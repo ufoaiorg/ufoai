@@ -450,7 +450,7 @@ static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absX, 
 	R_Bind(cache->texPos);
 
 	/* draw it */
-	RSTATE_ENABLE_BLEND
+	R_EnableBlend(qtrue);
 
 	qglBegin(GL_TRIANGLE_STRIP);
 	qglTexCoord2f(start[0], start[1]);
@@ -463,7 +463,7 @@ static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absX, 
 	qglVertex2f((x + tw) * viddef.rx, (y + th) * viddef.ry);
 	qglEnd();
 
-	RSTATE_DISABLE_BLEND
+	R_EnableBlend(qfalse);
 
 	return 0;
 }

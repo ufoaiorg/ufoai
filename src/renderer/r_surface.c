@@ -87,7 +87,7 @@ static void R_RenderBrushPoly (mBspSurface_t *surf)
 
 	R_Bind(surf->texinfo->image->texnum);
 
-	if (surf->flags & SURF_DRAWTURB) {
+	if (surf->flags & SURF_WARP) {
 		/* warp texture, no lightmaps */
 		R_TexEnv(GL_MODULATE);
 		R_DrawTurbSurface(surf);
@@ -119,7 +119,7 @@ void R_DrawAlphaSurfaces (mBspSurface_t *list)
 	/* go back to the world matrix */
 	qglLoadMatrixf(r_world_matrix);
 
-	RSTATE_ENABLE_BLEND
+	R_EnableBlend(qtrue);
 	qglDepthMask(GL_FALSE); /* disable depth writing */
 	R_TexEnv(GL_MODULATE);
 
@@ -136,7 +136,7 @@ void R_DrawAlphaSurfaces (mBspSurface_t *list)
 
 		R_Color(color);
 
-		if (surf->flags & SURF_DRAWTURB)
+		if (surf->flags & SURF_WARP)
 			R_DrawTurbSurface(surf);
 		else if (surf->texinfo->flags & SURF_FLOWING) {
 			float scroll;
@@ -164,7 +164,7 @@ static void R_DrawSurface (mBspSurface_t *surf)
 	unsigned lmtex = surf->lightmaptexturenum;
 
 	if (surf->texinfo->flags & SURF_ALPHATEST)
-		RSTATE_ENABLE_ALPHATEST
+		R_EnableAlphaTest(qtrue);
 
 	c_brush_polys++;
 
@@ -183,7 +183,7 @@ static void R_DrawSurface (mBspSurface_t *surf)
 		R_DrawPolyChain(surf, 0.0f);
 	}
 
-	RSTATE_DISABLE_ALPHATEST
+	R_EnableAlphaTest(qfalse);
 }
 
 #define BACKFACE_EPSILON    0.01
@@ -234,7 +234,7 @@ static void R_DrawInlineBrushModel (entity_t *e, model_t *mod)
 					psurf->texturechain = r_alpha_surfaces;
 					r_alpha_surfaces = psurf;
 				}
-			} else if (!(psurf->flags & SURF_DRAWTURB)) {
+			} else if (!(psurf->flags & SURF_WARP)) {
 				R_DrawSurface(psurf);
 			} else {
 				R_EnableMultitexture(qfalse);
@@ -375,7 +375,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 			surf->texturechain = r_alpha_surfaces;
 			r_alpha_surfaces = surf;
 		} else {
-			if (!(surf->flags & SURF_DRAWTURB))
+			if (!(surf->flags & SURF_WARP))
 				R_DrawSurface(surf);
 		}
 		/* add to the material chain if appropriate */

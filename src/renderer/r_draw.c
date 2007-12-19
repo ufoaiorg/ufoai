@@ -398,7 +398,7 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	}
 
 	if (blend)
-		RSTATE_ENABLE_BLEND
+		R_EnableBlend(qtrue);
 
 	R_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
@@ -413,7 +413,7 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	qglEnd();
 
 	if (blend)
-		RSTATE_DISABLE_BLEND
+		R_EnableBlend(qfalse);
 
 	return nw;
 }
@@ -505,7 +505,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		return;
 
 	/* init combiner */
-	RSTATE_ENABLE_BLEND
+	R_EnableBlend(qtrue);
 
 	R_SelectTexture(GL_TEXTURE0_ARB);
 	R_Bind(gl->texnum);
@@ -541,7 +541,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	qglDisable(GL_TEXTURE_2D);
 	R_SelectTexture(GL_TEXTURE0_ARB);
 
-	RSTATE_DISABLE_BLEND
+	R_EnableBlend(qfalse);
 }
 
 /**
@@ -559,7 +559,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
-	RSTATE_ENABLE_BLEND
+	R_EnableBlend(qtrue);
 
 	R_Color(color);
 
@@ -596,7 +596,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	R_Color(NULL);
 
-	RSTATE_DISABLE_BLEND
+	R_EnableBlend(qfalse);
 	qglDisable(GL_LINE_SMOOTH);
 	qglEnable(GL_TEXTURE_2D);
 }
@@ -892,7 +892,7 @@ void R_DrawBox (const entity_t * e)
 /*		return; */
 
 	qglDepthMask(GL_FALSE);
-	RSTATE_ENABLE_BLEND
+	R_EnableBlend(qtrue);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
 	if (!r_wire->integer)
@@ -936,6 +936,6 @@ void R_DrawBox (const entity_t * e)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	qglEnable(GL_TEXTURE_2D);
 	qglEnable(GL_CULL_FACE);
-	RSTATE_DISABLE_BLEND
+	R_EnableBlend(qfalse);
 	qglDepthMask(GL_TRUE);
 }

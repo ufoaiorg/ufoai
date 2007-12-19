@@ -260,10 +260,8 @@ void R_DrawParticles (void)
 	ptl_t *p;
 	int i;
 
-	/* no z buffering */
-	qglDepthMask(GL_FALSE);
 	qglDisable(GL_CULL_FACE);
-	RSTATE_ENABLE_BLEND
+	R_EnableBlend(qtrue);
 
 	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
 		if (p->inuse && !p->invis) {
@@ -290,8 +288,7 @@ void R_DrawParticles (void)
 			}
 		}
 
-	RSTATE_DISABLE_BLEND
+	R_EnableBlend(qfalse);
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglEnable(GL_CULL_FACE);
-	qglDepthMask(GL_TRUE);
 }

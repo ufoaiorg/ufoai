@@ -127,7 +127,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	e->angles[YAW] = e->angles[YAW] + 90;
 
 	if (e->flags & RF_TRANSLUCENT)
-		RSTATE_ENABLE_BLEND
+		R_EnableBlend(qtrue);
 
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
 		Com_Printf("R_DrawAliasMD3Model %s: no such frame %d\n", e->model->name, e->as.frame);
@@ -143,9 +143,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	}
 
 	if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-		if (!(e->flags & RF_TRANSLUCENT))
-			qglDepthMask(GL_FALSE);
-		RSTATE_ENABLE_BLEND
+		R_EnableBlend(qtrue);
 
 		R_Color(NULL);
 		if (e->flags & RF_SHADOW)
@@ -165,9 +163,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 		qglEnd();
 
-		RSTATE_DISABLE_BLEND
-		if (!(e->flags & RF_TRANSLUCENT))
-			qglDepthMask(GL_TRUE);
+		R_EnableBlend(qfalse);
 	}
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
@@ -183,7 +179,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	RSTATE_DISABLE_LIGHTING
 
 	if (e->flags & RF_TRANSLUCENT)
-		RSTATE_DISABLE_BLEND
+		R_EnableBlend(qfalse);
 
 	qglPopMatrix();
 

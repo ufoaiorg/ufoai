@@ -48,7 +48,6 @@ typedef struct mBspHeader_s {
 } mBspHeader_t;
 
 #define	SURF_PLANEBACK		2
-#define SURF_DRAWTURB		0x10
 
 typedef struct mBspEdge_s {
 	unsigned short v[2];

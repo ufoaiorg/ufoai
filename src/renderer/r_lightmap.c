@@ -229,7 +229,7 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	int smax, tmax;
 	byte *base;
 
-	if (surf->flags & SURF_DRAWTURB)
+	if (surf->flags & SURF_WARP)
 		return;
 
 	smax = (surf->extents[0] >> surf->lquant) + 1;

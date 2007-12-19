@@ -41,7 +41,36 @@ void R_SetDefaultState (void)
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	RSTATE_DISABLE_ALPHATEST
+	R_EnableAlphaTest(qfalse);
+}
+
+void R_EnableAlphaTest (qboolean enable)
+{
+	if (enable == r_state.alpha_test_enabled)
+		return;
+
+	r_state.alpha_test_enabled = enable;
+
+	if (enable)
+		qglEnable(GL_ALPHA_TEST);
+	else
+		qglDisable(GL_ALPHA_TEST);
+}
+
+void R_EnableBlend (qboolean enable)
+{
+	if (r_state.blend_enabled == enable)
+		return;
+
+	r_state.blend_enabled = enable;
+
+	if (enable) {
+		qglEnable(GL_BLEND);
+		qglDepthMask(GL_FALSE);
+	} else {
+		qglDisable(GL_BLEND);
+		qglDepthMask(GL_TRUE);
+	}
 }
 
 void R_BlendFunc (GLenum src, GLenum dest)
@@ -116,9 +145,10 @@ void R_SetupGL3D (void)
 	/* set drawing parms */
 	qglEnable(GL_CULL_FACE);
 
-	RSTATE_DISABLE_BLEND
-	RSTATE_DISABLE_ALPHATEST
-	qglEnable(GL_DEPTH_TEST);
+	R_EnableBlend(qfalse);
+	R_EnableAlphaTest(qfalse);
+
+	R_CheckError();
 }
 
 /**
@@ -128,40 +158,43 @@ void R_SetupGL2D (void)
 {
 	/* set 2D virtual screen size */
 	qglViewport(0, 0, viddef.width, viddef.height);
-	R_CheckError();
+
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity();
+
+	/* switch to orthographic (2 dimensional) projection */
 	qglOrtho(0, viddef.width, viddef.height, 0, 9999, -9999);
-	R_CheckError();
+
 	qglMatrixMode(GL_MODELVIEW);
 	qglLoadIdentity();
+
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_CULL_FACE);
-	RSTATE_ENABLE_ALPHATEST
+
+	R_EnableAlphaTest(qtrue);
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	R_TexEnv(GL_MODULATE);
 	R_Color(NULL);
+
 	R_CheckError();
 }
 
 void R_EnableMultitexture (qboolean enable)
 {
-	if (enable == r_state.multitexture)
+	if (enable == r_state.multitexture_enabled)
 		return;
 
-	r_state.multitexture = enable;
+	r_state.multitexture_enabled = enable;
+
+	R_SelectTexture(GL_TEXTURE1_ARB);
 
 	if (enable) {
-		R_SelectTexture(GL_TEXTURE1_ARB);
 		qglEnable(GL_TEXTURE_2D);
-		R_TexEnv(GL_REPLACE);
 	} else {
-		R_SelectTexture(GL_TEXTURE1_ARB);
 		qglDisable(GL_TEXTURE_2D);
-		R_TexEnv(GL_REPLACE);
 	}
 	R_SelectTexture(GL_TEXTURE0_ARB);
-	R_TexEnv(GL_REPLACE);
 }
 
 void R_SelectTexture (GLenum texture)
@@ -179,7 +212,6 @@ void R_SelectTexture (GLenum texture)
 	r_state.currenttmu = tmu;
 
 	qglActiveTexture(texture);
-	R_CheckError();
 	qglClientActiveTexture(texture);
 	R_CheckError();
 }
@@ -295,9 +327,9 @@ const vec4_t color_white = {1, 1, 1, 1};
 void R_ColorBlend (const float *rgba)
 {
 	if (rgba && rgba[3] < 1.0f) {
-		RSTATE_ENABLE_BLEND
+		R_EnableBlend(qtrue);
 	} else if (!rgba) {
-		RSTATE_DISABLE_BLEND
+		R_EnableBlend(qfalse);
 	}
 	R_Color(rgba);
 }
