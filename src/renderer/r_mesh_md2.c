@@ -499,10 +499,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	qglPushMatrix();
 	qglScalef(viddef.rx, viddef.ry, (viddef.rx + viddef.ry) / 2);
 
-	if (mi->color[3])
-		R_Color(mi->color);
-	else
-		R_Color(NULL);
+	R_Color(mi->color);
 
 	if (pmi) {
 		/* register the parent model */
@@ -554,7 +551,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	R_TexEnv(r_config.envCombine);
 
-	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
+	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qtrue);
 
 	/* draw the model */
@@ -564,7 +561,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
-	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
+	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qfalse);
 
 	qglPopMatrix();
@@ -606,10 +603,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	/* locate the proper data */
 	c_alias_polys += paliashdr->num_tris;
 
-	if (mi->color[3])
-		R_Color(mi->color);
-	else
-		R_Color(NULL);
+	R_Color(mi->color);
 
 	/* draw all the triangles */
 	qglPushMatrix();
@@ -624,7 +618,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	R_TexEnv(r_config.envCombine);
 
-	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
+	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qtrue);
 
 	qglEnable(GL_DEPTH_TEST);
@@ -636,7 +630,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
-	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
+	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qfalse);
 
 	qglPopMatrix();
