@@ -110,6 +110,9 @@ static void S_Music_Start (const char *file)
 	/* we are still playing some background track - fade it out @sa S_Frame */
 	if (Mix_PlayingMusic()) {
 		Mix_FadeOutMusic(3000);
+		if (music.nextMusicTrack)
+			Mem_Free(music.nextMusicTrack);
+		music.currentlyPlaying[0] = 0;
 		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, CL_TAG_NONE);
 		return;
 	}
@@ -126,12 +129,12 @@ static void S_Music_Start (const char *file)
 	music.data = Mix_LoadMUS_RW(music.musicSrc);
 
 	if (music.data) {
-		Com_Printf("S_Music_Start: Playing music: 'music/%s.ogg'\n", file);
+		Com_Printf("S_Music_Start: Playing music: 'music/%s'\n", name);
 		Q_strncpyz(music.currentlyPlaying, name, sizeof(music.currentlyPlaying));
 		if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
-			Com_Printf("S_Music_Start: Could not play music: 'music/%s.ogg' (%s)\n", file, Mix_GetError());
+			Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
 	} else {
-		Com_Printf("S_Music_Start: Could not load music: 'music/%s.ogg' (%s)\n", file, Mix_GetError());
+		Com_Printf("S_Music_Start: Could not load music: 'music/%s' (%s)\n", name, Mix_GetError());
 	}
 }
 
@@ -148,6 +151,9 @@ static void S_Music_Play_f (void)
 	if (Cmd_Argc() == 2) {
 		if (Mix_PlayingMusic()) {
 			Mix_FadeOutMusic(3000);
+			if (music.nextMusicTrack)
+				Mem_Free(music.nextMusicTrack);
+			music.currentlyPlaying[0] = 0;
 			music.nextMusicTrack = Mem_PoolStrDup(Cmd_Argv(1), cl_soundSysPool, CL_TAG_NONE);
 		} else {
 			Cvar_Set("snd_music", Cmd_Argv(1));
