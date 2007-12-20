@@ -177,6 +177,8 @@ particle fireBall
 	{
 		image  sfx/fireball
 		blend  add
+		lightcolor "1 0.4 0.4"
+		lightintensity -0.8
 		style  facing
 		tps    2.5
 	}
@@ -198,6 +200,7 @@ particle fireImpact
 		blend  add
 		style  rotated
 		size   "80 80"
+		lightcolor "1 0.4 0.4"
 		thinkfade  out
 		tps    1.25
 	}
@@ -267,6 +270,7 @@ particle rocketFire
 		image  sfx/fireball
 		blend  add
 		style  facing
+		lightcolor "1 0.4 0.4"
 		thinkfade  out
 		tps    1.8
 		color  ".5 .5 .5 1"

@@ -238,7 +238,6 @@ void CL_SequenceRender (void)
 	entity_t ent;
 	seqCmd_t *sc;
 	seqEnt_t *se;
-	float sunfrac = 1.0;
 	int i;
 
 	/* run script */
@@ -272,7 +271,6 @@ void CL_SequenceRender (void)
 			ent.skinnum = se->skin;
 			ent.as = se->as;
 			ent.alpha = se->alpha;
-			ent.lightparam = &sunfrac;
 
 			VectorCopy(se->origin, ent.origin);
 			VectorCopy(se->origin, ent.oldorigin);
@@ -374,6 +372,7 @@ void CL_SequenceStart_f (void)
 	const char *name, *menuName;
 	int i;
 	menu_t* menu;
+	light_t sun;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <name> [<menu>]\n", Cmd_Argv(0));
@@ -411,9 +410,12 @@ void CL_SequenceStart_f (void)
 	CL_SetClientState(ca_sequence);
 
 	/* init sun */
-	VectorSet(r_lightSun.dir, 2, 2, 3);
-	Vector4Set(r_lightSun.ambient, 1.6, 1.6, 1.6, 5.4);
-	Vector4Set(r_lightSun.color, 1.2, 1.2, 1.2, 1.0);
+	memset(&sun, 0, sizeof(sun));
+	Vector4Copy(color_white, sun.color);
+	Vector4Copy(color_white, sun.ambient);
+
+	/* init sun */
+	R_AddSunLight(&sun);
 }
 
 

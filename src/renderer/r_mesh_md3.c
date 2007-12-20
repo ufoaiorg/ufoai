@@ -165,7 +165,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	/* set-up lighting */
 	R_EnableLighting(qtrue);
-	R_ModEnableLights(e);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		skin = e->model->alias.skins_img[e->skinnum];

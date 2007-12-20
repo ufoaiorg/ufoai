@@ -534,35 +534,65 @@ void R_RenderFrame (void)
 	/* draw brushes on current worldlevel */
 	R_GetLevelSurfaceChains();
 
+	R_AddLights();
+
+	R_CheckError();
+
 	R_DrawOpaqueSurfaces(r_opaque_surfaces);
+
+	R_CheckError();
 
 	R_DisableEffects();
 
 	R_DrawOpaqueWarpSurfaces(r_opaque_warp_surfaces);
 
+	R_CheckError();
+
 	R_DisableEffects();
+
+	R_CheckError();
 
 	R_DrawMaterialSurfaces(r_material_surfaces);
 
+	R_CheckError();
+
 	R_DisableEffects();
+
+	R_CheckError();
 
 	/* draw opaque entities */
 	R_DrawEntities();
 
+	R_CheckError();
+
 	R_EnableBlend(qtrue);
+
+	R_CheckError();
 
 	/* draw opaque entities */
 	R_DrawAlphaEntities();
 
+	R_CheckError();
+
 	R_DrawAlphaSurfaces(r_alpha_surfaces);
+
+	R_CheckError();
 
 	R_DisableEffects();
 
+	R_CheckError();
+
 	R_DrawAlphaWarpSurfaces(r_alpha_warp_surfaces);
+
+	R_CheckError();
 
 	R_DrawParticles();
 
+	R_CheckError();
+
 	R_EnableBlend(qfalse);
+
+	R_CheckError();
 
 	/* leave wire mode again */
 	if (r_wire->integer)
@@ -570,6 +600,8 @@ void R_RenderFrame (void)
 
 	/* go back into 2D mode for hud and the like */
 	R_SetupGL2D();
+
+	R_CheckError();
 }
 
 /**

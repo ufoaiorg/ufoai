@@ -88,13 +88,8 @@ void LM_AddToScene (void)
 			R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
 		}
 
-		if (lm->flags & LMF_LIGHTFIXED) {
+		if (lm->flags & LMF_LIGHTFIXED)
 			ent.flags |= RF_LIGHTFIXED;
-			ent.lightparam = lm->lightorigin;
-			ent.lightcolor = lm->lightcolor;
-			ent.lightambient = lm->lightambient;
-		} else
-			ent.lightparam = &lm->sunfrac;
 
 		/* add it to the scene */
 		V_AddEntity(&ent);
@@ -238,9 +233,7 @@ void LM_Explode (struct dbuffer *msg)
 void CL_RegisterLocalModels (void)
 {
 	localModel_t *lm;
-	vec3_t sunOrigin;
 	int i;
-	trace_t tr;
 
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
 		/* register the model and recalculate routing info */
@@ -248,18 +241,8 @@ void CL_RegisterLocalModels (void)
 		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);
 			if (!lm->as.change)
-				Com_Printf("CL_RegisterLocalModels: Could not change anim of model '%s'\n",
-					lm->animname);
+				Com_Printf("CL_RegisterLocalModels: Could not change anim of model '%s'\n", lm->animname);
 		}
-
-		/* calculate sun lighting and register model if not yet done */
-		VectorMA(lm->origin, SUN_HEIGHT, r_lightSun.dir, sunOrigin);
-		tr = CM_CompleteBoxTrace(sunOrigin, lm->origin, vec3_origin, vec3_origin, 0, MASK_VISIBILILITY);
-		/*Com_Printf("tr.fraction (%s): %f (%s)\n", lm->name, tr.fraction, tr.surface->name);*/
-		if (tr.fraction < 0.9)
-			lm->sunfrac = 0.0f;
-		else
-			lm->sunfrac = 1.0f;
 	}
 }
 
@@ -965,7 +948,6 @@ void LE_AddToScene (void)
 {
 	le_t *le;
 	entity_t ent;
-	vec3_t sunOrigin;
 	vec3_t modelOffset;
 	int i;
 
@@ -973,18 +955,6 @@ void LE_AddToScene (void)
 		if (le->inuse && !le->invis && le->pos[2] <= cl_worldlevel->integer) {
 			memset(&ent, 0, sizeof(entity_t));
 
-			/* FIXME: Not every le needs sunfraction */
-			/* calculate sun lighting */
-			if (!VectorCompare(le->origin, le->oldOrigin)) {
-				VectorCopy(le->origin, le->oldOrigin);
-				VectorMA(le->origin, SUN_HEIGHT, r_lightSun.dir, sunOrigin);
-				/* check whether the direct connection is blocked */
-				if (CM_TestLine(le->origin, sunOrigin))
-					le->sunfrac = 0.0f;
-				else
-					le->sunfrac = 1.0f;
-			}
-			ent.lightparam = &le->sunfrac;
 			ent.alpha = le->alpha;
 
 			/* set entity values */

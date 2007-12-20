@@ -221,6 +221,7 @@ struct cBspPlane_s;
 
 extern const vec3_t vec3_origin;
 extern const vec4_t vec4_origin;
+extern const vec4_t color_white;
 
 qboolean Q_IsPowerOfTwo(int i);
 

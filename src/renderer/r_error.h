@@ -30,6 +30,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #ifdef DEBUG
+
+static const char* inline R_TranslateError (GLenum error)
+{
+	switch (error) {
+	case GL_INVALID_ENUM:
+		return "GL_INVALID_ENUM";
+	case GL_INVALID_VALUE:
+		return "GL_INVALID_VALUE";
+	case GL_INVALID_OPERATION:
+		return "GL_INVALID_OPERATION";
+	default:
+		return "UNKNOWN";
+	}
+}
+
 /**
  * @brief Checks for opengl errors
  */
@@ -38,7 +53,7 @@ static inline void R_CheckErrorDebug (const char *file, int line, const char *fu
 	if (qglGetError && r_checkerror && r_checkerror->integer) {
 		GLenum error = qglGetError();
 		if (error != GL_NO_ERROR)
-			Com_Printf("OpenGL err: %s (%d): %s 0x%X\n", file, line, function, error);
+			Com_Printf("OpenGL err: %s (%d): %s %s (0x%X)\n", file, line, function, R_TranslateError(error), error);
 	}
 }
 #endif

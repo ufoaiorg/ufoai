@@ -258,62 +258,6 @@ void R_ModEndLoading (void)
 }
 
 /**
- * @sa R_DrawAliasMD2Model
- * @sa R_DrawAliasMD3Model
- * @param[in] lightambient May not be null for fixed lighting
- */
-void R_ModEnableLights (const entity_t* e)
-{
-	/* enable the lighting */
-	qglEnable(GL_LIGHT0);
-
-	if (e->flags & RF_LIGHTFIXED) {
-		/* add the fixed light */
-		qglLightfv(GL_LIGHT0, GL_POSITION, e->lightparam);
-		qglLightfv(GL_LIGHT0, GL_DIFFUSE, e->lightcolor);
-		qglLightfv(GL_LIGHT0, GL_AMBIENT, e->lightambient);
-	} else {
-		float sumBright, max;
-		vec4_t sumColor, trorigin, sumDelta;
-
-		VectorClear(sumColor);
-		VectorClear(sumDelta);
-		sumDelta[3] = 1.0;
-		GLVectorTransform(trafo[e - r_entities].matrix, sumDelta, trorigin);
-
-		if (*e->lightparam != 0.0) {
-			VectorScale(r_lightSun.dir, 1.0, sumDelta);
-			sumBright = *e->lightparam;
-			VectorScale(r_lightSun.color, sumBright, sumColor);
-		} else {
-			VectorClear(sumDelta);
-			sumBright = 0;
-		}
-
-		/* normalize delta and color */
-		VectorNormalize(sumDelta);
-		VectorMA(trorigin, 512, sumDelta, sumDelta);
-		sumDelta[3] = 0.0;
-		if (sumBright > 0.)
-			VectorScale(sumColor, sumBright, sumColor);
-		sumColor[3] = 1.0;
-
-		max = sumColor[0];
-		if (sumColor[1] > max)
-			max = sumColor[1];
-		if (sumColor[2] > max)
-			max = sumColor[2];
-		if (max > 2.0)
-			VectorScale(sumColor, 2.0 / max, sumColor);
-
-		/* add the light */
-		qglLightfv(GL_LIGHT0, GL_POSITION, sumDelta);
-		qglLightfv(GL_LIGHT0, GL_DIFFUSE, sumColor);
-		qglLightfv(GL_LIGHT0, GL_AMBIENT, r_lightSun.ambient);
-	}
-}
-
-/**
  * @brief Draws the model bounding box
  * @sa R_DrawAliasMD2Model
  */

@@ -3388,7 +3388,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		if (le->left != NONE) {
 			memset(&add, 0, sizeof(entity_t));
 
-			add.lightparam = &le->sunfrac;
 			add.model = cls.model_weapons[le->left];
 
 			/* +2 (resp. +3) because the body and the head are already
@@ -3404,7 +3403,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		if (le->right != NONE) {
 			memset(&add, 0, sizeof(entity_t));
 
-			add.lightparam = &le->sunfrac;
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
 
@@ -3429,7 +3427,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		}
 	}
 
-	add.lightparam = &le->sunfrac;
 	add.alpha = le->alpha;
 	add.model = le->model2;
 	add.skinnum = le->skinnum;
@@ -3475,7 +3472,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 		if (le->left != NONE) {
 			memset(&add, 0, sizeof(entity_t));
 
-			add.lightparam = &le->sunfrac;
 			add.model = cls.model_weapons[le->left];
 
 			add.tagent = V_GetEntity() + 2 + (le->right != NONE);
@@ -3488,7 +3484,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 		if (le->right != NONE) {
 			memset(&add, 0, sizeof(entity_t));
 
-			add.lightparam = &le->sunfrac;
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
 
@@ -3502,7 +3497,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	/* add head */
 	memset(&add, 0, sizeof(entity_t));
 
-	add.lightparam = &le->sunfrac;
 	add.alpha = le->alpha;
 	add.model = le->model2;
 	add.skinnum = le->skinnum;

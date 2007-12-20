@@ -75,7 +75,6 @@ void R_ModModellist_f(void);
 void R_ModDrawModelBBox(vec4_t bbox[8], entity_t *e);
 void R_ModDrawNullModel(entity_t *e);
 
-void R_ModEnableLights(const entity_t *e);
 void R_ShutdownModels(void);
 void R_CreateSurfacePoly(mBspSurface_t *surf, int shift[3], model_t *mod);
 

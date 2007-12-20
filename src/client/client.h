@@ -374,7 +374,6 @@ typedef struct le_s {
 	int reaction_minhit;
 
 	float angles[3];
-	float sunfrac;
 	float alpha;
 
 	int team;		/**< the team number this local entity belongs to */
@@ -449,7 +448,6 @@ typedef struct lm_s {
 	int frame;	/**< which frame to show */
 	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
-	float sunfrac;
 	animState_t as;
 
 	struct model_s *model;

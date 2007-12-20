@@ -79,7 +79,6 @@ typedef struct {
 } rstate_t;
 
 extern rstate_t r_state;
-extern const vec4_t color_white;
 extern const float default_texcoords[];
 
 void R_SetDefaultState(void);

@@ -360,7 +360,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	/* set-up lighting */
 	R_EnableLighting(qtrue);
-	R_ModEnableLights(e);
 
 	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 

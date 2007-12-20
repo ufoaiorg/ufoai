@@ -74,7 +74,6 @@ typedef struct entity_s {
 
 	float *lightcolor;			/**< color for fixed light */
 	float *lightambient;		/**< ambient color for fixed light */
-	float *lightparam;			/**< fraction lit by the sun */
 
 	float alpha;				/**< ignore if RF_TRANSLUCENT isn't set */
 
@@ -114,11 +113,10 @@ typedef struct shader_s {
 #define MAX_GL_LIGHTS 8
 
 typedef struct {
-	vec3_t origin;
-	vec3_t dir;
+	vec4_t origin;
 	vec4_t color;
 	vec4_t ambient;
-	int intensity;
+	float intensity;
 } light_t;
 
 typedef struct {
@@ -163,6 +161,8 @@ typedef struct ptl_s {
 	vec3_t origin;		/**< start position - set initial s position to get this value */
 	vec3_t offset;
 	vec3_t angles;
+	vec3_t lightColor;
+	float lightIntensity;
 	int levelFlags;
 
 	int skin;		/**< model skin to use for this particle */
@@ -262,10 +262,14 @@ qboolean R_Init(void);
 qboolean R_SetMode(void);
 void R_Shutdown(void);
 
+void R_AddLights(void);
+void R_AddLight(vec3_t origin, float intensity, vec3_t color);
+void R_AddSunLight(const light_t* sunlight);
+
 extern SDL_Surface *r_surface;
 extern cvar_t *r_3dmapradius;
 
-extern light_t r_lightSun;
+extern light_t r_lights[MAX_GL_LIGHTS];
 
 extern int r_numShaders;
 extern shader_t r_shaders[MAX_SHADERS];

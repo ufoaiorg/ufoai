@@ -34,7 +34,6 @@ cvar_t *cursor;
 
 int map_maxlevel;
 int map_maxlevel_base = 0;
-light_t r_lightSun;
 
 int r_numEntities;
 entity_t r_entities[MAX_ENTITIES];
@@ -189,20 +188,25 @@ static void CL_ParseEntitystring (const char *es)
 
 		/* analyze values */
 		if (!Q_strcmp(classname, "worldspawn")) {
+			light_t sun;
+
 			/* init sun */
+			memset(&sun, 0, sizeof(sun));
 			angles[YAW] *= torad;
 			angles[PITCH] *= torad;
-			r_lightSun.dir[0] = cos(angles[YAW]) * sin(angles[PITCH]);
-			r_lightSun.dir[1] = sin(angles[YAW]) * sin(angles[PITCH]);
-			r_lightSun.dir[2] = cos(angles[PITCH]);
+			sun.origin[0] = cos(angles[YAW]) * sin(angles[PITCH]);
+			sun.origin[1] = sin(angles[YAW]) * sin(angles[PITCH]);
+			sun.origin[2] = cos(angles[PITCH]);
+			sun.origin[3] = 0;
 
 			VectorNormalize(color);
-			VectorScale(color, light / 100, r_lightSun.color);
-			r_lightSun.color[3] = 1.0;
+			VectorScale(color, light / 100, sun.color);
+			sun.color[3] = 1.0;
 
 			/* init ambient */
-			VectorScale(ambient, 1.4, r_lightSun.ambient);
-			r_lightSun.ambient[3] = 1.0;
+			VectorScale(ambient, 1.4, sun.ambient);
+			sun.ambient[3] = 1.0;
+			R_AddSunLight(&sun);
 
 			/* maximum level */
 			map_maxlevel = maxlevel;

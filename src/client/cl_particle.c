@@ -148,6 +148,8 @@ static const value_t pps[] = {
 	{"autohide", V_BOOL, offsetof(ptl_t, autohide), MEMBER_SIZEOF(ptl_t, autohide)},
 	{"stayalive", V_BOOL, offsetof(ptl_t, stayalive), MEMBER_SIZEOF(ptl_t, stayalive)},
 	{"weather", V_BOOL, offsetof(ptl_t, weather), MEMBER_SIZEOF(ptl_t, weather)},
+	{"lightcolor", V_VECTOR, offsetof(ptl_t, lightColor), MEMBER_SIZEOF(ptl_t, lightColor)},
+	{"lightintensity", V_FLOAT, offsetof(ptl_t, lightIntensity), MEMBER_SIZEOF(ptl_t, lightIntensity)},
 
 	{NULL, 0, 0, 0}
 };
@@ -464,6 +466,8 @@ static void CL_ParticleEditor_f (void)
 	const cmdList_t *commands;
 
 	if (!Q_strncmp(Cmd_Argv(0), "particle_editor_open", MAX_VAR)) {
+		light_t sun;
+
 		for (commands = ptl_edit; commands->name; commands++)
 			Cmd_AddCommand(commands->name, commands->function, commands->description);
 		MN_PushMenu("particle_editor");
@@ -478,13 +482,12 @@ static void CL_ParticleEditor_f (void)
 		if (!ptleditMenu.renderZone)
 			Sys_Error("Could not find the menu node render in particle_editor menu\n");
 
+		memset(&sun, 0, sizeof(sun));
 		/* init sequence state */
 		CL_SetClientState(ca_ptledit);
 
 		/* init sun */
-		VectorSet(r_lightSun.dir, 2, 2, 3);
-		Vector4Set(r_lightSun.ambient, 1.6, 1.6, 1.6, 5.4);
-		Vector4Set(r_lightSun.color, 1.2, 1.2, 1.2, 1.0);
+		R_AddSunLight(&sun);
 
 		PE_UpdateMenu(NULL);
 	} else {
@@ -1098,6 +1101,11 @@ static void CL_ParticleRun2 (ptl_t *p)
 			return;
 		}
 	}
+
+	/* add light to the scene */
+	if (VectorNotEmpty(p->lightColor))
+		R_AddLight(p->s, 1 + p->lightIntensity, p->lightColor);
+
 	p->invis = qfalse;
 }
 

@@ -30,8 +30,20 @@ const float default_texcoords[] = {
 	0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0
 };
 
+/* global ambient lighting */
+const vec4_t ambient = {
+	0.0, 0.0, 0.0, 1.0
+};
+
+/* material reflection */
+const vec4_t material = {
+	1.0, 1.0, 1.0, 1.0
+};
+
 void R_SetDefaultState (void)
 {
+	int i;
+
 	/* setup texture units */
 	r_state.active_texunit = NULL;
 
@@ -57,6 +69,15 @@ void R_SetDefaultState (void)
 	/* we always use this texcoord array */
 	qglEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	qglTexCoordPointer(2, GL_FLOAT, 0, r_state.active_texunit->texcoords);
+
+	/* lighting parameters */
+	qglLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
+	qglMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material);
+
+	for (i = 1; i < MAX_GL_LIGHTS; i++) {
+		qglLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.005);
+		qglLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0001);
+	}
 
 	/* and some vertex array (floats for 3d, shorts for 2d) */
 	qglEnableClientState(GL_VERTEX_ARRAY);

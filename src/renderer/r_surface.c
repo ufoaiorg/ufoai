@@ -167,9 +167,9 @@ void R_DrawOpaqueSurfaces (const mBspSurface_t *surfs)
 
 	R_EnableMultitexture(qtrue);
 
-	/*R_EnableLighting(qtrue);*/
+	R_EnableLighting(qtrue);
 	R_DrawSurfaces(surfs);
-	/*R_EnableLighting(qfalse);*/
+	R_EnableLighting(qfalse);
 
 	R_EnableMultitexture(qfalse);
 }
