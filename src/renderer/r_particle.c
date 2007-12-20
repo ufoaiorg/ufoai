@@ -250,18 +250,10 @@ static void R_SetBlendMode (int mode)
 	}
 }
 
-
-/**
- * @note the refdef.ptls is the ptl array from cl_particle.c
- * @sa V_UpdateRefDef
- */
 void R_DrawParticles (void)
 {
 	ptl_t *p;
 	int i;
-
-	qglDisable(GL_CULL_FACE);
-	qglEnable(GL_DEPTH_TEST);
 
 	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
 		if (p->inuse && !p->invis) {
@@ -287,7 +279,4 @@ void R_DrawParticles (void)
 				qglDisable(GL_CULL_FACE);
 			}
 		}
-
-	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	qglEnable(GL_CULL_FACE);
 }

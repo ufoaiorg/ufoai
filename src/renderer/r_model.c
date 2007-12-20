@@ -260,7 +260,7 @@ void R_ModEndLoading (void)
 /**
  * @sa R_DrawAliasMD2Model
  * @sa R_DrawAliasMD3Model
- * @param[in] lightambient May not be null for fixed lightning
+ * @param[in] lightambient May not be null for fixed lighting
  */
 void R_ModEnableLights (const entity_t* e)
 {

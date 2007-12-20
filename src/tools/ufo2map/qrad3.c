@@ -393,7 +393,7 @@ void RadWorld (void)
 	/* subdivide patches to a maximum dimension */
 	SubdividePatches();
 
-	/* calculate vertex normals for smooth lightning */
+	/* calculate vertex normals for smooth lighting */
 	/*U2M_ProgressBar(CalcVertexNormals, numvertexes - 1, qtrue, "VERTEXNRM");*/
 
 	/* create directlights out of patches and lights */

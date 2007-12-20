@@ -289,72 +289,82 @@ static void R_DrawEntities (void)
 		e = &r_entities[i];
 
 		/* find out if and how an entity should be drawn */
-		if (e->flags & RF_TRANSLUCENT)
+		if (e->flags & (RF_TRANSLUCENT | RF_BOX))
 			continue;			/* solid */
 
-		if (e->flags & RF_BOX)
-			R_DrawBox(e);
-		else {
-			mod = e->model;
-			if (!mod) {
-				R_ModDrawNullModel(e);
-				continue;
-			}
-			switch (mod->type) {
-			case mod_alias_md2:
-				/* MD2 model */
-				R_DrawAliasMD2Model(e);
-				break;
-			case mod_alias_md3:
-				/* MD3 model */
-				R_DrawAliasMD3Model(e);
-				break;
-			case mod_brush:
-				/* draw things like func_breakable */
-				R_DrawBrushModel(e);
-				break;
-			default:
-				Sys_Error("Bad %s modeltype: %i", mod->name, mod->type);
-				break;
-			}
+		mod = e->model;
+		if (!mod) {
+			R_ModDrawNullModel(e);
+			continue;
 		}
+		switch (mod->type) {
+		case mod_alias_md2:
+			/* MD2 model */
+			R_DrawAliasMD2Model(e);
+			break;
+		case mod_alias_md3:
+			/* MD3 model */
+			R_DrawAliasMD3Model(e);
+			break;
+		case mod_brush:
+			/* draw things like func_breakable */
+			R_DrawBrushModel(e);
+			break;
+		default:
+			Sys_Error("Bad %s modeltype: %i", mod->name, mod->type);
+			break;
+		}
+
+		R_Color(NULL);
 	}
+}
+
+/**
+ * @note They are already transformed
+ */
+static void R_DrawAlphaEntities (void)
+{
+	int i;
+	entity_t *e;
+	model_t *mod;
+
+	if (!r_drawentities->integer)
+		return;
 
 	/* draw transparent entities */
 	/* we could sort these if it ever becomes a problem... */
-	qglDepthMask(GL_FALSE);			/* no z writes */
 	for (i = 0; i < r_numEntities; i++) {
 		e = &r_entities[i];
 		if (!(e->flags & RF_TRANSLUCENT))
 			continue;			/* solid */
-
-		if (e->flags & RF_BOX)
+		if (e->flags & RF_BOX) {
 			R_DrawBox(e);
-		else {
-			mod = e->model;
-			if (!mod) {
-				R_ModDrawNullModel(e);
-				continue;
-			}
-			switch (mod->type) {
-			case mod_alias_md2:
-				/* MD2 model */
-				R_DrawAliasMD2Model(e);
-				break;
-			case mod_alias_md3:
-				/* MD3 model */
-				R_DrawAliasMD3Model(e);
-				break;
-			case mod_brush:
-				R_DrawBrushModel(e);
-				break;
-			default:
-				Sys_Error("Bad %s modeltype: %i", mod->name, mod->type);
-				break;
-			}
+			continue;
 		}
+
+		mod = e->model;
+		if (!mod) {
+			R_ModDrawNullModel(e);
+			continue;
+		}
+		switch (mod->type) {
+		case mod_alias_md2:
+			/* MD2 model */
+			R_DrawAliasMD2Model(e);
+			break;
+		case mod_alias_md3:
+			/* MD3 model */
+			R_DrawAliasMD3Model(e);
+			break;
+		case mod_brush:
+			R_DrawBrushModel(e);
+			break;
+		default:
+			Sys_Error("Bad %s modeltype: %i", mod->name, mod->type);
+			break;
+		}
+		R_Color(NULL);
 	}
-	qglDepthMask(GL_TRUE);			/* back to writing */
 }
 
 static inline int SignbitsForPlane (cBspPlane_t * out)
@@ -408,7 +418,7 @@ static void R_SetFrustum (void)
 	}
 }
 
-static void R_SetupFrame (void)
+static inline void R_SetupFrame (void)
 {
 	/* build the transformation matrix for the given view angles */
 	AngleVectors(refdef.viewangles, vpn, vright, vup);
@@ -426,7 +436,7 @@ static void R_SetupFrame (void)
 	}
 }
 
-static void R_Clear (void)
+static inline void R_Clear (void)
 {
 	qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	R_CheckError();
@@ -526,18 +536,29 @@ void R_RenderFrame (void)
 
 	R_DrawOpaqueSurfaces(r_opaque_surfaces);
 
+	R_DisableEffects();
+
 	R_DrawOpaqueWarpSurfaces(r_opaque_warp_surfaces);
 
-	/* draw entities like cursor box and models */
+	R_DisableEffects();
+
+	R_DrawMaterialSurfaces(r_material_surfaces);
+
+	R_DisableEffects();
+
+	/* draw opaque entities */
 	R_DrawEntities();
 
 	R_EnableBlend(qtrue);
 
+	/* draw opaque entities */
+	R_DrawAlphaEntities();
+
 	R_DrawAlphaSurfaces(r_alpha_surfaces);
 
-	R_DrawAlphaWarpSurfaces(r_alpha_warp_surfaces);
+	R_DisableEffects();
 
-	R_DrawMaterialSurfaces(r_material_surfaces);
+	R_DrawAlphaWarpSurfaces(r_alpha_warp_surfaces);
 
 	R_DrawParticles();
 

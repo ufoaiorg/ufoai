@@ -153,6 +153,7 @@ void R_DrawAlphaSurfaces (const mBspSurface_t *surfs)
 	if (!surfs)
 		return;
 
+	assert(r_state.blend_enabled);
 	R_DrawSurfaces(surfs);
 }
 
@@ -188,6 +189,7 @@ void R_DrawAlphaWarpSurfaces (mBspSurface_t *surfs)
 	if (!surfs)
 		return;
 
+	assert(r_state.blend_enabled);
 	R_EnableWarp(qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableWarp(qfalse);

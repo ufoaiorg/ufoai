@@ -810,7 +810,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	/* revert the cullface mode */
 	qglCullFace(GL_FRONT);
 
-	/* disable 3d geoscape lightning */
+	/* disable 3d geoscape lighting */
 	R_EnableLighting(qfalse);
 
 	/* restore the previous matrix */
@@ -864,7 +864,6 @@ void R_DrawBox (const entity_t * e)
 	float dx, dy;
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
-	R_EnableBlend(qtrue);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
 	if (!r_wire->integer)
@@ -908,5 +907,4 @@ void R_DrawBox (const entity_t * e)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	qglEnable(GL_TEXTURE_2D);
 	qglEnable(GL_CULL_FACE);
-	R_EnableBlend(qfalse);
 }

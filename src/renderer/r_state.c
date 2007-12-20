@@ -104,6 +104,18 @@ void R_BlendFunc (GLenum src, GLenum dest)
 	qglBlendFunc(src, dest);
 }
 
+void R_DisableEffects (void)
+{
+	if (r_state.alpha_test_enabled)
+		R_EnableAlphaTest(qfalse);
+
+	if (r_state.lighting_enabled)
+		R_EnableLighting(qfalse);
+
+	if (r_state.warp_enabled)
+		R_EnableWarp(qfalse);
+}
+
 /**
  * @sa R_SetupGL3D
  */
@@ -148,8 +160,6 @@ void R_SetupGL3D (void)
 	qglLoadIdentity();
 	MYgluPerspective(4.0, 4096.0);
 
-	qglCullFace(GL_FRONT);
-
 	qglMatrixMode(GL_MODELVIEW);
 	qglLoadIdentity();
 
@@ -164,6 +174,7 @@ void R_SetupGL3D (void)
 
 	/* set drawing parms */
 	qglEnable(GL_CULL_FACE);
+	qglCullFace(GL_FRONT);
 
 	R_EnableBlend(qfalse);
 	R_EnableAlphaTest(qfalse);
@@ -206,37 +217,41 @@ void R_SetupGL2D (void)
 	R_CheckError();
 }
 
-static shader_t *lightning_shader, *warp_shader;
+static shader_t *lighting_shader, *warp_shader;
 
 void R_EnableLighting (qboolean enable)
 {
-	if (r_state.lighting_enabled == enable)
+	/* FIXME: ...until lighting works */
+	if (1 || r_state.lighting_enabled == enable)
 		return;
 
 	r_state.lighting_enabled = enable;
 
 	if (enable) {  /* toggle state */
-		if (!lightning_shader)
-			lightning_shader = R_GetShader("lightning");
+		if (!lighting_shader)
+			lighting_shader = R_GetShader("lighting");
 		qglEnable(GL_LIGHTING);
 
-		qglEnableClientState(GL_NORMAL_ARRAY);
-		qglNormalPointer(GL_FLOAT, 0, r_state.normal_array);
+		if (lighting_shader && !(refdef.rdflags & RDF_NOWORLDMODEL)) {
+			qglEnableClientState(GL_NORMAL_ARRAY);
+			qglNormalPointer(GL_FLOAT, 0, r_state.normal_array);
 
-		if (!(refdef.rdflags & RDF_NOWORLDMODEL))
-			SH_UseShader(lightning_shader, qtrue);
+			SH_UseShader(lighting_shader, qtrue);
+		}
 	} else {
 		qglDisable(GL_LIGHTING);
-		qglDisableClientState(GL_NORMAL_ARRAY);
 
-		if (!(refdef.rdflags & RDF_NOWORLDMODEL))
-			SH_UseShader(lightning_shader, qfalse);
+		if (lighting_shader && !(refdef.rdflags & RDF_NOWORLDMODEL)) {
+			qglDisableClientState(GL_NORMAL_ARRAY);
+
+			SH_UseShader(lighting_shader, qfalse);
+		}
 	}
 }
 
 void R_EnableWarp (qboolean enable)
 {
-	if(r_state.warp_enabled == enable)
+	if (r_state.warp_enabled == enable)
 		return;
 
 	r_state.warp_enabled = enable;

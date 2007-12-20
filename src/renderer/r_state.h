@@ -99,5 +99,6 @@ void R_EnableAlphaTest(qboolean enable);
 void R_EnableLighting(qboolean enable);
 void R_EnableColorArray(qboolean enable);
 void R_EnableWarp(qboolean enable);
+void R_DisableEffects(void);
 
 #endif

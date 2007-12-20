@@ -266,7 +266,6 @@ static void R_ModDrawModelEffects (const entity_t *e)
 	if (e->flags & RF_HIGHLIGHT)
 		R_DrawHighlight(e);
 
-	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
 	/* draw the circles for team-members and allied troops */
@@ -309,6 +308,8 @@ static void R_ModDrawModelEffects (const entity_t *e)
 		qglDisable(GL_LINE_SMOOTH);
 		qglEnable(GL_TEXTURE_2D);
 	}
+
+	qglEnable(GL_DEPTH_TEST);
 }
 
 /**
@@ -380,12 +381,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	R_TexEnv(r_config.envCombine);
 
-	if (e->flags & RF_TRANSLUCENT)
-		R_EnableBlend(qtrue);
-
-	qglEnable(GL_DEPTH_TEST);
-	qglEnable(GL_CULL_FACE);
-
 	/* set-up lighting */
 	R_EnableLighting(qtrue);
 	R_ModEnableLights(e);
@@ -394,11 +389,10 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	R_EnableLighting(qfalse);
 
+	R_TexEnv(GL_MODULATE);
+
 	/* depth test and cull face are deactivated here */
 	R_ModDrawModelEffects(e);
-
-	if (e->flags & RF_TRANSLUCENT)
-		R_EnableBlend(qfalse);
 
 	/* show model bounding box */
 	R_ModDrawModelBBox(bbox, e);
