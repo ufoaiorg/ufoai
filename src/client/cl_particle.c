@@ -483,10 +483,8 @@ static void CL_ParticleEditor_f (void)
 
 		/* init sun */
 		VectorSet(map_sun.dir, 2, 2, 3);
-		VectorSet(map_sun.ambient, 1.6, 1.6, 1.6);
-		map_sun.ambient[3] = 5.4;
-		VectorSet(map_sun.color, 1.2, 1.2, 1.2);
-		map_sun.color[3] = 1.0;
+		Vector4Set(map_sun.ambient, 1.6, 1.6, 1.6, 5.4);
+		Vector4Set(map_sun.color, 1.2, 1.2, 1.2, 1.0);
 
 		PE_UpdateMenu(NULL);
 	} else {
