@@ -183,6 +183,9 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 				strcpy(end, name + 1);
 				mod->alias.skins_img[i] = R_FindImage(path, it_skin);
 			}
+			/* fallback */
+			if (!mod->alias.skins_img[i])
+				mod->alias.skins_img[i] = r_notexture;
 		}
 
 		/* load the indexes */

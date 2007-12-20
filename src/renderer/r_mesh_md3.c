@@ -169,8 +169,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		skin = e->model->alias.skins_img[e->skinnum];
-		if (!skin)
-			skin = r_notexture;
 		R_Bind(skin->texnum);
 		/* locate the proper data */
 		c_alias_polys += paliashdr->meshes[i].num_tris;

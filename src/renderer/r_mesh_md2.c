@@ -350,9 +350,8 @@ void R_DrawAliasMD2Model (entity_t * e)
 				skin = e->model->alias.skins_img[0];
 		}
 	}
-	if (!skin)
-		skin = r_notexture;		/* fallback... */
-	else if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
+
+	if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
 		/* it will be drawn in the next entity render pass
 		 * for the translucent entities */
 		e->flags |= RF_TRANSLUCENT;
