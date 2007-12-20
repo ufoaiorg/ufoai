@@ -406,7 +406,6 @@ menu althud
 //		size	"120 260"
 //		bgcolor	"1 1 1 0.5"
 		scale	"4 4 4"
-		color	"0.5 0.5 0.5 1"
 	}
 
 	model right_head
@@ -414,7 +413,6 @@ menu althud
 		md2		"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"right_actor tag_head"
-		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
 	}
 
@@ -422,7 +420,6 @@ menu althud
 	{
 		md2		"*cvar mn_rweapon"
 		tag		"right_actor tag_rweapon"
-		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
 	}
 
@@ -430,7 +427,6 @@ menu althud
 	{
 		md2		"*cvar mn_lweapon"
 		tag		"right_actor tag_lweapon"
-		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
 	}
 
@@ -443,7 +439,6 @@ menu althud
 		pos		"854 672"
 		size	"50 78"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 	model head1
 	{
@@ -454,7 +449,6 @@ menu althud
 		pos		"774 672"
 		size	"50 78"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 	model head2
 	{
@@ -465,7 +459,6 @@ menu althud
 		pos		"694 672"
 		size	"50 78"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 	model head3
 	{
@@ -476,7 +469,6 @@ menu althud
 		pos		"614 672"
 		size	"50 78"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 	model head4
 	{
@@ -487,7 +479,6 @@ menu althud
 		pos		"534 672"
 		size	"50 78"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 	model head5
 	{
@@ -498,7 +489,6 @@ menu althud
 		pos		"454 672"
 		size	"50 78"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 	model head6
 	{
@@ -509,7 +499,6 @@ menu althud
 		pos		"374 672"
 		size	"50 78"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 	model head7
 	{
@@ -520,7 +509,6 @@ menu althud
 		pos		"294 672"
 		size	"50 78"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 
 	// ==================
@@ -1681,7 +1669,7 @@ menu althud
 	string right_fm_shot5 { string "*cvar mn_r_fm_shot5"	pos "753 218"	invis true }
 	string right_fm_shot6 { string "*cvar mn_r_fm_shot6"	pos "753 154"	invis true }
 	string right_fm_shot7 { string "*cvar mn_r_fm_shot7"	pos "753 90"	invis true }
-	
+
 	/* These two need to be _after_ the firemode-nodes so they can be toggled correctly. (z-depth/orer of menu node)
 	 * The alpha value (i.e. image overlaps but is not visible) in the firemode-images would prevent clicking them in some cases. */
 	pic bt_primaryright

@@ -411,7 +411,6 @@ menu aliencont
 	{
 		md2	"*cvar mn_al_alienmodel"
 		angles	"0 70 90"
-		color	"0.5 0.5 0.5 1"
 		origin	"805 380 0"
 		scale	"4 4 4"
 		pos	"685 290"

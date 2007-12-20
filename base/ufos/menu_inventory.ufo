@@ -109,7 +109,6 @@ menu inventory
 //		pos		"420 180"
 //		size	"190 240"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 
 	model head
@@ -117,7 +116,6 @@ menu inventory
 		md2		"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"actor tag_head"
-		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
 	}
 

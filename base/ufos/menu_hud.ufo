@@ -746,7 +746,6 @@ menu hud
 		size	"74 66"
 		pos		"20 20"
 //		bgcolor	"1 1 1 0.5"
-		color	"0.5 0.5 0.5 1"
 	}
 
 	container right

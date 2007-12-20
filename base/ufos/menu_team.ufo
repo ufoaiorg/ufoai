@@ -845,7 +845,6 @@ menu team
 //		size	"190 300"
 //		bgcolor	"1 1 1 0.5"
 		scale	"6.7 6.7 6.7"
-		color	"0.5 0.5 0.5 1"
 	}
 
 	model head
@@ -853,7 +852,6 @@ menu team
 		md2		"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"body tag_head"
-		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
 	}
 
@@ -944,7 +942,6 @@ menu team
 		origin	"690 640 0"
 		angles	"-20 -40 120"
 		scale	"1.1 1.1 1.1"
-		color	"0.5 0.5 0.5 1"
 	}
 
 	string team_members
@@ -1703,7 +1700,6 @@ menu equipment
 		origin	"785 173 0"
 		angles	"0 70 90"
 		scale	"5 5 5"
-		color	"0.5 0.5 0.5 1"
 	}
 
 	model head
@@ -1711,7 +1707,6 @@ menu equipment
 		md2		"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"body tag_head"
-		color	"0.5 0.5 0.5 1"
 		scale	"1.0 1.0 1.0"
 	}
 
