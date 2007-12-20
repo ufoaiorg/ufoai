@@ -335,12 +335,12 @@ static void R_DrawAlphaEntities (void)
 	/* we could sort these if it ever becomes a problem... */
 	for (i = 0; i < r_numEntities; i++) {
 		e = &r_entities[i];
-		if (!(e->flags & RF_TRANSLUCENT))
-			continue;			/* solid */
 		if (e->flags & RF_BOX) {
 			R_DrawBox(e);
 			continue;
 		}
+		if (!(e->flags & RF_TRANSLUCENT))
+			continue;			/* solid */
 
 		mod = e->model;
 		if (!mod) {
