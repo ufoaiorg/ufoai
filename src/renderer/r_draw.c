@@ -864,7 +864,6 @@ void R_DrawBox (const entity_t * e)
 	float dx, dy;
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
-	qglDepthMask(GL_FALSE);
 	R_EnableBlend(qtrue);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
@@ -910,5 +909,4 @@ void R_DrawBox (const entity_t * e)
 	qglEnable(GL_TEXTURE_2D);
 	qglEnable(GL_CULL_FACE);
 	R_EnableBlend(qfalse);
-	qglDepthMask(GL_TRUE);
 }
