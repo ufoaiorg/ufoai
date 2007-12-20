@@ -482,7 +482,7 @@ static void SCR_DrawCursor (void)
 	} else {
 		vec3_t scale = { 3.5, 3.5, 3.5 };
 		vec3_t org = { mousePosX, mousePosY, -50 };
-		vec4_t color = { 0.5, 0.5, 0.5, 1.0 };
+		vec4_t color = { 1, 1, 1, 1 };
 		MN_DrawItem(org, dragItem, 0, 0, 0, 0, scale, color);
 	}
 }

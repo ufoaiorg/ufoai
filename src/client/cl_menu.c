@@ -2881,8 +2881,7 @@ void MN_DrawMenus (void)
 						vec3_t scale = {3.5, 3.5, 3.5};
 						invList_t *ic;
 
-						color[0] = color[1] = color[2] = 0.5;
-						color[3] = 1;
+						Vector4Set(color, 1, 1, 1, 1);
 
 						if (node->mousefx == C_UNDEFINED)
 							MN_FindContainer(node);
@@ -4623,7 +4622,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 
 					/* set standard color */
 					if (!node->color[3])
-						node->color[0] = node->color[1] = node->color[2] = node->color[3] = 1.0f;
+						Vector4Set(node->color, 1, 1, 1, 1);
 
 					found = qtrue;
 					break;
@@ -4688,7 +4687,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 	menuModel = &menuModels[numMenuModels];
 	memset(menuModel, 0, sizeof(menuModel_t));
 
-	Vector4Set(menuModel->color, 0.5, 0.5, 0.5, 1.0);
+	Vector4Set(menuModel->color, 1, 1, 1, 1);
 
 	menuModel->id = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_MENU);
 	Com_DPrintf(DEBUG_CLIENT, "Found menu model %s (%i)\n", menuModel->id, numMenuModels);

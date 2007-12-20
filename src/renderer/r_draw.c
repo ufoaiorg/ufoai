@@ -694,7 +694,6 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 	modelInfo_t mi;
 	char path[MAX_QPATH] = "";
 	vec2_t model_center;
-	vec4_t model_color = {0.5, 0.5, 0.5, 1};
 
 	memset(&mi, 0, sizeof(modelInfo_t));
 
@@ -711,7 +710,6 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 	mi.origin = position;
 	mi.angles = angles;
 	mi.scale = NULL;
-	mi.color = model_color;
 
 	model_center[0] = MARKER_SIZE * zoom;
 	model_center[1] = MARKER_SIZE * zoom;
@@ -796,9 +794,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	VectorSet(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a);
 
 	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-	R_CheckError();
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
-	R_CheckError();
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
 	R_CheckError();
 
@@ -852,7 +848,7 @@ static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
 void R_DrawHighlight (const entity_t * e)
 {
 	qglDisable(GL_TEXTURE_2D);
-	R_Color(color_white);
+	R_Color(NULL);
 	memcpy(r_state.vertex_array_3d, r_highlightVertices, sizeof(r_highlightVertices));
 	qglDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);
 	qglEnable(GL_TEXTURE_2D);

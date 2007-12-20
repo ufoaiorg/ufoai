@@ -172,7 +172,7 @@ void R_DrawMaterialSurfaces (mBspSurface_t *surfs)
 		}
 	}
 
-	R_Color(color_white);
+	R_Color(NULL);
 
 	qglDisable(GL_POLYGON_OFFSET_FILL);
 
