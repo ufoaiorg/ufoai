@@ -1644,6 +1644,8 @@ void CL_InitAfter (void)
 		Cbuf_AddText("cinematic intro;");
 		Cvar_Set("cl_introshown", "1");
 	}
+
+	R_ShaderInit();
 }
 
 /**

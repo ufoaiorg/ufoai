@@ -255,6 +255,7 @@ void R_FontRegister(const char *name, int size, const char *path, const char *st
 int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
 void R_FontLength(const char *font, char *c, int *width, int *height);
 
+void R_ShaderInit(void);
 qboolean R_Init(void);
 qboolean R_SetMode(void);
 void R_Shutdown(void);

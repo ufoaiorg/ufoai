@@ -97,6 +97,7 @@ void VID_Restart_f (void)
 
 	R_Shutdown();
 	R_Init();
+	R_ShaderInit();
 	CL_InitFonts();
 
 	CL_LoadMedia();
