@@ -34,7 +34,7 @@ cvar_t *cursor;
 
 int map_maxlevel;
 int map_maxlevel_base = 0;
-sun_t map_sun;
+light_t r_lightSun;
 
 int r_numEntities;
 entity_t r_entities[MAX_ENTITIES];
@@ -192,17 +192,17 @@ static void CL_ParseEntitystring (const char *es)
 			/* init sun */
 			angles[YAW] *= torad;
 			angles[PITCH] *= torad;
-			map_sun.dir[0] = cos(angles[YAW]) * sin(angles[PITCH]);
-			map_sun.dir[1] = sin(angles[YAW]) * sin(angles[PITCH]);
-			map_sun.dir[2] = cos(angles[PITCH]);
+			r_lightSun.dir[0] = cos(angles[YAW]) * sin(angles[PITCH]);
+			r_lightSun.dir[1] = sin(angles[YAW]) * sin(angles[PITCH]);
+			r_lightSun.dir[2] = cos(angles[PITCH]);
 
 			VectorNormalize(color);
-			VectorScale(color, light / 100, map_sun.color);
-			map_sun.color[3] = 1.0;
+			VectorScale(color, light / 100, r_lightSun.color);
+			r_lightSun.color[3] = 1.0;
 
 			/* init ambient */
-			VectorScale(ambient, 1.4, map_sun.ambient);
-			map_sun.ambient[3] = 1.0;
+			VectorScale(ambient, 1.4, r_lightSun.ambient);
+			r_lightSun.ambient[3] = 1.0;
 
 			/* maximum level */
 			map_maxlevel = maxlevel;
@@ -400,8 +400,6 @@ void V_UpdateRefDef (void)
 	refdef.height = scr_vrect.height;
 	refdef.time = cl.time * 0.001;
 	refdef.worldlevel = cl_worldlevel->integer;
-
-	refdef.sun = &map_sun;
 }
 
 /**

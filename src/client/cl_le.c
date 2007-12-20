@@ -253,7 +253,7 @@ void CL_RegisterLocalModels (void)
 		}
 
 		/* calculate sun lighting and register model if not yet done */
-		VectorMA(lm->origin, SUN_HEIGHT, map_sun.dir, sunOrigin);
+		VectorMA(lm->origin, SUN_HEIGHT, r_lightSun.dir, sunOrigin);
 		tr = CM_CompleteBoxTrace(sunOrigin, lm->origin, vec3_origin, vec3_origin, 0, MASK_VISIBILILITY);
 		/*Com_Printf("tr.fraction (%s): %f (%s)\n", lm->name, tr.fraction, tr.surface->name);*/
 		if (tr.fraction < 0.9)
@@ -977,7 +977,7 @@ void LE_AddToScene (void)
 			/* calculate sun lighting */
 			if (!VectorCompare(le->origin, le->oldOrigin)) {
 				VectorCopy(le->origin, le->oldOrigin);
-				VectorMA(le->origin, SUN_HEIGHT, map_sun.dir, sunOrigin);
+				VectorMA(le->origin, SUN_HEIGHT, r_lightSun.dir, sunOrigin);
 				/* check whether the direct connection is blocked */
 				if (CM_TestLine(le->origin, sunOrigin))
 					le->sunfrac = 0.0f;

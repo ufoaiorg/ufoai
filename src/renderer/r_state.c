@@ -221,15 +221,15 @@ static shader_t *lighting_shader, *warp_shader;
 
 void R_EnableLighting (qboolean enable)
 {
-	/* FIXME: ...until lighting works */
-	if (1 || r_state.lighting_enabled == enable)
+	if (!lighting_shader)
+		lighting_shader = R_GetShader("lighting");
+
+	if (r_state.lighting_enabled == enable)
 		return;
 
 	r_state.lighting_enabled = enable;
 
 	if (enable) {  /* toggle state */
-		if (!lighting_shader)
-			lighting_shader = R_GetShader("lighting");
 		qglEnable(GL_LIGHTING);
 
 		if (lighting_shader && !(refdef.rdflags & RDF_NOWORLDMODEL)) {
@@ -251,7 +251,10 @@ void R_EnableLighting (qboolean enable)
 
 void R_EnableWarp (qboolean enable)
 {
-	if (r_state.warp_enabled == enable)
+	if (!warp_shader)
+		warp_shader = R_GetShader("warp");
+
+	if (!warp_shader || r_state.warp_enabled == enable)
 		return;
 
 	r_state.warp_enabled = enable;
@@ -259,8 +262,6 @@ void R_EnableWarp (qboolean enable)
 	R_SelectTexture(&r_state.lightmap_texunit);
 
 	if (enable) {
-		if (!warp_shader)
-			warp_shader = R_GetShader("warp");
 		R_Bind(r_warptexture->texnum);
 		qglEnable(GL_TEXTURE_2D);
 

@@ -282,9 +282,9 @@ void R_ModEnableLights (const entity_t* e)
 		GLVectorTransform(trafo[e - r_entities].matrix, sumDelta, trorigin);
 
 		if (*e->lightparam != 0.0) {
-			VectorScale(refdef.sun->dir, 1.0, sumDelta);
+			VectorScale(r_lightSun.dir, 1.0, sumDelta);
 			sumBright = *e->lightparam;
-			VectorScale(refdef.sun->color, sumBright, sumColor);
+			VectorScale(r_lightSun.color, sumBright, sumColor);
 		} else {
 			VectorClear(sumDelta);
 			sumBright = 0;
@@ -309,7 +309,7 @@ void R_ModEnableLights (const entity_t* e)
 		/* add the light */
 		qglLightfv(GL_LIGHT0, GL_POSITION, sumDelta);
 		qglLightfv(GL_LIGHT0, GL_DIFFUSE, sumColor);
-		qglLightfv(GL_LIGHT0, GL_AMBIENT, refdef.sun->ambient);
+		qglLightfv(GL_LIGHT0, GL_AMBIENT, r_lightSun.ambient);
 	}
 }
 

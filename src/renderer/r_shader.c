@@ -37,7 +37,7 @@ static qboolean shaderInited = qfalse;
  */
 void R_ShaderInit (void)
 {
-	int i = 0;
+	int i = 0, uploadedCnt = 0;
 	shader_t *s;
 
 	for (i = 0; i < r_numShaders; i++) {
@@ -45,16 +45,21 @@ void R_ShaderInit (void)
 		if (s->glsl) {
 			if (r_state.glsl_program) {
 				/* a glsl can be a shader or a vertex program */
-				SH_LoadProgram_GLSL(s);
+				if (SH_LoadProgram_GLSL(s) > 0)
+					uploadedCnt++;
 			}
 		} else if (s->vertex) {
 			s->vpid = SH_LoadProgram_ARB_VP(s->filename);
+			if (s->vpid > 0)
+				uploadedCnt++;
 		} else if (s->frag) {
 			s->fpid = SH_LoadProgram_ARB_FP(s->filename);
+			if (s->fpid > 0)
+				uploadedCnt++;
 		}
 	}
 	shaderInited = qtrue;
-	Com_Printf("...uploaded %i shaders\n", r_numShaders);
+	Com_Printf("...uploaded %i shaders\n", uploadedCnt);
 }
 
 /**

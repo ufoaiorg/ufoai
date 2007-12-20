@@ -111,11 +111,15 @@ typedef struct shader_s {
 	int vpid, fpid, glslpid;
 } shader_t;
 
+#define MAX_GL_LIGHTS 8
+
 typedef struct {
+	vec3_t origin;
 	vec3_t dir;
 	vec4_t color;
 	vec4_t ambient;
-} sun_t;
+	int intensity;
+} light_t;
 
 typedef struct {
 	struct model_s *model;
@@ -210,8 +214,6 @@ typedef struct {
 	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
 
-	sun_t *sun;
-
 	const char *mapZone;	/**< used to replace textures in base assembly */
 } refdef_t;
 
@@ -262,6 +264,8 @@ void R_Shutdown(void);
 
 extern SDL_Surface *r_surface;
 extern cvar_t *r_3dmapradius;
+
+extern light_t r_lightSun;
 
 extern int r_numShaders;
 extern shader_t r_shaders[MAX_SHADERS];

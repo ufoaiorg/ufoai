@@ -816,7 +816,6 @@ qboolean CL_CheckOrDownloadFile(const char *filename);
 void CL_DrawLineOfSight(le_t *watcher, le_t *target);
 
 /* cl_view.c */
-extern sun_t map_sun;
 extern int map_maxlevel;
 extern int map_maxlevel_base;
 

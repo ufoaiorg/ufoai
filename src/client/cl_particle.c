@@ -482,9 +482,9 @@ static void CL_ParticleEditor_f (void)
 		CL_SetClientState(ca_ptledit);
 
 		/* init sun */
-		VectorSet(map_sun.dir, 2, 2, 3);
-		Vector4Set(map_sun.ambient, 1.6, 1.6, 1.6, 5.4);
-		Vector4Set(map_sun.color, 1.2, 1.2, 1.2, 1.0);
+		VectorSet(r_lightSun.dir, 2, 2, 3);
+		Vector4Set(r_lightSun.ambient, 1.6, 1.6, 1.6, 5.4);
+		Vector4Set(r_lightSun.color, 1.2, 1.2, 1.2, 1.0);
 
 		PE_UpdateMenu(NULL);
 	} else {

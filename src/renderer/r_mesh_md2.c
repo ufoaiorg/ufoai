@@ -28,24 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
-#define NUMVERTEXNORMALS	162
-
-static float r_avertexnormals[NUMVERTEXNORMALS][3] = {
-#include "../shared/vertex_normals.h"
-};
-
-static vec4_t s_lerped[MD2_MAX_VERTS];
-
-static inline void R_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
-{
-	int i;
-
-	for (i = 0; i < nverts; i++, v++, ov++, lerp += 4) {
-		lerp[0] = move[0] + ov->v[0] * backv[0] + v->v[0] * frontv[0];
-		lerp[1] = move[1] + ov->v[1] * backv[1] + v->v[1] * frontv[1];
-		lerp[2] = move[2] + ov->v[2] * backv[2] + v->v[2] * frontv[2];
-	}
-}
+static vec3_t r_mesh_verts[MD2_MAX_VERTS];
+static vec3_t r_mesh_norms[MD2_MAX_VERTS];
 
 /**
  * @brief interpolates between two frames and origins
@@ -60,7 +44,6 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 	vec3_t move;
 	vec3_t frontv, backv;
 	int i, j, mode, index_xyz;
-	float *oldNormal, *newNormal;
 
 	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + framenum * paliashdr->framesize);
 	verts = v = frame->verts;
@@ -80,25 +63,17 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 		backv[i] = backlerp * oldframe->scale[i];
 	}
 
-	R_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv);
+	for (i = 0; i < paliashdr->num_xyz; i++, v++, ov++) {
+		VectorSet(r_mesh_verts[i],
+				move[0] + ov->v[0] * backv[0] + v->v[0] * frontv[0],
+				move[1] + ov->v[1] * backv[1] + v->v[1] * frontv[1],
+				move[2] + ov->v[2] * backv[2] + v->v[2] * frontv[2]);
 
-	if (backlerp == 0.0) {
-		for (i = 0; i < paliashdr->num_xyz; v++, i++) {
-			j = i * 3;
-			memcpy(&r_state.normal_array[j], r_avertexnormals[v->lightnormalindex], sizeof(vec3_t));
-		}
-	} else {
-		for (i = 0; i < paliashdr->num_xyz; v++, ov++, i++) {
-			j = i * 3;
-
-			oldNormal = r_avertexnormals[ov->lightnormalindex];
-			newNormal = r_avertexnormals[v->lightnormalindex];
-
-			VectorScale(oldNormal, backlerp, oldNormal);
-			VectorScale(newNormal, backlerp, newNormal);
-			VectorAdd(oldNormal, newNormal, newNormal);
-
-			memcpy(&r_state.normal_array[j], newNormal, sizeof(vec3_t));
+		if (r_state.lighting_enabled) {  /* and the norms */
+			VectorSet(r_mesh_norms[i],
+					backlerp * bytedirs[ov->lightnormalindex][0] + frontlerp * bytedirs[v->lightnormalindex][0],
+					backlerp * bytedirs[ov->lightnormalindex][1] + frontlerp * bytedirs[v->lightnormalindex][1],
+					backlerp * bytedirs[ov->lightnormalindex][2] + frontlerp * bytedirs[v->lightnormalindex][2]);
 		}
 	}
 
@@ -123,7 +98,9 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 			order += 3;
 
 			/* verts */
-			memcpy(&r_state.vertex_array_3d[i], s_lerped[index_xyz], sizeof(vec3_t));
+			memcpy(&r_state.vertex_array_3d[i], r_mesh_verts[index_xyz], sizeof(vec3_t));
+			/* norms */
+			memcpy(&r_state.normal_array[i], r_mesh_norms[index_xyz], sizeof(vec3_t));
 			i += 3;
 		} while (--count);
 
