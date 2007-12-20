@@ -151,7 +151,7 @@ void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(entity_t *e);
 void R_DrawBox(const entity_t *e);
 void R_DrawHighlight(const entity_t *e);
-void R_DrawLevelBrushes(void);
+void R_GetLevelSurfaceChains(void);
 void R_InitMiscTexture(void);
 void R_DrawInitLocal(void);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);

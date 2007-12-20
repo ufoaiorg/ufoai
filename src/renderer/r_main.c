@@ -522,7 +522,7 @@ void R_RenderFrame (void)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	/* draw brushes on current worldlevel */
-	R_DrawLevelBrushes();
+	R_GetLevelSurfaceChains();
 
 	R_DrawOpaqueSurfaces(r_opaque_surfaces);
 

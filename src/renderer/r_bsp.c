@@ -248,7 +248,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 }
 
 /**
- * @sa R_DrawLevelBrushes
+ * @sa R_GetLevelSurfaceChains
  */
 static void R_RecurseWorld (mBspNode_t * node)
 {
@@ -267,10 +267,10 @@ static void R_RecurseWorld (mBspNode_t * node)
 
 
 /**
- * @brief Draws the brushes for the current worldlevel and hide other levels
+ * @brief Fills the surface chains for the current worldlevel and hide other levels
  * @sa cvar cl_worldlevel
  */
-void R_DrawLevelBrushes (void)
+void R_GetLevelSurfaceChains (void)
 {
 	int i, tile, mask;
 
