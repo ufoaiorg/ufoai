@@ -1,38 +1,30 @@
-//
-// valid flags:
-// filename (only when frag or vertex are true): filename to shader file
-// frag, vertex: boolean
-// glmode replace, blend, add, filter (default), invfilter
-//
-// TODO: To bind one shader to more than one image we should introduce an image variable that
-//       can be set more than once for one shader - init this image at shader load time and
-//       assign the shader
 
-//shader pics/menu/main_ur
-//{
-//	filename "shaders/water.fp"
-//	frag true
-//}
-
-/*shader textures/tex_nature/grass003
+shader lighting
 {
-	terrain textures/tex_nature/dirt_se01 {
-		ceil 16
-		floor 0
-	}
-	rotate textures/tex_nature/dirt_se01 {
-		hz 12
-	}
-}*/
-
-/*shader lightning
-{
-	filename "shaders/lightning.fp"
+	filename "shaders/lighting.fp"
 	frag true
-}*/
+}
+
+shader lighting_mtex
+{
+	filename "shaders/lighting_mtex.fp"
+	frag true
+}
 
 shader warp
 {
 	filename "shaders/warp.fp"
+	frag true
+}
+
+shader water
+{
+	filename "shaders/water.fp"
+	frag true
+}
+
+shader blur
+{
+	filename "shaders/blur.fp"
 	frag true
 }
