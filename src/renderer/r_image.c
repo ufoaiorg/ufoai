@@ -37,6 +37,9 @@ static char *glerrortexend;
 static image_t gltextures[MAX_GLTEXTURES];
 static int numgltextures;
 
+/* generic environment map */
+image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
+
 int gl_solid_format = GL_RGB;
 int gl_alpha_format = GL_RGBA;
 
@@ -1273,11 +1276,16 @@ void R_FreeUnusedImages (void)
 
 void R_InitImages (void)
 {
+	int i;
+
 	registration_sequence = 1;
 	numgltextures = 0;
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
 	DaN = NULL;
+
+	for (i = 0; i < MAX_ENVMAPTEXTURES; i++)
+		r_envmaptextures[i] = R_FindImage(va("envmaps/envmap_%i.tga", i), it_static);
 }
 
 /**

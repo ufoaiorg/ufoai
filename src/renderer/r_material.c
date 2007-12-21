@@ -79,16 +79,52 @@ static void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *sta
 
 static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t st)
 {
-	if (stage->flags & STAGE_ROTATE) {
-		float s0, t0;
-		s0 = st[0] - 0.5;
-		t0 = st[1] + 0.5;
-		st[0] = stage->rotate.dcos * s0 - stage->rotate.dsin * t0 + 0.5;
-		st[1] = stage->rotate.dsin * s0 + stage->rotate.dcos * t0 - 0.5;
-	} else {
-		st[0] = v[3];
-		st[1] = v[4];
+	vec3_t tmp;
+	float s, t, s0, t0;
+
+	if (stage->flags & STAGE_ENVMAP) {  /* generate texcoords */
+		tmp[0] = v[0] * r_world_matrix[0] + v[1] * r_world_matrix[4] +
+				v[2] * r_world_matrix[8] + r_world_matrix[12];
+
+		tmp[1] = v[0] * r_world_matrix[1] + v[1] * r_world_matrix[5] +
+				v[2] * r_world_matrix[9] + r_world_matrix[13];
+
+		tmp[2] = v[0] * r_world_matrix[2] + v[1] * r_world_matrix[6] +
+				v[2] * r_world_matrix[10] + r_world_matrix[14];
+
+		VectorNormalize(tmp);
+
+		s = tmp[0];
+		t = tmp[1];
+	} else {  /* or use the ones from the vertex */
+		s = v[3];
+		t = v[4];
 	}
+
+	/* scale first... */
+	if (stage->flags & STAGE_SCALE_S)
+		s *= stage->scale.s;
+
+	if (stage->flags & STAGE_SCALE_T)
+		t *= stage->scale.t;
+
+	/* ...then scroll */
+	if (stage->flags & STAGE_SCROLL_S)
+		s += stage->scroll.ds;
+
+	if (stage->flags & STAGE_SCROLL_T)
+		t += stage->scroll.dt;
+
+	/* rotate */
+	if (stage->flags & STAGE_ROTATE) {
+		s0 = s - 0.5;
+		t0 = t + 0.5;
+		s = stage->rotate.dcos * s0 - stage->rotate.dsin * t0 + 0.5;
+		t = stage->rotate.dsin * s0 + stage->rotate.dcos * t0 - 0.5;
+	}
+
+	st[0] = s;
+	st[1] = t;
 }
 
 static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
@@ -223,15 +259,14 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			continue;
 		}
 
-#if 0
 		if (!strcmp(c, "envmap")) {
 			c = COM_Parse(buffer);
 			i = atoi(c);
 
-			if (i > -1 && i < NUM_ENVMAPTEXTURES)
+			if (i > -1 && i < MAX_ENVMAPTEXTURES)
 				s->image = r_envmaptextures[i];
 			else
-				s->image = R_FindImage(va("envmaps/%s", c), it_material);
+				s->image = R_FindImage(va("envmaps/%s", c), it_static);
 
 			if (s->image == r_notexture) {
 				Com_Printf("R_ParseStage: Failed to resolve envmap: %s\n", c);
@@ -241,7 +276,6 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			s->flags |= STAGE_ENVMAP;
 			continue;
 		}
-#endif
 
 		if (!strcmp(c, "blend")) {
 			c = COM_Parse(buffer);

@@ -89,4 +89,7 @@ image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file,
 image_t *R_FindImage(const char *pname, imagetype_t type);
 #endif
 
+#define MAX_ENVMAPTEXTURES 2
+extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
+
 #endif
