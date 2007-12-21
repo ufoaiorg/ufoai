@@ -298,6 +298,8 @@ void R_EnableWarp (qboolean enable)
 		qglDisable(GL_TEXTURE_2D);
 	}
 
+	R_CheckError();
+
 	R_SelectTexture(&r_state.texture_texunit);
 }
 

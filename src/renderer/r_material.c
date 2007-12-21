@@ -38,11 +38,25 @@ void R_UpdateMaterial (material_t *m)
 	m->time = refdef.time;
 
 	for (s = m->stages; s; s = s->next) {
-		if (s->flags & STAGE_ROTATE){
+		if (s->flags & STAGE_PULSE)
+			s->pulse.dhz = (sin(refdef.time * s->pulse.hz * 6.28) + 1.0) / 2.0;
+
+		if (s->flags & STAGE_STRETCH) {
+			s->stretch.dhz = (sin(refdef.time * s->stretch.hz * 6.28) + 1.0) / 2.0;
+			s->stretch.damp = -2.0 - s->stretch.dhz * s->stretch.amp;
+		}
+
+		if (s->flags & STAGE_ROTATE) {
 			s->rotate.dhz = refdef.time * s->rotate.hz * 6.28;
 			s->rotate.dsin = sin(s->rotate.dhz);
 			s->rotate.dcos = cos(s->rotate.dhz);
 		}
+
+		if (s->flags & STAGE_SCROLL_S)
+			s->scroll.ds = s->scroll.s * refdef.time;
+
+		if (s->flags & STAGE_SCROLL_T)
+			s->scroll.dt = s->scroll.t * refdef.time;
 	}
 }
 
@@ -192,10 +206,8 @@ void R_DrawMaterialSurfaces (mBspSurface_t *surfs)
 
 			if (s->flags & STAGE_COLOR)
 				VectorCopy(s->color, color);
-#if 0
 			else if (s->flags & STAGE_ENVMAP)
 				VectorCopy(surf->color, color);
-#endif
 
 			if (s->flags & STAGE_PULSE)
 				color[3] = s->pulse.dhz;
@@ -266,7 +278,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			if (i > -1 && i < MAX_ENVMAPTEXTURES)
 				s->image = r_envmaptextures[i];
 			else
-				s->image = R_FindImage(va("envmaps/%s", c), it_static);
+				s->image = R_FindImage(va("pics/envmaps/%s", c), it_static);
 
 			if (s->image == r_notexture) {
 				Com_Printf("R_ParseStage: Failed to resolve envmap: %s\n", c);

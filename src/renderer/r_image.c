@@ -1284,8 +1284,14 @@ void R_InitImages (void)
 	glerrortexend = glerrortex;
 	DaN = NULL;
 
-	for (i = 0; i < MAX_ENVMAPTEXTURES; i++)
-		r_envmaptextures[i] = R_FindImage(va("envmaps/envmap_%i.tga", i), it_static);
+	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
+		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_static);
+#if 0
+		/* deactivated until we have the images */
+		if (!r_envmaptextures[i])
+			Sys_Error("Could not load environment map %i", i);
+#endif
+	}
 }
 
 /**
