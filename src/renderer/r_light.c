@@ -33,6 +33,9 @@ void R_AddLight (vec3_t origin, float intensity, vec3_t color)
 {
 	int i;
 
+	if (!r_light->integer)
+		return;
+
 	if (r_numLights == MAX_GL_LIGHTS - 1)
 		return;
 
@@ -64,13 +67,14 @@ void R_AddLights (void)
 	vec3_t diffuse;
 	int i;
 
-	/* the first light is our sun */
-	qglLightfv(GL_LIGHT0, GL_POSITION, r_sunLight.origin);
-	qglLightfv(GL_LIGHT0, GL_DIFFUSE, r_sunLight.color);
-	/*qglLightfv(GL_LIGHT0, GL_AMBIENT, r_sunLight.ambient);*/
-	qglEnable(GL_LIGHT0);
+	if (r_light->integer) {
+		/* the first light is our sun */
+		qglLightfv(GL_LIGHT0, GL_POSITION, r_sunLight.origin);
+		qglLightfv(GL_LIGHT0, GL_DIFFUSE, r_sunLight.color);
+		qglEnable(GL_LIGHT0);
 
-	R_CheckError();
+		R_CheckError();
+	}
 
 	for (i = 0; i < r_numLights; i++) {  /* now add all lights */
 		VectorCopy(r_lights[i].origin, position);
@@ -80,7 +84,6 @@ void R_AddLights (void)
 
 		qglLightfv(GL_LIGHT1 + i, GL_POSITION, position);
 		qglLightfv(GL_LIGHT1 + i, GL_DIFFUSE, diffuse);
-		/*qglLightfv(GL_LIGHT1 + i, GL_AMBIENT, r_sunLight.ambient);*/
 		qglEnable(GL_LIGHT1 + i);
 	}
 

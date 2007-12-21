@@ -243,11 +243,11 @@ static shader_t *lighting_shader, *warp_shader;
 
 void R_EnableLighting (qboolean enable)
 {
+	if (!r_light->integer || r_state.lighting_enabled == enable)
+		return;
+
 	if (!lighting_shader)
 		lighting_shader = R_GetShader("lighting");
-
-	if (r_state.lighting_enabled == enable)
-		return;
 
 	r_state.lighting_enabled = enable;
 
