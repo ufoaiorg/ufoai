@@ -102,7 +102,6 @@ extern cvar_t *r_materials;
 extern cvar_t *r_screenshot;
 extern cvar_t *r_screenshot_jpeg_quality;
 extern cvar_t *r_lightmap;
-extern cvar_t *r_ext_combine;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;
 extern cvar_t *r_intel_hack;
@@ -168,7 +167,6 @@ typedef struct {
 	const char *extensions_string;
 	int maxTextureSize;
 	int maxTextureUnits;
-	GLenum envCombine;
 } rconfig_t;
 
 extern rconfig_t r_config;

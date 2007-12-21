@@ -82,6 +82,8 @@ void R_SetDefaultState (void)
 	/* and some vertex array (floats for 3d, shorts for 2d) */
 	qglEnableClientState(GL_VERTEX_ARRAY);
 
+	R_TexEnv(GL_MODULATE);
+
 	R_EnableAlphaTest(qfalse);
 }
 
@@ -232,7 +234,6 @@ void R_SetupGL2D (void)
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_TexEnv(GL_MODULATE);
 	R_Color(NULL);
 
 	R_CheckError();
@@ -360,8 +361,6 @@ void R_TexEnv (GLenum mode)
 
 	qglTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 	r_state.active_texunit->texenv = mode;
-	if (mode == GL_COMBINE_EXT)
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 }
 
 void R_Bind (int texnum)

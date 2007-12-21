@@ -61,7 +61,6 @@ cvar_t *r_shader;
 cvar_t *r_screenshot;
 cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
-cvar_t *r_ext_combine;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
 cvar_t *r_intel_hack;
@@ -672,7 +671,6 @@ static void R_Register (void)
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	r_intensity = Cvar_Get("r_intensity", "1", 0, "Brighten the models and the lightmap");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
-	r_ext_combine = Cvar_Get("r_ext_combine", "1", CVAR_ARCHIVE, NULL);
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
@@ -737,19 +735,6 @@ static void R_InitExtension (void)
 	int aniso_level, max_aniso;
 	int size;
 	GLenum err;
-
-	if (strstr(r_config.extensions_string, "GL_EXT_texture_env_combine") || strstr(r_config.extensions_string, "GL_ARB_texture_env_combine")) {
-		if (r_ext_combine->integer) {
-			Com_Printf("using GL_EXT_texture_env_combine\n");
-			r_config.envCombine = GL_COMBINE_EXT;
-		} else {
-			Com_Printf("ignoring EXT_texture_env_combine\n");
-			r_config.envCombine = GL_MODULATE;
-		}
-	} else {
-		Com_Printf("GL_EXT_texture_env_combine not found\n");
-		r_config.envCombine = GL_MODULATE;
-	}
 
 	if (strstr(r_config.extensions_string, "GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {

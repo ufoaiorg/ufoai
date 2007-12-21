@@ -356,16 +356,12 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* draw it */
 	R_Bind(skin->texnum);
 
-	R_TexEnv(r_config.envCombine);
-
 	/* set-up lighting */
 	R_EnableLighting(qtrue);
 
 	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 
 	R_EnableLighting(qfalse);
-
-	R_TexEnv(GL_MODULATE);
 
 	/* depth test and cull face are deactivated here */
 	R_ModDrawModelEffects(e);
@@ -518,15 +514,12 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
-	R_TexEnv(r_config.envCombine);
-
 	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qtrue);
 
 	/* draw the model */
 	R_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
 
-	R_TexEnv(GL_MODULATE);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
@@ -584,8 +577,6 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	/* draw it */
 	R_Bind(skin->texnum);
-
-	R_TexEnv(r_config.envCombine);
 
 	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qtrue);
