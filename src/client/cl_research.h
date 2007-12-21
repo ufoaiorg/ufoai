@@ -190,7 +190,7 @@ typedef struct technology_s {
 void RS_ResetResearch(void);
 void RS_ResetHash(void);
 void CL_CheckResearchStatus(void);
-void RS_UpdateData(void);
+void RS_UpdateData(struct base_s *base);
 void RS_ParseTechnologies(const char *name, const char **text);
 qboolean RS_ItemIsResearched(const char *id_provided);
 qboolean RS_TechIsResearched(int tech_idx);
@@ -209,6 +209,7 @@ void RS_ResearchFinish(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 void RS_MarkResearchedAll(void);
 void RS_AssignScientist(technology_t* tech);
+void RS_RemoveScientist(technology_t* tech);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t* RS_GetTechByIDX(int tech_idx);

@@ -750,18 +750,13 @@ const char *RS_GetName (const char *id)
  * @brief Displays the informations of the current selected technology in the description-area.
  * See menu_research.ufo for the layout/called functions.
  */
-static void RS_ResearchDisplayInfo (void)
+static void RS_ResearchDisplayInfo (const base_t* base)
 {
 	char tmpbuf[128];
 	technology_t *tech = NULL;
-	base_t *base = NULL;
 
 	/* reset cvars */
 	Cvar_Set("mn_research_imagetop", "");
-
-	/* we are not in base view */
-	if (!baseCurrent)
-		return;
 
 	if (researchListLength <= 0 || researchListPos >= researchListLength)
 		return;
@@ -770,24 +765,24 @@ static void RS_ResearchDisplayInfo (void)
 
 	/* Display laboratories limits. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (used/all): %i/%i"),
-		baseCurrent->capacities[CAP_LABSPACE].cur,
-		baseCurrent->capacities[CAP_LABSPACE].max);
+		base->capacities[CAP_LABSPACE].cur,
+		base->capacities[CAP_LABSPACE].max);
 	Cvar_Set("mn_research_labs", tmpbuf);
 
 	/* Display scientists amounts. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (available/all): %i/%i"),
-		E_CountUnassigned(baseCurrent, EMPL_SCIENTIST),
-		E_CountHired(baseCurrent, EMPL_SCIENTIST));
+		E_CountUnassigned(base, EMPL_SCIENTIST),
+		E_CountHired(base, EMPL_SCIENTIST));
 	Cvar_Set("mn_research_scis", tmpbuf);
 
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
 	if (tech->scientists > 0) {
-		if (tech->base_idx != baseCurrent->idx) {
-			base = &gd.bases[tech->base_idx];
-			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), base->name));
-		} else
+		assert(tech->base_idx >= 0);
+		if (tech->base_idx != base->idx)
+			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), gd.bases[tech->base_idx].name));
+		else
 			Cvar_Set("mn_research_selbase", _("Researched in this base."));
 	}
 
@@ -841,6 +836,9 @@ static void CL_ResearchSelect_f (void)
 {
 	int num;
 
+	if (!baseCurrent)
+		return;
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
@@ -856,8 +854,7 @@ static void CL_ResearchSelect_f (void)
 	researchListPos = num;
 	Cbuf_AddText(va("researchselect%i\n", researchListPos));
 
-	RS_ResearchDisplayInfo();
-	RS_UpdateData();
+	RS_UpdateData(baseCurrent);
 }
 
 /**
@@ -865,6 +862,7 @@ static void CL_ResearchSelect_f (void)
  * @note The lab will be automatically selected (the first one that has still free space).
  * @param[in] tech What technology you want to assign the scientist to.
  * @sa RS_AssignScientist_f
+ * @sa RS_RemoveScientist
  */
 void RS_AssignScientist (technology_t* tech)
 {
@@ -881,10 +879,12 @@ void RS_AssignScientist (technology_t* tech)
 		base = baseCurrent;
 	}
 
-	employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+	assert(base);
 
+	employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 	if (!employee) {
 		/* No scientists are free in this base. */
+		Com_DPrintf(DEBUG_CLIENT, "No free scientists in this base (%s) to assign to tech '%s'\n", base->name, tech->id);
 		return;
 	}
 
@@ -895,7 +895,7 @@ void RS_AssignScientist (technology_t* tech)
 			/* Check the capacity. */
 			if (base->capacities[CAP_LABSPACE].max > base->capacities[CAP_LABSPACE].cur) {
 				tech->scientists++;			/* Assign a scientist to this tech. */
-				tech->base_idx = building->base_idx;	/* Make sure this tech has proper base_idx. */
+				tech->base_idx = base->idx;	/* Make sure this tech has proper base_idx. */
 				base->capacities[CAP_LABSPACE].cur++;	/* Set the amount of currently assigned in capacities. */
 
 				/* Assign the sci to the lab and set number of used lab-space. */
@@ -904,7 +904,6 @@ void RS_AssignScientist (technology_t* tech)
 				if (base->capacities[CAP_LABSPACE].cur > base->capacities[CAP_LABSPACE].max)
 					Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", base->capacities[CAP_LABSPACE].cur, base->capacities[CAP_LABSPACE].max);
 #endif
-
 			} else {
 				MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 				return;
@@ -917,8 +916,7 @@ void RS_AssignScientist (technology_t* tech)
 		tech->statusResearch = RS_RUNNING;
 
 		/* Update display-list and display-info. */
-		RS_ResearchDisplayInfo();
-		RS_UpdateData();
+		RS_UpdateData(base);
 	}
 }
 
@@ -951,7 +949,7 @@ static void RS_AssignScientist_f (void)
  * @sa RS_RemoveScientist_f
  * @sa RS_AssignScientist
  */
-static void RS_RemoveScientist (technology_t* tech)
+void RS_RemoveScientist (technology_t* tech)
 {
 	employee_t *employee = NULL;
 
@@ -1015,6 +1013,9 @@ static void RS_RemoveScientist_f (void)
 {
 	int num;
 
+	if (!baseCurrent)
+		return;
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
 		return;
@@ -1027,8 +1028,7 @@ static void RS_RemoveScientist_f (void)
 	RS_RemoveScientist(researchList[num]);
 
 	/* Update display-list and display-info. */
-	RS_ResearchDisplayInfo();
-	RS_UpdateData();
+	RS_UpdateData(baseCurrent);
 }
 
 /**
@@ -1099,7 +1099,7 @@ static void RS_ResearchStart_f (void)
 	} else
 		MN_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
 
-	RS_UpdateData();
+	RS_UpdateData(baseCurrent);
 }
 
 /**
@@ -1143,7 +1143,7 @@ static void RS_ResearchStop_f (void)
 	default:
 		break;
 	}
-	RS_UpdateData();
+	RS_UpdateData(baseCurrent);
 }
 
 /**
@@ -1175,7 +1175,7 @@ static void RS_ShowPedia_f (void)
  * @note See menu_research.ufo for the layout/called functions.
  * @todo Display free space in all labs in the current base for each item.
  */
-void RS_UpdateData (void)
+void RS_UpdateData (base_t* base)
 {
 	char name[MAX_VAR];
 	int i, j;
@@ -1225,9 +1225,9 @@ void RS_UpdateData (void)
 
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
-			if ((tech->base_idx == baseCurrent->idx) || (tech->base_idx < 0) ) {
+			if ((tech->base_idx == base->idx) || (tech->base_idx < 0) ) {
 				/* Maximal available scientists in the base the tech is researched. */
-				Cvar_SetValue(va("mn_researchavailable%i", j), available[baseCurrent->idx]);
+				Cvar_SetValue(va("mn_researchavailable%i", j), available[base->idx]);
 			} else {
 				/* Display available scientists of other base here. */
 				Cvar_SetValue(va("mn_researchavailable%i", j), available[tech->base_idx]);
@@ -1255,7 +1255,7 @@ void RS_UpdateData (void)
 
 			/* Display the concated text in the correct list-entry.
 			 * But embed it in brackets if it isn't researched in the current base. */
-			if ((tech->scientists > 0) && (tech->base_idx != baseCurrent->idx)) {
+			if ((tech->scientists > 0) && (tech->base_idx != base->idx)) {
 				Com_sprintf(name, sizeof(name), "(%s)", _(name));
 			}
 			Cvar_Set(va("mn_researchitem%i", j), _(name));
@@ -1301,7 +1301,17 @@ void RS_UpdateData (void)
 	}
 
 	/* Update the description field/area. */
-	RS_ResearchDisplayInfo();
+	RS_ResearchDisplayInfo(base);
+}
+
+/**
+ * @brief Script binding for RS_UpdateData
+ */
+static void RS_UpdateData_f (void)
+{
+	if (!baseCurrent)
+		return;
+	RS_UpdateData(baseCurrent);
 }
 
 /**
@@ -1313,8 +1323,11 @@ void RS_UpdateData (void)
  */
 static void CL_ResearchType_f (void)
 {
+	if (!baseCurrent)
+		return;
+
 	/* Update and display the list. */
-	RS_UpdateData();
+	RS_UpdateData(baseCurrent);
 
 	/* Nothing to research here. */
 	if (!researchListLength || !gd.numBases) {
@@ -1377,9 +1390,12 @@ void CL_CheckResearchStatus (void)
 {
 	int i, newResearch = 0;
 	technology_t *tech = NULL;
+	base_t* checkBases[MAX_BASES];
 
 	if (!researchListLength)
 		return;
+
+	memset(checkBases, 0, sizeof(checkBases));
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
@@ -1402,16 +1418,22 @@ void CL_CheckResearchStatus (void)
 					researchListLength = 0;
 					researchListPos = 0;
 					newResearch++;
+					/* add this base to the list that needs an update call */
+					checkBases[tech->base_idx] = &gd.bases[tech->base_idx];
 					tech->time = 0;
 				}
 			}
 		}
 	}
 
-	if (newResearch) {
-		CL_GameTimeStop();
-		RS_UpdateData();
+	/* now update the data in all affected bases */
+	for (i = 0; i < MAX_BASES; i++) {
+		if (checkBases[i])
+			RS_UpdateData(checkBases[i]);
 	}
+
+	if (newResearch)
+		CL_GameTimeStop();
 }
 
 #ifdef DEBUG
@@ -1620,7 +1642,7 @@ void RS_ResetResearch (void)
 	Cmd_AddCommand("mn_show_ufopedia", RS_ShowPedia_f, "Show the entry in the UFOpaedia for the selected research topic");
 	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
 	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, "Remove one scientist from this entry");
-	Cmd_AddCommand("research_update", RS_UpdateData, NULL);
+	Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
 	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 #ifdef DEBUG
 	Cmd_AddCommand("debug_invlist", INV_InventoryList_f, "Print the current inventory to the game console");
@@ -2281,6 +2303,7 @@ technology_t *RS_GetTechWithMostScientists (int base_idx)
 		}
 	}
 
+	/* this tech has at least one assigned scientist or is a NULL pointer */
 	return tech;
 }
 

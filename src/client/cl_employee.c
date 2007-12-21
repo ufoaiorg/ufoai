@@ -428,7 +428,7 @@ character_t* E_GetHiredCharacter (const base_t* const base, employeeType_t type,
  * @return qboolean
  * @sa E_EmployeeIsFree
  */
-static qboolean E_EmployeeIsUnassigned (employee_t * employee)
+static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 {
 	if (!employee)
 		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
@@ -811,21 +811,21 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
  */
 qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 {
-	character_t *chr = NULL;
 	technology_t *tech = NULL;
 
 	if (employee) {
-		chr = &employee->chr;
+		const character_t *chr = &employee->chr;
 		switch (chr->empl_type) {
 		case EMPL_SCIENTIST:
 			/* Get technology with highest scientist-count and remove one scientist. */
 			tech = RS_GetTechWithMostScientists(employee->baseIDHired);
 			if (tech) {
-				tech->scientists--;
 				/* Try to assign replacement scientist */
 				RS_AssignScientist(tech);
+				RS_RemoveScientist(tech);
+			} else {
+				assert(employee->buildingID != -1);
 			}
-			employee->buildingID = -1;
 			break;
 
 		case EMPL_SOLDIER:
@@ -840,7 +840,6 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 		}
 	}
 	return qfalse;
-
 }
 
 /**
