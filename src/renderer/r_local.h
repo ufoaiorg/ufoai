@@ -119,7 +119,6 @@ extern cvar_t *r_texturemode;
 extern cvar_t *r_texturealphamode;
 extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_wire;
-extern cvar_t *r_intensity;
 
 extern image_t *draw_chars[2];
 

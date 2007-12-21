@@ -1278,9 +1278,6 @@ void R_InitImages (void)
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
 	DaN = NULL;
-
-	if (r_intensity->value <= 1)
-		Cvar_Set("r_intensity", "1");
 }
 
 /**

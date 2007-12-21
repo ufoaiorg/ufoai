@@ -83,7 +83,6 @@ cvar_t *r_texturealphamode;
 cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
 cvar_t *r_showbox;
-cvar_t *r_intensity;
 
 /**
  * @brief Prints some OpenGL strings
@@ -669,7 +668,6 @@ static void R_Register (void)
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
-	r_intensity = Cvar_Get("r_intensity", "1", 0, "Brighten the models and the lightmap");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
