@@ -482,6 +482,11 @@ static void CL_ParticleEditor_f (void)
 		if (!ptleditMenu.renderZone)
 			Sys_Error("Could not find the menu node render in particle_editor menu\n");
 
+		/* If running a local server, kill it */
+		SV_Shutdown("Server quit", qfalse);
+		/* if still connected - disconnect */
+		CL_Disconnect();
+
 		memset(&sun, 0, sizeof(sun));
 		/* init sequence state */
 		CL_SetClientState(ca_ptledit);
