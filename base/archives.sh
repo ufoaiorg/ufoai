@@ -28,6 +28,8 @@ echo "i18n..."
 echo "don't include this in the zipfiles - gettext doesn't have support for it"
 echo "ufos..."
 find ufos -type f -print | egrep -v '(\/\.svn\/)' | awk '/\.ufo$/ {print}' | xargs zip -u9@ 0ufos.${EXT}
+echo "materials..."
+find materials -type f -print | egrep -v '(\/\.svn\/)' | awk '/\.mat$/ {print}' | xargs zip -u9@ 0materials.${EXT}
 #zip -ru9 0ufos.zip ufos -i \*.ufo
 echo "base..."
 #don't add the user settings
