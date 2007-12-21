@@ -181,6 +181,8 @@ void R_DrawMaterialSurfaces (mBspSurface_t *surfs)
 	if (!surfs)
 		return;
 
+	assert(r_state.blend_enabled);
+
 	qglEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
 
 	for (surf = surfs; surf; surf = surf->materialchain) {

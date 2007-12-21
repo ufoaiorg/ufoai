@@ -129,6 +129,8 @@ void R_BlendFunc (GLenum src, GLenum dest)
 
 void R_DisableEffects (void)
 {
+	R_CheckError();
+
 	if (r_state.alpha_test_enabled)
 		R_EnableAlphaTest(qfalse);
 
@@ -137,6 +139,8 @@ void R_DisableEffects (void)
 
 	if (r_state.warp_enabled)
 		R_EnableWarp(qfalse);
+
+	R_CheckError();
 }
 
 /**
