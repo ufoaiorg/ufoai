@@ -29,26 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_LIGHTMAP_H
 #define R_LIGHTMAP_H
 
-#define	BLOCK_WIDTH		256
-#define	BLOCK_HEIGHT	256
-#define	MAX_LIGHTMAPS	256
-#define LIGHTMAP_BYTES	4
-
-#define GL_LIGHTMAP_FORMAT GL_RGBA
-
-typedef struct {
-	int current_lightmap_texture;
-
-	mBspSurface_t *lightmap_surfaces[MAX_LIGHTMAPS];
-
-	int allocated[BLOCK_WIDTH];
-
-	/* the lightmap texture data needs to be kept in */
-	/* main memory so texsubimage can update properly */
-	byte lightmap_buffer[LIGHTMAP_BYTES * BLOCK_WIDTH * BLOCK_HEIGHT];
-} gllightmapstate_t;
-
-extern gllightmapstate_t gl_lms;
+#define	LIGHTMAP_BLOCK_WIDTH	256
+#define	LIGHTMAP_BLOCK_HEIGHT	256
 
 void R_BlendLightmaps(const model_t* mod);
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);

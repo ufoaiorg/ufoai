@@ -1501,6 +1501,7 @@ static void CM_InitBoxHull (void)
 int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 {
 	assert((tile < numTiles) && (tile >= 0));
+	/* FIXME: is it ok to set the global var curTile here? */
 	curTile = &mapTiles[tile];
 
 	curTile->box_planes[0].dist = maxs[0];

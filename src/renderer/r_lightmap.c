@@ -26,9 +26,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_lightmap.h"
 
-gllightmapstate_t gl_lms;
+#define	MAX_LIGHTMAPS	256
+#define LIGHTMAP_BYTES	4
 
-static float s_blocklights[BLOCK_WIDTH * BLOCK_HEIGHT * LIGHTMAP_BYTES];
+typedef struct {
+	GLuint lightmap_texture_count;
+
+	int allocated[LIGHTMAP_BLOCK_WIDTH];
+
+	/* the lightmap texture data needs to be kept in */
+	/* main memory so texsubimage can update properly */
+	byte lightmap_buffer[LIGHTMAP_BYTES * LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT];
+} lightmapstate_t;
+
+static lightmapstate_t r_lightmapstate;
+static float s_blocklights[LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT * LIGHTMAP_BYTES];
 
 /**
  * @brief Combine and scale multiple lightmaps into the floating format in blocklights
@@ -169,19 +181,25 @@ LIGHTMAP ALLOCATION
 
 static inline void LM_InitBlock (void)
 {
-	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
+	memset(r_lightmapstate.allocated, 0, sizeof(r_lightmapstate.allocated));
 }
 
 static void LM_UploadBlock (void)
 {
-	R_Bind(r_state.lightmap_texnum + gl_lms.current_lightmap_texture);
+	R_Bind(r_state.lightmap_texnum + r_lightmapstate.lightmap_texture_count);
+
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, LIGHTMAP_BLOCK_WIDTH, LIGHTMAP_BLOCK_HEIGHT,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmapstate.lightmap_buffer);
 	R_CheckError();
-	if (++gl_lms.current_lightmap_texture == MAX_LIGHTMAPS)
-		Com_Error(ERR_DROP, "LM_UploadBlock() - MAX_LIGHTMAPS exceeded\n");
+
+	if (++r_lightmapstate.lightmap_texture_count == MAX_LIGHTMAPS) {
+		Com_Printf("LM_UploadBlock: MAX_LIGHTMAPS exceeded\n");
+		r_lightmapstate.lightmap_texture_count--;
+		return;
+	}
 }
 
 /**
@@ -192,16 +210,16 @@ static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
 	int i, j;
 	int best, best2;
 
-	best = BLOCK_HEIGHT;
+	best = LIGHTMAP_BLOCK_HEIGHT;
 
-	for (i = 0; i < BLOCK_WIDTH - w; i++) {
+	for (i = 0; i < LIGHTMAP_BLOCK_WIDTH - w; i++) {
 		best2 = 0;
 
 		for (j = 0; j < w; j++) {
-			if (gl_lms.allocated[i + j] >= best)
+			if (r_lightmapstate.allocated[i + j] >= best)
 				break;
-			if (gl_lms.allocated[i + j] > best2)
-				best2 = gl_lms.allocated[i + j];
+			if (r_lightmapstate.allocated[i + j] > best2)
+				best2 = r_lightmapstate.allocated[i + j];
 		}
 		/* this is a valid spot */
 		if (j == w) {
@@ -210,11 +228,11 @@ static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
 		}
 	}
 
-	if (best + h > BLOCK_HEIGHT)
+	if (best + h > LIGHTMAP_BLOCK_HEIGHT)
 		return qfalse;
 
 	for (i = 0; i < w; i++)
-		gl_lms.allocated[*x + i] = best + h;
+		r_lightmapstate.allocated[*x + i] = best + h;
 
 	return qtrue;
 }
@@ -237,15 +255,15 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 		LM_UploadBlock();
 		LM_InitBlock();
 		if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t))
-			Sys_Error("Consecutive calls to LM_AllocBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
+			Com_Error(ERR_DROP, "Consecutive calls to LM_AllocBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
 	}
 
-	surf->lightmaptexturenum = gl_lms.current_lightmap_texture;
+	surf->lightmaptexturenum = r_lightmapstate.lightmap_texture_count;
 
-	base = gl_lms.lightmap_buffer;
-	base += (surf->light_t * BLOCK_WIDTH + surf->light_s) * LIGHTMAP_BYTES;
+	base = r_lightmapstate.lightmap_buffer;
+	base += (surf->light_t * LIGHTMAP_BLOCK_WIDTH + surf->light_s) * LIGHTMAP_BYTES;
 
-	R_BuildLightMap(surf, base, BLOCK_WIDTH * LIGHTMAP_BYTES);
+	R_BuildLightMap(surf, base, LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BYTES);
 }
 
 /**
@@ -254,24 +272,14 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
  */
 void R_BeginBuildingLightmaps (void)
 {
-	unsigned dummy[BLOCK_WIDTH * BLOCK_HEIGHT];
-
-	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
+	memset(r_lightmapstate.allocated, 0, sizeof(r_lightmapstate.allocated));
 
 	R_EnableMultitexture(qtrue);
 	R_SelectTexture(&r_state.lightmap_texunit);
 
-	if (!r_state.lightmap_texnum)
-		r_state.lightmap_texnum = TEXNUM_LIGHTMAPS;
+	r_state.lightmap_texnum = TEXNUM_LIGHTMAPS;
 
-	gl_lms.current_lightmap_texture = 1;
-
-	/* initialize the dynamic lightmap texture */
-	R_Bind(r_state.lightmap_texnum + 0);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, dummy);
-	R_CheckError();
+	r_lightmapstate.lightmap_texture_count = 1;
 }
 
 /**
@@ -282,5 +290,5 @@ void R_EndBuildingLightmaps (void)
 {
 	LM_UploadBlock();
 	R_EnableMultitexture(qfalse);
-	Com_DPrintf(DEBUG_RENDERER, "lightmaps: %i\n", gl_lms.current_lightmap_texture);
+	Com_DPrintf(DEBUG_RENDERER, "lightmaps: %i\n", r_lightmapstate.lightmap_texture_count);
 }

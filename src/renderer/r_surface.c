@@ -244,13 +244,13 @@ void R_CreateSurfacePoly (mBspSurface_t *surf, int shift[3], model_t *mod)
 		s -= surf->stmins[0];
 		s += surf->light_s << surf->lquant;
 		s += 1 << (surf->lquant - 1);
-		s /= BLOCK_WIDTH << surf->lquant;
+		s /= LIGHTMAP_BLOCK_WIDTH << surf->lquant;
 
 		t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
 		t -= surf->stmins[1];
 		t += surf->light_t << surf->lquant;
 		t += 1 << (surf->lquant - 1);
-		t /= BLOCK_HEIGHT << surf->lquant;
+		t /= LIGHTMAP_BLOCK_HEIGHT << surf->lquant;
 
 		poly->verts[i][5] = s;
 		poly->verts[i][6] = t;

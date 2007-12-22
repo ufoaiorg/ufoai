@@ -291,7 +291,7 @@ typedef struct {
  * Offset is filled in to contain the adjustment that must be added to the
  * testing object's origin to get a point to use with the returned hull.
  */
-static int SV_HullForEntity (edict_t * ent, int *tile)
+static int SV_HullForEntity (const edict_t * ent, int *tile)
 {
 	/* decide which clipping hull to use, based on the size */
 	if (ent->solid == SOLID_BSP) {	/* explicit hulls in the BSP model */

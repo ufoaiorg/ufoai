@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 
 static vec3_t modelorg;			/* relative to viewpoint */
-static model_t *currentmodel;
 
 /*
 =============================================================
@@ -119,19 +118,19 @@ void R_DrawBrushModel (entity_t * e)
 	int i;
 	qboolean rotated;
 
-	if (currentmodel->bsp.nummodelsurfaces == 0)
+	if (e->model->bsp.nummodelsurfaces == 0)
 		return;
 
 	if (e->angles[0] || e->angles[1] || e->angles[2]) {
 		rotated = qtrue;
 		for (i = 0; i < 3; i++) {
-			mins[i] = e->origin[i] - currentmodel->radius;
-			maxs[i] = e->origin[i] + currentmodel->radius;
+			mins[i] = e->origin[i] - e->model->radius;
+			maxs[i] = e->origin[i] + e->model->radius;
 		}
 	} else {
 		rotated = qfalse;
-		VectorAdd(e->origin, currentmodel->mins, mins);
-		VectorAdd(e->origin, currentmodel->maxs, maxs);
+		VectorAdd(e->origin, e->model->mins, mins);
+		VectorAdd(e->origin, e->model->maxs, maxs);
 	}
 
 	if (R_CullBox(mins, maxs))
@@ -171,8 +170,9 @@ WORLD MODEL
 /**
  * @sa R_DrawWorld
  * @sa R_RecurseWorld
+ * @param[in] tile The maptile (map assembly)
  */
-static void R_RecursiveWorldNode (mBspNode_t * node)
+static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 {
 	int c, side, sidebit;
 	cBspPlane_t *plane;
@@ -210,10 +210,10 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 	}
 
 	/* recurse down the children, front side first */
-	R_RecursiveWorldNode(node->children[side]);
+	R_RecursiveWorldNode(node->children[side], tile);
 
 	/* draw stuff */
-	for (c = node->numsurfaces, surf = currentmodel->bsp.surfaces + node->firstsurface; c; c--, surf++) {
+	for (c = node->numsurfaces, surf = rTiles[tile]->bsp.surfaces + node->firstsurface; c; c--, surf++) {
 		if ((surf->flags & SURF_PLANEBACK) != sidebit)
 			continue;			/* wrong side */
 
@@ -244,24 +244,20 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 	}
 
 	/* recurse down the back side */
-	R_RecursiveWorldNode(node->children[!side]);
+	R_RecursiveWorldNode(node->children[!side], tile);
 }
 
 /**
  * @sa R_GetLevelSurfaceChains
+ * @param[in] tile The maptile (map assembly)
  */
-static void R_RecurseWorld (mBspNode_t * node)
+static void R_RecurseWorld (mBspNode_t * node, int tile)
 {
 	if (!node->plane) {
-		R_RecurseWorld(node->children[0]);
-		R_RecurseWorld(node->children[1]);
+		R_RecurseWorld(node->children[0], tile);
+		R_RecurseWorld(node->children[1], tile);
 	} else {
-		VectorCopy(refdef.vieworg, modelorg);
-
-		R_Color(NULL);
-		memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
-
-		R_RecursiveWorldNode(node);
+		R_RecursiveWorldNode(node, tile);
 	}
 }
 
@@ -288,9 +284,9 @@ void R_GetLevelSurfaceChains (void)
 
 	r_material_surfaces = NULL;
 
-	for (tile = 0; tile < rNumTiles; tile++) {
-		currentmodel = rTiles[tile];
+	VectorCopy(refdef.vieworg, modelorg);
 
+	for (tile = 0; tile < rNumTiles; tile++) {
 		/* don't draw weapon-, actorclip and stepon */
 		/* @note Change this to 258 to see the actorclip brushes in-game */
 		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
@@ -298,10 +294,10 @@ void R_GetLevelSurfaceChains (void)
 			if (i && !(i & mask))
 				continue;
 
-			if (!currentmodel->bsp.submodels[i].numfaces)
+			if (!rTiles[tile]->bsp.submodels[i].numfaces)
 				continue;
 
-			R_RecurseWorld(currentmodel->bsp.nodes + currentmodel->bsp.submodels[i].headnode);
+			R_RecurseWorld(rTiles[tile]->bsp.nodes + rTiles[tile]->bsp.submodels[i].headnode, tile);
 		}
 	}
 }
