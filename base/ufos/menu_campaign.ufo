@@ -58,6 +58,26 @@ menu campaigns
 	// ==================
 	// buttons
 	// ==================
+	pic c_button_skirmish
+	{
+		pos	"80 250"
+		click	{ cmd "mn_push skirmish;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *c_string_skirmish color "0 0.5 0 1" *c_button_skirmish texl "0 0"  *c_button_skirmish texh "256 64" }
+		in	{ *c_string_skirmish color "1 1 1 1" *c_button_skirmish texl "0 64" *c_button_skirmish texh "256 128" }
+	}
+	string c_string_skirmish
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Skirmish"
+		pos	"208 282"
+		align	cc
+	}
+
 	pic c_button_start
 	{
 		pos	"80 320"
