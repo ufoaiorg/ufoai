@@ -185,6 +185,7 @@ item power
 	scale		0.7
 	price		32000
 	buytype		armour
+	useable		0
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
