@@ -52,11 +52,13 @@ static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
  */
 static inline void R_DrawHighlight (const entity_t * e)
 {
+	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
 	R_Color(NULL);
 	memcpy(r_state.vertex_array_3d, r_highlightVertices, sizeof(r_highlightVertices));
 	qglDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);
 	qglEnable(GL_TEXTURE_2D);
+	qglEnable(GL_CULL_FACE);
 }
 
 /**
