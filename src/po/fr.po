@@ -542,7 +542,8 @@ msgstr "Vaisseau alien repéré"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
+msgstr ""
+"Secrétaire Général Mahouf Serra, Nations Unies, New York"
 
 #: ../base/ufos/events.ufo:61
 #: ../base/ufos/events.ufo:71
@@ -682,8 +683,8 @@ msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
 #: ../base/ufos/research.ufo:4201
 #: ../base/ufos/research.ufo:4208
 msgid "mail_to_base_commander"
-msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
-
+msgstr ""
+"Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
 # l'année doit être en premier pour correspondre aux formats de date des autres emails
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -800,7 +801,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4076
 #: ../base/ufos/research.ufo:4084
 msgid "mail_from_paul_navarre"
-msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:74
 #: ../base/ufos/events.ufo:84
@@ -858,7 +860,8 @@ msgstr "mail_production_finished"
 #: ../base/ufos/events.ufo:212
 #: ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -956,7 +959,8 @@ msgstr "mail_new_radar_contact"
 #: ../base/ufos/research.ufo:493
 #: ../base/ufos/research.ufo:501
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -988,7 +992,8 @@ msgstr "mail_alien_activity_reported"
 #: ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4973,7 +4978,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4200
 #: ../base/ufos/research.ufo:4207
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:247
 #: ../base/ufos/research.ufo:286
@@ -5151,34 +5157,36 @@ msgstr "Le sérum universel"
 #: ../base/ufos/research.ufo:413
 msgid "universal_serum_txt"
 msgstr ""
-"Commander,\n"
+"Commandant,\n"
 "\n"
-"Our development cycle on the new truth drug is complete. The new set of chemical mixtures we've tested are effective, and they seem to be the solution we've hoped for.\n"
+"Notre programme de développement sur le nouveau sérum de vérité est accompli. Le nouveau kit de mixtures chimiques que nous avons testé fonctionne, et ils semblent être la solution que nous espérions.\n"
 "\n"
-"The work we've done on alien biology since the start of the invasion, along with some help from our captives, has put us on the track of certain psychotropic substances -- notably LSD-derivatives -- that have very interesting effects on alien psychology. The divergence of species has been a problem, as some compounds will work on one type of alien but not on another, but with this new data it will be an easy task to whip up drugs specifically tailored to the individual alien species.\n"
+"La travail que nous avons fait sur la biologie alienne depuis le début de l'invasion, parallèlement à l'aide fournie par nos captifs, nous a mis sur la piste de certaines substances psychotropiques -- des dérivés du LSD notamment -- qui ont des effets très intéressants sur la psychologie alienne. Les différentes espèces ont été un problème, certains mélanges fonctionnant sur une espèce alienne, mais pas une autre. Mais avec ces nouvelles données, ce sera tâche facile de préparer rapidement les drogues spécifiques à une race d'alien.\n"
 "\n"
-"Subjects under the influence of this drug have proven to be more pliable and loose-lipped, as long as we keep injecting all the specimens in our containment unit. Unfortunately the hive mind's natural resistance to interrogation is still throwing a spanner in the works. Even with all our specimens fully injected, we've not managed to break that resistance, and the accuracy of our test information has still not been 100% reliable. All data we receive still requires some degree of time-consuming verification work.\n"
+"Les sujets sous l'influence de cette drogue ont prouvé qu'ils sont plus flexibles et ouverts, aussi longtemps que nous continuons à injecter ce sérum à tous les spécimens détenus dans notre unité de confinement. Malheureusement, la résistance naturelle aux interrogatoires de l'esprit de ruche perturbe toujours notre travail. Même avec tous les spécimens sous effet de la drogue, nous ne parvenons pas à briser cette résistance, et la précision de nos informations de test n'est toujours pas fiable à 100%. Toutes les données que nous recevons demandent toujours un certain temps de vérification.\n"
 "\n"
-"On the positive side, the act of getting the information out of our subjects has become quicker and more painless, which should speed up some of our research. The danger of allergenic reaction is much lower and the number of subjects succumbing during interrogation has dropped significantly. The deeper effect of the new drugs may even give us access to more sensitive information that we would not have been able to extract from the hive mind with our old serum.\n"
+"Du côté positif, l'extraction d'informations de nos sujets est devenue plus rapide et moins douloureuse, ce qui devrait accélérer une partie de nos recherches. Le danger des réactions allergiques est beaucoup plus faible et le nombre de sujets succombant aux interrogatoires a baissé de façon significative. Les effets les plus puissants de la nouvelle drogue peut également nous donner accès à des informations plus sensibles que nous n'aurions jamais pu obtenir avec notre ancien sérum.\n"
 "\n"
-"We should keep up our interrogation efforts to get maximum benefit out of the new drugs.\n"
+"Nous continuerons nos interrogatoires afin de tirer le meilleur profit de ce nouveau sérum.\n"
 "\n"
-"Sincerely,\n"
+"Sincèrement,\n"
 "\n"
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:416
 msgid "universal_serum_pre_txt"
 msgstr ""
-"Commander,\n"
+"Commandant,\n"
 "\n"
-"As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.\n"
+"Comme vous devez le savoir, nos efforts afin d'entrer en communications avec les aliens vivants dans notre unité de confinement ne progressent que très lentement. Nous avons de grandes difficultés à appliquer nos méthodes d'interrogation standards. Le sérum de vérité dont nous disposons a ses limites : il produit une réaction allergique létale chez la plupart des aliens si nous ne réduisons pas les doses, ce qui diminue encore ses effets déjà insuffisants. Nous avons eu droit à nombre de petits mensonges et de demi-vérités dans chacune de nos sessions. La torture semble pouvoir influencer ce phénomène, mais pas l'éviter. La douleur ne semble pas avoir d'effet correctif sur l'esprit de ruche.\n"
 "\n"
-"There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.\n"
+"Un autre obstacle plus imposant se présente, celui d'avoir à injecter chaque spécimen de l'esprit de ruche afin de submerger toute capacité de jugement de chaque sujet. Si un seul membre de la ruche meurt, les spécimens restants subissent une augmentation du niveau de leur équivalent-adrénaline jusqu'à atteindre le point où il faut tout recommencer.\n"
 "\n"
-"To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.\n"
+"C'est pour cela que, armés de nos connaissances plus étendues sur le corps et l'esprit alien, je propose un nouveau programme de recherche afin de mettre au point la composition d'un sérum universel que nous pourrions utiliser afin d'extraire des informations plus fiables, plus rapidement, et plus facilement. Les spécimens que nous étudions regorgent d'informations qui ne demandent qu'à être connues, Commandant, et nous avons juste besoin des bons outils pour y accéder.\n"
 "\n"
-"Sincerely,Dr. Connor"
+"Sincèrement,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:445
 #: ../base/ufos/research.ufo:458
@@ -5828,30 +5836,30 @@ msgstr ""
 #: ../base/ufos/research.ufo:917
 msgid "monoknife_txt"
 msgstr ""
-"Commander, I'm hereby reporting our success in the creation of alien blade materials. We've loaded the production specs into our Workshop machinery and have constructed a small forge for shaping our new monomolecular knives.\n"
+"Commandant, je vous rapporte, par la présente, notre succès dans la création de matériaux de lame alienne. Nous avons chargé les spécifications de production dans les machines de l'Atelier et construit une petite forge pour façonner nos lames monomoléculaires.\n"
 "\n"
-"The reproduction process has been very interesting on this one. After we'd figured out how to 'cook' the alien plastics to the right temperatures, we ended up with bars of incredibly hard material which we then tried to shape into knives. On our first attempts we tried to create a straight-edged blade with a powerful point, like most modern combat knives, so that it could be used for both cutting and stabbing. All of these models snapped in half during the cooling process. We had a devil of a time figuring out why until we placed a small camera inside the furnace.\n"
+"Le processus de reproduction a été très intéressant sur ce point. Après avoir compris la manière de préparer le plastique alien à la bonne température. Nous parvenons à fabriquer des barres de matériau extrêmement dures que nous essayons ensuite de façonner en lames. Lors de nos premières tentatives, nous avions essayé d'en créer une droite et tranchante avec une pointe acérée, comme la plupart des lames de combat moderne, afin qu'elle puisse être utilisée autant pour couper que poignarder. Tous ces essais ont cassé à la moitié du processus de refroidissement. Nous avons eu des moments très difficiles, jusqu'à ce que nous placions une petite caméra dans le fourneau.\n"
 "\n"
-"It turns out that the curve of the Kerrblade isn't a design choice -- it's a function of the material itself. The plastic radically curves and expands during heat-moulding in our furnace, and contracts again during cooling, which ended up cracking all of our straight-edged blades. It demands a particular curved shape to retain its durability as a blade. We had to completely redesign the knife to account for this effect, which brought it to its current shape.\n"
+"Il nous est alors apparu que la courbure de l'épée Kerr n'était pas un choix de conception, mais une propriété du matériau même. Le plastique se courbe radicalement et s'allonge durant le moulage dans nos fourneaux, puis se contracte encore pendant le refroidissement. Ces contraintes ont fini par casser toutes nos lames à tranchant rectiligne. Une courbure particulière est nécessaire afin de pouvoir conserver ce matériau sous forme de lame. Nous avons dû complètement redessiner le couteau, en prenant en compte cet effet, ce qui nous a conduit à sa forme actuelle.\n"
 "\n"
-"In length, it's either a long knife or a short sword, depending on who you ask. The design of the handle and crossguard are based on Middle-Eastern and Asian swordmaking traditions mixed in with modern-day science and know-how. The handle is made from semi-solid rubber, which automatically moulds itself to the wielder's hand to maximise comfort and gripping power. Both the triangular crossguard and pommel are unbreakable carbon-nanotube-reinforced plastic, a material that even Kerrblades have trouble with.\n"
+"En longueur, il s'agit d'un long couteau, ou d'une épée courte, selon celui à qui vous posez la question. La forme de la poignée et de la garde sont inspirées des traditions des forgeurs d'épées d'Asie et du Moyen-Orient, mélangées à la science et au savoir-faire moderne. La poignée a été conçue avec du caoutchouc semi-solide, qui s'adapte automatiquement à la main de son utilisateur, afin d'optimiser son confort et son côté agrippant. La garde triangulaire et le pommeau sont en plastique renforcé de nanotubes de carbone, incassable, que même les épées Kerr auraient du mal à abîmer.\n"
 "\n"
-"This knife goes a long way towards evening the odds for our soldiers when they get caught in hand-to-hand. Though it's larger than our old combat knife, doesn't thrust as well, and doesn't have the power of the Kerrblade's sword-length swing, it strikes an ideal middle ground between these two weapons. The monomolecular knife is almost the equal of the Kerrblade in lethality but still small enough to be worn in our standard holster or in a sheath hung from the belt. It amounts to a significant upgrade of our melee combat capabilities, and I'm thoroughly pleased with the result.\n"
+"Ce couteau augmentera considérablement les chances de nos soldats lorsqu'ils seront pris au corps à corps. Bien qu'il soit plus grand que notre ancien poignard de combat, n'espérez pas pouvoir rivaliser avec une épée Kerr. Notre nouvelle arme se situe plutôt entre cette épée, et notre poignard en terme de puissance. La lame monomoléculaire est presque aussi dangereuse que l'épée Kerr en terme de puissance létale, mais est suffisamment petite pour tenir dans notre holster standard, ou même sur une ceinture. Ce qui signifie une amélioration remarquable dans nos capacités de combat rapproché, et je suis assez satisfait des résultats.\n"
 "\n"
-"--Cdr. Navarre"
+"--Cdt Navarre"
 
 #: ../base/ufos/research.ufo:920
 msgid "monoknife_pre_txt"
 msgstr ""
-"Commandant, je vous rapporte, par la présente, notre succès dans la création de matériaux de lame alien. Nous avons chargés les spécifications de production dans les machines de l'Atelier et construit une petite forge pour façonner nos lames monomoléculaire.\n"
+"Commandant, maintenant que nous avons un bon aperçu de la technologie des lames aliennes à partir de plusieurs sources (les 'mandibules' d'Araignée Sanguinaire et l'Épée Kerr) nous commençons à visualiser comment recréer les matériaux utilisés pour leur construction, jusqu'à présent inconnus ou mal compris.\n"
 "\n"
-"Le processus de reproduction a été très intéressant sur ce point. Après avoir compris la manière de préparer le plastique alien à la bonne température, nous aboutissons à des bars de matériau extrêmement dure que nous essayons ensuite de façonner sur les lames. Lors de nos premières tentatives, nous avions essayés de créer une droite et tranchante avec une pointe acérée, comme la plupart des lames de combat moderne, afin qu'elles puissent être utilisées autant pour couper que poignarder. Tout ces modèles ont cassé à la moitié de du processus de refroidissement. Nous avions des difficultés avec le temps jusqu'à ce que l'on place une petite caméra dans le fourneau.\n"
+"Certains aspects sont nouveaux pour nous. Les plastiques à partir desquels les lames aliennes sont forgées sont plus durs que l'acier de Damas, plus aiguisés qu'un rasoir, et malgré cela résistants aux chocs et suffisamment souples pour survivre aux contraintes d'un combat rapproché. Une fois forgées, ces lames sont impossible à briser, ébrécher ou plier. Vouloir affiner la lame au marteau et au ciseau va simplement vous couper en deux votre ciseau, de façon très nette.\n"
 "\n"
-"Il nous est apparu que la courbure de la l'épée Kerr n'était pas un choix de conception ; c'est une propriété du matériau même. The plastic radically curves and expands during heat-moulding in our furnace, and contracts again during cooling, which ended up cracking all of our straight-edged blades. It demands a particular curved shape to retain its durability as a blade. We had to completely redesign the knife to account for this effect, which brought it to its current shape.\n"
+"Évidemment il serait extrêmement intéressant pour nous de pouvoir créer nos propres lames, faites de ce matériau, et dont le tranchant est de la largeur d'une seule molécule. Mon équipe et moi croyons c'est maintenant possible.\n"
 "\n"
-"In length, it's either a long knife or a short sword, depending on who you ask. The design of the handle and crossguard are based on Middle-Eastern and Asian swordmaking traditions mixed in with modern-day science and know-how. The handle is made from semi-solid rubber, which automatically moulds itself to the wielder's hand to maximise comfort and gripping power. Both the triangular crossguard and pommel are unbreakable carbon-nanotube-reinforced plastic, a material that even Kerrblades have trouble with.\n"
+"Si vous nous donnez les fonds et le temps de recherche dont nous avons besoin, nous pouvons concevoir et créer une lame monomoléculaire de combat qui serait beaucoup plus efficace pour nos soldats lorsqu'ils seront forcés de combattre au corps à corps. Cette lame sera beaucoup plus compacte que l'Épée Kerr, beaucoup plus facile à manier pour les humains et suffisamment petite pour être utilisée à une main.\n"
 "\n"
-"This knife goes a long way towards evening the odds for our soldiers when they get caught in hand-to-hand. Though it's larger than our old combat knife, doesn't thrust as well, and doesn't have the power of the Kerrblade's sword-length swing, it strikes an ideal middle ground between these two weapons. The monomolecular knife is almost the equal of the Kerrblade in lethality but still small enough to be worn in our standard holster or in a sheath hung from the belt. It amounts to a significant upgrade of our melee combat capabilities, and I'm thoroughly pleased with the result.\n"
+"Équiper nos troupes avec ces armes pourrait nous donner un avantage majeur, car elles pourraient se défendre efficacement dans la mêlée pour la première fois, tout en utilisant d'autres armes ou équipements ; tel que les pistolets, les grenades, les médikits ou d'autres objets tactiques utiles ou d'importance vitale.\n"
 "\n"
 "--Cdt Navarre"
 
@@ -8494,44 +8502,42 @@ msgstr ""
 #: ../base/ufos/research.ufo:3157
 msgid "ufo_supply_txt"
 msgstr ""
-"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
+"Commandant, mon équipe et moi avons tout juste fini un autre rapport d'OVNI pour vous. En voici le résumé que j'ai préparé pour vous.\n"
 "\n"
-"As far as we can determine, this type of UFO is indeed a transporter of some kind, carrying materials in its large cargo hold and up to 12 aliens in a small passenger compartment behind the cockpit. Satellite surveillance has observed these ships landing at alien-held positions and unloading material and passengers. This is strong evidence in support of the 'supply ship' theory, and we're confident that it's correct.\n"
+"D'après ce que nous pouvons déterminer, ce type d'OVNI est vraisemblablement une sorte de transport, stockant du matériel dans sa baie de cargaison et jusqu'à 12 aliens dans son petit compartiment passager situé derrière le cockpit. Les observations satellites ont montré ces vaisseaux atterrir sur des positions tenues par les aliens, et décharger matériel et passagers. C'est une preuve importante allant dans le sens de la théorie de 'vaisseau ravitailleur', nous sommes certains qu'elle est correcte.\n"
 "\n"
-"We can make several conclusions from the UFO's construction and the cargo we've recovered from the hold. Unlike other UFOs we've seen, the Supply Ship is built for carrying heavy loads rather than surviving combat. It doesn't manoeuvre very well, its engines are weak by comparison, and its airframe will break up easily when hit. This is why a Supply Ship will often be protected by a large screen of Fighter UFOs, in case of interception.\n"
+"Nous pouvons faire plusieurs conclusions d'après la structure de l'OVNI et le chargement que nous avons récupéré. Différent des autres OVNI que nous avons déjà vu, le ravitailleur est construit dans le but de porter de lourdes charges plutôt que de survivre au combat. Il ne manœuvre pas très bien, ses moteurs sont relativement peu puissantes, et son fuselage cède facilement une fois touché. C'est pourquoi le ravitailleur est souvent protégé par un large écran de chasseurs OVNI, en cas d'interception.\n"
 "\n"
-"There isn't much that an alien cargo ship could be doing on Earth except reinforcement and resupply. It will be bringing in weapons, spare parts and other supplies from the alien homeworld to Earth in support of alien operations on the surface. This should be prevented at all costs -- permanent alien installations on Earth would place the civilian population in the area in extreme danger. A strong alien presence also hampers our operations in many ways, some too subtle to observe directly. The regular operation of Supply Ships in an area may indicate an alien installation under construction or, worse, one that's already operational.\n"
+"Il n'y a pas grand chose qu'un vaisseau cargo alien puisse faire sur Terre, excepté ravitailler et apporter des renforts. Il peut transporter des armes, des pièces et autres ravitaillement du monde des aliens jusqu'à la Terre, afin de soutenir les opérations aliennes en surface. Ceci doit être empêché à tout prix -- des installations aliennes permanentes sur Terre mettraient la population civile de la zone en grand danger. Une forte présence alienne peut également bousculer nos opérations de différentes façons, certaines trop subtiles pour être observées directement. L'intervention régulière de ravitailleurs dans une zone peut indiquer qu'une installation alienne est en construction, ou pire, est déjà opérationnelle.\n"
 "\n"
-"On the other hand, if we can prevent any Supply Ships from reaching an existing alien strongpoint, we may be able to starve it out for a while before sending in troops. This may give us a crucial tactical advantage.\n"
+"D'un autre côté, si nous pouvons empêcher tout ravitailleur de rejoindre une position alien existante, nous pourrions les affamer avant d'envoyer des troupes. Ceci pourrait nous donner un avantage tactique crucial.\n"
 "\n"
-"In conclusion, although it may seem of lesser importance than the other UFOs we've encountered, the Supply Ship should be engaged whenever possible. The long-term benefits of interrupting alien supplies may not be immediately apparent, but it will show over time.\n"
+"En conclusion, bien qu'il semble être moins important que les autres OVNIs que nous ayons rencontré, le ravitailleur devrait être intercepté à chaque fois que possible. Les bénéfices à long terme de la suspension des ravitaillements aliens ne seraient peut-être pas immédiatement apparents, mais finiront par émerger.\n"
 "\n"
-"Because Supply Ships are likely to have escorts, it's recommended that we only engage them with overwhelming force. That's all, Commander.\n"
+"Puisque les ravitailleurs sont susceptibles d'être escortés, il est recommandé de ne les attaquer qu'avec une force supérieure à ces renforts. Ce sera tout, Commandant.\n"
 "\n"
-"--Cdr. Navarre\n"
+"--Cdt Navarre\n"
 "\n"
+"Estimation des statistiques des ravitailleurs:\n"
 "\n"
-"Estimated Supply Ship statistics:\n"
+"Taille: Moyenne (12m x 18m x 6m)\n"
 "\n"
+"Vitesse de croisière: +/- 1,600 km/h\n"
 "\n"
-"Size: Medium (12m x 18m x 6m)\n"
+"Vitesse maximale: +/- 3,000km/h\n"
 "\n"
-"Cruising speed: +/- 1,600 km/h\n"
+"Equipage: 30 max.\n"
 "\n"
-"Top speed: +/- 3,000km/h\n"
-"\n"
-"Crew capacity: 30 max.\n"
-"\n"
-"Weapon capacity: None"
+"Capacité offensive: Aucune"
 
 #: ../base/ufos/research.ufo:3160
 msgid "ufo_supply_pre_txt"
 msgstr ""
-"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.\n"
+"Commandant, nous avons récupéré un nouveau type d'OVNI qui attend maintenant dans notre hangar pour être démantelé. Plus gros que n'importe quel autre OVNI que nous ayons déjà vu, il semble désarmé, et sa grande baie de cargaison laisse suggérer qu'il pourrait s'agir d'une sorte de vaisseau ravitailleur, convoyant les besoins aliens vers la surface de la Terre. Ces vaisseaux peuvent être trouvés au sein de la plupart des formations aliennes et augmentera considérablement leur présence sur notre planète si nous les laissons accomplir leur mission.\n"
 "\n"
-"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"Nous sommes prêts à commencer à étudier et démanteler le vaisseau à votre ordre, mais nous aurons besoin de temps et de fonds pour faire un rapport complet de ses fonctions et possibilités.\n"
 "\n"
-"--Cdr. Navarre"
+"--Cdt Navarre"
 
 #: ../base/ufos/research.ufo:3199
 msgid "ufo_carrier_txt"
@@ -10055,35 +10061,43 @@ msgstr "seq_alienbase_sentence3"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr ""
+"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr ""
+"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr ""
+"Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr ""
+"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr ""
+"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
+msgstr ""
+"Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr ""
+"Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr ""
+"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
