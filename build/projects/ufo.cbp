@@ -403,6 +403,9 @@
 		<Unit filename="..\..\src\renderer\r_draw.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\renderer\r_entity.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\renderer\r_font.c">
 			<Option compilerVar="CC" />
 		</Unit>

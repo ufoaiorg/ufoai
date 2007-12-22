@@ -123,9 +123,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 	e->angles[PITCH] = -e->angles[PITCH];	/* sigh. */
 	e->angles[YAW] = e->angles[YAW] + 90;
 
-	if (e->flags & RF_TRANSLUCENT)
-		R_EnableBlend(qtrue);
-
 	if ((e->as.frame >= md3->num_frames) || (e->as.frame < 0)) {
 		Com_Printf("R_DrawAliasMD3Model %s: no such frame %d\n", e->model->name, e->as.frame);
 		e->as.frame = 0;
@@ -137,30 +134,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 			e->model->name, e->as.oldframe);
 		e->as.frame = 0;
 		e->as.oldframe = 0;
-	}
-
-	if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-		R_EnableBlend(qtrue);
-
-		R_Color(NULL);
-		if (e->flags & RF_SHADOW)
-			R_Bind(shadow->texnum);
-		else
-			R_Bind(blood->texnum);
-		qglBegin(GL_QUADS);
-
-		qglTexCoord2f(0.0, 1.0);
-		qglVertex3f(-18.0, 14.0, -28.5);
-		qglTexCoord2f(1.0, 1.0);
-		qglVertex3f(10.0, 14.0, -28.5);
-		qglTexCoord2f(1.0, 0.0);
-		qglVertex3f(10.0, -14.0, -28.5);
-		qglTexCoord2f(0.0, 0.0);
-		qglVertex3f(-18.0, -14.0, -28.5);
-
-		qglEnd();
-
-		R_EnableBlend(qfalse);
 	}
 
 	/* set-up lighting */
@@ -176,8 +149,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	R_EnableLighting(qfalse);
 
-	if (e->flags & RF_TRANSLUCENT)
-		R_EnableBlend(qfalse);
+	R_DrawEntityEffects(e);
 
 	qglPopMatrix();
 

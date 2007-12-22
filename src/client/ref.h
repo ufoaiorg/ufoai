@@ -50,7 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct animState_s {
 	int frame, oldframe;
-	float backlerp;
+	float backlerp;				/**< linear interpolation from previous frame */
 	int time, dt;
 
 	byte list[MAX_ANIMLIST];
@@ -81,6 +81,8 @@ typedef struct entity_s {
 	int flags;
 
 	animState_t as;
+
+	struct entity_s *next;		/**< for chaining */
 } entity_t;
 
 /*============================================================================= */
@@ -129,7 +131,7 @@ typedef struct {
 	float *center;			/**< pointer to node/menumodel center */
 
 	int frame, oldframe;	/**< animation frames */
-	float backlerp;
+	float backlerp;			/**< linear interpolation from previous frame */
 
 	int skin;				/**< skin number */
 	float *color;

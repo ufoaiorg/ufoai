@@ -4430,6 +4430,7 @@ static void CL_GameSkirmish_f (void)
 	gd.numAircraft = 0;
 
 	CL_GameInit(qfalse);
+	RS_MarkResearchedAll();
 
 	gd.numBases = 1;
 

@@ -49,8 +49,8 @@ float r_world_matrix[16];
 float r_base_world_matrix[16];
 
 static cvar_t *r_norefresh;
-static cvar_t *r_drawentities;
 static cvar_t *r_speeds;
+cvar_t *r_drawentities;
 cvar_t *r_drawworld;
 cvar_t *r_nocull;
 cvar_t *r_isometric;
@@ -160,206 +160,6 @@ void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float 
 	/* normalize */
 	for (i = 0; i < 3; i++)
 		VectorNormalize(interpolated + i * 4);
-}
-
-
-static float *R_CalcTransform (entity_t * e)
-{
-	vec3_t angles;
-	transform_t *t;
-	float *mp;
-	float mt[16], mc[16];
-	int i;
-
-	/* check if this entity is already transformed */
-	t = &trafo[e - r_entities];
-
-	if (t->processing)
-		Sys_Error("Ring in entity transformations!\n");
-
-	if (t->done)
-		return t->matrix;
-
-	/* process this matrix */
-	t->processing = qtrue;
-	mp = NULL;
-
-	/* do parent object trafos first */
-	if (e->tagent) {
-		/* parent trafo */
-		mp = R_CalcTransform(e->tagent);
-
-		/* tag trafo */
-		if (e->tagent->model && e->tagent->model->alias.tagdata) {
-			dtag_t *taghdr;
-			const char *name;
-			float *tag;
-			float interpolated[16];
-
-			taghdr = (dtag_t *) e->tagent->model->alias.tagdata;
-
-			/* find the right tag */
-			name = (char *) taghdr + taghdr->ofs_names;
-			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME)
-				if (!strcmp(name, e->tagname)) {
-					/* found the tag (matrix) */
-					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);
-					tag += i * 16 * taghdr->num_frames;
-
-					/* do interpolation */
-					R_InterpolateTransform(&e->tagent->as, taghdr->num_frames, tag, interpolated);
-
-					/* transform */
-					GLMatrixMultiply(mp, interpolated, mt);
-					mp = mt;
-
-					break;
-				}
-		}
-	}
-
-	/* fill in edge values */
-	mc[3] = mc[7] = mc[11] = 0.0;
-	mc[15] = 1.0;
-
-	/* add rotation */
-	VectorCopy(e->angles, angles);
-/*	angles[YAW] = -angles[YAW]; */
-
-	AngleVectors(angles, &mc[0], &mc[4], &mc[8]);
-
-	/* add translation */
-	mc[12] = e->origin[0];
-	mc[13] = e->origin[1];
-	mc[14] = e->origin[2];
-
-	/* flip an axis */
-	VectorScale(&mc[4], -1, &mc[4]);
-
-	/* combine trafos */
-	if (mp)
-		GLMatrixMultiply(mp, mc, t->matrix);
-	else
-		memcpy(t->matrix, mc, sizeof(float) * 16);
-
-	/* we're done */
-	t->done = qtrue;
-	t->processing = qfalse;
-
-	return t->matrix;
-}
-
-
-/**
- * @sa R_DrawEntities
- */
-static inline void R_TransformEntitiesOnList (void)
-{
-	int i;
-
-	/* clear flags */
-	for (i = 0; i < r_numEntities; i++) {
-		trafo[i].done = qfalse;
-		trafo[i].processing = qfalse;
-	}
-
-	/* calculate all transformations */
-	/* possibly recursive */
-	for (i = 0; i < r_numEntities; i++)
-		R_CalcTransform(&r_entities[i]);
-}
-
-/**
- * @sa R_TransformEntitiesOnList
- */
-static void R_DrawEntities (void)
-{
-	int i;
-	entity_t *e;
-
-	if (!r_drawentities->integer)
-		return;
-
-	R_TransformEntitiesOnList();
-
-	/* draw non-transparent first */
-	for (i = 0; i < r_numEntities; i++) {
-		e = &r_entities[i];
-
-		/* find out if and how an entity should be drawn */
-		if (e->flags & (RF_TRANSLUCENT | RF_BOX))
-			continue;			/* solid */
-
-		if (!e->model) {
-			R_ModDrawNullModel(e);
-			continue;
-		}
-		switch (e->model->type) {
-		case mod_alias_md2:
-			/* MD2 model */
-			R_DrawAliasMD2Model(e);
-			break;
-		case mod_alias_md3:
-			/* MD3 model */
-			R_DrawAliasMD3Model(e);
-			break;
-		case mod_brush:
-			/* draw things like func_breakable */
-			R_DrawBrushModel(e);
-			break;
-		default:
-			Sys_Error("Bad %s modeltype: %i", e->model->name, e->model->type);
-			break;
-		}
-
-		R_Color(NULL);
-	}
-}
-
-/**
- * @note They are already transformed
- */
-static void R_DrawAlphaEntities (void)
-{
-	int i;
-	entity_t *e;
-
-	if (!r_drawentities->integer)
-		return;
-
-	/* draw transparent entities */
-	/* we could sort these if it ever becomes a problem... */
-	for (i = 0; i < r_numEntities; i++) {
-		e = &r_entities[i];
-		if (e->flags & RF_BOX) {
-			R_DrawBox(e);
-			continue;
-		}
-		if (!(e->flags & RF_TRANSLUCENT))
-			continue;			/* solid */
-
-		if (!e->model) {
-			R_ModDrawNullModel(e);
-			continue;
-		}
-		switch (e->model->type) {
-		case mod_alias_md2:
-			/* MD2 model */
-			R_DrawAliasMD2Model(e);
-			break;
-		case mod_alias_md3:
-			/* MD3 model */
-			R_DrawAliasMD3Model(e);
-			break;
-		case mod_brush:
-			R_DrawBrushModel(e);
-			break;
-		default:
-			Sys_Error("Bad %s modeltype: %i", e->model->name, e->model->type);
-			break;
-		}
-		R_Color(NULL);
-	}
 }
 
 static inline int SignbitsForPlane (const cBspPlane_t * out)
@@ -541,7 +341,6 @@ void R_RenderFrame (void)
 
 	R_DisableEffects();
 
-	/* draw opaque entities */
 	R_DrawEntities();
 
 	R_EnableBlend(qtrue);
@@ -551,11 +350,6 @@ void R_RenderFrame (void)
 	R_DisableEffects();
 
 	R_EnableBlend(qtrue);
-
-	R_CheckError();
-
-	/* draw opaque entities */
-	R_DrawAlphaEntities();
 
 	R_CheckError();
 

@@ -208,88 +208,6 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 }
 
 /**
- * @brief Draws shadow and highlight effects for the entities (actors)
- */
-static void R_ModDrawModelEffects (const entity_t *e)
-{
-	vec4_t color = {1, 1, 1, 1};
-
-	if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-		R_EnableBlend(qtrue);
-
-		R_Color(NULL);
-		if (e->flags & RF_SHADOW)
-			R_Bind(shadow->texnum);
-		else
-			R_Bind(blood->texnum);
-		qglBegin(GL_QUADS);
-
-		qglTexCoord2f(0.0, 1.0);
-		qglVertex3f(-18.0, 14.0, -28.5);
-		qglTexCoord2f(1.0, 1.0);
-		qglVertex3f(10.0, 14.0, -28.5);
-		qglTexCoord2f(1.0, 0.0);
-		qglVertex3f(10.0, -14.0, -28.5);
-		qglTexCoord2f(0.0, 0.0);
-		qglVertex3f(-18.0, -14.0, -28.5);
-
-		qglEnd();
-		R_CheckError();
-
-		R_EnableBlend(qfalse);
-	}
-
-	/* draw a highlight icon over this entity */
-	if (e->flags & RF_HIGHLIGHT)
-		R_DrawHighlight(e);
-
-	qglDisable(GL_DEPTH_TEST);
-
-	/* draw the circles for team-members and allied troops */
-	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
-		qglDisable(GL_TEXTURE_2D);
-		qglEnable(GL_LINE_SMOOTH);
-		R_EnableBlend(qtrue);
-
-		if (e->flags & RF_MEMBER) {
-			if (e->flags & RF_SELECTED)
-				Vector4Set(color, 0, 1, 0, 1);
-			else
-				Vector4Set(color, 0, 1, 0, 0.3);
-		} else if (e->flags & RF_ALLIED) {
-			if (e->flags & RF_SELECTED)
-				Vector4Set(color, 0, 0.5, 1, 1);
-			else
-				Vector4Set(color, 0, 0.5, 1, 0.3);
-		} else
-			Vector4Set(color, 0, 1, 0, 1);
-
-		R_Color(color);
-
-		qglBegin(GL_LINE_STRIP);
-
-		/* circle points */
-		qglVertex3f(10.0, 0.0, -27.0);
-		qglVertex3f(7.0, -7.0, -27.0);
-		qglVertex3f(0.0, -10.0, -27.0);
-		qglVertex3f(-7.0, -7.0, -27.0);
-		qglVertex3f(-10.0, 0.0, -27.0);
-		qglVertex3f(-7.0, 7.0, -27.0);
-		qglVertex3f(0.0, 10.0, -27.0);
-		qglVertex3f(7.0, 7.0, -27.0);
-		qglVertex3f(10.0, 0.0, -27.0);
-
-		qglEnd();
-		R_CheckError();
-
-		qglDisable(GL_LINE_SMOOTH);
-		qglEnable(GL_TEXTURE_2D);
-	}
-
-	qglEnable(GL_DEPTH_TEST);
-}
-
-/**
  * @sa R_DrawAliasMD2Model
  */
 void R_DrawAliasMD2Model (entity_t * e)
@@ -362,8 +280,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	R_EnableLighting(qfalse);
 
-	/* depth test and cull face are deactivated here */
-	R_ModDrawModelEffects(e);
+	R_DrawEntityEffects(e);
 
 	/* show model bounding box */
 	R_ModDrawModelBBox(bbox, e);
@@ -507,11 +424,12 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	/* transform */
 	R_TransformModelDirect(mi);
 
-	/* draw it */
-	R_Bind(skin->texnum);
-
+	/* we have to reenable this here - we are in 2d mode here already */
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
+
+	/* draw it */
+	R_Bind(skin->texnum);
 
 	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qtrue);
@@ -519,11 +437,11 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	/* draw the model */
 	R_DrawAliasFrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);
 
-	qglDisable(GL_CULL_FACE);
-	qglDisable(GL_DEPTH_TEST);
-
 	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qfalse);
+
+	qglDisable(GL_CULL_FACE);
+	qglDisable(GL_DEPTH_TEST);
 
 	qglPopMatrix();
 
@@ -577,20 +495,8 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	/* draw it */
 	R_Bind(skin->texnum);
 
-	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		R_EnableBlend(qtrue);
-
-	qglEnable(GL_DEPTH_TEST);
-	qglEnable(GL_CULL_FACE);
-
 	/* draw the model */
 	R_DrawAliasFrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);
-
-	qglDisable(GL_CULL_FACE);
-	qglDisable(GL_DEPTH_TEST);
-
-	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		R_EnableBlend(qfalse);
 
 	qglPopMatrix();
 

@@ -90,6 +90,7 @@ extern vec3_t vpn;
 extern vec3_t vright;
 
 extern cvar_t *r_drawworld;
+extern cvar_t *r_drawentities;
 extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;
 extern cvar_t *r_shader;
@@ -149,9 +150,10 @@ void R_InterpolateTransform(animState_t *as, int numframes, float *tag, float *i
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(entity_t *e);
 void R_DrawBox(const entity_t *e);
-void R_DrawHighlight(const entity_t *e);
 void R_GetLevelSurfaceChains(void);
 void R_InitMiscTexture(void);
+void R_DrawEntityEffects(const entity_t *e);
+void R_DrawEntities(void);
 void R_DrawInitLocal(void);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_RotateForEntity(const entity_t *e);
