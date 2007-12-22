@@ -1440,8 +1440,6 @@ void MAP_ResetAction (void)
 	if (gd.numBases)
 		gd.mapAction = MA_NONE;
 
-	/* FIXME: Don't reset the selMis when we are in tactical mission and enter the geoscape via mn_push map */
-	/* @todo: I think this doesn't matter anymore, don't it? */
 	gd.interceptAircraft = AIRCRAFT_INVALID;
 	if (selMis) {
 		selMis->def->active = qfalse;

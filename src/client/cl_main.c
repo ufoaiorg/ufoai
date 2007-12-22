@@ -194,7 +194,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		ccs.singleplayer = qtrue;
 		if (Com_ServerState()) {
 			/* shutdown server */
-			SV_Shutdown("Server was killed.\n", qfalse);
+			SV_Shutdown("Server was killed (switched to singleplayer).\n", qfalse);
 		} else if (cls.state >= ca_connecting) {
 			Com_Printf("Disconnect from current server\n");
 			CL_Disconnect();
@@ -1426,7 +1426,8 @@ static void CL_SpawnSoldiers_f (void)
 			CL_SendCurTeamInfo(msg, &chr_list_temp);
 			NET_WriteMsg(cls.stream, msg);
 		}
-	}
+	} else
+		Com_Printf("Don't spawn soldiers - no homebase of mission aircraft\n");
 
 	{
 		struct dbuffer *msg = new_dbuffer();

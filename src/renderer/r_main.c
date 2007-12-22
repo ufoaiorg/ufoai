@@ -115,7 +115,7 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 }
 
 
-void R_RotateForEntity (entity_t * e)
+void R_RotateForEntity (const entity_t * e)
 {
 	qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 

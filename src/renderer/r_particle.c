@@ -246,6 +246,11 @@ static void R_SetBlendMode (int mode)
 	}
 }
 
+/**
+ * @brief
+ * @note No need to reset the blend mode - R_SetupGL2D will do this
+ * @sa R_SetupGL2D
+ */
 void R_DrawParticles (void)
 {
 	ptl_t *p;

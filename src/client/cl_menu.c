@@ -4917,26 +4917,28 @@ static void MN_MapInfo (int step)
 	else
 		Cvar_Set("mn_mappic3", va("maps/shots/na.jpg"));
 
-	if (md->gameTypes) {
-		linkedList_t *list = md->gameTypes;
-		char buf[256] = "";
-		while (list) {
-			Q_strcat(buf, va("%s ", (const char *)list->data), sizeof(buf));
-			list = list->next;
-		}
-		Cvar_Set("mn_mapgametypes", buf);
-		list = md->gameTypes;
-		while (list) {
-			/* check whether current selected gametype is a valid one */
-			if (!Q_strcmp((const char*)list->data, gametype->string)) {
-				break;
+	if (!ccs.singleplayer) {
+		if (md->gameTypes) {
+			linkedList_t *list = md->gameTypes;
+			char buf[256] = "";
+			while (list) {
+				Q_strcat(buf, va("%s ", (const char *)list->data), sizeof(buf));
+				list = list->next;
 			}
-			list = list->next;
+			Cvar_Set("mn_mapgametypes", buf);
+			list = md->gameTypes;
+			while (list) {
+				/* check whether current selected gametype is a valid one */
+				if (!Q_strcmp((const char*)list->data, gametype->string)) {
+					break;
+				}
+				list = list->next;
+			}
+			if (!list)
+				MN_ChangeGametype_f();
+		} else {
+			Cvar_Set("mn_mapgametypes", _("all"));
 		}
-		if (!list)
-			MN_ChangeGametype_f();
-	} else {
-		Cvar_Set("mn_mapgametypes", _("all"));
 	}
 }
 

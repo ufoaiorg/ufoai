@@ -862,6 +862,7 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
 			return;
 		}
+		/* don't try to hire more that available - see E_CreateEmployee */
 		if (num > gd.numEmployees[employeeType])
 			num = gd.numEmployees[employeeType];
 		for (;num--;)
@@ -994,7 +995,7 @@ void B_SetUpBase (base_t* base)
 	/* the first base never has invalid fields */
 	if (base->idx > 0) {
 		j = (int) (frand() * 3 + 1.5f);
-		for (i=0; i < j; i++) {
+		for (i = 0; i < j; i++) {
 			int *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE - 1)];
 			/* set this field to invalid if there is no building yet */
 			if (*mapPtr == BASE_FREESLOT)

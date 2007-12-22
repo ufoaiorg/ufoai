@@ -1873,6 +1873,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 	NET_WriteByte(buf, clc_teaminfo);
 	NET_WriteByte(buf, team->num);
 
+	Com_DPrintf(DEBUG_CLIENT, "CL_SendCurTeamInfo: Upload information about %i soldiers to server\n", team->num);
 	for (i = 0; i < team->num; i++) {
 		chr = team->chr[i];
 		assert(chr);
@@ -2205,7 +2206,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		Cvar_SetValue("mission_tryagain", 0);
 		if (selMis && base)
 			CP_ExecuteMissionTrigger(selMis->def, winner == we);
-		else
+		else if (curCampaign)
 			Com_Printf("CL_ParseResults: Error - no mission triggers, because selMis or baseCurrent are not valid\n");
 
 		if (winner == we) {

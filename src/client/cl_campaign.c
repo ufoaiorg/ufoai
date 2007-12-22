@@ -4378,6 +4378,102 @@ campaign_t* CL_GetCampaign (const char* name)
 }
 
 /**
+ * @brief Starts a new skirmish game
+ * @todo Check the stuff in this function - maybe not every functioncall
+ * is needed here or maybe some are missing
+ */
+static void CL_GameSkirmish_f (void)
+{
+	base_t* base;
+	char map[MAX_VAR];
+	mapDef_t *md;
+	int i;
+	cvar_t* mn_serverday = Cvar_Get("mn_serverday", "1", 0, "Decides whether the server starts the day or the night version of the selected map");
+
+	if (!ccs.singleplayer)
+		return;
+
+	if (!cl_start_employees->integer || !cl_start_buildings->integer) {
+		Com_Printf("Activate initial employees and buildings in game options to play a skirmish game\n");
+		return;
+	}
+
+	md = &csi.mds[ccs.multiplayerMapDefinitionIndex];
+	if (!md)
+		return;
+
+	assert(md->map);
+	Com_sprintf(map, sizeof(map), "map %s%c %s;", md->map, mn_serverday->integer ? 'd' : 'n', md->param ? md->param : "");
+
+	/* exit running game */
+	if (curCampaign)
+		CL_GameExit();
+
+	/* get campaign - they are already parsed here */
+	curCampaign = CL_GetCampaign(Cvar_VariableString("campaign"));
+	if (!curCampaign) {
+		Com_Printf("CL_GameSkirmish_f: Could not find campaign '%s'\n", Cvar_VariableString("campaign"));
+		return;
+	}
+
+	Cvar_Set("team", curCampaign->team);
+
+	memset(&ccs, 0, sizeof(ccs_t));
+	CL_StartSingleplayer(qtrue);
+	CL_ReadSinglePlayerData();
+
+	/* create employees and clear bases */
+	B_NewBases();
+
+	base = &gd.bases[0];
+	baseCurrent = base;
+	gd.numAircraft = 0;
+
+	CL_GameInit(qfalse);
+
+	gd.numBases = 1;
+
+	/* even in skirmish mode we need a little money to build the base */
+	CL_UpdateCredits(MAX_CREDITS);
+
+	/* build our pseudo base */
+	B_SetUpBase(base);
+
+	/* execute the pending commands - e.g. aircraft are added via commandbuffer */
+	Cbuf_Execute();
+
+	if (!base->numAircraftInBase) {
+		Com_Printf("CL_GameSkirmish_f: Error - there is no dropship in base\n");
+		return;
+	}
+
+	/* we have to set this manually here */
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		if (base->aircraft[i].type == AIRCRAFT_TRANSPORTER) {
+			cls.missionaircraft = &base->aircraft[i];
+			break;
+		}
+	}
+
+	if (!cls.missionaircraft || !cls.missionaircraft->homebase) {
+		Com_Printf("CL_GameSkirmish_f: Error - could not set the mission aircraft: %i\n", base->numAircraftInBase);
+		return;
+	}
+
+	INV_InitialEquipment(base, curCampaign);
+
+	Cvar_Set("mn_main", "multiplayerInGame");
+
+	/* make sure, that we are not trying to switch to singleplayer a second time */
+	sv_maxclients->modified = qfalse;
+
+	/* this is no real campaign - but we need the pointer for some of
+	 * the previous actions */
+	curCampaign = NULL;
+	Cbuf_AddText(map);
+}
+
+/**
  * @brief Starts a new single-player game
  * @sa CL_GameInit
  * @sa CL_CampaignInitMarket
@@ -4385,8 +4481,6 @@ campaign_t* CL_GetCampaign (const char* name)
 static void CL_GameNew_f (void)
 {
 	char val[8];
-
-	Cvar_SetValue("sv_maxclients", 1.0f);
 
 	/* exit running game */
 	if (curCampaign)
@@ -5345,6 +5439,7 @@ void CL_ResetCampaign (void)
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
+	Cmd_AddCommand("game_skirmish", CL_GameSkirmish_f, "Start the new skirmish game");
 	Cmd_AddCommand("game_new", CL_GameNew_f, "Start the new campaign");
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
 	Cmd_AddCommand("cp_tryagain", CP_TryAgain_f, "Try again a mission");

@@ -315,7 +315,7 @@ static void BaseSummary_PrevBase_f (void)
 	i = baseID - 1;
 	while (i != baseCurrent->idx) {
 		if (i < 0)
-			i = gd.numBases-1;
+			i = gd.numBases - 1;
 
 		if (gd.bases[i].founded) {
 			Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push basesummary\n", i));
