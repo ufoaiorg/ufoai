@@ -335,6 +335,8 @@ void CL_LoadMedia (void)
 			cl.model_clip[i] = CM_InlineModel(cl.configstrings[CS_MODELS + i]);
 		else
 			cl.model_clip[i] = NULL;
+		if (!cl.model_draw[i])
+			Com_Error(ERR_DROP, "Could not load model '%s'\n", cl.configstrings[CS_MODELS + i]);
 
 		cls.loadingPercent += 100.0f / (float)max;
 	}
@@ -342,10 +344,14 @@ void CL_LoadMedia (void)
 	/* update le model references */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
 		if (le->inuse) {
-			if (le->modelnum1)
+			if (le->modelnum1) {
 				le->model1 = cl.model_draw[le->modelnum1];
-			if (le->modelnum2)
+				assert(le->model1);
+			}
+			if (le->modelnum2) {
 				le->model2 = cl.model_draw[le->modelnum2];
+				assert(le->model2);
+			}
 		}
 
 	cls.loadingPercent = 100.0f;

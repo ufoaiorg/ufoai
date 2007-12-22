@@ -3383,12 +3383,14 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
+	/* add the weapons it the actor's hand */
 	if (!(le->state & STATE_DEAD)) {
 		/* add weapon */
 		if (le->left != NONE) {
 			memset(&add, 0, sizeof(entity_t));
 
 			add.model = cls.model_weapons[le->left];
+			assert(add.model);
 
 			/* +2 (resp. +3) because the body and the head are already
 			 * (and maybe the right weapon will be)
@@ -3405,6 +3407,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
+			assert(add.model);
 
 			/* +2 because the body and the head are already
 			 * at the previous location */
@@ -3429,6 +3432,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	add.alpha = le->alpha;
 	add.model = le->model2;
+	assert(add.model);
 	add.skinnum = le->skinnum;
 
 	/* +1 because the body is already at the previous location */

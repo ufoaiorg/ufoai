@@ -79,6 +79,7 @@ void LM_AddToScene (void)
 		VectorCopy(lm->origin, ent.origin);
 		VectorCopy(lm->origin, ent.oldorigin);
 		VectorCopy(lm->angles, ent.angles);
+		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
 		ent.as.frame = lm->frame;
