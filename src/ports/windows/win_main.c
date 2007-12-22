@@ -184,7 +184,7 @@ void Sys_Init (void)
 #endif
 
 	sys_affinity = Cvar_Get("sys_affinity", "1", CVAR_ARCHIVE, "Which core to use - 1 = only first, 2 = only second, 3 = both");
-	sys_priority = Cvar_Get("sys_priority", "1", CVAR_ARCHIVE, "Process priority - 0 = normal, 1 = high, 2 = realtime");
+	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process priority - 0 = normal, 1 = high, 2 = realtime");
 
 	timeBeginPeriod(1);
 
