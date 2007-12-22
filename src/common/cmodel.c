@@ -81,8 +81,6 @@ typedef struct chead_s {
 typedef struct {
 	char name[MAX_QPATH];
 
-	void *extraData;
-
 	int numbrushsides;
 	cBspBrushSide_t *brushsides;
 
@@ -97,7 +95,7 @@ typedef struct {
 
 	int numleafs;
 	cBspLeaf_t *leafs;
-	int emptyleaf, solidleaf;
+	int emptyleaf;
 
 	int numleafbrushes;
 	unsigned short *leafbrushes;
@@ -463,7 +461,6 @@ static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
 
 	if (curTile->leafs[0].contentFlags != CONTENTS_SOLID)
 		Com_Error(ERR_DROP, "Map leaf 0 is not CONTENTS_SOLID");
-	curTile->solidleaf = 0;
 	curTile->emptyleaf = -1;
 	for (i = 1; i < curTile->numleafs; i++) {
 		if (!curTile->leafs[i].contentFlags) {

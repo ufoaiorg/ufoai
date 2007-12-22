@@ -34,7 +34,7 @@ static vec3_t r_mesh_norms[MD2_MAX_VERTS];
 /**
  * @brief interpolates between two frames and origins
  */
-static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int framenum, int oldframenum)
+static void R_DrawAliasFrameLerp (mdl_md2_t * md2, float backlerp, int framenum, int oldframenum)
 {
 	dAliasFrame_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
@@ -45,13 +45,13 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 	vec3_t frontv, backv;
 	int i, j, mode, index_xyz;
 
-	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + framenum * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) md2 + md2->ofs_frames + framenum * md2->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + oldframenum * paliashdr->framesize);
+	oldframe = (dAliasFrame_t *) ((byte *) md2 + md2->ofs_frames + oldframenum * md2->framesize);
 	ov = oldframe->verts;
 
-	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
+	order = (int *) ((byte *) md2 + md2->ofs_glcmds);
 
 	frontlerp = 1.0 - backlerp;
 
@@ -63,7 +63,7 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 		backv[i] = backlerp * oldframe->scale[i];
 	}
 
-	for (i = 0; i < paliashdr->num_xyz; i++, v++, ov++) {
+	for (i = 0; i < md2->num_xyz; i++, v++, ov++) {
 		VectorSet(r_mesh_verts[i],
 				move[0] + ov->v[0] * backv[0] + v->v[0] * frontv[0],
 				move[1] + ov->v[1] * backv[1] + v->v[1] * frontv[1],
@@ -120,17 +120,17 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 {
 	int i, p, mask, f, aggregatemask = ~0;
 	vec3_t mins, maxs;
-	mdl_md2_t *paliashdr;
+	mdl_md2_t *md2;
 	vec3_t thismins, oldmins, thismaxs, oldmaxs;
 	dAliasFrame_t *pframe, *poldframe;
 	float dp;
 
 	assert(e->model->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) e->model->alias.extraData;
+	md2 = (mdl_md2_t *) e->model->alias.extraData;
 
-	pframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
+	pframe = (dAliasFrame_t *) ((byte *) md2 + md2->ofs_frames + e->as.frame * md2->framesize);
 
-	poldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.oldframe * paliashdr->framesize);
+	poldframe = (dAliasFrame_t *) ((byte *) md2 + md2->ofs_frames + e->as.oldframe * md2->framesize);
 
 	/* compute axially aligned mins and maxs */
 	if (pframe == poldframe) {
@@ -294,7 +294,7 @@ static void R_ModDrawModelEffects (const entity_t *e)
  */
 void R_DrawAliasMD2Model (entity_t * e)
 {
-	mdl_md2_t *paliashdr;
+	mdl_md2_t *md2;
 	image_t *skin;
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t bbox[8];
@@ -303,15 +303,14 @@ void R_DrawAliasMD2Model (entity_t * e)
 	if (R_CullAliasMD2Model(bbox, e))
 		return;
 
-	assert(e->model->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) e->model->alias.extraData;
+	md2 = (mdl_md2_t *) e->model->alias.extraData;
 
 	/* check animations */
-	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
+	if ((e->as.frame >= md2->num_frames) || (e->as.frame < 0)) {
 		Com_Printf("R_DrawAliasMD2Model %s: no such frame %d\n", e->model->name, e->as.frame);
 		e->as.frame = 0;
 	}
-	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
+	if ((e->as.oldframe >= md2->num_frames) || (e->as.oldframe < 0)) {
 		Com_Printf("R_DrawAliasMD2Model %s: no such oldframe %d\n", e->model->name, e->as.oldframe);
 		e->as.oldframe = 0;
 	}
@@ -339,7 +338,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	}
 
 	/* locate the proper data */
-	c_alias_polys += paliashdr->num_tris;
+	c_alias_polys += md2->num_tris;
 
 	qglPushMatrix();
 
@@ -359,7 +358,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* set-up lighting */
 	R_EnableLighting(qtrue);
 
-	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
+	R_DrawAliasFrameLerp(md2, e->as.backlerp, e->as.frame, e->as.oldframe);
 
 	R_EnableLighting(qfalse);
 
@@ -390,7 +389,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 			qglTranslatef(-mi->center[0], -mi->center[1], -mi->center[2]);
 	} else if (mi->center) {
 		/* autoscale */
-		mdl_md2_t *paliashdr;
+		mdl_md2_t *md2;
 		dAliasFrame_t *pframe;
 
 		float max, size;
@@ -399,8 +398,8 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 
 		/* get model data */
 		assert(mi->model->type == mod_alias_md2);
-		paliashdr = (mdl_md2_t *) mi->model->alias.extraData;
-		pframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
+		md2 = (mdl_md2_t *) mi->model->alias.extraData;
+		pframe = (dAliasFrame_t *) ((byte *) md2 + md2->ofs_frames);
 
 		/* get center and scale */
 		for (max = 1.0, i = 0; i < 3; i++) {
@@ -424,7 +423,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
 {
 	int i;
-	mdl_md2_t *paliashdr;
+	mdl_md2_t *md2;
 	image_t *skin;
 
 	/* register the model */
@@ -436,20 +435,20 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		return;
 	}
 
-	paliashdr = (mdl_md2_t *) mi->model->alias.extraData;
+	md2 = (mdl_md2_t *) mi->model->alias.extraData;
 
 	/* check animations */
-	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {
+	if ((mi->frame >= md2->num_frames) || (mi->frame < 0)) {
 		Com_Printf("R_DrawModelDirect %s: no such frame %d\n", mi->model->name, mi->frame);
 		mi->frame = 0;
 	}
-	if ((mi->oldframe >= paliashdr->num_frames) || (mi->oldframe < 0)) {
+	if ((mi->oldframe >= md2->num_frames) || (mi->oldframe < 0)) {
 		Com_Printf("R_DrawModelDirect %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
 		mi->oldframe = 0;
 	}
 
 	/* select skin */
-	if (mi->skin >= 0 && mi->skin < paliashdr->num_skins)
+	if (mi->skin >= 0 && mi->skin < md2->num_skins)
 		skin = mi->model->alias.skins_img[mi->skin];
 	else
 		skin = mi->model->alias.skins_img[0];
@@ -458,7 +457,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		skin = r_notexture;		/* fallback... */
 
 	/* locate the proper data */
-	c_alias_polys += paliashdr->num_tris;
+	c_alias_polys += md2->num_tris;
 
 	/* draw all the triangles */
 	qglPushMatrix();
@@ -518,7 +517,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		R_EnableBlend(qtrue);
 
 	/* draw the model */
-	R_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
+	R_DrawAliasFrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);
 
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
@@ -533,29 +532,29 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 void R_DrawModelParticle (modelInfo_t * mi)
 {
-	mdl_md2_t *paliashdr;
+	mdl_md2_t *md2;
 	image_t *skin;
 
 	/* check if the model exists */
 	if (!mi->model || mi->model->type != mod_alias_md2)
 		return;
 
-	paliashdr = (mdl_md2_t *) mi->model->alias.extraData;
+	md2 = (mdl_md2_t *) mi->model->alias.extraData;
 
 	/* check animations */
-	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {
+	if ((mi->frame >= md2->num_frames) || (mi->frame < 0)) {
 		Com_Printf("R_DrawModelParticle %s: no such frame %d\n", mi->model->name, mi->frame);
 		mi->frame = 0;
 	}
-	if ((mi->oldframe >= paliashdr->num_frames) || (mi->oldframe < 0)) {
+	if ((mi->oldframe >= md2->num_frames) || (mi->oldframe < 0)) {
 		Com_Printf("R_DrawModelParticle %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
 		mi->oldframe = 0;
 	}
 
 	/* select skin */
-	if (mi->skin >= paliashdr->num_skins) {
+	if (mi->skin >= md2->num_skins) {
 		Com_Printf("R_DrawModelParticle %s: no such skin %i (found %i skins)\n",
-			mi->model->name, mi->skin, paliashdr->num_skins);
+			mi->model->name, mi->skin, md2->num_skins);
 		mi->skin = 0;
 	}
 	skin = mi->model->alias.skins_img[mi->skin];
@@ -563,7 +562,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 		skin = r_notexture;		/* fallback... */
 
 	/* locate the proper data */
-	c_alias_polys += paliashdr->num_tris;
+	c_alias_polys += md2->num_tris;
 
 	R_Color(mi->color);
 
@@ -585,7 +584,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	qglEnable(GL_CULL_FACE);
 
 	/* draw the model */
-	R_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
+	R_DrawAliasFrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);
 
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);

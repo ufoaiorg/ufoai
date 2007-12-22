@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
-static void R_DrawAliasMD3FrameLerp (entity_t* e, mAliasModel_t *paliashdr, mAliasMesh_t mesh)
+static void R_DrawAliasMD3FrameLerp (entity_t* e, mAliasModel_t *md3, mAliasMesh_t mesh)
 {
 	int i, j;
 	mAliasFrame_t	*frame, *oldframe;
@@ -52,8 +52,8 @@ static void R_DrawAliasMD3FrameLerp (entity_t* e, mAliasModel_t *paliashdr, mAli
 	else
 		alpha = 1.0;
 
-	frame = paliashdr->frames + e->as.frame;
-	oldframe = paliashdr->frames + e->as.oldframe;
+	frame = md3->frames + e->as.frame;
+	oldframe = md3->frames + e->as.oldframe;
 
 	VectorSubtract(e->oldorigin, e->origin, delta);
 	VectorCopy(e->angles, tempangle);
@@ -104,16 +104,16 @@ static void R_DrawAliasMD3FrameLerp (entity_t* e, mAliasModel_t *paliashdr, mAli
  */
 void R_DrawAliasMD3Model (entity_t *e)
 {
-	mAliasModel_t	*paliashdr;
-	image_t		*skin;
-	int	i;
+	mAliasModel_t *md3;
+	image_t *skin;
+	int i;
 
 	assert(e->model->type == mod_alias_md3);
 
-	paliashdr = (mAliasModel_t *)e->model->alias.extraData;
+	md3 = (mAliasModel_t *)e->model->alias.extraData;
 
-	for (i = 0; i < paliashdr->num_meshes; i++) {
-		c_alias_polys += paliashdr->meshes[i].num_tris;
+	for (i = 0; i < md3->num_meshes; i++) {
+		c_alias_polys += md3->meshes[i].num_tris;
 	}
 
 	qglPushMatrix();
@@ -126,13 +126,13 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (e->flags & RF_TRANSLUCENT)
 		R_EnableBlend(qtrue);
 
-	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
+	if ((e->as.frame >= md3->num_frames) || (e->as.frame < 0)) {
 		Com_Printf("R_DrawAliasMD3Model %s: no such frame %d\n", e->model->name, e->as.frame);
 		e->as.frame = 0;
 		e->as.oldframe = 0;
 	}
 
-	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
+	if ((e->as.oldframe >= md3->num_frames) || (e->as.oldframe < 0)) {
 		Com_Printf("R_DrawAliasMD3Model %s: no such oldframe %d\n",
 			e->model->name, e->as.oldframe);
 		e->as.frame = 0;
@@ -166,12 +166,12 @@ void R_DrawAliasMD3Model (entity_t *e)
 	/* set-up lighting */
 	R_EnableLighting(qtrue);
 
-	for (i = 0; i < paliashdr->num_meshes; i++) {
+	for (i = 0; i < md3->num_meshes; i++) {
 		skin = e->model->alias.skins_img[e->skinnum];
 		R_Bind(skin->texnum);
 		/* locate the proper data */
-		c_alias_polys += paliashdr->meshes[i].num_tris;
-		R_DrawAliasMD3FrameLerp(e, paliashdr, paliashdr->meshes[i]);
+		c_alias_polys += md3->meshes[i].num_tris;
+		R_DrawAliasMD3FrameLerp(e, md3, md3->meshes[i]);
 	}
 
 	R_EnableLighting(qfalse);

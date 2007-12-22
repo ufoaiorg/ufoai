@@ -38,7 +38,7 @@ MD3 ALIAS MODELS
 void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 {
 	int					version, i, j, l;
-	dmd3_t				*pinmodel;
+	dmd3_t				*md3;
 	dmd3frame_t			*pinframe;
 	dmd3tag_t			*pintag;
 	dmd3mesh_t			*pinmesh;
@@ -58,8 +58,8 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	char path[MAX_QPATH];
 	char *slash, *end;
 
-	pinmodel = (dmd3_t *)buffer;
-	version = LittleLong(pinmodel->version);
+	md3 = (dmd3_t *)buffer;
+	version = LittleLong(md3->version);
 
 	if (version != MD3_ALIAS_VERSION) {
 		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)",
@@ -69,9 +69,9 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	poutmodel = VID_TagAlloc(vid_modelPool, sizeof(mAliasModel_t), 0);
 
 	/* byte swap the header fields and sanity check */
-	poutmodel->num_frames = LittleLong(pinmodel->num_frames);
-	poutmodel->num_tags = LittleLong(pinmodel->num_tags);
-	poutmodel->num_meshes = LittleLong(pinmodel->num_meshes);
+	poutmodel->num_frames = LittleLong(md3->num_frames);
+	poutmodel->num_tags = LittleLong(md3->num_tags);
+	poutmodel->num_meshes = LittleLong(md3->num_meshes);
 	poutmodel->num_skins = 0;
 
 	if (poutmodel->num_frames <= 0)
@@ -90,7 +90,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		Sys_Error("model %s has too many meshes", mod->name);
 
 	/* load the frames */
-	pinframe = (dmd3frame_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_frames));
+	pinframe = (dmd3frame_t *)((byte *)md3 + LittleLong(md3->ofs_frames));
 	poutframe = poutmodel->frames = VID_TagAlloc(vid_modelPool, sizeof(mAliasFrame_t) * poutmodel->num_frames, 0);
 
 	mod->radius = 0;
@@ -113,7 +113,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 	/* load the tags */
 	if (poutmodel->num_tags) {
-		pintag = (dmd3tag_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_tags));
+		pintag = (dmd3tag_t *)((byte *)md3 + LittleLong(md3->ofs_tags));
 		pouttag = poutmodel->tags = VID_TagAlloc(vid_modelPool, sizeof(mAliasTag_t) * poutmodel->num_frames * poutmodel->num_tags, 0);
 
 		for (i = 0; i < poutmodel->num_frames; i++) {
@@ -131,7 +131,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	}
 
 	/* load the meshes */
-	pinmesh = (dmd3mesh_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_meshes));
+	pinmesh = (dmd3mesh_t *)((byte *)md3 + LittleLong(md3->ofs_meshes));
 	poutmesh = poutmodel->meshes = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t) * poutmodel->num_meshes, 0);
 
 	for (i = 0; i < poutmodel->num_meshes; i++, poutmesh++) {

@@ -113,7 +113,7 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 {
 	int i, j;
 	size_t l;
-	mdl_md2_t *pinmodel, *pheader;
+	mdl_md2_t *md2, *pheader;
 	dstvert_t *pinst, *poutst;
 	dtriangle_t *pintri, *pouttri;
 	dAliasFrame_t *pinframe, *poutframe;
@@ -122,13 +122,13 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 
 	byte *tagbuf = NULL, *animbuf = NULL;
 
-	pinmodel = (mdl_md2_t *) buffer;
+	md2 = (mdl_md2_t *) buffer;
 
-	version = LittleLong(pinmodel->version);
+	version = LittleLong(md2->version);
 	if (version != MD2_ALIAS_VERSION)
 		Sys_Error("%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
 
-	pheader = VID_TagAlloc(vid_modelPool, LittleLong(pinmodel->ofs_end), 0);
+	pheader = VID_TagAlloc(vid_modelPool, LittleLong(md2->ofs_end), 0);
 	mod->alias.extraData = pheader;
 
 	/* byte swap the header fields and sanity check */
@@ -165,7 +165,7 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	mod->alias.num_skins = pheader->num_skins;
 
 	/* load base s and t vertices (not used in gl version) */
-	pinst = (dstvert_t *) ((byte *) pinmodel + pheader->ofs_st);
+	pinst = (dstvert_t *) ((byte *) md2 + pheader->ofs_st);
 	poutst = (dstvert_t *) ((byte *) pheader + pheader->ofs_st);
 
 	for (i = 0; i < pheader->num_st; i++) {
@@ -174,7 +174,7 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	}
 
 	/* load triangle lists */
-	pintri = (dtriangle_t *) ((byte *) pinmodel + pheader->ofs_tris);
+	pintri = (dtriangle_t *) ((byte *) md2 + pheader->ofs_tris);
 	pouttri = (dtriangle_t *) ((byte *) pheader + pheader->ofs_tris);
 
 	for (i = 0; i < pheader->num_tris; i++) {
@@ -186,7 +186,7 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 
 	/* load the frames */
 	for (i = 0; i < pheader->num_frames; i++) {
-		pinframe = (dAliasFrame_t *) ((byte *) pinmodel + pheader->ofs_frames + i * pheader->framesize);
+		pinframe = (dAliasFrame_t *) ((byte *) md2 + pheader->ofs_frames + i * pheader->framesize);
 		poutframe = (dAliasFrame_t *) ((byte *) pheader + pheader->ofs_frames + i * pheader->framesize);
 
 		memcpy(poutframe->name, pinframe->name, sizeof(poutframe->name));
@@ -201,13 +201,13 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	mod->type = mod_alias_md2;
 
 	/* load the glcmds */
-	pincmd = (int *) ((byte *) pinmodel + pheader->ofs_glcmds);
+	pincmd = (int *) ((byte *) md2 + pheader->ofs_glcmds);
 	poutcmd = (int *) ((byte *) pheader + pheader->ofs_glcmds);
 	for (i = 0; i < pheader->num_glcmds; i++)
 		poutcmd[i] = LittleLong(pincmd[i]);
 
 	/* copy skin names */
-	memcpy((char *) pheader + pheader->ofs_skins, (char *) pinmodel + pheader->ofs_skins, pheader->num_skins * MD2_MAX_SKINNAME);
+	memcpy((char *) pheader + pheader->ofs_skins, (char *) md2 + pheader->ofs_skins, pheader->num_skins * MD2_MAX_SKINNAME);
 
 	mod->mins[0] = -UNIT_SIZE;
 	mod->mins[1] = -UNIT_SIZE;

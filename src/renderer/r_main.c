@@ -276,7 +276,6 @@ static void R_DrawEntities (void)
 {
 	int i;
 	entity_t *e;
-	model_t *mod;
 
 	if (!r_drawentities->integer)
 		return;
@@ -291,12 +290,11 @@ static void R_DrawEntities (void)
 		if (e->flags & (RF_TRANSLUCENT | RF_BOX))
 			continue;			/* solid */
 
-		mod = e->model;
-		if (!mod) {
+		if (!e->model) {
 			R_ModDrawNullModel(e);
 			continue;
 		}
-		switch (mod->type) {
+		switch (e->model->type) {
 		case mod_alias_md2:
 			/* MD2 model */
 			R_DrawAliasMD2Model(e);
@@ -310,7 +308,7 @@ static void R_DrawEntities (void)
 			R_DrawBrushModel(e);
 			break;
 		default:
-			Sys_Error("Bad %s modeltype: %i", mod->name, mod->type);
+			Sys_Error("Bad %s modeltype: %i", e->model->name, e->model->type);
 			break;
 		}
 
@@ -325,7 +323,6 @@ static void R_DrawAlphaEntities (void)
 {
 	int i;
 	entity_t *e;
-	model_t *mod;
 
 	if (!r_drawentities->integer)
 		return;
@@ -341,12 +338,11 @@ static void R_DrawAlphaEntities (void)
 		if (!(e->flags & RF_TRANSLUCENT))
 			continue;			/* solid */
 
-		mod = e->model;
-		if (!mod) {
+		if (!e->model) {
 			R_ModDrawNullModel(e);
 			continue;
 		}
-		switch (mod->type) {
+		switch (e->model->type) {
 		case mod_alias_md2:
 			/* MD2 model */
 			R_DrawAliasMD2Model(e);
@@ -359,14 +355,14 @@ static void R_DrawAlphaEntities (void)
 			R_DrawBrushModel(e);
 			break;
 		default:
-			Sys_Error("Bad %s modeltype: %i", mod->name, mod->type);
+			Sys_Error("Bad %s modeltype: %i", e->model->name, e->model->type);
 			break;
 		}
 		R_Color(NULL);
 	}
 }
 
-static inline int SignbitsForPlane (cBspPlane_t * out)
+static inline int SignbitsForPlane (const cBspPlane_t * out)
 {
 	int bits, j;
 

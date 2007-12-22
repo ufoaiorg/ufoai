@@ -88,7 +88,6 @@ void R_ModLoadAnims (mAliasModel_t * mod, void *buffer)
 		mod->numanims++;
 		anim++;
 	} while (mod->numanims < MAX_ANIMS);
-/*	Com_Printf("anims: %i for model %s\n", mod->numanims, mod->name); */
 }
 
 int R_ModFindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex)
