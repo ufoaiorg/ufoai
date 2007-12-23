@@ -82,7 +82,7 @@ void R_ImageClearMaterials(void);
 void R_UpdateTextures(int min, int max);
 void R_CalcDayAndNight(float q);
 
-image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
+image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG
 image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file, int line);
 #define R_FindImage(pname,type) R_FindImageDebug(pname, type, __FILE__, __LINE__ )

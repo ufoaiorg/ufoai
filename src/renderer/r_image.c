@@ -1091,7 +1091,7 @@ void R_CalcDayAndNight (float q)
 /**
  * @brief This is also used as an entry point for the generated r_notexture
  */
-image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagetype_t type, int bits)
+image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
 	int i;
@@ -1197,7 +1197,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (FS_CheckFile(lname) != -1) {
 		R_LoadTGA(lname, &pic, &width, &height);
 		if (pic) {
-			image = R_LoadPic(lname, pic, width, height, type, 32);
+			image = R_LoadPic(lname, pic, width, height, type);
 			goto end;
 		}
 	}
@@ -1206,7 +1206,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (FS_CheckFile(lname) != -1) {
 		R_LoadPNG(lname, &pic, &width, &height);
 		if (pic) {
-			image = R_LoadPic(lname, pic, width, height, type, 32);
+			image = R_LoadPic(lname, pic, width, height, type);
 			goto end;
 		}
 	}
@@ -1215,7 +1215,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (FS_CheckFile(lname) != -1) {
 		R_LoadJPG(lname, &pic, &width, &height);
 		if (pic) {
-			image = R_LoadPic(lname, pic, width, height, type, 32);
+			image = R_LoadPic(lname, pic, width, height, type);
 			goto end;
 		}
 	}
