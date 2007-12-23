@@ -378,8 +378,6 @@ static void R_ModLoadLeafs (lump_t * l)
 
 		p = LittleLong(in->contentFlags);
 		out->contents = p;
-
-		out->area = LittleShort(in->area);
 	}
 }
 

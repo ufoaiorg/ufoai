@@ -65,7 +65,6 @@ typedef struct mBspTexInfo_s {
 
 typedef struct mBspPoly_s {
 	struct mBspPoly_s *next;
-	struct mBspPoly_s *chain;
 	int numverts;
 	float verts[4][VERTEXSIZE];	/**< variable sized (xyz s1t1 s2t2) */
 } mBspPoly_t;
@@ -121,15 +120,11 @@ typedef struct mBspLeaf_s {
 	float minmaxs[6];			/**< for bounding box culling */
 
 	struct mnode_s *parent;
-
-	/** leaf specific */
-	int area;
 } mBspLeaf_t;
 
 /** @brief brush model */
 typedef struct mBspModel_s {
 	int firstmodelsurface, nummodelsurfaces;
-	int lightmap;				/**< only for submodels */
 
 	int numsubmodels;
 	mBspHeader_t *submodels;
