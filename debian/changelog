@@ -1,10 +1,15 @@
-ufoai (2.2~~svn11980) unstable; urgency=low
+ufoai (2.3~~svn13732) unstable; urgency=low
 
+  [ Martin Gerhardy ]
   * Removed snd_* (SDL sound is merged into the ufo binary)
   * Removed openal
-  * Added libcurl
 
- -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 26 Sep 2007 07:54:13 +0100
+  [ Florian Ludwig ]
+  * Fix versioning of dependencies on ufo-data
+  * Use libcurl4-dev not 3
+  * Dump version to 2.3~~svn
+
+ -- Florian Ludwig <dino@phidev.org>  Sun, 23 Dec 2007 17:33:16 +0100
 
 ufoai (2.2~~svn11864) unstable; urgency=low
 
