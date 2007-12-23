@@ -116,17 +116,6 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 	return qfalse;
 }
 
-
-void R_RotateForEntity (const entity_t * e)
-{
-	qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
-
-	qglRotatef(e->angles[1], 0, 0, 1);
-	qglRotatef(-e->angles[0], 0, 1, 0);
-	qglRotatef(-e->angles[2], 1, 0, 0);
-}
-
-
 void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float *interpolated)
 {
 	float *current, *old;

@@ -117,11 +117,8 @@ void R_DrawAliasMD3Model (entity_t *e)
 	}
 
 	qglPushMatrix();
-	e->angles[PITCH] = -e->angles[PITCH];	/* sigh. */
-	e->angles[YAW] = e->angles[YAW] - 90;
-	R_RotateForEntity(e);
-	e->angles[PITCH] = -e->angles[PITCH];	/* sigh. */
-	e->angles[YAW] = e->angles[YAW] + 90;
+
+	qglMultMatrixf(trafo[e - r_entities].matrix);
 
 	if ((e->as.frame >= md3->num_frames) || (e->as.frame < 0)) {
 		Com_Printf("R_DrawAliasMD3Model %s: no such frame %d\n", e->model->name, e->as.frame);

@@ -129,7 +129,6 @@ void R_DrawEntityEffects(const entity_t *e);
 void R_DrawEntities(void);
 void R_DrawInitLocal(void);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
-void R_RotateForEntity(const entity_t *e);
 void R_DrawParticles(void);
 
 /*
