@@ -36,7 +36,8 @@ mBspSurface_t *r_alpha_warp_surfaces;
 static float surface_warp, surface_flow;
 
 /**
- * @brief
+ * @brief Set the surface state according to surface flags and bind the texture
+ * @sa R_DrawSurfaces
  */
 static void R_SetSurfaceState (const mBspSurface_t *surf)
 {
@@ -86,6 +87,10 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	}
 }
 
+/**
+ * @brief Use the vertex, texture and normal arrays to draw a surface
+ * @sa R_DrawSurfaces
+ */
 static void R_DrawSurface (const mBspSurface_t *surf)
 {
 	int i, j, k, nv;
@@ -112,7 +117,8 @@ static void R_DrawSurface (const mBspSurface_t *surf)
 		/* vertex */
 		memcpy(&r_state.vertex_array_3d[k], v, sizeof(vec3_t));
 
-		if (r_state.lighting_enabled) {  /* normal vector for lights */
+		/* normal vector for lights */
+		if (r_state.lighting_enabled) {
 			if (surf->flags & SURF_PLANEBACK)
 				VectorNegate(surf->plane->normal, norm);
 			else
