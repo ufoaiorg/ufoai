@@ -129,7 +129,10 @@ static void R_DrawSurface (const mBspSurface_t *surf)
 }
 
 /**
- * @brief
+ * @brief General surface drawing function, that draw the surface chains
+ * @note The needed states for the surfaces must be set before you call this
+ * @sa R_DrawSurface
+ * @sa R_SetSurfaceState
  */
 static void R_DrawSurfaces (const mBspSurface_t *surfs)
 {
@@ -144,7 +147,8 @@ static void R_DrawSurfaces (const mBspSurface_t *surfs)
 }
 
 /**
- * @brief
+ * @brief Draw the surface chain with multitexture enabled and blend enabled
+ * @sa R_DrawOpaqueSurfaces
  */
 void R_DrawAlphaSurfaces (const mBspSurface_t *surfs)
 {
@@ -158,7 +162,8 @@ void R_DrawAlphaSurfaces (const mBspSurface_t *surfs)
 }
 
 /**
- * @brief
+ * @brief Draw the surface chain with multitexture enabled and light enabled
+ * @sa R_DrawAlphaSurfaces
  */
 void R_DrawOpaqueSurfaces (const mBspSurface_t *surfs)
 {
@@ -174,6 +179,10 @@ void R_DrawOpaqueSurfaces (const mBspSurface_t *surfs)
 	R_EnableMultitexture(qfalse);
 }
 
+/**
+ * @brief Draw the surfaces via warp shader
+ * @sa R_DrawAlphaWarpSurfaces
+ */
 void R_DrawOpaqueWarpSurfaces (mBspSurface_t *surfs)
 {
 	if (!surfs)
@@ -184,6 +193,10 @@ void R_DrawOpaqueWarpSurfaces (mBspSurface_t *surfs)
 	R_EnableWarp(qfalse);
 }
 
+/**
+ * @brief Draw the alpha surfaces via warp shader and with blend enabled
+ * @sa R_DrawOpaqueWarpSurfaces
+ */
 void R_DrawAlphaWarpSurfaces (mBspSurface_t *surfs)
 {
 	if (!surfs)
