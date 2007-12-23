@@ -203,9 +203,6 @@ static void CL_ParseEntitystring (const char *es)
 			VectorScale(color, light / 100, sun.color);
 			sun.color[3] = 1.0;
 
-			/* init ambient */
-			VectorScale(ambient, 1.4, sun.ambient);
-			sun.ambient[3] = 1.0;
 			R_AddSunLight(&sun);
 
 			/* maximum level */

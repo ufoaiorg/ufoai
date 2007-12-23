@@ -32,12 +32,12 @@ const float default_texcoords[] = {
 };
 
 /* global ambient lighting */
-const vec4_t ambient = {
-	0.0, 0.0, 0.0, 1.0
+static const vec4_t ambient = {
+	0.6, 0.6, 0.6, 1.0
 };
 
 /* material reflection */
-const vec4_t material = {
+static const vec4_t material = {
 	1.0, 1.0, 1.0, 1.0
 };
 
