@@ -1495,7 +1495,7 @@ static void CM_InitBoxHull (void)
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
+int CM_HeadnodeForBox (int tile, const vec3_t mins, const vec3_t maxs)
 {
 	assert((tile < numTiles) && (tile >= 0));
 	/* FIXME: is it ok to set the global var curTile here? */
