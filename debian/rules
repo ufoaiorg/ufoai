@@ -64,7 +64,7 @@ clean:
 	dh_testroot
 	rm -rf stamps
 
-	$(MAKE) BUILDDIR=$(CURDIR)/BUILD distclean
+	$(MAKE) BUILDDIR=$(CURDIR)/BUILD clean
 	find maps -name '*.bsp' | xargs --no-run-if-empty rm
 
 	set -e; if [ -d .svn ]; then \
