@@ -37,6 +37,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Whole model */
 
+/** @brief entity transform */
+typedef struct {
+	qboolean done;
+	qboolean processing;
+	float matrix[16];
+} transform_t;
+
+extern transform_t trafo[MAX_ENTITIES];
+
 /**
  * @brief All supported model formats
  * @sa mod_extensions

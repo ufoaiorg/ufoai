@@ -80,6 +80,7 @@ void R_ShutdownImages(void);
 void R_FreeUnusedImages(void);
 void R_ImageClearMaterials(void);
 void R_UpdateTextures(int min, int max);
+void R_CalcDayAndNight(float q);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
 #ifdef DEBUG
@@ -91,5 +92,12 @@ image_t *R_FindImage(const char *pname, imagetype_t type);
 
 #define MAX_ENVMAPTEXTURES 2
 extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
+
+extern image_t *shadow;	/**< draw this when actor is alive */
+extern image_t *blood; /**< draw this when actor is dead */
+extern image_t *r_notexture;
+extern image_t *r_warptexture;
+extern image_t *DaN;
+
 
 #endif

@@ -33,8 +33,6 @@ mBspSurface_t *r_opaque_warp_surfaces;
 mBspSurface_t *r_alpha_surfaces;
 mBspSurface_t *r_alpha_warp_surfaces;
 
-mBspSurface_t *r_material_surfaces;
-
 static float surface_warp, surface_flow;
 
 /**

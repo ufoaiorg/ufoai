@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	MAX_LIGHTMAPS	256
 #define LIGHTMAP_BYTES	4
+#define RGB_PIXELSIZE 3
 
 typedef struct {
 	GLuint lightmap_texture_count;

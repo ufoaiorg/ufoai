@@ -26,9 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
+mBspSurface_t *r_material_surfaces;
 
 #define UPDATE_THRESHOLD 0.02
-void R_UpdateMaterial (material_t *m)
+static void R_UpdateMaterial (material_t *m)
 {
 	materialStage_t *s;
 

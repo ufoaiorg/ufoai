@@ -143,7 +143,7 @@ static void R_InitGlobeChain (void)
 }
 
 /* console font */
-image_t *draw_chars[2];
+static image_t *draw_chars[2];
 
 /**
  * @brief Loads some textures and init the 3d globe
