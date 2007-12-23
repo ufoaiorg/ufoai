@@ -152,7 +152,9 @@ void R_DrawAlphaSurfaces (const mBspSurface_t *surfs)
 		return;
 
 	assert(r_state.blend_enabled);
+	R_EnableMultitexture(qtrue);
 	R_DrawSurfaces(surfs);
+	R_EnableMultitexture(qfalse);
 }
 
 /**

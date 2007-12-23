@@ -310,7 +310,6 @@ static void SH_UseProgram_ARB_VP (int vpid)
  * @sa SH_UseProgram_ARB_FP
  * @sa SH_UseProgram_ARB_VP
  * @param[in] shader Shader pointer (see image_t)
- * @todo finish the implementation
  */
 void SH_UseShader (shader_t * shader, qboolean deactivate)
 {
