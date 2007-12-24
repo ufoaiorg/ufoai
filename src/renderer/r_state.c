@@ -33,7 +33,7 @@ const float default_texcoords[] = {
 
 /* global ambient lighting */
 static const vec4_t ambient = {
-	0.6, 0.6, 0.6, 1.0
+	0.0, 0.0, 0.0, 1.0
 };
 
 /* material reflection */
@@ -333,6 +333,7 @@ void R_EnableMultitexture (qboolean enable)
 	R_SelectTexture(&r_state.lightmap_texunit);
 
 	if (enable) {
+		/* enable on the second texture unit */
 		qglEnable(GL_TEXTURE_2D);
 		if (r_lightmap->modified) {
 			r_lightmap->modified = qfalse;
@@ -344,6 +345,7 @@ void R_EnableMultitexture (qboolean enable)
 		qglEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		qglTexCoordPointer(2, GL_FLOAT, 0, r_state.lightmap_texunit.texcoords);
 	} else {
+		/* disable on the second texture unit */
 		qglDisable(GL_TEXTURE_2D);
 		qglDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
