@@ -285,6 +285,18 @@ menu options_video
 		align	ur
 	}
 
+	string light_str
+	{
+		string  "_Per pixel lighting:"
+		pos             "500 365"
+	}
+	checkbox light
+	{
+		cvar    "*cvar r_light"
+		pos             "840 365"
+		align   ur
+	}
+
 	string ptlweather_str
 	{
 		string	"_Weather effects:"
