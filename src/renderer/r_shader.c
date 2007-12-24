@@ -311,7 +311,7 @@ static void SH_UseProgram_ARB_VP (int vpid)
  * @sa SH_UseProgram_ARB_VP
  * @param[in] shader Shader pointer (see image_t)
  */
-void SH_UseShader (shader_t * shader, qboolean deactivate)
+void SH_UseShader (shader_t * shader, qboolean activate)
 {
 	/* no shaders supported - @todo glsl */
 	if (!r_shader->integer || !r_state.arb_fragment_program || !shader)
@@ -320,21 +320,24 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 	assert(shader);
 
 	if (shader->glslpid > 0) {
-		if (deactivate)
-			qglUseProgram(0);
-		else
+		if (activate) {
 			qglUseProgram(shader->glslpid);
-	} else if (shader->fpid > 0) {
-		if (deactivate) {
-			SH_UseProgram_ARB_FP(0);
 		} else {
-			SH_UseProgram_ARB_FP(shader->fpid);
+			qglUseProgram(0);
 		}
-	} else if (shader->vpid > 0) {
-		if (deactivate) {
-			SH_UseProgram_ARB_VP(0);
+	}
+	if (shader->fpid > 0) {
+		if (activate) {
+			SH_UseProgram_ARB_FP(shader->fpid);
 		} else {
+			SH_UseProgram_ARB_FP(0);
+		}
+	}
+	if (shader->vpid > 0) {
+		if (activate) {
 			SH_UseProgram_ARB_VP(shader->vpid);
+		} else {
+			SH_UseProgram_ARB_VP(0);
 		}
 	}
 }

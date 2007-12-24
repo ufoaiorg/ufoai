@@ -22,6 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 shader_t* R_GetShader(const char* name);
 void R_ShutdownShaders(void);
-void SH_UseShader(shader_t * shader, qboolean deactivate);
+void SH_UseShader(shader_t * shader, qboolean activate);
 
 #endif
