@@ -1280,7 +1280,8 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 
 			FS_LoadFile(filename, &lBuffer);
 			*text = (char*)lBuffer;
-		}
+		} else if (!lBuffer)
+			break;
 	}
 
 	/* free the old file */
