@@ -244,35 +244,45 @@ void R_SetupGL2D (void)
 	R_CheckError();
 }
 
-static shader_t *lighting_shader, *warp_shader;
+static shader_t *lighting_shader, *lighting_mtex_shader, *warp_shader;
+static shader_t *activeLightShader;
 
 void R_EnableLighting (qboolean enable)
 {
 	if (!r_light->integer || r_state.lighting_enabled == enable)
 		return;
 
-	if (!lighting_shader)
+	if (!lighting_shader || !lighting_mtex_shader) {
 		lighting_shader = R_GetShader("lighting");
+		lighting_mtex_shader = R_GetShader("lighting_mtex");
+	}
 
 	r_state.lighting_enabled = enable;
 
 	if (enable) {  /* toggle state */
 		qglEnable(GL_LIGHTING);
 
+		if (r_state.multitexture_enabled)
+			activeLightShader = lighting_mtex_shader;
+		else
+			activeLightShader = lighting_shader;
+
 		if (lighting_shader && !(refdef.rdflags & RDF_NOWORLDMODEL)) {
 			qglEnableClientState(GL_NORMAL_ARRAY);
 			qglNormalPointer(GL_FLOAT, 0, r_state.normal_array);
 
-			SH_UseShader(lighting_shader, qtrue);
+			SH_UseShader(activeLightShader, qtrue);
 		}
 	} else {
+		assert(activeLightShader);
 		qglDisable(GL_LIGHTING);
 
 		if (lighting_shader && !(refdef.rdflags & RDF_NOWORLDMODEL)) {
 			qglDisableClientState(GL_NORMAL_ARRAY);
 
-			SH_UseShader(lighting_shader, qfalse);
+			SH_UseShader(activeLightShader, qfalse);
 		}
+		activeLightShader = NULL;
 	}
 }
 
