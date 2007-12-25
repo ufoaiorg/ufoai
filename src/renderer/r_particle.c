@@ -37,7 +37,7 @@ PARTICLE DRAWING
  * @param[out] up the output up vector for the particle
  * @sa R_DrawSprite
  */
-static void R_GetSpriteVectors (ptl_t *p, vec3_t right, vec3_t up)
+static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 {
 	/* get transformation */
 	switch (p->style) {
@@ -71,9 +71,9 @@ static void R_GetSpriteVectors (ptl_t *p, vec3_t right, vec3_t up)
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawSprite (ptl_t * p)
+static void R_DrawSprite (const ptl_t * p)
 {
-	ptl_t *q;
+	const ptl_t *q;
 	vec3_t up, right;
 	vec3_t nup, nright;
 	vec3_t pos;
@@ -158,7 +158,7 @@ static void R_DrawPtlModel (ptl_t * p)
  * @param[in] color The color of the circle lines
  * @sa Draw_Circle
  */
-static void R_DrawPtlCircle (ptl_t* p)
+static void R_DrawPtlCircle (const ptl_t* p)
 {
 	float radius = p->size[0];
 	int thickness = (int)p->size[1];
@@ -195,7 +195,7 @@ static void R_DrawPtlCircle (ptl_t* p)
 /**
  * @sa R_DrawParticles
  */
-static void R_DrawPtlLine (ptl_t * p)
+static void R_DrawPtlLine (const ptl_t * p)
 {
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
