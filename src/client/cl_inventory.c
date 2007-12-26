@@ -40,7 +40,7 @@ static int eTempCredits;		/**< Used to count temporary credits for item selling.
  * @param[in] aircraft Pointer to aircraft used in this mission.
  * @sa INV_CollectingItems
  */
-static void INV_CollectingAmmo (invList_t *magazine, aircraft_t *aircraft)
+static void INV_CollectingAmmo (const invList_t *magazine, aircraft_t *aircraft)
 {
 	int i;
 	itemsTmp_t *cargo = NULL;
@@ -73,7 +73,7 @@ static void INV_CollectingAmmo (invList_t *magazine, aircraft_t *aircraft)
  * @param[in] soldier Pointer to le_t being a soldier from our team.
  * @sa INV_CollectingItems
  */
-static void INV_CarriedItems (le_t *soldier)
+static void INV_CarriedItems (const le_t *soldier)
 {
 	int container;
 	invList_t *item = NULL;
@@ -304,7 +304,7 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
  * @param[in] tech Pointer to newly researched technology.
  * @sa RS_MarkResearched
  */
-void INV_EnableAutosell (technology_t *tech)
+void INV_EnableAutosell (const technology_t *tech)
 {
 	int i = 0, j;
 	technology_t *ammotech = NULL;
@@ -343,10 +343,10 @@ void INV_EnableAutosell (technology_t *tech)
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  */
-void INV_InitialEquipment (base_t *base, campaign_t* campaign)
+void INV_InitialEquipment (base_t *base, const campaign_t* campaign)
 {
 	int i, price = 0;
-	equipDef_t *ed;
+	const equipDef_t *ed;
 	const char *eqname = cl_initial_equipment->string;
 
 	assert(campaign);

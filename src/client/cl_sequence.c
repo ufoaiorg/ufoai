@@ -371,7 +371,7 @@ void CL_SequenceStart_f (void)
 	sequence_t *sp;
 	const char *name, *menuName;
 	int i;
-	menu_t* menu;
+	const menu_t* menu;
 	light_t sun;
 
 	if (Cmd_Argc() < 2) {
