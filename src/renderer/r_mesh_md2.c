@@ -273,12 +273,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* draw it */
 	R_Bind(skin->texnum);
 
-	/* set-up lighting */
-	R_EnableLighting(qtrue);
-
 	R_DrawAliasFrameLerp(md2, e->as.backlerp, e->as.frame, e->as.oldframe);
-
-	R_EnableLighting(qfalse);
 
 	R_DrawEntityEffects(e);
 

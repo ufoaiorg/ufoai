@@ -133,9 +133,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 		e->as.oldframe = 0;
 	}
 
-	/* set-up lighting */
-	R_EnableLighting(qtrue);
-
 	for (i = 0; i < md3->num_meshes; i++) {
 		skin = e->model->alias.skins_img[e->skinnum];
 		R_Bind(skin->texnum);
@@ -143,8 +140,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 		c_alias_polys += md3->meshes[i].num_tris;
 		R_DrawAliasMD3FrameLerp(e, md3, md3->meshes[i]);
 	}
-
-	R_EnableLighting(qfalse);
 
 	R_DrawEntityEffects(e);
 

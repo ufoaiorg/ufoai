@@ -239,9 +239,11 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 	if (!ents)
 		return;
 
-	R_EnableLighting(qtrue);
+	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+		R_EnableLighting(qtrue);
 	R_DrawMeshEntities(ents);
-	R_EnableLighting(qfalse);
+	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+		R_EnableLighting(qfalse);
 }
 
 static void R_DrawAlphaMeshEntities (entity_t *ents)
