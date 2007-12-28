@@ -122,6 +122,10 @@ static void R_DrawEntityEffects (void)
 
 	for (i = 0; i < r_numEntities; i++) {
 		e = &r_entities[i];
+
+		if (!e->flags)
+			continue;
+
 		qglPushMatrix();
 		qglMultMatrixf(e->transform.matrix);
 
