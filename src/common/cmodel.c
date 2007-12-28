@@ -1220,7 +1220,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
  * @return The checksum of the maptile
  * @return 0 on error
  * @sa CM_LoadMap
- * @sa R_AddMapTile
+ * @sa R_ModAddMapTile
  */
 static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 {
