@@ -49,6 +49,7 @@ static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
 };
 /**
  * @brief Used to draw actor highlights over the actors
+ * @sa RF_HIGHLIGHT
  */
 static inline void R_DrawHighlight (const entity_t * e)
 {
@@ -62,6 +63,7 @@ static inline void R_DrawHighlight (const entity_t * e)
 /**
  * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
  * @sa CL_AddTargeting
+ * @sa RF_BOX
  */
 void R_DrawBox (const entity_t * e)
 {
