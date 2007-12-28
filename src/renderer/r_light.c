@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static int r_numLights;
 light_t r_lights[MAX_GL_LIGHTS];
-static light_t r_sunLight;
 
 void R_AddLight (vec3_t origin, float intensity, vec3_t color)
 {
@@ -48,16 +47,6 @@ void R_AddLight (vec3_t origin, float intensity, vec3_t color)
 }
 
 /**
- * @sa CL_ParticleEditor_f
- * @sa CL_ParseEntitystring
- * @sa CL_SequenceStart_f
- */
-void R_AddSunLight (const light_t* sunlight)
-{
-	memcpy(&r_sunLight, sunlight, sizeof(light_t));
-}
-
-/**
  * @brief Set light parameters
  * @sa R_RenderFrame
  */
@@ -69,13 +58,6 @@ void R_AddLights (void)
 
 	if (!r_light->integer)
 		return;
-
-	/* are we in world mode? */
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
-		/* our sun is ambient lighting */
-		qglLightModelfv(GL_LIGHT_MODEL_AMBIENT, r_sunLight.color);
-		R_CheckError();
-	}
 
 	for (i = 0; i < r_numLights; i++) {  /* now add all lights */
 		VectorCopy(r_lights[i].origin, position);

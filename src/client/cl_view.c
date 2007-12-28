@@ -41,7 +41,7 @@ entity_t r_entities[MAX_ENTITIES];
 /**
  * @sa V_RenderView
  */
-static void V_ClearScene (void)
+static inline void V_ClearScene (void)
 {
 	r_numEntities = 0;
 }
@@ -188,23 +188,6 @@ static void CL_ParseEntitystring (const char *es)
 
 		/* analyze values - there is one worlspawn per maptile */
 		if (!Q_strcmp(classname, "worldspawn")) {
-			light_t sun;
-
-			/* init sun */
-			memset(&sun, 0, sizeof(sun));
-			angles[YAW] *= torad;
-			angles[PITCH] *= torad;
-			sun.origin[0] = cos(angles[YAW]) * sin(angles[PITCH]);
-			sun.origin[1] = sin(angles[YAW]) * sin(angles[PITCH]);
-			sun.origin[2] = cos(angles[PITCH]);
-			sun.origin[3] = 0;
-
-			VectorNormalize(color);
-			VectorScale(color, light / 100, sun.color);
-			sun.color[3] = 1.0;
-
-			R_AddSunLight(&sun);
-
 			/* maximum level */
 			map_maxlevel = maxlevel;
 

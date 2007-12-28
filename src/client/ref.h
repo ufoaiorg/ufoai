@@ -275,7 +275,6 @@ void R_Shutdown(void);
 
 void R_AddLights(void);
 void R_AddLight(vec3_t origin, float intensity, vec3_t color);
-void R_AddSunLight(const light_t* sunlight);
 
 extern SDL_Surface *r_surface;
 extern cvar_t *r_3dmapradius;

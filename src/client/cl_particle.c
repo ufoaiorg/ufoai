@@ -466,8 +466,6 @@ static void CL_ParticleEditor_f (void)
 	const cmdList_t *commands;
 
 	if (!Q_strncmp(Cmd_Argv(0), "particle_editor_open", MAX_VAR)) {
-		light_t sun;
-
 		for (commands = ptl_edit; commands->name; commands++)
 			Cmd_AddCommand(commands->name, commands->function, commands->description);
 		MN_PushMenu("particle_editor");
@@ -487,12 +485,8 @@ static void CL_ParticleEditor_f (void)
 		/* if still connected - disconnect */
 		CL_Disconnect();
 
-		memset(&sun, 0, sizeof(sun));
 		/* init sequence state */
 		CL_SetClientState(ca_ptledit);
-
-		/* init sun */
-		R_AddSunLight(&sun);
 
 		PE_UpdateMenu(NULL);
 	} else {

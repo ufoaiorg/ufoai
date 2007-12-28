@@ -734,7 +734,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 {
 	/* globe scaling */
 	const float fullscale = zoom / 4.0f;
-	vec4_t lightPos = {0.0f, 0.0f, 0.0f, 0.0f};
+	vec4_t lightPos;
 	const vec4_t diffuseLightColor = {1.0f, 1.0f, 1.0f, 1.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float a;
@@ -812,6 +812,10 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 
 	/* disable 3d geoscape lighting */
 	R_EnableLighting(qfalse);
+
+	/* restore settings */
+	qglLightfv(GL_LIGHT0, GL_DIFFUSE, vec4_origin);
+	qglLightfv(GL_LIGHT0, GL_AMBIENT, vec4_origin);
 
 	/* restore the previous matrix */
 	qglPopMatrix();

@@ -372,7 +372,6 @@ void CL_SequenceStart_f (void)
 	const char *name, *menuName;
 	int i;
 	const menu_t* menu;
-	light_t sun;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <name> [<menu>]\n", Cmd_Argv(0));
@@ -413,14 +412,6 @@ void CL_SequenceStart_f (void)
 
 	/* init sequence state */
 	CL_SetClientState(ca_sequence);
-
-	/* init sun */
-	memset(&sun, 0, sizeof(sun));
-	Vector4Copy(color_white, sun.color);
-	Vector4Copy(color_white, sun.ambient);
-
-	/* init sun */
-	R_AddSunLight(&sun);
 }
 
 
