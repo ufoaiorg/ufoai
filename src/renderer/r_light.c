@@ -67,7 +67,11 @@ void R_AddLights (void)
 	vec3_t diffuse;
 	int i;
 
-	if (r_light->integer) {
+	if (!r_light->integer)
+		return;
+
+	/* are we in world mode? */
+	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
 		/* our sun is ambient lighting */
 		qglLightModelfv(GL_LIGHT_MODEL_AMBIENT, r_sunLight.color);
 		R_CheckError();
