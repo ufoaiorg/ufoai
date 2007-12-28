@@ -52,13 +52,11 @@ static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
  */
 static inline void R_DrawHighlight (const entity_t * e)
 {
-	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
 	R_Color(NULL);
 	memcpy(r_state.vertex_array_3d, r_highlightVertices, sizeof(r_highlightVertices));
 	qglDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);
 	qglEnable(GL_TEXTURE_2D);
-	qglEnable(GL_CULL_FACE);
 }
 
 /**
@@ -71,7 +69,6 @@ void R_DrawBox (const entity_t * e)
 	float dx, dy;
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
-	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
 	if (!r_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -112,27 +109,32 @@ void R_DrawBox (const entity_t * e)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	qglEnable(GL_TEXTURE_2D);
-	qglEnable(GL_CULL_FACE);
 }
 
 /**
  * @brief Draws shadow and highlight effects for the entities (actors)
  * @note The origins are already transformed
  */
-void R_DrawEntityEffects (const entity_t *e)
+static void R_DrawEntityEffects (void)
 {
-	/* draw a highlight icon over this entity */
-	if (e->flags & RF_HIGHLIGHT)
-		R_DrawHighlight(e);
+	int i;
+	entity_t *e;
 
-	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER | RF_SHADOW | RF_BLOOD)) {
-		R_EnableBlend(qtrue);
+	for (i = 0; i < r_numEntities; i++) {
+		e = &r_entities[i];
+		qglPushMatrix();
+		qglMultMatrixf(e->transform.matrix);
+
+		/* draw a highlight icon over this entity */
+		if (e->flags & RF_HIGHLIGHT)
+			R_DrawHighlight(e);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 			if (e->flags & RF_SHADOW)
 				R_Bind(shadow->texnum);
 			else
 				R_Bind(blood->texnum);
+
 			qglBegin(GL_QUADS);
 			qglTexCoord2f(0.0, 1.0);
 			qglVertex3f(-18.0, 14.0, -28.5);
@@ -147,8 +149,8 @@ void R_DrawEntityEffects (const entity_t *e)
 			R_CheckError();
 		}
 
-		/* draw the circles for team-members and allied troops */
 		if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
+			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
 			qglDisable(GL_DEPTH_TEST);
 			qglDisable(GL_TEXTURE_2D);
@@ -187,9 +189,10 @@ void R_DrawEntityEffects (const entity_t *e)
 			qglEnable(GL_TEXTURE_2D);
 			qglEnable(GL_DEPTH_TEST);
 		}
-
-		R_EnableBlend(qfalse);
+		qglPopMatrix();
 	}
+
+	R_Color(NULL);
 }
 
 static void R_DrawBspEntities (entity_t *ents)
@@ -429,4 +432,8 @@ void R_DrawEntities (void)
 	R_DrawAlphaMeshEntities(r_alpha_mesh_entities);
 	R_Color(NULL);
 	R_DrawNullEntities(r_null_entities);
+
+	R_EnableBlend(qtrue);
+	R_DrawEntityEffects();
+	R_EnableBlend(qfalse);
 }

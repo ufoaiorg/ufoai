@@ -274,11 +274,8 @@ void R_DrawParticles (void)
 			}
 			if (p->pic != -1)
 				R_DrawSprite(p);
-			if (p->model != -1) {
-				qglEnable(GL_CULL_FACE);
+			if (p->model != -1)
 				R_DrawPtlModel(p);
-				qglDisable(GL_CULL_FACE);
-			}
 			R_TexEnv(GL_MODULATE);
 		}
 }

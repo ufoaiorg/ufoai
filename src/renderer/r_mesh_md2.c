@@ -274,8 +274,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	R_DrawAliasFrameLerp(md2, e->as.backlerp, e->as.frame, e->as.oldframe);
 
-	R_DrawEntityEffects(e);
-
 	/* show model bounding box */
 	R_ModDrawModelBBox(bbox, e);
 
@@ -420,7 +418,6 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* we have to reenable this here - we are in 2d mode here already */
 	qglEnable(GL_DEPTH_TEST);
-	qglEnable(GL_CULL_FACE);
 
 	/* draw it */
 	R_Bind(skin->texnum);
@@ -434,7 +431,6 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qfalse);
 
-	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
 	qglPopMatrix();

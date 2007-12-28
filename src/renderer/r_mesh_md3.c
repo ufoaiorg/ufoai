@@ -141,8 +141,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 		R_DrawAliasMD3FrameLerp(e, md3, md3->meshes[i]);
 	}
 
-	R_DrawEntityEffects(e);
-
 	qglPopMatrix();
 
 	R_Color(NULL);

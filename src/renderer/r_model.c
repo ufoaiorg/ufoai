@@ -266,7 +266,6 @@ void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 	if (!r_showbox->integer)
 		return;
 
-	qglDisable(GL_CULL_FACE);
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	/* Draw top and sides */
@@ -296,7 +295,6 @@ void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 	qglEnd();
 
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	qglEnable(GL_CULL_FACE);
 }
 
 static int static_mod_numknown;
