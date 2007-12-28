@@ -795,7 +795,7 @@ static void CL_GenerateEquipment_f (void)
 		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
 		Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
 
-		/* Update nubmer of displayed team-members. */
+		/* Update number of displayed team-members. */
 		chrDisplayList.num++;
 	}
 

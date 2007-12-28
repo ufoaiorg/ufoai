@@ -147,7 +147,7 @@ static void E_EmployeeList_f (void)
 		if (employeesInCurrentList < cl_numnames->integer) {
 			if (employee->hired) {
 				if (employee->baseIDHired == baseCurrent->idx) {
-					Cvar_ForceSet(va("mn_name%i", j), employee->chr.name);
+					Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
 					Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
 				} else
 					Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
