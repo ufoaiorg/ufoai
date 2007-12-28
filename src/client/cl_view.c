@@ -186,7 +186,7 @@ static void CL_ParseEntitystring (const char *es)
 				skin = atoi(entity_token);
 		}
 
-		/* analyze values */
+		/* analyze values - there is one worlspawn per maptile */
 		if (!Q_strcmp(classname, "worldspawn")) {
 			light_t sun;
 

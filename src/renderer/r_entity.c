@@ -261,7 +261,7 @@ static void R_DrawNullModel (const entity_t *e)
 	int i;
 
 	qglPushMatrix();
-	qglMultMatrixf(trafo[e - r_entities].matrix);
+	qglMultMatrixf(e->transform.matrix);
 
 	qglDisable(GL_TEXTURE_2D);
 
@@ -306,7 +306,7 @@ static float *R_CalcTransform (entity_t * e)
 	int i;
 
 	/* check if this entity is already transformed */
-	t = &trafo[e - r_entities];
+	t = &e->transform;
 
 	if (t->processing)
 		Sys_Error("Ring in entity transformations!\n");
@@ -318,12 +318,12 @@ static float *R_CalcTransform (entity_t * e)
 	t->processing = qtrue;
 	mp = NULL;
 
-	/* do parent object trafos first */
+	/* do parent object transformations first */
 	if (e->tagent) {
-		/* parent trafo */
+		/* parent transformation */
 		mp = R_CalcTransform(e->tagent);
 
-		/* tag trafo */
+		/* tag transformation */
 		if (e->tagent->model && e->tagent->model->alias.tagdata) {
 			dtag_t *taghdr;
 			const char *name;
@@ -370,7 +370,7 @@ static float *R_CalcTransform (entity_t * e)
 	/* flip an axis */
 	VectorScale(&mc[4], -1, &mc[4]);
 
-	/* combine trafos */
+	/* combine transformations */
 	if (mp)
 		GLMatrixMultiply(mp, mc, t->matrix);
 	else
@@ -383,25 +383,6 @@ static float *R_CalcTransform (entity_t * e)
 	return t->matrix;
 }
 
-/**
- * @sa R_DrawEntities
- */
-static inline void R_TransformEntitiesOnList (void)
-{
-	int i;
-
-	/* clear flags */
-	for (i = 0; i < r_numEntities; i++) {
-		trafo[i].done = qfalse;
-		trafo[i].processing = qfalse;
-	}
-
-	/* calculate all transformations */
-	/* possibly recursive */
-	for (i = 0; i < r_numEntities; i++)
-		R_CalcTransform(&r_entities[i]);
-}
-
 void R_DrawEntities (void)
 {
 	entity_t *e, **chain;
@@ -412,13 +393,12 @@ void R_DrawEntities (void)
 	if (!r_drawentities->integer)
 		return;
 
-	R_TransformEntitiesOnList();
-
 	r_bsp_entities = r_opaque_mesh_entities =
 		r_alpha_mesh_entities = r_null_entities = NULL;
 
 	for (i = 0; i < r_numEntities; i++) {
 		e = &r_entities[i];
+		R_CalcTransform(e);
 
 		if (!e->model) {
 			if (e->flags != RF_BOX)

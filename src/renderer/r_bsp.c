@@ -150,8 +150,7 @@ void R_DrawBrushModel (entity_t * e)
 	}
 
 	qglPushMatrix();
-
-	qglMultMatrixf(trafo[e - r_entities].matrix);
+	qglMultMatrixf(e->transform.matrix);
 
 	R_DrawInlineBrushModel(e);
 

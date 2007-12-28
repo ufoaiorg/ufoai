@@ -58,6 +58,13 @@ typedef struct animState_s {
 	byte change;
 } animState_t;
 
+/** @brief entity transform */
+typedef struct {
+	qboolean done;
+	qboolean processing;
+	float matrix[16];
+} transform_t;
+
 typedef struct entity_s {
 	struct model_s *model;		/**< opaque type outside refresh */
 	vec3_t angles;
@@ -81,6 +88,8 @@ typedef struct entity_s {
 	int flags;
 
 	animState_t as;
+
+	transform_t transform;
 
 	struct entity_s *next;		/**< for chaining */
 } entity_t;

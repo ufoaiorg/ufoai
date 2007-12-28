@@ -185,7 +185,7 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 		vec4_t tmp;
 
 		Vector4Copy(bbox[i], tmp);
-		GLVectorTransform(trafo[e - r_entities].matrix, tmp, bbox[i]);
+		GLVectorTransform(e->transform.matrix, tmp, bbox[i]);
 	}
 
 	/* cull */
@@ -259,8 +259,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	c_alias_polys += md2->num_tris;
 
 	qglPushMatrix();
-
-	qglMultMatrixf(trafo[e - r_entities].matrix);
+	qglMultMatrixf(e->transform.matrix);
 
 	/* FIXME: Does not work */
 	/* IR goggles override color */
