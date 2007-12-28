@@ -204,8 +204,8 @@ struct routing_s svMap, clMap;
 
 /* static */
 static cBspSurface_t nullsurface;
-static mapTile_t mapTiles[MAX_MAPTILES];
-static int numTiles = 0;
+static mapTile_t mapTiles[MAX_MAPTILES];	/**< loaded map tiles with this assembly */
+static int numTiles = 0;	/**< number of loaded map tiles (map assembly) */
 static mapTile_t *curTile;
 static int checkcount;
 static int numInline;
@@ -1328,6 +1328,9 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 	memset(&(clMap.fall[0][0]), ROUTING_NOT_REACHABLE, WIDTH * WIDTH);
 	memset(&(clMap.step[0][0]), 0, WIDTH * WIDTH);
 	memset(&(clMap.route[0][0][0]), 0, WIDTH * WIDTH * HEIGHT);
+
+	if (pos && *pos)
+		Com_Printf("CM_LoadMap: \"%s\" \"%s\"\n", tiles, pos);
 
 	/* load tiles */
 	while (tiles) {
