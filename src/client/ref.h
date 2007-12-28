@@ -124,7 +124,7 @@ typedef struct shader_s {
 #define MAX_GL_LIGHTS 8
 
 typedef struct {
-	vec4_t origin;
+	vec3_t origin;
 	vec4_t color;
 	vec4_t ambient;
 	float intensity;

@@ -41,7 +41,6 @@ void R_AddLight (vec3_t origin, float intensity, vec3_t color)
 	i = r_numLights++;
 
 	VectorCopy(origin, r_lights[i].origin);
-	r_lights[i].origin[3] = 1; /* no sun light */
 	r_lights[i].intensity = intensity;
 	VectorCopy(color, r_lights[i].color);
 }
@@ -61,7 +60,7 @@ void R_AddLights (void)
 
 	for (i = 0; i < r_numLights; i++) {  /* now add all lights */
 		VectorCopy(r_lights[i].origin, position);
-		position[3] = 1;	/* no sun light */
+		position[3] = 1;
 
 		VectorScale(r_lights[i].color, r_lights[i].intensity, diffuse);
 
