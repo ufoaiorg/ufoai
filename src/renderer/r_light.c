@@ -36,7 +36,7 @@ void R_AddLight (vec3_t origin, float intensity, vec3_t color)
 	if (!r_light->integer)
 		return;
 
-	if (r_numLights == MAX_GL_LIGHTS - 1)
+	if (r_numLights == MAX_GL_LIGHTS)
 		return;
 
 	i = r_numLights++;
@@ -68,11 +68,8 @@ void R_AddLights (void)
 	int i;
 
 	if (r_light->integer) {
-		/* the first light is our sun */
-		qglLightfv(GL_LIGHT0, GL_POSITION, r_sunLight.origin);
-		qglLightfv(GL_LIGHT0, GL_DIFFUSE, r_sunLight.color);
-		qglEnable(GL_LIGHT0);
-
+		/* our sun is ambient lighting */
+		qglLightModelfv(GL_LIGHT_MODEL_AMBIENT, r_sunLight.color);
 		R_CheckError();
 	}
 
@@ -82,13 +79,13 @@ void R_AddLights (void)
 
 		VectorScale(r_lights[i].color, r_lights[i].intensity, diffuse);
 
-		qglLightfv(GL_LIGHT1 + i, GL_POSITION, position);
-		qglLightfv(GL_LIGHT1 + i, GL_DIFFUSE, diffuse);
-		qglEnable(GL_LIGHT1 + i);
+		qglLightfv(GL_LIGHT0 + i, GL_POSITION, position);
+		qglLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
+		qglEnable(GL_LIGHT0 + i);
 	}
 
-	for (i = r_numLights; i < MAX_GL_LIGHTS - 1; i++)
-		qglDisable(GL_LIGHT1 + i);
+	for (i = r_numLights; i < MAX_GL_LIGHTS; i++)
+		qglDisable(GL_LIGHT0 + i);
 
 	R_CheckError();
 

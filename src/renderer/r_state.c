@@ -72,7 +72,6 @@ void R_SetDefaultState (void)
 	qglTexCoordPointer(2, GL_FLOAT, 0, r_state.active_texunit->texcoords);
 
 	/* lighting parameters */
-	qglLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 	qglMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material);
 
 	for (i = 1; i < MAX_GL_LIGHTS; i++) {
@@ -211,6 +210,9 @@ void R_SetupGL3D (void)
 	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 
 	qglEnable(GL_DEPTH_TEST);
+
+	/* lighting parameters */
+	qglLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 
 	R_CheckError();
 }
