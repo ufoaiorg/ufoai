@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /******* GUI STUFF ********/
 
 void E_Reset(void);
-extern qboolean mn_employee_namechange;
 
 /******* BACKEND STUFF ********/
 
@@ -78,7 +77,6 @@ employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t typ
 employee_t* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
 employee_t* E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t type, int ucn);
 employee_t* E_GetEmployeeFromChrUCN(int ucn);
-employee_t* E_GetEmployeeByMenuIndex(int num);
 
 int E_CountHired(const base_t* const base, employeeType_t type);
 int E_CountUnhired(employeeType_t type);

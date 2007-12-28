@@ -35,8 +35,6 @@ static menuNode_t *employeeListNode;
 /* how many employees in current list (changes on every catergory change, too) */
 int employeesInCurrentList = 0;
 
-qboolean mn_employee_namechange;
-
 /*****************************************************
 VISUAL/GUI STUFF
 *****************************************************/
@@ -112,19 +110,23 @@ static void E_EmployeeList_f (void)
 {
 	int i, j;
 	employee_t* employee = NULL;
+	int employeeIdx = -1;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !curCampaign)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <category> <employeeid>\n", Cmd_Argv(0));
 		return;
 	}
 
 	employeeCategory = atoi(Cmd_Argv(1));
 	if (employeeCategory >= MAX_EMPL || employeeCategory < 0)
 		employeeCategory = EMPL_SOLDIER;
+
+	if (Cmd_Argc() == 3)
+		employeeIdx = atoi(Cmd_Argv(2));
 
 	/* reset the employee count */
 	employeesInCurrentList = 0;
@@ -144,9 +146,10 @@ static void E_EmployeeList_f (void)
 		/* change the buttons */
 		if (employeesInCurrentList < cl_numnames->integer) {
 			if (employee->hired) {
-				if (employee->baseIDHired == baseCurrent->idx)
+				if (employee->baseIDHired == baseCurrent->idx) {
+					Cvar_ForceSet(va("mn_name%i", j), employee->chr.name);
 					Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
-				else
+				} else
 					Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
 			} else
 				Cbuf_AddText(va("employeedel%i\n", employeesInCurrentList));
@@ -177,13 +180,13 @@ static void E_EmployeeList_f (void)
 		Cvar_ForceSet(va("mn_name%i", i), "");
 		Cbuf_AddText(va("employeedisable%i\n", i));
 	}
-	/* Select the current employee if name was changed or first one. */
-	if (!mn_employee_namechange)
-		Cbuf_AddText("employee_select 0\n");
+
+	/* Select the current employee if name was changed or first one. Use the direct string
+	 * execution here - otherwise the employeeCategory might be out of sync */
+	if (employeeIdx < 0 || employeeIdx >= employeesInCurrentList)
+		Cmd_ExecuteString("employee_select 0\n");
 	else
-		Cbuf_AddText(va("employee_select %i;", Cvar_VariableInteger("mn_employee_idx")));
-	/* And finally reset mn_employee_namechange. */
-	mn_employee_namechange = qfalse;
+		Cmd_ExecuteString(va("employee_select %i;", Cvar_VariableInteger("mn_employee_idx")));
 }
 
 
@@ -909,25 +912,25 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 /**
  * @brief Find an hired or free employee by the menu index
  * @param[in] num The index from the hire menu screen.
+ * @param[in] category The employee category (e.g EMPL_SOLDIER)
  */
-employee_t* E_GetEmployeeByMenuIndex (int num)
+static inline employee_t* E_GetEmployeeByMenuIndex (const base_t* base, int num, int category)
 {
 	int i, j;
 	employee_t* employee;
 
-	if (!baseCurrent)
-		return NULL;
+	assert(base);
 
-	/* Some sanity checks (is employeeCategory valid?). */
-	if (employeeCategory < EMPL_SOLDIER || employeeCategory >= MAX_EMPL)
+	/* Some sanity checks (is category valid?). */
+	if (category < EMPL_SOLDIER || category >= MAX_EMPL)
 		return NULL;
 
 	if (num >= employeesInCurrentList || num < 0)
 		return NULL;
 
-	for (i = 0, j = 0, employee = &(gd.employees[employeeCategory][0]); i < gd.numEmployees[employeeCategory]; i++, employee++) {
+	for (i = 0, j = 0, employee = &(gd.employees[category][0]); i < gd.numEmployees[category]; i++, employee++) {
 		/* don't count employees of other bases */
-		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
+		if (employee->baseIDHired != base->idx && employee->hired)
 			continue;
 
 		if (num == j)
@@ -963,7 +966,7 @@ static void E_EmployeeHire_f (void)
 	 * with values from 0 - #available employees (bigger values than
 	 * cl_numnames [19]) possible ... */
 	if (*arg == '+') {
-		num = atoi(arg+1);
+		num = atoi(arg + 1);
 		button = num - employeeListNode->textScroll;
 	/* ... or with the hire pictures that are using only values from
 	 * 0 - cl_numnames [19] */
@@ -972,8 +975,7 @@ static void E_EmployeeHire_f (void)
 		num = button + employeeListNode->textScroll;
 	}
 
-	employee = E_GetEmployeeByMenuIndex(num);
-
+	employee = E_GetEmployeeByMenuIndex(baseCurrent, num, employeeCategory);
 	/* empty slot selected */
 	if (!employee)
 		return;
@@ -1008,11 +1010,14 @@ static void E_EmployeeSelect_f (void)
 		return;
 	}
 
+	if (!baseCurrent)
+		return;
+
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= gd.numEmployees[employeeCategory])
 		return;
 
-	employee = E_GetEmployeeByMenuIndex(num);
+	employee = E_GetEmployeeByMenuIndex(baseCurrent, num, employeeCategory);
 	if (employee) {
 		/* mn_employee_hired is needed to allow renaming */
 		Cvar_SetValue("mn_employee_hired", employee->hired? 1: 0);
@@ -1035,8 +1040,6 @@ void E_Reset (void)
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
-
-	mn_employee_namechange = qfalse;
 }
 
 /**

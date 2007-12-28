@@ -410,14 +410,12 @@ static void CL_ChangeName_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (sel >= 0 && sel < gd.numEmployees[type])
+	if (sel >= 0 && sel < gd.numEmployees[type]) {
 		Q_strncpyz(gd.employees[type][sel].chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
 
-	/* Update mn_employee_namechange so refreshing the list will select current employee. */
-	mn_employee_namechange = qtrue;
-
-	/* Now refresh the list. */
-	Cbuf_AddText(va("employee_init %i;", type));
+		/* Now refresh the list. */
+		Cbuf_AddText(va("employee_init %i %i;", type, sel));
+	}
 }
 
 
@@ -1778,7 +1776,7 @@ void CL_ResetTeams (void)
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, NULL);
 	Cmd_AddCommand("team_select", CL_Select_f, NULL);
-	Cmd_AddCommand("team_changename", CL_ChangeName_f, NULL);
+	Cmd_AddCommand("team_changename", CL_ChangeName_f, "Change the name of an actor");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, NULL);
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinOnBoard_f, NULL);
 	Cmd_AddCommand("team_comments", CL_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
