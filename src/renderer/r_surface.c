@@ -47,10 +47,10 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		float a;
 		switch (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
 		case SURF_TRANS33:
-			a = 0.25;
+			a = 0.33;
 			break;
 		case SURF_TRANS66:
-			a = 0.50;
+			a = 0.66;
 			break;
 		default:  /* both flags mean use the texture's alpha channel */
 			a = 1.0;
