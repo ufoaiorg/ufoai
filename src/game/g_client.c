@@ -2194,7 +2194,7 @@ static void G_GetTeam (player_t * player)
 /**
  * @brief Returns the assigned team number of the player
  */
-int G_ClientGetTeamNum (player_t * player)
+int G_ClientGetTeamNum (const player_t * player)
 {
 	assert(player);
 	return player->pers.team;
@@ -2203,7 +2203,7 @@ int G_ClientGetTeamNum (player_t * player)
 /**
  * @brief Returns the preferred team number for the player
  */
-int G_ClientGetTeamNumPref (player_t * player)
+int G_ClientGetTeamNumPref (const player_t * player)
 {
 	assert(player);
 	return atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
@@ -2214,7 +2214,7 @@ int G_ClientGetTeamNumPref (player_t * player)
  * randomly assigns the first turn to a team.
  * @sa SVCmd_StartGame_f
  */
-static void G_ClientTeamAssign (player_t * player)
+static void G_ClientTeamAssign (const player_t * player)
 {
 	int i, j, teamCount = 1;
 	int playerCount = 0;
@@ -2271,7 +2271,7 @@ static void G_ClientTeamAssign (player_t * player)
  * @param[in] type The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
  * @return A pointer to a found spawn point or NULL if nothing was found or on error.
  */
-static edict_t *G_ClientGetFreeSpawnPoint (player_t * player, int spawnType)
+static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnType)
 {
 	int i;
 	edict_t *ent;
