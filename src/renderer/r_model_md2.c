@@ -195,7 +195,7 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 			poutframe->translate[j] = LittleFloat(pinframe->translate[j]);
 		}
 		/* verts are all 8 bit, so no swapping needed */
-		memcpy(poutframe->verts, pinframe->verts, pheader->num_xyz * sizeof(dtrivertx_t));
+		memcpy(poutframe->verts, pinframe->verts, pheader->num_xyz * sizeof(dAliasTriangleVertex_t));
 	}
 
 	mod->type = mod_alias_md2;

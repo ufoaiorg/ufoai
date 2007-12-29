@@ -603,6 +603,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 #define MAX_LINEVERTS 256
 /**
+ * @brief 2 dimensional line strip
  * @sa R_DrawCircle
  * @sa R_DrawLineLoop
  */

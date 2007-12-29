@@ -78,8 +78,8 @@ typedef struct {
 								 * structure. This will give you the vertex coordinate relative to the model's
 								 * origin, which is at the origin, (0, 0, 0)
 								 */
-	byte lightnormalindex;		/**< this is an index into a table of normals */
-} dtrivertx_t;
+	byte lightnormalindex;		/**< this is an index into a table of normals (bytedirs - see anormtab.h) */
+} dAliasTriangleVertex_t;
 
 /**
  * @brief is a variable sized structure, however all frame_t structures within the same file will
@@ -89,7 +89,7 @@ typedef struct dAliasFrame_s {
 	float scale[3];				/**< multiply byte verts by this */
 	float translate[3];			/**< then add this */
 	char name[16];				/**< frame name from grabbing */
-	dtrivertx_t verts[1];		/**< variable sized - an array of num_xyz dtrivertx_t structures.*/
+	dAliasTriangleVertex_t verts[1];		/**< variable sized - an array of num_xyz dtrivertx_t structures.*/
 } dAliasFrame_t;
 
 

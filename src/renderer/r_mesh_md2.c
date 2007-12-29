@@ -37,7 +37,7 @@ static vec3_t r_mesh_norms[MD2_MAX_VERTS];
 static void R_DrawAliasFrameLerp (mdl_md2_t * md2, float backlerp, int framenum, int oldframenum)
 {
 	dAliasFrame_t *frame, *oldframe;
-	dtrivertx_t *v, *ov, *verts;
+	dAliasTriangleVertex_t *v, *ov, *verts;
 	int *order;
 	int count;
 	float frontlerp;
