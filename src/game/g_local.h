@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define PM_ALL			0xFFFFFFFF
 
 /* server is running at 10 fps */
-#define	FRAMETIME		0.1
+#define	SERVER_FRAME_SECONDS		0.1
 
 /* memory tags to allow dynamic memory to be cleaned up */
 #define	TAG_GAME	765			/* clear when unloading the dll */
@@ -89,7 +89,7 @@ typedef struct {
 typedef struct {
 	int framenum;		/**< the current frame (10fps) */
 	float time;			/**< seconds the game is running already
-		calculated through framenum * FRAMETIME */
+						 * calculated through framenum * SERVER_FRAME_SECONDS */
 
 	char level_name[MAX_QPATH];	/**< the descriptive name (Outer Base, etc) */
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */

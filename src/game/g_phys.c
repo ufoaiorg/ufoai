@@ -77,7 +77,7 @@ void G_PhysicsStep (edict_t *ent)
 		ent->moveinfo.currentStep++;
 
 		/* immediatly rethink */
-		ent->nextthink = (level.framenum + 3) * FRAMETIME;
+		ent->nextthink = (level.framenum + 3) * SERVER_FRAME_SECONDS;
 /*		Com_Printf("step: %i/%i\n", ent->moveinfo.currentStep, ent->moveinfo.steps);*/
 	} else {
 		ent->moveinfo.currentStep = 0;
@@ -99,7 +99,7 @@ static qboolean G_PhysicsThink (edict_t *ent)
 	if (thinktime > level.time + 0.001f)
 		return qtrue;
 
-	ent->nextthink = level.time + FRAMETIME;
+	ent->nextthink = level.time + SERVER_FRAME_SECONDS;
 	if (!ent->think)
 		gi.error("G_PhysicsThink ent->think is NULL");
 	ent->think(ent);

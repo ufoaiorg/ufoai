@@ -334,20 +334,20 @@ static void Move_Final (edict_t *ent)
 		return;
 	}
 
-	VectorScale (ent->moveinfo.dir, ent->moveinfo.remaining_distance / FRAMETIME, ent->moveinfo.velocity);
+	VectorScale (ent->moveinfo.dir, ent->moveinfo.remaining_distance / SERVER_FRAME_SECONDS, ent->moveinfo.velocity);
 }
 
 static void Move_Begin (edict_t *ent)
 {
 	float	frames;
 
-	if ((ent->moveinfo.speed * FRAMETIME) >= ent->moveinfo.remaining_distance) {
+	if ((ent->moveinfo.speed * SERVER_FRAME_SECONDS) >= ent->moveinfo.remaining_distance) {
 		Move_Final(ent);
 		return;
 	}
 	VectorScale (ent->moveinfo.dir, ent->moveinfo.speed, ent->moveinfo.velocity);
-	frames = floor((ent->moveinfo.remaining_distance / ent->moveinfo.speed) / FRAMETIME);
-	ent->moveinfo.remaining_distance -= frames * ent->moveinfo.speed * FRAMETIME;
+	frames = floor((ent->moveinfo.remaining_distance / ent->moveinfo.speed) / SERVER_FRAME_SECONDS);
+	ent->moveinfo.remaining_distance -= frames * ent->moveinfo.speed * SERVER_FRAME_SECONDS;
 }
 
 void Move_Calc (edict_t *ent, vec3_t dest, void(*func)(edict_t*))

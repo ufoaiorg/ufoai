@@ -29,13 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_INPUT_H
 #define CLIENT_INPUT_H
 
-typedef struct {
-	int down[2];				/**< key nums holding it down */
-	unsigned downtime;			/**< msec timestamp */
-	unsigned msec;				/**< msec down this frame */
-	int state;
-} kbutton_t;
-
 typedef enum {
 	MS_NULL,
 	MS_MENU,	/**< we are over some menu node */
@@ -62,7 +55,7 @@ typedef struct {
 	vec3_t omega;		/**< speed of rotation */
 	vec3_t axis[3];		/**< set when refdef.angles is set */
 
-	float lerplevel;	/**< linear interpolation */
+	float lerplevel;	/**< linear interpolation between frames */
 	float zoom;			/**< the current zoom level (see MIN_ZOOM and MAX_ZOOM) */
 } camera_t;
 

@@ -92,6 +92,13 @@ KEY BUTTONS
 ===============================================================================
 */
 
+typedef struct {
+	int down[2];				/**< key nums holding it down */
+	unsigned downtime;			/**< msec timestamp */
+	unsigned msec;				/**< msec down this frame */
+	int state;
+} kbutton_t;
+
 static kbutton_t in_turnleft, in_turnright, in_shiftleft, in_shiftright;
 static kbutton_t in_shiftup, in_shiftdown;
 static kbutton_t in_zoomin, in_zoomout;
@@ -99,11 +106,11 @@ static kbutton_t in_turnup, in_turndown;
 
 /**
  * @brief
- * @sa KeyUp
+ * @sa IN_KeyUp
  * @sa CL_GetKeyMouseState
  * @sa CL_CameraMoveFirstPerson
  */
-static void KeyDown (kbutton_t * b)
+static void IN_KeyDown (kbutton_t * b)
 {
 	int k;
 	const char *c = Cmd_Argv(1);
@@ -143,11 +150,11 @@ static void KeyDown (kbutton_t * b)
 
 /**
  * @brief
- * @sa KeyDown
+ * @sa IN_KeyDown
  * @sa CL_GetKeyMouseState
  * @sa CL_CameraMoveFirstPerson
  */
-static void KeyUp (kbutton_t * b)
+static void IN_KeyUp (kbutton_t * b)
 {
 	int k;
 	unsigned uptime;
@@ -195,83 +202,83 @@ static void KeyUp (kbutton_t * b)
 
 static void IN_TurnLeftDown_f (void)
 {
-	KeyDown(&in_turnleft);
+	IN_KeyDown(&in_turnleft);
 }
 static void IN_TurnLeftUp_f (void)
 {
-	KeyUp(&in_turnleft);
+	IN_KeyUp(&in_turnleft);
 }
 static void IN_TurnRightDown_f (void)
 {
-	KeyDown(&in_turnright);
+	IN_KeyDown(&in_turnright);
 }
 static void IN_TurnRightUp_f (void)
 {
-	KeyUp(&in_turnright);
+	IN_KeyUp(&in_turnright);
 }
 static void IN_TurnUpDown_f (void)
 {
-	KeyDown(&in_turnup);
+	IN_KeyDown(&in_turnup);
 }
 static void IN_TurnUpUp_f (void)
 {
-	KeyUp(&in_turnup);
+	IN_KeyUp(&in_turnup);
 }
 static void IN_TurnDownDown_f (void)
 {
-	KeyDown(&in_turndown);
+	IN_KeyDown(&in_turndown);
 }
 static void IN_TurnDownUp_f (void)
 {
-	KeyUp(&in_turndown);
+	IN_KeyUp(&in_turndown);
 }
 static void IN_ShiftLeftDown_f (void)
 {
-	KeyDown(&in_shiftleft);
+	IN_KeyDown(&in_shiftleft);
 }
 static void IN_ShiftLeftUp_f (void)
 {
-	KeyUp(&in_shiftleft);
+	IN_KeyUp(&in_shiftleft);
 }
 static void IN_ShiftRightDown_f (void)
 {
-	KeyDown(&in_shiftright);
+	IN_KeyDown(&in_shiftright);
 }
 static void IN_ShiftRightUp_f (void)
 {
-	KeyUp(&in_shiftright);
+	IN_KeyUp(&in_shiftright);
 }
 static void IN_ShiftUpDown_f (void)
 {
-	KeyDown(&in_shiftup);
+	IN_KeyDown(&in_shiftup);
 }
 static void IN_ShiftUpUp_f (void)
 {
-	KeyUp(&in_shiftup);
+	IN_KeyUp(&in_shiftup);
 }
 static void IN_ShiftDownDown_f (void)
 {
-	KeyDown(&in_shiftdown);
+	IN_KeyDown(&in_shiftdown);
 }
 static void IN_ShiftDownUp_f (void)
 {
-	KeyUp(&in_shiftdown);
+	IN_KeyUp(&in_shiftdown);
 }
 static void IN_ZoomInDown_f (void)
 {
-	KeyDown(&in_zoomin);
+	IN_KeyDown(&in_zoomin);
 }
 static void IN_ZoomInUp_f (void)
 {
-	KeyUp(&in_zoomin);
+	IN_KeyUp(&in_zoomin);
 }
 static void IN_ZoomOutDown_f (void)
 {
-	KeyDown(&in_zoomout);
+	IN_KeyDown(&in_zoomout);
 }
 static void IN_ZoomOutUp_f (void)
 {
-	KeyUp(&in_zoomout);
+	IN_KeyUp(&in_zoomout);
 }
 
 /**

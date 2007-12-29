@@ -675,7 +675,7 @@ static void Touch_DoorTrigger (edict_t *self)
 		if (VectorDist(e->origin, self->owner->absmin) < UNIT_SIZE) {
 			door_go_up(self->owner);
 			Com_DPrintf(DEBUG_SERVER, "Touch_DoorTrigger: Door goes up\n");
-			self->nextthink = level.time + FRAMETIME;
+			self->nextthink = level.time + SERVER_FRAME_SECONDS;
 			return;
 		}
 	}
@@ -737,7 +737,7 @@ static void Think_SpawnDoorTrigger (edict_t *self)
 	other->owner = self;
 	other->solid = SOLID_TRIGGER;
 	other->think = Touch_DoorTrigger;
-	other->nextthink = level.time + FRAMETIME;
+	other->nextthink = level.time + SERVER_FRAME_SECONDS;
 	/* link into the world */
 	gi.linkentity(other);
 
@@ -806,7 +806,7 @@ void SP_func_door (edict_t *self)
 	if (self->solid != SOLID_BSP)
 		Com_Printf("Error - func_door with no SOLID_BSP\n");
 
-	self->nextthink = level.time + FRAMETIME;
+	self->nextthink = level.time + SERVER_FRAME_SECONDS;
 	self->think = Think_SpawnDoorTrigger;
 }
 

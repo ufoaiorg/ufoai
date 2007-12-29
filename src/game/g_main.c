@@ -570,7 +570,7 @@ qboolean G_RunFrame (void)
 {
 	level.framenum++;
 	/* server is running at 10 fps */
-	level.time = level.framenum * FRAMETIME;
+	level.time = level.framenum * SERVER_FRAME_SECONDS;
 /*	Com_Printf("frame: %i   time: %f\n", level.framenum, level.time); */
 
 	/* still waiting for other players */
