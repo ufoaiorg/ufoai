@@ -262,7 +262,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	c_alias_polys += md2->num_tris;
 
 	/* resolve lighting for coloring and shadow position */
-	GLVectorTransform(e->transform.matrix, e->origin, tmp)
+	GLVectorTransform(e->transform.matrix, e->origin, tmp);
 	R_LightPoint(tmp);
 
 	qglPushMatrix();
