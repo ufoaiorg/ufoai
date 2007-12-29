@@ -218,7 +218,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	image_t *skin;
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t bbox[8];
-	vec3_t tmp;
+	vec4_t tmp;
 
 	/* check if model is out of fov */
 	if (R_CullAliasMD2Model(bbox, e))
