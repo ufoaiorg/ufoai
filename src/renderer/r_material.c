@@ -504,6 +504,8 @@ void R_LoadMaterials (const char *map)
 	if ((i = FS_LoadFile(path, &fileBuffer)) < 1){
 		Com_DPrintf(DEBUG_RENDERER, "Couldn't load %s\n", path);
 		return;
+	} else {
+		Com_Printf("load material file: '%s'\n", path);
 	}
 
 	buffer = (const char *)fileBuffer;

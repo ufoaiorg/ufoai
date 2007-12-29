@@ -378,7 +378,7 @@ static void CL_LevelUp_f (void)
 	if (!CL_OnBattlescape())
 		return;
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
-		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->value < map_maxlevel-1) ? cl_worldlevel->value + 1.0f : map_maxlevel-1);
+		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer < map_maxlevel - 1) ? cl_worldlevel->integer + 1 : map_maxlevel - 1);
 }
 
 /**
@@ -389,17 +389,17 @@ static void CL_LevelDown_f (void)
 	if (!CL_OnBattlescape())
 		return;
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
-		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->value > 0.0f) ? cl_worldlevel->value - 1.0f : 0.0f);
+		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer > 0) ? cl_worldlevel->integer - 1 : 0);
 }
 
 
 static void CL_ZoomInQuant_f (void)
 {
-	float quant;
-
 	if (mouseSpace == MS_MENU)
 		MN_MouseWheel(qfalse, mousePosX, mousePosY);
 	else {
+		float quant;
+
 		/* no zooming in first person mode */
 		if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 			return;
@@ -423,11 +423,11 @@ static void CL_ZoomInQuant_f (void)
 
 static void CL_ZoomOutQuant_f (void)
 {
-	float quant;
-
 	if (mouseSpace == MS_MENU)
 		MN_MouseWheel(qtrue, mousePosX, mousePosY);
 	else {
+		float quant;
+
 		/* no zooming in first person mode */
 		if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 			return;

@@ -379,7 +379,7 @@ static void CheckNeedPass (void)
  * @sa G_EndGame
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
-static void G_SendCharacterData (edict_t* ent)
+static void G_SendCharacterData (const edict_t* ent)
 {
 	int k;
 
