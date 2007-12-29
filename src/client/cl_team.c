@@ -1907,6 +1907,20 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 			NET_WriteShort(buf, chr->kills[j]);
 		NET_WriteShort(buf, chr->assigned_missions);
 
+		NET_WriteByte(buf, chr->chrscore.alienskilled);
+		NET_WriteByte(buf, chr->chrscore.aliensstunned);
+		NET_WriteByte(buf, chr->chrscore.civilianskilled);
+		NET_WriteByte(buf, chr->chrscore.civiliansstunned);
+		NET_WriteByte(buf, chr->chrscore.teamkilled);
+		NET_WriteByte(buf, chr->chrscore.teamstunned);
+		NET_WriteByte(buf, chr->chrscore.closekills);
+		NET_WriteByte(buf, chr->chrscore.heavykills);
+		NET_WriteByte(buf, chr->chrscore.assaultkills);
+		NET_WriteByte(buf, chr->chrscore.sniperkills);
+		NET_WriteByte(buf, chr->chrscore.explosivekills);
+		NET_WriteByte(buf, chr->chrscore.accuracystat);
+		NET_WriteByte(buf, chr->chrscore.powerstat);
+
 		/* inventory */
 		CL_NetSendInventory(buf, chr->inv);
 	}
@@ -1939,6 +1953,7 @@ typedef struct updateCharacter_s {
 /**
  * @brief Parses the character data which was send by G_EndGame using G_SendCharacterData
  * @sa G_SendCharacterData
+ * @sa CL_SendCurTeamInfo
  * @sa G_EndGame
  * @sa E_Save
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here

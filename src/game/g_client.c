@@ -2418,6 +2418,20 @@ void G_ClientTeamInfo (player_t * player)
 				ent->chr.kills[k] = gi.ReadShort();
 			ent->chr.assigned_missions = gi.ReadShort();
 
+			ent->chr.chrscore.alienskilled = gi.ReadByte();
+			ent->chr.chrscore.aliensstunned = gi.ReadByte();
+			ent->chr.chrscore.civilianskilled = gi.ReadByte();
+			ent->chr.chrscore.civiliansstunned = gi.ReadByte();
+			ent->chr.chrscore.teamkilled = gi.ReadByte();
+			ent->chr.chrscore.teamstunned = gi.ReadByte();
+			ent->chr.chrscore.closekills = gi.ReadByte();
+			ent->chr.chrscore.heavykills = gi.ReadByte();
+			ent->chr.chrscore.assaultkills = gi.ReadByte();
+			ent->chr.chrscore.sniperkills = gi.ReadByte();
+			ent->chr.chrscore.explosivekills = gi.ReadByte();
+			ent->chr.chrscore.accuracystat = gi.ReadByte();
+			ent->chr.chrscore.powerstat = gi.ReadByte();
+
 			/* inventory */
 			{
 				int nr = gi.ReadShort() / INV_INVENTORY_BYTES;
