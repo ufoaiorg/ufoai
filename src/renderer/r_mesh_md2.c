@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_lightmap.h"
+#include "r_shader.h"
 #include "r_error.h"
 
 static vec3_t r_mesh_verts[MD2_MAX_VERTS];
@@ -216,6 +218,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	image_t *skin;
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t bbox[8];
+	vec3_t tmp;
 
 	/* check if model is out of fov */
 	if (R_CullAliasMD2Model(bbox, e))
@@ -258,16 +261,25 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* locate the proper data */
 	c_alias_polys += md2->num_tris;
 
+	/* resolve lighting for coloring and shadow position */
+	GLVectorTransform(e->transform.matrix, e->origin, tmp)
+	R_LightPoint(tmp);
+
 	qglPushMatrix();
 	qglMultMatrixf(e->transform.matrix);
+
+	VectorCopy(r_lightmap_sample.color, color);
+	color[3] = r_state.blend_enabled ? 0.25 : 1.0;
 
 	/* FIXME: Does not work */
 	/* IR goggles override color */
 	if (refdef.rdflags & RDF_IRGOGGLES)
 		color[1] = color[2] = 0.0;
 
-	color[3] = e->alpha;
-	R_Color(color);
+	if (r_state.lighting_enabled)
+		R_ShaderFragmentParameter(0, color);
+	else
+		R_Color(color);
 
 	/* draw it */
 	R_Bind(skin->texnum);

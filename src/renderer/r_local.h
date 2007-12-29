@@ -114,8 +114,6 @@ void QR_Link(void);
 
 /*==================================================================== */
 
-extern model_t *rTiles[MAX_MAPTILES];
-extern int rNumTiles;
 extern int registration_sequence;
 
 void R_ScreenShot_f(void);

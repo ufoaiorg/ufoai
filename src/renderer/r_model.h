@@ -76,6 +76,9 @@ void R_ModDrawNullModel(entity_t *e);
 void R_ShutdownModels(void);
 void R_CreateSurfacePoly(mBspSurface_t *surf, int shift[3], model_t *mod);
 
+extern model_t *rTiles[MAX_MAPTILES];
+extern int rNumTiles;
+
 extern model_t mod_known[MAX_MOD_KNOWN];
 extern int mod_numknown;
 

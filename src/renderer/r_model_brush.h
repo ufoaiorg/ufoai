@@ -94,6 +94,7 @@ typedef struct mBspSurface_s {
 	int lightmaptexturenum;
 	byte styles[MAXLIGHTMAPS];
 	byte *samples;				/**< [numstyles*surfsize] */
+	float *lightmap;			/**< floating point, finalized lightmap samples */
 } mBspSurface_t;
 
 #define NODE_NO_LEAF -1

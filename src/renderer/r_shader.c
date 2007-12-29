@@ -341,3 +341,11 @@ void SH_UseShader (shader_t * shader, qboolean activate)
 		}
 	}
 }
+
+void R_ShaderFragmentParameter (GLuint index, GLfloat *p)
+{
+	if (!r_shader->integer || !r_state.arb_fragment_program)
+		return;
+
+	qglProgramLocalParameter4fvARB(GL_FRAGMENT_PROGRAM_ARB, index, p);
+}

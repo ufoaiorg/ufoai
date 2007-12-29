@@ -157,7 +157,12 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 		for (i = 0; i < 4; i++)
 			R_SoftenTexture(lightmap, smax, tmax, 4);
 
-	/* then copy into the final strided lightmap block */
+	/* the final lightmap is uploaded to the card via the strided
+	 * lightmap block, and also cached on the surface as floating
+	 * point values for fast point lighting lookups */
+
+	surf->lightmap = (float *)VID_TagAlloc(vid_lightPool, size * 3 * sizeof(float), 0);
+	bl = surf->lightmap;
 	lm = lightmap;
 	for (i = 0; i < tmax; i++, dest += stride) {
 		for (j = 0; j < smax; j++) {
@@ -165,6 +170,12 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 			dest[1] = lm[1];
 			dest[2] = lm[2];
 			dest[3] = lm[3];
+
+			/* and to the surface */
+			bl[0] = lm[0] / 255.0;
+			bl[1] = lm[1] / 255.0;
+			bl[2] = lm[2] / 255.0;
+			bl += 3;
 
 			lm += 4;
 			dest += 4;
@@ -292,4 +303,154 @@ void R_EndBuildingLightmaps (void)
 	LM_UploadBlock();
 	R_EnableMultitexture(qfalse);
 	Com_DPrintf(DEBUG_RENDERER, "lightmaps: %i\n", r_lightmapstate.lightmap_texture_count);
+}
+
+/** @brief for resolving static lighting for mesh ents */
+lightmap_sample_t r_lightmap_sample;
+
+/**
+ * @brief for resolving static lighting for mesh ents
+ */
+static qboolean R_LightPoint_ (model_t *mapTile, mBspNode_t *node, vec3_t start, vec3_t end)
+{
+	float front, back;
+	int i, side, s, t, ds, dt, sample;
+	vec3_t mid;
+	mBspSurface_t *surf;
+	mBspTexInfo_t *tex;
+
+begin:
+
+	if (node->contents != -1)  /* didn't hit anything */
+		return qfalse;
+
+	VectorCopy(end, mid);
+
+	/* optimize for axially aligned planes */
+	switch (node->plane->type) {
+	case PLANE_X:
+		node = node->children[start[0] < node->plane->dist];
+		goto begin;
+	case PLANE_Y:
+		node = node->children[start[1] < node->plane->dist];
+		goto begin;
+	case PLANE_Z:
+		side = start[2] < node->plane->dist;
+		if ((end[2] < node->plane->dist) == side) {
+			node = node->children[side];
+			goto begin;
+		}
+		mid[2] = node->plane->dist;
+		break;
+	default:
+		/* compute partial dot product to determine sidedness */
+		back = front = start[0] * node->plane->normal[0] + start[1] * node->plane->normal[1];
+		front += start[2] * node->plane->normal[2];
+		back += end[2] * node->plane->normal[2];
+
+		side = front < node->plane->dist;
+		if ((back < node->plane->dist) == side) {
+			node = node->children[side];
+			goto begin;
+		}
+		mid[2] = start[2] + (end[2] - start[2]) * (front - node->plane->dist) / (front - back);
+		break;
+	}
+
+	/* go down front side */
+	if (R_LightPoint_(mapTile, node->children[side], start, mid))
+		return qtrue;
+
+	/* check for impact on this node */
+	VectorCopy(mid, r_lightmap_sample.point);
+
+	surf = mapTile->bsp.surfaces + node->firstsurface;
+	for (i = 0; i < node->numsurfaces; i++, surf++) {
+		if (surf->flags & SURF_WARP)
+			continue;  /* no lightmap */
+
+		if (!surf->lightmap)
+			return qfalse;
+
+		tex = surf->texinfo;
+
+		s = DotProduct(mid, tex->vecs[0]) + tex->vecs[0][3];
+		t = DotProduct(mid, tex->vecs[1]) + tex->vecs[1][3];
+
+		if (s < surf->stmins[0] || t < surf->stmins[1])
+			continue;
+
+		ds = s - surf->stmins[0];
+		dt = t - surf->stmins[1];
+
+		if (ds > surf->stmaxs[0] || dt > surf->stmaxs[1])
+			continue;
+
+		ds /= (1 << surf->lquant);
+		dt /= (1 << surf->lquant);
+
+		/* resolve the actual sample at intersection */
+		sample = (int)(3 * (dt * ((surf->stmaxs[0] / (1 << surf->lquant)) + 1) + ds));
+		VectorCopy((&surf->lightmap[sample]), r_lightmap_sample.color);
+
+		return qtrue;
+	}
+
+	/* go down back side */
+	return R_LightPoint_(mapTile, node->children[!side], mid, end);
+}
+
+/**
+ * @sa R_LightPoint_
+ */
+void R_LightPoint (vec3_t p)
+{
+	lightmap_sample_t lms;
+	entity_t *ent;
+	model_t *m;
+	vec3_t end;
+	float dist, d;
+	int i, j;
+
+	VectorClear(r_lightmap_sample.point);
+	VectorSet(r_lightmap_sample.color, 1.0, 1.0, 1.0);
+
+	if (!rTiles[0]->bsp.lightdata)
+		return;
+
+	VectorSet(r_lightmap_sample.color, 0.5, 0.5, 0.5);
+	lms = r_lightmap_sample;
+
+	VectorCopy(p, end);
+	end[2] -= 256;
+
+	dist = 999999;
+
+	for (j = 0; j < rNumTiles; j++) {
+		/* check world */
+		if (R_LightPoint_(rTiles[j], rTiles[j]->bsp.nodes, p, end)) {
+			lms = r_lightmap_sample;
+			dist = p[2] - r_lightmap_sample.point[2];
+		}
+
+		/* check bsp models */
+		for (i = 0; i < r_numEntities; i++) {
+			ent = &r_entities[i];
+			m = ent->model;
+
+			if (!m || m->type != mod_brush)
+				continue;
+
+			if (!R_LightPoint_(rTiles[j], &rTiles[j]->bsp.nodes[m->bsp.firstnode], p, end))
+				continue;
+
+			if ((d = p[2] - r_lightmap_sample.point[2]) < dist) {
+				lms = r_lightmap_sample;
+				dist = d;
+			}
+		}
+	}
+
+	/* copy the closest result to the shared instance */
+	r_lightmap_sample = lms;
 }

@@ -35,4 +35,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void R_BlendLightmaps(const model_t* mod);
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);
 
+typedef struct lightmap_sample_s {
+	vec3_t point;
+	vec3_t color;
+} lightmap_sample_t;
+
+extern lightmap_sample_t r_lightmap_sample;
+void R_LightPoint(vec3_t p);
+
 #endif
