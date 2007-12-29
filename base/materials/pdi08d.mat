@@ -1,0 +1,7 @@
+{
+	material tex_nature/desert006
+	{
+		texture tex_nature/desert001
+		terrain 0 64
+	}
+}
