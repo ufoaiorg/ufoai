@@ -301,7 +301,7 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, struct memPool_s *pool, const 
 		Com_Error(ERR_FATAL, "Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
 
 	/* Add header and round to cacheline */
-	size = (size + sizeof (memBlock_t) + sizeof (memBlockFoot_t) + 31) & ~31;
+	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
 	mem = malloc(size);
 	if (!mem)
 		Com_Error(ERR_FATAL, "Mem_Alloc: failed on allocation of '"UFO_SIZE_T"' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
