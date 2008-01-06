@@ -134,7 +134,7 @@ void MSG_WriteShort (sizebuf_t * sb, int c)
 	byte *buf;
 
 #ifdef DEBUG
-	if (c < SHRT_MIN || c > USHRT_MAX)
+	if (c < SHRT_MIN || c > SHRT_MAX)
 		Com_Printf("MSG_WriteShort: range error %i ('%s', line %i)\n", c, file, line);
 #endif
 
