@@ -345,8 +345,8 @@ item stungrenade
 	type		grenade
 	animationindex	0
 	shape		"0 0 1 1"
-	center		"-0.7 0 0"
-	scale		2.2
+	center		"0 0 0"
+	scale		1.4
 	price		90
 	size		7
 	buytype	misc

@@ -393,7 +393,7 @@ menu employees
 	confunc mn_name_changed
 	{
 		*name mousefx false
-		cmd	"team_changename"
+		cmd	"team_changename;"
 	}
 
 	pic bt_edit
