@@ -3584,7 +3584,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->status = MSG_ReadByte(sb);
 			aircraft->fuel = MSG_ReadLong(sb);
 			MSG_ReadPos(sb, aircraft->pos);
-			aircraft->time = MSG_ReadShort(sb);
+			aircraft->time = MSG_ReadLong(sb);
 			aircraft->point = MSG_ReadShort(sb);
 			aircraft->hangar = MSG_ReadByte(sb);
 			/* load aircraft target */
