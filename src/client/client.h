@@ -273,7 +273,6 @@ shader stuff
 =================================================
 */
 
-void CL_ShaderList_f(void);
 void CL_ParseShaders(const char *name, const char **text);
 
 /*================================================= */
@@ -429,8 +428,6 @@ typedef struct le_s {
 #define MAX_LOCALMODELS		512
 #define MAX_MAPPARTICLES	1024
 
-#define LMF_LIGHTFIXED		1
-
 /** @brief local models */
 typedef struct lm_s {
 	char name[MAX_VAR];
@@ -438,9 +435,6 @@ typedef struct lm_s {
 
 	vec3_t origin;
 	vec3_t angles;
-	vec4_t lightorigin;
-	vec4_t lightcolor;
-	vec4_t lightambient;
 
 	int num;
 	int skin;

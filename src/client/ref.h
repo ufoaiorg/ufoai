@@ -79,12 +79,8 @@ typedef struct entity_s {
 	/* misc */
 	int skinnum;
 
-	float *lightcolor;			/**< color for fixed light */
-	float *lightambient;		/**< ambient color for fixed light */
-
 	float alpha;				/**< ignore if RF_TRANSLUCENT isn't set */
 
-	struct image_s *skin;		/**< NULL for inline skin */
 	int flags;
 
 	animState_t as;

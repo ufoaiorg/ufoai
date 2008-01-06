@@ -47,7 +47,8 @@ typedef struct mBspHeader_s {
 	int firstface, numfaces;
 } mBspHeader_t;
 
-#define	SURF_PLANEBACK		2
+#define	MSURF_PLANEBACK		1
+#define	MSURF_LIGHTMAP		2
 
 typedef struct mBspEdge_s {
 	unsigned short v[2];
@@ -61,12 +62,11 @@ typedef struct mBspTexInfo_s {
 	image_t *image;
 } mBspTexInfo_t;
 
-#define	VERTEXSIZE	7
-
 typedef struct mBspPoly_s {
-	struct mBspPoly_s *next;
 	int numverts;
-	float verts[4][VERTEXSIZE];	/**< variable sized (xyz s1t1 s2t2) */
+	float *verts;	/**< verts */
+	float *texcoords; /**< diffuse texcoords */
+	float *lmtexcoords; /**< lightmap texcoords */
 } mBspPoly_t;
 
 typedef struct mBspSurface_s {
@@ -81,11 +81,12 @@ typedef struct mBspSurface_s {
 
 	vec3_t center;
 	vec3_t color;
+	vec3_t normal;
 
 	int light_s, light_t;		/**< gl lightmap coordinates */
 	byte lquant;
 
-	mBspPoly_t *polys;			/* multiple if warped */
+	mBspPoly_t *polys;
 	struct mBspSurface_s *next;
 	struct mBspSurface_s *materialchain;	/**< material surface chain */
 
@@ -94,7 +95,7 @@ typedef struct mBspSurface_s {
 	int lightmaptexturenum;
 	byte styles[MAXLIGHTMAPS];
 	byte *samples;				/**< [numstyles*surfsize] */
-	float *lightmap;			/**< floating point, finalized lightmap samples */
+	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
 } mBspSurface_t;
 
 #define NODE_NO_LEAF -1

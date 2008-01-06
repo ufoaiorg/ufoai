@@ -263,7 +263,7 @@ void CL_SequenceRender (void)
 			/* advance in time */
 			VectorMA(se->origin, cls.frametime, se->speed, se->origin);
 			VectorMA(se->angles, cls.frametime, se->omega, se->angles);
-			R_AnimRun(&se->as, se->model, seq_animspeed->value * cls.frametime);
+			R_AnimRun(&se->as, se->model, seq_animspeed->integer * cls.frametime);
 
 			/* add to scene */
 			memset(&ent, 0, sizeof(ent));

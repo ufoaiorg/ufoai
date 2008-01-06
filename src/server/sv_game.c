@@ -409,8 +409,6 @@ void SV_ShutdownGameProgs (void)
 	ge = NULL;
 }
 
-void SCR_DebugGraph(float value, int color);
-
 /**
  * @brief Init the game subsystem for a new map
  */
@@ -499,8 +497,6 @@ void SV_InitGameProgs (void)
 	import.argv = Cmd_Argv;
 	import.args = Cmd_Args;
 	import.AddCommandString = Cbuf_AddText;
-
-	import.DebugGraph = SCR_DebugGraph;
 
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;

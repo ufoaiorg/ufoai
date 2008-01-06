@@ -71,47 +71,30 @@ static void CL_ParseEntitystring (const char *es)
 {
 	const char *strstart, *entity_token;
 	char keyname[256];
-
 	char classname[MAX_VAR];
-	char animname[MAX_QPATH];
-	char model[MAX_QPATH];
-	char particle[MAX_QPATH];
-	char sound[MAX_QPATH];
-	float light;
-	vec3_t color, ambient, origin, angles, lightangles;
+	char animname[MAX_QPATH], model[MAX_QPATH], particle[MAX_QPATH], sound[MAX_QPATH];
+	vec3_t origin, angles;
 	vec2_t wait;
-	int spawnflags;
-	int maxlevel = 8;
-	int maxmultiplayerteams = 2;
-	int entnum;
-	int skin;
-	int frame;
+	int maxlevel = 8, maxmultiplayerteams = 2, entnum = 0;
+	int skin, frame, spawnflags;
 	float volume = 255.0f;
 	float attenuation = SOUND_DEFAULTATTENUATE;
 
 	map_maxlevel = 8;
-	if (map_maxlevel_base >= 1) {
+	if (map_maxlevel_base >= 1)
 		map_maxlevel = maxlevel = map_maxlevel_base;
-	}
-	entnum = 0;
-	numLMs = 0;
-	numMPs = 0;
+
+	assert(numLMs == 0);
+	assert(numMPs == 0);
 
 	/* parse ents */
 	while (1) {
 		/* initialize */
-		VectorCopy(vec3_origin, ambient);
-		color[0] = color[1] = color[2] = 1.0f;
 		VectorCopy(vec3_origin, origin);
 		VectorCopy(vec3_origin, angles);
-		wait[0] = wait[1] = 0;
-		spawnflags = 0;
-		light = 0;
-		frame = 0;
-		animname[0] = 0;
-		model[0] = 0;
-		particle[0] = 0;
-		skin = 0;
+		Vector2Clear(wait);
+		spawnflags = frame = skin = 0;
+		animname[0] = model[0] = particle[0] = '\0';
 
 		/* parse the opening brace */
 		entity_token = COM_Parse(&es);
@@ -159,12 +142,8 @@ static void CL_ParseEntitystring (const char *es)
 				attenuation = atof(entity_token);
 			else if (!Q_strcmp(keyname, "volume"))
 				volume = atof(entity_token);
-			else if (!Q_strcmp(keyname, "_color") || !Q_strcmp(keyname, "lightcolor"))
-				Com_ParseValue(color, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "origin"))
 				Com_ParseValue(origin, entity_token, V_VECTOR, 0, sizeof(vec3_t));
-			else if (!Q_strcmp(keyname, "ambient") || !Q_strcmp(keyname, "lightambient"))
-				Com_ParseValue(ambient, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "angles") && !angles[YAW])
 				/* pitch, yaw, roll */
 				Com_ParseValue(angles, entity_token, V_VECTOR, 0, sizeof(vec3_t));
@@ -172,10 +151,6 @@ static void CL_ParseEntitystring (const char *es)
 				angles[YAW] = atof(entity_token);
 			else if (!Q_strcmp(keyname, "wait"))
 				Com_ParseValue(wait, entity_token, V_POS, 0, sizeof(vec2_t));
-			else if (!Q_strcmp(keyname, "light"))
-				light = atof(entity_token);
-			else if (!Q_strcmp(keyname, "lightangles"))
-				Com_ParseValue(lightangles, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "spawnflags"))
 				spawnflags = atoi(entity_token);
 			else if (!Q_strcmp(keyname, "maxlevel"))
@@ -209,23 +184,7 @@ static void CL_ParseEntitystring (const char *es)
 
 			/* add it */
 			lm = CL_AddLocalModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
-
-			/* get light parameters */
 			if (lm) {
-				if (light != 0.0) {
-					lm->flags |= LMF_LIGHTFIXED;
-					VectorCopy(color, lm->lightcolor);
-					VectorCopy(ambient, lm->lightambient);
-					lm->lightcolor[3] = light;
-					lm->lightambient[3] = 1.0;
-
-					lightangles[YAW] *= torad;
-					lightangles[PITCH] *= torad;
-					lm->lightorigin[0] = cos(lightangles[YAW]) * sin(lightangles[PITCH]);
-					lm->lightorigin[1] = sin(lightangles[YAW]) * sin(lightangles[PITCH]);
-					lm->lightorigin[2] = cos(lightangles[PITCH]);
-					lm->lightorigin[3] = 0.0;
-				}
 				lm->skin = skin;
 				lm->frame = frame;
 				if (!lm->frame)
@@ -446,22 +405,10 @@ void V_CenterView (pos3_t pos)
 	Cvar_SetValue("cl_worldlevel", pos[2]);
 }
 
-
-/**
- * @brief Just prints the vieworg vector to console
- */
-static void V_Viewpos_f (void)
-{
-	Com_Printf("(%i %i %i) : %i\n", (int) refdef.vieworg[0], (int) refdef.vieworg[1], (int) refdef.vieworg[2], (int) refdef.viewangles[YAW]);
-}
-
 /**
  * @sa CL_Init
  */
 void V_Init (void)
 {
-	Cmd_AddCommand("viewpos", V_Viewpos_f, NULL);
-	Cmd_AddCommand("shaderlist", CL_ShaderList_f, NULL);
-
 	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
 }

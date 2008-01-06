@@ -59,10 +59,6 @@ void Cmd_ForwardToServer (void)
 	Com_Printf("Unknown command \"%s\"\n", cmd);
 }
 
-void SCR_DebugGraph (float value, int color)
-{
-}
-
 void SCR_BeginLoadingPlaque (void)
 {
 }

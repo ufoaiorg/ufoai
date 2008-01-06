@@ -89,9 +89,6 @@ void LM_AddToScene (void)
 			R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
 		}
 
-		if (lm->flags & LMF_LIGHTFIXED)
-			ent.flags |= RF_LIGHTFIXED;
-
 		/* add it to the scene */
 		V_AddEntity(&ent);
 	}
@@ -874,7 +871,11 @@ void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float a
  LE Management functions
 =========================================================================== */
 
-
+/**
+ * @brief Add a new local entity to the scene
+ * @param[in] entnum The entity number (server side)
+ * @sa LE_Get
+ */
 le_t *LE_Add (int entnum)
 {
 	int i;
@@ -907,6 +908,7 @@ le_t *LE_Add (int entnum)
 /**
  * @brief Searches all local entities for the one with the searched entnum
  * @param[in] entnum The entity number (server side)
+ * @sa LE_Add
  */
 le_t *LE_Get (int entnum)
 {
@@ -922,7 +924,11 @@ le_t *LE_Get (int entnum)
 	return NULL;
 }
 
-
+/**
+ * @brief Searches a local entity on a given grid field
+ * @param[in] type Entity type
+ * @param[in] pos The grid pos to search for an item of the given type
+ */
 le_t *LE_Find (int type, pos3_t pos)
 {
 	int i;
@@ -1153,6 +1159,7 @@ static void CL_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa CL_TraceBounds
  * @sa CL_ClipMoveToLEs
+ * @sa SV_Trace
  * @param[in] start Start vector to start the trace from
  * @param[in] end End vector to stop the trace at
  * @param[in] mins Bounding box used for tracing

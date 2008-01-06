@@ -201,6 +201,10 @@ static void R_DrawEntityEffects (void)
 	R_Color(NULL);
 }
 
+/**
+ * @sa R_DrawEntities
+ * @sa R_DrawBrushModel
+ */
 static void R_DrawBspEntities (entity_t *ents)
 {
 	entity_t *e;
@@ -218,6 +222,9 @@ static void R_DrawBspEntities (entity_t *ents)
 	R_DisableEffects();
 }
 
+/**
+ * @sa R_DrawEntities
+ */
 static void R_DrawMeshEntities (entity_t *ents)
 {
 	entity_t *e;
@@ -243,6 +250,9 @@ static void R_DrawMeshEntities (entity_t *ents)
 	}
 }
 
+/**
+ * @sa R_DrawEntities
+ */
 static void R_DrawOpaqueMeshEntities (entity_t *ents)
 {
 	if (!ents)
@@ -255,6 +265,9 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 		R_EnableLighting(qfalse);
 }
 
+/**
+ * @sa R_DrawEntities
+ */
 static void R_DrawAlphaMeshEntities (entity_t *ents)
 {
 	if (!ents)
@@ -265,6 +278,10 @@ static void R_DrawAlphaMeshEntities (entity_t *ents)
 	R_EnableBlend(qfalse);
 }
 
+/**
+ * @brief Draw replacement model (e.g. when model wasn't found)
+ * @sa R_DrawNullEntities
+ */
 static void R_DrawNullModel (const entity_t *e)
 {
 	int i;
@@ -291,6 +308,9 @@ static void R_DrawNullModel (const entity_t *e)
 	qglEnable(GL_TEXTURE_2D);
 }
 
+/**
+ * @brief Draw entities which models couldn't be loaded
+ */
 static void R_DrawNullEntities (const entity_t *ents)
 {
 	const entity_t *e;
@@ -306,6 +326,10 @@ static void R_DrawNullEntities (const entity_t *ents)
 	}
 }
 
+/**
+ * @brief Calculates transformation matrix for the model and its tags
+ * @note The transformation matrix is only calculated once
+ */
 static float *R_CalcTransform (entity_t * e)
 {
 	vec3_t angles;
@@ -367,8 +391,6 @@ static float *R_CalcTransform (entity_t * e)
 
 	/* add rotation */
 	VectorCopy(e->angles, angles);
-/*	angles[YAW] = -angles[YAW]; */
-
 	AngleVectors(angles, &mc[0], &mc[4], &mc[8]);
 
 	/* add translation */
@@ -392,6 +414,10 @@ static float *R_CalcTransform (entity_t * e)
 	return t->matrix;
 }
 
+/**
+ * @brief Draw entities like models and cursor box
+ * @sa R_RenderFrame
+ */
 void R_DrawEntities (void)
 {
 	entity_t *e, **chain;

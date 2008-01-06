@@ -342,6 +342,11 @@ void SH_UseShader (shader_t * shader, qboolean activate)
 	}
 }
 
+/**
+ * @brief Set some shader values in the current active shader
+ * @param[in] index The index of the local parameter for the shader
+ * @param[in] p The list of values
+ */
 void R_ShaderFragmentParameter (GLuint index, GLfloat *p)
 {
 	if (!r_shader->integer || !r_state.arb_fragment_program)

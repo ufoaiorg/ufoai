@@ -47,97 +47,12 @@ vrect_t scr_vrect;				/* position of render window on screen */
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
 static cvar_t *scr_centertime;
-
-static cvar_t *scr_timegraph;
-static cvar_t *scr_debuggraph;
-static cvar_t *scr_graphheight;
-static cvar_t *scr_graphscale;
-static cvar_t *scr_graphshift;
 static cvar_t *scr_rspeed;
 
 static char cursor_pic[MAX_QPATH];
 
 static void SCR_TimeRefresh_f(void);
 static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont);
-
-/*
-===============================================================================
-BAR GRAPHS
-===============================================================================
-*/
-
-/** @brief Graph color and value */
-typedef struct {
-	float value;
-	int color;		/**< color value */
-} graphsamp_t;
-
-#define GRAPH_WIDTH 256
-
-static int currentPos = 0;
-static graphsamp_t values[GRAPH_WIDTH];
-
-/**
- * @sa SCR_DrawDebugGraph
- */
-void SCR_DebugGraph (float value, int color)
-{
-	values[currentPos & (GRAPH_WIDTH-1)].value = value;
-	values[currentPos & (GRAPH_WIDTH-1)].color = color;
-	currentPos++;
-}
-
-/**
- * @sa SCR_DebugGraph
- */
-static void SCR_DrawDebugGraph (void)
-{
-	int a, x, y, w, i, h, min, max;
-	float v;
-	vec4_t color = {1, 0, 0, 0.5};
-	static float lasttime = 0;
-	static int fps;
-	struct tm *now;
-	time_t tnow;
-
-	tnow = time((time_t *) 0);
-	now = localtime(&tnow);
-
-	h = w = GRAPH_WIDTH;
-
-	x = scr_vrect.width - (w + 2) - 1;
-	y = scr_vrect.height - (h + 2) - 1;
-
-	R_DrawFill(x, y, w, h, 0, color);
-
-	for (a = 0; a < GRAPH_WIDTH; a++) {
-		i = (currentPos - 1 - a + GRAPH_WIDTH) & (GRAPH_WIDTH-1);
-		v = values[i].value;
-		Vector4Set(color, values[i].color, values[i].color, values[i].color, 1.0f);
-		v = v * scr_graphscale->value;
-
-		if (v < 1)
-			v += h * (1 + (int)(-v / h));
-
-		max = (int)v % h + 1;
-		min = y + h - max - scr_graphshift->integer;
-
-		/* bind to box! */
-		if (min < y + 1)
-			min = y + 1;
-		if (min > y + h)
-			min = y + h;
-		if (min + max > y + h)
-			max = y + h - max;
-
-		R_DrawFill(x + w - a, min, 1, max, 0, color);
-	}
-
-	if (cls.realtime - lasttime > 50) {
-		lasttime = cls.realtime;
-		fps = (cls.frametime) ? 1 / cls.frametime : 0;
-	}
-}
 
 /*
 ===============================================================================
@@ -268,11 +183,6 @@ void SCR_Init (void)
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, NULL);
 	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0, NULL);
-	scr_timegraph = Cvar_Get("timegraph", "0", 0, NULL);
-	scr_debuggraph = Cvar_Get("debuggraph", "0", 0, NULL);
-	scr_graphheight = Cvar_Get("graphheight", "32", 0, NULL);
-	scr_graphscale = Cvar_Get("graphscale", "1", 0, NULL);
-	scr_graphshift = Cvar_Get("graphshift", "0", 0, NULL);
 	scr_rspeed = Cvar_Get("r_speeds", "0", 0, NULL);
 
 	/* register our commands */
@@ -695,12 +605,6 @@ void SCR_UpdateScreen (void)
 			SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
 		if (cls.state == ca_active && scr_rspeed->integer)
 			SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", c_brush_polys, c_alias_polys), qtrue);
-
-		if (scr_timegraph->integer)
-			SCR_DebugGraph(cls.frametime * 300, 0);
-
-		if (scr_debuggraph->integer || scr_timegraph->integer)
-			SCR_DrawDebugGraph();
 
 		if (cls.state != ca_sequence)
 			SCR_DrawCursor();

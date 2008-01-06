@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_MODEL_H
 #define R_MODEL_H
 
-#define VERTEXSIZE	7
-
 #include "r_model_alias.h"
 #include "r_model_brush.h"
 #include "r_model_md2.h"
@@ -72,6 +70,7 @@ void R_ModClearAll(void);
 void R_ModModellist_f(void);
 void R_ModDrawModelBBox(vec4_t bbox[8], entity_t *e);
 void R_ModDrawNullModel(entity_t *e);
+void R_AliasModelState(model_t *mod, int *frame, int *oldFrame, int *skin);
 
 void R_ShutdownModels(void);
 void R_CreateSurfacePoly(mBspSurface_t *surf, int shift[3], model_t *mod);

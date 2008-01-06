@@ -1162,7 +1162,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		Sys_Error("R_FindImage: NULL name");
 	len = strlen(pname);
 	if (len < 5)
-		return NULL;
+		return r_notexture;
 
 	/* drop extension */
 	Q_strncpyz(lname, pname, MAX_QPATH);

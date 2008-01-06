@@ -242,8 +242,4 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 		R_ModLoadAnims(&mod->alias, animbuf);
 		FS_FreeFile(animbuf);
 	}
-
-	/* find neighbours */
-	mod->alias.neighbors = VID_TagAlloc(vid_modelPool, pheader->num_tris * sizeof(mAliasNeighbors_t), 0);
-	R_ModBuildTriangleNeighbors(mod->alias.neighbors, pouttri, pheader->num_tris);
 }

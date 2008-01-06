@@ -32,6 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	LIGHTMAP_BLOCK_WIDTH	256
 #define	LIGHTMAP_BLOCK_HEIGHT	256
 
+#define LIGHTMAP_BYTES 3 /* RGB */
+#define LIGHTMAP_BLOCK_BYTES 4 /* bytes RGBA */
+
+
 void R_BlendLightmaps(const model_t* mod);
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);
 

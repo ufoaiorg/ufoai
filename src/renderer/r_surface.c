@@ -33,16 +33,12 @@ mBspSurface_t *r_opaque_warp_surfaces;
 mBspSurface_t *r_alpha_surfaces;
 mBspSurface_t *r_alpha_warp_surfaces;
 
-static float surface_warp, surface_flow;
-
 /**
  * @brief Set the surface state according to surface flags and bind the texture
  * @sa R_DrawSurfaces
  */
 static void R_SetSurfaceState (const mBspSurface_t *surf)
 {
-	image_t *image;
-
 	if (r_state.blend_enabled) {  /* alpha blend */
 		float a;
 		switch (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
@@ -66,71 +62,30 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_EnableAlphaTest(qfalse);
 	}
 
-	surface_warp = 0;
-	if (surf->texinfo->flags & SURF_WARP) {  /* warping */
-		surface_warp = refdef.time / 8.0;
-	}
+	if (r_state.lighting_enabled)  /* normal vector for lighting */
+		qglNormal3fv(surf->normal);
 
-	surface_flow = 0;
-	if (surf->texinfo->flags & SURF_FLOWING) {  /* flowing */
-		surface_flow = refdef.time / -4.0;
-		surface_warp = surface_warp / 2.0;
-	}
+	/* setup array pointers */
+	R_SetArray(GL_VERTEX_ARRAY, GL_FLOAT, surf->polys->verts);
 
-	image = surf->texinfo->image;
+	if (r_state.multitexture_enabled)
+		R_BindMultitexture(surf->texinfo->image->texnum, surf->polys->texcoords,
+				surf->lightmaptexturenum, surf->polys->lmtexcoords);
+	else
+		R_BindWithArray(surf->texinfo->image->texnum, surf->polys->texcoords);
 
-	if (r_state.multitexture_enabled) {  /* bind diffuse and lightmap */
-		R_BindMultitexture(&r_state.texture_texunit, image->texnum,
-			&r_state.lightmap_texunit, r_state.lightmap_texnum + surf->lightmaptexturenum);
-	} else {  /* just bind diffuse */
-		R_Bind(image->texnum);
-	}
+	R_CheckError();
 }
 
 /**
  * @brief Use the vertex, texture and normal arrays to draw a surface
  * @sa R_DrawSurfaces
  */
-static void R_DrawSurface (const mBspSurface_t *surf)
+static inline void R_DrawSurface (const mBspSurface_t *surf)
 {
-	int i, j, k, nv;
-	float *v;
-	vec3_t norm;
+	qglDrawArrays(GL_POLYGON, 0, surf->polys->numverts);
 
-	nv = surf->polys->numverts;
-	for (i = 0, v = surf->polys->verts[0]; i < nv; i++, v += VERTEXSIZE) {
-		j = i * 2;
-		k = i * 3;
-
-		/* diffuse coords */
-		r_state.texture_texunit.texcoords[j + 0] = v[3] + surface_flow;
-		r_state.texture_texunit.texcoords[j + 1] = v[4];
-
-		if (r_state.warp_enabled) {  /* warp coords */
-			r_state.lightmap_texunit.texcoords[j + 0] = v[3] + surface_flow + surface_warp;
-			r_state.lightmap_texunit.texcoords[j + 1] = v[4] + surface_warp;
-		} else if (r_state.multitexture_enabled) {  /* lightmap coords */
-			r_state.lightmap_texunit.texcoords[j + 0] = v[5];
-			r_state.lightmap_texunit.texcoords[j + 1] = v[6];
-		}
-
-		/* vertex */
-		memcpy(&r_state.vertex_array_3d[k], v, sizeof(vec3_t));
-
-		/* normal vector for lights */
-		if (r_state.lighting_enabled) {
-			if (surf->flags & SURF_PLANEBACK)
-				VectorNegate(surf->plane->normal, norm);
-			else
-				VectorCopy(surf->plane->normal, norm);
-
-			memcpy(&r_state.normal_array[k], norm, sizeof(vec3_t));
-		}
-	}
-
-	qglDrawArrays(GL_POLYGON, 0, i);
-	R_CheckError();
-
+	R_Color(NULL);
 	c_brush_polys++;
 }
 
@@ -149,7 +104,9 @@ static void R_DrawSurfaces (const mBspSurface_t *surfs)
 		R_DrawSurface(surf);
 	}
 
-	R_Color(color_white);
+	/* and restore array pointers */
+	R_EnableArray(qtrue, GL_VERTEX_ARRAY, 0, NULL);
+	R_EnableArray(qtrue, GL_TEXTURE_COORD_ARRAY, 0, NULL);
 }
 
 /**
@@ -212,68 +169,4 @@ void R_DrawAlphaWarpSurfaces (mBspSurface_t *surfs)
 	R_EnableWarp(qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableWarp(qfalse);
-}
-
-void R_CreateSurfacePoly (mBspSurface_t *surf, int shift[3], model_t *mod)
-{
-	int i, lindex, lnumverts;
-	mBspEdge_t *pedges, *r_pedge;
-	int vertpage;
-	float *vec;
-	float s, t;
-	mBspPoly_t *poly;
-	vec3_t total;
-
-	/* reconstruct the polygon */
-	pedges = mod->bsp.edges;
-	lnumverts = surf->numedges;
-	vertpage = 0;
-
-	VectorClear(total);
-
-	/* draw texture */
-	poly = VID_TagAlloc(vid_modelPool, sizeof(mBspPoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
-	poly->next = surf->polys;
-	surf->polys = poly;
-	poly->numverts = lnumverts;
-
-	for (i = 0; i < lnumverts; i++) {
-		lindex = mod->bsp.surfedges[surf->firstedge + i];
-
-		if (lindex > 0) {
-			r_pedge = &pedges[lindex];
-			vec = mod->bsp.vertexes[r_pedge->v[0]].position;
-		} else {
-			r_pedge = &pedges[-lindex];
-			vec = mod->bsp.vertexes[r_pedge->v[1]].position;
-		}
-		s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
-		s /= surf->texinfo->image->width;
-
-		t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
-		t /= surf->texinfo->image->height;
-
-		VectorAdd(total, vec, total);
-		VectorAdd(vec, shift, poly->verts[i]);
-		poly->verts[i][3] = s;
-		poly->verts[i][4] = t;
-
-		/* lightmap texture coordinates */
-		s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
-		s -= surf->stmins[0];
-		s += surf->light_s << surf->lquant;
-		s += 1 << (surf->lquant - 1);
-		s /= LIGHTMAP_BLOCK_WIDTH << surf->lquant;
-
-		t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
-		t -= surf->stmins[1];
-		t += surf->light_t << surf->lquant;
-		t += 1 << (surf->lquant - 1);
-		t /= LIGHTMAP_BLOCK_HEIGHT << surf->lquant;
-
-		poly->verts[i][5] = s;
-		poly->verts[i][6] = t;
-	}
-
-	poly->numverts = lnumverts;
 }

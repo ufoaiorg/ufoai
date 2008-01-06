@@ -26,33 +26,63 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_lightmap.h"
 
-#define	MAX_LIGHTMAPS	256
-#define LIGHTMAP_BYTES	4
-#define RGB_PIXELSIZE 3
+/* in the bsp, they are just rgb, and we work with floats */
+#define LIGHTMAP_BUFFER_SIZE \
+	(LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT * LIGHTMAP_BLOCK_BYTES)
 
-typedef struct {
-	GLuint lightmap_texture_count;
+/* in the bsp, they are just rgb, and we work with floats */
+#define LIGHTMAP_FBUFFER_SIZE \
+	(LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT * LIGHTMAP_BYTES)
 
-	int allocated[LIGHTMAP_BLOCK_WIDTH];
+typedef struct lightmaps_s {
+	GLuint texnum;
 
-	/* the lightmap texture data needs to be kept in */
-	/* main memory so texsubimage can update properly */
-	byte lightmap_buffer[LIGHTMAP_BYTES * LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT];
-} lightmapstate_t;
+	unsigned allocated[LIGHTMAP_BLOCK_WIDTH];
 
-static lightmapstate_t r_lightmapstate;
-static float s_blocklights[LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT * LIGHTMAP_BYTES];
+	byte buffer[LIGHTMAP_BUFFER_SIZE];
+	float fbuffer[LIGHTMAP_FBUFFER_SIZE];
+} lightmaps_t;
+
+static lightmaps_t r_lightmaps;
+
+/**
+ * @brief Fullbridght lightmap
+ * @sa R_BuildLightmap
+ */
+static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
+{
+	int i, j, smax, tmax, size;
+
+	smax = (surf->stmaxs[0] / (1 << surf->lquant)) + 1;
+	tmax = (surf->stmaxs[1] / (1 << surf->lquant)) + 1;
+
+	size = smax * tmax;
+	stride -= (smax << 2);
+
+	for (i = 0; i < tmax; i++, dest += stride) {
+		for (j = 0; j < smax; j++) {
+			dest[0] = 255;
+			dest[1] = 255;
+			dest[2] = 255;
+			dest[3] = 255;
+
+			dest += 4;
+		}
+	}
+
+	VectorSet(surf->color, 1, 1, 1);
+}
 
 /**
  * @brief Combine and scale multiple lightmaps into the floating format in blocklights
+ * @sa R_BuildDefaultLightmap
  */
-void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
+static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 {
 	unsigned int smax, tmax;
-	int r, g, b, a, max;
+	int r, g, b, max;
 	unsigned int i, j, size;
-	byte *lightmap, *lm;
-	int nummaps;
+	byte *lightmap, *lm, *l;
 	float *bl;
 	int maps;
 
@@ -62,46 +92,38 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 		return;
 	}
 
-	if ((surf->texinfo->flags & SURF_WARP))
-		Com_Error(ERR_DROP, "R_BuildLightMap called for non-lit surface");
-
 	smax = (surf->stmaxs[0] >> surf->lquant) + 1;
 	tmax = (surf->stmaxs[1] >> surf->lquant) + 1;
 	size = smax * tmax;
-	if (size > (sizeof(s_blocklights) >> surf->lquant)) {
-		Com_Error(ERR_DROP, "Bad s_blocklights size (%i) - should be "UFO_SIZE_T" (lquant: %i) (smax: %i, stmaxs[0]: %i, tmax: %i, stmaxs[1]: %i)\n",
-			size, (sizeof(s_blocklights) >> surf->lquant), surf->lquant, smax, surf->stmaxs[0], tmax, surf->stmaxs[1]);
-	}
+	if (size * LIGHTMAP_BYTES > (sizeof(r_lightmaps.fbuffer)))
+		Com_Error(ERR_DROP, "R_BuildLightmap: Surface too large: %d.\n", size);
 
 	lightmap = surf->samples;
 
-	/* only add one lightmap */
-	if (nummaps != 1)
-		memset(s_blocklights, 0, sizeof(s_blocklights[0]) * size * RGB_PIXELSIZE);
-
+	/* add all the lightmaps for any lightstyles */
 	for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
-		bl = s_blocklights;
+		bl = r_lightmaps.fbuffer;
 
-		for (i = 0; i < size; i++, bl += RGB_PIXELSIZE) {
-			if (maps > 0) {
-				bl[0] += lightmap[i * RGB_PIXELSIZE + 0] * r_modulate->value;
-				bl[1] += lightmap[i * RGB_PIXELSIZE + 1] * r_modulate->value;
-				bl[2] += lightmap[i * RGB_PIXELSIZE + 2] * r_modulate->value;
-			} else {
-				bl[0] = lightmap[i * RGB_PIXELSIZE + 0] * r_modulate->value;
-				bl[1] = lightmap[i * RGB_PIXELSIZE + 1] * r_modulate->value;
-				bl[2] = lightmap[i * RGB_PIXELSIZE + 2] * r_modulate->value;
+		for (i = 0; i < size; i++, bl += LIGHTMAP_BYTES) {
+			if (maps > 0) { /* add to existing value */
+				bl[0] += lightmap[i * LIGHTMAP_BYTES + 0] * r_modulate->value;
+				bl[1] += lightmap[i * LIGHTMAP_BYTES + 1] * r_modulate->value;
+				bl[2] += lightmap[i * LIGHTMAP_BYTES + 2] * r_modulate->value;
+			} else { /* or simply set */
+				bl[0] = lightmap[i * LIGHTMAP_BYTES + 0] * r_modulate->value;
+				bl[1] = lightmap[i * LIGHTMAP_BYTES + 1] * r_modulate->value;
+				bl[2] = lightmap[i * LIGHTMAP_BYTES + 2] * r_modulate->value;
 			}
 		}
-		lightmap += size * RGB_PIXELSIZE;	/* skip to next lightmap */
+		lightmap += size * LIGHTMAP_BYTES;	/* skip to next lightmap */
 	}
 
 	/* put into texture format */
 	stride -= (smax << 2);
-	bl = s_blocklights;
+	bl = r_lightmaps.fbuffer;
 
 	/* first into an rgba linear block for softening */
-	lightmap = (byte *)VID_TagAlloc(vid_lightPool, size * 4, 0);
+	lightmap = (byte *)VID_TagAlloc(vid_lightPool, size * LIGHTMAP_BLOCK_BYTES, 0);
 	lm = lightmap;
 
 	for (i = 0; i < tmax; i++) {
@@ -126,59 +148,53 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 			if (b > max)
 				max = b;
 
-			/* alpha is ONLY used for the mono lightmap case.  For this reason
-			 * we set it to the brightest of the color components so that
-			 * things don't get too dim. */
-			a = max;
-
 			/* rescale all the color components if the intensity of the greatest
 			 * channel exceeds 1.0 */
 			if (max > 255) {
 				float t = 255.0F / max;
 
-				r = r * t;
-				g = g * t;
-				b = b * t;
-				a = a * t;
+				r *= t;
+				g *= t;
+				b *= t;
 			}
 
 			lm[0] = r;
 			lm[1] = g;
 			lm[2] = b;
-			lm[3] = a;
+			lm[3] = 255; /* pad alpha */
 
-			bl += RGB_PIXELSIZE;
-			lm += 4;
+			bl += LIGHTMAP_BYTES;
+			lm += LIGHTMAP_BLOCK_BYTES;
 		}
 	}
 
 	/* soften it if it's sufficiently large */
 	if (r_soften->integer && size > 1024)
 		for (i = 0; i < 4; i++)
-			R_SoftenTexture(lightmap, smax, tmax, 4);
+			R_SoftenTexture(lightmap, smax, tmax, LIGHTMAP_BLOCK_BYTES);
 
-	/* the final lightmap is uploaded to the card via the strided
-	 * lightmap block, and also cached on the surface as floating
-	 * point values for fast point lighting lookups */
+	/* the final lightmap is uploaded to the card via the strided lightmap
+	 * block, and also cached on the surface for fast point lighting lookups */
 
-	surf->lightmap = (float *)VID_TagAlloc(vid_lightPool, size * 3 * sizeof(float), 0);
-	bl = surf->lightmap;
+	surf->lightmap = (byte *)VID_TagAlloc(vid_lightPool, size * LIGHTMAP_BYTES, 0);
+	l = surf->lightmap;
 	lm = lightmap;
 	for (i = 0; i < tmax; i++, dest += stride) {
 		for (j = 0; j < smax; j++) {
+			/* copy to the strided block */
 			dest[0] = lm[0];
 			dest[1] = lm[1];
 			dest[2] = lm[2];
 			dest[3] = lm[3];
+			dest += LIGHTMAP_BLOCK_BYTES;
 
 			/* and to the surface */
-			bl[0] = lm[0] / 255.0;
-			bl[1] = lm[1] / 255.0;
-			bl[2] = lm[2] / 255.0;
-			bl += 3;
+			l[0] = lm[0];
+			l[1] = lm[1];
+			l[2] = lm[2];
+			l += LIGHTMAP_BYTES;
 
-			lm += 4;
-			dest += 4;
+			lm += LIGHTMAP_BLOCK_BYTES;
 		}
 	}
 
@@ -191,33 +207,33 @@ LIGHTMAP ALLOCATION
 =============================================================================
 */
 
-static inline void LM_InitBlock (void)
+static void R_UploadLightmapBlock (void)
 {
-	memset(r_lightmapstate.allocated, 0, sizeof(r_lightmapstate.allocated));
-}
+	if (r_lightmaps.texnum == MAX_GLLIGHTMAPS) {
+		Com_Printf("R_UploadLightmapBlock: MAX_GLLIGHTMAPS reached.\n");
+		return;
+	}
 
-static void LM_UploadBlock (void)
-{
-	R_Bind(r_state.lightmap_texnum + r_lightmapstate.lightmap_texture_count);
+	R_Bind(TEXNUM_LIGHTMAPS + r_lightmaps.texnum);
 
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, LIGHTMAP_BLOCK_WIDTH, LIGHTMAP_BLOCK_HEIGHT,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmapstate.lightmap_buffer);
+		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.buffer);
+
 	R_CheckError();
 
-	if (++r_lightmapstate.lightmap_texture_count == MAX_LIGHTMAPS) {
-		Com_Printf("LM_UploadBlock: MAX_LIGHTMAPS exceeded\n");
-		r_lightmapstate.lightmap_texture_count--;
-		return;
-	}
+	/* clear the allocation block */
+	memset(r_lightmaps.allocated, 0, sizeof(r_lightmaps.allocated));
+
+	r_lightmaps.texnum++;
 }
 
 /**
  * @brief returns a texture number and the position inside it
  */
-static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
+static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 {
 	int i, j;
 	int best, best2;
@@ -228,10 +244,10 @@ static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
 		best2 = 0;
 
 		for (j = 0; j < w; j++) {
-			if (r_lightmapstate.allocated[i + j] >= best)
+			if (r_lightmaps.allocated[i + j] >= best)
 				break;
-			if (r_lightmapstate.allocated[i + j] > best2)
-				best2 = r_lightmapstate.allocated[i + j];
+			if (r_lightmaps.allocated[i + j] > best2)
+				best2 = r_lightmaps.allocated[i + j];
 		}
 		/* this is a valid spot */
 		if (j == w) {
@@ -244,7 +260,7 @@ static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
 		return qfalse;
 
 	for (i = 0; i < w; i++)
-		r_lightmapstate.allocated[*x + i] = best + h;
+		r_lightmaps.allocated[*x + i] = best + h;
 
 	return qtrue;
 }
@@ -257,25 +273,27 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	int smax, tmax;
 	byte *base;
 
-	if (surf->texinfo->flags & SURF_WARP)
+	if (!(surf->flags & MSURF_LIGHTMAP))
 		return;
 
 	smax = (surf->stmaxs[0] >> surf->lquant) + 1;
 	tmax = (surf->stmaxs[1] >> surf->lquant) + 1;
 
-	if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t)) {
-		LM_UploadBlock();
-		LM_InitBlock();
-		if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t))
-			Com_Error(ERR_DROP, "Consecutive calls to LM_AllocBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
+	if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t)) {
+		R_UploadLightmapBlock();
+		if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t))
+			Com_Error(ERR_DROP, "Consecutive calls to R_AllocLightmapBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
 	}
 
-	surf->lightmaptexturenum = r_lightmapstate.lightmap_texture_count;
+	surf->lightmaptexturenum = TEXNUM_LIGHTMAPS + r_lightmaps.texnum;
 
-	base = r_lightmapstate.lightmap_buffer;
-	base += (surf->light_t * LIGHTMAP_BLOCK_WIDTH + surf->light_s) * LIGHTMAP_BYTES;
+	base = r_lightmaps.buffer;
+	base += (surf->light_t * LIGHTMAP_BLOCK_WIDTH + surf->light_s) * LIGHTMAP_BLOCK_BYTES;
 
-	R_BuildLightMap(surf, base, LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BYTES);
+	if (!surf->samples)  /* make it fullbright */
+		R_BuildDefaultLightmap(surf, base, LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_BYTES);
+	else  /* or light it properly */
+		R_BuildLightmap(surf, base, LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_BYTES);
 }
 
 /**
@@ -284,14 +302,12 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
  */
 void R_BeginBuildingLightmaps (void)
 {
-	memset(r_lightmapstate.allocated, 0, sizeof(r_lightmapstate.allocated));
+	memset(r_lightmaps.allocated, 0, sizeof(r_lightmaps.allocated));
 
 	R_EnableMultitexture(qtrue);
 	R_SelectTexture(&r_state.lightmap_texunit);
 
-	r_state.lightmap_texnum = TEXNUM_LIGHTMAPS;
-
-	r_lightmapstate.lightmap_texture_count = 1;
+	r_lightmaps.texnum = 0;
 }
 
 /**
@@ -300,9 +316,9 @@ void R_BeginBuildingLightmaps (void)
  */
 void R_EndBuildingLightmaps (void)
 {
-	LM_UploadBlock();
+	R_UploadLightmapBlock();
 	R_EnableMultitexture(qfalse);
-	Com_DPrintf(DEBUG_RENDERER, "lightmaps: %i\n", r_lightmapstate.lightmap_texture_count);
+	Com_DPrintf(DEBUG_RENDERER, "lightmaps: %i\n", r_lightmaps.texnum);
 }
 
 /** @brief for resolving static lighting for mesh ents */

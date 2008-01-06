@@ -61,15 +61,22 @@ void R_SetDefaultState (void)
 
 	R_Color(NULL);
 	qglClearColor(0, 0, 0, 0);
-	R_CheckError();
 
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	qglEnableClientState(GL_VERTEX_ARRAY);
+	R_SetDefaultArray(GL_VERTEX_ARRAY);
 
-	/* we always use this texcoord array */
 	qglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	qglTexCoordPointer(2, GL_FLOAT, 0, r_state.active_texunit->texcoords);
+	R_SetDefaultArray(GL_TEXTURE_COORD_ARRAY);
+
+	qglEnableClientState(GL_COLOR_ARRAY);
+	R_SetDefaultArray(GL_COLOR_ARRAY);
+	qglDisableClientState(GL_COLOR_ARRAY);
+
+	qglEnableClientState(GL_NORMAL_ARRAY);
+	R_SetDefaultArray(GL_NORMAL_ARRAY);
+	qglDisableClientState(GL_NORMAL_ARRAY);
 
 	/* lighting parameters */
 	qglLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
@@ -80,12 +87,62 @@ void R_SetDefaultState (void)
 		qglLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0001);
 	}
 
-	/* and some vertex array (floats for 3d, shorts for 2d) */
-	qglEnableClientState(GL_VERTEX_ARRAY);
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
 
-	R_TexEnv(GL_MODULATE);
+void R_SetArray (GLenum target, GLenum type, void *array)
+{
+	switch (target) {
+	case GL_VERTEX_ARRAY:
+		if (r_state.ortho)
+			qglVertexPointer(2, type, 0, array);
+		else
+			qglVertexPointer(3, type, 0, array);
+		break;
+	case GL_TEXTURE_COORD_ARRAY:
+		qglTexCoordPointer(2, type, 0, array);
+		break;
+	case GL_COLOR_ARRAY:
+		qglColorPointer(4, type, 0, array);
+		break;
+	case GL_NORMAL_ARRAY:
+		qglNormalPointer(type, 0, array);
+		break;
+	}
+}
 
-	R_EnableAlphaTest(qfalse);
+void R_SetDefaultArray (GLenum target)
+{
+	switch (target) {
+	case GL_VERTEX_ARRAY:
+		if (r_state.ortho)
+			R_SetArray(target, GL_SHORT, r_state.vertex_array_2d);
+		else
+			R_SetArray(target, GL_FLOAT, r_state.vertex_array_3d);
+		break;
+	case GL_TEXTURE_COORD_ARRAY:
+		R_SetArray(target, GL_FLOAT, r_state.texcoord_array);
+		break;
+	case GL_COLOR_ARRAY:
+		R_SetArray(target, GL_FLOAT, r_state.color_array);
+		break;
+	case GL_NORMAL_ARRAY:
+		R_SetArray(target, GL_FLOAT, r_state.normal_array);
+		break;
+	}
+}
+
+void R_EnableArray (qboolean enable, GLenum target, GLenum type, void *array)
+{
+	if (enable)  /* toggle client state */
+		qglEnableClientState(target);
+	else
+		qglDisableClientState(target);
+
+	if (!type || !array)  /* set the default array */
+		R_SetDefaultArray(target);
+	else  /* or the specified one */
+		R_SetArray(target, type, array);
 }
 
 void R_EnableAlphaTest (qboolean enable)
@@ -200,15 +257,12 @@ void R_SetupGL3D (void)
 
 	qglGetFloatv(GL_MODELVIEW_MATRIX, r_world_matrix);
 
-	/* set drawing parms */
-	qglEnable(GL_CULL_FACE);
-	qglCullFace(GL_FRONT);
-
-	R_EnableBlend(qfalse);
-	R_EnableAlphaTest(qfalse);
+	r_state.ortho = qfalse;
 
 	/* set vertex array pointer */
-	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
+	R_SetDefaultArray(GL_VERTEX_ARRAY);
+
+	qglDisable(GL_BLEND);
 
 	qglEnable(GL_DEPTH_TEST);
 
@@ -233,13 +287,16 @@ void R_SetupGL2D (void)
 	qglLoadIdentity();
 
 	qglDisable(GL_DEPTH_TEST);
-	qglDisable(GL_CULL_FACE);
+
+	R_SetDefaultArray(GL_VERTEX_ARRAY);
 
 	R_EnableAlphaTest(qtrue);
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	R_Color(NULL);
+
+	r_state.ortho = qtrue;
 
 	R_CheckError();
 }
@@ -255,6 +312,8 @@ void R_EnableLighting (qboolean enable)
 	if (!lighting_shader || !lighting_mtex_shader) {
 		lighting_shader = R_GetShader("lighting");
 		lighting_mtex_shader = R_GetShader("lighting_mtex");
+		if (!lighting_shader || !lighting_mtex_shader)
+			Sys_Error("Could not load lighting shaders");
 	}
 
 	r_state.lighting_enabled = enable;
@@ -267,27 +326,26 @@ void R_EnableLighting (qboolean enable)
 		else
 			activeLightShader = lighting_shader;
 
-		if (lighting_shader && !(refdef.rdflags & RDF_NOWORLDMODEL)) {
-			qglEnableClientState(GL_NORMAL_ARRAY);
-			qglNormalPointer(GL_FLOAT, 0, r_state.normal_array);
-
-			SH_UseShader(activeLightShader, qtrue);
-		}
+		qglEnableClientState(GL_NORMAL_ARRAY);
+		SH_UseShader(activeLightShader, qtrue);
 	} else {
+		int i;
+
 		assert(activeLightShader);
 		qglDisable(GL_LIGHTING);
+		for (i = 0; i < MAX_GL_LIGHTS; i++)
+			qglDisable(GL_LIGHT0 + i);
 
-		if (lighting_shader && !(refdef.rdflags & RDF_NOWORLDMODEL)) {
-			qglDisableClientState(GL_NORMAL_ARRAY);
-
-			SH_UseShader(activeLightShader, qfalse);
-		}
+		qglDisableClientState(GL_NORMAL_ARRAY);
+		SH_UseShader(activeLightShader, qfalse);
 		activeLightShader = NULL;
 	}
 }
 
 void R_EnableWarp (qboolean enable)
 {
+	static vec4_t offset;
+
 	if (!warp_shader)
 		warp_shader = R_GetShader("warp");
 
@@ -304,33 +362,17 @@ void R_EnableWarp (qboolean enable)
 
 		SH_UseShader(warp_shader, qtrue);
 
-		qglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		qglTexCoordPointer(2, GL_FLOAT, 0, r_state.lightmap_texunit.texcoords);
+		offset[0] = offset[1] = refdef.time / 8.0;
+		R_ShaderFragmentParameter(0, offset);
 	} else {
-		SH_UseShader(warp_shader, qfalse);
-
-		qglDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		qglDisable(GL_TEXTURE_2D);
+
+		SH_UseShader(warp_shader, qfalse);
 	}
 
 	R_CheckError();
 
 	R_SelectTexture(&r_state.texture_texunit);
-}
-
-void R_EnableColorArray (qboolean enable)
-{
-	if (enable == r_state.color_array_enabled)
-		return;
-
-	r_state.color_array_enabled = enable;
-
-	if (enable) {
-		qglEnableClientState(GL_COLOR_ARRAY);
-		qglColorPointer(4, GL_FLOAT, 0, r_state.color_array);
-	} else {
-		qglDisableClientState(GL_COLOR_ARRAY);
-	}
 }
 
 void R_EnableMultitexture (qboolean enable)
@@ -352,12 +394,9 @@ void R_EnableMultitexture (qboolean enable)
 			else
 				R_TexEnv(GL_MODULATE);
 		}
-		qglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		qglTexCoordPointer(2, GL_FLOAT, 0, r_state.lightmap_texunit.texcoords);
 	} else {
 		/* disable on the second texture unit */
 		qglDisable(GL_TEXTURE_2D);
-		qglDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 	R_SelectTexture(&r_state.texture_texunit);
 }
@@ -393,12 +432,19 @@ void R_Bind (int texnum)
 	R_CheckError();
 }
 
-void R_BindMultitexture (gltexunit_t *texunit0, int texnum0, gltexunit_t *texunit1, int texnum1)
+void R_BindWithArray (GLuint texnum, void *array)
 {
-	R_SelectTexture(texunit0);
-	R_Bind(texnum0);
-	R_SelectTexture(texunit1);
-	R_Bind(texnum1);
+	R_Bind(texnum);
+	R_EnableArray(qtrue, GL_TEXTURE_COORD_ARRAY, GL_FLOAT, array);
+}
+
+void R_BindMultitexture (int texnum0, void *array0, int texnum1, void *array1)
+{
+	R_SelectTexture(&r_state.lightmap_texunit);
+	R_BindWithArray(texnum1, array1);
+
+	R_SelectTexture(&r_state.texture_texunit);
+	R_BindWithArray(texnum0, array0);
 }
 
 typedef struct {

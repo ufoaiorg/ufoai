@@ -92,7 +92,7 @@ static void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *sta
 	}
 }
 
-static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t st)
+static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t in, vec2_t out)
 {
 	vec3_t tmp;
 	float s, t, s0, t0;
@@ -112,8 +112,8 @@ static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t st)
 		s = tmp[0];
 		t = tmp[1];
 	} else {  /* or use the ones from the vertex */
-		s = v[3];
-		t = v[4];
+		s = in[0];
+		t = in[1];
 	}
 
 	/* scale first... */
@@ -138,23 +138,34 @@ static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t st)
 		t = stage->rotate.dsin * s0 + stage->rotate.dcos * t0 - 0.5;
 	}
 
-	st[0] = s;
-	st[1] = t;
+	out[0] = s;
+	out[1] = t;
 }
 
 static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 {
-	int i, nv;
-	float *v;
+	int i;
+	float *v, *st;
 
 	if (stage->flags & STAGE_TERRAIN)
-		R_EnableColorArray(qtrue);
+		R_EnableArray(qtrue, GL_COLOR_ARRAY, 0, NULL);
 
-	nv = surf->polys->numverts;
-	R_Bind(stage->image->texnum);
+	if (stage->flags & STAGE_LIGHTMAP) {
+		R_EnableMultitexture(qtrue);
 
-	for (i = 0, v = surf->polys->verts[0]; i < nv; i++, v += VERTEXSIZE) {
-		R_StageTexcoord(stage, v, &r_state.texture_texunit.texcoords[i * 2]);
+		/* setup array pointers */
+		R_SetArray(GL_VERTEX_ARRAY, GL_FLOAT, surf->polys->verts);
+
+		R_BindMultitexture(surf->texinfo->image->texnum, surf->polys->texcoords,
+				surf->lightmaptexturenum, surf->polys->lmtexcoords);
+	} else
+		R_Bind(stage->image->texnum);
+
+	for (i = 0; i < surf->polys->numverts; i++) {
+		v = &surf->polys->verts[i * 3];
+		st = &surf->polys->texcoords[i * 2];
+
+		R_StageTexcoord(stage, v, st, &r_state.texcoord_array[i * 2]);
 		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
 		if (stage->flags & STAGE_TERRAIN)
 			R_StageVertexColor(stage, v, &r_state.color_array[i * 4]);
@@ -163,7 +174,15 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	qglDrawArrays(GL_POLYGON, 0, i);
 
 	if (stage->flags & STAGE_TERRAIN)
-		R_EnableColorArray(qfalse);
+		R_EnableArray(qfalse, GL_COLOR_ARRAY, 0, NULL);
+
+	if (stage->flags & STAGE_LIGHTMAP) {
+		R_EnableMultitexture(qfalse);
+
+		/* and restore array pointers */
+		R_EnableArray(qtrue, GL_VERTEX_ARRAY, 0, NULL);
+		R_EnableArray(qtrue, GL_TEXTURE_COORD_ARRAY, 0, NULL);
+	}
 
 	R_CheckError();
 }
@@ -425,25 +444,8 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			s->flags |= STAGE_TERRAIN;
 		}
 
-#if 0
-		if (!strcmp(c, "flare")) {
-			c = COM_Parse(buffer);
-			i = atoi(c);
-
-			if (i > -1 && i < NUM_FLARETEXTURES)
-				s->image = r_flaretextures[i];
-			else
-				s->image = R_FindImage(va("flares/%s", c), it_material);
-
-			if (s->image == r_notexture) {
-				Com_Warn("R_ParseStage: Failed to resolve flare: %s\n", c);
-				return -1;
-			}
-
-			s->flags |= STAGE_FLARE;
-			continue;
-		}
-#endif
+		if (!strcmp(c, "lightmap"))
+			s->flags |= STAGE_LIGHTMAP;
 
 		if (*c == '}') {
 			Com_DPrintf(DEBUG_RENDERER, "Parsed stage\n"
@@ -468,7 +470,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 					s->scale.s, s->scale.t, s->terrain.floor, s->terrain.ceil);
 
 			/* a texture or envmap means render it */
-			if (s->flags & (STAGE_TEXTURE | STAGE_ENVMAP))
+			if (s->flags & (STAGE_TEXTURE | STAGE_ENVMAP | STAGE_LIGHTMAP))
 				s->flags |= STAGE_RENDER;
 
 			return 0;

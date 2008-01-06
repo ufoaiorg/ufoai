@@ -152,6 +152,4 @@ qboolean Rimp_Init(void);
 void Rimp_Shutdown(void);
 qboolean R_InitGraphics(void);
 
-void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
-
 #endif /* R_LOCAL_H */

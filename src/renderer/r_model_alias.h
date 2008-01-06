@@ -25,10 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MODEL_MAX_PATH 64
 
-typedef struct mAliasNeighbors_s {
-	int n[3];
-} mAliasNeighbors_t;
-
 typedef	struct	mAliasCoord_s {
 	vec2_t	st;
 } mAliasCoord_t;
@@ -67,7 +63,6 @@ typedef	struct mAliasMesh_s {
 
 	int	num_tris;
 	unsigned int	*indexes;
-	int	*trneighbors;
 
 	int		num_skins;
 	mAliasSkin_t	*skins;
@@ -109,10 +104,6 @@ typedef	struct	mAliasModel_s {
 	/** tag data */
 	char tagname[MAX_QPATH];
 	void *tagdata;
-
-	mAliasNeighbors_t *neighbors;
 } mAliasModel_t;
 
-void R_ModBuildTriangleNeighbors(mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris);
-int R_ModFindTriangleWithEdge(mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex);
 void R_ModLoadAnims(mAliasModel_t * mod, void *buffer);

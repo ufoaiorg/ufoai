@@ -35,17 +35,17 @@ typedef struct gltexunit_s {
 	GLenum texture;  /* e.g. GL_TEXTURE0_ARB */
 	GLint texnum;  /* e.g 123 */
 	GLenum texenv;  /* e.g. GL_MODULATE */
-	float texcoords[MAX_GL_ARRAY_LENGTH * 2];  /* vertex array */
 } gltexunit_t;
 
 typedef struct {
 	qboolean fullscreen;
 
-	/* vertex arrays */
-	float vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
-	short vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
-	float color_array[MAX_GL_ARRAY_LENGTH * 4];
-	float normal_array[MAX_GL_ARRAY_LENGTH * 3];
+	/* arrays */
+	GLfloat vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
+	GLshort vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
+	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
+	GLfloat color_array[MAX_GL_ARRAY_LENGTH * 4];
+	GLfloat normal_array[MAX_GL_ARRAY_LENGTH * 3];
 
 	/* multitexture texunits */
 	gltexunit_t texture_texunit;
@@ -54,8 +54,6 @@ typedef struct {
 	/* texunit in use */
 	gltexunit_t *active_texunit;
 
-	int lightmap_texnum;
-
 	vec4_t color;
 
 	/* blend function */
@@ -63,12 +61,13 @@ typedef struct {
 
 	int maxAnisotropic;
 
+	qboolean ortho;
+
 	/* states */
 	qboolean blend_enabled;
 	qboolean alpha_test_enabled;
 	qboolean multitexture_enabled;
 	qboolean lighting_enabled;
-	qboolean color_array_enabled;
 	qboolean warp_enabled;
 
 	qboolean hwgamma;
@@ -87,7 +86,7 @@ void R_SetupGL3D(void);
 void R_EnableMultitexture(qboolean enable);
 void R_SelectTexture(gltexunit_t *texunit);
 void R_Bind(int texnum);
-void R_BindMultitexture(gltexunit_t *texunit0, int texnum0, gltexunit_t *texunit1, int texnum1);
+void R_BindMultitexture(int texnum0, void *array0, int texnum1, void *array1);
 void R_TexEnv(GLenum value);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
@@ -96,8 +95,11 @@ void R_BlendFunc(GLenum src, GLenum dest);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableLighting(qboolean enable);
-void R_EnableColorArray(qboolean enable);
 void R_EnableWarp(qboolean enable);
 void R_DisableEffects(void);
+void R_EnableArray(qboolean enable, GLenum target, GLenum type, void *array);
+void R_BindWithArray(GLuint texnum, void *array);
+void R_SetArray(GLenum target, GLenum type, void *array);
+void R_SetDefaultArray(GLenum target);
 
 #endif

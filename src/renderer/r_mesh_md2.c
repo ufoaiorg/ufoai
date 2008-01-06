@@ -36,7 +36,7 @@ static vec3_t r_mesh_norms[MD2_MAX_VERTS];
 /**
  * @brief interpolates between two frames and origins
  */
-static void R_DrawAliasFrameLerp (mdl_md2_t * md2, float backlerp, int framenum, int oldframenum)
+static void R_DrawAliasMD2FrameLerp (mdl_md2_t * md2, float backlerp, int framenum, int oldframenum)
 {
 	dAliasFrame_t *frame, *oldframe;
 	dAliasTriangleVertex_t *v, *ov, *verts;
@@ -57,10 +57,9 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * md2, float backlerp, int framenum,
 
 	frontlerp = 1.0 - backlerp;
 
-	for (i = 0; i < 3; i++)
-		move[i] = backlerp * (oldframe->translate[i]) + frontlerp * frame->translate[i];
-
+	/* the move vector should be the delta back to the previous frame * backlerp */
 	for (i = 0; i < 3; i++) {
+		move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
 		frontv[i] = frontlerp * frame->scale[i];
 		backv[i] = backlerp * oldframe->scale[i];
 	}
@@ -93,7 +92,7 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * md2, float backlerp, int framenum,
 		}
 		do {
 			/* texture coordinates come from the draw list */
-			memcpy(&r_state.texture_texunit.texcoords[j], order, sizeof(vec2_t));
+			memcpy(&r_state.texcoord_array[j], order, sizeof(vec2_t));
 			j += 2;
 
 			index_xyz = order[2];
@@ -118,7 +117,7 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * md2, float backlerp, int framenum,
 /**
  * @brief Check if model is out of view
  */
-static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
+static qboolean R_CullAliasMD2Model (vec4_t bbox[8], const entity_t * e)
 {
 	int i, p, mask, f, aggregatemask = ~0;
 	vec3_t mins, maxs;
@@ -210,7 +209,8 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 }
 
 /**
- * @sa R_DrawAliasMD2Model
+ * @brief Draw md2 model in world mode
+ * @sa R_DrawModelDirect
  */
 void R_DrawAliasMD2Model (entity_t * e)
 {
@@ -226,28 +226,9 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	md2 = (mdl_md2_t *) e->model->alias.extraData;
 
-	/* check animations */
-	if ((e->as.frame >= md2->num_frames) || (e->as.frame < 0)) {
-		Com_Printf("R_DrawAliasMD2Model %s: no such frame %d\n", e->model->name, e->as.frame);
-		e->as.frame = 0;
-	}
-	if ((e->as.oldframe >= md2->num_frames) || (e->as.oldframe < 0)) {
-		Com_Printf("R_DrawAliasMD2Model %s: no such oldframe %d\n", e->model->name, e->as.oldframe);
-		e->as.oldframe = 0;
-	}
+	R_AliasModelState(e->model, &e->as.frame, &e->as.oldframe, &e->skinnum);
 
-	/* select skin */
-	if (e->skin)
-		skin = e->skin;			/* custom player skin */
-	else {
-		if (e->skinnum >= MD2_MAX_SKINS)
-			skin = e->model->alias.skins_img[0];
-		else {
-			skin = e->model->alias.skins_img[e->skinnum];
-			if (!skin)
-				skin = e->model->alias.skins_img[0];
-		}
-	}
+	skin = e->model->alias.skins_img[e->skinnum];
 
 	if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
 		/* it will be drawn in the next entity render pass
@@ -271,9 +252,9 @@ void R_DrawAliasMD2Model (entity_t * e)
 	VectorCopy(r_lightmap_sample.color, color);
 	color[3] = r_state.blend_enabled ? 0.25 : 1.0;
 
-	/* FIXME: Does not work */
-	/* IR goggles override color */
-	if (refdef.rdflags & RDF_IRGOGGLES)
+	/* IR goggles override color
+	 * FIXME RF_SHADOW is used here for actors - don't highlight misc_models */
+	if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_SHADOW)
 		color[1] = color[2] = 0.0;
 
 	if (r_state.lighting_enabled)
@@ -284,7 +265,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* draw it */
 	R_Bind(skin->texnum);
 
-	R_DrawAliasFrameLerp(md2, e->as.backlerp, e->as.frame, e->as.oldframe);
+	R_DrawAliasMD2FrameLerp(md2, e->as.backlerp, e->as.frame, e->as.oldframe);
 
 	/* show model bounding box */
 	R_ModDrawModelBBox(bbox, e);
@@ -358,24 +339,9 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	md2 = (mdl_md2_t *) mi->model->alias.extraData;
 
-	/* check animations */
-	if ((mi->frame >= md2->num_frames) || (mi->frame < 0)) {
-		Com_Printf("R_DrawModelDirect %s: no such frame %d\n", mi->model->name, mi->frame);
-		mi->frame = 0;
-	}
-	if ((mi->oldframe >= md2->num_frames) || (mi->oldframe < 0)) {
-		Com_Printf("R_DrawModelDirect %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
-		mi->oldframe = 0;
-	}
+	R_AliasModelState(mi->model, &mi->frame, &mi->oldframe, &mi->skin);
 
-	/* select skin */
-	if (mi->skin >= 0 && mi->skin < md2->num_skins)
-		skin = mi->model->alias.skins_img[mi->skin];
-	else
-		skin = mi->model->alias.skins_img[0];
-
-	if (!skin)
-		skin = r_notexture;		/* fallback... */
+	skin = mi->model->alias.skins_img[mi->skin];
 
 	/* locate the proper data */
 	c_alias_polys += md2->num_tris;
@@ -434,13 +400,13 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	/* draw it */
 	R_Bind(skin->texnum);
 
-	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
+	if ((mi->color && mi->color[3] < 1.0f) || skin->has_alpha)
 		R_EnableBlend(qtrue);
 
 	/* draw the model */
-	R_DrawAliasFrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);
+	R_DrawAliasMD2FrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);
 
-	if ((mi->color && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
+	if ((mi->color && mi->color[3] < 1.0f) || skin->has_alpha)
 		R_EnableBlend(qfalse);
 
 	qglDisable(GL_DEPTH_TEST);
@@ -450,6 +416,9 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	R_Color(NULL);
 }
 
+/**
+ * @sa R_DrawPtlModel
+ */
 void R_DrawModelParticle (modelInfo_t * mi)
 {
 	mdl_md2_t *md2;
@@ -461,25 +430,9 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	md2 = (mdl_md2_t *) mi->model->alias.extraData;
 
-	/* check animations */
-	if ((mi->frame >= md2->num_frames) || (mi->frame < 0)) {
-		Com_Printf("R_DrawModelParticle %s: no such frame %d\n", mi->model->name, mi->frame);
-		mi->frame = 0;
-	}
-	if ((mi->oldframe >= md2->num_frames) || (mi->oldframe < 0)) {
-		Com_Printf("R_DrawModelParticle %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
-		mi->oldframe = 0;
-	}
+	R_AliasModelState(mi->model, &mi->frame, &mi->oldframe, &mi->skin);
 
-	/* select skin */
-	if (mi->skin >= md2->num_skins) {
-		Com_Printf("R_DrawModelParticle %s: no such skin %i (found %i skins)\n",
-			mi->model->name, mi->skin, md2->num_skins);
-		mi->skin = 0;
-	}
 	skin = mi->model->alias.skins_img[mi->skin];
-	if (!skin)
-		skin = r_notexture;		/* fallback... */
 
 	/* locate the proper data */
 	c_alias_polys += md2->num_tris;
@@ -498,7 +451,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	R_Bind(skin->texnum);
 
 	/* draw the model */
-	R_DrawAliasFrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);
+	R_DrawAliasMD2FrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);
 
 	qglPopMatrix();
 

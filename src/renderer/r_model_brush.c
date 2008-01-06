@@ -181,10 +181,6 @@ static void R_ModLoadTexinfo (lump_t * l)
 			Com_sprintf(name, sizeof(name), "textures/%s", in->texture);
 
 		out->image = R_FindImage(name, it_wall);
-		if (!out->image) {
-			Com_Printf("Couldn't load %s\n", name);
-			out->image = r_notexture;
-		}
 	}
 
 	/* count animation frames */
@@ -243,7 +239,7 @@ static void R_CalcSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 	}
 }
 
-static void R_ModLoadFaces (lump_t * l)
+static void R_ModLoadSurfaces (lump_t * l)
 {
 	dBspFace_t *in;
 	mBspSurface_t *out;
@@ -253,7 +249,7 @@ static void R_ModLoadFaces (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadFaces: funny lump size in %s", loadmodel->name);
+		Sys_Error("R_ModLoadSurfaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...faces: %i\n", count);
@@ -264,32 +260,39 @@ static void R_ModLoadFaces (lump_t * l)
 	for (surfnum = 0; surfnum < count; surfnum++, in++, out++) {
 		out->firstedge = LittleLong(in->firstedge);
 		out->numedges = LittleShort(in->numedges);
-		out->flags = 0;
-		out->polys = NULL;
 
 		planenum = LittleShort(in->planenum);
-		side = LittleShort(in->side);
-		if (side)
-			out->flags |= SURF_PLANEBACK;
-
 		out->plane = loadmodel->bsp.planes + planenum;
+
+		side = LittleShort(in->side);
+		if (side) {
+			out->flags |= MSURF_PLANEBACK;
+			VectorNegate(out->plane->normal, out->normal);
+		} else {
+			VectorCopy(out->plane->normal, out->normal);
+		}
 
 		ti = LittleShort(in->texinfo);
 		if (ti < 0 || ti >= loadmodel->bsp.numtexinfo)
-			Sys_Error("R_ModLoadFaces: bad texinfo number");
+			Sys_Error("R_ModLoadSurfaces: bad texinfo number");
 		out->texinfo = loadmodel->bsp.texinfo + ti;
 
 		out->lquant = loadmodel->bsp.lightquant;
+
+		/* and size, texcoords, etc */
 		R_CalcSurfaceExtents(out, loadmodel);
 
-		/* lighting info */
+		/* lastly lighting info */
 		for (i = 0; i < MAXLIGHTMAPS; i++)
 			out->styles[i] = in->styles[i];
+
 		i = LittleLong(in->lightofs);
-		if (i == -1)
+		if (i == -1 || (out->texinfo->flags & (SURF_WARP)))
 			out->samples = NULL;
-		else
+		else {
 			out->samples = loadmodel->bsp.lightdata + i;
+			out->flags |= MSURF_LIGHTMAP;
+		}
 
 		/* create lightmaps and polygons */
 		R_CreateSurfaceLightmap(out);
@@ -511,7 +514,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	R_ModLoadLighting(&header->lumps[LUMP_LIGHTING]);
 	R_ModLoadPlanes(&header->lumps[LUMP_PLANES]);
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
-	R_ModLoadFaces(&header->lumps[LUMP_FACES]);
+	R_ModLoadSurfaces(&header->lumps[LUMP_FACES]);
 	R_ModShiftTile();
 	R_ModLoadLeafs(&header->lumps[LUMP_LEAFS]);
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);

@@ -157,7 +157,6 @@ static model_t *R_RegisterModel (const char *name)
 	model_t *mod;
 	int i;
 	mdl_md2_t *pheader;
-	mAliasModel_t *pheader3;
 
 	mod = R_ModForName(name, qfalse);
 	if (mod) {
@@ -181,19 +180,12 @@ static model_t *R_RegisterModel (const char *name)
 					strcpy(end, skin + 1);
 					mod->alias.skins_img[i] = R_FindImage(path, it_skin);
 				}
-				/* fallback */
-				if (!mod->alias.skins_img[i])
-					mod->alias.skins_img[i] = r_notexture;
 			}
 			mod->numframes = pheader->num_frames;
 			break;
 			}
 		case mod_alias_md3:
-			{
-			pheader3 = (mAliasModel_t *)mod->alias.extraData;
-			mod->numframes = pheader3->num_frames;
 			break;
-			}
 		case mod_brush:
 			for (i = 0; i < mod->bsp.numtexinfo; i++)
 				mod->bsp.texinfo[i].image->registration_sequence = registration_sequence;
@@ -341,4 +333,23 @@ void R_ShutdownModels (void)
 	if (vid_lightPool)
 		VID_FreeTags(vid_lightPool, 0);
 	mod_numknown = static_mod_numknown;
+}
+
+
+void R_AliasModelState (model_t *mod, int *frame, int *oldFrame, int *skin)
+{
+	/* check animations */
+	if ((*frame >= mod->alias.num_frames) || *frame < 0) {
+		Com_Printf("R_AliasModelState %s: no such frame %d (# %i)\n", mod->name, *frame, mod->alias.num_frames);
+		*frame = 0;
+	}
+	if ((*oldFrame >= mod->alias.num_frames) || *oldFrame < 0) {
+		Com_Printf("R_AliasModelState %s: no such oldframe %d (# %i)\n", mod->name, *oldFrame, mod->alias.num_frames);
+		*oldFrame = 0;
+	}
+
+	/* use default skin - this is never null - but maybe the placeholder texture */
+	if (*skin < 0 || *skin >= mod->alias.num_skins)
+		*skin = 0;
+
 }

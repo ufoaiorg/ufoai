@@ -125,20 +125,3 @@ void CL_ParseShaders (const char *name, const char **text)
 			Com_Printf("CL_ParseShaders: Ignoring unknown param value '%s'\n", token);
 	} while (*text);
 }
-
-/**
- * @brief List all loaded shaders via console
- */
-void CL_ShaderList_f (void)
-{
-	int i;
-
-	for (i = 0; i < r_numShaders; i++) {
-		Com_Printf("Shader %s\n", r_shaders[i].name);
-		Com_Printf("..filename: %s\n", r_shaders[i].filename);
-		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);
-		Com_Printf("..vertex %i\n", (int) r_shaders[i].vertex);
-		Com_Printf("..glMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof(shader_t, glMode)));
-		Com_Printf("\n");
-	}
-}

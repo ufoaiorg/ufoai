@@ -69,7 +69,7 @@ void R_AddLights (void)
 		qglEnable(GL_LIGHT0 + i);
 	}
 
-	for (i = r_numLights; i < MAX_GL_LIGHTS; i++)
+	for (; i < MAX_GL_LIGHTS; i++)
 		qglDisable(GL_LIGHT0 + i);
 
 	R_CheckError();

@@ -439,6 +439,7 @@ static void SV_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, 
  * @brief Moves the given mins/maxs volume through the world from start to end.
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa SV_TraceBounds
+ * @sa CL_Trace
  */
 trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask)
 {

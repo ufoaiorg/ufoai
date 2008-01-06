@@ -2820,6 +2820,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 
 	fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
 
+	/* shooting actor */
 	le = LE_Get(number);
 
 	/* center view (if wanted) */
@@ -3378,6 +3379,8 @@ ACTOR GRAPHICS
  * @param[in] ent The body entity used in the renderer
  * @sa CL_AddUGV
  * @sa LE_AddToScene
+ * @sa CL_ActorAppear
+ * @note Called via addfunc for each local entity in every frame
  */
 qboolean CL_AddActor (le_t * le, entity_t * ent)
 {
@@ -3385,7 +3388,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	/* add the weapons it the actor's hand */
 	if (!(le->state & STATE_DEAD)) {
-		/* add weapon */
+		/* add left hand weapon */
 		if (le->left != NONE) {
 			memset(&add, 0, sizeof(entity_t));
 
@@ -3401,7 +3404,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			V_AddEntity(&add);
 		}
 
-		/* add weapon */
+		/* add right hand weapon */
 		if (le->right != NONE) {
 			memset(&add, 0, sizeof(entity_t));
 

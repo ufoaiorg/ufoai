@@ -237,6 +237,7 @@ qboolean Q_IsPowerOfTwo(int i);
 #define VectorCopy(a,b)         (b[0]=a[0],b[1]=a[1],b[2]=a[2])
 #define Vector2Copy(a,b)            (b[0]=a[0],b[1]=a[1])
 #define Vector4Copy(a,b)        (b[0]=a[0],b[1]=a[1],b[2]=a[2],b[3]=a[3])
+#define Vector2Clear(a)            (a[0]=0,a[1]=0)
 #define VectorClear(a)          (a[0]=a[1]=a[2]=0)
 #define VectorNegate(a,b)       (b[0]=-a[0],b[1]=-a[1],b[2]=-a[2])
 #define VectorSet(v, x, y, z)   (v[0]=(x), v[1]=(y), v[2]=(z))
@@ -462,7 +463,6 @@ typedef struct {
 #define RF_SELECTED         0x00000010	/**< selected actor */
 #define RF_MEMBER           0x00000020	/**< actor in the same team */
 #define RF_ALLIED           0x00000040	/**< actor in an allied team (controlled by another player) */
-#define RF_LIGHTFIXED       0x00000080	/**< @sa LMF_LIGHTFIXED */
 #define RF_HIGHLIGHT        0x00000200  /**< hightlight the actor with a marker */
 
 /* player_state_t->refdef bit flags */

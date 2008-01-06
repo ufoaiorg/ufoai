@@ -792,16 +792,14 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 
 	/* add the light */
 	a = cos(q) * SIN_ALPHA;
-	VectorSet(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a);
+	Vector4Set(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a, 0);
 
+	/* enable the lighting */
+	qglEnable(GL_LIGHTING);
+	qglEnable(GL_LIGHT0);
 	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
-	R_CheckError();
-
-	/* enable the lighting */
-	R_EnableLighting(qtrue);
-	qglEnable(GL_LIGHT0);
 
 	/* draw the sphere */
 	qglCallList(spherelist);
@@ -812,11 +810,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglCullFace(GL_FRONT);
 
 	/* disable 3d geoscape lighting */
-	R_EnableLighting(qfalse);
-
-	/* restore settings */
-	qglLightfv(GL_LIGHT0, GL_DIFFUSE, vec4_origin);
-	qglLightfv(GL_LIGHT0, GL_AMBIENT, vec4_origin);
+	qglDisable(GL_LIGHTING);
 
 	/* restore the previous matrix */
 	qglPopMatrix();

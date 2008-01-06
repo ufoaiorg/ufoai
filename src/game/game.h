@@ -226,7 +226,6 @@ typedef struct {
 	/* add commands to the server console as if they were typed in */
 	/* for map changing, etc */
 	void (IMPORT *AddCommandString) (const char *text);
-	void (IMPORT *DebugGraph) (float value, int color);
 } game_import_t;
 
 /** @brief functions exported by the game subsystem */

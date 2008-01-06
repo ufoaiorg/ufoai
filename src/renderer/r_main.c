@@ -47,7 +47,6 @@ vec3_t vright;
 float r_world_matrix[16];
 float r_base_world_matrix[16];
 
-static cvar_t *r_norefresh;
 static cvar_t *r_speeds;
 cvar_t *r_drawentities;
 cvar_t *r_drawworld;
@@ -296,9 +295,6 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-	if (r_norefresh->integer)
-		return;
-
 	if (r_speeds->integer) {
 		c_brush_polys = 0;
 		c_alias_polys = 0;
@@ -373,10 +369,8 @@ void R_RenderFrame (void)
  */
 void R_EndFrame (void)
 {
-	float g;
-
 	if (vid_gamma->modified) {
-		g = vid_gamma->value;
+		float g = vid_gamma->value;
 
 		if (g < 0.1)
 			g = 0.1;
@@ -405,7 +399,6 @@ static void R_Register (void)
 {
 	const cmdList_t *commands;
 
-	r_norefresh = Cvar_Get("r_norefresh", "0", 0, "Fix the screen to the last thing you saw. Only used for debugging.");
 	r_drawentities = Cvar_Get("r_drawentities", "1", 0, NULL);
 	r_drawworld = Cvar_Get("r_drawworld", "1", 0, NULL);
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
@@ -504,11 +497,9 @@ static void R_InitExtension (void)
 		if (r_ext_texture_compression->integer) {
 			Com_Printf("using GL_ARB_texture_compression\n");
 			if (r_ext_s3tc_compression->integer && strstr(r_config.extensions_string, "GL_EXT_texture_compression_s3tc")) {
-/*				Com_Printf("with s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 			} else {
-/*				Com_Printf("without s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_ARB;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
 			}
