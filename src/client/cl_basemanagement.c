@@ -3356,7 +3356,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, aircraft->status);
 			MSG_WriteLong(sb, aircraft->fuel);
 			MSG_WritePos(sb, aircraft->pos);
-			MSG_WriteShort(sb, aircraft->time);
+			MSG_WriteLong(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
 			MSG_WriteByte(sb, aircraft->hangar);
 			/* Save target of the ufo */
