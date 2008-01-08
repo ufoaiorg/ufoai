@@ -152,10 +152,10 @@ static image_t *draw_chars[2];
 void R_DrawInitLocal (void)
 {
 	shadow = R_FindImage("pics/sfx/shadow", it_pic);
-	if (!shadow)
+	if (shadow == r_notexture)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
 	blood = R_FindImage("pics/sfx/blood", it_pic);
-	if (!blood)
+	if (blood == r_notexture)
 		Com_Printf("Could not find blood image in game pics/sfx directory!\n");
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	R_CheckError();
@@ -164,10 +164,10 @@ void R_DrawInitLocal (void)
 	/* load console characters (don't bilerp characters) */
 
 	draw_chars[0] = R_FindImage("pics/conchars", it_pic);
-	if (!draw_chars[0])
+	if (draw_chars[0] == r_notexture)
 		Sys_Error("Could not find conchars image in game pics directory!\n");
 	draw_chars[1] = R_FindImage("pics/conchars_small", it_pic);
-	if (!draw_chars[1])
+	if (draw_chars[1] == r_notexture)
 		Com_Printf("Could not find conchars2 image in game pics directory!\n");
 
 	R_InitGlobeChain();
@@ -228,7 +228,7 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 	image_t *img;
 
 	img = R_FindImage(name, it_pic);
-	if (!img)
+	if (img == r_notexture)
 		Sys_Error("Could not find the searched image: %s\n", name);
 
 	R_Bind(img->texnum);
@@ -501,7 +501,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	gl = R_FindImage(va("pics/menu/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
-	if (!gl)
+	if (gl == r_notexture)
 		return;
 
 	/* init combiner */
@@ -740,7 +740,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float a;
 
-	image_t* gl = NULL;
+	image_t* geoscape;
 	float nx, ny, nw, nh;
 
 	/* normalize */
@@ -750,8 +750,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	nh = h * viddef.ry;
 
 	/* load day image */
-	gl = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
-	if (!gl) {
+	geoscape = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
+	if (geoscape == r_notexture) {
 		Com_Printf("Could not find pics/menu/%s_day\n", map);
 		return;
 	}
@@ -784,7 +784,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglRotatef(rotate[PITCH], 0, 0, 1);
 
 	/* solid globe texture */
-	qglBindTexture(GL_TEXTURE_2D, gl->texnum);
+	qglBindTexture(GL_TEXTURE_2D, geoscape->texnum);
 	R_CheckError();
 
 	qglEnable(GL_CULL_FACE);

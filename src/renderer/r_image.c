@@ -1288,7 +1288,7 @@ void R_InitImages (void)
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_static);
 #if 0
 		/* deactivated until we have the images */
-		if (!r_envmaptextures[i])
+		if (r_envmaptextures[i] == r_notexture)
 			Sys_Error("Could not load environment map %i", i);
 #endif
 	}
