@@ -27,6 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_material.h"
 
+#define R_SurfaceToSurfaces(surfs, surf)\
+	(surfs)->surfaces[(surfs)->count++] = surf
+
 static vec3_t modelorg;			/* relative to viewpoint */
 
 /*
@@ -43,67 +46,69 @@ BRUSH MODELS
 static void R_DrawInlineBrushModel (entity_t *e)
 {
 	int i;
-	cBspPlane_t *plane;
 	float dot;
 	mBspSurface_t *surf;
-	mBspSurface_t *opaque_surfaces, *opaque_warp_surfaces;
-	mBspSurface_t *alpha_surfaces, *alpha_warp_surfaces;
-	mBspSurface_t *material_surfaces;
+	mBspSurfaces_t opaque_surfaces, opaque_warp_surfaces;
+	mBspSurfaces_t alpha_surfaces, alpha_warp_surfaces;
+	mBspSurfaces_t material_surfaces;
 
-	opaque_surfaces = opaque_warp_surfaces = NULL;
-	alpha_surfaces = alpha_warp_surfaces = NULL;
-
-	material_surfaces = NULL;
+	opaque_surfaces.count = opaque_warp_surfaces.count = 0;
+	alpha_surfaces.count = alpha_warp_surfaces.count = 0;
+	material_surfaces.count = 0;
 
 	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
 
 	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
-		/* find which side of the node we are on */
-		plane = surf->plane;
 
-		dot = DotProduct(modelorg, plane->normal) - plane->dist;
+		/* find which side of the surf we are on  */
+		switch(surf->plane->type){
+		case PLANE_X:
+			dot = modelorg[0] - surf->plane->dist;
+			break;
+		case PLANE_Y:
+			dot = modelorg[1] - surf->plane->dist;
+			break;
+		case PLANE_Z:
+			dot = modelorg[2] - surf->plane->dist;
+			break;
+		default:
+			dot = DotProduct(modelorg, surf->plane->normal) - surf->plane->dist;
+			break;
+		}
 
 		if (((surf->flags & MSURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) ||
 			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON))) {
 
 			/* add to appropriate surface chain */
 			if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
-				if (surf->texinfo->flags & SURF_WARP) {
-					surf->next = alpha_warp_surfaces;
-					alpha_warp_surfaces = surf;
-				} else {
-					surf->next = alpha_surfaces;
-					alpha_surfaces = surf;
-				}
+				if (surf->texinfo->flags & SURF_WARP)
+					R_SurfaceToSurfaces(&alpha_warp_surfaces, surf);
+				else
+					R_SurfaceToSurfaces(&alpha_surfaces, surf);
 			} else {
-				if (surf->texinfo->flags & SURF_WARP) {
-					surf->next = opaque_warp_surfaces;
-					opaque_warp_surfaces = surf;
-				} else {
-					surf->next = opaque_surfaces;
-					opaque_surfaces = surf;
-				}
+				if (surf->texinfo->flags & SURF_WARP)
+					R_SurfaceToSurfaces(&opaque_warp_surfaces, surf);
+				else
+					R_SurfaceToSurfaces(&opaque_surfaces, surf);
 			}
 
 			/* add to the material chain if appropriate */
-			if (surf->texinfo->image->material.flags & STAGE_RENDER) {
-				surf->materialchain = material_surfaces;
-				material_surfaces = surf;
-			}
+			if (surf->texinfo->image->material.flags & STAGE_RENDER)
+				R_SurfaceToSurfaces(&material_surfaces, surf);
 		}
 	}
 
-	R_DrawOpaqueSurfaces(opaque_surfaces);
+	R_DrawOpaqueSurfaces(&opaque_surfaces);
 
-	R_DrawOpaqueWarpSurfaces(opaque_warp_surfaces);
+	R_DrawOpaqueWarpSurfaces(&opaque_warp_surfaces);
 
 	R_EnableBlend(qtrue);
 
-	R_DrawAlphaSurfaces(alpha_surfaces);
+	R_DrawAlphaSurfaces(&alpha_surfaces);
 
-	R_DrawAlphaWarpSurfaces(alpha_warp_surfaces);
+	R_DrawAlphaWarpSurfaces(&alpha_warp_surfaces);
 
-	R_DrawMaterialSurfaces(material_surfaces);
+	R_DrawMaterialSurfaces(&material_surfaces);
 
 	R_EnableBlend(qfalse);
 }
@@ -172,7 +177,6 @@ WORLD MODEL
 static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 {
 	int c, side, sidebit;
-	cBspPlane_t *plane;
 	mBspSurface_t *surf;
 	float dot;
 
@@ -188,14 +192,13 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 
 	/* node is just a decision point, so go down the apropriate sides
 	 * find which side of the node we are on */
-	plane = node->plane;
 
 	if (r_isometric->integer) {
-		dot = -DotProduct(vpn, plane->normal);
-	} else if (plane->type >= 3) {
-		dot = DotProduct(modelorg, plane->normal) - plane->dist;
+		dot = -DotProduct(vpn, node->plane->normal);
+	} else if (node->plane->type >= 3) {
+		dot = DotProduct(modelorg, node->plane->normal) - node->plane->dist;
 	} else {
-		dot = modelorg[plane->type] - plane->dist;
+		dot = modelorg[node->plane->type] - node->plane->dist;
 	}
 
 	if (dot >= 0) {
@@ -214,30 +217,22 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 		if ((surf->flags & MSURF_PLANEBACK) != sidebit)
 			continue;			/* wrong side */
 
-		/* add to appropriate surface chain */
+		/* add to appropriate surfaces list */
 		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
-			if (surf->texinfo->flags & SURF_WARP) {
-				surf->next = r_alpha_warp_surfaces;
-				r_alpha_warp_surfaces = surf;
-			} else {
-				surf->next = r_alpha_surfaces;
-				r_alpha_surfaces = surf;
-			}
+			if (surf->texinfo->flags & SURF_WARP)
+				R_SurfaceToSurfaces(&r_alpha_warp_surfaces, surf);
+			else
+				R_SurfaceToSurfaces(&r_alpha_surfaces, surf);
 		} else {
-			if (surf->texinfo->flags & SURF_WARP) {
-				surf->next = r_opaque_warp_surfaces;
-				r_opaque_warp_surfaces = surf;
-			} else {
-				surf->next = r_opaque_surfaces;
-				r_opaque_surfaces = surf;
-			}
+			if (surf->texinfo->flags & SURF_WARP)
+				R_SurfaceToSurfaces(&r_opaque_warp_surfaces, surf);
+			else
+				R_SurfaceToSurfaces(&r_opaque_surfaces, surf);
 		}
 
-		/* add to the material chain if appropriate */
-		if (surf->texinfo->image->material.flags & STAGE_RENDER) {
-			surf->materialchain = r_material_surfaces;
-			r_material_surfaces = surf;
-		}
+		/* add to the material list if appropriate */
+		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+			R_SurfaceToSurfaces(&r_material_surfaces, surf);
 	}
 
 	/* recurse down the back side */
@@ -270,9 +265,9 @@ void R_GetLevelSurfaceChains (void)
 	/* reset surface chains and regenerate them
 	 * even reset them when RDF_NOWORLDMODEL is set - otherwise
 	 * there still might be some surfaces in none-world-mode */
-	r_opaque_surfaces = r_opaque_warp_surfaces = NULL;
-	r_alpha_surfaces = r_alpha_warp_surfaces = NULL;
-	r_material_surfaces = NULL;
+	r_opaque_surfaces.count = r_opaque_warp_surfaces.count = 0;
+	r_alpha_surfaces.count = r_alpha_warp_surfaces.count = 0;
+	r_material_surfaces.count = 0;
 
 	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;

@@ -317,11 +317,11 @@ void R_RenderFrame (void)
 
 	R_CheckError();
 
-	R_DrawOpaqueSurfaces(r_opaque_surfaces);
+	R_DrawOpaqueSurfaces(&r_opaque_surfaces);
 
 	R_DisableEffects();
 
-	R_DrawOpaqueWarpSurfaces(r_opaque_warp_surfaces);
+	R_DrawOpaqueWarpSurfaces(&r_opaque_warp_surfaces);
 
 	R_DisableEffects();
 
@@ -329,7 +329,7 @@ void R_RenderFrame (void)
 
 	R_EnableBlend(qtrue);
 
-	R_DrawMaterialSurfaces(r_material_surfaces);
+	R_DrawMaterialSurfaces(&r_material_surfaces);
 
 	R_DisableEffects();
 
@@ -337,11 +337,11 @@ void R_RenderFrame (void)
 
 	R_CheckError();
 
-	R_DrawAlphaSurfaces(r_alpha_surfaces);
+	R_DrawAlphaSurfaces(&r_alpha_surfaces);
 
 	R_DisableEffects();
 
-	R_DrawAlphaWarpSurfaces(r_alpha_warp_surfaces);
+	R_DrawAlphaWarpSurfaces(&r_alpha_warp_surfaces);
 
 	R_CheckError();
 

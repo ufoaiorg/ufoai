@@ -87,8 +87,6 @@ typedef struct mBspSurface_s {
 	byte lquant;
 
 	mBspPoly_t *polys;
-	struct mBspSurface_s *next;
-	struct mBspSurface_s *materialchain;	/**< material surface chain */
 
 	mBspTexInfo_t *texinfo;
 
@@ -97,6 +95,13 @@ typedef struct mBspSurface_s {
 	byte *samples;				/**< [numstyles*surfsize] */
 	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
 } mBspSurface_t;
+
+#define MAX_RENDERER_SURFACES 32768
+/* surfaces are assembled according to bsp order into arrays */
+typedef struct msurfaces_s {
+	mBspSurface_t *surfaces[MAX_RENDERER_SURFACES];
+	int count;
+} mBspSurfaces_t;
 
 #define NODE_NO_LEAF -1
 

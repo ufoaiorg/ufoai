@@ -27,11 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_error.h"
 
-mBspSurface_t *r_opaque_surfaces;
-mBspSurface_t *r_opaque_warp_surfaces;
-
-mBspSurface_t *r_alpha_surfaces;
-mBspSurface_t *r_alpha_warp_surfaces;
+mBspSurfaces_t r_opaque_surfaces;
+mBspSurfaces_t r_opaque_warp_surfaces;
+mBspSurfaces_t r_alpha_surfaces;
+mBspSurfaces_t r_alpha_warp_surfaces;
 
 /**
  * @brief Set the surface state according to surface flags and bind the texture
@@ -95,13 +94,13 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
  * @sa R_DrawSurface
  * @sa R_SetSurfaceState
  */
-static void R_DrawSurfaces (const mBspSurface_t *surfs)
+static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 {
-	const mBspSurface_t *surf;
+	int i;
 
-	for (surf = surfs; surf; surf = surf->next) {
-		R_SetSurfaceState(surf);
-		R_DrawSurface(surf);
+	for (i = 0; i < surfs->count; i++) {
+		R_SetSurfaceState(surfs->surfaces[i]);
+		R_DrawSurface(surfs->surfaces[i]);
 	}
 
 	/* and restore array pointers */
@@ -113,9 +112,9 @@ static void R_DrawSurfaces (const mBspSurface_t *surfs)
  * @brief Draw the surface chain with multitexture enabled and blend enabled
  * @sa R_DrawOpaqueSurfaces
  */
-void R_DrawAlphaSurfaces (const mBspSurface_t *surfs)
+void R_DrawAlphaSurfaces (const mBspSurfaces_t *surfs)
 {
-	if (!surfs)
+	if (!surfs->count)
 		return;
 
 	assert(r_state.blend_enabled);
@@ -128,9 +127,9 @@ void R_DrawAlphaSurfaces (const mBspSurface_t *surfs)
  * @brief Draw the surface chain with multitexture enabled and light enabled
  * @sa R_DrawAlphaSurfaces
  */
-void R_DrawOpaqueSurfaces (const mBspSurface_t *surfs)
+void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 {
-	if (!surfs)
+	if (!surfs->count)
 		return;
 
 	R_EnableMultitexture(qtrue);
@@ -146,9 +145,9 @@ void R_DrawOpaqueSurfaces (const mBspSurface_t *surfs)
  * @brief Draw the surfaces via warp shader
  * @sa R_DrawAlphaWarpSurfaces
  */
-void R_DrawOpaqueWarpSurfaces (mBspSurface_t *surfs)
+void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
 {
-	if (!surfs)
+	if (!surfs->count)
 		return;
 
 	R_EnableWarp(qtrue);
@@ -160,9 +159,9 @@ void R_DrawOpaqueWarpSurfaces (mBspSurface_t *surfs)
  * @brief Draw the alpha surfaces via warp shader and with blend enabled
  * @sa R_DrawOpaqueWarpSurfaces
  */
-void R_DrawAlphaWarpSurfaces (mBspSurface_t *surfs)
+void R_DrawAlphaWarpSurfaces (mBspSurfaces_t *surfs)
 {
-	if (!surfs)
+	if (!surfs->count)
 		return;
 
 	assert(r_state.blend_enabled);

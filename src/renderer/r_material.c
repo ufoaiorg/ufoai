@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
-mBspSurface_t *r_material_surfaces;
+mBspSurfaces_t r_material_surfaces;
 
 #define UPDATE_THRESHOLD 0.02
 static void R_UpdateMaterial (material_t *m)
@@ -176,35 +176,36 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	R_CheckError();
 }
 
-void R_DrawMaterialSurfaces (mBspSurface_t *surfs)
+void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 {
 	mBspSurface_t *surf;
 	material_t *m;
 	materialStage_t *s;
 	vec4_t color;
-	int i;
+	int i, j;
 
 	if (!r_materials->integer || r_wire->integer)
 		return;
 
-	if (!surfs)
+	if (!surfs->count)
 		return;
 
 	assert(r_state.blend_enabled);
 
 	qglEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
 
-	for (surf = surfs; surf; surf = surf->materialchain) {
+	for (i = 0; i < surfs->count; i++) {
+		surf = surfs->surfaces[i];
 		m = &surf->texinfo->image->material;
 
 		R_UpdateMaterial(m);
 
-		i = -1;
-		for (s = m->stages; s; s = s->next, i--) {
+		j = -1;
+		for (s = m->stages; s; s = s->next, j--) {
 			if (!(s->flags & STAGE_RENDER))
 				continue;
 
-			qglPolygonOffset(-1, i);  /* increase depth offset for each stage */
+			qglPolygonOffset(-1, j);  /* increase depth offset for each stage */
 
 			if (s->flags & STAGE_LIGHTMAP)
 				R_Bind(surf->lightmaptexturenum);
@@ -214,7 +215,7 @@ void R_DrawMaterialSurfaces (mBspSurface_t *surfs)
 			if (s->flags & STAGE_BLEND)
 				R_BlendFunc(s->blend.src, s->blend.dest);
 			else if (s->flags & STAGE_LIGHTMAP)
-				R_BlendFunc(GL_ZERO,GL_SRC_COLOR);/*GL_SRC_COLOR, GL_DST_COLOR);*/
+				R_BlendFunc(GL_ZERO,GL_SRC_COLOR);
 			else
 				R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
