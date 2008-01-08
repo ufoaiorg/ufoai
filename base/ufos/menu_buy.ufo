@@ -95,172 +95,172 @@ menu buy
 	// buy/sell/autosell buttons
 	// =========================
 	confunc buy_autoselle0 { *bt_autosell0 image menu/button_autosell1
-		*bt_autosell0 tooltip "_Item autosell enabled."
+		*bt_autosell0 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld0 { *bt_autosell0 image menu/button_autosell2
-		*bt_autosell0 tooltip "_Item autosell disabled."
+		*bt_autosell0 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle1 { *bt_autosell1 image menu/button_autosell1
-		*bt_autosell1 tooltip "_Item autosell enabled."
+		*bt_autosell1 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld1 { *bt_autosell1 image menu/button_autosell2
-		*bt_autosell1 tooltip "_Item autosell disabled."
+		*bt_autosell1 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle2 { *bt_autosell2 image menu/button_autosell1
-		*bt_autosell2 tooltip "_Item autosell enabled."
+		*bt_autosell2 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld2 { *bt_autosell2 image menu/button_autosell2
-		*bt_autosell2 tooltip "_Item autosell disabled."
+		*bt_autosell2 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle3 { *bt_autosell3 image menu/button_autosell1
-		*bt_autosell3 tooltip "_Item autosell enabled."
+		*bt_autosell3 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld3 { *bt_autosell3 image menu/button_autosell2
-		*bt_autosell3 tooltip "_Item autosell disabled."
+		*bt_autosell3 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle4 { *bt_autosell4 image menu/button_autosell1
-		*bt_autosell4 tooltip "_Item autosell enabled."
+		*bt_autosell4 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld4 { *bt_autosell4 image menu/button_autosell2
-		*bt_autosell4 tooltip "_Item autosell disabled."
+		*bt_autosell4 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle5 { *bt_autosell5 image menu/button_autosell1
-		*bt_autosell5 tooltip "_Item autosell enabled."
+		*bt_autosell5 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld5 { *bt_autosell5 image menu/button_autosell2
-		*bt_autosell5 tooltip "_Item autosell disabled."
+		*bt_autosell5 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle6 { *bt_autosell6 image menu/button_autosell1
-		*bt_autosell6 tooltip "_Item autosell enabled."
+		*bt_autosell6 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld6 { *bt_autosell6 image menu/button_autosell2
-		*bt_autosell6 tooltip "_Item autosell disabled."
+		*bt_autosell6 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle7 { *bt_autosell7 image menu/button_autosell1
-		*bt_autosell7 tooltip "_Item autosell enabled."
+		*bt_autosell7 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld7 { *bt_autosell7 image menu/button_autosell2
-		*bt_autosell7 tooltip "_Item autosell disabled."
+		*bt_autosell7 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle8 { *bt_autosell8 image menu/button_autosell1
-		*bt_autosell8 tooltip "_Item autosell enabled."
+		*bt_autosell8 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld8 { *bt_autosell8 image menu/button_autosell2
-		*bt_autosell8 tooltip "_Item autosell disabled."
+		*bt_autosell8 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle9 { *bt_autosell9 image menu/button_autosell1
-		*bt_autosell9 tooltip "_Item autosell enabled."
+		*bt_autosell9 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld9 { *bt_autosell9 image menu/button_autosell2
-		*bt_autosell9 tooltip "_Item autosell disabled."
+		*bt_autosell9 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle10 { *bt_autosell10 image menu/button_autosell1
-		*bt_autosell10 tooltip "_Item autosell enabled."
+		*bt_autosell10 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld10 { *bt_autosell10 image menu/button_autosell2
-		*bt_autosell10 tooltip "_Item autosell disabled."
+		*bt_autosell10 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle11 { *bt_autosell11 image menu/button_autosell1
-		*bt_autosell11 tooltip "_Item autosell enabled."
+		*bt_autosell11 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld11 { *bt_autosell11 image menu/button_autosell2
-		*bt_autosell11 tooltip "_Item autosell disabled."
+		*bt_autosell11 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle12 { *bt_autosell12 image menu/button_autosell1
-		*bt_autosell12 tooltip "_Item autosell enabled."
+		*bt_autosell12 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld12 { *bt_autosell12 image menu/button_autosell2
-		*bt_autosell12 tooltip "_Item autosell disabled."
+		*bt_autosell12 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle13 { *bt_autosell13 image menu/button_autosell1
-		*bt_autosell13 tooltip "_Item autosell enabled."
+		*bt_autosell13 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld13 { *bt_autosell13 image menu/button_autosell2
-		*bt_autosell13 tooltip "_Item autosell disabled."
+		*bt_autosell13 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle14 { *bt_autosell14 image menu/button_autosell1
-		*bt_autosell14 tooltip "_Item autosell enabled."
+		*bt_autosell14 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld14 { *bt_autosell14 image menu/button_autosell2
-		*bt_autosell14 tooltip "_Item autosell disabled."
+		*bt_autosell14 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle15 { *bt_autosell15 image menu/button_autosell1
-		*bt_autosell15 tooltip "_Item autosell enabled."
+		*bt_autosell15 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld15 { *bt_autosell15 image menu/button_autosell2
-		*bt_autosell15 tooltip "_Item autosell disabled."
+		*bt_autosell15 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle16 { *bt_autosell16 image menu/button_autosell1
-		*bt_autosell16 tooltip "_Item autosell enabled."
+		*bt_autosell16 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld16 { *bt_autosell16 image menu/button_autosell2
-		*bt_autosell16 tooltip "_Item autosell disabled."
+		*bt_autosell16 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle17 { *bt_autosell17 image menu/button_autosell1
-		*bt_autosell17 tooltip "_Item autosell enabled."
+		*bt_autosell17 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld17 { *bt_autosell17 image menu/button_autosell2
-		*bt_autosell17 tooltip "_Item autosell disabled."
+		*bt_autosell17 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle18 { *bt_autosell18 image menu/button_autosell1
-		*bt_autosell18 tooltip "_Item autosell enabled."
+		*bt_autosell18 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld18 { *bt_autosell18 image menu/button_autosell2
-		*bt_autosell18 tooltip "_Item autosell disabled."
+		*bt_autosell18 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle19 { *bt_autosell19 image menu/button_autosell1
-		*bt_autosell19 tooltip "_Item autosell enabled."
+		*bt_autosell19 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld19 { *bt_autosell19 image menu/button_autosell2
-		*bt_autosell19 tooltip "_Item autosell disabled."
+		*bt_autosell19 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle20 { *bt_autosell20 image menu/button_autosell1
-		*bt_autosell20 tooltip "_Item autosell enabled."
+		*bt_autosell20 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld20 { *bt_autosell20 image menu/button_autosell2
-		*bt_autosell20 tooltip "_Item autosell disabled."
+		*bt_autosell20 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle21 { *bt_autosell21 image menu/button_autosell1
-		*bt_autosell21 tooltip "_Item autosell enabled."
+		*bt_autosell21 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld21 { *bt_autosell21 image menu/button_autosell2
-		*bt_autosell21 tooltip "_Item autosell disabled."
+		*bt_autosell21 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle22 { *bt_autosell22 image menu/button_autosell1
-		*bt_autosell22 tooltip "_Item autosell enabled."
+		*bt_autosell22 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld22 { *bt_autosell22 image menu/button_autosell2
-		*bt_autosell22 tooltip "_Item autosell disabled."
+		*bt_autosell22 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle23 { *bt_autosell23 image menu/button_autosell1
-		*bt_autosell23 tooltip "_Item autosell enabled."
+		*bt_autosell23 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld23 { *bt_autosell23 image menu/button_autosell2
-		*bt_autosell23 tooltip "_Item autosell disabled."
+		*bt_autosell23 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle24 { *bt_autosell24 image menu/button_autosell1
-		*bt_autosell24 tooltip "_Item autosell enabled."
+		*bt_autosell24 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld24 { *bt_autosell24 image menu/button_autosell2
-		*bt_autosell24 tooltip "_Item autosell disabled."
+		*bt_autosell24 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle25 { *bt_autosell25 image menu/button_autosell1
-		*bt_autosell25 tooltip "_Item autosell enabled."
+		*bt_autosell25 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld25 { *bt_autosell25 image menu/button_autosell2
-		*bt_autosell25 tooltip "_Item autosell disabled."
+		*bt_autosell25 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle26 { *bt_autosell26 image menu/button_autosell1
-		*bt_autosell26 tooltip "_Item autosell enabled."
+		*bt_autosell26 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld26 { *bt_autosell26 image menu/button_autosell2
-		*bt_autosell26 tooltip "_Item autosell disabled."
+		*bt_autosell26 tooltip "_Item autosell disabled"
 	}
 	confunc buy_autoselle27 { *bt_autosell27 image menu/button_autosell1
-		*bt_autosell27 tooltip "_Item autosell enabled."
+		*bt_autosell27 tooltip "_Item autosell enabled"
 	}
 	confunc buy_autoselld27 { *bt_autosell27 image menu/button_autosell2
-		*bt_autosell27 tooltip "_Item autosell disabled."
+		*bt_autosell27 tooltip "_Item autosell disabled"
 	}
 
 	// =========================
@@ -2249,18 +2249,18 @@ menu buyaircraft
 	confunc abuy_craftitems	{ cmd "buy_type 7;" abuy_reset *s_craftitems	color "1 1 1 1" }
 
 	confunc abuy_disableaircrafts1 { *bt_aircrafts image "menu/button_gray"
-		*bt_aircrafts tooltip "_No power supplies in this base." }
+		*bt_aircrafts tooltip "_No power supplies in this base" }
 	confunc abuy_disableaircrafts2 { *bt_aircrafts image "menu/button_gray"
-		*bt_aircrafts tooltip "_No hangars in this base."
+		*bt_aircrafts tooltip "_No hangars in this base"
 	}
 	confunc abuy_disableitems	 { *bt_craftitems image "menu/button_gray"
-		*bt_craftitems tooltip "_No storage in this base."
+		*bt_craftitems tooltip "_No storage in this base"
 	}
 	confunc abuy_enableaircrafts	 { *bt_aircrafts image "menu/button_blue"
-		*bt_aircrafts tooltip "_Buy or sell aircrafts."
+		*bt_aircrafts tooltip "_Buy or sell aircrafts"
 	}
 	confunc abuy_enableitems	 { *bt_craftitems image "menu/button_blue"
-		*bt_craftitems tooltip "_Buy or sell craftitems."
+		*bt_craftitems tooltip "_Buy or sell craftitems"
 	}
 
 	pic bt_aircrafts

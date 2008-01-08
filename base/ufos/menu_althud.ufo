@@ -1413,7 +1413,7 @@ menu althud
 	pic bt_left_cb0
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 532"
 		texl	"0 0"
 		texh	"31 31"
@@ -1426,7 +1426,7 @@ menu althud
 	pic bt_left_cb1
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 468"
 		texl	"0 0"
 		texh	"31 31"
@@ -1439,7 +1439,7 @@ menu althud
 	pic bt_left_cb2
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 404"
 		texl	"0 0"
 		texh	"31 31"
@@ -1452,7 +1452,7 @@ menu althud
 	pic bt_left_cb3
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 340"
 		texl	"0 0"
 		texh	"31 31"
@@ -1465,7 +1465,7 @@ menu althud
 	pic bt_left_cb4
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 276"
 		texl	"0 0"
 		texh	"31 31"
@@ -1478,7 +1478,7 @@ menu althud
 	pic bt_left_cb5
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 212"
 		texl	"0 0"
 		texh	"31 31"
@@ -1491,7 +1491,7 @@ menu althud
 	pic bt_left_cb6
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 148"
 		texl	"0 0"
 		texh	"31 31"
@@ -1504,7 +1504,7 @@ menu althud
 	pic bt_left_cb7
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 84"
 		texl	"0 0"
 		texh	"31 31"
@@ -1517,7 +1517,7 @@ menu althud
 	pic bt_right_cb0
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 532"
 		texl	"0 0"
 		texh	"31 31"
@@ -1530,7 +1530,7 @@ menu althud
 	pic bt_right_cb1
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 468"
 		texl	"0 0"
 		texh	"31 31"
@@ -1543,7 +1543,7 @@ menu althud
 	pic bt_right_cb2
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 404"
 		texl	"0 0"
 		texh	"31 31"
@@ -1556,7 +1556,7 @@ menu althud
 	pic bt_right_cb3
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 340"
 		texl	"0 0"
 		texh	"31 31"
@@ -1569,7 +1569,7 @@ menu althud
 	pic bt_right_cb4
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 276"
 		texl	"0 0"
 		texh	"31 31"
@@ -1582,7 +1582,7 @@ menu althud
 	pic bt_right_cb5
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 212"
 		texl	"0 0"
 		texh	"31 31"
@@ -1595,7 +1595,7 @@ menu althud
 	pic bt_right_cb6
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 148"
 		texl	"0 0"
 		texh	"31 31"
@@ -1608,7 +1608,7 @@ menu althud
 	pic bt_right_cb7
 	{
 		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire."
+		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"647 84"
 		texl	"0 0"
 		texh	"31 31"

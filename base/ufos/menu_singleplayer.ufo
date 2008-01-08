@@ -465,7 +465,7 @@ menu quickload
 
 	pic bt_go
 	{
-		tooltip	"_Reload the last automatically saved campaign state."
+		tooltip	"_Reload the last automatically saved campaign state"
 		image	menu/multi_buttons3
 		pos	"530 450"
 		texh	"180 64"

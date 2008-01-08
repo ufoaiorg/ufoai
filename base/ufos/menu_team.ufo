@@ -1714,7 +1714,7 @@ menu equipment
 	{
 //		FIXME: probably add better button here
 		image	menu/button_autosell1
-		tooltip	"_Use current skin with every soldier aboard."
+		tooltip	"_Use current skin with every soldier aboard"
 		pos	"640 300"
 		texl	"0 0"
 		texh	"16 16"
