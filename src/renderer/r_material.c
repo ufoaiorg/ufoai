@@ -150,20 +150,17 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	if (stage->flags & STAGE_TERRAIN)
 		R_EnableArray(qtrue, GL_COLOR_ARRAY, 0, NULL);
 
-	if (stage->flags & STAGE_LIGHTMAP) {
-		R_EnableMultitexture(qtrue);
-
-		/* setup array pointers */
-		R_SetArray(GL_VERTEX_ARRAY, GL_FLOAT, surf->polys->verts);
-
-		R_BindMultitexture(surf->texinfo->image->texnum, surf->polys->texcoords,
-				surf->lightmaptexturenum, surf->polys->lmtexcoords);
-	} else
+	if (stage->flags & STAGE_LIGHTMAP)
+		R_Bind(surf->lightmaptexturenum);
+	else
 		R_Bind(stage->image->texnum);
 
 	for (i = 0; i < surf->polys->numverts; i++) {
 		v = &surf->polys->verts[i * 3];
-		st = &surf->polys->texcoords[i * 2];
+		if (stage->flags & STAGE_LIGHTMAP)
+			st = &surf->polys->lmtexcoords[i * 2];
+		else
+			st = &surf->polys->texcoords[i * 2];
 
 		R_StageTexcoord(stage, v, st, &r_state.texcoord_array[i * 2]);
 		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
@@ -175,14 +172,6 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 
 	if (stage->flags & STAGE_TERRAIN)
 		R_EnableArray(qfalse, GL_COLOR_ARRAY, 0, NULL);
-
-	if (stage->flags & STAGE_LIGHTMAP) {
-		R_EnableMultitexture(qfalse);
-
-		/* and restore array pointers */
-		R_EnableArray(qtrue, GL_VERTEX_ARRAY, 0, NULL);
-		R_EnableArray(qtrue, GL_TEXTURE_COORD_ARRAY, 0, NULL);
-	}
 
 	R_CheckError();
 }
@@ -215,12 +204,17 @@ void R_DrawMaterialSurfaces (mBspSurface_t *surfs)
 			if (!(s->flags & STAGE_RENDER))
 				continue;
 
-			qglPolygonOffset(0, i);  /* increase depth offset for each stage */
+			qglPolygonOffset(-1, i);  /* increase depth offset for each stage */
 
-			R_Bind(s->image->texnum);
+			if (s->flags & STAGE_LIGHTMAP)
+				R_Bind(surf->lightmaptexturenum);
+			else
+				R_Bind(s->image->texnum);
 
 			if (s->flags & STAGE_BLEND)
 				R_BlendFunc(s->blend.src, s->blend.dest);
+			else if (s->flags & STAGE_LIGHTMAP)
+				R_BlendFunc(GL_ZERO,GL_SRC_COLOR);/*GL_SRC_COLOR, GL_DST_COLOR);*/
 			else
 				R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -260,6 +254,10 @@ static GLenum R_ConstByName (const char *c)
 		return GL_SRC_ALPHA;
 	if (!strcmp(c, "GL_ONE_MINUS_SRC_ALPHA"))
 		return GL_ONE_MINUS_SRC_ALPHA;
+	if (!strcmp(c, "GL_SRC_COLOR"))
+		return GL_SRC_COLOR;
+	if (!strcmp(c, "GL_DST_COLOR"))
+		return GL_DST_COLOR;
 
 	Com_Printf("R_ConstByName: Failed to resolve: %s\n", c);
 	return GL_ZERO;
