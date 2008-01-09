@@ -15,7 +15,6 @@
 ./client/cl_cinematic.c
 ./client/cl_employee.c
 ./client/cl_event.c
-./client/cl_fx.c
 ./client/cl_hospital.c
 ./client/cl_http.c
 ./client/cl_input.c
