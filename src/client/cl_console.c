@@ -365,8 +365,8 @@ void Con_Init (void)
 	Cmd_AddCommand("messagesay", Con_MessageModeSay_f, _("Send a message to all players"));
 	Cmd_AddCommand("messagesayteam", Con_MessageModeSayTeam_f, _("Send a message to allied team members"));
 	Cmd_AddCommand("messagemenu", Con_MessageModeMenu_f, NULL);
-	Cmd_AddCommand("clear", Con_Clear_f, NULL);
-	Cmd_AddCommand("condump", Con_Dump_f, NULL);
+	Cmd_AddCommand("clear", Con_Clear_f, "Clear console text");
+	Cmd_AddCommand("condump", Con_Dump_f, "Dump console text to textfile");
 
 	/* load console history if con_history is true */
 	Con_LoadConsoleHistory(FS_Gamedir());
