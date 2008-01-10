@@ -245,7 +245,7 @@ void Sys_UnloadGame (void)
  */
 game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
-	GetGameApi_t GetGameAPI;
+	void *(*GetGameAPI) (void *);
 	char name[MAX_OSPATH];
 	const char *path;
 
@@ -273,7 +273,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		return NULL;
 	}
 
-	GetGameAPI = (GetGameApi_t)GetProcAddress(game_library, "GetGameAPI");
+	GetGameAPI = (void *)GetProcAddress(game_library, "GetGameAPI");
 	if (!GetGameAPI) {
 		Sys_UnloadGame();
 		Com_Printf("Could not load game lib '%s'\n", name);
