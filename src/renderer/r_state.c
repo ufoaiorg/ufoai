@@ -375,6 +375,8 @@ void R_SetupGL2D (void)
 
 	R_Color(NULL);
 
+	qglDisable(GL_DEPTH_TEST);
+
 	r_state.ortho = qtrue;
 
 	R_CheckError();
