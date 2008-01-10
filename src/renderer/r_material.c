@@ -202,6 +202,9 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	if (stage->flags & STAGE_TERRAIN)
 		qglEnableClientState(GL_COLOR_ARRAY);
 
+	if (surf->numedges >= MAX_GL_ARRAY_LENGTH)
+		Com_Error(ERR_DROP, "R_DrawMaterialSurface: Exceeded MAX_GL_ARRAY_LENGTH\n");
+
 	for (i = 0; i < surf->numedges; i++) {
 		v = &r_mapTiles[surf->tile]->bsp.verts[surf->index * 3 + i * 3];
 		st = &r_mapTiles[surf->tile]->bsp.texcoords[surf->index * 2 + i * 2];
