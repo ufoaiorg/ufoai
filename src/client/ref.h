@@ -238,6 +238,7 @@ struct image_s *R_RegisterPic(const char *name);
 
 int R_DrawNormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
 void R_DrawChar(int x, int y, int c);
+void R_DrawChars(void);
 void R_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
 void R_Color(const float *rgba);
 void R_ColorBlend(const float *rgba);

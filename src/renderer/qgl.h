@@ -411,6 +411,12 @@ extern void (APIENTRY * qglGetVertexAttribivARB) (GLuint, GLenum, GLint *);
 extern void (APIENTRY * qglGetVertexAttribPointervARB) (GLuint, GLenum, GLvoid * *);
 extern GLboolean(APIENTRY * qglIsProgramARB) (GLuint);
 
+/* vertex buffer objects */
+extern void (APIENTRY *qglGenBuffers)  (GLuint count, GLuint *id);
+extern void (APIENTRY *qglDeleteBuffers)  (GLuint count, GLuint *id);
+extern void (APIENTRY *qglBindBuffer)  (GLenum target, GLuint id);
+extern void (APIENTRY *qglBufferData)  (GLenum target, GLsizei size, const GLvoid *data, GLenum usage);
+
 /* GLSL */
 extern GLuint (APIENTRY * qglCreateShader) (GLenum  shaderType);
 extern void (APIENTRY * qglShaderSource) (GLuint shader, int numOfStrings, const char **strings, int *lenOfStrings);

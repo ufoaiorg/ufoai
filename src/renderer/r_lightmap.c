@@ -26,13 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_lightmap.h"
 
-/* in the bsp, they are just rgb, and we work with floats */
+/* in video memory, lightmaps are chunked into rgba blocks */
 #define LIGHTMAP_BUFFER_SIZE \
 	(LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT * LIGHTMAP_BLOCK_BYTES)
 
 /* in the bsp, they are just rgb, and we work with floats */
 #define LIGHTMAP_FBUFFER_SIZE \
-	(LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT * LIGHTMAP_BYTES)
+	(LIGHTMAP_WIDTH * LIGHTMAP_HEIGHT * LIGHTMAP_BYTES)
 
 typedef struct lightmaps_s {
 	GLuint texnum;
@@ -44,6 +44,64 @@ typedef struct lightmaps_s {
 } lightmaps_t;
 
 static lightmaps_t r_lightmaps;
+
+static void R_UploadLightmapBlock (void)
+{
+	if (r_lightmaps.texnum == MAX_GLLIGHTMAPS) {
+		Com_Printf("R_UploadLightmapBlock: MAX_GLLIGHTMAPS reached.\n");
+		return;
+	}
+
+	R_BindTexture(TEXNUM_LIGHTMAPS + r_lightmaps.texnum);
+
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, LIGHTMAP_BLOCK_WIDTH, LIGHTMAP_BLOCK_HEIGHT,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.buffer);
+
+	R_CheckError();
+
+	/* clear the allocation block */
+	memset(r_lightmaps.allocated, 0, sizeof(r_lightmaps.allocated));
+
+	r_lightmaps.texnum++;
+}
+
+/**
+ * @brief returns a texture number and the position inside it
+ */
+static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
+{
+	int i, j;
+	int best, best2;
+
+	best = LIGHTMAP_BLOCK_HEIGHT;
+
+	for (i = 0; i < LIGHTMAP_BLOCK_WIDTH - w; i++) {
+		best2 = 0;
+
+		for (j = 0; j < w; j++) {
+			if (r_lightmaps.allocated[i + j] >= best)
+				break;
+			if (r_lightmaps.allocated[i + j] > best2)
+				best2 = r_lightmaps.allocated[i + j];
+		}
+		/* this is a valid spot */
+		if (j == w) {
+			*x = i;
+			*y = best = best2;
+		}
+	}
+
+	if (best + h > LIGHTMAP_BLOCK_HEIGHT)
+		return qfalse;
+
+	for (i = 0; i < w; i++)
+		r_lightmaps.allocated[*x + i] = best + h;
+
+	return qtrue;
+}
 
 /**
  * @brief Fullbridght lightmap
@@ -149,7 +207,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 				max = b;
 
 			/* rescale all the color components if the intensity of the greatest
-			 * channel exceeds 1.0 */
+			 * channel exceeds 255 */
 			if (max > 255) {
 				float t = 255.0F / max;
 
@@ -199,70 +257,6 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 	}
 
 	VID_MemFree(lightmap);
-}
-
-/*
-=============================================================================
-LIGHTMAP ALLOCATION
-=============================================================================
-*/
-
-static void R_UploadLightmapBlock (void)
-{
-	if (r_lightmaps.texnum == MAX_GLLIGHTMAPS) {
-		Com_Printf("R_UploadLightmapBlock: MAX_GLLIGHTMAPS reached.\n");
-		return;
-	}
-
-	R_BindTexture(TEXNUM_LIGHTMAPS + r_lightmaps.texnum);
-
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, LIGHTMAP_BLOCK_WIDTH, LIGHTMAP_BLOCK_HEIGHT,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.buffer);
-
-	R_CheckError();
-
-	/* clear the allocation block */
-	memset(r_lightmaps.allocated, 0, sizeof(r_lightmaps.allocated));
-
-	r_lightmaps.texnum++;
-}
-
-/**
- * @brief returns a texture number and the position inside it
- */
-static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
-{
-	int i, j;
-	int best, best2;
-
-	best = LIGHTMAP_BLOCK_HEIGHT;
-
-	for (i = 0; i < LIGHTMAP_BLOCK_WIDTH - w; i++) {
-		best2 = 0;
-
-		for (j = 0; j < w; j++) {
-			if (r_lightmaps.allocated[i + j] >= best)
-				break;
-			if (r_lightmaps.allocated[i + j] > best2)
-				best2 = r_lightmaps.allocated[i + j];
-		}
-		/* this is a valid spot */
-		if (j == w) {
-			*x = i;
-			*y = best = best2;
-		}
-	}
-
-	if (best + h > LIGHTMAP_BLOCK_HEIGHT)
-		return qfalse;
-
-	for (i = 0; i < w; i++)
-		r_lightmaps.allocated[*x + i] = best + h;
-
-	return qtrue;
 }
 
 /**
@@ -382,8 +376,11 @@ begin:
 
 	surf = mapTile->bsp.surfaces + node->firstsurface;
 	for (i = 0; i < node->numsurfaces; i++, surf++) {
-		if (surf->flags & SURF_WARP)
+		if (!(surf->flags & MSURF_LIGHTMAP))
 			continue;  /* no lightmap */
+
+		if (surf->texinfo->flags & SURF_ALPHATEST)
+			continue;
 
 		if (!surf->lightmap)
 			return qfalse;
@@ -407,7 +404,10 @@ begin:
 
 		/* resolve the actual sample at intersection */
 		sample = (int)(3 * (dt * ((surf->stmaxs[0] / (1 << surf->lquant)) + 1) + ds));
-		VectorCopy((&surf->lightmap[sample]), r_lightmap_sample.color);
+
+		/* and normalize it to floating point */
+		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,
+				surf->lightmap[sample + 1] / 255.0, surf->lightmap[sample + 2] / 255.0);
 
 		return qtrue;
 	}

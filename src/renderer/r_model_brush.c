@@ -146,10 +146,9 @@ static void R_ModLoadEdges (lump_t * l)
 static void R_ModLoadTexinfo (lump_t * l)
 {
 	dBspTexinfo_t *in;
-	mBspTexInfo_t *out, *step;
+	mBspTexInfo_t *out;
 	int i, j, count;
 	char name[MAX_QPATH];
-	int next;
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -168,11 +167,7 @@ static void R_ModLoadTexinfo (lump_t * l)
 		}
 
 		out->flags = LittleLong(in->surfaceFlags);
-		next = LittleLong(in->nexttexinfo);
-		if (next > 0)
-			out->next = loadmodel->bsp.texinfo + next;
-		else
-			out->next = NULL;
+
 		/* exchange the textures with the ones that are needed for base assembly */
 		if (refdef.mapZone && strstr(in->texture, "tex_terrain/dummy"))
 			Com_sprintf(name, sizeof(name), "textures/tex_terrain/%s", refdef.mapZone);
@@ -181,14 +176,6 @@ static void R_ModLoadTexinfo (lump_t * l)
 
 		out->image = R_FindImage(name, it_wall);
 	}
-
-	/* count animation frames */
-	for (i = 0; i < count; i++) {
-		out = &loadmodel->bsp.texinfo[i];
-		out->numframes = 1;
-		for (step = out->next; step && step != out; step = step->next)
-			out->numframes++;
-	}
 }
 
 /**
@@ -196,16 +183,19 @@ static void R_ModLoadTexinfo (lump_t * l)
  */
 static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 {
-	float mins[2], maxs[2], val;
-
-/* 	vec3_t	pos; */
+	vec3_t mins, maxs;
+	vec2_t stmins, stmaxs;
+	int bmins[2], bmaxs[2];
+	float val;
 	int i, j, e;
 	mBspVertex_t *v;
 	mBspTexInfo_t *tex;
-	int bmins[2], bmaxs[2];
 
-	mins[0] = mins[1] = 999999;
-	maxs[0] = maxs[1] = -99999;
+	VectorSet(mins, 999999, 999999, 999999);
+	VectorSet(maxs, -999999, -999999, -999999);
+
+	stmins[0] = stmins[1] = 999999;
+	stmaxs[0] = stmaxs[1] = -99999;
 
 	tex = surf->texinfo;
 
@@ -216,12 +206,22 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 		else
 			v = &mod->bsp.vertexes[mod->bsp.edges[-e].v[1]];
 
-		for (j = 0; j < 2; j++) {
-			val = v->position[0] * tex->vecs[j][0] + v->position[1] * tex->vecs[j][1] + v->position[2] * tex->vecs[j][2] + tex->vecs[j][3];
-			if (val < mins[j])
-				mins[j] = val;
-			if (val > maxs[j])
-				maxs[j] = val;
+		for (j = 0; j < 3; j++) {  /* calculate mins, maxs */
+			if (v->position[j] > maxs[j])
+				maxs[j] = v->position[j];
+			if (v->position[j] < mins[j])
+				mins[j] = v->position[j];
+		}
+
+		for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
+			val = v->position[0] * tex->vecs[j][0] +
+				  v->position[1] * tex->vecs[j][1] +
+				  v->position[2] * tex->vecs[j][2] +
+				  tex->vecs[j][3];
+			if (val < stmins[j])
+				stmins[j] = val;
+			if (val > stmaxs[j])
+				stmaxs[j] = val;
 		}
 	}
 
@@ -230,8 +230,8 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 
 	for (i = 0; i < 2; i++) {
 		/* tiny rounding hack, not sure if it works */
-		bmins[i] = floor(mins[i] / (1 << surf->lquant));
-		bmaxs[i] = ceil(maxs[i] / (1 << surf->lquant));
+		bmins[i] = floor(stmins[i] / (1 << surf->lquant));
+		bmaxs[i] = ceil(stmaxs[i] / (1 << surf->lquant));
 
 		surf->stmins[i] = bmins[i] << surf->lquant;
 		surf->stmaxs[i] = (bmaxs[i] - bmins[i]) << surf->lquant;
@@ -295,10 +295,9 @@ static void R_ModLoadSurfaces (lump_t * l)
 			out->flags |= MSURF_LIGHTMAP;
 		}
 
-		/* create lightmaps and polygons */
 		R_CreateSurfaceLightmap(out);
 
-		R_CreateSurfacePoly(out, shift, loadmodel);
+		out->tile = r_numMapTiles - 1;
 	}
 }
 
@@ -461,6 +460,105 @@ static void R_ModShiftTile (void)
 			plane->dist += plane->normal[j] * shift[j];
 }
 
+static void R_LoadBspVertexArrays (void)
+{
+	int i, j, index;
+	int vertind, coordind;
+	float *vec, s, t;
+	mBspEdge_t *edge;
+	mBspSurface_t *surf;
+
+	vertind = coordind = 0;
+	surf = loadmodel->bsp.surfaces;
+
+	for (i = 0; i < loadmodel->bsp.numsurfaces; i++, surf++) {
+		surf->index = vertind / 3;
+
+		for (j = 0; j < surf->numedges; j++) {
+			index = loadmodel->bsp.surfedges[surf->firstedge + j];
+
+			/* vertex */
+			if (index > 0) {  /* negative indices to differentiate which end of the edge */
+				edge = &loadmodel->bsp.edges[index];
+				vec = loadmodel->bsp.vertexes[edge->v[0]].position;
+			} else {
+				edge = &loadmodel->bsp.edges[-index];
+				vec = loadmodel->bsp.vertexes[edge->v[1]].position;
+			}
+
+			memcpy(&r_state.vertex_array_3d[vertind], vec, sizeof(vec3_t));
+
+			/* texture coordinates */
+			s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
+			s /= surf->texinfo->image->width;
+
+			t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
+			t /= surf->texinfo->image->height;
+
+			r_state.texcoord_array[coordind + 0] = s;
+			r_state.texcoord_array[coordind + 1] = t;
+
+			if (surf->flags & MSURF_LIGHTMAP) {  /* lightmap coordinates */
+				s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
+				s -= surf->stmins[0];
+				s += surf->light_s << surf->lquant;
+				s += 1 << (surf->lquant - 1);
+				s /= LIGHTMAP_BLOCK_WIDTH << surf->lquant;
+
+				t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
+				t -= surf->stmins[1];
+				t += surf->light_t << surf->lquant;
+				t += 1 << (surf->lquant - 1);
+				t /= LIGHTMAP_BLOCK_HEIGHT << surf->lquant;
+			}
+
+			r_state.color_array[coordind + 0] = s;
+			r_state.color_array[coordind + 1] = t;
+
+			/* normal vectors */
+			memcpy(&r_state.normal_array[vertind], surf->normal, sizeof(vec3_t));
+
+			vertind += 3;
+			coordind += 2;
+		}
+	}
+
+	/* populate the vertex arrays */
+	loadmodel->bsp.verts = (GLfloat *)VID_TagAlloc(vid_modelPool, vertind * sizeof(GLfloat), 0);
+	memcpy(loadmodel->bsp.verts, r_state.vertex_array_3d, vertind * sizeof(GLfloat));
+
+	loadmodel->bsp.texcoords = (GLfloat *)VID_TagAlloc(vid_modelPool, coordind * sizeof(GLfloat), 0);
+	memcpy(loadmodel->bsp.texcoords, r_state.texcoord_array, coordind * sizeof(GLfloat));
+
+	loadmodel->bsp.lmtexcoords = (GLfloat *)VID_TagAlloc(vid_modelPool, coordind * sizeof(GLfloat), 0);
+	memcpy(loadmodel->bsp.lmtexcoords, r_state.color_array, coordind * sizeof(GLfloat));
+
+	loadmodel->bsp.normals = (GLfloat *)VID_TagAlloc(vid_modelPool, vertind * sizeof(GLfloat), 0);
+	memcpy(loadmodel->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
+
+	/* and also the vertex buffer objects */
+	qglGenBuffers(1, &loadmodel->bsp.vertex_buffer);
+	qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.vertex_buffer);
+	qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat),
+			r_state.vertex_array_3d, GL_STATIC_DRAW);
+
+	qglGenBuffers(1, &loadmodel->bsp.texcoord_buffer);
+	qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.texcoord_buffer);
+	qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat),
+			r_state.texcoord_array, GL_STATIC_DRAW);
+
+	qglGenBuffers(1, &loadmodel->bsp.lmtexcoord_buffer);
+	qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.lmtexcoord_buffer);
+	qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat),
+			r_state.color_array, GL_STATIC_DRAW);
+
+	qglGenBuffers(1, &loadmodel->bsp.normal_buffer);
+	qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.normal_buffer);
+	qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat),
+			r_state.normal_array, GL_STATIC_DRAW);
+
+	qglBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 
 /**
  * @sa CM_AddMapTile
@@ -509,19 +607,27 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 		((int *) header)[i] = LittleLong(((int *) header)[i]);
 
 	/* load into heap */
+	Com_DPrintf(DEBUG_RENDERER, "...load vertexes\n");
 	R_ModLoadVertexes(&header->lumps[LUMP_VERTEXES]);
+	Com_DPrintf(DEBUG_RENDERER, "...load edges\n");
 	R_ModLoadEdges(&header->lumps[LUMP_EDGES]);
+	Com_DPrintf(DEBUG_RENDERER, "...load surfedges\n");
 	R_ModLoadSurfedges(&header->lumps[LUMP_SURFEDGES]);
+	Com_DPrintf(DEBUG_RENDERER, "...load lighting\n");
 	R_ModLoadLighting(&header->lumps[LUMP_LIGHTING]);
+	Com_DPrintf(DEBUG_RENDERER, "...load planes\n");
 	R_ModLoadPlanes(&header->lumps[LUMP_PLANES]);
+	Com_DPrintf(DEBUG_RENDERER, "...load texinfo\n");
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
+	Com_DPrintf(DEBUG_RENDERER, "...load surfaces\n");
 	R_ModLoadSurfaces(&header->lumps[LUMP_FACES]);
 	R_ModShiftTile();
+	Com_DPrintf(DEBUG_RENDERER, "...load leafs\n");
 	R_ModLoadLeafs(&header->lumps[LUMP_LEAFS]);
+	Com_DPrintf(DEBUG_RENDERER, "...load nodes\n");
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);
+	Com_DPrintf(DEBUG_RENDERER, "...load submodels\n");
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
-	/* regular and alternate animation */
-	loadmodel->numframes = 2;
 
 	/* set up the submodels, the first 255 submodels
 	 * are the models of the different levels, don't
@@ -549,6 +655,9 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 
 		starmod->bsp.numleafs = bm->visleafs;
 	}
+
+	R_LoadBspVertexArrays();
+
 	FS_FreeFile(buffer);
 }
 

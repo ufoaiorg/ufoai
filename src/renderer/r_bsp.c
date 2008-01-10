@@ -240,7 +240,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 }
 
 /**
- * @sa R_GetLevelSurfaceChains
+ * @sa R_GetLevelSurfaceLists
  * @param[in] tile The maptile (map assembly)
  */
 static void R_RecurseWorld (mBspNode_t * node, int tile)
@@ -258,7 +258,7 @@ static void R_RecurseWorld (mBspNode_t * node, int tile)
  * @brief Fills the surface chains for the current worldlevel and hide other levels
  * @sa cvar cl_worldlevel
  */
-void R_GetLevelSurfaceChains (void)
+void R_GetLevelSurfaceLists (void)
 {
 	int i, tile, mask;
 
@@ -292,68 +292,5 @@ void R_GetLevelSurfaceChains (void)
 
 			R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);
 		}
-	}
-}
-
-void R_CreateSurfacePoly (mBspSurface_t *surf, int shift[3], model_t *mod)
-{
-	int i, index, nv;
-	mBspEdge_t *edge;
-	float *vec, *vertsPos;
-	float s, t;
-
-	surf->polys = (mBspPoly_t *)VID_TagAlloc(vid_modelPool, sizeof(mBspPoly_t), 0);
-	surf->polys->numverts = nv = surf->numedges;
-
-	surf->polys->verts = vertsPos = (float *)VID_TagAlloc(vid_modelPool, nv * sizeof(vec3_t), 0);
-	surf->polys->texcoords = (float *)VID_TagAlloc(vid_modelPool, nv * sizeof(vec2_t), 0);
-
-	if (surf->flags & MSURF_LIGHTMAP)  /* allocate for lightmap coords */
-		surf->polys->lmtexcoords = (float *)VID_TagAlloc(vid_modelPool, nv * sizeof(vec2_t), 0);
-
-	for (i = 0; i < nv; i++) {
-		index = mod->bsp.surfedges[surf->firstedge + i];
-
-		/* vertex */
-		if (index > 0) {  /* negative indices to differentiate which end of the edge */
-			edge = &mod->bsp.edges[index];
-			vec = mod->bsp.vertexes[edge->v[0]].position;
-		} else {
-			edge = &mod->bsp.edges[-index];
-			vec = mod->bsp.vertexes[edge->v[1]].position;
-		}
-
-		/* shifting the position for maptiles */
-		VectorAdd(vec, shift, vertsPos);
-		vertsPos += 3;
-
-		/* texture coordinates */
-		s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
-		s /= surf->texinfo->image->width;
-
-		t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
-		t /= surf->texinfo->image->height;
-
-		surf->polys->texcoords[i * 2 + 0] = s;
-		surf->polys->texcoords[i * 2 + 1] = t;
-
-		if (!(surf->flags & MSURF_LIGHTMAP))
-			continue;
-
-		/* lightmap coordinates */
-		s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
-		s -= surf->stmins[0];
-		s += surf->light_s << surf->lquant;
-		s += 1 << (surf->lquant - 1);
-		s /= LIGHTMAP_BLOCK_WIDTH << surf->lquant;
-
-		t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
-		t -= surf->stmins[1];
-		t += surf->light_t << surf->lquant;
-		t += 1 << (surf->lquant - 1);
-		t /= LIGHTMAP_BLOCK_HEIGHT << surf->lquant;
-
-		surf->polys->lmtexcoords[i * 2 + 0] = s;
-		surf->polys->lmtexcoords[i * 2 + 1] = t;
 	}
 }

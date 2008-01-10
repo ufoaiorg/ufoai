@@ -44,6 +44,7 @@ typedef struct {
 	GLfloat vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
 	GLshort vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
 	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
+	GLfloat lmtexcoord_array[MAX_GL_ARRAY_LENGTH * 2];
 	GLfloat color_array[MAX_GL_ARRAY_LENGTH * 4];
 	GLfloat normal_array[MAX_GL_ARRAY_LENGTH * 3];
 
@@ -86,7 +87,8 @@ void R_SetupGL3D(void);
 void R_EnableMultitexture(qboolean enable);
 void R_SelectTexture(gltexunit_t *texunit);
 void R_BindTexture(int texnum);
-void R_BindMultitexture(int texnum0, void *array0, int texnum1, void *array1);
+void R_BindLightmapTexture(GLuint texnum);
+void R_BindBuffer(GLenum target, GLenum type, GLuint id);
 void R_TexEnv(GLenum value);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
@@ -97,9 +99,7 @@ void R_EnableAlphaTest(qboolean enable);
 void R_EnableLighting(qboolean enable);
 void R_EnableWarp(qboolean enable);
 void R_DisableEffects(void);
-void R_EnableArray(qboolean enable, GLenum target, GLenum type, void *array);
-void R_BindWithArray(GLuint texnum, void *array);
-void R_SetArray(GLenum target, GLenum type, void *array);
-void R_SetDefaultArray(GLenum target);
+void R_BindArray(GLenum target, GLenum type, void *array);
+void R_BindDefaultArray(GLenum target);
 
 #endif

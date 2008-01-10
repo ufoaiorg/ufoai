@@ -97,6 +97,7 @@ extern cvar_t *r_texturemode;
 extern cvar_t *r_texturealphamode;
 extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_wire;
+extern cvar_t *r_vertexbuffers;
 
 extern int gl_solid_format;
 extern int gl_alpha_format;
@@ -119,7 +120,7 @@ void R_InterpolateTransform(animState_t *as, int numframes, float *tag, float *i
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(entity_t *e);
 void R_DrawBox(const entity_t *e);
-void R_GetLevelSurfaceChains(void);
+void R_GetLevelSurfaceLists(void);
 void R_InitMiscTexture(void);
 void R_DrawEntities(void);
 void R_DrawInitLocal(void);

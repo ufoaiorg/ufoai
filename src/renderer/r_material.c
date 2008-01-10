@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_error.h"
+#include "r_lightmap.h"
 
 mBspSurfaces_t r_material_surfaces;
 
@@ -58,37 +59,13 @@ static void R_UpdateMaterial (material_t *m)
 
 		if (s->flags & STAGE_SCROLL_T)
 			s->scroll.dt = s->scroll.t * refdef.time;
-	}
-}
 
-static void R_StageVertexColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
-{
-	float a;
-
-	VectorSet(color, 1.0, 1.0, 1.0);
-
-	/* resolve alpha for vert based on z axis height */
-	if (v[2] < stage->terrain.floor)
-		a = 0.0;
-	else if (v[2] > stage->terrain.ceil)
-		a = 1.0;
-	else
-		a = (v[2] - stage->terrain.floor) / stage->terrain.height;
-
-	color[3] = a;
-}
-
-static void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
-{
-	vec3_t tmp;
-
-	/* translate from surface center */
-	if (stage->flags & STAGE_STRETCH) {
-		VectorSubtract(in, surf->center, tmp);
-		VectorScale(tmp, stage->stretch.damp, tmp);
-		VectorAdd(in, tmp, out);
-	} else {  /* or simply copy */
-		VectorCopy(in, out);
+		if (s->flags & STAGE_ANIM) {
+			if (refdef.time >= s->anim.dtime) {  /* change frames */
+				s->anim.dtime = refdef.time + (1.0 / s->anim.fps);
+				s->image = s->anim.images[++s->anim.dframe % s->anim.num_frames];
+			}
+		}
 	}
 }
 
@@ -142,36 +119,110 @@ static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t in, 
 	out[1] = t;
 }
 
+static void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
+{
+	vec3_t tmp;
+
+	/* translate from surface center */
+	if (stage->flags & STAGE_STRETCH) {
+		VectorSubtract(in, surf->center, tmp);
+		VectorScale(tmp, stage->stretch.damp, tmp);
+		VectorAdd(in, tmp, out);
+	} else {  /* or simply copy */
+		VectorCopy(in, out);
+	}
+}
+
+static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
+{
+	float a;
+
+	if (stage->flags & STAGE_TERRAIN) {
+		if (stage->flags & STAGE_COLOR)  /* honor stage color */
+			VectorCopy(stage->color, color);
+		else  /* or use white */
+			VectorSet(color, 1.0, 1.0, 1.0);
+
+		/* resolve alpha for vert based on z axis height */
+		if (v[2] < stage->terrain.floor)
+			a = 0.0;
+		else if (v[2] > stage->terrain.ceil)
+			a = 1.0;
+		else
+			a = (v[2] - stage->terrain.floor) / stage->terrain.height;
+
+		color[3] = a;
+	} else {  /* simply use white */
+		Vector4Set(color, 1.0, 1.0, 1.0, 1.0);
+	}
+}
+
+static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const materialStage_t *stage)
+{
+	vec4_t color;
+
+	/* bind the texture or envmap */
+	R_BindTexture(stage->image->texnum);
+
+	/* and optionally the lightmap */
+	if (stage->flags & STAGE_LIGHTMAP) {
+		R_EnableMultitexture(qtrue);
+		R_BindLightmapTexture(surf->lightmaptexturenum);
+	} else
+		R_EnableMultitexture(qfalse);
+
+	/* set the blend function, ensuring a good default */
+	if (stage->flags & STAGE_BLEND)
+		R_BlendFunc(stage->blend.src, stage->blend.dest);
+	else
+		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	/* resolve the color, which may be explicit or implied */
+	VectorSet(color, 1.0, 1.0, 1.0);
+
+	if (stage->flags & STAGE_COLOR)
+		VectorCopy(stage->color, color);
+	else if(stage->flags & STAGE_ENVMAP)
+		VectorCopy(surf->color, color);
+
+	/* modulate the alpha value for animations */
+	if (stage->flags & STAGE_PULSE)
+		color[3] = stage->pulse.dhz;
+	else
+		color[3] = 1.0;
+
+	R_Color(color);
+}
+
 static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 {
 	int i;
 	float *v, *st;
 
 	if (stage->flags & STAGE_TERRAIN)
-		R_EnableArray(qtrue, GL_COLOR_ARRAY, 0, NULL);
+		qglEnableClientState(GL_COLOR_ARRAY);
 
-	if (stage->flags & STAGE_LIGHTMAP)
-		R_BindTexture(surf->lightmaptexturenum);
-	else
-		R_BindTexture(stage->image->texnum);
+	for (i = 0; i < surf->numedges; i++) {
+		v = &r_mapTiles[surf->tile]->bsp.verts[surf->index * 3 + i * 3];
+		st = &r_mapTiles[surf->tile]->bsp.texcoords[surf->index * 2 + i * 2];
 
-	for (i = 0; i < surf->polys->numverts; i++) {
-		v = &surf->polys->verts[i * 3];
-		if (stage->flags & STAGE_LIGHTMAP)
-			st = &surf->polys->lmtexcoords[i * 2];
-		else
-			st = &surf->polys->texcoords[i * 2];
+		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
 
 		R_StageTexcoord(stage, v, st, &r_state.texcoord_array[i * 2]);
-		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
-		if (stage->flags & STAGE_TERRAIN)
-			R_StageVertexColor(stage, v, &r_state.color_array[i * 4]);
+ 		if (stage->flags & STAGE_TERRAIN)
+			R_StageColor(stage, v, &r_state.color_array[i * 4]);
+
+		if (r_state.multitexture_enabled) {
+			st = &r_mapTiles[surf->tile]->bsp.lmtexcoords[surf->index * 2 + i * 2];
+			r_state.lmtexcoord_array[i * 2 + 0] = st[0];
+			r_state.lmtexcoord_array[i * 2 + 1] = st[1];
+		}
 	}
 
 	qglDrawArrays(GL_POLYGON, 0, i);
 
 	if (stage->flags & STAGE_TERRAIN)
-		R_EnableArray(qfalse, GL_COLOR_ARRAY, 0, NULL);
+		qglDisableClientState(GL_COLOR_ARRAY);
 
 	R_CheckError();
 }
@@ -181,7 +232,6 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	mBspSurface_t *surf;
 	material_t *m;
 	materialStage_t *s;
-	vec4_t color;
 	int i, j;
 
 	if (!r_materials->integer || r_wire->integer)
@@ -207,31 +257,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 			qglPolygonOffset(-1, j);  /* increase depth offset for each stage */
 
-			if (s->flags & STAGE_LIGHTMAP)
-				R_BindTexture(surf->lightmaptexturenum);
-			else
-				R_BindTexture(s->image->texnum);
-
-			if (s->flags & STAGE_BLEND)
-				R_BlendFunc(s->blend.src, s->blend.dest);
-			else if (s->flags & STAGE_LIGHTMAP)
-				R_BlendFunc(GL_ZERO,GL_SRC_COLOR);
-			else
-				R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-			VectorSet(color, 1.0, 1.0, 1.0);
-
-			if (s->flags & STAGE_COLOR)
-				VectorCopy(s->color, color);
-			else if (s->flags & STAGE_ENVMAP)
-				VectorCopy(surf->color, color);
-
-			if (s->flags & STAGE_PULSE)
-				color[3] = s->pulse.dhz;
-			else
-				color[3] = 1.0;
-
-			R_Color(color);
+			R_SetMaterialSurfaceState(surf, s);
 
 			R_DrawMaterialSurface(surf, s);
 		}
@@ -242,6 +268,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	qglDisable(GL_POLYGON_OFFSET_FILL);
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	R_EnableMultitexture(qfalse);
 }
 
 /**
@@ -259,9 +287,43 @@ static GLenum R_ConstByName (const char *c)
 		return GL_SRC_COLOR;
 	if (!strcmp(c, "GL_DST_COLOR"))
 		return GL_DST_COLOR;
+	if (!strcmp(c, "GL_ZERO"))
+		return GL_ZERO;
 
 	Com_Printf("R_ConstByName: Failed to resolve: %s\n", c);
 	return GL_ZERO;
+}
+
+static int R_LoadAnimImages (materialStage_t *s)
+{
+	char *c, name[MAX_QPATH];
+	int i, j;
+
+	strncpy(name, s->image->name, sizeof(name));
+	j = strlen(name);
+
+	if (name[j - 1] != '0') {
+		Com_Printf("R_LoadAnimImages: Texture name does not end in 0: %s\n", name);
+		return -1;
+	}
+
+	/* the first image was already loaded by the stage parse, so just copy
+	 * the pointer into the images array */
+
+	s->anim.images[0] = s->image;
+	name[j - 1] = 0;
+
+	/* now load the rest */
+	for (i = 1; i < s->anim.num_frames; i++) {
+		c = va("%s%d", name, i);
+		s->anim.images[i] = R_FindImage(c, it_material);
+		if (s->anim.images[i] == r_notexture) {
+			Com_Printf("R_LoadAnimImages: Failed to resolve texture: %s\n", c);
+			return -1;
+		}
+	}
+
+	return 0;
 }
 
 /**
@@ -443,8 +505,35 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			s->flags |= STAGE_TERRAIN;
 		}
 
-		if (!strcmp(c, "lightmap"))
+		if (!strcmp(c, "anim")) {
+			c = COM_Parse(buffer);
+			s->anim.num_frames = atoi(c);
+
+			if (s->anim.num_frames < 1 || s->anim.num_frames > MAX_ANIM_FRAMES) {
+				Com_Printf("R_ParseStage: Invalid number of anim frames for %s\n",
+						(s->image ? s->image->name : NULL));
+				return -1;
+			}
+
+			c = COM_Parse(buffer);
+			s->anim.fps = atof(c);
+
+			if (s->anim.fps <= 0) {
+				Com_Printf("R_ParseStage: Invalid anim fps for %s\n",
+						(s->image ? s->image->name : NULL));
+				return -1;
+			}
+
+			/* the frame images are loaded once the stage is parsed completely */
+
+			s->flags |= STAGE_ANIM;
+			continue;
+		}
+
+		if (!strcmp(c, "lightmap")) {
 			s->flags |= STAGE_LIGHTMAP;
+			continue;
+		}
 
 		if (*c == '}') {
 			Com_DPrintf(DEBUG_RENDERER, "Parsed stage\n"
@@ -460,16 +549,19 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 					"  scale.s: %3f\n"
 					"  scale.t: %3f\n"
 					"  terrain.floor: %5f\n"
-					"  terrain.ceil: %5f\n",
+					"  terrain.ceil: %5f\n"
+					"  anim.num_frames: %d\n"
+					"  anim.fps: %3f\n",
 					s->flags, (s->image ? s->image->name : "null"),
 					s->blend.src, s->blend.dest,
 					s->color[0], s->color[1], s->color[2],
 					s->pulse.hz, s->stretch.amp, s->stretch.hz,
 					s->rotate.hz, s->scroll.s, s->scroll.t,
-					s->scale.s, s->scale.t, s->terrain.floor, s->terrain.ceil);
+					s->scale.s, s->scale.t, s->terrain.floor, s->terrain.ceil,
+					s->anim.num_frames, s->anim.fps);
 
 			/* a texture or envmap means render it */
-			if (s->flags & (STAGE_TEXTURE | STAGE_ENVMAP | STAGE_LIGHTMAP))
+			if (s->flags & (STAGE_TEXTURE | STAGE_ENVMAP))
 				s->flags |= STAGE_RENDER;
 
 			return 0;
@@ -549,6 +641,22 @@ void R_LoadMaterials (const char *map)
 			if (R_ParseStage(s, &buffer) == -1) {
 				VID_MemFree(s);
 				continue;
+			}
+
+			/* load animation frame images */
+			if (s->flags & STAGE_ANIM) {
+				if (R_LoadAnimImages(s) == -1) {
+					VID_MemFree(s);
+					continue;
+				}
+			}
+
+			/* load animation frame images */
+			if (s->flags & STAGE_ANIM) {
+				if (R_LoadAnimImages(s) == -1) {
+					VID_MemFree(s);
+					continue;
+				}
 			}
 
 			/* append the stage to the chain */

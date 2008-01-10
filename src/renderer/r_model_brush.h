@@ -57,21 +57,13 @@ typedef struct mBspEdge_s {
 typedef struct mBspTexInfo_s {
 	float vecs[2][4];
 	int flags;
-	int numframes;
-	struct mBspTexInfo_s *next;	/**< animation chain */
 	image_t *image;
 } mBspTexInfo_t;
-
-typedef struct mBspPoly_s {
-	int numverts;
-	float *verts;	/**< verts */
-	float *texcoords; /**< diffuse texcoords */
-	float *lmtexcoords; /**< lightmap texcoords */
-} mBspPoly_t;
 
 typedef struct mBspSurface_s {
 	cBspPlane_t *plane;
 	int flags;
+	int tile;				/**< index in r_mapTiles (loaded bsp map index) this surface belongs, to */
 
 	int firstedge;				/**< look up in model->surfedges[], negative numbers */
 	int numedges;				/**< are backwards edges */
@@ -86,7 +78,7 @@ typedef struct mBspSurface_s {
 	int light_s, light_t;		/**< gl lightmap coordinates */
 	byte lquant;
 
-	mBspPoly_t *polys;
+	GLuint index;
 
 	mBspTexInfo_t *texinfo;
 
@@ -161,12 +153,20 @@ typedef struct mBspModel_s {
 	int numsurfedges;
 	int *surfedges;
 
+	/* vertex arrays */
+	GLfloat *verts;
+	GLfloat *texcoords;
+	GLfloat *lmtexcoords;
+	GLfloat *normals;
+
+	/* vertex buffer objects */
+	GLuint vertex_buffer;
+	GLuint texcoord_buffer;
+	GLuint lmtexcoord_buffer;
+	GLuint normal_buffer;
+
 	byte lightquant;
 	byte *lightdata;
 } mBspModel_t;
-
-void R_CreateSurfaceLightmap(mBspSurface_t * surf);
-void R_EndBuildingLightmaps(void);
-void R_BeginBuildingLightmaps(void);
 
 #endif /* R_MODEL_BRUSH_H */

@@ -44,9 +44,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define STAGE_SCALE_T		(1 << 10)
 #define STAGE_TERRAIN		(1 << 11)
 #define STAGE_LIGHTMAP		(1 << 12)
+#define STAGE_ANIM			(1 << 13)
 
 /* set on stages with valid render passes */
 #define STAGE_RENDER 		(1 << 31)
+
+/* frame based animation, lerp between consecutive images */
+#define MAX_ANIM_FRAMES 8
 
 #define UPDATE_THRESHOLD 0.02
 
@@ -82,6 +86,14 @@ typedef struct terrain_s {
 	float height;
 } terrain_t;
 
+typedef struct anim_s {
+	int num_frames;
+	struct image_s *images[MAX_ANIM_FRAMES];
+	float fps;
+	float dtime;
+	int dframe;
+} anim_t;
+
 typedef struct materialStage_s {
 	unsigned flags;
 	struct image_s *image;
@@ -93,6 +105,7 @@ typedef struct materialStage_s {
 	scroll_t scroll;
 	scale_t scale;
 	terrain_t terrain;
+	anim_t anim;
 	struct materialStage_s *next;
 } materialStage_t;
 

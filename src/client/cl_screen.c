@@ -58,9 +58,9 @@ static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont
  */
 void SCR_Init (void)
 {
-	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
-	scr_consize = Cvar_Get("scr_consize", "1.0", 0, NULL);
-	scr_rspeed = Cvar_Get("r_speeds", "0", 0, NULL);
+	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
+	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
+	scr_rspeed = Cvar_Get("r_speeds", "0", 0, "Show some rendering stats");
 
 	/* register our commands */
 	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, "Run a benchmark");
@@ -484,6 +484,8 @@ void SCR_UpdateScreen (void)
 		if (cls.state != ca_sequence)
 			SCR_DrawCursor();
 	}
+
+	R_DrawChars();  /* draw all chars accumulated above */
 
 	R_EndFrame();
 }

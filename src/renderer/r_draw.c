@@ -174,6 +174,12 @@ void R_DrawInitLocal (void)
 	R_DrawSphere();
 }
 
+#define MAX_CHARS 8192
+
+/* chars are batched per frame so that they are drawn in one shot */
+static float char_texcoords[MAX_CHARS * 4 * 2];
+static short char_verts[MAX_CHARS * 4 * 2];
+static int char_index = 0;
 
 /**
  * @brief Draws one 8*8 graphics character with 0 being transparent.
@@ -187,14 +193,17 @@ void R_DrawChar (int x, int y, int num)
 
 	num &= 255;
 
-	if ((num & 127) == 32)		/* space */
+	if ((num & 127) == ' ')		/* space */
 		return;
 
 	if (y <= -con_fontHeight->integer)
 		return;					/* totally off screen */
 
-	row = num >> 4;
-	col = num & 15;
+	if (char_index >= MAX_CHARS * 8)
+		return;
+
+	row = (int) num >> 4;
+	col = (int) num & 15;
 
 	/* 0.0625 => 16 cols (conchars images) */
 	frow = row * 0.0625;
@@ -203,17 +212,43 @@ void R_DrawChar (int x, int y, int num)
 	assert(con_font->integer < 2);
 	R_BindTexture(draw_chars[con_font->integer]->texnum);
 
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(fcol, frow);
-	qglVertex2f(x, y);
-	qglTexCoord2f(fcol + 0.0625, frow);
-	qglVertex2f(x + con_fontWidth->integer, y);
-	qglTexCoord2f(fcol + 0.0625, frow + 0.0625);
-	qglVertex2f(x + con_fontWidth->integer, y + con_fontHeight->integer);
-	qglTexCoord2f(fcol, frow + 0.0625);
-	qglVertex2f(x, y + con_fontHeight->integer);
-	qglEnd();
+	char_texcoords[char_index + 0] = fcol;
+	char_texcoords[char_index + 1] = frow;
+	char_texcoords[char_index + 2] = fcol + 0.0625;
+	char_texcoords[char_index + 3] = frow;
+	char_texcoords[char_index + 4] = fcol + 0.0625;
+	char_texcoords[char_index + 5] = frow + 0.0625;
+	char_texcoords[char_index + 6] = fcol;
+	char_texcoords[char_index + 7] = frow + 0.0625;
+
+	char_verts[char_index + 0] = x;
+	char_verts[char_index + 1] = y;
+	char_verts[char_index + 2] = x + con_fontWidth->integer;
+	char_verts[char_index + 3] = y;
+	char_verts[char_index + 4] = x + con_fontWidth->integer;
+	char_verts[char_index + 5] = y + con_fontHeight->integer;
+	char_verts[char_index + 6] = x;
+	char_verts[char_index + 7] = y + con_fontHeight->integer;
+
+	char_index += 8;
 }
+
+void R_DrawChars (void)
+{
+	R_BindTexture(draw_chars[con_font->integer]->texnum);
+
+	/* alter the array pointers */
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, char_texcoords);
+	R_BindArray(GL_VERTEX_ARRAY, GL_SHORT, char_verts);
+
+	qglDrawArrays(GL_QUADS, 0, char_index / 2);
+
+	char_index = 0;
+
+	/* and restore them */
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+ }
 
 /**
  * @brief Uploads image data

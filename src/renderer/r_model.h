@@ -73,7 +73,6 @@ void R_ModDrawNullModel(entity_t *e);
 void R_AliasModelState(const model_t *mod, int *frame, int *oldFrame, int *skin);
 
 void R_ShutdownModels(void);
-void R_CreateSurfacePoly(mBspSurface_t *surf, int shift[3], model_t *mod);
 
 extern model_t *r_mapTiles[MAX_MAPTILES];
 extern int r_numMapTiles;

@@ -421,6 +421,12 @@ void (APIENTRY * qglGetVertexAttribivARB)  (GLuint, GLenum, GLint *);
 void (APIENTRY * qglGetVertexAttribPointervARB)  (GLuint, GLenum, GLvoid * *);
 GLboolean(APIENTRY * qglIsProgramARB)  (GLuint);
 
+/* vertex buffer objects */
+void (APIENTRY *qglGenBuffers)  (GLuint count, GLuint *id);
+void (APIENTRY *qglDeleteBuffers)  (GLuint count, GLuint *id);
+void (APIENTRY *qglBindBuffer)  (GLenum target, GLuint id);
+void (APIENTRY *qglBufferData)  (GLenum target, GLsizei size, const GLvoid *data, GLenum usage);
+
 /* GLSL */
 GLuint (APIENTRY * qglCreateShader)  (GLenum  shaderType);
 void (APIENTRY * qglShaderSource)  (GLuint shader, int numOfStrings, const char **strings, int *lenOfStrings);
@@ -799,6 +805,11 @@ void QR_UnLink (void)
 	qglGetVertexAttribPointervARB = NULL;
 	qglIsProgramARB               = NULL;
 
+	qglGenBuffers = NULL;
+	qglDeleteBuffers = NULL;
+	qglBindBuffer = NULL;
+	qglBufferData = NULL;
+
 	qglCreateShader  = NULL;
 	qglShaderSource  = NULL;
 	qglCompileShader = NULL;
@@ -1153,6 +1164,11 @@ void QR_Link (void)
 	qglMultiTexCoord2f           = SDL_GL_GetProcAddress("glMultiTexCoord2f");
 	qglActiveTexture             = SDL_GL_GetProcAddress("glActiveTexture");
 	qglClientActiveTexture       = SDL_GL_GetProcAddress("glClientActiveTexture");
+
+	qglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
+	qglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
+	qglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
+	qglBufferData = SDL_GL_GetProcAddress("glBufferData");
 
 	qglLockArraysEXT             = NULL;
 	qglUnlockArraysEXT           = NULL;

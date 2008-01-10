@@ -289,7 +289,7 @@ void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-static int r_numStaticModels;
+static int r_numModelsStatic;
 #define MEM_TAG_STATIC_MODELS 1
 /**
  * @brief After all static models are loaded, switch the pool tag for these models
@@ -302,12 +302,12 @@ void R_SwitchModelMemPoolTag (void)
 	int i, j;
 	model_t* mod;
 
-	r_numStaticModels = r_numModels;
+	r_numModelsStatic = r_numModels;
 	Mem_ChangeTag(vid_modelPool, 0, MEM_TAG_STATIC_MODELS);
 
 	/* mark the static model textures as it_statis, thus R_FreeUnusedImages
 	 * won't free them */
-	for (i = 0, mod = r_models; i < r_numStaticModels; i++, mod++) {
+	for (i = 0, mod = r_models; i < r_numModelsStatic; i++, mod++) {
 		if (!mod->alias.num_skins)
 			Com_Printf("Model '%s' has no skins\n", mod->name);
 		for (j = 0; j < mod->alias.num_skins; j++) {
@@ -327,12 +327,29 @@ void R_SwitchModelMemPoolTag (void)
  */
 void R_ShutdownModels (void)
 {
+	int i;
+	model_t *mod;
+
+	/* free the vertex buffer - but not for the static models */
+	for (i = r_numModelsStatic; i < r_numModels; i++) {
+		mod = &r_models[i];
+
+		if (mod->bsp.vertex_buffer)
+			qglDeleteBuffers(1, &mod->bsp.vertex_buffer);
+		if (mod->bsp.texcoord_buffer)
+			qglDeleteBuffers(1, &mod->bsp.texcoord_buffer);
+		if (mod->bsp.lmtexcoord_buffer)
+			qglDeleteBuffers(1, &mod->bsp.lmtexcoord_buffer);
+		if (mod->bsp.normal_buffer)
+			qglDeleteBuffers(1, &mod->bsp.normal_buffer);
+	}
+
 	/* don't free the static models with the tag MEM_TAG_STATIC_MODELS */
 	if (vid_modelPool)
 		VID_FreeTags(vid_modelPool, 0);
 	if (vid_lightPool)
 		VID_FreeTags(vid_lightPool, 0);
-	r_numModels = r_numStaticModels;
+	r_numModels = r_numModelsStatic;
 }
 
 
@@ -351,5 +368,4 @@ void R_AliasModelState (const model_t *mod, int *frame, int *oldFrame, int *skin
 	/* use default skin - this is never null - but maybe the placeholder texture */
 	if (*skin < 0 || *skin >= mod->alias.num_skins)
 		*skin = 0;
-
 }

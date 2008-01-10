@@ -29,15 +29,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_LIGHTMAP_H
 #define R_LIGHTMAP_H
 
-#define	LIGHTMAP_BLOCK_WIDTH	256
-#define	LIGHTMAP_BLOCK_HEIGHT	256
+#define	LIGHTMAP_BLOCK_WIDTH	2048
+#define	LIGHTMAP_BLOCK_HEIGHT	2048
+#define LIGHTMAP_BLOCK_BYTES	4 /* bytes RGBA */
 
-#define LIGHTMAP_BYTES 3 /* RGB */
-#define LIGHTMAP_BLOCK_BYTES 4 /* bytes RGBA */
+#define LIGHTMAP_WIDTH			512
+#define LIGHTMAP_HEIGHT			512
+#define LIGHTMAP_BYTES			3 /* RGB */
 
 
 void R_BlendLightmaps(const model_t* mod);
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);
+void R_EndBuildingLightmaps(void);
+void R_BeginBuildingLightmaps(void);
 
 typedef struct lightmap_sample_s {
 	vec3_t point;

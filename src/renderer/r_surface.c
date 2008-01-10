@@ -33,6 +33,78 @@ mBspSurfaces_t r_alpha_surfaces;
 mBspSurfaces_t r_alpha_warp_surfaces;
 
 /**
+ * @brief this is the r_numMapTiles index of the loaded bsp
+ * @note Remember that we can have loaded more than one bsp at the same time
+ */
+static int bufferMapTile = -1;
+
+static void R_SetVertexArrayState (const mBspSurface_t *surf)
+{
+	model_t* mod;
+
+	if (bufferMapTile == surf->tile)
+		return;
+
+	mod = r_mapTiles[surf->tile];
+
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.verts);
+
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoords);
+
+	if (r_state.multitexture_enabled) {  /* lightmap texcoords */
+		R_SelectTexture(&r_state.lightmap_texunit);
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoords);
+		R_SelectTexture(&r_state.texture_texunit);
+	}
+
+	if (r_state.lighting_enabled)  /* normal vectors for lighting */
+		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
+}
+
+static void R_SetVertexBufferState (const mBspSurface_t *surf)
+{
+	model_t *mod;
+
+	if (bufferMapTile == surf->tile)
+		return;
+
+	mod = r_mapTiles[surf->tile];
+
+	R_BindBuffer(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.vertex_buffer);
+
+	R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoord_buffer);
+
+	if (r_state.multitexture_enabled) {  /* lightmap texcoords */
+		R_SelectTexture(&r_state.lightmap_texunit);
+		R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoord_buffer);
+		R_SelectTexture(&r_state.texture_texunit);
+	}
+
+	if (r_state.lighting_enabled)  /* normal vectors for lighting */
+		R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
+}
+
+static void R_ResetVertexArrayState (void)
+{
+	R_BindBuffer(0, 0, 0);
+
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+
+	if (r_state.multitexture_enabled) {
+		R_SelectTexture(&r_state.lightmap_texunit);
+		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+		R_SelectTexture(&r_state.texture_texunit);
+	}
+
+	if (r_state.lighting_enabled)
+		R_BindDefaultArray(GL_NORMAL_ARRAY);
+
+	bufferMapTile = -1;
+}
+
+/**
  * @brief Set the surface state according to surface flags and bind the texture
  * @sa R_DrawSurfaces
  */
@@ -61,17 +133,15 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_EnableAlphaTest(qfalse);
 	}
 
-	if (r_state.lighting_enabled)  /* normal vector for lighting */
-		qglNormal3fv(surf->normal);
-
-	/* setup array pointers */
-	R_SetArray(GL_VERTEX_ARRAY, GL_FLOAT, surf->polys->verts);
-
-	if (r_state.multitexture_enabled)
-		R_BindMultitexture(surf->texinfo->image->texnum, surf->polys->texcoords,
-				surf->lightmaptexturenum, surf->polys->lmtexcoords);
+	if (r_vertexbuffers->integer)
+		R_SetVertexBufferState(surf);
 	else
-		R_BindWithArray(surf->texinfo->image->texnum, surf->polys->texcoords);
+		R_SetVertexArrayState(surf);
+
+	R_BindTexture(surf->texinfo->image->texnum);  /* texture */
+
+	if (r_state.multitexture_enabled)  /* lightmap */
+		R_BindLightmapTexture(surf->lightmaptexturenum);
 
 	R_CheckError();
 }
@@ -82,9 +152,8 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
  */
 static inline void R_DrawSurface (const mBspSurface_t *surf)
 {
-	qglDrawArrays(GL_POLYGON, 0, surf->polys->numverts);
+	qglDrawArrays(GL_POLYGON, surf->index, surf->numedges);
 
-	R_Color(NULL);
 	c_brush_polys++;
 }
 
@@ -104,23 +173,9 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	}
 
 	/* and restore array pointers */
-	R_EnableArray(qtrue, GL_VERTEX_ARRAY, 0, NULL);
-	R_EnableArray(qtrue, GL_TEXTURE_COORD_ARRAY, 0, NULL);
-}
+	R_ResetVertexArrayState();
 
-/**
- * @brief Draw the surface chain with multitexture enabled and blend enabled
- * @sa R_DrawOpaqueSurfaces
- */
-void R_DrawAlphaSurfaces (const mBspSurfaces_t *surfs)
-{
-	if (!surfs->count)
-		return;
-
-	assert(r_state.blend_enabled);
-	R_EnableMultitexture(qtrue);
-	R_DrawSurfaces(surfs);
-	R_EnableMultitexture(qfalse);
+	R_Color(NULL);
 }
 
 /**
@@ -153,6 +208,21 @@ void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
 	R_EnableWarp(qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableWarp(qfalse);
+}
+
+/**
+ * @brief Draw the surface chain with multitexture enabled and blend enabled
+ * @sa R_DrawOpaqueSurfaces
+ */
+void R_DrawAlphaSurfaces (const mBspSurfaces_t *surfs)
+{
+	if (!surfs->count)
+		return;
+
+	assert(r_state.blend_enabled);
+	R_EnableMultitexture(qtrue);
+	R_DrawSurfaces(surfs);
+	R_EnableMultitexture(qfalse);
 }
 
 /**
