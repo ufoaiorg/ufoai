@@ -357,7 +357,7 @@ void R_EnableWarp (qboolean enable)
 	R_SelectTexture(&r_state.lightmap_texunit);
 
 	if (enable) {
-		R_Bind(r_warptexture->texnum);
+		R_BindTexture(r_warptexture->texnum);
 		qglEnable(GL_TEXTURE_2D);
 
 		SH_UseShader(warp_shader, qtrue);
@@ -421,7 +421,7 @@ void R_TexEnv (GLenum mode)
 	r_state.active_texunit->texenv = mode;
 }
 
-void R_Bind (int texnum)
+void R_BindTexture (int texnum)
 {
 	if (texnum == r_state.active_texunit->texnum)
 		return;
@@ -434,7 +434,7 @@ void R_Bind (int texnum)
 
 void R_BindWithArray (GLuint texnum, void *array)
 {
-	R_Bind(texnum);
+	R_BindTexture(texnum);
 	R_EnableArray(qtrue, GL_TEXTURE_COORD_ARRAY, GL_FLOAT, array);
 }
 

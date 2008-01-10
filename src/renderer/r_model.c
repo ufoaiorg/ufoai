@@ -27,15 +27,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static int modfilelen;
 
-model_t mod_known[MAX_MOD_KNOWN];
-int mod_numknown;
+model_t r_models[MAX_MOD_KNOWN];
+int r_numModels;
 
-model_t *rTiles[MAX_MAPTILES];
-int rNumTiles;
+model_t *r_mapTiles[MAX_MAPTILES];
+int r_numMapTiles;
 
 /* the inline * models from the current map are kept seperate */
-model_t mod_inline[MAX_MOD_KNOWN];
-int numInline;
+model_t r_modelsInline[MAX_MOD_KNOWN];
+int r_numModelsInline;
 
 int registration_sequence;
 
@@ -48,7 +48,7 @@ void R_ModModellist_f (void)
 	model_t *mod;
 
 	Com_Printf("Loaded models:\n");
-	for (i = 0, mod = mod_known; i < mod_numknown; i++, mod++) {
+	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
 		if (!mod->name[0])
 			continue;
 		switch(mod->type) {
@@ -83,13 +83,13 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	/* inline models are grabbed only from worldmodel */
 	if (name[0] == '*') {
 		i = atoi(name + 1) - 1;
-		if (i < 0 || i >= numInline)
-			Sys_Error("bad inline model number '%s' (%i/%i)", name, i, numInline);
-		return &mod_inline[i];
+		if (i < 0 || i >= r_numModelsInline)
+			Sys_Error("bad inline model number '%s' (%i/%i)", name, i, r_numModelsInline);
+		return &r_modelsInline[i];
 	}
 
 	/* search the currently loaded models */
-	for (i = 0, mod = mod_known; i < mod_numknown; i++, mod++) {
+	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
 		if (!mod->name[0])
 			continue;
 		if (!Q_strcmp(mod->name, name))
@@ -97,15 +97,15 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	}
 
 	/* find a free model slot spot */
-	for (i = 0, mod = mod_known; i < mod_numknown; i++, mod++) {
+	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
 		if (!mod->name[0])
 			break;				/* free spot */
 	}
 
-	if (i == mod_numknown) {
-		if (mod_numknown == MAX_MOD_KNOWN)
-			Sys_Error("mod_numknown == MAX_MOD_KNOWN");
-		mod_numknown++;
+	if (i == r_numModels) {
+		if (r_numModels == MAX_MOD_KNOWN)
+			Sys_Error("r_numModels == MAX_MOD_KNOWN");
+		r_numModels++;
 	}
 
 	memset(mod, 0, sizeof(model_t));
@@ -289,7 +289,7 @@ void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-static int static_mod_numknown;
+static int r_numStaticModels;
 #define MEM_TAG_STATIC_MODELS 1
 /**
  * @brief After all static models are loaded, switch the pool tag for these models
@@ -302,12 +302,12 @@ void R_SwitchModelMemPoolTag (void)
 	int i, j;
 	model_t* mod;
 
-	static_mod_numknown = mod_numknown;
+	r_numStaticModels = r_numModels;
 	Mem_ChangeTag(vid_modelPool, 0, MEM_TAG_STATIC_MODELS);
 
 	/* mark the static model textures as it_statis, thus R_FreeUnusedImages
 	 * won't free them */
-	for (i = 0, mod = mod_known; i < static_mod_numknown; i++, mod++) {
+	for (i = 0, mod = r_models; i < r_numStaticModels; i++, mod++) {
 		if (!mod->alias.num_skins)
 			Com_Printf("Model '%s' has no skins\n", mod->name);
 		for (j = 0; j < mod->alias.num_skins; j++) {
@@ -318,7 +318,7 @@ void R_SwitchModelMemPoolTag (void)
 		}
 	}
 
-	Com_Printf("%i static models loaded\n", mod_numknown);
+	Com_Printf("%i static models loaded\n", r_numModels);
 }
 
 /**
@@ -332,11 +332,11 @@ void R_ShutdownModels (void)
 		VID_FreeTags(vid_modelPool, 0);
 	if (vid_lightPool)
 		VID_FreeTags(vid_lightPool, 0);
-	mod_numknown = static_mod_numknown;
+	r_numModels = r_numStaticModels;
 }
 
 
-void R_AliasModelState (model_t *mod, int *frame, int *oldFrame, int *skin)
+void R_AliasModelState (const model_t *mod, int *frame, int *oldFrame, int *skin)
 {
 	/* check animations */
 	if ((*frame >= mod->alias.num_frames) || *frame < 0) {

@@ -40,8 +40,6 @@ static const char *svc_strings[UCHAR_MAX+1] =
 {
 	"svc_bad",
 
-	"svc_inventory",
-
 	"svc_nop",
 	"svc_disconnect",
 	"svc_reconnect",
@@ -50,9 +48,6 @@ static const char *svc_strings[UCHAR_MAX+1] =
 	"svc_stufftext",
 	"svc_serverdata",
 	"svc_configstring",
-	"svc_spawnbaseline",
-	"svc_centerprint",
-	"svc_playerinfo",
 	"svc_event"
 };
 
@@ -1641,12 +1636,6 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		}
 		Com_DPrintf(DEBUG_CLIENT, "svc_print(%d): %s\n", i, s);
 		Com_Printf("%s", s);
-		break;
-
-	case svc_centerprint:
-		s = NET_ReadString(msg);
-		Com_DPrintf(DEBUG_CLIENT, "svc_centerprint: %s\n", s);
-		SCR_CenterPrint(s);
 		break;
 
 	case svc_stufftext:

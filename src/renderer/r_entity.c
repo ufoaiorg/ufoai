@@ -137,9 +137,9 @@ static void R_DrawEntityEffects (void)
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 			if (e->flags & RF_SHADOW)
-				R_Bind(shadow->texnum);
+				R_BindTexture(shadow->texnum);
 			else
-				R_Bind(blood->texnum);
+				R_BindTexture(blood->texnum);
 
 			qglBegin(GL_QUADS);
 			qglTexCoord2f(0.0, 1.0);

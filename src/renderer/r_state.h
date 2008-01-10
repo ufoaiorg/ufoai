@@ -85,7 +85,7 @@ void R_SetupGL2D(void);
 void R_SetupGL3D(void);
 void R_EnableMultitexture(qboolean enable);
 void R_SelectTexture(gltexunit_t *texunit);
-void R_Bind(int texnum);
+void R_BindTexture(int texnum);
 void R_BindMultitexture(int texnum0, void *array0, int texnum1, void *array1);
 void R_TexEnv(GLenum value);
 void R_TextureAlphaMode(const char *string);

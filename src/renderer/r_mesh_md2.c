@@ -263,7 +263,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 		R_Color(color);
 
 	/* draw it */
-	R_Bind(skin->texnum);
+	R_BindTexture(skin->texnum);
 
 	R_DrawAliasMD2FrameLerp(md2, e->as.backlerp, e->as.frame, e->as.oldframe);
 
@@ -398,7 +398,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	qglEnable(GL_DEPTH_TEST);
 
 	/* draw it */
-	R_Bind(skin->texnum);
+	R_BindTexture(skin->texnum);
 
 	if ((mi->color && mi->color[3] < 1.0f) || skin->has_alpha)
 		R_EnableBlend(qtrue);
@@ -448,7 +448,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	qglRotatef(-mi->angles[2], 1, 0, 0);
 
 	/* draw it */
-	R_Bind(skin->texnum);
+	R_BindTexture(skin->texnum);
 
 	/* draw the model */
 	R_DrawAliasMD2FrameLerp(md2, mi->backlerp, mi->frame, mi->oldframe);

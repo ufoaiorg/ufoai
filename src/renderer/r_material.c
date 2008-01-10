@@ -151,9 +151,9 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 		R_EnableArray(qtrue, GL_COLOR_ARRAY, 0, NULL);
 
 	if (stage->flags & STAGE_LIGHTMAP)
-		R_Bind(surf->lightmaptexturenum);
+		R_BindTexture(surf->lightmaptexturenum);
 	else
-		R_Bind(stage->image->texnum);
+		R_BindTexture(stage->image->texnum);
 
 	for (i = 0; i < surf->polys->numverts; i++) {
 		v = &surf->polys->verts[i * 3];
@@ -208,9 +208,9 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 			qglPolygonOffset(-1, j);  /* increase depth offset for each stage */
 
 			if (s->flags & STAGE_LIGHTMAP)
-				R_Bind(surf->lightmaptexturenum);
+				R_BindTexture(surf->lightmaptexturenum);
 			else
-				R_Bind(s->image->texnum);
+				R_BindTexture(s->image->texnum);
 
 			if (s->flags & STAGE_BLEND)
 				R_BlendFunc(s->blend.src, s->blend.dest);

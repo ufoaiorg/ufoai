@@ -34,26 +34,6 @@ static int pfe_mask = 0;
 static struct dbuffer *pfe_msg = NULL;
 struct dbuffer *sv_msg = NULL;
 
-static void PF_Unicast (player_t * player, struct dbuffer *msg)
-{
-	client_t *client;
-
-	if (!player || !player->inuse)
-		return;
-
-	if (player->num < 0 || player->num >= ge->maxplayersperteam)
-		return;
-
-	client = svs.clients + player->num;
-
-	if (client->state <= cs_spawning) {
-		Com_Printf("PF_Unicast: GAME ERROR: Attempted to write to disconnected client, ignored.\n");
-		return;
-	}
-
-	NET_WriteMsg(client->stream, msg);
-}
-
 /**
  * @brief Debug print to server console
  */
@@ -101,34 +81,6 @@ static void PF_cprintf (player_t * player, int level, const char *fmt, ...)
 	else
 		Com_Printf("%s", msg);
 }
-
-
-/**
- * @brief Centerprint to a single client
- */
-static void PF_centerprintf (player_t * player, const char *fmt, ...)
-{
-	va_list argptr;
-	int n;
-	struct dbuffer *msg;
-
-	if (!player)
-		return;
-
-	n = player->num;
-	if (n < 0 || n >= ge->maxplayersperteam)
-		return;
-
-	msg = new_dbuffer();
-	NET_WriteByte(msg, svc_centerprint);
-	va_start(argptr, fmt);
-	NET_VPrintf(msg, fmt, argptr);
-	va_end(argptr);
-
-	PF_Unicast(player, msg);
-	free_dbuffer(msg);
-}
-
 
 static void PF_error (const char *fmt, ...) __attribute__((noreturn));
 /**
@@ -424,7 +376,6 @@ void SV_InitGameProgs (void)
 	import.bprintf = SV_BroadcastPrintf;
 	import.dprintf = PF_dprintf;
 	import.cprintf = PF_cprintf;
-	import.centerprintf = PF_centerprintf;
 	import.error = PF_error;
 
 	import.trace = SV_Trace;

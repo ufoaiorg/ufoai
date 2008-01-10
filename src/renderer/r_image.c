@@ -95,7 +95,7 @@ void R_UpdateTextures (int min, int max)
 
 	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
 		if (glt->type != it_pic) {
-			R_Bind(glt->texnum);
+			R_BindTexture(glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
 			R_CheckError();
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
@@ -1043,7 +1043,7 @@ void R_CalcDayAndNight (float q)
 		DaN->type = it_pic;
 		DaN->texnum = TEXNUM_IMAGES + (DaN - gltextures);
 	}
-	R_Bind(DaN->texnum);
+	R_BindTexture(DaN->texnum);
 
 	/* init geometric data */
 	dphi = (float) 2 * M_PI / DAN_WIDTH;
@@ -1128,7 +1128,7 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 
 	image->texnum = TEXNUM_IMAGES + (image - gltextures);
 	if (pic) {
-		R_Bind(image->texnum);
+		R_BindTexture(image->texnum);
 		R_UploadTexture((unsigned *) pic, width, height, image);
 	}
 	return image;

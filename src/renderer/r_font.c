@@ -237,7 +237,7 @@ static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 {
 	/* use a fixed texture number allocation scheme, starting offset at TEXNUM_FONTS */
 	cache->texPos = TEXNUM_FONTS + numInCache;
-	R_Bind(cache->texPos);
+	R_BindTexture(cache->texPos);
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixel->pixels);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -445,7 +445,7 @@ static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absY, 
 	if (height > 0 && y + cache->size[1] > absY + height)
 		return 1;
 
-	R_Bind(cache->texPos);
+	R_BindTexture(cache->texPos);
 
 	/* draw it */
 	R_EnableBlend(qtrue);

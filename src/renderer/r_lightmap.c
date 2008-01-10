@@ -214,7 +214,7 @@ static void R_UploadLightmapBlock (void)
 		return;
 	}
 
-	R_Bind(TEXNUM_LIGHTMAPS + r_lightmaps.texnum);
+	R_BindTexture(TEXNUM_LIGHTMAPS + r_lightmaps.texnum);
 
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -431,7 +431,7 @@ void R_LightPoint (vec3_t p)
 	VectorClear(r_lightmap_sample.point);
 	VectorSet(r_lightmap_sample.color, 1.0, 1.0, 1.0);
 
-	if (!rTiles[0]->bsp.lightdata)
+	if (!r_mapTiles[0]->bsp.lightdata)
 		return;
 
 	VectorSet(r_lightmap_sample.color, 0.5, 0.5, 0.5);
@@ -442,9 +442,9 @@ void R_LightPoint (vec3_t p)
 
 	dist = 999999;
 
-	for (j = 0; j < rNumTiles; j++) {
+	for (j = 0; j < r_numMapTiles; j++) {
 		/* check world */
-		if (R_LightPoint_(rTiles[j], rTiles[j]->bsp.nodes, p, end)) {
+		if (R_LightPoint_(r_mapTiles[j], r_mapTiles[j]->bsp.nodes, p, end)) {
 			lms = r_lightmap_sample;
 			dist = p[2] - r_lightmap_sample.point[2];
 		}
@@ -457,7 +457,7 @@ void R_LightPoint (vec3_t p)
 			if (!m || m->type != mod_brush)
 				continue;
 
-			if (!R_LightPoint_(rTiles[j], &rTiles[j]->bsp.nodes[m->bsp.firstnode], p, end))
+			if (!R_LightPoint_(r_mapTiles[j], &r_mapTiles[j]->bsp.nodes[m->bsp.firstnode], p, end))
 				continue;
 
 			if ((d = p[2] - r_lightmap_sample.point[2]) < dist) {

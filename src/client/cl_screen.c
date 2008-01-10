@@ -46,134 +46,12 @@ vrect_t scr_vrect;				/* position of render window on screen */
 
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
-static cvar_t *scr_centertime;
 static cvar_t *scr_rspeed;
 
 static char cursor_pic[MAX_QPATH];
 
 static void SCR_TimeRefresh_f(void);
 static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont);
-
-/*
-===============================================================================
-CENTER PRINTING
-===============================================================================
-*/
-
-static char scr_centerstring[1024];
-static int scr_centertime_off;
-static int scr_center_lines;
-
-/**
- * @brief Called for important messages that should stay in the center of the screen for a few moments
- */
-void SCR_CenterPrint (const char *str)
-{
-	const char *s;
-	char line[64];
-	int i, j, l;
-
-	strncpy(scr_centerstring, str, sizeof(scr_centerstring) - 1);
-	scr_centertime_off = scr_centertime->integer;
-
-	/* count the number of lines for centering */
-	scr_center_lines = 1;
-	s = str;
-	while (*s) {
-		if (*s == '\n')
-			scr_center_lines++;
-		s++;
-	}
-
-	s = str;
-	do {
-		/* scan the width of the line */
-		for (l = 0; l < 40; l++)
-			if (s[l] == '\n' || !s[l])
-				break;
-		for (i = 0; i < (40 - l) / 2; i++)
-			line[i] = ' ';
-
-		for (j = 0; j < l; j++) {
-			line[i++] = s[j];
-		}
-
-		line[i] = '\n';
-		line[i + 1] = 0;
-
-		Com_Printf("%s", line);
-
-		while (*s && *s != '\n')
-			s++;
-
-		if (!*s)
-			break;
-		s++;					/* skip the \n */
-	} while (1);
-	Con_ClearNotify();
-}
-
-/**
- * @brief Draws the center string parsed from svc_centerprint events
- * @sa SCR_CheckDrawCenterString
- * @sa SCR_CenterPrint
- */
-static void SCR_DrawCenterString (void)
-{
-	char *start;
-	int l;
-	int j;
-	int x, y;
-	int remaining;
-
-	/* the finale prints the characters one at a time */
-	remaining = 9999;
-
-	start = scr_centerstring;
-
-	if (scr_center_lines <= 4)
-		y = viddef.height * 0.35;
-	else
-		y = 48;
-
-	do {
-		/* scan the width of the line */
-		for (l = 0; l < 40; l++)
-			if (start[l] == '\n' || !start[l])
-				break;
-		x = (viddef.width - l * 8) / 2;
-		for (j = 0; j < l; j++, x += 8) {
-			R_DrawChar(x, y, start[j]);
-			if (!remaining--)
-				return;
-		}
-
-		y += 8;
-
-		while (*start && *start != '\n')
-			start++;
-
-		if (!*start)
-			break;
-		start++;				/* skip the \n */
-	} while (1);
-}
-
-/**
- * @brief Checks whether center string is outdated or should still be shown
- * @sa SCR_DrawCenterString
- * @sa PF_centerprintf
- * @sa svc_centerprint
- */
-static void SCR_CheckDrawCenterString (void)
-{
-	scr_centertime_off -= cls.frametime;
-
-	if (scr_centertime_off <= 0)
-		return;
-
-	SCR_DrawCenterString();
-}
 
 /**
  * @sa CL_Init
@@ -182,7 +60,6 @@ void SCR_Init (void)
 {
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, NULL);
-	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0, NULL);
 	scr_rspeed = Cvar_Get("r_speeds", "0", 0, NULL);
 
 	/* register our commands */
@@ -390,9 +267,9 @@ static void SCR_DrawCursor (void)
 			}
 		}
 	} else {
-		vec3_t scale = { 3.5, 3.5, 3.5 };
-		vec3_t org = { mousePosX, mousePosY, -50 };
-		vec4_t color = { 1, 1, 1, 1 };
+		const vec3_t org = { mousePosX, mousePosY, -50 };
+		const vec3_t scale = { 3.5, 3.5, 3.5 };
+		const vec4_t color = { 1, 1, 1, 1 };
 		MN_DrawItem(org, dragItem, 0, 0, 0, 0, scale, color);
 	}
 }
@@ -595,8 +472,6 @@ void SCR_UpdateScreen (void)
 
 			/* draw the menus on top of the render view (for hud and so on) */
 			MN_DrawMenus();
-
-			SCR_CheckDrawCenterString();
 		}
 
 		SCR_DrawConsole();

@@ -116,8 +116,6 @@ typedef struct {
 	void (IMPORT *dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	/** sends message to only one entity */
 	void (IMPORT *cprintf) (player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
-	/** sends message to one entity and displays message on center of the screen */
-	void (IMPORT *centerprintf) (player_t * player, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 
 	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound, int channel, float volume, float attenuation);
 
@@ -281,6 +279,6 @@ typedef struct {
 	int maxplayersperteam;
 } game_export_t;
 
-typedef game_export_t *(*GetGameApi_t) (game_import_t * import);
+game_export_t *GetGameAPI(game_import_t * import);
 
 #endif /* GAME_GAME_H */

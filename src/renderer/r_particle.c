@@ -79,7 +79,7 @@ static void R_DrawSprite (const ptl_t * p)
 	vec3_t pos;
 
 	/* load texture set up coordinates */
-	R_Bind(((image_t *) r_particlesArt[p->pic].art)->texnum);
+	R_BindTexture(((image_t *) r_particlesArt[p->pic].art)->texnum);
 
 	/* calculate main position and normalised up and right vectors */
 	q = p->parent ? p->parent : p;

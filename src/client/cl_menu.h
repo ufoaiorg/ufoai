@@ -274,7 +274,7 @@ qboolean MN_FocusNextActionNode(void);
 qboolean MN_FocusExecuteActionNode(void);
 void MN_FocusRemove(void);
 void MN_DrawMenus(void);
-void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
+void MN_DrawItem(const vec3_t org, item_t item, int sx, int sy, int x, int y, const vec3_t scale, const vec4_t color);
 void MN_UnHideNode(menuNode_t* node);
 void MN_HideNode(menuNode_t* node);
 menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);

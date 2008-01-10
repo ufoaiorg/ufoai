@@ -70,18 +70,18 @@ void R_ModClearAll(void);
 void R_ModModellist_f(void);
 void R_ModDrawModelBBox(vec4_t bbox[8], entity_t *e);
 void R_ModDrawNullModel(entity_t *e);
-void R_AliasModelState(model_t *mod, int *frame, int *oldFrame, int *skin);
+void R_AliasModelState(const model_t *mod, int *frame, int *oldFrame, int *skin);
 
 void R_ShutdownModels(void);
 void R_CreateSurfacePoly(mBspSurface_t *surf, int shift[3], model_t *mod);
 
-extern model_t *rTiles[MAX_MAPTILES];
-extern int rNumTiles;
+extern model_t *r_mapTiles[MAX_MAPTILES];
+extern int r_numMapTiles;
 
-extern model_t mod_known[MAX_MOD_KNOWN];
-extern int mod_numknown;
+extern model_t r_models[MAX_MOD_KNOWN];
+extern int r_numModels;
 
-extern model_t mod_inline[MAX_MOD_KNOWN];
-extern int numInline;
+extern model_t r_modelsInline[MAX_MOD_KNOWN];
+extern int r_numModelsInline;
 
 #endif

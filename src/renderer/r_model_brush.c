@@ -34,7 +34,6 @@ BRUSHMODEL LOADING
 
 static byte *mod_base;
 static int shift[3];
-typedef model_t *model_p;
 static model_t *loadmodel;
 
 /**
@@ -80,7 +79,7 @@ static float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 	vec3_t corner;
 
 	for (i = 0; i < 3; i++)
-		corner[i] = fabs(mins[i]) > fabs(maxs[i]) ? fabs(mins[i]) : fabs(maxs[i]);
+		corner[i] = fabsf(mins[i]) > fabsf(maxs[i]) ? fabsf(mins[i]) : fabsf(maxs[i]);
 
 	return VectorLength(corner);
 }
@@ -195,7 +194,7 @@ static void R_ModLoadTexinfo (lump_t * l)
 /**
  * @brief Fills in s->stmins[] and s->stmaxs[]
  */
-static void R_CalcSurfaceExtents (mBspSurface_t *surf, model_t* mod)
+static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 {
 	float mins[2], maxs[2], val;
 
@@ -261,9 +260,11 @@ static void R_ModLoadSurfaces (lump_t * l)
 		out->firstedge = LittleLong(in->firstedge);
 		out->numedges = LittleShort(in->numedges);
 
+		/* resolve plane */
 		planenum = LittleShort(in->planenum);
 		out->plane = loadmodel->bsp.planes + planenum;
 
+		/* and sideness */
 		side = LittleShort(in->side);
 		if (side) {
 			out->flags |= MSURF_PLANEBACK;
@@ -280,7 +281,7 @@ static void R_ModLoadSurfaces (lump_t * l)
 		out->lquant = loadmodel->bsp.lightquant;
 
 		/* and size, texcoords, etc */
-		R_CalcSurfaceExtents(out, loadmodel);
+		R_SetSurfaceExtents(out, loadmodel);
 
 		/* lastly lighting info */
 		for (i = 0; i < MAXLIGHTMAPS; i++)
@@ -472,15 +473,15 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	mBspHeader_t *bm;
 
 	/* get new model */
-	if ((mod_numknown < 0) || (mod_numknown >= MAX_MOD_KNOWN))
-		Sys_Error("R_ModAddMapTile: mod_numknown >= MAX_MOD_KNOWN");
+	if ((r_numModels < 0) || (r_numModels >= MAX_MOD_KNOWN))
+		Sys_Error("R_ModAddMapTile: r_numModels >= MAX_MOD_KNOWN");
 
-	if ((rNumTiles < 0) || (rNumTiles >= MAX_MAPTILES))
+	if ((r_numMapTiles < 0) || (r_numMapTiles >= MAX_MAPTILES))
 		Sys_Error("R_ModAddMapTile: Too many map tiles");
 
 	/* alloc model and tile */
-	loadmodel = &mod_known[mod_numknown++];
-	rTiles[rNumTiles++] = loadmodel;
+	loadmodel = &r_models[r_numModels++];
+	r_mapTiles[r_numMapTiles++] = loadmodel;
 	memset(loadmodel, 0, sizeof(model_t));
 	Com_sprintf(loadmodel->name, sizeof(loadmodel->name), "maps/%s.bsp", name);
 
@@ -529,7 +530,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 		model_t *starmod;
 
 		bm = &loadmodel->bsp.submodels[i];
-		starmod = &mod_inline[numInline++];
+		starmod = &r_modelsInline[r_numModelsInline++];
 
 		*starmod = *loadmodel;
 
@@ -571,8 +572,8 @@ void R_ModBeginLoading (const char *tiles, const char *pos)
 
 	/* init */
 	R_BeginBuildingLightmaps();
-	numInline = 0;
-	rNumTiles = 0;
+	r_numModelsInline = 0;
+	r_numMapTiles = 0;
 
 	/* load tiles */
 	while (tiles) {

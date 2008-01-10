@@ -164,14 +164,10 @@ PROTOCOL
 
 /**
  * @brief server to client
- *
  * the svc_strings[] array in cl_parse.c should mirror this
  */
 enum svc_ops_e {
 	svc_bad,
-
-	/** these ops are known to the game dll */
-	svc_inventory,
 
 	/** the rest are private to the client and server */
 	svc_nop,
@@ -182,10 +178,7 @@ enum svc_ops_e {
 	svc_stufftext,				/**< [string] stuffed into client's console buffer, should be \n terminated */
 	svc_serverdata,				/**< [long] protocol ... */
 	svc_configstring,			/**< [short] [string] */
-	svc_spawnbaseline,
-	svc_centerprint,			/**< [string] to put in center of the screen */
-	svc_playerinfo,				/**< variable */
-	svc_event,					/**< ... */
+	svc_event,					/**< event like move or inventory usage - see EV_* and ev_format array */
 	svc_oob = 0xff
 };
 

@@ -92,7 +92,7 @@ typedef struct mBspSurface_s {
 
 	int lightmaptexturenum;
 	byte styles[MAXLIGHTMAPS];
-	byte *samples;				/**< [numstyles*surfsize] */
+	byte *samples;				/**< lightmap samples - only used at loading time */
 	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
 } mBspSurface_t;
 

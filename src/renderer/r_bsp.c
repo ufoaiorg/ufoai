@@ -213,7 +213,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	R_RecursiveWorldNode(node->children[side], tile);
 
 	/* draw stuff */
-	for (c = node->numsurfaces, surf = rTiles[tile]->bsp.surfaces + node->firstsurface; c; c--, surf++) {
+	for (c = node->numsurfaces, surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface; c; c--, surf++) {
 		if ((surf->flags & MSURF_PLANEBACK) != sidebit)
 			continue;			/* wrong side */
 
@@ -279,7 +279,7 @@ void R_GetLevelSurfaceChains (void)
 
 	VectorCopy(refdef.vieworg, modelorg);
 
-	for (tile = 0; tile < rNumTiles; tile++) {
+	for (tile = 0; tile < r_numMapTiles; tile++) {
 		/* don't draw weapon-, actorclip and stepon */
 		/* @note Change this to 258 to see the actorclip brushes in-game */
 		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
@@ -287,10 +287,10 @@ void R_GetLevelSurfaceChains (void)
 			if (i && !(i & mask))
 				continue;
 
-			if (!rTiles[tile]->bsp.submodels[i].numfaces)
+			if (!r_mapTiles[tile]->bsp.submodels[i].numfaces)
 				continue;
 
-			R_RecurseWorld(rTiles[tile]->bsp.nodes + rTiles[tile]->bsp.submodels[i].headnode, tile);
+			R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);
 		}
 	}
 }

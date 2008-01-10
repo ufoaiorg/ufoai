@@ -201,7 +201,7 @@ void R_DrawChar (int x, int y, int num)
 	fcol = col * 0.0625;
 
 	assert(con_font->integer < 2);
-	R_Bind(draw_chars[con_font->integer]->texnum);
+	R_BindTexture(draw_chars[con_font->integer]->texnum);
 
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(fcol, frow);
@@ -231,7 +231,7 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 	if (img == r_notexture)
 		Sys_Error("Could not find the searched image: %s\n", name);
 
-	R_Bind(img->texnum);
+	R_BindTexture(img->texnum);
 
 	if (img->width == width && img->height == height) {
 		qglTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, frame);
@@ -306,7 +306,7 @@ void R_DrawGetPicSize (int *w, int *h, const char *pic)
  */
 void R_DrawTexture (int texnum, int x, int y, int w, int h)
 {
-	R_Bind(texnum);
+	R_BindTexture(texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(0, 0);
 	qglVertex2f(x, y);
@@ -400,7 +400,7 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	if (blend)
 		R_EnableBlend(qtrue);
 
-	R_Bind(gl->texnum);
+	R_BindTexture(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(sl, tl);
 	qglVertex2f(nx, ny);
@@ -487,7 +487,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	gl = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
 
 	/* draw day image */
-	R_Bind(gl->texnum);
+	R_BindTexture(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(cx - iz, cy - iz);
 	qglVertex2f(nx, ny);
@@ -508,7 +508,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	R_EnableBlend(qtrue);
 
 	R_SelectTexture(&r_state.texture_texunit);
-	R_Bind(gl->texnum);
+	R_BindTexture(gl->texnum);
 
 	R_SelectTexture(&r_state.lightmap_texunit);
 	if (!DaN || lastQ != q) {
@@ -518,7 +518,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	assert(DaN);
 
-	R_Bind(DaN->texnum);
+	R_BindTexture(DaN->texnum);
 	qglEnable(GL_TEXTURE_2D);
 
 	/* draw night image */

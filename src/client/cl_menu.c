@@ -2140,7 +2140,7 @@ MENU DRAWING
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color)
+void MN_DrawItem (const vec3_t org, item_t item, int sx, int sy, int x, int y, const vec3_t scale, const vec4_t color)
 {
 	modelInfo_t mi;
 	objDef_t *od;
