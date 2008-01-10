@@ -735,13 +735,11 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 
 	Com_sprintf(path, sizeof(path), "geoscape/%s", model);
 	mi.model = R_RegisterModelShort(path);
-	mi.name = path;
 	if (!mi.model) {
 		Com_Printf("Could not find model '%s'\n", path);
-		mi.model = R_RegisterModelShort(path);
-		mi.name = path;
-		/*return;*/
+		return;
 	}
+	mi.name = path;
 
 	mi.origin = position;
 	mi.angles = angles;
