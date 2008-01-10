@@ -533,8 +533,8 @@ static void R_LoadBspVertexArrays (void)
 				t /= LIGHTMAP_BLOCK_HEIGHT << surf->lquant;
 			}
 
-			r_state.color_array[coordind + 0] = s;
-			r_state.color_array[coordind + 1] = t;
+			r_state.lmtexcoord_array[coordind + 0] = s;
+			r_state.lmtexcoord_array[coordind + 1] = t;
 
 			/* normal vectors */
 			memcpy(&r_state.normal_array[vertind], surf->normal, sizeof(vec3_t));
@@ -552,7 +552,7 @@ static void R_LoadBspVertexArrays (void)
 	memcpy(loadmodel->bsp.texcoords, r_state.texcoord_array, coordind * sizeof(GLfloat));
 
 	loadmodel->bsp.lmtexcoords = (GLfloat *)VID_TagAlloc(vid_modelPool, coordind * sizeof(GLfloat), 0);
-	memcpy(loadmodel->bsp.lmtexcoords, r_state.color_array, coordind * sizeof(GLfloat));
+	memcpy(loadmodel->bsp.lmtexcoords, r_state.lmtexcoord_array, coordind * sizeof(GLfloat));
 
 	loadmodel->bsp.normals = (GLfloat *)VID_TagAlloc(vid_modelPool, vertind * sizeof(GLfloat), 0);
 	memcpy(loadmodel->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
