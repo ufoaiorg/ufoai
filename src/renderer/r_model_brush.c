@@ -475,6 +475,9 @@ static void R_LoadBspVertexArrays (void)
 		surf->index = vertind / 3;
 
 		for (j = 0; j < surf->numedges; j++) {
+			if (vertind >= MAX_GL_ARRAY_LENGTH * 3)
+				Com_Error(ERR_DROP, "R_LoadBspVertexArrays: Exceeded MAX_GL_ARRAY_LENGTH %i", vertind);
+
 			index = loadmodel->bsp.surfedges[surf->firstedge + j];
 
 			/* vertex */

@@ -805,10 +805,10 @@ void QR_UnLink (void)
 	qglGetVertexAttribPointervARB = NULL;
 	qglIsProgramARB               = NULL;
 
-	qglGenBuffers = NULL;
+	qglGenBuffers    = NULL;
 	qglDeleteBuffers = NULL;
-	qglBindBuffer = NULL;
-	qglBufferData = NULL;
+	qglBindBuffer    = NULL;
+	qglBufferData    = NULL;
 
 	qglCreateShader  = NULL;
 	qglShaderSource  = NULL;
@@ -1165,10 +1165,10 @@ void QR_Link (void)
 	qglActiveTexture             = SDL_GL_GetProcAddress("glActiveTexture");
 	qglClientActiveTexture       = SDL_GL_GetProcAddress("glClientActiveTexture");
 
-	qglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
-	qglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
-	qglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
-	qglBufferData = SDL_GL_GetProcAddress("glBufferData");
+	qglGenBuffers                = SDL_GL_GetProcAddress("glGenBuffers");
+	qglDeleteBuffers             = SDL_GL_GetProcAddress("glDeleteBuffers");
+	qglBindBuffer                = SDL_GL_GetProcAddress("glBindBuffer");
+	qglBufferData                = SDL_GL_GetProcAddress("glBufferData");
 
 	qglLockArraysEXT             = NULL;
 	qglUnlockArraysEXT           = NULL;
