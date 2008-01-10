@@ -2142,12 +2142,7 @@ MENU DRAWING
  */
 void MN_DrawItem (const vec3_t org, item_t item, int sx, int sy, int x, int y, const vec3_t scale, const vec4_t color)
 {
-	modelInfo_t mi;
 	objDef_t *od;
-	vec3_t angles = { -10, 160, 70 };
-	vec3_t origin;
-	vec3_t size;
-	vec4_t col;
 
 	assert(item.t != NONE);
 	od = &csi.ods[item.t];
@@ -2159,9 +2154,15 @@ void MN_DrawItem (const vec3_t org, item_t item, int sx, int sy, int x, int y, c
 			org[1] + C_UNIT / 2.0 * sy + C_UNIT * y,
 			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
 	} else if (od->model[0]) {
-		if (item.rotated) {
-			angles[0] = angles[0] - 90;
-		}
+		modelInfo_t mi;
+		vec3_t angles = { -10, 160, 70 };
+		vec3_t origin;
+		vec3_t size;
+		vec4_t col;
+
+		if (item.rotated)
+			angles[0] -= 90;
+
 		/* draw model, if there is no image */
 		mi.name = od->model;
 		mi.origin = origin;
