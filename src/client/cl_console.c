@@ -34,10 +34,10 @@ console_t con;
 
 static cvar_t *con_notifytime;
 static cvar_t *con_history;
-cvar_t *con_fontHeight;
 cvar_t *con_font;
-cvar_t *con_fontWidth;
-cvar_t *con_fontShift;
+int con_fontHeight;
+int con_fontWidth;
+int con_fontShift;
 
 extern char key_lines[MAXKEYLINES][MAXCMDLINE];
 extern int edit_line;
@@ -47,7 +47,7 @@ static void Con_DisplayString (int x, int y, const char *s)
 {
 	while (*s) {
 		R_DrawChar(x, y, *s);
-		x += con_fontWidth->integer;
+		x += con_fontWidth;
 		s++;
 	}
 }
@@ -202,26 +202,26 @@ void Con_CheckResize (void)
 
 	if (con_font->modified) {
 		if (con_font->integer == 0) {
-			Cvar_ForceSet("con_fontWidth", "16");
-			Cvar_ForceSet("con_fontHeight", "32");
-			Cvar_ForceSet("con_fontShift", "4");
+			con_fontWidth = 16;
+			con_fontHeight = 32;
+			con_fontShift = 4;
 			con_font->modified = qfalse;
 		} else if (con_font->integer == 1) {
-			Cvar_ForceSet("con_fontWidth", "8");
-			Cvar_ForceSet("con_fontHeight", "8");
-			Cvar_ForceSet("con_fontShift", "3");
+			con_fontWidth = 8;
+			con_fontHeight = 8;
+			con_fontShift = 3;
 			con_font->modified = qfalse;
 		} else
 			Cvar_ForceSet("con_font", "1");
 	}
 
-	width = (viddef.width >> con_fontShift->integer);
+	width = (viddef.width >> con_fontShift);
 
 	if (width == con.linewidth)
 		return;
 
 	if (width < 1) {	/* video hasn't been initialized yet */
-		width = VID_NORM_WIDTH / con_fontWidth->integer;
+		width = VID_NORM_WIDTH / con_fontWidth;
 		con.linewidth = width;
 		con.totallines = sizeof(con.text) / con.linewidth;
 		memset(con.text, ' ', sizeof(con.text));
@@ -355,10 +355,11 @@ void Con_Init (void)
 	/* register our commands and cvars */
 	con_notifytime = Cvar_Get("con_notifytime", "10", CVAR_ARCHIVE, "How many seconds console messages should be shown before they fade away");
 	con_history = Cvar_Get("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
-	con_fontWidth = Cvar_Get("con_fontWidth", "16", CVAR_NOSET, NULL);
-	con_fontHeight = Cvar_Get("con_fontHeight", "32", CVAR_NOSET, NULL);
-	con_fontShift = Cvar_Get("con_fontShift", "4", CVAR_NOSET, NULL);
 	con_font = Cvar_Get("con_font", "1", CVAR_ARCHIVE, "Change the console font - 0 and 1 are valid values");
+
+	con_fontWidth = 16;
+	con_fontHeight = 32;
+	con_fontShift = 4;
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
@@ -505,10 +506,10 @@ static void Con_DrawInput (void)
 		text += 1 + key_linepos - con.linewidth;
 
 	/* draw it */
-	y = con.vislines - con_fontHeight->integer;
+	y = con.vislines - con_fontHeight;
 
 	for (i = 0; i < con.linewidth; i++)
-		R_DrawChar((i + 1) << con_fontShift->integer, con.vislines - con_fontHeight->integer - CONSOLE_CHAR_ALIGN, text[i]);
+		R_DrawChar((i + 1) << con_fontShift, con.vislines - con_fontHeight - CONSOLE_CHAR_ALIGN, text[i]);
 }
 
 
@@ -540,12 +541,12 @@ void Con_DrawNotify (void)
 		for (x = 0; x < con.linewidth; x++) {
 			/* only draw chat or check for developer mode */
 			if (developer->integer || text[x] & COLORED_TEXT_MASK) {
-				R_DrawChar(l + (x << con_fontShift->integer), v, text[x]);
+				R_DrawChar(l + (x << con_fontShift), v, text[x]);
 				draw = qtrue;
 			}
 		}
 		if (draw)
-			v += con_fontHeight->integer;
+			v += con_fontHeight;
 	}
 
 	if (cls.key_dest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {
@@ -558,15 +559,15 @@ void Con_DrawNotify (void)
 		}
 
 		s = msg_buffer;
-		if (msg_bufferlen > (viddef.width >> con_fontShift->integer) - (skip + 1))
-			s += msg_bufferlen - ((viddef.width >> con_fontShift->integer) - (skip + 1));
+		if (msg_bufferlen > (viddef.width >> con_fontShift) - (skip + 1))
+			s += msg_bufferlen - ((viddef.width >> con_fontShift) - (skip + 1));
 		x = 0;
 		while (s[x]) {
-			R_DrawChar(l + ((x + skip) << con_fontShift->integer), v, s[x]);
+			R_DrawChar(l + ((x + skip) << con_fontShift), v, s[x]);
 			x++;
 		}
-		R_DrawChar(l + ((x + skip) << con_fontShift->integer), v, 10 + ((cls.realtime >> 8) & 1));
-		v += con_fontHeight->integer;
+		R_DrawChar(l + ((x + skip) << con_fontShift), v, 10 + ((cls.realtime >> 8) & 1));
+		v += con_fontHeight;
 	}
 }
 
@@ -596,27 +597,27 @@ void Con_DrawConsole (float frac)
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
 	len = strlen(version);
 	for (x = 0; x < len; x++)
-		R_DrawChar(viddef.width - (len * con_fontWidth->integer) + x * con_fontWidth->integer - CONSOLE_CHAR_ALIGN, lines - (con_fontHeight->integer + CONSOLE_CHAR_ALIGN), version[x] | COLORED_TEXT_MASK);
+		R_DrawChar(viddef.width - (len * con_fontWidth) + x * con_fontWidth - CONSOLE_CHAR_ALIGN, lines - (con_fontHeight + CONSOLE_CHAR_ALIGN), version[x] | COLORED_TEXT_MASK);
 
 	/* draw the text */
 	con.vislines = lines;
 
-	rows = (lines - con_fontHeight->integer * 2) >> con_fontShift->integer;	/* rows of text to draw */
+	rows = (lines - con_fontHeight * 2) >> con_fontShift;	/* rows of text to draw */
 
-	y = lines - con_fontHeight->integer * 3;
+	y = lines - con_fontHeight * 3;
 
 	/* draw from the bottom up */
 	if (con.display != con.current) {
 		/* draw arrows to show the buffer is backscrolled */
 		for (x = 0; x < con.linewidth; x += 4)
-			R_DrawChar((x + 1) << con_fontShift->integer, y, '^');
+			R_DrawChar((x + 1) << con_fontShift, y, '^');
 
-		y -= con_fontHeight->integer;
+		y -= con_fontHeight;
 		rows--;
 	}
 
 	row = con.display;
-	for (i = 0; i < rows; i++, y -= con_fontHeight->integer, row--) {
+	for (i = 0; i < rows; i++, y -= con_fontHeight, row--) {
 		if (row < 0)
 			break;
 		if (con.current - row >= con.totallines)
@@ -625,7 +626,7 @@ void Con_DrawConsole (float frac)
 		text = con.text + (row % con.totallines) * con.linewidth;
 
 		for (x = 0; x < con.linewidth; x++)
-			R_DrawChar((x + 1) << con_fontShift->integer, y, text[x]);
+			R_DrawChar((x + 1) << con_fontShift, y, text[x]);
 	}
 
 	/* draw the input prompt, user text, and cursor if desired */

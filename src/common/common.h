@@ -267,10 +267,10 @@ extern cvar_t *gametype;
 extern cvar_t *masterserver_url;
 extern cvar_t *port;
 
-extern cvar_t *con_fontHeight;
+extern int con_fontHeight;
+extern int con_fontWidth;
+extern int con_fontShift;
 extern cvar_t *con_font;
-extern cvar_t *con_fontWidth;
-extern cvar_t *con_fontShift;
 
 /* host_speeds times */
 extern int time_before_game;

@@ -196,7 +196,7 @@ void R_DrawChar (int x, int y, int num)
 	if ((num & 127) == ' ')		/* space */
 		return;
 
-	if (y <= -con_fontHeight->integer)
+	if (y <= -con_fontHeight)
 		return;					/* totally off screen */
 
 	if (char_index >= MAX_CHARS * 8)
@@ -223,12 +223,12 @@ void R_DrawChar (int x, int y, int num)
 
 	char_verts[char_index + 0] = x;
 	char_verts[char_index + 1] = y;
-	char_verts[char_index + 2] = x + con_fontWidth->integer;
+	char_verts[char_index + 2] = x + con_fontWidth;
 	char_verts[char_index + 3] = y;
-	char_verts[char_index + 4] = x + con_fontWidth->integer;
-	char_verts[char_index + 5] = y + con_fontHeight->integer;
+	char_verts[char_index + 4] = x + con_fontWidth;
+	char_verts[char_index + 5] = y + con_fontHeight;
 	char_verts[char_index + 6] = x;
-	char_verts[char_index + 7] = y + con_fontHeight->integer;
+	char_verts[char_index + 7] = y + con_fontHeight;
 
 	char_index += 8;
 }

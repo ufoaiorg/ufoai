@@ -424,7 +424,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 	if (bitmapFont) {
 		while (*string) {
 			R_DrawChar(x, y, *string);
-			x += con_fontWidth->integer;
+			x += con_fontWidth;
 			string++;
 		}
 	} else
@@ -477,9 +477,9 @@ void SCR_UpdateScreen (void)
 		SCR_DrawConsole();
 
 		if (cl_fps->integer)
-			SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
+			SCR_DrawString(viddef.width - con_fontWidth * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
 		if (cls.state == ca_active && scr_rspeed->integer)
-			SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", c_brush_polys, c_alias_polys), qtrue);
+			SCR_DrawString(viddef.width - con_fontWidth * 30, 20, va("brushes: %6i alias: %6i\n", c_brush_polys, c_alias_polys), qtrue);
 
 		if (cls.state != ca_sequence)
 			SCR_DrawCursor();
