@@ -3,5 +3,6 @@
 	{
 		texture tex_nature/desert001
 		terrain 0 64
+		lightmap
 	}
 }

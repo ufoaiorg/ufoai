@@ -3,8 +3,6 @@
 	{
 		texture tex_nature/grass001
 		terrain 0 32
-	}
-	{
 		lightmap
 	}
 }
