@@ -2925,8 +2925,7 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_ITEM:
-					color[0] = color[1] = color[2] = 0.5;
-					color[3] = 1;
+					Vector4Copy(color_white, color);
 
 					if (node->mousefx == C_UNDEFINED)
 						MN_FindContainer(node);
