@@ -237,6 +237,8 @@ void R_DrawChars (void)
 {
 	R_BindTexture(draw_chars[con_font->integer]->texnum);
 
+	R_EnableBlend(qtrue);
+
 	/* alter the array pointers */
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, char_texcoords);
 	R_BindArray(GL_VERTEX_ARRAY, GL_SHORT, char_verts);
@@ -244,6 +246,8 @@ void R_DrawChars (void)
 	qglDrawArrays(GL_QUADS, 0, char_index / 2);
 
 	char_index = 0;
+
+	R_EnableBlend(qfalse);
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
