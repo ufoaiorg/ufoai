@@ -33,20 +33,18 @@ mBspSurfaces_t r_alpha_surfaces;
 mBspSurfaces_t r_alpha_warp_surfaces;
 
 /**
- * @brief this is the r_numMapTiles index of the loaded bsp
+ * @brief this is the currently handled bsp model
  * @note Remember that we can have loaded more than one bsp at the same time
  */
-static int bufferMapTile = -1;
+static const model_t* bufferMapTile = NULL;
 
-static void R_SetVertexArrayState (const mBspSurface_t *surf)
+/**
+ * @sa R_SetVertexBufferState
+ * @param[in] mod The loaded maptile (more than one bsp loaded at the same time)
+ * @note r_vertexbuffers must be set to 1 to use this
+ */
+static inline void R_SetVertexArrayState (const model_t* mod)
 {
-	model_t* mod;
-
-	if (bufferMapTile == surf->tile)
-		return;
-
-	mod = r_mapTiles[surf->tile];
-
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.verts);
 
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoords);
@@ -61,15 +59,12 @@ static void R_SetVertexArrayState (const mBspSurface_t *surf)
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
 }
 
-static void R_SetVertexBufferState (const mBspSurface_t *surf)
+/**
+ * @sa R_SetVertexArrayState
+ * @param[in] mod The loaded maptile (more than one bsp loaded at the same time)
+ */
+static inline void R_SetVertexBufferState (const model_t* mod)
 {
-	model_t *mod;
-
-	if (bufferMapTile == surf->tile)
-		return;
-
-	mod = r_mapTiles[surf->tile];
-
 	R_BindBuffer(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.vertex_buffer);
 
 	R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoord_buffer);
@@ -101,7 +96,7 @@ static void R_ResetVertexArrayState (void)
 	if (r_state.lighting_enabled)
 		R_BindDefaultArray(GL_NORMAL_ARRAY);
 
-	bufferMapTile = -1;
+	bufferMapTile = NULL;
 }
 
 /**
@@ -110,6 +105,8 @@ static void R_ResetVertexArrayState (void)
  */
 static void R_SetSurfaceState (const mBspSurface_t *surf)
 {
+	const model_t* mod = r_mapTiles[surf->tile];
+
 	if (r_state.blend_enabled) {  /* alpha blend */
 		float a;
 		switch (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
@@ -133,10 +130,14 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_EnableAlphaTest(qfalse);
 	}
 
-	if (r_vertexbuffers->integer)
-		R_SetVertexBufferState(surf);
-	else
-		R_SetVertexArrayState(surf);
+	if (bufferMapTile != mod) {
+		bufferMapTile = mod;
+
+		if (r_vertexbuffers->integer)
+			R_SetVertexBufferState(mod);
+		else
+			R_SetVertexArrayState(mod);
+	}
 
 	R_BindTexture(surf->texinfo->image->texnum);  /* texture */
 
