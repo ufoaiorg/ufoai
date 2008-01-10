@@ -464,7 +464,7 @@ static void R_LoadBspVertexArrays (void)
 {
 	int i, j, index;
 	int vertind, coordind;
-	float *vec, s, t;
+	float *vec, *vecShifted, s, t;
 	mBspEdge_t *edge;
 	mBspSurface_t *surf;
 
@@ -486,7 +486,9 @@ static void R_LoadBspVertexArrays (void)
 				vec = loadmodel->bsp.vertexes[edge->v[1]].position;
 			}
 
-			memcpy(&r_state.vertex_array_3d[vertind], vec, sizeof(vec3_t));
+			/* shift it for assembled maps */
+			vecShifted = &r_state.vertex_array_3d[vertind];
+			VectorAdd(vec, shift, vecShifted);
 
 			/* texture coordinates */
 			s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
@@ -621,7 +623,6 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
 	Com_DPrintf(DEBUG_RENDERER, "...load surfaces\n");
 	R_ModLoadSurfaces(&header->lumps[LUMP_FACES]);
-	R_ModShiftTile();
 	Com_DPrintf(DEBUG_RENDERER, "...load leafs\n");
 	R_ModLoadLeafs(&header->lumps[LUMP_LEAFS]);
 	Com_DPrintf(DEBUG_RENDERER, "...load nodes\n");
@@ -657,6 +658,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	}
 
 	R_LoadBspVertexArrays();
+	R_ModShiftTile();
 
 	FS_FreeFile(buffer);
 }

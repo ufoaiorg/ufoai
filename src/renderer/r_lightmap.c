@@ -260,7 +260,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 }
 
 /**
- * @sa R_ModLoadFaces
+ * @sa R_ModLoadSurfaces
  */
 void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 {
