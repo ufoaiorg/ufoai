@@ -441,7 +441,15 @@ static void R_ModLoadPlanes (lump_t * l)
 	}
 }
 
-
+/**
+ * @brief Shift the verts for map assemblies
+ * @note This is needed because you want to place a bsp file to a given
+ * position on the grid - see R_ModAddMapTile for the shift vector calculation
+ * This vector differs for every map - and depends on the grid position the bsp
+ * map tile is placed in the world
+ * @note Call this after the buffers were generated in R_LoadBspVertexArrays
+ * @sa R_LoadBspVertexArrays
+ */
 static void R_ModShiftTile (void)
 {
 	mBspVertex_t *vert;
@@ -460,6 +468,14 @@ static void R_ModShiftTile (void)
 			plane->dist += plane->normal[j] * shift[j];
 }
 
+/**
+ * @brief Puts the map data into buffers
+ * @sa R_ModAddMapTile
+ * @note Shift the verts after the texcoords for diffuse and lightmap are loaded
+ * @sa R_ModShiftTile
+ * @todo Don't use the buffers from r_state here - they might overflow
+ * @todo Decrease MAX_GL_ARRAY_LENGTH to 32768 again when this is fixed
+ */
 static void R_LoadBspVertexArrays (void)
 {
 	int i, j, index;
