@@ -436,7 +436,7 @@ static void R_Register (void)
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
-	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "1", CVAR_ARCHIVE, "Use vertex buffers for better performance");
+	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE, "Use vertex buffers for better performance");
 
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);
