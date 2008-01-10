@@ -1316,9 +1316,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		MN_MenuTextReset(TEXT_XVI);
 }
 
-/** @brief geobackground image for 3d globe */
-static menuNode_t* geobackground = NULL;
-
 /**
  * @brief Draw the geoscape
  * @param[in] node The map menu node
@@ -1336,10 +1333,6 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {
-		if (!geobackground)
-			geobackground = MN_GetNodeFromCurrentMenu("geobackground");
-		Vector2Set(geobackground->texl, 511 - 512 / ccs.zoom, 387 - 384 / ccs.zoom);
-		Vector2Set(geobackground->texh, 512 + 512 / ccs.zoom, 387 + 384 / ccs.zoom);
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 24))) * 2 * M_PI / 365;

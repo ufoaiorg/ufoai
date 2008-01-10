@@ -777,7 +777,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float a;
 
-	image_t* geoscape;
+	image_t* geoscape, *starfield, *background;
 	float nx, ny, nw, nh;
 
 	/* normalize */
@@ -785,6 +785,21 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	ny = y * viddef.ry;
 	nw = w * viddef.rx;
 	nh = h * viddef.ry;
+
+	starfield = R_FindImage(va("pics/menu/%s_stars", map), it_pic);
+	if (geoscape != r_notexture) {
+		R_DrawTexture(starfield->texnum, nx, ny, nw, nh);
+	}
+
+	background = R_FindImage("pics/menu/map_background", it_pic);
+	if (background != r_notexture) {
+		const float bgZoom = zoom * 10.0f;
+		/* Force height to make sure the image is a circle (and not an ellipse) */
+		const int halfHeight = 768.0f * viddef.ry;
+		qglEnable(GL_BLEND);
+		R_DrawTexture(background->texnum,  nx + nw / 2 * (1 - bgZoom), ny + nh / 2 - halfHeight / 2 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
+		qglDisable(GL_BLEND);
+	}
 
 	/* load day image */
 	geoscape = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
@@ -807,7 +822,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglPushMatrix();
 
 	/* center it */
-	qglTranslatef((nx + nw) / 2, (ny + nh) / 2, 0);
+	qglTranslatef(nx + nw / 2, ny + nh / 2, 0);
 	R_CheckError();
 
 	/* flatten the sphere */
