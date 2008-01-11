@@ -167,12 +167,9 @@ static void R_DrawEntityEffects (void)
 					Vector4Set(color, 0, 1, 0, 1);
 				else
 					Vector4Set(color, 0, 1, 0, 0.3);
-			} else if (e->flags & RF_ALLIED) {
-				if (e->flags & RF_SELECTED)
-					Vector4Set(color, 0, 0.5, 1, 1);
-				else
-					Vector4Set(color, 0, 0.5, 1, 0.3);
-			} else
+			} else if (e->flags & RF_ALLIED)
+				Vector4Set(color, 0, 0.5, 1, 0.3);
+			else
 				Vector4Set(color, 0, 1, 0, 1);
 
 			R_Color(color);
