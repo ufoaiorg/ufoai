@@ -65,6 +65,11 @@ extern vec3_t vup;
 extern vec3_t vpn;
 extern vec3_t vright;
 
+extern cvar_t *r_brightness;
+extern cvar_t *r_contrast;
+extern cvar_t *r_invert;
+extern cvar_t *r_monochrome;
+
 extern cvar_t *r_drawworld;
 extern cvar_t *r_drawentities;
 extern cvar_t *r_nocull;

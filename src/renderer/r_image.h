@@ -42,8 +42,8 @@ pic
 
 typedef enum {
 	it_skin,
-	it_sprite,
-	it_wall,
+	it_world,
+	it_lightmap,
 	it_material,
 	it_pic,
 	it_wrappic,
@@ -82,6 +82,7 @@ void R_FreeUnusedImages(void);
 void R_ImageClearMaterials(void);
 void R_UpdateTextures(int min, int max);
 void R_CalcDayAndNight(float q);
+void R_FilterTexture(unsigned *in, int width, int height, vec3_t color, imagetype_t type);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG

@@ -220,6 +220,9 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 		}
 	}
 
+	/* apply contrast, resolve average surface color, etc.. */
+	R_FilterTexture((unsigned *)lightmap, smax, tmax, surf->color, it_lightmap);
+
 	/* soften it if it's sufficiently large */
 	if (r_soften->integer && size > 1024)
 		for (i = 0; i < 4; i++)

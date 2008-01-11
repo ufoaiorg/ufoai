@@ -175,7 +175,7 @@ static void R_ModLoadTexinfo (lump_t * l)
 		else
 			Com_sprintf(name, sizeof(name), "textures/%s", in->texture);
 
-		out->image = R_FindImage(name, it_wall);
+		out->image = R_FindImage(name, it_world);
 	}
 }
 

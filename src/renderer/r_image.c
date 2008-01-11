@@ -126,10 +126,7 @@ void R_ImageList_f (void)
 		case it_skin:
 			Com_Printf("M");
 			break;
-		case it_sprite:
-			Com_Printf("S");
-			break;
-		case it_wall:
+		case it_world:
 			Com_Printf("W");
 			break;
 		case it_pic:
@@ -889,6 +886,91 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
 }
 
 /**
+ * @brief Applies brightness and contrast to the specified image while optionally computing
+ * the image's average color. Also handles image inversion and monochrome. This is
+ * all munged into one function to reduce loops on level load.
+ */
+void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagetype_t type)
+{
+	int i, j, c, mask;
+	unsigned col[3];
+	byte *p;
+	float f;
+
+	p = (byte *)in;
+	c = width * height;
+
+	mask = 0;  /* monochrome/invert */
+
+	if (type == it_world || type == it_material)
+		mask = 1;
+	else if (type == it_lightmap)
+		mask = 2;
+
+	if (color)  /* compute average color */
+		VectorSet(col, 0, 0, 0);
+
+	for (i = 0; i < c; i++, p+= 4) {
+		for (j = 0; j < 3; j++) {
+			/* first brightness */
+			f = p[j] / 255.0;  /* as float */
+
+			if(type != it_lightmap)  /* scale */
+				f *= r_brightness->value;
+
+			if (f > 1.0)  /* clamp */
+				f = 1.0;
+			else if (f < 0)
+				f = 0;
+
+			/* then contrast */
+			f -= 0.5;  /* normalize to -0.5 through 0.5 */
+
+			f *= r_contrast->value;  /* scale */
+
+			f += 0.5;
+			f *= 255;  /* back to byte */
+
+			if (f > 255)  /* clamp */
+				f = 255;
+			else if (f < 0)
+				f = 0;
+
+			p[j] = (byte)f;
+
+			if (color)  /* accumulate color */
+				col[j] += p[j];
+		}
+
+		if ((int)r_monochrome->value & mask)  /* monochrome */
+			p[0] = p[1] = p[2] = (p[0] + p[1] + p[2]) / 3;
+
+		if ((int)r_invert->value & mask) {  /* inverted */
+			p[0] = 255 - p[0];
+			p[1] = 255 - p[1];
+			p[2] = 255 - p[2];
+		}
+	}
+
+	if (color) {  /* average accumulated colors */
+		for (i = 0; i < 3; i++)
+			col[i] /= (width * height);
+
+		if ((int)r_monochrome->value & mask)
+			col[0] = col[1] = col[2] = (col[0] + col[1] + col[2]) / 3;
+
+		if ((int)r_invert->value & mask){
+			col[0] = 255 - col[0];
+			col[1] = 255 - col[1];
+			col[2] = 255 - col[2];
+		}
+
+		for (i = 0; i < 3; i++)
+			color[i] = col[i] / 255.0;
+	}
+}
+
+/**
  * @brief Uploads the opengl texture to the server
  */
 static void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
@@ -920,6 +1002,10 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 		scaled = (unsigned *)VID_TagAlloc(vid_imagePool, scaled_width * scaled_height * sizeof(unsigned), 0);
 		R_ScaleTexture(data, width, height, scaled, scaled_width, scaled_height);
 	}
+
+	/* and filter */
+	if (image->type == it_world || image->type == it_material || image->type == it_skin)
+		R_FilterTexture(scaled, scaled_width, scaled_height, NULL, image->type);
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;

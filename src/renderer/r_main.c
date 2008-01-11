@@ -48,6 +48,11 @@ float r_world_matrix[16];
 float r_base_world_matrix[16];
 
 static cvar_t *r_speeds;
+
+cvar_t *r_brightness;
+cvar_t *r_contrast;
+cvar_t *r_invert;
+cvar_t *r_monochrome;
 cvar_t *r_drawentities;
 cvar_t *r_drawworld;
 cvar_t *r_nocull;
@@ -402,6 +407,11 @@ static void R_Register (void)
 {
 	const cmdList_t *commands;
 
+	r_brightness = Cvar_Get("r_brightness", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Brightness for images");
+	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Contrast for images");
+	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Monochrome world");
+	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Invert images");
+
 	r_drawentities = Cvar_Get("r_drawentities", "1", 0, NULL);
 	r_drawworld = Cvar_Get("r_drawworld", "1", 0, NULL);
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
@@ -419,7 +429,7 @@ static void R_Register (void)
 	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
 	r_light = Cvar_Get("r_light", "0", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
-	r_modulate = Cvar_Get("r_modulate", "3.0", CVAR_ARCHIVE, "Scale lightmap values");
+	r_modulate = Cvar_Get("r_modulate", "1.8", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");

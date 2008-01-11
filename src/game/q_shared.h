@@ -348,6 +348,7 @@ CVARS (console variables)
 #define CVAR_LATCH      16      /**< save changes until server restart */
 #define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
 #define CVAR_CHEAT      64      /**< clamp to the default value when cheats are off */
+#define CVAR_IMAGES     128     /**< effects image filtering */
 
 /**
  * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.

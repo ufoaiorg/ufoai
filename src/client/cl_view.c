@@ -84,8 +84,9 @@ static void CL_ParseEntitystring (const char *es)
 	if (map_maxlevel_base >= 1)
 		map_maxlevel = maxlevel = map_maxlevel_base;
 
-	assert(numLMs == 0);
-	assert(numMPs == 0);
+	/* vid restart? */
+	if (numMPs || numLMs)
+		return;
 
 	/* parse ents */
 	while (1) {

@@ -771,6 +771,10 @@ static void Cvar_List_f (void)
 			Com_Printf("D");
 		else
 			Com_Printf(" ");
+		if (var->flags & CVAR_IMAGES)
+			Com_Printf("I");
+		else
+			Com_Printf(" ");
 		if (var->flags & CVAR_NOSET)
 			Com_Printf("-");
 		else if (var->flags & CVAR_LATCH)
@@ -779,7 +783,7 @@ static void Cvar_List_f (void)
 			Com_Printf(" ");
 		Com_Printf(" %-20s \"%s\"\n", var->name, var->string);
 		if (var->description)
-			Com_Printf("%c       %s\n", 2, var->description);
+			Com_Printf("%c        %s\n", 2, var->description);
 	}
 	Com_Printf("%i cvars\n", i);
 	Com_Printf("legend:\n"
@@ -787,6 +791,7 @@ static void Cvar_List_f (void)
 		"L: Latched\n"
 		"D: Developer\n"
 		"U: Userinfo\n"
+		"I: Image\n"
 		"*: Archive\n"
 		"-: Not changeable\n"
 	);

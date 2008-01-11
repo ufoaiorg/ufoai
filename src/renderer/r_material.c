@@ -627,7 +627,7 @@ void R_LoadMaterials (const char *map)
 
 		if (!strcmp(c, "material")) {
 			c = COM_Parse(&buffer);
-			image = R_FindImage(va("textures/%s", c), it_wall);
+			image = R_FindImage(va("textures/%s", c), it_world);
 
 			if (image == r_notexture){
 				Com_Printf("R_LoadMaterials: Failed to resolve texture: %s\n", c);
