@@ -313,8 +313,7 @@ static void SH_UseProgram_ARB_VP (int vpid)
  */
 void SH_UseShader (shader_t * shader, qboolean activate)
 {
-	/* no shaders supported - @todo glsl */
-	if (!r_shader->integer || !r_state.arb_fragment_program || !shader)
+	if (!r_state.arb_fragment_program || !shader)
 		return;
 
 	assert(shader);
@@ -349,7 +348,7 @@ void SH_UseShader (shader_t * shader, qboolean activate)
  */
 void R_ShaderFragmentParameter (GLuint index, GLfloat *p)
 {
-	if (!r_shader->integer || !r_state.arb_fragment_program)
+	if (!r_state.arb_fragment_program)
 		return;
 
 	qglProgramLocalParameter4fvARB(GL_FRAGMENT_PROGRAM_ARB, index, p);

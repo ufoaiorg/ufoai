@@ -60,7 +60,6 @@ cvar_t *r_isometric;
 cvar_t *r_lerpmodels;
 cvar_t *r_anisotropic;
 cvar_t *r_texture_lod;			/* lod_bias */
-cvar_t *r_shader;
 cvar_t *r_screenshot;
 cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
@@ -422,7 +421,6 @@ static void R_Register (void)
 	r_bitdepth = Cvar_Get("r_bitdepth", "24", CVAR_ARCHIVE, "16 or 24 - bitdepth of the display");
 	r_stencilsize = Cvar_Get("r_stencilsize", "1", CVAR_ARCHIVE, NULL);
 	r_colordepth = Cvar_Get("r_colordepth", "8", CVAR_ARCHIVE, "8 for 24 bit display depth - 4 for 16 bit");
-	r_shader = Cvar_Get("r_shader", "1", CVAR_ARCHIVE, "Activates or deactivates shaders");
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
@@ -433,7 +431,7 @@ static void R_Register (void)
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
-	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
+	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, "The maximum texture resolution UFO should use");
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
@@ -442,7 +440,7 @@ static void R_Register (void)
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
-	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
+	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
 	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE, "Use vertex buffers for better performance");
 

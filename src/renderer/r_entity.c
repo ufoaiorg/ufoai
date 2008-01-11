@@ -125,7 +125,7 @@ static void R_DrawEntityEffects (void)
 	for (i = 0; i < r_numEntities; i++) {
 		e = &r_entities[i];
 
-		if (!e->flags)
+		if (e->flags <= RF_BOX)
 			continue;
 
 		qglPushMatrix();
@@ -436,12 +436,10 @@ void R_DrawEntities (void)
 		R_CalcTransform(e);
 
 		if (!e->model) {
-			if (e->flags != RF_BOX)
-				chain = &r_null_entities;
-			else if (e->flags & RF_BOX)
+			if (e->flags & RF_BOX)
 				chain = &r_alpha_mesh_entities;
 			else
-				continue;
+				chain = &r_null_entities;
 		} else {
 			switch (e->model->type) {
 			case mod_brush:

@@ -74,7 +74,6 @@ extern cvar_t *r_drawworld;
 extern cvar_t *r_drawentities;
 extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;
-extern cvar_t *r_shader;
 extern cvar_t *r_anisotropic;
 extern cvar_t *r_texture_lod;   /* lod_bias */
 extern cvar_t *r_bitdepth;

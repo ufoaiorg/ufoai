@@ -456,9 +456,10 @@ typedef struct {
 #define torad (M_PI/180.0f)
 #define todeg (180.0f/M_PI)
 
-/* entity->flags (render flags) */
+/** entity->flags (render flags) */
 #define RF_TRANSLUCENT      0x00000001
 #define RF_BOX              0x00000002	/**< actor selection box */
+/** the following ent flags also draw entity effects */
 #define RF_SHADOW           0x00000004	/**< shadow (when living) for this entity */
 #define RF_BLOOD            0x00000008	/**< blood (when dead) for this entity */
 #define RF_SELECTED         0x00000010	/**< selected actor */
