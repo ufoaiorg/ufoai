@@ -324,7 +324,8 @@ lightmap_sample_t r_lightmap_sample;
 static qboolean R_LightPoint_ (model_t *mapTile, mBspNode_t *node, vec3_t start, vec3_t end)
 {
 	float front, back;
-	int i, side, s, t, ds, dt, sample;
+	int i, side, sample;
+	float s, t, ds, dt;
 	vec3_t mid;
 	mBspSurface_t *surf;
 	mBspTexInfo_t *tex;
@@ -382,9 +383,6 @@ begin:
 		if (surf->texinfo->flags & SURF_ALPHATEST)
 			continue;
 
-		if (!surf->lightmap)
-			return qfalse;
-
 		tex = surf->texinfo;
 
 		s = DotProduct(mid, tex->vecs[0]) + tex->vecs[0][3];
@@ -402,8 +400,8 @@ begin:
 		ds /= (1 << surf->lquant);
 		dt /= (1 << surf->lquant);
 
-		/* resolve the actual sample at intersection */
-		sample = (int)(3 * (dt * ((surf->stmaxs[0] / (1 << surf->lquant)) + 1) + ds));
+		/* resolve the lightmap sample at intersection */
+		sample = (int)(3 * ((int)dt * ((surf->stmaxs[0] / (1 << surf->lquant)) + 1) + (int)ds));
 
 		/* and normalize it to floating point */
 		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,
@@ -424,7 +422,7 @@ void R_LightPoint (vec3_t p)
 	lightmap_sample_t lms;
 	entity_t *ent;
 	model_t *m;
-	vec3_t end;
+	vec3_t start, end, dest;
 	float dist, d;
 	int i, j;
 
@@ -437,16 +435,20 @@ void R_LightPoint (vec3_t p)
 	VectorSet(r_lightmap_sample.color, 0.5, 0.5, 0.5);
 	lms = r_lightmap_sample;
 
-	VectorCopy(p, end);
-	end[2] -= 256;
+	/* dest is the absolute lowest we'll trace to */
+	VectorCopy(p, dest);
+	dest[2] -= 256;
 
 	dist = 999999;
 
+	VectorCopy(p, start);	/* while start and end are transformed according */
+	VectorCopy(dest, end);	/* to the entity being traced */
+
 	for (j = 0; j < r_numMapTiles; j++) {
 		/* check world */
-		if (R_LightPoint_(r_mapTiles[j], r_mapTiles[j]->bsp.nodes, p, end)) {
+		if (R_LightPoint_(r_mapTiles[j], r_mapTiles[j]->bsp.nodes, start, end)) {
 			lms = r_lightmap_sample;
-			dist = p[2] - r_lightmap_sample.point[2];
+			dist = start[2] - r_lightmap_sample.point[2];
 		}
 
 		/* check bsp models */
@@ -457,12 +459,17 @@ void R_LightPoint (vec3_t p)
 			if (!m || m->type != mod_brush)
 				continue;
 
-			if (!R_LightPoint_(r_mapTiles[j], &r_mapTiles[j]->bsp.nodes[m->bsp.firstnode], p, end))
+			VectorSubtract(p, ent->origin, start);
+			VectorSubtract(dest, ent->origin, end);
+
+			if (!R_LightPoint_(r_mapTiles[j], &r_mapTiles[j]->bsp.nodes[m->bsp.firstnode], start, end))
 				continue;
 
-			if ((d = p[2] - r_lightmap_sample.point[2]) < dist) {
+			if ((d = start[2] - r_lightmap_sample.point[2]) < dist) {  /* hit */
 				lms = r_lightmap_sample;
 				dist = d;
+
+				VectorAdd(lms.point, ent->origin, lms.point);
 			}
 		}
 	}
