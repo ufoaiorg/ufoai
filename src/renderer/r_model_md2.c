@@ -40,10 +40,8 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 	int i, j, size;
 	float *inmat, *outmat;
 	int read;
-	mdl_md2_t *md2;
 
 	pintag = (dtag_t *) buffer;
-	md2 = (mdl_md2_t *) mod->alias.extraData;
 
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
@@ -74,9 +72,9 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 		Sys_Error("R_ModLoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i\n",
 			mod->alias.tagname, bufSize, pheader->ofs_end);
 
-	if (pheader->num_frames != md2->num_frames)
+	if (pheader->num_frames != mod->alias.num_frames)
 		Com_Printf("R_ModLoadTags: found %i frames in %s but model has %i frames\n",
-			pheader->num_frames, mod->alias.tagname, md2->num_frames);
+			pheader->num_frames, mod->alias.tagname, mod->alias.num_frames);
 
 	if (pheader->ofs_names != 32)
 		Sys_Error("R_ModLoadTags: invalid ofs_name for tagfile %s\n", mod->alias.tagname);
@@ -103,7 +101,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 	read = (byte *)outmat - (byte *)pheader;
 	if (read != size)
 		Sys_Error("R_ModLoadTags: read: %i expected: %i - tags: %i, frames: %i (should be %i)",
-			read, size, pheader->num_tags, pheader->num_frames, md2->num_frames);
+			read, size, pheader->num_tags, pheader->num_frames, mod->alias.num_frames);
 }
 
 /**
@@ -114,12 +112,10 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	int i, j;
 	size_t l;
 	mdl_md2_t *md2, *pheader;
-	dstvert_t *pinst, *poutst;
 	dtriangle_t *pintri, *pouttri;
 	dAliasFrame_t *pinframe, *poutframe;
 	int *pincmd, *poutcmd;
 	int version, size;
-
 	byte *tagbuf = NULL, *animbuf = NULL;
 
 	md2 = (mdl_md2_t *) buffer;
@@ -163,15 +159,6 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 
 	mod->alias.num_frames = pheader->num_frames;
 	mod->alias.num_skins = pheader->num_skins;
-
-	/* load base s and t vertices (not used in gl version) */
-	pinst = (dstvert_t *) ((byte *) md2 + pheader->ofs_st);
-	poutst = (dstvert_t *) ((byte *) pheader + pheader->ofs_st);
-
-	for (i = 0; i < pheader->num_st; i++) {
-		poutst[i].s = LittleShort(pinst[i].s);
-		poutst[i].t = LittleShort(pinst[i].t);
-	}
 
 	/* load triangle lists */
 	pintri = (dtriangle_t *) ((byte *) md2 + pheader->ofs_tris);
