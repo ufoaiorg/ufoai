@@ -217,8 +217,6 @@ void R_EnableLighting (qboolean enable)
 		qglEnableClientState(GL_NORMAL_ARRAY);
 		SH_UseShader(activeLightShader, qtrue);
 	} else {
-		int i;
-
 		assert(activeLightShader);
 		qglDisable(GL_LIGHTING);
 
@@ -374,8 +372,6 @@ void R_SetupGL2D (void)
 	R_Color(NULL);
 
 	qglDisable(GL_DEPTH_TEST);
-
-	r_state.ortho = qtrue;
 
 	R_CheckError();
 }
