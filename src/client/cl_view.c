@@ -61,8 +61,10 @@ entity_t *V_GetEntity (void)
  */
 void V_AddEntity (entity_t * ent)
 {
-	if (r_numEntities >= MAX_ENTITIES)
+	if (r_numEntities >= MAX_ENTITIES) {
+		Com_Printf("V_AddEntity: MAX_ENTITIES exceeded\n");
 		return;
+	}
 
 	r_entities[r_numEntities++] = *ent;
 }
@@ -396,7 +398,10 @@ void V_RenderView (void)
 		CL_Sequence2D();
 }
 
-
+/**
+ * @brief Centers the camera on a given grid field
+ * @sa CL_CameraMove
+ */
 void V_CenterView (pos3_t pos)
 {
 	vec3_t vec;
