@@ -221,8 +221,6 @@ void R_EnableLighting (qboolean enable)
 
 		assert(activeLightShader);
 		qglDisable(GL_LIGHTING);
-		for (i = 0; i < MAX_GL_LIGHTS; i++)
-			qglDisable(GL_LIGHT0 + i);
 
 		qglDisableClientState(GL_NORMAL_ARRAY);
 		SH_UseShader(activeLightShader, qfalse);
@@ -403,8 +401,6 @@ void R_SetDefaultState (void)
 	r_state.lightmap_texunit.texture = GL_TEXTURE1_ARB;
 
 	R_SelectTexture(&r_state.texture_texunit);
-
-	qglCullFace(GL_FRONT);
 
 	qglEnable(GL_TEXTURE_2D);
 	R_Color(NULL);

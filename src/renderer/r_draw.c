@@ -840,7 +840,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	R_CheckError();
 
 	qglEnable(GL_CULL_FACE);
-	qglCullFace(GL_BACK);
 
 	/* add the light */
 	a = cos(q) * SIN_ALPHA;
@@ -858,8 +857,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	R_CheckError();
 
 	qglDisable(GL_CULL_FACE);
-	/* revert the cullface mode */
-	qglCullFace(GL_FRONT);
 
 	/* disable 3d geoscape lighting */
 	qglDisable(GL_LIGHTING);
