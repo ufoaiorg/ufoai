@@ -207,8 +207,8 @@ void Con_CheckResize (void)
 			con_fontShift = 4;
 			con_font->modified = qfalse;
 		} else if (con_font->integer == 1) {
-			con_fontWidth = 8;
-			con_fontHeight = 8;
+			con_fontWidth = 10;
+			con_fontHeight = 12;
 			con_fontShift = 3;
 			con_font->modified = qfalse;
 		} else
