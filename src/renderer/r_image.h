@@ -99,7 +99,7 @@ extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *blood; /**< draw this when actor is dead */
 extern image_t *r_notexture;
 extern image_t *r_warptexture;
-extern image_t *DaN;
+extern image_t *r_dayandnighttexture;
 
 
 #endif

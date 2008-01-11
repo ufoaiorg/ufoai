@@ -1103,8 +1103,8 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 
 #define DAWN		0.03
 
-static byte DaNalpha[DAN_WIDTH * DAN_HEIGHT];
-image_t *DaN;
+static byte r_dayandnightalpha[DAN_WIDTH * DAN_HEIGHT];
+image_t *r_dayandnighttexture;
 
 /**
  * @brief Applies alpha values to the night overlay image for 2d geoscape
@@ -1120,16 +1120,16 @@ void R_CalcDayAndNight (float q)
 	byte *px;
 
 	/* get image */
-	if (!DaN) {
+	if (!r_dayandnighttexture) {
 		if (numgltextures >= MAX_GLTEXTURES)
 			Com_Error(ERR_DROP, "MAX_GLTEXTURES");
-		DaN = &gltextures[numgltextures++];
-		DaN->width = DAN_WIDTH;
-		DaN->height = DAN_HEIGHT;
-		DaN->type = it_pic;
-		DaN->texnum = TEXNUM_IMAGES + (DaN - gltextures);
+		r_dayandnighttexture = &gltextures[numgltextures++];
+		r_dayandnighttexture->width = DAN_WIDTH;
+		r_dayandnighttexture->height = DAN_HEIGHT;
+		r_dayandnighttexture->type = it_pic;
+		r_dayandnighttexture->texnum = TEXNUM_IMAGES + (r_dayandnighttexture - gltextures);
 	}
-	R_BindTexture(DaN->texnum);
+	R_BindTexture(r_dayandnighttexture->texnum);
 
 	/* init geometric data */
 	dphi = (float) 2 * M_PI / DAN_WIDTH;
@@ -1146,7 +1146,7 @@ void R_CalcDayAndNight (float q)
 	}
 
 	/* calculate */
-	px = DaNalpha;
+	px = r_dayandnightalpha;
 	for (y = 0; y < DAN_HEIGHT; y++) {
 		a = sin(M_PI / 2 * HIGH_LAT - y * da);
 		root = sqrt(1 - a * a);
@@ -1163,7 +1163,7 @@ void R_CalcDayAndNight (float q)
 	}
 
 	/* upload alpha map */
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, DaNalpha);
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightalpha);
 	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
 	R_CheckError();
@@ -1368,7 +1368,7 @@ void R_InitImages (void)
 	numgltextures = 0;
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
-	DaN = NULL;
+	r_dayandnighttexture = NULL;
 
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_static);

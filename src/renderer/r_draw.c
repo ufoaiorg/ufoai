@@ -550,14 +550,14 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	R_BindTexture(gl->texnum);
 
 	R_SelectTexture(&r_state.lightmap_texunit);
-	if (!DaN || lastQ != q) {
+	if (!r_dayandnighttexture || lastQ != q) {
 		R_CalcDayAndNight(q);
 		lastQ = q;
 	}
 
-	assert(DaN);
+	assert(r_dayandnighttexture);
 
-	R_BindTexture(DaN->texnum);
+	R_BindTexture(r_dayandnighttexture->texnum);
 	qglEnable(GL_TEXTURE_2D);
 
 	/* draw night image */
@@ -641,12 +641,8 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 }
 
 #define MAX_LINEVERTS 256
-/**
- * @brief 2 dimensional line strip
- * @sa R_DrawCircle
- * @sa R_DrawLineLoop
- */
-void R_DrawLineStrip (int points, int *verts)
+
+static void inline R_Draw2DArray (int points, int *verts, GLenum mode)
 {
 	int i;
 
@@ -663,9 +659,19 @@ void R_DrawLineStrip (int points, int *verts)
 	}
 
 	qglDisable(GL_TEXTURE_2D);
-	qglDrawArrays(GL_LINE_STRIP, 0, points);
+	qglDrawArrays(mode, 0, points);
 	qglEnable(GL_TEXTURE_2D);
 	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
+}
+
+/**
+ * @brief 2 dimensional line strip
+ * @sa R_DrawCircle
+ * @sa R_DrawLineLoop
+ */
+void R_DrawLineStrip (int points, int *verts)
+{
+	R_Draw2DArray(points, verts, GL_LINE_STRIP);
 }
 
 /**
@@ -674,25 +680,7 @@ void R_DrawLineStrip (int points, int *verts)
  */
 void R_DrawLineLoop (int points, int *verts)
 {
-	int i;
-
-	/* fit it on screen */
-	if (points > MAX_LINEVERTS * 2)
-		points = MAX_LINEVERTS * 2;
-
-	/* set vertex array pointer */
-	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
-
-	for (i = 0; i < points * 2; i += 2) {
-		r_state.vertex_array_2d[i] = verts[i] * viddef.rx;
-		r_state.vertex_array_2d[i + 1] = verts[i + 1] * viddef.ry;
-	}
-
-	/* init vertex array */
-	qglDisable(GL_TEXTURE_2D);
-	qglDrawArrays(GL_LINE_LOOP, 0, points);
-	qglEnable(GL_TEXTURE_2D);
-	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
+	R_Draw2DArray(points, verts, GL_LINE_LOOP);
 }
 
 
@@ -703,25 +691,7 @@ void R_DrawLineLoop (int points, int *verts)
  */
 void R_DrawPolygon (int points, int *verts)
 {
-	int i;
-
-	/* fit it on screen */
-	if (points > MAX_LINEVERTS * 2)
-		points = MAX_LINEVERTS * 2;
-
-	/* set vertex array pointer */
-	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
-
-	for (i = 0; i < points * 2; i += 2) {
-		r_state.vertex_array_2d[i] = verts[i] * viddef.rx;
-		r_state.vertex_array_2d[i + 1] = verts[i + 1] * viddef.ry;
-	}
-
-	/* init vertex array */
-	qglDisable(GL_TEXTURE_2D);
-	qglDrawArrays(GL_POLYGON, 0, points);
-	qglEnable(GL_TEXTURE_2D);
-	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
+	R_Draw2DArray(points, verts, GL_POLYGON);
 }
 
 #define MARKER_SIZE 60.0

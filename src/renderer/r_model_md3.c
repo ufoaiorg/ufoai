@@ -100,9 +100,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 			poutframe->translate[j] = LittleFloat(pinframe->translate[j]);
 		}
 
-		/* @todo:
 		poutframe->radius = LittleFloat(pinframe->radius);
-		*/
 		mod->radius = max(mod->radius, poutframe->radius);
 		AddPointToBounds(poutframe->mins, mod->mins, mod->maxs);
 		AddPointToBounds(poutframe->maxs, mod->mins, mod->maxs);
