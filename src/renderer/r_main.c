@@ -330,8 +330,6 @@ void R_RenderFrame (void)
 
 	R_DisableEffects();
 
-	R_DisableEffects();
-
 	R_EnableBlend(qtrue);
 
 	R_DrawMaterialSurfaces(&r_material_surfaces);

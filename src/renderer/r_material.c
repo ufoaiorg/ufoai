@@ -157,6 +157,10 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
 	}
 }
 
+/**
+ * @brief Set the correct states for the material stage
+ * @sa R_DrawMaterialSurfaces
+ */
 static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const materialStage_t *stage)
 {
 	vec4_t color;
@@ -178,12 +182,12 @@ static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const material
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	/* resolve the color, which may be explicit or implied */
-	VectorSet(color, 1.0, 1.0, 1.0);
-
 	if (stage->flags & STAGE_COLOR)
 		VectorCopy(stage->color, color);
-	else if(stage->flags & STAGE_ENVMAP)
+	else if (stage->flags & STAGE_ENVMAP)
 		VectorCopy(surf->color, color);
+	else
+		VectorSet(color, 1.0, 1.0, 1.0);
 
 	/* modulate the alpha value for animations */
 	if (stage->flags & STAGE_PULSE)
@@ -644,14 +648,6 @@ void R_LoadMaterials (const char *map)
 			if (R_ParseStage(s, &buffer) == -1) {
 				VID_MemFree(s);
 				continue;
-			}
-
-			/* load animation frame images */
-			if (s->flags & STAGE_ANIM) {
-				if (R_LoadAnimImages(s) == -1) {
-					VID_MemFree(s);
-					continue;
-				}
 			}
 
 			/* load animation frame images */
