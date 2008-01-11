@@ -425,7 +425,7 @@ static void R_Register (void)
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
 	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
-	r_light = Cvar_Get("r_light", "0", CVAR_ARCHIVE, "Activate harware lighting");
+	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_modulate = Cvar_Get("r_modulate", "1.8", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
