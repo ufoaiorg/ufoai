@@ -244,23 +244,26 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	/* resolve lighting for coloring and shadow position */
 	GLVectorTransform(e->transform.matrix, e->origin, tmp);
-	R_LightPoint(tmp);
 
 	qglPushMatrix();
 	qglMultMatrixf(e->transform.matrix);
 
-	VectorCopy(r_lightmap_sample.color, color);
-	color[3] = r_state.blend_enabled ? 0.25 : 1.0;
+	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
+		R_LightPoint(tmp);
 
-	/* IR goggles override color
-	 * FIXME RF_SHADOW is used here for actors - don't highlight misc_models */
-	if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_SHADOW)
-		color[1] = color[2] = 0.0;
+		VectorCopy(r_lightmap_sample.color, color);
+		color[3] = r_state.blend_enabled ? 0.25 : 1.0;
 
-	if (r_state.lighting_enabled)
-		R_ShaderFragmentParameter(0, color);
-	else
-		R_Color(color);
+		/* IR goggles override color
+		* FIXME RF_SHADOW is used here for actors - don't highlight misc_models */
+		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_SHADOW)
+			color[1] = color[2] = 0.0;
+
+		if (r_state.lighting_enabled)
+			R_ShaderFragmentParameter(0, color);
+		else
+			R_Color(color);
+	}
 
 	/* draw it */
 	R_BindTexture(skin->texnum);
