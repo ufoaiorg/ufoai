@@ -45,6 +45,7 @@ static void R_ModLoadLighting (lump_t * l)
 		loadmodel->bsp.lightdata = NULL;
 		return;
 	}
+
 	loadmodel->bsp.lightdata = VID_TagAlloc(vid_lightPool, l->filelen, 0);
 	loadmodel->bsp.lightquant = *(byte *) (mod_base + l->fileofs);
 	memcpy(loadmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
@@ -58,7 +59,7 @@ static void R_ModLoadVertexes (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadVertexes: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...verts: %i\n", count);
@@ -96,7 +97,7 @@ static void R_ModLoadSubmodels (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadSubmodels: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...submodels: %i\n", count);
@@ -126,7 +127,7 @@ static void R_ModLoadEdges (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadEdges: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, (count + 1) * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...edges: %i\n", count);
@@ -152,7 +153,7 @@ static void R_ModLoadTexinfo (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadTexinfo: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...texinfo: %i\n", count);
@@ -230,11 +231,11 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 
 	for (i = 0; i < 2; i++) {
 		/* tiny rounding hack, not sure if it works */
-		bmins[i] = floor(stmins[i] / (1 << surf->lquant));
-		bmaxs[i] = ceil(stmaxs[i] / (1 << surf->lquant));
+		bmins[i] = floor(stmins[i] / surf->lightmap_scale);
+		bmaxs[i] = ceil(stmaxs[i] / surf->lightmap_scale);
 
-		surf->stmins[i] = bmins[i] << surf->lquant;
-		surf->stmaxs[i] = (bmaxs[i] - bmins[i]) << surf->lquant;
+		surf->stmins[i] = bmins[i] * surf->lightmap_scale;
+		surf->stmaxs[i] = (bmaxs[i] - bmins[i]) * surf->lightmap_scale;
 	}
 }
 
@@ -248,7 +249,7 @@ static void R_ModLoadSurfaces (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadSurfaces: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...faces: %i\n", count);
@@ -278,7 +279,7 @@ static void R_ModLoadSurfaces (lump_t * l)
 			Sys_Error("R_ModLoadSurfaces: bad texinfo number");
 		out->texinfo = loadmodel->bsp.texinfo + ti;
 
-		out->lquant = loadmodel->bsp.lightquant;
+		out->lightmap_scale = (1 << loadmodel->bsp.lightquant);
 
 		/* and size, texcoords, etc */
 		R_SetSurfaceExtents(out, loadmodel);
@@ -319,7 +320,7 @@ static void R_ModLoadNodes (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadNodes: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...nodes: %i\n", count);
@@ -365,7 +366,7 @@ static void R_ModLoadLeafs (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadLeafs: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...leafs: %i\n", count);
@@ -391,7 +392,7 @@ static void R_ModLoadSurfedges (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadSurfedges: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadSurfedges: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	if (count < 1 || count >= MAX_MAP_SURFEDGES)
 		Sys_Error("R_ModLoadSurfedges: bad surfedges count in %s: %i", loadmodel->name, count);
@@ -419,7 +420,7 @@ static void R_ModLoadPlanes (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadPlanes: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = VID_TagAlloc(vid_modelPool, count * 2 * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...planes: %i\n", count);
@@ -522,15 +523,15 @@ static void R_LoadBspVertexArrays (void)
 			if (surf->flags & MSURF_LIGHTMAP) {  /* lightmap coordinates */
 				s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
 				s -= surf->stmins[0];
-				s += surf->light_s << surf->lquant;
-				s += 1 << (surf->lquant - 1);
-				s /= LIGHTMAP_BLOCK_WIDTH << surf->lquant;
+				s += surf->light_s * surf->lightmap_scale;
+				s += 1 * (surf->lightmap_scale / 2);
+				s /= LIGHTMAP_BLOCK_WIDTH * surf->lightmap_scale;
 
 				t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
 				t -= surf->stmins[1];
-				t += surf->light_t << surf->lquant;
-				t += 1 << (surf->lquant - 1);
-				t /= LIGHTMAP_BLOCK_HEIGHT << surf->lquant;
+				t += surf->light_t * surf->lightmap_scale;
+				t += 1 * (surf->lightmap_scale / 2);
+				t /= LIGHTMAP_BLOCK_HEIGHT * surf->lightmap_scale;
 			}
 
 			r_state.lmtexcoord_array[coordind + 0] = s;
@@ -589,10 +590,10 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 
 	/* get new model */
 	if ((r_numModels < 0) || (r_numModels >= MAX_MOD_KNOWN))
-		Sys_Error("R_ModAddMapTile: r_numModels >= MAX_MOD_KNOWN");
+		Com_Error(ERR_DROP, "R_ModAddMapTile: r_numModels >= MAX_MOD_KNOWN");
 
 	if ((r_numMapTiles < 0) || (r_numMapTiles >= MAX_MAPTILES))
-		Sys_Error("R_ModAddMapTile: Too many map tiles");
+		Com_Error(ERR_DROP, "R_ModAddMapTile: Too many map tiles");
 
 	/* alloc model and tile */
 	loadmodel = &r_models[r_numModels++];
@@ -603,7 +604,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	/* load the file */
 	FS_LoadFile(loadmodel->name, (byte **) &buffer);
 	if (!buffer)
-		Sys_Error("R_ModAddMapTile: %s not found", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModAddMapTile: %s not found", loadmodel->name);
 
 	/* init */
 	loadmodel->type = mod_brush;
@@ -615,7 +616,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	header = (dBspHeader_t *) buffer;
 	i = LittleLong(header->version);
 	if (i != BSPVERSION)
-		Sys_Error("R_ModAddMapTile: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
+		Com_Error(ERR_DROP, "R_ModAddMapTile: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
 
 	/* swap all the lumps */
 	mod_base = (byte *) header;
@@ -624,25 +625,15 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 		((int *) header)[i] = LittleLong(((int *) header)[i]);
 
 	/* load into heap */
-	Com_DPrintf(DEBUG_RENDERER, "...load vertexes\n");
 	R_ModLoadVertexes(&header->lumps[LUMP_VERTEXES]);
-	Com_DPrintf(DEBUG_RENDERER, "...load edges\n");
 	R_ModLoadEdges(&header->lumps[LUMP_EDGES]);
-	Com_DPrintf(DEBUG_RENDERER, "...load surfedges\n");
 	R_ModLoadSurfedges(&header->lumps[LUMP_SURFEDGES]);
-	Com_DPrintf(DEBUG_RENDERER, "...load lighting\n");
 	R_ModLoadLighting(&header->lumps[LUMP_LIGHTING]);
-	Com_DPrintf(DEBUG_RENDERER, "...load planes\n");
 	R_ModLoadPlanes(&header->lumps[LUMP_PLANES]);
-	Com_DPrintf(DEBUG_RENDERER, "...load texinfo\n");
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
-	Com_DPrintf(DEBUG_RENDERER, "...load surfaces\n");
 	R_ModLoadSurfaces(&header->lumps[LUMP_FACES]);
-	Com_DPrintf(DEBUG_RENDERER, "...load leafs\n");
 	R_ModLoadLeafs(&header->lumps[LUMP_LEAFS]);
-	Com_DPrintf(DEBUG_RENDERER, "...load nodes\n");
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);
-	Com_DPrintf(DEBUG_RENDERER, "...load submodels\n");
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
 
 	/* set up the submodels, the first 255 submodels
@@ -660,7 +651,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 		starmod->bsp.nummodelsurfaces = bm->numfaces;
 		starmod->bsp.firstnode = bm->headnode;
 		if (starmod->bsp.firstnode >= loadmodel->bsp.numnodes)
-			Sys_Error("R_ModAddMapTile: Inline model %i has bad firstnode", i);
+			Com_Error(ERR_DROP, "R_ModAddMapTile: Inline model %i has bad firstnode", i);
 
 		VectorCopy(bm->maxs, starmod->maxs);
 		VectorCopy(bm->mins, starmod->mins);

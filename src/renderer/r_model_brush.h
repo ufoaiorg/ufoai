@@ -76,7 +76,7 @@ typedef struct mBspSurface_s {
 	vec3_t normal;
 
 	int light_s, light_t;		/**< gl lightmap coordinates */
-	byte lquant;
+	int lightmap_scale;
 
 	GLuint index;
 

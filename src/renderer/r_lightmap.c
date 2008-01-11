@@ -111,8 +111,8 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
 {
 	int i, j, smax, tmax, size;
 
-	smax = (surf->stmaxs[0] / (1 << surf->lquant)) + 1;
-	tmax = (surf->stmaxs[1] / (1 << surf->lquant)) + 1;
+	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
+	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
 
 	size = smax * tmax;
 	stride -= (smax << 2);
@@ -144,14 +144,8 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 	float *bl;
 	int maps;
 
-	/* no rad processing - for map testing */
-	if (!surf->lquant) {
-		Com_Printf("R_BuildLightMap - no lightmap\n");
-		return;
-	}
-
-	smax = (surf->stmaxs[0] >> surf->lquant) + 1;
-	tmax = (surf->stmaxs[1] >> surf->lquant) + 1;
+	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
+	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
 	size = smax * tmax;
 	if (size * LIGHTMAP_BYTES > (sizeof(r_lightmaps.fbuffer)))
 		Com_Error(ERR_DROP, "R_BuildLightmap: Surface too large: %d.\n", size);
@@ -270,13 +264,13 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	if (!(surf->flags & MSURF_LIGHTMAP))
 		return;
 
-	smax = (surf->stmaxs[0] >> surf->lquant) + 1;
-	tmax = (surf->stmaxs[1] >> surf->lquant) + 1;
+	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
+	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
 
 	if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t)) {
 		R_UploadLightmapBlock();
 		if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t))
-			Com_Error(ERR_DROP, "Consecutive calls to R_AllocLightmapBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
+			Com_Error(ERR_DROP, "Consecutive calls to R_AllocLightmapBlock(%d,%d) failed (lightmap_scale: %i)\n", smax, tmax, surf->lightmap_scale);
 	}
 
 	surf->lightmaptexturenum = TEXNUM_LIGHTMAPS + r_lightmaps.texnum;
@@ -397,11 +391,11 @@ begin:
 		if (ds > surf->stmaxs[0] || dt > surf->stmaxs[1])
 			continue;
 
-		ds /= (1 << surf->lquant);
-		dt /= (1 << surf->lquant);
+		ds /= surf->lightmap_scale;
+		dt /= surf->lightmap_scale;
 
 		/* resolve the lightmap sample at intersection */
-		sample = (int)(3 * ((int)dt * ((surf->stmaxs[0] / (1 << surf->lquant)) + 1) + (int)ds));
+		sample = (int)(3 * ((int)dt * ((surf->stmaxs[0] / surf->lightmap_scale) + 1) + (int)ds));
 
 		/* and normalize it to floating point */
 		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,
