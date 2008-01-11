@@ -942,10 +942,10 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 				col[j] += p[j];
 		}
 
-		if ((int)r_monochrome->value & mask)  /* monochrome */
+		if (r_monochrome->integer & mask)  /* monochrome */
 			p[0] = p[1] = p[2] = (p[0] + p[1] + p[2]) / 3;
 
-		if ((int)r_invert->value & mask) {  /* inverted */
+		if (r_invert->integer & mask) {  /* inverted */
 			p[0] = 255 - p[0];
 			p[1] = 255 - p[1];
 			p[2] = 255 - p[2];
@@ -956,10 +956,10 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 		for (i = 0; i < 3; i++)
 			col[i] /= (width * height);
 
-		if ((int)r_monochrome->value & mask)
+		if (r_monochrome->integer & mask)
 			col[0] = col[1] = col[2] = (col[0] + col[1] + col[2]) / 3;
 
-		if ((int)r_invert->value & mask){
+		if (r_invert->integer & mask){
 			col[0] = 255 - col[0];
 			col[1] = 255 - col[1];
 			col[2] = 255 - col[2];
