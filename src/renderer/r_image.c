@@ -847,6 +847,9 @@ void R_WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_destroy_compress(&cinfo);
 }
 
+/**
+ * @todo Fix this for none power of two
+ */
 static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
@@ -915,7 +918,7 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 			/* first brightness */
 			f = p[j] / 255.0;  /* as float */
 
-			if(type != it_lightmap)  /* scale */
+			if (type != it_lightmap)  /* scale */
 				f *= r_brightness->value;
 
 			if (f > 1.0)  /* clamp */
@@ -1022,7 +1025,11 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	image->upload_width = scaled_width;	/* after power of 2 and scales */
 	image->upload_height = scaled_height;
 
+	/* and mipmapped */
 	if (mipmap) {
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		qglTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 		if (r_anisotropic->integer && r_state.anisotropic) {
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
 			R_CheckError();
@@ -1031,13 +1038,6 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 			qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 			R_CheckError();
 		}
-	}
-
-	/* and mipmapped */
-	if (mipmap) {
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-		qglTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 	} else {
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
