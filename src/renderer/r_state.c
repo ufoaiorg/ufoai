@@ -427,7 +427,7 @@ void R_SetDefaultState (void)
 	qglMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material);
 
 	for (i = 0; i < MAX_GL_LIGHTS; i++) {
-		qglLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.005);
+		qglLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.05);
 		qglLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0001);
 	}
 
