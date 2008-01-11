@@ -437,7 +437,7 @@ menu bases
 		font	f_menu
 		align	cc
 	}
-
+/*
 	pic summary
 	{
 		tooltip	"_Base Information"
@@ -462,7 +462,7 @@ menu bases
 		font	f_menu
 		align	cc
 	}
-
+*/
 	// ==================
 	// text and info
 	// ==================
