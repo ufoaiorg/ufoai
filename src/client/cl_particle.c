@@ -1102,7 +1102,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	}
 
 	/* add light to the scene */
-	if (VectorNotEmpty(p->lightColor))
+	if (!p->parent && VectorNotEmpty(p->lightColor))
 		R_AddLight(p->s, 1 + p->lightIntensity, p->lightColor);
 
 	p->invis = qfalse;
