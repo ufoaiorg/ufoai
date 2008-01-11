@@ -1132,29 +1132,13 @@ static void CL_PlaceItem (le_t *le)
 		}
 
 	if (FLOOR(le)) {
-		trace_t trace;
-		vec3_t from, to;
-
 		biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cls.model_weapons[biggest];
 		Grid_PosToVec(&clMap, le->pos, le->origin);
 		VectorSubtract(le->origin, csi.ods[biggest].center, le->origin);
-
-		VectorCopy(le->origin, to);
-		VectorCopy(le->origin, from);
-		/* between these two we should really hit the ground */
-		from[2] += UNIT_HEIGHT;
-		to[2] -= UNIT_HEIGHT;
-
 		le->angles[ROLL] = 90;
-/*		le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
-
-		/* fall to ground */
-		trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
-		if (trace.surface)
-			le->origin[2] = trace.endpos[2];
-		else
-			le->origin[2] -= GROUND_DELTA;
+		/*le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
+		le->origin[2] -= GROUND_DELTA;
 	} else {
 		/* If no items in floor inventory, don't draw this le */
 		/* DEBUG
