@@ -419,7 +419,7 @@ static void R_Register (void)
 	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
 	r_light = Cvar_Get("r_light", "0", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
-	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, "Scale lightmap values");
+	r_modulate = Cvar_Get("r_modulate", "3.0", CVAR_ARCHIVE, "Scale lightmap values");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
