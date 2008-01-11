@@ -427,7 +427,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	RotatePointAroundVector(v, rotationAxis, v1, - ccs.angles[YAW]);
 
 	/* set mid to the coordinates of the center of the globe */
-	Vector2Set(mid, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
+	Vector2Set(mid, node->pos[0] + node->size[0] / 2.0f, node->pos[1] + node->size[1] / 2.0f);
 
 	/* We now convert those coordinates relative to the center of the globe to coordinates of the screen
 	 * (which are relative to the upper left side of the screen) */
@@ -531,8 +531,8 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 		if (cl_3dmap->integer) {
 			/* Set angles of the model */
 			VectorCopy(screenPos, v);
-			v[0] -= (node->pos[0] + node->size[0]) / 2.0f;
-			v[1] -= (node->pos[1] + node->size[1]) / 2.0f;
+			v[0] -= node->pos[0] + node->size[0] / 2.0f;
+			v[1] -= node->pos[1] + node->size[1] / 2.0f;
 
 			angles[0] = theta;
 			costheta = cos(angles[0] * torad);
@@ -587,7 +587,7 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 	const float radius = GLOBE_RADIUS;
 
 	/* set mid to the coordinates of the center of the globe */
-	Vector2Set(mid, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
+	Vector2Set(mid, node->pos[0] + node->size[0] / 2.0f, node->pos[1] + node->size[1] / 2.0f);
 
 	/* stop if we click outside the globe (distance is the distance of the point to the center of the globe) */
 	dist = sqrt((x - mid[0]) * (x - mid[0]) + (y - mid[1]) * (y - mid[1]));
