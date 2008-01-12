@@ -747,14 +747,21 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float a;
 
-	image_t* geoscape, *starfield, *background;
+	image_t* geoscape, *starfield, *background, *sun;
 	float nx, ny, nw, nh;
+	float centerx, centery;
+
+	vec3_t v, v1, rotationAxis;
 
 	/* normalize */
 	nx = x * viddef.rx;
 	ny = y * viddef.ry;
 	nw = w * viddef.rx;
 	nh = h * viddef.ry;
+
+	/* center of screen */
+	centerx = nx + nw / 2;
+	centery = ny + nh / 2;
 
 	starfield = R_FindImage(va("pics/menu/%s_stars", map), it_pic);
 	if (geoscape != r_notexture) {
@@ -767,7 +774,28 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 		/* Force height to make sure the image is a circle (and not an ellipse) */
 		const int halfHeight = 768.0f * viddef.ry;
 		qglEnable(GL_BLEND);
-		R_DrawTexture(background->texnum,  nx + nw / 2 * (1 - bgZoom), ny + nh / 2 - halfHeight / 2 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
+		R_DrawTexture(background->texnum,  centerx - nw / 2 * bgZoom, centery - halfHeight / 2 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
+		qglDisable(GL_BLEND);
+	}
+
+	/* add the light */
+	a = cos(q) * SIN_ALPHA;
+	Vector4Set(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a, 0);
+
+	VectorSet(v, lightPos[1], lightPos[0], lightPos[2]);
+
+	VectorSet(rotationAxis, 0, 0, 1);
+	RotatePointAroundVector(v1, rotationAxis, v, - rotate[PITCH]);
+
+	VectorSet(rotationAxis, 0, 1, 0);
+	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
+
+	/* load sun image */
+	sun = R_FindImage("pics/menu/map_sun", it_pic);
+	if (sun != r_notexture && (v[2] < 0)) {
+		const float sunZoom = 1000.0f;
+		qglEnable(GL_BLEND);
+		R_DrawTexture(sun->texnum, centerx - 128 * viddef.rx + 1000 * v[1] * viddef.rx , centery - 128 * viddef.ry + sunZoom * v[0] * viddef.ry, 256 * viddef.rx, 256 * viddef.ry);
 		qglDisable(GL_BLEND);
 	}
 
@@ -810,10 +838,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	R_CheckError();
 
 	qglEnable(GL_CULL_FACE);
-
-	/* add the light */
-	a = cos(q) * SIN_ALPHA;
-	Vector4Set(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a, 0);
 
 	/* enable the lighting */
 	qglEnable(GL_LIGHTING);
