@@ -273,6 +273,7 @@ void UP_ItemDescription (int item)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
 	objDef_t *od;
+	objDef_t *odAmmo = NULL;
 	int i;
 	int up_numresearchedlink = 0;
 	int up_weapon_id = NONE;
@@ -299,8 +300,98 @@ void UP_ItemDescription (int item)
 		menuText[TEXT_STANDARD] = itemText;
 	} else
 #endif
-	/* set description text */
-	if (RS_IsResearched_ptr(od->tech)) {
+
+	/* Write attached ammo or weapon even if item is not researched */
+	if (!Q_strncmp(od->type, "ammo", 4)) {
+		/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
+		upCurrentTech = od->tech;
+
+		/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
+		/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
+		for (i = 0; i < od->numWeapons; i++) {
+			if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech))
+				up_numresearchedlink++;
+		}
+		if (up_numresearchedlink > 1)
+			Cvar_Set("mn_changeweapon", "1"); /* use strings here - no int */
+
+		/* Only display weapons if at least one has been researched */
+		if (up_numresearchedlink > 0) {
+			/* We check that up_researchedlink exists for this ammo (in case we switched from an ammo or a weapon with higher value)*/
+			if (up_researchedlink > od->numWeapons - 1) {
+				for (up_researchedlink = 0; up_researchedlink < od->numWeapons; up_researchedlink++) {
+					if (RS_IsResearched_ptr(csi.ods[od->weap_idx[up_researchedlink]].tech))
+						break;
+					up_researchedlink++;
+				}
+			}
+
+			up_weapon_id = up_researchedlink;
+
+			/* Display the name of the associated weapon */
+			Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
+			Cvar_Set("mn_researchedlinkname", csi.ods[od->weap_idx[up_researchedlink]].name);
+			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), csi.ods[od->weap_idx[up_researchedlink]].name));
+
+			/* Needed for writing stats below */
+			odAmmo = od;
+		} else
+			up_researchedlink = 0;
+	} else if (od->weapon && !od->reload) {
+		/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
+		upCurrentTech = od->tech;
+
+		/* Security reset */
+		up_researchedlink = 0;
+
+		/* ammo and weapon are the same item: must use up_weapon_id 0 */
+		up_weapon_id = 0;
+
+		/* Needed for writing stats below */
+		odAmmo = od;
+	} else if (od->weapon) {
+		/* We have a weapon that uses ammos */
+		/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
+		upCurrentTech = od->tech;
+
+		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo */
+		/* up_numresearchedlink contains the number of researched ammos useable with this weapon */
+		for (i = 0; i < od->numAmmos; i++) {
+			if (RS_IsResearched_ptr(csi.ods[od->ammo_idx[i]].tech))
+				up_numresearchedlink++;
+		}
+		if (up_numresearchedlink > 1)
+			Cvar_Set("mn_changeweapon", "2"); /* use strings here - no int */
+
+		/* Only display ammos if at least one has been researched */
+		if (up_numresearchedlink > 0) {
+			/* We check that up_researchedlink exists for this weapon (in case we switched from an ammo or a weapon with higher value)*/
+			if (up_researchedlink > od->numAmmos - 1) {
+				for (up_researchedlink = 0; up_researchedlink < od->numAmmos; up_researchedlink++) {
+					if (RS_IsResearched_ptr(csi.ods[od->ammo_idx[up_researchedlink]].tech))
+						break;
+					up_researchedlink++;
+				}
+			}
+
+			/* Everything that follows depends only of the ammunition, so we change od to it */
+			odAmmo = &csi.ods[od->ammo_idx[up_researchedlink]];
+			for (i = 0; i < odAmmo->numWeapons; i++) {
+				if (odAmmo->weap_idx[i] == item)
+					up_weapon_id = i;
+			}
+
+			Cvar_Set("mn_displayweapon", "2"); /* use strings here - no int */
+			Cvar_Set("mn_researchedlinkname", odAmmo->name);
+			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), odAmmo->name));
+		} else {
+			/* Reset up_researchedLink to make sure we don't hit an assert while drawing ammo */
+			up_researchedlink = 0;
+		}
+	}
+
+	/* set description text if item as been researched or one of its ammo/weapon has been researched */
+	if (RS_IsResearched_ptr(od->tech) || up_numresearchedlink > 0) {
 		*itemText = '\0';
 		if (!Q_strncmp(od->type, "armour", 5)) {
 			if (Q_strncmp(activeMenu->name, "equipment", 9)) {
@@ -346,88 +437,31 @@ void UP_ItemDescription (int item)
 			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
 		}
 
-		if (!Q_strncmp(od->type, "ammo", 4) || (od->weapon && !od->reload)) {
-			/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
-			upCurrentTech = od->tech;
-
-			/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
-			/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
-			if (!(od->weapon && !od->reload)) {
-				for (i = 0; i < od->numWeapons; i++) {
-					if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech))
-						up_numresearchedlink++;
-				}
-			}
-			if (up_numresearchedlink > 1)
-				Cvar_Set("mn_changeweapon", "1"); /* use strings here - no int */
-
-			/* We check that up_researchedlink exists for this ammo (in case we switched from an ammo or a weapon with higher value)*/
-			if (up_researchedlink > od->numWeapons - 1)
-				up_researchedlink = 0;
-
-			up_weapon_id = up_researchedlink;
-
-			/* We only display the name of the associated weapon for an ammo (and not for thrown weapons) */
-			if (!(od->weapon && !od->reload)) {
-				Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
-				Cvar_Set("mn_researchedlinkname", csi.ods[od->weap_idx[up_researchedlink]].name);
-				Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), csi.ods[od->weap_idx[up_researchedlink]].name));
-			}
-		} else if (od->weapon) {
-			/* We have a weapon that uses ammos */
-			/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
-			upCurrentTech = od->tech;
-
-			/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo */
-			/* up_numresearchedlink contains the number of researched ammos useable with this weapon */
-			for (i = 0; i < od->numAmmos; i++) {
-				if (RS_IsResearched_ptr(csi.ods[od->ammo_idx[i]].tech))
-					up_numresearchedlink++;
-			}
-			if (up_numresearchedlink > 1)
-				Cvar_Set("mn_changeweapon", "2"); /* use strings here - no int */
-
-			/* We check that up_researchedlink exists for this weapon (in case we switched from an ammo or a weapon with higher value)*/
-			if (up_researchedlink > od->numAmmos - 1)
-				up_researchedlink = 0;
-
-			/* Everything that follows depends only of the ammunition, so we change od to it */
-			od = &csi.ods[od->ammo_idx[up_researchedlink]];
-			for (i = 0; i < od->numWeapons; i++) {
-				if (od->weap_idx[i] == item)
-					up_weapon_id = i;
-			}
-
-			Cvar_Set("mn_displayweapon", "2"); /* use strings here - no int */
-			Cvar_Set("mn_researchedlinkname", od->name);
-			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), od->name));
-		}
-
-		if (od->weapon || !Q_strncmp(od->type, "ammo", 4)) {
+		if (odAmmo) {
 			/* This contains everything common for weapons and ammos */
 
 			/* We check if the wanted firemode to display exists. */
-			if (up_firemode > od->numFiredefs[up_weapon_id] - 1)
-				up_firemode = od->numFiredefs[up_weapon_id] - 1;
+			if (up_firemode > odAmmo->numFiredefs[up_weapon_id] - 1)
+				up_firemode = odAmmo->numFiredefs[up_weapon_id] - 1;
 			if (up_firemode < 0)
 				up_firemode = 0;
 
 			/* We always display the name of the firemode for an ammo */
 			Cvar_Set("mn_displayfiremode", "1"); /* use strings here - no int */
-			Cvar_Set("mn_firemodename", od->fd[up_weapon_id][up_firemode].name);
+			Cvar_Set("mn_firemodename", odAmmo->fd[up_weapon_id][up_firemode].name);
 			/* We display the pre/next buttons for changing firemode only if there are more than one */
-			if (od->numFiredefs[up_weapon_id] > 1)
+			if (odAmmo->numFiredefs[up_weapon_id] > 1)
 				Cvar_Set("mn_changefiremode", "1"); /* use strings here - no int */
 
 			/* We display the characteristics of this firemode */
-			Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(od->fd[up_weapon_id][up_firemode].weaponSkill)), sizeof(itemText));
+			Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(odAmmo->fd[up_weapon_id][up_firemode].weaponSkill)), sizeof(itemText));
 			Q_strcat(itemText, va(_("Damage:\t%i\n"),
-				(int) ((od->fd[up_weapon_id][up_firemode].damage[0] + od->fd[up_weapon_id][up_firemode].spldmg[0]) * od->fd[up_weapon_id][up_firemode].shots)),
+				(int) ((odAmmo->fd[up_weapon_id][up_firemode].damage[0] + odAmmo->fd[up_weapon_id][up_firemode].spldmg[0]) * odAmmo->fd[up_weapon_id][up_firemode].shots)),
 						sizeof(itemText));
-			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[up_weapon_id][up_firemode].time),  sizeof(itemText));
-			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[up_weapon_id][up_firemode].range / UNIT_SIZE),  sizeof(itemText));
+			Q_strcat(itemText, va(_("Time units:\t%i\n"), odAmmo->fd[up_weapon_id][up_firemode].time),  sizeof(itemText));
+			Q_strcat(itemText, va(_("Range:\t%g\n"), odAmmo->fd[up_weapon_id][up_firemode].range / UNIT_SIZE),  sizeof(itemText));
 			Q_strcat(itemText, va(_("Spreads:\t%g\n"),
-				(od->fd[up_weapon_id][up_firemode].spread[0] + od->fd[up_weapon_id][up_firemode].spread[1]) / 2),  sizeof(itemText));
+				(odAmmo->fd[up_weapon_id][up_firemode].spread[0] + odAmmo->fd[up_weapon_id][up_firemode].spread[1]) / 2),  sizeof(itemText));
 		}
 
 		menuText[TEXT_STANDARD] = itemText;
@@ -899,14 +933,15 @@ static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 	Cvar_Set("mn_upimage_top", "base/empty");
 
 	if (tech) {
+		up_firemode = 0;
+		up_researchedlink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+
 		if (tech->mdl_top)
 			Cvar_Set("mn_upmodel_top", tech->mdl_top);
 		if (tech->type == RS_WEAPON)
 			UP_DrawAssociatedAmmo(tech);
 		if (!tech->mdl_top && tech->image_top)
 			Cvar_Set("mn_upimage_top", tech->image_top);
-		up_firemode = 0;
-		up_researchedlink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 
 		currentChapter = tech->up_chapter;
 	} else if (!mail)
