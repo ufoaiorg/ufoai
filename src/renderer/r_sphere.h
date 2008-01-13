@@ -23,14 +23,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 typedef struct sphere_s {
-	GLint list;
-	float *texes;
-	float *verts;
-	float *normals;
-	image_t* texture;
+	GLint list;			/**< the opengl list id */
+	float *texes;		/**< globe tex coords */
+	float *verts;		/**< globe vertices */
+	float *normals;		/**< vertex normal array */
+	image_t* texture;	/**< the texture for this globe - @note scaled texture matrix */
+	image_t* bumpMap;	/**< @todo implement bump mapping for globes */
 } sphere_t;
-
-#define GLOBE_TRIS 60
 
 extern sphere_t r_globeEarth;
 extern sphere_t r_globeMoon;
