@@ -242,7 +242,7 @@ void R_DrawChars(void);
 void R_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
 void R_Color(const float *rgba);
 void R_ColorBlend(const float *rgba);
-void R_Draw3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map);
+void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, vec3_t rotate, float zoom, const char *map);
 void R_Draw3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model);
 int R_DrawImagePixelData(const char *name, byte *frame, int width, int height);
 void R_DrawTexture(int texnum, int x, int y, int w, int h);

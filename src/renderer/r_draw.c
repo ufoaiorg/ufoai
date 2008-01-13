@@ -625,14 +625,15 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
+void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rotate, float zoom, const char *map)
 {
 	/* globe scaling */
 	const float fullscale = zoom / 4.0f;
 	vec4_t lightPos;
 	const vec4_t diffuseLightColor = {1.0f, 1.0f, 1.0f, 1.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
-	float a;
+	float a, p, q;
+	const float moonDist = 1000.0f;
 
 	image_t *starfield, *background, *sun;
 	float nx, ny, nw, nh;
@@ -668,6 +669,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	}
 
 	/* add the light */
+	q = (day % 365 + (float) (second / (3600.0f * 24.0f))) * 2 * M_PI / 365;
+	p = (float) (second / (24 * 3600.0f)) * 2 * M_PI - 0.5f * M_PI;
 	a = cos(q) * SIN_ALPHA;
 	Vector4Set(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a, 0);
 
@@ -705,9 +708,18 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglScalef(2, 1, 1);
 	qglMatrixMode(GL_MODELVIEW);
 
-	/* center it */
-	VectorSet(earthPos, (nx + nw / 2), (ny + nh / 2), 0);
-	VectorSet(moonPos, 0, 0, 0); /* TODO */
+	/* center earth */
+	VectorSet(earthPos, centerx, centery, 0);
+
+	/* calculate position of the moon */
+	p = (day % 27 + (float) (second / (3600.0f * 24.0f))) * 2 * M_PI / 27.33;
+	VectorSet(moonPos, cos(p) * sqrt(0.5f * (1 - a * a)), - sin(p) * sqrt(0.5f * (1 - a * a)), a);
+	VectorSet(v, moonPos[1], moonPos[0], moonPos[2]);
+	VectorSet(rotationAxis, 0, 0, 1);
+	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
+	VectorSet(rotationAxis, 0, 1, 0);
+	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
+	VectorSet(moonPos, centerx + moonDist * v[1], centery + moonDist * v[0], v[2]);
 
 	/* enable the lighting */
 	qglEnable(GL_LIGHTING);
@@ -719,7 +731,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* draw the moon */
 	if (r_globeMoon.texture != r_notexture)
-		R_SphereRender(&r_globeMoon, moonPos, rotate, fullscale, NULL);
+		R_SphereRender(&r_globeMoon, moonPos, rotate, fullscale, lightPos);
 
 	/* disable 3d geoscape lighting */
 	qglDisable(GL_LIGHTING);
