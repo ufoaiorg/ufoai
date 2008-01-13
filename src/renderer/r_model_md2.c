@@ -117,8 +117,6 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	int *pincmd, *poutcmd;
 	int version, size;
 	byte *tagbuf = NULL, *animbuf = NULL;
-	char path[MAX_QPATH];
-	char *skin, *slash, *end;
 
 	md2 = (mdl_md2_t *) buffer;
 
@@ -164,20 +162,14 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 
 	mod->alias.meshes = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t), 0);
 	mod->alias.meshes[0].num_skins = pheader->num_skins;
-	mod->alias.meshes[0].skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * mod->alias.meshes[0].num_skins, 0);
+	mod->alias.meshes[0].skins = VID_TagAlloc(vid_modelPool,
+		sizeof(mAliasSkin_t) * mod->alias.meshes[0].num_skins, 0);
 
 	for (i = 0; i < mod->alias.meshes[0].num_skins; i++) {
-		skin = (char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME;
-		if (skin[0] != '.')
-			mod->alias.meshes[0].skins[i].skin = R_FindImage(skin, it_skin);
-		else {
-			Q_strncpyz(path, mod->name, sizeof(path));
-			end = path;
-			while ((slash = strchr(end, '/')) != 0)
-				end = slash + 1;
-			strcpy(end, skin + 1);
-			mod->alias.meshes[0].skins[i].skin = R_FindImage(path, it_skin);
-		}
+		mod->alias.meshes[0].skins[i].skin = R_AliasModelGetSkin(mod,
+			(char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME);
+		Q_strncpyz(mod->alias.meshes[0].skins[i].name,
+			mod->alias.meshes[0].skins[i].skin->name, MODEL_MAX_PATH);
 	}
 
 	/* load triangle lists */

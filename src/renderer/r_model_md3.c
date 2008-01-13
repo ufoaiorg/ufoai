@@ -48,14 +48,10 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	unsigned int		*pinindex, *poutindex;
 	mAliasVertex_t		*poutvert;
 	mAliasCoord_t		*poutcoord;
-	mAliasSkin_t		*poutskin;
 	mAliasMesh_t		*poutmesh;
 	mAliasTag_t			*pouttag;
 	mAliasFrame_t		*poutframe;
-	char				name[MAX_QPATH];
 	float				lat, lng;
-	char path[MAX_QPATH];
-	char *slash, *end;
 
 	md3 = (dmd3_t *)buffer;
 	version = LittleLong(md3->version);
@@ -157,21 +153,12 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 		/* register all skins */
 		pinskin = (dmd3skin_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
-		poutskin = poutmesh->skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * poutmesh->num_skins, 0);
+		poutmesh->skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * poutmesh->num_skins, 0);
 
-		for (j = 0; j < poutmesh->num_skins; j++, pinskin++, poutskin++) {
-			memcpy(name, pinskin->name, MD3_MAX_PATH);
-			memcpy(poutskin->name, name, MD3_MAX_PATH);
-			if (name[0] != '.')
-				poutmesh->skins[i].skin = R_FindImage(name, it_skin);
-			else {
-				Q_strncpyz(path, mod->name, sizeof(path));
-				end = path;
-				while ((slash = strchr(end, '/')) != 0)
-					end = slash + 1;
-				strcpy(end, name + 1);
-				poutmesh->skins[i].skin = R_FindImage(path, it_skin);
-			}
+		for (j = 0; j < mod->alias.meshes[i].num_skins; j++) {
+			mod->alias.meshes[i].skins[j].skin = R_AliasModelGetSkin(mod, pinskin->name);
+			Q_strncpyz(mod->alias.meshes[i].skins[j].name,
+				mod->alias.meshes[i].skins[j].skin->name, MODEL_MAX_PATH);
 		}
 
 		/* load the indexes */

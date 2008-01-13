@@ -354,3 +354,20 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 
 	return mod->alias.meshes[*mesh].skins[*skin].skin;
 }
+
+image_t* R_AliasModelGetSkin (const model_t* mod, const char *skin)
+{
+	char path[MAX_QPATH];
+	char *slash, *end;
+
+	if (skin[0] != '.')
+		return R_FindImage(skin, it_skin);
+	else {
+		Q_strncpyz(path, mod->name, sizeof(path));
+		end = path;
+		while ((slash = strchr(end, '/')) != 0)
+			end = slash + 1;
+		strcpy(end, skin + 1);
+		return R_FindImage(path, it_skin);
+	}
+}
