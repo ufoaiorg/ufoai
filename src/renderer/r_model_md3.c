@@ -69,7 +69,6 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	mod->alias.num_frames = LittleLong(md3->num_frames);
 	mod->alias.num_tags = LittleLong(md3->num_tags);
 	mod->alias.num_meshes = LittleLong(md3->num_meshes);
-	mod->alias.num_skins = 0;
 
 	if (mod->alias.num_frames <= 0)
 		Sys_Error("model %s has no frames", mod->name);

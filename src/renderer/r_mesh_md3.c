@@ -127,9 +127,8 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	qglMultMatrixf(e->transform.matrix);
 
-	R_AliasModelState(e->model, &e->as.frame, &e->as.oldframe, &e->skinnum);
+	skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
 
-	skin = e->model->alias.skins[e->skinnum].skin;
 	R_BindTexture(skin->texnum);
 
 	for (i = 0; i < md3->num_meshes; i++) {

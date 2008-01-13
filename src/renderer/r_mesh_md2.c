@@ -226,9 +226,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	md2 = (mdl_md2_t *) e->model->alias.extraData;
 
-	R_AliasModelState(e->model, &e->as.frame, &e->as.oldframe, &e->skinnum);
-
-	skin = e->model->alias.skins[e->skinnum].skin;
+	skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
 
 	if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
 		/* it will be drawn in the next entity render pass
@@ -240,7 +238,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	}
 
 	/* locate the proper data */
-	c_alias_polys += md2->num_tris;
+	c_alias_polys += e->model->alias.meshes[0].num_tris;
 
 	/* resolve lighting for coloring and shadow position */
 	GLVectorTransform(e->transform.matrix, e->origin, tmp);
@@ -342,9 +340,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	md2 = (mdl_md2_t *) mi->model->alias.extraData;
 
-	R_AliasModelState(mi->model, &mi->frame, &mi->oldframe, &mi->skin);
-
-	skin = mi->model->alias.skins[mi->skin].skin;
+	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
 
 	/* locate the proper data */
 	c_alias_polys += md2->num_tris;
@@ -433,12 +429,10 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	md2 = (mdl_md2_t *) mi->model->alias.extraData;
 
-	R_AliasModelState(mi->model, &mi->frame, &mi->oldframe, &mi->skin);
-
-	skin = mi->model->alias.skins[mi->skin].skin;
+	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
 
 	/* locate the proper data */
-	c_alias_polys += md2->num_tris;
+	c_alias_polys += mi->model->alias.meshes[0].num_tris;
 
 	R_Color(mi->color);
 

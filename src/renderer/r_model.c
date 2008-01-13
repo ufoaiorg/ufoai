@@ -277,7 +277,7 @@ static int r_numModelsStatic;
  */
 void R_SwitchModelMemPoolTag (void)
 {
-	int i, j;
+	int i, j, k;
 	model_t* mod;
 
 	r_numModelsStatic = r_numModels;
@@ -286,13 +286,15 @@ void R_SwitchModelMemPoolTag (void)
 	/* mark the static model textures as it_statis, thus R_FreeUnusedImages
 	 * won't free them */
 	for (i = 0, mod = r_models; i < r_numModelsStatic; i++, mod++) {
-		if (!mod->alias.num_skins)
-			Com_Printf("Model '%s' has no skins\n", mod->name);
-		for (j = 0; j < mod->alias.num_skins; j++) {
-			if (mod->alias.skins[j].skin)
-				mod->alias.skins[j].skin->type = it_static;
-			else
-				Com_Printf("No skin for #%i of '%s'\n", j, mod->name);
+		for (j = 0; j < mod->alias.num_meshes; j++) {
+			if (!mod->alias.meshes[j].num_skins)
+				Com_Printf("Model '%s' has no skins\n", mod->name);
+			for (k = 0; k < mod->alias.meshes[j].num_skins; k++) {
+				if (mod->alias.meshes[j].skins[k].skin)
+					mod->alias.meshes[j].skins[k].skin->type = it_static;
+				else
+					Com_Printf("No skin for #%i of '%s'\n", j, mod->name);
+			}
 		}
 	}
 
@@ -331,7 +333,7 @@ void R_ShutdownModels (void)
 }
 
 
-void R_AliasModelState (const model_t *mod, int *frame, int *oldFrame, int *skin)
+image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin)
 {
 	/* check animations */
 	if ((*frame >= mod->alias.num_frames) || *frame < 0) {
@@ -343,7 +345,12 @@ void R_AliasModelState (const model_t *mod, int *frame, int *oldFrame, int *skin
 		*oldFrame = 0;
 	}
 
+	if (*mesh < 0 || *mesh >= mod->alias.num_meshes)
+		*mesh = 0;
+
 	/* use default skin - this is never null - but maybe the placeholder texture */
-	if (*skin < 0 || *skin >= mod->alias.num_skins)
+	if (*skin < 0 || *skin >= mod->alias.meshes[*mesh].num_skins)
 		*skin = 0;
+
+	return mod->alias.meshes[*mesh].skins[*skin].skin;
 }

@@ -52,6 +52,7 @@ typedef struct animState_s {
 	int frame, oldframe;
 	float backlerp;				/**< linear interpolation from previous frame */
 	int time, dt;
+	int mesh;
 
 	byte list[MAX_ANIMLIST];
 	byte lcur, ladd;
@@ -139,6 +140,7 @@ typedef struct {
 	float backlerp;			/**< linear interpolation from previous frame */
 
 	int skin;				/**< skin number */
+	int mesh;				/**< which mesh? md2 models only have one mesh */
 	float *color;
 } modelInfo_t;
 

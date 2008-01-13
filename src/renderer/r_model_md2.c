@@ -160,21 +160,23 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 		Sys_Error("model %s has too many frames", mod->name);
 
 	mod->alias.num_frames = pheader->num_frames;
-	mod->alias.num_skins = pheader->num_skins;
+	mod->alias.num_meshes = 1;
 
-	mod->alias.skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * mod->alias.num_skins, 0);
+	mod->alias.meshes = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t), 0);
+	mod->alias.meshes[0].num_skins = pheader->num_skins;
+	mod->alias.meshes[0].skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * mod->alias.meshes[0].num_skins, 0);
 
-	for (i = 0; i < mod->alias.num_skins; i++) {
+	for (i = 0; i < mod->alias.meshes[0].num_skins; i++) {
 		skin = (char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME;
 		if (skin[0] != '.')
-			mod->alias.skins[i].skin = R_FindImage(skin, it_skin);
+			mod->alias.meshes[0].skins[i].skin = R_FindImage(skin, it_skin);
 		else {
 			Q_strncpyz(path, mod->name, sizeof(path));
 			end = path;
 			while ((slash = strchr(end, '/')) != 0)
 				end = slash + 1;
 			strcpy(end, skin + 1);
-			mod->alias.skins[i].skin = R_FindImage(path, it_skin);
+			mod->alias.meshes[0].skins[i].skin = R_FindImage(path, it_skin);
 		}
 	}
 

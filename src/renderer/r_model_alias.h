@@ -88,9 +88,6 @@ typedef	struct	mAliasModel_s {
 	int		num_meshes;
 	mAliasMesh_t	*meshes;
 
-	int		num_skins;
-	mAliasSkin_t	*skins;
-
 	/** animation data */
 	char animname[MAX_QPATH];
 	int numanims;

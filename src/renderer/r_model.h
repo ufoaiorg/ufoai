@@ -69,7 +69,7 @@ void R_ModClearAll(void);
 void R_ModModellist_f(void);
 void R_ModDrawModelBBox(vec4_t bbox[8], entity_t *e);
 void R_ModDrawNullModel(entity_t *e);
-void R_AliasModelState(const model_t *mod, int *frame, int *oldFrame, int *skin);
+image_t* R_AliasModelState(const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin);
 
 void R_ShutdownModels(void);
 
