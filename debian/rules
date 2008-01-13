@@ -37,8 +37,7 @@ versionconfig:
 
 config.status:
 	dh_testdir
-
-	./configure --with-curses
+	./configure
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status
@@ -64,7 +63,7 @@ clean:
 	dh_testroot
 	rm -rf stamps
 
-	$(MAKE) BUILDDIR=$(CURDIR)/BUILD clean
+	[ ! -f Makefile ] || $(MAKE) BUILDDIR=$(CURDIR)/BUILD clean
 	find maps -name '*.bsp' | xargs --no-run-if-empty rm
 
 	set -e; if [ -d .svn ]; then \
@@ -124,7 +123,7 @@ binary-arch: versionconfig install-arch
 #	dh_install
 	dh_installmenu
 #	dh_installdebconf
-#	dh_installman
+	dh_installman debian/ufo.6
 	dh_strip
 	dh_compress
 	dh_fixperms

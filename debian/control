@@ -2,7 +2,7 @@ Source: ufoai
 Section: contrib/games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
-Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libpng-dev, libjpeg-dev, libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev, ncurses-dev, libcurl4-dev
+Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libpng-dev, libjpeg-dev, libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev, libcurl4-dev
 Standards-Version: 3.6.1
 
 Package: ufoai
@@ -17,7 +17,7 @@ Description: UFO: Alien Invasion - build your team and stop the aliens
  various sites on the Earth.
  .
  The tactical part of the game uses OpenGL, and is based on the Quake2
- engine.  A multiplayer mode is also available.
+ engine. A multiplayer mode is also available.
 
 Package: ufoai-tools
 Architecture: any
