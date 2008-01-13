@@ -238,7 +238,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	}
 
 	/* locate the proper data */
-	c_alias_polys += e->model->alias.meshes[0].num_tris;
+	c_alias_polys += e->model->alias.meshes[e->as.mesh].num_tris;
 
 	/* resolve lighting for coloring and shadow position */
 	GLVectorTransform(e->transform.matrix, e->origin, tmp);
@@ -343,7 +343,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
 
 	/* locate the proper data */
-	c_alias_polys += md2->num_tris;
+	c_alias_polys += mi->model->alias.meshes[mi->mesh].num_tris;
 
 	/* draw all the triangles */
 	qglPushMatrix();
@@ -432,7 +432,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
 
 	/* locate the proper data */
-	c_alias_polys += mi->model->alias.meshes[0].num_tris;
+	c_alias_polys += mi->model->alias.meshes[mi->mesh].num_tris;
 
 	R_Color(mi->color);
 
