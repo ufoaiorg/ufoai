@@ -679,6 +679,11 @@ static void BS_BuyAircraft_f (void)
 			if (ccs.credits < aircraft_samples[aircraftID].price) {
 				MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
 				return;
+			} else if (baseCurrent->numAircraftInBase >=
+				B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_SMALL_HANGAR)
+				+ B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HANGAR)) {
+				MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nOne aircraft per Hangar maximum.\n"));
+				return;
 			} else {
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
 				CL_UpdateCredits(ccs.credits-aircraft_samples[aircraftID].price);
