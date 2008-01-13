@@ -633,7 +633,12 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	const vec4_t diffuseLightColor = {1.0f, 1.0f, 1.0f, 1.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float a, p, q;
-	const float moonDist = 1000.0f;
+	/* earth radius is about 3000.0f * zoom, so 300 with the base zoom of 0.1
+	   Note that moon dist should be 18 000 then, but if we use that we don't see the moon
+	   and the movement of the moon is made by step: this is not nice. I prefered to use
+	   a lower but nicer value. */
+	const float moonDist = 2000.0f;
+	const float moonSize = 0.02f;
 
 	image_t *starfield, *background, *sun;
 	float nx, ny, nw, nh;
@@ -719,7 +724,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
-	VectorSet(moonPos, centerx + moonDist * v[1], centery + moonDist * v[0], v[2]);
+	VectorSet(moonPos, centerx + moonDist * v[1], centery + moonDist * v[0], -moonDist * v[2]);
 
 	/* enable the lighting */
 	qglEnable(GL_LIGHTING);
@@ -727,11 +732,17 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
 
+	/* Enable depth (to draw the moon behind the earth if needed) */
+	qglEnable(GL_DEPTH_TEST);
+
 	/* draw the globe */
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* draw the moon */
 	if (r_globeMoon.texture != r_notexture)
-		R_SphereRender(&r_globeMoon, moonPos, rotate, fullscale, lightPos);
+		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize, NULL);
+
+	/* Disable depth */
+	qglDisable(GL_DEPTH_TEST);
 
 	/* disable 3d geoscape lighting */
 	qglDisable(GL_LIGHTING);
