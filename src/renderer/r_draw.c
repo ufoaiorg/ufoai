@@ -638,7 +638,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	   and the movement of the moon is made by step: this is not nice. I prefered to use
 	   a lower but nicer value. */
 	const float moonDist = 2000.0f;
-	const float moonSize = 0.02f;
+	const float moonSize = 0.03f;
 
 	image_t *starfield, *background, *sun;
 	float nx, ny, nw, nh;
