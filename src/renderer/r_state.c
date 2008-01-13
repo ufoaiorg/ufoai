@@ -420,7 +420,7 @@ void R_SetDefaultState (void)
 	qglDisableClientState(GL_NORMAL_ARRAY);
 
 	/* alpha test parameters */
-	qglAlphaFunc(GL_GREATER, 0.1f);
+	qglAlphaFunc(GL_GREATER, 0.01f);
 
 	/* lighting parameters */
 	qglLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
