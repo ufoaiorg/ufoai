@@ -289,6 +289,7 @@ void (APIENTRY * qglScaled) (GLdouble x, GLdouble y, GLdouble z);
 void (APIENTRY * qglScalef) (GLfloat x, GLfloat y, GLfloat z);
 void (APIENTRY * qglScissor) (GLint x, GLint y, GLsizei width, GLsizei height);
 void (APIENTRY * qglSelectBuffer) (GLsizei size, GLuint *buffer);
+void (APIENTRY * qglShadeModel)  (GLenum mode);
 void (APIENTRY * qglStencilFunc) (GLenum func, GLint ref, GLuint mask);
 void (APIENTRY * qglStencilMask) (GLuint mask);
 void (APIENTRY * qglStencilOp) (GLenum fail, GLenum zfail, GLenum zpass);
@@ -696,6 +697,7 @@ void QR_UnLink (void)
 	qglScalef                    = NULL;
 	qglScissor                   = NULL;
 	qglSelectBuffer              = NULL;
+	qglShadeModel                = NULL;
 	qglStencilFunc               = NULL;
 	qglStencilMask               = NULL;
 	qglStencilOp                 = NULL;
@@ -1079,6 +1081,7 @@ void QR_Link (void)
 	qglScalef                    = SDL_GL_GetProcAddress("glScalef");
 	qglScissor                   = SDL_GL_GetProcAddress("glScissor");
 	qglSelectBuffer              = SDL_GL_GetProcAddress("glSelectBuffer");
+	qglShadeModel                = SDL_GL_GetProcAddress("glShadeModel");
 	qglStencilFunc               = SDL_GL_GetProcAddress("glStencilFunc");
 	qglStencilMask               = SDL_GL_GetProcAddress("glStencilMask");
 	qglStencilOp                 = SDL_GL_GetProcAddress("glStencilOp");
