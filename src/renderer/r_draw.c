@@ -741,7 +741,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
  * @param[in] rotate
  * @param[in] scale
  */
-static void R_DrawSphere (sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale)
+static void R_DrawSphere (sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec3_t lightPos)
 {
 	/* go to a new matrix */
 	qglPushMatrix();
@@ -756,6 +756,9 @@ static void R_DrawSphere (sphere_t *sphere, const vec3_t pos, const vec3_t rotat
 	qglRotatef(rotate[YAW], 1, 0, 0);
 	qglRotatef(rotate[ROLL], 0, 1, 0);
 	qglRotatef(rotate[PITCH], 0, 0, 1);
+
+	if (lightPos)
+		qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	R_CheckError();
 
@@ -873,15 +876,14 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	/* enable the lighting */
 	qglEnable(GL_LIGHTING);
 	qglEnable(GL_LIGHT0);
-	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
 
 	/* draw the globe */
-	R_DrawSphere(&r_globeEarth, earthPos, rotate, fullscale);
+	R_DrawSphere(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* draw the moon */
 	if (r_globeMoon.texture != r_notexture)
-		R_DrawSphere(&r_globeMoon, moonPos, rotate, fullscale);
+		R_DrawSphere(&r_globeMoon, moonPos, rotate, fullscale, NULL);
 
 	/* disable 3d geoscape lighting */
 	qglDisable(GL_LIGHTING);
