@@ -178,15 +178,16 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
  */
 static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t *destbase)
 {
-	int i, intransfer = 0;
+	int i, intransfer, numAircraftTransfer = 0;
 	aircraft_t *aircraftOnList = NULL;
 	assert(aircraft && srcbase && destbase);
 
-	/* Count weight of all aircraft already on the transfer list. */
+	/* Count weight and number of all aircraft already on the transfer list. */
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraftOnList = AIR_AircraftGetFromIdx(i);
 			intransfer += aircraftOnList->weight;
+			numAircraftTransfer++;
 		}
 	}
 
@@ -202,7 +203,12 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 		return qfalse;
 	}
 	/* Is there a place for this aircraft in destination base? */
-	if (AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, intransfer) == 0) {
+	if (destbase->numAircraftInBase + numAircraftTransfer >=
+		B_GetNumberOfBuildingsInBaseByType(destbase->idx, B_SMALL_HANGAR)
+		+ B_GetNumberOfBuildingsInBaseByType(destbase->idx, B_HANGAR)) {
+		MN_Popup(_("Not enough space"), _("Destination base has already one aircraft per hangar.\n"));
+		return qfalse;
+	} else if (AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, intransfer) == 0) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin hangars.\n"));
 		return qfalse;
 	} else if (AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, intransfer) > 0) {
@@ -450,7 +456,7 @@ static void TR_TransferSelect_f (void)
 			if (!cnt)
 				Q_strncpyz(transferList, _("No aircraft available for transfer.\n"), sizeof(transferList));
 		} else {
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't hangar functional."), sizeof(transferList));
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a functional hangar."), sizeof(transferList));
 		}
 		break;
 	default:
