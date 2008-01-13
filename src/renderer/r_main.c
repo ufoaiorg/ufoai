@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_shader.h"
+#include "r_sphere.h"
 #include "r_font.h"
 #include "r_error.h"
 
@@ -709,6 +710,7 @@ qboolean R_Init (void)
 	R_InitImages();
 	R_InitMiscTexture();
 	R_DrawInitLocal();
+	R_SphereInit();
 	R_FontInit();
 
 	R_CheckError();

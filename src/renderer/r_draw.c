@@ -23,127 +23,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_sphere.h"
 #include "r_error.h"
 
 image_t *shadow;
 image_t *blood;
-
-typedef struct sphere_s {
-	GLint list;
-	float *texes;
-	float *verts;
-	float *normals;
-	image_t* texture;
-} sphere_t;
-
-static sphere_t r_globeEarth;
-static sphere_t r_globeMoon;
-
-#define GLOBE_TRIS 60
-
-/**
- * @brief Initialize the globe chain arrays
- * @param[out] sphere The sphere you want to create
- * @param[in] tris The amount of tris the globe should have - the higher the number
- * the higher the details
- * @param[in] radius The radius of the sphere
- * @sa R_Draw3DGlobe
- */
-static void R_GenerateSphere (sphere_t *sphere, const int tris, const float radius)
-{
-	const float drho = M_PI / tris;
-	const float dtheta = M_PI / (tris / 2);
-
-	const float ds = 1.0f / (tris * 2);
-	const float dt = 1.0f / tris;
-
-	float t = 1.0f;
-	float s = 0.0f;
-
-	int i, j;
-
-	int vertspos = 0;
-	int texespos = 0;
-
-	sphere->verts = (float*)VID_TagAlloc(vid_modelPool, sizeof(float) * ((tris + 1) * (tris + 1) * 6), 0);
-	sphere->texes = (float*)VID_TagAlloc(vid_modelPool, sizeof(float) * ((tris + 1) * (tris + 1) * 4), 0);
-	sphere->normals = (float*)VID_TagAlloc(vid_modelPool, sizeof(float) * ((tris + 1) * (tris + 1) * 6), 0);
-
-	for (i = 0; i < tris; i++) {
-		float rho = (float) i * drho;
-		float srho = (float) (sin(rho));
-		float crho = (float) (cos(rho));
-		float srhodrho = (float) (sin(rho + drho));
-		float crhodrho = (float) (cos(rho + drho));
-
-		s = 0.0f;
-
-		for (j = 0; j <= tris; j++) {
-			float theta = (j == tris) ? 0.0f : j * dtheta;
-			float stheta = (float) (-sin(theta));
-			float ctheta = (float) (cos(theta));
-
-			Vector2Set((&sphere->texes[texespos]), s, (t - dt));
-			texespos += 2;
-
-			VectorSet((&sphere->verts[vertspos]),
-				stheta * srhodrho * radius,
-				ctheta * srhodrho * radius,
-				crhodrho * radius);
-			VectorNormalize2((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
-			vertspos += 3;
-
-			Vector2Set((&sphere->texes[texespos]), s, t);
-			texespos += 2;
-
-			VectorSet((&sphere->verts[vertspos]),
-				stheta * srho * radius,
-				ctheta * srho * radius,
-				crho * radius);
-			VectorNormalize2((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
-			vertspos += 3;
-
-			s += ds;
-		}
-
-		t -= dt;
-	}
-
-	vertspos = 0;
-	texespos = 0;
-
-	/* build the sphere display list */
-	sphere->list = qglGenLists(1);
-	R_CheckError();
-
-	qglNewList(sphere->list, GL_COMPILE);
-	R_CheckError();
-
-	for (i = 0; i < tris; i++) {
-		qglBegin(GL_TRIANGLE_STRIP);
-
-		for (j = 0; j <= tris; j++) {
-			qglNormal3fv(&sphere->normals[vertspos]);
-			qglTexCoord2fv(&sphere->texes[texespos]);
-			qglVertex3fv(&sphere->verts[vertspos]);
-
-			texespos += 2;
-			vertspos += 3;
-
-			qglNormal3fv(&sphere->normals[vertspos]);
-			qglTexCoord2fv(&sphere->texes[texespos]);
-			qglVertex3fv(&sphere->verts[vertspos]);
-
-			texespos += 2;
-			vertspos += 3;
-		}
-
-		qglEnd();
-		R_CheckError();
-	}
-
-	qglEndList();
-}
 
 /* console font */
 static image_t *draw_chars[2];
@@ -172,10 +56,6 @@ void R_DrawInitLocal (void)
 	draw_chars[1] = R_FindImage("pics/conchars_small", it_pic);
 	if (draw_chars[1] == r_notexture)
 		Com_Printf("Could not find conchars2 image in game pics directory!\n");
-
-	R_GenerateSphere(&r_globeEarth, 60, EARTH_RADIUS);
-	/* the earth has more details than the moon */
-	R_GenerateSphere(&r_globeMoon, 20, MOON_RADIUS);
 }
 
 #define MAX_CHARS 8192
@@ -732,48 +612,6 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 }
 
 /**
- * @brief Draw the sphere
- * @param[in] sphereList
- * @param[in] texture
- * @param[in] pos
- * @param[in] rotate
- * @param[in] scale
- */
-static void R_DrawSphere (sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec3_t lightPos)
-{
-	/* go to a new matrix */
-	qglPushMatrix();
-
-	qglTranslatef(pos[0], pos[1], pos[2]);
-
-	/* flatten the sphere */
-	qglScalef(scale * viddef.rx, scale * viddef.ry, scale);
-	R_CheckError();
-
-	/* rotate the globe as given in ccs.angles */
-	qglRotatef(rotate[YAW], 1, 0, 0);
-	qglRotatef(rotate[ROLL], 0, 1, 0);
-	qglRotatef(rotate[PITCH], 0, 0, 1);
-
-	if (lightPos)
-		qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
-	R_CheckError();
-
-	/* solid globe texture */
-	qglBindTexture(GL_TEXTURE_2D, sphere->texture->texnum);
-
-	qglEnable(GL_CULL_FACE);
-	qglCallList(sphere->list);
-	qglDisable(GL_CULL_FACE);
-
-	R_CheckError();
-
-	/* restore the previous matrix */
-	qglPopMatrix();
-}
-
-/**
  * @brief responsible for drawing the 3d globe on geoscape
  * @param[in] x menu node x position
  * @param[in] y menu node y position
@@ -785,7 +623,7 @@ static void R_DrawSphere (sphere_t *sphere, const vec3_t pos, const vec3_t rotat
  * @param[in] zoom the current globe zoon
  * @param[in] map the prefix of the map to use (image must be at base/pics/menu/<map>_[day|night])
  * @sa R_DrawFlatGeoscape
- * @sa R_GenerateSphere
+ * @sa R_SphereGenerate
  */
 void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
 {
@@ -878,10 +716,10 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
 
 	/* draw the globe */
-	R_DrawSphere(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
+	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* draw the moon */
 	if (r_globeMoon.texture != r_notexture)
-		R_DrawSphere(&r_globeMoon, moonPos, rotate, fullscale, NULL);
+		R_SphereRender(&r_globeMoon, moonPos, rotate, fullscale, NULL);
 
 	/* disable 3d geoscape lighting */
 	qglDisable(GL_LIGHTING);

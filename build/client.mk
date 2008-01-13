@@ -94,6 +94,7 @@ CLIENT_SRCS = \
 	renderer/r_misc.c \
 	renderer/r_surface.c \
 	renderer/r_state.c \
+	renderer/r_sphere.c \
 	renderer/r_particle.c \
 	renderer/qgl.c \
 	renderer/r_sdl.c \

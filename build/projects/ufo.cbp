@@ -460,6 +460,9 @@
 		<Unit filename="..\..\src\renderer\r_state.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\renderer\r_sphere.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\renderer\r_surface.c">
 			<Option compilerVar="CC" />
 		</Unit>
