@@ -68,7 +68,6 @@ cvar_t *r_ext_s3tc_compression;
 cvar_t *r_intel_hack;
 cvar_t *r_light;
 cvar_t *r_materials;
-cvar_t *r_3dmapradius;
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
@@ -424,7 +423,6 @@ static void R_Register (void)
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
-	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
 	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_modulate = Cvar_Get("r_modulate", "1.8", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
@@ -728,13 +726,9 @@ void R_Shutdown (void)
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);
 
-	/* in case of a sys error e.g. this value is still -1 */
-	if (r_globeEarthList != -1)
-		qglDeleteLists(r_globeEarthList, 1);
-	r_globeEarthList = -1;
-
 	R_ShutdownModels();
 	R_ShutdownImages();
+	R_ShutdownDraw();
 
 	R_ShutdownShaders();
 	R_FontShutdown();

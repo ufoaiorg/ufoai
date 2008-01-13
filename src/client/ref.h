@@ -274,7 +274,9 @@ void R_AddLights(void);
 void R_AddLight(vec3_t origin, float intensity, vec3_t color);
 
 extern SDL_Surface *r_surface;
-extern cvar_t *r_3dmapradius;
+
+#define EARTH_RADIUS 8192.0f
+#define MOON_RADIUS 1024.0f /* FIXME */
 
 extern light_t r_lights[MAX_GL_LIGHTS];
 

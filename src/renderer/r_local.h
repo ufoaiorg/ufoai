@@ -56,8 +56,6 @@ extern mBspSurfaces_t r_material_surfaces;
 
 /*==================================================== */
 
-extern int r_globeEarthList;	/**< the gl list of the 3d globe */
-
 extern cBspPlane_t frustum[4];
 
 /* view origin */
@@ -131,6 +129,7 @@ void R_DrawInitLocal(void);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_DrawParticles(void);
 
+void R_ShutdownDraw(void);
 /*
 ** GL config stuff
 */
