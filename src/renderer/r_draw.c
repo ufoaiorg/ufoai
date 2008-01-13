@@ -90,8 +90,7 @@ static void R_GenerateSphere (sphere_t *sphere, const int tris, const float radi
 				stheta * srhodrho * radius,
 				ctheta * srhodrho * radius,
 				crhodrho * radius);
-			VectorCopy((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
-			VectorNormalize((&sphere->normals[vertspos]));
+			VectorNormalize2((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
 			vertspos += 3;
 
 			Vector2Set((&sphere->texes[texespos]), s, t);
@@ -101,8 +100,7 @@ static void R_GenerateSphere (sphere_t *sphere, const int tris, const float radi
 				stheta * srho * radius,
 				ctheta * srho * radius,
 				crho * radius);
-			VectorCopy((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
-			VectorNormalize((&sphere->normals[vertspos]));
+			VectorNormalize2((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
 			vertspos += 3;
 
 			s += ds;
