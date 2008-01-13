@@ -122,7 +122,7 @@ aircraft craft_inter_stiletto
 	type		interceptor
 	model		"inter_stiletto"
 	size		1
-	weight		5
+	weight		4
 	price		20000
 	building	building_intercept
 	image		air_interceptor
@@ -166,7 +166,7 @@ aircraft craft_inter_saracen
 	type		interceptor
 	model		"inter_saracen"
 	size		1
-	weight		5
+	weight		4
 	price		26000
 	building	building_intercept
 	image		air_interceptor
@@ -205,7 +205,7 @@ aircraft craft_inter_dragon
 	type		interceptor
 	model		"inter_dragon"
 	size		1
-	weight		5
+	weight		4
 	price		26000
 	building	building_intercept
 	image		air_interceptor
@@ -244,7 +244,7 @@ aircraft craft_inter_stingray
 	type		interceptor
 	model		"inter_stingray"
 	size		1
-	weight		5
+	weight		4
 	price		48000
 	building	building_intercept
 	image		air_interceptor
