@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_sphere.h"
 #include "r_error.h"
 
+/** @brief This var is needed - because a Sys_Error may call R_SphereShutdown
+ * before the precompiled lists are even generated */
+static qboolean sphereInit = qfalse;
+
 sphere_t r_globeEarth;
 sphere_t r_globeMoon;
 
@@ -136,13 +140,13 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 
 /**
  * @brief Draw the sphere
- * @param[in] sphereList
- * @param[in] texture
- * @param[in] pos
- * @param[in] rotate
- * @param[in] scale
+ * @param[in] sphere The sphere that should be rendered
+ * @param[in] pos The position (translation) of the matrix
+ * @param[in] rotate The rotation of the matrix
+ * @param[in] scale The scale of the matrix
+ * @param[in] lightPos Set this to NULL if you don't want to change the light position
  */
-void R_SphereRender (sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec3_t lightPos)
+void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec3_t lightPos)
 {
 	/* go to a new matrix */
 	qglPushMatrix();
@@ -177,6 +181,8 @@ void R_SphereRender (sphere_t *sphere, const vec3_t pos, const vec3_t rotate, co
 }
 
 /**
+ * @brief Creates the spheres we need for rendering the 3d globe
+ * @note The moon sphere has less details because it's a lot smaller in the real scene
  * @sa R_Init
  */
 void R_SphereInit (void)
@@ -184,4 +190,18 @@ void R_SphereInit (void)
 	R_SphereGenerate(&r_globeEarth, 60, EARTH_RADIUS);
 	/* the earth has more details than the moon */
 	R_SphereGenerate(&r_globeMoon, 20, MOON_RADIUS);
+
+	sphereInit = qtrue;
+}
+
+/**
+ * @brief Frees the precompiled display lists
+ * @sa R_Shutdown
+ */
+void R_SphereShutdown (void)
+{
+	if (sphereInit) {
+		qglDeleteLists(r_globeEarth.list, 1);
+		qglDeleteLists(r_globeMoon.list, 1);
+	}
 }
