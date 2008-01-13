@@ -164,14 +164,14 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 			memcpy(name, pinskin->name, MD3_MAX_PATH);
 			memcpy(poutskin->name, name, MD3_MAX_PATH);
 			if (name[0] != '.')
-				mod->alias.skins_img[i] = R_FindImage(name, it_skin);
+				poutmesh->skins[i].skin = R_FindImage(name, it_skin);
 			else {
 				Q_strncpyz(path, mod->name, sizeof(path));
 				end = path;
 				while ((slash = strchr(end, '/')) != 0)
 					end = slash + 1;
 				strcpy(end, name + 1);
-				mod->alias.skins_img[i] = R_FindImage(path, it_skin);
+				poutmesh->skins[i].skin = R_FindImage(path, it_skin);
 			}
 		}
 

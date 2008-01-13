@@ -129,7 +129,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	R_AliasModelState(e->model, &e->as.frame, &e->as.oldframe, &e->skinnum);
 
-	skin = e->model->alias.skins_img[e->skinnum];
+	skin = e->model->alias.skins[e->skinnum].skin;
 	R_BindTexture(skin->texnum);
 
 	for (i = 0; i < md3->num_meshes; i++) {

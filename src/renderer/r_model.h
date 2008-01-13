@@ -44,7 +44,6 @@ typedef struct model_s {
 	char name[MAX_QPATH];
 
 	modtype_t type;	/**< model type */
-	int numframes;
 
 	int flags;
 

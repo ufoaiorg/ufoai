@@ -156,34 +156,12 @@ static model_t *R_RegisterModel (const char *name)
 {
 	model_t *mod;
 	int i;
-	mdl_md2_t *pheader;
 
 	mod = R_ModForName(name, qfalse);
 	if (mod) {
 		/* register any images used by the models */
 		switch (mod->type) {
 		case mod_alias_md2:
-			{
-			char path[MAX_QPATH];
-			char *skin, *slash, *end;
-
-			pheader = (mdl_md2_t *) mod->alias.extraData;
-			for (i = 0; i < pheader->num_skins; i++) {
-				skin = (char *) pheader + pheader->ofs_skins + i * MD2_MAX_SKINNAME;
-				if (skin[0] != '.')
-					mod->alias.skins_img[i] = R_FindImage(skin, it_skin);
-				else {
-					Q_strncpyz(path, mod->name, sizeof(path));
-					end = path;
-					while ((slash = strchr(end, '/')) != 0)
-						end = slash + 1;
-					strcpy(end, skin + 1);
-					mod->alias.skins_img[i] = R_FindImage(path, it_skin);
-				}
-			}
-			mod->numframes = pheader->num_frames;
-			break;
-			}
 		case mod_alias_md3:
 			break;
 		case mod_brush:
@@ -311,8 +289,8 @@ void R_SwitchModelMemPoolTag (void)
 		if (!mod->alias.num_skins)
 			Com_Printf("Model '%s' has no skins\n", mod->name);
 		for (j = 0; j < mod->alias.num_skins; j++) {
-			if (mod->alias.skins_img[j])
-				mod->alias.skins_img[j]->type = it_static;
+			if (mod->alias.skins[j].skin)
+				mod->alias.skins[j].skin->type = it_static;
 			else
 				Com_Printf("No skin for #%i of '%s'\n", j, mod->name);
 		}

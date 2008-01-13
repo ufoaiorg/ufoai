@@ -53,6 +53,7 @@ typedef	struct mAliasTag_s {
 typedef	struct mAliasSkin_s {
 	char	name[MODEL_MAX_PATH];
 	int	shader;
+	image_t *skin;
 } mAliasSkin_t;
 
 typedef	struct mAliasMesh_s {
@@ -98,7 +99,6 @@ typedef	struct	mAliasModel_s {
 	qboolean noshadow;
 
 	/* FIXME */
-	image_t *skins_img[MD2_MAX_SKINS];
 	void *extraData;
 
 	/** tag data */

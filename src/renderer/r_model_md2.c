@@ -117,6 +117,8 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	int *pincmd, *poutcmd;
 	int version, size;
 	byte *tagbuf = NULL, *animbuf = NULL;
+	char path[MAX_QPATH];
+	char *skin, *slash, *end;
 
 	md2 = (mdl_md2_t *) buffer;
 
@@ -159,6 +161,22 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 
 	mod->alias.num_frames = pheader->num_frames;
 	mod->alias.num_skins = pheader->num_skins;
+
+	mod->alias.skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * mod->alias.num_skins, 0);
+
+	for (i = 0; i < mod->alias.num_skins; i++) {
+		skin = (char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME;
+		if (skin[0] != '.')
+			mod->alias.skins[i].skin = R_FindImage(skin, it_skin);
+		else {
+			Q_strncpyz(path, mod->name, sizeof(path));
+			end = path;
+			while ((slash = strchr(end, '/')) != 0)
+				end = slash + 1;
+			strcpy(end, skin + 1);
+			mod->alias.skins[i].skin = R_FindImage(path, it_skin);
+		}
+	}
 
 	/* load triangle lists */
 	pintri = (dtriangle_t *) ((byte *) md2 + pheader->ofs_tris);

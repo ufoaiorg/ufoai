@@ -228,7 +228,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	R_AliasModelState(e->model, &e->as.frame, &e->as.oldframe, &e->skinnum);
 
-	skin = e->model->alias.skins_img[e->skinnum];
+	skin = e->model->alias.skins[e->skinnum].skin;
 
 	if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
 		/* it will be drawn in the next entity render pass
@@ -344,7 +344,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	R_AliasModelState(mi->model, &mi->frame, &mi->oldframe, &mi->skin);
 
-	skin = mi->model->alias.skins_img[mi->skin];
+	skin = mi->model->alias.skins[mi->skin].skin;
 
 	/* locate the proper data */
 	c_alias_polys += md2->num_tris;
@@ -435,7 +435,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	R_AliasModelState(mi->model, &mi->frame, &mi->oldframe, &mi->skin);
 
-	skin = mi->model->alias.skins_img[mi->skin];
+	skin = mi->model->alias.skins[mi->skin].skin;
 
 	/* locate the proper data */
 	c_alias_polys += md2->num_tris;
