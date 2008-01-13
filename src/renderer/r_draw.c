@@ -28,69 +28,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 image_t *shadow;
 image_t *blood;
 
-int spherelist = -1;
+int r_globeEarthList;
 #define GLOBE_TRIS 60
 #define GLOBE_TEXES (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*4
 #define GLOBE_VERTS (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*6
-static float globetexes[GLOBE_TEXES];
-static float globeverts[GLOBE_VERTS];
-/**
- * @brief Draw a sphere! The verts and texcoords are precalculated for extra efficiency.
- * @note The sphere is put into a display list to reduce overhead even further.
- */
-static void R_DrawSphere (void)
-{
-	if (spherelist == -1) {
-		int i;
-		int j;
-
-		int vertspos = 0;
-		int texespos = 0;
-
-		/* build the sphere display list */
-		spherelist = qglGenLists(1);
-		R_CheckError();
-
-		qglNewList(spherelist, GL_COMPILE);
-		R_CheckError();
-
-		qglEnable(GL_NORMALIZE);
-
-		for (i = 0; i < GLOBE_TRIS; i++) {
-			qglBegin(GL_TRIANGLE_STRIP);
-
-			for (j = 0; j <= GLOBE_TRIS; j++) {
-				qglNormal3fv(&globeverts[vertspos]);
-				qglTexCoord2fv(&globetexes[texespos]);
-				qglVertex3fv(&globeverts[vertspos]);
-
-				texespos += 2;
-				vertspos += 3;
-
-				qglNormal3fv(&globeverts[vertspos]);
-				qglTexCoord2fv(&globetexes[texespos]);
-				qglVertex3fv(&globeverts[vertspos]);
-
-				texespos += 2;
-				vertspos += 3;
-			}
-
-			qglEnd();
-			R_CheckError();
-		}
-
-		qglDisable(GL_NORMALIZE);
-
-		qglEndList();
-	}
-	R_CheckError();
-}
 
 /**
  * @brief Initialize the globe chain arrays
  */
-static void R_InitGlobeChain (void)
+static void R_InitGlobeEarthChain (void)
 {
+	static float globetexes[GLOBE_TEXES];
+	static float globeverts[GLOBE_VERTS];
+
 	const float drho = M_PI / GLOBE_TRIS;
 	const float dtheta = M_PI / (GLOBE_TRIS / 2);
 
@@ -139,7 +89,45 @@ static void R_InitGlobeChain (void)
 
 		t -= dt;
 	}
-	spherelist = -1;
+
+	vertspos = 0;
+	texespos = 0;
+
+	/* build the sphere display list */
+	r_globeEarthList = qglGenLists(1);
+	R_CheckError();
+
+	qglNewList(r_globeEarthList, GL_COMPILE);
+	R_CheckError();
+
+	qglEnable(GL_NORMALIZE);
+
+	for (i = 0; i < GLOBE_TRIS; i++) {
+		qglBegin(GL_TRIANGLE_STRIP);
+
+		for (j = 0; j <= GLOBE_TRIS; j++) {
+			qglNormal3fv(&globeverts[vertspos]);
+			qglTexCoord2fv(&globetexes[texespos]);
+			qglVertex3fv(&globeverts[vertspos]);
+
+			texespos += 2;
+			vertspos += 3;
+
+			qglNormal3fv(&globeverts[vertspos]);
+			qglTexCoord2fv(&globetexes[texespos]);
+			qglVertex3fv(&globeverts[vertspos]);
+
+			texespos += 2;
+			vertspos += 3;
+		}
+
+		qglEnd();
+		R_CheckError();
+	}
+
+	qglDisable(GL_NORMALIZE);
+
+	qglEndList();
 }
 
 /* console font */
@@ -170,8 +158,7 @@ void R_DrawInitLocal (void)
 	if (draw_chars[1] == r_notexture)
 		Com_Printf("Could not find conchars2 image in game pics directory!\n");
 
-	R_InitGlobeChain();
-	R_DrawSphere();
+	R_InitGlobeEarthChain();
 }
 
 #define MAX_CHARS 8192
@@ -510,6 +497,7 @@ static float lastQ;
 /**
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
+ * @sa R_Draw3DGlobe
  */
 void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
@@ -737,6 +725,8 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
  * @param[in] rotate the rotate angle of the globe
  * @param[in] zoom the current globe zoon
  * @param[in] map the prefix of the map to use (image must be at base/pics/menu/<map>_[day|night])
+ * @sa R_DrawFlatGeoscape
+ * @sa R_InitGlobeEarthChain
  */
 void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
 {
@@ -847,7 +837,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
 
 	/* draw the sphere */
-	qglCallList(spherelist);
+	qglCallList(r_globeEarthList);
 	R_CheckError();
 
 	qglDisable(GL_CULL_FACE);

@@ -56,7 +56,7 @@ extern mBspSurfaces_t r_material_surfaces;
 
 /*==================================================== */
 
-extern int spherelist;	/**< the gl list of the 3d globe */
+extern int r_globeEarthList;	/**< the gl list of the 3d globe */
 
 extern cBspPlane_t frustum[4];
 

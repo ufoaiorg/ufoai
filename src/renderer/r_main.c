@@ -729,9 +729,9 @@ void R_Shutdown (void)
 		Cmd_RemoveCommand(commands->name);
 
 	/* in case of a sys error e.g. this value is still -1 */
-	if (spherelist != -1)
-		qglDeleteLists(spherelist, 1);
-	spherelist = -1;
+	if (r_globeEarthList != -1)
+		qglDeleteLists(r_globeEarthList, 1);
+	r_globeEarthList = -1;
 
 	R_ShutdownModels();
 	R_ShutdownImages();
