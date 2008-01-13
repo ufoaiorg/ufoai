@@ -206,7 +206,7 @@ building building_hangar
 	onconstruct 	""
 	max_employees	8
 	onclick		"building_open"
-	capacity	16
+	capacity	8
 }
 
 building building_hangar2
@@ -233,7 +233,7 @@ building building_intercept
 	more_than_one	true
 	onconstruct	""
 //	ondestroy	???
-	capacity	8
+	capacity	5
 	type		smallhangar
 	onclick		"building_open"
 }
