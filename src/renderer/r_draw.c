@@ -742,8 +742,12 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	/* draw the globe */
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* draw the moon */
-	if (r_globeMoon.texture != r_notexture)
+	if (r_globeMoon.texture != r_notexture) {
 		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize - moonSizeVariation * moonPos[2] , NULL);
+		refdef.alias_count += r_globeMoon.num_tris;
+	}
+
+	refdef.alias_count += r_globeEarth.num_tris;
 
 	/* Disable depth */
 	qglDisable(GL_DEPTH_TEST);

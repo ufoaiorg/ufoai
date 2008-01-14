@@ -135,6 +135,8 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 		R_CheckError();
 	}
 
+	sphere->num_tris = tris * tris;
+
 	qglEndList();
 }
 

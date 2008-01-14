@@ -115,43 +115,6 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 	return qfalse;
 }
 
-void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float *interpolated)
-{
-	float *current, *old;
-	float bl, fl;
-	int i;
-
-	/* range check */
-	if (as->frame >= numframes || as->frame < 0)
-		as->frame = 0;
-	if (as->oldframe >= numframes || as->oldframe < 0)
-		as->oldframe = 0;
-
-	/* calc relevant values */
-	current = tag + as->frame * 16;
-	old = tag + as->oldframe * 16;
-	bl = as->backlerp;
-	fl = 1.0 - as->backlerp;
-
-	/* right on a frame? */
-	if (bl == 0.0) {
-		memcpy(interpolated, current, sizeof(float) * 16);
-		return;
-	}
-	if (bl == 1.0) {
-		memcpy(interpolated, old, sizeof(float) * 16);
-		return;
-	}
-
-	/* interpolate */
-	for (i = 0; i < 16; i++)
-		interpolated[i] = fl * current[i] + bl * old[i];
-
-	/* normalize */
-	for (i = 0; i < 3; i++)
-		VectorNormalize(interpolated + i * 4);
-}
-
 static inline int SignbitsForPlane (const cBspPlane_t * out)
 {
 	int bits, j;

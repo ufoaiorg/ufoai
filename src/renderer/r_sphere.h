@@ -29,6 +29,7 @@ typedef struct sphere_s {
 	float *normals;		/**< vertex normal array */
 	image_t* texture;	/**< the texture for this globe - @note scaled texture matrix */
 	image_t* bumpMap;	/**< @todo implement bump mapping for globes */
+	int num_tris;		/**< number of tris */
 } sphere_t;
 
 extern sphere_t r_globeEarth;

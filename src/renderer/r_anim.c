@@ -223,3 +223,44 @@ char *R_AnimGetName (animState_t * as, model_t * mod)
 	anim = mod->alias.animdata + as->list[as->lcur];
 	return anim->name;
 }
+
+/**
+ * @brief
+ * @param[out] interpolated This is an array of 16 floats
+ */
+void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float *interpolated)
+{
+	float *current, *old;
+	float bl, fl;
+	int i;
+
+	/* range check */
+	if (as->frame >= numframes || as->frame < 0)
+		as->frame = 0;
+	if (as->oldframe >= numframes || as->oldframe < 0)
+		as->oldframe = 0;
+
+	/* calc relevant values */
+	current = tag + as->frame * 16;
+	old = tag + as->oldframe * 16;
+	bl = as->backlerp;
+	fl = 1.0 - as->backlerp;
+
+	/* right on a frame? */
+	if (bl == 0.0) {
+		memcpy(interpolated, current, sizeof(float) * 16);
+		return;
+	}
+	if (bl == 1.0) {
+		memcpy(interpolated, old, sizeof(float) * 16);
+		return;
+	}
+
+	/* interpolate */
+	for (i = 0; i < 16; i++)
+		interpolated[i] = fl * current[i] + bl * old[i];
+
+	/* normalize */
+	for (i = 0; i < 3; i++)
+		VectorNormalize(interpolated + i * 4);
+}

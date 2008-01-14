@@ -112,23 +112,24 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 			/* find the right tag */
 			name = (char *) taghdr + taghdr->ofs_names;
-			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME)
+			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
 				if (!Q_strcmp(name, tagname)) {
-				/* found the tag (matrix) */
-				tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);
-				tag += i * 16 * taghdr->num_frames;
+					/* found the tag (matrix) */
+					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);
+					tag += i * 16 * taghdr->num_frames;
 
-				/* do interpolation */
-				as.frame = pmi->frame;
-				as.oldframe = pmi->oldframe;
-				as.backlerp = pmi->backlerp;
-				R_InterpolateTransform(&as, taghdr->num_frames, tag, interpolated);
+					/* do interpolation */
+					as.frame = pmi->frame;
+					as.oldframe = pmi->oldframe;
+					as.backlerp = pmi->backlerp;
+					R_InterpolateTransform(&as, taghdr->num_frames, tag, interpolated);
 
-				/* transform */
-				qglMultMatrixf(interpolated);
-				R_CheckError();
-				break;
+					/* transform */
+					qglMultMatrixf(interpolated);
+					R_CheckError();
+					break;
 				}
+			}
 		}
 	}
 

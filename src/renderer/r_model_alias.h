@@ -94,8 +94,6 @@ typedef	struct	mAliasModel_s {
 	int num_anims;
 	mAliasAnim_t *animdata;
 
-	qboolean noshadow;
-
 	/** tag data */
 	char tagname[MAX_QPATH];
 	void *tagdata;
