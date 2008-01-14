@@ -124,8 +124,8 @@ void R_DrawChars (void)
 	R_EnableBlend(qtrue);
 
 	/* alter the array pointers */
-	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, char_texcoords);
-	R_BindArray(GL_VERTEX_ARRAY, GL_SHORT, char_verts);
+	qglVertexPointer(2, GL_SHORT, 0, char_verts);
+	qglTexCoordPointer(2, GL_FLOAT, 0, char_texcoords);
 
 	qglDrawArrays(GL_QUADS, 0, char_index / 2);
 

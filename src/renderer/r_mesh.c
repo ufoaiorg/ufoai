@@ -208,72 +208,21 @@ void R_DrawModelParticle (modelInfo_t * mi)
 static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
 {
 	int i, p, mask, f, aggregatemask = ~0;
-	vec3_t mins, maxs;
-	mAliasModel_t *md2;
-	vec3_t thismins, oldmins, thismaxs, oldmaxs;
-	mAliasFrame_t *frame, *oldframe;
-	float dp;
+	mAliasModel_t *mod;
+	mAliasFrame_t *frame;
+	vec4_t tmp;
 
-	assert(e->model->type == mod_alias_md2);
-	md2 = &e->model->alias;
-
-	frame = md2->frames + e->as.frame;
-	oldframe = md2->frames + e->as.oldframe;
-
-	/* compute axially aligned mins and maxs */
-	if (frame == oldframe) {
-		for (i = 0; i < 3; i++) {
-			mins[i] = frame->translate[i];
-			maxs[i] = mins[i] + frame->scale[i] * 255;
-		}
-	} else {
-		for (i = 0; i < 3; i++) {
-			thismins[i] = frame->translate[i];
-			thismaxs[i] = thismins[i] + frame->scale[i] * 255;
-
-			oldmins[i] = oldframe->translate[i];
-			oldmaxs[i] = oldmins[i] + oldframe->scale[i] * 255;
-
-			if (thismins[i] < oldmins[i])
-				mins[i] = thismins[i];
-			else
-				mins[i] = oldmins[i];
-
-			if (thismaxs[i] > oldmaxs[i])
-				maxs[i] = thismaxs[i];
-			else
-				maxs[i] = oldmaxs[i];
-		}
-	}
+	mod = &e->model->alias;
+	frame = mod->frames + e->as.frame;
 
 	/* compute a full bounding box */
 	for (i = 0; i < 8; i++) {
-		vec3_t tmp;
+		tmp[0] = (i & 1) ? frame->mins[0] : frame->maxs[0];
+		tmp[1] = (i & 2) ? frame->mins[1] : frame->maxs[1];
+		tmp[2] = (i & 4) ? frame->mins[2] : frame->maxs[2];
+		tmp[3] = 1.0;
 
-		if (i & 1)
-			tmp[0] = mins[0];
-		else
-			tmp[0] = maxs[0];
-
-		if (i & 2)
-			tmp[1] = mins[1];
-		else
-			tmp[1] = maxs[1];
-
-		if (i & 4)
-			tmp[2] = mins[2];
-		else
-			tmp[2] = maxs[2];
-
-		VectorCopy(tmp, bbox[i]);
-		bbox[i][3] = 1.0;
-	}
-	/* transform the bounding box */
-	for (i = 0; i < 8; i++) {
-		vec4_t tmp;
-
-		Vector4Copy(bbox[i], tmp);
-		GLVectorTransform(e->transform.matrix, tmp, bbox[i]);
+		Vector4Copy(tmp, bbox[i]);
 	}
 
 	/* cull */
@@ -281,9 +230,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
 		mask = 0;
 
 		for (f = 0; f < 4; f++) {
-			dp = DotProduct(frustum[f].normal, bbox[p]);
-
-			if ((dp - frustum[f].dist) < 0)
+			if (DotProduct(frustum[f].normal, bbox[p]) < frustum[f].dist);
 				mask |= (1 << f);
 		}
 		aggregatemask &= mask;
@@ -368,11 +315,11 @@ void R_DrawAliasModel (entity_t *e)
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t bbox[8];
 	vec4_t tmp;
-#if 0
+
 	/* check if model is out of fov */
-	if (R_CullAliasModel(bbox, e))
-		return;
-#endif
+	/* FIXME: fix culling and reactivate check */
+	/*R_CullAliasModel(bbox, e);*/
+
 	mod = (mAliasModel_t *)&e->model->alias;
 
 	qglPushMatrix();
@@ -383,10 +330,9 @@ void R_DrawAliasModel (entity_t *e)
 		R_LightPoint(tmp);
 
 		VectorCopy(r_lightmap_sample.color, color);
-		color[3] = r_state.blend_enabled ? 0.25 : 1.0;
 
 		/* IR goggles override color
-		* FIXME RF_SHADOW is used here for actors - don't highlight misc_models */
+		 * FIXME RF_SHADOW is used here for actors - don't highlight misc_models */
 		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_SHADOW)
 			color[1] = color[2] = 0.0;
 
@@ -396,7 +342,7 @@ void R_DrawAliasModel (entity_t *e)
 			R_Color(color);
 	}
 
-	skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
+	skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
 
 	R_BindTexture(skin->texnum);
 
@@ -407,7 +353,10 @@ void R_DrawAliasModel (entity_t *e)
 	}
 
 	/* show model bounding box */
-	R_ModDrawModelBBox(bbox, e);
+	if (r_showbox->integer) {
+		R_CullAliasModel(bbox, e); /* FIXME: Remove me when culling is fixed */
+		R_ModDrawModelBBox(bbox, e);
+	}
 
 	qglPopMatrix();
 

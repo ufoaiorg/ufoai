@@ -72,10 +72,7 @@ void R_BindArray (GLenum target, GLenum type, void *array)
 {
 	switch (target) {
 	case GL_VERTEX_ARRAY:
-		if (r_state.ortho)
-			qglVertexPointer(2, type, 0, array);
-		else
-			qglVertexPointer(3, type, 0, array);
+		qglVertexPointer(3, type, 0, array);
 		break;
 	case GL_TEXTURE_COORD_ARRAY:
 		qglTexCoordPointer(2, type, 0, array);
@@ -93,10 +90,7 @@ void R_BindDefaultArray (GLenum target)
 {
 	switch (target) {
 	case GL_VERTEX_ARRAY:
-		if (r_state.ortho)
-			R_BindArray(target, GL_SHORT, r_state.vertex_array_2d);
-		else
-			R_BindArray(target, GL_FLOAT, r_state.vertex_array_3d);
+		R_BindArray(target, GL_FLOAT, r_state.vertex_array_3d);
 		break;
 	case GL_TEXTURE_COORD_ARRAY:
 		if (r_state.active_texunit == &r_state.lightmap_texunit)

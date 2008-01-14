@@ -121,7 +121,6 @@ void R_ScreenShot_f(void);
 void R_InterpolateTransform(animState_t *as, int numframes, float *tag, float *interpolated);
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(entity_t *e);
-void R_DrawBox(const entity_t *e);
 void R_GetLevelSurfaceLists(void);
 void R_InitMiscTexture(void);
 void R_DrawEntities(void);

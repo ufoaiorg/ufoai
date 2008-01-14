@@ -234,9 +234,6 @@ void R_ModEndLoading (void)
  */
 void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 {
-	if (!r_showbox->integer)
-		return;
-
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	/* Draw top and sides */

@@ -65,7 +65,7 @@ static inline void R_DrawHighlight (const entity_t * e)
  * @sa CL_AddTargeting
  * @sa RF_BOX
  */
-void R_DrawBox (const entity_t * e)
+static void R_DrawBox (const entity_t * e)
 {
 	vec3_t upper, lower;
 	float dx, dy;
@@ -111,6 +111,8 @@ void R_DrawBox (const entity_t * e)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	qglEnable(GL_TEXTURE_2D);
+
+	R_Color(NULL);
 }
 
 /**
@@ -415,10 +417,11 @@ static float *R_CalcTransform (entity_t * e)
  */
 void R_DrawEntities (void)
 {
-	entity_t *e, **chain;
 	int i;
+	entity_t *e, **chain;
 	entity_t *r_bsp_entities, *r_opaque_mesh_entities;
 	entity_t *r_alpha_mesh_entities, *r_null_entities;
+	image_t *skin;
 
 	if (!r_drawentities->integer)
 		return;
@@ -440,11 +443,16 @@ void R_DrawEntities (void)
 			case mod_brush:
 				chain = &r_bsp_entities;
 				break;
-			default:
-				if (e->flags & RF_TRANSLUCENT)
+			case mod_alias_md2:
+			case mod_alias_md3:
+				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
+				if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
 					chain = &r_alpha_mesh_entities;
 				else
 					chain = &r_opaque_mesh_entities;
+				break;
+			default:
+				Sys_Error("Unknown model type in R_DrawEntities entity chain");
 				break;
 			}
 		}
