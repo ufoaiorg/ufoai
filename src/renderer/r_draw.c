@@ -638,7 +638,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	   and the movement of the moon is made by step: this is not nice. I prefered to use
 	   a lower but nicer value. */
 	const float moonDist = 2000.0f;
-	const float moonSize = 0.03f;
+	const float moonSize = 0.035f;
+	const float moonSizeVariation = 0.00001f;
 
 	image_t *starfield, *background, *sun;
 	float nx, ny, nw, nh;
@@ -739,7 +740,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* draw the moon */
 	if (r_globeMoon.texture != r_notexture)
-		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize, NULL);
+		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize - moonSizeVariation * moonPos[2] , NULL);
 
 	/* Disable depth */
 	qglDisable(GL_DEPTH_TEST);
