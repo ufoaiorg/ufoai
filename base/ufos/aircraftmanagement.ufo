@@ -550,7 +550,7 @@ craftitem craft_ammo_tr20
 	price		210
 	buytype		craftitem
 
-	ammo		12
+	ammo		152
 	wdamage		18
 	accuracy	0.4
 	wrange		3
