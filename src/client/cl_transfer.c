@@ -178,7 +178,7 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
  */
 static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t *destbase)
 {
-	int i, intransfer, numAircraftTransfer = 0;
+	int i, intransfer = 0, numAircraftTransfer = 0;
 	aircraft_t *aircraftOnList = NULL;
 	assert(aircraft && srcbase && destbase);
 
