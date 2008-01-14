@@ -83,7 +83,6 @@ CLIENT_SRCS = \
 	renderer/r_light.c \
 	renderer/r_lightmap.c \
 	renderer/r_material.c \
-	renderer/r_mesh_md2.c \
 	renderer/r_mesh_md3.c \
 	renderer/r_model.c \
 	renderer/r_model_alias.c \

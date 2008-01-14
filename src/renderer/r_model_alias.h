@@ -25,9 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MODEL_MAX_PATH 64
 
-typedef	struct	mAliasCoord_s {
-	vec2_t	st;
-} mAliasCoord_t;
+#define mAliasCoord_t vec2_t
 
 typedef	struct	mAliasVertex_s {
 	vec3_t	point;
@@ -37,6 +35,7 @@ typedef	struct	mAliasVertex_s {
 typedef	struct mAliasFrame_s {
 	vec3_t	mins, maxs;
 	vec3_t	translate;
+	vec3_t	scale;
 	float	radius;
 } mAliasFrame_t;
 
@@ -63,9 +62,11 @@ typedef	struct mAliasMesh_s {
 	mAliasCoord_t	*stcoords;
 
 	int	num_tris;
-	unsigned int	*indexes;
+	int32_t	*indexes;
 
 	int		num_skins;
+	int		skinHeight;
+	int		skinWidth;
 	mAliasSkin_t	*skins;
 } mAliasMesh_t;
 
@@ -90,13 +91,10 @@ typedef	struct	mAliasModel_s {
 
 	/** animation data */
 	char animname[MAX_QPATH];
-	int numanims;
+	int num_anims;
 	mAliasAnim_t *animdata;
 
 	qboolean noshadow;
-
-	/* FIXME */
-	void *extraData;
 
 	/** tag data */
 	char tagname[MAX_QPATH];

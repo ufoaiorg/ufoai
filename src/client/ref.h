@@ -222,6 +222,7 @@ typedef struct {
 	float time;					/**< time is used to auto animate */
 	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
+	int brush_count, alias_count;
 
 	const char *mapZone;	/**< used to replace textures in base assembly */
 } refdef_t;
@@ -294,7 +295,5 @@ extern int r_numEntities;
 extern entity_t r_entities[MAX_ENTITIES];
 
 extern refdef_t refdef;
-
-extern int c_brush_polys, c_alias_polys;
 
 #endif /* CLIENT_REF_H */

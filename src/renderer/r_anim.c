@@ -40,7 +40,7 @@ static mAliasAnim_t *R_AnimGet (model_t * mod, const char *name)
 	if (!mod || mod->type != mod_alias_md2)
 		return NULL;
 
-	for (i = 0, anim = mod->alias.animdata; i < mod->alias.numanims; i++, anim++)
+	for (i = 0, anim = mod->alias.animdata; i < mod->alias.num_anims; i++, anim++)
 		if (!Q_strncmp(name, anim->name, MAX_ANIMNAME))
 			return anim;
 

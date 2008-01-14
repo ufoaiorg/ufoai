@@ -35,13 +35,13 @@ MD2 ALIAS MODELS
 
 static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 {
-	dtag_t *pintag, *pheader;
+	dMD2tag_t *pintag, *pheader;
 	int version;
 	int i, j, size;
 	float *inmat, *outmat;
 	int read;
 
-	pintag = (dtag_t *) buffer;
+	pintag = (dMD2tag_t *) buffer;
 
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
@@ -52,7 +52,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 	pheader = mod->alias.tagdata;
 
 	/* byte swap the header fields and sanity check */
-	for (i = 0; i < (int)sizeof(dtag_t) / 4; i++)
+	for (i = 0; i < (int)sizeof(dMD2tag_t) / 4; i++)
 		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
 
 	if (pheader->num_tags <= 0)
@@ -107,113 +107,144 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 /**
  * @brief Load MD2 models from file.
  */
-void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
+void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 {
 	int i, j;
-	size_t l;
-	mdl_md2_t *md2, *pheader;
-	dtriangle_t *pintri, *pouttri;
-	dAliasFrame_t *pinframe, *poutframe;
-	int *pincmd, *poutcmd;
+	dMD2Model_t *md2;
+	dMD2Triangle_t *pintri;
+	dMD2Coord_t *pincoord;
+	dMD2Frame_t *pinframe;
 	int version, size;
 	byte *tagbuf = NULL, *animbuf = NULL;
+	mAliasMesh_t *outMesh;
+	mAliasFrame_t *outFrame;
+	mAliasVertex_t *outVertex;
+	mAliasCoord_t *outCoord;
+	int32_t tempIndex[MD2_MAX_TRIANGLES * 3];
+	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
+	int indRemap[MD2_MAX_TRIANGLES * 3];
+	int32_t *outIndex;
+	int frameSize;
+	int numIndexes;
+	int numVerts;
+	double isw, ish;
+	size_t l;
 
-	md2 = (mdl_md2_t *) buffer;
+	md2 = (dMD2Model_t *) buffer;
 
 	version = LittleLong(md2->version);
 	if (version != MD2_ALIAS_VERSION)
 		Sys_Error("%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
 
-	pheader = VID_TagAlloc(vid_modelPool, LittleLong(md2->ofs_end), 0);
-	mod->alias.extraData = pheader;
-
-	/* byte swap the header fields and sanity check */
-	for (i = 0; i < (int)sizeof(mdl_md2_t) / 4; i++) /* FIXME */
-		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
-
-	if (bufSize != pheader->ofs_end)
-		Sys_Error("model %s broken offset values", mod->name);
-
-	if (pheader->skinheight > MAX_LBM_HEIGHT)
-		Sys_Error("model %s has a skin taller than %d", mod->name, MAX_LBM_HEIGHT);
-	else if (pheader->skinheight <= 0 || pheader->skinwidth <= 0)
-		Sys_Error("model %s has invalid skin dimensions '%d x %d'", mod->name, pheader->skinheight, pheader->skinwidth);
-
-	if (pheader->num_xyz <= 0)
-		Sys_Error("model %s has no vertices", mod->name);
-	else if (pheader->num_xyz > MD2_MAX_VERTS)
-		Sys_Error("model %s has too many vertices", mod->name);
-
-	if (pheader->num_st <= 0)
-		Sys_Error("model %s has no st vertices", mod->name);
-
-	if (pheader->num_tris <= 0)
-		Sys_Error("model %s has no triangles", mod->name);
-	else if (pheader->num_tris > MD2_MAX_TRIANGLES)
-		Sys_Error("model %s has too many triangles", mod->name);
-
-	if (pheader->num_frames <= 0)
-		Sys_Error("model %s has no frames", mod->name);
-	else if (pheader->num_frames > MD2_MAX_FRAMES)
-		Sys_Error("model %s has too many frames", mod->name);
-
-	mod->alias.num_frames = pheader->num_frames;
+	mod->type = mod_alias_md2;
+	/* only one mesh for md2 models */
 	mod->alias.num_meshes = 1;
+	mod->alias.meshes = outMesh = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t), 0);
+	mod->alias.num_frames = LittleLong(md2->num_frames);
+	outMesh->num_verts = LittleLong(md2->num_verts);
+	outMesh->num_tris = LittleLong(md2->num_tris);
+	frameSize = LittleLong(md2->framesize);
 
-	mod->alias.meshes = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t), 0);
-	mod->alias.meshes[0].num_skins = pheader->num_skins;
-	mod->alias.meshes[0].skins = VID_TagAlloc(vid_modelPool,
-		sizeof(mAliasSkin_t) * mod->alias.meshes[0].num_skins, 0);
-
-	for (i = 0; i < mod->alias.meshes[0].num_skins; i++) {
-		mod->alias.meshes[0].skins[i].skin = R_AliasModelGetSkin(mod,
-			(char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME);
-		Q_strncpyz(mod->alias.meshes[0].skins[i].name,
-			mod->alias.meshes[0].skins[i].skin->name, MODEL_MAX_PATH);
+	/* load the skins */
+	outMesh->num_skins = LittleLong(md2->num_skins);
+	if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS) {
+		Com_Printf("Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
+		return;
 	}
+	outMesh->skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * outMesh->num_skins, 0);
+	for (i = 0; i < outMesh->num_skins; i++) {
+		outMesh->skins[i].skin = R_AliasModelGetSkin(mod,
+			(char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME);
+		Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
+	}
+	outMesh->skinWidth = LittleLong(md2->skinwidth);
+	outMesh->skinHeight = LittleLong(md2->skinheight);
+
+	isw = 1.0 / (double)outMesh->skinWidth;
+	ish = 1.0 / (double)outMesh->skinHeight;
 
 	/* load triangle lists */
-	pintri = (dtriangle_t *) ((byte *) md2 + pheader->ofs_tris);
-	pouttri = (dtriangle_t *) ((byte *) pheader + pheader->ofs_tris);
+	pintri = (dMD2Triangle_t *) ((byte *) md2 + LittleLong(md2->ofs_tris));
+	pincoord = (dMD2Coord_t *) ((byte *) md2 + LittleLong(md2->ofs_st));
 
-	for (i = 0; i < pheader->num_tris; i++) {
+	for (i = 0; i < outMesh->num_tris; i++) {
 		for (j = 0; j < 3; j++) {
-			pouttri[i].index_xyz[j] = LittleShort(pintri[i].index_xyz[j]);
-			pouttri[i].index_st[j] = LittleShort(pintri[i].index_st[j]);
+			tempIndex[i * 3 + j] = (int32_t)LittleShort(pintri[i].index_verts[j]);
+			tempSTIndex[i * 3 + j] = (int32_t)LittleShort(pintri[i].index_st[j]);
 		}
+	}
+
+	/* build list of unique vertices */
+	numIndexes = outMesh->num_tris * 3;
+	numVerts = 0;
+	outMesh->indexes = outIndex = VID_TagAlloc(vid_modelPool, sizeof(int32_t) * numIndexes, 0);
+
+	for (i = 0; i < numIndexes; i++)
+		indRemap[i] = -1;
+
+	for (i = 0; i < numIndexes; i++) {
+		if (indRemap[i] != -1)
+			continue;
+
+		/* remap duplicates */
+		for (j = i + 1; j < numIndexes; j++) {
+			if (tempIndex[j] != tempIndex[i])
+				continue;
+			if (pincoord[tempSTIndex[j]].s != pincoord[tempSTIndex[i]].s
+			 || pincoord[tempSTIndex[j]].t != pincoord[tempSTIndex[i]].t)
+				continue;
+
+			indRemap[j] = i;
+			outIndex[j] = numVerts;
+		}
+
+		/* add unique vertex */
+		indRemap[i] = i;
+		outIndex[i] = numVerts++;
+	}
+	outMesh->num_verts = numVerts;
+	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 4096) {
+		Com_Printf("R_ModLoadAliasMD2Model: invalid about of verts for model '%s'\n", mod->name);
+		return;
+	}
+
+	for (i = 0; i < numIndexes; i++) {
+		if (indRemap[i] == i)
+			continue;
+
+		outIndex[i] = outIndex[indRemap[i]];
+	}
+
+	outMesh->stcoords = outCoord = VID_TagAlloc(vid_modelPool, sizeof(mAliasCoord_t) * outMesh->num_verts, 0);
+	for (j = 0; j < numIndexes; j++) {
+		outCoord[outIndex[j]][0] = (float)(((double)LittleShort(pincoord[tempSTIndex[indRemap[j]]].s) + 0.5) * isw);
+		outCoord[outIndex[j]][1] = (float)(((double)LittleShort(pincoord[tempSTIndex[indRemap[j]]].t) + 0.5) * isw);
 	}
 
 	/* load the frames */
-	for (i = 0; i < pheader->num_frames; i++) {
-		pinframe = (dAliasFrame_t *) ((byte *) md2 + pheader->ofs_frames + i * pheader->framesize);
-		poutframe = (dAliasFrame_t *) ((byte *) pheader + pheader->ofs_frames + i * pheader->framesize);
+	mod->alias.frames = outFrame = VID_TagAlloc(vid_modelPool, sizeof(mAliasFrame_t) * mod->alias.num_frames, 0);
+	outMesh->vertexes = outVertex = VID_TagAlloc(vid_modelPool, sizeof(mAliasVertex_t) * mod->alias.num_frames * outMesh->num_verts, 0);
 
-		memcpy(poutframe->name, pinframe->name, sizeof(poutframe->name));
+	for (i = 0; i < mod->alias.num_frames; i++) {
+		pinframe = (dMD2Frame_t *) ((byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
+
 		for (j = 0; j < 3; j++) {
-			poutframe->scale[j] = LittleFloat(pinframe->scale[j]);
-			poutframe->translate[j] = LittleFloat(pinframe->translate[j]);
+			outFrame->scale[j] = LittleFloat(pinframe->scale[j]);
+			outFrame->translate[j] = LittleFloat(pinframe->translate[j]);
 		}
-		/* verts are all 8 bit, so no swapping needed */
-		memcpy(poutframe->verts, pinframe->verts, pheader->num_xyz * sizeof(dAliasTriangleVertex_t));
+
+		VectorCopy(outFrame->translate, outFrame->mins);
+		VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->maxs);
+
+		AddPointToBounds(outFrame->mins, mod->mins, mod->maxs);
+		AddPointToBounds(outFrame->maxs, mod->mins, mod->maxs);
+
+		for (j = 0; j < numIndexes; j++) {
+			outVertex[outIndex[j]].point[0] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[0] * outFrame->scale[0];
+			outVertex[outIndex[j]].point[1] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[1] * outFrame->scale[1];
+			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[2] * outFrame->scale[2];
+		}
 	}
-
-	mod->type = mod_alias_md2;
-
-	/* load the glcmds */
-	pincmd = (int *) ((byte *) md2 + pheader->ofs_glcmds);
-	poutcmd = (int *) ((byte *) pheader + pheader->ofs_glcmds);
-	for (i = 0; i < pheader->num_glcmds; i++)
-		poutcmd[i] = LittleLong(pincmd[i]);
-
-	/* copy skin names */
-	memcpy((char *) pheader + pheader->ofs_skins, (char *) md2 + pheader->ofs_skins, pheader->num_skins * MD2_MAX_SKINNAME);
-
-	mod->mins[0] = -UNIT_SIZE;
-	mod->mins[1] = -UNIT_SIZE;
-	mod->mins[2] = -UNIT_SIZE;
-	mod->maxs[0] = UNIT_SIZE;
-	mod->maxs[1] = UNIT_SIZE;
-	mod->maxs[2] = UNIT_SIZE;
 
 	/* load the tags */
 	Q_strncpyz(mod->alias.tagname, mod->name, sizeof(mod->alias.tagname));

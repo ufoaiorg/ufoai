@@ -38,8 +38,6 @@ image_t *r_warptexture;
 
 cBspPlane_t frustum[4];
 
-int c_brush_polys, c_alias_polys;
-
 /* view origin */
 vec3_t vup;
 vec3_t vpn;
@@ -210,9 +208,6 @@ static inline void R_SetupFrame (void)
 	/* build the transformation matrix for the given view angles */
 	AngleVectors(refdef.viewangles, vpn, vright, vup);
 
-	c_brush_polys = 0;
-	c_alias_polys = 0;
-
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (refdef.rdflags & RDF_NOWORLDMODEL) {
 		qglEnable(GL_SCISSOR_TEST);
@@ -300,11 +295,6 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-	if (r_speeds->integer) {
-		c_brush_polys = 0;
-		c_alias_polys = 0;
-	}
-
 	R_SetupFrame();
 
 	R_SetFrustum();

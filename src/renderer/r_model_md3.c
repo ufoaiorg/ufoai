@@ -45,9 +45,8 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	dmd3skin_t			*pinskin;
 	dmd3coord_t			*pincoord;
 	dmd3vertex_t		*pinvert;
-	unsigned int		*pinindex, *poutindex;
+	int32_t				*pinindex, *poutindex;
 	mAliasVertex_t		*poutvert;
-	mAliasCoord_t		*poutcoord;
 	mAliasMesh_t		*poutmesh;
 	mAliasTag_t			*pouttag;
 	mAliasFrame_t		*poutframe;
@@ -61,6 +60,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 				mod->name, version, MD3_ALIAS_VERSION);
 	}
 
+	mod->type = mod_alias_md3;
 	/* byte swap the header fields and sanity check */
 	mod->alias.num_frames = LittleLong(md3->num_frames);
 	mod->alias.num_tags = LittleLong(md3->num_tags);
@@ -162,22 +162,22 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		}
 
 		/* load the indexes */
-		pinindex = (unsigned int *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
-		poutindex = poutmesh->indexes = VID_TagAlloc(vid_modelPool, sizeof(unsigned int) * poutmesh->num_tris * 3, 0);
+		pinindex = (int32_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
+		poutindex = poutmesh->indexes = VID_TagAlloc(vid_modelPool, sizeof(int32_t) * poutmesh->num_tris * 3, 0);
 
 		for (j = 0; j < poutmesh->num_tris; j++, pinindex += 3, poutindex += 3) {
-			poutindex[0] = (unsigned int)LittleLong(pinindex[0]);
-			poutindex[1] = (unsigned int)LittleLong(pinindex[1]);
-			poutindex[2] = (unsigned int)LittleLong(pinindex[2]);
+			poutindex[0] = (int32_t)LittleLong(pinindex[0]);
+			poutindex[1] = (int32_t)LittleLong(pinindex[1]);
+			poutindex[2] = (int32_t)LittleLong(pinindex[2]);
 		}
 
 		/* load the texture coordinates */
 		pincoord = (dmd3coord_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
-		poutcoord = poutmesh->stcoords = VID_TagAlloc(vid_modelPool, sizeof(mAliasCoord_t) * poutmesh->num_verts, 0);
+		poutmesh->stcoords = VID_TagAlloc(vid_modelPool, sizeof(mAliasCoord_t) * poutmesh->num_verts, 0);
 
-		for (j = 0; j < poutmesh->num_verts; j++, pincoord++, poutcoord++) {
-			poutcoord->st[0] = LittleFloat(pincoord->st[0]);
-			poutcoord->st[1] = LittleFloat(pincoord->st[1]);
+		for (j = 0; j < poutmesh->num_verts; j++, pincoord++) {
+			poutmesh->stcoords[j][0] = LittleFloat(pincoord->st[0]);
+			poutmesh->stcoords[j][1] = LittleFloat(pincoord->st[1]);
 		}
 
 		/* load the vertexes and normals */
@@ -203,5 +203,4 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		}
 		pinmesh = (dmd3mesh_t *)((byte *)pinmesh + LittleLong(pinmesh->meshsize));
 	}
-	mod->type = mod_alias_md3;
 }

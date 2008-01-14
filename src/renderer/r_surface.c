@@ -155,7 +155,7 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
 {
 	qglDrawArrays(GL_POLYGON, surf->index, surf->numedges);
 
-	c_brush_polys++;
+	refdef.brush_count++;
 }
 
 /**

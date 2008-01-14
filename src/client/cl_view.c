@@ -359,6 +359,9 @@ void V_UpdateRefDef (void)
  */
 void V_RenderView (void)
 {
+	refdef.brush_count = 0;
+	refdef.alias_count = 0;
+
 	if (cls.state != ca_active && cls.state != ca_sequence && cls.state != ca_ptledit)
 		return;
 

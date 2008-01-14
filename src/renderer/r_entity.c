@@ -234,10 +234,8 @@ static void R_DrawMeshEntities (entity_t *ents)
 		} else {
 			switch (e->model->type) {
 			case mod_alias_md2:
-				R_DrawAliasMD2Model(e);
-				break;
 			case mod_alias_md3:
-				R_DrawAliasMD3Model(e);
+				R_DrawAliasModel(e);
 				break;
 			default:
 				break;
@@ -355,12 +353,12 @@ static float *R_CalcTransform (entity_t * e)
 
 		/* tag transformation */
 		if (e->tagent->model && e->tagent->model->alias.tagdata) {
-			dtag_t *taghdr;
+			dMD2tag_t *taghdr;
 			const char *name;
 			float *tag;
 			float interpolated[16];
 
-			taghdr = (dtag_t *) e->tagent->model->alias.tagdata;
+			taghdr = (dMD2tag_t *) e->tagent->model->alias.tagdata;
 
 			/* find the right tag */
 			name = (char *) taghdr + taghdr->ofs_names;

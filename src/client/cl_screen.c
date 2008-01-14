@@ -478,8 +478,12 @@ void SCR_UpdateScreen (void)
 
 		if (cl_fps->integer)
 			SCR_DrawString(viddef.width - con_fontWidth * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
-		if (cls.state == ca_active && scr_rspeed->integer)
-			SCR_DrawString(viddef.width - con_fontWidth * 30, 20, va("brushes: %6i alias: %6i\n", c_brush_polys, c_alias_polys), qtrue);
+		if (scr_rspeed->integer) {
+			if (cls.state == ca_active)
+				SCR_DrawString(viddef.width - con_fontWidth * 30, 20, va("brushes: %6i alias: %6i\n", refdef.brush_count, refdef.alias_count), qtrue);
+			else
+				SCR_DrawString(viddef.width - con_fontWidth * 14, 20, va("alias: %6i\n", refdef.alias_count), qtrue);
+		}
 
 		if (cls.state != ca_sequence)
 			SCR_DrawCursor();

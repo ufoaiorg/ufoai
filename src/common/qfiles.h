@@ -55,31 +55,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct {
 	short s; /**< (0 <= s < skinWidth) */
 	short t; /**< (0 <= t < skinHeight) */
-} dstvert_t;
+} dMD2Coord_t;
 
 typedef struct {
-	short index_xyz[3];	/**< these three shorts are indices into the array of vertices in each frames.
+	short index_verts[3];	/**< these three shorts are indices into the array of vertices in each frames.
 						 * In other words, the number of triangles in a md2 file is fixed, and each
 						 * triangle is always made of the same three indices into each frame's array
 						 * of vertices. So, in each frame, the triangles themselves stay intact, their
 						 * vertices are just moved around
 						 */
 	short index_st[3];	/**< these three shorts are indices into the array of texture coordinates */
-} dtriangle_t;
+} dMD2Triangle_t;
 
 typedef struct {
-	byte v[3];					/**< scaled byte to fit in frame mins/maxs
-								 * The three bytes represent the x, y, and z coordinates of this vertex.
-								 * This is not the "real" vertex coordinate. This is a scaled version of the
-								 * coordinate, scaled so that each of the three numbers fit within one byte.
-								 * To scale the vertex back to the "real" coordinate, you need to first
-								 * multiply each of the bytes by their respective float scale in the dAliasFrame_t
-								 * structure, and then add the respective float translation, also in the dAliasFrame_t
-								 * structure. This will give you the vertex coordinate relative to the model's
-								 * origin, which is at the origin, (0, 0, 0)
-								 */
+	byte v[3];	/**< scaled byte to fit in frame mins/maxs
+				 * The three bytes represent the x, y, and z coordinates of this vertex.
+				 * This is not the "real" vertex coordinate. This is a scaled version of the
+				 * coordinate, scaled so that each of the three numbers fit within one byte.
+				 * To scale the vertex back to the "real" coordinate, you need to first
+				 * multiply each of the bytes by their respective float scale in the dMD2Frame_t
+				 * structure, and then add the respective float translation, also in the dMD2Frame_t
+				 * structure. This will give you the vertex coordinate relative to the model's
+				 * origin, which is at the origin, (0, 0, 0)
+				 */
 	byte lightnormalindex;		/**< this is an index into a table of normals (bytedirs - see anormtab.h) */
-} dAliasTriangleVertex_t;
+} dMD2TriangleVertex_t;
 
 /**
  * @brief is a variable sized structure, however all frame_t structures within the same file will
@@ -89,8 +89,8 @@ typedef struct dAliasFrame_s {
 	float scale[3];				/**< multiply byte verts by this */
 	float translate[3];			/**< then add this */
 	char name[16];				/**< frame name from grabbing */
-	dAliasTriangleVertex_t verts[1];		/**< variable sized - an array of num_xyz dtrivertx_t structures.*/
-} dAliasFrame_t;
+	dMD2TriangleVertex_t verts[1];		/**< variable sized - an array of num_verts dMD2TriangleVertex_t structures.*/
+} dMD2Frame_t;
 
 
 /**
@@ -117,8 +117,8 @@ typedef struct {
 	int framesize;				/**< byte size of each frame */
 
 	int num_skins;				/**< Number of skins associated with this model */
-	int num_xyz;				/**< number of vertices */
-	int num_st;					/**< number of texture coordinates - can be greater than num_xyz */
+	int num_verts;				/**< number of vertices */
+	int num_st;					/**< number of texture coordinates - can be greater than num_verts */
 	int num_tris;				/**< number of triangles in each frame. */
 	int num_glcmds;				/**< dwords in strip/fan command list */
 	int num_frames;				/**< number of frames for this model */
@@ -129,7 +129,7 @@ typedef struct {
 	int ofs_frames;				/**< offset for first frame */
 	int ofs_glcmds;				/**< offset to the gl command list */
 	int ofs_end;				/**< end of file */
-} mdl_md2_t;
+} dMD2Model_t;
 
 
 /** @brief Tag file header structure - 32 byte */
@@ -145,7 +145,7 @@ typedef struct {
 	int ofs_tags;
 	int ofs_end;
 	int ofs_extractend;
-} dtag_t;
+} dMD2tag_t;
 
 /*========================================================================
 .MD3 model file format
@@ -175,11 +175,6 @@ typedef struct {
 	short point[3];
 	short norm;
 } dmd3vertex_t;
-
-typedef struct {
-	float point[3];
-	float normal[3];
-} admd3vertex_t;
 
 typedef struct {
 	float mins[3];
