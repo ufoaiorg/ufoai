@@ -28,21 +28,15 @@
 #ifndef _MDFOUR_H
 #define _MDFOUR_H
 
-#ifndef int32
-#define int32 int
-#endif
+#include "../shared/ufotypes.h"
 
 #if SIZEOF_INT > 4
 #define LARGE_INT32
 #endif
 
-#ifndef uint32
-#define uint32 unsigned int32
-#endif
-
 struct mdfour {
-	uint32 A, B, C, D;
-	uint32 totalN;
+	uint32_t A, B, C, D;
+	uint32_t totalN;
 };
 
 unsigned Com_BlockChecksum(const void *buffer, int length);
