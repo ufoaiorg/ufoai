@@ -629,7 +629,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rotate, float zoom, const char *map)
 {
 	/* globe scaling */
-	const float fullscale = zoom / 4.0f;
+	const float fullscale = zoom / 40.0f;
 	vec4_t lightPos;
 	const vec4_t diffuseLightColor = {1.0f, 1.0f, 1.0f, 1.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
@@ -667,7 +667,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 
 	background = R_FindImage("pics/menu/map_background", it_pic);
 	if (background != r_notexture) {
-		const float bgZoom = zoom * 10.0f;
+		const float bgZoom = zoom;
 		/* Force height to make sure the image is a circle (and not an ellipse) */
 		const int halfHeight = 768.0f * viddef.ry;
 		qglEnable(GL_BLEND);

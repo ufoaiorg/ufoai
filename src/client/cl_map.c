@@ -1336,7 +1336,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		R_Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
-			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom / 10, curCampaign->map);
+			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, curCampaign->map);
 	} else {
 		if (smoothRotation)
 			MAP_SmoothTranslate();
