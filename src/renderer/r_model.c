@@ -48,21 +48,22 @@ void R_ModModellist_f (void)
 	model_t *mod;
 
 	Com_Printf("Loaded models:\n");
+	Com_Printf("Type | #Tris  | Filename\n");
 	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
 		if (!mod->name[0])
 			continue;
 		switch(mod->type) {
 		case mod_alias_md3:
-			Com_Printf("MD3");
+			Com_Printf("MD3 ");
 			break;
 		case mod_alias_md2:
-			Com_Printf("MD2");
+			Com_Printf("MD2 ");
 			break;
 		default:
-			Com_Printf("%3i", mod->type);
+			Com_Printf("%3i ", mod->type);
 			break;
 		}
-		Com_Printf(" %s\n", mod->name);
+		Com_Printf(" | %6i | %s\n", mod->alias.meshes[0].num_tris, mod->name);
 	}
 }
 
