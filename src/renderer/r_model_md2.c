@@ -124,25 +124,42 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int32_t *outIndex;
-	int frameSize;
-	int numIndexes;
-	int numVerts;
+	int frameSize, numIndexes, numVerts, skinWidth, skinHeight;
 	double isw, ish;
 	size_t l;
 
+	/* fixed values */
+	mod->type = mod_alias_md2;
+	mod->alias.num_meshes = 1;
+
+	/* get the disk data */
 	md2 = (dMD2Model_t *) buffer;
 
+	/* sanity checks */
 	version = LittleLong(md2->version);
 	if (version != MD2_ALIAS_VERSION)
 		Sys_Error("%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
 
-	mod->type = mod_alias_md2;
+	if (bufSize != LittleLong(md2->ofs_end))
+		Sys_Error("model %s broken offset values", mod->name);
+
+	skinHeight = LittleLong(md2->skinheight);
+	skinWidth = LittleLong(md2->skinwidth);
+	if (skinHeight <= 0 || skinWidth <= 0)
+		Sys_Error("model %s has invalid skin dimensions '%d x %d'", mod->name, skinHeight, skinWidth);
+
 	/* only one mesh for md2 models */
-	mod->alias.num_meshes = 1;
-	mod->alias.meshes = outMesh = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t), 0);
 	mod->alias.num_frames = LittleLong(md2->num_frames);
+	if (mod->alias.num_frames <= 0 || mod->alias.num_frames >= MD2_MAX_FRAMES)
+		Sys_Error("model %s has too many (or no) frames", mod->name);
+
+	mod->alias.meshes = outMesh = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t), 0);
 	outMesh->num_verts = LittleLong(md2->num_verts);
+	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MD2_MAX_VERTS)
+		Sys_Error("model %s has too many (or no) vertices", mod->name);
 	outMesh->num_tris = LittleLong(md2->num_tris);
+	if (outMesh->num_tris <= 0 || outMesh->num_tris >= MD2_MAX_TRIANGLES)
+		Sys_Error("model %s has too many (or no) triangles", mod->name);
 	frameSize = LittleLong(md2->framesize);
 
 	/* load the skins */
@@ -157,8 +174,8 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 			(char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME);
 		Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
 	}
-	outMesh->skinWidth = LittleLong(md2->skinwidth);
-	outMesh->skinHeight = LittleLong(md2->skinheight);
+	outMesh->skinWidth = skinWidth;
+	outMesh->skinHeight = skinHeight;
 
 	isw = 1.0 / (double)outMesh->skinWidth;
 	ish = 1.0 / (double)outMesh->skinHeight;
