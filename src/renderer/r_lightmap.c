@@ -329,6 +329,9 @@ static qboolean R_LightPoint_ (model_t *mapTile, mBspNode_t *node, vec3_t start,
 
 begin:
 
+	if (!node->plane)
+		return qfalse
+
 	if (node->contents != -1)  /* didn't hit anything */
 		return qfalse;
 
