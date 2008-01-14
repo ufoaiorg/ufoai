@@ -632,7 +632,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	vec4_t lightPos;
 	const vec4_t diffuseLightColor = {1.0f, 1.0f, 1.0f, 1.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
-	float a, p, q;
+	float a, sqrta, p, q;
 	/* earth radius is about 3000.0f * zoom, so 300 with the base zoom of 0.1
 	   Note that moon dist should be 18 000 then, but if we use that we don't see the moon
 	   and the movement of the moon is made by step: this is not nice. I prefered to use
@@ -678,7 +678,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	q = (day % 365 + (float) (second / (3600.0f * 24.0f))) * 2 * M_PI / 365;
 	p = (float) (second / (24 * 3600.0f)) * 2 * M_PI - 0.5f * M_PI;
 	a = cos(q) * SIN_ALPHA;
-	Vector4Set(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a, 0);
+	sqrta = sqrt(0.5f * (1 - a * a));
+	Vector4Set(lightPos, cos(p) * sqrta, -sin(p) * sqrta, a, 0);
 
 	VectorSet(v, lightPos[1], lightPos[0], lightPos[2]);
 
@@ -717,9 +718,11 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	/* center earth */
 	VectorSet(earthPos, centerx, centery, 0);
 
-	/* calculate position of the moon */
-	p = (day % 27 + (float) (second / (3600.0f * 24.0f))) * 2 * M_PI / 27.33;
-	VectorSet(moonPos, cos(p) * sqrt(0.5f * (1 - a * a)), - sin(p) * sqrt(0.5f * (1 - a * a)), a);
+	/* calculate position of the moon
+	 (it rotates around earth with a period of about 24.9 h, and we must take day into account
+	 to avoid moon to "jump" every time the day is changing) */
+	p = (float) ((day % 249) + second / (24.9f * 3600.0f)) * 2 * M_PI;
+	VectorSet(moonPos, cos(p) * sqrta, - sin(p) * sqrta, a);
 	VectorSet(v, moonPos[1], moonPos[0], moonPos[2]);
 	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
