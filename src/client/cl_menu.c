@@ -2190,7 +2190,7 @@ void MN_DrawItem (const vec3_t org, item_t item, int sx, int sy, int x, int y, c
 		mi.skin = 0;
 
 		Vector4Copy(color, col);
-		/* no ammo in this weapon - hightlight this item */
+		/* no ammo in this weapon - highlight this item */
 		if (od->weapon && od->reload && !item.a) {
 			col[1] *= 0.5;
 			col[2] *= 0.5;

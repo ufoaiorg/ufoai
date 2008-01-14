@@ -588,7 +588,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 {
 	modelInfo_t mi;
 	char path[MAX_QPATH] = "";
-	vec2_t model_center;
+	vec3_t model_center = {0, 0, 0};
 
 	memset(&mi, 0, sizeof(modelInfo_t));
 
@@ -606,6 +606,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 
 	model_center[0] = MARKER_SIZE * zoom;
 	model_center[1] = MARKER_SIZE * zoom;
+	model_center[2] = MARKER_SIZE * zoom; /* FIXME */
 	mi.center = model_center;
 
 	R_DrawModelDirect(&mi, NULL, NULL);
