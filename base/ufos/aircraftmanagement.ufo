@@ -522,7 +522,7 @@ craftitem craft_ammo_sparrowhawk
 	price		250
 	buytype		craftitem
 
-	ammo		8
+	ammo		7
 	wdamage		20
 	accuracy	0.4
 	wrange		7
