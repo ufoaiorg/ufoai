@@ -588,7 +588,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 {
 	modelInfo_t mi;
 	char path[MAX_QPATH] = "";
-	vec3_t model_center = {0, 0, 0};
+	vec3_t model_center;
 
 	memset(&mi, 0, sizeof(modelInfo_t));
 
