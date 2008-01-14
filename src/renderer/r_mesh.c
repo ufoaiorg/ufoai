@@ -97,7 +97,8 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		/* register the parent model */
 		pmi->model = R_RegisterModelShort(pmi->name);
 
-		/* transform */
+		/* transform - the next transform for the child model will be relative from the
+		 * parent model location now */
 		R_TransformModelDirect(pmi);
 
 		/* tag trafo */
@@ -304,14 +305,14 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
 }
 
 /**
- * @sa R_DrawAliasMD2Model
- * @todo Implement the md2 renderer effect (e.g. RF_HIGHLIGHT)
+ * @brief Draw the models in the entity list
+ * @note this is only called in ca_active or ca_sequence mode
+ * @sa R_DrawEntities
  */
 void R_DrawAliasModel (entity_t *e)
 {
 	mAliasModel_t *mod;
 	int i;
-	image_t *skin;
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t bbox[8];
 	vec4_t tmp;
@@ -342,9 +343,8 @@ void R_DrawAliasModel (entity_t *e)
 			R_Color(color);
 	}
 
-	skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
-
-	R_BindTexture(skin->texnum);
+	/* the values are sane here already - see R_DrawEntities */
+	R_BindTexture(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum);
 
 	for (i = 0; i < mod->num_meshes; i++) {
 		/* locate the proper data */
