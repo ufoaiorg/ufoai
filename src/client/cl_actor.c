@@ -3223,8 +3223,8 @@ void CL_ActorMouseTrace (void)
 	le_t *le;
 
 	/* get cursor position as a -1 to +1 range for projection */
-	cur[0] = (mousePosX * viddef.rx - scr_vrect.width * 0.5 - scr_vrect.x) / (scr_vrect.width * 0.5);
-	cur[1] = (mousePosY * viddef.ry - scr_vrect.height * 0.5 - scr_vrect.y) / (scr_vrect.height * 0.5);
+	cur[0] = (mousePosX * viddef.rx - viddef.viewWidth * 0.5 - viddef.x) / (viddef.viewWidth * 0.5);
+	cur[1] = (mousePosY * viddef.ry - viddef.viewHeight * 0.5 - viddef.y) / (viddef.viewHeight * 0.5);
 
 	/* get trace vectors */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON) {
@@ -3253,8 +3253,8 @@ void CL_ActorMouseTrace (void)
 	if (cl_isometric->integer)
 		frustumslope[0] = 10.0 * refdef.fov_x;
 	else
-		frustumslope[0] = tan(refdef.fov_x * M_PI / 360) * projectiondistance;
-	frustumslope[1] = frustumslope[0] * ((float)scr_vrect.height / scr_vrect.width);
+		frustumslope[0] = tan(refdef.fov_x * M_PI / 360.0) * projectiondistance;
+	frustumslope[1] = frustumslope[0] * ((float)viddef.viewHeight / (float)viddef.viewWidth);
 
 	/* transform cursor position into perspective space */
 	VectorMA(from, projectiondistance, forward, stop);

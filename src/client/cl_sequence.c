@@ -165,7 +165,7 @@ void CL_SequenceEnd_f (void)
  */
 static void CL_SequenceCamera (void)
 {
-	if (!scr_vrect.width || !scr_vrect.height)
+	if (!viddef.viewWidth || !viddef.viewHeight)
 		return;
 
 	/* advance time */

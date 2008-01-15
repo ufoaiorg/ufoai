@@ -2103,18 +2103,19 @@ void MN_SetViewRect (const menu_t* menu)
 
 	if (!menuNode) {
 		/* render the full screen */
-		scr_vrect.x = scr_vrect.y = 0;
-		scr_vrect.width = viddef.width;
-		scr_vrect.height = viddef.height;
+		viddef.x = viddef.y = 0;
+		viddef.viewWidth = viddef.width;
+		viddef.viewHeight = viddef.height;
 	} else if (menuNode->invis) {
 		/* don't draw the scene */
-		memset(&scr_vrect, 0, sizeof(scr_vrect));
+		viddef.x = viddef.y = 0;
+		viddef.viewWidth = viddef.viewHeight = 0;
 	} else {
 		/* the menu has a view size specified */
-		scr_vrect.x = menuNode->pos[0] * viddef.rx;
-		scr_vrect.y = menuNode->pos[1] * viddef.ry;
-		scr_vrect.width = menuNode->size[0] * viddef.rx;
-		scr_vrect.height = menuNode->size[1] * viddef.ry;
+		viddef.x = menuNode->pos[0] * viddef.rx;
+		viddef.y = menuNode->pos[1] * viddef.ry;
+		viddef.viewWidth = menuNode->size[0] * viddef.rx;
+		viddef.viewHeight = menuNode->size[1] * viddef.ry;
 	}
 }
 

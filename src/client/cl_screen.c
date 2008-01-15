@@ -42,8 +42,6 @@ static qboolean scr_initialized = qfalse;/* ready to draw */
 
 static int scr_draw_loading = 0;
 
-vrect_t scr_vrect;				/* position of render window on screen */
-
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
 static cvar_t *scr_rspeed;
@@ -307,7 +305,7 @@ static void SCR_DrawConsole (void)
 {
 	Con_CheckResize();
 
-	if (!scr_vrect.width || !scr_vrect.height) {
+	if (!viddef.viewWidth || !viddef.viewHeight) {
 		/* active full screen menu */
 		/* draw the console like in game */
 		if (scr_con_current)

@@ -40,11 +40,6 @@ and the (x,y) offset from the bottom (?) left (?) corner.
 
 */
 
-
-typedef struct vrect_s {
-	int x, y, width, height;
-} vrect_t;
-
 /**
  * @brief Contains the game screen size and drawing scale
  *
@@ -70,6 +65,8 @@ typedef struct {
 	qboolean prev_fullscreen;
 	float rx;		/**< horizontal screen scale factor */
 	float ry;		/**< vertical screen scale factor */
+	int x, y;
+	int viewWidth, viewHeight;
 } viddef_t;
 
 typedef struct vidmode_s {

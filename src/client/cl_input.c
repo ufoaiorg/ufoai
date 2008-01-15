@@ -1104,7 +1104,7 @@ void CL_CameraMove (void)
 	if (cls.state != ca_active)
 		return;
 
-	if (!scr_vrect.width || !scr_vrect.height)
+	if (!viddef.viewWidth || !viddef.viewHeight)
 		return;
 
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -1231,7 +1231,7 @@ static void IN_Parse (void)
 		if (cls.state != ca_active)
 			return;
 
-		if (!scr_vrect.width || !scr_vrect.height)
+		if (!viddef.viewWidth || !viddef.viewHeight)
 			return;
 
 		CL_ActorMouseTrace();

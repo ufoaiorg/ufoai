@@ -319,7 +319,7 @@ static struct ptleditMenu_s {
  */
 static void PE_SetCamera (void)
 {
-	if (!scr_vrect.width || !scr_vrect.height)
+	if (!viddef.width || !viddef.height)
 		return;
 
 	/* set camera */

@@ -343,13 +343,13 @@ void V_UpdateRefDef (void)
 	VectorCopy(cl.cam.camorg, refdef.vieworg);
 	VectorCopy(cl.cam.angles, refdef.viewangles);
 
-	V_CalcFovY(scr_vrect.width, scr_vrect.height);
+	V_CalcFovY(viddef.viewWidth, viddef.viewHeight);
 
 	/* setup refdef */
-	refdef.x = scr_vrect.x;
-	refdef.y = scr_vrect.y;
-	refdef.width = scr_vrect.width;
-	refdef.height = scr_vrect.height;
+	refdef.x = viddef.x;
+	refdef.y = viddef.y;
+	refdef.width = viddef.viewWidth;
+	refdef.height = viddef.viewHeight;
 	refdef.time = cl.time * 0.001;
 	refdef.worldlevel = cl_worldlevel->integer;
 }
@@ -365,7 +365,7 @@ void V_RenderView (void)
 	if (cls.state != ca_active && cls.state != ca_sequence && cls.state != ca_ptledit)
 		return;
 
-	if (!scr_vrect.width || !scr_vrect.height)
+	if (!viddef.viewWidth || !viddef.viewHeight)
 		return;
 
 	/* still loading */
