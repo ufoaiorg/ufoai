@@ -550,7 +550,9 @@ craftitem craft_ammo_tr20
 	price		210
 	buytype		craftitem
 
-	ammo		152
+//	ammo		152
+// The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
+	ammo		12
 	wdamage		18
 	accuracy	0.4
 	wrange		3
