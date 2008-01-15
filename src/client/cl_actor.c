@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "cl_sound.h"
+#include "../renderer/r_mesh_anim.h"
 
 /* public */
 le_t *selActor;
@@ -3398,7 +3399,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			/* +2 (resp. +3) because the body and the head are already
 			 * (and maybe the right weapon will be)
 			 * at the previous location */
-			add.tagent = R_GetEntity() + 2 + (le->right != NONE);
+			add.tagent = R_GetFreeEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
 
 			R_AddEntity(&add);
@@ -3414,7 +3415,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 			/* +2 because the body and the head are already
 			 * at the previous location */
-			add.tagent = R_GetEntity() + 2;
+			add.tagent = R_GetFreeEntity() + 2;
 			add.tagname = "tag_rweapon";
 
 			R_AddEntity(&add);
@@ -3439,7 +3440,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	add.skinnum = le->skinnum;
 
 	/* +1 because the body is already at the previous location */
-	add.tagent = R_GetEntity() + 1;
+	add.tagent = R_GetFreeEntity() + 1;
 	add.tagname = "tag_head";
 
 	R_AddEntity(&add);
@@ -3483,7 +3484,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 			add.model = cls.model_weapons[le->left];
 
-			add.tagent = R_GetEntity() + 2 + (le->right != NONE);
+			add.tagent = R_GetFreeEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
 
 			R_AddEntity(&add);
@@ -3496,7 +3497,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
 
-			add.tagent = R_GetEntity() + 2;
+			add.tagent = R_GetFreeEntity() + 2;
 			add.tagname = "tag_rweapon";
 
 			R_AddEntity(&add);
@@ -3511,7 +3512,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	add.skinnum = le->skinnum;
 
 	/* FIXME */
-	add.tagent = R_GetEntity() + 1;
+	add.tagent = R_GetFreeEntity() + 1;
 	add.tagname = "tag_head";
 
 	R_AddEntity(&add);

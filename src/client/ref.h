@@ -59,64 +59,7 @@ typedef struct animState_s {
 	byte change;
 } animState_t;
 
-/** @brief entity transform */
-typedef struct {
-	qboolean done;
-	qboolean processing;
-	float matrix[16];
-} transform_t;
-
-typedef struct entity_s {
-	struct model_s *model;		/**< opaque type outside refresh */
-	vec3_t angles;
-
-	vec3_t origin;
-	vec3_t oldorigin;
-
-	/* tag positioning */
-	struct entity_s *tagent;	/**< pointer to the parent entity */
-	const char *tagname;				/**< name of the tag */
-
-	/* misc */
-	int skinnum;
-
-	float alpha;				/**< ignore if RF_TRANSLUCENT isn't set */
-
-	int flags;
-
-	animState_t as;
-
-	transform_t transform;
-
-	struct entity_s *next;		/**< for chaining */
-} entity_t;
-
 /*============================================================================= */
-
-#define MAX_SHADERS 64
-typedef struct shader_s {
-	/* title is internal for finding the shader */
-
-	/** we should use this shader when loading the image */
-	char *name;
-
-	/** filename is for an external filename to load the shader from */
-	char *filename;
-
-	/** image filenames */
-	char *distort;
-	char *normal;
-
-	qboolean glsl;				/**< glsl shader */
-	qboolean frag;				/**< fragment-shader */
-	qboolean vertex;			/**< vertex-shader */
-
-	byte glMode;
-	/* @todo: */
-
-	/* vpid and fpid are vertexpid and fragmentpid for binding */
-	int vpid, fpid, glslpid;
-} shader_t;
 
 #define MAX_GL_LIGHTS 8
 
@@ -227,38 +170,11 @@ typedef struct {
 	const char *mapZone;	/**< used to replace textures in base assembly */
 } refdef_t;
 
-void R_BeginFrame(void);
-void R_EndFrame(void);
-void R_RenderFrame(void);
-
-void R_AnimAppend(animState_t * as, struct model_s *mod, const char *name);
-void R_AnimChange(animState_t * as, struct model_s *mod, const char *name);
-void R_AnimRun(animState_t * as, struct model_s *mod, int msec);
-char *R_AnimGetName(animState_t * as, struct model_s *mod);
-
 struct model_s *R_RegisterModelShort(const char *name);
 struct image_s *R_RegisterPic(const char *name);
 
-int R_DrawNormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
-void R_DrawChar(int x, int y, int c);
-void R_DrawChars(void);
-void R_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
 void R_Color(const float *rgba);
 void R_ColorBlend(const float *rgba);
-void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, vec3_t rotate, float zoom, const char *map);
-void R_Draw3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model);
-int R_DrawImagePixelData(const char *name, byte *frame, int width, int height);
-void R_DrawTexture(int texnum, int x, int y, int w, int h);
-void R_DrawGetPicSize(int *w, int *h, const char *name);
-void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
-void R_DrawFlatGeoscape(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
-void R_DrawLineStrip(int points, int *verts);
-void R_DrawLineLoop(int points, int *verts);
-void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness);
-void R_DrawPolygon(int points, int *verts);
-
-void R_AddEntity(entity_t * ent);
-entity_t *R_GetEntity(void);
 
 void R_ModBeginLoading(const char *tiles, const char *pos);
 void R_ModEndLoading(void);
@@ -271,31 +187,8 @@ void R_FontRegister(const char *name, int size, const char *path, const char *st
 int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
 void R_FontLength(const char *font, char *c, int *width, int *height);
 
-void R_ShaderInit(void);
-qboolean R_Init(void);
-qboolean R_SetMode(void);
-void R_Shutdown(void);
-
-void R_AddLights(void);
-void R_AddLight(vec3_t origin, float intensity, vec3_t color);
-
-extern SDL_Surface *r_surface;
-
 #define EARTH_RADIUS 8192.0f
 #define MOON_RADIUS 1024.0f /* FIXME */
-
-extern light_t r_lights[MAX_GL_LIGHTS];
-
-extern int r_numShaders;
-extern shader_t r_shaders[MAX_SHADERS];
-
-extern ptlArt_t r_particlesArt[MAX_PTL_ART];
-extern ptl_t r_particles[MAX_PTLS];
-extern int r_numParticlesArt;
-extern int r_numParticles;
-
-extern int r_numEntities;
-extern entity_t r_entities[MAX_ENTITIES];
 
 extern refdef_t refdef;
 

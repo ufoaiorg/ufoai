@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_shader.h"
 #include "r_sphere.h"
 #include "r_font.h"
+#include "r_light.h"
+#include "r_main.h"
 #include "r_error.h"
 
 refdef_t refdef;

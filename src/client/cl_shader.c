@@ -33,11 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "client.h"
+#include "../renderer/r_shader.h"
 
 int r_numShaders;
-
-/* shader_t is in client/ref.h */
-/* r_shaders is external and is linked to refdef.shaders in cl_view.c V_RenderView */
 shader_t r_shaders[MAX_SHADERS];
 
 static const value_t shader_values[] = {

@@ -346,7 +346,7 @@ void SH_UseShader (shader_t * shader, qboolean activate)
  * @param[in] index The index of the local parameter for the shader
  * @param[in] p The list of values
  */
-void R_ShaderFragmentParameter (GLuint index, GLfloat *p)
+void R_ShaderFragmentParameter (unsigned int index, float *p)
 {
 	if (!r_state.arb_fragment_program)
 		return;

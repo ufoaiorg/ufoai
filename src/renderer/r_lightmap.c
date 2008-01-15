@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_error.h"
+#include "r_entity.h"
 #include "r_lightmap.h"
 
 /* in video memory, lightmaps are chunked into rgba blocks */
@@ -453,7 +454,7 @@ void R_LightPoint (vec3_t p)
 
 		/* check bsp models */
 		for (i = 0; i < r_numEntities; i++) {
-			ent = &r_entities[i];
+			ent = R_GetEntity(i);
 			m = ent->model;
 
 			if (!m || m->type != mod_brush)

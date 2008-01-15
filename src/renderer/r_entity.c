@@ -23,10 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_entity.h"
+#include "r_mesh_anim.h"
 #include "r_error.h"
 
 int r_numEntities;
-entity_t r_entities[MAX_ENTITIES];
+static entity_t r_entities[MAX_ENTITIES];
 
 #define HIGHLIGHT_START_Z 22
 #define HIGHTLIGHT_SIZE 18
@@ -480,14 +482,24 @@ void R_DrawEntities (void)
  * @note This can't overflow, because R_AddEntity checks the bounds
  * @sa R_AddEntity
  */
-entity_t *R_GetEntity (void)
+entity_t *R_GetFreeEntity (void)
 {
 	assert(r_numEntities < MAX_ENTITIES);
 	return &r_entities[r_numEntities];
 }
 
 /**
- * @sa R_GetEntity
+ * @brief Returns a specific entity from the list
+ */
+entity_t *R_GetEntity (int id)
+{
+	if (id < 0 || id >= r_numEntities)
+		return NULL;
+	return &r_entities[id];
+}
+
+/**
+ * @sa R_GetFreeEntity
  */
 void R_AddEntity (entity_t * ent)
 {

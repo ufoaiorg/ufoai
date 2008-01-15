@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "../renderer/r_draw.h"
+#include "../renderer/r_mesh_anim.h"
 
 #define MAX_DATA_LENGTH 2048
 
@@ -286,7 +288,7 @@ void CL_SequenceRender (void)
 			}
 
 			/* add to render list */
-			se->ep = R_GetEntity();
+			se->ep = R_GetFreeEntity();
 			R_AddEntity(&ent);
 		}
 }

@@ -118,7 +118,6 @@ void QR_Link(void);
 extern int registration_sequence;
 
 void R_ScreenShot_f(void);
-void R_InterpolateTransform(animState_t *as, int numframes, float *tag, float *interpolated);
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(entity_t *e);
 void R_GetLevelSurfaceLists(void);

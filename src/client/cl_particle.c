@@ -24,6 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "../renderer/r_light.h"
+#include "../renderer/r_particle.h"
 
 static mapParticle_t MPs[MAX_MAPPARTICLES];
 int numMPs;
@@ -183,12 +185,6 @@ static int pcmdPos;
 static byte cmdStack[MAX_STACK_DATA];
 static void *stackPtr[MAX_STACK_DEPTH];
 static byte stackType[MAX_STACK_DEPTH];
-
-ptlArt_t r_particlesArt[MAX_PTL_ART];
-int r_numParticlesArt;
-
-ptl_t r_particles[MAX_PTLS];
-int r_numParticles;
 
 static void CL_ParticleRun2(ptl_t *p);
 

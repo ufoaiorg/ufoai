@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "../renderer/r_draw.h"
 
 vec3_t newBasePos;
 static cvar_t *mn_base_title;

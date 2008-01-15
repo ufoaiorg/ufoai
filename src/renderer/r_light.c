@@ -24,9 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_error.h"
+#include "r_light.h"
 
 static int r_numLights;
-light_t r_lights[MAX_GL_LIGHTS];
+static light_t r_lights[MAX_GL_LIGHTS];
 
 void R_AddLight (vec3_t origin, float intensity, vec3_t color)
 {
