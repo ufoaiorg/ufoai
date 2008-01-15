@@ -162,6 +162,16 @@ language fr {
 	}
 }
 
+language gr {
+	"_Greek"
+	{
+		gr.UTF-8
+		gr_GR.UTF-8
+		gr.utf8
+		gr_GR.utf8
+	}
+}
+
 language it {
 	"_Italien"
 	{
