@@ -315,7 +315,6 @@ void R_DrawAliasModel (entity_t *e)
 	int i;
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t bbox[8];
-	vec4_t tmp;
 
 	/* check if model is out of fov */
 	/* FIXME: fix culling and reactivate check */
@@ -327,7 +326,11 @@ void R_DrawAliasModel (entity_t *e)
 
 	qglMultMatrixf(e->transform.matrix);
 
+	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
+		vec4_t tmp;
+
+		GLVectorTransform(e->transform.matrix, e->origin, tmp);
 		R_LightPoint(tmp);
 
 		VectorCopy(r_lightmap_sample.color, color);
