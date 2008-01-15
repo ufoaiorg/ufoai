@@ -29,8 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CLIENT_H
 #define CLIENT_CLIENT_H
 
-#include "ref.h"
-#include "vid.h"
+#include "cl_renderer.h"
+#include "cl_video.h"
 #include "../game/inv_shared.h"
 #include "cl_sound.h"
 #include "cl_screen.h"

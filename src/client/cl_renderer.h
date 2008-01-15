@@ -1,8 +1,5 @@
 /**
- * @file ref.h
- * @brief Think this may be the header for the renderer that specifies the renderer API, but am not sure.
- *
- * @todo: If this is indeed the header for the render, that specifies the renderer API, it should be with the renderer, not the client.
+ * @file cl_renderer.h
  */
 
 /*

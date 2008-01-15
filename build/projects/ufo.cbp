@@ -243,7 +243,7 @@
 		<Unit filename="..\..\src\client\cl_ufopedia.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_vid.c">
+		<Unit filename="..\..\src\client\cl_video.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_view.c">
