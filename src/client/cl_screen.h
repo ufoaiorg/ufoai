@@ -34,7 +34,6 @@ void SCR_UpdateScreen(void);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
 const char* SCR_SetLoadingBackground(const char *mapString);
-void SCR_TouchPics(void);
 void SCR_RunConsole(void);
 void SCR_DrawPrecacheScreen(qboolean string);
 

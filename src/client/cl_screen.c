@@ -204,6 +204,25 @@ static void SCR_DrawLoading (void)
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
 }
 
+/**
+ * @brief Allows rendering code to cache all needed sbar graphics
+ */
+static void SCR_TouchPics (void)
+{
+	if (cursor->integer) {
+		if (cursor->integer > 9 || cursor->integer < 0)
+			Cvar_SetValue("cursor", 1);
+
+		R_RegisterPic("wait");
+		R_RegisterPic("ducked");
+		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", cursor->integer);
+		if (!R_RegisterPic(cursor_pic)) {
+			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursor_pic);
+			cursor_pic[0] = 0;
+		}
+	}
+}
+
 static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 /**
  * @brief Draws the 3D-cursor in battlemode and the icons/info next to it.
@@ -387,25 +406,6 @@ static void SCR_TimeRefresh_f (void)
 	stop = Sys_Milliseconds();
 	time = (stop - start) / 1000.0;
 	Com_Printf("%f seconds (%f fps)\n", time, 128 / time);
-}
-
-/**
- * @brief Allows rendering code to cache all needed sbar graphics
- */
-void SCR_TouchPics (void)
-{
-	if (cursor->integer) {
-		if (cursor->integer > 9 || cursor->integer < 0)
-			Cvar_SetValue("cursor", 1);
-
-		R_RegisterPic("wait");
-		R_RegisterPic("ducked");
-		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", cursor->integer);
-		if (!R_RegisterPic(cursor_pic)) {
-			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursor_pic);
-			cursor_pic[0] = 0;
-		}
-	}
 }
 
 /**
