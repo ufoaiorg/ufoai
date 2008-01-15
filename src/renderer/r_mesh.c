@@ -336,8 +336,8 @@ void R_DrawAliasModel (entity_t *e)
 		VectorCopy(r_lightmap_sample.color, color);
 
 		/* IR goggles override color
-		 * FIXME RF_SHADOW is used here for actors - don't highlight misc_models */
-		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_SHADOW)
+		 * don't highlight misc_models only actors */
+		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
 			color[1] = color[2] = 0.0;
 
 		if (r_state.lighting_enabled)

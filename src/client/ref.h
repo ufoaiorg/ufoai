@@ -257,6 +257,9 @@ void R_DrawLineLoop(int points, int *verts);
 void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness);
 void R_DrawPolygon(int points, int *verts);
 
+void R_AddEntity(entity_t * ent);
+entity_t *R_GetEntity(void);
+
 void R_ModBeginLoading(const char *tiles, const char *pos);
 void R_ModEndLoading(void);
 void R_SwitchModelMemPoolTag(void);

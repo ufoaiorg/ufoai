@@ -35,40 +35,6 @@ cvar_t *cursor;
 int map_maxlevel;
 int map_maxlevel_base = 0;
 
-int r_numEntities;
-entity_t r_entities[MAX_ENTITIES];
-
-/**
- * @sa V_RenderView
- */
-static inline void V_ClearScene (void)
-{
-	r_numEntities = 0;
-}
-
-/**
- * @brief Get the next free entry in the entity list (the last one)
- * @note This can't overflow, because V_AddEntity checks the bounds
- * @sa V_AddEntity
- */
-entity_t *V_GetEntity (void)
-{
-	return r_entities + r_numEntities;
-}
-
-/**
- * @sa V_GetEntity
- */
-void V_AddEntity (entity_t * ent)
-{
-	if (r_numEntities >= MAX_ENTITIES) {
-		Com_Printf("V_AddEntity: MAX_ENTITIES exceeded\n");
-		return;
-	}
-
-	r_entities[r_numEntities++] = *ent;
-}
-
 static void CL_ParseEntitystring (const char *es)
 {
 	const char *strstart, *entity_token;
@@ -372,7 +338,7 @@ void V_RenderView (void)
 	if (!cl.refresh_prepped)
 		return;
 
-	V_ClearScene();
+	r_numEntities = 0;
 
 	switch (cls.state) {
 	case ca_sequence:

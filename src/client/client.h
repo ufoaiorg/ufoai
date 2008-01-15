@@ -814,8 +814,6 @@ extern int map_maxlevel_base;
 void V_Init(void);
 void V_RenderView(void);
 void V_UpdateRefDef(void);
-void V_AddEntity(entity_t * ent);
-entity_t *V_GetEntity(void);
 void V_CenterView(pos3_t pos);
 void V_CalcFovX(void);
 

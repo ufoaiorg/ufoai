@@ -3398,10 +3398,10 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			/* +2 (resp. +3) because the body and the head are already
 			 * (and maybe the right weapon will be)
 			 * at the previous location */
-			add.tagent = V_GetEntity() + 2 + (le->right != NONE);
+			add.tagent = R_GetEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
 
-			V_AddEntity(&add);
+			R_AddEntity(&add);
 		}
 
 		/* add right hand weapon */
@@ -3414,10 +3414,10 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 			/* +2 because the body and the head are already
 			 * at the previous location */
-			add.tagent = V_GetEntity() + 2;
+			add.tagent = R_GetEntity() + 2;
 			add.tagname = "tag_rweapon";
 
-			V_AddEntity(&add);
+			R_AddEntity(&add);
 		}
 	}
 
@@ -3439,16 +3439,18 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	add.skinnum = le->skinnum;
 
 	/* +1 because the body is already at the previous location */
-	add.tagent = V_GetEntity() + 1;
+	add.tagent = R_GetEntity() + 1;
 	add.tagname = "tag_head";
 
-	V_AddEntity(&add);
+	R_AddEntity(&add);
 
 	/* add actor special effects */
 	if (le->state & STATE_DEAD)
 		ent->flags |= RF_BLOOD;
 	else
 		ent->flags |= RF_SHADOW;
+
+	ent->flags |= RF_ACTOR;
 
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)
@@ -3481,10 +3483,10 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 			add.model = cls.model_weapons[le->left];
 
-			add.tagent = V_GetEntity() + 2 + (le->right != NONE);
+			add.tagent = R_GetEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
 
-			V_AddEntity(&add);
+			R_AddEntity(&add);
 		}
 
 		/* add weapon */
@@ -3494,10 +3496,10 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
 
-			add.tagent = V_GetEntity() + 2;
+			add.tagent = R_GetEntity() + 2;
 			add.tagname = "tag_rweapon";
 
-			V_AddEntity(&add);
+			R_AddEntity(&add);
 		}
 	}
 
@@ -3509,13 +3511,14 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	add.skinnum = le->skinnum;
 
 	/* FIXME */
-	add.tagent = V_GetEntity() + 1;
+	add.tagent = R_GetEntity() + 1;
 	add.tagname = "tag_head";
 
-	V_AddEntity(&add);
+	R_AddEntity(&add);
 
 	/* add actor special effects */
 	ent->flags |= RF_SHADOW;
+	ent->flags |= RF_ACTOR;
 
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)
@@ -4007,7 +4010,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	}
 
 	/* add it */
-	V_AddEntity(&ent);
+	R_AddEntity(&ent);
 }
 
 /**

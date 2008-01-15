@@ -286,8 +286,8 @@ void CL_SequenceRender (void)
 			}
 
 			/* add to render list */
-			se->ep = V_GetEntity();
-			V_AddEntity(&ent);
+			se->ep = R_GetEntity();
+			R_AddEntity(&ent);
 		}
 }
 

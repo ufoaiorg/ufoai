@@ -25,6 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
+int r_numEntities;
+entity_t r_entities[MAX_ENTITIES];
+
 #define HIGHLIGHT_START_Z 22
 #define HIGHTLIGHT_SIZE 18
 static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
@@ -364,7 +367,7 @@ static float *R_CalcTransform (entity_t * e)
 
 			/* find the right tag */
 			name = (char *) taghdr + taghdr->ofs_names;
-			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME)
+			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
 				if (!strcmp(name, e->tagname)) {
 					/* found the tag (matrix) */
 					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);
@@ -379,6 +382,7 @@ static float *R_CalcTransform (entity_t * e)
 
 					break;
 				}
+			}
 		}
 	}
 
@@ -469,4 +473,28 @@ void R_DrawEntities (void)
 	R_EnableBlend(qtrue);
 	R_DrawEntityEffects();
 	R_EnableBlend(qfalse);
+}
+
+/**
+ * @brief Get the next free entry in the entity list (the last one)
+ * @note This can't overflow, because R_AddEntity checks the bounds
+ * @sa R_AddEntity
+ */
+entity_t *R_GetEntity (void)
+{
+	assert(r_numEntities < MAX_ENTITIES);
+	return &r_entities[r_numEntities];
+}
+
+/**
+ * @sa R_GetEntity
+ */
+void R_AddEntity (entity_t * ent)
+{
+	if (r_numEntities >= MAX_ENTITIES) {
+		Com_Printf("R_AddEntity: MAX_ENTITIES exceeded\n");
+		return;
+	}
+
+	r_entities[r_numEntities++] = *ent;
 }

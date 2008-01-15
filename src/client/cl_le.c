@@ -90,7 +90,7 @@ void LM_AddToScene (void)
 		}
 
 		/* add it to the scene */
-		V_AddEntity(&ent);
+		R_AddEntity(&ent);
 	}
 }
 
@@ -998,7 +998,7 @@ void LE_AddToScene (void)
 					continue;
 
 			/* add it to the scene */
-			V_AddEntity(&ent);
+			R_AddEntity(&ent);
 		}
 	}
 }
