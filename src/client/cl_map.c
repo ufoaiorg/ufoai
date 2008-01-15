@@ -436,7 +436,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	*y = (int) (mid[1] - radius * v[0]);
 
 	if (z) {
-		*z = (int) (- radius * v[2]);
+		*z = (int) (radius * v[2]);
 	}
 
 	/* if the point is on the wrong side of earth, the player cannot see it */
@@ -501,7 +501,7 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
 		return MAP_3DMapToScreen(node, pos, x, y, z);
 	else {
 		if (z)
-			*z = 10;
+			*z = -10;
 		return MAP_MapToScreen(node, pos, x, y);
 	}
 }
@@ -1324,7 +1324,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
  */
 void MAP_DrawMap (const menuNode_t* node)
 {
-	float q;
+	float q = 0.0f;
 	base_t* base;
 	float distance;
 
