@@ -48,26 +48,23 @@ static cvar_t *scr_rspeed;
 
 static char cursor_pic[MAX_QPATH];
 
-static void SCR_TimeRefresh_f(void);
-static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont);
-
 /**
- * @sa CL_Init
+ * @sa Font_DrawString
  */
-void SCR_Init (void)
+static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFont)
 {
-	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
-	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
-	scr_rspeed = Cvar_Get("r_speeds", "0", 0, "Show some rendering stats");
+	if (!string || !*string)
+		return;
 
-	/* register our commands */
-	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, "Run a benchmark");
-
-	SCR_TouchPics();
-
-	scr_initialized = qtrue;
+	if (bitmapFont) {
+		while (*string) {
+			R_DrawChar(x, y, *string);
+			x += con_fontWidth;
+			string++;
+		}
+	} else
+		R_FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 12, string, 0, 0, NULL, qfalse);
 }
-
 
 /**
  * @sa SCR_DrawLoading
@@ -412,24 +409,6 @@ void SCR_TouchPics (void)
 }
 
 /**
- * @sa Font_DrawString
- */
-static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFont)
-{
-	if (!string || !*string)
-		return;
-
-	if (bitmapFont) {
-		while (*string) {
-			R_DrawChar(x, y, *string);
-			x += con_fontWidth;
-			string++;
-		}
-	} else
-		R_FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 12, string, 0, 0, NULL, qfalse);
-}
-
-/**
  * @brief This is called every frame, and can also be called explicitly to flush text to the screen
  * @sa MN_DrawMenus
  * @sa V_RenderView
@@ -490,4 +469,21 @@ void SCR_UpdateScreen (void)
 	R_DrawChars();  /* draw all chars accumulated above */
 
 	R_EndFrame();
+}
+
+/**
+ * @sa CL_Init
+ */
+void SCR_Init (void)
+{
+	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
+	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
+	scr_rspeed = Cvar_Get("r_speeds", "0", 0, "Show some rendering stats");
+
+	/* register our commands */
+	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, "Run a benchmark");
+
+	SCR_TouchPics();
+
+	scr_initialized = qtrue;
 }
