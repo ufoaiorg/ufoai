@@ -242,7 +242,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 	mod->alias.frames = outFrame = VID_TagAlloc(vid_modelPool, sizeof(mAliasFrame_t) * mod->alias.num_frames, 0);
 	outMesh->vertexes = outVertex = VID_TagAlloc(vid_modelPool, sizeof(mAliasVertex_t) * mod->alias.num_frames * outMesh->num_verts, 0);
 
-	for (i = 0; i < mod->alias.num_frames; i++, outVertex += numVerts) {
+	for (i = 0; i < mod->alias.num_frames; i++, outFrame++, outVertex += numVerts) {
 		pinframe = (dMD2Frame_t *) ((byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
 
 		for (j = 0; j < 3; j++) {
