@@ -1807,11 +1807,11 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
  */
 qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
-	if (LIST_ContainsString(terrainTypes,MAP_GetTerrainTypeByPos(pos)) || LIST_ContainsString(terrainTypes,"Any")) {
-		if (LIST_ContainsString(cultureTypes,MAP_GetCultureTypeByPos(pos)) || LIST_ContainsString(cultureTypes,"Any")) {
-			if (LIST_ContainsString(populationTypes,MAP_GetPopulationTypeByPos(pos)) || LIST_ContainsString(populationTypes,"Any")) {
-				nation_t *nationAtPos = MAP_GetNation(pos);
-				if ((nationAtPos && LIST_ContainsString(nations,nationAtPos->id)) || LIST_ContainsString(nations,"Any")) {
+	if (LIST_ContainsString(terrainTypes, MAP_GetTerrainTypeByPos(pos)) || LIST_ContainsString(terrainTypes, "Any")) {
+		if (LIST_ContainsString(cultureTypes, MAP_GetCultureTypeByPos(pos)) || LIST_ContainsString(cultureTypes, "Any")) {
+			if (LIST_ContainsString(populationTypes, MAP_GetPopulationTypeByPos(pos)) || LIST_ContainsString(populationTypes, "Any")) {
+				const nation_t *nationAtPos = MAP_GetNation(pos);
+				if ((nationAtPos && LIST_ContainsString(nations, nationAtPos->id)) || LIST_ContainsString(nations, "Any")) {
 					return qtrue;
 				}
 			}

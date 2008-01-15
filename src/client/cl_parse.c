@@ -1468,7 +1468,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			break;
 		case EV_ACTOR_SHOOT_HIDDEN:
 			{
-				fireDef_t *fd;
+				const fireDef_t *fd;
 				int first;
 				int obj_idx;
 				int weap_fds_idx, fd_idx;
@@ -1492,7 +1492,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			break;
 		case EV_ACTOR_SHOOT:
 			{
-				fireDef_t	*fd;
+				const fireDef_t	*fd;
 				int flags, dummy;
 				int obj_idx, surfaceFlags;
 				int weap_fds_idx, fd_idx;
