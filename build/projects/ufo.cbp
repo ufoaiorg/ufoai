@@ -394,7 +394,7 @@
 		<Unit filename="..\..\src\renderer\qgl.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\r_anim.c">
+		<Unit filename="..\..\src\renderer\r_mesh_anim.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_bsp.c">

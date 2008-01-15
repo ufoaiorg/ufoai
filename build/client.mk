@@ -73,7 +73,6 @@ CLIENT_SRCS = \
 	game/q_shared.c \
 	game/inv_shared.c \
 	\
-	renderer/r_anim.c \
 	renderer/r_bsp.c \
 	renderer/r_entity.c \
 	renderer/r_shader.c \
@@ -84,6 +83,7 @@ CLIENT_SRCS = \
 	renderer/r_lightmap.c \
 	renderer/r_material.c \
 	renderer/r_mesh.c \
+	renderer/r_mesh_anim.c \
 	renderer/r_model.c \
 	renderer/r_model_alias.c \
 	renderer/r_model_brush.c \
