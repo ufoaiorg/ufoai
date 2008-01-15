@@ -32,14 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
-/*    vrect_s
-
-The menu system may define a quake rendering view port on the screen. The vrect_s
-struct defines the properties of this view port - i.e. the height and width of the port,
-and the (x,y) offset from the bottom (?) left (?) corner.
-
-*/
-
 /**
  * @brief Contains the game screen size and drawing scale
  *
@@ -57,16 +49,22 @@ and the (x,y) offset from the bottom (?) left (?) corner.
 typedef struct {
 	unsigned width;		/**< game screen/window width */
 	unsigned height;	/**< game screen/window height */
+	int mode;			/**< resolution mode - see vidmode_t */
+	qboolean fullscreen;	/**< currently in fullscreen mode? */
+
+	/** safe values for restoring a failed vid change */
 	unsigned prev_width;
 	unsigned prev_height;
 	int prev_mode;
-	int mode;
-	qboolean fullscreen;
 	qboolean prev_fullscreen;
+
 	float rx;		/**< horizontal screen scale factor */
 	float ry;		/**< vertical screen scale factor */
-	int x, y;
-	int viewWidth, viewHeight;
+
+	int x, y, viewWidth, viewHeight;	/**< The menu system may define a rendering view port
+			* on the screen. The values defines the properties of this view port
+			* i.e. the height and width of the port, and the (x,y) offset from the
+			* bottom (?) left (?) corner. */
 } viddef_t;
 
 typedef struct vidmode_s {
