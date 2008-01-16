@@ -342,22 +342,6 @@ void G_KillTeam(void);
 void G_StunTeam(void);
 #endif
 
-typedef enum {
-	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1 undefined) */
-	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON. -1 = undefined */
-
-	RF_MAX
-} g_reaction_firemode_type_t;
-
-/**
- * @brief Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
- * Used in g_combat.c for choosing correct reaction fire. It is (must be) filled with data from cl_actor.c
- * The CLIENT has to make sure that any default firemodes (and unusable firemodes) are transferred correctly to this one.
- * Otherwise reaction fire will not work at all.
- */
-extern int reactionFiremode[MAX_EDICTS][RF_MAX];
-
-
 extern int turnTeam;
 
 /* g_combat.c */

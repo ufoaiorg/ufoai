@@ -493,6 +493,39 @@ typedef struct chrScore_s {
 	int survivedmissions;	/**< Missions survived. @todo: use me. */
 } chrScore_t;
 
+typedef enum {
+	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1=undef) */
+	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
+	RF_WPIDX, 	/**< Stores the weapon idx in ods. (for faster access and checks) -1=undef */
+
+	RF_MAX
+} cl_reaction_firemode_type_t;
+
+/**
+ * @brief How many TUs (and of what type) did a player reserve for a unit?
+ * @sa CL_UsableTUs
+ * @sa CL_ReservedTUs
+ * @sa CL_ReserveTUs
+ * @todo Would a list be better here? See the enum reservation_types_t
+ */
+typedef struct {
+	int reaction;	/**< Did the player activate RF with a usable firemode? (And at the same time storing the TU-costs of this firemode) */
+	int crouch;	/**< Did the player reserve TUs for crouching (or stanbding up)? Depends exclusively on TU_CROUCH.
+			 * @sa cl_actor:CL_ActorStandCrouch_f
+			 * @sa cl_parse:CL_ActorStateChange
+			 */
+/*	int thisTurn;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to create a popup where one can add one or several actions (firemodes are most important) to this value. */
+/*	int thisTurnManually;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to provide a numerical input-field. */
+} cl_reserved_tus_t;
+
+typedef enum {
+	RES_REACTION,
+	RES_CROUCH,
+	RES_ALL,
+	RES_ALL_ACTIVE,
+	RES_TYPES /**< Max. */
+} reservation_types_t;
+
 /** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;
@@ -528,6 +561,8 @@ typedef struct character_s {
 
 	int teamDefIndex;			/**< teamDef array index. */
 	int gender;					/**< Gender index. */
+	cl_reserved_tus_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See cl_reserved_tus_t for more. */
+	int reactionFiremode[RF_MAX];	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
 
 /** @brief The types of employees. */
