@@ -58,12 +58,12 @@ typedef enum {
 	RF_MAX
 } cl_reaction_firemode_type_t;
 
-static int reactionFiremode[MAX_EDICTS][RF_MAX]; /** < Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
-
-cl_reserved_tus_t reservedTus[MAX_EDICTS]; /** < Per actor: Stores the reserved TUs for actions. @sa See client.h:cl_reserved_tus_t for more. */
-
 #define THIS_REACTION(actoridx, hand, fd_idx)	(reactionFiremode[actoridx][RF_HAND] == hand && reactionFiremode[actoridx][RF_FM] == fd_idx)
 #define SANE_REACTION(actoridx)	(((reactionFiremode[actoridx][RF_HAND] >= 0) && (reactionFiremode[actoridx][RF_FM] >=0 && reactionFiremode[actoridx][RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (reactionFiremode[actoridx][RF_FM] >= 0)))
+
+static int reactionFiremode[MAX_EDICTS][RF_MAX]; /**< Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+
+cl_reserved_tus_t reservedTus[MAX_EDICTS]; /** < Per actor: Stores the reserved TUs for actions. @sa See client.h:cl_reserved_tus_t for more. */
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
@@ -613,10 +613,11 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG le!\n"); /**@todo DEBUG - remove me */
 		/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
 		if ((obj_idx >= 0) && (fd_idx >= 0)) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG obj_idx+fd_idx!\n");  /**@todo DEBUG - remove me */
 			objDef_t *ammo = NULL;
 			fireDef_t *fd = NULL;
 			int weap_fds_idx = -1;
+			
+			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG obj_idx+fd_idx!\n");  /**@todo DEBUG - remove me */
 
 			/* Get index of firedefinitions in 'ammo'. */
 			CL_GetWeaponAndAmmo(le, handidx==1?'l':'r', NULL, &ammo, &weap_fds_idx);
@@ -1777,7 +1778,7 @@ void CL_ActorUpdateCVars (void)
 					if (reserved_tus > 0)
                         Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reverved TUs: %i\nMove %i (%i|%i TU left)\n"), selActor->morale, reserved_tus, actorMoveLength, selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
                     else
-                        Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\nMove %i (%i TU left)\n"), selActor->morale, reserved_tus, actorMoveLength, selActor->TU - actorMoveLength);
+                        Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\nMove %i (%i TU left)\n"), selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 
 					if (actorMoveLength <= CL_UsableTUs(selActor))
 						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
