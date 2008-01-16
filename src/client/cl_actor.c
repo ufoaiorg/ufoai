@@ -685,7 +685,7 @@ static void CL_DisplayPossibleReaction (le_t *actor)
 		return;
 
 	if (actor != selActor) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPossibleReaction: Something went wront, given actor does not equal the currently selectd actor!\n");
+		/* Given actor does not equal the currently selectd actor. This normally only happens on game-start. */
 		return;
 	}
 
@@ -715,7 +715,7 @@ static qboolean CL_DisplayImpossibleReaction (le_t *actor)
 		return qfalse;
 
 	if (actor != selActor) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_DisplayImpossibleReaction: Something went wront, given actor does not equal the currently selected actor!\n");
+		/* Given actor does not equal the currently selectd actor. This normally only happens on game-start. */
 		return qfalse;
 	}
 
