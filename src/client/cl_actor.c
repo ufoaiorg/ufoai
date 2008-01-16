@@ -444,7 +444,7 @@ static void SetWeaponButton (int button, cl_reaction_firemode_type_t state)
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist.
  */
-static int CL_GetActorNumber (le_t * le)
+static int CL_GetActorNumber (const le_t * le)
 {
 	int actor_idx;
 
