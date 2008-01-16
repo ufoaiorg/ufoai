@@ -835,6 +835,16 @@ menu althud
 		max		"*cvar mn_tumax"
 		align	uc
 	}
+	
+	bar timereserved
+	{
+		pos		"886 332"
+		size	"120 2"
+		color	"0 .5 0 1"
+		current	"*cvar mn_tureserved"
+		max		"*cvar mn_tumax"
+		align	uc
+	}
 
 	bar morale
 	{

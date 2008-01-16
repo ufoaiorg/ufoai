@@ -108,8 +108,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* Timeunits for the various actions. */
 #define TU_CROUCH	1	/**< Time units for crouching and standing up */
 #define TU_TURN		1	/**< Time units for turning (no matter how far). */
-#define TU_REACTION_SINGLE	7	/**< Time units used to activate single RF. */
-#define TU_REACTION_MULTI	14	/**< Time units used to activate multi-RF. */
 #define TU_MOVE_STRAIGHT 2	/**< Time units used to move straight to the next field/square. */
 #define TU_MOVE_DIAGONAL 3	/**< Time units used to move to a diagonal field/square. */
 
@@ -518,6 +516,7 @@ typedef enum {
 	EV_NULL = 0,
 	EV_RESET,
 	EV_START,
+	EV_START_DONE,  /**< Signals that all information was sent fromt he server. */
 	EV_ENDROUND,	/**< ends the current team's round CL_DoEndRound */
 	EV_ENDROUNDANNOUNCE,
 

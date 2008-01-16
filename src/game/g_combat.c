@@ -34,8 +34,6 @@ qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn
 static void G_ReactToPreFire(edict_t *target);
 static void G_ReactToPostFire(edict_t *target);
 
-int reactionTUs[MAX_EDICTS][REACT_MAX];	/* Defined in g_local.h. See there for more. */
-
 typedef enum {
 	ML_WOUND,
 	ML_DEATH
@@ -158,30 +156,13 @@ void G_ResetReactionFire (int team)
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == team) {
-			reactionTUs[ent->number][REACT_FIRED] = 0;	/* reset 'RF used' flag */
 			if (ent->state & STATE_REACTION) {
-				if ((ent->state & STATE_REACTION_ONCE) && (ent->TU >= TU_REACTION_SINGLE)) {
-					/* Enough TUs for single reaction fire available. */
-					ent->TU -= TU_REACTION_SINGLE;
-					reactionTUs[ent->number][REACT_TUS] = TU_REACTION_SINGLE;	/* Save the used TUs for possible later re-adding. */
-				} else if ((ent->state & STATE_REACTION_MANY) && (ent->TU >= TU_REACTION_MULTI)) {
-					/* Enough TUs for multi reaction fire available. */
-					ent->TU -= TU_REACTION_MULTI;
-					reactionTUs[ent->number][REACT_TUS] = TU_REACTION_MULTI;	/* Save the used TUs for possible later re-adding. */
-#if 0
-/* @todo: this saving might be too powerful with multi-RF. (i.e. mutli-rf is too cheap in a lot of cases) */
-				} else if (ent->TU > 0) {
-					/* Not enough TUs for reaction fire available. */
-					reactionTUs[ent->number][REACT_TUS] = ent->TU;	/* Save the used TUs for possible later re-adding. */
-					ent->TU = 0;
-#endif
-				} else {
-					/* No TUs at all available. */
-					reactionTUs[ent->number][REACT_TUS] = -1;
-				}
+				/** @todo Do something if actor has reaction activated (previously reserve TUs) */
 			} else {
-				reactionTUs[ent->number][REACT_TUS] = 0;	/* Reset saved TUs. */
+				/** @todo Do something if actor has no reaction (previously reset reserved TUs) */
 			}
+
+			/** @todo why do we send the state here and why do we change the "shaken" state? */
 			ent->state &= ~STATE_SHAKEN;
 			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 			gi.WriteShort(ent->number);
@@ -1327,11 +1308,11 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 	}
 
 	/* check ent has reaction fire enabled */
-	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION_MANY) &&
-		(!(ent->state & STATE_REACTION_ONCE) || reactionTUs[ent->number][REACT_FIRED])) {
+	if (!(ent->state & STATE_SHAKEN)
+	 && !(ent->state & STATE_REACTION)) {
 #ifdef DEBUG_REACTION
 		if (reason)
-			Com_sprintf(reason, sizeof(reason), "Shooter does not have reaction fire enabled, or has already fired too often");
+			Com_sprintf(reason, sizeof(reason), "Shooter does not have reaction fire enabled"); /**@todo ", or has already fired too often" */
 #endif
 		return qfalse;
 	}
@@ -1595,7 +1576,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	/* clear any shakenness */
 	if (tookShot) {
 		ent->state &= ~STATE_SHAKEN;
-		reactionTUs[ent->number][REACT_FIRED] += 1; /* Save the fact that the ent has fired. */
+		/**@todo Save the fact that the ent has fired? (previously reactionTUs[ent->number][REACT_FIRED] += 1;)  */
 	} else {
 #ifdef DEBUG_REACTION
 		Com_Printf("Cancelling resolution because %s judged it unwise to fire\n", ent->chr.name);
@@ -1605,7 +1586,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 }
 
 /**
- * @brief check all entities to see whether target has caused reaction fire to resolve.
+ * @brief Check all entities to see whether target has caused reaction fire to resolve.
  * @param[in] target The entity that might be resolving reaction fire
  * @param[in] mock If true then don't actually fire
  * @returns whether any entity fired (or would fire) upon target

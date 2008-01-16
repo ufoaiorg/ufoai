@@ -796,6 +796,16 @@ menu hud
 		align	uc
 	}
 
+	bar timereserved
+	{
+		pos		"422 670"
+		size	"305 3"
+		color	"0 .5 0 1"
+		current	"*cvar mn_tureserved"
+		max		"*cvar mn_tumax"
+		align	uc
+	}
+
 	bar health
 	{
 		pos		"422 682"

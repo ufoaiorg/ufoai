@@ -343,15 +343,6 @@ void G_StunTeam(void);
 #endif
 
 typedef enum {
-	REACT_TUS,	/**< Stores the used TUs for Reaction fire for each edict. */
-	REACT_FIRED,	/**< Stores if the edict has fired in reaction. */
-
-	REACT_MAX
-} g_reaction_storage_type_t;
-
-extern int reactionTUs[MAX_EDICTS][REACT_MAX];	/**< Per actor: */
-
-typedef enum {
 	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1 undefined) */
 	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON. -1 = undefined */
 

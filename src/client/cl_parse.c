@@ -75,6 +75,7 @@ const char *ev_format[] =
 	"",					/* EV_NULL */
 	"bb",				/* EV_RESET */
 	"b",				/* EV_START */
+	"",					/* EV_START_DONE */
 	"b",				/* EV_ENDROUND */
 	"bb",				/* EV_ENDROUNDANNOUNCE */
 
@@ -123,6 +124,7 @@ static const char *ev_names[] =
 	"EV_NULL",
 	"EV_RESET",
 	"EV_START",
+	"EV_START_DONE",
 	"EV_ENDROUND",
 	"EV_ENDROUNDANNOUNCE",
 
@@ -163,6 +165,7 @@ static const char *ev_names[] =
 
 static void CL_Reset(struct dbuffer *msg);
 static void CL_StartGame(struct dbuffer *msg);
+static void CL_StartingGameDone(struct dbuffer *msg);
 static void CL_CenterView(struct dbuffer *msg);
 static void CL_EntAppear(struct dbuffer *msg);
 static void CL_EntPerish(struct dbuffer *msg);
@@ -183,6 +186,7 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 	NULL,
 	CL_Reset,		/* EV_RESET */
 	CL_StartGame,	/* EV_START */
+	CL_StartingGameDone, /* EV_START_DONE */
 	CL_DoEndRound,
 	CL_EndRoundAnnounce,
 
@@ -256,7 +260,7 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 	strcpy(lastfilename, filename);
 
 	if (strstr(filename, "..")) {
-		Com_Printf("Refusing to check a path with .. (%s)\n",  filename);
+		Com_Printf("Refusing to check a path with .. (%s)\n", filename);
 		return qtrue;
 	}
 
@@ -613,6 +617,20 @@ static void CL_StartGame (struct dbuffer *msg)
 	SCR_EndLoadingPlaque();	/* get rid of loading plaque */
 }
 
+/**
+ * @brief The server finished sending all init-data to the client.
+ * @sa CL_StartGame
+ * @note EV_START_DONE
+ */
+static void CL_StartingGameDone (struct dbuffer *msg)
+{
+	int actor_idx;
+
+	/* Set default reaction-firemode on game-start. */
+	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
+		CL_SetDefaultReactionFiremode(actor_idx, 'r');
+	}
+}
 
 static void CL_CenterView (struct dbuffer *msg)
 {
@@ -1059,10 +1077,17 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 		return;
 	}
 
-	/* if standing up or crouching down, set this le as the last moving */
+	/*
+	 * If standing up or crouching down, set this le as the last moving.
+	 * Also remove the reserved-state for crouching.
+	 */
 	if ((state & STATE_CROUCHED && !(le->state & STATE_CROUCHED)) ||
-		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED))
+		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED)) {
 		CL_SetLastMoving(le);
+		if (CL_ReservedTUs(le, 1) >= TU_CROUCH) {
+			CL_ReserveTUs(le, 1, 0); /* Reset reserved TUs (0 TUs) */
+		}
+	}
 
 	/* killed by the server: no animation is played, etc. */
 	if (state & STATE_DEAD && !(le->state & STATE_DEAD)) {

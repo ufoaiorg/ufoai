@@ -1529,7 +1529,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 		return;
 
 	switch (reqState) {
-	case STATE_CROUCHED: /* toggle between crouch/stand */
+	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
 		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH, NOISY)) {
 			ent->state ^= STATE_CROUCHED;
@@ -1542,88 +1542,36 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 			gi.linkentity(ent);
 		}
 		break;
-	case ~STATE_REACTION: /* request to turn off reaction fire */
+	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
-			if (ent->state & STATE_SHAKEN)
+			if (ent->state & STATE_SHAKEN) {
 				gi.cprintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
-			else {
-				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
+			} else {
+				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
-
-				if (reactionTUs[ent->number][REACT_TUS] > 0) {
-					/* TUs where used for activation. */
-					ent->TU += reactionTUs[ent->number][0];
-				} else if (reactionTUs[ent->number][REACT_TUS] < 0) {
-					/* No TUs where used for activation. */
-					/* Don't give TUs back because none where used up (reaction fire was already active from previous turn) */
-				} else {
-					/* reactionTUs[ent->number][REACT_TUS] == 0) */
-					/* This should never be the case.  */
-					Com_DPrintf(DEBUG_GAME, "G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
-				}
 			}
 		}
 		break;
-	case STATE_REACTION_MANY: /* request to turn on multi-reaction fire mode */
-		/* We can assume that the previous mode is STATE_REACTION_ONCE here.
-		 * If the gui behaviour ever changes we need to check for the previosu state in a better way here.
-		 */
-		if ((ent->TU >= (TU_REACTION_MULTI - reactionTUs[ent->number][REACT_TUS]))
-			&& (ent->state & STATE_REACTION_ONCE)) {
-			/* We have enough TUs for switching to multi-rf and the previous state is STATE_REACTION_ONCE */
+	case STATE_REACTION_MANY: /* Request to turn on multi-reaction fire mode. */
+		/* Disable reaction fire. */
+		ent->state &= ~STATE_REACTION;
 
-			/* Disable single reaction fire and remove saved TUs. */
- 			ent->state &= ~STATE_REACTION;
-			if (reactionTUs[ent->number][REACT_TUS] > 0) {
-				ent->TU += reactionTUs[ent->number][REACT_TUS];
-				reactionTUs[ent->number][REACT_TUS] = 0;
-			}
-
-			/* enable multi reaction fire */
- 			ent->state |= STATE_REACTION_MANY;
-			ent->TU -= TU_REACTION_MULTI;
-			reactionTUs[ent->number][REACT_TUS] = TU_REACTION_MULTI;
-		} else {
-			/* @todo: this is a workaround for now.
-			the multi-rf button was clicked (i.e. single-rf is activated right now), but there are not enough TUs left for it.
-			so the only sane action if the button is clicked is to disable everything in order to make it work at all.
-			@todo: dsiplay correct "disable" button and directly call this function with "disable rf" parameters
-			*/
-			G_ClientStateChange(player, num, ~STATE_REACTION, qtrue); /**< Turn off RF */
-		}
+		/* Enable multi reaction fire. */
+ 		ent->state |= STATE_REACTION_MANY;
 		break;
-	case STATE_REACTION_ONCE: /* request to turn on single-reaction fire mode */
-		if (!checkaction || G_ActionCheck(player, ent, TU_REACTION_SINGLE, NOISY)) {
-			/* Turn on reaction fire and save the used TUs to the list. */
-			ent->state |= STATE_REACTION_ONCE;
+	case STATE_REACTION_ONCE: /* Request to turn on single-reaction fire mode. */
+		/* Disable reaction fire. */
+ 		ent->state &= ~STATE_REACTION;
 
-#if 0 /* @todo: do we really want to enable this? i don't think we can get soemthing useable out of it .. the whole "save TUs until nex round" needs a cleanup. */
-			if (reactionTUs[ent->number][REACT_TUS] > 0) {
-				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
-				ent->TU -= reactionTUs[ent->number][REACT_TUS];
-			} else
-
-			if (reactionTUs[ent->number][REACT_TUS] == 0) {
-#endif
-				/* Reaction fire was not triggered in the last turn. */
-				ent->TU -= TU_REACTION_SINGLE;
-				reactionTUs[ent->number][REACT_TUS] = TU_REACTION_SINGLE;
-#if 0	/* @todo: Same here */
-			}  else {
-				/* reactionTUs[ent->number][REACT_TUS] < 0 */
-				/* Reaction fire was triggered in the last turn,
-				   and has used 0 TU from this one.
-				   Can be activated without TU-loss. */
-			}
-#endif
-		}
+		/* Turn on single reaction fire. */
+		ent->state |= STATE_REACTION_ONCE;
 		break;
 	default:
 		Com_Printf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
 		return;
 	}
 
-	/* only activate the events - network stuff is handled in the calling function */
+	/* Only activate the events - network stuff is handled in the calling function */
 	if (!checkaction)
 		return;
 
@@ -1770,7 +1718,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					ent->TU -= TU_REACTION_SINGLE; /* @todo: Comment-me: Why do we modify reaction stuff here? */
+					/* ent->TU -= TU_REACTION_SINGLE; /* @todo: Comment-me: Why do we modify reaction stuff (especially TUs) here? I've commented this out for now, we could remove it compeltly or add a special "shaken" TU penalty. */
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
@@ -2581,15 +2529,13 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* clear any remaining reaction fire */
 	G_ReactToEndTurn();
 
-	/* give his actors their TUs */
-	G_GiveTimeUnits(level.activeTeam);
-
 	/* let all the invisible players perish now */
 	G_CheckVisTeam(level.activeTeam, NULL, qtrue);
 
 	lastTeam = player->pers.team;
 	level.activeTeam = -1;
 
+	/* Get the next active team. */
 	p = NULL;
 	while (level.activeTeam == -1) {
 		/* search next team */
@@ -2645,6 +2591,9 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 
 	/* store the round start time to be able to abort the round after a give time */
 	level.roundstartTime = level.time;
+
+	/* Give the actors of the now active team their TUs. */
+	G_GiveTimeUnits(level.activeTeam);
 
 	/* apply morale behaviour, reset reaction fire */
 	G_ResetReactionFire(level.activeTeam);
@@ -2776,11 +2725,11 @@ qboolean G_ClientSpawn (player_t * player)
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 
-	/* set initial state to reaction fire activated for the other team */
-	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
-		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2))
-				G_ClientStateChange(player, i, STATE_REACTION_ONCE, qfalse);
+	/* Set initial state to reaction fire activated (ONCE) for all teams. */
+	/* This (and the second loop below) defines the default reaction-mode */
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2))
+			G_ClientStateChange(player, i, STATE_REACTION_ONCE, qfalse);
 
 	/* submit stats */
 	G_SendPlayerStats(player);
@@ -2794,13 +2743,15 @@ qboolean G_ClientSpawn (player_t * player)
 	/* send events */
 	gi.EndEvents();
 
-	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
-		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
-				gi.AddEvent(player->pers.team, EV_ACTOR_STATECHANGE);
-				gi.WriteShort(ent->number);
-				gi.WriteShort(ent->state);
-			}
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+			gi.AddEvent(player->pers.team, EV_ACTOR_STATECHANGE);
+			gi.WriteShort(ent->number);
+			gi.WriteShort(ent->state);
+		}
+
+    gi.AddEvent(P_MASK(player), EV_START_DONE);
+    gi.EndEvents();
 
 	/* inform all clients */
 	gi.bprintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);

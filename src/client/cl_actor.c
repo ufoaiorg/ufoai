@@ -33,6 +33,7 @@ static fireDef_t *selFD;
 static character_t *selChr;
 static int selToHit;
 static pos3_t mousePos;
+
 /**
  * @brief If you want to change the z level of targetting and shooting,
  * use this value. Negative and positiv offsets are possible
@@ -58,6 +59,13 @@ typedef enum {
 } cl_reaction_firemode_type_t;
 
 static int reactionFiremode[MAX_EDICTS][RF_MAX]; /** < Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+
+cl_reserved_tus_t reservedTus[MAX_EDICTS]; /** < Per actor: Stores the reserved TUs for actions. @sa See client.h:cl_reserved_tus_t for more. */
+/**
+ * Todos for the new reaction-fire code:
+ * @todo Modify CL_SetReactionFiremode to set "reaction" correctly. (The value should've been checked beforehand -> In what functions?)
+ * @todo Display reserved TUs in status bar.
+ */
 
 #define THIS_REACTION(actoridx, hand, fd_idx)	(reactionFiremode[actoridx][RF_HAND] == hand && reactionFiremode[actoridx][RF_FM] == fd_idx)
 #define SANE_REACTION(actoridx)	(((reactionFiremode[actoridx][RF_HAND] >= 0) && (reactionFiremode[actoridx][RF_FM] >=0 && reactionFiremode[actoridx][RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (reactionFiremode[actoridx][RF_FM] >= 0)))
@@ -94,7 +102,7 @@ typedef enum {
 	BT_STATE_DISABLE,		/* 'Disabled' display (grey) */
 	BT_STATE_DESELECT,	/* Normal display (blue) */
 	BT_STATE_HIGHLIGHT,	/* Normal + highlight (blue + glow)*/
-	BT_STATE_UNUSABLE	/* Normal + red (activated but unuseable aka "impossible") */
+	BT_STATE_UNUSABLE	/* Normal + red (activated but unusable aka "impossible") */
 } weaponButtonState_t;
 
 static weaponButtonState_t weaponButtonState[BT_NUM_TYPES];
@@ -512,6 +520,68 @@ static void HideFiremodes (void)
 
 }
 
+/**
+ * @brief Returns the weapon its ammo and the firemodes-index inside the ammo for a given hand.
+ * @param[in] actor The pointer to the actor we want to get the data from.
+ * @param[in] hand Which weapon(-hand) to use [l|r].
+ * @param[out] weapon The weapon in the hand.
+ * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
+ * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon (objDef.fd[x][])
+ */
+static void CL_GetWeaponAndAmmo (le_t *actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fd_idx)
+{
+	invList_t *invlist_weapon = NULL;
+	objDef_t *item, *itemAmmo;
+
+	assert(weap_fd_idx);
+
+	if (!actor)
+		return;
+
+	if (hand == 'r')
+		invlist_weapon = RIGHT(actor);
+	else
+		invlist_weapon = LEFT(actor);
+
+	if (!invlist_weapon || invlist_weapon->item.t == NONE)
+		return;
+
+	item = &csi.ods[invlist_weapon->item.t];
+
+	if (!item)
+		return;
+
+	if (item->numWeapons) /* @todo: "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
+		itemAmmo = item; /* This weapon doesn't need ammo it already has firedefs */
+	else
+		itemAmmo = &csi.ods[invlist_weapon->item.m];
+
+	*weap_fd_idx = FIRESH_FiredefsIDXForWeapon(itemAmmo, invlist_weapon->item.t);
+	if (ammo)
+		*ammo = itemAmmo;
+	if (weapon)
+		*weapon = item;
+}
+
+/**
+ * @brief Prints all reaction- and reservation-info for teh team.
+ * @note Console command: debug_listreservations
+ */
+void CL_ListReactionAndReservations_f (void)
+{
+	int actor_idx;
+	character_t *chr;
+
+	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
+		if (cl.teamList[actor_idx]) {
+			chr = CL_GetActorChr(cl.teamList[actor_idx]);
+			Com_Printf("%s\n", chr->name);
+			Com_Printf(" - hand: %i | fm: %i | wpidx: %i\n", reactionFiremode[actor_idx][RF_HAND],reactionFiremode[actor_idx][RF_FM],reactionFiremode[actor_idx][RF_WPIDX]);
+			Com_Printf(" - res... reaction: %i | crouch: %i\n", reservedTus[actor_idx].reaction, reservedTus[actor_idx].crouch);
+		}
+
+	}
+}
 
 /**
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
@@ -544,10 +614,174 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 	le = cl.teamList[actor_idx];
 	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx);
 
-	reactionFiremode[actor_idx][RF_HAND] = handidx;	/* Store the given hand. */
-	reactionFiremode[actor_idx][RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
-	MSG_Write_PA(PA_REACT_SELECT, le->entnum, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for moR_ */
-	reactionFiremode[actor_idx][RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
+	if (le) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG le!\n"); /**@todo DEBUG - remove me */
+		/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
+		if ((obj_idx >= 0) && (fd_idx >= 0)) {
+			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG obj_idx+fd_idx!\n");  /**@todo DEBUG - remove me */
+			objDef_t *ammo = NULL;
+			fireDef_t *fd = NULL;
+			int weap_fds_idx = -1;
+
+			/* Get index of firedefinitions in 'ammo'. */
+			CL_GetWeaponAndAmmo(le, handidx==1?'l':'r', NULL, &ammo, &weap_fds_idx);
+
+			/* Get The firedefinition of the selected firemode */
+			fd = &ammo->fd[weap_fds_idx][fd_idx];
+
+			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
+			if (fd) {
+				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG fd!\n");  /**@todo DEBUG - remove me */
+				CL_ReserveTUs(le, RES_REACTION, fd->time);
+			}
+		}
+#if 0
+		/** @todo We don't reset this value to 0 right now, we check for reaction state in CL_UsableTUs.
+		 * Maybe we need to do this anyway though? */
+		else {
+			CL_ReserveTUs(le, RES_REACTION, 0);
+		}
+#endif
+
+		reactionFiremode[actor_idx][RF_HAND] = handidx;	/* Store the given hand. */
+		reactionFiremode[actor_idx][RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
+		MSG_Write_PA(PA_REACT_SELECT, le->entnum, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for more. */
+		reactionFiremode[actor_idx][RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
+	}
+}
+
+/**
+ * @brief Returns the amount of reserved TUs for a certain type.
+ * @param[in] le The actor to check.
+ * @param[in] type The type to check. Use RES_ALL_ACTIVE to get all reserved TUs that are not "active" (e.g. RF is skipped if disabled). RES_ALL returns ALL of them, no matter what. See reservation_types_t for a list of options.
+ * @return The reserved TUs for the given type.
+ * @return -1 on error.
+ */
+int CL_ReservedTUs (const le_t * le, reservation_types_t type)
+{
+	int actor_idx;
+
+	if (!le) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: No le_t given.\n");
+		return -1;
+	}
+
+	actor_idx = CL_GetActorNumber(le);
+
+	if (actor_idx < 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: No actor index found for le.\n");
+		return -1;
+	}
+
+	switch (type) {
+	case RES_ALL:
+		/* A summary of ALL TUs that are reserved. */
+		return	  max(0,reservedTus[actor_idx].reaction)
+			+ max(0, reservedTus[actor_idx].crouch);
+	case RES_ALL_ACTIVE:
+		/* A summary of ALL TUs that are reserved depending on their "status". */
+		/* Only use reaction-value if we are have RF activated. */
+		return (
+			(le->state & STATE_REACTION)
+				? max(0,reservedTus[actor_idx].reaction)
+				: 0
+			+ max(0, reservedTus[actor_idx].crouch));
+/* For future additions:
+		return le->TU -
+			( (le->state & STATE_REACTION) ? max(0, reservedTus[actor_idx].reaction) : 0
+			+ max(0, reservedTus[actor_idx].crouch)
+			+ max(0, reservedTus[actor_idx].thisTurn)
+			+ max(0, reservedTus[actor_idx].thisTurnManually));
+*/
+	case RES_REACTION:
+		return max(0, reservedTus[actor_idx].reaction);
+	case RES_CROUCH:
+		return max(0, reservedTus[actor_idx].crouch);
+	default:
+		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: Bad type given: %i\n", type);
+		return -1;
+	}
+}
+
+/**
+ * @brief Returns the amount of usable (overall-reserved) TUs for this actor.
+ * @param[in] le The actor to check.
+ * @return The remaining/usable TUs for this actor
+ * @return -1 on error (this includes bad [very large] numbers stored in the struct).
+ */
+static int CL_UsableTUs (const le_t * le)
+{
+	int actor_idx;
+
+	if (!le) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_UsableTUs: No le_t given.\n");
+		return -1;
+	}
+
+	actor_idx = CL_GetActorNumber(le);
+
+	if (actor_idx < 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_UsableTUs: No actor index found for le.\n");
+		return -1;
+	}
+
+	return le->TU - CL_ReservedTUs(le, RES_ALL_ACTIVE);
+}
+
+/**
+ * @brief Returns the amount of usable "reaction fire" TUs for this actor (depends on active/inactive RF)
+ * @param[in] le The actor to check.
+ * @return The remaining/usable TUs for this actor
+ * @return -1 on error (this includes bad [very large] numbers stored in the struct).
+ * @todo Maybe onyl return "reaction" value if reaction-state is active? The value _should_ be 0, but one never knows :)
+ */
+static int CL_UsableReactionTUs (le_t * le)
+{
+	/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) */
+	if (selActor->state & STATE_REACTION)
+		return CL_UsableTUs(le) - CL_ReservedTUs(le, RES_REACTION);
+	else
+		return CL_UsableTUs(le); /* CL_UsableTUs does not return any stored value for "reaction" here */
+}
+
+
+/**
+ * @brief Replace the reserved TUs for a certain type.
+ * @param[in] le The actor to change it for.
+ * @param[in] type The type to be changed.
+ * @param[in] tus How many TUs to set.
+ * @todo Make the "type" into enum
+ */
+void CL_ReserveTUs (const le_t * le, reservation_types_t type, int tus)
+{
+	int actor_idx;
+
+	if (!le || tus < 0) {
+		return;
+	}
+
+	actor_idx = CL_GetActorNumber(le);
+
+	if (actor_idx < 0)
+		return;
+
+	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Debug: type=%i, TUs=%i\n", type, tus);
+
+	switch (type) {
+	case RES_ALL:
+	case RES_ALL_ACTIVE:
+		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: RES_ALL and RES_ALL_ACTIVE are not a valid option\n");
+		return;
+	case RES_REACTION:
+		reservedTus[actor_idx].reaction = tus;
+		return;
+	case RES_CROUCH:
+		reservedTus[actor_idx].crouch = tus;
+		return;
+	default:
+		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Bad type given: %i\n", type);
+		return;
+	}
 }
 
 /**
@@ -558,12 +792,15 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
  */
 static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, qboolean status)
 {
+	int usableTusForRF = 0;
 	/* char cbufText[MAX_VAR]; */
 	if (!fd)
 		return;
 
 	if (!selActor)
 		return;
+
+	usableTusForRF = CL_UsableReactionTUs(selActor);
 
 	if (hand == 'r') {
 		Cbuf_AddText(va("set_right_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
@@ -574,8 +811,8 @@ static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, qboolean status)
 			Cbuf_AddText(va("set_right_ina%i\n", fd->fd_idx));
 		}
 
-		if (selActor->TU > fd->time)
-			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"),selActor->TU - fd->time));
+		if (usableTusForRF > fd->time)
+			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"), usableTusForRF - fd->time));
 		else
 			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),_("No remaining TUs left after shot."));
 
@@ -592,8 +829,8 @@ static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, qboolean status)
 			Cbuf_AddText(va("set_left_ina%i\n", fd->fd_idx));
 		}
 
-		if (selActor->TU > fd->time)
-			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"),selActor->TU - fd->time));
+		if (usableTusForRF > fd->time)
+			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"), usableTusForRF - fd->time));
 		else
 			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),_("No remaining TUs left after shot."));
 
@@ -607,43 +844,7 @@ static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, qboolean status)
 }
 
 /**
- * @brief Returns the weapon its ammo and the firemodes-index inside the ammo for a given hand.
- * @param[in] actor The pointer to the actor we want to get the data from.
- * @param[in] hand Which weapon(-hand) to use [l|r].
- * @param[out] weapon The weapon in the hand.
- * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
- * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon (objDef.fd[x][])
- */
-static void CL_GetWeaponAndAmmo (le_t *actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fd_idx)
-{
-	invList_t *invlist_weapon = NULL;
-
-	if (!actor)
-		return;
-
-	if (hand == 'r')
-		invlist_weapon = RIGHT(actor);
-	else
-		invlist_weapon = LEFT(actor);
-
-	if (!invlist_weapon || invlist_weapon->item.t == NONE)
-		return;
-
-	*weapon = &csi.ods[invlist_weapon->item.t];
-
-	if (!weapon)
-		return;
-
-	if ((*weapon)->numWeapons) /* @todo: "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
-		*ammo = *weapon; /* This weapon doesn't need ammo it already has firedefs */
-	else
-		*ammo = &csi.ods[invlist_weapon->item.m];
-
-	*weap_fd_idx = FIRESH_FiredefsIDXForWeapon(*ammo, invlist_weapon->item.t);
-}
-
-/**
- * @brief Checks if a there is a weapon in the hand that can be used for reaction fiR_
+ * @brief Checks if there is a weapon in the hand that can be used for reaction fiR_
  * @param[in] actor What actor to check.
  * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
  */
@@ -676,7 +877,7 @@ static qboolean CL_WeaponWithReaction (le_t *actor, char hand)
 }
 
 /**
- * @brief Display 'useable" (blue) reaction buttons.
+ * @brief Display 'usable" (blue) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  */
 static void CL_DisplayPossibleReaction (le_t *actor)
@@ -689,7 +890,8 @@ static void CL_DisplayPossibleReaction (le_t *actor)
 		return;
 	}
 
-	/* Display 'useable" (blue) reaction buttons
+
+	/* Display 'usable" (blue) reaction buttons
 	 * Code also used in CL_ActorToggleReaction_f */
 	switch (CL_GetReactionState(actor)) {
 	case R_FIRE_ONCE:
@@ -706,8 +908,7 @@ static void CL_DisplayPossibleReaction (le_t *actor)
 /**
  * @brief Display 'impossible" (red) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
- * @return qtrue if "turn rf off" message was sent otherwise qfalse.
- * @todo I think the MSG_Write_PA and return stuff might be unneccesary now after the RPG-multiplayer fix. Nothing urgent though.
+ * @return qtrue if nothing changed message was sent otherwise qfalse.
  */
 static qboolean CL_DisplayImpossibleReaction (le_t *actor)
 {
@@ -730,8 +931,6 @@ static qboolean CL_DisplayImpossibleReaction (le_t *actor)
 		Cbuf_AddText("startreactionmany_impos\n");
 		break;
 	default:
-		/* Send the "turn rf off" message just in case. */
-		MSG_Write_PA(PA_STATE, actor->entnum,  ~STATE_REACTION);
 		return qtrue;
 	}
 
@@ -789,29 +988,43 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 
 		if (i >= 0) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG i>=0\n");
-			/* Found useable firemode for the weapon in this hand */
+			/* Found usable firemode for the weapon in _this_ hand. */
 			CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
 
-			/* Display 'useable" (blue) reaction buttons */
-			CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
+			if (CL_UsableReactionTUs(cl.teamList[actor_idx]) >= ammo->fd[weap_fd_idx][i].time) {
+				/* Display 'usable" (blue) reaction buttons */
+				CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
+			} else {
+				/* Display "impossible" (red) reaction button. */
+				CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
+			}
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG else (i>=0)\n");
-			/* weapon in hand not RF-capable. */
+			/* Weapon in _this_ hand not RF-capable. */
 			if (CL_WeaponWithReaction(cl.teamList[actor_idx], (hand == 'r') ? 'l' : 'r')) {
-				/* The other hand has useable firemodes for RF, use it instead. */
+				/* The _other_ hand has usable firemodes for RF, use it instead. */
 				CL_UpdateReactionFiremodes((hand == 'r') ? 'l' : 'r', actor_idx, -1);
 
 				Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG inverse hand\n");
-				/* Display 'useable" (blue) reaction buttons */
-				CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
+#if 0
+				/** This should already be be handled in the call of CL_UpdateReactionFiremodes above. */
+				if (CL_UsableReactionTUs(&cl.teamList[actor_idx]) >= ammo->fd[weap_fd_idx][xxxxxxx].time) {
+					/* Display 'usable" (blue) reaction buttons */
+					CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
+				} else {
+					/* Display "impossible" (red) reaction button. */
+					CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
+				}
+#endif
 			} else {
 				Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG no rf-items in hands\n");
 				/* No RF-capable item in either hand. */
 
-				/* Display "impossible" (red) reaction button or disable button. */
+				/* Display "impossible" (red) reaction button. */
 				CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
 				/* Set RF-mode info to undef. */
 				CL_SetReactionFiremode(actor_idx, -1, NONE, -1);
+				CL_ReserveTUs(cl.teamList[actor_idx], RES_REACTION, 0);
 			}
 		}
 		/* The rest of this function assumes that active_firemode is bigger than -1 ->  finish. */
@@ -836,8 +1049,17 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
 		if (ammo->fd[weap_fd_idx][i].reaction) {
 			if (i == active_firemode) {
-				CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
+				/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
+				if (CL_UsableReactionTUs(cl.teamList[actor_idx]) >= ammo->fd[weap_fd_idx][active_firemode].time) {
+					CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
+				} else {
+					/** @todo: Popup that tells the player no enough TUs? */
+					CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
+					CL_ReserveTUs(cl.teamList[actor_idx], RES_REACTION, 0);
+					CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
+				}
 				return;
+
 			}
 		}
 	}
@@ -865,7 +1087,7 @@ void CL_SetDefaultReactionFiremode (int actor_idx, char hand)
 #if 0
 			if (!SANE_REACTION(actor_idx)) {
 				/* If that fails as well set firemode to undef. */
-				CL_SetReactionFiremode (actor_idx, -1, NONE, -1);
+				CL_SetReactionFiremode(actor_idx, -1, NONE, -1);
 			}
 #endif
 		}
@@ -879,7 +1101,7 @@ void CL_SetDefaultReactionFiremode (int actor_idx, char hand)
 #if 0
 			if (!SANE_REACTION(actor_idx)) {
 				/* If that fails as well set firemode to undef. */
-				CL_SetReactionFiremode (actor_idx, -1, NONE, -1);
+				CL_SetReactionFiremode(actor_idx, -1, NONE, -1);
 			}
 #endif
 		}
@@ -982,7 +1204,7 @@ void CL_DisplayFiremodes_f (void)
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if (i < ammo->numFiredefs[weap_fd_idx]) { /* We have a defined fd ... */
 			/* Display the firemode information (image + text). */
-			if (ammo->fd[weap_fd_idx][i].time <= selActor->TU) {  /* Enough timeunits for this firemode?*/
+			if (ammo->fd[weap_fd_idx][i].time <= CL_UsableTUs(selActor)) {  /* Enough timeunits for this firemode?*/
 				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qtrue);
 			} else{
 				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qfalse);
@@ -1120,16 +1342,16 @@ void CL_FireWeapon_f (void)
 		return;
 
 	/* Let's check if shooting is possible.
-	 * Don't let the selActor->TU parameter irritate you, it is not checked/used heR_ */
+	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
 	if (hand[0] == 'r') {
-		if (!CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_AMMO))
+		if (!CL_CheckMenuAction(CL_UsableTUs(selActor), RIGHT(selActor), EV_INV_AMMO))
 			return;
 	} else {
-		if (!CL_CheckMenuAction(selActor->TU, LEFT(selActor), EV_INV_AMMO))
+		if (!CL_CheckMenuAction(CL_UsableTUs(selActor), LEFT(selActor), EV_INV_AMMO))
 			return;
 	}
 
-	if (ammo->fd[weap_fd_idx][firemode].time <= selActor->TU) {
+	if (ammo->fd[weap_fd_idx][firemode].time <= CL_UsableTUs(selActor)) {
 		/* Actually start aiming. This is done by changing the current mode of display. */
 		if (hand[0] == 'r')
 			cl.cmode = M_FIRE_R;
@@ -1236,7 +1458,7 @@ static void CL_RefreshWeaponButtons (int time)
 
 	/* reaction-fire button */
 	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
-		if ((time >= TU_REACTION_SINGLE)
+		if ((time >= CL_ReservedTUs(selActor, RES_REACTION))
 		&& (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')))
 			SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
@@ -1462,6 +1684,7 @@ void CL_ActorUpdateCVars (void)
 		/* set generic cvars */
 		Cvar_Set("mn_tu", va("%i", selActor->TU));
 		Cvar_Set("mn_tumax", va("%i", selActor->maxTU));
+		Cvar_Set("mn_tureserved", va("%i", CL_ReservedTUs(selActor, RES_ALL_ACTIVE)));
 		Cvar_Set("mn_morale", va("%i", selActor->morale));
 		Cvar_Set("mn_moralemax", va("%i", selActor->maxMorale));
 		Cvar_Set("mn_hp", va("%i", selActor->HP));
@@ -1497,10 +1720,10 @@ void CL_ActorUpdateCVars (void)
 				/* Check whether this item uses/has ammo. */
 				if (selWeapon->item.m == NONE) {
 					/* This item does not use ammo, check for existing firedefs in this item. */
-					/* This is supposed to be a weapon or other useable item. */
+					/* This is supposed to be a weapon or other usable item. */
 					if (csi.ods[selWeapon->item.t].numWeapons > 0) {
 						if (csi.ods[selWeapon->item.t].weapon || (csi.ods[selWeapon->item.t].weap_idx[0] == selWeapon->item.t)) {
-							/* Get firedef from the weapon (or other useable item) entry instead. */
+							/* Get firedef from the weapon (or other usable item) entry instead. */
 							selFD = FIRESH_GetFiredef(
 								selWeapon->item.t,
 								FIRESH_FiredefsIDXForWeapon(
@@ -1540,25 +1763,33 @@ void CL_ActorUpdateCVars (void)
 
 		/* update HUD stats etc in more or shoot modes */
 		if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
+		    int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is 255 - not reachable e.g. */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
 				/* @todo: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = ROUTING_NOT_REACHABLE;
-				Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\n"), selActor->morale);
+				if (reserved_tus > 0)
+				Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reverved TUs: %i\n"), selActor->morale, reserved_tus);
+				else
+                    Com_sprintf(infoText, sizeof(infoText), _("Morale  %i"), selActor->morale);
 				MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 			}
 			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
 				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
-					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
-					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\nMove %i (%i TU left)\n"), selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
-					if (actorMoveLength <= selActor->TU)
-						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, selActor->TU);
+					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
+					if (reserved_tus > 0)
+                        Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reverved TUs: %i\nMove %i (%i|%i TU left)\n"), selActor->morale, reserved_tus, actorMoveLength, selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
+                    else
+                        Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\nMove %i (%i TU left)\n"), selActor->morale, reserved_tus, actorMoveLength, selActor->TU - actorMoveLength);
+
+					if (actorMoveLength <= CL_UsableTUs(selActor))
+						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
 					else
 						Com_sprintf(mouseText, sizeof(mouseText), "- (-)\n");
 				} else {
-					CL_RefreshWeaponButtons(selActor->TU);
+					CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 				}
 				lastHUDActor = selActor;
 				lastMoveLength = actorMoveLength;
@@ -1583,15 +1814,15 @@ void CL_ActorUpdateCVars (void)
 
 				time = selFD->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
-				if (selActor->TU < time || (csi.ods[selWeapon->item.t].reload && selWeapon->item.a <= 0)) {
+				if (CL_UsableTUs(selActor) < time || (csi.ods[selWeapon->item.t].reload && selWeapon->item.a <= 0)) {
 					cl.cmode = M_MOVE;
-					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 				}
 			} else if (selWeapon) {
 				Com_sprintf(infoText, sizeof(infoText), _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
 			} else {
 				cl.cmode = M_MOVE;
-				CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
+				CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 			}
 		}
 
@@ -1602,6 +1833,7 @@ void CL_ActorUpdateCVars (void)
 		}
 
 		/* Calculate remaining TUs. */
+		/* We use the full count of TUs sicne the "reserved" bar is overlaid over this one. */
 		time = max(0, selActor->TU - time);
 
 		Cvar_Set("mn_turemain", va("%i", time));
@@ -1641,11 +1873,12 @@ void CL_ActorUpdateCVars (void)
 			}
 
 			cl.oldstate = selActor->state;
+			/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
 			if (actorMoveLength < ROUTING_NOT_REACHABLE
 				&& (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE))
 				CL_RefreshWeaponButtons(time);
 			else
-				CL_RefreshWeaponButtons(selActor->TU);
+				CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 		} else {
 			/* no actor selected, reset cvars */
 			/* @todo: this overwrites the correct values a bit to often.
@@ -1698,7 +1931,7 @@ void CL_ActorUpdateCVars (void)
 		}
 		cl.oldcmode = cl.cmode;
 		if (selActor)
-			CL_RefreshWeaponButtons(selActor->TU);
+			CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 	}
 
 	/* player bar */
@@ -1756,6 +1989,7 @@ void CL_AddActorToTeamList (le_t * le)
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 
+		/**@todo: still needed? check if this can be removed */
 		CL_SetDefaultReactionFiremode(i, 'r');	/**< Set default reaction firemode for this soldier. */
 #if 0
 		/* @todo: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
@@ -2134,7 +2368,7 @@ static qboolean CL_TraceMove (pos3_t to)
 		length = Grid_MoveLength(&clMap, pos, qfalse);
 		PosAddDV(pos, dv);
 		Grid_PosToVec(&clMap, pos, vec);
-		if (length > selActor->TU)
+		if (length > CL_UsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
 		else if (selActor->state & STATE_CROUCHED)
 			CL_ParticleSpawn("crawlTracer", 0, vec, oldVec, NULL);
@@ -2333,7 +2567,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 		}
 	}
 
-	/* ... ELSE  (not sane and/or not useable) */
+	/* ... ELSE  (not sane and/or not usable) */
 	/* Update the changed hand with default firemode. */
 	if (hand == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG right\n");
@@ -2493,8 +2727,12 @@ void CL_ActorStandCrouch_f (void)
 	if (selActor->fieldSize == ACTOR_SIZE_2x2)
 		/** @todo future thoughs: maybe define this in team_*.ufo files instead? */
 		return;
-	/* send a request to toggle crouch to the server */
-	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
+
+	/* Check if we should even try to send this command (no TUs left or). */
+	if (CL_UsableTUs(selActor) >= TU_CROUCH || CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
+		/* send a request to toggle crouch to the server */
+		MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
+	}
 }
 
 /**
@@ -2585,7 +2823,7 @@ void CL_ActorToggleReaction_f (void)
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 	} else {
-		/* No useable RF weapon. */
+		/* No usable RF weapon. */
 		switch (selActorReactionState) {
 		case R_FIRE_OFF:
 			state = ~STATE_REACTION;
@@ -3172,6 +3410,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
+        /**@todo: Still needed? check if this can be removed. */
 		for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
 			if (cl.teamList[actor_idx]) {
 				/* Check if any default firemode is defined and search for one if not. */
@@ -3931,26 +4170,28 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 
 	Grid_PosToVec(&clMap, pos, ent.origin);
 
-	/* ok, paint the green box if move is possible */
-	if (selActor && actorMoveLength < ROUTING_NOT_REACHABLE && actorMoveLength <= selActor->TU)
-		VectorSet(ent.angles, 0, 1, 0);
-	/* and paint a dark blue one if move is impossible or the soldier */
-	/* does not have enough TimeUnits left */
+	/**
+	 * Paint the green box if move is possible ...
+	 * OR paint a dark blue one if move is impossible or the
+	 * soldier does not have enough TimeUnits left.
+	 */
+	if (selActor && actorMoveLength < ROUTING_NOT_REACHABLE && actorMoveLength <= CL_UsableTUs(selActor))
+		VectorSet(ent.angles, 0, 1, 0); /* Green */
 	else
-		VectorSet(ent.angles, 0, 0, 0.6);
+		VectorSet(ent.angles, 0, 0, 0.6); /* Dark Blue */
 
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 
 	/* color */
 	if (mouseActor && (mouseActor != selActor)) {
 		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
-		/* paint the box red if the soldiers under the cursor is
-		 * not in our team and no civilian, too */
+		/* Paint the box red if the soldiers under the cursor is
+		 * not in our team and no civilian either. */
 		if (mouseActor->team != cls.team) {
 			switch (mouseActor->team) {
 			case TEAM_CIVILIAN:
-				/* civilians are yellow */
-				VectorSet(ent.angles, 1, 1, 0);
+				/* Civilians are yellow */
+				VectorSet(ent.angles, 1, 1, 0); /* Yellow */
 				break;
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
@@ -3965,8 +4206,8 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 					/* see CL_ParseClientinfo */
 					menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
 				}
-				/* aliens (and players not in our team [multiplayer]) are red */
-				VectorSet(ent.angles, 1, 0, 0);
+				/* Aliens (and players not in our team [multiplayer]) are red */
+				VectorSet(ent.angles, 1, 0, 0); /* Red */
 				break;
 			}
 		} else {
@@ -3979,8 +4220,8 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				assert(chr);
 				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = chr->name;
 			}
-			/* paint a light blue box if on our team */
-			VectorSet(ent.angles, 0.2, 0.3, 1);
+			/* Paint a light blue box if on our team */
+			VectorSet(ent.angles, 0.2, 0.3, 1); /* Light Blue */
 		}
 
 		if (selActor) {
@@ -4006,7 +4247,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
 	if (pendBox) {
-		VectorSet(ent.angles, 0, 1, 1);
+		VectorSet(ent.angles, 0, 1, 1); /* Cyan */
 		ent.alpha = 0.15;
 	}
 

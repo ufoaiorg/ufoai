@@ -513,8 +513,9 @@ void CL_ParticleFree(ptl_t *p);
 /* distance from vertical center of grid-point to head when crouched */
 #define EYE_HT_CROUCH UNIT_HEIGHT * 0.06
 
-
-/* reaction fire toggle state, don't mess with the order!!! */
+/**
+ * @brief Reaction fire toggle state, don't mess with the order!!!
+ */
 typedef enum {
 	R_FIRE_OFF,
 	R_FIRE_ONCE,
@@ -532,6 +533,33 @@ typedef enum {
 	BT_HEADGEAR,
 	BT_NUM_TYPES
 } button_types_t;
+
+/**
+ * @brief How many TUs (and of what type) did a player reserve for a unit?
+ * @sa CL_UsableTUs
+ * @sa CL_ReservedTUs
+ * @sa CL_ReserveTUs
+ * @todo Would a list be better here? See the enum reservation_types_t
+ */
+typedef struct {
+	int reaction;	/**< Did the player activate RF with a usable firemode? (And at the same time storing the TU-costs of this firemode) */
+	int crouch;	/**< Did the player reserve TUs for crouching (or stanbding up)? Depends exclusively on TU_CROUCH.
+			 * @sa cl_actor:CL_ActorStandCrouch_f
+			 * @sa cl_parse:CL_ActorStateChange
+			 */
+/*	int thisTurn;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to create a popup where one can add one or several actions (firemodes are most important) to this value. */
+/*	int thisTurnManually;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to provide a numerical input-field. */
+} cl_reserved_tus_t;
+
+typedef enum {
+	RES_REACTION,
+	RES_CROUCH,
+	RES_ALL,
+	RES_ALL_ACTIVE,
+	RES_TYPES /**< Max. */
+} reservation_types_t;
+
+extern cl_reserved_tus_t reservedTus[MAX_EDICTS];	/** @sa Definition in cl_actor.c */
 
 extern le_t *selActor;
 extern int actorMoveLength;
@@ -555,7 +583,11 @@ void CL_SwitchFiremodeList_f(void);
 void CL_FireWeapon_f(void);
 void CL_SelectReactionFiremode_f(void);
 
+int CL_ReservedTUs(const le_t * le, reservation_types_t type);
+void CL_ReserveTUs(const le_t * le, reservation_types_t type, int tus);
+
 #ifdef DEBUG
+void CL_ListReactionAndReservations_f (void);
 void CL_DisplayBlockedPaths_f(void);
 void LE_List_f(void);
 #endif
