@@ -567,7 +567,6 @@ static void R_InitExtension (void)
 	R_CheckError();
 
 	{
-		qglGetError();
 		Com_Printf("max texture size: ");
 		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
 		r_config.maxTextureSize = size;
