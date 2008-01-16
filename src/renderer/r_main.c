@@ -576,7 +576,7 @@ static void R_InitExtension (void)
 			r_config.maxTextureSize = 0;
 
 		if ((err = qglGetError()) != GL_NO_ERROR) {
-			Com_Printf("cannot detect - using 1024!\n");
+			Com_Printf("cannot detect - using 1024! (%s)\n", R_TranslateError(err));
 			Cvar_SetValue("r_maxtexres", 1024);
 		} else {
 			Com_Printf("detected %d\n", r_config.maxTextureSize);
