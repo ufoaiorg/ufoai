@@ -89,7 +89,6 @@ extern cvar_t *r_checkerror;
 extern cvar_t *r_showbox;
 extern cvar_t *r_shadows;
 extern cvar_t *r_soften;
-extern cvar_t *r_maxtexres;
 extern cvar_t *r_modulate;
 extern cvar_t *r_drawbuffer;
 extern cvar_t *r_driver;

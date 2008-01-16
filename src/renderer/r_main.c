@@ -49,6 +49,7 @@ float r_world_matrix[16];
 float r_base_world_matrix[16];
 
 static cvar_t *r_speeds;
+static cvar_t *r_maxtexres;
 
 cvar_t *r_brightness;
 cvar_t *r_contrast;
@@ -78,7 +79,6 @@ cvar_t *r_stencilsize;
 cvar_t *r_colordepth;
 cvar_t *r_soften;
 cvar_t *r_modulate;
-cvar_t *r_maxtexres;
 cvar_t *r_swapinterval;
 cvar_t *r_acceleratedvisuals;
 cvar_t *r_texturemode;
@@ -563,9 +563,12 @@ static void R_InitExtension (void)
 		r_state.glsl_program = qfalse;
 	}
 
-	{
-		Com_Printf("max texture size: ");
+	/* reset gl error state */
+	R_CheckError();
 
+	{
+		qglGetError();
+		Com_Printf("max texture size: ");
 		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
 		r_config.maxTextureSize = size;
 
@@ -577,12 +580,13 @@ static void R_InitExtension (void)
 			Com_Printf("cannot detect - using 1024!\n");
 			Cvar_SetValue("r_maxtexres", 1024);
 		} else {
-			Com_Printf("detected %d\n", size);
-			if (r_maxtexres->integer > size) {
+			Com_Printf("detected %d\n", r_config.maxTextureSize);
+			if (r_maxtexres->integer > r_config.maxTextureSize) {
 				Com_Printf("downgrading from %i\n", r_maxtexres->integer);
-				Cvar_SetValue("r_maxtexres", size);
-			} else if (r_maxtexres->integer < size) {
+				Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
+			} else if (r_maxtexres->integer < r_config.maxTextureSize) {
 				Com_Printf("but using %i as requested\n", r_maxtexres->integer);
+				r_config.maxTextureSize = r_maxtexres->integer;
 			}
 		}
 	}
