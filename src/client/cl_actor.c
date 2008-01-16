@@ -610,14 +610,11 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx);
 
 	if (le) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG le!\n"); /**@todo DEBUG - remove me */
 		/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
 		if ((obj_idx >= 0) && (fd_idx >= 0)) {
 			objDef_t *ammo = NULL;
 			fireDef_t *fd = NULL;
 			int weap_fds_idx = -1;
-			
-			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG obj_idx+fd_idx!\n");  /**@todo DEBUG - remove me */
 
 			/* Get index of firedefinitions in 'ammo'. */
 			CL_GetWeaponAndAmmo(le, handidx==1?'l':'r', NULL, &ammo, &weap_fds_idx);
@@ -627,7 +624,6 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 
 			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
 			if (fd) {
-				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: DEBUG fd!\n");  /**@todo DEBUG - remove me */
 				CL_ReserveTUs(le, RES_REACTION, fd->time);
 			}
 		}
