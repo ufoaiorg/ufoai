@@ -39,6 +39,7 @@ static inline void R_CheckErrorDebug (const char *file, int line, const char *fu
 		GLenum error = qglGetError();
 		if (error != GL_NO_ERROR)
 			Com_Printf("OpenGL err: %s (%d): %s 0x%X\n", file, line, function, error);
-	}
+	} else
+		qglGetError();
 }
 #endif
