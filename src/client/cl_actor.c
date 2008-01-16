@@ -61,11 +61,6 @@ typedef enum {
 static int reactionFiremode[MAX_EDICTS][RF_MAX]; /** < Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 
 cl_reserved_tus_t reservedTus[MAX_EDICTS]; /** < Per actor: Stores the reserved TUs for actions. @sa See client.h:cl_reserved_tus_t for more. */
-/**
- * Todos for the new reaction-fire code:
- * @todo Modify CL_SetReactionFiremode to set "reaction" correctly. (The value should've been checked beforehand -> In what functions?)
- * @todo Display reserved TUs in status bar.
- */
 
 #define THIS_REACTION(actoridx, hand, fd_idx)	(reactionFiremode[actoridx][RF_HAND] == hand && reactionFiremode[actoridx][RF_FM] == fd_idx)
 #define SANE_REACTION(actoridx)	(((reactionFiremode[actoridx][RF_HAND] >= 0) && (reactionFiremode[actoridx][RF_FM] >=0 && reactionFiremode[actoridx][RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (reactionFiremode[actoridx][RF_FM] >= 0)))
