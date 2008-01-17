@@ -2313,7 +2313,7 @@ void G_ClientTeamInfo (player_t * player)
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 				if (!ent) {
-					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is avaialble (%i)\n", dummyFieldSize);
+					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n", dummyFieldSize);
 					G_ClientSkipActorInfo();
 					continue;
 				}
@@ -2323,7 +2323,7 @@ void G_ClientTeamInfo (player_t * player)
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 				if (!ent) {
-					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is avaialble (%i)\n", dummyFieldSize);
+					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n", dummyFieldSize);
 					G_ClientSkipActorInfo();
 					continue;
 				}
