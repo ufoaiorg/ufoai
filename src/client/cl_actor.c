@@ -506,14 +506,14 @@ static void HideFiremodes (void)
  * @param[in] hand Which weapon(-hand) to use [l|r].
  * @param[out] weapon The weapon in the hand.
  * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
- * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon (objDef.fd[x][])
+ * @param[out] weap_fds_idx weapon_mod index in the ammo for the weapon (objDef.fd[x][])
  */
-static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fd_idx)
+static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fds_idx)
 {
 	invList_t *invlist_weapon = NULL;
 	objDef_t *item, *itemAmmo;
 
-	assert(weap_fd_idx);
+	assert(weap_fds_idx);
 
 	if (!actor)
 		return;
@@ -536,7 +536,7 @@ static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapo
 	else
 		itemAmmo = &csi.ods[invlist_weapon->item.m];
 
-	*weap_fd_idx = FIRESH_FiredefsIDXForWeapon(itemAmmo, invlist_weapon->item.t);
+	*weap_fds_idx = FIRESH_FiredefsIDXForWeapon(itemAmmo, invlist_weapon->item.t);
 	if (ammo)
 		*ammo = itemAmmo;
 	if (weapon)
@@ -564,8 +564,57 @@ void CL_ListReactionAndReservations_f (void)
 }
 
 /**
+ * @brief Checks if the currenlty selected firemode in reactionFiremode is useable with the defined weapon.
+ * @param[in] actor The actor to check the firemdoe for.
+ * @return qtrue if nothing has to be done.
+ * @return qfalse if settings are outdated.
+ */
+static qboolean CL_CheckReactionFiremode (const le_t * actor)
+{
+	character_t * chr = NULL;
+
+	objDef_t *ammo = NULL;
+	int weap_fds_idx = -1;
+
+	if (!actor) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_CheckReactionFiremode: No actor given! Abort.\n");
+		return qtrue;
+	}
+
+	chr = CL_GetActorChr(actor);
+	if (!chr) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_CheckReactionFiremode: No character found! Abort.\n");
+		return qtrue;
+	}
+
+	if (!SANE_REACTION(chr)) {
+		/* Settings out of range or otherwise invalid - update needed. */
+		return qfalse;
+	}
+
+	/**@todo Get Weapon&Firedef and compare with settings. */
+	/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
+	CL_GetWeaponAndAmmo(actor, (chr->reactionFiremode[RF_HAND]==1)?'l':'r', NULL, &ammo, &weap_fds_idx);
+
+	if (!ammo && weap_fds_idx < 0) {
+		/* No weapon&ammo found or bad index returned. stored ssettings possibly bad. */
+		return qfalse;
+	}
+
+	if (ammo->weap_idx[weap_fds_idx] == chr->reactionFiremode[RF_WPIDX]
+	&&  chr->reactionFiremode[RF_FM] >= 0
+	&&  chr->reactionFiremode[RF_FM] < ammo->numFiredefs[MAX_WEAPONS_PER_OBJDEF]) {
+		/* Stored firemode settings up to date - nothin has to be changed */
+		return qtrue;
+	}
+
+	/* Return "settings unusable" */
+	return qfalse;
+}
+
+/**
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
- * @param[in] actor_idx Index of an actor.
+ * @param[in] actor The actor to update the firemdoe for.
  * @param[in] handidx Index of hand with item, which will be used for reactionfiR_ Possible hand indices: 0=right, 1=right, -1=undef
  * @param[in] fd_idx Index of firedefinition for an item in given hand.
  */
@@ -597,7 +646,7 @@ static void CL_SetReactionFiremode (le_t * actor, const int handidx, const int o
 		fireDef_t *fd = NULL;
 		int weap_fds_idx = -1;
 
-		/* Get index of firedefinitions in 'ammo'. */
+		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
 		CL_GetWeaponAndAmmo(actor, handidx==1?'l':'r', NULL, &ammo, &weap_fds_idx);
 
 		/* Get The firedefinition of the selected firemode */
@@ -815,13 +864,13 @@ static qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
 {
 	objDef_t *ammo = NULL;
 	objDef_t *weapon = NULL;
-	int weap_fd_idx = -1;
+	int weap_fds_idx = -1;
 	int i;
 
 	/* Get ammo and weapon-index in ammo. */
-	CL_GetWeaponAndAmmo(actor, hand, &weapon, &ammo, &weap_fd_idx);
+	CL_GetWeaponAndAmmo(actor, hand, &weapon, &ammo, &weap_fds_idx);
 
-	if (weap_fd_idx == -1) {
+	if (weap_fds_idx == -1) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_WeaponWithReaction: No weapondefinition in ammo found\n");
 		return qfalse;
 	}
@@ -830,8 +879,8 @@ static qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
 		return qfalse;
 
 	/* check ammo for reaction-enabled firemodes */
-	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
-		if (ammo->fd[weap_fd_idx][i].reaction) {
+	for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
+		if (ammo->fd[weap_fds_idx][i].reaction) {
 			return qtrue;
 		}
 	}
@@ -909,7 +958,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 {
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	int weap_fd_idx = -1;
+	int weap_fds_idx = -1;
 	int i = -1;
 	character_t *chr = NULL;
 	int actor_idx = -1;
@@ -921,11 +970,11 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 		return;
 	}
 
-	CL_GetWeaponAndAmmo(actor, hand, &weapon, &ammo, &weap_fd_idx);
+	CL_GetWeaponAndAmmo(actor, hand, &weapon, &ammo, &weap_fds_idx);
 
-	if (weap_fd_idx == -1) {
+	if (weap_fds_idx == -1) {
 		CL_DisplayImpossibleReaction(actor);
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: No weap_fd_idx found for %c hand.\n", hand);
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: No weap_fds_idx found for %c hand.\n", hand);
 		return;
 	}
 
@@ -937,8 +986,8 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 
 	/* ammo is definitly set here - otherwise the both checks above would have
 	 * left this function already */
-	if (!RS_ItemIsResearched(csi.ods[ammo->weap_idx[weap_fd_idx]].id)) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fiR_\n", csi.ods[ammo->weap_idx[weap_fd_idx]].id);
+	if (!RS_ItemIsResearched(csi.ods[ammo->weap_idx[weap_fds_idx]].id)) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fiR_\n", csi.ods[ammo->weap_idx[weap_fds_idx]].id);
 		return;
 	}
 
@@ -949,15 +998,15 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 
 	if (active_firemode < 0) {
 		/* Set default reaction firemode for this hand (active_firemode=-1) */
-		i = FIRESH_GetDefaultReactionFire(ammo, weap_fd_idx);
+		i = FIRESH_GetDefaultReactionFire(ammo, weap_fds_idx);
 		actor_idx = CL_GetActorNumber(actor);
 
 		if (i >= 0) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG i>=0\n");
 			/* Found usable firemode for the weapon in _this_ hand. */
-			CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fd_idx], i);
+			CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fds_idx], i);
 
-			if (CL_UsableReactionTUs(actor) >= ammo->fd[weap_fd_idx][i].time) {
+			if (CL_UsableReactionTUs(actor) >= ammo->fd[weap_fds_idx][i].time) {
 				/* Display 'usable" (blue) reaction buttons */
 				CL_DisplayPossibleReaction(actor);
 			} else {
@@ -974,7 +1023,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 				Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG inverse hand\n");
 #if 0
 				/** This should already be be handled in the call of CL_UpdateReactionFiremodes above. */
-				if (CL_UsableReactionTUs(&actor) >= ammo->fd[weap_fd_idx][xxxxxxx].time) {
+				if (CL_UsableReactionTUs(&actor) >= ammo->fd[weap_fds_idx][xxxxxxx].time) {
 					/* Display 'usable" (blue) reaction buttons */
 					CL_DisplayPossibleReaction(actor);
 				} else {
@@ -998,10 +1047,10 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 	}
 
 	chr = CL_GetActorChr(actor);
-	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fd_idx);
-	if (chr->reactionFiremode[RF_WPIDX] == ammo->weap_idx[weap_fd_idx]
+	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fds_idx);
+	if (chr->reactionFiremode[RF_WPIDX] == ammo->weap_idx[weap_fds_idx]
 	 && chr->reactionFiremode[RF_HAND] == handidx) {
-		if (ammo->fd[weap_fd_idx][active_firemode].reaction) {
+		if (ammo->fd[weap_fds_idx][active_firemode].reaction) {
 			if (chr->reactionFiremode[RF_FM] == active_firemode)
 				/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
 				return;
@@ -1013,15 +1062,15 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 
 	/* Search for a (reaction) firemode with the given index and store/send it. */
 	CL_SetReactionFiremode(actor, -1, NONE, -1);
-	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
-		if (ammo->fd[weap_fd_idx][i].reaction) {
+	for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
+		if (ammo->fd[weap_fds_idx][i].reaction) {
 			if (i == active_firemode) {
 				/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
-				if (CL_UsableReactionTUs(actor) >= ammo->fd[weap_fd_idx][active_firemode].time) {
-					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fd_idx], i);
+				if (CL_UsableReactionTUs(actor) >= ammo->fd[weap_fds_idx][active_firemode].time) {
+					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fds_idx], i);
 				} else {
 					/** @todo Popup that tells the player no enough TUs? */
-					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fd_idx], i);
+					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fds_idx], i);
 					CL_ReserveTUs(actor, RES_REACTION, 0);
 					CL_DisplayImpossibleReaction(actor);
 				}
@@ -1088,7 +1137,7 @@ void CL_DisplayFiremodes_f (void)
 	character_t *chr = NULL;
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	int weap_fd_idx = -1;
+	int weap_fds_idx = -1;
 	int i;
 	const char *hand;
 
@@ -1113,11 +1162,11 @@ void CL_DisplayFiremodes_f (void)
 		return;
 	}
 
-	CL_GetWeaponAndAmmo(selActor, hand[0], &weapon, &ammo, &weap_fd_idx);
-	if (weap_fd_idx == -1)
+	CL_GetWeaponAndAmmo(selActor, hand[0], &weapon, &ammo, &weap_fds_idx);
+	if (weap_fds_idx == -1)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: %s | %s | %i\n", weapon->name, ammo->name, weap_fd_idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: %s | %s | %i\n", weapon->name, ammo->name, weap_fds_idx);
 
 	if (!weapon || !ammo) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: no weapon or ammo found.\n");
@@ -1161,7 +1210,7 @@ void CL_DisplayFiremodes_f (void)
 		/* Set default firemode (try right hand first, then left hand). */
 		CL_SetDefaultReactionFiremode(selActor, 'r');
 	} else {
-		if (chr->reactionFiremode[RF_WPIDX] != ammo->weap_idx[weap_fd_idx]) {
+		if (chr->reactionFiremode[RF_WPIDX] != ammo->weap_idx[weap_fds_idx]) {
 			if ((hand[0] == 'r') && (chr->reactionFiremode[RF_HAND] == 0)) {
 				/* Set default firemode (try right hand first, then left hand). */
 				CL_SetDefaultReactionFiremode(selActor, 'r');
@@ -1174,16 +1223,16 @@ void CL_DisplayFiremodes_f (void)
 	}
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		if (i < ammo->numFiredefs[weap_fd_idx]) { /* We have a defined fd ... */
+		if (i < ammo->numFiredefs[weap_fds_idx]) { /* We have a defined fd ... */
 			/* Display the firemode information (image + text). */
-			if (ammo->fd[weap_fd_idx][i].time <= CL_UsableTUs(selActor)) {	/* Enough timeunits for this firemode?*/
-				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qtrue);
+			if (ammo->fd[weap_fds_idx][i].time <= CL_UsableTUs(selActor)) {	/* Enough timeunits for this firemode?*/
+				CL_DisplayFiremodeEntry(&ammo->fd[weap_fds_idx][i], hand[0], qtrue);
 			} else{
-				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qfalse);
+				CL_DisplayFiremodeEntry(&ammo->fd[weap_fds_idx][i], hand[0], qfalse);
 			}
 
 			/* Display checkbox for reaction firemode (this needs a sane reactionFiremode array) */
-			if (ammo->fd[weap_fd_idx][i].reaction) {
+			if (ammo->fd[weap_fds_idx][i].reaction) {
 				Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
 				if (hand[0] == 'r') {
 					if (THIS_REACTION(chr,0,i)) {
@@ -1280,7 +1329,7 @@ void CL_FireWeapon_f (void)
 
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	int weap_fd_idx = -1;
+	int weap_fds_idx = -1;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
@@ -1304,8 +1353,8 @@ void CL_FireWeapon_f (void)
 		return;
 	}
 
-	CL_GetWeaponAndAmmo(selActor, hand[0], &weapon, &ammo, &weap_fd_idx);
-	if (weap_fd_idx == -1)
+	CL_GetWeaponAndAmmo(selActor, hand[0], &weapon, &ammo, &weap_fds_idx);
+	if (weap_fds_idx == -1)
 		return;
 
 	/* Let's check if shooting is possible.
@@ -1318,7 +1367,7 @@ void CL_FireWeapon_f (void)
 			return;
 	}
 
-	if (ammo->fd[weap_fd_idx][firemode].time <= CL_UsableTUs(selActor)) {
+	if (ammo->fd[weap_fds_idx][firemode].time <= CL_UsableTUs(selActor)) {
 		/* Actually start aiming. This is done by changing the current mode of display. */
 		if (hand[0] == 'r')
 			cl.cmode = M_FIRE_R;
@@ -1330,7 +1379,7 @@ void CL_FireWeapon_f (void)
 		/* Cannot shoot because of not enough TUs - every other
 		   case should be checked previously in this function. */
 		CL_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
-		Com_DPrintf(DEBUG_CLIENT, "CL_FireWeapon_f: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
+		Com_DPrintf(DEBUG_CLIENT, "CL_FireWeapon_f: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fds_idx][firemode].name);
 		return;
 	}
 }
@@ -2497,7 +2546,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	int weap_fd_idx = NONE;
+	int weap_fds_idx = NONE;
 
 	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
 
@@ -2521,12 +2570,12 @@ void CL_InvCheckHands (struct dbuffer *msg)
 
 	/* Check if current RF-selection is sane (and in the other hand) ... */
 	if (SANE_REACTION(chr) && (chr->reactionFiremode[RF_HAND] != hand)) {
-		CL_GetWeaponAndAmmo(le, chr->reactionFiremode[RF_HAND], &weapon, &ammo, &weap_fd_idx); /* get info about other hand */
+		CL_GetWeaponAndAmmo(le, chr->reactionFiremode[RF_HAND], &weapon, &ammo, &weap_fds_idx); /* get info about other hand */
 
 		/* Break if the currently selected RF mode is ok. */
-		if (weapon && (weap_fd_idx != NONE)) {
+		if (weapon && (weap_fds_idx != NONE)) {
 			firemode_idx = chr->reactionFiremode[RF_FM];
-			if (ammo->fd[weap_fd_idx][firemode_idx].reaction)
+			if (ammo->fd[weap_fds_idx][firemode_idx].reaction)
 				return;
 		}
 	}
