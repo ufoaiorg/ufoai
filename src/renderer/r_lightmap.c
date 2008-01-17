@@ -58,7 +58,7 @@ static void R_UploadLightmapBlock (void)
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, LIGHTMAP_BLOCK_WIDTH, LIGHTMAP_BLOCK_HEIGHT,
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, r_maxlightmap->integer, r_maxlightmap->integer,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.buffer);
 
 	R_CheckError();
@@ -77,9 +77,9 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 	int i, j;
 	int best, best2;
 
-	best = LIGHTMAP_BLOCK_HEIGHT;
+	best = r_maxlightmap->integer;
 
-	for (i = 0; i < LIGHTMAP_BLOCK_WIDTH - w; i++) {
+	for (i = 0; i < r_maxlightmap->integer - w; i++) {
 		best2 = 0;
 
 		for (j = 0; j < w; j++) {
@@ -95,7 +95,7 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 		}
 	}
 
-	if (best + h > LIGHTMAP_BLOCK_HEIGHT)
+	if (best + h > r_maxlightmap->integer)
 		return qfalse;
 
 	for (i = 0; i < w; i++)
@@ -280,12 +280,12 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	surf->lightmaptexturenum = TEXNUM_LIGHTMAPS + r_lightmaps.texnum;
 
 	base = r_lightmaps.buffer;
-	base += (surf->light_t * LIGHTMAP_BLOCK_WIDTH + surf->light_s) * LIGHTMAP_BLOCK_BYTES;
+	base += (surf->light_t * r_maxlightmap->integer + surf->light_s) * LIGHTMAP_BLOCK_BYTES;
 
 	if (!surf->samples)  /* make it fullbright */
-		R_BuildDefaultLightmap(surf, base, LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_BYTES);
+		R_BuildDefaultLightmap(surf, base, r_maxlightmap->integer * LIGHTMAP_BLOCK_BYTES);
 	else  /* or light it properly */
-		R_BuildLightmap(surf, base, LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_BYTES);
+		R_BuildLightmap(surf, base, r_maxlightmap->integer * LIGHTMAP_BLOCK_BYTES);
 }
 
 /**

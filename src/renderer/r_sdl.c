@@ -66,6 +66,7 @@ qboolean Rimp_Init (void)
 	SDL_version version;
 	int attrValue;
 	const SDL_VideoInfo* info;
+	char videoDriverName[MAX_VAR] = "";
 
 	r_surface = NULL;
 
@@ -92,8 +93,15 @@ qboolean Rimp_Init (void)
 	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
 	info = SDL_GetVideoInfo();
-	if (info)
+	if (info) {
 		Com_Printf("I: desktop depth: %ibpp\n", info->vfmt->BitsPerPixel);
+		r_config.videoMemory = info->video_mem;
+		Com_Printf("I: video memory: %i\n", r_config.videoMemory);
+	} else {
+		r_config.videoMemory = 0;
+	}
+	SDL_VideoDriverName(videoDriverName, sizeof(videoDriverName));
+	Com_Printf("I: video driver: %s\n", videoDriverName);
 
 	if (!R_SetMode()) {
 		Sys_Error("Video subsystem failed to initialize\n");

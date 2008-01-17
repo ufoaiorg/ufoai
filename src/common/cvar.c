@@ -100,14 +100,18 @@ float Cvar_VariableValue (const char *var_name)
  * @sa Cvar_FindVar
  * @return true if set
  */
-qboolean Cvar_SetCheckFunction (const char *var_name, qboolean (*check) (cvar_t* cvar) )
+qboolean Cvar_SetCheckFunction (const char *var_name, qboolean (*check) (cvar_t* cvar))
 {
 	cvar_t *var;
 
 	var = Cvar_FindVar(var_name);
-	if (!var)
+	if (!var) {
+		Com_Printf("Could not set check function for cvar '%s'\n", var_name);
 		return qfalse;
+	}
 	var->check = check;
+	/* execute the check */
+	var->check(var);
 	return qtrue;
 }
 
@@ -134,11 +138,11 @@ qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qboolean s
 
 	if (cvar->value < minVal) {
 		Com_Printf("WARNING: cvar '%s' out of range (%f < %f)\n", cvar->name, cvar->value, minVal);
-		Cvar_Set(cvar->name, va("%f", minVal));
+		Cvar_SetValue(cvar->name, minVal);
 		return qtrue;
 	} else if (cvar->value > maxVal) {
 		Com_Printf("WARNING: cvar '%s' out of range (%f > %f)\n", cvar->name, cvar->value, maxVal);
-		Cvar_Set(cvar->name, va("%f", maxVal));
+		Cvar_SetValue(cvar->name, maxVal);
 		return qtrue;
 	}
 
@@ -459,6 +463,11 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 					FS_ExecAutoexec();
 				}
 			}
+
+			if (var->check)
+				if (var->check(var))
+					Com_Printf("Invalid value for cvar %s\n", var_name);
+
 			return var;
 		}
 	} else {

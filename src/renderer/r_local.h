@@ -99,6 +99,7 @@ extern cvar_t *r_texturealphamode;
 extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_wire;
 extern cvar_t *r_vertexbuffers;
+extern cvar_t *r_maxlightmap;
 
 extern int gl_solid_format;
 extern int gl_alpha_format;
@@ -137,6 +138,8 @@ typedef struct {
 	const char *extensions_string;
 	int maxTextureSize;
 	int maxTextureUnits;
+
+	int videoMemory;
 } rconfig_t;
 
 extern rconfig_t r_config;

@@ -29,8 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_LIGHTMAP_H
 #define R_LIGHTMAP_H
 
-#define	LIGHTMAP_BLOCK_WIDTH	2048
-#define	LIGHTMAP_BLOCK_HEIGHT	2048
+#define	LIGHTMAP_BLOCK_WIDTH	4096
+#define	LIGHTMAP_BLOCK_HEIGHT	4096
 #define LIGHTMAP_BLOCK_BYTES	4 /* bytes RGBA */
 
 #define LIGHTMAP_WIDTH			512

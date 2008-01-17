@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_sphere.h"
 #include "r_font.h"
 #include "r_light.h"
+#include "r_lightmap.h"
 #include "r_main.h"
 #include "r_error.h"
 
@@ -87,6 +88,7 @@ cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
 cvar_t *r_showbox;
 cvar_t *r_vertexbuffers;
+cvar_t *r_maxlightmap;
 
 /**
  * @brief Prints some OpenGL strings
@@ -357,6 +359,23 @@ static const cmdList_t r_commands[] = {
 	{NULL, NULL, NULL}
 };
 
+static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
+{
+	if (r_config.maxTextureSize && cvar->integer > r_config.maxTextureSize) {
+		Com_Printf("%s exceeded max supported texture size\n", cvar->name);
+		Cvar_SetValue(cvar->name, r_config.maxTextureSize);
+		return qfalse;
+	}
+
+	if (!Q_IsPowerOfTwo(cvar->integer)) {
+		Com_Printf("%s must be power of two\n", cvar->name);
+		Cvar_SetValue(cvar->name, LIGHTMAP_BLOCK_WIDTH);
+		return qfalse;
+	}
+
+	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, qtrue);
+}
+
 static void R_Register (void)
 {
 	const cmdList_t *commands;
@@ -397,6 +416,8 @@ static void R_Register (void)
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
 	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE, "Use vertex buffers for better performance");
+	r_maxlightmap = Cvar_Get("r_maxlightmap", "2048", CVAR_ARCHIVE|CVAR_LATCH, "Reduce this value on older hardware");
+	Cvar_SetCheckFunction("r_maxlightmap", R_CvarCheckMaxLightmap);
 
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);

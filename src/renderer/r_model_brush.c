@@ -525,13 +525,13 @@ static void R_LoadBspVertexArrays (void)
 				s -= surf->stmins[0];
 				s += surf->light_s * surf->lightmap_scale;
 				s += 1 * (surf->lightmap_scale / 2);
-				s /= LIGHTMAP_BLOCK_WIDTH * surf->lightmap_scale;
+				s /= r_maxlightmap->integer * surf->lightmap_scale;
 
 				t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
 				t -= surf->stmins[1];
 				t += surf->light_t * surf->lightmap_scale;
 				t += 1 * (surf->lightmap_scale / 2);
-				t /= LIGHTMAP_BLOCK_HEIGHT * surf->lightmap_scale;
+				t /= r_maxlightmap->integer * surf->lightmap_scale;
 			}
 
 			r_state.lmtexcoord_array[coordind + 0] = s;
