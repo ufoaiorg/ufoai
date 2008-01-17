@@ -544,13 +544,13 @@ extern int fb_length;
 void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void CL_CharacterCvars(character_t * chr);
-void CL_UGVCvars(character_t *chr);
+void CL_UGVCvars(character_t * chr);
 void CL_ActorUpdateCVars(void);
-qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
+qboolean CL_CheckMenuAction(int time, invList_t * weapon, int mode);
 
-void CL_DisplayHudMessage(const char *text, int time);
+void CL_DisplayHudMessage(const char * text, int time);
 void CL_ResetWeaponButtons(void);
-void CL_SetDefaultReactionFiremode(int actor_idx, char hand);
+void CL_SetDefaultReactionFiremode(le_t * actor, const char hand);
 void CL_DisplayFiremodes_f(void);
 void CL_SwitchFiremodeList_f(void);
 void CL_FireWeapon_f(void);
@@ -569,7 +569,7 @@ qboolean CL_ActorSelect(le_t * le);
 qboolean CL_ActorSelectList(int num);
 qboolean CL_ActorSelectNext(void);
 void CL_AddActorToTeamList(le_t * le);
-void CL_RemoveActorFromTeamList(le_t * le);
+void CL_RemoveActorFromTeamList(const le_t * le);
 void CL_ActorSelectMouse(void);
 void CL_ActorReload(int hand);
 void CL_ActorTurnMouse(void);
@@ -577,8 +577,8 @@ void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
 void CL_ActorToggleReaction_f(void);
 void CL_ActorUseHeadgear_f(void);
-void CL_ActorStartMove(le_t * le, pos3_t to);
-void CL_ActorShoot(le_t * le, pos3_t at);
+void CL_ActorStartMove(const le_t * le, pos3_t to);
+void CL_ActorShoot(const le_t * le, pos3_t at);
 void CL_InvCheckHands(struct dbuffer *msg);
 void CL_ActorDoMove(struct dbuffer *msg);
 void CL_ActorDoShoot(struct dbuffer *msg);
@@ -586,7 +586,7 @@ void CL_ActorShootHidden(struct dbuffer *msg);
 void CL_ActorDoThrow(struct dbuffer *msg);
 void CL_ActorStartShoot(struct dbuffer *msg);
 void CL_ActorDie(struct dbuffer *msg);
-void CL_PlayActorSound(le_t* le, actorSound_t soundType);
+void CL_PlayActorSound(const le_t * le, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
 

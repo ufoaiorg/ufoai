@@ -621,6 +621,7 @@ static void CL_StartGame (struct dbuffer *msg)
  * @brief The server finished sending all init-data to the client.
  * @sa CL_StartGame
  * @note EV_START_DONE
+ * @todo is there more stuff to initialise when the client is "ready"?
  */
 static void CL_StartingGameDone (struct dbuffer *msg)
 {
@@ -628,7 +629,7 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 
 	/* Set default reaction-firemode on game-start. */
 	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-		CL_SetDefaultReactionFiremode(actor_idx, 'r');
+		CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
 	}
 }
 
@@ -895,7 +896,7 @@ static void CL_ActorAdd (struct dbuffer *msg)
 static void CL_ActorAppear (struct dbuffer *msg)
 {
 	qboolean newActor;
-	le_t *le;
+	le_t *le = NULL;
 	char tmpbuf[128];
 	int entnum, modelnum1, modelnum2;
 	int teamDefID = -1;
