@@ -23,13 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifdef DEBUG
-#define R_CheckError() R_CheckErrorDebug(__FILE__, __LINE__, __PRETTY_FUNCTION__)
-#else
-#define R_CheckError()
-#endif
 
-#ifdef DEBUG
+#define R_CheckError() R_CheckErrorDebug(__FILE__, __LINE__, __PRETTY_FUNCTION__)
 
 static const char* inline R_TranslateError (GLenum error)
 {
@@ -57,4 +52,3 @@ static inline void R_CheckErrorDebug (const char *file, int line, const char *fu
 	} else
 		qglGetError();
 }
-#endif
