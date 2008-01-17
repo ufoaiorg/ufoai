@@ -1781,7 +1781,7 @@ void CL_ActorUpdateCVars (void)
 				/** @todo CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = ROUTING_NOT_REACHABLE;
 				if (reserved_tus > 0)
-					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reverved TUs: %i\n"), selActor->morale, reserved_tus);
+					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reserved_tus);
 				else
 					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i"), selActor->morale);
 				MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
@@ -1791,7 +1791,7 @@ void CL_ActorUpdateCVars (void)
 				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
 					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 					if (reserved_tus > 0)
-						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reverved TUs: %i\nMove %i (%i|%i TU left)\n"), selActor->morale, reserved_tus, actorMoveLength, selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
+						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reserved TUs: %i\nMove %i (%i|%i TU left)\n"), selActor->morale, reserved_tus, actorMoveLength, selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
 					else
 						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\nMove %i (%i TU left)\n"), selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 
