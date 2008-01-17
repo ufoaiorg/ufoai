@@ -195,21 +195,27 @@ menu options_video
 	}
 	// select box is defined at the bottom - due to shine through on hovering
 
+	string lightmapres_str
+	{
+		string	"_Lightmap block size:"
+		pos		"500 190"
+	}
+
 	string aniso_str
 	{
 		string	"_Texture anisotropy level:"
-		pos		"500 190"
+		pos		"500 215"
 	}
 	string aniso_value
 	{
 		string	"*cvar r_anisotropic"
-		pos		"840 190"
+		pos		"840 215"
 		align	ur
 	}
 	pic aniso_dec
 	{
 		image	menu/buttons_small
-		pos		"868 194"
+		pos		"868 219"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -218,7 +224,7 @@ menu options_video
 	pic aniso_inc
 	{
 		image	menu/buttons_small
-		pos		"884 194"
+		pos		"884 219"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -228,48 +234,48 @@ menu options_video
 	string fullscreen_str
 	{
 		string	"_Fullscreen:"
-		pos		"500 215"
+		pos		"500 240"
 	}
 	checkbox fullscreen
 	{
 		cvar	"*cvar vid_fullscreen"
-		pos		"840 215"
+		pos		"840 240"
 		align	ur
 	}
 
 	string compression_str
 	{
 		string	"_Texture compression:"
-		pos		"500 240"
+		pos		"500 265"
 	}
 	checkbox compression
 	{
 		cvar	"*cvar r_ext_texture_compression"
-		pos		"840 240"
+		pos		"840 265"
 		align	ur
 	}
 
 	string fps_str
 	{
 		string	"_Show FPS:"
-		pos		"500 265"
+		pos		"500 290"
 	}
 	checkbox fps
 	{
 		cvar	"*cvar cl_fps"
-		pos		"840 265"
+		pos		"840 290"
 		align	ur
 	}
 
 	string lod_str
 	{
 		string	"_Texture Lod:"
-		pos		"500 290"
+		pos		"500 315"
 	}
 	checkbox lod
 	{
 		cvar	"*cvar r_texture_lod"
-		pos		"840 290"
+		pos		"840 315"
 		align	ur
 	}
 
@@ -398,6 +404,35 @@ menu options_video
 	}
 
 	/* must be the last one - otherwise other strings and images will shine through */
+	selectbox lightmapres_box
+	{
+		image	"menu/selectbox_green"
+		pos	"774 192"
+		size	"100 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar r_maxlightmap"
+		option low_value {
+			label	"_Low"
+			value	"256"
+			action	""
+		}
+		option medium_value {
+			label	"_Medium"
+			value	"512"
+			action	""
+		}
+		option normal_value {
+			label	"_Normal"
+			value	"1024"
+			action	""
+		}
+		option high_value {
+			label	"_High"
+			value	"2048"
+			action	""
+		}
+	}
+
 	selectbox texres_box
 	{
 		image	"menu/selectbox_green"
