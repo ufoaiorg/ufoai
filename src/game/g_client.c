@@ -1984,7 +1984,7 @@ int G_ClientAction (player_t * player)
 	int i;
 	int firemode;
 	int from, fx, fy, to, tx, ty;
-	int hand, fd_idx;
+	int hand, fd_idx, obj_idx;
 	edict_t * ent = NULL;
 
 	/* read the header */
@@ -2023,13 +2023,15 @@ int G_ClientAction (player_t * player)
 	case PA_REACT_SELECT:
 		hand = -1;
 		fd_idx = -1;
-		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx);
-		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
+		obj_idx = -1;
+		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx, &obj_idx);
+		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fd_idx, obj_idx);
 		/* @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
 		ent = g_edicts + num;
 		if (ent) {
             ent->chr.reactionFiremode[RF_HAND] = hand;
             ent->chr.reactionFiremode[RF_FM] = fd_idx;
+            ent->chr.reactionFiremode[RF_WPIDX] = obj_idx;
 		}
 		break;
 

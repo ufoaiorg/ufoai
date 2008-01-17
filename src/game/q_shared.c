@@ -73,7 +73,7 @@ const char *pa_format[] =
 						 * @sa G_ClientStateChange */
 	"gbbl",				/**< PA_SHOOT */
 	"bbbbbb",			/**< PA_INVMOVE */
-	"ll"				/**< PA_REACT_SELECT */
+	"lll"				/**< PA_REACT_SELECT */
 };
 
 /*===========================================================================*/

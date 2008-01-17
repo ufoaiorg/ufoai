@@ -667,8 +667,8 @@ static void CL_SetReactionFiremode (le_t * actor, const int handidx, const int o
 	chr = CL_GetActorChr(actor);
 	chr->reactionFiremode[RF_HAND] = handidx;	/* Store the given hand. */
 	chr->reactionFiremode[RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
-	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for more. */
 	chr->reactionFiremode[RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
+	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fd_idx, obj_idx); /* Send reactionFiremode[] to server-side storage as well. See g_local.h for more. */
 }
 
 /**
