@@ -596,14 +596,14 @@ qboolean CL_WorkingReactionFiremode (const le_t * actor)
 	/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
 	CL_GetWeaponAndAmmo(actor, (chr->reactionFiremode[RF_HAND]==1)?'l':'r', NULL, &ammo, &weap_fds_idx);
 
-	if (!ammo && weap_fds_idx < 0) {
+	if (!ammo || weap_fds_idx < 0) {
 		/* No weapon&ammo found or bad index returned. stored ssettings possibly bad. */
 		return qfalse;
 	}
 
 	if (ammo->weap_idx[weap_fds_idx] == chr->reactionFiremode[RF_WPIDX]
 	&&  chr->reactionFiremode[RF_FM] >= 0
-	&&  chr->reactionFiremode[RF_FM] < ammo->numFiredefs[MAX_WEAPONS_PER_OBJDEF]) {
+	&&  chr->reactionFiremode[RF_FM] < ammo->numFiredefs[weap_fds_idx]) {
 		/* Stored firemode settings up to date - nothin has to be changed */
 		return qtrue;
 	}
@@ -961,7 +961,6 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 	int weap_fds_idx = -1;
 	int i = -1;
 	character_t *chr = NULL;
-	int actor_idx = -1;
 
 	int handidx = (hand == 'r') ? 0 : 1;
 
@@ -999,7 +998,6 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 	if (active_firemode < 0) {
 		/* Set default reaction firemode for this hand (active_firemode=-1) */
 		i = FIRESH_GetDefaultReactionFire(ammo, weap_fds_idx);
-		actor_idx = CL_GetActorNumber(actor);
 
 		if (i >= 0) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG i>=0\n");
@@ -1047,7 +1045,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 	}
 
 	chr = CL_GetActorChr(actor);
-	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fds_idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%s handidx%i weapfdidx%i\n", chr->name, handidx, weap_fds_idx);
 	if (chr->reactionFiremode[RF_WPIDX] == ammo->weap_idx[weap_fds_idx]
 	 && chr->reactionFiremode[RF_HAND] == handidx) {
 		if (ammo->fd[weap_fds_idx][active_firemode].reaction) {
@@ -1280,14 +1278,14 @@ void CL_SelectReactionFiremode_f (void)
 	int firemode;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
-		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
+		Com_Printf("Usage: sel_reactmode [l|r] <num>   num=firemode number\n");
 		return;
 	}
 
 	hand = Cmd_Argv(1);
 
 	if (hand[0] != 'r' && hand[0] != 'l') {
-		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
+		Com_Printf("Usage: sel_reactmode [l|r] <num>   num=firemode number\n");
 		return;
 	}
 
