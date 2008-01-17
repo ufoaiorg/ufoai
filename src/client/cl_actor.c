@@ -1996,9 +1996,6 @@ void CL_AddActorToTeamList (le_t * le)
 		Cbuf_AddText(va("huddeselect%i\n", i));
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
-
-		/**@todo: still needed? check if this can be removed */
-		CL_SetDefaultReactionFiremode(cl.teamList[i], 'r');	/**< Set default reaction firemode for this soldier. */
 	}
 }
 
