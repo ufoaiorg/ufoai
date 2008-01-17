@@ -119,7 +119,7 @@ menu basesummary
 
 	string txt_basesummary_aircraft
 	{
-		string "_Aircraft:"
+		string "_Aircraft"
 		pos "30 70"
 		//color "0 .78 0 1"
 	}
