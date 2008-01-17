@@ -455,8 +455,6 @@ qboolean R_SetMode (void)
  */
 static void R_InitExtension (void)
 {
-	int aniso_level, max_aniso;
-	int size;
 	GLenum err;
 
 	if (strstr(r_config.extensions_string, "GL_ARB_texture_compression")) {
@@ -482,27 +480,25 @@ static void R_InitExtension (void)
 
 	/* anisotropy */
 	r_state.anisotropic = qfalse;
+	r_state.maxAnisotropic = 0;
 
-	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_aniso);
-	R_CheckError();
-	r_state.maxAnisotropic = max_aniso;
-	if (r_anisotropic->integer > max_aniso) {
-		Com_Printf("max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso);
-		Cvar_SetValue("r_anisotropic", max_aniso);
-	}
-
-	aniso_level = r_anisotropic->integer;
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_filter_anisotropic")) {
-		if (!r_anisotropic->integer)
+		if (r_anisotropic->integer) {
+			qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &r_state.maxAnisotropic);
+			R_CheckError();
+			if (r_anisotropic->integer > r_state.maxAnisotropic) {
+				Com_Printf("max GL_EXT_texture_filter_anisotropic value is %i\n", r_state.maxAnisotropic);
+				Cvar_SetValue("r_anisotropic", r_state.maxAnisotropic);
+			}
+
+			Com_Printf("using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", r_state.maxAnisotropic, r_anisotropic->integer);
+			if (r_state.maxAnisotropic)
+				r_state.anisotropic = qtrue;
+		} else
 			Com_Printf("ignoring GL_EXT_texture_filter_anisotropic\n");
-		else {
-			Com_Printf("using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", max_aniso, aniso_level);
-			r_state.anisotropic = qtrue;
-		}
 	} else {
 		Com_Printf("GL_EXT_texture_filter_anisotropic not found\n");
 		Cvar_Set("r_anisotropic", "0");
-		r_state.maxAnisotropic = 0;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_lod_bias")) {
@@ -566,27 +562,25 @@ static void R_InitExtension (void)
 	/* reset gl error state */
 	R_CheckError();
 
-	{
-		Com_Printf("max texture size: ");
-		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
-		r_config.maxTextureSize = size;
+	/* check max texture size */
+	Com_Printf("max texture size: ");
+	r_config.maxTextureSize = 256;
+	qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &r_config.maxTextureSize);
+	/* stubbed or broken drivers may have reported 0 */
+	if (r_config.maxTextureSize <= 0)
+		r_config.maxTextureSize = 256;
 
-		/* stubbed or broken drivers may have reported 0 */
-		if (r_config.maxTextureSize <= 0)
-			r_config.maxTextureSize = 0;
-
-		if ((err = qglGetError()) != GL_NO_ERROR) {
-			Com_Printf("cannot detect - using 1024! (%s)\n", R_TranslateError(err));
-			Cvar_SetValue("r_maxtexres", 1024);
-		} else {
-			Com_Printf("detected %d\n", r_config.maxTextureSize);
-			if (r_maxtexres->integer > r_config.maxTextureSize) {
-				Com_Printf("downgrading from %i\n", r_maxtexres->integer);
-				Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
-			} else if (r_maxtexres->integer < r_config.maxTextureSize) {
-				Com_Printf("but using %i as requested\n", r_maxtexres->integer);
-				r_config.maxTextureSize = r_maxtexres->integer;
-			}
+	if ((err = qglGetError()) != GL_NO_ERROR) {
+		Com_Printf("cannot detect - using %i! (%s)\n", r_config.maxTextureSize, R_TranslateError(err));
+		Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
+	} else {
+		Com_Printf("detected %d\n", r_config.maxTextureSize);
+		if (r_maxtexres->integer > r_config.maxTextureSize) {
+			Com_Printf("downgrading from %i\n", r_maxtexres->integer);
+			Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
+		} else if (r_maxtexres->integer < r_config.maxTextureSize) {
+			Com_Printf("but using %i as requested\n", r_maxtexres->integer);
+			r_config.maxTextureSize = r_maxtexres->integer;
 		}
 	}
 }

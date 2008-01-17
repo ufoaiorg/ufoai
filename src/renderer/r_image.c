@@ -81,25 +81,19 @@ void R_ImageClearMaterials (void)
  */
 void R_UpdateTextures (int min, int max)
 {
-	int		i;
-	image_t	*glt;
-	float	value;
+	int i;
+	image_t *glt;
 
 	gl_filter_min = min;
 	gl_filter_max = max;
 
-	if (!r_state.anisotropic)
-		value = 0;
-	else
-		value = r_state.maxAnisotropic;
-
 	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
 		if (glt->type != it_pic) {
 			R_BindTexture(glt->texnum);
-			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
+			if (r_state.anisotropic)
+				qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
 			R_CheckError();
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-			R_CheckError();
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 			R_CheckError();
 		}
