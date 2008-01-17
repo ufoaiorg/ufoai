@@ -621,18 +621,15 @@ static void CL_StartGame (struct dbuffer *msg)
  * @brief The server finished sending all init-data to the client.
  * @sa CL_StartGame
  * @note EV_START_DONE
- * @todo Only execute CL_SetDefaultReactionFiremode when the current setting DOES NOT MATCH the current weapon!
- * @todo is there more stuff to initialise when the client is "ready"?
+ * @todo Is there more stuff to initialise when the client is "ready"?
  */
 static void CL_StartingGameDone (struct dbuffer *msg)
 {
 	int actor_idx;
-	character_t *chr = NULL;
 
 	/* Set default reaction-firemode on game-start. */
 	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-		chr = CL_GetActorChr(cl.teamList[actor_idx]);
-		if (!SANE_REACTION(chr)) /**@todo better check here. */
+		if (!CL_WorkingReactionFiremode(cl.teamList[actor_idx]))
 			CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
 	}
 }

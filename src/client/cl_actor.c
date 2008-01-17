@@ -564,12 +564,12 @@ void CL_ListReactionAndReservations_f (void)
 }
 
 /**
- * @brief Checks if the currenlty selected firemode in reactionFiremode is useable with the defined weapon.
+ * @brief Checks if the currently selected firemode in reactionFiremode is useable with the defined weapon.
  * @param[in] actor The actor to check the firemdoe for.
  * @return qtrue if nothing has to be done.
  * @return qfalse if settings are outdated.
  */
-static qboolean CL_CheckReactionFiremode (const le_t * actor)
+qboolean CL_WorkingReactionFiremode (const le_t * actor)
 {
 	character_t * chr = NULL;
 
@@ -577,13 +577,13 @@ static qboolean CL_CheckReactionFiremode (const le_t * actor)
 	int weap_fds_idx = -1;
 
 	if (!actor) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_CheckReactionFiremode: No actor given! Abort.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_WorkingReactionFiremode: No actor given! Abort.\n");
 		return qtrue;
 	}
 
 	chr = CL_GetActorChr(actor);
 	if (!chr) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_CheckReactionFiremode: No character found! Abort.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_WorkingReactionFiremode: No character found! Abort.\n");
 		return qtrue;
 	}
 
@@ -1088,23 +1088,20 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
  */
 void CL_SetDefaultReactionFiremode (le_t * actor, const char hand)
 {
-	character_t *chr = NULL;
-
 	if (!actor) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_SetDefaultReactionFiremode: No actor given! Abort.\n");
 		return;
 	}
 
-	chr = CL_GetActorChr(actor);
 	if (hand == 'r') {
 		/* Set default firemode (try right hand first, then left hand). */
 		/* Try to set right hand */
 		CL_UpdateReactionFiremodes(actor, 'r', -1);
-		if (!SANE_REACTION(chr)) {
+		if (!CL_WorkingReactionFiremode(actor)) {
 			/* If that failed try to set left hand. */
 			CL_UpdateReactionFiremodes(actor, 'l', -1);
 #if 0
-			if (!SANE_REACTION(chr)) {
+			if (!CL_WorkingReactionFiremode(actor)) {
 				/* If that fails as well set firemode to undef. */
 				CL_SetReactionFiremode(actor, -1, NONE, -1);
 			}
@@ -1114,11 +1111,11 @@ void CL_SetDefaultReactionFiremode (le_t * actor, const char hand)
 		/* Set default firemode (try left hand first, then right hand). */
 		/* Try to set left hand. */
 		CL_UpdateReactionFiremodes(actor, 'l', -1);
-		if (!SANE_REACTION(chr)) {
+		if (!CL_WorkingReactionFiremode(actor)) {
 			/* If that failed try to set right hand. */
 			CL_UpdateReactionFiremodes(actor, 'r', -1);
 #if 0
-			if (!SANE_REACTION(chr)) {
+			if (!CL_WorkingReactionFiremode(actor)) {
 				/* If that fails as well set firemode to undef. */
 				CL_SetReactionFiremode(actor, -1, NONE, -1);
 			}
@@ -1206,19 +1203,14 @@ void CL_DisplayFiremodes_f (void)
 
 	chr = CL_GetActorChr(selActor);
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
-	if (!SANE_REACTION(chr)) {	/* No sane firemode selected. */
-		/* Set default firemode (try right hand first, then left hand). */
-		CL_SetDefaultReactionFiremode(selActor, 'r');
-	} else {
-		if (chr->reactionFiremode[RF_WPIDX] != ammo->weap_idx[weap_fds_idx]) {
-			if ((hand[0] == 'r') && (chr->reactionFiremode[RF_HAND] == 0)) {
-				/* Set default firemode (try right hand first, then left hand). */
-				CL_SetDefaultReactionFiremode(selActor, 'r');
-			}
-			if ((hand[0] == 'l') && (chr->reactionFiremode[RF_HAND] == 1)) {
-				/* Set default firemode (try left hand first, then right hand). */
-				CL_SetDefaultReactionFiremode(selActor, 'l');
-			}
+	if (!CL_WorkingReactionFiremode(selActor)) {	/* No usable firemode selected. */
+		/* Make sure we use the same hand if it's defined */
+		if (chr->reactionFiremode[RF_HAND] != 1) { /* No the left hand defined */
+			/* Set default firemode (try right hand first, then left hand). */
+			CL_SetDefaultReactionFiremode(selActor, 'r');
+		} else  if (chr->reactionFiremode[RF_HAND] == 1) {
+			/* Set default firemode (try left hand first, then right hand). */
+			CL_SetDefaultReactionFiremode(selActor, 'l');
 		}
 	}
 
@@ -2540,13 +2532,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	int entnum;
 	le_t *le = NULL;
 	int actor_idx = -1;
-	character_t *chr = NULL;
 	int hand = -1;		/**< 0=right, 1=left -1=undef*/
-	int firemode_idx = -1;
-
-	objDef_t *weapon = NULL;
-	objDef_t *ammo = NULL;
-	int weap_fds_idx = NONE;
 
 	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
 
@@ -2566,19 +2552,10 @@ void CL_InvCheckHands (struct dbuffer *msg)
 		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
 		return;
 	}
-	chr = CL_GetActorChr(le);
 
-	/* Check if current RF-selection is sane (and in the other hand) ... */
-	if (SANE_REACTION(chr) && (chr->reactionFiremode[RF_HAND] != hand)) {
-		CL_GetWeaponAndAmmo(le, chr->reactionFiremode[RF_HAND], &weapon, &ammo, &weap_fds_idx); /* get info about other hand */
-
-		/* Break if the currently selected RF mode is ok. */
-		if (weapon && (weap_fds_idx != NONE)) {
-			firemode_idx = chr->reactionFiremode[RF_FM];
-			if (ammo->fd[weap_fds_idx][firemode_idx].reaction)
-				return;
-		}
-	}
+	/* No need to continue if stored firemode settings are still usable. */
+	if (CL_WorkingReactionFiremode(le))
+		return;
 
 	/* ... ELSE  (not sane and/or not usable) */
 	/* Update the changed hand with default firemode. */
@@ -2809,17 +2786,15 @@ void CL_ActorToggleReaction_f (void)
 			break;
 		case R_FIRE_ONCE:
 			state = STATE_REACTION_ONCE;
-			/** @todo Check if stored info for RF is up-to-date and set it to default if not. */
-			/* Set default rf-mode. */
-			if (!SANE_REACTION(chr)) {
+			/* Check if stored info for RF is up-to-date and set it to default if not. */
+			if (!CL_WorkingReactionFiremode(selActor)) {
 				CL_SetDefaultReactionFiremode(selActor, 'r');
 			}
 			break;
 		case R_FIRE_MANY:
 			state = STATE_REACTION_MANY;
-			/** @todo Check if stored info for RF is up-to-date and set it to default if not. */
-			/* Set default rf-mode. */
-			if (!SANE_REACTION(chr)) {
+			/* Check if stored info for RF is up-to-date and set it to default if not. */
+			if (!CL_WorkingReactionFiremode(selActor)) {
 				CL_SetDefaultReactionFiremode(selActor, 'r');
 			}
 			break;
@@ -3400,7 +3375,6 @@ void CL_NextRound_f (void)
 void CL_DoEndRound (struct dbuffer *msg)
 {
 	int actor_idx;
-	character_t *chr = NULL;
 
 	/* hud changes */
 	if (cls.team == cl.actTeam)
@@ -3422,14 +3396,13 @@ void CL_DoEndRound (struct dbuffer *msg)
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
-		/**@todo Still needed? check if this can be removed. */
+        /* Check for unusable RF setting - just in case*/
 		for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-			if (cl.teamList[actor_idx]) {
-				chr = CL_GetActorChr(cl.teamList[actor_idx]);
-				/* Check if any default firemode is defined and search for one if not. */
-				if (!SANE_REACTION(chr)) {
-					CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
-				}
+			if (cl.teamList[actor_idx]
+			&& !CL_WorkingReactionFiremode(cl.teamList[actor_idx])) {
+			    Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actor_idx);
+			    /* At this point the rest of the code forgot to update RF-settings somewhere. */
+				CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
 			}
 		}
 	}
