@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactionFire() is abusing it. */
 
-int reactionFiremode[MAX_EDICTS][RF_MAX]; /* Defined in g_local.h See there for full info. */
-
 /* if actors appear or perish we have to handle the movement of the current actor
  * a little bit different */
 static qboolean sentAppearPerishEvent;
@@ -1987,6 +1985,7 @@ int G_ClientAction (player_t * player)
 	int firemode;
 	int from, fx, fy, to, tx, ty;
 	int hand, fd_idx;
+	edict_t * ent = NULL;
 
 	/* read the header */
 	action = gi.ReadByte();
@@ -2027,8 +2026,11 @@ int G_ClientAction (player_t * player)
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx);
 		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
 		/* @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
-		reactionFiremode[num][RF_HAND] = hand;
-		reactionFiremode[num][RF_FM] = fd_idx;
+		ent = g_edicts + num;
+		if (ent) {
+            ent->chr.reactionFiremode[RF_HAND] = hand;
+            ent->chr.reactionFiremode[RF_FM] = fd_idx;
+		}
 		break;
 
 	default:
