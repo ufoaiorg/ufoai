@@ -427,11 +427,13 @@ void R_LightPoint (vec3_t p)
 	float dist, d;
 	int i, j;
 
+	/* fullbright */
 	VectorSet(r_lightmap_sample.color, 1.0, 1.0, 1.0);
 
 	if (!r_mapTiles[0]->bsp.lightdata)
 		return;
 
+	/* there is lightdata */
 	VectorSet(r_lightmap_sample.color, 0.5, 0.5, 0.5);
 	lms = r_lightmap_sample;
 
@@ -445,6 +447,10 @@ void R_LightPoint (vec3_t p)
 	VectorCopy(dest, end);	/* to the entity being traced */
 
 	for (j = 0; j < r_numMapTiles; j++) {
+		if (!r_mapTiles[j]->bsp.lightdata) {
+			Com_Printf("No light data in maptile %i (%s)\n", j, r_mapTiles[j]->name);
+			continue;
+		}
 		/* check world */
 		if (R_LightPoint_(r_mapTiles[j], r_mapTiles[j]->bsp.nodes, start, end)) {
 			lms = r_lightmap_sample;
