@@ -556,6 +556,7 @@ void CL_SwitchFiremodeList_f(void);
 void CL_FireWeapon_f(void);
 void CL_SelectReactionFiremode_f(void);
 
+character_t *CL_GetActorChr(const le_t * le);
 int CL_ReservedTUs(const le_t * le, reservation_types_t type);
 void CL_ReserveTUs(const le_t * le, reservation_types_t type, int tus);
 

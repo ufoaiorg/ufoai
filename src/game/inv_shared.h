@@ -565,6 +565,9 @@ typedef struct character_s {
 	int reactionFiremode[RF_MAX];	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
 
+#define THIS_REACTION(chr, hand, fd_idx)	(chr->reactionFiremode[RF_HAND] == hand && chr->reactionFiremode[RF_FM] == fd_idx)
+#define SANE_REACTION(chr)	(((chr->reactionFiremode[RF_HAND] >= 0) && (chr->reactionFiremode[RF_FM] >=0 && chr->reactionFiremode[RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (chr->reactionFiremode[RF_FM] >= 0)))
+
 /** @brief The types of employees. */
 /** @note If you will change order, make sure personel transfering still works. */
 typedef enum {

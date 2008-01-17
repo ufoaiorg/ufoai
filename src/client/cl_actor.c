@@ -50,9 +50,6 @@ static qboolean visible_firemode_list_left = qfalse;
 static qboolean visible_firemode_list_right = qfalse;
 static qboolean firemodes_change_display = qtrue; /* If this set to qfalse so CL_DisplayFiremodes_f will not attempt to hide the list */
 
-#define THIS_REACTION(chr, hand, fd_idx)	(chr->reactionFiremode[RF_HAND] == hand && chr->reactionFiremode[RF_FM] == fd_idx)
-#define SANE_REACTION(chr)	(((chr->reactionFiremode[RF_HAND] >= 0) && (chr->reactionFiremode[RF_FM] >=0 && chr->reactionFiremode[RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (chr->reactionFiremode[RF_FM] >= 0)))
-
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 pos3_t mousePendPos; /* for double-click movement and confirmations ... */
@@ -454,7 +451,7 @@ static int CL_GetActorNumber (const le_t * le)
  * @return A pointer to a character struct.
  * @todo We really needs a better way to syn this up.
  */
-static character_t *CL_GetActorChr (const le_t * le)
+character_t *CL_GetActorChr (const le_t * le)
 {
 	int actor_idx;
 	aircraft_t *aircraft = cls.missionaircraft;
@@ -534,7 +531,7 @@ static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapo
 	if (!item)
 		return;
 
-	if (item->numWeapons) /* @todo: "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
+	if (item->numWeapons) /** @todo "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
 		itemAmmo = item; /* This weapon doesn't need ammo it already has firedefs */
 	else
 		itemAmmo = &csi.ods[invlist_weapon->item.m];
@@ -699,7 +696,7 @@ static int CL_UsableTUs (const le_t * le)
  * @param[in] le The actor to check.
  * @return The remaining/usable TUs for this actor
  * @return -1 on error (this includes bad [very large] numbers stored in the struct).
- * @todo Maybe onyl return "reaction" value if reaction-state is active? The value _should_ be 0, but one never knows :)
+ * @todo Maybe only return "reaction" value if reaction-state is active? The value _should_ be 0, but one never knows :)
  */
 static int CL_UsableReactionTUs (const le_t * le)
 {
@@ -1023,7 +1020,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 				if (CL_UsableReactionTUs(actor) >= ammo->fd[weap_fd_idx][active_firemode].time) {
 					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fd_idx], i);
 				} else {
-					/** @todo: Popup that tells the player no enough TUs? */
+					/** @todo Popup that tells the player no enough TUs? */
 					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fd_idx], i);
 					CL_ReserveTUs(actor, RES_REACTION, 0);
 					CL_DisplayImpossibleReaction(actor);
@@ -1560,7 +1557,7 @@ static void CL_RefreshWeaponButtons (int time)
 qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
 	/* No item in hand. */
-	/* @todo: ignore this condition when ammo in hand */
+	/** @todo Ignore this condition when ammo in hand. */
 	if (!weapon || weapon->item.t == NONE) {
 		CL_DisplayHudMessage(_("No item in hand.\n"), 2000);
 		return qfalse;
@@ -1737,7 +1734,7 @@ void CL_ActorUpdateCVars (void)
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is 255 - not reachable e.g. */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
-				/* @todo: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
+				/** @todo CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = ROUTING_NOT_REACHABLE;
 				if (reserved_tus > 0)
 					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reverved TUs: %i\n"), selActor->morale, reserved_tus);
@@ -1851,7 +1848,7 @@ void CL_ActorUpdateCVars (void)
 				CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 		} else {
 			/* no actor selected, reset cvars */
-			/* @todo: this overwrites the correct values a bit to often.
+			/** @todo this overwrites the correct values a bit to often.
 			Cvar_Set("mn_tu", "0");
 			Cvar_Set("mn_turemain", "0");
 			Cvar_Set("mn_tumax", "30");
@@ -1887,14 +1884,14 @@ void CL_ActorUpdateCVars (void)
 	/* mode */
 	if (cl.oldcmode != cl.cmode || refresh) {
 		switch (cl.cmode) {
-		/* @todo: Better highlight for active firemode (from the list, not the buttons) needed ... */
+		/** @todo Better highlight for active firemode (from the list, not the buttons) needed ... */
 		case M_FIRE_L:
 		case M_PEND_FIRE_L:
-			/* @todo: Display current firemode better*/
+			/** @todo Display current firemode better*/
 			break;
 		case M_FIRE_R:
 		case M_PEND_FIRE_R:
-			/* @todo: Display current firemode better*/
+			/** @todo Display current firemode better*/
 			break;
 		default:
 			ClearHighlights();
@@ -1961,11 +1958,6 @@ void CL_AddActorToTeamList (le_t * le)
 
 		/**@todo: still needed? check if this can be removed */
 		CL_SetDefaultReactionFiremode(cl.teamList[i], 'r');	/**< Set default reaction firemode for this soldier. */
-#if 0
-		/* @todo: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
-		/* Initialize reactionmode (with undefined firemode) ... this will be checked for in CL_DoEndRound. */
-		CL_SetReactionFiremode(i, -1, NONE, -1);
-#endif
 	}
 }
 
@@ -1996,7 +1988,7 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 
 	/* check selection */
 	if (selActor == le) {
-		/* @todo: This should probably be a while loop */
+		/** @todo This should probably be a while loop */
 		for (i = 0; i < cl.numTeamList; i++) {
 			if (CL_ActorSelect(cl.teamList[i]))
 				break;
@@ -2402,7 +2394,7 @@ void CL_ActorShoot (const le_t * le, pos3_t at)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorShoot: cl.firemode %i.\n", cl.cfiremode);
 
-	/* @todo: Is there a better way to do this?
+	/** @todo Is there a better way to do this?
 	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
 	 */
 	if (IS_MODE_FIRE_RIGHT(cl.cmode)) {
@@ -2768,7 +2760,7 @@ void CL_ActorToggleReaction_f (void)
 			break;
 		case R_FIRE_ONCE:
 			state = STATE_REACTION_ONCE;
-			/* @todo: Check if stored info for RF is up-to-date and set it to default if not. */
+			/** @todo Check if stored info for RF is up-to-date and set it to default if not. */
 			/* Set default rf-mode. */
 			if (!SANE_REACTION(chr)) {
 				CL_SetDefaultReactionFiremode(selActor, 'r');
@@ -2776,7 +2768,7 @@ void CL_ActorToggleReaction_f (void)
 			break;
 		case R_FIRE_MANY:
 			state = STATE_REACTION_MANY;
-			/* @todo: Check if stored info for RF is up-to-date and set it to default if not. */
+			/** @todo Check if stored info for RF is up-to-date and set it to default if not. */
 			/* Set default rf-mode. */
 			if (!SANE_REACTION(chr)) {
 				CL_SetDefaultReactionFiremode(selActor, 'r');
@@ -2931,7 +2923,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		return;
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
+	/** @todo FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
 	if (HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
 		/* No animation for this */
 	} else if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
@@ -3066,7 +3058,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	} */
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
+	/** @todo FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
 	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
@@ -4093,7 +4085,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		}
 
 		/* draw particles */
-		/* @todo: character strength should be used here, too
+		/** @todo character strength should be used here, too
 		 * the stronger the character, the further the throw */
 		if (obstructed || VectorLength(at) > selFD->range)
 			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
