@@ -427,7 +427,6 @@ void R_LightPoint (vec3_t p)
 	float dist, d;
 	int i, j;
 
-	VectorClear(r_lightmap_sample.point);
 	VectorSet(r_lightmap_sample.color, 1.0, 1.0, 1.0);
 
 	if (!r_mapTiles[0]->bsp.lightdata)
