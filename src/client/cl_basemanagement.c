@@ -3179,6 +3179,7 @@ int B_ItemInBase (int item_idx, base_t *base)
  * @param[in] base Pointer to the base.
  * @sa B_UpdateAllBaseBuildingStatus
  * @sa B_BuildingDestroy_f
+ * @note If hasBuilding is qfalse, the capacity is still increase: if power plant is destroyed and rebuilt, you shouldn't have to hire employees again
  */
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 {
