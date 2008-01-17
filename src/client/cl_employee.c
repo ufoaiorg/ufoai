@@ -131,8 +131,14 @@ static void E_EmployeeList_f (void)
 	/* reset the employee count */
 	employeesInCurrentList = 0;
 
-	/* reset scrolling */
-	employeeListNode->textScroll = 0;
+	
+	if (employeeIdx < 0) {
+		/* Reset scrolling when no specific entry was given. */
+		/** @todo Is there a case where employeeIdx is <0 and the textScroll must be reset? */
+		employeeListNode->textScroll = 0;
+	} else {
+		/** @todo If employee is given but outside the current visible list (defined by employeeListNode->textScroll) we need to calculate the new employeeListNode->textScroll */
+	}
 
 	/* make sure, that we are using the linked list */
 	MN_MenuTextReset(TEXT_LIST);
@@ -143,8 +149,10 @@ static void E_EmployeeList_f (void)
 			continue;
 
 		LIST_AddPointer(&menuTextLinkedList[TEXT_LIST], employee->chr.name);
-		/* change the buttons */
-		if (employeesInCurrentList < cl_numnames->integer) {
+		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
+		/** @todo Check if the "textScroll % cl_numnames->integer" calculation is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
+		if ((employeesInCurrentList >= employeeListNode->textScroll)
+		&& (employeesInCurrentList < (employeeListNode->textScroll + cl_numnames->integer))) {
 			if (employee->hired) {
 				if (employee->baseIDHired == baseCurrent->idx) {
 					Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
