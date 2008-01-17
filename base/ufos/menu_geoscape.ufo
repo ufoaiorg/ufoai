@@ -291,10 +291,10 @@ menu map
 		tooltip	"_Organisation statistics"
 		image	menu/b_geobuttons
 		pos	"102 544"
-		texl	"64 64"
+		texl	"64 65"
 		texh	"127 127"
 		out	{
-				*bt_stats texl "64 64"
+				*bt_stats texl "64 65"
 				*bt_stats texh "127 127"
 			}
 		in	{
@@ -309,10 +309,10 @@ menu map
 		tooltip	"_UFOpaedia"
 		image	menu/b_geobuttons
 		pos	 "172 544"
-		texl	"128 64"
+		texl	"128 65"
 		texh	"191 127"
 		out	{
-				*bt_ufopedia texl "128 64"
+				*bt_ufopedia texl "128 65"
 				*bt_ufopedia texh "191 127"
 			}
 		in	{
@@ -328,10 +328,10 @@ menu map
 		tooltip	"_Create base"
 		image	menu/b_geobuttons
 		pos	"242 544"
-		texl	"192 64"
+		texl	"192 65"
 		texh	"255 127"
 		out	{
-				*bt_base texl "192 64"
+				*bt_base texl "192 65"
 				*bt_base texh "255 127"
 			}
 		in	{
