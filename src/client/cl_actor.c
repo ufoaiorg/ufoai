@@ -751,9 +751,11 @@ static int CL_UsableReactionTUs (const le_t * le)
 {
 	/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) */
 	if (selActor->state & STATE_REACTION)
-		return CL_UsableTUs(le) - CL_ReservedTUs(le, RES_REACTION);
+		/* CL_UsableTUs DOES NOT return the stored value for "reaction" here. */
+		return CL_UsableTUs(le) + CL_ReservedTUs(le, RES_REACTION);
 	else
-		return CL_UsableTUs(le); /* CL_UsableTUs does not return any stored value for "reaction" here */
+		/* CL_UsableTUs DOES return the stored value for "reaction" here. */
+		return CL_UsableTUs(le); 
 }
 
 
@@ -1059,19 +1061,22 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 	}
 
 	/* Search for a (reaction) firemode with the given index and store/send it. */
-	CL_SetReactionFiremode(actor, -1, NONE, -1);
+	/* CL_SetReactionFiremode(actor, -1, NONE, -1); */
 	for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
 		if (ammo->fd[weap_fds_idx][i].reaction) {
 			if (i == active_firemode) {
 				/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
 				if (CL_UsableReactionTUs(actor) >= ammo->fd[weap_fds_idx][active_firemode].time) {
 					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fds_idx], i);
-				} else {
+				}
+#if 0
+				else {
 					/** @todo Popup that tells the player no enough TUs? */
 					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fds_idx], i);
 					CL_ReserveTUs(actor, RES_REACTION, 0);
 					CL_DisplayImpossibleReaction(actor);
 				}
+#endif
 				return;
 
 			}
