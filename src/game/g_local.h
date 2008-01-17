@@ -526,6 +526,7 @@ struct edict_s {
 	edict_t *reactionTarget;
 	float	reactionTUs;
 	qboolean reactionNoDraw;
+	int	reactionFired;	/**< A simple counter that tells us how many times an actor has fired as a reaction (int he current turn). */
 
 	/** only set this for the attacked edict - to know who's shooting */
 	edict_t *reactionAttacker;

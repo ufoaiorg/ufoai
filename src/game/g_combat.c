@@ -143,7 +143,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 }
 
 /**
- * @brief Stores the TUs for reaction fire that are used (if any).
+ * @brief Guess! Reset all "shaken" states on end of turn?
  * @note Normally called on end of turn.
  * @todo Comment on the AddEvent code.
  * @sa G_ClientStateChange
@@ -156,12 +156,6 @@ void G_ResetReactionFire (int team)
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == team) {
-			if (ent->state & STATE_REACTION) {
-				/** @todo Do something if actor has reaction activated (previously reserve TUs) */
-			} else {
-				/** @todo Do something if actor has no reaction (previously reset reserved TUs) */
-			}
-
 			/** @todo why do we send the state here and why do we change the "shaken" state? */
 			ent->state &= ~STATE_SHAKEN;
 			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
@@ -1312,7 +1306,16 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 	 && !(ent->state & STATE_REACTION)) {
 #ifdef DEBUG_REACTION
 		if (reason)
-			Com_sprintf(reason, sizeof(reason), "Shooter does not have reaction fire enabled"); /**@todo ", or has already fired too often" */
+			Com_sprintf(reason, sizeof(reason), "Shooter does not have reaction fire enabled");
+#endif
+		return qfalse;
+	}
+	
+	if ((ent->state & STATE_REACTION_ONCE)
+	 && (ent->reactionFired > 0)) {
+#ifdef DEBUG_REACTION
+		if (reason)
+			Com_sprintf(reason, sizeof(reason), "Shooter is not supposed to react again (i.e. has shot too often).");
 #endif
 		return qfalse;
 	}
@@ -1576,7 +1579,8 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	/* clear any shakenness */
 	if (tookShot) {
 		ent->state &= ~STATE_SHAKEN;
-		/**@todo Save the fact that the ent has fired? (previously reactionTUs[ent->number][REACT_FIRED] += 1;)  */
+		/* Save the fact that the ent has fired. */
+		ent->reactionFired += 1;
 	} else {
 #ifdef DEBUG_REACTION
 		Com_Printf("Cancelling resolution because %s judged it unwise to fire\n", ent->chr.name);
@@ -1730,5 +1734,6 @@ void G_ReactToEndTurn (void)
 #endif
 		G_ResolveRF(ent, qfalse);
 		ent->reactionTarget = NULL;
+		ent->reactionFired = 0;
 	}
 }
