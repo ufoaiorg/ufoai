@@ -294,7 +294,6 @@ int B_ItemInBase(int item_idx, base_t *base);
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
 void B_ReviveSoldiersInBase(base_t* base); /* @todo */
 
-int B_GetAvailableQuarterSpace(const base_t* const base);
 int B_GetEmployeeCount(const base_t* const base);
 
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);

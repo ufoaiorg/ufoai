@@ -493,25 +493,6 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t ty
  */
 qboolean E_HireEmployee (base_t* base, employee_t* employee)
 {
-#if 0
-/* Introducing capacity for quarters. 15042007 Zenerka */
-	int spaceTotal = 0;
-	int employeesTotal = 0;
-	int diff;
-
-	spaceTotal = B_GetAvailableQuarterSpace(base);
-	employeesTotal = B_GetEmployeeCount(base);
-	diff = spaceTotal - employeesTotal;
-	if (diff < 0) {
-		MN_AddNewMessage(_("Not enough quarters"),
-			va(_("You don't have enough living quarters to house all of your personnel. You need to fire %i personnel until more living space becomes available."),
-			employeesTotal - spaceTotal), qtrue, MSG_INFO, NULL);
-		return qfalse;
-	} else if (diff == 0) {
-		MN_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees."));
-		return qfalse;
-	}
-#endif
 	if (base->capacities[CAP_EMPLOYEES].cur >= base->capacities[CAP_EMPLOYEES].max) {
 		MN_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
 		return qfalse;

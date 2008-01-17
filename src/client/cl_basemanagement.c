@@ -188,26 +188,6 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t*
 }
 
 /**
- * @brief Sums up max_employees quarter values
- * @param[in] base The base to count the free space in.
- * @return int The total number of space in quarters.
- */
-int B_GetAvailableQuarterSpace (const base_t* const base)
-{
-	int cnt = 0, i;
-
-	if (base->hasBuilding[B_QUARTERS])
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			if (gd.buildings[base->idx][i].buildingType == B_QUARTERS
-			&& gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
-				cnt += gd.buildings[base->idx][i].maxEmployees;
-		}
-	Com_DPrintf(DEBUG_CLIENT, "B_GetAvailableQuarterSpace: %i\n", cnt);
-
-	return cnt;
-}
-
-/**
  * @note Make sure you are not doing anything with the buildingCurrent pointer
  * in this function, the pointer might already be invalid
  */
@@ -252,7 +232,7 @@ static const value_t valid_building_vars[] = {
 	{"fixcosts", V_INT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
 	{"varcosts", V_INT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
 	{"build_time", V_INT, offsetof(building_t, buildTime), MEMBER_SIZEOF(building_t, buildTime)},	/**< How many days it takes to construct the building. */
-	{"max_employees", V_INT, offsetof(building_t, maxEmployees), MEMBER_SIZEOF(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
+	{"starting_employees", V_INT, offsetof(building_t, maxEmployees), MEMBER_SIZEOF(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
 	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buildings in a different way. */
 
 	/*event handler functions */
@@ -844,7 +824,6 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 		case B_WORKSHOP:
 			employeeType = EMPL_WORKER;
 			break;
-		case B_ALIEN_CONTAINMENT:
 		case B_LAB:
 			employeeType = EMPL_SCIENTIST;
 			break;
@@ -854,8 +833,6 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 		case B_HANGAR: /* the Dropship Hangar */
 			employeeType = EMPL_SOLDIER;
 			break;
-		case B_QUARTERS:
-			return;
 		case B_MISC:
 			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
 			return;
@@ -3219,7 +3196,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		}
 		/* First base gets extra space for employees. */
 		if ((gd.numBases == 1) && (base->idx == 0) && (cap == CAP_EMPLOYEES))
-			base->capacities[cap].max += 13;
+			base->capacities[cap].max += 18;
 		if (b_idx != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
 				gd.buildingTypes[b_idx].id, base->capacities[cap].max);

@@ -183,9 +183,8 @@ building building_quarters
 	pos			"4 3"
 	more_than_one	true
 	type		quarters
-	max_employees	32
 	onclick		"building_open"
-	capacity	25
+	capacity	20
 }
 
 building building_hangar
@@ -204,7 +203,7 @@ building building_hangar
 	type		hangar
 	needs		building_hangar2
 	onconstruct 	""
-	max_employees	8
+	starting_employees	8	//Number of soldiers in dropship when first base is build
 	onclick		"building_open"
 	capacity	8
 }
@@ -307,7 +306,7 @@ building building_workshop
 	pos			"4 0"
 	more_than_one	true
 	type	workshop
-	max_employees	10
+	starting_employees	10
 	needs		building_workshop2
 	onclick		"building_open"
 	capacity	10
@@ -369,7 +368,7 @@ building building_lab
 	pos		"3 2"
 	more_than_one	true
 	type		lab
-	max_employees	10
+	starting_employees	10
 	onclick		"building_open"
 	capacity	10
 }
@@ -388,7 +387,7 @@ building building_hospital
 //	pos			"3 3"
 	more_than_one	true
 	type		hospital
-	max_employees	10
+	starting_employees	10
 	onclick		"building_open"
 	capacity	30
 }
