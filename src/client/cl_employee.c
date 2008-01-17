@@ -1096,6 +1096,11 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.rank);
 			MSG_WriteByte(sb, e->chr.fieldSize);
 
+			/* Store reaction-firemode */
+			MSG_WriteShort(sb, e->chr.reactionFiremode[RF_HAND]);
+			MSG_WriteShort(sb, e->chr.reactionFiremode[RF_FM]);
+			MSG_WriteShort(sb, e->chr.reactionFiremode[RF_WPIDX]);
+
 			MSG_WriteShort(sb, e->chr.assigned_missions);
 
 			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
@@ -1165,6 +1170,13 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.morale = MSG_ReadByte(sb);
 			e->chr.rank = MSG_ReadByte(sb);
 			e->chr.fieldSize = MSG_ReadByte(sb);
+
+			if (((saveFileHeader_t *)data)->version >= 3) {
+				/* Load reaction-firemode */
+				e->chr.reactionFiremode[RF_HAND] = MSG_ReadShort(sb);
+				e->chr.reactionFiremode[RF_FM] = MSG_ReadShort(sb);
+				e->chr.reactionFiremode[RF_WPIDX] = MSG_ReadShort(sb);
+			}
 
 			e->chr.assigned_missions = MSG_ReadShort(sb);
 

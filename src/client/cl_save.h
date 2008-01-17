@@ -36,8 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * ===================================================
  *          1   | 2.1.1        | no
  *          2   | 2.2          | yes
+ *          3   | 2.3          | yes
  */
-#define SAVE_FILE_VERSION 2
+#define SAVE_FILE_VERSION 3
 /* MAX_GAMESAVESIZE has room for 3MB for dynamic data, eg geoscape messages */
 #define MAX_GAMESAVESIZE	3145728
 #define MAX_COMMENTLENGTH	32
