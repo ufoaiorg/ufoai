@@ -2377,7 +2377,7 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 	int x1, y1; /* variable x and y position */
 	static const vec4_t scrollbarColorBG = {0.03, 0.41, 0.05, 0.5};
 	static const vec4_t scrollbarColorBar = {0.03, 0.41, 0.05, 1.0};
-	static const vec4_t colorSelected = {1.0, 1.0, 0.0, 1.0}; /** Yellow @todo Set/get this in/from node? */
+	static const vec4_t colorSelected = {1.0, 1.0, 1.0, 1.0}; /** @todo Set/get this in/from node? */
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -2443,6 +2443,10 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
 				/* Draw current line in "selected" color (if the linenumber is stored). */
 				R_Color(colorSelected);
+
+				/* Prepare color for "darkened" hover effect in combination with "selected". */
+				VectorScale(colorSelected, 0.8, color);
+				color[3] = colorSelected[3];
 			}
 			if (node->mousefx && node->textLines + 1 == node->state) {
 				/* Hightlight line if mousefx is true. */
