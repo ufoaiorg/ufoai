@@ -907,7 +907,7 @@ static void MN_StartServer_f (void)
  */
 static void MN_DrawDisabled (menuNode_t* node)
 {
-	static vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
+	const vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
 	R_DrawFill(node->pos[0], node->pos[1], node->size[0], node->size[1], ALIGN_UL, color);
 }
 
@@ -916,7 +916,7 @@ static void MN_DrawDisabled (menuNode_t* node)
  */
 static void MN_DrawFree (int container, menuNode_t * node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
 {
-	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
+	const vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	invDef_t* inv = &csi.ids[container];
 
 	R_DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
@@ -2367,9 +2367,9 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
 	int x1, y1; /* variable x and y position */
-	static const vec4_t scrollbarColorBG = {0.03, 0.41, 0.05, 0.5};
-	static const vec4_t scrollbarColorBar = {0.03, 0.41, 0.05, 1.0};
-	static const vec4_t colorSelected = {1.0, 1.0, 1.0, 1.0}; /** @todo Set/get this in/from node? */
+	const vec4_t scrollbarColorBG = {0.03, 0.41, 0.05, 0.5};
+	const vec4_t scrollbarColorBar = {0.03, 0.41, 0.05, 1.0};
+	const vec4_t colorSelected = {1.0, 1.0, 1.0, 1.0}; /** @todo Set/get this in/from node? */
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
