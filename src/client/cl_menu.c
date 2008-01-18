@@ -261,7 +261,6 @@ static int numActions;
 static int numNodes;
 static int numMenus;
 static int numMenuModels;
-static int numTutorials;
 
 static byte *adata, *curadata;
 static int adataize = 0;
@@ -293,14 +292,6 @@ static cvar_t *mn_debugmenu;
 cvar_t *mn_inputlength;
 
 char popupText[MAX_SMALLMENUTEXTLEN];
-
-typedef struct tutorial_s {
-	char name[MAX_VAR];
-	char *sequence;
-} tutorial_t;
-
-#define MAX_TUTORIALS 16
-static tutorial_t tutorials[MAX_TUTORIALS];
 
 /* some function prototypes */
 static void MN_GetMaps_f(void);
@@ -2448,7 +2439,7 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
 				/* Draw current line in "selected" color (if the linenumber is stored). */
 				R_Color(colorSelected);
-			} 
+			}
 
 			if (node->mousefx && node->textLines + 1 == node->state) {
 				/* Hightlight line if mousefx is true. */
@@ -3650,52 +3641,6 @@ static void MN_Translate_f (void)
 	Cvar_Set(Cmd_Argv(2), _(current));
 }
 
-#define MAX_TUTORIALLIST 512
-static char tutorialList[MAX_TUTORIALLIST];
-
-static void MN_GetTutorials_f (void)
-{
-	int i;
-	tutorial_t *t;
-
-	menuText[TEXT_LIST] = tutorialList;
-	tutorialList[0] = 0;
-	for (i = 0; i < numTutorials; i++) {
-		t = &tutorials[i];
-		Q_strcat(tutorialList, va("%s\n", t->name), sizeof(tutorialList));
-	}
-}
-
-static void MN_ListTutorials_f (void)
-{
-	int i;
-
-	Com_Printf("Tutorials: %i\n", numTutorials);
-	for (i = 0; i < numTutorials; i++) {
-		Com_Printf("tutorial: %s\n", tutorials[i].name);
-		Com_Printf("..sequence: %s\n", tutorials[i].sequence);
-	}
-}
-
-/**
- * @brief click function for text tutoriallist in menu_tutorials.ufo
- */
-static void MN_TutorialListClick_f (void)
-{
-	int num;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= numTutorials)
-		return;
-
-	Cmd_ExecuteString(va("seq_start %s", tutorials[num].sequence));
-}
-
 static void MN_ListMenuModels_f (void)
 {
 	int i;
@@ -3996,7 +3941,6 @@ void MN_ResetMenus (void)
 	numMenus = 0;
 	numMenuModels = 0;
 	menuStackPos = 0;
-	numTutorials = 0;
 	numSelectBoxes = 0;
 
 	messageStack = NULL;
@@ -4019,10 +3963,6 @@ void MN_ResetMenus (void)
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);
 
-	/* tutorial stuff */
-	Cmd_AddCommand("listtutorials", MN_ListTutorials_f, "Show all tutorials");
-	Cmd_AddCommand("gettutorials", MN_GetTutorials_f, NULL);
-	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f, NULL);
 	Cmd_AddCommand("chatlist", CL_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
 	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
@@ -5298,67 +5238,6 @@ void CL_InitFonts (void)
 }
 
 /* ===================== USE_SDL_TTF stuff end ====================== */
-
-static const value_t tutValues[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name), 0},
-	{"sequence", V_CLIENT_HUNK_STRING, offsetof(tutorial_t, sequence), 0},
-	{NULL, 0, 0, 0}
-};
-
-/**
- * @sa CL_ParseClientData
- */
-void MN_ParseTutorials (const char *name, const char **text)
-{
-	tutorial_t *t = NULL;
-	const char *errhead = "MN_ParseTutorials: unexpected end of file (tutorial ";
-	const char *token;
-	const value_t *v;
-
-	/* get name list body body */
-	token = COM_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("MN_ParseTutorials: tutorial \"%s\" without body ignored\n", name);
-		return;
-	}
-
-	/* parse tutorials */
-	if (numTutorials >= MAX_TUTORIALS) {
-		Com_Printf("Too many tutorials, '%s' ignored.\n", name);
-		numTutorials = MAX_TUTORIALS;
-		return;
-	}
-
-	t = &tutorials[numTutorials++];
-	memset(t, 0, sizeof(tutorial_t));
-	do {
-		/* get the name type */
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-		for (v = tutValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
-				/* found a definition */
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (v->type) {
-				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
-					break;
-				default:
-					Com_ParseValue(t, token, v->type, v->ofs, v->size);
-				}
-				break;
-			}
-		if (!v->string)
-			Com_Printf("MN_ParseTutorials: unknown token \"%s\" ignored (tutorial %s)\n", token, name);
-	} while (*text);
-}
 
 /**
  * @brief Saved the complete message stack

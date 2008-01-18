@@ -295,7 +295,6 @@ menu_t* MN_PushMenu(const char *name);
 void MN_PopMenu(qboolean all);
 menu_t* MN_ActiveMenu(void);
 void MN_Popup(const char *title, const char *text);
-void MN_ParseTutorials(const char *title, const char **text);
 qboolean MN_ScriptSanityCheck(void);
 
 void MN_MenuTextReset(int menuTextID);

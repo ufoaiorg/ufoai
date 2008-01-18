@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "cl_tutorials.h"
 #include "cl_global.h"
 #include "../shared/infostring.h"
 #include "../renderer/r_main.h"
@@ -1673,7 +1674,7 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 	else if (!Q_strncmp(type, "font", 4))
 		CL_ParseFont(name, text);
 	else if (!Q_strncmp(type, "tutorial", 8))
-		MN_ParseTutorials(name, text);
+		TUT_ParseTutorials(name, text);
 	else if (!Q_strncmp(type, "menu_model", 10))
 		MN_ParseMenuModel(name, text);
 	else if (!Q_strncmp(type, "menu", 4))
@@ -2025,6 +2026,7 @@ static void CL_InitLocal (void)
 
 	SAV_Init();
 	MN_ResetMenus();
+	TUT_Init();
 	CL_ResetParticles();
 	CL_ResetCampaign();
 	BS_ResetMarket();

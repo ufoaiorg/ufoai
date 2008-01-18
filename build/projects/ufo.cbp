@@ -237,6 +237,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_transfer.h" />
+		<Unit filename="..\..\src\client\cl_tutorials.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cl_ufo.c">
 			<Option compilerVar="CC" />
 		</Unit>
