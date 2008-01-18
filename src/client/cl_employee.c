@@ -131,7 +131,6 @@ static void E_EmployeeList_f (void)
 	/* reset the employee count */
 	employeesInCurrentList = 0;
 
-	
 	if (employeeIdx < 0) {
 		/* Reset scrolling when no specific entry was given. */
 		/** @todo Is there a case where employeeIdx is <0 and the textScroll must be reset? */
@@ -1013,6 +1012,9 @@ static void E_EmployeeSelect_f (void)
 
 		/* set info cvars */
 		CL_CharacterCvars(&(employee->chr));
+
+		/* Set the value of the selected line in the scroll-text to the correct number. */
+		employeeListNode->textLineSelected = num;
 	}
 }
 

@@ -2377,6 +2377,7 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 	int x1, y1; /* variable x and y position */
 	static const vec4_t scrollbarColorBG = {0.03, 0.41, 0.05, 0.5};
 	static const vec4_t scrollbarColorBar = {0.03, 0.41, 0.05, 1.0};
+	static const vec4_t colorSelected = {1.0, 1.0, 0.0, 1.0}; /** Yellow @todo Set/get this in/from node? */
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -2438,11 +2439,19 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 			/* let end point to the next char after the \n (or \0 now) */
 			*end++ = '\0';
 
-		/* hightlight if mousefx is true */
-		/* node->state is the line number to highlight */
-		/* FIXME: what about multiline text that should be highlighted completly? */
-		if (node && node->mousefx && node->textLines + 1 == node->state)
-			R_ColorBlend(color);
+		if (node) {
+			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
+				/* Draw current line in "selected" color (if the linenumber is stored). */
+				R_Color(colorSelected);
+			}
+			if (node->mousefx && node->textLines + 1 == node->state) {
+				/* Hightlight line if mousefx is true. */
+				/* node->state is the line number to highlight */
+				/** @todo FIXME: what about multiline text that should be highlighted completly? */
+				R_ColorBlend(color);
+			}
+		}
+
 
 		/* we assume all the tabs fit on a single line */
 		do {
@@ -4556,6 +4565,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					node->type = i;
 					/* node default values */
 					node->padding = 3;
+					node->textLineSelected = -1; /**< Invalid/no line selected per default. */
 
 /*					Com_Printf(" %s %s\n", nt_strings[i], *token); */
 
