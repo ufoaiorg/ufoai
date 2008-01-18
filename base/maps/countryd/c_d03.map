@@ -85,12 +85,12 @@
 }
 // brush 9
 {
-( 64 64 64 ) ( 64 32 64 ) ( 32 64 64 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
-( 64 64 64 ) ( 32 64 64 ) ( 64 64 0 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
-( 64 64 64 ) ( 64 64 0 ) ( 64 32 64 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
-( 32 32 0 ) ( 64 32 0 ) ( 32 64 0 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
-( 32 32 0 ) ( 32 32 64 ) ( 64 32 0 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
-( 32 32 0 ) ( 32 64 0 ) ( 32 32 64 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 64 64 64 ) ( 64 32 64 ) ( 32 64 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 64 64 64 ) ( 32 64 64 ) ( 64 64 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 64 64 64 ) ( 64 64 0 ) ( 64 32 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 32 32 0 ) ( 64 32 0 ) ( 32 64 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 32 32 0 ) ( 32 32 64 ) ( 64 32 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 32 32 0 ) ( 32 64 0 ) ( 32 32 64 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 }
 }
 // entity 1
