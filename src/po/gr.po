@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-12-06 11:17+0100\n"
-"PO-Revision-Date: 2008-01-17 10:38+0200\n"
+"PO-Revision-Date: 2008-01-18 13:54+0200\n"
 "Last-Translator: N.Mamouzelos <n.mamos@hotmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,7 @@ msgstr "Μεγάλο Χωριό"
 
 #: ../base/ufos/aircraftmanagement.ufo:81
 msgid "Firebird-class Dropship"
-msgstr "Firebird-κλάση μεταγωγικό"
+msgstr "Firebird-μεταγωγικό"
 
 #: ../base/ufos/aircraftmanagement.ufo:82
 msgid "Firebird D"
@@ -138,7 +138,7 @@ msgstr "Firebird D"
 
 #: ../base/ufos/aircraftmanagement.ufo:119
 msgid "Stiletto-class Interceptor"
-msgstr "Stiletto-κλάση αναχαιτιστικό"
+msgstr "Stiletto-αναχαιτιστικό"
 
 #: ../base/ufos/aircraftmanagement.ufo:120
 msgid "Stiletto I"
@@ -146,7 +146,7 @@ msgstr "Stiletto I"
 
 #: ../base/ufos/aircraftmanagement.ufo:163
 msgid "Saracen-class Interceptor"
-msgstr "Saracen-κλάση αναχαιτιστικό"
+msgstr "Saracen-αναχαιτιστικό"
 
 #: ../base/ufos/aircraftmanagement.ufo:164
 msgid "Saracen I"
@@ -154,7 +154,7 @@ msgstr "Saracen I"
 
 #: ../base/ufos/aircraftmanagement.ufo:202
 msgid "Dragon Interceptor"
-msgstr "Dragon αναχαιτιστικό"
+msgstr "Dragon-αναχαιτιστικό"
 
 #: ../base/ufos/aircraftmanagement.ufo:203
 msgid "Dragon"
@@ -272,7 +272,7 @@ msgstr "Alien Aircraft Plating"
 #: ../base/ufos/research.ufo:3743
 #: ../base/ufos/research.ufo:3750
 msgid "Alien Astrogation"
-msgstr "Alien Astrogation"
+msgstr "Εξωγήινος Αστρολάβος"
 
 #: ../base/ufos/aircraftmanagement.ufo:632
 #: ../base/ufos/research.ufo:3769
@@ -291,7 +291,7 @@ msgstr "Εξωγήινη ανίχνευση"
 #: ../base/ufos/aircraftmanagement.ufo:654
 #: ../base/ufos/research.ufo:3633
 msgid "AA51 missile launcher"
-msgstr "AA51 missile launcher"
+msgstr "AA51 εκτοξευτής πυραύλων"
 
 #: ../base/ufos/aircraftmanagement.ufo:665
 #: ../base/ufos/research.ufo:3652
@@ -2434,7 +2434,7 @@ msgstr "Εκστρατείες"
 
 #: ../base/ufos/menu_campaign.ufo:76
 msgid "Start campaign"
-msgstr "Έναρξη εκστρατείας"
+msgstr "Έναρξη"
 
 #: ../base/ufos/menu_campaign.ufo:96
 #: ../base/ufos/menu_multiplayer.ufo:123
@@ -2490,7 +2490,7 @@ msgstr "Επιτάχυνση χρόνου"
 
 #: ../base/ufos/menu_geoscape.ufo:276
 msgid "INBOX (with unread mails)"
-msgstr "ΕΙΣΕΡΧΟΜΕΝΑ (με μή αναγνωσμένα μηνύματα)"
+msgstr "ΕΙΣΕΡΧΟΜΕΝΑ μή αναγνωσμένα μηνύματα)"
 
 #: ../base/ufos/menu_geoscape.ufo:288
 msgid "INBOX"
@@ -2573,7 +2573,7 @@ msgstr "Κόστος:"
 
 #: ../base/ufos/menu_geoscape.ufo:716
 msgid "100000 c"
-msgstr "100000 ευρώ"
+msgstr "100000 c"
 
 #: ../base/ufos/menu_geoscape.ufo:734
 msgid "Build the base"
@@ -3017,11 +3017,11 @@ msgstr "Επαναγέμιση όπλου"
 
 #: ../base/ufos/menu_hud.ufo:521
 msgid "Multiple-shot reaction fire (Not possible)"
-msgstr "Multiple-shot reaction fire (Not possible)"
+msgstr "Πύρ αντίδρασης πολλαπλών βολών (Αδύνατο)"
 
 #: ../base/ufos/menu_hud.ufo:533
 msgid "One-shot reaction fire (Not possible)"
-msgstr "One-shot reaction fire (Not possible)"
+msgstr "Πύρ αντίδρασης μίας βολής (Αδύνατο)"
 
 #: ../base/ufos/menu_hud.ufo:705
 #: ../base/ufos/menu_main.ufo:110
@@ -4724,7 +4724,7 @@ msgstr "Εξωγήινοι επιτέθηκαν σε καταφύγιο. Προ�
 
 #: ../base/ufos/missions.ufo:919
 msgid "TODO"
-msgstr "TODO"
+msgstr "ΝΑ ΓΙΝΟΥΝ"
 
 #: ../base/ufos/missions.ufo:920
 msgid "Infection Attack"
@@ -4752,7 +4752,7 @@ msgstr "Η Ασιατική Δημοκρατία"
 
 #: ../base/ufos/nations.ufo:87
 msgid "The Middle-Eastern Alliance"
-msgstr "Η Μέση Αναλοτική Συμαχία"
+msgstr "Η Μεσο-Ανατολική συμμαχία"
 
 #: ../base/ufos/nations.ufo:99
 msgid "New Africa"
@@ -4886,21 +4886,19 @@ msgstr ""
 #: ../base/ufos/research.ufo:154
 msgid "antimatter_extra_txt"
 msgstr ""
-"Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
+"Η μελέτη μας για την αντιύλη είναι πλήρης, διοικητά, και αναμένουμε για να σας παρουσιάσουμε τα αποτελέσματά μας. Είμαι φοβισμένος ότι οι ειδήσεις είναι κακές.\n"
 "\n"
-"There are a lot of things the aliens know that we don't. Nowhere is this more clear in their widespread use of antimatter. It seems to be plentiful for them, at least plentiful enough to send out UFO after UFO to Earth, burning tanks full of antiprotons. Human experiments into antimatter, on the other hand . . .\n"
+"Υπάρχουν πολλά πράγματα που οι εξωγήινοι ξέρουν ότι εμείς δε γνωρίζουμε. Δεν είναι πουθενά αυτός ο σαφέστερος σε διαδεδομένη χρήση antimatter τους. Φαίνεται να είναι άφθονος για αυτούς, τουλάχιστον αρκετά άφθονη ώστε να στέλνουν ΟΥΦΟ το ένα μετά το άλλο στη Γη. Τα ανθρώπινα πειράματα αντιύλης, αφ' ετέρου. ..\n"
 "\n"
-"The first artificially produced antimatter on Earth consisted of 9 atoms of anti-hydrogen created at the CERN particle physics laboratory, situated near Geneva on the border between France and Switzerland. Not long after, another lab produced approximately 100 atoms. We've come slowly forward over the years in tiny, tiny steps, but even though we can now produce antiprotons by the millions, it's easy to forget just how little that really is.\n"
+"Πρώτη τεχνητά παραχθέν αντιύληr στη γη αποτελέσθηκε από 9 άτομα του αντι-υδρογόνου που δημιουργήθηκαν στο εργαστήριο φυσικής μορίων Κέντρο Πυρηνικών Μελετών και Ερευνών (CERN), που τοποθετήθηκε κοντά στη Γενεύη στα σύνορα μεταξύ της Γαλλίας και της Ελβετίας. Λίγο μετά  ένα άλλο εργαστήριο παρήγαγε περίπου 100 άτομα. Έχουμε κάνει αργά βήματα αλλά σταθερά κατά την διάρκεια των ετών, αλλά ακόμα κι αν μπορούμε τώρα να παραγάγουμε αντιπροτώνια κατά εκατομμύρια, είναι εύκολο να ξεχάσει κανείς πόσο λίγο αυτό είναι πραγματικά.\n"
 "\n"
-"In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in a Scout UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.\n"
+"Στην πραγματικότητα, το μεγαλύτερο εμπόδιο στην προσαρμογή μας των εξωγήινων καυσίμων είναι η διαθεσιμότητα αντιπροτωνίων. Έχουμε έναν μακροχρόνιο τρόπο από το 1995, αλλά ακόμη και με κάθε εργαστήριο φυσικής μορίων στον κόσμο που αναδεύει έξω όσο το δυνατόν περισσότερα αντιπροτώνια, θα διαρκούσε ογδόντα εκατομμύριο έτη για να παραγάγει 1 αξία του γραμμαρίου αντιπροτώνια. Από τη σύγκριση, το ποσό που περιλαμβάνεται σε μια δεξαμενή ανιχνεύσεων ΟΥΦΟ υπερβαίνει όλη την αντιύλη που παράγεται στη Γη κατά τη διάρκεια των προηγούμενων εκατό ετών.\n"
 "\n"
-"Another worrying point is that the aliens also seem to be using antimatter as part of their weapons systems. Antimatter-fuelled alien missiles are one thing; what if they begin using antimatter itself as an explosive? My staff has come up with more than one disconcerting idea along these lines. For myself, I think we should try to head the aliens off at the pass in this regard. A special program regarding antimatter-based weapons may be a highly interesting option to pursue -- it may be a more economical prospect than trying to adapt alien rockets to our interceptor craft.\n"
+"Η ανθρωπότητα είναι ακόμα πολύ μακρυά για να έιναι σε θέση να δημιουργηθούν αντιπροτώνια στα ποσά απαραίτητα να τροφοδοτήσουν με καύσιμα αυτούς τους πυραύλους αντιύλης. Η κατώτατη γραμμή είναι, ότι δεν μπορούμε να αναπαραγάγουμε αυτήν την εξωγήινη τεχνολογία. Δεν ξέρουμε πώς δημιουργούν την αντιυλή τους ή πώς κατορθώνουν να παραγάγουν αρκετή ηλεκτρική ενέργεια για να κάνουν αυτό. Εκτός αν και έως ότου μπορούμε να πάρουμε τα χέρια μας σε αυτόν τον εξοπλισμό, οι προσπάθειές μας θα είναι άκαρπες.\n"
 "\n"
-"Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless.\n"
+"Οι μόνες σημαντικές επιτυχίες μας έχουν προέλθει από τη μελέτη πώς οι εξωγήινοι αποθηκεύουν την αντιύλη τους. Είμαστε βέβαιοι ότι μπορούμε να υιοθετήσουμε τις ίδιες μαγνητικές τεχνικές αποθήκευσης, που δημιουργούν τις ειδικές εγκαταστάσεις ακίνδυνες για να αποθηκεύσουμε μέχρι δέκα γραμμάρια αντιύλης. Σας έχω στείλει ένα σύνολο σχεδιαγραμμάτων σε ένα χωριστό μήνυμα για την ευκολία σας. Έχουμε σχεδιάσει επίσης δεξαμενές αντιύλης καυσίμων που πρέπει να ταιριάξουν στους αναχαιτιστές μας δεδομένης κάποιας σημαντικής εξέτασης. Φυσικά θα χρειαστούμε μια πλήρη κατανόηση των εξωγήινων μηχανών προτού να μπορέσουμε να αρχίσουμε την παραγωγή τους.\n"
 "\n"
-"Our only major successes have come from studying how the aliens store their antimatter. We're confident we can employ the same magnetic storage techniques, creating special facilities for safely storing up to ten grammes of antimatter. I've sent you a set of blueprints in a separate message to peruse at your convenience. We've also designed antimatter fuel tanks that should fit in our interceptors given some major overhaul. Of course we'll need a full understanding of the alien engines before we can begin incorporating it.\n"
-"\n"
-"For all intents and purposes, we are unable to replicate the alien fuel. If we use antimatter in our own technology we will be dependent upon recovering it from alien sources. This seems a dangerous course of action, but we may have no choice; we need to adapt this technology as soon as possible if we are to have any chance of truly stopping the invasion.\n"
+"Παρόλες τις προσπάθειες, είμαστε ανίκανοι να αναδημιουργήσουμε τα εξωγήινα καύσιμα. Εάν χρησιμοποιούμε αντιύλη στην τεχνολογία μας θα εξαρτηθούμε από την ανάκτηση του από τις αλλοδαπές πηγές. Αυτό φαίνεται ένα επικίνδυνο σχέδιο δράσης, αλλά δεν μπορούμε να έχουμε καμία επιλογή πρέπει να προσαρμόσουμε αυτήν την τεχνολογία το συντομότερο δυνατόν εάν πρόκειται να έχετε οποιαδήποτε πιθανότητα απέναντι στην εισβολή.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -4946,7 +4944,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:212
 msgid "alien_live_pre_txt"
 msgstr ""
-"Διοικητάr,\n"
+"Διοικητά,\n"
 "\n"
 "Έχουμε συλλάβει έναν ζωντανό εξωγήινο στο πεδίο μάχης! Το πλάσμα έχει ανακτηθεί από την τελευταία τακτική αποστολή μας και κρατιέται στη νέα μονάδα συγκράτησής μας, την οποία είμαι ευτυχής να εκθέσω φαίνεται να δουλέυει κανονικά.\n"
 "\n"
@@ -4988,40 +4986,40 @@ msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operation
 #: ../base/ufos/research.ufo:286
 msgid "alien_breathing_txt"
 msgstr ""
-"Commander,\n"
+"Διοικητά,\n"
 "\n"
-"I have made a thorough examination of the devices found during the alien autopsies we've performed. I believe we're now ready to present our conclusions.\n"
+"Έχω κάνει μια λεπτομερή εξέταση των συσκευών που βρίσκονται κατά τη διάρκεια των εξωγήινων αυτοψιών που έχουμε εκτελέσει. Πιστεύω ότι είμαστε έτοιμοι  τώρα για να παρουσιάσουμε τα συμπεράσματά μας.\n"
 "\n"
-"From our investigation of tissue growth and scarring around the alien larynx, we conclude that these artifacts are surgically implanted in an alien's throat at a very early age. Somewhere during adolescence, the child-sized device is removed and an adult version is implanted.\n"
+"Από την έρευνά μας για αύξηση και σημάδι ιστού γύρω από τον αλλοδαπό λάρυγγα, καταλήγουμε στο συμπέρασμα ότι αυτά τα χειροποίητα αντικείμενα εμφυτεύονται χειρουργικά στο λαιμό ενός αλλοδαπού σε μια πολύ νεαρή ηλικία. Κάπου κατά τη διάρκεια της εφηβείας, η παιδί-ταξινομημένη συσκευή αφαιρείται και μια ενήλικη έκδοση εμφυτεύεται.\n"
 "\n"
-"We've examined several different possibilities for the device's function, from food preprocessors to suicide equipment, but the obvious answer turned out to be the correct one. It is some kind of respirator, allowing the aliens to survive in our atmosphere, and possibly other atmospheres as well. Every organic specimen we've autopsied has carried one of these devices, all with the same basic functionality, implying that their constant operation is either required for survival on the alien homeworld or that we are seeing only specimens which are intended for frequent planetary operations. Certainly external breathing apparatus would be easier and more economical to use if these specimens were only intended to take short trips into hostile atmospheres.\n"
+"Έχουμε εξετάσει διάφορες διαφορετικές δυνατότητες για τη λειτουργία της συσκευής, αλλά η προφανής απάντηση αποδείχθηκε η σωστή. Είναι κάποια αναπνευστική συσκευή, επιτρέποντας στους εξωγήινους να επιζήσει στην ατμόσφαιρά μας, και ενδεχομένως άλλες ατμόσφαιρες επίσης. Κάθε οργανικό δείγμα που έχουμε με αυτοψία έχει φέρει μια από αυτές τις συσκευές, όλες με την ίδια βασική λειτουργία, που υπονοεί ότι η σταθερή λειτουργία τους είτε απαιτείται για την επιβίωση στον εξωγήινο πλανήτη τους είτε ότι βλέπουμε μόνο τα δείγματα που προορίζονται για τις συχνές πλανητικές διαδικασίες. Βεβαίως οι εξωτερικές συσκευές αναπνοής θα ήταν ευκολότερες και πιό οικονομικές να χρησιμοποιήθουν εάν αυτά τα δείγματα προορίστηκαν μόνο για σύντομα ταξίδια στις εχθρικές ατμόσφαιρες.\n"
 "\n"
-"The device itself consists of a sophisticated filter stretched across the subject's windpipe, and two small spherical tanks positioned on either side of the brainstem, connected to the windpipe by a small metal tube. These tanks are filled with a gas mixture compressed into a liquid state, functioning much like a scuba diver's oxygen bottles. The filter mechanism is semi-intelligent; it scrupulously removes all elements that are harmful to the subject, but allows beneficial elements to pass through. The tanks are refilled by way of a small mechanical navel at the back of the alien's neck.\n"
+"Η ίδια η συσκευή αποτελείται από περίπλοκο φίλτρο που τεντώνονται πέρα από την αναπνετστικό σωλήνα του αντικειμένου, και δύο μικρές σφαιρικές δεξαμενές που τοποθετούνται από κάθε πλευρά του ισθμού εγκεφάλου, που συνδέεται με τον αναπνευστικό σωλήνα με έναν μικρό σωλήνα μετάλλων. Αυτές τις δεξαμενές γεμίζουν με ένα αέριο μίγμα που συμπιέζεται σε μια υγρή κατάσταση, που λειτουργεί σαν τα μπουκάλια οξυγόνου ενός δύτη. Ο μηχανισμός φίλτρων είναι ημι-ευφυής αφαιρεί με ακρίβεια όλα τα στοιχεία που είναι επιβλαβή στο αντικέιμκενο, αλλά επιτρέπει στα ευεργετικά στοιχεία να περάσουν. Οι δεξαμενές ξαναγεμίζονται μέσω ενός μικρού μηχανικού ομφαλού στο πίσω μέρος του λαιμού του εξωγήινου.\n"
 "\n"
-"An examination of the tanks' contents has given us our first accurate data on the alien atmosphere. We now have several mixtures on record that we believe will be able to support various alien lifeforms in our Containment unit. A few of the mixtures are nitrogen-oxygen compounds, very similar to our own, but others don't contain any oxygen at all. If all of these mixtures are actively used by one or more alien species, some of our enemies seem to breathe an atmosphere of almost pure methane.\n"
+"Μια εξέταση του περιεχομένου των δεξαμενών μας έχει δώσει τα πρώτα ακριβή στοιχεία μας όσον αφορά την αλλοδαπή ατμόσφαιρα. Έχουμε τώρα διάφορα μίγματα στο αρχείο που πιστεύουμε θα είναι σε θέση να υποστηρίξει τα διάφορα εξωγήινα είδη ζωής στη μονάδα συγκράτησής μας. Μερικά από τα μίγματα είναι ενώσεις άζωτο-οξυγόνου, πολύ παρόμοιες με τις δικές μας, αλλά άλλες δεν περιέχουν οποιοδήποτε μορφή οξυγόνου καθόλου. Εάν όλα αυτά τα μίγματα χρησιμοποιούνται ενεργά από ένα ή περισσότερα αλλοδαπά είδη, μερικοί από τους εχθρούς μας φαίνονται να αναπνέουν μια ατμόσφαιρα σχεδόν καθαρού μεθανίου.\n"
 "\n"
-"The vastly different mixtures are actually giving us a bit of a puzzle. Surely it would be more economical to use segregated crews than to force these species to coexist in the same place?\n"
+"Τα απέραντα διαφορετικά μίγματα μας δίνουν πραγματικά έναν γρίφο. Σίγουρα θα ήταν πιό οικονομικό να χρησιμοποιηθούν τα διαχωρισμένα πληρώματα από να αναγκαστούν αυτά τα είδη να συνυπάρξουν στην ίδια θέση;\n"
 "\n"
-"Future questions aside, I'm well pleased with our present results. We can now store aliens in our Containment unit for prolonged periods of time -- they will no longer suffocate when their atmosphere tanks run out. This usually happens after 24 hours without replenishment, so no delays should be afforded when we manage to capture a specimen.\n"
+"Μελλοντικές ερωτήσεις κατά μέρος, είμαι ευτυχής με τα παρόντα αποτελέσματά μας. Μπορούμε τώρα να αποθηκεύσουμε τους αλλοδαπούς στη μονάδα συγκράτησής μας για τις παρατεταμένες χρονικές περιόδους -- δεν θα ασφυκτιήσουν πλέον όταν τρέχουν έξω από τις δεξαμενές ατμόσφαιράς τους. Αυτό συμβαίνει συνήθως μετά από 24 ώρες χωρίς ξαναγέμισμα, έτσι καμία καθυστέρηση δεν πρέπει να διατεθεί όταν κατορθώνουμε να συλλάβουμε ένα δείγμα.\n"
 "\n"
-"My team and I are all looking forward to finally getting our hands on a live one, Commander.\n"
+"Η ομάδα μου και όλοι ανυπομονούμε να πάρουμε τελικά στα χέρια μας ένα ζωντανό, Διοικητά.\n"
 "\n"
-"Sincerely,\n"
+"Μετά τιμής,\n"
 "\n"
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:250
 msgid "alien_breathing_pre_txt"
 msgstr ""
-"Commander,\n"
+"Διοικητά,\n"
 "\n"
-"During autopsy of the alien corpses we've recovered, my team and I uncovered some peculiar machinery implanted into the throat of the alien specimen. It consists of two metal spheres located on either side of the brainstem, connected directly to the windpipe by way of a small tube. The windpipe itself is protected by some manner of valve or filter. We believe this interconnected apparatus may be some kind of breathing equipment or rebreather, or even something else entirely; we're not sure how it works yet.\n"
+"Κατά τη διάρκεια της αυτοψίας των εξωγήινων πτωμάτων που έχουμε ανακτήσει, η ομάδα μου και αποκάλυψε κάποια ιδιαίτερα μηχανήματα που εμφυτεύθηκαν στο λαιμό του εξωγήινου δείγματος. Αποτελείται από δύο σφαίρες μετάλλων που βρίσκονται από κάθε πλευρά του ισθμού εγκεφάλου, που συνδέεται άμεσα με τον αναπνευστικό σωλήνα μέσω ενός μικρού σωλήνα. Το ίδιο αναπνευστικό κύκλωμα προστατεύεται από κάποιο τρόπο με κάποια βαλβίδα ή φίλτρο. Πιστεύουμε ότι αυτή η διασυνδεμένη συσκευή μπορεί να είναι κάποιος εξοπλισμός αναπνοής , ή ακόμα και κάτι άλλο,  εξ ολοκλήρου δεν είμαστε βέβαιοι πώς λειτουργεί ακόμα.\n"
 "\n"
-"I would like your permission and funding to examine these items more closely than our autopsy would allow. At this point in the war, anything that enhances our knowledge base about the alien threat is useful, and we may discover critical clues about alien technology and biology. Certainly we need to find out what the aliens breathe before we can accomodate them in our Containment unit for any period of time.\n"
+"Θα ήθελα την άδειά σας και τη χρηματοδότηση να εξετάσουμε αυτά τα στοιχεία περισσότερο από ότι η αυτοψία μας θα επέτρεπε. Σε αυτό το σημείο στον πόλεμο, τίποτα που ενισχύει στη βάση γνώσεών μας για την εξωγήινη απειλή είναι χρήσιμο, και μπορούμε να ανακαλύψουμε τις κρίσιμες ενδείξεις για την εξωγήινη τεχνολογία και τη βιολογία. Βεβαίως πρέπει να ανακαλύψουμε τι οι εξωγήινοι αναπνέουν προτού να μπορέσουμε να τους προσαρμόσουμε στη μονάδα συγκράτησής μας για οποιαδήποτε χρονική περίοδο.\n"
 "\n"
-"Cdr. Navarre and his team will be assisting us on the technical side. He has committed his full support to the proposal.\n"
+"Cdr. Navarre και η ομάδα του θα μας βοηθούν στην τεχνική πλευρά. Έχει δεσμεύσει την πλήρη υποστήριξή του στη πρότασή μας.\n"
 "\n"
-"Sincerely,\n"
+"Μετά τιμής,\n"
 "\n"
 "Dr. Connor"
 
@@ -5034,34 +5032,34 @@ msgstr "Το Μυαλό των Εξωγήινων"
 #: ../base/ufos/research.ufo:306
 msgid "alien_mind_txt"
 msgstr ""
-"Commander,\n"
+"Διοικητά,\n"
 "\n"
-"My team has finished conducting a number of tests on our captives that have shed some light on the aliens' behaviour.\n"
+"Η ομάδα μου έχει τελειώσει διάφορες δοκιμές στους αιχμαλώτους μας που έχουν ρίξει κάποιο φως στη συμπεριφορά των εξωγήινων.\n"
 "\n"
-"In one experiment, an alien specimen was given a box of food, sealed by a two-digit number lock. The subject took six hours to find the right combination by trial and error. This places the alien's IQ well below most large terrestrial mammals; however, when other subjects in the Containment were given the same task, with exactly the same lock, they all immediately input the right combination on their first attempt without having been exposed to the first specimen's attempts. We know how this looks, Commander, but I assure you my team and I have been thoroughly conscientious about security and separation. The aliens have not been allowed to communicate in any way. We're not yet willing to commit to any definite hypothesis about these events, though we're working on it.\n"
+"Σε ένα πείραμα, σε ένα Εξωγήινο δείγμα δόθηκε ένα κιβώτιο τροφίμων, που σφραγίστηκε από μια διψήφια κλειδαριά αριθμού. Το αντικείμενο διάρκεσε έξι ώρες για να βρεί το σωστό συνδυασμό από τη δοκιμή και το λάθος. Αυτό τοποθετεί το ΔΕΙΚΤΗ ΝΟΗΜΟΣΥΝΗΣ του εξωγήινου αρκετά κάτω από τα περισσότερα μεγάλα επίγεια θηλαστικά εντούτοις, όταν δόθηκε σε άλλα θέματα στη συγκράτηση ο ίδιος στόχος, με ακριβώς την ίδια κλειδαριά, αυτοί όλοι εισήγαγαν αμέσως το σωστό συνδυασμό στην πρώτη προσπάθειά τους χωρίς έκθεση στις προσπάθειες του πρώτου δείγματος! Οι εξωγήινοιδεν έχουν την άδεια για να επικοινωνήσουν από καμιά άποψη. Δεν είμαστε ακόμα πρόθυμοι να δεσμευτούμε σε οποιαδήποτε καθορισμένη υπόθεση για αυτά τα γεγονότα, αν και εργαζόμαστε σε αυτήν.\n"
 "\n"
-"Unfortunately, results of our other experiments have been inconclusive at best. Various ways of communication have been attempted without success. Despite having fully functional vocal cords and/or working hands, they do not seem to speak or sign in any sense that we understand. Pheromone communication has had no effect beyond simple physical reactions. The large biological disparity between alien species also creates its own share of problems with containment and communication -- please refer to the alien autopsy reports for more details on individual alien physiology.\n"
+"Δυστυχώς, τα αποτελέσματα των άλλων πειραμάτων μας είναι αναποτελεσματικά στην καλύτερη περίπτωση. Οι διάφοροι τρόποι της επικοινωνίας που έχουμε προσπαθηθεί είναι χωρίς επιτυχία. Παρά την κατοχή των πλήρως λειτουργικών φωνητικών χορδών, δεν φαίνονται να μιλούν ή να υπογράφουν υπό οποιαδήποτε έννοια όπως εμείς το καταλαβαίνουμε. Η επικοινωνία φερορμονών δεν είχε καμία επίδραση πέρα από τις απλές φυσικές αντιδράσεις. Η μεγάλη βιολογική διαφορά μεταξύ των εξωγήινων ειδών δημιουργεί επίσης το μερίδιο προβλημάτων της με τη συγκράτηση και την επικοινωνία -- παρακαλώ αναφερθείτε στις εξωγήινες εκθέσεις αυτοψίας για περισσότερες λεπτομέρειες σχετικά με τη μεμονωμένη εξωγήινη φυσιολογία.\n"
 "\n"
-"Nevertheless, I believe we're making progress, however slowly. Communication with the aliens is certainly within the realm of possibility. Our studies confirm that all alien specimens react to external stimuli. This means that we can make them respond, one way or another. Dr. Yamamura is currently working on teaching an isolated group how to express desire, acknowledgement and denial. Their intelligence is too limited to attempt anything more sophisticated at the moment. Once the subjects have mastered these basic concepts, we will have some data on the rate at which the aliens can learn, and a solid foundation upon which to build. Yamamura hopes we can gradually raise their communication skills until they can make themselves intelligible to us, thereby spreading this knowledge to others of their kind who may possess superior intellect and talents.\n"
+"Εντούτοις, πιστεύω ότι σημειώνουμε πρόοδο, αργά αλλά σταθερά. Η επικοινωνία με τους εξωγήινους είναι βεβαίως μέσα στη σφαίρα της δυνατότητας μας. Οι μελέτες μας επιβεβαιώνουν ότι όλα τα εξωγήινα δείγματα αντιδρούν στα εξωτερικά ερεθίσματα. Αυτό σημαίνει ότι μπορούμε να τους κάνουμε να αποκριθούν, με κάποιο τρόπο. Ο Δρ Yamamura εργάζεται αυτήν την περίοδο στη διδασκαλία μιας απομονωμένης ομάδας πώς να εκφράσει την επιθυμία, την αναγνώριση και την άρνηση. Η νοημοσύνη τους περιορίζεται πάρα πολύ στην προσπάθεια τίποτα πιό περίπλοκο προς το παρόν. Μόλις κυριαρχήσουν τα θέματα με αυτές τις βασικές έννοιες, θα έχουμε μερικά στοιχεία όσον αφορά το ποσοστό στο οποίο οι εξωγήινοι μπορούν να μάθουν, και μία στέρεα βάση επάνω στο οποίο μπορεί να χτίσει. Ο Yamamura ελπίζει ότι μπορούμε βαθμιαία να αυξήσουμε τις δεξιότητες επικοινωνίας τους έως ότου μπορούν να κατασταθούν καταληπτοί σε μας, με αυτόν τον τρόπο διαδίδοντας αυτήν την γνώση σε άλλα του είδους τους τα οποία μπορούν να κατέχουν τον ανώτερη διάνοια ταλέντα.\n"
 "\n"
-"As always, I will keep you informed, Commander.\n"
+"Όπως πάντα, θα σας κρατήσω ενήμερους, Διοικητά.\n"
 "\n"
-"Sincerely,\n"
+"Μετά τιμής,\n"
 "\n"
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:309
 msgid "alien_mind_pre_txt"
 msgstr ""
-"Commander,\n"
+"Διοικητά,\n"
 "\n"
-"Though we've achieved limited results so far, research must continue on our alien captives. There's a number of experiments we'd like to run that require your authorisation for lab time and funding. I assure you this is not blue-sky research; with enough tests and behavioural data, we may be able to figure out a way to communicate with these aliens, perhaps even reawaken their intelligence somehow. We don't know what the results of the program will be -- we simply know too little about these aliens, our body of data is far too small to make any predictions at this point. What we do know is that every tidbit we learn about alien psychology is a valuable piece of the puzzle.\n"
+"Αν και έχουμε επιτύχει περιορισμένα αποτελέσματα μέχρι τώρα, η έρευνα πρέπει να συνεχιστεί στους εξωγήινούς αιχμαλώτους μας. Εκεί διάφορα πειράματα θα επιθυμούσαμε να τρέξουμε που απαιτούν την έγκρισή σας για το χρόνο εργαστηρίων και τη χρηματοδότηση. Σας βεβαιώνω αυτό δεν είναι έρευνα μπλε-ουρανού με αρκετές δοκιμές και συμπεριφοριστικά στοιχεία, μπορούμε να είμαστε σε θέση να υπολογίσουμε έναν τρόπο να επικοινωνήσουμε με αυτούς τους εξωγήινους, ίσως να αναζωπυρώσουμε ακόμα και τη νοημοσύνη τους κάπως. Δεν ξέρουμε τα αποτελέσματα του προγράμματοςι -- ξέρουμε απλά λίγα για αυτούς τους εξωγήινους το πακέτο των  στοιχείων μας είναι πάρα πολύ μικρό για να κάνουμε οποιεσδήποτε προβλέψη σε αυτό το σημείο. Αυτό που ξέρουμε είναι ότι το κάθε τι που μαθαίνουμε για την εξωγήινη ψυχολογία είναι ένα πολύτιμο κομμάτι του γρίφου.\n"
 "\n"
-"On a personal note, I'm convinced they must know something, Commander. The trick is in getting it out of them, and we're by God going to do it.\n"
+"Σε μια προσωπική σημείωση, είμαι πεπεισμένος ότι πρέπει να ξέρουν κάτι, διοικητά. Το τέχνασμα είναι να το εξάγουμε απο μέσα τους, και μα το  Θεό θα το καταφέρουμε.\n"
 "\n"
-"My team and I are all eagerly awaiting your approval for the program.\n"
+"Η ομάδα μου και όλοι αναμένω ανυπόμονα την έγκρισή σας για το πρόγραμμα.\n"
 "\n"
-"Sincerely,\n"
+"Μετά τιμής,\n"
 "\n"
 "Dr. Connor"
 
@@ -5181,15 +5179,15 @@ msgstr ""
 #: ../base/ufos/research.ufo:416
 msgid "universal_serum_pre_txt"
 msgstr ""
-"Commander,\n"
+"Διοικητά,\n"
 "\n"
-"As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.\n"
+"Όπως μπορείτε να ξέρετε, οι προσπάθειές μας στην επικοινωνία με τους ζωντανούς εξωγήινους στη μονάδα συγκράτησής μας προχωρούν πολύ αργά. Έχουμε πολύ πρόβλημα που εφαρμόζει τις τυποποιημένες μεθόδους ερώτησής μας. Ο ορός αλήθειας που έχουμε διαθέσιμο έχει διάφορους ευδιάκριτους περιορισμούς και τείνει να παραγάγει μια θανατηφόρα αλλεργική αντίδραση στους περισσότερους εξωγήινους οργανισμούς εκτός αν το περιορίζουμε στις μικρότερες, ανεπαρκείς δόσεις, το οποίο επιδεινώνει την ελλιπή επίδραση του ορού ήδη στην εξωγήινη φυσιολογία. Έχουμε αντιμετωπίσει τα πολυάριθμα μικρά ψέματα και τα μισό-λογα στις συνόδους που έχουμε πάρει μέχρι τώρα. Τα βασανιστήρια που έχουμε προσπαθηθεί για να επηρεάσουν αυτήν την συμπεριφορά, είναι μάταία. Ο πόνος φαίνεται να μην έχει καμία διορθωτική επίδραση στο μυαλό κυψελών.\n"
 "\n"
-"There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.\n"
+"Εκεί επίσης το μεγαλύτερο εμπόδιο να πρέπει να εγχεθεί κάθε ενιαίο δείγμα του μυαλού κυψελών προκειμένου να καταδυθεί κατάλληλα η αίσθηση οποιουδήποτε θέματος της κρίσης. Εάν ένα μέλος του μυαλού κυψελών πεθαίνει, η υπόλοιπη άνοδος επιπέδων των δειγμάτων αδρεναλίνη-ισοδύναμη στο σημείο όπου πρέπει να αρχίσουμε.\n"
 "\n"
-"To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.\n"
+"Για αυτόν τον λόγο, που οπλίζόμαστε  με την επεκταθείσα γνώση μας του εξωγήινου μυαλού και του σώματος, προτείνω ένα νέο ερευνητικό πρόγραμμα για να εξετάσω ένα καθολικό σύνολο ορών που μπορούμε να χρησιμοποιήσουμε για να εξαγάγουμε τις πιό αξιόπιστες πληροφορίες, γρηγορότερα και ευκολότερα. Υπάρχουν προφανώς πολλές πληροφορίες μέσα σε αυτά τα δείγματα που περιμένουν να καταληφθούν, διοικητά χρειαζόμαστε ακριβώς τα εργαλεία για να ραγίσουμε κατάλληλα το κέλυφος.\n"
 "\n"
-"Sincerely,Dr. Connor"
+"Μετά τιμής, Dr. Connor"
 
 #: ../base/ufos/research.ufo:445
 #: ../base/ufos/research.ufo:458
@@ -5200,48 +5198,48 @@ msgstr "Εξωγήινες Προελέυσεις"
 #: ../base/ufos/research.ufo:448
 msgid "alien_origins_txt"
 msgstr ""
-"Good morning, Sir.\n"
+"Καλημέρα, κύριε.\n"
 "\n"
-"I've got the results of our Alien Origins project here and I believe you'll find them encouraging. Here is my summary of the data.\n"
+"Έχω τα αποτελέσματα του εξωγήινου προγράμματος προέλευσής μας εδώ και πιστεύω ότι θα τα βρείτε ενδιαφέροντα. Εδώ είναι η περίληψή μου των στοιχείων.\n"
 "\n"
-"The project overall has been a resounding success in integration and cooperation. For several short periods over the past few days, we had direct control over every civilian and military detection asset in the solar system, including several installations in the asteroid belt so secret that we have been sworn to silence by the UN. Our deep-space probes have scanned every inch of buildable surface to detect any sign of an alien base. With these resources at our disposal, we have achieved continuous detection coverage of approximately 90% of the solar system over the past two weeks. The remaining 10% has been uncovered no longer than forty minutes at a time.\n"
+"Το πρόγραμμα συνολικά είναι μια επιτυχία σε ολοκλήρωση και συνεργασία. Για αρκετές μικρές χρονικές περιόδους κατά τη διάρκεια των προηγούμενων λίγων ημερών, είχαμε τον άμεσο έλεγχο κάθε πολιτικού και στρατιωτικού προτερήματος ανίχνευσης στο ηλιακό σύστημα, συμπεριλαμβανομένων διάφορων εγκαταστάσεων στην αστεροειδή ζώνη τόσο μυστική που έχουμε ορκιστεί για να την κατασιγάσουμε από τα Ηνωμένα Έθνη. Οι βαθύς-διαστημικοί έλεγχοί μας έχουν ανιχνεύσει κάθε ίντσα της οικοδομήσιμης επιφάνειας για να ανιχνεύσουν οποιοδήποτε σημάδι μιας εξωγήινης βάσης. Με αυτούς τους πόρους στη διάθεσή μας, έχουμε επιτύχει τη συνεχή κάλυψη και ανίχνευσης περίπου 90% του ηλιακού συστήματος κατά τη διάρκεια των προηγούμενων δύο εβδομάδων. Το υπόλοιπο 10% δεν έχει αποκαλυφθεί.\n"
 "\n"
-"Unfortunately -- depending on your understanding of the word 'unfortunately' -- we could find no evidence of alien fleets hiding in our solar system. We have been so thorough that these results are all but conclusive. There is no way to be absolutely sure that our conclusions are correct, but I make the following statement with high confidence:\n"
+"Δυστυχώς -- ανάλογα με την κατανόησή σας της λέξης \"δυστυχώσ\" -- δεν θα μπορούσαμε να βρούμε κανένα στοιχείο των αλλοδαπών στόλων που κρύβονται στο ηλιακό σύστημά μας. Είμαστε τόσο λεπτομερείς που αυτά τα αποτελέσματα είναι σχεδόν αποφασιστικά. Δεν υπάρχει κανένας τρόπος να είναι απολύτως βέβαιος ότι τα συμπεράσματά μας είναι σωστά, αλλά κάνω την ακόλουθη δήλωση με την υψηλή εμπιστοσύνη:\n"
 "\n"
-"We do not believe there are alien ships or bases in our solar system at this time.\n"
+"Δεν πιστεύουμε ότι υπάρχουν εξωγήινα σκάφη ή βάσεις στο ηλιακό σύστημά μας αυτή τη στιγμή.\n"
 "\n"
-"This answers one of our questions, but brings us no closer to understanding where the aliens come from or how they get here. In fact, the question of how they get here becomes an even greater conundrum than it was before. If the aliens are not based in our solar system, how can they be delivering UFOs to Earth?\n"
+"Αυτό απαντά σε μια από τις ερωτήσεις μας, αλλά μας φέρνει όχι πιό κοντά στην κατανόηση απο που οι εξωγήινοι προέρχονται ή πώς παίρνουν απο εδώ. Στην πραγματικότητα, το θέμα για το πώς παίρνουν εδώ γίνεται ένα ακόμα μεγαλύτερο αίνιγμα από αυτό που ήταν πριν. Εάν οι εξωγήινοι δεν είναι βασισμένοι στο ηλιακό σύστημά μας, πώς μπορούν τα ΟΥΦΟ στη γη;\n"
 "\n"
-"I have spoken at length with Cdr. Navarre and members of his team about this issue, trying to figure it out, and most of our theories still seem like crackpot speculations even to ourselves. However, fate gave us the proof we needed.\n"
+"Έχω μιλήσει επί μακρόν με τον cdr. Navarre και μέλη της ομάδας του για αυτό το ζήτημα, που προσπαθεί να το επιλύση. Εντούτοις, η μοίρα μας έδωσε την απόδειξη που χρειαστήκαμε.\n"
 "\n"
-"We were having little luck with the issues of 'how' and 'where' until we got our hands on last week's video records from the MIMIR space telescope. Upon watching the footage, we realised that the MIMIR array had accidentally managed to catch a UFO arrival on film. We have full records in the visible and infrared spectra of a large, unfamiliar class of UFO 'popping' into existence approximately 10,000 kilometres from Earth, from where it ignited its engines and set a course for the planet.\n"
+"Είχαμε λίγη τύχη με τα ζητήματα \"πώσ\" και \"που\" έως ότου πήραμε στα χέρια μας την προηγούμενη εβδομάδα τηλεοπτικά αρχεία από το διαστημικό τηλεσκόπιο MIMIR. Επάνω στην προσοχή του μήκους σε πόδια, συνειδητοποιήσαμε ότι η σειρά MIMIR είχε κατορθώσει τυχαία να πιάσει μια άφιξη ΟΥΦΟ στην ταινία. Έχουμε τα πλήρη αρχεία στα ορατά και υπέρυθρα φάσματα μιας μεγάλης, άγνωστης κατηγορίας ενός ΟΥΦΟ όπυ υπάρχει περίπου στα 10.000 χιλιόμετρα από τη γη, και ανάφλεξε τις μηχανές και έθεσε πορεία για τον πλανήτη μας.\n"
 "\n"
-"It is possible the aliens could have some manner of 'cloaking' technology that has prevented us from detecting the UFO beyond that range, but we have strong doubts about this; the appearance was highly sudden, accompanied by a burst of gamma rays and a momentary gravitic anomaly. There was not even the slightest evidence of this UFO's existence prior to its appearance 10,000 klicks from Earth.\n"
+"Είναι δυνατό οι εξωγήινοι να μπορούσαν να έχουν με κάποιο τρόπο υποκλέψει την τεχνολογία μας και με αυτόν τον τρόπο να έχουν αποτρέψει την ανίχνευση του ΟΥΦΟ πέρα από εκείνη την σειρά, αλλά έχουμε τις ισχυρές αμφιβολίες για αυτό διότι η εμφάνιση ήταν ιδιαίτερα ξαφνική, συνοδευόμενη από μια έκρηξη των ακτίνων γάμμα και μιας στιγμιαίας βαρυτικής ανωμαλίας. Δεν υπήρξαν ούτε τα μικρότερα στοιχεία αυτής της ύπαρξης ΟΥΦΟ πριν από την εμφάνισή του στα 10.000 χιλιόμετρα από τη γη.\n"
 "\n"
-"The most likely conclusion is also the most frightening: the aliens do not need to be located in our solar system, because they have a means of travel that is faster than light. Apparently this FTL (Faster-Than-Light) drive allows them to 'jump' into the Sol system from a distance well beyond our detection range. We don't know how this could be possible, as it clearly violates one or more concepts of general relativity (e.g. causality and/or special relativity), which remains the most accurate model of physics we have. The aliens clearly know something we don't.\n"
+"Το πλέον πιθανό συμπέρασμα είναι επίσης και το πιο τρομακτικό: οι εξωγήινοι δεν χρειάζεται ν αβρίσκονται στο ηλιακό σύστημά μας, επειδή έχουν τα μέσα του ταξιδιού. Προφανώς αυτή η (γρήγορη) κίνηση FTL τους επιτρέπει  \"να πηδήσει\" στο σύστημα κολλοειδούς διαλύματος από μια απόσταση καλά πέρα από τη σειρά ανίχνευσής μας. Δεν ξέρουμε πώς αυτό θα μπορούσε να είναι δυνατό, δεδομένου ότι παραβιάζει σαφώς μια ή περισσότερες έννοιες της γενικής σχετικότητας (π.χ. αιτιότητα ή/και ειδική σχετικότητα), η οποία παραμένει το ακριβέστερο πρότυπο της φυσικής που έχουμε. Οι εξωγήινοι ξέρουν σαφώς κάτι που εμείς όχι.\n"
 "\n"
-"Our next priority must be the capture of an FTL-equipped UFO so that we may study and adapt this drive for our own spacecraft. Obviously, this will not be an easy task, but developing the ability to strike back is paramount -- just in case we need to end this invasion the hard way.\n"
+"Η επόμενη προτεραιότητά μας πρέπει να είναι η σύλληψη ενός εξοπλισμένου ΟΥΦΟ έτσι ώστε να μπορούμε να μελετήσουμε και να προσαρμόσουμε αυτήν την κίνηση για στο διαστημικό σκάφος μας. Προφανώς, αυτό δεν θα είναι ένας εύκολος στόχος, αλλά η ανάπτυξη της δυνατότητας να χτυπήσει πίσω είναι κυρίαρχη -- ακριβώς σε περίπτωση που πρέπει να τελειώσουμε αυτήν την εισβολή με τον σκληρό τρόπο.\n"
 "\n"
-"Of course, the final decision on how to balance our short-term defence needs and long-term retaliation rests with you, Commander.\n"
+"Φυσικά, η τελική απόφαση σχετικά με το πώς να ισορροπήσει τις βραχυπρόθεσμες αμυντικές ανάγκες και μακροπρόθεσμα την ανταπόδοσή μας στηρίζεται με σας, διοικηά.\n"
 "\n"
-"With kind regards,\n"
+"Με φιλικούς χαιρετισμούς,\n"
 "\n"
 "Col. Falkland"
 
 #: ../base/ufos/research.ufo:451
 msgid "alien_origins_pre_txt"
 msgstr ""
-"Good morning, Sir.\n"
+"Καλη μέρα, Κύριε.\n"
 "\n"
-"Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?\n"
+"Αν και αγωνιζόμαστε ακόμα να γίνουμε λειτουργικοί, μια από τις πρώτες γραμμές επιχείρησής μας πρέπει να είναι η ανακάλυψη απο όπου οι εξωγήινοι προέρχονται. Το μόνο πράγμα που ξέρουμε είναι ότι μπορούν αμέσως να εισαχθούν στην ατμόσφαιρα από το διάστημα,να κάνουν ότι ήρθαν να κάνουν, και έπειτα να μπούν πάλι στην τροχιά και εξαφανίζονται από τις οθόνες μας. Πρέπει να ανακαλύψουμε τι συμβαίνει πριν και μετά από αυτά τα σημεία. Από πού προέρχονται, τι παίρνουν αυτοί απο εδώ, και πού πηγαίνουν;\n"
 "\n"
-"We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.\n"
+"Δεν έχουμε δει κανένα στοιχείο αν τα  σκάφη κινούνται στη γήινη τροχιά ή να βρίσκονται σε εγκαταστάσεις οπουδήποτε στο ηλιακό σύστημα, αλλά αυτό δεν σημαίνει ότι δεν είναι εκεί. Η περιοχή της αστεροειδούς ζώνης και των εξωτερικών πλανητών -- το διάστημα μεταξύ του Αρη και Ποσειδώνα -- είναι κακώς ελεγχόμενη υπό μια στρατιωτική έννοια και, λαμβάνοντας υπόψη τις ικανότητες μυστικότητας που καταδεικνύονται με μία επίθεση ΟΥΦΟ, σε έναν αλλοδαπό στόλο μπορεί να έχει αναγνωριστεί λάθος ή να είχαν αποτύχει απλά να καταχωρήσει στον πολιτικό εξοπλισμό. Δεν έχει υπάρξει καμία περιεκτική προσπάθεια για να ανιχνευθεί η επιφάνεια των διάφορων βάση-βιώσιμων ουράνιων αντικειμένων στο ηλιακό σύστημά μας.\n"
 "\n"
-"Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.\n"
+"Επομένως, προτείνω ένα νέο ερευνητικό πρόγραμμα που στοχεύει στον καθαρισμό του ηλιακού συστήματος με τους ελέγχους και ισχυρό οπτικό - και ραδιοτηλεσκοπικό για να ανιχνεύσω την εξωγήινη δραστηριότητα οπουδήποτε στο διάστημά μας. Οι επιστήμονές μας θα αναθεωρήσουν επίσης τα στοιχεία που πρέπει να έχουν των προηγούμενων εισβολών και να τα δοκιμάσουμε και να τα διαμορφώσουμε με την κάποια εικόνα των εξωγήινων μετακινήσεων από την γήινη τροχιά. Ακόμα κι αν εκεί ένας στόλος που κρύβετε πίσω από τον Αρη ή έναν από τους εξωτερικούς πλανήτες, πρέπει τελικά να αποκαλυφθεί. Εάν βάλουμε αρκετά μάτια στο πρόβλημα μας , ούτε αυτοί οι εξωγήινοι δεν θα μπορούν να κρυφτούν για πολύ.\n"
 "\n"
-"This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.\n"
+"Αυτό το πρόγραμμα θα πάρει ένα σημαντικό ποσό χρηματοδότησης και εργαστήριο-χρόνου, διοικητά, έτσι απαιτεί την έγκρισή σας προτού να μπορέσει να αρχίσει η εργασία.\n"
 "\n"
-"With kind regards,\n"
+"Με φιλικούς χαιρετισμούς,\n"
 "\n"
 "Col. Falkland"
 
@@ -5249,45 +5247,45 @@ msgstr ""
 #: ../base/ufos/research.ufo:495
 #: ../base/ufos/research.ufo:503
 msgid "eXtraterrestial Viral Infection"
-msgstr "eXtraterrestial Viral Infection"
+msgstr "Εξωγήινος Ιός Μόλυνσης"
 
 #: ../base/ufos/research.ufo:485
 msgid "alien_xvi_txt"
 msgstr ""
-"Good morning, Sir.\n"
+"Καλημέρα, Κύριε.\n"
 "\n"
-"The XVI census program has just gone into effect. Weekly rolling tests have commenced this morning, and I've got a full report on our estimated performance levels and operational details.\n"
+"Το XVI πρόγραμμα απογραφής τέθηκε μόλις σε ισχύ. Οι εβδομαδιαίες δοκιμές κυλίσματος έχουν αρχίσει αυτό το πρωί, και έχω μια πλήρη έκθεση σχετικά με τα κατ' εκτίμηση επίπεδα απόδοσης και τις λειτουργικές λεπτομέρειές μας.\n"
 "\n"
-"Our strategy is based around local medical centres, where the XVI tests are performed by existing nursing staff under the supervision of a small police or military guard. If a test turns out positive, this guard will perform the arrest and turn the infected prisoners over to the UN for containment and study. Once the aliens figure out this scheme -- I don't think it'll take them long -- the infected people will start avoiding the census, thereby giving us the data we need simply by their absence.\n"
+"Η στρατηγική μας είναι βασισμένη γύρω από τα τοπικά ιατρικά κέντρα, όπου οι XVI δοκιμές εκτελούνται από το υπάρχον νοσηλευτικό προσωπικό υπό την επίβλεψη μιας μικρής αστυνομίας ή μιας στρατιωτικής φρουράς. Εάν μια δοκιμή βγάλει το θετικό, αυτή η φρουρά θα εκτελέσει τη σύλληψη και θα γυρίσει τους μολυσμένους φυλακισμένους στα Ηνωμένα Έθνη για τη συγκράτηση και τη μελέτη. Μόλις καταλάβουν οι εξωγήινοι αυτό το σχέδιο -- δεν σκέφτομαι να τους πάρει πολύ -- οι μολυσμένοι άνθρωποι θα αρχίσουν την απογραφή, με αυτόν τον τρόπο δίνοντας μας τα στοιχεία που χρειαζόμαστε.\n"
 "\n"
-"As always there's good news and bad news. I'll start with the bad news.\n"
+"Όπως πάντα υπάρχουν και καλές ειδήσεις και κακές ειδήσεις. Θα αρχίσω με τις κακές ειδήσεις.\n"
 "\n"
 "Despite our best efforts, the census data will have some limitations. 99.9% of the planet's population is registered with one national authority or another, but out of ten billion people that still leaves several million unaccounted for. We will be able to extrapolate figures that are accurate to within several thousand heads, but the statistics we generate won't ever be exact. This means the program is less useful for identifying those who have been infected, but still a godsend for keeping track of XVI spread and alien activity on a global basis. After all, we need to know what kind of progress we're making against this new threat.\n"
 "\n"
-"The good news is that the UN and the member nations have agreed to shoulder the entire cost of the census program. They are handling all the equipment and manpower locally, with strenuous checks as to the reliability of personnel and the validity of the results. The information will be piped directly to our command centre at no charge to us.\n"
+"Οι καλές ειδήσεις είναι ότι τα Ηνωμένα Έθνη και τα έθνη μελών έχουν συμφωνήσει να επωμιστούν ολόκληρο το κόστος του προγράμματος απογραφής. Χειρίζονται με όλους τον εξοπλισμό και το εργατικό δυναμικό τοπικά, με τους επίμονους ελέγχους ως προς την αξιοπιστία του προσωπικού και την ισχύ των αποτελεσμάτων. Οι πληροφορίες θα διοχετευθούν με σωλήνες άμεσα στο κέντρο εντολής μας με καμία δαπάνη σε μας.\n"
 "\n"
-"The best thing about this program is that we can now keep track of infection levels and how much threat each region is under from XVI. This will work in conjunction with our normal detection methods to warn us where alien activity is worst and allow us to intervene before the situation becomes critical.\n"
+"Το καλύτερο πράγμα για αυτό το πρόγραμμα είναι ότι μπορούμε τώρα να παρακολουθήσουμε το επιπέδο μόλυνσης και πόση απειλή για κάθε περιοχή είναι κάτω από από XVI. Αυτό θα λειτουργήσει από κοινού με τις κανονικές μεθόδους ανίχνευσής μας για να μας προειδοποιήσει όπου η εξωγήινη δραστηριότητα είναι χειρότερη και επιτρέπει σε μας να επεμβούμε προτού η κατάσταση γίνει κρίσιμη.\n"
 "\n"
-"Any area where XVI seems to be gaining ground should be posted with additional air patrols, and we should be on the lookout for any attempts by the aliens to solidify their hold on the ground. Alien activity reports in this area should be investigated and responded to with extreme prejudice.\n"
+"Οποιαδήποτε περιοχή όπου XVI φαίνεται να έχει εντοπιστεί πρέπει να αντιδράσουμε με πρόσθετες περιπόλους αέρα, και πρέπει να είμαστε στην επιφυλακή για οποιεσδήποτε προσπάθεια από τους εξωγήινους για να σταθεροποιηθεί ο ιός  στο έδαφος. Οι εξωγήινες εκθέσεις δραστηριότητας σε αυτήν την περιοχή πρέπει να ερευνηθούν και να αποκριθούν με την ακραία προκατάληψη.\n"
 "\n"
-"With kind regards,\n"
+"Με φιλικούς χαιρετισμούς,\n"
 "\n"
 "Col. Falkland"
 
 #: ../base/ufos/research.ufo:488
 msgid "alien_xvi_pre_txt"
 msgstr ""
-"Good morning, Sir.\n"
+"Καλημέρα, Κύριε.\n"
 "\n"
-"With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.\n"
+"Με αυτές τις νέες εξελίξεις σχετικά με τη μόλυνση του γήινου πολιτικού πληθυσμού από αυτόν τον εξωγήινο οργανισμό, η ανάγκη που προκύπτει για έναν τρόπο να καθοριστεί ο αριθμός μολυσμένων ανθρώπων στις διάφορες περιοχές και το ποσοστό διάδοσης. Εύκολο στα λόγια παρά στις πράξεις , αλλά  είναι τόσο σημαντικό πως να βρούμε μια θεραπεία. Δεν μπορούμε να βοηθήσουμε κανέναν εάν δεν ξέρουμε ότι είναι άρρωστοι.\n"
 "\n"
-"What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
+"Αυτό που προτείνω να κάνω, είναι να δημιουργηθεί μια μακροπρόθεσμη απογραφή κυλίσματος που ελέγχει όλα τα εγγραμμένα άτομα σε ολόκληρο το πλανήτη για XVI μόλυνση μέσω μιας μικρής εξέτασης αίματος. Ο καθένας θα απαιτηθεί να υποβάλετει σε αυτήν την δοκιμή για να σιγουρευτεί μία φορά την εβδομάδα ότι είναι καθαροί -- συχνότερα θα χρειαστεί εάν πέσουν κάτω από την υποψία της μόλυνσης. Τα δείγματα θα πρέπει μόνο να είναι τόσο μεγάλα όσο μια ενιαία πτώση του αίματος, που λαμβάνεται από μια τυχαία φλέβα για να αποτρέψει να πειράξουν τα αποτελέσματα . Ευτυχώς ο XVI οργανισμός είναι μεγάλος και αρκετά επικρατών έτσι ώστε ότι να μπορούμε να τον εξετάσουμε σε αυτά τα δείγματα επίτόπου με αποτελέσματα -100%- αξιόπιστα.\n"
 "\n"
-"This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
+"Αυτή πρόκειται να είναι σημαντική επιχείρηση που απαιτεί την προσεκτική επικοινωνία με την υπηρεσία πληροφοριών γήινων οκτώ μεγάλων εθνών. Έχω προετοιμάσει ήδη τα σχέδια και τις προσομοιώσεις για να καταδείξω τη λειτουργία και την αποτελεσματικότητα αυτού του προγράμματος. Με κάποιο χρόνο και χρηματοδότηση, μπορούμε να τους πείσουμε την σπουδαιότητα του προγράμματος και να έχουμε όλα λειτουργικά σε ένα βάθος μερικών εβδομάδων.\n"
 "\n"
-"All we need is your signature on the dotted line, Sir.\n"
+"Το μόνο που χρειαζόμαστε είναι η υπογραφή σας στη διαστιγμένη γραμμή, Κύριε.\n"
 "\n"
-"With kind regards,\n"
+"Με φιλικούς χαιρετισμούς,\n"
 "\n"
 "Col. Falkland"
 
@@ -6505,15 +6503,15 @@ msgstr ""
 #: ../base/ufos/research.ufo:1305
 msgid "laserpistol_pre_txt"
 msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"Αυτό είναι μια από διάφορες προτάσεις που υποβάλλω για την έρευνα και την ανάπτυξη του νέου εξοπλισμού λέιζερ. Κάθε ένας από αυτούς θα πρέπει να αναπτυχθεί χωριστά λόγω στις διαφορές μεγέθους, τα επίπεδα δύναμης και την πολυπλοκότητα των συστημάτων σχετικών.\n"
 "\n"
-"Our notes on Continuous Wave Laser Operation have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.\n"
+"Οι σημειώσεις μας για τη λειτουργία λέιζερ συνεχών κυμάτων έχουν παραγάγει πολλά σχέδια, και αυτό είναι ενδεχομένως το δυσκολότερο που φέρνει στην πραγματικότητα: ένα όπλο λέιζερ δευτέριο-φθοριδίου στο μέγεθος ενός συνηθισμένου πιστολιού.\n"
 "\n"
-"The difficulty in making this a reality will be to get the parts small enough and light enough so that they will:\n"
+"Η δυσκολία στην παραγωγή αυτού μια πραγματικότητα θα είναι να αποκτηθούν τα μέρη αρκετά μικρά και αρκετά ελαφριά έτσι ώστε αυτά να μπορούνl:\n"
 "\n"
-"1) Fit into a pistol-sized package, and2) Be light enough to aim and fire one-handed.\n"
+"1) Να χωρούν σε ένα πιστόλι, και2) να είναι αρκετά ελαφρύ για να στοχεύσει και να βάλει με ένα χέρι.\n"
 "\n"
-"As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.\n"
+"Όπως πάντα, πρόκειται να είναι μια ανταλλαγή μεταξύ του μεγέθους και της δύναμης, αλλά με αρκετή εργασία πιστεύω ότι μπορούμε πράγματι να χτίσουμε ένα λειτουργικό πιστόλι λέιζερ. Περιμένουμε ακριβώς την έγκρισή σας, διοικητά.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -6661,9 +6659,9 @@ msgstr ""
 #: ../base/ufos/research.ufo:1513
 msgid "plasblaster_pre_txt"
 msgstr ""
-"Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
+"Διοικητά, έχουμε ανακτήσει μια εξωγήινη αμμοστρωτική μηχανή πλάσματος από τον τομέα. Αυτό είναι ένα εξαιρετικά ισχυρό νέο όπλο πλάσματος που επιτρέπει την άμεση έρευνα. Η προκαταρκτική δοκιμή επιβεβαιώνει ότι το δικαίωμα  πυροβολισμών αμμοστρωτικών μηχανών μέσω του τεθωρακισμένου αγώνα μας και έχει μια πολύ πιό μακροχρόνια σειρά από τα άλλα όπλα πλάσματος που έχουμε ανακτήσει.\n"
 "\n"
-"Please authorise this research program at your earliest convenience.\n"
+"Παρακαλώ εγκρίνετε αυτό το ερευνητικό πρόγραμμα με την πρώτη ευκαιρία.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -6696,9 +6694,9 @@ msgstr ""
 #: ../base/ufos/research.ufo:1550
 msgid "plasblade_pre_txt"
 msgstr ""
-"Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
+"Διοικητά, η τελευταία τακτική αποστολή μας έφερε πίσω ένα παράξενο εξωγήινο όπλο υπό μορφή αίθουσας πλάσματος με μια λαβή. Τουλάχιστον, υποθέτουμε ότι είναι ένα όπλο η μορφή του φαίνεται να μοιάζει με κάποιο μαχαίρι βασισμένο στο πλάσμα, αν και δεν έχω καμία ιδέα πώς αυτό θα λειτουργούσε. Δεν μπορούμε να υπολογίσουμε αρκετά πώς να το ανοίξουμε ή ποιο σκοπό εξυπηρετεί στο εξωγήινο οπλοστάσιο.\n"
 "\n"
-"More research is definitely required, Commander. Whenever we have a bit of free lab time, I'd like a go at it.\n"
+"Περισσότερη έρευνα απαιτείται σίγουρα, διοικητά. Όποτε έχουμε λίγο ελεύθερο χρόνο εργαστηρίων, θα ήθελα να πηγαίνω σε αυτόν.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -6725,11 +6723,11 @@ msgstr ""
 #: ../base/ufos/research.ufo:1588
 msgid "plasmagren_pre_txt"
 msgstr ""
-"Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
+"Διοικητά, η τελευταία αποστολή TAC μας έχει φέρει μια εξωγήινη χειροβομβίδα πλάσματος. Αυτό είναι ένα ιδιαίτερα ισχυρό όπλο χειροβομβίδας που, μόλις ριχτεί, εκρήγνυται σε ένα ντους υπερκαυτού πλάσματος. Είναι κάπως μεγαλύτερο και εμφανίζεται να είναι πολύ πιό επικίνδυνο από τις τυποποιημένες χειροβομβίδες μας.\n"
 "\n"
-"We should examine this weapon to see how it works, what it's made of, and how it's put together. Once we have those points figured out, we should be able to replicate it for our own use.\n"
+"Πρέπει να εξετάσουμε αυτό το όπλο για να δούμε πώς λειτουργεί, απο τι αποτελείται, και πώς τίθεται από κοινού. Μόλις υπολογίζουμε εκείνα τα σημεία, πρέπει να είμαστε σε θέση να το επαναπαράγουμε για τη χρήση μας.\n"
 "\n"
-"The project is ready for research, just waiting on your authorisation, Commander.\n"
+"Το πρόγραμμα αναμένει για την έρευνα, περιμένοντας ακριβώς για την έγκρισή σας, διοικητά.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -6760,7 +6758,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1666
 msgid "plasrifle_pre_txt"
 msgstr ""
-"Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
+"Διοικητά, το τμήμα μου αναμένει για να αρχίσει το ανακτημένο εξωγήινο τουφέκι πλάσματος. Αυτό είναι ένα ιδιαίτερα επικίνδυνο και ευπροσάρμοστο όπλο, ξεπερνώντας απέραντα το πιστόλι πλάσματος στη σειρά και τη δύναμη κάτι που πρέπει να δοκιμάσουμε για να βάλουμε στα χέρια των στρατιωτών μας ΤΟ ΣΥΝΤΟΜΟΤΕΡΟ ΔΥΝΑΤΟΝ. Παρακαλώ εγκρίνετε το χρόνο και τη χρηματοδότηση των εργαστηρίων για αυτό το πρόγραμα.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -7243,9 +7241,9 @@ msgstr ""
 #: ../base/ufos/research.ufo:1967
 msgid "pbeampistol_pre_txt"
 msgstr ""
-"Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
+"Διοικητά, έχουμε ανακτήσει ένα επικίνδυνο νέο εξωγήινο πιστόλι που φαίνεται να βάζει φωτιά στις υψηλής ενέργειας ακτίνες μορίων -- πιό υπερβολικό από τα λέιζερ, ακριβέστερο από τα όπλα πλάσματος, και μια εξαιρετικά δυσάρεστη νέα απειλή στα στρατεύματά μας και στο πεδίοτης μάχης. Οι προκαταρκτικές δοκιμές ενάντια στο τεθωρακισμένο μας έχουν παραγάγει λυπηρά αποτελέσματα. Πρέπει να εκτελέσουμε περισσότερη έρευνα για αυτά τα όπλα αμέσως.\n"
 "\n"
-"Please authorise this program at your earliest convenience.\n"
+"Παρακαλώ εγκρίνετε αυτό το πρόγραμμα με την πρώτη ευκαιρία.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -7491,9 +7489,9 @@ msgstr ""
 #: ../base/ufos/research.ufo:2368
 msgid "alien_medium_armour_pre_txt"
 msgstr ""
-"Commander, we've salvaged a new suit of alien armour from the field. It's much heavier than the alien armour we've encountered previously, and it seems to stop ordinary firearms without taking so much as a scratch. Its trauma plates are made of the densest CNT (Carbon Nanotube) weave I've ever seen. We need to research this armour right away to determine which weapons will remain effective against aliens wearing it, and to try and find a method to replicate it for our own troops. As long as we can't match this technology, we are at a severe disadvantage.\n"
+"Διοικητά, έχουμε σώσει ένα μία νέα θωράκιση των εξωγήινων από τον τομέα. Είναι πολύ βαρύτερο από το εξωγήινο τεθωρακισμένο που είχουμε αντιμετωπίσει προηγουμένως, και φαίνεται να σταματά τα συνηθισμένα πυροβόλα. Τα πιάτα τραύματός του αποτελούνται από την πυκνότερη (άνθρακας Nanotube) ύφανση CNT που έχω δει ποτέ. Πρέπει να ερευνήσουμε αυτό το είδος τεθωρακισμένων απο μακριά και να καθορίσουμε ποια όπλα θα παραμείνουν αποτελεσματικά ενάντια στους εξωγήινους που το φορούν, και να δοκιμάσουμε και να βρούμε μια μέθοδο για να το επαναπαράγουμε για τα στρατεύματά μας. Εφ' όσον δεν μπορούμε να ταιριάξουμε με αυτήν την τεχνολογία, είμαστε σε αυστηρή μειονεκτική θέση.\n"
 "\n"
-"This project will require a significant amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
+"Αυτό το πρόγραμμα θα απαιτήσει ένα σημαντικό ποσό χρόνου και χρηματοδότησης εργαστηρίων. Η εργασία θα αρχίσει μόλις έχουμε την έγκρισή σας, διοικητά.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -9764,31 +9762,31 @@ msgstr "Μετά τον πόλεμο"
 #: ../base/ufos/research.ufo:4138
 msgid "news_after_the_war_txt"
 msgstr ""
-"The Asian Republic:\n"
+"Η ασιατική Δημοκρατίαc:\n"
 "\n"
 "In the years that followed, the reformed Republic of China -- taking up its old, pre-Communist name -- slowly relinquished its conquered territories, including those seized in centuries past, offering them a choice between independence or a seat on the new governmental council as an equal and respected part of the new Republic. Having fought on the rebel side throughout the civil war, Taiwan was the first to merge with the new Republic, reconciling its differences with the mainland after the Communist government surrendered. Taiwan quickly became a major player in the new council and was instrumental in sending the captured government leaders off to The Hague to face a war crimes tribunal. North Korea, another rebel nation, also elected to remain in the Republic, sensing opportunities for greater economic growth and freedom from dictatorship. They would not be disappointed.\n"
 "\n"
 "The resurgence of the Chinese economy was dubbed a miracle by contemporary historians. The first breakthroughs in nanotechnology were made by Chinese researchers, bringing in vast medical-industrial contracts from all over the world. Despite old hatreds and mistrust, other east-Asian nations slowly joined the Republic, which was soon redubbed the Asian Republic to honour its new members. Even Japan eventually joined to bolster its flagging economy and a population which had dwindled through the war years. The Republic continued mostly true to its principles with the civil war still fresh in mind. Over the years it made a reputation for dealing with all its member nations in good faith, and built enough trust and solidarity that it can now speak with a single voice for all the billions of people of south-east Asia.\n"
 "\n"
-"Today, the Asian Republic's economy has all but recovered due to the commercialisation of nanotech and holographics. It still possesses a strong and up-to-date military, trained to a higher standard than any other country.\n"
+"Σήμερα, η οικονομία της ασιατικής Δημοκρατίας έχει σχεδόν ανακάμψη αλλά λόγω στην εμπορευματοποίηση του nanotech και του holographics. Κατέχει ακόμα ισχυρό και ενημερωμένο έναν στρατιωτικό, εκπαιδευμένος σε υψηλότερα πρότυπα από οποιαδήποτε άλληδήποτε χώρα.\n"
 "\n"
 "\n"
 "\n"
-"The Revolutionary Countries:\n"
+"Οι επαναστατιμένες χώρες:\n"
 "\n"
 "With the successive fall of both the United States and China, Socialism in South-America waxed and waned during the post-war years. The US's economic death brought on a surge of revolutionary fervor, swaying several nations away from the influence of capitalism. However, with a democratic framework already halfway in place in most countries, the ideal of rule of the people could for the first time be realised without corruption. This new wave proposed to unite the principles of democracy with true Socialist ideals.\n"
 "\n"
-"The whole continent watched in horror at the nuking of Shanghai during the Second Cold War, televised all over the globe right up to the final second. The new wave suffered another major blow when China fell. In that, everyone could see a first-hand example of what might happen to the revolution if it went the way of dictatorship and totalitarianism. It didn't take long for the leaders to respond.\n"
+"Ολόκληρη η ήπειρος πρόσεξε τη φρίκη στο ατομικό όπλο της Σαγγάης κατά τη διάρκεια του δεύτερου ψυχρού πολέμου, που μεταδόθηκε μέσω της τηλεόρασης μέχρι το τελικό δεύτερο. Το νέο κύμα υπέστη ένα άλλο σημαντικό χτύπημα όταν έπεσε η Κίνα. Σε αυτό, ο καθένας θα μπορούσε να δει από πρώτο χέρι το παράδειγμα αυτό που θα συμβεί στην επανάσταση εάν ολοκληρονώταν ο τρόπος της δικτατορίας και του ολοκληρωτισμού. Δεν πήρε πολύ στους ηγέτες για να αποκριθούν.\n"
 "\n"
-"Several dictator-led countries immediately tried to turn on the thumbscrews, trying to head off a rebellion before it began, which caused a huge backlash in the larger democratic nations, particularly Cuba, Brazil and Argentina. Suddenly, the last remaining kings of South-America were left with no friends at all.\n"
+"Διάφορες δικτάτορίες οδηγημένες απο χώρες που προσπάθησαν  να διευθύνουν  μια εξέγερση και κάποιες άλλες που προσπάθησαν να τις σταματήσουν προτού να αρχίσει, οδήγησε σε μια τεράστια σπασμωδική κίνηση απο τα μεγαλύτερα δημοκρατικά έθνη, ιδιαίτερα τη Κούβα, τη Βραζιλία και την Αργεντινή. Ξαφνικά, οι τελευταίοι υπόλοιποι βασιλιάδες της Νότιας Αμερικής αφέθηκαν χωρίς φίλους καθόλου.\n"
 "\n"
 "One by one, they caved to public and political pressure and were replaced by elected houses. The revolution picked up speed instead of losing it; they encouraged greater trade, closer integration, and eventually followed Europe's example of open borders. A new network of highways all over the continent strengthened economies and allowed far more efficient use of arable land. South-America's natural riches were tapped like never before, and they demanded fair prices for every bit of it.\n"
 "\n"
-"Today, the member nations have merged so closely that they are better known as a single body: the Revolutionary Countries. One joint government represents the entire continent, and they manage an economical juggernaut surpassed only by the Greater European Union. Their military is small but has state-of-the-art equipment. Their training is not exceptional.\n"
+"Σήμερα, τα έθνη μελών έχουν συγχωνεύθει τόσο πολύ και γνωρίζουν ότι είναι καλύτερα ως ενιαίο σώμα: οι επαναστατικές χώρες. Μια κοινή κυβέρνηση αντιπροσωπεύει ολόκληρη την ήπειρο, και διαχειρίζεται το οικονομικό κομμάτι που ξεπερνιέται μόνο από τη μεγαλύτερη Ευρωπαϊκή Ένωση. Ο στρατός της είναιμικρός αλλά έχει τον κατάλληλο εξοπλισμό. Η κατάρτισή του δεν είναι εξαιρετική.\n"
 "\n"
 "\n"
 "\n"
-"United America:\n"
+"Ηνωμένη Αμερική:\n"
 "\n"
 "As the US economy started to break down in the late 2020s, more and more people abandoned the country for the greener pastures of Canada and, ironically, Mexico. The value of the dollar plummeted to unprecedented depths, impoverishing millions until its price was fixed by the IMF and the international banking community. The country was then saddled with a brutal reform plan, requiring it to sell off or mothball over half of its military arsenal. To cope with the repayment on sixteen trillion dollars of debt, its interest rate was frozen and its exports shifted to technology and luxury goods. Successful restructuring of NASA, combined with a functional spaceplane prototype, also turned outer space into a money-maker for the post-collapse US. Cape Canaveral began offering the cheapest space launches anywhere on the planet, first with their prototype, later with fully-functional advanced spaceplane designs. This significantly helped the beleaguered country claw its way back towards the black.\n"
 "\n"
@@ -9802,7 +9800,7 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"The Greater European Union:\n"
+"Η μεγαλύτερη Ευρωπαϊκή Ένωση:\n"
 "\n"
 "Slowly but surely, the European Union has expanded borders further and further with every passing decade. It first moved into the Middle-East when it accepted Israel as an associate member in 2011, and then upgraded both Israel and Turkey to full membership in 2017. Several Atlantic islands were also accepted in the same resolution, making it the single greatest EU expansion of the 21st century.\n"
 "\n"
@@ -9816,7 +9814,7 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"The Middle-Eastern Alliance:\n"
+"Η Μεσο-Ανατολική συμμαχία:\n"
 "\n"
 "The rise of the Middle-Eastern Alliance was a surprise to everyone, including the people involved. It was designed solely to weaken Western influence in the Middle-East. The principal designers and first members -- Iran, Syria, Jordan and Afghanistan -- never meant the Alliance to last more than a decade, by which time they expected it to fragment and disband under the weight of its own differences.\n"
 "\n"
@@ -9832,7 +9830,7 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"New Africa:\n"
+"Νέ Αφρική:\n"
 "\n"
 "Born out of violence and strife, New Africa found its unification in separation. It languished onwards for three decades into the 21st century, as it had done for far too long, with its civil wars and ethnic purges and atrocities beyond measure. That is, until several central-African nations undertook a massive project in 2039 to break the notorious diamond cartels and seize their revenue for long-term national improvement.\n"
 "\n"
@@ -9844,35 +9842,35 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"Russia:\n"
+"Ρωσσία:\n"
 "\n"
-"Russia took decades to recover from the fall of the Soviet Union and the ravages of the Soviet system on the country's economy. It festered like an open wound for the first half of the 21st century, still trying to quash the constant rebellions in Chechnya, still trying to reform after 70 years of state domination, still trying to get back its lost position as a world superpower.\n"
+"Η Ρωσία πέρασαν δεκαετίες για να ανακάμψει από την πτώση της Σοβιετικής Ένωσης και τις καταστροφές του σοβιετικού συστήματος στην οικονομία της χώρας. Έιναι όπως μία ανοικτή πληγή καθώς προσπαθεί ακόμα να καταργήσει τις σταθερές εξεγέρσεις σε Τσετσενία, προσπαθεί ακόμα να μεταρρυθμίσει μετά από 70 έτη κρατικής κυριαρχίας, και να ανακτήσει τη χαμένη θέση της ως παγκόσμια υπερδύναμη.\n"
 "\n"
 "Things finally started getting better for Russia when then-prime minister Yevgeny Karamazov granted complete independence to Chechnya in 2047. While the newly official Chechen Republic imploded in a storm of violence about who exactly should rule, Russia turned away and set itself to fixing its own problems, leaving Chechnya to itself -- and to the new and improved UN, which immediately took an interest in trying to stop the bloodshed. Unfortunately that wouldn't happen for a long time, and even then Chechnya could only return to Russia's sphere of influence, but for the first time it did so as a fully-recognised independent voice.\n"
 "\n"
 "Economic salvation for Russia -- especially with oil supplies from the Middle-East dwindling -- began with drilling the country's own oil in Siberia, with new techniques and equipment able to survive the harsh winter conditions, and later with the construction of a series of new nuclear power plants. Russia invested heavily in research to make the new plants smaller, safer and -- more importantly -- sustainable. This involved a switch from enriched uranium to thorium as the main nuclear fuel for all the new Russian plants, and advanced new designs based upon the 'energy amplifier', a new type of fission reactor first test-built near Rome from 2004 to 2011. Two of the new reactors even consumed plutonium from dismantled nuclear weapons and from the stored waste of older power plants.\n"
 "\n"
-"Then, eight years after the Chechen independence, Russia's 'nuclear revolution' really came into its own with the invention of the depleted element postprocessor, which could convert 90% of an energy amplifier's waste into radiation-free elements in weeks instead of centuries. The Russians ended the age-old energy crisis almost overnight; nuclear fission became safe, relatively clean, and global thorium supplies would see the world clear into the year 3000.\n"
+"Μετά από οκτώ έτη από την ανεξαρτησία της Τσετσενίας, η \"πυρηνική επανάσταση\" της Ρωσίας πραγματικά μπήκε σε νέα τροχιά με την εφεύρεση του μειωμένου μετεπεξεργαστή στοιχείων, ο οποίος θα μπορούσε να μετατρέψει 90% των αποβλήτων ενός ενεργειακού ενισχυτή και τη μείωση της ακτινοβολίας σε εβδομάδες αντί των αιώνων. Οι Ρώσοι τελείωσαν την ιστορική ενεργειακή κρίση σχεδόν ολονυκτίς η πυρηνική διάσπαση έγινε ασφαλής, σχετικά καθαρή, και οι σφαιρικές προμήθειες φθορίου θα έβλεπαν τον κόσμο ασφαλή στο έτος 3000.\n"
 "\n"
-"Today, many of the ex-Soviet republics have rejoined Russia, following the example of the other great nations, eager to take advantage of the power generation and nuclear technology that are now Russia's main exports. The nuclear revolution continues even today with the gradual development and commercialisation of fusion power. Though its economy is still troubled, the country is now in better shape than it has been for centuries -- whether under the khans, the czars or the Soviets. Its military is somewhat antiquated but highly-trained, well-disciplined and professional, and it does not lack for manpower.\n"
+"Σήμερα, πολλές από τις πρώην-σοβιετικές δημοκρατίες έχουν επανασυνδεθεί με τη Ρωσία, μετά από το παράδειγμα των άλλων μεγάλων εθνών, πρόθυμο να εκμεταλλευθεί την ηλεκτρική παραγωγή και την πυρηνική τεχνολογία που είναι τώρα κύριες εξαγωγές της Ρωσίας. Η πυρηνική επανάσταση συνεχίζεται ακόμα και σήμερα με την ανάπτυξη και την εμπορευματοποίηση της δύναμης τήξης. Αν και η οικονομία της είναι ακόμα ενοχλημένη, η χώρα είναι τώρα στην καλύτερη μορφή από ότι ήταν για αιώνες -- είτε κάτω από τους τσάρους είτε τους Σοβιετικούς. Ο στρατός της είναι κάπως απαρχαιωμένος αλλά ιδιαίτερα-εκπαιδευμένος, καλά-πειθαρχημένος και επαγγελματικός, και δεν έχει ελλείψεις σε εργατικό δυναμικό.\n"
 "\n"
 "\n"
 "\n"
-"The Commonwealth of Oceania:\n"
+"Η κοινοπολιτεία της Ωκεανίας:\n"
 "\n"
-"The Commonwealth of Nations, a political organisation made up of most of the countries of the old British Empire, lost a great deal of power going into the Second Cold War. First, Pakistan cut its ties to the Commonwealth when joining the Middle-Eastern Alliance. Then, as the United States crashed and burned, Britain and Canada became more and more concerned with their own parts of the world and let their participation dwindle to nothing. By 2030, they were members in name only.\n"
+"Η Κοινοπολιτεία των εθνών, μια πολιτική οργάνωση φτιαγμένη επάνω στις περισσότερες από τις χώρες της παλαιάς βρετανικής αυτοκρατορίας, έχασε πολλή δύναμη που πήγε στο δεύτερο ψυχρό πόλεμο. Κατ' αρχάς, το Πακιστάν έκοψε τους δεσμούς του με την Κοινοπολιτεία και ενώθηκε με την Μεσο-Ανατολική συμμαχία. Κατόπιν, καθώς οι Ηνωμένες Πολιτείες συνέτριψαν και το έκαψαν, η Μεγάλη Βρετανία και ο Καναδάς έγιναν όλο και περισσότερο ενδιαφερόμενοι για τις περιοχές του. Μέχρι το 2030, ήταν μέλη στο όνομα μόνο.\n"
 "\n"
-"The growing power of China throughout the war caused a huge expansion in military budgets for India and Australia, budgets which their economies had trouble supporting. Then, in 2035, India became one more battlefield in the Chinese civil war. Veteran government troops easily defeated the Indian military in several short but bloody engagements and seized most of the country while the rebels pursued.\n"
+"Η αυξανόμενη δύναμη της Κίνας σε όλο τον πόλεμο προκάλεσε μια τεράστια επέκταση στους στρατιωτικούς προϋπολογισμούς για την Ινδία και την Αυστραλία, προϋπολογισμοί που οι οικονομίες τους δεν μπορούσαν να ανταπεξέλθουν. Κατόπιν, το 2035, η Ινδία έγινε περισσότερο ένα πεδίο μάχη στον κινεζικό εμφύλιο πόλεμο. Τα κυβερνητικά στρατεύματα παλαιμάχων νίκησαν εύκολα τους ινδικούς στρατιωτικούς σε διάφορες σύντομες αλλά αιματηρές μάχεσ και κατέλαβαν την μεγαλύτερο μέρος της χώρας.\n"
 "\n"
-"Australia pledged a full-scale military intervention along with several South-African Commonwealth members. After weeks of brutal fighting, the Australian divisions managed to link up with Chinese rebel forces and the surviving regiments of the Indian army, and together they nearly annihilated the governmental army before the surrender in 2036.\n"
+"Η Αυστραλία δέσμευσε μια πραγματικού μεγέθους στρατιωτική επέμβαση μαζί με διάφορα νοτιοαφρικανικά μέλη Κοινοπολιτείας. Μετά από τις εβδομάδες της βάναυσης πάλης, τα αυστραλιανά τμήματα κατόρθωσαν να συνδεθούν επάνω με τις κινεζικές επαναστατικές δυνάμεις και τα επιζόντα συντάγματα του ινδικού στρατού, και μαζί εκμηδένισαν σχεδόν τον κυβερνητικό στρατό πριν από την παράδοση το 2036.\n"
 "\n"
-"The cost was high. The conquered parts of India were a wasteland, the country had no government left after the nuking of New Delhi, and famines were already starting to grip the population. It began ceding worthless parts of land to other nations and gave independence to several small regions along its border. The remaining Commonwealth nations undertook the vast task of reconstructing India, though many abandoned the project and the Commonwealth in favour of the other growing superpowers.\n"
+"Το κόστος ήταν υψηλό. Τα κατακτημένα μέρη της Ινδίας ήταν μια χέρσα περιοχή, η χώρα δεν άφησε καμία κυβέρνηση μετά από το ατομικό όπλο του Νέου Δελχί. Έδωσε την ανεξαρτησία σε διάφορες μικρές περιοχές κατά μήκος των συνόρων του. Τα υπόλοιπα έθνη Κοινοπολιτείας ανέλαβαν τον απέραντο στόχο την Ινδία, αν και πολλά εγκατέλειψαν το πρόγραμμα και την Κοινοπολιτεία υπέρ των άλλων αυξανόμενων υπερδυνάμεων.\n"
 "\n"
-"The reconstruction of India eventually united the Commonwealth into one great nation, taking advantage of their geographic location around the Indian Ocean and the South Pacific to charge strategic tariffs for ships passing through their waters. Commonwealth shipping, on the other hand, was free from tariffs and quickly rose to dominance in the competitive market. Later, with the breaking of the diamond cartels in Africa, the Commonwealth seized several leaderless mines inside its borders and used them to their full potential.\n"
+"Η αναδημιουργία της Ινδίας ένωσε τελικά την Κοινοπολιτεία σε ένα μεγάλο έθνος, που εκμεταλλεύεται τη γεωγραφική θέση τους γύρω από τον Ινδικό Ωκεανό και το Νότιο Ειρηνικό για να χρεώσει τα στρατηγικά δασμολόγια για τα σκάφη που περνούν μέσω των υδάτων τους. Η Κοινοπολιτεία που, ήταν απαλλαγμένη από τα δασμολόγια ανήλθε γρήγορα στην κυριαρχία και στην ανταγωνιστική αγορά. Αργότερα, με το σπάσιμο των καρτέλ διαμαντιών στην Αφρική, η Κοινοπολιτεία κατέλαβε διάφορα ορυχεία μέσα στα σύνορά της και τα χρησιμοποίησε στην πλήρη δυνατότητά τους.\n"
 "\n"
-"Today, the Commonwealth of Nations is better known as the 'Commonwealth of Oceania' or just 'Oceania'. Since its inception it has accepted several non-Commonwealth countries into its midst, notably Madagascar, Zimbabwe and Indonesia, extending its control over the Oceanian waters. While it still can't compete economically with the richer nations, it has carved out its own niche, and is quite happy to go on prospering in it.\n"
+"Σήμερα, η Κοινοπολιτεία των εθνών είναι καλύτερα γνωστή ως \"Κοινοπολιτεία της Ωκεανίας\" ή ακριβώς \"της Ωκεανίας\". Από την έναρξή της έχει δεχτεί διάφορες χώρες μη-Κοινοπολιτειών στη μέση της, ειδικότερα Μαδαγασκάρη, Ζιμπάπουε και Ινδονησία, που επεκτείνει τον έλεγχό των υδάτων της. Ενώ δεν μπορεί ακόμα να ανταγωνιστεί οικονομικά με τα πλουσιότερα έθνη.\n"
 "\n"
-"Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations."
+"Ο στρατός της Ωκεανίας αποτελείται κυρίως από ένα ισχυρό ναυτικό. Ο στρατός εδάφους είναι μικροσκοπικός έναντι σε αυτόν οποιουδήποτε έθνους εκτός από την ηνωμένη Αμερική, και εξυπηρετεί μόνο σε μια αμυντική ικανότητα, με τη μέση κατάρτιση και τον εξοπλισμό. Εντούτοις, μπορεί να αποκριθεί αρκετά γρήγορα στις καταστάσεις έκτακτης ανάγκης."
 
 #: ../base/ufos/research.ufo:4149
 msgid "PHALANX And The Mumbai Aftermath"
@@ -10326,7 +10324,7 @@ msgstr "Shevaar"
 
 #: ../base/ufos/team_aliens.ufo:200
 msgid "Bloodspider"
-msgstr "Bloodspider"
+msgstr "Αράχνη αίματος"
 
 #: ../base/ufos/team_humans.ufo:505
 msgid "Phoenix"
@@ -10362,7 +10360,7 @@ msgstr "Remember to give your soldiers a varying array of weapons, you never kno
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
-msgstr "Don't forget to equip your soldiers with enough ammo."
+msgstr "Μήν ξεχνάς να εξοπλίζεις τους στρατιώτες σου με πυρομαχικά."
 
 #: ../base/ufos/tips.ufo:12
 msgid "Don't forget to equip your soldiers with armour."
@@ -12451,7 +12449,7 @@ msgstr "Local game version (%s) differs from the servers (%s)"
 
 #: client/cl_main.c:2106
 msgid "Target your shot to the ground"
-msgstr "Target your shot to the ground"
+msgstr "Πυροβολήστε στο έδαφος"
 
 #: client/cl_main.c:2107
 msgid "Open the actors inventory while we are in tactical mission"
@@ -12464,7 +12462,7 @@ msgstr "Αναμονή για την έναρξη του παιχνιδιού"
 
 #: client/cl_main.c:2240
 msgid "Chicken-hearted"
-msgstr "Chicken-hearted"
+msgstr "Δειλό"
 
 #: client/cl_main.c:2242
 msgid "Very Easy"
@@ -12496,7 +12494,7 @@ msgstr "Βάση"
 
 #: client/cl_map.c:356
 msgid "UFO"
-msgstr "UFO"
+msgstr "ΟΥΦΟ"
 
 #: client/cl_map.c:1154
 msgid "Day"
@@ -12565,7 +12563,7 @@ msgstr "Ταχύτητα:\t\t%i\n"
 #: client/cl_map.c:1410
 #, c-format
 msgid "Fuel:\t\t%i/%i\n"
-msgstr "Καύσιμαl:\t\t%i/%i\n"
+msgstr "Καύσιμα:\t\t%i/%i\n"
 
 #: client/cl_mapfightequip.c:656
 #: client/cl_mapfightequip.c:670
@@ -12619,8 +12617,8 @@ msgstr "No ammo assigned to this defense system."
 #, c-format
 msgid " (%i missile left)"
 msgid_plural " (%i missiles left)"
-msgstr[0] " (%i missile left)"
-msgstr[1] " (%i missiles left)"
+msgstr[0] " (%i πύραυλος απέμεινε)"
+msgstr[1] " (%i πύραυλοι απέμειναν)"
 
 #: client/cl_mapfightequip.c:789
 msgid "Aircraft item was successfully installed."
@@ -12628,30 +12626,30 @@ msgstr "Αντικείμενο σκάφους εγκαταστάθηκε με ε
 
 #: client/cl_mapfightequip.c:791
 msgid "Base defense item was successfully installed."
-msgstr "Base defense item was successfully installed."
+msgstr "Αμυντικό σύστημα τησ βάσης εγκαταστάθηκε."
 
 #: client/cl_mapfightequip.c:1016
 msgid "No item assigned.\n"
-msgstr "No item assigned.\n"
+msgstr "Δεν ανατέθηκε αντικείμενο.\n"
 
 #: client/cl_mapfightequip.c:1017
 #, c-format
 msgid "This slot is for %s or smaller items."
-msgstr "This slot is for %s or smaller items."
+msgstr "Αυτή η θέση είναι για %s 'η για μικρότερα αντικείμενα."
 
 #: client/cl_mapfightequip.c:1022
 msgid "This item is functional.\n"
-msgstr "This item is functional.\n"
+msgstr "Αυτό το αντικέιμενο είναι λειτουργικό.\n"
 
 #: client/cl_mapfightequip.c:1024
 #, c-format
 msgid "This item will be installed in %i hours.\n"
-msgstr "This item will be installed in %i hours.\n"
+msgstr "Το αντικείμενο θα εγκατασταθεί σε %i ώρες.\n"
 
 #: client/cl_mapfightequip.c:1026
 #, c-format
 msgid "This item will be removed in %i hours.\n"
-msgstr "This item will be removed in %i hours.\n"
+msgstr "Το αντικέιμενο θα αφαιρεθεί %i ώρες.\n"
 
 #: client/cl_mapfightequip.c:1033
 msgid "No item assigned."
@@ -12660,11 +12658,11 @@ msgstr "Δεν ανατέθηκε αντικείμενο."
 #: client/cl_mapfightequip.c:1037
 #, c-format
 msgid "This item will be operational in %i hours.\n"
-msgstr "This item will be operational in %i hours.\n"
+msgstr "Αυτό το αντικέιμενο θα είναι λειτουργικό σε %i ώρες.\n"
 
 #: client/cl_mapfightequip.c:1046
 msgid "No ammo assigned to this weapon."
-msgstr "No ammo assigned to this weapon."
+msgstr "Δεν ανατέθηκαν πυρομαχικά στο όπλο."
 
 #: client/cl_mapfightequip.c:1811
 msgid "Light weight"
@@ -12759,7 +12757,7 @@ msgstr "Μέσα: %i Έξω: %i"
 #: client/cl_menu.c:2255
 #, c-format
 msgid "Key: %s"
-msgstr "Key: %s"
+msgstr "Πλήκτρο: %s"
 
 #: client/cl_menu.c:2320
 #: client/cl_menu.c:2327
@@ -12801,7 +12799,7 @@ msgstr "%s τερματίστε τον γύρο του (ομάδα %i)\n"
 #: client/cl_parse.c:972
 #, c-format
 msgid "Alien spotted: %s!"
-msgstr "Alien spotted: %s!"
+msgstr "Εντοπίστηκε εξωγήινος: %s!"
 
 #: client/cl_parse.c:975
 #: client/cl_parse.c:977
@@ -12848,7 +12846,7 @@ msgstr "No craft available, no weapon or ammo equipped or target out of reach."
 
 #: client/cl_popup.c:332
 msgid "No defense system operational or no weapon or ammo equipped."
-msgstr "No defense system operational or no weapon or ammo equipped."
+msgstr "Κανένα αμυντικό σύστημα λειτουργικό ή κανένα όπλο ή πυρομαχικά εξοπλισμένα."
 
 #: client/cl_popup.c:386
 msgid ""
@@ -12857,10 +12855,10 @@ msgid ""
 "\n"
 "Aircraft cannot start.\n"
 msgstr ""
-"No Command Centre operational in homebase\n"
-"of this aircraft.\n"
+"Όχι κέντρο ελέγχου στη βάση\n"
+"για το σκάφος.\n"
 "\n"
-"Aircraft cannot start.\n"
+"Το σκάφος δε μπορεί να ξεκινήσει.\n"
 
 #: client/cl_produce.c:216
 msgid "Not enough workers"
@@ -12872,9 +12870,9 @@ msgid ""
 "\n"
 "Hire workers."
 msgstr ""
-"You cannot queue productions without workers hired in this base.\n"
+"Δέ μπορείτε να παράγετε χωρίς εργάτες στη βάση σας.\n"
 "\n"
-"Hire workers."
+"Προσλάβετε εργάτες."
 
 #: client/cl_produce.c:223
 msgid "Not enough workshops"
@@ -12885,8 +12883,8 @@ msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 msgstr ""
-"You cannot queue more items.\n"
-"Build more workshops.\n"
+"Δε μπορείτε να παράγετε άλλα αντικείμενα.\n"
+"Χτίστε περισότερα μηχανουργεία.\n"
 
 #: client/cl_produce.c:238
 #: client/cl_produce.c:241
@@ -12903,16 +12901,16 @@ msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
 msgstr ""
-"You cannot queue aircraft.\n"
-"No command centre in this base.\n"
+"Δε μπορείτε να παράγετε σκάφος.\n"
+"Όχι κέντρο ελέγχου στη βάση.\n"
 
 #: client/cl_produce.c:241
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
 msgstr ""
-"You cannot queue aircraft.\n"
-"No hangars in this base.\n"
+"Δε μπορείτε να παράγετε σκάφος.\n"
+"Όχι υπόστεγα στη βάση.\n"
 
 #: client/cl_produce.c:245
 #: client/cl_produce.c:1126
@@ -12920,38 +12918,38 @@ msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
 msgstr ""
-"You cannot queue aircraft.\n"
-"No free space in hangars.\n"
+"Δε μπορείτε να παράγετε σκάφος.\n"
+"Όχι αρκετό ελεύθερο χώρο στα υπόστεγα.\n"
 
 #: client/cl_produce.c:365
 #, c-format
 msgid "Production queue for base %s is empty"
-msgstr "Production queue for base %s is empty"
+msgstr "Σειρά αναμονής παραγωγής για την βάση %s είναι κενή"
 
 #: client/cl_produce.c:366
 msgid "Production queue empty"
-msgstr "Production queue empty"
+msgstr "Σειρά αναμονής παραγωγής κενή"
 
 #: client/cl_produce.c:414
 #: client/cl_produce.c:433
 #, c-format
 msgid "Not enough credits to finish production in base %s.\n"
-msgstr "Not enough credits to finish production in base %s.\n"
+msgstr "Όχι αρκετά χρήματα για να τελειώσει την παραγωγή στη βάση %s.\n"
 
 #: client/cl_produce.c:423
 #, c-format
 msgid "Not enough free storage space in base %s. Production paused.\n"
-msgstr "Not enough free storage space in base %s. Production paused.\n"
+msgstr "Όχι αρκετό ελεύθερο χώρο αποθήκευσης στη βάση %s. Η παραγωγή σταμάτησε.\n"
 
 #: client/cl_produce.c:442
 #, c-format
 msgid "Not enough free hangar space in base %s. Production paused.\n"
-msgstr "Not enough free hangar space in base %s. Production paused.\n"
+msgstr "Όχι αρκετό ελεύθερο χώρο στο υπόστεγο στη βάση %s. Η παραγωγή σταμάτησε.\n"
 
 #: client/cl_produce.c:453
 #, c-format
 msgid "Not enough free storage space in base %s. Disassembling paused.\n"
-msgstr "Not enough free storage space in base %s. Disassembling paused.\n"
+msgstr "Όχι αρκετό ελεύθερο χώρο αποθήκευσης στη βάση %s.Η αποσύνθεση σταμάτησε.\n"
 
 #: client/cl_produce.c:484
 #: client/cl_produce.c:496
