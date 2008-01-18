@@ -48,6 +48,12 @@ typedef enum {
 	AIRCRAFT_UFO
 } aircraftType_t;
 
+/** @brief All different size of aircraft. */
+typedef enum {
+	AIRCRAFT_SMALL = 1,
+	AIRCRAFT_LARGE = 2,
+} aircraftSize_t;
+
 typedef enum {
 	AIRCRAFT_HANGAR_NONE = 0,
 	AIRCRAFT_HANGAR_SMALL = 1,

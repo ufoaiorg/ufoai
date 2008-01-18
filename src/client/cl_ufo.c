@@ -571,7 +571,17 @@ void UFO_PrepareRecovery (base_t *base)
 	recovery->event = event;
 
 	/* Update base capacity. */
-	base->capacities[CAP_UFOHANGARS].cur += ufocraft->weight;
+	if (ufocraft->weight == AIRCRAFT_LARGE) {
+		/* Large UFOs can only fit in large UFO hangars */
+		base->capacities[CAP_UFOHANGARS_LARGE].cur += 1;
+	} else {
+		/* Small UFOs can fit in small and large UFO hangars: try to fill small hangar first */
+		if (base->capacities[CAP_UFOHANGARS_SMALL].max - base->capacities[CAP_UFOHANGARS_SMALL].cur < ufocraft->weight)
+			base->capacities[CAP_UFOHANGARS_SMALL].cur += 1;
+		else
+			/* there's no more room in a small hangar: fill large hangar */
+			base->capacities[CAP_UFOHANGARS_LARGE].cur += 1;
+	}
 
 	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
 		base->name, recovery->ufotype, recovery->event.day);
@@ -633,11 +643,36 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
 {
 	assert(base && ufocraft);
 
-	if (!base->hasBuilding[B_UFO_HANGAR] && !base->hasBuilding[B_UFO_SMALL_HANGAR])
-		return qfalse;
+	if (ufocraft->weight == AIRCRAFT_LARGE) {
+		/* Large UFOs can only fit large UFO hangars */
+		if (!base->hasBuilding[B_UFO_HANGAR])
+			return qfalse;
 
-	if (base->capacities[CAP_UFOHANGARS].max - base->capacities[CAP_UFOHANGARS].cur < ufocraft->weight)
-		return qfalse;
+		/* Check there is still enough room for this UFO */
+		if (base->capacities[CAP_UFOHANGARS_LARGE].max - base->capacities[CAP_UFOHANGARS_LARGE].cur < 1)
+			return qfalse;
+	} else {
+		/* This is a small UFO */
+
+		/* There's no hangar functional */
+		if (!base->hasBuilding[B_UFO_SMALL_HANGAR] && !base->hasBuilding[B_UFO_HANGAR])
+			return qfalse;
+
+		/* there's only a large hangar, but it's full */
+		if (!base->hasBuilding[B_UFO_SMALL_HANGAR]
+			&& base->capacities[CAP_UFOHANGARS_LARGE].max - base->capacities[CAP_UFOHANGARS_LARGE].cur < 1)
+			return qfalse;
+
+		/* there's only a small hangar, but it's full */
+		if (!base->hasBuilding[B_UFO_HANGAR]
+			&& base->capacities[CAP_UFOHANGARS_SMALL].max - base->capacities[CAP_UFOHANGARS_SMALL].cur < 1)
+			return qfalse;
+
+		/* there are both hangar, both full */
+		if (base->capacities[CAP_UFOHANGARS_LARGE].max - base->capacities[CAP_UFOHANGARS_LARGE].cur < 1
+			&& base->capacities[CAP_UFOHANGARS_SMALL].max - base->capacities[CAP_UFOHANGARS_SMALL].cur < 1)
+			return qfalse;
+	}
 
 	return qtrue;
 }

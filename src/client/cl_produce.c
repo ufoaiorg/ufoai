@@ -510,7 +510,16 @@ void PR_ProductionRun (void)
 				if (od->aircraft) {
 					ufocraft = AIR_GetAircraft(od->id);
 					assert(ufocraft);
-					gd.bases[i].capacities[CAP_UFOHANGARS].cur -= ufocraft->weight;
+					if (ufocraft->weight == AIRCRAFT_LARGE) {
+						/* Large UFOs can only be stored in Large UFO Hangar */  
+						gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur -= 1;
+					} else {
+						/* Small UFOs are stored in priority in small UFO hangars */
+						if (gd.bases[i].capacities[CAP_UFOHANGARS_SMALL].cur > 0)
+							gd.bases[i].capacities[CAP_UFOHANGARS_SMALL].cur -= 1;
+						else
+							gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur -= 1;
+						}
 				}
 				if (prod->amount <= 0) {
 					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The disassembling of %s has finished."),od->name);

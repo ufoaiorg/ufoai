@@ -111,7 +111,8 @@ typedef enum {
 	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
 	CAP_WORKSPACE,		/**< Space for workers in workshop. */
 	CAP_HOSPSPACE,		/**< Space for hurted people in hospital. */
-	CAP_UFOHANGARS,		/**< Space for recovered UFOs. */
+	CAP_UFOHANGARS_SMALL,	/**< Space for small recovered UFOs. */
+	CAP_UFOHANGARS_LARGE,	/**< Space for small and large recovered UFOs. */
 	CAP_ANTIMATTER,		/**< Space for Antimatter Storage. */
 
 	MAX_CAP
