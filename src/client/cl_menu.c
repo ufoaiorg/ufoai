@@ -2372,7 +2372,8 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 	int lineHeight = 0;
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
-	vec4_t color;
+	vec4_t colorHover;
+	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
 	int x1, y1; /* variable x and y position */
 	static const vec4_t scrollbarColorBG = {0.03, 0.41, 0.05, 0.5};
@@ -2387,9 +2388,13 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 		Sys_Error("MN_DrawTextNode: Called without text or linkedList pointer");
 	cur = textCopy;
 
-	/* hover darkening effect for text lines */
-	VectorScale(node->color, 0.8, color);
-	color[3] = node->color[3];
+	/* Hover darkening effect for normal text lines. */
+	VectorScale(node->color, 0.8, colorHover);
+	colorHover[3] = node->color[3];
+
+	/* Hover darkening effect for selected text lines. */
+	VectorScale(colorSelected, 0.8, colorSelectedHover);
+	colorSelectedHover[3] = colorSelected[3];
 
 	if (node->scrollbar) {
 		width -= SCROLLBAR_WIDTH; /* scrollbar space */
@@ -2443,16 +2448,17 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
 				/* Draw current line in "selected" color (if the linenumber is stored). */
 				R_Color(colorSelected);
+			} 
 
-				/* Prepare color for "darkened" hover effect in combination with "selected". */
-				VectorScale(colorSelected, 0.8, color);
-				color[3] = colorSelected[3];
-			}
 			if (node->mousefx && node->textLines + 1 == node->state) {
 				/* Hightlight line if mousefx is true. */
 				/* node->state is the line number to highlight */
 				/** @todo FIXME: what about multiline text that should be highlighted completly? */
-				R_ColorBlend(color);
+				if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
+					R_ColorBlend(colorSelectedHover);
+				} else {
+					R_ColorBlend(colorHover);
+				}
 			}
 		}
 
