@@ -190,7 +190,7 @@ static void E_EmployeeList_f (void)
 
 	/* Select the current employee if name was changed or first one. Use the direct string
 	 * execution here - otherwise the employeeCategory might be out of sync */
-	if (employeeIdx < 0 || employeeIdx >= employeesInCurrentList)
+	if (employeeIdx < 0)
 		Cmd_ExecuteString("employee_select 0\n");
 	else
 		Cmd_ExecuteString(va("employee_select %i;", Cvar_VariableInteger("mn_employee_idx")));

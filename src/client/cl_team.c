@@ -30,6 +30,7 @@ static qboolean display_heavy_equipment_list = qfalse; /**< Used in team assignm
 
 static int CL_GetRank(const char* rankID);
 static void CL_SaveTeamInfo(sizebuf_t * buf, int baseID, int num);
+static void CL_MarkTeam_f(void);
 
 /* List of currently displayed or equipeable characters. extern definition in client.h */
 chrList_t chrDisplayList;
@@ -405,6 +406,7 @@ static void CL_ChangeName_f (void)
 {
 	int sel = Cvar_VariableInteger("mn_employee_idx");
 	int type = Cvar_VariableInteger("mn_employee_type");
+	menu_t *activeMenu = NULL;
 
 	/* Maybe called without base initialized or active. */
 	if (!baseCurrent)
@@ -414,7 +416,14 @@ static void CL_ChangeName_f (void)
 		Q_strncpyz(gd.employees[type][sel].chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
 
 		/* Now refresh the list. */
-		Cbuf_AddText(va("employee_init %i %i;", type, sel));
+		activeMenu = MN_ActiveMenu();
+		if (!Q_strncmp(activeMenu->name, "employees", 9)) {
+			/* We are in the hire (aka "employee") screen. */
+			Cbuf_AddText(va("employee_init %i %i;", type, sel));
+		} else {
+			/* We are in the "assign to aircraft" screen. */
+			CL_MarkTeam_f();
+		}
 	}
 }
 
