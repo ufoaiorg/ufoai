@@ -426,6 +426,32 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 	return qtrue;
 }
 
+static void SetImpliedFlags (side_t *side, const char *tex)
+{
+	if (!strcmp(tex, "tex_common/actorclip"))
+		side->contentFlags |= CONTENTS_ACTORCLIP;
+	else if (!strcmp(tex, "tex_common/caulk"))
+		side->surfaceFlags |= SURF_NODRAW;
+	else if (!strcmp(tex, "tex_common/hint"))
+		side->surfaceFlags |= SURF_HINT;
+	else if (!strcmp(tex, "tex_common/nodraw"))
+		side->surfaceFlags |= SURF_NODRAW;
+	else if (!strcmp(tex, "tex_common/origin"))
+		side->contentFlags |= CONTENTS_ORIGIN;
+	else if (!strcmp(tex, "tex_common/slick"))
+		side->contentFlags |= SURF_SLICK;
+	else if (!strcmp(tex, "tex_common/stepon"))
+		side->contentFlags |= CONTENTS_STEPON;
+	else if (!strcmp(tex, "tex_common/weaponclip"))
+		side->contentFlags |= CONTENTS_WEAPONCLIP;
+
+	if (strstr(tex, "water")) {
+		side->surfaceFlags |= SURF_WARP;
+		side->contentFlags |= CONTENTS_WATER;
+		side->contentFlags |= CONTENTS_PASSABLE;
+	}
+}
+
 /**
  * @sa FindMiptex
  */
@@ -521,6 +547,9 @@ static void ParseBrush (entity_t *mapent)
 			GetToken(qfalse);
 			td.value = atoi(token);
 		}
+
+		/* resolve implicit surface and contents flags */
+		SetImpliedFlags(side, td.name);
 
 		/* translucent objects are automatically classified as detail */
 		if (side->surfaceFlags & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST))
