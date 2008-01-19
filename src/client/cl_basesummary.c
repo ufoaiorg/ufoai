@@ -111,11 +111,11 @@ static void BaseSummary_BuildingUsage (const base_t* base)
 
 		/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
 		if (base->hasBuilding[b->buildingType])
-			Com_sprintf(buffer, sizeof(buffer), _("%s: %i/%i"), _(b->name),
+			Com_sprintf(buffer, sizeof(buffer), "%s: %i/%i", _(b->name),
 				base->capacities[cap].cur,
 				base->capacities[cap].max);
 		else
-			Com_sprintf(buffer, sizeof(buffer), _("%s: %i/%i"), _(b->name),
+			Com_sprintf(buffer, sizeof(buffer), "%s: %i/%i", _(b->name),
 				base->capacities[cap].cur, 0);
 		Cvar_Set(va("mn_bs_cap_%s", b->id), buffer);
 	}
