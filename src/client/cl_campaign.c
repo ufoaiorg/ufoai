@@ -3032,6 +3032,10 @@ void CL_GameAutoGo (actMis_t *mission)
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won);
 
+	/* if a UFO has been recovered, send it to a base */
+	if (won && missionresults.recovery)
+		Cmd_ExecuteString("cp_uforecoverystore");
+
 	if (won || !selMis->def->keepAfterFail)
 		CL_CampaignRemoveMission(selMis);
 
