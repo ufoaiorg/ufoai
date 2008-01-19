@@ -512,13 +512,13 @@ void PR_ProductionRun (void)
 					assert(ufocraft);
 					if (ufocraft->weight == AIRCRAFT_LARGE) {
 						/* Large UFOs can only be stored in Large UFO Hangar */  
-						gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur -= 1;
+						gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur--;
 					} else {
 						/* Small UFOs are stored in priority in small UFO hangars */
 						if (gd.bases[i].capacities[CAP_UFOHANGARS_SMALL].cur > 0)
-							gd.bases[i].capacities[CAP_UFOHANGARS_SMALL].cur -= 1;
+							gd.bases[i].capacities[CAP_UFOHANGARS_SMALL].cur--;
 						else
-							gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur -= 1;
+							gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur--;
 						}
 				}
 				if (prod->amount <= 0) {
