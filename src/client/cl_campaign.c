@@ -3176,7 +3176,7 @@ static void CL_DebugAllItems_f (void)
 
 /**
  * @brief Debug function to show items in base storage.
- * @note Command to call this: debug_showitems
+ * @note Command to call this: debug_itemlist
  */
 static void CL_DebugShowItems_f (void)
 {
@@ -4287,7 +4287,7 @@ static const cmdList_t game_commands[] = {
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
 	{"debug_newemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
-	{"debug_showitems", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
+	{"debug_itemlist", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
 #endif
 	{NULL, NULL, NULL}
 };
