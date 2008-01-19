@@ -2911,7 +2911,7 @@ void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
 static void CL_GameAutoCheck_f (void)
 {
 	if (!curCampaign || !selMis || gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoCheck_f: No update after automission\n");
 		return;
 	}
 
@@ -2949,7 +2949,7 @@ void CL_GameAutoGo (actMis_t *mission)
 
 	if (mis->missionType != MIS_BASEATTACK) {
 		if (gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
-			Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
+			Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 			return;
 		}
 
