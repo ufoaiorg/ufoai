@@ -94,6 +94,7 @@ static void BaseSummary_BuildingCount (const base_t* base)
 
 /**
  * @sa BaseSummary_BuildingCount
+ * @sa B_UpdateBaseCapacities
  */
 static void BaseSummary_BuildingUsage (const base_t* base)
 {
@@ -108,9 +109,14 @@ static void BaseSummary_BuildingUsage (const base_t* base)
 		if (cap == MAX_CAP)
 			continue;
 
-		Com_sprintf(buffer, sizeof(buffer), _("%s: %i/%i"), _(b->name),
-			base->capacities[cap].cur,
-			base->capacities[cap].max);
+		/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
+		if (base->hasBuilding[b->buildingType])
+			Com_sprintf(buffer, sizeof(buffer), _("%s: %i/%i"), _(b->name),
+				base->capacities[cap].cur,
+				base->capacities[cap].max);
+		else
+			Com_sprintf(buffer, sizeof(buffer), _("%s: %i/%i"), _(b->name),
+				base->capacities[cap].cur, 0);
 		Cvar_Set(va("mn_bs_cap_%s", b->id), buffer);
 	}
 }
