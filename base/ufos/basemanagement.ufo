@@ -205,7 +205,7 @@ building building_hangar
 	onconstruct 	""
 	starting_employees	8	//Number of soldiers in dropship when first base is build
 	onclick		"building_open"
-	capacity	8
+	capacity	1
 }
 
 building building_hangar2
@@ -232,7 +232,7 @@ building building_intercept
 	more_than_one	true
 	onconstruct	""
 //	ondestroy	???
-	capacity	4
+	capacity	1
 	type		smallhangar
 	onclick		"building_open"
 }

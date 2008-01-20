@@ -5,6 +5,7 @@
 //
 //	model - Model that is displayed on battlescape. For geoscape models (i.e. menu models) see the research.ufo file ("mdl_top").
 //	size - Maximum number of employees aboard.
+//	weight - 1 for small aircraft (stored in small and large hangars), 2 for large aircraft (stored in large hangar)
 //	slot {}	- Any number of entries. Parameters can be the following :
 //		type		- The type of item this slot can contain (See "type "in "craftitem" below)
 //		position	- Slot's position on the aircraft. See cl_aircraft.c for available values.
@@ -87,7 +88,7 @@ aircraft craft_drop_firebird
 	price		35000
 	building	building_hangar
 	size		8
-	weight		8
+	weight		2
 	image		air_dropship
 	slot {
 		type		weapon
@@ -123,7 +124,7 @@ aircraft craft_inter_stiletto
 	type		interceptor
 	model		"inter_stiletto"
 	size		1
-	weight		4
+	weight		1
 	price		20000
 	building	building_intercept
 	image		air_interceptor
@@ -167,7 +168,7 @@ aircraft craft_inter_saracen
 	type		interceptor
 	model		"inter_saracen"
 	size		1
-	weight		4
+	weight		1
 	price		26000
 	building	building_intercept
 	image		air_interceptor
@@ -206,7 +207,7 @@ aircraft craft_inter_dragon
 	type		interceptor
 	model		"inter_dragon"
 	size		1
-	weight		4
+	weight		1
 	price		26000
 	building	building_intercept
 	image		air_interceptor
@@ -245,7 +246,7 @@ aircraft craft_inter_stingray
 	type		interceptor
 	model		"inter_stingray"
 	size		1
-	weight		4
+	weight		1
 	price		48000
 	building	building_intercept
 	image		air_interceptor

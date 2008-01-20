@@ -178,7 +178,7 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
  */
 static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t *destbase)
 {
-	int i, intransfer = 0, numAircraftTransfer = 0;
+	int i, hangarStorage, numAircraftTransfer = 0;
 	aircraft_t *aircraftOnList = NULL;
 	assert(aircraft && srcbase && destbase);
 
@@ -186,7 +186,6 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraftOnList = AIR_AircraftGetFromIdx(i);
-			intransfer += aircraftOnList->weight;
 			numAircraftTransfer++;
 		}
 	}
@@ -203,15 +202,11 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 		return qfalse;
 	}
 	/* Is there a place for this aircraft in destination base? */
-	if (destbase->numAircraftInBase + numAircraftTransfer >=
-		B_GetNumberOfBuildingsInBaseByType(destbase->idx, B_SMALL_HANGAR)
-		+ B_GetNumberOfBuildingsInBaseByType(destbase->idx, B_HANGAR)) {
-		MN_Popup(_("Not enough space"), _("Destination base has already one aircraft per hangar.\n"));
-		return qfalse;
-	} else if (AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, intransfer) == 0) {
+	hangarStorage = AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, numAircraftTransfer);
+	if (hangarStorage == 0) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin hangars.\n"));
 		return qfalse;
-	} else if (AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, intransfer) > 0) {
+	} else if (hangarStorage > 0) {
 		return qtrue;
 	}
 
