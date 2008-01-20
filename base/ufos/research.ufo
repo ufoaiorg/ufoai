@@ -176,7 +176,7 @@ tech rs_antimatter
 
 	require_AND
 	{
-		tech rs_craft_ufo_scout
+		tech rs_alien_ufo_theory
 	}
 
 	time 2800
@@ -472,6 +472,47 @@ tech rs_alien_origins
 		tech nothing
 	}
 	time		2700
+}
+
+tech rs_alien_ufo_theory
+{
+	type		tech
+	up_chapter	crafts
+	name		"_UFO Theory"
+	description {
+		default "_alien_theory_txt"
+	}
+	pre_description {
+		default "_alien_theory_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_UFO Theory"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_UFO Theory"
+		icon	icons/tech
+	}
+
+	require_OR
+	{
+		item craft_ufo_scout 1
+		item craft_ufo_fighter 1
+		item craft_ufo_supply 1
+		item craft_ufo_carrier 1
+		item craft_ufo_condor 1
+		item craft_ufo_harvester 1
+	}
+
+	time		3000
 }
 
 // FIXME: This should not be researchable at all - this is marked as
@@ -3097,7 +3138,7 @@ tech rs_craft_ufo_scout
 	require_AND
 	{
 		item craft_ufo_scout 1
-		tech rs_building_small_ufo_hangar
+		tech rs_alien_ufo_theory
 	}
 
 	provides	"craft_ufo_scout"
@@ -3139,7 +3180,7 @@ tech rs_craft_ufo_fighter
 	require_AND
 	{
 		item craft_ufo_fighter 1
-		tech rs_craft_ufo_scout
+		tech rs_alien_ufo_theory
 	}
 
 	provides	"craft_ufo_fighter"
@@ -3180,7 +3221,7 @@ tech rs_craft_ufo_supply
 	// FIXME
 	require_AND
 	{
-		tech rs_craft_ufo_scout
+		tech rs_alien_ufo_theory
 		item craft_ufo_supply 1
 	}
 
@@ -3222,7 +3263,7 @@ tech rs_craft_ufo_carrier
 	// FIXME
 	require_AND
 	{
-		tech rs_craft_ufo_scout
+		tech rs_alien_ufo_theory
 		item craft_ufo_carrier 1
 	}
 
@@ -3264,7 +3305,7 @@ tech rs_craft_ufo_condor
 	// FIXME
 	require_AND
 	{
-		tech rs_craft_ufo_harvester
+		tech rs_alien_ufo_theory
 		item craft_ufo_condor 1
 	}
 
@@ -3306,7 +3347,7 @@ tech rs_craft_ufo_harvester
 	// FIXME
 	require_AND
 	{
-		tech rs_craft_ufo_scout
+		tech rs_alien_ufo_theory
 		item craft_ufo_harvester 1
 	}
 
@@ -4089,7 +4130,7 @@ tech rs_alien_materials
 
 	require_AND
 	{
-		tech rs_craft_ufo_scout
+		tech rs_alien_ufo_theory
 	}
 
 	time		6000
