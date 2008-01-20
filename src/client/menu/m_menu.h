@@ -40,12 +40,6 @@ void MN_PopMenu(qboolean all);
 menu_t* MN_ActiveMenu(void);
 menu_t *MN_GetMenu(const char *name);
 
-
-void MN_PopMenu_f(void);
-void MN_PushMenu_f(void);
-void MN_PushCopyMenu_f(void);
-void MN_PushNoHud_f(void);
-
 int MN_CompletePushMenu(const char *partial, const char **match);
 
 

@@ -128,4 +128,5 @@ void MN_NodeModelInit (void)
 	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
 	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
 #endif
+	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }

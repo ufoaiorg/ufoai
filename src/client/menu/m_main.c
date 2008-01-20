@@ -157,7 +157,7 @@ menu_t* MN_PushMenu (const char *name)
  * @brief Console function to push a menu onto the menu stack
  * @sa MN_PushMenu
  */
-void MN_PushMenu_f (void)
+static void MN_PushMenu_f (void)
 {
 	if (Cmd_Argc() > 1)
 		MN_PushMenu(Cmd_Argv(1));
@@ -170,7 +170,7 @@ void MN_PushMenu_f (void)
  * Note: relies on a "nohud" menu existing
  * @sa MN_PushMenu
  */
-void MN_PushNoHud_f (void)
+static void MN_PushNoHud_f (void)
 {
 	/* can't hide hud if we are not in battlescape */
 	if (!CL_OnBattlescape())
@@ -183,7 +183,7 @@ void MN_PushNoHud_f (void)
  * @brief Console function to push a menu, without deleting its copies
  * @sa MN_PushMenu
  */
-void MN_PushCopyMenu_f (void)
+static void MN_PushCopyMenu_f (void)
 {
 	if (Cmd_Argc() > 1) {
 		Cvar_SetValue("mn_escpop", mn_escpop->value + 1);
@@ -247,7 +247,7 @@ void MN_PopMenu (qboolean all)
  * @note The cvar mn_escpop defined how often the MN_PopMenu function is called.
  * This is useful for e.g. nodes that doesn't have a render node (for example: video options)
  */
-void MN_PopMenu_f (void)
+static void MN_PopMenu_f (void)
 {
 	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3)) {
 		MN_PopMenu(qfalse);
@@ -617,6 +617,9 @@ void MN_Shutdown (void)
 
 void MN_Init (void)
 {
+	/* reset menu structures */
+	memset(&mn, 0, sizeof(mn));
+
 	/* add cvars */
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
 
@@ -627,6 +630,12 @@ void MN_Init (void)
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
 	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
 	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, "Activates the inline cvar editing");
+
+	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
+	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);
+	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
+	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
+	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 
 	/* 256kb - FIXME: Get rid of adata, curadata and adataize */
 	mn.adataize = MENU_HUNK_SIZE;

@@ -1155,9 +1155,6 @@ static void MN_PrevMap_f (void)
  */
 void MN_ResetMenus (void)
 {
-	/* reset menu structures */
-	memset(&mn, 0, sizeof(mn));
-
 	/* add commands and cvars */
 	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes");
 	Cvar_Set("mn_main", "main");
@@ -1173,13 +1170,6 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_getmaps", MN_GetMaps_f, "The initial map to show");
 	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, "Switch to the next multiplayer map");
 	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, "Switch to the previous multiplayer map");
-	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
-	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);
-	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
-	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
-	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
-
-	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 
 	MN_Init();
 
