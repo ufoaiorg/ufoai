@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define UNIT_SIZE   32
 #define UNIT_HEIGHT 64
 
+#define MAX_VAR     64
+
 #define LEAFNODE -1
 
 #include <stddef.h>
