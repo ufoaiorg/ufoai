@@ -938,8 +938,11 @@ void B_SetUpBase (base_t* base)
 			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-			/* Now buy two first aircraft if it is our first base. */
+
+			/* A few more things for first base.
+				@todo: this shouldn't be hard coded, but in *.ufo files */
 			if (gd.numBases == 1) {
+				/* buy two first aircraft */
 				if (building->buildingType == B_HANGAR) {
 					Cbuf_AddText("aircraft_new craft_drop_firebird\n");
 					aircraft = AIR_GetAircraft("craft_drop_firebird");
@@ -948,6 +951,23 @@ void B_SetUpBase (base_t* base)
 					Cbuf_AddText("aircraft_new craft_inter_stiletto\n");
 					aircraft = AIR_GetAircraft("craft_inter_stiletto");
 					CL_UpdateCredits(ccs.credits - aircraft->price);
+				}
+
+				/* build a second quarter */
+				if (building->buildingType == B_QUARTERS) {
+					building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+					*building = gd.buildingTypes[i];
+					/* self-link to building-list in base */
+					building->idx = gd.numBuildings[base->idx];
+					gd.numBuildings[base->idx]++;
+					/* Link to the base. */
+					building->base_idx = base->idx;
+					/* Build second quarter just above first one */
+					Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0] - 1, building->pos[1]);
+					base->buildingCurrent = building;
+					/* fake a click to basemap */
+					B_SetBuildingByClick((int) building->pos[0] - 1, (int) building->pos[1]);
+					B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 				}
 			}
 
@@ -3195,9 +3215,6 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 				base->capacities[cap].max += capacity;
 			}
 		}
-		/* First base gets extra space for employees. */
-		if ((gd.numBases == 1) && (base->idx == 0) && (cap == CAP_EMPLOYEES))
-			base->capacities[cap].max += 18;
 		if (b_idx != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
 				gd.buildingTypes[b_idx].id, base->capacities[cap].max);
