@@ -485,8 +485,6 @@ typedef struct {
 #define ATTN_IDLE               2
 #define ATTN_STATIC             3   /* diminish very rapidly with distance */
 
-#define MAX_VAR     64
-
 typedef struct date_s {
 	int day;	/**< Number of ellapsed days since 1st january of year 0 */
 	int sec;	/**< Number of ellapsed seconds since the begining of current day */
