@@ -245,6 +245,7 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
 			return NULL;
 		}
+		/* @todo FIXME: we should also count aircraft that are already in the queue list */
 		if (AIR_CalculateHangarStorage(objID, base, 0) <= 0) {
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return NULL;
@@ -1166,6 +1167,7 @@ static void PR_ProductionIncrease_f (void)
 			prod = PR_QueueNew(base, queue, selectedIndex, amount_temp, qtrue);	/* Disassembling. */
 		}
 		/* prod is NULL when queue limit is reached */
+		/* @todo FIXME: this popup hides any previous popup, like popup created in PR_QueueNew */
 		if (!prod) {
 			/* Oops! Too many items! */
 			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
