@@ -1026,10 +1026,10 @@ static void MAP_GetGeoscapeAngle (float *Vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	menu_t *activeMenu = NULL;
+	const menu_t *activeMenu = NULL;
 
 	/* this function only concerns maps */
-	activeMenu = MN_ActiveMenu();
+	activeMenu = MN_GetActiveMenu();
 	if (Q_strncmp(activeMenu->name, "map", 3))
 		return;
 

@@ -139,7 +139,7 @@ const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 {
 	if (!n || n->data[MN_DATA_ANIM_OR_FONT]) {
 		if (!m)
-			m = MN_GetCurrentMenu();
+			m = MN_GetActiveMenu();
 
 		return MN_GetReferenceString(m, n->data[MN_DATA_ANIM_OR_FONT]);
 	}

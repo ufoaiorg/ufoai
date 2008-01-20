@@ -87,6 +87,5 @@ void MN_Init(void);
 void MN_Shutdown(void);
 qboolean MN_CheckCondition(menuNode_t *node);
 int MN_GetVisibleMenuCount(void);
-menu_t* MN_GetCurrentMenu(void);
 
 #endif

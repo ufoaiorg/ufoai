@@ -408,7 +408,7 @@ static void CL_ChangeName_f (void)
 {
 	int sel = Cvar_VariableInteger("mn_employee_idx");
 	int type = Cvar_VariableInteger("mn_employee_type");
-	menu_t *activeMenu = NULL;
+	const menu_t *activeMenu = NULL;
 
 	/* Maybe called without base initialized or active. */
 	if (!baseCurrent)
@@ -418,7 +418,7 @@ static void CL_ChangeName_f (void)
 		Q_strncpyz(gd.employees[type][sel].chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
 
 		/* Now refresh the list. */
-		activeMenu = MN_ActiveMenu();
+		activeMenu = MN_GetActiveMenu();
 		if (!Q_strncmp(activeMenu->name, "employees", 9)) {
 			/* We are in the hire (aka "employee") screen. */
 			Cbuf_AddText(va("employee_init %i %i;", type, sel));
@@ -955,7 +955,7 @@ static void CL_Select_f (void)
 	int num;
 	selectSoldierModes_t mode;
 	employeeType_t employeeType;
-	menu_t *activeMenu = NULL;
+	const menu_t *activeMenu = NULL;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -1032,7 +1032,7 @@ static void CL_Select_f (void)
 	}
 
 	if (mode == SELECT_MODE_SOLDIER) {
-		activeMenu = MN_ActiveMenu();
+		activeMenu = MN_GetActiveMenu();
 		if (!Q_strncmp(activeMenu->name, "employees", 9)) {
 			/* this is hire menu: we can select soldiers, worker, medics, or researcher */
 			if (num < employeesInCurrentList) {

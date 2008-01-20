@@ -4247,7 +4247,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 void CL_ActorInventoryOpen_f (void)
 {
 	if (CL_OnBattlescape()) {
-		menu_t* menu = MN_ActiveMenu();
+		const menu_t* menu = MN_GetActiveMenu();
 		if (!strstr(menu->name, "hudinv")) {
 			if (!Q_strcmp(mn_hud->string, "althud"))
 				MN_PushMenu("ahudinv");

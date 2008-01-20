@@ -37,7 +37,7 @@ typedef struct menu_s {
 
 menu_t* MN_PushMenu(const char *name);
 void MN_PopMenu(qboolean all);
-menu_t* MN_ActiveMenu(void);
+menu_t* MN_GetActiveMenu(void);
 menu_t *MN_GetMenu(const char *name);
 
 int MN_CompletePushMenu(const char *partial, const char **match);

@@ -103,7 +103,7 @@ static void MN_SetModelTransform_f (void)
 	VectorSet(value, x, y, z);
 
 	/* search the node */
-	node = MN_GetNode(MN_GetCurrentMenu(), nodeID);
+	node = MN_GetNode(MN_GetActiveMenu(), nodeID);
 	if (!node) {
 		/* didn't find node -> "kill" action and print error */
 		Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeID);

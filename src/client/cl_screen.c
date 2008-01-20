@@ -442,7 +442,7 @@ void SCR_UpdateScreen (void)
 	if (scr_draw_loading)
 		SCR_DrawLoading();
 	else {
-		MN_SetViewRect(MN_ActiveMenu());
+		MN_SetViewRect(MN_GetActiveMenu());
 
 		if (cls.playingCinematic == CIN_STATUS_FULLSCREEN) {
 			CIN_RunCinematic();

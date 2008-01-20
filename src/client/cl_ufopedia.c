@@ -278,11 +278,11 @@ void UP_ItemDescription (int item)
 	int i;
 	int up_numresearchedlink = 0;
 	int up_weapon_id = NONE;
-	menu_t *activeMenu = NULL;
+	const menu_t *activeMenu = NULL;
 
 	assert(item != NONE);
 
-	activeMenu = MN_ActiveMenu();
+	activeMenu = MN_GetActiveMenu();
 
 	/* select item */
 	od = &csi.ods[item];

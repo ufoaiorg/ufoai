@@ -261,25 +261,13 @@ static void MN_PopMenu_f (void)
 	}
 }
 
-
 /**
  * @brief Returns the current active menu from the menu stack or NULL if there is none
  * @return menu_t pointer from menu stack
- * @sa MN_ActiveMenu
  */
-menu_t* MN_GetCurrentMenu (void)
+menu_t* MN_GetActiveMenu (void)
 {
 	return (mn.menuStackPos > 0 ? mn.menuStack[mn.menuStackPos - 1] : NULL);
-}
-
-/**
- * @brief Returns the current active menu from the menu stack or NULL if there is none
- * @return menu_t pointer from menu stack
- * @sa MN_GetCurrentMenu
- */
-menu_t* MN_ActiveMenu (void)
-{
-	return MN_GetCurrentMenu();
 }
 
 /**
@@ -295,7 +283,7 @@ menu_t *MN_GetMenu (const char *name)
 
 	/* get the current menu */
 	if (name == NULL)
-		return MN_GetCurrentMenu();
+		return MN_GetActiveMenu();
 
 	for (i = 0; i < mn.numMenus; i++)
 		if (!Q_strncmp(mn.menus[i].name, name, MAX_VAR))
@@ -312,7 +300,7 @@ menu_t *MN_GetMenu (const char *name)
  */
 static void MN_ReinitCurrentMenu_f (void)
 {
-	menu_t* menu = MN_GetCurrentMenu();
+	menu_t* menu = MN_GetActiveMenu();
 	/* initialize it */
 	if (menu) {
 		MN_ExecuteActions(menu, menu->initNode->click);

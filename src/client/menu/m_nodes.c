@@ -219,7 +219,7 @@ menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
  */
 menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
 {
-	return MN_GetNode(MN_GetCurrentMenu(), name);
+	return MN_GetNode(MN_GetActiveMenu(), name);
 }
 
 /**

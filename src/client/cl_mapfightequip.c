@@ -91,11 +91,11 @@ static technology_t **AII_GetCraftitemTechsByType (int type, base_t* base)
  */
 static void AIM_CheckAirequipID (void)
 {
-	menu_t *activeMenu = NULL;
+	const menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
 
 	/* select menu */
-	activeMenu = MN_ActiveMenu();
+	activeMenu = MN_GetActiveMenu();
 	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
 	if (aircraftMenu) {
@@ -1156,7 +1156,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	int zone;
 	aircraft_t *aircraft = NULL;
 	aircraftSlot_t *slot;
-	menu_t *activeMenu = NULL;
+	const menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
 
 	if (!baseCurrent)
@@ -1168,7 +1168,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	}
 
 	/* select menu */
-	activeMenu = MN_ActiveMenu();
+	activeMenu = MN_GetActiveMenu();
 	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
 	zone = atoi(Cmd_Argv(1));
@@ -1386,7 +1386,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft;
-	menu_t *activeMenu = NULL;
+	const menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
 	base_t* base;
 
@@ -1401,7 +1401,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	zone = atoi(Cmd_Argv(1));
 
 	/* select menu */
-	activeMenu = MN_ActiveMenu();
+	activeMenu = MN_GetActiveMenu();
 	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
 	/* proceed only if an item has been selected */
@@ -1510,7 +1510,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft;
-	menu_t *activeMenu = NULL;
+	const menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
 
 	if (!baseCurrent)
@@ -1523,7 +1523,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	zone = atoi(Cmd_Argv(1));
 
 	/* select menu */
-	activeMenu = MN_ActiveMenu();
+	activeMenu = MN_GetActiveMenu();
 	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
 	/* check in which menu we are */
@@ -1586,7 +1586,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	base_t *base = NULL;
 	int num;
 	technology_t **list;
-	menu_t *activeMenu;
+	const menu_t *activeMenu;
 
 	if (!baseCurrent || airequipID == -1)
 		return;
@@ -1597,7 +1597,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	}
 
 	/* select menu */
-	activeMenu = MN_ActiveMenu();
+	activeMenu = MN_GetActiveMenu();
 	/* check in which menu we are */
 	if (!Q_strncmp(activeMenu->name, "aircraft_equip", 14)) {
 		if (baseCurrent->aircraftCurrent < 0)
