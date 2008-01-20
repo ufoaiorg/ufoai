@@ -33,6 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_main.h"
 #include "../renderer/r_shader.h"
 #include "../renderer/r_particle.h"
+#include "menu/m_popup.h"
+#include "menu/m_font.h"
+#include "menu/m_parse.h"
 
 cvar_t *cl_isometric;
 
@@ -98,8 +101,6 @@ typedef struct teamData_s {
 static teamData_t teamData;
 
 static int precache_check;
-
-char messageBuffer[MAX_MESSAGE_TEXT];
 
 static void CL_SpawnSoldiers_f(void);
 
@@ -786,7 +787,7 @@ static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	Cvar_SetValue("mn_maxteams", teamData.maxteams);
 	Cvar_SetValue("mn_maxplayersperteam", teamData.maxplayersperteam);
 
-	menuText[TEXT_LIST] = teamData.teamInfoText;
+	mn.menuText[TEXT_LIST] = teamData.teamInfoText;
 	teamData.parsed = qtrue;
 
 	/* spawn multi-player death match soldiers here */
@@ -861,7 +862,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperplayer"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperteam"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), Info_ValueForKey(s, "sv_needpass"));
-		menuText[TEXT_STANDARD] = serverInfoText;
+		mn.menuText[TEXT_STANDARD] = serverInfoText;
 		userInfoText[0] = '\0';
 		do {
 			token = COM_Parse(&users);
@@ -873,7 +874,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 				break;
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
-		menuText[TEXT_LIST] = userInfoText;
+		mn.menuText[TEXT_LIST] = userInfoText;
 		Cvar_Set("mn_server_ip", stream_peer_name(stream, buf, sizeof(buf), qtrue));
 		MN_PushMenu("serverinfo");
 	} else
@@ -1096,7 +1097,7 @@ static void CL_ServerListClick_f (void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	menuText[TEXT_STANDARD] = serverInfoText;
+	mn.menuText[TEXT_STANDARD] = serverInfoText;
 	if (num >= 0 && num < serverListLength)
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
@@ -1116,7 +1117,7 @@ static void CL_SelectTeam_Init_f (void)
 	MN_MenuTextReset(TEXT_STANDARD);
 
 	NET_OOB_Printf(cls.stream, "teaminfo %i", PROTOCOL_VERSION);
-	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
+	mn.menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
 }
 
 /**< this is true if pingservers was already executed */
@@ -1151,7 +1152,7 @@ static void CL_PingServers_f (void)
 		}
 		memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
 	} else {
-		menuText[TEXT_LIST] = serverText;
+		mn.menuText[TEXT_LIST] = serverText;
 		return;
 	}
 
@@ -1180,7 +1181,7 @@ static void CL_PingServers_f (void)
 		CL_AddServerToList(adrstring, service);
 	}
 
-	menuText[TEXT_LIST] = serverText;
+	mn.menuText[TEXT_LIST] = serverText;
 
 	/* don't query the masterservers with every call */
 	if (serversAlreadyQueried) {
@@ -1339,10 +1340,10 @@ static void CL_TeamNum_f (void)
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
 				Cvar_SetValue("teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				menuText[TEXT_STANDARD] = buf;
+				mn.menuText[TEXT_STANDARD] = buf;
 				break;
 			} else {
-				menuText[TEXT_STANDARD] = _("Team is already in use");
+				mn.menuText[TEXT_STANDARD] = _("Team is already in use");
 #if DEBUG
 				Com_DPrintf(DEBUG_CLIENT, "team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
 #endif
@@ -1353,10 +1354,10 @@ static void CL_TeamNum_f (void)
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
 				Cvar_SetValue("teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				menuText[TEXT_STANDARD] = buf;
+				mn.menuText[TEXT_STANDARD] = buf;
 				break;
 			} else {
-				menuText[TEXT_STANDARD] = _("Team is already in use");
+				mn.menuText[TEXT_STANDARD] = _("Team is already in use");
 #if DEBUG
 				Com_DPrintf(DEBUG_CLIENT, "team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
 #endif
@@ -1366,7 +1367,7 @@ static void CL_TeamNum_f (void)
 
 #if 0
 	if (!teamnum->modified)
-		menuText[TEXT_STANDARD] = _("Invalid or full team");
+		mn.menuText[TEXT_STANDARD] = _("Invalid or full team");
 #endif
 	CL_SelectTeam_Init_f();
 }
@@ -1404,7 +1405,7 @@ static void CL_SpawnSoldiers_f (void)
 	if (!ccs.singleplayer && base) {
 		/* we are already connected and in this list */
 		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam < teamData.teamCount[n]) {
-			menuText[TEXT_STANDARD] = _("Invalid or full team");
+			mn.menuText[TEXT_STANDARD] = _("Invalid or full team");
 			Com_Printf("CL_SpawnSoldiers_f: Invalid or full team %i\n"
 				"  maxplayers per team: %i - players on team: %i",
 				n, teamData.maxplayersperteam, teamData.teamCount[n]);
@@ -1672,7 +1673,7 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 	if (!Q_strncmp(type, "shader", 6))
 		CL_ParseShaders(name, text);
 	else if (!Q_strncmp(type, "font", 4))
-		CL_ParseFont(name, text);
+		MN_ParseFont(name, text);
 	else if (!Q_strncmp(type, "tutorial", 8))
 		TUT_ParseTutorials(name, text);
 	else if (!Q_strncmp(type, "menu_model", 10))

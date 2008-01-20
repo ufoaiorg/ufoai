@@ -419,7 +419,7 @@ static qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_co
 
 /**
  * @brief Append the irc message to the buffer
- * @note the irc_buffer is linked to menuText array to display in the menu
+ * @note the irc_buffer is linked to mn.menuText array to display in the menu
  * @param[in] msg the complete irc message (without \n)
  * @return true if the message was added to the chatbuffer, too
  */
@@ -1624,8 +1624,8 @@ void Irc_Input_Activate (void)
 	/* in case of a failure we need this in MN_PopMenu */
 	msg_mode = MSG_IRC;
 	if (irc_connected && *irc_defaultChannel->string) {
-		menuText[TEXT_STANDARD] = irc_buffer;
-		menuText[TEXT_LIST] = irc_names_buffer;
+		mn.menuText[TEXT_STANDARD] = irc_buffer;
+		mn.menuText[TEXT_LIST] = irc_names_buffer;
 		Key_SetDest(key_input);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");

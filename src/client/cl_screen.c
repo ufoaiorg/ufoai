@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "../renderer/r_main.h"
 #include "../renderer/r_draw.h"
+#include "menu/m_inventory.h"
 
 static float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
 static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
@@ -269,16 +270,16 @@ static void SCR_DrawCursor (void)
 				icon_offset_y += icon_spacing;
 
 				/* Display weaponmode (text) heR_ */
-				if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
+				if (mn.menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->integer)
+					SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 16, mn.menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
 			}
 
 			/* playernames */
-			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->integer) {
+			if (mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->integer) {
 				/*@todo: activate this:
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				*/
-				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
+				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
 				MN_MenuTextReset(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}
 		}
@@ -488,4 +489,16 @@ void SCR_Init (void)
 	SCR_TouchPics();
 
 	scr_initialized = qtrue;
+}
+
+/**
+ * @brief Displays a message on the hud.
+ *
+ * @param[in] time is a ms values
+ * @param[in] text text is already translated here
+ */
+void SCR_DisplayHudMessage (const char *text, int time)
+{
+	cl.msgTime = cl.time + time;
+	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
 }

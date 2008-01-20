@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_popup.h"
 
 #define TR_NO_BASE	-1
 
@@ -229,7 +230,7 @@ static void TR_CargoList (void)
 	memset(cargo, 0, sizeof(cargo));
 	memset(trempl, 0, sizeof(trempl));
 
-	menuText[TEXT_CARGO_LIST] = cargoList;
+	mn.menuText[TEXT_CARGO_LIST] = cargoList;
 
 	if (!baseCurrent)
 		return;
@@ -308,7 +309,7 @@ static void TR_CargoList (void)
 		}
 	}
 
-	menuText[TEXT_CARGO_LIST] = cargoList;
+	mn.menuText[TEXT_CARGO_LIST] = cargoList;
 }
 
 /**
@@ -463,7 +464,7 @@ static void TR_TransferSelect_f (void)
 	TR_CargoList();
 
 	transferType = type;
-	menuText[TEXT_TRANSFER_LIST] = transferList;
+	mn.menuText[TEXT_TRANSFER_LIST] = transferList;
 }
 
 /**
@@ -760,7 +761,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 		Q_strcat(transferBaseSelectPopup, va("  %s ", gd.bases[i].name), sizeof(transferBaseSelectPopup));
 		Q_strcat(transferBaseSelectPopup, va(ngettext("(can host %i alive alien)\n", "(can host %i alive aliens)\n", num), num), sizeof(transferBaseSelectPopup));
 	}
-	menuText[TEXT_LIST] = transferBaseSelectPopup;
+	mn.menuText[TEXT_LIST] = transferBaseSelectPopup;
 	MN_PushMenu("popup_transferbaselist");
 }
 
@@ -1094,7 +1095,7 @@ static void TR_TransferBaseSelect (base_t *base)
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
 
-	menuText[TEXT_BASE_INFO] = baseInfo;
+	mn.menuText[TEXT_BASE_INFO] = baseInfo;
 
 	/* Set global pointer to current selected base. */
 	transferBase = base;

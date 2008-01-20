@@ -259,6 +259,54 @@
 		<Unit filename="..\..\src\client\cl_sound.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client/menu/m_actions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_font.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_input.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_inventory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_messages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_nodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_node_bar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_node_image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_node_model.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_node_selectbox.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_node_string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_node_text.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_popup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client/menu/m_tooltip.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\vid.h" />
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />

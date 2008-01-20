@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_popup.h"
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
 /**
@@ -635,7 +636,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	idx = aircraft->electronics[0].itemIdx;
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
-	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
+	mn.menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
 /**
@@ -710,8 +711,8 @@ void AIR_NewAircraft (base_t *base, const char *name)
 
 		AIR_ResetAircraftTeam(aircraft);
 
-		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), _(aircraft->name), base->name), MAX_MESSAGE_TEXT);
-		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+		Q_strncpyz(mn.messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), _(aircraft->name), base->name), sizeof(mn.messageBuffer));
+		MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
 		Radar_Initialise(&(aircraft->radar), aircraftRadarRange, 1.0f);

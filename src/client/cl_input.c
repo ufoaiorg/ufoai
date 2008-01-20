@@ -46,12 +46,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_keys.h"
 #include "cl_input.h"
+#include "menu/m_input.h"
 
 #include "../renderer/r_sdl.h"
 
 /** @brief Grid position on the map for pending events */
 extern pos3_t mousePendPos;
-extern mouseRepeat_t mouseRepeat;
 extern qboolean shift_down;
 
 /* power of two please */
@@ -74,8 +74,7 @@ static unsigned in_frametime;
 int mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
-int dragFrom, dragFromX, dragFromY;
-item_t dragItem = {NONE_AMMO, NONE, NONE, 1, 0}; /* to crash as soon as possible */
+
 /**
  * rotate angles for menu models - pointer to menu node angles vec3_t
  * modify the node->angles values to rotate a model
@@ -1215,9 +1214,9 @@ static void IN_Parse (void)
 	/* repeat the mouse button */
 	case MS_LHOLD:
 	{
-		if (cls.realtime >= mouseRepeat.nexttime) {
-			MN_ExecuteActions(mouseRepeat.menu, mouseRepeat.action);
-			mouseRepeat.nexttime = cls.realtime + 100;	/* next "event" after 0.1 sec */
+		if (cls.realtime >= mn.mouseRepeat.nexttime) {
+			MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
+			mn.mouseRepeat.nexttime = cls.realtime + 100;	/* next "event" after 0.1 sec */
 		}
 		return;
 	}

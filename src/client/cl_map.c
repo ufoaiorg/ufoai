@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "../renderer/r_draw.h"
+#include "menu/m_popup.h"
+#include "menu/m_font.h"
 
 /*
 ==============================================================
@@ -361,7 +363,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		Cmd_ExecuteString("multi_select_click");
  	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
-		menuText[TEXT_MULTISELECTION] = multiSelect.popupText;
+		mn.menuText[TEXT_MULTISELECTION] = multiSelect.popupText;
 		MN_PushMenu("popup_multi_selection");
 	} else {
 		/* Nothing selected */
@@ -1340,7 +1342,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 	}
 	if (showXVI)
-		menuText[TEXT_XVI] = buffer;
+		mn.menuText[TEXT_XVI] = buffer;
 	else
 		MN_MenuTextReset(TEXT_XVI);
 }
@@ -1383,22 +1385,22 @@ void MAP_DrawMap (const menuNode_t* node)
 			/* Draw base radar info */
 			RADAR_DrawCoverage(node, &(base->radar),base->pos);
 
-		menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
+		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
 		return;
 	case MA_BASEATTACK:
 		if (selMis)
 			break;
-		menuText[TEXT_STANDARD] = _("Aliens are attacking our base at this very moment.\n");
+		mn.menuText[TEXT_STANDARD] = _("Aliens are attacking our base at this very moment.\n");
 		return;
 	case MA_INTERCEPT:
 		if (selMis)
 			break;
-		menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
+		mn.menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
 		return;
 	case MA_UFORADAR:
 		if (selMis)
 			break;
-		menuText[TEXT_STANDARD] = _("UFO in radar range\n");
+		mn.menuText[TEXT_STANDARD] = _("UFO in radar range\n");
 		return;
 	case MA_NONE:
 		break;
@@ -1415,7 +1417,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		else
 			txt = selMis->def->missionText;
 
-		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s"), selMis->def->location, selMis->def->type, _(txt));
+		mn.menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s"), selMis->def->location, selMis->def->type, _(txt));
 	} else if (selectedAircraft) {
 		switch (selectedAircraft->status) {
 		case AIR_HOME:
@@ -1430,7 +1432,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			Q_strcat(text_standard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Speed:\t\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(text_standard));
-			menuText[TEXT_STANDARD] = text_standard;
+			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
 		default:
 			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize));
@@ -1438,13 +1440,13 @@ void MAP_DrawMap (const menuNode_t* node)
 			Q_strcat(text_standard, va(_("Speed:\t\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
 				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
-			menuText[TEXT_STANDARD] = text_standard;
+			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
 		}
 	} else if (selectedUfo) {
 		Com_sprintf(text_standard, sizeof(text_standard), va("%s\n", selectedUfo->name));
 		Q_strcat(text_standard, va(_("Speed:\t%i\n"), selectedUfo->stats[AIR_STATS_SPEED]), sizeof(text_standard));
-		menuText[TEXT_STANDARD] = text_standard;
+		mn.menuText[TEXT_STANDARD] = text_standard;
 	}
 }
 

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_popup.h"
 
 #define TECH_HASH_SIZE 64
 static technology_t *tech_hash[TECH_HASH_SIZE];
@@ -77,8 +78,8 @@ void RS_ResearchFinish (technology_t* tech)
 
 	/* send a new message and add it to the mailclient */
 	if ((tech->mailSent < MAILSENT_FINISHED) && (tech->type != RS_LOGIC)) {
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Research finished"), mn.messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
 	}
 }
@@ -100,8 +101,8 @@ void RS_MarkOneResearchable (technology_t* tech)
 		tech->mailSent = MAILSENT_FINISHED;
 
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Unknown Technology researchable"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("New research proposal: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Unknown Technology researchable"), mn.messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 
@@ -358,8 +359,8 @@ void RS_MarkCollected (technology_t* tech)
 
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		if (tech->statusResearch < RS_FINISH) {
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-			MN_AddNewMessage(_("Unknown Technology found"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("New research proposal: %s\n"), _(tech->name));
+			MN_AddNewMessage(_("Unknown Technology found"), mn.messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		}
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}

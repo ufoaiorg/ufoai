@@ -548,7 +548,6 @@ void CL_UGVCvars(character_t * chr);
 void CL_ActorUpdateCVars(void);
 qboolean CL_CheckMenuAction(int time, invList_t * weapon, int mode);
 
-void CL_DisplayHudMessage(const char * text, int time);
 void CL_ResetWeaponButtons(void);
 void CL_SetDefaultReactionFiremode(le_t * actor, const char hand);
 void CL_DisplayFiremodes_f(void);
@@ -730,50 +729,6 @@ typedef struct stats_s {
 } stats_t;
 
 extern stats_t stats;
-
-/* message systems */
-typedef enum {
-	MSG_DEBUG,			/**< only save them in debug mode */
-	MSG_INFO,			/**< don't save these messages */
-	MSG_STANDARD,
-	MSG_RESEARCH_PROPOSAL,
-	MSG_RESEARCH_FINISHED,
-	MSG_CONSTRUCTION,
-	MSG_UFOSPOTTED,
-	MSG_TERRORSITE,
-	MSG_BASEATTACK,
-	MSG_TRANSFERFINISHED,
-	MSG_PROMOTION,
-	MSG_PRODUCTION,
-	MSG_NEWS,
-	MSG_DEATH,
-	MSG_CRASHSITE,
-	MSG_EVENT,
-
-	MSG_MAX
-} messagetype_t;
-
-/** @brief also used for chat message buffer */
-#define MAX_MESSAGE_TEXT 1024
-#define TIMESTAMP_TEXT 21
-typedef struct message_s {
-	char title[MAX_VAR];
-	char *text;
-	messagetype_t type;
-	technology_t *pedia;		/**< link to ufopedia if a research has finished. */
-	eventMail_t *eventMail;
-	struct message_s *next;
-	int d, m, y, h, min, s;
-} message_t;
-
-extern char messageBuffer[MAX_MESSAGE_TEXT];
-
-extern message_t *messageStack;
-
-message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t *pedia);
-void MN_RemoveMessage(char *title);
-
-void MN_AddChatMessage(const char *text);
 
 #include "cl_campaign.h"
 missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */

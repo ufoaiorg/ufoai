@@ -322,8 +322,8 @@ static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 		list++;
 	}
 
-	/* copy buffer to menuText to display it on screen */
-	menuText[TEXT_LIST] = buffer;
+	/* copy buffer to mn.menuText to display it on screen */
+	mn.menuText[TEXT_LIST] = buffer;
 
 	/* if there is at least one element, select the first one */
 	if (i)
@@ -519,7 +519,7 @@ void BDEF_RemoveBattery_f (void)
 		/* Check if the removed building was under construction */
 		int i, type, max;
 		int workingNum = 0;
-		
+
 		switch (basedefType) {
 		case BASEDEF_MISSILE:
 			type = B_DEFENSE_MISSILE;
@@ -717,7 +717,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: unknown airequipId.\n");
 		return;
 	}
-	menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
+	mn.menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
 
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
@@ -735,7 +735,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		else
 			Q_strcat(smallbuffer1, va(_("This defense system will be removed in %i hours.\n"), -slot->installationTime), sizeof(smallbuffer1));
 	}
-	menuText[TEXT_AIREQUIP_1] = smallbuffer1;
+	mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
 	/* Second slot: next item to install when the first one will be removed */
 	if (slot->itemIdx != NONE && slot->installationTime < 0) {
@@ -748,7 +748,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		}
 	} else
 		*smallbuffer2 = '\0';
-	menuText[TEXT_AIREQUIP_2] = smallbuffer2;
+	mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
 
 	/* Third slot: ammo slot (only used for weapons) */
 	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->itemIdx != NONE) {
@@ -761,7 +761,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			Q_strcat(smallbuffer3, va(ngettext(" (%i missile left)", " (%i missiles left)", slot->ammoLeft), slot->ammoLeft), sizeof(smallbuffer3));
 	} else
 		*smallbuffer3 = '\0';
-	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
+	mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
 
 	/* Draw selected zone */
 	AIM_DrawSelectedZone();
@@ -1060,7 +1060,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		else
 			Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),-slot->installationTime), sizeof(smallbuffer1));
 	}
-	menuText[TEXT_AIREQUIP_1] = smallbuffer1;
+	mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
 	/* Second slot: next item to install when the first one will be removed */
 	if (slot->itemIdx != NONE && slot->installationTime < 0) {
@@ -1073,7 +1073,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		}
 	} else
 		*smallbuffer2 = '\0';
-	menuText[TEXT_AIREQUIP_2] = smallbuffer2;
+	mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
 
 	/* Third slot: ammo slot (only used for weapons) */
 	if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->itemIdx != NONE) {
@@ -1083,7 +1083,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(csi.ods[slot->ammoIdx].tech->name));
 	} else
 		*smallbuffer3 = '\0';
-	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
+	mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
 
 	/* Draw existing slots for this aircraft */
 	AIM_DrawAircraftSlots(aircraft);

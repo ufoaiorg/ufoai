@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_inventory.h"
+#include "menu/m_popup.h"
 
 static qboolean display_heavy_equipment_list = qfalse; /**< Used in team assignment screen to tell if we are assigning soldeirs or heavy equipment (ugvs/tanks) */
 
@@ -2107,7 +2109,7 @@ void CL_ParseResults (struct dbuffer *msg)
 	CL_ParseCharacterData(msg, qfalse);
 
 	/* init result text */
-	menuText[TEXT_STANDARD] = resultText;
+	mn.menuText[TEXT_STANDARD] = resultText;
 
 	our_surviviurs = 0;
 	our_killed = 0;

@@ -42,7 +42,7 @@ static void TUT_GetTutorials_f (void)
 	int i;
 	tutorial_t *t;
 
-	menuText[TEXT_LIST] = tutorialList;
+	mn.menuText[TEXT_LIST] = tutorialList;
 	tutorialList[0] = 0;
 	for (i = 0; i < numTutorials; i++) {
 		t = &tutorials[i];

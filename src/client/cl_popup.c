@@ -3,9 +3,6 @@
  * @brief Manage popups
  */
 
-#include "client.h"
-#include "cl_global.h"
-
 /*
 Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
@@ -25,6 +22,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
+#include "client.h"
+#include "cl_global.h"
+#include "menu/m_popup.h"
 
 /* global_popup */
 extern void CL_PopupInit(void);
@@ -155,7 +156,7 @@ void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 	popupAircraft.aircraft_idx = aircraft->idx;
 	popupAircraft.nbItems = 0;
 	memset(popupAircraft.text_popup, 0, POPUP_AIRCARFT_MAX_TEXT);
-	menuText[TEXT_POPUP] = popupAircraft.text_popup;
+	mn.menuText[TEXT_POPUP] = popupAircraft.text_popup;
 
 	/* Set static datas in popup_aircraft */
 	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
@@ -304,11 +305,11 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			break;
 	}
 	if (popupIntercept.numAircraft)
-		menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
+		mn.menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 	else if (mission)
-		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no tactical teams assigned to available craft.");
+		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no tactical teams assigned to available craft.");
 	else if (ufo)
-		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no weapon or ammo equipped or target out of reach.");
+		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no weapon or ammo equipped or target out of reach.");
 
 	if (ufo) {
 		somethingWritten = qfalse;
@@ -327,9 +328,9 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			}
 		}
 		if (somethingWritten)
-			menuText[TEXT_BASE_LIST] = baseListText;
+			mn.menuText[TEXT_BASE_LIST] = baseListText;
 		else
-			menuText[TEXT_BASE_LIST] = _("No defense system operational or no weapon or ammo equipped.");
+			mn.menuText[TEXT_BASE_LIST] = _("No defense system operational or no weapon or ammo equipped.");
 		/* Display base list in popup */
 		Cvar_Set("mn_displaybaselist", "1");
 	} else

@@ -362,7 +362,7 @@ static void PE_UpdateMenu (ptlDef_t* p)
 
 	/* link them */
 	ptleditMenu.ptlName->data[0] = ptledit_ptlName;
-	menuText[TEXT_LIST] = ptlList;
+	mn.menuText[TEXT_LIST] = ptlList;
 }
 
 

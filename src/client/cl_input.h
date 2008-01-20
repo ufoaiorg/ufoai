@@ -64,8 +64,6 @@ typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;
 extern camera_mode_t camera_mode;
 extern int mouseSpace;
 extern int mousePosX, mousePosY;
-extern int dragFrom, dragFromX, dragFromY;
-extern item_t dragItem;
 extern float *rotateAngles;
 extern const float MIN_ZOOM, MAX_ZOOM;
 

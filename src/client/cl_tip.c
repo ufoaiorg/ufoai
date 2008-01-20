@@ -75,7 +75,7 @@ static void CL_GetTipOfTheDay_f (void)
 		rnd--;
 	};
 
-	menuText[TEXT_TIPOFTHEDAY] = _(tip->tipString);
+	mn.menuText[TEXT_TIPOFTHEDAY] = _(tip->tipString);
 }
 
 /**

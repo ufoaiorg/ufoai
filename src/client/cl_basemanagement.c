@@ -31,13 +31,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "../renderer/r_draw.h"
+#include "menu/m_popup.h"
 
 vec3_t newBasePos;
 static cvar_t *mn_base_title;
 static cvar_t *mn_base_count;
 static cvar_t *mn_base_id;
 
-/** @brief allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
+/** @brief allocate memory for mn.menuText[TEXT_STANDARD] contained the information about a building */
 static char buildingText[MAX_LIST_CHAR];
 
 static int BuildingConstructionList[MAX_BUILDINGS];
@@ -1282,7 +1283,7 @@ static void B_DrawBuilding (base_t* base, building_t* building)
 		Cvar_Set("mn_building_image", "base/empty");
 
 	/* link into menu text array */
-	menuText[TEXT_BUILDING_INFO] = buildingText;
+	mn.menuText[TEXT_BUILDING_INFO] = buildingText;
 }
 
 /**
@@ -1290,7 +1291,7 @@ static void B_DrawBuilding (base_t* base, building_t* building)
  *
  * @param[in] building Add this building to the construction list
  * Called everytime a building was constructed and thus maybe other buildings get available.
- * menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList which will be displayed in the build-screen.
+ * mn.menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList which will be displayed in the build-screen.
  * This way every base can hold its own building list.
  * The content is updated everytime B_BuildingInit is called (i.e everytime the buildings-list is dispplayed/updated)
  */
@@ -1379,7 +1380,7 @@ static void B_BuildingInit (base_t* base)
 
 	/* initialising the vars used in B_BuildingAddToList */
 	memset(base->allBuildingsList, 0, sizeof(base->allBuildingsList));
-	menuText[TEXT_BUILDINGS] = base->allBuildingsList;
+	mn.menuText[TEXT_BUILDINGS] = base->allBuildingsList;
 	numBuildingConstructionList = 0;
 
 	for (i = 0; i < gd.numBuildingTypes; i++) {
@@ -2318,7 +2319,10 @@ static void B_PackInitialEquipment_f (void)
 static void B_BuildBase_f (void)
 {
 	const nation_t *nation = NULL;
-	assert(baseCurrent);
+
+	if (!baseCurrent)
+		return;
+
 	assert(!baseCurrent->founded);
 	assert(ccs.singleplayer);
 
@@ -2335,10 +2339,10 @@ static void B_BuildBase_f (void)
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
 			nation = MAP_GetNation(baseCurrent->pos);
 			if (nation)
-				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
 			else
-				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
-			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
+			MN_AddNewMessage(_("Base built"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0.0f, 1.0f);
 			B_ResetAllStatusAndCapacities(baseCurrent, qtrue);
 			AL_FillInContainment(baseCurrent);
@@ -3043,8 +3047,8 @@ void B_UpdateBaseData (void)
 			new = B_CheckBuildingConstruction(b, &gd.bases[i]);
 			newBuilding += new;
 			if (new) {
-				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), _(b->name), gd.bases[i].name);
-				MN_AddNewMessage(_("Building finished"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[i].name);
+				MN_AddNewMessage(_("Building finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
 

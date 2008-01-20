@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_sound.h"
 #include "../renderer/r_mesh_anim.h"
+#include "menu/m_inventory.h"
 
 /* public */
 le_t *selActor;
@@ -178,8 +179,7 @@ void CL_CharacterCvars (character_t * chr)
 
 	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
 	if (chr->rank >= 0 && gd.numRanks) {
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), gd.ranks[chr->rank].name);
-		Cvar_Set("mn_chrrank", messageBuffer);
+		Cvar_Set("mn_chrrank", va(_("Rank: %s"), gd.ranks[chr->rank].name));
 		Cvar_Set("mn_chrrank_img", gd.ranks[chr->rank].image);
 	} else {
 		Cvar_Set("mn_chrrank", "");
@@ -755,7 +755,7 @@ static int CL_UsableReactionTUs (const le_t * le)
 		return CL_UsableTUs(le) + CL_ReservedTUs(le, RES_REACTION);
 	else
 		/* CL_UsableTUs DOES return the stored value for "reaction" here. */
-		return CL_UsableTUs(le); 
+		return CL_UsableTUs(le);
 }
 
 
@@ -1372,8 +1372,8 @@ void CL_FireWeapon_f (void)
 		HideFiremodes();
 	} else {
 		/* Cannot shoot because of not enough TUs - every other
-		   case should be checked previously in this function. */
-		CL_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
+		 * case should be checked previously in this function. */
+		SCR_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
 		Com_DPrintf(DEBUG_CLIENT, "CL_FireWeapon_f: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fds_idx][firemode].name);
 		return;
 	}
@@ -1603,7 +1603,7 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 	/* No item in hand. */
 	/** @todo Ignore this condition when ammo in hand. */
 	if (!weapon || weapon->item.t == NONE) {
-		CL_DisplayHudMessage(_("No item in hand.\n"), 2000);
+		SCR_DisplayHudMessage(_("No item in hand.\n"), 2000);
 		return qfalse;
 	}
 
@@ -1616,12 +1616,12 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 
 		/* Cannot shoot because of lack of ammo. */
 		if (weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
-			CL_DisplayHudMessage(_("Can't perform action:\nout of ammo.\n"), 2000);
+			SCR_DisplayHudMessage(_("Can't perform action:\nout of ammo.\n"), 2000);
 			return qfalse;
 		}
 		/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
 		if (csi.ods[weapon->item.t].fireTwoHanded && LEFT(selActor)) {
-			CL_DisplayHudMessage(_("This weapon cannot be fired\none handed.\n"), 2000);
+			SCR_DisplayHudMessage(_("This weapon cannot be fired\none handed.\n"), 2000);
 			return qfalse;
 		}
 		break;
@@ -1630,17 +1630,17 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 
 		/* Cannot reload because this item is not reloadable. */
 		if (!csi.ods[weapon->item.t].reload) {
-			CL_DisplayHudMessage(_("Can't perform action:\nthis item is not reloadable.\n"), 2000);
+			SCR_DisplayHudMessage(_("Can't perform action:\nthis item is not reloadable.\n"), 2000);
 			return qfalse;
 		}
 		/* Cannot reload because of no ammo in inventory. */
 		if (CL_CalcReloadTime(weapon->item.t) >= 999) {
-			CL_DisplayHudMessage(_("Can't perform action:\nammo not available.\n"), 2000);
+			SCR_DisplayHudMessage(_("Can't perform action:\nammo not available.\n"), 2000);
 			return qfalse;
 		}
 		/* Cannot reload because of not enough TUs. */
 		if (time < CL_CalcReloadTime(weapon->item.t)) {
-			CL_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
+			SCR_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
 			return qfalse;
 		}
 		break;
@@ -1805,7 +1805,7 @@ void CL_ActorUpdateCVars (void)
 				lastHUDActor = selActor;
 				lastMoveLength = actorMoveLength;
 				lastTU = selActor->TU;
-				menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;
+				mn.menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;
 			}
 			time = actorMoveLength;
 		} else {
@@ -1813,7 +1813,7 @@ void CL_ActorUpdateCVars (void)
 			/* in multiplayer RS_ItemIsResearched always returns true,
 			 * so we are able to use the aliens weapons */
 			if (selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].id)) {
-				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
+				SCR_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {
 				Com_sprintf(infoText, sizeof(infoText),
@@ -1821,7 +1821,7 @@ void CL_ActorUpdateCVars (void)
 				Com_sprintf(mouseText, sizeof(mouseText),
 							"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
 
-				menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;	/* Save the text for later display next to the cursor. */
+				mn.menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;	/* Save the text for later display next to the cursor. */
 
 				time = selFD->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
@@ -1913,7 +1913,7 @@ void CL_ActorUpdateCVars (void)
 				Com_sprintf(infoText, sizeof(infoText), cl.msgText);
 			}
 		}
-		menuText[TEXT_STANDARD] = infoText;
+		mn.menuText[TEXT_STANDARD] = infoText;
 	/* this will stop the drawing of the bars over the hole screen when we test maps */
 	} else if (!cl.numTeamList) {
 		Cvar_SetValue("mn_tu", 0);
@@ -2341,7 +2341,7 @@ static int CL_CheckAction (void)
 	}
 */
 	if (cls.team != cl.actTeam) {
-		CL_DisplayHudMessage(_("This isn't your round\n"), 2000);
+		SCR_DisplayHudMessage(_("This isn't your round\n"), 2000);
 		return qfalse;
 	}
 
@@ -2494,7 +2494,7 @@ void CL_ActorReload (int hand)
 		return;
 
 	if (!RS_ItemIsResearched(csi.ods[weapon].id)) {
-		CL_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
+		SCR_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
 		return;
 	}
 
@@ -3160,54 +3160,54 @@ void CL_ActorDie (struct dbuffer *msg)
 		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was stunned\n"),
 			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "", chr->name);
-			CL_DisplayHudMessage(tmpbuf, 2000);
+			SCR_DisplayHudMessage(tmpbuf, 2000);
 		} else if (chr) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was killed\n"),
 			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "", chr->name);
-			CL_DisplayHudMessage(tmpbuf, 2000);
+			SCR_DisplayHudMessage(tmpbuf, 2000);
 		}
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
 			if ((le->state & STATE_STUN) & ~STATE_DEAD)
-				CL_DisplayHudMessage(_("A civilian was stunned.\n"), 2000);
+				SCR_DisplayHudMessage(_("A civilian was stunned.\n"), 2000);
 			else
-				CL_DisplayHudMessage(_("A civilian was killed.\n"), 2000);
+				SCR_DisplayHudMessage(_("A civilian was killed.\n"), 2000);
 			break;
 		case (TEAM_ALIEN):
 			if (le->teamDef) {
 				if (RS_IsResearched_idx(RS_GetTechIdxByName(le->teamDef->tech))) {
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 						Com_sprintf(tmpbuf, sizeof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
-						CL_DisplayHudMessage(tmpbuf, 2000);
+						SCR_DisplayHudMessage(tmpbuf, 2000);
 					} else {
 						Com_sprintf(tmpbuf, sizeof(tmpbuf), _("An alien was killed: %s\n"), _(le->teamDef->name));
-						CL_DisplayHudMessage(tmpbuf, 2000);
+						SCR_DisplayHudMessage(tmpbuf, 2000);
 					}
 				} else {
 					if ((le->state & STATE_STUN) & ~STATE_DEAD)
-						CL_DisplayHudMessage(_("An alien was stunned.\n"), 2000);
+						SCR_DisplayHudMessage(_("An alien was stunned.\n"), 2000);
 					else
-						CL_DisplayHudMessage(_("An alien was killed.\n"), 2000);
+						SCR_DisplayHudMessage(_("An alien was killed.\n"), 2000);
 				}
 			} else {
 				if ((le->state & STATE_STUN) & ~STATE_DEAD)
-					CL_DisplayHudMessage(_("An alien was stunned.\n"), 2000);
+					SCR_DisplayHudMessage(_("An alien was stunned.\n"), 2000);
 				else
-					CL_DisplayHudMessage(_("An alien was killed.\n"), 2000);
+					SCR_DisplayHudMessage(_("An alien was killed.\n"), 2000);
 			}
 			break;
 		case (TEAM_PHALANX):
 			if ((le->state & STATE_STUN) & ~STATE_DEAD)
-				CL_DisplayHudMessage(_("A soldier was stunned.\n"), 2000);
+				SCR_DisplayHudMessage(_("A soldier was stunned.\n"), 2000);
 			else
-				CL_DisplayHudMessage(_("A soldier was killed.\n"), 2000);
+				SCR_DisplayHudMessage(_("A soldier was killed.\n"), 2000);
 			break;
 		default:
 			if ((le->state & STATE_STUN) & ~STATE_DEAD)
-				CL_DisplayHudMessage(va(_("A member of team %i was stunned.\n"), le->team), 2000);
+				SCR_DisplayHudMessage(va(_("A member of team %i was stunned.\n"), le->team), 2000);
 			else
-				CL_DisplayHudMessage(va(_("A member of team %i was killed.\n"), le->team), 2000);
+				SCR_DisplayHudMessage(va(_("A member of team %i was killed.\n"), le->team), 2000);
 			break;
 		}
 	}
@@ -3392,7 +3392,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
 		Cbuf_AddText("startround\n");
-		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
+		SCR_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
@@ -4183,14 +4183,14 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				if (mouseActor->team == TEAM_ALIEN) {
 					if (mouseActor->teamDef) {
 						if (RS_IsResearched_idx(RS_GetTechIdxByName(mouseActor->teamDef->tech)))
-							menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _(mouseActor->teamDef->name);
+							mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _(mouseActor->teamDef->name);
 						else
-							menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _("Unknown alien race");
+							mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _("Unknown alien race");
 					}
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */
-					menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
+					mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
 				}
 				/* Aliens (and players not in our team [multiplayer]) are red */
 				VectorSet(ent.angles, 1, 0, 0); /* Red */
@@ -4199,12 +4199,12 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		} else {
 			/* coop multiplayer games */
 			if (mouseActor->pnum != cl.pnum) {
-				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
+				mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
 			} else {
 				/* we know the names of our own actors */
 				character_t* chr = CL_GetActorChr(mouseActor);
 				assert(chr);
-				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = chr->name;
+				mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = chr->name;
 			}
 			/* Paint a light blue box if on our team */
 			VectorSet(ent.angles, 0.2, 0.3, 1); /* Light Blue */

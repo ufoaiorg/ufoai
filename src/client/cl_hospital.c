@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_popup.h"
 
 /** @brief This is the current selected employee for the hospital_employee menu. */
 static employee_t* currentEmployeeInHospital = NULL;
@@ -116,8 +117,8 @@ static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 		employee->chr.HP = employee->chr.maxHP;
 		if (HOS_RemoveFromList(employee, base)) {
 			/* @todo: better text handling - "0 current healings" sounds silly. */
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), ngettext("Healing of %s completed - %i active healing left\n", "Healing of %s completed - %i active healings left\n", base->capacities[CAP_HOSPSPACE].cur), employee->chr.name, base->capacities[CAP_HOSPSPACE].cur);
-			MN_AddNewMessage(_("Healing complete"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), ngettext("Healing of %s completed - %i active healing left\n", "Healing of %s completed - %i active healings left\n", base->capacities[CAP_HOSPSPACE].cur), employee->chr.name, base->capacities[CAP_HOSPSPACE].cur);
+			MN_AddNewMessage(_("Healing complete"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		} else {
 			Com_Printf("HOS_CheckRemovalFromEmployeeList()... Didn't find employee %s in Hospital healing list\n",employee->chr.name);
 		}
@@ -512,7 +513,7 @@ static void HOS_EmployeeInit_f (void)
 	}
 
 	/* @todo */
-	menuText[TEXT_STANDARD] = employeeDesc;
+	mn.menuText[TEXT_STANDARD] = employeeDesc;
 	*employeeDesc = '\0';
 
 	c = &currentEmployeeInHospital->chr;

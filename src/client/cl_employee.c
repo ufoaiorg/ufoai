@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_popup.h"
 
 /* holds the current active employee category */
 static int employeeCategory = 0;
@@ -147,7 +148,7 @@ static void E_EmployeeList_f (void)
 		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
 			continue;
 
-		LIST_AddPointer(&menuTextLinkedList[TEXT_LIST], employee->chr.name);
+		LIST_AddPointer(&mn.menuTextLinkedList[TEXT_LIST], employee->chr.name);
 		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
 		/** @todo Check if the "textScroll % cl_numnames->integer" calculation is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
 		if ((employeesInCurrentList >= employeeListNode->textScroll)

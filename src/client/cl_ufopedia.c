@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_messages.h"
 
 static cvar_t *mn_uppretext = NULL;
 static cvar_t *mn_uppreavailable = NULL;
@@ -252,8 +253,8 @@ static void UP_DisplayTechTree (technology_t* t)
 			Q_strcat(up_techtree, "\n", sizeof(up_techtree));
 		}
 	}
-	/* and now set the buffer to the right menuText */
-	menuText[TEXT_LIST] = up_techtree;
+	/* and now set the buffer to the right mn.menuText */
+	mn.menuText[TEXT_LIST] = up_techtree;
 }
 
 /**
@@ -297,7 +298,7 @@ void UP_ItemDescription (int item)
 #ifdef DEBUG
 	if (!od->tech && ccs.singleplayer) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
-		menuText[TEXT_STANDARD] = itemText;
+		mn.menuText[TEXT_STANDARD] = itemText;
 	} else
 #endif
 
@@ -464,10 +465,10 @@ void UP_ItemDescription (int item)
 				(odAmmo->fd[up_weapon_id][up_firemode].spread[0] + odAmmo->fd[up_weapon_id][up_firemode].spread[1]) / 2),  sizeof(itemText));
 		}
 
-		menuText[TEXT_STANDARD] = itemText;
+		mn.menuText[TEXT_STANDARD] = itemText;
 	} else { /* includes if (RS_Collected_(tech)) AFAIK*/
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-		menuText[TEXT_STANDARD] = itemText;
+		mn.menuText[TEXT_STANDARD] = itemText;
 	}
 }
 
@@ -505,7 +506,7 @@ static void UP_ArmourDescription (technology_t* t)
 			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
 		}
 	}
-	menuText[TEXT_STANDARD] = upBuffer;
+	mn.menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);
 }
 
@@ -534,7 +535,7 @@ static void UP_BuildingDescription (technology_t* t)
 		Q_strcat(upBuffer, va(_("Cost:\t%i c\n"), b->fixCosts), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), b->varCosts), sizeof(upBuffer));
 	}
-	menuText[TEXT_STANDARD] = upBuffer;
+	mn.menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);
 }
 
@@ -583,7 +584,7 @@ void UP_AircraftItemDescription (int idx)
 #ifdef DEBUG
 	if (!item->tech && ccs.singleplayer) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
-		menuText[TEXT_STANDARD] = itemText;
+		mn.menuText[TEXT_STANDARD] = itemText;
 	} else
 #endif
 	/* set description text */
@@ -617,7 +618,7 @@ void UP_AircraftItemDescription (int idx)
 		}
 	}
 
-	menuText[TEXT_STANDARD] = itemText;
+	mn.menuText[TEXT_STANDARD] = itemText;
 }
 
 /**
@@ -665,7 +666,7 @@ void UP_AircraftDescription (technology_t* t)
 	} else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	}
-	menuText[TEXT_STANDARD] = upBuffer;
+	mn.menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);
 }
 
@@ -677,7 +678,7 @@ void UP_AircraftDescription (technology_t* t)
  */
 int UP_GetUnreadMails (void)
 {
-	message_t *m = messageStack;
+	message_t *m = mn.messageStack;
 
 	if (gd.numUnreadMails != -1)
 		return gd.numUnreadMails;
@@ -720,7 +721,7 @@ int UP_GetUnreadMails (void)
 }
 
 /**
- * @brief Binds the mail header (if needed) to the menuText array.
+ * @brief Binds the mail header (if needed) to the mn.menuText array.
  * @note The cvar mn_up_mail is set to 1 (for activate mail nodes from menu_ufopedia.ufo)
  * @note if there is a mail header.
  * @param[in] tech The tech to generate a header for.
@@ -799,12 +800,12 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	}
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
 		_(from), _(to), dateBuf, subjectType, _(subject));
-	menuText[TEXT_UFOPEDIA_MAILHEADER] = mailHeader;
+	mn.menuText[TEXT_UFOPEDIA_MAILHEADER] = mailHeader;
 	Cvar_Set("mn_up_mail", "1"); /* use strings here - no int */
 }
 
 /**
- * @brief Display only the TEXT_UFOPEDIA part - don't reset any other menuText pointers here
+ * @brief Display only the TEXT_UFOPEDIA part - don't reset any other mn.menuText pointers here
  * @param[in] tech The technology_t pointer to print the ufopedia article for
  * @sa UP_DrawEntry
  */
@@ -820,7 +821,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		Cvar_SetValue("mn_uppreavailable", 0);
 		Cvar_SetValue("mn_updisplay", 0);
 		UP_SetMailHeader(NULL, 0, mail);
-		menuText[TEXT_UFOPEDIA] = _(mail->body);
+		mn.menuText[TEXT_UFOPEDIA] = _(mail->body);
 		/* This allows us to use the index button in the ufopedia,
 		 * eventMails don't have any chapter to go back to. */
 		upDisplay = UFOPEDIA_INDEX;
@@ -830,11 +831,11 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		if (RS_IsResearched_ptr(tech)) {
 			Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 			/* If researched -> display research text */
-			menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->description));
+			mn.menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->description));
 			if (tech->pre_description.numDescriptions > 0) {
 				/* Display pre-research text and the buttons if a pre-research text is available. */
 				if (mn_uppretext->integer) {
-					menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
+					mn.menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
 					UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
 				} else {
 					UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
@@ -884,10 +885,10 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 			Cvar_Set("mn_uptitle", _(tech->name));
 			/* Not researched but some items collected -> display pre-research text if available. */
 			if (tech->pre_description.numDescriptions > 0) {
-				menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
+				mn.menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
 				UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
 			} else {
-				menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
+				mn.menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
 			}
 		} else {
 			Cvar_Set("mn_uptitle", _(tech->name));
@@ -1079,7 +1080,7 @@ static void UP_Content_f (void)
 
 	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
 
-	menuText[TEXT_UFOPEDIA] = upText;
+	mn.menuText[TEXT_UFOPEDIA] = upText;
 	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
 }
 
@@ -1110,7 +1111,7 @@ static void UP_Index_f (void)
 
 	upIndex = upText;
 	*upIndex = '\0';
-	menuText[TEXT_UFOPEDIA] = upIndex;
+	mn.menuText[TEXT_UFOPEDIA] = upIndex;
 
 	Cvar_Set("mn_uptitle", va(_("UFOpaedia Index: %s"), _(gd.upChapters[currentChapter].name)));
 
@@ -1348,7 +1349,7 @@ static void UP_Update_f (void)
  */
 static void UP_MailClientClick_f (void)
 {
-	message_t *m = messageStack;
+	message_t *m = mn.messageStack;
 	int num;
 	int cnt = -1;
 
@@ -1442,7 +1443,7 @@ static menuNode_t *mailClientListNode;
 static void UP_SetMailButtons_f (void)
 {
 	int i = 0, num;
-	message_t *m = messageStack;
+	message_t *m = mn.messageStack;
 
 	num = mailClientListNode->textScroll;
 
@@ -1509,7 +1510,7 @@ static void UP_SetMailButtons_f (void)
 /**
  * @brief Start the mailclient
  * @sa UP_MailClientClick_f
- * @note use TEXT_UFOPEDIA_MAIL in menuText array (33)
+ * @note use TEXT_UFOPEDIA_MAIL in mn.menuText array (33)
  * @sa CP_GetUnreadMails
  * @sa CL_EventAddMail_f
  * @sa MN_AddNewMessage
@@ -1517,7 +1518,7 @@ static void UP_SetMailButtons_f (void)
 static void UP_OpenMail_f (void)
 {
 	char tempBuf[MAIL_LENGTH] = "";
-	message_t *m = messageStack;
+	message_t *m = mn.messageStack;
 	menu_t* menu;
 
 	*mailBuffer = '\0';
@@ -1623,7 +1624,7 @@ static void UP_OpenMail_f (void)
 #endif
 		m = m->next;
 	}
-	menuText[TEXT_UFOPEDIA_MAIL] = mailBuffer;
+	mn.menuText[TEXT_UFOPEDIA_MAIL] = mailBuffer;
 
 	UP_SetMailButtons_f();
 }

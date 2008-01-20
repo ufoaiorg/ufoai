@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_popup.h"
 
 /* public vars */
 static mission_t missions[MAX_MISSIONS];	/**< Missions parsed in missions.ufo AND missions created during game (crash site, ...)
@@ -801,8 +802,8 @@ static void CL_CampaignAddMission (setState_t * set)
 	MAP_MaskFind(mis->def->mask, mis->realPos);
 
 	/* Add message to message-system. */
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
-	MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
+	MN_AddNewMessage(_("Alien activity"), mn.messageBuffer, qfalse, MSG_TERRORSITE, NULL);
 	Com_DPrintf(DEBUG_CLIENT, "Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
 
 	/* prepare next event (if any) */
@@ -882,7 +883,7 @@ static void CL_AircraftList_f (void)
 		}
 	}
 
-	menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
+	mn.menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 }
 
 /**
@@ -959,7 +960,7 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 	if (mission && curCampaign->civiliansKilledUntilLost) {
 		if (ccs.civiliansKilled > curCampaign->civiliansKilledUntilLost) {
 			/* lost the game */
-			menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have"
+			mn.menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have"
 				" consistently failed to protect innocent civilians. Dozens have"
 				" lost their lives through your inability to handle the alien threat."
 				" The UN, highly unsatisfied with your performance, has decided to remove"
@@ -972,13 +973,13 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 	}
 
 	if (!endCampaign && ccs.credits < -curCampaign->negativeCreditsUntilLost) {
-		menuText[TEXT_STANDARD] = _("You've gone too far into debt.");
+		mn.menuText[TEXT_STANDARD] = _("You've gone too far into debt.");
 		endCampaign = qtrue;
 	}
 
 	if (!endCampaign) {
 		if (CP_GetAverageXVIRate() > curCampaign->maxAllowedXVIRateUntilLost) {
-			menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth."
+			mn.menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth."
 				" Our home and our people have fallen to the alien infection. Only a handful"
 				" of people on Earth remain human, and the remaining few no longer have a"
 				" chance to stem the tide. Your command is no more; PHALANX is no longer"
@@ -1122,8 +1123,8 @@ void CL_BaseRansacked (base_t *base)
 	 * time from other bases?
 	 * @todo: Destroy (or better: just damage) some random buildings. */
 
-	Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base: %s has been ransacked! All employees killed and all equipment destroyed."), base->name);
-	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Your base: %s has been ransacked! All employees killed and all equipment destroyed."), base->name);
+	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_GameTimeStop();
 }
 
@@ -1180,8 +1181,8 @@ static void CP_CheckEvents (void)
 				/* Normal ground mission. */
 				CL_HandleNationData(qtrue, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 				if (!mis->def->storyRelated || mis->def->played) {
-					Q_strncpyz(messageBuffer, va(ngettext("The mission %s expired and %i civilian died.", "The mission %s expired and %i civilians died.", mis->def->civilians), mis->def->name, mis->def->civilians), MAX_MESSAGE_TEXT);
-					MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+					Q_strncpyz(mn.messageBuffer, va(ngettext("The mission %s expired and %i civilian died.", "The mission %s expired and %i civilians died.", mis->def->civilians), mis->def->name, mis->def->civilians), sizeof(mn.messageBuffer));
+					MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 				}
 				break;
 			default:
@@ -1195,8 +1196,8 @@ static void CP_CheckEvents (void)
 			 * (e.g. they expired) and have the storyRelated flag set */
 			if (mis->def->storyRelated && !mis->def->played) {
 				date_t date = {7, 0};
-				Q_strncpyz(messageBuffer, va(ngettext("The aliens had enough time to kill %i civilian at %s.", "The aliens had enough time to kill %i civilians at %s.", mis->def->civilians), mis->def->civilians, mis->def->location), MAX_MESSAGE_TEXT);
-				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+				Q_strncpyz(mn.messageBuffer, va(ngettext("The aliens had enough time to kill %i civilian at %s.", "The aliens had enough time to kill %i civilians at %s.", mis->def->civilians), mis->def->civilians, mis->def->location), sizeof(mn.messageBuffer));
+				MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 				/* nation's happiness decreases */
 				for (j = 0; j < gd.numNations; j++) {
@@ -1633,10 +1634,10 @@ void CL_CampaignRun (void)
 			gd.fund = qtrue;
 
 		UP_GetUnreadMails();
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%i %s %02i"), ccs.date.day / DAYS_PER_YEAR, CL_DateGetMonthName(month), day);
-		Cvar_Set("mn_mapdate", messageBuffer);
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%02i"), ccs.date.sec / 3600, ((ccs.date.sec % 3600) / 60));
-		Cvar_Set("mn_maptime", messageBuffer);
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%i %s %02i"), ccs.date.day / DAYS_PER_YEAR, CL_DateGetMonthName(month), day);
+		Cvar_Set("mn_mapdate", mn.messageBuffer);
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%02i:%02i"), ccs.date.sec / 3600, ((ccs.date.sec % 3600) / 60));
+		Cvar_Set("mn_maptime", mn.messageBuffer);
 	}
 }
 
@@ -1772,18 +1773,18 @@ static void CL_StatsUpdate_f (void)
 	pos = statsBuffer;
 
 	/* missions */
-	menuText[TEXT_STATS_1] = pos;
+	mn.menuText[TEXT_STATS_1] = pos;
 	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), stats.missionsWon, stats.missionsLost);
 
 	/* bases */
 	pos += (strlen(pos) + 1);
-	menuText[TEXT_STATS_2] = pos;
+	mn.menuText[TEXT_STATS_2] = pos;
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 		stats.basesBuild, gd.numBases, stats.basesAttacked),
 
 	/* nations */
 	pos += (strlen(pos) + 1);
-	menuText[TEXT_STATS_3] = pos;
+	mn.menuText[TEXT_STATS_3] = pos;
 	for (i = 0; i < gd.numNations; i++) {
 		Q_strcat(pos, va(_("%s\t%s\n"), _(gd.nations[i].name), CL_GetNationHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
@@ -1822,14 +1823,14 @@ static void CL_StatsUpdate_f (void)
 
 	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
-	menuText[TEXT_STATS_4] = pos;
+	mn.menuText[TEXT_STATS_4] = pos;
 	for (i = 0; i < MAX_EMPL; i++) {
 		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs - second part */
 	pos += (strlen(pos) + 1);
-	menuText[TEXT_STATS_5] = pos;
+	mn.menuText[TEXT_STATS_5] = pos;
 	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -1866,7 +1867,7 @@ static void CL_StatsUpdate_f (void)
 
 	/* campaign */
 	pos += (strlen(pos) + 1);
-	menuText[TEXT_GENERIC] = pos;
+	mn.menuText[TEXT_GENERIC] = pos;
 	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), curCampaign->negativeCreditsUntilLost),
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 
@@ -3127,10 +3128,10 @@ static void CL_UpdateCharacterStats (int won)
 						&& ((chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM]) <= rank->killed_others)) {
 						chr->rank = j;
 						if (chr->HP > 0)
-							Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name);
+							Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name);
 						else
-							Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"), chr->name, rank->name);
-						MN_AddNewMessage(_("Soldier promoted"), messageBuffer, qfalse, MSG_PROMOTION, NULL);
+							Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"), chr->name, rank->name);
+						MN_AddNewMessage(_("Soldier promoted"), mn.messageBuffer, qfalse, MSG_PROMOTION, NULL);
 						break;
 					}
 				}
@@ -3375,8 +3376,8 @@ static void CL_GameResults_f (void)
 		base = (base_t*)selMis->def->data;
 		assert(base);
 		if (won) {
-			Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Defense of base: %s successful!"), base->name);
-			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defense of base: %s successful!"), base->name);
+			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			base->baseStatus = BASE_WORKING;
 			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
@@ -4578,7 +4579,7 @@ static void CP_GetCampaigns_f (void)
 			Q_strcat(campaignText, va("%s\n", campaigns[i].name), MAXCAMPAIGNTEXT);
 	}
 	/* default campaign */
-	menuText[TEXT_STANDARD] = campaignDesc;
+	mn.menuText[TEXT_STANDARD] = campaignDesc;
 
 	/* select main as default */
 	for (i = 0; i < numCampaigns; i++)
@@ -4633,7 +4634,7 @@ static void CP_CampaignsClick_f (void)
 			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty),
 			campaigns[num].civiliansKilledUntilLost, campaigns[num].negativeCreditsUntilLost,
 			_(campaigns[num].text));
-	menuText[TEXT_STANDARD] = campaignDesc;
+	mn.menuText[TEXT_STANDARD] = campaignDesc;
 }
 
 /**
@@ -4653,7 +4654,7 @@ void CL_ResetSinglePlayerData (void)
 	memset(stageSets, 0, sizeof(stageSet_t) * MAX_STAGESETS);
 	memset(stages, 0, sizeof(stage_t) * MAX_STAGES);
 	memset(&invList, 0, sizeof(invList));
-	messageStack = NULL;
+	mn.messageStack = NULL;
 
 	/* cleanup dynamic mails */
 	CL_FreeDynamicEventMail();
@@ -4956,10 +4957,10 @@ static void CP_UFORecoveredStart_f (void)
 
 	base = &gd.bases[i];
 	assert(base);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer),
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
 		UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), base->name);
-	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 	UFO_PrepareRecovery(base);
 
 	/* UFO recovery process is done, disable buttons. */
@@ -5047,7 +5048,7 @@ static void CP_UFORecoveredStore_f (void)
 			}
 		}
 		/* If more than one - popup with list to select base. */
-		menuText[TEXT_LIST] = recoveryBaseSelectPopup;
+		mn.menuText[TEXT_LIST] = recoveryBaseSelectPopup;
 		MN_PushMenu("popup_recoverybaselist");
 		break;
 	}
@@ -5099,9 +5100,9 @@ static void CP_UFOSellStart_f (void)
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert(nation);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
-	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
-	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
+		UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
+	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 
 	/* update nation happiness */
@@ -5176,7 +5177,7 @@ static void CP_UFORecoveredSell_f (void)
 	if (nations == 0)
 		return;
 
-	menuText[TEXT_LIST] = recoveryNationSelectPopup;
+	mn.menuText[TEXT_LIST] = recoveryNationSelectPopup;
 	MN_PushMenu("popup_recoverynationlist");
 }
 
@@ -5190,9 +5191,9 @@ static void CP_UFORecoveredDestroy_f (void)
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
 
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Secured %s was destroyed."),
-	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")));
-	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Secured %s was destroyed."),
+		UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")));
+	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();
@@ -5438,7 +5439,7 @@ void CL_ResetCampaign (void)
 	/* reset some vars */
 	curCampaign = NULL;
 	baseCurrent = NULL;
-	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
+	mn.menuText[TEXT_CAMPAIGN_LIST] = campaignText;
 
 	/* commands */
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);

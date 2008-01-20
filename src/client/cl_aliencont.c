@@ -1008,7 +1008,7 @@ static void AC_Init (void)
 		Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].max);
 		Cvar_Set("mn_al_base", baseCurrent->name);
 
-		menuText[TEXT_STANDARD] = aliencontText;
+		mn.menuText[TEXT_STANDARD] = aliencontText;
 	} else
 		MN_MenuTextReset(TEXT_STANDARD);
 	MN_MenuTextReset(TEXT_UFOPEDIA);

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_sound.h"
+#include "menu/m_popup.h"
 
 extern cvar_t *fs_gamedir;
 
@@ -983,15 +984,15 @@ static void CL_ActorAppear (struct dbuffer *msg)
 					if (le->teamDef) {
 						if (RS_IsResearched_idx(RS_GetTechIdxByName(le->teamDef->tech))) {
 							Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Alien spotted: %s!"), _(le->teamDef->name));
-							CL_DisplayHudMessage(tmpbuf, 2000);
+							SCR_DisplayHudMessage(tmpbuf, 2000);
 						} else
-							CL_DisplayHudMessage(_("Alien spotted!\n"), 2000);
+							SCR_DisplayHudMessage(_("Alien spotted!\n"), 2000);
 					} else
-						CL_DisplayHudMessage(_("Alien spotted!\n"), 2000);
+						SCR_DisplayHudMessage(_("Alien spotted!\n"), 2000);
 				} else
-					CL_DisplayHudMessage(_("Enemy spotted!\n"), 2000);
+					SCR_DisplayHudMessage(_("Enemy spotted!\n"), 2000);
 			} else
-				CL_DisplayHudMessage(_("Civilian spotted!\n"), 2000);
+				SCR_DisplayHudMessage(_("Civilian spotted!\n"), 2000);
 
 			/* update pathing as new actor could block path */
 			if (newActor)
@@ -1639,7 +1640,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 			/* all game lib messages or server messages should be printed
 			 * untranslated with bprintf or cprintf */
 			/* see src/po/OTHER_STRINGS */
-			CL_DisplayHudMessage(_(s), 2000);
+			SCR_DisplayHudMessage(_(s), 2000);
 			/* this is utf-8 - so no console print please */
 			return;
 		default:

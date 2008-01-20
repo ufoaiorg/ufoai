@@ -1,0 +1,67 @@
+/**
+ * @file m_node_model.h
+ */
+
+/*
+Copyright (C) 1997-2008 UFO:AI Team
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+#ifndef CLIENT_MENU_M_NODE_MODEL_H
+#define CLIENT_MENU_M_NODE_MODEL_H
+
+#define MAX_MENUMODELS		128
+
+/* max menuscale values */
+#define MAX_MENUMODELS_SCALEMENUS 8
+typedef struct menuTransform_s {
+	char *menuID;		/**< The menu id wher ethe model should use these values. */
+	void *menuPtr;		/**< Linked after parsing for faster access */
+
+	qboolean useScale;	/**< Is the scale value used? */
+	qboolean useAngles;	/**< Is the angles value used? */
+	qboolean useOrigin;	/**< Is the origin value used? */
+
+	vec3_t scale;		/**< Scale values to be used instead of the ones defined in the menu. */
+	vec3_t angles;		/**< Angle values to be used instead of the ones defined in the menu. */
+	vec3_t origin;		/**< The _relative_ offset ont he screen. It is added to the "origin" value defined int he menu (-file). */
+} menuTransform_t;
+
+/** @brief Model that have more than one part (head, body) but may only use one menu node */
+typedef struct menuModel_s {
+	char *id;
+	char *need;
+	char *anim;	/**< animation to run for this model */
+	char *parent;	/**< parent model id */
+	char *tag;	/**< the tag the model should placed onto */
+	int skin;		/**< skin number to use - default 0 (first skin) */
+	char *model;
+	menuTransform_t menuTransform[MAX_MENUMODELS_SCALEMENUS];	/**< The various transform values for the specific menu. */
+	int menuTransformCnt;			/**< Nubmer of parsed menutransform menus. */
+	animState_t animState;
+	vec3_t origin, scale, angles, center;
+	vec4_t color;				/**< rgba */
+	struct menuModel_s *next;
+} menuModel_t;
+
+void MN_LinkMenuModels(void);
+menuModel_t *MN_GetMenuModel(const char *menuModel);
+void MN_ListMenuModels_f(void);
+void MN_NodeModelInit(void);
+
+#endif

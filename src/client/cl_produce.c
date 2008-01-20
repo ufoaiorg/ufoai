@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_popup.h"
 
 /** @brief Holds the current active production category (which is buytype). */
 static int produceCategory = BUY_WEAP_PRI;
@@ -367,8 +368,8 @@ static void PR_QueueNext (base_t* base)
 	if (queue->numItems == 0) {
 		selectedQueueItem = qfalse;
 		selectedIndex = NONE;
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production queue for base %s is empty"), base->name);
-		MN_AddNewMessage(_("Production queue empty"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production queue for base %s is empty"), base->name);
+		MN_AddNewMessage(_("Production queue empty"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 		CL_GameTimeStop();
 		return;
 	} else if (selectedIndex >= queue->numItems) {
@@ -416,8 +417,8 @@ void PR_ProductionRun (void)
 				/* Not enough money to produce more items in this base. */
 				if (od->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditmessage) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough credits to finish production in base %s.\n"), gd.bases[i].name);
-						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), gd.bases[i].name);
+						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->creditmessage = qtrue;
 					}
 					continue;
@@ -425,8 +426,8 @@ void PR_ProductionRun (void)
 				/* Not enough free space in base storage for this item. */
 				if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < od->size) {
 					if (!prod->spacemessage) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough free storage space in base %s. Production paused.\n"), gd.bases[i].name);
-						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Production paused.\n"), gd.bases[i].name);
+						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->spacemessage = qtrue;
 					}
 					continue;
@@ -435,8 +436,8 @@ void PR_ProductionRun (void)
 				/* Not enough money to produce more items in this base. */
 				if (aircraft->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditmessage) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough credits to finish production in base %s.\n"), gd.bases[i].name);
-						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), gd.bases[i].name);
+						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->creditmessage = qtrue;
 					}
 					continue;
@@ -444,8 +445,8 @@ void PR_ProductionRun (void)
 				/* Not enough free space in hangars for this aircraft. */
 				if (AIR_CalculateHangarStorage(prod->objID, &gd.bases[i], 0) <= 0) {
 					if (!prod->spacemessage) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough free hangar space in base %s. Production paused.\n"), gd.bases[i].name);
-						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free hangar space in base %s. Production paused.\n"), gd.bases[i].name);
+						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->spacemessage = qtrue;
 					}
 					continue;
@@ -455,8 +456,8 @@ void PR_ProductionRun (void)
 			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur <
 			INV_DisassemblyItem(NULL, INV_GetComponentsByItemIdx(prod->objID), qtrue)) {
 				if (!prod->spacemessage) {
-					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough free storage space in base %s. Disassembling paused.\n"), gd.bases[i].name);
-					MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Disassembling paused.\n"), gd.bases[i].name);
+					MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 					prod->spacemessage = qtrue;
 				}
 				continue;
@@ -486,8 +487,8 @@ void PR_ProductionRun (void)
 
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."), od->name);
-						MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The production of %s has finished."), od->name);
+						MN_AddNewMessage(_("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 						PR_QueueNext(&gd.bases[i]);
 					}
 				} else {
@@ -498,8 +499,8 @@ void PR_ProductionRun (void)
 					AIR_NewAircraft(&gd.bases[i], aircraft->id);
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."), _(aircraft->name));
-						MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The production of %s has finished."), _(aircraft->name));
+						MN_AddNewMessage(_("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 						PR_QueueNext(&gd.bases[i]);
 					}
 				}
@@ -512,7 +513,7 @@ void PR_ProductionRun (void)
 					ufocraft = AIR_GetAircraft(od->id);
 					assert(ufocraft);
 					if (ufocraft->weight == AIRCRAFT_LARGE) {
-						/* Large UFOs can only be stored in Large UFO Hangar */  
+						/* Large UFOs can only be stored in Large UFO Hangar */
 						gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur--;
 					} else {
 						/* Small UFOs are stored in priority in small UFO hangars */
@@ -523,8 +524,8 @@ void PR_ProductionRun (void)
 						}
 				}
 				if (prod->amount <= 0) {
-					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The disassembling of %s has finished."),od->name);
-					MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The disassembling of %s has finished."),od->name);
+					MN_AddNewMessage(_("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 					PR_QueueNext(&gd.bases[i]);
 				}
 			}
@@ -621,7 +622,7 @@ static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
 			UP_ItemDescription(objID);
 		}
 	}
-	menuText[TEXT_PRODUCTION_INFO] = productionInfo;
+	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
 
 /**
@@ -641,7 +642,7 @@ static void PR_AircraftInfo (void)
 	} else {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No aircraft selected."));
 	}
-	menuText[TEXT_PRODUCTION_INFO] = productionInfo;
+	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
 
 /**
@@ -901,11 +902,11 @@ static void PR_UpdateProductionList (base_t* base)
 		}
 	}
 	/* bind the menu text to our static char array */
-	menuText[TEXT_PRODUCTION_LIST] = productionList;
+	mn.menuText[TEXT_PRODUCTION_LIST] = productionList;
 	/* bind the amount of available items */
-	menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
+	mn.menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
 	/* bind the amount of queued items */
-	menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
+	mn.menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
 
 #if 0 /* FIXME: needed now? */
 	/* now print the information about the current item in production */
@@ -968,11 +969,11 @@ static void PR_UpdateDisassemblingList_f (void)
 	/* Enable disassembly cvar. */
 	production_disassembling = qtrue;
 	/* bind the menu text to our static char array */
-	menuText[TEXT_PRODUCTION_LIST] = productionList;
+	mn.menuText[TEXT_PRODUCTION_LIST] = productionList;
 	/* bind the amount of available items */
-	menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
+	mn.menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
 	/* bind the amount of queued items */
-	menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
+	mn.menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
 }
 
 /**
@@ -1196,11 +1197,11 @@ static void PR_ProductionIncrease_f (void)
 				}
 
 				if (!production_disassembling) {
-					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
-					MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
+					MN_AddNewMessage(_("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
 				} else {
-					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Disassembling of %s started"), csi.ods[selectedIndex].name);
-					MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Disassembling of %s started"), csi.ods[selectedIndex].name);
+					MN_AddNewMessage(_("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
 				}
 
 				/* Now we select the item we just created. */
@@ -1218,8 +1219,8 @@ static void PR_ProductionIncrease_f (void)
 			prod->aircraft = qtrue;
 			aircraft = &aircraft_samples[prod->objID];
 			Com_DPrintf(DEBUG_CLIENT, "Increasing %s\n", aircraft->name);
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), _(aircraft->name));
-			MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), _(aircraft->name));
+			MN_AddNewMessage(_("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 			/* Now we select the item we just created. */
 			selectedQueueItem = qtrue;
 			selectedIndex = queue->numItems - 1;

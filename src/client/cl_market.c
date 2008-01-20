@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "menu/m_popup.h"
 
 #define MAX_BUYLIST		64
 
@@ -278,10 +279,10 @@ static void BS_BuyType_f (void)
 
 	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
 	MN_MenuTextReset(TEXT_STANDARD);
-	menuText[TEXT_MARKET_NAMES] = bsMarketNames;
-	menuText[TEXT_MARKET_STORAGE] = bsMarketStorage;
-	menuText[TEXT_MARKET_MARKET] = bsMarketMarket;
-	menuText[TEXT_MARKET_PRICES] = bsMarketPrices;
+	mn.menuText[TEXT_MARKET_NAMES] = bsMarketNames;
+	mn.menuText[TEXT_MARKET_STORAGE] = bsMarketStorage;
+	mn.menuText[TEXT_MARKET_MARKET] = bsMarketMarket;
+	mn.menuText[TEXT_MARKET_PRICES] = bsMarketPrices;
 
 	/* 'normal' items */
 	switch (buyCategory) {
