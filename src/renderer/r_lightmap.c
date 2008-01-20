@@ -296,9 +296,6 @@ void R_BeginBuildingLightmaps (void)
 {
 	memset(r_lightmaps.allocated, 0, sizeof(r_lightmaps.allocated));
 
-	R_EnableMultitexture(qtrue);
-	R_SelectTexture(&r_state.lightmap_texunit);
-
 	r_lightmaps.texnum = 0;
 }
 
@@ -309,7 +306,6 @@ void R_BeginBuildingLightmaps (void)
 void R_EndBuildingLightmaps (void)
 {
 	R_UploadLightmapBlock();
-	R_EnableMultitexture(qfalse);
 	Com_DPrintf(DEBUG_RENDERER, "lightmaps: %i\n", r_lightmaps.texnum);
 }
 
@@ -402,7 +398,7 @@ begin:
 		dt /= surf->lightmap_scale;
 
 		/* resolve the lightmap sample at intersection */
-		sample = (int)(3 * ((int)dt * ((surf->stmaxs[0] / surf->lightmap_scale) + 1) + (int)ds));
+		sample = (int)(LIGHTMAP_BYTES * ((int)dt * ((surf->stmaxs[0] / surf->lightmap_scale) + 1) + (int)ds));
 
 		/* and normalize it to floating point */
 		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,
