@@ -480,8 +480,14 @@ void AIM_PrevAircraft_f (void)
 int CL_AircraftMenuStatsValues (const int value, const int stat)
 {
 	switch (stat) {
+	case AIR_STATS_SPEED:
+		/* Convert into km/h, and round this value */
+		return 10 * (int) (111.2 * value / 10.0f);
 	case AIR_STATS_FUELSIZE:
 		return value / 1000;
+	case AIR_STATS_OP_RANGE:
+		/* the 2.0f factor is for going to destination and then come back */
+		return 100 * (int) (111.2 * value / (2.0f * 3600.0f * 100.0f));
 	default:
 		return value;
 	}

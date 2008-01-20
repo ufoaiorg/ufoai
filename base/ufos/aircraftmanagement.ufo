@@ -74,12 +74,12 @@
 aircraft craft_drop_firebird
 {
 	param {
-		speed		10
+		speed		7
 		shield		0
 		ecm			100
 		damage		50
 		accuracy	70
-		fuelsize	100000
+		fuelsize	166600
 	}
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
@@ -112,12 +112,12 @@ aircraft craft_drop_firebird
 aircraft craft_inter_stiletto
 {
 	param {
-		speed		30
+		speed		13
 		shield		0
 		ecm		100
 		damage		30
 		accuracy	100
-		fuelsize	60000
+		fuelsize	10000
 	}
 	name		"_Stiletto-class Interceptor"
 	shortname	"_Stiletto I"
@@ -125,7 +125,7 @@ aircraft craft_inter_stiletto
 	model		"inter_stiletto"
 	size		1
 	weight		1
-	price		20000
+	price		10000
 	building	building_intercept
 	image		air_interceptor
 	slot {
@@ -156,12 +156,12 @@ aircraft craft_inter_stiletto
 aircraft craft_inter_saracen
 {
 	param {
-		speed		30
+		speed		37
 		shield		0
 		ecm		100
 		damage		40
 		accuracy	70
-		fuelsize	60000
+		fuelsize	17500
 	}
 	name		"_Saracen-class Interceptor"
 	shortname	"_Saracen I"
@@ -200,7 +200,7 @@ aircraft craft_inter_dragon
 		ecm		100
 		damage		40
 		accuracy	80
-		fuelsize	60000
+		fuelsize	35000
 	}
 	name		"_Dragon Interceptor"
 	shortname	"_Dragon"
@@ -239,7 +239,7 @@ aircraft craft_inter_stingray
 		ecm		100
 		damage		70
 		accuracy	100
-		fuelsize	60000
+		fuelsize	25000
 	}
 	name		"_Stingray Interceptor"
 	shortname	"_Stingray"
@@ -280,7 +280,7 @@ aircraft craft_inter_stingray
 aircraft craft_ufo_harvester
 {
 	param {
-		speed		25
+		speed		20
 		shield		3
 		ecm		100
 		damage		40
@@ -348,7 +348,7 @@ aircraft craft_ufo_carrier
 aircraft craft_ufo_supply
 {
 	param {
-		speed		25
+		speed		15
 		shield		5
 		ecm		100
 		damage		50
@@ -400,7 +400,7 @@ aircraft craft_ufo_condor
 aircraft craft_ufo_scout
 {
 	param {
-		speed		25
+		speed		15
 		shield		0
 		ecm		100
 		damage		30
@@ -422,7 +422,7 @@ aircraft craft_ufo_scout
 aircraft craft_ufo_fighter
 {
 	param {
-		speed		18
+		speed		17
 		shield		0
 		ecm		100
 		damage		80

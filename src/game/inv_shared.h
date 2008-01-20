@@ -162,7 +162,8 @@ typedef enum {
 	AIR_STATS_FUELSIZE,	/**< Aircraft fuel capacity. */
 	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. @note: Should be the last one */
 
-	AIR_STATS_MAX
+	AIR_STATS_MAX,
+	AIR_STATS_OP_RANGE	/**< Operationnal range of the aircraft (after AIR_STATS_MAX because not needed in stats[AIR_STATS_MAX], only in CL_AircraftMenuStatsValues */
 } aircraftParams_t;
 
 typedef struct craftitem_s {
