@@ -1722,8 +1722,12 @@ Aircraft functions related to team handling.
  */
 void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 {
-	memset(aircraft->teamIdxs, -1, MAX_ACTIVETEAM * sizeof(int));
-	memset(aircraft->teamTypes, MAX_EMPL, MAX_ACTIVETEAM * sizeof(employeeType_t));
+	int i;
+
+	for (i = 0; i < MAX_ACTIVETEAM; i++) {
+		aircraft->teamIdxs[i] = -1;
+		aircraft->teamTypes[i] = MAX_EMPL;
+	}
 	aircraft->teamSize = 0;
 }
 
@@ -1737,6 +1741,8 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
 	int i;
+
+	assert(employeeType <= MAX_EMPL);
 
 	if (aircraft == NULL) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: null aircraft \n");
