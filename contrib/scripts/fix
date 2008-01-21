@@ -5,21 +5,20 @@ DIR=.
 if [ $# -eq 1 ]
 then
     echo "Use $1"
-    DIR=$1
+    DIR="$1"
 fi
 
 EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py"
 
 for i in $EXT; do
-        find $DIR -name "*.$i" -exec ./eol {} \;
+        find "$DIR" -name "*.$i" -exec ./eol {} \;
 done
 
-find $DIR -name ".cvsignore" -exec svn rm {} \;
+find "$DIR" -name ".cvsignore" -exec svn rm {} \;
 
 mime () {
-        find $DIR -name "*.$1" -exec svn ps svn:mime-type $2 {} \;
+        find "$DIR" -name "*.$1" -exec svn ps svn:mime-type $2 {} \;
 }
-
 
 mime bmp image/bmp
 mime jpg image/jpeg
