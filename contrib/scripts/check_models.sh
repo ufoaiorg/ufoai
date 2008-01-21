@@ -4,7 +4,6 @@
 
 # Environment
 path=$(pwd)
-subdirfile=~/subdir.list
 logfile=~/check_models.log
 svnsoft=$(which svn) || fail "couldn't find svn"
 awksoft=$(which awk) || fail "couldn't find awk"
@@ -17,9 +16,6 @@ then
 fi
 
 [ -d "$path" ] || fail "Directory does not exist"
-
-# Prepare workspace
-find "$path" -type d -print > "$subdirfile"
 
 # Prepare logfile
 > "$logfile"
@@ -106,12 +102,11 @@ fix_md2_and_tga()
 }
 
 # M A I N
-for i in $(cat subdir.list); do
+while read i; do
 	cd "$i"
 	echo "current path: $i" >> "$logfile"
 	remove_pcx_if_png
 	convert_png_to_tga
 	fix_md2_and_tga
-done
-rm "$subdirfile"
+done < <(find "$path" -type d -print)
 exit
