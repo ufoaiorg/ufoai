@@ -27,12 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "menu/m_main.h"
 #include "menu/m_popup.h"
-#include "menu/m_messages.h"
-#include "../renderer/r_mesh.h"
-#include "../renderer/r_draw.h"
-#include "../renderer/r_mesh_anim.h"
-
-cvar_t *mn_inputlength;
 
 /**
  * @brief Update the menu values with current gametype values

@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_inventory.h"
 #include "m_node_text.h"
 
+cvar_t *mn_inputlength;
+
 /**
  * @sa IN_Parse
  */
