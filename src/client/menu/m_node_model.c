@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Add a menu link to menumodel definition for faster access
- * @note Called after all menus are parsed of course
+ * @note Called after all menus are parsed - only once
  */
 void MN_LinkMenuModels (void)
 {
@@ -40,6 +40,9 @@ void MN_LinkMenuModels (void)
 			m->menuTransform[j].menuPtr = MN_GetMenu(m->menuTransform[j].menuID);
 			if (m->menuTransform[j].menuPtr == NULL)
 				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'", m->menuTransform[j].menuID, m->id);
+			/* we don't need this anymore */
+			Mem_Free(m->menuTransform[j].menuID);
+			m->menuTransform[j].menuID = NULL;
 		}
 	}
 }
