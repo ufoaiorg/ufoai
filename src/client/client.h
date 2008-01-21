@@ -224,8 +224,6 @@ extern cvar_t *cl_http_max_connections;
 extern cvar_t *cl_isometric;
 extern cvar_t *cl_particleWeather;
 extern cvar_t *cl_fps;
-extern cvar_t *cl_shownet;
-extern cvar_t *cl_show_tooltips;
 extern cvar_t *cl_logevents;
 extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;

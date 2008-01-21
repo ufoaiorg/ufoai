@@ -44,8 +44,7 @@ cvar_t *cl_isometric;
 cvar_t *rcon_client_password;
 
 cvar_t *cl_fps;
-cvar_t *cl_shownet;
-cvar_t *cl_show_tooltips;
+static cvar_t *cl_shownet;
 cvar_t *cl_particleWeather;
 cvar_t *cl_logevents;
 cvar_t *cl_centerview;
@@ -2042,8 +2041,6 @@ static void CL_InitLocal (void)
 
 	/* register our variables */
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-
-	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");

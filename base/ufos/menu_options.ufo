@@ -846,7 +846,7 @@ menu options_game
 	}
 	checkbox tooltip
 	{
-		cvar	"*cvar cl_show_tooltips"
+		cvar	"*cvar mn_show_tooltips"
 		pos		"840 280"
 		align	ur
 		tooltip	"_Activates tooltips"

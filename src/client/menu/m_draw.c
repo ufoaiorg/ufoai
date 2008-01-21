@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 
 static cvar_t *mn_debugmenu;
+static cvar_t *mn_show_tooltips;
 
 /**
  * @brief Draws the menu stack
@@ -438,7 +439,7 @@ void MN_DrawMenus (void)
 							MN_InvDrawFree(menuInventory, node);
 
 						/* Draw tooltip for weapon or ammo */
-						if (mouseSpace != MS_DRAG && node->state && cl_show_tooltips->integer) {
+						if (mouseSpace != MS_DRAG && node->state && mn_show_tooltips->integer) {
 							/* Find out where the mouse is */
 							itemHover = Com_SearchInInventory(menuInventory,
 								node->mousefx, (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);
@@ -757,11 +758,11 @@ void MN_DrawMenus (void)
 			}	/* if */
 
 		}	/* for */
-		if (sp == mn.menuStackPos && menu->hoverNode && cl_show_tooltips->integer) {
+		if (sp == mn.menuStackPos && menu->hoverNode && mn_show_tooltips->integer) {
 			/* we are hovering an item and also want to display it
 	 		 * make sure that we draw this on top of every other node */
 			if (itemHover) {
-				char tooltiptext[MAX_VAR*2] = "";
+				char tooltiptext[MAX_VAR * 2] = "";
 				int x = mousePosX, y = mousePosY;
 				const int itemToolTipWidth = 250;
 				int linenum;
@@ -788,8 +789,8 @@ void MN_DrawMenus (void)
 	R_ColorBlend(NULL);
 }
 
-
 void MN_DrawMenusInit (void)
 {
 	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes");
+	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 }
