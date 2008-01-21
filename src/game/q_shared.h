@@ -117,7 +117,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_QPATH           64  /* max length of a quake game pathname */
 /* windows + linux 256, macosx 32 */
-#define MAX_OSPATH          128 /* max length of a filesystem pathname */
+#define MAX_OSPATH          256 /* max length of a filesystem pathname */
 #define MAX_FILES           512 /* max files in a directory */
 
 /* per-level limits */

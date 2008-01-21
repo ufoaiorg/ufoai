@@ -256,13 +256,13 @@ static qboolean parsedDeath = qfalse;
  */
 qboolean CL_CheckOrDownloadFile (const char *filename)
 {
-	static char lastfilename[MAX_OSPATH] = {0};
+	static char lastfilename[MAX_OSPATH] = "";
 
 	/* r1: don't attempt same file many times */
 	if (!strcmp(filename, lastfilename))
 		return qtrue;
 
-	strcpy(lastfilename, filename);
+	Q_strncpyz(lastfilename, filename, sizeof(lastfilename));
 
 	if (strstr(filename, "..")) {
 		Com_Printf("Refusing to check a path with .. (%s)\n", filename);
