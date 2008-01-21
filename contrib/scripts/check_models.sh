@@ -20,9 +20,15 @@ md2soft=./md2.pl
 # enable nullglob, required for some of the checks later
 shopt -s nullglob
 
-if [ ! -f "$md2soft" ]
+if [ ! -x "$md2soft" ]
 then
 	md2soft=md2.pl
+	if [ ! -x "$md2soft" ]; then
+	    md2soft=$SCRIPTDIR/../../src/tools/md2.pl
+	    if [ ! -x "$md2soft" ]; then
+		fail "can't find md2.pl"
+	    fi
+	fi
 fi
 
 [ -d "$path" ] || fail "Directory does not exist"
