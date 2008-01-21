@@ -18,14 +18,21 @@ BINARIES = \
 BINARIES_BASE = \
 	$(ROOTDIR)base/game.dylib
 
+bundle_dirs:
+	@mkdir -p UFOAI.app/base
+# These are part of the svn repository as directories
+#	@mkdir -p UFOAI.app/Contents/MacOS
+#	@mkdir -p UFOAI.app/Contents/Frameworks
+#	@mkdir -p UFOAI.app/Contents/Libraries
+
 updateversion:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
 
-copybinaries:
+copybinaries: bundle_dirs
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
 	@cp $(BINARIES_BASE) UFOAI.app/base
 
-copydata:
+copydata: bundle_dirs
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
 	@cp -r $(ROOTDIR)base/i18n UFOAI.app/base/i18n
 
@@ -47,11 +54,7 @@ create-dmg: bundle updateversion
 	@hdiutil create -srcfolder $(PACKAGE_NAME) $(PACKAGE_NAME).dmg
 
 
-build_dmg:
-	@mkdir -p UFOAI.app/Contents/MacOS
-	@mkdir -p UFOAI.app/Contents/Frameworks
-	@mkdir -p UFOAI.app/Contents/Libraries
-	@mkdir -p UFOAI.app/base
+build_dmg: bundle_dirs
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
 	@cp $(BINARIES_BASE) UFOAI.app/base
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
