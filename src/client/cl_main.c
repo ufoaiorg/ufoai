@@ -53,15 +53,14 @@ cvar_t *cl_selected;
 cvar_t *cl_3dmap;
 cvar_t *cl_numnames;
 
-cvar_t *mn_serverlist;
 cvar_t *mn_main;
 cvar_t *mn_sequence;
 cvar_t *mn_active;
 cvar_t *mn_afterdrop;
 cvar_t *mn_main_afterdrop;
 cvar_t *mn_hud;
-cvar_t *mn_lastsave;
 
+cvar_t *cl_lastsave;
 cvar_t *difficulty;
 cvar_t *cl_start_employees;
 cvar_t *cl_initial_equipment;
@@ -74,6 +73,7 @@ cvar_t *confirm_actions;
 
 static cvar_t *cl_precache;
 static cvar_t *cl_introshown;
+static cvar_t *cl_serverlist;
 
 /* userinfo */
 static cvar_t *info_password;
@@ -606,9 +606,9 @@ static void CL_PingServerCallback (struct net_stream *s)
 	} else
 		return;
 
-	if (mn_serverlist->integer == 0
-	|| (mn_serverlist->integer == 1 && server->clients < server->sv_maxclients)
-	|| (mn_serverlist->integer == 2 && server->clients)) {
+	if (cl_serverlist->integer == 0
+	|| (cl_serverlist->integer == 1 && server->clients < server->sv_maxclients)
+	|| (cl_serverlist->integer == 2 && server->clients)) {
 		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
 			server->sv_hostname,
 			server->mapname,
@@ -2086,12 +2086,11 @@ static void CL_InitLocal (void)
 	mn_afterdrop = Cvar_Get("mn_afterdrop", "", 0, "The menu that should be pushed after the drop function was called");
 	mn_main_afterdrop = Cvar_Get("mn_main_afterdrop", "", 0, "The main menu that should be returned to after the drop function was called - will be the new mn_main value then");
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
-	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
-
-	mn_serverlist = Cvar_Get("mn_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
-
 	mn_inputlength = Cvar_Get("mn_inputlength", "32", 0, "Limit the input length for messagemenu input");
 	mn_inputlength->modified = qfalse;
+
+	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
+	cl_serverlist = Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);

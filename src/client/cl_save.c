@@ -297,9 +297,9 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	Mem_Free(fbuf);
 
 	if (res == bufLen + sizeof(saveFileHeader_t)) {
-		/* set mn_lastsave to let the continue function know which game to
+		/* set cl_lastsave to let the continue function know which game to
 		 * automatically continue @todo: redo this in the menu */
-		Cvar_Set("mn_lastsave", filename);
+		Cvar_Set("cl_lastsave", filename);
 		Com_Printf("Campaign '%s' saved.\n", comment);
 		return qtrue;
 	} else {
@@ -417,7 +417,7 @@ static void SAV_GameLoad_f (void)
 
 /**
  * @brief Loads the last saved game
- * @note At saving the archive cvar mn_lastsave was set to the latest savegame
+ * @note At saving the archive cvar cl_lastsave was set to the latest savegame
  * @sa SAV_GameLoad
  */
 static void SAV_GameContinue_f (void)
@@ -431,7 +431,7 @@ static void SAV_GameContinue_f (void)
 
 	if (!curCampaign) {
 		/* try to load the last saved campaign */
-		if (!SAV_GameLoad(mn_lastsave->string, &error)) {
+		if (!SAV_GameLoad(cl_lastsave->string, &error)) {
 			Cbuf_Execute(); /* wipe outstanding campaign commands */
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 			MN_Popup(_("Error"), popupText);
