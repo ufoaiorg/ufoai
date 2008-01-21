@@ -1,10 +1,9 @@
 /**
- * @file cl_menu.h
- * @brief Header for client menu implementation
+ * @file m_draw.h
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 1997-2008 UFO:AI Team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,16 +22,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_MENU_H
-#define CLIENT_CL_MENU_H
-
-#include "menu/m_main.h"
-
-void MN_SetViewRect(const menu_t* menu);
-
-void MN_ResetMenus(void);
-
-void MN_BaseMapClick(menuNode_t *node, int x, int y);
-void MN_BaseMapRightClick(menuNode_t *node, int x, int y);
-
-#endif /* CLIENT_CL_MENU_H */
+void MN_DrawMenus(void);
+void MN_DrawMenusInit(void);
