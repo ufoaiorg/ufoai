@@ -701,7 +701,7 @@ void RS_InitTree (qboolean load)
 				}
 			}
 			if (!found)
-				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", tech->id, tech->provides);
+				Com_Printf("RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", tech->id, tech->provides);
 			break;
 		case RS_ALIEN:
 			/* does nothing right now */
