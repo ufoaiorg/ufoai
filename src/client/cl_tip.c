@@ -37,7 +37,7 @@ typedef struct tipOfTheDay_s {
 static tipOfTheDay_t *tipList;	/**< linked list of all parsed tips */
 static int tipCount; /**< how many tips do we have */
 
-cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
+static cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
 
 /**
  * @brief Popup with tip of the day messages on new single player campaigns

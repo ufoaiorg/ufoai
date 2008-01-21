@@ -24,4 +24,3 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void CL_TipOfTheDayInit(void);
 void CL_ParseTipsOfTheDay(const char *name, const char **text);
-extern cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
