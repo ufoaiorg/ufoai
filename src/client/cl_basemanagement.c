@@ -1740,7 +1740,7 @@ void B_ClearBase (base_t *const base)
 			E_CreateEmployee(EMPL_MEDIC);
 	}
 
-	memset(base->map, BASE_FREESLOT, sizeof(int) * BASE_SIZE * BASE_SIZE);
+	memset(base->map, BASE_FREESLOT, sizeof(base->map));
 }
 
 /**
@@ -1781,7 +1781,7 @@ void B_ParseBases (const char *name, const char **text)
 		memset(base, 0, sizeof(base_t));
 		base->idx = gd.numBaseNames;
 		base->buildingToBuild = -1;
-		memset(base->map, BASE_FREESLOT, sizeof(int) * BASE_SIZE * BASE_SIZE);
+		memset(base->map, BASE_FREESLOT, sizeof(base->map));
 
 		/* get the title */
 		token = COM_EParse(text, errhead, name);

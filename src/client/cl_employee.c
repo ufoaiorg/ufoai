@@ -290,7 +290,7 @@ void E_ResetEmployees (void)
 	Com_DPrintf(DEBUG_CLIENT, "E_ResetEmployees: Delete all employees\n");
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
 		if (gd.numEmployees[i]) {
-			memset(gd.employees[i], 0, sizeof(employee_t)*MAX_EMPLOYEES);
+			memset(gd.employees[i], 0, sizeof(gd.employees[i]));
 			gd.numEmployees[i] = 0;
 		}
 }
@@ -690,9 +690,8 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 
 	idx = employee->idx;
 	/* Fire the employee. This will also:
-		1) remove him from buildings&work
-		2) remove his inventory
-	*/
+	 * 1) remove him from buildings&work
+	 * 2) remove his inventory */
 
 	if (employee->baseIDHired >= 0) {
 		HOS_RemoveDeadEmployeeFromLists(employee);
@@ -705,7 +704,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 			found = qtrue;
 
 		if (found) {
-			if (i < MAX_EMPLOYEES-1) { /* Just in case we have _that much_ employees. :) */
+			if (i < MAX_EMPLOYEES - 1) { /* Just in case we have _that much_ employees. :) */
 				/* Move all the following employees in the list one place forward and correct its index. */
 				gd.employees[type][i] = gd.employees[type][i + 1];
 				gd.employees[type][i].idx = i;

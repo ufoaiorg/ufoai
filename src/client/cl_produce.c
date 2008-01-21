@@ -1089,7 +1089,7 @@ static void PR_ProductionListScroll_f (void)
 void PR_ProductionInit (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Reset all productions\n");
-	memset(gd.productions, 0, sizeof(production_queue_t)*MAX_BASES);
+	memset(gd.productions, 0, sizeof(gd.productions));
 	mn_production_limit = Cvar_Get("mn_production_limit", "0", 0, NULL);
 	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
 }

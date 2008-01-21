@@ -157,7 +157,7 @@ void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 		return;
 	popupAircraft.aircraft_idx = aircraft->idx;
 	popupAircraft.nbItems = 0;
-	memset(popupAircraft.text_popup, 0, POPUP_AIRCARFT_MAX_TEXT);
+	memset(popupAircraft.text_popup, 0, sizeof(popupAircraft.text_popup));
 	mn.menuText[TEXT_POPUP] = popupAircraft.text_popup;
 
 	/* Set static datas in popup_aircraft */

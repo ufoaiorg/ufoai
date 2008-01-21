@@ -1154,7 +1154,7 @@ static void CL_PingServers_f (void)
 			free(serverList[i].node);
 			free(serverList[i].service);
 		}
-		memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
+		memset(serverList, 0, sizeof(serverList));
 	} else {
 		mn.menuText[TEXT_LIST] = serverText;
 		return;
@@ -2019,7 +2019,7 @@ static void CL_InitLocal (void)
 {
 	int i;
 
-	memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
+	memset(serverList, 0, sizeof(serverList));
 
 	CL_SetClientState(ca_disconnected);
 	cls.stream = NULL;

@@ -4691,9 +4691,9 @@ void CL_ResetSinglePlayerData (void)
 	memset(&campaignStats, 0, sizeof(campaignStats));
 
 	numStageSets = numStages = numMissions = 0;
-	memset(missions, 0, sizeof(mission_t) * MAX_MISSIONS);
-	memset(stageSets, 0, sizeof(stageSet_t) * MAX_STAGESETS);
-	memset(stages, 0, sizeof(stage_t) * MAX_STAGES);
+	memset(missions, 0, sizeof(missions));
+	memset(stageSets, 0, sizeof(stageSets));
+	memset(stages, 0, sizeof(stages));
 	memset(&invList, 0, sizeof(invList));
 	mn.messageStack = NULL;
 
