@@ -11,16 +11,12 @@ awksoft=$(which awk) || fail "couldn't find awk"
 convertsoft=$(which convert) || fail "couldn't find convert (install imagemagick)"
 md2soft=./md2.pl
 
-if [ ! -e "$md2soft" ]
+if [ ! -f "$md2soft" ]
 then
 	md2soft=md2.pl
 fi
 
-if [ ! -d "$path" ]
-then
-	echo "Directory does not exist"
-	exit
-fi
+[ -d "$path" ] || fail "Directory does not exist"
 
 # Prepare workspace
 find "$path" -type d -print > "$subdirfile"
