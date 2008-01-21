@@ -265,6 +265,7 @@ static void MN_PopMenu_f (void)
 /**
  * @brief Returns the current active menu from the menu stack or NULL if there is none
  * @return menu_t pointer from menu stack
+ * @sa MN_GetMenu
  */
 menu_t* MN_GetActiveMenu (void)
 {
@@ -277,14 +278,13 @@ menu_t* MN_GetActiveMenu (void)
  * on the stack - otherwise it will search the hole stack for a menu with the
  * id name
  * @return NULL if not found or no menu on the stack
+ * @sa MN_GetActiveMenu
  */
 menu_t *MN_GetMenu (const char *name)
 {
 	int i;
 
-	/* get the current menu */
-	if (name == NULL)
-		return MN_GetActiveMenu();
+	assert(name);
 
 	for (i = 0; i < mn.numMenus; i++)
 		if (!Q_strncmp(mn.menus[i].name, name, MAX_VAR))
