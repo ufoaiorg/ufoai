@@ -11,19 +11,19 @@ LANG=C;
 MAPS="base/maps/"
 #
 # working directory
-DIR=".texturechecker/"
+DIR=".texturechecker"
 #
 # temp file with list of maps using current texture
-MAPFILE=$DIR"mapfile.txt"
+MAPFILE="$DIR/mapfile.txt"
 #
 # temp file storing the info about found texture in map
-ISTHERE=$DIR"isthere.txt"
+ISTHERE="$DIR/isthere.txt"
 #
 # temp file storing found textures without license
-NOLIC=$DIR"nolicense.txt"
+NOLIC="$DIR/nolicense.txt"
 #
 # temp file storing fixed texture names
-FIXNAMES=$DIR"fixed.txt"
+FIXNAMES="$DIR/fixed.txt"
 
 SearchFiles() {
 	directory="$1"
@@ -140,8 +140,10 @@ Usage() {
 	echo " [extension]	- png/tga/jpg for -list param"
 }
 
-rm -rf $DIR
-mkdir $DIR
+if [ -d "$DIR" ]; then
+    rm -rf "$DIR"
+fi
+mkdir "$DIR"
 if [ $# -eq 0 ]
 then
 	Usage
@@ -177,4 +179,4 @@ fi
 #	SearchFiles base/textures/ '*.tga'
 #	SearchFiles base/textures/ '*.png'
 
-rm -rf $DIR
+rm -rf "$DIR"
