@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_MAP_H
 #define CLIENT_CL_MAP_H
 
+#include "menu/m_nodes.h"
+
 #define GLOBE_ROTATE -90
 #define ROTATE_SPEED	0.5
 #define MAX_PROJECTILESONGEOSCAPE 32

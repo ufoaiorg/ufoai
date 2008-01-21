@@ -69,7 +69,7 @@ typedef struct {
 
 typedef struct {
 	struct model_s *model;
-	char *name;				/**< model path */
+	const char *name;				/**< model path */
 
 	float *origin;			/**< pointer to node/menumodel origin */
 	float *angles;			/**< pointer to node/menumodel angles */

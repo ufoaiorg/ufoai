@@ -33,6 +33,7 @@ void MN_SetViewRect(const menu_t* menu);
 void MN_ResetMenus(void);
 
 void MN_BaseMapClick(menuNode_t *node, int x, int y);
-void MN_BaseMapRightClick(menuNode_t *node, int x, int y);
+void MN_BaseMapRighTClick(menuNode_t *node, int x, int y);
+void MN_BaseMapDraw(const menuNode_t * node);
 
 #endif /* CLIENT_CL_MENU_H */

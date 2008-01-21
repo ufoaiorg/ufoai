@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "../renderer/r_draw.h"
+#include "menu/m_nodes.h"
 #include "menu/m_popup.h"
 
 vec3_t newBasePos;
@@ -1798,7 +1799,7 @@ void B_ParseBases (const char *name, const char **text)
  * @brief Draws a base.
  * @sa MN_DrawMenus
  */
-void B_DrawBase (menuNode_t * node)
+void MN_BaseMapDraw (const menuNode_t * node)
 {
 	int x, y, xHover = -1, yHover = -1, widthHover = 1;
 	int width, height, row, col, time, colSecond;

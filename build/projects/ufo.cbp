@@ -262,6 +262,9 @@
 		<Unit filename="..\..\src\client/menu/m_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client/menu/m_checkbox.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client/menu/m_draw.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -242,29 +242,6 @@ void MN_BaseMapClick (menuNode_t *node, int x, int y)
 }
 
 /**
- * @brief Right click on the basemap
- */
-void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
-{
-	int row, col;
-	building_t	*entry;
-
-	assert(baseCurrent);
-
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++)
-			if (baseCurrent->map[row][col] > BASE_FREESLOT && x >= baseCurrent->posX[row][col]
-				&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
-				&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
-				entry = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
-				if (!entry)
-					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
-				B_MarkBuildingDestroy(baseCurrent, entry);
-				return;
-			}
-}
-
-/**
  * @brief Prints a list of tab and newline seperated string to keylist char array that hold the key and the command desc
  */
 static void MN_InitKeyList_f (void)

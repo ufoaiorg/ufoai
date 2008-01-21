@@ -193,6 +193,29 @@ static void MN_TextRightClick (menuNode_t * node, int mouseOver)
 }
 
 /**
+ * @brief Right click on the basemap
+ */
+static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
+{
+	int row, col;
+	building_t	*entry;
+
+	assert(baseCurrent);
+
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++)
+			if (baseCurrent->map[row][col] > BASE_FREESLOT && x >= baseCurrent->posX[row][col]
+				&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
+				&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
+				entry = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
+				if (!entry)
+					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
+				B_MarkBuildingDestroy(baseCurrent, entry);
+				return;
+			}
+}
+
+/**
  * @brief Is called everytime one clickes on a menu/screen. Then checks if anything needs to be executed in the earea of the click (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
  * @sa MN_ModelClick
  * @sa MN_TextRightClick

@@ -1,5 +1,5 @@
 /**
- * @file m_node_string.h
+ * @file m_node_checkbox.h
  */
 
 /*
@@ -22,8 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_STRING_H
-#define CLIENT_MENU_M_NODE_STRING_H
+#ifndef CLIENT_MENU_M_NODE_CHECKBOX_H
+#define CLIENT_MENU_M_NODE_CHECKBOX_H
 
+void MN_DrawCheckBoxNode(const menuNode_t* node, const char *checkBoxImage);
 
 #endif

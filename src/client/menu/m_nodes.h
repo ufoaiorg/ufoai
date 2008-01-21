@@ -169,5 +169,6 @@ void MN_InitNodes(void);
 #include "m_node_string.h"
 #include "m_node_text.h"
 #include "m_node_selectbox.h"
+#include "m_node_checkbox.h"
 
 #endif

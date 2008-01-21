@@ -39,14 +39,10 @@ static cvar_t *mn_show_tooltips;
  */
 void MN_DrawMenus (void)
 {
-	modelInfo_t mi;
-	modelInfo_t pmi;
 	menuNode_t *node;
 	menu_t *menu;
-	animState_t *as;
 	const char *ref;
 	const char *font;
-	char *anim;					/* model anim state */
 	char source[MAX_VAR] = "";
 	int sp, pp;
 	item_t item = {1, NONE, NONE, 0, 0}; /* 1 so it's not reddish; fake item anyway */
@@ -54,11 +50,9 @@ void MN_DrawMenus (void)
 	int mouseOver = 0;
 	int y, i;
 	message_t *message;
-	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
 	int width, height;
 	invList_t *itemHover = NULL;
 	char *tab, *end;
-	static menuNode_t *selectBoxNode = NULL;
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -130,6 +124,7 @@ void MN_DrawMenus (void)
 					R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding, node->size[0] + (node->padding*2), node->size[1] + (node->padding*2), 0, node->bgcolor);
 				}
 
+				/* FIXME: use GL_LINE_LOOP + array here */
 				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos) {
 					/* left */
 					R_DrawFill(node->pos[0] - node->padding - node->border, node->pos[1] - node->padding - node->border,
@@ -174,131 +169,18 @@ void MN_DrawMenus (void)
 
 				switch (node->type) {
 				case MN_PIC:
-					/* hack for ekg pics */
-					if (!Q_strncmp(node->name, "ekg_", 4)) {
-						int pt;
-
-						if (node->name[4] == 'm')
-							pt = Cvar_VariableInteger("mn_morale") / 2;
-						else
-							pt = Cvar_VariableInteger("mn_hp");
-						node->texl[1] = (3 - (int) (pt < 60 ? pt : 60) / 20) * 32;
-						node->texh[1] = node->texl[1] + 32;
-						node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * cl.time) % 64;
-						node->texh[0] = node->texl[0] + node->size[0];
-					}
 					if (ref && *ref)
-						R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
-								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
+						MN_DrawImageNode(node, ref, cl.time);
 					break;
 
 				case MN_CHECKBOX:
-					{
-						const char *image;
-						/* image set? */
-						if (ref && *ref)
-							image = ref;
-						else
-							image = "menu/checkbox";
-						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
-						switch (*ref) {
-						case '0':
-							R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
-								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_unchecked", image));
-							break;
-						case '1':
-							R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
-								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_checked", image));
-							break;
-						default:
-							Com_Printf("Error - invalid value for MN_CHECKBOX node - only 0/1 allowed\n");
-						}
-						break;
-					}
+					MN_DrawCheckBoxNode(node, ref);
+					break;
 
 				case MN_SELECTBOX:
-					{
-						selectBoxOptions_t* selectBoxOption;
-						int selBoxX, selBoxY;
-						const char *image = ref;
-						if (!image)
-							image = "menu/selectbox";
-						if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) {
-							Com_Printf("MN_DrawMenus: skip node '%s' (MN_SELECTBOX) - no cvar given (menu %s)\n", node->name, node->menu->name);
-							node->invis = qtrue;
-							break;
-						}
-						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
-
-						font = MN_GetFont(menu, node);
-						selBoxX = node->pos[0] + SELECTBOX_SIDE_WIDTH;
-						selBoxY = node->pos[1] + SELECTBOX_SPACER;
-
-						/* left border */
-						R_DrawNormPic(node->pos[0], node->pos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
-							SELECTBOX_SIDE_WIDTH, 20.0f, 0.0f, 0.0f, node->align, node->blend, image);
-						/* stretched middle bar */
-						R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
-							12.0f, 20.0f, 7.0f, 0.0f, node->align, node->blend, image);
-						/* right border (arrow) */
-						R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
-							32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, image);
-						/* draw the label for the current selected option */
-						for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
-							if (!Q_strcmp(selectBoxOption->value, ref)) {
-								R_FontDrawString(font, node->align, selBoxX, selBoxY,
-									selBoxX, selBoxY, node->size[0] - 4, 0,
-									node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
-							}
-						}
-
-						/* active? */
-						if (node->state) {
-							selBoxY += node->size[1];
-							selectBoxNode = node;
-
-							/* drop down menu */
-							/* left side */
-							R_DrawNormPic(node->pos[0], node->pos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
-								7.0f, 28.0f, 0.0f, 21.0f, node->align, node->blend, image);
-
-							/* stretched middle bar */
-							R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1] + node->size[1], node->size[0], node->size[1] * node->height,
-								16.0f, 28.0f, 7.0f, 21.0f, node->align, node->blend, image);
-
-							/* right side */
-							R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
-								23.0f, 28.0f, 16.0f, 21.0f, node->align, node->blend, image);
-
-							/* now draw all available options for this selectbox */
-							for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
-								/* draw the hover effect */
-								if (selectBoxOption->hovered)
-									R_DrawFill(selBoxX, selBoxY, node->size[0], SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
-								/* print the option label */
-								R_FontDrawString(font, node->align, selBoxX, selBoxY,
-									selBoxX, node->pos[1] + node->size[1], node->size[0] - 4, 0,
-									node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
-								/* next entries' position */
-								selBoxY += node->size[1];
-								/* reset the hovering - will be recalculated next frame */
-								selectBoxOption->hovered = qfalse;
-							}
-							/* left side */
-							R_DrawNormPic(node->pos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-								7.0f, 32.0f, 0.0f, 28.0f, node->align, node->blend, image);
-
-							/* stretched middle bar */
-							R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0], SELECTBOX_BOTTOM_HEIGHT,
-								16.0f, 32.0f, 7.0f, 28.0f, node->align, node->blend, image);
-
-							/* right bottom side */
-							R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], selBoxY - SELECTBOX_SPACER,
-								SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-								23.0f, 32.0f, 16.0f, 28.0f, node->align, node->blend, image);
-						}
-						break;
-					}
+					if (node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
+						MN_DrawSelectBoxNode(node, ref);
+					break;
 
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
@@ -467,260 +349,8 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_MODEL:
-				{
-					/* if true we have to reset the anim state and make sure the correct model is shown */
-					qboolean updateModel = qfalse;
-					/* set model properties */
-					if (!*source)
-						break;
-					node->menuModel = MN_GetMenuModel(source);
-
-					/* direct model name - no menumodel definition */
-					if (!node->menuModel) {
-						/* prevent the searching for a menumodel def in the next frame */
-						menuModel = NULL;
-						mi.model = R_RegisterModelShort(source);
-						mi.name = source;
-						if (!mi.model) {
-							Com_Printf("Could not find model '%s'\n", source);
-							break;
-						}
-					} else
-						menuModel = node->menuModel;
-
-					/* check whether the cvar value changed */
-					if (Q_strncmp(node->oldRefValue, source, sizeof(node->oldRefValue))) {
-						Q_strncpyz(node->oldRefValue, source, sizeof(node->oldRefValue));
-						updateModel = qtrue;
-					}
-
-					mi.origin = node->origin;
-					mi.angles = node->angles;
-					mi.scale = node->scale;
-					mi.center = node->center;
-					mi.color = node->color;
-
-					/* autoscale? */
-					if (!node->scale[0]) {
-						mi.scale = NULL;
-						mi.center = node->size;
-					}
-
-					do {
-						/* no animation */
-						mi.frame = 0;
-						mi.oldframe = 0;
-						mi.backlerp = 0;
-						if (menuModel) {
-							assert(menuModel->model);
-							mi.model = R_RegisterModelShort(menuModel->model);
-							if (!mi.model) {
-								menuModel = menuModel->next;
-								/* list end */
-								if (!menuModel)
-									break;
-								continue;
-							}
-
-							mi.skin = menuModel->skin;
-							mi.name = menuModel->model;
-
-							/* set mi pointers to menuModel */
-							mi.origin = menuModel->origin;
-							mi.angles = menuModel->angles;
-							mi.center = menuModel->center;
-							mi.color = menuModel->color;
-							mi.scale = menuModel->scale;
-
-							/* no tag and no parent means - base model or single model */
-							if (!menuModel->tag && !menuModel->parent) {
-								if (menuModel->menuTransformCnt) {
-									for (i = 0; i < menuModel->menuTransformCnt; i++) {
-										if (menu == menuModel->menuTransform[i].menuPtr) {
-											/* Use menu scale if defined. */
-											if (menuModel->menuTransform[i].useScale) {
-												VectorCopy(menuModel->menuTransform[i].scale, mi.scale);
-											} else {
-												VectorCopy(node->scale, mi.scale);
-											}
-
-											/* Use menu angles if defined. */
-											if (menuModel->menuTransform[i].useAngles) {
-												VectorCopy(menuModel->menuTransform[i].angles, mi.angles);
-											} else {
-												VectorCopy(node->angles, mi.angles);
-											}
-
-											/* Use menu origin if defined. */
-											if (menuModel->menuTransform[i].useOrigin) {
-												VectorAdd(node->origin, menuModel->menuTransform[i].origin, mi.origin);
-											} else {
-												VectorCopy(node->origin, mi.origin);
-											}
-											break;
-										}
-									}
-									/* not for this menu */
-									if (i == menuModel->menuTransformCnt) {
-										VectorCopy(node->scale, mi.scale);
-										VectorCopy(node->angles, mi.angles);
-										VectorCopy(node->origin, mi.origin);
-									}
-								} else {
-									VectorCopy(node->scale, mi.scale);
-									VectorCopy(node->angles, mi.angles);
-									VectorCopy(node->origin, mi.origin);
-								}
-								Vector4Copy(node->color, mi.color);
-								VectorCopy(node->center, mi.center);
-
-								/* get the animation given by menu node properties */
-								if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
-									ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
-								/* otherwise use the standard animation from modelmenu defintion */
-								} else
-									ref = menuModel->anim;
-
-								/* only base models have animations */
-								if (ref && *ref) {
-									as = &menuModel->animState;
-									anim = R_AnimGetName(as, mi.model);
-									/* initial animation or animation change */
-									if (!anim || (anim && Q_strncmp(anim, ref, MAX_VAR)))
-										R_AnimChange(as, mi.model, ref);
-									else
-										R_AnimRun(as, mi.model, cls.frametime * 1000);
-
-									mi.frame = as->frame;
-									mi.oldframe = as->oldframe;
-									mi.backlerp = as->backlerp;
-								}
-								R_DrawModelDirect(&mi, NULL, NULL);
-							/* tag and parent defined */
-							} else {
-								/* place this menumodel part on an already existing menumodel tag */
-								assert(menuModel->parent);
-								assert(menuModel->tag);
-								menuModelParent = MN_GetMenuModel(menuModel->parent);
-								if (!menuModelParent) {
-									Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
-									break;
-								}
-								pmi.model = R_RegisterModelShort(menuModelParent->model);
-								if (!pmi.model) {
-									Com_Printf("Menumodel: Could not get the model '%s'\n", menuModelParent->model);
-									break;
-								}
-
-								pmi.name = menuModelParent->model;
-								pmi.origin = menuModelParent->origin;
-								pmi.angles = menuModelParent->angles;
-								pmi.scale = menuModelParent->scale;
-								pmi.center = menuModelParent->center;
-								pmi.color = menuModelParent->color;
-
-								/* autoscale? */
-								if (!mi.scale[0]) {
-									mi.scale = NULL;
-									mi.center = node->size;
-								}
-
-								as = &menuModelParent->animState;
-								pmi.frame = as->frame;
-								pmi.oldframe = as->oldframe;
-								pmi.backlerp = as->backlerp;
-
-								R_DrawModelDirect(&mi, &pmi, menuModel->tag);
-							}
-							menuModel = menuModel->next;
-						} else {
-							/* get skin */
-							if (node->data[MN_DATA_MODEL_SKIN_OR_CVAR] && *(char *) node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
-								mi.skin = atoi(MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]));
-							else
-								mi.skin = 0;
-
-							/* do animations */
-							if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
-								ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
-								if (updateModel) {
-									/* model has changed but mem is already reserved in pool */
-									if (node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
-										Mem_Free(node->data[MN_DATA_MODEL_ANIMATION_STATE]);
-										node->data[MN_DATA_MODEL_ANIMATION_STATE] = NULL;
-									}
-								}
-								if (!node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
-									as = (animState_t *) Mem_PoolAlloc(sizeof(animState_t), cl_genericPool, CL_TAG_NONE);
-									R_AnimChange(as, mi.model, ref);
-									node->data[MN_DATA_MODEL_ANIMATION_STATE] = as;
-								} else {
-									/* change anim if needed */
-									as = node->data[MN_DATA_MODEL_ANIMATION_STATE];
-									anim = R_AnimGetName(as, mi.model);
-									if (anim && Q_strncmp(anim, ref, MAX_VAR))
-										R_AnimChange(as, mi.model, ref);
-									R_AnimRun(as, mi.model, cls.frametime * 1000);
-								}
-
-								mi.frame = as->frame;
-								mi.oldframe = as->oldframe;
-								mi.backlerp = as->backlerp;
-							}
-
-							/* place on tag */
-							if (node->data[MN_DATA_MODEL_TAG]) {
-								menuNode_t *search;
-								char parent[MAX_VAR];
-								char *tag;
-
-								Q_strncpyz(parent, MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_TAG]), MAX_VAR);
-								tag = parent;
-								/* tag "menuNodeName modelTag" */
-								while (*tag && *tag != ' ')
-									tag++;
-								/* split node name and tag */
-								*tag++ = 0;
-
-								for (search = menu->firstNode; search != node && search; search = search->next)
-									if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, MAX_VAR)) {
-										char model[MAX_VAR];
-
-										Q_strncpyz(model, MN_GetReferenceString(menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), MAX_VAR);
-
-										pmi.model = R_RegisterModelShort(model);
-										if (!pmi.model)
-											break;
-
-										pmi.name = model;
-										pmi.origin = search->origin;
-										pmi.angles = search->angles;
-										pmi.scale = search->scale;
-										pmi.center = search->center;
-										pmi.color = search->color;
-
-										/* autoscale? */
-										if (!node->scale[0]) {
-											mi.scale = NULL;
-											mi.center = node->size;
-										}
-
-										as = search->data[MN_DATA_MODEL_ANIMATION_STATE];
-										pmi.frame = as->frame;
-										pmi.oldframe = as->oldframe;
-										pmi.backlerp = as->backlerp;
-										R_DrawModelDirect(&mi, &pmi, tag);
-										break;
-									}
-							} else
-								R_DrawModelDirect(&mi, NULL, NULL);
-						}
-					/* for normal models (normal = no menumodel definition) this
-					 * menuModel pointer is null - the do-while loop is only
-					 * ran once */
-					} while (menuModel != NULL);
+					MN_DrawModelNode(node, ref, source);
 					break;
-				}
 
 				case MN_MAP:
 					if (curCampaign) {
@@ -730,7 +360,7 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_BASEMAP:
-					B_DrawBase(node);
+					MN_BaseMapDraw(node);
 					break;
 
 				case MN_CINEMATIC:
@@ -751,10 +381,8 @@ void MN_DrawMenus (void)
 				if (node->state == qtrue)
 					menu->hoverNode = node;
 
-				if (mn_debugmenu->integer) {
+				if (mn_debugmenu->integer)
 					MN_DrawTooltip("f_small", node->name, node->pos[0], node->pos[1], node->size[1], 0);
-/*					R_FontDrawString("f_verysmall", ALIGN_UL, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], node->name, 0, 0, NULL, qfalse);*/
-				}
 			}	/* if */
 
 		}	/* for */

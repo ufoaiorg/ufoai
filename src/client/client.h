@@ -40,7 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_console.h"
 #include "cl_market.h"
 #include "cl_event.h"
-#include "cl_menu.h"
 #include "cl_save.h"
 #include "cl_http.h"
 #include "../renderer/r_entity.h"
@@ -562,24 +561,10 @@ qboolean CL_SoldierInAircraft(int employee_idx, employeeType_t employeeType, int
 void CL_RemoveSoldierFromAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx, struct base_s *base);
 void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
 
+#include "cl_menu.h"
+
 /* cl_radar.c */
-#define MAX_UFOONGEOSCAPE	4
-extern const float baseRadarRange;
-extern const float aircraftRadarRange;
-
-typedef struct radar_s {
-	int range;						/**< Range of radar */
-	int ufos[MAX_UFOONGEOSCAPE];	/**< Ufos id sensored by radar (gd.ufos[id]) */
-	int numUfos;					/**< Num ufos sensored by radar */
-} radar_t;
-
-void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
-void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
-void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
-void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
-void Radar_Initialise (radar_t* radar, float range, float level);
-qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
-	const struct aircraft_s* ufo, qboolean wasUfoSensored);
+#include "cl_radar.h"
 
 /* cl_research.c */
 #include "cl_research.h"
@@ -661,9 +646,6 @@ extern stats_t stats;
 
 #include "cl_campaign.h"
 missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
-
-#include "cl_menu.h"
-void B_DrawBase(menuNode_t * node);
 
 /* cl_map.c */
 #include "cl_map.h"
