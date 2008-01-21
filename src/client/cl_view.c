@@ -142,7 +142,7 @@ static void CL_ParseEntitystring (const char *es)
 				Com_Printf("The selected team is not useable. "
 					"The map doesn't support %i teams but only %i teams\n",
 					teamnum->integer, maxmultiplayerteams);
-				Cvar_SetValue("teamnum", DEFAULT_TEAMNUM);
+				Cvar_SetValue("cl_teamnum", DEFAULT_TEAMNUM);
 				Com_Printf("Set teamnum to %i\n", teamnum->integer);
 			}
 		} else if (!Q_strcmp(classname, "misc_model")) {

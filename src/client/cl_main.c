@@ -44,8 +44,7 @@ cvar_t *cl_isometric;
 cvar_t *rcon_client_password;
 
 cvar_t *cl_fps;
-static cvar_t *cl_shownet;
-cvar_t *cl_particleWeather;
+cvar_t *cl_particleweather;
 cvar_t *cl_logevents;
 cvar_t *cl_centerview;
 cvar_t *cl_worldlevel;
@@ -71,18 +70,18 @@ static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) *
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 cvar_t *confirm_actions;
 
+static cvar_t *cl_shownet;
 static cvar_t *cl_precache;
 static cvar_t *cl_introshown;
 static cvar_t *cl_serverlist;
 
 /* userinfo */
 static cvar_t *info_password;
-cvar_t *name;
-cvar_t *team;
-cvar_t *equip;
-cvar_t *teamnum;
-cvar_t *campaign;
-cvar_t *msg;
+static cvar_t *cl_name;
+static cvar_t *cl_team;
+static cvar_t *cl_equip;
+static cvar_t *cl_teamnum;
+static cvar_t *cl_msg;
 
 client_static_t cls;
 client_state_t cl;
@@ -1331,14 +1330,14 @@ static void CL_TeamNum_f (void)
 	teamnum->modified = qfalse;
 
 	if (i <= TEAM_CIVILIAN || i > teamData.maxteams) {
-		Cvar_SetValue("teamnum", DEFAULT_TEAMNUM);
+		Cvar_SetValue("cl_teamnum", DEFAULT_TEAMNUM);
 		i = DEFAULT_TEAMNUM;
 	}
 
 	if (Q_strncmp(Cmd_Argv(0), "teamnum_dec", 11)) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
-				Cvar_SetValue("teamnum", i);
+				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
 				mn.menuText[TEXT_STANDARD] = buf;
 				break;
@@ -1352,7 +1351,7 @@ static void CL_TeamNum_f (void)
 	} else {
 		for (i++; i <= teamData.maxteams; i++) {
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
-				Cvar_SetValue("teamnum", i);
+				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
 				mn.menuText[TEXT_STANDARD] = buf;
 				break;
@@ -2044,7 +2043,7 @@ static void CL_InitLocal (void)
 
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
-	cl_particleWeather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
+	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
@@ -2077,12 +2076,11 @@ static void CL_InitLocal (void)
 
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
-	name = Cvar_Get("name", "", CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
-	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
-	equip = Cvar_Get("equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
-	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
-	campaign = Cvar_Get("campaign", "main", 0, "Which is the current selected campaign id");
-	msg = Cvar_Get("msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
+	cl_name = Cvar_Get("cl_name", "", CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
+	cl_team = Cvar_Get("cl_team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
+	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
+	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
+	cl_msg = Cvar_Get("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 
 	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");

@@ -2254,7 +2254,7 @@ static void B_PackInitialEquipment_f (void)
 	base_t *base = baseCurrent;
 	int aircraft_idxInBase;
 	aircraft_t *aircraft = NULL;
-	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
+	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("cl_equip");
 	chrList_t chr_list_temp;
 
 	/* check syntax */

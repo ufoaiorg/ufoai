@@ -2096,7 +2096,7 @@ static void G_GetTeam (player_t * player)
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
 		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
-		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
+		i = atoi(Info_ValueForKey(player->pers.userinfo, "cl_teamnum"));
 		/* civilians are at team zero */
 		if (i > 0 && sv_maxteams->integer >= i) {
 			player->pers.team = i;
@@ -2160,7 +2160,7 @@ int G_ClientGetTeamNum (const player_t * player)
 int G_ClientGetTeamNumPref (const player_t * player)
 {
 	assert(player);
-	return atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
+	return atoi(Info_ValueForKey(player->pers.userinfo, "cl_teamnum"));
 }
 
 /**
@@ -2778,7 +2778,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 		Q_strncpyz(userinfo, "\\name\\badinfo", sizeof(userinfo));
 
 	/* set name */
-	s = Info_ValueForKey(userinfo, "name");
+	s = Info_ValueForKey(userinfo, "cl_name");
 	Q_strncpyz(player->pers.netname, s, sizeof(player->pers.netname));
 
 	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));

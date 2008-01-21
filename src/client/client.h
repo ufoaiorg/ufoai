@@ -222,7 +222,7 @@ extern cvar_t *cl_http_downloads;
 extern cvar_t *cl_http_filelists;
 extern cvar_t *cl_http_max_connections;
 extern cvar_t *cl_isometric;
-extern cvar_t *cl_particleWeather;
+extern cvar_t *cl_particleweather;
 extern cvar_t *cl_fps;
 extern cvar_t *cl_logevents;
 extern cvar_t *cl_centerview;

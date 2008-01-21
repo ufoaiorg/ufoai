@@ -360,7 +360,7 @@ menu mp_team
 	}
 	string race_value
 	{
-		string	"*cvar team"
+		string	"*cvar cl_team"
 		pos	"620 570"
 		align	ur
 	}
@@ -703,7 +703,7 @@ menu mp_serverbrowser
 	}
 	string txt_name
 	{
-		string "*cvar name"
+		string "*cvar cl_name"
 		pos "490 581"
 		color "0 .78 0 1"
 	}
@@ -1514,7 +1514,7 @@ menu multiplayer_selectteam
 	}
 	string teamnum_value
 	{
-		string	"*cvar teamnum"
+		string	"*cvar cl_teamnum"
 		pos		"550 500"
 		align	ur
 	}

@@ -53,6 +53,8 @@ static salary_t salaries[MAX_CAMPAIGNS];
 /* extern in client.h */
 stats_t stats;					/**< Document me. */
 
+static cvar_t *cl_campaign;
+
 /*
 ============================================================================
 Boolean expression parser
@@ -2225,7 +2227,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	}
 
 	/* reset team */
-	Cvar_Set("team", curCampaign->team);
+	Cvar_Set("cl_team", curCampaign->team);
 
 	/* store active missions */
 	num = MSG_ReadByte(sb);
@@ -3590,7 +3592,7 @@ void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 	int i;
 	campaign_t* campaign = NULL;
 
-	campaign = CL_GetCampaign(Cvar_VariableString("campaign"));
+	campaign = CL_GetCampaign(cl_campaign->string);
 	if (!campaign) {
 		Com_Printf("CL_ParseResearchedCampaignItems: failed\n");
 		return;
@@ -3641,7 +3643,7 @@ void CL_ParseResearchableCampaignStates (const char *name, const char **text, qb
 	int i;
 	campaign_t* campaign = NULL;
 
-	campaign = CL_GetCampaign(Cvar_VariableString("campaign"));
+	campaign = CL_GetCampaign(cl_campaign->string);
 	if (!campaign) {
 		Com_Printf("CL_ParseResearchableCampaignStates: failed\n");
 		return;
@@ -4415,13 +4417,13 @@ static void CL_GameSkirmish_f (void)
 		CL_GameExit();
 
 	/* get campaign - they are already parsed here */
-	curCampaign = CL_GetCampaign(Cvar_VariableString("campaign"));
+	curCampaign = CL_GetCampaign(cl_campaign->string);
 	if (!curCampaign) {
-		Com_Printf("CL_GameSkirmish_f: Could not find campaign '%s'\n", Cvar_VariableString("campaign"));
+		Com_Printf("CL_GameSkirmish_f: Could not find campaign '%s'\n", cl_campaign->string);
 		return;
 	}
 
-	Cvar_Set("team", curCampaign->team);
+	Cvar_Set("cl_team", curCampaign->team);
 
 	memset(&ccs, 0, sizeof(ccs_t));
 	CL_StartSingleplayer(qtrue);
@@ -4493,7 +4495,7 @@ static void CL_GameNew_f (void)
 		CL_GameExit();
 
 	/* get campaign - they are already parsed here */
-	curCampaign = CL_GetCampaign(Cvar_VariableString("campaign"));
+	curCampaign = CL_GetCampaign(cl_campaign->string);
 	if (!curCampaign)
 		return;
 
@@ -4510,7 +4512,7 @@ static void CL_GameNew_f (void)
 
 	CL_ReadSinglePlayerData();
 
-	Cvar_Set("team", curCampaign->team);
+	Cvar_Set("cl_team", curCampaign->team);
 
 	/* difficulty */
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
@@ -4615,7 +4617,7 @@ static void CP_CampaignsClick_f (void)
 			return;
 	}
 
-	Cvar_Set("campaign", campaigns[num].id);
+	Cvar_Set("cl_campaign", campaigns[num].id);
 	if (!Q_strncmp(campaigns[num].team, "human", 5))
 		racetype = _("Human");
 	else
@@ -5440,6 +5442,8 @@ void CL_ResetCampaign (void)
 	curCampaign = NULL;
 	baseCurrent = NULL;
 	mn.menuText[TEXT_CAMPAIGN_LIST] = campaignText;
+
+	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
 
 	/* commands */
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);

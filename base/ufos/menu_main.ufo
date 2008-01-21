@@ -254,7 +254,7 @@ menu checkcvars
 	}
 	string txt_name
 	{
-		string "*cvar name"
+		string "*cvar cl_name"
 		pos "510 279"
 		color "0 .78 0 1"
 	}

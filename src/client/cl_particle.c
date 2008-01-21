@@ -1014,7 +1014,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	/* don't play the weather particles if a user don't want them
 	 * there can be a lot of weather particles - which might slow the computer
 	 * down - so i made them switchable */
-	} else if (p->weather && !cl_particleWeather->integer) {
+	} else if (p->weather && !cl_particleweather->integer) {
 		CL_ParticleFree(p);
 		return;
 	}

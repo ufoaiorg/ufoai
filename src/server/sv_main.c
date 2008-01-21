@@ -764,13 +764,13 @@ void SV_UserinfoChanged (client_t * cl)
 	ge->ClientUserinfoChanged(cl->player, cl->userinfo);
 
 	/* name for C code */
-	strncpy(cl->name, Info_ValueForKey(cl->userinfo, "name"), sizeof(cl->name) - 1);
+	strncpy(cl->name, Info_ValueForKey(cl->userinfo, "cl_name"), sizeof(cl->name) - 1);
 	/* mask off high bit */
 	for (i = 0; i < sizeof(cl->name); i++)
 		cl->name[i] &= 127;
 
 	/* msg command */
-	val = Info_ValueForKey(cl->userinfo, "msg");
+	val = Info_ValueForKey(cl->userinfo, "cl_msg");
 	if (strlen(val))
 		cl->messagelevel = atoi(val);
 }

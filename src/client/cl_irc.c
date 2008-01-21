@@ -707,7 +707,7 @@ static void Irc_Client_CmdNick (const char *prefix, const char *params, const ch
 
 	Irc_ParseName(prefix, nick, &p);
 	if (!strcmp(irc_nick->string, nick))
-		Cvar_ForceSet("name", trailing);
+		Cvar_ForceSet("cl_name", trailing);
 	Irc_AppendToBuffer(va("%s is now known as %s", nick, trailing));
 	Irc_Logic_RemoveChannelName(chan, nick);
 	Irc_Logic_AddChannelName(chan, p, trailing);
@@ -1604,7 +1604,7 @@ void Irc_Init (void)
 	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, "Log all irc conversations to game console, too");
 	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "0", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
 	irc_send_buffer = Cvar_Get("irc_send_buffer", "", 0, NULL);
-	irc_nick = Cvar_Get("name", "", 0, NULL);
+	irc_nick = Cvar_Get("cl_name", "", 0, NULL);
 
 	/* reset buffer */
 	memset(irc_buffer, 0, sizeof(irc_buffer));
