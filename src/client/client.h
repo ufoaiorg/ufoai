@@ -260,52 +260,6 @@ void CL_LoadMedia(void);
 void CL_RegisterSounds(void);
 void CL_RegisterLocalModels(void);
 
-/* cl_save.c */
-void SAV_Init(void);
-#define MAX_ARRAYINDEXES	512
-
-/** @brief Indexes of presaveArray. DON'T MESS WITH ORDER. */
-typedef enum {
-	PRE_NUMODS,	/* Number of Objects in csi.ods */
-	PRE_NUMIDS,	/* Number of Containers */
-	PRE_BASESI,	/* #define BASE_SIZE */
-	PRE_MAXBUI,	/* #define MAX_BUILDINGS */
-	PRE_ACTTEA,	/* #define MAX_ACTIVETEAM */
-	PRE_MAXEMP,	/* #define MAX_EMPLOYEES */
-	PRE_MCARGO,	/* #define MAX_CARGO */
-	PRE_MAXAIR,	/* #define MAX_AIRCRAFT */
-	PRE_AIRSTA,	/* AIR_STATS_MAX in aircraftParams_t */
-	PRE_MAXCAP,	/* MAX_CAP in baseCapacities_t */
-	PRE_EMPTYP,	/* MAX_EMPL in employeeType_t */
-	PRE_MAXBAS,	/* #define MAX_BASES */
-	PRE_NATION,	/* gd.numNations */
-	PRE_KILLTP,	/* KILLED_NUM_TYPES in killtypes_t */
-	PRE_SKILTP,	/* SKILL_NUM_TYPES in abilityskills_t */
-	PRE_NMTECH,	/* gd.numTechnologies */
-	PRE_TECHMA,	/* TECHMAIL_MAX in techMailType_t */
-	PRE_NUMTDS,	/* numTeamDesc */
-	PRE_NUMALI,	/* gd.numAliensTD */
-	PRE_NUMUFO,	/* gd.numUfos */
-	PRE_MAXREC,	/* #define MAX_RECOVERIES */
-	PRE_MAXTRA, /* #define MAX_TRANSFERS */
-	PRE_MAXOBJ, /* #define MAX_OBJDEFS */
-	PRE_MAXBUL, /* #define BULLETS_PER_SHOT */
-	PRE_MBUITY, /* MAX_BUILDING_TYPE in buildingType_t */
-
-	PRE_MAX
-} presaveType_t;
-
-/**
- * @brief Presave array of arrays indexes.
- * @note Needs to be loaded first, values from here should be used in every loops.
- */
-extern int presaveArray[MAX_ARRAYINDEXES];
-
-/* cl_tip.c */
-void CL_TipOfTheDayInit(void);
-void CL_ParseTipsOfTheDay(const char *name, const char **text);
-extern cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
-
 /* cl_language.c */
 void CL_ParseLanguages(const char *name, const char **text);
 void CL_LanguageInit(void);
