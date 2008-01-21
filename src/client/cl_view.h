@@ -1,5 +1,5 @@
 /**
- * @file m_node_selectbox.h
+ * @file cl_view.h
  */
 
 /*
@@ -22,15 +22,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_SELECTBOX_H
-#define CLIENT_MENU_M_NODE_SELECTBOX_H
+#ifndef CLIENT_CL_VIEW_H
+#define CLIENT_CL_VIEW_H
 
-#include "m_nodes.h"
+extern int map_maxlevel;
+extern int map_maxlevel_base;
 
-selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
-void MN_NodeSelectBoxInit(void);
-void MN_DrawSelectBoxNode(const menuNode_t *node, const char *image);
-
-extern const menuNode_t *selectBoxNode;
+void V_Init(void);
+void V_RenderView(void);
+void V_UpdateRefDef(void);
+void V_CenterView(pos3_t pos);
+void V_CalcFovX(void);
 
 #endif

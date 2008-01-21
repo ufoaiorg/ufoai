@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_font.h"
 
-menuNode_t *selectBoxNode = NULL;
+const menuNode_t *selectBoxNode;
 
 /**
  * @brief Adds a new selectbox option to a selectbox node

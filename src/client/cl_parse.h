@@ -1,5 +1,5 @@
 /**
- * @file m_node_selectbox.h
+ * @file cl_parse.h
  */
 
 /*
@@ -22,15 +22,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_SELECTBOX_H
-#define CLIENT_MENU_M_NODE_SELECTBOX_H
+#ifndef CLIENT_CL_PARSE_H
+#define CLIENT_CL_PARSE_H
 
-#include "m_nodes.h"
+extern const char *ev_format[128];
+extern qboolean blockEvents;
+void CL_BlockEvents(void);
+void CL_UnblockEvents(void);
 
-selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
-void MN_NodeSelectBoxInit(void);
-void MN_DrawSelectBoxNode(const menuNode_t *node, const char *image);
-
-extern const menuNode_t *selectBoxNode;
+void CL_SetLastMoving(le_t *le);
+void CL_ParseServerMessage(int cmd, struct dbuffer *msg);
+qboolean CL_CheckOrDownloadFile(const char *filename);
+void CL_DrawLineOfSight(le_t *watcher, le_t *target);
 
 #endif

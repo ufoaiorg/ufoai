@@ -1,9 +1,9 @@
 /**
- * @file m_node_selectbox.h
+ * @file cl_popup.h
  */
 
 /*
-Copyright (C) 1997-2008 UFO:AI Team
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,15 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_SELECTBOX_H
-#define CLIENT_MENU_M_NODE_SELECTBOX_H
+#ifndef CLIENT_CL_POPUP_H
+#define CLIENT_CL_POPUP_H
 
-#include "m_nodes.h"
-
-selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
-void MN_NodeSelectBoxInit(void);
-void MN_DrawSelectBoxNode(const menuNode_t *node, const char *image);
-
-extern const menuNode_t *selectBoxNode;
+void CL_PopupInit(void);
+void CL_PopupNotifyMissionRemoved(const actMis_t* mission);
+void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
+void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
+void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
+void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 
 #endif

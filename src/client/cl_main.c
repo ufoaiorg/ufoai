@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_shader.h"
 #include "cl_global.h"
 #include "cl_tip.h"
+#include "cl_team.h"
 #include "../shared/infostring.h"
 #include "../renderer/r_main.h"
 #include "../renderer/r_shader.h"

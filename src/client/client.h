@@ -549,17 +549,10 @@ typedef struct chr_list_s {
 	int num;	/* Number of entries */
 } chrList_t;
 
-void CL_SaveInventory(sizebuf_t * buf, inventory_t * i);
-void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
-void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
-void CL_ResetTeams(void);
-void CL_ParseResults(struct dbuffer *msg);
-void CL_SendCurTeamInfo(struct dbuffer * buf, chrList_t *team);
-void CL_AddCarriedToEq(struct aircraft_s *aircraft, equipDef_t * equip);
-void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
-qboolean CL_SoldierInAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx);
-void CL_RemoveSoldierFromAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx, struct base_s *base);
-void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
+/**
+ * @brief List of currently displayed or equipeable characters.
+ */
+extern chrList_t chrDisplayList;
 
 #include "cl_menu.h"
 
@@ -592,36 +585,8 @@ void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
 /* cl_employee.c */
 #include "cl_employee.h"
 
-/* cl_hospital.c */
-#include "cl_hospital.h"
-
 /* cl_transfer.c */
 #include "cl_transfer.h"
-
-/* cl_basesummary.c */
-#include "cl_basesummary.h"
-
-/* cl_mapfightequip.c */
-#include "cl_mapfightequip.h"
-
-/* MISC */
-/* @todo: needs to be sorted (e.g what file is it defined?) */
-#define MAX_TEAMDATASIZE	32768
-
-/* cl_team.c: CL_UpdateHireVar(), CL_ReloadAndRemoveCarried() */
-/* cl_team.c should have own header file afterall 24042007 Zenerka */
-qboolean CL_SoldierAwayFromBase(employee_t *soldier);
-void CL_UpdateHireVar(aircraft_t *aircraft, employeeType_t employeeType);
-void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
-void CL_CleanTempInventory(base_t* base);
-
-void CL_ResetCharacters(base_t* const base);
-void CL_ResetTeamInBase(void);
-void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t employeeType);
-char* CL_GetTeamSkinName(int id);
-
-
-/* END MISC */
 
 /* stats */
 
@@ -653,12 +618,6 @@ missionResults_t missionresults;	/**< Mission results pointer used for Menu Won.
 /* cl_inventory.c */
 #include "cl_inventory.h"
 
-/**
- * @brief List of currently displayed or equipeable characters.
- * @sa cl_team.c and cl_menu.c for usage.
- */
-extern chrList_t chrDisplayList;
-
 /* cl_particle.c */
 void CL_ParticleRegisterArt(void);
 void CL_ResetParticles(void);
@@ -671,61 +630,18 @@ void PE_RenderParticles(void);
 void CL_ParticleVisible(ptl_t *p, qboolean hide);
 
 /* cl_parse.c */
-extern const char *ev_format[128];
-extern qboolean blockEvents;
-void CL_BlockEvents(void);
-void CL_UnblockEvents(void);
-
-void CL_SetLastMoving(le_t *le);
-void CL_ParseServerMessage(int cmd, struct dbuffer *msg);
-qboolean CL_CheckOrDownloadFile(const char *filename);
-void CL_DrawLineOfSight(le_t *watcher, le_t *target);
+#include "cl_parse.h"
 
 /* cl_view.c */
-extern int map_maxlevel;
-extern int map_maxlevel_base;
-
-void V_Init(void);
-void V_RenderView(void);
-void V_UpdateRefDef(void);
-void V_CenterView(pos3_t pos);
-void V_CalcFovX(void);
+#include "cl_view.h"
 
 /* cl_sequence.c */
-void CL_SequenceRender(void);
-void CL_Sequence2D(void);
-void CL_SequenceClick_f(void);
-void CL_SequenceStart_f(void);
-void CL_SequenceEnd_f(void);
-void CL_ResetSequences(void);
-void CL_ParseSequence(const char *name, const char **text);
+#include "cl_sequence.h"
 
 /* cl_ufo.c */
-enum {
-	UFO_IS_NO_TARGET,
-	UFO_IS_TARGET_OF_MISSILE,
-	UFO_IS_TARGET_OF_LASER
-};
-
-ufoType_t UFO_ShortNameToID(const char *token);
-const char* UFO_TypeToShortName(ufoType_t type);
-const char* UFO_TypeToName(ufoType_t type);
-void UFO_FleePhalanxAircraft(aircraft_t *ufo, const vec2_t v);
-void UFO_CampaignRunUfos(int dt);
-void UFO_CampaignCheckEvents(void);
-void UFO_Reset(void);
-void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
-void UFO_PrepareRecovery(base_t *base);
-void UFO_Recovery(void);
-qboolean UFO_ConditionsForStoring(const base_t *base, const aircraft_t *ufocraft);
-qboolean UFO_UFOCanShoot(const aircraft_t *ufo);
+#include "cl_ufo.h"
 
 /* cl_popup.c */
-void CL_PopupInit(void);
-void CL_PopupNotifyMissionRemoved(const actMis_t* mission);
-void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
-void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
-void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
-void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
+#include "cl_popup.h"
 
 #endif /* CLIENT_CLIENT_H */
