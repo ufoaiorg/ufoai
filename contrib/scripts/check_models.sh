@@ -1,12 +1,14 @@
 #!/bin/bash
 
+. scripts_common
+
 # Environment
 path=$(pwd)
 subdirfile=~/subdir.list
 logfile=~/check_models.log
-svnsoft=$(which svn)
-awksoft=$(which awk)
-convertsoft=$(which convert)
+svnsoft=$(which svn) || fail "couldn't find svn"
+awksoft=$(which awk) || fail "couldn't find awk"
+convertsoft=$(which convert) || fail "couldn't find convert (install imagemagick)"
 md2soft=./md2.pl
 
 if [ ! -e "$md2soft" ]
