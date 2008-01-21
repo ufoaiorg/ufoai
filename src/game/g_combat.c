@@ -566,6 +566,12 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 /*	int i; */
 	byte flags;
 
+	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
+	if (ent->state & STATE_DEAD) {
+		Com_DPrintf(DEBUG_GAME, "G_ShootGrenade: Shooter is dead, shot not possible.\n");
+		return;
+	}
+
 	/* get positional data */
 	VectorCopy(from, last);
 	gi.GridPosToVec(gi.map, at, target);
@@ -753,6 +759,12 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? @todo */
 	int throughWall; /* shoot through x walls */
+
+	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
+	if (ent->state & STATE_DEAD) {
+		Com_DPrintf(DEBUG_GAME, "G_ShootSingle: Shooter is dead, shot not possible.\n");
+		return;
+	}
 
 	/* Calc direction of the shot. */
 	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
@@ -1197,7 +1209,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 
 	G_GetShotOrigin(ent, fd, dir, shotOrigin);
 
-	/* fire all shots */
+	/* Fire all shots. */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
 			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align);
@@ -1310,7 +1322,7 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 #endif
 		return qfalse;
 	}
-	
+
 	if ((ent->state & STATE_REACTION_ONCE)
 	 && (ent->reactionFired > 0)) {
 #ifdef DEBUG_REACTION
