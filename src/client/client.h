@@ -567,8 +567,6 @@ void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
 #define MAX_UFOONGEOSCAPE	4
 extern const float baseRadarRange;
 extern const float aircraftRadarRange;
-struct aircraft_s;
-struct menuNode_s;
 
 typedef struct radar_s {
 	int range;						/**< Range of radar */
