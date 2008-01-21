@@ -28,11 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 
-#ifdef UFO_MMX_ENABLED
-/* used for mmx optimizations */
-#include <xmmintrin.h>
-#endif
-
 #define DEG2RAD( a ) (( a * M_PI ) / 180.0F)
 
 const vec3_t vec3_origin = { 0, 0, 0 };
@@ -835,29 +830,9 @@ void VectorInverse (vec3_t v)
 
 void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
 {
-#ifdef UFO_MMX_ENABLED
-	/* raynorpat: msvc sse optimization */
-	__m128 xmm_in, xmm_scale, xmm_out;
-
-	xmm_in = _mm_load_ss(&in[0]);
-	xmm_scale = _mm_load_ss(&scale);
-	xmm_out = _mm_mul_ss(xmm_in, xmm_scale);
-	_mm_store_ss(&out[0], xmm_out);
-
-	xmm_in = _mm_load_ss(&in[1]);
-	xmm_scale = _mm_load_ss(&scale);
-	xmm_out = _mm_mul_ss(xmm_in, xmm_scale);
-	_mm_store_ss(&out[1], xmm_out);
-
-	xmm_in = _mm_load_ss(&in[2]);
-	xmm_scale = _mm_load_ss(&scale);
-	xmm_out = _mm_mul_ss(xmm_in, xmm_scale);
-	_mm_store_ss(&out[2], xmm_out);
-#else
 	out[0] = in[0] * scale;
 	out[1] = in[1] * scale;
 	out[2] = in[2] * scale;
-#endif
 }
 
 

@@ -690,7 +690,6 @@ BUILD_UFO2MAP
 BUILD_DEBUG
 PARANOID
 PROFILING
-MMX
 EXE_EXT
 CLIENT_LIBS
 CLIENT_CFLAGS
@@ -1290,7 +1289,6 @@ Optional Features:
                           [default=disabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
   --enable-profiling      build with profiling for gprof [default=disabled]
-  --enable-mmx            use MMX optimisations [default=disabled]
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -2000,14 +1998,6 @@ if test "${enable_profiling+set}" = set; then
   enableval=$enable_profiling;
 else
   enable_profiling=no
-fi
-
-
-# Check whether --enable-mmx was given.
-if test "${enable_mmx+set}" = set; then
-  enableval=$enable_mmx;
-else
-  enable_mmx=no
 fi
 
 
@@ -9392,21 +9382,6 @@ else
 
 fi
 
-# ---------------------------------------------------------------------
-# Architecture dependent optimisations
-# ---------------------------------------------------------------------
-
-if test "$enable_mmx" = "yes"
-then
-	MMX=1
-
-	{ echo "$as_me:$LINENO: Enabling MMX" >&5
-echo "$as_me: Enabling MMX" >&6;}
-else
-	MMX=0
-
-fi
-
 #---------------------------------------------------------------------------------------------
 
 EXE_EXT="$ac_exe_ext"
@@ -10125,7 +10100,6 @@ BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
 BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
-MMX!$MMX$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
 CLIENT_LIBS!$CLIENT_LIBS$ac_delim
 CLIENT_CFLAGS!$CLIENT_CFLAGS$ac_delim
@@ -10137,7 +10111,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 87; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 86; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

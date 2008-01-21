@@ -69,10 +69,6 @@ AC_ARG_ENABLE(profiling,
 	[AS_HELP_STRING([--enable-profiling], [build with profiling for gprof @<:@default=disabled@:>@])],
 	[], [enable_profiling=no])
 
-AC_ARG_ENABLE(mmx,
-	[AS_HELP_STRING([--enable-mmx], [use MMX optimisations @<:@default=disabled@:>@])],
-	[], [enable_mmx=no])
-
 #---------------------------------------------------------------------------------------------
 # CHECK SED
 #---------------------------------------------------------------------------------------------
@@ -596,18 +592,6 @@ then
 	AC_MSG_NOTICE([Enabling profiling])
 else
 	AC_SUBST([PROFILING],0)
-fi
-
-# ---------------------------------------------------------------------
-# Architecture dependent optimisations
-# ---------------------------------------------------------------------
-
-if test "$enable_mmx" = "yes"
-then
-	AC_SUBST([MMX],1)
-	AC_MSG_NOTICE([Enabling MMX])
-else
-	AC_SUBST([MMX],0)
 fi
 
 #---------------------------------------------------------------------------------------------
