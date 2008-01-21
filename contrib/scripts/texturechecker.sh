@@ -8,7 +8,7 @@ LANG=C;
 
 #
 # directory with maps, relative to current
-MAPS="base/maps/"
+MAPS="base/maps"
 #
 # working directory
 DIR=".texturechecker"
@@ -28,8 +28,8 @@ FIXNAMES="$DIR/fixed.txt"
 SearchFiles() {
 	directory="$1"
 	extension="$2"
-	for i in $(find $directory -name $extension -print);
-		do svn proplist -R -v $i | awk '{
+	while read i
+		do svn proplist -R -v "$i" | awk '{
 			k++;
 			{
 				if (k == 1 && $1 ~ /Properties/) {
@@ -54,7 +54,7 @@ SearchFiles() {
 				}
 			}
 		}';
-	done
+	done< <(find "$directory" -name $extension -print)
 }
 
 #
@@ -62,7 +62,7 @@ SearchFiles() {
 FindNoLicense() {
 	directory="$1"
 	extension="$2"
-	for i in $(find $directory -name $extension -print);
+	while read i
 		do svn proplist -R -v $i | awk '{
 		k++;
 		{
@@ -87,49 +87,45 @@ FindNoLicense() {
 			}
 		}
 	}';
-	done
+	done< <(find "$directory" -name $extension -print)
 }
 
 #
 # Function fixing the texture names to use them in search engine among maps
 FixNames() {
-	awk -F\/ '{print $3"/"$4}' $NOLIC | awk -F\' '{print $1}' | awk -F\. '{print $1}' | sort -uf
+	awk -F\/ '{print $3"/"$4}' "$NOLIC" | awk -F\' '{print $1}' | awk -F\. '{print $1}' | sort -uf
 }
 
 #
 # Function searching given textures without license in all maps
 CheckInMaps() {
-	for i in $(cat $FIXNAMES); do
-		if [ -f "$MAPFILE" ];
-		then
-			rm $MAPFILE
-		fi
-		touch $MAPFILE
-		if [ $i = "/" ];
+	while read i; do
+		> "$MAPFILE"
+		if [ "$i" = "/" ]
 		then
 			continue
 		fi
-		for j in $(find $MAPS -name '*.map' -print); do
-			grep $i $j > $ISTHERE;
-			THEREIS=$(wc -l $ISTHERE | awk '{print $1}')
+		while read j; do
+			grep "$i" "$j" > "$ISTHERE"
+			THEREIS=$(wc -l "$ISTHERE" | awk '{print $1}')
 			if [ "$THEREIS" -ne 0 ];
 			then
-				echo $j >> $MAPFILE;
+				echo "$j" >> "$MAPFILE"
 			fi
-		done;
-		THEREIS=$(wc -l $MAPFILE | awk '{print $1}')
+		done< <(find "$MAPS" -name '*.map' -print)
+		THEREIS=$(wc -l "$MAPFILE" | awk '{print $1}')
 		if [ "$THEREIS" -eq 0 ];
 		then
-			echo -n "Texture ";
-			echo -n $i
-			echo " is NOT used in any map";
+			echo -n "Texture "
+			echo -n "$i"
+			echo " is NOT used in any map"
 		else
-			echo -n "Texture ";
-			echo -n $i
-			echo " used in maps:";
-			cat $MAPFILE;
+			echo -n "Texture "
+			echo -n "$i"
+			echo " used in maps:"
+			cat "$MAPFILE"
 		fi
-	done
+	done< <(cat "$FIXNAMES")
 }
 
 Usage() {
@@ -161,12 +157,11 @@ else
 			;;
 		"-checkmaps")
 			echo "Prepare to find textures with no license..."
-			touch $NOLIC
-			FindNoLicense base/textures/ '*.jpg' >> $NOLIC
-			FindNoLicense base/textures/ '*.png' >> $NOLIC
-			FindNoLicense base/textures/ '*.tga' >> $NOLIC
+			FindNoLicense base/textures/ '*.jpg' >> "$NOLIC"
+			FindNoLicense base/textures/ '*.png' >> "$NOLIC"
+			FindNoLicense base/textures/ '*.tga' >> "$NOLIC"
 			echo "Found textures without license, prepare to fix names..."
-			FixNames > $FIXNAMES
+			FixNames > "$FIXNAMES"
 			echo "Prepare to search textures without license in map files..."
 			CheckInMaps
 			;;
