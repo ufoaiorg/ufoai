@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_research.h"
 #include "cl_basemanagement.h"
 
+#define MAX_PROJECTILESONGEOSCAPE 32
 
 /**
  * @brief This struct/variable holds the global data for a game.

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_sound.h"
 #include "cl_particle.h"
+#include "cl_actor.h"
 #include "../renderer/r_mesh_anim.h"
 
 #define SUN_HEIGHT 512 /* 8 levels * 64 */

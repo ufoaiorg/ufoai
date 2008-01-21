@@ -284,7 +284,6 @@ typedef struct chr_list_s {
 extern chrList_t chrDisplayList;
 
 #include "cl_le.h"
-#include "cl_actor.h"
 #include "cl_menu.h"
 #include "cl_radar.h"
 #include "cl_research.h"
@@ -299,12 +298,7 @@ extern chrList_t chrDisplayList;
 #include "cl_employee.h"
 #include "cl_transfer.h"
 #include "cl_campaign.h"
-#include "cl_map.h"
 #include "cl_inventory.h"
 #include "cl_parse.h"
-#include "cl_view.h"
-#include "cl_sequence.h"
-#include "cl_ufo.h"
-#include "cl_popup.h"
 
 #endif /* CLIENT_CLIENT_H */

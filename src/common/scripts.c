@@ -1849,7 +1849,7 @@ static const value_t terrainTypeValues[] = {
 const terrainType_t* Com_GetTerrainType (const char *textureName)
 {
 	unsigned hash;
-	terrainType_t *t;
+	const terrainType_t *t;
 
 	assert(textureName);
 	hash = Com_HashKey(textureName, TERRAIN_HASH_SIZE);

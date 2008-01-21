@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_team.h"
 #include "cl_mapfightequip.h"
 #include "cl_hospital.h"
+#include "cl_map.h"
+#include "cl_ufo.h"
 #include "menu/m_popup.h"
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
