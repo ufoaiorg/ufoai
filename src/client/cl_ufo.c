@@ -29,11 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "cl_ufo.h"
 
-extern void UFO_CampaignRunUfos(int dt);
-static void UFO_RemoveUfoFromGeoscape_f(void);
-extern void UFO_CampaignCheckEvents(void);
-extern void UFO_Reset(void);
-
 static const float max_detecting_range = 60.0f; /**< range to detect and fire at phalanx aircraft */
 
 typedef struct ufoTypeList_s {
