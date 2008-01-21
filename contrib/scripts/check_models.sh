@@ -89,8 +89,8 @@ fix_md2_and_tga()
 	if [ "$howmanymd2" -eq 1 ] && [ "$howmanytga" -eq 1 ]
 	then
 		name=$(ls | egrep '(.*\.md2$)' | awk -F\. '{print $1}')
-		md2name=$(echo -n $name; echo ".md2")
-		tganame=$(echo -n $name; echo ".tga")
+		md2name="${name}.md2"
+		tganame="${name}.tga"
 		if [ -f "$tganame" ]
 		then
 			echo "fix_md2_and_tga()... Only one model but tga file has the same name, doing nothing" >> "$logfile"
