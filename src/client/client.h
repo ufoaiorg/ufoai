@@ -223,23 +223,9 @@ extern cvar_t *cl_http_filelists;
 extern cvar_t *cl_http_max_connections;
 extern cvar_t *cl_isometric;
 extern cvar_t *cl_particleWeather;
-extern cvar_t *cl_camrotspeed;
-extern cvar_t *cl_camrotaccel;
-extern cvar_t *cl_cammovespeed;
-extern cvar_t *cl_cammoveaccel;
-extern cvar_t *cl_camyawspeed;
-extern cvar_t *cl_campitchmax;
-extern cvar_t *cl_campitchmin;
-extern cvar_t *cl_campitchspeed;
-extern cvar_t *cl_camzoomquant;
-extern cvar_t *cl_camzoommax;
-extern cvar_t *cl_camzoommin;
-extern cvar_t *cl_mapzoommax;
-extern cvar_t *cl_mapzoommin;
 extern cvar_t *cl_fps;
 extern cvar_t *cl_shownet;
 extern cvar_t *cl_show_tooltips;
-extern cvar_t *cl_show_cursor_tooltips;
 extern cvar_t *cl_logevents;
 extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
@@ -249,7 +235,11 @@ extern cvar_t *cl_numnames;
 extern cvar_t *cl_start_employees;
 extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
-extern cvar_t *cl_connecttimeout;
+
+extern cvar_t *cl_camzoommin;
+
+extern cvar_t *cl_mapzoommax;
+extern cvar_t *cl_mapzoommin;
 
 extern cvar_t *mn_active;
 extern cvar_t *mn_afterdrop;
@@ -265,16 +255,6 @@ extern cvar_t *confirm_actions;
 
 /** limit the input for cvar editing (base name, save slots and so on) */
 #define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */
-
-/*
-=================================================
-shader stuff
-=================================================
-*/
-
-void CL_ParseShaders(const char *name, const char **text);
-
-/*================================================= */
 
 void CL_LoadMedia(void);
 void CL_RegisterSounds(void);

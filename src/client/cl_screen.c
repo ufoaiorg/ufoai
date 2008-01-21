@@ -49,6 +49,7 @@ static int scr_draw_loading = 0;
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
 static cvar_t *scr_rspeed;
+static cvar_t *cl_show_cursor_tooltips;
 
 static char cursor_pic[MAX_QPATH];
 
@@ -483,6 +484,7 @@ void SCR_Init (void)
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
 	scr_rspeed = Cvar_Get("r_speeds", "0", 0, "Show some rendering stats");
+	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
 
 	/* register our commands */
 	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, "Run a benchmark");

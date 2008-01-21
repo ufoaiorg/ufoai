@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_tutorials.h"
+#include "cl_shader.h"
 #include "cl_global.h"
 #include "../shared/infostring.h"
 #include "../renderer/r_main.h"
@@ -44,7 +45,6 @@ cvar_t *rcon_client_password;
 cvar_t *cl_fps;
 cvar_t *cl_shownet;
 cvar_t *cl_show_tooltips;
-cvar_t *cl_show_cursor_tooltips;
 cvar_t *cl_particleWeather;
 cvar_t *cl_logevents;
 cvar_t *cl_centerview;
@@ -66,7 +66,7 @@ cvar_t *cl_start_employees;
 cvar_t *cl_initial_equipment;
 cvar_t *cl_start_buildings;
 
-cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
+static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 cvar_t *confirm_actions;
@@ -2043,22 +2043,7 @@ static void CL_InitLocal (void)
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 
 	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
-	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
 
-	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, NULL);
-	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", CVAR_ARCHIVE, NULL);
-	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", CVAR_ARCHIVE, NULL);
-	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", CVAR_ARCHIVE, NULL);
-	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", CVAR_ARCHIVE, NULL);
-	cl_campitchmax = Cvar_Get("cl_campitchmax", "90", 0, "Max camera pitch - over 90 presents apparent mouse inversion");
-	cl_campitchmin = Cvar_Get("cl_campitchmin", "35", 0, "Min camera pitch - under 35 presents difficulty positioning cursor");
-	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", CVAR_ARCHIVE, NULL);
-	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.16", CVAR_ARCHIVE, NULL);
-	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
-	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
-	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
-	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
-	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_particleWeather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");

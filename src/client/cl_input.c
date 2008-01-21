@@ -340,16 +340,16 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 const float MIN_ZOOM = 0.5;
 const float MAX_ZOOM = 32.0;
 
-cvar_t *cl_camrotspeed;
-cvar_t *cl_camrotaccel;
-cvar_t *cl_cammovespeed;
-cvar_t *cl_cammoveaccel;
-cvar_t *cl_camyawspeed;
-cvar_t *cl_campitchmax;
-cvar_t *cl_campitchmin;
-cvar_t *cl_campitchspeed;
-cvar_t *cl_camzoomquant;
-cvar_t *cl_camzoommax;
+static cvar_t *cl_camrotspeed;
+static cvar_t *cl_camrotaccel;
+static cvar_t *cl_cammovespeed;
+static cvar_t *cl_cammoveaccel;
+static cvar_t *cl_camyawspeed;
+static cvar_t *cl_campitchmax;
+static cvar_t *cl_campitchmin;
+static cvar_t *cl_campitchspeed;
+static cvar_t *cl_camzoomquant;
+static cvar_t *cl_camzoommax;
 cvar_t *cl_camzoommin;
 
 cvar_t *cl_mapzoommax;
@@ -1633,6 +1633,20 @@ void IN_Init (void)
 {
 	/* other cvars */
 	in_debug = Cvar_Get("in_debug", "0", 0, "Show input key codes on game console");
+	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, NULL);
+	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", CVAR_ARCHIVE, NULL);
+	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", CVAR_ARCHIVE, NULL);
+	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", CVAR_ARCHIVE, NULL);
+	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", CVAR_ARCHIVE, NULL);
+	cl_campitchmax = Cvar_Get("cl_campitchmax", "90", 0, "Max camera pitch - over 90 presents apparent mouse inversion");
+	cl_campitchmin = Cvar_Get("cl_campitchmin", "35", 0, "Min camera pitch - under 35 presents difficulty positioning cursor");
+	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", CVAR_ARCHIVE, NULL);
+	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.16", CVAR_ARCHIVE, NULL);
+	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
+	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
+	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
+	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
+	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 
 	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
 	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
