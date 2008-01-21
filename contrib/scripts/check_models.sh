@@ -23,8 +23,8 @@ fi
 # Remove pcx file if png file with the same name exists
 remove_pcx_if_png()
 {
-	for i in $(ls | egrep '(.*\.pcx$)'); do
-		name=$(echo $i | awk -F\. '{print $1}')
+	for i in *.pcx; do
+		name=${i%.pcx}
 		pngname="${name}.png"
 		if [ -f "$pngname" ]
 		then
@@ -38,8 +38,8 @@ remove_pcx_if_png()
 # Convert png file to tga file
 convert_png_to_tga()
 {
-	for i in $(ls | egrep '(.*\.png$)'); do
-		name=$(echo $i | awk -F\. '{print $1}')
+	for i in *.png; do
+		name=${i%.png}
 		pngname="${name}.png"
 		tganame="${name}.tga"
 		if [ -f "$pngname" ]
