@@ -1521,7 +1521,7 @@ void CL_RequestNextDownload (void)
 		}
 	}
 
-	CL_RegisterSounds();
+	S_RegisterSounds();
 	CL_LoadMedia();
 
 	soldiersSpawned = qfalse;
@@ -2220,36 +2220,6 @@ static void CL_SendCommand (void)
 	default:
 		break;
 	}
-}
-
-/**
- * @brief Translate the difficulty int to a translated string
- * @param difficulty the difficulty integer value
- */
-const char* CL_ToDifficultyName (int difficulty)
-{
-	switch (difficulty) {
-	case -4:
-		return _("Chicken-hearted");
-	case -3:
-		return _("Very Easy");
-	case -2:
-	case -1:
-		return _("Easy");
-	case 0:
-		return _("Normal");
-	case 1:
-	case 2:
-		return _("Hard");
-	case 3:
-		return _("Very Hard");
-	case 4:
-		return _("Insane");
-	default:
-		Sys_Error("Unknown difficulty id %i\n", difficulty);
-		break;
-	}
-	return NULL;
 }
 
 static void CL_CvarCheck (void)

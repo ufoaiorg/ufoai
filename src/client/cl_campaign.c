@@ -53,10 +53,11 @@ static technology_t *rs_alien_xvi;
 
 static salary_t salaries[MAX_CAMPAIGNS];
 
-/* extern in client.h */
-stats_t stats;					/**< Document me. */
+stats_t campaignStats;
 
 static cvar_t *cl_campaign;
+
+missionResults_t missionresults;
 
 /*
 ============================================================================
@@ -1024,10 +1025,10 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	float xvi_infection_factor;
 
 	if (lost) {
-		stats.missionsLost++;
+		campaignStats.missionsLost++;
 		ccs.civiliansKilled += civiliansKilled;
 	} else
-		stats.missionsWon++;
+		campaignStats.missionsWon++;
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
@@ -1779,13 +1780,13 @@ static void CL_StatsUpdate_f (void)
 
 	/* missions */
 	mn.menuText[TEXT_STATS_1] = pos;
-	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), stats.missionsWon, stats.missionsLost);
+	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), campaignStats.missionsWon, campaignStats.missionsLost);
 
 	/* bases */
 	pos += (strlen(pos) + 1);
 	mn.menuText[TEXT_STATS_2] = pos;
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
-		stats.basesBuild, gd.numBases, stats.basesAttacked),
+		campaignStats.basesBuild, gd.numBases, campaignStats.basesAttacked),
 
 	/* nations */
 	pos += (strlen(pos) + 1);
@@ -2528,39 +2529,39 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 
 qboolean STATS_Save (sizebuf_t* sb, void* data)
 {
-	MSG_WriteShort(sb, stats.missionsWon);
-	MSG_WriteShort(sb, stats.missionsLost);
-	MSG_WriteShort(sb, stats.basesBuild);
-	MSG_WriteShort(sb, stats.basesAttacked);
-	MSG_WriteShort(sb, stats.interceptions);
-	MSG_WriteShort(sb, stats.soldiersLost);
-	MSG_WriteShort(sb, stats.soldiersNew);
-	MSG_WriteShort(sb, stats.killedAliens);
-	MSG_WriteShort(sb, stats.rescuedCivilians);
-	MSG_WriteShort(sb, stats.researchedTechnologies);
-	MSG_WriteShort(sb, stats.moneyInterceptions);
-	MSG_WriteShort(sb, stats.moneyBases);
-	MSG_WriteShort(sb, stats.moneyResearch);
-	MSG_WriteShort(sb, stats.moneyWeapons);
+	MSG_WriteShort(sb, campaignStats.missionsWon);
+	MSG_WriteShort(sb, campaignStats.missionsLost);
+	MSG_WriteShort(sb, campaignStats.basesBuild);
+	MSG_WriteShort(sb, campaignStats.basesAttacked);
+	MSG_WriteShort(sb, campaignStats.interceptions);
+	MSG_WriteShort(sb, campaignStats.soldiersLost);
+	MSG_WriteShort(sb, campaignStats.soldiersNew);
+	MSG_WriteShort(sb, campaignStats.killedAliens);
+	MSG_WriteShort(sb, campaignStats.rescuedCivilians);
+	MSG_WriteShort(sb, campaignStats.researchedTechnologies);
+	MSG_WriteShort(sb, campaignStats.moneyInterceptions);
+	MSG_WriteShort(sb, campaignStats.moneyBases);
+	MSG_WriteShort(sb, campaignStats.moneyResearch);
+	MSG_WriteShort(sb, campaignStats.moneyWeapons);
 	return qtrue;
 }
 
 qboolean STATS_Load (sizebuf_t* sb, void* data)
 {
-	stats.missionsWon = MSG_ReadShort(sb);
-	stats.missionsLost = MSG_ReadShort(sb);
-	stats.basesBuild = MSG_ReadShort(sb);
-	stats.basesAttacked = MSG_ReadShort(sb);
-	stats.interceptions = MSG_ReadShort(sb);
-	stats.soldiersLost = MSG_ReadShort(sb);
-	stats.soldiersNew = MSG_ReadShort(sb);
-	stats.killedAliens = MSG_ReadShort(sb);
-	stats.rescuedCivilians = MSG_ReadShort(sb);
-	stats.researchedTechnologies = MSG_ReadShort(sb);
-	stats.moneyInterceptions = MSG_ReadShort(sb);
-	stats.moneyBases = MSG_ReadShort(sb);
-	stats.moneyResearch = MSG_ReadShort(sb);
-	stats.moneyWeapons = MSG_ReadShort(sb);
+	campaignStats.missionsWon = MSG_ReadShort(sb);
+	campaignStats.missionsLost = MSG_ReadShort(sb);
+	campaignStats.basesBuild = MSG_ReadShort(sb);
+	campaignStats.basesAttacked = MSG_ReadShort(sb);
+	campaignStats.interceptions = MSG_ReadShort(sb);
+	campaignStats.soldiersLost = MSG_ReadShort(sb);
+	campaignStats.soldiersNew = MSG_ReadShort(sb);
+	campaignStats.killedAliens = MSG_ReadShort(sb);
+	campaignStats.rescuedCivilians = MSG_ReadShort(sb);
+	campaignStats.researchedTechnologies = MSG_ReadShort(sb);
+	campaignStats.moneyInterceptions = MSG_ReadShort(sb);
+	campaignStats.moneyBases = MSG_ReadShort(sb);
+	campaignStats.moneyResearch = MSG_ReadShort(sb);
+	campaignStats.moneyWeapons = MSG_ReadShort(sb);
 	return qtrue;
 }
 
@@ -4596,6 +4597,36 @@ static void CP_GetCampaigns_f (void)
 }
 
 /**
+ * @brief Translate the difficulty int to a translated string
+ * @param difficulty the difficulty integer value
+ */
+static inline const char* CL_ToDifficultyName (int difficulty)
+{
+	switch (difficulty) {
+	case -4:
+		return _("Chicken-hearted");
+	case -3:
+		return _("Very Easy");
+	case -2:
+	case -1:
+		return _("Easy");
+	case 0:
+		return _("Normal");
+	case 1:
+	case 2:
+		return _("Hard");
+	case 3:
+		return _("Very Hard");
+	case 4:
+		return _("Insane");
+	default:
+		Sys_Error("Unknown difficulty id %i\n", difficulty);
+		break;
+	}
+	return NULL;
+}
+
+/**
  * @brief Script function to select a campaign from campaign list
  */
 static void CP_CampaignsClick_f (void)
@@ -4652,7 +4683,7 @@ void CL_ResetSinglePlayerData (void)
 	int i;
 
 	memset(&gd, 0, sizeof(gd));
-	memset(&stats, 0, sizeof(stats));
+	memset(&campaignStats, 0, sizeof(campaignStats));
 
 	numStageSets = numStages = numMissions = 0;
 	memset(missions, 0, sizeof(mission_t) * MAX_MISSIONS);

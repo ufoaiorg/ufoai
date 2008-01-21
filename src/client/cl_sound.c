@@ -475,11 +475,39 @@ static void S_Play_f (void)
 	S_StartLocalSound(filename);
 }
 
+
+/**
+ * @sa Call before entering a new level, or after snd_restart
+ * @sa CL_LoadMedia
+ * @sa S_Restart_f
+ * @sa CL_RequestNextDownload
+ */
+void S_RegisterSounds (void)
+{
+	int i, j, k;
+
+	/* load weapon sounds */
+	for (i = 0; i < csi.numODs; i++) { /* i = obj */
+		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
+			for (k = 0; k < csi.ods[i].numFiredefs[j]; j++) { /* k = firedef per wepaon */
+				if (csi.ods[i].fd[j][k].fireSound[0])
+					S_RegisterSound(csi.ods[i].fd[j][k].fireSound);
+				if (csi.ods[i].fd[j][k].impactSound[0])
+					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
+				if (csi.ods[i].fd[j][k].hitBodySound[0])
+					S_RegisterSound(csi.ods[i].fd[j][k].hitBodySound);
+				if (csi.ods[i].fd[j][k].bounceSound[0])
+					S_RegisterSound(csi.ods[i].fd[j][k].bounceSound);
+			}
+		}
+	}
+}
+
 /**
  * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
  * @sa S_Shutdown
  * @sa S_Init
- * @sa CL_RegisterSounds
+ * @sa S_RegisterSounds
  */
 static void S_Restart_f (void)
 {
@@ -490,7 +518,7 @@ static void S_Restart_f (void)
 	if (!sound_started)
 		return;
 
-	CL_RegisterSounds();
+	S_RegisterSounds();
 	/* restart the music, too */
 	snd_music->modified = qtrue;
 }

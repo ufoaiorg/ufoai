@@ -292,33 +292,6 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 	return qtrue;
 }
 
-/**
- * @sa Call before entering a new level, or after snd_restart
- * @sa CL_LoadMedia
- * @sa S_Restart_f
- * @sa CL_RequestNextDownload
- */
-void CL_RegisterSounds (void)
-{
-	int i, j, k;
-
-	/* load weapon sounds */
-	for (i = 0; i < csi.numODs; i++) { /* i = obj */
-		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
-			for (k = 0; k < csi.ods[i].numFiredefs[j]; j++) { /* k = firedef per wepaon */
-				if (csi.ods[i].fd[j][k].fireSound[0])
-					S_RegisterSound(csi.ods[i].fd[j][k].fireSound);
-				if (csi.ods[i].fd[j][k].impactSound[0])
-					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
-				if (csi.ods[i].fd[j][k].hitBodySound[0])
-					S_RegisterSound(csi.ods[i].fd[j][k].hitBodySound);
-				if (csi.ods[i].fd[j][k].bounceSound[0])
-					S_RegisterSound(csi.ods[i].fd[j][k].bounceSound);
-			}
-		}
-	}
-}
-
 /*
 =====================================================================
 SERVER CONNECTING MESSAGES

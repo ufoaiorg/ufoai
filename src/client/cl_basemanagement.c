@@ -2338,7 +2338,7 @@ static void B_BuildBase_f (void)
 			baseCurrent->founded = qtrue;
 			baseCurrent->numAircraftInBase = 0;
 			baseCurrent->baseStatus = BASE_WORKING;
-			stats.basesBuild++;
+			campaignStats.basesBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
@@ -2414,11 +2414,11 @@ void B_BaseAttack (base_t* const base)
 
 		if (CP_SpawnBaseAttackMission(base, ms, NULL)) {
 			base->baseStatus = BASE_UNDER_ATTACK;
-			stats.basesAttacked++;
+			campaignStats.basesAttacked++;
 		}
 	} else {
 		CL_BaseRansacked(base);
-		stats.basesAttacked++;
+		campaignStats.basesAttacked++;
 	}
 #if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)

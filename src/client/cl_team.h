@@ -25,6 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_TEAM_H
 #define CLIENT_CL_TEAM_H
 
+#define MAX_WHOLETEAM	32
+
+#define NUM_TEAMSKINS	6
+#define NUM_TEAMSKINS_SINGLEPLAYER 4
+
 qboolean CL_SoldierAwayFromBase(employee_t *soldier);
 void CL_UpdateHireVar(aircraft_t *aircraft, employeeType_t employeeType);
 void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
@@ -47,5 +52,7 @@ void CL_ParseResults(struct dbuffer *msg);
 void CL_SendCurTeamInfo(struct dbuffer * buf, chrList_t *team);
 void CL_AddCarriedToEq(struct aircraft_s *aircraft, equipDef_t * equip);
 void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
+
+void CL_UpdateCharacterSkills(character_t *chr);
 
 #endif

@@ -235,7 +235,6 @@ extern cvar_t *cl_start_buildings;
 extern cvar_t *cl_team;
 extern cvar_t *cl_teamnum;
 extern cvar_t *cl_camzoommin;
-
 extern cvar_t *cl_mapzoommax;
 extern cvar_t *cl_mapzoommin;
 
@@ -255,13 +254,6 @@ extern cvar_t *confirm_actions;
 #define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */
 
 void CL_LoadMedia(void);
-void CL_RegisterSounds(void);
-void CL_RegisterLocalModels(void);
-
-/* cl_language.c */
-void CL_ParseLanguages(const char *name, const char **text);
-void CL_LanguageInit(void);
-qboolean CL_LanguageTryToSet(const char *localeID);
 
 /* cl_main.c */
 void CL_SetClientState(int state);
@@ -270,278 +262,15 @@ void CL_Init(void);
 void CL_ReadSinglePlayerData(void);
 void CL_RequestNextDownload(void);
 void CL_StartSingleplayer(qboolean singleplayer);
-void CL_GetChallengePacket(void);
 void CL_ParseMedalsAndRanks(const char *name, const char **text, byte parserank);
 void CL_ParseUGVs(const char *name, const char **text);
-void CL_UpdateCharacterSkills(character_t *chr);	/* cl_team.c */
-const char* CL_ToDifficultyName(int difficulty);
 void CL_ScriptSanityCheck(void);
 
 void CL_ClearState(void);
 
-/* cl_le.c */
-#define MAX_LE_PATHLENGTH 32
-
-/** @brief a local entity */
-typedef struct le_s {
-	qboolean inuse;
-	qboolean invis;
-	qboolean autohide;
-	qboolean selected;
-	int hearTime;		/**< draw a marker over the entity if its an actor and he heard something */
-	int type;				/**< the local entity type */
-	int entnum;				/**< the server side edict num this le belongs to */
-
-	vec3_t origin, oldOrigin;	/**< position given via world coordinates */
-	pos3_t pos, oldPos;		/**< position on the grid */
-	int dir;				/**< the current dir the le is facing into */
-
-	int TU, maxTU;				/**< time units */
-	int morale, maxMorale;		/**< morale value - used for soldier panic and the like */
-	int HP, maxHP;				/**< health points */
-	int STUN;					/**< if stunned - state STATE_STUN */
-	int state;					/**< rf states, dead, crouched and so on */
-	int reaction_minhit;
-
-	float angles[3];
-	float alpha;
-
-	int team;		/**< the team number this local entity belongs to */
-	int pnum;		/**< the player number this local entity belongs to */
-
-	int contents;			/**< content flags for this LE - used for tracing */
-	vec3_t mins, maxs;
-
-	int modelnum1;	/**< the number of the body model in the cl.model_draw array */
-	int modelnum2;	/**< the number of the head model in the cl.model_draw array */
-	int skinnum;	/**< the skin number of the body and head model */
-	struct model_s *model1, *model2;	/**< pointers to the cl.model_draw array
-					 * that holds the models for body and head - model1 is body,
-					 * model2 is head */
-
-/* 	character_t	*chr; */
-
-	/** is called every frame */
-	void (*think) (struct le_s * le);
-	/** number of frames to skip the think function for */
-	int thinkDelay;
-
-	/** various think function vars */
-	byte path[MAX_LE_PATHLENGTH];
-	int pathContents[MAX_LE_PATHLENGTH];	/**< content flags of the brushes the actor is walking in */
-	int positionContents;					/**< content flags for the current brush the actor is standing in */
-	int pathLength, pathPos;
-	int startTime, endTime;
-	int speed;			/**< the speed the le is moving with */
-
-	/** sound effects */
-	struct sfx_s* sfx;
-	float attenuation;
-	float volume;
-
-	/** gfx */
-	animState_t as;	/**< holds things like the current active frame and so on */
-	const char *particleID;
-	int particleLevelFlags;	/**< the levels this particle should be visible at */
-	ptl_t *ptl;				/**< particle pointer to display */
-	char *ref1, *ref2;
-	inventory_t i;
-	int left, right, extension;
-	int fieldSize;				/**< ACTOR_SIZE_* */
-	teamDef_t* teamDef;
-	int gender;
-	fireDef_t *fd;	/**< in case this is a projectile */
-
-	/** is called before adding a le to scene */
-	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
-} le_t;							/* local entity */
-
-#define MAX_LOCALMODELS		512
-#define MAX_MAPPARTICLES	1024
-
-/** @brief local models */
-typedef struct lm_s {
-	char name[MAX_VAR];
-	char particle[MAX_VAR];
-
-	vec3_t origin;
-	vec3_t angles;
-
-	int num;
-	int skin;
-	int flags;
-	int frame;	/**< which frame to show */
-	char animname[MAX_QPATH];	/**< is this an animated model */
-	int levelflags;
-	animState_t as;
-
-	struct model_s *model;
-} localModel_t;							/* local models */
-
-/** @brief map particles */
-typedef struct mp_s {
-	char ptl[MAX_QPATH];
-	const char *info;
-	vec3_t origin;
-	vec2_t wait;
-	int nextTime;
-	int levelflags;
-} mapParticle_t;							/* mapparticles */
-
-extern localModel_t LMs[MAX_LOCALMODELS];
-
-extern int numLMs;
-extern int numMPs;
-
-extern le_t LEs[MAX_EDICTS];
-extern int numLEs;
-
-static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
-static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
-static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
-
-qboolean CL_OutsideMap(vec3_t impact);
-const char *LE_GetAnim(const char *anim, int right, int left, int state);
-void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide);
-void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
-void LE_AddAmbientSound(const char *sound, vec3_t origin, float volume, float attenuation);
-le_t *LE_GetClosestActor(const vec3_t origin);
-
-void LE_Think(void);
-/* think functions */
-void LET_StartIdle(le_t * le);
-void LET_Appear(le_t * le);
-void LET_StartPathMove(le_t * le);
-void LET_ProjectileAutoHide(le_t *le);
-void LET_PlayAmbientSound(le_t * le);
-
-/* local model functions */
-void LM_Perish(struct dbuffer *msg);
-void LM_Explode(struct dbuffer *msg);
-void LM_DoorOpen(struct dbuffer *msg);
-void LM_DoorClose(struct dbuffer *msg);
-
-void LM_AddToScene(void);
-void LE_AddToScene(void);
-le_t *LE_Add(int entnum);
-le_t *LE_Get(int entnum);
-le_t *LE_Find(int type, pos3_t pos);
-void LE_Cleanup(void);
-trace_t CL_Trace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask);
-
-localModel_t *CL_AddLocalModel(const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
-void CL_AddMapParticle(const char *particle, vec3_t origin, vec2_t wait, const char *info, int levelflags);
-void CL_ParticleCheckRounds(void);
-void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg);
-void CL_ParticleFree(ptl_t *p);
-
-/* cl_actor.c */
-/* vertical cursor offset */
-#define CURSOR_OFFSET UNIT_HEIGHT * 0.4
-/* distance from vertical center of grid-point to head when standing */
-#define EYE_HT_STAND  UNIT_HEIGHT * 0.25
-/* distance from vertical center of grid-point to head when crouched */
-#define EYE_HT_CROUCH UNIT_HEIGHT * 0.06
-
-/**
- * @brief Reaction fire toggle state, don't mess with the order!!!
- */
-typedef enum {
-	R_FIRE_OFF,
-	R_FIRE_ONCE,
-	R_FIRE_MANY
-} reactionmode_t;
-
-typedef enum {
-	BT_RIGHT_FIRE,
-	BT_REACTION,
-	BT_LEFT_FIRE,
-	BT_RIGHT_RELOAD,
-	BT_LEFT_RELOAD,
-	BT_STAND,
-	BT_CROUCH,
-	BT_HEADGEAR,
-	BT_NUM_TYPES
-} button_types_t;
-
-extern le_t *selActor;
-extern int actorMoveLength;
-extern invList_t invList[MAX_INVLIST];
-
-extern pos_t *fb_list[MAX_FORBIDDENLIST];
-extern int fb_length;
-
-void MSG_Write_PA(player_action_t player_action, int num, ...);
-
-void CL_CharacterCvars(character_t * chr);
-void CL_UGVCvars(character_t * chr);
-void CL_ActorUpdateCVars(void);
-qboolean CL_CheckMenuAction(int time, invList_t * weapon, int mode);
-
-void CL_ResetWeaponButtons(void);
-void CL_SetDefaultReactionFiremode(le_t * actor, const char hand);
-void CL_DisplayFiremodes_f(void);
-void CL_SwitchFiremodeList_f(void);
-void CL_FireWeapon_f(void);
-void CL_SelectReactionFiremode_f(void);
-
-character_t *CL_GetActorChr(const le_t * le);
-qboolean CL_WorkingReactionFiremode(const le_t * actor);
-int CL_ReservedTUs(const le_t * le, reservation_types_t type);
-void CL_ReserveTUs(const le_t * le, reservation_types_t type, int tus);
-
-#ifdef DEBUG
-void CL_ListReactionAndReservations_f (void);
-void CL_DisplayBlockedPaths_f(void);
-void LE_List_f(void);
-#endif
-void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
-qboolean CL_ActorSelect(le_t * le);
-qboolean CL_ActorSelectList(int num);
-qboolean CL_ActorSelectNext(void);
-void CL_AddActorToTeamList(le_t * le);
-void CL_RemoveActorFromTeamList(const le_t * le);
-void CL_ActorSelectMouse(void);
-void CL_ActorReload(int hand);
-void CL_ActorTurnMouse(void);
-void CL_ActorDoTurn(struct dbuffer *msg);
-void CL_ActorStandCrouch_f(void);
-void CL_ActorToggleReaction_f(void);
-void CL_ActorUseHeadgear_f(void);
-void CL_ActorStartMove(const le_t * le, pos3_t to);
-void CL_ActorShoot(const le_t * le, pos3_t at);
-void CL_InvCheckHands(struct dbuffer *msg);
-void CL_ActorDoMove(struct dbuffer *msg);
-void CL_ActorDoShoot(struct dbuffer *msg);
-void CL_ActorShootHidden(struct dbuffer *msg);
-void CL_ActorDoThrow(struct dbuffer *msg);
-void CL_ActorStartShoot(struct dbuffer *msg);
-void CL_ActorDie(struct dbuffer *msg);
-void CL_PlayActorSound(const le_t * le, actorSound_t soundType);
-
-void CL_ActorActionMouse(void);
-
-void CL_NextRound_f(void);
-void CL_DoEndRound(struct dbuffer * msg);
-
-void CL_ResetMouseLastPos(void);
-void CL_ResetActorMoveLength(void);
-void CL_ActorMouseTrace(void);
-
-qboolean CL_AddActor(le_t * le, entity_t * ent);
-qboolean CL_AddUGV(le_t * le, entity_t * ent);
-
-void CL_AddTargeting(void);
-void CL_ActorTargetAlign_f(void);
-void CL_ActorInventoryOpen_f(void);
-
-/* cl_team.c */
 /* if you increase this, you also have to change the aircraft buy/sell menu scripts */
 #define MAX_ACTIVETEAM	8
-#define MAX_WHOLETEAM	32
 
-#define NUM_TEAMSKINS	6
-#define NUM_TEAMSKINS_SINGLEPLAYER 4
 struct base_s;
 
 typedef struct chr_list_s {
@@ -554,94 +283,30 @@ typedef struct chr_list_s {
  */
 extern chrList_t chrDisplayList;
 
+#include "cl_le.h"
+#include "cl_language.h"
+#include "cl_particle.h"
+#include "cl_actor.h"
 #include "cl_menu.h"
-
-/* cl_radar.c */
 #include "cl_radar.h"
-
-/* cl_research.c */
 #include "cl_research.h"
-
-/* cl_produce.c */
 #include "cl_produce.h"
-
-/* cl_aliencont.c */
 #include "cl_aliencont.h"
-
-/* cl_basemanagment.c */
 /* we need this in cl_aircraft.h */
 #define MAX_EMPLOYEES 512
-
-/* cl_aircraft.c */
 #include "cl_aircraft.h"
-
-/* cl_airfight.c */
 #include "cl_airfight.h"
-
-/* cl_basemanagment.c */
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"
-
-/* cl_employee.c */
 #include "cl_employee.h"
-
-/* cl_transfer.c */
 #include "cl_transfer.h"
-
-/* stats */
-
-typedef struct stats_s {
-	int missionsWon;
-	int missionsLost;
-	int basesBuild;
-	int basesAttacked;
-	int interceptions;
-	int soldiersLost;
-	int soldiersNew;			/**< new recruits */
-	int killedAliens;
-	int rescuedCivilians;
-	int researchedTechnologies;
-	int moneyInterceptions;
-	int moneyBases;
-	int moneyResearch;
-	int moneyWeapons;
-} stats_t;
-
-extern stats_t stats;
-
 #include "cl_campaign.h"
-missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
-
-/* cl_map.c */
 #include "cl_map.h"
-
-/* cl_inventory.c */
 #include "cl_inventory.h"
-
-/* cl_particle.c */
-void CL_ParticleRegisterArt(void);
-void CL_ResetParticles(void);
-void CL_ParticleRun(void);
-void CL_RunMapParticles(void);
-int CL_ParseParticle(const char *name, const char **text);
-void CL_InitParticles(void);
-ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
-void PE_RenderParticles(void);
-void CL_ParticleVisible(ptl_t *p, qboolean hide);
-
-/* cl_parse.c */
 #include "cl_parse.h"
-
-/* cl_view.c */
 #include "cl_view.h"
-
-/* cl_sequence.c */
 #include "cl_sequence.h"
-
-/* cl_ufo.c */
 #include "cl_ufo.h"
-
-/* cl_popup.c */
 #include "cl_popup.h"
 
 #endif /* CLIENT_CLIENT_H */

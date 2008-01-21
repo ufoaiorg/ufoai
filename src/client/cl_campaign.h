@@ -200,6 +200,27 @@ typedef struct missionResults_s {
 	qboolean crashsite;	/**< Qtrue if secured UFO was crashed one. */
 } missionResults_t;
 
+extern missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
+
+typedef struct stats_s {
+	int missionsWon;
+	int missionsLost;
+	int basesBuild;
+	int basesAttacked;
+	int interceptions;
+	int soldiersLost;
+	int soldiersNew;			/**< new recruits */
+	int killedAliens;
+	int rescuedCivilians;
+	int researchedTechnologies;
+	int moneyInterceptions;
+	int moneyBases;
+	int moneyResearch;
+	int moneyWeapons;
+} stats_t;
+
+extern stats_t campaignStats;
+
 /** campaign definition */
 typedef struct campaign_s {
 	int idx;					/**< own index in global campaign array */
