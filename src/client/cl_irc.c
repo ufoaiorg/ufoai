@@ -443,7 +443,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg)
 		Com_Printf("IRC: %s\n", msg);
 
 	MN_TextScrollBottom("irc_data");
-	menu = MN_GetMenu(NULL); /* get current menu from stack */
+	menu = MN_GetActiveMenu(); /* get current menu from stack */
 	if (irc_showIfNotInMenu->integer && Q_strncmp(menu->name, "irc", 4)) {
 		S_StartLocalSound("misc/talk");
 		MN_AddChatMessage(msg);
@@ -736,7 +736,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			Com_Printf("Irc_Client_CmdPrivmsg: Unknown ctcp command: '%s'\n", trailing);
 		}
 	} else {
-		menu = MN_GetMenu(NULL);
+		menu = MN_GetActiveMenu();
 
 		if (!Irc_AppendToBuffer(va("<%s> %s", nick, trailing))) {
 			/* check whether this is no message to the channel - but to the user */

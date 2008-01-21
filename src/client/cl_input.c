@@ -522,7 +522,7 @@ static void CL_SelectDown_f (void)
 	CL_ActorSelectMouse();
 	/* we clicked outside the world but not onto a menu */
 	/* get the current menu */
-	menu = MN_GetMenu(NULL);
+	menu = MN_GetActiveMenu();
 	if (menu && menu->leaveNode)
 		MN_ExecuteActions(menu, menu->leaveNode->click);
 }
@@ -613,7 +613,7 @@ static void CL_LeftClickDown_f (void)
 		/* we clicked outside the world but not onto a menu */
 		if (cls.state == ca_active) {
 			/* get the current menu */
-			menu = MN_GetMenu(NULL);
+			menu = MN_GetActiveMenu();
 			if (menu && menu->leaveNode)
 				MN_ExecuteActions(menu, menu->leaveNode->click);
 		}
