@@ -962,7 +962,7 @@ menu options_game
 		image   menu/save_slot
 		pos     "500 500"
 		mousefx true
-		click   { cmd "msgmenu ?name" *txt_name color "1 1 1 1" *txt_name mousefx true }
+		click   { cmd "msgmenu ?cl_name" *txt_name color "1 1 1 1" *txt_name mousefx true }
 	}
 	string txt_name
 	{
@@ -970,7 +970,7 @@ menu options_game
 		pos "510 505"
 		color "0 .78 0 1"
 	}
-	confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
+	confunc cl_name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
 
 	pic button_keys
 	{

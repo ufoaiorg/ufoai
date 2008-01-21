@@ -699,7 +699,7 @@ menu mp_serverbrowser
 		image   menu/save_slot
 		pos     "480 575"
 		mousefx true
-		click   { cmd "msgmenu ?name" *txt_name color "1 1 1 1" *txt_name mousefx true }
+		click   { cmd "msgmenu ?cl_name" *txt_name color "1 1 1 1" *txt_name mousefx true }
 	}
 	string txt_name
 	{
@@ -707,7 +707,7 @@ menu mp_serverbrowser
 		pos "490 581"
 		color "0 .78 0 1"
 	}
-	confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
+	confunc cl_name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
 
 	// ==================
 	// preferences
