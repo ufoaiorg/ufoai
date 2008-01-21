@@ -1861,7 +1861,7 @@ static void CL_WriteConfiguration (void)
 
 /** @brief Cvars for initial check (popup at first start) */
 static cvarList_t checkcvar[] = {
-	{"name", NULL, NULL},
+	{"cl_name", NULL, NULL},
 
 	{NULL, NULL, NULL}
 };

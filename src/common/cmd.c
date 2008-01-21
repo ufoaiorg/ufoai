@@ -93,10 +93,10 @@ COMMAND BUFFER
 =============================================================================
 */
 
+#define CMD_BUFFER_SIZE 8192 /*16384*/
 static sizebuf_t cmd_text;
-static byte cmd_text_buf[8192];
-
-static char defer_text_buf[8192];
+static byte cmd_text_buf[CMD_BUFFER_SIZE];
+static char defer_text_buf[CMD_BUFFER_SIZE];
 
 /**
  * @note The initial buffer will grow as needed.
@@ -125,7 +125,8 @@ void Cbuf_AddText (const char *text)
 	l = strlen(text);
 
 	if (cmd_text.cursize + l >= cmd_text.maxsize) {
-		Com_Printf("Cbuf_AddText: overflow (%s)\n", text);
+		Com_Printf("Cbuf_AddText: overflow (%i) (%s)\n", cmd_text.maxsize, text);
+		Com_Printf("buffer content: %s\n", cmd_text_buf);
 		return;
 	}
 	SZ_Write(&cmd_text, text, l);
