@@ -3128,7 +3128,7 @@ tech rs_craft_inter_stingray
 
 tech rs_craft_ufo_scout
 {
-	type	tech
+	type	craft
 	name	"_UFO - Scout"
 	description {
 		default "_ufo_scout_txt"
@@ -3169,7 +3169,7 @@ tech rs_craft_ufo_scout
 
 tech rs_craft_ufo_fighter
 {
-	type	tech
+	type	craft
 	name	"_UFO - Fighter"
 	description {
 		default "_ufo_fighter_txt"
@@ -3211,7 +3211,7 @@ tech rs_craft_ufo_fighter
 
 tech rs_craft_ufo_supply
 {
-	type	tech
+	type	craft
 	name	"_UFO - Supply Ship"
 	description {
 		default "_ufo_supply_txt"
@@ -3253,7 +3253,7 @@ tech rs_craft_ufo_supply
 
 tech rs_craft_ufo_carrier
 {
-	type	tech
+	type	craft
 	name	"_UFO - Carrier"
 	description {
 		default "_ufo_carrier_txt"
@@ -3295,7 +3295,7 @@ tech rs_craft_ufo_carrier
 
 tech rs_craft_ufo_condor
 {
-	type	tech
+	type	craft
 	name	"_UFO - Condor"
 	description {
 		default "_ufo_condor_txt"
@@ -3337,7 +3337,7 @@ tech rs_craft_ufo_condor
 
 tech rs_craft_ufo_harvester
 {
-	type	tech
+	type	craft
 	name	"_UFO - Harvester"
 	description {
 		default "_ufo_harvester_txt"
