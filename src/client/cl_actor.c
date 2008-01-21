@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_team.h"
 #include "cl_sound.h"
+#include "cl_particle.h"
 #include "../renderer/r_mesh_anim.h"
 #include "menu/m_inventory.h"
 

@@ -284,8 +284,6 @@ typedef struct chr_list_s {
 extern chrList_t chrDisplayList;
 
 #include "cl_le.h"
-#include "cl_language.h"
-#include "cl_particle.h"
 #include "cl_actor.h"
 #include "cl_menu.h"
 #include "cl_radar.h"
