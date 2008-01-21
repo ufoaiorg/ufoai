@@ -22,20 +22,14 @@ fi
 find "$path" -type d -print > "$subdirfile"
 
 # Prepare logfile
-if [ -f "$logfile" ]
-then
-	rm "$logfile"
-	touch "$logfile"
-else
-	touch "$logfile"
-fi
+> "$logfile"
 
-# Remove pcx file if png file with the same name exist
+# Remove pcx file if png file with the same name exists
 remove_pcx_if_png()
 {
 	for i in $(ls | egrep '(.*\.pcx$)'); do
 		name=$(echo $i | awk -F\. '{print $1}')
-		pngname=$(echo -n $name; echo ".png")
+		pngname="${name}.png"
 		if [ -f "$pngname" ]
 		then
 			rm "$name.pcx"
@@ -50,8 +44,8 @@ convert_png_to_tga()
 {
 	for i in $(ls | egrep '(.*\.png$)'); do
 		name=$(echo $i | awk -F\. '{print $1}')
-		pngname=$(echo -n $name; echo ".png")
-		tganame=$(echo -n $name; echo ".tga")
+		pngname="${name}.png"
+		tganame="${name}.tga"
 		if [ -f "$pngname" ]
 		then
 			"$convertsoft" "$pngname" "$tganame"
