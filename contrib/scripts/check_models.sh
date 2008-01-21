@@ -1,14 +1,24 @@
 #!/bin/bash
 
-. scripts_common
-
 # Environment
 path=$(pwd)
+
+# make sure we can find any includes no matter where from we are launched
+cd $(dirname $0)
+SCRIPTDIR=$PWD
+. $SCRIPTDIR/scripts_common || {
+    echo "can't include scripts_common"
+    exit
+}
+
 logfile=~/check_models.log
 svnsoft=$(which svn) || fail "couldn't find svn"
 awksoft=$(which awk) || fail "couldn't find awk"
 convertsoft=$(which convert) || fail "couldn't find convert (install imagemagick)"
 md2soft=./md2.pl
+
+# enable nullglob, required for some of the checks later
+shopt -s nullglob
 
 if [ ! -f "$md2soft" ]
 then
@@ -108,5 +118,6 @@ while read i; do
 	remove_pcx_if_png
 	convert_png_to_tga
 	fix_md2_and_tga
-done < <(find "$path" -type d -print)
+done < <(find "$path" -type d ! -wholename '*.svn*' -print)
+shopt -u nullglob
 exit
