@@ -2413,6 +2413,12 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 		/* move not valid, don't even care to send */
 		return;
 	}
+	
+	if (CL_UsableTUs(selActor) < length) {
+		/* We do not have enough _usable_ TUs to move so don't even try to send. */
+		/* This includes a check for reserved TUs (which isn't done on the server!) */
+		return;
+	}
 
 	/* change mode to move now */
 	cl.cmode = M_MOVE;
