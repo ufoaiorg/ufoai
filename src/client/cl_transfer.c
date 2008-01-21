@@ -441,7 +441,7 @@ static void TR_TransferSelect_f (void)
 				aircraft = AIR_AircraftGetFromIdx(i);
 				if (aircraft) {
 					if (aircraft->homebase == baseCurrent) {
-						Com_sprintf(str, sizeof(str), _("Aircraft %s\n"), aircraft->name);
+						Com_sprintf(str, sizeof(str), _("Aircraft %s\n"), _(aircraft->name));
 						Q_strcat(transferList, str, sizeof(transferList));
 						cnt++;
 					}

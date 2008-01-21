@@ -119,7 +119,7 @@ menu basesummary
 
 	string txt_basesummary_aircraft
 	{
-		string "_Aircraft:"
+		string "_Aircraft"
 		pos "30 70"
 		//color "0 .78 0 1"
 	}
@@ -459,11 +459,11 @@ menu basesummary
 	{
 		cmd "del mn_basesummary_name;del mn_basesummary_interceptorcount;del mn_basesummary_transportercount;"
 		cmd "del mn_basesummary_soldiercount;del mn_basesummary_scientistcount;del mn_basesummary_workercount;"
-		cmd "del mn_basesummary_mediccount;del mn_basesummary_robotcount;del mn_bs_cap_building_aliencont;"
+		cmd "del mn_basesummary_mediccount;del mn_basesummary_robotcount;del mn_bs_cap_building_aliencontainment;"
 		cmd "del mn_bs_cap_building_intercept;del mn_bs_cap_building_hangar;del mn_bs_cap_building_large_ufo_hangar;"
 		cmd "del mn_bs_cap_building_hospital;del mn_bs_cap_building_lab;del mn_bs_cap_building_quarters;"
 		cmd "del mn_bs_cap_building_storage;del mn_bs_cap_building_workshop;del mn_bs_cap_building_small_ufo_hangar;"
-		cmd "del del mn_basesummary_construction0; mn_basesummary_construction1;del mn_basesummary_construction2;"
+		cmd "del mn_basesummary_construction0; del mn_basesummary_construction1;del mn_basesummary_construction2;"
 		cmd "del mn_basesummary_researchcurrent0;del mn_basesummary_researchcurrent1;del mn_basesummary_researchcurrent2;"
 		cmd "del mn_basesummary_researchcurrent3; del mn_basesummary_researchcurrent4; del mn_basesummary_totals_basecount;"
 		cmd "del mn_basesummary_totals_personnel;del mn_basesummary_totals_aircraft;del mn_basesummary_productioncurrent;"

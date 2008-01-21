@@ -1144,7 +1144,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	const vec2_t northPole = {0.0f, 90.0f};
 	float angle = 0.0f;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
+	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.5f};
 	qboolean showXVI = qfalse;
+	qboolean oneUFOVisible = qfalse;
 	static char buffer[512] = "";
 
 	assert(node);
@@ -1153,6 +1155,14 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	R_Color(node->color);
 	/* default font */
 	font = MN_GetFont(NULL, node);
+
+	/* check if at least 1 UFO is visible */
+	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
+		if (aircraft->visible) {
+			oneUFOVisible = qtrue;
+			break;
+		}
+	}
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
@@ -1164,7 +1174,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				/* Draw circle around the mission */
 				if (cl_3dmap->integer) {
 					if (!selMis->def->active)
-						MAP_MapDrawEquidistantPoints(node,  ms->realPos, SELECT_CIRCLE_RADIUS, yellow);
+						MAP_MapDrawEquidistantPoints(node, ms->realPos, SELECT_CIRCLE_RADIUS, yellow);
 				} else
 					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
 			}
@@ -1191,6 +1201,18 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 		if (!base->founded)
 			continue;
+
+		/* Draw weapon range if at least one UFO is visible */
+		if (oneUFOVisible && AII_BaseCanShoot(base)) {
+			/* @todo When there will be different possible base weapon, range should change */
+			for (i = 0; i < base->maxBatteries; i++) {
+				if (base->batteries[i].itemIdx != NONE && base->batteries[i].ammoLeft > 0
+					&& base->batteries[i].installationTime == 0) {
+					MAP_MapDrawEquidistantPoints(node, base->pos,
+						csi.ods[base->batteries[i].ammoIdx].craftitem.stats[AIR_STATS_WRANGE], red);
+				}
+			}
+		}
 
 		/* Draw base radar info */
 		RADAR_DrawInMap(node, &(base->radar), base->pos);
@@ -1219,6 +1241,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 				/* Draw aircraft radar */
 				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos);
+
+				/* Draw weapon range if at least one UFO is visible */
+				if (oneUFOVisible && aircraft->stats[AIR_STATS_WRANGE] > 0)
+					MAP_MapDrawEquidistantPoints(node, aircraft->pos, aircraft->stats[AIR_STATS_WRANGE], red);
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {
