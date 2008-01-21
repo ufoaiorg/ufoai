@@ -720,7 +720,7 @@ static void PR_ProductionListClick_f (void)
 
 #if 0 /* FIXME: not a concern any more ... */
 	/* there is already a running production - stop it first */
-	if (gd.productions[base->idx].amount > 0 ) {
+	if (gd.productions[base->idx].amount > 0) {
 		PR_ProductionInfo(base, qfalse);
 		return;
 	}
@@ -781,7 +781,10 @@ static void PR_ProductionListClick_f (void)
 			} else {	/* Aircraft. */
 				for (j = 0, i = 0; i < numAircraft_samples; i++) {
 					aircraft = &aircraft_samples[j];
-					if ((aircraft->tech->produceTime >= 0) && RS_IsResearched_ptr(aircraft->tech)) {
+					/* ufo research definition must not have a tech assigned
+					 * only RS_CRAFT types have
+					 * @sa RS_InitTree */
+					if (aircraft->tech && (aircraft->tech->produceTime >= 0) && RS_IsResearched_ptr(aircraft->tech)) {
 						if (j == idx) {
 							selectedQueueItem = qfalse;
 							selectedIndex = i;
