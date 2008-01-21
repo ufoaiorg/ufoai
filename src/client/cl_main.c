@@ -78,10 +78,9 @@ static cvar_t *cl_serverlist;
 /* userinfo */
 static cvar_t *info_password;
 static cvar_t *cl_name;
-static cvar_t *cl_team;
-static cvar_t *cl_equip;
-static cvar_t *cl_teamnum;
 static cvar_t *cl_msg;
+cvar_t *cl_teamnum;
+cvar_t *cl_team;
 
 client_static_t cls;
 client_state_t cl;
@@ -1319,7 +1318,7 @@ static void CL_TeamNum_f (void)
 {
 	int max = 4;
 	int maxteamnum = 0;
-	int i = teamnum->integer;
+	int i = cl_teamnum->integer;
 	static char buf[MAX_STRING_CHARS];
 
 	maxteamnum = Cvar_VariableInteger("mn_maxteams");
@@ -1327,7 +1326,7 @@ static void CL_TeamNum_f (void)
 	if (maxteamnum > 0)
 		max = maxteamnum;
 
-	teamnum->modified = qfalse;
+	cl_teamnum->modified = qfalse;
 
 	if (i <= TEAM_CIVILIAN || i > teamData.maxteams) {
 		Cvar_SetValue("cl_teamnum", DEFAULT_TEAMNUM);
@@ -1378,7 +1377,7 @@ static int spawnCountFromServer = -1;
  */
 static void CL_SpawnSoldiers_f (void)
 {
-	int n = teamnum->integer;
+	int n = cl_teamnum->integer;
 	base_t *base = NULL;
 	aircraft_t *aircraft = cls.missionaircraft;
 	chrList_t chr_list_temp;
@@ -2078,7 +2077,6 @@ static void CL_InitLocal (void)
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	cl_name = Cvar_Get("cl_name", "", CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
 	cl_team = Cvar_Get("cl_team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
-	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
 	cl_msg = Cvar_Get("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");

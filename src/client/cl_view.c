@@ -137,13 +137,13 @@ static void CL_ParseEntitystring (const char *es)
 			/* maximum level */
 			map_maxlevel = maxlevel;
 
-			if (!ccs.singleplayer && (teamnum->integer > maxmultiplayerteams
-									|| teamnum->integer <= TEAM_CIVILIAN)) {
+			if (!ccs.singleplayer && (cl_teamnum->integer > maxmultiplayerteams
+									|| cl_teamnum->integer <= TEAM_CIVILIAN)) {
 				Com_Printf("The selected team is not useable. "
 					"The map doesn't support %i teams but only %i teams\n",
-					teamnum->integer, maxmultiplayerteams);
+					cl_teamnum->integer, maxmultiplayerteams);
 				Cvar_SetValue("cl_teamnum", DEFAULT_TEAMNUM);
-				Com_Printf("Set teamnum to %i\n", teamnum->integer);
+				Com_Printf("Set teamnum to %i\n", cl_teamnum->integer);
 			}
 		} else if (!Q_strcmp(classname, "misc_model")) {
 			localModel_t *lm;

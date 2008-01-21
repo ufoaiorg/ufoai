@@ -778,7 +778,7 @@ static void CL_GenerateEquipment_f (void)
 	}
 
 	/* Get team. */
-	if (strstr(Cvar_VariableString("cl_team"), "human")) {
+	if (strstr(cl_team->string, "human")) {
 		team = 0;
 		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f().. team human, id: %i\n", team);
 	} else if (strstr(Cvar_VariableString("team"), "alien")) {

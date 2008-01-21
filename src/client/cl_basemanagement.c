@@ -37,6 +37,7 @@ vec3_t newBasePos;
 static cvar_t *mn_base_title;
 static cvar_t *mn_base_count;
 static cvar_t *mn_base_id;
+static cvar_t *cl_equip;
 
 /** @brief allocate memory for mn.menuText[TEXT_STANDARD] contained the information about a building */
 static char buildingText[MAX_LIST_CHAR];
@@ -3006,6 +3007,7 @@ void B_ResetBaseManagement (void)
 
 	mn_base_count = Cvar_Get("mn_base_count", "0", 0, "Current amount of build bases");
 	mn_base_id = Cvar_Get("mn_base_id", "-1", 0, "Internal id of the current selected base");
+	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 }
 
 /**

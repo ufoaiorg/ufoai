@@ -233,7 +233,8 @@ extern cvar_t *cl_numnames;
 extern cvar_t *cl_start_employees;
 extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
-
+extern cvar_t *cl_team;
+extern cvar_t *cl_teamnum;
 extern cvar_t *cl_camzoommin;
 
 extern cvar_t *cl_mapzoommax;
