@@ -2383,6 +2383,36 @@ static qboolean CL_TraceMove (pos3_t to)
 }
 
 /**
+ * @brief Return the last position we can walk to with a defined amount of TUs.
+ * @param[in] to The location we want to reach
+ * @param[in] tus How many timeunits we have to move.
+ * @param[out pos The location we can react with the available TUs.
+ */
+static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
+{
+	int length;
+	vec3_t vec;
+	int dv;
+
+	length = Grid_MoveLength(&clMap, to, qfalse);
+
+	if (!selActor || !length || length >= 0x3F)
+		return;
+	
+	VectorCopy(to, pos);
+
+	while ((dv = Grid_MoveNext(&clMap, pos)) < ROUTING_NOT_REACHABLE) {
+		length = Grid_MoveLength(&clMap, pos, qfalse);
+		if (length <= tus)
+			return;
+		PosAddDV(pos, dv);
+		Grid_PosToVec(&clMap, pos, vec);
+
+	}
+}
+
+
+/**
  * @brief Starts moving actor.
  * @param[in] le
  * @param[in] to
@@ -2392,6 +2422,7 @@ static qboolean CL_TraceMove (pos3_t to)
 void CL_ActorStartMove (const le_t * le, pos3_t to)
 {
 	int length;
+	pos3_t toReal;
 
 	if (mouseSpace != MS_WORLD)
 		return;
@@ -2410,6 +2441,12 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 		return;
 	}
 
+	/* Get the last position we can walk to with the usable TUs. */
+	CL_MaximumMove(to, CL_UsableTUs(selActor), toReal);
+	
+	/* Get the cost of the new position just in case. */
+	length = Grid_MoveLength(&clMap, toReal, qfalse);
+
 	if (CL_UsableTUs(selActor) < length) {
 		/* We do not have enough _usable_ TUs to move so don't even try to send. */
 		/* This includes a check for reserved TUs (which isn't done on the server!) */
@@ -2420,7 +2457,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	cl.cmode = M_MOVE;
 
 	/* move seems to be possible; send request to server */
-	MSG_Write_PA(PA_MOVE, le->entnum, to);
+	MSG_Write_PA(PA_MOVE, le->entnum, toReal);
 }
 
 
