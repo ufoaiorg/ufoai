@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# note : this script currently is broken.
+# md2.pl syntax has changed since it was introduced, and it has not been updated here.
+
 # Environment
 path=$(pwd)
 
