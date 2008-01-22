@@ -121,20 +121,17 @@ static void LM_Delete (localModel_t * lm)
 	memcpy(lm, lm + 1, (numLMs - (lm - LMs)) * sizeof(localModel_t));
 
 	LM_GenerateList();
-	Grid_RecalcRouting(&clMap, backup.name, lmList);
+	Grid_RecalcRouting(&clMap, backup.name, backup.angles, lmList);
 	/* also recalc forbidden list for func_breakable and func_door e.g. */
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
-/**
- * @brief Callback for EV_DOOR_CLOSE event - rotates the inline model and recalc routing
- * @sa Touch_DoorTrigger
- */
-void LM_DoorClose (struct dbuffer *msg)
+static inline void LM_DoorAction (struct dbuffer *msg, qboolean openDoor)
 {
 	localModel_t *lm;
 	le_t *le;
 	int lmNum, entNum;
+	cBspModel_t *mod;
 
 	/* get local entity */
 	entNum = NET_ReadShort(msg);
@@ -149,14 +146,35 @@ void LM_DoorClose (struct dbuffer *msg)
 		return;
 	}
 
-	/* FIXME */
-	le->angles[YAW] -= DOOR_ROTATION_ANGLE;
-	lm->angles[YAW] -= DOOR_ROTATION_ANGLE;
-	lm->flags = LM_DOOR_CLOSE;
+	if (!openDoor) {
+		/* FIXME */
+		le->angles[YAW] -= DOOR_ROTATION_ANGLE;
+		Com_Printf("close - le->angles, %.2f:%.2f:%.2f\n", le->angles[0], le->angles[1], le->angles[2]);
+		lm->angles[YAW] -= DOOR_ROTATION_ANGLE;
+		Com_Printf("close - lm->angles, %.2f:%.2f:%.2f\n", lm->angles[0], lm->angles[1], lm->angles[2]);
+		lm->flags = LM_DOOR_CLOSE;
+	} else {
+		/* FIXME */
+		le->angles[YAW] += DOOR_ROTATION_ANGLE;
+		Com_Printf("open - le->angles, %.2f:%.2f:%.2f\n", le->angles[0], le->angles[1], le->angles[2]);
+		lm->angles[YAW] += DOOR_ROTATION_ANGLE;
+		Com_Printf("open - lm->angles, %.2f:%.2f:%.2f\n", lm->angles[0], lm->angles[1], lm->angles[2]);
+		lm->flags = LM_DOOR_OPEN;
+	}
+	mod = CM_InlineModel(lm->name);
 
-	Grid_RecalcRouting(&clMap, lm->name, lmList);
+	Grid_RecalcRouting(&clMap, lm->name, lm->angles, lmList);
 	/* also recalc forbidden list for func_breakable and func_door e.g. */
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+}
+
+/**
+ * @brief Callback for EV_DOOR_CLOSE event - rotates the inline model and recalc routing
+ * @sa Touch_DoorTrigger
+ */
+void LM_DoorClose (struct dbuffer *msg)
+{
+	LM_DoorAction(msg, qfalse);
 }
 
 /**
@@ -165,31 +183,7 @@ void LM_DoorClose (struct dbuffer *msg)
  */
 void LM_DoorOpen (struct dbuffer *msg)
 {
-	localModel_t *lm;
-	le_t *le;
-	int lmNum, entNum;
-
-	/* get local entity */
-	entNum = NET_ReadShort(msg);
-	le = LE_Get(entNum);
-
-	/* get local model */
-	lmNum = NET_ReadShort(msg);
-	lm = LM_Find(lmNum);
-
-	if (!lm || !le) {
-		Com_Printf("Can't open the door - lm (%p) for mapNum %i not found or le (%p) for entnum %i not found\n", lm, lmNum, le, entNum);
-		return;
-	}
-
-	/* FIXME */
-	le->angles[YAW] += DOOR_ROTATION_ANGLE;
-	lm->angles[YAW] += DOOR_ROTATION_ANGLE;
-	lm->flags = LM_DOOR_OPEN;
-
-	Grid_RecalcRouting(&clMap, lm->name, lmList);
-	/* also recalc forbidden list for func_breakable and func_door e.g. */
-	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+	LM_DoorAction(msg, qtrue);
 }
 
 void LM_Perish (struct dbuffer *msg)
@@ -277,7 +271,7 @@ localModel_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t 
 	lm->levelflags = levelflags;
 
 	LM_GenerateList();
-	Grid_RecalcRouting(&clMap, lm->name, lmList);
+	Grid_RecalcRouting(&clMap, lm->name, lm->angles, lmList);
 /* 	Com_Printf("adding model %s %i\n", lm->name, numLMs); */
 
 	return lm;

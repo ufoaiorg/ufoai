@@ -597,10 +597,10 @@ DOOR FUNCTIONS
  * @sa LM_DoorOpen
  * @sa LM_CloseOpen
  */
-static void Touch_DoorTrigger (edict_t *self, edict_t *activator)
+static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 {
 	if (!self->owner)
-		return;
+		return qfalse;
 
 	if (self->owner->moveinfo.state == STATE_CLOSED) {
 		self->owner->moveinfo.state = STATE_OPENED;
@@ -613,7 +613,13 @@ static void Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		gi.WriteShort(self->owner->mapNum);
 		gi.EndEvents();
 		G_RecalcRouting(self->owner);
-	} else if (self->owner->moveinfo.state == STATE_OPENED) {
+		return qtrue;
+	}
+
+	return qfalse;
+
+#if 0
+	if (self->owner->moveinfo.state == STATE_OPENED) {
 		self->owner->moveinfo.state = STATE_CLOSED;
 		/* FIXME */
 		self->owner->angles[YAW] += DOOR_ROTATION_ANGLE;
@@ -625,6 +631,7 @@ static void Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		gi.EndEvents();
 		G_RecalcRouting(self->owner);
 	}
+#endif
 }
 
 /**

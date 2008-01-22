@@ -372,12 +372,10 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 			out->plane = curTile->planes + LittleLong(in->planenum);
 
 		/* in case this is a map assemble */
-		out->mins[0] = LittleShort(in->mins[0]) + shift[0];
-		out->mins[1] = LittleShort(in->mins[1]) + shift[1];
-		out->mins[2] = LittleShort(in->mins[2]) + shift[2];
-		out->maxs[0] = LittleShort(in->maxs[0]) + shift[0];
-		out->maxs[1] = LittleShort(in->maxs[1]) + shift[1];
-		out->maxs[2] = LittleShort(in->maxs[2]) + shift[2];
+		for (j = 0; j < 3; j++) {
+			out->mins[j] = LittleShort(in->mins[j]) + shift[j];
+			out->maxs[j] = LittleShort(in->maxs[j]) + shift[j];
+		}
 
 		for (j = 0; j < 2; j++) {
 			child = LittleLong(in->children[j]);
@@ -2019,7 +2017,7 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, con
 	VectorSubtract(end, origin, end_l);
 
 	/* rotate start and end into the models frame of reference */
-	if (headnode != curTile->box_headnode && (angles[0] || angles[1] || angles[2]))
+	if (headnode != curTile->box_headnode && VectorNotEmpty(angles))
 		rotated = qtrue;
 	else
 		rotated = qfalse;
@@ -2987,7 +2985,7 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  * @sa CMod_LoadSubmodels
  * @param[in] list The local models list
  */
-void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **list)
+void Grid_RecalcRouting (struct routing_s *map, const char *name, vec3_t angles, const char **list)
 {
 	cBspModel_t *model;
 	pos3_t min, max;
@@ -3004,8 +3002,30 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	inlineList = list;
 
 	/* get dimensions */
-	VecToPos(model->mins, min);
-	VecToPos(model->maxs, max);
+	if (VectorNotEmpty(angles)) {
+		vec3_t minVec, maxVec;
+		float maxF, v;
+		int i;
+
+		maxF = 0;
+		for (i = 0; i < 3; i++) {
+			v = fabsf(model->mins[i]);
+			if (v > maxF)
+				maxF = v;
+			v = fabsf(model->maxs[i]);
+			if (v > maxF)
+				maxF = v;
+		}
+		for (i = 0; i < 3; i++) {
+			minVec[i] = -maxF;
+			maxVec[i] = maxF;
+		}
+		VecToPos(minVec, min);
+		VecToPos(maxVec, max);
+	} else {  /* normal */
+		VecToPos(model->mins, min);
+		VecToPos(model->maxs, max);
+	}
 
 	memset(filled, 0, WIDTH * WIDTH);
 

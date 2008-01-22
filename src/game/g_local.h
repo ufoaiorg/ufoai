@@ -546,7 +546,7 @@ struct edict_s {
 	int fieldSize;	/* ACTOR_SIZE_* */
 
 	/** function to call when used */
-	void (*use) (edict_t * self, edict_t * activator);
+	qboolean (*use) (edict_t * self, edict_t * activator);
 	float nextthink;
 	void (*think)(edict_t *self);
 

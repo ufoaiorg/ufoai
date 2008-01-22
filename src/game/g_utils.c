@@ -408,7 +408,7 @@ void G_RecalcRouting (edict_t * self)
 	entList[i] = NULL;
 
 	/* recalculate routing */
-	gi.GridRecalcRouting(gi.map, self->model, entList);
+	gi.GridRecalcRouting(gi.map, self->model, self->angles, entList);
 }
 
 /**
@@ -429,7 +429,7 @@ void G_CompleteRecalcRouting (void)
  */
 int G_TouchTriggers (edict_t *ent)
 {
-	int i, num;
+	int i, num, usedNum = 0;
 	edict_t *touch[MAX_EDICTS], *hit;
 
 	if (ent->type != ET_ACTOR || ent->state & STATE_DEAD)
@@ -445,7 +445,8 @@ int G_TouchTriggers (edict_t *ent)
 			continue;
 		if (!hit->use)
 			continue;
-		hit->use(hit, ent);
+		if (hit->use(hit, ent))
+			usedNum++;
 	}
-	return num;
+	return usedNum;
 }
