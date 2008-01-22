@@ -76,10 +76,8 @@ typedef enum {
 	F_INT,
 	F_FLOAT,
 	F_LSTRING,					/* string on disk, pointer in memory, TAG_LEVEL */
-	F_GSTRING,					/* string on disk, pointer in memory, TAG_GAME */
 	F_VECTOR,
 	F_EDICT,					/* index on disk, pointer in memory */
-	F_CLIENT,					/* index on disk, pointer in memory */
 	F_FUNCTION,
 	F_IGNORE
 } fieldtype_t;
@@ -208,11 +206,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 				break;
 			case F_IGNORE:
 				break;
-			case F_GSTRING:
-				break;
 			case F_EDICT:
-				break;
-			case F_CLIENT:
 				break;
 			case F_FUNCTION:
 				break;
