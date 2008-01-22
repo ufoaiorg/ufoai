@@ -289,6 +289,9 @@ static void PF_ReadFormat (const char *format, ...)
 	va_end(ap);
 }
 
+/**
+ * @sa gi.EndEvents
+ */
 static void PF_EndEvents (void)
 {
 	if (!pfe_pending)
@@ -301,6 +304,9 @@ static void PF_EndEvents (void)
 	pfe_msg = NULL;
 }
 
+/**
+ * @sa gi.AddEvent
+ */
 static void PF_AddEvent (int mask, int eType)
 {
 	/* finish the last event */
