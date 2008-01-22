@@ -580,6 +580,18 @@ static void R_InitExtension (void)
 		r_state.glsl_program = qfalse;
 	}
 
+	/* vertex buffer objects */
+	if (strstr(r_config.extensions_string, "GL_ARB_vertex_buffer_object")){
+		r_state.vertex_buffers = qtrue;
+		if (r_vertexbuffers->integer)
+			Com_Printf("using GL_ARB_vertex_buffer_object\n");
+		else
+			Com_Printf("ignoring GL_EXT_texture_filter_anisotropic\n");
+	} else {
+		Com_Printf("GL_ARB_vertex_buffer_object not found\n");
+		r_state.vertex_buffers = qfalse;
+	}
+
 	/* reset gl error state */
 	R_CheckError();
 

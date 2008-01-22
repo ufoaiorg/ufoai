@@ -76,6 +76,7 @@ typedef struct {
 	qboolean lod_bias;
 	qboolean arb_fragment_program;
 	qboolean glsl_program;
+	qboolean vertex_buffers;
 } rstate_t;
 
 extern rstate_t r_state;

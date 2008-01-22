@@ -133,7 +133,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	if (bufferMapTile != mod) {
 		bufferMapTile = mod;
 
-		if (r_vertexbuffers->integer)
+		if (r_state.vertex_buffers && r_vertexbuffers->integer)
 			R_SetVertexBufferState(mod);
 		else
 			R_SetVertexArrayState(mod);

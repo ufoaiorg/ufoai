@@ -558,24 +558,26 @@ static void R_LoadBspVertexArrays (void)
 	loadmodel->bsp.normals = (GLfloat *)VID_TagAlloc(vid_modelPool, vertind * sizeof(GLfloat), 0);
 	memcpy(loadmodel->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
 
-	/* and also the vertex buffer objects */
-	qglGenBuffers(1, &loadmodel->bsp.vertex_buffer);
-	qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.vertex_buffer);
-	qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), loadmodel->bsp.verts, GL_STATIC_DRAW);
+	if (r_state.vertex_buffers) {
+		/* and also the vertex buffer objects */
+		qglGenBuffers(1, &loadmodel->bsp.vertex_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.vertex_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), loadmodel->bsp.verts, GL_STATIC_DRAW);
 
-	qglGenBuffers(1, &loadmodel->bsp.texcoord_buffer);
-	qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.texcoord_buffer);
-	qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), loadmodel->bsp.texcoords, GL_STATIC_DRAW);
+		qglGenBuffers(1, &loadmodel->bsp.texcoord_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.texcoord_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), loadmodel->bsp.texcoords, GL_STATIC_DRAW);
 
-	qglGenBuffers(1, &loadmodel->bsp.lmtexcoord_buffer);
-	qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.lmtexcoord_buffer);
-	qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), loadmodel->bsp.lmtexcoords, GL_STATIC_DRAW);
+		qglGenBuffers(1, &loadmodel->bsp.lmtexcoord_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.lmtexcoord_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), loadmodel->bsp.lmtexcoords, GL_STATIC_DRAW);
 
-	qglGenBuffers(1, &loadmodel->bsp.normal_buffer);
-	qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.normal_buffer);
-	qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), loadmodel->bsp.normals, GL_STATIC_DRAW);
+		qglGenBuffers(1, &loadmodel->bsp.normal_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.normal_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), loadmodel->bsp.normals, GL_STATIC_DRAW);
 
-	qglBindBuffer(GL_ARRAY_BUFFER, 0);
+		qglBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 }
 
 /**
