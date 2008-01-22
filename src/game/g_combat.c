@@ -515,10 +515,8 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		/* do damage */
 		if (shock)
 			damage = 0;
-		else {
-			/* REMOVED random component - it's quite random enough already */
-			damage = (fd->spldmg[0] /* + fd->spldmg[1] * crand() */) * (1.0 - dist / fd->splrad);
-		}
+		else
+			damage = fd->spldmg[0] * (1.0 - dist / fd->splrad);
 
 		if (mock)
 			mock->allow_self = qtrue;
