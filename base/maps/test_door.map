@@ -164,6 +164,7 @@
 {
 "classname" "info_human_start"
 "origin" "-48 80 32"
+"spawnflags" "3"
 }
 // entity 16
 {
@@ -198,6 +199,7 @@
 // entity 20
 {
 "classname" "func_door"
+"spawnflags" "3"
 // brush 0
 {
 ( -128 4 60 ) ( -128 0 60 ) ( -132 4 60 ) tex_doors/door016 0 0 0 0.03125 0.25
