@@ -364,39 +364,13 @@ typedef enum {
 } edictMaterial_t;
 
 typedef struct {
-	/* fixed data */
-	vec3_t		start_origin;
-	vec3_t		start_angles;
-	vec3_t		end_origin;
-	vec3_t		end_angles;
-
 	/* actor movement */
 	int			contentFlags[MAX_DVTAB];
 	int			visflags[MAX_DVTAB];
 	byte		steps;
 	int			currentStep;
 
-	/* brush movement */
-	float		accel;
-	float		speed;
-	float		decel;
-	float		distance;
-
-	float		wait;
-
-	vec3_t		movedir;
-	vec3_t		pos1, pos2;
-	vec3_t		velocity;
-
-	/* state data */
 	int			state;
-	vec3_t		dir;
-	float		current_speed;
-	float		move_speed;
-	float		next_speed;
-	float		remaining_distance;
-	float		decel_distance;
-	void		(*endfunc)(edict_t *);
 } moveinfo_t;
 
 /* client_t->anim_priority */
