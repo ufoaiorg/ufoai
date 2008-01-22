@@ -92,109 +92,95 @@
 }
 // entity 1
 {
-"classname" "func_door"
-"spawnflags" "3"
-// brush 0
-{
-( -48 64 60 ) ( -288 64 60 ) ( -48 64 -68 ) tex_mattn/door026 0 18.2858886719 0 0.015625 0.2187499851
-( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_mattn/door026 0 0 0 0.015625 0.25
-( 72 0 14 ) ( 72 0 142 ) ( 312 0 14 ) tex_mattn/door026 0 18.2857055664 0 0.015625 0.2187499851
-( -132 -4 -60 ) ( -132 204 -60 ) ( -132 -4 68 ) tex_mattn/door026 0 18.2857055664 0 0.25 0.2187499851
-( -128 -4 68 ) ( -128 204 -60 ) ( -128 -4 -60 ) tex_mattn/door026 0 18.2857055664 0 0.25 0.2187499851
-( 120 296 60 ) ( 120 88 60 ) ( -120 296 60 ) tex_mattn/door026 0 0 0 0.015625 0.25
-}
+"classname" "info_player_start"
+"origin" "112 -208 32"
 }
 // entity 2
 {
 "classname" "info_player_start"
-"origin" "112 -208 32"
+"origin" "-80 -16 32"
 }
 // entity 3
 {
 "classname" "info_player_start"
-"origin" "-80 -16 32"
+"origin" "-176 -176 32"
 }
 // entity 4
 {
 "classname" "info_player_start"
-"origin" "-176 -176 32"
+"origin" "48 -112 32"
 }
 // entity 5
 {
 "classname" "info_player_start"
-"origin" "48 -112 32"
+"origin" "176 80 32"
 }
 // entity 6
 {
 "classname" "info_player_start"
-"origin" "176 80 32"
+"origin" "48 176 32"
 }
 // entity 7
 {
 "classname" "info_player_start"
-"origin" "48 176 32"
+"origin" "-208 16 32"
 }
 // entity 8
 {
 "classname" "info_player_start"
-"origin" "-208 16 32"
+"origin" "-208 -80 32"
 }
 // entity 9
 {
 "classname" "info_player_start"
-"origin" "-208 -80 32"
-}
-// entity 10
-{
-"classname" "info_player_start"
 "origin" "-112 -144 32"
 }
-// entity 11
+// entity 10
 {
 "classname" "info_human_start"
 "origin" "-48 176 32"
 }
-// entity 12
+// entity 11
 {
 "classname" "info_human_start"
 "origin" "-240 -144 32"
 }
-// entity 13
+// entity 12
 {
 "classname" "info_human_start"
 "origin" "-16 -208 32"
 }
-// entity 14
+// entity 13
 {
 "classname" "info_human_start"
 "origin" "112 -144 32"
 }
-// entity 15
+// entity 14
 {
 "classname" "info_human_start"
 "origin" "208 16 32"
 }
-// entity 16
+// entity 15
 {
 "classname" "info_human_start"
 "origin" "-48 80 32"
 }
-// entity 17
+// entity 16
 {
 "classname" "info_human_start"
 "origin" "-176 144 32"
 }
-// entity 18
+// entity 17
 {
 "classname" "info_alien_start"
 "origin" "-16 -112 32"
 }
-// entity 19
+// entity 18
 {
 "classname" "info_alien_start"
 "origin" "16 80 32"
 }
-// entity 20
+// entity 19
 {
 "classname" "func_breakable"
 "spawnflags" "3"
@@ -202,10 +188,32 @@
 // brush 0
 {
 ( 0 -80 66 ) ( 0 -80 -62 ) ( 0 -288 66 ) tex_material/wood004 0 17.0666809082 0 0.015625 0.2343749851
-( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_material/wood004 0 -0 0 0.25 0.015625
+( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_material/wood004 0 0 0 0.25 0.015625
 ( 72 -68 14 ) ( 72 -68 142 ) ( 312 -68 14 ) tex_material/wood004 0 17.0666809082 0 0.25 0.2343749851
 ( -64 -4 -60 ) ( -64 204 -60 ) ( -64 -4 68 ) tex_material/wood004 0 17.0666809082 0 0.015625 0.2343749851
 ( 312 -64 18 ) ( 72 -64 146 ) ( 72 -64 18 ) tex_material/wood004 0 17.0667114258 0 0.25 0.2343749851
-( 120 298 64 ) ( 120 90 64 ) ( -120 298 64 ) tex_material/wood004 0 -0 0 0.25 0.015625
+( 120 298 64 ) ( 120 90 64 ) ( -120 298 64 ) tex_material/wood004 0 0 0 0.25 0.015625
+}
+}
+// entity 20
+{
+"classname" "func_door"
+// brush 0
+{
+( -128 4 60 ) ( -128 0 60 ) ( -132 4 60 ) tex_doors/door016 0 0 0 0.03125 0.25
+( -128 64 60 ) ( -132 64 60 ) ( -128 64 4 ) tex_doors/door016 0 18.285736084 0 0.03125 0.2187499851
+( -128 4 60 ) ( -128 4 4 ) ( -128 0 60 ) tex_doors/door016 0 18.285736084 0 0.5 0.2187499851
+( -132 0 4 ) ( -128 0 4 ) ( -132 4 4 ) tex_doors/door016 0 0 0 0.03125 0.25
+( -132 0 4 ) ( -132 0 60 ) ( -128 0 4 ) tex_doors/door016 0 18.285736084 0 0.03125 0.2187499851
+( -132 0 4 ) ( -132 4 4 ) ( -132 0 60 ) tex_doors/door016 0 18.285736084 0 0.5 0.2187499851
+}
+// brush 1
+{
+( -128 64 60 ) ( -128 60 60 ) ( -132 64 60 ) tex_common/origin 0 60 0 1 1
+( -128 64 60 ) ( -132 64 60 ) ( -128 64 4 ) tex_common/origin 0 0 0 1 1
+( -128 64 60 ) ( -128 64 4 ) ( -128 60 60 ) tex_common/origin 4 0 0 1 1
+( -132 60 4 ) ( -128 60 4 ) ( -132 64 4 ) tex_common/origin 0 60 0 1 1
+( -132 60 4 ) ( -132 60 60 ) ( -128 60 4 ) tex_common/origin 0 0 0 1 1
+( -132 60 4 ) ( -132 64 4 ) ( -132 60 60 ) tex_common/origin 4 0 0 1 1
 }
 }
