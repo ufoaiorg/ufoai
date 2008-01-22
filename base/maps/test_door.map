@@ -1,0 +1,187 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxlevel" "5"
+"maxteams" "0"
+"light" "160"
+"_color" "1 0.8 0.8"
+"angles" "30 210"
+"ambient" "0.4 0.4 0.4"
+// brush 0
+{
+( 120 80 4 ) ( 120 -128 4 ) ( -120 80 4 ) tex_mattn/dirt001 0 0 0 1 1
+( -48 224 64 ) ( -288 224 64 ) ( -48 224 -64 ) tex_mattn/dirt001 40 0 0 1 1
+( 312 -80 64 ) ( 312 -80 -64 ) ( 312 -288 64 ) tex_mattn/dirt001 32 0 0 1 1
+( -120 -120 0 ) ( 120 -120 0 ) ( -120 88 0 ) tex_mattn/dirt001 0 8 0 1 1
+( 72 -288 -64 ) ( 72 -288 64 ) ( 312 -288 -64 ) tex_mattn/dirt001 0 0 0 1 1
+( -288 16 -64 ) ( -288 224 -64 ) ( -288 16 64 ) tex_mattn/dirt001 48 0 0 1 1
+}
+// brush 1
+{
+( 120 298 68 ) ( 120 90 68 ) ( -120 298 68 ) tex_mattn/concrete003 0 218 0 1 1 512 0 0
+( -48 132 64 ) ( -288 132 64 ) ( -48 132 -64 ) tex_mattn/concrete003 40 0 0 1 1 512 0 0
+( 68 -80 68 ) ( 68 -80 -60 ) ( 68 -288 68 ) tex_mattn/concrete003 32 4 0 1 1 512 0 0
+( 72 -68 14 ) ( 72 -68 142 ) ( 312 -68 14 ) tex_mattn/concrete003 0 78 0 1 1 512 0 0
+( -132 -4 -60 ) ( -132 204 -60 ) ( -132 -4 68 ) tex_mattn/concrete003 68 4 0 1 1 512 0 0
+( -120 298 64 ) ( 120 90 64 ) ( 120 298 64 ) tex_mattn/concrete003 0 218 0 1 1 512 0 0
+}
+// brush 2
+{
+( 68 -80 68 ) ( 68 -80 -60 ) ( 68 -288 68 ) tex_mattn/concrete003 32 4 0 1 1
+( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_mattn/concrete003 0 10 0 1 1
+( 72 -68 14 ) ( 72 -68 142 ) ( 312 -68 14 ) tex_mattn/concrete003 0 78 0 1 1
+( -132 -4 -60 ) ( -132 204 -60 ) ( -132 -4 68 ) tex_mattn/concrete003 68 4 0 1 1
+( 312 -64 18 ) ( 72 -64 146 ) ( 72 -64 18 ) tex_mattn/concrete003 0 82 0 1 1
+( 120 298 64 ) ( 120 90 64 ) ( -120 298 64 ) tex_mattn/concrete003 0 218 0 1 1
+}
+// brush 3
+{
+( -48 132 64 ) ( -288 132 64 ) ( -48 132 -64 ) tex_mattn/concrete003 40 0 0 1 1
+( 68 -80 68 ) ( 68 -80 -60 ) ( 68 -288 68 ) tex_mattn/concrete003 32 4 0 1 1
+( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_mattn/concrete003 0 10 0 1 1
+( -132 -4 -60 ) ( -132 204 -60 ) ( -132 -4 68 ) tex_mattn/concrete003 68 4 0 1 1
+( -48 128 -60 ) ( -288 128 68 ) ( -48 128 68 ) tex_mattn/concrete003 40 4 0 1 1
+( 120 298 64 ) ( 120 90 64 ) ( -120 298 64 ) tex_mattn/concrete003 0 218 0 1 1
+}
+// brush 4
+{
+( -48 132 64 ) ( -288 132 64 ) ( -48 132 -64 ) tex_mattn/concrete003 40 0 0 1 1
+( 68 -80 68 ) ( 68 -80 -60 ) ( 68 -288 68 ) tex_mattn/concrete003 32 4 0 1 1
+( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_mattn/concrete003 0 10 0 1 1
+( 72 -68 14 ) ( 72 -68 142 ) ( 312 -68 14 ) tex_mattn/concrete003 0 78 0 1 1
+( 64 -288 68 ) ( 64 -80 -60 ) ( 64 -80 68 ) tex_mattn/concrete003 32 4 0 1 1
+( 120 298 64 ) ( 120 90 64 ) ( -120 298 64 ) tex_mattn/concrete003 0 218 0 1 1
+}
+// brush 5
+{
+( -48 132 64 ) ( -288 132 64 ) ( -48 132 -64 ) tex_mattn/concrete003 40 0 0 1 1
+( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_mattn/concrete003 0 10 0 1 1
+( -132 -4 -60 ) ( -132 204 -60 ) ( -132 -4 68 ) tex_mattn/concrete003 68 4 0 1 1
+( -128 -4 68 ) ( -128 204 -60 ) ( -128 -4 -60 ) tex_mattn/concrete003 68 4 0 1 1
+( 120 298 64 ) ( 120 90 64 ) ( -120 298 64 ) tex_mattn/concrete003 0 218 0 1 1
+( -48 64 -68 ) ( -288 64 60 ) ( -48 64 60 ) tex_mattn/concrete003 40 508 0 1 1
+}
+// brush 6
+{
+( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_mattn/concrete003 0 10 0 1 1
+( 72 -68 14 ) ( 72 -68 142 ) ( 312 -68 14 ) tex_mattn/concrete003 0 78 0 1 1
+( -132 -4 -60 ) ( -132 204 -60 ) ( -132 -4 68 ) tex_mattn/concrete003 68 4 0 1 1
+( -128 -4 68 ) ( -128 204 -60 ) ( -128 -4 -60 ) tex_mattn/concrete003 68 4 0 1 1
+( 120 298 64 ) ( 120 90 64 ) ( -120 298 64 ) tex_mattn/concrete003 0 218 0 1 1
+( 312 0 14 ) ( 72 0 142 ) ( 72 0 14 ) tex_mattn/concrete003 0 78 0 1 1
+}
+// brush 7
+{
+( -132 -4 -60 ) ( -132 204 -60 ) ( -132 -4 68 ) tex_mattn/concrete003 68 4 0 1 1
+( -128 -4 68 ) ( -128 204 -60 ) ( -128 -4 -60 ) tex_mattn/concrete003 68 4 0 1 1
+( 120 298 64 ) ( 120 90 64 ) ( -120 298 64 ) tex_mattn/concrete003 0 218 0 1 1
+( -48 64 60 ) ( -288 64 60 ) ( -48 64 -68 ) tex_mattn/concrete003 40 508 0 1 1
+( 72 0 14 ) ( 72 0 142 ) ( 312 0 14 ) tex_mattn/concrete003 0 78 0 1 1
+( -120 296 60 ) ( 120 88 60 ) ( 120 296 60 ) tex_mattn/concrete003 0 216 0 1 1
+}
+}
+// entity 1
+{
+"classname" "func_door"
+"spawnflags" "3"
+// brush 0
+{
+( -48 64 60 ) ( -288 64 60 ) ( -48 64 -68 ) tex_mattn/door026 0 18.2858886719 0 0.015625 0.2187499851
+( -120 -118 4 ) ( 120 -118 4 ) ( -120 90 4 ) tex_mattn/door026 0 0 0 0.015625 0.25
+( 72 0 14 ) ( 72 0 142 ) ( 312 0 14 ) tex_mattn/door026 0 18.2857055664 0 0.015625 0.2187499851
+( -132 -4 -60 ) ( -132 204 -60 ) ( -132 -4 68 ) tex_mattn/door026 0 18.2857055664 0 0.25 0.2187499851
+( -128 -4 68 ) ( -128 204 -60 ) ( -128 -4 -60 ) tex_mattn/door026 0 18.2857055664 0 0.25 0.2187499851
+( 120 296 60 ) ( 120 88 60 ) ( -120 296 60 ) tex_mattn/door026 0 0 0 0.015625 0.25
+}
+}
+// entity 2
+{
+"classname" "info_player_start"
+"origin" "112 -208 32"
+}
+// entity 3
+{
+"classname" "info_player_start"
+"origin" "-80 -16 32"
+}
+// entity 4
+{
+"classname" "info_player_start"
+"origin" "-176 -176 32"
+}
+// entity 5
+{
+"classname" "info_player_start"
+"origin" "48 -112 32"
+}
+// entity 6
+{
+"classname" "info_player_start"
+"origin" "176 80 32"
+}
+// entity 7
+{
+"classname" "info_player_start"
+"origin" "48 176 32"
+}
+// entity 8
+{
+"classname" "info_player_start"
+"origin" "-208 16 32"
+}
+// entity 9
+{
+"classname" "info_player_start"
+"origin" "-208 -80 32"
+}
+// entity 10
+{
+"classname" "info_player_start"
+"origin" "-112 -144 32"
+}
+// entity 11
+{
+"classname" "info_human_start"
+"origin" "-48 176 32"
+}
+// entity 12
+{
+"classname" "info_human_start"
+"origin" "-240 -144 32"
+}
+// entity 13
+{
+"classname" "info_human_start"
+"origin" "-16 -208 32"
+}
+// entity 14
+{
+"classname" "info_human_start"
+"origin" "112 -144 32"
+}
+// entity 15
+{
+"classname" "info_human_start"
+"origin" "208 16 32"
+}
+// entity 16
+{
+"classname" "info_human_start"
+"origin" "-48 80 32"
+}
+// entity 17
+{
+"classname" "info_human_start"
+"origin" "-176 144 32"
+}
+// entity 18
+{
+"classname" "info_alien_start"
+"origin" "-16 -112 32"
+}
+// entity 19
+{
+"classname" "info_alien_start"
+"origin" "16 80 32"
+}
