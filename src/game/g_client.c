@@ -2639,17 +2639,8 @@ static void G_SendVisibleEdicts (int team)
 		if (!ent->inuse)
 			continue;
 		/* don't add actors here */
-		if (ent->type == ET_BREAKABLE) {
-			if (!end)
-				gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
-			gi.WriteShort(ent->type);
-			gi.WriteShort(ent->number);
-			gi.WriteShort(ent->modelindex);
-			ent->visflags |= ~ent->visflags;
-			end = qtrue;
-		} else if (ent->type == ET_DOOR) {
-			if (!end)
-				gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
+		if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
+			gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);

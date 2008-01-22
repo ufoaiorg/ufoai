@@ -186,6 +186,9 @@ void LM_DoorOpen (struct dbuffer *msg)
 	LM_DoorAction(msg, qtrue);
 }
 
+/**
+ * @sa EV_MODEL_PERISH
+ */
 void LM_Perish (struct dbuffer *msg)
 {
 	localModel_t *lm;
@@ -200,23 +203,29 @@ void LM_Perish (struct dbuffer *msg)
 
 /**
  * @note e.g. func_breakable or func_door with health
+ * @sa EV_MODEL_EXPLODE
  */
 void LM_Explode (struct dbuffer *msg)
 {
 	localModel_t *lm;
+	int num;
 	le_t *le;
 
-	lm = LM_Find(NET_ReadShort(msg));
-	if (!lm)
+	num = NET_ReadShort(msg);
+	lm = LM_Find(num);
+	if (!lm) {
+		Com_Error(ERR_DROP, "LM_Explode: Could not find lm with id %i", num);
 		return;
+	}
 
 	/* now remove also the le to allow the tracing code to skip this le */
 	/* func_breakable and func_door e.g. */
-	le = LE_Get(NET_ReadShort(msg));
+	num = NET_ReadShort(msg);
+	le = LE_Get(num);
 	if (le)
 		le->inuse = qfalse;
 	else
-		Com_Error(ERR_DROP, "LM_Explode: Could not find le");
+		Com_Error(ERR_DROP, "LM_Explode: Could not find le with id %i", num);
 
 	if (lm->particle[0]) {
 		cBspModel_t *mod;
