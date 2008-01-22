@@ -221,7 +221,8 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 	}
 	outMesh->num_verts = numVerts;
 	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 4096) {
-		Com_Printf("R_ModLoadAliasMD2Model: invalid amount of verts for model '%s' (%i)\n", mod->name, outMesh->num_verts);
+		Com_Printf("R_ModLoadAliasMD2Model: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
+			mod->name, outMesh->num_verts, outMesh->num_tris);
 		return;
 	}
 
