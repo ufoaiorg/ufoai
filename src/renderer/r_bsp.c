@@ -166,9 +166,9 @@ void R_DrawBrushModel (entity_t * e)
 
 		/* compute a full bounding box */
 		for (i = 0; i < 8; i++) {
-			tmp[0] = (i & 1) ? mins[0] : maxs[0];
-			tmp[1] = (i & 2) ? mins[1] : maxs[1];
-			tmp[2] = (i & 4) ? mins[2] : maxs[2];
+			tmp[0] = (i & 1) ? e->model->mins[0] : e->model->maxs[0];
+			tmp[1] = (i & 2) ? e->model->mins[1] : e->model->maxs[1];
+			tmp[2] = (i & 4) ? e->model->mins[2] : e->model->maxs[2];
 			tmp[3] = 1.0;
 
 			Vector4Copy(tmp, bbox[i]);
