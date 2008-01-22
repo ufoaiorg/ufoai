@@ -168,12 +168,30 @@ void SV_LinkEdict (edict_t * ent)
 	/* set the size */
 	VectorSubtract(ent->maxs, ent->mins, ent->size);
 
-	/* set the abs box */
-	/* normal */
-	VectorAdd(ent->origin, ent->mins, ent->absmin);
-	VectorAdd(ent->origin, ent->maxs, ent->absmax);
-
 	ent->linkcount++;
+
+	/* expand for rotation */
+	if (ent->solid == SOLID_BSP && VectorNotEmpty(ent->angles)) {
+		float max, v;
+		int i;
+
+		max = 0;
+		for (i = 0; i < 3; i++) {
+			v = fabsf(ent->mins[i]);
+			if (v > max)
+				max = v;
+			v = fabsf(ent->maxs[i]);
+			if (v > max)
+				max = v;
+		}
+		for (i = 0; i < 3; i++) {
+			ent->absmin[i] = ent->origin[i] - max;
+			ent->absmax[i] = ent->origin[i] + max;
+		}
+	} else {  /* normal */
+		VectorAdd(ent->origin, ent->mins, ent->absmin);
+		VectorAdd(ent->origin, ent->maxs, ent->absmax);
+	}
 
 	if (ent->solid == SOLID_NOT)
 		return;

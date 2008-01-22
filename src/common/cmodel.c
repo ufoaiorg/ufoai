@@ -1388,7 +1388,7 @@ cBspModel_t *CM_InlineModel (const char *name)
 
 	for (i = 0; i < numTiles; i++) {
 		models = mapTiles[i].numcmodels - LEVEL_STEPON;
-		assert(models>=0);
+		assert(models >= 0);
 
 		if (num >= models)
 			num -= models;
@@ -1742,7 +1742,7 @@ static void CM_TraceToLeaf (int leafnum)
 	cBspLeaf_t *leaf;
 	cBspBrush_t *b;
 
-	assert(leafnum >= 0);
+	assert(leafnum > LEAFNODE);
 
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contentFlags & trace_contents))
@@ -1775,7 +1775,7 @@ static void CM_TestInLeaf (int leafnum)
 	cBspLeaf_t *leaf;
 	cBspBrush_t *b;
 
-	assert(leafnum >= 0);
+	assert(leafnum > LEAFNODE);
 
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contentFlags & trace_contents))
@@ -1819,8 +1819,8 @@ static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
 		return;					/* already hit something nearer */
 
 	/* if < 0, we are in a leaf node */
-	if (num < 0) {
-		CM_TraceToLeaf(-1 - num);
+	if (num <= LEAFNODE) {
+		CM_TraceToLeaf(LEAFNODE - num);
 		return;
 	}
 
@@ -1947,7 +1947,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const v
 	VectorCopy(maxs, trace_maxs);
 
 	/* check for position test special case */
-	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2]) {
+	if (VectorCompare(start, end)) {
 		int leafs[MAX_LEAFS];
 		int numleafs;
 		vec3_t c1, c2;
@@ -1971,7 +1971,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const v
 	}
 
 	/* check for point special case */
-	if (mins[0] == 0 && mins[1] == 0 && mins[2] == 0 && maxs[0] == 0 && maxs[1] == 0 && maxs[2] == 0) {
+	if (VectorCompare(mins, vec3_origin) && VectorCompare(maxs, vec3_origin)) {
 		trace_ispoint = qtrue;
 		VectorClear(trace_extents);
 	} else {
@@ -2722,7 +2722,6 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 	memset(map->area, ROUTING_NOT_REACHABLE, WIDTH * WIDTH * HEIGHT);
 	map->fblist = fb_list;
 	map->fblength = fb_length;
-
 
 	if (distance > MAX_ROUTE)
 		distance = MAX_ROUTE;

@@ -84,10 +84,6 @@ void LM_AddToScene (void)
 		VectorCopy(lm->origin, ent.origin);
 		VectorCopy(lm->origin, ent.oldorigin);
 		VectorCopy(lm->angles, ent.angles);
-		if (lm->flags & LM_DOOR_OPEN) {
-			/* @todo - check whether there is an le in front of it */
-			ent.angles[YAW] += 90;
-		}
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
@@ -155,6 +151,7 @@ void LM_DoorClose (struct dbuffer *msg)
 
 	/* FIXME */
 	le->angles[YAW] -= DOOR_ROTATION_ANGLE;
+	lm->angles[YAW] -= DOOR_ROTATION_ANGLE;
 	lm->flags = LM_DOOR_CLOSE;
 
 	Grid_RecalcRouting(&clMap, lm->name, lmList);
@@ -187,6 +184,7 @@ void LM_DoorOpen (struct dbuffer *msg)
 
 	/* FIXME */
 	le->angles[YAW] += DOOR_ROTATION_ANGLE;
+	lm->angles[YAW] += DOOR_ROTATION_ANGLE;
 	lm->flags = LM_DOOR_OPEN;
 
 	Grid_RecalcRouting(&clMap, lm->name, lmList);
