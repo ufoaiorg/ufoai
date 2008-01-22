@@ -38,6 +38,8 @@ extern item_t dragItem;
 void MN_FindContainer(menuNode_t* const node);
 void MN_Drag(const menuNode_t* const node, int x, int y, qboolean rightClick);
 void MN_DrawItem(const vec3_t org, item_t item, int sx, int sy, int x, int y, const vec3_t scale, const vec4_t color);
+const invList_t* MN_DrawContainerNode(menuNode_t *node);
+void MN_DrawItemNode(menuNode_t *node, const char *itemName);
 
 void MN_DrawDisabled(const menuNode_t* node);
 void MN_DrawFree(int container, const menuNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs);

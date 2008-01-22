@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_actor.h"
 #include "m_inventory.h"
+#include "m_draw.h"
 
 inventory_t *menuInventory = NULL;
 
@@ -348,12 +349,15 @@ int MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 {
 	int i;
 	int weapon_idx;
-	int linenum = 0;
+	int linenum = 1;
+
+	assert(item.t != NONE);
+
 	if (item.amount > 1)
 		Q_strncpyz(tooltiptext, va("%i x %s\n", item.amount, csi.ods[item.t].name), string_maxlength);
 	else
 		Q_strncpyz(tooltiptext, va("%s\n", csi.ods[item.t].name), string_maxlength);
-	linenum++;
+
 	/* Only display further info if item.t is researched */
 	if (RS_ItemIsResearched(csi.ods[item.t].id)) {
 		if (csi.ods[item.t].weapon) {
@@ -390,4 +394,75 @@ int MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 	return linenum;
 }
 
+/**
+ * @brief Draw the container with all its items
+ * @note The item tooltip is done after the menu is completly
+ * drawn - because it must be on top of every other node and item
+ * @return The item in the container to hover
+ */
+const invList_t* MN_DrawContainerNode (menuNode_t *node)
+{
+	const vec3_t scale = {3.5, 3.5, 3.5};
+	vec4_t color = {1, 1, 1, 1};
+	invList_t *ic;
 
+	if (node->mousefx == C_UNDEFINED)
+		MN_FindContainer(node);
+	if (node->mousefx == NONE)
+		return NULL;
+
+	if (csi.ids[node->mousefx].single) {
+		/* single item container (special case for left hand) */
+		if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
+			color[3] = 0.5;
+			if (menuInventory->c[csi.idRight] && csi.ods[menuInventory->c[csi.idRight]->item.t].holdTwoHanded)
+				MN_DrawItem(node->pos, menuInventory->c[csi.idRight]->item, node->size[0] / C_UNIT,
+							node->size[1] / C_UNIT, 0, 0, scale, color);
+		} else if (menuInventory->c[node->mousefx]) {
+			if (node->mousefx == csi.idRight &&
+					csi.ods[menuInventory->c[csi.idRight]->item.t].fireTwoHanded &&
+					menuInventory->c[csi.idLeft]) {
+				color[0] = color[1] = color[2] = color[3] = 0.5;
+				MN_DrawDisabled(node);
+			}
+			MN_DrawItem(node->pos, menuInventory->c[node->mousefx]->item, node->size[0] / C_UNIT,
+						node->size[1] / C_UNIT, 0, 0, scale, color);
+		}
+	} else {
+		/* standard container */
+		for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
+			MN_DrawItem(node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color);
+		}
+	}
+	/* draw free space if dragging - but not for idEquip */
+	if (mouseSpace == MS_DRAG && node->mousefx != csi.idEquip)
+		MN_InvDrawFree(menuInventory, node);
+
+	/* Draw tooltip for weapon or ammo */
+	if (mouseSpace != MS_DRAG && node->state && mn_show_tooltips->integer)
+		/* Find out where the mouse is */
+		return Com_SearchInInventory(menuInventory,
+			node->mousefx, (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);
+	return NULL;
+}
+
+void MN_DrawItemNode (menuNode_t *node, const char *itemName)
+{
+	item_t item = {1, NONE, NONE, 0, 0}; /* 1 so it's not reddish; fake item anyway */
+	const vec4_t color = {1, 1, 1, 1};
+
+	if (node->mousefx == C_UNDEFINED)
+		MN_FindContainer(node);
+	if (node->mousefx == NONE) {
+		Com_Printf("no container for drawing this item (%s)...\n", itemName);
+		return;
+	}
+
+	for (item.t = 0; item.t < csi.numODs; item.t++)
+		if (!Q_strncmp(itemName, csi.ods[item.t].id, MAX_VAR))
+			break;
+	if (item.t == csi.numODs)
+		return;
+
+	MN_DrawItem(node->pos, item, 0, 0, 0, 0, node->scale, color);
+}

@@ -146,9 +146,6 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 	/* if true we have to reset the anim state and make sure the correct model is shown */
 	qboolean updateModel = qfalse;
 
-	/* set model properties */
-	if (!*source)
-		return;
 	node->menuModel = MN_GetMenuModel(source);
 
 	/* direct model name - no menumodel definition */
