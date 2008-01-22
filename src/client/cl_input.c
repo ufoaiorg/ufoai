@@ -1699,6 +1699,7 @@ void IN_Init (void)
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
 	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
 	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
+	Cmd_AddCommand("dooraction", CL_ActorDoorAction_f, _("Opens or closes a door"));
 	Cmd_AddCommand("levelup", CL_LevelUp_f, _("Slice through terrain at a higher level"));
 	Cmd_AddCommand("leveldown", CL_LevelDown_f, _("Slice through terrain at a lower level"));
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, _("Zoom in"));

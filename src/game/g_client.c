@@ -1297,6 +1297,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	int contentFlags;
 	vec3_t pointTrace;
 	char* stepAmount = NULL;
+	qboolean triggers = qfalse;
 
 	ent = g_edicts + num;
 
@@ -1425,6 +1426,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
+					triggers = qtrue;
 					status |= VIS_STOP;
 					steps = 0;
 					sentAppearPerishEvent = qfalse;
@@ -1464,6 +1466,13 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			if (g_notu != NULL && !g_notu->integer)
 				ent->TU = max(0, initTU - (int) tu);
 			G_SendStats(ent);
+
+			if (!triggers) {
+				/* no triggers, no client action */
+				ent->client_action = NULL;
+				gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
+				gi.WriteShort(ent->number);
+			}
 
 			/* end the move */
 			G_GetFloorItems(ent);
@@ -1980,12 +1989,96 @@ void G_KillTeam (void)
 #endif
 
 /**
+ * @brief This function opens the door when the player wants it to open
+ * @sa PA_OPEN_DOOR
+ * @param[in] entnum The entity number of the door
+ */
+static void G_ClientOpenDoor (player_t *player, int entnum, int doornum)
+{
+	edict_t *actor = g_edicts + entnum;
+	edict_t* door = actor->client_action;
+	if (!door)
+		return;
+
+	if (doornum != door->number) {
+		Com_Printf("G_ClientOpenDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
+		return;
+	}
+
+	if (!G_ActionCheck(player, actor, TU_DOOR_ACTION, qfalse))
+		return;
+
+	if (door->moveinfo.state == STATE_CLOSED) {
+		door->moveinfo.state = STATE_OPENED;
+
+		/* FIXME */
+		/* change rotation and relink */
+		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
+		gi.linkentity(door);
+
+		/* let everybody know, that the door opens */
+		gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
+		gi.WriteShort(door->number);
+		gi.WriteShort(door->mapNum);
+		G_RecalcRouting(door);
+
+		actor->TU -= TU_DOOR_ACTION;
+		/* send the new TUs */
+		G_SendStats(actor);
+
+		gi.EndEvents();
+	}
+}
+
+/**
+ * @brief This function closes the door when the player wants it to close
+ * @sa PA_CLOSE_DOOR
+ * @param[in] entnum The entity number of the door
+ */
+static void G_ClientCloseDoor (player_t *player, int entnum, int doornum)
+{
+	edict_t *actor = g_edicts + entnum;
+	edict_t* door = actor->client_action;
+	if (!door)
+		return;
+
+	if (doornum != door->number) {
+		Com_Printf("G_ClientCloseDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
+		return;
+	}
+
+	if (!G_ActionCheck(player, actor, TU_DOOR_ACTION, qfalse))
+		return;
+
+	if (door->moveinfo.state == STATE_OPENED) {
+		door->moveinfo.state = STATE_CLOSED;
+
+		/* FIXME */
+		/* change rotation and relink */
+		door->angles[YAW] += DOOR_ROTATION_ANGLE;
+		gi.linkentity(door);
+
+		/* let everybody know, that the door closes */
+		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
+		gi.WriteShort(door->number);
+		gi.WriteShort(door->mapNum);
+		G_RecalcRouting(door);
+
+		actor->TU -= TU_DOOR_ACTION;
+		/* send the new TUs */
+		G_SendStats(actor);
+
+		gi.EndEvents();
+	}
+}
+
+/**
  * @brief The client sent us a message that he did something. We now execute the related fucntion(s) adn notify him if neccessary.
  * @param[in] player The player that sent us the message (@todo: is this correct?)
  */
 int G_ClientAction (player_t * player)
 {
-	int action;
+	player_action_t action;
 	int num;
 	pos3_t pos;
 	int i;
@@ -2025,6 +2118,16 @@ int G_ClientAction (player_t * player)
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 		G_ClientInvMove(player, num, from, fx, fy, to, tx, ty, qtrue, NOISY);
+		break;
+
+	case PA_OPEN_DOOR:
+		gi.ReadFormat(pa_format[PA_OPEN_DOOR], &i);
+		G_ClientOpenDoor(player, num, i);
+		break;
+
+	case PA_CLOSE_DOOR:
+		gi.ReadFormat(pa_format[PA_OPEN_DOOR], &i);
+		G_ClientCloseDoor(player, num, i);
 		break;
 
 	case PA_REACT_SELECT:

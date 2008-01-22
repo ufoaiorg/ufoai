@@ -110,6 +110,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TU_TURN		1	/**< Time units for turning (no matter how far). */
 #define TU_MOVE_STRAIGHT 2	/**< Time units used to move straight to the next field/square. */
 #define TU_MOVE_DIAGONAL 3	/**< Time units used to move to a diagonal field/square. */
+#define TU_DOOR_ACTION 1	/**< Time units used to interact with doors */
+
+/* door states */
+#define STATE_OPENED		0
+#define STATE_CLOSED		1
 
 #define MAX_STRING_CHARS    1024    /* max length of a string passed to Cmd_TokenizeString */
 #define MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */
@@ -553,6 +558,8 @@ typedef enum {
 
 	EV_DOOR_OPEN,
 	EV_DOOR_CLOSE,
+	EV_DOOR_ACTION,
+	EV_RESET_CLIENT_ACTION,
 
 	EV_NUM_EVENTS
 } event_t;
@@ -581,6 +588,8 @@ typedef enum {
 	PA_MOVE,
 	PA_STATE,
 	PA_SHOOT,
+	PA_OPEN_DOOR,
+	PA_CLOSE_DOOR,
 	PA_INVMOVE,
 	PA_REACT_SELECT
 } player_action_t;

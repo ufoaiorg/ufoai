@@ -2506,10 +2506,10 @@ void CL_ActorReload (int hand)
 
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].out < tu) {
-			/* Once we've found at least one clip, there's no point */
-			/* searching other containers if it would take longer */
-			/* to retrieve the ammo from them than the one */
-			/* we've already found. */
+			/* Once we've found at least one clip, there's no point
+			 * searching other containers if it would take longer
+			 * to retrieve the ammo from them than the one
+			 * we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(&csi.ods[ic->item.t], weapon)
 				 && RS_ItemIsResearched(csi.ods[ic->item.t].id)) {
@@ -2530,6 +2530,117 @@ void CL_ActorReload (int hand)
 }
 
 /**
+ * @brief Opens a door.
+ * @param[in] le Who is opening
+ * @sa CL_ActorDoorAction
+ * @sa CL_ActorCloseDoor
+ */
+void CL_ActorOpenDoor (void)
+{
+	if (!CL_CheckAction())
+		return;
+
+	MSG_Write_PA(PA_OPEN_DOOR, selActor->entnum, selActor->client_action);
+}
+
+/**
+ * @brief Closes a door.
+ * @param[in] le Who is closing
+ * @sa CL_ActorDoorAction
+ * @sa CL_ActorOpenDoor
+ */
+void CL_ActorCloseDoor (void)
+{
+	if (!CL_CheckAction())
+		return;
+
+	MSG_Write_PA(PA_CLOSE_DOOR, selActor->entnum, selActor->client_action);
+}
+
+/**
+ * @brief Reads the door entity number for client interaction
+ * @sa EV_DOOR_ACTION
+ * @sa Touch_DoorTrigger
+ */
+void CL_ActorDoorAction (struct dbuffer *msg)
+{
+	le_t* le;
+	int number, doornumber;
+
+	/* read data */
+	NET_ReadFormat(msg, ev_format[EV_DOOR_ACTION], &number, &doornumber);
+
+	/* get actor le */
+	le = LE_Get(number);
+	if (!le) {
+		Com_Printf("CL_ActorDoorAction: Could not get le %i\n", number);
+		return;
+	}
+	/* set door number */
+	le->client_action = doornumber;
+}
+
+/**
+ * @brief Hud callback to open/close a door
+ */
+void CL_ActorDoorAction_f (void)
+{
+	const char *action;
+
+	if (!CL_CheckAction())
+		return;
+
+	/* we need at least one parameter - an 'o' or 'c' for open and close */
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s [o|c]\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* no client action */
+	if (selActor->client_action == 0)
+		return;
+
+	/* Check if we should even try to send this command (no TUs left or). */
+	if (CL_UsableTUs(selActor) >= TU_DOOR_ACTION) {
+		action = Cmd_Argv(1);
+		switch (*action) {
+		case 'o':
+			CL_ActorOpenDoor();
+			break;
+		case 'c':
+			CL_ActorCloseDoor();
+			break;
+		default:
+			Com_Printf("Only o(pen) and c(lose) are valid parameters\n");
+			break;
+		}
+	}
+}
+
+/**
+ * @brief When no trigger is touched, the client actions are resetted
+ * @sa EV_RESET_CLIENT_ACTION
+ * @sa G_ClientMove
+ */
+void CL_ActorResetClientAction (struct dbuffer *msg)
+{
+	le_t* le;
+	int number;
+
+	/* read data */
+	NET_ReadFormat(msg, ev_format[EV_RESET_CLIENT_ACTION], &number);
+
+	/* get actor le */
+	le = LE_Get(number);
+	if (!le) {
+		Com_Printf("CL_ActorResetClientAction: Could not get le %i\n", number);
+		return;
+	}
+	/* set door number */
+	le->client_action = 0;
+}
+
+/**
  * @brief The client changed something in his hand-containers. This function updates the reactionfire info.
  * @param[in] msg
  */
@@ -2541,7 +2652,6 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	int hand = -1;		/**< 0=right, 1=left -1=undef*/
 
 	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
-
 	if ((entnum < 0) || (hand < 0)) {
 		Com_Printf("CL_InvCheckHands: entnum or hand not sent/received correctly. (number: %i)\n", entnum);
 	}

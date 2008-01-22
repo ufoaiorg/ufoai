@@ -131,7 +131,6 @@ static inline void LM_DoorAction (struct dbuffer *msg, qboolean openDoor)
 	localModel_t *lm;
 	le_t *le;
 	int lmNum, entNum;
-	cBspModel_t *mod;
 
 	/* get local entity */
 	entNum = NET_ReadShort(msg);
@@ -157,11 +156,8 @@ static inline void LM_DoorAction (struct dbuffer *msg, qboolean openDoor)
 		lm->angles[YAW] += DOOR_ROTATION_ANGLE;
 		lm->flags = LM_DOOR_OPEN;
 	}
-	mod = CM_InlineModel(lm->name);
 
 	Grid_RecalcRouting(&clMap, lm->name, lm->angles, lmList);
-	/* also recalc forbidden list for func_breakable and func_door e.g. */
-	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
 /**

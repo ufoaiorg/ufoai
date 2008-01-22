@@ -588,57 +588,39 @@ DOOR FUNCTIONS
 =============================================================================
 */
 
-/* door states */
-#define STATE_OPENED		0
-#define STATE_CLOSED		1
-
 /**
  * @brief Trigger to open the door we are standing in front of it
  * @sa LM_DoorOpen
  * @sa LM_CloseOpen
+ * @sa CL_ActorDoorAction
  */
 static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 {
 	if (!self->owner)
 		return qfalse;
 
-	if (self->owner->moveinfo.state == STATE_CLOSED) {
-		self->owner->moveinfo.state = STATE_OPENED;
-
-		/* FIXME */
-		/* change rotation and relink */
-		self->owner->angles[YAW] -= DOOR_ROTATION_ANGLE;
-		gi.linkentity(self->owner);
-
-		/* let everybody know, that the door opens */
-		gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
-		gi.WriteShort(self->owner->number);
-		gi.WriteShort(self->owner->mapNum);
+	if (activator->team == TEAM_CIVILIAN || activator->team == TEAM_ALIEN) {
+		/* let the ai interact with the door */
+		if (self->owner->moveinfo.state == STATE_CLOSED) {
+			/* open it */
+			activator->TU -= TU_DOOR_ACTION;
+		} else if (self->owner->moveinfo.state == STATE_OPENED) {
+			/* close it */
+			activator->TU -= TU_DOOR_ACTION;
+		}
+		return qtrue;
+	} else {
+		/* prepare for client action */
+		Com_Printf("action %i\n", activator->number);
+		activator->client_action = self->owner;
+		/* tell the hud to show the door buttons */
+		gi.AddEvent(G_TeamToPM(activator->team), EV_DOOR_ACTION);
+		gi.WriteShort(activator->number);
+		gi.WriteShort(activator->client_action->number);
 		gi.EndEvents();
-		G_RecalcRouting(self->owner);
 		return qtrue;
 	}
-
 	return qfalse;
-
-#if 0
-	if (self->owner->moveinfo.state == STATE_OPENED) {
-		self->owner->moveinfo.state = STATE_CLOSED;
-
-		/* FIXME */
-		/* change rotation and relink */
-		self->owner->angles[YAW] += DOOR_ROTATION_ANGLE;
-		gi.linkentity(self->owner);
-
-		/* let everybody know, that the door closes */
-		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
-		gi.WriteShort(self->owner->number);
-		gi.WriteShort(self->owner->mapNum);
-		gi.EndEvents();
-		G_RecalcRouting(self->owner);
-		return qtrue;
-	}
-#endif
 }
 
 /**

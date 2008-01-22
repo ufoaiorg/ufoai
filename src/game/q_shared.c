@@ -67,6 +67,8 @@ const char *pa_format[] =
 	"s",				/**< PA_STATE - don't use a bitmask here - only one value
 						 * @sa G_ClientStateChange */
 	"gbbl",				/**< PA_SHOOT */
+	"s",					/**< PA_OPEN_DOOR */
+	"s",					/**< PA_CLOSE_DOOR */
 	"bbbbbb",			/**< PA_INVMOVE */
 	"lll"				/**< PA_REACT_SELECT */
 };

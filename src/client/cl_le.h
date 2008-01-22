@@ -54,6 +54,8 @@ typedef struct le_s {
 	int team;		/**< the team number this local entity belongs to */
 	int pnum;		/**< the player number this local entity belongs to */
 
+	int client_action;		/**< entnum from server that is currently triggered */
+
 	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;
 

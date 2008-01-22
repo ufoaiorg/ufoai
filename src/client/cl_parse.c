@@ -116,8 +116,10 @@ const char *ev_format[] =
 	"ss",				/* EV_MODEL_EXPLODE */
 	"sp*",				/* EV_SPAWN_PARTICLE */
 
-	"ssp",				/* EV_DOOR_OPEN */
-	"ssp"				/* EV_DOOR_CLOSE */
+	"ss",				/* EV_DOOR_OPEN */
+	"ss",				/* EV_DOOR_CLOSE */
+	"ss",				/* EV_DOOR_ACTION */
+	"s"					/* EV_RESET_CLIENT_ACTION */
 };
 
 /**
@@ -165,7 +167,9 @@ static const char *ev_names[] =
 	"EV_SPAWN_PARTICLE",
 
 	"EV_DOOR_OPEN",
-	"EV_DOOR_CLOSE"
+	"EV_DOOR_CLOSE",
+	"EV_DOOR_ACTION",
+	"EV_RESET_CLIENT_ACTION"
 };
 
 static void CL_Reset(struct dbuffer *msg);
@@ -188,46 +192,48 @@ static void CL_EndRoundAnnounce(struct dbuffer * msg);
 
 static void (*ev_func[])( struct dbuffer *msg ) =
 {
-	NULL,
-	CL_Reset,		/* EV_RESET */
-	CL_StartGame,	/* EV_START */
-	CL_StartingGameDone, /* EV_START_DONE */
-	CL_DoEndRound,
-	CL_EndRoundAnnounce,
+	NULL,							/* EV_NULL */
+	CL_Reset,						/* EV_RESET */
+	CL_StartGame,					/* EV_START */
+	CL_StartingGameDone,			/* EV_START_DONE */
+	CL_DoEndRound,					/* EV_ENDROUND */
+	CL_EndRoundAnnounce,			/* EV_ENDROUNDANNOUNCE */
 
-	CL_ParseResults,
-	CL_CenterView,
+	CL_ParseResults,				/* EV_RESULTS */
+	CL_CenterView,					/* EV_CENTERVIEW */
 
-	CL_EntAppear,
-	CL_EntPerish,
-	CL_EntEdict,
+	CL_EntAppear,					/* EV_ENT_APPEAR */
+	CL_EntPerish,					/* EV_ENT_PERISH */
+	CL_EntEdict,					/* EV_ENT_EDICT */
 
-	CL_ActorAppear,
-	CL_ActorAdd,
-	CL_ActorDoStartMove,
-	CL_ActorDoTurn,
-	CL_ActorDoMove,
-	CL_ActorStartShoot,
-	CL_ActorDoShoot,
-	CL_ActorShootHidden,
-	CL_ActorDoThrow,
-	CL_ActorDie,
-	CL_ActorStats,
-	CL_ActorStateChange,
+	CL_ActorAppear,					/* EV_ACTOR_APPEAR */
+	CL_ActorAdd,					/* EV_ACTOR_ADD */
+	CL_ActorDoStartMove,			/* EV_ACTOR_START_MOVE */
+	CL_ActorDoTurn,					/* EV_ACTOR_TURN */
+	CL_ActorDoMove,					/* EV_ACTOR_MOVE */
+	CL_ActorStartShoot,				/* EV_ACTOR_START_SHOOT */
+	CL_ActorDoShoot,				/* EV_ACTOR_SHOOT */
+	CL_ActorShootHidden,			/* EV_ACTOR_SHOOT_HIDDEN */
+	CL_ActorDoThrow,				/* EV_ACTOR_THROW */
+	CL_ActorDie,					/* EV_ACTOR_DIE */
+	CL_ActorStats,					/* EV_ACTOR_STATS */
+	CL_ActorStateChange,			/* EV_ACTOR_STATECHANGE */
 
-	CL_InvAdd,
-	CL_InvDel,
-	CL_InvAmmo,
-	CL_InvReload,
-	CL_InvCheckHands,
+	CL_InvAdd,						/* EV_INV_ADD */
+	CL_InvDel,						/* EV_INV_DEL */
+	CL_InvAmmo,						/* EV_INV_AMMO */
+	CL_InvReload,					/* EV_INV_RELOAD */
+	CL_InvCheckHands,				/* EV_INV_HANDS_CHANGED */
 
-	LM_Perish,
-	LM_Explode,
+	LM_Perish,						/* EV_MODEL_PERISH */
+	LM_Explode,						/* EV_MODEL_EXPLODE */
 
-	CL_ParticleSpawnFromSizeBuf,
+	CL_ParticleSpawnFromSizeBuf,	/* EV_SPAWN_PARTICLE */
 
-	LM_DoorOpen,
-	LM_DoorClose
+	LM_DoorOpen,					/* EV_DOOR_OPEN */
+	LM_DoorClose,					/* EV_DOOR_CLOSE */
+	CL_ActorDoorAction,				/* EV_DOOR_ACTION */
+	CL_ActorResetClientAction		/* EV_RESET_CLIENT_ACTION */
 };
 
 typedef struct evTimes_s {

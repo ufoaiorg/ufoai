@@ -101,6 +101,8 @@ void CL_ActorStartMove(const le_t * le, pos3_t to);
 void CL_ActorShoot(const le_t * le, pos3_t at);
 void CL_InvCheckHands(struct dbuffer *msg);
 void CL_ActorDoMove(struct dbuffer *msg);
+void CL_ActorDoorAction(struct dbuffer *msg);
+void CL_ActorResetClientAction(struct dbuffer *msg);
 void CL_ActorDoShoot(struct dbuffer *msg);
 void CL_ActorShootHidden(struct dbuffer *msg);
 void CL_ActorDoThrow(struct dbuffer *msg);
@@ -109,6 +111,9 @@ void CL_ActorDie(struct dbuffer *msg);
 void CL_PlayActorSound(const le_t * le, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
+void CL_ActorCloseDoor(void);
+void CL_ActorOpenDoor(void);
+void CL_ActorDoorAction_f(void);
 
 void CL_NextRound_f(void);
 void CL_DoEndRound(struct dbuffer * msg);
