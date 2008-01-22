@@ -109,8 +109,10 @@ static void PF_SetModel (edict_t * ent, const char *name)
 {
 	cBspModel_t *mod;
 
+	assert(ent);
+
 	if (!name)
-		Com_Error(ERR_DROP, "PF_setmodel: NULL");
+		Com_Error(ERR_DROP, "PF_SetModel: NULL");
 
 	ent->modelindex = SV_ModelIndex(name);
 
@@ -381,6 +383,7 @@ void SV_InitGameProgs (void)
 	import.trace = SV_Trace;
 	import.linkentity = SV_LinkEdict;
 	import.unlinkentity = SV_UnlinkEdict;
+	import.boxedicts = SV_AreaEdicts;
 
 	import.TestLine = CM_TestLine;
 	import.GrenadeTarget = Com_GrenadeTarget;

@@ -286,7 +286,8 @@ void MN_DrawMenus (void)
 						itemHover = MN_DrawContainerNode(node);
 
 				case MN_ITEM:
-					MN_DrawItemNode(node, ref);
+					if (ref && *ref)
+						MN_DrawItemNode(node, ref);
 					break;
 
 				case MN_MODEL:

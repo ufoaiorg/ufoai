@@ -606,147 +606,42 @@ DOOR FUNCTIONS
 */
 
 /* door states */
-#define STATE_TOP			0
-#define STATE_BOTTOM		1
-#define STATE_UP			2
-#define STATE_DOWN			3
-
-static void door_hit_top (edict_t *self)
-{
-	self->moveinfo.state = STATE_TOP;
-}
-
-static void door_hit_bottom (edict_t *self)
-{
-	self->moveinfo.state = STATE_BOTTOM;
-}
-
-static void door_go_down (edict_t *self)
-{
-	if (self->moveinfo.state == STATE_BOTTOM)
-		return; /* already hit the bottom */
-
-	self->moveinfo.state = STATE_DOWN;
-	Move_Calc(self, self->moveinfo.start_origin, door_hit_bottom);
-	/* let everybody know, that the door closes */
-	/* FIXME: See door_go_up */
-	gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
-	gi.WriteShort(self->number);
-	gi.WriteShort(self->mapNum);
-	gi.WritePos(self->moveinfo.dir);
-}
-
-static void door_go_up (edict_t *self)
-{
-	if (self->moveinfo.state == STATE_TOP)
-		return; /* already hit the top */
-
-	self->moveinfo.state = STATE_UP;
-	Move_Calc(self, self->moveinfo.end_origin, door_hit_top);
-	/* let everybody know, that the door opens */
-	/* FIXME: Put this to a better place and only update the edict values for
-	 * client side if the door is visible - only update for the one who
-	 * triggered the event
-	 * FIXME: animate this
-	 */
-	gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
-	gi.WriteShort(self->number);
-	gi.WriteShort(self->mapNum);
-	gi.WritePos(self->moveinfo.dir);
-}
+#define STATE_OPENED		0
+#define STATE_CLOSED		1
 
 /**
- * @brief Trigger to open the door we are standing in front of
+ * @brief Trigger to open the door we are standing in front of it
+ * @sa LM_DoorOpen
+ * @sa LM_CloseOpen
  */
-static void Touch_DoorTrigger (edict_t *self)
+static void Touch_DoorTrigger (edict_t *self, edict_t *activator)
 {
-	edict_t *e;
-	int i;
+	if (!self->owner)
+		return;
 
-	/* no worldspawn here */
-	e = &g_edicts[1];
-	for (i = 1; i < globals.num_edicts; i++, e++) {
-		if (!e->inuse)
-			continue;
-		/* only actors can activate a touch trigger */
-		if (e->type != ET_ACTOR && e->type != ET_ACTOR2x2)
-			continue;
-		/* FIXME: if a spawnpoint is too close to this door, the EV_RESET was not send */
-		if (VectorDist(e->origin, self->owner->absmin) < UNIT_SIZE) {
-			door_go_up(self->owner);
-			Com_DPrintf(DEBUG_SERVER, "Touch_DoorTrigger: Door goes up\n");
-			self->nextthink = level.time + SERVER_FRAME_SECONDS;
-			return;
-		}
+	if (self->owner->moveinfo.state == STATE_CLOSED) {
+		self->owner->moveinfo.state = STATE_OPENED;
+		/* FIXME */
+		self->owner->angles[YAW] -= DOOR_ROTATION_ANGLE;
+		gi.linkentity(self->owner);
+		/* let everybody know, that the door opens */
+		gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
+		gi.WriteShort(self->owner->number);
+		gi.WriteShort(self->owner->mapNum);
+		gi.EndEvents();
+		G_RecalcRouting(self->owner);
+	} else if (self->owner->moveinfo.state == STATE_OPENED) {
+		self->owner->moveinfo.state = STATE_CLOSED;
+		/* FIXME */
+		self->owner->angles[YAW] += DOOR_ROTATION_ANGLE;
+		gi.linkentity(self->owner);
+		/* let everybody know, that the door closes */
+		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
+		gi.WriteShort(self->owner->number);
+		gi.WriteShort(self->owner->mapNum);
+		gi.EndEvents();
+		G_RecalcRouting(self->owner);
 	}
-	door_go_down(self->owner);
-}
-
-/**
- * @sa Think_SpawnDoorTrigger
- */
-static void Think_CalcMoveSpeed (edict_t *self)
-{
-	float	min;
-	float	time;
-	float	newspeed;
-	float	ratio;
-
-	min = fabs(self->moveinfo.distance);
-	time = min / self->moveinfo.speed;
-
-	/* adjust speeds so they will all complete at the same time */
-	newspeed = fabs(self->moveinfo.distance) / time;
-	ratio = newspeed / self->moveinfo.speed;
-	if (self->moveinfo.accel == self->moveinfo.speed)
-		self->moveinfo.accel = newspeed;
-	else
-		self->moveinfo.accel *= ratio;
-	if (self->moveinfo.decel == self->moveinfo.speed)
-		self->moveinfo.decel = newspeed;
-	else
-		self->moveinfo.decel *= ratio;
-	self->moveinfo.speed = newspeed;
-}
-
-/**
- * @brief Spawns a door trigger around the func_door
- * @sa Think_CalcMoveSpeed
- */
-static void Think_SpawnDoorTrigger (edict_t *self)
-{
-	edict_t		*other;
-	vec3_t		mins, maxs;
-
-	VectorCopy(self->origin, self->pos);
-	VectorSet(self->origin, 0, 0, 0);
-	VectorCopy(self->absmin, mins);
-	VectorCopy(self->absmax, maxs);
-
-	/* expand */
-	mins[0] -= 60;
-	mins[1] -= 60;
-	maxs[0] += 60;
-	maxs[1] += 60;
-
-	/* spawn the trigger entity */
-	other = G_Spawn();
-	VectorCopy(mins, other->mins);
-	VectorCopy(maxs, other->maxs);
-	/* link the door into the trigger */
-	other->owner = self;
-	other->solid = SOLID_TRIGGER;
-	other->think = Touch_DoorTrigger;
-	other->nextthink = level.time + SERVER_FRAME_SECONDS;
-	/* link into the world */
-	gi.linkentity(other);
-
-	Think_CalcMoveSpeed(self);
-	/**
-	 * don't call the door think function but the
-	 * trigger think function with next frame
-	 */
-	self->think = NULL;
 }
 
 /**
@@ -759,45 +654,11 @@ static void Think_SpawnDoorTrigger (edict_t *self)
  */
 void SP_func_door (edict_t *self)
 {
-	vec3_t	abs_movedir;
+	edict_t *other;
+	vec3_t mins, maxs;
 
-	G_SetMovedir (self->angles, self->moveinfo.movedir);
 	self->classname = "door";
 	self->type = ET_DOOR;
-
-	/* some standard values */
-	if (!self->speed)
-		self->speed = 100;
-	if (!self->accel)
-		self->accel = self->speed;
-	if (!self->decel)
-		self->decel = self->speed;
-
-	if (!self->wait)
-		self->wait = 3;
-	if (!st.lip)
-		st.lip = 8;
-	if (!self->dmg)
-		self->dmg = 2;
-
-	/* calculate second position */
-	VectorCopy(self->origin, self->moveinfo.pos1);
-	abs_movedir[0] = fabs(self->moveinfo.movedir[0]);
-	abs_movedir[1] = fabs(self->moveinfo.movedir[1]);
-	abs_movedir[2] = fabs(self->moveinfo.movedir[2]);
-	self->moveinfo.distance = abs_movedir[0] * self->size[0] + abs_movedir[1] * self->size[1] + abs_movedir[2] * self->size[2] - st.lip;
-	VectorMA(self->moveinfo.pos1, self->moveinfo.distance, self->moveinfo.movedir, self->moveinfo.pos2);
-
-	self->moveinfo.state = STATE_BOTTOM;
-
-	self->moveinfo.speed = self->speed;
-	self->moveinfo.accel = self->accel;
-	self->moveinfo.decel = self->decel;
-	self->moveinfo.wait = self->wait;
-	VectorCopy(self->moveinfo.pos1, self->moveinfo.start_origin);
-	VectorCopy(self->angles, self->moveinfo.start_angles);
-	VectorCopy(self->moveinfo.pos2, self->moveinfo.end_origin);
-	VectorCopy(self->angles, self->moveinfo.end_angles);
 
 	/* set an inline model */
 	/* also set self->solid = SOLID_BSP here */
@@ -806,8 +667,30 @@ void SP_func_door (edict_t *self)
 	if (self->solid != SOLID_BSP)
 		Com_Printf("Error - func_door with no SOLID_BSP\n");
 
-	self->nextthink = level.time + SERVER_FRAME_SECONDS;
-	self->think = Think_SpawnDoorTrigger;
+	VectorCopy(self->origin, self->pos);
+	VectorSet(self->origin, 0, 0, 0);
+	VectorCopy(self->absmin, mins);
+	VectorCopy(self->absmax, maxs);
+	self->moveinfo.state = STATE_CLOSED;
+
+	/* expand */
+	mins[0] -= UNIT_SIZE;
+	mins[1] -= UNIT_SIZE;
+	maxs[0] += UNIT_SIZE;
+	maxs[1] += UNIT_SIZE;
+
+	/* spawn the trigger entity */
+	other = G_Spawn();
+	VectorCopy(mins, other->mins);
+	VectorCopy(maxs, other->maxs);
+
+	/* link the door into the trigger */
+	other->owner = self;
+	other->solid = SOLID_TRIGGER;
+	other->use = Touch_DoorTrigger;
+
+	/* link into the world */
+	gi.linkentity(other);
 }
 
 /**

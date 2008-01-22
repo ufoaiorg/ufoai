@@ -1423,6 +1423,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				ent->TU = max(0, initTU - (int) tu);
 
+				/* check triggers at new position */
+				if (G_TouchTriggers(ent)) {
+					status |= VIS_STOP;
+					steps = 0;
+					sentAppearPerishEvent = qfalse;
+				}
 				/* check for reaction fire */
 				if (G_ReactToMove(ent, qtrue)) {
 					if (G_ReactToMove(ent, qfalse))
@@ -1455,7 +1461,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			}
 
 			/* submit the TUs / round down */
-			ent->TU = max(0, initTU - (int) tu);
+			if (g_notu != NULL && !g_notu->integer)
+				ent->TU = max(0, initTU - (int) tu);
 			G_SendStats(ent);
 
 			/* end the move */
@@ -2632,8 +2639,17 @@ static void G_SendVisibleEdicts (int team)
 		if (!ent->inuse)
 			continue;
 		/* don't add actors here */
-		if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
-			gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
+		if (ent->type == ET_BREAKABLE) {
+			if (!end)
+				gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
+			gi.WriteShort(ent->type);
+			gi.WriteShort(ent->number);
+			gi.WriteShort(ent->modelindex);
+			ent->visflags |= ~ent->visflags;
+			end = qtrue;
+		} else if (ent->type == ET_DOOR) {
+			if (!end)
+				gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);

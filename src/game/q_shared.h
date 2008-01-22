@@ -413,6 +413,7 @@ extern cvar_t* sys_os;
 
 /* FIXME: eliminate AREA_ distinction? */
 #define AREA_SOLID			1
+#define AREA_TRIGGERS		2
 
 /**
  * @brief plane_t structure
@@ -572,6 +573,7 @@ typedef enum {
 	ET_PARTICLE
 } entity_type_t;
 
+#define DOOR_ROTATION_ANGLE 90
 
 typedef enum {
 	PA_NULL,

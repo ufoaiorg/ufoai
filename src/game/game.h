@@ -151,6 +151,7 @@ typedef struct {
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
 	void (IMPORT *linkentity) (edict_t * ent);
 	void (IMPORT *unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
+	int (*boxedicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
 
 	qboolean (IMPORT *TestLine) (vec3_t start, vec3_t stop);
 	float (IMPORT *GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);

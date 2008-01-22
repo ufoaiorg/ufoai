@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 localModel_t LMs[MAX_LOCALMODELS];
 int numLMs;
 
+#define LM_DOOR_OPEN 1
+#define LM_DOOR_CLOSE 2
 
 le_t LEs[MAX_EDICTS];
 int numLEs;
@@ -82,6 +84,10 @@ void LM_AddToScene (void)
 		VectorCopy(lm->origin, ent.origin);
 		VectorCopy(lm->origin, ent.oldorigin);
 		VectorCopy(lm->angles, ent.angles);
+		if (lm->flags & LM_DOOR_OPEN) {
+			/* @todo - check whether there is an le in front of it */
+			ent.angles[YAW] += 90;
+		}
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
@@ -125,63 +131,67 @@ static void LM_Delete (localModel_t * lm)
 }
 
 /**
- * @brief Callback for EV_DOOR_CLOSE event
+ * @brief Callback for EV_DOOR_CLOSE event - rotates the inline model and recalc routing
+ * @sa Touch_DoorTrigger
  */
 void LM_DoorClose (struct dbuffer *msg)
 {
 	localModel_t *lm;
 	le_t *le;
 	int lmNum, entNum;
-	vec3_t pos;
-	vec3_t newOrigin;
 
+	/* get local entity */
 	entNum = NET_ReadShort(msg);
 	le = LE_Get(entNum);
+
+	/* get local model */
 	lmNum = NET_ReadShort(msg);
 	lm = LM_Find(lmNum);
+
 	if (!lm || !le) {
-		NET_ReadPos(msg, pos);
-		Com_Printf("Can't close the door - lm for mapNum %i not found or le (%i) not found\n", lmNum, entNum);
+		Com_Printf("Can't close the door - lm (%p) for mapNum %i not found or le (%p) for entnum %i not found\n", lm, lmNum, le, entNum);
 		return;
-	} else {
-		Com_Printf("Close the door\n");
 	}
-	le->contents = CONTENTS_SOLID;
-	NET_ReadPos(msg, pos);
-	VectorSubtract(pos, lm->origin, newOrigin);
-	VectorCopy(newOrigin, lm->origin);
+
+	/* FIXME */
+	le->angles[YAW] -= DOOR_ROTATION_ANGLE;
+	lm->flags = LM_DOOR_CLOSE;
+
+	Grid_RecalcRouting(&clMap, lm->name, lmList);
+	/* also recalc forbidden list for func_breakable and func_door e.g. */
+	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
 /**
- * @brief Callback for EV_DOOR_OPEN event
+ * @brief Callback for EV_DOOR_OPEN event - rotates the inline model and recalc routing
+ * @sa Touch_DoorTrigger
  */
 void LM_DoorOpen (struct dbuffer *msg)
 {
 	localModel_t *lm;
 	le_t *le;
 	int lmNum, entNum;
-	vec3_t pos;
-	vec3_t newOrigin;
 
+	/* get local entity */
 	entNum = NET_ReadShort(msg);
 	le = LE_Get(entNum);
+
+	/* get local model */
 	lmNum = NET_ReadShort(msg);
 	lm = LM_Find(lmNum);
+
 	if (!lm || !le) {
-		NET_ReadPos(msg, pos);
-		Com_Printf("Can't open the door - lm for mapNum %i not found or le (%i) not found\n", lmNum, entNum);
+		Com_Printf("Can't open the door - lm (%p) for mapNum %i not found or le (%p) for entnum %i not found\n", lm, lmNum, le, entNum);
 		return;
-	} else {
-		Com_Printf("Open the door\n");
 	}
-	/* FIXME: don't trace against an opened door */
-	/* NOTE: this is no func_door_rotating */
-	le->contents = 0;
-	/* FIXME: lm->origin is wrong here */
-	NET_ReadPos(msg, pos);
-	VectorSubtract(pos, lm->origin, newOrigin);
-	VectorCopy(newOrigin, lm->origin);
-	/*Print3Vector(lm->origin);*/
+
+	/* FIXME */
+	le->angles[YAW] += DOOR_ROTATION_ANGLE;
+	lm->flags = LM_DOOR_OPEN;
+
+	Grid_RecalcRouting(&clMap, lm->name, lmList);
+	/* also recalc forbidden list for func_breakable and func_door e.g. */
+	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
 void LM_Perish (struct dbuffer *msg)

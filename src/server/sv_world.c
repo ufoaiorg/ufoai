@@ -99,7 +99,7 @@ static areanode_t *SV_CreateAreaNode (int depth, vec3_t mins, vec3_t maxs)
 	ClearLink(&anode->solid_edicts);
 
 	if (depth == AREA_DEPTH) {
-		anode->axis = -1;
+		anode->axis = -1; /* leaf */
 		anode->children[0] = anode->children[1] = NULL;
 		return anode;
 	}
@@ -258,7 +258,7 @@ static void SV_AreaEdicts_r (areanode_t * node, int area_type)
 /**
  * @sa SV_AreaEdicts_r
  */
-static int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype)
+int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype)
 {
 	area_mins = mins;
 	area_maxs = maxs;

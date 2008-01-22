@@ -29,18 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 #include <time.h>
 
-#if 0
-/**
- * @note unused
- */
-void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result)
-{
-	result[0] = point[0] + forward[0] * distance[0] + right[0] * distance[1];
-	result[1] = point[1] + forward[1] * distance[0] + right[1] * distance[1];
-	result[2] = point[2] + forward[2] * distance[0] + right[2] * distance[1] + distance[2];
-}
-#endif
-
 /**
  * @brief Marks the edict as free
  * @sa G_Spawn
@@ -59,11 +47,11 @@ void G_FreeEdict (edict_t * ed)
 /**
  * @brief Searches for the obj that has the given firedef
  */
-static const objDef_t* G_GetObjectForFiredef (fireDef_t* fd)
+static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)
 {
 	int i, j, k;
-	fireDef_t *csiFD;
-	objDef_t *od;
+	const fireDef_t *csiFD;
+	const objDef_t *od;
 
 	/* For each object ... */
 	for (i = 0; i < gi.csi->numODs; i++) {
@@ -326,61 +314,6 @@ char *vtos (vec3_t v)
 	return s;
 }
 
-static void Move_Final (edict_t *ent)
-{
-	if (ent->moveinfo.remaining_distance == 0) {
-		VectorClear (ent->moveinfo.velocity);
-		ent->moveinfo.endfunc (ent);
-		return;
-	}
-
-	VectorScale (ent->moveinfo.dir, ent->moveinfo.remaining_distance / SERVER_FRAME_SECONDS, ent->moveinfo.velocity);
-}
-
-static void Move_Begin (edict_t *ent)
-{
-	float	frames;
-
-	if ((ent->moveinfo.speed * SERVER_FRAME_SECONDS) >= ent->moveinfo.remaining_distance) {
-		Move_Final(ent);
-		return;
-	}
-	VectorScale (ent->moveinfo.dir, ent->moveinfo.speed, ent->moveinfo.velocity);
-	frames = floor((ent->moveinfo.remaining_distance / ent->moveinfo.speed) / SERVER_FRAME_SECONDS);
-	ent->moveinfo.remaining_distance -= frames * ent->moveinfo.speed * SERVER_FRAME_SECONDS;
-}
-
-void Move_Calc (edict_t *ent, vec3_t dest, void(*func)(edict_t*))
-{
-	VectorClear (ent->moveinfo.velocity);
-	VectorSubtract (dest, ent->origin, ent->moveinfo.dir);
-	ent->moveinfo.remaining_distance = VectorNormalize (ent->moveinfo.dir);
-	ent->moveinfo.endfunc = func;
-
-	Move_Begin(ent);
-}
-
-
-static const vec3_t VEC_UP = { 0, -1, 0 };
-static const vec3_t MOVEDIR_UP = { 0, 0, 1 };
-static const vec3_t VEC_DOWN = { 0, -2, 0 };
-static const vec3_t MOVEDIR_DOWN = { 0, 0, -1 };
-
-/**
- * @note unused
- */
-void G_SetMovedir (vec3_t angles, vec3_t movedir)
-{
-	if (VectorCompare(angles, VEC_UP))
-		VectorCopy(MOVEDIR_UP, movedir);
-	else if (VectorCompare(angles, VEC_DOWN))
-		VectorCopy(MOVEDIR_DOWN, movedir);
-	else
-		AngleVectors(angles, movedir, NULL, NULL);
-
-	VectorClear(angles);
-}
-
 /**
  * @brief Return the yaw component of the angle vector
  */
@@ -489,4 +422,30 @@ void G_CompleteRecalcRouting (void)
 	for (ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
 		if (ent->inuse && ent->model && *ent->model == '*')
 			G_RecalcRouting(ent);
+}
+
+/**
+ * @brief Check the world against triggers for the current entity (actor)
+ */
+int G_TouchTriggers (edict_t *ent)
+{
+	int i, num;
+	edict_t *touch[MAX_EDICTS], *hit;
+
+	if (ent->type != ET_ACTOR || ent->state & STATE_DEAD)
+		return 0;
+
+	num = gi.boxedicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);
+
+	/* be careful, it is possible to have an entity in this
+	* list removed before we get to it(killtriggered) */
+	for (i = 0; i < num; i++) {
+		hit = touch[i];
+		if (!hit->inuse)
+			continue;
+		if (!hit->use)
+			continue;
+		hit->use(hit, ent);
+	}
+	return num;
 }

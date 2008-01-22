@@ -466,6 +466,7 @@ static void Com_DebugHelp_f (void)
 			"------------------------------\n"
 			" * developer\n"
 			" * g_nodamage\n"
+			" * g_notu\n"
 			" * mn_debugmenu\n"
 			"------------------------------\n"
 			"\n"

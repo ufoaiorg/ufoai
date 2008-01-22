@@ -105,6 +105,7 @@ cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
 cvar_t *g_nodamage;
+cvar_t *g_notu;
 cvar_t *flood_msgs;
 cvar_t *flood_persecond;
 cvar_t *flood_waitdelay;
@@ -204,6 +205,7 @@ static void InitGame (void)
 	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH, NULL);
 
 	g_nodamage = gi.cvar("g_nodamage", "0", CVAR_DEVELOPER, "No damage in developer mode");
+	g_notu = gi.cvar("g_notu", "0", CVAR_DEVELOPER, "No TU costs while moving around (e.g. for map testing)");
 
 	/* flood control */
 	flood_msgs = gi.cvar("flood_msgs", "4", 0, NULL);

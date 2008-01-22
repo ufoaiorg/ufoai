@@ -227,6 +227,7 @@ extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
 extern cvar_t *g_nodamage;
+extern cvar_t *g_notu;
 
 extern cvar_t *flood_msgs;
 extern cvar_t *flood_persecond;
@@ -256,8 +257,7 @@ int G_GetActiveTeam(void);
 const char* G_GetWeaponNameForFiredef(fireDef_t* fd);
 void G_PrintActorStats(edict_t* victim, edict_t* attacker, fireDef_t* fd);
 void G_PrintStats(const char *buffer);
-void Move_Calc(edict_t *ent, vec3_t dest, void(*func)(edict_t*));
-void G_SetMovedir(vec3_t angles, vec3_t movedir);
+int G_TouchTriggers(edict_t *ent);
 
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
@@ -529,7 +529,7 @@ struct edict_s {
 
 	/** only set this for the attacked edict - to know who's shooting */
 	edict_t *reactionAttacker;
-	
+
 	int	reactionFired;	/**< A simple counter that tells us how many times an actor has fired as a reaction (int he current turn). */
 
 	/** here are the character values */
@@ -561,7 +561,7 @@ struct edict_s {
 	int fieldSize;	/* ACTOR_SIZE_* */
 
 	/** function to call when used */
-	void (*use) (edict_t * self, edict_t * other, edict_t * activator);
+	void (*use) (edict_t * self, edict_t * activator);
 	float nextthink;
 	void (*think)(edict_t *self);
 
