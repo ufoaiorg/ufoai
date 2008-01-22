@@ -127,7 +127,7 @@ void R_DrawBrushModel (entity_t * e)
 	if (e->model->bsp.nummodelsurfaces == 0)
 		return;
 
-	if (e->angles[0] || e->angles[1] || e->angles[2]) {
+	if (VectorNotEmpty(e->angles)) {
 		rotated = qtrue;
 		for (i = 0; i < 3; i++) {
 			mins[i] = e->origin[i] - e->model->radius;

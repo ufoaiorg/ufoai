@@ -74,7 +74,7 @@ static void R_ModLoadVertexes (lump_t * l)
 	}
 }
 
-static float RadiusFromBounds (vec3_t mins, vec3_t maxs)
+static inline float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 {
 	int i;
 	vec3_t corner;
