@@ -232,7 +232,7 @@ void R_ModEndLoading (void)
 /**
  * @brief Draws the model bounding box
  */
-void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
+void R_ModDrawModelBBox (vec4_t bbox[8])
 {
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

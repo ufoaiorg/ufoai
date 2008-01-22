@@ -360,7 +360,7 @@ void R_DrawAliasModel (entity_t *e)
 	/* show model bounding box */
 	if (r_showbox->integer) {
 		R_CullAliasModel(bbox, e); /* FIXME: Remove me when culling is fixed */
-		R_ModDrawModelBBox(bbox, e);
+		R_ModDrawModelBBox(bbox);
 	}
 
 	qglPopMatrix();
