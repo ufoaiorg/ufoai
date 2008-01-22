@@ -149,16 +149,12 @@ static inline void LM_DoorAction (struct dbuffer *msg, qboolean openDoor)
 	if (!openDoor) {
 		/* FIXME */
 		le->angles[YAW] -= DOOR_ROTATION_ANGLE;
-		Com_Printf("close - le->angles, %.2f:%.2f:%.2f\n", le->angles[0], le->angles[1], le->angles[2]);
 		lm->angles[YAW] -= DOOR_ROTATION_ANGLE;
-		Com_Printf("close - lm->angles, %.2f:%.2f:%.2f\n", lm->angles[0], lm->angles[1], lm->angles[2]);
 		lm->flags = LM_DOOR_CLOSE;
 	} else {
 		/* FIXME */
 		le->angles[YAW] += DOOR_ROTATION_ANGLE;
-		Com_Printf("open - le->angles, %.2f:%.2f:%.2f\n", le->angles[0], le->angles[1], le->angles[2]);
 		lm->angles[YAW] += DOOR_ROTATION_ANGLE;
-		Com_Printf("open - lm->angles, %.2f:%.2f:%.2f\n", lm->angles[0], lm->angles[1], lm->angles[2]);
 		lm->flags = LM_DOOR_OPEN;
 	}
 	mod = CM_InlineModel(lm->name);
