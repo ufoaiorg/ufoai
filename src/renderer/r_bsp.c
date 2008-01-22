@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_SurfaceToSurfaces(surfs, surf)\
 	(surfs)->surfaces[(surfs)->count++] = surf
 
-static vec3_t modelorg;			/* relative to viewpoint */
-
 /*
 =============================================================
 BRUSH MODELS
@@ -43,7 +41,7 @@ BRUSH MODELS
 /**
  * @brief
  */
-static void R_DrawInlineBrushModel (entity_t *e)
+static void R_DrawInlineBrushModel (entity_t *e, vec3_t modelorg)
 {
 	int i;
 	float dot;
@@ -120,6 +118,8 @@ static void R_DrawInlineBrushModel (entity_t *e)
  */
 void R_DrawBrushModel (entity_t * e)
 {
+	/* relative to viewpoint */
+	vec3_t modelorg;
 	vec3_t mins, maxs;
 	int i;
 	qboolean rotated;
@@ -157,7 +157,7 @@ void R_DrawBrushModel (entity_t * e)
 	qglPushMatrix();
 	qglMultMatrixf(e->transform.matrix);
 
-	R_DrawInlineBrushModel(e);
+	R_DrawInlineBrushModel(e, modelorg);
 
 	/* show model bounding box */
 	if (r_showbox->integer) {
@@ -213,9 +213,9 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	if (r_isometric->integer) {
 		dot = -DotProduct(vpn, node->plane->normal);
 	} else if (node->plane->type >= 3) {
-		dot = DotProduct(modelorg, node->plane->normal) - node->plane->dist;
+		dot = DotProduct(refdef.vieworg, node->plane->normal) - node->plane->dist;
 	} else {
-		dot = modelorg[node->plane->type] - node->plane->dist;
+		dot = refdef.vieworg[node->plane->type] - node->plane->dist;
 	}
 
 	if (dot >= 0) {
@@ -293,8 +293,6 @@ void R_GetLevelSurfaceLists (void)
 		return;
 
 	mask = 1 << refdef.worldlevel;
-
-	VectorCopy(refdef.vieworg, modelorg);
 
 	for (tile = 0; tile < r_numMapTiles; tile++) {
 		/* don't draw weapon-, actorclip and stepon */
