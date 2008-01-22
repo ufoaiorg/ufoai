@@ -138,34 +138,34 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 	/* sanity checks */
 	version = LittleLong(md2->version);
 	if (version != MD2_ALIAS_VERSION)
-		Sys_Error("%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
+		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
 
 	if (bufSize != LittleLong(md2->ofs_end))
-		Sys_Error("model %s broken offset values", mod->name);
+		Com_Error(ERR_DROP, "model %s broken offset values", mod->name);
 
 	skinHeight = LittleLong(md2->skinheight);
 	skinWidth = LittleLong(md2->skinwidth);
 	if (skinHeight <= 0 || skinWidth <= 0)
-		Sys_Error("model %s has invalid skin dimensions '%d x %d'", mod->name, skinHeight, skinWidth);
+		Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'", mod->name, skinHeight, skinWidth);
 
 	/* only one mesh for md2 models */
 	mod->alias.num_frames = LittleLong(md2->num_frames);
 	if (mod->alias.num_frames <= 0 || mod->alias.num_frames >= MD2_MAX_FRAMES)
-		Sys_Error("model %s has too many (or no) frames", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many (or no) frames", mod->name);
 
 	mod->alias.meshes = outMesh = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t), 0);
 	outMesh->num_verts = LittleLong(md2->num_verts);
 	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MD2_MAX_VERTS)
-		Sys_Error("model %s has too many (or no) vertices", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many (or no) vertices", mod->name);
 	outMesh->num_tris = LittleLong(md2->num_tris);
 	if (outMesh->num_tris <= 0 || outMesh->num_tris >= MD2_MAX_TRIANGLES)
-		Sys_Error("model %s has too many (or no) triangles", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many (or no) triangles", mod->name);
 	frameSize = LittleLong(md2->framesize);
 
 	/* load the skins */
 	outMesh->num_skins = LittleLong(md2->num_skins);
 	if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS) {
-		Com_Printf("Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
+		Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
 		return;
 	}
 	outMesh->skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * outMesh->num_skins, 0);
@@ -220,8 +220,8 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 		outIndex[i] = numVerts++;
 	}
 	outMesh->num_verts = numVerts;
-	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 4096) {
-		Com_Printf("R_ModLoadAliasMD2Model: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
+	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 8192) {
+		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Model: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
 			mod->name, outMesh->num_verts, outMesh->num_tris);
 		return;
 	}

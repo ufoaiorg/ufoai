@@ -67,19 +67,19 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	mod->alias.num_meshes = LittleLong(md3->num_meshes);
 
 	if (mod->alias.num_frames <= 0)
-		Sys_Error("model %s has no frames", mod->name);
+		Com_Error(ERR_DROP, "model %s has no frames", mod->name);
 	else if (mod->alias.num_frames > MD3_MAX_FRAMES)
-		Sys_Error("model %s has too many frames", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many frames", mod->name);
 
 	if (mod->alias.num_tags > MD3_MAX_TAGS)
-		Sys_Error("model %s has too many tags", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many tags", mod->name);
 	else if (mod->alias.num_tags < 0)
-		Sys_Error("model %s has invalid number of tags", mod->name);
+		Com_Error(ERR_DROP, "model %s has invalid number of tags", mod->name);
 
 	if (mod->alias.num_meshes <= 0)
-		Sys_Error("model %s has no meshes", mod->name);
+		Com_Error(ERR_DROP, "model %s has no meshes", mod->name);
 	else if (mod->alias.num_meshes > MD3_MAX_MESHES)
-		Sys_Error("model %s has too many meshes", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many meshes", mod->name);
 
 	/* load the frames */
 	pinframe = (dmd3frame_t *)((byte *)md3 + LittleLong(md3->ofs_frames));
@@ -115,7 +115,10 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 					pouttag->orient.axis[1][j] = LittleFloat(pintag->orient.axis[1][j] );
 					pouttag->orient.axis[2][j] = LittleFloat(pintag->orient.axis[2][j] );
 				}
-				Com_Printf("X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n", pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2], pouttag->orient.axis[1][0], pouttag->orient.axis[1][1], pouttag->orient.axis[1][2], pouttag->orient.axis[2][0], pouttag->orient.axis[2][1], pouttag->orient.axis[2][2]);
+				/*Com_Printf("X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n",
+					pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2],
+					pouttag->orient.axis[1][0], pouttag->orient.axis[1][1], pouttag->orient.axis[1][2],
+					pouttag->orient.axis[2][0], pouttag->orient.axis[2][1], pouttag->orient.axis[2][2]); */
 			}
 		}
 	}
@@ -128,7 +131,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		memcpy(poutmesh->name, pinmesh->name, MD3_MAX_PATH);
 
 		if (Q_strncmp(pinmesh->id, "IDP3", 4)) {
-			Sys_Error("mesh %s in model %s has wrong id (%s should be %i)",
+			Com_Error(ERR_DROP, "mesh %s in model %s has wrong id (%s should be %i)",
 					poutmesh->name, mod->name, pinmesh->id, IDMD3HEADER);
 		}
 
@@ -137,19 +140,19 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		poutmesh->num_verts = LittleLong(pinmesh->num_verts);
 
 		if (poutmesh->num_skins <= 0)
-			Sys_Error("mesh %i in model %s has no skins", i, mod->name);
+			Com_Error(ERR_DROP, "mesh %i in model %s has no skins", i, mod->name);
 		else if (poutmesh->num_skins > MD3_MAX_SHADERS)
-			Sys_Error("mesh %i in model %s has too many skins", i, mod->name);
+			Com_Error(ERR_DROP, "mesh %i in model %s has too many skins", i, mod->name);
 
 		if (poutmesh->num_tris <= 0)
-			Sys_Error("mesh %i in model %s has no triangles", i, mod->name);
+			Com_Error(ERR_DROP, "mesh %i in model %s has no triangles", i, mod->name);
 		else if (poutmesh->num_tris > MD3_MAX_TRIANGLES)
-			Sys_Error("mesh %i in model %s has too many triangles", i, mod->name);
+			Com_Error(ERR_DROP, "mesh %i in model %s has too many triangles", i, mod->name);
 
 		if (poutmesh->num_verts <= 0)
-			Sys_Error("mesh %i in model %s has no vertices", i, mod->name);
+			Com_Error(ERR_DROP, "mesh %i in model %s has no vertices", i, mod->name);
 		else if (poutmesh->num_verts > MD3_MAX_VERTS)
-			Sys_Error("mesh %i in model %s has too many vertices", i, mod->name);
+			Com_Error(ERR_DROP, "mesh %i in model %s has too many vertices", i, mod->name);
 
 		/* register all skins */
 		pinskin = (dmd3skin_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
