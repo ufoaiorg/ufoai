@@ -1,12 +1,7 @@
-#! /bin/sh
+#! /bin/bash
 
-DIR=.
-
-if [ $# -eq 1 ]
-then
-    echo "Use $1"
-    DIR="$1"
-fi
+DIR=${1:-.}
+echo "using directory $DIR"
 
 EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py"
 
