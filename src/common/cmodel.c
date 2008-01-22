@@ -3011,13 +3011,11 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	memset(filled, 0, WIDTH * WIDTH);
 
 	/* fit min/max into the world size */
-#if 1
 	max[0] = min(max[0] + 2, WIDTH - 1);
 	max[1] = min(max[1] + 2, WIDTH - 1);
 	max[2] = min(max[2] + 2, HEIGHT - 1);
 	for (i = 0; i < 3; i++)
 		min[i] = max(min[i] - 2, 0);
-#endif
 
 #if 0
 	Com_Printf("routing: (%i %i %i) (%i %i %i)\n",
