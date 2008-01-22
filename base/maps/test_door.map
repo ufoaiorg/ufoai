@@ -165,6 +165,7 @@
 "classname" "info_human_start"
 "origin" "-48 80 32"
 "spawnflags" "3"
+"angle" "180"
 }
 // entity 16
 {
