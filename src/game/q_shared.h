@@ -588,8 +588,7 @@ typedef enum {
 	PA_MOVE,
 	PA_STATE,
 	PA_SHOOT,
-	PA_OPEN_DOOR,
-	PA_CLOSE_DOOR,
+	PA_USE_DOOR,
 	PA_INVMOVE,
 	PA_REACT_SELECT
 } player_action_t;

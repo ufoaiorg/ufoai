@@ -1990,10 +1990,10 @@ void G_KillTeam (void)
 
 /**
  * @brief This function opens the door when the player wants it to open
- * @sa PA_OPEN_DOOR
+ * @sa PA_USE_DOOR
  * @param[in] entnum The entity number of the door
  */
-static void G_ClientOpenDoor (player_t *player, int entnum, int doornum)
+static void G_ClientUseDoor (player_t *player, int entnum, int doornum)
 {
 	edict_t *actor = g_edicts + entnum;
 	edict_t* door = actor->client_action;
@@ -2001,7 +2001,7 @@ static void G_ClientOpenDoor (player_t *player, int entnum, int doornum)
 		return;
 
 	if (doornum != door->number) {
-		Com_Printf("G_ClientOpenDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
+		Com_Printf("G_ClientUseDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
 		return;
 	}
 
@@ -2027,30 +2027,7 @@ static void G_ClientOpenDoor (player_t *player, int entnum, int doornum)
 		G_SendStats(actor);
 
 		gi.EndEvents();
-	}
-}
-
-/**
- * @brief This function closes the door when the player wants it to close
- * @sa PA_CLOSE_DOOR
- * @param[in] entnum The entity number of the door
- */
-static void G_ClientCloseDoor (player_t *player, int entnum, int doornum)
-{
-	edict_t *actor = g_edicts + entnum;
-	edict_t* door = actor->client_action;
-	if (!door)
-		return;
-
-	if (doornum != door->number) {
-		Com_Printf("G_ClientCloseDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
-		return;
-	}
-
-	if (!G_ActionCheck(player, actor, TU_DOOR_ACTION, qfalse))
-		return;
-
-	if (door->moveinfo.state == STATE_OPENED) {
+	} else if (door->moveinfo.state == STATE_OPENED) {
 		door->moveinfo.state = STATE_CLOSED;
 
 		/* FIXME */
@@ -2120,14 +2097,9 @@ int G_ClientAction (player_t * player)
 		G_ClientInvMove(player, num, from, fx, fy, to, tx, ty, qtrue, NOISY);
 		break;
 
-	case PA_OPEN_DOOR:
-		gi.ReadFormat(pa_format[PA_OPEN_DOOR], &i);
-		G_ClientOpenDoor(player, num, i);
-		break;
-
-	case PA_CLOSE_DOOR:
-		gi.ReadFormat(pa_format[PA_OPEN_DOOR], &i);
-		G_ClientCloseDoor(player, num, i);
+	case PA_USE_DOOR:
+		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
+		G_ClientUseDoor(player, num, i);
 		break;
 
 	case PA_REACT_SELECT:

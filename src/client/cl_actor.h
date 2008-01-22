@@ -111,8 +111,7 @@ void CL_ActorDie(struct dbuffer *msg);
 void CL_PlayActorSound(const le_t * le, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
-void CL_ActorCloseDoor(void);
-void CL_ActorOpenDoor(void);
+void CL_ActorUseDoor(void);
 void CL_ActorDoorAction_f(void);
 
 void CL_NextRound_f(void);

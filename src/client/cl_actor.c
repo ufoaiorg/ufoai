@@ -2533,28 +2533,13 @@ void CL_ActorReload (int hand)
  * @brief Opens a door.
  * @param[in] le Who is opening
  * @sa CL_ActorDoorAction
- * @sa CL_ActorCloseDoor
  */
-void CL_ActorOpenDoor (void)
+void CL_ActorUseDoor (void)
 {
 	if (!CL_CheckAction())
 		return;
 
-	MSG_Write_PA(PA_OPEN_DOOR, selActor->entnum, selActor->client_action);
-}
-
-/**
- * @brief Closes a door.
- * @param[in] le Who is closing
- * @sa CL_ActorDoorAction
- * @sa CL_ActorOpenDoor
- */
-void CL_ActorCloseDoor (void)
-{
-	if (!CL_CheckAction())
-		return;
-
-	MSG_Write_PA(PA_CLOSE_DOOR, selActor->entnum, selActor->client_action);
+	MSG_Write_PA(PA_USE_DOOR, selActor->entnum, selActor->client_action);
 }
 
 /**
@@ -2585,36 +2570,16 @@ void CL_ActorDoorAction (struct dbuffer *msg)
  */
 void CL_ActorDoorAction_f (void)
 {
-	const char *action;
-
 	if (!CL_CheckAction())
 		return;
-
-	/* we need at least one parameter - an 'o' or 'c' for open and close */
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s [o|c]\n", Cmd_Argv(0));
-		return;
-	}
 
 	/* no client action */
 	if (selActor->client_action == 0)
 		return;
 
 	/* Check if we should even try to send this command (no TUs left or). */
-	if (CL_UsableTUs(selActor) >= TU_DOOR_ACTION) {
-		action = Cmd_Argv(1);
-		switch (*action) {
-		case 'o':
-			CL_ActorOpenDoor();
-			break;
-		case 'c':
-			CL_ActorCloseDoor();
-			break;
-		default:
-			Com_Printf("Only o(pen) and c(lose) are valid parameters\n");
-			break;
-		}
-	}
+	if (CL_UsableTUs(selActor) >= TU_DOOR_ACTION)
+		CL_ActorUseDoor();
 }
 
 /**
