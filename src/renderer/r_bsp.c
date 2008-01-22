@@ -159,6 +159,23 @@ void R_DrawBrushModel (entity_t * e)
 
 	R_DrawInlineBrushModel(e);
 
+	/* show model bounding box */
+	if (r_showbox->integer) {
+		vec4_t bbox[8];
+		vec4_t tmp;
+
+		/* compute a full bounding box */
+		for (i = 0; i < 8; i++) {
+			tmp[0] = (i & 1) ? mins[0] : maxs[0];
+			tmp[1] = (i & 2) ? mins[1] : maxs[1];
+			tmp[2] = (i & 4) ? mins[2] : maxs[2];
+			tmp[3] = 1.0;
+
+			Vector4Copy(tmp, bbox[i]);
+		}
+		R_ModDrawModelBBox(bbox);
+	}
+
 	qglPopMatrix();
 }
 
