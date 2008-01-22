@@ -659,15 +659,11 @@ static void CL_SetReactionFiremode (le_t * actor, const int handidx, const int o
 		/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
 		if (fd) {
 			CL_ReserveTUs(actor, RES_REACTION, fd->time);
+		} else {
+			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: no firedef found! No TUs will be reserved.\n");
 		}
 	}
-#if 0
-	/** @todo We don't reset this value to 0 right now, we check for reaction state in CL_UsableTUs.
-	 * Maybe we need to do this anyway though? */
-	else {
-		CL_ReserveTUs(actor, RES_REACTION, 0);
-	}
-#endif
+
 	chr = CL_GetActorChr(actor);
 	chr->reactionFiremode[RF_HAND] = handidx;	/* Store the given hand. */
 	chr->reactionFiremode[RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
@@ -862,7 +858,7 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 }
 
 /**
- * @brief Checks if there is a weapon in the hand that can be used for reaction fiR_
+ * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
  * @param[in] actor What actor to check.
  * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
  */
@@ -958,9 +954,9 @@ static qboolean CL_DisplayImpossibleReaction (const le_t * actor)
 /**
  * @brief Updates the information in reactionFiremode for the selected actor with the given data from the parameters.
  * @param[in] hand Which weapon(-hand) to use (l|r).
- * @param[in] active_firemode Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
+ * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
-static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int active_firemode)
+static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActive)
 {
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
@@ -996,13 +992,13 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 		return;
 	}
 
-	if (active_firemode >= MAX_FIREDEFS_PER_WEAPON) {
-		Com_Printf("CL_UpdateReactionFiremodes: Firemode index to big (%i). Highest possible number is %i.\n", active_firemode, MAX_FIREDEFS_PER_WEAPON-1);
+	if (firemodeActive >= MAX_FIREDEFS_PER_WEAPON) {
+		Com_Printf("CL_UpdateReactionFiremodes: Firemode index to big (%i). Highest possible number is %i.\n", firemodeActive, MAX_FIREDEFS_PER_WEAPON-1);
 		return;
 	}
 
-	if (active_firemode < 0) {
-		/* Set default reaction firemode for this hand (active_firemode=-1) */
+	if (firemodeActive < 0) {
+		/* Set default reaction firemode for this hand (firemodeActive=-1) */
 		i = FIRESH_GetDefaultReactionFire(ammo, weap_fds_idx);
 
 		if (i >= 0) {
@@ -1046,7 +1042,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 				CL_ReserveTUs(actor, RES_REACTION, 0);
 			}
 		}
-		/* The rest of this function assumes that active_firemode is bigger than -1 -> finish. */
+		/* The rest of this function assumes that firemodeActive is bigger than -1 -> finish. */
 		return;
 	}
 
@@ -1054,8 +1050,8 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%s handidx%i weapfdidx%i\n", chr->name, handidx, weap_fds_idx);
 	if (chr->reactionFiremode[RF_WPIDX] == ammo->weap_idx[weap_fds_idx]
 	 && chr->reactionFiremode[RF_HAND] == handidx) {
-		if (ammo->fd[weap_fds_idx][active_firemode].reaction) {
-			if (chr->reactionFiremode[RF_FM] == active_firemode)
+		if (ammo->fd[weap_fds_idx][firemodeActive].reaction) {
+			if (chr->reactionFiremode[RF_FM] == firemodeActive)
 				/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
 				return;
 		} else {
@@ -1068,9 +1064,9 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int activ
 	/* CL_SetReactionFiremode(actor, -1, NONE, -1); */
 	for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
 		if (ammo->fd[weap_fds_idx][i].reaction) {
-			if (i == active_firemode) {
+			if (i == firemodeActive) {
 				/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
-				if (CL_UsableReactionTUs(actor) >= ammo->fd[weap_fds_idx][active_firemode].time) {
+				if (CL_UsableReactionTUs(actor) >= ammo->fd[weap_fds_idx][firemodeActive].time) {
 					CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fds_idx], i);
 				}
 #if 0
@@ -3406,12 +3402,12 @@ void CL_DoEndRound (struct dbuffer *msg)
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
-        /* Check for unusable RF setting - just in case*/
+		/* Check for unusable RF setting - just in case*/
 		for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
 			if (cl.teamList[actor_idx]
 			&& !CL_WorkingReactionFiremode(cl.teamList[actor_idx])) {
-			    Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actor_idx);
-			    /* At this point the rest of the code forgot to update RF-settings somewhere. */
+				Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actor_idx);
+				/* At this point the rest of the code forgot to update RF-settings somewhere. */
 				CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
 			}
 		}
