@@ -117,11 +117,6 @@ static const field_t fields[] = {
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
 
 	/* need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
-	{"gravity", offsetof(spawn_temp_t, gravity), F_LSTRING, FFL_SPAWNTEMP},
-	{"minyaw", offsetof(spawn_temp_t, minyaw), F_FLOAT, FFL_SPAWNTEMP},
-	{"maxyaw", offsetof(spawn_temp_t, maxyaw), F_FLOAT, FFL_SPAWNTEMP},
-	{"minpitch", offsetof(spawn_temp_t, minpitch), F_FLOAT, FFL_SPAWNTEMP},
-	{"maxpitch", offsetof(spawn_temp_t, maxpitch), F_FLOAT, FFL_SPAWNTEMP},
 	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
@@ -698,7 +693,6 @@ void SP_func_door (edict_t *self)
  *
  * Only used for the world.
  * "sounds"	music cd track number
- * "gravity"	800 is default gravity
  * "message"	text to print at user logon
  * "maxlevel"	max. level to use in the map
  * "maxteams"	max team amount for multiplayergames for the current map
@@ -732,9 +726,4 @@ static void SP_worldspawn (edict_t * ent)
 		} else
 			gi.configstring(CS_MAXTEAMS, sv_maxteams->string);
 	}
-
-	if (!st.gravity)
-		gi.cvar_set("sv_gravity", "800");
-	else
-		gi.cvar_set("sv_gravity", st.gravity);
 }

@@ -122,20 +122,6 @@ typedef struct {
 typedef struct {
 	/* world vars */
 	char *nextmap;
-
-	int lip;
-	int distance;
-	int height;
-	char *noise;
-	char *item;
-	char *gravity;
-
-	/* left and right */
-	float minyaw;
-	float maxyaw;
-	/* up and down */
-	float minpitch;
-	float maxpitch;
 } spawn_temp_t;
 
 /** @brief used in shot probability calculations (pseudo shots) */
@@ -168,7 +154,6 @@ extern FILE *logstatsfile;
 
 extern cvar_t *sv_filterban;
 
-extern cvar_t *sv_gravity;
 extern cvar_t *sv_maxvelocity;
 
 extern cvar_t *sv_cheats;
