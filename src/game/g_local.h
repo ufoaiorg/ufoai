@@ -453,7 +453,6 @@ struct edict_s {
 
 	int mapNum;
 	const char *model;
-	float freetime;				/**< sv.time when the object was freed */
 
 	/** only used locally in game, not by server */
 

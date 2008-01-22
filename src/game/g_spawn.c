@@ -624,15 +624,19 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 #if 0
 	if (self->owner->moveinfo.state == STATE_OPENED) {
 		self->owner->moveinfo.state = STATE_CLOSED;
+
 		/* FIXME */
+		/* change rotation and relink */
 		self->owner->angles[YAW] += DOOR_ROTATION_ANGLE;
 		gi.linkentity(self->owner);
+
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 		gi.WriteShort(self->owner->number);
 		gi.WriteShort(self->owner->mapNum);
 		gi.EndEvents();
 		G_RecalcRouting(self->owner);
+		return qtrue;
 	}
 #endif
 }

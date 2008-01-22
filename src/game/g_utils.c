@@ -40,7 +40,6 @@ void G_FreeEdict (edict_t * ed)
 
 	memset(ed, 0, sizeof(*ed));
 	ed->classname = "freed";
-	ed->freetime = level.time;
 	ed->inuse = qfalse;
 }
 
