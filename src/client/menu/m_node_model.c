@@ -140,16 +140,16 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 	modelInfo_t mi;
 	modelInfo_t pmi;
 	animState_t *as;
-	char *anim;					/* model anim state */
-	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
+	const char *anim;					/* model anim state */
+	menuModel_t *menuModel, *menuModelParent = NULL;
 
 	/* if true we have to reset the anim state and make sure the correct model is shown */
 	qboolean updateModel = qfalse;
 
-	node->menuModel = MN_GetMenuModel(source);
+	menuModel = node->menuModel = MN_GetMenuModel(source);
 
 	/* direct model name - no menumodel definition */
-	if (!node->menuModel) {
+	if (!menuModel) {
 		/* prevent the searching for a menumodel def in the next frame */
 		menuModel = NULL;
 		mi.model = R_RegisterModelShort(source);
@@ -158,8 +158,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 			Com_Printf("Could not find model '%s'\n", source);
 			return;
 		}
-	} else
-		menuModel = node->menuModel;
+	}
 
 	/* check whether the cvar value changed */
 	if (Q_strncmp(node->oldRefValue, source, sizeof(node->oldRefValue))) {
@@ -357,15 +356,14 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 
 				for (search = node->menu->firstNode; search != node && search; search = search->next)
 					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, MAX_VAR)) {
-						char model[MAX_VAR];
+						char modelName[MAX_VAR];
+						Q_strncpyz(modelName, MN_GetReferenceString(node->menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), sizeof(modelName));
 
-						Q_strncpyz(model, MN_GetReferenceString(node->menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), MAX_VAR);
-
-						pmi.model = R_RegisterModelShort(model);
+						pmi.model = R_RegisterModelShort(modelName);
 						if (!pmi.model)
 							break;
 
-						pmi.name = model;
+						pmi.name = modelName;
 						pmi.origin = search->origin;
 						pmi.angles = search->angles;
 						pmi.scale = search->scale;

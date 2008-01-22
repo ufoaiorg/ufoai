@@ -1671,7 +1671,7 @@ void CL_ActorUpdateCVars (void)
 	static char infoText[MAX_SMALLMENUTEXTLEN];
 	static char mouseText[MAX_SMALLMENUTEXTLEN];
 	qboolean refresh;
-	char *name;
+	const char *animName;
 	int time;
 	fireDef_t *old;
 
@@ -1707,9 +1707,9 @@ void CL_ActorUpdateCVars (void)
 		Cvar_Set("mn_stun", va("%i", selActor->STUN));
 
 		/* animation and weapons */
-		name = R_AnimGetName(&selActor->as, selActor->model1);
-		if (name)
-			Cvar_Set("mn_anim", name);
+		animName = R_AnimGetName(&selActor->as, selActor->model1);
+		if (animName)
+			Cvar_Set("mn_anim", animName);
 		if (RIGHT(selActor))
 			Cvar_Set("mn_rweapon", csi.ods[RIGHT(selActor)->item.t].model);
 		if (LEFT(selActor))

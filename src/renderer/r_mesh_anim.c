@@ -210,7 +210,7 @@ void R_AnimRun (animState_t * as, model_t * mod, int msec)
  * @sa R_AnimRun
  * @sa R_AnimChange
  */
-char *R_AnimGetName (animState_t * as, model_t * mod)
+const char *R_AnimGetName (animState_t * as, model_t * mod)
 {
 	mAliasAnim_t *anim;
 

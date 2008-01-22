@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void R_AnimAppend(animState_t * as, struct model_s *mod, const char *name);
 void R_AnimChange(animState_t * as, struct model_s *mod, const char *name);
 void R_AnimRun(animState_t * as, struct model_s *mod, int msec);
-char *R_AnimGetName(animState_t * as, struct model_s *mod);
+const char *R_AnimGetName(animState_t * as, struct model_s *mod);
 void R_InterpolateTransform(animState_t *as, int numframes, float *tag, float *interpolated);
 
 #endif
