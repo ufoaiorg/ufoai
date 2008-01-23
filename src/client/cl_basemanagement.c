@@ -3435,8 +3435,8 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 		/* Base capacities. */
 		for (k = 0; k < presaveArray[PRE_MAXCAP]; k++) {
-			MSG_WriteShort(sb, b->capacities[k].cur);
-			MSG_WriteShort(sb, b->capacities[k].max);
+			MSG_WriteLong(sb, b->capacities[k].cur);
+			MSG_WriteLong(sb, b->capacities[k].max);
 		}
 
 		/* Buy/Sell factors. */
@@ -3697,8 +3697,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* Base capacities. */
 		for (k = 0; k < presaveArray[PRE_MAXCAP]; k++) {
-			b->capacities[k].cur = MSG_ReadShort(sb);
-			b->capacities[k].max = MSG_ReadShort(sb);
+			b->capacities[k].cur = MSG_ReadLong(sb);
+			b->capacities[k].max = MSG_ReadLong(sb);
 		}
 
 		/* Buy/Sell factors. */
