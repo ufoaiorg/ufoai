@@ -4,12 +4,12 @@
 # md2.pl syntax has changed since it was introduced, and it has not been updated here.
 
 # Environment
-path=$(pwd)
+path="$(pwd)"
 
 # make sure we can find any includes no matter where from we are launched
-cd $(dirname $0)
-SCRIPTDIR=$PWD
-. $SCRIPTDIR/scripts_common || {
+cd "$(dirname $0)"
+SCRIPTDIR="$PWD"
+. "$SCRIPTDIR/scripts_common" || {
     echo "can't include scripts_common"
     exit
 }
