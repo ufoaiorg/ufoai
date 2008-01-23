@@ -717,6 +717,7 @@ static void BS_SellAircraft_f (void)
 	aircraft_t *aircraft;
 	qboolean found = qfalse;
 	qboolean teamNote = qfalse;
+	qboolean aircraftOutNote = qfalse;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -741,6 +742,11 @@ static void BS_SellAircraft_f (void)
 					teamNote = qtrue;
 					continue;
 				}
+				if (aircraft->status >= AIR_IDLE) {
+					/* aircraft is not in base */
+					aircraftOutNote = qtrue;
+					continue;
+				}
 				found = qtrue;
 				break;
 			}
@@ -761,6 +767,8 @@ static void BS_SellAircraft_f (void)
 		if (!found) {
 			if (teamNote)
 				MN_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
+			else if (aircraftOutNote)
+				MN_Popup(_("Note"), _("You can't sell an aircraft that is not in base"));
 			else
 				Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
 		}

@@ -311,6 +311,25 @@ static void TR_CargoList (void)
 }
 
 /**
+ * @brief Check if an aircraft should be displayed for transfer.
+ * @param[in] i global idx of the aircraft
+ * @return qtrue if the aircraft should be displayed, qfalse else.
+ */
+static qboolean TR_AircraftListSelect (int i)
+{
+	aircraft_t *aircraft;
+
+	if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
+		return qfalse;
+
+	aircraft = AIR_AircraftGetFromIdx(i);
+	if (aircraft->status >= AIR_IDLE)	/* Aircraft is not in base. */
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
  * @brief Fills the items-in-base list with stuff available for transfer.
  * @note Filling the transfer list with proper stuff (items/employees/aliens/aircraft) is being done here.
  * @sa TR_TransferStart_f
@@ -436,11 +455,9 @@ static void TR_TransferSelect_f (void)
 	case TRANS_TYPE_AIRCRAFT:
 		if (transferBase->hasBuilding[B_HANGAR] || transferBase->hasBuilding[B_SMALL_HANGAR]) {
 			for (i = 0; i < MAX_AIRCRAFT; i++) {
-				if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
-					continue;
 				aircraft = AIR_AircraftGetFromIdx(i);
 				if (aircraft) {
-					if (aircraft->homebase == baseCurrent) {
+					if ((aircraft->homebase == baseCurrent) && TR_AircraftListSelect(i)) {
 						Com_sprintf(str, sizeof(str), _("Aircraft %s\n"), _(aircraft->name));
 						Q_strcat(transferList, str, sizeof(transferList));
 						cnt++;
@@ -1015,7 +1032,7 @@ static void TR_TransferListSelect_f (void)
 			aircraft = AIR_AircraftGetFromIdx(i);
 			if (!aircraft)
 				return;
-			if (aircraft->homebase == baseCurrent) {
+			if ((aircraft->homebase == baseCurrent) && TR_AircraftListSelect(i)) {
 				if (cnt == num) {
 					if (TR_CheckAircraft(aircraft, baseCurrent, transferBase)) {
 						trAircraftsTmp[i] = i;
