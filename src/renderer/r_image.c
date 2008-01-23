@@ -118,16 +118,28 @@ void R_ImageList_f (void)
 		texels += image->upload_width * image->upload_height;
 		switch (image->type) {
 		case it_skin:
-			Com_Printf("M");
+			Com_Printf("SK");
+			break;
+		case it_wrappic:
+			Com_Printf("WR");
+			break;
+		case it_static:
+			Com_Printf("ST");
+			break;
+		case it_material:
+			Com_Printf("MA");
+			break;
+		case it_lightmap:
+			Com_Printf("LM");
 			break;
 		case it_world:
-			Com_Printf("W");
+			Com_Printf("WO");
 			break;
 		case it_pic:
-			Com_Printf("P");
+			Com_Printf("PI");
 			break;
 		default:
-			Com_Printf(" ");
+			Com_Printf("  ");
 			break;
 		}
 
