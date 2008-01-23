@@ -43,6 +43,7 @@ static void R_ModLoadLighting (lump_t * l)
 {
 	if (!l->filelen) {
 		loadmodel->bsp.lightdata = NULL;
+		loadmodel->bsp.lightquant = 4;
 		return;
 	}
 
