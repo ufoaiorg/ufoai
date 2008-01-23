@@ -109,7 +109,7 @@ fix_md2_and_tga()
 			echo "fix_md2_and_tga()... Renamed $realtga to $tganame" >> "$logfile"
 			if [ -f "$tganame" ]
 			then
-				"$md2soft" "$md2name" "$md2name" ".$name" || fail "$md2soft failed on $md2name"
+				"$md2soft" skinedit "$md2name" "$md2name" ".$name" || fail "$md2soft failed on $md2name"
 				echo "fix_md2_and_tga()... fixed md2 model: $md2name" >> "$logfile"
 				$svnsoft del $realtga
 				echo "fix_md2_and_tga()... removed $realtga" >> "$logfile"
