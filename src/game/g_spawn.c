@@ -665,7 +665,7 @@ void SP_func_door (edict_t *self)
 	/* link the door into the trigger */
 	other->owner = self;
 	other->solid = SOLID_TRIGGER;
-	other->use = Touch_DoorTrigger;
+	other->touch = Touch_DoorTrigger;
 
 	/* link into the world */
 	gi.linkentity(other);

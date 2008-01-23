@@ -521,8 +521,9 @@ struct edict_s {
 	/** @sa memcpy in Grid_CheckForbidden */
 	int fieldSize;	/* ACTOR_SIZE_* */
 
-	/** function to call when used */
-	qboolean (*use) (edict_t * self, edict_t * activator);
+	/** function to call when triggered - this function should only return true when there is
+	 * a client action assosiated with it */
+	qboolean (*touch)(edict_t * self, edict_t * activator);
 	float nextthink;
 	void (*think)(edict_t *self);
 

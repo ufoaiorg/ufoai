@@ -442,9 +442,9 @@ int G_TouchTriggers (edict_t *ent)
 		hit = touch[i];
 		if (!hit->inuse)
 			continue;
-		if (!hit->use)
+		if (!hit->touch)
 			continue;
-		if (hit->use(hit, ent))
+		if (hit->touch(hit, ent))
 			usedNum++;
 	}
 	return usedNum;

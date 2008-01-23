@@ -458,6 +458,12 @@ static void SV_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, 
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa SV_TraceBounds
  * @sa CL_Trace
+ * @param[in] start
+ * @param[in] end
+ * @param[in] passedict
+ * @param[in] contentmask brushes the trace should stop at (see MASK_*)
+ * @param[in] mins
+ * @param[in] maxs
  */
 trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask)
 {
