@@ -427,19 +427,10 @@ menu_model ufo_scout
 }
 
 // ============== UFO SUPPLY ==========================
-menu_model ufo_supply_body
-{
-	model	"models/aircraft/ufo_supply/ufo_supply_body_closed.md2"
-	menutransform {
-		ufopedia	"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
-	}
-}
+
 menu_model ufo_supply_engine_left
 {
 	model	"models/aircraft/ufo_supply/ufo_supply_engine_left.md2"
-	need	"ufo_supply_body"
 	menutransform {
 		ufopedia	"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
 		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
@@ -478,7 +469,7 @@ menu_model ufo_supply_wing_right
 }
 menu_model ufo_supply
 {
-	model	"models/aircraft/ufo_supply/ufo_supply.md2"
+	model	"models/aircraft/ufo_supply/ufo_supply_body_closed.md2"
 	need	"ufo_supply_wing_right"
 	menutransform {
 		ufopedia	"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
