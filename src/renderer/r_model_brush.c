@@ -277,7 +277,7 @@ static void R_ModLoadSurfaces (lump_t * l)
 
 		ti = LittleShort(in->texinfo);
 		if (ti < 0 || ti >= loadmodel->bsp.numtexinfo)
-			Sys_Error("R_ModLoadSurfaces: bad texinfo number");
+			Com_Error(ERR_DROP, "R_ModLoadSurfaces: bad texinfo number");
 		out->texinfo = loadmodel->bsp.texinfo + ti;
 
 		out->lightmap_scale = (1 << loadmodel->bsp.lightquant);
@@ -396,7 +396,7 @@ static void R_ModLoadSurfedges (lump_t * l)
 		Com_Error(ERR_DROP, "R_ModLoadSurfedges: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	if (count < 1 || count >= MAX_MAP_SURFEDGES)
-		Sys_Error("R_ModLoadSurfedges: bad surfedges count in %s: %i", loadmodel->name, count);
+		Com_Error(ERR_DROP, "R_ModLoadSurfedges: bad surfedges count in %s: %i", loadmodel->name, count);
 
 	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...surface edges: %i\n", count);
@@ -724,7 +724,7 @@ void R_ModBeginLoading (const char *tiles, const char *pos)
 			for (i = 0; i < 2; i++) {
 				token = COM_Parse(&pos);
 				if (!pos)
-					Sys_Error("R_ModBeginLoading: invalid positions\n");
+					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
 			R_ModAddMapTile(name, sh[0], sh[1], 0);
@@ -736,5 +736,5 @@ void R_ModBeginLoading (const char *tiles, const char *pos)
 		}
 	}
 
-	Sys_Error("R_ModBeginLoading: invalid tile names\n");
+	Com_Error(ERR_DROP, "R_ModBeginLoading: invalid tile names\n");
 }

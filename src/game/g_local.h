@@ -225,11 +225,6 @@ extern cvar_t *difficulty;
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
-
-/* g_cmds.c */
-void Cmd_Help_f(edict_t * ent);
-void Cmd_Score_f(edict_t * ent);
-
 /* g_phys.c */
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
@@ -246,13 +241,6 @@ int G_TouchTriggers(edict_t *ent);
 
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
-
-char *G_CopyString(const char *in);
-
-float *tv(float x, float y, float z);
-char *vtos(vec3_t v);
-
-float vectoyaw(vec3_t vec);
 
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(edict_t * ent);
