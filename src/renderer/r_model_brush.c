@@ -667,7 +667,8 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	}
 
 	R_LoadBspVertexArrays();
-	R_ModShiftTile();
+	if (VectorNotEmpty(shift))
+		R_ModShiftTile();
 
 	FS_FreeFile(buffer);
 }

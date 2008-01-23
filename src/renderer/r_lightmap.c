@@ -138,7 +138,7 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
  */
 static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 {
-	unsigned int smax, tmax;
+	int smax, tmax;
 	int r, g, b, max;
 	unsigned int i, j, size;
 	byte *lightmap, *lm, *l;
@@ -394,6 +394,7 @@ begin:
 		if (ds > surf->stmaxs[0] || dt > surf->stmaxs[1])
 			continue;
 
+		/* we've hit, so find the sample */
 		ds /= surf->lightmap_scale;
 		dt /= surf->lightmap_scale;
 
@@ -424,6 +425,7 @@ void R_LightPoint (vec3_t p)
 	int i, j;
 
 	/* fullbright */
+	VectorClear(r_lightmap_sample.point);
 	VectorSet(r_lightmap_sample.color, 1.0, 1.0, 1.0);
 
 	if (!r_mapTiles[0]->bsp.lightdata)
