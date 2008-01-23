@@ -4009,7 +4009,6 @@ tech rs_craft_weapon_tr20
 	producetime	100
 
 	mdl_top		"aircraft/craft_weapon_tr20/tr20"
-	//image_top	"techs/craft_weapon_tr20"
 }
 
 tech rs_craft_ammo_tr20
@@ -4028,9 +4027,9 @@ tech rs_craft_ammo_tr20
 		tech rs_craft_weapon_tr20
 	}
 	time		0
-	producetime	24 //Assuming a full 128-rocket batch!
+	producetime	24 //Assuming a full 128-rocket batch! // TODO: 152 pcs?
 
-	image_top	"techs/craft_ammo_tr20"
+	mdl_top		"aircraft/craft_weapon_tr20/tr20_rocket"
 }
 
 tech rs_craft_weapon_particle
