@@ -4,7 +4,7 @@
 // parent	(string)	The "menu_model" parent with the tag specified - never in main model.
 // need		(string)	"menu_model" name of e.g. head. (i.e. children menu-models)
 // anim		(string)	The animation from *.anm files.
-// skin	(int)			The index o fhte skin (texture) to use in the md2 file. Default 0.
+// skin	(int)			The index of hte skin (texture) to use in the md2 file. Default 0.
 // origin	<x,y,z>
 // center	<x,y,z>
 // scale	<x,y,z>
@@ -17,8 +17,9 @@
 //			Except for the "origin" values - they are ADDED to the original values of the menu.
 //			You can skip any of these values by replacing the '"x y z"' part with a '#'
 //			See "scale" "origin" and "angles" definitions for for info on the values.
-//			The downside of this right now is that the mdoels can't be rotated in-game
-//			(e.g. in the ufopedia) anymore and that the rotatioon values are kinda hard to get.
+//			The downside the menutransform settings right now is that the models can't
+//			be rotated in-game (e.g. in the ufopedia) anymore and that the rotatioon
+//			values are kinda hard to get.
 // color	(color)
 // =================================================
 // NOTE: The entries have to be ordered (top-down) to start with children and end with parents (e.g. head, then body)
@@ -251,39 +252,6 @@ menu_model inter_stingray
 	}
 }
 
-// ============== UFO Carrier ======================
-menu_model ufo_carrier
-{
-	model	"models/aircraft/ufo_carrier/ufo_carrier.md2"
-	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
-	}
-}
-
-// ============== UFO Harvester ======================
-menu_model ufo_harvester
-{
-	model	"models/aircraft/ufo_harvester/ufo_harvester.md2"
-	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
-	}
-}
-
-// ============== UFO Condor ======================
-menu_model ufo_condor
-{
-	model	"models/aircraft/ufo_condor/ufo_condor.md2"
-	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
-	}
-}
-
 // ============== Saracen Interceptor ======================
 menu_model inter_saracen
 {
@@ -343,12 +311,45 @@ menu_model inter_stiletto
 	}
 }
 
+// ============== UFO Carrier ======================
+menu_model ufo_carrier
+{
+	model	"models/aircraft/ufo_carrier/ufo_carrier.md2"
+	menutransform {
+		ufopedia	"3 3 3"	"-45 135 45"	#	// todo: fixme
+		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+	}
+}
+
+// ============== UFO Harvester ======================
+menu_model ufo_harvester
+{
+	model	"models/aircraft/ufo_harvester/ufo_harvester.md2"
+	menutransform {
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+	}
+}
+
+// ============== UFO Condor ======================
+menu_model ufo_condor
+{
+	model	"models/aircraft/ufo_condor/ufo_condor.md2"
+	menutransform {
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+	}
+}
+
 // ============== UFO FIGHTER ============================
 menu_model ufo_fighter_upper
 {
 	model	"models/aircraft/ufo_fighter/ufo_fighter_upper.md2"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"30 0 0"
 		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
 	}
@@ -358,7 +359,7 @@ menu_model ufo_fighter_engines_2
 	model	"models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
 	need	"ufo_fighter_upper"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"30 0 0"
 		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
 	}
@@ -368,7 +369,7 @@ menu_model ufo_fighter_engines_1
 	model	"models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
 	need	"ufo_fighter_engines_2"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"30 0 0"
 		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
 	}
@@ -378,7 +379,7 @@ menu_model ufo_fighter_wings
 	model	"models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
 	need	"ufo_fighter_engines_1"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"30 0 0"
 		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
 	}
@@ -388,7 +389,7 @@ menu_model ufo_fighter
 	model	"models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
 	need	"ufo_fighter_wings"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"30 0 0"
 		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
 	}
@@ -399,7 +400,7 @@ menu_model ufo_scout_upper
 {
 	model	"models/aircraft/ufo_scout/ufo_scout_upper.md2"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"30 0 0"
 		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
 	}
@@ -409,7 +410,7 @@ menu_model ufo_scout_engines
 	model	"models/aircraft/ufo_scout/ufo_scout_engines_1.md2"
 	need	"ufo_scout_upper"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"30 0 0"
 		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
 	}
@@ -419,7 +420,7 @@ menu_model ufo_scout
 	model	"models/aircraft/ufo_scout/ufo_scout_hull.md2"
 	need	"ufo_scout_engines"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"	// todo: fixme
+		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"30 0 0"
 		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
 	}
