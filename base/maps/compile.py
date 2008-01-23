@@ -7,18 +7,23 @@
 
 import os, fnmatch, sys, stat, platform
 
-extra = "-bounce 0 -extra"
+extra = "-extra"
 
 def getFile(root):
     for path, subdirs, files in os.walk(root):
         if ".svn" in subdirs: subdirs.remove(".svn")
         patterns = ["*.map"]
+        antipatterns = ["prefab_*.map"]
         files.sort()
         for name in files:
             for pattern in patterns:
                 if fnmatch.fnmatch(name, pattern):
-                    yield os.path.join(path, name)
-                    break
+                    for apattern in antipatterns:
+                        if fnmatch.fnmatch(name, apattern):
+                            break
+                    else:
+                        yield os.path.join(path, name)
+                        break
 
 
 def compile(root):
