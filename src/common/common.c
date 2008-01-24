@@ -481,6 +481,7 @@ static void Com_DebugHelp_f (void)
 			" * debug_itemlist\n"
 			" * debug_techlist\n"
 			" * mem_stats\n"
+			" * nationlist\n"
 			"------------------------------\n"
 			"\n"
 			"Debugging commands:\n"
