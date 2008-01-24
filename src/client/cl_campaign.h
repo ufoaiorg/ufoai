@@ -221,7 +221,7 @@ typedef struct campaign_s {
 	int credits;				/**< start with x credits */
 	int num;
 	signed int difficulty;		/**< difficulty level -4 - 4 */
-	int civiliansKilledUntilLost;	/**< how many civilians may be killed until you've lost the game */
+	float minhappiness;			/**< minimum value of mean happiness before the game is lost */
 	int negativeCreditsUntilLost;	/**< bankrupt - negative credits until you've lost the game */
 	int maxAllowedXVIRateUntilLost;	/**< 0 - 100 - the average rate of XVI over all nations before you've lost the game */
 	qboolean visible;			/**< visible in campaign menu? */

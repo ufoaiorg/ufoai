@@ -952,24 +952,10 @@ static int CP_GetAverageXVIRate (void)
 static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civiliansKilled)
 {
 	qboolean endCampaign = qfalse;
+ 	/* fraction of nation that can be below min happiness before the game is lost */
+	const float nationBelowLimitPercentage = 0.5f;
 
 	assert(curCampaign);
-
-	/* only if the definition tells us to keep an eye on this lost criteria */
-	if (mission && curCampaign->civiliansKilledUntilLost) {
-		if (ccs.civiliansKilled > curCampaign->civiliansKilledUntilLost) {
-			/* lost the game */
-			menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have"
-				" consistently failed to protect innocent civilians. Dozens have"
-				" lost their lives through your inability to handle the alien threat."
-				" The UN, highly unsatisfied with your performance, has decided to remove"
-				" you from command and subsequently disbands the PHALANX project as an"
-				" effective task force. No further attempts at global cooperation are made."
-				" Earth's nations each try to stand alone against the aliens, and eventually"
-				" fall one by one.");
-			endCampaign = qtrue;
-		}
-	}
 
 	if (!endCampaign && ccs.credits < -curCampaign->negativeCreditsUntilLost) {
 		menuText[TEXT_STANDARD] = _("You've gone too far into debt.");
@@ -986,8 +972,25 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 				" and total victory.");
 			endCampaign = qtrue;
 		} else {
-			/* check for nation happyiness */
-			/* @todo */
+			/* check for nation happiness */
+			int j, nationBelowLimit = 0;
+			for (j = 0; j < gd.numNations; j++) {
+				nation_t *nation = &gd.nations[j];
+				if (nation->stats[0].happiness < curCampaign->minhappiness) {
+					nationBelowLimit++;
+				}
+			}
+			if (nationBelowLimit >= nationBelowLimitPercentage * gd.numNations) {
+				/* lost the game */
+				menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have"
+					" consistently failed to protect nations."
+					" The UN, highly unsatisfied with your performance, has decided to remove"
+					" you from command and subsequently disbands the PHALANX project as an"
+					" effective task force. No further attempts at global cooperation are made."
+					" Earth's nations each try to stand alone against the aliens, and eventually"
+					" fall one by one.");
+				endCampaign = qtrue;
+			}
 		}
 	}
 
@@ -3933,7 +3936,7 @@ static const value_t campaign_vals[] = {
 	{"medics", V_INT, offsetof(campaign_t, medics), MEMBER_SIZEOF(campaign_t, medics)},
 	{"xvirate", V_INT, offsetof(campaign_t, maxAllowedXVIRateUntilLost), MEMBER_SIZEOF(campaign_t, maxAllowedXVIRateUntilLost)},
 	{"maxdebts", V_INT, offsetof(campaign_t, negativeCreditsUntilLost), MEMBER_SIZEOF(campaign_t, negativeCreditsUntilLost)},
-	{"killedcivilians", V_INT, offsetof(campaign_t, civiliansKilledUntilLost), MEMBER_SIZEOF(campaign_t, civiliansKilledUntilLost)},
+	{"minhappiness", V_FLOAT, offsetof(campaign_t, minhappiness), MEMBER_SIZEOF(campaign_t, minhappiness)},
 	{"scientists", V_INT, offsetof(campaign_t, scientists), MEMBER_SIZEOF(campaign_t, scientists)},
 	{"ugvs", V_INT, offsetof(campaign_t, ugvs), MEMBER_SIZEOF(campaign_t, ugvs)},
 	{"equipment", V_STRING, offsetof(campaign_t, equipment), 0},
@@ -4525,7 +4528,7 @@ static void CP_CampaignsClick_f (void)
 
 	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"
-		"Max. civilians allowed to die: %i\n"
+		"Min. happiness of nations: %i \%\n"
 		"Max. allowed debts: %ic\n"
 		"%s\n"),
 			racetype,
@@ -4534,7 +4537,7 @@ static void CP_CampaignsClick_f (void)
 			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
 			campaigns[num].medics, ngettext("medic", "medics", campaigns[num].medics),
 			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty),
-			campaigns[num].civiliansKilledUntilLost, campaigns[num].negativeCreditsUntilLost,
+			(int)(round(campaigns[num].minhappiness * 100.0f)), campaigns[num].negativeCreditsUntilLost,
 			_(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }

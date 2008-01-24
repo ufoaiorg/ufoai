@@ -160,7 +160,7 @@ campaign veryhard
 	workers		1
 	medics		0
 	difficulty	4
-	killedcivilians	20
+	minhappiness	0.42
 	maxdebts	20000
 	xvirate		30
 	researched rslist_human
@@ -184,7 +184,7 @@ campaign hard
 	workers		2
 	medics		1
 	difficulty	2
-	killedcivilians	30
+	minhappiness	0.35
 	maxdebts	100000
 	xvirate		50
 	salary {
@@ -211,7 +211,7 @@ campaign main
 	workers		14
 	medics		2
 	difficulty	0
-	killedcivilians	40
+	minhappiness	0.30
 	maxdebts	150000
 	xvirate		70
 	salary {
@@ -257,7 +257,7 @@ campaign easy
 	workers		10
 	medics		10
 	difficulty	-2
-	killedcivilians	50
+	minhappiness	0.2
 	maxdebts	250000
 	xvirate		80
 	salary {
@@ -284,7 +284,7 @@ campaign veryeasy
 	workers		20
 	medics		20
 	difficulty	-4
-	killedcivilians	60
+	minhappiness	0.1
 	maxdebts	300000
 	xvirate		90
 	salary {
@@ -348,7 +348,7 @@ campaign test
 	workers		11
 	medics		11
 	difficulty	0
-	killedcivilians	20
+	minhappiness	0.2
 	maxdebts	300000
 	researched	rslist_human
 	equipment	testing_and_tweaking
