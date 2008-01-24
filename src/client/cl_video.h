@@ -90,9 +90,6 @@ void VID_Init(void);
 
 #include "../common/common.h"
 
-void *VID_TagAlloc(struct memPool_s *pool, int size, int tagNum);
-void VID_FreeTags(struct memPool_s *pool, int tagNum);
-void VID_MemFree(void *ptr);
 int VID_GetModeNums(void);
 
 void VID_Restart_f(void);

@@ -43,7 +43,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
 
-	mod->animdata = (mAliasAnim_t *) VID_TagAlloc(vid_modelPool, n * sizeof(mAliasAnim_t), 0);
+	mod->animdata = (mAliasAnim_t *) Mem_PoolAlloc(n * sizeof(mAliasAnim_t), vid_modelPool, 0);
 	anim = mod->animdata;
 	text = buffer;
 	mod->num_anims = 0;

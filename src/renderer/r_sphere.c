@@ -58,9 +58,9 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	int vertspos = 0;
 	int texespos = 0;
 
-	sphere->verts = (float*)VID_TagAlloc(vid_modelPool, sizeof(float) * ((tris + 1) * (tris + 1) * 6), 0);
-	sphere->texes = (float*)VID_TagAlloc(vid_modelPool, sizeof(float) * ((tris + 1) * (tris + 1) * 4), 0);
-	sphere->normals = (float*)VID_TagAlloc(vid_modelPool, sizeof(float) * ((tris + 1) * (tris + 1) * 6), 0);
+	sphere->verts = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 6), vid_modelPool, 0);
+	sphere->texes = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 4), vid_modelPool, 0);
+	sphere->normals = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 6), vid_modelPool, 0);
 
 	for (i = 0; i < tris; i++) {
 		float rho = (float) i * drho;

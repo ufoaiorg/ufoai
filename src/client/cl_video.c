@@ -131,29 +131,3 @@ void VID_Init (void)
 	/* Start the graphics mode */
 	R_Init();
 }
-
-
-void *VID_TagAlloc (struct memPool_s *pool, int size, int tagNum)
-{
-	if (tagNum < 0)
-		tagNum *= -1;
-
-	assert(pool);
-	return _Mem_Alloc(size, qtrue, pool, tagNum, "RENDERER", 0);
-}
-
-void VID_MemFree (void *ptr)
-{
-	_Mem_Free(ptr, "RENDERER", -1);
-}
-
-
-void VID_FreeTags (struct memPool_s *pool, int tagNum)
-{
-	assert(pool);
-	if (tagNum < 0)
-		tagNum *= -1;
-
-	assert(pool);
-	_Mem_FreeTag(pool, tagNum, "RENDERER", 0);
-}

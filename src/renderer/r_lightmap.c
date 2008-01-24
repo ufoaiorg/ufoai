@@ -176,7 +176,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 	bl = r_lightmaps.fbuffer;
 
 	/* first into an rgba linear block for softening */
-	lightmap = (byte *)VID_TagAlloc(vid_lightPool, size * LIGHTMAP_BLOCK_BYTES, 0);
+	lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BLOCK_BYTES, vid_lightPool, 0);
 	lm = lightmap;
 
 	for (i = 0; i < tmax; i++) {
@@ -232,7 +232,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 	/* the final lightmap is uploaded to the card via the strided lightmap
 	 * block, and also cached on the surface for fast point lighting lookups */
 
-	surf->lightmap = (byte *)VID_TagAlloc(vid_lightPool, size * LIGHTMAP_BYTES, 0);
+	surf->lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BYTES, vid_lightPool, 0);
 	l = surf->lightmap;
 	lm = lightmap;
 	for (i = 0; i < tmax; i++, dest += stride) {
@@ -254,7 +254,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 		}
 	}
 
-	VID_MemFree(lightmap);
+	Mem_Free(lightmap);
 }
 
 /**

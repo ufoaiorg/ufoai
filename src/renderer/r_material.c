@@ -643,17 +643,17 @@ void R_LoadMaterials (const char *map)
 		m = &image->material;
 
 		if (*c == '{' && inmaterial) {
-			s = (materialStage_t *)VID_TagAlloc(vid_imagePool, sizeof(materialStage_t), 0);
+			s = (materialStage_t *)Mem_PoolAlloc(sizeof(materialStage_t), vid_imagePool, 0);
 
 			if (R_ParseStage(s, &buffer) == -1) {
-				VID_MemFree(s);
+				Mem_Free(s);
 				continue;
 			}
 
 			/* load animation frame images */
 			if (s->flags & STAGE_ANIM) {
 				if (R_LoadAnimImages(s) == -1) {
-					VID_MemFree(s);
+					Mem_Free(s);
 					continue;
 				}
 			}

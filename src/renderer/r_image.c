@@ -67,7 +67,7 @@ void R_ImageClearMaterials (void)
 
 		while (s) {  /* free the stages chain */
 			ss = s->next;
-			VID_MemFree(s);
+			Mem_Free(s);
 			s = ss;
 		}
 
@@ -256,7 +256,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	row_pointers = png_get_rows(png_ptr, info_ptr);
 	rowptr = 0;
 
-	img = VID_TagAlloc(vid_imagePool, info_ptr->width * info_ptr->height * 4, 0);
+	img = Mem_PoolAlloc(info_ptr->width * info_ptr->height * 4, vid_imagePool, 0);
 	if (pic)
 		*pic = img;
 
@@ -324,7 +324,7 @@ void R_WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_write_info(png_ptr, info_ptr);
 
-	row_pointers = VID_TagAlloc(vid_imagePool, height * sizeof(png_bytep), 0);
+	row_pointers = Mem_PoolAlloc(height * sizeof(png_bytep), vid_imagePool, 0);
 	for (i = 0; i < height; i++)
 		row_pointers[i] = buffer + (height - 1 - i) * 3 * width;
 
@@ -333,7 +333,7 @@ void R_WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_destroy_write_struct(&png_ptr, &info_ptr);
 
-	VID_MemFree(row_pointers);
+	Mem_Free(row_pointers);
 }
 
 /*
@@ -495,7 +495,7 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	if (height)
 		*height = rows;
 
-	targaRGBA = VID_TagAlloc(vid_imagePool, columns * rows * 4, 0);
+	targaRGBA = Mem_PoolAlloc(columns * rows * 4, vid_imagePool, 0);
 	*pic = targaRGBA;
 
 	/* If bit 5 of attributes isn't set, the image has been stored from bottom to top */
@@ -586,7 +586,7 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 
 	/* Allocate an output buffer */
 	size = (width * height * 3) + 18;
-	out = VID_TagAlloc(vid_imagePool, size, 0);
+	out = Mem_PoolAlloc(size, vid_imagePool, 0);
 
 	/* Fill in header */
 	out[2] = 2;		/* Uncompressed type */
@@ -609,7 +609,7 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 	if (fwrite(out, 1, size, f) != size)
 		Com_Printf("R_WriteTGA: Failed to write the tga file\n");
 
-	VID_MemFree(out);
+	Mem_Free(out);
 }
 
 
@@ -709,7 +709,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	}
 
 	/* Allocate Memory for decompressed image */
-	rgbadata = VID_TagAlloc(vid_imagePool, cinfo.output_width * cinfo.output_height * 4, 0);
+	rgbadata = Mem_PoolAlloc(cinfo.output_width * cinfo.output_height * 4, vid_imagePool, 0);
 	if (!rgbadata) {
 		Com_Printf("Insufficient RAM for JPEG buffer\n");
 		jpeg_destroy_decompress(&cinfo);
@@ -717,10 +717,10 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 		return;
 	}
 	/* Allocate Scanline buffer */
-	scanline = VID_TagAlloc(vid_imagePool, cinfo.output_width * components, 0);
+	scanline = Mem_PoolAlloc(cinfo.output_width * components, vid_imagePool, 0);
 	if (!scanline) {
 		Com_Printf("Insufficient RAM for JPEG scanline buffer\n");
-		VID_MemFree(rgbadata);
+		Mem_Free(rgbadata);
 		jpeg_destroy_decompress(&cinfo);
 		FS_FreeFile(rawdata);
 		return;
@@ -750,7 +750,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	}
 
 	/* Free the scanline buffer */
-	VID_MemFree(scanline);
+	Mem_Free(scanline);
 
 	/* Finish Decompression */
 	jpeg_finish_decompress(&cinfo);
@@ -1008,7 +1008,7 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	scaled = data;
 
 	if (scaled_width != width || scaled_height != height) {  /* whereas others need to be scaled */
-		scaled = (unsigned *)VID_TagAlloc(vid_imagePool, scaled_width * scaled_height * sizeof(unsigned), 0);
+		scaled = (unsigned *)Mem_PoolAlloc(scaled_width * scaled_height * sizeof(unsigned), vid_imagePool, 0);
 		R_ScaleTexture(data, width, height, scaled, scaled_width, scaled_height);
 	}
 
@@ -1061,7 +1061,7 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	R_CheckError();
 
 	if (scaled != data)
-		VID_MemFree(scaled);
+		Mem_Free(scaled);
 }
 
 /**
@@ -1076,7 +1076,7 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 	byte *u, *d, *l, *r;
 
 	/* soften into a copy of the original image, as in-place would be incorrect */
-	out = (byte *)VID_TagAlloc(vid_imagePool, width * height * bpp, 0);
+	out = (byte *)Mem_PoolAlloc(width * height * bpp, vid_imagePool, 0);
 	if (!out)
 		Sys_Error("TagMalloc: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
 
@@ -1101,7 +1101,7 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 
 	/* copy the softened image over the input image, and free it */
 	memcpy(in, out, width * height * bpp);
-	VID_MemFree(out);
+	Mem_Free(out);
 }
 
 #define DAN_WIDTH	512
@@ -1332,9 +1332,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 
   end:
 	if (pic)
-		VID_MemFree(pic);
+		Mem_Free(pic);
 	if (palette)
-		VID_MemFree(palette);
+		Mem_Free(palette);
 
 	return image;
 }

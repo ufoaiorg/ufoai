@@ -160,7 +160,7 @@ void R_ScreenShot_f (void)
 	}
 
 	/* Allocate room for a copy of the framebuffer */
-	buffer = VID_TagAlloc(vid_imagePool, viddef.width * viddef.height * 3, 0);
+	buffer = Mem_PoolAlloc(viddef.width * viddef.height * 3, vid_imagePool, 0);
 	if (!buffer) {
 		Com_Printf("R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", viddef.width * viddef.height * 3);
 		fclose(f);
@@ -188,7 +188,7 @@ void R_ScreenShot_f (void)
 
 	/* Finish */
 	fclose(f);
-	VID_MemFree(buffer);
+	Mem_Free(buffer);
 
 	Com_Printf("Wrote %s\n", checkName);
 }

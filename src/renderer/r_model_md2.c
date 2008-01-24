@@ -48,7 +48,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 		Sys_Error("R_ModLoadTags: %s has wrong version number (%i should be %i)", mod->alias.tagname, version, TAG_VERSION);
 
 	size = LittleLong(pintag->ofs_extractend);
-	mod->alias.tagdata = VID_TagAlloc(vid_modelPool, size, 0);
+	mod->alias.tagdata = Mem_PoolAlloc(size, vid_modelPool, 0);
 	pheader = mod->alias.tagdata;
 
 	/* byte swap the header fields and sanity check */
@@ -153,7 +153,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 	if (mod->alias.num_frames <= 0 || mod->alias.num_frames >= MD2_MAX_FRAMES)
 		Com_Error(ERR_DROP, "model %s has too many (or no) frames", mod->name);
 
-	mod->alias.meshes = outMesh = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t), 0);
+	mod->alias.meshes = outMesh = Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
 	outMesh->num_verts = LittleLong(md2->num_verts);
 	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MD2_MAX_VERTS)
 		Com_Error(ERR_DROP, "model %s has too many (or no) vertices", mod->name);
@@ -168,7 +168,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 		Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
 		return;
 	}
-	outMesh->skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * outMesh->num_skins, 0);
+	outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
 	for (i = 0; i < outMesh->num_skins; i++) {
 		outMesh->skins[i].skin = R_AliasModelGetSkin(mod,
 			(char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME);
@@ -194,7 +194,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 	/* build list of unique vertices */
 	numIndexes = outMesh->num_tris * 3;
 	numVerts = 0;
-	outMesh->indexes = outIndex = VID_TagAlloc(vid_modelPool, sizeof(int32_t) * numIndexes, 0);
+	outMesh->indexes = outIndex = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
 
 	for (i = 0; i < numIndexes; i++)
 		indRemap[i] = -1;
@@ -237,15 +237,15 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 		outIndex[i] = outIndex[indRemap[i]];
 	}
 
-	outMesh->stcoords = outCoord = VID_TagAlloc(vid_modelPool, sizeof(mAliasCoord_t) * outMesh->num_verts, 0);
+	outMesh->stcoords = outCoord = Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
 	for (j = 0; j < numIndexes; j++) {
 		outCoord[outIndex[j]][0] = (float)(((double)LittleShort(pincoord[tempSTIndex[indRemap[j]]].s) + 0.5) * isw);
 		outCoord[outIndex[j]][1] = (float)(((double)LittleShort(pincoord[tempSTIndex[indRemap[j]]].t) + 0.5) * isw);
 	}
 
 	/* load the frames */
-	mod->alias.frames = outFrame = VID_TagAlloc(vid_modelPool, sizeof(mAliasFrame_t) * mod->alias.num_frames, 0);
-	outMesh->vertexes = outVertex = VID_TagAlloc(vid_modelPool, sizeof(mAliasVertex_t) * mod->alias.num_frames * outMesh->num_verts, 0);
+	mod->alias.frames = outFrame = Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
+	outMesh->vertexes = outVertex = Mem_PoolAlloc(sizeof(mAliasVertex_t) * mod->alias.num_frames * outMesh->num_verts, vid_modelPool, 0);
 
 	for (i = 0; i < mod->alias.num_frames; i++, outFrame++, outVertex += numVerts) {
 		pinframe = (dMD2Frame_t *) ((byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
