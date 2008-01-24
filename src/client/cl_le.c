@@ -1031,8 +1031,10 @@ void LE_Cleanup (void)
 			INVSH_EmptyContainer(&le->i, csi.idFloor);
 			break;
 		case ET_PARTICLE:
-			if (le->ptl)
-				Mem_Free(le->ptl);
+			if (le->ptl) {
+				CL_ParticleFree(le->ptl);
+				le->ptl = NULL;
+			}
 			break;
 		default:
 			break;

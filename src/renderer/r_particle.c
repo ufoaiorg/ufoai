@@ -234,7 +234,7 @@ static void R_SetBlendMode (int mode)
 	switch (mode) {
 	case BLEND_REPLACE:
 		R_TexEnv(GL_REPLACE);
-		return;
+		break;
 	case BLEND_BLEND:
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		break;
