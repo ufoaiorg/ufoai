@@ -4667,7 +4667,7 @@ static void CP_CampaignsClick_f (void)
 
 	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"
-		"Min. happiness of nations: %i \%\n"
+		"Min. happiness of nations: %i %%\n"
 		"Max. allowed debts: %ic\n"
 		"%s\n"),
 			racetype,
