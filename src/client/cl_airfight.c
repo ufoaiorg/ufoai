@@ -533,7 +533,9 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (damage > 0) {
 		assert(target->stats[AIR_STATS_DAMAGE] > 0);
 		target->stats[AIR_STATS_DAMAGE] -= damage;
-		AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
+		if (target->stats[AIR_STATS_DAMAGE] <= 0)
+			/* Target is destroyed */
+			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
 	}
 }
 
