@@ -342,7 +342,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 }
 
 
-#define GUETE_CIV_RANDOM	30
+#define GUETE_CIV_RANDOM	10
 #define GUETE_RUN_AWAY		50
 #define GUETE_CIV_LAZINESS	5
 #define RUN_AWAY_DIST		160
