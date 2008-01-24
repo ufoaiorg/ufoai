@@ -174,7 +174,7 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_CHECKBOX:
-					MN_DrawCheckBoxNode(node, ref);
+					MN_DrawCheckBoxNode(menu, node, ref);
 					break;
 
 				case MN_SELECTBOX:
@@ -292,7 +292,7 @@ void MN_DrawMenus (void)
 
 				case MN_MODEL:
 					if (*source)
-						MN_DrawModelNode(node, ref, source);
+						MN_DrawModelNode(menu, node, ref, source);
 					break;
 
 				case MN_MAP:

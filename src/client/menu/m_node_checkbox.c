@@ -2,7 +2,7 @@
 #include "m_nodes.h"
 #include "m_parse.h"
 
-void MN_DrawCheckBoxNode (const menuNode_t* node, const char *checkBoxImage)
+void MN_DrawCheckBoxNode (const menu_t* menu, const menuNode_t* node, const char *checkBoxImage)
 {
 	const char *image;
 	const char *ref;
@@ -13,7 +13,7 @@ void MN_DrawCheckBoxNode (const menuNode_t* node, const char *checkBoxImage)
 	else
 		image = "menu/checkbox";
 
-	ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
+	ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 	if (!ref)
 		return;
 

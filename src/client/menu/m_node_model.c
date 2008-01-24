@@ -134,7 +134,7 @@ void MN_NodeModelInit (void)
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }
 
-void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
+void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, const char *source)
 {
 	int i;
 	modelInfo_t mi;
@@ -208,7 +208,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 			if (!menuModel->tag && !menuModel->parent) {
 				if (menuModel->menuTransformCnt) {
 					for (i = 0; i < menuModel->menuTransformCnt; i++) {
-						if (node->menu == menuModel->menuTransform[i].menuPtr) {
+						if (menu == menuModel->menuTransform[i].menuPtr) {
 							/* Use menu scale if defined. */
 							if (menuModel->menuTransform[i].useScale) {
 								VectorCopy(menuModel->menuTransform[i].scale, mi.scale);
@@ -248,7 +248,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 
 				/* get the animation given by menu node properties */
 				if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
-					ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_ANIM_OR_FONT]);
+					ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
 				/* otherwise use the standard animation from modelmenu defintion */
 				} else
 					ref = menuModel->anim;
@@ -310,13 +310,13 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 		} else {
 			/* get skin */
 			if (node->data[MN_DATA_MODEL_SKIN_OR_CVAR] && *(char *) node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
-				mi.skin = atoi(MN_GetReferenceString(node->menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]));
+				mi.skin = atoi(MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]));
 			else
 				mi.skin = 0;
 
 			/* do animations */
 			if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
-				ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_ANIM_OR_FONT]);
+				ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
 				if (updateModel) {
 					/* model has changed but mem is already reserved in pool */
 					if (node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
@@ -352,7 +352,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 				char parent[MAX_VAR];
 				char *tag;
 
-				Q_strncpyz(parent, MN_GetReferenceString(node->menu, node->data[MN_DATA_MODEL_TAG]), MAX_VAR);
+				Q_strncpyz(parent, MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_TAG]), MAX_VAR);
 				tag = parent;
 				/* tag "menuNodeName modelTag" */
 				while (*tag && *tag != ' ')
@@ -360,10 +360,10 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 				/* split node name and tag */
 				*tag++ = 0;
 
-				for (search = node->menu->firstNode; search != node && search; search = search->next)
+				for (search = menu->firstNode; search != node && search; search = search->next)
 					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, MAX_VAR)) {
 						char modelName[MAX_VAR];
-						Q_strncpyz(modelName, MN_GetReferenceString(node->menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), sizeof(modelName));
+						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), sizeof(modelName));
 
 						pmi.model = R_RegisterModelShort(modelName);
 						if (!pmi.model)
