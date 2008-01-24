@@ -3697,8 +3697,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* Base capacities. */
 		for (k = 0; k < presaveArray[PRE_MAXCAP]; k++) {
-			b->capacities[k].cur = MSG_ReadLong(sb);
-			b->capacities[k].max = MSG_ReadLong(sb);
+			if (((saveFileHeader_t *)data)->version < 3) {
+				/* @note this was a bug in version 2.2 */
+				b->capacities[k].cur = MSG_ReadShort(sb);
+				b->capacities[k].max = MSG_ReadShort(sb);
+			} else {
+				b->capacities[k].cur = MSG_ReadLong(sb);
+				b->capacities[k].max = MSG_ReadLong(sb);
+			}
 		}
 
 		/* Buy/Sell factors. */
