@@ -283,6 +283,10 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 								continue;
 
+							/* don't take vis into account, don't multiply with amout of shots
+							 * others (human victims) should be prefered, that's why we don't
+							 * want a too high value here */
+							maxDmg = (fd->damage[0] + fd->spldmg[0]);
 							aia->mode = fm;
 							aia->shots = shots;
 							aia->target = check;
@@ -362,6 +366,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 	/* reward closing in */
 	minDist = CLOSE_IN_DIST;
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+		/* FIXME: check the edict type here */
 		if (check->inuse && check->team != ent->team && !(check->state & STATE_DEAD)) {
 			dist = VectorDist(ent->origin, check->origin);
 			if (dist < minDist)
