@@ -57,9 +57,6 @@ static void BS_MarketAircraftDescription (int aircraftID)
 	if (aircraftID >= numAircraft_samples)
 		return;
 
-	/* Remember previous settings and restore them in AIM_ResetAircraftCvars_f(). */
-	Cvar_Set("mn_aircraftname_before", Cvar_VariableString("mn_aircraftname"));
-
 	aircraft = &aircraft_samples[aircraftID];
 	tech = RS_GetTechByProvided(aircraft->id);
 	assert(tech);

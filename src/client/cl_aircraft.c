@@ -398,7 +398,30 @@ void AIR_NewAircraft_f (void)
  */
 void AIM_ResetAircraftCvars_f (void)
 {
-	Cvar_Set("mn_aircraftname", Cvar_VariableString("mn_aircraftname_before"));
+	int aircraftID;
+
+	if (!baseCurrent || (baseCurrent->numAircraftInBase < 0))
+		return;
+
+	/* Maybe we sold displayed aircraft ? */
+
+	if (baseCurrent->numAircraftInBase == 0) {
+		/* no more aircraft in base */
+		Cbuf_AddText("mn_pop\n");
+		return;
+	}
+
+	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
+
+	if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
+		/* Bad aircraft idx found (no or no sane aircraft).
+		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
+		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: bad aircraft idx found.\n");
+		aircraftID = 0;
+		Cvar_SetValue("mn_aircraft_idx", aircraftID);
+	}
+
+	AIR_AircraftSelect(NULL);
 }
 
 /**
