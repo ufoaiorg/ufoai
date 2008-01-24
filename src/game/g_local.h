@@ -238,7 +238,6 @@ const char* G_GetWeaponNameForFiredef(fireDef_t* fd);
 void G_PrintActorStats(edict_t* victim, edict_t* attacker, fireDef_t* fd);
 void G_PrintStats(const char *buffer);
 int G_TouchTriggers(edict_t *ent);
-
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
 
@@ -264,7 +263,7 @@ void G_RecalcRouting(edict_t * ent);
 #define MAX_DVTAB 32
 
 void G_FlushSteps(void);
-
+qboolean G_ClientUseDoor(player_t *player, int entnum, int doornum);
 qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet);
 void G_SendStats(edict_t * ent);
 edict_t *G_SpawnFloor(pos3_t pos);
@@ -493,8 +492,6 @@ struct edict_s {
 	float angle;	/**< entity yaw - set via mapeditor - -1=up; -2=down */
 
 	float speed;	/**< speed of entities - e.g. doors */
-	float accel;	/**< acceleration of plattforms/doors */
-	float decel;	/**< deceleration of plattforms/doors */
 	const char *target;	/**< name of the entity to trigger or move towards */
 	const char *targetname;	/**< name pointed to by target */
 	const char *message;	/**< message when entity is activated - set via mapeditor */

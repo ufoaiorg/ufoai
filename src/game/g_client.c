@@ -367,6 +367,7 @@ float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
 /**
  * @brief test if check is visible by from
  * from is from team team
+ * @param[in] team @todo document why this can be negative
  */
 static float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 {
@@ -1993,20 +1994,20 @@ void G_KillTeam (void)
  * @sa PA_USE_DOOR
  * @param[in] entnum The entity number of the door
  */
-static void G_ClientUseDoor (player_t *player, int entnum, int doornum)
+qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 {
 	edict_t *actor = g_edicts + entnum;
 	edict_t* door = actor->client_action;
 	if (!door)
-		return;
+		return qfalse;
 
 	if (doornum != door->number) {
 		Com_Printf("G_ClientUseDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
-		return;
+		return qfalse;
 	}
 
 	if (!G_ActionCheck(player, actor, TU_DOOR_ACTION, qfalse))
-		return;
+		return qfalse;
 
 	if (door->moveinfo.state == STATE_CLOSED) {
 		door->moveinfo.state = STATE_OPENED;
@@ -2047,6 +2048,7 @@ static void G_ClientUseDoor (player_t *player, int entnum, int doornum)
 
 		gi.EndEvents();
 	}
+	return qtrue;
 }
 
 /**

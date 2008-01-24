@@ -278,12 +278,12 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 		} else if (aia->target && tu >= 2) {
 			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
-			@todo: do this decently, only penalizing the visible part of walk
-			and penalizing much more for reaction shooters around;
-			now it may remove some tactical options from aliens,
-			e.g. they may now choose only the closer doors;
-			however it's still better than going three times around soldier
-			and only then firing at him */
+			 * @todo: do this decently, only penalizing the visible part of walk
+			 * and penalizing much more for reaction shooters around;
+			 * now it may remove some tactical options from aliens,
+			 * e.g. they may now choose only the closer doors;
+			 * however it's still better than going three times around soldier
+			 * and only then firing at him */
 			guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
@@ -324,7 +324,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			guete += GUETE_HIDE;
 			tu -= delta;
 			/* @todo: also add bonus for fleeing from reaction fire
-			and a huge malus if more than 1 move under reaction */
+			 * and a huge malus if more than 1 move under reaction */
 		}
 	}
 
@@ -386,7 +386,7 @@ static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 	/* run away */
 	minDist = RUN_AWAY_DIST;
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && check->team != ent->team && !(check->state & STATE_DEAD)) {
+		if (check->inuse && check->team == TEAM_ALIEN && !(check->state & STATE_DEAD)) {
 			dist = VectorDist(ent->origin, check->origin);
 			if (dist < minDist)
 				minDist = dist;

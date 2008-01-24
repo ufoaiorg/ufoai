@@ -92,8 +92,6 @@ static const field_t fields[] = {
 	{"model", offsetof(edict_t, model), F_LSTRING, 0},
 	{"spawnflags", offsetof(edict_t, spawnflags), F_INT, 0},
 	{"speed", offsetof(edict_t, speed), F_FLOAT, 0},
-	{"accel", offsetof(edict_t, accel), F_FLOAT, 0},
-	{"decel", offsetof(edict_t, decel), F_FLOAT, 0},
 	{"target", offsetof(edict_t, target), F_LSTRING, 0},
 	{"targetname", offsetof(edict_t, targetname), F_LSTRING, 0},
 	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
@@ -601,14 +599,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 
 	if (activator->team == TEAM_CIVILIAN || activator->team == TEAM_ALIEN) {
 		/* let the ai interact with the door */
-		if (self->owner->moveinfo.state == STATE_CLOSED) {
-			/* open it */
-			activator->TU -= TU_DOOR_ACTION;
-		} else if (self->owner->moveinfo.state == STATE_OPENED) {
-			/* close it */
-			activator->TU -= TU_DOOR_ACTION;
-		}
-		return qtrue;
+		return G_ClientUseDoor(game.players + activator->pnum, activator->number, self->number);
 	} else {
 		/* prepare for client action */
 		activator->client_action = self->owner;
