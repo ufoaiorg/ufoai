@@ -39,7 +39,7 @@ typedef struct {
  * @param[in] target Shoot to this location
  * @param[in] spread
  */
-static qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
+static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
 {
 	edict_t *check;
 	vec3_t dtarget, dcheck, back;
@@ -87,6 +87,28 @@ static qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
 #define SPREAD_FACTOR		8.0
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
 #define HIDE_DIST			7
+
+/**
+ * @brief Check whether the fighter should perform the shoot
+ * @todo: Check whether radius and power of fd are to to big for dist
+ * @todo: Check whether the alien will die when shooting
+ */
+static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, const fireDef_t* fd, float *dist)
+{
+	/* check range */
+	*dist = VectorDist(ent->origin, check->origin);
+	if (*dist > fd->range)
+		return qfalse;
+	/* don't shoot - we are to close */
+	else if (*dist < fd->splrad)
+		return qfalse;
+
+	/* check FF */
+	if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
+		return qfalse;
+
+	return qtrue;
+}
 
 /**
  * @sa AI_ActorThink
@@ -201,24 +223,15 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 						if (check->team == TEAM_CIVILIAN && sv_maxclients->integer > 1 && !(ent->state & STATE_INSANE))
 							continue;
 
-						/* check range */
-						dist = VectorDist(ent->origin, check->origin);
-						if (dist > fd->range)
-							continue;
-						/* @todo: Check whether radius and power of fd are to to big for dist */
-						/* @todo: Check whether the alien will die when shooting */
-						/* don't shoot - we are to close */
-						if (dist < fd->splrad)
+						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 							continue;
 
-						/* check FF */
-						if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
+						/* check whether target is visible */
+						vis = G_ActorVis(ent->origin, check, qtrue);
+						if (vis == ACTOR_VIS_0)
 							continue;
 
 						/* calculate expected damage */
-						vis = G_ActorVis(ent->origin, check, qtrue);
-						if (vis == 0.0)
-							continue;
 						dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
 						if (nspread && dist > nspread)
 							dmg *= nspread / dist;
@@ -260,6 +273,24 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 							aia->target = check;
 						}
 					}
+
+				if (!aia->target) {
+					/* search best target none human target */
+					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+						if (check->inuse && ((check->type == ET_DOOR && check->HP)
+							|| check->type == ET_BREAKABLE)) {
+
+							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+								continue;
+
+							aia->mode = fm;
+							aia->shots = shots;
+							aia->target = check;
+							best_time = fd->time * shots;
+							/* take the first best breakable or door and try to shoot it */
+							break;
+						}
+				}
 			}
 		} /* firedefs */
 	}

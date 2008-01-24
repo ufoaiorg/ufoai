@@ -1216,7 +1216,7 @@ static void G_BuildForbiddenList (int team)
 		/* Dead 2x2 unit will stop walking, too. */
 		/**
 		 * @todo Just a note for the future.
-		 * If we get any  that does not block the map when dead this si the place to look.
+		 * If we get any that does not block the map when dead this is the place to look.
 		 */
 		if (((ent->type == ET_ACTOR && !(ent->state & STATE_DEAD)) || ent->type == ET_ACTOR2x2) && (ent->visflags & vis_mask)) {
 			fb_list[fb_length++] = ent->pos;
@@ -1299,6 +1299,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	vec3_t pointTrace;
 	char* stepAmount = NULL;
 	qboolean triggers = qfalse;
+	edict_t* client_action = NULL;
 
 	ent = g_edicts + num;
 
@@ -1425,12 +1426,15 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				ent->TU = max(0, initTU - (int) tu);
 
+				client_action = ent->client_action;
 				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
 					triggers = qtrue;
-					status |= VIS_STOP;
-					steps = 0;
-					sentAppearPerishEvent = qfalse;
+					if (!client_action) {
+						status |= VIS_STOP;
+						steps = 0;
+						sentAppearPerishEvent = qfalse;
+					}
 				}
 				/* check for reaction fire */
 				if (G_ReactToMove(ent, qtrue)) {

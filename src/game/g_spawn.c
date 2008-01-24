@@ -601,13 +601,15 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		/* let the ai interact with the door */
 		return G_ClientUseDoor(game.players + activator->pnum, activator->number, self->number);
 	} else {
-		/* prepare for client action */
-		activator->client_action = self->owner;
-		/* tell the hud to show the door buttons */
-		gi.AddEvent(G_TeamToPM(activator->team), EV_DOOR_ACTION);
-		gi.WriteShort(activator->number);
-		gi.WriteShort(activator->client_action->number);
-		gi.EndEvents();
+		if (activator->client_action != self->owner) {
+			/* prepare for client action */
+			activator->client_action = self->owner;
+			/* tell the hud to show the door buttons */
+			gi.AddEvent(G_TeamToPM(activator->team), EV_DOOR_ACTION);
+			gi.WriteShort(activator->number);
+			gi.WriteShort(activator->client_action->number);
+			gi.EndEvents();
+		}
 		return qtrue;
 	}
 	return qfalse;
