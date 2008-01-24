@@ -817,6 +817,14 @@ menu althud
 		align	uc
 	}
 
+	zone tu_tooltips
+	{
+		tooltip	"*cvar mn_tu_tooltips"
+		pos		"886 332"
+		size	"120 4"
+		//click	{ }
+	}
+
 	bar timeall
 	{
 		pos		"886 332"

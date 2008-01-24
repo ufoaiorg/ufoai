@@ -1666,6 +1666,7 @@ void CL_ActorUpdateCVars (void)
 {
 	static char infoText[MAX_SMALLMENUTEXTLEN];
 	static char mouseText[MAX_SMALLMENUTEXTLEN];
+	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
 	qboolean refresh;
 	const char *animName;
 	int time;
@@ -1696,6 +1697,14 @@ void CL_ActorUpdateCVars (void)
 		Cvar_Set("mn_tu", va("%i", selActor->TU));
 		Cvar_Set("mn_tumax", va("%i", selActor->maxTU));
 		Cvar_Set("mn_tureserved", va("%i", CL_ReservedTUs(selActor, RES_ALL_ACTIVE)));
+
+		Com_sprintf(tuTooltipText, sizeof(tuTooltipText),
+			_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
+			selActor->TU, selActor->maxTU,
+			CL_ReservedTUs(selActor, RES_ALL_ACTIVE),
+			CL_UsableTUs(selActor));
+		Cvar_Set("mn_tu_tooltips", tuTooltipText);
+
 		Cvar_Set("mn_morale", va("%i", selActor->morale));
 		Cvar_Set("mn_moralemax", va("%i", selActor->maxMorale));
 		Cvar_Set("mn_hp", va("%i", selActor->HP));
@@ -1914,7 +1923,7 @@ void CL_ActorUpdateCVars (void)
 			}
 		}
 		mn.menuText[TEXT_STANDARD] = infoText;
-	/* this will stop the drawing of the bars over the hole screen when we test maps */
+	/* This will stop the drawing of the bars over the whole screen when we test maps. */
 	} else if (!cl.numTeamList) {
 		Cvar_SetValue("mn_tu", 0);
 		Cvar_SetValue("mn_tumax", 100);
