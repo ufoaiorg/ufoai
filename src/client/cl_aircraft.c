@@ -426,7 +426,7 @@ void AIM_ResetAircraftCvars_f (void)
 
 	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 
-	if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
+	if (aircraftID >= baseCurrent->numAircraftInBase) {
 		/* Bad aircraft idx found (no or no sane aircraft).
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
 		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: bad aircraft idx found.\n");
