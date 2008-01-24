@@ -25,6 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_MESH_H
 #define R_MESH_H
 
-void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
+void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, const char *tagname);
 
 #endif
