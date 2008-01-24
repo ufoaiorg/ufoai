@@ -1699,7 +1699,10 @@ void CL_ActorUpdateCVars (void)
 		Cvar_Set("mn_tureserved", va("%i", CL_ReservedTUs(selActor, RES_ALL_ACTIVE)));
 
 		Com_sprintf(tuTooltipText, sizeof(tuTooltipText),
+			_("Time Units: Available %i (of %i) | Reserved %i | Remaining %i\n"),
+			/** @todo: make this into a multi-line tooltip as soon as this is supproted:
 			_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
+			*/
 			selActor->TU, selActor->maxTU,
 			CL_ReservedTUs(selActor, RES_ALL_ACTIVE),
 			CL_UsableTUs(selActor));

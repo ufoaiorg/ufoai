@@ -777,12 +777,14 @@ menu hud
 		align	uc
 	}
 
-	zone tu_tooltips
+	//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_althud.
+	string tu_tooltips
 	{
+		string " "
 		tooltip	"*cvar mn_tu_tooltips"
 		pos		"422 670"
 		size	"305 6"
-		//click	{ }
+		in
 	}
 
 	bar timeall
