@@ -126,6 +126,8 @@ qboolean Rimp_Init (void)
 		Com_Printf("I: got %d bits for green\n", attrValue);
 	if (!SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &attrValue))
 		Com_Printf("I: got %d bits for blue\n", attrValue);
+	if (!SDL_GL_GetAttribute(SDL_GL_ALPHA_SIZE, &attrValue))
+		Com_Printf("I: got %d bits for alpha\n", attrValue);
 
 	/* we need this in the renderer because if we issue an vid_restart we have
 	 * to set these values again, too */
@@ -163,11 +165,7 @@ qboolean R_InitGraphics (void)
 	if (r_surface)
 		SDL_FreeSurface(r_surface);
 
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, r_acceleratedvisuals->integer);
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, r_swapinterval->integer);
