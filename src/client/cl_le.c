@@ -1148,9 +1148,17 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 
 
 /**
+ * @brief Create the bounding box for the entire move
+ * @param[in] start Start vector to start the trace from
+ * @param[in] mins Bounding box used for tracing
+ * @param[in] maxs Bounding box used for tracing
+ * @param[in] end End vector to stop the trace at
+ * @param[out] boxmins The resulting box mins
+ * @param[out] boxmaxs The resulting box maxs
  * @sa CL_Trace
+ * @note Box is expanded by 1
  */
-static void CL_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
+static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 	int i;
 
