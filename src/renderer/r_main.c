@@ -75,9 +75,6 @@ cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
 cvar_t *r_shadows;
-cvar_t *r_bitdepth;
-cvar_t *r_stencilsize;
-cvar_t *r_colordepth;
 cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_swapinterval;
@@ -392,9 +389,6 @@ static void R_Register (void)
 	r_speeds = Cvar_Get("r_speeds", "0", 0, NULL);
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
-	r_bitdepth = Cvar_Get("r_bitdepth", "24", CVAR_ARCHIVE, "16 or 24 - bitdepth of the display");
-	r_stencilsize = Cvar_Get("r_stencilsize", "1", CVAR_ARCHIVE, NULL);
-	r_colordepth = Cvar_Get("r_colordepth", "8", CVAR_ARCHIVE, "8 for 24 bit display depth - 4 for 16 bit");
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
@@ -421,7 +415,7 @@ static void R_Register (void)
 
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);
-	r_acceleratedvisuals = Cvar_Get("r_acceleratedvisuals", "1", CVAR_ARCHIVE, NULL);
+	r_acceleratedvisuals = Cvar_Get("r_acceleratedvisuals", "1", CVAR_ARCHIVE, "Force SDL to get hardware acceleration");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
