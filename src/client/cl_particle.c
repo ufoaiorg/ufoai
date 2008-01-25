@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_light.h"
 #include "../renderer/r_particle.h"
 
+#define MAX_MAPPARTICLES	1024
+
 static mapParticle_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 

@@ -626,7 +626,11 @@ static void CL_CenterView (struct dbuffer *msg)
 	V_CenterView(pos);
 }
 
-
+/**
+ * @brief Let an entity appear - like an item on the ground that just got visible
+ * @sa EV_ENT_APPEAR
+ * @sa CL_EntPerish
+ */
 static void CL_EntAppear (struct dbuffer *msg)
 {
 	le_t	*le;
@@ -653,6 +657,7 @@ static void CL_EntAppear (struct dbuffer *msg)
 
 /**
  * @brief Called whenever an entity disappears from view
+ * @sa CL_EntAppear
  */
 static void CL_EntPerish (struct dbuffer *msg)
 {
@@ -707,9 +712,10 @@ static void CL_EntPerish (struct dbuffer *msg)
 }
 
 /**
- * @brief Inits the breakable or other solid objects
+ * @brief Register local entities for SOLID_BSP models like func_breakable or func_door
  * @note func_breakable, func_door
  * @sa G_SendVisibleEdicts
+ * @sa EV_ENT_EDICT
  */
 static void CL_EntEdict (struct dbuffer *msg)
 {
@@ -730,7 +736,11 @@ static void CL_EntEdict (struct dbuffer *msg)
 	}
 
 	le->invis = qtrue;
+
 	le->type = type;
+	if (type != ET_BREAKABLE && type != ET_DOOR)
+		Com_Error(ERR_DROP, "Invalid le announced via EV_ENT_EDICT\n");
+
 	le->modelnum1 = modelnum1;
 	inline_model_name = va("*%i", le->modelnum1);
 	model = CM_InlineModel(inline_model_name);

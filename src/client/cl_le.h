@@ -104,7 +104,6 @@ typedef struct le_s {
 } le_t;							/* local entity */
 
 #define MAX_LOCALMODELS		512
-#define MAX_MAPPARTICLES	1024
 
 /** @brief local models */
 typedef struct lm_s {
@@ -164,7 +163,7 @@ le_t *LE_Find(int type, pos3_t pos);
 void LE_Cleanup(void);
 trace_t CL_Trace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask);
 
-localModel_t *CL_AddLocalModel(const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
+localModel_t *CL_AddLocalModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int num, int levelflags);
 void CL_RegisterLocalModels(void);
 
 #endif

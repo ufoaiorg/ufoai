@@ -254,7 +254,7 @@ void CL_RegisterLocalModels (void)
 /**
  * @sa CL_ParseEntitystring
  */
-localModel_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
+localModel_t *CL_AddLocalModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int num, int levelflags)
 {
 	localModel_t *lm;
 
@@ -268,6 +268,9 @@ localModel_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t 
 	Q_strncpyz(lm->particle, particle, sizeof(lm->particle));
 	VectorCopy(origin, lm->origin);
 	VectorCopy(angles, lm->angles);
+	/* check whether there is already a model with that number */
+	if (LM_Find(num))
+		Com_Error(ERR_DROP, "Already a local model with the same id loaded\n");
 	lm->num = num;
 	lm->levelflags = levelflags;
 
