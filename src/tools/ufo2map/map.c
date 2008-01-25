@@ -426,6 +426,11 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 	return qtrue;
 }
 
+/**
+ * @brief Sets surface flags dependent on assigned texture
+ * @sa ParseBrush
+ * @sa CheckFlags
+ */
 static void SetImpliedFlags (side_t *side, const char *tex)
 {
 	if (!strcmp(tex, "tex_common/actorclip"))
@@ -450,6 +455,21 @@ static void SetImpliedFlags (side_t *side, const char *tex)
 		side->contentFlags |= CONTENTS_WATER;
 		side->contentFlags |= CONTENTS_PASSABLE;
 	}
+}
+
+/**
+ * @brief Checks whether the surface flags are correct
+ * @sa ParseBrush
+ * @sa SetImpliedFlags
+ */
+static inline void CheckFlags (side_t *side, const mapbrush_t *b)
+{
+	if ((side->contentFlags & CONTENTS_ACTORCLIP) && 
+		(side->contentFlags & CONTENTS_STEPON))
+		Sys_Error("Brush %i (entity %i) has invalid mix of stepon and actorclip", b->brushnum, b->entitynum);
+	if ((side->contentFlags & CONTENTS_ACTORCLIP) && 
+		(side->contentFlags & CONTENTS_PASSABLE))
+		Sys_Error("Brush %i (entity %i) has invalid mix of passable and actorclip", b->brushnum, b->entitynum);
 }
 
 /**
@@ -564,6 +584,9 @@ static void ParseBrush (entity_t *mapent)
 			side->contentFlags = 0;
 			side->surfaceFlags &= ~CONTENTS_DETAIL;
 		}
+
+		/* check whether the flags are ok */
+		CheckFlags(side, b);
 
 		/* find the plane number */
 		planenum = PlaneFromPoints(planepts[0], planepts[1], planepts[2]);
