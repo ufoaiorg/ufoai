@@ -15,7 +15,7 @@
 !define PRODUCT_VERSION "2.3-dev"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
 !define PRODUCT_WEB_SITE "http://ufoai.sf.net"
-!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ufo.exe"
+!define PRODUCT_DIR_REGKEY "Software\UFOAI\ufo.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
@@ -86,6 +86,10 @@ ShowUnInstDetails show
 
 Function .onInit
   !insertmacro MUI_LANGDLL_DISPLAY
+FunctionEnd
+
+Function .onInstSuccess
+	MessageBox MB_OK "If you want to play multiplayer games, open the TCP port 27910 in your firewall."
 FunctionEnd
 
 SectionGroup /e "Game" SECGROUP01
@@ -216,6 +220,9 @@ Section "Source Code" SEC03
   SetOutPath "$INSTDIR\src\client"
   File "..\..\client\*.h"
   File "..\..\client\*.c"
+  SetOutPath "$INSTDIR\src\client\menu"
+  File "..\..\client\menu\*.h"
+  File "..\..\client\menu\*.c"
   SetOutPath "$INSTDIR\src\docs"
   File "..\..\docs\*.txt"
   SetOutPath "$INSTDIR\src\docs\tex"
@@ -271,24 +278,41 @@ Section "Source Code" SEC03
 ;======================================================================
   SetOutPath "$INSTDIR\src\tools"
   File "..\..\tools\*.pl"
+
+; 3dsmax 
   File "..\..\tools\*.ms"
+
+; blender
   SetOutPath "$INSTDIR\src\tools\blender"
   File "..\..\tools\blender\*.py"
+
+; gtkradiant
   SetOutPath "$INSTDIR\src\tools\gtkradiant"
-  File "..\..\tools\gtkradiant\*.diff"
+; version 1.4
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.4"
+  File "..\..\tools\gtkradiant\1.4\*.diff"
+; version 1.5
+; gamepack
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\games"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\games"
+  File "..\..\tools\gtkradiant\1.5\gamepack\games\*.game"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\ufoai.game"
+  File "..\..\tools\gtkradiant\1.5\gamepack\ufoai.game\*.xml"
+  File "..\..\tools\gtkradiant\1.5\gamepack\ufoai.game\*.xlink"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\ufoai.game\base"
+  File "..\..\tools\gtkradiant\1.5\gamepack\ufoai.game\base\*.def"
+; plugin
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\plugin"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\plugin\ufoai"
+  File "..\..\tools\gtkradiant\1.5\plugin\ufoai\*.cpp"
+  File "..\..\tools\gtkradiant\1.5\plugin\ufoai\*.h"
+
+; masterserver
   SetOutPath "$INSTDIR\src\tools\masterserver"
   File "..\..\tools\masterserver\*.php"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\games"
-  File "..\..\tools\gtkradiant\games\*.game"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\plugin"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\plugin\ufoai"
-  File "..\..\tools\gtkradiant\plugin\ufoai\*.cpp"
-  File "..\..\tools\gtkradiant\plugin\ufoai\*.h"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\ufoai.game"
-  File "..\..\tools\gtkradiant\ufoai.game\*.xml"
-  File "..\..\tools\gtkradiant\ufoai.game\*.xlink"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\ufoai.game\base"
-  File "..\..\tools\gtkradiant\ufoai.game\base\*.def"
+
+; ufo2map
   SetOutPath "$INSTDIR\src\tools\ufo2map"
   File "..\..\tools\ufo2map\*.h"
   File "..\..\tools\ufo2map\*.c"
