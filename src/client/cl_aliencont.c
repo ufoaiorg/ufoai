@@ -207,8 +207,10 @@ void AL_AddAliens (aircraft_t *aircraft)
 				B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_dead, qfalse, qfalse);
 				if (cargo[i].amount_alive <= 0)
 					continue;
-				if (!alienBreathing) {
-					/* we cannot store alive aliens without rs_alien_breathing tech */
+				if (!alienBreathing
+				&& (Q_strncmp(cargo[i].alientype, "Bloodspider", MAX_VAR))) {
+					/** @todo Make this check more versatile (i.e. check for something like "robot" or "not a live alien") */
+					/* We cannot store alive (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
 					/* Add breathing apparatuses as well and update storage capacity. */
 					B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_alive, qfalse, qfalse);
