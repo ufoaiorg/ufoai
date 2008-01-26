@@ -33,6 +33,7 @@ static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
 /**
  * @brief Generic tooltip function
+ * FIXME: R_FontLength can change the string - which very very very bad for reference values and item names
  */
 int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, int maxHeight)
 {
@@ -63,7 +64,7 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
  */
 void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 {
-	char *tooltip;
+	const char *tooltip;
 	int width = 0;
 
 	/* tooltips
@@ -72,17 +73,18 @@ void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 
 	/* maybe not tooltip but a key entity? */
 	if (node->data[MN_DATA_NODE_TOOLTIP]) {
-		tooltip = (char *) node->data[MN_DATA_NODE_TOOLTIP];
-		assert(tooltip);
-		if (*tooltip == '_')
-			tooltip++;
-
-		width = MN_DrawTooltip("f_small", _(MN_GetReferenceString(menu, node->data[MN_DATA_NODE_TOOLTIP])), x, y, width, 0);
+		char buf[256]; /* FIXME: see FIXME in MN_DrawTooltip */
+		tooltip = MN_GetReferenceString(menu, node->data[MN_DATA_NODE_TOOLTIP]);
+		Q_strncpyz(buf, tooltip, sizeof(buf));
+		width = MN_DrawTooltip("f_small", buf, x, y, width, 0);
 		y += 20;
 	}
 	if (node->key[0]) {
-		if (node->key[0] == '*')
-			Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), MN_GetReferenceString(menu, node->key));
+		if (node->key[0] == '*') {
+			tooltip = MN_GetReferenceString(menu, node->key);
+			if (tooltip)
+				Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), tooltip);
+		}
 		MN_DrawTooltip("f_verysmall", node->key, x, y, width,0);
 	}
 }
