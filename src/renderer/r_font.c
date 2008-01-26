@@ -36,8 +36,6 @@ static fontCache_t *hash[MAX_FONT_CACHE];
 
 static font_t fonts[MAX_FONTS];
 
-static char *R_FontGetLineWrap(font_t * f, char *buffer, int maxWidth, int *width, int *height);
-
 /* holds the gettext string */
 static char buf[BUF_SIZE];
 static int numInCache = 0;
@@ -122,6 +120,79 @@ static font_t *R_FontGetFont (const char *name)
 		if (!Q_strncmp(name, fonts[i].name, MAX_FONTNAME))
 			return &fonts[i];
 
+	return NULL;
+}
+
+/**
+ * @param[in] maxWidth is a pixel value
+ * FIXME: if maxWidth is too small to display even the first word this has bugs
+ */
+static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *width, int *height)
+{
+	char *space = NULL;
+	char *newlineTest = NULL;
+	int w = 0, oldW = 0;
+	int h = 0;
+
+	/* TTF does not like empty strings... */
+	assert(buffer);
+	assert(strlen(buffer));
+
+	if (!maxWidth)
+		maxWidth = VID_NORM_WIDTH;
+
+	/* no line wrap needed? */
+	TTF_SizeUTF8(f->font, buffer, &w, &h);
+	if (!w)
+		return NULL;
+
+	*width = w;
+	*height = h;
+
+	/* string fits */
+	if (w <= maxWidth)
+		return NULL;
+
+	space = buffer;
+	newlineTest = strstr(space, "\n");
+	/* try to break at a newline */
+	if (newlineTest) {
+		*newlineTest = '\0';
+		TTF_SizeUTF8(f->font, buffer, &w, &h);
+		*width = w;
+		/* Fine, the whole line (up to \n) has a length smaller than maxwidth. */
+		if (w < maxWidth)
+			return newlineTest + 1;
+		/* Ok, doesn't fit - revert the change. */
+		*newlineTest = '\n';
+	}
+
+	/* uh - this line is getting longer than allowed... */
+	space = newlineTest = buffer;
+	while ((space = strstr(space, " ")) != NULL) {
+		*space = '\0';
+		TTF_SizeUTF8(f->font, buffer, &w, &h);
+		*width = w;
+		/* otherwise even the first work would be too long */
+		if (w > maxWidth) {
+			*width = oldW;
+			*space = ' ';
+			*newlineTest = '\0';
+			return newlineTest + 1;
+		} else if (maxWidth == w)
+			return space + 1;
+		newlineTest = space;
+		oldW = w;
+		*space++ = ' ';
+		/* maybe there is space for one more word? */
+	};
+
+	TTF_SizeUTF8(f->font, buffer, &w, &h);
+	if (w > maxWidth) {
+		/* last word - no more spaces but still to long? */
+		*newlineTest = '\0';
+		return newlineTest + 1;
+	}
 	return NULL;
 }
 
@@ -346,79 +417,6 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 	result = R_FontAddToCache(fontString, openGLSurface, w, h);
 	SDL_FreeSurface(openGLSurface);
 	return result;
-}
-
-/**
- * @param[in] maxWidth is a pixel value
- * FIXME: if maxWidth is too small to display even the first word this has bugs
- */
-static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *width, int *height)
-{
-	char *space = NULL;
-	char *newlineTest = NULL;
-	int w = 0, oldW = 0;
-	int h = 0;
-
-	/* TTF does not like empty strings... */
-	assert(buffer);
-	assert(strlen(buffer));
-
-	if (!maxWidth)
-		maxWidth = VID_NORM_WIDTH;
-
-	/* no line wrap needed? */
-	TTF_SizeUTF8(f->font, buffer, &w, &h);
-	if (!w)
-		return NULL;
-
-	*width = w;
-	*height = h;
-
-	/* string fits */
-	if (w <= maxWidth)
-		return NULL;
-
-	space = buffer;
-	newlineTest = strstr(space, "\n");
-	/* try to break at a newline */
-	if (newlineTest) {
-		*newlineTest = '\0';
-		TTF_SizeUTF8(f->font, buffer, &w, &h);
-		*width = w;
-		/* Fine, the whole line (up to \n) has a length smaller than maxwidth. */
-		if (w < maxWidth)
-			return newlineTest + 1;
-		/* Ok, doesn't fit - revert the change. */
-		*newlineTest = '\n';
-	}
-
-	/* uh - this line is getting longer than allowed... */
-	space = newlineTest = buffer;
-	while ((space = strstr(space, " ")) != NULL) {
-		*space = '\0';
-		TTF_SizeUTF8(f->font, buffer, &w, &h);
-		*width = w;
-		/* otherwise even the first work would be too long */
-		if (w > maxWidth) {
-			*width = oldW;
-			*space = ' ';
-			*newlineTest = '\0';
-			return newlineTest + 1;
-		} else if (maxWidth == w)
-			return space + 1;
-		newlineTest = space;
-		oldW = w;
-		*space++ = ' ';
-		/* maybe there is space for one more word? */
-	};
-
-	TTF_SizeUTF8(f->font, buffer, &w, &h);
-	if (w > maxWidth) {
-		/* last word - no more spaces but still to long? */
-		*newlineTest = '\0';
-		return newlineTest + 1;
-	}
-	return NULL;
 }
 
 /**
