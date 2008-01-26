@@ -2994,11 +2994,15 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, vec3_t angles,
 	unsigned int i;
 
 	/* get inline model, if it is one */
-	if (*name != '*')
+	if (*name != '*') {
+		Com_Printf("Called Grid_RecalcRouting with no inline model\n");
 		return;
+	}
 	model = CM_InlineModel(name);
-	if (!model)
+	if (!model) {
+		Com_Printf("Called Grid_RecalcRouting with invalid inline model name '%s'\n", name);
 		return;
+	}
 	inlineList = list;
 
 	/* get dimensions */
