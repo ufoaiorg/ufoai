@@ -229,12 +229,16 @@ void WriteBSP (node_t *headnode)
 	Sys_FPrintf(SYS_VRB, "%5i faces\n", numfaces-oldfaces);
 }
 
+/**
+ * @brief Set the model numbers for SOLID_BSP entities like func_door or func_breakable
+ */
 void SetModelNumbers (void)
 {
-	int i, models;
+	int i;
 	char value[10];
 
-	models = 1;
+	/* 0 is the world - start at 1 */
+	int models = 1;
 	for (i = 1; i < num_entities; i++) {
 		if (entities[i].numbrushes) {
 			sprintf(value, "*%i", models);
@@ -253,7 +257,7 @@ void SetLightStyles (void)
 	entity_t *e;
 	int i, j;
 	char value[10];
-	char lighttargets[MAX_SWITCHED_LIGHTS][64];
+	char lighttargets[MAX_SWITCHED_LIGHTS][MAX_VAR];
 
 	/* any light that is controlled (has a targetname) */
 	/* must have a unique style number generated for it */
@@ -336,8 +340,7 @@ static void EmitBrushes (void)
 						Sys_Error("MAX_MAP_BRUSHSIDES (%i)", numbrushsides);
 
 					dbrushsides[numbrushsides].planenum = planenum;
-					dbrushsides[numbrushsides].texinfo =
-						dbrushsides[numbrushsides-1].texinfo;
+					dbrushsides[numbrushsides].texinfo = dbrushsides[numbrushsides - 1].texinfo;
 					numbrushsides++;
 					db->numsides++;
 				}
@@ -422,8 +425,9 @@ void BeginModel (int entityNum)
 
 	for (j = start; j < end; j++) {
 		b = &mapbrushes[j];
+		/* not a real brush (origin brush) - e.g. func_door */
 		if (!b->numsides)
-			continue;	/* not a real brush (origin brush) */
+			continue;
 		AddPointToBounds(b->mins, mins, maxs);
 		AddPointToBounds(b->maxs, mins, maxs);
 	}
