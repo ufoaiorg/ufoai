@@ -59,7 +59,8 @@ static void MakeBackplanes (void)
 	}
 }
 
-#if 0
+/* #define CALC_VERTEX_NORMALS */
+#ifdef CALC_VERTEX_NORMALS
 static vec3_t vnormals[MAX_MAP_VERTS];
 
 static void CalcVertexNormals (unsigned int vnum)
@@ -79,7 +80,7 @@ static void CalcVertexNormals (unsigned int vnum)
 	found = qfalse;
 
 	for (i = 0, face = dfaces; i < numfaces; i++, face++)
-		if (texinfo[face->texinfo].flags & 0x8000)
+		if (texinfo[face->texinfo].flags & 0x8000) /* FIXME */
 			for (k = 0, se = &dsurfedges[face->firstedge]; k < face->numedges; k++, se++) {
 				if (*se < 0)
 					v = dedges[-*se].v[1];
@@ -393,8 +394,10 @@ void RadWorld (void)
 	/* subdivide patches to a maximum dimension */
 	SubdividePatches();
 
+#ifdef CALC_VERTEX_NORMALS
 	/* calculate vertex normals for smooth lighting */
-	/*U2M_ProgressBar(CalcVertexNormals, numvertexes - 1, qtrue, "VERTEXNRM");*/
+	U2M_ProgressBar(CalcVertexNormals, numvertexes - 1, qtrue, "VERTEXNRM");
+#endif
 
 	/* create directlights out of patches and lights */
 	CreateDirectLights();

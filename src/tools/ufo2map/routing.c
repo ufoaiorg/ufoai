@@ -75,7 +75,7 @@ static void CheckUnit (unsigned int unitnum)
 	}
 
 	/* calculate tracing coordinates */
-	pos[0] = x; pos[1] = y; pos[2] = z;
+	VectorSet(pos, x, y, z);
 	PosToVec(pos, end);
 
 	/* step height check */
@@ -114,11 +114,11 @@ static void CheckUnit (unsigned int unitnum)
 
 		if (i == 5 && !VectorCompare(start, tr_end)) {
 			/* found a possibly valid ground */
-			height = PLAYER_HEIGHT - (start[2]-tr_end[2]);
+			height = PLAYER_HEIGHT - (start[2] - tr_end[2]);
 			end[2] = start[2] + height;
 
 			if (!TestLineDM(start, end, tr_end, 2))
-				route[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
+				route[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
 			else
 				filled[y][x] |= 1 << z; /* don't enter */
 		} else {
@@ -186,18 +186,18 @@ static void CheckConnections (unsigned int unitnum)
 	assert(x < WIDTH);
 
 	/* totally blocked unit */
-	if (filled[y][x] & (1<<z))
+	if (filled[y][x] & (1 << z))
 		return;
 
 	h = (route[z][y][x] & 0xF);
 
 	/* prepare trace */
-	pos[0] = x; pos[1] = y; pos[2] = z;
+	VectorSet(pos, x, y, z);
 	PosToVec(pos, start);
 	start[2] += h * QUANT;
 	VectorCopy(start, ts);
 
-	sh = (step[y][x] & (1<<z)) ? SH_BIG : SH_LOW;
+	sh = (step[y][x] & (1 << z)) ? SH_BIG : SH_LOW;
 	sz = z + (h + sh) / 0x10;
 	h = (h + sh) % 0x10;
 
@@ -227,7 +227,7 @@ static void CheckConnections (unsigned int unitnum)
 			ax = x;
 			ay = y - 1;
 			break;
-		} 
+		}
 		/* range check*/
 		if ( x < 0 || x >= WIDTH || y < 0 || y >= WIDTH)
 			continue;
@@ -235,7 +235,7 @@ static void CheckConnections (unsigned int unitnum)
 		if ((route[sz][ay][ax] & 0x0F) > h)
 			continue;
 		/* filled check */
-		if (filled[ay][ax] & (1<<sz))
+		if (filled[ay][ax] & (1 << sz))
 			continue;
 		/* deep fall check */
 		if ((fall[ay][ax] & deep_fall[sz]) == deep_fall[sz])

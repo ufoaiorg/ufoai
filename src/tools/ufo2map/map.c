@@ -464,10 +464,10 @@ static void SetImpliedFlags (side_t *side, const char *tex)
  */
 static inline void CheckFlags (side_t *side, const mapbrush_t *b)
 {
-	if ((side->contentFlags & CONTENTS_ACTORCLIP) && 
+	if ((side->contentFlags & CONTENTS_ACTORCLIP) &&
 		(side->contentFlags & CONTENTS_STEPON))
 		Sys_Error("Brush %i (entity %i) has invalid mix of stepon and actorclip", b->brushnum, b->entitynum);
-	if ((side->contentFlags & CONTENTS_ACTORCLIP) && 
+	if ((side->contentFlags & CONTENTS_ACTORCLIP) &&
 		(side->contentFlags & CONTENTS_PASSABLE))
 		Sys_Error("Brush %i (entity %i) has invalid mix of passable and actorclip", b->brushnum, b->entitynum);
 }
@@ -670,10 +670,9 @@ static void ParseBrush (entity_t *mapent)
 	MakeBrushWindings(b);
 
 	/* origin brushes are removed, but they set
-	 * the rotation origin for the rest of the brushes
-	 * in the entity.  After the entire entity is parsed,
-	 * the planenums and texinfos will be adjusted for
-	 * the origin brush */
+	 * the rotation origin for the rest of the brushes (like func_door)
+	 * in the entity. After the entire entity is parsed, the planenums
+	 * and texinfos will be adjusted for the origin brush */
 	if (b->contentFlags & CONTENTS_ORIGIN) {
 		char string[32];
 		vec3_t origin;
