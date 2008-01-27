@@ -167,8 +167,6 @@ typedef struct mBspModel_s {
 
 	byte lightquant;
 	byte *lightdata;
-
-	int inlinenum;	/**< index in r_modelsInline array */
 } mBspModel_t;
 
 #endif /* R_MODEL_BRUSH_H */

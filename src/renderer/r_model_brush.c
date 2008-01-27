@@ -649,7 +649,6 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 		starmod = &r_modelsInline[r_numModelsInline];
 
 		*starmod = *loadmodel;
-		starmod->bsp.inlinenum = r_numModelsInline;
 		starmod->bsp.firstmodelsurface = bm->firstface;
 		starmod->bsp.nummodelsurfaces = bm->numfaces;
 		starmod->bsp.firstnode = bm->headnode;
