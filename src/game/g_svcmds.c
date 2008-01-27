@@ -29,11 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-static void SVCmd_Test_f (void)
-{
-	gi.cprintf(NULL, PRINT_CONSOLE, "Svcmd_Test_f()\n");
-}
-
 /**
  * @brief PACKET FILTERING
  * You can add or remove addresses from the filter list with:
@@ -364,9 +359,7 @@ void ServerCommand (void)
 	const char *cmd;
 
 	cmd = gi.argv(1);
-	if (Q_stricmp(cmd, "test") == 0)
-		SVCmd_Test_f();
-	else if (Q_stricmp(cmd, "startgame") == 0)
+	if (Q_stricmp(cmd, "startgame") == 0)
 		SVCmd_StartGame_f();
 	else if (Q_stricmp(cmd, "addip") == 0)
 		SVCmd_AddIP_f();

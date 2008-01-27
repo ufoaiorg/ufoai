@@ -74,8 +74,6 @@ static void SV_cprintf (player_t * player, int level, const char *fmt, ...)
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
-	msg[sizeof(msg)-1] = 0;
-
 	if (player)
 		SV_ClientPrintf(svs.clients + n, level, "%s", msg);
 	else
