@@ -251,7 +251,7 @@ edict_t *G_PickTarget (char *targetname)
 	edict_t *choice[MAXCHOICES];
 
 	if (!targetname) {
-		gi.dprintf("G_PickTarget called with NULL targetname\n");
+		Com_DPrintf(DEBUG_GAME, "G_PickTarget called with NULL targetname\n");
 		return NULL;
 	}
 
@@ -265,7 +265,7 @@ edict_t *G_PickTarget (char *targetname)
 	}
 
 	if (!num_choices) {
-		gi.dprintf("G_PickTarget: target %s not found\n", targetname);
+		Com_DPrintf(DEBUG_GAME, "G_PickTarget: target %s not found\n", targetname);
 		return NULL;
 	}
 

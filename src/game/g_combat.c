@@ -424,7 +424,7 @@ void G_StunTeam (void)
 	if (gi.argc() == 2)
 		teamToKill = atoi(gi.argv(1));
 
-	gi.dprintf("G_StunTeam: stun team %i\n", teamToKill);
+	Com_DPrintf(DEBUG_GAME, "G_StunTeam: stun team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD)) {

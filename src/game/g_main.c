@@ -122,7 +122,7 @@ invList_t invChain[MAX_INVLIST];
  */
 static void InitGame (void)
 {
-	gi.dprintf("==== InitGame ====\n");
+	Com_Printf("==== InitGame ====\n");
 
 	/* noset vars */
 	sv_dedicated = gi.cvar("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
@@ -248,7 +248,7 @@ static void InitGame (void)
  */
 static void ShutdownGame (void)
 {
-	gi.dprintf("==== ShutdownGame ====\n");
+	Com_Printf("==== ShutdownGame ====\n");
 
 	if (logstatsfile)
 		fclose(logstatsfile);

@@ -1147,9 +1147,9 @@ static void G_InventoryToFloor (edict_t * ent)
 				}
 #endif
 				if (Q_strncmp(gi.csi->ods[ic->item.t].type, "armour", MAX_VAR))
-					gi.dprintf("G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].id);
+					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].id);
 				if (!Com_RemoveFromInventory(&ent->i, k, ic->x, ic->y))
-					gi.dprintf("G_InventoryToFloor: Error: could not remove item: %s\n", gi.csi->ods[ic->item.t].id);
+					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", gi.csi->ods[ic->item.t].id);
 			} else {
 				ic->x = x;
 				ic->y = y;
@@ -1935,7 +1935,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		ent->state = state;
 		break;
 	default:
-		gi.dprintf("G_ActorDie: unknown state %i\n", state);
+		Com_DPrintf(DEBUG_GAME, "G_ActorDie: unknown state %i\n", state);
 		break;
 	}
 	VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
@@ -2149,7 +2149,7 @@ static void G_GetTeam (player_t * player)
 
 	/* player has already a team */
 	if (player->pers.team) {
-		gi.dprintf("You are already on team %i\n", player->pers.team);
+		Com_DPrintf(DEBUG_GAME, "You are already on team %i\n", player->pers.team);
 		return;
 	}
 
@@ -2167,14 +2167,14 @@ static void G_GetTeam (player_t * player)
 		}
 		/* we need at least 2 different team spawnpoints for multiplayer */
 		if (spawnSpots <= 1) {
-			gi.dprintf("G_GetTeam: Not enough spawn spots in map!\n");
+			Com_DPrintf(DEBUG_GAME, "G_GetTeam: Not enough spawn spots in map!\n");
 			player->pers.team = -1;
 			return;
 		}
 		/* assign random valid team number */
 		randomSpot = (int)(frand() * (spawnSpots - 1) + 0.5);
 		player->pers.team = spawnCheck[randomSpot];
-		gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);
+		Com_Printf("You have been randomly assigned to team %i\n", player->pers.team);
 		return;
 	}
 
@@ -2183,20 +2183,20 @@ static void G_GetTeam (player_t * player)
 		player->pers.team = TEAM_PHALANX;
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
-		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
+		Com_Printf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "cl_teamnum"));
 		/* civilians are at team zero */
 		if (i > 0 && sv_maxteams->integer >= i) {
 			player->pers.team = i;
 			gi.bprintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
-			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
+			Com_Printf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
 			player->pers.team = DEFAULT_TEAMNUM;
 		}
 	} else {
 		qboolean teamAvailable;
 		/* search team */
-		gi.dprintf("Getting a multiplayer team for %s\n", player->pers.netname);
+		Com_Printf("Getting a multiplayer team for %s\n", player->pers.netname);
 		for (i = 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				teamAvailable = qtrue;
@@ -2401,7 +2401,7 @@ void G_ClientTeamInfo (player_t * player)
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 				if (!ent) {
-					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n", dummyFieldSize);
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n", dummyFieldSize);
 					G_ClientSkipActorInfo();
 					continue;
 				}
@@ -2411,7 +2411,7 @@ void G_ClientTeamInfo (player_t * player)
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 				if (!ent) {
-					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n", dummyFieldSize);
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n", dummyFieldSize);
 					G_ClientSkipActorInfo();
 					continue;
 				}

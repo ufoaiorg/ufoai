@@ -125,7 +125,7 @@ static void ED_CallSpawn (edict_t * ent)
 	const spawn_t *s;
 
 	if (!ent->classname) {
-		gi.dprintf("ED_CallSpawn: NULL classname\n");
+		Com_DPrintf(DEBUG_GAME, "ED_CallSpawn: NULL classname\n");
 		return;
 	}
 
@@ -138,7 +138,7 @@ static void ED_CallSpawn (edict_t * ent)
 		}
 	}
 
-	gi.dprintf("%s doesn't have a spawn function\n", ent->classname);
+	Com_DPrintf(DEBUG_GAME, "%s doesn't have a spawn function\n", ent->classname);
 	ent->inuse = qfalse;
 }
 
@@ -207,7 +207,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 			return;
 		}
 	}
-/*	gi.dprintf ("ED_ParseField: %s is not a valid field\n", key);*/
+/*	Com_DPrintf(DEBUG_GAME, "ED_ParseField: %s is not a valid field\n", key);*/
 }
 
 /**
