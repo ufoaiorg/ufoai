@@ -6,8 +6,6 @@ base/maps/b/antimatter.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/base_empty.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/commando.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/b/drop.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/b/drop_b.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/b/drop_iso.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/b/empty.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/entrance.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/b/hospital.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -21,7 +19,6 @@ base/maps/b/radar_adv.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/storage.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/b/teamroom.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/ufohangar.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/b/ufohangar_b.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/ufohangar_l.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/workshop.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/bridge01d.map | GNU General Public License 2.0 | Martin Gerhardy
