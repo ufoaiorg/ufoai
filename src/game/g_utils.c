@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void G_FreeEdict (edict_t * ed)
 {
 	/* unlink from world */
-	gi.unlinkentity(ed);
+	gi.UnlinkEntity(ed);
 
 	memset(ed, 0, sizeof(*ed));
 	ed->classname = "freed";
@@ -357,7 +357,7 @@ int G_TouchTriggers (edict_t *ent)
 	if (ent->type != ET_ACTOR || ent->state & STATE_DEAD)
 		return 0;
 
-	num = gi.boxedicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);
+	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);
 
 	/* be careful, it is possible to have an entity in this
 	* list removed before we get to it(killtriggered) */

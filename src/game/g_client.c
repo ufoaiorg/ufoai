@@ -1387,7 +1387,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				contentFlags = gi.PointContents(pointTrace);
 
 				/* link it at new position */
-				gi.linkentity(ent);
+				gi.LinkEntity(ent);
 
 				/* write move header if not yet done */
 				if (!steps) {
@@ -1558,7 +1558,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
 			else
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
-			gi.linkentity(ent);
+			gi.LinkEntity(ent);
 		}
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
@@ -1939,7 +1939,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		break;
 	}
 	VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
-	gi.linkentity(ent);
+	gi.LinkEntity(ent);
 	level.num_alive[ent->team]--;
 	/* send death */
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
@@ -2019,7 +2019,7 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 		/* FIXME */
 		/* change rotation and relink */
 		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
-		gi.linkentity(door);
+		gi.LinkEntity(door);
 
 		/* let everybody know, that the door opens */
 		gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
@@ -2038,7 +2038,7 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 		/* FIXME */
 		/* change rotation and relink */
 		door->angles[YAW] += DOOR_ROTATION_ANGLE;
-		gi.linkentity(door);
+		gi.LinkEntity(door);
 
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
@@ -2431,7 +2431,7 @@ void G_ClientTeamInfo (player_t * player)
 
 			Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
 
-			gi.linkentity(ent);
+			gi.LinkEntity(ent);
 
 			/* model */
 			ent->chr.ucn = gi.ReadShort();
@@ -2489,8 +2489,8 @@ void G_ClientTeamInfo (player_t * player)
 
 			/* set models */
 			ent->chr.inv = &ent->i;
-			ent->body = gi.modelindex(CHRSH_CharGetBody(&ent->chr));
-			ent->head = gi.modelindex(CHRSH_CharGetHead(&ent->chr));
+			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
+			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 
 			/* set initial vital statistics */
@@ -2758,7 +2758,7 @@ void G_ClientBegin (player_t* player)
 	player->began = qtrue;
 
 	level.numplayers++;
-	gi.configstring(CS_PLAYERCOUNT, va("%i", level.numplayers));
+	gi.ConfigString(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
 	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.sv_maxplayersperteam: %i	\n", P_MASK(player), player->num, game.sv_maxplayersperteam);*/
 	/* spawn camera (starts client rendering) */
@@ -2769,7 +2769,7 @@ void G_ClientBegin (player_t* player)
 	gi.EndEvents();
 
 	/* set the net name */
-	gi.configstring(CS_PLAYERNAMES + player->num, player->pers.netname);
+	gi.ConfigString(CS_PLAYERNAMES + player->num, player->pers.netname);
 
 	/* inform all clients */
 	gi.bprintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
@@ -2874,7 +2874,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
 
 	/* send the updated config string */
-	gi.configstring(CS_PLAYERNAMES + player->num, player->pers.netname);
+	gi.ConfigString(CS_PLAYERNAMES + player->num, player->pers.netname);
 }
 
 
@@ -2915,7 +2915,7 @@ void G_ClientDisconnect (player_t * player)
 	/* only if the player already sent his began */
 	if (player->began) {
 		level.numplayers--;
-		gi.configstring(CS_PLAYERCOUNT, va("%i", level.numplayers));
+		gi.ConfigString(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
 		if (level.activeTeam == player->pers.team)
 			G_ClientEndRound(player, NOISY);

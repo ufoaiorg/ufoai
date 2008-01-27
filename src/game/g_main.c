@@ -578,7 +578,7 @@ qboolean G_RunFrame (void)
 	if (level.activeTeam == -1) {
 		if (sv_maxteams->modified) {
 			/* inform the client */
-			gi.configstring(CS_MAXTEAMS, va("%i", sv_maxteams->integer));
+			gi.ConfigString(CS_MAXTEAMS, va("%i", sv_maxteams->integer));
 			sv_maxteams->modified = qfalse;
 		}
 	}

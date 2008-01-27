@@ -357,7 +357,7 @@ static edict_t* G_TriggerSpawn (edict_t* owner)
 	trigger->solid = SOLID_TRIGGER;
 
 	/* link into the world */
-	gi.linkentity(trigger);
+	gi.LinkEntity(trigger);
 
 	return trigger;
 }
@@ -599,7 +599,7 @@ static void SP_func_breakable (edict_t * self)
 	/* set an inline model */
 	/* also set self->solid = SOLID_BSP here */
 	/* also linked into the world here */
-	gi.setmodel(self, self->model);
+	gi.SetModel(self, self->model);
 	if (self->solid != SOLID_BSP)
 		Com_Printf("Error - func_breakable with no SOLID_BSP\n");
 	if (!self->model)
@@ -662,7 +662,7 @@ void SP_func_door (edict_t *self)
 	/* set an inline model */
 	/* also set self->solid = SOLID_BSP here */
 	/* also linked into the world here */
-	gi.setmodel(self, self->model);
+	gi.SetModel(self, self->model);
 	if (self->solid != SOLID_BSP)
 		Com_Printf("Error - func_door with no SOLID_BSP\n");
 
@@ -698,22 +698,22 @@ static void SP_worldspawn (edict_t * ent)
 
 	/* make some data visible to the server */
 	if (ent->message && ent->message[0]) {
-		gi.configstring(CS_NAME, ent->message);
+		gi.ConfigString(CS_NAME, ent->message);
 		Q_strncpyz(level.level_name, ent->message, sizeof(level.level_name));
 	} else
 		Q_strncpyz(level.level_name, level.mapname, sizeof(level.level_name));
 
-	gi.configstring(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
+	gi.ConfigString(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
 
 	/* only used in multi player */
 	if (sv_maxclients->integer >= 2) {
-		gi.configstring(CS_MAXSOLDIERSPERTEAM, va("%i", sv_maxsoldiersperteam->integer));
-		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", sv_maxsoldiersperplayer->integer));
-		gi.configstring(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
+		gi.ConfigString(CS_MAXSOLDIERSPERTEAM, va("%i", sv_maxsoldiersperteam->integer));
+		gi.ConfigString(CS_MAXSOLDIERSPERPLAYER, va("%i", sv_maxsoldiersperplayer->integer));
+		gi.ConfigString(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
 		if (gi.csi->currentMD) {
-			gi.configstring(CS_MAXTEAMS, va("%i", gi.csi->currentMD->teams));
+			gi.ConfigString(CS_MAXTEAMS, va("%i", gi.csi->currentMD->teams));
 			gi.cvar_set("sv_maxteams", va("%i", gi.csi->currentMD->teams));
 		} else
-			gi.configstring(CS_MAXTEAMS, sv_maxteams->string);
+			gi.ConfigString(CS_MAXTEAMS, sv_maxteams->string);
 	}
 }

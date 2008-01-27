@@ -712,7 +712,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
-			gi.linkentity(ent);
+			gi.LinkEntity(ent);
 
 			/* skills; @todo: more power to Ortnoks, more mind to Tamans */
 			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
@@ -739,8 +739,8 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 			/* set model */
 			ent->chr.inv = &ent->i;
-			ent->body = gi.modelindex(CHRSH_CharGetBody(&ent->chr));
-			ent->head = gi.modelindex(CHRSH_CharGetHead(&ent->chr));
+			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
+			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 		} else {
 			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
@@ -753,12 +753,12 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->chr.skin = gi.GetCharacterValues(gi.cvar_string("ai_civilian"), &ent->chr);
 			ent->chr.inv = &ent->i;
 			/* FIXME: Maybe we have civilians with armour, too - police and so on */
-			ent->body = gi.modelindex(CHRSH_CharGetBody(&ent->chr));
-			ent->head = gi.modelindex(CHRSH_CharGetHead(&ent->chr));
+			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
+			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
-			gi.linkentity(ent);
+			gi.LinkEntity(ent);
 		}
 	}
 	/* show visible actors */

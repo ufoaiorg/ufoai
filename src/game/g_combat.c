@@ -296,7 +296,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			case MAT_MAX:
 				break;
 			}
-			gi.unlinkentity(ent);
+			gi.UnlinkEntity(ent);
 			ent->inuse = qfalse;
 			ent->HP = 0;
 			G_RecalcRouting(ent);

@@ -122,14 +122,14 @@ typedef struct {
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when
 	 * they connect, and changes are sent to all connected clients. */
-	void (IMPORT *configstring) (int num, const char *string);
+	void (IMPORT *ConfigString) (int num, const char *string);
 
 	void (IMPORT *error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */
-	int (IMPORT *modelindex) (const char *name);
+	int (IMPORT *ModelIndex) (const char *name);
 
-	void (IMPORT *setmodel) (edict_t * ent, const char *name);
+	void (IMPORT *SetModel) (edict_t * ent, const char *name);
 
 	/** @brief collision detection
 	 * @note traces a box from start to end, ignoring entities passent, stoping if it hits an object of type specified
@@ -149,9 +149,9 @@ typedef struct {
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
-	void (IMPORT *linkentity) (edict_t * ent);
-	void (IMPORT *unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
-	int (*boxedicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
+	void (IMPORT *LinkEntity) (edict_t * ent);
+	void (IMPORT *UnlinkEntity) (edict_t * ent);	/* call before removing an interactive edict */
+	int (*BoxEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
 
 	qboolean (IMPORT *TestLine) (vec3_t start, vec3_t stop);
 	float (IMPORT *GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);

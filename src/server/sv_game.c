@@ -93,8 +93,6 @@ static void SV_error (const char *fmt, ...)
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
-	msg[sizeof(msg)-1] = 0;
-
 	Com_Error(ERR_DROP, "Game Error: %s", msg);
 }
 
@@ -385,9 +383,9 @@ void SV_InitGameProgs (void)
 	import.error = SV_error;
 
 	import.trace = SV_Trace;
-	import.linkentity = SV_LinkEdict;
-	import.unlinkentity = SV_UnlinkEdict;
-	import.boxedicts = SV_AreaEdicts;
+	import.LinkEntity = SV_LinkEdict;
+	import.UnlinkEntity = SV_UnlinkEdict;
+	import.BoxEdicts = SV_AreaEdicts;
 
 	import.TestLine = CM_TestLine;
 	import.GrenadeTarget = Com_GrenadeTarget;
@@ -401,11 +399,11 @@ void SV_InitGameProgs (void)
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = Grid_RecalcRouting;
 
-	import.modelindex = SV_ModelIndex;
+	import.ModelIndex = SV_ModelIndex;
 
-	import.setmodel = SV_SetModel;
+	import.SetModel = SV_SetModel;
 
-	import.configstring = SV_Configstring;
+	import.ConfigString = SV_Configstring;
 	import.PositionedSound = SV_StartSound;
 
 	import.PointContents = SV_PointContents;
