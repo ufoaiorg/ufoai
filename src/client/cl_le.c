@@ -1038,7 +1038,6 @@ void LM_List_f (void)
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float *mins, *maxs;	/**< size of the moving object */
-	vec3_t mins2, maxs2;		/**< size when clipping against mosnters */
 	float *start, *end;
 	trace_t trace;
 	le_t *passle, *passle2;		/**< ignore these for clipping */
@@ -1070,7 +1069,8 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		if (le == clip->passle || le == clip->passle2)
 			continue;
 
-		if (le->type == ET_BREAKABLE || le->type == ET_DOOR) {
+		/* special case for bmodels */
+		if (le->contents & CONTENTS_SOLID) {
 			/* special value for bmodel */
 			assert(le->modelnum1 < MAX_MODELS);
 			cmodel = cl.model_clip[le->modelnum1];

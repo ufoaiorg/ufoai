@@ -295,7 +295,7 @@ int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int 
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float *mins, *maxs;	/**< size of the moving object */
-	vec3_t mins2, maxs2;		/**< size when clipping against mosnters */
+	vec3_t mins2, maxs2;		/**< size when clipping against monsters */
 	float *start, *end;
 	trace_t trace;
 	edict_t *passedict;
