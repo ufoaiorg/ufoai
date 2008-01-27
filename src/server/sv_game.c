@@ -444,14 +444,13 @@ void SV_InitGameProgs (void)
 	import.TagFree = SV_MemFree;
 	import.FreeTags = SV_FreeTags;
 
-	import.cvar = Cvar_Get;
-	import.cvar_set = Cvar_Set;
-	import.cvar_forceset = Cvar_ForceSet;
-	import.cvar_string = Cvar_VariableString;
+	import.Cvar_Get = Cvar_Get;
+	import.Cvar_Set = Cvar_Set;
+	import.Cvar_String = Cvar_VariableString;
 
-	import.argc = Cmd_Argc;
-	import.argv = Cmd_Argv;
-	import.args = Cmd_Args;
+	import.Cmd_Argc = Cmd_Argc;
+	import.Cmd_Argv = Cmd_Argv;
+	import.Cmd_Args = Cmd_Args;
 	import.AddCommandString = Cbuf_AddText;
 
 	import.seed = Sys_Milliseconds();

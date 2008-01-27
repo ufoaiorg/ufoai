@@ -1974,8 +1974,8 @@ void G_KillTeam (void)
 	edict_t *ent;
 
 	/* with a parameter we will be able to kill a specific team */
-	if (gi.argc() == 2)
-		teamToKill = atoi(gi.argv(1));
+	if (gi.Cmd_Argc() == 2)
+		teamToKill = atoi(gi.Cmd_Argv(1));
 
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 

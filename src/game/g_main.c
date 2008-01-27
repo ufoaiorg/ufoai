@@ -125,92 +125,92 @@ static void InitGame (void)
 	Com_Printf("==== InitGame ====\n");
 
 	/* noset vars */
-	sv_dedicated = gi.cvar("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+	sv_dedicated = gi.Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
 	/* latched vars */
-	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, "Activate cheats (see cheatcvars)");
-	gi.cvar("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH, NULL);
-	gi.cvar("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH, NULL);
-	developer = gi.cvar("developer", "0", 0, "Print out a lot of developer debug messages - useful to track down bugs");
-	logstats = gi.cvar("logstats", "1", CVAR_ARCHIVE, "Server logfile output for kills");
+	sv_cheats = gi.Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, "Activate cheats (see cheatcvars)");
+	gi.Cvar_Get("gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	gi.Cvar_Get("gamedate", __DATE__, CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	developer = gi.Cvar_Get("developer", "0", 0, "Print out a lot of developer debug messages - useful to track down bugs");
+	logstats = gi.Cvar_Get("logstats", "1", CVAR_ARCHIVE, "Server logfile output for kills");
 
 	/* max. players per team (original quake) */
-	sv_maxplayersperteam = gi.cvar("sv_maxplayersperteam", "8", CVAR_SERVERINFO | CVAR_LATCH, "How many players (humans) may a team have");
+	sv_maxplayersperteam = gi.Cvar_Get("sv_maxplayersperteam", "8", CVAR_SERVERINFO | CVAR_LATCH, "How many players (humans) may a team have");
 	/* max. soldiers per team */
-	sv_maxsoldiersperteam = gi.cvar("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers may one team have");
+	sv_maxsoldiersperteam = gi.Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers may one team have");
 	/* max soldiers per player */
-	sv_maxsoldiersperplayer = gi.cvar("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
+	sv_maxsoldiersperplayer = gi.Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
-	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
-	sv_roundtimelimit = gi.cvar("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit for multiplayer rounds");
+	sv_enablemorale = gi.Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
+	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit for multiplayer rounds");
 	sv_roundtimelimit->modified = qfalse;
-	sv_maxentities = gi.cvar("sv_maxentities", "1024", CVAR_LATCH, NULL);
+	sv_maxentities = gi.Cvar_Get("sv_maxentities", "1024", CVAR_LATCH, NULL);
 
-	sv_maxteams = gi.cvar("sv_maxteams", "2", CVAR_SERVERINFO, "How many teams for current running map");
+	sv_maxteams = gi.Cvar_Get("sv_maxteams", "2", CVAR_SERVERINFO, "How many teams for current running map");
 	sv_maxteams->modified = qfalse;
 
 	/* change anytime vars */
-	password = gi.cvar("password", "", CVAR_USERINFO, NULL);
-	sv_needpass = gi.cvar("sv_needpass", "0", CVAR_SERVERINFO, NULL);
-	sv_filterban = gi.cvar("sv_filterban", "1", 0, NULL);
-	sv_ai = gi.cvar("sv_ai", "1", 0, NULL);
-	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see sv_maxclients, sv_maxplayersperteam, sv_maxsoldiersperteam and sv_maxsoldiersperplayer");
+	password = gi.Cvar_Get("password", "", CVAR_USERINFO, NULL);
+	sv_needpass = gi.Cvar_Get("sv_needpass", "0", CVAR_SERVERINFO, NULL);
+	sv_filterban = gi.Cvar_Get("sv_filterban", "1", 0, NULL);
+	sv_ai = gi.Cvar_Get("sv_ai", "1", 0, NULL);
+	sv_teamplay = gi.Cvar_Get("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see sv_maxclients, sv_maxplayersperteam, sv_maxsoldiersperteam and sv_maxsoldiersperplayer");
 	/* how many connected clients */
-	sv_maxclients = gi.cvar("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
+	sv_maxclients = gi.Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 	/* reaction leftover is 0 for acceptance testing; should default to 13 */
-	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
-	sv_shot_origin = gi.cvar("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
+	sv_reaction_leftover = gi.Cvar_Get("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
+	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
-	ai_alien = gi.cvar("ai_alien", "ortnok", 0, "Alien team");
-	ai_civilian = gi.cvar("ai_civilian", "europa", 0, "Civilian team");
+	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
+	ai_civilian = gi.Cvar_Get("ai_civilian", "europa", 0, "Civilian team");
 	/* this cvar is set in singleplayer via campaign definition */
-	ai_equipment = gi.cvar("ai_equipment", "multiplayer_alien", 0, "Initial equipment definition for aliens");
+	ai_equipment = gi.Cvar_Get("ai_equipment", "multiplayer_alien", 0, "Initial equipment definition for aliens");
 	/* aliens in singleplayer (can differ each mission) */
-	ai_numaliens = gi.cvar("ai_numaliens", "8", 0, "How many aliens in this battle (singleplayer)");
+	ai_numaliens = gi.Cvar_Get("ai_numaliens", "8", 0, "How many aliens in this battle (singleplayer)");
 	/* civilians for singleplayer */
-	ai_numcivilians = gi.cvar("ai_numcivilians", "8", 0, "How many civilians in this battle");
+	ai_numcivilians = gi.Cvar_Get("ai_numcivilians", "8", 0, "How many civilians in this battle");
 	/* aliens in multiplayer */
-	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
+	ai_numactors = gi.Cvar_Get("ai_numactors", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
 	/* autojoin aliens */
-	ai_autojoin = gi.cvar("ai_autojoin", "0", 0, "Auto join ai players if no human player was found for a team");
+	ai_autojoin = gi.Cvar_Get("ai_autojoin", "0", 0, "Auto join ai players if no human player was found for a team");
 
 	/* FIXME: Apply CVAR_NOSET after balancing */
-	mob_death = gi.cvar("mob_death", "10", CVAR_LATCH, NULL);
-	mob_wound = gi.cvar("mob_wound", "0.1", CVAR_LATCH, NULL);
-	mof_watching = gi.cvar("mof_watching", "1.7", CVAR_LATCH, NULL);
-	mof_teamkill = gi.cvar("mof_teamkill", "2.0", CVAR_LATCH, NULL);
-	mof_civilian = gi.cvar("mof_civilian", "0.3", CVAR_LATCH, NULL);
-	mof_enemy = gi.cvar("mof_ememy", "0.5", CVAR_LATCH, NULL);
-	mor_pain = gi.cvar("mof_pain", "3.6", CVAR_LATCH, NULL);
+	mob_death = gi.Cvar_Get("mob_death", "10", CVAR_LATCH, NULL);
+	mob_wound = gi.Cvar_Get("mob_wound", "0.1", CVAR_LATCH, NULL);
+	mof_watching = gi.Cvar_Get("mof_watching", "1.7", CVAR_LATCH, NULL);
+	mof_teamkill = gi.Cvar_Get("mof_teamkill", "2.0", CVAR_LATCH, NULL);
+	mof_civilian = gi.Cvar_Get("mof_civilian", "0.3", CVAR_LATCH, NULL);
+	mof_enemy = gi.Cvar_Get("mof_ememy", "0.5", CVAR_LATCH, NULL);
+	mor_pain = gi.Cvar_Get("mof_pain", "3.6", CVAR_LATCH, NULL);
 	/*everyone gets this times morale damage */
-	mor_default = gi.cvar("mor_default", "0.3", CVAR_LATCH, "Everyone gets this times morale damage");
+	mor_default = gi.Cvar_Get("mor_default", "0.3", CVAR_LATCH, "Everyone gets this times morale damage");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_distance = gi.cvar("mor_distance", "120", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
+	mor_distance = gi.Cvar_Get("mor_distance", "120", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_victim = gi.cvar("mor_victim", "0.7", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
+	mor_victim = gi.Cvar_Get("mor_victim", "0.7", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_attacker = gi.cvar("mor_attacker", "0.3", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
+	mor_attacker = gi.Cvar_Get("mor_attacker", "0.3", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
 	/* how much the morale depends on the size of the damaged team */
-	mon_teamfactor = gi.cvar("mon_teamfactor", "0.6", CVAR_LATCH, "How much the morale depends on the size of the damaged team");
+	mon_teamfactor = gi.Cvar_Get("mon_teamfactor", "0.6", CVAR_LATCH, "How much the morale depends on the size of the damaged team");
 
-	mor_regeneration = gi.cvar("mor_regeneration", "15", CVAR_LATCH, NULL);
-	mor_shaken = gi.cvar("mor_shaken", "50", CVAR_LATCH, NULL);
-	mor_panic = gi.cvar("mor_panic", "30", CVAR_LATCH, NULL);
+	mor_regeneration = gi.Cvar_Get("mor_regeneration", "15", CVAR_LATCH, NULL);
+	mor_shaken = gi.Cvar_Get("mor_shaken", "50", CVAR_LATCH, NULL);
+	mor_panic = gi.Cvar_Get("mor_panic", "30", CVAR_LATCH, NULL);
 
-	m_sanity = gi.cvar("m_sanity", "1.0", CVAR_LATCH, NULL);
-	m_rage = gi.cvar("m_rage", "0.6", CVAR_LATCH, NULL);
-	m_rage_stop = gi.cvar("m_rage_stop", "2.0", CVAR_LATCH, NULL);
-	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH, NULL);
+	m_sanity = gi.Cvar_Get("m_sanity", "1.0", CVAR_LATCH, NULL);
+	m_rage = gi.Cvar_Get("m_rage", "0.6", CVAR_LATCH, NULL);
+	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH, NULL);
+	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH, NULL);
 
-	g_nodamage = gi.cvar("g_nodamage", "0", CVAR_DEVELOPER, "No damage in developer mode");
-	g_notu = gi.cvar("g_notu", "0", CVAR_DEVELOPER, "No TU costs while moving around (e.g. for map testing)");
+	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER, "No damage in developer mode");
+	g_notu = gi.Cvar_Get("g_notu", "0", CVAR_DEVELOPER, "No TU costs while moving around (e.g. for map testing)");
 
 	/* flood control */
-	flood_msgs = gi.cvar("flood_msgs", "4", 0, NULL);
-	flood_persecond = gi.cvar("flood_persecond", "4", 0, NULL);
-	flood_waitdelay = gi.cvar("flood_waitdelay", "10", 0, "Delay until someone is unlocked from talking again");
+	flood_msgs = gi.Cvar_Get("flood_msgs", "4", 0, NULL);
+	flood_persecond = gi.Cvar_Get("flood_persecond", "4", 0, NULL);
+	flood_waitdelay = gi.Cvar_Get("flood_waitdelay", "10", 0, "Delay until someone is unlocked from talking again");
 
-	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, "Difficulty level");
+	difficulty = gi.Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
 
 	game.sv_maxentities = sv_maxentities->integer;
 	/* FIXME: */
@@ -366,7 +366,7 @@ static void CheckNeedPass (void)
 		if (*password->string && Q_stricmp(password->string, "none"))
 			need = 1;
 
-		gi.cvar_set("sv_needpass", va("%d", need));
+		gi.Cvar_Set("sv_needpass", va("%d", need));
 	}
 }
 
@@ -590,7 +590,7 @@ qboolean G_RunFrame (void)
 			/* don't allow smaller values here */
 			if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
 				Com_Printf("The minimum value for sv_roundtimelimit is 30\n");
-				gi.cvar_set("sv_roundtimelimit", "30");
+				gi.Cvar_Set("sv_roundtimelimit", "30");
 			}
 			sv_roundtimelimit->modified = qfalse;
 		}

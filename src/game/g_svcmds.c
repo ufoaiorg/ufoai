@@ -134,7 +134,7 @@ static void SVCmd_AddIP_f (void)
 {
 	int i;
 
-	if (gi.argc() < 3) {
+	if (gi.Cmd_Argc() < 3) {
 		gi.cprintf(NULL, PRINT_CONSOLE, "Usage: addip <ip-mask>\n");
 		return;
 	}
@@ -150,7 +150,7 @@ static void SVCmd_AddIP_f (void)
 		numipfilters++;
 	}
 
-	if (!StringToFilter(gi.argv(2), &ipfilters[i]))
+	if (!StringToFilter(gi.Cmd_Argv(2), &ipfilters[i]))
 		ipfilters[i].compare = ~0x0;
 }
 
@@ -162,12 +162,12 @@ static void SVCmd_RemoveIP_f (void)
 	ipfilter_t f;
 	int i, j;
 
-	if (gi.argc() < 3) {
+	if (gi.Cmd_Argc() < 3) {
 		gi.cprintf(NULL, PRINT_CONSOLE, "Usage:  sv removeip <ip-mask>\n");
 		return;
 	}
 
-	if (!StringToFilter(gi.argv(2), &f))
+	if (!StringToFilter(gi.Cmd_Argv(2), &f))
 		return;
 
 	for (i = 0; i < numipfilters; i++)
@@ -178,7 +178,7 @@ static void SVCmd_RemoveIP_f (void)
 			gi.cprintf(NULL, PRINT_CONSOLE, "Removed.\n");
 			return;
 		}
-	gi.cprintf(NULL, PRINT_CONSOLE, "Didn't find %s.\n", gi.argv(2));
+	gi.cprintf(NULL, PRINT_CONSOLE, "Didn't find %s.\n", gi.Cmd_Argv(2));
 }
 
 /**
@@ -235,11 +235,11 @@ static void SVCmd_AI_Add_f (void)
 {
 	int team;
 
-	if (gi.argc() < 3) {
+	if (gi.Cmd_Argc() < 3) {
 		Com_Printf("Usage: ai_add <teamnum>\n");
 		return;
 	}
-	team = atoi(gi.argv(2));
+	team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS) {
 		if (!AI_CreatePlayer(team))
 			Com_Printf("Couldn't create AI player.\n");
@@ -257,11 +257,11 @@ static void SVCmd_Win_f (void)
 {
 	int team;
 
-	if (gi.argc() < 3) {
+	if (gi.Cmd_Argc() < 3) {
 		Com_Printf("Usage: win <teamnum>\n");
 		return;
 	}
-	team = atoi(gi.argv(2));
+	team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS)
 		G_EndGame(team);
 	else
@@ -350,7 +350,7 @@ static void SVCmd_StartGame_f (void)
 
 /**
  * @brief ServerCommand will be called when an "sv" command is issued.
- * The game can issue gi.argc() / gi.argv() commands to get the rest
+ * The game can issue gi.Cmd_Argc() / gi.Cmd_Argv() commands to get the rest
  * of the parameters
  * @sa serverCommandList
  */
@@ -358,7 +358,7 @@ void ServerCommand (void)
 {
 	const char *cmd;
 
-	cmd = gi.argv(1);
+	cmd = gi.Cmd_Argv(1);
 	if (Q_stricmp(cmd, "startgame") == 0)
 		SVCmd_StartGame_f();
 	else if (Q_stricmp(cmd, "addip") == 0)

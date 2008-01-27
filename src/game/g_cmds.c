@@ -91,7 +91,7 @@ static void G_Say (player_t *player, qboolean arg0, qboolean team)
 	const char *p, *token;
 	char text[2048];
 
-	if (gi.argc() < 2 && !arg0)
+	if (gi.Cmd_Argc() < 2 && !arg0)
 		return;
 
 	if (G_CheckFlood(player))
@@ -103,11 +103,11 @@ static void G_Say (player_t *player, qboolean arg0, qboolean team)
 		Com_sprintf(text, sizeof(text), "^B%s (team): ", player->pers.netname);
 
 	if (arg0) {
-		Q_strcat(text, gi.argv(0), sizeof(text));
+		Q_strcat(text, gi.Cmd_Argv(0), sizeof(text));
 		Q_strcat(text, " ", sizeof(text));
-		Q_strcat(text, gi.args(), sizeof(text));
+		Q_strcat(text, gi.Cmd_Args(), sizeof(text));
 	} else {
-		p = gi.args();
+		p = gi.Cmd_Args();
 
 		token = COM_Parse(&p);
 
@@ -183,7 +183,7 @@ void G_ClientCommand (player_t * player)
 	if (!player->inuse)
 		return;					/* not fully in game yet */
 
-	cmd = gi.argv(0);
+	cmd = gi.Cmd_Argv(0);
 
 	if (Q_stricmp(cmd, "players") == 0)
 		Cmd_Players_f(player);

@@ -712,7 +712,7 @@ static void SP_worldspawn (edict_t * ent)
 		gi.ConfigString(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
 		if (gi.csi->currentMD) {
 			gi.ConfigString(CS_MAXTEAMS, va("%i", gi.csi->currentMD->teams));
-			gi.cvar_set("sv_maxteams", va("%i", gi.csi->currentMD->teams));
+			gi.Cvar_Set("sv_maxteams", va("%i", gi.csi->currentMD->teams));
 		} else
 			gi.ConfigString(CS_MAXTEAMS, sv_maxteams->string);
 	}

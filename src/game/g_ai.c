@@ -684,7 +684,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
-		Q_strncpyz(name, gi.cvar_string("ai_equipment"), sizeof(name));
+		Q_strncpyz(name, gi.Cvar_String("ai_equipment"), sizeof(name));
 		for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
 			if (!Q_strncmp(name, ed->name, MAX_VAR))
 				break;
@@ -708,7 +708,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 				assert(gi.csi->alienTeams[alienTeam]);
 				ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
 			} else
-				ent->chr.skin = gi.GetCharacterValues(gi.cvar_string("ai_alien"), &ent->chr);
+				ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_alien"), &ent->chr);
 
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
@@ -750,7 +750,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->morale = (ent->chr.morale > 45 ? 45 : ent->chr.morale); /* low morale for civilians */
 			ent->STUN = 0;
 
-			ent->chr.skin = gi.GetCharacterValues(gi.cvar_string("ai_civilian"), &ent->chr);
+			ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_civilian"), &ent->chr);
 			ent->chr.inv = &ent->i;
 			/* FIXME: Maybe we have civilians with armour, too - police and so on */
 			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));

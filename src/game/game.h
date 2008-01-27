@@ -151,7 +151,7 @@ typedef struct {
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
 	void (IMPORT *LinkEntity) (edict_t * ent);
 	void (IMPORT *UnlinkEntity) (edict_t * ent);	/* call before removing an interactive edict */
-	int (*BoxEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
+	int (IMPORT *BoxEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
 
 	qboolean (IMPORT *TestLine) (vec3_t start, vec3_t stop);
 	float (IMPORT *GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
@@ -212,15 +212,14 @@ typedef struct {
 	void (IMPORT *FreeTags) (int tag);
 
 	/* console variable interaction */
-	cvar_t *(IMPORT *cvar) (const char *var_name, const char *value, int flags, const char* desc);
-	cvar_t *(IMPORT *cvar_set) (const char *var_name, const char *value);
-	cvar_t *(IMPORT *cvar_forceset) (const char *var_name, const char *value);
-	const char *(IMPORT *cvar_string) (const char *var_name);
+	cvar_t *(IMPORT *Cvar_Get) (const char *var_name, const char *value, int flags, const char* desc);
+	cvar_t *(IMPORT *Cvar_Set) (const char *var_name, const char *value);
+	const char *(IMPORT *Cvar_String) (const char *var_name);
 
 	/* ClientCommand and ServerCommand parameter access */
-	int (IMPORT *argc) (void);
-	const char *(IMPORT *argv) (int n);
-	const char *(IMPORT *args) (void);		/* concatenation of all argv >= 1 */
+	int (IMPORT *Cmd_Argc) (void);
+	const char *(IMPORT *Cmd_Argv) (int n);
+	const char *(IMPORT *Cmd_Args) (void);		/* concatenation of all argv >= 1 */
 
 	/* add commands to the server console as if they were typed in */
 	/* for map changing, etc */
@@ -260,7 +259,7 @@ typedef struct {
 
 	/** ServerCommand will be called when an "sv <command>" command is issued on the
 	 * server console.
-	 * The game can issue gi.argc() / gi.argv() commands to get the rest
+	 * The game can issue gi.Cmd_Argc() / gi.Cmd_Argv() commands to get the rest
 	 * of the parameters */
 	void (EXPORT *ServerCommand) (void);
 
