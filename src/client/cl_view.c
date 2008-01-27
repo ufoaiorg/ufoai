@@ -158,7 +158,7 @@ static void CL_ParseEntitystring (const char *es)
 			}
 
 			/* add it */
-			lm = CL_AddLocalModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
+			lm = LM_AddModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
 			if (lm) {
 				lm->skin = skin;
 				lm->frame = frame;
@@ -175,9 +175,6 @@ static void CL_ParseEntitystring (const char *es)
 			Com_Printf("implement misc_rope\n");
 		} else if (!Q_strcmp(classname, "misc_decal")) {
 			Com_Printf("implement misc_decal\n");
-		} else if (!Q_strcmp(classname, "func_breakable") || !Q_strcmp(classname, "func_door")) {
-			CL_AddLocalModel(model, particle, origin, vec3_origin, entnum, (spawnflags & 0xFF));
-			Com_DPrintf(DEBUG_CLIENT, "Add %i as local model (%s)\n", entnum, classname);
 		}
 
 		entnum++;

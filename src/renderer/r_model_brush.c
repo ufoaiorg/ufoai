@@ -646,10 +646,10 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 		model_t *starmod;
 
 		bm = &loadmodel->bsp.submodels[i];
-		starmod = &r_modelsInline[r_numModelsInline++];
+		starmod = &r_modelsInline[r_numModelsInline];
 
 		*starmod = *loadmodel;
-
+		starmod->bsp.inlinenum = r_numModelsInline;
 		starmod->bsp.firstmodelsurface = bm->firstface;
 		starmod->bsp.nummodelsurfaces = bm->numfaces;
 		starmod->bsp.firstnode = bm->headnode;
@@ -664,6 +664,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 			*loadmodel = *starmod;
 
 		starmod->bsp.numleafs = bm->visleafs;
+		r_numModelsInline++;
 	}
 
 	R_LoadBspVertexArrays();

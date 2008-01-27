@@ -241,6 +241,15 @@ int G_TouchTriggers(edict_t *ent);
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
 
+/* g_reaction.c */
+qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason);
+qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
+void G_ReactToPreFire(edict_t *target);
+void G_ReactToPostFire(edict_t *target);
+/* uncomment this to enable debugging the reaction fire */
+/*#define DEBUG_REACTION*/
+
+
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(edict_t * ent);
 

@@ -929,7 +929,7 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 		le->inuse = qtrue;
 		le->type = ET_PARTICLE;
 		le->invis = qtrue;
-		le->particleLevelFlags = levelflags;
+		le->levelflags = levelflags;
 		le->particleID = Mem_PoolStrDup(particle, cl_localPool, 0);
 		VectorCopy(origin, le->origin);
 		VecToPos(le->origin, le->pos);

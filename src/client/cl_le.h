@@ -59,6 +59,7 @@ typedef struct le_s {
 	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;
 
+	char inlineModelName[8];
 	int modelnum1;	/**< the number of the body model in the cl.model_draw array */
 	int modelnum2;	/**< the number of the head model in the cl.model_draw array */
 	int skinnum;	/**< the skin number of the body and head model */
@@ -89,7 +90,7 @@ typedef struct le_s {
 	/** gfx */
 	animState_t as;	/**< holds things like the current active frame and so on */
 	const char *particleID;
-	int particleLevelFlags;	/**< the levels this particle should be visible at */
+	int levelflags;	/**< the levels this particle should be visible at */
 	ptl_t *ptl;				/**< particle pointer to display */
 	char *ref1, *ref2;
 	inventory_t i;
@@ -150,20 +151,21 @@ void LET_ProjectileAutoHide(le_t *le);
 void LET_PlayAmbientSound(le_t * le);
 
 /* local model functions */
+localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int num, int levelflags);
 void LM_Perish(struct dbuffer *msg);
-void LM_Explode(struct dbuffer *msg);
-void LM_DoorOpen(struct dbuffer *msg);
-void LM_DoorClose(struct dbuffer *msg);
-
 void LM_AddToScene(void);
-void LE_AddToScene(void);
+
+void LE_Explode(struct dbuffer *msg);
+void LE_DoorOpen(struct dbuffer *msg);
+void LE_DoorClose(struct dbuffer *msg);
 le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
 le_t *LE_Find(int type, pos3_t pos);
 void LE_Cleanup(void);
+void LE_AddToScene(void);
+
 trace_t CL_Trace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask);
 
-localModel_t *CL_AddLocalModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int num, int levelflags);
 void CL_RegisterLocalModels(void);
 
 #endif

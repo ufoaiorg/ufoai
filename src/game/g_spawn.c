@@ -37,13 +37,14 @@ static void SP_player_start(edict_t * ent);
 static void SP_human_start(edict_t * ent);
 static void SP_alien_start(edict_t * ent);
 static void SP_civilian_start(edict_t * ent);
-static void SP_func_breakable(edict_t * ent);
 static void SP_worldspawn(edict_t * ent);
 static void SP_2x2_start(edict_t * ent);
 static void SP_civilian_target(edict_t * ent);
 static void SP_misc_mission(edict_t * ent);
 static void SP_misc_mission_aliens(edict_t * ent);
+
 static void SP_func_door(edict_t *ent);
+static void SP_func_breakable(edict_t * ent);
 
 typedef struct {
 	const char *name;
@@ -557,7 +558,7 @@ static void SP_dummy (edict_t * self)
  * the are stored in the lmList (because they are inline models)
  * for tracing (see inlineList in cmodel.c)
  * @sa CM_EntTestLine
- * @sa CL_AddLocalModel
+ * @sa LM_AddModel
  * @sa PF_SetModel
  */
 static void SP_func_breakable (edict_t * self)
@@ -588,8 +589,8 @@ DOOR FUNCTIONS
 
 /**
  * @brief Trigger to open the door we are standing in front of it
- * @sa LM_DoorOpen
- * @sa LM_CloseOpen
+ * @sa LE_DoorOpen
+ * @sa LE_CloseOpen
  * @sa CL_ActorDoorAction
  */
 static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
@@ -617,11 +618,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 
 /**
  * @brief QUAKED func_door (0 .5 .8) ?
- * "angle"		determines the opening direction
  * "health"	if set, door must be shot open
- * "speed"		movement speed (100 default)
- * "wait"		wait before returning (3 default, -1 = never return)
- * "lip"		lip remaining at end of move (8 default)
  */
 void SP_func_door (edict_t *self)
 {

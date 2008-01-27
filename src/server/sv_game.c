@@ -120,6 +120,7 @@ static void PF_SetModel (edict_t * ent, const char *name)
 	if (name[0] == '*') {
 		mod = CM_InlineModel(name);
 		assert(mod);
+		VectorCopy(ent->origin, mod->origin);
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
 		ent->solid = SOLID_BSP;

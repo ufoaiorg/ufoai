@@ -83,6 +83,7 @@ void CL_ReserveTUs(const le_t * le, reservation_types_t type, int tus);
 void CL_ListReactionAndReservations_f (void);
 void CL_DisplayBlockedPaths_f(void);
 void LE_List_f(void);
+void LM_List_f(void);
 #endif
 void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
 qboolean CL_ActorSelect(le_t * le);

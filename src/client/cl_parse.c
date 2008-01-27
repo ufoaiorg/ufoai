@@ -89,7 +89,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
-	"sss",				/* EV_ENT_EDICT */
+	"sssb",				/* EV_ENT_EDICT */
 
 	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
@@ -112,12 +112,11 @@ const char *ev_format[] =
 	"sbbbbb",			/* EV_INV_RELOAD */
 	"ss",				/* EV_INV_HANDS_CHANGED */
 
-	"s",				/* EV_MODEL_PERISH */
-	"ss",				/* EV_MODEL_EXPLODE */
+	"s",				/* EV_MODEL_EXPLODE */
 	"sp*",				/* EV_SPAWN_PARTICLE */
 
-	"ss",				/* EV_DOOR_OPEN */
-	"ss",				/* EV_DOOR_CLOSE */
+	"s",				/* EV_DOOR_OPEN */
+	"s",				/* EV_DOOR_CLOSE */
 	"ss",				/* EV_DOOR_ACTION */
 	"s"					/* EV_RESET_CLIENT_ACTION */
 };
@@ -161,7 +160,6 @@ static const char *ev_names[] =
 	"EV_INV_RELOAD",
 	"EV_INV_HANDS_CHANGED",
 
-	"EV_MODEL_PERISH",
 	"EV_MODEL_EXPLODE",
 
 	"EV_SPAWN_PARTICLE",
@@ -225,13 +223,12 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 	CL_InvReload,					/* EV_INV_RELOAD */
 	CL_InvCheckHands,				/* EV_INV_HANDS_CHANGED */
 
-	LM_Perish,						/* EV_MODEL_PERISH */
-	LM_Explode,						/* EV_MODEL_EXPLODE */
+	LE_Explode,						/* EV_MODEL_EXPLODE */
 
 	CL_ParticleSpawnFromSizeBuf,	/* EV_SPAWN_PARTICLE */
 
-	LM_DoorOpen,					/* EV_DOOR_OPEN */
-	LM_DoorClose,					/* EV_DOOR_CLOSE */
+	LE_DoorOpen,					/* EV_DOOR_OPEN */
+	LE_DoorClose,					/* EV_DOOR_CLOSE */
 	CL_ActorDoorAction,				/* EV_DOOR_ACTION */
 	CL_ActorResetClientAction		/* EV_RESET_CLIENT_ACTION */
 };
@@ -720,11 +717,15 @@ static void CL_EntPerish (struct dbuffer *msg)
 static void CL_EntEdict (struct dbuffer *msg)
 {
 	le_t *le;
-	int entnum, modelnum1, type;
-	char *inline_model_name;
+	int entnum, modelnum1, type, levelflags;
 	cBspModel_t *model;
 
-	NET_ReadFormat(msg, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1);
+	NET_ReadFormat(msg, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1, &levelflags);
+
+	if (type != ET_BREAKABLE && type != ET_DOOR)
+		Com_Error(ERR_DROP, "Invalid le announced via EV_ENT_EDICT\n");
+	else if (modelnum1 > MAX_MODELS || modelnum1 < 1)
+		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ENT_EDICT\n");
 
 	/* check if the ent is already visible */
 	le = LE_Get(entnum);
@@ -735,20 +736,22 @@ static void CL_EntEdict (struct dbuffer *msg)
 		le->inuse = qtrue;
 	}
 
-	le->invis = qtrue;
-
 	le->type = type;
-	if (type != ET_BREAKABLE && type != ET_DOOR)
-		Com_Error(ERR_DROP, "Invalid le announced via EV_ENT_EDICT\n");
-
 	le->modelnum1 = modelnum1;
-	inline_model_name = va("*%i", le->modelnum1);
-	model = CM_InlineModel(inline_model_name);
+	le->levelflags = levelflags;
+
+	model = cl.model_clip[le->modelnum1];
 	if (!model)
 		Com_Error(ERR_DROP, "CL_EntEdict: Could not find inline model %i", le->modelnum1);
-	VectorCopy(model->origin, le->origin);
+	le->model1 = R_RegisterModelShort(va("*%i", le->modelnum1));
+	if (!le->model1)
+		Com_Error(ERR_DROP, "CL_EntEdict: Could not register inline model %i", le->modelnum1);
+
+	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
+	VectorAdd(model->mins, model->maxs, le->origin);
+	VectorScale(le->origin, 0.5, le->origin);
 
 	/* to allow tracing against this le */
 	le->contents = CONTENTS_SOLID;

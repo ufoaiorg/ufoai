@@ -2159,6 +2159,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_gdstats", CL_GlobalDataSizes_f, "Show globalData_t sizes");
 	Cmd_AddCommand("actorinvlist", NULL, "Shows the inventory list of all actors");
 	Cmd_AddCommand("debug_listle", LE_List_f, "Shows a list of current know local entities with type and status");
+	Cmd_AddCommand("debug_listlm", LM_List_f, "Shows a list of current know local models");
 	Cmd_AddCommand("killteam", NULL, NULL);
 	Cmd_AddCommand("stunteam", NULL, NULL);
 #endif

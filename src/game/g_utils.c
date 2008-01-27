@@ -313,10 +313,6 @@ edict_t *G_Spawn (void)
 	return e;
 }
 
-
-#define ENTLIST_LENGTH 256
-static const char *entList[ENTLIST_LENGTH];
-
 /**
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
@@ -325,6 +321,7 @@ void G_RecalcRouting (edict_t * self)
 {
 	int i;
 	edict_t *ent;
+	const char *entList[MAX_EDICTS];
 
 	/* generate entity list */
 	for (i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)

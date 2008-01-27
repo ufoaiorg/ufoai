@@ -749,7 +749,11 @@ void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
 
 
 /**
+ * @brief
  * @sa MatrixMultiply
+ * @param[out] c The target matrix
+ * @param[in] a
+ * @param[in] b
  */
 void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
 {
@@ -762,7 +766,12 @@ void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
 	}
 }
 
-
+/**
+ * @brief Transforms a vector with a given matrix
+ * @param[out] out
+ * @param[in] m The matrix to transform the vector with
+ * @param[in] in The vector that should be transformed
+ */
 void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 {
 	int i;
@@ -771,7 +780,11 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 		out[i] = m[i] * in[0] + m[i + 4] * in[1] + m[i + 8] * in[2] + m[i + 12] * in[3];
 }
 
-
+/**
+ * @param[out] vb The target vector
+ * @param[in] m
+ * @param[in] va
+ */
 void VectorRotate (const vec3_t m[3], const vec3_t va, vec3_t vb)
 {
 	vb[0] = m[0][0] * va[0] + m[1][0] * va[1] + m[2][0] * va[2];

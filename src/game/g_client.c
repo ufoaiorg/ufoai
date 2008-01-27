@@ -2043,7 +2043,7 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 		gi.WriteShort(door->number);
-		gi.WriteShort(door->mapNum);
+
 		G_RecalcRouting(door);
 
 		actor->TU -= TU_DOOR_ACTION;
@@ -2725,6 +2725,7 @@ static void G_SendVisibleEdicts (int team)
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);
+			gi.WriteByte(ent->spawnflags & 255);
 			ent->visflags |= ~ent->visflags;
 			end = qtrue;
 		}
