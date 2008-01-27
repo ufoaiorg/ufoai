@@ -114,7 +114,7 @@ typedef struct lm_s {
 	vec3_t origin;
 	vec3_t angles;
 
-	int num;
+	int entnum;
 	int skin;
 	int flags;
 	int frame;	/**< which frame to show */
@@ -151,7 +151,7 @@ void LET_ProjectileAutoHide(le_t *le);
 void LET_PlayAmbientSound(le_t * le);
 
 /* local model functions */
-localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int num, int levelflags);
+localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags);
 void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 

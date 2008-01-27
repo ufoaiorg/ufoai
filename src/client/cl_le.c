@@ -58,7 +58,7 @@ static inline void LE_GenerateInlineModelList (void)
 }
 
 /**
- * @brief Add the local models (misc_model) to the scene
+ * @brief Add the local models to the scene
  * @sa V_RenderView
  * @sa LE_AddToScene
  */
@@ -93,13 +93,15 @@ void LM_AddToScene (void)
 	}
 }
 
-
-static localModel_t *LM_Find (int num)
+/**
+ * @brief Checks whether a local model with the same entity number is already registered
+ */
+static inline localModel_t *LM_Find (int entnum)
 {
 	int i;
 
 	for (i = 0; i < numLMs; i++)
-		if (LMs[i].num == num)
+		if (LMs[i].entnum == entnum)
 			return &LMs[i];
 
 	return NULL;
@@ -194,8 +196,9 @@ void CL_RegisterLocalModels (void)
  * @brief Adds local (not known or handled by the server) models to the map
  * @note misc_model
  * @sa CL_ParseEntitystring
+ * @param[in] entnum Entity number
  */
-localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int num, int levelflags)
+localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags)
 {
 	localModel_t *lm;
 
@@ -210,9 +213,9 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	VectorCopy(origin, lm->origin);
 	VectorCopy(angles, lm->angles);
 	/* check whether there is already a model with that number */
-	if (LM_Find(num))
-		Com_Error(ERR_DROP, "Already a local model with the same id loaded\n");
-	lm->num = num;
+	if (LM_Find(entnum))
+		Com_Error(ERR_DROP, "Already a local model with the same id (%i) loaded\n", entnum);
+	lm->entnum = entnum;
 	lm->levelflags = levelflags;
 
 	return lm;
@@ -921,7 +924,8 @@ void LE_AddToScene (void)
 			ent.skinnum = le->skinnum;
 
 			switch (le->contents) {
-			/* SOLID_BSP models don't have animations here (func_breakable or func_door) */
+			/* SOLID_BSP models don't have animations nor do they use their
+			 * origin here (e.g. func_breakable or func_door) */
 			case CONTENTS_SOLID:
 				break;
 			default:
@@ -1023,7 +1027,7 @@ void LM_List_f (void)
 	Com_Printf("number | entnum | skin | frame | lvlflg | flags | origin          | name\n");
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
 		Com_Printf("#%5i | #%5i | #%3i | #%4i | %6i | %5i | %5.0f:%5.0f:%3.0f | %s\n",
-			i, lm->num, lm->skin, lm->frame, lm->levelflags, lm->flags,
+			i, lm->entnum, lm->skin, lm->frame, lm->levelflags, lm->flags,
 			lm->origin[0], lm->origin[1], lm->origin[2], lm->name);
 	}
 }
