@@ -949,7 +949,9 @@ void MN_ParseMenu (const char *name, const char **text)
 
 }
 
-
+/**
+ * @sa Cmd_MacroExpandString
+ */
 const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 {
 	if (!ref)

@@ -501,7 +501,10 @@ const char *Cmd_Args (void)
 
 
 /**
+ * @brief Expands strings with cvar values that are dereferenced by a *
+ * @note There is an overflow check for cvars that also contain a *
  * @sa Cmd_TokenizeString
+ * @sa MN_GetReferenceString
  */
 static const char *Cmd_MacroExpandString (const char *text)
 {
@@ -527,7 +530,7 @@ static const char *Cmd_MacroExpandString (const char *text)
 			inquote ^= 1;
 		if (inquote)
 			continue;			/* don't expand inside quotes */
-		if (scan[i] != '$')
+		if (Q_strcmp(&scan[i], "*cvar"))
 			continue;
 		/* scan out the complete macro */
 		start = scan + i + 1;
@@ -736,7 +739,6 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
 	if (!cmd_name || !cmd_name[0])
 		return;
 
-	/* fail if the command already exists */
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(cmd_name, cmd->name)) {

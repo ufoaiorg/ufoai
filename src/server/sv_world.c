@@ -355,7 +355,7 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 			continue;
 		if (touch == clip->passedict)
 			continue;
-#if 0
+
 		if (clip->trace.allsolid)
 			return;
 
@@ -365,15 +365,16 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 			if (clip->passedict->owner == touch)
 				continue;		/* don't clip against owner */
 		}
-#endif
 
 		/* might intersect, so do an exact clip */
 		headnode = SV_HullForEntity(touch, &tile);
 		if (headnode >= MAX_MAP_NODES)
 			continue;
-		angles = touch->angles;
+
 		if (touch->solid != SOLID_BSP)
 			angles = vec3_origin;	/* boxes don't rotate */
+		else
+			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
 		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, angles);
@@ -382,7 +383,7 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 		Com_DPrintf(DEBUG_SERVER, "SV_ClipMoveToEntities: %i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
 			(int)touch->mins[0], (int)touch->mins[1], (int)touch->mins[2],
 			(int)touch->maxs[0], (int)touch->maxs[1], (int)touch->maxs[2],
-			(int)touch->origin[0], (int)touch->origin[1], (int)touch->origin[2] );
+			(int)touch->origin[0], (int)touch->origin[1], (int)touch->origin[2]);
 #endif
 
 		if (trace.fraction < clip->trace.fraction) {

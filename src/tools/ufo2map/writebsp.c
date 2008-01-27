@@ -33,24 +33,27 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 	int current, previous = 0;
 	int	start, end;
 
-	start = I_FloatTime();
 	if (showProgress) {
+		start = I_FloatTime();
 		fprintf(stdout, "%10s: ", id);
 		fflush(stdout);
 	}
 	for (i = 0; i < count; i++) {
-		current = (10 * i / count);
-		if (showProgress && current != previous) {
-			previous = current;
-			fprintf(stdout, "%i..", current * 10);
-			fflush(stdout);
+		if (showProgress) {
+			current = (10 * i / count);
+			if (current != previous) {
+				previous = current;
+				fprintf(stdout, "%i..", current * 10);
+				fflush(stdout);
+			}
 		}
 
 		func(i);
 	}
-	end = I_FloatTime();
-	if (showProgress)
+	if (showProgress) {
+		end = I_FloatTime();
 		Com_Printf(" (time: %4is, count: %i)\n", end - start, count);
+	}
 }
 
 
