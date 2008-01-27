@@ -2,10 +2,10 @@
 // entity 0
 {
 "classname" "worldspawn"
-"angles" "25 45 0"
-"ambient" "0.4 0.4 0.4"
-"_color" "0.8 0.8 1"
-"light" "60"
+"angles" "20 45 0"
+"light" "35"
+"ambient" "0 0 0"
+"_color" "0.7 0.75 1"
 // brush 0
 {
 ( 504 384 60 ) ( 488 448 60 ) ( 496 448 40 ) tex_nature/ice001 0.3333740234 0 0 -0.375 0.375 0 0 0
