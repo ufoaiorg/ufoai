@@ -245,7 +245,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		init = qtrue;
 
 		/* keynames with a leading underscore are used for utility comments, */
-		/* and are immediately discarded by quake */
+		/* and are immediately discarded by ufo */
 		if (keyname[0] == '_')
 			continue;
 
@@ -330,6 +330,36 @@ static void SP_light (edict_t * self)
 	/* lights aren't client-server communicated items */
 	/* they are completely client side */
 	G_FreeEdict(self);
+}
+
+static edict_t* G_TriggerSpawn (edict_t* owner)
+{
+	edict_t* trigger;
+	vec3_t mins, maxs;
+
+	trigger = G_Spawn();
+	trigger->classname = "trigger";
+	/* link the door into the trigger */
+	trigger->owner = owner;
+
+	VectorCopy(owner->absmin, mins);
+	VectorCopy(owner->absmax, maxs);
+
+	/* expand the trigger box */
+	mins[0] -= UNIT_SIZE;
+	mins[1] -= UNIT_SIZE;
+	maxs[0] += UNIT_SIZE;
+	maxs[1] += UNIT_SIZE;
+
+	VectorCopy(mins, trigger->mins);
+	VectorCopy(maxs, trigger->maxs);
+
+	trigger->solid = SOLID_TRIGGER;
+
+	/* link into the world */
+	gi.linkentity(trigger);
+
+	return trigger;
 }
 
 static void G_ActorSpawn (edict_t * ent)
@@ -559,13 +589,13 @@ static void SP_dummy (edict_t * self)
  * for tracing (see inlineList in cmodel.c)
  * @sa CM_EntTestLine
  * @sa LM_AddModel
- * @sa PF_SetModel
+ * @sa SV_SetModel
  */
 static void SP_func_breakable (edict_t * self)
 {
 	self->classname = "breakable";
 	self->type = ET_BREAKABLE;
-	VectorSet(self->origin, 0, 0, 0);
+
 	/* set an inline model */
 	/* also set self->solid = SOLID_BSP here */
 	/* also linked into the world here */
@@ -574,11 +604,11 @@ static void SP_func_breakable (edict_t * self)
 		Com_Printf("Error - func_breakable with no SOLID_BSP\n");
 	if (!self->model)
 		Com_Printf("Error - func_breakable with no model\n");
-#if 0
-	Com_Printf("model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
+
+	Com_DPrintf(DEBUG_GAME, "func_breakable: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
 		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
-		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2]);
-#endif
+		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2],
+		(int)self->origin[0], (int)self->origin[1], (int)self->origin[2]);
 }
 
 /*
@@ -619,11 +649,12 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 /**
  * @brief QUAKED func_door (0 .5 .8) ?
  * "health"	if set, door must be shot open
+ * @sa SV_SetModel
+ * @sa LM_AddModel
  */
 void SP_func_door (edict_t *self)
 {
 	edict_t *other;
-	vec3_t mins, maxs;
 
 	self->classname = "door";
 	self->type = ET_DOOR;
@@ -635,30 +666,16 @@ void SP_func_door (edict_t *self)
 	if (self->solid != SOLID_BSP)
 		Com_Printf("Error - func_door with no SOLID_BSP\n");
 
-	VectorCopy(self->origin, self->pos);
-	VectorSet(self->origin, 0, 0, 0);
-	VectorCopy(self->absmin, mins);
-	VectorCopy(self->absmax, maxs);
 	self->moveinfo.state = STATE_CLOSED;
 
-	/* expand */
-	mins[0] -= UNIT_SIZE;
-	mins[1] -= UNIT_SIZE;
-	maxs[0] += UNIT_SIZE;
-	maxs[1] += UNIT_SIZE;
-
 	/* spawn the trigger entity */
-	other = G_Spawn();
-	VectorCopy(mins, other->mins);
-	VectorCopy(maxs, other->maxs);
-
-	/* link the door into the trigger */
-	other->owner = self;
-	other->solid = SOLID_TRIGGER;
+	other = G_TriggerSpawn(self);
 	other->touch = Touch_DoorTrigger;
 
-	/* link into the world */
-	gi.linkentity(other);
+	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
+		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
+		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2],
+		(int)self->origin[0], (int)self->origin[1], (int)self->origin[2]);
 }
 
 /**

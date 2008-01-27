@@ -37,7 +37,7 @@ struct dbuffer *sv_msg = NULL;
 /**
  * @brief Debug print to server console
  */
-static void PF_dprintf (const char *fmt, ...)
+static void SV_dprintf (const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -54,7 +54,7 @@ static void PF_dprintf (const char *fmt, ...)
  * @brief Print to a single client
  * @sa SV_BroadcastPrintf
  */
-static void PF_cprintf (player_t * player, int level, const char *fmt, ...)
+static void SV_cprintf (player_t * player, int level, const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -82,11 +82,11 @@ static void PF_cprintf (player_t * player, int level, const char *fmt, ...)
 		Com_Printf("%s", msg);
 }
 
-static void PF_error (const char *fmt, ...) __attribute__((noreturn));
+static void SV_error (const char *fmt, ...) __attribute__((noreturn));
 /**
  * @brief Abort the server with a game error
  */
-static void PF_error (const char *fmt, ...)
+static void SV_error (const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -105,14 +105,14 @@ static void PF_error (const char *fmt, ...)
  * @note Also sets mins and maxs for inline bmodels
  * @sa CM_InlineModel
  */
-static void PF_SetModel (edict_t * ent, const char *name)
+static void SV_SetModel (edict_t * ent, const char *name)
 {
 	cBspModel_t *mod;
 
 	assert(ent);
 
 	if (!name)
-		Com_Error(ERR_DROP, "PF_SetModel: NULL");
+		Com_Error(ERR_DROP, "SV_SetModel: NULL");
 
 	ent->modelindex = SV_ModelIndex(name);
 
@@ -120,7 +120,6 @@ static void PF_SetModel (edict_t * ent, const char *name)
 	if (name[0] == '*') {
 		mod = CM_InlineModel(name);
 		assert(mod);
-		VectorCopy(ent->origin, mod->origin);
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
 		ent->solid = SOLID_BSP;
@@ -131,7 +130,7 @@ static void PF_SetModel (edict_t * ent, const char *name)
 /**
  * @sa CL_ParseConfigString
  */
-static void PF_Configstring (int index, const char *val)
+static void SV_Configstring (int index, const char *val)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_DROP, "configstring: bad index %i", index);
@@ -162,12 +161,12 @@ static void PF_Configstring (int index, const char *val)
 	}
 }
 
-static void PF_WriteChar (char c)
+static void SV_WriteChar (char c)
 {
 	NET_WriteChar(pfe_msg, c);
 }
 
-static void PF_WriteByte (unsigned char c)
+static void SV_WriteByte (unsigned char c)
 {
 	NET_WriteByte(pfe_msg, c);
 }
@@ -175,49 +174,49 @@ static void PF_WriteByte (unsigned char c)
 /**
  * @brief Use this if the value might change and you need the position in the buffer
  */
-static char* PF_WriteDummyByte (unsigned char c)
+static char* SV_WriteDummyByte (unsigned char c)
 {
 	char *pos = pfe_msg->end;
 	NET_WriteByte(pfe_msg, c);
 	return pos;
 }
 
-static void PF_WriteShort (int c)
+static void SV_WriteShort (int c)
 {
 	NET_WriteShort(pfe_msg, c);
 }
 
-static void PF_WriteLong (int c)
+static void SV_WriteLong (int c)
 {
 	NET_WriteLong(pfe_msg, c);
 }
 
-static void PF_WriteString (const char *s)
+static void SV_WriteString (const char *s)
 {
 	NET_WriteString(pfe_msg, s);
 }
 
-static void PF_WritePos (vec3_t pos)
+static void SV_WritePos (vec3_t pos)
 {
 	NET_WritePos(pfe_msg, pos);
 }
 
-static void PF_WriteGPos (pos3_t pos)
+static void SV_WriteGPos (pos3_t pos)
 {
 	NET_WriteGPos(pfe_msg, pos);
 }
 
-static void PF_WriteDir (vec3_t dir)
+static void SV_WriteDir (vec3_t dir)
 {
 	NET_WriteDir(pfe_msg, dir);
 }
 
-static void PF_WriteAngle (float f)
+static void SV_WriteAngle (float f)
 {
 	NET_WriteAngle(pfe_msg, f);
 }
 
-static void PF_WriteFormat (const char *format, ...)
+static void SV_WriteFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -225,52 +224,52 @@ static void PF_WriteFormat (const char *format, ...)
 	va_end(ap);
 }
 
-static int PF_ReadChar (void)
+static int SV_ReadChar (void)
 {
 	return NET_ReadChar(sv_msg);
 }
 
-static int PF_ReadByte (void)
+static int SV_ReadByte (void)
 {
 	return NET_ReadByte(sv_msg);
 }
 
-static int PF_ReadShort (void)
+static int SV_ReadShort (void)
 {
 	return NET_ReadShort(sv_msg);
 }
 
-static int PF_ReadLong (void)
+static int SV_ReadLong (void)
 {
 	return NET_ReadLong(sv_msg);
 }
 
-static char *PF_ReadString (void)
+static char *SV_ReadString (void)
 {
 	return NET_ReadString(sv_msg);
 }
 
-static void PF_ReadPos (vec3_t pos)
+static void SV_ReadPos (vec3_t pos)
 {
 	NET_ReadPos(sv_msg, pos);
 }
 
-static void PF_ReadGPos (pos3_t pos)
+static void SV_ReadGPos (pos3_t pos)
 {
 	NET_ReadGPos(sv_msg, pos);
 }
 
-static void PF_ReadDir (vec3_t vector)
+static void SV_ReadDir (vec3_t vector)
 {
 	NET_ReadDir(sv_msg, vector);
 }
 
-static float PF_ReadAngle (void)
+static float SV_ReadAngle (void)
 {
 	return NET_ReadAngle(sv_msg);
 }
 
-static void PF_ReadData (void *buffer, int size)
+static void SV_ReadData (void *buffer, int size)
 {
 	NET_ReadData(sv_msg, buffer, size);
 }
@@ -278,7 +277,7 @@ static void PF_ReadData (void *buffer, int size)
 /**
  * @sa NET_V_ReadFormat
  */
-static void PF_ReadFormat (const char *format, ...)
+static void SV_ReadFormat (const char *format, ...)
 {
 	va_list ap;
 
@@ -293,7 +292,7 @@ static void PF_ReadFormat (const char *format, ...)
 /**
  * @sa gi.EndEvents
  */
-static void PF_EndEvents (void)
+static void SV_EndEvents (void)
 {
 	if (!pfe_pending)
 		return;
@@ -308,11 +307,11 @@ static void PF_EndEvents (void)
 /**
  * @sa gi.AddEvent
  */
-static void PF_AddEvent (int mask, int eType)
+static void SV_AddEvent (int mask, int eType)
 {
 	/* finish the last event */
 	if (pfe_pending)
-		PF_EndEvents();
+		SV_EndEvents();
 
 	/* start the new event */
 	pfe_pending = qtrue;
@@ -327,7 +326,7 @@ static void PF_AddEvent (int mask, int eType)
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
-static void *GI_TagAlloc (int size, int tagNum)
+static void *SV_TagAlloc (int size, int tagNum)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
@@ -335,7 +334,7 @@ static void *GI_TagAlloc (int size, int tagNum)
 	return _Mem_Alloc(size, qtrue, sv_gameSysPool, tagNum, "GAME DLL", 0);
 }
 
-static void GI_MemFree (void *ptr)
+static void SV_MemFree (void *ptr)
 {
 	_Mem_Free(ptr, "GAME DLL", -1);
 }
@@ -344,7 +343,7 @@ static void GI_MemFree (void *ptr)
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
-static void GI_FreeTags (int tagNum)
+static void SV_FreeTags (int tagNum)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
@@ -383,9 +382,9 @@ void SV_InitGameProgs (void)
 
 	/* load a new game dll */
 	import.bprintf = SV_BroadcastPrintf;
-	import.dprintf = PF_dprintf;
-	import.cprintf = PF_cprintf;
-	import.error = PF_error;
+	import.dprintf = SV_dprintf;
+	import.cprintf = SV_cprintf;
+	import.error = SV_error;
 
 	import.trace = SV_Trace;
 	import.linkentity = SV_LinkEdict;
@@ -406,9 +405,9 @@ void SV_InitGameProgs (void)
 
 	import.modelindex = SV_ModelIndex;
 
-	import.setmodel = PF_SetModel;
+	import.setmodel = SV_SetModel;
 
-	import.configstring = PF_Configstring;
+	import.configstring = SV_Configstring;
 	import.PositionedSound = SV_StartSound;
 
 	import.PointContents = SV_PointContents;
@@ -416,38 +415,38 @@ void SV_InitGameProgs (void)
 
 	import.FS_Gamedir = FS_Gamedir;
 
-	import.WriteChar = PF_WriteChar;
-	import.WriteByte = PF_WriteByte;
-	import.WriteDummyByte = PF_WriteDummyByte;
-	import.WriteShort = PF_WriteShort;
-	import.WriteLong = PF_WriteLong;
-	import.WriteString = PF_WriteString;
-	import.WritePos = PF_WritePos;
-	import.WriteGPos = PF_WriteGPos;
-	import.WriteDir = PF_WriteDir;
-	import.WriteAngle = PF_WriteAngle;
-	import.WriteFormat = PF_WriteFormat;
+	import.WriteChar = SV_WriteChar;
+	import.WriteByte = SV_WriteByte;
+	import.WriteDummyByte = SV_WriteDummyByte;
+	import.WriteShort = SV_WriteShort;
+	import.WriteLong = SV_WriteLong;
+	import.WriteString = SV_WriteString;
+	import.WritePos = SV_WritePos;
+	import.WriteGPos = SV_WriteGPos;
+	import.WriteDir = SV_WriteDir;
+	import.WriteAngle = SV_WriteAngle;
+	import.WriteFormat = SV_WriteFormat;
 
-	import.EndEvents = PF_EndEvents;
-	import.AddEvent = PF_AddEvent;
+	import.EndEvents = SV_EndEvents;
+	import.AddEvent = SV_AddEvent;
 
-	import.ReadChar = PF_ReadChar;
-	import.ReadByte = PF_ReadByte;
-	import.ReadShort = PF_ReadShort;
-	import.ReadLong = PF_ReadLong;
-	import.ReadString = PF_ReadString;
-	import.ReadPos = PF_ReadPos;
-	import.ReadGPos = PF_ReadGPos;
-	import.ReadDir = PF_ReadDir;
-	import.ReadAngle = PF_ReadAngle;
-	import.ReadData = PF_ReadData;
-	import.ReadFormat = PF_ReadFormat;
+	import.ReadChar = SV_ReadChar;
+	import.ReadByte = SV_ReadByte;
+	import.ReadShort = SV_ReadShort;
+	import.ReadLong = SV_ReadLong;
+	import.ReadString = SV_ReadString;
+	import.ReadPos = SV_ReadPos;
+	import.ReadGPos = SV_ReadGPos;
+	import.ReadDir = SV_ReadDir;
+	import.ReadAngle = SV_ReadAngle;
+	import.ReadData = SV_ReadData;
+	import.ReadFormat = SV_ReadFormat;
 
 	import.GetCharacterValues = Com_GetCharacterValues;
 
-	import.TagMalloc = GI_TagAlloc;
-	import.TagFree = GI_MemFree;
-	import.FreeTags = GI_FreeTags;
+	import.TagMalloc = SV_TagAlloc;
+	import.TagFree = SV_MemFree;
+	import.FreeTags = SV_FreeTags;
 
 	import.cvar = Cvar_Get;
 	import.cvar_set = Cvar_Set;

@@ -89,7 +89,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
-	"sssb",				/* EV_ENT_EDICT */
+	"sssbp",			/* EV_ENT_EDICT */
 
 	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
@@ -381,7 +381,7 @@ static void CL_ParseClientinfo (int player)
 }
 
 /**
- * @sa PF_Configstring
+ * @sa SV_Configstring
  */
 static void CL_ParseConfigString (struct dbuffer *msg)
 {
@@ -719,8 +719,9 @@ static void CL_EntEdict (struct dbuffer *msg)
 	le_t *le;
 	int entnum, modelnum1, type, levelflags;
 	cBspModel_t *model;
+	vec3_t origin;
 
-	NET_ReadFormat(msg, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1, &levelflags);
+	NET_ReadFormat(msg, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1, &levelflags, &origin);
 
 	if (type != ET_BREAKABLE && type != ET_DOOR)
 		Com_Error(ERR_DROP, "Invalid le announced via EV_ENT_EDICT\n");
@@ -750,8 +751,7 @@ static void CL_EntEdict (struct dbuffer *msg)
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
-	VectorAdd(model->mins, model->maxs, le->origin);
-	VectorScale(le->origin, 0.5, le->origin);
+	VectorCopy(origin, le->origin);
 
 	/* to allow tracing against this le */
 	le->contents = CONTENTS_SOLID;

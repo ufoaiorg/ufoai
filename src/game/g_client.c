@@ -2726,6 +2726,7 @@ static void G_SendVisibleEdicts (int team)
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);
 			gi.WriteByte(ent->spawnflags & 255);
+			gi.WritePos(ent->origin);
 			ent->visflags |= ~ent->visflags;
 			end = qtrue;
 		}
