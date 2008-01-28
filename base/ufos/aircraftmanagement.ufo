@@ -674,6 +674,8 @@ craftitem base_ammo_AA51
 	buytype		dummy
 	notonmarket	true
 
+//	ammo		80
+// The value (20) below is a workaround until we can display (or fake) high numbers of projectiles in interception
 	ammo		20
 	wdamage		50
 	accuracy	0.3
