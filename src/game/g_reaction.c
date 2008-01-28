@@ -535,3 +535,25 @@ void G_ReactToEndTurn (void)
 		ent->reactionFired = 0;
 	}
 }
+
+/**
+ * @brief Guess! Reset all "shaken" states on end of turn?
+ * @note Normally called on end of turn.
+ * @todo Comment on the AddEvent code.
+ * @sa G_ClientStateChange
+ * @param[in] team Index of team to loop through.
+ */
+void G_ResetReactionFire (int team)
+{
+	edict_t *ent;
+	int i;
+
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == team) {
+			/** @todo why do we send the state here and why do we change the "shaken" state? */
+			ent->state &= ~STATE_SHAKEN;
+			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
+			gi.WriteShort(ent->number);
+			gi.WriteShort(ent->state);
+		}
+}
