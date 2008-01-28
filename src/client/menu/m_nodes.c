@@ -48,7 +48,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	if (!node || node->type != MN_PIC || !node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
 		return qfalse;
 
-	R_LoadImage(va("pics/menu/%s",path), &picture, &width, &height);
+	R_LoadImage(va("pics/menu/%s", path), &picture, &width, &height);
 
 	if (!picture || !width || !height) {
 		Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);

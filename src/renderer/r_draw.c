@@ -410,7 +410,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	nh = h * viddef.ry;
 
 	/* load day image */
-	gl = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
+	gl = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
 
 	/* draw day image */
 	R_BindTexture(gl->texnum);
@@ -425,7 +425,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
-	gl = R_FindImage(va("pics/menu/%s_night", map), it_wrappic);
+	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
 	if (gl == r_notexture)
 		return;
@@ -660,13 +660,13 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	centerx = nx + nw / 2;
 	centery = ny + nh / 2;
 
-	starfield = R_FindImage(va("pics/menu/%s_stars", map), it_wrappic);
+	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
 	if (starfield != r_notexture) {
 		/* TODO: this should be a box that is rotated, too */
 		R_DrawTexture(starfield->texnum, nx, ny, nw, nh);
 	}
 
-	background = R_FindImage("pics/menu/map_background", it_pic);
+	background = R_FindImage("pics/geoscape/map_background", it_pic);
 	if (background != r_notexture) {
 		const float bgZoom = zoom;
 		/* Force height to make sure the image is a circle (and not an ellipse) */
@@ -692,7 +692,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
 
 	/* load sun image */
-	sun = R_FindImage("pics/menu/map_sun", it_pic);
+	sun = R_FindImage("pics/geoscape/map_sun", it_pic);
 	if (sun != r_notexture && (v[2] < 0)) {
 		const float sunZoom = 1000.0f;
 		qglEnable(GL_BLEND);
@@ -701,14 +701,14 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	}
 
 	/* load earth image */
-	r_globeEarth.texture = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
+	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
 	if (r_globeEarth.texture== r_notexture) {
-		Com_Printf("Could not find pics/menu/%s_day\n", map);
+		Com_Printf("Could not find pics/geoscape/%s_day\n", map);
 		return;
 	}
 
 	/* load moon image */
-	r_globeMoon.texture = R_FindImage(va("pics/menu/%s_moon", map), it_wrappic);
+	r_globeMoon.texture = R_FindImage(va("pics/geoscape/%s_moon", map), it_wrappic);
 
 	/* globe texture scaling */
 	qglMatrixMode(GL_TEXTURE);

@@ -1835,36 +1835,36 @@ void MAP_Init (void)
 		Mem_Free(terrainPic);
 		terrainPic = NULL;
 	}
-	R_LoadImage(va("pics/menu/%s_terrain.tga", curCampaign->map), &terrainPic, &terrainWidth, &terrainHeight);
+	R_LoadImage(va("pics/geoscape/%s_terrain.tga", curCampaign->map), &terrainPic, &terrainWidth, &terrainHeight);
 	if (!terrainPic || !terrainWidth || !terrainHeight)
-		Sys_Error("Couldn't load map mask %s_terrain.tga in pics/menu\n", curCampaign->map);
+		Sys_Error("Couldn't load map mask %s_terrain.tga in pics/geoscape\n", curCampaign->map);
 
 	/* load culture mask */
 	if (culturePic) {
 		Mem_Free(culturePic);
 		culturePic = NULL;
 	}
-	R_LoadImage(va("pics/menu/%s_culture.tga", curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
+	R_LoadImage(va("pics/geoscape/%s_culture.tga", curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
 	if (!culturePic || !cultureWidth || !cultureHeight)
-		Sys_Error("Couldn't load map mask %s_culture.tga in pics/menu\n", curCampaign->map);
+		Sys_Error("Couldn't load map mask %s_culture.tga in pics/geoscape\n", curCampaign->map);
 
 	/* load population mask */
 	if (populationPic) {
 		Mem_Free(populationPic);
 		populationPic = NULL;
 	}
-	R_LoadImage(va("pics/menu/%s_population.tga", curCampaign->map), &populationPic, &populationWidth, &populationHeight);
+	R_LoadImage(va("pics/geoscape/%s_population.tga", curCampaign->map), &populationPic, &populationWidth, &populationHeight);
 	if (!populationPic || !populationWidth || !populationHeight)
-		Sys_Error("Couldn't load map mask %s_population.tga in pics/menu\n", curCampaign->map);
+		Sys_Error("Couldn't load map mask %s_population.tga in pics/geoscape\n", curCampaign->map);
 
 	/* load nations mask */
 	if (nationsPic) {
 		Mem_Free(nationsPic);
 		nationsPic = NULL;
 	}
-	R_LoadImage(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
+	R_LoadImage(va("pics/geoscape/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic || !nationsWidth || !nationsHeight)
-		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
+		Sys_Error("Couldn't load map mask %s_nations.tga in pics/geoscape\n", curCampaign->map);
 
 	MAP_ResetAction();
 }
