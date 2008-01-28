@@ -170,7 +170,10 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	R_CheckError();
 
 	/* solid globe texture */
-	qglBindTexture(GL_TEXTURE_2D, sphere->texture->texnum);
+	if (sphere->overlay)
+		qglBindTexture(GL_TEXTURE_2D, sphere->overlay->texnum);
+	else
+		qglBindTexture(GL_TEXTURE_2D, sphere->texture->texnum);
 
 	qglEnable(GL_CULL_FACE);
 	qglCallList(sphere->list);
@@ -180,6 +183,8 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 
 	/* restore the previous matrix */
 	qglPopMatrix();
+
+	refdef.alias_count += sphere->num_tris;
 }
 
 /**

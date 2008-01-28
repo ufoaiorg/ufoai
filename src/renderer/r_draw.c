@@ -411,6 +411,8 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	/* load day image */
 	gl = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
+	if (gl == r_notexture)
+		Sys_Error("Could not load geoscape day image");
 
 	/* draw day image */
 	R_BindTexture(gl->texnum);
@@ -424,6 +426,28 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	qglTexCoord2f(cx - iz, cy + iz);
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
+
+	/* draw nation overlay */
+	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
+		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
+		if (gl == r_notexture)
+			Sys_Error("Could not load geoscape nation overlay image");
+
+		R_EnableBlend(qtrue);
+		/* draw day image */
+		R_BindTexture(gl->texnum);
+		qglBegin(GL_QUADS);
+		qglTexCoord2f(cx - iz, cy - iz);
+		qglVertex2f(nx, ny);
+		qglTexCoord2f(cx + iz, cy - iz);
+		qglVertex2f(nx + nw, ny);
+		qglTexCoord2f(cx + iz, cy + iz);
+		qglVertex2f(nx + nw, ny + nh);
+		qglTexCoord2f(cx - iz, cy + iz);
+		qglVertex2f(nx, ny + nh);
+		qglEnd();
+		R_EnableBlend(qfalse);
+	}
 
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
@@ -702,7 +726,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 
 	/* load earth image */
 	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
-	if (r_globeEarth.texture== r_notexture) {
+	if (r_globeEarth.texture == r_notexture) {
 		Com_Printf("Could not find pics/geoscape/%s_day\n", map);
 		return;
 	}
@@ -743,13 +767,20 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 
 	/* draw the globe */
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
-	/* draw the moon */
-	if (r_globeMoon.texture != r_notexture && moonPos[2] > 0) {
-		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
-		refdef.alias_count += r_globeMoon.num_tris;
+	/* load nation overlay */
+	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
+		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
+		if (r_globeEarth.overlay == r_notexture)
+			Sys_Error("Could not load geoscape nation overlay image");
+		R_EnableBlend(qtrue);
+		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
+		R_EnableBlend(qfalse);
+		r_globeEarth.overlay = NULL;
 	}
 
-	refdef.alias_count += r_globeEarth.num_tris;
+	/* draw the moon */
+	if (r_globeMoon.texture != r_notexture && moonPos[2] > 0)
+		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
 
 	/* Disable depth */
 	qglDisable(GL_DEPTH_TEST);

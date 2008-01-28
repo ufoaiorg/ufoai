@@ -86,6 +86,7 @@ cvar_t *r_wire;
 cvar_t *r_showbox;
 cvar_t *r_vertexbuffers;
 cvar_t *r_maxlightmap;
+cvar_t *r_geoscape_overlay;
 
 /**
  * @brief Prints some OpenGL strings
@@ -392,6 +393,7 @@ static void R_Register (void)
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
+	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays");
 	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_modulate = Cvar_Get("r_modulate", "1.8", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");

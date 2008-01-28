@@ -40,4 +40,7 @@ void R_DrawLineLoop(int points, int *verts);
 void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness);
 void R_DrawPolygon(int points, int *verts);
 
+#define OVERLAY_NATION		(1<<0)
+#define OVERLAY_XVI			(1<<1)
+
 #endif
