@@ -414,6 +414,93 @@ void COM_AddParm (const char *parm)
 	com_argv[com_argc++] = parm;
 }
 
+#define MACRO_CVAR_ID_LENGTH 6
+/**
+ * @brief Expands strings with cvar values that are dereferenced by a '*cvar'
+ * @note There is an overflow check for cvars that also contain a '*cvar'
+ * @sa Cmd_TokenizeString
+ * @sa MN_GetReferenceString
+ */
+const char *COM_MacroExpandString (const char *text)
+{
+	int i, j, count, len;
+	qboolean inquote;
+	const char *scan;
+	static char expanded[MAX_STRING_CHARS];
+	const char *token, *start, *cvarvalue;
+	char *pos;
+
+	inquote = qfalse;
+	scan = text;
+	if (!text || !*text)
+		return NULL;
+
+	len = strlen(scan);
+	if (len >= MAX_STRING_CHARS) {
+		Com_Printf("Line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
+		return NULL;
+	}
+
+	count = 0;
+	memset(expanded, 0, sizeof(expanded));
+	pos = expanded;
+
+	/* also the \0 */
+	assert(scan[len] == '\0');
+	for (i = 0; i <= len; i++) {
+		if (scan[i] == '"')
+			inquote ^= 1;
+		/* don't expand inside quotes */
+		if (inquote || Q_strncmp(&scan[i], "*cvar ", MACRO_CVAR_ID_LENGTH)) {
+			*pos++ = scan[i];
+			continue;
+		}
+
+		/* scan out the complete macro and only parse the cvar name */
+		start = &scan[i + MACRO_CVAR_ID_LENGTH];
+		token = COM_Parse(&start);
+		if (!start)
+			continue;
+
+		/* skip the macro and the cvar name in the next loop */
+		i += MACRO_CVAR_ID_LENGTH;
+		i += strlen(token);
+		i--;
+
+		/* get the cvar value */
+		cvarvalue = Cvar_VariableString(token);
+		if (!cvarvalue) {
+			Com_Printf("Could not get cvar value for cvar: %s\n", token);
+			return NULL;
+		}
+		j = strlen(cvarvalue);
+		if (strlen(pos) + j >= MAX_STRING_CHARS) {
+			Com_Printf("Expanded line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
+			return NULL;
+		}
+
+		/* copy the cvar value into the target buffer */
+		/* check for overflow is already done - so MAX_STRING_CHARS won't hurt here */
+		Q_strncpyz(pos, cvarvalue, j + 1);
+		pos += j;
+
+		if (++count == 100) {
+			Com_Printf("Macro expansion loop, discarded.\n");
+			return NULL;
+		}
+	}
+
+	if (inquote) {
+		Com_Printf("Line has unmatched quote, discarded.\n");
+		return NULL;
+	}
+
+	if (count)
+		return expanded;
+	else
+		return NULL;
+}
+
 /*======================================================== */
 
 void Com_SetGameType (void)

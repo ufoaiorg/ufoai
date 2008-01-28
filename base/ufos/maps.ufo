@@ -7,6 +7,28 @@
 // valid population	values:
 // * urban,	suburban, village, rural, nopopulation
 
+mapdef test_door
+{
+	map				"test_door"
+	music			van_mission
+	multiplayer		false
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		village
+	}
+}
+
 mapdef or_tabelbala
 {
 	map				"+oriental"

@@ -27,6 +27,6 @@ void MN_DrawCheckBoxNode (const menu_t* menu, const menuNode_t* node, const char
 			node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_checked", image));
 		break;
 	default:
-		Com_Printf("Error - invalid value for MN_CHECKBOX node - only 0/1 allowed\n");
+		Com_Printf("Error - invalid value for MN_CHECKBOX node - only 0/1 allowed (%s)\n", ref);
 	}
 }

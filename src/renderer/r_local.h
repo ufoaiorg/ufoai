@@ -97,7 +97,6 @@ extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_wire;
 extern cvar_t *r_vertexbuffers;
 extern cvar_t *r_maxlightmap;
-extern cvar_t *r_geoscape_overlay;
 
 extern int gl_solid_format;
 extern int gl_alpha_format;

@@ -10,7 +10,7 @@ menu map
 
 	zone render
 	{
-		invis true
+		invis	true
 	}
 
 	// ==================
@@ -19,59 +19,36 @@ menu map
 
 	map themap
 	{
-		pos		"0 96"
-		size	"1024 672"
-		click mclick wheel
-		rclick { cmd "mn_mapaction_reset;" }
+		pos		"0 0"
+		size	"1024 768"
+		click	mclick wheel
+		rclick	{ cmd "mn_mapaction_reset;" }
+		// menu
 		excluderect
 		{
-			// mission description
-			pos		"0 608"
-			size	"384 192"
-		}
-		// panel
-		excluderect
-		{
-			pos		"864 608"
-			size	"140 140"
+			pos		"768 0"
+			size	"256 768"
 		}
 	}
 
 	text messagesystem
 	{
-		pos	"0 99"
-		size	"1024 22"
+		pos		"0 0"
+		size	"768 22"
 		bgcolor	"0 0 0 .5"
 		format	"20 0"
 		height	1
 		// TEXT_MESSAGESYSTEM
-		num	12
+		num		12
 		wheel
 	}
 
-	pic back_ul
+	pic back
 	{
-		image	menu/map_ul
-		pos		"0 0"
+		image	menu/geo_menu
+		pos		"768 0"
+		blend	true
 	}
-
-	pic back_ur
-	{
-		image	menu/map_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/map_ll
-		pos		"0 512"
-	}
-
-//	pic back_lr
-//	{
-//		image	menu/map_lr
-//		pos		"512 512"
-//	}
 
 	// ==================
 	// time
@@ -79,26 +56,18 @@ menu map
 
 	string date
 	{
-		string	"*cvar mn_mapdate"
-		pos	"40 30"
-		color	"0 .78 0 1"
-		font	f_big
-	}
-
-	string time
-	{
-		string	"*cvar mn_maptime"
-		pos	"520 30"
-		align	ur
-		color	"0 .78 0 1"
-		font	f_big
+		string	"*cvar mn_mapdate *cvar mn_maptime"
+		pos		"896 30"
+		align	uc
+		color	"1 1 1 1"
+		font	f_small
 	}
 
 	string txt_credits_caption
 	{
-		string	"_CREDIT"
-		pos	"680 30"
-		font	f_big
+		string	"_CREDITS"
+		pos		"808 54"
+		font	f_small
 		align	ul
 	}
 
@@ -106,97 +75,22 @@ menu map
 	{
 		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
-		size "230 40"
-		pos	"900 30"
-		font	f_big
+		size	"256 20"
+		pos		"990 54"
+		font	f_small
 		align	ur
 		in
-	}
-
-	pic bt_panel
-	{
-		tooltip	"_Scroll and zoom"
-		image	menu/panel
-		pos	"1024 768"
-		align	"lr"
-		texl	"0 0"
-		texh	"180 180"
-		click	{ cmd "prod_inc;" }
-		repeat	true
-	}
-
-	zone panel_scroll_uo
-	{
-		pos		"914 608"
-		size	"40 20"
-		repeat true
-//		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_scroll up;" }
-	}
-
-	zone panel_scroll_down
-	{
-		pos		"914 726"
-		size	"40 20"
-		repeat true
-//		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_scroll down;" }
-	}
-
-	zone panel_scroll_left
-	{
-		pos		"864 658"
-		size	"20 40"
-		repeat true
-//		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_scroll left;" }
-	}
-
-	zone panel_scroll_right
-	{
-		pos		"981 658"
-		size	"20 40"
-		repeat true
-//		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_scroll right;" }
-	}
-
-	zone panel_zoom_in
-	{
-		pos		"920 645"
-		size	"28 25"
-		repeat true
-//		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_zoom in;" }
-	}
-
-	zone panel_zoom_out
-	{
-		pos		"920 688"
-		size	"28 25"
-//		bgcolor	"1 1 1 0.5"
-		repeat true
-		click	{ cmd "map_zoom out;" }
-	}
-
-	zone panel_center
-	{
-		pos		"926 672"
-		size	"16 12"
-//		bgcolor	"1 1 1 0.5"
-		repeat true
-		click	{ cmd "map_center;" }
 	}
 
 	pic bt_timestop
 	{
 		tooltip	"_Reset time to 5 seconds"
 		image	menu/buttons_time
-		pos	"565 28"
+		pos		"865 100"
 		texl	"0 0"
 		texh	"20 20"
-		out	{ *bt_timestop texl "0 0" *bt_timestop texh "20 20" }
-		in	{ *bt_timestop texl "21 0" *bt_timestop texh "41 20" }
+		out		{ *bt_timestop texl "0 0" *bt_timestop texh "20 20" }
+		in		{ *bt_timestop texl "21 0" *bt_timestop texh "41 20" }
 		click	{ cmd "game_timestop;" }
 		whup	{ cmd "game_timefast;" }
 		whdown	{ cmd "game_timeslow;" }
@@ -206,11 +100,11 @@ menu map
 	{
 		tooltip	"_Slow down time"
 		image	menu/buttons_time
-		pos	"596 28"
+		pos		"896 100"
 		texl	"42 0"
 		texh	"52 20"
-		out	{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
-		in	{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
+		out		{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
+		in		{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
 		click	{ cmd "game_timeslow;" }
 		whup	{ cmd "game_timefast;" }
 		whdown	{ cmd "game_timeslow;" }
@@ -220,11 +114,11 @@ menu map
 	{
 		tooltip	"_Speed up time"
 		image	menu/buttons_time
-		pos	"616 28"
+		pos		"916 100"
 		texl	"53 0"
 		texh	"63 20"
-		out	{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
-		in	{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
+		out		{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
+		in		{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
 		click	{ cmd "game_timefast;" }
 		whup	{ cmd "game_timefast;" }
 		whdown	{ cmd "game_timeslow;" }
@@ -233,8 +127,64 @@ menu map
 	string timelapse
 	{
 		string	"*cvar mn_timelapse"
-		pos	"565 50"
+		pos		"865 122"
 		color	"0 .78 0 1"
+	}
+
+	// geoscape controll buttons
+
+	zone panel_scroll_uo
+	{
+		pos		"868 354"
+		size	"60 30"
+		repeat	true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_scroll up;" }
+	}
+
+	zone panel_scroll_down
+	{
+		pos		"868 484"
+		size	"60 30"
+		repeat	true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_scroll down;" }
+	}
+
+	zone panel_scroll_left
+	{
+		pos		"818 400"
+		size	"30 60"
+		repeat	true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_scroll left;" }
+	}
+
+	zone panel_scroll_right
+	{
+		pos		"950 400"
+		size	"30 60"
+		repeat	true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_scroll right;" }
+	}
+
+	zone panel_zoom_in
+	{
+		pos		"880 396"
+		size	"34 30"
+		repeat	true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_zoom in;" }
+	}
+
+	zone panel_zoom_out
+	{
+		pos		"880 434"
+		size	"34 30"
+//		bgcolor	"1 1 1 0.5"
+		repeat	true
+		click	{ cmd "map_zoom out;" }
 	}
 
 	// ==================
@@ -249,142 +199,179 @@ menu map
 
 	text description
 	{
-		pos		"34 652"
-		size	"320 80"
-		format	"18 100"
-		height	"4"
+		pos			"800 160"
+		size		"192 140"
+		format		"18 100"
+		height		"4"
 		wheel
-		scrollbar true
+//		bgcolor		"1 1 1 0.6"
+		scrollbar	true
 	}
 
 	// ==================
 	// buttons
 	// ==================
 
-	// FIXME: another icon
-	pic bt_mailclient
+	pic bt_highlight
+	{
+		image	"menu/geo_button_hl"
+		invis	true
+		align	ul
+	}
+
+	string bt_mailclient
 	{
 		if "mn_upunreadmail != 0"
+		color	"0 0.5 0 1"
+		align	"uc"
+		font 	f_small
 		tooltip	"_INBOX (with unread mails)"
-		image	menu/mailclient
-		texl	"0 0"
-		texh	"32 32"
-		pos		"300 32"
-		mousefx true
+		string	"_Mailclient"
+		pos		"896 536"
+		size	"220 20"
 		click	{ cmd "mn_push ufopedia_mail;" }
+		out		{ *bt_mailclient color "0 0.5 0 1" *bt_highlight invis true }
+		in		{ *bt_mailclient color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 530" }
 	}
 
-	pic bt_mailclient_nomail
+	string bt_mailclient_nomail
 	{
 		if "mn_upunreadmail == 0"
+		color	"0 0.5 0 1"
+		align	"uc"
+		font 	f_small
 		tooltip	"_INBOX"
-		image	menu/mailclient
-		texl	"32 0"
-		texh	"64 32"
-		pos		"300 32"
-		mousefx true
+		string	"_Mailclient"
+		pos		"896 536"
+		size	"220 20"
 		click	{ cmd "mn_push ufopedia_mail;" }
+		out		{ *bt_mailclient color "0 0.5 0 1" *bt_highlight invis true  }
+		in		{ *bt_mailclient color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 530" }
 	}
 
-	pic bt_stats
+	string bt_stats
 	{
 		tooltip	"_Organisation statistics"
-		image	menu/b_geobuttons
-		pos	"102 544"
-		texl	"64 65"
-		texh	"127 127"
-		out	{
-				*bt_stats texl "64 65"
-				*bt_stats texh "127 127"
-			}
-		in	{
-				*bt_stats texl "64 0"
-				*bt_stats texh "127 63"
-			}
-		click { cmd "mn_push stats;" }
+		pos		"896 577"
+		align	"uc"
+		color	"0 0.5 0 1"
+		size	"220 20"
+		font 	f_small
+		string	"_Statistics"
+		click	{ cmd "mn_push stats;" }
+		out		{ *bt_stats color "0 0.5 0 1" *bt_highlight invis true  }
+		in		{ *bt_stats color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 571" }
 	}
 
-	pic bt_ufopedia
+	string bt_ufopedia
 	{
-		tooltip	"_UFOpaedia"
-		image	menu/b_geobuttons
-		pos	 "172 544"
-		texl	"128 65"
-		texh	"191 127"
-		out	{
-				*bt_ufopedia texl "128 65"
-				*bt_ufopedia texh "191 127"
-			}
-		in	{
-				*bt_ufopedia texl "128 0"
-				*bt_ufopedia texh "191 63"
-			}
-		click { cmd "mn_push ufopedia;" }
+		tooltip	"_Open UFOpaedia"
+		pos		"896 618"
+		color	"0 0.5 0 1"
+		align	"uc"
+		size	"220 20"
+		font 	f_small
+		string	"_UFOpaedia"
+		click	{ cmd "mn_push ufopedia;" }
+		out		{ *bt_ufopedia color "0 0.5 0 1" *bt_highlight invis true  }
+		in		{ *bt_ufopedia color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 611" }
 	}
 
-	pic bt_base
+	string bt_base
 	{
 		if "mn_base_count < 8"
 		tooltip	"_Create base"
-		image	menu/b_geobuttons
-		pos	"242 544"
-		texl	"192 65"
-		texh	"255 127"
-		out	{
-				*bt_base texl "192 65"
-				*bt_base texh "255 127"
-			}
-		in	{
-				*bt_base texl "192 0"
-				*bt_base texh "255 63"
-			}
+		align	"uc"
+		color	"0 0.5 0 1"
+		size	"220 20"
+		font 	f_small
+		string	"_Create base"
+		pos		"896 659"
 		click	{ cmd "mn_select_base -1;" }
+		out		{ *bt_base color "0 0.5 0 1" *bt_highlight invis true  }
+		in		{ *bt_base color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 651" }
 	}
 
-	pic bt_menu
+	string bt_base_nomore
 	{
-		tooltip	"_Go to Options"
-		image	menu/button_mapmen_options2
-		pos	"950 10"
-		texl	"0 0"
-		texh	"64 64"
-		mousefx false
-		click	{ cmd mn_pop; }
-		out	{
-				*bt_menu texl "0 0"
-				*bt_menu texh "64 64"
-			}
-		in	{
-				*bt_menu texl "64 0"
-				*bt_menu texh "128 64"
-			}
+		if "mn_base_count >= 8"
+		tooltip	"_Max. bases reached"
+		align	"uc"
+		string	"_Create base"
+		font 	f_small
+		size	"220 20"
+		pos		"896 659"
+		color	"0.5 0.5 0.5 1"
 	}
 
-	pic messagesystem_show
+	// ==================
+	// small buttons
+	// ==================
+
+	pic bt_show_overlay
+	{
+		tooltip	"_Highlight nation borders"
+		image	menu/geo_nations_highlight
+		pos		"808 320"
+		texl	"0 0"
+		texh	"32 32"
+		mousefx	false
+		click	{ cmd "map_overlay nations;" }
+		out		{ *bt_show_overlay texl "0 0" *bt_show_overlay texh "32 32" }
+		in		{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
+	}
+
+	pic bt_messagesystem
 	{
 		tooltip	"_Open up messages"
 		image	menu/event_log
+		pos		"850 320"
 		texl	"0 0"
-		texh	"32 36"
-		pos	"975 96"
-		mousefx false
+		texh	"32 32"
+		mousefx	false
 		out	{
-				*messagesystem_show texl "0 0"
-				*messagesystem_show texh "32 36"
+				*bt_messagesystem texl "0 0"
+				*bt_messagesystem texh "32 32"
 				*messagesystem size "1024 22"
 				*messagesystem height "1"
 			}
 		in	{
-				*messagesystem_show texl "0 37"
-				*messagesystem_show texh "32 73"
+				*bt_messagesystem texl "32 0"
+				*bt_messagesystem texh "64 32"
 				*messagesystem size "1024 400"
 				*messagesystem height "25"
 			}
 	}
 
+	pic bt_mapcenter
+	{
+		tooltip	"_Center objects on the map"
+		image	menu/geo_mapcenter
+		pos		"892 320"
+		texl	"0 0"
+		texh	"32 32"
+		mousefx	false
+		out		{ *bt_mapcenter texl "0 0" *bt_mapcenter texh "32 32" }
+		in		{ *bt_mapcenter texl "32 0" *bt_mapcenter texh "64 32" }
+		click	{ cmd "map_center;" }
+	}
+
+	pic bt_menu
+	{
+		tooltip	"_Go to Options"
+		image	menu/geo_options
+		pos		"950 320"
+		texl	"0 0"
+		texh	"32 32"
+		mousefx	false
+		click	{ cmd mn_pop; }
+		out		{ *bt_menu texl "0 0" *bt_menu texh "32 32" }
+		in		{ *bt_menu texl "32 0" *bt_menu texh "64 32" }
+	}
+
 	func init
 	{
-		cmd "snd_music van_geoscape;"
+		cmd		"snd_music van_geoscape;"
 	}
 }
 
@@ -426,14 +413,14 @@ menu popup_intercept_ready
 	string title
 	{
 		string	"_Ready"
-		pos	"290 280"
+		pos		"290 280"
 		font	f_big
 	}
 
 	string name_label
 	{
 		string	"_Aircraft reached desired location - what to do?"
-		pos	"290 320"
+		pos		"290 320"
 	}
 
 	pic bt_cancel
@@ -442,9 +429,9 @@ menu popup_intercept_ready
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 32"
-		pos	"310 450"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos		"310 450"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	string string_cancel
@@ -452,7 +439,7 @@ menu popup_intercept_ready
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"398 466"
+		pos		"398 466"
 		align	cc
 	}
 
@@ -460,11 +447,11 @@ menu popup_intercept_ready
 	{
 		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
-		pos	"530 450"
+		pos		"530 450"
 		texh	"180 64"
 		texl	"0 32"
-		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
-		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
+		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
+		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
 		click	{ cmd "game_go;" }
 	}
 	string string_go
@@ -481,26 +468,26 @@ menu popup_intercept_ready
 		if	"game_autogo == 1"
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
-		pos	"530 410"
+		pos		"530 410"
 		texh	"180 64"
 		texl	"0 32"
-		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
-		in	{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
+		out		{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
+		in		{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
 		click	{ cmd "game_auto_go;" }
 	}
 	string string_auto_go
 	{
-		if	"game_autogo == 1"
+		if "game_autogo == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto mission"
-		pos	"618 426"
+		pos		"618 426"
 		align	cc
 	}
 
 	func init
 	{
-		cmd "game_auto_check;game_timestop;"
+		cmd 	"game_auto_check;game_timestop;"
 	}
 }
 
@@ -524,14 +511,14 @@ menu popup_base_attack
 	string title
 	{
 		string	"_Base is under attack"
-		pos	"290 280"
+		pos		"290 280"
 		font	f_big
 	}
 
 	string name_label
 	{
 		string	"_Base is under attack - what to do?"
-		pos	"290 320"
+		pos		"290 320"
 	}
 
 	pic bt_cancel
@@ -540,9 +527,9 @@ menu popup_base_attack
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 32"
-		pos	"310 450"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos		"310 450"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	string string_cancel
@@ -550,7 +537,7 @@ menu popup_base_attack
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"398 466"
+		pos		"398 466"
 		align	cc
 	}
 
@@ -558,11 +545,11 @@ menu popup_base_attack
 	{
 		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
-		pos	"530 450"
+		pos		"530 450"
 		texh	"180 64"
 		texl	"0 32"
-		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
-		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
+		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
+		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
 		click	{ cmd "game_go;" }
 	}
 	string string_go
@@ -570,7 +557,7 @@ menu popup_base_attack
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Enter"
-		pos	"618 466"
+		pos		"618 466"
 		align	cc
 	}
 
@@ -578,11 +565,11 @@ menu popup_base_attack
 	{
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
-		pos	"530 410"
+		pos		"530 410"
 		texh	"180 64"
 		texl	"0 32"
-		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
-		in	{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
+		out		{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
+		in		{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
 		click	{ cmd "game_auto_go;" }
 	}
 	string string_auto_go
@@ -590,13 +577,13 @@ menu popup_base_attack
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto mission"
-		pos	"618 426"
+		pos		"618 426"
 		align	cc
 	}
 
 	func init
 	{
-		cmd "game_auto_check;game_timestop;"
+		cmd	"game_auto_check;game_timestop;"
 	}
 }
 
@@ -607,7 +594,7 @@ menu popup_transferbaselist
 {
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	pic back
 	{
@@ -618,7 +605,7 @@ menu popup_transferbaselist
 	string title
 	{
 		string	"_Select base to transfer to"
-		pos	"290 280"
+		pos		"290 280"
 		font	f_big
 	}
 
@@ -626,20 +613,21 @@ menu popup_transferbaselist
 	string info
 	{
 		string	"_Choose a base to host alien bodies:"
-		pos	"290 316"
+		pos		"290 316"
 	}
 
 	text trans_baselist
 	{
-		num 1
-		pos	"290 336"
-		size "450 144"
-//		bgcolor "1 1 1 0.5"
+		num		1
+		pos		"290 336"
+		size	"450 144"
+//		bgcolor	"1 1 1 0.5"
 		format	"16 100"
-		height 9
-		wheel click
-		rclick { cmd "mn_pop; aircraft_return" }
-		mousefx true
+		height	9
+		wheel
+		click
+		rclick	{ cmd "mn_pop; aircraft_return" }
+		mousefx	true
 	}
 
 	pic bt_cancel
@@ -648,9 +636,9 @@ menu popup_transferbaselist
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 32"
-		pos	"530 450"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos		"530 450"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;aircraft_return;" }
 	}
 	string string_cancel
@@ -658,7 +646,7 @@ menu popup_transferbaselist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"618 466"
+		pos		"618 466"
 		align	cc
 	}
 }
@@ -670,7 +658,7 @@ menu popup_newbase
 {
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	pic back
 	{
@@ -681,19 +669,19 @@ menu popup_newbase
 	string title
 	{
 		string	"_New base"
-		pos	"290 276"
+		pos		"290 276"
 		font	f_big
 	}
 
 	string name_label
 	{
 		string	"_Name:"
-		pos	"290 320"
+		pos		"290 320"
 	}
 	string name
 	{
 		string	"*cvar mn_base_title"
-		pos	"290 330"
+		pos		"290 330"
 		size	"440 32"
 		font	f_big
 	}
@@ -701,12 +689,12 @@ menu popup_newbase
 	string cost_label
 	{
 		string	"_Cost:"
-		pos	"290 380"
+		pos		"290 380"
 	}
 	string cost
 	{
-		string "_100000 c"
-		pos	"290 390"
+		string	"_100000 c"
+		pos		"290 390"
 		font	f_big
 	}
 
@@ -716,9 +704,9 @@ menu popup_newbase
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos	"290 450"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos		"290 450"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	pic bt_build
@@ -727,9 +715,9 @@ menu popup_newbase
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos	"560 450"
-		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
-		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
+		pos		"560 450"
+		out		{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
+		in		{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_build_base;" }
 	}
 	string string_cancel
@@ -737,7 +725,7 @@ menu popup_newbase
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"378 466"
+		pos		"378 466"
 		align	cc
 	}
 	string string_build
@@ -745,13 +733,13 @@ menu popup_newbase
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Build"
-		pos	"648 466"
+		pos		"648 466"
 		align	cc
 	}
 
 	func init
 	{
-		cmd "mn_setbasetitle;bases_check_max;"
+		cmd		"mn_setbasetitle;bases_check_max;"
 	}
 }
 
@@ -763,7 +751,7 @@ menu popup_intercept
 {
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	pic back
 	{
@@ -784,7 +772,7 @@ menu popup_intercept
 	string title
 	{
 		string	"_Select aircraft"
-		pos	"370 210"
+		pos		"370 210"
 		font	f_big
 		align	uc
 	}
@@ -793,7 +781,7 @@ menu popup_intercept
 	{
 		if "mn_displaybaselist == 1"
 		string	"_Select base"
-		pos	"750 210"
+		pos		"750 210"
 		font	f_big
 		align	uc
 	}
@@ -801,39 +789,39 @@ menu popup_intercept
 	string name_label
 	{
 		string	"_Name:"
-		pos	"150 240"
+		pos		"150 240"
 	}
 
 	string status_label
 	{
 		string	"_Status:"
-		pos	"300 240"
+		pos		"300 240"
 	}
 
 	string base_label
 	{
 		string	"_Base:"
-		pos	"450 240"
+		pos		"450 240"
 	}
 
 	string base2_label
 	{
 		if "mn_displaybaselist == 1"
 		string	"_Base:"
-		pos	"625 240"
+		pos		"625 240"
 	}
 
 	text ships
 	{
-		pos             "150 266"
-		size    "460 260"
-		format  "20 150"
-		mousefx true
-		num	9
+		pos		"150 266"
+		size	"460 260"
+		format	"20 150"
+		mousefx	true
+		num		9
 		wheel
 		height	"13"
-		click { }
-		rclick { }
+		click
+		rclick
 	}
 
 	text bases
@@ -844,10 +832,10 @@ menu popup_intercept
 		format	"20 175"
 		mousefx	true
 		num		27
-		wheel
 		height	"13"
-		click { }
-		rclick { }
+		wheel
+		click
+		rclick
 	}
 
 	pic bt_cancel
@@ -856,9 +844,9 @@ menu popup_intercept
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos	"690 530"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos		"690 530"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	string string_cancel
@@ -866,7 +854,7 @@ menu popup_intercept
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"778 546"
+		pos		"778 546"
 		align	cc
 	}
 }
@@ -879,7 +867,7 @@ menu popup_baseattack
 {
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	pic back
 	{
@@ -890,14 +878,14 @@ menu popup_baseattack
 	string title
 	{
 		string	"_Base attack"
-		pos	"290 276"
+		pos		"290 276"
 		font	f_big
 	}
 
 	string name_label
 	{
 		string	"_What to do?"
-		pos	"290 320"
+		pos		"290 320"
 	}
 
 	pic bt_cancel
@@ -906,9 +894,9 @@ menu popup_baseattack
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 32"
-		pos	"310 450"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos		"310 450"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	string string_cancel
@@ -916,7 +904,7 @@ menu popup_baseattack
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"398 466"
+		pos		"398 466"
 		align	cc
 	}
 
@@ -924,11 +912,11 @@ menu popup_baseattack
 	{
 		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
-		pos	"530 450"
+		pos		"530 450"
 		texh	"180 64"
 		texl	"0 32"
-		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
-		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
+		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
+		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
 		click	{ cmd "game_go;" }
 	}
 	string string_go
@@ -936,13 +924,13 @@ menu popup_baseattack
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Enter"
-		pos	"618 466"
+		pos		"618 466"
 		align	cc
 	}
 
 	func init
 	{
-		cmd "game_timestop;"
+		cmd		"game_timestop;"
 	}
 }
 
@@ -966,20 +954,20 @@ menu popup_multi_selection
 	string title
 	{
 		string	"_Select item"
-		pos	"290 276"
+		pos		"290 276"
 		font	f_big
 	}
 
 	string type_label
 	{
 		string	"_Type:"
-		pos	"290 320"
+		pos		"290 320"
 	}
 
 	string name_label
 	{
 		string	"_Name:"
-		pos	"440 320"
+		pos		"440 320"
 	}
 
 	text multi_select
@@ -987,7 +975,7 @@ menu popup_multi_selection
 		pos		"290 340"
 		size	"420 100"
 		format	"20 150"
-		num	14
+		num		14
 		wheel
 		height	5
 		mousefx	true
@@ -1000,9 +988,9 @@ menu popup_multi_selection
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos	"290 450"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos		"290 450"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	string string_cancel
@@ -1010,7 +998,7 @@ menu popup_multi_selection
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"378 466"
+		pos		"378 466"
 		align	cc
 	}
 
@@ -1025,7 +1013,7 @@ menu popup_aircraft
 {
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	pic back
 	{
@@ -1036,20 +1024,20 @@ menu popup_aircraft
 	string title
 	{
 		string	"_Aircraft"
-		pos	"290 276"
+		pos		"290 276"
 		font	f_big
 	}
 
 	string action_label
 	{
 		string	"_Action:"
-		pos	"290 320"
+		pos		"290 320"
 	}
 
 	string description_label
 	{
 		string	"_Description:"
-		pos	"440 320"
+		pos		"440 320"
 	}
 
 	text popup_aircraft_action
@@ -1057,11 +1045,11 @@ menu popup_aircraft
 		pos		"290 340"
 		size	"420 100"
 		format	"20 150"
-		num	7
-		mousefx true
-		click { }
-		wheel
+		num		7
 		height	5
+		mousefx	true
+		click
+		wheel
 	}
 
 	pic bt_cancel
@@ -1070,9 +1058,9 @@ menu popup_aircraft
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos	"290 450"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos		"290 450"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
 	}
 	string string_cancel
@@ -1080,7 +1068,7 @@ menu popup_aircraft
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"378 466"
+		pos		"378 466"
 		align	cc
 	}
 
@@ -1090,18 +1078,18 @@ menu popup
 {
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	pic back
 	{
 		image	menu/popup
-		pos	"256 256"
+		pos		"256 256"
 	}
 
 	pic bt_close
 	{
 		image	hud/close
-		pos	"722 284"
+		pos		"722 284"
 		click	{ cmd "mn_pop;" }
 	}
 
@@ -1111,19 +1099,19 @@ menu popup
 		align	uc
 		size	"446 20"
 		height	"1"
-		num	7
+		num		7
 	}
 
 	text popup_text
 	{
-		pos	"290 320"
-		num	8
+		pos		"290 320"
+		num		8
 		format	"16 100"
 		size	"446 128"
 //		bgcolor	"1 1 1 0.5"
 		height	8
+		scrollbar	true
 		wheel
-		scrollbar true
 	}
 	pic bt_ok
 	{
@@ -1131,9 +1119,9 @@ menu popup
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos	"560 454"
-		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
-		in	{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
+		pos		"560 454"
+		out		{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
+		in		{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
 	}
 	string string_ok
@@ -1141,11 +1129,11 @@ menu popup
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_OK"
-		pos	"648 470"
+		pos		"648 470"
 		align	cc
 	}
 	func leave
 	{
-		cmd "mn_pop;"
+		cmd		"mn_pop;"
 	}
 }

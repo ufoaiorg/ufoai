@@ -1985,6 +1985,24 @@ void MAP_Scroll_f (void)
 	}
 }
 
+static void MAP_SetOverlay_f (void)
+{
+	char *arg;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("usage: %s <nations>\n", Cmd_Argv(0));
+		return;
+	}
+
+	arg = Cmd_Argv(1);
+	if (!Q_strcmp(arg, "nations")) {
+		if (r_geoscape_overlay->integer & OVERLAY_NATION)
+			r_geoscape_overlay->integer ^= OVERLAY_NATION;
+		else
+			r_geoscape_overlay->integer |= OVERLAY_NATION;
+	}
+}
+
 /**
  * @brief Initialise MAP/Geoscape
  */
@@ -1992,4 +2010,5 @@ void MAP_GameInit (void)
 {
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", 0, NULL);
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
+	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 }

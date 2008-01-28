@@ -393,6 +393,7 @@ void COM_ClearArgv(int arg);
 unsigned int Com_HashKey(const char *name, int hashsize);
 int COM_CheckParm(const char *parm);
 void COM_AddParm(const char *parm);
+const char* COM_MacroExpandString (const char *text);
 
 void COM_Init(void);
 void COM_InitArgv(int argc, const char **argv);

@@ -499,73 +499,6 @@ const char *Cmd_Args (void)
 	return cmd_args;
 }
 
-
-/**
- * @brief Expands strings with cvar values that are dereferenced by a *
- * @note There is an overflow check for cvars that also contain a *
- * @sa Cmd_TokenizeString
- * @sa MN_GetReferenceString
- */
-static const char *Cmd_MacroExpandString (const char *text)
-{
-	int i, j, count, len;
-	qboolean inquote;
-	const char *scan;
-	static char expanded[MAX_STRING_CHARS];
-	const char *token, *start;
-
-	inquote = qfalse;
-	scan = text;
-
-	len = strlen(scan);
-	if (len >= MAX_STRING_CHARS) {
-		Com_Printf("Line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
-		return NULL;
-	}
-
-	count = 0;
-
-	for (i = 0; i < len; i++) {
-		if (scan[i] == '"')
-			inquote ^= 1;
-		if (inquote)
-			continue;			/* don't expand inside quotes */
-		if (Q_strcmp(&scan[i], "*cvar"))
-			continue;
-		/* scan out the complete macro */
-		start = scan + i + 1;
-		token = COM_Parse(&start);
-		if (!start)
-			continue;
-
-		token = Cvar_VariableString(token);
-
-		j = strlen(token);
-		len += j;
-		if (len >= MAX_STRING_CHARS) {
-			Com_Printf("Expanded line exceeded %i chars, discarded.\n", MAX_STRING_CHARS);
-			return NULL;
-		}
-
-		Com_sprintf(expanded, MAX_STRING_CHARS, "%s%s%s", scan, token, start);
-
-		scan = expanded;
-		i--;
-
-		if (++count == 100) {
-			Com_Printf("Macro expansion loop, discarded.\n");
-			return NULL;
-		}
-	}
-
-	if (inquote) {
-		Com_Printf("Line has unmatched quote, discarded.\n");
-		return NULL;
-	}
-
-	return scan;
-}
-
 /**
  * @brief Clears the argv vector and set argc to zero
  * @sa Cmd_TokenizeString
@@ -585,19 +518,19 @@ void Cmd_BufClear (void)
 /**
  * @brief Parses the given string into command line tokens.
  * @note $Cvars will be expanded unless they are in a quoted token
- * @sa Cmd_MacroExpandString
+ * @sa COM_MacroExpandString
  */
 void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 {
-	const char *com_token;
+	const char *com_token, *expanded;
 
 	Cmd_BufClear();
 
 	/* macro expand the text */
 	if (macroExpand)
-		text = Cmd_MacroExpandString(text);
-	if (!text)
-		return;
+		expanded = COM_MacroExpandString(text);
+	if (expanded)
+		text = expanded;
 
 	while (1) {
 		/* skip whitespace up to a /n */

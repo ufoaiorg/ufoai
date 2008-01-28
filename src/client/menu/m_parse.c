@@ -950,7 +950,7 @@ void MN_ParseMenu (const char *name, const char **text)
 }
 
 /**
- * @sa Cmd_MacroExpandString
+ * @sa COM_MacroExpandString
  */
 const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 {
@@ -963,6 +963,10 @@ const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 		char param[MAX_VAR];
 
 		/* get the reference and the name */
+		text = COM_MacroExpandString(ref);
+		if (text)
+			return text;
+
 		text = ref + 1;
 		token = COM_Parse(&text);
 		if (!text)
@@ -972,10 +976,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 		if (!text)
 			return NULL;
 
-		if (!Q_strncmp(ident, "cvar", 4)) {
-			/* get the cvar value */
-			return Cvar_VariableString(token);
-		} else if (!Q_strncmp(ident, "binding", 7)) {
+		if (!Q_strncmp(ident, "binding", 7)) {
 			/* get the cvar value */
 			if (*text && *text <= ' ') {
 				/* check command and param */
@@ -985,9 +986,6 @@ const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 				/*Com_sprintf(token, MAX_VAR, "%s %s", command, param);*/
 			}
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
-		} else if (!Q_strncmp(ident, "cmd", 3)) {
-			/* @todo: get the command output */
-			return "TOOD";
 		} else {
 			menuNode_t *refNode;
 			const value_t *val;

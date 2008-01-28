@@ -34,6 +34,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *mn_debugmenu;
 cvar_t *mn_show_tooltips;
 
+static void MN_DrawBorder (const menuNode_t *node)
+{
+	/* left */
+	R_DrawFill(node->pos[0] - node->padding - node->border, node->pos[1] - node->padding - node->border,
+		node->border, node->size[1] + (node->padding*2) + (node->border*2), node->align, node->bordercolor);
+	/* right */
+	R_DrawFill(node->pos[0] + node->size[0] + node->padding, node->pos[1] - node->padding - node->border,
+		node->border, node->size[1] + (node->padding*2) + (node->border*2), node->align, node->bordercolor);
+	/* top */
+	R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding - node->border,
+		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
+	/* down */
+	R_DrawFill(node->pos[0] - node->padding, node->pos[1] + node->size[1] + node->padding,
+		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
+}
+
 /**
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
@@ -125,20 +141,8 @@ void MN_DrawMenus (void)
 				}
 
 				/* FIXME: use GL_LINE_LOOP + array here */
-				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos) {
-					/* left */
-					R_DrawFill(node->pos[0] - node->padding - node->border, node->pos[1] - node->padding - node->border,
-						node->border, node->size[1] + (node->padding*2) + (node->border*2), 0, node->bordercolor);
-					/* right */
-					R_DrawFill(node->pos[0] + node->size[0] + node->padding, node->pos[1] - node->padding - node->border,
-						node->border, node->size[1] + (node->padding*2) + (node->border*2), 0, node->bordercolor);
-					/* top */
-					R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding - node->border,
-						node->size[0] + (node->padding*2), node->border, 0, node->bordercolor);
-					/* down */
-					R_DrawFill(node->pos[0] - node->padding, node->pos[1] + node->size[1] + node->padding,
-						node->size[0] + (node->padding*2), node->border, 0, node->bordercolor);
-				}
+				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
+					MN_DrawBorder(node);
 
 				/* mouse darken effect */
 				VectorScale(node->color, 0.8, color);
