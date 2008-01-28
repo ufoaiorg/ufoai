@@ -107,7 +107,7 @@ building building_missile
 	name		"_Missile Battery"
 	image		base/missile
 	fixcosts	36000
-	depends		building_entrance // storage base needs just entrance
+	depends		building_command // need to know where to shoot
 	type		missile
 	build_time	1
 	varcosts	200
@@ -174,7 +174,6 @@ building building_quarters
 	name		"_Living Quarters"
 	image		base/quarters
 	fixcosts	40000
-	depends		building_powerplant // so that they don't freeze
 	build_time	5
 	varcosts	200
 	map_name	"quarters"
@@ -284,7 +283,7 @@ building building_teamroom
 	name		"_Team Room"
 	image		base/teamroom
 	fixcosts	32000
-	depends		building_command
+	depends		building_powerplant
 	build_time	3
 	varcosts	140
 	map_name	"teamroom"
@@ -378,7 +377,7 @@ building building_hospital
 	name		"_Hospital"
 	image		base/hospital
 	fixcosts	62000
-	depends		building_command // medics need supervision, or...
+	depends		building_powerplant
 	build_time	8
 	varcosts	10000
 	map_name	"hospital"
@@ -397,7 +396,6 @@ building building_amstorage
 	name		"_Antimatter Storage"
 	image		base/antimatter
 	fixcosts	70000
-	depends		building_powerplant
 	build_time	20
 	varcosts	10000
 	type		amstorage

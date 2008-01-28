@@ -2757,7 +2757,7 @@ tech rs_building_missile
 
 	require_AND
 	{
-		tech rs_building_entrance
+		tech rs_building_command
 	}
 
 	provides	building_missile
@@ -2793,7 +2793,7 @@ tech rs_building_hospital
 
 	require_AND
 	{
-		tech rs_building_lab
+		tech rs_building_powerplant
 	}
 
 	provides	building_hospital
@@ -2811,7 +2811,7 @@ tech rs_building_small_hangar
 
 	require_AND
 	{
-		tech rs_building_command
+		tech rs_building_powerplant
 	}
 
 	provides	building_intercept
@@ -2865,7 +2865,7 @@ tech rs_building_quarters
 
 	require_AND
 	{
-		tech rs_building_powerplant
+		tech nothing
 	}
 
 	provides	building_quarters
@@ -2883,7 +2883,7 @@ tech rs_building_radar
 
 	require_AND
 	{
-		tech rs_building_powerplant
+		tech rs_building_command
 	}
 
 	provides	building_radar
@@ -2901,7 +2901,7 @@ tech rs_building_radar_adv
 
 	require_AND
 	{
-		tech rs_building_powerplant
+		tech rs_building_command
 		tech rs_craft_alien_detection
 	}
 
@@ -2956,7 +2956,7 @@ tech rs_building_small_ufo_hangar
 
 	require_AND
 	{
-		tech rs_building_lab
+		tech rs_building_powerplant
 	}
 
 	provides	building_small_ufo_hangar
@@ -2974,7 +2974,7 @@ tech rs_building_large_ufo_hangar
 
 	require_AND
 	{
-		tech rs_building_lab
+		tech rs_building_powerplant
 	}
 
 	provides	building_large_ufo_hangar
@@ -2992,7 +2992,7 @@ tech rs_building_workshop
 
 	require_AND
 	{
-		tech rs_building_powerplant
+		tech rs_building_command
 	}
 
 	provides	building_workshop
