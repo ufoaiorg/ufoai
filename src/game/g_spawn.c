@@ -43,6 +43,7 @@ static void SP_civilian_target(edict_t * ent);
 static void SP_misc_mission(edict_t * ent);
 static void SP_misc_mission_aliens(edict_t * ent);
 
+static void SP_func_rotating(edict_t *ent);
 static void SP_func_door(edict_t *ent);
 static void SP_func_breakable(edict_t * ent);
 
@@ -69,6 +70,7 @@ static const spawn_t spawns[] = {
 	{"info_null", SP_dummy},
 	{"func_breakable", SP_func_breakable},
 	{"func_door", SP_func_door},
+	{"func_rotating", SP_func_rotating},
 
 	{NULL, NULL}
 };
@@ -92,7 +94,7 @@ static const field_t fields[] = {
 	{"classname", offsetof(edict_t, classname), F_LSTRING, 0},
 	{"model", offsetof(edict_t, model), F_LSTRING, 0},
 	{"spawnflags", offsetof(edict_t, spawnflags), F_INT, 0},
-	{"speed", offsetof(edict_t, speed), F_FLOAT, 0},
+	{"speed", offsetof(edict_t, speed), F_INT, 0},
 	{"target", offsetof(edict_t, target), F_LSTRING, 0},
 	{"targetname", offsetof(edict_t, targetname), F_LSTRING, 0},
 	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
@@ -652,7 +654,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
  * @sa SV_SetModel
  * @sa LM_AddModel
  */
-void SP_func_door (edict_t *self)
+static void SP_func_door (edict_t *self)
 {
 	edict_t *other;
 
@@ -673,6 +675,33 @@ void SP_func_door (edict_t *self)
 	other->touch = Touch_DoorTrigger;
 
 	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
+		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
+		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2],
+		(int)self->origin[0], (int)self->origin[1], (int)self->origin[2]);
+}
+
+/**
+ * @brief QUAKED func_door (0 .5 .8) ?
+ * "health"	if set, door must be shot open
+ * @sa SV_SetModel
+ * @sa LM_AddModel
+ */
+static void SP_func_rotating (edict_t *self)
+{
+	self->classname = "rotating";
+	self->type = ET_ROTATING;
+
+	/* set an inline model */
+	/* also set self->solid = SOLID_BSP here */
+	/* also linked into the world here */
+	gi.SetModel(self, self->model);
+	if (self->solid != SOLID_BSP)
+		Com_Printf("Error - func_door with no SOLID_BSP\n");
+
+	if (!self->speed)
+		self->speed = 100;
+
+	Com_DPrintf(DEBUG_GAME, "func_rotating: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
 		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
 		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2],
 		(int)self->origin[0], (int)self->origin[1], (int)self->origin[2]);

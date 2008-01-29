@@ -500,7 +500,7 @@ struct edict_s {
 
 	float angle;	/**< entity yaw - set via mapeditor - -1=up; -2=down */
 
-	float speed;	/**< speed of entities - e.g. doors */
+	int speed;	/**< speed of entities - e.g. rotating or actors */
 	const char *target;	/**< name of the entity to trigger or move towards */
 	const char *targetname;	/**< name pointed to by target */
 	const char *message;	/**< message when entity is activated - set via mapeditor */

@@ -89,7 +89,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
-	"sssbp",			/* EV_ENT_EDICT */
+	"sssbps",			/* EV_ENT_EDICT */
 
 	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
@@ -717,29 +717,27 @@ static void CL_EntPerish (struct dbuffer *msg)
 static void CL_EntEdict (struct dbuffer *msg)
 {
 	le_t *le;
-	int entnum, modelnum1, type, levelflags;
+	int entnum, modelnum1, type, levelflags, speed;
 	cBspModel_t *model;
 	vec3_t origin;
 
-	NET_ReadFormat(msg, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1, &levelflags, &origin);
+	NET_ReadFormat(msg, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1, &levelflags, &origin, &speed);
 
-	if (type != ET_BREAKABLE && type != ET_DOOR)
+	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING)
 		Com_Error(ERR_DROP, "Invalid le announced via EV_ENT_EDICT\n");
 	else if (modelnum1 > MAX_MODELS || modelnum1 < 1)
 		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ENT_EDICT\n");
 
 	/* check if the ent is already visible */
 	le = LE_Get(entnum);
-	if (!le) {
-		le = LE_Add(entnum);
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "Entity appearing already visible... overwriting the old one\n");
-		le->inuse = qtrue;
-	}
+	if (le)
+		Com_Error(ERR_DROP, "le announced a second time - le for entnum %i (type: %i) already exists (via EV_ENT_EDICT)\n", entnum, type);
 
+	le->speed = speed;
 	le->type = type;
 	le->modelnum1 = modelnum1;
 	le->levelflags = levelflags;
+	le->addFunc = LE_BrushModelAction;
 
 	model = cl.model_clip[le->modelnum1];
 	if (!model)
