@@ -789,8 +789,7 @@ void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 void LE_BrushModelAction (le_t * le, entity_t * ent)
 {
 	switch (le->type) {
-	case ET_ROTATE:
-
+	case ET_ROTATING:
 		break;
 	case ET_DOOR:
 		break;
