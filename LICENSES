@@ -1782,7 +1782,9 @@ base/pics/menu/button_equip.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_checked.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_disabled.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_unchecked.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/menu/event_log.tga | GNU General Public License 2.0 | Werner Hoehrer
 base/pics/menu/geo_button_hl.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/pics/menu/geo_eventlog.tga | GNU General Public License 2.0 | Werner Hoehrer
 base/pics/menu/geo_mapcenter.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/menu/geo_menu.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/menu/geo_nations_highlight.tga | GNU General Public License 2.0 | Martin Gerhardy
