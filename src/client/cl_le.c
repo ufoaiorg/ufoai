@@ -796,6 +796,8 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	case ET_BREAKABLE:
 		break;
 	}
+
+	return qtrue;
 }
 
 /**
