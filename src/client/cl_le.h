@@ -155,7 +155,7 @@ localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t 
 void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 
-void LE_BrushModelAction(le_t * le, entity_t * ent);
+qboolean LE_BrushModelAction(le_t * le, entity_t * ent);
 
 void LE_Explode(struct dbuffer *msg);
 void LE_DoorOpen(struct dbuffer *msg);

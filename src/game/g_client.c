@@ -2707,9 +2707,9 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 }
 
 /**
- * @sa CL_EntEdict
+ * @sa CL_AddBrushModel
  */
-static void G_SendVisibleEdicts (int team)
+static void G_SendBrushModels (int team)
 {
 	int i;
 	edict_t *ent;
@@ -2719,9 +2719,9 @@ static void G_SendVisibleEdicts (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++) {
 		if (!ent->inuse)
 			continue;
-		/* don't add actors here */
-		if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
-			gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
+		/* don't add actors here - only brush models */
+		if (ent->solid == SOLID_BSP) {
+			gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);
@@ -2832,7 +2832,7 @@ qboolean G_ClientSpawn (player_t * player)
 	G_SendPlayerStats(player);
 
 	/* send things like doors and breakables */
-	G_SendVisibleEdicts(player->pers.team);
+	G_SendBrushModels(player->pers.team);
 
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);

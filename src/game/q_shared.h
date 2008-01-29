@@ -530,7 +530,7 @@ typedef enum {
 	EV_ENT_APPEAR,
 	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le inuse to qfalse
 		* see CL_EntPerish */
-	EV_ENT_EDICT,
+	EV_ADD_BRUSH_MODEL,
 
 	EV_ACTOR_APPEAR,
 	EV_ACTOR_ADD,

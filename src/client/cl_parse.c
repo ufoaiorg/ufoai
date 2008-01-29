@@ -89,7 +89,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
-	"sssbps",			/* EV_ENT_EDICT */
+	"sssbps",			/* EV_ADD_BRUSH_MODEL */
 
 	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
@@ -139,7 +139,7 @@ static const char *ev_names[] =
 
 	"EV_ENT_APPEAR",
 	"EV_ENT_PERISH",
-	"EV_ENT_EDICT",
+	"EV_ADD_BRUSH_MODEL",
 
 	"EV_ACTOR_APPEAR",
 	"EV_ACTOR_ADD",
@@ -176,7 +176,7 @@ static void CL_StartingGameDone(struct dbuffer *msg);
 static void CL_CenterView(struct dbuffer *msg);
 static void CL_EntAppear(struct dbuffer *msg);
 static void CL_EntPerish(struct dbuffer *msg);
-static void CL_EntEdict(struct dbuffer *msg);
+static void CL_AddBrushModel(struct dbuffer *msg);
 static void CL_ActorDoStartMove(struct dbuffer *msg);
 static void CL_ActorAppear(struct dbuffer *msg);
 static void CL_ActorAdd(struct dbuffer *msg);
@@ -202,7 +202,7 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 
 	CL_EntAppear,					/* EV_ENT_APPEAR */
 	CL_EntPerish,					/* EV_ENT_PERISH */
-	CL_EntEdict,					/* EV_ENT_EDICT */
+	CL_AddBrushModel,				/* EV_ADD_BRUSH_MODEL */
 
 	CL_ActorAppear,					/* EV_ACTOR_APPEAR */
 	CL_ActorAdd,					/* EV_ACTOR_ADD */
@@ -711,27 +711,27 @@ static void CL_EntPerish (struct dbuffer *msg)
 /**
  * @brief Register local entities for SOLID_BSP models like func_breakable or func_door
  * @note func_breakable, func_door
- * @sa G_SendVisibleEdicts
- * @sa EV_ENT_EDICT
+ * @sa G_SendBrushModels
+ * @sa EV_ADD_BRUSH_MODEL
  */
-static void CL_EntEdict (struct dbuffer *msg)
+static void CL_AddBrushModel (struct dbuffer *msg)
 {
 	le_t *le;
 	int entnum, modelnum1, type, levelflags, speed;
 	cBspModel_t *model;
 	vec3_t origin;
 
-	NET_ReadFormat(msg, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1, &levelflags, &origin, &speed);
+	NET_ReadFormat(msg, ev_format[EV_ADD_BRUSH_MODEL], &type, &entnum, &modelnum1, &levelflags, &origin, &speed);
 
 	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING)
-		Com_Error(ERR_DROP, "Invalid le announced via EV_ENT_EDICT\n");
+		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL\n");
 	else if (modelnum1 > MAX_MODELS || modelnum1 < 1)
-		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ENT_EDICT\n");
+		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ADD_BRUSH_MODEL\n");
 
 	/* check if the ent is already visible */
 	le = LE_Get(entnum);
 	if (le)
-		Com_Error(ERR_DROP, "le announced a second time - le for entnum %i (type: %i) already exists (via EV_ENT_EDICT)\n", entnum, type);
+		Com_Error(ERR_DROP, "le announced a second time - le for entnum %i (type: %i) already exists (via EV_ADD_BRUSH_MODEL)\n", entnum, type);
 
 	le->speed = speed;
 	le->type = type;
@@ -741,10 +741,10 @@ static void CL_EntEdict (struct dbuffer *msg)
 
 	model = cl.model_clip[le->modelnum1];
 	if (!model)
-		Com_Error(ERR_DROP, "CL_EntEdict: Could not find inline model %i", le->modelnum1);
+		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not find inline model %i", le->modelnum1);
 	le->model1 = R_RegisterModelShort(va("*%i", le->modelnum1));
 	if (!le->model1)
-		Com_Error(ERR_DROP, "CL_EntEdict: Could not register inline model %i", le->modelnum1);
+		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not register inline model %i", le->modelnum1);
 
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
 	VectorCopy(model->mins, le->mins);
