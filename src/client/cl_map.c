@@ -1987,7 +1987,7 @@ void MAP_Scroll_f (void)
 
 static void MAP_SetOverlay_f (void)
 {
-	char *arg;
+	const char *arg;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: %s <nations>\n", Cmd_Argv(0));
