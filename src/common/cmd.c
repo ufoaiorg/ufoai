@@ -527,10 +527,11 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 	Cmd_BufClear();
 
 	/* macro expand the text */
-	if (macroExpand)
+	if (macroExpand) {
 		expanded = COM_MacroExpandString(text);
-	if (expanded)
-		text = expanded;
+		if (expanded)
+			text = expanded;
+	}
 
 	while (1) {
 		/* skip whitespace up to a /n */
