@@ -125,7 +125,7 @@ menu althud
 	{
 		if	"sv_maxclients >= 2"
 		tooltip	"_Chat messages"
-		image	menu/event_log
+		image	hud/event_log
 		texl	"0 0"
 		texh	"32 36"
 		pos	"985 590"
@@ -845,7 +845,7 @@ menu althud
 		max		"*cvar mn_tumax"
 		align	uc
 	}
-	
+
 	bar timereserved
 	{
 		pos		"886 332"

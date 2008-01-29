@@ -1612,6 +1612,7 @@ base/pics/hud/buttons1g.tga | GNU General Public License 2.0 |  | Based on the o
 base/pics/hud/buttons2.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/buttons2g.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/checkbox.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/hud/event_log.tga | GNU General Public License 2.0 | Werner Hoehrer
 base/pics/hud/firemode.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/icons/air.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/alien.tga | GNU General Public License 2.0 | Gerd Heisse
@@ -1782,7 +1783,6 @@ base/pics/menu/button_equip.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_checked.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_disabled.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_unchecked.tga | GNU General Public License 2.0 | Gerd Heisse
-base/pics/menu/event_log.tga | GNU General Public License 2.0 | Werner Hoehrer
 base/pics/menu/geo_button_hl.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/menu/geo_eventlog.tga | GNU General Public License 2.0 | Werner Hoehrer
 base/pics/menu/geo_mapcenter.tga | GNU General Public License 2.0 | Martin Gerhardy
