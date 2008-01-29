@@ -724,7 +724,7 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_ADD_BRUSH_MODEL], &type, &entnum, &modelnum1, &levelflags, &origin, &speed);
 
 	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING)
-		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL\n");
+		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL type: %i\n", type);
 	else if (modelnum1 > MAX_MODELS || modelnum1 < 1)
 		Com_Error(ERR_DROP, "Invalid le modelnum1 announced via EV_ADD_BRUSH_MODEL\n");
 
@@ -732,6 +732,9 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	le = LE_Get(entnum);
 	if (le)
 		Com_Error(ERR_DROP, "le announced a second time - le for entnum %i (type: %i) already exists (via EV_ADD_BRUSH_MODEL)\n", entnum, type);
+
+	le = LE_Add(entnum);
+	assert(le);
 
 	le->speed = speed;
 	le->type = type;

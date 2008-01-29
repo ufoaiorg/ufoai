@@ -2716,9 +2716,10 @@ static void G_SendBrushModels (int team)
 	qboolean end = qfalse;
 
 	/* make every edict visible thats not an actor or a 2x2 unit */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++) {
+	for (i = 1, ent = g_edicts + 1; i < globals.num_edicts; ent++, i++) {
 		if (!ent->inuse)
 			continue;
+
 		/* don't add actors here - only brush models */
 		if (ent->solid == SOLID_BSP) {
 			gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
