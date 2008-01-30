@@ -688,6 +688,7 @@ static void ParseBrush (entity_t *mapent)
 
 		sprintf(string, "%i %i %i", (int)origin[0], (int)origin[1], (int)origin[2]);
 		SetKeyValue(&entities[b->entitynum], "origin", string);
+		Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: set origin to %s\n", b->entitynum, b->brushnum, string);
 
 		VectorCopy(origin, entities[b->entitynum].origin);
 

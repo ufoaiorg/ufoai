@@ -675,19 +675,11 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 		for (j = 0; j < 2; j++) {
 			if (!cw[j])
 				continue;
-#if 0
-			if (WindingIsTiny(cw[j])) {
-				FreeWinding(cw[j]);
-				continue;
-			}
-#endif
+
 			cs = &b[j]->sides[b[j]->numsides];
 			b[j]->numsides++;
 			*cs = *s;
-/*			cs->planenum = s->planenum; */
-/*			cs->texinfo = s->texinfo; */
-/*			cs->visible = s->visible; */
-/*			cs->original = s->original; */
+
 			cs->winding = cw[j];
 			cs->tested = qfalse;
 		}
@@ -749,7 +741,7 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 			if (v1 < 1.0) {
 				FreeBrush(b[i]);
 				b[i] = NULL;
-/*				Sys_FPrintf(SYS_VRB, "tiny volume after clip\n"); */
+				Sys_FPrintf(SYS_VRB, "tiny volume after clip\n");
 			}
 		}
 	}
