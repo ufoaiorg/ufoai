@@ -199,10 +199,10 @@ menu map
 
 	text description
 	{
-		pos			"800 160"
-		size		"192 140"
+		pos			"800 158"
+		size		"192 144"
 		format		"18 100"
-		height		"4"
+		height		"8"
 		wheel
 //		bgcolor		"1 1 1 0.6"
 		scrollbar	true
