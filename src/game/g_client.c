@@ -2707,7 +2707,11 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 }
 
 /**
+ * @brief Send brush models for entities like func_breakable and func_door to the
+ * client and let him know about them. There are also entities that are announced
+ * here, but fully handled clientside - like func_rotating
  * @sa CL_AddBrushModel
+ * @sa EV_ADD_BRUSH_MODEL
  */
 static void G_SendBrushModels (int team)
 {
