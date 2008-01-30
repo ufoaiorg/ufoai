@@ -683,6 +683,18 @@ particle crawlTracer
 	}
 }
 
+particle blocked_field
+{
+	init
+	{
+		image  sfx/foe
+		blend  blend
+		style  facing
+		size   "24 24"
+		life   0.0001
+	}
+}
+
 particle actor_friend
 {
 	init
