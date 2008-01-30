@@ -263,8 +263,10 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 /**
  * @brief Creates a server's entity / program execution context
  * by parsing textual entity definitions out of an ent file.
+ * @sa CM_EntityString
+ * @sa SV_SpawnServer
  */
-void SpawnEntities (const char *mapname, const char *entities)
+void G_SpawnEntities (const char *mapname, const char *entities)
 {
 	edict_t *ent;
 	int entnum;
@@ -297,7 +299,7 @@ void SpawnEntities (const char *mapname, const char *entities)
 		entities = ED_ParseEdict(entities, ent);
 
 		VecToPos(ent->origin, ent->pos);
-		gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+		gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 
 		ent->mapNum = entnum++;
 		ED_CallSpawn(ent);
@@ -376,11 +378,11 @@ static void G_ActorSpawn (edict_t * ent)
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
+	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
 	if (ent->pos[2] >= HEIGHT)
 		Com_Printf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
-	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+	gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 
 	/* link it for collision detection */
 	ent->dir = AngleToDV(ent->angle);
@@ -406,10 +408,10 @@ static void G_Actor2x2Spawn (edict_t * ent)
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
+	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
 	if (ent->pos[2] >= HEIGHT)
 		Com_Printf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
-	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+	gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 
 	/* link it for collision detection */
 	ent->dir = AngleToDV(ent->angle);
@@ -536,8 +538,8 @@ static void SP_civilian_target (edict_t * ent)
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
-	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
+	gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 }
 
 /**
@@ -552,8 +554,8 @@ static void SP_misc_mission (edict_t * ent)
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
-	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
+	gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 }
 
 /**
@@ -568,8 +570,8 @@ static void SP_misc_mission_aliens (edict_t * ent)
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
-	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
+	gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 }
 
 /**

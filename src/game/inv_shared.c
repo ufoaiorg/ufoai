@@ -39,7 +39,7 @@ static item_t cacheItem = {NONE_AMMO, NONE, NONE, 0, 0}; /* to crash as soon as 
 /**
  * @brief Initializes csi_t *CSI pointer.
  * @param[in] import
- * @sa InitGame
+ * @sa G_Init
  * @sa Com_ParseScripts
  */
 void INVSH_InitCSI (csi_t * import)
@@ -70,7 +70,7 @@ inline fireDef_t* FIRESH_GetFiredef (int objIdx, int weapFdsIdx, int fdIdx)
 /**
  * @brief Inits the inventory definition by linking the ->next pointers properly.
  * @param[in] invList Pointer to invList_t definition being inited.
- * @sa InitGame
+ * @sa G_Init
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */

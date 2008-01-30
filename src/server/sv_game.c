@@ -350,7 +350,8 @@ static void SV_FreeTags (int tagNum)
 
 /**
  * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
- * @sa ShutdownGame
+ * @sa G_Shutdown
+ * @sa SV_InitGameProgs
  */
 void SV_ShutdownGameProgs (void)
 {
@@ -368,6 +369,7 @@ void SV_ShutdownGameProgs (void)
 
 /**
  * @brief Init the game subsystem for a new map
+ * @sa SV_ShutdownGameProgs
  */
 void SV_InitGameProgs (void)
 {
@@ -458,7 +460,7 @@ void SV_InitGameProgs (void)
 	import.csi = &csi;
 
 	/* import the server routing table */
-	import.map = (void *) &svMap;
+	import.routingMap = (void *) &svMap;
 
 	ge = Sys_GetGameAPI(&import);
 

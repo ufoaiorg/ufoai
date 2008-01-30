@@ -1405,6 +1405,13 @@ int CM_NumInlineModels (void)
 	return numInline;
 }
 
+/**
+ * @return The entitystring for all the loaded maps
+ * @note Every map assembly will attack their entities here
+ * @sa CM_LoadMap
+ * @sa G_SpawnEntities
+ * @sa SV_SpawnServer
+ */
 char *CM_EntityString (void)
 {
 	return map_entitystring;

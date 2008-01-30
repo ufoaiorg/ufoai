@@ -129,7 +129,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 
 	guete = 0.0;
 	memset(aia, 0, sizeof(aiAction_t));
-	move = gi.MoveLength(gi.map, to, qtrue);
+	move = gi.MoveLength(gi.routingMap, to, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -163,7 +163,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	gi.GridPosToVec(gi.map, to, ent->origin);
+	gi.GridPosToVec(gi.routingMap, to, ent->origin);
 
 	/* shooting */
 	maxDmg = 0.0;
@@ -332,12 +332,12 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 					/* time */
-					delta = gi.MoveLength(gi.map, ent->pos, qfalse);
+					delta = gi.MoveLength(gi.routingMap, ent->pos, qfalse);
 					if (delta > tu)
 						continue;
 
 					/* visibility */
-					gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+					gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 						continue;
 
@@ -352,7 +352,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 		if (still_searching) {
 			/* nothing found */
 			VectorCopy(to, ent->pos);
-			gi.GridPosToVec(gi.map, to, ent->origin);
+			gi.GridPosToVec(gi.routingMap, to, ent->origin);
 		} else {
 			/* found a hiding spot */
 			VectorCopy(ent->pos, aia->stop);
@@ -402,9 +402,9 @@ static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	gi.GridPosToVec(gi.map, to, ent->origin);
+	gi.GridPosToVec(gi.routingMap, to, ent->origin);
 
-	move = gi.MoveLength(gi.map, to, qtrue);
+	move = gi.MoveLength(gi.routingMap, to, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -458,7 +458,7 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 
 	/* calculate move table */
 	G_MoveCalc(0, ent->pos, ent->fieldSize, MAX_ROUTE);
-	gi.MoveStore(gi.map);
+	gi.MoveStore(gi.routingMap);
 
 	/* set borders */
 	xl = (int) ent->pos[0] - AI_MAX_DIST;
@@ -484,7 +484,7 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	for (to[2] = 0; to[2] < HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++)
-				if (gi.MoveLength(gi.map, to, qtrue) <= ent->TU) {
+				if (gi.MoveLength(gi.routingMap, to, qtrue) <= ent->TU) {
 					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
 						guete = AI_CivilianCalcGuete(ent, to, &aia);
 					else
@@ -503,7 +503,7 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 				i++;
 				Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
 				/* test for time */
-				if (ent->TU - gi.MoveLength(gi.map, checkPoint->pos, qtrue) < 0) {
+				if (ent->TU - gi.MoveLength(gi.routingMap, checkPoint->pos, qtrue) < 0) {
 					Com_DPrintf(DEBUG_GAME, "civtarget too far away (%i)\n", checkPoint->count);
 					/* FIXME: Nevertheless walk to that direction */
 					continue;

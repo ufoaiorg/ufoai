@@ -330,7 +330,7 @@ void G_RecalcRouting (const edict_t * self)
 	entList[i] = NULL;
 
 	/* recalculate routing */
-	gi.GridRecalcRouting(gi.map, self->model, self->angles, entList);
+	gi.GridRecalcRouting(gi.routingMap, self->model, self->angles, entList);
 }
 
 /**

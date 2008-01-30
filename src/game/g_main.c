@@ -120,7 +120,7 @@ invList_t invChain[MAX_INVLIST];
  * @brief This will be called when the dll is first loaded
  * @note only happens when a new game is started or a save game is loaded.
  */
-static void InitGame (void)
+static void G_Init (void)
 {
 	Com_Printf("==== InitGame ====\n");
 
@@ -246,7 +246,7 @@ static void InitGame (void)
  * @brief Free the tags TAG_LEVEL and TAG_GAME
  * @sa Mem_FreeTags
  */
-static void ShutdownGame (void)
+static void G_Shutdown (void)
 {
 	Com_Printf("==== ShutdownGame ====\n");
 
@@ -268,9 +268,9 @@ game_export_t *GetGameAPI (game_import_t * import)
 	srand(gi.seed);
 
 	globals.apiversion = GAME_API_VERSION;
-	globals.Init = InitGame;
-	globals.Shutdown = ShutdownGame;
-	globals.SpawnEntities = SpawnEntities;
+	globals.Init = G_Init;
+	globals.Shutdown = G_Shutdown;
+	globals.SpawnEntities = G_SpawnEntities;
 
 	globals.ClientConnect = G_ClientConnect;
 	globals.ClientUserinfoChanged = G_ClientUserinfoChanged;

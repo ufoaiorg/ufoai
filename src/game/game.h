@@ -104,7 +104,7 @@ typedef struct {
 	/* client/server information */
 	int seed;
 	csi_t *csi;
-	struct routing_s *map;	/**< server side routing table */
+	struct routing_s *routingMap;	/**< server side routing table */
 
 	/* special messages */
 
@@ -233,7 +233,7 @@ typedef struct {
 	void (EXPORT *Init) (void);
 	void (EXPORT *Shutdown) (void);
 
-	/* each new level entered will cause a call to SpawnEntities */
+	/* each new level entered will cause a call to G_SpawnEntities */
 	void (EXPORT *SpawnEntities) (const char *mapname, const char *entstring);
 
 	qboolean(EXPORT *ClientConnect) (player_t * client, char *userinfo);

@@ -763,8 +763,8 @@ edict_t *G_SpawnFloor (pos3_t pos)
 	floor->type = ET_ITEM;
 	floor->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floor->pos);
-	floor->pos[2] = gi.GridFall(gi.map, floor->pos, floor->fieldSize);
-	gi.GridPosToVec(gi.map, floor->pos, floor->origin);
+	floor->pos[2] = gi.GridFall(gi.routingMap, floor->pos, floor->fieldSize);
+	gi.GridPosToVec(gi.routingMap, floor->pos, floor->origin);
 	return floor;
 }
 
@@ -1238,7 +1238,7 @@ static void G_BuildForbiddenList (int team)
 void G_MoveCalc (int team, pos3_t from, int size, int distance)
 {
 	G_BuildForbiddenList(team);
-	gi.MoveCalc(gi.map, from, size, distance, fb_list, fb_length);
+	gi.MoveCalc(gi.routingMap, from, size, distance, fb_list, fb_length);
 }
 
 
@@ -1309,7 +1309,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, MAX_ROUTE);
-	length = gi.MoveLength(gi.map, to, qfalse);
+	length = gi.MoveLength(gi.routingMap, to, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length < ROUTING_NOT_REACHABLE) {
@@ -1326,7 +1326,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		tu = 0;
 		initTU = ent->TU;
 
-		while ((dv = gi.MoveNext(gi.map, pos)) < ROUTING_NOT_REACHABLE) {
+		while ((dv = gi.MoveNext(gi.routingMap, pos)) < ROUTING_NOT_REACHABLE) {
 			/* store the inverted dv */
 			/* (invert by flipping the first bit and add the old height) */
 			assert(numdv < MAX_DVTAB);
@@ -1380,7 +1380,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* move */
 				PosAddDV(ent->pos, dvtab[numdv]);
-				gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+				gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 				VectorCopy(ent->origin, pointTrace);
 				pointTrace[2] += PLAYER_MIN;
 

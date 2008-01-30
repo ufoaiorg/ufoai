@@ -544,7 +544,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 
 	/* get positional data */
 	VectorCopy(from, last);
-	gi.GridPosToVec(gi.map, at, target);
+	gi.GridPosToVec(gi.routingMap, at, target);
 	/* first apply z_align value */
 	target[2] -= z_align;
 
@@ -737,7 +737,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	}
 
 	/* Calc direction of the shot. */
-	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
+	gi.GridPosToVec(gi.routingMap, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
 	impact[2] -= z_align;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
@@ -934,7 +934,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
 {
 	/* get weapon position */
-	gi.GridPosToVec(gi.map, shooter->pos, shotOrigin);
+	gi.GridPosToVec(gi.routingMap, shooter->pos, shotOrigin);
 	/* adjust height: */
 	shotOrigin[2] += fd->shotOrg[1];
 	/* adjust horizontal: */
@@ -1061,7 +1061,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	}
 
 	/* check target is not out of range */
-	gi.GridPosToVec(gi.map, at, target);
+	gi.GridPosToVec(gi.routingMap, at, target);
 	if (fd->range < VectorDist(ent->origin, target)) {
 		if (!quiet)
 			gi.cprintf(player, PRINT_HUD, _("Can't perform action - target out of range!\n"));

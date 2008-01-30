@@ -314,7 +314,7 @@ int G_VisToPM(int vis_mask);
 void G_SendInventory(int player_mask, edict_t * ent);
 int G_TeamToPM(int team);
 
-void SpawnEntities(const char *mapname, const char *entities);
+void G_SpawnEntities(const char *mapname, const char *entities);
 qboolean G_RunFrame(void);
 
 #ifdef DEBUG
