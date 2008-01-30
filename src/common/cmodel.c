@@ -249,8 +249,8 @@ MAP LOADING
 
 
 /**
- * @brief Loads brush entities like doors and func_breakable
- * @param[in] l
+ * @brief Loads brush entities like func_door and func_breakable
+ * @param[in] l The lump to load the data from
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  * @sa Mod_LoadSubmodels
