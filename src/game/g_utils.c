@@ -317,7 +317,7 @@ edict_t *G_Spawn (void)
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
  */
-void G_RecalcRouting (edict_t * self)
+void G_RecalcRouting (const edict_t * self)
 {
 	int i;
 	edict_t *ent;

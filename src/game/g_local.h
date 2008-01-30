@@ -251,7 +251,7 @@ void G_ReactToPostFire(edict_t *target);
 
 
 void G_CompleteRecalcRouting(void);
-void G_RecalcRouting(edict_t * ent);
+void G_RecalcRouting(const edict_t * ent);
 
 /* g_client.c */
 /* the visibile changed - if it was visible - it's (the edict) now invisible */

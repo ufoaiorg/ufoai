@@ -2986,7 +2986,7 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  * @sa CMod_LoadSubmodels
  * @param[in] list The local models list
  */
-void Grid_RecalcRouting (struct routing_s *map, const char *name, vec3_t angles, const char **list)
+void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t angles, const char **list)
 {
 	cBspModel_t *model;
 	pos3_t min, max;
