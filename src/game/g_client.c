@@ -2712,6 +2712,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
  * here, but fully handled clientside - like func_rotating
  * @sa CL_AddBrushModel
  * @sa EV_ADD_BRUSH_MODEL
+ * @param[in] team The team the edicts are send to
  */
 static void G_SendBrushModels (int team)
 {
@@ -2733,7 +2734,7 @@ static void G_SendBrushModels (int team)
 			gi.WriteByte(ent->spawnflags & 255);
 			gi.WritePos(ent->origin);
 			gi.WriteShort(ent->speed);
-			gi.WriteByte(YAW); /* FIXME make this variable */
+			gi.WriteByte(ent->angle);
 			ent->visflags |= ~ent->visflags;
 			end = qtrue;
 		}
