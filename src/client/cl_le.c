@@ -149,6 +149,8 @@ static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 	}
 
 	CL_CompleteRecalcRouting();
+
+	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
 /**
@@ -807,8 +809,8 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 {
 	switch (le->type) {
 	case ET_ROTATING:
-		break;
 	case ET_DOOR:
+		VectorCopy(le->origin, ent->origin);
 		break;
 	case ET_BREAKABLE:
 		break;

@@ -146,6 +146,8 @@ void SV_UnlinkEdict (edict_t * ent)
 		return;					/* not linked in anywhere */
 	RemoveLink(&ent->area);
 	ent->area.prev = ent->area.next = NULL;
+	if (ent->child)
+		SV_UnlinkEdict(ent->child);
 }
 
 /**

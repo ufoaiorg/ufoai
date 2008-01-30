@@ -431,11 +431,8 @@ struct edict_s {
 	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	/*
-	 * usually the entity that spawned this entity - e.g. a bullet is owned
-	 * but the player who fired it
-	 */
-	edict_t *owner;
+	edict_t *child;	/**< e.g. the trigger for this edict */
+	edict_t *owner;	/**< e.g. the door model in case of func_door */
 	/*
 	 * type of objects the entity will not pass through
 	 * can be any of MASK_* or CONTENTS_*

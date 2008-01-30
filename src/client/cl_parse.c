@@ -755,6 +755,7 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
 
 	VectorCopy(origin, le->origin);
+/*	VectorCopy(origin, model->origin);*/
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
 

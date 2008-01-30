@@ -2236,7 +2236,7 @@ static void CL_BuildForbiddenList (void)
 			continue;
 		/* Dead ugv will stop walking, too. */
 		/**
-		 * @note Just a note for the futuR_
+		 * @note Just a note for the future
 		 * If we get any ugv that does not block the map when dead this is the place to look.
 		 */
 		if ((!(le->state & STATE_DEAD) && le->type == ET_ACTOR) || le->type == ET_ACTOR2x2) {
@@ -2262,7 +2262,7 @@ static void CL_BuildForbiddenList (void)
 void CL_DisplayBlockedPaths_f (void)
 {
 	le_t *le = NULL;
-	int i;
+	int i, j;
 	ptl_t *ptl = NULL;
 	vec3_t s;
 
@@ -2270,45 +2270,39 @@ void CL_DisplayBlockedPaths_f (void)
 		if (!le->inuse)
 			continue;
 
-		if (!(le->state & STATE_DEAD)
-		&& (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)) {
+		switch (le->type) {
+		case ET_ACTOR:
+		case ET_ACTOR2x2:
 			/* draw blocking cursor at le->pos */
-			Grid_PosToVec(&clMap, le->pos, s);
-			ptl = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
-			ptl->rounds = 2;
-			ptl->roundsCnt = 2;
-			ptl->life = 10000;
-			ptl->t = 0;
-			if (le->fieldSize == ACTOR_SIZE_2x2) {
-				/* If this actor blocks 4 fields draw them as well. */
-				pos3_t temp;
-				ptl_t *ptl2 = NULL;
-				ptl_t *ptl3 = NULL;
-				ptl_t *ptl4 = NULL;
+			if (!(le->state & STATE_DEAD))
+				Grid_PosToVec(&clMap, le->pos, s);
+			break;
+		case ET_DOOR:
+		case ET_BREAKABLE:
+		case ET_ROTATING:
+			VectorCopy(le->origin, s);
+			break;
+		default:
+			continue;
+		}
 
-				VectorSet(temp, le->pos[0]+1, le->pos[1], le->pos[2]);
-				Grid_PosToVec(&clMap,temp, s);
-				ptl2 = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
+		ptl = CL_ParticleSpawn("blocked_field", 0, s, NULL, NULL);
+		ptl->rounds = 2;
+		ptl->roundsCnt = 2;
+		ptl->life = 10000;
+		ptl->t = 0;
+		if (le->fieldSize == ACTOR_SIZE_2x2) {
+			/* If this actor blocks 4 fields draw them as well. */
+			ptl_t *ptl2;
+			vec3_t temp;
+			for (j = 0; j < 3; j++) {
+				VectorCopy(s, temp);
+				temp[j] += UNIT_SIZE;
+				ptl2 = CL_ParticleSpawn("blocked_field", 0, s, NULL, NULL);
 				ptl2->rounds = ptl->rounds;
 				ptl2->roundsCnt = ptl->roundsCnt;
 				ptl2->life = ptl->life;
 				ptl2->t = ptl->t;
-
-				VectorSet(temp, le->pos[0], le->pos[1]+1, le->pos[2]);
-				Grid_PosToVec(&clMap,temp, s);
-				ptl3 = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
-				ptl3->rounds = ptl->rounds;
-				ptl3->roundsCnt = ptl->roundsCnt;
-				ptl3->life = ptl->life;
-				ptl3->t = ptl->t;
-
-				VectorSet(temp, le->pos[0]+1, le->pos[1]+1, le->pos[2]);
-				Grid_PosToVec(&clMap,temp, s);
-				ptl4 = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
-				ptl4->rounds = ptl->rounds;
-				ptl4->roundsCnt = ptl->roundsCnt;
-				ptl4->life = ptl->life;
-				ptl4->t = ptl->t;
 			}
 		}
 	}

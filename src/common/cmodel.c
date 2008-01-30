@@ -2707,8 +2707,8 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
  * @sa Grid_MoveMark
- * @sa G_MoveCalc (g_client.c)
- * @sa CL_ConditionalMoveCalc (cl_actor.c)
+ * @sa G_MoveCalc
+ * @sa CL_ConditionalMoveCalc
  */
 void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int distance, byte ** fb_list, int fb_length)
 {

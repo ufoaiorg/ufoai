@@ -676,6 +676,8 @@ static void SP_func_door (edict_t *self)
 	other = G_TriggerSpawn(self);
 	other->touch = Touch_DoorTrigger;
 
+	self->child = other;
+
 	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
 		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
 		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2],
