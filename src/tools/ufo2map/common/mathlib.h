@@ -52,6 +52,8 @@ qboolean VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
 #define VectorClear(x) {x[0] = x[1] = x[2] = 0;}
 #define	VectorNegate(x) {x[0]=-x[0];x[1]=-x[1];x[2]=-x[2];}
 #define VectorSet(v, x, y, z)   (v[0]=(x), v[1]=(y), v[2]=(z))
+#define VectorNotEmpty(a)           (a[0]||a[1]||a[2])
+#define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
 
 vec_t Q_rint(const vec_t in);
 

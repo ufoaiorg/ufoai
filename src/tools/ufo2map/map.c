@@ -344,11 +344,12 @@ static void AddBrushBevels (mapbrush_t *b)
 					/* if all the points on all the sides are */
 					/* behind this plane, it is a proper edge bevel */
 					for (k = 0; k < b->numsides; k++) {
-						/* FIXME: This leads to different results on different archs
-						 * due to float rounding/precision errors */
+						/* @note: This leads to different results on different archs
+						 * due to float rounding/precision errors - use the -ffloat-store
+						 * feature of gcc to 'fix' this */
 						/* if this plane has already been used, skip it */
 						if (PlaneEqual(&mapplanes[b->original_sides[k].planenum]
-							, normal, dist) )
+							, normal, dist))
 							break;
 
 						w2 = b->original_sides[k].winding;
@@ -490,7 +491,7 @@ static void ParseBrush (entity_t *mapent)
 
 	b = &mapbrushes[nummapbrushes];
 	b->original_sides = &brushsides[nummapbrushsides];
-	b->entitynum = num_entities-1;
+	b->entitynum = num_entities - 1;
 	b->brushnum = nummapbrushes - mapent->firstbrush;
 
 	b->optimizedDetail = qfalse;
@@ -706,27 +707,21 @@ static void ParseBrush (entity_t *mapent)
 
 /**
  * @brief Takes all of the brushes from the current entity and adds them to the world's brush list.
- * @note Used by func_group and func_areaportal
+ * @note Used by func_group
  */
 static void MoveBrushesToWorld (entity_t *mapent)
 {
 	int newbrushes, worldbrushes, i;
 	mapbrush_t *temp;
 
-	/* this is pretty gross, because the brushes are expected to be */
-	/* in linear order for each entity */
+	/* this is pretty gross, because the brushes are expected to be
+	 * in linear order for each entity */
 
 	newbrushes = mapent->numbrushes;
 	worldbrushes = entities[0].numbrushes;
 
-	temp = malloc(newbrushes*sizeof(mapbrush_t));
-	memcpy(temp, mapbrushes + mapent->firstbrush, newbrushes*sizeof(mapbrush_t));
-
-#if	0
-	/* let them keep their original brush numbers */
-	for (i = 0; i < newbrushes; i++)
-		temp[i].entitynum = 0;
-#endif
+	temp = malloc(newbrushes * sizeof(mapbrush_t));
+	memcpy(temp, mapbrushes + mapent->firstbrush, newbrushes * sizeof(mapbrush_t));
 
 	/* make space to move the brushes (overlapped copy) */
 	memmove(mapbrushes + worldbrushes + newbrushes,
@@ -749,10 +744,7 @@ static qboolean ParseMapEntity (void)
 {
 	entity_t *mapent;
 	epair_t *e;
-	side_t *s;
-	int i, j, startbrush, startsides;
-	vec_t newdist;
-	mapbrush_t *b;
+	int startbrush, startsides;
 
 	if (!GetToken(qtrue))
 		return qfalse;
@@ -766,8 +758,7 @@ static qboolean ParseMapEntity (void)
 	startbrush = nummapbrushes;
 	startsides = nummapbrushsides;
 
-	mapent = &entities[num_entities];
-	num_entities++;
+	mapent = &entities[num_entities++];
 	memset(mapent, 0, sizeof(*mapent));
 	mapent->firstbrush = nummapbrushes;
 	mapent->numbrushes = 0;
@@ -788,8 +779,13 @@ static qboolean ParseMapEntity (void)
 
 	GetVectorForKey(mapent, "origin", mapent->origin);
 
-	/* if there was an origin brush, offset all of the planes and texinfo */
-	if (mapent->origin[0] || mapent->origin[1] || mapent->origin[2]) {
+	/* if there was an origin brush, offset all of the planes and texinfo - e.g. func_door or func_rotating */
+	if (VectorNotEmpty(mapent->origin)) {
+		vec_t newdist;
+		int i, j;
+		side_t *s;
+		mapbrush_t *b;
+
 		for (i = 0; i < mapent->numbrushes; i++) {
 			b = &mapbrushes[mapent->firstbrush + i];
 			for (j = 0; j < b->numsides; j++) {
@@ -800,6 +796,7 @@ static qboolean ParseMapEntity (void)
 				s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
 					&side_brushtextures[s-brushsides], mapent->origin, qfalse);
 			}
+			/* create windings for sides and bounds for brush */
 			MakeBrushWindings(b);
 		}
 	}
@@ -810,7 +807,6 @@ static qboolean ParseMapEntity (void)
 		MoveBrushesToWorld(mapent);
 		mapent->numbrushes = 0;
 		num_entities--;
-		return qtrue;
 	}
 
 	return qtrue;
