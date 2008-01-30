@@ -632,8 +632,7 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 			return returnHeight;
 
 		pos = R_FontGetLineWrap(f, buffer, maxWidth - (x - absX), &w, &h);
-		if (pos && (pos[0] == '\n'))
-			*pos++ = '\0';
+
 		fh = h;
 
 		if (texh0 > 0) {
@@ -711,9 +710,6 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 		} else {
 			/* Check if this line has any linebreaks and update buffer if that is the case. */
 			buffer = strtok(NULL, "\n");
-			if (buffer)
-				*buffer++ = '\0';
-
 		}
 		x = locX;
 	} while (buffer);
