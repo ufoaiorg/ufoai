@@ -1407,7 +1407,7 @@ int CM_NumInlineModels (void)
 
 /**
  * @return The entitystring for all the loaded maps
- * @note Every map assembly will attack their entities here
+ * @note Every map assembly will attach their entities here
  * @sa CM_LoadMap
  * @sa G_SpawnEntities
  * @sa SV_SpawnServer
