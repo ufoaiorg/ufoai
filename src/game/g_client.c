@@ -1738,7 +1738,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 					/* if shaken, well .. be shaken; */
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					/* @todo: Comment-me: Why do we modify reaction stuff (especially TUs) here?
-					 * I've commented this out for now, we could remove it completly or add a special "shaken" TU penalty. */
+					 * I've commented this out for now, we could remove it completely or add a special "shaken" TU penalty. */
 					/* ent->TU -= TU_REACTION_SINGLE; */
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;

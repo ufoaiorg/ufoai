@@ -218,7 +218,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			if (node->mousefx && node->textLines + 1 == node->state) {
 				/* Hightlight line if mousefx is true. */
 				/* node->state is the line number to highlight */
-				/** @todo FIXME: what about multiline text that should be highlighted completly? */
+				/** @todo FIXME: what about multiline text that should be highlighted completely? */
 				if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
 					R_ColorBlend(colorSelectedHover);
 				} else {

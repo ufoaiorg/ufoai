@@ -388,7 +388,7 @@ void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 
 /**
  * @brief Draw the container with all its items
- * @note The item tooltip is done after the menu is completly
+ * @note The item tooltip is done after the menu is completely
  * drawn - because it must be on top of every other node and item
  * @return The item in the container to hover
  */

@@ -522,7 +522,7 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 }
 
 /**
- * @brief Checks if the map is completly filled.
+ * @brief Checks if the map is completely filled.
  * @return qtrue if the map is filled
  * @return qfalse if the map has still empty fields
  * @sa SV_AssembleMap

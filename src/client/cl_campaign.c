@@ -690,7 +690,7 @@ qboolean CP_SpawnBaseAttackMission (base_t* base, mission_t* ms, setState_t *cau
 /**
  * @brief Add a new ground mission to the ccs.mission array
  * @param[in] mis The mission to add to geoscape
- * @note This mission must already be defined completly
+ * @note This mission must already be defined completely
  * @note If the mapdef is missing, this function will return NULL, too
  * @sa CL_AddMission
  * @sa CL_CampaignAddMission
