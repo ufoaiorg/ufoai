@@ -31,11 +31,6 @@ static int c_active_brushes;
 /* if a brush just barely pokes onto the other side, let it slide by without chopping */
 #define	PLANESIDE_EPSILON	0.001
 
-#define	PSIDE_FRONT			1
-#define	PSIDE_BACK			2
-#define	PSIDE_BOTH			(PSIDE_FRONT|PSIDE_BACK)
-#define	PSIDE_FACING		4
-
 /**
  * @brief Sets the mins/maxs based on the windings
  */

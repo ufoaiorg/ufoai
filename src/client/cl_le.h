@@ -81,6 +81,7 @@ typedef struct le_s {
 	int pathLength, pathPos;
 	int startTime, endTime;
 	int speed;			/**< the speed the le is moving with */
+	float rotationSpeed;
 
 	/** sound effects */
 	struct sfx_s* sfx;
@@ -156,6 +157,7 @@ void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 
 qboolean LE_BrushModelAction(le_t * le, entity_t * ent);
+void LE_BrushModelThink(le_t *le);
 
 void LE_Explode(struct dbuffer *msg);
 void LE_DoorOpen(struct dbuffer *msg);

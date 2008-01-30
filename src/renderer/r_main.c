@@ -112,7 +112,7 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 		return qfalse;
 
 	for (i = 0; i < 4; i++)
-		if (BoxOnPlaneSide(mins, maxs, &frustum[i]) == 2)
+		if (BoxOnPlaneSide(mins, maxs, &frustum[i]) == PSIDE_BACK)
 			return qtrue;
 	return qfalse;
 }

@@ -786,6 +786,10 @@ void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 	le->think(le);
 }
 
+/**
+ * @brief Add function for brush models
+ * @sa LE_AddToScene
+ */
 qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 {
 	switch (le->type) {
@@ -798,6 +802,19 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	}
 
 	return qtrue;
+}
+
+void LE_BrushModelThink (le_t *le)
+{
+	if (cl.time - le->thinkDelay < le->speed) {
+		le->thinkDelay = cl.time;
+		return;
+	}
+
+	if (le->type == ET_ROTATING) {
+		float angle = le->angles[le->dir] + (1.0 / le->rotationSpeed);
+		le->angles[le->dir] = (angle >= 360 ? angle - 360 : angle);
+	}
 }
 
 /**

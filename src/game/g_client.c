@@ -2729,6 +2729,7 @@ static void G_SendBrushModels (int team)
 			gi.WriteByte(ent->spawnflags & 255);
 			gi.WritePos(ent->origin);
 			gi.WriteShort(ent->speed);
+			gi.WriteByte(YAW); /* FIXME make this variable */
 			ent->visflags |= ~ent->visflags;
 			end = qtrue;
 		}

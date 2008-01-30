@@ -1544,9 +1544,9 @@ static void CM_BoxLeafnums_r (int nodenum)
 		node = &curTile->nodes[nodenum];
 		plane = node->plane;
 		s = BoxOnPlaneSide(leaf_mins, leaf_maxs, plane);
-		if (s == 1)
+		if (s == PSIDE_FRONT)
 			nodenum = node->children[0];
-		else if (s == 2)
+		else if (s == PSIDE_BACK)
 			nodenum = node->children[1];
 		else {					/* go down both */
 			if (leaf_topnode == -1)

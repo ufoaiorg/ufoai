@@ -559,6 +559,9 @@ float AngleNormalize180 (float angle)
 	return angle;
 }
 
+/**
+ * @return PSIDE_FRONT, PSIDE_BACK, or PSIDE_BOTH
+ */
 int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 {
 	float dist1, dist2;
@@ -567,10 +570,10 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 	/* fast axial cases */
 	if (p->type < 3) {
 		if (p->dist <= emins[p->type])
-			return 1;
+			return PSIDE_FRONT;
 		if (p->dist >= emaxs[p->type])
-			return 2;
-		return 3;
+			return PSIDE_BACK;
+		return PSIDE_BOTH;
 	}
 
 	/* general case */
@@ -615,9 +618,9 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 
 	sides = 0;
 	if (dist1 >= p->dist)
-		sides = 1;
+		sides = PSIDE_FRONT;
 	if (dist2 < p->dist)
-		sides |= 2;
+		sides |= PSIDE_BACK;
 
 	assert(sides != 0);
 

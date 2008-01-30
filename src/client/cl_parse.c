@@ -89,7 +89,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
-	"sssbps",			/* EV_ADD_BRUSH_MODEL */
+	"sssbpsb",			/* EV_ADD_BRUSH_MODEL */
 
 	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
@@ -719,9 +719,10 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	le_t *le;
 	int entnum, modelnum1, type, levelflags, speed;
 	cBspModel_t *model;
+	int angle;
 	vec3_t origin;
 
-	NET_ReadFormat(msg, ev_format[EV_ADD_BRUSH_MODEL], &type, &entnum, &modelnum1, &levelflags, &origin, &speed);
+	NET_ReadFormat(msg, ev_format[EV_ADD_BRUSH_MODEL], &type, &entnum, &modelnum1, &levelflags, &origin, &speed, &angle);
 
 	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING)
 		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL type: %i\n", type);
@@ -736,11 +737,13 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	le = LE_Add(entnum);
 	assert(le);
 
-	le->speed = speed;
+	le->rotationSpeed = speed / 100.0f;
+	le->dir = angle;
 	le->type = type;
 	le->modelnum1 = modelnum1;
 	le->levelflags = levelflags;
 	le->addFunc = LE_BrushModelAction;
+	le->think = LE_BrushModelThink;
 
 	model = cl.model_clip[le->modelnum1];
 	if (!model)
@@ -750,6 +753,7 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not register inline model %i", le->modelnum1);
 
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
+
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
 	VectorCopy(origin, le->origin);

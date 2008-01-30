@@ -667,6 +667,8 @@ static void SP_func_door (edict_t *self)
 	gi.SetModel(self, self->model);
 	if (self->solid != SOLID_BSP)
 		Com_Printf("Error - func_door with no SOLID_BSP\n");
+	if (!self->model)
+		Com_Printf("Error - func_door with no model\n");
 
 	self->moveinfo.state = STATE_CLOSED;
 
@@ -697,9 +699,12 @@ static void SP_func_rotating (edict_t *self)
 	gi.SetModel(self, self->model);
 	if (self->solid != SOLID_BSP)
 		Com_Printf("Error - func_door with no SOLID_BSP\n");
+	if (!self->model)
+		Com_Printf("Error - func_rotating with no model\n");
 
+	/* the lower, the faster */
 	if (!self->speed)
-		self->speed = 100;
+		self->speed = 50;
 
 	Com_DPrintf(DEBUG_GAME, "func_rotating: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
 		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
