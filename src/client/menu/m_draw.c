@@ -346,7 +346,6 @@ void MN_DrawMenus (void)
 				MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
 
 				MN_DrawTooltip("f_small", tooltiptext, mousePosX, mousePosY, itemToolTipWidth, 0);
-				MN_DrawTooltip("f_small", "x", mousePosX, mousePosY, itemToolTipWidth, 0);	/** @todo debug: remove me */
 			} else {
 				MN_Tooltip(menu, menu->hoverNode, mousePosX, mousePosY);
 				menu->hoverNode = NULL;
