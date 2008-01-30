@@ -253,7 +253,8 @@ MAP LOADING
  * @param[in] l The lump to load the data from
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
- * @sa Mod_LoadSubmodels
+ * @sa R_ModLoadSubmodels
+ * @sa CM_InlineModel
  */
 static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 {

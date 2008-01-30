@@ -37,7 +37,7 @@ static int shift[3];
 static model_t *loadmodel;
 
 /**
- * @brief FIXME
+ * @brief Load the lightmap data
  */
 static void R_ModLoadLighting (lump_t * l)
 {
@@ -88,7 +88,8 @@ static inline float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 
 
 /**
- * @sa CR_ModLoadSubmodels
+ * @brief Loads brush entities like func_door and func_breakable
+ * @sa CMod_LoadSubmodels
  */
 static void R_ModLoadSubmodels (lump_t * l)
 {
