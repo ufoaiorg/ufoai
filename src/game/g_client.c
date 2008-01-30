@@ -2720,8 +2720,8 @@ static void G_SendBrushModels (int team)
 		if (!ent->inuse)
 			continue;
 
-		/* don't add actors here - only brush models */
-		if (ent->solid == SOLID_BSP) {
+		/* brush models that have a type - not the world */
+		if (ent->solid == SOLID_BSP && ent->type) {
 			gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);
