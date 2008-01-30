@@ -1417,15 +1417,6 @@ char *CM_EntityString (void)
 	return map_entitystring;
 }
 
-#if 0
-static int CM_LeafContents (int leafnum)
-{
-	if (leafnum < 0 || leafnum >= curTile->numleafs)
-		Com_Error(ERR_DROP, "CM_LeafContents: bad number");
-	return curTile->leafs[leafnum].contentFlags;
-}
-#endif
-
 /*
 ===============================================================================
 BOX TRACING
@@ -1749,6 +1740,7 @@ static void CM_TraceToLeaf (int leafnum)
 	cBspBrush_t *b;
 
 	assert(leafnum > LEAFNODE);
+	assert(leafnum <= curTile->numleafs);
 
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contentFlags & trace_contents))
