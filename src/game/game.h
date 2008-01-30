@@ -149,8 +149,8 @@ typedef struct {
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
-	void (IMPORT *LinkEntity) (edict_t * ent);
-	void (IMPORT *UnlinkEntity) (edict_t * ent);	/* call before removing an interactive edict */
+	void (IMPORT *LinkEdict) (edict_t * ent);
+	void (IMPORT *UnlinkEdict) (edict_t * ent);	/* call before removing an interactive edict */
 	int (IMPORT *BoxEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
 
 	qboolean (IMPORT *TestLine) (vec3_t start, vec3_t stop);

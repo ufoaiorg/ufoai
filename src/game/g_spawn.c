@@ -209,7 +209,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 			return;
 		}
 	}
-/*	Com_DPrintf(DEBUG_GAME, "ED_ParseField: %s is not a valid field\n", key);*/
+	Com_DPrintf(DEBUG_GAME, "ED_ParseField: %s is not a valid field\n", key);
 }
 
 /**
@@ -359,7 +359,7 @@ static edict_t* G_TriggerSpawn (edict_t* owner)
 	trigger->solid = SOLID_TRIGGER;
 
 	/* link into the world */
-	gi.LinkEntity(trigger);
+	gi.LinkEdict(trigger);
 
 	return trigger;
 }

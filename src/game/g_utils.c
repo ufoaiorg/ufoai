@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void G_FreeEdict (edict_t * ed)
 {
 	/* unlink from world */
-	gi.UnlinkEntity(ed);
+	gi.UnlinkEdict(ed);
 
 	memset(ed, 0, sizeof(*ed));
 	ed->classname = "freed";

@@ -1387,7 +1387,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				contentFlags = gi.PointContents(pointTrace);
 
 				/* link it at new position */
-				gi.LinkEntity(ent);
+				gi.LinkEdict(ent);
 
 				/* write move header if not yet done */
 				if (!steps) {
@@ -1558,7 +1558,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
 			else
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
-			gi.LinkEntity(ent);
+			gi.LinkEdict(ent);
 		}
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
@@ -1939,7 +1939,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		break;
 	}
 	VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
-	gi.LinkEntity(ent);
+	gi.LinkEdict(ent);
 	level.num_alive[ent->team]--;
 	/* send death */
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
@@ -2019,7 +2019,7 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 		/* FIXME */
 		/* change rotation and relink */
 		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
-		gi.LinkEntity(door);
+		gi.LinkEdict(door);
 
 		/* let everybody know, that the door opens */
 		gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
@@ -2038,7 +2038,7 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 		/* FIXME */
 		/* change rotation and relink */
 		door->angles[YAW] += DOOR_ROTATION_ANGLE;
-		gi.LinkEntity(door);
+		gi.LinkEdict(door);
 
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
@@ -2431,7 +2431,7 @@ void G_ClientTeamInfo (player_t * player)
 
 			Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
 
-			gi.LinkEntity(ent);
+			gi.LinkEdict(ent);
 
 			/* model */
 			ent->chr.ucn = gi.ReadShort();

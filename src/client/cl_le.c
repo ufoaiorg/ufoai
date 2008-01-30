@@ -40,7 +40,7 @@ static sfx_t* soundWaterOut;
 static sfx_t* soundWaterMove;
 
 /*===========================================================================
- LM handling
+Local Model (LM) handling
 =========================================================================== */
 
 static const char *leInlineModelList[MAX_EDICTS + 1];
@@ -52,9 +52,24 @@ static inline void LE_GenerateInlineModelList (void)
 
 	l = 0;
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inlineModelName[0] == '*')
+		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
 			leInlineModelList[l++] = le->inlineModelName;
 	leInlineModelList[l] = NULL;
+}
+
+/**
+ * @sa G_CompleteRecalcRouting
+ */
+void CL_CompleteRecalcRouting (void)
+{
+	le_t* le;
+	int i;
+
+	LE_GenerateInlineModelList();
+
+	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
+			Grid_RecalcRouting(&clMap, le->inlineModelName, le->angles, leInlineModelList);
 }
 
 /**
@@ -133,8 +148,7 @@ static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 		le->angles[YAW] += DOOR_ROTATION_ANGLE;
 	}
 
-	LE_GenerateInlineModelList();
-	Grid_RecalcRouting(&clMap, le->inlineModelName, le->angles, leInlineModelList);
+	CL_CompleteRecalcRouting();
 }
 
 /**
@@ -344,7 +358,6 @@ void LET_PlayAmbientSound (le_t * le)
 {
 	/* find the total contribution of all sounds of this type */
 	/*int volume = S_SpatializeOrigin(le->origin, le->volume, le->attenuation);*/
-
 }
 
 /**
@@ -804,7 +817,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	return qtrue;
 }
 
-void LE_BrushModelThink (le_t *le)
+void LET_BrushModel (le_t *le)
 {
 	if (cl.time - le->thinkDelay < le->speed) {
 		le->thinkDelay = cl.time;
@@ -840,7 +853,6 @@ void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float a
 	le->sfx = sfx;
 	le->attenuation = attenuation;
 	le->volume = volume;
-	le->inuse = qtrue;
 	VectorCopy(origin, le->origin);
 	le->invis = qtrue;
 	le->think = LET_PlayAmbientSound;

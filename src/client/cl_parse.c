@@ -743,7 +743,7 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	le->modelnum1 = modelnum1;
 	le->levelflags = levelflags;
 	le->addFunc = LE_BrushModelAction;
-	le->think = LE_BrushModelThink;
+	le->think = LET_BrushModel;
 
 	model = cl.model_clip[le->modelnum1];
 	if (!model)
@@ -754,12 +754,14 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
 
+	VectorCopy(origin, le->origin);
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
-	VectorCopy(origin, le->origin);
 
 	/* to allow tracing against this le */
 	le->contents = CONTENTS_SOLID;
+
+	CL_CompleteRecalcRouting();
 }
 
 /**

@@ -383,8 +383,8 @@ void SV_InitGameProgs (void)
 	import.error = SV_error;
 
 	import.trace = SV_Trace;
-	import.LinkEntity = SV_LinkEdict;
-	import.UnlinkEntity = SV_UnlinkEdict;
+	import.LinkEdict = SV_LinkEdict;
+	import.UnlinkEdict = SV_UnlinkEdict;
 	import.BoxEdicts = SV_AreaEdicts;
 
 	import.TestLine = CM_TestLine;

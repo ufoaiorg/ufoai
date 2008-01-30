@@ -712,7 +712,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
-			gi.LinkEntity(ent);
+			gi.LinkEdict(ent);
 
 			/* skills; @todo: more power to Ortnoks, more mind to Tamans */
 			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
@@ -758,7 +758,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->skin = ent->chr.skin;
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
-			gi.LinkEntity(ent);
+			gi.LinkEdict(ent);
 		}
 	}
 	/* show visible actors */
