@@ -343,13 +343,11 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
  * @param[in|out] tooltiptext Pointer to a string the information should be written into.
  * @param[in] Max. string size of tooltiptext.
  * @return Number of lines
- * @todo return maximum line-width as well?
  */
-int MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
+void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 {
 	int i;
 	int weapon_idx;
-	int linenum = 1;
 
 	assert(item.t != NONE);
 
@@ -366,32 +364,26 @@ int MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 				/* Item has no ammo but might have shot-count */
 				if (item.a) {
 					Q_strcat(tooltiptext, va(_("Ammo: %i\n"), item.a), string_maxlength);
-					linenum++;
 				}
 			} else if (item.m != NONE) {
 				/* Search for used ammo and display name + ammo count */
 				Q_strcat(tooltiptext, va(_("%s loaded\n"), csi.ods[item.m].name), string_maxlength);
-				linenum++;
 				Q_strcat(tooltiptext, va(_("Ammo: %i\n"),  item.a), string_maxlength);
-				linenum++;
 			}
 		} else if (csi.ods[item.t].numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
 			if (!(csi.ods[item.t].numWeapons == 1 && csi.ods[item.t].weap_idx[0] == item.t)) {
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltiptext, _("Usable in:\n"), string_maxlength);
-				linenum++;
 				for (i = 0; i < csi.ods[item.t].numWeapons; i++) {
 					weapon_idx = csi.ods[item.t].weap_idx[i];
 					if (RS_ItemIsResearched(csi.ods[weapon_idx].id)) {
 						Q_strcat(tooltiptext, va("* %s\n", csi.ods[weapon_idx].name), string_maxlength);
-						linenum++;
 					}
 				}
 			}
 		}
 	}
-	return linenum;
 }
 
 /**

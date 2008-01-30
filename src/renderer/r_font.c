@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_font.h"
 #include "r_error.h"
 
-#define BUF_SIZE 2048
 static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4. value is unused */
 static int numFonts = 0;
 
@@ -489,11 +488,13 @@ static void R_FontConvertChars (char *buffer)
 		*replace++ = ' ';
 		replace = strstr(replace, "\t");
 	}
+
 	replace = strstr(buffer, "\n\0");
 	if (replace)
-		*replace = '\0';
+		*replace = '\n';	/** @todo: Could be removed ... Doesn't change anything, no? */
 }
 
+static fontCacheList_t cacheList;
 /**
  * @param[in] fontID the font id (defined in ufos/fonts.ufo)
  * @param[in] x Current x position (may differ from absX due to tabs e.g.)
@@ -514,16 +515,47 @@ static void R_FontConvertChars (char *buffer)
 int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
 {
+	int returnHeight;
+
+	returnHeight = R_FontGenerateCacheList(fontID, align, x, y, absX, absY, maxWidth,
+					lineHeight, c, box_height, scroll_pos, cur_line, increaseLine, &cacheList);
+
+	R_FontRenderCacheList(&cacheList, absY, maxWidth, maxHeight, 0, 0);
+
+	return returnHeight;
+}
+
+/**
+ * @param[in] fontID the font id (defined in ufos/fonts.ufo)
+ * @param[in] x Current x position (may differ from absX due to tabs e.g.)
+ * @param[in] y Current y position (may differ from absY due to linebreaks)
+ * @param[in] absX Absolute x value for this string
+ * @param[in] absY Absolute y value for this string
+ * @param[in] maxWidth Max width - relative from absX
+ * @param[in] maxHeight Max height - relative from absY
+ * @param[in] lineHeight The lineheight of that node
+ * @param[in] c The string to draw
+ * @param[in] scroll_pos Starting line in this node (due to scrolling)
+ * @param[in] cur_line Current line (see lineHeight)
+ * @param[in] increaseLine If true cur_line is increased with every linebreak
+ * @param[out] cacheList A List of fontCache_t pointers will be created that can be drawwn later on.
+ * @note the x, y, width and height values are all normalized here - don't use the
+ * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
+ * and VID_NORM_HEIGHT
+ * @todo replace R_FontDrawString with this function.
+ */
+int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth,
+	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, fontCacheList_t *cacheList)
+{
 	int w = 0, h = 0, locX;
-	float returnHeight = 0; /* rounding errors break mouse-text corelation */
+	float returnHeight = 0; /* Rounding errors break mouse-text correlation. */
 	font_t *f = NULL;
 	char *buffer = buf;
 	char *pos;
-	fontCache_t *cache;
 	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];
 	int max = 0;				/* calculated maxWidth */
 	int line = 0;
-	float texh0, fh, fy; /* rounding errors break mouse-text corelation */
+	float texh0, fh, fy; /* Rounding errors break mouse-text correlation. */
 	qboolean skipline = qfalse;
 
 	fy = y;
@@ -534,8 +566,19 @@ int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int
 	if (!f)
 		Sys_Error("...could not find font: %s\n", fontID);
 
-	cache = R_FontGetFromCache(c);
-	if (cache) { /* @todo: check that cache.font = fontID and that texh0 was the same */
+	if (!cacheList)
+		Sys_Error("...no pointer to cachelist given!\n");
+
+	if (cacheList->numCaches >= MAX_FONTCACHE_ENTRIES)
+		Sys_Error("...out of space in cachelist!\n");
+
+	/* Init Cachelist */
+	cacheList->numCaches = 0;
+	cacheList->height = 0;
+	cacheList->width = 0;
+
+	cacheList->cache[cacheList->numCaches] = R_FontGetFromCache(c);
+	if (cacheList->cache[cacheList->numCaches]) { /* @todo: check that cache.font = fontID and that texh0 was the same */
 		if (cur_line) {
 			/* Com_Printf("h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			if (increaseLine)
@@ -547,12 +590,19 @@ int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int
 				return -1;
 			}
 		}
-
-		R_FontGenerateGLSurface(cache, x, fy, absY, maxWidth, maxHeight);
+		cacheList->height += cacheList->cache[cacheList->numCaches]->size[1];
+		if (cacheList->width < cacheList->cache[cacheList->numCaches]->size[0])
+			cacheList->width = cacheList->cache[cacheList->numCaches]->size[0];
+		cacheList->posX[cacheList->numCaches] = x;
+		cacheList->posY[cacheList->numCaches] = fy;
+		cacheList->numCaches++;
+		/* R_FontGenerateGLSurface(cache, x, fy, absY, maxWidth, maxHeight);*/
 		return lineHeight;
 	}
 
+
 	Q_strncpyz(buffer, c, BUF_SIZE);
+	buffer = strtok(buf, "\n");
 
 	R_FontConvertChars(buf);
 	/* for linebreaks */
@@ -578,10 +628,12 @@ int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int
 		}
 
 		/* TTF does not like empty strings... */
-		if (!strlen(buffer))
+		if (!buffer || !strlen(buffer))
 			return returnHeight;
 
 		pos = R_FontGetLineWrap(f, buffer, maxWidth - (x - absX), &w, &h);
+		if (pos && (pos[0] == '\n'))
+			*pos++;
 		fh = h;
 
 		if (texh0 > 0) {
@@ -625,29 +677,78 @@ int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int
 			/* NOTE: There can be a non critical overflow in Com_sprintf */
 			Com_sprintf(searchString, sizeof(searchString), "%s%s", fontID, buffer);
 
-			cache = R_FontGetFromCache(searchString);
-			if (!cache)
-				cache = R_FontGenerateCache(buffer, searchString, f, maxWidth);
+			if (cacheList->numCaches >= MAX_FONTCACHE_ENTRIES)
+				Sys_Error("...out of space in cachelist!\n");
 
-			if (!cache) {
+			cacheList->cache[cacheList->numCaches] = R_FontGetFromCache(searchString);
+			if (!cacheList->cache[cacheList->numCaches])
+				cacheList->cache[cacheList->numCaches] = R_FontGenerateCache(buffer, searchString, f, maxWidth);
+
+			if (!cacheList->cache[cacheList->numCaches]) {
 				/* maybe we are running out of mem */
 				R_FontCleanCache();
-				cache = R_FontGenerateCache(buffer, searchString, f, maxWidth);
+				cacheList->cache[cacheList->numCaches] = R_FontGenerateCache(buffer, searchString, f, maxWidth);
 			}
-			if (!cache)
+			if (!cacheList->cache[cacheList->numCaches])
 				Sys_Error("...could not generate font surface '%s'\n", buffer);
 
-			R_FontGenerateGLSurface(cache, x, fy, absY, maxWidth, maxHeight);
+			cacheList->height += cacheList->cache[cacheList->numCaches]->size[1];
+			if (cacheList->width < cacheList->cache[cacheList->numCaches]->size[0])
+				cacheList->width = cacheList->cache[cacheList->numCaches]->size[0];
+			cacheList->posX[cacheList->numCaches] = x;
+			cacheList->posY[cacheList->numCaches] = fy;
+			cacheList->numCaches++;
+			/* R_FontGenerateGLSurface(cache, x, fy, absY, maxWidth, maxHeight); */
+
 			fy += fh;
 			returnHeight += (texh0 > 0) ? texh0 : h;
 		}
 
 		/* skip for next line */
-		buffer = pos;
+		if (pos) {
+			/* We have to break this line */
+			buffer = pos;
+		} else {
+			/* Check if this line has any linebreaks and update buffer if that is the case. */
+			buffer = strtok(NULL, "\n");
+			if (buffer && (buffer[0] == '\n'))
+				*buffer++;
+
+		}
 		x = locX;
 	} while (buffer);
 
 	return returnHeight;
+}
+
+/**
+ * @brief Render all the entries in a list of caches (e.g. generated in R_FontDrawString)
+ * @param[in] cacheList A List of fontCache_t pointers that will be drawn.
+ * @param[in] Absolute y value for the string(s).
+ * @param[in] maxWidth Max width - relative from absX (as used in R_FontGenerateCacheList)
+ * @param[in] maxHeight Max height - relative from absY
+ * @param[in] dx Modifier to displace strings by a relative x value.
+ * @param[in] dy Modifier to displace strings by a relative y value.
+ */
+void R_FontRenderCacheList (fontCacheList_t *cacheList, int absY, int maxWidth, int maxHeight, int dx, int dy)
+{
+	int i;
+
+	if (!cacheList)
+		Sys_Error("...no pointer to cachelist given!\n");
+
+	for (i = 0; i < cacheList->numCaches; i++) {
+		if (cacheList->cache[i]) {
+			R_FontGenerateGLSurface(cacheList->cache[i],
+				cacheList->posX[i] + dx,
+				cacheList->posY[i] + dy,
+				absY,
+				maxWidth,
+				maxHeight);
+		} else {
+			Sys_Error("...no font-cache pointer found!\n");
+		}
+	}
 }
 
 void R_FontInit (void)

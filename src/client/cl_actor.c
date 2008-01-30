@@ -1699,10 +1699,7 @@ void CL_ActorUpdateCVars (void)
 		Cvar_Set("mn_tureserved", va("%i", CL_ReservedTUs(selActor, RES_ALL_ACTIVE)));
 
 		Com_sprintf(tuTooltipText, sizeof(tuTooltipText),
-			_("Time Units: Available %i (of %i) | Reserved %i | Remaining %i\n"),
-			/** @todo: make this into a multi-line tooltip as soon as this is supproted:
 			_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
-			*/
 			selActor->TU, selActor->maxTU,
 			CL_ReservedTUs(selActor, RES_ALL_ACTIVE),
 			CL_UsableTUs(selActor));
@@ -2410,7 +2407,7 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 
 	if (!selActor || !length || length >= 0x3F)
 		return;
-	
+
 	VectorCopy(to, pos);
 
 	while ((dv = Grid_MoveNext(&clMap, pos)) < ROUTING_NOT_REACHABLE) {
@@ -2455,7 +2452,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 
 	/* Get the last position we can walk to with the usable TUs. */
 	CL_MaximumMove(to, CL_UsableTUs(selActor), toReal);
-	
+
 	/* Get the cost of the new position just in case. */
 	length = Grid_MoveLength(&clMap, toReal, qfalse);
 

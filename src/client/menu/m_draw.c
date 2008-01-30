@@ -288,6 +288,7 @@ void MN_DrawMenus (void)
 				case MN_CONTAINER:
 					if (menuInventory)
 						itemHover = MN_DrawContainerNode(node);
+					break;
 
 				case MN_ITEM:
 					if (ref && *ref)
@@ -334,26 +335,18 @@ void MN_DrawMenus (void)
 
 		}	/* for */
 		if (sp == mn.menuStackPos && menu->hoverNode && mn_show_tooltips->integer) {
-			/* we are hovering an item and also want to display it
-	 		 * make sure that we draw this on top of every other node */
+			/* We are hovering over an item and also want to display it.
+	 		 * Make sure that we draw this on top of every other node. */
+
 			if (itemHover) {
 				char tooltiptext[MAX_VAR * 2] = "";
-				int x = mousePosX, y = mousePosY;
 				const int itemToolTipWidth = 250;
-				int linenum;
-				int itemToolTipHeight;
+
 				/* Get name and info about item */
-				linenum = MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
-				itemToolTipHeight = linenum * 25; /** @todo make this a constant/define? */
-#if 1
-				if (x + itemToolTipWidth > VID_NORM_WIDTH)
-					x = VID_NORM_WIDTH - itemToolTipWidth;
-				if (y + itemToolTipHeight > VID_NORM_HEIGHT)
-					y = VID_NORM_HEIGHT - itemToolTipHeight;
-				MN_DrawTextNode(tooltiptext, NULL, "f_small", menu->hoverNode, x, y, itemToolTipWidth, itemToolTipHeight);
-#else
-				MN_DrawTooltip("f_small", tooltiptext, x, y, itemToolTipWidth, itemToolTipHeight);
-#endif
+				MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+
+				MN_DrawTooltip("f_small", tooltiptext, mousePosX, mousePosY, itemToolTipWidth, 0);
+				MN_DrawTooltip("f_small", "x", mousePosX, mousePosY, itemToolTipWidth, 0);	/** @todo debug: remove me */
 			} else {
 				MN_Tooltip(menu, menu->hoverNode, mousePosX, mousePosY);
 				menu->hoverNode = NULL;

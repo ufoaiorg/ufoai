@@ -44,6 +44,6 @@ void MN_DrawItemNode(menuNode_t *node, const char *itemName);
 void MN_DrawDisabled(const menuNode_t* node);
 void MN_DrawFree(int container, const menuNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs);
 void MN_InvDrawFree(inventory_t *inv, const menuNode_t *node);
-int MN_GetItemTooltip(item_t item, char *tooltiptext, size_t string_maxlength);
+void MN_GetItemTooltip(item_t item, char *tooltiptext, size_t string_maxlength);
 
 #endif

@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_FONTS		16
 #define	MAX_FONTNAME		32
 
+#define BUF_SIZE 2048
+
 /* starting offset for font texture numbers (used in font-cache) */
 #define TEXNUM_FONTS        TEXNUM_IMAGES + MAX_GLTEXTURES
 
@@ -52,6 +54,21 @@ typedef struct fontCache_s {
 	GLuint texPos;				/**< the bound texture number/identifier*/
 } fontCache_t;
 
+#define MAX_FONTCACHE_ENTRIES 64
+/**
+ * @brief A list of font-chaches used to draw the whole thing later.
+ * @todo Maybe a linked list is better here?
+ * @todo Store max height/width values as well?
+ */
+typedef struct fontCacheList_s {
+	fontCache_t *cache[MAX_FONTCACHE_ENTRIES];
+	int posX[MAX_FONTCACHE_ENTRIES];	/** Stores x position value as used by R_FontGenerateGLSurface. */
+	int posY[MAX_FONTCACHE_ENTRIES];	/** Stores y position value as used by R_FontGenerateGLSurface. */
+	int numCaches;	/**< Number of font-caches */
+	int height;	/**< Sum of the heights of all caches. Assumes no spaces between caches right now. */
+	int width;	/**< Width of the biggest line. Assumes that all caches are aligned. */
+} fontCacheList_t;
+
 typedef struct {
 	const char *name;
 	int renderStyle;
@@ -64,5 +81,9 @@ void R_FontCleanCache(void);
 void R_FontShutdown(void);
 void R_FontInit(void);
 void R_FontListCache_f(void);
+
+int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
+int R_FontGenerateCacheList(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, fontCacheList_t *cacheList);
+void R_FontRenderCacheList(fontCacheList_t *cacheList, int absY, int maxWidth, int maxHeight, int dx, int dy);
 
 #endif

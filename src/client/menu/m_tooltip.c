@@ -27,36 +27,51 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_parse.h"
+#include "../../renderer/r_local.h"
+#include "../../renderer/r_font.h"
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
+static fontCacheList_t cacheList;
 
 /**
  * @brief Generic tooltip function
- * FIXME: R_FontLength can change the string - which very very very bad for reference values and item names
+ * @todo FIXME: R_FontLength can change the string - which very very very bad for reference values and item names.
+ * @todo Check for max height as well? (multi-line tooltips)
  */
 int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, int maxHeight)
 {
 	int height = 0, width = 0;
 	int lines = 5;
+	int dx; /**< Delta-x position. Relative to original x position. */
 
+	/* Get height of string. The width will be ignored (except for the check below). */
 	R_FontLength(font, string, &width, &height);
+
 	if (!width)
 		return 0;
 
-	/* maybe there is no maxWidth given */
-	if (maxWidth < width)
-		maxWidth = width;
-
 	x += 5;
 	y += 5;
-	if (x + maxWidth +3 > VID_NORM_WIDTH)
-		x -= (maxWidth + 10);
-	R_DrawFill(x - 1, y - 1, maxWidth + 4, height, 0, tooltipBG);
+/*	if (x + maxWidth +3 > VID_NORM_WIDTH)
+		x -= (maxWidth + 10);*/
+
+	R_FontGenerateCacheList(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, height, string, lines, 0, NULL, qfalse, &cacheList);
+
+	if (x + cacheList.width +3 > VID_NORM_WIDTH)
+		dx = -(cacheList.width + 10);
+
+/** @todo
+	if (y + cacheList.height +3 > VID_NORM_HEIGHT)
+		dy = -(cacheList.height + 10);
+*/
+
+	R_DrawFill(x - 1 + dx, y - 1, cacheList.width + 4, cacheList.height + 4, 0, tooltipBG);
 	R_ColorBlend(tooltipColor);
-	R_FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, height, string, lines, 0, NULL, qfalse);
+	R_FontRenderCacheList(&cacheList, y + 1, maxWidth, maxHeight, dx, 0);
+
 	R_ColorBlend(NULL);
-	return width;
+	return cacheList.width;
 }
 
 /**
