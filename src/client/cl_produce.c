@@ -529,9 +529,9 @@ void PR_ProductionRun (void)
 						}
 				}
 				if (prod->amount <= 0) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The disassembling of %s has finished."),od->name);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The disassembling of %s has finished."), od->name);
 					MN_AddNewMessage(_("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-					PR_QueueNext(&gd.bases[i]);
+					PR_QueueNext(B_GetBase(i));
 				}
 			}
 		}

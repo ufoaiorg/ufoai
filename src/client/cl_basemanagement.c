@@ -2964,7 +2964,7 @@ static void B_PrintCapacities_f (void)
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
-	base = gd.bases + i;
+	base = B_GetBase(i);
 	for (i = 0; i < MAX_CAP; i++) {
 		building = B_GetBuildingTypeByCapacity(i);
 		if (building == MAX_BUILDING_TYPE)
@@ -3062,7 +3062,7 @@ void B_UpdateBaseData (void)
 			b = &gd.buildings[i][j];
 			if (!b)
 				continue;
-			new = B_CheckBuildingConstruction(b, &gd.bases[i]);
+			new = B_CheckBuildingConstruction(b, B_GetBase(i));
 			newBuilding += new;
 			if (new) {
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[i].name);
@@ -3305,7 +3305,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 	MSG_WriteShort(sb, gd.numAircraft);
 	MSG_WriteByte(sb, gd.numBases);
 	for (i = 0; i < gd.numBases; i++) {
-		b = &gd.bases[i];
+		b = B_GetBase(i);
 		MSG_WriteString(sb, b->name);
 		MSG_WritePos(sb, b->pos);
 		MSG_WriteByte(sb, b->founded);
@@ -3515,7 +3515,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
 	for (i = 0; i < bases; i++) {
-		base_t *const b = &gd.bases[i];
+		base_t *const b = B_GetBase(i);
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
 		if (b->founded) {
