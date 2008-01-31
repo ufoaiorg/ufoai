@@ -2352,6 +2352,26 @@ static int CL_CheckAction (void)
 }
 
 /**
+ * @brief Get the real move length (depends on crouch-state of the current actor).
+ * @param[in] The position in the map to calculate the move-length for.
+ */
+static int CL_MoveLength (pos3_t to)
+{
+	if (selActor->state & STATE_CROUCHED)
+		return Grid_MoveLength(&clMap, to, qfalse) * 1.5;
+	else
+		return Grid_MoveLength(&clMap, to, qfalse);
+}
+
+/**
+ * @brief Recalculates the currently selected Actor's move length.
+ */
+void CL_ResetActorMoveLength (void)
+{
+	actorMoveLength = CL_MoveLength(mousePos);
+}
+
+/**
  * @brief Draws the way to walk when confirm actions is activated.
  * @param[in] to
  */
@@ -2362,7 +2382,7 @@ static qboolean CL_TraceMove (pos3_t to)
 	pos3_t pos;
 	int dv;
 
-	length = Grid_MoveLength(&clMap, to, qfalse);
+	length = CL_MoveLength(to);
 
 	if (!selActor || !length || length >= 0x3F)
 		return qfalse;
@@ -2371,7 +2391,7 @@ static qboolean CL_TraceMove (pos3_t to)
 	VectorCopy(to, pos);
 
 	while ((dv = Grid_MoveNext(&clMap, pos)) < ROUTING_NOT_REACHABLE) {
-		length = Grid_MoveLength(&clMap, pos, qfalse);
+		length = CL_MoveLength(pos);
 		PosAddDV(pos, dv);
 		Grid_PosToVec(&clMap, pos, vec);
 		if (length > CL_UsableTUs(selActor))
@@ -2397,7 +2417,7 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 	vec3_t vec;
 	int dv;
 
-	length = Grid_MoveLength(&clMap, to, qfalse);
+	length = CL_MoveLength(to);
 
 	if (!selActor || !length || length >= 0x3F)
 		return;
@@ -2405,7 +2425,7 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 	VectorCopy(to, pos);
 
 	while ((dv = Grid_MoveNext(&clMap, pos)) < ROUTING_NOT_REACHABLE) {
-		length = Grid_MoveLength(&clMap, pos, qfalse);
+		length = CL_MoveLength(pos);
 		if (length <= tus)
 			return;
 		PosAddDV(pos, dv);
@@ -2437,7 +2457,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	if (blockEvents)
 		return;
 
-	length = Grid_MoveLength(&clMap, to, qfalse);
+	length = CL_MoveLength(to);
 
 	if (!length || length >= ROUTING_NOT_REACHABLE) {
 		/* move not valid, don't even care to send */
@@ -2448,7 +2468,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	CL_MaximumMove(to, CL_UsableTUs(selActor), toReal);
 
 	/* Get the cost of the new position just in case. */
-	length = Grid_MoveLength(&clMap, toReal, qfalse);
+	length = CL_MoveLength(toReal);
 
 	if (CL_UsableTUs(selActor) < length) {
 		/* We do not have enough _usable_ TUs to move so don't even try to send. */
@@ -3535,16 +3555,6 @@ void CL_DoEndRound (struct dbuffer *msg)
 MOUSE SCANNING
 ==============================================================
 */
-
-/**
- * @brief Recalculates the currently selected Actor's move length.
- * */
-void CL_ResetActorMoveLength (void)
-{
-	actorMoveLength = Grid_MoveLength(&clMap, mousePos, qfalse);
-	if (selActor->state & STATE_CROUCHED)
-		actorMoveLength *= 1.5;
-}
 
 /**
  * @brief Battlescape cursor positioning.
