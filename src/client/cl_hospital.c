@@ -108,7 +108,7 @@ static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 	base_t *base;
 
 	assert(employee);
-	base = &gd.bases[employee->baseIDHired];
+	base = B_GetBase(employee->baseIDHired);
 	assert(base);
 
 	if (base->hospitalListCount[employee->type] <= 0)
@@ -656,7 +656,7 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
 
 	assert(employee);
 
-	base = &gd.bases[employee->baseIDHired];
+	base = B_GetBase(employee->baseIDHired);
 	assert(base);
 
 	/* Do nothing if the base does not have hospital. */

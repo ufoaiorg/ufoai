@@ -50,7 +50,7 @@ chrList_t chrDisplayList;
  */
 static void CL_MultiplayerEnvironment_f (void)
 {
-	base_t *base = &gd.bases[0];
+	base_t *base = B_GetBase(0);
 
 	/* multiplayer is not ready yet */
 	if (!gd.numBases)
@@ -1330,7 +1330,7 @@ qboolean CL_SoldierAwayFromBase (employee_t *employee)
 	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT)
 		return qfalse;
 
-	base = &gd.bases[employee->baseIDHired];
+	base = B_GetBase(employee->baseIDHired);
 	assert(base);
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
@@ -1829,7 +1829,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 	/* header */
 	MSG_WriteByte(buf, num);
 	for (i = 0; i < num; i++) {
-		chr = E_GetHiredCharacter(&gd.bases[baseID], EMPL_SOLDIER, -(i+1));
+		chr = E_GetHiredCharacter(B_GetBase(baseID), EMPL_SOLDIER, -(i + 1));
 		assert(chr);
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, chr->fieldSize);

@@ -329,7 +329,7 @@ char *RS_GetDescription (descriptions_t *desc)
 			continue;
 
 		if (tech->base_idx >= 0)
-			base = &gd.bases[tech->base_idx];
+			base = B_GetBase(tech->base_idx);
 		else
 			base = baseCurrent;
 
@@ -502,7 +502,7 @@ void RS_MarkResearchable (qboolean init)
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
 				if (tech->base_idx >= 0)
-					base = &gd.bases[tech->base_idx];
+					base = B_GetBase(tech->base_idx);
 				else
 					base = baseCurrent;
 
@@ -875,7 +875,7 @@ void RS_AssignScientist (technology_t* tech)
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
 
 	if (tech->base_idx >= 0) {
-		base = &gd.bases[tech->base_idx];
+		base = B_GetBase(tech->base_idx);
 	} else {
 		base = baseCurrent;
 	}
@@ -949,6 +949,7 @@ static void RS_AssignScientist_f (void)
  * @param[in] tech The technology you want to remove the scientist from.
  * @sa RS_RemoveScientist_f
  * @sa RS_AssignScientist
+ * @sa E_RemoveEmployeeFromBuilding
  */
 void RS_RemoveScientist (technology_t* tech)
 {
@@ -967,6 +968,8 @@ void RS_RemoveScientist (technology_t* tech)
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
 		}
 	}
+
+	assert(tech->scientists < 0);
 
 	if (tech->scientists == 0) {
 		/* Remove the tech from the base if no scis are left to research it. */
@@ -1129,7 +1132,7 @@ static void RS_ResearchStop_f (void)
 		/* Remove all scis from it and set the status to paused (i.e. it's differnet from a RS_NONE since it may have a little bit of progress already). */
 		while (tech->scientists > 0)
 			RS_RemoveScientist(tech);
-		tech->statusResearch = RS_PAUSED; /* This is redundant since it's done in RS_RemoveScientist aready. But just in case :) */
+		assert(tech->statusResearch == RS_PAUSED);
 		break;
 	case RS_PAUSED:
 		/* @todo: remove? Popup info how much is already researched? */
@@ -1187,7 +1190,7 @@ void RS_UpdateData (base_t* base)
 	Cmd_ExecuteString("research_clear");
 
 	for (i = 0; i < gd.numBases; i++) {
-		available[i] = E_CountUnassigned(&gd.bases[i], EMPL_SCIENTIST);
+		available[i] = E_CountUnassigned(B_GetBase(i), EMPL_SCIENTIST);
 	}
 	RS_CheckAllCollected();
 	RS_MarkResearchable(qfalse);
@@ -1226,7 +1229,7 @@ void RS_UpdateData (base_t* base)
 
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
-			if ((tech->base_idx == base->idx) || (tech->base_idx < 0) ) {
+			if ((tech->base_idx == base->idx) || (tech->base_idx < 0)) {
 				/* Maximal available scientists in the base the tech is researched. */
 				Cvar_SetValue(va("mn_researchavailable%i", j), available[base->idx]);
 			} else {
@@ -1420,7 +1423,7 @@ void CL_CheckResearchStatus (void)
 					researchListPos = 0;
 					newResearch++;
 					/* add this base to the list that needs an update call */
-					checkBases[tech->base_idx] = &gd.bases[tech->base_idx];
+					checkBases[tech->base_idx] = B_GetBase(tech->base_idx);
 					tech->time = 0;
 				}
 			}

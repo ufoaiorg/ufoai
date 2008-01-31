@@ -69,6 +69,16 @@ int B_GetEmployeeCount (const base_t* const base)
 }
 
 /**
+ * @brief Array bound check for the base id
+ */
+base_t* B_GetBase (int id)
+{
+	assert(id < MAX_BASES);
+	assert(id >= 0);
+	return &gd.bases[id];
+}
+
+/**
  * @brief Searches the base for a given building type with the given status
  * @param[in] base Base to search
  * @param[in] type Building type to search
@@ -104,7 +114,7 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 /**
  * @brief Get the capacity associated to a building type
  * @param[in] type The type of the building
- * @return capacity (baseCapacities_t), or MAX_CAP if capacity has not b
+ * @return capacity (baseCapacities_t), or MAX_CAP if building has no capacity
  */
 baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
 {
@@ -274,7 +284,7 @@ static void B_BaseInit_f (void)
 		return;
 	}
 
-	baseCurrent = &gd.bases[mn_base_id->integer];
+	baseCurrent = B_GetBase(mn_base_id->integer);
 
 	CL_UpdateCredits(ccs.credits);
 

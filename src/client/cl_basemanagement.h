@@ -279,6 +279,7 @@ extern vec3_t newBasePos;
 
 int B_GetFoundedBaseCount(void);
 void B_SetUpBase(base_t* base);
+base_t* B_GetBase(int id);
 
 void B_SetBuildingByClick(int row, int col);
 void B_ResetBaseManagement(void);

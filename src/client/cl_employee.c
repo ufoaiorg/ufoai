@@ -537,65 +537,51 @@ qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
 }
 
 /**
+ * @brief Removes the inventory of the employee and also removes him from buildings
+ * @note This is used in the transfer start function (when you transfer an employee
+ * this must be called for him to make him no longer useable in the current base)
+ * and is also used when you completly unhire an employee.
+ * @sa E_UnhireEmployee
+ */
+void E_ResetEmployee (employee_t *employee)
+{
+	base_t* base;
+
+	assert(employee);
+	assert(employee->hired);
+	assert(employee->baseIDHired != -1);
+
+	base = B_GetBase(employee->baseIDHired);
+
+	/* Remove employee from building (and tech/production). */
+	E_RemoveEmployeeFromBuilding(employee);
+	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
+	INVSH_DestroyInventory(&employee->inv);
+	/* Remove employee from hospital if needed */
+	HOS_RemoveFromList(employee, base);
+}
+
+/**
  * @brief Fires an employee.
  * @note also remove him from the aircraft
  * @param[in] employee The employee who will be fired
  * @sa E_HireEmployee
  * @sa E_HireEmployeeByType
  * @sa CL_RemoveSoldierFromAircraft
+ * @sa E_ResetEmployee
  */
 qboolean E_UnhireEmployee (employee_t* employee)
 {
-	base_t* base = NULL;
-
 	if (employee && employee->hired) {
-		base = &gd.bases[employee->baseIDHired];
+		base_t *base = B_GetBase(employee->baseIDHired);
+		/* Update capacity of Living Quarters. */
+		base->capacities[CAP_EMPLOYEES].cur--;
 
-		if (employee->buildingID >= 0) {
-			/* Remove employee from building (and tech/production). */
-			E_RemoveEmployeeFromBuilding(employee);
-			/* @todo: Assign a new employee to the tech/production) if one is available.
-			E_AssignEmployee(employee, building_rom_unhired_employee);
-			*/
-		}
-		/* Remove employee from hospital if needed */
-		HOS_RemoveFromList(employee, base);
-		/* @todo: this switch should be moved to E_RemoveEmployeeFromBuilding() when I will
-		   finish implementing capacities. 22042007 Zenerka */
-		switch (employee->type) {
-		case EMPL_SOLDIER:
-			/* Remove soldier from aircraft/team if he was assigned to one. */
-			if (CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
-				CL_RemoveSoldierFromAircraft(employee->idx, employee->type, -1, base);
-			}
-			break;
-		case EMPL_WORKER:
-			/* Update current capacity and production times if worker is being counted there. */
-			if (E_CountHired(base, EMPL_WORKER) == base->capacities[CAP_WORKSPACE].cur) {
-				base->capacities[CAP_WORKSPACE].cur--;
-			}
-			break;
-		case EMPL_SCIENTIST:
-			/* Update current capacity for lab if scientist is being counter there. */
-			if (E_CountHired(base, EMPL_SCIENTIST) == base->capacities[CAP_LABSPACE].cur) {
-				base->capacities[CAP_LABSPACE].cur--;
-			}
-			break;
-		case EMPL_MEDIC:
-			/* @todo: implement me. */
-			break;
-		default:
-			break;
-		}
+		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
 		employee->baseIDHired = -1;
-		/* Destroy the inventory of the employee (carried items will remain in base->storage) */
-		INVSH_DestroyInventory(&employee->inv);
-		/* unneeded, INVSH_DestroyInventory does this (more or less)
-		memset(&employee->inv, 0, sizeof(inventory_t)); */
-		/* Update capacity of Living Quarters. */
-		base->capacities[CAP_EMPLOYEES].cur--;
+
 		return qtrue;
 	} else
 		Com_Printf("Could not fire employee\n");
@@ -806,34 +792,64 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 {
 	technology_t *tech = NULL;
+	base_t *base;
 
-	if (employee) {
-		const character_t *chr = &employee->chr;
-		switch (chr->empl_type) {
-		case EMPL_SCIENTIST:
-			/* Get technology with highest scientist-count and remove one scientist. */
-			tech = RS_GetTechWithMostScientists(employee->baseIDHired);
-			if (tech) {
-				/* Try to assign replacement scientist */
-				RS_AssignScientist(tech);
-				RS_RemoveScientist(tech);
-			} else {
-				assert(employee->buildingID != -1);
-			}
-			break;
+	assert(employee);
 
-		case EMPL_SOLDIER:
-		case EMPL_MEDIC:
-		case EMPL_WORKER:
-		case EMPL_ROBOT:
-			/*@todo: Check if they are linked to anywhere and remove them there. */
-			break;
-		default:
-			Com_DPrintf(DEBUG_CLIENT, "E_RemoveEmployeeFromBuilding: Unhandled employee type: %i\n", chr->empl_type);
-			break;
+	/* not assigned to any building */
+	if (employee->buildingID < 0)
+		return qfalse;
+
+	/* we can assume this because otherwise there should be no buildingID */
+	assert(employee->baseIDHired != -1);
+	base = B_GetBase(employee->baseIDHired);
+
+	switch (employee->type) {
+	case EMPL_SCIENTIST:
+		/* Update current capacity for lab if scientist is being counter there. */
+		if (E_CountHired(base, employee->type) == base->capacities[CAP_LABSPACE].cur) {
+			base->capacities[CAP_LABSPACE].cur--;
 		}
+
+		/* Get technology with highest scientist-count and remove one scientist. */
+		tech = RS_GetTechWithMostScientists(employee->baseIDHired);
+		if (tech) {
+			/* Try to assign replacement scientist */
+			RS_AssignScientist(tech);
+			RS_RemoveScientist(tech);
+		} else {
+			assert(employee->buildingID != -1);
+		}
+		break;
+
+	case EMPL_SOLDIER:
+		/* Remove soldier from aircraft/team if he was assigned to one. */
+		if (CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
+			CL_RemoveSoldierFromAircraft(employee->idx, employee->type, -1, base);
+		}
+		break;
+
+	case EMPL_MEDIC:
+		/* @todo: Check if they are linked to anywhere and remove them there. */
+		break;
+
+	case EMPL_WORKER:
+		/* Update current capacity and production times if worker is being counted there. */
+		if (E_CountHired(base, employee->type) == base->capacities[CAP_WORKSPACE].cur) {
+			base->capacities[CAP_WORKSPACE].cur--;
+		}
+		break;
+
+	case EMPL_ROBOT:
+		/* @todo: Check if they are linked to anywhere and remove them there. */
+		break;
+
+	/* otherwise the compiler would print a warning */
+	case MAX_EMPL:
+		break;
 	}
-	return qfalse;
+
+	return qtrue;
 }
 
 /**

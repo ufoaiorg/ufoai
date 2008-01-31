@@ -127,7 +127,7 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 	base_t *base = NULL;
 	aircraft_t *aircraft = NULL;
 
-	base = &gd.bases[base_idx];
+	base = B_GetBase(base_idx);
 
 	if (!base) {
 #ifdef DEBUG
@@ -380,7 +380,7 @@ void AIR_NewAircraft_f (void)
 		i = atoi(Cmd_Argv(2));
 
 	if (!baseCurrent || (i >= 0)) {
-		if (i < 0 || i > MAX_BASES)
+		if (i < 0 || i >= MAX_BASES)
 			return;
 
 		if (gd.bases[i].founded)
@@ -2072,7 +2072,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int == -1)
 				ufo->baseTarget = NULL;
 			else
-				ufo->baseTarget = &gd.bases[tmp_int];
+				ufo->baseTarget = B_GetBase(tmp_int);
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int == -1)
 				ufo->aircraftTarget = NULL;
@@ -2150,7 +2150,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int >= 0)
-				gd.projectiles[i].aimedBase = &gd.bases[tmp_int];
+				gd.projectiles[i].aimedBase = B_GetBase(tmp_int);
 			else
 				gd.projectiles[i].aimedBase = NULL;
 			tmp_int = MSG_ReadByte(sb);

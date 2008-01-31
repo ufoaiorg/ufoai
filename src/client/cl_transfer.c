@@ -112,7 +112,7 @@ static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
  * @param[in] employee Pointer to employee for transfer.
  * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
- * @return qtrue if transfer of this type of alien is possible.
+ * @return qtrue if transfer of this type of employee is possible.
  */
 static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destbase)
 {
@@ -134,12 +134,18 @@ static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t 
 		return qfalse;
 	}
 
-	/* Is this a soldier assigned to aircraft? */
-	if ((employee->type == EMPL_SOLDIER) && CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
-		Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
-		gd.ranks[employee->chr.rank].shortname, employee->chr.name);
-		MN_Popup(_("Soldier in aircraft"), popupText);
-		return qfalse;
+	switch (employee->type) {
+	case EMPL_SOLDIER:
+		/* Is this a soldier assigned to aircraft? */
+		if (CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
+			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
+			gd.ranks[employee->chr.rank].shortname, employee->chr.name);
+			MN_Popup(_("Soldier in aircraft"), popupText);
+			return qfalse;
+		}
+		break;
+	default:
+		break;
 	}
 
 	return qtrue;
@@ -350,7 +356,7 @@ static void TR_TransferSelect_f (void)
 	aircraft_t *aircraft = NULL;
 	char str[128];
 
-	if (!transferBase)
+	if (!transferBase || !baseCurrent)
 		return;
 
 	if (Cmd_Argc() < 2)
@@ -869,12 +875,12 @@ static void TR_TransferStart_f (void)
 			if (trEmployeesTmp[i][j] > TRANS_LIST_EMPTY_SLOT) {
 				transfer->hasEmployees = qtrue;
 				employee = &gd.employees[i][j];
-				E_RemoveEmployeeFromBuilding(employee);		/* Remove from building. */
-				INVSH_DestroyInventory(&employee->inv);		/* Remove inventory. */
-				HOS_RemoveFromList(employee, baseCurrent);	/* Remove from hospital. */
+
+				assert(employee->baseIDHired == baseCurrent->idx);
+
+				E_ResetEmployee(employee);
 				transfer->employeesArray[i][j] = trEmployeesTmp[i][j];
-				/* FIXME: wouldn't it be better to use MAX_BASES + 1 here? */
-				employee->baseIDHired = 42;	/* Hack to take them as hired but not in any base. */
+				employee->baseIDHired = MAX_BASES;	/* HACK to take them as hired but not in any base. */
 			}
 		}
 	}
@@ -1144,7 +1150,7 @@ static void TR_NextBase_f (void)
 		counter = transferBase->idx;
 
 	for (i = counter + 1; i < gd.numBases; i++) {
-		base = &gd.bases[i];
+		base = B_GetBase(i);
 		if (!base->founded)
 			continue;
 		if (base == baseCurrent)
@@ -1154,7 +1160,7 @@ static void TR_NextBase_f (void)
 	}
 	/* At this point we are at "last" base, so we will select first. */
 	for (i = 0; i < gd.numBases; i++) {
-		base = &gd.bases[i];
+		base = B_GetBase(i);
 		if (!base->founded)
 			continue;
 		if (base == baseCurrent)
@@ -1182,7 +1188,7 @@ static void TR_PrevBase_f (void)
 		counter = transferBase->idx;
 
 	for (i = counter - 1; i >= 0; i--) {
-		base = &gd.bases[i];
+		base = B_GetBase(i);
 		if (!base->founded)
 			continue;
 		if (base == baseCurrent)
@@ -1192,7 +1198,7 @@ static void TR_PrevBase_f (void)
 	}
 	/* At this point we are at "first" base, so we will select last. */
 	for (i = gd.numBases; i >= 0; i--) {
-		base = &gd.bases[i];
+		base = B_GetBase(i);
 		if (!base->founded)
 			continue;
 		if (base == baseCurrent)
@@ -1372,7 +1378,7 @@ void TR_TransferCheck (void)
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer = &gd.alltransfers[i];
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
-			base = &gd.bases[transfer->destBase];
+			base = B_GetBase(transfer->destBase);
 			if (!base->founded) {
 				TR_EmptyTransferCargo(transfer, qfalse);
 				MN_AddNewMessage(_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);

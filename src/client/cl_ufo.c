@@ -608,7 +608,7 @@ void UFO_Recovery (void)
 	for (i = 0; i < MAX_RECOVERIES; i++) {
 		recovery = &gd.recoveries[i];
 		if (recovery->active && recovery->event.day == ccs.date.day) {
-			base = &gd.bases[recovery->baseID];
+			base = B_GetBase(recovery->baseID);
 			if (!base->founded) {
 				/* Destination base was destroyed meanwhile. */
 				/* UFO is lost, send proper message to the user.*/

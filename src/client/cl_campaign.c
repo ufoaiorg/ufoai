@@ -2285,7 +2285,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 				{
 					/* Load IDX of base under attack */
 					int baseidx = MSG_ReadByte(sb);
-					base = &gd.bases[baseidx];
+					base = B_GetBase(baseidx);
 					Vector2Copy(base->pos, mis->realPos);
 					if (base->baseStatus != BASE_UNDER_ATTACK)
 						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", j, base->name);
@@ -4444,7 +4444,7 @@ static void CL_GameSkirmish_f (void)
 	/* create employees and clear bases */
 	B_NewBases();
 
-	base = &gd.bases[0];
+	base = B_GetBase(0);
 	baseCurrent = base;
 	gd.numAircraft = 0;
 
@@ -4974,7 +4974,7 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 	if (num < 0 || num >= MAX_BASES || UFObases[num] == -1)
 		return;
 
-	base = &gd.bases[UFObases[num]];
+	base = B_GetBase(UFObases[num]);
 
 	assert(base);
 
@@ -4999,7 +4999,7 @@ static void CP_UFORecoveredStart_f (void)
 	if (i < 0 || i > MAX_BASES)
 		return;
 
-	base = &gd.bases[i];
+	base = B_GetBase(i);
 	assert(base);
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),

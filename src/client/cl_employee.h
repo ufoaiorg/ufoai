@@ -65,6 +65,7 @@ qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);
 qboolean E_UnhireEmployee(employee_t* employee);
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
+void E_ResetEmployee(employee_t *employee);
 
 employeeType_t E_GetEmployeeType(const char* type);
 extern const char* E_GetEmployeeString(employeeType_t type);
