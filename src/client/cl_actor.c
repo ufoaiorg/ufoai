@@ -622,7 +622,7 @@ qboolean CL_WorkingReactionFiremode (const le_t * actor)
  * @param[in] handidx Index of hand with item, which will be used for reactionfiR_ Possible hand indices: 0=right, 1=right, -1=undef
  * @param[in] fd_idx Index of firedefinition for an item in given hand.
  */
-static void CL_SetReactionFiremode (le_t * actor, const int handidx, const int obj_idx, const int fd_idx)
+void CL_SetReactionFiremode (le_t * actor, const int handidx, const int obj_idx, const int fd_idx)
 {
 	character_t * chr = NULL;
 
