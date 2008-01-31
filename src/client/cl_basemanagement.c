@@ -585,7 +585,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
 	base_t *base;
 
 	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++){
-		base = gd.bases + baseIdx;
+		base = B_GetBase(baseIdx);
 		B_ResetAllStatusAndCapacities(base, qtrue);
 	}
 }
