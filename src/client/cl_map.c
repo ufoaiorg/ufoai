@@ -933,7 +933,7 @@ static void MAP_GetGeoscapeAngle (float *Vector)
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
 	maxEventIdx = ccs.numMissions + gd.numBases - 1;
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
-		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
+		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (aircraft->status > AIR_HOME)
 				maxEventIdx++;
 		}

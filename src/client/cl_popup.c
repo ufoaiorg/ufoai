@@ -324,7 +324,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 
 			/* Check if the base should be displayed in base list
 			 * don't check range because maybe UFO will get closer */
-			if (AII_BaseCanShoot(gd.bases + j)) {
+			if (AII_BaseCanShoot(B_GetBase(j))) {
 				Q_strcat(baseListText, va("%s\n", gd.bases[j].name), sizeof(baseListText));
 				somethingWritten = qtrue;
 			}
@@ -441,7 +441,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 			continue;
 
 		/* Check if the base should be displayed in base list */
-		if (AII_BaseCanShoot(gd.bases + baseIdx)) {
+		if (AII_BaseCanShoot(B_GetBase(baseIdx))) {
 			num--;
 			atLeastOneBase = qtrue;
 			if (num < 0)
