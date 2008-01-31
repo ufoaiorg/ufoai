@@ -1197,7 +1197,7 @@ static void TR_PrevBase_f (void)
 		return;
 	}
 	/* At this point we are at "first" base, so we will select last. */
-	for (i = gd.numBases; i >= 0; i--) {
+	for (i = gd.numBases - 1; i >= 0; i--) {
 		base = B_GetBase(i);
 		if (!base->founded)
 			continue;
