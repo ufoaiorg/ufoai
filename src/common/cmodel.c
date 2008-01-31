@@ -931,7 +931,7 @@ static void CM_CheckUnit (routing_t * map, int x, int y, pos_t z)
 				end[2] = start[2] + PLAYER_HEIGHT - (start[2] - tend[2]);
 				height = UNIT_HEIGHT - (start[2] - tend[2]);
 
-/*				printf("%i %i\n", (int)height, (int)(start[2]-tend[2])); */
+/*				Com_DPrintf(DEBUG_ENGINE, "%i %i\n", (int)height, (int)(start[2] - tend[2])); */
 
 				if (!CM_EntTestLineDM(start, end, tend))
 					map->route[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
@@ -1745,6 +1745,7 @@ static void CM_TraceToLeaf (int leafnum)
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contentFlags & trace_contents))
 		return;
+
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
 		brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
@@ -1755,6 +1756,7 @@ static void CM_TraceToLeaf (int leafnum)
 
 		if (!(b->contentFlags & trace_contents))
 			continue;
+
 		CM_ClipBoxToBrush(trace_mins, trace_maxs, trace_start, trace_end, &trace_trace, b);
 		if (!trace_trace.fraction)
 			return;
@@ -1774,6 +1776,7 @@ static void CM_TestInLeaf (int leafnum)
 	cBspBrush_t *b;
 
 	assert(leafnum > LEAFNODE);
+	assert(leafnum <= curTile->numleafs);
 
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contentFlags & trace_contents))
@@ -1839,13 +1842,6 @@ static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
 		else
 			offset = fabs(trace_extents[0] * plane->normal[0]) + fabs(trace_extents[1] * plane->normal[1]) + fabs(trace_extents[2] * plane->normal[2]);
 	}
-
-
-#if 0
-	CM_RecursiveHullCheck(node->children[0], p1f, p2f, p1, p2);
-	CM_RecursiveHullCheck(node->children[1], p1f, p2f, p1, p2);
-	return;
-#endif
 
 	/* see which sides we need to consider */
 	if (t1 >= offset && t2 >= offset) {
@@ -1954,6 +1950,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const v
 		VectorAdd(start, mins, c1);
 		VectorAdd(start, maxs, c2);
 		for (i = 0; i < 3; i++) {
+			/* expand the box by 1 */
 			c1[i] -= 1;
 			c2[i] += 1;
 		}
@@ -2153,9 +2150,11 @@ static void BuildTnode_r (int node, int level)
 		VectorCopy(curTile->nodes[n->children[0]].maxs, c0maxs);
 		VectorCopy(curTile->nodes[n->children[1]].mins, c1mins);
 
-		/*  printf("(%i %i : %i %i) (%i %i : %i %i)\n", */
-		/*      (int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1], */
-		/*      (int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1]); */
+		Com_DPrintf(DEBUG_ENGINE, "(%i %i : %i %i) (%i %i : %i %i)\n",
+			(int)curTile->nodes[n->children[0]].mins[0], (int)curTile->nodes[n->children[0]].mins[1],
+			(int)curTile->nodes[n->children[0]].maxs[0], (int)curTile->nodes[n->children[0]].maxs[1],
+			(int)curTile->nodes[n->children[1]].mins[0], (int)curTile->nodes[n->children[1]].mins[1],
+			(int)curTile->nodes[n->children[1]].maxs[0], (int)curTile->nodes[n->children[1]].maxs[1]);
 
 		for (i = 0; i < 2; i++)
 			if (c0maxs[i] <= c1mins[i]) {
