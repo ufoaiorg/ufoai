@@ -1411,13 +1411,13 @@ static void CL_RefreshWeaponButtons (int time)
 	/* crouch/stand button */
 	if (selActor->state & STATE_CROUCHED) {
 		weaponButtonState[BT_STAND] = -1;
-		if (time < TU_CROUCH)
+		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH)
 			SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
 		else
 			SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
 	} else {
 		weaponButtonState[BT_CROUCH] = -1;
-		if (time < TU_CROUCH)
+		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH)
 			SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		else
 			SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
@@ -1425,7 +1425,7 @@ static void CL_RefreshWeaponButtons (int time)
 
 	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 		Cbuf_AddText("crouch_checkbox_check\n");
-	} else if (CL_UsableTUs(selActor) >= TU_CROUCH) {
+	} else if (time >= TU_CROUCH) {
 		Cbuf_AddText("crouch_checkbox_clear\n");
 	} else {
 		Cbuf_AddText("crouch_checkbox_disable\n");

@@ -689,8 +689,8 @@ menu althud
 
 	pic bt_crouch_reservation
 	{
-		tooltip	"_Reserve TUs for crouching/standing up"
-		pos	"362 30"
+		tooltip	"_Reserve TUs for crouching/standing up."
+		pos	"966 536"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
