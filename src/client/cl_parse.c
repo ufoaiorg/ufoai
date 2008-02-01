@@ -1097,8 +1097,8 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	if ((state & STATE_CROUCHED && !(le->state & STATE_CROUCHED)) ||
 		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED)) {
 		CL_SetLastMoving(le);
-		if (CL_ReservedTUs(le, 1) >= TU_CROUCH) {
-			CL_ReserveTUs(le, 1, 0); /* Reset reserved TUs (0 TUs) */
+		if (CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
+			CL_ReserveTUs(le, RES_CROUCH, 0); /* Reset reserved TUs (0 TUs) */
 		}
 	}
 
