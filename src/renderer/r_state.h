@@ -60,7 +60,7 @@ typedef struct {
 	/* blend function */
 	GLenum blend_src, blend_dest;
 
-	int maxAnisotropic;
+	int32_t maxAnisotropic;
 
 	qboolean ortho;
 

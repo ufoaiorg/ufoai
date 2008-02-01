@@ -91,7 +91,7 @@ void R_UpdateTextures (int min, int max)
 		if (glt->type != it_pic) {
 			R_BindTexture(glt->texnum);
 			if (r_state.anisotropic)
-				qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
+				qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_state.maxAnisotropic);
 			R_CheckError();
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
@@ -1036,8 +1036,8 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 		qglTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-		if (r_anisotropic->integer && r_state.anisotropic) {
-			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
+		if (r_state.anisotropic) {
+			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_state.maxAnisotropic);
 			R_CheckError();
 		}
 		if (r_texture_lod->integer && r_state.lod_bias) {
@@ -1045,6 +1045,10 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 			R_CheckError();
 		}
 	} else {
+		if (r_state.anisotropic) {
+			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
+			R_CheckError();
+		}
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 	}
