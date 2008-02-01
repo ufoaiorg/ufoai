@@ -2077,7 +2077,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int == -1)
 				ufo->aircraftTarget = NULL;
 			else
-				ufo->aircraftTarget = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
+				ufo->aircraftTarget = AIR_AircraftGetFromIdx(tmp_int);
 			/* read weapon slot */
 			tmp_int = MSG_ReadByte(sb);
 			for (j = 0; j < tmp_int; j++) {
