@@ -99,7 +99,6 @@ cvar_t *r_modulate;
 cvar_t *r_showtris;
 cvar_t *r_flashblend;
 cvar_t *r_swapinterval;
-cvar_t *r_acceleratedvisuals;
 cvar_t *r_texturemode;
 cvar_t *r_texturealphamode;
 cvar_t *r_texturesolidmode;
@@ -717,7 +716,6 @@ static void R_Register (void)
 
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);
-	r_acceleratedvisuals = Cvar_Get("r_acceleratedvisuals", "1", CVAR_ARCHIVE, NULL);
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);

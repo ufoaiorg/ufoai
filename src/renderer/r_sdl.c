@@ -185,7 +185,6 @@ qboolean R_InitGraphics (void)
 	}
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, r_acceleratedvisuals->integer);
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, r_swapinterval->integer);
 
 	flags = SDL_OPENGL;
