@@ -683,6 +683,22 @@ menu althud
 		click	{ cmd "standcrouch;" }
 	}
 
+	confunc crouch_checkbox_disable_a { *bt_crouch_reservation image menu/checkbox_green_disabled }
+	confunc crouch_checkbox_clear_a	{ *bt_crouch_reservation image menu/checkbox_green_unchecked }
+	confunc crouch_checkbox_check_a	{ *bt_crouch_reservation image menu/checkbox_green_checked }
+
+	pic bt_crouch_reservation
+	{
+		tooltip	"_Reserve TUs for crouching/standing up"
+		pos	"362 30"
+		texl	"0 0"
+		texh	"20 20"
+		mousefx true
+		click { cmd "togglecrouchreserve" }
+		out	{ *bt_crouch_reservation texl "0 0" *bt_crouch_reservation texh "20 20" }
+		in	{ *bt_crouch_reservation texl "0 20" *bt_crouch_reservation texh "20 40" }
+	}
+
 	pic bt_floorup
 	{
 		key "*binding levelup"

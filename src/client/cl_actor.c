@@ -1423,6 +1423,14 @@ static void CL_RefreshWeaponButtons (int time)
 			SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
 	}
 
+	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
+		Cbuf_AddText("crouch_checkbox_check\n");
+	} else if (CL_UsableTUs(selActor) >= TU_CROUCH) {
+		Cbuf_AddText("crouch_checkbox_clear\n");
+	} else {
+		Cbuf_AddText("crouch_checkbox_disable\n");
+	}
+
 	/* headgear button (nearly the same code as for weapon firing buttons below). */
 	/** @todo Make a generic function out of this? */
 	if (headgear) {
@@ -2913,10 +2921,14 @@ void CL_ActorToggleCrouchReservation_f (void)
 	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 		/* Reset reserved TUs to 0 */
 		CL_ReserveTUs(selActor, RES_CROUCH, 0);
+		Cbuf_AddText("crouch_checkbox_clear\n");
 	} else {
 		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
 		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
+			Cbuf_AddText("crouch_checkbox_check\n");
+		} else {
+			Cbuf_AddText("crouch_checkbox_disable\n");
 		}
 	}
 }
