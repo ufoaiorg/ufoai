@@ -580,7 +580,7 @@ static void R_InitExtension (void)
 		if (r_vertexbuffers->integer)
 			Com_Printf("using GL_ARB_vertex_buffer_object\n");
 		else
-			Com_Printf("ignoring GL_EXT_texture_filter_anisotropic\n");
+			Com_Printf("ignoring GL_ARB_vertex_buffer_object\n");
 	} else {
 		Com_Printf("GL_ARB_vertex_buffer_object not found\n");
 		r_state.vertex_buffers = qfalse;
