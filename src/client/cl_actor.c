@@ -703,16 +703,18 @@ int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 		/* A summary of ALL TUs that are reserved depending on their "status". */
 		/* Only use reaction-value if we are have RF activated. */
 		return (
-			(le->state & STATE_REACTION)
+			((le->state & STATE_REACTION)
 				? max(0,chr->reservedTus.reaction)
-				: 0
+				: 0)
 			+ max(0, chr->reservedTus.crouch));
 /* For future additions:
 		return le->TU -
-			( (le->state & STATE_REACTION) ? max(0, chr->reservedTus.reaction) : 0
+			(
+			((le->state & STATE_REACTION) ? max(0, chr->reservedTus.reaction) : 0)
 			+ max(0, chr->reservedTus.crouch)
 			+ max(0, chr->reservedTus.thisTurn)
-			+ max(0, chr->reservedTus.thisTurnManually));
+			+ max(0, chr->reservedTus.thisTurnManually)
+			);
 */
 	case RES_REACTION:
 		return max(0, chr->reservedTus.reaction);
@@ -2913,8 +2915,9 @@ void CL_ActorToggleCrouchReservation_f (void)
 		CL_ReserveTUs(selActor, RES_CROUCH, 0);
 	} else {
 		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
-		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)
+		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
+		}
 	}
 }
 
