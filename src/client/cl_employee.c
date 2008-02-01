@@ -767,7 +767,7 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 	case EMPL_SOLDIER:
 		break;
 	case EMPL_SCIENTIST:
-		employee = E_GetUnassignedEmployee(&gd.bases[building->base_idx], type);
+		employee = E_GetUnassignedEmployee(B_GetBase(building->base_idx), type);
 		if (employee) {
 			employee->buildingID = building->idx;
 		} else {

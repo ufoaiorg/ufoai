@@ -388,13 +388,15 @@ void PR_ProductionRun (void)
 	aircraft_t *aircraft = NULL;
 	production_t *prod;
 	aircraft_t *ufocraft;
+	base_t *base;
 
 	/* Loop through all founded bases. Then check productions
 	 * in global data array. Then increase prod->percentDone and check
 	 * wheter an item is produced. Then add to base storage. */
 
 	for (i = 0; i < MAX_BASES; i++) {
-		if (!gd.bases[i].founded)
+		base = B_GetBase(i);
+		if (!base->founded)
 			continue;
 
 		/* not actually any active productions */
@@ -402,7 +404,7 @@ void PR_ProductionRun (void)
 			continue;
 
 		/* Workshop is disabled because their dependences are disabled */
-		if (!gd.bases[i].hasBuilding[B_WORKSHOP])
+		if (!base->hasBuilding[B_WORKSHOP])
 			continue;
 
 		prod = &gd.productions[i].items[0];
@@ -417,16 +419,16 @@ void PR_ProductionRun (void)
 				/* Not enough money to produce more items in this base. */
 				if (od->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditmessage) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), gd.bases[i].name);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
 						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->creditmessage = qtrue;
 					}
 					continue;
 				}
 				/* Not enough free space in base storage for this item. */
-				if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < od->size) {
+				if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < od->size) {
 					if (!prod->spacemessage) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Production paused.\n"), gd.bases[i].name);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Production paused.\n"), base->name);
 						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->spacemessage = qtrue;
 					}
@@ -436,16 +438,16 @@ void PR_ProductionRun (void)
 				/* Not enough money to produce more items in this base. */
 				if (aircraft->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditmessage) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), gd.bases[i].name);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
 						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->creditmessage = qtrue;
 					}
 					continue;
 				}
 				/* Not enough free space in hangars for this aircraft. */
-				if (AIR_CalculateHangarStorage(prod->objID, &gd.bases[i], 0) <= 0) {
+				if (AIR_CalculateHangarStorage(prod->objID, base, 0) <= 0) {
 					if (!prod->spacemessage) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free hangar space in base %s. Production paused.\n"), gd.bases[i].name);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free hangar space in base %s. Production paused.\n"), base->name);
 						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->spacemessage = qtrue;
 					}
@@ -453,10 +455,9 @@ void PR_ProductionRun (void)
 				}
 			}
 		} else {		/* This is disassembling. */
-			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur <
-			INV_DisassemblyItem(NULL, INV_GetComponentsByItemIdx(prod->objID), qtrue)) {
+			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < INV_DisassemblyItem(NULL, INV_GetComponentsByItemIdx(prod->objID), qtrue)) {
 				if (!prod->spacemessage) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Disassembling paused.\n"), gd.bases[i].name);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Disassembling paused.\n"), base->name);
 					MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 					prod->spacemessage = qtrue;
 				}
@@ -470,11 +471,11 @@ void PR_ProductionRun (void)
 #endif
 		if (prod->production) {	/* This is production, not disassembling. */
 			if (!prod->aircraft)
-				prod->percentDone += PR_CalculateProductionPercentDone(&gd.bases[i], od->tech, NULL, qfalse);
+				prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse);
 			else
-				prod->percentDone += PR_CalculateProductionPercentDone(&gd.bases[i], aircraft->tech, NULL, qfalse);
+				prod->percentDone += PR_CalculateProductionPercentDone(base, aircraft->tech, NULL, qfalse);
 		} else /* This is disassembling. */
-			prod->percentDone += PR_CalculateProductionPercentDone(&gd.bases[i], od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+			prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
 
 		if (prod->percentDone >= 1.0f) {
 			if (prod->production) {	/* This is production, not disassembling. */
@@ -483,29 +484,29 @@ void PR_ProductionRun (void)
 					prod->percentDone = 0.0f;
 					prod->amount--;
 					/* Now add it to equipment and update capacity. */
-					B_UpdateStorageAndCapacity(&gd.bases[i], prod->objID, 1, qfalse, qfalse);
+					B_UpdateStorageAndCapacity(base, prod->objID, 1, qfalse, qfalse);
 
 					/* queue the next production */
 					if (prod->amount <= 0) {
 						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The production of %s has finished."), od->name);
 						MN_AddNewMessage(_("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-						PR_QueueNext(&gd.bases[i]);
+						PR_QueueNext(base);
 					}
 				} else {
 					CL_UpdateCredits(ccs.credits - (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
 					prod->percentDone = 0.0f;
 					prod->amount--;
 					/* Now add new aircraft. */
-					AIR_NewAircraft(&gd.bases[i], aircraft->id);
+					AIR_NewAircraft(base, aircraft->id);
 					/* queue the next production */
 					if (prod->amount <= 0) {
 						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The production of %s has finished."), _(aircraft->name));
 						MN_AddNewMessage(_("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
-						PR_QueueNext(&gd.bases[i]);
+						PR_QueueNext(base);
 					}
 				}
 			} else {	/* This is disassembling. */
-				gd.bases[i].capacities[CAP_ITEMS].cur += INV_DisassemblyItem(&gd.bases[i], INV_GetComponentsByItemIdx(prod->objID), qfalse);
+				base->capacities[CAP_ITEMS].cur += INV_DisassemblyItem(base, INV_GetComponentsByItemIdx(prod->objID), qfalse);
 				prod->percentDone = 0.0f;
 				prod->amount--;
 				/* If this is aircraft dummy item, update UFO hangars capacity. */
@@ -514,15 +515,15 @@ void PR_ProductionRun (void)
 					assert(ufocraft);
 					if (ufocraft->weight == AIRCRAFT_LARGE) {
 						/* Large UFOs can only be stored in Large UFO Hangar */
-						if (gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur > 0)
-							gd.bases[i].capacities[CAP_UFOHANGARS_LARGE].cur--;
+						if (base->capacities[CAP_UFOHANGARS_LARGE].cur > 0)
+							base->capacities[CAP_UFOHANGARS_LARGE].cur--;
 						else
 							/* Should never be reached */
 							Com_Printf("PR_ProductionRun: Can not find %s in large UFO Hangar\n", ufocraft->name);
 					} else {
 						/* Small UFOs can only be stored in Small UFO Hangar */
-						if (gd.bases[i].capacities[CAP_UFOHANGARS_SMALL].cur > 0)
-							gd.bases[i].capacities[CAP_UFOHANGARS_SMALL].cur--;
+						if (base->capacities[CAP_UFOHANGARS_SMALL].cur > 0)
+							base->capacities[CAP_UFOHANGARS_SMALL].cur--;
 						else
 							/* Should never be reached */
 							Com_Printf("PR_ProductionRun: Can not find %s in small UFO Hangar\n", ufocraft->name);
@@ -531,7 +532,7 @@ void PR_ProductionRun (void)
 				if (prod->amount <= 0) {
 					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The disassembling of %s has finished."), od->name);
 					MN_AddNewMessage(_("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-					PR_QueueNext(B_GetBase(i));
+					PR_QueueNext(base);
 				}
 			}
 		}

@@ -1395,6 +1395,7 @@ void CL_CheckResearchStatus (void)
 	int i, newResearch = 0;
 	technology_t *tech = NULL;
 	base_t* checkBases[MAX_BASES];
+	base_t *base;
 
 	if (!researchListLength)
 		return;
@@ -1405,26 +1406,29 @@ void CL_CheckResearchStatus (void)
 		tech = &gd.technologies[i];
 		if (tech->statusResearch == RS_RUNNING) {
 			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
-			if ((tech->time > 0) && (tech->scientists >= 0) && gd.bases[tech->base_idx].hasBuilding[B_LAB]) {
-				Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
-				Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
-				/* @todo: Just for testing, better formular may be needed. */
-				tech->time -= tech->scientists * 0.8;
-				Com_DPrintf(DEBUG_CLIENT, "timeafter %.2f\n", tech->time);
-				/* @todo include employee-skill in calculation. */
-				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
-				if (tech->time <= 0) {
-					/* Remove all scientists from the technology. */
-					while (tech->scientists > 0)
-						RS_RemoveScientist(tech);
+			if (tech->time > 0 && tech->scientists >= 0) {
+				base = B_GetBase(tech->base_idx);
+				if (base->hasBuilding[B_LAB]) {
+					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
+					Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
+					/* @todo: Just for testing, better formular may be needed. */
+					tech->time -= tech->scientists * 0.8;
+					Com_DPrintf(DEBUG_CLIENT, "timeafter %.2f\n", tech->time);
+					/* @todo include employee-skill in calculation. */
+					/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
+					if (tech->time <= 0) {
+						/* Remove all scientists from the technology. */
+						while (tech->scientists > 0)
+							RS_RemoveScientist(tech);
 
-					RS_MarkResearched(tech);
-					researchListLength = 0;
-					researchListPos = 0;
-					newResearch++;
-					/* add this base to the list that needs an update call */
-					checkBases[tech->base_idx] = B_GetBase(tech->base_idx);
-					tech->time = 0;
+						RS_MarkResearched(tech);
+						researchListLength = 0;
+						researchListPos = 0;
+						newResearch++;
+						/* add this base to the list that needs an update call */
+						checkBases[tech->base_idx] = base;
+						tech->time = 0;
+					}
 				}
 			}
 		}

@@ -1787,7 +1787,7 @@ void B_ParseBases (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		base = &gd.bases[gd.numBaseNames];
+		base = B_GetBase(gd.numBaseNames);
 		memset(base, 0, sizeof(base_t));
 		base->idx = gd.numBaseNames;
 		base->buildingToBuild = -1;
@@ -2033,19 +2033,19 @@ static void B_SelectBase_f (void)
 		baseID = gd.numBases;
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
-			baseCurrent = &gd.bases[baseID];
+			baseCurrent = B_GetBase(baseID);
 			baseCurrent->idx = baseID;
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			Cmd_ExecuteString("set_base_to_normal");
 		} else {
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
-			baseCurrent = &gd.bases[0];
+			baseCurrent = B_GetBase(0);
 			gd.mapAction = MA_NONE;
 		}
 	} else if (baseID < MAX_BASES) {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", baseID);
-		baseCurrent = &gd.bases[baseID];
+		baseCurrent = B_GetBase(baseID);
 		if (baseCurrent->founded) {
 			gd.mapAction = MA_NONE;
 			MN_PushMenu("bases");
@@ -2454,7 +2454,7 @@ static void B_BaseAttack_f (void)
 	whichBaseID = atoi(Cmd_Argv(1));
 
 	if (whichBaseID >= 0 && whichBaseID < gd.numBases) {
-		B_BaseAttack(&gd.bases[whichBaseID]);
+		B_BaseAttack(B_GetBase(whichBaseID));
 	}
 }
 
@@ -2488,7 +2488,7 @@ static void B_AssembleMap_f (void)
 			Com_DPrintf(DEBUG_CLIENT, "Invalid baseID: %i\n", baseID);
 			return;
 		}
-		base = &gd.bases[baseID];
+		base = B_GetBase(baseID);
 	}
 
 	if (!base) {
@@ -2570,11 +2570,13 @@ void B_NewBases (void)
 	/* reset bases */
 	int i;
 	char title[MAX_VAR];
+	base_t *base;
 
 	for (i = 0; i < MAX_BASES; i++) {
-		Q_strncpyz(title, gd.bases[i].name, sizeof(title));
-		B_ClearBase(&gd.bases[i]);
-		Q_strncpyz(gd.bases[i].name, title, sizeof(title));
+		base = B_GetBase(i);
+		Q_strncpyz(title, base->name, sizeof(title));
+		B_ClearBase(base);
+		Q_strncpyz(base->name, title, sizeof(title));
 	}
 }
 

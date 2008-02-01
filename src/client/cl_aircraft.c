@@ -384,7 +384,7 @@ void AIR_NewAircraft_f (void)
 			return;
 
 		if (gd.bases[i].founded)
-			b = &gd.bases[i];
+			b = B_GetBase(i);
 	} else
 		b = baseCurrent;
 

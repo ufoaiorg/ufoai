@@ -136,7 +136,7 @@ static int BaseSummary_EmployeeTotal (void)
 
 	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
 		for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
-			cnt += E_CountHired(gd.bases + baseIdx, type);
+			cnt += E_CountHired(B_GetBase(baseIdx), type);
 		}
 	}
 

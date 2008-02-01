@@ -701,32 +701,31 @@ static qboolean AC_PrevAC (void)
  */
 static void AC_PrevAC_f (void)
 {
-	int i, baseID;
+	int i;
 	qboolean found = qfalse;
+	base_t *base = NULL;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
 		return;
 
-	baseID = baseCurrent->idx;
-
-	for (i = (baseID - 1) & (MAX_BASES - 1); i >= 0; i--) {
-		if (!gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
+	for (i = (baseCurrent->idx - 1) & (MAX_BASES - 1); i >= 0; i--) {
+		base = B_GetBase(i);
+		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
-		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
-			baseID = i;
+		if (B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			found = qtrue;
 			break;
 		}
 	}
 
 	if (!found)
-		baseID = baseCurrent->idx;
+		base = B_GetBase(baseCurrent->idx);
 
-	if (!gd.bases[baseID].founded)
+	if (!base->founded)
 		return;
 	else
-		Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push aliencont\n", baseID));
+		Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push aliencont\n", base->idx));
 }
 
 /**

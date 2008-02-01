@@ -1824,7 +1824,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 	assert(baseID < gd.numBases);
 
 	/* clean temp inventory */
-	CL_CleanTempInventory(&gd.bases[baseID]);
+	CL_CleanTempInventory(B_GetBase(baseID));
 
 	/* header */
 	MSG_WriteByte(buf, num);

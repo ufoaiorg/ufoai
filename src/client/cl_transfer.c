@@ -801,11 +801,10 @@ void TR_TransferEnd (transfer_t *transfer)
 	char message[256];
 
 	assert(transfer);
-	destination = &gd.bases[transfer->destBase];
-	assert(destination);
+	destination = B_GetBase(transfer->destBase);
 
 	TR_EmptyTransferCargo(transfer, qtrue);
-	Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), gd.bases[transfer->destBase].name);
+	Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), destination->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 }
 
@@ -912,7 +911,7 @@ static void TR_TransferStart_f (void)
 	memset(trEmployeesTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trEmployeesTmp));
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
-	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), gd.bases[transfer->destBase].name);
+	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transferBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	Cbuf_AddText("mn_pop\n");
 }

@@ -437,7 +437,7 @@ void BDEF_AddBattery_f (void)
 		return;
 	}
 
-	BDEF_AddBattery(basedefType, gd.bases + baseIdx);
+	BDEF_AddBattery(basedefType, B_GetBase(baseIdx));
 }
 
 /**
@@ -488,6 +488,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenseType_t basedefType, int idx)
 void BDEF_RemoveBattery_f (void)
 {
 	int basedefType, baseIdx;
+	base_t *base;
 
 	if (Cmd_Argc() < 3)
 		return;
@@ -502,20 +503,23 @@ void BDEF_RemoveBattery_f (void)
 		return;
 	}
 
+	base = B_GetBase(baseIdx);
+
 	if (basedefType == BASEDEF_RANDOM) {
 		/* Type of base defense to destroy is randomly selected */
-		if (gd.bases[baseIdx].maxBatteries <= 0 && gd.bases[baseIdx].maxLasers <= 0) {
+		if (base->maxBatteries <= 0 && base->maxLasers <= 0) {
 			Com_Printf("No base defense to destroy\n");
 			return;
-		} else if (gd.bases[baseIdx].maxBatteries <= 0)
+		} else if (base->maxBatteries <= 0) {
 			/* only laser battery is possible */
 			basedefType = BASEDEF_LASER;
-		else if (gd.bases[baseIdx].maxLasers <= 0)
+		} else if (base->maxLasers <= 0) {
 			/* only missile battery is possible */
 			basedefType = BASEDEF_MISSILE;
-		else
+		} else {
 			/* both type are possible, choose one randomly */
 			basedefType = rand() % 2 + BASEDEF_MISSILE;
+		}
 	} else {
 		/* Check if the removed building was under construction */
 		int i, type, max;
@@ -524,11 +528,11 @@ void BDEF_RemoveBattery_f (void)
 		switch (basedefType) {
 		case BASEDEF_MISSILE:
 			type = B_DEFENSE_MISSILE;
-			max = gd.bases[baseIdx].maxBatteries;
+			max = base->maxBatteries;
 			break;
 		case BASEDEF_LASER:
 			type = B_DEFENSE_MISSILE;
-			max = gd.bases[baseIdx].maxLasers;
+			max = base->maxLasers;
 			break;
 		default:
 			Com_Printf("BDEF_RemoveBattery_f: base defense type %i doesn't exists.\n", basedefType);
@@ -553,7 +557,7 @@ void BDEF_RemoveBattery_f (void)
 		/* If we reached this point, that means we are removing a working building: continue */
 	}
 
-	BDEF_RemoveBattery(gd.bases + baseIdx, basedefType, -1);
+	BDEF_RemoveBattery(base, basedefType, -1);
 }
 
 /**
@@ -1637,13 +1641,14 @@ void AIM_AircraftEquipMenuClick_f (void)
 }
 
 /**
- * @brief Initialise values of one slot of an aircraft common to all types of items.
- * @param[in] slot Pointer to the slot to initialize.
+ * @brief Initialise values of one slot of an aircraft or basedefense common to all types of items.
+ * @param[in] slot Pointer to the slot to initialize
+ * @param[in] index The index of the aircraft or the base
  */
-void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx, aircraftItemType_t type)
+void AII_InitialiseSlot (aircraftSlot_t *slot, int index, aircraftItemType_t type)
 {
 	memset(slot, 0, sizeof(slot)); /* all values to 0 */
-	slot->aircraftIdx = aircraftIdx;
+	slot->aircraftIdx = index;
 	slot->itemIdx = NONE;
 	slot->ammoIdx = NONE;
 	slot->size = ITEM_HEAVY;

@@ -3177,8 +3177,7 @@ static void CL_DebugAllItems_f (void)
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
-	base = gd.bases + i;
-	assert(base);
+	base = B_GetBase(i);
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (!csi.ods[i].weapon && !csi.ods[i].numWeapons)
@@ -3213,8 +3212,7 @@ static void CL_DebugShowItems_f (void)
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
-	base = gd.bases + i;
-	assert(base);
+	base = B_GetBase(i);
 
 	for (i = 0; i < csi.numODs; i++) {
 		tech = csi.ods[i].tech;
@@ -4906,9 +4904,9 @@ static void CP_UFORecovered_f (void)
 
 	/* Now we have to check whether we can store the UFO in any base. */
 	for (i = 0; i < gd.numBases; i++) {
-		if (!gd.bases[i].founded)
+		base = B_GetBase(i);
+		if (!base->founded)
 			continue;
-		base = &gd.bases[i];
 		if (UFO_ConditionsForStoring(base, ufocraft)) {
 			store = qtrue;
 			break;
@@ -5051,11 +5049,11 @@ static void CP_UFORecoveredStore_f (void)
 	recoveryBaseSelectPopup[0] = '\0';
 	/* Check how many bases can store this UFO. */
 	for (i = 0; i < gd.numBases; i++) {
-		if (!gd.bases[i].founded)
+		base = B_GetBase(i);
+		if (!base->founded)
 			continue;
-		base = &gd.bases[i];
 		if (UFO_ConditionsForStoring(base, ufocraft)) {
-			Q_strcat(recoveryBaseSelectPopup, gd.bases[i].name, sizeof(recoveryBaseSelectPopup));
+			Q_strcat(recoveryBaseSelectPopup, base->name, sizeof(recoveryBaseSelectPopup));
 			Q_strcat(recoveryBaseSelectPopup, "\n", sizeof(recoveryBaseSelectPopup));
 			UFObases[baseHasUFOHangarCount++] = i;
 		}
