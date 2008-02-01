@@ -98,6 +98,7 @@ void CL_ActorReload(int hand);
 void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
+void CL_ActorToggleCrouchReservation_f(void);
 void CL_ActorToggleReaction_f(void);
 void CL_ActorUseHeadgear_f(void);
 void CL_ActorStartMove(const le_t * le, pos3_t to);

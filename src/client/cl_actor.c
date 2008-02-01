@@ -2854,6 +2854,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 
 /**
  * @brief Stands or crouches actor.
+ * @todo Maybe add a popup that asks if the player _really_ wants to crouch/stand up when only the reserved amount is left?
  */
 void CL_ActorStandCrouch_f (void)
 {
@@ -2898,6 +2899,23 @@ void CL_ActorUseHeadgear_f (void)
 
 	/* restore old mouse space */
 	mouseSpace = tmp_mouseSpace;
+}
+/**
+ * @brief Toggles if the current actor reserves Tus for crouching (e.g. at end of moving) or not.
+ */
+void CL_ActorToggleCrouchReservation_f (void)
+{
+	if (!CL_CheckAction())
+		return;
+
+	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
+		/* Reset reserved TUs to 0 */
+		CL_ReserveTUs(selActor, RES_CROUCH, 0);
+	} else {
+		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
+		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)
+			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
+	}
 }
 
 /**
