@@ -117,7 +117,7 @@ static void BuildTnode_r (int node)
 				/* create a separation plane */
 				t->type = i;
 				t->normal[0] = i;
-				t->normal[1] = i^1;
+				t->normal[1] = i ^ 1;
 				t->normal[2] = 0;
 				t->dist = (c0maxs[i] + c1mins[i]) / 2;
 

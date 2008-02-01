@@ -404,7 +404,7 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 				continue;
 			if (ob->original_sides[j].bevel)
 				continue;
-			plane = &mapplanes[ob->original_sides[j].planenum^1];
+			plane = &mapplanes[ob->original_sides[j].planenum ^ 1];
 			ChopWindingInPlace(&w, plane->normal, plane->dist, 0); /*CLIP_EPSILON); */
 		}
 

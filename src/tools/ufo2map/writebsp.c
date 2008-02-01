@@ -184,7 +184,7 @@ static int EmitDrawNode_r (node_t *node)
 	VectorCopy((short)node->maxs, n->maxs);
 
 	planeused[node->planenum]++;
-	planeused[node->planenum^1]++;
+	planeused[node->planenum ^ 1]++;
 
 	if (node->planenum & 1)
 		Sys_Error("WriteDrawNodes_r: odd planenum");

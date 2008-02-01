@@ -371,7 +371,7 @@ static void MakeTreePortals_r (node_t *node)
 
 	for (i = 0; i < 3; i++) {
 		if (node->mins[i] < -8000 || node->maxs[i] > 8000) {
-			Com_Printf("WARNING: node with unbounded volume\n");
+			Com_Printf("WARNING: node with unbounded volume %i\n", node->mins[i]);
 			break;
 		}
 	}

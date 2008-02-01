@@ -65,7 +65,7 @@ static void CreateBrushWindings (bspbrush_t *brush)
 				continue;
 			if (brush->sides[j].bevel)
 				continue;
-			plane = &mapplanes[brush->sides[j].planenum^1];
+			plane = &mapplanes[brush->sides[j].planenum ^ 1];
 			ChopWindingInPlace(&w, plane->normal, plane->dist, 0); /*CLIP_EPSILON); */
 		}
 
