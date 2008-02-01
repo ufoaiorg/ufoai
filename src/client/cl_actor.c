@@ -2353,7 +2353,9 @@ static int CL_CheckAction (void)
 
 /**
  * @brief Get the real move length (depends on crouch-state of the current actor).
- * @param[in] The position in the map to calculate the move-length for.
+ * @note The part of the line that is not reachable in this turn (i.e. not enough
+ * TUs left) will be drawn differently.
+ * @param[in] to The position in the map to calculate the move-length for.
  */
 static int CL_MoveLength (pos3_t to)
 {
@@ -2373,7 +2375,9 @@ void CL_ResetActorMoveLength (void)
 
 /**
  * @brief Draws the way to walk when confirm actions is activated.
- * @param[in] to
+ * @param[in] to The location we draw the line to (starting with the location of selActor)
+ * @return qtrue if everything went ok, otherwise qfalse.
+ * @sa CL_MaximumMove (similar algo.)
  */
 static qboolean CL_TraceMove (pos3_t to)
 {
@@ -2407,9 +2411,10 @@ static qboolean CL_TraceMove (pos3_t to)
 
 /**
  * @brief Return the last position we can walk to with a defined amount of TUs.
- * @param[in] to The location we want to reach
+ * @param[in] to The location we want to reach.
  * @param[in] tus How many timeunits we have to move.
- * @param[out pos The location we can react with the available TUs.
+ * @param[out pos The location we can reach with the given amount of TUs.
+ * @sa CL_TraceMove (similar algo.)
  */
 static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 {
