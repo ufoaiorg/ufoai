@@ -730,7 +730,7 @@ int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
  * @return The remaining/usable TUs for this actor
  * @return -1 on error (this includes bad [very large] numbers stored in the struct).
  */
-static int CL_UsableTUs (const le_t * le)
+int CL_UsableTUs (const le_t * le)
 {
 	if (!le) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_UsableTUs: No le_t given.\n");

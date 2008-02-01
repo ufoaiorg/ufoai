@@ -1092,13 +1092,13 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 
 	/*
 	 * If standing up or crouching down, set this le as the last moving.
-	 * Also remove the reserved-state for crouching if no more TUs are available, but some were reserved.
+	 * Also remove the reserved-state for crouching.
 	 */
 	if ((state & STATE_CROUCHED && !(le->state & STATE_CROUCHED)) ||
 		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED)) {
 		CL_SetLastMoving(le);
-		if (CL_UsableTUs(selActor) < TU_CROUCH
-		&&  CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH)) {
+		if ((CL_UsableTUs(selActor) < TU_CROUCH)
+		&&  (CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH)) {
 			/* We have not enough non-reserved TUs,
 			 * but some reserved for crouching/standing up.
 			 * i.e. we only reset the reservation for crouching if it's the very last attempt. */
