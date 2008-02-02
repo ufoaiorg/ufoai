@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_keys.h"
 #include "cl_input.h"
+#include "cl_joystick.h"
 #include "cl_actor.h"
 #include "cl_view.h"
 #include "cl_map.h"
@@ -1502,6 +1503,11 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1); \
 	}
 
+void IN_EventEnqueue (int key, qboolean down)
+{
+	EVENT_ENQUEUE(key, down)
+}
+
 /**
  * @sa CL_Frame
  */
@@ -1514,6 +1520,8 @@ void IN_Frame (void)
 	in_frametime = cls.realtime;
 
 	IN_Parse();
+
+	IN_JoystickMove();
 
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = qfalse;
@@ -1572,7 +1580,7 @@ void IN_Frame (void)
 				mouse_buttonstate = K_AUX1 + (event.button.button - 8) % 16;
 				break;
 			}
-			Key_Event(mouse_buttonstate, (event.type == SDL_MOUSEBUTTONDOWN), in_frametime);
+			EVENT_ENQUEUE(mouse_buttonstate, (event.type == SDL_MOUSEBUTTONDOWN))
 			break;
 		case SDL_MOUSEMOTION:
 			SDL_GetMouseState(&mousePosX, &mousePosY);
@@ -1634,7 +1642,9 @@ void IN_Frame (void)
  */
 void IN_Init (void)
 {
-	/* other cvars */
+	Com_Printf("\n------- input initialization -------\n");
+
+	/* cvars */
 	in_debug = Cvar_Get("in_debug", "0", 0, "Show input key codes on game console");
 	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, NULL);
 	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", CVAR_ARCHIVE, NULL);
@@ -1651,6 +1661,7 @@ void IN_Init (void)
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 
+	/* commands */
 	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
 	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
 	Cmd_AddCommand("+turnright", IN_TurnRightDown_f, _("Rotate battlescape camera clockwise"));
@@ -1719,6 +1730,8 @@ void IN_Init (void)
 
 	mousePosX = mousePosY = 0.0;
 	shift_down = qfalse;
+
+	IN_StartupJoystick();
 }
 
 /**

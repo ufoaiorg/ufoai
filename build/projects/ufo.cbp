@@ -167,6 +167,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_irc.h" />
+		<Unit filename="..\..\src\client\cl_joystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_joystick.h" />
 		<Unit filename="..\..\src\client\cl_keys.c">
 			<Option compilerVar="CC" />
 		</Unit>

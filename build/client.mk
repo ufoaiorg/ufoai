@@ -17,6 +17,7 @@ CLIENT_SRCS = \
 	client/cl_inventory.c \
 	client/cl_input.c \
 	client/cl_irc.c \
+	client/cl_joystick.c \
 	client/cl_keys.c \
 	client/cl_language.c \
 	client/cl_le.c \

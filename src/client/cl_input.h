@@ -71,6 +71,8 @@ void IN_Init(void);
 void IN_Frame(void);
 void IN_SendKeyEvents(void);
 
+void IN_EventEnqueue(int key, qboolean down);
+
 void CL_CameraMove(void);
 void CL_CameraRoute(pos3_t from, pos3_t target);
 void CL_CameraModeChange(camera_mode_t newcameramode);
