@@ -1497,7 +1497,7 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 #define EVENT_ENQUEUE(keyNum, keyDown) \
 	if (keyNum > 0) { \
 		if (in_debug->integer) \
-			Com_Printf("Enqueue: %i (down: %i)\n", keyNum, keyDown); \
+			Com_Printf("Enqueue: %s (%i) (down: %i)\n", Key_KeynumToString(keyNum), keyNum, keyDown); \
 		keyq[keyq_head].down = (keyDown); \
 		keyq[keyq_head].key = (keyNum); \
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1); \

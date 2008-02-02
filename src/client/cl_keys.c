@@ -592,6 +592,7 @@ static void Key_Message (int key)
  * @return a key number to be used to index keybindings[] by looking at
  * the given string.  Single ascii characters return themselves, while
  * the K_* names are matched up.
+ * @sa Key_KeynumToString
  */
 static int Key_StringToKeynum (const char *str)
 {
@@ -614,6 +615,7 @@ static int Key_StringToKeynum (const char *str)
  * @param[in] keynum The keynum to convert to string
  * @return a string (either a single ascii char, or a K_* name) for the given keynum.
  * FIXME: handle quote special (general escape sequence?)
+ * @sa Key_StringToKeynum
  */
 const char *Key_KeynumToString (int keynum)
 {
