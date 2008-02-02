@@ -345,6 +345,9 @@ static void TR_TransferSelect_f (void)
 	aircraft_t *aircraft = NULL;
 	char str[128];
 
+	/* for reseting the scrolling */
+	static menuNode_t *trans_list = NULL;
+
 	if (!transferBase)
 		return;
 
@@ -354,6 +357,19 @@ static void TR_TransferSelect_f (void)
 		type = atoi(Cmd_Argv(1));
 
 	transferList[0] = '\0';
+
+	/**
+	 * only fetch this once after ufopedia menu was on the stack (was the
+	 * current menu)
+	 */
+	if (!trans_list) {
+		trans_list = MN_GetNodeFromCurrentMenu("trans_list");
+	}
+
+	/* maybe we call this function and the ufopedia is not on the menu stack */
+	if (trans_list) {
+		trans_list->textScroll = 0;
+	}
 
 	/* Reset and fill temp employees arrays. */
 	for (i = 0; i < MAX_EMPL; i++) {
