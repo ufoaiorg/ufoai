@@ -2369,6 +2369,8 @@ static int CL_CheckAction (void)
  */
 static int CL_MoveLength (pos3_t to)
 {
+	assert(selActor);
+
 	if (selActor->state & STATE_CROUCHED)
 		return Grid_MoveLength(&clMap, to, qfalse) * 1.5;
 	else
@@ -2380,6 +2382,7 @@ static int CL_MoveLength (pos3_t to)
  */
 void CL_ResetActorMoveLength (void)
 {
+	assert(selActor);
 	actorMoveLength = CL_MoveLength(mousePos);
 }
 
@@ -2396,9 +2399,11 @@ static qboolean CL_TraceMove (pos3_t to)
 	pos3_t pos;
 	int dv;
 
-	length = CL_MoveLength(to);
+	if (!selActor)
+		return;
 
-	if (!selActor || !length || length >= 0x3F)
+	length = CL_MoveLength(to);
+	if (!length || length >= 0x3F)
 		return qfalse;
 
 	Grid_PosToVec(&clMap, to, oldVec);
@@ -2432,9 +2437,11 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 	vec3_t vec;
 	int dv;
 
-	length = CL_MoveLength(to);
+	if (!selActor)
+		return;
 
-	if (!selActor || !length || length >= 0x3F)
+	length = CL_MoveLength(to);
+	if (!length || length >= 0x3F)
 		return;
 
 	VectorCopy(to, pos);

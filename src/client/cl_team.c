@@ -1891,6 +1891,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 	for (i = 0; i < team->num; i++) {
 		chr = team->chr[i];
 		assert(chr);
+		assert(chr->fieldSize > 0);
 		/* send the fieldSize ACTOR_SIZE_* */
 		NET_WriteByte(buf, chr->fieldSize);
 
