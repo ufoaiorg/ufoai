@@ -969,7 +969,7 @@ void RS_RemoveScientist (technology_t* tech)
 		}
 	}
 
-	assert(tech->scientists < 0);
+	assert(tech->scientists >= 0);
 
 	if (tech->scientists == 0) {
 		/* Remove the tech from the base if no scis are left to research it. */
