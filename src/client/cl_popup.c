@@ -277,6 +277,20 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			air = &gd.bases[j].aircraft[i];
 			notEnoughFuel = qfalse;
 
+			/* if dependencies of hangar are missing, you can't send aircraft */
+			switch (air->weight) {
+			case AIRCRAFT_SMALL:
+				if (!gd.bases[j].hasBuilding[B_SMALL_HANGAR])
+					continue;
+				break;
+			case AIRCRAFT_LARGE:
+				if (!gd.bases[j].hasBuilding[B_HANGAR])
+					continue;
+				break;
+			default:
+				Com_Printf("CL_DisplayPopupIntercept: Unknown weight of aircraft '%s': %i\n", air->id, air->weight);
+			}
+
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (mission && (air->teamSize <= 0))
 				continue;
