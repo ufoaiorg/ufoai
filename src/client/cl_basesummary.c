@@ -185,7 +185,7 @@ static void BaseSummary_ResearchCurrent (const base_t* base)
 	}
 	assert(base);
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 		if (tech->base_idx == base->idx && (tech->statusResearch == RS_RUNNING ||
 			tech->statusResearch == RS_PAUSED)) {
 			Com_sprintf(buffer, sizeof(buffer), _("%s: %1.2f%% (%d %s)\n"),

@@ -405,7 +405,7 @@ static qboolean RS_CheckCollected (requirements_t *required)
 			}
 			break;
 		case RS_LINK_TECH:
-			tech = &gd.technologies[required->idx[i]];
+			tech = RS_GetTechByIDX(required->idx[i]);
 			/* Check if it is a logic block (RS_LOGIC) and interate into it if so.*/
 			if (tech->type == RS_LOGIC) {
 				if (!RS_CheckCollected(&tech->require_AND)) {
@@ -462,7 +462,7 @@ void RS_CheckAllCollected (void)
 		return;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 
 		if (RS_CheckCollected(&tech->require_AND) || RS_CheckCollected(&tech->require_OR)) {
 			RS_MarkCollected(tech);
@@ -484,7 +484,7 @@ void RS_MarkResearchable (qboolean init)
 
 	/* Set all entries to initial value. */
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 		tech->statusResearchable = qfalse;
 	}
 
@@ -492,7 +492,7 @@ void RS_MarkResearchable (qboolean init)
 	RS_CheckAllCollected();
 
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
 			/* Check for collected items/aliens/etc... */
 
@@ -579,7 +579,7 @@ void RS_RequiredIdxAssign (void)
 	technology_t *tech = NULL;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 		if (&tech->require_AND.numLinks)
 			RS_AssignTechIdxs(&tech->require_AND);
 		if (&tech->require_OR.numLinks)
@@ -608,7 +608,7 @@ void RS_InitTree (qboolean load)
 	byte found;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 
 		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
 			if (tech->markResearched.markOnly[j] && !Q_strncmp(tech->markResearched.campaign[j], curCampaign->id, MAX_VAR)) {
@@ -1054,19 +1054,17 @@ static void RS_ResearchStart_f (void)
 	/* get the currently selected research-item */
 	tech = researchList[researchListPos];
 
-	/************
-		@todo:
-		If there are enough items add them to the tech (i.e. block them from selling or for other research), otherwise pop an errormessage telling the palyer what is missing.
-	*/
+	/* @todo: If there are enough items add them to the tech (i.e. block them from selling or for other research),
+	 * otherwise pop an errormessage telling the palyer what is missing */
 	if (!tech->statusResearchable) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n",tech->id);
-		/* If all requiremnts are met (includes a check for "enough-collected") mark this tech as researchable.*/
+		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
 		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, baseCurrent))
 			RS_MarkOneResearchable(tech);
 		RS_MarkResearchable(qfalse);	/* Re-check all other techs in case they depend on the marked one. */
 	}
-	/************/
 
+	/* statusResearchable might have changed - check it again */
 	if (tech->statusResearchable) {
 		switch (tech->statusResearch) {
 		case RS_RUNNING:
@@ -1193,7 +1191,7 @@ void RS_UpdateData (base_t* base)
 	RS_CheckAllCollected();
 	RS_MarkResearchable(qfalse);
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 
 		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
 		if (tech->time == 0)
@@ -1212,14 +1210,14 @@ void RS_UpdateData (base_t* base)
 			/* Color the item 'unresearchable' */
 			Cmd_ExecuteString(va("researchunresearchable%i", j));
 			/* Display the concated text in the correct list-entry. */
-			Cvar_Set(va("mn_researchitem%i", j), _(name));
+			Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
 
 			Cvar_Set(va("mn_researchassigned%i", j), "--");
 			Cvar_Set(va("mn_researchavailable%i", j), "--");
 			Cvar_Set(va("mn_researchmax%i", j), "--");
 
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
-			researchList[j] = &gd.technologies[i];
+			researchList[j] = tech;
 			/* counting the numbers of display-list entries. */
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
@@ -1236,7 +1234,7 @@ void RS_UpdateData (base_t* base)
 			}
 			/* @todo: Free space in all labs in this base. */
 			/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
-			Cvar_Set(va("mn_researchmax%i", j), "mx.");
+			Cvar_Set(va("mn_researchmax%i", j), _("mx."));
 			/* Set the text of the research items and mark them if they are currently researched. */
 			switch (tech->statusResearch) {
 			case RS_RUNNING:
@@ -1258,11 +1256,11 @@ void RS_UpdateData (base_t* base)
 			/* Display the concated text in the correct list-entry.
 			 * But embed it in brackets if it isn't researched in the current base. */
 			if ((tech->scientists > 0) && (tech->base_idx != base->idx)) {
-				Com_sprintf(name, sizeof(name), "(%s)", _(name));
+				Com_sprintf(name, sizeof(name), "(%s)", _(tech->name));
 			}
 			Cvar_Set(va("mn_researchitem%i", j), _(name));
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
-			researchList[j] = &gd.technologies[i];
+			researchList[j] = tech;
 			/* counting the numbers of display-list entries. */
 			j++;
 		}
@@ -1401,7 +1399,7 @@ void CL_CheckResearchStatus (void)
 	memset(checkBases, 0, sizeof(checkBases));
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 		if (tech->statusResearch == RS_RUNNING) {
 			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
 			if (tech->time > 0 && tech->scientists >= 0) {
@@ -1487,7 +1485,7 @@ static void RS_TechnologyList_f (void)
 
 	Com_Printf("#techs: %i\n", gd.numTechnologies);
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 		Com_Printf("Tech: %s\n", tech->id);
 		Com_Printf("... time      -> %.2f\n", tech->time);
 		Com_Printf("... name      -> %s\n", tech->name);
@@ -1557,11 +1555,13 @@ static void MN_ResearchInit_f (void)
 void RS_MarkResearchedAll (void)
 {
 	int i;
+	technology_t *tech;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", gd.technologies[i].id);
-		RS_MarkOneResearchable(&gd.technologies[i]);
-		RS_ResearchFinish(&gd.technologies[i]);
+		tech = RS_GetTechByIDX(i);
+		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+		RS_MarkOneResearchable(tech);
+		RS_ResearchFinish(tech);
 		/* @todo: Set all "collected" entries in the requirements to the "amount" value. */
 	}
 }
@@ -1596,7 +1596,7 @@ static void RS_DebugResearchableAll (void)
 
 	if (Cmd_Argc() != 2) {
 		for (i = 0; i < gd.numTechnologies; i++) {
-			tech = &gd.technologies[i];
+			tech = RS_GetTechByIDX(i);
 			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech);
 			RS_MarkCollected(tech);
@@ -2180,7 +2180,7 @@ void RS_GetProvided (char *id, char *provided)
 	technology_t *tech = NULL;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = &gd.technologies[i];
+		tech = RS_GetTechByIDX(i);
 		if (!Q_strncmp(id, tech->id, MAX_VAR)) {
 			for (j = 0; j < MAX_TECHLINKS; j++)
 				Com_sprintf(provided[j], MAX_VAR, tech->provides);
@@ -2271,7 +2271,7 @@ technology_t **RS_GetTechsByType (researchType_t type)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		if (gd.technologies[i].type == type) {
-			techList[j] = &gd.technologies[i];
+			techList[j] = RS_GetTechByIDX(i);
 			j++;
 			/* j+1 because last item have to be NULL */
 			if (j + 1 >= MAX_TECHNOLOGIES) {
@@ -2300,7 +2300,7 @@ technology_t *RS_GetTechWithMostScientists (int base_idx)
 	int max = 0;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech_temp = &gd.technologies[i];
+		tech_temp = RS_GetTechByIDX(i);
 		if ((tech_temp->statusResearch == RS_RUNNING) && (tech_temp->base_idx == base_idx)) {
 			if (tech_temp->scientists > max) {
 				tech = tech_temp;
@@ -2343,7 +2343,7 @@ qboolean RS_Save (sizebuf_t* sb, void* data)
 	technology_t *t;
 
 	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
-		t = &gd.technologies[i];
+		t = RS_GetTechByIDX(i);
 		MSG_WriteString(sb, t->id);
 		MSG_WriteByte(sb, t->statusCollected);
 		MSG_WriteFloat(sb, t->time);

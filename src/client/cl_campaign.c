@@ -3601,6 +3601,7 @@ void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 	const char *token;
 	int i;
 	campaign_t* campaign = NULL;
+	technology_t *tech;
 
 	campaign = CL_GetCampaign(cl_campaign->string);
 	if (!campaign) {
@@ -3625,15 +3626,18 @@ void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 		if (!*text || *token == '}')
 			return;
 
-		for (i = 0; i < gd.numTechnologies; i++)
-			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
-				gd.technologies[i].mailSent = MAILSENT_FINISHED;
-				gd.technologies[i].markResearched.markOnly[gd.technologies[i].markResearched.numDefinitions] = qtrue;
-				gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions] = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-				gd.technologies[i].markResearched.numDefinitions++;
-				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", gd.technologies[i].id);
+		for (i = 0; i < gd.numTechnologies; i++) {
+			tech = RS_GetTechByIDX(i);
+			assert(tech);
+			if (!Q_strncmp(token, tech->id, MAX_VAR)) {
+				tech->mailSent = MAILSENT_FINISHED;
+				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = qtrue;
+				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+				tech->markResearched.numDefinitions++;
+				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;
 			}
+		}
 
 		if (i == gd.numTechnologies)
 			Com_Printf("CL_ParseResearchedCampaignItems: unknown token \"%s\" ignored (tech %s)\n", token, name);
@@ -3652,6 +3656,7 @@ void CL_ParseResearchableCampaignStates (const char *name, const char **text, qb
 	const char *token;
 	int i;
 	campaign_t* campaign = NULL;
+	technology_t *tech;
 
 	campaign = CL_GetCampaign(cl_campaign->string);
 	if (!campaign) {
@@ -3678,16 +3683,18 @@ void CL_ParseResearchableCampaignStates (const char *name, const char **text, qb
 		if (!*text || *token == '}')
 			return;
 
-		for (i = 0; i < gd.numTechnologies; i++)
-			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
+		for (i = 0; i < gd.numTechnologies; i++) {
+			tech = RS_GetTechByIDX(i);
+			if (!Q_strncmp(token, tech->id, MAX_VAR)) {
 				if (researchable) {
-					gd.technologies[i].mailSent = MAILSENT_PROPOSAL;
-					RS_MarkOneResearchable(&gd.technologies[i]);
+					tech->mailSent = MAILSENT_PROPOSAL;
+					RS_MarkOneResearchable(tech);
 				} else
 					Com_Printf("@todo: Mark unresearchable");
-				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", gd.technologies[i].id);
+				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;
 			}
+		}
 
 		if (i == gd.numTechnologies)
 			Com_Printf("CL_ParseResearchableCampaignStates: unknown token \"%s\" ignored (tech %s)\n", token, name);

@@ -1058,14 +1058,14 @@ static void UP_Content_f (void)
 	for (i = 0; i < gd.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
 		researched_entries = qfalse;
-		upCurrentTech = &gd.technologies[gd.upChapters[i].first];
+		upCurrentTech = RS_GetTechByIDX(gd.upChapters[i].first);
 		do {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
 				researched_entries = qtrue;
 				break;
 			}
 			if (upCurrentTech->idx != upCurrentTech->next && upCurrentTech->next != TECH_INVALID)
-				upCurrentTech = &gd.technologies[upCurrentTech->next];
+				upCurrentTech = RS_GetTechByIDX(upCurrentTech->next);
 			else {
 				upCurrentTech = NULL;
 			}
@@ -1116,7 +1116,7 @@ static void UP_Index_f (void)
 
 	Cvar_Set("mn_uptitle", va(_("UFOpaedia Index: %s"), _(gd.upChapters[currentChapter].name)));
 
-	t = &gd.technologies[gd.upChapters[currentChapter].first];
+	t = RS_GetTechByIDX(gd.upChapters[currentChapter].first);
 
 	/* get next entry */
 	while (t) {
@@ -1125,7 +1125,7 @@ static void UP_Index_f (void)
 			Q_strcat(upText, va("%s\n", _(t->name)), sizeof(upText));
 		}
 		if (t->next >= 0)
-			t = &gd.technologies[t->next];
+			t = RS_GetTechByIDX(t->next);
 		else
 			t = NULL;
 	}
@@ -1169,7 +1169,7 @@ static void UP_Prev_f (void)
 	if (t->prev >= 0) {
 		/* Check if the previous entry is researched already otherwise go to the next entry. */
 		do {
-			t = &gd.technologies[t->prev];
+			t = RS_GetTechByIDX(t->prev);
 			assert(t);
 			if (t->idx == t->prev)
 				Sys_Error("UP_Prev_f: The 'prev':%d entry equals to 'idx' entry for '%s'.\n", t->prev, t->id);
@@ -1203,7 +1203,7 @@ static void UP_Next_f (void)
 	if (t && (t->next >= 0)) {
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
-			t = &gd.technologies[t->next];
+			t = RS_GetTechByIDX(t->next);
 			assert(upCurrentTech);
 			if (t->idx == t->next)
 				Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", t->next, t->id);
@@ -1250,19 +1250,19 @@ static void UP_Click_f (void)
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
 		if (num < numChapters_displaylist && upChapters_displaylist[num]->first) {
-			upCurrentTech = &gd.technologies[upChapters_displaylist[num]->first];
+			upCurrentTech = RS_GetTechByIDX(upChapters_displaylist[num]->first);
 			do {
 				if (UP_TechGetsDisplayed(upCurrentTech)) {
 					Cbuf_AddText(va("mn_upindex %i;", upCurrentTech->up_chapter));
 					return;
 				}
-				upCurrentTech = &gd.technologies[upCurrentTech->next];
+				upCurrentTech = RS_GetTechByIDX(upCurrentTech->next);
 			} while (upCurrentTech);
 		}
 		break;
 	case UFOPEDIA_INDEX:
 		assert(currentChapter >= 0);
-		t = &gd.technologies[gd.upChapters[currentChapter].first];
+		t = RS_GetTechByIDX(gd.upChapters[currentChapter].first);
 
 		/* get next entry */
 		while (t) {
@@ -1274,7 +1274,7 @@ static void UP_Click_f (void)
 					break;
 			}
 			if (t->next >= 0)
-				t = &gd.technologies[t->next];
+				t = RS_GetTechByIDX(t->next);
 			else
 				t = NULL;
 		}
