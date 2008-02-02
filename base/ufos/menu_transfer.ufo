@@ -345,5 +345,6 @@ menu transfer
 	func init
 	{
 		cmd "trans_init 0;"
+		trans_items
 	}
 }
