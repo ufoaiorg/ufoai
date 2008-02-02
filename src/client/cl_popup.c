@@ -258,7 +258,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 	char *s;
 	int i, j;
 	aircraft_t *air;
-	qboolean somethingWritten;
+	qboolean somethingWritten, notEnoughFuel;
 
 	/* One parameter must be specified, mission or ufo */
 	if (!mission && !ufo)
@@ -275,6 +275,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 
 		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
 			air = &gd.bases[j].aircraft[i];
+			notEnoughFuel = qfalse;
 
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (mission && (air->teamSize <= 0))
@@ -290,10 +291,12 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 				/* now check the aircraft range */
 				if (!AIR_AircraftHasEnoughFuel(air, ufo->pos)) {
 					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: Target out of reach for craft '%s'\n", air->id);
-					continue;
+					notEnoughFuel = qtrue;
 				}
 			}
 
+			if (!notEnoughFuel)
+				Q_strcat(aircraftListText, "^B", sizeof(aircraftListText));
 			s = va("%s (%i/%i)\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;
@@ -311,7 +314,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 	else if (mission)
 		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no tactical teams assigned to available craft.");
 	else if (ufo)
-		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no weapon or ammo equipped or target out of reach.");
+		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available or no weapon or ammo equipped.");
 
 	if (ufo) {
 		somethingWritten = qfalse;
@@ -325,7 +328,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			/* Check if the base should be displayed in base list
 			 * don't check range because maybe UFO will get closer */
 			if (AII_BaseCanShoot(B_GetBase(j))) {
-				Q_strcat(baseListText, va("%s\n", gd.bases[j].name), sizeof(baseListText));
+				Q_strcat(baseListText, va("^B%s\n", gd.bases[j].name), sizeof(baseListText));
 				somethingWritten = qtrue;
 			}
 		}
