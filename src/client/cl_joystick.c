@@ -94,10 +94,8 @@ void IN_JoystickMove (void)
 			balldy += dy;
 		}
 		if (balldx || balldy) {
-			mousePosX = balldx;
-			mousePosY = balldy;
-			mousePosX /= viddef.rx;
-			mousePosY /= viddef.ry;
+			mousePosX = balldx / viddef.rx;
+			mousePosY = balldy / viddef.ry;
 		}
 	}
 
@@ -129,7 +127,7 @@ void IN_JoystickMove (void)
 		for (i = 0; i < 4; i++) {
 			if (((Uint8 *)&hats)[i] != ((Uint8 *)&stick_state.oldhats)[i]) {
 				/* release event */
-				switch( ((Uint8 *)&stick_state.oldhats)[i] ) {
+				switch (((Uint8 *)&stick_state.oldhats)[i]) {
 				case SDL_HAT_UP:
 					IN_EventEnqueue(hat_keys[4 * i + 0], qfalse);
 					break;
@@ -210,9 +208,9 @@ void IN_JoystickMove (void)
 			Sint16 axis = SDL_JoystickGetAxis(stick, i);
 			float f = ((float) axis) / 32767.0f;
 			if (f < -in_joystickThreshold->value) {
-				axes |= ( 1 << ( i * 2 ) );
+				axes |= (1 << (i * 2));
 			} else if( f > in_joystickThreshold->value) {
-				axes |= ( 1 << ( ( i * 2 ) + 1 ) );
+				axes |= (1 << ((i * 2) + 1));
 			}
 		}
 	}
