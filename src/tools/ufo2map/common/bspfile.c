@@ -29,8 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bspfile.h"
 #include "scriplib.h"
 
-void GetLeafNums (void);
-
 int nummodels;
 dBspModel_t dmodels[MAX_MAP_MODELS];
 
@@ -287,7 +285,6 @@ void LoadBSPFile (const char *filename)
 	numedges = CopyLump(LUMP_EDGES, dedges, sizeof(dBspEdge_t));
 	numbrushes = CopyLump(LUMP_BRUSHES, dbrushes, sizeof(dBspBrush_t));
 	numbrushsides = CopyLump(LUMP_BRUSHSIDES, dbrushsides, sizeof(dBspBrushSide_t));
-
 	routedatasize = CopyLump(LUMP_ROUTING, droutedata, 1);
 	lightdatasize = CopyLump(LUMP_LIGHTING, dlightdata, 1);
 	entdatasize = CopyLump(LUMP_ENTITIES, dentdata, 1);
@@ -346,29 +343,9 @@ void WriteBSPFile (const char *filename)
 	AddLump(LUMP_SURFEDGES, dsurfedges, numsurfedges * sizeof(dsurfedges[0]));
 	AddLump(LUMP_EDGES, dedges, numedges * sizeof(dBspEdge_t));
 	AddLump(LUMP_MODELS, dmodels, nummodels * sizeof(dBspModel_t));
-
 	AddLump(LUMP_LIGHTING, dlightdata, lightdatasize);
-	/* removed LUMP_VISIBILITY and use LUMP_ROUTING */
 	AddLump(LUMP_ROUTING, droutedata, routedatasize);
 	AddLump(LUMP_ENTITIES, dentdata, entdatasize);
-
-#if 0
-	Com_Printf("numplanes: %i\n", numplanes);
-	Com_Printf("numleafs: %i\n", numleafs);
-	Com_Printf("numvertexes: %i\n", numvertexes);
-	Com_Printf("numnodes: %i\n", numnodes);
-	Com_Printf("numtexinfo: %i\n", numtexinfo);
-	Com_Printf("numfaces: %i\n", numfaces);
-	Com_Printf("numbrushes: %i\n", numbrushes);
-	Com_Printf("numbrushsides: %i\n", numbrushsides);
-	Com_Printf("numleafbrushes: %i\n", numleafbrushes);
-	Com_Printf("numsurfedges: %i\n", numsurfedges);
-	Com_Printf("numedges: %i\n", numedges);
-	Com_Printf("nummodels: %i\n", nummodels);
-	Com_Printf("lightdatasize: %i\n", lightdatasize);
-	Com_Printf("routedatasize: %i\n", routedatasize);
-	Com_Printf("entdatasize: %i\n", entdatasize);
-#endif
 
 	fseek(bspfile.f, 0, SEEK_SET);
 	SafeWrite(&bspfile, header, sizeof(dBspHeader_t));

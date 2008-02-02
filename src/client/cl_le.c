@@ -477,6 +477,8 @@ le_t* LE_GetClosestActor (const vec3_t origin)
 		/* only visible actors */
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
+			if (le->state & STATE_DEAD)
+				continue;
 			VectorSubtract(origin, le->origin, leOrigin);
 			tmp = VectorLength(leOrigin);
 			if (tmp < dist) {

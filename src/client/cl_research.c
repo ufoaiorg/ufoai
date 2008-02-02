@@ -901,10 +901,6 @@ void RS_AssignScientist (technology_t* tech)
 
 				/* Assign the sci to the lab and set number of used lab-space. */
 				employee->buildingID = building->idx;
-#ifdef DEBUG
-				if (base->capacities[CAP_LABSPACE].cur > base->capacities[CAP_LABSPACE].max)
-					Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", base->capacities[CAP_LABSPACE].cur, base->capacities[CAP_LABSPACE].max);
-#endif
 			} else {
 				MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 				return;
@@ -954,11 +950,13 @@ static void RS_AssignScientist_f (void)
 void RS_RemoveScientist (technology_t* tech)
 {
 	employee_t *employee = NULL;
+	base_t *base;
 
 	assert(tech);
 
 	if (tech->scientists > 0) {
-		employee = E_GetAssignedEmployee(&gd.bases[tech->base_idx], EMPL_SCIENTIST);
+		base = B_GetBase(tech->base_idx);
+		employee = E_GetAssignedEmployee(base, EMPL_SCIENTIST);
 		if (employee) {
 			/* Remove the sci from the tech. */
 			tech->scientists--;
@@ -976,6 +974,13 @@ void RS_RemoveScientist (technology_t* tech)
 		tech->base_idx = -1;
 		tech->statusResearch = RS_PAUSED;
 	}
+
+	/* we only need an update if the employee ptr is not null */
+	if (employee) {
+		assert(base);
+		/* Update display-list and display-info. */
+		RS_UpdateData(base);
+	}
 }
 
 
@@ -985,15 +990,14 @@ void RS_RemoveScientist (technology_t* tech)
  * @param[in] tech The technology you want to max out.
  * @sa RS_AssignScientist
  */
-static void RS_MaxOutResearch (base_t *base, technology_t* tech)
+static void RS_MaxOutResearch (const base_t *base, technology_t* tech)
 {
 	employee_t *employee = NULL;
 
 	if (!base || !tech)
 		return;
 
-	if (tech->scientists <= 0)
-		tech->scientists = 0; /* Just in case it's negative. */
+	assert(tech->scientists >= 0);
 
 	/* Add as many scientists as possible to this tech. */
 	do {
@@ -1017,9 +1021,6 @@ static void RS_RemoveScientist_f (void)
 {
 	int num;
 
-	if (!baseCurrent)
-		return;
-
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
 		return;
@@ -1030,9 +1031,6 @@ static void RS_RemoveScientist_f (void)
 		return;
 
 	RS_RemoveScientist(researchList[num]);
-
-	/* Update display-list and display-info. */
-	RS_UpdateData(baseCurrent);
 }
 
 /**
