@@ -1582,11 +1582,13 @@ void IN_Frame (void)
 			}
 			EVENT_ENQUEUE(mouse_buttonstate, (event.type == SDL_MOUSEBUTTONDOWN))
 			break;
+
 		case SDL_MOUSEMOTION:
 			SDL_GetMouseState(&mousePosX, &mousePosY);
 			mousePosX /= viddef.rx;
 			mousePosY /= viddef.ry;
 			break;
+
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
 			if (event.key.keysym.mod & KMOD_ALT && event.key.keysym.sym == SDLK_RETURN) {
@@ -1620,8 +1622,10 @@ void IN_Frame (void)
 				key = p;
 			EVENT_ENQUEUE(key, qtrue)
 			break;
+
 		case SDL_VIDEOEXPOSE:
 			break;
+
 		case SDL_KEYUP:
 			down = qfalse;
 			IN_PrintKey(&event, 0);
@@ -1630,6 +1634,7 @@ void IN_Frame (void)
 				key = p;
 			EVENT_ENQUEUE(key, qfalse)
 			break;
+
 		case SDL_QUIT:
 			Cmd_ExecuteString("quit");
 			break;

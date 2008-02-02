@@ -209,7 +209,7 @@ void IN_JoystickMove (void)
 			float f = ((float) axis) / 32767.0f;
 			if (f < -in_joystickThreshold->value) {
 				axes |= (1 << (i * 2));
-			} else if( f > in_joystickThreshold->value) {
+			} else if (f > in_joystickThreshold->value) {
 				axes |= (1 << ((i * 2) + 1));
 			}
 		}
