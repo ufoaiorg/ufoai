@@ -31,6 +31,7 @@ static SDL_Joystick *stick = NULL;
 static cvar_t *in_joystick;
 static cvar_t *in_joystickNo;
 static cvar_t *in_joystickThreshold;
+static cvar_t *in_joystickSpeed;
 
 struct {
 	qboolean buttons[16];
@@ -201,10 +202,32 @@ void IN_JoystickMove (void)
 
 	/* finally, look at the axes... */
 	total = SDL_JoystickNumAxes(stick);
-	if (total > 0) {
+	if (total >= 2) {
+		/* the first two axes are used for the cursor movement */
+		for (i = 0; i < 2; i++) {
+			Sint16 axis = SDL_JoystickGetAxis(stick, i);
+			float velocity = ((float) axis) / 32767.0f;
+			if (velocity > -in_joystickThreshold->value && velocity < in_joystickThreshold->value)
+				continue;
+
+			if (!(i % 2)) {
+				mousePosX += in_joystickSpeed->value * velocity;
+				mousePosX = (mousePosX > viddef.width) ? viddef.width : mousePosX;
+				mousePosX = (mousePosX < 0) ? 0 : mousePosX;
+			} else {
+				mousePosY += in_joystickSpeed->value * velocity;
+				mousePosY = (mousePosY > viddef.height) ? viddef.height : mousePosY;
+				mousePosY = (mousePosY < 0) ? 0 : mousePosY;
+			}
+		}
+	}
+
+
+	if (total > 2) {
 		if (total > 16)
 			total = 16;
-		for (i = 0; i < total; i++) {
+		/* every axis except the first two can be normally bound to an action */
+		for (i = 2; i < total; i++) {
 			Sint16 axis = SDL_JoystickGetAxis(stick, i);
 			float f = ((float) axis) / 32767.0f;
 			if (f < -in_joystickThreshold->value) {
@@ -215,9 +238,10 @@ void IN_JoystickMove (void)
 		}
 	}
 
+
 	/* Time to update axes state based on old vs. new. */
 	if (axes != stick_state.oldaxes) {
-		for (i = 0; i < 16; i++) {
+		for (i = 2; i < 16; i++) {
 			if ((axes & (1 << i)) && !(stick_state.oldaxes & (1 << i)))
 				IN_EventEnqueue(joy_keys[i], qtrue);
 
@@ -241,7 +265,8 @@ void IN_StartupJoystick (void)
 
 	in_joystick = Cvar_Get("in_joystick", "1", CVAR_ARCHIVE, "Activate or deactivate the use of a joystick");
 	in_joystickNo = Cvar_Get("in_joystickNo", "0", CVAR_ARCHIVE, "Joystick to use");
-	in_joystickThreshold = Cvar_Get("in_joystickThreshold", "0.15", CVAR_ARCHIVE, "The threshold for the joystick axes");
+	in_joystickThreshold = Cvar_Get("in_joystickThreshold", "0.05", CVAR_ARCHIVE, "The threshold for the joystick axes");
+	in_joystickSpeed = Cvar_Get("in_joystickSpeed", "20", CVAR_ARCHIVE, "The joystick speed for the cursor");
 
 	if (stick != NULL) {
 		Com_Printf("... closing already inited joystick\n");
