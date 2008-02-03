@@ -449,6 +449,7 @@ int AL_GetAlienAmount (int idx, requirementType_t reqtype, base_t *base)
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Counts alive aliens in base.
  * @param[in] base Pointer to the base
@@ -469,6 +470,7 @@ static int AL_CountInBase (base_t *base)
 
 	return amount;
 }
+#endif
 
 /**
  * @brief Add / Remove alive aliens to Alien Containment.
