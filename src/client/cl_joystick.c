@@ -252,7 +252,7 @@ void IN_StartupJoystick (void)
 	memset(&stick_state, '\0', sizeof(stick_state));
 
 	if (!in_joystick->integer) {
-		Com_DPrintf(DEBUG_CLIENT, "... joystick is not active.\n");
+		Com_Printf("joystick is not active.\n");
 		return;
 	}
 
@@ -276,11 +276,11 @@ void IN_StartupJoystick (void)
 	stick = SDL_JoystickOpen(in_joystickNo->integer);
 
 	if (stick == NULL) {
-		Com_DPrintf(DEBUG_CLIENT, "... no joystick opened.\n");
+		Com_Printf("no joystick found.\n");
 		return;
 	}
 
-	Com_Printf("... joystick %d opened\n", in_joystickNo->integer);
+	Com_Printf("joystick %d opened\n", in_joystickNo->integer);
 	Com_Printf("... name: %s\n", SDL_JoystickName(in_joystickNo->integer));
 	Com_Printf("... axes: %d\n", SDL_JoystickNumAxes(stick));
 	Com_Printf("... hats: %d\n", SDL_JoystickNumHats(stick));
