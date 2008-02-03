@@ -73,6 +73,7 @@ void AL_FillInContainment (base_t *base)
 			Sys_Error("Could not find a valid tech for '%s'\n", containment[i].alientype);
 		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment()... type: %s techIdx: %i\n", containment[i].alientype, containment[i].techIdx);
 	}
+	base->capacities[CAP_ALIENS].cur = 0;
 }
 
 /**
@@ -222,22 +223,20 @@ void AL_AddAliens (aircraft_t *aircraft)
 				} else {
 					for (k = 0; k < cargo[i].amount_alive; k++) {
 						/* Check base capacity. */
-						if (tobase->capacities[CAP_ALIENS].max > AL_CountInBase()) {
-							tobase->alienscont[j].amount_alive++;
+						if (AL_CheckAliveFreeSpace(tobase, NULL, 1)) {
+							AL_ChangeAliveAlienNumber(tobase, &(tobase->alienscont[j]), 1);
 						} else {
+							/* Every exceeding alien is killed
+								Display a message only when first one is killed */
 							if (!limit) {
-								/* Limit is hit. Set the amount of currently stored in capacities. */
-								/* FIXME: this is needed? */
 								tobase->capacities[CAP_ALIENS].cur = tobase->capacities[CAP_ALIENS].max;
 								MN_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
 								limit = qtrue;
-								tobase->alienscont[j].amount_dead++;
-							} else {
-								/* Just kill aliens which don't fit the limit. */
-								tobase->alienscont[j].amount_dead++;
-								/* Add breathing apparatus as well and update storage capacity. */
-								B_UpdateStorageAndCapacity(tobase, albridx, 1, qfalse, qfalse);
 							}
+							/* Just kill aliens which don't fit the limit. */
+							tobase->alienscont[j].amount_dead++;
+							/* Add breathing apparatus as well and update storage capacity. */
+							B_UpdateStorageAndCapacity(tobase, albridx, 1, qfalse, qfalse);
 						}
 					}
 					/* only once */
@@ -250,8 +249,6 @@ void AL_AddAliens (aircraft_t *aircraft)
 			}
 		}
 	}
-	/* Set the amount of currently stored in capacities. */
-	tobase->capacities[CAP_ALIENS].cur = AL_CountInBase();
 
 	for (i = 0; i < gd.numAliensTD; i++ ) {
 #ifdef DEBUG
@@ -274,7 +271,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 
 /**
  * @brief Removes alien(s) from Alien Containment.
- * @param[in] base Pointer to the base where we will remove aliens.
+ * @param[in] base Pointer to the base where we will perform action (remove, add, ... aliens).
  * @param[in] name Name of alien race.
  * @param[in] amount Amount of aliens to be removed.
  * @param[in] action Type of action (see alienCalcType_t).
@@ -291,7 +288,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 	aliensCont_t *containment = NULL;
 
 	assert(base);
-	containment = baseCurrent->alienscont;
+	containment = base->alienscont;
 
 	switch (action) {
 	case AL_RESEARCH:
@@ -313,7 +310,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 				}
 				if (maxamount == 1) {
 					/* If only one here, just remove. */
-					containment[maxidx].amount_alive = 0;
+					AL_ChangeAliveAlienNumber(base, &(containment[maxidx]), -1);
 					containment[maxidx].amount_dead++;
 					--amount;
 				} else {
@@ -321,7 +318,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 					toremove = maxamount - 1;
 					if (toremove > amount)
 						toremove = amount;
-					containment[maxidx].amount_alive -= toremove;
+					AL_ChangeAliveAlienNumber(base, &(containment[maxidx]), -toremove);
 					containment[maxidx].amount_dead += toremove;
 					amount -= toremove;
 				}
@@ -333,7 +330,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		for (j = 0; j < gd.numAliensTD; j++) {
 			if (containment[j].amount_alive > 0) {
 				containment[j].amount_dead += containment[j].amount_alive;
-				containment[j].amount_alive = 0;
+				AL_ChangeAliveAlienNumber(base, &(containment[j]), -containment[j].amount_alive);
 			}
 		}
 		break;
@@ -346,31 +343,27 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 					return;
 				/* We are killing only one here, so we
 				 * don't care about amount param.   */
-				containment[j].amount_alive--;
+				AL_ChangeAliveAlienNumber(base, &(containment[j]), -1);
 				containment[j].amount_dead++;
 				break;
 			}
 		}
 		break;
 	case AL_ADDALIVE:
-		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
-		if (AL_CountInBase() == base->capacities[CAP_ALIENS].max) {
+		/* We ignore 3rd parameter of AL_RemoveAliens() here: add only 1 alien */
+		if (!AL_CheckAliveFreeSpace(base, NULL, 1)) {
 			return; /* stop because we will else exceed the max of aliens */
 		}
 		for (j = 0; j < gd.numAliensTD; j++) {
 			assert(*containment[j].alientype);
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
-				containment[j].amount_alive++;
+				AL_ChangeAliveAlienNumber(base, &(containment[j]), 1);
 				break;
 			}
 		}
 		aliencontCurrent = &containment[j];
 		break;
 	case AL_ADDDEAD:
-		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
-		if (AL_CountInBase() == base->capacities[CAP_ALIENS].max) {
-			return; /* stop because we will else exceed the max of aliens */
-		}
 		for (j = 0; j < gd.numAliensTD; j++) {
 			assert(*containment[j].alientype);
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
@@ -383,8 +376,6 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 	default:
 		break;
 	}
-	/* Set the amount of currently stored in capacities. */
-	base->capacities[CAP_ALIENS].cur = AL_CountInBase();
 	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
 	return;
 }
@@ -459,6 +450,85 @@ int AL_GetAlienAmount (int idx, requirementType_t reqtype, base_t *base)
 }
 
 /**
+ * @brief Counts alive aliens in base.
+ * @param[in] base Pointer to the base
+ * @return amount of all alive aliens stored in containment
+ * @sa AL_ChangeAliveAlienNumber
+ */
+static int AL_CountInBase (base_t *base)
+{
+	int j;
+	int amount = 0;
+
+	assert(base);
+
+	for (j = 0; j < gd.numAliensTD; j++) {
+		if (*base->alienscont[j].alientype)
+			amount += base->alienscont[j].amount_alive;
+	}
+
+	return amount;
+}
+
+/**
+ * @brief Add / Remove alive aliens to Alien Containment.
+ * @param[in] base Pointer to the base where Alien Cont. should be checked.
+ * @param[in] containment Pointer to the containment
+ * @param[in] num Number of alien to be added/removed
+ * @pre free space has already been checked
+ */
+void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num)
+{
+	assert(base);
+	assert(containment);
+
+	/* Just a check -- should never be reached */
+	if (!AL_CheckAliveFreeSpace(base, containment, num)) {
+		Com_Printf("AL_ChangeAliveAlienNumber: Can't add/remove %i alive aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
+			num, base->capacities[CAP_ALIENS].cur, base->capacities[CAP_ALIENS].max,
+			base->hasBuilding[B_ALIEN_CONTAINMENT]);
+		return;
+	}
+
+	containment->amount_alive += num;
+	base->capacities[CAP_ALIENS].cur += num;
+
+#ifdef DEBUG
+	if (base->capacities[CAP_ALIENS].cur != AL_CountInBase(base))
+		Com_Printf("AL_ChangeAliveAlienNumber: Wrong capacity in Alien containment: %i instead of %i\n",
+		base->capacities[CAP_ALIENS].cur, AL_CountInBase(base));
+#endif
+}
+
+/**
+ * @brief Check if alive aliens can be added/removed to Alien Containment.
+ * @param[in] base Pointer to the base where Alien Cont. should be checked.
+ * @param[in] containment Pointer to the containment (may be NULL when adding aliens or 
+ * if you don't care about alien type of alien you're removing)
+ * @param[in] num Number of alien to be added/removed
+ * @return qtrue if action may be performed in base
+ */
+qboolean AL_CheckAliveFreeSpace (base_t *base, aliensCont_t *containment, int num)
+{
+	/* you need Alien Containment and it's dependencies to handle aliens */
+	if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
+		return qfalse;
+
+	if (num > 0) {
+		/* We add aliens */
+		if (base->capacities[CAP_ALIENS].cur + num > base->capacities[CAP_ALIENS].max)
+			return qfalse;
+	} else {
+		if (base->capacities[CAP_ALIENS].cur + num < 0)
+			return qfalse;
+		if (containment && (containment->amount_alive + num < 0))
+			return qfalse;
+	}
+	
+	return qtrue;
+}
+
+/**
  * Menu functions
  */
 
@@ -486,36 +556,6 @@ int AL_CountAll (void)
 				amount += base->alienscont[j].amount_alive;
 		}
 	}
-	return amount;
-}
-
-/**
- * @brief Counts alive aliens in current base.
- * @return amount of all alive aliens stored in containment
- * @sa AC_Init
- */
-int AL_CountInBase (void)
-{
-	int j;
-	int amount = 0;
-	base_t *base;
-
-	if (baseCurrent) {
-		base = baseCurrent;
-	} else {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("AL_CountInBase()... No base selected!\n");
-#endif
-		return -1;
-	}
-	if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
-		return 0;
-	for (j = 0; j < gd.numAliensTD; j++) {
-		if (*base->alienscont[j].alientype)
-			amount += base->alienscont[j].amount_alive;
-	}
-
 	return amount;
 }
 

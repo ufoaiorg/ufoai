@@ -75,12 +75,13 @@ void AL_RemoveAliens(struct base_s *base, const char *name, int amount, alienCal
 int AL_GetAlienIdx(const char *id);
 int AL_GetAlienGlobalIdx(int idx);
 int AL_GetAlienAmount(int idx, requirementType_t reqtype, struct base_s *base);
+void AL_ChangeAliveAlienNumber(struct base_s *base, aliensCont_t *containment, int num);
+qboolean AL_CheckAliveFreeSpace(struct base_s *base, aliensCont_t *containment, int num);
 
 /**
  * Menu functions
  */
 int AL_CountAll(void);
-int AL_CountInBase(void);
 
 void AC_Reset(void);
 

@@ -170,8 +170,11 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 			intransfer += trAliensTmp[i][TRANS_ALIEN_ALIVE];
 	}
 
+	/* add the alien we are trying to transfer */
+	intransfer++;
+
 	/* Does the destination base has enough space in alien containment? */
-	if (destbase->capacities[CAP_ALIENS].max - destbase->capacities[CAP_ALIENS].cur - intransfer < 1) {
+	if (!AL_CheckAliveFreeSpace(srcbase, NULL, -intransfer) || !AL_CheckAliveFreeSpace(destbase, NULL, intransfer)) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
 		return qfalse;
 	}
@@ -530,7 +533,7 @@ static void TR_TransferListClear_f (void)
  	}
 	for (i = 0; i < gd.numAliensTD; i++) {	/* Return aliens. */
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
-			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][TRANS_ALIEN_ALIVE];
+			AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][TRANS_ALIEN_DEAD];
 	}
@@ -628,8 +631,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		} else {
 			for (i = 0; i < gd.numAliensTD; i++) {
 				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
-					destination->alienscont[i].amount_alive += transfer->alienAmount[i][TRANS_ALIEN_ALIVE];
-					destination->capacities[CAP_ALIENS].cur += transfer->alienAmount[i][TRANS_ALIEN_ALIVE];
+					AL_ChangeAliveAlienNumber(destination, &(destination->alienscont[i]), transfer->alienAmount[i][TRANS_ALIEN_ALIVE]);
 				}
 				if (transfer->alienAmount[i][TRANS_ALIEN_DEAD] > 0)
 					destination->alienscont[i].amount_dead += transfer->alienAmount[i][TRANS_ALIEN_DEAD];
@@ -1041,8 +1043,7 @@ static void TR_TransferListSelect_f (void)
 					if (TR_CheckAlien(i, baseCurrent, transferBase)) {
 						trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
 						/* Remove an alien from Alien Containment. */
-						baseCurrent->alienscont[i].amount_alive--;
-						baseCurrent->capacities[CAP_ALIENS].cur--;
+						AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), -1);
 						break;
 					} else
 						return;
@@ -1341,7 +1342,7 @@ static void TR_CargoListSelect_f (void)
 			if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][TRANS_ALIEN_ALIVE]--;
-					baseCurrent->alienscont[i].amount_alive--;
+					AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), 1);
 					break;
 				}
 				cnt++;
@@ -1460,7 +1461,7 @@ static void TR_TransferClose_f (void)
 		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][TRANS_ALIEN_DEAD];
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE])
-			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][TRANS_ALIEN_ALIVE];
+			AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 	}
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
