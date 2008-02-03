@@ -2400,7 +2400,7 @@ static qboolean CL_TraceMove (pos3_t to)
 	int dv;
 
 	if (!selActor)
-		return;
+		return qfalse;
 
 	length = CL_MoveLength(to);
 	if (!length || length >= 0x3F)
