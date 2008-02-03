@@ -547,6 +547,7 @@ static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapo
 		*weapon = item;
 }
 
+#ifdef DEBUG
 /**
  * @brief Prints all reaction- and reservation-info for teh team.
  * @note Console command: debug_listreservations
@@ -563,9 +564,9 @@ void CL_ListReactionAndReservations_f (void)
 			Com_Printf(" - hand: %i | fm: %i | wpidx: %i\n", chr->reactionFiremode[RF_HAND], chr->reactionFiremode[RF_FM],chr->reactionFiremode[RF_WPIDX]);
 			Com_Printf(" - res... reaction: %i | crouch: %i\n", chr->reservedTus.reaction, chr->reservedTus.crouch);
 		}
-
 	}
 }
+#endif
 
 /**
  * @brief Checks if the currently selected firemode in reactionFiremode is useable with the defined weapon.
