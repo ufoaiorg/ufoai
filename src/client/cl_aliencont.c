@@ -854,7 +854,7 @@ static void AC_AddOne_f (void)
 	int j;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign) {
+	if (!baseCurrent || !curCampaign) {
 		return;
 	}
 
@@ -864,10 +864,9 @@ static void AC_AddOne_f (void)
 		return;
 	}
 
-/*	alienType[0] = '\0';*/
 	alienType = Cmd_Argv(1);
 
-/* Check that alientType exists */
+	/* Check that alientType exists */
 	alienTypeExists = qfalse;
 	containment = baseCurrent->alienscont;
 	for (j = 0; j < gd.numAliensTD; j++) {
