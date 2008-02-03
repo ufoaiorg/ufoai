@@ -573,6 +573,9 @@ static void Com_DebugHelp_f (void)
 			"\n"
 			"Debugging commands:\n"
 			"------------------------------\n"
+#ifdef DEBUG
+			" * aliencont_addone\n"
+#endif
 			" * debug_additems\n"
 			" * debug_basereset\n"
 			"   reset building status and capacities of every base\n"
