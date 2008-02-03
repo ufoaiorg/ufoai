@@ -174,7 +174,7 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 	intransfer++;
 
 	/* Does the destination base has enough space in alien containment? */
-	if (!AL_CheckAliveFreeSpace(srcbase, NULL, -intransfer) || !AL_CheckAliveFreeSpace(destbase, NULL, intransfer)) {
+	if (!AL_CheckAliveFreeSpace(destbase, NULL, intransfer)) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
 		return qfalse;
 	}
