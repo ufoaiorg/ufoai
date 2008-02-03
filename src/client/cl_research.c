@@ -950,7 +950,7 @@ static void RS_AssignScientist_f (void)
 void RS_RemoveScientist (technology_t* tech)
 {
 	employee_t *employee = NULL;
-	base_t *base;
+	base_t *base = NULL;
 
 	assert(tech);
 

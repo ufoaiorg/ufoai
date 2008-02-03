@@ -60,6 +60,8 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 
 	if (x + cacheList.width +3 > VID_NORM_WIDTH)
 		dx = -(cacheList.width + 10);
+	else
+		dx = 0;
 
 /** @todo
 	if (y + cacheList.height +3 > VID_NORM_HEIGHT)

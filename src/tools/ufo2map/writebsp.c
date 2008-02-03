@@ -31,7 +31,7 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 {
 	unsigned int i;
 	int current, previous = 0;
-	int	start, end;
+	int	start = 0, end;
 
 	if (showProgress) {
 		start = I_FloatTime();
