@@ -2342,19 +2342,27 @@ static inline void G_ClientSkipActorInfo (void)
 	for (k = 0; k < 4; k++)
 		gi.ReadString(); /* name, path, body, head */
 	gi.ReadByte(); /* skin */
+
 	gi.ReadShort(); /* HP */
 	gi.ReadShort(); /* maxHP */
 	gi.ReadByte(); /* teamDefIndex */
 	gi.ReadByte(); /* gender */
 	gi.ReadByte(); /* STUN */
 	gi.ReadByte(); /* morale */
+
 	for (k = 0; k < SKILL_NUM_TYPES; k++)
 		gi.ReadByte(); /* skills */
+
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.ReadShort(); /* kills */
 	gi.ReadShort(); /* assigned missions */
+
+	/* skip stats */
+	for (k = 0; k < 13; k++)
+		gi.ReadByte();
+
+	/* skip inventory */
 	j = gi.ReadShort();
-	/* @todo: skip j bytes instead of reading and ignoring */
 	for (k = 0; k < j; k++)
 		gi.ReadByte(); /* inventory */
 }
@@ -2419,7 +2427,7 @@ void G_ClientTeamInfo (player_t * player)
 				ent->morale = 100;
 				break;
 			default:
-				gi.error("G_ClientTeamInfo: unknown fieldSize for edict (%i)\n", dummyFieldSize);
+				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (size: %i, actor num: %i)\n", dummyFieldSize, i);
 			}
 
 			level.num_alive[ent->team]++;
@@ -2460,6 +2468,7 @@ void G_ClientTeamInfo (player_t * player)
 				ent->chr.kills[k] = gi.ReadShort();
 			ent->chr.assigned_missions = gi.ReadShort();
 
+			/* @sa G_ClientSkipActorInfo */
 			ent->chr.chrscore.alienskilled = gi.ReadByte();
 			ent->chr.chrscore.aliensstunned = gi.ReadByte();
 			ent->chr.chrscore.civilianskilled = gi.ReadByte();
