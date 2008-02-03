@@ -850,7 +850,7 @@ static void AC_AddOne_f (void)
 {
 	const char *alienType;
 	aliensCont_t *containment = NULL;
-	qboolean updateAlive, alienTypeExists;
+	qboolean updateAlive;
 	int j;
 
 	/* Can be called from everywhere. */
@@ -867,20 +867,17 @@ static void AC_AddOne_f (void)
 	alienType = Cmd_Argv(1);
 
 	/* Check that alientType exists */
-	alienTypeExists = qfalse;
 	containment = baseCurrent->alienscont;
 	for (j = 0; j < gd.numAliensTD; j++) {
 		assert(*containment[j].alientype);
-		if (!Q_strncmp(containment[j].alientype, alienType, MAX_VAR)) {
-			alienTypeExists = qtrue;
+		if (!Q_strncmp(containment[j].alientype, alienType, MAX_VAR))
 			break;
-		}
-		if (!alienTypeExists) {
-			Com_Printf("AC_AddOne_f: Alien Type '%s' does not exist. Available choices are:\n", alienType);
-			for (j = 0; j < gd.numAliensTD; j++)
-				Com_Printf("\t* %s\n", containment[j].alientype);
-			return;
-		}
+	}
+	if (j == gd.numAliensTD) {
+		Com_Printf("AC_AddOne_f: Alien Type '%s' does not exist. Available choices are:\n", alienType);
+		for (j = 0; j < gd.numAliensTD; j++)
+			Com_Printf("\t* %s\n", containment[j].alientype);
+		return;
 	}
 
 	if ((Cmd_Argc() == 3) && (atoi(Cmd_Argv(2)) == 1)) {
