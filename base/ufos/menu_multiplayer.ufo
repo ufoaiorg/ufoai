@@ -804,6 +804,7 @@ menu mp_serverbrowser
 	// ====================
 	func init
 	{
+		cmd "set mn_serverlist 0;"
 		cmd	"mn_escpop 5;"
 		cmd "pingservers;mn_translate mn_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 	}
