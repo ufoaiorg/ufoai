@@ -2,11 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "5"
+"maxlevel" "3"
 "maxteams" "2"
-"light" "30"
+"light" "35"
 "_color" "0.8 0.8 1"
-"angles" "30 210"
+"angles" "15 60"
 "ambient" "0.0 0.0 0.0"
 // brush 0
 {

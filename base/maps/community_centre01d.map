@@ -2,7 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "5"
+"maxlevel" "3"
 "maxteams" "2"
 "light" "160"
 "_color" "1 0.8 0.8"
