@@ -441,8 +441,12 @@ static void MN_Translate_f (void)
 		}
 	}
 
-	/* nothing found, copy value */
-	Cvar_Set(Cmd_Argv(2), _(current));
+	if (*current) {
+		/* nothing found, copy value */
+		Cvar_Set(Cmd_Argv(2), _(current));
+	} else {
+		Cvar_Set(Cmd_Argv(2), current);
+	}
 }
 
 /**

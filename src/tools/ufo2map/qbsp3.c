@@ -69,11 +69,6 @@ static void ProcessSubModel (int entityNum)
 	start = e->firstbrush;
 	end = start + e->numbrushes;
 
-#if 0
-	if (!strcmp("func_detail", ValueForKey(e, "classname"))) {
-	}
-#endif
-
 	mins[0] = mins[1] = mins[2] = -4096;
 	maxs[0] = maxs[1] = maxs[2] = 4096;
 	list = MakeBspBrushList(start, end, -1, mins, maxs);
