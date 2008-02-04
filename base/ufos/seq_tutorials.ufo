@@ -761,3 +761,36 @@ sequence tut_tacticalmission
 	rem tactical_bg
 	rem text_bg
 }
+
+
+// ==============================================
+
+tutorial multiplayer
+{
+	name	"_How to play multiplayer"
+	sequence	tut_multiplayer
+}
+
+sequence tut_multiplayer
+{
+	// ==============================================
+	// just precaching the background image
+	precache pics
+	{
+		tutorial/multiplayer1
+	}
+
+	2dobj port_text
+	{
+		text	"_Make sure that you've opened the TCP port 27910 in your firewall settings"
+		pos	"512 10"
+		align	uc
+		color	"1 1 1 1"
+		font	f_normal
+	}
+	wait 5
+
+
+
+	rem port_text
+}
