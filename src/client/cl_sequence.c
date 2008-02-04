@@ -95,7 +95,7 @@ typedef struct seqEnt_s {
 typedef struct seq2D_s {
 	qboolean inuse;
 	char name[MAX_VAR];
-	char text[MAX_VAR];	/**< a placeholder for gettext (V_TRANSLATION_MANUAL_STRING) */
+	char *text;	/**< a placeholder for gettext (V_TRANSLATION_MANUAL_STRING) */
 	char font[MAX_VAR];
 	char image[MAX_VAR];
 	vec2_t pos, speed;
@@ -346,7 +346,7 @@ void CL_Sequence2D (void)
 			R_Color(s2d->color);
 
 			/* gettext placeholder */
-			if (*s2d->text)
+			if (s2d->text)
 				height += R_FontDrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /* @todo: use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse);
 		}
 	R_Color(NULL);
@@ -649,8 +649,18 @@ int SEQ_2Dobj (const char *name, char *data)
 	while (*data) {
 		for (vp = seq2D_vals; vp->string; vp++)
 			if (!Q_strcmp(data, vp->string)) {
-				data += strlen(data) + 1;
-				Com_ParseValue(s2d, data, vp->type, vp->ofs, vp->size);
+				data += strlen(data) + 1; /* FIXME: COM_Parse */
+				switch (vp->type) {
+				case V_TRANSLATION_MANUAL_STRING:
+					data++;
+				case V_CLIENT_HUNK_STRING:
+					Mem_PoolStrDupTo(data, (char**) ((char*)s2d + (int)vp->ofs), cl_localPool, 0);
+					break;
+
+				default:
+					Com_ParseValue(s2d, data, vp->type, vp->ofs, vp->size);
+					break;
+				}
 				break;
 			}
 		if (!vp->string)
@@ -679,6 +689,9 @@ int SEQ_Remove (const char *name, char *data)
 	s2d = CL_SequenceFind2D(name);
 	if (s2d)
 		s2d->inuse = qfalse;
+
+	if (s2d->text)
+		Mem_Free(s2d->text);
 
 	if (!se && !s2d)
 		Com_Printf("SEQ_Remove: couldn't find '%s'\n", name);
