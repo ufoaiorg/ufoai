@@ -254,8 +254,11 @@ static void SCR_DrawCursor (void)
 	if (mouseSpace != MS_DRAG) {
 		if (cls.state == ca_active && cls.team != cl.actTeam)
 			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
-		else
+		else {
 			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
+			if (cl_showCoords->integer)
+				SCR_DrawString(mousePosX, mousePosY, va("%i:%i", mousePosX, mousePosY), qtrue);
+		}
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
 			if (selActor) {

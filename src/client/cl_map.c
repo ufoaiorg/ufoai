@@ -77,7 +77,6 @@ static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 
 /* static variables */
-static cvar_t* cl_showCoords;
 static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
 aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
@@ -2008,7 +2007,6 @@ static void MAP_SetOverlay_f (void)
  */
 void MAP_GameInit (void)
 {
-	cl_showCoords = Cvar_Get("cl_showcoords", "0", 0, NULL);
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 }
