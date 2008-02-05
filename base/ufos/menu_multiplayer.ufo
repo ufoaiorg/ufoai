@@ -1697,7 +1697,7 @@ menu serverpassword
 	{
 		image	hud/close
 		pos	"722 284"
-		click	{ cmd "mn_pop" }
+		click	{ cmd "mn_pop;" }
 	}
 
 	string title
@@ -1748,6 +1748,49 @@ menu serverpassword
 		string	"_OK"
 		pos	"648 470"
 		align	cc
+	}
+}
+
+// ==========================
+// CHAT POPUP (IRC)
+// ==========================
+menu chat_popup
+{
+	zone popup
+	{
+		invis true
+	}
+
+	pic back
+	{
+		image	menu/popup
+		pos	"256 256"
+	}
+
+	pic bt_close
+	{
+		image	hud/close
+		pos	"722 284"
+		click	{ cmd "mn_pop;" }
+	}
+
+	string title
+	{
+		pos	"512 282"
+		align	uc
+		string	"_Personal message"
+	}
+
+	text chatscreen
+	{
+		pos		"290 320"
+		size	"444 120"
+		format	"20 150"
+		font	"f_verysmall"
+		wheel
+		num		"38"
+		wheel
+		height	6
 	}
 }
 

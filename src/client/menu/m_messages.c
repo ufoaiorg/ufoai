@@ -171,8 +171,12 @@ void MN_AddChatMessage (const char *text)
 		/* only link this once */
 		mn.menuText[TEXT_CHAT_WINDOW] = chatBuffer;
 	}
-	if (!chatBufferNode)
-		chatBufferNode = MN_GetNodeFromCurrentMenu("chatscreen");
+	if (!chatBufferNode) {
+		const menu_t* menu = MN_GetMenu(mn_hud->string);
+		if (!menu)
+			Sys_Error("Could not get hud menu: %s\n", mn_hud->string);
+		chatBufferNode = MN_GetNode(menu, "chatscreen");
+	}
 
 	*chatBuffer = '\0'; /* clear buffer */
 	do {
