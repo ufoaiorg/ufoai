@@ -5393,6 +5393,7 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 			if (MAP_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
 				/* the location given in pos belongs to the terrain, culture, population types and nations
 				 * that are acceptable, so count it */
+				/* @todo - cache the counted hits */
 				hits++;
 			}
 		}
