@@ -2884,7 +2884,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 
 	/* check for malformed or illegal info strings */
 	if (!Info_Validate(userinfo))
-		Q_strncpyz(userinfo, "\\name\\badinfo", sizeof(userinfo));
+		Q_strncpyz(userinfo, "\\cl_name\\badinfo", sizeof(userinfo));
 
 	/* set name */
 	s = Info_ValueForKey(userinfo, "cl_name");
