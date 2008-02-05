@@ -330,6 +330,24 @@ static qboolean TR_AircraftListSelect (int i)
 }
 
 /**
+ * @brief Reset scrolling of node containing item-in-base list.
+ */
+static void TR_ResetScrooling_f (void)
+{
+	/* for reseting the scrolling */
+	static menuNode_t *trans_list = NULL;
+
+	if (!trans_list) {
+		trans_list = MN_GetNodeFromCurrentMenu("trans_list");
+	}
+
+	/* maybe we call this function and transfer menu is not on the menu stack */
+	if (trans_list) {
+		trans_list->textScroll = 0;
+	}
+}
+
+/**
  * @brief Fills the items-in-base list with stuff available for transfer.
  * @note Filling the transfer list with proper stuff (items/employees/aliens/aircraft) is being done here.
  * @sa TR_TransferStart_f
@@ -345,9 +363,6 @@ static void TR_TransferSelect_f (void)
 	aircraft_t *aircraft = NULL;
 	char str[128];
 
-	/* for reseting the scrolling */
-	static menuNode_t *trans_list = NULL;
-
 	if (!transferBase)
 		return;
 
@@ -357,19 +372,6 @@ static void TR_TransferSelect_f (void)
 		type = atoi(Cmd_Argv(1));
 
 	transferList[0] = '\0';
-
-	/**
-	 * only fetch this once after ufopedia menu was on the stack (was the
-	 * current menu)
-	 */
-	if (!trans_list) {
-		trans_list = MN_GetNodeFromCurrentMenu("trans_list");
-	}
-
-	/* maybe we call this function and the ufopedia is not on the menu stack */
-	if (trans_list) {
-		trans_list->textScroll = 0;
-	}
 
 	/* Reset and fill temp employees arrays. */
 	for (i = 0; i < MAX_EMPL; i++) {
@@ -532,6 +534,7 @@ static void TR_TransferListClear_f (void)
 	/* Update cargo list and items list. */
 	TR_CargoList();
  	TR_TransferSelect_f();
+	TR_ResetScrooling_f();
 }
 
 /**
@@ -1457,8 +1460,6 @@ static void TR_TransferClose_f (void)
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
 	memset(trEmployeesTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trEmployeesTmp));
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
-
-	Cbuf_AddText("mn_pop\n");
 }
 
 /**
@@ -1545,6 +1546,7 @@ void TR_Reset (void)
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_select", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
+	Cmd_AddCommand("trans_resetscroll", TR_ResetScrooling_f, "Reset scrolling items-in-base list");
 	Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");

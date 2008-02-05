@@ -184,25 +184,25 @@ menu transfer
 	}
 	func trans_items
 	{
-		cmd "trans_select 0;"
+		cmd "trans_resetscroll; trans_select 0;"
 		trans_reset
 		*s_items	color "1 1 1 1"
 	}
 	func trans_humans
 	{
-		cmd "trans_select 1;"
+		cmd "trans_resetscroll; trans_select 1;"
 		trans_reset
 		*s_humans	color "1 1 1 1"
 	}
 	func trans_aliens
 	{
-		cmd "trans_select 2;"
+		cmd "trans_resetscroll; trans_select 2;"
 		trans_reset
 		*s_aliens	color "1 1 1 1"
 	}
 	func trans_crafts
 	{
-		cmd "trans_select 3;"
+		cmd "trans_resetscroll; trans_select 3;"
 		trans_reset
 		*s_crafts	color "1 1 1 1"
 	}
@@ -335,7 +335,7 @@ menu transfer
 		pos	"940 725"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "trans_close;" }
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -346,5 +346,9 @@ menu transfer
 	{
 		cmd "trans_init 0;"
 		trans_items
+	}
+	func close
+	{
+		cmd "trans_close;"
 	}
 }
