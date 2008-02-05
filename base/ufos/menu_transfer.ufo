@@ -335,7 +335,7 @@ menu transfer
 		pos	"940 725"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "trans_close;" }
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -346,5 +346,9 @@ menu transfer
 	{
 		cmd "trans_init 0;"
 		trans_items
+	}
+	func close
+	{
+		cmd "trans_close;"
 	}
 }

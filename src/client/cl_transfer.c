@@ -1471,8 +1471,6 @@ static void TR_TransferClose_f (void)
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
 	memset(trEmployeesTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trEmployeesTmp));
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
-
-	Cbuf_AddText("mn_pop\n");
 }
 
 /**
