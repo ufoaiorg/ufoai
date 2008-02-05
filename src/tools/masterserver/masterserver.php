@@ -105,6 +105,8 @@ function updateServerList ($remove, $add)
 	ftruncate($fHandle, ftell($fHandle));
 	flock($fHandle, LOCK_UN);
 	fclose($fHandle);
+	# windows doesn't like the ipv6 stuff
+	$serverListStr = ereg_replace("::ffff:", "", $serverListStr);
 	return "$i\n$serverListStr";
 }
 
