@@ -302,7 +302,6 @@ static qboolean Irc_Proto_Msg (const char *target, const char *text)
 	return Irc_Proto_Enqueue(msg, msg_len);
 }
 
-#if 0
 /**
  * @sa Irc_Proto_Enqueue
  */
@@ -313,7 +312,6 @@ static qboolean Irc_Proto_Notice (const char *target, const char *text)
 	msg[sizeof(msg) - 1] = '\0';
 	return Irc_Proto_Enqueue(msg, msg_len);
 }
-#endif
 
 #if 0
 /**
@@ -713,11 +711,14 @@ static void Irc_Client_CmdNick (const char *prefix, const char *params, const ch
 	Irc_Logic_AddChannelName(chan, p, trailing);
 }
 
+#define IRC_CTCP_MARKER_CHR '\001'
+#define IRC_CTCP_MARKER_STR "\001"
+
 static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const char *trailing)
 {
 	char nick[MAX_VAR];
 	char * const emph = strchr(prefix, '!');
-	char * ctcp = strchr(trailing, 1);
+	char * ctcp = strchr(trailing, IRC_CTCP_MARKER_CHR);
 	menu_t* menu;
 	memset(nick, 0, sizeof(nick));
 	if (emph)
@@ -726,12 +727,22 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		strcpy(nick, prefix);
 
 	if (ctcp) {
-		trailing++;
-		if (!Q_strncmp(trailing, "VERSION", 7)
-		 || !Q_strncmp(trailing, "version", 7)) {
+		if (!Q_strcmp(trailing + 1, "VERSION" IRC_CTCP_MARKER_STR)) {
 			/* response with the game version */
 			Irc_Proto_Msg(irc_defaultChannel->string, Cvar_VariableString("version"));
+			/*Irc_Proto_Notice(nick, IRC_CTCP_MARKER_STR "VERSION " UFO_VERSION " " CPUSTRING " " __DATE__ " " BUILDSTRING);*/
 			Com_DPrintf(DEBUG_CLIENT, "Irc_Client_CmdPrivmsg: Response to version query\n");
+		} else if (!Q_strncmp(trailing + 1, "PING", 4)) {
+			char response[IRC_SEND_BUF_SIZE];
+			strcpy(response, trailing);
+			response[2] = 'O'; /* PING => PONG */
+			Irc_Proto_Notice(nick, response);
+		} else if (!Q_strcmp(trailing + 1, "TIME" IRC_CTCP_MARKER_STR)) {
+			const time_t t = time(NULL);
+			char response[IRC_SEND_BUF_SIZE];
+			const size_t response_len = sprintf(response, IRC_CTCP_MARKER_STR "TIME :%s" IRC_CTCP_MARKER_STR, ctime(&t));
+			response[response_len - 1] = '\0';	/* remove trailing \n */
+			Irc_Proto_Notice(nick, response);
 		} else {
 			Com_Printf("Irc_Client_CmdPrivmsg: Unknown ctcp command: '%s'\n", trailing);
 		}
