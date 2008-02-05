@@ -742,7 +742,14 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			/* check whether this is no message to the channel - but to the user */
 			if (params && Q_strcmp(params, irc_defaultChannel->string)) {
 				S_StartLocalSound("misc/lobbyprivmsg");
-				MN_AddChatMessage(va("<%s> %s", nick, trailing));
+				MN_AddChatMessage(va("<%s> %s\n", nick, trailing));
+			} else if (strstr(trailing, irc_nick->string)) {
+				S_StartLocalSound("misc/lobbyprivmsg");
+				MN_AddChatMessage(va("<%s> %s\n", nick, trailing));
+				if (Q_strcmp(menu->name, mn_hud->string)) {
+					/* we are not in hud mode, use a popup */
+					MN_PushMenu("chat_popup");
+				}
 			}
 		}
 
