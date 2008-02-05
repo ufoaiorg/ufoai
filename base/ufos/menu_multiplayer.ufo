@@ -943,6 +943,15 @@ menu mp_create_server
 		align	ur
 	}
 
+	string firewall_str
+	{
+		string	"_Make sure that you've opened the TCP port 27910 in your firewall settings"
+		pos		"208 150"
+		size	"256 40"
+		align	uc
+		font	"f_small"
+	}
+
 	// =====================
 	// PUBLIC - MASTERSERVER
 	// =====================
