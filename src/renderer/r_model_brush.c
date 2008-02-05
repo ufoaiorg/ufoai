@@ -112,7 +112,6 @@ static void R_ModLoadSubmodels (lump_t * l)
 		for (j = 0; j < 3; j++) {
 			out->mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
-			out->origin[j] = LittleFloat(in->origin[j]) + shift[j];
 		}
 		out->radius = RadiusFromBounds(out->mins, out->maxs);
 		out->headnode = LittleLong(in->headnode);

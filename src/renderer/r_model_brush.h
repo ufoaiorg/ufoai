@@ -40,7 +40,6 @@ typedef struct mBspVertex_s {
 
 typedef struct mBspHeader_s {
 	vec3_t mins, maxs;
-	vec3_t origin;				/**< for sounds or lights */
 	float radius;
 	int headnode;
 	int visleafs;				/**< not including the solid leaf 0 */
