@@ -79,7 +79,7 @@ nation asia
 	alien_friendly	0.30
 	soldiers 5
 	scientists 1
-	pos "-100 55"
+	pos "-100 33"
 }
 
 nation middle
@@ -115,7 +115,7 @@ nation russia
 	alien_friendly	0.70
 	soldiers 5
 	scientists 5
-	pos "-60 55"
+	pos "-80 63"
 }
 
 nation oceania
