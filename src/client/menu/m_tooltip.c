@@ -45,6 +45,9 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 
+	if (!string ||  !*string || !font)
+		return 0;
+
 	/* Get height of string. The width will be ignored (except for the check below). */
 	R_FontLength(font, string, &width, &height);
 

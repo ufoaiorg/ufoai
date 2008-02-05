@@ -205,7 +205,7 @@ void R_FontLength (const char *font, char *c, int *width, int *height)
 	if (width && height)
 		*width = *height = 0;
 
-	if (!c || !font)
+	if (!c || !*c || !font)
 		return;
 
 	/* get the font */
