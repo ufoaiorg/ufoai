@@ -594,6 +594,7 @@ static void SP_dummy (edict_t * self)
  * @sa CM_EntTestLine
  * @sa LM_AddModel
  * @sa SV_SetModel
+ * @sa G_SendBrushModels
  */
 static void SP_func_breakable (edict_t * self)
 {
@@ -652,9 +653,10 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 
 /**
  * @brief QUAKED func_door (0 .5 .8) ?
- * "health"	if set, door must be shot open
+ * "health" if set, door is destroyable
  * @sa SV_SetModel
  * @sa LM_AddModel
+ * @sa G_SendBrushModels
  */
 static void SP_func_door (edict_t *self)
 {

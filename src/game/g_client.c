@@ -2734,7 +2734,9 @@ static void G_SendBrushModels (int team)
 		if (!ent->inuse)
 			continue;
 
-		/* brush models that have a type - not the world */
+		/* brush models that have a type - not the world - keep in
+		 * mind that there are several world edicts in the list in case of
+		 * a map assembly */
 		if (ent->solid == SOLID_BSP && ent->type) {
 			gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
 			gi.WriteShort(ent->type);
