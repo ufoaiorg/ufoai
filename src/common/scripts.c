@@ -1962,13 +1962,13 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 			break;
 
 	if (i == numGTs) {
-		if (i >= MAX_DAMAGETYPES)
-			Sys_Error("Com_ParseGameTypes: MAX_DAMAGETYPES exceeded\n");
+		if (i >= MAX_GAMETYPES)
+			Sys_Error("Com_ParseGameTypes: MAX_GAMETYPES exceeded\n");
 		gt = &gts[numGTs++];
 		memset(gt, 0, sizeof(gametype_t));
 		Q_strncpyz(gt->id, name, sizeof(gt->id));
 		if (numGTs >= MAX_GAMETYPES)
-			Sys_Error("Com_ParseGameTypes: Too many damage types.\n");
+			Sys_Error("Com_ParseGameTypes: Too many gametypes.\n");
 
 		do {
 			token = COM_EParse(text, errhead, name);
