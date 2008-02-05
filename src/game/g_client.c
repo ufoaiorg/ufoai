@@ -2729,7 +2729,7 @@ static void G_SendBrushModels (int team)
 	edict_t *ent;
 	qboolean end = qfalse;
 
-	/* make every edict visible thats not an actor or a 2x2 unit */
+	/* make SOLID_BSP edicts visible to the client */
 	for (i = 1, ent = g_edicts + 1; i < globals.num_edicts; ent++, i++) {
 		if (!ent->inuse)
 			continue;
