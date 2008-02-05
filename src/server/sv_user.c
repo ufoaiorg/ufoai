@@ -283,7 +283,7 @@ static const ucmd_t ucmds[] = {
 /**
  * @sa SV_ExecuteClientMessage
  */
-static void SV_ExecuteUserCommand (char *s)
+static void SV_ExecuteUserCommand (const char *s)
 {
 	const ucmd_t *u;
 
