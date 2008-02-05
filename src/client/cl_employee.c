@@ -876,6 +876,26 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 }
 
 /**
+ * @brief Counts all hired employees of a given base
+ * @param[in] base The base where we count
+ * @return count of hired employees of a given type in a given base
+ * @note must not return 0 if hasBuilding[B_QUARTER] is qfalse: used to update capacity
+ */
+int E_CountAllHired (const base_t* const base)
+{
+	employeeType_t type;
+	int count = 0;
+
+	if (!base)
+		return 0;
+
+	for (type = 0; type < MAX_EMPL; type++)
+		count += E_CountHired(base, type);
+
+	return count;
+}
+
+/**
  * @brief Counts unhired employees of a given type in a given base
  *
  * @param[in] type The type of employee to search.

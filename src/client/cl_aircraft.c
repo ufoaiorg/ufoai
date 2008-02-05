@@ -118,7 +118,6 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
  * @brief Updates current capacities for hangars in given base.
  * @param[in] base_idx Index of base in global array.
  * @note Call this function whenever you sell/loss aircraft in given base.
- * @todo Remember to call this function when you lost aircraft in air fight.
  * @sa BS_SellAircraft_f
  */
 void AIR_UpdateHangarCapForAll (int base_idx)

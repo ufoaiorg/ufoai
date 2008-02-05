@@ -449,14 +449,15 @@ int AL_GetAlienAmount (int idx, requirementType_t reqtype, base_t *base)
 	}
 }
 
-#ifdef DEBUG
 /**
  * @brief Counts alive aliens in base.
  * @param[in] base Pointer to the base
  * @return amount of all alive aliens stored in containment
+ * @note must not return 0 if hasBuilding[B_ALIEN_CONTAINMENT] is qfalse: used to update capacity
  * @sa AL_ChangeAliveAlienNumber
+ * @sa B_ResetAllStatusAndCapacities_f
  */
-static int AL_CountInBase (base_t *base)
+int AL_CountInBase (const base_t *base)
 {
 	int j;
 	int amount = 0;
@@ -470,7 +471,6 @@ static int AL_CountInBase (base_t *base)
 
 	return amount;
 }
-#endif
 
 /**
  * @brief Add / Remove alive aliens to Alien Containment.

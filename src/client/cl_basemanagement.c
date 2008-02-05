@@ -147,6 +147,43 @@ baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
 }
 
 /**
+ * @brief Get building type by base capacity.
+ * @param[in] cap Enum type of baseCapacities_t.
+ * @return Enum type of buildingType_t.
+ * @sa B_UpdateBaseCapacities
+ * @sa B_PrintCapacities_f
+ */
+static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
+{
+	switch (cap) {
+	case CAP_ALIENS:
+		return B_ALIEN_CONTAINMENT;
+	case CAP_AIRCRAFTS_SMALL:
+		return B_SMALL_HANGAR;
+	case CAP_AIRCRAFTS_BIG:
+		return B_HANGAR;
+	case CAP_EMPLOYEES:
+		return B_QUARTERS;
+	case CAP_ITEMS:
+		return B_STORAGE;
+	case CAP_LABSPACE:
+		return B_LAB;
+	case CAP_WORKSPACE:
+		return B_WORKSHOP;
+	case CAP_HOSPSPACE:
+		return B_HOSPITAL;
+	case CAP_UFOHANGARS_SMALL:
+		return B_UFO_SMALL_HANGAR;
+	case CAP_UFOHANGARS_LARGE:
+		return B_UFO_HANGAR;
+	case CAP_ANTIMATTER:
+		return B_ANTIMATTER;
+	default:
+		return MAX_BUILDING_TYPE;
+	}
+}
+
+/**
  * @brief Get the status associated to a building
  * @param[in] type value of building->buildingType
  * @param[in] building
@@ -539,8 +576,8 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qbool
 }
 
 /**
- * @brief Update status and capacities of all bases from zero
- * @param[in] base Pointer to the base where status and capacities must be reset
+ * @brief Recalculate status and capacities of one base
+ * @param[in] base Pointer to the base where status and capacities must be recalculated
  * @param[in] firstEnable qtrue if this is the first time the function is called for this base
  * @sa B_UpdateOneBaseBuildingStatusOnEnable
  */
@@ -574,22 +611,58 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	B_UpdateBaseCapacities(MAX_CAP, base);
 }
 
-#ifdef DEBUG
 /**
- * @brief Update status and capacities of all bases from zero
- * @note function called with debug_basereset
+ * @brief Recalculate status and capacities
+ * @note function called with debug_basereset or after loading
  */
 static void B_ResetAllStatusAndCapacities_f (void)
 {
-	int baseIdx;
+	int baseIdx, i;
 	base_t *base;
 
 	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++){
 		base = B_GetBase(baseIdx);
-		B_ResetAllStatusAndCapacities(base, qtrue);
+		if (base->founded) {
+			/* set buildingStatus[] and capacities.max values */
+			B_ResetAllStatusAndCapacities(base, qfalse);
+
+			/* calculate capacities.cur for every capacity */
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_ALIENS)])
+				base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
+
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)] ||
+				base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)])
+				AIR_UpdateHangarCapForAll(baseIdx);
+
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)])
+				base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
+
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_ITEMS)])
+				INV_UpdateStorageCap(base);
+
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_LABSPACE)])
+				base->capacities[CAP_ITEMS].cur += RS_CountInBase(base);
+
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_WORKSPACE)])
+				baseCurrent->capacities[CAP_WORKSPACE].cur = E_CountHired(baseCurrent, EMPL_WORKER);
+
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)])
+				HOS_UpdateHospitalCapForAll(base);
+
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)] ||
+				base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)])
+				UFO_UpdateUFOHangarCapForAll(baseIdx);
+
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)])
+				INV_UpdateAntimatterCap(base);
+
+			/* Check that current capacity is possible -- if we changed values in *.ufo */
+			for (i = 0; i < MAX_CAP; i++)
+				if (base->capacities[i].cur > base->capacities[i].max)
+					Com_Printf("B_ResetAllStatusAndCapacities_f: Warning, capacity of %i is bigger than maximum capacity\n", i);
+		}
 	}
 }
-#endif
 
 /**
  * @brief Removes a building from the given base
@@ -2906,43 +2979,6 @@ static void B_CheckMaxBases_f (void)
 {
 	if (gd.numBases >= MAX_BASES) {
 		MN_PopMenu(qfalse);
-	}
-}
-
-/**
- * @brief Get building type by base capacity.
- * @param[in] cap Enum type of baseCapacities_t.
- * @return Enum type of buildingType_t.
- * @sa B_UpdateBaseCapacities
- * @sa B_PrintCapacities_f
- */
-static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
-{
-	switch (cap) {
-	case CAP_ALIENS:
-		return B_ALIEN_CONTAINMENT;
-	case CAP_AIRCRAFTS_SMALL:
-		return B_SMALL_HANGAR;
-	case CAP_AIRCRAFTS_BIG:
-		return B_HANGAR;
-	case CAP_EMPLOYEES:
-		return B_QUARTERS;
-	case CAP_ITEMS:
-		return B_STORAGE;
-	case CAP_LABSPACE:
-		return B_LAB;
-	case CAP_WORKSPACE:
-		return B_WORKSHOP;
-	case CAP_HOSPSPACE:
-		return B_HOSPITAL;
-	case CAP_UFOHANGARS_SMALL:
-		return B_UFO_SMALL_HANGAR;
-	case CAP_UFOHANGARS_LARGE:
-		return B_UFO_HANGAR;
-	case CAP_ANTIMATTER:
-		return B_ANTIMATTER;
-	default:
-		return MAX_BUILDING_TYPE;
 	}
 }
 

@@ -687,6 +687,21 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
 }
 
 /**
+ * @brief Update Hospital capacity.
+ * @param[in] base Pointer to the base
+ * @sa B_ResetAllStatusAndCapacities_f
+ */
+void HOS_UpdateHospitalCapForAll (base_t *base)
+{
+	employeeType_t type;
+
+	base->capacities[CAP_HOSPSPACE].cur = 0;
+
+	for (type = 0; type < MAX_EMPL; type++)
+		base->capacities[CAP_HOSPSPACE].cur += base->hospitalListCount[type];
+}
+
+/**
  * @brief Initial stuff for hospitals
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal

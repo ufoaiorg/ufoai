@@ -54,6 +54,8 @@ void INV_EnableAutosell(const technology_t *tech);
 void INV_InitialEquipment(base_t *base, const campaign_t* campaign);
 components_t *INV_GetComponentsByItemIdx(int itemIdx);
 int INV_DisassemblyItem(base_t *base, components_t *comp, qboolean calculate);
+void INV_UpdateStorageCap(base_t *base);
+void INV_UpdateAntimatterCap(base_t *base);
 void INV_ManageAntimatter(base_t *base, int amount, qboolean add);
 qboolean INV_MoveItem(base_t* base, inventory_t* inv, int toContainer, int px, int py, int fromContainer, int fromX, int fromY);
 

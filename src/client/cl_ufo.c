@@ -517,6 +517,48 @@ void UFO_CampaignCheckEvents (void)
 }
 
 /**
+ * @brief Updates current capacities for UFO hangars in given base.
+ * @param[in] base_idx Index of base in global array.
+ */
+void UFO_UpdateUFOHangarCapForAll (int base_idx)
+{
+	int i, item;
+	base_t *base = NULL;
+	aircraft_t *ufocraft = NULL;
+
+	base = B_GetBase(base_idx);
+
+	if (!base) {
+#ifdef DEBUG
+		Com_Printf("UFO_UpdateUFOHangarCapForAll()... base does not exist!\n");
+#endif
+		return;
+	}
+	assert(base);
+	/* Reset current capacities for UFO hangar. */
+	base->capacities[CAP_UFOHANGARS_LARGE].cur = 0;
+	base->capacities[CAP_UFOHANGARS_SMALL].cur = 0;
+
+	for (i = 0; i < numAircraft_samples; i++) {
+		ufocraft = &aircraft_samples[i];
+		assert(ufocraft);
+		if (ufocraft->type != AIRCRAFT_UFO)
+			continue;
+
+		item = INVSH_GetItemByID(ufocraft->id);
+		assert(item != NONE);
+
+		/* Update base capacity. */
+		if (ufocraft->weight == AIRCRAFT_LARGE)
+			base->capacities[CAP_UFOHANGARS_LARGE].cur += base->storage.num[item];
+		else
+			base->capacities[CAP_UFOHANGARS_SMALL].cur += base->storage.num[item];
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "UFO_UpdateUFOHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_UFOHANGARS_SMALL].cur, base->capacities[CAP_UFOHANGARS_LARGE].cur);
+}
+
+/**
  * @brief Prepares UFO recovery in global recoveries array.
  * @param[in] base Pointer to the base, where the UFO recovery will be made.
  * @sa UFO_Recovery

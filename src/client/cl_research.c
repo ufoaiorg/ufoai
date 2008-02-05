@@ -2337,6 +2337,29 @@ int RS_GetTechIdxByName (const char *name)
 	return TECH_INVALID;
 }
 
+/**
+ * @brief Returns the number of employees searching in labs in given base.
+ * @param[in] base Pointer to the base
+ * @sa B_ResetAllStatusAndCapacities_f
+ * @note must not return 0 if hasBuilding[B_LAB] is qfalse: used to update capacity
+ */
+int RS_CountInBase (const base_t *base)
+{
+	int i, counter = 0;
+	technology_t *tech;
+
+	for (i = 0; i < gd.numTechnologies; i++) {
+		tech = gd.technologies + i;
+		assert(tech);
+		if (tech->statusResearchable && (tech->base_idx == base->idx)) {
+			/* Get a free lab from the base. */
+			counter += tech->scientists;
+		}
+	}
+
+	return counter;
+}
+
 qboolean RS_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;

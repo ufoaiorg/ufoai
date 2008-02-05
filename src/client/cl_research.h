@@ -215,6 +215,7 @@ technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(int base_idx);
 int RS_GetTechIdxByName(const char *name);
+int RS_CountInBase(const struct base_s *base);
 qboolean RS_ScriptSanityCheck(void);
 
 /* ufopedia function - but needs technology_t */

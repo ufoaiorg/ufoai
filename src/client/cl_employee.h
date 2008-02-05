@@ -80,6 +80,7 @@ employee_t* E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t typ
 employee_t* E_GetEmployeeFromChrUCN(int ucn);
 
 int E_CountHired(const base_t* const base, employeeType_t type);
+int E_CountAllHired(const base_t* const base);
 int E_CountUnhired(employeeType_t type);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);

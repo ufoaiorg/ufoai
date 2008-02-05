@@ -523,6 +523,46 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 }
 
 /**
+ * @brief Update Storage Capacity.
+ * @param[in] base Pointer to the base
+ * @sa B_ResetAllStatusAndCapacities_f
+ */
+void INV_UpdateStorageCap (base_t *base)
+{
+	int i;
+
+	for (i = 0; i < csi.numODs; i++) {
+		/* don't count antimatter */
+		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+			continue;
+
+		/* don't count aircraft */
+		if ((csi.ods[i].tech->type == RS_CRAFT)) {
+			continue;
+		}
+
+		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * csi.ods[i].size;
+	}
+}
+
+/**
+ * @brief Update Antimatter Capacity.
+ * @param[in] base Pointer to the base
+ * @sa B_ResetAllStatusAndCapacities_f
+ */
+void INV_UpdateAntimatterCap (base_t *base)
+{
+	int i;
+
+	for (i = 0; i < csi.numODs; i++) {
+		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10)) {
+			base->capacities[CAP_ANTIMATTER].cur = (base->storage.num[i] * ANTIMATTER_SIZE);
+			return;
+		}
+	}
+}
+
+/**
  * @brief Manages Antimatter (adding, removing) through Antimatter Storage Facility.
  * @param[in] base Pointer to the base.
  * @param[in] add True if we are adding antimatter, false when removing.

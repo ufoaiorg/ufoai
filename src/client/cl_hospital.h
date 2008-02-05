@@ -32,5 +32,6 @@ void HOS_HospitalRun(void);
 void HOS_RemoveEmployeesInHospital(const aircraft_t *aircraft);
 void HOS_ReaddEmployeesInHospital(const aircraft_t *aircraft);
 void HOS_RemoveDeadEmployeeFromLists (employee_t *employee);
+void HOS_UpdateHospitalCapForAll (base_t *base);
 qboolean HOS_Save(sizebuf_t *sb, void* data);
 qboolean HOS_Load(sizebuf_t *sb, void* data);
