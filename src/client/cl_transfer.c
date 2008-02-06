@@ -1514,16 +1514,8 @@ static void TR_TransferClose_f (void)
 		return;
 
 	/* Unload what was loaded. */
-	for (i = 0; i < csi.numODs; i++) {
-		if (trItemsTmp[i] > 0)
-			baseCurrent->storage.num[i] += trItemsTmp[i];
-	}
-	for (i = 0; i < gd.numAliensTD; i++) {
-		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
-			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][TRANS_ALIEN_DEAD];
-		if (trAliensTmp[i][TRANS_ALIEN_ALIVE])
-			AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
-	}
+	TR_TransferListClear_f();
+
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
