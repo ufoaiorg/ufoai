@@ -636,6 +636,7 @@ void ClearBounds (vec3_t mins, vec3_t maxs)
 
 /**
  * @brief If the point is outside the box defined by mins and maxs, expand
+ * the box to accomodate it. Sets mins and maxs to their new values
  */
 void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 {
@@ -817,8 +818,6 @@ int VectorCompareEps (const vec3_t v1, const vec3_t v2, float epsilon)
 
 	return 1;
 }
-
-double sqrt (double x);
 
 /**
  * @brief Calculate the length of a vector
