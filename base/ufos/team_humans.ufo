@@ -147,6 +147,7 @@ team human
 		female {
 			soldiers/female body head01a 0
 			soldiers/female body head01b 0
+			soldiers/female body head01c 0
 			soldiers/female body head03a 0
 			soldiers/female body head03b 0
 		}
