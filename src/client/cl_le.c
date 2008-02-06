@@ -190,8 +190,11 @@ void LE_Explode (struct dbuffer *msg)
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
-
-void CL_RegisterLocalModels (void)
+/**
+ * @brief Register misc_models
+ * @sa CL_LoadMedia
+ */
+void LM_Register (void)
 {
 	localModel_t *lm;
 	int i;
@@ -202,7 +205,7 @@ void CL_RegisterLocalModels (void)
 		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);
 			if (!lm->as.change)
-				Com_Printf("CL_RegisterLocalModels: Could not change anim of model '%s'\n", lm->animname);
+				Com_Printf("LM_Register: Could not change anim of model '%s'\n", lm->animname);
 		}
 	}
 }
@@ -812,7 +815,6 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	switch (le->type) {
 	case ET_ROTATING:
 	case ET_DOOR:
-		VectorCopy(le->origin, ent->origin);
 		break;
 	case ET_BREAKABLE:
 		break;

@@ -763,17 +763,14 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	le->addFunc = LE_BrushModelAction;
 	le->think = LET_BrushModel;
 
+	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
 	model = cl.model_clip[le->modelnum1];
 	if (!model)
 		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not find inline model %i", le->modelnum1);
-	le->model1 = R_RegisterModelShort(va("*%i", le->modelnum1));
+	le->model1 = R_RegisterModelShort(le->inlineModelName);
 	if (!le->model1)
 		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not register inline model %i", le->modelnum1);
 
-	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
-
-	VectorCopy(origin, le->origin);
-/*	VectorCopy(origin, model->origin);*/
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
 

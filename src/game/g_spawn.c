@@ -329,14 +329,14 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 /**
  * @brief QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
  */
-static void SP_light (edict_t * self)
+static void SP_light (edict_t *ent)
 {
 	/* lights aren't client-server communicated items */
 	/* they are completely client side */
-	G_FreeEdict(self);
+	G_FreeEdict(ent);
 }
 
-static edict_t* G_TriggerSpawn (edict_t* owner)
+static edict_t* G_TriggerSpawn (edict_t *owner)
 {
 	edict_t* trigger;
 	vec3_t mins, maxs;
@@ -366,7 +366,7 @@ static edict_t* G_TriggerSpawn (edict_t* owner)
 	return trigger;
 }
 
-static void G_ActorSpawn (edict_t * ent)
+static void G_ActorSpawn (edict_t *ent)
 {
 	/* set properties */
 	level.num_spawnpoints[ent->team]++;
@@ -397,7 +397,7 @@ static void G_ActorSpawn (edict_t * ent)
 /**
  * @brief Spawn an singleplayer 2x2 unit
  */
-static void G_Actor2x2Spawn (edict_t * ent)
+static void G_Actor2x2Spawn (edict_t *ent)
 {
 	/* set properties */
 	level.num_2x2spawnpoints[ent->team]++;
@@ -424,7 +424,7 @@ static void G_Actor2x2Spawn (edict_t * ent)
  * "team"	the number of the team for this player starting point
  * "0" is reserved for civilians and critters (use info_civilian_start instead)
  */
-static void SP_player_start (edict_t * ent)
+static void SP_player_start (edict_t *ent)
 {
 	/* only used in multi player */
 	if (sv_maxclients->integer == 1) {
@@ -446,7 +446,7 @@ static void SP_player_start (edict_t * ent)
  * @brief QUAKED info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player human.
  */
-static void SP_human_start (edict_t * ent)
+static void SP_human_start (edict_t *ent)
 {
 	/* only used in single player */
 	if (sv_maxclients->integer > 1) {
@@ -464,7 +464,7 @@ static void SP_human_start (edict_t * ent)
  * @brief QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
  * Starting point for a 2x2 unit.
  */
-static void SP_2x2_start (edict_t * ent)
+static void SP_2x2_start (edict_t *ent)
 {
 	/* no 2x2 unit in multiplayer */
 	if (sv_maxclients->integer > 1) {
@@ -487,7 +487,7 @@ static void SP_2x2_start (edict_t * ent)
  * @brief QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player alien.
  */
-static void SP_alien_start (edict_t * ent)
+static void SP_alien_start (edict_t *ent)
 {
 	/* deactivateable in multiplayer */
 	if (sv_maxclients->integer > 1 && !ai_numactors->integer) {
@@ -507,7 +507,7 @@ static void SP_alien_start (edict_t * ent)
  * @brief QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
  * Starting point for a civilian.
  */
-static void SP_civilian_start (edict_t * ent)
+static void SP_civilian_start (edict_t *ent)
 {
 	/* deactivateable in multiplayer */
 	if (sv_maxclients->integer > 1 && !ai_numcivilians->integer) {
@@ -527,7 +527,7 @@ static void SP_civilian_start (edict_t * ent)
  * Way point for a civilian.
  * @sa SP_civilian_start
  */
-static void SP_civilian_target (edict_t * ent)
+static void SP_civilian_target (edict_t *ent)
 {
 	/* target point for which team */
 	ent->team = TEAM_CIVILIAN;
@@ -543,45 +543,96 @@ static void SP_civilian_target (edict_t * ent)
 }
 
 /**
+ * @brief Mission trigger
+ */
+static qboolean Touch_MissionTrigger (edict_t *self, edict_t *activator)
+{
+	if (!self->owner)
+		return qfalse;
+
+	switch (self->owner->team) {
+	case TEAM_ALIEN:
+		if (activator->team == TEAM_ALIEN) {
+			return qtrue;
+		}
+	case TEAM_PHALANX:
+		if (activator->team == TEAM_PHALANX) {
+			return qtrue;
+		}
+	}
+	return qfalse;
+}
+
+/**
  * @brief Init the human/phalanx mission entity
  */
-static void SP_misc_mission (edict_t * ent)
+static void SP_misc_mission (edict_t *ent)
 {
+	edict_t *other;
+
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
 	ent->team = TEAM_PHALANX;
+
+	/* spawn the trigger entity */
+	other = G_TriggerSpawn(ent);
+	other->touch = Touch_MissionTrigger;
+
+	ent->child = other;
 
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
-	gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
+
+	if (ent->particle) {
+		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+		gi.WriteShort(ent->spawnflags);
+		gi.WriteGPos(ent->pos);
+		gi.WriteShort((int)strlen(ent->particle));
+		gi.WriteString(ent->particle);
+	}
 }
 
 /**
  * @brief Init the alien mission entity
  */
-static void SP_misc_mission_aliens (edict_t * ent)
+static void SP_misc_mission_aliens (edict_t *ent)
 {
+	edict_t *other;
+
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
 	ent->team = TEAM_ALIEN;
+
+	/* spawn the trigger entity */
+	other = G_TriggerSpawn(ent);
+	other->touch = Touch_MissionTrigger;
+
+	ent->child = other;
 
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
-	gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
+
+	if (ent->particle) {
+		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+		gi.WriteShort(ent->spawnflags);
+		gi.WriteGPos(ent->pos);
+		gi.WriteShort((int)strlen(ent->particle));
+		gi.WriteString(ent->particle);
+	}
 }
 
 /**
  * @brief a dummy to get rid of local entities
  */
-static void SP_dummy (edict_t * self)
+static void SP_dummy (edict_t *ent)
 {
-	/* models and particles aren't client-server communicated items */
+	/* misc_models and particles aren't client-server communicated items */
 	/* they are completely client side */
-	G_FreeEdict(self);
+	G_FreeEdict(ent);
 }
 
 
@@ -596,24 +647,24 @@ static void SP_dummy (edict_t * self)
  * @sa SV_SetModel
  * @sa G_SendBrushModels
  */
-static void SP_func_breakable (edict_t * self)
+static void SP_func_breakable (edict_t *ent)
 {
-	self->classname = "breakable";
-	self->type = ET_BREAKABLE;
+	ent->classname = "breakable";
+	ent->type = ET_BREAKABLE;
 
 	/* set an inline model */
-	/* also set self->solid = SOLID_BSP here */
+	/* also set ent->solid = SOLID_BSP here */
 	/* also linked into the world here */
-	gi.SetModel(self, self->model);
-	if (self->solid != SOLID_BSP)
+	gi.SetModel(ent, ent->model);
+	if (ent->solid != SOLID_BSP)
 		Com_Printf("Error - func_breakable with no SOLID_BSP\n");
-	if (!self->model)
+	if (!ent->model)
 		Com_Printf("Error - func_breakable with no model\n");
 
 	Com_DPrintf(DEBUG_GAME, "func_breakable: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
-		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2],
-		(int)self->origin[0], (int)self->origin[1], (int)self->origin[2]);
+			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
+			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
+			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 }
 
 /*
@@ -658,34 +709,34 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
  * @sa LM_AddModel
  * @sa G_SendBrushModels
  */
-static void SP_func_door (edict_t *self)
+static void SP_func_door (edict_t *ent)
 {
 	edict_t *other;
 
-	self->classname = "door";
-	self->type = ET_DOOR;
+	ent->classname = "door";
+	ent->type = ET_DOOR;
 
 	/* set an inline model */
-	/* also set self->solid = SOLID_BSP here */
+	/* also set ent->solid = SOLID_BSP here */
 	/* also linked into the world here */
-	gi.SetModel(self, self->model);
-	if (self->solid != SOLID_BSP)
+	gi.SetModel(ent, ent->model);
+	if (ent->solid != SOLID_BSP)
 		Com_Printf("Error - func_door with no SOLID_BSP\n");
-	if (!self->model)
+	if (!ent->model)
 		Com_Printf("Error - func_door with no model\n");
 
-	self->moveinfo.state = STATE_CLOSED;
+	ent->moveinfo.state = STATE_CLOSED;
 
 	/* spawn the trigger entity */
-	other = G_TriggerSpawn(self);
+	other = G_TriggerSpawn(ent);
 	other->touch = Touch_DoorTrigger;
 
-	self->child = other;
+	ent->child = other;
 
 	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
-		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2],
-		(int)self->origin[0], (int)self->origin[1], (int)self->origin[2]);
+			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
+			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
+			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 }
 
 /**
@@ -694,28 +745,28 @@ static void SP_func_door (edict_t *self)
  * @sa SV_SetModel
  * @sa LM_AddModel
  */
-static void SP_func_rotating (edict_t *self)
+static void SP_func_rotating (edict_t *ent)
 {
-	self->classname = "rotating";
-	self->type = ET_ROTATING;
+	ent->classname = "rotating";
+	ent->type = ET_ROTATING;
 
 	/* set an inline model */
-	/* also set self->solid = SOLID_BSP here */
+	/* also set ent->solid = SOLID_BSP here */
 	/* also linked into the world here */
-	gi.SetModel(self, self->model);
-	if (self->solid != SOLID_BSP)
+	gi.SetModel(ent, ent->model);
+	if (ent->solid != SOLID_BSP)
 		Com_Printf("Error - func_door with no SOLID_BSP\n");
-	if (!self->model)
+	if (!ent->model)
 		Com_Printf("Error - func_rotating with no model\n");
 
 	/* the lower, the faster */
-	if (!self->speed)
-		self->speed = 50;
+	if (!ent->speed)
+		ent->speed = 50;
 
 	Com_DPrintf(DEBUG_GAME, "func_rotating: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
-		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2],
-		(int)self->origin[0], (int)self->origin[1], (int)self->origin[2]);
+			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
+			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
+			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 }
 
 /**
@@ -727,7 +778,7 @@ static void SP_func_rotating (edict_t *self)
  * "maxlevel"	max. level to use in the map
  * "maxteams"	max team amount for multiplayergames for the current map
  */
-static void SP_worldspawn (edict_t * ent)
+static void SP_worldspawn (edict_t *ent)
 {
 	ent->solid = SOLID_BSP;
 	/* since the world doesn't use G_Spawn() */

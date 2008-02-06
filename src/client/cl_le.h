@@ -171,6 +171,6 @@ void LE_AddToScene(void);
 
 trace_t CL_Trace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask);
 
-void CL_RegisterLocalModels(void);
+void LM_Register(void);
 
 #endif

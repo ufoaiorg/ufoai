@@ -226,6 +226,10 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 	Com_DPrintf(DEBUG_CLIENT, "Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
 }
 
+/**
+ * @note We have to use the char* cast here because the image_t and model_t
+ * have their names at the beginning of their structs
+ */
 void CL_ParticleRegisterArt (void)
 {
 	ptlArt_t *a;
@@ -235,9 +239,10 @@ void CL_ParticleRegisterArt (void)
 		/* register the art */
 		switch (a->type) {
 		case ART_PIC:
+			/* only one image */
 			if (*a->name != '+')
 				a->art = (char *) R_RegisterPic(a->name);
-			else
+			else /* load several frames */
 				a->art = (char *) R_RegisterPic(va("%s%c%c", a->name + 1, a->frame / 10 + '0', a->frame % 10 + '0'));
 			break;
 		case ART_MODEL:
@@ -253,6 +258,8 @@ void CL_ParticleRegisterArt (void)
  * @brief Register art (pics, models) for each particle
  * @note searches the global particle art list and checks whether the pic or model was already loaded
  * @return index of global art array
+ * @note We have to use the char* cast here because the image_t and model_t
+ * have their names at the beginning of their structs
  */
 static int CL_ParticleGetArt (const char *name, int frame, char type)
 {
@@ -273,9 +280,10 @@ static int CL_ParticleGetArt (const char *name, int frame, char type)
 	/* register new art */
 	switch (type) {
 	case ART_PIC:
+		/* only one image */
 		if (*name != '+')
 			a->art = (char *) R_RegisterPic(name);
-		else
+		else /* load several frames */
 			a->art = (char *) R_RegisterPic(va("%s%c%c", name + 1, frame / 10 + '0', frame % 10 + '0'));
 		break;
 	case ART_MODEL:

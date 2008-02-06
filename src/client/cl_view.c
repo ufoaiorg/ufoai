@@ -223,7 +223,7 @@ void CL_LoadMedia (void)
 	cls.loadingPercent += 10.0f;
 	SCR_UpdateScreen();
 
-	CL_RegisterLocalModels();
+	LM_Register();
 	CL_ParticleRegisterArt();
 
 	for (i = 1, max = 0; i < MAX_MODELS && cl.configstrings[CS_MODELS+i][0]; i++)
