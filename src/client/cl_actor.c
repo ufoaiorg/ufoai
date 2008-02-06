@@ -894,6 +894,7 @@ void CL_PopupFiremodeReservation_f (void)
 		return;
 
 	LIST_Delete(list);
+	list = NULL;
 
 	/* Get weapons from right hand and add text for its firemodes. */
 	CL_GetWeaponAndAmmo(selActor, 'r', &weapon, &ammo, &weap_fds_idx);
