@@ -114,6 +114,8 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	qglNewList(sphere->list, GL_COMPILE);
 	R_CheckError();
 
+	qglEnable(GL_NORMALIZE);
+
 	for (i = 0; i < tris; i++) {
 		qglBegin(GL_TRIANGLE_STRIP);
 
@@ -136,6 +138,8 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 		qglEnd();
 		R_CheckError();
 	}
+
+	qglDisable(GL_NORMALIZE);
 
 	sphere->num_tris = tris * tris;
 
