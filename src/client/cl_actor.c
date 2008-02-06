@@ -966,9 +966,12 @@ void CL_ReserveShot_f (void)
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
 		return;
 
-	CL_ReserveTUs(selActor, RES_SHOT, popupTUs[selectedPopupIndex]);
-	MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
-
+	
+	/* Check if we have enough TUs (again) */
+	if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= popupTUs[selectedPopupIndex]) {
+		CL_ReserveTUs(selActor, RES_SHOT, popupTUs[selectedPopupIndex]);
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
+	}
 }
 
 /**
