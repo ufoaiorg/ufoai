@@ -700,7 +700,7 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 		model = CM_InlineModel(*name);
 		if (!model || model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
+		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, vec3_origin, vec3_origin);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
@@ -739,7 +739,7 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 		model = CM_InlineModel(*name);
 		if (!model || model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
+		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, vec3_origin, vec3_origin);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
 			VectorCopy(start, end);
@@ -1988,7 +1988,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const v
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, const vec3_t angles)
+trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;

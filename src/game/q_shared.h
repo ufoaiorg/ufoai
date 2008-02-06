@@ -433,7 +433,6 @@ typedef struct cBspPlane_s {
 
 typedef struct cBspModel_s {
 	vec3_t mins, maxs;
-	vec3_t origin;				/**< for sounds or lights */
 	int tile;					/**< which tile in assembly */
 	int headnode;
 } cBspModel_t;

@@ -112,15 +112,15 @@ static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 	if (VectorLength(normal) < 0.5)
 		Sys_Error("FloatPlane: bad normal");
 	/* create a new plane */
-	if (nummapplanes+2 > MAX_MAP_PLANES)
-		Sys_Error("MAX_MAP_PLANES (%i)", nummapplanes+2);
+	if (nummapplanes + 2 > MAX_MAP_PLANES)
+		Sys_Error("MAX_MAP_PLANES (%i)", nummapplanes + 2);
 
 	p = &mapplanes[nummapplanes];
 	VectorCopy(normal, p->normal);
 	p->dist = dist;
-	p->type = (p + 1)->type = PlaneTypeForNormal (p->normal);
+	p->type = (p + 1)->type = PlaneTypeForNormal(p->normal);
 
-	VectorSubtract (vec3_origin, normal, (p + 1)->normal);
+	VectorSubtract(vec3_origin, normal, (p + 1)->normal);
 	(p + 1)->dist = -dist;
 
 	nummapplanes += 2;
@@ -189,11 +189,11 @@ int FindFloatPlane (vec3_t normal, vec_t dist)
 		h = (hash + i) & (PLANE_HASHES - 1);
 		for (p = planehash[h]; p; p = p->hash_chain) {
 			if (PlaneEqual(p, normal, dist))
-				return p-mapplanes;
+				return p - mapplanes;
 		}
 	}
 
-	return CreateNewFloatPlane (normal, dist);
+	return CreateNewFloatPlane(normal, dist);
 }
 
 static int PlaneFromPoints (int *p0, int *p1, int *p2)
