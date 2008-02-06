@@ -425,6 +425,8 @@ menu popup_list
 		size	"446 96"
 //		bgcolor	"1 1 1 0.5"
 		height	6
+		wheel
+		scrollbar true
 	}
 	pic bt_ok
 	{
