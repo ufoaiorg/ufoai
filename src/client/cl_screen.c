@@ -257,7 +257,7 @@ static void SCR_DrawCursor (void)
 		else {
 			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 			if (cl_showCoords->integer)
-				SCR_DrawString(mousePosX, mousePosY, va("%i:%i", mousePosX, mousePosY), qtrue);
+				SCR_DrawString(mousePosX * viddef.rx, mousePosY * viddef.rx, va("%i:%i", mousePosX, mousePosY), qtrue);
 		}
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
