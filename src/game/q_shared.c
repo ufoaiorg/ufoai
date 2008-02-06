@@ -69,7 +69,8 @@ const char *pa_format[] =
 	"gbbl",				/**< PA_SHOOT */
 	"s",					/**< PA_USE_DOOR */
 	"bbbbbb",			/**< PA_INVMOVE */
-	"lll"				/**< PA_REACT_SELECT */
+	"sss",				/**< PA_REACT_SELECT */
+	"sss"				/**< PA_RESERVE_STATE */
 };
 
 /*===========================================================================*/

@@ -1131,6 +1131,17 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, e->chr.reactionFiremode[RF_FM]);
 			MSG_WriteShort(sb, e->chr.reactionFiremode[RF_WPIDX]);
 
+			/* Store reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
+			MSG_WriteShort(sb, e->chr.reservedTus.reserveReaction);
+			MSG_WriteShort(sb, e->chr.reservedTus.reaction);
+			MSG_WriteShort(sb, e->chr.reservedTus.reserveCrouch);
+			MSG_WriteShort(sb, e->chr.reservedTus.crouch);
+			/**@todo Write dummy values to not break savegames later on when adding new types of reservations.*/
+			MSG_WriteShort(sb, -1);
+			MSG_WriteShort(sb, -1);
+			MSG_WriteShort(sb, -1);
+			MSG_WriteShort(sb, -1);
+
 			MSG_WriteShort(sb, e->chr.assigned_missions);
 
 			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
@@ -1206,6 +1217,19 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				e->chr.reactionFiremode[RF_HAND] = MSG_ReadShort(sb);
 				e->chr.reactionFiremode[RF_FM] = MSG_ReadShort(sb);
 				e->chr.reactionFiremode[RF_WPIDX] = MSG_ReadShort(sb);
+#if 0
+/**@todo un-"if 0" me */
+				/* Read reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
+				e->chr.reservedTus.reserveReaction = MSG_ReadShort(sb);
+				e->chr.reservedTus.reaction = MSG_ReadShort(sb);
+				e->chr.reservedTus.reserveCrouch = MSG_ReadShort(sb);
+				e->chr.reservedTus.crouch = MSG_ReadShort(sb);
+				/** Read dummy values */
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+#endif
 			}
 
 			e->chr.assigned_missions = MSG_ReadShort(sb);

@@ -615,6 +615,18 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 			/* Rewrite/-send selected reaction firemode in case reserved-TUs or server is outdated. */
 			chr = CL_GetActorChr(cl.teamList[actor_idx]);
 			CL_SetReactionFiremode(cl.teamList[actor_idx], chr->reactionFiremode[RF_HAND], chr->reactionFiremode[RF_WPIDX], chr->reactionFiremode[RF_FM]);
+
+			/* Reserve Tus for crouching/standing up if player selected this previously. */
+			if (chr->reservedTus.reserveCrouch) {
+				/** @sa CL_ActorToggleCrouchReservation_f */
+				/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
+				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
+					CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
+					Cbuf_AddText("crouch_checkbox_check\n");
+				} else {
+					Cbuf_AddText("crouch_checkbox_disable\n");
+				}
+			}
 		} else {
 			CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
 		}

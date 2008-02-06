@@ -508,10 +508,14 @@ typedef enum {
  * @sa CL_ReservedTUs
  * @sa CL_ReserveTUs
  * @todo Would a list be better here? See the enum reservation_types_t
+ * @note The "reserveCrouch" is no qboolean to keep all types the same (@sa PA_RESERVE_STATE functions).
  */
 typedef struct {
+	int reserveReaction; /** Stores if the player has activated or disabled reservation for RF. states can be 0, STATE_REACTION_ONCE or STATE_REACTION_MANY See also le_t->state. This is only for remembering over missions. @sa: g_client:G_ClientSpawn*/
 	int reaction;	/**< Did the player activate RF with a usable firemode? (And at the same time storing the TU-costs of this firemode) */
-	int crouch;	/**< Did the player reserve TUs for crouching (or stanbding up)? Depends exclusively on TU_CROUCH.
+
+	int reserveCrouch; /** Stores if the player has activated or disabled reservation for crouching/standing up. @sa cl_parse:CL_StartingGameDone */
+	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH.
 			 * @sa cl_actor:CL_ActorStandCrouch_f
 			 * @sa cl_parse:CL_ActorStateChange
 			 */

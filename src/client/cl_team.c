@@ -316,7 +316,11 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	else if (strstr(team, "alien"))
 		teamValue = TEAM_ALIEN;
 
-	/* Generate character stats, moels & names. */
+	/* Set default reaction-mode for all character-types to "once". */
+	/** @todo Set aliens to "multi"? */
+	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
+
+	/* Generate character stats, models & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
 		chr->rank = CL_GetRank("rifleman");

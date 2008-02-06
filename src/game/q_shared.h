@@ -590,7 +590,8 @@ typedef enum {
 	PA_SHOOT,
 	PA_USE_DOOR,
 	PA_INVMOVE,
-	PA_REACT_SELECT
+	PA_REACT_SELECT,
+	PA_RESERVE_STATE
 } player_action_t;
 
 extern const char *pa_format[128];

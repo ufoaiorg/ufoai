@@ -570,7 +570,7 @@ void CL_ListReactionAndReservations_f (void)
 
 /**
  * @brief Checks if the currently selected firemode in reactionFiremode is useable with the defined weapon.
- * @param[in] actor The actor to check the firemdoe for.
+ * @param[in] actor The actor to check the firemode for.
  * @return qtrue if nothing has to be done.
  * @return qfalse if settings are outdated.
  */
@@ -615,61 +615,6 @@ qboolean CL_WorkingReactionFiremode (const le_t * actor)
 
 	/* Return "settings unusable" */
 	return qfalse;
-}
-
-/**
- * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
- * @param[in] actor The actor to update the firemdoe for.
- * @param[in] handidx Index of hand with item, which will be used for reactionfiR_ Possible hand indices: 0=right, 1=right, -1=undef
- * @param[in] fd_idx Index of firedefinition for an item in given hand.
- */
-void CL_SetReactionFiremode (le_t * actor, const int handidx, const int obj_idx, const int fd_idx)
-{
-	character_t * chr = NULL;
-
-	if (cls.team != cl.actTeam) {	/**< Not our turn */
-		/* This check is just here (additional to the one in CL_DisplayFiremodes_f) in case a possible situation was missed. */
-		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Function called on enemy/other turn.\n");
-		return;
-	}
-
-	if (!actor) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: No actor fiven! Abort.\n");
-		return;
-	}
-
-	if (handidx < -1 || handidx > 1) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Bad hand index given. Abort.\n");
-		return;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n",  CL_GetActorNumber(actor), actor->entnum, handidx, fd_idx);
-
-	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
-	if ((obj_idx >= 0) && (fd_idx >= 0)) {
-		objDef_t *ammo = NULL;
-		fireDef_t *fd = NULL;
-		int weap_fds_idx = -1;
-
-		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-		CL_GetWeaponAndAmmo(actor, handidx==1?'l':'r', NULL, &ammo, &weap_fds_idx);
-
-		/* Get The firedefinition of the selected firemode */
-		fd = &ammo->fd[weap_fds_idx][fd_idx];
-
-		/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
-		if (fd) {
-			CL_ReserveTUs(actor, RES_REACTION, fd->time);
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: no firedef found! No TUs will be reserved.\n");
-		}
-	}
-
-	chr = CL_GetActorChr(actor);
-	chr->reactionFiremode[RF_HAND] = handidx;	/* Store the given hand. */
-	chr->reactionFiremode[RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
-	chr->reactionFiremode[RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
-	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fd_idx, obj_idx); /* Send reactionFiremode[] to server-side storage as well. See g_local.h for more. */
 }
 
 /**
@@ -802,9 +747,75 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 }
 
 /**
+ * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
+ * @param[in] actor The actor to update the firemode for.
+ * @param[in] handidx Index of hand with item, which will be used for reactionfiR_ Possible hand indices: 0=right, 1=right, -1=undef
+ * @param[in] fd_idx Index of firedefinition for an item in given hand.
+ */
+void CL_SetReactionFiremode (le_t * actor, const int handidx, const int obj_idx, const int fd_idx)
+{
+	character_t * chr = NULL;
+
+	if (cls.team != cl.actTeam) {	/**< Not our turn */
+		/* This check is just here (additional to the one in CL_DisplayFiremodes_f) in case a possible situation was missed. */
+		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Function called on enemy/other turn.\n");
+		return;
+	}
+
+	if (!actor) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: No actor given! Abort.\n");
+		return;
+	}
+
+	if (handidx < -1 || handidx > 1) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Bad hand index given. Abort.\n");
+		return;
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n",  CL_GetActorNumber(actor), actor->entnum, handidx, fd_idx);
+
+	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
+	if ((obj_idx >= 0) && (fd_idx >= 0)) {
+		objDef_t *ammo = NULL;
+		fireDef_t *fd = NULL;
+		int weap_fds_idx = -1;
+
+		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
+		CL_GetWeaponAndAmmo(actor, handidx==1?'l':'r', NULL, &ammo, &weap_fds_idx);
+
+		/* Get The firedefinition of the selected firemode */
+		fd = &ammo->fd[weap_fds_idx][fd_idx];
+
+		/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
+		if (fd) {
+			if (actor->state & STATE_REACTION_MANY) {
+				/** Reserve as many shots as possible for RF.
+				 * @todo This is not supposed to be a final solution.
+				 * I'm open for (sane) suggestions to improve this. See also my comment here
+				 * https://sourceforge.net/tracker/?func=detail&atid=805242&aid=1789282&group_id=157793
+				 * for some other ways to implements it.
+				 * Let's see how players like this way for now though ;) */
+				CL_ReserveTUs(actor, RES_REACTION, fd->time * (CL_UsableReactionTUs(actor) / fd->time));
+			} else {
+				CL_ReserveTUs(actor, RES_REACTION, fd->time);
+			}
+		} else {
+			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: no firedef found! No TUs will be reserved.\n");
+		}
+	}
+
+	chr = CL_GetActorChr(actor);
+	chr->reactionFiremode[RF_HAND] = handidx;	/* Store the given hand. */
+	chr->reactionFiremode[RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
+	chr->reactionFiremode[RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
+	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fd_idx, obj_idx); /* Send reactionFiremode[] to server-side storage as well. See g_local.h for more. */
+	MSG_Write_PA(PA_RESERVE_STATE, actor->entnum, RES_REACTION, chr->reservedTus.reserveReaction, chr->reservedTus.reaction); /* Update server-side settings */
+}
+
+/**
  * @brief Sets the display for a single weapon/reload HUD button.
  * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
- * @param[in] hand Which list to display: 'l' for left hand list, 'r' for right hand list.
+ * @param[in] hand What list to display: 'l' for left hand list, 'r' for right hand list.
  * @param[in] status Display the firemode clickable/active (1) or inactive (0).
  */
 static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, const qboolean status)
@@ -1137,7 +1148,6 @@ void CL_SetDefaultReactionFiremode (le_t * actor, const char hand)
 void CL_DisplayFiremodes_f (void)
 {
 	int actor_idx;
-	character_t *chr = NULL;
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	int weap_fds_idx = -1;
@@ -1207,14 +1217,16 @@ void CL_DisplayFiremodes_f (void)
 	if (actor_idx == -1)
 		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
-	chr = CL_GetActorChr(selActor);
+	selChr = CL_GetActorChr(selActor);
+	assert(selChr);
+
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!CL_WorkingReactionFiremode(selActor)) {	/* No usable firemode selected. */
 		/* Make sure we use the same hand if it's defined */
-		if (chr->reactionFiremode[RF_HAND] != 1) { /* No the left hand defined */
+		if (selChr->reactionFiremode[RF_HAND] != 1) { /* No the left hand defined */
 			/* Set default firemode (try right hand first, then left hand). */
 			CL_SetDefaultReactionFiremode(selActor, 'r');
-		} else  if (chr->reactionFiremode[RF_HAND] == 1) {
+		} else  if (selChr->reactionFiremode[RF_HAND] == 1) {
 			/* Set default firemode (try left hand first, then right hand). */
 			CL_SetDefaultReactionFiremode(selActor, 'l');
 		}
@@ -1233,7 +1245,7 @@ void CL_DisplayFiremodes_f (void)
 			if (ammo->fd[weap_fds_idx][i].reaction) {
 				Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
 				if (hand[0] == 'r') {
-					if (THIS_REACTION(chr,0,i)) {
+					if (THIS_REACTION(selChr, 0, i)) {
 						/* Set this checkbox visible+active. */
 						Cbuf_AddText(va("set_right_cb_a%i\n", i));
 					} else {
@@ -1241,7 +1253,7 @@ void CL_DisplayFiremodes_f (void)
 						Cbuf_AddText(va("set_right_cb_ina%i\n", i));
 					}
 				} else { /* hand[0] == 'l' */
-					if (THIS_REACTION(chr,1,i)) {
+					if (THIS_REACTION(selChr, 1, i)) {
 						/* Set this checkbox visible+active. */
 						Cbuf_AddText(va("set_left_cb_a%i\n", i));
 					} else {
@@ -2107,6 +2119,7 @@ qboolean CL_ActorSelect (le_t * le)
 
 	selChr = CL_GetActorChr(le);
 	assert(selChr);
+
 	if (selChr->inv) {
 		switch (le->fieldSize) {
 		case ACTOR_SIZE_NORMAL:
@@ -2920,24 +2933,35 @@ void CL_ActorUseHeadgear_f (void)
 }
 /**
  * @brief Toggles if the current actor reserves Tus for crouching (e.g. at end of moving) or not.
+ * @sa CL_StartingGameDone
+ * @todo Send the reserveCrouch state to the server!
  */
 void CL_ActorToggleCrouchReservation_f (void)
 {
 	if (!CL_CheckAction())
 		return;
 
-	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
+	selChr = CL_GetActorChr(selActor);
+	assert(selChr);
+
+	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH
+	||  selChr->reservedTus.reserveCrouch) {
 		/* Reset reserved TUs to 0 */
 		CL_ReserveTUs(selActor, RES_CROUCH, 0);
+		selChr->reservedTus.reserveCrouch = qfalse;
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_CROUCH, selChr->reservedTus.reserveCrouch, selChr->reservedTus.crouch); /* Update server-side settings */
 		Cbuf_AddText("crouch_checkbox_clear\n");
 	} else {
 		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
-		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
+		if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
 			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
 			Cbuf_AddText("crouch_checkbox_check\n");
 		} else {
 			Cbuf_AddText("crouch_checkbox_disable\n");
 		}
+		/* Player wants to reserve Tus for crouching - remember this. */
+		selChr->reservedTus.reserveCrouch = qtrue;
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_CROUCH, selChr->reservedTus.reserveCrouch, selChr->reservedTus.crouch); /* Update server-side settings */
 	}
 }
 
@@ -2952,12 +2976,12 @@ void CL_ActorToggleCrouchReservation_f (void)
 void CL_ActorToggleReaction_f (void)
 {
 	int state = 0;
-	character_t *chr = NULL;
 
 	if (!CL_CheckAction())
 		return;
 
-	chr = CL_GetActorChr(selActor);
+	selChr = CL_GetActorChr(selActor);
+	assert(selChr);
 
 	selActorReactionState++;
 	if (selActorReactionState > R_FIRE_MANY)
@@ -2970,6 +2994,7 @@ void CL_ActorToggleReaction_f (void)
 		switch (selActorReactionState) {
 		case R_FIRE_OFF:
 			state = ~STATE_REACTION;
+
 			break;
 		case R_FIRE_ONCE:
 			state = STATE_REACTION_ONCE;
@@ -2995,6 +3020,7 @@ void CL_ActorToggleReaction_f (void)
 
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, state, selChr->reservedTus.reaction); /* Update server-side settings */
 	} else {
 		/* No usable RF weapon. */
 		switch (selActorReactionState) {
@@ -3017,7 +3043,7 @@ void CL_ActorToggleReaction_f (void)
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 
 		/* Set RF-mode info to undef. */
-		CL_SetReactionFiremode(selActor, -1, NONE, -1);
+		CL_SetReactionFiremode(selActor, -1, NONE, -1); /* Includes PA_RESERVE_STATE */
 	}
 }
 

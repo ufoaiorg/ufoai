@@ -2068,6 +2068,7 @@ int G_ClientAction (player_t * player)
 	int firemode;
 	int from, fx, fy, to, tx, ty;
 	int hand, fd_idx, obj_idx;
+	int resType, resState, resValue;
 	edict_t * ent = NULL;
 
 	/* read the header */
@@ -2120,6 +2121,36 @@ int G_ClientAction (player_t * player)
 			ent->chr.reactionFiremode[RF_HAND] = hand;
 			ent->chr.reactionFiremode[RF_FM] = fd_idx;
 			ent->chr.reactionFiremode[RF_WPIDX] = obj_idx;
+		}
+		break;
+
+	case PA_RESERVE_STATE:
+		resType = -1;
+		resState = -1;
+		resValue = -1;
+
+		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resType, &resState, &resValue);
+
+		if (resState < 0 || resValue < 0) {
+			gi.error("G_ClientAction: No sane value received for resState and/or resValue!\n");
+			break;
+		}
+
+		ent = g_edicts + num;
+		if (ent) {
+			switch (resType) {
+			case RES_REACTION:
+				ent->chr.reservedTus.reserveReaction = resState;
+				ent->chr.reservedTus.reaction = resValue;
+				break;
+			case RES_CROUCH:
+				ent->chr.reservedTus.reserveCrouch = resState;
+				ent->chr.reservedTus.crouch = resValue;
+				break;
+			default:
+				gi.error("G_ClientAction: Unknown reservation type!\n");
+				break;
+			}
 		}
 		break;
 
@@ -2840,11 +2871,13 @@ qboolean G_ClientSpawn (player_t * player)
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 
-	/* Set initial state to reaction fire activated (ONCE) for all teams. */
-	/* This (and the second loop below) defines the default reaction-mode */
+	/* Set initial state of reaction fire to previously stored state for all teams. */
+	/* This (and the second loop below) defines the default reaction-mode. */
+	/** @sa cl_team:CL_GenerateCharacter for the initial default value. */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2))
-			G_ClientStateChange(player, i, STATE_REACTION_ONCE, qfalse);
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+			G_ClientStateChange(player, i, ent->chr.reservedTus.reserveReaction, qfalse);
+		}
 
 	/* submit stats */
 	G_SendPlayerStats(player);
