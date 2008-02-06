@@ -233,7 +233,8 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 				}
 
 			/* node property setting */
-			if (**token == '*') {
+			switch (**token) {
+			case '*':
 /*				Com_Printf("   %s", *token); */
 
 				/* add the action */
@@ -291,6 +292,10 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 				lastAction = action;
 				found = qtrue;
+				break;
+			case '&':
+				action->type = EA_VAR;
+				break;
 			}
 
 			/* function calls */

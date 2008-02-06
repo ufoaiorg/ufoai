@@ -34,7 +34,7 @@ typedef enum ea_s {
 
 	EA_CALL,
 	EA_NODE,
-	EA_VAR,
+	EA_VAR,	/**< @todo finishe menu var implementation - to reduce the cvar use */
 
 	EA_NUM_EVENTACTION
 } ea_t;
@@ -76,5 +76,6 @@ qboolean MN_FocusNextActionNode(void);
 qboolean MN_FocusExecuteActionNode(void);
 void MN_FocusRemove(void);
 
+menuAction_t *MN_SetMenuAction(menuAction_t** action, int type, const void *data);
 
 #endif

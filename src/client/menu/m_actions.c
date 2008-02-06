@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../game/q_shared.h"
+#include "../client.h"
 #include "../cl_input.h"
 #include "m_main.h"
 
@@ -49,6 +50,8 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 		case EA_CALL:
 			/* call another function */
 			MN_ExecuteActions(menu, **(menuAction_t ***) action->data);
+			break;
+		case EA_VAR:
 			break;
 		case EA_NODE:
 			/* set a property */
@@ -226,3 +229,28 @@ qboolean MN_FocusNextActionNode (void)
 	return qfalse;
 }
 
+/**
+ * @brief Set a new action to a node->menuAction_t pointer
+ * @param[in] type EA_CMD
+ * @param[in] data The data for this action - in case of EA_CMD this is the commandline
+ * @note You first have to free existing node actions - only free those that are 
+ * not static in mn.menuActions array
+ */
+menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *data)
+{
+	menuAction_t *newAction;
+
+	if (*action)
+		Sys_Error("There is already an action assigned\n");
+	newAction = (menuAction_t *)Mem_PoolAlloc(sizeof(menuAction_t), cl_menuSysPool, CL_TAG_MENU);
+	newAction->type = type;
+	switch (type) {
+	case EA_CMD:
+		newAction->data = Mem_PoolStrDup((const char *)data, cl_menuSysPool, CL_TAG_MENU);;
+		break;
+	default:
+		Sys_Error("Action type %i is not yet implemented", type);
+	}
+
+	return newAction;
+}

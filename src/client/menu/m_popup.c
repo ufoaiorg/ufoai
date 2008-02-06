@@ -26,6 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_popup.h"
 
+#define POPUPLIST_MENU_NAME "popup_list"
+#define POPUPLIST_NODE_NAME "popup_list"
+#define POPUP_MENU_NAME "popup"
+
 char popupText[MAX_SMALLMENUTEXTLEN];
 
 /**
@@ -39,5 +43,45 @@ void MN_Popup (const char *title, const char *text)
 	mn.menuText[TEXT_POPUP_INFO] = text;
 	if (ccs.singleplayer)
 		CL_GameTimeStop();
-	MN_PushMenu("popup");
+	MN_PushMenu(POPUP_MENU_NAME);
+}
+
+void MN_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
+{
+	menu_t* popupListMenu;
+	menuNode_t* listNode;
+
+	mn.menuText[TEXT_POPUP] = title;
+	mn.menuText[TEXT_POPUP_INFO] = headline;
+	
+	/* make sure, that we are using the linked list */
+	MN_MenuTextReset(TEXT_LIST);
+	mn.menuTextLinkedList[TEXT_LIST] = entries;
+	if (ccs.singleplayer)
+		CL_GameTimeStop();
+	
+	popupListMenu = MN_GetMenu(POPUPLIST_MENU_NAME);
+	if (!popupListMenu)
+		Sys_Error("Could not get "POPUPLIST_MENU_NAME" menu");
+	listNode = MN_GetNode(popupListMenu, POPUPLIST_NODE_NAME);
+	if (!listNode)
+		Sys_Error("Could not get "POPUPLIST_NODE_NAME" node in "POPUPLIST_MENU_NAME" menu");
+
+	/* free previous actions */
+	if (listNode->click) {
+		assert(listNode->click->data);
+		Mem_Free(listNode->click->data);
+		Mem_Free(listNode->click);
+		listNode->click = NULL;
+	}
+	
+	if (clickAction) {
+		listNode->mousefx = qtrue;
+		listNode->click = MN_SetMenuAction(&listNode->click, EA_CMD, clickAction);
+	} else {
+		listNode->mousefx = qfalse;
+		listNode->click = NULL;
+	}
+
+	MN_PushMenu(popupListMenu->name);
 }

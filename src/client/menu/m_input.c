@@ -178,6 +178,10 @@ static void MN_TextClick (menuNode_t * node, int mouseOver)
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
 	if (Cmd_Exists(cmd))
 		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
+	else if (node->click && node->click->type == EA_CMD) {
+		assert(node->click->data);
+		Cbuf_AddText(va("%s %i\n", (char*)node->click->data, mouseOver - 1));
+	}
 }
 
 /**
