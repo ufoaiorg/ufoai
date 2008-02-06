@@ -602,6 +602,8 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 		Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
 		Q_strncpyz(ms->civTeam, "europa", sizeof(ms->civTeam));
 	}
+	/* this string is already in the po (OTHER_STRINGS) file
+	 * don't mark it with gettext markers */
 	ms->missionText = "Crashed Alien Ship. Secure the area.";
 
 	/* FIXME */
@@ -651,6 +653,8 @@ qboolean CP_SpawnBaseAttackMission (base_t* base, mission_t* ms, setState_t *cau
 	Com_sprintf(ms->location, sizeof(ms->location), base->name);
 	Q_strncpyz(ms->civTeam, "human_scientist", sizeof(ms->civTeam));
 	Q_strncpyz(ms->type, _("Base attack"), sizeof(ms->type));
+	/* this string is already in the po (OTHER_STRINGS) file
+	 * don't mark it with gettext markers */
 	ms->missionText = "Base is under attack.";
 	/* FIXME */
 	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
