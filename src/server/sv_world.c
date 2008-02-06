@@ -85,6 +85,7 @@ static void InsertLinkBefore (link_t * l, link_t * before)
 /**
  * @brief Builds a uniformly subdivided tree for the given world size
  * @sa SV_ClearWorld
+ * @sa SV_LinkEdict
  */
 static areanode_t *SV_CreateAreaNode (int depth, vec3_t mins, vec3_t maxs)
 {
@@ -99,7 +100,7 @@ static areanode_t *SV_CreateAreaNode (int depth, vec3_t mins, vec3_t maxs)
 	ClearLink(&anode->solid_edicts);
 
 	if (depth == AREA_DEPTH) {
-		anode->axis = -1; /* leaf */
+		anode->axis = -1; /* end of tree */
 		anode->children[0] = anode->children[1] = NULL;
 		return anode;
 	}
@@ -153,6 +154,7 @@ void SV_UnlinkEdict (edict_t * ent)
 /**
  * @brief Needs to be called any time an entity changes origin, mins, maxs,
  * or solid. Automatically unlinks if needed. Sets ent->absmin and ent->absmax
+ * @sa SV_CreateAreaNode
  */
 void SV_LinkEdict (edict_t * ent)
 {
@@ -201,6 +203,7 @@ void SV_LinkEdict (edict_t * ent)
 	/* find the first node that the ent's box crosses */
 	node = sv_areanodes;
 	while (1) {
+		/* end of tree */
 		if (node->axis == -1)
 			break;
 		if (ent->absmin[node->axis] > node->dist)
@@ -266,7 +269,7 @@ static void SV_AreaEdicts_r (areanode_t * node, int area_type)
 	}
 
 	if (node->axis == -1)
-		return;					/* terminal node */
+		return;					/* terminal node - end of tree */
 
 	/* recurse down both sides */
 	if (area_maxs[node->axis] > node->dist)
