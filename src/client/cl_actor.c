@@ -2935,6 +2935,11 @@ void CL_ActorTurnMouse (void)
 	if (!CL_CheckAction())
 		return;
 
+	if (CL_UsableTUs(selActor) < TU_TURN) {
+		/* Cannot turn because of not enough usable TUs. */
+		return;	
+	}
+	
 	/* check for fire-modes, and cancel them */
 	switch (cl.cmode) {
 	case M_FIRE_R:
