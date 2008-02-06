@@ -1712,6 +1712,8 @@ void IN_Init (void)
 	Cmd_AddCommand("switch_firemode_list", CL_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
 	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
+	Cmd_AddCommand("sel_shotreservation", CL_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
+	Cmd_AddCommand("reserve_shot", CL_ReserveShot_f, "Reserve The TUs for the selected entry in the popup.");
 
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
 	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));

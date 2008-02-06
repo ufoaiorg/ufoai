@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "../renderer/r_mesh_anim.h"
 #include "menu/m_inventory.h"
+#include "menu/m_popup.h"
 
 /* public */
 le_t *selActor;
@@ -77,6 +78,10 @@ static const char *shoot_type_strings[BT_NUM_TYPES] = {
 	"crouch\n",
 	"headgear\n"
 };
+
+/* Reservation-popup info */
+static int popupNum;
+static int popupTUs[2*MAX_FIREDEFS_PER_WEAPON+1];	/** Space for two times the firedefinitions of a weapon (one in each hand) + one place for the "none" setting. */
 
 /**
  * @brief Defines the various states of a button.
@@ -644,28 +649,25 @@ int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 	case RES_ALL:
 		/* A summary of ALL TUs that are reserved. */
 		return	  max(0,chr->reservedTus.reaction)
-			+ max(0, chr->reservedTus.crouch);
+			+ max(0, chr->reservedTus.crouch)
+			+ max(0, chr->reservedTus.shot);
 	case RES_ALL_ACTIVE:
 		/* A summary of ALL TUs that are reserved depending on their "status". */
 		/* Only use reaction-value if we are have RF activated. */
 		return (
-			((le->state & STATE_REACTION)
+			((le->state & STATE_REACTION)	/** @todo reserveReaction is not yet correct on the client side - at least not tested. */
 				? max(0,chr->reservedTus.reaction)
 				: 0)
-			+ max(0, chr->reservedTus.crouch));
-/* For future additions:
-		return le->TU -
-			(
-			((le->state & STATE_REACTION) ? max(0, chr->reservedTus.reaction) : 0)
-			+ max(0, chr->reservedTus.crouch)
-			+ max(0, chr->reservedTus.thisTurn)
-			+ max(0, chr->reservedTus.thisTurnManually)
-			);
-*/
+			+ ((selChr->reservedTus.reserveCrouch)
+				? max(0, chr->reservedTus.crouch)
+				: 0)
+			+ max(0,chr->reservedTus.shot));	/*+ ((chr->reservedTus.shotreserveShot) */
 	case RES_REACTION:
 		return max(0, chr->reservedTus.reaction);
 	case RES_CROUCH:
 		return max(0, chr->reservedTus.crouch);
+	case RES_SHOT:
+		return max(0, chr->reservedTus.shot);
 	default:
 		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: Bad type given: %i\n", type);
 		return -1;
@@ -739,6 +741,9 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 		return;
 	case RES_CROUCH:
 		chr->reservedTus.crouch = tus;
+		return;
+	case RES_SHOT:
+		chr->reservedTus.shot = tus;
 		return;
 	default:
 		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Bad type given: %i\n", type);
@@ -872,6 +877,106 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 }
 
 /**
+ * @brief Creates a (text) list of all firemodes of the currently selected actor.
+ * @note console command: cl_input.c:sel_shotreservation
+ */
+void CL_PopupFiremodeReservation_f (void)
+{
+	objDef_t *ammo = NULL;
+	objDef_t *weapon = NULL;
+	int weap_fds_idx = -1;
+	int i;
+	char text[MAX_VAR];
+
+	static linkedList_t* list = NULL;
+
+	if (!selActor)
+		return;
+
+	LIST_Delete(list);
+
+	/* Get weapons from right hand and add text for its firemodes. */
+	CL_GetWeaponAndAmmo(selActor, 'r', &weapon, &ammo, &weap_fds_idx);
+
+	popupNum = 0;
+
+	LIST_AddPointer(&list, _("No reservation [TU:0]"));
+	popupTUs[popupNum] = 0;
+	popupNum++;
+
+	if (weapon && ammo) {
+		for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
+			if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weap_fds_idx][i].time) {
+				/** Get weapon name, firemode name and TUs. */
+				Com_sprintf(text, sizeof(text),
+					_("%s - %s [TU:%i]"),
+					weapon->name,
+					ammo->fd[weap_fds_idx][i].name,
+					ammo->fd[weap_fds_idx][i].time);
+
+				LIST_AddString(&list, text);
+				popupTUs[popupNum] = ammo->fd[weap_fds_idx][i].time;
+				popupNum++;
+			}
+		}
+	}
+
+	/* Get weapons from left hand and add text for its firemodes. */
+	ammo = NULL;
+	weapon = NULL;
+	weap_fds_idx = -1;
+	CL_GetWeaponAndAmmo(selActor, 'l', &weapon, &ammo, &weap_fds_idx);
+
+	if (weapon && ammo) {
+		for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
+			if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weap_fds_idx][i].time) {
+				/** Get weapon name, firemode name and TUs. */
+				Com_sprintf(text, sizeof(text),
+					_("%s - %s [TU:%i]"),
+					weapon->name,
+					ammo->fd[weap_fds_idx][i].name,
+					ammo->fd[weap_fds_idx][i].time);
+
+				LIST_AddString(&list, text);
+				popupTUs[popupNum] = ammo->fd[weap_fds_idx][i].time;
+				popupNum++;
+			}
+		}
+	}
+
+	MN_PopupList(_("Reserve Time for Shot/Action"), _("Reserve Time for Shot/Action"), list, "reserve_shot");
+}
+
+/**
+ * @brief Creates a (text) list of all firemodes of the currently selected actor.
+ * @note console command: cl_input.c:reserve_shot
+ */
+void CL_ReserveShot_f (void)
+{
+	int selectedPopupIndex;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <popupindex>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!selActor)
+		return;
+
+	selChr = CL_GetActorChr(selActor);
+	assert(selChr);
+
+	/* read and range check */
+	selectedPopupIndex = atoi(Cmd_Argv(1));
+	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
+		return;
+
+	CL_ReserveTUs(selActor, RES_SHOT, popupTUs[selectedPopupIndex]);
+	MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
+
+}
+
+/**
  * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
  * @param[in] actor What actor to check.
  * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
@@ -914,10 +1019,9 @@ static void CL_DisplayPossibleReaction (const le_t * actor)
 		return;
 
 	if (actor != selActor) {
-		/* Given actor does not equal the currently selectd actor. This normally only happens on game-start. */
+		/* Given actor does not equal the currently selected actor. This normally only happens on game-start. */
 		return;
 	}
-
 
 	/* Display 'usable" (blue) reaction buttons
 	 * Code also used in CL_ActorToggleReaction_f */
@@ -1443,6 +1547,18 @@ static void CL_RefreshWeaponButtons (int time)
 	} else {
 		Cbuf_AddText("crouch_checkbox_disable\n");
 	}
+
+/**
+@todo Handle RES_SHOT vs. button stuff here.
+	selChr = CL_GetActorChr(selActor);
+	assert(selChr);
+
+	if (selChr->reservedTus.shot > 0) {	** todo selChr->reservedTus.reserveShot
+
+	} else {
+
+	}
+*/
 
 	/* headgear button (nearly the same code as for weapon firing buttons below). */
 	/** @todo Make a generic function out of this? */
@@ -3020,7 +3136,8 @@ void CL_ActorToggleReaction_f (void)
 
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
-		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, state, selChr->reservedTus.reaction); /* Update server-side settings */
+		selChr->reservedTus.reserveReaction = state;
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, selChr->reservedTus.reserveReaction, selChr->reservedTus.reaction); /* Update server-side settings */
 	} else {
 		/* No usable RF weapon. */
 		switch (selActorReactionState) {
@@ -3041,6 +3158,8 @@ void CL_ActorToggleReaction_f (void)
 
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
+
+		selChr->reservedTus.reserveReaction = state;
 
 		/* Set RF-mode info to undef. */
 		CL_SetReactionFiremode(selActor, -1, NONE, -1); /* Includes PA_RESERVE_STATE */
@@ -3609,13 +3728,19 @@ void CL_DoEndRound (struct dbuffer *msg)
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
-		/* Check for unusable RF setting - just in case*/
 		for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-			if (cl.teamList[actor_idx]
-			&& !CL_WorkingReactionFiremode(cl.teamList[actor_idx])) {
-				Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actor_idx);
-				/* At this point the rest of the code forgot to update RF-settings somewhere. */
-				CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
+			if (cl.teamList[actor_idx]) {
+				/* Check for unusable RF setting - just in case. */
+				if (!CL_WorkingReactionFiremode(cl.teamList[actor_idx])) {
+					Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actor_idx);
+					/* At this point the rest of the code forgot to update RF-settings somewhere. */
+					CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
+				}
+
+				/** @todo Reset reservations for shots?
+				CL_ReserveTUs(cl.teamList[actor_idx], RES_SHOT, 0);
+				MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); * Update server-side settings *
+				*/
 			}
 		}
 	}

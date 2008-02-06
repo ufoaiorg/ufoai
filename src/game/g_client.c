@@ -2147,6 +2147,10 @@ int G_ClientAction (player_t * player)
 				ent->chr.reservedTus.reserveCrouch = resState;
 				ent->chr.reservedTus.crouch = resValue;
 				break;
+			case RES_SHOT:
+				/* resState is ignored here right now */
+				ent->chr.reservedTus.shot = resValue;
+				break;
 			default:
 				gi.error("G_ClientAction: Unknown reservation type!\n");
 				break;

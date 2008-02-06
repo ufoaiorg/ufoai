@@ -519,13 +519,25 @@ typedef struct {
 			 * @sa cl_actor:CL_ActorStandCrouch_f
 			 * @sa cl_parse:CL_ActorStateChange
 			 */
-/*	int thisTurn;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to create a popup where one can add one or several actions (firemodes are most important) to this value. */
-/*	int thisTurnManually;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to provide a numerical input-field. */
+	/**
+	@todo These two would bring up the same problems (of remembering&updating the correct information)
+	as we have with character_t->reactionFiremode right now :-/
+	We would need to update this whenever the weapon(s) in hand change - same as reactionFiremode.
+	int reserveShotFM;		*< The firemode of the weapon to reserve the TUs for.
+	int reserveShotHand;	*< The hand the weapon is in.
+	*/
+	int shot;	/**< If non-zero we reserved a shot in this turn. Will be cleared on turn end. See todo comment above. */
+
+/*
+	int reserveCustom;	**< Did the player activate reservation for hte custom value?
+	int custom;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to provide a numerical input-field.
+*/
 } cl_reserved_tus_t;
 
 typedef enum {
 	RES_REACTION,
 	RES_CROUCH,
+	RES_SHOT,
 	RES_ALL,
 	RES_ALL_ACTIVE,
 	RES_TYPES /**< Max. */
