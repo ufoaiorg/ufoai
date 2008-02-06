@@ -548,7 +548,7 @@ menu serverinfo
 	pic button_favorite
 	{
 		pos	"200 720"
-		click	{ cmd "bookmark_add" }
+		click	{ cmd "bookmark_add;" }
 		image	menu/button_long
 		texl	"0 0"
 		texh	"128 35"
@@ -566,12 +566,12 @@ menu serverinfo
 
 	func init
 	{
-		cmd	"mn_escpop 1"
+		cmd	"mn_escpop 1;"
 	}
 
 	func close
 	{
-		cmd	"mn_escpop 3"
+		cmd	"mn_escpop 3;"
 	}
 }
 
