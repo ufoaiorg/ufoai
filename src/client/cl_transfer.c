@@ -1508,8 +1508,6 @@ static void TR_Init_f (void)
  */
 static void TR_TransferClose_f (void)
 {
-	int i;
-
 	if (!baseCurrent)
 		return;
 
