@@ -133,13 +133,13 @@ menu map
 
 	// geoscape controll buttons
 
-	zone panel_scroll_uo
+	zone panel_scroll_up
 	{
 		pos		"868 354"
 		size	"60 30"
 		repeat	true
 //		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_scroll up;" }
+		click	{ cmd "map_scroll down;" }
 	}
 
 	zone panel_scroll_down
@@ -148,7 +148,7 @@ menu map
 		size	"60 30"
 		repeat	true
 //		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_scroll down;" }
+		click	{ cmd "map_scroll up;" }
 	}
 
 	zone panel_scroll_left
@@ -157,7 +157,7 @@ menu map
 		size	"30 60"
 		repeat	true
 //		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_scroll left;" }
+		click	{ cmd "map_scroll right;" }
 	}
 
 	zone panel_scroll_right
@@ -166,7 +166,7 @@ menu map
 		size	"30 60"
 		repeat	true
 //		bgcolor	"1 1 1 0.5"
-		click	{ cmd "map_scroll right;" }
+		click	{ cmd "map_scroll left;" }
 	}
 
 	zone panel_zoom_in
