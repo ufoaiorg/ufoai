@@ -31,21 +31,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 spawn_temp_t st;
 
-static void SP_light(edict_t * ent);
-static void SP_dummy(edict_t * ent);
-static void SP_player_start(edict_t * ent);
-static void SP_human_start(edict_t * ent);
-static void SP_alien_start(edict_t * ent);
-static void SP_civilian_start(edict_t * ent);
-static void SP_worldspawn(edict_t * ent);
-static void SP_2x2_start(edict_t * ent);
-static void SP_civilian_target(edict_t * ent);
-static void SP_misc_mission(edict_t * ent);
-static void SP_misc_mission_aliens(edict_t * ent);
-
+static void SP_light(edict_t *ent);
+static void SP_dummy(edict_t *ent);
+static void SP_player_start(edict_t *ent);
+static void SP_human_start(edict_t *ent);
+static void SP_alien_start(edict_t *ent);
+static void SP_civilian_start(edict_t *ent);
+static void SP_worldspawn(edict_t *ent);
+static void SP_2x2_start(edict_t *ent);
+static void SP_civilian_target(edict_t *ent);
+static void SP_misc_mission(edict_t *ent);
+static void SP_misc_mission_aliens(edict_t *ent);
+static void SP_trigger_hurt(edict_t *ent);
 static void SP_func_rotating(edict_t *ent);
 static void SP_func_door(edict_t *ent);
-static void SP_func_breakable(edict_t * ent);
+static void SP_func_breakable(edict_t *ent);
 
 typedef struct {
 	const char *name;
@@ -71,6 +71,7 @@ static const spawn_t spawns[] = {
 	{"func_breakable", SP_func_breakable},
 	{"func_door", SP_func_door},
 	{"func_rotating", SP_func_rotating},
+	{"trigger_hurt", SP_trigger_hurt},
 
 	{NULL, NULL}
 };
@@ -327,13 +328,42 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 }
 
 /**
- * @brief QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
+ * @sa G_Spawn
  */
-static void SP_light (edict_t *ent)
+static inline void G_InitEdict (edict_t * e)
 {
-	/* lights aren't client-server communicated items */
-	/* they are completely client side */
-	G_FreeEdict(ent);
+	e->inuse = qtrue;
+	e->classname = "noclass";
+	e->number = e - g_edicts;
+}
+
+/**
+ * @brief Either finds a free edict, or allocates a new one.
+ * @note Try to avoid reusing an entity that was recently freed, because it
+ * can cause the player to think the entity morphed into something else
+ * instead of being removed and recreated, which can cause interpolated
+ * angles and bad trails.
+ * @sa G_InitEdict
+ * @sa G_FreeEdict
+ */
+edict_t *G_Spawn (void)
+{
+	int i;
+	edict_t *e;
+
+	e = &g_edicts[1];
+	for (i = 1; i < globals.num_edicts; i++, e++)
+		if (!e->inuse) {
+			G_InitEdict(e);
+			return e;
+		}
+
+	if (i == game.sv_maxentities)
+		gi.error("G_Spawn: no free edicts");
+
+	globals.num_edicts++;
+	G_InitEdict(e);
+	return e;
 }
 
 static edict_t* G_TriggerSpawn (edict_t *owner)
@@ -416,6 +446,53 @@ static void G_Actor2x2Spawn (edict_t *ent)
 	/* link it for collision detection */
 	ent->dir = AngleToDV(ent->angle);
 	ent->solid = SOLID_BBOX;
+}
+
+/**
+ * @brief QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
+ */
+static void SP_light (edict_t *ent)
+{
+	/* lights aren't client-server communicated items */
+	/* they are completely client side */
+	G_FreeEdict(ent);
+}
+
+/**
+ * @brief Hurt trigger
+ * @sa SP_trigger_hurt
+ */
+static qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
+{
+	if (!self->owner)
+		return qfalse;
+
+	/* @todo implement protection for the touching activator */
+	activator->HP = max(activator->HP - self->dmg, 0);
+
+	return qtrue;
+}
+
+/**
+ * @brief Trigger for grid fields if they are under fire
+ * @note Called once for every step
+ * @sa Touch_HurtTrigger
+ */
+void SP_trigger_hurt (edict_t *ent)
+{
+	ent->classname = "trigger_hurt";
+	ent->type = ET_TRIGGER_HURT;
+
+	if (!ent->dmg)
+		ent->dmg = 5;
+
+	ent->solid = SOLID_TRIGGER;
+	gi.SetModel(ent, ent->model);
+
+	ent->touch = Touch_HurtTrigger;
+	ent->child = NULL;
+
+	gi.LinkEdict(ent);
 }
 
 /**
@@ -550,17 +627,40 @@ static qboolean Touch_MissionTrigger (edict_t *self, edict_t *activator)
 	if (!self->owner)
 		return qfalse;
 
+	Com_Printf("Touched\n");
 	switch (self->owner->team) {
 	case TEAM_ALIEN:
 		if (activator->team == TEAM_ALIEN) {
+			Com_Printf("Touched by TEAM_ALIEN\n");
 			return qtrue;
 		}
 	case TEAM_PHALANX:
 		if (activator->team == TEAM_PHALANX) {
+			Com_Printf("Touched by TEAM_PHALANX\n");
 			return qtrue;
 		}
 	}
 	return qfalse;
+}
+
+/**
+ * @note Think functions are only executed when level.activeTeam != -1
+ * or in other word, the game has started
+ */
+static void Think_MissionTrigger (edict_t *self)
+{
+	/* when every player has joined the match - spawn the mission target
+	 * particle (if given) to mark the trigger */
+	if (self->particle) {
+		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+		gi.WriteShort(self->spawnflags);
+		gi.WritePos(self->origin);
+		gi.WriteString(self->particle);
+		gi.EndEvents();
+
+		/* @todo: this think function is also useful for the other mission conditions */
+		self->think = NULL;
+	}
 }
 
 /**
@@ -573,25 +673,30 @@ static void SP_misc_mission (edict_t *ent)
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
 	ent->team = TEAM_PHALANX;
-
-	/* spawn the trigger entity */
-	other = G_TriggerSpawn(ent);
-	other->touch = Touch_MissionTrigger;
-
-	ent->child = other;
+	ent->solid = SOLID_NOT;
 
 	/* fall to ground */
+	ent->fieldSize = ACTOR_SIZE_NORMAL; /* to let the grid fall function work */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
 
-	if (ent->particle) {
-		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-		gi.WriteShort(ent->spawnflags);
-		gi.WriteGPos(ent->pos);
-		gi.WriteShort((int)strlen(ent->particle));
-		gi.WriteString(ent->particle);
-	}
+	/* think function values */
+	ent->inuse = qtrue;
+	ent->think = Think_MissionTrigger;
+	ent->nextthink = 1;
+
+	ent->dir = AngleToDV(ent->angle);
+	ent->solid = SOLID_BBOX;
+	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
+	VectorSet(ent->absmin, -(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
+
+	/* spawn the trigger entity */
+	other = G_TriggerSpawn(ent);
+	other->touch = Touch_MissionTrigger;
+	ent->child = other;
+
+	gi.LinkEdict(ent);
 }
 
 /**
@@ -604,25 +709,30 @@ static void SP_misc_mission_aliens (edict_t *ent)
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
 	ent->team = TEAM_ALIEN;
-
-	/* spawn the trigger entity */
-	other = G_TriggerSpawn(ent);
-	other->touch = Touch_MissionTrigger;
-
-	ent->child = other;
+	ent->solid = SOLID_NOT;
 
 	/* fall to ground */
+	ent->fieldSize = ACTOR_SIZE_NORMAL; /* to let the grid fall function work */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
 
-	if (ent->particle) {
-		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-		gi.WriteShort(ent->spawnflags);
-		gi.WriteGPos(ent->pos);
-		gi.WriteShort((int)strlen(ent->particle));
-		gi.WriteString(ent->particle);
-	}
+	/* think function values */
+	ent->inuse = qtrue;
+	ent->think = Think_MissionTrigger;
+	ent->nextthink = 1;
+
+	ent->dir = AngleToDV(ent->angle);
+	ent->solid = SOLID_BBOX;
+	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
+	VectorSet(ent->absmin, -(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
+
+	/* spawn the trigger entity */
+	other = G_TriggerSpawn(ent);
+	other->touch = Touch_MissionTrigger;
+	ent->child = other;
+
+	gi.LinkEdict(ent);
 }
 
 /**
@@ -653,13 +763,9 @@ static void SP_func_breakable (edict_t *ent)
 	ent->type = ET_BREAKABLE;
 
 	/* set an inline model */
-	/* also set ent->solid = SOLID_BSP here */
-	/* also linked into the world here */
 	gi.SetModel(ent, ent->model);
-	if (ent->solid != SOLID_BSP)
-		Com_Printf("Error - func_breakable with no SOLID_BSP\n");
-	if (!ent->model)
-		Com_Printf("Error - func_breakable with no model\n");
+	ent->solid = SOLID_BSP;
+	gi.LinkEdict(ent);
 
 	Com_DPrintf(DEBUG_GAME, "func_breakable: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
 			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
@@ -717,13 +823,9 @@ static void SP_func_door (edict_t *ent)
 	ent->type = ET_DOOR;
 
 	/* set an inline model */
-	/* also set ent->solid = SOLID_BSP here */
-	/* also linked into the world here */
 	gi.SetModel(ent, ent->model);
-	if (ent->solid != SOLID_BSP)
-		Com_Printf("Error - func_door with no SOLID_BSP\n");
-	if (!ent->model)
-		Com_Printf("Error - func_door with no model\n");
+	ent->solid = SOLID_BSP;
+	gi.LinkEdict(ent);
 
 	ent->moveinfo.state = STATE_CLOSED;
 
@@ -751,13 +853,9 @@ static void SP_func_rotating (edict_t *ent)
 	ent->type = ET_ROTATING;
 
 	/* set an inline model */
-	/* also set ent->solid = SOLID_BSP here */
-	/* also linked into the world here */
 	gi.SetModel(ent, ent->model);
-	if (ent->solid != SOLID_BSP)
-		Com_Printf("Error - func_door with no SOLID_BSP\n");
-	if (!ent->model)
-		Com_Printf("Error - func_rotating with no model\n");
+	ent->solid = SOLID_BSP;
+	gi.LinkEdict(ent);
 
 	/* the lower, the faster */
 	if (!ent->speed)

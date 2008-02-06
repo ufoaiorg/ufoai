@@ -273,46 +273,6 @@ edict_t *G_PickTarget (char *targetname)
 }
 #endif
 
-
-/**
- * @sa G_Spawn
- */
-static void G_InitEdict (edict_t * e)
-{
-	e->inuse = qtrue;
-	e->classname = "noclass";
-	e->number = e - g_edicts;
-}
-
-/**
- * @brief Either finds a free edict, or allocates a new one.
- * @note Try to avoid reusing an entity that was recently freed, because it
- * can cause the player to think the entity morphed into something else
- * instead of being removed and recreated, which can cause interpolated
- * angles and bad trails.
- * @sa G_InitEdict
- * @sa G_FreeEdict
- */
-edict_t *G_Spawn (void)
-{
-	int i;
-	edict_t *e;
-
-	e = &g_edicts[1];
-	for (i = 1; i < globals.num_edicts; i++, e++)
-		if (!e->inuse) {
-			G_InitEdict(e);
-			return e;
-		}
-
-	if (i == game.sv_maxentities)
-		gi.error("G_Spawn: no free edicts");
-
-	globals.num_edicts++;
-	G_InitEdict(e);
-	return e;
-}
-
 /**
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
@@ -354,7 +314,7 @@ int G_TouchTriggers (edict_t *ent)
 	int i, num, usedNum = 0;
 	edict_t *touch[MAX_EDICTS], *hit;
 
-	if (ent->type != ET_ACTOR || ent->state & STATE_DEAD)
+	if (ent->type != ET_ACTOR || (ent->state & STATE_DEAD))
 		return 0;
 
 	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);

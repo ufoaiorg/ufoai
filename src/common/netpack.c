@@ -172,6 +172,9 @@ void NET_V_WriteFormat (struct dbuffer *buf, const char *format, va_list ap)
 			break;
 		case '!':
 			break;
+		case '&':
+			NET_WriteString(buf, va_arg(ap, char *));
+			break;
 		case '*':
 			{
 				int i, n;
@@ -452,6 +455,9 @@ void NET_V_ReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 			break;
 		case '!':
 			format++;
+			break;
+		case '&':
+			*va_arg(ap, char **) = NET_ReadString(buf);
 			break;
 		case '*':
 			{

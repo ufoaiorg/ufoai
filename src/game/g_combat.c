@@ -230,7 +230,7 @@ static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *t
  * @sa G_SplashDamage
  * @sa G_PrintActorStats
  */
-static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
+static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
 	player_t *player = NULL;
 	qboolean stun = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damStun);
@@ -249,27 +249,32 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	/* Breakables */
 	if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
 		if (damage >= ent->HP) {
+			vec3_t origin;
+
+			VectorAdd(ent->absmin, ent->absmax, origin);
+			VectorScale(origin, 0.5, origin);
+
 			gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 			gi.WriteShort(ent->number);
 			if (ent->particle && Q_strcmp(ent->particle, "null")) {
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 				gi.WriteShort(ent->spawnflags);
-				gi.WriteGPos(ent->pos);
-				gi.WriteShort((int)strlen(ent->particle));
+				gi.WritePos(origin);
 				gi.WriteString(ent->particle);
+				gi.EndEvents();
 			}
 			switch (ent->material) {
 			case MAT_GLASS:
-				gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakglass", CHAN_AUTO, 1, 1);
+				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakglass", CHAN_AUTO, 1, 1);
 				break;
 			case MAT_METAL:
-				gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakmetal", CHAN_AUTO, 1, 1);
+				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakmetal", CHAN_AUTO, 1, 1);
 				break;
 			case MAT_ELECTRICAL:
-				gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakelectric", CHAN_AUTO, 1, 1);
+				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakelectric", CHAN_AUTO, 1, 1);
 				break;
 			case MAT_WOOD:
-				gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakwood", CHAN_AUTO, 1, 1);
+				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakwood", CHAN_AUTO, 1, 1);
 				break;
 			case MAT_MAX:
 				break;
@@ -503,8 +508,8 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(tr->contentFlags >> 8);
 		gi.WritePos(impact);
-		gi.WriteShort(7);
 		gi.WriteString("burning");
+		gi.EndEvents();
 	}
 }
 
@@ -847,8 +852,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 				gi.WriteShort(tr.contentFlags >> 8);
 				gi.WritePos(impact);
-				gi.WriteShort(4);
 				gi.WriteString("fire");
+				gi.EndEvents();
 			}
 		}
 

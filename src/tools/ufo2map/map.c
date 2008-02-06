@@ -442,6 +442,8 @@ static void SetImpliedFlags (side_t *side, const char *tex)
 		side->surfaceFlags |= SURF_HINT;
 	else if (!strcmp(tex, "tex_common/nodraw"))
 		side->surfaceFlags |= SURF_NODRAW;
+	else if (!strcmp(tex, "tex_common/trigger"))
+		side->surfaceFlags |= SURF_NODRAW;
 	else if (!strcmp(tex, "tex_common/origin"))
 		side->contentFlags |= CONTENTS_ORIGIN;
 	else if (!strcmp(tex, "tex_common/slick"))

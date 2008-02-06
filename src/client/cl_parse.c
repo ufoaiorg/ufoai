@@ -69,6 +69,7 @@ static const char *svc_strings[UCHAR_MAX+1] =
  * g	| gpos		| 3
  * d	| dir		| 1
  * a	| angle		| 1
+ * &	| string	| x
  * !	| do not read the next id | 1
  * *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg
 		| 2 + sizeof(DATA)
@@ -111,9 +112,10 @@ const char *ev_format[] =
 	"sbbbbb",			/* EV_INV_AMMO */
 	"sbbbbb",			/* EV_INV_RELOAD */
 	"ss",				/* EV_INV_HANDS_CHANGED */
+	"sbsbbbb",			/* EV_INV_TRANSFER */
 
 	"s",				/* EV_MODEL_EXPLODE */
-	"sp*",				/* EV_SPAWN_PARTICLE */
+	"sp&",				/* EV_SPAWN_PARTICLE */
 
 	"s",				/* EV_DOOR_OPEN */
 	"s",				/* EV_DOOR_CLOSE */
@@ -159,6 +161,7 @@ static const char *ev_names[] =
 	"EV_INV_AMMO",
 	"EV_INV_RELOAD",
 	"EV_INV_HANDS_CHANGED",
+	"EV_INV_TRANSFER",
 
 	"EV_MODEL_EXPLODE",
 
@@ -222,6 +225,7 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 	CL_InvAmmo,						/* EV_INV_AMMO */
 	CL_InvReload,					/* EV_INV_RELOAD */
 	CL_InvCheckHands,				/* EV_INV_HANDS_CHANGED */
+	NULL,							/* EV_INV_TRANSFER */
 
 	LE_Explode,						/* EV_MODEL_EXPLODE */
 
@@ -1396,6 +1400,8 @@ static void CL_ExecuteEvent (int now, void *data)
 
 		Com_DPrintf(DEBUG_CLIENT, "event(dispatching): %s %p\n", ev_names[event->eType], event);
 		CL_LogEvent(event->eType);
+		if (!ev_func[event->eType])
+			Sys_Error("Event %i doesn't have a callback", event->eType);
 		ev_func[event->eType](event->msg);
 
 		free_dbuffer(event->msg);

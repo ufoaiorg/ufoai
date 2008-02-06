@@ -179,8 +179,9 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y)
 {
 	assert(item.t != NONE);
-/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
-	NET_WriteFormat(buf, "sbsbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
+	Com_DPrintf(DEBUG_CLIENT, "CL_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
+		csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);
+	NET_WriteFormat(buf, ev_format[EV_INV_TRANSFER], item.t, item.a, item.m, container, x, y, item.rotated);
 }
 
 /**
@@ -213,7 +214,7 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
 	item->t = item->m = NONE;
 	item->a = NONE_AMMO;
 
-	NET_ReadFormat(buf, "sbsbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
+	NET_ReadFormat(buf, ev_format[EV_INV_TRANSFER], &item->t, &item->a, &item->m, container, x, y, &item->rotated);
 }
 
 /**

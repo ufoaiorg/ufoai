@@ -118,8 +118,6 @@ static void SV_SetModel (edict_t * ent, const char *name)
 		assert(mod);
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
-		ent->solid = SOLID_BSP;
-		SV_LinkEdict(ent);
 	}
 }
 

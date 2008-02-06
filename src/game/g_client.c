@@ -96,6 +96,7 @@ void G_SendStats (edict_t * ent)
 /**
  * @brief Write an item to the network buffer
  * @sa CL_NetReceiveItem
+ * @sa EV_INV_TRANSFER
  */
 static void G_WriteItem (item_t item, int container, int x, int y)
 {
@@ -106,6 +107,7 @@ static void G_WriteItem (item_t item, int container, int x, int y)
 /**
  * @brief Read item from the network buffer
  * @sa CL_NetReceiveItem
+ * @sa EV_INV_TRANSFER
  */
 static void G_ReadItem (item_t * item, int * container, int * x, int * y)
 {
@@ -2135,7 +2137,7 @@ int G_ClientAction (player_t * player)
 			gi.error("G_ClientAction: No sane value received for resState! (resType=%i resState=%i resValue=%i)\n", resType, resState, resValue);
 			break;
 		}
-		
+
 		if (resValue < 0) {
 			gi.error("G_ClientAction: No sane value received for resValue!  (resType=%i resState=%i resValue=%i)\n", resType, resState, resValue);
 			break;

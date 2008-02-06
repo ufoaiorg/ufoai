@@ -918,22 +918,20 @@ void CL_ParticleFree (ptl_t *p)
  */
 void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 {
-	char *particle;
-	int levelflags, length;
+	char *particle = NULL;
+	int levelflags;
 	vec3_t origin;
 	le_t* le;
 
-	levelflags = NET_ReadShort(msg);
-	NET_ReadPos(msg, origin);
-	length = NET_ReadShort(msg); /* for stringlength */
-	particle = NET_ReadString(msg);
-	if (length != (int)strlen(particle))
-		Com_Printf("CL_ParticleSpawnFromSizeBuf: Wrong transmitted particle name or length: %i\n", length);
+	/* read data */
+	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &levelflags, &origin, &particle);
 
-	if (particle && Q_strcmp(particle, "null")) {
+	if (particle && *particle && Q_strcmp(particle, "null")) {
 		le = LE_Add(0);
-		if (!le)
+		if (!le) {
+			Com_Printf("CL_ParticleSpawnFromSizeBuf: Could not add le\n");
 			return;
+		}
 		le->inuse = qtrue;
 		le->type = ET_PARTICLE;
 		le->invis = qtrue;
