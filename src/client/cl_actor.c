@@ -900,7 +900,7 @@ void CL_PopupFiremodeReservation_f (void)
 
 	popupNum = 0;
 
-	LIST_AddPointer(&list, _("No reservation [TU:0]"));
+	LIST_AddPointer(&list, _("[0 TU] No reservation"));
 	popupTUs[popupNum] = 0;
 	popupNum++;
 
@@ -909,10 +909,10 @@ void CL_PopupFiremodeReservation_f (void)
 			if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weap_fds_idx][i].time) {
 				/** Get weapon name, firemode name and TUs. */
 				Com_sprintf(text, sizeof(text),
-					_("%s - %s [TU:%i]"),
+					_("[%i TU] %s - %s"),
+					ammo->fd[weap_fds_idx][i].time,
 					weapon->name,
-					ammo->fd[weap_fds_idx][i].name,
-					ammo->fd[weap_fds_idx][i].time);
+					ammo->fd[weap_fds_idx][i].name);
 
 				LIST_AddString(&list, text);
 				popupTUs[popupNum] = ammo->fd[weap_fds_idx][i].time;
@@ -932,10 +932,10 @@ void CL_PopupFiremodeReservation_f (void)
 			if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weap_fds_idx][i].time) {
 				/** Get weapon name, firemode name and TUs. */
 				Com_sprintf(text, sizeof(text),
-					_("%s - %s [TU:%i]"),
+					_("[%i TU] %s - %s"),
+					ammo->fd[weap_fds_idx][i].time,
 					weapon->name,
-					ammo->fd[weap_fds_idx][i].name,
-					ammo->fd[weap_fds_idx][i].time);
+					ammo->fd[weap_fds_idx][i].name);
 
 				LIST_AddString(&list, text);
 				popupTUs[popupNum] = ammo->fd[weap_fds_idx][i].time;
