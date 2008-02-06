@@ -130,6 +130,8 @@ SectionGroup /e "Game" SECGROUP01
     File "..\..\..\base\i18n\ja\LC_MESSAGES\*.mo"
     SetOutPath "$INSTDIR\base\i18n\pl\LC_MESSAGES"
     File "..\..\..\base\i18n\pl\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\pt\LC_MESSAGES"
+    File "..\..\..\base\i18n\pt\LC_MESSAGES\*.mo"
     SetOutPath "$INSTDIR\base\i18n\pt_BR\LC_MESSAGES"
     File "..\..\..\base\i18n\pt_BR\LC_MESSAGES\*.mo"
     SetOutPath "$INSTDIR\base\i18n\ru\LC_MESSAGES"
@@ -279,7 +281,7 @@ Section "Source Code" SEC03
   SetOutPath "$INSTDIR\src\tools"
   File "..\..\tools\*.pl"
 
-; 3dsmax 
+; 3dsmax
   File "..\..\tools\*.ms"
 
 ; blender
