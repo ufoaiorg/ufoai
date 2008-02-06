@@ -2125,14 +2125,19 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_RESERVE_STATE:
-		resType = -1;
+		resType = RES_TYPES;
 		resState = -1;
 		resValue = -1;
 
 		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resType, &resState, &resValue);
 
-		if (resState < 0 || resValue < 0) {
-			gi.error("G_ClientAction: No sane value received for resState and/or resValue!\n");
+		if (resState == RES_TYPES) {
+			gi.error("G_ClientAction: No sane value received for resState! (resType=%i resState=%i resValue=%i)\n", resType, resState, resValue);
+			break;
+		}
+		
+		if (resValue < 0) {
+			gi.error("G_ClientAction: No sane value received for resValue!  (resType=%i resState=%i resValue=%i)\n", resType, resState, resValue);
 			break;
 		}
 
