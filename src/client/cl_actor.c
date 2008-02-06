@@ -936,7 +936,7 @@ void CL_PopupFiremodeReservation_f (void)
 		} else {
 			hand = 0;	/* Second (&last) run -> quit. */
 		}
-	} while (hand == 'l');
+	} while (hand != 0);
 
 
 	MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), list, "reserve_shot");
