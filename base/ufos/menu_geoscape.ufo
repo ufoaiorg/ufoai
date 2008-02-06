@@ -171,8 +171,8 @@ menu map
 
 	zone panel_zoom_in
 	{
-		pos		"880 396"
-		size	"34 30"
+		pos		"880 400"
+		size	"20 30"
 		repeat	true
 //		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_zoom in;" }
@@ -180,8 +180,8 @@ menu map
 
 	zone panel_zoom_out
 	{
-		pos		"880 434"
-		size	"34 30"
+		pos		"890 400"
+		size	"20 30"
 //		bgcolor	"1 1 1 0.5"
 		repeat	true
 		click	{ cmd "map_zoom out;" }
