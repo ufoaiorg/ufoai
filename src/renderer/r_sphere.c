@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * before the precompiled lists are even generated */
 static qboolean sphereInit = qfalse;
 
+static cvar_t *r_sphereDetails;
+
 sphere_t r_globeEarth;
 sphere_t r_globeMoon;
 
@@ -194,9 +196,13 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
  */
 void R_SphereInit (void)
 {
-	R_SphereGenerate(&r_globeEarth, 60, EARTH_RADIUS);
+	r_sphereDetails = Cvar_Get("r_sphereDetails", "1", CVAR_ARCHIVE, "Sets the amount of ");
+	if (r_sphereDetails->integer <= 0)
+		Cvar_SetValue("r_sphereDetails", 1.0);
+
+	R_SphereGenerate(&r_globeEarth, 60 * r_sphereDetails->value, EARTH_RADIUS);
 	/* the earth has more details than the moon */
-	R_SphereGenerate(&r_globeMoon, 20, MOON_RADIUS);
+	R_SphereGenerate(&r_globeMoon, 20 * r_sphereDetails->value, MOON_RADIUS);
 
 	sphereInit = qtrue;
 }

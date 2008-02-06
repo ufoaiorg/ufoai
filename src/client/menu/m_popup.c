@@ -59,7 +59,7 @@ void MN_PopupList (const char *title, const char *headline, linkedList_t* entrie
 	mn.menuTextLinkedList[TEXT_LIST] = entries;
 	if (ccs.singleplayer)
 		CL_GameTimeStop();
-	
+
 	popupListMenu = MN_GetMenu(POPUPLIST_MENU_NAME);
 	if (!popupListMenu)
 		Sys_Error("Could not get "POPUPLIST_MENU_NAME" menu");
@@ -74,7 +74,7 @@ void MN_PopupList (const char *title, const char *headline, linkedList_t* entrie
 		Mem_Free(listNode->click);
 		listNode->click = NULL;
 	}
-	
+
 	if (clickAction) {
 		listNode->mousefx = qtrue;
 		listNode->click = MN_SetMenuAction(&listNode->click, EA_CMD, clickAction);

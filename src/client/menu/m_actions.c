@@ -233,7 +233,7 @@ qboolean MN_FocusNextActionNode (void)
  * @brief Set a new action to a node->menuAction_t pointer
  * @param[in] type EA_CMD
  * @param[in] data The data for this action - in case of EA_CMD this is the commandline
- * @note You first have to free existing node actions - only free those that are 
+ * @note You first have to free existing node actions - only free those that are
  * not static in mn.menuActions array
  */
 menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *data)
