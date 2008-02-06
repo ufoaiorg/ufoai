@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_hospital.h"
 #include "cl_team.h"
+#include "cl_ufo.h"
 #include "cl_map.h"
 #include "menu/m_popup.h"
 
@@ -67,6 +68,8 @@ static int trAircraftsTmp[MAX_AIRCRAFT];
 static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 {
 	int i, intransfer = 0, amtransfer = 0;
+	int smallufotransfer = 0, bigufotransfer = 0;
+	aircraft_t *ufocraft;
 
 	assert(od && srcbase && destbase);
 
@@ -75,7 +78,14 @@ static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 		if (trItemsTmp[i] > 0) {
 			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
 				amtransfer = ANTIMATTER_SIZE * trItemsTmp[i];
-			else
+			if (od->tech->type == RS_CRAFT) {
+				ufocraft = AIR_GetAircraft(od->tech->provides);
+				assert(ufocraft);
+				if (ufocraft->weight == AIRCRAFT_LARGE)
+					bigufotransfer++;
+				else
+					smallufotransfer++;
+			} else
 				intransfer += csi.ods[i].size * trItemsTmp[i];
 		}
 	}
@@ -92,6 +102,26 @@ static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 		if (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer < ANTIMATTER_SIZE) {
 			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return qfalse;
+		}
+	} if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
+		ufocraft = AIR_GetAircraft(od->tech->provides);
+		assert(ufocraft);
+		if (ufocraft->weight == AIRCRAFT_LARGE) {
+			if (!destbase->hasBuilding[B_UFO_HANGAR]) {
+				MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have functional Large UFO Hangar.\n"));
+				return qfalse;
+			} else if (destbase->capacities[CAP_UFOHANGARS_LARGE].max - destbase->capacities[CAP_UFOHANGARS_LARGE].cur <= bigufotransfer) {
+				MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have enough Large UFO Hangar.\n"));
+				return qfalse;
+			}
+		} else if (ufocraft->weight == AIRCRAFT_SMALL) {
+			if (!destbase->hasBuilding[B_UFO_SMALL_HANGAR]) {
+				MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have functional Small UFO Hangar.\n"));
+				return qfalse;
+			} else if (destbase->capacities[CAP_UFOHANGARS_SMALL].max - destbase->capacities[CAP_UFOHANGARS_SMALL].cur <= smallufotransfer) {
+				MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have enough Small UFO Hangar.\n"));
+				return qfalse;
+			}
 		}
 	} else {	/*This is not antimatter*/
 		if (!transferBase->hasBuilding[B_STORAGE])	/* Return if the target base doesn't have storage or power. */
@@ -529,7 +559,15 @@ static void TR_TransferListClear_f (void)
 		if (trItemsTmp[i] > 0) {
 			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
 				INV_ManageAntimatter(baseCurrent, trItemsTmp[i], qtrue);
-			else
+			else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
+				const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
+				assert(ufocraft);
+				B_UpdateStorageAndCapacity(baseCurrent, i, trItemsTmp[i], qfalse, qfalse);
+				if (ufocraft->weight == AIRCRAFT_LARGE)
+					baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur++;
+				else
+					baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
+			} else
 				B_UpdateStorageAndCapacity(baseCurrent, i, trItemsTmp[i], qfalse, qfalse);
 		}
  	}
@@ -590,7 +628,19 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 				if (transfer->itemAmount[i] > 0) {
 					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
 						INV_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
-					else
+					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
+						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
+						assert(ufocraft);
+						for (j = 0; j < transfer->itemAmount[i]; j++) {
+							if (UFO_ConditionsForStoring(destination, ufocraft)) {
+								B_UpdateStorageAndCapacity(destination, i, 1, qfalse, qtrue);
+								if (ufocraft->weight == AIRCRAFT_LARGE)
+									destination->capacities[CAP_UFOHANGARS_LARGE].cur++;
+								else
+									destination->capacities[CAP_UFOHANGARS_SMALL].cur++;
+							}
+						}
+					} else
 						B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse, qtrue);
 				}
 			}
@@ -977,7 +1027,15 @@ static void TR_TransferListSelect_f (void)
 						trItemsTmp[i]++;
 						if (!Q_strncmp(od->id, "antimatter", 10))
 							INV_ManageAntimatter(baseCurrent, 1, qfalse);
-						else
+						else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
+							const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
+							assert(ufocraft);
+							B_UpdateStorageAndCapacity(baseCurrent, i, -1, qfalse, qfalse);
+							if (ufocraft->weight == AIRCRAFT_LARGE)
+								baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur--;
+							else
+								baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur--;
+						} else
 							B_UpdateStorageAndCapacity(baseCurrent, i, -1, qfalse, qfalse);
 						break;
 					} else
