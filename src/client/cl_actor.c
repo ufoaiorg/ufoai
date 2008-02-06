@@ -944,7 +944,7 @@ void CL_PopupFiremodeReservation_f (void)
 		}
 	}
 
-	MN_PopupList(_("Reserve Time for Shot/Action"), _("Reserve Time for Shot/Action"), list, "reserve_shot");
+	MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), list, "reserve_shot");
 }
 
 /**
