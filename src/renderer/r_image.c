@@ -1061,7 +1061,7 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 		R_CheckError();
 	}
 
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	R_CheckError();
 
 	if (scaled != data)
