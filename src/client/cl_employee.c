@@ -1217,8 +1217,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				e->chr.reactionFiremode[RF_HAND] = MSG_ReadShort(sb);
 				e->chr.reactionFiremode[RF_FM] = MSG_ReadShort(sb);
 				e->chr.reactionFiremode[RF_WPIDX] = MSG_ReadShort(sb);
-#if 0
-/**@todo un-"if 0" me */
+
 				/* Read reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
 				e->chr.reservedTus.reserveReaction = MSG_ReadShort(sb);
 				e->chr.reservedTus.reaction = MSG_ReadShort(sb);
@@ -1229,7 +1228,6 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				MSG_ReadShort(sb);
 				MSG_ReadShort(sb);
 				MSG_ReadShort(sb);
-#endif
 			}
 
 			e->chr.assigned_missions = MSG_ReadShort(sb);
