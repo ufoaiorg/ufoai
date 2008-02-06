@@ -800,7 +800,7 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int obj_idx,
 				 * https://sourceforge.net/tracker/?func=detail&atid=805242&aid=1789282&group_id=157793
 				 * for some other ways to implements it.
 				 * Let's see how players like this way for now though ;) */
-				CL_ReserveTUs(actor, RES_REACTION, fd->time * (CL_UsableReactionTUs(actor) / fd->time));
+				CL_ReserveTUs(actor, RES_REACTION, fd->time * CL_UsableReactionTUs(actor) / fd->time);
 			} else {
 				CL_ReserveTUs(actor, RES_REACTION, fd->time);
 			}
@@ -3113,13 +3113,16 @@ void CL_ActorToggleReaction_f (void)
 		switch (selActorReactionState) {
 		case R_FIRE_OFF:
 			state = ~STATE_REACTION;
-
 			break;
 		case R_FIRE_ONCE:
 			state = STATE_REACTION_ONCE;
 			/* Check if stored info for RF is up-to-date and set it to default if not. */
 			if (!CL_WorkingReactionFiremode(selActor)) {
 				CL_SetDefaultReactionFiremode(selActor, 'r');
+			} else {
+				/* We would reserve more TUs than are available - reserve nothing and abort. */
+				if (CL_UsableTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
+					return;
 			}
 			break;
 		case R_FIRE_MANY:
@@ -3127,6 +3130,10 @@ void CL_ActorToggleReaction_f (void)
 			/* Check if stored info for RF is up-to-date and set it to default if not. */
 			if (!CL_WorkingReactionFiremode(selActor)) {
 				CL_SetDefaultReactionFiremode(selActor, 'r');
+			} else {
+				/* Just in case. */
+				if (CL_UsableTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
+					return;
 			}
 			break;
 		default:
