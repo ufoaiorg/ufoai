@@ -3,16 +3,36 @@ use strict;
 
 my @explicit_libs = ('libcurl');
 
+# Replaces the relative framework path returned by otool with 
+# the path to the library in the framework top level directory.
+# We will now only copy the framework from it's original location 
+# to the application bundle UFOAI.app/Contents/Frameworks directory,
+# removing the need to update all of the binary dependencies on 
+# a given framework.
 sub fixframeworkpath {
 	my $old = shift;
 	return $old if $old =~ /\.dylib$/;
 
 	if($old =~ /\@executable_path\/\.\.\/Frameworks\/.*\/([^\/]+)$/) {
-		return "/Library/Frameworks/$1.framework/$1";
+		$old = "/Library/Frameworks/$1.framework/$1";
 	}
 	return $old;
 }
 
+# Given a relative path to a framework, returns a canonical path 
+# assuming that the framework is installed in /Library/Framework
+sub frameworkdir {
+	my $old = shift;
+	return $old if $old =~ /\.dylib$/;
+
+	if($old =~ /\@executable_path\/\.\.\/Frameworks\/.*\/([^\/]+)$/) {
+		$old = "/Library/Frameworks/$1.framework";
+	}
+	return $old;
+}
+
+# Find all the libraries upon which a target binary depends,
+# ignoring the standard Mac OS X system libraries
 sub findlibs {
 	my $target = shift;
 	my $otool = `otool -L $target`;
@@ -82,15 +102,16 @@ sub installlib {
 		`cp $lib $libdir/` && die "failed\n";
 		$newpath = "$libdir/$libname";
 		$fworlib = "Libraries";
+
+		# change my id
+		#print "install_name_tool -id \@executable_path/../$fworlib/$libname $newpath\n";
+		`install_name_tool -id \@executable_path/../$fworlib/$libname $newpath` && die "failed\n";
 	} else {
-		`cp $nlib $fwdir/` && die "failed\n";
+		my $framedir = frameworkdir $lib;
+		`cp -R $framedir $fwdir/` && die "failed\n";
 		$newpath = "$fwdir/$libname";
 		$fworlib = "Frameworks";
 	}
-
-	# change my id
-	#print "install_name_tool -id \@executable_path/../$fworlib/$libname $newpath\n";
-	`install_name_tool -id \@executable_path/../$fworlib/$libname $newpath` && die "failed\n";
 
 	# change my deps
 	foreach my $i (@libs) {
@@ -99,10 +120,13 @@ sub installlib {
 		my $fworlib2;
 		my $libname2;
 
+		# update references to dylibs, but not to frameworks,
+		# since we just copy frameworks wholesale to the app bundle
 		if($i=~/\.dylib$/) {
+			# dylibs in Contents/Libraries
 			$fworlib2 = "Libraries";
 		} else {
-			$fworlib2 = "Frameworks";
+			next;
 		}
 
 		if($i =~ /.*\/([^\/]+)$/) {
@@ -125,7 +149,7 @@ while ( my ($x,$y) = each %alllibs ) {
 }
 
 ## and, finally, change for app itself
-print "Finalizing...";
+print "Finalizing ufo...";
 foreach my $i (@a) {
 	my $fworlib2;
 	my $libname2;
@@ -133,7 +157,7 @@ foreach my $i (@a) {
 	if($i=~/\.dylib$/) {
 		$fworlib2 = "Libraries";
 	} else {
-		$fworlib2 = "Frameworks";
+		next;
 	}
 
 	if($i =~ /.*\/([^\/]+)$/) {
@@ -145,5 +169,56 @@ foreach my $i (@a) {
 	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
 	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
 }
+print "done\n";
+
+## and, finally, change for app itself
+print "Finalizing ufoded...";
+$binpath = 'UFOAI.app/Contents/MacOS/ufoded';
+@a = findlibs $binpath;
+foreach my $i (@a) {
+	my $fworlib2;
+	my $libname2;
+
+	if($i=~/\.dylib$/) {
+		$fworlib2 = "Libraries";
+	} else {
+		next;
+	}
+
+	if($i =~ /.*\/([^\/]+)$/) {
+		$libname2 = $1;
+	} else {
+		die "wtf?\n";
+	}
+
+	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
+	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
+}
+print "done\n";
+
+## and, finally, change for app itself
+print "Finalizing ufo2map...";
+$binpath = 'UFOAI.app/Contents/MacOS/ufo2map';
+@a = findlibs $binpath;
+foreach my $i (@a) {
+	my $fworlib2;
+	my $libname2;
+
+	if($i=~/\.dylib$/) {
+		$fworlib2 = "Libraries";
+	} else {
+		next;
+	}
+
+	if($i =~ /.*\/([^\/]+)$/) {
+		$libname2 = $1;
+	} else {
+		die "wtf?\n";
+	}
+
+	#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n";
+	`install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $binpath\n` && die "failed\n";
+}
+
 print "done\n";
 

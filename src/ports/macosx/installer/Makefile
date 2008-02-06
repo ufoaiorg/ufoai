@@ -18,49 +18,61 @@ BINARIES = \
 BINARIES_BASE = \
 	$(ROOTDIR)base/game.dylib
 
+bundle_dirs:
+	@mkdir -p UFOAI.app/base
+# These are part of the svn repository as directories
+#	@mkdir -p UFOAI.app/Contents/MacOS
+#	@mkdir -p UFOAI.app/Contents/Frameworks
+#	@mkdir -p UFOAI.app/Contents/Libraries
+
+package_dir:
+	@rm -rf $(PACKAGE_NAME)
+	@mkdir -p $(PACKAGE_NAME)
+
 updateversion:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
 
-copybinaries:
+copybinaries: bundle_dirs
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
 	@cp $(BINARIES_BASE) UFOAI.app/base
 
-copydata:
+copydata: bundle_dirs
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
 	@cp -r $(ROOTDIR)base/i18n UFOAI.app/base/i18n
 
-copynotes:
-	@mkdir -p $(PACKAGE_NAME)
+copynotes: package_dir
 	@cp $(ROOTDIR)README $(PACKAGE_NAME)
 	@cp $(ROOTDIR)CONTRIBUTORS $(PACKAGE_NAME)
 	@cp $(ROOTDIR)COPYING $(PACKAGE_NAME)
 
-bundle: copybinaries copydata copynotes
-	@perl macfixlibs.pl
+copylibs:
+	@rm -rf UFOAI.app/Contents/Frameworks/*.framework
+	@perl macfixlibs2.pl
+
+
+copy_package_bundle: package_dir bundle
+	@cp -r UFOAI.app $(PACKAGE_NAME)
+
+strip_dev_files: copy_package_bundle
+	@find -d $(PACKAGE_NAME) -name .svn -exec rm -rf {} \;
+
+bundle: copybinaries copydata copylibs copynotes
 
 # for testing:
-bundle-nodata: copybinaries copynotes
-	@perl macfixlibs.pl
+bundle-nodata: copybinaries copylibs copynotes
 
-create-dmg: bundle updateversion
-	@cp -r UFOAI.app $(PACKAGE_NAME)
+create-dmg: bundle updateversion copy_package_bundle strip_dev_files
+	@rm $(PACKAGE_NAME).dmg
 	@hdiutil create -srcfolder $(PACKAGE_NAME) $(PACKAGE_NAME).dmg
 
 
-build_dmg:
-	@mkdir -p UFOAI.app/Contents/MacOS
-	@mkdir -p UFOAI.app/Contents/Frameworks
-	@mkdir -p UFOAI.app/Contents/Libraries
-	@mkdir -p UFOAI.app/base
-	@cp $(BINARIES) UFOAI.app/Contents/MacOS
-	@cp $(BINARIES_BASE) UFOAI.app/base
+build_dmg: copybinaries copylibs
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
 #	for dir in $(ROOTDIR)base/i18n/*; do \
 #		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
 #		cp $(ROOTDIR)base/$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
 #	done
 	@cp -r $(ROOTDIR)base/i18n UFOAI.app/base/i18n
-	@perl macfixlibs.pl
 	@rm -f $(PACKAGE_NAME).dmg
 	@cp $(ROOTDIR)README UFOAI.app
 	@cp $(ROOTDIR)CONTRIBUTORS UFOAI.app
