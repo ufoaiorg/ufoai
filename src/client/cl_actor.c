@@ -885,6 +885,7 @@ void CL_PopupFiremodeReservation_f (void)
 	objDef_t *ammo = NULL;
 	objDef_t *weapon = NULL;
 	int weap_fds_idx = -1;
+	char hand = 'r';
 	int i;
 	char text[MAX_VAR];
 
@@ -896,54 +897,47 @@ void CL_PopupFiremodeReservation_f (void)
 	LIST_Delete(list);
 	list = NULL;
 
-	/* Get weapons from right hand and add text for its firemodes. */
-	CL_GetWeaponAndAmmo(selActor, 'r', &weapon, &ammo, &weap_fds_idx);
-
+	/* Reset the length of the TU-list. */
 	popupNum = 0;
 
+	/* Add list-entry for deactivation of the reservation. */
 	LIST_AddPointer(&list, _("[0 TU] No reservation"));
 	popupTUs[popupNum] = 0;
 	popupNum++;
 
-	if (weapon && ammo) {
-		for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
-			if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weap_fds_idx][i].time) {
-				/** Get weapon name, firemode name and TUs. */
-				Com_sprintf(text, sizeof(text),
-					_("[%i TU] %s - %s"),
-					ammo->fd[weap_fds_idx][i].time,
-					weapon->name,
-					ammo->fd[weap_fds_idx][i].name);
+	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
+		ammo = NULL;
+		weapon = NULL;
+		weap_fds_idx = -1;
 
-				LIST_AddString(&list, text);
-				popupTUs[popupNum] = ammo->fd[weap_fds_idx][i].time;
-				popupNum++;
+		/* Get weapon (and its ammo) from the hand. */
+		CL_GetWeaponAndAmmo(selActor, hand, &weapon, &ammo, &weap_fds_idx);
+
+		if (weapon && ammo) {
+			for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
+				if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weap_fds_idx][i].time) {
+					/** Get weapon name, firemode name and TUs. */
+					Com_sprintf(text, sizeof(text),
+						_("[%i TU] %s - %s"),
+						ammo->fd[weap_fds_idx][i].time,
+						weapon->name,
+						ammo->fd[weap_fds_idx][i].name);
+
+					LIST_AddString(&list, text);
+					popupTUs[popupNum] = ammo->fd[weap_fds_idx][i].time;
+					popupNum++;
+				}
 			}
 		}
-	}
 
-	/* Get weapons from left hand and add text for its firemodes. */
-	ammo = NULL;
-	weapon = NULL;
-	weap_fds_idx = -1;
-	CL_GetWeaponAndAmmo(selActor, 'l', &weapon, &ammo, &weap_fds_idx);
-
-	if (weapon && ammo) {
-		for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
-			if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weap_fds_idx][i].time) {
-				/** Get weapon name, firemode name and TUs. */
-				Com_sprintf(text, sizeof(text),
-					_("[%i TU] %s - %s"),
-					ammo->fd[weap_fds_idx][i].time,
-					weapon->name,
-					ammo->fd[weap_fds_idx][i].name);
-
-				LIST_AddString(&list, text);
-				popupTUs[popupNum] = ammo->fd[weap_fds_idx][i].time;
-				popupNum++;
-			}
+		/* Prepare for next run or for end of loop. */
+		if (hand == 'r') {
+			hand = 'l';	/* First run. Set hand for second run of the loop (other hand) */
+		} else {
+			hand = 0;	/* Second (&last) run -> quit. */
 		}
-	}
+	} while (hand == 'l');
+
 
 	MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), list, "reserve_shot");
 }
