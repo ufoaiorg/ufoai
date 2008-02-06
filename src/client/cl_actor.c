@@ -793,17 +793,7 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int obj_idx,
 
 		/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
 		if (fd) {
-			if (actor->state & STATE_REACTION_MANY) {
-				/** Reserve as many shots as possible for RF.
-				 * @todo This is not supposed to be a final solution.
-				 * I'm open for (sane) suggestions to improve this. See also my comment here
-				 * https://sourceforge.net/tracker/?func=detail&atid=805242&aid=1789282&group_id=157793
-				 * for some other ways to implements it.
-				 * Let's see how players like this way for now though ;) */
-				CL_ReserveTUs(actor, RES_REACTION, fd->time * CL_UsableReactionTUs(actor) / fd->time);
-			} else {
-				CL_ReserveTUs(actor, RES_REACTION, fd->time);
-			}
+			CL_ReserveTUs(actor, RES_REACTION, fd->time);
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: no firedef found! No TUs will be reserved.\n");
 		}
@@ -966,7 +956,6 @@ void CL_ReserveShot_f (void)
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
 		return;
 
-	
 	/* Check if we have enough TUs (again) */
 	if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= popupTUs[selectedPopupIndex]) {
 		CL_ReserveTUs(selActor, RES_SHOT, popupTUs[selectedPopupIndex]);
@@ -2940,9 +2929,9 @@ void CL_ActorTurnMouse (void)
 
 	if (CL_UsableTUs(selActor) < TU_TURN) {
 		/* Cannot turn because of not enough usable TUs. */
-		return;	
+		return;
 	}
-	
+
 	/* check for fire-modes, and cancel them */
 	switch (cl.cmode) {
 	case M_FIRE_R:
@@ -3121,7 +3110,7 @@ void CL_ActorToggleReaction_f (void)
 				CL_SetDefaultReactionFiremode(selActor, 'r');
 			} else {
 				/* We would reserve more TUs than are available - reserve nothing and abort. */
-				if (CL_UsableTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
+				if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
 					return;
 			}
 			break;
@@ -3132,7 +3121,7 @@ void CL_ActorToggleReaction_f (void)
 				CL_SetDefaultReactionFiremode(selActor, 'r');
 			} else {
 				/* Just in case. */
-				if (CL_UsableTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
+				if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
 					return;
 			}
 			break;
