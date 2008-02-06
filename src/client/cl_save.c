@@ -197,6 +197,12 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	Com_Printf("File '%s' loaded.\n", filename);
 	Mem_Free(buf);
 
+	/* Workaround for 2.2 branch: capacity max. are not saved properly (saved short instead of long) */
+	for (i = 0; i < gd.numBases; i++) {
+		base_t *base = gd.bases + i;
+		B_UpdateBaseCapacities(MAX_CAP, base);
+	}
+
 	return qtrue;
 }
 
