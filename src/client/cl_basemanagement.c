@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_hospital.h"
 #include "cl_view.h"
 #include "cl_map.h"
+#include "cl_ufo.h"
 #include "../renderer/r_draw.h"
 #include "menu/m_nodes.h"
 #include "menu/m_popup.h"
@@ -611,6 +612,7 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	B_UpdateBaseCapacities(MAX_CAP, base);
 }
 
+#ifdef DEBUG
 /**
  * @brief Recalculate status and capacities
  * @note function called with debug_basereset or after loading
@@ -663,6 +665,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
 		}
 	}
 }
+#endif
 
 /**
  * @brief Removes a building from the given base
