@@ -952,6 +952,7 @@ menu aircraft_equip
 		cmd "del mn_aircraft_item_model_slot2;del mn_aircraft_item_model_slot3;"
 		cmd "del mn_aircraft_item_model_slot4;del mn_aircraft_item_model_slot5;"
 		cmd "del mn_aircraft_item_model_slot6;del mn_aircraft_item_model_slot7;"
+		cmd "aircraft_select;"
 	}
 }
 
