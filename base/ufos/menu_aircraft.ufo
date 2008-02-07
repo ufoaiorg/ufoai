@@ -494,14 +494,14 @@ menu aircraft_equip
 	string airequip_available
 	{
 		string	"_Available equipment:"
-		pos		"880 441"
+		pos		"594 440"
 		font	f_big
 		align	uc
 	}
 
 	text airequip_selected_description
 	{
-		pos	"474 630"
+		pos	"760 630"
 		size	"400 120"
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
@@ -512,8 +512,8 @@ menu aircraft_equip
 	{
 		md2		"*cvar mn_upmodel_top"
 		angles	"0 0 120"
-		origin	"600 545 0"
-		pos		"500 500"
+		origin	"886 545 0"
+		pos		"786 500"
 		size	"200 200"
 		mousefx	true
 		click
@@ -522,14 +522,14 @@ menu aircraft_equip
 	string airequip_item_name
 	{
 		string	"*cvar mn_itemname"
-		pos		"594 475"
+		pos		"880 475"
 		align	uc
 	}
 
 	string airequip_description
 	{
 		string	"_Selected item:"
-		pos		"594 441"
+		pos		"880 440"
 		font	f_big
 		align	uc
 	}
@@ -587,7 +587,7 @@ menu aircraft_equip
 
 	text airequip_list
 	{
-		pos	"756 480"
+		pos	"472 480"
 		size	"252 220"
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
@@ -927,15 +927,6 @@ menu aircraft_equip
 		texh	"64 37"
 		click	{ cmd "mn_pop"  }
 	}
-
-//	text aircraft_description
-//	{
-//		pos	"474 665"
-//		size	"530 85"
-//		format	"16 0"
-//		bgcolor	"1 1 1 0.5"
-//		num 11
-//	}
 
 	// ==================
 	// init function
