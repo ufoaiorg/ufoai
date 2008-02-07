@@ -424,7 +424,7 @@ struct edict_s {
 	/* FIXME: move these fields to a server private sv_entity_t */
 	link_t area;				/**< linked to a division node or leaf */
 
-	/* tracing info */
+	/* tracing info SOLID_BSP, SOLID_BBOX, ... */
 	solid_t solid;
 
 	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
@@ -438,14 +438,15 @@ struct edict_s {
 	 * can be any of MASK_* or CONTENTS_*
 	 */
 	int clipmask;
-	int modelindex;
+	int modelindex;	 /**< inline model index */
 
 	/*================================ */
 	/* don't change anything above here - the server expects the fields in that order */
 	/*================================ */
 
-	int mapNum;
-	const char *model;
+	int mapNum;		/**< entity number in the map file */
+	const char *model;	/**< inline model (start with * and is followed by the model numberer)
+						 * or misc_model model name (e.g. md2) */
 
 	/** only used locally in game, not by server */
 
