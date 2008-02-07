@@ -83,6 +83,9 @@ static char text_standard[2048];		/**< Buffer to display standard text in geosca
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
 static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};	/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
 static vec2_t final2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
+static float deltaLengthSmooth = 0.0f;		/**< angle/position difference that we need to change when smoothing */
+static float finalZoom = 0.0f;			/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
+static float deltaZoomSmooth = 0.0f;		/**< zoom difference that we need to change when smoothing */
 static qboolean smoothRotation = qfalse;				/**< qtrue if the rotation of 3D geoscape must me smooth */
 static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
 											zone and water by different color values */
@@ -1039,46 +1042,74 @@ void MAP_CenterOnPoint_f (void)
 
 	if (cl_3dmap->integer) {
 		/* case 3D geoscape */
+		vec3_t diff;
+
 		MAP_GetGeoscapeAngle(finalGlobeAngle);
 		finalGlobeAngle[1] += GLOBE_ROTATE;
+		VectorSubtract(finalGlobeAngle, ccs.angles, diff);
+		deltaLengthSmooth = VectorLength(diff);
 	} else {
 		/* case 2D geoscape */
+		vec2_t diff;
+
 		MAP_GetGeoscapeAngle(final2DGeoscapeCenter);
 		Vector2Set(final2DGeoscapeCenter, 0.5f - final2DGeoscapeCenter[0] / 360.0f, 0.5f - final2DGeoscapeCenter[1] / 180.0f);
 		if (final2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
 			final2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
 		if (final2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
 			final2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
+		diff[0] = final2DGeoscapeCenter[0] - ccs.center[0];
+		diff[1] = final2DGeoscapeCenter[1] - ccs.center[1];
+		deltaLengthSmooth = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
 	}
+	finalZoom = ZOOM_LIMIT;
+
+	deltaZoomSmooth = fabs(finalZoom - ccs.zoom);
 
 	smoothRotation = qtrue;
 }
 
-#define SMOOTHING_STEP	5.0f
 /**
  * @brief smooth rotation of the 3D geoscape
- * @note updates slowly values of ccs.angles so that its value goes to finalGlobeAngle
+ * @note updates slowly values of ccs.angles and ccs.zoom so that its value goes to finalGlobeAngle
  * @sa MAP_DrawMap
  * @sa MAP_CenterOnPoint
  */
 static void MAP3D_SmoothRotate (void)
 {
 	vec3_t diff;
-	float length, diff_zoom;
+	float diff_angle, diff_zoom, a;
+	const float acceleration = 0.06f;
+	const float epsilon = 0.1f;
+	const float epsilonZoom = 0.01f;
 
-	diff_zoom = ZOOM_LIMIT - ccs.zoom;
+	diff_zoom = finalZoom - ccs.zoom;
 
 	VectorSubtract(finalGlobeAngle, ccs.angles, diff);
-	length = VectorLength(diff);
-	if (length < SMOOTHING_STEP) {
-		VectorCopy(finalGlobeAngle, ccs.angles);
-		smoothRotation = qfalse;
-		ccs.zoom = ZOOM_LIMIT;
+	diff_angle = VectorLength(diff);
+
+	if (deltaLengthSmooth > deltaZoomSmooth) {
+		if (diff_angle > epsilon) {
+			a = deltaLengthSmooth * sin(3.05f * (diff_angle / deltaLengthSmooth));
+			VectorScale(diff, acceleration / diff_angle * a, diff);
+			VectorAdd(ccs.angles, diff, ccs.angles);
+			ccs.zoom = ccs.zoom + acceleration * diff_zoom / diff_angle * a;
+			return;
+		}
 	} else {
-		VectorScale(diff, SMOOTHING_STEP / length, diff);
-		VectorAdd(ccs.angles, diff, ccs.angles);
-		ccs.zoom = ccs.zoom + SMOOTHING_STEP * diff_zoom / length;
+		if (fabs(diff_zoom) > epsilonZoom) {
+			a = deltaZoomSmooth * sin(3.05f * (diff_zoom / deltaZoomSmooth));
+			VectorScale(diff, acceleration * diff_angle / fabs(diff_zoom) * a, diff);
+			VectorAdd(ccs.angles, diff, ccs.angles);
+			ccs.zoom = ccs.zoom + acceleration * a;
+			return;
+		}
 	}
+
+	/* if we reach this point, that means that movement is over */
+	VectorCopy(finalGlobeAngle, ccs.angles);
+	smoothRotation = qfalse;
+	ccs.zoom = finalZoom;
 }
 
 #define SMOOTHING_STEP_2D	0.02f
@@ -1889,7 +1920,7 @@ void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
 void MAP_Zoom_f (void)
 {
 	const char *cmd;
-	const float zoomAmount = 15.0f;
+	const float zoomAmount = 50.0f;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <in|out>\n", Cmd_Argv(0));
@@ -1899,26 +1930,32 @@ void MAP_Zoom_f (void)
 	cmd = Cmd_Argv(1);
 	switch (*cmd) {
 	case 'i':
-		ccs.zoom *= pow(0.995, -zoomAmount);
+		finalZoom = ccs.zoom * pow(0.995, -zoomAmount);
 		break;
 	case 'o':
-		ccs.zoom *= pow(0.995, zoomAmount);
+		finalZoom = ccs.zoom * pow(0.995, zoomAmount);
 		break;
 	default:
 		Com_Printf("MAP_Zoom_f: Invalid parameter: %s\n", cmd);
 		return;
 	}
 
-	if (ccs.zoom < cl_mapzoommin->value)
-		ccs.zoom = cl_mapzoommin->value;
-	else if (ccs.zoom > cl_mapzoommax->value)
-		ccs.zoom = cl_mapzoommax->value;
+	if (finalZoom < cl_mapzoommin->value)
+		finalZoom = cl_mapzoommin->value;
+	else if (finalZoom > cl_mapzoommax->value)
+		finalZoom = cl_mapzoommax->value;
 
 	if (!cl_3dmap->integer) {
+		ccs.zoom = finalZoom;
 		if (ccs.center[1] < 0.5 / ccs.zoom)
 			ccs.center[1] = 0.5 / ccs.zoom;
 		if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
 			ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+	} else {
+		VectorCopy(ccs.angles, finalGlobeAngle);
+		deltaLengthSmooth = 0;
+		smoothRotation = qtrue;
+		deltaZoomSmooth = fabs(finalZoom - ccs.zoom);
 	}
 }
 
@@ -1929,7 +1966,7 @@ void MAP_Scroll_f (void)
 {
 	const char *cmd;
 	float scrollX = 0.0f, scrollY = 0.0f;
-	const float scrollAmount = 30.0f;
+	const float scrollAmount = 80.0f;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <up|down|left|right>\n", Cmd_Argv(0));
@@ -1955,19 +1992,30 @@ void MAP_Scroll_f (void)
 		return;
 	}
 	if (cl_3dmap->integer) {
+		/* case 3D geoscape */
+		vec3_t diff;
+
+		VectorCopy(ccs.angles, finalGlobeAngle);
+
 		/* rotate a model */
-		ccs.angles[PITCH] += ROTATE_SPEED * (scrollX) / ccs.zoom;
-		ccs.angles[YAW] -= ROTATE_SPEED * (scrollY) / ccs.zoom;
+		finalGlobeAngle[PITCH] += ROTATE_SPEED * (scrollX) / ccs.zoom;
+		finalGlobeAngle[YAW] -= ROTATE_SPEED * (scrollY) / ccs.zoom;
 
-		while (ccs.angles[YAW] > 180.0)
-			ccs.angles[YAW] -= 360.0;
-		while (ccs.angles[YAW] < -180.0)
-			ccs.angles[YAW] += 360.0;
+		while (finalGlobeAngle[YAW] > 180.0)
+			finalGlobeAngle[YAW] -= 360.0;
+		while (finalGlobeAngle[YAW] < -180.0)
+			finalGlobeAngle[YAW] += 360.0;
 
-		while (ccs.angles[PITCH] > 180.0)
-			ccs.angles[PITCH] -= 360.0;
-		while (ccs.angles[PITCH] < -180.0)
-			ccs.angles[PITCH] += 360.0;
+		while (finalGlobeAngle[PITCH] > 180.0)
+			finalGlobeAngle[PITCH] -= 360.0;
+		while (finalGlobeAngle[PITCH] < -180.0)
+			finalGlobeAngle[PITCH] += 360.0;
+		VectorSubtract(finalGlobeAngle, ccs.angles, diff);
+		deltaLengthSmooth = VectorLength(diff);
+
+		finalZoom = ccs.zoom;
+		deltaZoomSmooth = 0.0f;
+		smoothRotation = qtrue;
 	} else {
 		int i;
 		/* shift the map */
