@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-01-25 16:49+0100\n"
-"PO-Revision-Date: 2008-02-03 09:16+0100\n"
+"PO-Revision-Date: 2008-02-07 12:15+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11290,7 +11290,7 @@ msgstr "Armures : \t%i sur 1\n"
 #: client/cl_aircraft.c:652
 #, c-format
 msgid "Electronics:\t%i on %i"
-msgstr "Électronique :\t%i on %i"
+msgstr "Électronique :\t%i sur %i"
 
 #: client/cl_aircraft.c:729
 #, c-format
