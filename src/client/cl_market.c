@@ -367,7 +367,7 @@ static void BS_BuyType_f (void)
 	}
 
 	/* Update some menu cvars. */
-	if (buyCategory < BUY_AIRCRAFT) {
+	if ((buyCategory < BUY_AIRCRAFT) || (buyCategory == BUY_DUMMY)) {
 		/* Set up Buy/Sell factors. */
 		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
 		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
