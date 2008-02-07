@@ -531,6 +531,8 @@ void INV_UpdateStorageCap (base_t *base)
 {
 	int i;
 
+	base->capacities[CAP_ITEMS].cur = 0;
+
 	for (i = 0; i < csi.numODs; i++) {
 		/* don't count antimatter */
 		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
