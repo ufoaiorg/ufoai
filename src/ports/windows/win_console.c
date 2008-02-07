@@ -84,6 +84,10 @@ void Sys_ConsoleOutput (const char *text)
 	char buffer[MAX_PRINTMSG];
 	int len = 0;
 
+	/* skip color char */
+	if (*text == 1)
+		text++;
+
 	/* Change \n to \r\n so it displays properly in the edit box */
 	while (*text) {
 		if (*text == '\n') {

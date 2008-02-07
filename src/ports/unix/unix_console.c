@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #undef HAVE_CURSES
 #endif
 
-/*#define CURSES_COLOR*/
+#define CURSES_COLOR
 
 #ifdef HAVE_CURSES
 #include <ncurses.h>
@@ -88,7 +88,12 @@ void Sys_ConsoleShutdown (void)
 void Sys_ConsoleInit (void)
 {
 #ifdef HAVE_CURSES
-	initscr();
+	WINDOW *stdwin = initscr();
+	cbreak();					/* disable input line buffering */
+	noecho();					/* don't show type characters */
+	keypad(stdwin, TRUE);		/* enable special keys */
+	nodelay(stdwin, TRUE); 		/* non-blocking input */
+	curs_set(1);				/* enable the cursor */
 
 #ifdef CURSES_COLOR
 	/* Add colors */
@@ -323,31 +328,23 @@ char *Sys_ConsoleInput (void)
 void Sys_ConsoleOutput (const char *msg)
 {
 	int i;
-#ifdef CURSES_COLOR
-	char col;
 
+#ifdef CURSES_COLOR
 	/* Set the default color at the beginning of the line */
 	wattron(win_log, COLOR_PAIR(COLOR_DEFAULT));
-#endif /* CURSES_COLOR */
 
-	for (i = 0; i < strlen(msg); i++) {
-		if (msg[i] == '^') {
-#ifdef CURSES_COLOR
-			/* A color modifier */
-			col = (msg[i+1] - '0') % COLOR_MAX;
-
-			/* Wrap 0 (black) to the default color */
-			col = col ? col : COLOR_DEFAULT;
-
-			wattron(win_log, COLOR_PAIR (col));
-#endif /* CURSES_COLOR */
-
-			/* Takes one character extra */
-			i++;
-		} else
-			/* A regular character */
-			waddch(win_log, msg[i]);
+	if (*msg == 1) {
+		wattron(win_log, COLOR_PAIR(COLOR_GREEN));
+		msg++;
 	}
+#else
+	/* skip color char */
+	if (*msg == 1)
+		msg++;
+#endif
+
+	for (i = 0; i < strlen(msg); i++)
+		waddch(win_log, msg[i]);
 
 	Sys_ConsoleRefresh();
 }
@@ -393,6 +390,10 @@ void Sys_ConsoleOutput (const char *string)
 	int i, j;
 
 	i = j = 0;
+
+	/* skip color char */
+	if (*string == 1)
+		string++;
 
 	/* strip high bits */
 	while (string[j]) {
