@@ -34,6 +34,12 @@ int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactio
  * a little bit different */
 static qboolean sentAppearPerishEvent;
 
+qboolean G_IsLivingActor (edict_t *ent)
+{
+	assert(ent);
+	return ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD));
+}
+
 /**
  * @brief Generates the player mask
  */
@@ -140,7 +146,7 @@ void G_GiveTimeUnits (int team)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == team) {
+		if (ent->inuse && G_IsLivingActor(ent) && ent->team == team) {
 			ent->state &= ~STATE_DAZED;
 			ent->TU = GET_TU(ent->chr.skills[ABILITY_SPEED]);
 			G_SendStats(ent);
@@ -1270,7 +1276,7 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 	/* Search for blocker. */
 	/** @todo 2x2 support needed? */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD) && VectorCompare(pos, ent->pos))
+		if (ent->inuse && G_IsLivingActor(ent) && VectorCompare(pos, ent->pos))
 			return qtrue;
 
 	/* Nothing blocked - moving to this direction should be ok. */
@@ -1982,7 +1988,7 @@ void G_KillTeam (void)
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD)) {
+		if (ent->inuse && G_IsLivingActor(ent)) {
 			if (teamToKill >= 0 && ent->team != teamToKill)
 				continue;
 
@@ -2570,7 +2576,7 @@ static int G_PlayerSoldiersCount (player_t* player)
 	edict_t *ent;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->pnum == player->num)
+		if (ent->inuse && G_IsLivingActor(ent) && ent->pnum == player->num)
 			cnt++;
 
 	return cnt;

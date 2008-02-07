@@ -412,7 +412,7 @@ void G_StunTeam (void)
 	Com_DPrintf(DEBUG_GAME, "G_StunTeam: stun team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD)) {
+		if (ent->inuse && G_IsLivingActor(ent)) {
 			if (teamToKill >= 0 && ent->team != teamToKill)
 				continue;
 

@@ -549,7 +549,7 @@ void G_ResetReactionFire (int team)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == team) {
+		if (ent->inuse && G_IsLivingActor(ent) && ent->team == team) {
 			/** @todo why do we send the state here and why do we change the "shaken" state? */
 			ent->state &= ~STATE_SHAKEN;
 			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);

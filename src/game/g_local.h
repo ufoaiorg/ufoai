@@ -278,8 +278,8 @@ void G_SendStats(edict_t * ent);
 edict_t *G_SpawnFloor(pos3_t pos);
 int G_CheckVisTeam(int team, edict_t * check, qboolean perish);
 
+qboolean G_IsLivingActor(edict_t *ent);
 void G_ForceEndRound(void);
-
 void G_ActorDie(edict_t * ent, int state, edict_t *attacker);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);

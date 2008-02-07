@@ -33,14 +33,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Marks the edict as free
  * @sa G_Spawn
  */
-void G_FreeEdict (edict_t * ed)
+void G_FreeEdict (edict_t *ent)
 {
 	/* unlink from world */
-	gi.UnlinkEdict(ed);
+	gi.UnlinkEdict(ent);
 
-	memset(ed, 0, sizeof(*ed));
-	ed->classname = "freed";
-	ed->inuse = qfalse;
+	memset(ent, 0, sizeof(*ent));
+	ent->classname = "freed";
+	ent->inuse = qfalse;
 }
 
 /**
