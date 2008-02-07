@@ -643,7 +643,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
 				INV_UpdateStorageCap(base);
 
 			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_LABSPACE)])
-				base->capacities[CAP_ITEMS].cur += RS_CountInBase(base);
+				base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
 
 			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_WORKSPACE)])
 				baseCurrent->capacities[CAP_WORKSPACE].cur = E_CountHired(baseCurrent, EMPL_WORKER);
