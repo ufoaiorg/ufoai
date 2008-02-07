@@ -840,6 +840,8 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 				Sys_Error("AII_UpdateOneInstallationDelay: aircraft->homebase and base pointers are out of sync\n");
 #endif
 			AII_RemoveItemFromSlot(base, slot, qfalse);
+			if (aircraft)
+				AII_UpdateAircraftStats(aircraft);
 		}
 	}
 }
@@ -1241,6 +1243,57 @@ void AIM_AircraftEquipZoneSelect_f (void)
 }
 
 /**
+ * @brief Auto add ammo corresponding to weapon in main zone, if there is enough in storage.
+ * @param[in] base Pointer to the base where you want to add/remove ammo
+ * @param[in] aircraft Pointer to the aircraft (NULL if we are changing base defense system)
+ * @param[in] slot Pointer to the slot where you want to add ammo
+ * @sa AIM_AircraftEquipAddItem_f
+ * @sa AII_RemoveItemFromSlot
+ */
+static void AIM_AutoAddAmmo (base_t *base, aircraft_t *aircraft, aircraftSlot_t *slot)
+{
+	int k, itemIdx, ammoIdx;
+	technology_t *ammo_tech;
+
+	assert(slot);
+
+	/* Get idx of the weapon */
+	itemIdx = slot->itemIdx;
+
+	if (itemIdx == NONE)
+		return;
+
+	if (csi.ods[itemIdx].craftitem.type > AC_ITEM_WEAPON)
+		return;
+
+	/* don't try to add ammo to a slot that already has ammo */
+	if (slot->ammoIdx != NONE)
+		return;
+
+	if (itemIdx != NONE) {
+		/* Try every ammo usable with this weapon until we find one we have in storage */
+		for (k = 0; k < csi.ods[itemIdx].numAmmos; k++) {
+			ammoIdx = csi.ods[itemIdx].ammo_idx[k];
+			if (ammoIdx != NONE) {
+				ammo_tech = csi.ods[ammoIdx].tech;
+				if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {
+					AII_AddAmmoToSlot(csi.ods[ammoIdx].notOnMarket ? NULL : base, ammo_tech, slot);
+					/* base missile are free, you have 20 when you build a new base defense */
+					if (csi.ods[itemIdx].craftitem.type == AC_ITEM_BASE_MISSILE && (slot->ammoLeft < 0)) {
+						/* we use < 0 here, and not <= 0, because we give missiles only on first build
+						 * (not when player removes base defense and re-add it)
+						 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
+						slot->ammoLeft = 20;
+					} else if (aircraft)
+						AII_ReloadWeapon(aircraft);
+					break;
+				}
+			}
+		}
+	}
+}
+
+/**
  * @brief Move the item in the slot (or optionally its ammo only) to the base storage.
  * @note if there is another item to install after removal, begin this installation.
  * @param[in] base The base to add the item to (may be NULL if item shouldn't be removed from any base).
@@ -1267,8 +1320,20 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 		if (slot->nextItemIdx != NONE) {
 			/* there is anoter item to install after this one */
 			slot->itemIdx = slot->nextItemIdx;
+			if (base) {
+				/* remove next item from storage (maybe we don't have anymore item ?) */
+				if (B_UpdateStorageAndCapacity(base, slot->nextItemIdx, -1, qfalse, qfalse)) {
+					slot->itemIdx = slot->nextItemIdx;
+					slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
+				} else {
+					slot->itemIdx = NONE;
+					slot->installationTime = 0;
+				}
+			} else {
+				slot->itemIdx = slot->nextItemIdx;
+				slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
+			}
 			slot->nextItemIdx = NONE;
-			slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
 		} else {
 			slot->itemIdx = NONE;
 			slot->installationTime = 0;
@@ -1442,44 +1507,30 @@ void AIM_AircraftEquipAddItem_f (void)
 
 	switch (zone) {
 	case ZONE_MAIN:
-		/* we change the weapon, shield, item, or base defense that is already in the slot */
-		AII_RemoveItemFromSlot(base, slot, qfalse);
-		AII_AddItemToSlot(base, airequipSelectedTechnology, slot);
-		/* if the item is a weapon, or base defense, add at the same time ammos to ammo slot (otherwise player forget to put ammos)
-		 * (only if we have some in storage) */
-		if (airequipID <= AC_ITEM_WEAPON) {
-			int k, itemIdx, ammoIdx;
-			technology_t *ammo_tech;
-
-			/* Get idx of the weapon */
-			itemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
-			if (itemIdx != NONE) {
-				/* Try every ammo usable with this weapon until we find one we have in storage */
-				for (k = 0; k < csi.ods[itemIdx].numAmmos; k++) {
-					ammoIdx = csi.ods[itemIdx].ammo_idx[k];
-					if (ammoIdx != NONE) {
-						ammo_tech = csi.ods[ammoIdx].tech;
-						if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {
-							AII_AddAmmoToSlot(csi.ods[ammoIdx].notOnMarket ? NULL : base, ammo_tech, slot);
-							/* base missile are free, you have 20 when you build a new base defense */
-							if (airequipID == AC_ITEM_BASE_MISSILE && (slot->ammoLeft < 0)) {
-								/* we use < 0 here, and not <= 0, because we give missiles only on first build
-								 * (not when player removes base defense and re-add it)
-								 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
-								slot->ammoLeft = 20;
-							} else if (aircraft)
-								AII_ReloadWeapon(aircraft);
-							break;
-						}
-					}
-				}
+		/* we add the weapon, shield, item, or base defense if slot is free or the installation of
+			current item just began */
+		if (slot->itemIdx == NONE || slot->installationTime == csi.ods[slot->itemIdx].craftitem.installationTime) {
+			AII_RemoveItemFromSlot(base, slot, qfalse);
+			AII_AddItemToSlot(base, airequipSelectedTechnology, slot); /* Aircraft stats are updated below */
+			AIM_AutoAddAmmo(base, aircraft, slot);
+			break;
+		} else if (slot->itemIdx == AII_GetAircraftItemByID(airequipSelectedTechnology->provides) &&
+			slot->installationTime == -csi.ods[slot->itemIdx].craftitem.installationTime) {
+			/* player changed he's mind: he just want to readd the item he just removed */
+			slot->installationTime = 0;
+			slot->nextItemIdx = NONE;
+			AIM_AutoAddAmmo(base, aircraft, slot);
+		} else {
+			AII_RemoveItemFromSlot(base, slot, qtrue); /* remove ammo */
+			/* We start removing current item in slot, and the selected item will be installed afterwards */
+			slot->installationTime = -csi.ods[slot->itemIdx].craftitem.installationTime;
+			/* more below (don't use break) */
 			}
-		}
-		break;
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
 		 * of the one in the slot atm */
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
+		/* do not remove item from storage now, this will be done in AII_RemoveItemFromSlot */
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defense system) */
@@ -1549,10 +1600,11 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 		if (slot->installationTime < csi.ods[slot->itemIdx].craftitem.installationTime) {
 			slot->installationTime = -csi.ods[slot->itemIdx].craftitem.installationTime;
-			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
+			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue); /* we remove only ammo, not item */
 		} else {
 			AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
 		}
+		/* aircraft stats are updated below */
 		break;
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
@@ -1658,8 +1710,35 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, int index, aircraftItemType_t typ
 }
 
 /**
+ * @brief Check if item in given slot should change one aircraft stat.
+ * @param[in] slot Pointer to the slot containing the item
+ * @param[in] stat the stat that should be checked
+ * @return qtrue if the item should change the stat.
+ */
+static qboolean AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int stat)
+{
+	const objDef_t *item;
+
+	assert(slot);
+
+	/* there's no item */
+	if (slot->itemIdx == NONE)
+		return qfalse;
+
+	/* you can not have advantages from items if it is being installed or removed, but only disavantages */
+	if (slot->installationTime != 0) {
+		item = &csi.ods[slot->itemIdx];
+		if (item->craftitem.stats[stat] > 1.0f) /* advandages for relative and absolute values */
+			return qfalse;
+	}
+
+	return qtrue;
+}
+
+/**
  * @brief Update the value of stats array of an aircraft.
  * @param[in] aircraft Pointer to the aircraft
+ * @note This should be called when an item starts to be added/removed and when addition/removal is over.
  */
 void AII_UpdateAircraftStats (aircraft_t *aircraft)
 {
@@ -1678,11 +1757,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
-			/* Check that slot is not empty */
-			if (aircraft->electronics[i].itemIdx == NONE)
-				continue;
-			/* check if the electronics is operationnal (not in installing or removing process) */
-			if (aircraft->electronics[i].installationTime != 0)
+			if (!AII_CheckUpdateAircraftStats (&aircraft->electronics[i], currentStat))
 				continue;
 			item = &csi.ods[aircraft->electronics[i].itemIdx];
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
@@ -1694,11 +1769,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by weapons (do nothing if the value of stat is 0)
 		 * note that stats are not modified by ammos */
 		for (i = 0; i < aircraft->maxWeapons; i++) {
-			/* Check that slot is not empty */
-			if (aircraft->weapons[i].itemIdx == NONE)
-				continue;
-			/* check if the weapon is operationnal (not in installing or removing process) */
-			if (aircraft->weapons[i].installationTime != 0)
+			if (!AII_CheckUpdateAircraftStats (&aircraft->weapons[i], currentStat))
 				continue;
 			item = &csi.ods[aircraft->weapons[i].itemIdx];
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
@@ -1707,28 +1778,20 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
-		/* modify by shield (do nothing if the value of stat is 0)
-		 * check if the shield is operationnal (not in installing or removing process) */
-		if (aircraft->shield.installationTime == 0) {
-			/* Check that slot is not empty */
-			if (aircraft->shield.itemIdx != NONE) {
-				item = &csi.ods[aircraft->shield.itemIdx];
-				if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
-					aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
-				else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
-					aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
-			}
+		/* modify by shield (do nothing if the value of stat is 0) */
+		if (AII_CheckUpdateAircraftStats (&aircraft->shield, currentStat)) {
+			item = &csi.ods[aircraft->shield.itemIdx];
+			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
+				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
+			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
+				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 	}
 
 	/* now we update AIR_STATS_WRANGE (this one is the biggest value of every ammo) */
 	aircraft->stats[AIR_STATS_WRANGE] = 0;
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		/* Check that slot is not empty */
-		if (aircraft->weapons[i].itemIdx == NONE)
-			continue;
-		/* check if the weapon is operationnal (not in installing or removing process) */
-		if (aircraft->weapons[i].installationTime != 0)
+		if (!AII_CheckUpdateAircraftStats (&aircraft->weapons[i], AIR_STATS_WRANGE))
 			continue;
 		item = &csi.ods[aircraft->weapons[i].ammoIdx];
 		if (item->craftitem.stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE])
