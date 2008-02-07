@@ -371,7 +371,7 @@ menu map
 
 	func init
 	{
-		cmd		"snd_music van_geoscape;"
+		cmd		"snd_music karlmacklin_geoscape;"
 	}
 }
 
