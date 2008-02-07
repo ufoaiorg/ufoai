@@ -72,11 +72,11 @@ static void MakeTnode (int nodenum)
 
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
-			contentFlags = dleafs[-node->children[i] - 1].contentFlags & ~(1<<31);
+			contentFlags = dleafs[-node->children[i] - 1].contentFlags & ~(1 << 31);
 			if ((contentFlags & neededContents) && !(contentFlags & forbiddenContents))
-				t->children[i] = 1 | (1<<31); /*-node->children[i] | (1<<31); // leaf+1 */
+				t->children[i] = 1 | (1 << 31); /*-node->children[i] | (1<<31); // leaf+1 */
 			else
-				t->children[i] = (1<<31);
+				t->children[i] = (1 << 31);
 		} else {
 			t->children[i] = tnode_p - tnodes;
 			MakeTnode(node->children[i]);
@@ -108,9 +108,11 @@ static void BuildTnode_r (int node)
 		VectorCopy(dnodes[n->children[0]].maxs, c0maxs);
 		VectorCopy(dnodes[n->children[1]].mins, c1mins);
 
-		/*	Com_Printf("(%i %i : %i %i) (%i %i : %i %i)\n", */
-		/*		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1], */
-		/*		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] ); */
+#if 0
+		Com_Printf("(%i %i : %i %i) (%i %i : %i %i)\n",
+			(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1],
+			(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] );
+#endif
 
 		for (i = 0; i < 2; i++)
 			if (c0maxs[i] <= c1mins[i]) {
@@ -203,10 +205,9 @@ static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 		if (r)
 			return r;
 		return TestLine_r(tnode->children[1], start, stop);
-		break;
 	default:
-		front = (start[0]*tnode->normal[0] + start[1]*tnode->normal[1] + start[2]*tnode->normal[2]) - tnode->dist;
-		back = (stop[0]*tnode->normal[0] + stop[1]*tnode->normal[1] + stop[2]*tnode->normal[2]) - tnode->dist;
+		front = (start[0] * tnode->normal[0] + start[1] * tnode->normal[1] + start[2] * tnode->normal[2]) - tnode->dist;
+		back = (stop[0] * tnode->normal[0] + stop[1] * tnode->normal[1] + stop[2] * tnode->normal[2]) - tnode->dist;
 		break;
 	}
 
@@ -220,9 +221,9 @@ static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 
 	frac = front / (front-back);
 
-	mid[0] = start[0] + (stop[0] - start[0])*frac;
-	mid[1] = start[1] + (stop[1] - start[1])*frac;
-	mid[2] = start[2] + (stop[2] - start[2])*frac;
+	mid[0] = start[0] + (stop[0] - start[0]) * frac;
+	mid[1] = start[1] + (stop[1] - start[1]) * frac;
+	mid[2] = start[2] + (stop[2] - start[2]) * frac;
 
 	r = TestLine_r(tnode->children[side], start, mid);
 	if (r)
@@ -270,18 +271,17 @@ static int TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 			if (VectorNearer(mid, tr_end, start)) {
 				VectorCopy(mid, tr_end);
 				return r;
-			}
-			else return side;
+			} else
+				return side;
 		}
 		if (r) {
 			VectorCopy(mid, tr_end);
 			return r;
 		}
 		return side;
-		break;
 	default:
-		front = (start[0]*tnode->normal[0] + start[1]*tnode->normal[1] + start[2]*tnode->normal[2]) - tnode->dist;
-		back = (stop[0]*tnode->normal[0] + stop[1]*tnode->normal[1] + stop[2]*tnode->normal[2]) - tnode->dist;
+		front = (start[0] * tnode->normal[0] + start[1] * tnode->normal[1] + start[2] * tnode->normal[2]) - tnode->dist;
+		back = (stop[0] * tnode->normal[0] + stop[1] * tnode->normal[1] + stop[2] * tnode->normal[2]) - tnode->dist;
 		break;
 	}
 
@@ -295,9 +295,9 @@ static int TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 
 	frac = front / (front-back);
 
-	mid[0] = start[0] + (stop[0] - start[0])*frac;
-	mid[1] = start[1] + (stop[1] - start[1])*frac;
-	mid[2] = start[2] + (stop[2] - start[2])*frac;
+	mid[0] = start[0] + (stop[0] - start[0]) * frac;
+	mid[1] = start[1] + (stop[1] - start[1]) * frac;
+	mid[2] = start[2] + (stop[2] - start[2]) * frac;
 
 	r = TestLineDist_r(tnode->children[side], start, mid);
 	if (r)
@@ -399,7 +399,7 @@ static int TestContents_r (int node, const vec3_t pos)
 		return TestContents_r(tnode->children[1], pos);
 		break;
 	default:
-		front = (pos[0]*tnode->normal[0] + pos[1]*tnode->normal[1] + pos[2]*tnode->normal[2]) - tnode->dist;
+		front = (pos[0] * tnode->normal[0] + pos[1] * tnode->normal[1] + pos[2] * tnode->normal[2]) - tnode->dist;
 		break;
 	}
 
@@ -420,7 +420,7 @@ qboolean TestContents (const vec3_t pos)
 
 	/* loop over all theads */
 	for (i = numtheads - 1; i >= 0; i--) {
-		if (theadlevel[i] != 258) /* only check stepon here */
+		if (theadlevel[i] != LEVEL_STEPON) /* only check stepon here */
 			continue;
 
 		if (TestContents_r(thead[i], pos))

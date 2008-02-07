@@ -314,8 +314,11 @@ typedef struct {
  * Offset is filled in to contain the adjustment that must be added to the
  * testing object's origin to get a point to use with the returned hull.
  */
-static int SV_HullForEntity (const edict_t * ent, int *tile)
+static int SV_HullForEntity (const edict_t *ent, int *tile)
 {
+	assert(ent->solid != SOLID_NOT);
+	assert(ent->solid != SOLID_TRIGGER);
+
 	/* decide which clipping hull to use, based on the size */
 	if (ent->solid == SOLID_BSP) {	/* explicit hulls in the BSP model */
 		cBspModel_t *model;
@@ -342,7 +345,7 @@ static int SV_HullForEntity (const edict_t * ent, int *tile)
  * @sa SV_AreaEdicts
  * @sa CL_ClipMoveToLEs
  */
-static void SV_ClipMoveToEntities (moveclip_t * clip)
+static void SV_ClipMoveToEntities (moveclip_t *clip)
 {
 	int i, num;
 	edict_t *touchlist[MAX_EDICTS], *touch;
@@ -352,8 +355,8 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 
 	num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS, AREA_SOLID);
 
-	/* be careful, it is possible to have an entity in this */
-	/* list removed before we get to it (killtriggered) */
+	/* be careful, it is possible to have an entity in this
+	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		touch = touchlist[i];
 		if (touch->solid == SOLID_NOT)
@@ -484,6 +487,7 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 
 	/* clip to world - 0x1FF = all levels */
 	clip.trace = CM_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask);
+	/* FIXME: There is more than one world in case of a map assembly */
 	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */

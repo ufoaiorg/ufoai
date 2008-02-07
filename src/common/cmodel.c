@@ -1777,6 +1777,7 @@ static void CM_TestInLeaf (int leafnum)
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contentFlags & trace_contents))
 		return;
+
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
 		brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
