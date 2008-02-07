@@ -285,7 +285,7 @@ void G_RecalcRouting (const edict_t * self)
 
 	/* generate entity list */
 	for (i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (ent->inuse && ent->model && *ent->model == '*')
+		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP)
 			entList[i++] = ent->model;
 	entList[i] = NULL;
 
@@ -302,7 +302,7 @@ void G_CompleteRecalcRouting (void)
 
 	/* generate entity list */
 	for (ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (ent->inuse && ent->model && *ent->model == '*')
+		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP)
 			G_RecalcRouting(ent);
 }
 

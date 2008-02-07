@@ -1308,6 +1308,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	char* stepAmount = NULL;
 	qboolean triggers = qfalse;
 	edict_t* client_action = NULL;
+	int oldState;
 
 	ent = g_edicts + num;
 
@@ -1435,6 +1436,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				ent->TU = max(0, initTU - (int) tu);
 
 				client_action = ent->client_action;
+				oldState = ent->state;
 				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
 					triggers = qtrue;
@@ -1443,6 +1445,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 						steps = 0;
 						sentAppearPerishEvent = qfalse;
 					}
+				}
+				/* state has changed - maybe we walked on a trigger_hurt */
+				if (oldState != ent->state) {
+					status |= VIS_STOP;
+					steps = 0;
+					sentAppearPerishEvent = qfalse;
 				}
 				/* check for reaction fire */
 				if (G_ReactToMove(ent, qtrue)) {
@@ -1463,8 +1471,13 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				ent->TU = initTU;
 
 				/* check for death */
-				if (ent->state & STATE_DEAD)
+				if (oldState != ent->state && !(ent->state & STATE_DAZED)) {
+					/* @todo Handle dazed via trigger_hurt */
+					/* maybe this was due to rf - then the G_ActorDie was already called */
+					if (ent->maxs[2] != PLAYER_DEAD)
+						G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN, NULL);
 					return;
+				}
 
 				if (stop && (status & VIS_STOP))
 					break;

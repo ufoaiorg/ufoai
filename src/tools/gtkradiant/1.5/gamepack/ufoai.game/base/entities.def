@@ -144,7 +144,7 @@ Only for editor and terrain convenience.
 "angle"		rotate around this angle - pitch = 0, yaw = 1, roll = 2
 */
 
-/*QUAKED trigger_hurt (0 0 0) ?
+/*QUAKED trigger_hurt (0 0 0) ? KILL STUN DAZE
 Any entity that touches this will be hurt. It does dmg points of damage each server frame
 "dmg"		default 5 (whole numbers only)
 */

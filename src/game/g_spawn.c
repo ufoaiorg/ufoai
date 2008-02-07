@@ -461,14 +461,25 @@ static void SP_light (edict_t *ent)
 /**
  * @brief Hurt trigger
  * @sa SP_trigger_hurt
+ * @note No new event in the trigger functions!!!! They are called while moving
  */
 static qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 {
-	if (!self->owner)
-		return qfalse;
+	/* these actors should really not be able to trigger this - they don't move anymore */
+	assert(!(activator->state & STATE_DEAD));
+	assert(!(activator->state & STATE_STUN));
 
-	/* @todo implement protection for the touching activator */
-	activator->HP = max(activator->HP - self->dmg, 0);
+	if (self->spawnflags & 2) {
+		activator->STUN += self->dmg;
+		if (activator->HP <= activator->STUN)
+			activator->state |= STATE_STUN;
+	} else if (self->spawnflags & 4) {
+		/* @todo Handle dazed via trigger_hurt */
+	} else {
+		activator->HP = max(activator->HP - self->dmg, 0);
+		if (activator->HP == 0)
+			activator->state |= STATE_DEAD;
+	}
 
 	return qtrue;
 }
