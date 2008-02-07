@@ -3816,8 +3816,15 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qbool
 		if (csi.ods[objIDX].size > 0)
 			base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
 
-		if (base->capacities[CAP_ITEMS].cur < 0)
+		if (base->capacities[CAP_ITEMS].cur < 0) {
+			Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", base->capacities[CAP_ITEMS].cur);
 			base->capacities[CAP_ITEMS].cur = 0;
+		}
+
+		if (base->storage.num[objIDX] < 0) {
+			Com_Printf("B_UpdateStorageAndCapacity: current number of item '%s' is negative: reset to 0\n", csi.ods[objIDX].id);
+			base->storage.num[objIDX] = 0;
+		}
 	}
 
 	return qtrue;

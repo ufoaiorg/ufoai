@@ -444,8 +444,7 @@ static void BS_BuyItem_f (void)
 		if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
 			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[item].size) {
 				/* reinit the menu */
-				baseCurrent->storage.num[item]++;
-				baseCurrent->capacities[CAP_ITEMS].cur += csi.ods[item].size;
+				B_UpdateStorageAndCapacity(baseCurrent, item, 1, qfalse, qfalse);
 				ccs.eMarket.num[item]--;
 				Cmd_BufClear();
 				BS_BuyType_f();
@@ -468,7 +467,7 @@ static void BS_BuyItem_f (void)
  */
 static void BS_SellItem_f (void)
 {
-	int num, item, i, j;
+	int num, item, i;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -494,13 +493,7 @@ static void BS_SellItem_f (void)
 	for (i = 0; i < baseCurrent->sellfactor; i++) {
 		if (baseCurrent->storage.num[item]) {
 			/* reinit the menu */
-			baseCurrent->storage.num[item]--;
-			for (j = csi.ods[item].size; j > 0; j--) {
-				if (baseCurrent->capacities[CAP_ITEMS].cur > 0)
-					baseCurrent->capacities[CAP_ITEMS].cur--;
-				else
-					break;
-			}
+			B_UpdateStorageAndCapacity(baseCurrent, item, -1, qfalse, qfalse);
 			ccs.eMarket.num[item]++;
 			Cmd_BufClear();
 			BS_BuyType_f();
