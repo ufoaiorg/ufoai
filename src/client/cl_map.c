@@ -2001,15 +2001,23 @@ void MAP_Scroll_f (void)
 		finalGlobeAngle[PITCH] += ROTATE_SPEED * (scrollX) / ccs.zoom;
 		finalGlobeAngle[YAW] -= ROTATE_SPEED * (scrollY) / ccs.zoom;
 
-		while (finalGlobeAngle[YAW] > 180.0)
+		while (finalGlobeAngle[YAW] > 180.0) {
 			finalGlobeAngle[YAW] -= 360.0;
-		while (finalGlobeAngle[YAW] < -180.0)
+			ccs.angles[YAW] -= 360.0;
+		}
+		while (finalGlobeAngle[YAW] < -180.0){
 			finalGlobeAngle[YAW] += 360.0;
+			ccs.angles[YAW] += 360.0;
+		}
 
-		while (finalGlobeAngle[PITCH] > 180.0)
+		while (finalGlobeAngle[PITCH] > 180.0) {
 			finalGlobeAngle[PITCH] -= 360.0;
-		while (finalGlobeAngle[PITCH] < -180.0)
+			ccs.angles[PITCH] -= 360.0;
+		}
+		while (finalGlobeAngle[PITCH] < -180.0) {
 			finalGlobeAngle[PITCH] += 360.0;
+			ccs.angles[PITCH] += 360.0;
+		}
 		VectorSubtract(finalGlobeAngle, ccs.angles, diff);
 		deltaLengthSmooth = VectorLength(diff);
 
