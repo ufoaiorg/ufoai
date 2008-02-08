@@ -1271,6 +1271,7 @@ static void PR_ProductionStop_f (void)
 	if (queue->numItems == 0) {
 		selectedQueueItem = qfalse;
 		selectedIndex = NONE;
+		/* empty selected item description */
 		PR_ProductionInfo(base, qfalse);
 	} else if (selectedIndex >= queue->numItems) {
 		selectedIndex = queue->numItems - 1;
@@ -1280,8 +1281,13 @@ static void PR_ProductionStop_f (void)
 			PR_ProductionInfo(base, qfalse);
 	}
 
-	PR_UpdateDisassemblingList_f();
-	PR_UpdateProductionList(base);
+	if (production_disassembling) {
+		PR_ProductionInfo(base, qtrue);
+		PR_UpdateDisassemblingList_f();
+	} else {
+		PR_ProductionInfo(base, qfalse);
+		PR_UpdateProductionList(base);
+	}
 }
 
 /**
