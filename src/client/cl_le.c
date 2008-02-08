@@ -533,8 +533,7 @@ static void LET_PathMove (le_t * le)
 				/* prepare trace vectors */
 				PosToVec(le->pos, from);
 				VectorCopy(from, to);
-				/* between these two we should really hit the ground */
-				from[2] += UNIT_HEIGHT;
+				/* we should really hit the ground with this */
 				to[2] -= UNIT_HEIGHT;
 
 				trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
