@@ -3128,7 +3128,9 @@ static void CL_UpdateCharacterStats (int won)
 			idx++;
 			chr->score.assignedMissions++;
 
-			CL_UpdateCharacterSkills(chr);
+			/** CL_UpdateCharacterSkills(chr);
+			This is now done in g_client.c:G_UpdateCharacterSkills
+			@todo I think we can remove this later on. I've left it here just FYI for now. */
 
 			/* @todo: use chrScore_t to determine negative influence on soldier here,
 			   like killing too many civilians and teammates can lead to unhire and disband

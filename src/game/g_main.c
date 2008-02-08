@@ -406,6 +406,126 @@ static void G_SendCharacterData (const edict_t* ent)
 }
 
 /**
+ * @brief Ensures skills increase quickly at first and then slows down as they near 100.
+ * @note (number of calls to this function/skill increase range)
+ * 5/20-40 6/40-50 8/50-60 11/60-70 15/80-90 24/90-100
+ * @note we calculate the increase and not the new value because this way we can use skills bigger than MAX_SKILL
+ * thanks to implants (but skills won't then be increased)
+ * @param[in] skill The current value of the skill to be increased.
+ * @return The amount to be added to the skill
+ */
+static int G_SkillIncreaseBy (float skill)
+{
+	float delta;
+
+	if (skill >= MAX_SKILL)
+		return 0;
+
+	delta = 2.3f - 0.02f * skill + (2.0f - 0.01f * skill) * frand();
+
+	/* to avoid skill increasing to fast, you can not gain more than 1 point if your skill is bigger than 95
+	 * This allow to be sure at the same time than skill is never bigger than MAX_SKILL (because delta < 4.3) */
+	if (delta > 1.0f && skill >= 0.95 * MAX_SKILL)
+		return 1;
+	else
+		return (int) delta;
+}
+
+/**
+ * @brief Updates character skills after a mission.
+ * @param[in] chr Pointer to a character_t.
+ * @sa cl_campaign.c:CL_UpdateCharacterStats
+ * @sa cl_combat.c:G_UpdateCharacterScore
+ * @sa cl_combat.c:G_UpdateHitScore
+ * @todo We really need to update this so it takes all the other new stuff (in chr->scoreMission and chr->score) into account.
+ */
+static void G_UpdateCharacterSkills (character_t *chr)
+{
+	qboolean changed = qfalse;
+
+	if (!chr)
+		return;
+
+	if (!chr->scoreMission)
+		return;
+	
+	/* We are only updating skills to max value 100.
+	   TODO: More than 100 is available only with implants. */
+
+	/* Update SKILL_CLOSE. 2 closekills needed. */
+	if (chr->score.skills[SKILL_CLOSE] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_CLOSE] >= 2) {
+			chr->score.skills[SKILL_CLOSE] += G_SkillIncreaseBy((float)chr->score.skills[SKILL_CLOSE]);
+			chr->scoreMission->skillKills[SKILL_CLOSE] = chr->scoreMission->skillKills[SKILL_CLOSE] - 2;
+			changed = qtrue;
+		}
+	}
+
+	/* Update SKILL_HEAVY. 4 heavykills needed.*/
+	if (chr->score.skills[SKILL_HEAVY] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_HEAVY] >= 4) {
+			chr->score.skills[SKILL_HEAVY] += G_SkillIncreaseBy((float)chr->score.skills[SKILL_HEAVY]);
+			chr->scoreMission->skillKills[SKILL_HEAVY] = chr->scoreMission->skillKills[SKILL_HEAVY] - 4;
+			changed = qtrue;
+		}
+	}
+
+	/* Update SKILL_ASSAULT. 3 assaultkills needed.*/
+	if (chr->score.skills[SKILL_ASSAULT] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_ASSAULT] >= 3) {
+			chr->score.skills[SKILL_ASSAULT] += G_SkillIncreaseBy((float)chr->score.skills[SKILL_ASSAULT]);
+			chr->scoreMission->skillKills[SKILL_ASSAULT] = chr->scoreMission->skillKills[SKILL_ASSAULT] - 3;
+			changed = qtrue;
+		}
+	}
+
+	/* Update SKILL_SNIPER. 3 sniperkills needed. */
+	if (chr->score.skills[SKILL_SNIPER] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_SNIPER] >= 3) {
+			chr->score.skills[SKILL_SNIPER] += G_SkillIncreaseBy((float)chr->score.skills[SKILL_SNIPER]);
+			chr->scoreMission->skillKills[SKILL_SNIPER] = chr->scoreMission->skillKills[SKILL_SNIPER] - 3;
+			changed = qtrue;
+		}
+	}
+
+	/* Update SKILL_EXPLOSIVE. 5 explosivekills needed. */
+	if (chr->score.skills[SKILL_EXPLOSIVE] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_EXPLOSIVE] >= 5) {
+			chr->score.skills[SKILL_EXPLOSIVE] += G_SkillIncreaseBy((float)chr->score.skills[SKILL_EXPLOSIVE]);
+			chr->scoreMission->skillKills[SKILL_EXPLOSIVE] = chr->scoreMission->skillKills[SKILL_EXPLOSIVE] - 5;
+			changed = qtrue;
+		}
+	}
+#if 0
+	/* Update ABILITY_ACCURACY. 8 accuracystat (succesful kill or stun) needed. */
+	if (chr->score.skills[ABILITY_ACCURACY] < MAX_SKILL) {
+		if (chr->chrscore.accuracystat >= 8) {
+			chr->score.skills[ABILITY_ACCURACY] += G_SkillIncreaseBy((float)chr->score.skills[ABILITY_ACCURACY]);
+			chr->scoreMission.accuracystat = chr->scoreMission.accuracystat - 8;
+			changed = qtrue;
+		}
+	}
+
+	/* Update ABILITY_POWER. 8 powerstat (succesful kill or stun with heavy) needed. */
+	if (chr->score.skills[ABILITY_POWER] < MAX_SKILL) {
+		if (chr->chrscore.powerstat >= 8) {
+			chr->score.skills[ABILITY_POWER] += G_SkillIncreaseBy((float)chr->score.skills[ABILITY_POWER]);
+			chr->scoreMission.powerstat = chr->scoreMission.powerstat - 8;
+			changed = qtrue;
+		}
+	}
+#endif
+	/* Update ABILITY_MIND just to make ranks work.
+	   @todo: ABILITY_MIND should be improved other way. FIXME. */
+	if (!changed)
+		chr->score.skills[ABILITY_MIND]++;
+
+	/* Repeat to make sure we update skills with huge amount of chrscore->*kills. */
+	if (changed)
+		G_UpdateCharacterSkills(chr);
+}
+
+/**
  * @brief Handles the end of a game
  * @note Called by game_abort command (or sv win [team])
  * @sa G_RunFrame
@@ -420,6 +540,14 @@ void G_EndGame (int team)
 
 	G_PrintStats(va("End of game - Team %i is the winner", team));
 
+	/* Calculate new scores/skills for the soldiers */
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
+		&& !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX) {
+			G_UpdateCharacterSkills(&ent->chr);
+		}
+	}
+	
 	/* if aliens won, make sure every soldier dies */
 	if (team == TEAM_ALIEN) {
 		level.num_alive[TEAM_PHALANX] = 0;
