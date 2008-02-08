@@ -722,6 +722,7 @@ void Master_Heartbeat (void)
 	svs.last_heartbeat = svs.realtime;
 
 	/* send to master */
+	Com_Printf("sending heartbeat\n");
 	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string));
 	if (responseBuf) {
 		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
