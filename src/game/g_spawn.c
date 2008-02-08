@@ -105,6 +105,7 @@ static const field_t fields[] = {
 	{"delay", offsetof(edict_t, delay), F_FLOAT, 0},
 	{"random", offsetof(edict_t, random), F_FLOAT, 0},
 	{"count", offsetof(edict_t, count), F_INT, 0},
+	{"time", offsetof(edict_t, time), F_INT, 0},
 	{"health", offsetof(edict_t, HP), F_INT, 0},
 	{"sounds", offsetof(edict_t, sounds), F_INT, 0},
 	{"material", offsetof(edict_t, material), F_INT, 0},
@@ -645,15 +646,26 @@ static qboolean Touch_MissionTrigger (edict_t *self, edict_t *activator)
 	switch (self->owner->team) {
 	case TEAM_ALIEN:
 		if (activator->team == TEAM_ALIEN) {
-			self->count++; /* how often was this trigger touched already */
-			Com_Printf("Touched by TEAM_ALIEN\n");
+			if (!self->count) {
+				self->count = level.actualRound;
+				gi.bprintf(PRINT_HUD, _("Aliens entered target zone\n"));
+			}
 			return qtrue;
+		} else {
+			/* reset king of the hill counter */
+			self->count = 0;
 		}
-	case TEAM_PHALANX:
-		if (activator->team == TEAM_PHALANX) {
-			self->count++; /* how often was this trigger touched already */
-			Com_Printf("Touched by TEAM_PHALANX\n");
+	/* general case that also works for multiplayer teams */
+	default:
+		if (activator->team == self->owner->team) {
+			if (!self->count) {
+				self->count = level.actualRound;
+				gi.bprintf(PRINT_HUD, _("Target zone is occupied\n"));
+			}
 			return qtrue;
+		} else {
+			/* reset king of the hill counter */
+			self->count = 0;
 		}
 	}
 	return qfalse;
@@ -674,8 +686,16 @@ static void Think_MissionTrigger (edict_t *self)
 		gi.WriteString(self->particle);
 		gi.EndEvents();
 
-		/* @todo: this think function is also useful for the other mission conditions */
-		self->think = NULL;
+		/* This is automatically freed on map shutdown */
+		self->particle = NULL;
+	}
+
+	/* occupied by a special team */
+	if (self->count) {
+		if (level.actualRound - self->count >= self->time) {
+			/* mission succeeds */
+			/* @todo implement this */
+		}
 	}
 }
 
@@ -688,7 +708,11 @@ static void SP_misc_mission (edict_t *ent)
 
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
-	ent->team = TEAM_PHALANX;
+
+	/* maybe this was set to something else for multiplayer */
+	if (!ent->team)
+		ent->team = TEAM_PHALANX;
+
 	ent->solid = SOLID_BBOX;
 
 	/* think function values */

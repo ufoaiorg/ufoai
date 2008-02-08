@@ -510,6 +510,7 @@ struct edict_s {
 	float random;	/**< used to add a bit of time variation of func_timer */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
+	int time;		/**< general purpose 'rounds' variable - set via mapeditor often */
 	int sounds;		/**< type of sounds to play - e.g. doors */
 	int dmg;		/**< damage done by entity */
 	/** @sa memcpy in Grid_CheckForbidden */
