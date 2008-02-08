@@ -365,7 +365,7 @@ mission frozen_alienlandingindustrial
 	nation		"oceania"		//FIXME: does Antarctica belongs to Oceania?
 	onlose		""
 	onwin		"cp_uforecovery 1;"
-	storyrelated	false
+	storyrelated	true
 }
 
 //--------------------------------------
