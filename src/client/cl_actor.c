@@ -884,8 +884,8 @@ void CL_PopupFiremodeReservation_f (void)
 	if (!selActor)
 		return;
 
-	MN_MenuTextReset(TEXT_LIST);
-	list = NULL;
+	LIST_Delete(list);
+	mn.menuTextLinkedList[TEXT_LIST] = list = NULL;
 
 	/* Reset the length of the TU-list. */
 	popupNum = 0;
