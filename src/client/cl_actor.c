@@ -884,7 +884,7 @@ void CL_PopupFiremodeReservation_f (void)
 	if (!selActor)
 		return;
 
-	LIST_Delete(list);
+	MN_MenuTextReset(TEXT_LIST);
 	list = NULL;
 
 	/* Reset the length of the TU-list. */
@@ -927,7 +927,6 @@ void CL_PopupFiremodeReservation_f (void)
 			hand = 0;	/* Second (&last) run -> quit. */
 		}
 	} while (hand != 0);
-
 
 	MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), list, "reserve_shot");
 }

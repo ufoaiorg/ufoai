@@ -1226,7 +1226,7 @@ void LIST_Delete (linkedList_t *list)
 	linkedList_t *l = list;
 
 	while (l) {
-		list = list->next;
+		list = l->next;
 		if (!l->ptr)
 			Mem_Free(l->data);
 		Mem_Free(l);
