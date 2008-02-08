@@ -1112,6 +1112,16 @@ static void MAP3D_SmoothRotate (void)
 	ccs.zoom = finalZoom;
 }
 
+/**
+ * @brief stop smooth translation on geoscape
+ * @sa MN_RightClick
+ * @sa MN_MouseWheel
+ */
+void MAP_StopSmoothMovement (void)
+{
+	smoothRotation = qfalse;
+}
+
 #define SMOOTHING_STEP_2D	0.02f
 /**
  * @brief smooth translation of the 2D geoscape
@@ -1995,7 +2005,8 @@ void MAP_Scroll_f (void)
 		/* case 3D geoscape */
 		vec3_t diff;
 
-		VectorCopy(ccs.angles, finalGlobeAngle);
+		if (!smoothRotation)
+			VectorCopy(ccs.angles, finalGlobeAngle);
 
 		/* rotate a model */
 		finalGlobeAngle[PITCH] += ROTATE_SPEED * (scrollX) / ccs.zoom;

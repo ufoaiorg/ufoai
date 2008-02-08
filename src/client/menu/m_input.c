@@ -363,6 +363,7 @@ void MN_RightClick (int x, int y)
 					mouseSpace = MS_SHIFTMAP;
 				else
 					mouseSpace = MS_SHIFT3DMAP;
+				MAP_StopSmoothMovement();
 				break;
 			case MN_TEXT:
 				MN_TextRightClick(node, mouseOver);
@@ -471,6 +472,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 					if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
 						ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
 				}
+				MAP_StopSmoothMovement();
 				break;
 			case MN_TEXT:
 				if (node->wheelUp && node->wheelDown) {
