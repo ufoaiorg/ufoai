@@ -47,7 +47,7 @@ copynotes: package_dir
 
 copylibs:
 	@rm -rf UFOAI.app/Contents/Frameworks/*.framework
-	@perl macfixlibs2.pl
+	@perl macfixlibs.pl
 
 
 copy_package_bundle: package_dir bundle
