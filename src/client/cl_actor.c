@@ -50,11 +50,17 @@ static pos3_t mousePos;
  */
 static int mousePosTargettingAlign = 0;
 
+/**
+ * @brief The TUs that the current selected actor needs to walk to the
+ * current grid position marked by the mouse cursor (mousePos)
+ * @sa CL_MoveLength
+ */
 int actorMoveLength;
+
 invList_t invList[MAX_INVLIST];
 static qboolean visible_firemode_list_left = qfalse;
 static qboolean visible_firemode_list_right = qfalse;
-static qboolean firemodes_change_display = qtrue; /* If this set to qfalse so CL_DisplayFiremodes_f will not attempt to hide the list */
+static qboolean firemodes_change_display = qtrue; /* If this set to qfalse CL_DisplayFiremodes_f will not attempt to hide the list */
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
@@ -2482,6 +2488,7 @@ static int CL_CheckAction (void)
  * @note The part of the line that is not reachable in this turn (i.e. not enough
  * TUs left) will be drawn differently.
  * @param[in] to The position in the map to calculate the move-length for.
+ * @return The amount of TUs that are need to walk to the given grid position
  */
 static int CL_MoveLength (pos3_t to)
 {
