@@ -307,7 +307,7 @@ void MN_Click (int x, int y)
 				mouseSpace = MS_LHOLD;
 				mn.mouseRepeat.menu = menu;
 				mn.mouseRepeat.action = execute_node->click;
-				mn.mouseRepeat.nexttime = cls.realtime + 100;	/* second "event" after 0.5 sec */
+				mn.mouseRepeat.nexttime = cls.realtime + 100;	/* second "event" after 0.1 sec */
 			}
 		}
 
