@@ -2381,6 +2381,7 @@ static void B_PackInitialEquipment_f (void)
 			}
 		}
 		CL_AddCarriedToEq(aircraft, &base->storage);
+		INV_UpdateStorageCap(base);
 		CL_SwapSkills(&chr_list_temp);
 
 		/* pay for the initial equipment */
