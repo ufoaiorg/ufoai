@@ -1186,8 +1186,7 @@ static void SV_InitGame (void)
 	} else
 		svs.initialized = SV_Start(NULL, NULL, &SV_ReadPacket);
 
-	/* heartbeats will always be sent to the ufo master */
-	svs.last_heartbeat -= (HEARTBEAT_SECONDS + 1)* 1000;	/* send immediately */
+	SV_Heartbeat_f();
 
 	/* init game */
 	SV_InitGameProgs();

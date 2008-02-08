@@ -165,6 +165,7 @@ void SV_SetClientState(client_t* client, int state);
 
 /* sv_ccmds.c */
 void SV_SetMaster_f(void);
+void SV_Heartbeat_f(void);
 
 /* sv_game.c */
 extern game_export_t *ge;
