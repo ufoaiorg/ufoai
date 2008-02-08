@@ -64,7 +64,7 @@ edict_t* G_TriggerSpawn (edict_t *owner)
  * @sa SP_trigger_hurt
  * @note No new event in the trigger functions!!!! They are called while moving
  */
-qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
+static qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
 	assert(!(activator->state & STATE_DEAD));
