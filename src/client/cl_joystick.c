@@ -295,7 +295,7 @@ void IN_StartupJoystick (void)
 	}
 
 	total = SDL_NumJoysticks();
-	Com_DPrintf(DEBUG_CLIENT, "%d possible joysticks\n", total);
+	Com_Printf("%d possible joysticks\n", total);
 	for (i = 0; i < total; i++)
 		Com_DPrintf(DEBUG_CLIENT, "[%d] %s\n", i, SDL_JoystickName(i));
 
@@ -309,7 +309,7 @@ void IN_StartupJoystick (void)
 		return;
 	}
 
-	Com_Printf("joystick %d opened\n", in_joystickNo->integer);
+	Com_Printf("joystick %d opened - set cvar in_joystickNo to change this\n", in_joystickNo->integer);
 	Com_Printf("... name: %s\n", SDL_JoystickName(in_joystickNo->integer));
 	Com_Printf("... axes: %d\n", SDL_JoystickNumAxes(stick));
 	Com_Printf("... hats: %d\n", SDL_JoystickNumHats(stick));
