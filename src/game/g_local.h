@@ -93,7 +93,7 @@ typedef struct {
 
 	char level_name[MAX_QPATH];	/**< the descriptive name (Outer Base, etc) */
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
-	char nextmap[MAX_QPATH];	/**< go here when fraglimit is hit */
+	char nextmap[MAX_QPATH];	/**< @todo Spawn the new map after the current one was ended */
 	qboolean routed;
 	int maxteams; /**< the max team amount for multiplayer games for the current map */
 
@@ -106,6 +106,8 @@ typedef struct {
 	int numplayers;
 	int activeTeam;
 	int nextEndRound;
+
+	int actualRound;
 
 	byte num_alive[MAX_TEAMS];
 	byte num_spawned[MAX_TEAMS];

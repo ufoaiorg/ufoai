@@ -2774,6 +2774,8 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam)
 			p->ready = qfalse;
+
+	level.actualRound++;
 }
 
 /**

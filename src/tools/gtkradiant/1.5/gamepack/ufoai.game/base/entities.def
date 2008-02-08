@@ -100,7 +100,6 @@ Used to play ambient sounds (looped sounds)
 
 /*QUAKED misc_mission (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
 Defines a mission target
-"model"	display a model
 "particle"	display a particle
 "time"	if set the entity has to be occupied x rounds to win the mission
 "radius"	if the entity has to be occupied this defines the radius that is needed
@@ -109,7 +108,6 @@ Defines a mission target
 
 /*QUAKED misc_mission_alien (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
 Defines the alien mission target
-"model"	display a model
 "particle"	display a particle
 "time"	if set the entity has to be occupied x rounds to win the mission
 "radius"	if the entity has to be occupied this defines the radius that is needed

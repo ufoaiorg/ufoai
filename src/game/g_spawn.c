@@ -632,6 +632,9 @@ static void SP_civilian_target (edict_t *ent)
 
 /**
  * @brief Mission trigger
+ * @todo use level.nextmap to spawn another map when every living actor has touched the mission trigger
+ * @todo use level.actualRound to determine the 'King of the Hill' time
+ * @todo Implement trigger->owner health (to destroy the target)
  */
 static qboolean Touch_MissionTrigger (edict_t *self, edict_t *activator)
 {
@@ -642,11 +645,13 @@ static qboolean Touch_MissionTrigger (edict_t *self, edict_t *activator)
 	switch (self->owner->team) {
 	case TEAM_ALIEN:
 		if (activator->team == TEAM_ALIEN) {
+			self->count++; /* how often was this trigger touched already */
 			Com_Printf("Touched by TEAM_ALIEN\n");
 			return qtrue;
 		}
 	case TEAM_PHALANX:
 		if (activator->team == TEAM_PHALANX) {
+			self->count++; /* how often was this trigger touched already */
 			Com_Printf("Touched by TEAM_PHALANX\n");
 			return qtrue;
 		}
@@ -684,21 +689,12 @@ static void SP_misc_mission (edict_t *ent)
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
 	ent->team = TEAM_PHALANX;
-	ent->solid = SOLID_NOT;
-
-	/* fall to ground */
-	ent->fieldSize = ACTOR_SIZE_NORMAL; /* to let the grid fall function work */
-	if (ent->pos[2] >= HEIGHT)
-		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
+	ent->solid = SOLID_BBOX;
 
 	/* think function values */
-	ent->inuse = qtrue;
 	ent->think = Think_MissionTrigger;
 	ent->nextthink = 1;
 
-	ent->dir = AngleToDV(ent->angle);
-	ent->solid = SOLID_BBOX;
 	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
 	VectorSet(ent->absmin, -(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
 
@@ -720,21 +716,12 @@ static void SP_misc_mission_aliens (edict_t *ent)
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
 	ent->team = TEAM_ALIEN;
-	ent->solid = SOLID_NOT;
-
-	/* fall to ground */
-	ent->fieldSize = ACTOR_SIZE_NORMAL; /* to let the grid fall function work */
-	if (ent->pos[2] >= HEIGHT)
-		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
+	ent->solid = SOLID_BBOX;
 
 	/* think function values */
-	ent->inuse = qtrue;
 	ent->think = Think_MissionTrigger;
 	ent->nextthink = 1;
 
-	ent->dir = AngleToDV(ent->angle);
-	ent->solid = SOLID_BBOX;
 	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
 	VectorSet(ent->absmin, -(PLAYER_WIDTH * 3), -(PLAYER_WIDTH * 3), PLAYER_MIN);
 
