@@ -59,8 +59,7 @@ void G_PhysicsStep (edict_t *ent)
 
 				VectorCopy(ent->origin, to);
 				VectorCopy(ent->origin, from);
-				/* between these two we should really hit the ground */
-				from[2] += UNIT_HEIGHT;
+				/* we should really hit the ground with this */
 				to[2] -= UNIT_HEIGHT;
 
 				trace = gi.trace(from, NULL, NULL, to, NULL, MASK_SOLID);
