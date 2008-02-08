@@ -3,7 +3,7 @@
 $standardPort = 27910;
 $serverList = "serverlist.txt";
 #every 300 seconds should be a heartbeat from the server
-$serverTimeoutSeconds = "320";
+$serverTimeoutSeconds = "620";
 
 ###############################################################################
 # NOTES
@@ -74,9 +74,7 @@ function updateServerList ($remove, $add)
 		if (!isset($data[1])) {
 			continue;
 		}
-		if (isset($data[2]) && $time > $data[2] + $GLOBALS["serverTimeoutSeconds"]) {
-			# don't readd this server - timed out
-		} else if (!strcmp($data[0], $ip) && !strcmp($data[1], $port)) {
+		if (!strcmp($data[0], $ip) && !strcmp($data[1], $port)) {
 			if (!$remove) {
 				# heartbeat
 				$newListContent .= $data[0].' '.$data[1].' '.$time."\n";
@@ -85,6 +83,8 @@ function updateServerList ($remove, $add)
 				$updatedServer = true;
 				$i++;
 			}
+		} else if (isset($data[2]) && $time > $data[2] + $GLOBALS["serverTimeoutSeconds"]) {
+			# don't readd this server - timed out
 		} else {
 			$i++;
 			# now updates - so write it back
