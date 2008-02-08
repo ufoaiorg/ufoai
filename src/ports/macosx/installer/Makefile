@@ -38,7 +38,7 @@ copybinaries: bundle_dirs
 
 copydata: bundle_dirs
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
-	@cp -r $(ROOTDIR)base/i18n UFOAI.app/base/i18n
+	@cp -r $(ROOTDIR)base/i18n/[^.]* UFOAI.app/base/i18n
 
 copynotes: package_dir
 	@cp $(ROOTDIR)README $(PACKAGE_NAME)
@@ -47,7 +47,7 @@ copynotes: package_dir
 
 copylibs:
 	@rm -rf UFOAI.app/Contents/Frameworks/*.framework
-	@perl macfixlibs2.pl
+	@perl macfixlibs.pl
 
 copy_package_bundle: package_dir bundle
 	@cp -r UFOAI.app $(PACKAGE_NAME)
@@ -68,11 +68,11 @@ build_dmg: copybinaries copylibs
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
 	@cp $(BINARIES_BASE) UFOAI.app/base
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
-#	for dir in $(ROOTDIR)base/i18n/*; do \
+#	for dir in $(ROOTDIR)base/i18n/[^.]*; do \
 #		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
 #		cp $(ROOTDIR)base/$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
 #	done
-	@cp -r $(ROOTDIR)base/i18n UFOAI.app/base/i18n
+	@cp -r $(ROOTDIR)base/i18n/[^.]* UFOAI.app/base/i18n
 	@rm -f $(PACKAGE_NAME).dmg
 	@cp $(ROOTDIR)README UFOAI.app
 	@cp $(ROOTDIR)CONTRIBUTORS UFOAI.app
