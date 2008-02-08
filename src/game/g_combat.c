@@ -123,8 +123,8 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 			/* clamp new morale */
 			/*+0.9 to allow weapons like flamethrowers to inflict panic (typecast rounding) */
 			newMorale = ent->morale + (int) (MORALE_RANDOM(mod) + 0.9);
-			if (newMorale > GET_MORALE(ent->chr.skills[ABILITY_MIND]))
-				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
+			if (newMorale > GET_MORALE(ent->chr.score.skills[ABILITY_MIND]))
+				ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
 			else if (newMorale < 0)
 				ent->morale = 0;
 			else
@@ -162,12 +162,13 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 }
 
 /**
- * @brief Update character stats after succesful shoot.
+ * @brief Update character stats for this mission after successful shoot.
+ * @note Mind you that this code is always from the view of PHALANX soldiers right now, not anybody else!
  * @param[in] attacker Pointer to attacker.
  * @param[in] fd Pointer to fireDef_t used in shoot.
  * @param[in] target Pointer to target.
- * @note chr.chrscore is being sent to client in CL_ParseCharacterData()
  * @sa CL_UpdateCharacterSkills
+ * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
  */
 static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *target)
 {
@@ -176,47 +177,114 @@ static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *t
 
 	switch (target->team) {
 	case TEAM_ALIEN:	/**< Aliens. */
-		if (target->HP <= 0)
-			attacker->chr.chrscore.alienskilled++;
-		else
-			attacker->chr.chrscore.aliensstunned++;
-		attacker->chr.chrscore.accuracystat++;
-		/* Only killing/stunning an alien can lead to skill improve. */
-		switch (fd->weaponSkill) {
-		case SKILL_CLOSE:
-			attacker->chr.chrscore.closekills++;
-			break;
-		case SKILL_HEAVY:
-			attacker->chr.chrscore.heavykills++;
-			attacker->chr.chrscore.powerstat++;
-			break;
-		case SKILL_ASSAULT:
-			attacker->chr.chrscore.assaultkills++;
-			break;
-		case SKILL_SNIPER:
-			attacker->chr.chrscore.sniperkills++;
-			break;
-		case SKILL_EXPLOSIVE:
-			attacker->chr.chrscore.explosivekills++;
-			break;
-		default:
-			break;
+		if (target->HP <= 0) {
+			if (attacker->chr.scoreMission)
+				attacker->chr.scoreMission->kills[KILLED_ALIENS]++;
+			attacker->chr.score.kills[KILLED_ALIENS]++;
+		} else {
+			if (attacker->chr.scoreMission)
+				attacker->chr.scoreMission->stuns[KILLED_ALIENS]++;
+			attacker->chr.score.stuns[KILLED_ALIENS]++;
 		}
+
+		/**@todo Add check for valid values of fd->weaponSkill */
+		if (attacker->chr.scoreMission)
+			attacker->chr.scoreMission->skillKills[fd->weaponSkill]++;
 		break;
 	case TEAM_CIVILIAN:	/**< Civilians. */
-		if (target->HP <= 0)
-			attacker->chr.chrscore.civilianskilled++;
-		else
-			attacker->chr.chrscore.civiliansstunned++;
+		if (target->HP <= 0) {
+			if (attacker->chr.scoreMission)
+				attacker->chr.scoreMission->kills[KILLED_CIVILIANS]++;
+			attacker->chr.score.kills[KILLED_CIVILIANS]++;
+		} else {
+			attacker->chr.scoreMission->stuns[KILLED_CIVILIANS]++;
+			attacker->chr.score.stuns[KILLED_CIVILIANS]++;
+		}
 		break;
 	case TEAM_PHALANX:	/* PHALANX soldiers. */
-		if (target->HP <= 0)
-			attacker->chr.chrscore.teamkilled++;
-		else
-			attacker->chr.chrscore.teamstunned++;
+		if (target->HP <= 0) {
+			if (attacker->chr.scoreMission)
+				attacker->chr.scoreMission->kills[KILLED_TEAM]++;
+			attacker->chr.score.kills[KILLED_TEAM]++;
+		} else {
+			if (attacker->chr.scoreMission)
+				attacker->chr.scoreMission->stuns[KILLED_TEAM]++;
+			attacker->chr.score.stuns[KILLED_TEAM]++;
+		}
 		break;
 	default:
 		break;
+	}
+}
+
+/**
+ * @brief Increases the 'hit' score by one for all affected teams/skills by one (except splash damage, read below).
+ * @param[in|out] attacker The soldier to update (he/she dealt the damage)
+ * @param[in] target The hit target.
+ * @param[in] fd the used fire definition.
+ * @param[in] splashDamage Do we count it as splashdamage? If this value is not zero the stats well be counted as splashdamage and the value will be added to the overall splash-damage count.
+ */
+static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const fireDef_t * fd, const int splashDamage)
+{
+	if (!attacker || !target || !fd)
+		return;
+
+	/* Abort if no player team. */
+	if (!attacker->chr.scoreMission)
+		return;
+	
+	if (!splashDamage) {
+		if ((attacker->team == target->team)
+		&& (!attacker->chr.scoreMission->firedHit[KILLED_TEAM])) {
+			/* Increase friendly fire counter. */
+			attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_TEAM]++;
+			attacker->chr.scoreMission->firedHit[KILLED_TEAM] = qtrue;
+		}
+
+		switch (target->team) {
+			case TEAM_CIVILIAN:
+				if (!attacker->chr.scoreMission->firedHit[KILLED_CIVILIANS]) {
+					attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_CIVILIANS]++;
+					attacker->chr.scoreMission->firedHit[KILLED_CIVILIANS] = qtrue;
+				}
+				break;
+			case TEAM_ALIEN:
+				if (!attacker->chr.scoreMission->firedHit[KILLED_ALIENS]) {
+					attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_ALIENS]++;
+					attacker->chr.scoreMission->firedHit[KILLED_ALIENS] = qtrue;
+				}
+				break;
+			default:
+				return;
+		}
+	} else {
+		if (attacker->team == target->team) {
+			/* Increase friendly fire counter. */
+			attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_TEAM] += splashDamage;
+			if (!attacker->chr.scoreMission->firedSplashHit[KILLED_TEAM]) {
+				attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_TEAM]++;
+				attacker->chr.scoreMission->firedSplashHit[KILLED_TEAM] = qtrue;
+			}
+		}
+
+		switch (target->team) {
+			case TEAM_CIVILIAN:
+				attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_CIVILIANS] += splashDamage;
+				if (!attacker->chr.scoreMission->firedSplashHit[KILLED_CIVILIANS]) {
+					attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_CIVILIANS]++;
+					attacker->chr.scoreMission->firedSplashHit[KILLED_CIVILIANS] = qtrue;
+				}
+				break;
+			case TEAM_ALIEN:
+				attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_ALIENS] += splashDamage;
+				if (!attacker->chr.scoreMission->firedSplashHit[KILLED_ALIENS]) {
+					attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_ALIENS]++;
+					attacker->chr.scoreMission->firedSplashHit[KILLED_ALIENS] = qtrue;
+				}
+				break;
+			default:
+				return;
+		}
 	}
 }
 
@@ -340,8 +408,22 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 		} else {
 			ent->HP = max(ent->HP - damage, 0);
 			if (damage < 0) {
-				/* @todo: also increase the morale a little bit when
-				 * soldier gets healing and morale is lower than max possible */
+				/* The 'attacker' is healing ent. */
+				/* Update stats here to get info on how many TUs the target received. */
+				if (ent->chr.scoreMission)
+					ent->chr.scoreMission->heal += -damage;
+
+				/** @todo Do the same for "attacker" but as "applied" healing
+					e.g. attacker->chr->scoreMission.healOthers += -damage; ? */
+
+				/** @todo Also increase the morale a little bit when
+					soldier gets healing and morale is lower than max possible? */
+			} else {
+				/* Real damage was dealt. */
+
+				/* Update overall splash damage for stats/score. */
+				if (!mock && (damage > 0) && (fd->splrad)) /**< Check for >0 and splrad to not count this as direct hit. */
+					G_UpdateHitScore(attacker, ent, fd, damage);
 			}
 		}
 	}
@@ -354,7 +436,7 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 	 * I'll leave this one in here just in case. */
 	ent->HP = max(ent->HP, 0);
 
-	/* Check death/knockouth. */
+	/* Check death/knockout. */
 	if (ent->HP == 0 || ent->HP <= ent->STUN) {
 		G_SendStats(ent);
 		/* prints stats for multiplayer to game console */
@@ -376,20 +458,27 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 			level.num_stuns[attacker->team][ent->team]++;
 
 		/* count score */
-		if (ent->team == TEAM_CIVILIAN)
-			attacker->chr.kills[KILLED_CIVILIANS]++;
-		else if (attacker->team == ent->team)
-			attacker->chr.kills[KILLED_TEAM]++;
-		else
-			attacker->chr.kills[KILLED_ALIENS]++;
+		if (ent->team == TEAM_CIVILIAN) {
+			if (attacker->chr.scoreMission)
+				attacker->chr.scoreMission->kills[KILLED_CIVILIANS]++;
+			attacker->chr.score.kills[KILLED_CIVILIANS]++;
+		} else if (ent->team == attacker->team) {
+			if (attacker->chr.scoreMission)
+				attacker->chr.scoreMission->kills[KILLED_TEAM]++;
+			attacker->chr.score.kills[KILLED_TEAM]++;
+		} else {
+			if (attacker->chr.scoreMission)
+				attacker->chr.scoreMission->kills[KILLED_ALIENS]++;
+			attacker->chr.score.kills[KILLED_ALIENS]++;
+		}
 		G_UpdateCharacterScore(attacker, fd, ent);
 
 	} else {
 		if (damage > 0 && mor_panic->integer) {
 			G_Morale(ML_WOUND, ent, attacker, damage);
 		} else { /* medikit, etc. */
-			if (ent->HP > GET_HP(ent->chr.skills[ABILITY_POWER]))
-				ent->HP = max(GET_HP(ent->chr.skills[ABILITY_POWER]), 0);
+			if (ent->HP > GET_HP(ent->chr.score.skills[ABILITY_POWER]))
+				ent->HP = max(GET_HP(ent->chr.score.skills[ABILITY_POWER]), 0);
 		}
 		G_SendStats(ent);
 	}
@@ -570,7 +659,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 		speed = fd->range;
 
 	/* add random effects and get new dir */
-	acc = GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.skills[fd->weaponSkill] : 0);
+	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
 
 	VecToAngles(startV, angles);
 	/* @todo Remove the 2.0f and use gaussian random number instead of crand() */
@@ -755,7 +844,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
 
 	/* Get accuracy value for this attacker. */
-	acc = GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.skills[fd->weaponSkill] : 0);
+	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
 
 	/* Get 2 gaussian distributed random values */
 	gaussrand(&gauss1, &gauss2);
@@ -778,7 +867,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	range = fd->range;
 	bounce = 0;
 	flags = 0;
-	/* healing */
+
+	/* Are we healing? */
 	if (fd->damage[0] < 0)
 		damage = fd->damage[0] + (fd->damage[1] * crand());
 	else
@@ -879,6 +969,11 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 		/* do damage if the trace hit an entity */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2 || tr.ent->type == ET_BREAKABLE)) {
 			G_Damage(tr.ent, fd, damage, ent, mock);
+
+			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
+				/* Count this as a hit of this firemode. */
+				G_UpdateHitScore(ent, tr.ent, fd, 0);
+			}
 			break;
 		}
 
@@ -1071,6 +1166,27 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		if (!quiet)
 			gi.cprintf(player, PRINT_HUD, _("Can't perform action - target out of range!\n"));
 		return qfalse;
+	}
+
+	/* Count for stats if it's no mock-shot and it's a Phalanx soldier (aliens do not have this info yet). */
+	if (!mock && ent->chr.scoreMission) {	
+		/* Count this start of the shooting for stats/score. */
+		/** @todo check for direct shot / splash damage shot? */
+		if (fd->splrad) {
+			/* Splash damage */
+			ent->chr.scoreMission->firedSplash[fd->weaponSkill]++;
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				/** Reset status. @see G_UpdateHitScore for the check. */
+				ent->chr.scoreMission->firedSplashHit[i] = qfalse;
+			}
+		} else {
+			/* Direkt hits */
+			ent->chr.scoreMission->fired[fd->weaponSkill]++;
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				/** Reset status. @see G_UpdateHitScore for the check. */
+				ent->chr.scoreMission->firedHit[i] = qfalse;
+			}
+		}
 	}
 
 	/* fire shots */

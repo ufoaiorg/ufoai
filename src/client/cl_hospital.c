@@ -199,7 +199,7 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 	int healing = 1;
 
 	if (hospital)
-		healing = GET_HP_HEALING(chr->skills[ABILITY_POWER]);
+		healing = GET_HP_HEALING(chr->score.skills[ABILITY_POWER]);
 
 	assert(chr);
 	if (chr->HP < chr->maxHP) {
@@ -317,7 +317,7 @@ static void HOS_UpdateMenu (void)
 				Com_sprintf(name, sizeof(name), employee->chr.name);
 				/* Print rank for soldiers or type for other personel. */
 				if (type == EMPL_SOLDIER)
-					Com_sprintf(rank, sizeof(rank), _(gd.ranks[employee->chr.rank].name));
+					Com_sprintf(rank, sizeof(rank), _(gd.ranks[employee->chr.score.rank].name));
 				else
 					Com_sprintf(rank, sizeof(rank), E_GetEmployeeString(employee->type));
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
@@ -546,7 +546,7 @@ static void HOS_StartHealing_f (void)
 		/* No room for employee - prepare a popup. */
 		if (currentEmployeeInHospital->type == EMPL_SOLDIER) {
 			Q_strcat(popupText, va("%s %s",
-			_(gd.ranks[currentEmployeeInHospital->chr.rank].shortname),
+			_(gd.ranks[currentEmployeeInHospital->chr.score.rank].shortname),
 			currentEmployeeInHospital->chr.name),
 			sizeof(popupText));
 		} else {

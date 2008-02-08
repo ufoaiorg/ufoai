@@ -2222,74 +2222,74 @@ static void CL_SwapSkills (chrList_t *team)
 
 							if (no1 > no2 /* more use of this skill */
 								 || (no1 && no1 == no2)) { /* or earlier on list */
-								tmp1 = cp1->skills[skill];
-								tmp2 = cp2->skills[skill];
-								cp1->skills[skill] = max(tmp1, tmp2);
-								cp2->skills[skill] = min(tmp1, tmp2);
+								tmp1 = cp1->score.skills[skill];
+								tmp2 = cp2->score.skills[skill];
+								cp1->score.skills[skill] = max(tmp1, tmp2);
+								cp2->score.skills[skill] = min(tmp1, tmp2);
 
 								switch (skill) {
 								case SKILL_CLOSE:
-									tmp1 = cp1->skills[ABILITY_SPEED];
-									tmp2 = cp2->skills[ABILITY_SPEED];
-									cp1->skills[ABILITY_SPEED] = max(tmp1, tmp2);
-									cp2->skills[ABILITY_SPEED] = min(tmp1, tmp2);
+									tmp1 = cp1->score.skills[ABILITY_SPEED];
+									tmp2 = cp2->score.skills[ABILITY_SPEED];
+									cp1->score.skills[ABILITY_SPEED] = max(tmp1, tmp2);
+									cp2->score.skills[ABILITY_SPEED] = min(tmp1, tmp2);
 									break;
 								case SKILL_HEAVY:
-									tmp1 = cp1->skills[ABILITY_POWER];
-									tmp2 = cp2->skills[ABILITY_POWER];
-									cp1->skills[ABILITY_POWER] = max(tmp1, tmp2);
-									cp2->skills[ABILITY_POWER] = min(tmp1, tmp2);
+									tmp1 = cp1->score.skills[ABILITY_POWER];
+									tmp2 = cp2->score.skills[ABILITY_POWER];
+									cp1->score.skills[ABILITY_POWER] = max(tmp1, tmp2);
+									cp2->score.skills[ABILITY_POWER] = min(tmp1, tmp2);
 									break;
 								case SKILL_ASSAULT:
 									/* no related basic attribute */
 									break;
 								case SKILL_SNIPER:
-									tmp1 = cp1->skills[ABILITY_ACCURACY];
-									tmp2 = cp2->skills[ABILITY_ACCURACY];
-									cp1->skills[ABILITY_ACCURACY] = max(tmp1, tmp2);
-									cp2->skills[ABILITY_ACCURACY] = min(tmp1, tmp2);
+									tmp1 = cp1->score.skills[ABILITY_ACCURACY];
+									tmp2 = cp2->score.skills[ABILITY_ACCURACY];
+									cp1->score.skills[ABILITY_ACCURACY] = max(tmp1, tmp2);
+									cp2->score.skills[ABILITY_ACCURACY] = min(tmp1, tmp2);
 									break;
 								case SKILL_EXPLOSIVE:
-									tmp1 = cp1->skills[ABILITY_MIND];
-									tmp2 = cp2->skills[ABILITY_MIND];
-									cp1->skills[ABILITY_MIND] = max(tmp1, tmp2);
-									cp2->skills[ABILITY_MIND] = min(tmp1, tmp2);
+									tmp1 = cp1->score.skills[ABILITY_MIND];
+									tmp2 = cp2->score.skills[ABILITY_MIND];
+									cp1->score.skills[ABILITY_MIND] = max(tmp1, tmp2);
+									cp2->score.skills[ABILITY_MIND] = min(tmp1, tmp2);
 									break;
 								default:
 									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
 								}
 							} else if (no1 < no2) {
-								tmp1 = cp1->skills[skill];
-								tmp2 = cp2->skills[skill];
-								cp2->skills[skill] = max(tmp1, tmp2);
-								cp1->skills[skill] = min(tmp1, tmp2);
+								tmp1 = cp1->score.skills[skill];
+								tmp2 = cp2->score.skills[skill];
+								cp2->score.skills[skill] = max(tmp1, tmp2);
+								cp1->score.skills[skill] = min(tmp1, tmp2);
 
 								switch (skill) {
 								case SKILL_CLOSE:
-									tmp1 = cp1->skills[ABILITY_SPEED];
-									tmp2 = cp2->skills[ABILITY_SPEED];
-									cp2->skills[ABILITY_SPEED] = max(tmp1, tmp2);
-									cp1->skills[ABILITY_SPEED] = min(tmp1, tmp2);
+									tmp1 = cp1->score.skills[ABILITY_SPEED];
+									tmp2 = cp2->score.skills[ABILITY_SPEED];
+									cp2->score.skills[ABILITY_SPEED] = max(tmp1, tmp2);
+									cp1->score.skills[ABILITY_SPEED] = min(tmp1, tmp2);
 									break;
 								case SKILL_HEAVY:
-									tmp1 = cp1->skills[ABILITY_POWER];
-									tmp2 = cp2->skills[ABILITY_POWER];
-									cp2->skills[ABILITY_POWER] = max(tmp1, tmp2);
-									cp1->skills[ABILITY_POWER] = min(tmp1, tmp2);
+									tmp1 = cp1->score.skills[ABILITY_POWER];
+									tmp2 = cp2->score.skills[ABILITY_POWER];
+									cp2->score.skills[ABILITY_POWER] = max(tmp1, tmp2);
+									cp1->score.skills[ABILITY_POWER] = min(tmp1, tmp2);
 									break;
 								case SKILL_ASSAULT:
 									break;
 								case SKILL_SNIPER:
-									tmp1 = cp1->skills[ABILITY_ACCURACY];
-									tmp2 = cp2->skills[ABILITY_ACCURACY];
-									cp2->skills[ABILITY_ACCURACY] = max(tmp1, tmp2);
-									cp1->skills[ABILITY_ACCURACY] = min(tmp1, tmp2);
+									tmp1 = cp1->score.skills[ABILITY_ACCURACY];
+									tmp2 = cp2->score.skills[ABILITY_ACCURACY];
+									cp2->score.skills[ABILITY_ACCURACY] = max(tmp1, tmp2);
+									cp1->score.skills[ABILITY_ACCURACY] = min(tmp1, tmp2);
 									break;
 								case SKILL_EXPLOSIVE:
-									tmp1 = cp1->skills[ABILITY_MIND];
-									tmp2 = cp2->skills[ABILITY_MIND];
-									cp2->skills[ABILITY_MIND] = max(tmp1, tmp2);
-									cp1->skills[ABILITY_MIND] = min(tmp1, tmp2);
+									tmp1 = cp1->score.skills[ABILITY_MIND];
+									tmp2 = cp2->score.skills[ABILITY_MIND];
+									cp2->score.skills[ABILITY_MIND] = max(tmp1, tmp2);
+									cp1->score.skills[ABILITY_MIND] = min(tmp1, tmp2);
 									break;
 								default:
 									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);

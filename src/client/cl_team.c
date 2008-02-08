@@ -324,31 +324,31 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	/* Generate character stats, models & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
-		chr->rank = CL_GetRank("rifleman");
+		chr->score.rank = CL_GetRank("rifleman");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Q_strncpyz(teamDefName, team, sizeof(teamDefName));
 		break;
 	case EMPL_SCIENTIST:
-		chr->rank = CL_GetRank("scientist");
+		chr->score.rank = CL_GetRank("scientist");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
 		break;
 	case EMPL_MEDIC:
-		chr->rank = CL_GetRank("medic");
+		chr->score.rank = CL_GetRank("medic");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_medic", team);
 		break;
 	case EMPL_WORKER:
-		chr->rank = CL_GetRank("worker");
+		chr->score.rank = CL_GetRank("worker");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
 		break;
 	case EMPL_ROBOT:
-		chr->rank = CL_GetRank("ugv");
+		chr->score.rank = CL_GetRank("ugv");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 
@@ -368,7 +368,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	chr->skin = Com_GetCharacterValues(teamDefName, chr);
 	/* chr->HP = GET_HP(chr->skills[ABILITY_POWER]); */
 	chr->maxHP = chr->HP;
-	chr->morale = GET_MORALE(chr->skills[ABILITY_MIND]);
+	chr->morale = GET_MORALE(chr->score.skills[ABILITY_MIND]);
 	if (chr->morale >= MAX_SKILL)
 		chr->morale = MAX_SKILL;
 }
@@ -1653,18 +1653,21 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->STUN = MSG_ReadByte(sb);
 	chr->morale = MSG_ReadByte(sb);
 
-	/* new attributes */
+	/* Load scores */
+	 chr->score.experience = MSG_ReadShort(sb);
 	num = MSG_ReadByte(sb);
 	for (i = 0; i < num; i++)
-		chr->skills[i] = MSG_ReadByte(sb);
-
-	/* load scores */
+		chr->score.skills[i] = MSG_ReadByte(sb);
 	num = MSG_ReadByte(sb);
 	for (i = 0; i < num; i++)
-		chr->kills[i] = MSG_ReadShort(sb);
-	chr->assigned_missions = MSG_ReadShort(sb);
+		chr->score.kills[i] = MSG_ReadShort(sb);
+	num = MSG_ReadByte(sb);
+	for (i = 0; i < num; i++)
+		chr->score.stuns[i] = MSG_ReadShort(sb);
+	chr->score.assignedMissions = MSG_ReadShort(sb);
+	chr->score.rank = MSG_ReadByte(sb);
 
-	/* inventory */
+	/* Inventory */
 	INVSH_DestroyInventory(chr->inv);
 	CL_LoadInventory(sb, chr->inv);
 }
@@ -1858,16 +1861,19 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->morale);
 
-		/* even new attributes */
+		/* Scores */
+		MSG_WriteShort(buf, chr->score.experience);
 		MSG_WriteByte(buf, SKILL_NUM_TYPES);
-		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			MSG_WriteByte(buf, chr->skills[j]);
-
-		/* scores */
+		for (j = 0; j < SKILL_NUM_TYPES; j++)	/* even new attributes */
+			MSG_WriteByte(buf, chr->score.skills[j]);
 		MSG_WriteByte(buf, KILLED_NUM_TYPES);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			MSG_WriteShort(buf, chr->kills[j]);
-		MSG_WriteShort(buf, chr->assigned_missions);
+			MSG_WriteShort(buf, chr->score.kills[j]);
+		MSG_WriteByte(buf, KILLED_NUM_TYPES);
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			MSG_WriteShort(buf, chr->score.stuns[j]);
+		MSG_WriteShort(buf, chr->score.assignedMissions);
+		MSG_WriteByte(buf, chr->score.rank);
 
 		/* inventory */
 		CL_SaveInventory(buf, chr->inv);
@@ -1919,37 +1925,27 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 		NET_WriteByte(buf, chr->STUN);
 		NET_WriteByte(buf, chr->morale);
 
-		/* even new attributes */
+		/* Scores */
+		NET_WriteShort(buf, chr->score.experience);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			NET_WriteByte(buf, chr->skills[j]);
-
-		/* scores */
+			NET_WriteByte(buf, chr->score.skills[j]);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			NET_WriteShort(buf, chr->kills[j]);
-		NET_WriteShort(buf, chr->assigned_missions);
-
-		NET_WriteByte(buf, chr->chrscore.alienskilled);
-		NET_WriteByte(buf, chr->chrscore.aliensstunned);
-		NET_WriteByte(buf, chr->chrscore.civilianskilled);
-		NET_WriteByte(buf, chr->chrscore.civiliansstunned);
-		NET_WriteByte(buf, chr->chrscore.teamkilled);
-		NET_WriteByte(buf, chr->chrscore.teamstunned);
-		NET_WriteByte(buf, chr->chrscore.closekills);
-		NET_WriteByte(buf, chr->chrscore.heavykills);
-		NET_WriteByte(buf, chr->chrscore.assaultkills);
-		NET_WriteByte(buf, chr->chrscore.sniperkills);
-		NET_WriteByte(buf, chr->chrscore.explosivekills);
-		NET_WriteByte(buf, chr->chrscore.accuracystat);
-		NET_WriteByte(buf, chr->chrscore.powerstat);
+			NET_WriteShort(buf, chr->score.kills[j]);
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			NET_WriteShort(buf, chr->score.stuns[j]);
+		NET_WriteShort(buf, chr->score.assignedMissions);
+		NET_WriteByte(buf, chr->score.rank);
 
 		/* inventory */
 		CL_NetSendInventory(buf, chr->inv);
 	}
 }
 
-
-/* for updating after click on continue */
-typedef struct updateCharacter_s {
+#if 0
+/** For updating after click on continue
+ * @todo how could this be merged with chrScoreNEW_s? */
+typedef struct
+ {
 	int ucn;
 	int kills[KILLED_NUM_TYPES];
 	int HP, STUN;
@@ -1969,6 +1965,17 @@ typedef struct updateCharacter_s {
 	int explosivekills;
 	int accuracystat;
 	int powerstat;
+} updateCharacter_t;
+#endif
+
+typedef struct
+ {
+	int ucn;
+	int kills[KILLED_NUM_TYPES];
+	int HP, STUN;
+	int morale;
+
+	chrScoreGlobal_t chrscore;
 } updateCharacter_t;
 
 /**
@@ -2001,22 +2008,7 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 			chr->STUN = updateCharacterArray[i].STUN;
 			chr->morale = updateCharacterArray[i].morale;
 
-			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				chr->kills[j] = updateCharacterArray[i].kills[j];
-
-			chr->chrscore.alienskilled = updateCharacterArray[i].alienskilled;
-			chr->chrscore.aliensstunned = updateCharacterArray[i].aliensstunned;
-			chr->chrscore.civilianskilled = updateCharacterArray[i].civilianskilled;
-			chr->chrscore.civiliansstunned = updateCharacterArray[i].civiliansstunned;
-			chr->chrscore.teamkilled = updateCharacterArray[i].teamkilled;
-			chr->chrscore.teamstunned = updateCharacterArray[i].teamstunned;
-			chr->chrscore.closekills = updateCharacterArray[i].closekills;
-			chr->chrscore.heavykills = updateCharacterArray[i].heavykills;
-			chr->chrscore.assaultkills = updateCharacterArray[i].assaultkills;
-			chr->chrscore.sniperkills = updateCharacterArray[i].sniperkills;
-			chr->chrscore.explosivekills = updateCharacterArray[i].explosivekills;
-			chr->chrscore.accuracystat = updateCharacterArray[i].accuracystat;
-			chr->chrscore.powerstat = updateCharacterArray[i].powerstat;
+			memcpy(&chr->score, &updateCharacterArray[i].chrscore, sizeof(chrScoreGlobal_t));
 		}
 		num = 0;
 	} else {
@@ -2043,22 +2035,15 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 			updateCharacterArray[i].STUN = NET_ReadByte(msg);
 			updateCharacterArray[i].morale = NET_ReadByte(msg);
 
+			updateCharacterArray[i].chrscore.experience = NET_ReadShort(msg);
+			for (j = 0; j < SKILL_NUM_TYPES; j++)
+				updateCharacterArray[i].chrscore.skills[j] = NET_ReadByte(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				updateCharacterArray[i].kills[j] = NET_ReadShort(msg);
-
-			updateCharacterArray[i].alienskilled = NET_ReadByte(msg);
-			updateCharacterArray[i].aliensstunned = NET_ReadByte(msg);
-			updateCharacterArray[i].civilianskilled = NET_ReadByte(msg);
-			updateCharacterArray[i].civiliansstunned = NET_ReadByte(msg);
-			updateCharacterArray[i].teamkilled = NET_ReadByte(msg);
-			updateCharacterArray[i].teamstunned = NET_ReadByte(msg);
-			updateCharacterArray[i].closekills = NET_ReadByte(msg);
-			updateCharacterArray[i].heavykills = NET_ReadByte(msg);
-			updateCharacterArray[i].assaultkills = NET_ReadByte(msg);
-			updateCharacterArray[i].sniperkills = NET_ReadByte(msg);
-			updateCharacterArray[i].explosivekills = NET_ReadByte(msg);
-			updateCharacterArray[i].accuracystat = NET_ReadByte(msg);
-			updateCharacterArray[i].powerstat = NET_ReadByte(msg);
+				updateCharacterArray[i].chrscore.kills[j] = NET_ReadShort(msg);
+			for (j = 0; j < KILLED_NUM_TYPES; j++)
+				updateCharacterArray[i].chrscore.stuns[j] = NET_ReadShort(msg);
+			updateCharacterArray[i].chrscore.assignedMissions = NET_ReadShort(msg);
+			updateCharacterArray[i].chrscore.rank = NET_ReadByte(msg);
 		}
 	}
 }
@@ -2471,9 +2456,15 @@ static int CL_SkillIncreaseBy (float skill)
  * @param[in] chr Pointer to a character_t.
  * @sa CL_UpdateCharacterStats
  * @sa G_UpdateCharacterScore
+ * @todo We really need to update this so it
+ * 1) doesn't modify skillKills[] and
+ * 2) take all the other new stuff (in chr->scoreMission and chr->score) into account.
+ * @todo We need to move this code to the server. The client will only receive the calculated results (chr->score).
  */
 void CL_UpdateCharacterSkills (character_t *chr)
 {
+#if 0
+/** @todo see todo above */
 	qboolean changed = qfalse;
 
 	if (!chr)
@@ -2482,74 +2473,75 @@ void CL_UpdateCharacterSkills (character_t *chr)
 	   TODO: More than 100 is available only with implants. */
 
 	/* Update SKILL_CLOSE. 2 closekills needed. */
-	if (chr->skills[SKILL_CLOSE] < MAX_SKILL) {
-		if (chr->chrscore.closekills >= 2) {
-			chr->skills[SKILL_CLOSE] += CL_SkillIncreaseBy((float)chr->skills[SKILL_CLOSE]);
-			chr->chrscore.closekills = chr->chrscore.closekills - 2;
+	if (chr->score.skills[SKILL_CLOSE] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_CLOSE] >= 2) {
+			chr->score.skills[SKILL_CLOSE] += CL_SkillIncreaseBy((float)chr->score.skills[SKILL_CLOSE]);
+			chr->scoreMission->skillKills[SKILL_CLOSE] = chr->scoreMission->skillKills[SKILL_CLOSE] - 2;
 			changed = qtrue;
 		}
 	}
 
 	/* Update SKILL_HEAVY. 4 heavykills needed.*/
-	if (chr->skills[SKILL_HEAVY] < MAX_SKILL) {
-		if (chr->chrscore.heavykills >= 4) {
-			chr->skills[SKILL_HEAVY] += CL_SkillIncreaseBy((float)chr->skills[SKILL_HEAVY]);
-			chr->chrscore.heavykills = chr->chrscore.heavykills - 4;
+	if (chr->score.skills[SKILL_HEAVY] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_HEAVY] >= 4) {
+			chr->score.skills[SKILL_HEAVY] += CL_SkillIncreaseBy((float)chr->score.skills[SKILL_HEAVY]);
+			chr->scoreMission->skillKills[SKILL_HEAVY] = chr->scoreMission->skillKills[SKILL_HEAVY] - 4;
 			changed = qtrue;
 		}
 	}
 
 	/* Update SKILL_ASSAULT. 3 assaultkills needed.*/
-	if (chr->skills[SKILL_ASSAULT] < MAX_SKILL) {
-		if (chr->chrscore.assaultkills >= 3) {
-			chr->skills[SKILL_ASSAULT] += CL_SkillIncreaseBy((float)chr->skills[SKILL_ASSAULT]);
-			chr->chrscore.assaultkills = chr->chrscore.assaultkills - 3;
+	if (chr->score.skills[SKILL_ASSAULT] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_ASSAULT] >= 3) {
+			chr->score.skills[SKILL_ASSAULT] += CL_SkillIncreaseBy((float)chr->score.skills[SKILL_ASSAULT]);
+			chr->scoreMission->skillKills[SKILL_ASSAULT] = chr->scoreMission->skillKills[SKILL_ASSAULT] - 3;
 			changed = qtrue;
 		}
 	}
 
 	/* Update SKILL_SNIPER. 3 sniperkills needed. */
-	if (chr->skills[SKILL_SNIPER] < MAX_SKILL) {
-		if (chr->chrscore.sniperkills >= 3) {
-			chr->skills[SKILL_SNIPER] += CL_SkillIncreaseBy((float)chr->skills[SKILL_SNIPER]);
-			chr->chrscore.sniperkills = chr->chrscore.sniperkills - 3;
+	if (chr->score.skills[SKILL_SNIPER] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_SNIPER] >= 3) {
+			chr->score.skills[SKILL_SNIPER] += CL_SkillIncreaseBy((float)chr->score.skills[SKILL_SNIPER]);
+			chr->scoreMission->skillKills[SKILL_SNIPER] = chr->scoreMission->skillKills[SKILL_SNIPER] - 3;
 			changed = qtrue;
 		}
 	}
 
 	/* Update SKILL_EXPLOSIVE. 5 explosivekills needed. */
-	if (chr->skills[SKILL_EXPLOSIVE] < MAX_SKILL) {
-		if (chr->chrscore.explosivekills >= 5) {
-			chr->skills[SKILL_EXPLOSIVE] += CL_SkillIncreaseBy((float)chr->skills[SKILL_EXPLOSIVE]);
-			chr->chrscore.explosivekills = chr->chrscore.explosivekills - 5;
+	if (chr->score.skills[SKILL_EXPLOSIVE] < MAX_SKILL) {
+		if (chr->scoreMission->skillKills[SKILL_EXPLOSIVE] >= 5) {
+			chr->score.skills[SKILL_EXPLOSIVE] += CL_SkillIncreaseBy((float)chr->score.skills[SKILL_EXPLOSIVE]);
+			chr->scoreMission->skillKills[SKILL_EXPLOSIVE] = chr->scoreMission->skillKills[SKILL_EXPLOSIVE] - 5;
 			changed = qtrue;
 		}
 	}
-
+#if 0
 	/* Update ABILITY_ACCURACY. 8 accuracystat (succesful kill or stun) needed. */
-	if (chr->skills[ABILITY_ACCURACY] < MAX_SKILL) {
+	if (chr->score.skills[ABILITY_ACCURACY] < MAX_SKILL) {
 		if (chr->chrscore.accuracystat >= 8) {
-			chr->skills[ABILITY_ACCURACY] += CL_SkillIncreaseBy((float)chr->skills[ABILITY_ACCURACY]);
-			chr->chrscore.accuracystat = chr->chrscore.accuracystat - 8;
+			chr->score.skills[ABILITY_ACCURACY] += CL_SkillIncreaseBy((float)chr->score.skills[ABILITY_ACCURACY]);
+			chr->scoreMission.accuracystat = chr->scoreMission.accuracystat - 8;
 			changed = qtrue;
 		}
 	}
 
 	/* Update ABILITY_POWER. 8 powerstat (succesful kill or stun with heavy) needed. */
-	if (chr->skills[ABILITY_POWER] < MAX_SKILL) {
+	if (chr->score.skills[ABILITY_POWER] < MAX_SKILL) {
 		if (chr->chrscore.powerstat >= 8) {
-			chr->skills[ABILITY_POWER] += CL_SkillIncreaseBy((float)chr->skills[ABILITY_POWER]);
-			chr->chrscore.powerstat = chr->chrscore.powerstat - 8;
+			chr->score.skills[ABILITY_POWER] += CL_SkillIncreaseBy((float)chr->score.skills[ABILITY_POWER]);
+			chr->scoreMission.powerstat = chr->scoreMission.powerstat - 8;
 			changed = qtrue;
 		}
 	}
-
+#endif
 	/* Update ABILITY_MIND just to make ranks work.
 	   @todo: ABILITY_MIND should be improved other way. FIXME. */
 	if (!changed)
-		chr->skills[ABILITY_MIND]++;
+		chr->score.skills[ABILITY_MIND]++;
 
 	/* Repeat to make sure we update skills with huge amount of chrscore->*kills. */
 	if (changed)
 		CL_UpdateCharacterSkills(chr);
+#endif
 }

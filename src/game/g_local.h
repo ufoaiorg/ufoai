@@ -323,6 +323,7 @@ qboolean G_RunFrame(void);
 void Cmd_InvList(player_t *player);
 void G_KillTeam(void);
 void G_StunTeam(void);
+void G_ListMissionScore_f(void);
 #endif
 
 extern int turnTeam;

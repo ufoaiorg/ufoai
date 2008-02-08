@@ -184,44 +184,44 @@ void CL_CharacterCvars (character_t * chr)
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
 	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
-	Cvar_Set("mn_chrmis", va("%i", chr->assigned_missions));
-	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
-	Cvar_Set("mn_chrkillcivilian", va("%i", chr->kills[KILLED_CIVILIANS]));
-	Cvar_Set("mn_chrkillteam", va("%i", chr->kills[KILLED_TEAM]));
+	Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
+	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ALIENS]));
+	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
+	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 	/* These two will be needed in Hire menu. */
 	Cvar_Set("mn_employee_idx", va("%i", chr->empl_idx));
 	Cvar_Set("mn_employee_type", va("%i", chr->empl_type));
 
 	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
-	if (chr->rank >= 0 && gd.numRanks) {
-		Cvar_Set("mn_chrrank", va(_("Rank: %s"), gd.ranks[chr->rank].name));
-		Cvar_Set("mn_chrrank_img", gd.ranks[chr->rank].image);
+	if (chr->score.rank >= 0 && gd.numRanks) {
+		Cvar_Set("mn_chrrank", va(_("Rank: %s"), gd.ranks[chr->score.rank].name));
+		Cvar_Set("mn_chrrank_img", gd.ranks[chr->score.rank].image);
 	} else {
 		Cvar_Set("mn_chrrank", "");
 		Cvar_Set("mn_chrrank_img", "");
 	}
 
-	Cvar_Set("mn_vpwr", va("%i", chr->skills[ABILITY_POWER]));
-	Cvar_Set("mn_vspd", va("%i", chr->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_vacc", va("%i", chr->skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_vmnd", va("%i", chr->skills[ABILITY_MIND]));
-	Cvar_Set("mn_vcls", va("%i", chr->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_vhvy", va("%i", chr->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_vass", va("%i", chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
-	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_vpwr", va("%i", chr->score.skills[ABILITY_POWER]));
+	Cvar_Set("mn_vspd", va("%i", chr->score.skills[ABILITY_SPEED]));
+	Cvar_Set("mn_vacc", va("%i", chr->score.skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_vmnd", va("%i", chr->score.skills[ABILITY_MIND]));
+	Cvar_Set("mn_vcls", va("%i", chr->score.skills[SKILL_CLOSE]));
+	Cvar_Set("mn_vhvy", va("%i", chr->score.skills[SKILL_HEAVY]));
+	Cvar_Set("mn_vass", va("%i", chr->score.skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_vsnp", va("%i", chr->score.skills[SKILL_SNIPER]));
+	Cvar_Set("mn_vexp", va("%i", chr->score.skills[SKILL_EXPLOSIVE]));
 	Cvar_Set("mn_vhp", va("%i", chr->HP));
 	Cvar_Set("mn_vhpmax", va("%i", chr->maxHP));
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_MIND]), chr->skills[ABILITY_MIND]));
-	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
-	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_POWER]), chr->score.skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_SPEED]), chr->score.skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_ACCURACY]), chr->score.skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_MIND]), chr->score.skills[ABILITY_MIND]));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_CLOSE]), chr->score.skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_HEAVY]), chr->score.skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_ASSAULT]), chr->score.skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
 	Cvar_Set("mn_thp", va("%i (%i)", chr->HP, chr->maxHP));
 }
 
@@ -246,33 +246,33 @@ void CL_UGVCvars (character_t *chr)
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
 	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
-	Cvar_Set("mn_chrmis", va("%i", chr->assigned_missions));
-	Cvar_Set("mn_chrkillalien", va("%i", chr->kills[KILLED_ALIENS]));
-	Cvar_Set("mn_chrkillcivilian", va("%i", chr->kills[KILLED_CIVILIANS]));
-	Cvar_Set("mn_chrkillteam", va("%i", chr->kills[KILLED_TEAM]));
+	Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
+	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ALIENS]));
+	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
+	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 	Cvar_Set("mn_chrrank_img", "");
 	Cvar_Set("mn_chrrank", "");
 	Cvar_Set("mn_chrrank_img", "");
 
-	Cvar_Set("mn_vpwr", va("%i", chr->skills[ABILITY_POWER]));
-	Cvar_Set("mn_vspd", va("%i", chr->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_vacc", va("%i", chr->skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_vpwr", va("%i", chr->score.skills[ABILITY_POWER]));
+	Cvar_Set("mn_vspd", va("%i", chr->score.skills[ABILITY_SPEED]));
+	Cvar_Set("mn_vacc", va("%i", chr->score.skills[ABILITY_ACCURACY]));
 	Cvar_Set("mn_vmnd", "0");
-	Cvar_Set("mn_vcls", va("%i", chr->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_vhvy", va("%i", chr->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_vass", va("%i", chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
-	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_vcls", va("%i", chr->score.skills[SKILL_CLOSE]));
+	Cvar_Set("mn_vhvy", va("%i", chr->score.skills[SKILL_HEAVY]));
+	Cvar_Set("mn_vass", va("%i", chr->score.skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_vsnp", va("%i", chr->score.skills[SKILL_SNIPER]));
+	Cvar_Set("mn_vexp", va("%i", chr->score.skills[SKILL_EXPLOSIVE]));
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_ACCURACY]), chr->skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (0)", CL_GetSkillString(chr->skills[ABILITY_MIND])));
-	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_CLOSE]), chr->skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_HEAVY]), chr->skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
-	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_POWER]), chr->score.skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_SPEED]), chr->score.skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_ACCURACY]), chr->score.skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (0)", CL_GetSkillString(chr->score.skills[ABILITY_MIND])));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_CLOSE]), chr->score.skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_HEAVY]), chr->score.skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_ASSAULT]), chr->score.skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
 }
 
 /**
@@ -560,7 +560,7 @@ static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapo
 
 #ifdef DEBUG
 /**
- * @brief Prints all reaction- and reservation-info for teh team.
+ * @brief Prints all reaction- and reservation-info for the team.
  * @note Console command: debug_listreservations
  */
 void CL_ListReactionAndReservations_f (void)
@@ -883,7 +883,7 @@ void CL_PopupFiremodeReservation_f (void)
 	int weap_fds_idx = -1;
 	char hand = 'r';
 	int i;
-	char text[MAX_VAR];
+	static char text[MAX_VAR];
 
 	static linkedList_t* list = NULL;
 
@@ -3496,11 +3496,11 @@ void CL_ActorDie (struct dbuffer *msg)
 		chr = CL_GetActorChr(le);
 		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was stunned\n"),
-			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "", chr->name);
+			chr->score.rank >= 0 ? gd.ranks[chr->score.rank].shortname : "", chr->name);
 			SCR_DisplayHudMessage(tmpbuf, 2000);
 		} else if (chr) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was killed\n"),
-			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "", chr->name);
+			chr->score.rank >= 0 ? gd.ranks[chr->score.rank].shortname : "", chr->name);
 			SCR_DisplayHudMessage(tmpbuf, 2000);
 		}
 	} else {
@@ -4191,8 +4191,8 @@ static float CL_TargetingToHit (pos3_t toPos)
 	width = 2 * PLAYER_WIDTH * pseudosin;
 	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND) - PLAYER_MIN;
 
-	acc = GET_ACC(selChr->skills[ABILITY_ACCURACY],
-			selFD->weaponSkill ? selChr->skills[selFD->weaponSkill] : 0);
+	acc = GET_ACC(selChr->score.skills[ABILITY_ACCURACY],
+			selFD->weaponSkill ? selChr->score.skills[selFD->weaponSkill] : 0);
 
 	crouch = ((selActor->state & STATE_CROUCHED) && selFD->crouch) ? selFD->crouch : 1;
 

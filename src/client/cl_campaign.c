@@ -1409,7 +1409,7 @@ static void CL_HandleBudget (void)
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 		if (gd.employees[EMPL_SOLDIER][i].hired)
-			cost += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
+			cost += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
@@ -1419,7 +1419,7 @@ static void CL_HandleBudget (void)
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
 		if (gd.employees[EMPL_WORKER][i].hired)
-			cost += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
+			cost += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
@@ -1429,7 +1429,7 @@ static void CL_HandleBudget (void)
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
 		if (gd.employees[EMPL_SCIENTIST][i].hired)
-			cost += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
+			cost += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
@@ -1439,7 +1439,7 @@ static void CL_HandleBudget (void)
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
 		if (gd.employees[EMPL_MEDIC][i].hired)
-			cost += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
+			cost += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.score.rank * SALARY_MEDIC_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to medics"), cost);
@@ -1449,7 +1449,7 @@ static void CL_HandleBudget (void)
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		if (gd.employees[EMPL_ROBOT][i].hired)
-			cost += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
+			cost += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
 	}
 
 	if (cost != 0) {
@@ -1810,31 +1810,31 @@ static void CL_StatsUpdate_f (void)
 	/* costs */
 	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
 		if (gd.employees[EMPL_SCIENTIST][i].hired) {
-			costs += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
+			costs += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 			hired[EMPL_SCIENTIST]++;
 		}
 	}
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 		if (gd.employees[EMPL_SOLDIER][i].hired) {
-			costs += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
+			costs += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 			hired[EMPL_SOLDIER]++;
 		}
 	}
 	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
 		if (gd.employees[EMPL_WORKER][i].hired) {
-			costs += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
+			costs += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
 			hired[EMPL_WORKER]++;
 		}
 	}
 	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
 		if (gd.employees[EMPL_MEDIC][i].hired) {
-			costs += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
+			costs += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.score.rank * SALARY_MEDIC_RANKBONUS;
 			hired[EMPL_MEDIC]++;
 		}
 	}
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		if (gd.employees[EMPL_ROBOT][i].hired) {
-			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
+			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
 			hired[EMPL_ROBOT]++;
 		}
 	}
@@ -3126,7 +3126,7 @@ static void CL_UpdateCharacterStats (int won)
 			assert(chr);
 			/* count every hired soldier in aircraft */
 			idx++;
-			chr->assigned_missions++;
+			chr->score.assignedMissions++;
 
 			CL_UpdateCharacterSkills(chr);
 
@@ -3138,13 +3138,13 @@ static void CL_UpdateCharacterStats (int won)
 			   and do a promotion. */
 			/* @todo: use param[in] in some way. */
 			if (gd.numRanks >= 2) {
-				for (j = gd.numRanks - 1; j > chr->rank; j--) {
+				for (j = gd.numRanks - 1; j > chr->score.rank; j--) {
 					rank = &gd.ranks[j];
 					/* FIXME: (Zenerka 20080301) extend ranks and change calculations here. */
-					if (rank->type == EMPL_SOLDIER && (chr->skills[ABILITY_MIND] >= rank->mind)
-						&& (chr->kills[KILLED_ALIENS] >= rank->killed_enemies)
-						&& ((chr->kills[KILLED_CIVILIANS] + chr->kills[KILLED_TEAM]) <= rank->killed_others)) {
-						chr->rank = j;
+					if (rank->type == EMPL_SOLDIER && (chr->score.skills[ABILITY_MIND] >= rank->mind)
+						&& (chr->score.kills[KILLED_ALIENS] >= rank->killed_enemies)
+						&& ((chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM]) <= rank->killed_others)) {
+						chr->score.rank = j;
 						if (chr->HP > 0)
 							Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s has been promoted to %s.\n"), chr->name, rank->name);
 						else
@@ -3270,7 +3270,7 @@ static void CL_DebugChangeCharacterStats_f (void)
 		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 		if (chr) {
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				chr->kills[j]++;
+				chr->score.kills[j]++;
 		}
 	}
 	CL_UpdateCharacterStats(1);

@@ -169,7 +169,7 @@ static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t 
 		/* Is this a soldier assigned to aircraft? */
 		if (CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
 			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
-			gd.ranks[employee->chr.rank].shortname, employee->chr.name);
+			gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 			MN_Popup(_("Soldier in aircraft"), popupText);
 			return qfalse;
 		}
@@ -295,7 +295,7 @@ static void TR_CargoList (void)
 			if (trEmployeesTmp[empltype][i] > TRANS_LIST_EMPTY_SLOT) {
 				if (empltype == EMPL_SOLDIER) {
 					employee = &gd.employees[empltype][i];
-					Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.rank].shortname, employee->chr.name);
+					Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 					Q_strcat(cargoList, str, sizeof(cargoList));
 					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 					cargo[cnt].itemidx = employee->idx;
@@ -456,7 +456,7 @@ static void TR_TransferSelect_f (void)
 					if (trEmployeesTmp[empltype][i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
 						continue;
 					if (empltype == EMPL_SOLDIER) {
-						Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.rank].shortname, employee->chr.name);
+						Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 						Q_strcat(transferList, str, sizeof(transferList));
 						cnt++;
 					}

@@ -393,24 +393,16 @@ static void G_SendCharacterData (const edict_t* ent)
 	gi.WriteByte(ent->STUN);
 	gi.WriteByte(ent->morale);
 
-	/* scores */
+	/* Scores */
+	gi.WriteShort(ent->chr.score.experience);
+	for (k = 0; k < SKILL_NUM_TYPES; k++)
+		gi.WriteByte(ent->chr.score.skills[k]);
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.WriteShort(ent->chr.kills[k]);
-
-	/* Send chr->chrscore as well. */
-	gi.WriteByte(ent->chr.chrscore.alienskilled);
-	gi.WriteByte(ent->chr.chrscore.aliensstunned);
-	gi.WriteByte(ent->chr.chrscore.civilianskilled);
-	gi.WriteByte(ent->chr.chrscore.civiliansstunned);
-	gi.WriteByte(ent->chr.chrscore.teamkilled);
-	gi.WriteByte(ent->chr.chrscore.teamstunned);
-	gi.WriteByte(ent->chr.chrscore.closekills);
-	gi.WriteByte(ent->chr.chrscore.heavykills);
-	gi.WriteByte(ent->chr.chrscore.assaultkills);
-	gi.WriteByte(ent->chr.chrscore.sniperkills);
-	gi.WriteByte(ent->chr.chrscore.explosivekills);
-	gi.WriteByte(ent->chr.chrscore.accuracystat);
-	gi.WriteByte(ent->chr.chrscore.powerstat);
+		gi.WriteShort(ent->chr.score.kills[k]);
+	for (k = 0; k < KILLED_NUM_TYPES; k++)
+		gi.WriteShort(ent->chr.score.stuns[k]);
+	gi.WriteShort(ent->chr.score.assignedMissions);
+	gi.WriteByte(ent->chr.score.rank);
 }
 
 /**

@@ -424,15 +424,19 @@ typedef struct csi_s {
 #define GET_TU( ab )        (min((27 + (ab) * 20/MAX_SKILL), 255))
 #define GET_MORALE( ab )        (min((100 + (ab) * 150/MAX_SKILL), 255))
 
+/**
+ * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
+ * For this see also g_combat.c:G_UpdateCharacterScore
+*/
 typedef enum {
-	KILLED_ALIENS,
-	KILLED_CIVILIANS,
-	KILLED_TEAM,
+	KILLED_ALIENS,		/**< Killed aliens @todo maybe generally "enemies" in the future? */
+	KILLED_CIVILIANS,	/**< Civilians, animals @todo maybe also scientists and workers int he future? */
+	KILLED_TEAM,	/**< Friendly fire, own team, partner-teams. */
 
 	KILLED_NUM_TYPES
 } killtypes_t;
 
-typedef enum {
+typedef enum { /** @note Changing order/entries also changes network-transmission and savegames! */
 	ABILITY_POWER,
 	ABILITY_SPEED,
 	ABILITY_ACCURACY,
@@ -476,23 +480,73 @@ typedef struct rank_s {
 extern rank_t ranks[MAX_RANKS]; /**< Global list of all ranks defined in medals.ufo. */
 extern int numRanks;            /**< The number of entries in the list above. */
 
-/** @brief Structure of scores being counted after soldier kill or stun. */
-typedef struct chrScore_s {
-	int alienskilled;	/**< Killed aliens. */
-	int aliensstunned;	/**< Stunned aliens. */
-	int civilianskilled;	/**< Killed civilians. @todo: use me. */
-	int civiliansstunned;	/**< Stunned civilians. @todo: use me. */
-	int teamkilled;		/**< Killed teammates. @todo: use me. */
-	int teamstunned;	/**< Stunned teammates. @todo: use me. */
-	int closekills;		/**< Aliens killed by CLOSE. */
-	int heavykills;		/**< Aliens killed by HEAVY. */
-	int assaultkills;	/**< Aliens killed by ASSAULT. */
-	int sniperkills;	/**< Aliens killed by SNIPER. */
-	int explosivekills;	/**< Aliens killed by EXPLOSIVE. */
-	int accuracystat;	/**< Aliens kills or stuns counted to ACCURACY. */
-	int powerstat;		/**< Aliens kills or stuns counted to POWER. */
-	int survivedmissions;	/**< Missions survived. @todo: use me. */
-} chrScore_t;
+/**
+ * @brief Structure of all stats collected in a mission.
+ * @todo Will replace chrScoreOLD_s at some point.
+ * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
+ * @note Mostly collected in g_client.c and not used anywhere else (at least that's the plan ;)).
+ * The result is parsed into chrScoreGlobal_t which is stored in savegames.
+ * @note
+BTAxis about "hit" count:
+"But yeah, what we want is a counter per skill. This counter should start at 0 every battle, and then be intreased by 1 everytime
+- a direct fire weapon hits (or deals damage, same thing) the actor the weapon was fired at. If it wasn't fired at an actor, nothing should happen.
+- a splash weapon deals damage to any enemy actor. If multiple actors are hit, increase the counter multiple times."
+ */
+typedef struct chrScoreMission_s {
+
+	/* Movement counts. */
+	int movedNormal;
+	int movedCrouched;
+#if 0
+	int movedPowered;
+
+	int weight; /**< Weight of equipment (or only armour?) */
+#endif
+	/** Kills & stuns @todo use existing code */
+	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
+	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
+
+	/**
+	 * Hits/Misses @sa g_combat.c:G_UpdateHitScore. */
+	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldeir started shooting) */
+	qboolean firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
+	int hits[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of hits (aliens, civilians or, teammates) per skill.
+													 * It is a sub-count of "fired".
+													 * It's planned to be increased by 1 for each series fo shots that dealt _some_ damage. */
+	int firedSplash[SKILL_NUM_TYPES];	/**< Count of fired splash "firemodes". */
+	qboolean firedSplashHit[KILLED_NUM_TYPES];	/** Same as firedHit but for Splash damage. */
+	int hitsSplash[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of splash hits. */
+	int hitsSplashDamage[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of dealt splash damage (aliens, civilians or, teammates).
+														 		 * This is counted in overall damage (healthpoint).*/
+	/** @todo Check HEALING of others. */
+
+	int skillKills[SKILL_NUM_TYPES];	/**< Number of kills related to each skill. */
+
+	int heal;	/**< How many hitpoints has this soldier received trough healing in battlescape. */
+#if 0
+	int reactionFire;	/**< Count number of usage of RF (or TUs?) */
+#endif
+} chrScoreMission_t;
+
+/**
+ * @brief Structure of all stats collected for an actor over time.
+ * @todo Will replace chrScoreOLD_s at some point.
+ * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
+ * @note This information is stored in savegames (in contract to chrScoreMission_t).
+ */
+typedef struct chrScoreGlobal_s {
+	int experience;
+
+	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. */
+
+	/* Kills & Stuns  */
+	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
+	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
+
+	int assignedMissions;		/**< Number of missions this soldeir was assigned to. */
+
+	int rank;					/**< Index of rank (in gd.ranks). */
+} chrScoreGlobal_t;
 
 typedef enum {
 	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1=undef) */
@@ -552,18 +606,12 @@ typedef struct character_s {
 	char head[MAX_VAR];			/**< @todo: document me. */
 	int skin;				/**< Index of skin. */
 
-	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. */
-
 	int HP;						/**< Health points (current ones). */
 	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
 	int STUN, morale;			/**< @todo: document me. */
 
-	chrScore_t chrscore;		/**< Array of scores. */
-
-	int kills[KILLED_NUM_TYPES];/**< Array of kills (@todo: integrate me with chrScore_t chrscore). */
-	int assigned_missions;		/**< Assigned missions (@todo: integrate me with chrScore_t chrscore). */
-
-	int rank;					/**< Index of rank (in gd.ranks). */
+	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
+	chrScoreMission_t *scoreMission;		/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */
 
 	/** @sa memcpy in Grid_CheckForbidden */
 	int fieldSize;				/**< ACTOR_SIZE_* */

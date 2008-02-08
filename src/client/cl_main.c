@@ -2164,6 +2164,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_listlm", LM_List_f, "Shows a list of current know local models");
 	Cmd_AddCommand("killteam", NULL, NULL);
 	Cmd_AddCommand("stunteam", NULL, NULL);
+	Cmd_AddCommand("debug_listscore", NULL, NULL);
 #endif
 }
 

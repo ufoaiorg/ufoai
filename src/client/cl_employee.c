@@ -1123,7 +1123,6 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, e->chr.HP);
 			MSG_WriteByte(sb, e->chr.STUN);
 			MSG_WriteByte(sb, e->chr.morale);
-			MSG_WriteByte(sb, e->chr.rank);
 			MSG_WriteByte(sb, e->chr.fieldSize);
 
 			/* Store reaction-firemode */
@@ -1141,7 +1140,9 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, -1);
 			MSG_WriteShort(sb, -1);
 			MSG_WriteShort(sb, -1);
+			/** Store character stats @todo see chrScoreGlobal_t */
 
+#if 0 /** old way (pre 2.3) */
 			MSG_WriteShort(sb, e->chr.assigned_missions);
 
 			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
@@ -1162,8 +1163,20 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.chrscore.explosivekills);
 			MSG_WriteByte(sb, e->chr.chrscore.accuracystat);
 			MSG_WriteByte(sb, e->chr.chrscore.powerstat);
+#endif
 
-			/* store inventories */
+			/* Store character stats/score */
+			MSG_WriteShort(sb, e->chr.score.experience);
+			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
+				MSG_WriteByte(sb, e->chr.score.skills[k]);
+			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
+				MSG_WriteShort(sb, e->chr.score.kills[k]);
+			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
+				MSG_WriteShort(sb, e->chr.score.stuns[k]);
+			MSG_WriteShort(sb, e->chr.score.assignedMissions);
+			MSG_WriteByte(sb, e->chr.score.rank);
+
+			/* Store inventories */
 			CL_SaveInventory(sb, &e->inv);
 		}
 	}
@@ -1209,7 +1222,16 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.HP = MSG_ReadShort(sb);
 			e->chr.STUN = MSG_ReadByte(sb);
 			e->chr.morale = MSG_ReadByte(sb);
-			e->chr.rank = MSG_ReadByte(sb);
+#if 0
+/** @todo activate me after first "stats/score" commit */
+			if (((saveFileHeader_t *)data)->version < 3) {
+#endif
+				/** This was moved into chr->score for 2.3 and up */
+				e->chr.score.rank = MSG_ReadByte(sb);
+#if 0
+/** @todo activate me after first "stats/score" commit */
+			}
+#endif
 			e->chr.fieldSize = MSG_ReadByte(sb);
 
 			if (((saveFileHeader_t *)data)->version >= 3) {
@@ -1233,27 +1255,46 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				MSG_ReadShort(sb);
 			}
 
-			e->chr.assigned_missions = MSG_ReadShort(sb);
+#if 0
+/** @todo activate me after first "stats/score" commit */
+			if (((saveFileHeader_t *)data)->version < 3) {
+#endif
+				/* Load character stats/score (before 2.3) */
+				e->chr.score.assignedMissions = MSG_ReadShort(sb);
 
-			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
-				e->chr.kills[k] = MSG_ReadShort(sb);
-			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
-				e->chr.skills[k] = MSG_ReadShort(sb);
+				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
+					e->chr.score.kills[k] = MSG_ReadShort(sb);
+				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
+					e->chr.score.skills[k] = MSG_ReadShort(sb);
 
-			e->chr.chrscore.alienskilled = MSG_ReadByte(sb);
-			e->chr.chrscore.aliensstunned = MSG_ReadByte(sb);
-			e->chr.chrscore.civilianskilled = MSG_ReadByte(sb);
-			e->chr.chrscore.civiliansstunned = MSG_ReadByte(sb);
-			e->chr.chrscore.teamkilled = MSG_ReadByte(sb);
-			e->chr.chrscore.teamstunned = MSG_ReadByte(sb);
-			e->chr.chrscore.closekills = MSG_ReadByte(sb);
-			e->chr.chrscore.heavykills = MSG_ReadByte(sb);
-			e->chr.chrscore.assaultkills = MSG_ReadByte(sb);
-			e->chr.chrscore.sniperkills = MSG_ReadByte(sb);
-			e->chr.chrscore.explosivekills = MSG_ReadByte(sb);
-			e->chr.chrscore.accuracystat = MSG_ReadByte(sb);
-			e->chr.chrscore.powerstat = MSG_ReadByte(sb);
-
+				e->chr.score.kills[KILLED_ALIENS] = MSG_ReadByte(sb);
+				e->chr.score.stuns[KILLED_ALIENS] = MSG_ReadByte(sb);
+				e->chr.score.kills[KILLED_CIVILIANS] = MSG_ReadByte(sb);
+				e->chr.score.stuns[KILLED_CIVILIANS] = MSG_ReadByte(sb);
+				e->chr.score.kills[KILLED_TEAM] = MSG_ReadByte(sb);
+ 				e->chr.score.stuns[KILLED_TEAM] = MSG_ReadByte(sb);
+				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_CLOSE] = */
+				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_HEAVY] = */
+				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_ASSAULT] = */
+				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_SNIPER] = */
+				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_EXPLOSIVE] = */
+				MSG_ReadByte(sb);	/*accuracystat*/
+				MSG_ReadByte(sb);	/*powerstat*/
+#if 0
+/** @todo activate me after first "stats/score" commit */
+			} else {
+				/* Load character stats/score (starting with 2.3 and up) */
+				e->chr.score.experience = MSG_ReadShort(sb);
+				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
+					e->chr.score.skills[k] = MSG_ReadByte(sb);
+				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
+					e->chr.score.kills[k] = MSG_ReadShort(sb);
+				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
+					e->chr.score.stuns[k] = MSG_ReadShort(sb);
+				e->chr.score.assignedMissions = MSG_ReadShort(sb);
+				e->chr.score.rank = MSG_ReadByte(sb);
+			}
+#endif
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
 			CL_LoadInventory(sb, &e->inv);

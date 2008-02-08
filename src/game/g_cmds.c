@@ -200,6 +200,8 @@ void G_ClientCommand (player_t * player)
 		G_KillTeam();
 	else if (Q_stricmp(cmd, "stunteam") == 0)
 		G_StunTeam();
+	else if (Q_stricmp(cmd, "debug_listscore") == 0)
+		G_ListMissionScore_f();
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */

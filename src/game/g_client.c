@@ -34,6 +34,9 @@ int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactio
  * a little bit different */
 static qboolean sentAppearPerishEvent;
 
+static chrScoreMission_t scoreMission[MAX_EDICTS];
+static int scoreMissionNum = 0;
+
 qboolean G_IsLivingActor (edict_t *ent)
 {
 	assert(ent);
@@ -148,7 +151,7 @@ void G_GiveTimeUnits (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && G_IsLivingActor(ent) && ent->team == team) {
 			ent->state &= ~STATE_DAZED;
-			ent->TU = GET_TU(ent->chr.skills[ABILITY_SPEED]);
+			ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
 			G_SendStats(ent);
 		}
 }
@@ -250,8 +253,8 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 			gi.WriteByte(check->skin);
 			gi.WriteShort(check->state & STATE_PUBLIC);
 			gi.WriteByte(check->fieldSize);
-			gi.WriteByte(GET_TU(check->chr.skills[ABILITY_SPEED]));
-			maxMorale = GET_MORALE(check->chr.skills[ABILITY_MIND]);
+			gi.WriteByte(GET_TU(check->chr.score.skills[ABILITY_SPEED]));
+			maxMorale = GET_MORALE(check->chr.score.skills[ABILITY_MIND]);
 			if (maxMorale >= MAX_SKILL)
 				maxMorale = MAX_SKILL;
 			gi.WriteByte(maxMorale);
@@ -1309,6 +1312,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	qboolean triggers = qfalse;
 	edict_t* client_action = NULL;
 	int oldState;
+	qboolean moveDiagonal;
 
 	ent = g_edicts + num;
 
@@ -1380,7 +1384,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					break;
 
 				/* decrease TUs */
-				div = ((dvtab[numdv] & (DIRECTIONS - 1)) < 4) ? TU_MOVE_STRAIGHT : TU_MOVE_DIAGONAL;
+				moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4);
+				div = moveDiagonal ? TU_MOVE_DIAGONAL : TU_MOVE_STRAIGHT;
 				if (ent->state & STATE_CROUCHED)
 					div *= 1.5;
 				if ((int) (tu + div) > ent->TU)
@@ -1397,6 +1402,16 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* link it at new position */
 				gi.LinkEdict(ent);
+
+				/** Count move for stats
+				 * @todo Add support for armoured walking (movedPowered). */
+				if (ent->chr.scoreMission) { /**< Only the PHALANX team has these stats right now. */
+					if (ent->state & STATE_CROUCHED) {
+						ent->chr.scoreMission->movedCrouched += (moveDiagonal) ? 3 : 2;	/* Diagonal or straight move. */
+					} else {
+						ent->chr.scoreMission->movedNormal += (moveDiagonal) ? 3 : 2;	/* Diagonal or straight move. */
+					}
+				}
 
 				/* write move header if not yet done */
 				if (!steps) {
@@ -1778,10 +1793,10 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 			else
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 
-			/* moraleregeneration, capped at max: */
+			/* morale-regeneration, capped at max: */
 			newMorale = ent->morale + MORALE_RANDOM(mor_regeneration->value);
-			if (newMorale > GET_MORALE(ent->chr.skills[ABILITY_MIND]))
-				ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
+			if (newMorale > GET_MORALE(ent->chr.score.skills[ABILITY_MIND]))
+				ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
 			else
 				ent->morale = newMorale;
 
@@ -2011,6 +2026,102 @@ void G_KillTeam (void)
 
 	/* check for win conditions */
 	G_CheckEndGame();
+}
+
+/**
+ * @brief Prints all mission-score entries of all team members.
+ * @note Console command: debug_listscore
+ */
+void G_ListMissionScore_f (void)
+{
+	int team = -1;
+	edict_t *ent;
+	int entIdx, i, j;
+
+	/* With a parameter we will be able to get the info for a specific team */
+	if (gi.Cmd_Argc() == 2) {
+		team = atoi(gi.Cmd_Argv(1));
+	} else {
+		Com_Printf("Usage: %s <teamnumber>\n", gi.Cmd_Argv(0));
+		return;
+	}
+
+	for (entIdx = 0, ent = g_edicts; entIdx < globals.num_edicts; entIdx++, ent++) {
+		if (ent->inuse && G_IsLivingActor(ent)) {
+			if (team >= 0 && ent->team != team)
+				continue;
+
+			assert(ent->chr.scoreMission);
+
+			Com_Printf("Soldier: %s\n", ent->chr.name);
+
+			/* ===================== */
+			Com_Printf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
+
+			Com_Printf("  Kills:");
+			for (i = 0; i < KILLED_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->kills[i]);
+			}
+			Com_Printf("\n");
+
+			Com_Printf("  Stuns:");
+			for (i = 0; i < KILLED_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->stuns[i]);
+			}
+			Com_Printf("\n");
+
+			/* ===================== */
+			Com_Printf("  Fired:");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->fired[i]);
+			}
+			Com_Printf("\n");
+
+			Com_Printf("  Hits:\n");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf("    Skill%i: ",i);
+				for (j = 0; j < KILLED_NUM_TYPES; j++) {
+					Com_Printf(" %i", ent->chr.scoreMission->hits[i][j]);
+				}
+				Com_Printf("\n");
+			}
+
+			/* ===================== */
+			Com_Printf("  Fired Splash:");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->firedSplash[i]);
+			}
+			Com_Printf("\n");
+
+			Com_Printf("  Hits Splash:\n");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf("    Skill%i: ",i);
+				for (j = 0; j < KILLED_NUM_TYPES; j++) {
+					Com_Printf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
+				}
+				Com_Printf("\n");
+			}
+
+			Com_Printf("  Splash Damage:\n");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf("    Skill%i: ",i);
+				for (j = 0; j < KILLED_NUM_TYPES; j++) {
+					Com_Printf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
+				}
+				Com_Printf("\n");
+			}
+
+			/* ===================== */
+			Com_Printf("  Kills per skill:");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->skillKills[i]);
+			}
+			Com_Printf("\n");
+
+			/* ===================== */
+			Com_Printf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
+		}
+	}
 }
 #endif
 
@@ -2411,16 +2522,15 @@ static inline void G_ClientSkipActorInfo (void)
 	gi.ReadByte(); /* STUN */
 	gi.ReadByte(); /* morale */
 
+	gi.ReadShort(); /* experience */
 	for (k = 0; k < SKILL_NUM_TYPES; k++)
 		gi.ReadByte(); /* skills */
-
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.ReadShort(); /* kills */
+	for (k = 0; k < KILLED_NUM_TYPES; k++)
+		gi.ReadShort(); /* stuns */
 	gi.ReadShort(); /* assigned missions */
-
-	/* skip stats */
-	for (k = 0; k < 13; k++)
-		gi.ReadByte();
+	gi.ReadByte(); /* rank */
 
 	/* skip inventory */
 	j = gi.ReadShort();
@@ -2520,29 +2630,20 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.STUN = gi.ReadByte();
 			ent->chr.morale = gi.ReadByte();
 
-			/* new attributes */
-			for (k = 0; k < SKILL_NUM_TYPES; k++)
-				ent->chr.skills[k] = gi.ReadByte();
-
-			/* scores */
+			/** Scores @sa G_ClientSkipActorInfo */
+			ent->chr.score.experience = gi.ReadShort();
+			for (k = 0; k < SKILL_NUM_TYPES; k++)	/* new attributes */
+				ent->chr.score.skills[k] = gi.ReadByte();
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
-				ent->chr.kills[k] = gi.ReadShort();
-			ent->chr.assigned_missions = gi.ReadShort();
-
-			/* @sa G_ClientSkipActorInfo */
-			ent->chr.chrscore.alienskilled = gi.ReadByte();
-			ent->chr.chrscore.aliensstunned = gi.ReadByte();
-			ent->chr.chrscore.civilianskilled = gi.ReadByte();
-			ent->chr.chrscore.civiliansstunned = gi.ReadByte();
-			ent->chr.chrscore.teamkilled = gi.ReadByte();
-			ent->chr.chrscore.teamstunned = gi.ReadByte();
-			ent->chr.chrscore.closekills = gi.ReadByte();
-			ent->chr.chrscore.heavykills = gi.ReadByte();
-			ent->chr.chrscore.assaultkills = gi.ReadByte();
-			ent->chr.chrscore.sniperkills = gi.ReadByte();
-			ent->chr.chrscore.explosivekills = gi.ReadByte();
-			ent->chr.chrscore.accuracystat = gi.ReadByte();
-			ent->chr.chrscore.powerstat = gi.ReadByte();
+				ent->chr.score.kills[k] = gi.ReadShort();
+			for (k = 0; k < KILLED_NUM_TYPES; k++)
+				ent->chr.score.stuns[k] = gi.ReadShort();
+			ent->chr.score.assignedMissions = gi.ReadShort();
+			ent->chr.score.rank = gi.ReadByte();
+			/* Mission Scores */
+			memset(&scoreMission[scoreMissionNum], 0, sizeof(chrScoreMission_t));
+			ent->chr.scoreMission = &scoreMission[scoreMissionNum];
+			scoreMissionNum++;
 
 			/* inventory */
 			{
@@ -2568,7 +2669,7 @@ void G_ClientTeamInfo (player_t * player)
 			ent->morale = ent->chr.morale;
 
 			/* FIXME: for now, heal fully upon entering mission */
-			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
+			ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
 
 			ent->reaction_minhit = 30; /* @todo: allow later changes from GUI */
 		} else {
@@ -2774,8 +2875,6 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam)
 			p->ready = qfalse;
-
-	level.actualRound++;
 }
 
 /**
