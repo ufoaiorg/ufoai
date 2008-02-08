@@ -2488,7 +2488,7 @@ static int CL_CheckAction (void)
  * @note The part of the line that is not reachable in this turn (i.e. not enough
  * TUs left) will be drawn differently.
  * @param[in] to The position in the map to calculate the move-length for.
- * @return The amount of TUs that are need to walk to the given grid position
+ * @return The amount of TUs that are needed to walk to the given grid position
  */
 static int CL_MoveLength (pos3_t to)
 {
