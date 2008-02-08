@@ -1222,16 +1222,12 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.HP = MSG_ReadShort(sb);
 			e->chr.STUN = MSG_ReadByte(sb);
 			e->chr.morale = MSG_ReadByte(sb);
-#if 0
-/** @todo activate me after first "stats/score" commit */
+
 			if (((saveFileHeader_t *)data)->version < 3) {
-#endif
 				/** This was moved into chr->score for 2.3 and up */
 				e->chr.score.rank = MSG_ReadByte(sb);
-#if 0
-/** @todo activate me after first "stats/score" commit */
 			}
-#endif
+
 			e->chr.fieldSize = MSG_ReadByte(sb);
 
 			if (((saveFileHeader_t *)data)->version >= 3) {
@@ -1255,10 +1251,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				MSG_ReadShort(sb);
 			}
 
-#if 0
-/** @todo activate me after first "stats/score" commit */
 			if (((saveFileHeader_t *)data)->version < 3) {
-#endif
 				/* Load character stats/score (before 2.3) */
 				e->chr.score.assignedMissions = MSG_ReadShort(sb);
 
@@ -1280,8 +1273,6 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_EXPLOSIVE] = */
 				MSG_ReadByte(sb);	/*accuracystat*/
 				MSG_ReadByte(sb);	/*powerstat*/
-#if 0
-/** @todo activate me after first "stats/score" commit */
 			} else {
 				/* Load character stats/score (starting with 2.3 and up) */
 				e->chr.score.experience = MSG_ReadShort(sb);
@@ -1294,7 +1285,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				e->chr.score.assignedMissions = MSG_ReadShort(sb);
 				e->chr.score.rank = MSG_ReadByte(sb);
 			}
-#endif
+
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
 			CL_LoadInventory(sb, &e->inv);
