@@ -10,6 +10,8 @@ GAME_SRCS=\
 	game/g_spawn.c \
 	game/g_svcmds.c \
 	game/g_utils.c \
+	game/g_func.c \
+	game/g_trigger.c \
 	game/inv_shared.c \
 	shared/shared.c \
 	shared/infostring.c

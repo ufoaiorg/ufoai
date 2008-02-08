@@ -72,6 +72,12 @@
 		<Unit filename="..\..\src\game\g_combat.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\game\g_trigger.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\g_func.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\game\g_local.h" />
 		<Unit filename="..\..\src\game\g_main.c">
 			<Option compilerVar="CC" />

@@ -42,10 +42,6 @@ static void SP_2x2_start(edict_t *ent);
 static void SP_civilian_target(edict_t *ent);
 static void SP_misc_mission(edict_t *ent);
 static void SP_misc_mission_aliens(edict_t *ent);
-static void SP_trigger_hurt(edict_t *ent);
-static void SP_func_rotating(edict_t *ent);
-static void SP_func_door(edict_t *ent);
-static void SP_func_breakable(edict_t *ent);
 
 typedef struct {
 	const char *name;
@@ -367,36 +363,6 @@ edict_t *G_Spawn (void)
 	return e;
 }
 
-static edict_t* G_TriggerSpawn (edict_t *owner)
-{
-	edict_t* trigger;
-	vec3_t mins, maxs;
-
-	trigger = G_Spawn();
-	trigger->classname = "trigger";
-	/* link the door into the trigger */
-	trigger->owner = owner;
-
-	VectorCopy(owner->absmin, mins);
-	VectorCopy(owner->absmax, maxs);
-
-	/* expand the trigger box */
-	mins[0] -= UNIT_SIZE;
-	mins[1] -= UNIT_SIZE;
-	maxs[0] += UNIT_SIZE;
-	maxs[1] += UNIT_SIZE;
-
-	VectorCopy(mins, trigger->mins);
-	VectorCopy(maxs, trigger->maxs);
-
-	trigger->solid = SOLID_TRIGGER;
-
-	/* link into the world */
-	gi.LinkEdict(trigger);
-
-	return trigger;
-}
-
 static void G_ActorSpawn (edict_t *ent)
 {
 	/* set properties */
@@ -457,54 +423,6 @@ static void SP_light (edict_t *ent)
 	/* lights aren't client-server communicated items */
 	/* they are completely client side */
 	G_FreeEdict(ent);
-}
-
-/**
- * @brief Hurt trigger
- * @sa SP_trigger_hurt
- * @note No new event in the trigger functions!!!! They are called while moving
- */
-static qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
-{
-	/* these actors should really not be able to trigger this - they don't move anymore */
-	assert(!(activator->state & STATE_DEAD));
-	assert(!(activator->state & STATE_STUN));
-
-	if (self->spawnflags & 2) {
-		activator->STUN += self->dmg;
-		if (activator->HP <= activator->STUN)
-			activator->state |= STATE_STUN;
-	} else if (self->spawnflags & 4) {
-		/* @todo Handle dazed via trigger_hurt */
-	} else {
-		activator->HP = max(activator->HP - self->dmg, 0);
-		if (activator->HP == 0)
-			activator->state |= STATE_DEAD;
-	}
-
-	return qtrue;
-}
-
-/**
- * @brief Trigger for grid fields if they are under fire
- * @note Called once for every step
- * @sa Touch_HurtTrigger
- */
-void SP_trigger_hurt (edict_t *ent)
-{
-	ent->classname = "trigger_hurt";
-	ent->type = ET_TRIGGER_HURT;
-
-	if (!ent->dmg)
-		ent->dmg = 5;
-
-	ent->solid = SOLID_TRIGGER;
-	gi.SetModel(ent, ent->model);
-
-	ent->touch = Touch_HurtTrigger;
-	ent->child = NULL;
-
-	gi.LinkEdict(ent);
 }
 
 /**
@@ -637,7 +555,7 @@ static void SP_civilian_target (edict_t *ent)
  * @todo use level.actualRound to determine the 'King of the Hill' time
  * @todo Implement trigger->owner health (to destroy the target)
  */
-static qboolean Touch_MissionTrigger (edict_t *self, edict_t *activator)
+static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 {
 	if (!self->owner)
 		return qfalse;
@@ -675,7 +593,7 @@ static qboolean Touch_MissionTrigger (edict_t *self, edict_t *activator)
  * @note Think functions are only executed when level.activeTeam != -1
  * or in other word, the game has started
  */
-static void Think_MissionTrigger (edict_t *self)
+static void Think_Mission (edict_t *self)
 {
 	/* when every player has joined the match - spawn the mission target
 	 * particle (if given) to mark the trigger */
@@ -716,7 +634,7 @@ static void SP_misc_mission (edict_t *ent)
 	ent->solid = SOLID_BBOX;
 
 	/* think function values */
-	ent->think = Think_MissionTrigger;
+	ent->think = Think_Mission;
 	ent->nextthink = 1;
 
 	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
@@ -724,7 +642,7 @@ static void SP_misc_mission (edict_t *ent)
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
-	other->touch = Touch_MissionTrigger;
+	other->touch = Touch_Mission;
 	ent->child = other;
 
 	gi.LinkEdict(ent);
@@ -743,7 +661,7 @@ static void SP_misc_mission_aliens (edict_t *ent)
 	ent->solid = SOLID_BBOX;
 
 	/* think function values */
-	ent->think = Think_MissionTrigger;
+	ent->think = Think_Mission;
 	ent->nextthink = 1;
 
 	VectorSet(ent->absmax, PLAYER_WIDTH * 3, PLAYER_WIDTH * 3, PLAYER_STAND);
@@ -751,7 +669,7 @@ static void SP_misc_mission_aliens (edict_t *ent)
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
-	other->touch = Touch_MissionTrigger;
+	other->touch = Touch_Mission;
 	ent->child = other;
 
 	gi.LinkEdict(ent);
@@ -765,128 +683,6 @@ static void SP_dummy (edict_t *ent)
 	/* misc_models and particles aren't client-server communicated items */
 	/* they are completely client side */
 	G_FreeEdict(ent);
-}
-
-
-/**
- * @brief QUAKED func_breakable (0.3 0.3 0.3) ?
- * Used for breakable objects.
- * @note These edicts are added client side as local models
- * the are stored in the lmList (because they are inline models)
- * for tracing (see inlineList in cmodel.c)
- * @sa CM_EntTestLine
- * @sa LM_AddModel
- * @sa SV_SetModel
- * @sa G_SendBrushModels
- */
-static void SP_func_breakable (edict_t *ent)
-{
-	ent->classname = "breakable";
-	ent->type = ET_BREAKABLE;
-
-	/* set an inline model */
-	gi.SetModel(ent, ent->model);
-	ent->solid = SOLID_BSP;
-	gi.LinkEdict(ent);
-
-	Com_DPrintf(DEBUG_GAME, "func_breakable: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
-			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
-			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
-}
-
-/*
-=============================================================================
-DOOR FUNCTIONS
-=============================================================================
-*/
-
-/**
- * @brief Trigger to open the door we are standing in front of it
- * @sa LE_DoorOpen
- * @sa LE_CloseOpen
- * @sa CL_ActorDoorAction
- */
-static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
-{
-	if (!self->owner)
-		return qfalse;
-
-	if (activator->team == TEAM_CIVILIAN || activator->team == TEAM_ALIEN) {
-		/* let the ai interact with the door */
-		return G_ClientUseDoor(game.players + activator->pnum, activator->number, self->number);
-	} else {
-		if (activator->client_action != self->owner) {
-			/* prepare for client action */
-			activator->client_action = self->owner;
-			/* tell the hud to show the door buttons */
-			gi.AddEvent(G_TeamToPM(activator->team), EV_DOOR_ACTION);
-			gi.WriteShort(activator->number);
-			gi.WriteShort(activator->client_action->number);
-			gi.EndEvents();
-		}
-		return qtrue;
-	}
-	return qfalse;
-}
-
-/**
- * @brief QUAKED func_door (0 .5 .8) ?
- * "health" if set, door is destroyable
- * @sa SV_SetModel
- * @sa LM_AddModel
- * @sa G_SendBrushModels
- */
-static void SP_func_door (edict_t *ent)
-{
-	edict_t *other;
-
-	ent->classname = "door";
-	ent->type = ET_DOOR;
-
-	/* set an inline model */
-	gi.SetModel(ent, ent->model);
-	ent->solid = SOLID_BSP;
-	gi.LinkEdict(ent);
-
-	ent->moveinfo.state = STATE_CLOSED;
-
-	/* spawn the trigger entity */
-	other = G_TriggerSpawn(ent);
-	other->touch = Touch_DoorTrigger;
-
-	ent->child = other;
-
-	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
-			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
-			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
-}
-
-/**
- * @brief QUAKED func_door (0 .5 .8) ?
- * "health"	if set, door must be shot open
- * @sa SV_SetModel
- * @sa LM_AddModel
- */
-static void SP_func_rotating (edict_t *ent)
-{
-	ent->classname = "rotating";
-	ent->type = ET_ROTATING;
-
-	/* set an inline model */
-	gi.SetModel(ent, ent->model);
-	ent->solid = SOLID_BSP;
-	gi.LinkEdict(ent);
-
-	/* the lower, the faster */
-	if (!ent->speed)
-		ent->speed = 50;
-
-	Com_DPrintf(DEBUG_GAME, "func_rotating: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
-			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
-			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 }
 
 /**

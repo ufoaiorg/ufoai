@@ -328,7 +328,6 @@ void G_StunTeam(void);
 extern int turnTeam;
 
 /* g_combat.c */
-
 qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 void G_ResetReactionFire(int team);
 qboolean G_ReactToMove(edict_t *target, qboolean mock);
@@ -344,10 +343,17 @@ void ServerCommand(void);
 qboolean SV_FilterPacket(const char *from);
 
 /* g_main.c */
-void SaveClientData(void);
-void FetchClientEntData(edict_t * ent);
 void G_EndGame(int team);
 void G_CheckEndGame(void);
+
+/* g_trigger.c */
+edict_t* G_TriggerSpawn(edict_t *owner);
+void SP_trigger_hurt(edict_t *ent);
+
+/* g_func.c */
+void SP_func_rotating(edict_t *ent);
+void SP_func_door(edict_t *ent);
+void SP_func_breakable(edict_t *ent);
 
 /*============================================================================ */
 
