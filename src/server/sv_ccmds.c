@@ -30,6 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 
+void SV_Heartbeat_f (void)
+{
+	/* heartbeats will always be sent to the ufo master */
+	svs.last_heartbeat = -9999999;	/* send immediately */
+}
+
 /**
  * @brief Specify a list of master servers
  * @sa SV_InitGame
@@ -54,7 +60,8 @@ void SV_SetMaster_f (void)
 	if (!sv_dedicated->integer)
 		return;
 
-	svs.last_heartbeat -= (HEARTBEAT_SECONDS + 1)* 1000;
+	/* only dedicated servers are sending heartbeats */
+	SV_Heartbeat_f();
 }
 
 
@@ -276,12 +283,6 @@ static void SV_ConSay_f (void)
 	SV_BroadcastPrintf(PRINT_CHAT, "%s\n", text);
 }
 #endif
-
-static void SV_Heartbeat_f (void)
-{
-	svs.last_heartbeat -= (HEARTBEAT_SECONDS + 1)* 1000;
-}
-
 
 /**
  * @brief Examine or change the serverinfo string
