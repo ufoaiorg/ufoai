@@ -81,15 +81,18 @@ static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
 aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
-static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};	/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
-static vec2_t final2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
-static float deltaLengthSmooth = 0.0f;		/**< angle/position difference that we need to change when smoothing */
-static float finalZoom = 0.0f;			/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
-static float deltaZoomSmooth = 0.0f;		/**< zoom difference that we need to change when smoothing */
-static qboolean smoothRotation = qfalse;				/**< qtrue if the rotation of 3D geoscape must me smooth */
 static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
 											zone and water by different color values */
 static int terrainWidth, terrainHeight;		/**< the width and height for the terrain pic. */
+
+/* Smoothing variables */
+static qboolean smoothRotation = qfalse;	/**< qtrue if the rotation of 3D geoscape must me smooth */
+static vec3_t smoothFinalGlobeAngle = {0, GLOBE_ROTATE, 0};	/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
+static vec2_t smoothFinal2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
+static float smoothDeltaLength = 0.0f;		/**< angle/position difference that we need to change when smoothing */
+static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
+static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
+static qboolean smoothNewClick = qfalse;		/**< New click on control panel to make geoscape rotate */
 
 static byte *culturePic = NULL;			/**< this is the mask for separating the culture
 											zone and water by different color values */
@@ -1022,7 +1025,7 @@ static void MAP_GetGeoscapeAngle (float *Vector)
 /**
  * @brief Switch to next model on 2D and 3D geoscape.
  * @note Set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap.
- * @note This function sets the value of finalGlobeAngle (for 3D) or final2DGeoscapeCenter (for 2D),
+ * @note This function sets the value of smoothFinalGlobeAngle (for 3D) or smoothFinal2DGeoscapeCenter (for 2D),
  *  which contains the finale value that ccs.angles or ccs.centre must respectively take.
  * @sa MAP_GetGeoscapeAngle
  * @sa MAP_DrawMap
@@ -1044,72 +1047,81 @@ void MAP_CenterOnPoint_f (void)
 		/* case 3D geoscape */
 		vec3_t diff;
 
-		MAP_GetGeoscapeAngle(finalGlobeAngle);
-		finalGlobeAngle[1] += GLOBE_ROTATE;
-		VectorSubtract(finalGlobeAngle, ccs.angles, diff);
-		deltaLengthSmooth = VectorLength(diff);
+		MAP_GetGeoscapeAngle(smoothFinalGlobeAngle);
+		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
+		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
+		smoothDeltaLength = VectorLength(diff);
 	} else {
 		/* case 2D geoscape */
 		vec2_t diff;
 
-		MAP_GetGeoscapeAngle(final2DGeoscapeCenter);
-		Vector2Set(final2DGeoscapeCenter, 0.5f - final2DGeoscapeCenter[0] / 360.0f, 0.5f - final2DGeoscapeCenter[1] / 180.0f);
-		if (final2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
-			final2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
-		if (final2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
-			final2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
-		diff[0] = final2DGeoscapeCenter[0] - ccs.center[0];
-		diff[1] = final2DGeoscapeCenter[1] - ccs.center[1];
-		deltaLengthSmooth = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+		MAP_GetGeoscapeAngle(smoothFinal2DGeoscapeCenter);
+		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
+		if (smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
+			smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
+		if (smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
+			smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
+		diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
+		diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
+		smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
 	}
-	finalZoom = ZOOM_LIMIT;
+	smoothFinalZoom = ZOOM_LIMIT;
 
-	deltaZoomSmooth = fabs(finalZoom - ccs.zoom);
+	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
 
 	smoothRotation = qtrue;
 }
 
 /**
  * @brief smooth rotation of the 3D geoscape
- * @note updates slowly values of ccs.angles and ccs.zoom so that its value goes to finalGlobeAngle
+ * @note updates slowly values of ccs.angles and ccs.zoom so that its value goes to smoothFinalGlobeAngle
  * @sa MAP_DrawMap
  * @sa MAP_CenterOnPoint
  */
 static void MAP3D_SmoothRotate (void)
 {
 	vec3_t diff;
-	float diff_angle, diff_zoom, a;
+	float diff_angle, diff_zoom;
 	const float acceleration = 0.06f;
 	const float epsilon = 0.1f;
 	const float epsilonZoom = 0.01f;
 
-	diff_zoom = finalZoom - ccs.zoom;
+	static float speedOffset = 0.0f;
+	static float rotationSpeed = 0.0f;
 
-	VectorSubtract(finalGlobeAngle, ccs.angles, diff);
+	diff_zoom = smoothFinalZoom - ccs.zoom;
+
+	VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
 	diff_angle = VectorLength(diff);
 
-	if (deltaLengthSmooth > deltaZoomSmooth) {
+	if (smoothNewClick) {
+		speedOffset = rotationSpeed;
+		smoothNewClick = qfalse;
+	}
+
+	if (smoothDeltaLength > smoothDeltaZoom) {
 		if (diff_angle > epsilon) {
-			a = deltaLengthSmooth * sin(3.05f * (diff_angle / deltaLengthSmooth));
-			VectorScale(diff, acceleration / diff_angle * a, diff);
+			rotationSpeed = smoothDeltaLength * sin(3.05f * diff_angle / smoothDeltaLength) + speedOffset * diff_angle / smoothDeltaLength;
+			VectorScale(diff, acceleration / diff_angle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
-			ccs.zoom = ccs.zoom + acceleration * diff_zoom / diff_angle * a;
+			ccs.zoom = ccs.zoom + acceleration * diff_zoom / diff_angle * rotationSpeed;
 			return;
 		}
 	} else {
 		if (fabs(diff_zoom) > epsilonZoom) {
-			a = deltaZoomSmooth * sin(3.05f * (diff_zoom / deltaZoomSmooth));
-			VectorScale(diff, acceleration * diff_angle / fabs(diff_zoom) * a, diff);
+			rotationSpeed = smoothDeltaZoom * sin(3.05f * (diff_zoom / smoothDeltaZoom)) + fabs(speedOffset) * diff_zoom / smoothDeltaZoom;
+			VectorScale(diff, acceleration * diff_angle / fabs(diff_zoom) * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
-			ccs.zoom = ccs.zoom + acceleration * a;
+			ccs.zoom = ccs.zoom + acceleration * rotationSpeed;
 			return;
 		}
 	}
 
 	/* if we reach this point, that means that movement is over */
-	VectorCopy(finalGlobeAngle, ccs.angles);
+	VectorCopy(smoothFinalGlobeAngle, ccs.angles);
 	smoothRotation = qfalse;
-	ccs.zoom = finalZoom;
+	speedOffset = 0.0f;
+	ccs.zoom = smoothFinalZoom;
 }
 
 /**
@@ -1125,7 +1137,7 @@ void MAP_StopSmoothMovement (void)
 #define SMOOTHING_STEP_2D	0.02f
 /**
  * @brief smooth translation of the 2D geoscape
- * @note updates slowly values of ccs.center so that its value goes to final2DGeoscapeCenter
+ * @note updates slowly values of ccs.center so that its value goes to smoothFinal2DGeoscapeCenter
  * @note updates slowly values of ccs.zoom so that its value goes to ZOOM_LIMIT
  * @sa MAP_DrawMap
  * @sa MAP_CenterOnPoint
@@ -1135,14 +1147,14 @@ static void MAP_SmoothTranslate (void)
 	vec2_t diff;
 	float length, diff_zoom;
 
-	diff[0] = final2DGeoscapeCenter[0] - ccs.center[0];
-	diff[1] = final2DGeoscapeCenter[1] - ccs.center[1];
+	diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
+	diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
 	diff_zoom = ZOOM_LIMIT - ccs.zoom;
 
 	length = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
 	if (length < SMOOTHING_STEP_2D) {
-		ccs.center[0] = final2DGeoscapeCenter[0];
-		ccs.center[1] = final2DGeoscapeCenter[1];
+		ccs.center[0] = smoothFinal2DGeoscapeCenter[0];
+		ccs.center[1] = smoothFinal2DGeoscapeCenter[1];
 		ccs.zoom = ZOOM_LIMIT;
 		smoothRotation = qfalse;
 	} else {
@@ -1940,32 +1952,35 @@ void MAP_Zoom_f (void)
 	cmd = Cmd_Argv(1);
 	switch (*cmd) {
 	case 'i':
-		finalZoom = ccs.zoom * pow(0.995, -zoomAmount);
+		smoothFinalZoom = ccs.zoom * pow(0.995, -zoomAmount);
 		break;
 	case 'o':
-		finalZoom = ccs.zoom * pow(0.995, zoomAmount);
+		smoothFinalZoom = ccs.zoom * pow(0.995, zoomAmount);
 		break;
 	default:
 		Com_Printf("MAP_Zoom_f: Invalid parameter: %s\n", cmd);
 		return;
 	}
 
-	if (finalZoom < cl_mapzoommin->value)
-		finalZoom = cl_mapzoommin->value;
-	else if (finalZoom > cl_mapzoommax->value)
-		finalZoom = cl_mapzoommax->value;
+	if (smoothFinalZoom < cl_mapzoommin->value)
+		smoothFinalZoom = cl_mapzoommin->value;
+	else if (smoothFinalZoom > cl_mapzoommax->value)
+		smoothFinalZoom = cl_mapzoommax->value;
 
 	if (!cl_3dmap->integer) {
-		ccs.zoom = finalZoom;
+		ccs.zoom = smoothFinalZoom;
 		if (ccs.center[1] < 0.5 / ccs.zoom)
 			ccs.center[1] = 0.5 / ccs.zoom;
 		if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
 			ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
 	} else {
-		VectorCopy(ccs.angles, finalGlobeAngle);
-		deltaLengthSmooth = 0;
+		VectorCopy(ccs.angles, smoothFinalGlobeAngle);
+		smoothDeltaLength = 0;
+		if (smoothRotation)
+			/* geoscape is already smooth rotating */
+			smoothNewClick = qtrue;
 		smoothRotation = qtrue;
-		deltaZoomSmooth = fabs(finalZoom - ccs.zoom);
+		smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
 	}
 }
 
@@ -2005,35 +2020,37 @@ void MAP_Scroll_f (void)
 		/* case 3D geoscape */
 		vec3_t diff;
 
-		if (!smoothRotation)
-			VectorCopy(ccs.angles, finalGlobeAngle);
+		VectorCopy(ccs.angles, smoothFinalGlobeAngle);
 
 		/* rotate a model */
-		finalGlobeAngle[PITCH] += ROTATE_SPEED * (scrollX) / ccs.zoom;
-		finalGlobeAngle[YAW] -= ROTATE_SPEED * (scrollY) / ccs.zoom;
+		smoothFinalGlobeAngle[PITCH] += ROTATE_SPEED * (scrollX) / ccs.zoom;
+		smoothFinalGlobeAngle[YAW] -= ROTATE_SPEED * (scrollY) / ccs.zoom;
 
-		while (finalGlobeAngle[YAW] > 180.0) {
-			finalGlobeAngle[YAW] -= 360.0;
+		while (smoothFinalGlobeAngle[YAW] > 180.0) {
+			smoothFinalGlobeAngle[YAW] -= 360.0;
 			ccs.angles[YAW] -= 360.0;
 		}
-		while (finalGlobeAngle[YAW] < -180.0){
-			finalGlobeAngle[YAW] += 360.0;
+		while (smoothFinalGlobeAngle[YAW] < -180.0){
+			smoothFinalGlobeAngle[YAW] += 360.0;
 			ccs.angles[YAW] += 360.0;
 		}
 
-		while (finalGlobeAngle[PITCH] > 180.0) {
-			finalGlobeAngle[PITCH] -= 360.0;
+		while (smoothFinalGlobeAngle[PITCH] > 180.0) {
+			smoothFinalGlobeAngle[PITCH] -= 360.0;
 			ccs.angles[PITCH] -= 360.0;
 		}
-		while (finalGlobeAngle[PITCH] < -180.0) {
-			finalGlobeAngle[PITCH] += 360.0;
+		while (smoothFinalGlobeAngle[PITCH] < -180.0) {
+			smoothFinalGlobeAngle[PITCH] += 360.0;
 			ccs.angles[PITCH] += 360.0;
 		}
-		VectorSubtract(finalGlobeAngle, ccs.angles, diff);
-		deltaLengthSmooth = VectorLength(diff);
+		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
+		smoothDeltaLength = VectorLength(diff);
 
-		finalZoom = ccs.zoom;
-		deltaZoomSmooth = 0.0f;
+		smoothFinalZoom = ccs.zoom;
+		smoothDeltaZoom = 0.0f;
+		if (smoothRotation)
+			/* geoscape is already smooth rotating */
+			smoothNewClick = qtrue;
 		smoothRotation = qtrue;
 	} else {
 		int i;
