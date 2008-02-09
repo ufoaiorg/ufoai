@@ -634,13 +634,21 @@ static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
 /**
  * @brief Prints information about the selected aircraft in production.
  */
-static void PR_AircraftInfo (void)
+static void PR_AircraftInfo (const base_t* base)
 {
 	aircraft_t *aircraft;
+	int aircraftIdx = NONE;
 	static char productionInfo[512];
 
+	if (selectedQueueItem) {
+		assert(selectedIndex != NONE);
+		aircraftIdx = gd.productions[base->idx].items[selectedIndex].objID;
+	} else {
+		aircraftIdx = selectedIndex;
+	}
+
 	if (selectedIndex != NONE) {
-		aircraft = &aircraft_samples[selectedIndex];
+		aircraft = &aircraft_samples[aircraftIdx];
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraft->name));
 		Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 			sizeof(productionInfo));
@@ -748,7 +756,7 @@ static void PR_ProductionListClick_f (void)
 		selectedIndex = num;
 		if (prod->production) {
 			if (prod->aircraft)
-				PR_AircraftInfo();
+				PR_AircraftInfo(base);
 			else
 				PR_ProductionInfo(base, qfalse);
 		} else
@@ -794,7 +802,7 @@ static void PR_ProductionListClick_f (void)
 						if (j == idx) {
 							selectedQueueItem = qfalse;
 							selectedIndex = i;
-							PR_AircraftInfo();
+							PR_AircraftInfo(base);
 							return;
 						}
 						j++;
@@ -1250,7 +1258,7 @@ static void PR_ProductionIncrease_f (void)
 		if (produceCategory != BUY_AIRCRAFT)
 			PR_ProductionInfo(base, qfalse);
 		else
-			PR_AircraftInfo();
+			PR_AircraftInfo(base);
 		PR_UpdateProductionList(base);
 	} else {							/* Disassembling. */
 		PR_ProductionInfo(base, qtrue);
