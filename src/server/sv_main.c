@@ -175,6 +175,7 @@ static void SVC_Status (struct net_stream *s)
  * @note Only a short server description - the user can determine whether he is
  * interested in a full status
  * @sa CL_ParseStatusMessage
+ * @sa CL_ProcessPingReply
  */
 static void SVC_Info (struct net_stream *s)
 {

@@ -562,6 +562,7 @@ static void CL_Reconnect_f (void)
 
 /**
  * @sa CL_PingServerCallback
+ * @sa SVC_Info
  */
 static void CL_ProcessPingReply (serverList_t *server, const char *msg)
 {
@@ -590,6 +591,12 @@ static void CL_ProcessPingReply (serverList_t *server, const char *msg)
 	server->sv_maxclients = atoi(Info_ValueForKey(msg, "sv_maxclients"));
 }
 
+typedef enum {
+	SERVERLIST_SHOWALL,
+	SERVERLIST_HIDEFULL,
+	SERVERLIST_HIDEEMPTY
+} serverListStatus_t;
+
 /**
  * @brief CL_PingServer
  */
@@ -609,9 +616,9 @@ static void CL_PingServerCallback (struct net_stream *s)
 	} else
 		return;
 
-	if (cl_serverlist->integer == 0
-	|| (cl_serverlist->integer == 1 && server->clients < server->sv_maxclients)
-	|| (cl_serverlist->integer == 2 && server->clients)) {
+	if (cl_serverlist->integer == SERVERLIST_SHOWALL
+	|| (cl_serverlist->integer == SERVERLIST_HIDEFULL && server->clients < server->sv_maxclients)
+	|| (cl_serverlist->integer == SERVERLIST_HIDEEMPTY && server->clients)) {
 		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
 			server->sv_hostname,
 			server->mapname,
@@ -657,12 +664,6 @@ static void CL_PrintServerList_f (void)
 		Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, cls.serverList[i].node, cls.serverList[i].service, cls.serverList[i].pinged);
 	}
 }
-
-typedef enum {
-	SERVERLIST_SHOWALL,
-	SERVERLIST_HIDEFULL,
-	SERVERLIST_HIDEEMPTY
-} serverListStatus_t;
 
 /**
  * @brief Adds a server to the serverlist cache
@@ -2008,7 +2009,6 @@ static void CL_InitLocal (void)
 	int i;
 
 	CL_SetClientState(ca_disconnected);
-	cls.stream = NULL;
 	cls.realtime = Sys_Milliseconds();
 
 	INVSH_InitInventory(invList);
@@ -2150,6 +2150,10 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("stunteam", NULL, NULL);
 	Cmd_AddCommand("debug_listscore", NULL, NULL);
 #endif
+
+	memset(&teamData, 0, sizeof(teamData_t));
+	/* Default to single-player mode */
+	ccs.singleplayer = qtrue;
 }
 
 static void CL_SendCmd (void)
@@ -2443,6 +2447,8 @@ void CL_Init (void)
 	if (sv_dedicated->integer)
 		return;					/* nothing running on the client */
 
+	memset(&cls, 0, sizeof(cls));
+
 	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 	/* i18n through gettext */
 	setlocale(LC_ALL, "C");
@@ -2477,14 +2483,10 @@ void CL_Init (void)
 	V_Init();
 
 	SCR_Init();
-	cls.loadingPercent = 0.0f;
+
 	SCR_DrawPrecacheScreen(qfalse);
 
 	CL_InitLocal();
-
-	memset(&teamData, 0, sizeof(teamData_t));
-	/* Default to single-player mode */
-	ccs.singleplayer = qtrue;
 
 	CL_InitParticles();
 
