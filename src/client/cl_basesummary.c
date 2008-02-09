@@ -52,7 +52,7 @@ static void BaseSummary_SelectBase_f (void)
  * @note Command to call this: basesummary_init
  * @note Should be called whenever the Base Summary menu gets active.
  */
-static void BaseSummary_Init (void)
+static void BaseSummary_Init_f (void)
 {
 	static char textStatsBuffer[1024];
 	static char textInfoBuffer[256];
@@ -162,7 +162,7 @@ static void BaseSummary_Init (void)
 void BaseSummary_Reset (void)
 {
 	/* add commands */
-	Cmd_AddCommand("basesummary_init", BaseSummary_Init, "Init function for Base Statistics menu");
+	Cmd_AddCommand("basesummary_init", BaseSummary_Init_f, "Init function for Base Statistics menu");
 	Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
 
 	baseCurrent = NULL;
