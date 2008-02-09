@@ -96,7 +96,7 @@ void MN_DrawMenus (void)
 		}
 		for (node = menu->firstNode; node; node = node->next) {
 			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
-					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP)
+					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASELAYOUT || node->type == MN_BASEMAP || node->type == MN_MAP)
 					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
 					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]))) {
 				/* if construct */
@@ -137,7 +137,9 @@ void MN_DrawMenus (void)
 
 				/* check node size x and y value to check whether they are zero */
 				if (node->bgcolor && node->size[0] && node->size[1] && node->pos) {
-					R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding, node->size[0] + (node->padding*2), node->size[1] + (node->padding*2), 0, node->bgcolor);
+					if (node->type != MN_BASELAYOUT)
+						R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding,
+							node->size[0] + (node->padding * 2), node->size[1] + (node->padding * 2), 0, node->bgcolor);
 				}
 
 				/* FIXME: use GL_LINE_LOOP + array here */
@@ -153,7 +155,7 @@ void MN_DrawMenus (void)
 					R_ColorBlend(node->color);
 
 				/* get the reference */
-				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP
+				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT
 					&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE && node->type != MN_LINESTRIP) {
 					ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 					if (!ref) {
@@ -305,6 +307,10 @@ void MN_DrawMenus (void)
 						CL_CampaignRun();	/* advance time */
 						MAP_DrawMap(node); /* Draw geoscape */
 					}
+					break;
+
+				case MN_BASELAYOUT:
+					MN_BaseMapLayout(node);
 					break;
 
 				case MN_BASEMAP:

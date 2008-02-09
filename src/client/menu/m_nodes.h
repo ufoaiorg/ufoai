@@ -48,6 +48,7 @@ typedef enum mn_s {
 	MN_ITEM,
 	MN_MAP,
 	MN_BASEMAP,
+	MN_BASELAYOUT,
 	MN_CHECKBOX,
 	MN_SELECTBOX,
 	MN_LINESTRIP,
@@ -134,7 +135,7 @@ typedef struct menuNode_s {
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
-	int num;					/**< textfields: menutexts-id */
+	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
 	int height;					/**< textfields: max. rows to show
 								 * select box: options count */
 	struct selectBoxOptions_s *options;	/**< pointer to select box options when type is MN_SELECTBOX */

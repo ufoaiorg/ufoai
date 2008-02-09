@@ -1890,6 +1890,50 @@ void B_ParseBases (const char *name, const char **text)
 }
 
 /**
+ * @brief Draw a small square with the menu layout of the given base
+ */
+void MN_BaseMapLayout (const menuNode_t * node)
+{
+	base_t *base;
+	int height, width, x, y;
+	int row, col;
+	const vec4_t c_gray = {0.5, 0.5, 0.5, 1.0};
+	vec2_t size;
+
+	if (node->num >= MAX_BASES || node->num < 0)
+		return;
+
+	height = node->size[1] / BASE_SIZE;
+	width = node->size[0] / BASE_SIZE;
+
+	Vector2Copy(node->size, size);
+	size[0] += (BASE_SIZE + 1) * node->padding;
+	size[1] += (BASE_SIZE + 1) * node->padding;
+	R_DrawFill(node->pos[0], node->pos[1], size[0], size[1], node->align, node->bgcolor);
+
+	base = B_GetBase(node->num);
+
+	for (row = 0; row < BASE_SIZE; row++) {
+		for (col = 0; col < BASE_SIZE; col++) {
+			x = node->pos[0] + (width * col + node->padding * (col + 1));
+			y = node->pos[1] + (height * row + node->padding * (row + 1));
+			switch (base->map[row][col]) {
+			case BASE_FREESLOT:
+				break;
+			case BASE_INVALID_SPACE:
+				R_DrawFill(x, y, width, height, node->align, c_gray);
+				break;
+			default:
+				/* maybe destroyed in the meantime */
+				if (base->founded)
+					R_DrawFill(x, y, width, height, node->align, node->color);
+				break;
+			}
+		}
+	}
+}
+
+/**
  * @brief Draws a base.
  * @sa MN_DrawMenus
  */

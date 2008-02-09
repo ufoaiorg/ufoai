@@ -150,6 +150,7 @@ static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"item",
 	"map",
 	"basemap",
+	"baselayout",
 	"checkbox",
 	"selectbox",
 	"linestrip",
