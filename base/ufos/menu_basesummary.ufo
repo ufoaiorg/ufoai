@@ -79,8 +79,9 @@ menu basesummary
 
 	string txt_basesummary_currentbase
 	{
-		string		"_^BName:"
+		string		"_Name:"
 		pos			"30 40"
+		font		f_small_bold
 		//color		"0 .78 0 1"
 	}
 
