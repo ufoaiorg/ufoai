@@ -95,6 +95,11 @@ static void BaseSummary_Init (void)
 		Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
 		for (i = 0; i < gd.numBuildingTypes; i++) {
 			b = &gd.buildingTypes[i];
+
+			/* only show already researched buildings */
+			if (!RS_IsResearched_ptr(b->tech))
+				continue;
+
 			cap = B_GetCapacityFromBuildingType(b->buildingType);
 			if (cap == MAX_CAP)
 				continue;
@@ -117,7 +122,6 @@ static void BaseSummary_Init (void)
 		Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
 
 		Q_strcat(textStatsBuffer, _("^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
-
 		queue = &gd.productions[base->idx];
 		if (queue->numItems > 0) {
 			production = &queue->items[0];

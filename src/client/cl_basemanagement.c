@@ -1495,10 +1495,11 @@ static void B_BuildingInit (base_t* base)
 			}
 
 			/* if the building is researched add it to the list */
-			if (RS_IsResearched_idx(buildingType->tech)) {
+			if (RS_IsResearched_ptr(buildingType->tech)) {
 				B_BuildingAddToList(buildingType);
 			} else {
-				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n", buildingType->id, buildingType->tech);
+				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n",
+					buildingType->id, buildingType->tech ? buildingType->tech->idx : 0);
 			}
 		}
 	}
@@ -1676,7 +1677,6 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		building->type_idx = gd.numBuildingTypes;
 		building->idx = -1;
 		building->base_idx = -1;
-		building->tech = -1;
 		building->dependsBuilding = -1;
 		building->visible = qtrue;
 
@@ -1740,7 +1740,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 
 		tech_link = RS_GetTechByProvided(name);
 		if (tech_link) {
-			building->tech = tech_link->idx;
+			building->tech = tech_link;
 		} else {
 			if (building->visible)
 				/* @todo: are the techs already parsed? */

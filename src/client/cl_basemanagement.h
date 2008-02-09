@@ -179,7 +179,7 @@ typedef struct building_s {
 	/** this way we can rename the buildings without loosing the control */
 	buildingType_t buildingType;
 
-	int tech;					/**< link to the building-technology */
+	technology_t *tech;					/**< link to the building-technology */
 	/** if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes */
 	int dependsBuilding;
 

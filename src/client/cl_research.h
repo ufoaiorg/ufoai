@@ -195,7 +195,7 @@ void RS_ParseTechnologies(const char *name, const char **text);
 qboolean RS_ItemIsResearched(const char *id_provided);
 qboolean RS_TechIsResearched(int tech_idx);
 qboolean RS_IsResearched_idx(int idx);
-qboolean RS_IsResearched_ptr(technology_t *tech);
+qboolean RS_IsResearched_ptr(const technology_t *tech);
 int RS_Collected_(technology_t * tech);
 void RS_CheckAllCollected(void);
 

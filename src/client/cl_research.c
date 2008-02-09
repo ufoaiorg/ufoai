@@ -2109,7 +2109,7 @@ qboolean RS_IsResearched_idx (int idx)
  * @sa RS_IsResearched_idx
  * Call this function if you already hold a tech pointer
  */
-qboolean RS_IsResearched_ptr (technology_t * tech)
+qboolean RS_IsResearched_ptr (const technology_t * tech)
 {
 	if (ccs.singleplayer == qfalse)
 		return qtrue;
