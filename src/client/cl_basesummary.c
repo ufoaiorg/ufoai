@@ -27,310 +27,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_basesummary.h"
 
-static int BaseSummary_AircraftCount (const base_t* base, aircraftType_t aircraftType)
-{
-	int i, count = 0;
-
-	assert(base);
-
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		if (base->aircraft[i].type == aircraftType)
-			count++;
-	}
-
-	return count;
-}
-
-static void BaseSummary_BuildingConstruction (const base_t* base)
-{
-	int i, cvarIndex, daysLeft;
-	char buffer[128], cvarName[128];
-	building_t *building;
-
-	cvarIndex = 0;
-
-	memset(buffer, 0, sizeof(buffer));
-
-	/* Reset all construction-related cvars: */
-	for (i = 0; i < BASESUMMARY_MAX_CVARS_CONSTRUCTION; i++) {
-		Com_sprintf(cvarName, sizeof(cvarName), "mn_basesummary_construction%d", i);
-		Cvar_Set(cvarName, buffer);
-	}
-
-	assert(base);
-	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		building = &gd.buildings[base->idx][i];
-
-		daysLeft = building->timeStart + building->buildTime - ccs.date.day;
-
-		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION && daysLeft > 0) {
-			Com_sprintf(buffer, sizeof(buffer), _("%s - %i %s\n"),
-				_(building->name), daysLeft, ngettext("day", "days", daysLeft));
-
-			Com_sprintf(cvarName, sizeof(cvarName), "mn_basesummary_construction%d", cvarIndex++);
-			Cvar_Set(cvarName, buffer);
-		}
-
-		if (cvarIndex == BASESUMMARY_MAX_CVARS_CONSTRUCTION)
-			break;
-	}
-}
-
 /**
- * @sa BaseSummary_BuildingUsage
+ * @brief Open menu for base.
  */
-static void BaseSummary_BuildingCount (const base_t* base)
+static void BaseSummary_SelectBase_f (void)
 {
-	char buffer[128];
 	int i;
-	building_t* b;
-
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		b = &gd.buildingTypes[i];
-		Com_sprintf(buffer, sizeof(buffer), _("%s: %i"), _(b->name),
-			B_GetNumberOfBuildingsInBaseByType(base->idx, b->buildingType));
-		Cvar_Set(va("mn_bs_bcount_%s", b->id), buffer);
-	}
-}
-
-/**
- * @sa BaseSummary_BuildingCount
- * @sa B_UpdateBaseCapacities
- */
-static void BaseSummary_BuildingUsage (const base_t* base)
-{
-	char buffer[128];
-	int i;
-	baseCapacities_t cap;
-	building_t* b;
-
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		b = &gd.buildingTypes[i];
-		cap = B_GetCapacityFromBuildingType(b->buildingType);
-		if (cap == MAX_CAP)
-			continue;
-
-		/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
-		if (base->hasBuilding[b->buildingType])
-			Com_sprintf(buffer, sizeof(buffer), "%s: %i/%i", _(b->name),
-				base->capacities[cap].cur,
-				base->capacities[cap].max);
-		else
-			Com_sprintf(buffer, sizeof(buffer), "%s: %i/%i", _(b->name),
-				base->capacities[cap].cur, 0);
-		Cvar_Set(va("mn_bs_cap_%s", b->id), buffer);
-	}
-}
-
-/**
- * @brief Sum up all hired employees.
- * @return The number of employees in all bases.
- * @sa BaseSummary_EmployeeCount
- * @sa E_CountHired
- */
-static int BaseSummary_EmployeeTotal (void)
-{
-	int cnt = 0;
-	int baseIdx;
-	employeeType_t type;
-
-	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
-		for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
-			cnt += E_CountHired(B_GetBase(baseIdx), type);
-		}
-	}
-
-	return cnt;
-}
-
-static void BaseSummary_ProductionCurrent (const base_t* base)
-{
-	production_queue_t *queue;
-	production_t *production;
-	objDef_t *objDef;
-	char buffer[128];
-
-	memset(buffer, 0, sizeof(buffer));
-	Cvar_Set("mn_basesummary_productioncurrent", buffer);
-
-	assert(base);
-	queue = &gd.productions[base->idx];
-	if (queue->numItems > 0) {
-		production = &queue->items[0];
-
-		objDef = &csi.ods[production->objID];
-
-		/* FIXME: use the same method as we do in PR_ProductionInfo */
-		Com_sprintf(buffer, sizeof(buffer), _("%s:  Qty: %d, Already produced: %.2f %%"),
-			objDef->name, production->amount, production->percentDone);
-
-		Cvar_Set("mn_basesummary_productioncurrent", buffer);
-	}
-}
-
-static void BaseSummary_ResearchCurrent (const base_t* base)
-{
-	int i, cvarIndex;
-	char buffer[128], cvarName[128];
-	technology_t *tech;
-
-	cvarIndex = 0;
-
-	memset(buffer, 0, sizeof(buffer));
-
-	/* Reset all research-related cvars: */
-	for (i = 0; i < BASESUMMARY_MAX_CVARS_RESEARCH; i++) {
-		Com_sprintf(cvarName, sizeof(cvarName), "mn_basesummary_researchcurrent%d", i);
-		Cvar_Set(cvarName, buffer);
-	}
-	assert(base);
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
-		if (tech->base_idx == base->idx && (tech->statusResearch == RS_RUNNING ||
-			tech->statusResearch == RS_PAUSED)) {
-			Com_sprintf(buffer, sizeof(buffer), _("%s: %1.2f%% (%d %s)\n"),
-				tech->name, (1 - tech->time / tech->overalltime) * 100,
-				tech->scientists, ngettext("scientist", "scientists", tech->scientists));
-
-			Com_sprintf(cvarName, sizeof(cvarName), "mn_basesummary_researchcurrent%d", cvarIndex++);
-			Cvar_Set(cvarName, buffer);
-		}
-
-		if (cvarIndex == BASESUMMARY_MAX_CVARS_RESEARCH)
-			break;
-	}
-}
-
-/**
- * @brief Check if there is a next base.
- * @sa BaseSummary_PrevBase
- * @sa BaseSummary_PrevBase_f
- * @sa BaseSummary_NextBase_f
- * @return qtrue if there is a next base.
- */
-static qboolean BaseSummary_NextBase (void)
-{
-	int i, baseID;
-	qboolean found = qfalse;
-
-	if (!baseCurrent)
-		return qfalse;
-
-	baseID = baseCurrent->idx;
-
-	i = baseID + 1;
-	while (i != baseCurrent->idx) {
-		if (i > gd.numBases - 1)
-			i = 0;
-
-		if (gd.bases[i].founded) {
-			found = qtrue;
-			break;
-		}
-
-		i++;
-	}
-
-	if (i == baseCurrent->idx)
-		return qfalse;
-	else
-		return found;
-}
-
-/**
- * @brief Open menu for next base.
- * @sa BaseSummary_NextBase
- * @sa BaseSummary_PrevBase
- * @sa BaseSummary_PrevBase_f
- */
-static void BaseSummary_NextBase_f (void)
-{
-	int i, baseID;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent || !curCampaign)
 		return;
 
-	baseID = baseCurrent->idx;
-
-	i = baseID + 1;
-	while (i != baseCurrent->idx) {
-		if (i > gd.numBases - 1)
-		i = 0;
-
-		if (gd.bases[i].founded) {
-			Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push basesummary\n", i));
-			break;
-		}
-
-		i++;
-	}
-}
-
-/**
- * @brief Check if there is working previous base.
- * @sa BaseSummary_PrevBase_f
- * @sa BaseSummary_NextBase
- * @sa BaseSummary_NextBase_f
- * @return qtrue if there is working previous base.
- */
-static qboolean BaseSummary_PrevBase (void)
-{
-	int i, baseID;
-	qboolean found = qfalse;
-
-	if (!baseCurrent)
-		return qfalse;
-
-	baseID = baseCurrent->idx;
-
-	i = baseID - 1;
-	while (i != baseCurrent->idx) {
-		if (i < 0)
-			i = gd.numBases - 1;
-
-		if (gd.bases[i].founded) {
-			found = qtrue;
-			break;
-		}
-
-		i--;
-	}
-
-	if (i == baseCurrent->idx)
-		return qfalse;
-	else
-		return found;
-}
-
-/**
- * @brief Open menu for previous base.
- * @sa BaseSummary_PrevBase
- * @sa BaseSummary_NextBase
- * @sa BaseSummary_NextBase_f
- */
-static void BaseSummary_PrevBase_f (void)
-{
-	int i, baseID;
-
-	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign)
+	if (Cmd_Argc() != 2) {
+		Com_Printf("usage: %s <baseid>\n", Cmd_Argv(0));
 		return;
-
-	baseID = baseCurrent->idx;
-
-	i = baseID - 1;
-	while (i != baseCurrent->idx) {
-		if (i < 0)
-			i = gd.numBases - 1;
-
-		if (gd.bases[i].founded) {
-			Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push basesummary\n", i));
-			break;
-		}
-
-		i--;
 	}
+
+	i = atoi(Cmd_Argv(1));
+	Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push basesummary\n", i));
 }
 
 /**
@@ -340,42 +54,100 @@ static void BaseSummary_PrevBase_f (void)
  */
 static void BaseSummary_Init (void)
 {
-	if (!baseCurrent) {
+	static char textStatsBuffer[1024];
+	static char textInfoBuffer[256];
+	int i;
+	base_t *base = baseCurrent;
+
+	if (!base) {
 		Com_Printf("No base selected\n");
 		return;
 	} else {
-		/* State of next and prev AC buttons. */
-		if (BaseSummary_NextBase())
-			Cbuf_AddText("basesummary_nextbb\n");
-		else
-			Cbuf_AddText("basesummary_nextbg\n");
-		if (BaseSummary_PrevBase())
-			Cbuf_AddText("basesummary_prevbb\n");
-		else
-			Cbuf_AddText("basesummary_prevbg\n");
+		baseCapacities_t cap;
+		building_t* b;
+		production_queue_t *queue;
+		production_t *production;
+		objDef_t *objDef;
+		technology_t *tech;
+		int totalEmployees = 0;
+		int tmp, daysLeft;
 
-		/* Current base: */
-		Cvar_Set("mn_basesummary_name", baseCurrent->name);
+		/* wipe away old buffers */
+		textStatsBuffer[0] = textInfoBuffer[0] = 0;
 
-		Cvar_SetValue("mn_basesummary_interceptorcount", BaseSummary_AircraftCount(baseCurrent, AIRCRAFT_INTERCEPTOR));
-		Cvar_SetValue("mn_basesummary_transportercount", BaseSummary_AircraftCount(baseCurrent, AIRCRAFT_TRANSPORTER));
+		Q_strcat(textInfoBuffer, _("^BAircraft\n"), sizeof(textInfoBuffer));
+		for (i = 0; i <= MAX_HUMAN_AIRCRAFT_TYPE; i++)
+			Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", AIR_GetAircraftString(i),
+				AIR_CountTypeInBase(base, i)), sizeof(textInfoBuffer));
 
-		Cvar_SetValue("mn_basesummary_soldiercount", E_CountHired(baseCurrent, EMPL_SOLDIER));
-		Cvar_SetValue("mn_basesummary_scientistcount", E_CountHired(baseCurrent, EMPL_SCIENTIST));
-		Cvar_SetValue("mn_basesummary_workercount", E_CountHired(baseCurrent, EMPL_WORKER));
-		Cvar_SetValue("mn_basesummary_mediccount", E_CountHired(baseCurrent, EMPL_MEDIC));
-		Cvar_SetValue("mn_basesummary_robotcount", E_CountHired(baseCurrent, EMPL_ROBOT));
+		Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
 
-		BaseSummary_BuildingUsage(baseCurrent);
-		BaseSummary_BuildingCount(baseCurrent);
-		BaseSummary_BuildingConstruction(baseCurrent);
-		BaseSummary_ProductionCurrent(baseCurrent);
-		BaseSummary_ResearchCurrent(baseCurrent);
+		Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
+		for (i = 0; i < MAX_EMPL; i++) {
+			tmp = E_CountHired(base, i);
+			totalEmployees += tmp;
+			Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(i), tmp), sizeof(textInfoBuffer));
+		}
 
-		/* Totals: */
-		Cvar_SetValue("mn_basesummary_totals_basecount", gd.numBases);
-		Cvar_SetValue("mn_basesummary_totals_aircraft",gd.numAircraft);
-		Cvar_SetValue("mn_basesummary_totals_personnel",BaseSummary_EmployeeTotal());
+		/* link into the menu */
+		mn.menuText[TEXT_STANDARD] = textInfoBuffer;
+
+		Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
+		for (i = 0; i < gd.numBuildingTypes; i++) {
+			b = &gd.buildingTypes[i];
+			cap = B_GetCapacityFromBuildingType(b->buildingType);
+			if (cap == MAX_CAP)
+				continue;
+
+			/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
+			if (base->hasBuilding[b->buildingType]) {
+				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
+					base->capacities[cap].cur, base->capacities[cap].max), sizeof(textStatsBuffer));
+			} else {
+				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION && daysLeft > 0) {
+					daysLeft = b->timeStart + b->buildTime - ccs.date.day;
+					Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i %s", _(b->name), daysLeft, ngettext("day", "days", daysLeft)), sizeof(textStatsBuffer));
+				} else {
+					Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), base->capacities[cap].cur, 0), sizeof(textStatsBuffer));
+				}
+			}
+			Q_strcat(textStatsBuffer, va("\t\t\t\t%i\n", B_GetNumberOfBuildingsInBaseByType(base->idx, b->buildingType)), sizeof(textStatsBuffer));
+		}
+
+		Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
+
+		Q_strcat(textStatsBuffer, _("^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
+
+		queue = &gd.productions[base->idx];
+		if (queue->numItems > 0) {
+			production = &queue->items[0];
+
+			objDef = &csi.ods[production->objID];
+
+			/* FIXME: use the same method as we do in PR_ProductionInfo */
+			Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), objDef->name,
+				production->amount, production->percentDone), sizeof(textStatsBuffer));
+		} else {
+			Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
+		}
+
+		Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
+
+		Q_strcat(textStatsBuffer, _("^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
+		tmp = 0;
+		for (i = 0; i < gd.numTechnologies; i++) {
+			tech = RS_GetTechByIDX(i);
+			if (tech->base_idx == base->idx && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
+				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%1.2f%%\t\t\t\t%d\n"), tech->name,
+					(1 - tech->time / tech->overalltime) * 100, tech->scientists), sizeof(textStatsBuffer));
+				tmp++;
+			}
+		}
+		if (!tmp)
+			Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
+
+		/* link into the menu */
+		mn.menuText[TEXT_STATS_1] = textStatsBuffer;
 	}
 }
 
@@ -387,8 +159,7 @@ void BaseSummary_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("basesummary_init", BaseSummary_Init, "Init function for Base Statistics menu");
-	Cmd_AddCommand("basesummary_nextbase", BaseSummary_NextBase_f, "Opens Base Statistics menu in next base");
-	Cmd_AddCommand("basesummary_prevbase", BaseSummary_PrevBase_f, "Opens Base Statistics menu in previous base");
+	Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
 
 	baseCurrent = NULL;
 }

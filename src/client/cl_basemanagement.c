@@ -2142,6 +2142,7 @@ static void B_PrevBase_f (void)
 static void B_SelectBase_f (void)
 {
 	int baseID;
+	base_t *base;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -2168,8 +2169,9 @@ static void B_SelectBase_f (void)
 		}
 	} else if (baseID < MAX_BASES) {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", baseID);
-		baseCurrent = B_GetBase(baseID);
-		if (baseCurrent->founded) {
+		base = B_GetBase(baseID);
+		if (base->founded) {
+			baseCurrent = base;
 			gd.mapAction = MA_NONE;
 			MN_PushMenu("bases");
 			AIR_AircraftSelect(NULL);
@@ -2182,8 +2184,6 @@ static void B_SelectBase_f (void)
 				Cmd_ExecuteString("set_base_to_normal");
 				break;
 			}
-		} else {
-			gd.mapAction = MA_NEWBASE;
 		}
 	} else
 		return;

@@ -481,6 +481,40 @@ void AIM_PrevAircraft_f (void)
 }
 
 /**
+ * @brief Calculates the amount of aircraft (of the given type) in the selected base
+ * @param[in] base The base to count the aircraft in
+ * @param[in] aircraftType The type of the aircraft you want
+ */
+int AIR_CountTypeInBase (const base_t *base, aircraftType_t aircraftType)
+{
+	int i, count = 0;
+
+	assert(base);
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		if (base->aircraft[i].type == aircraftType)
+			count++;
+	}
+
+	return count;
+}
+
+/**
+ * @brief Returns the string that matches the given aircraft type
+ */
+const char *AIR_GetAircraftString (aircraftType_t aircraftType)
+{
+	switch (aircraftType) {
+	case AIRCRAFT_INTERCEPTOR:
+		return _("Interceptor");
+	case AIRCRAFT_TRANSPORTER:
+		return _("Transporter");
+	case AIRCRAFT_UFO:
+		return _("UFO");
+	}
+}
+
+/**
  * @brief Some of the aircraft values needs special calculations when they
  * are shown in the menus
  * @sa CL_AircraftStatToName

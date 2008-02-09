@@ -48,6 +48,8 @@ typedef enum {
 	AIRCRAFT_UFO
 } aircraftType_t;
 
+#define MAX_HUMAN_AIRCRAFT_TYPE AIRCRAFT_INTERCEPTOR
+
 /** @brief All different size of aircraft. */
 typedef enum {
 	AIRCRAFT_SMALL = 1,
@@ -255,5 +257,7 @@ void AIR_UpdateHangarCapForAll(int base_idx);
 qboolean AIR_ScriptSanityCheck(void);
 int AIR_CalculateHangarStorage(int aircraftID, struct base_s *base, int used);
 int CL_AircraftMenuStatsValues(const int value, const int stat);
+int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
+const char *AIR_GetAircraftString(aircraftType_t aircraftType);
 
 #endif
