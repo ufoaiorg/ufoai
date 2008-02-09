@@ -512,6 +512,7 @@ const char *AIR_GetAircraftString (aircraftType_t aircraftType)
 	case AIRCRAFT_UFO:
 		return _("UFO");
 	}
+	return "";
 }
 
 /**
