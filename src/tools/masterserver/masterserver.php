@@ -33,7 +33,7 @@ $serverTimeoutSeconds = "620";
 # Checks whether a server timed out, or is going to be removed ($remove == 1)
 # Even new servers are added with this function ($add == 1)
 # TODO FIXME Lock the file in case of more than one query at a time
-function updateServerList ($remove, $add)
+function updateServerList ($remove, $add, $heartbeat)
 {
 	# seconds since 1970/01/01
 	$time = time();
@@ -94,8 +94,8 @@ function updateServerList ($remove, $add)
 		}
 	}
 	rewind($fHandle);
-	# new server
-	if (!$updatedServer && $add) {
+	# new server or changed ip of the server
+	if (!$updatedServer && ($add || $heartbeat)) {
 		$i++;
 		$newListContent = "{$ip} {$port} {$time}\n".$newListContent;
 		$serverListStr .= "$ip $port\n";
@@ -117,21 +117,21 @@ function updateServerList ($remove, $add)
 # Update the heartbeat entry for the given server
 function serverHeartbeat ()
 {
-	updateServerList(0, 0);
+	updateServerList(0, 0, 1);
 #	echo "OK";
 }
 
 # add a new server to the list
 function serverPing ()
 {
-	updateServerList(0, 1);
+	updateServerList(0, 1, 0);
 #	echo "OK";
 }
 
 # Remove the given server from the list
 function serverShutdown ()
 {
-	updateServerList(1, 0);
+	updateServerList(1, 0, 0);
 #	echo "OK";
 }
 
@@ -141,7 +141,7 @@ function sendServerList ()
 	$time = time();
 
 	# print the list
-	echo updateServerList(0, 0);
+	echo updateServerList(0, 0, 0);
 }
 
 # entry point
