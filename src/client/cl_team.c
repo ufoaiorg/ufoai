@@ -1654,7 +1654,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->morale = MSG_ReadByte(sb);
 
 	/* Load scores */
-	 chr->score.experience = MSG_ReadShort(sb);
+	chr->score.experience = MSG_ReadShort(sb);
 	num = MSG_ReadByte(sb);
 	for (i = 0; i < num; i++)
 		chr->score.skills[i] = MSG_ReadByte(sb);
