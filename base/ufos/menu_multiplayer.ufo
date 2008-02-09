@@ -515,7 +515,7 @@ menu serverinfo
 	pic button_connect
 	{
 		pos	"70 580"
-		click	{ cmd "server_connect; music_randomtrack;" }
+		click	{ cmd "connect; music_randomtrack;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
