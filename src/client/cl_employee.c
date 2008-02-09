@@ -615,10 +615,11 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 /**
  * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
  * @param[in] type Tell the function what type of employee to create.
+ * @param[in] type Tell the function what nation the employee (mainly used for soldiers in singleplayer) comes from.
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee (employeeType_t type)
+employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation)
 {
 	employee_t* employee = NULL;
 
@@ -641,6 +642,7 @@ employee_t* E_CreateEmployee (employeeType_t type)
 	employee->baseIDHired = -1;
 	employee->buildingID = -1;
 	employee->type = type;
+	employee->nation = nation;
 
 	switch (type) {
 	case EMPL_SOLDIER:
@@ -1113,6 +1115,10 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, e->idx);
 			MSG_WriteShort(sb, e->baseIDHired);
 			MSG_WriteShort(sb, e->buildingID);
+#if 0
+			/**@todo store the nation in some way*/
+#endif
+			/* Store the character data */
 			MSG_WriteString(sb, e->chr.name);
 			MSG_WriteString(sb, e->chr.body);
 			MSG_WriteString(sb, e->chr.path);
@@ -1210,6 +1216,10 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->idx = MSG_ReadShort(sb);
 			e->baseIDHired = MSG_ReadShort(sb);
 			e->buildingID = MSG_ReadShort(sb);
+#if 0
+			/**@todo Load the nation information and link the nation_t struct. */
+#endif
+			/* Load the character data */
 			Q_strncpyz(e->chr.name, MSG_ReadStringRaw(sb), sizeof(e->chr.name));
 			Q_strncpyz(e->chr.body, MSG_ReadString(sb), sizeof(e->chr.body));
 			Q_strncpyz(e->chr.path, MSG_ReadString(sb), sizeof(e->chr.path));

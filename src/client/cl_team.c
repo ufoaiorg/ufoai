@@ -1155,7 +1155,7 @@ void CL_ResetTeamInBase (void)
 
 	E_ResetEmployees();
 	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->integer) {
-		employee = E_CreateEmployee(EMPL_SOLDIER);
+		employee = E_CreateEmployee(EMPL_SOLDIER, NULL);
 		employee->hired = qtrue;
 		employee->baseIDHired = baseCurrent->idx;
 		Com_DPrintf(DEBUG_CLIENT, "CL_ResetTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
@@ -1721,7 +1721,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	E_ResetEmployees();
 	for (i = 0; i < num; i++) {
 		/* New employee */
-		employee = E_CreateEmployee(EMPL_SOLDIER);
+		employee = E_CreateEmployee(EMPL_SOLDIER, NULL);
 		employee->hired = qtrue;
 		employee->baseIDHired = gd.bases[0].idx;
 		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);

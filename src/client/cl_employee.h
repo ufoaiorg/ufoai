@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_EMPLOYEE
 #define CLIENT_CL_EMPLOYEE
 
+#include "cl_campaign.h"
+
 /******* GUI STUFF ********/
 
 void E_Reset(void);
@@ -53,13 +55,14 @@ typedef struct employee_s {
 	character_t chr;			/**< Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
 	inventory_t inv;			/**< employee inventory */
 	employeeType_t type;		/**< back link to employee type in gd.employees */
+	nation_t *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
 } employee_t;
 
 /* how many employees in current list (changes on every catergory change, too) */
 extern int employeesInCurrentList;
 
 void E_ResetEmployees(void);
-employee_t* E_CreateEmployee(employeeType_t type);
+employee_t* E_CreateEmployee(employeeType_t type, nation_t *nation);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);

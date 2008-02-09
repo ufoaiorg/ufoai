@@ -1791,6 +1791,16 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t type, 
 	return NULL;
 }
 
+
+/**
+ * @brief Hack to get a random nation for the initial 
+ */
+static inline nation_t *B_RandomNation (void)
+{
+	int nationIndex = rand() % gd.numNations;
+	return &gd.nations[nationIndex];
+}
+
 /**
  * @brief Clears a base with all its characters
  * @sa CL_ResetCharacters
@@ -1814,19 +1824,19 @@ void B_ClearBase (base_t *const base)
 		/* should be multiplayer (campaignmode @todo) or singleplayer */
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)
-			E_CreateEmployee(EMPL_SOLDIER);
+			E_CreateEmployee(EMPL_SOLDIER, B_RandomNation());
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i scientists\n", curCampaign->scientists);
 		for (i = 0; i < curCampaign->scientists; i++)
-			E_CreateEmployee(EMPL_SCIENTIST);
+			E_CreateEmployee(EMPL_SCIENTIST, B_RandomNation());
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i robots\n", curCampaign->ugvs);
 		for (i = 0; i < curCampaign->ugvs; i++)
-			E_CreateEmployee(EMPL_ROBOT);
+			E_CreateEmployee(EMPL_ROBOT, B_RandomNation());
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", curCampaign->workers);
 		for (i = 0; i < curCampaign->workers; i++)
-			E_CreateEmployee(EMPL_WORKER);
+			E_CreateEmployee(EMPL_WORKER, B_RandomNation());
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i medics\n", curCampaign->medics);
 		for (i = 0; i < curCampaign->medics; i++)
-			E_CreateEmployee(EMPL_MEDIC);
+			E_CreateEmployee(EMPL_MEDIC, B_RandomNation());
 	}
 
 	memset(base->map, BASE_FREESLOT, sizeof(base->map));
