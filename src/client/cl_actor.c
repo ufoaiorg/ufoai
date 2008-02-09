@@ -891,6 +891,8 @@ void CL_PopupFiremodeReservation_f (void)
 		return;
 
 	LIST_Delete(list);
+	/* also reset mn.menuTextLinkedList here - otherwise the
+	 * pointer is no longer valid (because the list was freed) */
 	mn.menuTextLinkedList[TEXT_LIST] = list = NULL;
 
 	/* Reset the length of the TU-list. */
