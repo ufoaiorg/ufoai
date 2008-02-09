@@ -105,6 +105,8 @@ typedef struct teamData_s {
 
 static teamData_t teamData;
 
+static char serverText[1024];
+
 static int precache_check;
 
 static void CL_SpawnSoldiers_f(void);
@@ -323,22 +325,30 @@ static void CL_Connect (void)
 	assert(!cls.stream);
 
 	if (cls.servername[0]) {
-		cls.stream = NET_Connect(cls.servername, port->string);
+		assert(cls.serverport[0]);
+		cls.stream = NET_Connect(cls.servername, cls.serverport);
 	} else
 		cls.stream = NET_ConnectToLoopBack();
 	if (cls.stream) {
 		NET_OOB_Printf(cls.stream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
 		cls.connectTime = cls.realtime;
-	} else
-		Com_Printf("Could not connect\n");
+	} else {
+		if (cls.servername[0]) {
+			assert(cls.serverport[0]);
+			Com_Printf("Could not connect to %s %s\n", cls.servername, cls.serverport);
+		} else {
+			Com_Printf("Could not connect to localhost\n");
+		}
+	}
 }
 
 static void CL_Connect_f (void)
 {
 	const char *server;
+	const char *serverport;
 	aircraft_t *aircraft;
 
-	if (Cmd_Argc() != 2) {
+	if (!cls.selectedServer && Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <server>\n", Cmd_Argv(0));
 		return;
 	}
@@ -361,8 +371,16 @@ static void CL_Connect_f (void)
 
 	CL_Disconnect();
 
-	server = Cmd_Argv(1);
+	if (Cmd_Argc() == 2) {
+		server = Cmd_Argv(1);
+		serverport = va("%d", PORT_SERVER);
+	} else {
+		assert(cls.selectedServer);
+		server = cls.selectedServer->node;
+		serverport = cls.selectedServer->service;
+	}
 	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
+	Q_strncpyz(cls.serverport, serverport, sizeof(cls.serverport));
 
 	CL_SetClientState(ca_connecting);
 
@@ -528,7 +546,7 @@ static void CL_Reconnect_f (void)
 		return;
 	}
 
-	if (*cls.servername) {
+	if (cls.servername[0]) {
 		if (cls.state >= ca_connecting) {
 			Com_Printf("disconnecting...\n");
 			CL_Disconnect();
@@ -541,26 +559,6 @@ static void CL_Reconnect_f (void)
 	} else
 		Com_Printf("No server to reconnect to\n");
 }
-
-typedef struct serverList_s {
-	char *node;
-	char *service;
-	qboolean pinged;
-	char sv_hostname[16];
-	char mapname[16];
-	char version[8];
-	char gametype[8];
-	qboolean sv_dedicated;
-	int sv_maxclients;
-	int clients;
-	int serverListPos;
-} serverList_t;
-
-#define MAX_SERVERLIST 128
-static char serverText[1024];
-static int serverListLength = 0;
-static int serverListPos = 0;
-static serverList_t serverList[MAX_SERVERLIST];
 
 /**
  * @sa CL_PingServerCallback
@@ -620,8 +618,8 @@ static void CL_PingServerCallback (struct net_stream *s)
 			server->gametype,
 			server->clients,
 			server->sv_maxclients);
-		server->serverListPos = serverListPos;
-		serverListPos++;
+		server->serverListPos = cls.serverListPos;
+		cls.serverListPos++;
 		Q_strcat(serverText, string, sizeof(serverText));
 	}
 	free_stream(s);
@@ -653,10 +651,10 @@ static void CL_PrintServerList_f (void)
 {
 	int i;
 
-	Com_Printf("%i servers on the list\n", serverListLength);
+	Com_Printf("%i servers on the list\n", cls.serverListLength);
 
-	for (i = 0; i < serverListLength; i++) {
-		Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, serverList[i].node, serverList[i].service, serverList[i].pinged);
+	for (i = 0; i < cls.serverListLength; i++) {
+		Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, cls.serverList[i].node, cls.serverList[i].service, cls.serverList[i].pinged);
 	}
 }
 
@@ -675,18 +673,18 @@ static void CL_AddServerToList (const char *node, const char *service)
 {
 	int i;
 
-	if (serverListLength >= MAX_SERVERLIST)
+	if (cls.serverListLength >= MAX_SERVERLIST)
 		return;
 
-	for (i = 0; i < serverListLength; i++)
-		if (strcmp(serverList[i].node, node) == 0 && strcmp(serverList[i].service, service) == 0)
+	for (i = 0; i < cls.serverListLength; i++)
+		if (strcmp(cls.serverList[i].node, node) == 0 && strcmp(cls.serverList[i].service, service) == 0)
 			return;
 
-	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
-	serverList[serverListLength].node = strdup(node);
-	serverList[serverListLength].service = strdup(service);
-	CL_PingServer(&serverList[serverListLength]);
-	serverListLength++;
+	memset(&(cls.serverList[cls.serverListLength]), 0, sizeof(serverList_t));
+	cls.serverList[cls.serverListLength].node = Mem_PoolStrDup(node, cl_localPool, CL_TAG_NONE);
+	cls.serverList[cls.serverListLength].service = Mem_PoolStrDup(service, cl_localPool, CL_TAG_NONE);
+	CL_PingServer(&cls.serverList[cls.serverListLength]);
+	cls.serverListLength++;
 }
 
 /**
@@ -979,6 +977,7 @@ static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const cha
  * @brief Command callback when you click the connect button from
  * the multiplayer menu
  * @note called via server_connect
+ * @todo Support different port
  */
 static void CL_ServerConnect_f (void)
 {
@@ -1040,52 +1039,39 @@ static void CL_BookmarkAdd_f (void)
 }
 
 /**
- * @sa CL_ParseServerInfoMessage
- */
-static void CL_BookmarkListClick_f (void)
-{
-	int num;
-	const char *bookmark = NULL;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= MAX_BOOKMARKS)
-		return;
-
-	bookmark = Cvar_VariableString(va("adr%i", num));
-
-	if (bookmark) {
-		Cvar_Set("mn_server_ip", bookmark);
-		Cbuf_AddText("server_info;");
-	}
-}
-
-/**
  * @sa CL_ServerInfoCallback
  */
 static void CL_ServerInfo_f (void)
 {
 	struct net_stream *s;
+	const char *host;
+	const char *port;
+
 	switch (Cmd_Argc()) {
 	case 2:
-		s = NET_Connect(Cmd_Argv(1), va("%d", PORT_SERVER));
+		host = Cmd_Argv(1);
+		port = va("%d", PORT_SERVER);
 		break;
 	case 3:
-		s = NET_Connect(Cmd_Argv(1), Cmd_Argv(2));
+		host = Cmd_Argv(1);
+		port = Cmd_Argv(2);
 		break;
 	default:
-		s = NET_Connect(Cvar_VariableString("mn_server_ip"), va("%d", PORT_SERVER));
+		if (cls.selectedServer) {
+			host = cls.selectedServer->node;
+			port = cls.selectedServer->service;
+		} else {
+			host = Cvar_VariableString("mn_server_ip");
+			port = va("%d", PORT_SERVER);
+		}
 		break;
 	}
+	s = NET_Connect(host, port);
 	if (s) {
 		NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
 		stream_callback(s, &CL_ServerInfoCallback);
 	} else
-		Com_Printf("Could not connect to host\n");
+		Com_Printf("Could not connect to %s %s\n", host, port);
 }
 
 /**
@@ -1103,11 +1089,12 @@ static void CL_ServerListClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	mn.menuText[TEXT_STANDARD] = serverInfoText;
-	if (num >= 0 && num < serverListLength)
-		for (i = 0; i < serverListLength; i++)
-			if (serverList[i].pinged && serverList[i].serverListPos == num) {
+	if (num >= 0 && num < cls.serverListLength)
+		for (i = 0; i < cls.serverListLength; i++)
+			if (cls.serverList[i].pinged && cls.serverList[i].serverListPos == num) {
 				/* found the server - grab the infos for this server */
-				Cbuf_AddText(va("server_info %s %s;", serverList[i].node, serverList[i].service));
+				cls.selectedServer = &cls.serverList[i];
+				Cbuf_AddText(va("server_info %s %s;", cls.serverList[i].node, cls.serverList[i].service));
 				return;
 			}
 }
@@ -1125,12 +1112,10 @@ static void CL_SelectTeam_Init_f (void)
 	mn.menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
 }
 
-/**< this is true if pingservers was already executed */
+/** this is true if pingservers was already executed */
 static qboolean serversAlreadyQueried = qfalse;
-
 static int lastServerQuery = 0;
-
-/* ms until the server query timed out */
+/** ms until the server query timed out */
 #define SERVERQUERYTIMEOUT 40000
 
 /**
@@ -1144,18 +1129,20 @@ static void CL_PingServers_f (void)
 	char name[6];
 	const char *adrstring;
 
+	cls.selectedServer = NULL;
+
 	/* refresh the list */
 	if (Cmd_Argc() == 2) {
 		/* reset current list */
 		serverText[0] = 0;
-		serverListPos = 0;
-		serverListLength = 0;
 		serversAlreadyQueried = qfalse;
-		for (i = 0; i < MAX_SERVERLIST; i++) {
-			free(serverList[i].node);
-			free(serverList[i].service);
+		for (i = 0; i < cls.serverListLength; i++) {
+			Mem_Free(cls.serverList[i].node);
+			Mem_Free(cls.serverList[i].service);
 		}
-		memset(serverList, 0, sizeof(serverList));
+		cls.serverListPos = 0;
+		cls.serverListLength = 0;
+		memset(cls.serverList, 0, sizeof(cls.serverList));
 	} else {
 		mn.menuText[TEXT_LIST] = serverText;
 		return;
@@ -2020,8 +2007,6 @@ static void CL_InitLocal (void)
 {
 	int i;
 
-	memset(serverList, 0, sizeof(serverList));
-
 	CL_SetClientState(ca_disconnected);
 	cls.stream = NULL;
 	cls.realtime = Sys_Milliseconds();
@@ -2111,7 +2096,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("serverlist", CL_PrintServerList_f, NULL);
 	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
 	Cmd_AddCommand("server_connect", CL_ServerConnect_f, NULL);
-	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f, NULL);
 	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
 
 	Cmd_AddCommand("userinfo", CL_Userinfo_f, "Prints your userinfo string");
@@ -2205,6 +2189,7 @@ static void CL_SendCommand (void)
 	case ca_disconnected:
 		if (Com_ServerState()) {
 			cls.servername[0] = '\0';
+			cls.serverport[0] = '\0';
 			CL_SetClientState(ca_connecting);
 			userinfo_modified = qfalse;
 			return;
@@ -2298,7 +2283,12 @@ void CL_SetClientState (int state)
 		cls.waitingForStart = 0;
 		break;
 	case ca_connecting:
-		Com_Printf("Connecting to %s...\n", *cls.servername ? cls.servername : "localhost");
+		if (cls.servername[0]) {
+			assert(cls.serverport[0]);
+			Com_Printf("Connecting to %s %s...\n", cls.servername, cls.serverport);
+		} else {
+			Com_Printf("Connecting to localhost...\n");
+		}
 		CL_Connect();
 		break;
 	case ca_disconnected:

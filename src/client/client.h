@@ -136,6 +136,23 @@ typedef enum {
 	key_message
 } keydest_t;
 
+
+typedef struct serverList_s {
+	char *node;
+	char *service;
+	qboolean pinged;
+	char sv_hostname[MAX_OSPATH];
+	char mapname[16];
+	char version[8];
+	char gametype[8];
+	qboolean sv_dedicated;
+	int sv_maxclients;
+	int clients;
+	int serverListPos;
+} serverList_t;
+
+#define MAX_SERVERLIST 128
+
 /**
  * @brief Not cleared on levelchange (static data)
  * @sa client_state_t
@@ -157,8 +174,13 @@ typedef struct client_static_s {
 
 	/* connection information */
 	char servername[MAX_OSPATH];	/**< name of server from original connect */
+	char serverport[16];			/**< port the server is running at */
 	int connectTime;				/**< for connection retransmits */
 	int waitingForStart;			/**< waiting for EV_START or timeout */
+	int serverListLength;
+	int serverListPos;
+	serverList_t serverList[MAX_SERVERLIST];
+	serverList_t *selectedServer;
 
 	struct datagram_socket *datagram_socket;
 	struct net_stream *stream;
