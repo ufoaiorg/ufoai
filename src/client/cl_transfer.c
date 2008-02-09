@@ -562,7 +562,8 @@ static void TR_TransferListClear_f (void)
 			else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 				const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 				assert(ufocraft);
-				B_UpdateStorageAndCapacity(baseCurrent, i, trItemsTmp[i], qfalse, qfalse);
+				/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
+				baseCurrent->storage.num[i] += trItemsTmp[i];
 				if (ufocraft->weight == AIRCRAFT_LARGE)
 					baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur++;
 				else
@@ -633,7 +634,8 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 						assert(ufocraft);
 						for (j = 0; j < transfer->itemAmount[i]; j++) {
 							if (UFO_ConditionsForStoring(destination, ufocraft)) {
-								B_UpdateStorageAndCapacity(destination, i, 1, qfalse, qtrue);
+								/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
+								baseCurrent->storage.num[i]++;
 								if (ufocraft->weight == AIRCRAFT_LARGE)
 									destination->capacities[CAP_UFOHANGARS_LARGE].cur++;
 								else
@@ -1030,7 +1032,8 @@ static void TR_TransferListSelect_f (void)
 						else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 							const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 							assert(ufocraft);
-							B_UpdateStorageAndCapacity(baseCurrent, i, -1, qfalse, qfalse);
+							/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
+							baseCurrent->storage.num[i]--;
 							if (ufocraft->weight == AIRCRAFT_LARGE)
 								baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur--;
 							else
@@ -1309,7 +1312,19 @@ static void TR_CargoListSelect_f (void)
 			if (trItemsTmp[i] > 0) {
 				if (cnt == num) {
 					trItemsTmp[i]--;
-					baseCurrent->storage.num[i]++;
+					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+						INV_ManageAntimatter(baseCurrent, 1, qfalse);
+					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
+						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
+						assert(ufocraft);
+						/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
+						baseCurrent->storage.num[i]++;
+						if (ufocraft->weight == AIRCRAFT_LARGE)
+							baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur++;
+						else
+							baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
+					} else
+						B_UpdateStorageAndCapacity(baseCurrent, i, 1, qfalse, qfalse);
 					break;
 				}
 				cnt++;

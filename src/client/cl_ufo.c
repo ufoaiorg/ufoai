@@ -522,7 +522,7 @@ void UFO_CampaignCheckEvents (void)
  */
 void UFO_UpdateUFOHangarCapForAll (int base_idx)
 {
-	int i, item;
+	int i, j;
 	base_t *base = NULL;
 	aircraft_t *ufocraft = NULL;
 
@@ -539,20 +539,35 @@ void UFO_UpdateUFOHangarCapForAll (int base_idx)
 	base->capacities[CAP_UFOHANGARS_LARGE].cur = 0;
 	base->capacities[CAP_UFOHANGARS_SMALL].cur = 0;
 
-	for (i = 0; i < numAircraft_samples; i++) {
-		ufocraft = &aircraft_samples[i];
-		assert(ufocraft);
-		if (ufocraft->type != AIRCRAFT_UFO)
+	for (i = 0; i < csi.numODs; i++) {
+		/* we are looking for UFO */
+		if (csi.ods[i].tech->type != RS_CRAFT)
 			continue;
 
-		item = INVSH_GetItemByID(ufocraft->id);
-		assert(item != NONE);
+		/* do we have UFO of this type ? */
+		if (!base->storage.num[i])
+			continue;
+
+		/* look for corresponding aircraft in global array */
+		for (j = 0; j < numAircraft_samples; j++) {
+			ufocraft = &aircraft_samples[j];
+			assert(ufocraft);
+			if (ufocraft->type != AIRCRAFT_UFO)
+				continue;
+
+			if (!Q_strncmp(ufocraft->id, csi.ods[i].id, MAX_VAR))
+				break;
+		}
+		if (j == numAircraft_samples) {
+			Com_Printf("UFO_UpdateUFOHangarCapForAll: Did not find UFO %s\n", csi.ods[i].id);
+			continue;
+		}
 
 		/* Update base capacity. */
 		if (ufocraft->weight == AIRCRAFT_LARGE)
-			base->capacities[CAP_UFOHANGARS_LARGE].cur += base->storage.num[item];
+			base->capacities[CAP_UFOHANGARS_LARGE].cur += base->storage.num[i];
 		else
-			base->capacities[CAP_UFOHANGARS_SMALL].cur += base->storage.num[item];
+			base->capacities[CAP_UFOHANGARS_SMALL].cur += base->storage.num[i];
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "UFO_UpdateUFOHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_UFOHANGARS_SMALL].cur, base->capacities[CAP_UFOHANGARS_LARGE].cur);
