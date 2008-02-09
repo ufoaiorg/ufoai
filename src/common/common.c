@@ -1100,12 +1100,12 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
  * @note if string is NULL, the function returns false
  * @sa LIST_AddString
  */
-linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)
+const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)
 {
 	assert(list);
 
 	while ((string != NULL) && (list != NULL)) {
-		if (!Q_strcmp((char*)list->data, string))
+		if (!Q_strcmp((const char*)list->data, string))
 			return list;
 			/* Com_Printf("%.0f: %.0f\n", (float)list->data[0], (float)list->data[1]); */
 		list = list->next;

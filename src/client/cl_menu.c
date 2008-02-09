@@ -265,7 +265,7 @@ static void MN_InitKeyList_f (void)
 }
 
 /**
- * @brief Prints the map info
+ * @brief Prints the map info for the server creation dialogue
  */
 static void MN_MapInfo (int step)
 {
@@ -314,21 +314,15 @@ static void MN_MapInfo (int step)
 
 	if (!ccs.singleplayer) {
 		if (md->gameTypes) {
-			linkedList_t *list = md->gameTypes;
+			const linkedList_t *list = md->gameTypes;
 			char buf[256] = "";
 			while (list) {
 				Q_strcat(buf, va("%s ", (const char *)list->data), sizeof(buf));
 				list = list->next;
 			}
 			Cvar_Set("mn_mapgametypes", buf);
-			list = md->gameTypes;
-			while (list) {
-				/* check whether current selected gametype is a valid one */
-				if (!Q_strcmp((const char*)list->data, gametype->string)) {
-					break;
-				}
-				list = list->next;
-			}
+			list = LIST_ContainsString(md->gameTypes, gametype->string);
+			/* the map doesn't support the current selected gametype - switch to the next valid */
 			if (!list)
 				MN_ChangeGametype_f();
 		} else {
