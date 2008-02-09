@@ -645,8 +645,12 @@ static void B_ResetAllStatusAndCapacities_f (void)
 			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_LABSPACE)])
 				base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_WORKSPACE)])
-				baseCurrent->capacities[CAP_WORKSPACE].cur = E_CountHired(baseCurrent, EMPL_WORKER);
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_WORKSPACE)]) {
+				if (baseCurrent->capacities[CAP_WORKSPACE].max >= E_CountHired(baseCurrent, EMPL_WORKER))
+					baseCurrent->capacities[CAP_WORKSPACE].cur = E_CountHired(baseCurrent, EMPL_WORKER);
+				else
+					baseCurrent->capacities[CAP_WORKSPACE].cur = baseCurrent->capacities[CAP_WORKSPACE].max;
+			}
 
 			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)])
 				HOS_UpdateHospitalCapForAll(base);
