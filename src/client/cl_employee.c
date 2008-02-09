@@ -515,6 +515,8 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		employee->baseIDHired = base->idx;
 		/* Update capacity. */
 		base->capacities[CAP_EMPLOYEES].cur++;
+		if ((employee->type == EMPL_WORKER) && (base->capacities[CAP_WORKSPACE].cur < base->capacities[CAP_WORKSPACE].max))
+			base->capacities[CAP_WORKSPACE].cur++;
 		return qtrue;
 	}
 	return qfalse;
@@ -576,6 +578,8 @@ qboolean E_UnhireEmployee (employee_t* employee)
 		base_t *base = B_GetBase(employee->baseIDHired);
 		/* Update capacity of Living Quarters. */
 		base->capacities[CAP_EMPLOYEES].cur--;
+		if (employee->type == EMPL_WORKER)
+			base->capacities[CAP_WORKSPACE].cur--;
 
 		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */

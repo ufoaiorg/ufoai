@@ -454,6 +454,9 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 		level = B_GetMaxBuildingLevel(base, B_RADAR);
 		Radar_Initialise(&base->radar, baseRadarRange, level);
 		break;
+	case B_WORKSHOP:
+		PR_UpdateProductionCap(baseCurrent);
+		break;
 	default:
 		break;
 	}
