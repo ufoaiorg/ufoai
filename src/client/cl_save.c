@@ -90,6 +90,59 @@ static qboolean SAV_PresaveArrayLoad (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+#ifdef DEBUG
+/**
+ * @brief Perform actions after loading a game for single player campaign
+ * @sa SAV_GameLoad
+ * @todo ATM, this function is only used to check that calculation of base capacity is OK. In near future (after 2.2.1 release ?), we should remove capacities from save/load, and calculate them here so that we don't break savegames if we change values in *.ufo of the way capacity code is handled (weight of items, number of aircraft per hangar, ...)
+	hasBuilding should also be removed from savegame (if we change dependencies of building in *.ufo hangar)
+ * @todo For now, this function always return qtrue. When this will be used to actually calculate capacities (see above), it should return qfalse if capacity.cur > capacity.max (see debug_basereset)
+ */
+static qboolean SAV_GameActionsAfterLoad (char **error)
+{
+	int cap, baseIdx, buildingType;
+	capacities_t oldcapacities[MAX_BASES][MAX_CAP];
+	qboolean oldhasBuilding[MAX_BASES][MAX_BUILDING_TYPE];
+
+	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
+		if (!gd.bases[baseIdx].founded)
+			continue;
+		for (cap = 0; cap < MAX_CAP; cap++) {
+			oldcapacities[baseIdx][cap].max = gd.bases[baseIdx].capacities[cap].max;
+			oldcapacities[baseIdx][cap].cur = gd.bases[baseIdx].capacities[cap].cur;
+		}
+		for (buildingType = 0; buildingType < MAX_BUILDING_TYPE; buildingType++) {
+			oldhasBuilding[baseIdx][buildingType] = gd.bases[baseIdx].hasBuilding[buildingType];
+		}
+	}
+
+	Cmd_ExecuteString("debug_basereset");
+
+	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
+		if (!gd.bases[baseIdx].founded)
+			continue;
+		for (cap = 0; cap < MAX_CAP; cap++) {
+			if (gd.bases[baseIdx].capacities[cap].max != oldcapacities[baseIdx][cap].max) {
+				Com_Printf("......warning: base %i has a wrong capacities[%i].max (%i instead of %i)\n", baseIdx, cap, oldcapacities[baseIdx][cap].max, gd.bases[baseIdx].capacities[cap].max);
+				gd.bases[baseIdx].capacities[cap].max = oldcapacities[baseIdx][cap].max;
+			}
+			if (gd.bases[baseIdx].capacities[cap].cur != oldcapacities[baseIdx][cap].cur) {
+				Com_Printf("......warning: base %i has a wrong capacities[%i].cur (%i instead of %i)\n", baseIdx, cap, oldcapacities[baseIdx][cap].cur, gd.bases[baseIdx].capacities[cap].cur);
+				gd.bases[baseIdx].capacities[cap].cur = oldcapacities[baseIdx][cap].cur;
+			}
+		}
+		for (buildingType = 0; buildingType < MAX_BUILDING_TYPE; buildingType++) {
+			if (gd.bases[baseIdx].hasBuilding[buildingType] != oldhasBuilding[baseIdx][buildingType]) {
+				Com_Printf("......warning: base %i has a wrong hasBuilding[%i] (%i instead of %i)\n", baseIdx, buildingType, oldhasBuilding[baseIdx][buildingType], gd.bases[baseIdx].hasBuilding[buildingType]);
+				gd.bases[baseIdx].hasBuilding[buildingType] = oldhasBuilding[baseIdx][buildingType];
+			}
+		}
+	}
+
+	return qtrue;
+}
+#endif
+
 /**
  * @brief Loads a savegame from file
  * @param[in] filename Savegame to load (relative to writepath/save)
@@ -191,6 +244,13 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 			return qfalse;
 		}
 	}
+
+#ifdef DEBUG
+	/* don't check for 2.2 branch: capacity code is really messed up */
+	if (header.version >= 3)
+		SAV_GameActionsAfterLoad(error);
+#endif
+
 	assert(ccs.singleplayer);
 
 	CL_Drop();
