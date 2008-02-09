@@ -112,14 +112,14 @@ menu basedefense
 	string basedef_available
 	{
 		string	"_Available defense:"
-		pos		"880 441"
+		pos		"594 441"
 		font	f_big
 		align	uc
 	}
 
 	text basedef_selected_description
 	{
-		pos	"474 630"
+		pos	"760 630"
 		size	"400 120"
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
@@ -130,8 +130,8 @@ menu basedefense
 	{
 		md2		"*cvar mn_upmodel_top"
 		angles	"0 0 120"
-		origin	"600 545 0"
-		pos		"500 500"
+		origin	"886 545 0"
+		pos		"786 500"
 		size	"200 200"
 		mousefx	true
 		click
@@ -140,14 +140,14 @@ menu basedefense
 	string basedef_item_name
 	{
 		string	"*cvar mn_itemname"
-		pos		"594 475"
+		pos		"880 475"
 		align	uc
 	}
 
 	string basedef_description
 	{
 		string	"_Selected defense:"
-		pos		"594 441"
+		pos		"880 441"
 		font	f_big
 		align	uc
 	}
@@ -193,7 +193,7 @@ menu basedefense
 
 	text basedef_list
 	{
-		pos	"756 480"
+		pos	"472 480"
 		size	"252 220"
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
