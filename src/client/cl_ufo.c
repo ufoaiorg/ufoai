@@ -522,7 +522,7 @@ void UFO_CampaignCheckEvents (void)
  */
 void UFO_UpdateUFOHangarCapForAll (int base_idx)
 {
-	int i, j;
+	int i;
 	base_t *base = NULL;
 	aircraft_t *ufocraft = NULL;
 
@@ -549,16 +549,9 @@ void UFO_UpdateUFOHangarCapForAll (int base_idx)
 			continue;
 
 		/* look for corresponding aircraft in global array */
-		for (j = 0; j < numAircraft_samples; j++) {
-			ufocraft = &aircraft_samples[j];
-			assert(ufocraft);
-			if (ufocraft->type != AIRCRAFT_UFO)
-				continue;
+		ufocraft = AIR_GetAircraft (csi.ods[i].id);
 
-			if (!Q_strncmp(ufocraft->id, csi.ods[i].id, MAX_VAR))
-				break;
-		}
-		if (j == numAircraft_samples) {
+		if (!ufocraft) {
 			Com_Printf("UFO_UpdateUFOHangarCapForAll: Did not find UFO %s\n", csi.ods[i].id);
 			continue;
 		}
