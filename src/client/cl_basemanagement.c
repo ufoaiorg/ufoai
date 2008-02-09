@@ -645,12 +645,8 @@ static void B_ResetAllStatusAndCapacities_f (void)
 			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_LABSPACE)])
 				base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_WORKSPACE)]) {
-				if (baseCurrent->capacities[CAP_WORKSPACE].max >= E_CountHired(baseCurrent, EMPL_WORKER))
-					baseCurrent->capacities[CAP_WORKSPACE].cur = E_CountHired(baseCurrent, EMPL_WORKER);
-				else
-					baseCurrent->capacities[CAP_WORKSPACE].cur = baseCurrent->capacities[CAP_WORKSPACE].max;
-			}
+			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_WORKSPACE)])
+				PR_UpdateProductionCap(base);
 
 			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)])
 				HOS_UpdateHospitalCapForAll(base);
@@ -2444,6 +2440,7 @@ static void B_BuildBase_f (void)
 			Radar_Initialise(&(baseCurrent->radar), 0.0f, 1.0f);
 			B_ResetAllStatusAndCapacities(baseCurrent, qtrue);
 			AL_FillInContainment(baseCurrent);
+			PR_UpdateProductionCap(baseCurrent);
 
 			/* initial base equipment */
 			if (gd.numBases == 1) {

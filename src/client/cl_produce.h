@@ -67,5 +67,6 @@ void PR_ResetProduction(void);
 void PR_ProductionRun(void);
 void PR_ProductionInit(void);
 void PR_Init(void);
+void PR_UpdateProductionCap(struct base_s *base);
 
 #endif /* CLIENT_CL_PROOUCE */

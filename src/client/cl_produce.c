@@ -1049,10 +1049,7 @@ static void PR_ProductionList_f (void)
 	Cvar_SetValue("mn_production_basecap", baseCurrent->capacities[CAP_WORKSPACE].max);
 
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
-	if (baseCurrent->capacities[CAP_WORKSPACE].max >= E_CountHired(baseCurrent, EMPL_WORKER))
-		baseCurrent->capacities[CAP_WORKSPACE].cur = E_CountHired(baseCurrent, EMPL_WORKER);
-	else
-		baseCurrent->capacities[CAP_WORKSPACE].cur = baseCurrent->capacities[CAP_WORKSPACE].max;
+	PR_UpdateProductionCap(baseCurrent);
 
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
 		baseCurrent->capacities[CAP_WORKSPACE].cur,
@@ -1115,6 +1112,19 @@ void PR_Init (void)
 
 	if (!prodlist || !node1 || !node2)
 		Sys_Error("Could not find the needed menu nodes in production menu\n");
+}
+
+/**
+ * @brief Update the current capacity of Workshop
+ */
+void PR_UpdateProductionCap (base_t *base)
+{
+	assert(base);
+
+	if (base->capacities[CAP_WORKSPACE].max >= E_CountHired(base, EMPL_WORKER))
+		base->capacities[CAP_WORKSPACE].cur = E_CountHired(base, EMPL_WORKER);
+	else
+		base->capacities[CAP_WORKSPACE].cur = base->capacities[CAP_WORKSPACE].max;
 }
 
 /**
