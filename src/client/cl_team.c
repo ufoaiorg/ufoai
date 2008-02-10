@@ -1653,11 +1653,16 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->STUN = MSG_ReadByte(sb);
 	chr->morale = MSG_ReadByte(sb);
 
-	/* Load scores */
-	chr->score.experience = MSG_ReadShort(sb);
+	/** Load scores @sa inv_shared.h:chrScoreGlobal_t */
+	num = MSG_ReadByte(sb);
+	for (i = 0; i < num; i++)
+		chr->score.experience[i] = MSG_ReadLong(sb);
 	num = MSG_ReadByte(sb);
 	for (i = 0; i < num; i++)
 		chr->score.skills[i] = MSG_ReadByte(sb);
+	num = MSG_ReadByte(sb);
+	for (i = 0; i < num; i++)
+		chr->score.initialSkills[i] = MSG_ReadByte(sb);
 	num = MSG_ReadByte(sb);
 	for (i = 0; i < num; i++)
 		chr->score.kills[i] = MSG_ReadShort(sb);
@@ -1861,11 +1866,16 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->morale);
 
-		/* Scores */
-		MSG_WriteShort(buf, chr->score.experience);
+		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+		MSG_WriteByte(buf, SKILL_NUM_TYPES+1);
+		for (j = 0; j < SKILL_NUM_TYPES+1; j++)
+			MSG_WriteLong(buf, chr->score.experience[j]);
 		MSG_WriteByte(buf, SKILL_NUM_TYPES);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)	/* even new attributes */
 			MSG_WriteByte(buf, chr->score.skills[j]);
+		MSG_WriteByte(buf, SKILL_NUM_TYPES);
+		for (j = 0; j < SKILL_NUM_TYPES; j++)
+			MSG_WriteByte(buf, chr->score.initialSkills[j]);
 		MSG_WriteByte(buf, KILLED_NUM_TYPES);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			MSG_WriteShort(buf, chr->score.kills[j]);
@@ -1925,10 +1935,13 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 		NET_WriteByte(buf, chr->STUN);
 		NET_WriteByte(buf, chr->morale);
 
-		/* Scores */
-		NET_WriteShort(buf, chr->score.experience);
+		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+		for (j = 0; j < SKILL_NUM_TYPES+1; j++)
+			NET_WriteLong(buf, chr->score.experience[j]);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
 			NET_WriteByte(buf, chr->score.skills[j]);
+		for (j = 0; j < SKILL_NUM_TYPES; j++)
+			NET_WriteByte(buf, chr->score.initialSkills[j]);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			NET_WriteShort(buf, chr->score.kills[j]);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
@@ -1971,7 +1984,6 @@ typedef struct
 typedef struct
  {
 	int ucn;
-	int kills[KILLED_NUM_TYPES];
 	int HP, STUN;
 	int morale;
 
@@ -2016,28 +2028,43 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 		for (i = 0; i < MAX_WHOLETEAM; i++) {
 			updateCharacterArray[i].ucn = -1;
 		}
-		/**
-		 * this is the size of updateCharacter_t - also change it in G_SendCharacterData
+		/** NEW
+		 * @note This is the size of updateCharacter_t - also change it in g_main.c:G_SendCharacterData
 		 * if you change something in updateCharacter_t
-		 * KILLED_NUM_TYPES => size of kills array
-		 * +2 => HP and ucn
-		 * *2 => for shorts
-		 * +16 => STUN and chrScore_t
+		 * @sa inv_shared.h:chrScoreGlobal_t
+		 * @todo THIS IS A MAJOR PITA! Better way wanted/needed, this _can_ be done more sane..
 		 */
-		num = NET_ReadShort(msg) / ((KILLED_NUM_TYPES + 2) * 2 + 16);
+		num = NET_ReadShort(msg) / (
+			(2 * 2) +			/* ucn+HP [* 2 for shorts] */
+			(2) +				/* STUN+morale [byte] */
+			( /* chrScoreGlobal_t */
+				((SKILL_NUM_TYPES+1) * 4) /* experience [* 4 for long] */
+				+(SKILL_NUM_TYPES) /* skills [byte] */
+				+(SKILL_NUM_TYPES) /* initialSkills [byte]*/
+				+(KILLED_NUM_TYPES * 2) /* kills [short] */
+				+(KILLED_NUM_TYPES * 2) /* stuns [short] */
+				+1 * 2 /* assignedMissions [short]*/
+				+1 /* rank [byte]*/
+			)
+		);
 		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
 			Sys_Error("CL_ParseCharacterData: NET_ReadShort error (%i)\n", num);
 		for (i = 0; i < num; i++) {
+			/* updateCharacter_t */
 			updateCharacterArray[i].ucn = NET_ReadShort(msg);
 			updateCharacterArray[i].HP = NET_ReadShort(msg);
 			updateCharacterArray[i].STUN = NET_ReadByte(msg);
 			updateCharacterArray[i].morale = NET_ReadByte(msg);
 
-			updateCharacterArray[i].chrscore.experience = NET_ReadShort(msg);
+			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+			for (j = 0; j < SKILL_NUM_TYPES+1; j++)
+				updateCharacterArray[i].chrscore.experience[j] = NET_ReadLong(msg);
 			for (j = 0; j < SKILL_NUM_TYPES; j++)
 				updateCharacterArray[i].chrscore.skills[j] = NET_ReadByte(msg);
+			for (j = 0; j < SKILL_NUM_TYPES; j++)
+				updateCharacterArray[i].chrscore.initialSkills[j] = NET_ReadByte(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
 				updateCharacterArray[i].chrscore.kills[j] = NET_ReadShort(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)

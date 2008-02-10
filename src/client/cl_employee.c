@@ -1175,10 +1175,20 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.chrscore.powerstat);
 #endif
 
-			/* Store character stats/score */
-			MSG_WriteShort(sb, e->chr.score.experience);
+			/** Store character stats/score @sa inv_shared.h:chrScoreGlobal_t */
+			MSG_WriteShort(sb, 666);	/** experience @todo remove me when switching to the new score stuff */
+#if 0
+/**@todo activate me */
+			for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
+				MSG_WriteLong(sb, e->chr.score.experience[k]);
+#endif
 			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 				MSG_WriteByte(sb, e->chr.score.skills[k]);
+#if 0
+/**@todo activate me */
+			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
+				MSG_WriteByte(sb, e->chr.score.initialSkills[k]);
+#endif
 			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
 				MSG_WriteShort(sb, e->chr.score.kills[k]);
 			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
@@ -1288,10 +1298,21 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				MSG_ReadByte(sb);	/*accuracystat*/
 				MSG_ReadByte(sb);	/*powerstat*/
 			} else {
-				/* Load character stats/score (starting with 2.3 and up) */
-				e->chr.score.experience = MSG_ReadShort(sb);
+				/** Load character stats/score (starting with 2.3 and up)
+				 * @sa inv_shared.h:chrScoreGlobal_t */
+				MSG_ReadShort(sb);	/** experience @todo remove me when the saving works. */
+#if 0
+/**@todo activate me */
+				for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
+					e->chr.score.experience[k] = MSG_ReadLong(sb);
+#endif
 				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 					e->chr.score.skills[k] = MSG_ReadByte(sb);
+#if 0
+/**@todo activate me */
+				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
+					e->chr.score.initialSkills[k] = MSG_ReadByte(sb);
+#endif
 				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
 					e->chr.score.kills[k] = MSG_ReadShort(sb);
 				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)

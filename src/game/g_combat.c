@@ -1176,6 +1176,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		/** @todo check for direct shot / splash damage shot? */
 		if (fd->splrad) {
 			/* Splash damage */
+			ent->chr.scoreMission->firedSplashTUs[fd->weaponSkill] += fd->time;
 			ent->chr.scoreMission->firedSplash[fd->weaponSkill]++;
 			for (i = 0; i < SKILL_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
@@ -1183,6 +1184,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 			}
 		} else {
 			/* Direkt hits */
+			ent->chr.scoreMission->firedTUs[fd->weaponSkill] += fd->time;
 			ent->chr.scoreMission->fired[fd->weaponSkill]++;
 			for (i = 0; i < SKILL_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */

@@ -2522,15 +2522,19 @@ static inline void G_ClientSkipActorInfo (void)
 	gi.ReadByte(); /* STUN */
 	gi.ReadByte(); /* morale */
 
-	gi.ReadShort(); /* experience */
+	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+	for (k = 0; k < SKILL_NUM_TYPES+1; k++)
+		gi.ReadLong(); /* score.experience */
 	for (k = 0; k < SKILL_NUM_TYPES; k++)
-		gi.ReadByte(); /* skills */
+		gi.ReadByte(); /* score.skills */
+	for (k = 0; k < SKILL_NUM_TYPES; k++)
+		gi.ReadByte(); /* score.initialSkills */
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.ReadShort(); /* kills */
+		gi.ReadShort(); /* score.kills */
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.ReadShort(); /* stuns */
-	gi.ReadShort(); /* assigned missions */
-	gi.ReadByte(); /* rank */
+		gi.ReadShort(); /* score.stuns */
+	gi.ReadShort(); /* score.assigned missions */
+	gi.ReadByte(); /* score.rank */
 
 	/* skip inventory */
 	j = gi.ReadShort();
@@ -2632,16 +2636,22 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.STUN = gi.ReadByte();
 			ent->chr.morale = gi.ReadByte();
 
-			/** Scores @sa G_ClientSkipActorInfo */
-			ent->chr.score.experience = gi.ReadShort();
+			/** Scores
+			 * @sa G_ClientSkipActorInfo
+			 * @sa inv_shared.h:chrScoreGlobal_t */
+			for (k = 0; k < SKILL_NUM_TYPES+1; k++)	/* new attributes */
+				ent->chr.score.experience[k] = gi.ReadLong();
 			for (k = 0; k < SKILL_NUM_TYPES; k++)	/* new attributes */
 				ent->chr.score.skills[k] = gi.ReadByte();
+			for (k = 0; k < SKILL_NUM_TYPES; k++)
+				ent->chr.score.initialSkills[k] = gi.ReadByte();
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				ent->chr.score.kills[k] = gi.ReadShort();
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				ent->chr.score.stuns[k] = gi.ReadShort();
 			ent->chr.score.assignedMissions = gi.ReadShort();
 			ent->chr.score.rank = gi.ReadByte();
+
 			/* Mission Scores */
 			memset(&scoreMission[scoreMissionNum], 0, sizeof(chrScoreMission_t));
 			ent->chr.scoreMission = &scoreMission[scoreMissionNum];

@@ -1410,7 +1410,7 @@ static const int MPSoldier[][2] =
  */
 void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t type, qboolean multiplayer)
 {
-	int i, abilityWindow;
+	int i, abilityWindow, temp;
 	const int (*soldierTemplate)[2] = MPSoldier;
 
 	assert(chr);
@@ -1463,12 +1463,19 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
 		abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
 		/* Reminder: In case if abilityWindow==0 the ability will get set to the lower limit. */
-		chr->score.skills[i] = (frand() * abilityWindow) + soldierTemplate[i][0];
+		temp = (frand() * abilityWindow) + soldierTemplate[i][0];
+		chr->score.skills[i] = temp;
+		chr->score.initialSkills[i] = temp;
 	}
 
 	/* Health. */
 	abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
 	chr->HP = (frand() * abilityWindow) + soldierTemplate[i][0];
+
+	/* Initialize the experience values */
+	for (i = 0; i <= SKILL_NUM_TYPES; i++) {
+		chr->score.experience[i] = 0;
+	}
 }
 
 /** @brief Used in CHRSH_CharGetHead and CHRSH_CharGetBody to generate the model path. */

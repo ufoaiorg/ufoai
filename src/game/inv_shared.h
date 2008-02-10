@@ -509,11 +509,13 @@ typedef struct chrScoreMission_s {
 	/**
 	 * Hits/Misses @sa g_combat.c:G_UpdateHitScore. */
 	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldeir started shooting) */
+	int firedTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes". (direct hits only)*/
 	qboolean firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
 	int hits[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of hits (aliens, civilians or, teammates) per skill.
 													 * It is a sub-count of "fired".
 													 * It's planned to be increased by 1 for each series fo shots that dealt _some_ damage. */
 	int firedSplash[SKILL_NUM_TYPES];	/**< Count of fired splash "firemodes". */
+	int firedSplashTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes" (splash damage only). */
 	qboolean firedSplashHit[KILLED_NUM_TYPES];	/** Same as firedHit but for Splash damage. */
 	int hitsSplash[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of splash hits. */
 	int hitsSplashDamage[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of dealt splash damage (aliens, civilians or, teammates).
@@ -533,11 +535,14 @@ typedef struct chrScoreMission_s {
  * @todo Will replace chrScoreOLD_s at some point.
  * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
  * @note This information is stored in savegames (in contract to chrScoreMission_t).
+ * @note WARNING: if you change something here you'll have to make sure all the network and savegame stuff is updated as well!
+ * Additionally you have to check the size of the network-transfer in g_main.c:G_SendCharacterData and cl_team.c:CL_ParseCharacterData (updateCharacter_t)
  */
 typedef struct chrScoreGlobal_s {
-	int experience;
+	int experience[SKILL_NUM_TYPES+1]; /**< Array of experience values for all skills, and health. */
 
-	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. */
+	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. This is the total value. */
+	int initialSkills[SKILL_NUM_TYPES];		/**< Array of initial skills and abilities. This is the value generated at character generation time. */
 
 	/* Kills & Stuns  */
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
