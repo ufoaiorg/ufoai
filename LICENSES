@@ -525,7 +525,6 @@ base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon_gear.md2 | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/inter_saracen/old/interceptor.rar | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
@@ -1174,7 +1173,6 @@ base/models/soldiers/femalepower/head03a.md2 | Creative Commons Attribution-Shar
 base/models/soldiers/femalepower/head03b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/head04a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/head04b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/old/powersuitfemale.wings | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
 base/models/soldiers/male/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/male/body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/male/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -1350,7 +1348,6 @@ base/models/soldiers/malepower/head05b.md2 | Creative Commons Attribution-Share 
 base/models/soldiers/malepower/head05c.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/malepower.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | powersuitmale by David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
 base/models/soldiers/malepower/malepower.xcf | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer) | malepower.tga texture by David Dallaston (PikkaBird)
-base/models/soldiers/malepower/old/powersuitmale.wings | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
 base/models/soldiers/ugv_ares/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 | Werner (hoehrer) Höhrer
 base/models/soldiers/ugv_ares/ares.blend | GNU General Public License 2.0 | Models: Willem "Sitters", Aniamtions: Werner (hoehrer) Höhrer
@@ -1419,7 +1416,6 @@ base/models/weapons/knife/knife.jpg | GNU General Public License 2.0 | Lukas Bey
 base/models/weapons/knife/knife.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/knifemono/knifemono.jpg | GNU General Public License 2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
 base/models/weapons/knifemono/knifemono.md2 | GNU General Public License 2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
-base/models/weapons/knifemono/old/knife5.wings | GNU General Public License 2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
 base/models/weapons/laserheavy/laserheavy.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserpistol/laserpistol.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -1457,7 +1453,6 @@ base/models/weapons/pistol/pistol.jpg | GNU General Public License 2.0 | Lukas B
 base/models/weapons/pistol/pistol.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pistol/pistol_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pistol/pistol_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pistol2/old/pistol2.wings | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/pistol2/pistol2.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/pistol2/pistol2.psd | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
@@ -1471,8 +1466,6 @@ base/models/weapons/plasblaster/plasblaster.3DS | GNU General Public License 2.0
 base/models/weapons/plasblaster/plasblaster.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/plasblaster.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/plasblaster_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasmagren/old/plasgren.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
-base/models/weapons/plasmagren/old/plasmagren3.wings | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plasmagren/plasmagren.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/plasmagren/plasmagren.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plaspistol/plaspistol.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -1483,7 +1476,6 @@ base/models/weapons/plasrifle/plasrifle.jpg | GNU General Public License 2.0 | L
 base/models/weapons/plasrifle/plasrifle.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasrifle/plasrifle_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasrifle/plasrifle_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/rpg/old/rocket_particle_highres.jpg |  | A M D G
 base/models/weapons/rpg/rocket.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/rpg/rocket.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/rpg/rocket_inc.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -1503,9 +1495,6 @@ base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-Share Al
 base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
 base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
-base/models/weapons/shotgunmicro/old/pistolshotgun.mtl | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/old/pistolshotgun.obj | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/old/pistolshotgun.wings | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
@@ -1523,13 +1512,8 @@ base/models/weapons/sniper/sniper.jpg | GNU General Public License 2.0 | Lukas B
 base/models/weapons/sniper/sniper.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/sniper/sniper_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/stungren/old/canister2.mtl | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
-base/models/weapons/stungren/old/canister2.obj | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
-base/models/weapons/stungren/old/canister2.wings | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
 base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
 base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
-base/models/weapons/stunrod/old/stunrod.wings | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
-base/models/weapons/stunrod/old/stunrodskin.png | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
 base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/music/AlexFightmare.ogg | GNU General Public License 2.0 | Alex Parker
