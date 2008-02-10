@@ -310,8 +310,12 @@ qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute_
 
 /*============================================= */
 
+/** returns the amount of elements - not the amount of bytes */
+#define lengthof(x) (sizeof(x) / sizeof(*(x)))
+
 /* portable case insensitive compare */
 int Q_strncmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
+int Q_strmatch(const char *s1, const char * s2);
 int Q_strcmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_stricmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_strcasecmp(const char *s1, const char *s2) __attribute__((nonnull));

@@ -195,7 +195,8 @@ static void S_Music_RandomTrack_f (void)
 				Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", search->filename);
 				FS_NormPath(findname);
 
-				if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+				dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+				if (dirnames != NULL) {
 					for (i = 0; i < ndirs - 1; i++) {
 						musicTrackCount++;
 						Mem_Free(dirnames[i]);
@@ -229,7 +230,8 @@ static void S_Music_RandomTrack_f (void)
 			Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", search->filename);
 			FS_NormPath(findname);
 
-			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+			if (dirnames != NULL) {
 				for (i = 0; i < ndirs - 1; i++) {
 					count++;
 					if (randomID == count) {
@@ -587,7 +589,7 @@ static qboolean SND_Init (void)
 	}
 
 	Mix_QuerySpec(&audio_rate, &audio_format, &audio_channels);
-	Com_Printf("...audio rate: %i\n...audio channels: %i\n", audio_rate, audio_channels);
+	Com_Printf("... audio rate: %i\n... audio channels: %i\n", audio_rate, audio_channels);
 	if (audio_rate != snd_rate->integer)
 		Cvar_SetValue("snd_rate", audio_rate);
 	if (audio_channels != snd_channels->integer)
@@ -595,7 +597,7 @@ static qboolean SND_Init (void)
 
 	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
 		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
-	Com_Printf("...driver: '%s'\n", drivername);
+	Com_Printf("... driver: '%s'\n", drivername);
 
 	return qtrue;
 }

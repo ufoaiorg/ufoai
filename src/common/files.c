@@ -529,7 +529,8 @@ static void FS_AddGameDirectory (const char *dir)
 	Com_Printf("Adding game dir: %s\n", dir);
 
 	Com_sprintf(pattern, sizeof(pattern), "%s/*.zip", dir);
-	if ((dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+	dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
+	if (dirnames != NULL) {
 		for (i = 0; i < ndirs - 1; i++) {
 			if (strrchr(dirnames[i], '/')) {
 				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
@@ -545,7 +546,8 @@ static void FS_AddGameDirectory (const char *dir)
 	}
 
 	Com_sprintf(pattern, sizeof(pattern), "%s/*.pk3", dir);
-	if ((dirnames = FS_ListFiles(pattern, &ndirs, 0, 0)) != 0) {
+	dirnames = FS_ListFiles(pattern, &ndirs, 0, 0);
+	if (dirnames != NULL) {
 		for (i = 0; i < ndirs - 1; i++) {
 			if (strrchr(dirnames[i], '/')) {
 				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
@@ -775,7 +777,8 @@ static void FS_Dir_f (void)
 		Com_Printf("Directory of %s\n", findname);
 		Com_Printf("----\n");
 
-		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+		dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+		if (dirnames != NULL) {
 			int i;
 
 			for (i = 0; i < ndirs - 1; i++) {
@@ -1052,7 +1055,8 @@ void FS_BuildFileList (const char *fileList)
 			Com_sprintf(findname, sizeof(findname), "%s/%s", search->filename, files);
 			FS_NormPath(findname);
 
-			if ((filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
+			if (filenames != NULL) {
 				for (i = 0; i < nfiles - 1; i++) {
 					_AddToListBlock(&fl, block, tblock, filenames[i]);
 					Mem_Free(filenames[i]);
@@ -1365,7 +1369,8 @@ void FS_GetMaps (qboolean reset)
 			Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
 			FS_NormPath(findname);
 
-			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+			if (dirnames != NULL) {
 				for (i = 0; i < ndirs - 1; i++) {
 					Com_DPrintf(DEBUG_ENGINE, "... found map: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
 					baseMapName = COM_SkipPath(dirnames[i]);
