@@ -123,95 +123,131 @@ menu basesummary
 		num			0
 	}
 
+	func resetbaselayout
+	{
+		*base0 bgcolor "1 1 1 0.4"
+		*base1 bgcolor "1 1 1 0.4"
+		*base2 bgcolor "1 1 1 0.4"
+		*base3 bgcolor "1 1 1 0.4"
+		*base4 bgcolor "1 1 1 0.4"
+		*base5 bgcolor "1 1 1 0.4"
+		*base6 bgcolor "1 1 1 0.4"
+		*base7 bgcolor "1 1 1 0.4"
+	}
+
 	// ==================
 	// base layouts
 	// ==================
 	baselayout base0
 	{
 		size		"55 60"
-		bgcolor		"1 1 1 0.4"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"654 62"
 		num			0
-		click 		{ cmd "basesummary_selectbase 0;" }
+		click 		{
+			resetbaselayout
+			*base0 bgcolor "1 1 1 1"
+			cmd "basesummary_selectbase 0;"
+		}
 	}
 
 	baselayout base1
 	{
 		size		"55 60"
-		bgcolor		"1 1 1 0.4"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"724 62"
 		num			1
-		click		{ cmd "basesummary_selectbase 1;" }
+		click		{
+			resetbaselayout
+			*base1 bgcolor "1 1 1 1"
+			cmd "basesummary_selectbase 1;"
+		}
 	}
 
 	baselayout base2
 	{
 		size		"55 60"
-		bgcolor		"1 1 1 0.4"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"794 62"
 		num			2
-		click		{ cmd "basesummary_selectbase 2;" }
+		click		{
+			resetbaselayout
+			*base2 bgcolor "1 1 1 1"
+			cmd "basesummary_selectbase 2;"
+		}
 	}
 
 	baselayout base3
 	{
 		size		"55 60"
-		bgcolor		"1 1 1 0.4"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"864 62"
 		num			3
-		click		{ cmd "basesummary_selectbase 3;" }
+		click		{
+			resetbaselayout
+			*base3 bgcolor "1 1 1 1"
+			cmd "basesummary_selectbase 3;"
+		}
 	}
 
 	baselayout base4
 	{
 		size		"55 61"
-		bgcolor		"1 1 1 0.4"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"654 137"
 		num			4
-		click		{ cmd "basesummary_selectbase 4;" }
+		click		{
+			resetbaselayout
+			*base4 bgcolor "1 1 1 1"
+			cmd "basesummary_selectbase 4;"
+		}
 	}
 
 	baselayout base5
 	{
 		size		"55 61"
-		bgcolor		"1 1 1 0.4"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"724 137"
 		num			5
-		click		{ cmd "basesummary_selectbase 5;" }
+		click		{
+			resetbaselayout
+			*base5 bgcolor "1 1 1 1"
+			cmd "basesummary_selectbase 5;"
+		}
 	}
 
 	baselayout base6
 	{
 		size		"55 61"
-		bgcolor		"1 1 1 0.4"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"794 137"
 		num			6
-		click		{ cmd "basesummary_selectbase 6;" }
+		click		{
+			resetbaselayout
+			*base6 bgcolor "1 1 1 1"
+			cmd "basesummary_selectbase 6;"
+		}
 	}
 
 	baselayout base7
 	{
 		size		"55 61"
-		bgcolor		"1 1 1 0.4"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"864 137"
 		num			7
-		click		{ cmd "basesummary_selectbase 7;" }
+		click		{
+			resetbaselayout
+			*base7 bgcolor "1 1 1 1"
+			cmd "basesummary_selectbase 7;"
+		}
 	}
 
 	// ==================
@@ -219,6 +255,7 @@ menu basesummary
 	// ==================
 	func init
 	{
+		resetbaselayout
 		cmd "basesummary_init;"
 	}
 }
