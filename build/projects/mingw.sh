@@ -240,8 +240,8 @@ echo "========================================"
 echo " LIBCURL"
 echo "========================================"
 version="7.17.0"
-download http://curl.haxx.se/download/libcurl-$version-win32-nossl.zip
-any2deb mingw32-libcurl-dev $version libcurl-mingw32-$version.zip /usr/i586-mingw32msvc >> /dev/null
+download http://curl.haxx.se/download/ libcurl-$version-win32-nossl.zip
+any2deb mingw32-libcurl-dev $version libcurl-$version-win32-nossl.zip /usr/i586-mingw32msvc >> /dev/null
 if [ "$dont_install" -ne "1" ]
 then
 	dpkg -i mingw32-libcurl-dev_$version-2_all.deb
