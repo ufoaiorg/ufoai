@@ -168,7 +168,7 @@ fi
 echo "========================================"
 echo " SDL"
 echo "========================================"
-version="1.2.12"
+version="1.2.13"
 download http://www.libsdl.org/release/ SDL-devel-$version-mingw32.tar.gz
 tar -xz -f SDL-devel-$version-mingw32.tar.gz
 mkdir -p build-sdl/usr/i586-mingw32msvc
