@@ -1949,11 +1949,14 @@ static int CL_NationsMaxFunding (void)
 	return max;
 }
 
+static int selectedNation = 0;
+
 /**
  * @brief Draws a graph for the funding values over time.
  * @param[in] nation The nation to draw the graph for.
  * @param[in] node A pointer to a "linestrip" node that we want to draw in.
  * @param[in] maxFunding The upper limit of the graph - all values willb e scaled to this one.
+ * @param[in] color If this is -1 draw the line for the current selected nation
  * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
  */
 static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFunding, int color)
@@ -2001,13 +2004,14 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	}
 
 	/* Break if we reached the max strip number. */
-	if (node->linestrips.numStrips >= MAX_LINESTRIPS-1)
+	if (node->linestrips.numStrips >= MAX_LINESTRIPS - 1)
 		return;
 
 	/* Link graph to node */
 	node->linestrips.pointList[node->linestrips.numStrips] = (int*)fundingPts[usedFundPtslist];
 	node->linestrips.numPoints[node->linestrips.numStrips] = ptsNumber;
 	if (color < 0) {
+		Cvar_Set("mn_nat_symbol", va("nations/%s", gd.nations[selectedNation].id));
 		Vector4Copy(graphColorSelected, node->linestrips.color[node->linestrips.numStrips]);
 	} else {
 		Vector4Copy(graphColors[color], node->linestrips.color[node->linestrips.numStrips]);
@@ -2017,7 +2021,6 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	usedFundPtslist++;
 }
 
-static int selectedNation = 0;
 /**
  * @brief Shows the current nation list + statistics.
  * @note See menu_stats.ufo

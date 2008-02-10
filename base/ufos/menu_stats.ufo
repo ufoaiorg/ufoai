@@ -370,8 +370,20 @@ menu nations
 		font f_small
 	}	//todo *cvar mn_nat_fund_max
 
+	pic nation_symbol
+	{
+		image	"*cvar mn_nat_symbol"
+		pos		"512 390"
+		align	uc
+	}
+
 	func init
 	{
 		cmd "nation_update;"
+	}
+
+	func close
+	{
+		cmd "del mn_nat_symbol;"
 	}
 }
