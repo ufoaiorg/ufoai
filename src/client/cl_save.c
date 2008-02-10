@@ -190,6 +190,17 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 			return qfalse;
 		}
 	}
+	/* Udate research so that it can start (otherwise research does not go on until you entered Laboratory)
+		WARNING: this is a horrible hack, with this baseCurrent stuff.
+		RS_UpdateData() differ in trunk and 2.2 branch: this is only a workaround for 2.2 */
+	if (baseCurrent && baseCurrent->founded)
+		RS_UpdateData();
+	else {
+		baseCurrent = &gd.bases[0];
+		RS_UpdateData();
+		baseCurrent = NULL;
+	}
+
 	assert(ccs.singleplayer);
 
 	CL_Drop();
