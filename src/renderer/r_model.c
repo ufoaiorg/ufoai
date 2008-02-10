@@ -215,7 +215,7 @@ model_t *R_RegisterModelShort (const char *name)
 				return mod;
 			i++;
 		}
-		Com_Printf("R_RegisterModelShort: Could not find any supporte model with the basename: %s\n", name);
+		Com_Printf("R_RegisterModelShort: Could not find any supported model with the basename: '%s'\n", name);
 		return NULL;
 	} else
 		return R_RegisterModel(name);
