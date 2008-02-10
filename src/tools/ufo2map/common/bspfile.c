@@ -76,7 +76,8 @@ dBspBrushSide_t dbrushsides[MAX_MAP_BRUSHSIDES];
 
 /**
  * @brief Compress the routing data of a map
- * @sa DeCompressRouting
+ * @sa CMod_DeCompressRouting
+ * @sa CMod_LoadRouting
  */
 byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 {

@@ -599,8 +599,9 @@ static void CMod_LoadBrushSides (lump_t * l, vec3_t shift)
 /**
  * @param[in] source Source will be set to the end of the compressed data block!
  * @sa CompressRouting (ufo2map)
+ * @sa CMod_LoadRouting
  */
-static int Cmod_DeCompressRouting (byte ** source, byte * dataStart)
+static int CMod_DeCompressRouting (byte ** source, byte * dataStart)
 {
 	int i, c;
 	byte *data_p;
@@ -1032,9 +1033,9 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	source = cmod_base + l->fileofs;
 	sh_low = *source++;
 	sh_big = *source++;
-	length = Cmod_DeCompressRouting(&source, &temp_route[0][0][0]);
-	length += Cmod_DeCompressRouting(&source, &temp_fall[0][0]);
-	length += Cmod_DeCompressRouting(&source, &temp_step[0][0]);
+	length = CMod_DeCompressRouting(&source, &temp_route[0][0][0]);
+	length += CMod_DeCompressRouting(&source, &temp_fall[0][0]);
+	length += CMod_DeCompressRouting(&source, &temp_step[0][0]);
 
 	/* 10 => HEIGHT (8), level 257 (1), level 258 (1) */
 	if (length != WIDTH * WIDTH * 10)
