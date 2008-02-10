@@ -194,8 +194,9 @@ typedef struct routing_s {
 #define R_AREA(map,x,y,z) ((map)->area[(z)][(y)][(x)])
 #define R_SAREA(map,x,y,z) ((map)->areaStored[(z)][(y)][(x)])
 
-/* extern */
+/* statistics */
 static int c_traces, c_brush_traces;
+/* extern */
 char map_entitystring[MAX_MAP_ENTSTRING];
 vec3_t map_min, map_max;
 
@@ -1323,7 +1324,6 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 	c_traces = c_brush_traces = numInline = numTiles = 0;
 	map_entitystring[0] = base[0] = 0;
 
-	/* ROUTING_NOT_REACHABLE means, not reachable */
 	memset(&(clMap.fall[0][0]), ROUTING_NOT_REACHABLE, WIDTH * WIDTH);
 	memset(&(clMap.step[0][0]), 0, WIDTH * WIDTH);
 	memset(&(clMap.route[0][0][0]), 0, WIDTH * WIDTH * HEIGHT);

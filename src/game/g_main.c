@@ -411,19 +411,20 @@ static void G_SendCharacterData (const edict_t* ent)
 /**
  * @brief Determines the maximum amount of XP per skill that can be gained from any one mission.
  * @param[in] skill The skill for which to fetch the maximum amount of XP.
+ * @sa G_UpdateCharacterSkills
+ * @sa G_GetEarnedExperience
+ * @note Explanation of the values here:
+ * There is a maximum speed at which skills may rise over the course of 100 missions (the predicted career length of a veteran soldier).
+ * For example, POWER will, at best, rise 10 points over 100 missions. If the soldier gets max XP every time.
+ * Because the increase is given as experience^0.6, that means that the maximum XP cap x per mission is given as
+ * log 10 / log x = 0.6
+ * log x = log 10 / 0.6
+ * x = 10 ^ (log 10 / 0.6)
+ * x = 46
+ * The division by 100 happens in G_UpdateCharacterSkills
  */
 static int G_GetMaxExperiencePerMission (abilityskills_t skill)
 {
-	/* 	Explanation of the values here:
-		There is a maximum speed at which skills may rise over the course of 100 missions (the predicted career length of a veteran soldier).
-		For example, POWER will, at best, rise 10 points over 100 missions. If the soldier gets max XP every time.
-		Because the increase is given as experience^0.6, that means that the maximum XP cap x per mission is given as
-		log 10 / log x = 0.6
-		log x = log 10 / 0.6
-		x = 10 ^ (log 10 / 0.6)
-		x = 46
-		The division by 100 happens in G_UpdateCharacterSkills
-	 */
 	switch (skill) {
 	case ABILITY_POWER:
 		return 46;
@@ -454,7 +455,8 @@ static int G_GetMaxExperiencePerMission (abilityskills_t skill)
 /**
  * @brief Determines the amount of XP earned by a given soldier for a given skill, based on the soldier's performance in the last mission.
  * @param[in] skill The skill for which to fetch the maximum amount of XP.
- * @param[in] chr Pointer to a character_t.
+ * @param[in] chr Pointer to the character you want to get the earned experience for
+ * @sa G_GetMaxExperiencePerMission
  */
 static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 {
@@ -508,9 +510,9 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 /**
  * @brief Updates character skills after a mission.
  * @param[in] chr Pointer to a character_t.
- * @sa cl_campaign.c:CL_UpdateCharacterStats
- * @sa cl_combat.c:G_UpdateCharacterScore
- * @sa cl_combat.c:G_UpdateHitScore
+ * @sa CL_UpdateCharacterStats
+ * @sa G_UpdateCharacterScore
+ * @sa G_UpdateHitScore
  * @todo Update skill calculation with implant data once implants are implemented
  */
 static void G_UpdateCharacterSkills (character_t *chr)
