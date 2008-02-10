@@ -38,6 +38,10 @@ AC_ARG_WITH(sdl_config,
 	[AS_HELP_STRING([--with-sdl-config=FILE],[using the given sdl-config @<:@default=sdl-config@:>@])],
 	[], [with_sdl_config=sdl-config])
 
+AC_ARG_WITH(curl_config,
+	[AS_HELP_STRING([--with-curl-config=FILE],[using the given curl-config @<:@default=curl-config@:>@])],
+	[], [with_curl_config=curl-config])
+
 AC_ARG_WITH(curses,
 	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
 	[], [with_curses=check])
@@ -182,6 +186,12 @@ AC_MSG_RESULT($TARGET_CPU)
 #---------------------------------------------------------------------------------------------
 
 AC_PROG_CC
+
+#---------------------------------------------------------------------------------------------
+# CHECK LIBTOOL
+#---------------------------------------------------------------------------------------------
+
+#AC_PROG_LIBTOOL
 
 # ---------------------------------------------------------------------
 # CHECK SIZES OF INTEGER TYPES
@@ -346,12 +356,7 @@ TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 # Check for curl
 #---------------------------------------------------------------------------------------------
 LIBS=
-AC_CHECK_HEADERS([curl/curl.h])
-if test "$ac_cv_header_curl_curl_h" != "yes"
-then
-	AC_MSG_ERROR([Could not find curl/curl.h!])
-fi
-AC_CHECK_LIB(curl, curl_easy_init, LIBS="-lcurl", AC_MSG_ERROR([You must have libcurl!!!]))
+AC_CHECK_HEADER(curl/curl.h, LIBS=`$with_curl_config --libs`, AC_MSG_ERROR([You must have libcurl!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 

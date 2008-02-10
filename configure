@@ -1294,6 +1294,7 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-sdl-config=FILE  using the given sdl-config [default=sdl-config]
+  --with-curl-config=FILE using the given curl-config [default=curl-config]
   --with-curses           compile with curses console support [default=check]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
@@ -1933,6 +1934,15 @@ if test "${with_sdl_config+set}" = set; then
   withval=$with_sdl_config;
 else
   with_sdl_config=sdl-config
+fi
+
+
+
+# Check whether --with-curl_config was given.
+if test "${with_curl_config+set}" = set; then
+  withval=$with_curl_config;
+else
+  with_curl_config=curl-config
 fi
 
 
@@ -3133,6 +3143,12 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
+
+#---------------------------------------------------------------------------------------------
+# CHECK LIBTOOL
+#---------------------------------------------------------------------------------------------
+
+#AC_PROG_LIBTOOL
 
 # ---------------------------------------------------------------------
 # CHECK SIZES OF INTEGER TYPES
@@ -7250,23 +7266,18 @@ TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 # Check for curl
 #---------------------------------------------------------------------------------------------
 LIBS=
-
-for ac_header in curl/curl.h
-do
-as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-  { echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+if test "${ac_cv_header_curl_curl_h+set}" = set; then
+  { echo "$as_me:$LINENO: checking for curl/curl.h" >&5
+echo $ECHO_N "checking for curl/curl.h... $ECHO_C" >&6; }
+if test "${ac_cv_header_curl_curl_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-ac_res=`eval echo '${'$as_ac_Header'}'`
-	       { echo "$as_me:$LINENO: result: $ac_res" >&5
-echo "${ECHO_T}$ac_res" >&6; }
+{ echo "$as_me:$LINENO: result: $ac_cv_header_curl_curl_h" >&5
+echo "${ECHO_T}$ac_cv_header_curl_curl_h" >&6; }
 else
   # Is the header compilable?
-{ echo "$as_me:$LINENO: checking $ac_header usability" >&5
-echo $ECHO_N "checking $ac_header usability... $ECHO_C" >&6; }
+{ echo "$as_me:$LINENO: checking curl/curl.h usability" >&5
+echo $ECHO_N "checking curl/curl.h usability... $ECHO_C" >&6; }
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -7274,7 +7285,7 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 $ac_includes_default
-#include <$ac_header>
+#include <curl/curl.h>
 _ACEOF
 rm -f conftest.$ac_objext
 if { (ac_try="$ac_compile"
@@ -7306,15 +7317,15 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 echo "${ECHO_T}$ac_header_compiler" >&6; }
 
 # Is the header present?
-{ echo "$as_me:$LINENO: checking $ac_header presence" >&5
-echo $ECHO_N "checking $ac_header presence... $ECHO_C" >&6; }
+{ echo "$as_me:$LINENO: checking curl/curl.h presence" >&5
+echo $ECHO_N "checking curl/curl.h presence... $ECHO_C" >&6; }
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <$ac_header>
+#include <curl/curl.h>
 _ACEOF
 if { (ac_try="$ac_cpp conftest.$ac_ext"
 case "(($ac_try" in
@@ -7347,123 +7358,47 @@ echo "${ECHO_T}$ac_header_preproc" >&6; }
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
   yes:no: )
-    { echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
-echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
-echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
+    { echo "$as_me:$LINENO: WARNING: curl/curl.h: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: curl/curl.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: curl/curl.h: proceeding with the compiler's result" >&5
+echo "$as_me: WARNING: curl/curl.h: proceeding with the compiler's result" >&2;}
     ac_header_preproc=yes
     ;;
   no:yes:* )
-    { echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
-echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
-echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
-echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
-echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
-echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
+    { echo "$as_me:$LINENO: WARNING: curl/curl.h: present but cannot be compiled" >&5
+echo "$as_me: WARNING: curl/curl.h: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: curl/curl.h:     check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: curl/curl.h:     check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: curl/curl.h: see the Autoconf documentation" >&5
+echo "$as_me: WARNING: curl/curl.h: see the Autoconf documentation" >&2;}
+    { echo "$as_me:$LINENO: WARNING: curl/curl.h:     section \"Present But Cannot Be Compiled\"" >&5
+echo "$as_me: WARNING: curl/curl.h:     section \"Present But Cannot Be Compiled\"" >&2;}
+    { echo "$as_me:$LINENO: WARNING: curl/curl.h: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: curl/curl.h: proceeding with the preprocessor's result" >&2;}
+    { echo "$as_me:$LINENO: WARNING: curl/curl.h: in the future, the compiler will take precedence" >&5
+echo "$as_me: WARNING: curl/curl.h: in the future, the compiler will take precedence" >&2;}
 
     ;;
 esac
-{ echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+{ echo "$as_me:$LINENO: checking for curl/curl.h" >&5
+echo $ECHO_N "checking for curl/curl.h... $ECHO_C" >&6; }
+if test "${ac_cv_header_curl_curl_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  eval "$as_ac_Header=\$ac_header_preproc"
+  ac_cv_header_curl_curl_h=$ac_header_preproc
 fi
-ac_res=`eval echo '${'$as_ac_Header'}'`
-	       { echo "$as_me:$LINENO: result: $ac_res" >&5
-echo "${ECHO_T}$ac_res" >&6; }
-
-fi
-if test `eval echo '${'$as_ac_Header'}'` = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
+{ echo "$as_me:$LINENO: result: $ac_cv_header_curl_curl_h" >&5
+echo "${ECHO_T}$ac_cv_header_curl_curl_h" >&6; }
 
 fi
-
-done
-
-if test "$ac_cv_header_curl_curl_h" != "yes"
-then
-	{ { echo "$as_me:$LINENO: error: Could not find curl/curl.h!" >&5
-echo "$as_me: error: Could not find curl/curl.h!" >&2;}
-   { (exit 1); exit 1; }; }
-fi
-{ echo "$as_me:$LINENO: checking for curl_easy_init in -lcurl" >&5
-echo $ECHO_N "checking for curl_easy_init in -lcurl... $ECHO_C" >&6; }
-if test "${ac_cv_lib_curl_curl_easy_init+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lcurl  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char curl_easy_init ();
-int
-main ()
-{
-return curl_easy_init ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext &&
-       $as_test_x conftest$ac_exeext; then
-  ac_cv_lib_curl_curl_easy_init=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_curl_curl_easy_init=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_curl_curl_easy_init" >&5
-echo "${ECHO_T}$ac_cv_lib_curl_curl_easy_init" >&6; }
-if test $ac_cv_lib_curl_curl_easy_init = yes; then
-  LIBS="-lcurl"
+if test $ac_cv_header_curl_curl_h = yes; then
+  LIBS=`$with_curl_config --libs`
 else
   { { echo "$as_me:$LINENO: error: You must have libcurl!!!" >&5
 echo "$as_me: error: You must have libcurl!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
+
 
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
