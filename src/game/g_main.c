@@ -162,7 +162,7 @@ static void G_Init (void)
 	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
 	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
-	ai_civilian = gi.Cvar_Get("ai_civilian", "europa", 0, "Civilian team");
+	ai_civilian = gi.Cvar_Get("ai_civilian", "europe", 0, "Civilian team");
 	/* this cvar is set in singleplayer via campaign definition */
 	ai_equipment = gi.Cvar_Get("ai_equipment", "multiplayer_alien", 0, "Initial equipment definition for aliens");
 	/* aliens in singleplayer (can differ each mission) */

@@ -600,7 +600,7 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 		Q_strncpyz(ms->civTeam, nation->id, sizeof(ms->civTeam));
 	} else {
 		Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
-		Q_strncpyz(ms->civTeam, "europa", sizeof(ms->civTeam));
+		Q_strncpyz(ms->civTeam, "europe", sizeof(ms->civTeam));
 	}
 	/* this string is already in the po (OTHER_STRINGS) file
 	 * don't mark it with gettext markers */
@@ -2339,7 +2339,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 						Q_strncpyz(mis->def->civTeam, nation->id, sizeof(mis->def->civTeam));
 					} else {
 						Com_sprintf(mis->def->location, sizeof(mis->def->location), _("No nation"));
-						Q_strncpyz(mis->def->civTeam, "europa", sizeof(mis->def->civTeam));
+						Q_strncpyz(mis->def->civTeam, "europe", sizeof(mis->def->civTeam));
 					}
 					mis->def->missionText = "Crashed Alien Ship. Secure the area.";
 				}
