@@ -695,10 +695,10 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		if (**name != '*')
-			continue;
+		assert(**name == '*');
 		model = CM_InlineModel(*name);
-		if (!model || model->headnode >= mapTiles[model->tile].numnodes + 6)
+		assert(model);
+		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
 		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, vec3_origin, vec3_origin);
 		/* if we started the trace in a wall */
@@ -734,10 +734,10 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		if (**name != '*')
-			continue;
+		assert(**name == '*');
 		model = CM_InlineModel(*name);
-		if (!model || model->headnode >= mapTiles[model->tile].numnodes + 6)
+		assert(model);
+		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
 		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, vec3_origin, vec3_origin);
 		/* if we started the trace in a wall */
@@ -853,6 +853,9 @@ static void CM_CheckUnit (routing_t * map, int x, int y, pos_t z)
 	pos3_t pos;
 	float height;
 	int i;
+
+	/* we need the local models here */
+	assert(inlineList);
 
 	assert(map);
 	assert((x >= 0) && (x < WIDTH));
@@ -2979,7 +2982,10 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  * @sa CM_CheckUnit
  * @sa CM_UpdateConnection
  * @sa CMod_LoadSubmodels
- * @param[in] list The local models list
+ * @param[in] map The routing map (either server or client map)
+ * @param[in] Name of the inline model to compute the mins/maxs for
+ * @param[in] Rotation of the inline model
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
 void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t angles, const char **list)
 {
@@ -2988,6 +2994,8 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 	int x, y;
 	pos_t z;
 	unsigned int i;
+
+	assert(list);
 
 	/* get inline model, if it is one */
 	if (*name != '*') {
