@@ -2544,6 +2544,7 @@ static inline void G_ClientSkipActorInfo (void)
  * @sa CL_SendCurTeamInfo
  * @sa globals.ClientTeamInfo
  * @sa clc_teaminfo
+ * @sa G_EndGame
  */
 void G_ClientTeamInfo (player_t * player)
 {

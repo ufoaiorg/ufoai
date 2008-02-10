@@ -448,7 +448,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 
 	if (!chr->scoreMission)
 		return;
-	
+
 	/* We are only updating skills to max value 100.
 	   TODO: More than 100 is available only with implants. */
 
@@ -531,6 +531,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
  * @sa G_RunFrame
  * @sa CL_ParseResults
  * @sa G_SendInventory
+ * @sa G_ClientTeamInfo
  */
 void G_EndGame (int team)
 {
@@ -547,7 +548,7 @@ void G_EndGame (int team)
 			G_UpdateCharacterSkills(&ent->chr);
 		}
 	}
-	
+
 	/* if aliens won, make sure every soldier dies */
 	if (team == TEAM_ALIEN) {
 		level.num_alive[TEAM_PHALANX] = 0;
