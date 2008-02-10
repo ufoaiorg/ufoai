@@ -48,7 +48,7 @@ nation states
 	pos "103 48"
 }
 
-nation europa
+nation europe
 {
 	name "_The Greater European Union"
 	color "0 128 255 1"

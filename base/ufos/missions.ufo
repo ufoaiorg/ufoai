@@ -78,7 +78,7 @@ mission estate
 	alienteam	ortnok
 	alienequip	stage1_soldiers
 	civilians	3
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -95,7 +95,7 @@ mission italy
 	alienteam	taman
 	alienequip	stage1_soldiers
 	civilians	8
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -112,7 +112,7 @@ mission mart
 	alienteam	"taman ortnok"
 	alienequip	stage1_workers
 	civilians	6
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -186,7 +186,7 @@ mission bunker
 	alienequip	stage1_workers_explosive
 	civilians	7
 	civteam		"armysoldier"
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -237,7 +237,7 @@ mission spedition
 	alienteam	"ortnok shevaar"
 	alienequip	stage4_soldiers
 	civilians	2
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -288,7 +288,7 @@ mission rzeszow
 	alienteam	"taman shevaar"
 	alienequip	stage4_soldiers
 	civilians	6
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -344,7 +344,7 @@ mission rivertown
 	aliens		6
 	alienteam	"taman ortnok"
 	alienequip	stage4_soldiers
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -532,7 +532,7 @@ mission bridge
 	alienteam	"ortnok taman shevaar bloodspider"
 	alienequip	stage3_soldiers
 	civilians	6
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		"cp_ufocrashed ufo_fighter;"
 	storyrelated	true
@@ -550,7 +550,7 @@ mission construction
 	alienequip	stage3_soldiers
 	civteam		"worker"
 	civilians	6
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -601,7 +601,7 @@ mission pdi
 	alienteam	"taman ortnok shevaar"
 	alienequip	stage3_workers_explosive
 	civilians	2
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -710,7 +710,7 @@ mission terrain
 	alienteam	ortnok
 	alienequip	stage4_soldiers_plasma
 	civilians	2
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		"cp_uforecovery 1;"
 	storyrelated	true
@@ -733,7 +733,7 @@ mission vil_lille
 	alienteam	ortnok
 	alienequip	stage2_workers
 	civilians	6
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	false
@@ -846,7 +846,7 @@ mission vil_grenchen
 	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	7
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	false
@@ -862,7 +862,7 @@ mission vil_albany
 	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	7
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	false
@@ -878,7 +878,7 @@ mission vil_shannon
 	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	4
-	nation		"europa"
+	nation		"europe"
 	onlose		""
 	onwin		""
 	storyrelated	false
