@@ -1,4 +1,5 @@
-^AC_INIT(src/server/sv_main.c)
+^AC_INIT
+AC_CONFIG_SRCDIR([src/server/sv_main.c])
 
 # check build/host/target systems
 # (build  = system we're building on,
@@ -34,7 +35,7 @@ case "$host_os" in
 esac
 
 AC_ARG_WITH(sdl_config,
-	[AC_HELP_STRING([--with-sdl-config=FILE], [using the given sdl-config @<:@default=sdl-config@:>@])],
+	[AS_HELP_STRING([--with-sdl-config=FILE],[using the given sdl-config @<:@default=sdl-config@:>@])],
 	[], [with_sdl_config=sdl-config])
 
 AC_ARG_WITH(curses,
@@ -610,4 +611,5 @@ AC_SUBST([MASTER_LIBS],"$MASTER_LIBS")
 #AC_MSG_NOTICE(Link against:   $LIBS")
 
 AC_CONFIG_HEADERS([config.h:config.h.in])
-AC_OUTPUT(Makefile)
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
