@@ -307,5 +307,13 @@ void R_GetLevelSurfaceLists (void)
 
 			R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);
 		}
+		if (r_drawspecialbrushes->integer) {
+			for (; i < LEVEL_MAX; i++) {
+				if (!r_mapTiles[tile]->bsp.submodels[i].numfaces)
+					continue;
+
+				R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);
+			}
+		}
 	}
 }

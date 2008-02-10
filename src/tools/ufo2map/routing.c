@@ -273,7 +273,7 @@ void DoRouting (void)
 	nummodels += 1;
 
 	/* process actorclip-level */
-	ProcessLevel(LEVEL_ACTORCLIP);
+	/*ProcessLevel(LEVEL_ACTORCLIP);*/
 	/* process stepon-level */
 	ProcessLevel(LEVEL_STEPON);
 

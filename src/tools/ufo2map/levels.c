@@ -226,6 +226,7 @@ void ProcessLevel (unsigned int levelnum)
 	vec3_t mins, maxs;
 	dBspModel_t *dm;
 
+	/* oversizing the blocks guarantees that all the boundaries will also get nodes. */
 	/* get maxs */
 	mins[0] = (config.block_xl) * 512.0 + 1.0;
 	mins[1] = (config.block_yl) * 512.0 + 1.0;
@@ -238,11 +239,11 @@ void ProcessLevel (unsigned int levelnum)
 	Sys_FPrintf(SYS_VRB, "Process levelnum %i (nummodels: %i)\n", levelnum, nummodels);
 
 	dm = &dmodels[levelnum];
-	memset(dm, 0, sizeof(dBspModel_t));
+	memset(dm, 0, sizeof(*dm));
 
 	/* back copy backup brush sides structure */
 	/* to reset all the changed values (especialy "finished") */
-	memcpy(mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t)*nummapbrushes);
+	memcpy(mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t) * nummapbrushes);
 
 	/* store face number for later use */
 	dm->firstface = numfaces;
