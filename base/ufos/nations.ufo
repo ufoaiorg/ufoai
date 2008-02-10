@@ -24,6 +24,8 @@
 // also please vary alien_friendly from 10 to 90
 // and soldiers/scientists/etc. from 1 to 5
 
+// NOTE: If you rename a nation, also rename the symbol in base/pics/nations
+
 nation latin
 {
 	name "_The Revolutionary Countries"
