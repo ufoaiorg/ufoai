@@ -607,6 +607,7 @@ typedef struct character_s {
 	int skin;				/**< Index of skin. */
 
 	int HP;						/**< Health points (current ones). */
+	int minHP;					/**< Minimum hp during combat */
 	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
 	int STUN, morale;			/**< @todo: document me. */
 

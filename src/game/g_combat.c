@@ -232,7 +232,7 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 	/* Abort if no player team. */
 	if (!attacker->chr.scoreMission)
 		return;
-	
+
 	if (!splashDamage) {
 		if ((attacker->team == target->team)
 		&& (!attacker->chr.scoreMission->firedHit[KILLED_TEAM])) {
@@ -474,8 +474,10 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 		G_UpdateCharacterScore(attacker, fd, ent);
 
 	} else {
-		if (damage > 0 && mor_panic->integer) {
-			G_Morale(ML_WOUND, ent, attacker, damage);
+		ent->chr.minHP = min(ent->chr.minHP, ent->HP);
+		if (damage > 0) {
+			if (mor_panic->integer)
+				G_Morale(ML_WOUND, ent, attacker, damage);
 		} else { /* medikit, etc. */
 			if (ent->HP > GET_HP(ent->chr.score.skills[ABILITY_POWER]))
 				ent->HP = max(GET_HP(ent->chr.score.skills[ABILITY_POWER]), 0);
@@ -1169,7 +1171,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	}
 
 	/* Count for stats if it's no mock-shot and it's a Phalanx soldier (aliens do not have this info yet). */
-	if (!mock && ent->chr.scoreMission) {	
+	if (!mock && ent->chr.scoreMission) {
 		/* Count this start of the shooting for stats/score. */
 		/** @todo check for direct shot / splash damage shot? */
 		if (fd->splrad) {

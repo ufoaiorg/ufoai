@@ -545,6 +545,7 @@ void G_EndGame (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 		&& !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX) {
+			ent->HP = min(ent->HP, ent->chr.minHP);
 			G_UpdateCharacterSkills(&ent->chr);
 		}
 	}
