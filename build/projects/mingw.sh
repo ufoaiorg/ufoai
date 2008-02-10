@@ -172,11 +172,14 @@ version="1.2.13"
 download http://www.libsdl.org/release/ SDL-devel-$version-mingw32.tar.gz
 tar -xz -f SDL-devel-$version-mingw32.tar.gz
 mkdir -p build-sdl/usr/i586-mingw32msvc
-make -C SDL-$version prefix="`pwd`/build-sdl/usr/i586-mingw32msvc/" install-sdl
 
-echo "set prefix to /usr/i586-mingw32msvc"
-#TODO: should be i586-mingw32msvc-sdl-config not i386-mingw32msvc-sdl-config
-cat build-sdl/usr/i586-mingw32msvc/bin/sdl-config | $sed_soft -e 's/^\(prefix\=\).*/\1\/usr\/i586-mingw32msvc/' > build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config
+dir=`pwd`/build-sdl/usr/i586-mingw32msvc/
+cd SDL-$version
+cp -rv bin include lib share $dir/
+sed "s|^prefix=.*|prefix=/usr/i586-mingw32msvc|" < bin/sdl-config > $dir/bin/sdl-config;
+chmod 755 $dir/bin/sdl-config;
+sed "s|^libdir=.*|libdir=\'/usr/i586-mingw32msvc/lib\'|" <lib/libSDL.la > $dir/lib/libSDL.la; \
+cd ..
 
 tar -cz --owner=root --group=root -C build-sdl -f mingw32-libsdl1.2-dev-$version.tgz .
 fakeroot alien mingw32-libsdl1.2-dev-$version.tgz >> /dev/null
