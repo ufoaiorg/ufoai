@@ -197,7 +197,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 	VectorSet(maxs, -999999, -999999, -999999);
 
 	stmins[0] = stmins[1] = 999999;
-	stmaxs[0] = stmaxs[1] = -99999;
+	stmaxs[0] = stmaxs[1] = -999999;
 
 	tex = surf->texinfo;
 
@@ -216,10 +216,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 		}
 
 		for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
-			val = v->position[0] * tex->vecs[j][0] +
-				  v->position[1] * tex->vecs[j][1] +
-				  v->position[2] * tex->vecs[j][2] +
-				  tex->vecs[j][3];
+			val = DotProduct(v->position, tex->vecs[j]) + tex->vecs[j][3];
 			if (val < stmins[j])
 				stmins[j] = val;
 			if (val > stmaxs[j])
