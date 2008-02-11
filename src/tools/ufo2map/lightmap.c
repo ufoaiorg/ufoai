@@ -406,6 +406,8 @@ typedef struct {
 	vec_t	facedist;
 	vec3_t	facenormal;
 
+	vec3_t center;
+
 	int		numsurfpt;
 	vec3_t	surfpt[SINGLEMAP];
 
@@ -429,16 +431,19 @@ typedef struct {
 static void CalcFaceExtents (lightinfo_t *l)
 {
 	dBspFace_t *s;
-	vec_t mins[2], maxs[2], val;
+	vec3_t mins, maxs;
+	vec_t stmins[2], stmaxs[2];
+	float val;
 	int i, j, e;
 	dBspVertex_t *v;
 	dBspTexinfo_t *tex;
-	vec3_t vt;
 
 	s = l->face;
 
-	mins[0] = mins[1] = 999999;
-	maxs[0] = maxs[1] = -999999;
+	VectorSet(mins, 999999, 999999, 999999);
+	VectorSet(maxs, -999999, -999999, -999999);
+	stmins[0] = stmins[1] = 999999;
+	stmaxs[0] = stmaxs[1] = -999999;
 
 	tex = &texinfo[s->texinfo];
 
@@ -448,28 +453,34 @@ static void CalcFaceExtents (lightinfo_t *l)
 			v = dvertexes + dedges[e].v[0];
 		else
 			v = dvertexes + dedges[-e].v[1];
+		for (j = 0; j < 3; j++) {  /* calculate mins, maxs */
+			if (v->point[j] > maxs[j])
+					maxs[j] = v->point[j];
+			if (v->point[j] < mins[j])
+				mins[j] = v->point[j];
+		}
 
-/*		VectorAdd(v->point, l->modelorg, vt); */
-		VectorCopy(v->point, vt);
-
-		for (j = 0; j < 2; j++) {
-			val = DotProduct(vt, tex->vecs[j]) + tex->vecs[j][3];
-			if (val < mins[j])
-				mins[j] = val;
-			if (val > maxs[j])
-				maxs[j] = val;
+		for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
+			val = DotProduct(v->point, tex->vecs[j]) + tex->vecs[j][3];
+			if (val < stmins[j])
+				stmins[j] = val;
+			if (val > stmaxs[j])
+				stmaxs[j] = val;
 		}
 	}
 
+	for (i = 0; i < 3; i++)
+		l->center[i] = (mins[i] + maxs[i]) / 2;
+
 	for (i = 0; i < 2; i++) {
-		l->exactmins[i] = mins[i];
-		l->exactmaxs[i] = maxs[i];
+		l->exactmins[i] = stmins[i];
+		l->exactmaxs[i] = stmaxs[i];
 
-		mins[i] = floor(mins[i] / (1 << config.lightquant));
-		maxs[i] = ceil(maxs[i] / (1 << config.lightquant));
+		stmins[i] = floor(stmins[i] / (1 << config.lightquant));
+		stmaxs[i] = ceil(stmaxs[i] / (1 << config.lightquant));
 
-		l->texmins[i] = mins[i];
-		l->texsize[i] = maxs[i] - mins[i];
+		l->texmins[i] = stmins[i];
+		l->texsize[i] = stmaxs[i] - stmins[i];
 		if (l->texsize[0] * l->texsize[1] > SINGLEMAP)
 			Sys_Error("Surface too large to light %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
 	}
@@ -804,14 +815,21 @@ void CreateDirectLights (void)
 /**
  * @param[in] lightscale is the normalizer for multisampling
  */
-static void GatherSampleLight (vec3_t pos, vec3_t normal,
+static void GatherSampleLight (vec3_t pos, vec3_t normal, vec3_t center,
 			float **styletable, int offset, int mapsize, float lightscale)
 {
 	directlight_t *l;
-	vec3_t delta;
+	vec3_t pos2, delta;
 	float dot, dot2, dist;
 	float scale = 0.0f;
 	float *dest;
+
+	/* move into the level using the normal and surface center */
+	VectorSubtract(pos, center, pos2);
+	VectorNormalize(pos2);
+
+	CrossProduct(pos2, normal, pos2);
+	VectorMA(pos, 1.5, pos2, pos);
 
 	for (l = directlights; l; l = l->next) {
 		VectorSubtract(l->origin, pos, delta);
@@ -873,7 +891,10 @@ skipadd: ;
 	if (dot <= 0.001)
 		return; /* wrong direction */
 
-	VectorMA(pos, 512, sun_dir, delta);
+	/* don't use only 512 (which would be the 8 level max unit) but a
+	 * higher value - because the light angle is not fixed at 90 degree */
+	VectorMA(pos, 8192, sun_dir, delta);
+
 	if (TestLine(pos, delta))
 		return; /* occluded */
 
@@ -989,8 +1010,8 @@ void BuildFacelights (unsigned int facenum)
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {
 		for (j = 0; j < numsamples; j++) {
-			GatherSampleLight(l[j].surfpt[i], l[0].facenormal, styletable,
-				i * 3, tablesize, 1.0 / numsamples);
+			GatherSampleLight(l[j].surfpt[i], l[0].facenormal, l[0].center,
+				styletable, i * 3, tablesize, 1.0 / numsamples);
 		}
 
 		/* contribute the sample to one or more patches */
