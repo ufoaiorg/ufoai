@@ -162,6 +162,7 @@ extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
+extern cvar_t *sv_send_edicts;
 extern cvar_t *sv_maxplayersperteam;
 extern cvar_t *sv_maxsoldiersperteam;
 extern cvar_t *sv_maxsoldiersperplayer;

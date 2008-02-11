@@ -205,28 +205,21 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	R_Color(NULL);
 }
 
+#if 0
 /**
  * @brief Check if model is out of view
  */
 static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
 {
-	int i, p, mask, f, aggregatemask = ~0;
+	int p, mask, f, aggregatemask = ~0;
 	mAliasModel_t *mod;
 	mAliasFrame_t *frame;
-	vec4_t tmp;
 
 	mod = &e->model->alias;
 	frame = mod->frames + e->as.frame;
 
 	/* compute a full bounding box */
-	for (i = 0; i < 8; i++) {
-		tmp[0] = (i & 1) ? frame->mins[0] : frame->maxs[0];
-		tmp[1] = (i & 2) ? frame->mins[1] : frame->maxs[1];
-		tmp[2] = (i & 4) ? frame->mins[2] : frame->maxs[2];
-		tmp[3] = 1.0;
-
-		Vector4Copy(tmp, bbox[i]);
-	}
+	R_EntityComputeBoundingBox(frame->mins, frame->maxs, bbox);
 
 	/* cull */
 	for (p = 0; p < 8; p++) {
@@ -244,6 +237,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
 
 	return qfalse;
 }
+#endif
 
 static vec3_t r_mesh_verts[MD3_MAX_VERTS];
 static vec3_t r_mesh_norms[MD3_MAX_VERTS];
@@ -359,8 +353,8 @@ void R_DrawAliasModel (entity_t *e)
 
 	/* show model bounding box */
 	if (r_showbox->integer) {
-		R_CullAliasModel(bbox, e); /* FIXME: Remove me when culling is fixed */
-		R_ModDrawModelBBox(bbox);
+		R_EntityComputeBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs, bbox);
+		R_EntityDrawlBBox(bbox);
 	}
 
 	qglPopMatrix();

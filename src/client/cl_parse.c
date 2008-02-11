@@ -65,7 +65,7 @@ static const char *svc_strings[UCHAR_MAX+1] =
  * b	| byte		| 1
  * s	| short		| 2
  * l	| long		| 4
- * p	| pos		| 6
+ * p	| pos		| 6 (map boudaries - (-8192) - (8192))
  * g	| gpos		| 3
  * d	| dir		| 1
  * a	| angle		| 1
@@ -91,6 +91,7 @@ const char *ev_format[] =
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
 	"sssbpsb",			/* EV_ADD_BRUSH_MODEL */
+	"sspp",				/* EV_ADD_EDICT */
 
 	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
@@ -142,6 +143,7 @@ static const char *ev_names[] =
 	"EV_ENT_APPEAR",
 	"EV_ENT_PERISH",
 	"EV_ADD_BRUSH_MODEL",
+	"EV_ADD_EDICT",
 
 	"EV_ACTOR_APPEAR",
 	"EV_ACTOR_ADD",
@@ -180,6 +182,7 @@ static void CL_CenterView(struct dbuffer *msg);
 static void CL_EntAppear(struct dbuffer *msg);
 static void CL_EntPerish(struct dbuffer *msg);
 static void CL_AddBrushModel(struct dbuffer *msg);
+static void CL_AddEdict(struct dbuffer * msg);
 static void CL_ActorDoStartMove(struct dbuffer *msg);
 static void CL_ActorAppear(struct dbuffer *msg);
 static void CL_ActorAdd(struct dbuffer *msg);
@@ -206,6 +209,7 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 	CL_EntAppear,					/* EV_ENT_APPEAR */
 	CL_EntPerish,					/* EV_ENT_PERISH */
 	CL_AddBrushModel,				/* EV_ADD_BRUSH_MODEL */
+	CL_AddEdict,					/* EV_ADD_EDICT */
 
 	CL_ActorAppear,					/* EV_ACTOR_APPEAR */
 	CL_ActorAdd,					/* EV_ACTOR_ADD */
@@ -649,6 +653,7 @@ static void CL_CenterView (struct dbuffer *msg)
  * @brief Let an entity appear - like an item on the ground that just got visible
  * @sa EV_ENT_APPEAR
  * @sa CL_EntPerish
+ * @sa CL_AddEdict
  */
 static void CL_EntAppear (struct dbuffer *msg)
 {
@@ -663,7 +668,7 @@ static void CL_EntAppear (struct dbuffer *msg)
 	if (!le) {
 		le = LE_Add(entnum);
 	} else {
-		Com_DPrintf(DEBUG_CLIENT, "Entity appearing already visible... overwriting the old one\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_EntAppear: Entity appearing already visible... overwriting the old one\n");
 		le->inuse = qtrue;
 	}
 
@@ -782,6 +787,51 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	le->contents = CONTENTS_SOLID;
 
 	CL_CompleteRecalcRouting();
+}
+
+
+/**
+ * @brief Draw the bounding boxes for the server side edicts
+ */
+static qboolean CL_AddEdictFunc (le_t *le, entity_t *ent)
+{
+	ent->flags = RF_BOX;
+	VectorSet(ent->angles, 1, 1, 1);
+	ent->alpha = 1.0;
+	VectorCopy(le->mins, ent->mins);
+	VectorCopy(le->maxs, ent->maxs);
+	return qtrue;
+}
+
+/**
+ * @brief Adds server side edicts to the client for displaying them
+ * @sa EV_ADD_EDICT
+ * @sa CL_EntAppear
+ */
+static void CL_AddEdict (struct dbuffer * msg)
+{
+	le_t *le;
+	int entnum, type;
+	vec3_t mins, maxs;
+
+	NET_ReadFormat(msg, ev_format[EV_ADD_EDICT], &type, &entnum, &mins, &maxs);
+
+	le = LE_Get(entnum);
+	if (!le) {
+		le = LE_Add(entnum);
+	} else {
+		Com_DPrintf(DEBUG_CLIENT, "CL_AddEdict: Entity appearing already visible... overwriting the old one\n");
+		le->inuse = qtrue;
+	}
+
+	VectorCopy(mins, le->mins);
+	VectorCopy(maxs, le->maxs);
+	le->addFunc = CL_AddEdictFunc;
+	le->type = type;
+
+	Com_Printf("CL_AddEdict: entnum: %i - type: %i\n", entnum, type);
+	Print3Vector(mins);
+	Print3Vector(maxs);
 }
 
 /**

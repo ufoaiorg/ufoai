@@ -153,7 +153,7 @@ COLLISION DETECTION
 #define CONTENTS_ORIGIN      0x01000000 /**< removed before bsping an entity */
 #define CONTENTS_WEAPONCLIP  0x02000000 /**< stop bullets */
 #define CONTENTS_DEADACTOR   0x04000000
-#define CONTENTS_DETAIL      0x08000000 /**< brushes to be added after vis leafs */
+#define CONTENTS_DETAIL      0x08000000 /**< brushes to be added after vis leafs also used for debugging local entities */
 #define CONTENTS_TRANSLUCENT 0x10000000 /**< auto set if any surface has trans */
 #define CONTENTS_STEPON      0x40000000 /**< marks areas elevated passable areas */
 

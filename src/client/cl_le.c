@@ -961,6 +961,8 @@ void LE_AddToScene (void)
 			if (le->contents & CONTENTS_SOLID) {
 				if (!((1 << cl_worldlevel->integer) & le->levelflags))
 					continue;
+			} else if (le->contents & CONTENTS_DETAIL) {
+				/* show them always */
 			} else if ((le->pos[2] > cl_worldlevel->integer))
 				continue;
 
@@ -976,6 +978,7 @@ void LE_AddToScene (void)
 			/* SOLID_BSP models don't have animations nor do they use their
 			 * origin here (e.g. func_breakable or func_door) */
 			case CONTENTS_SOLID:
+			case CONTENTS_DETAIL: /* they use mins/maxs */
 				break;
 			default:
 				/* set entity values */

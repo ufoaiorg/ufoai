@@ -534,6 +534,7 @@ typedef enum {
 	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le inuse to qfalse
 		* see CL_EntPerish */
 	EV_ADD_BRUSH_MODEL,
+	EV_ADD_EDICT,
 
 	EV_ACTOR_APPEAR,
 	EV_ACTOR_ADD,
@@ -567,13 +568,13 @@ typedef enum {
 	EV_NUM_EVENTS
 } event_t;
 
-
 typedef enum {
 	ET_NULL,
 	ET_ACTORSPAWN,
 	ET_ACTOR,
 	ET_ITEM,
 	ET_BREAKABLE,
+	ET_TRIGGER,
 	ET_TRIGGER_HURT,
 	ET_DOOR,
 	ET_ROTATING,

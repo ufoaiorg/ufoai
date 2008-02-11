@@ -66,6 +66,63 @@ static inline void R_DrawHighlight (const entity_t * e)
 }
 
 /**
+ * @brief Compute the bouding box for an entity out of the mins, maxs
+ * @sa R_EntityDrawlBBox
+ */
+void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec4_t bbox[8])
+{
+	vec4_t tmp;
+	int i;
+
+	/* compute a full bounding box */
+	for (i = 0; i < 8; i++) {
+		tmp[0] = (i & 1) ? mins[0] : maxs[0];
+		tmp[1] = (i & 2) ? mins[1] : maxs[1];
+		tmp[2] = (i & 4) ? mins[2] : maxs[2];
+		tmp[3] = 1.0;
+
+		Vector4Copy(tmp, bbox[i]);
+	}
+}
+
+/**
+ * @brief Draws the model bounding box
+ * @sa R_EntityComputeBoundingBox
+ */
+void R_EntityDrawlBBox (vec4_t bbox[8])
+{
+	qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	/* Draw top and sides */
+	qglBegin(GL_TRIANGLE_STRIP);
+	qglVertex3fv(bbox[2]);
+	qglVertex3fv(bbox[1]);
+	qglVertex3fv(bbox[0]);
+	qglVertex3fv(bbox[1]);
+	qglVertex3fv(bbox[4]);
+	qglVertex3fv(bbox[5]);
+	qglVertex3fv(bbox[1]);
+	qglVertex3fv(bbox[7]);
+	qglVertex3fv(bbox[3]);
+	qglVertex3fv(bbox[2]);
+	qglVertex3fv(bbox[7]);
+	qglVertex3fv(bbox[6]);
+	qglVertex3fv(bbox[2]);
+	qglVertex3fv(bbox[4]);
+	qglVertex3fv(bbox[0]);
+	qglEnd();
+
+	/* Draw bottom */
+	qglBegin(GL_TRIANGLE_STRIP);
+	qglVertex3fv(bbox[4]);
+	qglVertex3fv(bbox[6]);
+	qglVertex3fv(bbox[7]);
+	qglEnd();
+
+	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+/**
  * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
  * @sa CL_AddTargeting
  * @sa RF_BOX
@@ -83,33 +140,39 @@ static void R_DrawBox (const entity_t * e)
 
 	R_Color(color);
 
-	VectorCopy(e->origin, lower);
-	VectorCopy(e->origin, upper);
-	upper[2] = e->oldorigin[2];
+	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
+		vec4_t bbox[8];
+		R_EntityComputeBoundingBox(e->mins, e->maxs, bbox);
+		R_EntityDrawlBBox(bbox);
+	} else {
+		VectorCopy(e->origin, lower);
+		VectorCopy(e->origin, upper);
+		upper[2] = e->oldorigin[2];
 
-	dx = e->oldorigin[0] - e->origin[0];
-	dy = e->oldorigin[1] - e->origin[1];
+		dx = e->oldorigin[0] - e->origin[0];
+		dy = e->oldorigin[1] - e->origin[1];
 
-	qglBegin(GL_QUAD_STRIP);
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
-	lower[0] += dx;
-	upper[0] += dx;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
-	lower[1] += dy;
-	upper[1] += dy;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
-	lower[0] -= dx;
-	upper[0] -= dx;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
-	lower[1] -= dy;
-	upper[1] -= dy;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
-	qglEnd();
+		qglBegin(GL_QUAD_STRIP);
+		qglVertex3fv(lower);
+		qglVertex3fv(upper);
+		lower[0] += dx;
+		upper[0] += dx;
+		qglVertex3fv(lower);
+		qglVertex3fv(upper);
+		lower[1] += dy;
+		upper[1] += dy;
+		qglVertex3fv(lower);
+		qglVertex3fv(upper);
+		lower[0] -= dx;
+		upper[0] -= dx;
+		qglVertex3fv(lower);
+		qglVertex3fv(upper);
+		lower[1] -= dy;
+		upper[1] -= dy;
+		qglVertex3fv(lower);
+		qglVertex3fv(upper);
+		qglEnd();
+	}
 
 	qglDisable(GL_LINE_SMOOTH);
 	if (!r_wire->integer)

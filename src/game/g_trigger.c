@@ -36,6 +36,7 @@ edict_t* G_TriggerSpawn (edict_t *owner)
 
 	trigger = G_Spawn();
 	trigger->classname = "trigger";
+	trigger->type = ET_TRIGGER;
 	/* link the door into the trigger */
 	trigger->owner = owner;
 

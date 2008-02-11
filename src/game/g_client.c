@@ -2922,6 +2922,14 @@ static void G_SendBrushModels (int team)
 			gi.WriteByte(ent->angle);
 			ent->visflags |= ~ent->visflags;
 			end = qtrue;
+		/* only send triggers to the client to display them - can be extended or
+		 * every other ent that is not SOLID_NOT (needs mins, maxs set) */
+		} else if (ent->solid == SOLID_TRIGGER && sv_send_edicts->integer) {
+			gi.AddEvent(G_TeamToPM(team), EV_ADD_EDICT);
+			gi.WriteShort(ent->type);
+			gi.WriteShort(ent->number);
+			gi.WritePos(ent->mins);
+			gi.WritePos(ent->maxs);
 		}
 	}
 
