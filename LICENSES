@@ -2118,6 +2118,15 @@ base/textures/tex_buildings/wall_wood_001.jpg | GNU General Public License 2.0 |
 base/textures/tex_buildings/window020.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/window021.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/wizwood1_2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_common/actorclip.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/caulk.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/hint.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/nodraw.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/origin.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/slick.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/stepon.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/trigger.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/weaponclip.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_ctp1/asphalt_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bark_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bricks_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
