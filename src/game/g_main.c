@@ -162,7 +162,7 @@ static void G_Init (void)
 	sv_reaction_leftover = gi.Cvar_Get("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
-	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE, "Send server side edicts for client display like triggers");
+	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_LATCH, "Send server side edicts for client display like triggers");
 
 	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
 	ai_civilian = gi.Cvar_Get("ai_civilian", "europe", 0, "Civilian team");
