@@ -84,6 +84,7 @@ typedef struct mapConfig_s {
 	qboolean extrasamples;
 	float subdiv;
 	qboolean dumppatches;
+	qboolean info;
 	float ambient_red;
 	float ambient_green;
 	float ambient_blue;

@@ -363,36 +363,26 @@ void PrintBSPFileSizes (void)
 	if (!num_entities)
 		ParseEntities();
 
-	Com_Printf("%5i models       %7i\n"
-		,nummodels, (int)(nummodels * sizeof(dBspModel_t)));
-	Com_Printf("%5i brushes      %7i\n"
-		,numbrushes, (int)(numbrushes * sizeof(dBspBrush_t)));
-	Com_Printf("%5i brushsides   %7i\n"
-		,numbrushsides, (int)(numbrushsides * sizeof(dBspBrushSide_t)));
-	Com_Printf("%5i planes       %7i\n"
-		,numplanes, (int)(numplanes * sizeof(dBspPlane_t)));
-	Com_Printf("%5i texinfo      %7i\n"
-		,numtexinfo, (int)(numtexinfo * sizeof(dBspTexinfo_t)));
-	Com_Printf("%5i entdata      %7i\n", num_entities, entdatasize);
+	Com_Printf("amout type         size in bytes\n");
+	Com_Printf("================================\n");
+	Com_Printf("%5i models            %7i\n", nummodels, (int)(nummodels * sizeof(dBspModel_t)));
+	Com_Printf("%5i brushes           %7i\n", numbrushes, (int)(numbrushes * sizeof(dBspBrush_t)));
+	Com_Printf("%5i brushsides        %7i\n", numbrushsides, (int)(numbrushsides * sizeof(dBspBrushSide_t)));
+	Com_Printf("%5i planes            %7i\n", numplanes, (int)(numplanes * sizeof(dBspPlane_t)));
+	Com_Printf("%5i texinfo           %7i\n", numtexinfo, (int)(numtexinfo * sizeof(dBspTexinfo_t)));
+	Com_Printf("%5i entdata           %7i\n", num_entities, entdatasize);
 
 	Com_Printf("\n");
 
-	Com_Printf("%5i vertexes     %7i\n"
-		,numvertexes, (int)(numvertexes * sizeof(dBspVertex_t)));
-	Com_Printf("%5i nodes        %7i\n"
-		,numnodes, (int)(numnodes * sizeof(dBspNode_t)));
-	Com_Printf("%5i faces        %7i\n"
-		,numfaces, (int)(numfaces * sizeof(dBspFace_t)));
-	Com_Printf("%5i leafs        %7i\n"
-		,numleafs, (int)(numleafs * sizeof(dBspLeaf_t)));
-	Com_Printf("%5i leafbrushes  %7i\n"
-		,numleafbrushes, (int)(numleafbrushes * sizeof(dleafbrushes[0])));
-	Com_Printf("%5i surfedges    %7i\n"
-		,numsurfedges, (int)(numsurfedges * sizeof(dsurfedges[0])));
-	Com_Printf("%5i edges        %7i\n"
-		,numedges, (int)(numedges * sizeof(dBspEdge_t)));
-	Com_Printf("      lightdata    %7i\n", lightdatasize);
-	Com_Printf("      routedata    %7i\n", routedatasize);
+	Com_Printf("%5i vertexes          %7i\n", numvertexes, (int)(numvertexes * sizeof(dBspVertex_t)));
+	Com_Printf("%5i nodes             %7i\n", numnodes, (int)(numnodes * sizeof(dBspNode_t)));
+	Com_Printf("%5i faces             %7i\n", numfaces, (int)(numfaces * sizeof(dBspFace_t)));
+	Com_Printf("%5i leafs             %7i\n", numleafs, (int)(numleafs * sizeof(dBspLeaf_t)));
+	Com_Printf("%5i leafbrushes       %7i\n", numleafbrushes, (int)(numleafbrushes * sizeof(dleafbrushes[0])));
+	Com_Printf("%5i surfedges         %7i\n", numsurfedges, (int)(numsurfedges * sizeof(dsurfedges[0])));
+	Com_Printf("%5i edges             %7i\n", numedges, (int)(numedges * sizeof(dBspEdge_t)));
+	Com_Printf("      lightdata         %7i\n", lightdatasize);
+	Com_Printf("      routedata         %7i\n", routedatasize);
 }
 
 

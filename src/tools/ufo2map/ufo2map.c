@@ -55,6 +55,8 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			/* make every point unique */
 			Com_Printf("noweld = true\n");
 			config.noweld = qtrue;
+		} else if (!strcmp(argv[i], "-info")) {
+			config.info = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
 			Com_Printf("nocsg = true\n");
 			config.nocsg = qtrue;
@@ -244,6 +246,7 @@ int main (int argc, char **argv)
 		" -extra                   : extra light samples\n"
 		" -entity                  : \n"
 		" -fulldetail              : don't treat details (and trans surfaces) as details\n"
+		" -info                    : print bsp file info"
 		" -maxlight                : \n"
 		" -micro <float>           : \n"
 #ifndef _WIN32
@@ -278,6 +281,16 @@ int main (int argc, char **argv)
 
 	Com_Printf("path: '%s'\n", argv[argc - 1]);
 	SetQdirFromPath(argv[argc - 1]);
+
+	if (config.info) {
+		strcpy(name, ExpandArg(argv[argc - 1]));
+		COM_StripExtension(name, source, sizeof(source));
+		DefaultExtension(name, ".bsp");
+
+		LoadBSPFile(name);
+		PrintBSPFileSizes();
+		return 0;
+	}
 
 	strcpy(name, ExpandArg(argv[argc - 1]));
 	COM_StripExtension(name, source, sizeof(source));
@@ -329,8 +342,8 @@ int main (int argc, char **argv)
 
 		end = I_FloatTime();
 
-		Com_Printf("%5.0f seconds elapsed\n", end-start);
-		Com_Printf("sum: %5.0f seconds elapsed\n\n", end-begin);
+		Com_Printf("%5.0f seconds elapsed\n", end - start);
+		Com_Printf("sum: %5.0f seconds elapsed\n\n", end - begin);
 	}
 
 	return 0;
