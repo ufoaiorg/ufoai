@@ -403,7 +403,8 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 				Cvar_Set(cvarName, token);
 				if (*token!= '+')
 					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id");
-			}
+			} else
+				token = cvarValue;
 		}
 
 		for (i = 0; i < numTiles; i++)
