@@ -1222,13 +1222,12 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->idx = MSG_ReadShort(sb);
 			e->baseIDHired = MSG_ReadShort(sb);
 			e->buildingID = MSG_ReadShort(sb);
-#if 0
-/**@todo activate me */
+
 			if (((saveFileHeader_t *)data)->version >= 3) {
-				/* Read the nations identifier string, get the matching nation_t pointer. */
+				/* Read the nations identifier string, get the matching nation_t pointer. (2.3+) */
 				e->nation = CL_GetNationByID(MSG_ReadString(sb));
 			}
-#endif
+
 			/* Load the character data */
 			Q_strncpyz(e->chr.name, MSG_ReadStringRaw(sb), sizeof(e->chr.name));
 			Q_strncpyz(e->chr.body, MSG_ReadString(sb), sizeof(e->chr.body));
@@ -1300,21 +1299,13 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			} else {
 				/** Load character stats/score (starting with 2.3 and up)
 				 * @sa inv_shared.h:chrScoreGlobal_t */
-#if 1
-				MSG_ReadShort(sb);	/** experience @todo remove me when the saving works. */
-#endif
-#if 0
-/**@todo activate me */
+
 				for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
 					e->chr.score.experience[k] = MSG_ReadLong(sb);
-#endif
 				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 					e->chr.score.skills[k] = MSG_ReadByte(sb);
-#if 0
-/**@todo activate me */
 				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 					e->chr.score.initialSkills[k] = MSG_ReadByte(sb);
-#endif
 				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
 					e->chr.score.kills[k] = MSG_ReadShort(sb);
 				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
