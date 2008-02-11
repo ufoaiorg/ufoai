@@ -966,6 +966,32 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 }
 
 /**
+ * @brief Write in Red the text in zone ammo (zone 3)
+ * @sa AIM_NoEmphazeAmmoSlotText
+ * @note This is intended to show the player that there is no ammo in his aircraft
+ */
+static void AIM_EmphazeAmmoSlotText (void)
+{
+	menuNode_t *node;
+
+	node = MN_GetNodeFromCurrentMenu("airequip_text_zone3");
+	VectorSet(node->color, 1.0f, .0f, .0f);
+}
+
+/**
+ * @brief Write in White the text in zone ammo (zone 3)
+ * @sa AIM_EmphazeAmmoSlotText
+ * @note This is intended to revert effects of AIM_EmphazeAmmoSlotText()
+ */
+static void AIM_NoEmphazeAmmoSlotText (void)
+{
+	menuNode_t *node;
+
+	node = MN_GetNodeFromCurrentMenu("airequip_text_zone3");
+	VectorSet(node->color, 1.0f, 1.0f, 1.0f);
+}
+
+/**
  * @brief Fills the weapon and shield list of the aircraft equip menu
  * @sa AIM_AircraftEquipMenuClick_f
  */
@@ -1077,10 +1103,13 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 	/* Third slot: ammo slot (only used for weapons) */
 	if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->itemIdx != NONE) {
-		if (slot->ammoIdx == NONE)
+		if (slot->ammoIdx == NONE) {
+			AIM_EmphazeAmmoSlotText();
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon."));
-		else
+		} else {
+			AIM_NoEmphazeAmmoSlotText();
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(csi.ods[slot->ammoIdx].tech->name));
+		}
 	} else
 		*smallbuffer3 = '\0';
 	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
