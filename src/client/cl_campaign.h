@@ -444,6 +444,8 @@ void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
 actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 void CL_BaseRansacked(base_t *base);
 
+nation_t *CL_GetNationByID(const char *nationID);
+
 qboolean CP_GetRandomPosOnGeoscape(vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 
 campaign_t* CL_GetCampaign(const char* name);

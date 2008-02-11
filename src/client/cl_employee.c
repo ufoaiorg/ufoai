@@ -1115,9 +1115,12 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, e->idx);
 			MSG_WriteShort(sb, e->baseIDHired);
 			MSG_WriteShort(sb, e->buildingID);
-#if 0
-			/**@todo store the nation in some way*/
-#endif
+			/* 2.3++ Store the nations identifier string. */
+			if (e->nation)
+				MSG_WriteString(sb, e->nation->id);
+			else
+				MSG_WriteString(sb, "unknown");
+
 			/* Store the character data */
 			MSG_WriteString(sb, e->chr.name);
 			MSG_WriteString(sb, e->chr.body);
@@ -1176,19 +1179,12 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 #endif
 
 			/** Store character stats/score @sa inv_shared.h:chrScoreGlobal_t */
-			MSG_WriteShort(sb, 666);	/** experience @todo remove me when switching to the new score stuff */
-#if 0
-/**@todo activate me */
 			for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
 				MSG_WriteLong(sb, e->chr.score.experience[k]);
-#endif
 			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 				MSG_WriteByte(sb, e->chr.score.skills[k]);
-#if 0
-/**@todo activate me */
 			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 				MSG_WriteByte(sb, e->chr.score.initialSkills[k]);
-#endif
 			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
 				MSG_WriteShort(sb, e->chr.score.kills[k]);
 			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
@@ -1227,7 +1223,11 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->baseIDHired = MSG_ReadShort(sb);
 			e->buildingID = MSG_ReadShort(sb);
 #if 0
-			/**@todo Load the nation information and link the nation_t struct. */
+/**@todo activate me */
+			if (((saveFileHeader_t *)data)->version >= 3) {
+				/* Read the nations identifier string, get the matching nation_t pointer. */
+				e->nation = CL_GetNationByID(MSG_ReadString(sb));
+			}
 #endif
 			/* Load the character data */
 			Q_strncpyz(e->chr.name, MSG_ReadStringRaw(sb), sizeof(e->chr.name));
@@ -1290,17 +1290,19 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				e->chr.score.stuns[KILLED_CIVILIANS] = MSG_ReadByte(sb);
 				e->chr.score.kills[KILLED_TEAM] = MSG_ReadByte(sb);
  				e->chr.score.stuns[KILLED_TEAM] = MSG_ReadByte(sb);
-				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_CLOSE] = */
-				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_HEAVY] = */
+				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_CLOSE] = ... skillKills is now in scoremission and not saved. */
+				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_HEAVY] =  */
 				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_ASSAULT] = */
 				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_SNIPER] = */
 				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_EXPLOSIVE] = */
-				MSG_ReadByte(sb);	/*accuracystat*/
-				MSG_ReadByte(sb);	/*powerstat*/
+				MSG_ReadByte(sb);	/* accuracystat ... doesn't exist any more.*/
+				MSG_ReadByte(sb);	/* powerstat ... doesn't exist any more. */
 			} else {
 				/** Load character stats/score (starting with 2.3 and up)
 				 * @sa inv_shared.h:chrScoreGlobal_t */
+#if 1
 				MSG_ReadShort(sb);	/** experience @todo remove me when the saving works. */
+#endif
 #if 0
 /**@todo activate me */
 				for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)

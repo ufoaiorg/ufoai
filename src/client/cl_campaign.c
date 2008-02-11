@@ -1015,6 +1015,26 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 	}
 }
 
+/**
+ * @brief Return a nation-pointer by the nations id (nation_t->id) text.
+ * @param[in] nationID nation id as defined in (nation_t->id)
+ * @return nation_t pointer or NULL if nothing found (=error).
+ */
+nation_t *CL_GetNationByID (const char *nationID)
+{
+	int i;
+	nation_t *nation = NULL;
+
+	for (i = 0; i < gd.numNations; i++) {
+		nation = &gd.nations[i];
+		if (!Q_strcmp(nation->id, nationID))
+			return nation;
+	}
+
+	/* No matching nation found - ERROR */
+	return NULL;
+}
+
 /* Initial fraction of the population in the country where a mission has been lost / won */
 #define XVI_LOST_START_PERCENTAGE	0.20f
 #define XVI_WON_START_PERCENTAGE	0.05f
