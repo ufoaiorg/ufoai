@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_STATE_H
 #define R_STATE_H
 
-#define MAX_GL_ARRAY_LENGTH 131072
+#define MAX_GL_ARRAY_LENGTH 0x40000
 
 typedef struct gltexunit_s {
 	GLenum texture;  /* e.g. GL_TEXTURE0_ARB */
