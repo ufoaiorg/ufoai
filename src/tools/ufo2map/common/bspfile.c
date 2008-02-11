@@ -356,7 +356,6 @@ void WriteBSPFile (const char *filename)
 
 /**
  * @brief Dumps info about current file
- * @note Used in bspinfo3
  */
 void PrintBSPFileSizes (void)
 {
