@@ -321,5 +321,5 @@ void DoRouting (void)
 
 	routedatasize = data - droutedata;
 
-/*	CloseTNodes();*/
+/*	CloseTnodes();*/
 }

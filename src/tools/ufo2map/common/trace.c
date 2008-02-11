@@ -145,7 +145,7 @@ static void BuildTnode_r (int node)
 
 /**
  * @brief Loads the node structure out of a .bsp file to be used for light occlusion
- * @sa CloseTNodes
+ * @sa CloseTnodes
  */
 void MakeTnodes (int levels)
 {
@@ -434,7 +434,7 @@ qboolean TestContents (const vec3_t pos)
  * @brief
  * @sa MakeTnodes
  */
-void CloseTNodes (void)
+void CloseTnodes (void)
 {
 	if (tnodes)
 		free(tnodes);

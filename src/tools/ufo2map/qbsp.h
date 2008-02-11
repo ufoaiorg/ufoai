@@ -247,7 +247,7 @@ void FreeTree(tree_t *tree);
 /* trace.c */
 
 void MakeTnodes(int levels);
-void CloseTNodes(void);
+void CloseTnodes(void);
 int TestLine(const vec3_t start, const vec3_t stop);
 int TestLineMask(const vec3_t start, const vec3_t stop, int levels);
 int TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, int levels);

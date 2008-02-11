@@ -100,7 +100,7 @@ void LinkPlaneFaces(void);
 void BuildFacelights(unsigned int facenum);
 void FinalLightFace(unsigned int facenum);
 void MakeTnodes(int levels);
-void CloseTNodes(void);
+void CloseTnodes(void);
 int TestLine(const vec3_t start, const vec3_t stop);
 void CreateDirectLights(void);
 

@@ -428,5 +428,5 @@ void RadWorld (void)
 	lightdatasize = 1;
 
 	U2M_ProgressBar(FinalLightFace, numfaces, qtrue, "FINALLIGHT");
-/*	CloseTNodes();*/
+/*	CloseTnodes();*/
 }
