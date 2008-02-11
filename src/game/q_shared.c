@@ -284,7 +284,7 @@ vec_t VectorNormalize (vec3_t v)
 {
 	float length, ilength;
 
-	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	length = DotProduct(v, v);
 	length = sqrt(length);		/* FIXME */
 
 	if (length) {
@@ -426,7 +426,7 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 	R_ConcatRotations(tmpmat, im, rot);
 
 	for (i = 0; i < 3; i++) {
-		dst[i] = rot[i][0] * point[0] + rot[i][1] * point[1] + rot[i][2] * point[2];
+		dst[i] = DotProduct(rot[i], point);
 	}
 }
 
@@ -580,8 +580,8 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 	/* general case */
 	switch (p->signbits) {
 	case 0:
-		dist1 = p->normal[0] * emaxs[0] + p->normal[1] * emaxs[1] + p->normal[2] * emaxs[2];
-		dist2 = p->normal[0] * emins[0] + p->normal[1] * emins[1] + p->normal[2] * emins[2];
+		dist1 = DotProduct(p->normal, emaxs);
+		dist2 = DotProduct(p->normal, emins);
 		break;
 	case 1:
 		dist1 = p->normal[0] * emins[0] + p->normal[1] * emaxs[1] + p->normal[2] * emaxs[2];
@@ -608,8 +608,8 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 		dist2 = p->normal[0] * emins[0] + p->normal[1] * emaxs[1] + p->normal[2] * emaxs[2];
 		break;
 	case 7:
-		dist1 = p->normal[0] * emins[0] + p->normal[1] * emins[1] + p->normal[2] * emins[2];
-		dist2 = p->normal[0] * emaxs[0] + p->normal[1] * emaxs[1] + p->normal[2] * emaxs[2];
+		dist1 = DotProduct(p->normal, emins);
+		dist2 = DotProduct(p->normal, emaxs);
 		break;
 	default:
 		dist1 = dist2 = 0;		/* shut up compiler */
