@@ -3,20 +3,29 @@
 
 \include{header}
 \begin{document}
-
+\thispagestyle{empty} % Doesn't really deserve its own page number.
 Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.\\
 \\
-UFO:AI and its manual are pure free software projects. Nevertheless any pictures, symbols (if any) etc. appearing are subject to the copyright of their respective owners. If you feel that something might conflict with your legal rights please let us know. Otherwise feel free to enjoy free software - free as in freedom ;) 
+While UFO:AI and its manual are pure free software projects, any pictures, symbols, graphics \emph{etc} appearing are subject to the copyright of their respective owners. If you feel that something might conflict with your legal rights, please let us know. Please see the appendix titled ``Licenses'' for further reference. Otherwise feel free to enjoy free software -- free as in freedom ;) 
 
 \maketitle
+\thispagestyle{empty} % Title pages with page numbers look dumb.
 \newpage
 \tableofcontents
 \include{chapters/intro}
+\include{chapters/community}
+\include{chapters/firststeps}
 \include{chapters/geoscape}
+\include{chapters/base}
+\include{chapters/mechanics}
 \include{chapters/tactical}
-\include{chapters/end}
+\include{chapters/battlescape}
+\include{chapters/options}
 \include{chapters/multiplayer}
 \include{chapters/trouble}
 \appendix
-\include{chapters/appendix}
+\include{chapters/sysreq}
+\include{chapters/credits}
+\include{chapters/licenses}
+\include{chapters/changelog}
 \end{document}
