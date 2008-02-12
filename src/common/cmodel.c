@@ -2590,22 +2590,30 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 
 		if (dy == 0) {
 			/* Straight movement along the x axis */
-			if (dx > 0 && !(R_CONN_PX(map, poslist[1][0], poslist[1][1], z) || R_CONN_PX(map, poslist[3][0], poslist[3][1], z)))
+			if (dx > 0 &&
+				(!R_CONN_PX(map, poslist[1][0], poslist[1][1], z)
+				|| !R_CONN_PX(map, poslist[3][0], poslist[3][1], z)))
 				return;
-			if (dx < 0 && !(R_CONN_NX(map, poslist[0][0], poslist[0][1], z) || R_CONN_NX(map, poslist[2][0], poslist[2][1], z)))
+			if (dx < 0 &&
+				(!R_CONN_NX(map, poslist[0][0], poslist[0][1], z)
+				|| !R_CONN_NX(map, poslist[2][0], poslist[2][1], z)))
 				return;
 		}
 		if (dx == 0) {
 			/* Straight movement along the y axis */
-			if (dy > 0 && !(R_CONN_PY(map, poslist[2][0], poslist[2][1], z) || R_CONN_PY(map, poslist[3][0], poslist[3][1], z)))
+			if (dy > 0 &&
+				(!R_CONN_PY(map, poslist[2][0], poslist[2][1], z)
+				|| !R_CONN_PY(map, poslist[3][0], poslist[3][1], z)))
 				return;
-			if (dy < 0 && !(R_CONN_NY(map, poslist[0][0], poslist[0][1], z) || R_CONN_NY(map, poslist[1][0], poslist[1][1], z)))
+			if (dy < 0 &&
+				(!R_CONN_NY(map, poslist[0][0], poslist[0][1], z)
+				|| !R_CONN_NY(map, poslist[1][0], poslist[1][1], z)))
 				return;
 		}
 
-#if 1
-		/** @todo Check diagonal connection for a 2x2 unit.
-		 * Currently this is not needed because we skip it in Grid_MoveMarkRoute :)
+		/**
+		 * Check diagonal connection for a 2x2 unit.
+		 * Previously this was not needed because we skiped it in Grid_MoveMarkRoute :)
 		 */
 		if (dir > 3) {
 			/*
@@ -2653,8 +2661,24 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 			}
 			/* No checkforbidden tests needed here because all 3 affected fields
 			 * are checked later on anyway. */
+			
 		}
-#endif
+
+		/* Check if there is an obstacle (i.e. a small part of a wall) between one of the 4 fields of the target location.
+		 * i.e. Interconnections. */
+		/**
+		 * @todo MAJOR Problem!
+		 * This would still not prevent a single wooden post to stand exactly into the middle of the 2x2 unit!
+		 * How are we supposed to check that?
+		 * Example: There are some large doors in the warehouses in the harbour map with a post-like part of the wall in hte middle.
+		 */
+		if (
+		!( R_CONN_PX(map, poslistNew[0][0], poslist[0][1], z)	/* Go from x0/y0 forward into +x direction */
+		&& R_CONN_PY(map, poslistNew[0][0], poslist[0][1], z)	/* Go from x0/y0 forward into +x direction */
+		&& R_CONN_NX(map, poslistNew[3][0], poslist[3][1], z)	/* Go from px/py back into -x direction */
+		&& R_CONN_NY(map, poslistNew[3][0], poslist[3][1], z)))	/* Go from px/py back into -y direction */
+			return;
+
 		break;
 	default:
 		Com_Error(ERR_DROP, "Grid_MoveMark: unknown actor-size: %i", actor_size);
@@ -2740,10 +2764,6 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 			return pos
 		*/
 		for (dir = 0; dir < DIRECTIONS; dir++) {
-			if ((actor_size == ACTOR_SIZE_2x2) && (dir > 3)) {
-				/* Ignore diagonal move for 2x2 and other units */
-				break;
-			}
 			Grid_MoveMark(map, pos, dir, actor_size, &pqueue);
 		}
 

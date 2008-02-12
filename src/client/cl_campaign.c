@@ -1394,25 +1394,25 @@ static void CL_HandleBudget (void)
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
-			E_CreateEmployee(EMPL_SCIENTIST, nation);
+			E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
 			new_scientists++;
 		}
 
 		for (j = 0; 0.25 + j * 3 < (float) nation->maxScientists * nation->stats[0].happiness; j++) {
 			/* Create a medic. */
-			E_CreateEmployee(EMPL_MEDIC, nation);
+			E_CreateEmployee(EMPL_MEDIC, nation, NULL);
 			new_medics++;
 		}
 
 		for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a soldier. */
-			E_CreateEmployee(EMPL_SOLDIER, nation);
+			E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
 			new_soldiers++;
 		}
 
 		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * nation->stats[0].happiness; j++) {
 			/* Create a worker. */
-			E_CreateEmployee(EMPL_WORKER, nation);
+			E_CreateEmployee(EMPL_WORKER, nation, NULL);
 			new_workers++;
 		}
 
@@ -3268,19 +3268,27 @@ static void CL_DebugNewEmployees_f (void)
 
 	for (j = 0; j < 5; j++)
 		/* Create a scientist */
-		E_CreateEmployee(EMPL_SCIENTIST, NULL);
+		E_CreateEmployee(EMPL_SCIENTIST, NULL, NULL);
 
 	for (j = 0; j < 5; j++)
 		/* Create a medic. */
-		E_CreateEmployee(EMPL_MEDIC, NULL);
+		E_CreateEmployee(EMPL_MEDIC, NULL, NULL);
 
 	for (j = 0; j < 5; j++)
 		/* Create a soldier. */
-		E_CreateEmployee(EMPL_SOLDIER, NULL);
+		E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 
 	for (j = 0; j < 5; j++)
 		/* Create a worker. */
-		E_CreateEmployee(EMPL_WORKER, NULL);
+		E_CreateEmployee(EMPL_WORKER, NULL, NULL);
+
+	for (j = 0; j < 5; j++)
+		/* Create a ares  ugv. */
+		E_CreateEmployee(EMPL_ROBOT, NULL, CL_GetUgvById("ugv_ares_w"));
+
+	for (j = 0; j < 5; j++)
+		/* Create a phoenix  ugv. */
+		E_CreateEmployee(EMPL_ROBOT, NULL, CL_GetUgvById("ugv_phoenix"));
 }
 
 /**

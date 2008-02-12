@@ -63,6 +63,8 @@ researched rslist_human
 	rs_craft_inter_stiletto
 	rs_ugv_phoenix
 	rs_ugv_ares_w
+	rs_ugv_chaingun
+	rs_ugv_chaingun_belt
 	rs_craft_el_raven
 	rs_craft_shield_polymer
 	rs_craft_weapon_shiva

@@ -221,5 +221,6 @@ qboolean RS_ScriptSanityCheck(void);
 /* ufopedia function - but needs technology_t */
 void UP_Article(technology_t* tech, eventMail_t *mail);
 void UP_AircraftDescription(technology_t* t);
+void UP_UGVDescription(const ugv_t *ugvType);
 
 #endif /* CLIENT_CL_RESEARCH_H */

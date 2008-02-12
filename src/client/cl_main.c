@@ -1681,8 +1681,6 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		AIR_ParseAircraft(name, text, qfalse);
 	else if (!Q_strncmp(type, "campaign", 8))
 		CL_ParseCampaign(name, text);
-	else if (!Q_strncmp(type, "ugv", 3))
-		CL_ParseUGVs(name, text);
 	else if (!Q_strncmp(type, "tips", 4))
 		CL_ParseTipsOfTheDay(name, text);
 	else if (!Q_strncmp(type, "language", 8))
@@ -1755,6 +1753,8 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		B_ParseBuildings(name, text, qtrue);
 	else if (!Q_strncmp(type, "aircraft", 8))
 		AIR_ParseAircraft(name, text, qtrue);
+	else if (!Q_strncmp(type, "ugv", 3))
+		CL_ParseUGVs(name, text);
 }
 
 /** @brief struct that holds the sanity check data */

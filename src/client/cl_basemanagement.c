@@ -1793,7 +1793,7 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t type, 
 
 
 /**
- * @brief Hack to get a random nation for the initial 
+ * @brief Hack to get a random nation for the initial
  */
 static inline nation_t *B_RandomNation (void)
 {
@@ -1824,19 +1824,23 @@ void B_ClearBase (base_t *const base)
 		/* should be multiplayer (campaignmode @todo) or singleplayer */
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)
-			E_CreateEmployee(EMPL_SOLDIER, B_RandomNation());
+			E_CreateEmployee(EMPL_SOLDIER, B_RandomNation(), NULL);
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i scientists\n", curCampaign->scientists);
 		for (i = 0; i < curCampaign->scientists; i++)
-			E_CreateEmployee(EMPL_SCIENTIST, B_RandomNation());
+			E_CreateEmployee(EMPL_SCIENTIST, B_RandomNation(), NULL);
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i robots\n", curCampaign->ugvs);
-		for (i = 0; i < curCampaign->ugvs; i++)
-			E_CreateEmployee(EMPL_ROBOT, B_RandomNation());
+		for (i = 0; i < curCampaign->ugvs; i++) {
+			if (frand() > 0.5)
+				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUgvById("ugv_ares_w"));
+			else
+				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUgvById("ugv_phoenix"));
+		}
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", curCampaign->workers);
 		for (i = 0; i < curCampaign->workers; i++)
-			E_CreateEmployee(EMPL_WORKER, B_RandomNation());
+			E_CreateEmployee(EMPL_WORKER, B_RandomNation(), NULL);
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i medics\n", curCampaign->medics);
 		for (i = 0; i < curCampaign->medics; i++)
-			E_CreateEmployee(EMPL_MEDIC, B_RandomNation());
+			E_CreateEmployee(EMPL_MEDIC, B_RandomNation(), NULL);
 	}
 
 	memset(base->map, BASE_FREESLOT, sizeof(base->map));

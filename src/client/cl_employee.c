@@ -336,7 +336,7 @@ employee_t* E_GetEmployee (const base_t* const base, employeeType_t type, int id
 /**
  * @brief Return a given "not hired" employee pointer in the given base of a given type.
  * @param[in] type Which employee type to search for.
- * @param[in] idx Which employee id (in global employee array). Use -1, -2, etc.. to return the first/ second, etc... "hired" employee.
+ * @param[in] idx Which employee id (in global employee array). Use -1, -2, etc.. to return the first/ second, etc... "unhired" employee.
  * @return employee_t pointer or NULL
  * @sa E_GetHiredEmployee
  * @sa E_UnhireEmployee
@@ -373,8 +373,35 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 }
 
 /**
+ * @brief Return a "not hired" ugv-employee pointer of a given ugv-type.
+ * @param[in] ugvType What type of robot we want.
+ * @param[in] hired Do we want a hire or unhired robot?
+ */
+employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
+{
+	int i = 0;
+	employee_t *employee = NULL;
+
+
+	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
+		employee = &gd.employees[EMPL_ROBOT][i];
+
+		/* If no type give we return the first ugv we find. */
+		if (!ugvType)
+			return employee;
+
+		if ((employee->ugv == ugvType)
+		&&  !employee->hired) {
+			return employee;
+		}
+	}
+	Com_Printf("Could not get unhired ugv/robot.\n");
+	return NULL;
+}
+
+/**
  * @brief Return a given hired employee pointer in the given base of a given type
- * @param[in] base Which base the employee should be hired in.
+ * @param[in] base Which base the employee should be searched in.
  * @param[in] type Which employee type to search for.
  * @param[in] idx Which employee id (in global employee array). Use -1, -2, etc.. to return the first/ second, etc... "hired" employee.
  * @return employee_t pointer or NULL
@@ -416,6 +443,34 @@ employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, i
 		} else
 			continue;
 	}
+	return NULL;
+}
+
+/**
+ * @brief Return a "hired" ugv-employee pointer of a given ugv-type in a given base.
+ * @param[in] base Which base the ugv should be searched in.c
+ * @param[in] ugvType What type of robot we want.
+ */
+employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
+{
+	int i = 0;
+	employee_t *employee = NULL;
+
+
+	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
+		employee = &gd.employees[EMPL_ROBOT][i];
+
+		/* If no type give we return the first ugv we find. */
+		if (!ugvType)
+			return employee;
+
+		if (((employee->ugv == ugvType) || !ugvType)
+		&& (employee->baseIDHired == base->idx)) {
+			assert(employee->hired);
+			return employee;
+		}
+	}
+	Com_Printf("Could not get unhired ugv/robot.\n");
 	return NULL;
 }
 
@@ -501,6 +556,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t ty
  * @param[in] employee Which employee to hire
  * @sa E_HireEmployeeByType
  * @sa E_UnhireEmployee
+ * @todo handle EMPL_ROBOT capacities here?
  */
 qboolean E_HireEmployee (base_t* base, employee_t* employee)
 {
@@ -517,6 +573,10 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		base->capacities[CAP_EMPLOYEES].cur++;
 		if ((employee->type == EMPL_WORKER) && (base->capacities[CAP_WORKSPACE].cur < base->capacities[CAP_WORKSPACE].max))
 			base->capacities[CAP_WORKSPACE].cur++;
+		/**@todo
+		special cases for robots/ugvs?
+		if (employee->type == EMPL_ROBOT)
+		*/
 		return qtrue;
 	}
 	return qfalse;
@@ -532,10 +592,20 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
  */
 qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
 {
-	employee_t* employee = NULL;
+	employee_t* employee = E_GetUnhiredEmployee(type, -1);
+	return employee ? E_HireEmployee(base, employee) : qfalse;
+}
 
-	employee = E_GetUnhiredEmployee(type, -1);
-	return employee? E_HireEmployee(base, employee): qfalse;
+/**
+ * @brief Hires the first free employee of that type.
+ * @param[in] base  Which base the ugv/robot should be hired in.
+ * @param[in] ugvType What type of ugv/robot whoudl be hired.
+ * @return qtrue if everything went ok (the ugv was added), otherwise qfalse.
+ */
+qboolean E_HireRobot (base_t* base, const ugv_t *ugvType)
+{
+	employee_t* employee = E_GetUnhiredRobot(ugvType);
+	return employee ? E_HireEmployee(base, employee) : qfalse;
 }
 
 /**
@@ -571,6 +641,7 @@ void E_ResetEmployee (employee_t *employee)
  * @sa E_HireEmployeeByType
  * @sa CL_RemoveSoldierFromAircraft
  * @sa E_ResetEmployee
+ * @todo handle EMPL_ROBOT capacities here?
  */
 qboolean E_UnhireEmployee (employee_t* employee)
 {
@@ -619,7 +690,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation)
+employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvType)
 {
 	employee_t* employee = NULL;
 
@@ -646,16 +717,21 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation)
 
 	switch (type) {
 	case EMPL_SOLDIER:
-		CL_GenerateCharacter(employee, cl_team->string, type);
+		CL_GenerateCharacter(employee, cl_team->string, type, NULL);
 		break;
 	case EMPL_SCIENTIST:
 	case EMPL_MEDIC:
 	case EMPL_WORKER:
-		CL_GenerateCharacter(employee, cl_team->string, type);
+		CL_GenerateCharacter(employee, cl_team->string, type, NULL);
 		employee->speed = 100;
 		break;
 	case EMPL_ROBOT:
-		CL_GenerateCharacter(employee, cl_team->string, type);
+		if (!ugvType) {
+			Com_DPrintf(DEBUG_CLIENT, "E_CreateEmployee: No ugvType given!\n");
+			return NULL;
+		}
+		CL_GenerateCharacter(employee, cl_team->string, type, ugvType);
+		employee->ugv = ugvType;
 		break;
 	default:
 		break;
@@ -860,9 +936,8 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 
 /**
  * @brief Counts hired employees of a given type in a given base
- *
+ * @param[in] base The base where we count.
  * @param[in] type The type of employee to search.
- * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
 int E_CountHired (const base_t* const base, employeeType_t type)
@@ -882,10 +957,33 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 }
 
 /**
+ * @brief Counts 'hired' (i.e. bought or produced UGVs and other robots of a giben ugv-type in a given base.
+ * @param[in] base The base where we count.
+ * @param[in] ugvType What type of robot/ugv we are looking for.
+ * @return Count of Robots/UGVs.
+ */
+int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
+{
+	int count = 0, i;
+	employee_t *employee = NULL;
+
+	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
+		employee = &gd.employees[EMPL_ROBOT][i];
+		if (employee->hired
+		&&  employee->baseIDHired == base->idx
+		&& employee->ugv == ugvType)
+			count++;
+	}
+	return count;
+}
+
+
+/**
  * @brief Counts all hired employees of a given base
  * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  * @note must not return 0 if hasBuilding[B_QUARTER] is qfalse: used to update capacity
+ * @todo What about EMPL_ROBOT?
  */
 int E_CountAllHired (const base_t* const base)
 {
@@ -916,6 +1014,24 @@ int E_CountUnhired (employeeType_t type)
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 		if (!employee->hired)
+			count++;
+	}
+	return count;
+}
+/**
+ * @brief Counts all available Robots/UGVs that are for sale.
+ * @param[in] ugvType What type of robot/ugv we are looking for.
+ * @return count of available robots/ugvs.
+ */
+int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
+{
+	int count = 0, i;
+	employee_t *employee = NULL;
+
+	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
+		employee = &gd.employees[EMPL_ROBOT][i];
+		if (!employee->hired
+		&&  employee->ugv == ugvType)
 			count++;
 	}
 	return count;
@@ -1119,7 +1235,13 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			if (e->nation)
 				MSG_WriteString(sb, e->nation->id);
 			else
-				MSG_WriteString(sb, "unknown");
+				MSG_WriteString(sb, "NULL");
+
+			/* 2.3++ Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
+			if (e->ugv)
+				MSG_WriteString(sb, e->ugv->id);
+			else
+				MSG_WriteString(sb, "NULL");
 
 			/* Store the character data */
 			MSG_WriteString(sb, e->chr.name);
@@ -1226,6 +1348,10 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			if (((saveFileHeader_t *)data)->version >= 3) {
 				/* Read the nations identifier string, get the matching nation_t pointer. (2.3+) */
 				e->nation = CL_GetNationByID(MSG_ReadString(sb));
+#if 0
+/** @todo activate me */
+				e->ugv = CL_GetUgvById(MSG_ReadString(sb));
+#endif
 			}
 
 			/* Load the character data */

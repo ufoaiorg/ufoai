@@ -672,6 +672,49 @@ void UP_AircraftDescription (technology_t* t)
 }
 
 /**
+ * @brief Prints the description for robots/ugvs.
+ * @param[in] ugvType What type of robot/ugv to print the description for.
+ * @sa BS_MarketClick_f
+ * @sa UP_DrawEntry
+ */
+void UP_UGVDescription (const ugv_t *ugvType)
+{
+	static char itemText[MAX_SMALLMENUTEXTLEN];
+	technology_t *tech = NULL;
+
+	assert(ugvType);
+
+	tech = RS_GetTechByProvided(ugvType->id);
+	assert(tech);
+
+	/* Set name of ugv/robot */
+	Cvar_Set("mn_itemname", tech->name);
+
+	/* REset all sort of info for normal items */
+	/** @todo Check if this is all needed. Any better way? */
+	Cvar_Set("mn_item", "");
+	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
+
+	if (RS_IsResearched_ptr(tech)) {
+		/**@todo make me shiny */
+		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), tech->name, ugvType->weapon);
+		mn.menuText[TEXT_STANDARD] = itemText;
+	} else if (RS_Collected_(tech)) {
+		/* @todo Display crippled info and pre-research text here */
+		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
+		mn.menuText[TEXT_STANDARD] = itemText;
+	} else {
+		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
+		mn.menuText[TEXT_STANDARD] = itemText;
+	}
+}
+
+/**
  * @brief Sets the amount of unread/new mails
  * @note This is called every campaign frame - to update gd.numUnreadMails
  * just set it to -1 before calling this function

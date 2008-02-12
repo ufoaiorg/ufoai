@@ -1310,12 +1310,14 @@ menu buy
 		*s_misc			color "1 1 1 0.6"
 		*s_armour		color "1 1 1 0.6"
 		*s_other		color "1 1 1 0.6"
+		*s_heavy		color "1 1 1 0.6"
 	}
 	confunc buy_primary		{ cmd "buy_type 0;" buy_reset *s_primary	color "1 1 1 1" }
 	confunc buy_secondary	{ cmd "buy_type 1;" buy_reset *s_secondary	color "1 1 1 1" }
 	confunc buy_misc		{ cmd "buy_type 2;" buy_reset *s_misc	color "1 1 1 1" }
 	confunc buy_armour		{ cmd "buy_type 3;" buy_reset *s_armour	color "1 1 1 1" }
 	confunc buy_other		{ cmd "buy_type 6;" buy_reset *s_other	color "1 1 1 1" }
+	confunc buy_heavy		{ cmd "buy_type 8;" buy_reset *s_heavy	color "1 1 1 1" }
 
 	pic bt_primary
 	{
@@ -1397,12 +1399,32 @@ menu buy
 		string	"_Armour"
 	}
 
+	pic bt_heavy
+	{
+		tooltip	"_Show heavy equipment"
+		image	menu/button_blue
+		mousefx	true
+		pos	"615 683"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ buy_heavy }
+	}
+
+	string s_heavy
+	{
+		pos	"679 709"
+		align	cc
+		color	"1 1 1 0.6"
+		font	"f_small"
+		string	"_Heavy"
+	}
+
 	pic bt_other
 	{
 		tooltip	"_Show other items and materials"
 		image	menu/button_blue
 		mousefx	true
-		pos	"690 683"
+		pos	"765 683"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ buy_other }
@@ -1410,13 +1432,12 @@ menu buy
 
 	string s_other
 	{
-		pos	"759 709"
+		pos	"829 709"
 		align	cc
 		color	"1 1 1 0.6"
 		font	"f_small"
 		string	"_Other"
 	}
-
 
 	pic bt_continue
 	{

@@ -56,16 +56,18 @@ typedef struct employee_s {
 	inventory_t inv;			/**< employee inventory */
 	employeeType_t type;		/**< back link to employee type in gd.employees */
 	nation_t *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
+	ugv_t *ugv;	/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal emplyoees this is NULL. */
 } employee_t;
 
 /* how many employees in current list (changes on every catergory change, too) */
 extern int employeesInCurrentList;
 
 void E_ResetEmployees(void);
-employee_t* E_CreateEmployee(employeeType_t type, nation_t *nation);
+employee_t* E_CreateEmployee(employeeType_t type, nation_t *nation, ugv_t *ugvType);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);
+qboolean E_HireRobot(base_t* base, const ugv_t *ugvType);
 qboolean E_UnhireEmployee(employee_t* employee);
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
 void E_ResetEmployee(employee_t *employee);
@@ -75,7 +77,9 @@ extern const char* E_GetEmployeeString(employeeType_t type);
 int E_EmployeesInBase(const base_t* const base, employeeType_t type, qboolean free_only);
 
 employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int num);
+employee_t* E_GetUnhiredRobot(const ugv_t *ugvType);
 employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, int num);
+employee_t* E_GetHiredRobot(const base_t* const base, const ugv_t *ugvType);
 character_t* E_GetHiredCharacter(const base_t* const base, employeeType_t type, int num);
 employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);
 employee_t* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
@@ -83,8 +87,10 @@ employee_t* E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t typ
 employee_t* E_GetEmployeeFromChrUCN(int ucn);
 
 int E_CountHired(const base_t* const base, employeeType_t type);
+int E_CountHiredRobotByType(const base_t* const base, const ugv_t *ugvType);
 int E_CountAllHired(const base_t* const base);
 int E_CountUnhired(employeeType_t type);
+int E_CountUnhiredRobotsByType(const ugv_t *ugvType);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);

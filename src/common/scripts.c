@@ -684,7 +684,8 @@ static const char *buytypeNames[MAX_BUYTYPES] = {
 	"multi_ammo",
 	"aircraft",
 	"dummy",
-	"craftitem"
+	"craftitem",
+	"heavy_equipment"
 };
 
 /**
@@ -1460,7 +1461,15 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 	}
 
 	/* default values for human characters */
-	chr->fieldSize = ACTOR_SIZE_NORMAL; /* Default value is 1x1 */
+	switch (td->size) {
+	case 2:	/* 2x2 unit*/
+		chr->fieldSize = ACTOR_SIZE_2x2;
+		break;
+	case 1:	/* 1x1 unit*/
+	default:	/* Default value is 1x1 */
+		chr->fieldSize = ACTOR_SIZE_NORMAL;
+		break;
+	}
 	chr->weapons = td->weapons;
 	chr->armour = td->armour;
 	chr->teamDefIndex = i;

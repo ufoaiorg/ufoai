@@ -94,6 +94,8 @@ equipment campaign_market
 	craft_shield_polymer	4
 	base_AA51_launcher	3
 	base_ammo_AA51	30
+	ugv_chaingun	20	// This has to be at least the number of ugvs (with default weapon "ugv_chaingun")
+	ugv_chaingun_belt	40
 }
 
 //=================

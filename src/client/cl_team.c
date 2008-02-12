@@ -275,9 +275,30 @@ static void CL_GiveName_f (void)
 }
 
 /**
+ * @brief Return a given ugv_t pointer
+ * @param[in] ugvID Which base the employee should be hired in.
+ * @return ugv_t pointer or NULL if not found.
+ * @note If there ever is a problem because an id with the name "NULL" isn't found then this is because NULL pointers in E_Save/Employee_t are stored like that (duh) ;).
+ */
+ugv_t *CL_GetUgvById (const char *ugvID)
+{
+	int i;
+
+	for (i = 0; i < gd.numUGV; i++) {
+		if (!Q_strcmp(gd.ugvs[i].id, ugvID)) {
+			return &gd.ugvs[i];
+		}
+	}
+#if 0
+	Com_Printf("CL_GetUgvById: DEBUG No ugv_t entry found for id '%s' in %i entries.\n", ugvID, gd.numUGV);
+#endif
+	return NULL;
+}
+
+
+/**
  * @brief Generates the skills and inventory for a character and for a 2x2 unit
  *
- * @todo: Generate UGV
  * @sa CL_ResetCharacters
  * @param[in] employee The employee to create character data for.
  * @param[in] team Which team to use for creation.
@@ -285,7 +306,7 @@ static void CL_GiveName_f (void)
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_t employeeType)
+void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_t employeeType, const ugv_t *ugvType)
 {
 	character_t *chr = NULL;
 	char teamDefName[MAX_VAR];
@@ -348,18 +369,16 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
 		break;
 	case EMPL_ROBOT:
+		if (!ugvType)
+			Sys_Error("CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.\n");
+
 		chr->score.rank = CL_GetRank("ugv");
-		/* Create attributes. */
+
+		/** Create attributes.
+		 * @todo get the min/max values from ugv_t def? */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 
-		/**
-		 * generate 50/50 Phoenix/Ares UGVs
-		 * @todo: Define this in campaign file (with a way specify the "human_ugv_xxxxx" for easier modding)?
-		 */
-		if (frand() > 0.5)
-            Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv_ares_w", team);
-		else
-            Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv_phoenix", team);
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", team, ugvType->actors);
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");
@@ -1155,7 +1174,7 @@ void CL_ResetTeamInBase (void)
 
 	E_ResetEmployees();
 	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->integer) {
-		employee = E_CreateEmployee(EMPL_SOLDIER, NULL);
+		employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 		employee->hired = qtrue;
 		employee->baseIDHired = baseCurrent->idx;
 		Com_DPrintf(DEBUG_CLIENT, "CL_ResetTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
@@ -1726,7 +1745,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	E_ResetEmployees();
 	for (i = 0; i < num; i++) {
 		/* New employee */
-		employee = E_CreateEmployee(EMPL_SOLDIER, NULL);
+		employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 		employee->hired = qtrue;
 		employee->baseIDHired = gd.bases[0].idx;
 		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);
@@ -2397,8 +2416,8 @@ static const value_t ugvValues[] = {
 	{"tu", V_INT, offsetof(ugv_t, tu), MEMBER_SIZEOF(ugv_t, tu)},
 	{"weapon", V_STRING, offsetof(ugv_t, weapon), 0},
 	{"armour", V_STRING, offsetof(ugv_t, armour), 0},
-	{"size", V_INT, offsetof(ugv_t, size), MEMBER_SIZEOF(ugv_t, size)},
 	{"actors", V_STRING, offsetof(ugv_t, actors), 0},
+	{"price", V_INT, offsetof(ugv_t, price), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -2412,7 +2431,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 	const char *errhead = "Com_ParseUGVs: unexpected end of file (ugv ";
 	const char	*token;
 	const value_t	*v;
-	ugv_t*	ugv;
+	ugv_t *ugv;
 
 	/* get name list body body */
 	token = COM_Parse(text);
@@ -2429,7 +2448,9 @@ void CL_ParseUGVs (const char *name, const char **text)
 	}
 
 	ugv = &gd.ugvs[gd.numUGV++];
+
 	memset(ugv, 0, sizeof(ugv_t));
+	ugv->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 	do {
 		/* get the name type */

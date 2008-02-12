@@ -32,10 +32,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_MARKET_MENU_ENTRIES 28
 
-static byte buyList[MAX_BUYLIST];	/**< Current entry on the list. */
-static int buyListLength;		/**< Amount of entries on the list. */
+typedef struct buyListEntry_s {
+	byte item;	/**< Array index in csi.ods[] and base->storage.num[] etc... */
+	ugv_t *ugv;	/**< Used for mixed UGV (characters) and BUY_HEAVY (items) list. If not NULL it's a pointer to the correct UGV-struct (duh) otherwise a BUY_HEAVY-item is set in "item". */
+} buyListEntry_t;
+
+typedef struct buyList_s {
+	buyListEntry_t l[MAX_BUYLIST];	/** The actual list */
+	int length;		/**< Amount of entries on the list. */
+	int scroll;		/**< Scroll Position. Start of the buylist index - due to scrolling. */
+} buyList_t;
+
+static buyList_t buyList;	/**< Current entry on the list. */
 static int buyCategory = -1;			/**< Category of items in the menu. */
-static int buyListScrollPos;	/**< start of the buylist index - due to scrolling */
 
 /** @brief Max amount of aircraft type calculated for the market. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;
@@ -80,41 +89,41 @@ static void BS_MarketScroll_f (void)
 
 	node = MN_GetNodeFromCurrentMenu("market");
 	if (node)
-		buyListScrollPos = node->textScroll;
+		buyList.scroll = node->textScroll;
 	else
 		return;
 
-	if (buyListLength > MAX_MARKET_MENU_ENTRIES && buyListScrollPos >= buyListLength - MAX_MARKET_MENU_ENTRIES) {
-		buyListScrollPos = buyListLength - MAX_MARKET_MENU_ENTRIES;
-		node->textScroll = buyListScrollPos;
+	if (buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES) {
+		buyList.scroll = buyList.length - MAX_MARKET_MENU_ENTRIES;
+		node->textScroll = buyList.scroll;
 	}
 
 	/* the following nodes must exist */
 	node = MN_GetNodeFromCurrentMenu("market_market");
 	assert(node);
-	node->textScroll = buyListScrollPos;
+	node->textScroll = buyList.scroll;
 	node = MN_GetNodeFromCurrentMenu("market_storage");
 	assert(node);
-	node->textScroll = buyListScrollPos;
+	node->textScroll = buyList.scroll;
 	node = MN_GetNodeFromCurrentMenu("market_prices");
 	assert(node);
-	node->textScroll = buyListScrollPos;
+	node->textScroll = buyList.scroll;
 
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++)
 		Cbuf_AddText(va("buy_autoselld%i\n", i));
 	/* get item list */
-	for (i = buyListScrollPos; i < buyListLength - buyListScrollPos; i++) {
+	for (i = buyList.scroll; i < buyList.length - buyList.scroll; i++) {
 		if (i >= MAX_MARKET_MENU_ENTRIES)
 			break;
 		assert(i >= 0);
-		od = &csi.ods[buyList[i]];
+		od = &csi.ods[buyList.l[i].item];
 		tech = od->tech;
 		/* Check whether the proper buytype, storage in current base and market. */
-		if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[buyList[i]] || ccs.eMarket.num[buyList[i]])) {
-			Cbuf_AddText(va("buy_show%i\n", i - buyListScrollPos));
-			if (gd.autosell[buyList[i]])
-				Cbuf_AddText(va("buy_autoselle%i\n", i - buyListScrollPos));
+		if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[buyList.l[i].item] || ccs.eMarket.num[buyList.l[i].item])) {
+			Cbuf_AddText(va("buy_show%i\n", i - buyList.scroll));
+			if (gd.autosell[buyList.l[i].item])
+				Cbuf_AddText(va("buy_autoselle%i\n", i - buyList.scroll));
 		}
 	}
 }
@@ -134,22 +143,31 @@ static void BS_MarketClick_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num >= buyListLength)
+	if (num >= buyList.length)
 		return;
 
 	switch (buyCategory) {
 	case BUY_AIRCRAFT:
-		BS_MarketAircraftDescription(buyList[num]);
+		BS_MarketAircraftDescription(buyList.l[num].item);
 		break;
 	case BUY_CRAFTITEM:
-		UP_AircraftItemDescription(buyList[num]);
+		UP_AircraftItemDescription(buyList.l[num].item);
 		Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? */
+		break;
+	case BUY_HEAVY:
+		if (buyList.l[num].ugv) {
+			UP_UGVDescription(buyList.l[num].ugv);
+			Cvar_SetValue("mn_bs_current", -1);
+		} else {
+			UP_ItemDescription(buyList.l[num].item);
+			Cvar_SetValue("mn_bs_current", buyList.l[num].item);
+		}
 		break;
 	case -1:
 		break;
 	default:
-		UP_ItemDescription(buyList[num]);
-		Cvar_SetValue("mn_bs_current", buyList[num]);
+		UP_ItemDescription(buyList.l[num].item);
+		Cvar_SetValue("mn_bs_current", buyList.l[num].item);
 		break;
 	}
 }
@@ -260,7 +278,7 @@ static void BS_BuyType_f (void)
 
 	if (Cmd_Argc() == 2) {
 		buyCategory = atoi(Cmd_Argv(1));
-		buyListScrollPos = 0;
+		buyList.scroll = 0;
 		node = MN_GetNodeFromCurrentMenu("market");
 		if (node)
 			node->textScroll = 0;
@@ -293,17 +311,17 @@ static void BS_BuyType_f (void)
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
-				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
-					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
-					Cbuf_AddText(va("buy_tooltip_aircraft%i\n", j - buyListScrollPos));
+				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
+					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
+					Cbuf_AddText(va("buy_tooltip_aircraft%i\n", j - buyList.scroll));
 				}
 				BS_AddToList(air_samp->name, AIR_GetStorageSupply(air_samp->id, qtrue), AIR_GetStorageSupply(air_samp->id, qfalse), air_samp->price);
 
-				buyList[j] = i;
+				buyList.l[j].item = i;
 				j++;
 			}
 		}
-		buyListLength = j;
+		buyList.length = j;
 		}
 		break;
 	case BUY_CRAFTITEM:	/* Aircraft items */
@@ -316,18 +334,74 @@ static void BS_BuyType_f (void)
 			if (od->tech && (od->buytype == BUY_CRAFTITEM)
 			 && (RS_Collected_(od->tech) || RS_IsResearched_ptr(od->tech))
 			 && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
-				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
-					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
-					Cbuf_AddText(va("buy_tooltip_craftitem%i\n", j - buyListScrollPos));
+				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
+					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
+					Cbuf_AddText(va("buy_tooltip_craftitem%i\n", j - buyList.scroll));
 				}
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				if (j >= MAX_BUYLIST)
 					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
-				buyList[j] = i;
+				buyList.l[j].item = i;
 				j++;
 			}
 		}
-		buyListLength = j;
+		buyList.length = j;
+		break;
+	case BUY_HEAVY:	/* Heavy equipment like UGVs and it's weapons/ammo. */
+		{
+		technology_t* tech;
+		/* Get item list. */
+
+		j = 0;
+		for (i = 0; i < gd.numUGV; i++) {
+			/**@todo Add this entry to the list */
+			tech = RS_GetTechByProvided(gd.ugvs[i].id);
+			assert(tech);
+			if (RS_IsResearched_ptr(tech)) {
+				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
+					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
+				}
+
+
+				BS_AddToList(tech->name,
+					E_CountHiredRobotByType(baseCurrent, &gd.ugvs[i]),	/* numInStorage */
+					E_CountUnhiredRobotsByType(&gd.ugvs[i]),			/* numOnMarket */
+					gd.ugvs[i].price);
+
+				if (j >= MAX_BUYLIST)
+					Sys_Error("Increase the MAX_BUYLIST value to handle that much entries.\n");
+				buyList.l[j].item = NONE;
+				buyList.l[j].ugv = &gd.ugvs[i];
+
+				j++;
+			}
+		}
+
+		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+			if (od->notOnMarket)
+				continue;
+
+			/* Check whether the proper buytype, storage in current base and market. */
+			if (od->tech && (od->buytype == BUY_HEAVY) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
+				/* Set state of Autosell button. */
+				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
+					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
+					if (gd.autosell[i])
+						Cbuf_AddText(va("buy_autoselle%i\n", j - buyList.scroll));
+					else
+						Cbuf_AddText(va("buy_autoselld%i\n", j - buyList.scroll));
+				}
+
+				if (j >= MAX_BUYLIST)
+					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
+				buyList.l[j].item = i;
+				buyList.l[j].ugv = NULL; /** Just in case it's still set. */
+				j++;
+			}
+		}
+		buyList.length = j;
+		}
 		break;
 	default:	/* Normal items */
 		if (buyCategory < BUY_AIRCRAFT || buyCategory == BUY_DUMMY) {
@@ -342,21 +416,21 @@ static void BS_BuyType_f (void)
 				if (od->tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
 					BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 					/* Set state of Autosell button. */
-					if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
-						Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
+					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
+						Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
 						if (gd.autosell[i])
-							Cbuf_AddText(va("buy_autoselle%i\n", j - buyListScrollPos));
+							Cbuf_AddText(va("buy_autoselle%i\n", j - buyList.scroll));
 						else
-							Cbuf_AddText(va("buy_autoselld%i\n", j - buyListScrollPos));
+							Cbuf_AddText(va("buy_autoselld%i\n", j - buyList.scroll));
 					}
 
 					if (j >= MAX_BUYLIST)
 						Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
-					buyList[j] = i;
+					buyList.l[j].item = i;
 					j++;
 				}
 			}
-			buyListLength = j;
+			buyList.length = j;
 		}
 		break;
 	}
@@ -375,13 +449,19 @@ static void BS_BuyType_f (void)
 		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].cur,
 			baseCurrent->capacities[CAP_ITEMS].max);
 		Cvar_Set("mn_bs_storage", tmpbuf);
+	} else if (buyCategory == BUY_HEAVY) {
+		/**@todo better way to do this? */
+		Cvar_SetValue("mn_bfactor", 1);
+		Cvar_SetValue("mn_sfactor", 1);
+		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].cur,
+			baseCurrent->capacities[CAP_ITEMS].max);
 	}
 
 	/* select first item */
-	if (buyListLength) {
+	if (buyList.length) {
 		switch (buyCategory) {	/** @sa BS_MarketClick_f */
 		case BUY_AIRCRAFT:
-			BS_MarketAircraftDescription(buyList[0]);
+			BS_MarketAircraftDescription(buyList.l[0].item);
 			break;
 		case BUY_CRAFTITEM:
 			Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? See also BS_MarketClick_f */
@@ -389,7 +469,15 @@ static void BS_BuyType_f (void)
 			if (Cvar_VariableInteger("mn_bs_current") > 0) {
 				UP_AircraftItemDescription(Cvar_VariableInteger("mn_bs_current"));
 			} else {
-				UP_AircraftItemDescription(buyList[0]);
+				UP_AircraftItemDescription(buyList.l[0].item);
+			}
+			break;
+		case BUY_HEAVY:
+			/**@todo select first heavy item */
+			if (Cvar_VariableInteger("mn_bs_current") > 0) {
+				UP_ItemDescription(Cvar_VariableInteger("mn_bs_current"));
+			} else if (buyList.l[0].ugv) {
+				UP_UGVDescription(buyList.l[0].ugv);
 			}
 			break;
 		default:
@@ -398,7 +486,7 @@ static void BS_BuyType_f (void)
 			if (Cvar_VariableInteger("mn_bs_current") > 0)
 				UP_ItemDescription(Cvar_VariableInteger("mn_bs_current"));
 			else
-				UP_ItemDescription(buyList[0]);
+				UP_ItemDescription(buyList.l[0].item);
 			break;
 		}
 	} else {
@@ -431,30 +519,51 @@ static void BS_BuyItem_f (void)
 	assert(buyCategory != BUY_AIRCRAFT);
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num >= buyList.length)
 		return;
 
-	Cbuf_AddText(va("market_click %i\n", num + buyListScrollPos));
+	Cbuf_AddText(va("market_click %i\n", num + buyList.scroll));
 
-	item = buyList[num + buyListScrollPos];
-	Cvar_SetValue("mn_bs_current", item);
-	UP_ItemDescription(item);
-	Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %i\n", item);
-	for (i = 0; i < baseCurrent->buyfactor; i++) {
-		if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
-			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[item].size) {
-				/* reinit the menu */
-				B_UpdateStorageAndCapacity(baseCurrent, item, 1, qfalse, qfalse);
-				ccs.eMarket.num[item]--;
+	item = buyList.l[num + buyList.scroll].item;
+	if ((buyCategory == BUY_HEAVY)
+	&&  (buyList.l[num + buyList.scroll].ugv)) {
+		/* The list entry is an actual ugv/robot */
+		ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
+
+		UP_UGVDescription(ugv);
+
+		if ((ccs.credits >= ugv->price)
+		&&  (E_CountUnhiredRobotsByType(ugv) > 0)) {
+			/** @todo storage/capacity checks */
+			if (E_HireRobot(baseCurrent, ugv)) {
 				Cmd_BufClear();
 				BS_BuyType_f();
-				CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
+				CL_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
 			} else {
-				MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+				Com_Printf("Could not buy this item.\n");
+			}
+		}
+	} else {
+		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
+		Cvar_SetValue("mn_bs_current", item);
+		UP_ItemDescription(item);
+		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %i\n", item);
+		for (i = 0; i < baseCurrent->buyfactor; i++) {
+			if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
+				if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[item].size) {
+					/* reinit the menu */
+					B_UpdateStorageAndCapacity(baseCurrent, item, 1, qfalse, qfalse);
+					ccs.eMarket.num[item]--;
+					Cmd_BufClear();
+					BS_BuyType_f();
+					CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
+				} else {
+					MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+					break;
+				}
+			} else {
 				break;
 			}
-		} else {
-			break;
 		}
 	}
 }
@@ -480,26 +589,47 @@ static void BS_SellItem_f (void)
 	assert(buyCategory != BUY_AIRCRAFT);
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num >= buyList.length)
 		return;
 
-	Cbuf_AddText(va("market_click %i\n", num + buyListScrollPos));
+	Cbuf_AddText(va("market_click %i\n", num + buyList.scroll));
 
-	item = buyList[num + buyListScrollPos];
-	assert(item >= 0);
-	assert(item < csi.numODs);
-	Cvar_SetValue("mn_bs_current", item);
-	UP_ItemDescription(item);
-	for (i = 0; i < baseCurrent->sellfactor; i++) {
-		if (baseCurrent->storage.num[item]) {
-			/* reinit the menu */
-			B_UpdateStorageAndCapacity(baseCurrent, item, -1, qfalse, qfalse);
-			ccs.eMarket.num[item]++;
-			Cmd_BufClear();
-			BS_BuyType_f();
-			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item]);
-		} else {
-			break;
+	item = buyList.l[num + buyList.scroll].item;
+	if (buyCategory == BUY_HEAVY && buyList.l[num + buyList.scroll].ugv) {
+			employee_t *employee;
+			/* The list entry is an actual ugv/robot */
+			ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
+
+			UP_UGVDescription(ugv);
+
+			/** @todo storage/capacity checks */
+			employee = E_GetHiredRobot(baseCurrent, ugv);
+			if (!E_UnhireEmployee(employee)) {
+				/** @todo: message - Couldn't fire employee. */
+				Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
+			} else {
+				Cmd_BufClear();
+				BS_BuyType_f();
+				CL_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
+			}
+	} else {
+		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
+		assert(item >= 0);
+		assert(item < csi.numODs);
+		Cvar_SetValue("mn_bs_current", item);
+		UP_ItemDescription(item);
+		for (i = 0; i < baseCurrent->sellfactor; i++) {
+			if (baseCurrent->storage.num[item]) {
+				/* reinit the menu */
+				B_UpdateStorageAndCapacity(baseCurrent, item, -1, qfalse, qfalse);
+				ccs.eMarket.num[item]++;
+
+				Cmd_BufClear();
+				BS_BuyType_f();
+				CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item]);
+			} else {
+				break;
+			}
 		}
 	}
 }
@@ -523,9 +653,9 @@ static void BS_Autosell_f (void)
 
 	num = atoi(Cmd_Argv(1));
 	Com_DPrintf(DEBUG_CLIENT, "BS_Autosell_f: listnumber %i\n", num);
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num >= buyList.length)
 		return;
-	item = buyList[num + buyListScrollPos];
+	item = buyList.l[num + buyList.scroll].item;
 
 	assert(item >= 0);
 	assert(item < csi.numODs);
@@ -640,7 +770,7 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num >= buyList.length)
 		return;
 
 	if (buyCategory == BUY_AIRCRAFT) {
@@ -654,7 +784,7 @@ static void BS_BuyAircraft_f (void)
 			MN_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}
-		aircraftID = buyList[num];
+		aircraftID = buyList.l[num].item;
 		freeSpace = AIR_CalculateHangarStorage(aircraftID, baseCurrent, 0);
 
 		/* Check free space in hangars. */
@@ -681,7 +811,7 @@ static void BS_BuyAircraft_f (void)
 			MN_Popup(_("Note"), _("No storage in this base."));
 			return;
 		}
-		craftitemID = buyList[num];
+		craftitemID = buyList.l[num].item;
 		if (ccs.credits >= ccs.eMarket.ask[craftitemID] && ccs.eMarket.num[craftitemID]) {
 			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[craftitemID].size) {
 				B_UpdateStorageAndCapacity(baseCurrent, craftitemID, 1, qfalse, qfalse);
@@ -719,11 +849,11 @@ static void BS_SellAircraft_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num >= buyList.length)
 		return;
 
 	if (buyCategory == BUY_AIRCRAFT) {
-		aircraftID = buyList[num];
+		aircraftID = buyList.l[num].item;
 		if (aircraftID > numAircraft_samples)
 			return;
 
@@ -764,7 +894,7 @@ static void BS_SellAircraft_f (void)
 				Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
 		}
 	} else {
-		craftitemID = buyList[num];
+		craftitemID = buyList.l[num].item;
 
 		if (baseCurrent->storage.num[craftitemID]) {
 			B_UpdateStorageAndCapacity(baseCurrent, craftitemID, -1, qfalse, qfalse);
@@ -792,8 +922,8 @@ void BS_ResetMarket (void)
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
 	Cmd_AddCommand("buy_factor_inc", BS_IncreaseFactor_f, "Increase Buy/Sell factor for current base.");
 	Cmd_AddCommand("buy_factor_dec", BS_DecreaseFactor_f, "Decrease Buy/Sell factor for current base.");
-	buyListLength = -1;
-	buyListScrollPos = 0;
+	buyList.length = -1;
+	buyList.scroll = 0;
 }
 
 /**

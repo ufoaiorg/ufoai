@@ -3682,6 +3682,46 @@ tech rs_ugv_ares_w
 	producetime	200
 }
 
+tech rs_ugv_chaingun
+{
+	type	weapon
+	mdl_top	ugv_phoenix	// @todo fixme
+
+	up_chapter	equipment
+/* @todo use-me
+	description {
+		default "_ugv_chaingun_txt"
+	}
+	pre_description {
+		default "_ugv_chaingun_pre_txt"
+	}
+*/
+	provides	ugv_chaingun
+	require_AND { tech nothing }
+	time	0
+	producetime	50	// Not really needed since this should (at least in the beginning) be produced with the tank itself.
+}
+
+tech rs_ugv_chaingun_belt
+{
+	type	weapon
+	mdl_top	ugv_phoenix	// @todo fixme
+
+	up_chapter	equipment
+/* @todo use-me
+	description {
+		default "_ugv_chaingun_belt_txt"
+	}
+	pre_description {
+		default "_ugv_chaingun_belt_pre_txt"
+	}
+*/
+	provides	ugv_chaingun_belt
+	require_AND { tech nothing }
+	time	0
+	producetime	10	// @todo fixme
+}
+
 //========================
 // Base Weapons
 //========================

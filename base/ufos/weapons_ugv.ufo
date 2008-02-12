@@ -5,11 +5,12 @@
 //	num is the number of time units
 // armour
 //	writeme (used yet?)
-// size <>
-// 	0: normal actor (1x1)
-// 	1: ugv size (2x2)
+// (size <> NOT USED ANYMORE - See "size" field in team_human.ufo etc...)
+// ( 	0: normal actor (1x1))
+// (	1: ugv size (2x2))
 // actors <id>
-//	id as defined for "actors" in team_humans.ufo
+//	id as defined for "actors" in team_humans.ufo but without the "team" part.
+//	// e.g. human_ugv_ares_w  -> _ugv_ares_w
 //	todo: Used to get models + skins among other things.
 // ========================================================
 
@@ -18,20 +19,20 @@
 // ========================================================
 ugv ugv_ares_w
 {
-	tu	24
-	weapon	ares_weapon // todo: rename (is this even defined anywhere yet?)
+	tu	40
+	weapon	ugv_chaingun // todo: different weapon?
 	armour	medium
-	size	1	// 2x2
-	actors	human_ugv_ares_w
+	actors	_ugv_ares_w
+	price	1000	// TODO: fix me, this is for debugging only
 }
 
 ugv ugv_phoenix
 {
-	tu	20
-	weapon	phoenix_weapon // todo: rename (is this even defined anywhere yet?)
+	tu	50
+	weapon	ugv_chaingun // todo: different weapon?
 	armour	medium
-	size	1	// 2x2
-	actors	human_ugv_phoenix
+	actors	_ugv_phoenix
+	price	2000	// TODO: fix me, this is for debugging only
 }
 
 // ========================================================
@@ -40,7 +41,7 @@ ugv ugv_phoenix
 // TODO: Limit this to UGVs/Tanks only (is buytype enough?)
 // TODO: See model, buytype and reaction comments below.
 // ========================================================
-/*
+
 item ugv_chaingun
 {
 	name		"_Chaingun"
@@ -55,8 +56,9 @@ item ugv_chaingun
 	scale		1.25
 	ammo		500
 	reload		20
-	price		30000
-	buytype	dummy			// todo: extra "heavy equipment" buytype?
+	price		0	// @todo maybe we still need this somewhere?
+	notonmarket	true
+	buytype	heavy_equipment
 }
 
 item ugv_chaingun_belt
@@ -69,7 +71,7 @@ item ugv_chaingun_belt
 	center		"-3 -6 0"
 	scale		1.6
 	price		2500
-	buytype	dummy			// todo: extra "heavy equipment" buytype?
+	buytype	heavy_equipment
 	dmgtype normal
 
 	weapon_mod ugv_chaingun
@@ -139,7 +141,7 @@ item ugv_chaingun_belt
 //		}
 	}
 }
-*/
+
 
 // ========================================================
 // EOF

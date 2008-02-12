@@ -191,6 +191,7 @@ typedef enum {
 	BUY_AIRCRAFT,	/**< Aircraft and craft-equipment. */
 	BUY_DUMMY,		/**< Everything that is not equipment for soldiers except craftitems. */
 	BUY_CRAFTITEM,	/**< Craftitem. */
+	BUY_HEAVY,	/**< Heavy equipment like tanks (i.e. these are actually employees). */
 	MAX_BUYTYPES,
 
 	ENSURE_32BIT = 0xFFFFFF
@@ -454,13 +455,14 @@ typedef enum { /** @note Changing order/entries also changes network-transmissio
 
 
 #define MAX_UGV         8
+/** @brief Defines a type of UGV/Robot */
 typedef struct ugv_s {
-	char id[MAX_VAR];
+	char *id;
 	char weapon[MAX_VAR];
 	char armour[MAX_VAR];
-	int size;
 	int tu;
 	char actors[MAX_VAR];
+	int price;
 } ugv_t;
 
 #define MAX_RANKS           32
