@@ -2085,8 +2085,23 @@ base/textures/tex_base/vent007.jpg | GNU General Public License 2.0 | Werner Hö
 base/textures/tex_base/vent_round.tga | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall002_black.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall002_blue.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall002_brown.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall002_gold.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall002_red.jpg | John W. Bjerk (eleazar)
 base/textures/tex_base/wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall003_black.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall003_blue.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall003_brown.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall003_gold.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall003_red.jpg | John W. Bjerk (eleazar)
 base/textures/tex_base/wall004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall004_black.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall004_blue.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall004_brown.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall004_gold.jpg | John W. Bjerk (eleazar)
+base/textures/tex_base/wall004_red.jpg | John W. Bjerk (eleazar)
 base/textures/tex_buildings/9basetrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9darktrim02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9floorbasic01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
