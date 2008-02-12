@@ -470,7 +470,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 
 	switch (skill) {
 	case ABILITY_POWER:
-		exp =  56; /** @todo Make a formula for this once strength is used in combat. */
+		exp =  46; /** @todo Make a formula for this once strength is used in combat. */
 	case ABILITY_SPEED:
 		for (i = 0; i < SKILL_NUM_TYPES; i++)
 			total += chr->scoreMission->firedTUs[i] + chr->scoreMission->firedSplashTUs[i];
