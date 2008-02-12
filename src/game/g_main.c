@@ -464,45 +464,32 @@ static int G_GetMaxExperiencePerMission (abilityskills_t skill)
 static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 {
 	int exp = 0;
-	int total = 0;
 	abilityskills_t i;
-	killtypes_t j;
 
 	switch (skill) {
 	case ABILITY_POWER:
 		exp =  46; /** @todo Make a formula for this once strength is used in combat. */
 	case ABILITY_SPEED:
-		for (i = 0; i < SKILL_NUM_TYPES; i++)
-			total += chr->scoreMission->firedTUs[i] + chr->scoreMission->firedSplashTUs[i];
-		exp = chr->scoreMission->movedNormal + 2 * chr->scoreMission->movedCrouched + total / 10;
+		exp = chr->scoreMission->movedNormal + 2 * chr->scoreMission->movedCrouched + (chr->scoreMission->firedTUs[i] + chr->scoreMission->firedSplashTUs[i]) / 10;
 	case ABILITY_ACCURACY:
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
 			if (i == SKILL_SNIPER)
-				for (j = 0; j < KILLED_NUM_TYPES; j++)
-					exp += 30 * (chr->scoreMission->hits[i][j] + chr->scoreMission->hitsSplash[i][j]);
+				exp = 30 * (chr->scoreMission->hits[i][KILLED_ALIENS] + chr->scoreMission->hitsSplash[i][KILLED_ALIENS]);
 			else
-				for (j = 0; j < KILLED_NUM_TYPES; j++)
-					exp += 20 * (chr->scoreMission->hits[i][j] + chr->scoreMission->hitsSplash[i][j]);
+				exp = 20 * (chr->scoreMission->hits[i][KILLED_ALIENS] + chr->scoreMission->hitsSplash[i][KILLED_ALIENS]);
 		}
 	case ABILITY_MIND:
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			total += chr->scoreMission->kills[j];
-		exp = 100 * total;
+		exp = 100 * chr->scoreMission->kills[KILLED_ALIENS];
 	case SKILL_CLOSE:
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			exp += 150 * (chr->scoreMission->hits[skill][j] + chr->scoreMission->hitsSplash[skill][j]);
+		exp = 150 * (chr->scoreMission->hits[skill][KILLED_ALIENS] + chr->scoreMission->hitsSplash[skill][KILLED_ALIENS]);
 	case SKILL_HEAVY:
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			exp += 200 * (chr->scoreMission->hits[skill][j] + chr->scoreMission->hitsSplash[skill][j]);
+		exp = 200 * (chr->scoreMission->hits[skill][KILLED_ALIENS] + chr->scoreMission->hitsSplash[skill][KILLED_ALIENS]);
 	case SKILL_ASSAULT:
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			exp += 100 * (chr->scoreMission->hits[skill][j] + chr->scoreMission->hitsSplash[skill][j]);
+		exp = 100 * (chr->scoreMission->hits[skill][KILLED_ALIENS] + chr->scoreMission->hitsSplash[skill][KILLED_ALIENS]);
 	case SKILL_SNIPER:
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			exp += 200 * (chr->scoreMission->hits[skill][j] + chr->scoreMission->hitsSplash[skill][j]);
+		exp = 200 * (chr->scoreMission->hits[skill][KILLED_ALIENS] + chr->scoreMission->hitsSplash[skill][KILLED_ALIENS]);
 	case SKILL_EXPLOSIVE:
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			exp += 200 * (chr->scoreMission->hits[skill][j] + chr->scoreMission->hitsSplash[skill][j]);
+		exp = 200 * (chr->scoreMission->hits[skill][KILLED_ALIENS] + chr->scoreMission->hitsSplash[skill][KILLED_ALIENS]);
 	default:
 		Com_DPrintf(DEBUG_GAME, "G_GetEarnedExperience: invalid skill type\n");
 	}
