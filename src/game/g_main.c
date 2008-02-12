@@ -459,6 +459,7 @@ static int G_GetMaxExperiencePerMission (abilityskills_t skill)
  * @brief Determines the amount of XP earned by a given soldier for a given skill, based on the soldier's performance in the last mission.
  * @param[in] skill The skill for which to fetch the maximum amount of XP.
  * @param[in] chr Pointer to the character you want to get the earned experience for
+ * @sa G_UpdateCharacterSkills
  * @sa G_GetMaxExperiencePerMission
  */
 static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
