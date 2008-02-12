@@ -1345,13 +1345,11 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->baseIDHired = MSG_ReadShort(sb);
 			e->buildingID = MSG_ReadShort(sb);
 
-			if (((saveFileHeader_t *)data)->version >= 3) {
-				/* Read the nations identifier string, get the matching nation_t pointer. (2.3+) */
+			if (((saveFileHeader_t *)data)->version >= 3) { /* (2.3+) */
+				/* Read the nations identifier string, get the matching nation_t pointer. */
 				e->nation = CL_GetNationByID(MSG_ReadString(sb));
-#if 0
-/** @todo activate me */
+				/* Read the UGV-Type identifier and get the matching ugv_t pointer.  */
 				e->ugv = CL_GetUgvById(MSG_ReadString(sb));
-#endif
 			}
 
 			/* Load the character data */
