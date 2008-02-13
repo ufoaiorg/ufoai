@@ -4618,40 +4618,25 @@
 // entity 45
 {
 "classname" "info_alien_start"
-"origin" "624 176 92"
+"origin" "112 144 28"
 }
 // entity 46
 {
 "classname" "info_alien_start"
-"origin" "112 144 28"
+"origin" "688 304 28"
 }
 // entity 47
 {
-"classname" "info_alien_start"
-"origin" "532 336 28"
+"classname" "info_civilian_start"
+"origin" "304 400 28"
 }
 // entity 48
 {
 "classname" "info_civilian_start"
-"origin" "80 396 28"
+"origin" "592 176 92"
 }
 // entity 49
 {
 "classname" "info_civilian_start"
-"origin" "716 272 28"
-}
-// entity 50
-{
-"classname" "info_alien_start"
-"origin" "496 396 92"
-}
-// entity 51
-{
-"classname" "info_civilian_start"
-"origin" "368 368 28"
-}
-// entity 52
-{
-"classname" "info_human_start"
-"origin" "368 16 32"
+"origin" "176 304 92"
 }

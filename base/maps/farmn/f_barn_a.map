@@ -1038,3 +1038,8 @@
 "_color" "1 1 0.9"
 "origin" "402 256 52"
 }
+// entity 10
+{
+"classname" "info_civilian_start"
+"origin" "176 272 32"
+}

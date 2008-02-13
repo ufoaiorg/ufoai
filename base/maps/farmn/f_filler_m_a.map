@@ -17,3 +17,9 @@
 ( 0 0 0 ) ( 0 256 0 ) ( 0 0 256 ) tex_nature/grass001 224 0 0 0.5 0.5
 }
 }
+// entity 1
+{
+"classname" "info_civilian_start"
+"origin" "336 144 32"
+"angle" "-90"
+}

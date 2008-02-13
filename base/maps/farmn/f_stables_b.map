@@ -1318,3 +1318,9 @@
 "spawnflags" "1"
 "anim" "idle"
 }
+// entity 19
+{
+"classname" "info_civilian_start"
+"origin" "464 240 32"
+"angle" "-90"
+}
