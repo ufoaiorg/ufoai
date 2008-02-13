@@ -30,6 +30,7 @@ sub check
 	my $teamfound = 0;
 	my $team = 0; # search for team id in info_player_start (multiplayer)
 	my $brush = 0; # search for brushes inside of the entity (bmodels)
+	my $align = 0; # check alignment of spawns
 	my $brushcount = 0;
 	my $ent_end = 0;
 	foreach ( readDir( $dir ) ) {
@@ -49,7 +50,7 @@ sub check
 		%teamcount = ();
 		foreach ( <MAP> ) {
 			$line++;
-			unless ( $team || $brush ) {
+			unless ( $team || $brush || $align) {
 				m/^\"classname\"\s+\"(\w+)\"/ig;
 				if ( !$1 ) {
 					m/^\"team\"\s+\"(\d+)\"/ig;
@@ -85,6 +86,14 @@ sub check
 					} elsif ( m/^\{\n$/ ) {
 						$ent_end = 0;
 					}
+				} elsif ($align) {
+                    if (/\"origin\"/) {
+                        m/^\"origin\"\s+\"-*(\d+) -*(\d+) -*(\d+)\"/ig;
+                        if (($1 % 32) - 16 || ($2 % 32) - 16) {
+                            print "Error - found misaligned $entity at line $line\n";
+                        }
+                        $align = 0;
+                    }
 				}
 				next;
 			}
@@ -93,12 +102,16 @@ sub check
 				if ( ! $teamfound ) {
 					$team = 1;
 				}
+				$align = 1;
 				$teamfound = 0;
 			} elsif ( $entity eq "info_ugv_start" ) {
 				if ( ! $teamfound ) {
 					$team = 1;
 				}
-				$teamfound = 0;
+    			$align = 1;
+    			$teamfound = 0;
+			} elsif ( $entity =~ /info_.*_start/ ) {
+				$align = 1;
 			} elsif ( $entity eq "func_breakable" ) {
 				$brush = 1;
 				$brushcount = 0;
@@ -143,4 +156,3 @@ if ( $file eq "--recursion" || $file eq "-r" ) {
 check(".", $file, $rec);
 
 print "...finished\n"
-
