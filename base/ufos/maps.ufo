@@ -1066,3 +1066,92 @@ mapdef baseattack
 	multiplayer		false
 }
 
+mapdef farm_small
+{
+	map				"+farm"
+	param			small
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	size			"small"
+	teams			4
+	music			PsymongO6
+	multiplayer		false
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		western
+		eastern
+	}
+
+	populations
+	{
+	    nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef farm_medium
+{
+	map				"+farm"
+	param			medium
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	size			"medium"
+	teams			4
+	music			PsymongO6
+	multiplayer		false
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		western
+		eastern
+	}
+
+	populations
+	{
+	    nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef farm_large
+{
+	map				"+farm"
+	param			large
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	size			"large"
+	teams			4
+	music			PsymongO6
+	multiplayer		false
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		western
+		eastern
+	}
+
+	populations
+	{
+	    nopopulation
+		rural
+		village
+		suburban
+	}
+}
