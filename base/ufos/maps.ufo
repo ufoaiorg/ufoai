@@ -1052,20 +1052,6 @@ mapdef condor_crash
 	}
 }
 
-mapdef ufocrash
-{
-	map				"+ufocrash"
-	loadingscreen	"ufocrash"
-	multiplayer		false
-}
-
-mapdef baseattack
-{
-	map				".baseattack"
-	loadingscreen	"baseattack"
-	multiplayer		false
-}
-
 mapdef farm_small
 {
 	map				"+farm"
@@ -1154,4 +1140,18 @@ mapdef farm_large
 		village
 		suburban
 	}
+}
+
+mapdef ufocrash
+{
+	map				"+ufocrash"
+	loadingscreen	"ufocrash"
+	multiplayer		false
+}
+
+mapdef baseattack
+{
+	map				".baseattack"
+	loadingscreen	"baseattack"
+	multiplayer		false
 }
