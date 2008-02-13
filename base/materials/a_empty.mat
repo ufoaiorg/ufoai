@@ -4,10 +4,4 @@
 		texture tex_lights/mtl_l1_fx0
 		scroll.s 3
 	}
-	material tex_lights/mtl_l1
-	{
-		blend GL_ONE GL_ONE_MINUS_SRC_ALPHA
-		texture tex_lights/mtl_l1_fx0
-		pulse 2
-	}
 }
