@@ -2433,8 +2433,8 @@ base/textures/tex_doors/door017.jpg | GNU General Public License 2.0 | Werner H�
 base/textures/tex_lights/drkmtlsupport_light.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/drkmtlsupport_light_glow.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_lights/mtl_l1_fx.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_lights/mtl_l1_fx2.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_lights/mtl_l1_fx0.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_lights/mtl_l1_fx1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_material/c_black.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/c_blue.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/c_brown.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
