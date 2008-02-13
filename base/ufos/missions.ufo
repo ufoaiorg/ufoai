@@ -927,3 +927,31 @@ mission corrupt_city
 	onwin		"" //Win 2.2 campaign
 	storyrelated	true
 }
+
+mission community_centre
+{
+	location	"_TODO"
+	type		"_Infection Attack"
+	text		"_The aliens are trying to spread their XVI virus amongst the populace. Prevent them from succeeding at all costs!"
+	pos			"11 12" // FIXME
+	aliens		6
+	nation		"europe" // FIXME
+	alienequip	stage4_soldiers
+	onlose		"" //Lose 2.2 campaign
+	onwin		"" //Win 2.2 campaign
+	storyrelated	true
+}
+
+mission condor_crash
+{
+	location	"_TODO"
+	type		"_Crashed alien ship"
+	text		"_The aliens are trying to spread their XVI virus amongst the populace. Prevent them from succeeding at all costs!"
+	pos			"11 12" // FIXME
+	aliens		6
+	nation		"middle" // FIXME
+	alienequip	stage4_soldiers
+	onlose		"" //Lose 2.2 campaign
+	onwin		"" //Win 2.2 campaign
+	storyrelated	true
+}

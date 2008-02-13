@@ -7,38 +7,6 @@
 // valid population	values:
 // * urban,	suburban, village, rural, nopopulation
 
-mapdef community_centre
-{
-	map				community_centre01
-	music			van_mission
-	multiplayer		true
-	teams			2
-	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		coop2
-		coop3
-		coop4
-	}
-	terrains
-	{
-		grass
-		mountain
-	}
-
-	cultures
-	{
-		western
-	}
-
-	populations
-	{
-		village
-	}
-}
-
 mapdef or_tabelbala
 {
 	map				"+oriental"
@@ -1017,6 +985,70 @@ mapdef corrupt_city
 		coop2
 		coop3
 		coop4
+	}
+}
+
+mapdef community_centre
+{
+	map				community_centre01
+	music			van_mission
+	multiplayer		true
+	teams			3
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		village
+	}
+}
+
+mapdef condor_crash
+{
+	map				condor_crash04
+	music			van_mission
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		village
 	}
 }
 
