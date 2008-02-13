@@ -886,6 +886,8 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 	assert(employee->baseIDHired != -1);
 	base = B_GetBase(employee->baseIDHired);
 
+	assert(employee->type == employee->chr.empl_type);
+
 	switch (employee->type) {
 	case EMPL_SCIENTIST:
 		/* Update current capacity for lab if scientist is being counter there. */
