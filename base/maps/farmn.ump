@@ -270,7 +270,7 @@ grid "1 1"
 +barn_b "0 1"
 +stables_a "0 1"
 +stables_b "0 1"
-+drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
 *rm_ufo +ufo_scout "1 1"
 }
 
@@ -294,7 +294,7 @@ grid "1 1"
 +barn_b "0 1"
 +stables_a "0 1"
 +stables_b "0 1"
-+drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
 *rm_ufo +ufo_harvester "1 1"
 }
 
@@ -318,6 +318,6 @@ grid "1 1"
 +barn_b "0 1"
 +stables_a "0 1"
 +stables_b "0 1"
-+drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
 *rm_ufo +ufo_corrupter "1 1"
 }
