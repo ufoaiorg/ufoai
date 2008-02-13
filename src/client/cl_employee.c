@@ -1399,13 +1399,17 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			}
 
 			if (((saveFileHeader_t *)data)->version < 3) {
+				/**@todo What should happen to the new "experience" array when converted to 2.3? Right now this'll be all 0. */
+
 				/* Load character stats/score (before 2.3) */
 				e->chr.score.assignedMissions = MSG_ReadShort(sb);
 
 				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
 					e->chr.score.kills[k] = MSG_ReadShort(sb);
-				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
+				for (k = 0; k < presaveArray[PRE_SKILTP]; k++) {
 					e->chr.score.skills[k] = MSG_ReadShort(sb);
+					e->chr.score.initialSkills[k] = e->chr.score.skills[k];	/**< This didn't exist in 2.2 but is now used for calc of "skills[]". */
+				}
 
 				e->chr.score.kills[KILLED_ALIENS] = MSG_ReadByte(sb);
 				e->chr.score.stuns[KILLED_ALIENS] = MSG_ReadByte(sb);
