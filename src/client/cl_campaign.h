@@ -113,7 +113,7 @@ typedef struct mission_s {
 	 * in your trigger command, you can seperate more commands with ; of course */
 	char onwin[MAX_VAR];		/**< trigger command after you've won a battle */
 	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
-	int ugv;					/**< uncontrolled ground units (entity: info_ugv_start) */
+	int ugv;					/**< uncontrolled ground units (entity: info_2x2_start) */
 	qboolean active;			/**< aircraft at place? */
 	qboolean onGeoscape;		/**< is or was already on geoscape - don't add it twice */
 	date_t dateOnGeoscape;		/**< last time the mission was on geoscape */

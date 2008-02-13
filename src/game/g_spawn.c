@@ -62,7 +62,7 @@ static const spawn_t spawns[] = {
 	{"info_civilian_start", SP_civilian_start},
 	{"info_civilian_target", SP_civilian_target},
 	{"info_2x2_start", SP_2x2_start},
-	{"info_ugv_start", SP_2x2_start},
+	{"info_ugv_start", SP_2x2_start}, /* FIXME: Remove me */
 	{"info_null", SP_dummy},
 	{"func_breakable", SP_func_breakable},
 	{"func_door", SP_func_door},
@@ -468,7 +468,7 @@ static void SP_human_start (edict_t *ent)
 
 
 /**
- * @brief QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
+ * @brief QUAKED info_2x2_start (1 1 0) (-32 -32 -24) (32 32 32)
  * Starting point for a 2x2 unit.
  */
 static void SP_2x2_start (edict_t *ent)
