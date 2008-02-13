@@ -101,67 +101,6 @@ a      +c     a
 0      c      0
 }
 
-// Vertical street, with billboard "Afterwards"
-tile +s09
-{
-3 3
-
-0      c      0
-a      +c     a
-0      c      0
-}
-
-// Vertical street, with billboard "Polycount"
-tile +s10
-{
-3 3
-
-0      c      0
-a      +c     a
-0      c      0
-}
-
-// Vertical street, with billboard "Swim sale"
-tile +s11
-{
-3 3
-
-0      c      0
-a      +c     a
-0      c      0
-}
-
-// Horizontal street with billboard "Extreme Players"
-tile +s12
-{
-3 3
-
-0      a      0
-b      +b     b
-0      a      0
-}
-
-// Horizontal street with billboards "AIDAaura", "Maspalomas"
-tile +s13
-{
-3 3
-
-0      a      0
-b      +b     b
-0      a      0
-}
-
-// Vertical street, with big billboard "WOP"
-tile +s14
-{
-3 3
-
-0      c      0
-a      +c     a
-0      c      0
-}
-
-
 // cross street connection
 tile +s15
 {
@@ -391,12 +330,6 @@ title "_Village residential"
 +s06 "0 8"
 +s07 "0 1"
 +s08 "0 1"
-+s09 "0 4"
-+s10 "0 4"
-+s11 "0 4"
-+s12 "0 4"
-+s13 "0 4"
-+s14 "0 4"
 +s15 "0 2"
 +d01 "0 1"
 +d02 "0 2"
@@ -427,12 +360,6 @@ title "_Village recreational"
 +s04 "0 4"
 +s05 "0 4"
 +s06 "0 4"
-+s09 "0 4"
-+s10 "0 8"
-+s11 "0 8"
-+s12 "0 8"
-+s13 "0 8"
-+s14 "0 8"
 +s15 "0 2"
 +d01 "0 1"
 +d02 "0 2"
@@ -466,12 +393,6 @@ title "_Village commercial"
 +s06 "0 4"
 +s07 "0 2"
 +s08 "0 2"
-+s09 "0 4"
-+s10 "0 8"
-+s11 "0 8"
-+s12 "0 8"
-+s13 "0 8"
-+s14 "0 8"
 +s15 "0 2"
 +d02 "0 1"
 +d03 "0 1"
@@ -505,12 +426,6 @@ title "_Village big"
 +s06 "0 8"
 +s07 "0 3"
 +s08 "0 3"
-+s09 "0 8"
-+s10 "0 8"
-+s11 "0 8"
-+s12 "0 8"
-+s13 "0 8"
-+s14 "0 8"
 +s15 "0 2"
 +d01 "0 8"
 +d02 "0 8"
