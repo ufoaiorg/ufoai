@@ -238,7 +238,7 @@ static tnode_t *tnode_p;
 static pos3_t exclude_from_forbiddenlist;
 
 
-static void CM_MakeTnodes(void);
+static void CM_MakeTracingNodes(void);
 static void CM_InitBoxHull(void);
 
 
@@ -1281,7 +1281,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	CMod_LoadEntityString(&header.lumps[LUMP_ENTITIES], shift);
 
 	CM_InitBoxHull();
-	CM_MakeTnodes();
+	CM_MakeTracingNodes();
 
 	/* Lets test if curTile is changed */
 	assert(curTile == &mapTiles[numTiles]);
@@ -2099,7 +2099,7 @@ trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const 
 /**
  * @brief Converts the disk node structure into the efficient tracing structure
  */
-static void MakeTnode (int nodenum)
+static void MakeTracingNode (int nodenum)
 {
 	tnode_t *t;
 	cBspPlane_t *plane;
@@ -2123,16 +2123,17 @@ static void MakeTnode (int nodenum)
 				t->children[i] = (1 << 31);
 		} else {
 			t->children[i] = tnode_p - curTile->tnodes;
-			MakeTnode(node->children[i]);
+			MakeTracingNode(node->children[i]);
 		}
 	}
 }
 
 
-static void BuildTnode_r (int node, int level)
+static void BuildTracingNode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
 
+	/* FIXME should this be a == -1 check? */
 	if (!curTile->nodes[node].plane) {
 		cBspNode_t *n;
 		tnode_t *t;
@@ -2161,15 +2162,13 @@ static void BuildTnode_r (int node, int level)
 			if (c0maxs[i] <= c1mins[i]) {
 				/* create a separation plane */
 				t->type = i;
-				t->normal[0] = i;
-				t->normal[1] = i ^ 1;
-				t->normal[2] = 0;
+				VectorSet(t->normal, i, (i ^ 1), 0);
 				t->dist = (c0maxs[i] + c1mins[i]) / 2;
 
 				t->children[1] = tnode_p - curTile->tnodes;
-				BuildTnode_r(n->children[0], level);
+				BuildTracingNode_r(n->children[0], level);
 				t->children[0] = tnode_p - curTile->tnodes;
-				BuildTnode_r(n->children[1], level);
+				BuildTracingNode_r(n->children[1], level);
 				return;
 			}
 
@@ -2178,10 +2177,13 @@ static void BuildTnode_r (int node, int level)
 
 		for (i = 0; i < 2; i++) {
 			t->children[i] = tnode_p - curTile->tnodes;
-			BuildTnode_r(n->children[i], level);
+			BuildTracingNode_r(n->children[i], level);
 		}
 	} else {
 		/* don't include weapon clip in standard tracing */
+		/* FIXME: What about visibility checks - should LEVEL_ACTORCLIP
+		 * be removed here, too? Problem is, the tnode functions are used
+		 * for pathfinding, too */
 		if (level <= LEVEL_WEAPONCLIP) {
 			curTile->cheads[curTile->numcheads].cnode = node;
 			curTile->cheads[curTile->numcheads].level = level;
@@ -2189,16 +2191,17 @@ static void BuildTnode_r (int node, int level)
 			assert(curTile->numcheads <= MAX_MAP_NODES);
 		}
 
-		MakeTnode(node);
+		MakeTracingNode(node);
 	}
 }
 
 
 /**
- * @brief Loads the node structure out of a .bsp file to be used for light occlusion
- * @sa BuildTnode_r
+ * @brief Use the bsp node structure to reconstruct efficient tracing structures
+ * that are used for fast visibility and pathfinding checks
+ * @sa BuildTracingNode_r
  */
-static void CM_MakeTnodes (void)
+static void CM_MakeTracingNodes (void)
 {
 	int i;
 
@@ -2216,7 +2219,7 @@ static void CM_MakeTnodes (void)
 		curTile->numtheads++;
 		assert(curTile->numtheads < LEVEL_MAX);
 
-		BuildTnode_r(curTile->cmodels[i].headnode, i);
+		BuildTracingNode_r(curTile->cmodels[i].headnode, i);
 	}
 }
 
@@ -2661,7 +2664,7 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 			}
 			/* No checkforbidden tests needed here because all 3 affected fields
 			 * are checked later on anyway. */
-			
+
 		}
 
 		/* Check if there is an obstacle (i.e. a small part of a wall) between one of the 4 fields of the target location.

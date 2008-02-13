@@ -167,6 +167,7 @@ void MakeTnodes (int levels)
 		thead[numtheads] = tnode_p - tnodes;
 		theadlevel[numtheads] = i;
 		numtheads++;
+		/* FIXME NUMMODELS would be better here, no? */
 		assert(numtheads < 260);
 		BuildTnode_r(dmodels[i].headnode);
 	}
