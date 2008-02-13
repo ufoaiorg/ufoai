@@ -386,7 +386,7 @@ void RadWorld (void)
 
 	MakeBackplanes();
 
-	MakeTnodes(256);
+	MakeTnodes(LEVEL_WEAPONCLIP);
 
 	/* turn each face into a single patch */
 	MakePatches();
