@@ -467,6 +467,19 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	abilityskills_t i = 0;
 	unsigned int maxXP, gainedXP, totalGainedXP;
 
+	if (!chr) {
+		Com_DPrintf(DEBUG_GAME, "G_UpdateCharacterSkills: Bad character_t pointer given.");
+		return;
+	}
+
+	/* Mostly for debugging */
+	if (chr->empl_type >= MAX_EMPL)
+		Com_DPrintf(DEBUG_GAME, "G_UpdateCharacterSkills Soldier %s has employee-type of %i - please check if this is ok.\n", chr->name, chr->empl_type);
+
+	/* Robots/UGVs do not get skill-upgrades. */
+	if (chr->empl_type == EMPL_ROBOT)
+		return;
+
 	for (; i < SKILL_NUM_TYPES; i++) {
 		maxXP = CHRSH_CharGetMaxExperiencePerMission(i);
 		gainedXP = G_GetEarnedExperience(i, chr);
@@ -504,7 +517,9 @@ void G_EndGame (int team)
 
 	G_PrintStats(va("End of game - Team %i is the winner", team));
 
-	/* Calculate new scores/skills for the soldiers */
+	/** Calculate new scores/skills for the soldiers.
+	 * @note In theory we do not have to check for ET_ACTOR2x2 actors (since phalanx has only robots that are 2x2),
+	 * but we never know, maybe we have Hulk int hge future ;). */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 		&& !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX) {
