@@ -649,8 +649,6 @@ qboolean E_UnhireEmployee (employee_t* employee)
 		base_t *base = B_GetBase(employee->baseIDHired);
 		/* Update capacity of Living Quarters. */
 		base->capacities[CAP_EMPLOYEES].cur--;
-		if (employee->type == EMPL_WORKER)
-			base->capacities[CAP_WORKSPACE].cur--;
 
 		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */
@@ -879,7 +877,8 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 	assert(employee);
 
 	/* not assigned to any building */
-	if (employee->buildingID < 0)
+	/* FIXME: are soldiers assigned to a building, too? quarters? */
+	if (employee->buildingID < 0 && employee->type != EMPL_SOLDIER)
 		return qfalse;
 
 	/* we can assume this because otherwise there should be no buildingID */
