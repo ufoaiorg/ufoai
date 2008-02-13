@@ -412,50 +412,6 @@ static void G_SendCharacterData (const edict_t* ent)
 }
 
 /**
- * @brief Determines the maximum amount of XP per skill that can be gained from any one mission.
- * @param[in] skill The skill for which to fetch the maximum amount of XP.
- * @sa G_UpdateCharacterSkills
- * @sa G_GetEarnedExperience
- * @note Explanation of the values here:
- * There is a maximum speed at which skills may rise over the course of 100 missions (the predicted career length of a veteran soldier).
- * For example, POWER will, at best, rise 10 points over 100 missions. If the soldier gets max XP every time.
- * Because the increase is given as experience^0.6, that means that the maximum XP cap x per mission is given as
- * log 10 / log x = 0.6
- * log x = log 10 / 0.6
- * x = 10 ^ (log 10 / 0.6)
- * x = 46
- * The division by 100 happens in G_UpdateCharacterSkills
- */
-static int G_GetMaxExperiencePerMission (abilityskills_t skill)
-{
-	switch (skill) {
-	case ABILITY_POWER:
-		return 46;
-	case ABILITY_SPEED:
-		return 91;
-	case ABILITY_ACCURACY:
-		return 290;
-	case ABILITY_MIND:
-		return 290;
-	case SKILL_CLOSE:
-		return 680;
-	case SKILL_HEAVY:
-		return 680;
-	case SKILL_ASSAULT:
-		return 680;
-	case SKILL_SNIPER:
-		return 680;
-	case SKILL_EXPLOSIVE:
-		return 680;
-	case SKILL_NUM_TYPES: /* This is health. */
-		return 2154;
-	default:
-		Com_DPrintf(DEBUG_GAME, "G_GetMaxExperiencePerMission: invalid skill type\n");
-		return 0;
-	}
-}
-
-/**
  * @brief Determines the amount of XP earned by a given soldier for a given skill, based on the soldier's performance in the last mission.
  * @param[in] skill The skill for which to fetch the maximum amount of XP.
  * @param[in] chr Pointer to the character you want to get the earned experience for
@@ -512,7 +468,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	unsigned int maxXP, gainedXP, totalGainedXP;
 
 	for (; i < SKILL_NUM_TYPES; i++) {
-		maxXP = G_GetMaxExperiencePerMission(i);
+		maxXP = CHRSH_CharGetMaxExperiencePerMission(i);
 		gainedXP = G_GetEarnedExperience(i, chr);
 
 		gainedXP = min(gainedXP, maxXP);
@@ -524,7 +480,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
 	i++;
-	maxXP = G_GetMaxExperiencePerMission(i);
+	maxXP = CHRSH_CharGetMaxExperiencePerMission(i);
 	gainedXP = min(maxXP, totalGainedXP / 2);
 
 	chr->score.experience[i] += gainedXP;

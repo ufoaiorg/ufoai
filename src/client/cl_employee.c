@@ -1399,10 +1399,12 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			}
 
 			if (((saveFileHeader_t *)data)->version < 3) {
-				/**@todo What should happen to the new "experience" array when converted to 2.3? Right now this'll be all 0. */
-
 				/* Load character stats/score (before 2.3) */
 				e->chr.score.assignedMissions = MSG_ReadShort(sb);
+
+				/* "experience[]" didn't exist in 2.2. This'll set them to the maximum expected values for 50 missions. */
+				for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
+					e->chr.score.experience[k] = CHRSH_CharGetMaxExperiencePerMission(k) * 50;
 
 				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
 					e->chr.score.kills[k] = MSG_ReadShort(sb);

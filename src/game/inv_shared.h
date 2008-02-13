@@ -659,7 +659,8 @@ typedef enum {
 /* ================================ */
 
 int Com_StringToTeamNum(const char* teamString) __attribute__((nonnull));
-void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t type, qboolean multiplayer) __attribute__((nonnull));
+int CHRSH_CharGetMaxExperiencePerMission(abilityskills_t skill);
+void CHRSH_CharGenAbilitySkills(character_t * chr, int team, employeeType_t type, qboolean multiplayer) __attribute__((nonnull));
 char *CHRSH_CharGetBody(character_t* const chr) __attribute__((nonnull));
 char *CHRSH_CharGetHead(character_t* const chr) __attribute__((nonnull));
 
