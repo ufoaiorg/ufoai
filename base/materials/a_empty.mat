@@ -2,7 +2,7 @@
 	material tex_lights/mtl_l1_fx0
 	{
 		texture tex_lights/mtl_l1_fx0
-		scroll.s 3
+		scroll.s 1
 	}
 }
 {
