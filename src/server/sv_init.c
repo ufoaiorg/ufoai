@@ -548,6 +548,8 @@ static qboolean SV_TestFilled (void)
 static void SV_DumpRating (void)
 {
 	int x, y;
+
+	Com_Printf("Rating:\n");
 	for (y = mapH; y >= 1; y--) {
 		for (x = 1; x < mapW + 1; x++)
 			Com_Printf(" %2d", (int) curRating[y][x]);
@@ -973,10 +975,9 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 		mAsm = NULL;
 
 	/* use random assembly, if no valid one has been specified */
-	if (!mAsm) {
+	if (!mAsm)
 		mAsm = &mAssembly[rand() % numAssemblies];
-		Com_DPrintf(DEBUG_SERVER, "Use random assembly: '%s'\n", mAsm->id);
-	}
+	Com_DPrintf(DEBUG_SERVER, "Use assembly: '%s'\n", mAsm->id);
 
 	/* check size */
 	assert(mAsm->w <= MAX_RANDOM_MAP_WIDTH);
