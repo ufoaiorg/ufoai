@@ -464,12 +464,12 @@ void SCR_UpdateScreen (void)
 		SCR_DrawConsole();
 
 		if (cl_fps->integer)
-			SCR_DrawString(viddef.width - con_fontWidth * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
+			SCR_DrawString(viddef.width - 20 - con_fontWidth * 10, 60, va("fps: %3.1f", cls.framerate), qtrue);
 		if (scr_rspeed->integer) {
 			if (cls.state == ca_active)
-				SCR_DrawString(viddef.width - con_fontWidth * 30, 20, va("brushes: %6i alias: %6i\n", refdef.brush_count, refdef.alias_count), qtrue);
+				SCR_DrawString(viddef.width - 20 - con_fontWidth * 30, 80, va("brushes: %6i alias: %6i\n", refdef.brush_count, refdef.alias_count), qtrue);
 			else
-				SCR_DrawString(viddef.width - con_fontWidth * 14, 20, va("alias: %6i\n", refdef.alias_count), qtrue);
+				SCR_DrawString(viddef.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.alias_count), qtrue);
 		}
 
 		if (cls.state != ca_sequence)
@@ -488,7 +488,7 @@ void SCR_Init (void)
 {
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
-	scr_rspeed = Cvar_Get("r_speeds", "0", 0, "Show some rendering stats");
+	scr_rspeed = Cvar_Get("r_speeds", "0", CVAR_ARCHIVE, "Show some rendering stats");
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
 
 	/* register our commands */

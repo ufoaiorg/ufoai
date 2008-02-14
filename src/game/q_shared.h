@@ -41,10 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/byte.h"
 #include "../shared/shared.h"
 
-#ifdef HAVE_CONFIG_H
-# include "../../config.h"
-#endif
-
 #include <errno.h>
 #include <assert.h>
 #include <math.h>
@@ -319,7 +315,11 @@ int Q_strmatch(const char *s1, const char * s2);
 int Q_strcmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_stricmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_strcasecmp(const char *s1, const char *s2) __attribute__((nonnull));
+#ifdef HAVE_STRNCASECMP
+# define Q_strncasecmp(s1, s2, n) strncasecmp(s1, s2, n)
+#else
 int Q_strncasecmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
+#endif
 
 int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
 

@@ -1023,9 +1023,7 @@ int Q_stricmp (const char *s1, const char *s2)
 #endif
 }
 
-#ifdef HAVE_STRNCASECMP
-# define Q_strncasecmp(s1, s2, n) strncasecmp(s1, s2, n)
-#else
+#ifndef HAVE_STRNCASECMP
 int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
 	int c1, c2;

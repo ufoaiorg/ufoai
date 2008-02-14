@@ -49,7 +49,6 @@ vec3_t vright;
 float r_world_matrix[16];
 float r_base_world_matrix[16];
 
-static cvar_t *r_speeds;
 static cvar_t *r_maxtexres;
 
 cvar_t *r_brightness;
@@ -388,7 +387,6 @@ static void R_Register (void)
 	r_drawspecialbrushes = Cvar_Get("r_drawspecialbrushes", "0", 0, "Draw stuff like actorclip");
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 	r_nocull = Cvar_Get("r_nocull", "0", 0, NULL);
-	r_speeds = Cvar_Get("r_speeds", "0", 0, NULL);
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
@@ -397,10 +395,10 @@ static void R_Register (void)
 	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays");
 	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
-	r_modulate = Cvar_Get("r_modulate", "1.8", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
+	r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
-	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
+	r_soften = Cvar_Get("r_soften", "1", CVAR_ARCHIVE | CVAR_IMAGES, "Apply blur to lightmap");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, "The maximum texture resolution UFO should use");
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
