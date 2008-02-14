@@ -2250,9 +2250,9 @@ int G_ClientAction (player_t * player)
 		/* @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
 		ent = g_edicts + num;
 		if (ent) {
-			ent->chr.reactionFiremode[RF_HAND] = hand;
-			ent->chr.reactionFiremode[RF_FM] = fd_idx;
-			ent->chr.reactionFiremode[RF_WPIDX] = obj_idx;
+			ent->chr.RFmode.hand = hand;
+			ent->chr.RFmode.fmIdx = fd_idx;
+			ent->chr.RFmode.wpIdx = obj_idx;
 		}
 		break;
 

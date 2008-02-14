@@ -50,10 +50,10 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
 		assert(weapon_fd_idx >= 0);
 
-		if (ent->chr.reactionFiremode[RF_HAND] == 0
-		 && ent->chr.reactionFiremode[RF_FM] >= 0
-		 && ent->chr.reactionFiremode[RF_FM] < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
-			*firemode = ent->chr.reactionFiremode[RF_FM]; /* Get selected (if any) firemode for the weapon in the right hand. */
+		if (ent->chr.RFmode.hand == 0
+		 && ent->chr.RFmode.fmIdx >= 0
+		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
+			*firemode = ent->chr.RFmode.fmIdx; /* Get selected (if any) firemode for the weapon in the right hand. */
 
 			if (gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 			 && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
@@ -74,10 +74,10 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
 		assert(weapon_fd_idx >= 0);
 
-		if (ent->chr.reactionFiremode[RF_HAND] == 1
-		 && ent->chr.reactionFiremode[RF_FM] >= 0
-		 && ent->chr.reactionFiremode[RF_FM] < MAX_FIREDEFS_PER_WEAPON) { /* If a LEFT-hand firemode is selected and sane. */
-			*firemode = ent->chr.reactionFiremode[RF_FM]; /* Get selected firemode for the weapon in the left hand. */
+		if (ent->chr.RFmode.hand == 1
+		 && ent->chr.RFmode.fmIdx >= 0
+		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a LEFT-hand firemode is selected and sane. */
+			*firemode = ent->chr.RFmode.fmIdx; /* Get selected firemode for the weapon in the left hand. */
 
 			if (gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 			 && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {

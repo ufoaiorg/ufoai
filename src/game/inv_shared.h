@@ -555,13 +555,11 @@ typedef struct chrScoreGlobal_s {
 	int rank;					/**< Index of rank (in gd.ranks). */
 } chrScoreGlobal_t;
 
-typedef enum {
-	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1=undef) */
-	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
-	RF_WPIDX, 	/**< Stores the weapon idx in ods. (for faster access and checks) -1=undef */
-
-	RF_MAX
-} cl_reaction_firemode_type_t;
+typedef struct chrReactionSettings_s {
+	int hand;	/**< Stores the used hand (0=right, 1=left, -1=undef) */
+	int fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
+	int wpIdx;	/**< Stores the weapon idx in ods. (for faster access and checks) -1=undef */
+} chrReactionSettings_t;
 
 /**
  * @brief How many TUs (and of what type) did a player reserve for a unit?
@@ -571,7 +569,7 @@ typedef enum {
  * @todo Would a list be better here? See the enum reservation_types_t
  * @note The "reserveCrouch" is no qboolean to keep all types the same (@sa PA_RESERVE_STATE functions).
  */
-typedef struct {
+typedef struct chrReservations_s {
 	int reserveReaction; /** Stores if the player has activated or disabled reservation for RF. states can be 0, STATE_REACTION_ONCE or STATE_REACTION_MANY See also le_t->state. This is only for remembering over missions. @sa: g_client:G_ClientSpawn*/
 	int reaction;	/**< Did the player activate RF with a usable firemode? (And at the same time storing the TU-costs of this firemode) */
 
@@ -582,8 +580,8 @@ typedef struct {
 			 */
 	/**
 	@todo These two would bring up the same problems (of remembering&updating the correct information)
-	as we have with character_t->reactionFiremode right now :-/
-	We would need to update this whenever the weapon(s) in hand change - same as reactionFiremode.
+	as we have with character_t->RFmode right now :-/
+	We would need to update this whenever the weapon(s) in hand change - same as RFmode.
 	int reserveShotFM;		*< The firemode of the weapon to reserve the TUs for.
 	int reserveShotHand;	*< The hand the weapon is in.
 	*/
@@ -593,7 +591,7 @@ typedef struct {
 	int reserveCustom;	**< Did the player activate reservation for hte custom value?
 	int custom;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to provide a numerical input-field.
 */
-} cl_reserved_tus_t;
+} chrReservations_t;
 
 typedef enum {
 	RES_REACTION,
@@ -634,12 +632,12 @@ typedef struct character_s {
 
 	int teamDefIndex;			/**< teamDef array index. */
 	int gender;					/**< Gender index. */
-	cl_reserved_tus_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See cl_reserved_tus_t for more. */
-	int reactionFiremode[RF_MAX];	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
+	chrReactionSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
 
-#define THIS_REACTION(chr, hand, fd_idx)	(chr->reactionFiremode[RF_HAND] == hand && chr->reactionFiremode[RF_FM] == fd_idx)
-#define SANE_REACTION(chr)	(((chr->reactionFiremode[RF_HAND] >= 0) && (chr->reactionFiremode[RF_FM] >=0 && chr->reactionFiremode[RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (chr->reactionFiremode[RF_FM] >= 0)))
+#define THIS_REACTION(chr, HAND, fd_idx)	(chr->RFmode.hand == HAND && chr->RFmode.fmIdx == fd_idx)
+#define SANE_REACTION(chr)	(((chr->RFmode.hand >= 0) && (chr->RFmode.fmIdx >=0 && chr->RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) && (chr->RFmode.fmIdx >= 0)))
 
 /** @brief The types of employees. */
 /** @note If you will change order, make sure personel transfering still works. */

@@ -414,10 +414,10 @@ void CL_ResetWeaponButtons (void)
 /**
  * @brief Sets the display for a single weapon/reload HUD button.
  */
-static void SetWeaponButton (int button, cl_reaction_firemode_type_t state)
+static void SetWeaponButton (int button, weaponButtonState_t state)
 {
 	char cbufText[MAX_VAR];
-	cl_reaction_firemode_type_t currentState = weaponButtonState[button];
+	weaponButtonState_t currentState = weaponButtonState[button];
 
 	assert(button < BT_NUM_TYPES);
 
@@ -572,7 +572,7 @@ void CL_ListReactionAndReservations_f (void)
 		if (cl.teamList[actor_idx]) {
 			chr = CL_GetActorChr(cl.teamList[actor_idx]);
 			Com_Printf("%s\n", chr->name);
-			Com_Printf(" - hand: %i | fm: %i | wpidx: %i\n", chr->reactionFiremode[RF_HAND], chr->reactionFiremode[RF_FM],chr->reactionFiremode[RF_WPIDX]);
+			Com_Printf(" - hand: %i | fm: %i | wpidx: %i\n", chr->RFmode.hand, chr->RFmode.fmIdx,chr->RFmode.wpIdx);
 			Com_Printf(" - res... reaction: %i | crouch: %i\n", chr->reservedTus.reaction, chr->reservedTus.crouch);
 		}
 	}
@@ -580,7 +580,7 @@ void CL_ListReactionAndReservations_f (void)
 #endif
 
 /**
- * @brief Checks if the currently selected firemode in reactionFiremode is useable with the defined weapon.
+ * @brief Checks if the currently selected firemode in RFmode is useable with the defined weapon.
  * @param[in] actor The actor to check the firemode for.
  * @return qtrue if nothing has to be done.
  * @return qfalse if settings are outdated.
@@ -610,16 +610,16 @@ qboolean CL_WorkingReactionFiremode (const le_t * actor)
 
 	/**@todo Get Weapon&Firedef and compare with settings. */
 	/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-	CL_GetWeaponAndAmmo(actor, (chr->reactionFiremode[RF_HAND]==1)?'l':'r', NULL, &ammo, &weap_fds_idx);
+	CL_GetWeaponAndAmmo(actor, (chr->RFmode.hand==1)?'l':'r', NULL, &ammo, &weap_fds_idx);
 
 	if (!ammo || weap_fds_idx < 0) {
 		/* No weapon&ammo found or bad index returned. stored ssettings possibly bad. */
 		return qfalse;
 	}
 
-	if (ammo->weap_idx[weap_fds_idx] == chr->reactionFiremode[RF_WPIDX]
-	&&  chr->reactionFiremode[RF_FM] >= 0
-	&&  chr->reactionFiremode[RF_FM] < ammo->numFiredefs[weap_fds_idx]) {
+	if (ammo->weap_idx[weap_fds_idx] == chr->RFmode.wpIdx
+	&&  chr->RFmode.fmIdx >= 0
+	&&  chr->RFmode.fmIdx < ammo->numFiredefs[weap_fds_idx]) {
 		/* Stored firemode settings up to date - nothin has to be changed */
 		return qtrue;
 	}
@@ -806,10 +806,10 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int obj_idx,
 	}
 
 	chr = CL_GetActorChr(actor);
-	chr->reactionFiremode[RF_HAND] = handidx;	/* Store the given hand. */
-	chr->reactionFiremode[RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
-	chr->reactionFiremode[RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
-	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fd_idx, obj_idx); /* Send reactionFiremode[] to server-side storage as well. See g_local.h for more. */
+	chr->RFmode.hand = handidx;	/* Store the given hand. */
+	chr->RFmode.fmIdx = fd_idx;	/* Store the given firemode for this hand. */
+	chr->RFmode.wpIdx = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
+	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fd_idx, obj_idx); /* Send RFmode[] to server-side storage as well. See g_local.h for more. */
 	MSG_Write_PA(PA_RESERVE_STATE, actor->entnum, RES_REACTION, chr->reservedTus.reserveReaction, chr->reservedTus.reaction); /* Update server-side settings */
 }
 
@@ -1064,7 +1064,7 @@ static qboolean CL_DisplayImpossibleReaction (const le_t * actor)
 }
 
 /**
- * @brief Updates the information in reactionFiremode for the selected actor with the given data from the parameters.
+ * @brief Updates the information in RFmode for the selected actor with the given data from the parameters.
  * @param[in] hand Which weapon(-hand) to use (l|r).
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
@@ -1160,10 +1160,10 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 
 	chr = CL_GetActorChr(actor);
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%s handidx%i weapfdidx%i\n", chr->name, handidx, weap_fds_idx);
-	if (chr->reactionFiremode[RF_WPIDX] == ammo->weap_idx[weap_fds_idx]
-	 && chr->reactionFiremode[RF_HAND] == handidx) {
+	if (chr->RFmode.wpIdx == ammo->weap_idx[weap_fds_idx]
+	 && chr->RFmode.hand == handidx) {
 		if (ammo->fd[weap_fds_idx][firemodeActive].reaction) {
-			if (chr->reactionFiremode[RF_FM] == firemodeActive)
+			if (chr->RFmode.fmIdx == firemodeActive)
 				/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
 				return;
 		} else {
@@ -1321,10 +1321,10 @@ void CL_DisplayFiremodes_f (void)
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!CL_WorkingReactionFiremode(selActor)) {	/* No usable firemode selected. */
 		/* Make sure we use the same hand if it's defined */
-		if (selChr->reactionFiremode[RF_HAND] != 1) { /* No the left hand defined */
+		if (selChr->RFmode.hand != 1) { /* No the left hand defined */
 			/* Set default firemode (try right hand first, then left hand). */
 			CL_SetDefaultReactionFiremode(selActor, 'r');
-		} else  if (selChr->reactionFiremode[RF_HAND] == 1) {
+		} else  if (selChr->RFmode.hand == 1) {
 			/* Set default firemode (try left hand first, then right hand). */
 			CL_SetDefaultReactionFiremode(selActor, 'l');
 		}

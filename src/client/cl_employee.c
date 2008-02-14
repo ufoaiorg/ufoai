@@ -1262,9 +1262,9 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.fieldSize);
 
 			/* Store reaction-firemode */
-			MSG_WriteShort(sb, e->chr.reactionFiremode[RF_HAND]);
-			MSG_WriteShort(sb, e->chr.reactionFiremode[RF_FM]);
-			MSG_WriteShort(sb, e->chr.reactionFiremode[RF_WPIDX]);
+			MSG_WriteShort(sb, e->chr.RFmode.hand);
+			MSG_WriteShort(sb, e->chr.RFmode.fmIdx);
+			MSG_WriteShort(sb, e->chr.RFmode.wpIdx);
 
 			/* Store reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
 			MSG_WriteShort(sb, e->chr.reservedTus.reserveReaction);
@@ -1380,9 +1380,9 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 
 			if (((saveFileHeader_t *)data)->version >= 3) {
 				/* Load reaction-firemode */
-				e->chr.reactionFiremode[RF_HAND] = MSG_ReadShort(sb);
-				e->chr.reactionFiremode[RF_FM] = MSG_ReadShort(sb);
-				e->chr.reactionFiremode[RF_WPIDX] = MSG_ReadShort(sb);
+				e->chr.RFmode.hand = MSG_ReadShort(sb);
+				e->chr.RFmode.fmIdx = MSG_ReadShort(sb);
+				e->chr.RFmode.wpIdx = MSG_ReadShort(sb);
 
 				/* Read reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
 				e->chr.reservedTus.reserveReaction = MSG_ReadShort(sb);

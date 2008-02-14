@@ -622,7 +622,7 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 		if (CL_WorkingReactionFiremode(cl.teamList[actor_idx])) {
 			/* Rewrite/-send selected reaction firemode in case reserved-TUs or server is outdated. */
 			chr = CL_GetActorChr(cl.teamList[actor_idx]);
-			CL_SetReactionFiremode(cl.teamList[actor_idx], chr->reactionFiremode[RF_HAND], chr->reactionFiremode[RF_WPIDX], chr->reactionFiremode[RF_FM]);
+			CL_SetReactionFiremode(cl.teamList[actor_idx], chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
 
 			/* Reserve Tus for crouching/standing up if player selected this previously. */
 			if (chr->reservedTus.reserveCrouch) {
