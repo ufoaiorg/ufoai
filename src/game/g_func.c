@@ -70,8 +70,10 @@ DOOR FUNCTIONS
  */
 static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 {
-	if (!self->owner)
+	if (!self->owner) {
+		Com_DPrintf(DEBUG_GAME, "Touch_DoorTrigger: No owner for door trigger\n");
 		return qfalse;
+	}
 
 	if (activator->team == TEAM_CIVILIAN || activator->team == TEAM_ALIEN) {
 		/* let the ai interact with the door */
@@ -85,10 +87,11 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 			gi.WriteShort(activator->number);
 			gi.WriteShort(activator->client_action->number);
 			gi.EndEvents();
+		} else {
+			Com_DPrintf(DEBUG_GAME, "Touch_DoorTrigger: Door is already the current client action\n");
 		}
 		return qtrue;
 	}
-	return qfalse;
 }
 
 /**

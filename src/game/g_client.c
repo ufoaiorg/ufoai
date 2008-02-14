@@ -1508,7 +1508,9 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				ent->TU = max(0, initTU - (int) tu);
 			G_SendStats(ent);
 
-			if (!triggers) {
+			/* only if triggers are touched - there was a client
+			 * action set and there were steps made */
+			if (!triggers && ent->client_action && steps) {
 				/* no triggers, no client action */
 				ent->client_action = NULL;
 				gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
@@ -2129,16 +2131,19 @@ void G_ListMissionScore_f (void)
  * @brief This function opens the door when the player wants it to open
  * @sa PA_USE_DOOR
  * @param[in] entnum The entity number of the door
+ * @todo: Do we have to change the trigger position here, too? I don't think this is really needed.
  */
 qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 {
 	edict_t *actor = g_edicts + entnum;
 	edict_t* door = actor->client_action;
-	if (!door)
+	if (!door) {
+		Com_DPrintf(DEBUG_GAME, "G_ClientUseDoor: No client_action set for entnum: %i\n", entnum);
 		return qfalse;
+	}
 
 	if (doornum != door->number) {
-		Com_Printf("G_ClientUseDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
+		Com_DPrintf(DEBUG_GAME, "G_ClientUseDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
 		return qfalse;
 	}
 

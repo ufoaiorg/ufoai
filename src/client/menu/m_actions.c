@@ -97,7 +97,6 @@ void MN_Command_f (void)
 		for (node = mn.menuStack[i]->firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
-				Com_DPrintf(DEBUG_CLIENT, "MN_Command_f: menu '%s'\n", mn.menuStack[i]->name);
 				MN_ExecuteActions(mn.menuStack[i], node->click);
 				return;
 			}
@@ -107,7 +106,6 @@ void MN_Command_f (void)
 		for (node = mn.menus[i].firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
-				Com_DPrintf(DEBUG_CLIENT, "MN_Command_f: menu '%s'\n", mn.menus[i].name);
 				MN_ExecuteActions(&mn.menus[i], node->click);
 				return;
 			}

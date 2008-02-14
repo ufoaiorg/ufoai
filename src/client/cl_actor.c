@@ -1918,7 +1918,7 @@ void CL_ActorUpdateCVars (void)
 		if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 			int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
 			/* If the mouse is outside the world, blank move */
-			/* or the movelength is 255 - not reachable e.g. */
+			/* or the movelength is ROUTING_NOT_REACHABLE */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
 				/** @todo CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = ROUTING_NOT_REACHABLE;
@@ -2746,7 +2746,10 @@ void CL_ActorUseDoor (void)
 	if (!CL_CheckAction())
 		return;
 
+	assert(selActor->client_action);
+
 	MSG_Write_PA(PA_USE_DOOR, selActor->entnum, selActor->client_action);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", selActor->client_action, selActor->entnum);
 }
 
 /**
@@ -2770,6 +2773,7 @@ void CL_ActorDoorAction (struct dbuffer *msg)
 	}
 	/* set door number */
 	le->client_action = doornumber;
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction: Set door number: %i (for actor with entnum %i)\n", doornumber, number);
 }
 
 /**
@@ -2781,8 +2785,10 @@ void CL_ActorDoorAction_f (void)
 		return;
 
 	/* no client action */
-	if (selActor->client_action == 0)
+	if (selActor->client_action == 0) {
+		Com_Printf("CL_ActorDoorAction_f: No client_action set for actor with entnum %i\n", selActor->entnum);
 		return;
+	}
 
 	/* Check if we should even try to send this command (no TUs left or). */
 	if (CL_UsableTUs(selActor) >= TU_DOOR_ACTION)
@@ -2810,6 +2816,7 @@ void CL_ActorResetClientAction (struct dbuffer *msg)
 	}
 	/* set door number */
 	le->client_action = 0;
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorResetClientAction: Reset client action for actor with entnum %i\n", number);
 }
 
 /**
