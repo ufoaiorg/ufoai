@@ -542,7 +542,6 @@ static qboolean SV_TestFilled (void)
 	return qtrue;
 }
 
-#ifdef PARANOID
 /**
  * @brief Debug fuction to dump the rating of the current map.
  */
@@ -582,7 +581,6 @@ static void SV_DumpPlaced (mPlaced_t * placed)
 	}
 	Com_Printf("\n");
 }
-#endif
 
 /**
  * @brief Returns the rating of the current map.
@@ -599,9 +597,8 @@ static int SV_CalcRating (void)
 		for (x = 1; x < mapW + 1; x++)
 			rating += curRating[y][x];
 
-#ifdef PARANOID
-	SV_DumpRating();
-#endif
+	if (sv_dumpmapassembly->integer)
+		SV_DumpRating();
 
 	return rating;
 }
@@ -623,8 +620,8 @@ static void SV_AddTile (mTile_t * tile, int x, int y, int idx, int pos)
 	int tx, ty;
 
 	/* check vor valid grid positions */
-	assert(x%mAsm->dx == 0);
-	assert(y%mAsm->dy == 0);
+	assert(x % mAsm->dx == 0);
+	assert(y % mAsm->dy == 0);
 
 	/* add the new tile */
 	for (ty = 0; ty < tile->h; ty++)
@@ -714,8 +711,8 @@ static void SV_RemoveTile (int* idx, int* pos)
 static qboolean SV_AddRandomTile (int* idx, int* pos)
 {
 	int x, y;
-	int start_idx = *idx = rand() % numToPlace;
-	int start_pos = *pos = rand() % mapSize;
+	const int start_idx = *idx = rand() % numToPlace;
+	const int start_pos = *pos = rand() % mapSize;
 
 	do {
 		if (mToPlace[*idx].cnt < mToPlace[*idx].max) {
@@ -723,7 +720,7 @@ static qboolean SV_AddRandomTile (int* idx, int* pos)
 				x = (*pos) % mapW;
 				y = (*pos) / mapW;
 
-				if ((x%mAsm->dx == 0) && (y%mAsm->dy == 0) &&
+				if ((x % mAsm->dx == 0) && (y % mAsm->dy == 0) &&
 						SV_FitTile(mToPlace[*idx].tile, x, y)) {
 					SV_AddTile(mToPlace[*idx].tile, x, y, *idx, *pos);
 					return qtrue;
@@ -1016,9 +1013,8 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 
 	/* generate the strings */
 	for (i = 0, pl = mPlaced; i < numPlaced; i++, pl++) {
-#ifdef PARANOID
-		SV_DumpPlaced(pl);
-#endif
+		if (sv_dumpmapassembly->integer)
+			SV_DumpPlaced(pl);
 
 		Q_strcat(asmMap, va(" %s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		Q_strcat(asmPos, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8), MAX_TOKEN_CHARS * MAX_TILESTRINGS);

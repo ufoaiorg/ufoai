@@ -28,22 +28,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 
-client_t *sv_client;			/* current client */
+/** current client */
+client_t *sv_client;
 
-cvar_t *rcon_password;			/* password for remote server commands */
-
+/** password for remote server commands */
+static cvar_t *rcon_password;
 static cvar_t *sv_downloadserver;
+static cvar_t *sv_enablemorale;
+static cvar_t *sv_maxsoldiersperteam;
+static cvar_t *sv_maxsoldiersperplayer;
+static cvar_t *sv_hostname;
+/** minimum seconds between connect messages */
+static cvar_t *sv_reconnect_limit;
 
 cvar_t *sv_maxclients = NULL;
-cvar_t *sv_enablemorale;
-cvar_t *sv_maxsoldiersperteam;
-cvar_t *sv_maxsoldiersperplayer;
-
-cvar_t *sv_hostname;
-cvar_t *sv_public;			/**< should heartbeats be sent */
+cvar_t *sv_dumpmapassembly;
+/** should heartbeats be sent */
+cvar_t *sv_public;
 cvar_t *sv_mapname;
-
-static cvar_t *sv_reconnect_limit;		/**< minimum seconds between connect messages */
 
 void Master_Shutdown(void);
 
@@ -801,6 +803,8 @@ void SV_Init (void)
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
 	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
+
+	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
 
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");

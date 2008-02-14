@@ -124,6 +124,7 @@ extern server_t sv;				/**< local server */
 
 extern cvar_t *sv_mapname;
 extern cvar_t *sv_public;			/**< should heartbeats be sent */
+extern cvar_t *sv_dumpmapassembly;
 
 extern client_t *sv_client;
 extern player_t *sv_player;
