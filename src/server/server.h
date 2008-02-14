@@ -117,8 +117,6 @@ extern int mapcycleCount;		/**< number of maps in the cycle */
 
 /*============================================================================= */
 
-/*extern	sizebuf_t	net_message; */
-
 extern server_static_t svs;		/**< persistant server info */
 extern server_t sv;				/**< local server */
 

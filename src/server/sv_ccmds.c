@@ -299,6 +299,11 @@ static void SV_Serverinfo_f (void)
  */
 static void SV_DumpUser_f (void)
 {
+	if (!svs.initialized) {
+		Com_Printf("No server running.\n");
+		return;
+	}
+
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: info <userid>\n");
 		return;

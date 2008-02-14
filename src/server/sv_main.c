@@ -47,8 +47,6 @@ cvar_t *sv_dumpmapassembly;
 cvar_t *sv_public;
 cvar_t *sv_mapname;
 
-void Master_Shutdown(void);
-
 static qboolean abandon = qfalse;		/**< shutdown server when all clients disconnect and don't accept new connections */
 static qboolean killserver = qfalse;	/**< will initiate shutdown once abandon is set */
 
@@ -736,7 +734,7 @@ void Master_Heartbeat (void)
 /**
  * @brief Informs all masters that this server is going down
  */
-void Master_Shutdown (void)
+static void Master_Shutdown (void)
 {
 	char *responseBuf;
 
