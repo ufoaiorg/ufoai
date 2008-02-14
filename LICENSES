@@ -242,7 +242,23 @@ base/maps/oriental05n.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/oriental06d.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/oriental06n.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/orientald.ump | GNU General Public License 2.0
+base/maps/orientald/or_drop.map | GNU General Public License 2.0
 base/maps/orientald/or_drop_firebird.map | GNU General Public Licence 2.0
+base/maps/orientald/or_h01.map | GNU General Public License 2.0
+base/maps/orientald/or_h02.map | GNU General Public License 2.0
+base/maps/orientald/or_h03.map | GNU General Public License 2.0
+base/maps/orientald/or_h04.map | GNU General Public License 2.0
+base/maps/orientald/or_h05.map | GNU General Public License 2.0
+base/maps/orientald/or_h06.map | GNU General Public License 2.0
+base/maps/orientald/or_h07.map | GNU General Public License 2.0
+base/maps/orientald/or_h08.map | GNU General Public License 2.0
+base/maps/orientald/or_h09.map | GNU General Public License 2.0
+base/maps/orientald/or_h10.map | GNU General Public License 2.0
+base/maps/orientald/or_h11.map | GNU General Public License 2.0
+base/maps/orientald/or_h12.map | GNU General Public License 2.0
+base/maps/orientald/or_h13.map | GNU General Public License 2.0
+base/maps/orientald/or_h14.map | GNU General Public License 2.0
+base/maps/orientald/or_h15.map | GNU General Public License 2.0
 base/maps/orientald/or_house_a.map | GNU General Public Licence 2.0
 base/maps/orientald/or_house_b.map | GNU General Public Licence 2.0
 base/maps/orientald/or_house_c.map | GNU General Public Licence 2.0
@@ -259,7 +275,23 @@ base/maps/orientald/or_trees_a.map | GNU General Public Licence 2.0
 base/maps/orientald/or_trees_b.map | GNU General Public Licence 2.0
 base/maps/orientald/or_well.map | GNU General Public Licence 2.0
 base/maps/orientaln.ump | GNU General Public License 2.0
+base/maps/orientaln/or_drop.map | GNU General Public License 2.0
 base/maps/orientaln/or_drop_firebird.map | GNU General Public Licence 2.0
+base/maps/orientaln/or_h01.map | GNU General Public License 2.0
+base/maps/orientaln/or_h02.map | GNU General Public License 2.0
+base/maps/orientaln/or_h03.map | GNU General Public License 2.0
+base/maps/orientaln/or_h04.map | GNU General Public License 2.0
+base/maps/orientaln/or_h05.map | GNU General Public License 2.0
+base/maps/orientaln/or_h06.map | GNU General Public License 2.0
+base/maps/orientaln/or_h07.map | GNU General Public License 2.0
+base/maps/orientaln/or_h08.map | GNU General Public License 2.0
+base/maps/orientaln/or_h09.map | GNU General Public License 2.0
+base/maps/orientaln/or_h10.map | GNU General Public License 2.0
+base/maps/orientaln/or_h11.map | GNU General Public License 2.0
+base/maps/orientaln/or_h12.map | GNU General Public License 2.0
+base/maps/orientaln/or_h13.map | GNU General Public License 2.0
+base/maps/orientaln/or_h14.map | GNU General Public License 2.0
+base/maps/orientaln/or_h15.map | GNU General Public License 2.0
 base/maps/orientaln/or_house_a.map | GNU General Public Licence 2.0
 base/maps/orientaln/or_house_b.map | GNU General Public Licence 2.0
 base/maps/orientaln/or_house_c.map | GNU General Public Licence 2.0
