@@ -344,12 +344,12 @@ employee_t* E_GetEmployee (const base_t* const base, employeeType_t type, int id
  */
 static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 {
-	int i = 0;
+	int i;
 	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	if (type >= MAX_EMPL) {
-		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type );
+		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type);
 		return NULL;
 	}
 
@@ -379,9 +379,8 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
  */
 employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
-	int i = 0;
-	employee_t *employee = NULL;
-
+	int i;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		employee = &gd.employees[EMPL_ROBOT][i];
@@ -390,10 +389,8 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 		if (!ugvType)
 			return employee;
 
-		if ((employee->ugv == ugvType)
-		&&  !employee->hired) {
+		if (employee->ugv == ugvType && !employee->hired)
 			return employee;
-		}
 	}
 	Com_Printf("Could not get unhired ugv/robot.\n");
 	return NULL;
@@ -411,25 +408,24 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
  */
 employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, int idx)
 {
-	int i = 0;
+	int i;
 	int j = -1;	/* The number of found hired employees. Ignore the minus. */
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	if (!base)
 		return NULL;
 
 	if (type >= MAX_EMPL) {
-		Com_Printf("E_GetHiredEmployee: Unknown EmployeeType: %i\n", type );
+		Com_Printf("E_GetHiredEmployee: Unknown EmployeeType: %i\n", type);
 		return NULL;
 	}
 
 #ifdef PARANOID
-	if (j < 0) {
-		i = E_CountHired(base, type);
-		if (i < abs(idx))
-			Sys_Error("Try to get the %ith employee - but you only have %i hired\n", abs(idx), i);
-	}
+	i = E_CountHired(base, type);
+	if (i < abs(idx))
+		Sys_Error("Try to get the %ith employee - but you only have %i hired\n", abs(idx), i);
 #endif
+
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 		if (employee->baseIDHired == base->idx) {
@@ -453,9 +449,8 @@ employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, i
  */
 employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 {
-	int i = 0;
-	employee_t *employee = NULL;
-
+	int i;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		employee = &gd.employees[EMPL_ROBOT][i];
@@ -517,7 +512,7 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type)
 {
 	int i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -539,7 +534,7 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type
 employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t type)
 {
 	int i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -669,7 +664,7 @@ qboolean E_UnhireEmployee (employee_t* employee)
 void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 {
 	int i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	if (!base || type > MAX_EMPL)
 		return;
@@ -690,7 +685,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  */
 employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvType)
 {
-	employee_t* employee = NULL;
+	employee_t* employee;
 
 	if (type >= MAX_EMPL)
 		return NULL;
@@ -702,9 +697,6 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
 
 	employee = &gd.employees[type][gd.numEmployees[type]];
 	memset(employee, 0, sizeof(employee_t));
-
-	if (!employee)
-		return NULL;
 
 	employee->idx = gd.numEmployees[type];
 	employee->hired = qfalse;
@@ -803,7 +795,7 @@ void E_DeleteAllEmployees (base_t* base)
 {
 	int i;
 	employeeType_t type;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	if (!base)
 		return;
@@ -871,7 +863,7 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
  */
 qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 	base_t *base;
 
 	assert(employee);
@@ -944,7 +936,7 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 int E_CountHired (const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	if (!base)
 		return 0;
@@ -966,7 +958,7 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 {
 	int count = 0, i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		employee = &gd.employees[EMPL_ROBOT][i];
@@ -1010,7 +1002,7 @@ int E_CountAllHired (const base_t* const base)
 int E_CountUnhired (employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -1027,12 +1019,11 @@ int E_CountUnhired (employeeType_t type)
 int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 {
 	int count = 0, i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		employee = &gd.employees[EMPL_ROBOT][i];
-		if (!employee->hired
-		&&  employee->ugv == ugvType)
+		if (!employee->hired && employee->ugv == ugvType)
 			count++;
 	}
 	return count;
@@ -1046,7 +1037,7 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 int E_CountUnassigned (const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	if (!base)
 		return 0;
