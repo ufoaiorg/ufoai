@@ -70,7 +70,7 @@ static void BaseSummary_Init_f (void)
 		objDef_t *objDef;
 		technology_t *tech;
 		int totalEmployees = 0;
-		int tmp, daysLeft;
+		int tmp;
 
 		/* wipe away old buffers */
 		textStatsBuffer[0] = textInfoBuffer[0] = 0;
@@ -109,8 +109,10 @@ static void BaseSummary_Init_f (void)
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
 					base->capacities[cap].cur, base->capacities[cap].max), sizeof(textStatsBuffer));
 			} else {
-				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION && daysLeft > 0) {
-					daysLeft = b->timeStart + b->buildTime - ccs.date.day;
+				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
+					const int daysLeft = b->timeStart + b->buildTime - ccs.date.day;
+					/* if there is no day left the status should not be B_STATUS_UNDER_CONSTRUCTION */
+					assert(daysLeft);
 					Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i %s", _(b->name), daysLeft, ngettext("day", "days", daysLeft)), sizeof(textStatsBuffer));
 				} else {
 					Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), base->capacities[cap].cur, 0), sizeof(textStatsBuffer));
