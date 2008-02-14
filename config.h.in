@@ -6,9 +6,6 @@
 /* AI_NUMERICSERV not found in netdb.h */
 #undef HAVE_AI_NUMERICSERV
 
-/* Define to 1 if you have the <curl/curl.h> header file. */
-#undef HAVE_CURL_CURL_H
-
 /* Have curses library */
 #undef HAVE_CURSES
 
@@ -59,6 +56,9 @@
 
 /* Define to 1 if you have the <SDL_ttf.h> header file. */
 #undef HAVE_SDL_TTF_H
+
+/* Define to 1 if you have the `setpriority' function. */
+#undef HAVE_SETPRIORITY
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H

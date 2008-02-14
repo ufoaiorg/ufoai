@@ -70,7 +70,7 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			Com_Printf("nowater = true\n");
 			config.nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
+#ifdef HAVE_SETPRIORITY
 			config.nice = atoi(argv[i+1]);
 			Com_Printf("nice = %i\n", config.nice);
 			if (setpriority(PRIO_PROCESS, 0, config.nice))
