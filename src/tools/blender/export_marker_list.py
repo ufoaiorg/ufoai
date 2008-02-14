@@ -70,7 +70,7 @@ def write_mlist_ufoai (markerData):
 		txt.write("// Frame list exported from blender - please check if everything is ok before using!\n")
 		for frame in sorted(markerData.keys()):
 			if (markerData[frame][0] == "ufoai_end"):
-				return
+				break
 			txt.write(markerData[frame][0] + "\t\t\t\t" + str(frame+ufoaiOffset) + "\t\t" + str(markerData[frame][1]+ufoaiOffset) + "\t\t" + str(dummySpeed) + "\n")
 		txt.write("// End of the list.\n")
 	finally:
