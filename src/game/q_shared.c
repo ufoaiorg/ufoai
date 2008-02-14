@@ -1014,28 +1014,18 @@ int Q_strncmp (const char *s1, const char *s2, size_t n)
 	return strncmp(s1, s2, n);
 }
 
-/* PATCH: matt */
-/* use our own strncasecmp instead of this implementation */
-#ifdef sun
-
-#define Q_strncasecmp(s1, s2, n) (strncasecmp(s1, s2, n))
-
-int Q_stricmp (const char *s1, const char *s2)
-{
-	return strcasecmp(s1, s2);
-}
-
-#else							/* sun */
-/* FIXME: replace all Q_stricmp with Q_strcasecmp */
 int Q_stricmp (const char *s1, const char *s2)
 {
 #ifdef _WIN32
 	return _stricmp(s1, s2);
 #else
-	return strcasecmp(s1, s2);
+	return stricmp(s1, s2);
 #endif
 }
 
+#ifdef HAVE_STRNCASECMP
+# define Q_strncasecmp(s1, s2, n) strncasecmp(s1, s2, n)
+#else
 int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
 	int c1, c2;
@@ -1059,7 +1049,7 @@ int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 
 	return 0;					/* strings are equal */
 }
-#endif							/* sun */
+#endif /* HAVE_STRNCASECMP */
 
 /**
  * @brief Safe strncpy that ensures a trailing zero
