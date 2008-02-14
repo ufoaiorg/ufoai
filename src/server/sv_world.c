@@ -435,10 +435,6 @@ int SV_PointContents (vec3_t p)
 
 /**
  * @param[in] mins and maxs are relative
- * @param[in] passedict is explicitly excluded from clipping checks (normally NULL)
- * if the entire move stays in a solid volume, trace.allsolid will be set,
- * trace.startsolid will be set, and trace.fraction will be 0
- * if the starting point is in a solid, it will be allowed to move out to an open area
  * @sa SV_Trace
  */
 static void SV_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
@@ -469,7 +465,10 @@ static void SV_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, 
  * @sa CL_Trace
  * @param[in] start
  * @param[in] end
- * @param[in] passedict
+ * @param[in] passedict is explicitly excluded from clipping checks (normally NULL)
+ * if the entire move stays in a solid volume, trace.allsolid will be set,
+ * trace.startsolid will be set, and trace.fraction will be 0
+ * if the starting point is in a solid, it will be allowed to move out to an open area
  * @param[in] contentmask brushes the trace should stop at (see MASK_*)
  * @param[in] mins
  * @param[in] maxs

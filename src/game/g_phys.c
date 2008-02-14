@@ -90,12 +90,9 @@ void G_PhysicsStep (edict_t *ent)
  */
 static qboolean G_PhysicsThink (edict_t *ent)
 {
-	float	thinktime;
-
-	thinktime = ent->nextthink;
-	if (thinktime <= 0)
+	if (ent->nextthink <= 0)
 		return qtrue;
-	if (thinktime > level.time + 0.001f)
+	if (ent->nextthink > level.time + 0.001f)
 		return qtrue;
 
 	ent->nextthink = level.time + SERVER_FRAME_SECONDS;
