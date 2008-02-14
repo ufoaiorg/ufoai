@@ -1,89 +1,11 @@
-// **************
-// VILLAGE DESERT
-// **************
+// **********************
+// VILLAGE DESERT - Night
+// **********************
 
 base orientaln/or_
 
-// ---------------------------------
-tile +h01
-{
-4 3
-
-0      a      a      0
-a      +a     +a     a
-0      a      a      0
-}
-
-tile +h02
-{
-4 4
-
-0      a      a      0
-a      +a     +a     a
-a      +a     +a     a
-0      a      a      0
-}
-
-tile +h03
-{
-4 4
-
-0      a      a      0
-a      +a     +a     a
-a      +a     a      0
-0      a      0      0
-}
-
-tile +h04
-{
-4 4
-
-0      0      a      0
-0      a      +a     a
-a      +a     +a     a
-0      a      a      0
-}
-
-
-tile +h05
-{
-3 3
-
-0      a      0
-a      +a     a
-0      a      0
-}
-
-tile +h06
-{
-3 3
-
-0      a      0
-a      +a     a
-0      a      0
-}
-
-tile +h07
-{
-3 3
-
-0      a      0
-a      +a     a
-0      a      0
-}
-
-
-tile +h08
-{
-4 4
-
-0      a      a	     0
-a      +a     +a     a
-a      +a     +a     a
-0      a      a      0
-}
-
-tile +drop
+// or_drop_firebird - Dropship
+tile +drop_firebird
 {
 5 4
 
@@ -93,7 +15,53 @@ a      +a     +a    +a    a
 0      a      a     a     0
 }
 
-tile +h09
+// or_house_a - Small house: 2 rooms, outside stairs to roof
+tile +house_a
+{
+4 3
+
+0      a      a      0
+a      +a     +a     a
+0      a      a      0
+}
+
+// or_shed_a - Two small storage buildings
+tile +shed_a
+{
+4 4
+
+0      a      a      0
+a      +a     +a     a
+a      +a     +a     a
+0      a      a      0
+}
+
+// or_house_b - T-shaped house with shop, stairs to first floor, carpet on roof
+tile +house_b
+{
+4 4
+
+0      a      a      0
+a      +a     +a     a
+a      +a     a      0
+0      a      0      0
+}
+
+// or_house_c - L-shaped house, with first floor
+tile +house_c
+{
+4 4
+
+0      0      a      0
+0      a      +a     a
+a      +a     +a     a
+0      a      a      0
+}
+
+// ########################################
+
+// or_well - Small well
+tile +well
 {
 3 3
 
@@ -102,7 +70,8 @@ a      +a     a
 0      a      0
 }
 
-tile +h10
+// or_trees_a - 4 palm-trees
+tile +trees_a
 {
 3 3
 
@@ -111,7 +80,49 @@ a      +a     a
 0      a      0
 }
 
-tile +h11
+// or_house_d - Small square house, 2 rooms, outside stairs to roof
+tile +house_d
+{
+3 3
+
+0      a      0
+a      +a     a
+0      a      0
+}
+
+// or_house_e - Big house with fence
+tile +house_e
+{
+4 4
+
+0      a      a	     0
+a      +a     +a     a
+a      +a     +a     a
+0      a      a      0
+}
+
+// or_stall_a - Fruitstand
+tile +stall_a
+{
+3 3
+
+0      a      0
+a      +a     a
+0      a      0
+}
+
+// or_stall_b - Fruitstand
+tile +stall_b
+{
+3 3
+
+0      a      0
+a      +a     a
+0      a      0
+}
+
+// or_house_f - Big house with fence, car in yard
+tile +house_f
 {
 4 4
 
@@ -121,8 +132,8 @@ a      +a     +a	a
 0      a      a		0
 }
 
-
-tile +h12
+// or_house_g - Small square house, 1 room
+tile +house_g
 {
 3 3
 
@@ -131,7 +142,7 @@ a      +a     a
 0      a      0
 }
 
-tile +h13
+tile +house_h
 {
 4 4
 
@@ -141,7 +152,7 @@ a      +a     a      0
 0      a      a      0
 }
 
-tile +h14
+tile +mosque
 {
 4 4
 
@@ -152,7 +163,7 @@ a      +a     +a     a
 }
 
 // 4 palm-trees
-tile +h15
+tile +trees_b
 {
 3 3
 
@@ -161,91 +172,98 @@ a      +a     a
 0      a      0
 }
 
+// ########################################
+
+// *** Test-Maps ***
+
+// short-range weapon-testing :-)
+//assembly test
+//{
+//size "3 3"
+//+well "0 2"
+//+trees_a "0 2"
+//+stall_a "0 2"
+//+stall_b "0 2"
+//*rm_drop +drop_firebird "1 1"
+//}
+
+//assembly tiny
+//{
+//size "3 3"
+//+house_a "0 1"
+//+house_d "0 1"
+//+well "0 2"
+//+trees_a "0 2"
+//+stall_a "0 2"
+//+stall_b "0 2"
+//*rm_drop +drop_firebird "1 1"
+//}
+
 // *********************************
-assembly big
-{
-size "7 7"
-title "_Oriental big"
-+h01 "1 3"
-+h02 "1 3"
-+h03 "1 3"
-+h04 "1 3"
-+h05 "1 3"
-+h06 "0 10"
-+h07 "0 5"
-+h08 "1 3"
-+h09 "0 10"
-+h10 "0 10"
-+h11 "1 3"
-+h12 "0 3"
-+h13 "0 3"
-+h14 "0 1"
-+h15 "0 2"
-+drop "1 1"
-}
+// *** Game-Maps ***
 
 assembly small
 {
 size "4 4"
 title "_Oriental small"
-+h01 "0 2"
-+h02 "0 1"
-+h03 "1 2"
-+h04 "1 2"
-+h05 "0 2"
-+h06 "0 5"
-+h07 "0 3"
-+h08 "0 1"
-+h09 "0 3"
-+h10 "0 3"
-+h11 "0 1"
-+h12 "0 3"
-+h13 "0 3"
-+h14 "0 1"
-+h15 "0 2"
-+drop "1 1"
++house_a "0 2"
++shed_a "0 1"
++house_b "1 2"
++house_c "1 2"
++well "0 2"
++trees_a "0 5"
++house_d "0 3"
++house_e "0 1"
++stall_a "0 3"
++stall_b "0 3"
++house_f "0 1"
++house_g "0 3"
++house_h "0 3"
++mosque "0 1"
++trees_b "0 2"
+*rm_drop +drop_firebird "1 1"
 }
 
 assembly medium
 {
 size "5 6"
 title "_Oriental medium"
-+h01 "0 2"
-+h02 "0 1"
-+h03 "1 2"
-+h04 "1 2"
-+h05 "0 2"
-+h06 "0 5"
-+h07 "0 3"
-+h08 "1 2"
-+h09 "0 10"
-+h10 "0 10"
-+h11 "1 3"
-+h12 "0 3"
-+h13 "0 3"
-+h14 "0 1"
-+h15 "0 2"
-+drop "1 1"
++house_a "0 2"
++shed_a "0 1"
++house_b "1 2"
++house_c "1 2"
++well "0 2"
++trees_a "0 5"
++house_d "0 3"
++house_e "1 2"
++stall_a "0 10"
++stall_b "0 10"
++house_f "1 3"
++house_g "0 3"
++house_h "0 3"
++mosque "0 1"
++trees_b "0 2"
+*rm_drop +drop_firebird "1 1"
 }
 
 assembly big
 {
 size "7 7"
 title "_Oriental big"
-+h01 "1 3"
-+h02 "1 3"
-+h03 "1 3"
-+h04 "1 3"
-+h05 "1 3"
-+h06 "0 10"
-+h07 "0 5"
-+h08 "1 3"
-+h09 "0 10"
-+h10 "0 10"
-+h11 "1 3"
-+h12 "0 3"
-+h13 "0 3"
-+h14 "0 1"
-+h15 "0 2"
-+drop "1 1"
++house_a "1 3"
++shed_a "1 3"
++house_b "1 3"
++house_c "1 3"
++well "1 3"
++trees_a "0 10"
++house_d "0 5"
++house_e "1 3"
++stall_a "0 10"
++stall_b "0 10"
++house_f "1 3"
++house_g "0 3"
++house_h "0 3"
++mosque "0 1"
++trees_b "0 2"
+*rm_drop +drop_firebird "1 1"
 }
