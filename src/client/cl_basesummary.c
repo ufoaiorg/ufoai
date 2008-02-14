@@ -166,6 +166,4 @@ void BaseSummary_Reset (void)
 	/* add commands */
 	Cmd_AddCommand("basesummary_init", BaseSummary_Init_f, "Init function for Base Statistics menu");
 	Cmd_AddCommand("basesummary_selectbase", BaseSummary_SelectBase_f, "Opens Base Statistics menu in base");
-
-	baseCurrent = NULL;
 }
