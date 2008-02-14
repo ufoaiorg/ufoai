@@ -59,17 +59,29 @@ def generate_mlist (markerData, printInfo):
 #=======================
 # Output ufoai data
 #=======================
-def print_mlist_ufoai (markerData):
-	ufoaiOffset = -1	# Difference between Blender/UFO:AI frames (ufoai = blender + ufoaiOffset)
+def write_mlist_ufoai (markerData):
+	txt = Blender.Text.New("framelist")
+	#file = open(filename, 'wb')
+	try:
+		ufoaiOffset = -1	# Difference between Blender/UFO:AI frames (ufoai = blender + ufoaiOffset)
 
-#	print markerData #debug
-	dummySpeed = 20
-	print "// Frame list exported from blender - please check if everything is ok before using!"
-	for frame in sorted(markerData.keys()):
-		if (markerData[frame][0] == "ufoai_end"):
-			return
-		print markerData[frame][0] + "\t\t" + str(frame+ufoaiOffset) + "\t" + str(markerData[frame][1]+ufoaiOffset) + "\t" + str(dummySpeed)
-
+#		print markerData #debug
+		dummySpeed = 20
+		txt.write("// Frame list exported from blender - please check if everything is ok before using!\n")
+		for frame in sorted(markerData.keys()):
+			if (markerData[frame][0] == "ufoai_end"):
+				return
+			txt.write(markerData[frame][0] + "\t\t\t\t" + str(frame+ufoaiOffset) + "\t\t" + str(markerData[frame][1]+ufoaiOffset) + "\t\t" + str(dummySpeed) + "\n")
+		txt.write("// End of the list.\n")
+	finally:
+		print "========================================"
+		for line in txt.asLines():
+			print line
+		print "========================================"
+		print "Created new text with the frame list. See text-editor for saving."
+		print "A badly formatted version is printed above."
+		# You can normally use [Ctrl][Shift][Alt][C] to copy the text into the clipboards for use in other applications. Might not always work though.
+		#file.close()
 
 #=======================
 # MAIN
@@ -79,4 +91,4 @@ mlist = {}
 generate_mlist(mlist, not ufoaiOutput)
 
 if ufoaiOutput:
-	print_mlist_ufoai(mlist)
+	write_mlist_ufoai(mlist)
