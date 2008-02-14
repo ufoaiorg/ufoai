@@ -65,55 +65,29 @@ static void InitCocoa (void)
 	nsappload();
 }
 
-static int lenstr (const char *text)
+/**
+ * @brief Sets the current working directory to the top of the
+ * application bundle hierarchy.
+ */
+static void SetWorkingDirectory (const char **argv)
 {
-	int count = -1;				/* Character counter */
+	char newPath[MAX_OSPATH];
+	NSBundle *mainBundle;
+	int strLength = strlen(*argv);
 
-	while (text[++count] != '\0');		/* Search for a null */
+	Com_DPrintf(DEBUG_SYSTEM, "Path Length : %d \n", strLength);
+	mainBundle = [NSBundle mainBundle];
 
-	return (count);				/* Return the position of the NULL-1 */
-}
-
-static unsigned char CheckForFinderCall (const char **argv, int argc)
-{
-	unsigned char change = 0;
-
-	if (argc < 2) {
-		/* No change needed, finder would set argc to 2 */
-		change = 0;
+	if (strLength >= sizeof(newPath)) {
+		Com_Printf("Path is too long. Please copy Bundle to a shorter path location \n");
 	} else {
-		/* now check if first param is a cvar or a finder path */
-		if (argv[0][0] == '+') {
-			/* parameter is a cvar, don't change directory */
-			change = 0;
+		if (mainBundle != NULL) {
+			strncpy(newPath, [[mainBundle bundlePath] UTF8String], sizeof(newPath));
+			Com_DPrintf(DEBUG_SYSTEM, "%s = new path\n", newPath);
+			chdir(newPath);
 		} else {
-			/*change directory is needed */
-			/* finder gives as second argument -psxxxx process ID */
-			if (argv[1][0] == '-') {
-				change = 1;
-			}
+			Com_Printf("Main bundle appears to be NULL!\n");
 		}
-
-	}
-	return change;
-}
-
-static void FixWorkingDirectory (const char **argv)
-{
-	char newPath[255];
-
-	printf("Path Length : %d \n",lenstr(*argv));
-	if (lenstr(*argv) > 255) {
-		printf("Path is too long. Please copy Bundle to a shorter path location \n");
-	} else {
-		/* unfortunately the finder gives the path inclusive the executeable */
-		/* so we only go to length - 18, to remove "Contents/MacOS/ufo" from the path */
-		/* so we end up in UFO.app/ where base/ is to be found */
-		printf("Changing wd to path %s \n",argv[0]);
-		strncpy(newPath,argv[0],(strlen(argv[0])-19));
-		newPath[strlen(argv[0])-18]=0; /* terminating zero! */
-		printf("%s = neuer Pfad \n",newPath);
-		chdir(newPath);
 	}
 }
 
@@ -130,10 +104,8 @@ int main (int argc, const char **argv)
 
 	InitCocoa();
 
-	if (CheckForFinderCall(argv, argc)) {
-		printf("---> Fixing Working Directory, depending on Finder Call ! \n");
-		FixWorkingDirectory(argv);
-	}
+	SetWorkingDirectory(argv);
+
 	Qcommon_Init(argc, argv);
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 
