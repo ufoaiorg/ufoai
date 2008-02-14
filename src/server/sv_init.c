@@ -666,8 +666,10 @@ static void SV_RemoveTile (int* idx, int* pos)
 	int i, index;
 	mTile_t * tile;
 
-	assert(numPlaced);
 	SV_ClearMap();
+
+	if (numPlaced == 0)
+		return;
 
 	numPlaced--;
 	index = mPlaced[numPlaced].idx;
@@ -676,9 +678,11 @@ static void SV_RemoveTile (int* idx, int* pos)
 		mToPlace[index].cnt--;
 	}
 
-	for (i = numPlaced; i--; ) {
+	for (i = numPlaced; i--;) {
+		assert(i >= 0);
 		assert(mPlaced[i].tile);
 		tile = mPlaced[i].tile;
+		assert(tile);
 		x = mPlaced[i].x;
 		y = mPlaced[i].y;
 
@@ -762,7 +766,7 @@ static qboolean SV_AddMissingTiles (void)
 	const int startPlaced = numPlaced;
 
 	while (1) {
-		max_rating = -mapW*mapH*4;
+		max_rating = -mapW * mapH * 4;
 
 		/* check if the map is already filled */
 		if (SV_TestFilled())
@@ -791,8 +795,8 @@ static qboolean SV_AddMissingTiles (void)
 
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
 			if (rating[i] == max_rating) {
-				int x = pos[i] % mapW;
-				int y = pos[i] / mapW;
+				const int x = pos[i] % mapW;
+				const int y = pos[i] / mapW;
 				SV_AddTile(mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
 				break;
 			}
@@ -822,7 +826,7 @@ static void SV_AddMapTiles (void)
 				x = prList[pos] % mapW;
 				y = prList[pos] / mapW;
 
-				if ((x%mAsm->dx != 0) || (y%mAsm->dy != 0))
+				if ((x % mAsm->dx != 0) || (y % mAsm->dy != 0))
 					continue;
 
 				if (SV_FitTile(mToPlace[idx].tile, x, y)) {
@@ -840,7 +844,8 @@ static void SV_AddMapTiles (void)
 				break;
 
 			/* tile does not fit, restore last status - replace the last tile */
-			assert(idx == mPlaced[numPlaced-1].idx);
+			assert(numPlaced > 0);
+			assert(idx == mPlaced[numPlaced - 1].idx);
 			SV_RemoveTile(&idx, &pos);
 			pos++;
 		}
