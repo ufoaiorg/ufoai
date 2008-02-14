@@ -62,7 +62,7 @@ cshoot_grenade				418		427		22
 //cshoot_item				428		437		22	// no animation yet
 cshoot_rpg				438		452		22
 
-// IDLE animations (right these are reused "stand" animations)
+// IDLE animations (right now these are reused "stand" animations)
 move_rifle				62		62		1	//stand1
 move_biggun				62		62		1	//stand1
 move_melee				60		60		1	//stand0
@@ -72,7 +72,7 @@ move_grenade				60		60		1	//stand0
 move_item				60		60		1	//stand0
 move_rpg				66		66		1	//stand3
 
-// IDLE crouched animations (right these are reused "cstand" animations)
+// IDLE crouched animations (right now these are reused "cstand" animations)
 cmove_rifle				70		70		1	//cstand1
 cmove_biggun				70		70		1	//cstand1
 cmove_melee				68		68		1	//cstand0
@@ -83,136 +83,3 @@ cmove_item				68		68		1	//cstand0
 cmove_rpg				74		74		1	//cstand3
 
 // End of file
-
-/*
-/-------------------------------
-// Standing and walking with nothing in hands (sometime used for grenades and similar stuff)
-stand0				60		60		1
-walk0				63		81		22
-cstand0				62		62		1
-cwalk0				101		118		15
-
-// Item use&idle animations
-//move_item			263		263		4
-//shoot_item			264		268		10
-//cmove_item			303		304		10
-//cshoot_item			305		309		10
-
-// Rifle animations
-stand1				61		61		1
-walk1				82		100		22
-cstand1				134		134		1
-cwalk1				118		133		15
-
-//FKED move_rifle			82		100		22
-move_rifle			61		61		1		//stand1
-shoot_rifle			119		133		22
-//FKED cmove_rifle			136		153		22
-cmove_rifle				134		134		1	//cstand1
-cshoot_rifle			154		168		22
-
-// Throw and idle animations for grenades and similar items.
-// "Standing" with grenades uses stand0 etc...
-//FKED move_grenade		169		187		22
-move_grenade				60		60		1	//stand0
-shoot_grenade		188		197		22
-//FKED cmove_grenade		198		215		22
-cmove_grenade				62		62		1	//cstand0
-cshoot_grenade		216		225		22
-
-// RPG (and blaster) animations
-stand3				226		226		1
-walk3				228		246		22
-cstand3				262		262		1
-cwalk3				264		281		22
-
-//FKED move_rpg			228		246		22
-move_rpg				226		226		1	//stand3
-shoot_rpg			247		261		22
-//FKED cmove_rpg			264		281		22
-cmove_rpg				262		262		1	//cstand3
-cshoot_rpg			282		296		22
-
-// Pistol stand, walk, shoot and idle animations.
-stand2				297		297		1
-walk2				299		318		22
-cstand2				333		333		1
-cwalk2				335		352		22
-
-//FKED move_pistol			299		317		22
-move_pistol				297		297		1	//stand2
-shoot_pistol		318		332		22
-//FKED cmove_pistol		335		352		22
-cmove_pistol				333		333		1	//cstand2
-cshoot_pistol		353		367		22
-
-// Akimbo pistols (xxx_pistol_d)
-//BLEND move_pistol_d		368		386		22
-//BLEND shoot_pistol_d		387		401		22
-//BLEND cmove_pistol_d		402		419		22
-//BLEND cshoot_pistol_d		420		434		22
-
-// TODO: Right now we use the "rifle" animations (how is this different to rifle?)
-//FKED move_biggun			82		100		22
-move_biggun			61		61		1	//stand1
-shoot_biggun		119		133		22
-//FKED cmove_biggun		136		153		22
-cmove_biggun				134		134		1 //cstand1
-cshoot_biggun		154		168		22
-
-// Melee attack and move animations.
-//TODO move_melee			155		155		4
-//TODO shoot_melee			156		160		10
-//TODO cmove_melee			181		182		10
-//TODO cshoot_melee		183		187		10
-
-
-
-stand_menu			60		60		1
-//TODO panic0				370		371		1
-
-stand_still			60		60		1
-
-
-// Frame list exported from blender - please check if everything is ok before using!
-death1				0		27		20
-death2				28		46		20
-death3				47		59		20
-stand0				60		61		20
-stand1				62		63		20
-stand2				64		65		20
-stand3				66		67		20
-cstand0				68		69		20
-cstand1				70		71		20
-cstand2				72		73		20
-cstand3				74		75		20
-walk0				76		94		20
-walk1_Rifle				95		113		20
-walk2_Pistol				114		132		20
-walk3_RPG				133		151		20
-cwalk0				152		169		20
-cwalk1_Rifle				170		187		20
-cwalk2_Pistol				188		206		20
-cwalk3_RPG				207		224		20
-panic0				225		230		20
-
-stand_menu				231		236		20
-stand_still				237		242		20
-shoot_rifle				243		257		20
-shoot_biggun_dupRIFLE				258		272		20
-shoot_melee				273		282		20
-shoot_pistol				283		297		20
-shoot_pistol_d				298		312		20
-shoot_grenade				313		322		20
-shoot_item				323		332		20
-shoot_rpg				333		347		20
-cshoot_rifle				348		362		20
-cshoot_biggun_dupRIFLE				363		377		20
-cshoot_melee				378		387		20
-cshoot_pistol				388		402		20
-cshoot_pistol_d				403		417		20
-cshoot_grenade				418		427		20
-cshoot_item				428		437		20
-cshoot_rpg				438		452		20
-// End of the list.
-*/
