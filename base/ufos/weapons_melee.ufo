@@ -13,7 +13,7 @@ item knife
 	shape		"0 0 1 2"
 	center		"-1 0 3"
 	scale		1.0
-	price		210
+	price		21
 	size		6
 	buytype	weap_sec
 	thrown		true
