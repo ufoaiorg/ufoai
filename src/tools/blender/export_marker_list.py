@@ -62,7 +62,7 @@ def generate_mlist (markerData, printInfo):
 def print_mlist_ufoai (markerData):
 	ufoaiOffset = -1	# Difference between Blender/UFO:AI frames (ufoai = blender + ufoaiOffset)
 
-	print markerData #debug
+#	print markerData #debug
 	dummySpeed = 20
 	print "// Frame list exported from blender - please check if everything is ok before using!"
 	for frame in sorted(markerData.keys()):
