@@ -40,16 +40,39 @@ vxa   +x   +x     vxa
 0     hxa  hxa     0
 }
 
+tile +tunnel_x2
+{
+4 4
+
+0     hxa  hxa     0
+vxa   +x   +x     vxa
+vxa   +x   +x     vxa
+0     hxa  hxa     0
+}
+
+
+tile +lab
+{
+8 4
+
+0    hxa  hxa  hxa  hxa  0
+vxa  +x   +x   +x   +x   vxa
+vxa  +x   +x   +x   +x   vxa
+0    hxa  hxa  hxa  hxa  0
+}
+
 // ########################################
 // ########### Maps for the game ###########
 
 assembly alienbase1
 {
-size "12 12"
+size "8 8"
 title "_Alienbase"
 +empty "0 8"
 +tunnel_h "0 8"
 +tunnel_v "0 8"
 +tunnel_x "0 8"
++tunnel_x2 "0 8"
++lab "1 1"
 }
 
