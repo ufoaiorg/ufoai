@@ -3515,7 +3515,7 @@ tech rs_alien_ortnok_autopsy
 
 	image_top	techs/ortnok_autopsy
 	// menuModel - see models.ufo
-	mdl_top	alien_ortnok
+	//mdl_top	alien_ortnok
 }
 
 // TAMAN
@@ -3557,7 +3557,8 @@ tech rs_alien_taman_autopsy
 	time	1500
 
 	image_top	techs/taman_autopsy
-	mdl_top		alien_taman
+	// menuModel - see models.ufo
+	//mdl_top		alien_taman
 }
 
 // SHEVAAR
@@ -3600,7 +3601,7 @@ tech rs_alien_shevaar_autopsy
 
 	image_top	techs/shevaar_autopsy
 	// menuModel - see models.ufo
-	mdl_top	alien_shevaar
+	//mdl_top	alien_shevaar
 }
 
 // HOVERNET
