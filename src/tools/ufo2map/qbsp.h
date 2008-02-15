@@ -87,8 +87,6 @@ typedef struct brush_s {
 	qboolean optimizedDetail;
 } mapbrush_t;
 
-#define	PLANENUM_LEAF			-1
-
 #define	MAXEDGES		20
 
 typedef struct face_s {

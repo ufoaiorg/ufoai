@@ -163,6 +163,10 @@ static void EmitFace (face_t *f)
 	}
 }
 
+/**
+ * @brief Writes the draw nodes
+ * @note Called after a drawing hull is completed
+ */
 static int EmitDrawNode_r (node_t *node)
 {
 	dBspNode_t *n;
@@ -187,7 +191,7 @@ static int EmitDrawNode_r (node_t *node)
 	planeused[node->planenum ^ 1]++;
 
 	if (node->planenum & 1)
-		Sys_Error("WriteDrawNodes_r: odd planenum");
+		Sys_Error("EmitDrawNode_r: odd planenum");
 	n->planenum = node->planenum;
 	n->firstface = numfaces;
 

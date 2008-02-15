@@ -91,7 +91,7 @@ static void MakeTnode (int nodenum)
 static void BuildTnode_r (int node)
 {
 	assert(node < numnodes);
-	if (dnodes[node].planenum == -1) {
+	if (dnodes[node].planenum == PLANENUM_LEAF) {
 		dBspNode_t *n;
 		tnode_t *t;
 		vec3_t c0maxs, c1mins;

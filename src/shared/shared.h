@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_VAR     64
 
 #define LEAFNODE -1
+#define	PLANENUM_LEAF -1
 
 #include <stddef.h>
 

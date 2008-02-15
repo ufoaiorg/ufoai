@@ -84,7 +84,7 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 			newnode = &dnodes[numnodes];
 			numnodes++;
 
-			newnode->planenum = -1;
+			newnode->planenum = PLANENUM_LEAF;
 			newnode->children[0] = node;
 			newnode->children[1] = n[i];
 			newnode->firstface = 0;

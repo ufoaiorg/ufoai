@@ -364,7 +364,7 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 	curTile->nodes = out;
 
 	for (i = 0; i < count; i++, out++, in++) {
-		if (LittleLong(in->planenum) == -1)
+		if (LittleLong(in->planenum) == PLANENUM_LEAF)
 			out->plane = NULL;
 		else
 			out->plane = curTile->planes + LittleLong(in->planenum);

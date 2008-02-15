@@ -333,7 +333,7 @@ static void R_ModLoadNodes (lump_t * l)
 		}
 
 		p = LittleLong(in->planenum);
-		if (in->planenum == -1)
+		if (in->planenum == PLANENUM_LEAF)
 			out->plane = NULL;
 		else
 			out->plane = loadmodel->bsp.planes + p;
