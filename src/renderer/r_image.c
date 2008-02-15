@@ -909,12 +909,23 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 	p = (byte *)in;
 	c = width * height;
 
-	mask = 0;  /* monochrome/invert */
-
-	if (type == it_world || type == it_material)
+	switch (type) {
+	case it_world:
+	case it_material:
+	case it_skin:
 		mask = 1;
-	else if (type == it_lightmap)
+		break;
+	case it_lightmap:
 		mask = 2;
+		break;
+	case it_wrappic:
+	case it_pic:
+		mask = 4;
+		break;
+	default:
+		mask = 0;  /* monochrome/invert */
+		break;
+	}
 
 	if (color)  /* compute average color */
 		VectorSet(col, 0, 0, 0);
