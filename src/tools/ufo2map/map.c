@@ -287,7 +287,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					dist = b->maxs[axis];
 				else
 					dist = -b->mins[axis];
-				s->planenum = FindFloatPlane (normal, dist);
+				s->planenum = FindFloatPlane(normal, dist);
 				s->texinfo = b->original_sides[0].texinfo;
 				s->contentFlags = b->original_sides[0].contentFlags;
 				s->bevel = qtrue;

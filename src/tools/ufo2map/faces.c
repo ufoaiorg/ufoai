@@ -446,10 +446,10 @@ int GetEdge (int v1, int v2, face_t *f)
 	if (numedges >= MAX_MAP_EDGES)
 		Sys_Error("numedges >= MAX_MAP_EDGES (%i)", numedges);
 	edge = &dedges[numedges];
-	numedges++;
 	edge->v[0] = v1;
 	edge->v[1] = v2;
-	edgefaces[numedges - 1][0] = f;
+	edgefaces[numedges][0] = f;
+	numedges++;
 
 	return numedges - 1;
 }
