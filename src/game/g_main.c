@@ -427,7 +427,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 	case ABILITY_POWER:
 		exp =  46; /** @todo Make a formula for this once strength is used in combat. */
 	case ABILITY_SPEED:
-		exp = chr->scoreMission->movedNormal + chr->scoreMission->movedCrouched + (chr->scoreMission->firedTUs[skill] + chr->scoreMission->firedSplashTUs[skill]) / 10;
+		exp = chr->scoreMission->movedNormal + 2 * chr->scoreMission->movedCrouched + (chr->scoreMission->firedTUs[skill] + chr->scoreMission->firedSplashTUs[skill]) / 10;
 	case ABILITY_ACCURACY:
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
 			if (i == SKILL_SNIPER)
