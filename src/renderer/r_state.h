@@ -99,5 +99,5 @@ void R_EnableWarp(qboolean enable);
 void R_DisableEffects(void);
 void R_BindArray(GLenum target, GLenum type, void *array);
 void R_BindDefaultArray(GLenum target);
-
+void R_StatePrint(void);
 #endif

@@ -352,6 +352,7 @@ static const cmdList_t r_commands[] = {
 	{"screenshot", R_ScreenShot_f, "Take a screenshot"},
 	{"modellist", R_ModModellist_f, NULL},
 	{"r_strings", R_Strings_f, NULL},
+	{"r_state", R_StatePrint, NULL},
 
 	{NULL, NULL, NULL}
 };
@@ -731,4 +732,7 @@ void R_Shutdown (void)
 
 	/* shutdown our QGL subsystem */
 	QR_UnLink();
+
+	if (developer->integer & DEBUG_RENDERER)
+		R_StatePrint();
 }

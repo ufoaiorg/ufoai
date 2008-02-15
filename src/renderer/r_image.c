@@ -46,8 +46,8 @@ int gl_alpha_format = GL_RGBA;
 int gl_compressed_solid_format = 0;
 int gl_compressed_alpha_format = 0;
 
-static int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
-static int gl_filter_max = GL_LINEAR;
+int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
+int gl_filter_max = GL_LINEAR;
 
 /**
  * @brief Free previously loaded materials and their stages
@@ -88,7 +88,7 @@ void R_ImageList_f (void)
 	texels = 0;
 
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
-		if (image->texnum <= 0)
+		if (!image->texnum)
 			continue;
 		texels += image->upload_width * image->upload_height;
 		switch (image->type) {
@@ -124,8 +124,7 @@ void R_ImageList_f (void)
 			break;
 		}
 
-		Com_Printf(" %3i %3i RGB: %s\n",
-				image->upload_width, image->upload_height, image->name);
+		Com_Printf(" %3i %3i RGB: %s\n", image->upload_width, image->upload_height, image->name);
 	}
 	Com_Printf("Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);

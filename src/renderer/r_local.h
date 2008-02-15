@@ -102,6 +102,8 @@ extern int gl_solid_format;
 extern int gl_alpha_format;
 extern int gl_compressed_solid_format;
 extern int gl_compressed_alpha_format;
+extern int gl_filter_min;
+extern int gl_filter_max;
 
 extern float r_world_matrix[16];
 

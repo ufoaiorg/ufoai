@@ -370,6 +370,35 @@ void R_SetupGL2D (void)
 	R_CheckError();
 }
 
+/**
+ * @brief Prints the current render state - can be used to find state leaks
+ * @note Keep in mind that when you call this via commandline it is called in 2d mode
+ */
+void R_StatePrint (void)
+{
+	Com_Printf("\n------- render state ---------------\n");
+	Com_Printf("%c... color: %.1f:%.1f:%.1f:%.1f\n", 1, r_state.color[0], r_state.color[1], r_state.color[2], r_state.color[3]);
+	Com_Printf("%c... blend src: %i, blend dest: %i\n", 1, r_state.blend_src, r_state.blend_dest);
+	Com_Printf("%c... blend enabled: %s\n", 1, r_state.blend_enabled ? "Yes" : "No");
+	Com_Printf("%c... alpha test enabled: %s\n", 1, r_state.alpha_test_enabled ? "Yes" : "No");
+	Com_Printf("%c... multitexture enabled: %s\n", 1, r_state.multitexture_enabled ? "Yes" : "No");
+	Com_Printf("%c... lighting enabled: %s\n", 1, r_state.lighting_enabled ? "Yes" : "No");
+	Com_Printf("%c... warp enabled: %s\n", 1, r_state.warp_enabled ? "Yes" : "No");
+	Com_Printf("%c... ortho projection enabled: %s\n", 1, r_state.ortho ? "Yes" : "No");
+	Com_Printf("%c... 1st texunit:\n", 1);
+	Com_Printf("%c..... texenv: %i\n", 1, r_state.texture_texunit.texenv);
+	Com_Printf("%c..... texture: %i\n", 1, r_state.texture_texunit.texnum);
+	Com_Printf("%c... 2nd texunit\n", 1);
+	Com_Printf("%c..... texenv: %i\n", 1, r_state.lightmap_texunit.texenv);
+	Com_Printf("%c..... texture: %i\n", 1, r_state.lightmap_texunit.texnum);
+	Com_Printf("%c... solid format: %i\n", 1, gl_solid_format);
+	Com_Printf("%c... alpha format: %i\n", 1, gl_alpha_format);
+	Com_Printf("%c... compressed solid format: %i\n", 1, gl_compressed_solid_format);
+	Com_Printf("%c... compressed alpha format: %i\n", 1, gl_compressed_alpha_format);
+	Com_Printf("%c... filter min: %i\n", 1, gl_filter_min);
+	Com_Printf("%c... filter max: %i\n", 1, gl_filter_max);
+}
+
 /* global ambient lighting */
 static const vec4_t ambient = {
 	0.0, 0.0, 0.0, 1.0
@@ -427,6 +456,9 @@ void R_SetDefaultState (void)
 
 	/* alpha blend parameters */
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	if (developer->integer & DEBUG_RENDERER)
+		R_StatePrint();
 }
 
 void R_TexEnv (GLenum mode)
