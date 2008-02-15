@@ -3,6 +3,8 @@
 
 void MN_DrawImageNode (menuNode_t *node, const char *imageName, int time)
 {
+	vec2_t size;
+
 	/* HACK for ekg pics */
 	if (!Q_strncmp(node->name, "ekg_", 4)) {
 		int pt;
@@ -16,6 +18,23 @@ void MN_DrawImageNode (menuNode_t *node, const char *imageName, int time)
 		node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * time) % 64;
 		node->texh[0] = node->texl[0] + node->size[0];
 	}
-	R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+	if ((node->size[0] && !node->size[1])) {
+		float scale;
+		int w, h;
+
+		R_DrawGetPicSize(&w, &h, imageName);
+		scale = w / node->size[0];
+		Vector2Set(size, node->size[0], h / scale);
+	} else if ((node->size[1] && !node->size[0])) {
+		float scale;
+		int w, h;
+
+		R_DrawGetPicSize(&w, &h, imageName);
+		scale = h / node->size[1];
+		Vector2Set(size, w / scale, node->size[1]);
+	} else {
+		Vector2Copy(node->size, size);
+	}
+	R_DrawNormPic(node->pos[0], node->pos[1], size[0], size[1],
 		node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, imageName);
 }

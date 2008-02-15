@@ -328,7 +328,7 @@ menu ufopedia
 	{
 		image	"*cvar mn_upimage_top"
 		pos		"750 85"
-		size	"240 240"
+		size	"240 0"
 //		bgcolor "1 0.5 1 0.3"
 	}
 
