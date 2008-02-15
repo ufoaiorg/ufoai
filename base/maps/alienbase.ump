@@ -4,10 +4,10 @@ tile +empty
 {
 4 4
 
-0      a      a      0
-a      +a     +a     a
-a      +a     +a     a
-0      a      a      0
+0      hxa    hxa    0
+vxa    +a     +a     vxa
+vxa    +a     +a     vxa
+0      hxa    hxa    0
 }
 
 tile +tunnel_h
