@@ -4,20 +4,20 @@ tile +empty
 {
 4 4
 
-0      av     av     0
-ah     +a     +a     ah
-ah     +a     +a     ah
-0      av     av     0
+0      avx     avx     0
+ahx     +a     +a     ahx
+ahx     +a     +a     ahx
+0      avx     avx     0
 }
 
 tile +tunnel_h
 {
 4 4
 
-0      hx    hx    0
+0      ahx    ahx    0
 ah      +h     +h     ah
 ah      +h     +h     ah
-0      hx    hx    0
+0      ahx    ahx    0
 }
 
 tile +tunnel_v
@@ -25,8 +25,8 @@ tile +tunnel_v
 4 4
 
 0      av    av     0
-vx   +v   +v     vx
-vx   +v   +v     vx
+avx   +v   +v    avx
+avx   +v   +v    avx
 0      av    av     0
 }
 
@@ -34,20 +34,20 @@ tile +tunnel_x
 {
 4 4
 
-0    hx   hx   0
-vx   +x   +x   vx
-vx   +x   +x   vx
-0    hx   hx   0
+0    ahx   ahx   0
+avx   +x   +x   avx
+avx   +x   +x   avx
+0    ahx   ahx   0
 }
 
 tile +tunnel_x2
 {
-6 4
+4 4
 
-0    hx  hx  hx  hx  0
-vx  +x   +x   +x   +x   vx
-vx  +x   +x   +x   +x   vx
-0    hx  hx  hx  hx  0
+0    ahx  ahx  0
+avx  +x   +x   avx
+avx  +x   +x   avx
+0    ahx  ahx  0
 }
 
 
@@ -55,10 +55,10 @@ tile +lab
 {
 6 4
 
-0    hx  hx  hx  hx  0
-vx  +x   +x   +x   +x   vx
-vx  +x   +x   +x   +x   vx
-0    hx  hx  hx  hx  0
+0    hxa  hxa  hxa  hxa  0
+vxa  +a   +a   +a   +a   vxa
+vxa  +a   +a   +a   +a   vxa
+0    hxa  hxa  hxa  hxa  0
 }
 
 // ########################################
@@ -69,11 +69,11 @@ assembly alienbase1
 size "8 8"
 title "_Alienbase"
 grid "2 2"
-+empty "0 12"
-+tunnel_h "0 12"
-+tunnel_v "0 12"
-+tunnel_x "0 12"
-+tunnel_x2 "0 8"
-+lab "1 1"
++empty "1 4"
++tunnel_h "1 12"
++tunnel_v "1 12"
++tunnel_x "1 12"
++tunnel_x2 "1 8"
++lab "1 2"
 }
 
