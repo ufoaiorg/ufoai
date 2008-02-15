@@ -58,7 +58,9 @@ PLANE FINDING
 =============================================================================
 */
 
-
+/**
+ * @brief Set the type of the plane according to it's normal vector
+ */
 static int PlaneTypeForNormal (vec3_t normal)
 {
 	vec_t ax, ay, az;

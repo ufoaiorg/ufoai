@@ -345,7 +345,7 @@ static void R_ModLoadNodes (lump_t * l)
 
 		for (j = 0; j < 2; j++) {
 			p = LittleLong(in->children[j]);
-			if (p >= 0)
+			if (p > LEAFNODE)
 				out->children[j] = loadmodel->bsp.nodes + p;
 			else
 				out->children[j] = (mBspNode_t *) (loadmodel->bsp.leafs + (-1 - p));
