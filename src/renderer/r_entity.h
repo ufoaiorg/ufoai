@@ -50,6 +50,7 @@ typedef struct entity_s {
 
 	float alpha;				/**< ignore if RF_TRANSLUCENT isn't set */
 
+	int state;					/**< same state as the le->state */
 	int flags;
 
 	animState_t as;

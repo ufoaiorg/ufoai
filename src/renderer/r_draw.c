@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh.h"
 
 image_t *shadow;
-image_t *blood;
+image_t *blood[MAX_DEATH];
 
 /* console font */
 static image_t *draw_chars[2];
@@ -40,12 +40,16 @@ static image_t *draw_chars[2];
  */
 void R_DrawInitLocal (void)
 {
+	int i;
+
 	shadow = R_FindImage("pics/sfx/shadow", it_pic);
 	if (shadow == r_notexture)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
-	blood = R_FindImage("pics/sfx/blood", it_pic);
-	if (blood == r_notexture)
-		Com_Printf("Could not find blood image in game pics/sfx directory!\n");
+	for (i = 0; i < MAX_DEATH; i++) {
+		blood[i] = R_FindImage(va("pics/sfx/blood_%i", i), it_pic);
+		if (blood[i] == r_notexture)
+			Com_Printf("Could not find blood_%i image in game pics/sfx directory!\n", i);
+	}
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
