@@ -47,7 +47,7 @@ stand_still				225		225		1
 
 shoot_rifle				243		257		22
 shoot_biggun				258		272		22	// currently a frame-by-frame copy of rifle
-//shoot_melee				273		282		22	// no animation yet
+shoot_melee				273		282		22
 shoot_pistol				283		297		22
 shoot_pistol_d				298		312		22
 shoot_grenade				313		322		22
