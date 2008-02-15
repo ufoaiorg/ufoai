@@ -337,10 +337,8 @@ begin:
 	/* optimize for axially aligned planes */
 	switch (node->plane->type) {
 	case PLANE_X:
-		node = node->children[start[0] < node->plane->dist];
-		goto begin;
 	case PLANE_Y:
-		node = node->children[start[1] < node->plane->dist];
+		node = node->children[start[node->plane->type] < node->plane->dist];
 		goto begin;
 	case PLANE_Z:
 		side = start[2] < node->plane->dist;

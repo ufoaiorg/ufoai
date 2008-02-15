@@ -2248,16 +2248,10 @@ static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
-		front = start[0] - tnode->dist;
-		back = stop[0] - tnode->dist;
-		break;
 	case PLANE_Y:
-		front = start[1] - tnode->dist;
-		back = stop[1] - tnode->dist;
-		break;
 	case PLANE_Z:
-		front = start[2] - tnode->dist;
-		back = stop[2] - tnode->dist;
+		front = start[tnode->type] - tnode->dist;
+		back = stop[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
 		r = TestLine_r(tnode->children[0], start, stop);
