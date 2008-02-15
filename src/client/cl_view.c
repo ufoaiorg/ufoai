@@ -216,7 +216,7 @@ void CL_LoadMedia (void)
 	if (!ccs.singleplayer)
 		SCR_SetLoadingBackground(cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen();
-	R_ModBeginLoading(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+	R_ModBeginLoading(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], cl.configstrings[CS_TILES]);
 	CL_ParseEntitystring(map_entitystring);
 
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading models..."));

@@ -674,13 +674,20 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
  * @brief Specifies the model that will be used as the world
  * @sa R_ModEndLoading
  */
-void R_ModBeginLoading (const char *tiles, const char *pos)
+void R_ModBeginLoading (const char *tiles, const char *pos, const char *mapName)
 {
 	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
 	int sh[3];
 	int i;
+
+	assert(mapName);
+
+	if (*mapName == '+')
+		R_LoadMaterials(mapName + 1);
+	else
+		R_LoadMaterials(mapName);
 
 	/* next registration sequence */
 	registration_sequence++;
@@ -714,8 +721,6 @@ void R_ModBeginLoading (const char *tiles, const char *pos)
 			Com_sprintf(name, MAX_VAR, "%s%s", base, token + 1);
 		else
 			Q_strncpyz(name, token, sizeof(name));
-
-		R_LoadMaterials(name);
 
 		if (pos && pos[0]) {
 			/* get position and add a tile */
