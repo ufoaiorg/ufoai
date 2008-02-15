@@ -2231,7 +2231,7 @@ static void CM_MakeTracingNodes (void)
  * @sa TestLineDist_r
  * @sa CM_TestLine
  */
-static int TestLine_r (int node, vec3_t start, vec3_t stop)
+static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -2295,7 +2295,7 @@ static int TestLine_r (int node, vec3_t start, vec3_t stop)
  * @sa TestLine_r
  * @sa CM_TestLineDM
  */
-static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
+static int TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -2382,7 +2382,7 @@ static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
  * @sa CL_TargetingToHit
  * @return qfalse if not blocked
  */
-qboolean CM_TestLine (vec3_t start, vec3_t stop)
+qboolean CM_TestLine (const vec3_t start, const vec3_t stop)
 {
 	int tile, i;
 
@@ -2405,7 +2405,7 @@ qboolean CM_TestLine (vec3_t start, vec3_t stop)
  * @sa CL_ActorMouseTrace
  * @return qfalse if no connection between start and stop - 1 otherwise
  */
-qboolean CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
+qboolean CM_TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end)
 {
 	int tile, i;
 

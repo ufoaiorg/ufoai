@@ -50,8 +50,8 @@ int CM_HeadnodeForBox(int tile, const vec3_t mins, const vec3_t maxs);
 trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles);
 trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask);
 
-qboolean CM_TestLine(vec3_t start, vec3_t stop);
-qboolean CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end);
+qboolean CM_TestLine(const vec3_t start, const vec3_t stop);
+qboolean CM_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end);
 
 /*==========================================================
 GRID ORIENTED MOVEMENT AND SCANNING
