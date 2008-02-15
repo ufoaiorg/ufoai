@@ -77,7 +77,6 @@ typedef struct {
 #define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof (fontRenderStyle_t))
 
 /* public */
-void R_FontCleanCache(void);
 void R_FontShutdown(void);
 void R_FontInit(void);
 void R_FontListCache_f(void);

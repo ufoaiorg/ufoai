@@ -41,13 +41,17 @@ pic
 */
 
 typedef enum {
-	it_skin,
+	it_chars,
+	it_effect,
+	it_static,
+	it_pic,
+	it_wrappic,
+
+	/** the following are freed with every mapchange */
 	it_world,
 	it_lightmap,
 	it_material,
-	it_pic,
-	it_wrappic,
-	it_static
+	it_skin
 } imagetype_t;
 
 typedef struct image_s {
@@ -60,6 +64,7 @@ typedef struct image_s {
 	GLuint texnum;						/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;
+	vec3_t color;
 } image_t;
 
 #define MAX_GLERRORTEX		4096
@@ -80,9 +85,11 @@ void R_InitImages(void);
 void R_ShutdownImages(void);
 void R_FreeUnusedImages(void);
 void R_ImageClearMaterials(void);
-void R_UpdateTextures(int min, int max);
 void R_CalcDayAndNight(float q);
 void R_FilterTexture(unsigned *in, int width, int height, vec3_t color, imagetype_t type);
+void R_TextureMode(const char *string);
+void R_TextureAlphaMode(const char *string);
+void R_TextureSolidMode(const char *string);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG

@@ -438,70 +438,6 @@ void R_TexEnv (GLenum mode)
 	r_state.active_texunit->texenv = mode;
 }
 
-typedef struct {
-	const char *name;
-	int mode;
-} gltmode_t;
-
-static const gltmode_t gl_alpha_modes[] = {
-	{"default", 4},
-	{"GL_RGBA", GL_RGBA},
-	{"GL_RGBA8", GL_RGBA8},
-	{"GL_RGB5_A1", GL_RGB5_A1},
-	{"GL_RGBA4", GL_RGBA4},
-	{"GL_RGBA2", GL_RGBA2},
-};
-
-#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
-
-void R_TextureAlphaMode (const char *string)
-{
-	int i;
-
-	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
-		if (!Q_stricmp(gl_alpha_modes[i].name, string))
-			break;
-	}
-
-	if (i == NUM_R_ALPHA_MODES) {
-		Com_Printf("bad alpha texture mode name\n");
-		return;
-	}
-
-	gl_alpha_format = gl_alpha_modes[i].mode;
-}
-
-static const gltmode_t gl_solid_modes[] = {
-	{"default", 3},
-	{"GL_RGB", GL_RGB},
-	{"GL_RGB8", GL_RGB8},
-	{"GL_RGB5", GL_RGB5},
-	{"GL_RGB4", GL_RGB4},
-	{"GL_R3_G3_B2", GL_R3_G3_B2},
-#ifdef GL_RGB2_EXT
-	{"GL_RGB2", GL_RGB2_EXT},
-#endif
-};
-
-#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
-
-void R_TextureSolidMode (const char *string)
-{
-	int i;
-
-	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
-		if (!Q_stricmp(gl_solid_modes[i].name, string))
-			break;
-	}
-
-	if (i == NUM_R_SOLID_MODES) {
-		Com_Printf("bad solid texture mode name\n");
-		return;
-	}
-
-	gl_solid_format = gl_solid_modes[i].mode;
-}
-
 const vec4_t color_white = {1, 1, 1, 1};
 
 /**
@@ -542,35 +478,4 @@ void R_Color (const float *rgba)
 		qglColor4fv(r_state.color);
 		R_CheckError();
 	}
-}
-
-typedef struct {
-	const char *name;
-	int minimize, maximize;
-} glTextureMode_t;
-
-static const glTextureMode_t gl_texture_modes[] = {
-	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
-	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
-};
-#define NUM_R_MODES (sizeof(gl_texture_modes) / sizeof(glTextureMode_t))
-
-void R_TextureMode (const char *string)
-{
-	int i;
-
-	for (i = 0; i < NUM_R_MODES; i++) {
-		if (!Q_stricmp(gl_texture_modes[i].name, string))
-			break;
-	}
-
-	if (i == NUM_R_MODES) {
-		Com_Printf("bad filter name\n");
-		return;
-	}
-	R_UpdateTextures(gl_texture_modes[i].minimize, gl_texture_modes[i].maximize);
 }

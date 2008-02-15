@@ -76,31 +76,6 @@ void R_ImageClearMaterials (void)
 }
 
 /**
- * @brief Set the anisotropic and texture mode values for textures
- * @sa R_ScaleTexture
- */
-void R_UpdateTextures (int min, int max)
-{
-	int i;
-	image_t *glt;
-
-	gl_filter_min = min;
-	gl_filter_max = max;
-
-	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
-		if (glt->type != it_pic) {
-			R_BindTexture(glt->texnum);
-			if (r_state.anisotropic)
-				qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_state.maxAnisotropic);
-			R_CheckError();
-			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-			R_CheckError();
-		}
-	}
-}
-
-/**
  * @brief Shows all loaded images
  */
 void R_ImageList_f (void)
@@ -117,11 +92,17 @@ void R_ImageList_f (void)
 			continue;
 		texels += image->upload_width * image->upload_height;
 		switch (image->type) {
+		case it_effect:
+			Com_Printf("EF");
+			break;
 		case it_skin:
 			Com_Printf("SK");
 			break;
 		case it_wrappic:
 			Com_Printf("WR");
+			break;
+		case it_chars:
+			Com_Printf("CH");
 			break;
 		case it_static:
 			Com_Printf("ST");
@@ -910,6 +891,7 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 	c = width * height;
 
 	switch (type) {
+	case it_effect:
 	case it_world:
 	case it_material:
 	case it_skin:
@@ -917,10 +899,6 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 		break;
 	case it_lightmap:
 		mask = 2;
-		break;
-	case it_wrappic:
-	case it_pic:
-		mask = 4;
 		break;
 	default:
 		mask = 0;  /* monochrome/invert */
@@ -1000,8 +978,8 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	int scaled_width, scaled_height;
 	int i, c;
 	byte *scan;
-	qboolean mipmap = (image->type != it_pic);
-	qboolean clamp = (image->type == it_pic);
+	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
+	qboolean clamp = (image->type == it_pic && image->type != it_chars);
 
 	for (scaled_width = 1; scaled_width < width; scaled_width <<= 1);
 	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1);
@@ -1024,8 +1002,8 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	}
 
 	/* and filter */
-	if (image->type == it_world || image->type == it_material || image->type == it_skin)
-		R_FilterTexture(scaled, scaled_width, scaled_height, NULL, image->type);
+	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
+		R_FilterTexture(scaled, scaled_width, scaled_height, image->color, image->type);
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;
@@ -1150,6 +1128,7 @@ void R_CalcDayAndNight (float q)
 		r_dayandnighttexture->type = it_pic;
 		r_dayandnighttexture->texnum = TEXNUM_IMAGES + (r_dayandnighttexture - gltextures);
 	}
+	assert(r_dayandnighttexture->texnum);
 	R_BindTexture(r_dayandnighttexture->texnum);
 
 	/* init geometric data */
@@ -1363,17 +1342,15 @@ void R_FreeUnusedImages (void)
 	int i;
 	image_t *image;
 
-	/* never free r_notexture or particle texture */
-	r_notexture->registration_sequence = registration_sequence;
-
 	R_CheckError();
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+		if (!image->texnum)
+			continue;			/* free image slot */
+		if (image->type < it_world)
+			continue;			/* fix this! don't free pics */
 		if (image->registration_sequence == registration_sequence)
 			continue;			/* used this sequence */
-		if (!image->registration_sequence)
-			continue;			/* free image_t slot */
-		if (image->type == it_pic || image->type == it_wrappic || image->type == it_static)
-			continue;			/* fix this! don't free pics */
+
 		/* free it */
 		qglDeleteTextures(1, (GLuint *) &image->texnum);
 		R_CheckError();
@@ -1392,7 +1369,7 @@ void R_InitImages (void)
 	r_dayandnighttexture = NULL;
 
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
-		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_static);
+		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_effect);
 		if (r_envmaptextures[i] == r_notexture)
 			Sys_Error("Could not load environment map %i", i);
 	}
@@ -1408,7 +1385,7 @@ void R_ShutdownImages (void)
 
 	R_CheckError();
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
-		if (!image->registration_sequence)
+		if (!image->texnum)
 			continue;			/* free image_t slot */
 		/* free it */
 		qglDeleteTextures(1, (GLuint *) &image->texnum);
@@ -1416,3 +1393,113 @@ void R_ShutdownImages (void)
 		memset(image, 0, sizeof(*image));
 	}
 }
+
+
+typedef struct {
+	const char *name;
+	int minimize, maximize;
+} glTextureMode_t;
+
+static const glTextureMode_t gl_texture_modes[] = {
+	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
+	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
+	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
+	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR},
+	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
+	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
+};
+#define NUM_R_MODES (sizeof(gl_texture_modes) / sizeof(glTextureMode_t))
+
+void R_TextureMode (const char *string)
+{
+	int i;
+	image_t *image;
+
+	for (i = 0; i < NUM_R_MODES; i++) {
+		if (!Q_stricmp(gl_texture_modes[i].name, string))
+			break;
+	}
+
+	if (i == NUM_R_MODES) {
+		Com_Printf("bad filter name\n");
+		return;
+	}
+
+	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+		if (image->type == it_chars || image->type == it_pic || image->type == it_wrappic)
+			continue;
+
+		R_BindTexture(image->texnum);
+		if (r_state.anisotropic)
+			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_state.maxAnisotropic);
+		R_CheckError();
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[i].minimize);
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[i].maximize);
+		R_CheckError();
+	}
+}
+
+typedef struct {
+	const char *name;
+	int mode;
+} gltmode_t;
+
+static const gltmode_t gl_alpha_modes[] = {
+	{"default", 4},
+	{"GL_RGBA", GL_RGBA},
+	{"GL_RGBA8", GL_RGBA8},
+	{"GL_RGB5_A1", GL_RGB5_A1},
+	{"GL_RGBA4", GL_RGBA4},
+	{"GL_RGBA2", GL_RGBA2},
+};
+
+#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
+
+void R_TextureAlphaMode (const char *string)
+{
+	int i;
+
+	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
+		if (!Q_stricmp(gl_alpha_modes[i].name, string))
+			break;
+	}
+
+	if (i == NUM_R_ALPHA_MODES) {
+		Com_Printf("bad alpha texture mode name\n");
+		return;
+	}
+
+	gl_alpha_format = gl_alpha_modes[i].mode;
+}
+
+static const gltmode_t gl_solid_modes[] = {
+	{"default", 3},
+	{"GL_RGB", GL_RGB},
+	{"GL_RGB8", GL_RGB8},
+	{"GL_RGB5", GL_RGB5},
+	{"GL_RGB4", GL_RGB4},
+	{"GL_R3_G3_B2", GL_R3_G3_B2},
+#ifdef GL_RGB2_EXT
+	{"GL_RGB2", GL_RGB2_EXT},
+#endif
+};
+
+#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
+
+void R_TextureSolidMode (const char *string)
+{
+	int i;
+
+	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
+		if (!Q_stricmp(gl_solid_modes[i].name, string))
+			break;
+	}
+
+	if (i == NUM_R_SOLID_MODES) {
+		Com_Printf("bad solid texture mode name\n");
+		return;
+	}
+
+	gl_solid_format = gl_solid_modes[i].mode;
+}
+

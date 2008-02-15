@@ -47,6 +47,30 @@ static const fontRenderStyle_t fontStyle[] = {
 
 /*============================================================== */
 
+
+/**
+ * @brief Clears font cache and frees memory associated with the cache
+ */
+static void R_FontCleanCache (void)
+{
+	int i, count = 0;
+
+	R_CheckError();
+
+	/* free the surfaces */
+	for (i = 0; i < numInCache; i++) {
+		if (!fontCache[i].texPos)
+			continue;
+		qglDeleteTextures(1, &(fontCache[i].texPos));
+		count++;
+		R_CheckError();
+	}
+
+	memset(fontCache, 0, sizeof(fontCache));
+	memset(hash, 0, sizeof(hash));
+	numInCache = 0;
+}
+
 /**
  * @brief frees the SDL_ttf fonts
  * @sa R_FontCleanCache
@@ -213,26 +237,6 @@ void R_FontLength (const char *font, char *c, int *width, int *height)
 	if (!f)
 		return;
 	R_FontGetLineWrap(f, c, VID_NORM_WIDTH, width, height);
-}
-
-/**
- * @brief Clears font cache and frees memory associated with the cache
- */
-void R_FontCleanCache (void)
-{
-	int i = 0;
-	R_CheckError();
-	/* free the surfaces */
-	for (; i < numInCache; i++) {
-		if (fontCache[i].texPos >= 0) {
-			qglDeleteTextures(1, &(fontCache[i].texPos));
-			R_CheckError();
-		}
-	}
-
-	memset(fontCache, 0, sizeof(fontCache));
-	memset(hash, 0, sizeof(hash));
-	numInCache = 0;
 }
 
 /**
