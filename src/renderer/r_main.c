@@ -377,28 +377,29 @@ static void R_Register (void)
 {
 	const cmdList_t *commands;
 
+	/** image cvars - @sa R_FilterTexture */
 	r_brightness = Cvar_Get("r_brightness", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Brightness for images");
 	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Contrast for images");
 	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Monochrome world - Bitmask - 1, 2, 4");
 	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Invert images - Bitmask - 1, 2, 4");
+	r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
+	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Apply blur to lightmap");
 
-	r_drawentities = Cvar_Get("r_drawentities", "1", 0, NULL);
-	r_drawworld = Cvar_Get("r_drawworld", "1", 0, NULL);
+	r_drawentities = Cvar_Get("r_drawentities", "1", 0, "Draw the local entities");
+	r_drawworld = Cvar_Get("r_drawworld", "1", 0, "Draw the world brushes");
 	r_drawspecialbrushes = Cvar_Get("r_drawspecialbrushes", "0", 0, "Draw stuff like actorclip");
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-	r_nocull = Cvar_Get("r_nocull", "0", 0, NULL);
+	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling");
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
-	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays");
+	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
-	r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
-	r_soften = Cvar_Get("r_soften", "1", CVAR_ARCHIVE | CVAR_IMAGES, "Apply blur to lightmap");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, "The maximum texture resolution UFO should use");
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
@@ -411,7 +412,7 @@ static void R_Register (void)
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
 	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE, "Use vertex buffers for better performance");
-	r_maxlightmap = Cvar_Get("r_maxlightmap", "2048", CVAR_ARCHIVE|CVAR_LATCH, "Reduce this value on older hardware");
+	r_maxlightmap = Cvar_Get("r_maxlightmap", "2048", CVAR_ARCHIVE | CVAR_LATCH, "Reduce this value on older hardware");
 	Cvar_SetCheckFunction("r_maxlightmap", R_CvarCheckMaxLightmap);
 
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
