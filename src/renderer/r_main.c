@@ -380,8 +380,8 @@ static void R_Register (void)
 	/** image cvars - @sa R_FilterTexture */
 	r_brightness = Cvar_Get("r_brightness", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Brightness for images");
 	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Contrast for images");
-	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Monochrome world - Bitmask - 1, 2, 4");
-	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Invert images - Bitmask - 1, 2, 4");
+	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Monochrome world - Bitmask - 1, 2");
+	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Invert images - Bitmask - 1, 2");
 	r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
 	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Apply blur to lightmap");
 
@@ -669,6 +669,8 @@ static inline void R_VerifyDriver (void)
 qboolean R_Init (void)
 {
 	R_Register();
+
+	memset(&r_state, 0, sizeof(r_state));
 
 	/* set our "safe" modes */
 	viddef.prev_mode = 6;
