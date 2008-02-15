@@ -3513,10 +3513,9 @@ tech rs_alien_ortnok_autopsy
 	}
 	time	1500
 
+	image_top	techs/ortnok_autopsy
 	// menuModel - see models.ufo
 	mdl_top	alien_ortnok
-
-	//TODO: autopsy image
 }
 
 // TAMAN
@@ -3599,6 +3598,7 @@ tech rs_alien_shevaar_autopsy
 	}
 	time	1500
 
+	image_top	techs/shevaar_autopsy
 	// menuModel - see models.ufo
 	mdl_top	alien_shevaar
 }
