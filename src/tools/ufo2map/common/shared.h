@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _SHARED_H
 #define _SHARED_H
 
+#include "../../../shared/ufotypes.h"
 #include "../../../common/unzip.h"
 #include "../../../shared/shared.h"
-#include "../../../shared/ufotypes.h"
 #include "../../../shared/mathlib.h"
 
 #include <stdio.h>

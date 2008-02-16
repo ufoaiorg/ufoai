@@ -235,56 +235,6 @@ void Q_getwd (char *out)
 #endif
 }
 
-/**
- * @brief
- */
-int Q_strncasecmp (const char *s1, const char *s2, int n)
-{
-	int c1, c2;
-
-	do {
-		c1 = *s1++;
-		c2 = *s2++;
-
-		if (!n--)
-			return 0;		/* strings are equal until end point */
-
-		if (c1 != c2) {
-			if (c1 >= 'a' && c1 <= 'z')
-				c1 -= ('a' - 'A');
-			if (c2 >= 'a' && c2 <= 'z')
-				c2 -= ('a' - 'A');
-			if (c1 != c2)
-				return -1;		/* strings not equal */
-		}
-	} while (c1);
-
-	return 0;		/* strings are equal */
-}
-
-/**
- * @brief
- */
-int Q_strcasecmp (const char *s1, const char *s2)
-{
-	return Q_strncasecmp(s1, s2, 99999);
-}
-
-/**
- * @brief
- */
-char *strlower (char *start)
-{
-	char *in;
-	in = start;
-	while (*in) {
-		*in = tolower(*in);
-		in++;
-	}
-	return start;
-}
-
-
 /*
 =============================================================================
 MISC FUNCTIONS
@@ -374,7 +324,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
 			if (err != UNZ_OK)
 				break;
-			strlower(filename_inzip);
+			Q_strlwr(filename_inzip);
 
 			unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
 			strncpy(newfiles[i].name, filename_inzip, sizeof(newfiles[i].name) - 1);

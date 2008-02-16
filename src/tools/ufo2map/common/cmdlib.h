@@ -27,9 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../shared/byte.h"
 
-char *strlower(char *in);
-int Q_strncasecmp(const char *s1, const char *s2, int n);
-int Q_strcasecmp(const char *s1, const char *s2);
 void Q_getwd(char *out);
 
 int Q_filelength(qFILE *f);

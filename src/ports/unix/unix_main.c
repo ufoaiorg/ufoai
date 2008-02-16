@@ -57,7 +57,7 @@ char *Sys_Cwd (void)
 
 	if (getcwd(cwd, sizeof(cwd) - 1) == NULL)
 		return NULL;
-	cwd[MAX_OSPATH-1] = 0;
+	cwd[MAX_OSPATH - 1] = 0;
 
 	return cwd;
 }
