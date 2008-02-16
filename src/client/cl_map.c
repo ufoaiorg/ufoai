@@ -1857,21 +1857,25 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 /**
  * @brief Checks for a given location, if it fulfills all criteria given via parameters (terrain, culture, population, nation type)
  * @param[in] pos Location to be tested
- * @param[in] terrainTypes A linkedList_t containing a list of strings determining the terrain types to be tested for (e.g. "grass")
- * @param[in] cultureTypes A linkedList_t containing a list of strings determining the culture types to be tested for (e.g. "western")
- * @param[in] populationTypes A linkedList_t containing a list of strings determining the population types to be tested for (e.g. "suburban")
- * @param[in] nations A linkedList_t containing a list of strings determining the nations to be tested for (e.g. "asia")
+ * @param[in] terrainTypes A linkedList_t containing a list of strings determining the terrain types to be tested for (e.g. "grass") may be NULL
+ * @param[in] cultureTypes A linkedList_t containing a list of strings determining the culture types to be tested for (e.g. "western") may be NULL
+ * @param[in] populationTypes A linkedList_t containing a list of strings determining the population types to be tested for (e.g. "suburban") may be NULL
+ * @param[in] nations A linkedList_t containing a list of strings determining the nations to be tested for (e.g. "asia") may be NULL
  * @return true if a location was found, otherwise false
  * @note The name TCPNTypes comes from terrain, culture, population, nation types
  */
 qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
 	const char *terrainType = MAP_GetTerrainTypeByPos(pos);
+	const char *cultureType = MAP_GetCultureTypeByPos(pos);
+	const char *populationType = MAP_GetPopulationTypeByPos(pos);
 
-	if (LIST_ContainsString(terrainTypes, terrainType) || LIST_ContainsString(terrainTypes, "Any")) {
-		if (LIST_ContainsString(cultureTypes, terrainType) || LIST_ContainsString(cultureTypes, "Any")) {
-			if (LIST_ContainsString(populationTypes, terrainType) || LIST_ContainsString(populationTypes, "Any")) {
+	if (terrainTypes && (LIST_ContainsString(terrainTypes, terrainType) || LIST_ContainsString(terrainTypes, "Any"))) {
+		if (cultureTypes && (LIST_ContainsString(cultureTypes, cultureType) || LIST_ContainsString(cultureTypes, "Any"))) {
+			if (populationTypes && (LIST_ContainsString(populationTypes, populationType) || LIST_ContainsString(populationTypes, "Any"))) {
 				const nation_t *nationAtPos = MAP_GetNation(pos);
+				if (!nations)
+					return qtrue;
 				if ((nationAtPos && LIST_ContainsString(nations, nationAtPos->id)) || LIST_ContainsString(nations, "Any")) {
 					return qtrue;
 				}

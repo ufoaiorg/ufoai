@@ -5379,10 +5379,10 @@ base_t *CP_GetMissionBase (void)
 /**
  * @brief Determines a random position on Geoscape that fulfills certain criteria given via parameters
  * @param[in] pos The position that will be overwritten with the random point fulfilling the criterias
- * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass")
- * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western")
- * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban")
- * @param[in] nations A linkedList_t containing a list of strings determining the acceptable nations (e.g. "asia")
+ * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass") May be NULL.
+ * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western") May be NULL.
+ * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be NULL.
+ * @param[in] nations A linkedList_t containing a list of strings determining the acceptable nations (e.g. "asia"). May be NULL
  * @return true if a location was found, otherwise false
  * @sa LIST_AddString
  * @sa LIST_Delete
