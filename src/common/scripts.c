@@ -2174,11 +2174,11 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 /** @brief valid mapdef descriptors */
 static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_MANUAL_STRING, offsetof(mapDef_t, description), 0},
-	{"map", V_STRING, offsetof(mapDef_t, map), 0},
-	{"param", V_STRING, offsetof(mapDef_t, param), 0},
-	{"music", V_STRING, offsetof(mapDef_t, music), 0},
+	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
+	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
+	{"music", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, music), 0},
 	{"loadingscreen", V_STRING, offsetof(mapDef_t, loadingscreen), 0},
-	{"size", V_STRING, offsetof(mapDef_t, size), 0},
+	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
 
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
@@ -2227,7 +2227,6 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 					if (*token == '_')
 						token++;
 				/* fall through */
-				case V_STRING:
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
 					break;
