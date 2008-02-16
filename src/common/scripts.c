@@ -2180,6 +2180,10 @@ static const value_t mapdef_vals[] = {
 	{"loadingscreen", V_STRING, offsetof(mapDef_t, loadingscreen), 0},
 	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
 
+	{"ufo", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, ufo), 0},
+	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
+	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
+
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
 

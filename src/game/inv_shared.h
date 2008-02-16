@@ -356,10 +356,15 @@ typedef struct mapDef_s {
 	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
 
 	/* singleplayer */
+	int maxAliens;				/**< Number of spawning points on the map */
+
 	/* @todo: Make use of these values */
 	linkedList_t *terrains;		/**< terrain strings this map is useable for */
 	linkedList_t *populations;	/**< population strings this map is useable for */
 	linkedList_t *cultures;		/**< culture strings this map is useable for */
+	qboolean storyRelated;		/**< Is this a mission story related? */
+	int timesAlreadyUsed;		/**< Number of times the map has already been used */
+	const char *ufo;			/**< Type of ufo on the map */
 } mapDef_t;
 
 typedef struct damageType_s {
