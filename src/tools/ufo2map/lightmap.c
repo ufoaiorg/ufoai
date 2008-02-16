@@ -788,7 +788,7 @@ void CreateDirectLights (void)
 /**
  * @param[in] lightscale is the normalizer for multisampling
  */
-static void GatherSampleLight (vec3_t pos, vec3_t normal, vec3_t center,
+static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t center,
 			float **styletable, int offset, int mapsize, float lightscale)
 {
 	directlight_t *l;
@@ -802,7 +802,7 @@ static void GatherSampleLight (vec3_t pos, vec3_t normal, vec3_t center,
 	VectorNormalize(pos2);
 
 	CrossProduct(pos2, normal, pos2);
-	VectorMA(pos, 2.0, pos2, pos);
+	VectorMA(pos, 1.5, pos2, pos);
 
 	for (l = directlights; l; l = l->next) {
 		VectorSubtract(l->origin, pos, delta);
