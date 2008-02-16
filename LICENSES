@@ -373,9 +373,6 @@ base/maps/terrain02d.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/terrain02n.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/terrain08d.map | GNU General Public License 2.0
 base/maps/terrain08n.map | GNU General Public License 2.0
-base/maps/test_particles.map | GNU General Public License 2.0
-base/maps/test_surflight.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/test_waypoints.map | GNU General Public License 2.0
 base/maps/tower06d.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/tower06n.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/transport06d.map | GNU General Public License 2.0
