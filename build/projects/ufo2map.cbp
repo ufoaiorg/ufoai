@@ -113,9 +113,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\common\imagelib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\mathlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\common\polylib.c">
 			<Option compilerVar="CC" />
 		</Unit>
