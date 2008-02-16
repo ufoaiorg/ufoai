@@ -42,16 +42,16 @@ static int numMissions;				/**< Number of mission parsed in missions.ufo PLUS nb
 									 * (sa ccs.numMissions for number of active missions drawn on geoscape) */
 actMis_t *selMis;				/**< Currently selected mission on geoscape */
 
-static campaign_t campaigns[MAX_CAMPAIGNS];	/**< Document me. */
-static int numCampaigns = 0;			/**< Document me. */
+static campaign_t campaigns[MAX_CAMPAIGNS];
+static int numCampaigns = 0;
 
-static stageSet_t stageSets[MAX_STAGESETS];	/**< Document me. */
-static stage_t stages[MAX_STAGES];		/**< Document me. */
-static int numStageSets = 0;			/**< Document me. */
-static int numStages = 0;			/**< Document me. */
+static stageSet_t stageSets[MAX_STAGESETS];
+static stage_t stages[MAX_STAGES];
+static int numStageSets = 0;
+static int numStages = 0;
 
 campaign_t *curCampaign;			/**< Current running campaign */
-ccs_t ccs;					/**< Document me. */
+ccs_t ccs;
 base_t *baseCurrent;				/**< Pointer to current base. */
 
 static technology_t *rs_alien_xvi;
@@ -77,7 +77,7 @@ enum {
 	BEPERR_NOTFOUND
 } BEPerror;
 
-static char varName[MAX_VAR];			/**< Document me. */
+static char varName[MAX_VAR];
 
 static qboolean(*varFunc)(char *var);
 static qboolean CheckAND(char **s);

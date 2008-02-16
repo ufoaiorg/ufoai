@@ -219,7 +219,7 @@ typedef struct objDef_s {
 	char model[MAX_VAR];		/**< Model name - relative to game dir. */
 	char image[MAX_VAR];		/**< Object image file - relative to game dir. */
 	char type[MAX_VAR];		/**< melee, rifle, ammo, armour @todo: clarify how this is being used */
-	char extends_item[MAX_VAR];	/**< @todo: document me */
+	char extends_item[MAX_VAR];
 	uint32_t shape;			/**< The shape in inventory. */
 
 	byte sx, sy;			/**< Size in x and y direction. */
@@ -606,15 +606,16 @@ typedef enum {
 typedef struct character_s {
 	int ucn;
 	char name[MAX_VAR];			/**< Character name (as in: soldier name). */
-	char path[MAX_VAR];			/**< @todo: document me. */
-	char body[MAX_VAR];			/**< @todo: document me. */
-	char head[MAX_VAR];			/**< @todo: document me. */
+	char path[MAX_VAR];
+	char body[MAX_VAR];
+	char head[MAX_VAR];
 	int skin;				/**< Index of skin. */
 
 	int HP;						/**< Health points (current ones). */
 	int minHP;					/**< Minimum hp during combat */
 	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
-	int STUN, morale;			/**< @todo: document me. */
+	int STUN;
+	int morale;
 
 	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
 	chrScoreMission_t *scoreMission;		/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */
