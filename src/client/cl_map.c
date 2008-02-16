@@ -163,36 +163,36 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		if (id >= ccs.numMissions)
 			break;
 
-		if (gd.mapAction == MA_INTERCEPT && selMis && selMis == ccs.mission + id) {
-			CL_DisplayPopupIntercept(selMis, NULL);
+		if (gd.mapAction == MA_INTERCEPT && selectedMission && selectedMission == ccs.mission + id) {
+			CL_DisplayPopupIntercept(selectedMission, NULL);
 			return;
 		}
 
 		MAP_ResetAction();
-		selMis = ccs.mission + id;
+		selectedMission = ccs.mission + id;
 
-		if (selMis->def->missionType == MIS_BASEATTACK) {
+		if (selectedMission->def->missionType == MIS_BASEATTACK) {
 			base_t* base;
-			base = (base_t*)selMis->def->data;
+			base = (base_t*)selectedMission->def->data;
 			assert(base);
 			/* @sa B_BaseAttack */
 			if (!B_GetNumberOfBuildingsInBaseByType(base->idx, B_COMMAND)) {
 				CL_BaseRansacked(base);
 			} else {
 				/* we need no dropship in our base */
-				selMis->def->active = qtrue;
+				selectedMission->def->active = qtrue;
 				gd.mapAction = MA_BASEATTACK;
-				Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+				Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selectedMission->def->name, selectedMission->realPos[0], selectedMission->realPos[1]);
 				cls.missionaircraft = &base->aircraft[0]; /* FIXME */
 				assert(cls.missionaircraft);
 				assert(cls.missionaircraft->homebase == base);
 			}
 		} else {
-			Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+			Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selectedMission->def->name, selectedMission->realPos[0], selectedMission->realPos[1]);
 			gd.mapAction = MA_INTERCEPT;
 			if (multiSelection) {
 				/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
-				CL_DisplayPopupIntercept(selMis, NULL);
+				CL_DisplayPopupIntercept(selectedMission, NULL);
 				return;
 			}
 		}
@@ -963,7 +963,7 @@ static void MAP_GetGeoscapeAngle (float *Vector)
 		else
 			Vector2Set(Vector, ccs.mission[centerOnEventIdx - counter].realPos[0], ccs.mission[centerOnEventIdx - counter].realPos[1]);
 		MAP_ResetAction();
-		selMis = ccs.mission + centerOnEventIdx - counter;
+		selectedMission = ccs.mission + centerOnEventIdx - counter;
 		return;
 	}
 	counter += ccs.numMissions;
@@ -1220,15 +1220,15 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (ms = ccs.mission + ccs.numMissions - 1; ms >= ccs.mission; ms--)
 		if (MAP_AllMapToScreen(node, ms->realPos, &x, &y, NULL)) {
-			if (ms == selMis) {
+			if (ms == selectedMission) {
 				Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->realPos) ? _("Night") : _("Day"));
 
 				/* Draw circle around the mission */
 				if (cl_3dmap->integer) {
-					if (!selMis->def->active)
+					if (!ms->def->active)
 						MAP_MapDrawEquidistantPoints(node, ms->realPos, SELECT_CIRCLE_RADIUS, yellow);
 				} else
-					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
+					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, ms->def->active ? "circleactive" : "circle");
 			}
 
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
@@ -1435,17 +1435,17 @@ void MAP_DrawMap (const menuNode_t* node)
 		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
 		return;
 	case MA_BASEATTACK:
-		if (selMis)
+		if (selectedMission)
 			break;
 		mn.menuText[TEXT_STANDARD] = _("Aliens are attacking our base at this very moment.\n");
 		return;
 	case MA_INTERCEPT:
-		if (selMis)
+		if (selectedMission)
 			break;
 		mn.menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
 		return;
 	case MA_UFORADAR:
-		if (selMis)
+		if (selectedMission)
 			break;
 		mn.menuText[TEXT_STANDARD] = _("UFO in radar range\n");
 		return;
@@ -1454,17 +1454,18 @@ void MAP_DrawMap (const menuNode_t* node)
 	}
 
 	/* Nothing is displayed yet */
-	if (selMis) {
+	if (selectedMission) {
 		const char *txt;
-		if (!selMis->def)
+		if (!selectedMission->def)
 			Sys_Error("the selected mission has no def pointer set\n");
 
-		if (!selMis->def->played && selMis->def->onGeoscape && selMis->def->missionTextAlternate)
-			txt = selMis->def->missionTextAlternate;
+		if (!selectedMission->def->played && selectedMission->def->onGeoscape
+		 && selectedMission->def->missionTextAlternate)
+			txt = selectedMission->def->missionTextAlternate;
 		else
-			txt = selMis->def->missionText;
+			txt = selectedMission->def->missionText;
 
-		mn.menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s"), selMis->def->location, selMis->def->type, _(txt));
+		mn.menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s"), selectedMission->def->location, selectedMission->def->type, _(txt));
 	} else if (selectedAircraft) {
 		switch (selectedAircraft->status) {
 		case AIR_HOME:
@@ -1511,9 +1512,9 @@ void MAP_ResetAction (void)
 		gd.mapAction = MA_NONE;
 
 	gd.interceptAircraft = AIRCRAFT_INVALID;
-	if (selMis) {
-		selMis->def->active = qfalse;
-		selMis = NULL;				/* reset selected mission */
+	if (selectedMission) {
+		selectedMission->def->active = qfalse;
+		selectedMission = NULL;				/* reset selected mission */
 	}
 	selectedAircraft = NULL;
 	selectedUFO = NULL;
@@ -1533,11 +1534,11 @@ void MAP_SelectAircraft (aircraft_t* aircraft)
  */
 void MAP_SelectMission (actMis_t* mission)
 {
-	if (!mission || mission == selMis)
+	if (!mission || mission == selectedMission)
 		return;
 	MAP_ResetAction();
 	gd.mapAction = MA_INTERCEPT;
-	selMis = mission;
+	selectedMission = mission;
 }
 
 /**
@@ -1546,10 +1547,10 @@ void MAP_SelectMission (actMis_t* mission)
 void MAP_NotifyMissionRemoved (const actMis_t* mission)
 {
 	/* Unselect the current selected mission if its the same */
-	if (selMis == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
+	if (selectedMission == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
 		MAP_ResetAction();
-	else if (selMis > mission)
-		selMis--;
+	else if (selectedMission > mission)
+		selectedMission--;
 
 	/* Notify the multi selection popup */
 	MAP_MultiSelectNotifyMissionRemoved(mission);

@@ -411,7 +411,7 @@ typedef enum aircraftStatus_s {
 	AIR_FLEEING				/**< fleeing other aircraft */
 } aircraftStatus_t;
 
-extern actMis_t *selMis;
+extern actMis_t *selectedMission;
 
 extern campaign_t *curCampaign;
 extern ccs_t ccs;

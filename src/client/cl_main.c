@@ -238,7 +238,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 
 		ccs.singleplayer = qfalse;
 		curCampaign = NULL;
-		selMis = NULL;
+		selectedMission = NULL;
 		base = B_GetBase(0);
 		B_ClearBase(base);
 		RS_ResetHash();

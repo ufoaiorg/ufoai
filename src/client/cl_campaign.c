@@ -40,7 +40,7 @@ static mission_t missions[MAX_MISSIONS];	/**< Missions parsed in missions.ufo AN
 											 * (sa ccs.mission for active missions drawn on geoscape) */
 static int numMissions;				/**< Number of mission parsed in missions.ufo PLUS nb of mission created during game (crash site, ...)
 									 * (sa ccs.numMissions for number of active missions drawn on geoscape) */
-actMis_t *selMis;				/**< Currently selected mission on geoscape */
+actMis_t *selectedMission;				/**< Currently selected mission on geoscape */
 
 static campaign_t campaigns[MAX_CAMPAIGNS];
 static int numCampaigns = 0;
@@ -495,56 +495,6 @@ static void CL_CampaignExecute (setState_t * set)
 technology_t *CP_IsXVIResearched (void)
 {
 	return RS_IsResearched_ptr(rs_alien_xvi) ? rs_alien_xvi : NULL;
-}
-
-#define DETAILSWIDTH 14
-/**
- * @brief Console command to list all available missions
- */
-static void CP_MissionList_f (void)
-{
-	int i, j;
-	qboolean details = qfalse;
-	char tmp[DETAILSWIDTH+1];
-
-	if (Cmd_Argc() > 1)
-		details = qtrue;
-	else
-		Com_Printf("Use details as parameter to get a more detailed list\n");
-
-	/* detail header */
-	if (details) {
-		Com_Printf("| %-14s | %-14s | %-14s | %-14s | #  | %-14s | %-14s | #  |\n|", "id", "map", "param", "alienteam", "alienequip", "civteam");
-		for (i = 0; i < 4; i++)
-			Com_Printf("----------------|");
-		Com_Printf("----|----------------|----------------|----|");
-		Com_Printf("\n");
-	}
-
-	for (i = 0; i < numMissions; i++) {
-		if (details) {
-			Q_strncpyz(tmp, missions[i].name, sizeof(tmp));
-			Com_Printf("| %-*s | ", DETAILSWIDTH, tmp);
-			Q_strncpyz(tmp, missions[i].mapDef->map, sizeof(tmp));
-			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			if (missions[i].mapDef->param)
-				Q_strncpyz(tmp, missions[i].mapDef->param, sizeof(tmp));
-			else
-				tmp[0] = '\0';
-			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			for (j = 0; j < missions[i].numAlienTeams; j++)
-				Q_strncpyz(tmp, missions[i].alienTeams[j]->id, sizeof(tmp));
-			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			Com_Printf("%02i | ", missions[i].aliens);
-			Q_strncpyz(tmp, missions[i].alienEquipment, sizeof(tmp));
-			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			Q_strncpyz(tmp, missions[i].civTeam, sizeof(tmp));
-			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			Com_Printf("%02i |", missions[i].civilians);
-			Com_Printf("\n");
-		} else
-			Com_Printf("%s\n", missions[i].name);
-	}
 }
 
 /**
@@ -2165,7 +2115,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	stageState_t *state;
 	setState_t *set;
 	setState_t dummy;
-	const char *name, *selectedMission;
+	const char *name, *selectedMissionStr;
 	int i, j, num;
 	int misType;
 	char val[32];
@@ -2403,13 +2353,13 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	}
 
 	/* stores the select mission on geoscape */
-	selectedMission = MSG_ReadString(sb);
-	selMis = NULL;
-	if (*selectedMission) {
+	selectedMissionStr = MSG_ReadString(sb);
+	selectedMission = NULL;
+	if (*selectedMissionStr) {
 		for (i = 0; i < ccs.numMissions; i++) {
-			if (!Q_strcmp(ccs.mission[i].def->name, selectedMission)) {
-				selMis = &ccs.mission[i];
-				if (!selMis->def) {
+			if (!Q_strcmp(ccs.mission[i].def->name, selectedMissionStr)) {
+				selectedMission = &ccs.mission[i];
+				if (!selectedMission->def) {
 					Com_Printf("......warning: incomplete mission data (%s)\n", name);
 					return qfalse;
 				}
@@ -2553,8 +2503,8 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	}
 
 	/* stores the select mission on geoscape */
-	if (selMis && selMis->def)
-		MSG_WriteString(sb, selMis->def->name);
+	if (selectedMission && selectedMission->def)
+		MSG_WriteString(sb, selectedMission->def->name);
 	else
 		MSG_WriteString(sb, "");
 
@@ -2760,22 +2710,22 @@ static void CL_GameGo (void)
 	base_t *base = NULL;
 
 	if (!curCampaign) {
-		Com_DPrintf(DEBUG_CLIENT, "curCampaign: %p, selMis: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selMis, gd.interceptAircraft);
+		Com_DPrintf(DEBUG_CLIENT, "curCampaign: %p, selectedMission: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selectedMission, gd.interceptAircraft);
 		return;
 	}
 
 	aircraft = cls.missionaircraft;
 	base = CP_GetMissionBase();
 
-	if (!selMis)
-		selMis = aircraft->mission;
+	if (!selectedMission)
+		selectedMission = aircraft->mission;
 
-	if (!selMis) {
-		Com_DPrintf(DEBUG_CLIENT, "No selMis\n");
+	if (!selectedMission) {
+		Com_DPrintf(DEBUG_CLIENT, "No selectedMission\n");
 		return;
 	}
 
-	mis = selMis->def;
+	mis = selectedMission->def;
 	map_maxlevel_base = 0;
 	assert(mis && aircraft);
 
@@ -2866,9 +2816,9 @@ static void CP_ChangeNationHappiness_f (void)
 	multiplier = atof(Cmd_Argv(1));
 
 	/* we can use an assert here - because this script function will only
-	 * be available as trigger command - selMis must be set at that stage */
-	assert(selMis);
-	nation = MAP_GetNation(selMis->def->pos);
+	 * be available as trigger command - selectedMission must be set at that stage */
+	assert(selectedMission);
+	nation = MAP_GetNation(selectedMission->def->pos);
 	assert(nation);
 
 	nation->stats[0].happiness = nation->stats[0].happiness * multiplier;
@@ -2884,13 +2834,13 @@ static void CP_ChangeNationHappiness_f (void)
 static void CP_AddTriggerMessage_f (void)
 {
 	/* we can use an assert here - because this script function will only
-	 * be available as trigger command - selMis must be set at that stage */
-	assert(selMis);
+	 * be available as trigger command - selectedMission must be set at that stage */
+	assert(selectedMission);
 
-	if (selMis->def->triggerText)
-		MN_AddNewMessage(_("Notice"), selMis->def->triggerText, qfalse, MSG_STANDARD, NULL);
+	if (selectedMission->def->triggerText)
+		MN_AddNewMessage(_("Notice"), selectedMission->def->triggerText, qfalse, MSG_STANDARD, NULL);
 	else
-		Com_Printf("CP_AddTriggerMessage_f()... function call without mission triggerText (%s)\n", selMis->def->name);
+		Com_Printf("CP_AddTriggerMessage_f()... function call without mission triggerText (%s)\n", selectedMission->def->name);
 }
 
 /** @brief mission trigger functions */
@@ -2952,12 +2902,12 @@ void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
  */
 static void CL_GameAutoCheck_f (void)
 {
-	if (!curCampaign || !selMis || gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
+	if (!curCampaign || !selectedMission || gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoCheck_f: No update after automission\n");
 		return;
 	}
 
-	switch (selMis->def->storyRelated) {
+	switch (selectedMission->def->storyRelated) {
 	case qtrue:
 		Com_DPrintf(DEBUG_CLIENT, "story related - auto mission is disabled\n");
 		Cvar_Set("game_autogo", "0");
@@ -3024,22 +2974,22 @@ void CL_GameAutoGo (actMis_t *mission)
 
 	/* update nation opinions */
 	if (won) {
-		CL_HandleNationData(!won, mis->civilians, 0, 0, mis->aliens, selMis);
+		CL_HandleNationData(!won, mis->civilians, 0, 0, mis->aliens, selectedMission);
 		CP_CheckLostCondition(!won, mis, civiliansKilled);
 	} else {
-		CL_HandleNationData(!won, 0, mis->civilians, mis->aliens, 0, selMis);
+		CL_HandleNationData(!won, 0, mis->civilians, mis->aliens, 0, selectedMission);
 		CP_CheckLostCondition(!won, mis, mis->civilians);
 	}
 
 	if (mis->missionType != MIS_BASEATTACK) {
 		assert(aircraft);
 		/* campaign effects */
-		selMis->cause->done++;
-		if ((selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota)
-			|| (selMis->cause->def->number
-				&& selMis->cause->num >= selMis->cause->def->number)) {
-			selMis->cause->active = qfalse;
-			CL_CampaignExecute(selMis->cause);
+		selectedMission->cause->done++;
+		if ((selectedMission->cause->def->quota && selectedMission->cause->done >= selectedMission->cause->def->quota)
+			|| (selectedMission->cause->def->number
+				&& selectedMission->cause->num >= selectedMission->cause->def->number)) {
+			selectedMission->cause->active = qfalse;
+			CL_CampaignExecute(selectedMission->cause);
 		}
 
 		/* collect all aliens as dead ones */
@@ -3072,14 +3022,14 @@ void CL_GameAutoGo (actMis_t *mission)
 	}
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(selMis->def, won);
+	CP_ExecuteMissionTrigger(selectedMission->def, won);
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && missionresults.recovery)
 		Cmd_ExecuteString("cp_uforecoverystore");
 
-	if (won || !selMis->def->keepAfterFail)
-		CL_CampaignRemoveMission(selMis);
+	if (won || !selectedMission->def->keepAfterFail)
+		CL_CampaignRemoveMission(selectedMission);
 
 	if (won)
 		MN_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
@@ -3095,7 +3045,7 @@ void CL_GameAutoGo (actMis_t *mission)
  */
 static void CL_GameAutoGo_f (void)
 {
-	if (!curCampaign || !selMis) {
+	if (!curCampaign || !selectedMission) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo_f: No update after automission\n");
 		return;
 	}
@@ -3106,7 +3056,7 @@ static void CL_GameAutoGo_f (void)
 	}
 
 	/* start the map */
-	CL_GameAutoGo(selMis);
+	CL_GameAutoGo(selectedMission);
 }
 
 /**
@@ -3329,7 +3279,7 @@ static void CL_GameResults_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
 
 	/* multiplayer? */
-	if (!curCampaign || !selMis || !baseCurrent)
+	if (!curCampaign || !selectedMission || !baseCurrent)
 		return;
 
 	/* check for replay */
@@ -3345,8 +3295,8 @@ static void CL_GameResults_f (void)
 	}
 	won = atoi(Cmd_Argv(1));
 
-	if (selMis->def->missionType == MIS_BASEATTACK) {
-		baseCurrent = (base_t*)selMis->def->data;
+	if (selectedMission->def->missionType == MIS_BASEATTACK) {
+		baseCurrent = (base_t*)selectedMission->def->data;
 	} else {
 		assert(gd.interceptAircraft != AIRCRAFT_INVALID);
 		baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
@@ -3359,10 +3309,10 @@ static void CL_GameResults_f (void)
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
 	Com_DPrintf(DEBUG_CLIENT, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n",
-		won, selMis->def->civilians - civilians_killed, civilians_killed,
-		selMis->def->aliens - aliens_killed, aliens_killed);
-	CL_HandleNationData(!won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
-	CP_CheckLostCondition(!won, selMis->def, civilians_killed);
+		won, selectedMission->def->civilians - civilians_killed, civilians_killed,
+		selectedMission->def->aliens - aliens_killed, aliens_killed);
+	CL_HandleNationData(!won, selectedMission->def->civilians - civilians_killed, civilians_killed, selectedMission->def->aliens - aliens_killed, aliens_killed, selectedMission);
+	CP_CheckLostCondition(!won, selectedMission->def, civilians_killed);
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
@@ -3389,14 +3339,14 @@ static void CL_GameResults_f (void)
 				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);
 				E_DeleteEmployee(employee, EMPL_SOLDIER);
 			} /* if dead */
-		} /* if employee != NULL */
-	} /* for */
+		}
+	}
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - num %i\n", numberofsoldiers); /* DEBUG */
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
 
 	/* no transfer or campaign effects for base attack missions */
-	if (selMis->def->missionType != MIS_BASEATTACK) {
+	if (selectedMission->def->missionType != MIS_BASEATTACK) {
 		/* Check for alien containment in aircraft homebase. */
 		if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
@@ -3410,19 +3360,19 @@ static void CL_GameResults_f (void)
 		AIR_AircraftReturnToBase_f();
 
 		/* campaign effects */
-		selMis->cause->done++;
-		if ((selMis->cause->def->quota
-			&& selMis->cause->done >= selMis->cause->def->quota)
-			|| (selMis->cause->def->number
-				&& selMis->cause->num >= selMis->cause->def->number)) {
-			selMis->cause->active = qfalse;
-			CL_CampaignExecute(selMis->cause);
+		selectedMission->cause->done++;
+		if ((selectedMission->cause->def->quota
+			&& selectedMission->cause->done >= selectedMission->cause->def->quota)
+			|| (selectedMission->cause->def->number
+				&& selectedMission->cause->num >= selectedMission->cause->def->number)) {
+			selectedMission->cause->active = qfalse;
+			CL_CampaignExecute(selectedMission->cause);
 		}
 	}
 
 	/* handle base attack mission */
-	if (selMis->def->missionType == MIS_BASEATTACK) {
-		base = (base_t*)selMis->def->data;
+	if (selectedMission->def->missionType == MIS_BASEATTACK) {
+		base = (base_t*)selectedMission->def->data;
 		assert(base);
 		if (won) {
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defense of base: %s successful!"), base->name);
@@ -3434,8 +3384,8 @@ static void CL_GameResults_f (void)
 	}
 
 	/* remove mission from list */
-	if (won || !selMis->def->keepAfterFail)
-		CL_CampaignRemoveMission(selMis);
+	if (won || !selectedMission->def->keepAfterFail)
+		CL_CampaignRemoveMission(selectedMission);
 }
 
 /* =========================================================== */
@@ -4554,7 +4504,7 @@ static void CL_GameNew_f (void)
 		return;
 
 	/* reset, set time */
-	selMis = NULL;
+	selectedMission = NULL;
 
 	memset(&ccs, 0, sizeof(ccs_t));
 	CL_StartSingleplayer(qtrue);
@@ -5472,7 +5422,6 @@ void CL_ResetCampaign (void)
 	/* commands */
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
-	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
 	Cmd_AddCommand("game_skirmish", CL_GameSkirmish_f, "Start the new skirmish game");
 	Cmd_AddCommand("game_new", CL_GameNew_f, "Start the new campaign");
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
