@@ -184,6 +184,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 /**
  * @brief Fills the options language menu node with the parsed language mappings
  * @sa CL_InitAfter
+ * @sa CL_LocaleSet
  */
 void CL_LanguageInit (void)
 {
@@ -208,7 +209,7 @@ void CL_LanguageInit (void)
 #else
 		/* Calling with NULL param should return current system settings. */
 		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), MAX_VAR);
-		if (!deflang)
+		if (deflang[0] == '\0')
 			Q_strncpyz(deflang, "C", MAX_VAR);
 #endif
 	}
