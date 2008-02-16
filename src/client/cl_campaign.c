@@ -5471,56 +5471,6 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 	return qtrue;
 }
 
-#ifdef DEBUG
-/**
- * @brief Debug function to activate a given stage via console
- * @sa CP_CompleteActivateStage
- */
-static void CP_CampaignActivateStage_f (void)
-{
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <stage-id>\n", Cmd_Argv(0));
-		return;
-	}
-	CL_CampaignActivateStage(Cmd_Argv(1), qtrue);
-}
-
-/**
- * @brief Autocomplete function the debug_campaignactivatestage function
- * @sa Cmd_AddParamCompleteFunction
- * @sa CP_CampaignActivateStage_f
- */
-static int CP_CompleteActivateStage (const char *partial, const char **match)
-{
-	int i, matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	size_t len;
-
-	len = strlen(partial);
-	if (!len) {
-		/* list them all if there was no parameter given */
-		for (i = 0; i < numStages; i++) {
-			Com_Printf("%s\n", stages[i].name);
-		}
-		return 0;
-	}
-
-	localMatch[matches] = NULL;
-
-	/* search all matches and fill the localMatch array */
-	for (i = 0; i < numStages; i++) {
-		if (!Q_strncmp(partial, stages[i].name, len)) {
-			Com_Printf("%s\n", stages[i].name);
-			localMatch[matches++] = stages[i].name;
-			if (matches >= MAX_COMPLETE)
-				break;
-		}
-	}
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
-}
-#endif
-
 void CL_ResetCampaign (void)
 {
 	/* reset some vars */
@@ -5550,7 +5500,5 @@ void CL_ResetCampaign (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 	Cmd_AddCommand("debug_campaignstats", CP_CampaignStats_f, "Print campaign stats to game console");
-	Cmd_AddCommand("debug_campaignactivatestage", CP_CampaignActivateStage_f, "Activates a specific stage");
-	Cmd_AddParamCompleteFunction("debug_campaignactivatestage", CP_CompleteActivateStage);
 #endif
 }
