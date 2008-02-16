@@ -50,6 +50,50 @@ const float dangle[DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.
 const byte dvright[DIRECTIONS] = { 7, 6, 4, 5, 0, 1, 2, 3 };
 const byte dvleft[DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
 
+
+/**
+ * @brief Returns the indice of array dangle[DIRECTIONS] whose value is the closest to angle
+ * @note This function allows to know the closest multiple of 45 degree of angle.
+ * @param[in] angle The angle (in degrees) which is tested.
+ * @return Corresponding indice of array dangle[DIRECTIONS].
+ */
+int AngleToDV (int angle)
+{
+	angle += 22;
+	/* set angle between 0 <= angle < 360 */
+	angle %= 360;
+	/* next step is because the result of angle %= 360 when angle is negative depends of the compiler
+	*  (it can be between -360 < angle <= 0 or 0 <= angle < 360) */
+	if (angle < 0)
+		angle += 360;
+
+	/* get an integer quotient */
+	angle /= 45;
+
+	/* return the corresponding indice in dangle[DIRECTIONS] */
+	switch (angle) {
+		case 0:
+			return 0;
+		case 1:
+			return 4;
+		case 2:
+			return 2;
+		case 3:
+			return 6;
+		case 4:
+			return 1;
+		case 5:
+			return 5;
+		case 6:
+			return 3;
+		case 7:
+			return 7;
+		default:
+			Com_Printf("Error in AngleToDV: shouldn't have reached this line\n");
+			return 0;
+	}
+}
+
 /**
  * @brief
  */
@@ -721,6 +765,7 @@ float AngleNormalize180 (float angle)
 }
 
 /**
+ * @brief Sets mins and maxs to their starting points before using AddPointToBounds
  * @sa AddPointToBounds
  */
 void ClearBounds (vec3_t mins, vec3_t maxs)
