@@ -101,7 +101,7 @@ static void AddPlaneToHash (plane_t *p)
 	int hash;
 
 	hash = (int)fabs(p->dist) / 8;
-	hash &= (PLANE_HASHES-1);
+	hash &= (PLANE_HASHES - 1);
 
 	p->hash_chain = planehash[hash];
 	planehash[hash] = p;
@@ -454,6 +454,11 @@ static void SetImpliedFlags (side_t *side, const char *tex)
 		side->contentFlags |= CONTENTS_STEPON;
 	else if (!strcmp(tex, "tex_common/weaponclip"))
 		side->contentFlags |= CONTENTS_WEAPONCLIP;
+
+	if (side->surfaceFlags & SURF_NODRAW) {
+		/* nodraw has never phong set */
+		side->surfaceFlags &= ~SURF_PHONG;
+	}
 
 	if (strstr(tex, "water")) {
 		side->surfaceFlags |= SURF_WARP;
