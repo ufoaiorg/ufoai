@@ -1704,7 +1704,7 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 	if (!Q_strncmp(type, "mission", 7))
 		CL_ParseMission(name, text);
 	else if (!Q_strncmp(type, "up_chapters", 11))
-		UP_ParseUpChapters(name, text);
+		UP_ParseChapters(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qfalse);
 	else if (!Q_strncmp(type, "researched", 10))

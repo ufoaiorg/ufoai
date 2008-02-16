@@ -67,7 +67,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	mn.messageStack = mess;
 
 	mess->type = type;
-	mess->pedia = pedia;		/* pointer to ufopedia */
+	mess->pedia = pedia;		/* pointer to UFOpaedia entry */
 
 	CL_DateConvert(&ccs.date, &mess->d, &mess->m);
 	mess->y = ccs.date.day / 365;

@@ -1,6 +1,6 @@
 /**
  * @file cl_ufopedia.h
- * @brief Header file for Ufopedia script interpreter.
+ * @brief Header file for UFOpaedia script interpreter.
  */
 
 /*
@@ -37,7 +37,7 @@ typedef struct pediaChapter_s {
 } pediaChapter_t;
 
 void UP_ResetUfopedia(void);
-void UP_ParseUpChapters(const char *name, const char **text);
+void UP_ParseChapters(const char *name, const char **text);
 void UP_OpenWith(const char *name);
 void UP_OpenCopyWith(const char *name);
 void UP_ItemDescription(int item);

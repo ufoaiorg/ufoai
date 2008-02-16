@@ -661,7 +661,7 @@ static void PR_AircraftInfo (const base_t* base)
 
 /**
  * @brief Click function for production list
- * @note Opens the ufopedia - by right clicking an item
+ * @note Opens the UFOpaedia - by right clicking an item
  */
 static void PR_ProductionListRightClick_f (void)
 {
@@ -696,7 +696,7 @@ static void PR_ProductionListRightClick_f (void)
 			if (!od->tech)
 				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
-			/* Open up ufopedia for this entry. */
+			/* Open up UFOpaedia for this entry. */
 			if (BUYTYPE_MATCH(od->buytype, produceCategory) && RS_IsResearched_ptr(od->tech)) {
 				if (j == idx) {
 					UP_OpenWith(od->tech->id);

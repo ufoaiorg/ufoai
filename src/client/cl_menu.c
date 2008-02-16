@@ -374,8 +374,8 @@ void MN_ResetMenus (void)
 
 	MN_Init();
 
-	/* reset ufopedia, basemanagement and other subsystems */
-	UP_ResetUfopedia();
+	/* reset UFOpaedia, basemanagement and other subsystems */
+	UP_Reset();
 	B_ResetBaseManagement();
 	RS_ResetResearch();
 	PR_ResetProduction();

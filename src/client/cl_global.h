@@ -49,9 +49,9 @@ typedef struct globalData_s
 	int numTechnologies;
 
 	/* == pedia == */
-	/* A list of all Ufopedia chapters. */
+	/* A list of all UFOpaedia chapters. */
 	pediaChapter_t upChapters[MAX_PEDIACHAPTERS];
-	/* Total number uf upchapters */
+	/* Total number uf UFOpaedia chapters */
 	int numChapters;
 	int numUnreadMails; /**< only for faster access (don't cycle all techs every frame) */
 

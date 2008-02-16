@@ -170,17 +170,17 @@ typedef struct technology_s {
 						 * All requirements need to be fulfilled in order for _one_ item to be produced.
 						 * This check is done for each item.*/
 
-	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /**< Date for ufopedia. */
-	int researchedDateDay, researchedDateMonth, researchedDateYear; /**< Date for ufopedia. */
+	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /**< Date for UFOpaedia. */
+	int researchedDateDay, researchedDateMonth, researchedDateYear; /**< Date for UFOpaedia. */
 
 	markResearched_t markResearched;	/**< Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
 	/* Pedia info */
-	int up_chapter;			/**< Ufopedia chapter as stored in research.ufo. */
+	int up_chapter;			/**< UFOpaedia chapter as stored in research.ufo. */
 	int prev;			/**< Previous tech in pedia. */
 	int next;			/**< Next tech in pedia. */
 
-	techMail_t mail[TECHMAIL_MAX];	/**< Ufopedia mails. See techMailType_t for the different array-entries. */
+	techMail_t mail[TECHMAIL_MAX];	/**< UFOpaedia mails. See techMailType_t for the different array-entries. */
 	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equalt to TECHMAIL_MAX both mailtypes are available. */
 
 	struct technology_s *hash_next;

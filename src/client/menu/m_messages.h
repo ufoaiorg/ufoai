@@ -56,7 +56,7 @@ typedef struct message_s {
 	char title[MAX_VAR];
 	char *text;
 	messagetype_t type;
-	struct technology_s *pedia;		/**< link to ufopedia if a research has finished. */
+	struct technology_s *pedia;		/**< link to UFOpaedia if a research has finished. */
 	struct eventMail_s *eventMail;
 	struct message_s *next;
 	int d, m, y, h, min, s;

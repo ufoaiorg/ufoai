@@ -1,6 +1,6 @@
 /**
  * @file cl_ufopedia.c
- * @brief Ufopedia script interpreter.
+ * @brief UFOpaedia script interpreter.
  */
 
 /*
@@ -63,7 +63,7 @@ enum {
 static int upDisplay = UFOPEDIA_CHAPTERS;
 
 /**
- * @brief Checks If a technology/up-entry will be displayed in the ufopedia (-list).
+ * @brief Checks If a technology/UFOpaedia-entry will be displayed in the UFOpaedia (-list).
  * @note This does not check for different display modes (only pre-research text, what stats, etc...). The content is mostly checked in UP_Article
  * @return qtrue if the tech gets displayed at all, otherwise qfalse.
  * @sa UP_Article
@@ -99,7 +99,7 @@ static void UP_ChangeDisplay (int newDisplay)
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 	/**
-	 * only fetch this once after ufopedia menu was on the stack (was the
+	 * only fetch this once after UFOpaedia menu was on the stack (was the
 	 * current menu)
 	 */
 	if (!ufopedia || !ufopediaMail) {
@@ -213,7 +213,7 @@ static const char* CL_AircraftStatToName (int stat)
 }
 
 /**
- * @brief Diplays the tech tree dependencies in the ufopedia
+ * @brief Diplays the tech tree dependencies in the UFOpaedia
  * @sa UP_DrawEntry
  * @todo Add support for "require_AND"
  * @todo re-iterate trough logic blocks (i.e. append the tech-names it references recursively)
@@ -259,7 +259,7 @@ static void UP_DisplayTechTree (technology_t* t)
 }
 
 /**
- * @brief Prints the (ufopedia and other) description for items (weapons, armour, ...)
+ * @brief Prints the (UFOpaedia and other) description for items (weapons, armour, ...)
  * @param item Index in object definition array ods for the item
  * @sa UP_DrawEntry
  * @sa BS_BuySelect_f
@@ -267,7 +267,7 @@ static void UP_DisplayTechTree (technology_t* t)
  * @sa BS_BuyItem_f
  * @sa BS_SellItem_f
  * @sa MN_Drag
- * Not only called from Ufopedia but also from other places to display
+ * Not only called from UFOpaedia but also from other places to display
  * weapon and ammo stats
  * @todo Do we need to add checks for (od->type == "dummy") here somewhere?
  */
@@ -474,7 +474,7 @@ void UP_ItemDescription (int item)
 }
 
 /**
- * @brief Prints the ufopedia description for armours
+ * @brief Prints the UFOpaedia description for armours
  * @sa UP_DrawEntry
  */
 static void UP_ArmourDescription (technology_t* t)
@@ -512,7 +512,7 @@ static void UP_ArmourDescription (technology_t* t)
 }
 
 /**
- * @brief Prints the ufopedia description for technologies
+ * @brief Prints the UFOpaedia description for technologies
  * @sa UP_DrawEntry
  */
 static void UP_TechDescription (technology_t* t)
@@ -521,7 +521,7 @@ static void UP_TechDescription (technology_t* t)
 }
 
 /**
- * @brief Prints the ufopedia description for buildings
+ * @brief Prints the UFOpaedia description for buildings
  * @sa UP_DrawEntry
  */
 static void UP_BuildingDescription (technology_t* t)
@@ -541,10 +541,10 @@ static void UP_BuildingDescription (technology_t* t)
 }
 
 /**
- * @brief Prints the (ufopedia and other) description for aircraft items
+ * @brief Prints the (UFOpaedia and other) description for aircraft items
  * @param idx Index in object definition array ods for the item
  * @sa UP_DrawEntry
- * Not only called from Ufopedia but also from other places to display
+ * Not only called from UFOpaedia but also from other places to display
  * @todo Don't display things like speed for base defense items - a missile
  * facility isn't getting slower or faster due a special weapon or ammunition
  */
@@ -623,7 +623,7 @@ void UP_AircraftItemDescription (int idx)
 }
 
 /**
- * @brief Prints the ufopedia description for aircraft
+ * @brief Prints the UFOpaedia description for aircraft
  * @note Also checks whether the aircraft tech is already researched or collected
  * @sa BS_MarketAircraftDescription
  * @sa UP_DrawEntry
@@ -850,7 +850,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 
 /**
  * @brief Display only the TEXT_UFOPEDIA part - don't reset any other mn.menuText pointers here
- * @param[in] tech The technology_t pointer to print the ufopedia article for
+ * @param[in] tech The technology_t pointer to print the UFOpaedia article for
  * @sa UP_DrawEntry
  */
 void UP_Article (technology_t* tech, eventMail_t *mail)
@@ -866,7 +866,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		Cvar_SetValue("mn_updisplay", 0);
 		UP_SetMailHeader(NULL, 0, mail);
 		mn.menuText[TEXT_UFOPEDIA] = _(mail->body);
-		/* This allows us to use the index button in the ufopedia,
+		/* This allows us to use the index button in the UFOpaedia,
 		 * eventMails don't have any chapter to go back to. */
 		upDisplay = UFOPEDIA_INDEX;
 	} else {
@@ -969,7 +969,7 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
 }
 
 /**
- * @brief Displays the ufopedia information about a technology
+ * @brief Displays the UFOpaedia information about a technology
  * @param tech technology_t pointer for the tech to display the information about
  * @sa UP_AircraftDescription
  * @sa UP_BuildingDescription
@@ -1015,13 +1015,13 @@ void UP_OpenEventMail (const char *eventMailID)
 		return;
 
 	Cbuf_AddText("mn_push ufopedia\n");
-	Cbuf_Execute(); /* we have to execute the init node of the ufopedia menu here, too */
+	Cbuf_Execute(); /* we have to execute the init node of the UFOpaedia menu here, too */
 	UP_DrawEntry(NULL, mail);
 }
 
 /**
- * @brief Opens the ufopedia from everywhere with the entry given through name
- * @param name Ufopedia entry id
+ * @brief Opens the UFOpaedia from everywhere with the entry given through name
+ * @param name UFOpaedia entry id
  * @sa UP_FindEntry_f
  */
 void UP_OpenWith (const char *name)
@@ -1029,13 +1029,13 @@ void UP_OpenWith (const char *name)
 	if (!name)
 		return;
 	Cbuf_AddText("mn_push ufopedia\n");
-	Cbuf_Execute(); /* we have to execute the init node of the ufopedia menu here, too */
+	Cbuf_Execute(); /* we have to execute the init node of the UFOpaedia menu here, too */
 	Cbuf_AddText(va("ufopedia %s\n", name));
 }
 
 /**
- * @brief Opens the ufopedia with the entry given through name, not deleting copies
- * @param name Ufopedia entry id
+ * @brief Opens the UFOpaedia with the entry given through name, not deleting copies
+ * @param name UFOpaedia entry id
  * @sa UP_FindEntry_f
  */
 void UP_OpenCopyWith (const char *name)
@@ -1047,10 +1047,7 @@ void UP_OpenCopyWith (const char *name)
 
 
 /**
- * @brief Search and open the ufopedia
- *
- * Usage: ufopedia <id>
- * opens the ufopedia with entry id
+ * @brief Search and open the UFOpaedia with given id
  */
 static void UP_FindEntry_f (void)
 {
@@ -1065,16 +1062,15 @@ static void UP_FindEntry_f (void)
 	/* what are we searching for? */
 	id = Cmd_Argv(1);
 
-	/* maybe we get a call like ufopedia "" */
+	/* maybe we get a call like 'ufopedia ""' */
 	if (!*id) {
-		Com_Printf("UP_FindEntry_f: No PediaEntry given as parameter\n");
+		Com_Printf("UP_FindEntry_f: No UFOpaedia entry given as parameter\n");
 		return;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: id=\"%s\"\n", id); /*DEBUG */
+	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: id=\"%s\"\n", id);
 
 	tech = RS_GetTechByID(id);
-
 	if (tech) {
 		upCurrentTech = tech;
 		UP_DrawEntry(upCurrentTech, NULL);
@@ -1082,11 +1078,11 @@ static void UP_FindEntry_f (void)
 	}
 
 	/* if we can not find it */
-	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No PediaEntry found for %s\n", id);
+	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No UFOpaedia entry found for %s\n", id);
 }
 
 /**
- * @brief Displays the chapters in the ufopedia
+ * @brief Displays the chapters in the UFOpaedia
  * @sa UP_Next_f
  * @sa UP_Prev_f
  */
@@ -1196,7 +1192,7 @@ static void UP_Back_f (void)
 }
 
 /**
- * @brief Displays the previous entry in the ufopedia
+ * @brief Displays the previous entry in the UFOpaedia
  * @sa UP_Next_f
  */
 static void UP_Prev_f (void)
@@ -1230,7 +1226,7 @@ static void UP_Prev_f (void)
 }
 
 /**
- * @brief Displays the next entry in the ufopedia
+ * @brief Displays the next entry in the UFOpaedia
  * @sa UP_Prev_f
  */
 static void UP_Next_f (void)
@@ -1371,7 +1367,7 @@ static void UP_TechTreeClick_f (void)
 	if (!techRequired)
 		Sys_Error("Could not find the tech for '%s'\n", required_AND->id[num]);
 
-	/* maybe there is no ufopedia chapter assigned - this tech should not be opened at all */
+	/* maybe there is no UFOpaedia chapter assigned - this tech should not be opened at all */
 	if (techRequired->up_chapter == -1)
 		return;
 
@@ -1379,7 +1375,7 @@ static void UP_TechTreeClick_f (void)
 }
 
 /**
- * @brief Redraw the ufopedia article
+ * @brief Redraw the UFOpaedia article
  */
 static void UP_Update_f (void)
 {
@@ -1448,7 +1444,7 @@ static void UP_MailClientClick_f (void)
 }
 
 /**
- * @brief Change Ufopedia article when clicking on the name of associated ammo or weapon
+ * @brief Change UFOpaedia article when clicking on the name of associated ammo or weapon
  */
 static void UP_ResearchedLinkClick_f (void)
 {
@@ -1818,7 +1814,7 @@ static void UP_DecreaseFiremode_f (void)
 /**
  * @sa CL_ResetMenus
  */
-void UP_ResetUfopedia (void)
+void UP_Reset (void)
 {
 	/* reset menu structures */
 	gd.numChapters = 0;
@@ -1856,21 +1852,21 @@ void UP_ResetUfopedia (void)
 }
 
 /**
- * @brief Parse the ufopedia chapters from UFO-scriptfiles
+ * @brief Parse the UFOpaedia chapters from UFO-scriptfiles
  * @param id Chapter ID
  * @param text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-void UP_ParseUpChapters (const char *name, const char **text)
+void UP_ParseChapters (const char *name, const char **text)
 {
-	const char *errhead = "UP_ParseUpChapters: unexpected end of file (names ";
+	const char *errhead = "UP_ParseChapters: unexpected end of file (names ";
 	const char *token;
 
 	/* get name list body body */
 	token = COM_Parse(text);
 
 	if (!*text || *token !='{') {
-		Com_Printf("UP_ParseUpChapters: chapter def \"%s\" without body ignored\n", name);
+		Com_Printf("UP_ParseChapters: chapter def \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -1884,7 +1880,7 @@ void UP_ParseUpChapters (const char *name, const char **text)
 
 		/* add chapter */
 		if (gd.numChapters >= MAX_PEDIACHAPTERS) {
-			Com_Printf("UP_ParseUpChapters: too many chapter defs\n");
+			Com_Printf("UP_ParseChapters: too many chapter defs\n");
 			return;
 		}
 		memset(&gd.upChapters[gd.numChapters], 0, sizeof(pediaChapter_t));

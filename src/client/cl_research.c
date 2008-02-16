@@ -1147,7 +1147,7 @@ static void RS_ResearchStop_f (void)
 }
 
 /**
- * @brief Switches to the ufopedia entry of the currently selected research entry.
+ * @brief Switches to the UFOpaedia entry of the currently selected research entry.
  */
 static void RS_ShowPedia_f (void)
 {
@@ -1961,7 +1961,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					}
 				} while (*text);
 			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
-				/* ufopedia chapter */
+				/* UFOpaedia chapter */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1995,7 +1995,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				techMail_t* mail;
 
 				/* how many mails found for this technology
-				 * used in ufopedia to check which article to display */
+				 * used in UFOpaedia to check which article to display */
 				tech->numTechMails++;
 
 				if (tech->numTechMails > TECHMAIL_MAX)
