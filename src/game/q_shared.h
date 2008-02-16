@@ -40,17 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/ufotypes.h"
 #include "../shared/byte.h"
 #include "../shared/shared.h"
-
-#include <errno.h>
-#include <assert.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
-#include <ctype.h>
-#include <limits.h>
+#include "../shared/mathlib.h"
 
 #define CURL_STATICLIB
 #include <curl/curl.h>
@@ -152,40 +142,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * UNIT_HEIGHT is the height of one level */
 #define PLAYER_HEIGHT		(UNIT_HEIGHT-12)
 
-/* earth map data */
-/* values of sinus and cosinus of earth inclinaison (23,5 degrees) for faster day and night calculations */
-#define SIN_ALPHA   0.39875
-#define COS_ALPHA   0.91706
-/*#define HIGH_LAT      +0.953 */
-/*#define LOW_LAT       -0.805 */
-/*#define CENTER_LAT    (HIGH_LAT+(LOW_LAT)) */
-/*#define SIZE_LAT      (HIGH_LAT-(LOW_LAT)) */
-#define HIGH_LAT    +1.0
-#define LOW_LAT     -1.0
-#define CENTER_LAT  0.0
-#define SIZE_LAT    2.0
-
-/**
- * @brief Number of angles from a position (2-dimensional)
- * @sa dvecs (in q_shared.c) for a description of its use.
- * @sa AngleToDV.
- * @sa BASE_DIRECTIONS
- */
-#define DIRECTIONS 8
-
-/**
- * @brief Number of direct connected fields for a position
- * @sa DIRECTIONS.
- */
-#define BASE_DIRECTIONS 4
-
-extern const int dvecs[DIRECTIONS][2];
-extern const float dvecsn[DIRECTIONS][2];
-extern const float dangle[DIRECTIONS];
-
-extern const byte dvright[DIRECTIONS];
-extern const byte dvleft[DIRECTIONS];
-
 /* LINKED LIST STUFF */
 
 typedef struct linkedList_s {
@@ -201,101 +157,10 @@ const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* st
 void LIST_Delete(linkedList_t *list);
 void LIST_Remove(linkedList_t **list, linkedList_t *entry);
 
-/*
-==============================================================
-MATHLIB
-==============================================================
-*/
-
-typedef float vec_t;
-typedef vec_t vec2_t[2];
-typedef vec_t vec3_t[3];
-typedef vec_t vec4_t[4];
-typedef vec_t vec5_t[5];
-
-typedef byte pos_t;
-typedef pos_t pos3_t[3];
+/*============================================= */
 
 struct cBspPlane_s;
-
-extern const vec3_t vec3_origin;
-extern const vec4_t vec4_origin;
-extern const vec4_t color_white;
-
-qboolean Q_IsPowerOfTwo(int i);
-
-/* microsoft's fabs seems to be ungodly slow... */
-#define Q_ftol(f) (long) (f)
-
-/** @brief Returns the distance between two 3-dimensional vectors */
-#define DotProduct(x,y)         (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
-#define VectorSubtract(a,b,c)   (c[0]=a[0]-b[0],c[1]=a[1]-b[1],c[2]=a[2]-b[2])
-#define VectorAdd(a,b,c)        (c[0]=a[0]+b[0],c[1]=a[1]+b[1],c[2]=a[2]+b[2])
-#define VectorMul(scalar,b,c)       (c[0]=scalar*b[0],c[1]=scalar*b[1],c[2]=scalar*b[2])
-#define Vector2Mul(scalar,b,c)      (c[0]=scalar*b[0],c[1]=scalar*b[1])
-#define VectorCopy(a,b)         (b[0]=a[0],b[1]=a[1],b[2]=a[2])
-#define Vector2Copy(a,b)            (b[0]=a[0],b[1]=a[1])
-#define Vector4Copy(a,b)        (b[0]=a[0],b[1]=a[1],b[2]=a[2],b[3]=a[3])
-#define Vector2Clear(a)            (a[0]=0,a[1]=0)
-#define VectorClear(a)          (a[0]=a[1]=a[2]=0)
-#define VectorNegate(a,b)       (b[0]=-a[0],b[1]=-a[1],b[2]=-a[2])
-#define VectorSet(v, x, y, z)   (v[0]=(x), v[1]=(y), v[2]=(z))
-#define Vector2Set(v, x, y)     ((v)[0]=(x), (v)[1]=(y))
-#define Vector4Set(v, r, g, b, a)   (v[0]=(r), v[1]=(g), v[2]=(b), v[3]=(a))
-#define VectorCompare(a,b)      (a[0]==b[0]?a[1]==b[1]?a[2]==b[2]?1:0:0:0)
-#define Vector2Compare(a,b)     (a[0]==b[0]?a[1]==b[1]?1:0:0)
-#define VectorDistSqr(a,b)      ((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2]))
-#define VectorDist(a,b)         (sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2])))
-#define VectorLengthSqr(a)      (a[0]*a[0]+a[1]*a[1]+a[2]*a[2])
-#define VectorNotEmpty(a)           (a[0]||a[1]||a[2])
-#define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
-
-#define PosAddDV(p,dv)          (p[0]+=dvecs[dv&(DIRECTIONS-1)][0], p[1]+=dvecs[dv&(DIRECTIONS-1)][1], p[2]=(dv>>3)&(DIRECTIONS-1))
-int AngleToDV(int angle);
-
-void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
-void VectorClampMA(vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);
-
-void MatrixMultiply(const vec3_t a[3], const vec3_t b[3], vec3_t c[3]);
-void GLMatrixMultiply(const float a[16], const float b[16], float c[16]);
-void GLVectorTransform(const float m[16], const vec4_t in, vec4_t out);
-void VectorRotate(const vec3_t m[3], const vec3_t va, vec3_t vb);
-
-void ClearBounds(vec3_t mins, vec3_t maxs);
-void AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs);
-int VectorCompareEps(const vec3_t v1, const vec3_t v2, float epsilon);
-qboolean VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
-vec_t VectorLength(const vec3_t v);
-void CrossProduct(const vec3_t v1, const vec3_t v2, vec3_t cross);
-vec_t VectorNormalize(vec3_t v);    /* returns vector length */
-vec_t VectorNormalize2(const vec3_t v, vec3_t out);
-void VectorInverse(vec3_t v);
-void VectorScale(const vec3_t in, const vec_t scale, vec3_t out);
-int Q_log2(int val);
-
-void VecToAngles(const vec3_t vec, vec3_t angles);
-
-void Print2Vector(const vec2_t v);
-void Print3Vector(const vec3_t v);
-
-void VecToPolar(const vec3_t v, vec2_t a);
-void PolarToVec(const vec2_t a, vec3_t v);
-
-void AngleVectors(const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up);
 int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cBspPlane_s *plane);
-float AngleNormalize360(float angle);
-float AngleNormalize180(float angle);
-
-float LerpAngle(float a1, float a2, float frac);
-
-qboolean FrustomVis(vec3_t origin, int dir, vec3_t point);
-
-void PerpendicularVector(vec3_t dst, const vec3_t src);
-void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees);
-
-float frand(void);              /* 0 to 1 */
-float crand(void);              /* -1 to 1 */
-void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev 1 */
 
 /*============================================= */
 
@@ -459,9 +324,6 @@ typedef struct {
 	struct le_s *le;		/**< not set by CM_*() functions */
 	struct edict_s *ent;	/**< not set by CM_*() functions */
 } trace_t;
-
-#define torad (M_PI/180.0f)
-#define todeg (180.0f/M_PI)
 
 /** entity->flags (render flags) */
 #define RF_TRANSLUCENT      0x00000001

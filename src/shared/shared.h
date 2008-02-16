@@ -30,10 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include "../../config.h"
 #endif
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846  /* matches value in gcc v2 math.h */
-#endif
-
 /* important units */
 #define UNIT_SIZE   32
 #define UNIT_HEIGHT 64
@@ -43,6 +39,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LEAFNODE -1
 #define	PLANENUM_LEAF -1
 
+#include <errno.h>
+#include <assert.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include <ctype.h>
+#include <limits.h>
 #include <stddef.h>
 
 /* to support the gnuc __attribute__ command */
@@ -52,14 +58,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifndef NULL
 #define NULL ((void *)0)
-#endif
-
-#ifndef max
-#define max(a,b) ((a)>(b)?(a):(b))
-#endif
-
-#ifndef min
-#define min(a,b) ((a)<(b)?(a):(b))
 #endif
 
 #ifdef _WIN32
@@ -91,29 +89,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define inline
 #endif
 
-/* angle indexes */
-#define PITCH  0   /* up / down */
-#define YAW    1   /* left / right */
-#define ROLL   2   /* fall over */
-
 #define	BASEDIRNAME	"base"
-
-/** @brief Map boundary is +/- 4096 - to get into the positive area we add the
- * possible max negative value and divide by the size of a grid unit field */
-#define VecToPos(v, p) (                  \
-	p[0] = ((int)v[0] + 4096) / UNIT_SIZE,  \
-	p[1] = ((int)v[1] + 4096) / UNIT_SIZE,  \
-	p[2] =  (int)v[2]         / UNIT_HEIGHT \
-)
-/** @brief Pos boundary size is +/- 128 - to get into the positive area we add
- * the possible max negative value and multiply with the grid unit size to get
- * back the the vector coordinates - now go into the middle of the grid field
- * by adding the half of the grid unit size to this value */
-#define PosToVec(p, v) ( \
-	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + UNIT_SIZE   / 2, \
-	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + UNIT_SIZE   / 2, \
-	v[2] =  (int)p[2]        * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
-)
 
 const char *COM_SkipPath(const char *pathname);
 void COM_StripExtension(const char *in, char *out, size_t size);

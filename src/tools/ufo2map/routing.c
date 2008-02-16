@@ -104,7 +104,7 @@ static void CheckUnit (unsigned int unitnum)
 
 			/* stop if it's totally blocked somewhere */
 			/* and try a higher starting point */
-			if (VectorCompare(tvs, tr_end))
+			if (VectorCompareEps(tvs, tr_end, EQUAL_EPSILON))
 				break;
 		}
 
@@ -112,7 +112,7 @@ static void CheckUnit (unsigned int unitnum)
 		height += tr_end[2];
 		tr_end[2] = height / 6.0;
 
-		if (i == 5 && !VectorCompare(start, tr_end)) {
+		if (i == 5 && !VectorCompareEps(start, tr_end, EQUAL_EPSILON)) {
 			/* found a possibly valid ground */
 			height = PLAYER_HEIGHT - (start[2] - tr_end[2]);
 			end[2] = start[2] + height;
@@ -139,7 +139,7 @@ static void CheckUnit (unsigned int unitnum)
 			height += tr_end[2];
 			tr_end[2] = height / 6.0;
 
-			if (VectorCompare(start, tr_end)) {
+			if (VectorCompareEps(start, tr_end, EQUAL_EPSILON)) {
 				filled[y][x] |= 1 << z; /* don't enter */
 			} else {
 				/* found a possibly valid elevated ground */

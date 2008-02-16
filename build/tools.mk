@@ -20,11 +20,11 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/writebsp.c \
 	tools/ufo2map/common/bspfile.c \
 	tools/ufo2map/common/cmdlib.c \
-	tools/ufo2map/common/mathlib.c \
 	tools/ufo2map/common/polylib.c \
 	tools/ufo2map/common/scriplib.c \
 	tools/ufo2map/common/trace.c \
 	tools/ufo2map/common/imagelib.c \
+	shared/mathlib.c \
 	shared/byte.c \
 	shared/shared.c \
 	common/unzip.c \

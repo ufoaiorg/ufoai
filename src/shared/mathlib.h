@@ -1,0 +1,189 @@
+/**
+ * @file mathlib.h
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+#ifndef __MATHLIB__
+#define __MATHLIB__
+
+#include "ufotypes.h"
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846  /* matches value in gcc v2 math.h */
+#endif
+
+#define	EQUAL_EPSILON	0.001
+
+typedef float vec_t;
+typedef vec_t vec2_t[2];
+typedef vec_t vec3_t[3];
+typedef vec_t vec4_t[4];
+typedef vec_t vec5_t[5];
+
+typedef byte pos_t;
+typedef pos_t pos3_t[3];
+
+extern const vec3_t vec3_origin;
+extern const vec4_t vec4_origin;
+extern const vec4_t color_white;
+
+qboolean Q_IsPowerOfTwo(int i);
+
+#ifndef max
+#define max(a,b) ((a)>(b)?(a):(b))
+#endif
+
+#ifndef min
+#define min(a,b) ((a)<(b)?(a):(b))
+#endif
+
+/* microsoft's fabs seems to be ungodly slow... */
+#define Q_ftol(f) (long) (f)
+
+#define torad (M_PI/180.0f)
+#define todeg (180.0f/M_PI)
+
+/* angle indexes */
+#define PITCH  0   /* up / down */
+#define YAW    1   /* left / right */
+#define ROLL   2   /* fall over */
+
+/* earth map data */
+/* values of sinus and cosinus of earth inclinaison (23,5 degrees) for faster day and night calculations */
+#define SIN_ALPHA   0.39875
+#define COS_ALPHA   0.91706
+#define HIGH_LAT    +1.0
+#define LOW_LAT     -1.0
+#define CENTER_LAT  0.0
+#define SIZE_LAT    2.0
+
+/**
+ * @brief Number of angles from a position (2-dimensional)
+ * @sa dvecs (in q_shared.c) for a description of its use.
+ * @sa AngleToDV.
+ * @sa BASE_DIRECTIONS
+ */
+#define DIRECTIONS 8
+
+/**
+ * @brief Number of direct connected fields for a position
+ * @sa DIRECTIONS.
+ */
+#define BASE_DIRECTIONS 4
+
+extern const int dvecs[DIRECTIONS][2];
+extern const float dvecsn[DIRECTIONS][2];
+extern const float dangle[DIRECTIONS];
+
+extern const byte dvright[DIRECTIONS];
+extern const byte dvleft[DIRECTIONS];
+
+/** @brief Map boundary is +/- 4096 - to get into the positive area we add the
+ * possible max negative value and divide by the size of a grid unit field */
+#define VecToPos(v, p) (                  \
+	p[0] = ((int)v[0] + 4096) / UNIT_SIZE,  \
+	p[1] = ((int)v[1] + 4096) / UNIT_SIZE,  \
+	p[2] =  (int)v[2]         / UNIT_HEIGHT \
+)
+/** @brief Pos boundary size is +/- 128 - to get into the positive area we add
+ * the possible max negative value and multiply with the grid unit size to get
+ * back the the vector coordinates - now go into the middle of the grid field
+ * by adding the half of the grid unit size to this value */
+#define PosToVec(p, v) ( \
+	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + UNIT_SIZE   / 2, \
+	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + UNIT_SIZE   / 2, \
+	v[2] =  (int)p[2]        * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
+)
+
+/** @brief Returns the distance between two 3-dimensional vectors */
+#define DotProduct(x,y)         (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
+#define VectorSubtract(a,b,c)   (c[0]=a[0]-b[0],c[1]=a[1]-b[1],c[2]=a[2]-b[2])
+#define VectorAdd(a,b,c)        (c[0]=a[0]+b[0],c[1]=a[1]+b[1],c[2]=a[2]+b[2])
+#define VectorMul(scalar,b,c)       (c[0]=scalar*b[0],c[1]=scalar*b[1],c[2]=scalar*b[2])
+#define Vector2Mul(scalar,b,c)      (c[0]=scalar*b[0],c[1]=scalar*b[1])
+#define VectorCopy(a,b)         (b[0]=a[0],b[1]=a[1],b[2]=a[2])
+#define Vector2Copy(a,b)            (b[0]=a[0],b[1]=a[1])
+#define Vector4Copy(a,b)        (b[0]=a[0],b[1]=a[1],b[2]=a[2],b[3]=a[3])
+#define Vector2Clear(a)            (a[0]=0,a[1]=0)
+#define VectorClear(a)          (a[0]=a[1]=a[2]=0)
+#define VectorNegate(a,b)       (b[0]=-a[0],b[1]=-a[1],b[2]=-a[2])
+#define VectorSet(v, x, y, z)   (v[0]=(x), v[1]=(y), v[2]=(z))
+#define Vector2Set(v, x, y)     ((v)[0]=(x), (v)[1]=(y))
+#define Vector4Set(v, r, g, b, a)   (v[0]=(r), v[1]=(g), v[2]=(b), v[3]=(a))
+#define VectorCompare(a,b)      (a[0]==b[0]?a[1]==b[1]?a[2]==b[2]?1:0:0:0)
+#define Vector2Compare(a,b)     (a[0]==b[0]?a[1]==b[1]?1:0:0)
+#define VectorDistSqr(a,b)      ((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2]))
+#define VectorDist(a,b)         (sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2])))
+#define VectorLengthSqr(a)      (a[0]*a[0]+a[1]*a[1]+a[2]*a[2])
+#define VectorNotEmpty(a)           (a[0]||a[1]||a[2])
+#define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
+
+#define PosAddDV(p,dv)          (p[0]+=dvecs[dv&(DIRECTIONS-1)][0], p[1]+=dvecs[dv&(DIRECTIONS-1)][1], p[2]=(dv>>3)&(DIRECTIONS-1))
+int AngleToDV(int angle);
+
+void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
+void VectorClampMA(vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);
+
+void MatrixMultiply(const vec3_t a[3], const vec3_t b[3], vec3_t c[3]);
+void GLMatrixMultiply(const float a[16], const float b[16], float c[16]);
+void GLVectorTransform(const float m[16], const vec4_t in, vec4_t out);
+void VectorRotate(const vec3_t m[3], const vec3_t va, vec3_t vb);
+
+void ClearBounds(vec3_t mins, vec3_t maxs);
+void AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs);
+int VectorCompareEps(const vec3_t v1, const vec3_t v2, float epsilon);
+qboolean VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
+vec_t VectorLength(const vec3_t v);
+void CrossProduct(const vec3_t v1, const vec3_t v2, vec3_t cross);
+vec_t VectorNormalize(vec3_t v);    /* returns vector length */
+vec_t VectorNormalize2(const vec3_t v, vec3_t out);
+void VectorInverse(vec3_t v);
+void VectorScale(const vec3_t in, const vec_t scale, vec3_t out);
+int Q_log2(int val);
+
+void VecToAngles(const vec3_t vec, vec3_t angles);
+
+void Print2Vector(const vec2_t v);
+void Print3Vector(const vec3_t v);
+
+void VecToPolar(const vec3_t v, vec2_t a);
+void PolarToVec(const vec2_t a, vec3_t v);
+
+void AngleVectors(const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up);
+float AngleNormalize360(float angle);
+float AngleNormalize180(float angle);
+
+float LerpAngle(float a1, float a2, float frac);
+
+qboolean FrustomVis(vec3_t origin, int dir, vec3_t point);
+
+void PerpendicularVector(vec3_t dst, const vec3_t src);
+void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees);
+
+float frand(void);              /* 0 to 1 */
+float crand(void);              /* -1 to 1 */
+void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev 1 */
+
+vec_t Q_rint(const vec_t in);
+vec_t ColorNormalize(const vec3_t in, vec3_t out);
+
+#endif

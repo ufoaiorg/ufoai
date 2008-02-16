@@ -13,6 +13,7 @@ GAME_SRCS=\
 	game/g_func.c \
 	game/g_trigger.c \
 	game/inv_shared.c \
+	shared/mathlib.c \
 	shared/shared.c \
 	shared/infostring.c
 

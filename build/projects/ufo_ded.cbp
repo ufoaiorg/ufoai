@@ -233,6 +233,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\byte.h" />
+		<Unit filename="..\..\src\shared\mathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>

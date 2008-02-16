@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/shared.h"
 #include "common/cmdlib.h"
 #include "common/scriplib.h"
-#include "common/mathlib.h"
 #include "common/polylib.h"
 #include "common/bspfile.h"
 #include "common/imagelib.h"
@@ -35,9 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	CLIP_EPSILON	0.1
 
 #define	TEXINFO_NODE		-1		/* side is already on a node */
-
-typedef byte pos_t;
-typedef pos_t pos3_t[3];
 
 typedef int ipos_t;
 typedef ipos_t ipos3_t[3];

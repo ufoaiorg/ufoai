@@ -120,6 +120,7 @@ CLIENT_SRCS = \
 	renderer/r_sdl.c \
 	\
 	shared/byte.c \
+	shared/mathlib.c \
 	shared/infostring.c \
 	shared/shared.c
 

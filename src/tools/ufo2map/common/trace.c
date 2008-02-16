@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "shared.h"
 #include "cmdlib.h"
-#include "mathlib.h"
 #include "../qbsp.h"
 #include "bspfile.h"
 #include <stddef.h>
@@ -358,7 +357,7 @@ int TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, int levels)
 				VectorCopy(tr_end, end);
 	}
 
-	if (VectorCompare(end, stop))
+	if (VectorCompareEps(end, stop, EQUAL_EPSILON))
 		return 0;
 	else
 		return 1;
