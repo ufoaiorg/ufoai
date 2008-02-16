@@ -98,7 +98,7 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 		break;
 	default:
 		assert(0);
-		return;
+		return 0;
 	}
 
 	sides = 0;
