@@ -554,11 +554,11 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 	assert(base);
 
 	/* Calculate the line that the aircraft should follow to go to destination */
-	MAP_MapCalcLine(aircraft->pos, destination, &(line));
+	MAP_MapCalcLine(aircraft->pos, destination, &line);
 	distance = line.distance * (line.numPoints - 1);
 
 	/* Calculate the line that the aircraft should then follow to go back home */
-	MAP_MapCalcLine(destination, base->pos, &(line));
+	MAP_MapCalcLine(destination, base->pos, &line);
 	distance += line.distance * (line.numPoints - 1);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
@@ -747,7 +747,7 @@ void AIR_NewAircraft (base_t *base, const char *name)
 		MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
-		Radar_Initialise(&(aircraft->radar), aircraftRadarRange, 1.0f);
+		Radar_Initialise(&aircraft->radar, aircraftRadarRange, 1.0f);
 
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
@@ -1128,7 +1128,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
 		return qfalse;
 	}
 
-	MAP_MapCalcLine(aircraft->pos, mission->realPos, &(aircraft->route));
+	MAP_MapCalcLine(aircraft->pos, mission->realPos, &aircraft->route);
 	aircraft->status = AIR_MISSION;
 	aircraft->time = 0;
 	aircraft->point = 0;
@@ -1660,7 +1660,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 
 	/* don't check if the aircraft has enough fuel: maybe UFO will come closer */
 
-	MAP_MapCalcLine(aircraft->pos, ufo->pos, &(aircraft->route));
+	MAP_MapCalcLine(aircraft->pos, ufo->pos, &aircraft->route);
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
 	aircraft->point = 0;
@@ -1693,7 +1693,7 @@ qboolean AIR_SendUFOPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 		return qfalse;
 	}
 
-	MAP_MapCalcLine(ufo->pos, aircraft->pos, &(ufo->route));
+	MAP_MapCalcLine(ufo->pos, aircraft->pos, &ufo->route);
 	ufo->status = AIR_UFO;
 	ufo->time = 0;
 	ufo->point = 0;
@@ -1730,7 +1730,7 @@ qboolean AIR_SendUFOAttackBase (aircraft_t* ufo, base_t* base)
 	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
 		return qfalse;
 
-	MAP_MapCalcLine(ufo->pos, base->pos, &(ufo->route));
+	MAP_MapCalcLine(ufo->pos, base->pos, &ufo->route);
 	ufo->baseTarget = base;
 	ufo->aircraftTarget = NULL;
 	ufo->status = AIR_UFO; /* FIXME: Might crash in cl_map.c MAP_DrawMapMarkers */

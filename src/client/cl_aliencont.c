@@ -310,7 +310,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 				}
 				if (maxamount == 1) {
 					/* If only one here, just remove. */
-					AL_ChangeAliveAlienNumber(base, &(containment[maxidx]), -1);
+					AL_ChangeAliveAlienNumber(base, &containment[maxidx], -1);
 					containment[maxidx].amount_dead++;
 					--amount;
 				} else {
@@ -318,7 +318,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 					toremove = maxamount - 1;
 					if (toremove > amount)
 						toremove = amount;
-					AL_ChangeAliveAlienNumber(base, &(containment[maxidx]), -toremove);
+					AL_ChangeAliveAlienNumber(base, &containment[maxidx], -toremove);
 					containment[maxidx].amount_dead += toremove;
 					amount -= toremove;
 				}
@@ -330,7 +330,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		for (j = 0; j < gd.numAliensTD; j++) {
 			if (containment[j].amount_alive > 0) {
 				containment[j].amount_dead += containment[j].amount_alive;
-				AL_ChangeAliveAlienNumber(base, &(containment[j]), -containment[j].amount_alive);
+				AL_ChangeAliveAlienNumber(base, &containment[j], -containment[j].amount_alive);
 			}
 		}
 		break;
@@ -343,7 +343,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 					return;
 				/* We are killing only one here, so we
 				 * don't care about amount param.   */
-				AL_ChangeAliveAlienNumber(base, &(containment[j]), -1);
+				AL_ChangeAliveAlienNumber(base, &containment[j], -1);
 				containment[j].amount_dead++;
 				break;
 			}
@@ -357,7 +357,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		for (j = 0; j < gd.numAliensTD; j++) {
 			assert(*containment[j].alientype);
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
-				AL_ChangeAliveAlienNumber(base, &(containment[j]), 1);
+				AL_ChangeAliveAlienNumber(base, &containment[j], 1);
 				break;
 			}
 		}
@@ -505,7 +505,7 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 /**
  * @brief Check if alive aliens can be added/removed to Alien Containment.
  * @param[in] base Pointer to the base where Alien Cont. should be checked.
- * @param[in] containment Pointer to the containment (may be NULL when adding aliens or 
+ * @param[in] containment Pointer to the containment (may be NULL when adding aliens or
  * if you don't care about alien type of alien you're removing)
  * @param[in] num Number of alien to be added/removed
  * @return qtrue if action may be performed in base
@@ -526,7 +526,7 @@ qboolean AL_CheckAliveFreeSpace (base_t *base, aliensCont_t *containment, int nu
 		if (containment && (containment->amount_alive + num < 0))
 			return qfalse;
 	}
-	
+
 	return qtrue;
 }
 

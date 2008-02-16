@@ -126,7 +126,7 @@ static void UFO_SetRandomDest (aircraft_t* ufo)
 	ufo->time = 0;
 	ufo->point = 0;
 	CP_GetRandomPosForAircraft(pos);
-	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
+	MAP_MapCalcLine(ufo->pos, pos, &ufo->route);
 }
 
 /**
@@ -149,7 +149,7 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, const vec2_t v)
 
 	ufo->time = 0;
 	ufo->point = 0;
-	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
+	MAP_MapCalcLine(ufo->pos, pos, &ufo->route);
 	ufo->aircraftTarget = NULL;
 	ufo->baseTarget = NULL;
 	ufo->status = AIR_FLEEING;

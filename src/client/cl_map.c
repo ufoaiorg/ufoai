@@ -371,7 +371,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 			MAP_ResetAction();
 		else if (selectedAircraft->status > AIR_HOME && AIR_AircraftHasEnoughFuel(selectedAircraft, pos)) {
 			/* Move the selected aircraft to the position clicked */
-			MAP_MapCalcLine(selectedAircraft->pos, pos, &(selectedAircraft->route));
+			MAP_MapCalcLine(selectedAircraft->pos, pos, &selectedAircraft->route);
 			selectedAircraft->status = AIR_TRANSIT;
 			selectedAircraft->time = aircraft->point = 0;
 		}
@@ -1267,7 +1267,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 
 		/* Draw base radar info */
-		RADAR_DrawInMap(node, &(base->radar), base->pos);
+		RADAR_DrawInMap(node, &base->radar, base->pos);
 
 		/* Draw base */
 		if (cl_3dmap->integer) {
@@ -1292,7 +1292,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (aircraft->status > AIR_HOME) {
 
 				/* Draw aircraft radar */
-				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos);
+				RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
 
 				/* Draw weapon range if at least one UFO is visible */
 				if (oneUFOVisible && aircraft->stats[AIR_STATS_WRANGE] > 0)
@@ -1345,9 +1345,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (Cvar_VariableInteger("debug_showufos")) {
 			/* Draw ufo route */
 			if (cl_3dmap->integer)
-				MAP_3DMapDrawLine(node, &(aircraft->route));
+				MAP_3DMapDrawLine(node, &aircraft->route);
 			else
-				MAP_MapDrawLine(node, &(aircraft->route));
+				MAP_MapDrawLine(node, &aircraft->route);
 		} else
 #endif
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL))
@@ -1430,7 +1430,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	case MA_NEWBASE:
 		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
 			/* Draw base radar info */
-			RADAR_DrawCoverage(node, &(base->radar),base->pos);
+			RADAR_DrawCoverage(node, &base->radar,base->pos);
 
 		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
 		return;
