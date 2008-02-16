@@ -114,3 +114,4 @@ void SubdividePatches(void);
 void PairEdges(void);
 void CalcTextureReflectivity(void);
 void RadWorld(void);
+void BuildVertexNormals(void);

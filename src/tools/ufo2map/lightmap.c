@@ -557,10 +557,10 @@ static void CalcFaceVectors (lightinfo_t *l)
  */
 static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 {
-	int i, s, t, j, w, h, step;
+	int s, t, j, w, h, step;
 	vec_t starts, startt, us, ut, mids, midt;
 	vec_t *surf;
-	vec3_t facemid;
+	vec3_t pos, facemid;
 	dBspLeaf_t *leaf;
 
 	/* fill in surforg
@@ -586,42 +586,15 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 			us = starts + (s + sofs) * step;
 			ut = startt + (t + tofs) * step;
 
-			/* if a line can be traced from surf to facemid, the point is good */
-			for (i = 0; i < 6; i++) {
-				/* calculate texture point */
-				for (j = 0; j < 3; j++)
-					surf[j] = l->texorg[j] + l->textoworld[0][j] * us
-					+ l->textoworld[1][j] * ut;
+			/* calculate texture point */
+			for (j = 0; j < 3; j++)
+				surf[j] = l->texorg[j] + l->textoworld[0][j] * us +
+						l->textoworld[1][j] * ut;
 
-				leaf = Rad_PointInLeaf(surf);
-				if (leaf->contentFlags != CONTENTS_SOLID) {
-					if (!TestLine(facemid, surf))
-						break;	/* got it */
-				}
-
-				/* nudge it */
-				if (i & 1) {
-					if (us > mids) {
-						us -= 4;
-						if (us < mids)
-							us = mids;
-					} else {
-						us += 4;
-						if (us > mids)
-							us = mids;
-					}
-				} else {
-					if (ut > midt) {
-						ut -= 4;
-						if (ut < midt)
-							ut = midt;
-					} else {
-						ut += 4;
-						if (ut > midt)
-							ut = midt;
-					}
-				}
-			}
+			VectorMA(surf, 2, l->facenormal, pos);
+			leaf = Rad_PointInLeaf(pos);
+			if (leaf->contentFlags == CONTENTS_SOLID)
+				continue;
 		}
 	}
 }
@@ -829,7 +802,7 @@ static void GatherSampleLight (vec3_t pos, vec3_t normal, vec3_t center,
 	VectorNormalize(pos2);
 
 	CrossProduct(pos2, normal, pos2);
-	VectorMA(pos, 1.5, pos2, pos);
+	VectorMA(pos, 2.0, pos2, pos);
 
 	for (l = directlights; l; l = l->next) {
 		VectorSubtract(l->origin, pos, delta);
@@ -947,6 +920,137 @@ nextpatch:;
 	}
 }
 
+
+/**
+ * @brief Populate faces with indexes of all dBspFace_t's referencing the specified edge.
+ * @param[out] The number of dBspFace_t's referencing edge is returned in nfaces.
+ */
+static void FacesWithEdge (int edge, int *faces, int *nfaces)
+{
+	dBspFace_t *face;
+	int i, j, k, e;
+
+	k = 0;
+	for (i = 0; i < numfaces; i++) {
+		face = &dfaces[i];
+
+		if (!(texinfo[face->texinfo].surfaceFlags & SURF_PHONG))
+			continue;
+
+		for (j = 0; j < face->numedges; j++) {
+			e = dsurfedges[face->firstedge + j];
+
+			if (e == edge) {
+				faces[k++] = i;
+				break;
+			}
+		}
+	}
+	*nfaces = k;
+}
+
+static vec3_t vertexnormals[MAX_MAP_VERTS];
+
+/**
+ * @brief Calculate per-vertex (instead of per-plane) normal vectors.  This is done by
+ * finding all of the faces which use a given vertex, and calculating an average
+ * of their normal vectors.
+ */
+void BuildVertexNormals (void)
+{
+	dBspVertex_t *vert;
+	dBspEdge_t *edge;
+	dBspFace_t *face;
+	dBspPlane_t *plane;
+	int edge_faces[256];
+	int num_edge_faces;
+	vec3_t norm;
+	int i, j, k, l;
+
+	for (i = 0; i < numvertexes; i++) {
+		vert = &dvertexes[i];
+
+		VectorSet(vertexnormals[i], 0, 0, 0);
+		l = 0;
+
+		for (j = 0; j < numedges; j++) {
+			edge = &dedges[j];
+
+			if (edge->v[0] == i)  /* edge uses this vert */
+				FacesWithEdge(j, edge_faces, &num_edge_faces);
+			else if (edge->v[1] == i)
+				FacesWithEdge(-j, edge_faces, &num_edge_faces);
+			else
+				continue;
+
+			l += num_edge_faces;
+
+			for (k = 0; k < num_edge_faces; k++) {
+				face = &dfaces[edge_faces[k]];
+				plane = &dplanes[face->planenum];
+
+				if (face->side)
+					VectorNegate(plane->normal, norm);
+				else
+					VectorCopy(plane->normal, norm);
+
+				VectorAdd(vertexnormals[i], norm, vertexnormals[i]);
+			}
+		}
+		VectorScale(vertexnormals[i], 1.0 / l, vertexnormals[i]);
+		VectorNormalize(vertexnormals[i]);
+	}
+}
+
+
+/**
+ * @brief For Phong-shaded samples, interpolate the vertex normals for the surface,
+ * weighting them according to their proximity to pos.
+ */
+static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
+{
+	vec3_t temp;
+	float dist, neardist, fardist;
+	int near, far;
+	int i, v, e;
+
+	neardist = 999999;
+	fardist = -999999;
+
+	near = far = 0;
+
+	for (i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
+		e = dsurfedges[l->face->firstedge + i];
+		if (e >= 0)
+			v = dedges[e].v[0];
+		else
+			v = dedges[-e].v[1];
+
+		VectorSubtract(pos, dvertexes[v].point, temp);
+		dist = VectorLength(temp);
+
+		if (dist < neardist) {
+			neardist = dist;
+			near = v;
+		}
+
+		if (dist > fardist) {
+			fardist = dist;
+			far = v;
+		}
+	}
+
+#if 0
+	/* interpolate between nearest and farthest verts */
+	VectorScale(vertexnormals[near], fardist / (neardist + fardist), temp);
+	VectorScale(vertexnormals[far], neardist / (neardist + fardist), temp2);
+	VectorAdd(temp, temp2, normal);
+#endif
+
+	VectorCopy(vertexnormals[near], normal);
+}
+
+
 #define MAX_SAMPLES 5
 static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
 
@@ -960,6 +1064,7 @@ void BuildFacelights (unsigned int facenum)
 	patch_t *patch;
 	size_t tablesize;
 	facelight_t *fl;
+	vec3_t normal;
 
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
@@ -1010,7 +1115,13 @@ void BuildFacelights (unsigned int facenum)
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {
 		for (j = 0; j < numsamples; j++) {
-			GatherSampleLight(l[j].surfpt[i], l[0].facenormal, l[0].center,
+			/* calculate interpolated normal for phong shading */
+			if (texinfo[l[0].face->texinfo].surfaceFlags & SURF_PHONG)
+				SampleNormal(&l[0], l[j].surfpt[i], normal);
+			else /* or just use the plane normal */
+				VectorCopy(l[0].facenormal, normal);
+
+			GatherSampleLight(l[j].surfpt[i], normal, l[0].center,
 				styletable, i * 3, tablesize, 1.0 / numsamples);
 		}
 

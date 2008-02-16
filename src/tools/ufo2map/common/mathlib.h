@@ -50,7 +50,7 @@ qboolean VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
 #define VectorCopy(a,b) {b[0]=a[0];b[1]=a[1];b[2]=a[2];}
 #define VectorScale(a,b,c) {c[0]=b*a[0];c[1]=b*a[1];c[2]=b*a[2];}
 #define VectorClear(x) {x[0] = x[1] = x[2] = 0;}
-#define	VectorNegate(x) {x[0]=-x[0];x[1]=-x[1];x[2]=-x[2];}
+#define VectorNegate(a,b)       (b[0]=-a[0],b[1]=-a[1],b[2]=-a[2])
 #define VectorSet(v, x, y, z)   (v[0]=(x), v[1]=(y), v[2]=(z))
 #define VectorNotEmpty(a)           (a[0]||a[1]||a[2])
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])

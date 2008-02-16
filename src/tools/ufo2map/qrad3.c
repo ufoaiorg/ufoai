@@ -59,57 +59,6 @@ static void MakeBackplanes (void)
 	}
 }
 
-/* #define CALC_VERTEX_NORMALS */
-#ifdef CALC_VERTEX_NORMALS
-static vec3_t vnormals[MAX_MAP_VERTS];
-
-static void CalcVertexNormals (unsigned int vnum)
-{
-	qboolean	found;
-	int		i, k;
-	dBspFace_t	*face;
-	int		*se;
-	int		v;
-	vec3_t	normal;
-	vec3_t	vert;
-
-	/* clear normal and successively add plane normal vectors */
-	vnum++;
-	VectorCopy(dvertexes[vnum].point, vert);
-	VectorClear(normal);
-	found = qfalse;
-
-	for (i = 0, face = dfaces; i < numfaces; i++, face++)
-		if (texinfo[face->texinfo].flags & 0x8000) /* FIXME */
-			for (k = 0, se = &dsurfedges[face->firstedge]; k < face->numedges; k++, se++) {
-				if (*se < 0)
-					v = dedges[-*se].v[1];
-				else
-					v = dedges[*se].v[0];
-
-				if (v == vnum || VectorCompare(dvertexes[v].point, vert)) {
-					/* found a plane containing that vertex */
-					VectorAdd(normal, dplanes[face->planenum].normal, normal);
-					found = qtrue;
-					break;
-				}
-			}
-
-/*	normal[0] = (float)(rand()%256);
-	normal[1] = (float)(rand()%256);
-	normal[2] = (float)(rand()%256);
-	VectorCopy(normal, lastNormal);*/
-
-	if (found && !VectorCompare(normal, vec3_origin)) {
-		VectorCopy(normal, vnormals[vnum]);
-		VectorNormalize(vnormals[vnum]);
-	} else
-		VectorClear(vnormals[vnum]);
-
-	Sys_FPrintf(SYS_VRB, "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2]);
-}
-#endif
-
 /*
 ===================================================================
 TRANSFER SCALES
@@ -394,13 +343,11 @@ void RadWorld (void)
 	/* subdivide patches to a maximum dimension */
 	SubdividePatches();
 
-#ifdef CALC_VERTEX_NORMALS
-	/* calculate vertex normals for smooth lighting */
-	U2M_ProgressBar(CalcVertexNormals, numvertexes - 1, qtrue, "VERTEXNRM");
-#endif
-
 	/* create directlights out of patches and lights */
 	CreateDirectLights();
+
+	/* build per-vertex normals for phong shading */
+	BuildVertexNormals();
 
 	/* build initial facelights */
 	U2M_ProgressBar(BuildFacelights, numfaces, qtrue, "FACELIGHTS");

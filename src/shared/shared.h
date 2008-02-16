@@ -171,6 +171,7 @@ COLLISION DETECTION
 #define SURF_NODRAW    0x00000080 /**< don't bother referencing the texture */
 #define SURF_HINT      0x00000100 /**< make a primary bsp splitter */
 #define SURF_SKIP      0x00000200 /**< completely ignored, allowing non-closed brushes */
+#define SURF_PHONG     0x00000400 /**< phong interpolated lighting at compile time */
 #define SURF_ALPHATEST 0x02000000 /**< alpha test for transparent textures */
 
 /* content masks */
