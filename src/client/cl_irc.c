@@ -1616,7 +1616,7 @@ void Irc_Init (void)
 	irc_channel = Cvar_Get("irc_channel", "#ufo:ai", CVAR_ARCHIVE, "IRC channel to join into");
 	irc_channel->modified = qfalse;
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
-	irc_user = Cvar_Get("irc_user", "UfoAIPlayer", CVAR_ARCHIVE, NULL);
+	irc_user = Cvar_Get("irc_user", "UFOAIPlayer", CVAR_ARCHIVE, NULL);
 	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
 	irc_topic = Cvar_Get("irc_topic", "", CVAR_NOSET, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);

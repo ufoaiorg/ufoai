@@ -64,7 +64,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 	const vec4_t color = {0, 1, 0, 1};
 	screenPoint_t pts[2];
 
-	if (radar->numUfos == 0)
+	if (radar->numUFOs == 0)
 		return;
 
 	/* Show radar range zones */
@@ -77,7 +77,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 	MAP_AllMapToScreen(node, pos, &x, &y, &z);
 	pts[0].x = x;
 	pts[0].y = y;
-	for (i = radar->numUfos - 1; i >= 0; i--)
+	for (i = radar->numUFOs - 1; i >= 0; i--)
 		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z > 0) {
 			pts[1].x = x;
 			pts[1].y = y;
@@ -88,43 +88,43 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 }
 
 /**
- * @brief Add a UFO in the list of sensored ufo
+ * @brief Add a UFO in the list of sensored UFOs
  */
-static qboolean RADAR_AddUfo (radar_t* radar, int numUfo)
+static qboolean RADAR_AddUFO (radar_t* radar, int numUFO)
 {
-	if (radar->numUfos >= MAX_UFOONGEOSCAPE)
+	if (radar->numUFOs >= MAX_UFOONGEOSCAPE)
 		return qfalse;
 
-	radar->ufos[radar->numUfos] = numUfo;
-	radar->numUfos++;
+	radar->ufos[radar->numUFOs] = numUFO;
+	radar->numUFOs++;
 	return qtrue;
 }
 
 /**
- * @brief Check if ufo is sensored list, and return its position in list (-1 if not)
+ * @brief Check if UFO is sensored list, and return its position in list (-1 if not)
  */
-static int RADAR_IsUfoSensored (const radar_t* radar, int numUfo)
+static int RADAR_IsUFOSensored (const radar_t* radar, int numUFO)
 {
 	int i;
 
-	for (i = 0; i < radar->numUfos; i++)
-		if (radar->ufos[i] == numUfo)
+	for (i = 0; i < radar->numUFOs; i++)
+		if (radar->ufos[i] == numUFO)
 			return i;
 
 	return -1;
 }
 
 /**
- * @brief Ufo will no more be referenced by radar
+ * @brief UFO will no more be referenced by radar
  */
-void RADAR_RemoveUfo (radar_t* radar, const aircraft_t* ufo)
+static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
 {
-	int i, numUfo = ufo - gd.ufos;
+	int i, numUFO = ufo - gd.ufos;
 
-	for (i = 0; i < radar->numUfos; i++)
-		if (radar->ufos[i] == numUfo) {
-			radar->numUfos--;
-			radar->ufos[i] = radar->ufos[radar->numUfos];
+	for (i = 0; i < radar->numUFOs; i++)
+		if (radar->ufos[i] == numUFO) {
+			radar->numUFOs--;
+			radar->ufos[i] = radar->ufos[radar->numUFOs];
 			return;
 		}
 }
@@ -132,16 +132,16 @@ void RADAR_RemoveUfo (radar_t* radar, const aircraft_t* ufo)
 /**
  * @brief Notify that the specified ufo has been removed from geoscape
  **/
-void Radar_NotifyUfoRemoved (radar_t* radar, const aircraft_t* ufo)
+void Radar_NotifyUFORemoved (radar_t* radar, const aircraft_t* ufo)
 {
-	int i, numUfo = ufo - gd.ufos;
+	int i, numUFO = ufo - gd.ufos;
 
-	for (i = 0; i < radar->numUfos; i++)
-		if (radar->ufos[i] == numUfo) {
-			radar->numUfos--;
-			radar->ufos[i] = radar->ufos[radar->numUfos];
+	for (i = 0; i < radar->numUFOs; i++)
+		if (radar->ufos[i] == numUFO) {
+			radar->numUFOs--;
+			radar->ufos[i] = radar->ufos[radar->numUFOs];
 			i--;	/* Allow the moved value to be checked */
-		} else if (radar->ufos[i] > numUfo)
+		} else if (radar->ufos[i] > numUFO)
 			radar->ufos[i]--;
 }
 
@@ -154,17 +154,17 @@ void Radar_Initialise (radar_t* radar, float range, float level)
 		radar->range = 0.0f;
 	else
 		radar->range = range * (1 + (level - 1) * radarUpgradeMultiplier);
-	if (!radar->numUfos)
-		radar->numUfos = 0;
+	if (!radar->numUFOs)
+		radar->numUFOs = 0;
 }
 
 /**
- * @brief Check if the specified ufo is inside the sensor range of base
+ * @brief Check if the specified UFO is inside the sensor range of base
  * Return true if the aircraft is inside sensor
  * @sa UFO_CampaignCheckEvents
  */
-qboolean RADAR_CheckUfoSensored (radar_t* radar, vec2_t posRadar,
-	const aircraft_t* ufo, qboolean wasUfoSensored)
+qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
+	const aircraft_t* ufo, qboolean wasUFOSensored)
 {
 	int dist;
 	int num;
@@ -172,25 +172,25 @@ qboolean RADAR_CheckUfoSensored (radar_t* radar, vec2_t posRadar,
 
 	/* Get num of ufo in gd.ufos */
 	num = ufo - gd.ufos;
-	if (num < 0 || num >= gd.numUfos)
+	if (num < 0 || num >= gd.numUFOs)
 		return qfalse;
 
-	numAircraftSensored = RADAR_IsUfoSensored(radar, num);	/* indice of ufo in radar list */
+	numAircraftSensored = RADAR_IsUFOSensored(radar, num);	/* indice of ufo in radar list */
 	dist = MAP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (radar->range + (wasUfoSensored ? radar->range * outerCircleRatio : 0) > dist) {
-		/* Ufo is inside the radar range */
+	if (radar->range + (wasUFOSensored ? radar->range * outerCircleRatio : 0) > dist) {
+		/* UFO is inside the radar range */
 		if (numAircraftSensored < 0) {
-			/* Ufo was not sensored by the radar */
-			RADAR_AddUfo(radar, num);
+			/* UFO was not sensored by the radar */
+			RADAR_AddUFO(radar, num);
 		}
 		return qtrue;
 	}
 
-	/* Ufo is not in the sensor range */
+	/* UFO is not in the sensor range */
 	if (numAircraftSensored >= 0) {
-		/* Ufo was sensored by the radar */
-		RADAR_RemoveUfo(radar, ufo);
+		/* UFO was sensored by the radar */
+		RADAR_RemoveUFO(radar, ufo);
 	}
 	return qfalse;
 }

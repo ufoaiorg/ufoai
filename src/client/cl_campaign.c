@@ -1655,7 +1655,7 @@ void CL_CampaignRun (void)
 
 		/* check for campaign events */
 		CL_CampaignRunAircraft(dt);
-		UFO_CampaignRunUfos(dt);
+		UFO_CampaignRunUFOs(dt);
 		AIRFIGHT_CampaignRunBaseDefense(dt);
 		CP_CheckEvents();
 		CP_CheckLostCondition(qtrue, NULL, 0);
@@ -4805,9 +4805,9 @@ static void CP_CampaignStats_f (void)
 /*
 1. CP_UFORecovered_f() is triggered by mission "onwin" cp_uforecovery value.
 2. CP_UFORecoveredStore_f() prepares UFO recovery process.
-3. CP_UfoRecoveryBaseSelectPopup_f() allows to select desired base.
+3. CP_UFORecoveryBaseSelectPopup_f() allows to select desired base.
 4. CP_UFORecoveredStart_f() starts UFO recovery process.
-5. CP_UfoRecoveryNationSelectPopup_f() allows to select desired nation.
+5. CP_UFORecoveryNationSelectPopup_f() allows to select desired nation.
 6. CP_UFOSellStart_f() starts UFO sell process.
 7. CP_UFORecoveredSell_f() allows to sell UFO to desired nation.
 8. CP_UFORecoveredDestroy_f() destroys UFO.
@@ -4991,7 +4991,7 @@ static int UFObases[MAX_BASES];
  * @note The base selection is being done here.
  * @note Callback command: cp_uforecovery_baselist_click.
  */
-static void CP_UfoRecoveryBaseSelectPopup_f (void)
+static void CP_UFORecoveryBaseSelectPopup_f (void)
 {
 	int num;
 	base_t* base;
@@ -5011,7 +5011,7 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 
 	/* Pop the menu and launch it again - now with updated value of selected base. */
 	Cvar_SetValue("mission_recoverybase", base->idx);
-	Com_DPrintf(DEBUG_CLIENT, "CP_UfoRecoveryBaseSelectPopup_f()... picked base: %s\n", base->name);
+	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n", base->name);
 	MN_PopMenu(qfalse);
 	Cmd_ExecuteString("cp_uforecoverystore");
 }
@@ -5137,7 +5137,7 @@ static int UFOprices[MAX_NATIONS];
  * @note The nation selection is being done here.
  * @note Callback command: cp_uforecovery_nationlist_click.
  */
-static void CP_UfoRecoveryNationSelectPopup_f (void)
+static void CP_UFORecoveryNationSelectPopup_f (void)
 {
 	int i, j = -1, num;
 	nation_t *nation;
@@ -5160,7 +5160,7 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
 
 	/* Pop the menu and launch it again - now with updated value of selected nation. */
 	MN_PopMenu(qfalse);
-	Com_DPrintf(DEBUG_CLIENT, "CP_UfoRecoveryNationSelectPopup_f()... picked nation: %s\n", nation->name);
+	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 	Cmd_ExecuteString("cp_uforecoverysell");
 }
 
@@ -5478,10 +5478,10 @@ void CL_ResetCampaign (void)
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
 	Cmd_AddCommand("cp_tryagain", CP_TryAgain_f, "Try again a mission");
 	Cmd_AddCommand("cp_uforecovery", CP_UFORecovered_f, "Function to trigger UFO Recovered event");
-	Cmd_AddCommand("cp_uforecovery_baselist_click", CP_UfoRecoveryBaseSelectPopup_f, "Callback for recovery base list popup.");
+	Cmd_AddCommand("cp_uforecovery_baselist_click", CP_UFORecoveryBaseSelectPopup_f, "Callback for recovery base list popup.");
 	Cmd_AddCommand("cp_uforecoverystart", CP_UFORecoveredStart_f, "Function to start UFO recovery processing.");
 	Cmd_AddCommand("cp_uforecoverystore", CP_UFORecoveredStore_f, "Function to store recovered UFO in desired base.");
-	Cmd_AddCommand("cp_uforecovery_nationlist_click", CP_UfoRecoveryNationSelectPopup_f, "Callback for recovery nation list popup.");
+	Cmd_AddCommand("cp_uforecovery_nationlist_click", CP_UFORecoveryNationSelectPopup_f, "Callback for recovery nation list popup.");
 	Cmd_AddCommand("cp_ufosellstart", CP_UFOSellStart_f, "Function to start UFO selling processing.");
 	Cmd_AddCommand("cp_uforecoverysell", CP_UFORecoveredSell_f, "Function to sell recovered UFO to desired nation.");
 	Cmd_AddCommand("cp_uforecoverydestroy", CP_UFORecoveredDestroy_f, "Function to destroy recovered UFO.");

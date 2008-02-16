@@ -78,7 +78,7 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 
 /* static variables */
 static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
-aircraft_t *selectedUfo;			/**< Currently selected UFO */
+aircraft_t *selectedUFO;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
 static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
@@ -220,20 +220,20 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 	case MULTISELECT_TYPE_UFO : /* Selection of a UFO */
 		/* Get the ufo selected */
-		if (id < 0 || id >= gd.numUfos)
+		if (id < 0 || id >= gd.numUFOs)
 			return;
 		aircraft = gd.ufos + id;
 
-		if (aircraft == selectedUfo) {
+		if (aircraft == selectedUFO) {
 			/* Selection of an already selected ufo */
-			CL_DisplayPopupIntercept(NULL, selectedUfo);
+			CL_DisplayPopupIntercept(NULL, selectedUFO);
 		} else {
 			/* Selection of an unselected ufo */
 			MAP_ResetAction();
-			selectedUfo = aircraft;
+			selectedUFO = aircraft;
 			if (multiSelection)
 				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
-				CL_DisplayPopupIntercept(NULL, selectedUfo);
+				CL_DisplayPopupIntercept(NULL, selectedUFO);
 		}
 		break;
 
@@ -263,7 +263,7 @@ static void MAP_MultiSelectNotifyMissionRemoved (const actMis_t* mission)
 /**
  * @brief Notify the multi select system that a UFO has been removed
  */
-static void MAP_MultiSelectNotifyUfoRemoved (const aircraft_t* ufo)
+static void MAP_MultiSelectNotifyUFORemoved (const aircraft_t* ufo)
 {
 	int i;
 
@@ -272,14 +272,6 @@ static void MAP_MultiSelectNotifyUfoRemoved (const aircraft_t* ufo)
 	for (i = 0; i < multiSelect.nbSelect; i++)
 		if (multiSelect.selectType[i] == MULTISELECT_TYPE_UFO)
 			multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
-}
-
-/**
- * @brief Notify the multi select system that a UFO disapeard on radars
- */
-static void MAP_MultiSelectNotifyUfoDisappeared (const aircraft_t* ufo)
-{
-	MAP_MultiSelectNotifyUfoRemoved(ufo);
 }
 
 #define MN_MAP_DIST_SELECTION 15
@@ -357,7 +349,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 	}
 
 	/* Get selected ufos */
-	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft--)
+	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft--)
 		if (aircraft->visible
 #if DEBUG
 		|| Cvar_VariableInteger("debug_showufos")
@@ -943,7 +935,7 @@ static void MAP_GetGeoscapeAngle (float *Vector)
 				maxEventIdx++;
 		}
 	}
-	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
+	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
 		if (aircraft->visible) {
 			maxEventIdx++;
 		}
@@ -1005,7 +997,7 @@ static void MAP_GetGeoscapeAngle (float *Vector)
 	}
 
 	/* Cycle through UFO (only those visible on geoscape) */
-	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
+	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
 		if (aircraft->visible) {
 			if (centerOnEventIdx == counter) {
 				if (cl_3dmap->integer)
@@ -1013,7 +1005,7 @@ static void MAP_GetGeoscapeAngle (float *Vector)
 				else
 					Vector2Set(Vector, aircraft->pos[0], aircraft->pos[1]);
 				MAP_ResetAction();
-				selectedUfo = aircraft;
+				selectedUFO = aircraft;
 				return;
 			}
 			counter++;
@@ -1217,7 +1209,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	font = MN_GetFont(NULL, node);
 
 	/* check if at least 1 UFO is visible */
-	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
+	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
 		if (aircraft->visible) {
 			oneUFOVisible = qtrue;
 			break;
@@ -1347,7 +1339,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	}
 
 	/* draws ufos */
-	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
+	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableInteger("debug_showufos")) {
@@ -1360,7 +1352,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 #endif
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL))
 			continue;
-		if (aircraft == selectedUfo) {
+		if (aircraft == selectedUFO) {
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
@@ -1498,9 +1490,9 @@ void MAP_DrawMap (const menuNode_t* node)
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
 		}
-	} else if (selectedUfo) {
-		Com_sprintf(text_standard, sizeof(text_standard), va("%s\n", selectedUfo->name));
-		Q_strcat(text_standard, va(_("Speed:\t%i\n"), selectedUfo->stats[AIR_STATS_SPEED]), sizeof(text_standard));
+	} else if (selectedUFO) {
+		Com_sprintf(text_standard, sizeof(text_standard), va("%s\n", selectedUFO->name));
+		Q_strcat(text_standard, va(_("Speed:\t%i\n"), selectedUFO->stats[AIR_STATS_SPEED]), sizeof(text_standard));
 		mn.menuText[TEXT_STANDARD] = text_standard;
 	}
 }
@@ -1524,7 +1516,7 @@ void MAP_ResetAction (void)
 		selMis = NULL;				/* reset selected mission */
 	}
 	selectedAircraft = NULL;
-	selectedUfo = NULL;
+	selectedUFO = NULL;
 }
 
 /**
@@ -1566,16 +1558,16 @@ void MAP_NotifyMissionRemoved (const actMis_t* mission)
 /**
  * @brief Notify that a UFO has been removed
  */
-void MAP_NotifyUfoRemoved (const aircraft_t* ufo)
+void MAP_NotifyUFORemoved (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
-	if (selectedUfo == ufo)
+	if (selectedUFO == ufo)
 		MAP_ResetAction();
-	else if (selectedUfo > ufo)
-		selectedUfo--;
+	else if (selectedUFO > ufo)
+		selectedUFO--;
 
 	/* Notify the multi selection popup */
-	MAP_MultiSelectNotifyUfoRemoved(ufo);
+	MAP_MultiSelectNotifyUFORemoved(ufo);
 }
 
 /**
@@ -1930,14 +1922,14 @@ void MAP_Init (void)
 /**
  * @brief Notify that a UFO disappears on radars
  */
-void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
+void MAP_NotifyUFODisappear (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
-	if (selectedUfo == ufo)
+	if (selectedUFO == ufo)
 		MAP_ResetAction();
 
 	/* Notify the multi selection popup */
-	MAP_MultiSelectNotifyUfoDisappeared(ufo);
+	MAP_MultiSelectNotifyUFORemoved(ufo);
 }
 
 /**

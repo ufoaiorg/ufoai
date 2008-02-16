@@ -433,7 +433,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 
 		/* now remove the ufo from geoscape - the aircraft pointer is no longer
 		 * valid after this call */
-		UFO_RemoveUfoFromGeoscape(aircraft);
+		UFO_RemoveFromGeoscape(aircraft);
 		aircraft = NULL;
 	} else {
 		/* change destination of other projectiles aiming aircraft */
@@ -731,7 +731,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, aircraftSlot_t *slot, int ma
 				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 
 			/* Check if UFO flees */
-			if (gd.ufos[targetIdx[i]].status != AIR_FLEEING && !UFO_UFOCanShoot(gd.ufos + targetIdx[i]))
+			if (gd.ufos[targetIdx[i]].status != AIR_FLEEING && !UFO_CanShoot(gd.ufos + targetIdx[i]))
 				UFO_FleePhalanxAircraft(gd.ufos + targetIdx[i], base->pos);
 		}
 	}

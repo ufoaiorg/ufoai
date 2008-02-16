@@ -27,13 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_mapfightequip.h"
 #include "cl_map.h"
+#include "cl_popup.h"
 #include "menu/m_popup.h"
-
-/* global_popup */
-extern void CL_PopupInit(void);
-extern void CL_PopupNotifyMissionRemoved(const actMis_t* mission);
-extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
-extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 
 /* popup_aircraft display the actions availables for an aircraft */
 
@@ -79,66 +74,6 @@ typedef struct popup_intercept_s {
 } popup_intercept_t;
 
 static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
-
-/* popup_aircraft */
-extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
-static void CL_PopupAircraftClick_f(void);
-static void CL_PopupAircraftNotifyMissionRemoved(const actMis_t* mission);
-
-/* popup_intercept */
-extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
-static aircraft_t* CL_PopupInterceptGetAircraft(void);
-static void CL_PopupInterceptClick_f(void);
-static void CL_PopupInterceptRClick_f(void);
-static void CL_PopupInterceptBaseClick_f(void);
-static void CL_PopupInterceptNotifyMissionRemoved(const actMis_t* mission);
-static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo);
-static void CL_PopupInterceptNotifyUfoDisappeared(const aircraft_t* ufo);
-
-/**
- * @brief Initialise popups
- */
-void CL_PopupInit (void)
-{
-	/* popup_aircraft commands */
-	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, NULL);
-
-	/* popup_intercept commands */
-	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
-	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
-	Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f, NULL);
-
-	memset(&popupIntercept, 0, sizeof(popup_intercept_t));
-	memset(&popupAircraft, 0, sizeof(popup_aircraft_t));
-}
-
-/**
- * @brief Notify that a mission has been removed
- */
-void CL_PopupNotifyMissionRemoved (const actMis_t* mission)
-{
-	/* Notify all popups */
-	CL_PopupAircraftNotifyMissionRemoved(mission);
-	CL_PopupInterceptNotifyMissionRemoved(mission);
-}
-
-/**
- * @brief Notify that a UFO has been removed
- */
-void CL_PopupNotifyUfoRemoved (const aircraft_t* ufo)
-{
-	/* Notify all popups */
-	CL_PopupInterceptNotifyUfoRemoved(ufo);
-}
-
-/**
- * @brief Notify popups that a UFO has disappeared on radars
- */
-void CL_PopupNotifyUfoDisappeared (const aircraft_t* ufo)
-{
-	/* Notify all popups */
-	CL_PopupInterceptNotifyUfoDisappeared(ufo);
-}
 
 /*========================================
 POPUP_AIRCRAFT
@@ -444,7 +379,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 	qboolean atLeastOneBase =  qfalse;
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
-	assert(selectedUfo);
+	assert(selectedUFO);
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\tnum=num in base list\n", Cmd_Argv(0));
@@ -477,9 +412,9 @@ static void CL_PopupInterceptBaseClick_f (void)
 	}
 
 	for (i = 0; i < gd.bases[baseIdx].maxBatteries; i++)
-		gd.bases[baseIdx].targetMissileIdx[i] = selectedUfo - gd.ufos;
+		gd.bases[baseIdx].targetMissileIdx[i] = selectedUFO - gd.ufos;
 	for (i = 0; i < gd.bases[baseIdx].maxLasers; i++)
-		gd.bases[baseIdx].targetLaserIdx[i] = selectedUfo - gd.ufos;
+		gd.bases[baseIdx].targetLaserIdx[i] = selectedUFO - gd.ufos;
 
 	MN_PopMenu(qfalse);
 }
@@ -496,16 +431,35 @@ static void CL_PopupInterceptNotifyMissionRemoved (const actMis_t* mission)
 /**
  * @brief Notify the popup_intercept system that a UFO has been removed
  */
-static void CL_PopupInterceptNotifyUfoRemoved (const aircraft_t* ufo)
+void CL_PopupInterceptNotifyUFORemoved (const aircraft_t* ufo)
 {
 	if (popupIntercept.ufo == ufo)
 		popupIntercept.ufo = NULL;
 }
 
 /**
- * @brief Notify the popup_intercept system than a UFO has disappeared on radars
+ * @brief Notify that a mission has been removed
  */
-static void CL_PopupInterceptNotifyUfoDisappeared (const aircraft_t* ufo)
+void CL_PopupNotifyMissionRemoved (const actMis_t* mission)
 {
-	CL_PopupInterceptNotifyUfoRemoved(ufo);
+	/* Notify all popups */
+	CL_PopupAircraftNotifyMissionRemoved(mission);
+	CL_PopupInterceptNotifyMissionRemoved(mission);
+}
+
+/**
+ * @brief Initialise popups
+ */
+void CL_PopupInit (void)
+{
+	/* popup_aircraft commands */
+	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, NULL);
+
+	/* popup_intercept commands */
+	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
+	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
+	Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f, NULL);
+
+	memset(&popupIntercept, 0, sizeof(popup_intercept_t));
+	memset(&popupAircraft, 0, sizeof(popup_aircraft_t));
 }

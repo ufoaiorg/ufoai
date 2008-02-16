@@ -2805,7 +2805,7 @@ static void B_BaseList_f (void)
 		Com_Printf("Base numMissileBattery %i\n", base->maxBatteries);
 		Com_Printf("Base numLaserBattery %i\n", base->maxLasers);
 		Com_Printf("Base sensorWidth %i\n", base->radar.range);
-		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUfos);
+		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUFOs);
 		Com_Printf("Base hasBuilding[]: ");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
 			Com_Printf("%i ", base->hasBuilding[j]);

@@ -61,7 +61,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_TECHMA] = TECHMAIL_MAX;	/* TECHMAIL_MAX in techMailType_t */
 	presaveArray[PRE_NUMTDS] = csi.numTeamDefs;		/* numTeamDefs */
 	presaveArray[PRE_NUMALI] = gd.numAliensTD;	/* gd.numAliensTD */
-	presaveArray[PRE_NUMUFO] = gd.numUfos;		/* gd.numUfos */
+	presaveArray[PRE_NUMUFO] = gd.numUFOs;		/* gd.numUFOs */
 	presaveArray[PRE_MAXREC] = MAX_RECOVERIES;	/* #define MAX_RECOVERIES */
 	presaveArray[PRE_MAXTRA] = MAX_TRANSFERS;	/* #define MAX_TRANSFERS */
 	presaveArray[PRE_MAXOBJ] = MAX_OBJDEFS;		/* #define MAX_OBJDEFS */

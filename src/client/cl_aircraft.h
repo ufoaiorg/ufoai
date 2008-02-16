@@ -251,8 +251,8 @@ qboolean AIR_SendUFOPursuingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
 #ifdef UFO_ATTACK_BASES
 qboolean AIR_SendUFOAttackBase(aircraft_t* ufo, struct base_s *base);
 #endif
-void AIR_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
-void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
+void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo);
+void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);
 qboolean AIR_ScriptSanityCheck(void);
 int AIR_CalculateHangarStorage(int aircraftID, struct base_s *base, int used);

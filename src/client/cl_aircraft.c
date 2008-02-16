@@ -1587,7 +1587,7 @@ void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
  * @brief Notify that a UFO has been removed.
  * @param[in] ufo Pointer to UFO that has been removed.
  */
-void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
+void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo)
 {
 	base_t* base;
 	aircraft_t* aircraft;
@@ -1624,7 +1624,7 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
  * @brief Notify that a UFO disappear from radars.
  * @param[in] ufo Pointer to a UFO that has disappeared.
  */
-void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
+void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
 {
 	base_t* base;
 	aircraft_t* aircraft;
@@ -1647,7 +1647,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
-	if (num < 0 || num >= gd.numUfos || ! aircraft || ! ufo)
+	if (num < 0 || num >= gd.numUFOs || ! aircraft || ! ufo)
 		return qfalse;
 
 	/* if aircraft was in base */
@@ -2034,7 +2034,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	technology_t *tech;
 
 	/* load the amount of ufos on geoscape */
-	gd.numUfos = presaveArray[PRE_NUMUFO];
+	gd.numUFOs = presaveArray[PRE_NUMUFO];
 	/* load the ufos on geoscape */
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		s = MSG_ReadString(sb);
@@ -2203,11 +2203,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
 	}
 
-	for (i = gd.numUfos - 1; i >= 0; i--) {
+	for (i = gd.numUFOs - 1; i >= 0; i--) {
 		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0) {
 			Com_Printf("AIR_Load: Found invalid ufo entry - remove it - time: %i - speed: %i\n",
 				gd.ufos[i].time, gd.ufos[i].stats[AIR_STATS_SPEED]);
-			UFO_RemoveUfoFromGeoscape(&gd.ufos[i]);
+			UFO_RemoveFromGeoscape(&gd.ufos[i]);
 		}
 	}
 

@@ -33,16 +33,15 @@ extern const float aircraftRadarRange;
 
 typedef struct radar_s {
 	int range;						/**< Range of radar */
-	int ufos[MAX_UFOONGEOSCAPE];	/**< Ufos id sensored by radar (gd.ufos[id]) */
-	int numUfos;					/**< Num ufos sensored by radar */
+	int ufos[MAX_UFOONGEOSCAPE];	/**< UFOs id sensored by radar (gd.ufos[id]) */
+	int numUFOs;					/**< Num UFOs sensored by radar */
 } radar_t;
 
 void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
 void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
-void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
-void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
+void Radar_NotifyUFORemoved(radar_t* radar, const struct aircraft_s* ufo);
 void Radar_Initialise (radar_t* radar, float range, float level);
-qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
-	const struct aircraft_s* ufo, qboolean wasUfoSensored);
+qboolean RADAR_CheckUFOSensored(radar_t* radar, vec2_t posRadar,
+	const struct aircraft_s* ufo, qboolean wasUFOSensored);
 
 #endif
