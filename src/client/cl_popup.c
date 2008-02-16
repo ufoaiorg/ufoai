@@ -411,7 +411,7 @@ static void CL_PopupInterceptClick_f (void)
 	if (popupIntercept.mission)
 		AIR_SendAircraftToMission(aircraft, popupIntercept.mission);	/* Aircraft move to mission */
 	else if (popupIntercept.ufo)
-		AIR_SendAircraftPurchasingUfo(aircraft, popupIntercept.ufo);	/* Aircraft purchase ufo */
+		AIR_SendAircraftPursuingUFO(aircraft, popupIntercept.ufo);	/* Aircraft purchase ufo */
 }
 
 /**

@@ -253,7 +253,7 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 #ifdef UFO_ATTACK_BASES
 				/* check if the ufo can attack a base (if it's not too far) */
 				if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
-					if (AIR_SendUfoPurchasingBase(ufo, base))
+					if (AIR_SendUFOAttackBase(ufo, base))
 						/* don't check for aircraft if we can destroy a base */
 						continue;
 				}
@@ -272,7 +272,7 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 						/* choose the nearest target */
 						if (dist < distance) {
 							distance = dist;
-							AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
+							AIR_SendUFOPursuingAircraft(ufo, phalanxAircraft);
 						}
 					}
 				}

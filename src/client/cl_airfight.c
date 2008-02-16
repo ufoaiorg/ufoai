@@ -325,12 +325,12 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		/* no ammo to fire atm (too far or reloading), pursue target */
 		if (shooter->type == AIRCRAFT_UFO) {
 			if (!shooter->baseTarget)
-				AIR_SendUfoPurchasingAircraft(shooter, target);
+				AIR_SendUFOPursuingAircraft(shooter, target);
 			else
 				/* ufo is attacking a base */
 				return;
 		} else
-			AIR_SendAircraftPurchasingUfo(shooter, target);
+			AIR_SendAircraftPursuingUFO(shooter, target);
 	} else {
 		/* no ammo left, or no weapon, you should flee ! */
 		if (shooter->type == AIRCRAFT_UFO) {

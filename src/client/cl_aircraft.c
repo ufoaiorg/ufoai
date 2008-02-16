@@ -1643,7 +1643,7 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
  * @param[in] aircraft Pointer to an aircraft which will hunt for a UFO.
  * @param[in] ufo Pointer to a UFO.
  */
-qboolean AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
+qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
@@ -1675,7 +1675,7 @@ qboolean AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
  * @param[in] aircraft Pointer to the target aircraft.
  * @sa AIR_SendUFOAttackBase
  */
-qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
+qboolean AIR_SendUFOPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
 	int slotIdx;
 
@@ -1716,7 +1716,7 @@ qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
  * @brief Make the specified UFO attack a base.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] base Pointer to the target base.
- * @sa AIR_SendAircraftPurchasingUfo
+ * @sa AIR_SendAircraftPursuingUFO
  */
 qboolean AIR_SendUFOAttackBase (aircraft_t* ufo, base_t* base)
 {
