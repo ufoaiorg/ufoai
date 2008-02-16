@@ -249,7 +249,7 @@ qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* missio
 qboolean AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
 qboolean AIR_SendUfoPurchasingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
 #ifdef UFO_ATTACK_BASES
-qboolean AIR_SendUfoPurchasingBase(aircraft_t* ufo, struct base_s *base);
+qboolean AIR_SendUFOAttackBase(aircraft_t* ufo, struct base_s *base);
 #endif
 void AIR_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
 void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);

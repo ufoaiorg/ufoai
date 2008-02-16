@@ -1673,7 +1673,7 @@ qboolean AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
  * @brief Make the specified UFO purchasing a phalanx aircraft.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] aircraft Pointer to the target aircraft.
- * @sa AIR_SendUfoPurchasingBase
+ * @sa AIR_SendUFOAttackBase
  */
 qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
@@ -1718,7 +1718,7 @@ qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
  * @param[in] base Pointer to the target base.
  * @sa AIR_SendAircraftPurchasingUfo
  */
-qboolean AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
+qboolean AIR_SendUFOAttackBase (aircraft_t* ufo, base_t* base)
 {
 	int slotIdx;
 
