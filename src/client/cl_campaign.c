@@ -4766,9 +4766,6 @@ void CL_ResetSinglePlayerData (void)
  */
 static void CP_CampaignStats_f (void)
 {
-	setState_t *set;
-	int i;
-
 	if (!curCampaign) {
 		Com_Printf("No campaign active\n");
 		return;
@@ -4779,14 +4776,6 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("..equipment: %s\n", curCampaign->equipment);
 	Com_Printf("..team: %s\n", curCampaign->team);
 
-	Com_Printf("..active stage: %s\n", activeStage->name);
-	for (i = 0, set = &ccs.set[activeStage->first]; i < activeStage->num; i++, set++) {
-		Com_Printf("....name: %s\n", set->def->name);
-		Com_Printf("......needed: %s\n", set->def->needed);
-		Com_Printf("......quota: %i\n", set->def->quota);
-		Com_Printf("......number: %i\n", set->def->number);
-		Com_Printf("......done: %i\n", set->done);
-	}
 	Com_Printf("..salaries:\n");
 	Com_Printf("...soldier_base: %i\n", SALARY_SOLDIER_BASE);
 	Com_Printf("...soldier_rankbonus: %i\n", SALARY_SOLDIER_RANKBONUS);
