@@ -1011,13 +1011,13 @@ static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
 {
 	vec3_t temp;
 	float dist, neardist, fardist;
-	int near, far;
+	int nearEdge, farEdge;
 	int i, v, e;
 
 	neardist = 999999;
 	fardist = -999999;
 
-	near = far = 0;
+	nearEdge = farEdge = 0;
 
 	for (i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
 		e = dsurfedges[l->face->firstedge + i];
@@ -1031,12 +1031,12 @@ static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
 
 		if (dist < neardist) {
 			neardist = dist;
-			near = v;
+			nearEdge = v;
 		}
 
 		if (dist > fardist) {
 			fardist = dist;
-			far = v;
+			farEdge = v;
 		}
 	}
 
@@ -1047,7 +1047,7 @@ static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
 	VectorAdd(temp, temp2, normal);
 #endif
 
-	VectorCopy(vertexnormals[near], normal);
+	VectorCopy(vertexnormals[nearEdge], normal);
 }
 
 

@@ -97,9 +97,8 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 		dist2 = DotProduct(p->normal, emaxs);
 		break;
 	default:
-		dist1 = dist2 = 0;		/* shut up compiler */
 		assert(0);
-		break;
+		return;
 	}
 
 	sides = 0;
