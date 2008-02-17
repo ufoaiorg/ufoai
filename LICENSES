@@ -1645,6 +1645,8 @@ base/models/weapons/sniper/sniper_clip.jpg | GNU General Public License 2.0 | Lu
 base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
 base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren_alien/stungren.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/models/weapons/stungren_alien/stungren.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/music/AlexFightmare.ogg | GNU General Public License 2.0 | Alex Parker
