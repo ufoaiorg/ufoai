@@ -21,7 +21,7 @@ mapdef or_small
 	map				"+oriental"
 	param			small
 	multiplayer		false
-	description		"_A	suburban district of an	oriental area."
+	description		"_A suburban district of an oriental area."
 	size			"small"
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
@@ -53,7 +53,7 @@ mapdef or_medium
 	map				"+oriental"
 	param			medium
 	multiplayer		false
-	description		"_A	suburban district of an	oriental area."
+	description		"_A suburban district of an oriental area."
 	size			"small"
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
@@ -85,7 +85,7 @@ mapdef or_large
 	map				"+oriental"
 	param			large
 	multiplayer		false
-	description		"_A	suburban district of an	oriental area."
+	description		"_A suburban district of an oriental area."
 	size			"small"
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
@@ -120,7 +120,7 @@ mapdef farm_small
 {
 	map				"+farm"
 	param			small
-	description		"_A	farm in	a rural	area. Lots of land to cover, but few obstacles to impair line of sight."
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 	size			"small"
 	teams			4
 	multiplayer		false
@@ -157,7 +157,7 @@ mapdef farm_medium
 {
 	map				"+farm"
 	param			medium
-	description		"_A	farm in	a rural	area. Lots of land to cover, but few obstacles to impair line of sight."
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 	size			"medium"
 	teams			4
 	multiplayer		false
@@ -192,7 +192,7 @@ mapdef farm_large
 {
 	map				"+farm"
 	param			large
-	description		"_A	farm in	a rural	area. Lots of land to cover, but few obstacles to impair line of sight."
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 	size			"large"
 	teams			4
 	multiplayer		false
@@ -681,7 +681,7 @@ mapdef italy
 mapdef mart
 {
 	map			mart05
-	description		"_A	kind of communal gathering centre annex foraging facility, known as a supermarket."
+	description		"_A kind of communal gathering centre annex foraging facility, known as a supermarket."
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -1125,7 +1125,7 @@ mapdef terrain
 mapdef farm
 {
 	map				farm08
-	description		"_A	farmhouse surrounded by	fields and sheds. A	UFO	has	landed in one of the fields."
+	description		"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 	size			"medium"
 	teams			2
 	multiplayer		true
