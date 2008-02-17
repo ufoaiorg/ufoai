@@ -9,7 +9,7 @@
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
 // valid UFO values:
-// * "ufo_scout", "crash_scout", "ufo_fighter", "crash_fighter", "ufo_harvester", "crash_harvester", "ufo_lander", "crash_lander", "ufo_corrupter", "crash_corrupter"
+// * ufo_scout, crash_scout, ufo_fighter, crash_fighter, ufo_harvester, crash_harvester, ufo_lander, crash_lander, ufo_corrupter, crash_corrupter
 
 
 ///////////////////////
@@ -1828,7 +1828,7 @@ mapdef africa
 		coop3
 		coop4
 	}
-	description		"_An african suburb that has received a visit from a harvester."
+	description		"_An african suburb that has received a visit from a Harvester."
 	maxaliens		24
 
 	ufos
