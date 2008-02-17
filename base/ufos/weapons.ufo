@@ -409,6 +409,82 @@ item stungrenade
 	}
 }
 
+// =======================
+// STUNGAS ALIEN GRENADE
+// TODO fix the various values
+// =======================
+item stungrenade_alien
+{
+	name		"_Alien Gas Grenade"
+	model		weapons/stungren_alien/stungren
+	weapon		true
+	type		grenade
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.4
+	price		190
+	size		7
+	buytype	misc
+	thrown		true
+	dmgtype stun
+
+	weapon_mod stungrenade
+	{
+		firedef
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	stungren_alien
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"150 60"
+			splrad	6
+			dmgweight stun
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	stungren_alien
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"150 60"
+			splrad	6
+			dmgweight stun
+		}
+	}
+}
+
 // ====================
 // INCENDIARY GRENADE
 // TODO fix the various values

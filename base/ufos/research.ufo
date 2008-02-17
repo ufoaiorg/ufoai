@@ -1956,6 +1956,47 @@ tech rs_weapon_stungren
 	producetime	24
 }
 
+tech rs_weapon_stungren_alien
+{
+	type		weapon
+	up_chapter	equipment
+	description {
+		default "_stungren_alien_txt"
+	}
+	pre_description {
+		default "_stungren_alien_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Alien Anti-Human Gas"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Alien Anti-Human Gas"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		item stungrenade_alien 1
+
+		tech rs_skill_explosive
+		tech rs_damage_stun
+	}
+
+	provides	stungrenade_alien
+	time		0
+	// not producible
+	producetime	-1
+}
+
 tech rs_weapon_stunrod
 {
 	type		weapon

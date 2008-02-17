@@ -1086,6 +1086,15 @@ particle stungren
 	}
 }
 
+particle stungren_alien
+{
+	init
+	{
+		model  weapons/stungren_alien/stungren
+		color  ".5 .5 .5 1"
+	}
+}
+
 particle plasmagren
 {
 	init
