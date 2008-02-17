@@ -225,7 +225,7 @@ menu skirmish
 	// ===================
 	func init
 	{
-		cmd	"set ai_numactors 8;"
+		cmd	"set sv_maxclients 1;set ai_numactors 8;"
 		cmd "set mn_serverday 1;mn_getmaps;"
 	}
 }
