@@ -36,24 +36,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 
 /* public vars */
-mission_t *selectedMission;				/**< Currently selected mission on geoscape */
-
-static campaign_t campaigns[MAX_CAMPAIGNS];
-static int numCampaigns = 0;
-
+mission_t *selectedMission;			/**< Currently selected mission on geoscape */
 campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;
 base_t *baseCurrent;				/**< Pointer to current base. */
-
-static technology_t *rs_alien_xvi;
-
-static salary_t salaries[MAX_CAMPAIGNS];
-
 stats_t campaignStats;
-
-static cvar_t *cl_campaign;
-
 missionResults_t missionresults;
+
+static campaign_t campaigns[MAX_CAMPAIGNS];
+static int numCampaigns = 0;
+static technology_t *rs_alien_xvi;
+static salary_t salaries[MAX_CAMPAIGNS];
+static cvar_t *cl_campaign;
 
 /**
  * @brief Check wheter given date and time is later than current date.
@@ -345,6 +339,7 @@ static qboolean CP_ChooseMap (mission_t *mission)
 static qboolean CP_ChooseRandomMap (mission_t *mission, vec2_t pos)
 {
 	Com_sprintf(mission->name, sizeof(mission->name), "randommap%.0f:%.0f", pos[0], pos[1]);
+	Com_Printf("mission->ufo: '%s'\n", mission->ufo->id);
 	mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
 	if (!mission->mapDef)
 		Sys_Error("Could not get a mapdef for ufocrash");
@@ -357,17 +352,16 @@ static qboolean CP_ChooseRandomMap (mission_t *mission, vec2_t pos)
 /**
  * @brief Get a mission in ccs.missions by ufo.
  */
-static mission_t *CP_GetMissionByUFO (aircraft_t *ufocraft)
+static mission_t *CP_GetMissionByUFO (aircraft_t *ufo)
 {
 	const linkedList_t *list = ccs.missions;
 
 	for (;list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
-		if (mission->ufo == ufocraft)
+		if (mission->ufo == ufo)
 			return mission;
 	}
 
-	Com_Printf("CP_GetMissionByUFO: No mission correspond to ufo '%s'\n", ufocraft->id);
 	return NULL;
 }
 
@@ -471,7 +465,7 @@ static void CP_MissionRemove (mission_t *mission)
 		}
 	}
 
-	Com_Printf("CP_MissionRemove: Could not find mission to remove.\n");
+	Com_Printf("CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->name);
 }
 
 /**
@@ -1044,16 +1038,15 @@ static void CP_SpawnNewMissions (void)
  * @param[in] ufocraft Pointer to the ufo that reached destination
  * @sa UFO_CampaignRunUFOs
  */
-void CP_CheckNextStageDestination (aircraft_t *ufocraft)
+void CP_CheckNextStageDestination (aircraft_t *ufo)
 {
 	mission_t *mission;
 
-	mission = CP_GetMissionByUFO(ufocraft);
-
+	mission = CP_GetMissionByUFO(ufo);
 	if (!mission)
 		return;
 
-	switch(mission->stage) {
+	switch (mission->stage) {
 	case STAGE_COME_FROM_ORBIT:
 	case STAGE_RETURN_TO_ORBIT:
 	case STAGE_RECON_GOTO_GROUND:
@@ -1075,10 +1068,10 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 {
 	mission_t *mission;
 
-	/* @todo: remove me */
-	Com_Printf("CP_SpawnCrashSiteMission\n");
-
 	mission = CP_GetMissionByUFO(ufo);
+	if (!mission)
+		Sys_Error("CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
+
 	assert(mission);
 
 	CP_ChooseRandomMap(mission, ufo->pos);
