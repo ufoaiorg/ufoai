@@ -107,7 +107,7 @@ static void UP_ChangeDisplay (int newDisplay)
 		ufopediaMail = MN_GetNodeFromCurrentMenu("ufopedia_mail");
 	}
 
-	/* maybe we call this function and the ufopedia is not on the menu stack */
+	/* maybe we call this function and the UFOpaedia is not on the menu stack */
 	if (ufopedia && ufopediaMail) {
 		ufopedia->textScroll = ufopediaMail->textScroll = 0;
 	}

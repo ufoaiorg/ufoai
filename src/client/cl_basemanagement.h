@@ -219,7 +219,9 @@ typedef struct base_s {
 
 	baseStatus_t baseStatus; /**< the current base status */
 
+/* @todo: remove isDiscovered when alienInterest is implemented */
 	qboolean isDiscovered;	/** qtrue if the base has been discovered by aliens */
+	int alienInterest;		/**< How much aliens know this base (and may attack it) */ 
 
 	radar_t	radar;	/**< the onconstruct value of the buliding building_radar increases the sensor width */
 

@@ -1701,9 +1701,7 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 static void CL_ParseScriptFirst (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
-	if (!Q_strncmp(type, "mission", 7))
-		CL_ParseMission(name, text);
-	else if (!Q_strncmp(type, "up_chapters", 11))
+	if (!Q_strncmp(type, "up_chapters", 11))
 		UP_ParseChapters(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qfalse);
@@ -1747,9 +1745,7 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 static void CL_ParseScriptSecond (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
-	if (!Q_strncmp(type, "stage", 5))
-		CL_ParseStage(name, text);
-	else if (!Q_strncmp(type, "building", 8))
+	if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qtrue);
 	else if (!Q_strncmp(type, "aircraft", 8))
 		AIR_ParseAircraft(name, text, qtrue);

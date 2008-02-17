@@ -83,102 +83,81 @@ typedef enum mapType_s {
 	MAPTYPE_MAX
 } mapType_t;
 
-/** possible mission types */
-typedef enum missionType_s {
-	MIS_TERRORATTACK,	/* default: for every mission parsed in missions.ufo (not linked with type entry in missions.ufo) */
-	MIS_BASEATTACK,		/* for base attack missions */
-	MIS_CRASHSITE,		/* for dynamical crash sites (not for crash sites in missions.ufo) */
+/** possible campaign interest categories: type of missions that aliens can undertake */
+typedef enum interestCategory_s {
+	INTERESTCATEGORY_NONE,			/**< No mission */
+	INTERESTCATEGORY_RECON,			/**< Aerial recon mission or ground mission (UFO may or not land) */
+	INTERESTCATEGORY_TERROR_ATTACK,	/**< Terror attack */
+	INTERESTCATEGORY_BASE_ATTACK,	/**< Alien attack a phalanx base */
+	INTERESTCATEGORY_BUILDING,		/**< Alien build a new base or subverse governments */
+	INTERESTCATEGORY_SUPPLY,		/**< Alien supply one of their bases */
+	INTERESTCATEGORY_XVI,			/**< Alien try to spread XVI */
 
-	MIS_MAX
-} missionType_t;
+	INTERESTCATEGORY_MAX
+} interestCategory_t;
+
+/** possible stage for campaign missions (i.e. possible actions for UFO) */
+typedef enum missionStage_s {
+	STAGE_NOT_ACTIVE,				/**< mission did not begin yet */
+	STAGE_COME_FROM_ORBIT,			/**< UFO is arriving */
+
+	STAGE_RECON_AIR,				/**< Aerial Recon */
+	STAGE_RECON_GOTO_GROUND,		/**< Going to a new ground mission position */
+	STAGE_RECON_GROUND,				/**< Ground Recon */
+	STAGE_TERROR_MISSION,			/**< Ground Recon */
+	STAGE_BUILD_BASE,				/**< Building a base */
+	STAGE_BASE_ATTACK_GOTO,			/**< Go to Base attack */
+	STAGE_BASE_ATTACK,				/**< Base attack */
+	STAGE_SUBVERT_GOV,				/**< Subvert government */
+	STAGE_SUPPLY,					/**< Supply already existing base */
+	STAGE_SPREAD_XVI,				/**< Spreading XVI Virus */
+
+	STAGE_RETURN_TO_ORBIT,			/**< UFO is going back to base */
+
+	STAGE_OVER						/**< Mission is over */
+} missionStage_t;
 
 /** mission definition */
 typedef struct mission_s {
 	mapDef_t* mapDef;
-	char name[MAX_VAR];	/**< script id */
-	char *missionText;	/**< translateable - but untranslated in memory */
-	char *missionTextAlternate;	/**< translateable - but untranslated in memory */
-	char *triggerText;	/**< translateable - but untranslated in memory */
-	char location[MAX_VAR];
-	char nation[MAX_VAR];
-	char type[MAX_VAR];
-	teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
-	int numAlienTeams;
-	char alienEquipment[MAX_VAR];
-	char civTeam[MAX_VAR];
-	char cmds[MAX_VAR];
-	const char *zoneType;
+	byte mask[4];
+
+	/* should we keep them? */
+	char name[MAX_VAR];				/**< script id */
+	qboolean active;				/**< aircraft at place? */
 	/** @note Don't end with ; - the trigger commands get the base index as
 	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
 	 * in your trigger command, you can seperate more commands with ; of course */
 	char onwin[MAX_VAR];		/**< trigger command after you've won a battle */
 	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
-	int ugv;					/**< uncontrolled ground units (entity: info_2x2_start) */
-	qboolean active;			/**< aircraft at place? */
-	qboolean onGeoscape;		/**< is or was already on geoscape - don't add it twice */
-	date_t dateOnGeoscape;		/**< last time the mission was on geoscape */
-	qboolean storyRelated;		/**< auto mission play disabled when true */
-	missionType_t missionType;	/**< type of mission */
-	void* data;					/**< may be related to mission type */
-	qboolean keepAfterFail;		/**< keep the mission on geoscape after failing */
-	qboolean noExpire;			/**< the mission won't expire */
-	qboolean played;			/**< a mission could have onGeoscape true but played false - because it expired */
-	vec2_t pos;
-	byte mask[4];
-	int aliens, civilians;
+
+	void* data;						/**< may be related to mission type (like pointer to base attacked) */
+	char location[MAX_VAR];			/**< The name of the ground mission that will appear on geoscape */
+	interestCategory_t category;	/**< The category of the event */
+	int initialOverallInterest;		/**< The overall interest value when this event has been created */
+	int initialIndividualInterest;	/**< The individual interest value (of type type) when this event has been created */
+	date_t startDate;				/**< Date when the event should start */
+	missionStage_t stage;			/**< in which stage is this event? */
+	date_t finalDate;				/**< Date when the event should finish (e.g. for aerial recon)
+									 * if finaleDate.day == 0, then delay is not a limitating factor for next stage */
+	vec2_t pos;						/**< Position of the mission */
+	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be NULL) */
+	qboolean onGeoscape;			/**< Should the mission be displayed on geoscape */
 } mission_t;
 
-typedef struct stageSet_s {
-	char name[MAX_VAR];
-	char needed[MAX_VAR];
-	char nextstage[MAX_VAR];
-	char endstage[MAX_VAR];
-	char cmds[MAX_VAR];			/**< script commands to execute when stageset gets activated */
-
-	/** @note set only one of the two - cutscene should have higher priority */
-	char sequence[MAX_VAR];		/**< play a sequence when entering a new stage? */
-	char cutscene[MAX_VAR];		/**< play a cutscent when entering a new stage? */
-
-	date_t delay;
-	date_t frame;
-	date_t expire;				/**< date when this mission will expire and will be removed from geoscape */
-	int number;					/**< number of missions until set is deactivated (they only need to appear on geoscape) */
-	int quota;					/**< number of successfully ended missions until set gets deactivated */
-	qboolean activateXVI;		/**< if this is true the stage will active the global XVI spreading */
-	qboolean humanAttack;		/**< true when humans start to attack player */
-	int numMissions;			/**< number of missions in this set */
-	int missions[MAX_SETMISSIONS];	/**< mission names in this set */
-	int ufos;					/**< how many ufos should appear in this stage */
-} stageSet_t;
-
-typedef struct stage_s {
-	char name[MAX_VAR];			/**< stage name */
-	int first;					/**< stageSet id in stageSets array */
-	int num;					/**< how many stageSets in this stage */
-} stage_t;
-
-typedef struct setState_s {
-	stageSet_t *def;
-	stage_t *stage;
-	byte active;				/**< is this set active? */
-	date_t start;				/**< date when the set was activated */
-	date_t event;
-	int num;
-	int done;					/**< how many mission out of the mission pool are already done */
-} setState_t;
-
-typedef struct stageState_s {
-	stage_t *def;
-	byte active;
-	date_t start;
-} stageState_t;
-
-typedef struct actMis_s {
-	mission_t *def;
-	setState_t *cause;
-	date_t expire;
-	vec2_t realPos;
-} actMis_t;
+/** battlescape parameters that were used */
+typedef struct battleParam_s {
+	mission_t *mission;
+	teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];	/**< Race of aliens present in battle */
+	int numAlienTeams;								/**< Number of different races */
+	char alienEquipment[MAX_VAR];					/**< Equipment of alien team */
+	char civTeam[MAX_VAR];							/**< Type of civilian (europeean, ...) */
+	qboolean day;									/**< Mission is played during day */
+	const char *zoneType;							/**< Terrain type (used for texture replacement in base missions) */
+	int ugv;						/**< uncontrolled ground units (entity: info_ugv_start) */
+	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
+	struct nation_s *nation;		/**< nation where the mission takes place */
+} battleParam_t;
 
 /* UFO Recoveries stuff. */
 #define MAX_RECOVERIES 32
@@ -362,10 +341,14 @@ typedef struct ccs_s {
 	equipDef_t eMission;
 	market_t eMarket;
 
-	stageState_t stage[MAX_STAGES];
-	setState_t set[MAX_STAGESETS];
-	actMis_t mission[MAX_ACTMISSIONS];
-	int numMissions;
+	linkedList_t *missions;					/**< Missions spawned (visible on geoscape or not) */
+
+	battleParam_t battleParameters;			/**< Structure used to remember every parameter used during last battle */
+
+	int lastInterestIncreaseDelay;				/**< How many hours since last increase of alien overall interest */
+	int overallInterest;						/**< overall interest of aliens: how far is the player in the campaign */
+	int interest[INTERESTCATEGORY_MAX];			/**< interest of aliens: determine which actions aliens will undertake */
+	int lastMissionSpawnedDelay;				/**< How many days since last mission has been spawned */
 
 	vec2_t mapPos;
 	vec2_t mapSize;
@@ -411,13 +394,14 @@ typedef enum aircraftStatus_s {
 	AIR_FLEEING				/**< fleeing other aircraft */
 } aircraftStatus_t;
 
-extern actMis_t *selectedMission;
-
+extern mission_t *selectedMission;
 extern campaign_t *curCampaign;
 extern ccs_t ccs;
 
 void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
 void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
+
+void CP_CheckNextStageDestination(aircraft_t *ufocraft);
 
 void CL_ResetCampaign(void);
 void CL_ResetSinglePlayerData(void);
@@ -441,23 +425,27 @@ void AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
-actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 void CL_BaseRansacked(base_t *base);
 
 nation_t *CL_GetNationByID(const char *nationID);
 
-qboolean CP_GetRandomPosOnGeoscape(vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
+qboolean CP_GetRandomPosOnGeoscape(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
 
-campaign_t* CL_GetCampaign(const char* name);
+campaign_t* CL_GetCampaign(const char *name);
 void CL_GameExit(void);
-void CL_GameAutoGo(actMis_t *mission);
+void CL_GameAutoGo(mission_t *mission);
 
-qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
-void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
+/* Mission related functions */
+int MAP_GetIdxByMission(const mission_t *mis);
+mission_t* MAP_GetMissionByIdx(int id);
+int CP_CountMission(void);
+int CP_CountMissionOnGeoscape(void);
+const char *CP_MissionToTypeString(const mission_t *mission);
+qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
+void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
 base_t *CP_GetMissionBase(void);
-qboolean CP_SpawnBaseAttackMission(base_t* base, mission_t* mis, setState_t *cause);
-qboolean CP_SpawnCrashSiteMission(aircraft_t* aircraft);
+qboolean CP_SpawnCrashSiteMission(aircraft_t *ufo);
 void CP_UFOSendMail(const aircraft_t *ufocraft, const base_t *base);
 
 technology_t *CP_IsXVIResearched(void);

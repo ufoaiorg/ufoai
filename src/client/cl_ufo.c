@@ -114,19 +114,31 @@ const char* UFO_TypeToName (ufoType_t type)
 
 /**
  * @brief Give a random destination to the given UFO, and make him to move there
- * @todo Sometimes the ufos aren't changing the routes - CP_GetRandomPosForAircraft
- * returns correct values, but it seams, that MAP_MapCalcLine is not doing the correct
- * things - set debug_showufos to 1
  */
-static void UFO_SetRandomDest (aircraft_t* ufo)
+void UFO_SetRandomDest (aircraft_t* ufo)
 {
 	vec2_t pos;
 
+	pos[0] = (rand() % 180) - (rand() % 180);
+	pos[1] = (rand() % 90) - (rand() % 90);
+	Com_DPrintf(DEBUG_CLIENT, "Get random pos on geoscape %.2f:%.2f\n", pos[0], pos[1]);
+
+	UFO_SendToDestination(ufo, pos);
+}
+
+/**
+ * @brief Give a random destination to the given UFO, and make him to move there
+ * @todo Sometimes the ufos aren't changing the routes - UFO_SetRandomDest
+ * returns correct values, but it seams, that MAP_MapCalcLine is not doing the correct
+ * things - set debug_showufos to 1
+ * @sa UFO_SetRandomDest
+ */
+static void UFO_SetDest (aircraft_t* ufo, vec2_t pos)
+{
 	ufo->status = AIR_TRANSIT;
 	ufo->time = 0;
 	ufo->point = 0;
-	CP_GetRandomPosForAircraft(pos);
-	MAP_MapCalcLine(ufo->pos, pos, &ufo->route);
+	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 }
 
 /**
@@ -224,10 +236,36 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 		}
 	}
 }
-#endif
 
 /**
- * @brief Check if the ufo can shoot at something
+ * @brief Make the specified UFO attack a base.
+ * @param[in] ufo Pointer to the UFO.
+ * @param[in] base Pointer to the target base.
+ * @sa AIR_SendAircraftPursuingUFO
+ */
+static qboolean UFO_SendAttackBase (aircraft_t* ufo, base_t* base)
+{
+	int slotIdx;
+
+	assert(ufo);
+	assert(base);
+
+	/* check whether the ufo can shoot the base - if not, don't try it even */
+	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, base->pos);
+	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
+		return qfalse;
+
+	MAP_MapCalcLine(ufo->pos, base->pos, &ufo->route);
+	ufo->baseTarget = base;
+	ufo->aircraftTarget = NULL;
+	ufo->status = AIR_UFO; /* FIXME: Might crash in cl_map.c MAP_DrawMapMarkers */
+	ufo->time = 0;
+	ufo->point = 0;
+	return qtrue;
+}
+
+/**
+ * @brief Check if the ufo can shoot at a Base
  */
 static void UFO_SearchTarget (aircraft_t *ufo)
 {
@@ -250,33 +288,96 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 			ufo->status = AIR_TRANSIT;
 			/* reverse order - because bases can be destroyed in here */
 			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-#ifdef UFO_ATTACK_BASES
 				/* check if the ufo can attack a base (if it's not too far) */
 				if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
-					if (AIR_SendUFOAttackBase(ufo, base))
+					if (UFO_SendAttackBase(ufo, base))
 						/* don't check for aircraft if we can destroy a base */
 						continue;
 				}
+			}
+		}
+	}
+}
 #endif
 
-				/* check if the ufo can attack an aircraft
-				 * reverse order - because aircraft can be destroyed in here */
-				for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
-					/* check that aircraft is flying */
-					if (phalanxAircraft->status > AIR_HOME) {
-						/* get the distance from ufo to aircraft */
-						dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
-						/* check out of reach */
-						if (dist > max_detecting_range)
-							continue;
-						/* choose the nearest target */
-						if (dist < distance) {
-							distance = dist;
-							AIR_SendUFOPursuingAircraft(ufo, phalanxAircraft);
-						}
-					}
-				}
-			}
+/**
+ * @brief Make the specified UFO purchasing a phalanx aircraft.
+ * @param[in] ufo Pointer to the UFO.
+ * @param[in] aircraft Pointer to the target aircraft.
+ * @sa UFO_SendAttackBase
+ */
+qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
+{
+	int slotIdx;
+
+	assert(ufo);
+	assert(aircraft);
+
+	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
+	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
+	if (slotIdx == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
+		/* no ammo left: should flee ! */
+		UFO_FleePhalanxAircraft(ufo, aircraft->pos);
+		return qfalse;
+	} else if (slotIdx < AIRFIGHT_WEAPON_CAN_SHOOT) {
+		/* Don't flee: can't fire atm, but maybe we'll be able to attack later */
+		return qfalse;
+	}
+
+	MAP_MapCalcLine(ufo->pos, aircraft->pos, &ufo->route);
+	ufo->status = AIR_UFO;
+	ufo->time = 0;
+	ufo->point = 0;
+	ufo->aircraftTarget = aircraft;
+	ufo->baseTarget = NULL;
+
+	/* Stop Time */
+	CL_GameTimeStop();
+
+	/* Send a message to player to warn him */
+	MN_AddNewMessage(_("Notice"), va(_("A UFO is shooting at %s"), aircraft->name), qfalse, MSG_STANDARD, NULL);
+
+	/* @todo: present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
+
+	return qtrue;
+}
+
+/**
+ * @brief Make the specified UFO go to destination.
+ * @param[in] ufo Pointer to the UFO.
+ * @param[in] dest Destination.
+ * @sa UFO_SendAttackBase
+ */
+void UFO_SendToDestination (aircraft_t* ufo, vec2_t dest)
+{
+	assert(ufo);
+
+	MAP_MapCalcLine(ufo->pos, dest, &ufo->route);
+	ufo->status = AIR_TRANSIT;
+	ufo->time = 0;
+	ufo->point = 0;
+}
+
+/**
+ * @brief Check if the ufo can shoot back at phalanx aircraft
+ */
+void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
+{
+	if (ufo->status != AIR_FLEEING) {
+		/* check if the ufo is already attacking a base */
+		if (ufo->baseTarget) {
+			AIRFIGHT_ExecuteActions(ufo, NULL);
+		/* check if the ufo is already attacking an aircraft */
+		} else if (ufo->aircraftTarget) {
+			/* check if the target flee in a base */
+			if (ufo->aircraftTarget->status > AIR_HOME)
+				AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
+			else
+				ufo->aircraftTarget = NULL;
+		} else {
+			/* check that aircraft is flying */
+			if (phalanxAircraft->status > AIR_HOME)
+				UFO_SendPursuingAircraft(ufo, phalanxAircraft);
 		}
 	}
 }
@@ -292,6 +393,10 @@ void UFO_CampaignRunUFOs (int dt)
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufo = gd.ufos + gd.numUFOs - 1; ufo >= gd.ufos; ufo--) {
+		/* don't run a landed ufo */
+		if (ufo->notOnGeoscape)
+			continue;
+
 #ifdef UFO_ATTACK_BASES
 		/* Check if the UFO found a new base */
 		UFO_FoundNewBase(ufo, dt);
@@ -303,10 +408,13 @@ void UFO_CampaignRunUFOs (int dt)
 			end = ufo->route.point[ufo->route.numPoints - 1];
 			Vector2Copy(end, ufo->pos);
 			UFO_SetRandomDest(ufo);
+			CP_CheckNextStageDestination(ufo);
 		}
 
-		/* is there a PHALANX aircraft to shoot ? */
-		UFO_SearchTarget(ufo);
+#ifdef UFO_ATTACK_BASES
+		/* is there a PHALANX base to shoot at ? */
+		UFO_SearchBaseTarget(ufo);
+#endif
 
 		/* antimatter tanks */
 		if (ufo->fuel <= 0)
@@ -371,14 +479,64 @@ static void UFO_ListOnGeoscape_f (void)
 
 /**
  * @brief Add a UFO to geoscape
+ * @param[in] ufotype The type of ufo (fighter, scout, ...).
+ * @param[in] pos Position where the ufo should go. NULL is randomly chosen
  * @todo: UFOs are not assigned unique idx fields. Could be handy...
+ * @sa UFO_AddToGeoscape_f
+ * @sa UFO_RemoveFromGeoscape
+ * @sa UFO_RemoveFromGeoscape_f
+ */
+aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t pos)
+{
+	int newUFONum;
+	aircraft_t *ufo = NULL;
+
+	if (ufoType == UFO_MAX) {
+		Com_Printf("UFO_AddToGeoscape: ufotype does not exist\n");
+		return NULL;
+	}
+
+	/* check max amount */
+	if (gd.numUFOs >= MAX_UFOONGEOSCAPE) {
+		Com_Printf("UFO_AddToGeoscape: Too many UFOs on geoscape\n");
+		return NULL;
+	}
+
+	for (newUFONum = 0; newUFONum < numAircraft_samples; newUFONum++)
+		if (aircraft_samples[newUFONum].type == AIRCRAFT_UFO
+		 && ufoType == aircraft_samples[newUFONum].ufotype
+		 && !aircraft_samples[newUFONum].notOnGeoscape)
+			break;
+
+	if (newUFONum == numAircraft_samples) {
+		Com_DPrintf(DEBUG_CLIENT, "Could not add ufo type %i to geoscape\n", ufoType);
+		return NULL;
+	}
+
+	/* Create ufo */
+	ufo = gd.ufos + gd.numUFOs;
+	memcpy(ufo, aircraft_samples + newUFONum, sizeof(aircraft_t));
+	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (gd.numUFOs: %i, newUFONum: %i)\n", ufo->id, gd.numUFOs, newUFONum);
+	gd.numUFOs++;
+
+	/* Initialise ufo data */
+	AII_ReloadWeapon(ufo);					/* Load its weapons */
+	ufo->visible = qfalse;					/* Not visible in radars (just for now) */
+	if (pos)
+		UFO_SetDest(ufo, pos);
+	else
+		UFO_SetRandomDest(ufo);				/* Random destination */
+
+	return ufo;
+}
+
+/**
+ * @brief Add a UFO to geoscape
  * @sa UFO_RemoveFromGeoscape
  * @sa UFO_RemoveFromGeoscape_f
  */
 static void UFO_AddToGeoscape_f (void)
 {
-	static int newUFONum = -1;
-	aircraft_t *ufo = NULL;
 	ufoType_t ufotype = UFO_MAX;
 
 	/* check max amount */
@@ -388,40 +546,10 @@ static void UFO_AddToGeoscape_f (void)
 	if (Cmd_Argc() == 2) {
 		ufotype = atoi(Cmd_Argv(1));
 		if (ufotype > UFO_MAX || ufotype < 0)
-			ufotype = UFO_MAX;
+			ufotype = 0;
 	}
 
-	if (newUFONum >= numAircraft_samples)
-		newUFONum = -1;
-
-	/* Get next type of ufo in aircraft list */
-	while (++newUFONum < numAircraft_samples)
-		if (aircraft_samples[newUFONum].type == AIRCRAFT_UFO
-		 && !aircraft_samples[newUFONum].notOnGeoscape)
-			break;
-	if (newUFONum == numAircraft_samples)
-		for (newUFONum = 0; newUFONum < numAircraft_samples; newUFONum++)
-			if (aircraft_samples[newUFONum].type == AIRCRAFT_UFO
-			 && (ufotype == UFO_MAX || ufotype == aircraft_samples[newUFONum].ufotype)
-			 && !aircraft_samples[newUFONum].notOnGeoscape)
-				break;
-	if (newUFONum == numAircraft_samples) {
-		if (ufotype != UFO_MAX)
-			Com_DPrintf(DEBUG_CLIENT, "Could not add ufo type %i to geoscape\n", ufotype);
-		return;
-	}
-
-	/* Create ufo */
-	ufo = gd.ufos + gd.numUFOs;
-	memcpy(ufo, aircraft_samples + newUFONum, sizeof(aircraft_t));
-	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (gd.numUFOs: %i, newUfoNum: %i)\n", ufo->id, gd.numUFOs, newUFONum);
-	gd.numUFOs++;
-
-	/* Initialise ufo data */
-	AII_ReloadWeapon(ufo);					/* Load its weapons */
-	ufo->visible = qfalse;					/* Not visible in radars (just for now) */
-	CP_GetRandomPosForAircraft(ufo->pos);	/* Random position */
-	UFO_SetRandomDest(ufo);				/* Random destination */
+	UFO_AddToGeoscape(ufotype, NULL);
 }
 
 /**

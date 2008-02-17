@@ -320,12 +320,17 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			probability = frand();
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
 				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
+
+			if (shooter->type != AIRCRAFT_UFO) {
+				/* Maybe UFO is going to shoot back ? */
+				UFO_CheckShootBack(target, shooter);
+			}
 		}
 	} else if (slotIdx == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
 		if (shooter->type == AIRCRAFT_UFO) {
 			if (!shooter->baseTarget)
-				AIR_SendUFOPursuingAircraft(shooter, target);
+				UFO_SendPursuingAircraft(shooter, target);
 			else
 				/* ufo is attacking a base */
 				return;
@@ -409,6 +414,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		 * and we hit the probability to spawn a crashsite mission */
 		if (!MapIsWater(color)) {
 			CP_SpawnCrashSiteMission(aircraft);
+			/* don't remove ufo from global array: the mission is not over yet */
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
@@ -430,11 +436,6 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 				}
 			}
 		}
-
-		/* now remove the ufo from geoscape - the aircraft pointer is no longer
-		 * valid after this call */
-		UFO_RemoveFromGeoscape(aircraft);
-		aircraft = NULL;
 	} else {
 		/* change destination of other projectiles aiming aircraft */
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
@@ -616,6 +617,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		baseAttack = qtrue;
 	}
 
+#if 0
 	/* set the base under attack */
 	if (baseAttack) {
 		int idx;
@@ -629,6 +631,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			if (gd.projectiles[idx].aimedBase == base)
 				AIRFIGHT_RemoveProjectile(&gd.projectiles[idx]);
 	}
+#endif
 }
 
 /**

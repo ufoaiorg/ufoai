@@ -2180,7 +2180,6 @@ static const value_t mapdef_vals[] = {
 	{"loadingscreen", V_STRING, offsetof(mapDef_t, loadingscreen), 0},
 	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
 
-	{"ufo", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, ufo), 0},
 	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
 	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
 
@@ -2240,7 +2239,9 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 
 		if (!vp->string) {
 			linkedList_t **list;
-			if (!Q_strcmp(token, "terrains")) {
+			if (!Q_strcmp(token, "ufos")) {
+				list = &md->ufos;
+			} else if (!Q_strcmp(token, "terrains")) {
 				list = &md->terrains;
 			} else if (!Q_strcmp(token, "populations")) {
 				list = &md->populations;
@@ -2254,7 +2255,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 			}
 			token = COM_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
-				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has gametypes, terrains, populations or cultures block with no opening brace\n", name);
+				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
 				break;
 			}
 			do {

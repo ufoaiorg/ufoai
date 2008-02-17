@@ -758,8 +758,6 @@ void AIR_NewAircraft (base_t *base, const char *name)
 			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
 			if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
 				Com_Printf("AIR_NewAircraft()... ERROR, new aircraft but no free space in hangars!\n");
-			/* Now update the aircraft list - maybe there is a popup active */
-			Cmd_ExecuteString("aircraft_list");
 			/* also update the base menu buttons */
 			Cmd_ExecuteString("base_init");
 		}
@@ -845,9 +843,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		base->aircraftCurrent = AIRCRAFT_INBASE_INVALID;
 	}
 
-	/* Now update the aircraft list - maybe there is a popup active. */
-	Cmd_ExecuteString("aircraft_list");
-
 	/* also update the base menu buttons */
 	Cmd_ExecuteString("base_init");
 
@@ -881,20 +876,6 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	aircraft->status = AIR_HOME;
 
 	AIR_DeleteAircraft(aircraft);
-}
-
-/**
- * @brief Set pos to a random position on geoscape
- * @param[in] pos Pointer to vec2_t for aircraft position
- * @note Used to place UFOs on geoscape
- * @todo move this to cl_ufo.c - only ufos will get "random position"
- * @sa CP_GetRandomPosOnGeoscape
- */
-void CP_GetRandomPosForAircraft (float *pos)
-{
-	pos[0] = (rand() % 180) - (rand() % 180);
-	pos[1] = (rand() % 90) - (rand() % 90);
-	Com_DPrintf(DEBUG_CLIENT, "Get random pos on geoscape %.2f:%.2f\n", pos[0], pos[1]);
 }
 
 /**
@@ -964,8 +945,7 @@ void CL_CampaignRunAircraft (int dt)
 						case AIR_MISSION:
 							/* Aircraft reached its mission */
 							assert(aircraft->mission);
-							assert(aircraft->mission->def);
-							aircraft->mission->def->active = qtrue;
+							aircraft->mission->active = qtrue;
 							aircraft->status = AIR_DROP;
 							cls.missionaircraft = aircraft;
 							MAP_SelectMission(cls.missionaircraft->mission);
@@ -1092,7 +1072,7 @@ aircraft_t* AIR_AircraftGetFromIdx (int idx)
  * @param[in] mission Pointer to given mission.
  * @return qtrue if sending an aircraft to specified mission is possible.
  */
-qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
+qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 {
 	if (!aircraft || !mission)
 		return qfalse;
@@ -1118,17 +1098,17 @@ qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
 	if (aircraft->homebase->baseStatus == BASE_UNDER_ATTACK &&
 		AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
-		mission->def->active = qtrue;
+		mission->active = qtrue;
 		MN_PushMenu("popup_baseattack");
 		return qtrue;
 	}
 
-	if (!AIR_AircraftHasEnoughFuel(aircraft, mission->realPos)) {
+	if (!AIR_AircraftHasEnoughFuel(aircraft, mission->pos)) {
 		MN_AddNewMessage(_("Notice"), _("Your aircraft doesn't have enough fuel to go there and then come back to its home base."), qfalse, MSG_STANDARD, NULL);
 		return qfalse;
 	}
 
-	MAP_MapCalcLine(aircraft->pos, mission->realPos, &aircraft->route);
+	MAP_MapCalcLine(aircraft->pos, mission->pos, &aircraft->route);
 	aircraft->status = AIR_MISSION;
 	aircraft->time = 0;
 	aircraft->point = 0;
@@ -1562,7 +1542,7 @@ Aircraft functions related to UFOs or missions.
  * @brief Notify that a mission has been removed.
  * @param[in] mission Pointer to the mission that has been removed.
  */
-void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
+void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 {
 	base_t* base;
 	aircraft_t* aircraft;
@@ -1572,13 +1552,8 @@ void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--) {
 
-			if (aircraft->status == AIR_MISSION) {
-				if (aircraft->mission == mission) {
-					AIR_AircraftReturnToBase(aircraft);
-				} else if (aircraft->mission > mission) {
-					(aircraft->mission)--;
-				}
-			}
+			if (aircraft->status == AIR_MISSION && aircraft->mission == mission)
+				AIR_AircraftReturnToBase(aircraft);
 		}
 	}
 }
@@ -1629,7 +1604,7 @@ void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
 	base_t* base;
 	aircraft_t* aircraft;
 
-	/* Aircraft currently pursuing the specified ufo will be redirect to base */
+	/* Aircraft currently pursuing the specified UFO will be redirected to base */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
@@ -1645,7 +1620,7 @@ void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
  */
 qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 {
-	int num = ufo - gd.ufos;
+	const int num = ufo - gd.ufos;
 
 	if (num < 0 || num >= gd.numUFOs || ! aircraft || ! ufo)
 		return qfalse;
@@ -1668,77 +1643,6 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->baseTarget = NULL;
 	return qtrue;
 }
-
-/**
- * @brief Make the specified UFO purchasing a phalanx aircraft.
- * @param[in] ufo Pointer to the UFO.
- * @param[in] aircraft Pointer to the target aircraft.
- * @sa AIR_SendUFOAttackBase
- */
-qboolean AIR_SendUFOPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
-{
-	int slotIdx;
-
-	assert(ufo);
-	assert(aircraft);
-
-	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
-	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
-	if (slotIdx == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
-		/* no ammo left: should flee ! */
-		UFO_FleePhalanxAircraft(ufo, aircraft->pos);
-		return qfalse;
-	} else if (slotIdx < AIRFIGHT_WEAPON_CAN_SHOOT) {
-		/* Don't flee: can't fire atm, but maybe we'll be able to attack later */
-		return qfalse;
-	}
-
-	MAP_MapCalcLine(ufo->pos, aircraft->pos, &ufo->route);
-	ufo->status = AIR_UFO;
-	ufo->time = 0;
-	ufo->point = 0;
-	ufo->aircraftTarget = aircraft;
-	ufo->baseTarget = NULL;
-
-	/* Stop Time */
-	CL_GameTimeStop();
-
-	/* Send a message to player to warn him */
-	MN_AddNewMessage(_("Notice"), va(_("A UFO is shooting at %s"), aircraft->name), qfalse, MSG_STANDARD, NULL);
-
-	/* @todo: present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
-
-	return qtrue;
-}
-
-#ifdef UFO_ATTACK_BASES
-/**
- * @brief Make the specified UFO attack a base.
- * @param[in] ufo Pointer to the UFO.
- * @param[in] base Pointer to the target base.
- * @sa AIR_SendAircraftPursuingUFO
- */
-qboolean AIR_SendUFOAttackBase (aircraft_t* ufo, base_t* base)
-{
-	int slotIdx;
-
-	assert(ufo);
-	assert(base);
-
-	/* check whether the ufo can shoot the base - if not, don't try it even */
-	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, base->pos);
-	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
-		return qfalse;
-
-	MAP_MapCalcLine(ufo->pos, base->pos, &ufo->route);
-	ufo->baseTarget = base;
-	ufo->aircraftTarget = NULL;
-	ufo->status = AIR_UFO; /* FIXME: Might crash in cl_map.c MAP_DrawMapMarkers */
-	ufo->time = 0;
-	ufo->point = 0;
-	return qtrue;
-}
-#endif
 
 /*============================================
 Aircraft functions related to team handling.

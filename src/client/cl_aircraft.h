@@ -72,8 +72,6 @@ typedef enum {
 	ITEM_HEAVY
 } itemWeight_t;
 
-struct actMis_s;
-
 #define MAX_AIRCRAFTITEMS 64
 
 /** @brief different positions for aircraft items */
@@ -185,7 +183,7 @@ typedef struct aircraft_s {
 
 	int numUpgrades;
 
-	struct actMis_s* mission;	/**< The mission the aircraft is moving to */
+	struct mission_s* mission;	/**< The mission the aircraft is moving to */
 	char *missionID;			/**< if this is a crashsite, we need the string here
 								 * this is needed because we won't find the ufocrash mission
 								 * in the parsed missions in csi.missions until we loaded the campaign */
@@ -239,18 +237,13 @@ void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIdx(int idx);
 int AII_GetAircraftItemByID(const char *id);
-void CP_GetRandomPosForAircraft(float *pos);
 qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
 void AII_ReloadWeapon(aircraft_t *aircraft);
 qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
-qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
+qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
 qboolean AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
-qboolean AIR_SendUFOPursuingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
-#ifdef UFO_ATTACK_BASES
-qboolean AIR_SendUFOAttackBase(aircraft_t* ufo, struct base_s *base);
-#endif
 void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);

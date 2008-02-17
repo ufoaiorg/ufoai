@@ -1001,6 +1001,7 @@ void B_SetUpBase (base_t* base)
 	int i, j;
 	building_t *building = NULL;
 	aircraft_t *aircraft = NULL;
+	const int newBaseAlienInterest = 10;
 
 	assert(base);
 	/* Resent current capacities. */
@@ -1108,7 +1109,7 @@ void B_SetUpBase (base_t* base)
 	}
 
 	/* a new base is not discovered (yet) */
-	base->isDiscovered = qfalse;
+	base->alienInterest = newBaseAlienInterest;
 
 	/* intialise hit points */
 	base->batteryDamage = MAX_BATTERY_DAMAGE;
@@ -2532,75 +2533,9 @@ void B_BaseResetStatus (base_t* const base)
 }
 
 /**
- * @brief Initiates an attack on a base.
- * @sa B_BaseAttack_f
- * @sa CL_CampaignAddMission
- * @param[in] base Which base is under attack?
- */
-void B_BaseAttack (base_t* const base)
-{
-	mission_t* ms = NULL;
-
-	assert(base);
-
-	/* base is already under attack - don't spawn a new mission */
-	if (base->baseStatus == BASE_UNDER_ATTACK)
-		return;
-
-	/* HACK FIXME */
-	if (!base->numAircraftInBase) {
-		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are not crafts in this base\n", base->name);
-		return;
-	}
-
-	/* we always need at least one command centre in the base - because the
-	 * phalanx soldiers have their starting positions here
-	 * @note There should also always be an entrace - the aliens start there */
-	if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_COMMAND)) {
-		ms = CL_AddMission(va("baseattack%i:%i", (int)base->pos[0], (int)base->pos[1]));
-		if (!ms) {
-			Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack\n", base->name);
-			return;
-		}
-
-		if (CP_SpawnBaseAttackMission(base, ms, NULL)) {
-			base->baseStatus = BASE_UNDER_ATTACK;
-			campaignStats.basesAttacked++;
-		}
-	} else {
-		CL_BaseRansacked(base);
-		campaignStats.basesAttacked++;
-	}
-#if 0							/*@todo: run eventhandler for each building in base */
-	if (b->onAttack)
-		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
-#endif
-}
-
-/**
- * @brief Initiates an attack on a base.
- * @sa B_BaseAttack
- */
-static void B_BaseAttack_f (void)
-{
-	int whichBaseID;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
-		return;
-	}
-
-	whichBaseID = atoi(Cmd_Argv(1));
-
-	if (whichBaseID >= 0 && whichBaseID < gd.numBases) {
-		B_BaseAttack(B_GetBase(whichBaseID));
-	}
-}
-
-/**
  * @brief Builds a base map for tactical combat.
  * @sa SV_AssembleMap
- * @sa B_BaseAttack
+ * @sa CP_BaseAttackChooseBase
  * @note Do we need day and night maps here, too? Sure!
  * @todo Search a empty field and add a alien craft there, also add alien
  * spawn points around the craft, also some trees, etc. for their cover
@@ -2635,10 +2570,13 @@ static void B_AssembleMap_f (void)
 		return;
 	}
 
+#if 0
+FIXME
 	if (setUnderAttack) {
 		B_BaseAttack(base);
 		Com_DPrintf(DEBUG_CLIENT, "Set base %i under attack\n", base->idx);
 	}
+#endif
 
 	/* reset menu text */
 	MN_MenuTextReset(TEXT_STANDARD);
@@ -3103,7 +3041,6 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle_f, NULL);
 	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f, NULL);
 	Cmd_AddCommand("rename_base", B_RenameBase_f, "Rename the current base");
-	Cmd_AddCommand("base_attack", B_BaseAttack_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
@@ -3431,7 +3368,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		}
 		MSG_WriteShort(sb, gd.numBuildings[i]);
 		MSG_WriteByte(sb, b->baseStatus);
-		MSG_WriteByte(sb, b->isDiscovered);
+		MSG_WriteShort(sb, b->alienInterest);
 
 		MSG_WriteByte(sb, b->maxBatteries);
 		B_SaveItemSlots(b->batteries, b->maxBatteries, b->targetMissileIdx, sb);
@@ -3516,8 +3453,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				break;
 			case AIR_MISSION:
 				assert(aircraft->mission);
-				assert(aircraft->mission->def);
-				MSG_WriteString(sb, aircraft->mission->def->name);
+				MSG_WriteString(sb, aircraft->mission->name);
 				break;
 			}
 			MSG_WritePos(sb, aircraft->direction);
@@ -3647,7 +3583,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 		gd.numBuildings[i] = MSG_ReadShort(sb);
 		b->baseStatus = MSG_ReadByte(sb);
-		b->isDiscovered = MSG_ReadByte(sb);
+		b->alienInterest = MSG_ReadShort(sb);
 		BDEF_InitialiseBaseSlots(b);
 
 		/* read missile battery slots */

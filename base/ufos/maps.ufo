@@ -26,7 +26,7 @@ mapdef or_small
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -58,7 +58,7 @@ mapdef or_medium
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -90,7 +90,7 @@ mapdef or_large
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -126,13 +126,13 @@ mapdef farm_small
 	multiplayer		false
 	maxaliens		6
 
-//	ufo
-//	{
-//		"ufo_scout"
-//		"crash_scout"
-//		"ufo_fighter"
-//		"crash_fighter"
-//	}
+	ufos
+	{
+		ufo_scout
+		crash_scout
+		ufo_fighter
+		crash_fighter
+	}
 
 	terrains
 	{
@@ -163,11 +163,11 @@ mapdef farm_medium
 	multiplayer		false
 	maxaliens		11
 
-//	ufo
-//	{
-//		"ufo_harvester"
-//		"crash_harvester"
-//	}
+	ufos
+	{
+		ufo_harvester
+		crash_harvester
+	}
 
 	terrains
 	{
@@ -198,11 +198,11 @@ mapdef farm_large
 	multiplayer		false
 	maxaliens		16
 
-//	ufo
-//	{
-//		"ufo_corrupter"
-//		"crash_corrupter"
-//	}
+	ufos
+	{
+		ufo_corrupter
+		crash_corrupter
+	}
 
 	terrains
 	{
@@ -237,10 +237,10 @@ mapdef frozen_alienlandingindustrial
 	description		"_An industrial area in a cold region."
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
-//	{
-//		"ufo_scout"
-//	}
+	ufos
+	{
+		ufo_scout
+	}
 
 	terrains
 	{
@@ -270,7 +270,7 @@ mapdef frozen_small
 	description		"_An underpopulated area in a cold region."
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -302,10 +302,10 @@ mapdef frozen_landingnature
 	description		"_An industrial area in a cold region."
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
-//	{
-//		"ufo_scout"
-//	}
+	ufos
+	{
+		ufo_scout
+	}
 
 	terrains
 	{
@@ -335,7 +335,7 @@ mapdef frozen_industrial
 	description		"_An industrial area in a cold region."
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -370,7 +370,7 @@ mapdef tropic_river
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -401,7 +401,7 @@ mapdef tropic_drug
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -435,7 +435,7 @@ mapdef vil_lille
 	description		"_A peaceful neighborhood on the outskirts of a centre of population."
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -466,7 +466,7 @@ mapdef vil_residential
 	description		"_A peaceful neighborhood on the outskirts of a centre of population."
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -497,7 +497,7 @@ mapdef vil_commercial
 	description		"_A peaceful neighborhood on the outskirts of a centre of population."
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -528,7 +528,7 @@ mapdef vil_big
 	description		"_A peaceful neighborhood on the outskirts of a centre of population."
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -560,6 +560,7 @@ mapdef excavation
 	description		"_An excavation site that has fallen under alien attack."
 	multiplayer		true
 	teams			2
+	maxaliens		5
 	gametypes {
 		1on1
 		1on1on1
@@ -572,9 +573,10 @@ mapdef excavation
 
 	maxaliens		17
 
-//	ufo
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_scout
+	}
 
 	terrains
 	{
@@ -613,7 +615,7 @@ mapdef estate
 
 	maxaliens		12
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -653,7 +655,7 @@ mapdef italy
 
 	maxaliens		22
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -694,7 +696,7 @@ mapdef mart
 
 	maxaliens		16
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -738,7 +740,7 @@ mapdef mine
 	}
 	maxaliens		15
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -780,7 +782,7 @@ mapdef transport
 	}
 	maxaliens		19
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -819,7 +821,7 @@ mapdef bunker
 	}
 	maxaliens		8
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -860,7 +862,7 @@ mapdef dam
 	}
 	maxaliens		10
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -885,7 +887,6 @@ mapdef dam
 mapdef japan
 {
 	map				japan06
-	loadingscreen	japan06
 	description		"_A classic eastern suburban area."
 	teams			2
 	multiplayer		true
@@ -901,7 +902,7 @@ mapdef japan
 	}
 	maxaliens		16
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -939,7 +940,7 @@ mapdef spedition
 	}
 	maxaliens		7
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -979,7 +980,7 @@ mapdef stadium
 
 	maxaliens		5
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1020,7 +1021,7 @@ mapdef druglord
 	}
 	maxaliens		11
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1058,7 +1059,7 @@ mapdef terrain02
 	}
 	maxaliens		9
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1099,10 +1100,10 @@ mapdef terrain
 	}
 	maxaliens		4
 
-//	ufo
-//	{
-		"crash_scout"
-//	}
+	ufos
+	{
+		crash_scout
+	}
 
 	terrains
 	{
@@ -1140,7 +1141,7 @@ mapdef farm
 	}
 	maxaliens		12
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1179,7 +1180,7 @@ mapdef industrial
 	}
 	maxaliens		20
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1224,7 +1225,7 @@ mapdef rivertown
 	}
 	maxaliens		16
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1250,7 +1251,7 @@ mapdef rivertown
 mapdef city
 {
 	map				city04
-	description		"_A small neighbourhood in a warm urban region.
+	description		"_A small neighbourhood in a warm urban region."
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -1264,7 +1265,7 @@ mapdef city
 	}
 	maxaliens		6
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1304,7 +1305,7 @@ mapdef gasstation
 	}
 	maxaliens		4
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1346,7 +1347,7 @@ mapdef oriental05
 	}
 	maxaliens		16
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1385,7 +1386,7 @@ mapdef oriental06
 	}
 	maxaliens		16
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1424,7 +1425,7 @@ mapdef subway
 	}
 	maxaliens		8
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1451,7 +1452,7 @@ mapdef subway
 mapdef tower
 {
 	map				tower06
-	description		"_An office complex in the center of town.
+	description		"_An office complex in the center of town."
 	multiplayer		true
 	teams			3
 	gametypes {
@@ -1467,7 +1468,7 @@ mapdef tower
 	}
 	maxaliens		8
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1508,7 +1509,7 @@ mapdef village
 	}
 	maxaliens		11
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1548,7 +1549,7 @@ mapdef convoy
 	}
 	maxaliens		11
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1588,10 +1589,10 @@ mapdef mine_crash
 	}
 	maxaliens		19
 
-//	ufo
-//	{
-//		crash_fighter
-//	}
+	ufos
+	{
+		crash_fighter
+	}
 
 	terrains
 	{
@@ -1630,10 +1631,10 @@ mapdef bridge
 	}
 	maxaliens		19
 
-//	ufo
-//	{
-//		crash_fighter
-//	}
+	ufos
+	{
+		crash_fighter
+	}
 
 	terrains
 	{
@@ -1670,7 +1671,7 @@ mapdef construction
 	}
 	maxaliens		8
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1710,7 +1711,7 @@ mapdef harbor
 	}
 	maxaliens		8
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1736,7 +1737,7 @@ mapdef harbor
 mapdef office
 {
 	map				office06
-	description		"An office complex on the outskirts of town.
+	description		"_An office complex on the outskirts of town."
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -1750,7 +1751,7 @@ mapdef office
 	}
 	maxaliens		18
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1790,7 +1791,7 @@ mapdef pdi
 	}
 	maxaliens		8
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1830,10 +1831,10 @@ mapdef africa
 	description		"_An african suburb that has received a visit from a harvester."
 	maxaliens		24
 
-//	ufo
-//	{
-//		"ufo_harvester"
-//	}
+	ufos
+	{
+		ufo_harvester
+	}
 
 	terrains
 	{
@@ -1871,10 +1872,10 @@ mapdef harvestercrash
 	description		"_An alien Harvester has crashed in the wastelands."
 	maxaliens		24
 
-//	ufo
-//	{
-//		"ufo_harvester"
-//	}
+	ufos
+	{
+		ufo_harvester
+	}
 
 	terrains
 	{
@@ -1909,7 +1910,7 @@ mapdef lake
 	description		"_A small settlement in winter."
 	maxaliens		16
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -1951,7 +1952,7 @@ mapdef lake2
 mapdef shelter
 {
 	map				"+shelter"
-	description		"_A	shelter	that was built to house	people in times	of major disasters.	Some internal blast	doors may have been	closed."
+	description		"_A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 	size			"medium"
 	teams			4
 	multiplayer		true
@@ -1970,7 +1971,7 @@ mapdef shelter
 	}
 	maxaliens		21
 
-//	ufo
+//	ufos
 //	{
 //	}
 
@@ -2012,10 +2013,10 @@ mapdef corrupt_city
 	}
 	maxaliens		16
 
-//	ufo
-//	{
-//		"ufo_corrupter"
-//	}
+	ufos
+	{
+		ufo_corrupter
+	}
 
 	terrains
 	{
@@ -2040,7 +2041,7 @@ mapdef corrupt_city
 mapdef community_centre
 {
 	map				community_centre01
-	description		"A place where people come to relax and mingle."
+	description		"_A place where people come to relax and mingle."
 	multiplayer		true
 	teams			3
 	gametypes {
@@ -2054,7 +2055,7 @@ mapdef community_centre
 	}
 	maxaliens		8
 
-//	ufo
+//	ufos
 //	{
 //	}
 

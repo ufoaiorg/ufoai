@@ -36,19 +36,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 
 /* public vars */
-static mission_t missions[MAX_MISSIONS];	/**< Missions parsed in missions.ufo AND missions created during game (crash site, ...)
-											 * (sa ccs.mission for active missions drawn on geoscape) */
-static int numMissions;				/**< Number of mission parsed in missions.ufo PLUS nb of mission created during game (crash site, ...)
-									 * (sa ccs.numMissions for number of active missions drawn on geoscape) */
-actMis_t *selectedMission;				/**< Currently selected mission on geoscape */
+mission_t *selectedMission;				/**< Currently selected mission on geoscape */
 
 static campaign_t campaigns[MAX_CAMPAIGNS];
 static int numCampaigns = 0;
-
-static stageSet_t stageSets[MAX_STAGESETS];
-static stage_t stages[MAX_STAGES];
-static int numStageSets = 0;
-static int numStages = 0;
 
 campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;
@@ -174,6 +165,8 @@ static qboolean CheckAND (char **s)
 	return result;
 }
 
+#if 0
+I didn't remove this function because I don't know what it's suppose to do. Kracken
 /**
  * @brief Boolean expression parser
  *
@@ -216,6 +209,7 @@ static qboolean CheckBEP (char *expr, qboolean(*varFuncParam) (char *var))
 		return qtrue;
 	}
 }
+#endif
 
 
 /* =========================================================== */
@@ -252,34 +246,9 @@ static date_t Date_Add (date_t a, date_t b)
 	return a;
 }
 
-#if (0)
 static date_t Date_Random (date_t frame)
 {
 	frame.sec = (frame.day * 3600 * 24 + frame.sec) * frand();
-	frame.day = frame.sec / (3600 * 24);
-	frame.sec = frame.sec % (3600 * 24);
-	return frame;
-}
-#endif
-
-static date_t Date_Random_Begin (date_t frame)
-{
-	int sec = frame.day * 3600 * 24 + frame.sec;
-
-	/* first 1/3 of the frame */
-	frame.sec = sec * frand() / 3;
-	frame.day = frame.sec / (3600 * 24);
-	frame.sec = frame.sec % (3600 * 24);
-	return frame;
-}
-
-
-static date_t Date_Random_Middle (date_t frame)
-{
-	int sec = frame.day * 3600 * 24 + frame.sec;
-
-	/* middle 1/3 of the frame */
-	frame.sec = sec / 3 + sec * frand() / 3;
 	frame.day = frame.sec / (3600 * 24);
 	frame.sec = frame.sec % (3600 * 24);
 	return frame;
@@ -329,164 +298,1142 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 	return qtrue;
 }
 
-/**
- * @brief The active stage in the current campaign
- * @sa CL_StageSetDone
- */
-static const stage_t *activeStage = NULL;
+/*****************************************************************************
+ *
+ *	Alien interest functions
+ *
+ *****************************************************************************/
 
 /**
- * @brief Checks wheter a stage set exceeded the quota
- * @param[in] name Stage set name from script file
- * @return qboolean
+ * @brief Initialize alien interest values and mission cycle
+ * @note Should be used when a new single player campaign starts
+ * @sa CL_GameNew_f
  */
-static qboolean CL_StageSetDone (char *name)
+static void CL_ResetAlienInterest (void)
 {
-	setState_t *set;
 	int i;
 
-	assert(activeStage);
+	ccs.lastInterestIncreaseDelay = 0;
+	ccs.lastMissionSpawnedDelay = 0;
+	ccs.overallInterest = 20;
 
-	for (i = 0, set = &ccs.set[activeStage->first]; i < activeStage->num; i++, set++)
-		if (!Q_strncmp(name, set->def->name, MAX_VAR)) {
-			if (set->def->number && set->num >= set->def->number)
-				return qtrue;
-			if (set->def->quota && set->done >= set->def->quota)
-				return qtrue;
-		}
-	return qfalse;
+	/* Set initial individual interests
+	 * @todo These values should probably be set in campaign.ufo */
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+		ccs.interest[i] = 0;
+	ccs.interest[INTERESTCATEGORY_RECON] = 20;
+	ccs.interest[INTERESTCATEGORY_NONE] = 20;
 }
 
-
 /**
- * @sa CL_CampaignExecute
+ * @brief Change individual interest value
+ * @param[in] percentage Maybe pe > 0 or < 0
+ * @param[in] category Category of interest for aliens that should increase / decrease
+ * @note Should be used when a mission is over (success or failure)
  */
-static void CL_CampaignActivateStageSets (const stage_t *stage)
+static void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
 {
-	setState_t *set;
-	int i;
-
-	activeStage = stage;
-#ifdef PARANOID
-	if (stage->first + stage->num >= MAX_STAGESETS)
-		Sys_Error("CL_CampaignActivateStageSets '%s' (first: %i, num: %i)\n", stage->name, stage->first, stage->num);
-#endif
-	for (i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++)
-		if (!set->active && !set->num) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_CampaignActivateStageSets: i = %i, stage->first = %i, stage->num = %i, stage->name = %s\n", i, stage->first, stage->num, stage->name);
-			assert(!set->done); /* if not started, not done, as well */
-			assert(set->stage);
-			assert(set->def);
-
-			/* check needed sets */
-			if (set->def->needed[0] && !CheckBEP(set->def->needed, CL_StageSetDone))
-				continue;
-
-			Com_DPrintf(DEBUG_CLIENT, "Activated: set->def->name = %s.\n", set->def->name);
-
-			/* activate it */
-			set->active = qtrue;
-			set->start = Date_Add(ccs.date, set->def->delay);
-			set->event = Date_Add(set->start, Date_Random_Begin(set->def->frame));
-			if (*(set->def->sequence))
-				Cbuf_AddText(va("seq_start %s;\n", set->def->sequence));
-			/* XVI spreading has started */
-			if (set->def->activateXVI) {
-				ccs.XVISpreadActivated = qtrue;
-				/* Mark prequesite of "rs_alien_xvi" as met. */
-				RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
-			}
-			/* humans start to attacking player */
-			if (set->def->humanAttack) {
-				ccs.humansAttackActivated = qtrue;
-				/* Mark prequesite of "rs_enemy_on_earth" as met. */
-				RS_ResearchFinish(RS_GetTechByID("rs_enemy_on_earth_event"));
-			}
-		}
-}
-
-
-/**
- * @sa CL_CampaignActivateStageSets
- * @sa CL_CampaignExecute
- */
-static stageState_t *CL_CampaignActivateStage (const char *name, qboolean setsToo)
-{
-	stage_t *stage;
-	stageState_t *state;
-	int i, j;
-
-	for (i = 0, stage = stages; i < numStages; i++, stage++) {
-		if (!Q_strncmp(stage->name, name, MAX_VAR)) {
-			Com_Printf("Activate stage %s\n", stage->name);
-			/* add it to the list */
-			state = &ccs.stage[i];
-			state->active = qtrue;
-			state->def = stage;
-			state->start = ccs.date;
-
-			/* add stage sets */
-			for (j = stage->first; j < stage->first + stage->num; j++) {
-				memset(&ccs.set[j], 0, sizeof(setState_t));
-				ccs.set[j].stage = stage;
-				ccs.set[j].def = &stageSets[j];
-			}
-			/* activate stage sets */
-			if (setsToo)
-				CL_CampaignActivateStageSets(stage);
-
-			return state;
-		}
+	if (category == INTERESTCATEGORY_MAX) {
+		Com_Printf("CL_ChangeIndividualInterest: Unsupported value of category\n");
+		return;
 	}
 
-	Com_Printf("CL_CampaignActivateStage: stage '%s' not found.\n", name);
+	if (percentage > 0.0f) {
+		/* Value increases: percentage is taken from the overall interest value */
+		ccs.interest[category] += (int) (percentage * ccs.overallInterest);
+	} else {
+		/* Value decreases: percentage is taken from the individual interest value */
+		ccs.interest[category] += (int) (percentage * ccs.interest[category]);
+		if (ccs.interest[category] < 0) {
+			/* this may be reached if percentage is below -1 */
+			ccs.interest[category] = 0;
+		}
+	}
+}
+
+/**
+ * @brief Increase alien overall interest.
+ * @sa CL_CampaignRun
+ * @note hourly called
+ */
+static void CP_IncreaseAlienInterest (void)
+{
+	const int delayBetweenIncrease = 28;	/* Number of hours between 2 overall interest increase */
+
+	ccs.lastInterestIncreaseDelay++;
+
+	if (ccs.lastInterestIncreaseDelay > delayBetweenIncrease) {
+		ccs.overallInterest++;
+		ccs.lastInterestIncreaseDelay -= delayBetweenIncrease;
+	}
+}
+
+/**
+ * @brief Select new mission type.
+ * @sa CP_SpawnNewMissions
+ */
+static int CP_SelectNewMissionType (void)
+{
+	int sum = 0;
+	int i, randomNumber;
+
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+		sum += ccs.interest[i];
+
+	randomNumber = (int) (frand() * (float) sum);
+
+	for (i = 0; randomNumber >= 0; i++) {
+		randomNumber -= ccs.interest[i];
+	}
+
+	return i - 1;
+}
+
+/**
+ * @brief List alien interest values.
+ * @sa function called with debug_interestlist
+ */
+static void CP_AlienInterestList_f (void)
+{
+	int i;
+
+	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
+	Com_Printf("Individual interest:\n");
+
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+		Com_Printf("\t%i. -- %i\n", i, ccs.interest[i]);
+}
+
+/*****************************************************************************
+ *
+ *	Mission functions
+ *
+  *****************************************************************************/
+
+/**
+ * @brief Check if a map may be selected for mission.
+ * @param[in] mission Pointer to the mission
+ * @param[in] mapIdx idx of the map
+ * @return qfalse if map is not selectable
+ * @sa UFO_AddToGeoscape
+ */
+static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx)
+{
+	if (csi.mds[mapIdx].storyRelated)
+		return qfalse;
+
+	if (!mission->ufo) {
+		/* a mission without UFO should not use a map with UFO */
+		if (csi.mds[mapIdx].ufos)
+			return qfalse;
+	} else {
+		/* A mission with UFO should use a map with UFO
+		 * first check that list is not empty */
+		if (!csi.mds[mapIdx].ufos)
+			return qfalse;
+		/* then compare */
+		if (!LIST_ContainsString(csi.mds[mapIdx].ufos, mission->ufo->id))
+			return qfalse;
+	}
+
+	return qtrue;
+}
+
+/**
+ * @brief Choose a map for given mission.
+ * @return qfalse if could not set mission
+ */
+static qboolean CP_ChooseMap (mission_t *mission)
+{
+	int i;
+	int maxHits = 1;
+	int hits = 0;
+	int minMissionAppearance = 9999;
+	int randomNum;
+
+	mission->mapDef = NULL;
+
+	while (maxHits) {
+		maxHits = 0;
+		for (i = 0; i < csi.numMDs; i++) {
+			/* Check if mission fulfill conditions */
+			if (!CP_MapIsSelectable(mission, i))
+				continue;
+
+			maxHits++;
+			if (csi.mds[i].timesAlreadyUsed < minMissionAppearance) {
+				hits = 0;
+				minMissionAppearance = csi.mds[i].timesAlreadyUsed;
+				break;
+			} else if (csi.mds[i].timesAlreadyUsed == minMissionAppearance)
+				hits++;
+		}
+
+		if (i >= csi.numMDs)
+			break;
+	}
+
+	if (!maxHits) {
+		Com_Printf("CP_ChooseMap: Could not find fixed map with %s.\n", mission->ufo->id);
+		return qfalse;
+	}
+
+	randomNum = rand() % hits;
+
+	for (i = 0; randomNum >= 0; i++) {
+		/* Check if mission fulfill conditions */
+		if (!CP_MapIsSelectable(mission, i))
+			continue;
+
+		if (csi.mds[i].timesAlreadyUsed == minMissionAppearance)
+			randomNum--;
+	}
+
+	mission->mapDef = &csi.mds[i - 1];
+/* @todo Use me */
+	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
+	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
+	Q_strncpyz(gd.oldMis1, mission->mapDef->id, sizeof(gd.oldMis1));
+	return qtrue;
+}
+
+/**
+ * @brief Create a random map.
+ * @return qfalse if could not set mission FIXME
+ */
+static qboolean CP_ChooseRandomMap (mission_t *mission, vec2_t pos)
+{
+	Com_sprintf(mission->name, sizeof(mission->name), "randommap%.0f:%.0f", pos[0], pos[1]);
+	mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
+	if (!mission->mapDef)
+		Sys_Error("Could not get a mapdef for ufocrash");
+	if (mission->mapDef->ufos)
+		mission->mapDef->param = Mem_PoolStrDup(UFO_TypeToShortName(mission->ufo->ufotype), cl_localPool, CL_TAG_NONE);
+
+	return qtrue;
+}
+
+/**
+ * @brief Get a mission in ccs.missions by ufo.
+ */
+static mission_t *CP_GetMissionByUFO (aircraft_t *ufocraft)
+{
+	const linkedList_t *list = ccs.missions;
+
+	for (;list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		if (mission->ufo == ufocraft)
+			return mission;
+	}
+
+	Com_Printf("CP_GetMissionByUFO: No mission correspond to ufo '%s'\n", ufocraft->id);
 	return NULL;
 }
 
+/**
+ * @brief Return the type of mission.
+ * @todo implement me
+ */
+const char *CP_MissionToTypeString (const mission_t *mission)
+{
+	switch (mission->category) {
+	case INTERESTCATEGORY_RECON:
+		if (mission->stage == STAGE_RECON_GROUND)
+			return _("Landed UFO");
+		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		if (mission->stage == STAGE_TERROR_MISSION)
+			return _("Terror mission");
+		break;
+	case INTERESTCATEGORY_BASE_ATTACK:
+		if (mission->stage == STAGE_BASE_ATTACK)
+			return _("Base attack");
+		break;
+	default:
+		Com_Printf("CP_MissionToTypeString: Unknow category %i\n", mission->category);
+		return _("Unknown");
+	}
+	return _("Crashed UFO");
+}
 
 /**
- * @sa CL_CampaignExecute
+ * @brief Count the number of mission created and active.
+ * @return Number of active mission
+ * @sa CP_CountMissionOnGeoscape
  */
-static void CL_CampaignEndStage (const char *name)
+int CP_CountMission (void)
 {
-	stageState_t *state;
-	int i;
-	for (i = 0, state = ccs.stage; i < numStages; i++, state++) {
-		if (state->def->name != NULL) {
-			if (!Q_strncmp(state->def->name, name, MAX_VAR)) {
-				state->active = qfalse;
-				return;
-			}
+	int counterMission = 0;
+	int counterActiveMission = 0;
+
+	const linkedList_t *list = ccs.missions;
+
+	for (; list; list = list->next, counterMission++) {
+		const mission_t *mission = (mission_t *)list->data;
+		/* check whether current selected gametype is a valid one */
+		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER) {
+			counterActiveMission++;
 		}
 	}
 
-	Com_Printf("CL_CampaignEndStage: stage '%s' not found.\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "Total number of mission: %i -- Number of active mission: %i\n", counterMission, counterActiveMission);
+	return counterActiveMission;
+}
+
+/**
+ * @brief Count the number of mission active and displayed on geoscape.
+ * @return Number of active mission
+ * @sa CP_CountMission
+ */
+int CP_CountMissionOnGeoscape (void)
+{
+	int counterMission = 0;
+	int counterVisibleMission = 0;
+
+	const linkedList_t *list = ccs.missions;
+
+	for (; list; list = list->next, counterMission++) {
+		const mission_t *mission = (mission_t *)list->data;
+		/* check whether current selected gametype is a valid one */
+		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape && mission->onGeoscape) {
+			counterVisibleMission++;
+		}
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "Total number of mission: %i -- Number of visible mission: %i\n", counterMission, counterVisibleMission);
+	return counterVisibleMission;
+}
+
+/**
+ * @brief Removes a mission from mission global array.
+ */
+static void CP_MissionRemove (mission_t *mission)
+{
+	linkedList_t *list = ccs.missions;
+	mission_t *removedMission;
+
+	/* Destroy UFO */
+	if (mission->ufo)
+		UFO_RemoveFromGeoscape(mission->ufo);
+
+	/* Notifications */
+	MAP_NotifyMissionRemoved(mission);
+	AIR_AircraftsNotifyMissionRemoved(mission);
+	CL_PopupNotifyMissionRemoved(mission);
+
+	for (; list; list = list->next) {
+		removedMission = (mission_t *)list->data;
+		if (removedMission == mission) {
+			LIST_Remove(&ccs.missions, list);
+			Com_Printf("Mission removed from global array.\n");
+			return;
+		}
+	}
+
+	Com_Printf("CP_MissionRemove: Could not find mission to remove.\n");
+}
+
+/**
+ * @brief Disable time limit for given mission.
+ * @note This function is used for better readibility.
+ * @sa CP_CheckNextStageDestination
+ * @sa CP_CheckMissionLimitedInTime
+ */
+static inline void CP_MissionDisableTimeLimit (mission_t *mission)
+{
+	mission->finalDate.day = 0;
+}
+
+/**
+ * @brief Check if mission should end because of limited time.
+ * @note This function is used for better readibility.
+ * @sa CP_MissionDisableTimeLimit
+ * @return qtrue if function should end after finalDate
+ */
+static inline qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
+{
+	return mission->finalDate.day != 0;
+}
+
+/*****	Recon Mission *****/
+
+/**
+ * @brief Recon mission is over and is a success: change interest values.
+ * @note Recon mission
+ */
+static void CP_ReconMissionIsSuccess (mission_t *mission)
+{
+#if 0
+	/* @todo add me when INTERESTCATEGORY_BUILDING will be available */
+	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(0.15f, INTERESTCATEGORY_BUILDING);
+#endif
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Recon mission is over and is a success: change interest values.
+ * @note Recon mission
+ */
+static void CP_ReconMissionIsFailure (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(0.2f, INTERESTCATEGORY_RECON);
+#if 0
+	/* @todo add me when INTERESTCATEGORY_BUILDING will be available */
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+#endif
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Recon mission ends: UFO leave earth.
+ * @note Recon mission -- Stage 2
+ */
+static void CP_ReconMissionLeave (mission_t *mission)
+{
+	CP_MissionDisableTimeLimit(mission);
+	assert(mission->ufo);
+	UFO_SetRandomDest(mission->ufo);
+	/* Remove any mission the UFO created on geoscape */
+	mission->onGeoscape = qfalse;
+	/* Display UFO on geoscape if it is visible */
+	mission->ufo->notOnGeoscape = qfalse;
+
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+}
+
+/**
+ * @brief Choose between aerial and ground mission.
+ * @note Recon mission -- Stage 1
+ * @return qtrue if recon mission is aerial, qfalse if this is a ground mission
+ * @sa CP_ReconMissionSelect
+ * @todo implement me
+ */
+static qboolean CP_ReconMissionChoose (mission_t *mission)
+{
+	return (frand() > 0.5f);
+}
+
+/**
+ * @brief Set aerial mission.
+ * @note Recon mission -- Stage 1
+ * @sa CP_ReconMissionSelect
+ */
+static void CP_ReconMissionAerial (mission_t *mission)
+{
+	const date_t reconDelay = {2, 0};		/* How long the UFO with fly on earth */
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(reconDelay));
+	mission->stage = STAGE_RECON_AIR;
+}
+
+/**
+ * @brief Choose if a new ground mission should be started.
+ * @note Recon mission -- Stage 1
+ * @note Already one ground mission has been made
+ * @todo implement me (for now, there's only one ground mission possible)
+ * @sa CP_ReconMissionSelect
+ * @todo implement me
+ */
+static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
+{
+	return qfalse;
+}
+
+/**
+ * @brief Set ground mission, and go to ground mission pos.
+ * @note Recon mission -- Stage 1
+ * @sa CP_ReconMissionSelect
+ */
+static void CP_ReconMissionGroundGo (mission_t *mission)
+{
+	const nation_t *nation;
+
+	assert(mission->ufo);
+
+	mission->onGeoscape = qfalse;
+
+	/* Create a new fixed map */
+	if (!CP_ChooseMap(mission)) {
+		/* Creation failed: Find random pos (not on water) */
+		CP_GetRandomPosOnGeoscape(mission->pos, NULL, NULL, NULL, NULL);
+		/* Create map assembly map */
+		CP_ChooseRandomMap(mission, mission->pos);
+	} else if (!CP_GetRandomPosOnGeoscape(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL)) {
+		Com_Printf("CP_ReconMissionGroundGo: Error, could not set position.\n");
+		CP_MissionRemove(mission);
+	}
+
+	mission->mapDef->timesAlreadyUsed++;
+
+	/* @todo: check that name is unique in ccs.missions */
+	Com_sprintf(mission->name, sizeof(mission->name), "recon%.0f:%.0f", mission->pos[0], mission->pos[1]);
+
+	nation = MAP_GetNation(mission->pos);
+	if (nation) {
+		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
+	} else {
+		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
+	}
+
+	UFO_SendToDestination(mission->ufo, mission->pos);
+
+	mission->stage = STAGE_RECON_GOTO_GROUND;
+}
+
+/**
+ * @brief Start ground mission.
+ * @note Recon mission -- Stage 1
+ */
+static void CP_ReconMissionGround (mission_t *mission)
+{
+	const date_t missionDelay = {3, 0};
+
+	assert(mission->ufo);
+
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	mission->ufo->notOnGeoscape = qtrue;
+	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
+
+	/* mission appear on geoscape, player can go there */
+	mission->onGeoscape = qtrue;
+
+	CL_GameTimeStop();
+
+	mission->stage = STAGE_RECON_GROUND;
+}
+
+/**
+ * @brief Set recon mission type (aerial or ground).
+ * @note Recon mission -- Stage 1
+ * @todo implement me
+ */
+static void CP_ReconMissionSelect (mission_t *mission)
+{
+	if (mission->stage == STAGE_COME_FROM_ORBIT) {
+		/* this is the begining of the mission: choose between aerial or ground mission */
+		if (CP_ReconMissionChoose(mission))
+			/* This is a aerial mission */
+			CP_ReconMissionAerial(mission);
+		else
+			/* This is a ground mission */
+			CP_ReconMissionGroundGo(mission);
+	} else if (mission->stage == STAGE_RECON_GROUND) {
+		/* Ground mission may occur several times */
+		if (CP_ReconMissionNewGroundMission(mission))
+			CP_ReconMissionGroundGo(mission);
+		else
+			CP_ReconMissionLeave(mission);
+	}
+}
+
+/**
+ * @brief Recon mission begins: UFO arrive on earth.
+ * @note Recon mission -- Stage 0
+ */
+static void CP_ReconMissionCreate (mission_t *mission)
+{
+	CP_MissionDisableTimeLimit(mission);
+	/* @todo: type of ufo may change */
+	mission->ufo = UFO_AddToGeoscape(UFO_SCOUT, NULL);
+	/* @todo: it may be a ground mission */
+	mission->stage = STAGE_COME_FROM_ORBIT;
+}
+
+/**
+ * @brief Determine what action should be performed when a Recon mission stage ends.
+ */
+static void CP_ReconMissionNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		/* Create Recon mission */
+		CP_ReconMissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+	case STAGE_RECON_GROUND:
+		/* Choose if a new ground mission should be started */
+		CP_ReconMissionSelect(mission);
+		break;
+	case STAGE_RECON_GOTO_GROUND:
+		/* just arrived on a new ground mission: start it */
+		CP_ReconMissionGround(mission);
+		break;
+	case STAGE_RECON_AIR:
+		/* Leave earth */
+		CP_ReconMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_ReconMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_ReconMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
+
+/*****	Recon Mission *****/
+
+/**
+ * @brief Base attack mission is over and is a success (from an alien point of view): change interest values.
+ * @note Base attack mission
+ * @todo implement me
+ */
+static void CP_BaseAttackMissionIsSuccess (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(-0.8f, INTERESTCATEGORY_BASE_ATTACK);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Base attack mission is over and is a success (from an alien point of view): change interest values.
+ * @note Base attack mission
+ * @todo implement me
+ */
+static void CP_BaseAttackMissionIsFailure (mission_t *mission)
+{
+	base_t *base;
+
+	base = (base_t *)mission->data;
+
+	if (base)
+		base->baseStatus = BASE_WORKING;
+	gd.mapAction = MA_NONE;
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Base attack mission ends: UFO leave earth.
+ * @note Base attack mission -- Stage 3
+ * @todo destroy base
+ */
+static void CP_BaseAttackMissionLeave (mission_t *mission)
+{
+	base_t *base;
+
+	base = (base_t *)mission->data;
+	assert(base);
+	/* Base attack is over, alien won */
+	CL_BaseRansacked(base);
+	base->baseStatus = BASE_WORKING;
+	gd.mapAction = MA_NONE;
+
+	CP_MissionDisableTimeLimit(mission);
+	UFO_SetRandomDest(mission->ufo);
+	/* Remove any mission the UFO created on geoscape */
+	mission->onGeoscape = qfalse;
+	/* Display UFO on geoscape if it is visible */
+	mission->ufo->notOnGeoscape = qfalse;
+
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+}
+
+/**
+ * @brief Start Base Attack.
+ * @note Base attack mission -- Stage 2
+ * @todo Base attack should start right away
+ * @todo Base attack can't be selected in map anymore: remove all base attack code from cl_map.c
+ */
+static void CP_BaseAttackStartMission (mission_t *mission)
+{
+	base_t *base;
+	base = (base_t *)mission->data;
+
+	assert(base);
+	assert(mission->ufo);
+
+	CP_MissionDisableTimeLimit(mission);
+
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	mission->ufo->notOnGeoscape = qtrue;
+
+	/* mission appear on geoscape, player can go there */
+	mission->onGeoscape = qtrue;
+
+	/* we always need at least one command centre in the base - because the
+	 * phalanx soldiers have their starting positions here
+	 * @note There should also always be an entrace - the aliens start there */
+	if (!B_GetNumberOfBuildingsInBaseByType(base->idx, B_COMMAND)) {
+		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are not Command Center in this base\n", base->name);
+		CP_BaseAttackMissionLeave(mission);
+		return;
+	}
+
+	base->baseStatus = BASE_UNDER_ATTACK;
+	campaignStats.basesAttacked++;
+
+#if 0
+	/* @todo: implement onattack: add it to basemanagement.ufo and implement functions */
+	if (b->onAttack)
+		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
+#endif
+
+	MAP_SelectMission(mission);
+	selectedMission->active = qtrue;
+	gd.mapAction = MA_BASEATTACK;
+	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selectedMission->name, selectedMission->pos[0], selectedMission->pos[1]);
+	cls.missionaircraft = &base->aircraft[0]; /* @todo FIXME */
+	assert(cls.missionaircraft);
+	assert(cls.missionaircraft->homebase == base);
+
+	mission->stage = STAGE_BASE_ATTACK;
+
+	MN_PushMenu("popup_base_attack");
+}
+
+/**
+ * @brief Choose Base that will be attacked, and add it to mission description.
+ * @note Base attack mission -- Stage 1
+ * @return Pointer to the base, NULL if no base set
+ * @todo implement me (use base->alienInterest)
+ */
+static base_t* CP_BaseAttackChooseBase (mission_t *mission)
+{
+	base_t *base;
+
+	assert(mission);
+	base = B_GetBase(0);
+	assert(base);
+
+	CL_GameTimeStop();
+
+	/* base is already under attack */
+	if (base->baseStatus == BASE_UNDER_ATTACK)
+		return NULL;
+
+	/* HACK FIXME */
+	if (!base->numAircraftInBase) {
+		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are not crafts in this base\n", base->name);
+		return NULL;
+	}
+
+	mission->data = (void *)base;
+	return mission->data;
+}
+
+/**
+ * @brief Set ground mission, and go to ground mission pos.
+ * @note Base attack mission -- Stage 1
+ */
+static void CP_BaseAttackGoToBase (mission_t *mission)
+{
+	base_t *base;
+
+	assert(mission->ufo);
+
+	base = CP_BaseAttackChooseBase(mission);
+	if (!base) {
+		/* no base found */
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->mapDef = Com_GetMapDefinitionByID("baseattack");
+	if (!mission->mapDef) {
+		CP_MissionRemove(mission);
+		Sys_Error("Could not find mapdef baseattack");
+		return;
+	}
+
+	Vector2Copy(base->pos, mission->pos);
+
+	/* @todo: check that name is unique in ccs.missions */
+	Com_sprintf(mission->name, sizeof(mission->name), base->name);
+	Com_sprintf(mission->location, sizeof(mission->location), base->name);
+
+	UFO_SendToDestination(mission->ufo, mission->pos);
+
+	mission->stage = STAGE_BASE_ATTACK_GOTO;
+}
+
+/**
+ * @brief Base attack mission begins: UFO arrive on earth.
+ * @note Base attack mission -- Stage 0
+ */
+static void CP_BaseAttackMissionCreate (mission_t *mission)
+{
+	CP_MissionDisableTimeLimit(mission);
+	/* @todo: type of ufo may change */
+	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL);
+	/* @todo: it may be a ground mission */
+	mission->stage = STAGE_COME_FROM_ORBIT;
+}
+
+/**
+ * @brief Determine what action should be performed when a Base Attack mission stage ends.
+ */
+static void CP_BaseAttackMissionNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		CL_GameTimeStop();
+		/* Create Recon mission */
+		CP_BaseAttackMissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		/* Choose a base to attack and go to this base */
+		CP_BaseAttackGoToBase(mission);
+		break;
+	case STAGE_BASE_ATTACK_GOTO:
+		/* just arrived on base location: attack it */
+		CP_BaseAttackStartMission(mission);
+		break;
+	case STAGE_BASE_ATTACK:
+		/* Leave earth */
+		CP_BaseAttackMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_BaseAttackMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_BaseAttackMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
+
+/*****	General Mission Code *****/
+
+/**
+ * @brief Determine what action should be performed when a mission stage ends.
+ */
+static void CP_MissionStageEnd (mission_t *mission)
+{
+	Com_DPrintf(DEBUG_CLIENT, "Ending mission category %i, stage %i (time: %i day, %i sec)\n",
+		mission->category, mission->stage, ccs.date.day, ccs.date.sec);
+	switch (mission->category) {
+	case INTERESTCATEGORY_RECON:
+		CP_ReconMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_BASE_ATTACK:
+		CP_BaseAttackMissionNextStage(mission);
+		break;
+	default:
+		Com_Printf("CP_MissionStageEnd: Unknown type of mission: %i\n", mission->category);
+	}
+}
+
+/**
+ * @brief Mission is finished because Phalanx team ended it.
+ */
+static void CP_MissionIsOver (mission_t *mission)
+{
+	switch (mission->category) {
+	case INTERESTCATEGORY_RECON:
+		CP_ReconMissionIsFailure(mission);
+		break;
+	case INTERESTCATEGORY_BASE_ATTACK:
+		if (mission->stage <= STAGE_BASE_ATTACK)
+			CP_BaseAttackMissionIsFailure(mission);
+		else
+			CP_BaseAttackMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_MissionIsOver: Unknown type of mission: %i\n", mission->category);
+	}
+}
+
+/**
+ * @brief Create a new mission of given category.
+ * @sa CP_SpawnNewMissions
+ * @sa CP_MissionStageEnd
+ * @todo Implement me
+ */
+static void CP_CreateNewMission (int category)
+{
+	mission_t mission;
+	const date_t nextSpawningDate = {3, 0};	/* Delay between 2 mission spawning */
+
+	/* Some event are non-occurrence */
+	if (category == INTERESTCATEGORY_NONE)
+		return;
+
+	memset(&mission, 0, sizeof(mission));
+
+	/* First fill common datas between all type of missions */
+	mission.category = category;
+	mission.initialOverallInterest = ccs.overallInterest;
+	mission.initialIndividualInterest = ccs.interest[category];
+	mission.stage = STAGE_NOT_ACTIVE;
+	mission.ufo = NULL;
+	mission.startDate = Date_Add(ccs.date, Date_Random(nextSpawningDate));
+	mission.finalDate = mission.startDate;
+
+	/* Add mission to global array */
+	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
+	/* @todo: remove me */
+	Com_Printf("Mission added from global array\n");
+}
+
+/**
+ * @brief Spawn new missions.
+ * @sa CL_CampaignRun
+ * @note daily called
+ */
+static void CP_SpawnNewMissions (void)
+{
+	const int delayBetweenIncrease = 3;		/* Number of days between events are spawned */
+	int i, newMissionNum, type;
+
+	ccs.lastMissionSpawnedDelay++;
+
+	if (ccs.lastMissionSpawnedDelay > delayBetweenIncrease) {
+		/* How many missions will be spawned until next cycle ? */
+		newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
+		for (i = 0; i < newMissionNum; i++) {
+			type = CP_SelectNewMissionType();
+			CP_CreateNewMission(type);
+		}
+
+		ccs.lastMissionSpawnedDelay -= delayBetweenIncrease;
+	}
+}
+
+/**
+ * @brief Check if a stage mission is over when UFO reached destination.
+ * @param[in] ufocraft Pointer to the ufo that reached destination
+ * @sa UFO_CampaignRunUFOs
+ */
+void CP_CheckNextStageDestination (aircraft_t *ufocraft)
+{
+	mission_t *mission;
+
+	mission = CP_GetMissionByUFO(ufocraft);
+
+	if (!mission)
+		return;
+
+	switch(mission->stage) {
+	case STAGE_COME_FROM_ORBIT:
+	case STAGE_RETURN_TO_ORBIT:
+	case STAGE_RECON_GOTO_GROUND:
+	case STAGE_BASE_ATTACK_GOTO:
+		Com_Printf("UFO arrived at destination: stage finished\n");
+		CL_GameTimeStop();
+		CP_MissionStageEnd(mission);
+		break;
+	default:
+		/* Do nothing */
+		break;
+	}
+}
+
+/**
+ * @brief Spawn a new crash site after a UFO has been destroyed.
+ */
+qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
+{
+	mission_t *mission;
+
+	/* @todo: remove me */
+	Com_Printf("CP_SpawnCrashSiteMission\n");
+
+	mission = CP_GetMissionByUFO(ufo);
+	assert(mission);
+
+	CP_ChooseRandomMap(mission, ufo->pos);
+	/* Set new pos of mission */
+	Vector2Copy(ufo->pos, mission->pos);
+
+	if (!mission->mapDef)
+		return qfalse;
+
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	ufo->notOnGeoscape = qtrue;
+	CP_MissionDisableTimeLimit(mission);
+
+	/* mission appear on geoscape, player can go there */
+	mission->onGeoscape = qtrue;
+
+	return qtrue;
 }
 
 
 /**
- * @sa CL_CampaignActivateStage
- * @sa CL_CampaignEndStage
- * @sa CL_CampaignActivateStageSets
+ * @brief Find mission corresponding to idx
  */
-static void CL_CampaignExecute (setState_t * set)
+mission_t* MAP_GetMissionByIdx (int id)
 {
-	/* handle stages, execute commands */
-	if (*set->def->nextstage)
-		CL_CampaignActivateStage(set->def->nextstage, qtrue);
+	int i;
+	const linkedList_t *list = ccs.missions;
 
-	if (*set->def->endstage)
-		CL_CampaignEndStage(set->def->endstage);
-
-	if (*set->def->cmds) {
-		if (set->def->cmds[strlen(set->def->cmds)-1] != '\n'
-		 && set->def->cmds[strlen(set->def->cmds)-1] != ';')
-			Com_Printf("CL_CampaignExecute: missing command seperator for commands: '%s'\n", set->def->cmds);
-		Cbuf_AddText(set->def->cmds);
+	for (i = 0; list; list = list->next, i++) {
+		mission_t *mission = (mission_t *)list->data;
+		if (i == id)
+			return mission;
 	}
 
-	/* activate new sets in old stage */
-	CL_CampaignActivateStageSets(set->stage);
+	Com_Printf("MAP_GetMissionByIdx: No mission of id %i\n", id);
+	return NULL;
+}
+
+/**
+ * @brief Find idx corresponding to mission
+ */
+int MAP_GetIdxByMission (const mission_t *mis)
+{
+	int i;
+	const linkedList_t *list = ccs.missions;
+
+	for (i = 0; list; list = list->next, i++) {
+		mission_t *mission = (mission_t *)list->data;
+		if (mission == mis)
+			return i;
+	}
+
+	Com_Printf("MAP_GetIdxByMission: Mission does not exist\n");
+	return 0;
+}
+
+/*****************************************************************************
+Set Battle
+*****************************************************************************/
+
+/**
+ * @brief Returns the alien race for a mission (depends on the interest values)
+ * @return Alien team id string (team_aliens.ufo)
+ */
+static const char* CP_GetAlienByInterest (const mission_t *mission)
+{
+	int i, max;
+	interestCategory_t maxInterest;
+
+	max = maxInterest = 0;
+
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
+		if (ccs.interest[i] > max) {
+			maxInterest = i;
+			max = ccs.interest[i];
+		}
+	}
+
+	/* FIXME: Set the correct alien teams here
+	 * take the values from the script files */
+	switch (maxInterest) {
+	case INTERESTCATEGORY_NONE:
+		return "ortnok";
+	case INTERESTCATEGORY_RECON:
+		return "ortnok";
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		return "ortnok";
+	case INTERESTCATEGORY_BASE_ATTACK:
+		return "ortnok";
+	case INTERESTCATEGORY_BUILDING:
+		return "ortnok";
+	case INTERESTCATEGORY_SUPPLY:
+		return "ortnok";
+	case INTERESTCATEGORY_XVI:
+		return "ortnok";
+	case INTERESTCATEGORY_MAX:
+		break;
+	}
+	assert(0);
+	return "";
+}
+
+/**
+ * @brief Create alien team.
+ * @param[in] mission Pointer to the mission that generates the battle
+ * @todo implement me
+ */
+static void CP_CreateAlienTeam (mission_t *mission)
+{
+	const char *alienType;
+
+	assert(mission->pos);
+
+	ccs.battleParameters.aliens = mission->mapDef->maxAliens;
+
+	alienType = CP_GetAlienByInterest(mission);
+
+	/* @todo alien team should vary depending on interest values */
+	ccs.battleParameters.numAlienTeams = 0;
+	ccs.battleParameters.alienTeams[0] = Com_GetTeamDefinitionByID(alienType);
+	if (ccs.battleParameters.alienTeams[0])
+		ccs.battleParameters.numAlienTeams++;
+	/* @todo alien equipment should vary depending on interest values */
+	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "stage%i_%s", 1, "soldiers");
+}
+
+/**
+ * @brief Create alien team.
+ * @param[in] mission Pointer to the mission that generates the battle
+ */
+static void CP_CreateCivilianTeam (mission_t *mission)
+{
+	nation_t *nation;
+
+	assert(mission->pos);
+
+	/* @todo I've no idea what civilian number should be, please set it to desired value -- Kracken */
+	ccs.battleParameters.civilians = (frand() * 10);
+	ccs.battleParameters.civilians %= 4;
+	ccs.battleParameters.civilians += 1;
+
+	nation = MAP_GetNation(mission->pos);
+	ccs.battleParameters.nation = nation;
+	if (nation) {
+		Q_strncpyz(ccs.battleParameters.civTeam, nation->id, sizeof(ccs.battleParameters.civTeam));
+	} else {
+		Q_strncpyz(ccs.battleParameters.civTeam, "europe", sizeof(ccs.battleParameters.civTeam));
+	}
+}
+
+/**
+ * @brief Check if UFO of selected mission is crashed.
+ * @param[in] mission Pointer to the mission that generates the battle
+ * @sa CP_CreateBattleParameters
+ * @return true if the UFO is crashed, false if it's intact
+ */
+static qboolean CP_UFOIsCrashed (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_RECON_GROUND:
+	case STAGE_BUILD_BASE:
+	case STAGE_BASE_ATTACK:
+	case STAGE_SUBVERT_GOV:
+	case STAGE_SUPPLY:
+	case STAGE_SPREAD_XVI:
+		return qfalse;
+	default:
+		return qtrue;
+	}
+}
+
+/**
+ * @brief Create parameters needed for battle.
+ * @param[in] mission Pointer to the mission that generates the battle
+ * @sa CP_CreateAlienTeam
+ * @sa CP_CreateCivilianTeam
+ */
+static void CP_CreateBattleParameters (mission_t *mission)
+{
+	const char *zoneType;
+	byte *color;
+
+	assert(mission->pos);
+
+	ccs.battleParameters.mission = mission;
+	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
+	zoneType = MAP_GetTerrainType(color);
+	ccs.battleParameters.zoneType = zoneType; /* store to terrain type for texture replacement */
+
+	/* Is there a UFO to recover ? */
+	if (selectedMission->ufo) {
+		if (CP_UFOIsCrashed(mission))
+			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_ufocrashed %i;", mission->ufo->ufotype);
+		else
+			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
+	}
 }
 
 /**
@@ -496,202 +1443,7 @@ technology_t *CP_IsXVIResearched (void)
 {
 	return RS_IsResearched_ptr(rs_alien_xvi) ? rs_alien_xvi : NULL;
 }
-
-/**
- * @sa CP_SpawnBaseAttackMission
- */
-qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
-{
-	mission_t* ms;
-	actMis_t* mis;
-	const char *zoneType;
-	char missionName[MAX_VAR];
-	const nation_t *nation;
-	byte *color;
-
-	assert(aircraft);
-
-	color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
-	zoneType = MAP_GetTerrainType(color);
-	/* spawn new mission */
-	/* some random data like alien race, alien count (also depends on ufo-size) */
-	/* @todo: We should have a ufo crash theme for random map assembly */
-	/* @todo: call the map assembly theme with the right parameter, e.g.: +ufocrash [climazone] */
-	Com_sprintf(missionName, sizeof(missionName), "ufocrash%.0f:%.0f", aircraft->pos[0], aircraft->pos[1]);
-	ms = CL_AddMission(missionName);
-	if (!ms) {
-		MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
-		return qfalse;
-	}
-	ms->mapDef = Com_GetMapDefinitionByID("ufocrash");
-	if (!ms->mapDef) {
-		CP_RemoveLastMission();
-		MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
-		return qfalse;
-	}
-
-	ms->missionType = MIS_CRASHSITE;
-	/* the size if somewhat random, because not all map tiles would have
-		* alien spawn points */
-	ms->aliens = aircraft->maxTeamSize;
-	/* 1-4 civilians */
-	ms->civilians = (frand() * 10);
-	ms->civilians %= 4;
-	ms->civilians += 1;
-	ms->zoneType = zoneType; /* store to terrain type for texture replacement */
-
-	/* realPos is set below */
-	Vector2Set(ms->pos, aircraft->pos[0], aircraft->pos[1]);
-
-	nation = MAP_GetNation(ms->pos);
-	Com_sprintf(ms->type, sizeof(ms->type), _("UFO crash site"));
-	if (nation) {
-		Com_sprintf(ms->location, sizeof(ms->location), _(nation->name));
-		Q_strncpyz(ms->civTeam, nation->id, sizeof(ms->civTeam));
-	} else {
-		Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
-		Q_strncpyz(ms->civTeam, "europe", sizeof(ms->civTeam));
-	}
-	/* this string is already in the po (OTHER_STRINGS) file
-	 * don't mark it with gettext markers */
-	ms->missionText = "Crashed Alien Ship. Secure the area.";
-
-	/* FIXME */
-	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
-	if (ms->alienTeams[0])
-		ms->numAlienTeams++;
-	/* FIXME */
-	Com_sprintf(ms->alienEquipment, sizeof(ms->alienEquipment), "stage%i_%s", 1, "soldiers");
-
-	/* use ufocrash.ump as random tile assembly */
-	ms->mapDef->param = Mem_PoolStrDup(UFO_TypeToShortName(aircraft->ufotype), cl_localPool, CL_TAG_NONE);
-	ms->mapDef->loadingscreen = Mem_PoolStrDup("crashsite", cl_localPool, CL_TAG_NONE);
-	Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i;", aircraft->ufotype);
-	mis = CL_CampaignAddGroundMission(ms);
-	if (mis) {
-		Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
-		MN_AddNewMessage(_("Interception"), _("UFO interception successful -- New mission available."), qfalse, MSG_CRASHSITE, NULL);
-	} else {
-		/* no active stage - to decrement the mission counter */
-		CP_RemoveLastMission();
-		MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
-		return qfalse;
-	}
-	return qtrue;
-}
-
-/**
- * @sa B_BaseAttack
- * @sa CP_Load
- * @sa CP_SpawnCrashSiteMission
- */
-qboolean CP_SpawnBaseAttackMission (base_t* base, mission_t* ms, setState_t *cause)
-{
-	actMis_t *mis;
-
-	assert(ms);
-	assert(base);
-
-	/* realPos must still be set */
-	Vector2Set(ms->pos, base->pos[0], base->pos[1]);
-
-	/* set the mission type to base attack and store the base in data pointer */
-	/* this is useful if the mission expires and we want to know which base it was */
-	ms->missionType = MIS_BASEATTACK;
-	ms->data = (void*)base;
-
-	Com_sprintf(ms->location, sizeof(ms->location), base->name);
-	Q_strncpyz(ms->civTeam, "human_scientist", sizeof(ms->civTeam));
-	Q_strncpyz(ms->type, _("Base attack"), sizeof(ms->type));
-	/* this string is already in the po (OTHER_STRINGS) file
-	 * don't mark it with gettext markers */
-	ms->missionText = "Base is under attack.";
-	/* FIXME */
-	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
-	if (ms->alienTeams[0])
-		ms->numAlienTeams++;
-	/* FIXME */
-	Com_sprintf(ms->alienEquipment, sizeof(ms->alienEquipment), "stage%i_%s", 1, "soldiers");
-	ms->aliens = 8;
-	ms->civilians = 8;
-
-	ms->zoneType = base->mapZone;
-
-	ms->mapDef = Com_GetMapDefinitionByID("baseattack");
-	if (!ms->mapDef) {
-		CP_RemoveLastMission();
-		Sys_Error("Could not find mapdef baseattack");
-		return qfalse;
-	}
-
-	if (cause)
-		return qtrue;
-
-	mis = CL_CampaignAddGroundMission(ms);
-	if (mis) {
-		Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
-	} else {
-		/* no active stage - to decrement the mission counter */
-		CP_RemoveLastMission();
-		baseCurrent->baseStatus = BASE_WORKING;
-		Com_DPrintf(DEBUG_CLIENT, "CP_SpawnBaseAttackMission: Could not set base %s under attack - remove the mission data again\n", base->name);
-		return qfalse;
-	}
-
-	return qtrue;
-}
-
-/**
- * @brief Add a new ground mission to the ccs.mission array
- * @param[in] mis The mission to add to geoscape
- * @note This mission must already be defined completely
- * @note If the mapdef is missing, this function will return NULL, too
- * @sa CL_AddMission
- * @sa CL_CampaignAddMission
- * @return NULL if failed - actMis_t pointer (to ccs.mission array) if successful
- */
-actMis_t* CL_CampaignAddGroundMission (mission_t* mission)
-{
-	stageState_t *stage = NULL;
-	setState_t *set = NULL;
-	actMis_t *mis = NULL;
-	int i, j, activeCnt = 0;
-
-	/* add mission */
-	if (ccs.numMissions >= MAX_ACTMISSIONS) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddGroundMission: Too many active missions!\n");
-		return NULL;
-	}
-
-	if (!mission->mapDef) {
-		Com_Printf("CL_CampaignAddGroundMission: No mapdef pointer for mission: '%s'\n", mission->name);
-		return NULL;
-	}
-
-	mis = &ccs.mission[ccs.numMissions++];
-	memset(mis, 0, sizeof(actMis_t));
-
-	/* set relevant info */
-	mis->def = mission;
-
-	/* check campaign events */
-	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
-		if (stage->active) {
-			for (j = 0, set = &ccs.set[stage->def->first]; j < stage->def->num; j++, set++)
-				/* don't increase numMissions here - missions that are added
-				 * with this function don't belong to the campaign definition
-				 * but are dynamic missions - so chosing them as a random popup
-				 * geoscape mission wouldn't be good */
-				if (set->active && set->def->numMissions) {
-					mis->cause = set;
-					return mis;
-				}
-			activeCnt++;
-		}
-	Com_Printf("Could not add ground mission '%s' (active stages: %i)\n", mission->name, activeCnt);
-	ccs.numMissions--;
-	return NULL;
-}
+#if 0
 
 #define DIST_MIN_BASE_MISSION 4
 /**
@@ -711,7 +1463,7 @@ static void CL_CampaignAddMission (setState_t * set)
 	float f;
 
 	/* add mission */
-	if (ccs.numMissions >= MAX_ACTMISSIONS) {
+	if (ccs.numMissionsOld >= MAX_ACTMISSIONS) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddMission: Too many active missions!\n");
 		return;
 	}
@@ -735,7 +1487,7 @@ static void CL_CampaignAddMission (setState_t * set)
 	} else {
 		misTemp->onGeoscape = qtrue;
 	}
-	mis = &ccs.mission[ccs.numMissions++];
+	mis = &ccs.missionOld[ccs.numMissionsOld++];
 	memset(mis, 0, sizeof(actMis_t));
 
 	/* set relevant info */
@@ -802,8 +1554,8 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 	int i, num;
 	base_t *base;
 
-	num = mis - ccs.mission;
-	if (num >= ccs.numMissions) {
+	num = mis - ccs.missionOld;
+	if (num >= ccs.numMissionsOld) {
 		Com_Printf("CL_CampaignRemoveMission: Can't remove mission.\n");
 		return;
 	}
@@ -819,37 +1571,12 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 	AIR_AircraftsNotifyMissionRemoved(mis);
 	CL_PopupNotifyMissionRemoved(mis);
 
-	ccs.numMissions--;
-	Com_DPrintf(DEBUG_CLIENT, "%i missions left\n", ccs.numMissions);
-	for (i = num; i < ccs.numMissions; i++)
-		ccs.mission[i] = ccs.mission[i + 1];
+	ccs.numMissionsOld--;
+	Com_DPrintf(DEBUG_CLIENT, "%i missions left\n", ccs.numMissionsOld);
+	for (i = num; i < ccs.numMissionsOld; i++)
+		ccs.missionOld[i] = ccs.missionOld[i + 1];
 }
-
-/**
- * @brief Builds the aircraft list for textfield with id
- */
-static void CL_AircraftList_f (void)
-{
-	char *s;
-	int i, j;
-	aircraft_t *aircraft;
-	static char aircraftListText[1024];
-
-	memset(aircraftListText, 0, sizeof(aircraftListText));
-	for (j = 0; j < gd.numBases; j++) {
-		if (!gd.bases[j].founded)
-			continue;
-
-		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
-			aircraft = &gd.bases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", _(aircraft->name), aircraft->teamSize,
-				aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), gd.bases[j].name);
-			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
-		}
-	}
-
-	mn.menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
-}
+#endif
 
 /**
  * @brief Backs up each nation's relationship values.
@@ -995,7 +1722,7 @@ nation_t *CL_GetNationByID (const char *nationID)
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
  */
-static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
+static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis)
 {
 	int i, is_on_Earth = 0;
 	int civilianSum = civiliansKilled + civiliansSurvived;
@@ -1019,7 +1746,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		xvi_infection_factor = 1.0f;
 
 		if (lost) {
-			if (!Q_strcmp(nation->id, mis->def->nation)) {
+			if (nation == ccs.battleParameters.nation) {
 				/* Strong negative reaction (happiness_factor must be < 1) */
 				delta_happiness = - (1.0f - performance) * nation->stats[0].alienFriendly * nation->stats[0].happiness;
 				is_on_Earth++;
@@ -1038,7 +1765,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				xvi_infection_factor = 1.10f;
 			}
 		} else {
-			if (!Q_strcmp(nation->id, mis->def->nation)) {
+			if (nation == ccs.battleParameters.nation) {
 				/* Strong positive reaction (happiness_factor must be > 1) */
 				delta_happiness = performance * alienHostile * (1.0f - nation->stats[0].happiness);
 				is_on_Earth++;
@@ -1077,9 +1804,9 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		}
 	}
 	if (!is_on_Earth)
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->def->name, mis->def->nation);
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->name, ccs.battleParameters.nation->id);
 	else if (is_on_Earth > 1)
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->def->name, mis->def->nation);
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->name, ccs.battleParameters.nation->id);
 }
 
 /**
@@ -1116,97 +1843,36 @@ void CL_BaseRansacked (base_t *base)
 	CL_GameTimeStop();
 }
 
-
 /**
- * @sa CL_CampaignAddMission
- * @sa CL_CampaignExecute
- * @sa UFO_CampaignCheckEvents
- * @sa CL_CampaignRemoveMission
- * @sa CL_HandleNationData
+ * @brief Check for mission start, of change of status of mission
  */
 static void CP_CheckEvents (void)
 {
-	stageState_t *stage = NULL;
-	setState_t *set = NULL;
-	actMis_t *mis = NULL;
-	base_t *base = NULL;
+	const linkedList_t *list = ccs.missions;
 
-	int i, j;
-
-	/* check campaign events */
-	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
-		if (stage->active)
-			for (j = 0, set = &ccs.set[stage->def->first]; j < stage->def->num; j++, set++)
-				if (set->active) {
-					if (set->event.day && Date_LaterThan(ccs.date, set->event)) {
-						if (set->def->numMissions) {
-							CL_CampaignAddMission(set);
-							if (gd.mapAction == MA_NONE) {
-								gd.mapAction = MA_INTERCEPT;
-								CL_AircraftList_f();
-							}
-						} else
-							CL_CampaignExecute(set);
-					}
-				}
+	for  (; list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(ccs.date, mission->finalDate)) {
+			CP_MissionStageEnd(mission);
+		}
+	}
 
 	/* Check UFOs events. */
 	UFO_CampaignCheckEvents();
 
-	/* Let missions expire. */
-	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++)
-		if (!mis->def->noExpire && mis->expire.day && Date_LaterThan(ccs.date, mis->expire)) {
-			/* Mission is expired. Calculating penalties for the various mission types. */
-			switch (mis->def->missionType) {
-			case MIS_BASEATTACK:
-				/* Base attack mission never attended to, so
-				 * invaders had plenty of time to ransack it */
-				base = (base_t*)mis->def->data;
-				CL_HandleNationData(qtrue, 0, mis->def->civilians, mis->def->aliens, 0, mis);
-				CL_BaseRansacked(base);
-				break;
-			case MIS_TERRORATTACK:
-				/* Normal ground mission. */
-				CL_HandleNationData(qtrue, 0, mis->def->civilians, mis->def->aliens, 0, mis);
-				if (!mis->def->storyRelated || mis->def->played) {
-					Q_strncpyz(mn.messageBuffer, va(ngettext("The mission %s expired and %i civilian died.", "The mission %s expired and %i civilians died.", mis->def->civilians), mis->def->name, mis->def->civilians), sizeof(mn.messageBuffer));
-					MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-				}
-				break;
-			default:
-				Sys_Error("Unknown missionType for '%s'\n", mis->def->name);
-				break;
-			}
+	/* XVI spreading has started */
+	if (ccs.overallInterest > 500) {
+		ccs.XVISpreadActivated = qtrue;
+		/* Mark prequesite of "rs_alien_xvi" as met. */
+		RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
+	}
 
-			CP_CheckLostCondition(qtrue, mis->def, mis->def->civilians);
-
-			/* don't remove missions that were not played but were spawned
-			 * (e.g. they expired) and have the storyRelated flag set */
-			if (mis->def->storyRelated && !mis->def->played) {
-				date_t date = {7, 0};
-				Q_strncpyz(mn.messageBuffer, va(ngettext("The aliens had enough time to kill %i civilian at %s.", "The aliens had enough time to kill %i civilians at %s.", mis->def->civilians), mis->def->civilians, mis->def->location), sizeof(mn.messageBuffer));
-				MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-
-				/* nation's happiness decreases */
-				for (j = 0; j < gd.numNations; j++) {
-					nation_t *nation = &gd.nations[j];
-					if (!Q_strcmp(nation->id, mis->def->nation)) {
-						nation->stats[0].happiness *= .85f;
-						break;
-					}
-				}
-
-				/* FIXME use set->def->expire */
-				mis->expire = Date_Add(ccs.date, Date_Random_Middle(date));
-				CL_GameTimeStop();
-				continue;
-			}
-
-			/* Remove mission from the map. */
-			if (mis->cause->def->number && mis->cause->num >= mis->cause->def->number)
-				CL_CampaignExecute(mis->cause);
-			CL_CampaignRemoveMission(mis);
-		}
+	/* humans start to attacking player */
+	if (ccs.overallInterest > 700) {
+		ccs.humansAttackActivated = qtrue;
+		/* Mark prequesite of "rs_enemy_on_earth" as met. */
+		RS_ResearchFinish(RS_GetTechByID("rs_enemy_on_earth_event"));
+	}
 }
 
 static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -1591,6 +2257,7 @@ void CL_CampaignRun (void)
 			UFO_Recovery();
 			AII_UpdateInstallationDelay();
 			TR_TransferCheck();
+			CP_IncreaseAlienInterest();
 		}
 
 		/* daily events */
@@ -1601,6 +2268,7 @@ void CL_CampaignRun (void)
 			B_UpdateBaseData();
 			HOS_HospitalRun();
 			BDEF_ReloadBattery();
+			CP_SpawnNewMissions();
 		}
 
 		/* check for campaign events */
@@ -2111,6 +2779,8 @@ static void CL_NationSelect_f (void)
  */
 qboolean CP_Load (sizebuf_t *sb, void *data)
 {
+#if 0
+FIXME
 	actMis_t *mis;
 	stageState_t *state;
 	setState_t *set;
@@ -2220,11 +2890,12 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	/* store active missions */
 	num = MSG_ReadByte(sb);
-	ccs.numMissions = num;
+	ccs.numMissionsOld = num;
 	for (i = 0; i < num; i++) {
 		/* needed because we might add new missions inside
 		 * this loop (base attack and crashsites) */
-		mis = &ccs.mission[i + ccs.numMissions - num];
+
+		mis = &ccs.missionOld[i + ccs.numMissionsOld - num];
 		mis->def = NULL;
 		mis->cause = NULL;
 
@@ -2311,7 +2982,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 						Com_sprintf(mis->def->location, sizeof(mis->def->location), _("No nation"));
 						Q_strncpyz(mis->def->civTeam, "europe", sizeof(mis->def->civTeam));
 					}
-					mis->def->missionText = "Crashed Alien Ship. Secure the area.";
+					mis->def->mapDef->description = "Crashed Alien Ship. Secure the area.";
 				}
 				break;
 			case MIS_TERRORATTACK:
@@ -2356,10 +3027,10 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	selectedMissionStr = MSG_ReadString(sb);
 	selectedMission = NULL;
 	if (*selectedMissionStr) {
-		for (i = 0; i < ccs.numMissions; i++) {
-			if (!Q_strcmp(ccs.mission[i].def->name, selectedMissionStr)) {
-				selectedMission = &ccs.mission[i];
-				if (!selectedMission->def) {
+		for (i = 0; i < ccs.numMissionsOld; i++) {
+			if (!Q_strcmp(ccs.missionOld[i].def->name, selectedMissionStr)) {
+				selectedMission = &ccs.missionOld[i];
+				if (!selectedMission) {
 					Com_Printf("......warning: incomplete mission data (%s)\n", name);
 					return qfalse;
 				}
@@ -2375,15 +3046,15 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			if (base->aircraft[j].status == AIR_MISSION) {
 				assert(base->aircraft[j].missionID);
-				for (num = 0; num < ccs.numMissions; num++) {
-					if (!Q_strcmp(ccs.mission[num].def->name, base->aircraft[j].missionID)) {
-						base->aircraft[j].mission = &ccs.mission[num];
+				for (num = 0; num < ccs.numMissionsOld; num++) {
+					if (!Q_strcmp(ccs.missionOld[num].def->name, base->aircraft[j].missionID)) {
+						base->aircraft[j].mission = &ccs.missionOld[num];
 						Mem_Free(base->aircraft[j].missionID);
 						break;
 					}
 				}
 				/* not found */
-				if (num == ccs.numMissions) {
+				if (num == ccs.numMissionsOld) {
 					Com_Printf("Could not link mission '%s' in aircraft\n", base->aircraft[j].missionID);
 					Mem_Free(base->aircraft[j].missionID);
 					return qfalse;
@@ -2391,7 +3062,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			}
 		}
 	}
-
+#endif
 	return qtrue;
 }
 
@@ -2402,6 +3073,8 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
  */
 qboolean CP_Save (sizebuf_t *sb, void *data)
 {
+#if 0
+FIXME
 	stageState_t *state;
 	actMis_t *mis;
 	int i, j;
@@ -2462,8 +3135,9 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteByte(sb, 0);
 
 	/* store active missions */
-	MSG_WriteByte(sb, ccs.numMissions);
-	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
+	MSG_WriteByte(sb, ccs.numMissionsOld);
+
+	for (i = 0, mis = ccs.missionOld; i < ccs.numMissionsOld; i++, mis++) {
 		MSG_WriteString(sb, mis->cause->def->name);
 
 		MSG_WriteString(sb, mis->def->name);
@@ -2507,7 +3181,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteString(sb, selectedMission->def->name);
 	else
 		MSG_WriteString(sb, "");
-
+#endif
 	return qtrue;
 }
 
@@ -2588,23 +3262,24 @@ qboolean NA_Load (sizebuf_t* sb, void* data)
 /**
  * @brief Set some needed cvars from mission definition
  * @param[in] mission mission definition pointer with the needed data to set the cvars to
- * @sa CL_StartMission_f
  * @sa CL_GameGo
  */
-static void CP_SetMissionVars (mission_t* mission)
+static void CP_SetMissionVars (void)
 {
 	int i;
+	const mission_t *mission;
 
-	assert(mission);
+	assert(ccs.battleParameters.mission);
+	mission = ccs.battleParameters.mission;
 	assert(mission->mapDef);
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_SetMissionVars:\n");
 
 	/* start the map */
-	Cvar_SetValue("ai_numaliens", (float) mission->aliens);
-	Cvar_SetValue("ai_numcivilians", (float) mission->civilians);
-	Cvar_Set("ai_civilian", mission->civTeam);
-	Cvar_Set("ai_equipment", mission->alienEquipment);
+	Cvar_SetValue("ai_numaliens", (float) ccs.battleParameters.aliens);
+	Cvar_SetValue("ai_numcivilians", (float) ccs.battleParameters.civilians);
+	Cvar_Set("ai_civilian", ccs.battleParameters.civTeam);
+	Cvar_Set("ai_equipment", ccs.battleParameters.alienEquipment);
 	if (mission->mapDef->music) {
 		Cvar_Set("snd_music", mission->mapDef->music);
 	} else {
@@ -2615,25 +3290,22 @@ static void CP_SetMissionVars (mission_t* mission)
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
 	for (i = 0; i < MAX_TEAMS_PER_MISSION; i++)
-		csi.alienTeams[i] = mission->alienTeams[i];
-	csi.numAlienTeams = mission->numAlienTeams;
+		csi.alienTeams[i] = ccs.battleParameters.alienTeams[i];
+	csi.numAlienTeams = ccs.battleParameters.numAlienTeams;
 
 	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..alienTeams: '%i'\n..civTeam: '%s'\n..alienEquip: '%s'\n..music: '%s'\n",
-		mission->aliens,
-		mission->civilians,
-		mission->numAlienTeams,
-		mission->civTeam,
-		mission->alienEquipment,
+		ccs.battleParameters.aliens,
+		ccs.battleParameters.civilians,
+		ccs.battleParameters.numAlienTeams,
+		ccs.battleParameters.civTeam,
+		ccs.battleParameters.alienEquipment,
 		mission->mapDef->music);
-
-	mission->played = qtrue;
 }
 
 /**
  * @brief Select the mission type and start the map from mission definition
  * @param[in] mission Mission definition to start the map from
  * @sa CL_GameGo
- * @sa CL_StartMission_f
  */
 static void CP_StartMissionMap (mission_t* mission)
 {
@@ -2657,7 +3329,7 @@ static void CP_StartMissionMap (mission_t* mission)
 	 * with the suitable terrain texture - just use tex_terrain/dummy for the
 	 * brushes you want the terrain textures on
 	 * @sa Mod_LoadTexinfo */
-	refdef.mapZone = mission->zoneType;
+	refdef.mapZone = ccs.battleParameters.zoneType;
 
 	switch (mission->mapDef->map[0]) {
 	case '+':
@@ -2701,7 +3373,6 @@ static void CP_StartMissionMap (mission_t* mission)
  *
  * @note Checks whether a dropship is near the landing zone and whether it has a team on board
  * @sa CP_SetMissionVars
- * @sa CL_StartMission_f
  */
 static void CL_GameGo (void)
 {
@@ -2725,7 +3396,7 @@ static void CL_GameGo (void)
 		return;
 	}
 
-	mis = selectedMission->def;
+	mis = selectedMission;
 	map_maxlevel_base = 0;
 	assert(mis && aircraft);
 
@@ -2751,7 +3422,10 @@ static void CL_GameGo (void)
 		}
 	}
 
-	CP_SetMissionVars(mis);
+	CP_CreateAlienTeam(mis);
+	CP_CreateCivilianTeam(mis);
+	CP_CreateBattleParameters(mis);
+	CP_SetMissionVars();
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_homebase", base->idx);
 	Cvar_SetValue("mission_uforecovered", 0);
@@ -2818,7 +3492,7 @@ static void CP_ChangeNationHappiness_f (void)
 	/* we can use an assert here - because this script function will only
 	 * be available as trigger command - selectedMission must be set at that stage */
 	assert(selectedMission);
-	nation = MAP_GetNation(selectedMission->def->pos);
+	nation = MAP_GetNation(selectedMission->pos);
 	assert(nation);
 
 	nation->stats[0].happiness = nation->stats[0].happiness * multiplier;
@@ -2828,25 +3502,9 @@ static void CP_ChangeNationHappiness_f (void)
 		nation->stats[0].happiness = 1.0f;
 }
 
-/**
- * @brief Adds new message generated from mission triggerText variable.
- */
-static void CP_AddTriggerMessage_f (void)
-{
-	/* we can use an assert here - because this script function will only
-	 * be available as trigger command - selectedMission must be set at that stage */
-	assert(selectedMission);
-
-	if (selectedMission->def->triggerText)
-		MN_AddNewMessage(_("Notice"), selectedMission->def->triggerText, qfalse, MSG_STANDARD, NULL);
-	else
-		Com_Printf("CP_AddTriggerMessage_f()... function call without mission triggerText (%s)\n", selectedMission->def->name);
-}
-
 /** @brief mission trigger functions */
 static const cmdList_t cp_commands[] = {
 	{"cp_add_item", CP_AddItemAsCollected, "Add an item as collected"},
-	{"cp_triggermessage", CP_AddTriggerMessage_f, "Function to add new message with mission triggerText."},
 	{"cp_changehappiness", CP_ChangeNationHappiness_f, "Function to raise or lower nation hapiness."},
 
 	{NULL, NULL, NULL}
@@ -2907,7 +3565,7 @@ static void CL_GameAutoCheck_f (void)
 		return;
 	}
 
-	switch (selectedMission->def->storyRelated) {
+	switch (selectedMission->mapDef->storyRelated) {
 	case qtrue:
 		Com_DPrintf(DEBUG_CLIENT, "story related - auto mission is disabled\n");
 		Cvar_Set("game_autogo", "0");
@@ -2926,20 +3584,21 @@ static void CL_GameAutoCheck_f (void)
  * @sa CL_Drop
  * @sa AL_CollectingAliens
  */
-void CL_GameAutoGo (actMis_t *mission)
+void CL_GameAutoGo (mission_t *mis)
 {
 	qboolean won;
 	aircraft_t *aircraft = NULL;
-	mission_t *mis;
 	int i, amount = 0;
 	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
 	aliensTmp_t *cargo = NULL;
 
-	assert(mission);
-	mis = mission->def;
 	assert(mis);
 
-	if (mis->missionType != MIS_BASEATTACK) {
+	CP_CreateAlienTeam(mis);
+	CP_CreateCivilianTeam(mis);
+	CP_CreateBattleParameters(mis);
+
+	if (mis->stage != STAGE_BASE_ATTACK) {
 		if (gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 			return;
@@ -2954,15 +3613,15 @@ void CL_GameAutoGo (actMis_t *mission)
 		if (!mis->active) {
 			MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 			return;
-		} else if (mis->storyRelated) {
+		} else if (mis->mapDef->storyRelated) {
 			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
 			/* ensure, that the automatic button is no longer visible */
 			Cvar_Set("game_autogo", "0");
 			return;
 		}
 		/* FIXME: This needs work */
-		won = mis->aliens * difficulty->integer > aircraft->teamSize ? qfalse : qtrue;
-		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, aircraft->teamSize);
+		won = ccs.battleParameters.aliens * difficulty->integer > aircraft->teamSize ? qfalse : qtrue;
+		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i (count as %i) - Soldiers: %i\n", ccs.battleParameters.aliens, ccs.battleParameters.aliens * difficulty->integer, aircraft->teamSize);
 	} else {
 		baseCurrent = (base_t*)mis->data;
 		assert(baseCurrent);
@@ -2974,23 +3633,15 @@ void CL_GameAutoGo (actMis_t *mission)
 
 	/* update nation opinions */
 	if (won) {
-		CL_HandleNationData(!won, mis->civilians, 0, 0, mis->aliens, selectedMission);
+		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, selectedMission);
 		CP_CheckLostCondition(!won, mis, civiliansKilled);
 	} else {
-		CL_HandleNationData(!won, 0, mis->civilians, mis->aliens, 0, selectedMission);
-		CP_CheckLostCondition(!won, mis, mis->civilians);
+		CL_HandleNationData(!won, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, selectedMission);
+		CP_CheckLostCondition(!won, mis, ccs.battleParameters.civilians);
 	}
 
-	if (mis->missionType != MIS_BASEATTACK) {
+	if (mis->stage != STAGE_BASE_ATTACK) {
 		assert(aircraft);
-		/* campaign effects */
-		selectedMission->cause->done++;
-		if ((selectedMission->cause->def->quota && selectedMission->cause->done >= selectedMission->cause->def->quota)
-			|| (selectedMission->cause->def->number
-				&& selectedMission->cause->num >= selectedMission->cause->def->number)) {
-			selectedMission->cause->active = qfalse;
-			CL_CampaignExecute(selectedMission->cause);
-		}
 
 		/* collect all aliens as dead ones */
 		cargo = aircraft->aliencargo;
@@ -3003,11 +3654,11 @@ void CL_GameAutoGo (actMis_t *mission)
 		/*if (aircraft->alientypes) {
 		}*/
 
-		aircraft->alientypes = mis->numAlienTeams;
+		aircraft->alientypes = ccs.battleParameters.numAlienTeams;
 		for (i = 0; i < aircraft->alientypes; i++) {
-			Q_strncpyz(cargo[i].alientype, mis->alienTeams[i]->name, sizeof(cargo[i].alientype));
+			Q_strncpyz(cargo[i].alientype, ccs.battleParameters.alienTeams[i]->name, sizeof(cargo[i].alientype));
 			/* FIXME: This could lead to more aliens in their sum */
-			cargo[i].amount_dead = rand() % mis->aliens;
+			cargo[i].amount_dead = rand() % ccs.battleParameters.aliens;
 			amount += cargo[i].amount_dead;
 		}
 		if (amount)
@@ -3022,14 +3673,14 @@ void CL_GameAutoGo (actMis_t *mission)
 	}
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(selectedMission->def, won);
+	CP_ExecuteMissionTrigger(selectedMission, won);
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && missionresults.recovery)
 		Cmd_ExecuteString("cp_uforecoverystore");
 
-	if (won || !selectedMission->def->keepAfterFail)
-		CL_CampaignRemoveMission(selectedMission);
+	if (won)
+		CP_MissionIsOver(mis);
 
 	if (won)
 		MN_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
@@ -3295,8 +3946,8 @@ static void CL_GameResults_f (void)
 	}
 	won = atoi(Cmd_Argv(1));
 
-	if (selectedMission->def->missionType == MIS_BASEATTACK) {
-		baseCurrent = (base_t*)selectedMission->def->data;
+	if (selectedMission->stage == STAGE_BASE_ATTACK) {
+		baseCurrent = (base_t*)selectedMission->data;
 	} else {
 		assert(gd.interceptAircraft != AIRCRAFT_INVALID);
 		baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
@@ -3309,10 +3960,10 @@ static void CL_GameResults_f (void)
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
 	Com_DPrintf(DEBUG_CLIENT, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n",
-		won, selectedMission->def->civilians - civilians_killed, civilians_killed,
-		selectedMission->def->aliens - aliens_killed, aliens_killed);
-	CL_HandleNationData(!won, selectedMission->def->civilians - civilians_killed, civilians_killed, selectedMission->def->aliens - aliens_killed, aliens_killed, selectedMission);
-	CP_CheckLostCondition(!won, selectedMission->def, civilians_killed);
+		won, ccs.battleParameters.civilians - civilians_killed, civilians_killed,
+		ccs.battleParameters.aliens - aliens_killed, aliens_killed);
+	CL_HandleNationData(!won, ccs.battleParameters.civilians - civilians_killed, civilians_killed, ccs.battleParameters.aliens - aliens_killed, aliens_killed, selectedMission);
+	CP_CheckLostCondition(!won, selectedMission, civilians_killed);
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
@@ -3346,7 +3997,7 @@ static void CL_GameResults_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
 
 	/* no transfer or campaign effects for base attack missions */
-	if (selectedMission->def->missionType != MIS_BASEATTACK) {
+	if (selectedMission->stage != STAGE_BASE_ATTACK) {
 		/* Check for alien containment in aircraft homebase. */
 		if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
@@ -3358,112 +4009,26 @@ static void CL_GameResults_f (void)
 			baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
 		}
 		AIR_AircraftReturnToBase_f();
-
-		/* campaign effects */
-		selectedMission->cause->done++;
-		if ((selectedMission->cause->def->quota
-			&& selectedMission->cause->done >= selectedMission->cause->def->quota)
-			|| (selectedMission->cause->def->number
-				&& selectedMission->cause->num >= selectedMission->cause->def->number)) {
-			selectedMission->cause->active = qfalse;
-			CL_CampaignExecute(selectedMission->cause);
-		}
 	}
 
 	/* handle base attack mission */
-	if (selectedMission->def->missionType == MIS_BASEATTACK) {
-		base = (base_t*)selectedMission->def->data;
+	if (selectedMission->stage == STAGE_BASE_ATTACK) {
+		base = (base_t*)selectedMission->data;
 		assert(base);
 		if (won) {
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defense of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-			base->baseStatus = BASE_WORKING;
+			CP_BaseAttackMissionIsFailure(selectedMission);
 			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
-			CL_BaseRansacked(base);
+			CP_BaseAttackMissionLeave(selectedMission);
 	}
 
-	/* remove mission from list */
-	if (won || !selectedMission->def->keepAfterFail)
-		CL_CampaignRemoveMission(selectedMission);
+	if (won)
+		CP_MissionIsOver(selectedMission);
 }
 
 /* =========================================================== */
-
-/** @brief valid mission descriptors */
-static const value_t mission_vals[] = {
-	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location), 0},
-	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type), 0},
-	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, missionText), 0},
-	{"triggertext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, triggerText), 0},
-	{"alttext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, missionTextAlternate), 0},
-	{"nation", V_STRING, offsetof(mission_t, nation), 0},
-	{"pos", V_POS, offsetof(mission_t, pos), MEMBER_SIZEOF(mission_t, pos)},
-	{"mask", V_RGBA, offsetof(mission_t, mask), MEMBER_SIZEOF(mission_t, mask)}, /* color values from map mask this mission needs */
-	{"aliens", V_INT, offsetof(mission_t, aliens), MEMBER_SIZEOF(mission_t, aliens)},
-	{"maxugv", V_INT, offsetof(mission_t, ugv), MEMBER_SIZEOF(mission_t, ugv)},
-	{"commands", V_STRING, offsetof(mission_t, cmds), 0},	/* commands that are excuted when this mission gets active */
-	{"onwin", V_STRING, offsetof(mission_t, onwin), 0},
-	{"onlose", V_STRING, offsetof(mission_t, onlose), 0},
-	{"alienequip", V_STRING, offsetof(mission_t, alienEquipment), 0},
-	{"civilians", V_INT, offsetof(mission_t, civilians), MEMBER_SIZEOF(mission_t, civilians)},
-	{"civteam", V_STRING, offsetof(mission_t, civTeam), 0},
-	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated), MEMBER_SIZEOF(mission_t, storyRelated)},
-	{"keepafterfail", V_BOOL, offsetof(mission_t, keepAfterFail), MEMBER_SIZEOF(mission_t, keepAfterFail)},
-	{"noexpire", V_BOOL, offsetof(mission_t, noExpire), MEMBER_SIZEOF(mission_t, noExpire)},
-
-	{NULL, 0, 0, 0}
-};
-
-/**
- * @brief If e.g. CL_CampaignAddGroundMission failed after creating the new mission
- * with CL_AddMission we have to decrease the mission pointer, too
- * @sa CL_AddMission
- * @sa CL_CampaignAddGroundMission
- */
-void CP_RemoveLastMission (void)
-{
-	numMissions--;
-}
-
-/**
- * @brief Adds a mission to current stageSet
- * @note the returned mission_t pointer has to be filled - this function only fills the name
- * @param[in] name valid mission name
- * @return ms is the mission_t pointer of the mission to add
- * @sa CL_CampaignAddMission
- * @sa CL_CampaignAddGroundMission
- */
-mission_t *CL_AddMission (const char *name)
-{
-	int i;
-	mission_t *ms;
-
-	/* just to let us know: search for missions with same name */
-	for (i = 0; i < numMissions; i++)
-		if (!Q_strncmp(name, missions[i].name, MAX_VAR))
-			break;
-	if (i < numMissions) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_AddMission: mission def \"%s\" with same name found\n", name);
-		return &missions[i];
-	}
-
-	if (numMissions >= MAX_MISSIONS) {
-		Com_Printf("CL_AddMission: Max missions reached\n");
-		return NULL;
-	}
-
-	/* initialize the mission */
-	ms = &missions[numMissions++];
-	memset(ms, 0, sizeof(mission_t));
-	Q_strncpyz(ms->name, name, sizeof(ms->name));
-	Com_DPrintf(DEBUG_CLIENT, "CL_AddMission: mission name: '%s'\n", name);
-
-	/* this might be null for baseattack and crashsite missions */
-	ms->mapDef = Com_GetMapDefinitionByID(name);
-
-	return ms;
-}
 
 /**
  * @sa CL_ParseScriptFirst
@@ -3471,6 +4036,8 @@ mission_t *CL_AddMission (const char *name)
  */
 void CL_ParseMission (const char *name, const char **text)
 {
+/* @todo Parse story related missions */
+#if 0
 	const char *errhead = "CL_ParseMission: unexpected end of file (mission ";
 	mission_t *ms;
 	const value_t *vp;
@@ -3528,52 +4095,11 @@ void CL_ParseMission (const char *name, const char **text)
 			}
 
 		if (!vp->string) {
-			/* alienteams might be seperated by whitespaces */
-			if (!Q_strcmp(token, "alienteam")) {
-				char teamID[MAX_VAR];
-				const char *tokenTeam, *parseTeam;
-				/* found a definition */
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				/* prepare parsing the team list */
-				Q_strncpyz(teamID, token, sizeof(teamID));
-				parseTeam = teamID;
-				do {
-					tokenTeam = COM_Parse(&parseTeam);
-					if (!parseTeam)
-						break;
-					if (ms->numAlienTeams >= MAX_TEAMS_PER_MISSION) {
-						Com_Printf("CL_ParseMission: Max teams per mission exceeded (%i)\n", MAX_TEAMS_PER_MISSION);
-						break;
-					}
-					ms->alienTeams[ms->numAlienTeams] = Com_GetTeamDefinitionByID(tokenTeam);
-					if (ms->alienTeams[ms->numAlienTeams]) {
-						ms->numAlienTeams++;
-					} else
-						Com_Printf("CL_ParseMission: Could not find team with id: '%s'\n", tokenTeam);
-				} while (parseTeam);
-				if (!ms->numAlienTeams)
-					Com_Printf("CL_ParseMission: This mission will always use the default alien team\n"
-						"please set the alienteam variable in the mission description of '%s'\n", ms->name);
-			} else
-				Com_Printf("CL_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
+			Com_Printf("CL_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
 		}
 
 	} while (*text);
-
-	if (abs(ms->pos[0]) > 180.0f)
-		Com_Printf("CL_ParseMission: Longitude for mission '%s' is bigger than 180 EW (%.0f)\n", ms->name, ms->pos[0]);
-	if (abs(ms->pos[1]) > 90.0f)
-		Com_Printf("CL_ParseMission: Latitude for mission '%s' is bigger than 90 NS (%.0f)\n", ms->name, ms->pos[1]);
-	if (*ms->onwin && ms->onwin[strlen(ms->onwin)-1] != ';')
-		Com_Printf("CL_ParseMission: onwin trigger do not end on ; - mission '%s'\n", ms->name);
-	if (*ms->onlose && ms->onlose[strlen(ms->onlose)-1] != ';')
-		Com_Printf("CL_ParseMission: onlose trigger do not end on ; - mission '%s'\n", ms->name);
-
-	if (!*ms->civTeam)
-		Q_strncpyz(ms->civTeam, ms->nation, sizeof(ms->civTeam));
+#endif
 }
 
 /* =========================================================== */
@@ -3687,173 +4213,6 @@ void CL_ParseResearchableCampaignStates (const char *name, const char **text, qb
 			Com_Printf("CL_ParseResearchableCampaignStates: unknown token \"%s\" ignored (tech %s)\n", token, name);
 
 	} while (*text);
-}
-
-/* =========================================================== */
-
-static const value_t stageset_vals[] = {
-	{"needed", V_STRING, offsetof(stageSet_t, needed), 0},
-	{"delay", V_DATE, offsetof(stageSet_t, delay), 0},
-	{"frame", V_DATE, offsetof(stageSet_t, frame), 0},
-	{"expire", V_DATE, offsetof(stageSet_t, expire), 0},
-	{"number", V_INT, offsetof(stageSet_t, number), MEMBER_SIZEOF(stageSet_t, number)},
-	{"quota", V_INT, offsetof(stageSet_t, quota), MEMBER_SIZEOF(stageSet_t, quota)},
-	{"activatexvi", V_INT, offsetof(stageSet_t, activateXVI), MEMBER_SIZEOF(stageSet_t, activateXVI)},
-	{"humanattack", V_INT, offsetof(stageSet_t, humanAttack), MEMBER_SIZEOF(stageSet_t, humanAttack)},
-	{"ufos", V_INT, offsetof(stageSet_t, ufos), MEMBER_SIZEOF(stageSet_t, ufos)},
-	{"sequence", V_STRING, offsetof(stageSet_t, sequence), 0},
-	{"cutscene", V_STRING, offsetof(stageSet_t, cutscene), 0},
-	{"nextstage", V_STRING, offsetof(stageSet_t, nextstage), 0},
-	{"endstage", V_STRING, offsetof(stageSet_t, endstage), 0},
-	{"commands", V_STRING, offsetof(stageSet_t, cmds), 0},
-	{NULL, 0, 0, 0}
-};
-
-/**
- * @sa CL_ParseScriptSecond
- * @sa CL_ParseStage
- */
-static void CL_ParseStageSet (const char *name, const char **text)
-{
-	const char *errhead = "CL_ParseStageSet: unexpected end of file (stageset ";
-	stageSet_t *sp;
-	const value_t *vp;
-	char missionstr[256];
-	const char *token;
-	const char *misp;
-	int j;
-
-	if (numStageSets >= MAX_STAGESETS) {
-		Com_Printf("CL_ParseStageSet: Max stagesets reached\n");
-		return;
-	}
-
-	/* initialize the stage */
-	sp = &stageSets[numStageSets++];
-	memset(sp, 0, sizeof(stageSet_t));
-	Q_strncpyz(sp->name, name, sizeof(sp->name));
-
-	/* get it's body */
-	token = COM_Parse(text);
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseStageSets: stageset def \"%s\" without body ignored\n", name);
-		numStageSets--;
-		return;
-	}
-
-	do {
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		/* check for some standard values */
-		for (vp = stageset_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
-				/* found a definition */
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_ParseValue(sp, token, vp->type, vp->ofs, vp->size);
-				break;
-			}
-		if (vp->string)
-			continue;
-
-		/* get mission set */
-		if (!Q_strncmp(token, "missions", 8)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			Q_strncpyz(missionstr, token, sizeof(missionstr));
-			misp = missionstr;
-
-			/* add mission options */
-			if (sp->numMissions)
-				Sys_Error("CL_ParseStageSet: Double mission tag in set '%s'\n", sp->name);
-
-			sp->numMissions = 0;
-			do {
-				token = COM_Parse(&misp);
-				if (!misp)
-					break;
-
-				for (j = 0; j < numMissions; j++)
-					if (!Q_strncmp(token, missions[j].name, MAX_VAR)) {
-						sp->missions[sp->numMissions++] = j;
-						break;
-					}
-
-				if (j == numMissions)
-					Com_Printf("Com_ParseStageSet: unknown mission \"%s\" ignored (stageset %s)\n", token, sp->name);
-			} while (sp->numMissions < MAX_SETMISSIONS);
-			continue;
-		}
-		Com_Printf("Com_ParseStageSet: unknown token \"%s\" ignored (stageset %s)\n", token, name);
-	} while (*text);
-	if (sp->numMissions && !sp->number && !sp->quota) {
-		sp->quota = (int)(sp->numMissions / 2)+1;
-		Com_Printf("Com_ParseStageSet: Set quota to %i for stage set '%s' with %i missions\n", sp->quota, sp->name, sp->numMissions);
-	}
-}
-
-
-/**
- * @sa CL_ParseStageSet
- * @sa CL_ParseScriptSecond
- */
-void CL_ParseStage (const char *name, const char **text)
-{
-	const char *errhead = "CL_ParseStage: unexpected end of file (stage ";
-	stage_t *sp;
-	const char *token;
-	int i;
-
-	/* search for campaigns with same name */
-	for (i = 0; i < numStages; i++)
-		if (!Q_strncmp(name, stages[i].name, MAX_VAR))
-			break;
-
-	if (i < numStages) {
-		Com_Printf("Com_ParseStage: stage def \"%s\" with same name found, second ignored\n", name);
-		return;
-	} else if (numStages >= MAX_STAGES) {
-		Com_Printf("CL_ParseStages: Max stages reached\n");
-		return;
-	}
-
-	/* get it's body */
-	token = COM_Parse(text);
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseStages: stage def \"%s\" without body ignored\n", name);
-		return;
-	}
-
-	/* initialize the stage */
-	sp = &stages[numStages++];
-	memset(sp, 0, sizeof(stage_t));
-	Q_strncpyz(sp->name, name, sizeof(sp->name));
-	sp->first = numStageSets;
-
-	Com_DPrintf(DEBUG_CLIENT, "stage: %s\n", name);
-
-	do {
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		if (!Q_strncmp(token, "set", 3)) {
-			token = COM_EParse(text, errhead, name);
-			CL_ParseStageSet(token, text);
-		} else
-			Com_Printf("Com_ParseStage: unknown token \"%s\" ignored (stage %s)\n", token, name);
-	} while (*text);
-
-	sp->num = numStageSets - sp->first;
 }
 
 /* =========================================================== */
@@ -4199,40 +4558,6 @@ qboolean CL_OnBattlescape (void)
 }
 
 /**
- * @brief Starts a given mission
- * @note Mainly for testing
- * @sa CP_SetMissionVars
- * @sa CL_GameGo
- */
-static void CL_StartMission_f (void)
-{
-	int i;
-	const char *missionID;
-	mission_t* mission = NULL;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <missionID>\n", Cmd_Argv(0));
-		return;
-	}
-
-	missionID = Cmd_Argv(1);
-
-	for (i = 0; i < numMissions; i++) {
-		mission = &missions[i];
-		if (!Q_strncmp(missions[i].name, missionID, sizeof(missions[i].name))) {
-			break;
-		}
-	}
-	if (i == numMissions) {
-		Com_Printf("Mission with id '%s' was not found\n", missionID);
-		return;
-	}
-
-	CP_SetMissionVars(mission);
-	CP_StartMissionMap(mission);
-}
-
-/**
  * @brief Scriptfunction to list all parsed nations with their current values
  */
 static void CL_NationList_f (void)
@@ -4259,7 +4584,6 @@ static const cmdList_t game_commands[] = {
 	{"aircraft_new", AIR_NewAircraft_f, NULL},
 	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL},
 	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL},
-	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"},
 	{"aircraft_start", AIM_AircraftStart_f, NULL},
 	{"aircraft_select", AIR_AircraftSelect_f, NULL},
 	{"airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu"},
@@ -4275,7 +4599,6 @@ static const cmdList_t game_commands[] = {
 	{"basedef_slot_list_click", BDEF_ListClick_f, "Inits base defense menu"},
 	{"basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
-	{"mission", CL_StartMission_f, NULL},
 	{"stats_update", CL_StatsUpdate_f, NULL},
 	{"nationlist", CL_NationList_f, "List all nations on the game console"},
 	{"nation_stats_click", CP_NationStatsClick_f, NULL},
@@ -4299,6 +4622,7 @@ static const cmdList_t game_commands[] = {
 	{"debug_newemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
 	{"debug_itemlist", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
+	{"debug_interestlist", CP_AlienInterestList_f, "Debug function to show alien interest values"},
 #endif
 	{NULL, NULL, NULL}
 };
@@ -4552,8 +4876,8 @@ static void CL_GameNew_f (void)
 
 	CL_UpdateCredits(curCampaign->credits);
 
-	/* stage setup */
-	CL_CampaignActivateStage(curCampaign->firststage, qtrue);
+	/* Initialize alien interest */
+	CL_ResetAlienInterest();
 
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main", "singleplayerInGame");
@@ -4685,10 +5009,7 @@ void CL_ResetSinglePlayerData (void)
 	memset(&gd, 0, sizeof(gd));
 	memset(&campaignStats, 0, sizeof(campaignStats));
 
-	numStageSets = numStages = numMissions = 0;
-	memset(missions, 0, sizeof(missions));
-	memset(stageSets, 0, sizeof(stageSets));
-	memset(stages, 0, sizeof(stages));
+	LIST_Delete(ccs.missions);
 	memset(&invList, 0, sizeof(invList));
 	mn.messageStack = NULL;
 
@@ -5338,7 +5659,6 @@ base_t *CP_GetMissionBase (void)
  * @sa LIST_Delete
  * @note When all parameters contain the string "Any", the algorithm assumes that it does not need to include "water" terrains when determining a random position
  * @note The function is nondeterministic when RASTER is set to a value > 1. The amount of possible alternatives is exactly defined by RASTER. I.e. if RASTER is set to 3, there are 3 different lists from which the random positions are chosen. The list is then chosen randomly.
- * @sa CP_GetRandomPosForAircraft
  */
 qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {

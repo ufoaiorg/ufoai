@@ -69,7 +69,7 @@ typedef struct popup_intercept_s {
 	int numAircraft;	/**< Count of aircraft displayed in list */
 	int idBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< Base ID of aircraft in list */
 	int idInBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< ID in base of aircraft in list */
-	actMis_t* mission;	/**< Mission the selected aircraft have to move to */
+	mission_t* mission;	/**< Mission the selected aircraft have to move to */
 	aircraft_t* ufo;		/**< UFO the selected aircraft have to move to */
 } popup_intercept_t;
 
@@ -85,7 +85,7 @@ POPUP_AIRCRAFT
  */
 void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 {
-	int i;
+	const linkedList_t *list = ccs.missions;
 
 	/* Initialise popup_aircraft datas */
 	if (!aircraft)
@@ -103,10 +103,16 @@ void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 
 	/* Set missions in popup_aircraft */
 	if (aircraft->teamSize > 0) {
-		for (i = 0; i < ccs.numMissions; i++) {
-			popupAircraft.itemsId[popupAircraft.nbItems] = i;
-			popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
-			Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), _(ccs.mission[i].def->type), _(ccs.mission[i].def->location)), POPUP_AIRCARFT_MAX_TEXT);
+		for (; list; list = list->next) {
+			mission_t *tempMission = (mission_t *)list->data;
+			if ((tempMission->stage == STAGE_NOT_ACTIVE) || !tempMission->onGeoscape) {
+				continue;
+			}
+			if (tempMission->pos) {
+				popupAircraft.itemsId[popupAircraft.nbItems] = MAP_GetIdxByMission(tempMission);
+				popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
+				Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), CP_MissionToTypeString(tempMission), 	_(tempMission->location)), POPUP_AIRCARFT_MAX_TEXT);
+			}
 		}
 	}
 
@@ -119,8 +125,9 @@ void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
  */
 static void CL_PopupAircraftClick_f (void)
 {
-	int num, id;
+	int num;
 	aircraft_t* aircraft;
+	mission_t *mission;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_PopupAircraftClick\n");
 
@@ -148,10 +155,9 @@ static void CL_PopupAircraftClick_f (void)
 		aircraft->status = AIR_IDLE;
 		break;
 	case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
-		/* Get mission */
-		id = popupAircraft.itemsId[num];
-		if (id >= 0 && id < ccs.numMissions)
-			AIR_SendAircraftToMission(aircraft, ccs.mission + id);
+		mission = MAP_GetMissionByIdx(popupAircraft.itemsId[num]);
+		if (mission)
+			AIR_SendAircraftToMission(aircraft, mission);
 		break;
 	case POPUP_AIRCRAFT_ACTION_NONE:
 		break;
@@ -163,9 +169,11 @@ static void CL_PopupAircraftClick_f (void)
 /**
  * @brief Notify the popup_aircraft system that a mission has been removed
  */
-static void CL_PopupAircraftNotifyMissionRemoved (const actMis_t* mission)
+static void CL_PopupAircraftNotifyMissionRemoved (const mission_t* mission)
 {
-	int num = mission - ccs.mission, i;
+#if 0
+FIXME: why decreasing aircraft idx if this is the mission that changes ?
+	int num = mission - ccs.missionOld, i;
 
 	/* Deactive elements of list that allow to move to removed mission */
 	for (i = 0; i < popupAircraft.nbItems; i++)
@@ -175,6 +183,7 @@ static void CL_PopupAircraftNotifyMissionRemoved (const actMis_t* mission)
 			else if (popupAircraft.itemsId[i] > num)
 				popupAircraft.itemsId[i]--;
 		}
+#endif
 }
 
 
@@ -186,7 +195,7 @@ POPUP_INTERCEPT
  * @brief Display the popup_intercept
  * @sa CL_DisplayPopupAircraft
  */
-void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
+void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 {
 	static char aircraftListText[1024];
 	static char baseListText[1024];
@@ -376,7 +385,7 @@ static void CL_PopupInterceptRClick_f (void)
 static void CL_PopupInterceptBaseClick_f (void)
 {
 	int num, baseIdx, i;
-	qboolean atLeastOneBase =  qfalse;
+	qboolean atLeastOneBase = qfalse;
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
 	assert(selectedUFO);
@@ -422,7 +431,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 /**
  * @brief Notify the popup_intercept system that a mission has been removed
  */
-static void CL_PopupInterceptNotifyMissionRemoved (const actMis_t* mission)
+static void CL_PopupInterceptNotifyMissionRemoved (const mission_t* mission)
 {
 	if (popupIntercept.mission == mission)
 		popupIntercept.mission = NULL;
@@ -440,7 +449,7 @@ void CL_PopupInterceptNotifyUFORemoved (const aircraft_t* ufo)
 /**
  * @brief Notify that a mission has been removed
  */
-void CL_PopupNotifyMissionRemoved (const actMis_t* mission)
+void CL_PopupNotifyMissionRemoved (const mission_t* mission)
 {
 	/* Notify all popups */
 	CL_PopupAircraftNotifyMissionRemoved(mission);

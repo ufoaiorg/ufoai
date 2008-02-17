@@ -218,7 +218,7 @@ int RS_GetTechIdxByName(const char *name);
 int RS_CountInBase(const struct base_s *base);
 qboolean RS_ScriptSanityCheck(void);
 
-/* ufopedia function - but needs technology_t */
+/* UFOpaedia function - but needs technology_t */
 void UP_Article(technology_t* tech, eventMail_t *mail);
 void UP_AircraftDescription(technology_t* t);
 void UP_UGVDescription(const ugv_t *ugvType);

@@ -364,7 +364,7 @@ typedef struct mapDef_s {
 	linkedList_t *cultures;		/**< culture strings this map is useable for */
 	qboolean storyRelated;		/**< Is this a mission story related? */
 	int timesAlreadyUsed;		/**< Number of times the map has already been used */
-	const char *ufo;			/**< Type of ufo on the map */
+	linkedList_t *ufos;			/**< Type of allowed UFOs on the map */
 } mapDef_t;
 
 typedef struct damageType_s {
