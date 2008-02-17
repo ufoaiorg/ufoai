@@ -209,7 +209,7 @@ static void R_DrawEntityEffects (void)
 			if (e->flags & RF_SHADOW)
 				R_BindTexture(shadow->texnum);
 			else
-				R_BindTexture(blood[e->state & STATE_DEAD]->texnum);
+				R_BindTexture(blood[e->state % STATE_DEAD]->texnum);
 
 			qglBegin(GL_QUADS);
 			qglTexCoord2f(0.0, 1.0);
