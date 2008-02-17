@@ -1817,9 +1817,16 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 		return NULL;
 	}
 
+	assert(pos[0] >= -180);
+	assert(pos[0] <= 180);
+	assert(pos[1] >= -90);
+	assert(pos[1] <= 90);
+
 	/* get coordinates */
 	x = (180 - pos[0]) / 360 * width;
+	x--; /* we start from 0 */
 	y = (90 - pos[1]) / 180 * height;
+	y--; /* we start from 0 */
 	if (x < 0)
 		x = 0;
 	if (y < 0)
