@@ -4,8 +4,8 @@
 // * desert, arctic, cold, water, mountain, tropical, grass
 // valid culture values:
 // * eastern, western, oriental, african
-// valid population	values:
-// * urban,	suburban, village, rural, nopopulation
+// valid population values:
+// * urban, suburban, village, rural, nopopulation
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
 // valid UFO values:
