@@ -1959,7 +1959,7 @@ tech rs_weapon_stungren
 tech rs_weapon_stungren_alien
 {
 	type		weapon
-	up_chapter	equipment
+	up_chapter	artifacts
 	description {
 		default "_stungren_alien_txt"
 	}
