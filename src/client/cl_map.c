@@ -1847,13 +1847,13 @@ qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, const linkedList_t* terrainTypes
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);
 	const char *populationType = MAP_GetPopulationTypeByPos(pos);
 
-	if (terrainTypes && (LIST_ContainsString(terrainTypes, terrainType) || LIST_ContainsString(terrainTypes, "Any"))) {
-		if (cultureTypes && (LIST_ContainsString(cultureTypes, cultureType) || LIST_ContainsString(cultureTypes, "Any"))) {
-			if (populationTypes && (LIST_ContainsString(populationTypes, populationType) || LIST_ContainsString(populationTypes, "Any"))) {
+	if (!terrainTypes || LIST_ContainsString(terrainTypes, terrainType)) {
+		if (!cultureTypes || LIST_ContainsString(cultureTypes, cultureType)) {
+			if (!populationTypes || LIST_ContainsString(populationTypes, populationType)) {
 				const nation_t *nationAtPos = MAP_GetNation(pos);
 				if (!nations)
 					return qtrue;
-				if ((nationAtPos && LIST_ContainsString(nations, nationAtPos->id)) || LIST_ContainsString(nations, "Any")) {
+				if (nationAtPos && (!nations || LIST_ContainsString(nations, nationAtPos->id))) {
 					return qtrue;
 				}
 			}
