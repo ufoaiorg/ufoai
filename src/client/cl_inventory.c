@@ -539,8 +539,8 @@ void INV_UpdateStorageCap (base_t *base)
 			continue;
 
 		/* Don't count aircraft */
-		assert(csi.ods[i].tech);	/**@todo Check if _all_ items (ods[] entries) are supposed to have a tech links.
-									 * If not we could just make the if below check for the pointer as well instead of an assert. */
+		assert(csi.ods[i].tech);	/**@todo All items are supposed to have tech-links.
+									 * If this assert triggers: Maybe they are not initialised between savegame load and this function? */
 		if (csi.ods[i].tech->type == RS_CRAFT) {
 			continue;
 		}
