@@ -2895,14 +2895,15 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 }
 
 /**
- * @brief Send brush models for entities like func_breakable and func_door to the
- * client and let him know about them. There are also entities that are announced
- * here, but fully handled clientside - like func_rotating
+ * @brief Send brush models for entities like func_breakable and func_door and triggers
+ * with their mins and maxs bounding boxes to the client and let him know about them.
+ * There are also entities that are announced here, but fully handled clientside - like
+ * func_rotating.
  * @sa CL_AddBrushModel
  * @sa EV_ADD_BRUSH_MODEL
  * @param[in] team The team the edicts are send to
  */
-static void G_SendBrushModels (int team)
+static void G_SendEdictsAndBrushModels (int team)
 {
 	int i;
 	edict_t *ent;
@@ -2916,25 +2917,43 @@ static void G_SendBrushModels (int team)
 		/* brush models that have a type - not the world - keep in
 		 * mind that there are several world edicts in the list in case of
 		 * a map assembly */
-		if (ent->solid == SOLID_BSP && ent->type) {
-			gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
-			gi.WriteShort(ent->type);
-			gi.WriteShort(ent->number);
-			gi.WriteShort(ent->modelindex);
-			gi.WriteByte(ent->spawnflags & 255);
-			gi.WritePos(ent->origin);
-			gi.WriteShort(ent->speed);
-			gi.WriteByte(ent->angle);
-			ent->visflags |= ~ent->visflags;
-			end = qtrue;
-		/* only send triggers to the client to display them - can be extended or
-		 * every other ent that is not SOLID_NOT (needs mins, maxs set) */
-		} else if (ent->solid == SOLID_TRIGGER && sv_send_edicts->integer) {
-			gi.AddEvent(G_TeamToPM(team), EV_ADD_EDICT);
-			gi.WriteShort(ent->type);
-			gi.WriteShort(ent->number);
-			gi.WritePos(ent->mins);
-			gi.WritePos(ent->maxs);
+		switch (ent->solid) {
+		case SOLID_BSP:
+			/* skip the world(s) in case of map assembly */
+			if (ent->type) {
+				gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
+				gi.WriteShort(ent->type);
+				gi.WriteShort(ent->number);
+				gi.WriteShort(ent->modelindex);
+				gi.WriteByte(ent->spawnflags & 255);
+				gi.WritePos(ent->origin);
+				gi.WriteShort(ent->speed);
+				gi.WriteByte(ent->angle);
+				ent->visflags |= ~ent->visflags;
+				end = qtrue;
+			}
+			break;
+
+		case SOLID_NOT:
+			break;
+
+		case SOLID_BBOX:
+			if (sv_send_edicts->integer) {
+				/* @todo Send actorspawn boxes to show the bboxes client side, too
+				 * @note Only needed for displaying them */
+			}
+			break;
+
+		/* send trigger entities to the client to display them (needs mins, maxs set) */
+		case SOLID_TRIGGER:
+			if (sv_send_edicts->integer) {
+				gi.AddEvent(G_TeamToPM(team), EV_ADD_EDICT);
+				gi.WriteShort(ent->type);
+				gi.WriteShort(ent->number);
+				gi.WritePos(ent->mins);
+				gi.WritePos(ent->maxs);
+			}
+			break;
 		}
 	}
 
@@ -3039,7 +3058,7 @@ qboolean G_ClientSpawn (player_t * player)
 	G_SendPlayerStats(player);
 
 	/* send things like doors and breakables */
-	G_SendBrushModels(player->pers.team);
+	G_SendEdictsAndBrushModels(player->pers.team);
 
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);

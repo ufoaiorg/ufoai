@@ -738,7 +738,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 /**
  * @brief Register local entities for SOLID_BSP models like func_breakable or func_door
  * @note func_breakable, func_door
- * @sa G_SendBrushModels
+ * @sa G_SendEdictsAndBrushModels
  * @sa EV_ADD_BRUSH_MODEL
  */
 static void CL_AddBrushModel (struct dbuffer *msg)
