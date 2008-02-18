@@ -362,7 +362,6 @@ static void CL_CampaignActivateStageSets (const stage_t *stage)
 	for (i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++)
 		if (!set->active && !set->num) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_CampaignActivateStageSets: i = %i, stage->first = %i, stage->num = %i, stage->name = %s\n", i, stage->first, stage->num, stage->name);
-			assert(!set->done); /* if not started, not done, as well */
 			assert(set->stage);
 			assert(set->def);
 
