@@ -46,11 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-static void SplitBrush2 (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
-{
-	SplitBrush(brush, planenum, front, back);
-}
-
 /**
  * @return a list of brushes that remain after B is subtracted from A.
  * @note Return may by empty if A is contained inside B.
@@ -65,7 +60,7 @@ static bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
 	in = a;
 	out = NULL;
 	for (i = 0; i < b->numsides && in; i++) {
-		SplitBrush2(in, b->sides[i].planenum, &front, &back);
+		SplitBrush(in, b->sides[i].planenum, &front, &back);
 		if (in != a)
 			FreeBrush(in);
 		if (front) {	/* add to list */
@@ -262,16 +257,17 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 		numsides = mb->numsides;
 		if (!numsides)
 			continue;
+
 		/* make sure the brush has at least one face showing */
 		vis = 0;
 		for (j = 0; j < numsides; j++)
 			if (mb->original_sides[j].visible && mb->original_sides[j].winding)
 				vis++;
+
 		/* if the brush is outside the clip area, skip it */
 		for (j = 0; j < 3; j++)
-			if (mb->mins[j] < clipmins[j]
-			 || mb->maxs[j] > clipmaxs[j])
-			break;
+			if (mb->mins[j] < clipmins[j] || mb->maxs[j] > clipmaxs[j])
+				break;
 		if (j != 3)
 			continue;
 
@@ -386,10 +382,8 @@ newlist:
 			if (BrushesDisjoint(b1, b2))
 				continue;
 
-			sub = NULL;
-			sub2 = NULL;
-			c1 = 999999;
-			c2 = 999999;
+			sub = sub2 = NULL;
+			c1 = c2 = 999999;
 
 			if (BrushGE(b2, b1)) {
 				sub = SubtractBrush(b1, b2);
@@ -418,7 +412,7 @@ newlist:
 				continue;		/* neither one can bite */
 
 			/* only accept if it didn't fragment */
-			/* (commening this out allows full fragmentation) */
+			/* (commenting this out allows full fragmentation) */
 			if (c1 > 1 && c2 > 1) {
 				if (sub2)
 					FreeBrushList(sub2);
@@ -448,6 +442,6 @@ newlist:
 		}
 	}
 
-	Sys_FPrintf(SYS_VRB, "output brushes: %i\n", CountBrushList (keep));
+	Sys_FPrintf(SYS_VRB, "output brushes: %i\n", CountBrushList(keep));
 	return keep;
 }
