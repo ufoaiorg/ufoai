@@ -40,6 +40,7 @@ static void SP_civilian_start(edict_t *ent);
 static void SP_worldspawn(edict_t *ent);
 static void SP_2x2_start(edict_t *ent);
 static void SP_civilian_target(edict_t *ent);
+static void SP_misc_model(edict_t *ent);
 static void SP_misc_mission(edict_t *ent);
 static void SP_misc_mission_aliens(edict_t *ent);
 
@@ -52,7 +53,7 @@ static const spawn_t spawns[] = {
 	{"worldspawn", SP_worldspawn},
 	{"light", SP_light},
 	{"misc_sound", SP_dummy},
-	{"misc_model", SP_dummy},
+	{"misc_model", SP_misc_model},
 	{"misc_particle", SP_dummy},
 	{"misc_mission", SP_misc_mission},
 	{"misc_mission_aliens", SP_misc_mission_aliens},
@@ -675,12 +676,29 @@ static void SP_misc_mission_aliens (edict_t *ent)
 	gi.LinkEdict(ent);
 }
 
+#define MISC_MODEL_SOLID 256
+/**
+ * @brief Spawns a misc_model if there is a solid state
+ */
+static void SP_misc_model (edict_t *ent)
+{
+	if (ent->spawnflags & MISC_MODEL_SOLID) {
+		ent->solid = SOLID_BBOX;
+		/* FIXME: Handling some misc_models serverside
+		 * would be nice for pathfinding and clipping */
+		G_FreeEdict(ent);
+	} else {
+		/* handled client side */
+		G_FreeEdict(ent);
+	}
+}
+
 /**
  * @brief a dummy to get rid of local entities
  */
 static void SP_dummy (edict_t *ent)
 {
-	/* misc_models and particles aren't client-server communicated items */
+	/* particles aren't client-server communicated items */
 	/* they are completely client side */
 	G_FreeEdict(ent);
 }

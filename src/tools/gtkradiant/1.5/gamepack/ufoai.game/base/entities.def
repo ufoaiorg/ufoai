@@ -25,7 +25,7 @@ Starting point for a civilian.
 */
 
 
-/*QUAKED misc_model (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
+/*QUAKED misc_model (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8 server_solid
 Displays a md2 model.
 Set the level flags correctly!
 Use angles [pitch yaw roll] to rotate the model. pitch (up/down), yaw (left/right) and roll (fall over)
