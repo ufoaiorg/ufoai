@@ -295,23 +295,20 @@ void LoadBSPFile (const char *filename)
 	SwapBSPFile();
 }
 
-static qFILE bspfile;
-static dBspHeader_t outheader;
-
 /**
  * @brief
  * @sa WriteBSPFile
  */
-static void AddLump (int lumpnum, void *data, int len)
+static inline void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, void *data, int len)
 {
 	lump_t *lump;
 
 	lump = &header->lumps[lumpnum];
 
-	lump->fileofs = LittleLong(ftell(bspfile.f));
+	lump->fileofs = LittleLong(ftell(bspfile->f));
 	lump->filelen = LittleLong(len);
 	/* 4 byte align */
-	SafeWrite(&bspfile, data, (len + 3) &~ 3);
+	SafeWrite(bspfile, data, (len + 3) &~ 3);
 }
 
 /**
@@ -319,36 +316,38 @@ static void AddLump (int lumpnum, void *data, int len)
  */
 void WriteBSPFile (const char *filename)
 {
-	header = &outheader;
-	memset(header, 0, sizeof(dBspHeader_t));
+	qFILE bspfile;
+	dBspHeader_t outheader;
+
+	memset(&outheader, 0, sizeof(outheader));
+	memset(&bspfile, 0, sizeof(bspfile));
 
 	SwapBSPFile();
 
-	header->ident = LittleLong(IDBSPHEADER);
-	header->version = LittleLong(BSPVERSION);
+	outheader.ident = LittleLong(IDBSPHEADER);
+	outheader.version = LittleLong(BSPVERSION);
 
-	memset(&bspfile, 0, sizeof(qFILE));
 	SafeOpenWrite(filename, &bspfile);
-	SafeWrite(&bspfile, header, sizeof(dBspHeader_t));	/* overwritten later */
+	SafeWrite(&bspfile, &outheader, sizeof(dBspHeader_t));	/* overwritten later */
 
-	AddLump(LUMP_PLANES, dplanes, numplanes * sizeof(dBspPlane_t));
-	AddLump(LUMP_LEAFS, dleafs, numleafs * sizeof(dBspLeaf_t));
-	AddLump(LUMP_VERTEXES, dvertexes, numvertexes * sizeof(dBspVertex_t));
-	AddLump(LUMP_NODES, dnodes, numnodes * sizeof(dBspNode_t));
-	AddLump(LUMP_TEXINFO, texinfo, numtexinfo * sizeof(dBspTexinfo_t));
-	AddLump(LUMP_FACES, dfaces, numfaces * sizeof(dBspFace_t));
-	AddLump(LUMP_BRUSHES, dbrushes, numbrushes * sizeof(dBspBrush_t));
-	AddLump(LUMP_BRUSHSIDES, dbrushsides, numbrushsides * sizeof(dBspBrushSide_t));
-	AddLump(LUMP_LEAFBRUSHES, dleafbrushes, numleafbrushes * sizeof(dleafbrushes[0]));
-	AddLump(LUMP_SURFEDGES, dsurfedges, numsurfedges * sizeof(dsurfedges[0]));
-	AddLump(LUMP_EDGES, dedges, numedges * sizeof(dBspEdge_t));
-	AddLump(LUMP_MODELS, dmodels, nummodels * sizeof(dBspModel_t));
-	AddLump(LUMP_LIGHTING, dlightdata, lightdatasize);
-	AddLump(LUMP_ROUTING, droutedata, routedatasize);
-	AddLump(LUMP_ENTITIES, dentdata, entdatasize);
+	AddLump(&bspfile, &outheader, LUMP_PLANES, dplanes, numplanes * sizeof(dBspPlane_t));
+	AddLump(&bspfile, &outheader, LUMP_LEAFS, dleafs, numleafs * sizeof(dBspLeaf_t));
+	AddLump(&bspfile, &outheader, LUMP_VERTEXES, dvertexes, numvertexes * sizeof(dBspVertex_t));
+	AddLump(&bspfile, &outheader, LUMP_NODES, dnodes, numnodes * sizeof(dBspNode_t));
+	AddLump(&bspfile, &outheader, LUMP_TEXINFO, texinfo, numtexinfo * sizeof(dBspTexinfo_t));
+	AddLump(&bspfile, &outheader, LUMP_FACES, dfaces, numfaces * sizeof(dBspFace_t));
+	AddLump(&bspfile, &outheader, LUMP_BRUSHES, dbrushes, numbrushes * sizeof(dBspBrush_t));
+	AddLump(&bspfile, &outheader, LUMP_BRUSHSIDES, dbrushsides, numbrushsides * sizeof(dBspBrushSide_t));
+	AddLump(&bspfile, &outheader, LUMP_LEAFBRUSHES, dleafbrushes, numleafbrushes * sizeof(dleafbrushes[0]));
+	AddLump(&bspfile, &outheader, LUMP_SURFEDGES, dsurfedges, numsurfedges * sizeof(dsurfedges[0]));
+	AddLump(&bspfile, &outheader, LUMP_EDGES, dedges, numedges * sizeof(dBspEdge_t));
+	AddLump(&bspfile, &outheader, LUMP_MODELS, dmodels, nummodels * sizeof(dBspModel_t));
+	AddLump(&bspfile, &outheader, LUMP_LIGHTING, dlightdata, lightdatasize);
+	AddLump(&bspfile, &outheader, LUMP_ROUTING, droutedata, routedatasize);
+	AddLump(&bspfile, &outheader, LUMP_ENTITIES, dentdata, entdatasize);
 
 	fseek(bspfile.f, 0, SEEK_SET);
-	SafeWrite(&bspfile, header, sizeof(dBspHeader_t));
+	SafeWrite(&bspfile, &outheader, sizeof(outheader));
 	CloseFile(&bspfile);
 	SwapBSPFile();
 }
