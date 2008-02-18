@@ -12,10 +12,6 @@ CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -Winline -Wcast-qual -Wcast-align -ansi \
 #	-Wbad-function-cast -pedantic -std=c99
 #-combine -fwhole-program
 
-ifeq ($(HAVE_OPENAL),1)
-	CFLAGS+= -DHAVE_OPENAL
-endif
-
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))
 _MODULE=$(strip $(MODULE))
