@@ -300,7 +300,6 @@ int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int 
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float *mins, *maxs;	/**< size of the moving object */
-	vec3_t mins2, maxs2;		/**< size when clipping against monsters */
 	float *start, *end;
 	trace_t trace;
 	edict_t *passedict;
@@ -437,7 +436,7 @@ int SV_PointContents (vec3_t p)
  * @param[in] mins and maxs are relative
  * @sa SV_Trace
  */
-static void SV_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
+static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 #if 0
 	/* debug to test against everything */
@@ -498,11 +497,8 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 	clip.maxs = maxs;
 	clip.passedict = passedict;
 
-	VectorCopy(mins, clip.mins2);
-	VectorCopy(maxs, clip.maxs2);
-
 	/* create the bounding box of the entire move */
-	SV_TraceBounds(start, clip.mins2, clip.maxs2, end, clip.boxmins, clip.boxmaxs);
+	SV_TraceBounds(start, clip.mins, clip.maxs, end, clip.boxmins, clip.boxmaxs);
 
 	/* clip to other solid entities */
 	SV_ClipMoveToEntities(&clip);
