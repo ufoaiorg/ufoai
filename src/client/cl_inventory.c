@@ -538,8 +538,10 @@ void INV_UpdateStorageCap (base_t *base)
 		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
 			continue;
 
-		/* don't count aircraft */
-		if ((csi.ods[i].tech->type == RS_CRAFT)) {
+		/* Don't count aircraft */
+		assert(csi.ods[i].tech);	/**@todo Check if _all_ items (ods[] entries) are supposed to have a tech links.
+									 * If not we could just make the if below check for the pointer as well instead of an assert. */
+		if (csi.ods[i].tech->type == RS_CRAFT) {
 			continue;
 		}
 
