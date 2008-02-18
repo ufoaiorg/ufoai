@@ -26,6 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
 
+/* created planes for origin offset */
+static int fakeplanes;
+
 /*
 ===================================================================
 TEXTURE LIGHT VALUES
@@ -163,7 +166,7 @@ static void BaseLightForFace (dBspFace_t *f, vec3_t color)
 
 static float totalarea;
 
-static void MakePatchForFace (int fn, winding_t *w)
+static void MakePatchForFace (int facenum, winding_t *w)
 {
 	dBspFace_t *f;
 	float area;
@@ -173,7 +176,7 @@ static void MakePatchForFace (int fn, winding_t *w)
 	vec3_t color;
 	dBspLeaf_t *leaf;
 
-	f = &dfaces[fn];
+	f = &dfaces[facenum];
 
 	area = WindingArea(w);
 	totalarea += area;
@@ -181,8 +184,8 @@ static void MakePatchForFace (int fn, winding_t *w)
 	patch = &patches[num_patches];
 	if (num_patches == MAX_PATCHES)
 		Sys_Error("num_patches == MAX_PATCHES");
-	patch->next = face_patches[fn];
-	face_patches[fn] = patch;
+	patch->next = face_patches[facenum];
+	face_patches[facenum] = patch;
 
 	patch->winding = w;
 
@@ -190,15 +193,15 @@ static void MakePatchForFace (int fn, winding_t *w)
 		patch->plane = &backplanes[f->planenum];
 	else
 		patch->plane = &dplanes[f->planenum];
+
 	/* origin offset faces must create new planes */
-	if (face_offset[fn][0] || face_offset[fn][1] || face_offset[fn][2] ) {
+	if (VectorNotEmpty(face_offset[facenum])) {
 		if (numplanes + fakeplanes >= MAX_MAP_PLANES)
 			Sys_Error("numplanes + fakeplanes >= MAX_MAP_PLANES");
 		pl = &dplanes[numplanes + fakeplanes];
 		fakeplanes++;
-
 		*pl = *(patch->plane);
-		pl->dist += DotProduct(face_offset[fn], pl->normal);
+		pl->dist += DotProduct(face_offset[facenum], pl->normal);
 		patch->plane = pl;
 	}
 
@@ -213,7 +216,7 @@ static void MakePatchForFace (int fn, winding_t *w)
 	VectorCopy(texture_reflectivity[f->texinfo], patch->reflectivity);
 
 	/* non-bmodel patches can emit light */
-	if (fn < dmodels[0].numfaces || (texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
+	if (facenum < dmodels[0].numfaces || (texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
 		BaseLightForFace(f, patch->baselight);
 
 		ColorNormalize(patch->reflectivity, color);
@@ -247,7 +250,7 @@ void MakePatches (void)
 {
 	int i, j, k;
 	dBspFace_t *f;
-	int fn;
+	int facenum;
 	winding_t *w;
 	dBspModel_t *mod;
 	vec3_t origin;
@@ -263,17 +266,17 @@ void MakePatches (void)
 		GetVectorForKey(ent, "origin", origin);
 
 		for (j = 0; j < mod->numfaces; j++) {
-			fn = mod->firstface + j;
-			VectorCopy(origin, face_offset[fn]);
-			f = &dfaces[fn];
+			facenum = mod->firstface + j;
+			VectorCopy(origin, face_offset[facenum]);
+			f = &dfaces[facenum];
 			w = WindingFromFace(f);
 			for (k = 0; k < w->numpoints; k++)
 				VectorAdd(w->p[k], origin, w->p[k]);
-			MakePatchForFace(fn, w);
+			MakePatchForFace(facenum, w);
 		}
 	}
 
-	Sys_FPrintf(SYS_VRB, "%i square feet\n", (int)(totalarea/64));
+	Sys_FPrintf(SYS_VRB, "%i square feet\n", (int)(totalarea / 64));
 }
 
 /*

@@ -503,11 +503,11 @@ static void CalcFaceVectors (lightinfo_t *l)
 		for (j = 0; j < 3; j++)
 			l->worldtotex[i][j] = tex->vecs[i][j];
 
-	/* calculate a normal to the texture axis.  points can be moved along this */
-	/* without changing their S/T */
-	texnormal[0] = tex->vecs[1][1] * tex->vecs[0][2] - tex->vecs[1][2]*tex->vecs[0][1];
-	texnormal[1] = tex->vecs[1][2] * tex->vecs[0][0] - tex->vecs[1][0]*tex->vecs[0][2];
-	texnormal[2] = tex->vecs[1][0] * tex->vecs[0][1] - tex->vecs[1][1]*tex->vecs[0][0];
+	/* calculate a normal to the texture axis.  points can be moved along this
+	 * without changing their S/T */
+	texnormal[0] = tex->vecs[1][1] * tex->vecs[0][2] - tex->vecs[1][2] * tex->vecs[0][1];
+	texnormal[1] = tex->vecs[1][2] * tex->vecs[0][0] - tex->vecs[1][0] * tex->vecs[0][2];
+	texnormal[2] = tex->vecs[1][0] * tex->vecs[0][1] - tex->vecs[1][1] * tex->vecs[0][0];
 	VectorNormalize(texnormal);
 
 	/* flip it towards plane normal */
@@ -521,8 +521,8 @@ static void CalcFaceVectors (lightinfo_t *l)
 		VectorSubtract(vec3_origin, texnormal, texnormal);
 	}
 
-	/* distscale is the ratio of the distance along the texture normal to */
-	/* the distance along the plane normal */
+	/* distscale is the ratio of the distance along the texture normal to
+	 * the distance along the plane normal */
 	distscale = 1 / distscale;
 
 	for (i = 0; i < 2; i++) {

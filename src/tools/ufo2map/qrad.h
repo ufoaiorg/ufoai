@@ -106,7 +106,6 @@ void CreateDirectLights(void);
 dBspLeaf_t *Rad_PointInLeaf(vec3_t point);
 
 extern dBspPlane_t backplanes[MAX_MAP_PLANES];
-extern int fakeplanes;					/* created planes for origin offset  */
 
 void MakePatches(void);
 void SubdividePatches(void);
