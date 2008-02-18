@@ -413,13 +413,13 @@ epair_t *ParseEpair (void)
 	e = malloc(sizeof(epair_t));
 	memset(e, 0, sizeof(epair_t));
 
-	if (strlen(token) >= MAX_KEY - 1)
+	if (strlen(parsedToken) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
-	e->key = copystring(token);
+	e->key = copystring(parsedToken);
 	GetToken(qfalse);
-	if (strlen(token) >= MAX_VALUE - 1)
+	if (strlen(parsedToken) >= MAX_VALUE - 1)
 		Sys_Error("ParseEpar: token too long");
-	e->value = copystring(token);
+	e->value = copystring(parsedToken);
 
 	/* strip trailing spaces */
 	StripTrailing(e->key);
@@ -441,7 +441,7 @@ static qboolean ParseEntity (void)
 	if (!GetToken(qtrue))
 		return qfalse;
 
-	if (strcmp(token, "{"))
+	if (strcmp(parsedToken, "{"))
 		Sys_Error("ParseEntity: { not found");
 
 	if (num_entities >= MAX_MAP_ENTITIES)
@@ -453,7 +453,7 @@ static qboolean ParseEntity (void)
 	do {
 		if (!GetToken(qtrue))
 			Sys_Error("ParseEntity: EOF without closing brace");
-		if (!strcmp(token, "}") )
+		if (!strcmp(parsedToken, "}") )
 			break;
 		e = ParseEpair ();
 		e->next = mapent->epairs;

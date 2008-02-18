@@ -111,7 +111,6 @@ static void PruneNodes_r (node_t *node)
 		/* FIXME: free stuff */
 		node->planenum = PLANENUM_LEAF;
 		node->contentFlags = CONTENTS_SOLID;
-		node->detail_seperator = qfalse;
 
 		if (node->brushlist)
 			Sys_Error("PruneNodes: node->brushlist");

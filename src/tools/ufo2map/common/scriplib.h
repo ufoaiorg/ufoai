@@ -25,10 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _SCRIPTLIB
 #define _SCRIPTLIB
 
-#define	MAXTOKEN	1024
+#define	MAXTOKEN 256
 
-extern char token[MAXTOKEN];
-extern char *script_p;
+extern char parsedToken[MAXTOKEN];
 
 void LoadScriptFile(const char *filename);
 void ParseFromMemory(char *buffer, int size);

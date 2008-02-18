@@ -28,10 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cmdlib.h"
 #include "polylib.h"
 
-int	c_active_windings;
-int	c_peak_windings;
-int	c_winding_allocs;
-int	c_winding_points;
+static int c_active_windings;
+static int c_peak_windings;
 
 #define	BOGUS_RANGE	8192
 
@@ -39,13 +37,11 @@ int	c_winding_points;
  * @brief
  * @sa FreeWinding
  */
-winding_t *AllocWinding(int points)
+winding_t *AllocWinding (int points)
 {
 	winding_t *w;
 	size_t s;
 
-	c_winding_allocs++;
-	c_winding_points += points;
 	c_active_windings++;
 	if (c_active_windings > c_peak_windings)
 		c_peak_windings = c_active_windings;
@@ -73,8 +69,6 @@ void FreeWinding (winding_t *w)
 	free(w);
 }
 
-static int c_removed;
-
 /**
  * @brief
  */
@@ -100,7 +94,6 @@ void RemoveColinearPoints (winding_t *w)
 	if (nump == w->numpoints)
 		return;
 
-	c_removed += w->numpoints - nump;
 	w->numpoints = nump;
 	memcpy(w->p, p, nump * sizeof(p[0]));
 }

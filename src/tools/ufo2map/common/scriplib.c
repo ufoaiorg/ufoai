@@ -35,17 +35,18 @@ PARSING STUFF
 */
 
 typedef struct {
-	char	filename[1024];
-	char    *buffer,*script_p,*end_p;
+	char	filename[MAX_OSPATH];
+	char	*buffer;
+	char	*script_p;
+	char	*end_p;
 	int     line;
 } script_t;
 
-#define	MAX_INCLUDES	8
+#define	MAX_INCLUDES	2
 static script_t scriptstack[MAX_INCLUDES];
 static script_t *script;
-static int scriptline;
 
-char token[MAXTOKEN];
+char parsedToken[MAXTOKEN];
 
 /**
  * @brief
@@ -82,7 +83,7 @@ void LoadScriptFile (const char *filename)
 
 
 /**
- * @brief
+ * @brief Parses e.g. the entity string that is already stored in memory
  */
 void ParseFromMemory (char *buffer, int size)
 {
@@ -104,8 +105,9 @@ void ParseFromMemory (char *buffer, int size)
 static qboolean EndOfScript (qboolean crossline)
 {
 	if (!crossline)
-		Sys_Error("Line %i is incomplete\n",scriptline);
+		Sys_Error("Line %i is incomplete\n", script->line);
 
+	/* not if the current script is a memory buffer */
 	if (!strcmp(script->filename, "memory buffer"))
 		return qfalse;
 
@@ -114,13 +116,15 @@ static qboolean EndOfScript (qboolean crossline)
 		return qfalse;
 
 	script--;
-	scriptline = script->line;
 	Com_Printf("returning to %s\n", script->filename);
 	return GetToken(crossline);
 }
 
 /**
- * @brief
+ * @brief Parses the next token from the current script on the stack
+ * and store the result in parsedToken
+ * @param[in] crossline The next token may not be seperated by
+ * comment or newline if this is true - everything must be on the same line
  */
 qboolean GetToken (qboolean crossline)
 {
@@ -131,46 +135,31 @@ qboolean GetToken (qboolean crossline)
 
 	/* skip space */
 skipspace:
-	while (*script->script_p <= 32) {
+	while (*script->script_p <= ' ') {
 		if (script->script_p >= script->end_p)
 			return EndOfScript(crossline);
 		if (*script->script_p++ == '\n') {
 			if (!crossline)
-				Sys_Error("Line %i is incomplete\n",scriptline);
-			scriptline = script->line++;
+				Sys_Error("Line %i is incomplete\n", script->line);
+			script->line++;
 		}
 	}
 
 	if (script->script_p >= script->end_p)
 		return EndOfScript(crossline);
 
-	/* ; # // comments */
-	if (*script->script_p == ';' || *script->script_p == '#'
-		|| ( script->script_p[0] == '/' && script->script_p[1] == '/') ) {
+	/* // comments */
+	if (script->script_p[0] == '/' && script->script_p[1] == '/') {
 		if (!crossline)
-			Sys_Error("Line %i is incomplete\n",scriptline);
+			Sys_Error("Line %i is incomplete\n", script->line);
 		while (*script->script_p++ != '\n')
 			if (script->script_p >= script->end_p)
 				return EndOfScript(crossline);
 		goto skipspace;
 	}
 
-	/* c-style comments */
-	if (script->script_p[0] == '/' && script->script_p[1] == '*') {
-		if (!crossline)
-			Sys_Error("Line %i is incomplete\n",scriptline);
-		script->script_p += 2;
-		while (script->script_p[0] != '*' && script->script_p[1] != '/') {
-			script->script_p++;
-			if (script->script_p >= script->end_p)
-				return EndOfScript(crossline);
-		}
-		script->script_p += 2;
-		goto skipspace;
-	}
-
 	/* copy token */
-	token_p = token;
+	token_p = parsedToken;
 
 	if (*script->script_p == '"') {
 		/* quoted token */
@@ -179,17 +168,17 @@ skipspace:
 			*token_p++ = *script->script_p++;
 			if (script->script_p == script->end_p)
 				break;
-			if (token_p == &token[MAXTOKEN])
-				Sys_Error("Token too large on line %i\n",scriptline);
+			if (token_p == &parsedToken[MAXTOKEN])
+				Sys_Error("Token too large on line %i\n", script->line);
 		}
 		script->script_p++;
 	} else	/* regular token */
-		while (*script->script_p > 32 && *script->script_p != ';') {
+		while (*script->script_p > ' ') {
 			*token_p++ = *script->script_p++;
 			if (script->script_p == script->end_p)
 				break;
-			if (token_p == &token[MAXTOKEN])
-				Sys_Error("Token too large on line %i\n",scriptline);
+			if (token_p == &parsedToken[MAXTOKEN])
+				Sys_Error("Token too large on line %i\n", script->line);
 		}
 
 	*token_p = 0;
@@ -210,16 +199,13 @@ qboolean TokenAvailable (void)
 	if (search_p >= script->end_p)
 		return qfalse;
 
-	while (*search_p <= 32) {
+	while (*search_p <= ' ') {
 		if (*search_p == '\n')
 			return qfalse;
 		search_p++;
 		if (search_p == script->end_p)
 			return qfalse;
 	}
-
-	if (*search_p == ';')
-		return qfalse;
 
 	return qtrue;
 }

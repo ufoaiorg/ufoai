@@ -493,34 +493,29 @@ static void ParseBrush (entity_t *mapent)
 	int planenum;
 	brush_texture_t td;
 	int planepts[3][3];
-	qboolean phongShading;
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
 		Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
 
 	b = &mapbrushes[nummapbrushes];
+	memset(b, 0, sizeof(*b));
 	b->original_sides = &brushsides[nummapbrushsides];
 	b->entitynum = num_entities - 1;
 	b->brushnum = nummapbrushes - mapent->firstbrush;
 
-	b->optimizedDetail = qfalse;
 	b->isTerrain = (!strcmp("func_group", ValueForKey(&entities[b->entitynum], "classname"))
 				&& strlen(ValueForKey(&entities[b->entitynum], "terrain")) > 0);
 	b->isGenSurf = (!strcmp("func_group", ValueForKey(&entities[b->entitynum], "classname"))
 				&& strlen(ValueForKey(&entities[b->entitynum], "gensurf")) > 0);
-	phongShading = (!strcmp("func_group", ValueForKey(&entities[b->entitynum], "classname"))
-				&& strlen(ValueForKey(&entities[b->entitynum], "phongshading")) > 0);
 #if 1
 	if (b->isTerrain)
 		Sys_FPrintf(SYS_VRB, "Brush number %i in entity number %i has terrain flag set.\n", b->brushnum, b->entitynum);
-	if (phongShading)
-		Sys_FPrintf(SYS_VRB, "Brush number %i in entity number %i has phong shading flag set.\n", b->brushnum, b->entitynum);
 #endif
 
 	do {
 		if (!GetToken(qtrue))
 			break;
-		if (*token == '}')
+		if (*parsedToken == '}')
 			break;
 
 		if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
@@ -531,33 +526,33 @@ static void ParseBrush (entity_t *mapent)
 		for (i = 0; i < 3; i++) {
 			if (i != 0)
 				GetToken(qtrue);
-			if (*token != '(')
+			if (*parsedToken != '(')
 				Sys_Error("parsing brush");
 
 			for (j = 0; j < 3; j++) {
 				GetToken(qfalse);
-				planepts[i][j] = atoi(token);
+				planepts[i][j] = atoi(parsedToken);
 			}
 
 			GetToken(qfalse);
-			if (*token != ')')
+			if (*parsedToken != ')')
 				Sys_Error("parsing brush");
 		}
 
 		/* read the texturedef */
 		GetToken(qfalse);
-		strcpy(td.name, token);
+		strcpy(td.name, parsedToken);
 
 		GetToken(qfalse);
-		td.shift[0] = atoi(token);
+		td.shift[0] = atoi(parsedToken);
 		GetToken(qfalse);
-		td.shift[1] = atoi(token);
+		td.shift[1] = atoi(parsedToken);
 		GetToken(qfalse);
-		td.rotate = atoi(token);
+		td.rotate = atoi(parsedToken);
 		GetToken(qfalse);
-		td.scale[0] = atof(token);
+		td.scale[0] = atof(parsedToken);
 		GetToken(qfalse);
-		td.scale[1] = atof(token);
+		td.scale[1] = atof(parsedToken);
 
 		/* find default flags and values */
 		mt = FindMiptex(td.name);
@@ -571,11 +566,11 @@ static void ParseBrush (entity_t *mapent)
 
 		if (TokenAvailable()) {
 			GetToken(qfalse);
-			side->contentFlags = atoi(token);
+			side->contentFlags = atoi(parsedToken);
 			GetToken(qfalse);
-			side->surfaceFlags = td.surfaceFlags = atoi(token);
+			side->surfaceFlags = td.surfaceFlags = atoi(parsedToken);
 			GetToken(qfalse);
-			td.value = atoi(token);
+			td.value = atoi(parsedToken);
 		}
 
 		/* resolve implicit surface and contents flags */
@@ -651,30 +646,6 @@ static void ParseBrush (entity_t *mapent)
 		b->numsides = 0;
 		return;
 	}
-
-	/* Knightmare- check if this is an optimized detail brush (has caulk faces)
-	 * also exclude trans brushes and terrain */
-	if ((b->contentFlags & CONTENTS_DETAIL) && (b->contentFlags & CONTENTS_SOLID) && !b->isTerrain && !b->isGenSurf)
-		for (i = 0; i < b->numsides; i++) {
-			/* nodraw/caulk faces */
-			if ((b->original_sides[i].surfaceFlags & SURF_NODRAW) && !(b->original_sides[i].surfaceFlags & SURF_SKIP)) {
-				b->optimizedDetail = qtrue;
-				Com_Printf("Entity %i, Brush %i: optimized detail\n", b->entitynum, b->brushnum);
-				break;
-			}
-		}
-
-	/* Knightmare- special handling for terrain brushes */
-	if (b->isTerrain || b->isGenSurf || phongShading)
-		for (i = 0; i < b->numsides; i++) {
-			s2 = &b->original_sides[i];
-			/* set ArghRad phong shading value (because EasyGen/GTKGenSurf doesn't allow this) */
-			if (!(b->original_sides[i].surfaceFlags & SURF_NODRAW)
-			 && (b->original_sides[i].surfaceFlags & SURF_SKIP)) {
-				texinfo[s2->texinfo].value = 777 + b->entitynum;	/* lucky 7's */
-				texinfo[s2->texinfo].surfaceFlags &= ~SURF_LIGHT;			/* must not be light-emitting */
-			}
-		}
 
 	/* create windings for sides and bounds for brush */
 	MakeBrushWindings(b);
@@ -758,7 +729,7 @@ static qboolean ParseMapEntity (void)
 	if (!GetToken(qtrue))
 		return qfalse;
 
-	if (*token != '{')
+	if (*parsedToken != '{')
 		Sys_Error("ParseMapEntity: { not found");
 
 	if (num_entities == MAX_MAP_ENTITIES)
@@ -775,9 +746,9 @@ static qboolean ParseMapEntity (void)
 	do {
 		if (!GetToken(qtrue))
 			Sys_Error("ParseMapEntity: EOF without closing brace");
-		if (*token == '}')
+		if (*parsedToken == '}')
 			break;
-		if (*token == '{')
+		if (*parsedToken == '{')
 			ParseBrush(mapent);
 		else {
 			e = ParseEpair();
@@ -842,9 +813,6 @@ void LoadMapFile (const char *filename)
 		AddPointToBounds(mapbrushes[i].maxs, map_mins, map_maxs);
 	}
 
-	for (i = 0; i < nummapbrushes; i++)
-		mapbrushes[i].finished = qfalse;
-
 	/* save a copy of the brushes */
 	memcpy(mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t)*nummapbrushes);
 
@@ -856,6 +824,6 @@ void LoadMapFile (const char *filename)
 	Sys_FPrintf(SYS_VRB, "%5i entities\n", num_entities);
 	Sys_FPrintf(SYS_VRB, "%5i planes\n", nummapplanes);
 	Sys_FPrintf(SYS_VRB, "%5i areaportals\n", c_areaportals);
-	Sys_FPrintf(SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n", map_mins[0],map_mins[1],map_mins[2],
-		map_maxs[0],map_maxs[1],map_maxs[2]);
+	Sys_FPrintf(SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n",
+		map_mins[0], map_mins[1], map_mins[2], map_maxs[0], map_maxs[1], map_maxs[2]);
 }

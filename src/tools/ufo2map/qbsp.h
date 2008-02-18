@@ -80,7 +80,6 @@ typedef struct brush_s {
 	qboolean finished;
 	qboolean isTerrain;
 	qboolean isGenSurf;
-	qboolean optimizedDetail;
 } mapbrush_t;
 
 #define	MAXEDGES		20
@@ -121,7 +120,6 @@ typedef struct node_s {
 	bspbrush_t		*volume;	/**< one for each leaf/node */
 
 	/** nodes only */
-	qboolean		detail_seperator;	/**< a detail brush caused the split */
 	side_t			*side;		/**< the side that created the node */
 	struct node_s	*children[2];
 	face_t			*faces;

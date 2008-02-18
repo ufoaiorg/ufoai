@@ -436,7 +436,7 @@ static qboolean CheckPlaneAgainstVolume (int pnum, node_t *node)
 }
 
 /**
- * @brief Using a hueristic, choses one of the sides out of the brushlist
+ * @brief Using a heuristic, choses one of the sides out of the brushlist
  * to partition the brushes with.
  * @return NULL if there are no valid planes to split with..
  */
@@ -524,7 +524,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 				/* give a value estimate for using this plane */
 
-				value =  5 * facing - 5 * splits - abs(front-back);
+				value =  5 * facing - 5 * splits - abs(front - back);
 /*				value = -5 * splits; */
 /*				value = 5 * facing - 5 * splits; */
 				if (mapplanes[pnum].type < 3)
@@ -553,8 +553,6 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 		if (bestside) {
 			if (pass > 1)
 				c_nonvis++;
-			if (pass > 0)
-				node->detail_seperator = qtrue;	/* not needed for vis */
 			break;
 		}
 	}
