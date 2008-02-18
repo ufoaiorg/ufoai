@@ -288,8 +288,11 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_CONTAINER:
-					if (menuInventory)
-						itemHover = MN_DrawContainerNode(node);
+					if (menuInventory) {
+						const invList_t *itemHover_temp = MN_DrawContainerNode(node);
+						if (itemHover_temp)
+							itemHover = itemHover_temp;
+					}
 					break;
 
 				case MN_ITEM:
@@ -345,7 +348,7 @@ void MN_DrawMenus (void)
 	 		 * Make sure that we draw this on top of every other node. */
 
 			if (itemHover) {
-				char tooltiptext[MAX_VAR * 2] = "";
+				char tooltiptext[MAX_VAR * 2];
 				const int itemToolTipWidth = 250;
 
 				/* Get name and info about item */
