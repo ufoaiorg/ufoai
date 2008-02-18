@@ -1170,7 +1170,7 @@ void FinalLightFace (unsigned int facenum)
 	patch_t *patch;
 	triangulation_t *trian = NULL;
 	facelight_t	*fl;
-	float minlight, max, newmax;
+	float max, newmax;
 	byte *dest;
 	vec3_t facemins, facemaxs, lb;
 
@@ -1214,8 +1214,8 @@ void FinalLightFace (unsigned int facenum)
 
 		trian = AllocTriangulation(&dplanes[f->planenum]);
 
-		/* for all faces on the plane, add the nearby patches */
-		/* to the triangulation */
+		/* for all faces on the plane, add the nearby patches
+		 * to the triangulation */
 		for (pfacenum = planelinks[f->side][f->planenum]; pfacenum; pfacenum = facelinks[pfacenum]) {
 			for (patch = face_patches[pfacenum]; patch; patch = patch->next) {
 				for (i = 0; i < 3; i++) {
@@ -1235,12 +1235,6 @@ void FinalLightFace (unsigned int facenum)
 	}
 
 	/* sample the triangulation */
-
-	/* _minlight allows models that have faces that would not be
-	 * illuminated to receive a mottled light pattern instead of
-	 * black */
-/*	minlight = FloatForKey(face_entity[facenum], "_minlight") * 128; */
-	minlight = 0;
 
 	dest = &dlightdata[f->lightofs];
 
@@ -1283,9 +1277,6 @@ void FinalLightFace (unsigned int facenum)
 			newmax = max;
 			if (newmax < 0)
 				newmax = 0;		/* roundoff problems */
-			if (newmax < minlight) {
-				newmax = minlight + (rand() % 48);
-			}
 			if (newmax > config.maxlight)
 				newmax = config.maxlight;
 
