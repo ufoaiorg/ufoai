@@ -37,17 +37,17 @@ edict_t* G_TriggerSpawn (edict_t *owner)
 	trigger = G_Spawn();
 	trigger->classname = "trigger";
 	trigger->type = ET_TRIGGER;
-	/* link the door into the trigger */
+	/* e.g. link the door into the trigger */
 	trigger->owner = owner;
 
 	VectorCopy(owner->absmin, mins);
 	VectorCopy(owner->absmax, maxs);
 
 	/* expand the trigger box */
-	mins[0] -= UNIT_SIZE;
-	mins[1] -= UNIT_SIZE;
-	maxs[0] += UNIT_SIZE;
-	maxs[1] += UNIT_SIZE;
+	mins[0] -= (UNIT_SIZE / 2);
+	mins[1] -= (UNIT_SIZE / 2);
+	maxs[0] += (UNIT_SIZE / 2);
+	maxs[1] += (UNIT_SIZE / 2);
 
 	VectorCopy(mins, trigger->mins);
 	VectorCopy(maxs, trigger->maxs);
