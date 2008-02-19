@@ -101,10 +101,10 @@ menu irc
 
 	text irc_data
 	{
-		pos		"30 80"
-		size	"695 620"
+		pos		"30 168"
+		size	"695 534"
 //		bgcolor	"0.5 0.5 0.5 0.2"
-		height	"28"
+		height	"20"
 		format  "22 0"
 		num		"0"
 		wheel
@@ -121,7 +121,9 @@ menu irc
 	string irc_server_topic
 	{
 		string	"*cvar irc_topic"
-		pos		"256 60"
+		align	uc
+		size	"512 40"
+		pos		"340 80"
 		font	f_verysmall
 	}
 
