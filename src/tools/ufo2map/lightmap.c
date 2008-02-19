@@ -110,28 +110,34 @@ typedef struct {
 	triangle_t	tris[MAX_TRI_TRIS];
 } triangulation_t;
 
+/**
+ * @sa FreeTriangulation
+ */
 static triangulation_t *AllocTriangulation (dBspPlane_t *plane)
 {
-	triangulation_t *t;
+	triangulation_t *tr;
 
-	t = malloc(sizeof(triangulation_t));
-	t->numpoints = 0;
-	t->numedges = 0;
-	t->numtris = 0;
+	tr = malloc(sizeof(*tr));
+	memset(tr, 0, sizeof(*tr));
+	tr->numpoints = 0;
+	tr->numedges = 0;
+	tr->numtris = 0;
+	tr->plane = plane;
 
-	t->plane = plane;
-
-/*	memset (t->edgematrix, 0, sizeof(t->edgematrix)); */
-
-	return t;
+	return tr;
 }
 
+/**
+ * @sa AllocTriangulation
+ */
 static void FreeTriangulation (triangulation_t *tr)
 {
 	free(tr);
 }
 
-
+/**
+ * @sa TriangulatePoints
+ */
 static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 {
 	triedge_t *e, *be;
@@ -170,7 +176,7 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 	return e;
 }
 
-static triangle_t *AllocTriangle (triangulation_t *trian)
+static inline triangle_t *AllocTriangle (triangulation_t *trian)
 {
 	triangle_t *t;
 
@@ -229,6 +235,9 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	TriEdge_r(trian, FindEdge(trian, e->p0, bestp));
 }
 
+/**
+ * @sa FindEdge
+ */
 static void TriangulatePoints (triangulation_t *trian)
 {
 	vec_t d, bestd;
@@ -244,7 +253,7 @@ static void TriangulatePoints (triangulation_t *trian)
 	bestd = 9999;
 	for (i = 0; i < trian->numpoints; i++) {
 		p1 = trian->points[i]->origin;
-		for (j = i+1; j < trian->numpoints; j++) {
+		for (j = i + 1; j < trian->numpoints; j++) {
 			p2 = trian->points[j]->origin;
 			VectorSubtract(p2, p1, v1);
 			d = VectorLength(v1);
@@ -264,12 +273,9 @@ static void TriangulatePoints (triangulation_t *trian)
 
 static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 {
-	int pnum;
-
-	pnum = trian->numpoints;
-	if (pnum == MAX_TRI_POINTS)
-		Sys_Error("trian->numpoints == MAX_TRI_POINTS (%i)", pnum);
-	trian->points[pnum] = patch;
+	if (trian->numpoints == MAX_TRI_POINTS)
+		Sys_Error("trian->numpoints == MAX_TRI_POINTS (%i)", trian->numpoints);
+	trian->points[trian->numpoints] = patch;
 	trian->numpoints++;
 }
 
@@ -308,7 +314,7 @@ static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, v
 static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 {
 	int i;
-	triedge_t *e;
+	const triedge_t *e;
 	vec_t d;
 
 	for (i = 0; i < 3; i++) {
@@ -324,7 +330,7 @@ static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 {
 	triangle_t *t;
-	triedge_t *e;
+	const triedge_t *e;
 	vec_t d, best;
 	patch_t *p0, *p1;
 	vec3_t v1, v2;
@@ -1229,8 +1235,6 @@ void FinalLightFace (unsigned int facenum)
 				AddPointToTriangulation(patch, trian);
 			}
 		}
-		for (i = 0; i < trian->numpoints; i++)
-			memset(trian->edgematrix[i], 0, trian->numpoints * sizeof(trian->edgematrix[0][0]) );
 		TriangulatePoints(trian);
 	}
 
