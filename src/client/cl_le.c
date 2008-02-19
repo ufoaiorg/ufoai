@@ -103,6 +103,9 @@ void LM_AddToScene (void)
 			R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
 		}
 
+		/* renderflags like RF_GLOW */
+		ent.flags = lm->renderFlags;
+
 		/* add it to the scene */
 		R_AddEntity(&ent);
 	}
@@ -217,7 +220,7 @@ void LM_Register (void)
  * @sa CL_ParseEntitystring
  * @param[in] entnum Entity number
  */
-localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags)
+localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags)
 {
 	localModel_t *lm;
 
@@ -236,6 +239,7 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 		Com_Error(ERR_DROP, "Already a local model with the same id (%i) loaded\n", entnum);
 	lm->entnum = entnum;
 	lm->levelflags = levelflags;
+	lm->renderFlags = renderFlags;
 
 	return lm;
 }
@@ -1077,10 +1081,10 @@ void LM_List_f (void)
 	int i;
 	localModel_t *lm;
 
-	Com_Printf("number | entnum | skin | frame | lvlflg | flags | origin          | name\n");
+	Com_Printf("number | entnum | skin | frame | lvlflg | renderflags | origin          | name\n");
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
-		Com_Printf("#%5i | #%5i | #%3i | #%4i | %6i | %5i | %5.0f:%5.0f:%3.0f | %s\n",
-			i, lm->entnum, lm->skin, lm->frame, lm->levelflags, lm->flags,
+		Com_Printf("#%5i | #%5i | #%3i | #%4i | %6i | %11i | %5.0f:%5.0f:%3.0f | %s\n",
+			i, lm->entnum, lm->skin, lm->frame, lm->levelflags, lm->renderFlags,
 			lm->origin[0], lm->origin[1], lm->origin[2], lm->name);
 	}
 }

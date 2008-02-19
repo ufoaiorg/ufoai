@@ -117,7 +117,7 @@ typedef struct lm_s {
 
 	int entnum;
 	int skin;
-	int flags;
+	int renderFlags;	/**< effect flags */
 	int frame;	/**< which frame to show */
 	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
@@ -153,7 +153,7 @@ void LET_PlayAmbientSound(le_t * le);
 void LET_BrushModel(le_t *le);
 
 /* local model functions */
-localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags);
+localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags);
 void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 

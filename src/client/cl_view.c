@@ -41,6 +41,9 @@ cvar_t *cursor;
 int map_maxlevel;
 int map_maxlevel_base = 0;
 
+/** position in the spawnflags */
+#define MISC_MODEL_GLOW 9
+
 static void CL_ParseEntitystring (const char *es)
 {
 	const char *strstart, *entity_token;
@@ -151,14 +154,18 @@ static void CL_ParseEntitystring (const char *es)
 			}
 		} else if (!Q_strcmp(classname, "misc_model")) {
 			localModel_t *lm;
+			int renderFlags = 0;
 
 			if (!model[0]) {
 				Com_Printf("misc_model without \"model\" specified\n");
 				continue;
 			}
 
+			if (spawnflags & (1 << MISC_MODEL_GLOW))
+				renderFlags |= RF_GLOW;
+
 			/* add it */
-			lm = LM_AddModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
+			lm = LM_AddModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF), renderFlags);
 			if (lm) {
 				lm->skin = skin;
 				lm->frame = frame;

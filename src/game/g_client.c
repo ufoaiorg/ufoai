@@ -2925,7 +2925,7 @@ static void G_SendEdictsAndBrushModels (int team)
 				gi.WriteShort(ent->type);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(ent->modelindex);
-				gi.WriteByte(ent->spawnflags & 255);
+				gi.WriteByte(ent->spawnflags & 0xFF);
 				gi.WritePos(ent->origin);
 				gi.WriteShort(ent->speed);
 				gi.WriteByte(ent->angle);

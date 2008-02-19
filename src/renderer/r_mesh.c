@@ -309,7 +309,6 @@ void R_DrawAliasModel (entity_t *e)
 {
 	mAliasModel_t *mod;
 	int i;
-	vec4_t color = {1, 1, 1, 1};
 	vec4_t bbox[8];
 
 	/* check if model is out of fov */
@@ -324,12 +323,23 @@ void R_DrawAliasModel (entity_t *e)
 
 	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
+		vec4_t color = {1, 1, 1, 1};
+		float f;
 		vec4_t tmp;
 
 		GLVectorTransform(e->transform.matrix, e->origin, tmp);
 		R_LightPoint(tmp);
 
+		/* resolve the color, starting with the lighting result */
 		VectorCopy(r_lightmap_sample.color, color);
+
+		/* and adjusting for blend */
+		color[3] = r_state.blend_enabled ? 0.25 : 1.0;
+
+		if (e->flags & RF_GLOW) {  /* and then adding in a pulse */
+			f = 1.0 + sin((refdef.time + (e - R_GetEntity(0))) * 6.0);
+			VectorScale(color, 1.0 + f * 0.33, color);
+		}
 
 		/* IR goggles override color
 		 * don't highlight misc_models only actors */
