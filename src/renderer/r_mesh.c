@@ -324,7 +324,6 @@ void R_DrawAliasModel (entity_t *e)
 	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
 		vec4_t color = {1, 1, 1, 1};
-		float f;
 		vec4_t tmp;
 
 		GLVectorTransform(e->transform.matrix, e->origin, tmp);
@@ -337,7 +336,7 @@ void R_DrawAliasModel (entity_t *e)
 		color[3] = r_state.blend_enabled ? 0.25 : 1.0;
 
 		if (e->flags & RF_GLOW) {  /* and then adding in a pulse */
-			f = 1.0 + sin((refdef.time + (e - R_GetEntity(0))) * 6.0);
+			const float f = 1.0 + sin((refdef.time + (e - R_GetEntity(0))) * 6.0);
 			VectorScale(color, 1.0 + f * 0.33, color);
 		}
 
