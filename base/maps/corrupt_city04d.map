@@ -22127,7 +22127,6 @@
 "light" "150"
 "_color" "0 1 0.2"
 "origin" "98 416 40"
-"style" "5"
 }
 // entity 177
 {
@@ -23173,7 +23172,6 @@
 "light" "150"
 "_color" "0 1 0.2"
 "origin" "-544 416 40"
-"style" "5"
 }
 // entity 268
 {
@@ -23181,7 +23179,6 @@
 "light" "150"
 "_color" "0 1 0.2"
 "origin" "-220 416 40"
-"style" "5"
 }
 // entity 269
 {

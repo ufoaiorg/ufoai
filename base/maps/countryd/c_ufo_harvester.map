@@ -3260,7 +3260,6 @@
 "origin" "1244 560 112"
 "_color" "0 1 0.2"
 "light" "100"
-"style" "5"
 }
 // entity 54
 {
@@ -3268,7 +3267,6 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1240 472 112"
-"style" "5"
 }
 // entity 55
 {

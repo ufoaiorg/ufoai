@@ -14815,7 +14815,6 @@
 "origin" "32 -56 116"
 "_color" "0 1 0"
 "light" "150"
-"style" "5"
 }
 // entity 32
 {
@@ -14823,7 +14822,6 @@
 "light" "150"
 "_color" "0 1 0"
 "origin" "32 60 116"
-"style" "5"
 }
 // entity 33
 {
@@ -15027,7 +15025,6 @@
 "light" "160"
 "_color" "0 1 0"
 "origin" "432 -580 116"
-"style" "5"
 }
 // entity 62
 {
@@ -15035,7 +15032,6 @@
 "origin" "436 -372 116"
 "_color" "0 1 0"
 "light" "160"
-"style" "5"
 }
 // entity 63
 {
@@ -15058,7 +15054,6 @@
 "light" "160"
 "_color" "0 1 0"
 "origin" "448 368 116"
-"style" "5"
 }
 // entity 66
 {

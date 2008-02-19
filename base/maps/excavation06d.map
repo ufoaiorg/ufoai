@@ -10603,7 +10603,6 @@
 // entity 90
 {
 "classname" "light"
-"style" "mmmmmaaaaammmmmaaaaaabcdefgabcdefg"
 "origin" "1126 932 120"
 "light" "160"
 "_color" "0.2 0.2 0.2"
