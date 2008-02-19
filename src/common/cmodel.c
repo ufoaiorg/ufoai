@@ -1614,7 +1614,7 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 
 		/* FIXME: special case for axial */
 		if (!trace_ispoint) {	/* general box case */
-			/* push the plane out apropriately for mins/maxs */
+			/* push the plane out appropriately for mins/maxs */
 			/* FIXME: use signbits into 8 way lookup for each mins/maxs */
 			for (j = 0; j < 3; j++) {
 				if (plane->normal[j] < 0)
@@ -1700,7 +1700,7 @@ static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 
 		/* FIXME: special case for axial */
 		/* general box case */
-		/* push the plane out apropriately for mins/maxs */
+		/* push the plane out appropriately for mins/maxs */
 		/* FIXME: use signbits into 8 way lookup for each mins/maxs */
 		for (j = 0; j < 3; j++) {
 			if (plane->normal[j] < 0)
