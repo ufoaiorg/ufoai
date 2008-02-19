@@ -1571,6 +1571,9 @@ static void CL_PrecacheModels (void)
 	loading = cls.loadingPercent;
 
 	for (i = 0; i < csi.numODs; i++) {
+		if (!(csi.ods[i].weapon || csi.ods[i].extension || csi.ods[i].headgear))
+			continue;
+
 		if (*csi.ods[i].model) {
 			cls.model_weapons[i] = R_RegisterModelShort(csi.ods[i].model);
 			if (!cls.model_weapons[i])
@@ -2008,7 +2011,6 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	INVSH_InitInventory(invList);
-	Con_CheckResize();
 	IN_Init();
 
 	SAV_Init();

@@ -29,16 +29,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "../renderer/r_draw.h"
 
-console_t con;
-
 #define CONSOLE_CHAR_ALIGN 4
+#define NUM_CON_TIMES 8
+#define COLORED_TEXT_MASK 128
+#define CON_TEXTSIZE 32768
 
+typedef struct {
+	qboolean initialized;
+
+	char text[CON_TEXTSIZE];
+	int currentLine;			/**< line where next message will be printed */
+	int pos;					/**< offset in current line for next print */
+	int displayLine;			/**< bottom of console displays this line */
+
+	int lineWidth;				/**< characters across screen */
+	int totalLines;				/**< total lines in console scrollback */
+
+	int visLines;
+
+	float times[NUM_CON_TIMES];	/**< cls.realtime time the line was generated
+								 * for transparent notify lines */
+} console_t;
+
+static console_t con;
 static cvar_t *con_notifytime;
 static cvar_t *con_history;
-cvar_t *con_font;
-int con_fontHeight;
-int con_fontWidth;
-int con_fontShift;
+const int con_fontHeight = 12;
+const int con_fontWidth = 10;
+const int con_fontShift = 3;
 
 extern char key_lines[MAXKEYLINES][MAXCMDLINE];
 extern int edit_line;
@@ -95,6 +113,18 @@ static void Con_Clear_f (void)
 	memset(con.text, ' ', sizeof(con.text));
 }
 
+/**
+ * @brief Scrolls the console
+ * @param[in] scroll Lines to scroll
+ */
+void Con_Scroll (int scroll)
+{
+	con.displayLine += scroll;
+	if (con.displayLine > con.currentLine)
+		con.displayLine = con.currentLine;
+	else if (con.displayLine < 0)
+		con.displayLine = 0;
+}
 
 /**
  * @brief Save the console contents out to a file
@@ -123,21 +153,21 @@ static void Con_Dump_f (void)
 	}
 
 	/* skip empty lines */
-	for (l = con.current - con.totallines + 1; l <= con.current; l++) {
-		line = con.text + (l % con.totallines) * con.linewidth;
-		for (x = 0; x < con.linewidth; x++)
+	for (l = con.currentLine - con.totalLines + 1; l <= con.currentLine; l++) {
+		line = con.text + (l % con.totalLines) * con.lineWidth;
+		for (x = 0; x < con.lineWidth; x++)
 			if (line[x] != ' ')
 				break;
-		if (x != con.linewidth)
+		if (x != con.lineWidth)
 			break;
 	}
 
 	/* write the remaining lines */
-	buffer[con.linewidth] = 0;
-	for (; l <= con.current; l++) {
-		line = con.text + (l % con.totallines) * con.linewidth;
-		strncpy(buffer, line, con.linewidth);
-		for (x = con.linewidth - 1; x >= 0; x--) {
+	buffer[con.lineWidth] = 0;
+	for (; l <= con.currentLine; l++) {
+		line = con.text + (l % con.totalLines) * con.lineWidth;
+		strncpy(buffer, line, con.lineWidth);
+		for (x = con.lineWidth - 1; x >= 0; x--) {
 			if (buffer[x] == ' ')
 				buffer[x] = 0;
 			else
@@ -201,71 +231,49 @@ void Con_CheckResize (void)
 	int i, j, width, oldwidth, oldtotallines, numlines, numchars;
 	char tbuf[CON_TEXTSIZE];
 
-	if (con_font->modified) {
-		if (con_font->integer == 0) {
-			con_fontWidth = 16;
-			con_fontHeight = 32;
-			con_fontShift = 4;
-			con_font->modified = qfalse;
-		} else if (con_font->integer == 1) {
-			con_fontWidth = 10;
-			con_fontHeight = 12;
-			con_fontShift = 3;
-			con_font->modified = qfalse;
-		} else
-			Cvar_ForceSet("con_font", "1");
-	}
-
 	width = (viddef.width >> con_fontShift);
 
-	if (width == con.linewidth)
+	if (width == con.lineWidth)
 		return;
 
-	if (width < 1) {	/* video hasn't been initialized yet */
-		width = VID_NORM_WIDTH / con_fontWidth;
-		con.linewidth = width;
-		con.totallines = sizeof(con.text) / con.linewidth;
-		memset(con.text, ' ', sizeof(con.text));
-	} else {
-		oldwidth = con.linewidth;
-		con.linewidth = width;
-		oldtotallines = con.totallines;
-		con.totallines = CON_TEXTSIZE / con.linewidth;
-		numlines = oldtotallines;
+	oldwidth = con.lineWidth;
+	con.lineWidth = width;
+	oldtotallines = con.totalLines;
+	con.totalLines = CON_TEXTSIZE / con.lineWidth;
+	numlines = oldtotallines;
 
-		if (con.totallines < numlines)
-			numlines = con.totallines;
+	if (con.totalLines < numlines)
+		numlines = con.totalLines;
 
-		numchars = oldwidth;
+	numchars = oldwidth;
 
-		if (con.linewidth < numchars)
-			numchars = con.linewidth;
+	if (con.lineWidth < numchars)
+		numchars = con.lineWidth;
 
-		memcpy(tbuf, con.text, sizeof(tbuf));
-		memset(con.text, ' ', sizeof(con.text));
+	memcpy(tbuf, con.text, sizeof(tbuf));
+	memset(con.text, ' ', sizeof(con.text));
 
-		for (i = 0; i < numlines; i++) {
-			for (j = 0; j < numchars; j++) {
-				con.text[(con.totallines - 1 - i) * con.linewidth + j] = tbuf[((con.current - i + oldtotallines) % oldtotallines) * oldwidth + j];
-			}
+	for (i = 0; i < numlines; i++) {
+		for (j = 0; j < numchars; j++) {
+			con.text[(con.totalLines - 1 - i) * con.lineWidth + j] = tbuf[((con.currentLine - i + oldtotallines) % oldtotallines) * oldwidth + j];
 		}
-
-		Con_ClearNotify();
 	}
 
-	con.current = con.totallines - 1;
-	con.display = con.current;
+	Con_ClearNotify();
+
+	con.currentLine = con.totalLines - 1;
+	con.displayLine = con.currentLine;
 }
 
 #define CONSOLE_HISTORY_FILENAME "history"
 
 /**
- * @brief Load the console history from cl_consoleHistory
+ * @brief Load the console history
+ * @sa Con_SaveConsoleHistory
  */
 void Con_LoadConsoleHistory (const char* path)
 {
 	byte *buf;
-	char *f2;
 	const char *text, *token;
 	int len, i = 0;
 	char filename[MAX_OSPATH];
@@ -284,23 +292,18 @@ void Con_LoadConsoleHistory (const char* path)
 	}
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
-	f2 = Mem_Alloc(len + 1);
-	memcpy(f2, buf, len);
-	f2[len] = 0;
-	text = f2;
-
-	Com_DPrintf(DEBUG_COMMANDS, "...load console history\n");
+	text = (const char*)buf;
 
 	do {
 		token = COM_Parse(&text);
 		if (!*token || !text)
 			break;
-		Q_strncpyz(&key_lines[i][1], token, MAXCMDLINE-1);
+		Q_strncpyz(&key_lines[i][1], token, MAXCMDLINE - 1);
 		Com_DPrintf(DEBUG_COMMANDS, "....command: '%s'\n", token);
 		i++;
 	} while (token);
 	/* only the do not modify comment */
-	Mem_Free(f2);
+	Com_Printf("loaded console history commands: %i\n", i);
 	FS_FreeFile(buf);
 	history_line = i;
 	edit_line = i;
@@ -309,6 +312,7 @@ void Con_LoadConsoleHistory (const char* path)
 /**
  * @brief Stores the console history
  * @param[in] path path to store the history
+ * @sa Con_LoadConsoleHistory
  */
 void Con_SaveConsoleHistory (const char *path)
 {
@@ -335,15 +339,12 @@ void Con_SaveConsoleHistory (const char *path)
 
 	fprintf(f, "// generated by ufo, do not modify\n");
 	for (i = 0; i < history_line; i++) {
-		if (lastLine && !Q_strncmp(lastLine, &(key_lines[i][1]), MAXCMDLINE)) {
-#if 0
-			Com_DPrintf(DEBUG_CLIENT, "Don't save '%s' again\n", lastLine);
-#endif
-		} else {
-			lastLine = &(key_lines[i][1]);
-			if (*lastLine)
-				fprintf(f, "\"%s\"\n", lastLine);
-		}
+		if (lastLine && !Q_strncmp(lastLine, &(key_lines[i][1]), MAXCMDLINE - 1))
+			continue;
+
+		lastLine = &(key_lines[i][1]);
+		if (*lastLine)
+			fprintf(f, "\"%s\"\n", lastLine);
 	}
 	fclose(f);
 }
@@ -351,16 +352,10 @@ void Con_SaveConsoleHistory (const char *path)
 void Con_Init (void)
 {
 	Com_Printf("\n----- console initialization -------\n");
-	con.linewidth = -1;
 
 	/* register our commands and cvars */
 	con_notifytime = Cvar_Get("con_notifytime", "10", CVAR_ARCHIVE, "How many seconds console messages should be shown before they fade away");
 	con_history = Cvar_Get("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
-	con_font = Cvar_Get("con_font", "1", CVAR_ARCHIVE, "Change the console font - 0 and 1 are valid values");
-
-	con_fontWidth = 16;
-	con_fontHeight = 32;
-	con_fontShift = 4;
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
@@ -373,7 +368,9 @@ void Con_Init (void)
 	/* load console history if con_history is true */
 	Con_LoadConsoleHistory(FS_Gamedir());
 
-	Con_CheckResize();
+	memset(&con, 0, sizeof(con));
+	con.lineWidth = VID_NORM_WIDTH / con_fontWidth;
+	con.totalLines = sizeof(con.text) / con.lineWidth;
 	con.initialized = qtrue;
 
 	Com_Printf("Console initialized.\n");
@@ -382,11 +379,11 @@ void Con_Init (void)
 
 static void Con_Linefeed (void)
 {
-	con.x = 0;
-	if (con.display == con.current)
-		con.display++;
-	con.current++;
-	memset(&con.text[(con.current % con.totallines) * con.linewidth],' ', con.linewidth);
+	con.pos = 0;
+	if (con.displayLine == con.currentLine)
+		con.displayLine++;
+	con.currentLine++;
+	memset(&con.text[(con.currentLine % con.totalLines) * con.lineWidth],' ', con.lineWidth);
 }
 
 /**
@@ -413,48 +410,44 @@ void Con_Print (const char *txt)
 
 	while ((c = *txt) != 0) {
 		/* count word length */
-		for (l = 0; l < con.linewidth; l++)
+		for (l = 0; l < con.lineWidth; l++)
 			if (txt[l] <= ' ')
 				break;
 
 		/* word wrap */
-		if (l != con.linewidth && (con.x + l > con.linewidth))
-			con.x = 0;
+		if (l != con.lineWidth && (con.pos + l > con.lineWidth))
+			con.pos = 0;
 
 		txt++;
 
 		if (cr) {
-			con.current--;
+			con.currentLine--;
 			cr = qfalse;
 		}
 
-		if (!con.x) {
+		if (!con.pos) {
 			Con_Linefeed();
 			/* mark time for transparent overlay */
-			if (con.current >= 0)
-				con.times[con.current % NUM_CON_TIMES] = cls.realtime;
+			if (con.currentLine >= 0)
+				con.times[con.currentLine % NUM_CON_TIMES] = cls.realtime;
 		}
 
 		switch (c) {
 		case '\n':
-			con.x = 0;
+			con.pos = 0;
 			break;
 
 		case '\r':
-			con.x = 0;
+			con.pos = 0;
 			cr = 1;
 			break;
 
 		default:	/* display character and advance */
-#if 0
-			if (!isprint(c))
-				continue;
-#endif
-			y = con.current % con.totallines;
-			con.text[y * con.linewidth + con.x] = c | mask;
-			con.x++;
-			if (con.x >= con.linewidth)
-				con.x = 0;
+			y = con.currentLine % con.totalLines;
+			con.text[y * con.lineWidth + con.pos] = c | mask;
+			con.pos++;
+			if (con.pos >= con.lineWidth)
+				con.pos = 0;
 			break;
 		}
 	}
@@ -503,14 +496,14 @@ static void Con_DrawInput (void)
 		text[i] = ' ';
 
 	/* prestep if horizontally scrolling */
-	if (key_linepos >= con.linewidth)
-		text += 1 + key_linepos - con.linewidth;
+	if (key_linepos >= con.lineWidth)
+		text += 1 + key_linepos - con.lineWidth;
 
 	/* draw it */
-	y = con.vislines - con_fontHeight;
+	y = con.visLines - con_fontHeight;
 
-	for (i = 0; i < con.linewidth; i++)
-		R_DrawChar((i + 1) << con_fontShift, con.vislines - con_fontHeight - CONSOLE_CHAR_ALIGN, text[i]);
+	for (i = 0; i < con.lineWidth; i++)
+		R_DrawChar((i + 1) << con_fontShift, y - CONSOLE_CHAR_ALIGN, text[i]);
 }
 
 
@@ -527,7 +520,7 @@ void Con_DrawNotify (void)
 
 	v = 60 * viddef.rx;
 	l = 120 * viddef.ry;
-	for (i = con.current - NUM_CON_TIMES + 1; i <= con.current; i++) {
+	for (i = con.currentLine - NUM_CON_TIMES + 1; i <= con.currentLine; i++) {
 		draw = qfalse;
 		if (i < 0)
 			continue;
@@ -537,9 +530,9 @@ void Con_DrawNotify (void)
 		time = cls.realtime - time;
 		if (time > con_notifytime->integer * 1000)
 			continue;
-		text = con.text + (i % con.totallines) * con.linewidth;
+		text = con.text + (i % con.totalLines) * con.lineWidth;
 
-		for (x = 0; x < con.linewidth; x++) {
+		for (x = 0; x < con.lineWidth; x++) {
 			/* only draw chat or check for developer mode */
 			if (developer->integer || text[x] & COLORED_TEXT_MASK) {
 				R_DrawChar(l + (x << con_fontShift), v, text[x]);
@@ -601,32 +594,32 @@ void Con_DrawConsole (float frac)
 		R_DrawChar(viddef.width - (len * con_fontWidth) + x * con_fontWidth - CONSOLE_CHAR_ALIGN, lines - (con_fontHeight + CONSOLE_CHAR_ALIGN), version[x] | COLORED_TEXT_MASK);
 
 	/* draw the text */
-	con.vislines = lines;
+	con.visLines = lines;
 
 	rows = (lines - con_fontHeight * 2) >> con_fontShift;	/* rows of text to draw */
 
 	y = lines - con_fontHeight * 3;
 
 	/* draw from the bottom up */
-	if (con.display != con.current) {
+	if (con.displayLine != con.currentLine) {
 		/* draw arrows to show the buffer is backscrolled */
-		for (x = 0; x < con.linewidth; x += 4)
+		for (x = 0; x < con.lineWidth; x += 4)
 			R_DrawChar((x + 1) << con_fontShift, y, '^');
 
 		y -= con_fontHeight;
 		rows--;
 	}
 
-	row = con.display;
+	row = con.displayLine;
 	for (i = 0; i < rows; i++, y -= con_fontHeight, row--) {
 		if (row < 0)
 			break;
-		if (con.current - row >= con.totallines)
+		if (con.currentLine - row >= con.totalLines)
 			break;				/* past scrollback wrap point */
 
-		text = con.text + (row % con.totallines) * con.linewidth;
+		text = con.text + (row % con.totalLines) * con.lineWidth;
 
-		for (x = 0; x < con.linewidth; x++)
+		for (x = 0; x < con.lineWidth; x++)
 			R_DrawChar((x + 1) << con_fontShift, y, text[x]);
 	}
 

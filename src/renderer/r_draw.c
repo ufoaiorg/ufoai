@@ -32,7 +32,7 @@ image_t *shadow;
 image_t *blood[MAX_DEATH];
 
 /* console font */
-static image_t *draw_chars[2];
+static image_t *draw_chars;
 
 /**
  * @brief Loads some textures and init the 3d globe
@@ -51,12 +51,9 @@ void R_DrawInitLocal (void)
 			Com_Printf("Could not find blood_%i image in game pics/sfx directory!\n", i);
 	}
 
-	draw_chars[0] = R_FindImage("pics/conchars", it_chars);
-	if (draw_chars[0] == r_notexture)
+	draw_chars = R_FindImage("pics/conchars", it_chars);
+	if (draw_chars == r_notexture)
 		Sys_Error("Could not find conchars image in game pics directory!\n");
-	draw_chars[1] = R_FindImage("pics/conchars_small", it_chars);
-	if (draw_chars[1] == r_notexture)
-		Com_Printf("Could not find conchars2 image in game pics directory!\n");
 }
 
 #define MAX_CHARS 8192
@@ -94,9 +91,6 @@ void R_DrawChar (int x, int y, int num)
 	frow = row * 0.0625;
 	fcol = col * 0.0625;
 
-	assert(con_font->integer < 2);
-	R_BindTexture(draw_chars[con_font->integer]->texnum);
-
 	char_texcoords[char_index + 0] = fcol;
 	char_texcoords[char_index + 1] = frow;
 	char_texcoords[char_index + 2] = fcol + 0.0625;
@@ -120,7 +114,7 @@ void R_DrawChar (int x, int y, int num)
 
 void R_DrawChars (void)
 {
-	R_BindTexture(draw_chars[con_font->integer]->texnum);
+	R_BindTexture(draw_chars->texnum);
 
 	R_EnableBlend(qtrue);
 

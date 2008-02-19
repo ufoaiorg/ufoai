@@ -441,14 +441,12 @@ static void Key_Console (int key)
 	}
 
 	if (key == K_PGUP || key == K_KP_PGUP || key == K_MWHEELUP) {
-		con.display -= 2;
+		Con_Scroll(-2);
 		return;
 	}
 
 	if (key == K_PGDN || key == K_KP_PGDN || key == K_MWHEELDOWN) {
-		con.display += 2;
-		if (con.display > con.current)
-			con.display = con.current;
+		Con_Scroll(2);
 		return;
 	}
 

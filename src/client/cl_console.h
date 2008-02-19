@@ -29,34 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CONSOLE_H
 #define CLIENT_CL_CONSOLE_H
 
-#define	NUM_CON_TIMES 8
-
-#define COLORED_TEXT_MASK 128
-
-#define		CON_TEXTSIZE	32768
-typedef struct {
-	qboolean initialized;
-
-	char text[CON_TEXTSIZE];
-	int current;				/**< line where next message will be printed */
-	int x;						/**< offset in current line for next print */
-	int display;				/**< bottom of console displays this line */
-
-	int linewidth;				/**< characters across screen */
-	int totallines;				/**< total lines in console scrollback */
-
-	float cursorspeed;
-
-	int vislines;
-
-	float times[NUM_CON_TIMES];	/**< cls.realtime time the line was generated
-								* for transparent notify lines */
-} console_t;
-
-extern console_t con;
-
 void Con_DrawCharacter(int cx, int line, int num);
-
+void Con_Scroll(int scroll);
 void Con_CheckResize(void);
 void Con_Init(void);
 void Con_DrawConsole(float frac);

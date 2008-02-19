@@ -438,7 +438,7 @@ void SCR_UpdateScreen (void)
 	}
 
 	/* not initialized yet */
-	if (!scr_initialized || !con.initialized)
+	if (!scr_initialized)
 		return;
 
 	R_BeginFrame();
