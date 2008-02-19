@@ -865,13 +865,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 	Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, NULL), &SV_Frame, NULL);
 
-	/* XXX: These next two lines want to be removed */
-
-#ifndef DEDICATED_ONLY
-	/* Temporary hack: IRC logic shouldn't poll a timer like this */
-	Schedule_Timer(Cvar_Get("irc_freq", "10", 0, NULL), &Irc_Logic_Frame, NULL);
-#endif
-
+	/* XXX: This line wants to be removed */
 	Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL);
 
 	Com_Printf("====== UFO Initialized ======\n\n");

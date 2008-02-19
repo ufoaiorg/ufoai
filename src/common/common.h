@@ -144,7 +144,7 @@ void Irc_Init(void);
 void Irc_Shutdown(void);
 
 /* client side */
-void Irc_Logic_Frame(int now, void *data);
+void Irc_Logic_Frame(void);
 void Irc_Input_KeyEvent(int key);
 void Irc_Input_Deactivate(void);
 void Irc_Input_Activate(void);

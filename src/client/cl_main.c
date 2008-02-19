@@ -2346,6 +2346,8 @@ void CL_Frame (int now, void *data)
 
 	CL_SendCommand();
 
+	Irc_Logic_Frame();
+
 	IN_Frame();
 
 	/* update camera position */

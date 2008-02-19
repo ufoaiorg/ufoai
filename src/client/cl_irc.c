@@ -473,7 +473,12 @@ static void Irc_Client_CmdRplWhowasuser (const char *params, const char *trailin
 			break;
 		}
 	}
-	Irc_AppendToBuffer(va("%s was %s@%s : %s", nick, user, host, real_name));
+	Irc_AppendToBuffer(va("^B%s was %s@%s : %s", nick, user, host, real_name));
+}
+
+static inline void Irc_Client_CmdTopic (const char *prefix, const char *trailing)
+{
+	Cvar_ForceSet("irc_topic", trailing);
 }
 
 static void Irc_Client_CmdRplTopic (const char *params, const char *trailing)
@@ -481,16 +486,7 @@ static void Irc_Client_CmdRplTopic (const char *params, const char *trailing)
 	const char *channel = strchr(params, ' ');
 	if (channel) {
 		++channel;
-		Irc_AppendToBuffer(va("%s | Topic is: \"%s\"", channel, trailing));
-	}
-}
-
-static void Irc_Client_CmdRplNotopic (const char *params)
-{
-	const char *channel = strchr(params, ' ');
-	if (channel) {
-		++channel;
-		Irc_AppendToBuffer(va("%s | No topic set.", channel));
+		Irc_Client_CmdTopic(params, trailing);
 	}
 }
 
@@ -516,7 +512,7 @@ static void Irc_Client_CmdRplWhoisuser (const char *params, const char *trailing
 			break;
 		}
 	}
-	Irc_AppendToBuffer(va("%s is %s@%s : %s", nick, user, host, real_name));
+	Irc_AppendToBuffer(va("^B%s is %s@%s : %s", nick, user, host, real_name));
 }
 
 static void Irc_Client_CmdRplWhoisserver (const char *params, const char *trailing)
@@ -538,7 +534,7 @@ static void Irc_Client_CmdRplWhoisserver (const char *params, const char *traili
 			break;
 		}
 	}
-	Irc_AppendToBuffer(va("%s using %s : %s", nick, server, server_info));
+	Irc_AppendToBuffer(va("^B%s using %s : %s", nick, server, server_info));
 }
 
 static void Irc_Client_CmdRplWhoisaccount (const char *params, const char *trailing)
@@ -560,7 +556,7 @@ static void Irc_Client_CmdRplWhoisaccount (const char *params, const char *trail
 			break;
 		}
 	}
-	Irc_AppendToBuffer(va("%s %s %s", nick, trailing, account));
+	Irc_AppendToBuffer(va("^B%s %s %s", nick, trailing, account));
 }
 
 static void Irc_Client_CmdRplWhoisidle (const char *params, const char *trailing)
@@ -582,7 +578,7 @@ static void Irc_Client_CmdRplWhoisidle (const char *params, const char *trailing
 			break;
 		}
 	}
-	Irc_AppendToBuffer(va("%s is %s %s", nick, idle, trailing));
+	Irc_AppendToBuffer(va("^B%s is %s %s", nick, idle, trailing));
 }
 
 static void Irc_Client_CmdRplWhoreply (const char *params, const char *trailing)
@@ -624,7 +620,7 @@ static void Irc_Client_CmdMode (const char *prefix, const char *params, const ch
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("%s sets mode %s", nick, params));
+	Irc_AppendToBuffer(va("^B%s sets mode %s", nick, params));
 }
 
 static void Irc_Client_CmdJoin (const char *prefix, const char *params, const char *trailing)
@@ -632,7 +628,7 @@ static void Irc_Client_CmdJoin (const char *prefix, const char *params, const ch
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("Joined: %s (%s)", nick, prefix));
+	Irc_AppendToBuffer(va("^BJoined: %s", nick));
 	Irc_Logic_AddChannelName(chan, p, nick);
 }
 
@@ -641,7 +637,7 @@ static void Irc_Client_CmdPart (const char *prefix, const char *trailing)
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("Left: %s (%s)", nick, prefix));
+	Irc_AppendToBuffer(va("^BLeft: %s (%s)", nick, prefix));
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
@@ -650,7 +646,7 @@ static void Irc_Client_CmdQuit (const char *prefix, const char *params, const ch
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("Quits: %s (%s)", nick, trailing));
+	Irc_AppendToBuffer(va("^BQuits: %s (%s)", nick, trailing));
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
@@ -659,7 +655,7 @@ static void Irc_Client_CmdKill (const char *prefix, const char *params, const ch
 	char nick[MAX_VAR];
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("Killed: %s (%s)", nick, trailing));
+	Irc_AppendToBuffer(va("^BKilled: %s (%s)", nick, trailing));
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
@@ -675,21 +671,12 @@ static void Irc_Client_CmdKick (const char *prefix, const char *params, const ch
 	victim = strtok(NULL, " ");
 	if (!strcmp(victim, irc_nick->string)) {
 		/* we have been kicked */
-		Irc_AppendToBuffer(va("You were kicked from %s by %s (%s)", channel, nick, trailing));
+		Irc_AppendToBuffer(va("^BYou were kicked from %s by %s (%s)", channel, nick, trailing));
 	} else {
 		/* someone else was kicked */
-		Irc_AppendToBuffer(va("%s kicked %s (%s)", nick, victim, trailing));
+		Irc_AppendToBuffer(va("^B%s kicked %s (%s)", nick, victim, trailing));
 	}
 	Irc_Logic_RemoveChannelName(chan, nick);
-}
-
-static void Irc_Client_CmdTopic (const char *prefix, const char *trailing)
-{
-	char nick[MAX_VAR];
-	irc_nick_prefix_t p;
-	Irc_ParseName(prefix, nick, &p);
-	Irc_AppendToBuffer(va("%s sets topic: \"%s\"", nick, trailing));
-	Cvar_ForceSet("irc_topic", trailing);
 }
 
 /**
@@ -843,24 +830,25 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		case RPL_MYINFO:
 		case RPL_MOTDSTART:
 		case RPL_MOTD:
-		case RPL_ENDOFMOTD:
 		case RPL_LOCALUSERS:
 		case RPL_GLOBALUSERS:
-			Irc_AppendToBuffer(msg->trailing);
-			return qtrue;
-
 		case RPL_ISUPPORT:
 		case RPL_LUSEROP:
 		case RPL_LUSERUNKNOWN:
 		case RPL_LUSERCHANNELS:
 		case RPL_LUSERCLIENT:
 		case RPL_LUSERME:
-			p = strchr(msg->params, ' ');	/* skip first param (nick) */
-			if (p) {
-				++p;
-				Irc_AppendToBuffer(va("%s %s", p, msg->trailing));
-			} else
-				Irc_AppendToBuffer(msg->trailing);
+			return qtrue;
+
+		/* read our own motd */
+		case RPL_ENDOFMOTD:
+			{
+				char *fbuf;
+				int size;
+				size = FS_LoadFile("irc_motd.txt", (byte **) &fbuf);
+				if (size)
+					Irc_AppendToBuffer(fbuf);
+			}
 			return qtrue;
 
 		case RPL_NAMREPLY:
@@ -873,8 +861,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 			Irc_Client_CmdRplTopic(msg->params, msg->trailing);
 			return qtrue;
 		case RPL_NOTOPIC:
-			Irc_Client_CmdRplNotopic(msg->params);
-
+			return qtrue;
 		case RPL_WHOISUSER:
 			Irc_Client_CmdRplWhoisuser(msg->params, msg->trailing);
 			return qtrue;
@@ -965,7 +952,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 			Irc_AppendToBuffer(va("%s : %s", msg->params, msg->trailing));
 			return qtrue;
 		default:
-			Irc_AppendToBuffer(msg->trailing);
+			Com_DPrintf(DEBUG_CLIENT, "<%s> [%s] %s : %s\n", msg->prefix, cmd.id.string, msg->params, msg->trailing);
 			return qtrue;
 		} /* switch */
 		break;
@@ -979,7 +966,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		else if (!Q_strncmp(cmd.id.string, "QUIT", 4))
 			Irc_Client_CmdQuit(msg->prefix, msg->params, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "NOTICE", 6))
-			Irc_AppendToBuffer(msg->trailing);
+			Com_Printf(va("%s\n", msg->trailing));
 		else if (!Q_strncmp(cmd.id.string, "PRIVMSG", 7))
 			Irc_Client_CmdPrivmsg(msg->prefix, msg->params, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "MODE", 4))
@@ -1261,9 +1248,9 @@ static void Irc_Logic_Disconnect (const char *reason)
  * @sa Irc_Logic_ReadMessages
  * @sa Irc_Logic_SendMessages
  */
-void Irc_Logic_Frame (int now, void *data)
+void Irc_Logic_Frame (void)
 {
-	if (irc_connected && now > 0) {
+	if (irc_connected) {
 		if (irc_channel->modified) {
 			/* FIXME: do this without disconnect, connect */
 			Irc_Logic_Disconnect("Switched to another channel");
@@ -1618,7 +1605,7 @@ void Irc_Init (void)
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
 	irc_user = Cvar_Get("irc_user", "UFOAIPlayer", CVAR_ARCHIVE, NULL);
 	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
-	irc_topic = Cvar_Get("irc_topic", "", CVAR_NOSET, NULL);
+	irc_topic = Cvar_Get("irc_topic", "Connecting (please wait)...", CVAR_NOSET, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
 	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, "Log all irc conversations to game console, too");
 	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "0", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
