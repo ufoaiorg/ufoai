@@ -480,7 +480,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	if (chr->empl_type == EMPL_ROBOT)
 		return;
 
-	for (; i < SKILL_NUM_TYPES; i++) {
+	for (i = 0; i < SKILL_NUM_TYPES; i++) {
 		maxXP = CHRSH_CharGetMaxExperiencePerMission(i);
 		gainedXP = G_GetEarnedExperience(i, chr);
 
@@ -492,7 +492,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	}
 
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
-	i++;
+	assert(i == SKILL_NUM_TYPES);	/**< We need to get sure that index for health-experience is correct. */
 	maxXP = CHRSH_CharGetMaxExperiencePerMission(i);
 	gainedXP = min(maxXP, totalGainedXP / 2);
 
