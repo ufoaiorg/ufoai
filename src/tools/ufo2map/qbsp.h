@@ -215,7 +215,6 @@ void RemovePortalFromNode(portal_t *portal, node_t *l);
 /* writebsp.c */
 
 void SetModelNumbers(void);
-void SetLightStyles(void);
 
 void BeginBSPFile(void);
 void WriteBSP(node_t *headnode);

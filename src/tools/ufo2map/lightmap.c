@@ -658,7 +658,7 @@ void CreateDirectLights (void)
 			continue;
 
 		numdlights++;
-		dl = malloc(sizeof(directlight_t));
+		dl = malloc(sizeof(*dl));
 		memset(dl, 0, sizeof(*dl));
 
 		VectorCopy(p->origin, dl->origin);
@@ -683,7 +683,7 @@ void CreateDirectLights (void)
 			continue;
 
 		numdlights++;
-		dl = malloc(sizeof(directlight_t));
+		dl = malloc(sizeof(*dl));
 		memset(dl, 0, sizeof(*dl));
 
 		GetVectorForKey(e, "origin", dl->origin);

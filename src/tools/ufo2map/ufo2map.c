@@ -309,7 +309,6 @@ int main (int argc, char **argv)
 
 		LoadMapFile(name);
 		SetModelNumbers();
-		SetLightStyles();
 
 		UnparseEntities();
 
@@ -318,7 +317,6 @@ int main (int argc, char **argv)
 		/* start from scratch */
 		LoadMapFile(name);
 		SetModelNumbers();
-		SetLightStyles();
 
 		ProcessModels(source);
 	}

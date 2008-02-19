@@ -253,47 +253,6 @@ void SetModelNumbers (void)
 			SetKeyValue(&entities[i], "model", value);
 		}
 	}
-
-}
-
-#define	MAX_SWITCHED_LIGHTS	32
-void SetLightStyles (void)
-{
-	int stylenum;
-	const char *t;
-	entity_t *e;
-	int i, j;
-	char value[10];
-	char lighttargets[MAX_SWITCHED_LIGHTS][MAX_VAR];
-
-	/* any light that is controlled (has a targetname) */
-	/* must have a unique style number generated for it */
-
-	stylenum = 0;
-	for (i = 1; i < num_entities; i++) {
-		e = &entities[i];
-
-		t = ValueForKey(e, "classname");
-		if (Q_strncasecmp(t, "light", 5))
-			continue;
-		t = ValueForKey(e, "targetname");
-		if (!t[0])
-			continue;
-
-		/* find this targetname */
-		for (j = 0; j < stylenum; j++)
-			if (!strcmp(lighttargets[j], t))
-				break;
-		if (j == stylenum) {
-			if (stylenum >= MAX_SWITCHED_LIGHTS)
-				Sys_Error("stylenum == MAX_SWITCHED_LIGHTS (%i)", stylenum);
-			strcpy(lighttargets[j], t);
-			stylenum++;
-		}
-		sprintf(value, "%i", 32 + j);
-		SetKeyValue(e, "style", value);
-	}
-
 }
 
 /**
