@@ -1542,7 +1542,7 @@ static void Irc_Client_Kick_f (void)
 				reason = NULL;
 			Irc_Proto_Kick(channel, nick, reason);
 		} else
-			Com_Printf("Not joined: %s.", channel);
+			Com_Printf("Not joined: %s.\n", channel);
 	} else
 		Com_Printf("Usage: %s <channel> <nick> [<reason>]\n", Cmd_Argv(0));
 }
