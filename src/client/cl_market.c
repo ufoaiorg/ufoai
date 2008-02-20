@@ -266,24 +266,15 @@ static void BS_UpdateAircraftBSButtons (void)
 }
 
 /**
- * @brief Init function for Buy/Sell menu. Updates the Buy/Sell menu list.
+ * @brief Updates the Buy/Sell menu list.
+ * @sa BS_BuyType_f
  */
-static void BS_BuyType_f (void)
+static void BS_BuyType (void)
 {
 	objDef_t *od;
 	aircraft_t *air_samp;
 	int i, j = 0;
-	menuNode_t* node;
-	char tmpbuf[64];
-
-	if (Cmd_Argc() == 2) {
-		buyCategory = atoi(Cmd_Argv(1));
-		buyList.scroll = 0;
-		node = MN_GetNodeFromCurrentMenu("market");
-		if (node)
-			node->textScroll = 0;
-		BS_MarketScroll_f();
-	}
+	char tmpbuf[MAX_VAR];
 
 	if (!baseCurrent || buyCategory == -1)
 		return;
@@ -361,7 +352,6 @@ static void BS_BuyType_f (void)
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
 				}
-
 
 				BS_AddToList(tech->name,
 					E_CountHiredRobotByType(baseCurrent, &gd.ugvs[i]),	/* numInStorage */
@@ -497,6 +487,23 @@ static void BS_BuyType_f (void)
 	}
 }
 
+/**
+ * @brief Init function for Buy/Sell menu.
+ */
+static void BS_BuyType_f (void)
+{
+	if (Cmd_Argc() == 2) {
+		menuNode_t* node = MN_GetNodeFromCurrentMenu("market");
+		buyCategory = atoi(Cmd_Argv(1));
+		buyList.scroll = 0;
+		if (node)
+			node->textScroll = 0;
+		BS_MarketScroll_f();
+	}
+
+	BS_BuyType();
+}
+
 
 /**
  * @brief Buy one item of a given type.
@@ -536,8 +543,7 @@ static void BS_BuyItem_f (void)
 		&&  (E_CountUnhiredRobotsByType(ugv) > 0)) {
 			/** @todo storage/capacity checks */
 			if (E_HireRobot(baseCurrent, ugv)) {
-				Cmd_BufClear();
-				BS_BuyType_f();
+				BS_BuyType();
 				CL_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
 			} else {
 				Com_Printf("Could not buy this item.\n");
@@ -554,8 +560,7 @@ static void BS_BuyItem_f (void)
 					/* reinit the menu */
 					B_UpdateStorageAndCapacity(baseCurrent, item, 1, qfalse, qfalse);
 					ccs.eMarket.num[item]--;
-					Cmd_BufClear();
-					BS_BuyType_f();
+					BS_BuyType();
 					CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
 				} else {
 					MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
@@ -608,8 +613,7 @@ static void BS_SellItem_f (void)
 				/** @todo: message - Couldn't fire employee. */
 				Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
 			} else {
-				Cmd_BufClear();
-				BS_BuyType_f();
+				BS_BuyType();
 				CL_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
 			}
 	} else {
@@ -624,8 +628,7 @@ static void BS_SellItem_f (void)
 				B_UpdateStorageAndCapacity(baseCurrent, item, -1, qfalse, qfalse);
 				ccs.eMarket.num[item]++;
 
-				Cmd_BufClear();
-				BS_BuyType_f();
+				BS_BuyType();
 				CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item]);
 			} else {
 				break;
@@ -673,8 +676,7 @@ static void BS_Autosell_f (void)
 	}
 
 	/* Reinit the menu. */
-	Cmd_BufClear();
-	BS_BuyType_f();
+	BS_BuyType();
 }
 
 /**
@@ -711,8 +713,7 @@ static void BS_IncreaseFactor_f (void)
 		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
 	}
 	/* Reinit the menu. */
-	Cmd_BufClear();
-	BS_BuyType_f();
+	BS_BuyType();
 }
 
 /**
@@ -749,8 +750,7 @@ static void BS_DecreaseFactor_f (void)
 		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
 	}
 	/* Reinit the menu. */
-	Cmd_BufClear();
-	BS_BuyType_f();
+	BS_BuyType();
 }
 
 /**
@@ -817,8 +817,7 @@ static void BS_BuyAircraft_f (void)
 				B_UpdateStorageAndCapacity(baseCurrent, craftitemID, 1, qfalse, qfalse);
 				ccs.eMarket.num[craftitemID]--;
 				/* reinit the menu */
-				Cmd_BufClear();
-				BS_BuyType_f();
+				BS_BuyType();
 				CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[craftitemID]);
 			} else {
 				MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
@@ -836,8 +835,7 @@ static void BS_ProcessCraftItemSale (const int craftitemID)
 		assert(craftitemID >= MAX_OBJDEFS);
 		ccs.eMarket.num[craftitemID]++;
 		/* reinit the menu */
-		Cmd_BufClear();
-		BS_BuyType_f();
+		BS_BuyType();
 		CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[craftitemID]);
 	}
 }
@@ -911,8 +909,7 @@ static void BS_SellAircraft_f (void)
 
 			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
 			/* reinit the menu */
-			Cmd_BufClear();
-			BS_BuyType_f();
+			BS_BuyType();
 			return;
 		}
 		if (!found) {
