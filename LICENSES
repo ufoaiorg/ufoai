@@ -2797,6 +2797,9 @@ base/textures/tex_pics/banner_wop.jpg | GNU General Public License 2.0 | John W.
 base/textures/tex_pics/cow1.jpg | GNU General Public License 2.0 | Tobias Gerhardy
 base/textures/tex_pics/cow2.jpg | GNU General Public License 2.0 | Tobias Gerhardy
 base/textures/tex_pics/cow3.jpg | GNU General Public License 2.0 | Tobias Gerhardy
+base/textures/tex_pics/dragon001.jpg | Public Domain | 19th century Chinese wood engraving.
+base/textures/tex_pics/dragon002.jpg | Public Domain | 19th century Chinese wood engraving.
+base/textures/tex_pics/dragon003.jpg | Public Domain | 19th century Chinese wood engraving.
 base/textures/tex_pics/landsc001.jpg | GNU General Public License 2.0
 base/textures/tex_pics/landsc002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/landsc003.jpg | GNU General Public License 2.0
@@ -2807,6 +2810,7 @@ base/textures/tex_pics/landsc007.jpg | GNU General Public License 2.0
 base/textures/tex_pics/landsc008.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/landsc_conners_hill.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/landsc_topichow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/mc_kinnsi.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
 base/textures/tex_pics/messboard002.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_pics/poster_xcommando.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
 base/textures/tex_pics/science001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -2817,8 +2821,8 @@ base/textures/tex_pics/science005.jpg | GNU General Public License 2.0 | John W.
 base/textures/tex_pics/statistics.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/tonight1.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_pics/tonight_honuda.tga | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_pics/traktor1.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_pics/traktor2.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_pics/traktor1.jpg | Public Domain | US Federal Government
+base/textures/tex_pics/traktor2.jpg | Creative Commons Attribution ShareAlike 2.0 | Solitude
 base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
