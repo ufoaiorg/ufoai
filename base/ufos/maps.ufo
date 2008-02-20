@@ -1043,9 +1043,9 @@ mapdef druglord
 	}
 }
 
-mapdef terrain02
+mapdef eaglenest
 {
-	map				terrain02
+	map				eaglenest
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -1084,9 +1084,9 @@ mapdef terrain02
 	}
 }
 
-mapdef terrain
+mapdef scout_crash
 {
-	map				terrain08
+	map				scout_crash
 	multiplayer		true
 	teams			2
 	gametypes {

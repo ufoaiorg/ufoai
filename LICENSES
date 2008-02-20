@@ -85,6 +85,7 @@ base/maps/country/c_v01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_v01_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/dam.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/druglord.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/eaglenest.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/estate.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/excavation.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/farm.map | GNU General Public License 2.0 | 'SparX' Beyeler
@@ -202,7 +203,6 @@ base/maps/shelter/shelter_solid.map | GNU General Public License 2.0 | Bas Fourn
 base/maps/spedition.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/stadium.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/subway.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/terrain02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/tower.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/transport.map | GNU General Public License 2.0
 base/maps/tropic.ump | GNU General Public License 2.0

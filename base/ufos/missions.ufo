@@ -699,8 +699,8 @@ mission qatar
 }
 
 // Switzerland
-//artifact: craft_ufo_fighter
-mission terrain
+//artifact: craft_ufo_scout
+mission scout_crash
 {
 	location	"_Altdorf"
 	type		"_Terror attack"
@@ -712,7 +712,7 @@ mission terrain
 	civilians	2
 	nation		"europe"
 	onlose		""
-	onwin		"cp_uforecovery 1;"
+	onwin		"cp_uforecovery 0;"
 	storyrelated	true
 }
 
