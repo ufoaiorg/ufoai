@@ -319,8 +319,7 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 		if (damage >= ent->HP) {
 			vec3_t origin;
 
-			VectorAdd(ent->absmin, ent->absmax, origin);
-			VectorScale(origin, 0.5, origin);
+			VectorCenterFromMinsMaxs(ent->absmin, ent->absmax, origin);
 
 			gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 			gi.WriteShort(ent->number);
@@ -553,10 +552,9 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 
 		if (check->type == ET_ACTOR || check->type == ET_ACTOR2x2)
 			VectorCopy(check->origin, center);
-		else if (check->type == ET_BREAKABLE || check->type == ET_DOOR) {
-			VectorAdd(check->absmin, check->absmax, center);
-			VectorScale(center, 0.5, center);
-		} else
+		else if (check->type == ET_BREAKABLE || check->type == ET_DOOR)
+			VectorCenterFromMinsMaxs(check->absmin, check->absmax, center);
+		else
 			continue;
 
 		/* check for distance */

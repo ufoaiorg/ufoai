@@ -46,9 +46,9 @@ typedef struct plane_s {
 } plane_t;
 
 typedef struct {
-	vec_t	shift[2];
+	vec2_t	shift;
 	vec_t	rotate;
-	vec_t	scale[2];
+	vec2_t	scale;
 	char	name[32];
 	int		surfaceFlags;
 	int		value;

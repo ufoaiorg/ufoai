@@ -160,6 +160,8 @@ void VectorInverse(vec3_t v);
 void VectorScale(const vec3_t in, const vec_t scale, vec3_t out);
 int Q_log2(int val);
 
+void VectorCenterFromMinsMaxs(const vec3_t mins, const vec3_t maxs, vec3_t center);
+
 void VecToAngles(const vec3_t vec, vec3_t angles);
 
 void Print2Vector(const vec2_t v);

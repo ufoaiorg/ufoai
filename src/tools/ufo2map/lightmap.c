@@ -423,7 +423,7 @@ typedef struct {
 	vec3_t	worldtotex[2];	/* s = (world - texorg) . worldtotex[0] */
 	vec3_t	textoworld[2];	/* world = texorg + s * textoworld[0] */
 
-	vec_t	exactmins[2], exactmaxs[2];
+	vec2_t	exactmins, exactmaxs;
 
 	int		texmins[2], texsize[2];
 	int		surfnum;
@@ -438,7 +438,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 {
 	dBspFace_t *s;
 	vec3_t mins, maxs;
-	vec_t stmins[2], stmaxs[2];
+	vec2_t stmins, stmaxs;
 	float val;
 	int i, j, e;
 	dBspVertex_t *v;
@@ -448,8 +448,8 @@ static void CalcFaceExtents (lightinfo_t *l)
 
 	VectorSet(mins, 999999, 999999, 999999);
 	VectorSet(maxs, -999999, -999999, -999999);
-	stmins[0] = stmins[1] = 999999;
-	stmaxs[0] = stmaxs[1] = -999999;
+	Vector2Set(stmins, 999999, 999999);
+	Vector2Set(stmaxs, -999999, -999999);
 
 	tex = &texinfo[s->texinfo];
 

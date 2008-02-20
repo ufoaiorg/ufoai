@@ -664,8 +664,7 @@ static void ParseBrush (entity_t *mapent)
 			return;
 		}
 
-		VectorAdd(b->mins, b->maxs, origin);
-		VectorScale(origin, 0.5, origin);
+		VectorCenterFromMinsMaxs(b->mins, b->maxs, origin);
 
 		sprintf(string, "%i %i %i", (int)origin[0], (int)origin[1], (int)origin[2]);
 		SetKeyValue(&entities[b->entitynum], "origin", string);

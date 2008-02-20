@@ -335,9 +335,9 @@ static void SubdividePatch (patch_t *patch)
 			if (v > maxs[j])
 				maxs[j] = v;
 		}
-	VectorSubtract (maxs, mins, total);
+	VectorSubtract(maxs, mins, total);
 	for (i = 0; i < 3; i++)
-		if (total[i] > (config.subdiv + 1) )
+		if (total[i] > (config.subdiv + 1))
 			break;
 	/* no splitting needed */
 	if (i == 3)

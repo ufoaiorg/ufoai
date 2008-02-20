@@ -45,7 +45,7 @@ winding_t *AllocWinding (int points)
 	c_active_windings++;
 	if (c_active_windings > c_peak_windings)
 		c_peak_windings = c_active_windings;
-	s = sizeof(vec_t) * 3 * points + sizeof(int);
+	s = sizeof(vec3_t) * points + sizeof(int);
 	w = malloc(s);
 	if (!w) {
 		Sys_Error("could not allocate winding of size: "UFO_SIZE_T"\n", s);
@@ -360,10 +360,11 @@ void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t epsilon)
 {
 	winding_t *in;
-	vec_t dists[MAX_POINTS_ON_WINDING+4];
-	int sides[MAX_POINTS_ON_WINDING+4];
+	/* @todo: Why + 4? */
+	vec_t dists[MAX_POINTS_ON_WINDING + 4];
+	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
-	static vec_t dot;		/* VC 4.2 optimizer bug if not static */
+	vec_t dot;
 	int i, j;
 	vec_t *p1, *p2;
 	vec3_t mid;
@@ -401,8 +402,8 @@ void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t eps
 	if (!counts[1])
 		return;		/* inout stays the same */
 
-	maxpts = in->numpoints + 4;	/* cant use counts[0]+2 because */
-								/* of fp grouping errors */
+	/* cant use counts[0] + 2 because of fp grouping errors */
+	maxpts = in->numpoints + 4;
 
 	f = AllocWinding(maxpts);
 
@@ -426,7 +427,7 @@ void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t eps
 		/* generate a split point */
 		p2 = in->p[(i + 1) % in->numpoints];
 
-		dot = dists[i] / (dists[i]-dists[i + 1]);
+		dot = dists[i] / (dists[i] - dists[i + 1]);
 		/* avoid round off error when possible */
 		for (j = 0; j < 3; j++) {
 			if (normal[j] == 1)
@@ -434,7 +435,7 @@ void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t eps
 			else if (normal[j] == -1)
 				mid[j] = -dist;
 			else
-				mid[j] = p1[j] + dot*(p2[j]-p1[j]);
+				mid[j] = p1[j] + dot * (p2[j] - p1[j]);
 		}
 
 		VectorCopy(mid, f->p[f->numpoints]);

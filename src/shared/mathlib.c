@@ -764,6 +764,12 @@ float AngleNormalize180 (float angle)
 	return angle;
 }
 
+void VectorCenterFromMinsMaxs (const vec3_t mins, const vec3_t maxs, vec3_t center)
+{
+	VectorAdd(mins, maxs, center);
+	VectorScale(center, 0.5, center);
+}
+
 /**
  * @brief Sets mins and maxs to their starting points before using AddPointToBounds
  * @sa AddPointToBounds
