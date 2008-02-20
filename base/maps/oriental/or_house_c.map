@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "35"
-"_color" "0.8 0.8 1"
-"ambient" "0 0 0"
-"angles" "15 60"
 // brush 0
 {
 ( 384 36 0 ) ( 352 36 0 ) ( 352 32 0 ) tex_nature/desert004 128 0 -180 0.25 -0.25 0 128 0

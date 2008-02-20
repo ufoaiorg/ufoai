@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "35"
-"_color" "0.8 0.8 1"
-"ambient" "0 0 0"
-"angles" "15 60"
 // brush 0
 {
 ( 66 152 12 ) ( 64 152 12 ) ( 64 60 12 ) tex_material/metall002 -4 -16 0 0.5 0.5 0 0 0
@@ -999,18 +995,12 @@
 {
 "classname" "misc_model"
 "origin" "674 256 36"
-"lightcolor" "0.6 0.6 0.6"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
 "spawnflags" "255"
 "model" "models/objects/cars/van/van1t.md2"
 }
 // entity 2
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.6 0.6"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
 "skin" "0"
 "spawnflags" "255"
 "model" "models/objects/cars/van/van1.md2"

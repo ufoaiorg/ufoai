@@ -2,11 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "35"
-"_color" "0.8 0.8 1"
-"ambient" "0 0 0"
-"angles" "15 60"
-"maxteams" "0"
 // brush 0
 {
 ( 216 156 0 ) ( 200 156 0 ) ( 200 132 0 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
@@ -100,9 +95,6 @@
 // entity 2
 {
 "classname" "misc_model"
-"lightambient" "0.3 0.3 0.3"
-"lightcolor" "0.3 0.3 0.3"
-"light" "1"
 "origin" "76 52 13"
 "angles" "0 60 0"
 "model" "models/objects/furniture/trashcan/trashcan.md2"
@@ -115,7 +107,4 @@
 "model" "models/objects/furniture/trashcan/trashcan.md2"
 "angles" "0 60 0"
 "origin" "204 144 13"
-"light" "1"
-"lightcolor" "0.3 0.3 0.3"
-"lightambient" "0.3 0.3 0.3"
 }

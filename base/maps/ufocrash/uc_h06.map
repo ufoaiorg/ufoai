@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "35"
-"_color" "1 1 0.9"
-"ambient" "0.0 0.0 0.0"
-"angles" "40 20 0"
 // brush 0
 {
 ( 274 346 126 ) ( 250 346 126 ) ( 250 346 62 ) tex_misc/straw 52.1493530273 176 0 -0.3500980139 0.3500019908 65289 0 0

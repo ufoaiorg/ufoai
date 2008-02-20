@@ -2,11 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "35"
-"_color" "0.8 0.8 1"
-"ambient" "0 0 0"
-"angles" "15 60"
-"maxteams" "0"
 // brush 0
 {
 ( 224 96 4 ) ( 224 96 0 ) ( 224 64 0 ) tex_streets/street001 224 240 0 -0.25 0.25 2 0 0

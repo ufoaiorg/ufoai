@@ -2,11 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
-"_color" "0.9 0.8 1"
-"angles" "60 60"
 "maxlevel" "3"
-"light" "35"
-"ambient" "0 0 0"
 // brush 0
 {
 ( -400 -52 60 ) ( -400 -12 60 ) ( -448 -12 60 ) tex_material/c_yellow 4 8 90 0.5 0.5 0 128 0

@@ -4,10 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "6"
 "maxteams" "4"
-"light" "35"
-"_color" "1 0.8 0.8"
-"angles" "0 0"
-"ambient" "0 0 0"
 // brush 0
 {
 ( 512 448 256 ) ( 0 0 256 ) ( 0 448 256 ) tex_buildings/concrete003 0 0 0 1 1 63488 0 0

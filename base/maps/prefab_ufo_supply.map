@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"ambient" "0.4 0.4 0.4"
-"angles" "30 210"
-"_color" "1 0.8 0.8"
-"light" "160"
 // brush 0
 {
 ( -640 -204 68 ) ( -704 -204 68 ) ( -640 -204 64 ) tex_ufo/ufo1_04 0 0 0 0.5 0.5 512 128 0
