@@ -84,7 +84,7 @@ stage ufos_are_coming
 //		frame		"0 12 0"
 		frame		"0 20 0"
 		expire		"0 5 0"
-		missions	"mine_crash"
+		missions	"fighter_crash"
 		activatexvi	1
 		quota		1
 		ufos		4
@@ -96,7 +96,7 @@ stage ufos_are_coming
 //		frame		"0 10 0"
 		frame		"0 23 0"
 		expire		"0 8 0"
-		missions	"construction office harbor pdi bridge tropic_river shelter_standard"
+		missions	"construction office harbor resort bridge tropic_river shelter_standard"
 		quota		6
 		nextstage	invasion
 		ufos		2
@@ -118,7 +118,7 @@ stage invasion
 //		frame		"0 10 0"
 		frame		"0 30 0"
 		expire		"0 7 0"
-		missions	"africa terrain lake harvestercrash qatar"
+		missions	"africa terrain lake_ice harvester_crash qatar"
 		humanattack	1
 		quota		6
 		nextstage	alienbase

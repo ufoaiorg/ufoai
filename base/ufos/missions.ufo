@@ -373,7 +373,7 @@ mission frozen_alienlandingindustrial
 //--------------------------------------
 
 // Mexico
-mission city
+mission city_disco
 {
 	location	"_Veracruz"
 	type		"_Terror attack"
@@ -475,7 +475,7 @@ mission village
 }
 
 // America
-mission convoy
+mission military_convoy
 {
 	location	"_Georgia"
 	type		"_Terror attack"
@@ -499,7 +499,7 @@ mission convoy
 
 // Kenya, Africa
 // artifacts: crashed craft_ufo_fighter
-mission mine_crash
+mission fighter_crash
 {
 	location	"_Wajir"
 	type		"_Crash site"
@@ -591,7 +591,7 @@ mission office
 }
 
 // Turkey
-mission pdi
+mission resort
 {
 	location	"_Antalya"
 	type		"_Terror Attack"
@@ -648,7 +648,7 @@ mission africa
 
 //FIXME: where will we play now?
 //artifacts: crashed craft_ufo_harvester
-mission harvestercrash
+mission harvester_crash
 {
 	location	"_Atacama Desert"
 	type		"_Crashed alien ship"
@@ -665,7 +665,7 @@ mission harvestercrash
 }
 
 //FIXME: where will we play now?
-mission lake
+mission lake_ice
 {
 	location	"_Tazovskij"
 	type		"_Terror attack"
@@ -885,7 +885,7 @@ mission vil_shannon
 }
 
 //Siberia, Russia
-mission lake2
+mission lake_ice_big
 {
 	location	"_Somewhere in Siberia"
 	type		"_Terror Attack"

@@ -556,7 +556,7 @@ mapdef vil_big
 /////////////
 mapdef excavation
 {
-	map				excavation06
+	map				excavation
 	description		"_An excavation site that has fallen under alien attack."
 	multiplayer		true
 	teams			2
@@ -599,7 +599,7 @@ mapdef excavation
 
 mapdef estate
 {
-	map				estate01
+	map				estate
 	description		"_An estate owned by rich and influential people."
 	multiplayer		true
 	teams			2
@@ -638,7 +638,7 @@ mapdef estate
 
 mapdef italy
 {
-	map				italy05
+	map				italy
 	description		"_A small office in a mountainous region."
 	loadingscreen	italy05
 	teams			2
@@ -680,7 +680,7 @@ mapdef italy
 
 mapdef mart
 {
-	map			mart05
+	map			mart
 	description		"_A kind of communal gathering centre annex foraging facility, known as a supermarket."
 	multiplayer		true
 	teams			2
@@ -723,7 +723,7 @@ mapdef mart
 
 mapdef mine
 {
-	map				mine01
+	map				mine
 	description		"_An old mine."
 	multiplayer		true
 	teams			3
@@ -767,7 +767,7 @@ mapdef mine
 
 mapdef transport
 {
-	map				transport06
+	map				transport
 	description		"_An industial area, used for loading and unloading goods."
 	multiplayer		true
 	teams			2
@@ -806,7 +806,7 @@ mapdef transport
 
 mapdef bunker
 {
-	map				bunker01
+	map				bunker
 	description		"_A bunker used in a previous conflict."
 	multiplayer		true
 	teams			2
@@ -847,7 +847,7 @@ mapdef bunker
 
 mapdef dam
 {
-	map				dam01
+	map				dam
 	description		"_A hydroelectricity dam that is threatened by the alien invaders."
 	multiplayer		true
 	teams			2
@@ -886,7 +886,7 @@ mapdef dam
 
 mapdef japan
 {
-	map				japan06
+	map				japan
 	description		"_A classic eastern suburban area."
 	teams			2
 	multiplayer		true
@@ -925,7 +925,7 @@ mapdef japan
 
 mapdef spedition
 {
-	map				spedition06
+	map				spedition
 	description		"_A small industrial area."
 	multiplayer		true
 	teams			2
@@ -964,7 +964,7 @@ mapdef spedition
 
 mapdef stadium
 {
-	map				stadium06
+	map				stadium
 	description		"_A stadium used for various recreational events."
 	multiplayer		true
 	teams			2
@@ -1165,7 +1165,7 @@ mapdef farm
 
 mapdef industrial
 {
-	map				industrial06
+	map				industrial
 	description		"_An industrial compound."
 	multiplayer		true
 	teams			2
@@ -1206,7 +1206,7 @@ mapdef industrial
 
 mapdef rivertown
 {
-	map				rivertown01
+	map				rivertown
 	description		"_A rather old-fashioned suburban district."
 	multiplayer		true
 	teams			4
@@ -1248,9 +1248,9 @@ mapdef rivertown
 	}
 }
 
-mapdef city
+mapdef city_disco
 {
-	map				city04
+	map				city_disco
 	description		"_A small neighbourhood in a warm urban region."
 	multiplayer		true
 	teams			2
@@ -1290,7 +1290,7 @@ mapdef city
 
 mapdef gasstation
 {
-	map				gasstation05
+	map				gasstation
 	description		"_A place where citizens come to replenish their vehicles' fuel supply."
 	multiplayer		true
 	teams			2
@@ -1332,7 +1332,7 @@ mapdef gasstation
 
 mapdef oriental05
 {
-	map				oriental05
+	map				oriental
 	description		"_An urban district in an oriental region."
 	multiplayer		true
 	teams			2
@@ -1371,7 +1371,7 @@ mapdef oriental05
 
 mapdef oriental06
 {
-	map				oriental06
+	map				oriental_mosque
 	description		"_An urban district in an oriental region."
 	multiplayer		true
 	teams			2
@@ -1410,7 +1410,7 @@ mapdef oriental06
 
 mapdef subway
 {
-	map				subway07
+	map				subway
 	description		"_A subway station in a suburban part of town."
 	multiplayer		true
 	teams			2
@@ -1451,7 +1451,7 @@ mapdef subway
 
 mapdef tower
 {
-	map				tower06
+	map				tower
 	description		"_An office complex in the center of town."
 	multiplayer		true
 	teams			3
@@ -1494,7 +1494,7 @@ mapdef tower
 
 mapdef village
 {
-	map				village07
+	map				village
 	description		"_A suburban district."
 	multiplayer		true
 	teams			2
@@ -1532,9 +1532,9 @@ mapdef village
 	}
 }
 
-mapdef convoy
+mapdef military_convoy
 {
-	map				convoy01
+	map				military_convoy
 	description		"_A military convoy has caught the eye of the aliens."
 	multiplayer		true
 	teams			2
@@ -1572,9 +1572,9 @@ mapdef convoy
 	}
 }
 
-mapdef mine_crash
+mapdef fighter_crash
 {
-	map				mine_crash05
+	map				fighter_crash
 	description		"_A small UFO has crashed in this mining region."
 	multiplayer		true
 	teams			2
@@ -1614,7 +1614,7 @@ mapdef mine_crash
 
 mapdef bridge
 {
-	map				bridge01
+	map				bridge
 	description		"_A small UFO has crashed in this mining region."
 	multiplayer		true
 	teams			3
@@ -1656,7 +1656,7 @@ mapdef bridge
 
 mapdef construction
 {
-	map				const05
+	map				const
 	description		"_An office complex under constuction."
 	multiplayer		true
 	teams			2
@@ -1696,7 +1696,7 @@ mapdef construction
 
 mapdef harbor
 {
-	map				harbor07
+	map				harbor
 	description		"_A local harbor."
 	multiplayer		true
 	teams			2
@@ -1736,7 +1736,7 @@ mapdef harbor
 
 mapdef office
 {
-	map				office06
+	map				office
 	description		"_An office complex on the outskirts of town."
 	multiplayer		true
 	teams			2
@@ -1774,9 +1774,9 @@ mapdef office
 	}
 }
 
-mapdef pdi
+mapdef resort
 {
-	map				pdi08
+	map				resort
 	description		"_A luxurious vacation resort."
 	multiplayer		true
 	teams			2
@@ -1816,7 +1816,7 @@ mapdef pdi
 
 mapdef africa
 {
-	map				africa04
+	map				africa
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -1855,9 +1855,9 @@ mapdef africa
 	}
 }
 
-mapdef harvestercrash
+mapdef harvester_crash
 {
-	map				harvestercrash04
+	map				harvester_crash
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -1893,9 +1893,9 @@ mapdef harvestercrash
 	}
 }
 
-mapdef lake
+mapdef lake_ice
 {
-	map				lake03
+	map				lake_ice
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -1931,9 +1931,9 @@ mapdef lake
 	}
 }
 
-mapdef lake2
+mapdef lake_ice_big
 {
-	map				lake02
+	map				lake_ice_big
 	multiplayer		true
 	teams			3
 	gametypes {
@@ -1994,7 +1994,7 @@ mapdef shelter
 
 mapdef corrupt_city
 {
-	map				corrupt_city04
+	map				corrupt_city
 	description		"_A Corrupter has landed in the middle of a city."
 	multiplayer		true
 	teams			4
@@ -2040,7 +2040,7 @@ mapdef corrupt_city
 
 mapdef community_centre
 {
-	map				community_centre01
+	map				community_centre
 	description		"_A place where people come to relax and mingle."
 	multiplayer		true
 	teams			3
@@ -2081,7 +2081,7 @@ mapdef community_centre
 
 //mapdef condor_crash // The Condor is not used.
 //{
-//	map				condor_crash04
+//	map				condor_crash
 //	multiplayer		true
 //	teams			2
 //	gametypes {
