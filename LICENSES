@@ -239,6 +239,7 @@ base/maps/ufocrash/uc_ufo_fighter.map | GNU General Public License 2.0 | Martin 
 base/maps/ufocrash/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_ufo_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
 base/maps/ufocrash/uc_ufo_supply.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_supply and terrain08
+base/maps/village.ump | GNU General Public License 2.0
 base/maps/village/vil_c01.map | GNU General Public License 2.0
 base/maps/village/vil_c02.map | GNU General Public License 2.0
 base/maps/village/vil_c03.map | GNU General Public License 2.0
@@ -268,7 +269,6 @@ base/maps/village/vil_s07.map | GNU General Public License 2.0
 base/maps/village/vil_s08.map | GNU General Public License 2.0
 base/maps/village/vil_s15.map | GNU General Public License 2.0
 base/maps/village07n.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/villagen.ump | GNU General Public License 2.0
 base/media/FreeMono.ttf | GNU General Public License | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSans.ttf | GNU General Public License | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSerif.ttf | GNU General Public License | http://savannah.nongnu.org/projects/freefont/
