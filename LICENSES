@@ -183,6 +183,7 @@ base/maps/prefabs/prefab_ufo_supply.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_vegetation.map | GNU General Public License 2.0
 base/maps/resort.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/scout_crash.map | GNU General Public License 2.0
 base/maps/shelter.ump | GNU General Public License 2.0
 base/maps/shelter/shelter_corridor_ne.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelter/shelter_corridor_nw.map | GNU General Public License 2.0 | Bas Fournier
@@ -202,7 +203,6 @@ base/maps/spedition.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/stadium.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/subway.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/terrain02.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/terrain08.map | GNU General Public License 2.0
 base/maps/tower.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/transport.map | GNU General Public License 2.0
 base/maps/tropic.ump | GNU General Public License 2.0
