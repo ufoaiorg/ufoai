@@ -434,7 +434,7 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 	 * Note: This check needs to be done for every assignment to HP above anyway since a "return" could pop up in between.
 	 * I'll leave this one in here just in case. */
 	ent->HP = max(ent->HP, 0);
-	
+
 	/* Check death/knockout. */
 	if (ent->HP == 0 || ent->HP <= ent->STUN) {
 		G_SendStats(ent);

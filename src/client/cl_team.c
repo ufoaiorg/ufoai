@@ -2003,7 +2003,7 @@ typedef struct
 typedef struct
  {
 	int ucn;
-	int HP
+	int HP;
 	int STUN;
 	int morale;
 
