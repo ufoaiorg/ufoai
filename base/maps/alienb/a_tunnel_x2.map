@@ -3,11 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"maxteams" "0"
-"light" "0"
-"_color" "0.4 1 0.8"
-"angles" "0 270"
-"ambient" "0.4 0.4 0.4"
 // brush 0
 {
 ( 1024 192 96 ) ( 768 256 124 ) ( 1024 320 96 ) tex_alienbase/wall01 128 42 90 1 1 65024 0 0

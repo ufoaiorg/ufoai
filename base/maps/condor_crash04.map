@@ -2,12 +2,8 @@
 // entity 0
 {
 "classname" "worldspawn"
-"_color" "0.9 0.9 1"
-"angles" "30 45"
 "maxlevel" "5"
 "maxteams" "3"
-"light" "35"
-"ambient" "0 0 0"
 // brush 0
 {
 ( -4 -512 132 ) ( 448 -512 132 ) ( 448 -472 132 ) tex_ufo/ufo2_01 -32 -80 0 0.25 0.25 64512 0 0

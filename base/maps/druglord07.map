@@ -2,12 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
-"_color" "0.8 0.8 1"
-"ambient" "0.1 0.1 0.1"
-"light" "35"
-"angles" "30 210"
 "maxlevel" "5"
-"maxteams" "0"
 // brush 0
 {
 ( 512 488 -68 ) ( 256 488 -68 ) ( 256 256 -68 ) tex_nature/rock008 0 0 0 0.5 0.5 0 0 0

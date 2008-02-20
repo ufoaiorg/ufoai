@@ -2,12 +2,8 @@
 // entity 0
 {
 "classname" "worldspawn"
-"_color" "0.8 0.8 1"
-"angles" "15 60"
 "maxlevel" "5"
 "maxteams" "2"
-"light" "35"
-"ambient" "0 0 0"
 // brush 0
 {
 ( 512 160 0 ) ( 480 160 0 ) ( 480 128 0 ) tex_common/actorclip -8 0 0 0.5 0.5 65536 0 0
@@ -14155,9 +14151,6 @@
 // entity 28
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "84 560 32"
@@ -14165,9 +14158,6 @@
 // entity 29
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "84 560 32"
@@ -14178,9 +14168,6 @@
 "origin" "76 432 32"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "spawnflags" "254"
-"light" "1"
-"lightambient" "0.7 0.7 0.7"
-"lightcolor" "0.6 0.58 0.45"
 }
 // entity 31
 {
@@ -14188,16 +14175,10 @@
 "origin" "76 432 32"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "spawnflags" "255"
-"lightcolor" "0.6 0.58 0.45"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
 }
 // entity 32
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "400 376 32"
@@ -14205,9 +14186,6 @@
 // entity 33
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "400 376 32"
@@ -19372,9 +19350,6 @@
 // entity 149
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "-336 688 36"
@@ -19382,9 +19357,6 @@
 // entity 150
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "-336 688 36"
@@ -19395,9 +19367,6 @@
 "origin" "-140 536 42"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "spawnflags" "254"
-"light" "1"
-"lightambient" "0.7 0.7 0.7"
-"lightcolor" "0.6 0.58 0.45"
 "angles" "10 50 0"
 }
 // entity 152
@@ -19406,17 +19375,11 @@
 "origin" "-140 536 36"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "spawnflags" "255"
-"lightcolor" "0.6 0.58 0.45"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
 "angles" "10 50 0"
 }
 // entity 153
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "-430 690 36"
@@ -19424,9 +19387,6 @@
 // entity 154
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "-430 690 36"
@@ -19437,9 +19397,6 @@
 "origin" "-48 528 36"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "spawnflags" "255"
-"lightcolor" "0.6 0.58 0.45"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
 }
 // entity 156
 {
@@ -19447,16 +19404,10 @@
 "origin" "-48 528 36"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "spawnflags" "254"
-"light" "1"
-"lightambient" "0.7 0.7 0.7"
-"lightcolor" "0.6 0.58 0.45"
 }
 // entity 157
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "688 432 36"
@@ -19464,9 +19415,6 @@
 // entity 158
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "688 432 36"
@@ -19477,9 +19425,6 @@
 "origin" "596 344 42"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "spawnflags" "254"
-"light" "1"
-"lightambient" "0.7 0.7 0.7"
-"lightcolor" "0.6 0.58 0.45"
 "angles" "10 50 0"
 }
 // entity 160
@@ -19488,17 +19433,11 @@
 "origin" "596 344 36"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "spawnflags" "255"
-"lightcolor" "0.6 0.58 0.45"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
 "angles" "10 50 0"
 }
 // entity 161
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "594 434 36"
@@ -19506,9 +19445,6 @@
 // entity 162
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "594 434 36"
@@ -19519,9 +19455,6 @@
 "origin" "688 336 36"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "spawnflags" "255"
-"lightcolor" "0.6 0.58 0.45"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
 }
 // entity 164
 {
@@ -19529,9 +19462,6 @@
 "origin" "688 336 36"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "spawnflags" "254"
-"light" "1"
-"lightambient" "0.7 0.7 0.7"
-"lightcolor" "0.6 0.58 0.45"
 }
 // entity 165
 {
@@ -19867,9 +19797,6 @@
 "origin" "-300 432 36"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "spawnflags" "254"
-"light" "1"
-"lightambient" "0.7 0.7 0.7"
-"lightcolor" "0.6 0.58 0.45"
 }
 // entity 200
 {
@@ -19877,16 +19804,10 @@
 "origin" "-300 432 36"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "spawnflags" "255"
-"lightcolor" "0.6 0.58 0.45"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
 }
 // entity 201
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "-308 304 36"
@@ -19894,9 +19815,6 @@
 // entity 202
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "-308 304 36"
@@ -19907,9 +19825,6 @@
 "origin" "-688 720 36"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "spawnflags" "254"
-"light" "1"
-"lightambient" "0.7 0.7 0.7"
-"lightcolor" "0.6 0.58 0.45"
 }
 // entity 204
 {
@@ -19917,9 +19832,6 @@
 "origin" "-688 720 36"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "spawnflags" "255"
-"lightcolor" "0.6 0.58 0.45"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
 }
 // entity 205
 {

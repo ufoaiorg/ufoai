@@ -4,10 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "5"
 "maxteams" "2"
-"light" "25"
-"_color" "0.7 0.7 1"
-"angles" "30 210"
-"ambient" "0.1 0.1 0.1"
 // brush 0
 {
 ( 991 448 107 ) ( 863 448 107 ) ( 991 512 107 ) tex_common/actorclip 0 0 0 1 1 65536 0 0

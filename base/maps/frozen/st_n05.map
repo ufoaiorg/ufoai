@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"angles" "20 45 0"
-"light" "35"
-"ambient" "0 0 0"
-"_color" "0.7 0.75 1"
 // brush 0
 {
 ( 128 256 4 ) ( 128 128 7 ) ( 0 256 4 ) tex_nature/snow002 0 8 0 1 1

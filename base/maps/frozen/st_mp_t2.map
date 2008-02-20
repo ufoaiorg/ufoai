@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"angles" "20 45 0"
-"light" "35"
-"ambient" "0 0 0"
-"_color" "0.7 0.75 1"
 // brush 0
 {
 ( 326 58 27 ) ( 326 120 27 ) ( 328 120 32 ) tex_nature/tree001 24 9 0 0.25 0.2878420055 2 0 0

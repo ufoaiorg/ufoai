@@ -1,9 +1,5 @@
 {
 "classname" "worldspawn"
-"_color" "1 1 0.9"
-"ambient" "0 0 0"
-"light" "35"
-"angles" "40 20 0"
 // brush 0
 {
 ( 484 168 48 ) ( 480 168 48 ) ( 480 148 48 ) tex_buildings/wall_se14 0 0 0 0.250000 0.250000 0 0 0

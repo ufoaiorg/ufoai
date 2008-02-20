@@ -1,9 +1,5 @@
 {
 "classname" "worldspawn"
-"_color" "1 1 0.9"
-"ambient" "0 0 0"
-"light" "35"
-"angles" "40 20 0"
 // brush 0
 {
 ( 256 148 8 ) ( 152 148 8 ) ( 152 128 8 ) tex_nature/rock008 80 0 -180 0.500000 -0.500000 0 0 0
@@ -184,9 +180,6 @@
 // entity 7
 {
 "origin" "14 112 18"
-"lightcolor" "0.3 0.3 0.3"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
 "model" "/models/objects/vegi/bush/bush01.md2"
 "classname" "misc_model"
 "angles" "0 60 0"
@@ -196,9 +189,6 @@
 {
 "classname" "misc_model"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"light" "1"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.3 0.3 0.3"
 "origin" "174 16 18"
 "spawnflags" "255"
 "lightangles" "40 20 0"
@@ -209,9 +199,6 @@
 "angles" "0 100 0"
 "classname" "misc_model"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"light" "1"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.3 0.3 0.3"
 "origin" "174 16 42"
 "lightangles" "40 20 0"
 }
@@ -219,9 +206,6 @@
 {
 "classname" "misc_model"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"light" "1"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.3 0.3 0.3"
 "origin" "238 240 18"
 "spawnflags" "255"
 "lightangles" "40 20 0"
@@ -232,9 +216,6 @@
 "angles" "0 30 0"
 "classname" "misc_model"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"light" "1"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.3 0.3 0.3"
 "origin" "158 176 18"
 "lightangles" "40 20 0"
 }
@@ -244,9 +225,6 @@
 "angles" "0 300 0"
 "classname" "misc_model"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"light" "1"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.3 0.3 0.3"
 "origin" "158 176 42"
 "lightangles" "40 20 0"
 }

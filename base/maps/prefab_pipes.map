@@ -4,10 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "8"
 "maxteams" "2"
-"light" "60"
-"_color" "0.8 0.8 1"
-"angles" "15 60"
-"ambient" "0.25 0.25 0.275"
 // brush 0
 {
 ( 288 480 0 ) ( 160 480 0 ) ( 160 480 128 ) tex_buildings/wall005 72 40 0 1 -1 49152 0 0

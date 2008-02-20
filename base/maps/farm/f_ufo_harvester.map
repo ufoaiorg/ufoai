@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"angles" "15 60"
-"ambient" "0 0 0"
-"_color" "1 0.8 0.8"
-"light" "35"
 "maxlevel" "4"
 // brush 0
 {

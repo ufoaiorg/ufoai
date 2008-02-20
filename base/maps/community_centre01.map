@@ -4,10 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "3"
 "maxteams" "2"
-"light" "35"
-"_color" "0.8 0.8 1"
-"angles" "15 60"
-"ambient" "0.0 0.0 0.0"
 // brush 0
 {
 ( 914 832 4 ) ( 914 768 4 ) ( 910 832 4 ) tex_nature/grass001 5 199 0 0.400000006 0.400000006
@@ -6426,16 +6422,10 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "780 780 68"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.4 0.4 0.4"
 }
 // entity 66
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "780 780 68"
@@ -6443,9 +6433,6 @@
 // entity 67
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "780 780 68"
@@ -6453,9 +6440,6 @@
 // entity 68
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.4 0.4 0.4"
-"light" "1"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "780 780 68"
@@ -6463,9 +6447,6 @@
 // entity 69
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "780 780 68"

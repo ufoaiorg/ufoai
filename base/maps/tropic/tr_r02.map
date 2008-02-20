@@ -1,9 +1,5 @@
 {
 "classname" "worldspawn"
-"_color" "1 1 0.9"
-"ambient" "0 0 0"
-"light" "35"
-"angles" "40 20 0"
 // brush 0
 {
 ( 148 256 -60 ) ( 180 264 -56 ) ( 180 264 -64 ) tex_nature/rock008 0 0 0 0.500000 0.500000 0 0 0

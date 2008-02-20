@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"angles" "20 45 0"
-"light" "35"
-"ambient" "0 0 0"
-"_color" "0.7 0.75 1"
 // brush 0
 {
 ( 660 96 68 ) ( 606 96 68 ) ( 606 92 68 ) tex_common/actorclip 0 0 0 1 1 65536 0 0

@@ -3,10 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "3"
-"_color" "0.8 0.8 1"
-"angles" "15 60"
-"light" "35"
-"ambient" "0 0 0"
 "maxteams" "2"
 // brush 0
 {

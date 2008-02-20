@@ -2,11 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"lightambient" "0.7 0.7 0.7"
-"light" "140"
-"_color" "1 1 0.8"
-"angles" "30 30 0"
-"ambient" "0.4 0.4 0.4"
 // brush 0
 {
 ( -928 -88 132 ) ( -928 -128 132 ) ( -928 -128 4 ) tex_common/actorclip 0 8 0 0.5 0.5 65536 0 0
@@ -1068,9 +1063,6 @@
 // entity 1
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
 "origin" "-656 14 33"
 "spawnflags" "254"
 "model" "models/objects/vegi/tree01/tree01_s2.md2"
@@ -1078,9 +1070,6 @@
 // entity 2
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.4 0.4 0.4"
-"light" "1"
 "origin" "-656 14 32"
 "spawnflags" "1"
 "model" "models/objects/vegi/tree01/tree01_s1.md2"
@@ -1088,9 +1077,6 @@
 // entity 3
 {
 "classname" "misc_model"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
 "spawnflags" "254"
 "origin" "-656 14 34"
 "model" "models/objects/vegi/tree01/tree01_l2.md2"
@@ -1098,9 +1084,6 @@
 // entity 4
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
 "spawnflags" "255"
 "origin" "-656 14 32"
 "model" "models/objects/vegi/tree01/tree01_l1.md2"
@@ -1108,9 +1091,6 @@
 // entity 5
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm3/palm3.md2"
 "origin" "-238 48 35"
@@ -1118,9 +1098,6 @@
 // entity 6
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "-238 48 35"
@@ -1131,16 +1108,10 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "-980 -340 68"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.4 0.4 0.4"
 }
 // entity 8
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "-980 -340 68"
@@ -1148,9 +1119,6 @@
 // entity 9
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "-980 -340 68"
@@ -1158,9 +1126,6 @@
 // entity 10
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.4 0.4 0.4"
-"light" "1"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "-980 -340 68"
@@ -1168,9 +1133,6 @@
 // entity 11
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "-980 -340 68"
@@ -1181,16 +1143,10 @@
 "model" "models/objects/vegi/tree03/tree03.md2"
 "spawnflags" "255"
 "origin" "-720 -212 4"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 }
 // entity 13
 {
 "classname" "misc_model"
-"lightcolor" "0.7 0.6 0.6"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
 "model" "models/objects/vegi/tree04/bark.md2"
 "spawnflags" "255"
 "origin" "-532 -332 7"
@@ -1201,27 +1157,18 @@
 "origin" "-532 -332 8"
 "spawnflags" "254"
 "model" "models/objects/vegi/tree04/leafs.md2"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.7 0.6 0.6"
 }
 // entity 15
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/bush/bush01.md2"
-"light" "1"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.3 0.3 0.3"
 "origin" "-834 -64 18"
 }
 // entity 16
 {
 "classname" "misc_model"
 "origin" "-914 -112 18"
-"lightcolor" "0.3 0.3 0.3"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
 "model" "/models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
@@ -1230,9 +1177,6 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "/models/objects/vegi/bush/bush01.md2"
-"light" "1"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.3 0.3 0.3"
 "origin" "-914 -112 42"
 }
 // entity 18
@@ -1399,9 +1343,6 @@
 // entity 41
 {
 "classname" "misc_model"
-"lightcolor" "0.6 0.58 0.45"
-"lightambient" "0.7 0.7 0.7"
-"light" "1"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm2/palm2.md2"
 "origin" "-206 144 35"
@@ -1409,9 +1350,6 @@
 // entity 42
 {
 "classname" "misc_model"
-"lightambient" "0.6 0.6 0.6"
-"light" "1"
-"lightcolor" "0.6 0.58 0.45"
 "spawnflags" "255"
 "model" "models/objects/vegi/palm1/palm1.md2"
 "origin" "-206 144 35"

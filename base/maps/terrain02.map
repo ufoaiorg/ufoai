@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"_color" "0.6 0.65 1"
-"light" "35"
-"ambient" "0 0 0"
-"angles" "5 120"
 "maxteams" "2"
 "maxlevel" "4"
 // brush 0
@@ -13256,9 +13252,6 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/bush/bush01.md2"
-"light" "1"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.3 0.3 0.3"
 "origin" "488 -76 154"
 }
 // entity 103
