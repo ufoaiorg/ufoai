@@ -591,7 +591,7 @@ void G_EndGame (int team)
 	 * @todo THIS IS A MAJOR PITA! Better way wanted/needed. */
 	gi.WriteShort((
 			(2 * 2) +			/* ucn+HP [* 2 for shorts] */
-			(2) +				/** STUN+morale [byte] @todo shouldn't we use a short for STUN as well? Similar to HP. */
+			(2) +				/**< STUN+morale [byte] @todo shouldn't we use a short for STUN as well? Similar to HP. */
 			( /* chrScoreGlobal_t */
 				((SKILL_NUM_TYPES+1) * 4) /* experience [* 4 for long] */
 				+(SKILL_NUM_TYPES) /* skills [byte] */
