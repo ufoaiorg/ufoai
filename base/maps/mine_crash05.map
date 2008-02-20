@@ -10610,7 +10610,7 @@
 "classname" "misc_particle"
 "origin" "-266 182 84"
 "particle" "corona"
-"spawnflags" "255"
+"spawnflags" "511"
 }
 // entity 7
 {
@@ -11015,6 +11015,7 @@
 "origin" "8 460 76"
 "_color" "0 0.7 0"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 11
 {
@@ -12229,6 +12230,7 @@
 "light" "100"
 "_color" "0 0.7 0"
 "origin" "416 656 76"
+"spawnflags" "1"
 }
 // entity 51
 {
@@ -12236,6 +12238,7 @@
 "light" "100"
 "_color" "0 0.7 0"
 "origin" "644 596 76"
+"spawnflags" "1"
 }
 // entity 52
 {
@@ -12243,6 +12246,7 @@
 "light" "100"
 "_color" "0 0.7 0"
 "origin" "480 356 76"
+"spawnflags" "1"
 }
 // entity 53
 {
@@ -12250,6 +12254,7 @@
 "light" "200"
 "_color" "1 0.3 0"
 "origin" "0 572 52"
+"spawnflags" "1"
 }
 // entity 54
 {
@@ -12257,6 +12262,7 @@
 "origin" "176 484 52"
 "_color" "1 0.5 0"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 55
 {
@@ -12264,6 +12270,7 @@
 "origin" "464 644 52"
 "_color" "1 0.5 0"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 56
 {
@@ -12271,6 +12278,7 @@
 "light" "200"
 "_color" "1 0.3 0"
 "origin" "712 620 52"
+"spawnflags" "1"
 }
 // entity 57
 {
@@ -12278,6 +12286,7 @@
 "light" "200"
 "_color" "1 0.5 0"
 "origin" "664 524 52"
+"spawnflags" "1"
 }
 // entity 58
 {
@@ -12285,6 +12294,7 @@
 "light" "200"
 "_color" "1 0.3 0"
 "origin" "248 556 52"
+"spawnflags" "1"
 }
 // entity 59
 {
@@ -12834,6 +12844,7 @@
 "light" "200"
 "_color" "1 1 0.75"
 "origin" "694 568 38"
+"spawnflags" "1"
 }
 // entity 64
 {
@@ -12841,6 +12852,7 @@
 "origin" "-142 490 52"
 "_color" "1 0.5 0"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 65
 {
@@ -12848,6 +12860,7 @@
 "origin" "628 672 52"
 "_color" "1 0.5 0"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 66
 {
@@ -12855,6 +12868,7 @@
 "light" "150"
 "_color" "1 0.5 0"
 "origin" "400 320 52"
+"spawnflags" "1"
 }
 // entity 67
 {
@@ -13089,7 +13103,7 @@
 "classname" "misc_particle"
 "particle" "corona"
 "origin" "-75 182 84"
-"spawnflags" "255"
+"spawnflags" "511"
 }
 // entity 95
 {
@@ -13154,7 +13168,7 @@
 "classname" "misc_particle"
 "origin" "309 182 84"
 "particle" "corona"
-"spawnflags" "255"
+"spawnflags" "511"
 }
 // entity 97
 {
@@ -13219,7 +13233,7 @@
 "classname" "misc_particle"
 "particle" "corona"
 "origin" "501 182 84"
-"spawnflags" "255"
+"spawnflags" "511"
 }
 // entity 99
 {
@@ -13284,7 +13298,7 @@
 "classname" "misc_particle"
 "origin" "693 182 84"
 "particle" "corona"
-"spawnflags" "255"
+"spawnflags" "511"
 }
 // entity 101
 {
@@ -13349,7 +13363,7 @@
 "classname" "misc_particle"
 "particle" "corona"
 "origin" "885 182 84"
-"spawnflags" "255"
+"spawnflags" "511"
 }
 // entity 103
 {
@@ -13414,7 +13428,7 @@
 "classname" "misc_particle"
 "origin" "1077 182 84"
 "particle" "corona"
-"spawnflags" "255"
+"spawnflags" "511"
 }
 // entity 105
 {
