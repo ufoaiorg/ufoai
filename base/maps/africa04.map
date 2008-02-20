@@ -9961,6 +9961,7 @@
 "light" "140"
 "_color" "0.7 0.8 1"
 "origin" "1688 -300 108"
+"spawnflags" "1"
 }
 // entity 18
 {
@@ -9968,6 +9969,7 @@
 "light" "120"
 "_color" "0 1 0.2"
 "origin" "1600 -232 104"
+"spawnflags" "1"
 }
 // entity 19
 {
@@ -9975,6 +9977,7 @@
 "origin" "1600 -468 104"
 "_color" "0 1 0.2"
 "light" "120"
+"spawnflags" "1"
 }
 // entity 20
 {
@@ -9982,6 +9985,7 @@
 "origin" "1316 -312 104"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 21
 {
@@ -9989,6 +9993,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1312 -392 104"
+"spawnflags" "1"
 }
 // entity 22
 {
@@ -10003,6 +10008,7 @@
 "light" "160"
 "_color" "0.7 0.8 1"
 "origin" "1536 -352 108"
+"spawnflags" "1"
 }
 // entity 24
 {
@@ -10010,6 +10016,7 @@
 "light" "160"
 "_color" "0.7 0.8 1"
 "origin" "1792 -400 108"
+"spawnflags" "1"
 }
 // entity 25
 {
@@ -10017,6 +10024,7 @@
 "origin" "1396 -352 100"
 "_color" "1 0.3 0"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 26
 {
@@ -10024,6 +10032,7 @@
 "origin" "1712 -296 156"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 27
 {
@@ -10031,6 +10040,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1592 -296 156"
+"spawnflags" "1"
 }
 // entity 28
 {
@@ -10038,6 +10048,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1800 8 84"
+"spawnflags" "1"
 }
 // entity 29
 {
@@ -10045,6 +10056,7 @@
 "origin" "1720 8 84"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 30
 {
@@ -10052,6 +10064,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1816 -700 84"
+"spawnflags" "1"
 }
 // entity 31
 {
@@ -10059,6 +10072,7 @@
 "origin" "1736 -700 84"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 32
 {
@@ -10066,6 +10080,7 @@
 "origin" "1808 -568 84"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 33
 {
@@ -10073,6 +10088,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1728 -568 84"
+"spawnflags" "1"
 }
 // entity 34
 {
@@ -10080,6 +10096,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "1156 -292 132"
+"spawnflags" "1"
 }
 // entity 35
 {
@@ -10087,6 +10104,7 @@
 "origin" "1156 -392 132"
 "_color" "0 1 0.2"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 36
 {
@@ -10094,6 +10112,7 @@
 "origin" "1008 -292 64"
 "_color" "0 1 0.2"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 37
 {
@@ -10101,6 +10120,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "1008 -392 64"
+"spawnflags" "1"
 }
 // entity 38
 {
@@ -10108,6 +10128,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1712 -400 156"
+"spawnflags" "1"
 }
 // entity 39
 {
@@ -10115,6 +10136,7 @@
 "origin" "1592 -400 156"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 40
 {
@@ -10122,6 +10144,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1436 -496 36"
+"spawnflags" "1"
 }
 // entity 41
 {
@@ -10129,6 +10152,7 @@
 "origin" "1340 -284 168"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 42
 {
@@ -10136,6 +10160,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1340 -412 168"
+"spawnflags" "1"
 }
 // entity 43
 {
@@ -10143,6 +10168,7 @@
 "origin" "1436 -208 36"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 44
 {
@@ -10150,6 +10176,7 @@
 "origin" "1536 -352 50"
 "_color" "0.7 0.8 1"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 45
 {
@@ -10157,6 +10184,7 @@
 "light" "160"
 "_color" "0.7 0.8 1"
 "origin" "1352 -408 50"
+"spawnflags" "1"
 }
 // entity 46
 {
@@ -10164,6 +10192,7 @@
 "light" "160"
 "_color" "0.7 0.8 1"
 "origin" "1664 -288 50"
+"spawnflags" "1"
 }
 // entity 47
 {
@@ -10171,6 +10200,7 @@
 "light" "160"
 "_color" "0.7 0.8 1"
 "origin" "1664 -416 50"
+"spawnflags" "1"
 }
 // entity 48
 {
@@ -10178,6 +10208,7 @@
 "origin" "1748 -400 50"
 "_color" "1 0.3 0"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 49
 {
@@ -10185,6 +10216,7 @@
 "light" "80"
 "_color" "1 0.3 0"
 "origin" "1748 -304 50"
+"spawnflags" "1"
 }
 // entity 50
 {
@@ -10192,6 +10224,7 @@
 "origin" "1792 -448 50"
 "_color" "0.7 0.8 1"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 51
 {
@@ -10199,6 +10232,7 @@
 "origin" "1792 -256 50"
 "_color" "0.7 0.8 1"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 52
 {
@@ -10206,6 +10240,7 @@
 "light" "80"
 "_color" "1 0.3 0"
 "origin" "1452 -400 50"
+"spawnflags" "1"
 }
 // entity 53
 {
@@ -10213,6 +10248,7 @@
 "origin" "1452 -304 50"
 "_color" "1 0.3 0"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 54
 {
@@ -10220,6 +10256,7 @@
 "light" "160"
 "_color" "0.3 1 0.4"
 "origin" "1868 -352 34"
+"spawnflags" "1"
 }
 // entity 55
 {
@@ -10227,6 +10264,7 @@
 "origin" "1800 -128 88"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 56
 {
@@ -10234,6 +10272,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1720 -128 88"
+"spawnflags" "1"
 }
 // entity 57
 {
@@ -10241,6 +10280,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1904 -296 148"
+"spawnflags" "1"
 }
 // entity 58
 {
@@ -10248,6 +10288,7 @@
 "origin" "1904 -400 148"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 59
 {
@@ -10323,6 +10364,7 @@
 "origin" "1884 -312 108"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 69
 {
@@ -10411,6 +10453,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "1648 -352 32"
+"spawnflags" "1"
 }
 // entity 74
 {
@@ -10418,6 +10461,7 @@
 "origin" "1648 -272 32"
 "_color" "0 1 0.2"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 75
 {
@@ -10432,6 +10476,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1336 -276 42"
+"spawnflags" "1"
 }
 // entity 77
 {
@@ -10439,6 +10484,7 @@
 "origin" "1336 -318 42"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 78
 {
@@ -10570,6 +10616,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "1808 -316 108"
+"spawnflags" "1"
 }
 // entity 82
 {
@@ -10577,6 +10624,7 @@
 "origin" "1808 -384 108"
 "_color" "0 1 0.2"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 83
 {
@@ -10584,6 +10632,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1820 -540 192"
+"spawnflags" "1"
 }
 // entity 84
 {
