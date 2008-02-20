@@ -470,7 +470,11 @@ struct edict_s {
 
 	int TU;						/**< remaining timeunits */
 	int HP;						/**< remaining healthpoints */
-	int STUN;
+	int STUN;					/**< The stun damage received in a mission.
+							 * @sa g_combat.c:G_Damage
+							 * @todo How is this handled after mission-end?
+							 * @todo How is this checked to determine the stun-state? (I've found HP<=STUN in g_combat.c:G_Damage)
+							 */
 	int morale;					/**< the current morale value */
 
 	int state;					/**< the player state - dead, shaken.... */

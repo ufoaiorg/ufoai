@@ -2003,7 +2003,8 @@ typedef struct
 typedef struct
  {
 	int ucn;
-	int HP, STUN;
+	int HP
+	int STUN;
 	int morale;
 
 	chrScoreGlobal_t chrscore;
@@ -2055,7 +2056,7 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 		 */
 		num = NET_ReadShort(msg) / (
 			(2 * 2) +			/* ucn+HP [* 2 for shorts] */
-			(2) +				/* STUN+morale [byte] */
+			(2) +				/** STUN+morale [byte] @todo shouldn't we use a short for STUN as well? Similar to HP. */
 			( /* chrScoreGlobal_t */
 				((SKILL_NUM_TYPES+1) * 4) /* experience [* 4 for long] */
 				+(SKILL_NUM_TYPES) /* skills [byte] */

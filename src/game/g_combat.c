@@ -434,7 +434,15 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 	 * Note: This check needs to be done for every assignment to HP above anyway since a "return" could pop up in between.
 	 * I'll leave this one in here just in case. */
 	ent->HP = max(ent->HP, 0);
-
+	
+	/** Reset stun value if the character is dead.
+	 * @todo
+	 * This prevents some possible bugs (see e.g. http://sourceforge.net/tracker/index.php?func=detail&aid=1897336&group_id=157793&atid=805242)
+	 * But it is no good solution IMO, since the stunned/killed stuff should be handled correctly even if this is not reset.
+	 */
+	if (ent->HP == 0)
+		ent->STUN = 0;
+	
 	/* Check death/knockout. */
 	if (ent->HP == 0 || ent->HP <= ent->STUN) {
 		G_SendStats(ent);
@@ -456,7 +464,10 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 		else
 			level.num_stuns[attacker->team][ent->team]++;
 
-		/* count score */
+		/** Count score
+		 * @todo Isn't this currently counting twice (here and in G_UpdateCharacterScore)?
+		 * What doesn't G_UpdateCharacterScore do that is done here?
+		 * Expect for checking for stuns vs. kills. */
 		if (ent->team == TEAM_CIVILIAN) {
 			if (attacker->chr.scoreMission)
 				attacker->chr.scoreMission->kills[KILLED_CIVILIANS]++;
