@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"angles" "30 30"
-"light" "120"
-"ambient" "0.3 0.3 0.32"
-"_color" "1 0.8 0.8"
 // brush 0
 {
 ( 704 896 0 ) ( 500 896 0 ) ( 500 800 0 ) tex_nature/dirt_se01 0 0 0 0.5 0.5 65280 0 0

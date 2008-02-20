@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"ambient" "0.3 0.3 0.32"
-"angles" "30 30"
-"_color" "1 0.8 0.8"
-"light" "120"
 // brush 0
 {
 ( 480 558 0 ) ( 448 558 0 ) ( 448 486 0 ) tex_common/stepon 0 0 0 0.5 0.5 1073741824 0 0

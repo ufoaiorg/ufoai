@@ -4,10 +4,6 @@
 "classname" "worldspawn"
 "maxlevel" "5"
 "maxteams" "4"
-"light" "35"
-"_color" "0.8 0.8 1"
-"angles" "30 210"
-"ambient" "0.1 0.1 0.1"
 // brush 0
 {
 ( 168 -704 98 ) ( 452 -704 98 ) ( 168 -704 64 ) tex_buildings/wall013 0 0 0 0.400000006 0.400000006 65024 0 0
@@ -12609,16 +12605,10 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "908 236 66"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.4 0.4 0.4"
 }
 // entity 56
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "908 236 66"
@@ -12626,9 +12616,6 @@
 // entity 57
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "908 236 66"
@@ -12636,9 +12623,6 @@
 // entity 58
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.4 0.4 0.4"
-"light" "1"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "908 236 66"
@@ -12646,9 +12630,6 @@
 // entity 59
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "908 236 66"
@@ -12666,16 +12647,10 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "-404 172 66"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.4 0.4 0.4"
 }
 // entity 62
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "-404 172 66"
@@ -12683,9 +12658,6 @@
 // entity 63
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "-404 172 66"
@@ -12693,9 +12665,6 @@
 // entity 64
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.4 0.4 0.4"
-"light" "1"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "-404 172 66"
@@ -12703,9 +12672,6 @@
 // entity 65
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "-404 172 66"
@@ -12716,16 +12682,10 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "-852 -84 66"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.4 0.4 0.4"
 }
 // entity 67
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "-852 -84 66"
@@ -12733,9 +12693,6 @@
 // entity 68
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "-852 -84 66"
@@ -12743,9 +12700,6 @@
 // entity 69
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.4 0.4 0.4"
-"light" "1"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "-852 -84 66"
@@ -12753,9 +12707,6 @@
 // entity 70
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "-852 -84 66"
@@ -12766,16 +12717,10 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "-852 -596 66"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.4 0.4 0.4"
 }
 // entity 72
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "-852 -596 66"
@@ -12783,9 +12728,6 @@
 // entity 73
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "-852 -596 66"
@@ -12793,9 +12735,6 @@
 // entity 74
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.4 0.4 0.4"
-"light" "1"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "-852 -596 66"
@@ -12803,9 +12742,6 @@
 // entity 75
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "-852 -596 66"
@@ -12816,16 +12752,10 @@
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "748 -788 66"
-"light" "1"
-"lightambient" "0.6 0.6 0.6"
-"lightcolor" "0.4 0.4 0.4"
 }
 // entity 77
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.6 0.6 0.6"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "748 -788 66"
@@ -12833,9 +12763,6 @@
 // entity 78
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "748 -788 66"
@@ -12843,9 +12770,6 @@
 // entity 79
 {
 "classname" "misc_model"
-"lightambient" "0.4 0.4 0.4"
-"lightcolor" "0.4 0.4 0.4"
-"light" "1"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "748 -788 66"
@@ -12853,9 +12777,6 @@
 // entity 80
 {
 "classname" "misc_model"
-"light" "1"
-"lightcolor" "0.4 0.4 0.4"
-"lightambient" "0.4 0.4 0.4"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "748 -788 66"

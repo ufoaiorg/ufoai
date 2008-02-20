@@ -2,10 +2,6 @@
 // entity 0
 {
 "classname" "worldspawn"
-"_color" "0.6 0.65 1"
-"light" "35"
-"ambient" "0 0 0"
-"angles" "5 120"
 // brush 0
 {
 ( 396 396 64 ) ( 0 396 64 ) ( 0 192 64 ) tex_buildings/floor006 0 0 0 0.25 0.25 65024 128 0
