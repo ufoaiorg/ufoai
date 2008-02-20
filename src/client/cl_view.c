@@ -43,7 +43,7 @@ int map_maxlevel_base = 0;
 
 /** position in the spawnflags */
 #define MISC_MODEL_GLOW 9
-
+#define SPAWNFLAG_NO_DAY 9
 static void CL_ParseEntitystring (const char *es)
 {
 	const char *strstart, *entity_token;
@@ -56,6 +56,7 @@ static void CL_ParseEntitystring (const char *es)
 	int skin, frame, spawnflags;
 	float volume = 255.0f;
 	float attenuation = SOUND_DEFAULTATTENUATE;
+	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 
 	map_maxlevel = 8;
 	if (map_maxlevel_base >= 1)
@@ -175,13 +176,10 @@ static void CL_ParseEntitystring (const char *es)
 					Com_Printf("Warning: Model has frame and anim parameters - using frame (no animation)\n");
 			}
 		} else if (!Q_strcmp(classname, "misc_particle")) {
-			CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
+			if (!(dayLightmap && spawnflags & (1 << SPAWNFLAG_NO_DAY)))
+				CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
 		} else if (!Q_strcmp(classname, "misc_sound")) {
 			LE_AddAmbientSound(sound, origin, volume, attenuation);
-		} else if (!Q_strcmp(classname, "misc_rope")) {
-			Com_Printf("implement misc_rope\n");
-		} else if (!Q_strcmp(classname, "misc_decal")) {
-			Com_Printf("implement misc_decal\n");
 		}
 
 		entnum++;

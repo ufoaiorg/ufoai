@@ -38,10 +38,11 @@ Use angles [pitch yaw roll] to rotate the model. pitch (up/down), yaw (left/righ
 */
 
 
-/*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
+/*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8 noday
 Creates a particle. Particle properties can be set here with a preceding '-' or '+'.
 '-' property is set before calling the particle init function
 '+' do it afterwards
+noday means that the particle is not shown at the day version of the map. E.g. useful for flare particles around streetlight.
 Wait times are of the format "a b". It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start.
 "particle"	name of the particle definition
 "wait"		wait time
@@ -58,13 +59,13 @@ Non-displayed light. All lights are for the night version. If you want them to s
 "angle"		Special values: UP -1; DOWN -2;
 */
 
-/*QUAKED light_spot (0 1 0) (-8 -8 -8) (8 8 8) linear
-Non-displayed light.
+/*QUAKED light_spot (0 1 0) (-8 -8 -8) (8 8 8) day
+Non-displayed light. All lights are for the night version. If you want them to show up in the day version, too - mark the day flag
 "_color"	Color for the light RGB
 "light"		intensity 0-255
 "_cone"
 "origin"
-"angle"
+"angle"		Special values: UP -1; DOWN -2;
 */
 
 /*QUAKED worldspawn (0 0 0) ?
