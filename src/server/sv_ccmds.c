@@ -149,11 +149,12 @@ static qboolean SV_CheckMap (const char *map, const char *assembly)
 static void SV_Map_f (void)
 {
 	const char *assembly = NULL;
-	char bufMap[MAX_TOKEN_CHARS*MAX_TILESTRINGS];
-	char bufAssembly[MAX_TOKEN_CHARS*MAX_TILESTRINGS];
+	char bufMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+	char bufAssembly[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+	qboolean day;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <mapname> <assembly>\n", Cmd_Argv(0));
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <day|night> <mapname> [<assembly>]\n", Cmd_Argv(0));
 		Com_Printf("Use 'maplist' to get a list of all installed maps\n");
 		return;
 	}
@@ -163,13 +164,21 @@ static void SV_Map_f (void)
 		Cvar_SetValue("sv_ai", 0);
 	}
 
+	if (!Q_strcmp(Cmd_Argv(1), "day")) {
+		day = qtrue;
+	} else if (!Q_strcmp(Cmd_Argv(1), "night")) {
+		day = qfalse;
+	} else {
+		Com_Printf("Invalid lightmap parameter - use day or night\n");
+		return;
+	}
 	/* we copy them to buffers because the command pointers might be invalid soon */
 
-	Q_strncpyz(bufMap, Cmd_Argv(1), sizeof(bufMap));
+	Q_strncpyz(bufMap, Cmd_Argv(2), sizeof(bufMap));
 	/* assembled maps uses position strings */
-	if (Cmd_Argc() == 3) {
+	if (Cmd_Argc() == 4) {
 		assembly = bufAssembly;
-		Q_strncpyz(bufAssembly, Cmd_Argv(2), sizeof(bufAssembly));
+		Q_strncpyz(bufAssembly, Cmd_Argv(3), sizeof(bufAssembly));
 	}
 
 	/* check to make sure the level exists */
@@ -178,7 +187,7 @@ static void SV_Map_f (void)
 
 	/* start up the next map */
 	Com_SetServerState(ss_dead);
-	SV_Map(bufMap, assembly);
+	SV_Map(day, bufMap, assembly);
 }
 
 /**
@@ -221,7 +230,7 @@ static void SV_Status_f (void)
 		Com_Printf("No server running.\n");
 		return;
 	}
-	Com_Printf("map              : %s\n", sv.name);
+	Com_Printf("map              : %s (%s)\n", sv.name, (sv.day ? "day" : "night"));
 	Com_Printf("active team      : %i\n", ge->ClientGetActiveTeam());
 
 	Com_Printf("num status  name            address              \n");

@@ -52,6 +52,7 @@ typedef struct {
 	int framenum;
 
 	char name[MAX_QPATH];		/**< map name, or cinematic name */
+	qboolean day;				/**< day version loaded */
 	char assembly[MAX_QPATH];		/**< random map assembly name */
 	struct cBspModel_s *models[MAX_MODELS];
 
@@ -149,7 +150,7 @@ void SV_MapcycleAdd(const char* mapName, const char* gameType);
 void SV_ReadPacket(struct net_stream *s);
 
 /* sv_init.c */
-void SV_Map(const char *levelstring, const char *assembly);
+void SV_Map(qboolean day, const char *levelstring, const char *assembly);
 
 void SV_Multicast(int mask, struct dbuffer *msg);
 void SV_StartSound(int mask, vec3_t origin, edict_t *entity, const char* sound, int channel, float volume, float attenuation);

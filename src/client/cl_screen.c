@@ -130,9 +130,6 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 	else if (*mapname != '+') {
 		Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
 		len = strlen(tmpPicName);
-		/* strip of the day and night letter */
-		if (tmpPicName[len - 1] == 'n' || tmpPicName[len - 1] == 'd')
-			tmpPicName[len - 1] = '\0';
 		if (FS_CheckFile(va("pics/maps/loading/%s.jpg", tmpPicName)) > 0)
 			Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s.jpg", tmpPicName);
 		else

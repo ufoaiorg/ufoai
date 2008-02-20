@@ -64,6 +64,7 @@ cvar_t *mn_active;
 cvar_t *mn_afterdrop;
 cvar_t *mn_main_afterdrop;
 cvar_t *mn_hud;
+cvar_t* mn_serverday;
 
 cvar_t *cl_lastsave;
 cvar_t *difficulty;
@@ -705,7 +706,7 @@ static void CL_WaitInit_f (void)
 	}
 	Com_sprintf(buf, sizeof(buf), "%s/%s", cl.configstrings[CS_PLAYERCOUNT], cl.configstrings[CS_MAXCLIENTS]);
 	Cvar_Set("mp_wait_init_players", buf);
-	if (!*cl.configstrings[CS_NAME]) {
+	if (cl.configstrings[CS_NAME][0] == '\0') {
 		if (!reconnect) {
 			reconnect = qtrue;
 			CL_Reconnect_f();
@@ -839,8 +840,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		assert(value);
 		Cvar_Set("mn_svmapname", value);
 		Q_strncpyz(buf, value, sizeof(buf));
-		if (buf[strlen(buf)-1] == 'd' || buf[strlen(buf)-1] == 'n')
-			buf[strlen(buf)-1] = '\0';
+
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
 		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", buf)) != -1)
 			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", buf));
@@ -2058,6 +2058,7 @@ static void CL_InitLocal (void)
 	mn_afterdrop = Cvar_Get("mn_afterdrop", "", 0, "The menu that should be pushed after the drop function was called");
 	mn_main_afterdrop = Cvar_Get("mn_main_afterdrop", "", 0, "The main menu that should be returned to after the drop function was called - will be the new mn_main value then");
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
+	mn_serverday = Cvar_Get("mn_serverday", "1", CVAR_ARCHIVE, "Decides whether the server starts the day or the night version of the selected map");
 	mn_inputlength = Cvar_Get("mn_inputlength", "32", 0, "Limit the input length for messagemenu input");
 	mn_inputlength->modified = qfalse;
 

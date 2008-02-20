@@ -33,8 +33,8 @@ extern	dBspModel_t	dmodels[MAX_MAP_MODELS];
 extern	int			routedatasize;
 extern	byte		droutedata[MAX_MAP_ROUTING];
 
-extern	int			lightdatasize;
-extern	byte		dlightdata[MAX_MAP_LIGHTING];
+extern	int			lightdatasize[LIGHTMAP_MAX];
+extern	byte		dlightdata[LIGHTMAP_MAX][MAX_MAP_LIGHTING];
 
 extern	int			numleafs;
 extern	dBspLeaf_t		dleafs[MAX_MAP_LEAFS];

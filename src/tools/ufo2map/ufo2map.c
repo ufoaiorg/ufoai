@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define VERSION "1.2"
+#define VERSION "1.2.1"
 
 #include "qrad.h"
 #include "qbsp.h"
@@ -161,9 +161,7 @@ static void U2M_RAD_Parameter (int argc, char** argv)
 {
 	int i;
 	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i],"-dump"))
-			config.dumppatches = qtrue;
-		else if (!strcmp(argv[i],"-bounce")) {
+		if (!strcmp(argv[i],"-bounce")) {
 			config.numbounce = atoi(argv[i + 1]);
 			Com_Printf("light bounces = %i\n", config.numbounce);
 			i++;
@@ -213,9 +211,33 @@ static void U2M_SetDefaultConfigValues (void)
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
 	config.subdiv = 2048.0f;
-	config.ambient_red = 0.1;
-	config.ambient_green = 0.1;
-	config.ambient_blue = 0.1;
+
+	config.night_ambient_red = 0.0;
+	config.night_ambient_green = 0.0;
+	config.night_ambient_blue = 0.0;
+	config.night_sun_intensity = 35;
+	config.night_sun_pitch = 15 * torad;
+	config.night_sun_yaw = 60 * torad;
+	VectorSet(config.night_sun_color, 0.8, 0.8, 1);
+
+	config.day_ambient_red = 0.4;
+	config.day_ambient_green = 0.4;
+	config.day_ambient_blue = 0.4;
+	config.day_sun_intensity = 120;
+	config.day_sun_pitch = 30 * torad;
+	config.day_sun_yaw = 210 * torad;
+	VectorSet(config.day_sun_color, 1, 0.8, 0.8);
+
+	VectorSet(config.night_sun_dir,
+		cos(config.night_sun_yaw) * sin(config.night_sun_pitch),
+		sin(config.night_sun_yaw) * sin(config.night_sun_pitch),
+		cos(config.night_sun_pitch));
+
+	VectorSet(config.day_sun_dir,
+		cos(config.day_sun_yaw) * sin(config.day_sun_pitch),
+		sin(config.day_sun_yaw) * sin(config.day_sun_pitch),
+		cos(config.day_sun_pitch));
+
 	config.maxlight = 196;
 	config.lightscale = 1.0;
 	config.lightquant = 4;
@@ -329,20 +351,26 @@ int main (int argc, char **argv)
 
 		begin = start;
 
-		start = I_FloatTime();
-
 		CalcTextureReflectivity();
 
+		/* compile night version */
+		start = I_FloatTime();
 		RadWorld();
+		end = I_FloatTime();
+		Com_Printf("%5.0f seconds elapsed\n", end - start);
+
+		/* compile day version */
+		config.compile_for_day = 1;
+		start = I_FloatTime();
+		RadWorld();
+		end = I_FloatTime();
+		Com_Printf("%5.0f seconds elapsed\n", end - start);
 
 		DefaultExtension(source, ".bsp");
 		sprintf(name, "%s%s", outbase, source);
 		Com_Printf("writing %s\n", name);
 		WriteBSPFile(name);
 
-		end = I_FloatTime();
-
-		Com_Printf("%5.0f seconds elapsed\n", end - start);
 		Com_Printf("sum: %5.0f seconds elapsed\n\n", end - begin);
 	}
 

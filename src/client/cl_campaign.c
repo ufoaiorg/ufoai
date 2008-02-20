@@ -3144,18 +3144,11 @@ static void CP_SetMissionVars (void)
 static void CP_StartMissionMap (mission_t* mission)
 {
 	char expanded[MAX_QPATH];
-	char timeChar;
 	base_t *bAttack;
 
 	/* prepare */
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main_afterdrop", "singleplayermission");
-
-	/* get appropriate map */
-	if (MAP_IsNight(mission->pos))
-		timeChar = 'n';
-	else
-		timeChar = 'd';
 
 	assert(mission->mapDef->map);
 
@@ -3167,7 +3160,7 @@ static void CP_StartMissionMap (mission_t* mission)
 
 	switch (mission->mapDef->map[0]) {
 	case '+':
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.ump", mission->mapDef->map + 1, timeChar);
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", mission->mapDef->map + 1);
 		break;
 	/* base attack maps starts with a dot */
 	case '.':
@@ -3187,16 +3180,14 @@ static void CP_StartMissionMap (mission_t* mission)
 		 * @sa B_AssembleMap_f */
 		return;
 	default:
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mission->mapDef->map, timeChar);
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", mission->mapDef->map);
 		break;
 	}
 
 	SAV_QuickSave();
 
-	if (FS_LoadFile(expanded, NULL) != -1)
-		Cbuf_AddText(va("map %s%c %s\n", mission->mapDef->map, timeChar, mission->mapDef->param ? mission->mapDef->param : ""));
-	else
-		Cbuf_AddText(va("map %s %s\n", mission->mapDef->map, mission->mapDef->param ? mission->mapDef->param : ""));
+	Cbuf_AddText(va("map %s %s %s\n", (MAP_IsNight(mission->pos) ? "night" : "day"),
+		mission->mapDef->map, mission->mapDef->param ? mission->mapDef->param : ""));
 
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = mission->mapDef;
@@ -4557,7 +4548,6 @@ static void CL_GameSkirmish_f (void)
 	char map[MAX_VAR];
 	mapDef_t *md;
 	int i;
-	cvar_t* mn_serverday = Cvar_Get("mn_serverday", "1", 0, "Decides whether the server starts the day or the night version of the selected map");
 
 	if (!ccs.singleplayer)
 		return;
@@ -4572,7 +4562,7 @@ static void CL_GameSkirmish_f (void)
 		return;
 
 	assert(md->map);
-	Com_sprintf(map, sizeof(map), "map %s%c %s;", md->map, mn_serverday->integer ? 'd' : 'n', md->param ? md->param : "");
+	Com_sprintf(map, sizeof(map), "map %s %s %s;", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* exit running game */
 	if (curCampaign)

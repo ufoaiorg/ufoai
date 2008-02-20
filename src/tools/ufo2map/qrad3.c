@@ -206,32 +206,6 @@ static void FreeTransfers (void)
 	}
 }
 
-static void WriteWorld (const char *name)
-{
-	unsigned int j;
-	int i;
-	FILE *out;
-	patch_t *patch;
-	winding_t *w;
-
-	out = fopen(name, "w");
-	if (!out)
-		Sys_Error("Couldn't open %s", name);
-
-	for (j = 0, patch = patches; j < num_patches; j++, patch++) {
-		w = patch->winding;
-		fprintf(out, "%i\n", w->numpoints);
-		for (i = 0; i < w->numpoints; i++) {
-			fprintf(out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
-				w->p[i][0], w->p[i][1], w->p[i][2],
-				patch->totallight[0], patch->totallight[1], patch->totallight[2]);
-		}
-		fprintf(out, "\n");
-	}
-
-	fclose(out);
-}
-
 static float CollectLight (void)
 {
 	unsigned int i, j;
@@ -285,14 +259,12 @@ static void BounceLight (void)
 {
 	unsigned int i, j;
 	float	added;
-	char	name[64];
 	patch_t	*p;
 	char buf[12];
 
 	for (i = 0; i < num_patches; i++) {
 		p = &patches[i];
 		for (j = 0; j < 3; j++) {
-/*			p->totallight[j] = p->samplelight[j]; */
 			radiosity[i][j] = p->samplelight[j] * p->reflectivity[j] * p->area;
 		}
 	}
@@ -303,10 +275,6 @@ static void BounceLight (void)
 		added = CollectLight();
 
 		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
-		if (config.dumppatches && (i == 0 || i == config.numbounce - 1)) {
-			sprintf(name, "bounce%i.txt", i);
-			WriteWorld(name);
-		}
 	}
 }
 
@@ -330,6 +298,10 @@ void RadWorld (void)
 {
 	if (numnodes == 0 || numfaces == 0)
 		Sys_Error("Empty map");
+
+	/* initialize light data */
+	dlightdata[config.compile_for_day][0] = config.lightquant;
+	lightdatasize[config.compile_for_day] = 1;
 
 	MakeBackplanes();
 
@@ -367,10 +339,6 @@ void RadWorld (void)
 	/* blend bounced light into direct light and save */
 	PairEdges();
 	LinkPlaneFaces();
-
-	/* initialize light data */
-	dlightdata[0] = config.lightquant;
-	lightdatasize = 1;
 
 	U2M_ProgressBar(FinalLightFace, numfaces, qtrue, "FINALLIGHT");
 /*	CloseTnodes();*/

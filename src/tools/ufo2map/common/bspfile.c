@@ -34,8 +34,8 @@ dBspModel_t dmodels[MAX_MAP_MODELS];
 int routedatasize;
 byte droutedata[MAX_MAP_ROUTING];
 
-int lightdatasize;
-byte dlightdata[MAX_MAP_LIGHTING];
+int lightdatasize[2];
+byte dlightdata[2][MAX_MAP_LIGHTING];
 
 static int entdatasize;
 static char dentdata[MAX_MAP_ENTSTRING];
@@ -172,7 +172,8 @@ static void SwapBSPFile (void)
 		dfaces[i].texinfo = LittleShort(dfaces[i].texinfo);
 		dfaces[i].planenum = LittleShort(dfaces[i].planenum);
 		dfaces[i].side = LittleShort(dfaces[i].side);
-		dfaces[i].lightofs = LittleLong(dfaces[i].lightofs);
+		for (j = 0; j < LIGHTMAP_MAX; j++)
+			dfaces[i].lightofs[j] = LittleLong(dfaces[i].lightofs[j]);
 		dfaces[i].firstedge = LittleLong(dfaces[i].firstedge);
 		dfaces[i].numedges = LittleShort(dfaces[i].numedges);
 	}
@@ -286,7 +287,8 @@ void LoadBSPFile (const char *filename)
 	numbrushes = CopyLump(LUMP_BRUSHES, dbrushes, sizeof(dBspBrush_t));
 	numbrushsides = CopyLump(LUMP_BRUSHSIDES, dbrushsides, sizeof(dBspBrushSide_t));
 	routedatasize = CopyLump(LUMP_ROUTING, droutedata, 1);
-	lightdatasize = CopyLump(LUMP_LIGHTING, dlightdata, 1);
+	lightdatasize[LIGHTMAP_NIGHT] = CopyLump(LUMP_LIGHTING_NIGHT, dlightdata[LIGHTMAP_NIGHT], 1);
+	lightdatasize[LIGHTMAP_DAY] = CopyLump(LUMP_LIGHTING_DAY, dlightdata[LIGHTMAP_DAY], 1);
 	entdatasize = CopyLump(LUMP_ENTITIES, dentdata, 1);
 
 	free(header);		/* everything has been copied out */
@@ -342,7 +344,8 @@ void WriteBSPFile (const char *filename)
 	AddLump(&bspfile, &outheader, LUMP_SURFEDGES, dsurfedges, numsurfedges * sizeof(dsurfedges[0]));
 	AddLump(&bspfile, &outheader, LUMP_EDGES, dedges, numedges * sizeof(dBspEdge_t));
 	AddLump(&bspfile, &outheader, LUMP_MODELS, dmodels, nummodels * sizeof(dBspModel_t));
-	AddLump(&bspfile, &outheader, LUMP_LIGHTING, dlightdata, lightdatasize);
+	AddLump(&bspfile, &outheader, LUMP_LIGHTING_NIGHT, dlightdata[0], lightdatasize[0]);
+	AddLump(&bspfile, &outheader, LUMP_LIGHTING_DAY, dlightdata[1], lightdatasize[1]);
 	AddLump(&bspfile, &outheader, LUMP_ROUTING, droutedata, routedatasize);
 	AddLump(&bspfile, &outheader, LUMP_ENTITIES, dentdata, entdatasize);
 
@@ -378,7 +381,8 @@ void PrintBSPFileSizes (void)
 	Com_Printf("%5i leafbrushes       %7i\n", numleafbrushes, (int)(numleafbrushes * sizeof(dleafbrushes[0])));
 	Com_Printf("%5i surfedges         %7i\n", numsurfedges, (int)(numsurfedges * sizeof(dsurfedges[0])));
 	Com_Printf("%5i edges             %7i\n", numedges, (int)(numedges * sizeof(dBspEdge_t)));
-	Com_Printf("      lightdata         %7i\n", lightdatasize);
+	Com_Printf("night lightdata         %7i\n", lightdatasize[0]);
+	Com_Printf("  day lightdata         %7i\n", lightdatasize[1]);
 	Com_Printf("      routedata         %7i\n", routedatasize);
 }
 

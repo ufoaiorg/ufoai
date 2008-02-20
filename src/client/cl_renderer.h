@@ -173,7 +173,7 @@ struct image_s *R_RegisterPic(const char *name);
 void R_Color(const float *rgba);
 void R_ColorBlend(const float *rgba);
 
-void R_ModBeginLoading(const char *tiles, const char *pos, const char *mapName);
+void R_ModBeginLoading(const char *tiles, qboolean day, const char *pos, const char *mapName);
 void R_ModEndLoading(void);
 void R_SwitchModelMemPoolTag(void);
 

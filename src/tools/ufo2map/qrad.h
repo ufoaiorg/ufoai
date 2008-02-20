@@ -44,7 +44,6 @@ typedef struct directlight_s {
 	emittype_t	type;
 
 	float		intensity;
-	int			style;
 	vec3_t		origin;
 	vec3_t		color;
 	vec3_t		normal;		/* for surfaces and spotlights */

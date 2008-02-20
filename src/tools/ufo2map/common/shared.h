@@ -84,16 +84,33 @@ typedef struct mapConfig_s {
 	unsigned int numbounce;
 	qboolean extrasamples;
 	float subdiv;
-	qboolean dumppatches;
 	qboolean info;
-	float ambient_red;
-	float ambient_green;
-	float ambient_blue;
+
+	float day_ambient_red;
+	float day_ambient_green;
+	float day_ambient_blue;
+	float day_sun_intensity;
+	float day_sun_pitch;
+	float day_sun_yaw;
+	vec3_t day_sun_color;
+	vec3_t day_sun_dir;
+
+	float night_ambient_red;
+	float night_ambient_green;
+	float night_ambient_blue;
+	float night_sun_intensity;
+	float night_sun_pitch;
+	float night_sun_yaw;
+	vec3_t night_sun_color;
+	vec3_t night_sun_dir;
+
 	float maxlight;
 	float lightscale;
 	byte lightquant;
 	float direct_scale;
 	float entity_scale;
+
+	int compile_for_day;	/**< set this to 1 if you want to compile the day version of the lightmap */
 } mapConfig_t;
 
 extern mapConfig_t config;

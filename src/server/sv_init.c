@@ -1055,7 +1055,7 @@ static const char* SV_GetMapTitle (const char* const mapname)
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */
-static void SV_SpawnServer (const char *server, const char *param)
+static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 {
 	int i;
 	unsigned checksum = 0;
@@ -1076,6 +1076,8 @@ static void SV_SpawnServer (const char *server, const char *param)
 
 	/* save name for levels that don't set message */
 	Q_strncpyz(sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
+	Com_sprintf(sv.configstrings[CS_LIGHTMAP], MAX_TOKEN_CHARS, "%i", day);
+	sv.day = day;
 
 	Q_strncpyz(sv.name, server, sizeof(sv.name));
 	if (param)
@@ -1205,8 +1207,9 @@ static void SV_InitGame (void)
  * @note map [+]<map> [<assembly>]
  * @sa SV_SpawnServer
  * @sa SV_Map_f
+ * @param[in] day Use the day version of the map (only lightmap)
  */
-void SV_Map (const char *levelstring, const char *assembly)
+void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 {
 	assert(*levelstring);
 
@@ -1221,6 +1224,6 @@ void SV_Map (const char *levelstring, const char *assembly)
 
 	CL_Drop();
 	SCR_BeginLoadingPlaque();
-	SV_SpawnServer(levelstring, assembly);
+	SV_SpawnServer(day, levelstring, assembly);
 	Cbuf_CopyToDefer();
 }

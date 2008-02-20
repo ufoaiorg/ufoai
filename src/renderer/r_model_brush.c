@@ -237,7 +237,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 	}
 }
 
-static void R_ModLoadSurfaces (lump_t * l)
+static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 {
 	dBspFace_t *in;
 	mBspSurface_t *out;
@@ -282,11 +282,11 @@ static void R_ModLoadSurfaces (lump_t * l)
 		/* and size, texcoords, etc */
 		R_SetSurfaceExtents(out, loadmodel);
 
-		/* lastly lighting info */
-		for (i = 0; i < MAXLIGHTMAPS; i++)
-			out->styles[i] = in->styles[i];
+		if (day)
+			i = LittleLong(in->lightofs[LIGHTMAP_DAY]);
+		else
+			i = LittleLong(in->lightofs[LIGHTMAP_NIGHT]);
 
-		i = LittleLong(in->lightofs);
 		if (i == -1 || (out->texinfo->flags & (SURF_WARP)))
 			out->samples = NULL;
 		else {
@@ -581,7 +581,7 @@ static void R_LoadBspVertexArrays (void)
 /**
  * @sa CM_AddMapTile
  */
-static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
+static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int sZ)
 {
 	int i;
 	unsigned *buffer;
@@ -628,10 +628,13 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	R_ModLoadVertexes(&header->lumps[LUMP_VERTEXES]);
 	R_ModLoadEdges(&header->lumps[LUMP_EDGES]);
 	R_ModLoadSurfedges(&header->lumps[LUMP_SURFEDGES]);
-	R_ModLoadLighting(&header->lumps[LUMP_LIGHTING]);
+	if (day)
+		R_ModLoadLighting(&header->lumps[LUMP_LIGHTING_DAY]);
+	else
+		R_ModLoadLighting(&header->lumps[LUMP_LIGHTING_NIGHT]);
 	R_ModLoadPlanes(&header->lumps[LUMP_PLANES]);
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
-	R_ModLoadSurfaces(&header->lumps[LUMP_FACES]);
+	R_ModLoadSurfaces(day, &header->lumps[LUMP_FACES]);
 	R_ModLoadLeafs(&header->lumps[LUMP_LEAFS]);
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
@@ -674,7 +677,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
  * @brief Specifies the model that will be used as the world
  * @sa R_ModEndLoading
  */
-void R_ModBeginLoading (const char *tiles, const char *pos, const char *mapName)
+void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const char *mapName)
 {
 	const char *token;
 	char name[MAX_VAR];
@@ -730,10 +733,10 @@ void R_ModBeginLoading (const char *tiles, const char *pos, const char *mapName)
 					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
-			R_ModAddMapTile(name, sh[0], sh[1], 0);
+			R_ModAddMapTile(name, day, sh[0], sh[1], 0);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			R_ModAddMapTile(name, 0, 0, 0);
+			R_ModAddMapTile(name, day, 0, 0, 0);
 			R_EndBuildingLightmaps();
 			return;
 		}

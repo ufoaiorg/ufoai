@@ -260,7 +260,7 @@ typedef struct miptex_s {
 /** little-endian "IBSP" */
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
 
-#define BSPVERSION	72
+#define BSPVERSION	73
 
 
 /** upper design bounds
@@ -305,14 +305,15 @@ typedef struct {
 #define LUMP_NODES			4
 #define LUMP_TEXINFO		5
 #define LUMP_FACES			6
-#define LUMP_LIGHTING		7
-#define LUMP_LEAFS			8
-#define LUMP_LEAFBRUSHES	9
-#define LUMP_EDGES			10
-#define LUMP_SURFEDGES		11
-#define LUMP_MODELS			12
-#define LUMP_BRUSHES		13
-#define LUMP_BRUSHSIDES		14
+#define LUMP_LIGHTING_NIGHT	7
+#define LUMP_LIGHTING_DAY	8
+#define LUMP_LEAFS			9
+#define LUMP_LEAFBRUSHES	10
+#define LUMP_EDGES			11
+#define LUMP_SURFEDGES		12
+#define LUMP_MODELS			13
+#define LUMP_BRUSHES		14
+#define LUMP_BRUSHSIDES		15
 #define HEADER_LUMPS		16
 
 typedef struct {
@@ -382,7 +383,6 @@ typedef struct {
 	unsigned short v[2];		/**< vertex numbers */
 } dBspEdge_t;
 
-#define	MAXLIGHTMAPS	4
 typedef struct {
 	unsigned short planenum;
 	short side;
@@ -392,8 +392,7 @@ typedef struct {
 	short texinfo;
 
 	/** lighting info */
-	byte styles[MAXLIGHTMAPS];
-	int lightofs;				/**< start of [numstyles*surfsize] samples */
+	int lightofs[LIGHTMAP_MAX];				/**< start of [surfsize] samples */
 } dBspFace_t;
 
 typedef struct {

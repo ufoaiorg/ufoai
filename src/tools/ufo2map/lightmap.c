@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qrad.h"
 
-#define	MAX_LSTYLES	256
-
 typedef struct {
 	dBspFace_t		*faces[2];
 	qboolean	coplanar;
@@ -605,23 +603,15 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	}
 }
 
-#define	MAX_STYLES	32
 typedef struct {
 	int			numsamples;
 	float		*origins;
-	int			numstyles;
-	int			stylenums[MAX_STYLES];
-	float		*samples[MAX_STYLES];
+	float		*samples;
 } facelight_t;
 
-static directlight_t *directlights;
-static facelight_t facelight[MAX_MAP_FACES];
-static int numdlights;
-
-static vec3_t sun_color;
-static float sun_intensity;
-static float sun_pitch, sun_yaw;
-static vec3_t sun_dir;
+static directlight_t *directlights[2];
+static facelight_t facelight[2][MAX_MAP_FACES];
+static int numdlights[2];
 
 static entity_t *FindTargetEntity (const char *target)
 {
@@ -641,6 +631,7 @@ static entity_t *FindTargetEntity (const char *target)
 #define	DIRECT_LIGHT	3
 
 /**
+ * @brief Create directlights out of patches and lights
  * @sa RadWorld
  */
 void CreateDirectLights (void)
@@ -656,6 +647,7 @@ void CreateDirectLights (void)
 	vec3_t dest;
 	const char *_color;
 	float intensity;
+	int spawnflags;
 
 	/* surfaces */
 	for (i = 0, p = patches; i < num_patches; i++, p++) {
@@ -663,15 +655,15 @@ void CreateDirectLights (void)
 			&& p->totallight[2] < DIRECT_LIGHT)
 			continue;
 
-		numdlights++;
+		numdlights[config.compile_for_day]++;
 		dl = malloc(sizeof(*dl));
 		memset(dl, 0, sizeof(*dl));
 
 		VectorCopy(p->origin, dl->origin);
 
 		leaf = Rad_PointInLeaf(dl->origin);
-		dl->next = directlights;
-		directlights = dl;
+		dl->next = directlights[config.compile_for_day];
+		directlights[config.compile_for_day] = dl;
 
 		dl->type = emit_surface;
 		VectorCopy(p->plane->normal, dl->normal);
@@ -688,20 +680,22 @@ void CreateDirectLights (void)
 		if (strncmp(name, "light", 5))
 			continue;
 
-		numdlights++;
+		/* remove those lights that are only for the night version */
+		if (config.compile_for_day) {
+			spawnflags = atoi(ValueForKey(e, "spawnflags"));
+			if (!(spawnflags & 1))
+				continue;
+		}
+
+		numdlights[config.compile_for_day]++;
 		dl = malloc(sizeof(*dl));
 		memset(dl, 0, sizeof(*dl));
 
 		GetVectorForKey(e, "origin", dl->origin);
-		dl->style = FloatForKey(e, "_style");
-		if (!dl->style)
-			dl->style = FloatForKey(e, "style");
-		if (dl->style < 0 || dl->style >= MAX_LSTYLES)
-			dl->style = 0;
 
 		/* link in */
-		dl->next = directlights;
-		directlights = dl;
+		dl->next = directlights[config.compile_for_day];
+		directlights[config.compile_for_day] = dl;
 
 		intensity = FloatForKey(e, "light");
 		if (!intensity)
@@ -709,8 +703,8 @@ void CreateDirectLights (void)
 		if (!intensity)
 			intensity = 300;
 		_color = ValueForKey(e, "_color");
-		if (_color && _color[1]) {
-			sscanf(_color, "%f %f %f", &dl->color[0],&dl->color[1],&dl->color[2]);
+		if (_color[1]) {
+			sscanf(_color, "%f %f %f", &dl->color[0], &dl->color[1], &dl->color[2]);
 			ColorNormalize(dl->color, dl->color);
 		} else
 			dl->color[0] = dl->color[1] = dl->color[2] = 1.0;
@@ -728,7 +722,7 @@ void CreateDirectLights (void)
 				e2 = FindTargetEntity(target);
 				if (!e2)
 					Com_Printf("WARNING: light at (%i %i %i) has missing target\n",
-					(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2]);
+						(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2]);
 				else {
 					GetVectorForKey(e2, "origin", dest);
 					VectorSubtract(dest, dl->origin, dl->normal);
@@ -751,43 +745,19 @@ void CreateDirectLights (void)
 		}
 	}
 
-	/* sun light (parameters in worldspawn) */
-	e = &entities[0];
-
-	/* get intensity */
-	sun_intensity = FloatForKey(e, "light");
-	if (sun_intensity) {
-		/* there is a sun */
-		const char *angles;
-
-		/* get color */
-		_color = ValueForKey(e, "_color");
-		if (_color && _color[1]) {
-			sscanf(_color, "%f %f %f", &sun_color[0], &sun_color[1], &sun_color[2]);
-			ColorNormalize(sun_color, sun_color);
-		} else
-			sun_color[0] = sun_color[1] = sun_color[2] = 1.0;
-
-		/* get angles */
-		angles = ValueForKey(e, "angles");
-		sscanf(angles, "%f %f", &sun_pitch, &sun_yaw);
-
-		sun_yaw *= M_PI / 180.0f;
-		sun_pitch *= M_PI / 180.0f;
-
-		sun_dir[0] = cos(sun_yaw) * sin(sun_pitch);
-		sun_dir[1] = sin(sun_yaw) * sin(sun_pitch);
-		sun_dir[2] = cos(sun_pitch);
+	ColorNormalize(config.day_sun_color, config.day_sun_color);
+	ColorNormalize(config.night_sun_color, config.night_sun_color);
+	if (config.compile_for_day) {
+		config.day_ambient_red *= 128;
+		config.day_ambient_green *= 128;
+		config.day_ambient_blue *= 128;
+	} else {
+		config.night_ambient_red *= 128;
+		config.night_ambient_green *= 128;
+		config.night_ambient_blue *= 128;
 	}
 
-	/* get ambient light */
-	_color = ValueForKey(e, "ambient");
-	sscanf(_color, "%f %f %f", &config.ambient_red, &config.ambient_green, &config.ambient_blue );
-	config.ambient_red *= 128;
-	config.ambient_green *= 128;
-	config.ambient_blue *= 128;
-
-	Sys_FPrintf(SYS_VRB, "%i direct lights\n", numdlights);
+	Com_Printf("%i direct lights for %s lightmap\n", numdlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
 }
 
 
@@ -795,13 +765,14 @@ void CreateDirectLights (void)
  * @param[in] lightscale is the normalizer for multisampling
  */
 static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t center,
-			float **styletable, int offset, int mapsize, float lightscale)
+			float *styletable, int offset, int mapsize, float lightscale)
 {
 	directlight_t *l;
-	vec3_t pos2, delta;
+	vec3_t pos2, delta, sun_dir, sun_color;
 	float dot, dot2, dist;
 	float scale = 0.0f;
 	float *dest;
+	int sun_intensity;
 
 	/* move into the level using the normal and surface center */
 	VectorSubtract(pos, center, pos2);
@@ -810,7 +781,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 	CrossProduct(pos2, normal, pos2);
 	VectorMA(pos, 1.5, pos2, pos);
 
-	for (l = directlights; l; l = l->next) {
+	for (l = directlights[config.compile_for_day]; l; l = l->next) {
 		VectorSubtract(l->origin, pos, delta);
 		dist = VectorNormalize(delta);
 		dot = DotProduct(delta, normal);
@@ -848,13 +819,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 		if (TestLine(pos, l->origin))
 			continue;	/* occluded */
 
-		/* if this style doesn't have a table yet, allocate one */
-		if (!styletable[l->style]) {
-			styletable[l->style] = malloc(mapsize);
-			memset(styletable[l->style], 0, mapsize);
-		}
-
-		dest = styletable[l->style] + offset;
+		dest = styletable + offset;
 		/* add some light to it */
 		VectorMA(dest, scale * lightscale, l->color, dest);
 
@@ -862,8 +827,19 @@ skipadd: ;
 	}
 
 	/* add sun light */
-	if (!sun_intensity)
-		return;
+	if (config.compile_for_day) {
+		if (!config.day_sun_intensity)
+			return;
+		sun_intensity = config.day_sun_intensity;
+		VectorCopy(config.day_sun_dir, sun_dir);
+		VectorCopy(config.day_sun_color, sun_color);
+	} else {
+		if (!config.night_sun_intensity)
+			return;
+		sun_intensity = config.night_sun_intensity;
+		VectorCopy(config.night_sun_dir, sun_dir);
+		VectorCopy(config.night_sun_color, sun_color);
+	}
 
 	dot = DotProduct(sun_dir, normal);
 
@@ -877,13 +853,8 @@ skipadd: ;
 	if (TestLine(pos, delta))
 		return; /* occluded */
 
-	/* if this style doesn't have a table yet, allocate one */
-	if (!styletable[0]) {
-		styletable[0] = malloc(mapsize);
-		memset(styletable[0], 0, mapsize);
-	}
-
-	dest = styletable[0] + offset;
+	assert(styletable);
+	dest = styletable + offset;
 
 	/* add some light to it */
 	VectorMA(dest, sun_intensity * dot * lightscale, sun_color, dest);
@@ -1060,11 +1031,15 @@ static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
 #define MAX_SAMPLES 5
 static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
 
+/**
+ * @brief
+ * @sa FinalLightFace
+ */
 void BuildFacelights (unsigned int facenum)
 {
 	dBspFace_t *f;
 	lightinfo_t *l;
-	float *styletable[MAX_LSTYLES];
+	float *styletable;
 	int i, j, numsamples;
 	float *spot;
 	patch_t *patch;
@@ -1083,7 +1058,7 @@ void BuildFacelights (unsigned int facenum)
 		return;		/* non-lit texture */
 
 	l = malloc(MAX_SAMPLES * sizeof(lightinfo_t));
-	memset(styletable, 0, sizeof(styletable));
+	memset(l, 0, sizeof(lightinfo_t));
 
 	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;
@@ -1110,10 +1085,10 @@ void BuildFacelights (unsigned int facenum)
 	}
 
 	tablesize = l[0].numsurfpt * sizeof(vec3_t);
-	styletable[0] = malloc(tablesize);
-	memset(styletable[0], 0, tablesize);
+	styletable = malloc(tablesize);
+	memset(styletable, 0, tablesize);
 
-	fl = &facelight[facenum];
+	fl = &facelight[config.compile_for_day][facenum];
 	fl->numsamples = l[0].numsurfpt;
 	fl->origins = malloc(tablesize);
 	memcpy(fl->origins, l[0].surfpt, tablesize);
@@ -1132,7 +1107,7 @@ void BuildFacelights (unsigned int facenum)
 		}
 
 		/* contribute the sample to one or more patches */
-		AddSampleToPatch(l[0].surfpt[i], styletable[0] + i * 3, facenum);
+		AddSampleToPatch(l[0].surfpt[i], styletable + i * 3, facenum);
 	}
 
 	/* average up the direct light on each patch for radiosity */
@@ -1140,15 +1115,7 @@ void BuildFacelights (unsigned int facenum)
 		if (patch->samples)
 			VectorScale(patch->samplelight, 1.0 / patch->samples, patch->samplelight);
 
-	for (i = 0; i < MAX_LSTYLES; i++) {
-		if (!styletable[i])
-			continue;
-		if (fl->numstyles == MAX_STYLES)
-			break;
-		fl->samples[fl->numstyles] = styletable[i];
-		fl->stylenums[fl->numstyles] = i;
-		fl->numstyles++;
-	}
+	fl->samples = styletable;
 
 	/* the light from DIRECT_LIGHTS is sent out, but the
 	 * texture itself should still be full bright */
@@ -1156,7 +1123,7 @@ void BuildFacelights (unsigned int facenum)
 		(face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT)) {
-		spot = fl->samples[0];
+		spot = fl->samples;
 		for (i = 0; i < l[0].numsurfpt; i++, spot += 3)
 			VectorAdd(spot, face_patches[facenum]->baselight, spot);
 	}
@@ -1168,6 +1135,7 @@ void BuildFacelights (unsigned int facenum)
 /**
  * @brief Add the indirect lighting on top of the direct
  * lighting and save into final map format
+ * @sa BuildFacelights
  */
 void FinalLightFace (unsigned int facenum)
 {
@@ -1181,41 +1149,34 @@ void FinalLightFace (unsigned int facenum)
 	vec3_t facemins, facemaxs, lb;
 
 	f = &dfaces[facenum];
-	fl = &facelight[facenum];
+	fl = &facelight[config.compile_for_day][facenum];
 
-	/* non-lit texture */
+	/* none-lit texture */
 	if (texinfo[f->texinfo].surfaceFlags & SURF_WARP)
 		return;
 
-	f->lightofs = lightdatasize;
-	lightdatasize += fl->numstyles * (fl->numsamples * 3);
+	f->lightofs[config.compile_for_day] = lightdatasize[config.compile_for_day];
+	lightdatasize[config.compile_for_day] += fl->numsamples * 3;
 
 #if 0
 	/* add green sentinals between lightmaps */
-	lightdatasize += 256 * 3;
+	lightdatasize[config.compile_for_day] += 256 * 3;
 	for (i = 0; i < 256; i++)
-		dlightdata[lightdatasize - (i+1) * 3 + 1] = 255;
+		dlightdata[config.compile_for_day][lightdatasize[config.compile_for_day] - (i + 1) * 3 + 1] = 255;
 #endif
 
-	if (lightdatasize > MAX_MAP_LIGHTING)
-		Sys_Error("MAX_MAP_LIGHTING (%i)", lightdatasize);
-
-	f->styles[0] = 0;
-	f->styles[1] = f->styles[2] = f->styles[3] = 0xff;
+	if (lightdatasize[config.compile_for_day] > MAX_MAP_LIGHTING)
+		Sys_Error("MAX_MAP_LIGHTING (%i)", lightdatasize[config.compile_for_day]);
 
 	/* set up the triangulation */
 	if (config.numbounce > 0) {
 		ClearBounds(facemins, facemaxs);
 		for (i = 0; i < f->numedges; i++) {
-			int ednum;
-
-			ednum = dsurfedges[f->firstedge+i];
+			const int ednum = dsurfedges[f->firstedge + i];
 			if (ednum >= 0)
-				AddPointToBounds(dvertexes[dedges[ednum].v[0]].point,
-				facemins, facemaxs);
+				AddPointToBounds(dvertexes[dedges[ednum].v[0]].point, facemins, facemaxs);
 			else
-				AddPointToBounds(dvertexes[dedges[-ednum].v[1]].point,
-				facemins, facemaxs);
+				AddPointToBounds(dvertexes[dedges[-ednum].v[1]].point, facemins, facemaxs);
 		}
 
 		trian = AllocTriangulation(&dplanes[f->planenum]);
@@ -1240,53 +1201,44 @@ void FinalLightFace (unsigned int facenum)
 
 	/* sample the triangulation */
 
-	dest = &dlightdata[f->lightofs];
+	dest = &dlightdata[config.compile_for_day][f->lightofs[config.compile_for_day]];
 
-	if (fl->numstyles > MAXLIGHTMAPS) {
-		fl->numstyles = MAXLIGHTMAPS;
-		Com_Printf("face with too many lightstyles (%i): (%f %f %f)\n",
-			fl->numstyles,
-			face_patches[facenum]->origin[0],
-			face_patches[facenum]->origin[1],
-			face_patches[facenum]->origin[2]
-			);
-	}
+	for (j = 0; j < fl->numsamples; j++) {
+		VectorCopy((fl->samples + j * 3), lb);
+		if (config.numbounce > 0 && st == 0) {
+			vec3_t	add;
+			SampleTriangulation(fl->origins + j * 3, trian, add);
+			VectorAdd(lb, add, lb);
+		}
+		/* add an ambient term if desired */
+		if (config.compile_for_day) {
+			lb[0] += config.day_ambient_red;
+			lb[1] += config.day_ambient_green;
+			lb[2] += config.day_ambient_blue;
+		} else {
+			lb[0] += config.night_ambient_red;
+			lb[1] += config.night_ambient_green;
+			lb[2] += config.night_ambient_blue;
+		}
 
-	for (st = 0; st < fl->numstyles; st++) {
-		f->styles[st] = fl->stylenums[st];
-		for (j = 0; j < fl->numsamples; j++) {
-			VectorCopy((fl->samples[st] + j * 3), lb);
-			if (config.numbounce > 0 && st == 0) {
-				vec3_t	add;
+		VectorScale(lb, config.lightscale, lb);
 
-				SampleTriangulation(fl->origins + j * 3, trian, add);
-				VectorAdd(lb, add, lb);
-			}
-			/* add an ambient term if desired */
-			lb[0] += config.ambient_red;
-			lb[1] += config.ambient_green;
-			lb[2] += config.ambient_blue;
-
-			VectorScale(lb, config.lightscale, lb);
-
-			/* we need to clamp without allowing hue to change */
-			for (k = 0; k < 3; k++)
-				if (lb[k] < 1)
-					lb[k] = 1;
-			max = lb[0];
-			if (lb[1] > max)
-				max = lb[1];
-			if (lb[2] > max)
-				max = lb[2];
-			newmax = max;
-			if (newmax < 0)
-				newmax = 0;		/* roundoff problems */
-			if (newmax > config.maxlight)
-				newmax = config.maxlight;
-
+		/* we need to clamp without allowing hue to change */
+		for (k = 0; k < 3; k++)
+			if (lb[k] < 1)
+				lb[k] = 1;
+		max = lb[0];
+		if (lb[1] > max)
+			max = lb[1];
+		if (lb[2] > max)
+			max = lb[2];
+		newmax = max;
+		if (newmax < 0)
+			newmax = 0;		/* roundoff problems */
+		if (newmax > config.maxlight)
+			newmax = config.maxlight;
 			for (k = 0; k < 3; k++) {
-				*dest++ = lb[k] * newmax / max;
-			}
+			*dest++ = lb[k] * newmax / max;
 		}
 	}
 

@@ -2635,7 +2635,7 @@ FIXME
 	if (curCampaign)
 		SAV_QuickSave();
 
-	Cbuf_AddText(va("map \"%s\" \"%s\"\n", maps, coords));
+	Cbuf_AddText(va("map day \"%s\" \"%s\"\n", maps, coords));
 }
 
 /**

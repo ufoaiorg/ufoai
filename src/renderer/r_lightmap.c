@@ -143,7 +143,6 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 	unsigned int i, j, size;
 	byte *lightmap, *lm, *l;
 	float *bl;
-	int maps;
 
 	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
 	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
@@ -153,22 +152,12 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 
 	lightmap = surf->samples;
 
-	/* add all the lightmaps for any lightstyles */
-	for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
-		bl = r_lightmaps.fbuffer;
+	bl = r_lightmaps.fbuffer;
 
-		for (i = 0; i < size; i++, bl += LIGHTMAP_BYTES) {
-			if (maps > 0) { /* add to existing value */
-				bl[0] += lightmap[i * LIGHTMAP_BYTES + 0] * r_modulate->value;
-				bl[1] += lightmap[i * LIGHTMAP_BYTES + 1] * r_modulate->value;
-				bl[2] += lightmap[i * LIGHTMAP_BYTES + 2] * r_modulate->value;
-			} else { /* or simply set */
-				bl[0] = lightmap[i * LIGHTMAP_BYTES + 0] * r_modulate->value;
-				bl[1] = lightmap[i * LIGHTMAP_BYTES + 1] * r_modulate->value;
-				bl[2] = lightmap[i * LIGHTMAP_BYTES + 2] * r_modulate->value;
-			}
-		}
-		lightmap += size * LIGHTMAP_BYTES;	/* skip to next lightmap */
+	for (i = 0; i < size; i++, bl += LIGHTMAP_BYTES) {
+		bl[0] = lightmap[i * LIGHTMAP_BYTES + 0] * r_modulate->value;
+		bl[1] = lightmap[i * LIGHTMAP_BYTES + 1] * r_modulate->value;
+		bl[2] = lightmap[i * LIGHTMAP_BYTES + 2] * r_modulate->value;
 	}
 
 	/* put into texture format */

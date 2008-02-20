@@ -48,14 +48,14 @@ Wait times are of the format "a b". It spawns particles in random intervals rang
 */
 
 
-/*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) linear
-Non-displayed light.
+/*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) day
+Non-displayed light. All lights are for the night version. If you want them to show up in the day version, too - mark the day flag
 "_color"	Color for the light RGB
 "light"		intensity 0-255
 "target"	entity target name (info_null)
 "_cone"
 "origin"
-"angle"
+"angle"		Special values: UP -1; DOWN -2;
 */
 
 /*QUAKED light_spot (0 1 0) (-8 -8 -8) (8 8 8) linear

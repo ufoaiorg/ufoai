@@ -128,7 +128,6 @@ static void MN_StartServer_f (void)
 {
 	char map[MAX_VAR];
 	mapDef_t *md;
-	cvar_t* mn_serverday = Cvar_Get("mn_serverday", "1", 0, "Decides whether the server starts the day or the night version of the selected map");
 	aircraft_t *aircraft;
 
 	if (ccs.singleplayer)
@@ -154,7 +153,7 @@ static void MN_StartServer_f (void)
 		return;
 	assert(md->map);
 
-	Com_sprintf(map, sizeof(map), "map %s%c %s", md->map, mn_serverday->integer ? 'd' : 'n', md->param ? md->param : "");
+	Com_sprintf(map, sizeof(map), "map %s %s %s", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = md;
