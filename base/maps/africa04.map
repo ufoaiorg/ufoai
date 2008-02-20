@@ -10334,7 +10334,7 @@
 // entity 70
 {
 "classname" "misc_model"
-"spawnflags" "1"
+"spawnflags" "513"
 "origin" "1312 -372 12"
 "angles" "0 90 0"
 "model" "models/objects/alien/battery/battery.md2"
@@ -10342,7 +10342,7 @@
 // entity 71
 {
 "classname" "misc_model"
-"spawnflags" "1"
+"spawnflags" "513"
 "model" "models/objects/alien/battery/battery.md2"
 "angles" "0 90 0"
 "origin" "1312 -432 12"
