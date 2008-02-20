@@ -435,14 +435,6 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 	 * I'll leave this one in here just in case. */
 	ent->HP = max(ent->HP, 0);
 	
-	/** Reset stun value if the character is dead.
-	 * @todo
-	 * This prevents some possible bugs (see e.g. http://sourceforge.net/tracker/index.php?func=detail&aid=1897336&group_id=157793&atid=805242)
-	 * But it is no good solution IMO, since the stunned/killed stuff should be handled correctly even if this is not reset.
-	 */
-	if (ent->HP == 0)
-		ent->STUN = 0;
-	
 	/* Check death/knockout. */
 	if (ent->HP == 0 || ent->HP <= ent->STUN) {
 		G_SendStats(ent);
