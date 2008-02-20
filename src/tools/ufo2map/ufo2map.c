@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define VERSION "1.1"
+#define VERSION "1.2"
 
 #include "qrad.h"
 #include "qbsp.h"
