@@ -60,8 +60,8 @@ static void CL_ParseEntitystring (const char *es)
 	vec2_t wait;
 	int maxlevel = 8, maxmultiplayerteams = 2, entnum = 0;
 	int skin, frame, spawnflags;
-	float volume = 255.0f;
-	float attenuation = SOUND_DEFAULTATTENUATE;
+	float volume;
+	float attenuation;
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 
 	map_maxlevel = 8;
@@ -83,6 +83,8 @@ static void CL_ParseEntitystring (const char *es)
 		Vector2Clear(wait);
 		spawnflags = frame = skin = 0;
 		animname[0] = model[0] = particle[0] = '\0';
+		volume = MIX_MAX_VOLUME / 2;
+		attenuation = SOUND_DEFAULTATTENUATE;
 
 		/* parse the opening brace */
 		entity_token = COM_Parse(&es);
