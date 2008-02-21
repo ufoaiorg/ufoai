@@ -49,7 +49,7 @@ typedef struct cmd_alias_s {
 static cmd_alias_t *cmd_alias;
 static cmd_alias_t *cmd_alias_hash[ALIAS_HASH_SIZE];
 
-static qboolean cmd_wait, cmd_closed;
+static qboolean cmd_closed;
 
 #define	ALIAS_LOOP_COUNT	16
 static int alias_count;				/* for detecting runaway loops */
@@ -75,17 +75,6 @@ static void Cmd_Close_f (void)
 	Com_DPrintf(DEBUG_COMMANDS, "Cmd_Close_f: command buffer closed\n");
 	cmd_closed = qtrue;
 }
-
-/**
- * @brief Causes execution of the remainder of the command buffer to be delayed until
- * next frame.  This allows commands like:
- * bind g "impulse 5 ; +attack ; wait ; -attack ; impulse 2"
- */
-static void Cmd_Wait_f (void)
-{
-	cmd_wait = qtrue;
-}
-
 
 /*
 =============================================================================
@@ -237,13 +226,6 @@ void Cbuf_Execute (void)
 
 		/* execute the command line */
 		Cmd_ExecuteString(line);
-
-		if (cmd_wait) {
-			/* skip out while text still remains in buffer, leaving it */
-			/* for next frame */
-			cmd_wait = qfalse;
-			break;
-		}
 	}
 }
 
@@ -793,7 +775,7 @@ qboolean Cmd_Exists (const char *cmd_name)
  */
 int Cmd_CompleteCommandParameters (const char *command, const char *partial, const char **match)
 {
-	cmd_function_t *cmd;
+	const cmd_function_t *cmd;
 	unsigned int hash;
 
 	/* check for partial matches in commands */
@@ -816,8 +798,8 @@ int Cmd_CompleteCommandParameters (const char *command, const char *partial, con
  */
 int Cmd_CompleteCommand (const char *partial, const char **match)
 {
-	cmd_function_t *cmd;
-	cmd_alias_t *a;
+	const cmd_function_t *cmd;
+	const cmd_alias_t *a;
 	const char *localMatch[MAX_COMPLETE];
 	int len, matches = 0;
 
@@ -860,8 +842,8 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
  */
 void Cmd_ExecuteString (const char *text)
 {
-	cmd_function_t *cmd;
-	cmd_alias_t *a;
+	const cmd_function_t *cmd;
+	const cmd_alias_t *a;
 	const char *str;
 	unsigned int hash;
 
@@ -916,8 +898,8 @@ void Cmd_ExecuteString (const char *text)
  */
 static void Cmd_List_f (void)
 {
-	cmd_function_t *cmd;
-	cmd_alias_t *alias;
+	const cmd_function_t *cmd;
+	const cmd_alias_t *alias;
 	int i = 0, j = 0, c, l = 0;
 	const char *token = NULL;
 
@@ -999,7 +981,6 @@ void Cmd_Init (void)
 	Cmd_AddParamCompleteFunction("exec", Cmd_CompleteExecCommand);
 	Cmd_AddCommand("echo", Cmd_Echo_f, "Print to game console");
 	Cmd_AddCommand("alias", Cmd_Alias_f, "Creates a new command that executes a command string");
-	Cmd_AddCommand("wait", Cmd_Wait_f, "Causes execution of the remainder of the command buffer to be delayed until next frame");
 	Cmd_AddCommand("cmdclose", Cmd_Close_f, "Close the command buffer");
 	Cmd_AddCommand("cmdopen", Cmd_Open_f, "Open the command buffer again");
 #ifdef DEBUG
