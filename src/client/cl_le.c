@@ -366,10 +366,12 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
  */
 void LET_PlayAmbientSound (le_t * le)
 {
+	assert(le->sfx);
+
 	if (!((1 << cl_worldlevel->integer) & le->levelflags)) {
 		Mix_HaltChannel(le->sfx->channel);
 		le->sfx->channel = -1;
-		Com_DPrintf(DEBUG_SOUND, "Not on the correct level for soundfile '%s'\n", le->sfx->name);
+/*		Com_DPrintf(DEBUG_SOUND, "Not on the correct level for soundfile '%s'\n", le->sfx->name);*/
 		return;
 	}
 
@@ -398,7 +400,12 @@ void LET_PlayAmbientSound (le_t * le)
 				volume *= dist;
 			}
 		}
-		Mix_VolumeChunk(le->sfx->data, volume);
+		/* only change the chunk volume if it has changed */
+		if (le->oldVolume != (int)volume) {
+			le->oldVolume = volume;
+			Com_DPrintf(DEBUG_SOUND, "Volume changed from %.f to %i for sound '%s'\n", volume, le->oldVolume, le->sfx->name);
+			Mix_VolumeChunk(le->sfx->data, le->oldVolume);
+		}
 	} else {
 		le->sfx->channel = -1;
 	}

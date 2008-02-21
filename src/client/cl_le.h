@@ -87,6 +87,7 @@ typedef struct le_s {
 	struct sfx_s* sfx;
 	float attenuation;
 	float volume;
+	int oldVolume;
 
 	/** gfx */
 	animState_t as;	/**< holds things like the current active frame and so on */
