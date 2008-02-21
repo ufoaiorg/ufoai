@@ -482,6 +482,9 @@ static inline void CheckFlags (side_t *side, const mapbrush_t *b)
 		Sys_Error("Brush %i (entity %i) has invalid mix of passable and actorclip", b->brushnum, b->entitynum);
 }
 
+/** @brief Amount of footstep surfaces found in this map */
+static int footstepsCnt = 0;
+
 /**
  * @brief Generate a list of textures that should have footsteps when walking on them
  * @param[in] textureName Add this texture to the list of
@@ -489,15 +492,39 @@ static inline void CheckFlags (side_t *side, const mapbrush_t *b)
  * @sa SV_GetFootstepSound
  * @sa Com_GetTerrainType
  */
-static inline void GenerateFootstepList (const char *textureName)
+static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
 {
+	FILE *file;
+	char fileBase[MAX_OSPATH];
 
+	if (!config.generateFootstepFile)
+		return;
+
+	if (textureref[mipTexIndex].footstepMarked)
+		return;
+
+	assert(filename);
+
+	COM_StripExtension(filename, fileBase, sizeof(fileBase));
+
+	file = fopen(va("%s.footsteps", fileBase), "a");
+	if (!file) {
+		Com_Printf("Could not open footstep file '%s' for writing\n", filename);
+		config.generateFootstepFile = 0;
+		return;
+	}
+	fprintf(file, "terrain %s {\n}\n\n", textureref[mipTexIndex].name);
+	fclose(file);
+	footstepsCnt++;
+	textureref[mipTexIndex].footstepMarked = qtrue;
 }
 
 /**
+ * @brief Parses a brush from the map file
  * @sa FindMiptex
+ * @param[in] filename The map filename
  */
-static void ParseBrush (entity_t *mapent)
+static void ParseBrush (entity_t *mapent, const char *filename)
 {
 	mapbrush_t *b;
 	int i, j, k, mt;
@@ -588,8 +615,8 @@ static void ParseBrush (entity_t *mapent)
 		/* resolve implicit surface and contents flags */
 		SetImpliedFlags(side, td.name);
 		/* generate a list of textures that should have footsteps when walking on them */
-		if (side->contentFlags & CONTENTS_FOOTSTEP)
-			GenerateFootstepList(td.name);
+		if (mt > 0 && side->contentFlags & CONTENTS_FOOTSTEP)
+			GenerateFootstepList(filename, mt);
 
 		/* translucent objects are automatically classified as detail */
 		if (side->surfaceFlags & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST))
@@ -734,7 +761,12 @@ static void MoveBrushesToWorld (entity_t *mapent)
 	mapent->numbrushes = 0;
 }
 
-static qboolean ParseMapEntity (void)
+/**
+ * @brief Parsed map entites and brushes
+ * @sa ParseBrush
+ * @param[in] filename The map filename
+ */
+static qboolean ParseMapEntity (const char *filename)
 {
 	entity_t *mapent;
 	epair_t *e;
@@ -763,7 +795,7 @@ static qboolean ParseMapEntity (void)
 		if (*parsedToken == '}')
 			break;
 		if (*parsedToken == '{')
-			ParseBrush(mapent);
+			ParseBrush(mapent, filename);
 		else {
 			e = ParseEpair();
 			e->next = mapent->epairs;
@@ -817,7 +849,10 @@ void LoadMapFile (const char *filename)
 	nummapbrushsides = 0;
 	num_entities = 0;
 
-	while (ParseMapEntity());
+	while (ParseMapEntity(filename));
+
+	if (footstepsCnt)
+		Com_Printf("Generated footstep file with %i entries\n", footstepsCnt);
 
 	ClearBounds(map_mins, map_maxs);
 	for (i = 0; i < entities[0].numbrushes; i++) {

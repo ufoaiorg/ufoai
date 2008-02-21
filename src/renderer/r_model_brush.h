@@ -54,7 +54,7 @@ typedef struct mBspEdge_s {
 } mBspEdge_t;
 
 typedef struct mBspTexInfo_s {
-	float vecs[2][4];
+	vec2_t vecs[4];		/**< [s/t][xyz offset] */
 	int flags;
 	image_t *image;
 } mBspTexInfo_t;

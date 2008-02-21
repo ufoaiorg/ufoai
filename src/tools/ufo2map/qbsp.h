@@ -172,11 +172,11 @@ int FindFloatPlane(vec3_t normal, vec_t dist);
 /* textures.c */
 
 typedef struct {
-	char	name[64];
+	char	name[MAX_VAR];
 	int		surfaceFlags;
 	int		value;
 	int		contentFlags;
-	char	animname[64];
+	qboolean	footstepMarked; /**< only print it once to the footsteps file */
 } textureref_t;
 
 #define	MAX_MAP_TEXTURES	1024

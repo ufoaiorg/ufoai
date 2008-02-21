@@ -55,7 +55,6 @@ int FindMiptex (const char *name)
 		textureref[i].value = LittleLong(mt->value);
 		textureref[i].surfaceFlags = 0;
 		textureref[i].contentFlags = 0;
-		strcpy(textureref[i].animname, mt->animname);
 		free(mt);
 		loaded = qtrue;
 	}
@@ -66,7 +65,6 @@ int FindMiptex (const char *name)
 			textureref[i].value = LittleLong(mt->value);
 			textureref[i].surfaceFlags = 0;
 			textureref[i].contentFlags = 0;
-			strcpy(textureref[i].animname, mt->animname);
 			free(mt);
 			loaded = qtrue;
 		}
@@ -77,8 +75,6 @@ int FindMiptex (const char *name)
 		i = -1;
 	} else {
 		nummiptex++;
-		if (textureref[i].animname[0])
-			FindMiptex(textureref[i].animname);
 	}
 
 	return i;
@@ -218,15 +214,6 @@ skip:;
 	}
 	*tc = tx;
 	numtexinfo++;
-
-	/* load the next animation */
-	mt = FindMiptex(bt->name);
-	if (mt >= 0 && textureref[mt].animname[0]) {
-		anim = *bt;
-		strcpy(anim.name, textureref[mt].animname);
-		tc->nexttexinfo = TexinfoForBrushTexture(plane, &anim, origin, isTerrain);
-	} else
-		tc->nexttexinfo = -1;
 
 	return i;
 }

@@ -36,9 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/resource.h>
 #endif
 
-static char outbase[32];
-static char source[1024];
-static char name[1024];
+static char source[MAX_OSPATH];
+static char name[MAX_OSPATH];
 mapConfig_t config;
 
 /**
@@ -103,6 +102,9 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 		} else if (!strcmp(argv[i], "-noprune")) {
 			Com_Printf("noprune = true\n");
 			config.noprune = qtrue;
+		} else if (!strcmp(argv[i],"-nofootstep")) {
+			config.generateFootstepFile = qfalse;
+			Com_Printf("generateFootstepFile = false\n");
 		} else if (!strcmp(argv[i], "-nofill")) {
 			Com_Printf("nofill = true\n");
 			config.nofill = qtrue;
@@ -145,8 +147,6 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			Com_Printf("blocks: %i,%i to %i,%i\n",
 				config.block_xl, config.block_yl, config.block_xh, config.block_yh);
 			i += 4;
-		} else if (!strcmp (argv[i],"-tmpout")) {
-			strcpy(outbase, "/tmp");
 		} else if (!strcmp(argv[i], "-nobackclip")) {
 			Com_Printf("nobackclip = true\n");
 			config.nobackclip = qtrue;
@@ -243,6 +243,8 @@ static void U2M_SetDefaultConfigValues (void)
 	config.lightquant = 4;
 	config.direct_scale = 0.4f;
 	config.entity_scale = 1.0f;
+
+	config.generateFootstepFile = qtrue;
 }
 
 int main (int argc, char **argv)
@@ -367,7 +369,7 @@ int main (int argc, char **argv)
 		Com_Printf("%5.0f seconds elapsed\n", end - start);
 
 		DefaultExtension(source, ".bsp");
-		sprintf(name, "%s%s", outbase, source);
+		sprintf(name, "%s", source);
 		Com_Printf("writing %s\n", name);
 		WriteBSPFile(name);
 

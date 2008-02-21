@@ -247,7 +247,6 @@ typedef struct miptex_s {
 	char name[32];
 	unsigned width, height;
 	unsigned offsets[MIPLEVELS];	/**< four mip maps stored */
-	char animname[32];			/**< next frame in animation chain */
 	int surfaceFlagsFromFile;
 	int contentFlagsFromFile;
 	int value;
@@ -367,11 +366,10 @@ typedef struct {
 
 
 typedef struct texinfo_s {
-	float vecs[2][4];			/**< [s/t][xyz offset] */
+	vec2_t vecs[4];				/**< [s/t][xyz offset] */
 	int surfaceFlags;			/**< miptex flags + overrides */
 	int value;					/**< light emission, etc */
 	char texture[32];			/**< texture name */
-	int nexttexinfo;			/**< for animations, -1 = end of chain */
 } dBspTexinfo_t;
 
 

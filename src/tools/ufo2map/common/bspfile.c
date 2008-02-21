@@ -164,7 +164,6 @@ static void SwapBSPFile (void)
 			texinfo[i].vecs[0][j] = LittleFloat(texinfo[i].vecs[0][j]);
 		texinfo[i].surfaceFlags = LittleLong(texinfo[i].surfaceFlags);
 		texinfo[i].value = LittleLong(texinfo[i].value);
-		texinfo[i].nexttexinfo = LittleLong(texinfo[i].nexttexinfo);
 	}
 
 	/* faces */
