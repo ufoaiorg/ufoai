@@ -11,7 +11,7 @@ echo "models..."
 (find models -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.md2$/||/\.md3$/||/\.jpg$/||/\.png$/||/\.tga$/||/\.anm$/||/\.txt$/||/\.tag$/ {print}' | xargs zip -u9@ 0models.${EXT}
 #zip -ru9 0models.zip models -i \*.md2 \*.jpg \*.tga \*.png \*.txt \*.anm \*.tag
 echo "sound..."
-(find sound -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.txt$/||/\.wav$/ {print}' | xargs zip -u9@ 0snd.${EXT}
+(find sound -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.txt$/||/\.ogg$/||/\.wav$/ {print}' | xargs zip -u9@ 0snd.${EXT}
 echo "music..."
 (find music -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.ogg$/||/\.txt$/ {print}' | xargs zip -u9@ 0music.${EXT}
 #zip -ru9 0snd.zip music sound -i \*.txt \*.ogg \*.wav
