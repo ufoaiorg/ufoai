@@ -105,6 +105,9 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 		} else if (!strcmp(argv[i],"-nofootstep")) {
 			config.generateFootstepFile = qfalse;
 			Com_Printf("generateFootstepFile = false\n");
+		} else if (!strcmp(argv[i],"-nomaterial")) {
+			config.generateMaterialFile = qfalse;
+			Com_Printf("generateFootstepFile = false\n");
 		} else if (!strcmp(argv[i], "-nofill")) {
 			Com_Printf("nofill = true\n");
 			config.nofill = qtrue;
@@ -245,6 +248,7 @@ static void U2M_SetDefaultConfigValues (void)
 	config.entity_scale = 1.0f;
 
 	config.generateFootstepFile = qtrue;
+	config.generateMaterialFile = qtrue;
 }
 
 int main (int argc, char **argv)
