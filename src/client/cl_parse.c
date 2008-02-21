@@ -517,8 +517,6 @@ static void CL_EventReset (void)
  */
 static void CL_Reset (struct dbuffer *msg)
 {
-	/* clear local entities */
-	numLEs = 0;
 	selActor = NULL;
 	cl.numTeamList = 0;
 	Cbuf_AddText("numonteam1\n");

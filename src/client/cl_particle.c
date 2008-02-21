@@ -932,7 +932,6 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 			Com_Printf("CL_ParticleSpawnFromSizeBuf: Could not add le\n");
 			return;
 		}
-		le->inuse = qtrue;
 		le->type = ET_PARTICLE;
 		le->invis = qtrue;
 		le->levelflags = levelflags;

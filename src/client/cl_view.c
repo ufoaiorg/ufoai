@@ -72,6 +72,9 @@ static void CL_ParseEntitystring (const char *es)
 	if (numMPs || numLMs)
 		return;
 
+	/* clear local entities */
+	numLEs = 0;
+
 	/* parse ents */
 	while (1) {
 		/* initialize */
@@ -185,7 +188,7 @@ static void CL_ParseEntitystring (const char *es)
 			if (!(dayLightmap && (spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 				CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
 		} else if (!Q_strcmp(classname, "misc_sound")) {
-			LE_AddAmbientSound(sound, origin, volume, attenuation);
+			LE_AddAmbientSound(sound, origin, volume, attenuation, (spawnflags & 0xFF));
 		}
 
 		entnum++;

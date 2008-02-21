@@ -84,7 +84,7 @@ Used as a target where civilians try to get in a mission (TODO: Implement me)
 "count"	The priority of this waypoint - the lower the number, the nearer the end-target
 */
 
-/*QUAKED misc_sound (0.5 1 0.5) (-4 -4 -4) (4 4 4)
+/*QUAKED misc_sound (0.5 1 0.5) (-8 -8 -8) (8 8 8) level1 level2 level3 level4 level5 level6 level7 level8
 Used to play ambient sounds (looped sounds)
 "noise"		sound file name relative to sound/ambience
 "attenuation"	sound volume falloff - default is 0.03

@@ -287,10 +287,11 @@ void LE_Think (void)
 	if (cls.state != ca_active)
 		return;
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
+	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (le->inuse && le->think)
 			/* call think function */
 			le->think(le);
+	}
 }
 
 
@@ -365,8 +366,42 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
  */
 void LET_PlayAmbientSound (le_t * le)
 {
+	if (!((1 << cl_worldlevel->integer) & le->levelflags)) {
+		Mix_HaltChannel(le->sfx->channel);
+		le->sfx->channel = -1;
+		Com_DPrintf(DEBUG_SOUND, "Not on the correct level for soundfile '%s'\n", le->sfx->name);
+		return;
+	}
+
+	if (le->sfx->channel == -1)
+		le->sfx->channel = Mix_PlayChannel(le->sfx->channel, le->sfx->data, le->sfx->loops);
+
+	/* could not start the sound */
+	if (le->sfx->channel == -1) {
+		Com_DPrintf(DEBUG_SOUND, "Could not play the soundfile '%s'\n", le->sfx->name);
+		return;
+	}
+
 	/* find the total contribution of all sounds of this type */
-	/*int volume = S_SpatializeOrigin(le->origin, le->volume, le->attenuation);*/
+	if (Mix_Playing(le->sfx->channel)) {
+		float dist = VectorDist(cl.cam.reforg, le->origin);
+		float volume = le->volume;
+		if (dist >= SOUND_FULLVOLUME) {
+			/* @todo: use attenuation value */
+			dist = 1.0 - (dist / SOUND_MAX_DISTANCE);
+			if (dist < 0.)
+				/* too far away */
+				volume = 0;
+			else {
+				/* close enough to hear it, but apply a distance effect though
+				 * because it's farer than SOUND_FULLVOLUME */
+				volume *= dist;
+			}
+		}
+		Mix_VolumeChunk(le->sfx->data, volume);
+	} else {
+		le->sfx->channel = -1;
+	}
 }
 
 /**
@@ -700,6 +735,8 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 
 	/* add le */
 	le = LE_Add(0);
+	if (!le)
+		return;
 	le->invis = qtrue;
 	le->autohide = autohide;
 	/* bind particle */
@@ -776,6 +813,8 @@ void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 
 	/* add le */
 	le = LE_Add(0);
+	if (!le)
+		return;
 	le->invis = qtrue;
 
 	/* bind particle */
@@ -844,7 +883,7 @@ void LET_BrushModel (le_t *le)
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_ParseEntitystring
  */
-void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float attenuation)
+void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float attenuation, int levelflags)
 {
 	le_t* le;
 	sfx_t* sfx;
@@ -860,11 +899,14 @@ void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float a
 		Com_Printf("Could not add ambient sound entity\n");
 		return;
 	}
+	le->type = ET_SOUND;
 	le->sfx = sfx;
+	le->sfx->channel = -1;
 	le->attenuation = attenuation;
 	le->volume = volume;
 	VectorCopy(origin, le->origin);
 	le->invis = qtrue;
+	le->levelflags = levelflags;
 	le->think = LET_PlayAmbientSound;
 	Com_DPrintf(DEBUG_SOUND, "Add ambient sound '%s'\n", sound);
 }
@@ -890,7 +932,7 @@ le_t *LE_Add (int entnum)
 
 	/* list full, try to make list longer */
 	if (i == numLEs) {
-		if (numLEs >= MAX_EDICTS - numLMs) {
+		if (numLEs >= MAX_EDICTS) {
 			/* no free LEs */
 			Com_Error(ERR_DROP, "Too many LEs");
 			return NULL;

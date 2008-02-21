@@ -140,7 +140,7 @@ qboolean CL_OutsideMap(vec3_t impact);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
 void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide);
 void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
-void LE_AddAmbientSound(const char *sound, vec3_t origin, float volume, float attenuation);
+void LE_AddAmbientSound(const char *sound, vec3_t origin, float volume, float attenuation, int levelflags);
 le_t *LE_GetClosestActor(const vec3_t origin);
 
 void LE_Think(void);
