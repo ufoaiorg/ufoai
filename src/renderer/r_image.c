@@ -1452,7 +1452,7 @@ static const gltmode_t gl_alpha_modes[] = {
 	{"GL_RGBA2", GL_RGBA2},
 };
 
-#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
+#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof(gltmode_t))
 
 void R_TextureAlphaMode (const char *string)
 {
@@ -1483,7 +1483,7 @@ static const gltmode_t gl_solid_modes[] = {
 #endif
 };
 
-#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
+#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof(gltmode_t))
 
 void R_TextureSolidMode (const char *string)
 {

@@ -135,7 +135,7 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 	pool->createFile = fileName;
 	pool->createLine = fileLine;
 	pool->inUse = qtrue;
-	Q_strncpyz(pool->name, name, sizeof (pool->name));
+	Q_strncpyz(pool->name, name, sizeof(pool->name));
 	return pool;
 }
 
@@ -181,7 +181,7 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 		return 0;
 
 	/* Check sentinels */
-	mem = (memBlock_t *)((byte *)ptr - sizeof (memBlock_t));
+	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
 	if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
 		Com_Error(ERR_FATAL,
 			"Mem_Free: bad memory header top sentinel [buffer underflow]\n"
@@ -319,7 +319,7 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, struct memPool_s *pool, const 
 	mem->tagNum = tagNum;
 	mem->size = size;
 	mem->memPointer = (void *)(mem + 1);
-	mem->memSize = size - sizeof (memBlock_t) - sizeof (memBlockFoot_t);
+	mem->memSize = size - sizeof(memBlock_t) - sizeof(memBlockFoot_t);
 	mem->pool = pool;
 	mem->allocFile = fileName;
 	mem->allocLine = fileLine;
@@ -488,7 +488,6 @@ void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fil
 	int sum;
 	uint32_t startTime;
 
-	assert(pool);
 	if (!pool)
 		return;
 

@@ -463,7 +463,6 @@ typedef struct cmd_function_s {
 
 static int cmd_argc;
 static char *cmd_argv[MAX_STRING_TOKENS];
-static const char *cmd_null_string = "";
 static char cmd_args[MAX_STRING_CHARS];
 
 static cmd_function_t *cmd_functions;	/* possible commands to execute */
@@ -487,7 +486,7 @@ int Cmd_Argc (void)
 const char *Cmd_Argv (int arg)
 {
 	if (arg >= cmd_argc)
-		return cmd_null_string;
+		return "";
 	return cmd_argv[arg];
 }
 
@@ -508,8 +507,10 @@ void Cmd_BufClear (void)
 	int i;
 
 	/* clear the args from the last string */
-	for (i = 0; i < cmd_argc; i++)
+	for (i = 0; i < cmd_argc; i++) {
 		Mem_Free(cmd_argv[i]);
+		cmd_argv[i] = NULL;
+	}
 
 	cmd_argc = 0;
 	cmd_args[0] = 0;
@@ -573,8 +574,7 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 				com_token++;
 				com_token = Cvar_VariableString(com_token);
 			}
-			cmd_argv[cmd_argc] = Mem_Alloc(strlen(com_token) + 1);
-			Q_strncpyz(cmd_argv[cmd_argc], com_token, strlen(com_token) + 1);
+			cmd_argv[cmd_argc] = Mem_PoolStrDup(com_token, com_cmdSysPool, 0);
 			cmd_argc++;
 		}
 	}
@@ -861,7 +861,7 @@ void Cmd_ExecuteString (const char *text)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
-	char *str;
+	const char *str;
 	unsigned int hash;
 
 #ifdef DEBUG
@@ -875,7 +875,7 @@ void Cmd_ExecuteString (const char *text)
 		/* no tokens */
 		return;
 
-	str = cmd_argv[0];
+	str = Cmd_Argv(0);
 
 	/* check functions */
 	hash = Com_HashKey(str, CMD_HASH_SIZE);

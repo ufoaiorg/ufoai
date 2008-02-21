@@ -39,7 +39,7 @@ struct {
 	unsigned int oldhats;
 } stick_state;
 
-#define ARRAYLEN(x) (sizeof (x) / sizeof (x[0]))
+#define ARRAYLEN(x) (sizeof(x) / sizeof(x[0]))
 
 /* We translate axes movement into keypresses */
 static const int joy_keys[16] = {

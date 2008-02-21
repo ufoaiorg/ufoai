@@ -273,7 +273,7 @@ static inline int Sys_GetAddrInfo (const char *node, const char *service,
 		}
 
 		/* Copy of results */
-		*res = malloc(sizeof (struct addrinfo));
+		*res = malloc(sizeof(struct addrinfo));
 		memcpy(*res, &Result, sizeof(struct addrinfo));
 		(*res)->ai_addrlen = sizeof(struct sockaddr_in);
 		(*res)->ai_addr = malloc(sizeof(struct sockaddr_in));

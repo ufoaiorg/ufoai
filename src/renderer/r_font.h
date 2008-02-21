@@ -74,7 +74,7 @@ typedef struct {
 	int renderStyle;
 } fontRenderStyle_t;
 
-#define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof (fontRenderStyle_t))
+#define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof(fontRenderStyle_t))
 
 /* public */
 void R_FontShutdown(void);
