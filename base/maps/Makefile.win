@@ -2,7 +2,7 @@ MAPSDIR = .
 
 UFO2MAP = ufo2map.exe
 
-MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map) # Windows version. TODO still needs the "tutorial*" and "prefab*" excluded.
+MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "tutorial") # Windows version. Excludes "*tutorial*" and "*prefab*" maps.
 BSPS = $(MAPSRCS:%.map=%.bsp)
 
 UFO2MAPFLAGS = -extra
@@ -11,6 +11,7 @@ FAST_UFO2MAPFLAGS =
 all: $(BSPS)
 	echo $(MAPSRCS)
 
+# Doesn't seem to work under Windows (I just remove the "-extra" from UFO2MAPFLAGS right now. Is ther a better way? --Hoehrer)
 fast:
 	$(MAKE) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
 
