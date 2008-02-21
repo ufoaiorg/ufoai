@@ -369,9 +369,8 @@ int main (int argc, char **argv)
 		Com_Printf("%5.0f seconds elapsed\n", end - start);
 
 		DefaultExtension(source, ".bsp");
-		sprintf(name, "%s", source);
-		Com_Printf("writing %s\n", name);
-		WriteBSPFile(name);
+		Com_Printf("writing %s\n", source);
+		WriteBSPFile(source);
 
 		Com_Printf("sum: %5.0f seconds elapsed\n\n", end - begin);
 	}
