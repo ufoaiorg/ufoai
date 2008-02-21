@@ -17,7 +17,7 @@ fast:
 
 clean:
 	echo "Deleting all .bsp files in all subdirectories..."
-	del /S *.bsp
+	del /S $(MAPSDIR)\*.bsp
 
 $(BSPS): %.bsp: %.map
 	$(UFO2MAP) $(UFO2MAPFLAGS) "$<"
