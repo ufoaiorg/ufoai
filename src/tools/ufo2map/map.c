@@ -521,7 +521,7 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 		}
 	}
 
-	if (1 || b->isTerrain || b->isGenSurf) {
+	if (b->isTerrain || b->isGenSurf) {
 		fprintf(file, "{\n\tmaterial %s\n\t{\n\t\ttexture <fillme>\n\t\tterrain 0 64\n\t\tlightmap\n\t}\n}\n", textureref[mipTexIndex].name);
 		materialsCnt++;
 	}
