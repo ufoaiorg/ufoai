@@ -11513,17 +11513,15 @@
 {
 "classname" "misc_sound"
 "origin" "1888 -400 128"
-"angle" "180"
 "noise" "ambience/alien_engine"
-"volume" "120"
+"volume" "100"
 "spawnflags" "2"
 }
 // entity 182
 {
 "classname" "misc_sound"
 "origin" "1888 -304 128"
-"angle" "180"
 "noise" "ambience/alien_engine"
-"volume" "255"
+"volume" "100"
 "spawnflags" "2"
 }
