@@ -60,6 +60,11 @@ typedef struct qFILE_s {
 	unsigned long size;
 } qFILE;
 
+/* valid -noradiosity parameters */
+#define RADIOSITY_NONE			1
+#define RADIOSITY_DAY_ONLY		2
+#define RADIOSITY_NIGHT_ONLY	3
+
 typedef struct mapConfig_s {
 	float subdivideSize;
 	int nice;
@@ -78,7 +83,7 @@ typedef struct mapConfig_s {
 	qboolean notjunc;
 	qboolean verboseentities;
 	qboolean nobackclip;
-	qboolean noradiosity;
+	int noradiosity;
 	int block_xl, block_xh, block_yl, block_yh;
 	float microvolume;
 	unsigned int numbounce;

@@ -196,8 +196,15 @@ static void U2M_RAD_Parameter (int argc, char** argv)
 			config.maxlight = atof(argv[i + 1]) * 128;
 			i++;
 		} else if (!strcmp(argv[i], "-noradiosity")) {
+			int parameter;
 			Com_Printf("noradiosity = true\n");
-			config.noradiosity = qtrue;
+			parameter = atoi(argv[i + 1]);
+			if (parameter) {
+				config.noradiosity = parameter;
+				i++;
+			} else {
+				config.noradiosity = RADIOSITY_NONE;
+			}
 		}
 	}
 }
@@ -297,7 +304,7 @@ int main (int argc, char **argv)
 		" -notjunc                 : \n"
 		" -nowater                 : \n"
 		" -noweld                  : \n"
-		" -noradiosity             : don't perform the radiosity calculations\n"
+		" -noradiosity             : don't perform the radiosity calculations - 1 (skip completly) 2 (skip night) 3 (skip day)\n"
 		" -onlyents                : only update entities\n"
 		" -quant                   : lightquant\n"
 		" -radchop                 : \n"
@@ -353,25 +360,29 @@ int main (int argc, char **argv)
 	end = I_FloatTime();
 	Com_Printf("%5.0f seconds elapsed\n", end-start);
 
-	if (!config.onlyents && !config.noradiosity) {
+	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
 		Com_Printf("----- Radiosity ----\n");
 
 		begin = start;
 
 		CalcTextureReflectivity();
 
-		/* compile night version */
-		start = I_FloatTime();
-		RadWorld();
-		end = I_FloatTime();
-		Com_Printf("%5.0f seconds elapsed\n", end - start);
+		if (config.noradiosity != RADIOSITY_DAY_ONLY) {
+			/* compile night version */
+			start = I_FloatTime();
+			RadWorld();
+			end = I_FloatTime();
+			Com_Printf("%5.0f seconds elapsed\n", end - start);
+		}
 
-		/* compile day version */
-		config.compile_for_day = 1;
-		start = I_FloatTime();
-		RadWorld();
-		end = I_FloatTime();
-		Com_Printf("%5.0f seconds elapsed\n", end - start);
+		if (config.noradiosity != RADIOSITY_NIGHT_ONLY) {
+			/* compile day version */
+			config.compile_for_day = 1;
+			start = I_FloatTime();
+			RadWorld();
+			end = I_FloatTime();
+			Com_Printf("%5.0f seconds elapsed\n", end - start);
+		}
 
 		DefaultExtension(source, ".bsp");
 		Com_Printf("writing %s\n", source);

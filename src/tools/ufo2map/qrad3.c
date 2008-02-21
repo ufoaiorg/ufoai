@@ -38,8 +38,6 @@ dBspPlane_t	backplanes[MAX_MAP_PLANES];
 
 int TestLine(const vec3_t start, const vec3_t stop);
 
-qboolean	noradiosity = qfalse;
-
 /*
 ===================================================================
 MISC
