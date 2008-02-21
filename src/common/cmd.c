@@ -574,6 +574,7 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 				com_token++;
 				com_token = Cvar_VariableString(com_token);
 			}
+			assert(!cmd_argv[cmd_argc]);
 			cmd_argv[cmd_argc] = Mem_PoolStrDup(com_token, com_cmdSysPool, 0);
 			cmd_argc++;
 		}
