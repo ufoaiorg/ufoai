@@ -16,8 +16,8 @@ fast:
 	$(MAKE) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
 
 clean:
-	echo "Delete files in subdirs manually"
-	del *.bsp
+	echo "Deleting all .bsp files in all subdirectories..."
+	del /S *.bsp
 
 $(BSPS): %.bsp: %.map
 	$(UFO2MAP) $(UFO2MAPFLAGS) "$<"
