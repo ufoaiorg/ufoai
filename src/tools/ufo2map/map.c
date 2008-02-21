@@ -488,12 +488,16 @@ static int materialsCnt = 0;
 /**
  * @brief Generates material files in case the settings can be guessed from map file
  */
-static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, mapbrush_t *b, brush_texture_t *t)
+static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, mapbrush_t *b, brush_texture_t *t, side_t *s)
 {
 	FILE *file;
 	char fileBase[MAX_OSPATH];
 
 	if (!config.generateMaterialFile)
+		return;
+
+	/* we already have a material definition for this texture */
+	if (textureref[mipTexIndex].materialMarked)
 		return;
 
 	assert(filename);
@@ -523,10 +527,17 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 
 	if (b->isTerrain || b->isGenSurf) {
 		fprintf(file, "{\n\tmaterial %s\n\t{\n\t\ttexture <fillme>\n\t\tterrain 0 64\n\t\tlightmap\n\t}\n}\n", textureref[mipTexIndex].name);
+		textureref[mipTexIndex].materialMarked = qtrue;
 		materialsCnt++;
 	}
 
-	/* @todo Check for water textures, rock textures and so on */
+	/* envmap for water surfaces */
+	if (s->contentFlags & CONTENTS_WATER) {
+		fprintf(file, "{\n\tmaterial %s\n\t{\n\t\tenvmap 0\n\t}\n}\n", textureref[mipTexIndex].name);
+		textureref[mipTexIndex].materialMarked = qtrue;
+		materialsCnt++;
+	}
+	/* @todo Check for rock textures and so on */
 
 	fclose(file);
 }
@@ -663,10 +674,6 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 		/* resolve implicit surface and contents flags */
 		SetImpliedFlags(side, td.name);
-		/* generate a list of textures that should have footsteps when walking on them */
-		if (mt > 0 && side->contentFlags & CONTENTS_FOOTSTEP)
-			GenerateFootstepList(filename, mt);
-		GenerateMaterialFile(filename, mt, b, &td);
 
 		/* translucent objects are automatically classified as detail */
 		if (side->surfaceFlags & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST))
@@ -684,6 +691,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 		/* check whether the flags are ok */
 		CheckFlags(side, b);
+
+		/* generate a list of textures that should have footsteps when walking on them */
+		if (mt > 0 && side->contentFlags & CONTENTS_FOOTSTEP)
+			GenerateFootstepList(filename, mt);
+		GenerateMaterialFile(filename, mt, b, &td, side);
 
 		/* find the plane number */
 		planenum = PlaneFromPoints(planepts[0], planepts[1], planepts[2]);

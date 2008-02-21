@@ -177,6 +177,7 @@ typedef struct {
 	int		value;
 	int		contentFlags;
 	qboolean	footstepMarked; /**< only print it once to the footsteps file */
+	qboolean	materialMarked; /**< only print it once to the material file */
 } textureref_t;
 
 #define	MAX_MAP_TEXTURES	1024
