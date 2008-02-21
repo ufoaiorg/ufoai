@@ -12154,12 +12154,12 @@
 "classname" "misc_particle"
 "origin" "1440 147 192"
 "spawnflags" "252"
-"particle" "smoke"
+"particle" "smoke2"
 }
 // entity 190
 {
 "classname" "misc_particle"
 "origin" "1376 147 192"
 "spawnflags" "252"
-"particle" "smoke"
+"particle" "smoke2"
 }
