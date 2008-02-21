@@ -740,6 +740,7 @@ static void CL_EntPerish (struct dbuffer *msg)
  * @note func_breakable, func_door
  * @sa G_SendEdictsAndBrushModels
  * @sa EV_ADD_BRUSH_MODEL
+ * @sa CL_ParseEntitystring
  */
 static void CL_AddBrushModel (struct dbuffer *msg)
 {

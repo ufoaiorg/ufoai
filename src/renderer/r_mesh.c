@@ -332,9 +332,6 @@ void R_DrawAliasModel (entity_t *e)
 		/* resolve the color, starting with the lighting result */
 		VectorCopy(r_lightmap_sample.color, color);
 
-		/* and adjusting for blend */
-		color[3] = r_state.blend_enabled ? 0.25 : 1.0;
-
 		if (e->flags & RF_GLOW) {  /* and then adding in a pulse */
 			const float f = 1.0 + sin((refdef.time + (e - R_GetEntity(0))) * 6.0);
 			VectorScale(color, 1.0 + f * 0.33, color);

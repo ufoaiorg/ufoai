@@ -43,7 +43,13 @@ int map_maxlevel_base = 0;
 
 /** position in the spawnflags */
 #define MISC_MODEL_GLOW 9
-#define SPAWNFLAG_NO_DAY 9
+#define SPAWNFLAG_NO_DAY 8
+
+/**
+ * @brief Parse the map entity string and spawns those entities that are client-side only
+ * @sa G_SendEdictsAndBrushModels
+ * @sa CL_AddBrushModel
+ */
 static void CL_ParseEntitystring (const char *es)
 {
 	const char *strstart, *entity_token;
@@ -176,7 +182,7 @@ static void CL_ParseEntitystring (const char *es)
 					Com_Printf("Warning: Model has frame and anim parameters - using frame (no animation)\n");
 			}
 		} else if (!Q_strcmp(classname, "misc_particle")) {
-			if (!(dayLightmap && spawnflags & (1 << SPAWNFLAG_NO_DAY)))
+			if (!(dayLightmap && (spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 				CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
 		} else if (!Q_strcmp(classname, "misc_sound")) {
 			LE_AddAmbientSound(sound, origin, volume, attenuation);
