@@ -196,11 +196,15 @@ static void U2M_RAD_Parameter (int argc, char** argv)
 			config.maxlight = atof(argv[i + 1]) * 128;
 			i++;
 		} else if (!strcmp(argv[i], "-noradiosity")) {
-			int parameter;
 			Com_Printf("noradiosity = true\n");
-			parameter = atoi(argv[i + 1]);
-			if (parameter) {
-				config.noradiosity = parameter;
+			if (!strcmp(argv[i + 1], "day")) {
+				config.noradiosity = RADIOSITY_NIGHT_ONLY;
+				i++;
+			} else if (!strcmp(argv[i + 1], "night")) {
+				config.noradiosity = RADIOSITY_DAY_ONLY;
+				i++;
+			} else if (!strcmp(argv[i + 1], "all")) {
+				config.noradiosity = RADIOSITY_NONE;
 				i++;
 			} else {
 				config.noradiosity = RADIOSITY_NONE;
@@ -304,7 +308,7 @@ int main (int argc, char **argv)
 		" -notjunc                 : \n"
 		" -nowater                 : \n"
 		" -noweld                  : \n"
-		" -noradiosity             : don't perform the radiosity calculations - 1 (skip completly) 2 (skip night) 3 (skip day)\n"
+		" -noradiosity             : don't perform the radiosity calculations (day, night, all)\n"
 		" -onlyents                : only update entities\n"
 		" -quant                   : lightquant\n"
 		" -radchop                 : \n"
