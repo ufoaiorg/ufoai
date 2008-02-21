@@ -386,7 +386,7 @@ void LET_PlayAmbientSound (le_t * le)
 
 	/* find the total contribution of all sounds of this type */
 	if (Mix_Playing(le->sfx->channel)) {
-		float dist = VectorDist(cl.cam.reforg, le->origin);
+		float dist = VectorDist(cl.cam.camorg, le->origin);
 		float volume = le->volume;
 		if (dist >= SOUND_FULLVOLUME) {
 			/* @todo: use attenuation value */
@@ -910,7 +910,7 @@ void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float a
 	le->sfx = sfx;
 	le->sfx->channel = -1;
 	le->attenuation = attenuation;
-	le->volume = volume;
+	le->oldVolume = le->volume = volume;
 	VectorCopy(origin, le->origin);
 	le->invis = qtrue;
 	le->levelflags = levelflags;
