@@ -10,8 +10,8 @@ sub readDir
 	my $status = opendir (DIR, "$dir");
 	my @files = ();
 	unless ( $status ) {
- 		print "Could not read $dir\n";
- 		return ();
+		print "Could not read $dir\n";
+		return ();
 	}
 
 	@files = sort readdir ( DIR );
@@ -87,13 +87,13 @@ sub check
 						$ent_end = 0;
 					}
 				} elsif ($align) {
-                    if (/\"origin\"/) {
-                        m/^\"origin\"\s+\"-*(\d+) -*(\d+) -*(\d+)\"/ig;
-                        if (($1 % 32) - 16 || ($2 % 32) - 16) {
-                            print "Error - found misaligned $entity at line $line\n";
-                        }
-                        $align = 0;
-                    }
+					if (/\"origin\"/) {
+						m/^\"origin\"\s+\"-*(\d+) -*(\d+) -*(\d+)\"/ig;
+						if (($1 % 32) - 16 || ($2 % 32) - 16) {
+							print "Error - found misaligned $entity at line $line\n";
+						}
+						$align = 0;
+					}
 				}
 				next;
 			}
@@ -108,8 +108,8 @@ sub check
 				if ( ! $teamfound ) {
 					$team = 1;
 				}
-    			$align = 1;
-    			$teamfound = 0;
+				$align = 1;
+				$teamfound = 0;
 			} elsif ( $entity =~ /info_.*_start/ ) {
 				$align = 1;
 			} elsif ( $entity eq "func_breakable" ) {
@@ -120,7 +120,6 @@ sub check
 				$team = 0;
 				$brush = 0;
 			}
-
 		}
 		foreach ( keys %count ) {
 			print "... $_ => $count{$_}\n";
