@@ -483,6 +483,18 @@ static inline void CheckFlags (side_t *side, const mapbrush_t *b)
 }
 
 /**
+ * @brief Generate a list of textures that should have footsteps when walking on them
+ * @param[in] textureName Add this texture to the list of
+ * textures where we should have footstep sounds for
+ * @sa SV_GetFootstepSound
+ * @sa Com_GetTerrainType
+ */
+static inline void GenerateFootstepList (const char *textureName)
+{
+
+}
+
+/**
  * @sa FindMiptex
  */
 static void ParseBrush (entity_t *mapent)
@@ -575,6 +587,9 @@ static void ParseBrush (entity_t *mapent)
 
 		/* resolve implicit surface and contents flags */
 		SetImpliedFlags(side, td.name);
+		/* generate a list of textures that should have footsteps when walking on them */
+		if (side->contentFlags & CONTENTS_FOOTSTEP)
+			GenerateFootstepList(td.name);
 
 		/* translucent objects are automatically classified as detail */
 		if (side->surfaceFlags & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST))
