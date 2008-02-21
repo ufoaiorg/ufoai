@@ -902,10 +902,10 @@ nextpatch:;
  * @brief Populate faces with indexes of all dBspFace_t's referencing the specified edge.
  * @param[out] The number of dBspFace_t's referencing edge is returned in nfaces.
  */
-static void FacesWithEdge (int edge, int *faces, int *nfaces)
+static void FacesWithVert (int vert, int *faces, int *nfaces)
 {
 	dBspFace_t *face;
-	int i, j, k, e;
+	int i, j, k, e, v;
 
 	k = 0;
 	for (i = 0; i < numfaces; i++) {
@@ -917,7 +917,10 @@ static void FacesWithEdge (int edge, int *faces, int *nfaces)
 		for (j = 0; j < face->numedges; j++) {
 			e = dsurfedges[face->firstedge + j];
 
-			if (e == edge) {
+			v = e >= 0 ? dedges[e].v[0] : dedges[-e].v[1];
+
+			/* compare using surfedge reference or point equality */
+			if (v == vert || VectorCompare(dvertexes[v].point, dvertexes[vert].point)) {
 				faces[k++] = i;
 				break;
 			}
@@ -935,46 +938,29 @@ static vec3_t vertexnormals[MAX_MAP_VERTS];
  */
 void BuildVertexNormals (void)
 {
-	dBspVertex_t *vert;
-	dBspEdge_t *edge;
 	dBspFace_t *face;
 	dBspPlane_t *plane;
-	int edge_faces[256];
-	int num_edge_faces;
+	int vert_faces[256];
+	int num_vert_faces;
 	vec3_t norm;
-	int i, j, k, l;
+	int i, j;
 
 	for (i = 0; i < numvertexes; i++) {
-		vert = &dvertexes[i];
-
 		VectorSet(vertexnormals[i], 0, 0, 0);
-		l = 0;
+		FacesWithVert(i, vert_faces, &num_vert_faces);
 
-		for (j = 0; j < numedges; j++) {
-			edge = &dedges[j];
+		for (j = 0; j < num_vert_faces; j++) {
+			face = &dfaces[vert_faces[j]];
+			plane = &dplanes[face->planenum];
 
-			if (edge->v[0] == i)  /* edge uses this vert */
-				FacesWithEdge(j, edge_faces, &num_edge_faces);
-			else if (edge->v[1] == i)
-				FacesWithEdge(-j, edge_faces, &num_edge_faces);
+			if (face->side)
+				VectorNegate(plane->normal, norm);
 			else
-				continue;
+				VectorCopy(plane->normal, norm);
 
-			l += num_edge_faces;
-
-			for (k = 0; k < num_edge_faces; k++) {
-				face = &dfaces[edge_faces[k]];
-				plane = &dplanes[face->planenum];
-
-				if (face->side)
-					VectorNegate(plane->normal, norm);
-				else
-					VectorCopy(plane->normal, norm);
-
-				VectorAdd(vertexnormals[i], norm, vertexnormals[i]);
-			}
+			VectorAdd(vertexnormals[i], norm, vertexnormals[i]);
 		}
-		VectorScale(vertexnormals[i], 1.0 / l, vertexnormals[i]);
+		VectorScale(vertexnormals[i], 1.0 / num_vert_faces, vertexnormals[i]);
 		VectorNormalize(vertexnormals[i]);
 	}
 }
