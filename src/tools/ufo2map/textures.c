@@ -125,9 +125,8 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 	vec_t ang, sinv, cosv;
 	vec_t ns, nt;
 	dBspTexinfo_t tx, *tc;
-	int i, j, k, mt;
+	int i, j, k;
 	float shift[2];
-	brush_texture_t anim;
 
 	if (!bt->name[0])
 		return 0;
