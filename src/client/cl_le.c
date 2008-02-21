@@ -371,12 +371,13 @@ void LET_PlayAmbientSound (le_t * le)
 	if (!((1 << cl_worldlevel->integer) & le->levelflags)) {
 		Mix_HaltChannel(le->sfx->channel);
 		le->sfx->channel = -1;
-/*		Com_DPrintf(DEBUG_SOUND, "Not on the correct level for soundfile '%s'\n", le->sfx->name);*/
 		return;
 	}
 
-	if (le->sfx->channel == -1)
+	if (le->sfx->channel == -1) {
+		S_SetVolume(le->sfx, le->sfx->volume);
 		le->sfx->channel = Mix_PlayChannel(le->sfx->channel, le->sfx->data, le->sfx->loops);
+	}
 
 	/* could not start the sound */
 	if (le->sfx->channel == -1) {
@@ -389,7 +390,6 @@ void LET_PlayAmbientSound (le_t * le)
 		float dist = VectorDist(cl.cam.camorg, le->origin);
 		float volume = le->volume;
 		if (dist >= SOUND_FULLVOLUME) {
-			/* @todo: use attenuation value */
 			dist = 1.0 - (dist / SOUND_MAX_DISTANCE);
 			if (dist < 0.)
 				/* too far away */
@@ -400,12 +400,7 @@ void LET_PlayAmbientSound (le_t * le)
 				volume *= dist;
 			}
 		}
-		/* only change the chunk volume if it has changed */
-		if (le->oldVolume != (int)volume) {
-			le->oldVolume = volume;
-			Com_DPrintf(DEBUG_SOUND, "Volume changed from %.f to %i for sound '%s'\n", volume, le->oldVolume, le->sfx->name);
-			Mix_VolumeChunk(le->sfx->data, le->oldVolume);
-		}
+		S_SetVolume(le->sfx, volume);
 	} else {
 		le->sfx->channel = -1;
 	}
@@ -459,17 +454,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_StartSound(le->origin, soundWaterOut, DEFAULT_SOUND_PACKET_VOLUME, SOUND_DEFAULTATTENUATE);
+				S_StartSound(le->origin, soundWaterOut, DEFAULT_SOUND_PACKET_VOLUME);
 			} else {
 				/* play water entering sound */
-				S_StartSound(le->origin, soundWaterIn, DEFAULT_SOUND_PACKET_VOLUME, SOUND_DEFAULTATTENUATE);
+				S_StartSound(le->origin, soundWaterIn, DEFAULT_SOUND_PACKET_VOLUME);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_StartSound(le->origin, soundWaterMove, DEFAULT_SOUND_PACKET_VOLUME, SOUND_DEFAULTATTENUATE);
+			S_StartSound(le->origin, soundWaterMove, DEFAULT_SOUND_PACKET_VOLUME);
 		}
 	}
 }
@@ -503,7 +498,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	if (t->footStepSound) {
 		sfx = S_RegisterSound(t->footStepSound);
 		Com_DPrintf(DEBUG_SOUND, "LE_PlaySoundFileAndParticleForSurface: volume %.2f\n", t->footStepVolume);
-		S_StartSound(origin, sfx, t->footStepVolume, t->footStepAttenuation);
+		S_StartSound(origin, sfx, t->footStepVolume);
 	}
 }
 
@@ -718,7 +713,7 @@ static void LET_Projectile (le_t * le)
 		}
 		if (le->ref2 && le->ref2[0]) {
 			sfx_t *sfx = S_RegisterSound(le->ref2);
-			S_StartSound(impact, sfx, le->fd->relImpactVolume, DEFAULT_SOUND_PACKET_ATTENUATION);
+			S_StartSound(impact, sfx, le->fd->relImpactVolume);
 		}
 	} else if (CL_OutsideMap(le->ptl->s)) {
 		le->endTime = cl.time;
@@ -774,14 +769,14 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					sfx = S_RegisterSound(fd->hitBodySound);
-					S_StartSound(le->origin, sfx, le->fd->relImpactVolume, DEFAULT_SOUND_PACKET_ATTENUATION);
+					S_StartSound(le->origin, sfx, le->fd->relImpactVolume);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0]) {
 					sfx = S_RegisterSound(fd->impactSound);
-					S_StartSound(le->origin, sfx, le->fd->relImpactVolume, DEFAULT_SOUND_PACKET_ATTENUATION);
+					S_StartSound(le->origin, sfx, le->fd->relImpactVolume);
 				}
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);
@@ -890,7 +885,7 @@ void LET_BrushModel (le_t *le)
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_ParseEntitystring
  */
-void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float attenuation, int levelflags)
+void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, int levelflags)
 {
 	le_t* le;
 	sfx_t* sfx;
@@ -909,8 +904,8 @@ void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float a
 	le->type = ET_SOUND;
 	le->sfx = sfx;
 	le->sfx->channel = -1;
-	le->attenuation = attenuation;
-	le->oldVolume = le->volume = volume;
+	le->sfx->volume = -1; /* at least one volume change */
+	le->volume = min(volume, MIX_MAX_VOLUME);
 	VectorCopy(origin, le->origin);
 	le->invis = qtrue;
 	le->levelflags = levelflags;

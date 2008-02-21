@@ -36,8 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief A sound is only hearable when not farer than this value */
 #define SOUND_MAX_DISTANCE 600
 
-#define SOUND_DEFAULTATTENUATE 0.002
-
 enum {
 	SOUND_CHANNEL_OVERRIDE,	/**< entchannel 0 is always overwritten */
 	SOUND_CHANNEL_WEAPON,	/**< shooting sound */
@@ -50,6 +48,7 @@ typedef struct sfx_s {
 	int loops;					/**< how many loops - 0 = play only once, -1 = infinite */
 	Mix_Chunk* data;
 	int channel;				/**< the channel the sfx is played on */
+	int volume;					/**< current volume for this chunk */
 	struct sfx_s* hash_next;	/**< next hash entry */
 } sfx_t;
 
@@ -63,9 +62,9 @@ typedef struct music_s {
 void S_Init(void);
 void S_Shutdown(void);
 void S_Frame(void);
-
+void S_SetVolume(sfx_t *sfx, int volume);
 void S_StopAllSounds(void);
-void S_StartSound(const vec3_t origin, sfx_t* sfx, float relVolume, float attenuation);
+void S_StartSound(const vec3_t origin, sfx_t* sfx, float relVolume);
 void S_StartLocalSound(const char *s);
 sfx_t *S_RegisterSound(const char *s);
 void S_PlaySoundFromMem(short* mem, size_t size, int rate, int channel, int ms);

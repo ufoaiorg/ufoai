@@ -3362,7 +3362,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
 		sfx_t *sfx = S_RegisterSound(fd->fireSound);
-		S_StartSound(muzzle, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
+		S_StartSound(muzzle, sfx, DEFAULT_SOUND_PACKET_VOLUME);
 	}
 
 	firstShot = qfalse;
@@ -4725,7 +4725,7 @@ void CL_PlayActorSound (const le_t * le, actorSound_t soundType)
 		sfx = S_RegisterSound(actorSound);
 		if (sfx) {
 			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
-			S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
+			S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME);
 		}
 	}
 }

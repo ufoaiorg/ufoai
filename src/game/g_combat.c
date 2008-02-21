@@ -332,16 +332,16 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 			}
 			switch (ent->material) {
 			case MAT_GLASS:
-				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakglass", CHAN_AUTO, 1, 1);
+				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakglass", CHAN_AUTO, 1);
 				break;
 			case MAT_METAL:
-				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakmetal", CHAN_AUTO, 1, 1);
+				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakmetal", CHAN_AUTO, 1);
 				break;
 			case MAT_ELECTRICAL:
-				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakelectric", CHAN_AUTO, 1, 1);
+				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakelectric", CHAN_AUTO, 1);
 				break;
 			case MAT_WOOD:
-				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakwood", CHAN_AUTO, 1, 1);
+				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakwood", CHAN_AUTO, 1);
 				break;
 			case MAT_MAX:
 				break;

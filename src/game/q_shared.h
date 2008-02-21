@@ -309,12 +309,6 @@ typedef struct {
 #define	CHAN_ITEM               3
 #define	CHAN_BODY               4
 
-/* sound attenuation values */
-#define ATTN_NONE               0   /* full volume the entire level */
-#define ATTN_NORM               1
-#define ATTN_IDLE               2
-#define ATTN_STATIC             3   /* diminish very rapidly with distance */
-
 typedef struct date_s {
 	int day;	/**< Number of ellapsed days since 1st january of year 0 */
 	int sec;	/**< Number of ellapsed seconds since the begining of current day */

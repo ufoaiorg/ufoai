@@ -366,14 +366,36 @@ sfx_t *S_RegisterSound (const char *name)
 }
 
 /**
+ * @brief Set volume for mixer chunk relative to snd_volume
+ */
+void S_SetVolume (sfx_t *sfx, int volume)
+{
+	const float volRate = snd_volume->value / MIX_MAX_VOLUME;
+
+	if (volume < 0)
+		return;
+
+	if (volume >= MIX_MAX_VOLUME)
+		return;
+
+	Com_DPrintf(DEBUG_SOUND, "Volume changed from %i to %i for sound '%s' on channel %i\n",
+		sfx->volume, volume, sfx->name, sfx->channel);
+
+	/* only change the chunk volume if it has changed */
+	if (sfx->volume != volume) {
+		sfx->volume = volume;
+		Mix_VolumeChunk(sfx->data, sfx->volume * volRate);
+	}
+}
+
+/**
  * @brief Validates the parms and ques the sound up
  * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
  * @param[in] name The soundfile to play
  * @param[in] relVolume - 0 - 1
- * @param[in] attenuation the reduction in amplitude and intensity of a signal
  * @sa S_StartLocalSound
  */
-void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float attenuation)
+void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume)
 {
 	int volume = MIX_MAX_VOLUME * relVolume;
 
@@ -400,7 +422,6 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 			float dist = VectorDist(origin, le->origin);
 			Com_DPrintf(DEBUG_SOUND, "S_StartSound: world coord distance: %.2f\n", dist);
 			if (dist >= SOUND_FULLVOLUME) {
-				/* @todo: use attenuation value */
 				dist = 1.0 - (dist / SOUND_MAX_DISTANCE);
 				if (dist < 0.)
 					/* too far away */
@@ -416,8 +437,7 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 		}
 	}
 
-	Mix_VolumeChunk(sfx->data, volume);
-	Com_DPrintf(DEBUG_SOUND, "Mix '%s' (volume: %i, channel: %i)\n", sfx->name, volume, sfx->channel);
+	S_SetVolume(sfx, volume);
 
 	sfx->channel = Mix_PlayChannel(sfx->channel, sfx->data, sfx->loops);
 	if (sfx->channel == -1) {
@@ -443,7 +463,7 @@ void S_StartLocalSound (const char *sound)
 		Com_DPrintf(DEBUG_SOUND, "S_StartLocalSound: can't load %s\n", sound);
 		return;
 	}
-	S_StartSound(NULL, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
+	S_StartSound(NULL, sfx, DEFAULT_SOUND_PACKET_VOLUME);
 }
 
 /**

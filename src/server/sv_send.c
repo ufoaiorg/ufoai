@@ -150,11 +150,10 @@ FRAME UPDATES
  * @brief Each entity can have eight independant sound sources, like voice, weapon, feet, etc.
  * If cahnnel & 8, the sound will be sent to everyone, not just things in the PHS.
  * Channel 0 is an auto-allocate channel, the others override anything already running on that entity/channel pair.
- * An attenuation of 0 will play full volume everywhere in the level. Larger attenuations will drop off. (max 4 attenuation)
  * Timeofs can range from 0.0 to 0.1 to cause sounds to be started later in the frame than they normally would.
  * If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
  */
-void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, int channel, float volume, float attenuation)
+void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, int channel, float volume)
 {
 	int sendchan, flags, i, ent;
 	vec3_t origin_v;
@@ -162,9 +161,6 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 
 	if (volume < 0 || volume > 1.0)
 		Com_Error(ERR_FATAL, "SV_StartSound: volume = %f", volume);
-
-	if (attenuation < 0 || attenuation > 4)
-		Com_Error(ERR_FATAL, "SV_StartSound: attenuation = %f", attenuation);
 
 	ent = NUM_FOR_EDICT(entity);
 
@@ -176,8 +172,6 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 	flags = 0;
 	if (volume != DEFAULT_SOUND_PACKET_VOLUME)
 		flags |= SND_VOLUME;
-	if (attenuation != DEFAULT_SOUND_PACKET_ATTENUATION)
-		flags |= SND_ATTENUATION;
 
 	/**
 	 * the client doesn't know that bmodels have weird origins
@@ -208,8 +202,6 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 
 	if (flags & SND_VOLUME)
 		NET_WriteByte(msg, volume * 128);
-	if (flags & SND_ATTENUATION)
-		NET_WriteByte(msg, attenuation * 64);
 
 	if (flags & SND_ENT)
 		NET_WriteShort(msg, sendchan);

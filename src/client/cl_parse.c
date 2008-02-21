@@ -449,7 +449,6 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	float *pos;
 	int channel, ent, flags;
 	float volume;
-	float attenuation;
 	const char *sound;
 	sfx_t *sfx;
 
@@ -460,11 +459,6 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 		volume = NET_ReadByte(msg) / 128.0;
 	else
 		volume = DEFAULT_SOUND_PACKET_VOLUME;
-
-	if (flags & SND_ATTENUATION)
-		attenuation = NET_ReadByte(msg) / 64.0;
-	else
-		attenuation = DEFAULT_SOUND_PACKET_ATTENUATION;
 
 	/* entity relative */
 	if (flags & SND_ENT) {
@@ -487,12 +481,12 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	} else /* use entity number */
 		pos = NULL;
 
-	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %.3f, attenuation %.2f,"
+	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %.3f,"
 		" channel %d, ent %d, pos %.3f, %.3f, %.3f\n",
-		flags, sound, volume, attenuation, channel, ent, pos[0], pos[1], pos[2]);
+		flags, sound, volume, channel, ent, pos[0], pos[1], pos[2]);
 
 	sfx = S_RegisterSound(sound);
-	S_StartSound(pos, sfx, volume, attenuation);
+	S_StartSound(pos, sfx, volume);
 }
 
 /**

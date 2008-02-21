@@ -1845,7 +1845,6 @@ static const value_t terrainTypeValues[] = {
 	{"footstepsound", V_STRING, offsetof(terrainType_t, footStepSound), 0},
 	{"particle", V_STRING, offsetof(terrainType_t, particle), 0},
 	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footStepVolume), 0},
-	{"footstepattenuation", V_FLOAT, offsetof(terrainType_t, footStepAttenuation), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1903,7 +1902,6 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	t->hash_next = terrainTypesHash[hash];
 	terrainTypesHash[hash] = t;
 	t->footStepVolume = DEFAULT_SOUND_PACKET_VOLUME;
-	t->footStepAttenuation = DEFAULT_SOUND_PACKET_ATTENUATION;
 
 	do {
 		/* get the name type */
