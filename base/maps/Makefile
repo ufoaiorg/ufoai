@@ -7,11 +7,15 @@ BSPS = $(MAPSRCS:.map=.bsp)
 
 UFO2MAPFLAGS = -nice 19 -extra
 FAST_UFO2MAPFLAGS = -nice 19
+ENTS_UFO2MAPFLAGS = -nice 19 -onlyents
 
 all: $(BSPS)
 
 fast:
 	$(MAKE) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
+
+ents:
+	$(MAKE) all UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
 clean:
 	find $(MAPSDIR) -name '*.bsp' | xargs rm

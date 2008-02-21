@@ -103,6 +103,8 @@ include build/various.mk
 maps: $(UFO2MAP_TARGET)
 	@$(MAKE) -C base/maps all
 
+mapsents: $(UFO2MAP_TARGET)
+	@$(MAKE) -C base/maps ents
 #
 # Target to install the whole game - executables and game data.
 #
