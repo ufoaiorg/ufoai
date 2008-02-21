@@ -9483,28 +9483,28 @@
 // entity 171
 {
 "classname" "misc_particle"
-"origin" "-418 -485 124"
+"origin" "-418 -484 110"
 "particle" "corona"
 "spawnflags" "510"
 }
 // entity 172
 {
 "classname" "misc_particle"
-"origin" "-218 126 124"
+"origin" "-218 127 110"
 "particle" "corona"
 "spawnflags" "510"
 }
 // entity 173
 {
 "classname" "misc_particle"
-"origin" "-418 107 124"
+"origin" "-418 108 110"
 "particle" "corona"
 "spawnflags" "510"
 }
 // entity 174
 {
 "classname" "misc_particle"
-"origin" "-418 -197 124"
+"origin" "-418 -196 110"
 "particle" "corona"
 "spawnflags" "510"
 }
