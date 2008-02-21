@@ -160,7 +160,8 @@ COLLISION DETECTION
 /** remaining contents are non-visible, and don't eat brushes */
 #define CONTENTS_ACTORCLIP   0x00010000
 #define CONTENTS_PASSABLE    0x00020000
-#define CONTENTS_ACTOR       0x00040000 /**< should never be on a brush, only in game */
+#define CONTENTS_FOOTSTEP    0x00040000 /**< only for grabbing footsteps textures */
+#define CONTENTS_ACTOR       0x00800000 /**< should never be on a brush, only in game */
 #define CONTENTS_ORIGIN      0x01000000 /**< removed before bsping an entity */
 #define CONTENTS_WEAPONCLIP  0x02000000 /**< stop bullets */
 #define CONTENTS_DEADACTOR   0x04000000
