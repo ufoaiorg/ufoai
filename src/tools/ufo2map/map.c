@@ -513,7 +513,11 @@ static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
 		config.generateFootstepFile = 0;
 		return;
 	}
+#ifdef _WIN32
 	fprintf(file, "terrain %s {\n}\n\n", textureref[mipTexIndex].name);
+#else
+	fprintf(file, "%s\n", textureref[mipTexIndex].name);
+#endif
 	fclose(file);
 	footstepsCnt++;
 	textureref[mipTexIndex].footstepMarked = qtrue;
