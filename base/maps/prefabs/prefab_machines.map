@@ -1214,7 +1214,7 @@
 // brush 129
 {
 ( 444 196 0 ) ( 384 196 0 ) ( 384 92 0 ) tex_common/actorclip 14 0 0 0.5 0.5 65536 0 0
-( 384 91 68 ) ( 384 195 68 ) ( 444 195 68 ) tex_common/actorclip 14 0 0 0.5 0.5 65536 0 0
+( 384 91 64 ) ( 384 195 64 ) ( 444 195 64 ) tex_common/actorclip 14 0 0 0.5 0.5 65536 0 0
 ( 388 32 40 ) ( 448 32 40 ) ( 448 32 4 ) tex_common/actorclip 6 0 0 0.5 0.5 65536 0 0
 ( 448 91 40 ) ( 448 195 40 ) ( 448 195 4 ) tex_common/actorclip 2 0 0 0.5 0.5 65536 0 0
 ( 444 192 40 ) ( 384 192 40 ) ( 384 192 4 ) tex_common/actorclip 14 0 0 0.5 0.5 65536 0 0
@@ -4538,7 +4538,7 @@
 // entity 19
 {
 "classname" "misc_model"
-"origin" "420 87 36"
+"origin" "413 87 36"
 "model" "models/objects/cars/van/van1t.md2"
 "spawnflags" "255"
 }
