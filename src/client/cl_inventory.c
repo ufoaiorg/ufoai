@@ -539,8 +539,7 @@ void INV_UpdateStorageCap (base_t *base)
 			continue;
 
 		/* Don't count aircraft */
-		assert(csi.ods[i].tech);	/**@todo All items are supposed to have tech-links.
-									 * If this assert triggers: Maybe they are not initialised between savegame load and this function? */
+		assert(csi.ods[i].tech);
 		if (csi.ods[i].tech->type == RS_CRAFT) {
 			continue;
 		}

@@ -271,7 +271,9 @@ typedef struct objDef_s {
 	short ratings[MAX_DAMAGETYPES];		/**< Rating values for each armour and every damage type to display in the menus. */
 
 	/* Aircraft specific */
-	qboolean aircraft;			/**< True if this item is dummy aircraft - used in disassembling. */
+	qboolean aircraft;			/**< True if this item is dummy aircraft - used in disassembling.
+								 *@todo Check if this value is the same than (tech->->type == RS_CRAFT) and if so, remove it
+								 * otherwise, rename to a more self-speaking variable name -- Kracken 22/02/08 */
 	byte dmgtype;
 	craftitem_t craftitem;
 } objDef_t;
