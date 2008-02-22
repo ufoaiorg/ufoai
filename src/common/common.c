@@ -45,7 +45,6 @@ cvar_t *http_timeout;
 cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
-cvar_t *teamnum;
 cvar_t *gametype;
 cvar_t *masterserver_url;
 cvar_t *port;
@@ -706,7 +705,6 @@ void Qcommon_Init (int argc, const char **argv)
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
 	Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
 #endif
-	teamnum = Cvar_Get("teamnum", "1", CVAR_ARCHIVE, "Multiplayer team num");
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get("version", s, CVAR_NOSET, "Full version string");
