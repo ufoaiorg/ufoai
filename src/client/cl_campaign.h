@@ -120,35 +120,34 @@ typedef enum missionStage_s {
 /** mission definition */
 typedef struct mission_s {
 	mapDef_t* mapDef;
-	byte mask[4];
 
-	/* should we keep them? */
-	char name[MAX_VAR];				/**< script id */
+	char id[MAX_VAR];				/**< script id */
 	qboolean active;				/**< aircraft at place? */
-	/** @note Don't end with ; - the trigger commands get the base index as
-	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
-	 * in your trigger command, you can seperate more commands with ; of course */
-	char onwin[MAX_VAR];		/**< trigger command after you've won a battle */
-	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
-
 	void* data;						/**< may be related to mission type (like pointer to base attacked) */
 	char location[MAX_VAR];			/**< The name of the ground mission that will appear on geoscape */
 	interestCategory_t category;	/**< The category of the event */
+	missionStage_t stage;			/**< in which stage is this event? */
 	int initialOverallInterest;		/**< The overall interest value when this event has been created */
 	int initialIndividualInterest;	/**< The individual interest value (of type type) when this event has been created */
 	date_t startDate;				/**< Date when the event should start */
-	missionStage_t stage;			/**< in which stage is this event? */
 	date_t finalDate;				/**< Date when the event should finish (e.g. for aerial recon)
 									 * if finaleDate.day == 0, then delay is not a limitating factor for next stage */
 	vec2_t pos;						/**< Position of the mission */
 	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be NULL) */
 	qboolean onGeoscape;			/**< Should the mission be displayed on geoscape */
+
+	/* I'm not sure this is really needed still -- Kracken */
+	/** @note Don't end with ; - the trigger commands get the base index as
+	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
+	 * in your trigger command, you can seperate more commands with ; of course */
+	char onwin[MAX_VAR];		/**< trigger command after you've won a battle */
+	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
 } mission_t;
 
 /** battlescape parameters that were used */
 typedef struct battleParam_s {
 	mission_t *mission;
-	teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];	/**< Race of aliens present in battle */
+	teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< Race of aliens present in battle */
 	int numAlienTeams;								/**< Number of different races */
 	char alienEquipment[MAX_VAR];					/**< Equipment of alien team */
 	char civTeam[MAX_VAR];							/**< Type of civilian (europeean, ...) */
@@ -439,6 +438,7 @@ void CL_GameAutoGo(mission_t *mission);
 int MAP_GetIdxByMission(const mission_t *mis);
 mission_t* MAP_GetMissionByIdx(int id);
 int CP_CountMission(void);
+int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
 const char *CP_MissionToTypeString(const mission_t *mission);
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);

@@ -338,7 +338,7 @@ static qboolean CP_ChooseMap (mission_t *mission)
  */
 static qboolean CP_ChooseRandomMap (mission_t *mission, vec2_t pos)
 {
-	Com_sprintf(mission->name, sizeof(mission->name), "randommap%.0f:%.0f", pos[0], pos[1]);
+	Com_sprintf(mission->id, sizeof(mission->id), "randommap%.0f:%.0f", pos[0], pos[1]);
 	Com_Printf("mission->ufo: '%s'\n", mission->ufo->id);
 	mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
 	if (!mission->mapDef)
@@ -347,6 +347,23 @@ static qboolean CP_ChooseRandomMap (mission_t *mission, vec2_t pos)
 		mission->mapDef->param = Mem_PoolStrDup(UFO_TypeToShortName(mission->ufo->ufotype), cl_localPool, CL_TAG_NONE);
 
 	return qtrue;
+}
+
+/**
+ * @brief Get a mission in ccs.missions by Id.
+ */
+static mission_t *CP_GetMissionById (const char *missionId)
+{
+	const linkedList_t *list = ccs.missions;
+
+	for (;list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		if (!Q_strncmp(mission->id, missionId, MAX_VAR))
+			return mission;
+	}
+
+	Com_Printf("CP_GetMissionById: Could not find mission %s\n", missionId);
+	return NULL;
 }
 
 /**
@@ -392,11 +409,43 @@ const char *CP_MissionToTypeString (const mission_t *mission)
 }
 
 /**
- * @brief Count the number of mission created and active.
- * @return Number of active mission
+ * @brief Count the number of mission created.
+ * @return Number of created mission
+ * @sa CP_CountMissionActive
  * @sa CP_CountMissionOnGeoscape
  */
 int CP_CountMission (void)
+{
+	int counterMission = 0;
+	const linkedList_t *list = ccs.missions;
+#ifdef DEBUG
+	int counterInvalidMission = 0;
+#endif
+
+	for (; list; list = list->next, counterMission++) {
+#ifdef DEBUG
+		const mission_t *mission = (mission_t *)list->data;
+		/* check whether current selected gametype is a valid one */
+		if (mission->stage == STAGE_OVER) {
+			counterInvalidMission++;
+		}
+#endif
+	}
+
+#ifdef DEBUG
+	if (counterInvalidMission)
+	Com_Printf("CP_CountMission: Warning, there are %i mission that should have been removed from global mission array\n", counterInvalidMission);
+#endif
+	return counterMission;
+}
+
+/**
+ * @brief Count the number of mission created and active.
+ * @return Number of active mission
+ * @sa CP_CountMission
+ * @sa CP_CountMissionOnGeoscape
+ */
+int CP_CountMissionActive (void)
 {
 	int counterMission = 0;
 	int counterActiveMission = 0;
@@ -417,17 +466,17 @@ int CP_CountMission (void)
 
 /**
  * @brief Count the number of mission active and displayed on geoscape.
- * @return Number of active mission
+ * @return Number of active mission visible on geoscape
  * @sa CP_CountMission
+ * @sa CP_CountMissionActive
  */
 int CP_CountMissionOnGeoscape (void)
 {
-	int counterMission = 0;
 	int counterVisibleMission = 0;
 
 	const linkedList_t *list = ccs.missions;
 
-	for (; list; list = list->next, counterMission++) {
+	for (; list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
 		/* check whether current selected gametype is a valid one */
 		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape && mission->onGeoscape) {
@@ -435,7 +484,6 @@ int CP_CountMissionOnGeoscape (void)
 		}
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "Total number of mission: %i -- Number of visible mission: %i\n", counterMission, counterVisibleMission);
 	return counterVisibleMission;
 }
 
@@ -465,7 +513,7 @@ static void CP_MissionRemove (mission_t *mission)
 		}
 	}
 
-	Com_Printf("CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->name);
+	Com_Printf("CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->id);
 }
 
 /**
@@ -604,8 +652,8 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 
 	mission->mapDef->timesAlreadyUsed++;
 
-	/* @todo: check that name is unique in ccs.missions */
-	Com_sprintf(mission->name, sizeof(mission->name), "recon%.0f:%.0f", mission->pos[0], mission->pos[1]);
+	/* @todo: check that id is unique in ccs.missions */
+	Com_sprintf(mission->id, sizeof(mission->id), "recon%.0f:%.0f", mission->pos[0], mission->pos[1]);
 
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
@@ -814,7 +862,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	MAP_SelectMission(mission);
 	selectedMission->active = qtrue;
 	gd.mapAction = MA_BASEATTACK;
-	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selectedMission->name, selectedMission->pos[0], selectedMission->pos[1]);
+	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selectedMission->id, selectedMission->pos[0], selectedMission->pos[1]);
 	cls.missionaircraft = &base->aircraft[0]; /* @todo FIXME */
 	assert(cls.missionaircraft);
 	assert(cls.missionaircraft->homebase == base);
@@ -880,8 +928,8 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 
 	Vector2Copy(base->pos, mission->pos);
 
-	/* @todo: check that name is unique in ccs.missions */
-	Com_sprintf(mission->name, sizeof(mission->name), base->name);
+	/* @todo: check that id is unique in ccs.missions */
+	Com_sprintf(mission->id, sizeof(mission->id), base->name);
 	Com_sprintf(mission->location, sizeof(mission->location), base->name);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
@@ -1005,8 +1053,6 @@ static void CP_CreateNewMission (int category)
 
 	/* Add mission to global array */
 	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
-	/* @todo: remove me */
-	Com_Printf("Mission added from global array\n");
 }
 
 /**
@@ -1638,9 +1684,9 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		}
 	}
 	if (!is_on_Earth)
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->name, ccs.battleParameters.nation->id);
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->id, ccs.battleParameters.nation->id);
 	else if (is_on_Earth > 1)
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->name, ccs.battleParameters.nation->id);
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->id, ccs.battleParameters.nation->id);
 }
 
 /**
@@ -2613,20 +2659,10 @@ static void CL_NationSelect_f (void)
  */
 qboolean CP_Load (sizebuf_t *sb, void *data)
 {
-	int i;
-	const char *name;
-	char val[32];
-#if 0
-FIXME
-	actMis_t *mis;
-	stageState_t *state;
-	setState_t *set;
-	setState_t dummy;
-	const char *name, *selectedMissionStr;
 	int i, j, num;
-	int misType;
+	const char *name, *missionId;
+	char val[32];
 	base_t *base;
-#endif
 
 	/* read campaign name */
 	name = MSG_ReadString(sb);
@@ -2673,212 +2709,100 @@ FIXME
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(sb));
 
+	/* store interest values */
+	ccs.lastInterestIncreaseDelay = MSG_ReadShort(sb);
+	ccs.lastMissionSpawnedDelay = MSG_ReadShort(sb);
+	ccs.overallInterest = MSG_ReadShort(sb);
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+		ccs.interest[i] = MSG_ReadShort(sb);
+
 	/* read other campaign data */
 	ccs.civiliansKilled = MSG_ReadShort(sb);
 	ccs.aliensKilled = MSG_ReadShort(sb);
 	ccs.XVISpreadActivated = MSG_ReadByte(sb);
 	ccs.humansAttackActivated = MSG_ReadByte(sb);
 
-#if 0
-FIXME
-	/* read campaign data */
-	name = MSG_ReadString(sb);
-	while (*name) {
-		state = CL_CampaignActivateStage(name, qfalse);
-		if (!state) {
-			Com_Printf("......unable to load campaign, unknown stage '%s'\n", name);
-			curCampaign = NULL;
-			Cbuf_AddText("mn_pop\n");
-			return qfalse;
-		}
+	/* read missions */
+	num = MSG_ReadShort(sb);
+	for (i = 0; i < num; i++) {
+		mission_t mission;
+		int ufoIdx;
 
-		state->start.day = MSG_ReadLong(sb);
-		state->start.sec = MSG_ReadLong(sb);
-		num = MSG_ReadByte(sb);
-		if (num != state->def->num)
-			Com_Printf("......warning: Different number of sets: savegame: %i, scripts: %i\n", num, state->def->num);
-		for (i = 0; i < num; i++) {
-			name = MSG_ReadString(sb);
-			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++)
-				if (!Q_strncmp(name, set->def->name, MAX_VAR))
-					break;
-			/* write on dummy set, if it's unknown */
-			if (j >= state->def->num) {
-				Com_Printf("......warning: Set '%s' not found (%i/%i)\n", name, num, state->def->num);
-				set = &dummy;
-			}
+		memset(&mission, 0, sizeof(mission));
 
-			if (!set->def->numMissions)
-				Com_Printf("......warning: Set with no missions (%s)\n", set->def->name);
-
-			set->active = MSG_ReadByte(sb);
-			set->num = MSG_ReadShort(sb);
-			set->done = MSG_ReadShort(sb);
-			set->start.day = MSG_ReadLong(sb);
-			set->start.sec = MSG_ReadLong(sb);
-			set->event.day = MSG_ReadLong(sb);
-			set->event.sec = MSG_ReadLong(sb);
-		}
-
-		/* read next stage name */
 		name = MSG_ReadString(sb);
+		if (*name) {
+			mission.mapDef = Com_GetMapDefinitionByID(name);
+			mission.mapDef->param = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
+		} else
+			mission.mapDef = NULL;
+		Q_strncpyz(mission.id, MSG_ReadString(sb), sizeof(mission.id));
+		mission.active = MSG_ReadByte(sb);
+		Q_strncpyz(mission.onwin, MSG_ReadString(sb), sizeof(mission.onwin));
+		Q_strncpyz(mission.onlose, MSG_ReadString(sb), sizeof(mission.onlose));
+		switch (mission.stage) {
+		case STAGE_BASE_ATTACK_GOTO:
+		case STAGE_BASE_ATTACK:
+			{
+				/* Load IDX of base under attack */
+				int baseidx = MSG_ReadByte(sb);
+				base = B_GetBase(baseidx);
+				if (base->baseStatus != BASE_UNDER_ATTACK)
+					Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
+				else
+					mission.data = (void *) base;
+			}
+			break;
+		default:
+			break;
+		}
+		Q_strncpyz(mission.location, MSG_ReadString(sb), sizeof(mission.location));
+		mission.category = MSG_ReadShort(sb);
+		mission.stage = MSG_ReadShort(sb);
+		mission.initialOverallInterest = MSG_ReadShort(sb);
+		mission.initialIndividualInterest = MSG_ReadShort(sb);
+		mission.startDate.day = MSG_ReadLong(sb);
+		mission.startDate.sec = MSG_ReadLong(sb);
+		mission.finalDate.day = MSG_ReadLong(sb);
+		mission.finalDate.sec = MSG_ReadLong(sb);
+		mission.pos[0] = MSG_ReadFloat(sb);
+		mission.pos[1] = MSG_ReadFloat(sb);
+		ufoIdx = MSG_ReadShort(sb);
+		if (ufoIdx == AIRFIGHT_NO_TARGET)
+			mission.ufo = NULL;
+		else
+			mission.ufo = gd.ufos + ufoIdx;
+		mission.onGeoscape = MSG_ReadByte(sb);
+
+		/* Add mission to global array */
+		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
 	}
-#endif
+
+	/* read ccs.battleParameters */
+	memset(&ccs.battleParameters, 0, sizeof(ccs.battleParameters));
+	missionId = MSG_ReadString(sb);
+	if (*missionId) {
+		ccs.battleParameters.mission = CP_GetMissionById(missionId);
+		ccs.battleParameters.numAlienTeams = MSG_ReadShort(sb);
+		for (i = 0; i < ccs.battleParameters.numAlienTeams; i++)
+			ccs.battleParameters.alienTeams[i] = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
+		Q_strncpyz(ccs.battleParameters.alienEquipment, MSG_ReadString(sb), sizeof(ccs.battleParameters.alienEquipment));
+		Q_strncpyz(ccs.battleParameters.civTeam, MSG_ReadString(sb), sizeof(ccs.battleParameters.civTeam));
+		ccs.battleParameters.day = MSG_ReadByte(sb);
+		ccs.battleParameters.ugv = MSG_ReadShort(sb);
+		ccs.battleParameters.aliens = MSG_ReadShort(sb);
+		ccs.battleParameters.civilians = MSG_ReadShort(sb);
+	}
 
 	/* reset team */
 	Cvar_Set("cl_team", curCampaign->team);
 
-#if 0
-FIXME
-	/* store active missions */
-	num = MSG_ReadByte(sb);
-	ccs.numMissionsOld = num;
-	for (i = 0; i < num; i++) {
-		/* needed because we might add new missions inside
-		 * this loop (base attack and crashsites) */
-
-		mis = &ccs.missionOld[i + ccs.numMissionsOld - num];
-		mis->def = NULL;
-		mis->cause = NULL;
-
-		/* get mission cause */
-		name = MSG_ReadString(sb);
-
-		for (j = 0; j < numStageSets; j++)
-			if (!Q_strncmp(name, stageSets[j].name, MAX_VAR)) {
-				mis->cause = &ccs.set[j];
-				break;
-			}
-		if (j >= numStageSets)
-			Com_Printf("......warning: Stage set '%s' not found\n", name);
-
-		/* get mission definition */
-		name = MSG_ReadString(sb);
-
-		misType = MSG_ReadByte(sb);
-
-		/* ignore incomplete info */
-		if (!mis->cause) {
-			Com_Printf("......warning: Incomplete mission info for mission type %i (name: %s)\n", misType, name);
-			return qfalse;
-		}
-
-		for (j = 0; j < numMissions; j++)
-			if (!Q_strncmp(name, missions[j].name, MAX_VAR)) {
-				mis->def = &missions[j];
-				break;
-			}
-		if (j >= numMissions) {
-			switch (misType) {
-			case MIS_BASEATTACK:
-				assert(!mis->def);
-				{
-					/* Load IDX of base under attack */
-					int baseidx = MSG_ReadByte(sb);
-					base = B_GetBase(baseidx);
-					Vector2Copy(base->pos, mis->realPos);
-					if (base->baseStatus != BASE_UNDER_ATTACK)
-						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", j, base->name);
-					mis->def = CL_AddMission(name);
-					if (!mis->def) {
-						Com_Printf("......warning: could not load base attack mission '%s'!\n", name);
-						return qfalse;
-					}
-					if (!CP_SpawnBaseAttackMission(base, mis->def, mis->cause)) {
-						Com_Printf("......warning: could not spawn base attack mission on geoscape '%s'!\n", name);
-						return qfalse;
-					}
-				}
-				break;
-			case MIS_CRASHSITE:
-				assert(!mis->def);
-				{
-					const nation_t *nation = NULL;
-					/* create a new mission - this mission is not in the campaign definition */
-					mis->def = CL_AddMission(name);
-					if (!mis->def) {
-						CP_RemoveLastMission();
-						Com_Printf("......warning: could not load crashsite mission '%s'!\n", name);
-						return qfalse;
-					}
-					mis->def->mapDef = Com_GetMapDefinitionByID("ufocrash");
-					if (!mis->def->mapDef) {
-						CP_RemoveLastMission();
-						Com_Printf("......warning: could not load crashsite mission '%s'!\n", name);
-						return qfalse;
-					}
-					mis->realPos[0] = MSG_ReadFloat(sb);
-					mis->realPos[1] = MSG_ReadFloat(sb);
-					mis->def->aliens = MSG_ReadByte(sb);
-					mis->def->civilians = MSG_ReadByte(sb);
-					mis->def->mapDef->loadingscreen = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
-					Q_strncpyz(mis->def->onwin, MSG_ReadString(sb), sizeof(mis->def->onwin));
-					mis->def->mapDef->param = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
-					/** @sa CP_SpawnCrashSiteMission */
-					nation = MAP_GetNation(mis->realPos);
-					Com_sprintf(mis->def->type, sizeof(mis->def->type), _("UFO crash site"));
-					if (nation) {
-						Com_sprintf(mis->def->location, sizeof(mis->def->location), _(nation->name));
-						Q_strncpyz(mis->def->civTeam, nation->id, sizeof(mis->def->civTeam));
-					} else {
-						Com_sprintf(mis->def->location, sizeof(mis->def->location), _("No nation"));
-						Q_strncpyz(mis->def->civTeam, "europe", sizeof(mis->def->civTeam));
-					}
-					mis->def->mapDef->description = "Crashed Alien Ship. Secure the area.";
-				}
-				break;
-			case MIS_TERRORATTACK:
-				Com_Printf("......warning: Mission '%s' not found\n", name);
-				break;
-			default:
-				Com_Printf("......warning: Unknown mission type %i for mission %s\n", misType, name);
-				return qfalse;
-			}
-		} else {
-			assert(mis);
-			assert(misType == MIS_TERRORATTACK);
-			mis->realPos[0] = MSG_ReadFloat(sb);
-			mis->realPos[1] = MSG_ReadFloat(sb);
-		}
-
-		/* ignore incomplete info */
-		if (!mis->def) {
-			Com_Printf("......warning: Incomplete mission info for mission type %i (name: %s)\n", misType, name);
-			return qfalse;
-		}
-
-		/* get mission type and location */
-		mis->def->missionType = misType;
-		mis->def->storyRelated = MSG_ReadByte(sb);
-		mis->def->played = MSG_ReadByte(sb);
-		mis->def->noExpire = MSG_ReadByte(sb);
-		Q_strncpyz(mis->def->location, MSG_ReadString(sb), sizeof(mis->def->location));
-
-		/* read time */
-		mis->expire.day = MSG_ReadLong(sb);
-		mis->expire.sec = MSG_ReadLong(sb);
-
-		mis->def->onGeoscape = qtrue;
-		if (MSG_ReadByte(sb) != 0) {
-			Com_Printf("......warning: Sanity check for mission type %i (name: %s) failed\n", misType, mis->def->name);
-			return qfalse;
-		}
-	}
-
 	/* stores the select mission on geoscape */
-	selectedMissionStr = MSG_ReadString(sb);
-	selectedMission = NULL;
-	if (*selectedMissionStr) {
-		for (i = 0; i < ccs.numMissionsOld; i++) {
-			if (!Q_strcmp(ccs.missionOld[i].def->name, selectedMissionStr)) {
-				selectedMission = &ccs.missionOld[i];
-				if (!selectedMission) {
-					Com_Printf("......warning: incomplete mission data (%s)\n", name);
-					return qfalse;
-				}
-			}
-		}
-	}
+	missionId = MSG_ReadString(sb);
+	if (*missionId)
+		selectedMission = CP_GetMissionById(missionId);
+	else
+		selectedMission = NULL;
 
 	/* and now fix the mission pointers for e.g. ufocrash sites
 	 * this is needed because the base load function which loads the aircraft
@@ -2888,23 +2812,18 @@ FIXME
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			if (base->aircraft[j].status == AIR_MISSION) {
 				assert(base->aircraft[j].missionID);
-				for (num = 0; num < ccs.numMissionsOld; num++) {
-					if (!Q_strcmp(ccs.missionOld[num].def->name, base->aircraft[j].missionID)) {
-						base->aircraft[j].mission = &ccs.missionOld[num];
-						Mem_Free(base->aircraft[j].missionID);
-						break;
-					}
-				}
+				base->aircraft[j].mission = CP_GetMissionById(base->aircraft[j].missionID);
+			
 				/* not found */
-				if (num == ccs.numMissionsOld) {
+				if (!base->aircraft[j].mission) {
 					Com_Printf("Could not link mission '%s' in aircraft\n", base->aircraft[j].missionID);
 					Mem_Free(base->aircraft[j].missionID);
 					return qfalse;
 				}
+				Mem_Free(base->aircraft[j].missionID);
 			}
 		}
 	}
-#endif
 	return qtrue;
 }
 
@@ -2915,13 +2834,8 @@ FIXME
  */
 qboolean CP_Save (sizebuf_t *sb, void *data)
 {
-#if 0
-FIXME
-	stageState_t *state;
-	actMis_t *mis;
-	int i, j;
-	base_t *base;
-#endif
+	int i;
+	const linkedList_t *list = ccs.missions;
 
 	/* store campaign name */
 	MSG_WriteString(sb, curCampaign->id);
@@ -2947,88 +2861,89 @@ FIXME
 	/* store credits */
 	MSG_WriteLong(sb, ccs.credits);
 
+	/* store interest values */
+	MSG_WriteShort(sb, ccs.lastInterestIncreaseDelay);
+	MSG_WriteShort(sb, ccs.lastMissionSpawnedDelay);
+	MSG_WriteShort(sb, ccs.overallInterest);
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+		MSG_WriteShort(sb, ccs.interest[i]);
+
 	/* store other campaign data */
 	MSG_WriteShort(sb, ccs.civiliansKilled);
 	MSG_WriteShort(sb, ccs.aliensKilled);
 	MSG_WriteByte(sb, ccs.XVISpreadActivated);
 	MSG_WriteByte(sb, ccs.humansAttackActivated);
 
-#if 0
-FIXME
-	/* store campaign data */
-	for (i = 0, state = ccs.stage; i < numStages; i++, state++)
-		if (state->active) {
-			/* write head */
-			setState_t *set;
+	/* store missions */
+	MSG_WriteShort(sb, CP_CountMission());
+	for (; list; list = list->next) {
+		const mission_t *mission = (mission_t *)list->data;
 
-			MSG_WriteString(sb, state->def->name);
-			MSG_WriteLong(sb, state->start.day);
-			MSG_WriteLong(sb, state->start.sec);
-			MSG_WriteByte(sb, state->def->num);
-
-			/* write all sets */
-			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++) {
-				MSG_WriteString(sb, set->def->name);
-				MSG_WriteByte(sb, set->active);
-				MSG_WriteShort(sb, set->num);
-				MSG_WriteShort(sb, set->done);
-				MSG_WriteLong(sb, set->start.day);
-				MSG_WriteLong(sb, set->start.sec);
-				MSG_WriteLong(sb, set->event.day);
-				MSG_WriteLong(sb, set->event.sec);
+		if (mission->mapDef) {
+			MSG_WriteString(sb, mission->mapDef->id);
+			if (mission->mapDef->param)
+				MSG_WriteString(sb, mission->mapDef->param);
+			else
+				MSG_WriteString(sb, "");
+		} else
+			MSG_WriteString(sb, "");
+		MSG_WriteString(sb, mission->id);
+		MSG_WriteByte(sb, mission->active);
+		MSG_WriteString(sb, mission->onwin);
+		MSG_WriteString(sb, mission->onlose);
+		switch (mission->stage) {
+		case STAGE_BASE_ATTACK_GOTO:
+		case STAGE_BASE_ATTACK:
+			{
+				const base_t *base;
+				/* save IDX of base under attack if required */
+				base = (base_t*)mission->data;
+				assert(base);
+				MSG_WriteByte(sb, base->idx);
 			}
-		}
-	/* terminate list */
-	MSG_WriteByte(sb, 0);
-
-	/* store active missions */
-	MSG_WriteByte(sb, ccs.numMissionsOld);
-
-	for (i = 0, mis = ccs.missionOld; i < ccs.numMissionsOld; i++, mis++) {
-		MSG_WriteString(sb, mis->cause->def->name);
-
-		MSG_WriteString(sb, mis->def->name);
-		MSG_WriteByte(sb, mis->def->missionType);
-		switch (mis->def->missionType) {
-		case MIS_BASEATTACK:
-			/* save IDX of base under attack if required */
-			base = (base_t*)mis->def->data;
-			assert(base);
-			MSG_WriteByte(sb, base->idx);
-			break;
-		case MIS_TERRORATTACK:
-			MSG_WriteFloat(sb, mis->realPos[0]);
-			MSG_WriteFloat(sb, mis->realPos[1]);
-			break;
-		case MIS_CRASHSITE:
-			MSG_WriteFloat(sb, mis->realPos[0]);
-			MSG_WriteFloat(sb, mis->realPos[1]);
-			MSG_WriteByte(sb, mis->def->aliens);
-			MSG_WriteByte(sb, mis->def->civilians);
-			MSG_WriteString(sb, mis->def->mapDef->loadingscreen);
-			MSG_WriteString(sb, mis->def->onwin);
-			MSG_WriteString(sb, mis->def->mapDef->param);
 			break;
 		default:
-			Com_Printf("CP_Save: Error - unknown mission type: %i\n", mis->def->missionType);
-			return qfalse;
+			break;
 		}
-		MSG_WriteByte(sb, mis->def->storyRelated);
-		MSG_WriteByte(sb, mis->def->played);
-		MSG_WriteByte(sb, mis->def->noExpire);
-		MSG_WriteString(sb, mis->def->location);
-
-		MSG_WriteLong(sb, mis->expire.day);
-		MSG_WriteLong(sb, mis->expire.sec);
-		MSG_WriteByte(sb, 0);
+		MSG_WriteString(sb, mission->location);
+		MSG_WriteShort(sb, mission->category);
+		MSG_WriteShort(sb, mission->stage);
+		MSG_WriteShort(sb, mission->initialOverallInterest);
+		MSG_WriteShort(sb, mission->initialIndividualInterest);
+		MSG_WriteLong(sb, mission->startDate.day);
+		MSG_WriteLong(sb, mission->startDate.sec);
+		MSG_WriteLong(sb, mission->finalDate.day);
+		MSG_WriteLong(sb, mission->finalDate.sec);
+		MSG_WriteFloat(sb, mission->pos[0]);
+		MSG_WriteFloat(sb, mission->pos[1]);
+		if (mission->ufo)
+			MSG_WriteShort(sb, mission->ufo - gd.ufos);
+		else
+			MSG_WriteShort(sb, AIRFIGHT_NO_TARGET);
+		MSG_WriteByte(sb, mission->onGeoscape);
 	}
 
+	/* store ccs.battleParameters */
+	if (ccs.battleParameters.mission) {
+		MSG_WriteString(sb, ccs.battleParameters.mission->id);
+		MSG_WriteShort(sb, ccs.battleParameters.numAlienTeams);
+		for (i = 0; i < ccs.battleParameters.numAlienTeams; i++)
+			MSG_WriteString(sb, ccs.battleParameters.alienTeams[i]->id);
+		MSG_WriteString(sb, ccs.battleParameters.alienEquipment);
+		MSG_WriteString(sb, ccs.battleParameters.civTeam);
+		MSG_WriteByte(sb, ccs.battleParameters.day);
+		MSG_WriteShort(sb, ccs.battleParameters.ugv);
+		MSG_WriteShort(sb, ccs.battleParameters.aliens);
+		MSG_WriteShort(sb, ccs.battleParameters.civilians);
+	} else
+		MSG_WriteString(sb, "");
+
 	/* stores the select mission on geoscape */
-	if (selectedMission && selectedMission->def)
-		MSG_WriteString(sb, selectedMission->def->name);
+	if (selectedMission)
+		MSG_WriteString(sb, selectedMission->id);
 	else
 		MSG_WriteString(sb, "");
-#endif
+
 	return qtrue;
 }
 
@@ -3130,7 +3045,7 @@ static void CP_SetMissionVars (void)
 	if (mission->mapDef->music) {
 		Cvar_Set("snd_music", mission->mapDef->music);
 	} else {
-		Com_DPrintf(DEBUG_CLIENT, "..mission '%s' doesn't have a music track assigned\n", mission->name);
+		Com_DPrintf(DEBUG_CLIENT, "..mission '%s' doesn't have a music track assigned\n", mission->id);
 		Cbuf_AddText("music_randomtrack;");
 	}
 

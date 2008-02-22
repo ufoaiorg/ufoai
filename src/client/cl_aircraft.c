@@ -1806,6 +1806,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		MSG_WriteString(sb, gd.ufos[i].id);
 		MSG_WriteByte(sb, gd.ufos[i].visible);
+		MSG_WriteByte(sb, gd.ufos[i].notOnGeoscape);
 		MSG_WritePos(sb, gd.ufos[i].pos);
 		MSG_WriteByte(sb, gd.ufos[i].status);
 		MSG_WriteLong(sb, gd.ufos[i].fuel);
@@ -1946,6 +1947,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		if (!ufo) {
 			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);
 			MSG_ReadByte(sb); 			/* visible */
+			MSG_ReadByte(sb); 			/* notOnGeoscape */
 			MSG_ReadPos(sb, tmp_vec3t);		/* pos */
 			MSG_ReadByte(sb);			/* status */
 			MSG_ReadLong(sb);			/* fuel */
@@ -1985,6 +1987,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
 			ufo = &gd.ufos[i];
 			ufo->visible = MSG_ReadByte(sb);
+			ufo->notOnGeoscape = MSG_ReadByte(sb);
 			MSG_ReadPos(sb, ufo->pos);
 			ufo->status = MSG_ReadByte(sb);
 			ufo->fuel = MSG_ReadLong(sb);

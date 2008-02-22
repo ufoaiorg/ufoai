@@ -167,7 +167,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		MAP_ResetAction();
 		selectedMission = MAP_GetMissionByIdx(id);
 
-		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selectedMission->name, selectedMission->pos[0], selectedMission->pos[1]);
+		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selectedMission->id, selectedMission->pos[0], selectedMission->pos[1]);
 		gd.mapAction = MA_INTERCEPT;
 		if (multiSelection) {
 			/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */

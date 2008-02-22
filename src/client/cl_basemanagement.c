@@ -3453,7 +3453,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				break;
 			case AIR_MISSION:
 				assert(aircraft->mission);
-				MSG_WriteString(sb, aircraft->mission->name);
+				MSG_WriteString(sb, aircraft->mission->id);
 				break;
 			}
 			MSG_WritePos(sb, aircraft->direction);
