@@ -139,7 +139,7 @@ qboolean Info_Validate (const char *s)
 /**
  * @brief Adds a new entry into string with given value.
  * @note Removed any old version of the key
- * @param[in] s
+ * @param[out] s The target info string
  * @sa Info_RemoveKey
  */
 void Info_SetValueForKey (char *s, const char *key, const char *value)
@@ -175,7 +175,9 @@ void Info_SetValueForKey (char *s, const char *key, const char *value)
 	Q_strncpyz(s, newi, MAX_INFO_STRING);
 }
 
-
+/**
+ * @brief Prints info strings (like userinfo or serverinfo - CVAR_USERINFO, CVAR_SERVERINFO)
+ */
 void Info_Print (const char *s)
 {
 	char key[512];

@@ -1302,7 +1302,7 @@ static void CL_ReadPackets (void)
 /**
  * @brief Prints the current userinfo string to the game console
  */
-static void CL_Userinfo_f (void)
+static void CL_UserInfo_f (void)
 {
 	Com_Printf("User info settings:\n");
 	Info_Print(Cvar_Userinfo());
@@ -2100,7 +2100,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("server_connect", CL_ServerConnect_f, NULL);
 	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
 
-	Cmd_AddCommand("userinfo", CL_Userinfo_f, "Prints your userinfo string");
+	Cmd_AddCommand("userinfo", CL_UserInfo_f, "Prints your userinfo string");
 
 	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
 

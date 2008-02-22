@@ -305,8 +305,9 @@ static void SV_Serverinfo_f (void)
 
 /**
  * @brief Examine all a users info strings
+ * @sa CL_UserInfo_f
  */
-static void SV_DumpUser_f (void)
+static void SV_UserInfo_f (void)
 {
 	if (!svs.initialized) {
 		Com_Printf("No server running.\n");
@@ -314,7 +315,7 @@ static void SV_DumpUser_f (void)
 	}
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: info <userid>\n");
+		Com_Printf("Usage: %s <userid>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -515,7 +516,7 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("kick", SV_Kick_f, "Kick a user from the server");
 	Cmd_AddCommand("status", SV_Status_f, "Prints status of server and connected clients");
 	Cmd_AddCommand("serverinfo", SV_Serverinfo_f, "Prints the serverinfo that is visible in the server browsers");
-	Cmd_AddCommand("info", SV_DumpUser_f, "Prints the userinfo for a given userid");
+	Cmd_AddCommand("info", SV_UserInfo_f, "Prints the userinfo for a given userid");
 
 	Cmd_AddCommand("map", SV_Map_f, "Quit client and load the new map");
 	Cmd_AddParamCompleteFunction("map", SV_CompleteMapCommand);
