@@ -41,7 +41,6 @@ item craft_ufo_scout
 	weapon	false
 	model	objects/alien/disassembled/ufo_scout
 	notonmarket	true
-	aircraft	true
 }
 
 item craft_ufo_fighter
@@ -51,7 +50,6 @@ item craft_ufo_fighter
 	weapon	false
 	model	objects/alien/disassembled/ufo_fighter
 	notonmarket	true
-	aircraft	true
 }
 
 item craft_ufo_harvester
@@ -61,7 +59,6 @@ item craft_ufo_harvester
 	weapon	false
 	model	objects/alien/disassembled/ufo_harvester
 	notonmarket	true
-	aircraft	true
 }
 
 item craft_ufo_condor
@@ -70,7 +67,6 @@ item craft_ufo_condor
 	name	"_UFO - Condor"
 	weapon false
 	notonmarket	true
-	aircraft	true
 }
 
 item craft_ufo_carrier
@@ -79,7 +75,6 @@ item craft_ufo_carrier
 	name	"_UFO - Carrier"
 	weapon false
 	notonmarket	true
-	aircraft	true
 }
 
 item craft_ufo_supply
@@ -88,7 +83,6 @@ item craft_ufo_supply
 	name	"_UFO - Supply Ship"
 	weapon false
 	notonmarket	true
-	aircraft	true
 }
 
 // ========================

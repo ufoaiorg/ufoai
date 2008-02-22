@@ -510,7 +510,7 @@ void PR_ProductionRun (void)
 				prod->percentDone = 0.0f;
 				prod->amount--;
 				/* If this is aircraft dummy item, update UFO hangars capacity. */
-				if (od->aircraft) {
+				if (od->tech->type == RS_CRAFT) {
 					ufocraft = AIR_GetAircraft(od->id);
 					assert(ufocraft);
 					if (ufocraft->weight == AIRCRAFT_LARGE) {
