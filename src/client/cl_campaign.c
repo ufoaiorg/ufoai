@@ -340,9 +340,9 @@ static qboolean CP_ChooseRandomMap (mission_t *mission, vec2_t pos)
 {
 	Com_sprintf(mission->id, sizeof(mission->id), "randommap%.0f:%.0f", pos[0], pos[1]);
 	Com_Printf("mission->ufo: '%s'\n", mission->ufo->id);
-	mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
+	mission->mapDef = Com_GetMapDefinitionByID("farm_small");
 	if (!mission->mapDef)
-		Sys_Error("Could not get a mapdef for ufocrash");
+		Sys_Error("Could not get a mapdef for farm_small");
 	if (mission->mapDef->ufos)
 		mission->mapDef->param = Mem_PoolStrDup(UFO_TypeToShortName(mission->ufo->ufotype), cl_localPool, CL_TAG_NONE);
 
@@ -488,6 +488,19 @@ int CP_CountMissionOnGeoscape (void)
 }
 
 /**
+ * @brief Removes a mission from geoscape: make it non visible and call notify functions
+ */
+static void CP_MissionRemoveFromGeoscape (mission_t *mission)
+{
+	mission->onGeoscape = qfalse;
+
+	/* Notifications */
+	MAP_NotifyMissionRemoved(mission);
+	AIR_AircraftsNotifyMissionRemoved(mission);
+	CL_PopupNotifyMissionRemoved(mission);
+}
+
+/**
  * @brief Removes a mission from mission global array.
  */
 static void CP_MissionRemove (mission_t *mission)
@@ -500,15 +513,13 @@ static void CP_MissionRemove (mission_t *mission)
 		UFO_RemoveFromGeoscape(mission->ufo);
 
 	/* Notifications */
-	MAP_NotifyMissionRemoved(mission);
-	AIR_AircraftsNotifyMissionRemoved(mission);
-	CL_PopupNotifyMissionRemoved(mission);
+	CP_MissionRemoveFromGeoscape(mission);
 
 	for (; list; list = list->next) {
 		removedMission = (mission_t *)list->data;
 		if (removedMission == mission) {
 			LIST_Remove(&ccs.missions, list);
-			Com_Printf("Mission removed from global array.\n");
+			Com_DPrintf(DEBUG_CLIENT, "Mission removed from global array: %i missions left\n", CP_CountMission());
 			return;
 		}
 	}
@@ -580,8 +591,7 @@ static void CP_ReconMissionLeave (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	assert(mission->ufo);
 	UFO_SetRandomDest(mission->ufo);
-	/* Remove any mission the UFO created on geoscape */
-	mission->onGeoscape = qfalse;
+	CP_MissionRemoveFromGeoscape(mission);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
 
@@ -623,7 +633,7 @@ static void CP_ReconMissionAerial (mission_t *mission)
  */
 static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
 {
-	return qfalse;
+	return (frand() > 0.7f);
 }
 
 /**
@@ -637,7 +647,7 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 
 	assert(mission->ufo);
 
-	mission->onGeoscape = qfalse;
+	CP_MissionRemoveFromGeoscape(mission);
 
 	/* Create a new fixed map */
 	if (!CP_ChooseMap(mission)) {
@@ -722,7 +732,6 @@ static void CP_ReconMissionCreate (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	/* @todo: type of ufo may change */
 	mission->ufo = UFO_AddToGeoscape(UFO_SCOUT, NULL);
-	/* @todo: it may be a ground mission */
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }
 
@@ -787,7 +796,7 @@ static void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	base = (base_t *)mission->data;
 
 	if (base)
-		base->baseStatus = BASE_WORKING;
+		B_BaseResetStatus(base);
 	gd.mapAction = MA_NONE;
 
 	CP_MissionRemove(mission);
@@ -811,8 +820,7 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
-	/* Remove any mission the UFO created on geoscape */
-	mission->onGeoscape = qfalse;
+	CP_MissionRemoveFromGeoscape(mission);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
 
@@ -1417,44 +1425,6 @@ static void CL_CampaignAddMission (setState_t * set)
 
 	/* stop time */
 	CL_GameTimeStop();
-}
-
-/**
- * @brief Removes a mission from geoscape
- * @note This function is called in several different situations:
- * a mission was won
- * a mission doesn't have the keepAfterFail set and was lost
- * a mission that expired (prevent this via noExpire)
- * @sa CL_CampaignAddMission
- * @note Missions that are removed should already have the onGeoscape set to true
- * and thus won't be respawned on geoscape
- */
-static void CL_CampaignRemoveMission (actMis_t * mis)
-{
-	int i, num;
-	base_t *base;
-
-	num = mis - ccs.missionOld;
-	if (num >= ccs.numMissionsOld) {
-		Com_Printf("CL_CampaignRemoveMission: Can't remove mission.\n");
-		return;
-	}
-
-	/* Clear base-attack status if required */
-	if (mis->def->missionType == MIS_BASEATTACK) {
-		base = (base_t*)mis->def->data;
-		B_BaseResetStatus(base);
-	}
-
-	/* Notifications */
-	MAP_NotifyMissionRemoved(mis);
-	AIR_AircraftsNotifyMissionRemoved(mis);
-	CL_PopupNotifyMissionRemoved(mis);
-
-	ccs.numMissionsOld--;
-	Com_DPrintf(DEBUG_CLIENT, "%i missions left\n", ccs.numMissionsOld);
-	for (i = num; i < ccs.numMissionsOld; i++)
-		ccs.missionOld[i] = ccs.missionOld[i + 1];
 }
 #endif
 
