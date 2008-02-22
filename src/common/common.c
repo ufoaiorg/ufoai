@@ -678,7 +678,7 @@ static void Com_DeveloperSet_f (void)
 			i++;
 		}
 		if (!debugLevels[i].str) {
-			Com_Printf("No valid debug mode paramter\n");
+			Com_Printf("No valid debug mode parameter\n");
 			return;
 		}
 		Cvar_SetValue("developer", newValue);

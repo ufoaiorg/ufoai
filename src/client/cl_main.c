@@ -1301,6 +1301,7 @@ static void CL_ReadPackets (void)
 
 /**
  * @brief Prints the current userinfo string to the game console
+ * @sa SV_UserInfo_f
  */
 static void CL_UserInfo_f (void)
 {
