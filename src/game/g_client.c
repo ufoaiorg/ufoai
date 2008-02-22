@@ -2363,7 +2363,7 @@ static void G_GetTeam (player_t * player)
 		Com_Printf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "cl_teamnum"));
 		/* civilians are at team zero */
-		if (i > 0 && sv_maxteams->integer >= i) {
+		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
 			player->pers.team = i;
 			gi.bprintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
@@ -2374,7 +2374,7 @@ static void G_GetTeam (player_t * player)
 		qboolean teamAvailable;
 		/* search team */
 		Com_Printf("Getting a multiplayer team for %s\n", player->pers.netname);
-		for (i = 1; i < MAX_TEAMS; i++) {
+		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				teamAvailable = qtrue;
 				/* check if team is in use (only human controlled players) */
