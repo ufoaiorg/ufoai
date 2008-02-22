@@ -826,7 +826,7 @@ static char *Cvar_BitInfo (int bit)
 /**
  * @brief Returns an info string containing all the CVAR_USERINFO cvars
  */
-char *Cvar_Userinfo (void)
+const char *Cvar_Userinfo (void)
 {
 	return Cvar_BitInfo(CVAR_USERINFO);
 }
@@ -835,7 +835,7 @@ char *Cvar_Userinfo (void)
  * @brief Returns an info string containing all the CVAR_SERVERINFO cvars
  * @sa SV_StatusString
  */
-char *Cvar_Serverinfo (void)
+const char *Cvar_Serverinfo (void)
 {
 	return Cvar_BitInfo(CVAR_SERVERINFO);
 }

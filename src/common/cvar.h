@@ -105,12 +105,12 @@ void Cvar_Init(void);
 /**
  * @brief returns an info string containing all the CVAR_USERINFO cvars
  */
-char *Cvar_Userinfo(void);
+const char *Cvar_Userinfo(void);
 
 /**
  * @brief returns an info string containing all the CVAR_SERVERINFO cvars
  */
-char *Cvar_Serverinfo(void);
+const char *Cvar_Serverinfo(void);
 
 /**
  * @brief this is set each time a CVAR_USERINFO variable is changed
