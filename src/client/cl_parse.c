@@ -964,7 +964,7 @@ static void CL_ActorAdd (struct dbuffer *msg)
 static void CL_ActorAppear (struct dbuffer *msg)
 {
 	qboolean newActor;
-	le_t *le = NULL;
+	le_t *le;
 	char tmpbuf[128];
 	int entnum, modelnum1, modelnum2;
 	int teamDefID = -1;

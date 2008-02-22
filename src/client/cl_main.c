@@ -315,6 +315,7 @@ void CL_Drop (void)
 /**
  * @note Only call CL_Connect if there is no connection yet (cls.stream is NULL)
  * @sa CL_Disconnect
+ * @sa CL_SendChangedUserinfos
  */
 static void CL_Connect (void)
 {
@@ -1298,7 +1299,9 @@ static void CL_ReadPackets (void)
 	}
 }
 
-
+/**
+ * @brief Prints the current userinfo string to the game console
+ */
 static void CL_Userinfo_f (void)
 {
 	Com_Printf("User info settings:\n");
@@ -2155,7 +2158,12 @@ static void CL_InitLocal (void)
 	ccs.singleplayer = qtrue;
 }
 
-static void CL_SendCmd (void)
+/**
+ * @brief Send the userinfo to the server (and to all other clients)
+ * when they changed (CVAR_USERINFO)
+ * @sa CL_Connect
+ */
+static void CL_SendChangedUserinfos (void)
 {
 	/* send a userinfo update if needed */
 	if (cls.state >= ca_connected) {
@@ -2182,7 +2190,7 @@ static void CL_SendCommand (void)
 	Cbuf_Execute();
 
 	/* send intentions now */
-	CL_SendCmd();
+	CL_SendChangedUserinfos();
 
 	/* fix any cheating cvars */
 	Cvar_FixCheatVars();
