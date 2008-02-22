@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+
+<!-- valid keys:
+ shaderpath: the path in which to look for shaders
+ engine: engine name
+ enginepath: path to the engine
+ basegame: basegame directory
+ name: name of the game used in dialogs
+ gametools: the explicit path to the game-dependent modules
+ default_scale: default scale (0.5 in q3, 1.0 in q1/q2, 0.25 in JK2 ..)
+ eclass_singleload: only load a single eclass definition file
+ no_patch: this game doesn't support patch technology
+ caulk_shader: the shader to use for caulking
+ prefix: prefix for ~/.q3a ~/.wolf init, only on *nix
+-->
+
+<game
+  name="UFO:AI"
+  enginepath ="C:\Program Files\UFOAI-2.3\"
+  gametools="C:\Program Files\UFOAI-2.3\"
+  engine="ufo"
+  basegame="base"
+  shaderpath="materials/"
+/>
