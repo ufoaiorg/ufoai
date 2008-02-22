@@ -515,7 +515,7 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("kick", SV_Kick_f, "Kick a user from the server");
 	Cmd_AddCommand("status", SV_Status_f, "Prints status of server and connected clients");
 	Cmd_AddCommand("serverinfo", SV_Serverinfo_f, "Prints the serverinfo that is visible in the server browsers");
-	Cmd_AddCommand("dumpuser", SV_DumpUser_f, "Prints the userinfo for a given userid");
+	Cmd_AddCommand("info", SV_DumpUser_f, "Prints the userinfo for a given userid");
 
 	Cmd_AddCommand("map", SV_Map_f, "Quit client and load the new map");
 	Cmd_AddParamCompleteFunction("map", SV_CompleteMapCommand);
