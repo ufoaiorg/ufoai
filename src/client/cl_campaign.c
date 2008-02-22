@@ -2613,6 +2613,9 @@ static void CL_NationSelect_f (void)
  */
 qboolean CP_Load (sizebuf_t *sb, void *data)
 {
+	int i;
+	const char *name;
+	char val[32];
 #if 0
 FIXME
 	actMis_t *mis;
@@ -2622,8 +2625,8 @@ FIXME
 	const char *name, *selectedMissionStr;
 	int i, j, num;
 	int misType;
-	char val[32];
 	base_t *base;
+#endif
 
 	/* read campaign name */
 	name = MSG_ReadString(sb);
@@ -2649,8 +2652,6 @@ FIXME
 	memset(&ccs, 0, sizeof(ccs_t));
 	ccs.singleplayer = qtrue;
 
-	ccs.angles[YAW] = GLOBE_ROTATE;
-
 	gd.fund = MSG_ReadByte(sb);
 	gd.nextUCN = MSG_ReadShort(sb);
 
@@ -2661,6 +2662,8 @@ FIXME
 	/* read map view */
 	ccs.center[0] = MSG_ReadFloat(sb);
 	ccs.center[1] = MSG_ReadFloat(sb);
+	ccs.angles[0] = MSG_ReadFloat(sb);
+	ccs.angles[1] = MSG_ReadFloat(sb);
 	ccs.zoom = MSG_ReadFloat(sb);
 
 	Q_strncpyz(gd.oldMis1, MSG_ReadString(sb), sizeof(gd.oldMis1));
@@ -2676,6 +2679,8 @@ FIXME
 	ccs.XVISpreadActivated = MSG_ReadByte(sb);
 	ccs.humansAttackActivated = MSG_ReadByte(sb);
 
+#if 0
+FIXME
 	/* read campaign data */
 	name = MSG_ReadString(sb);
 	while (*name) {
@@ -2718,10 +2723,13 @@ FIXME
 		/* read next stage name */
 		name = MSG_ReadString(sb);
 	}
+#endif
 
 	/* reset team */
 	Cvar_Set("cl_team", curCampaign->team);
 
+#if 0
+FIXME
 	/* store active missions */
 	num = MSG_ReadByte(sb);
 	ccs.numMissionsOld = num;
@@ -2913,6 +2921,7 @@ FIXME
 	actMis_t *mis;
 	int i, j;
 	base_t *base;
+#endif
 
 	/* store campaign name */
 	MSG_WriteString(sb, curCampaign->id);
@@ -2927,6 +2936,8 @@ FIXME
 	/* store map view */
 	MSG_WriteFloat(sb, ccs.center[0]);
 	MSG_WriteFloat(sb, ccs.center[1]);
+	MSG_WriteFloat(sb, ccs.angles[0]);
+	MSG_WriteFloat(sb, ccs.angles[1]);
 	MSG_WriteFloat(sb, ccs.zoom);
 
 	MSG_WriteString(sb, gd.oldMis1);
@@ -2942,6 +2953,8 @@ FIXME
 	MSG_WriteByte(sb, ccs.XVISpreadActivated);
 	MSG_WriteByte(sb, ccs.humansAttackActivated);
 
+#if 0
+FIXME
 	/* store campaign data */
 	for (i = 0, state = ccs.stage; i < numStages; i++, state++)
 		if (state->active) {
