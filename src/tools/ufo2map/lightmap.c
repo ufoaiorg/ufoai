@@ -562,20 +562,15 @@ static void CalcFaceVectors (lightinfo_t *l)
 static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 {
 	int s, t, j, w, h, step;
-	vec_t starts, startt, us, ut, mids, midt;
+	vec_t starts, startt, us, ut;
 	vec_t *surf;
-	vec3_t pos, facemid;
+	vec3_t pos;
 	dBspLeaf_t *leaf;
 
 	/* fill in surforg
 	 * the points are biased towards the center of the surfaces
 	 * to help avoid edge cases just inside walls */
 	surf = l->surfpt[0];
-	mids = (l->exactmaxs[0] + l->exactmins[0]) / 2;
-	midt = (l->exactmaxs[1] + l->exactmins[1]) / 2;
-
-	for (j = 0; j < 3; j++)
-		facemid[j] = l->texorg[j] + l->textoworld[0][j] * mids + l->textoworld[1][j] * midt;
 
 	h = l->texsize[1] + 1;
 	w = l->texsize[0] + 1;
