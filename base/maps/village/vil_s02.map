@@ -188,5 +188,5 @@
 "classname" "misc_particle"
 "origin" "145 64 108"
 "particle" "corona"
-"spawnflags" "254"
+"spawnflags" "510"
 }
