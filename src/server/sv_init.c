@@ -303,7 +303,8 @@ static void SV_ParseMapTile (const char *filename, const char **text)
 static void SV_ParseAssembly (const char *filename, const char **text)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
-	const char *token, *cvarName, *cvarValue;
+	const char *token, *cvarValue;
+	char cvarName[MAX_VAR];
 	mAssembly_t *a;
 	int i, x, y;
 
@@ -392,16 +393,16 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			/* '*' is: replace by cvar value */
 			token++; /* strip '*' */
 			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement: %s\n", token);
-			cvarName = token;
+			Q_strncpyz(cvarName, token, sizeof(cvarName));
 			token = COM_EParse(text, errhead, filename);
 			if (!text || *token == '}')
 				break;
 			cvarValue = Cvar_VariableString(cvarName);
 			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvarValue);
 			if (*cvarValue != '+') {
-				Com_Printf("SV_ParseAssembly: warning - cvar value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarValue, token);
+				Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarName, cvarValue, token);
 				Cvar_Set(cvarName, token);
-				if (*token!= '+')
+				if (*token != '+')
 					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id");
 			} else
 				token = cvarValue;
