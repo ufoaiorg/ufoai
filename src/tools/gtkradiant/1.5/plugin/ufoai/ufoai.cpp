@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <gtk/gtk.h>
 
-#define PLUGIN_VERSION "0.3"
+#define PLUGIN_VERSION "0.4"
 
 #include "ifilter.h"
 #include "ibrush.h"
@@ -74,7 +74,7 @@ namespace UFOAI
 	const char* getCommandList()
 	{
 		/*GlobalRadiant().getGameName()*/
-		return "About;-;Worldspawn reset (day);Worldspawn reset (night);Worldspawn (day);Worldspawn (night);Perform check;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8;-;StepOn;ActorClip;WeaponClip;Nodraw";
+		return "About;-;Worldspawn reset;Worldspawn;Perform check;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8;-;StepOn;ActorClip;WeaponClip;Nodraw";
 	}
 	const char* getCommandTitleList()
 	{
@@ -101,21 +101,13 @@ namespace UFOAI
 		{
 			filter_level(CONTENTS_LEVEL3);
 		}
-		else if(string_equal(command, "Worldspawn (day)"))
+		else if(string_equal(command, "Worldspawn"))
 		{
-			assign_default_values_to_worldspawn(false, true, &message);
+			assign_default_values_to_worldspawn(false, &message);
 		}
-		else if(string_equal(command, "Worldspawn (night)"))
+		else if(string_equal(command, "Worldspawn reset"))
 		{
-			assign_default_values_to_worldspawn(false, false, &message);
-		}
-		else if(string_equal(command, "Worldspawn reset (day)"))
-		{
-			assign_default_values_to_worldspawn(true, true, &message);
-		}
-		else if(string_equal(command, "Worldspawn reset (night)"))
-		{
-			assign_default_values_to_worldspawn(true, false, &message);
+			assign_default_values_to_worldspawn(true, &message);
 		}
 		else if(string_equal(command, "Perform check"))
 		{
