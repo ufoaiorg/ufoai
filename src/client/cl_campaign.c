@@ -632,6 +632,27 @@ static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
 {
 	return (frand() > 0.7f);
 }
+/**
+ * @brief Minimum distance between a new mission and an existing base.
+ */
+const float distMinBaseMission = 4.0f;
+
+/**
+ * @brief Check if given pos is close to an existing base.
+ * @return Pointer to the base if one base is closer than distMinBaseMission from pos, NULL else
+ */
+static base_t* CP_PositionCloseToBase (vec2_t pos)
+{
+	base_t *base;
+	int i;
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+		if (MAP_GetDistance(pos, base->pos) < distMinBaseMission) {
+			return base;
+		}
+
+	return NULL;
+}
 
 /**
  * @brief Set ground mission, and go to ground mission pos.
@@ -648,7 +669,17 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
-		if (!CP_GetRandomPosOnGeoscape(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL)) {
+		const int maxLoop = 10;	/* There is a limited number of loop to avoid infinite loops */
+		qboolean positionValid = qfalse;
+		int counter;
+		for(counter = 0; positionValid && counter < maxLoop; counter++) {
+			positionValid = CP_GetRandomPosOnGeoscape(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL);
+			if (!positionValid)
+				continue;
+			if (!CP_PositionCloseToBase(mission->pos))
+				positionValid = qfalse;
+		}
+		if (counter >= maxLoop) {
 			Com_Printf("CP_ReconMissionGroundGo: Error, could not set position.\n");
 			CP_MissionRemove(mission);
 			return;
@@ -1118,6 +1149,7 @@ void CP_CheckNextStageDestination (aircraft_t *ufo)
 qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 {
 	mission_t *mission;
+	base_t *base;
 
 	mission = CP_GetMissionByUFO(ufo);
 	if (!mission)
@@ -1126,8 +1158,19 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	assert(mission);
 
 	CP_ChooseMap(mission, ufo->pos, qtrue);
-	/* Set new pos of mission */
-	Vector2Copy(ufo->pos, mission->pos);
+	/* Check if new mission is close from an existing base */
+	base = CP_PositionCloseToBase(mission->pos);
+	if (base) {
+		float dist = MAP_GetDistance(ufo->pos, base->pos);
+		if (dist > UFO_EPSILON) {
+			mission->pos[0] = base->pos[0] + (ufo->pos[0] - base->pos[0]) * distMinBaseMission / dist;
+			mission->pos[1] = base->pos[1] + (ufo->pos[1] - base->pos[1]) * distMinBaseMission / dist;
+		} else {
+			mission->pos[0] = base->pos[0];
+			mission->pos[1] = base->pos[1] + distMinBaseMission;
+		}
+	} else
+		Vector2Copy(ufo->pos, mission->pos);
 
 	if (!mission->mapDef)
 		return qfalse;
@@ -1339,102 +1382,6 @@ technology_t *CP_IsXVIResearched (void)
 {
 	return RS_IsResearched_ptr(rs_alien_xvi) ? rs_alien_xvi : NULL;
 }
-#if 0
-
-#define DIST_MIN_BASE_MISSION 4
-/**
- * @note missions that have the keepAfterFail boolean set should not be removed
- * after the mission failed - but only when the mission was successful
- * @sa CL_CampaignRemoveMission
- * @sa CP_CheckEvents
- * @sa CL_AddMission
- * @sa CL_CampaignAddGroundMission
- */
-static void CL_CampaignAddMission (setState_t * set)
-{
-	actMis_t *mis;
-
-	mission_t *misTemp;
-	int i;
-	float f;
-
-	/* add mission */
-	if (ccs.numMissionsOld >= MAX_ACTMISSIONS) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddMission: Too many active missions!\n");
-		return;
-	}
-
-	do {
-		misTemp = &missions[set->def->missions[rand() % set->def->numMissions]];
-
-		if ((set->def->numMissions < 2
-			 || Q_strncmp(misTemp->name, gd.oldMis1, MAX_VAR))
-			&& (set->def->numMissions < 3
-				|| Q_strncmp(misTemp->name, gd.oldMis2, MAX_VAR))
-			&& (set->def->numMissions < 4
-				|| Q_strncmp(misTemp->name, gd.oldMis3, MAX_VAR)))
-			break;
-	} while (1);
-
-	/* maybe the mission is already on geoscape --- e.g. one-mission sets */
-	if (misTemp->onGeoscape) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddMission: Mission is already on geoscape\n");
-		return;
-	} else {
-		misTemp->onGeoscape = qtrue;
-	}
-	mis = &ccs.missionOld[ccs.numMissionsOld++];
-	memset(mis, 0, sizeof(actMis_t));
-
-	/* set relevant info */
-	mis->def = misTemp;
-	mis->cause = set;
-	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
-	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
-	Q_strncpyz(gd.oldMis1, misTemp->name, sizeof(gd.oldMis1));
-
-	/* execute mission commands */
-	if (*mis->def->cmds)
-		Cmd_ExecuteString(mis->def->cmds);
-
-	if (set->def->expire.day)
-		mis->expire = Date_Add(ccs.date, Date_Random_Middle(set->def->expire));
-
-	/* A mission must not be very near a base */
-	for (i = 0; i < gd.numBases; i++) {
-		if (MAP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
-			f = frand();
-			mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
-			f = sin(acos(f));
-			mis->def->pos[1] = gd.bases[i].pos[1] + (gd.bases[i].pos[1] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
-			break;
-		}
-	}
-	/* get default position first, then try to find a corresponding mask color */
-	Vector2Set(mis->realPos, mis->def->pos[0], mis->def->pos[1]);
-	MAP_MaskFind(mis->def->mask, mis->realPos);
-
-	/* Add message to message-system. */
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
-	MN_AddNewMessage(_("Alien activity"), mn.messageBuffer, qfalse, MSG_TERRORSITE, NULL);
-	Com_DPrintf(DEBUG_CLIENT, "Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
-
-	/* prepare next event (if any) */
-	set->num++;
-	if (set->def->number && set->num >= set->def->number)
-		set->active = qfalse;
-	else
-		set->event = Date_Add(ccs.date, Date_Random_Middle(set->def->frame));
-
-	if (set->def->ufos > 0) {
-		Cbuf_AddText("addufo;");
-		set->def->ufos--;
-	}
-
-	/* stop time */
-	CL_GameTimeStop();
-}
-#endif
 
 /**
  * @brief Backs up each nation's relationship values.
