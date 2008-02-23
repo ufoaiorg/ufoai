@@ -2114,4 +2114,5 @@ mapdef baseattack
 	map				".baseattack"
 	loadingscreen	"baseattack"
 	multiplayer		false
+	maxaliens		9
 }
