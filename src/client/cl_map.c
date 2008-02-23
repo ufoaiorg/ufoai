@@ -1269,10 +1269,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		/* Draw base */
 		if (cl_3dmap->integer) {
 			angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
-			if (base->baseStatus == BASE_UNDER_ATTACK)
-				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "baseattack");
-			else
-				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base");
+			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base");
 		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 			if (base->baseStatus == BASE_UNDER_ATTACK)
 				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");

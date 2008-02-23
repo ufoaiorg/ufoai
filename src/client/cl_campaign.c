@@ -248,14 +248,21 @@ static void CP_AlienInterestList_f (void)
 /**
  * @brief Check if a map may be selected for mission.
  * @param[in] mission Pointer to the mission
+ * @param[in] pos position of the mission (NULL if the position will be chosen afterwars)
  * @param[in] mapIdx idx of the map
  * @return qfalse if map is not selectable
  * @sa UFO_AddToGeoscape
  */
-static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx)
+static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
 {
+	char ufoname[64];
+
 	if (csi.mds[mapIdx].storyRelated)
 		return qfalse;
+
+	if (pos) {
+		/* @todo Check that this map fits position conditions */
+	}
 
 	if (!mission->ufo) {
 		/* a mission without UFO should not use a map with UFO */
@@ -266,8 +273,9 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx)
 		 * first check that list is not empty */
 		if (!csi.mds[mapIdx].ufos)
 			return qfalse;
-		/* then compare */
-		if (!LIST_ContainsString(csi.mds[mapIdx].ufos, mission->ufo->id))
+		Com_sprintf(ufoname, sizeof(ufoname), UFO_TypeToShortName(mission->ufo->ufotype));
+		/* @todo The name of the UFO is not the same if the UFO is crashed (e.g. crash_fighter) */
+		if (!LIST_ContainsString(csi.mds[mapIdx].ufos, ufoname))
 			return qfalse;
 	}
 
@@ -276,9 +284,12 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx)
 
 /**
  * @brief Choose a map for given mission.
+ * @param[in] mission Pointer to the mission
+ * @param[in] pos position of the mission (NULL if the position will be chosen afterwars)
+ * @param[in] ufoCrashed true if the ufo is crashed
  * @return qfalse if could not set mission
  */
-static qboolean CP_ChooseMap (mission_t *mission)
+static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashed)
 {
 	int i;
 	int maxHits = 1;
@@ -291,8 +302,9 @@ static qboolean CP_ChooseMap (mission_t *mission)
 	while (maxHits) {
 		maxHits = 0;
 		for (i = 0; i < csi.numMDs; i++) {
+
 			/* Check if mission fulfill conditions */
-			if (!CP_MapIsSelectable(mission, i))
+			if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
 				continue;
 
 			maxHits++;
@@ -309,7 +321,7 @@ static qboolean CP_ChooseMap (mission_t *mission)
 	}
 
 	if (!maxHits) {
-		Com_Printf("CP_ChooseMap: Could not find fixed map with %s.\n", mission->ufo->id);
+		Com_Printf("CP_ChooseMap: Could not find map with %s.\n", mission->ufo->id);
 		return qfalse;
 	}
 
@@ -317,7 +329,7 @@ static qboolean CP_ChooseMap (mission_t *mission)
 
 	for (i = 0; randomNum >= 0; i++) {
 		/* Check if mission fulfill conditions */
-		if (!CP_MapIsSelectable(mission, i))
+		if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
 			continue;
 
 		if (csi.mds[i].timesAlreadyUsed == minMissionAppearance)
@@ -325,27 +337,12 @@ static qboolean CP_ChooseMap (mission_t *mission)
 	}
 
 	mission->mapDef = &csi.mds[i - 1];
+	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
+
 /* @todo Use me */
 	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
 	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
 	Q_strncpyz(gd.oldMis1, mission->mapDef->id, sizeof(gd.oldMis1));
-	return qtrue;
-}
-
-/**
- * @brief Create a random map.
- * @return qfalse if could not set mission FIXME
- */
-static qboolean CP_ChooseRandomMap (mission_t *mission, vec2_t pos)
-{
-	Com_sprintf(mission->id, sizeof(mission->id), "randommap%.0f:%.0f", pos[0], pos[1]);
-	Com_Printf("mission->ufo: '%s'\n", mission->ufo->id);
-	mission->mapDef = Com_GetMapDefinitionByID("farm_small");
-	if (!mission->mapDef)
-		Sys_Error("Could not get a mapdef for farm_small");
-	if (mission->mapDef->ufos)
-		mission->mapDef->param = Mem_PoolStrDup(UFO_TypeToShortName(mission->ufo->ufotype), cl_localPool, CL_TAG_NONE);
-
 	return qtrue;
 }
 
@@ -649,15 +646,17 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 
 	CP_MissionRemoveFromGeoscape(mission);
 
-	/* Create a new fixed map */
-	if (!CP_ChooseMap(mission)) {
-		/* Creation failed: Find random pos (not on water) */
-		CP_GetRandomPosOnGeoscape(mission->pos, NULL, NULL, NULL, NULL);
-		/* Create map assembly map */
-		CP_ChooseRandomMap(mission, mission->pos);
-	} else if (!CP_GetRandomPosOnGeoscape(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL)) {
-		Com_Printf("CP_ReconMissionGroundGo: Error, could not set position.\n");
+	/* Choose a map */
+	if (CP_ChooseMap(mission, NULL, qfalse)) {
+		if (!CP_GetRandomPosOnGeoscape(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL)) {
+			Com_Printf("CP_ReconMissionGroundGo: Error, could not set position.\n");
+			CP_MissionRemove(mission);
+			return;
+		}
+	} else {
+		Com_Printf("CP_ReconMissionGroundGo: Error, could not set map.\n");
 		CP_MissionRemove(mission);
+		return;
 	}
 
 	mission->mapDef->timesAlreadyUsed++;
@@ -1105,8 +1104,6 @@ void CP_CheckNextStageDestination (aircraft_t *ufo)
 	case STAGE_RETURN_TO_ORBIT:
 	case STAGE_RECON_GOTO_GROUND:
 	case STAGE_BASE_ATTACK_GOTO:
-		Com_Printf("UFO arrived at destination: stage finished\n");
-		CL_GameTimeStop();
 		CP_MissionStageEnd(mission);
 		break;
 	default:
@@ -1128,7 +1125,7 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	assert(mission);
 
-	CP_ChooseRandomMap(mission, ufo->pos);
+	CP_ChooseMap(mission, ufo->pos, qtrue);
 	/* Set new pos of mission */
 	Vector2Copy(ufo->pos, mission->pos);
 
@@ -1185,6 +1182,27 @@ int MAP_GetIdxByMission (const mission_t *mis)
 /*****************************************************************************
 Set Battle
 *****************************************************************************/
+
+/**
+ * @brief Check if UFO of selected mission is crashed.
+ * @param[in] mission Pointer to the mission that generates the battle
+ * @sa CP_CreateBattleParameters
+ * @return true if the UFO is crashed, false if it's intact
+ */
+static qboolean CP_UFOIsCrashed (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_RECON_GROUND:
+	case STAGE_BUILD_BASE:
+	case STAGE_BASE_ATTACK:
+	case STAGE_SUBVERT_GOV:
+	case STAGE_SUPPLY:
+	case STAGE_SPREAD_XVI:
+		return qfalse;
+	default:
+		return qtrue;
+	}
+}
 
 /**
  * @brief Returns the alien race for a mission (depends on the interest values)
@@ -1277,27 +1295,6 @@ static void CP_CreateCivilianTeam (mission_t *mission)
 }
 
 /**
- * @brief Check if UFO of selected mission is crashed.
- * @param[in] mission Pointer to the mission that generates the battle
- * @sa CP_CreateBattleParameters
- * @return true if the UFO is crashed, false if it's intact
- */
-static qboolean CP_UFOIsCrashed (mission_t *mission)
-{
-	switch (mission->stage) {
-	case STAGE_RECON_GROUND:
-	case STAGE_BUILD_BASE:
-	case STAGE_BASE_ATTACK:
-	case STAGE_SUBVERT_GOV:
-	case STAGE_SUPPLY:
-	case STAGE_SPREAD_XVI:
-		return qfalse;
-	default:
-		return qtrue;
-	}
-}
-
-/**
  * @brief Create parameters needed for battle.
  * @param[in] mission Pointer to the mission that generates the battle
  * @sa CP_CreateAlienTeam
@@ -1314,14 +1311,25 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
 	zoneType = MAP_GetTerrainType(color);
 	ccs.battleParameters.zoneType = zoneType; /* store to terrain type for texture replacement */
-
 	/* Is there a UFO to recover ? */
 	if (selectedMission->ufo) {
-		if (CP_UFOIsCrashed(mission))
+		if (CP_UFOIsCrashed(mission)) {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_ufocrashed %i;", mission->ufo->ufotype);
-		else
+			/* @todo FIXME: this should be crashed UFO tiles when they'll be implemented */
+			/* Set random map UFO if this is a random map */
+			if (mission->mapDef->map[0] == '+')
+				Cvar_Set("rm_ufo", UFO_TypeToShortName(selectedMission->ufo->ufotype));
+		} else {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
+			/* Set random map UFO if this is a random map */
+			if (mission->mapDef->map[0] == '+')
+				Cvar_Set("rm_ufo", UFO_TypeToShortName(selectedMission->ufo->ufotype));
+		}
 	}
+	/* @todo change dropship to any possible aircraft when random assembly tiles will be created */
+	/* Set random map aircraft if this is a random map */
+	if (mission->mapDef->map[0] == '+')
+		Cvar_Set("rm_drop", "drop_firebird");
 }
 
 /**
