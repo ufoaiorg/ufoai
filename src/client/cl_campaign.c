@@ -1329,7 +1329,7 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	/* @todo change dropship to any possible aircraft when random assembly tiles will be created */
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+')
-		Cvar_Set("rm_drop", "drop_firebird");
+		Cvar_Set("rm_drop", "+drop_firebird");
 }
 
 /**
