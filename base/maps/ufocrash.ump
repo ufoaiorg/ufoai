@@ -219,7 +219,7 @@ size "7 5"
 +h05 "0 2"
 +h06 "0 2"
 +ufo_harvester "1 1"
-*rm_dropship +drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
 }
 
 //assembly ufo_condor
@@ -230,7 +230,7 @@ size "7 5"
 //+h02 "0 10"
 //+h03 "0 10"
 //+ufo_condor "1 1"
-//*rm_dropship +drop_firebird "1 1"
+//*rm_drop +drop_firebird "1 1"
 //}
 
 assembly ufo_scout
@@ -244,7 +244,7 @@ size "7 5"
 +h05 "0 2"
 +h06 "0 2"
 +ufo_scout "1 1"
-*rm_dropship +drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
 }
 
 assembly ufo_fighter
@@ -258,7 +258,7 @@ size "7 5"
 +h05 "0 2"
 +h06 "0 2"
 +ufo_fighter "1 1"
-*rm_dropship +drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
 }
 
 assembly ufo_supply
@@ -272,5 +272,5 @@ size "7 5"
 +h05 "0 2"
 +h06 "0 2"
 +ufo_supply "1 1"
-*rm_dropship +drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
 }
