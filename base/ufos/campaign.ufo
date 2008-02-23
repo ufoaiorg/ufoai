@@ -166,7 +166,7 @@ campaign veryhard
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
-	credits		1150000
+	credits		1300000
 	map		    map_earth
 	visible		true
 
@@ -193,7 +193,7 @@ campaign hard
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
-	credits		1200000
+	credits		1300000
 	map		    map_earth
 	visible		true
 
@@ -239,7 +239,7 @@ campaign main
 	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
-	credits		1300000
+	credits		1350000
 	map		    map_earth
 	visible		true
 
