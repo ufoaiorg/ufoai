@@ -687,11 +687,12 @@ int SEQ_Remove (const char *name, char *data)
 		se->inuse = qfalse;
 
 	s2d = CL_SequenceFind2D(name);
-	if (s2d)
+	if (s2d) {
 		s2d->inuse = qfalse;
 
-	if (s2d->text)
-		Mem_Free(s2d->text);
+		if (s2d->text)
+			Mem_Free(s2d->text);
+	}
 
 	if (!se && !s2d)
 		Com_Printf("SEQ_Remove: couldn't find '%s'\n", name);
