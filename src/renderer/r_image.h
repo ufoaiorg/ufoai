@@ -64,7 +64,6 @@ typedef struct image_s {
 	GLuint texnum;						/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;
-	vec3_t color;
 } image_t;
 
 #define MAX_GLERRORTEX		4096
@@ -86,7 +85,7 @@ void R_ShutdownImages(void);
 void R_FreeUnusedImages(void);
 void R_ImageClearMaterials(void);
 void R_CalcDayAndNight(float q);
-void R_FilterTexture(unsigned *in, int width, int height, vec3_t color, imagetype_t type);
+void R_FilterTexture(unsigned *in, int width, int height, imagetype_t type);
 void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);

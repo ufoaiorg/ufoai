@@ -879,10 +879,9 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
  * the image's average color. Also handles image inversion and monochrome. This is
  * all munged into one function to reduce loops on level load.
  */
-void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagetype_t type)
+void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 {
 	int i, j, c, mask;
-	unsigned col[3];
 	byte *p;
 	float f;
 
@@ -904,10 +903,7 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 		break;
 	}
 
-	if (color)  /* compute average color */
-		VectorSet(col, 0, 0, 0);
-
-	for (i = 0; i < c; i++, p+= 4) {
+	for (i = 0; i < c; i++, p += 4) {
 		for (j = 0; j < 3; j++) {
 			/* first brightness */
 			f = p[j] / 255.0;  /* as float */
@@ -934,9 +930,6 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 				f = 0;
 
 			p[j] = (byte)f;
-
-			if (color)  /* accumulate color */
-				col[j] += p[j];
 		}
 
 		if (r_monochrome->integer & mask)  /* monochrome */
@@ -947,23 +940,6 @@ void R_FilterTexture (unsigned *in, int width, int height, vec3_t color, imagety
 			p[1] = 255 - p[1];
 			p[2] = 255 - p[2];
 		}
-	}
-
-	if (color) {  /* average accumulated colors */
-		for (i = 0; i < 3; i++)
-			col[i] /= (width * height);
-
-		if (r_monochrome->integer & mask)
-			col[0] = col[1] = col[2] = (col[0] + col[1] + col[2]) / 3;
-
-		if (r_invert->integer & mask){
-			col[0] = 255 - col[0];
-			col[1] = 255 - col[1];
-			col[2] = 255 - col[2];
-		}
-
-		for (i = 0; i < 3; i++)
-			color[i] = col[i] / 255.0;
 	}
 }
 
@@ -1002,7 +978,7 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
-		R_FilterTexture(scaled, scaled_width, scaled_height, image->color, image->type);
+		R_FilterTexture(scaled, scaled_width, scaled_height, image->type);
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;
