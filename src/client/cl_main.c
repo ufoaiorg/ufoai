@@ -273,8 +273,10 @@ void CL_StartSingleplayer (qboolean singleplayer)
 }
 
 /**
- * @note Called after an ERR_DROP was thrown
+ * @brief Ensures the right menu cvars are set after error drop or mapchange
+ * @note E.g. called after an ERR_DROP was thrown
  * @sa CL_Disconnect
+ * @sa SV_Map
  */
 void CL_Drop (void)
 {
