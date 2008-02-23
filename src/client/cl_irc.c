@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define STRINGIFY(x) #x
 #define DOUBLEQUOTE(x) STRINGIFY(x)
+#define IRC_MAX_INPUTLENGTH 128
 
 static cvar_t *irc_server = NULL;
 static cvar_t *irc_port = NULL;
@@ -1239,7 +1240,7 @@ static void Irc_Logic_Disconnect (const char *reason)
 		irc_connected = qfalse;
 		chan = NULL;
 		Cvar_ForceSet("irc_defaultChannel", "");
-		Cvar_ForceSet("irc_topic", "");
+		Cvar_ForceSet("irc_topic", "Connecting (please wait)...");
 		Irc_Input_Deactivate();
 	} else
 		Com_Printf("Irc_Disconnect: not connected\n");
@@ -1270,13 +1271,17 @@ static const char *Irc_Logic_GetChannelTopic (const irc_channel_t *channel)
 	return channel->topic;
 }
 
+/**
+ * @brief Adds a new username to the channel username list
+ * @sa Irc_Logic_RemoveChannelName
+ */
 static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t prefix, const char *nick)
 {
 	int i;
 	/* first one */
 	irc_user_t* user = channel->user;
 	for (i = 0; user && i < channel->users; i++, user = user->next) {
-		if (!Q_strncmp(&(user->key[1]), nick, MAX_VAR-1))
+		if (!Q_strncmp(&(user->key[1]), nick, MAX_VAR - 1))
 			return;
 	}
 	user = Mem_PoolAlloc(sizeof(irc_user_t), cl_ircSysPool, 0);
@@ -1289,6 +1294,10 @@ static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t 
 	Irc_Client_Names_f();
 }
 
+/**
+ * @brief Removes a username from the channel username list
+ * @sa Irc_Logic_AddChannelName
+ */
 static void Irc_Logic_RemoveChannelName (irc_channel_t *channel, const char *nick)
 {
 	int i;
@@ -1320,6 +1329,7 @@ Network functions
 
 /**
  * @return qtrue if successful - qfalse otherwise
+ * @sa Irc_Net_Disconnect
  */
 static qboolean Irc_Net_Connect (const char *host, const char *port)
 {
@@ -1329,6 +1339,9 @@ static qboolean Irc_Net_Connect (const char *host, const char *port)
 	return irc_stream ? qfalse : qtrue;
 }
 
+/**
+ * @sa Irc_Net_Connect
+ */
 static qboolean Irc_Net_Disconnect (void)
 {
 	free_stream(irc_stream);
@@ -1505,10 +1518,11 @@ static void Irc_Client_Topic_f (void)
 }
 
 #define IRC_MAX_USERLIST 512
+static char irc_userListOrdered[IRC_MAX_USERLIST][MAX_VAR];
+
 static void Irc_Client_Names_f (void)
 {
 	int i;
-	char list[IRC_MAX_USERLIST][MAX_VAR];
 
 	irc_user_t* user;
 	if (chan) {
@@ -1517,13 +1531,13 @@ static void Irc_Client_Names_f (void)
 		for (i = 0; i < chan->users; i++) {
 			if (i >= IRC_MAX_USERLIST)
 				break;
-			Q_strncpyz(list[i], user->key, MAX_VAR);
+			Q_strncpyz(irc_userListOrdered[i], user->key, MAX_VAR);
 			user = user->next;
 		}
 		if (i > 0) {
-			qsort((void *)list, i, MAX_VAR, Q_StringSort);
+			qsort((void *)irc_userListOrdered, i, MAX_VAR, Q_StringSort);
 			while (i--)
-				Q_strcat(irc_names_buffer, va("%s\n", list[i]), sizeof(irc_names_buffer));
+				Q_strcat(irc_names_buffer, va("%s\n", irc_userListOrdered[i]), sizeof(irc_names_buffer));
 		}
 	} else
 		Com_Printf("Not joined\n");
@@ -1572,6 +1586,63 @@ static void Irc_Client_Whowas_f (void)
 		Com_Printf("Usage: %s <nick>\n", Cmd_Argv(0));
 }
 
+/*
+===============================================================
+Menu functions
+===============================================================
+*/
+
+/**
+ * @brief Adds the username you clicked to your input buffer
+ * @sa Irc_UserRightClick_f
+ */
+static void Irc_UserClick_f (void)
+{
+	const char *name;
+	int num, cnt;
+
+	if (Cmd_Argc() != 2)
+		return;
+
+	if (!chan || irc_names_buffer[0] == '\0')
+		return;
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= chan->users || num >= IRC_MAX_USERLIST)
+		return;
+
+	cnt = min(chan->users, IRC_MAX_USERLIST);
+	cnt -= num + 1;
+
+	name = irc_userListOrdered[cnt];
+	Q_strcat(irc_send_buffer->string, &name[1], IRC_MAX_INPUTLENGTH);
+}
+
+/**
+ * @brief Performs a whois query for the username you clicked
+ * @sa Irc_UserClick_f
+ */
+static void Irc_UserRightClick_f (void)
+{
+	const char *name;
+	int num, cnt;
+
+	if (Cmd_Argc() != 2)
+		return;
+
+	if (!chan || irc_names_buffer[0] == '\0')
+		return;
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= chan->users || num >= IRC_MAX_USERLIST)
+		return;
+
+	cnt = min(chan->users, IRC_MAX_USERLIST);
+	cnt -= num + 1;
+
+	name = irc_userListOrdered[cnt];
+	Irc_Proto_Whois(&name[1]);
+}
 
 /*
 ===============================================================
@@ -1595,6 +1666,9 @@ void Irc_Init (void)
 	Cmd_AddCommand("irc_topic", Irc_Client_Topic_f, NULL);
 	Cmd_AddCommand("irc_names", Irc_Client_Names_f, NULL);
 	Cmd_AddCommand("irc_kick", Irc_Client_Kick_f, NULL);
+
+	Cmd_AddCommand("irc_userlist_click", Irc_UserClick_f, "Menu function for clicking a user from the list");
+	Cmd_AddCommand("irc_userlist_rclick", Irc_UserRightClick_f, "Menu function for clicking a user from the list");
 
 	Cmd_AddCommand("irc_activate", Irc_Input_Activate, "IRC init when entering the menu");
 	Cmd_AddCommand("irc_deactivate", Irc_Input_Deactivate, "IRC deactivate when leaving the irc menu");
@@ -1643,7 +1717,7 @@ void Irc_Input_Activate (void)
 	}
 	/* store this value to be able to reset it in Irc_Input_Deactivate */
 	inputLengthBackup = Cvar_VariableValue("mn_inputlength");
-	Cvar_SetValue("mn_inputlength", 128);
+	Cvar_SetValue("mn_inputlength", IRC_MAX_INPUTLENGTH);
 }
 
 /**
