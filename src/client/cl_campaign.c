@@ -502,7 +502,7 @@ static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 /**
  * @brief Add a mission to geoscape: make it visible and stop time
  */
-static void CP_MissionAddToGeoscape (mission_t *mission)
+static inline void CP_MissionAddToGeoscape (mission_t *mission)
 {
 	mission->onGeoscape = qtrue;
 	CL_GameTimeStop();
