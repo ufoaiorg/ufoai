@@ -476,7 +476,7 @@ int CP_CountMissionOnGeoscape (void)
 	for (; list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
 		/* check whether current selected gametype is a valid one */
-		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape && mission->onGeoscape) {
+		if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape) {
 			counterVisibleMission++;
 		}
 	}
@@ -495,6 +495,15 @@ static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 	MAP_NotifyMissionRemoved(mission);
 	AIR_AircraftsNotifyMissionRemoved(mission);
 	CL_PopupNotifyMissionRemoved(mission);
+}
+
+/**
+ * @brief Add a mission to geoscape: make it visible and stop time
+ */
+static void CP_MissionAddToGeoscape (mission_t *mission)
+{
+	mission->onGeoscape = qtrue;
+	CL_GameTimeStop();
 }
 
 /**
@@ -670,14 +679,13 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
 		const int maxLoop = 10;	/* There is a limited number of loop to avoid infinite loops */
-		qboolean positionValid = qfalse;
 		int counter;
-		for(counter = 0; positionValid && counter < maxLoop; counter++) {
-			positionValid = CP_GetRandomPosOnGeoscape(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL);
-			if (!positionValid)
+		for (counter = 0; counter < maxLoop; counter++) {
+			if (!CP_GetRandomPosOnGeoscape(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
 				continue;
-			if (!CP_PositionCloseToBase(mission->pos))
-				positionValid = qfalse;
+			if (CP_PositionCloseToBase(mission->pos))
+				continue;
+			break;
 		}
 		if (counter >= maxLoop) {
 			Com_Printf("CP_ReconMissionGroundGo: Error, could not set position.\n");
@@ -722,9 +730,7 @@ static void CP_ReconMissionGround (mission_t *mission)
 	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
 
 	/* mission appear on geoscape, player can go there */
-	mission->onGeoscape = qtrue;
-
-	CL_GameTimeStop();
+	CP_MissionAddToGeoscape(mission);
 
 	mission->stage = STAGE_RECON_GROUND;
 }
@@ -877,7 +883,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	mission->ufo->notOnGeoscape = qtrue;
 
 	/* mission appear on geoscape, player can go there */
-	mission->onGeoscape = qtrue;
+	CP_MissionAddToGeoscape(mission);
 
 	/* we always need at least one command centre in the base - because the
 	 * phalanx soldiers have their starting positions here
@@ -923,8 +929,6 @@ static base_t* CP_BaseAttackChooseBase (mission_t *mission)
 	assert(mission);
 	base = B_GetBase(0);
 	assert(base);
-
-	CL_GameTimeStop();
 
 	/* base is already under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK)
@@ -995,7 +999,6 @@ static void CP_BaseAttackMissionNextStage (mission_t *mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
-		CL_GameTimeStop();
 		/* Create Recon mission */
 		CP_BaseAttackMissionCreate(mission);
 		break;
@@ -1180,7 +1183,7 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	CP_MissionDisableTimeLimit(mission);
 
 	/* mission appear on geoscape, player can go there */
-	mission->onGeoscape = qtrue;
+	CP_MissionAddToGeoscape(mission);
 
 	return qtrue;
 }
