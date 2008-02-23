@@ -141,32 +141,6 @@ static void UFO_SetDest (aircraft_t* ufo, vec2_t pos)
 	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 }
 
-/**
- * @brief Set new route to UFO so that it can flee
- * @todo Make aircraft flee in the direction opposite of v rather than choosing a random direction
- */
-void UFO_FleePhalanxAircraft (aircraft_t *ufo, const vec2_t v)
-{
-	vec2_t pos;
-	vec3_t initialVector, rotationAxis, dest;
-
-	PolarToVec(ufo->pos, initialVector);
-	PolarToVec(v, dest);
-
-	CrossProduct(initialVector, dest, rotationAxis);
-	VectorNormalize(rotationAxis);
-	RotatePointAroundVector(dest, rotationAxis, initialVector, -15.0f);
-
-	VecToPolar(dest, pos);
-
-	ufo->time = 0;
-	ufo->point = 0;
-	MAP_MapCalcLine(ufo->pos, pos, &ufo->route);
-	ufo->aircraftTarget = NULL;
-	ufo->baseTarget = NULL;
-	ufo->status = AIR_FLEEING;
-}
-
 #ifdef UFO_ATTACK_BASES
 /**
  * @brief Check if a UFO is the target of a base
@@ -273,27 +247,25 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 	aircraft_t* phalanxAircraft;
 	float distance = 999999., dist;
 
-	if (ufo->status != AIR_FLEEING) {
-		/* check if the ufo is already attacking a base */
-		if (ufo->baseTarget) {
-			AIRFIGHT_ExecuteActions(ufo, NULL);
-		/* check if the ufo is already attacking an aircraft */
-		} else if (ufo->aircraftTarget) {
-			/* check if the target flee in a base */
-			if (ufo->aircraftTarget->status > AIR_HOME)
-				AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
-			else
-				ufo->aircraftTarget = NULL;
-		} else {
-			ufo->status = AIR_TRANSIT;
-			/* reverse order - because bases can be destroyed in here */
-			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-				/* check if the ufo can attack a base (if it's not too far) */
-				if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
-					if (UFO_SendAttackBase(ufo, base))
-						/* don't check for aircraft if we can destroy a base */
-						continue;
-				}
+	/* check if the ufo is already attacking a base */
+	if (ufo->baseTarget) {
+		AIRFIGHT_ExecuteActions(ufo, NULL);
+	/* check if the ufo is already attacking an aircraft */
+	} else if (ufo->aircraftTarget) {
+		/* check if the target flee in a base */
+		if (ufo->aircraftTarget->status > AIR_HOME)
+			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
+		else
+			ufo->aircraftTarget = NULL;
+	} else {
+		ufo->status = AIR_TRANSIT;
+		/* reverse order - because bases can be destroyed in here */
+		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+			/* check if the ufo can attack a base (if it's not too far) */
+			if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
+				if (UFO_SendAttackBase(ufo, base))
+					/* don't check for aircraft if we can destroy a base */
+					continue;
 			}
 		}
 	}
@@ -316,8 +288,8 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
 	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
 	if (slotIdx == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
-		/* no ammo left: should flee ! */
-		UFO_FleePhalanxAircraft(ufo, aircraft->pos);
+		/* no ammo left: stop attack */
+		ufo->status = AIR_TRANSIT;
 		return qfalse;
 	} else if (slotIdx < AIRFIGHT_WEAPON_CAN_SHOOT) {
 		/* Don't flee: can't fire atm, but maybe we'll be able to attack later */
@@ -363,22 +335,20 @@ void UFO_SendToDestination (aircraft_t* ufo, vec2_t dest)
  */
 void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
 {
-	if (ufo->status != AIR_FLEEING) {
-		/* check if the ufo is already attacking a base */
-		if (ufo->baseTarget) {
-			AIRFIGHT_ExecuteActions(ufo, NULL);
-		/* check if the ufo is already attacking an aircraft */
-		} else if (ufo->aircraftTarget) {
-			/* check if the target flee in a base */
-			if (ufo->aircraftTarget->status > AIR_HOME)
-				AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
-			else
-				ufo->aircraftTarget = NULL;
-		} else {
-			/* check that aircraft is flying */
-			if (phalanxAircraft->status > AIR_HOME)
-				UFO_SendPursuingAircraft(ufo, phalanxAircraft);
-		}
+	/* check if the ufo is already attacking a base */
+	if (ufo->baseTarget) {
+		AIRFIGHT_ExecuteActions(ufo, NULL);
+	/* check if the ufo is already attacking an aircraft */
+	} else if (ufo->aircraftTarget) {
+		/* check if the target flee in a base */
+		if (ufo->aircraftTarget->status > AIR_HOME)
+			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
+		else
+			ufo->aircraftTarget = NULL;
+	} else {
+		/* check that aircraft is flying */
+		if (phalanxAircraft->status > AIR_HOME)
+			UFO_SendPursuingAircraft(ufo, phalanxAircraft);
 	}
 }
 

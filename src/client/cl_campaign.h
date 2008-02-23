@@ -389,8 +389,7 @@ typedef enum aircraftStatus_s {
 	AIR_DROP,				/**< ready to drop down */
 	AIR_INTERCEPT,			/**< ready to intercept */
 	AIR_TRANSFER,			/**< being transfered */
-	AIR_RETURNING,			/**< returning to homebase */
-	AIR_FLEEING				/**< fleeing other aircraft */
+	AIR_RETURNING			/**< returning to homebase */
 } aircraftStatus_t;
 
 extern mission_t *selectedMission;

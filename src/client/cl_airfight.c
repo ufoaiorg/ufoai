@@ -338,12 +338,9 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			AIR_SendAircraftPursuingUFO(shooter, target);
 	} else {
 		/* no ammo left, or no weapon, you should flee ! */
-		if (shooter->type == AIRCRAFT_UFO) {
-			if (!shooter->baseTarget)
-				UFO_FleePhalanxAircraft(shooter, target->pos);
-			else
-				UFO_FleePhalanxAircraft(shooter, shooter->baseTarget->pos);
-		} else {
+		if (shooter->type == AIRCRAFT_UFO)
+			shooter->status = AIR_TRANSIT;
+		else {
 			MN_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
 			AIR_AircraftReturnToBase(shooter);
 		}
@@ -732,10 +729,6 @@ static void AIRFIGHT_BaseShoot (const base_t *base, aircraftSlot_t *slot, int ma
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
 				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
-
-			/* Check if UFO flees */
-			if (gd.ufos[targetIdx[i]].status != AIR_FLEEING && !UFO_CanShoot(gd.ufos + targetIdx[i]))
-				UFO_FleePhalanxAircraft(gd.ufos + targetIdx[i], base->pos);
 		}
 	}
 }
