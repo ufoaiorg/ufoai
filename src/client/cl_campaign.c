@@ -1295,6 +1295,24 @@ static const char* CP_GetAlienByInterest (const mission_t *mission)
 }
 
 /**
+ * @brief Set alien equipment for a mission (depends on the interest values)
+ * @note This function is used to know which equipment pack described in equipment_missions.ufo should be used
+ */
+static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
+{
+	int stage;
+
+	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "stage");
+
+	stage = 1 + ccs.overallInterest / (330 - difficulty->integer * 20);
+	if (stage > 4)
+		stage = 4;
+	if (stage < 1)
+		stage = 1;
+	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "stage%i_%s", stage, "soldiers");
+}
+
+/**
  * @brief Create alien team.
  * @param[in] mission Pointer to the mission that generates the battle
  * @todo implement me
@@ -1314,8 +1332,7 @@ static void CP_CreateAlienTeam (mission_t *mission)
 	ccs.battleParameters.alienTeams[0] = Com_GetTeamDefinitionByID(alienType);
 	if (ccs.battleParameters.alienTeams[0])
 		ccs.battleParameters.numAlienTeams++;
-	/* @todo alien equipment should vary depending on interest values */
-	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "stage%i_%s", 1, "soldiers");
+	CP_SetAlienEquipmentByInterest(mission);
 }
 
 /**
