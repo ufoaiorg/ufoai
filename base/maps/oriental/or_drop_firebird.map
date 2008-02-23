@@ -784,7 +784,7 @@
 {
 "classname" "misc_model"
 "origin" "724 176 36"
-"model" "models/objects/vegi/palm2/palm2.md2"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "254"
 "anim" "moving3"
 }
@@ -792,7 +792,7 @@
 {
 "classname" "misc_model"
 "origin" "724 176 36"
-"model" "models/objects/vegi/palm1/palm1.md2"
+"model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
 }
@@ -801,7 +801,7 @@
 "classname" "misc_model"
 "angles" "0 70 0"
 "spawnflags" "254"
-"model" "models/objects/vegi/palm2/palm2.md2"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 "origin" "716 48 36"
 "anim" "moving3"
 }
@@ -810,7 +810,7 @@
 "classname" "misc_model"
 "angles" "0 70 0"
 "spawnflags" "255"
-"model" "models/objects/vegi/palm1/palm1.md2"
+"model" "models/objects/vegi/palm_a/palm1.md2"
 "origin" "716 48 36"
 "anim" "moving3"
 }
@@ -818,7 +818,7 @@
 {
 "classname" "misc_model"
 "origin" "336 464 36"
-"model" "models/objects/vegi/palm2/palm2.md2"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "254"
 "angles" "0 70 0"
 "anim" "moving3"
@@ -827,7 +827,7 @@
 {
 "classname" "misc_model"
 "origin" "336 464 36"
-"model" "models/objects/vegi/palm1/palm1.md2"
+"model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "angles" "0 70 0"
 "anim" "moving3"
