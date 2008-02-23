@@ -255,7 +255,7 @@ static void CP_AlienInterestList_f (void)
  */
 static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
 {
-	char ufoname[64];
+	char ufoname[MAX_VAR];
 
 	if (csi.mds[mapIdx].storyRelated)
 		return qfalse;
@@ -2791,7 +2791,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			if (base->aircraft[j].status == AIR_MISSION) {
 				assert(base->aircraft[j].missionID);
 				base->aircraft[j].mission = CP_GetMissionById(base->aircraft[j].missionID);
-			
+
 				/* not found */
 				if (!base->aircraft[j].mission) {
 					Com_Printf("Could not link mission '%s' in aircraft\n", base->aircraft[j].missionID);
