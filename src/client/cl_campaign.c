@@ -224,6 +224,7 @@ static int CP_SelectNewMissionType (void)
 	return i - 1;
 }
 
+#ifdef DEBUG
 /**
  * @brief List alien interest values.
  * @sa function called with debug_interestlist
@@ -238,6 +239,7 @@ static void CP_AlienInterestList_f (void)
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
 		Com_Printf("\t%i. -- %i\n", i, ccs.interest[i]);
 }
+#endif
 
 /*****************************************************************************
  *
