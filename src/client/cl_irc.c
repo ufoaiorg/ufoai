@@ -1615,7 +1615,8 @@ static void Irc_UserClick_f (void)
 	cnt -= num + 1;
 
 	name = irc_userListOrdered[cnt];
-	Q_strcat(irc_send_buffer->string, &name[1], IRC_MAX_INPUTLENGTH);
+	Cvar_Set("irc_send_buffer", va("%s%s: ", irc_send_buffer->string, &name[1]));
+	Cmd_ExecuteString("irc_send_buffer_clicked");
 }
 
 /**
@@ -1642,6 +1643,7 @@ static void Irc_UserRightClick_f (void)
 
 	name = irc_userListOrdered[cnt];
 	Irc_Proto_Whois(&name[1]);
+	Cmd_ExecuteString("irc_send_buffer_clicked");
 }
 
 /*
