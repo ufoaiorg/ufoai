@@ -194,12 +194,13 @@ menu map
 	string daytime
 	{
 		string	"*cvar mn_mapdaytime"
-		pos		"34 634"
+		pos			"900 304"
+		align	"uc"
 	}
 
 	text description
 	{
-		pos			"800 158"
+		pos			"800 154"
 		size		"192 144"
 		format		"18 100"
 		height		"8"
