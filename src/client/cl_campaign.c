@@ -1318,12 +1318,12 @@ static void CP_CreateBattleParameters (mission_t *mission)
 			/* @todo FIXME: this should be crashed UFO tiles when they'll be implemented */
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+')
-				Cvar_Set("rm_ufo", UFO_TypeToShortName(selectedMission->ufo->ufotype));
+				Cvar_Set("rm_ufo", va("+%s", UFO_TypeToShortName(selectedMission->ufo->ufotype)));
 		} else {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+')
-				Cvar_Set("rm_ufo", UFO_TypeToShortName(selectedMission->ufo->ufotype));
+				Cvar_Set("rm_ufo", va("+%s", UFO_TypeToShortName(selectedMission->ufo->ufotype)));
 		}
 	}
 	/* @todo change dropship to any possible aircraft when random assembly tiles will be created */
