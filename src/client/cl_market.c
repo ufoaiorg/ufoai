@@ -832,7 +832,7 @@ static void BS_BuyAircraft_f (void)
 static void BS_ProcessCraftItemSale (const int craftitemID)
 {
 	if (craftitemID != NONE) {
-		assert(craftitemID >= MAX_OBJDEFS);
+		assert(craftitemID < MAX_OBJDEFS);
 		ccs.eMarket.num[craftitemID]++;
 		/* reinit the menu */
 		BS_BuyType();
