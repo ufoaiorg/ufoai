@@ -30,6 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BUILDINGS		256
 #define MAX_BASES		8
 
+/* FIXME: This value is in menu_geoscape, too */
+/*              make this variable?? */
+#define BASE_COSTS		100000
+
 #define MAX_BATTERY_DAMAGE	50
 #define MAX_BASE_DAMAGE		100
 #define MAX_BASE_SLOT		4
@@ -221,7 +225,7 @@ typedef struct base_s {
 
 /* @todo: remove isDiscovered when alienInterest is implemented */
 	qboolean isDiscovered;	/** qtrue if the base has been discovered by aliens */
-	int alienInterest;		/**< How much aliens know this base (and may attack it) */ 
+	int alienInterest;		/**< How much aliens know this base (and may attack it) */
 
 	radar_t	radar;	/**< the onconstruct value of the buliding building_radar increases the sensor width */
 

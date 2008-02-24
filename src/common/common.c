@@ -573,9 +573,7 @@ static void Com_DebugHelp_f (void)
 			"\n"
 			"Debugging commands:\n"
 			"------------------------------\n"
-#ifdef DEBUG
 			" * aliencont_addone\n"
-#endif
 			" * debug_additems\n"
 			" * debug_basereset\n"
 			"   reset building status and capacities of every base\n"
@@ -590,9 +588,6 @@ static void Com_DebugHelp_f (void)
 			" * debug_hosp_hurt_all\n"
 			" * debug_hosp_heal_all\n"
 			" * debug_menueditnode\n"
-			" * debug_menuprint\n"
-			" * debug_menureload\n"
-			"   reload the menu if you changed it and don't want to restart\n"
 			" * debug_newemployees\n"
 			"   add 5 new unhired employees of each type\n"
 			" * debug_researchall\n"

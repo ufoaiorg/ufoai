@@ -1478,6 +1478,11 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 		endCampaign = qtrue;
 	}
 
+	if (!gd.numBases && ccs.credits < BASE_COSTS - curCampaign->negativeCreditsUntilLost) {
+		mn.menuText[TEXT_STANDARD] = _("You've lost your bases and don't have enough money to build new ones.");
+		endCampaign = qtrue;
+	}
+
 	if (!endCampaign) {
 		if (CP_GetAverageXVIRate() > curCampaign->maxAllowedXVIRateUntilLost) {
 			mn.menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth."

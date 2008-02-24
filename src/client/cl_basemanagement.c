@@ -2464,10 +2464,6 @@ static void B_PackInitialEquipment_f (void)
 	}
 }
 
-/* FIXME: This value is in menu_geoscape, too */
-/*		 make this variable?? */
-#define BASE_COSTS 100000
-
 /**
  * @brief Constructs a new base.
  * @sa CL_NewBase
