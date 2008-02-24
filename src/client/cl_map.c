@@ -989,7 +989,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	const menu_t *activeMenu = NULL;
+	const menu_t *activeMenu;
 
 	/* this function only concerns maps */
 	activeMenu = MN_GetActiveMenu();
@@ -1511,7 +1511,7 @@ nation_t* MAP_GetNation (const vec2_t pos)
 {
 	int i;
 	nation_t* nation;
-	byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS);
+	const byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS);
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
@@ -1525,41 +1525,6 @@ nation_t* MAP_GetNation (const vec2_t pos)
 	return NULL;
 }
 
-/**
- * @brief Determine the terrain type under a given position
- * @sa MAP_GetColor
- * @param[in] pos Map Coordinates to get the terrain type from
- * @return returns the zone name
- */
-const char* MAP_GetTerrainTypeByPos (const vec2_t pos)
-{
-    byte* color = MAP_GetColor(pos, MAPTYPE_TERRAIN);
-    return MAP_GetTerrainType(color);
-}
-
-/**
- * @brief Determine the culture type under a given position
- * @sa MAP_GetColor
- * @param[in] pos Map Coordinates to get the culture type from
- * @return returns the zone name
- */
-const char* MAP_GetCultureTypeByPos (const vec2_t pos)
-{
-    byte* color = MAP_GetColor(pos, MAPTYPE_CULTURE);
-    return MAP_GetCultureType(color);
-}
-
-/**
- * @brief Determine the population type under a given position
- * @sa MAP_GetColor
- * @param[in] pos Map Coordinates to get the population type from
- * @return returns the zone name
- */
-const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
-{
-    byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
-    return MAP_GetPopulationType(color);
-}
 
 /**
  * @brief Translate color value to terrain type
@@ -1569,7 +1534,7 @@ const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
  */
-const char* MAP_GetTerrainType(const byte* const color)
+const char* MAP_GetTerrainType (const byte* const color)
 {
 	if (MapIsDesert(color))
 		return "desert";
@@ -1596,7 +1561,7 @@ const char* MAP_GetTerrainType(const byte* const color)
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
-const char* MAP_GetCultureType (byte* color)
+static const char* MAP_GetCultureType (const byte* color)
 {
 	if (MapIsWater(color))
 		return "water";
@@ -1619,7 +1584,7 @@ const char* MAP_GetCultureType (byte* color)
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
-const char* MAP_GetPopulationType (byte* color)
+static const char* MAP_GetPopulationType (const byte* color)
 {
 	if (MapIsWater(color))
 		return "water";
@@ -1635,6 +1600,42 @@ const char* MAP_GetPopulationType (byte* color)
 		return "nopopulation";
 	else
 		return "nopopulation";
+}
+
+/**
+ * @brief Determine the terrain type under a given position
+ * @sa MAP_GetColor
+ * @param[in] pos Map Coordinates to get the terrain type from
+ * @return returns the zone name
+ */
+static inline const char* MAP_GetTerrainTypeByPos (const vec2_t pos)
+{
+	const byte* color = MAP_GetColor(pos, MAPTYPE_TERRAIN);
+	return MAP_GetTerrainType(color);
+}
+
+/**
+ * @brief Determine the culture type under a given position
+ * @sa MAP_GetColor
+ * @param[in] pos Map Coordinates to get the culture type from
+ * @return returns the zone name
+ */
+static inline const char* MAP_GetCultureTypeByPos (const vec2_t pos)
+{
+	const byte* color = MAP_GetColor(pos, MAPTYPE_CULTURE);
+	return MAP_GetCultureType(color);
+}
+
+/**
+ * @brief Determine the population type under a given position
+ * @sa MAP_GetColor
+ * @param[in] pos Map Coordinates to get the population type from
+ * @return returns the zone name
+ */
+static inline const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
+{
+	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
+	return MAP_GetPopulationType(color);
 }
 
 /**

@@ -33,9 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern aircraft_t *selectedUFO;
 
 nation_t* MAP_GetNation(const vec2_t pos);
-const char* MAP_GetTerrainTypeByPos(const vec2_t pos);
-const char* MAP_GetCultureTypeByPos(const vec2_t pos);
-const char* MAP_GetPopulationTypeByPos(const vec2_t pos);
 qboolean MAP_AllMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z);
 qboolean MAP_Draw3DMarkerIfVisible(const menuNode_t* node, const vec2_t pos, float angle, const char *model);
 void MAP_MapDrawEquidistantPoints(const menuNode_t* node, vec2_t center, const float angle, const vec4_t color);
@@ -55,8 +52,6 @@ void MAP_NotifyUFORemoved(const aircraft_t* ufo);
 void MAP_NotifyUFODisappear(const aircraft_t* ufo);
 void MAP_GameInit(void);
 const char* MAP_GetTerrainType(const byte* color);
-const char* MAP_GetCultureType(byte* color);
-const char* MAP_GetPopulationType(byte* color);
 float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 qboolean MAP_IsNight(vec2_t pos);
 qboolean MAP_MaskFind(byte * color, vec2_t polar);
