@@ -1096,23 +1096,19 @@ static void CP_MissionIsOver (mission_t *mission)
 static void CP_SetMissionName (mission_t *mission)
 {
 	int num = 0;
-	qboolean missionIdAlreadyExists = qtrue;
 
-	for (; missionIdAlreadyExists; num++) {
-		const linkedList_t *list = ccs.missions;
-
-		missionIdAlreadyExists = qfalse;
+	do {
 		Com_sprintf(mission->id, sizeof(mission->id), "cat%i_interest%i_%i",
 			mission->category, mission->initialOverallInterest, num);
-		for (; list; list = list->next) {
-			const mission_t *mis = (mission_t *)list->data;
-			/* check whether current selected gametype is a valid one */
-			if (Q_strncmp(mission->id, mis->id, MAX_VAR)) {
-				missionIdAlreadyExists = qtrue;
-				break;
-			}
-		}
-	}
+
+		/* check whether a mission with the same id already exists in the list
+		 * if so, generate a new name by using an increased num values - otherwise
+		 * just use the mission->id we just stored - it should be unique now */
+		if (!LIST_ContainsString(ccs.missions, mission->id))
+			break;
+
+		num++;
+	} while (num); /* fake condition */
 }
 
 /**
