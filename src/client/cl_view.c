@@ -363,9 +363,13 @@ void V_RenderView (void)
 		refdef.rdflags |= RDF_NOWORLDMODEL;
 		break;
 	default:
+		/* make sure we are really rendering the world */
 		refdef.rdflags &= ~RDF_NOWORLDMODEL;
+		/* add local models to the renderer chain */
 		LM_AddToScene();
+		/* add local entities to the renderer chain */
 		LE_AddToScene();
+		/* adds target cursor */
 		CL_AddTargeting();
 		break;
 	}
@@ -373,7 +377,7 @@ void V_RenderView (void)
 	/* update ref def - do this even in non 3d mode - we need shaders at loading time */
 	V_UpdateRefDef();
 
-	/* render the frame */
+	/* render the world */
 	R_RenderFrame();
 
 	if (cls.state == ca_sequence)

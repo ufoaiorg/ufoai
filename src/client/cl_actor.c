@@ -4655,11 +4655,12 @@ void CL_ActorTargetAlign_f (void)
 }
 
 /**
- * @brief Adds a target cursor.
+ * @brief Adds a target cursor when we render the world.
  * @sa CL_TargetingStraight
  * @sa CL_TargetingGrenade
  * @sa CL_AddTargetingBox
  * @sa CL_TraceMove
+ * @sa V_RenderView
  * Draws the tracer (red, yellow, green box) on the grid
  */
 void CL_AddTargeting (void)
