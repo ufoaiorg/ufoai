@@ -60,16 +60,6 @@ nation europe
 	alien_friendly	0.45
 	soldiers 3
 	scientists 3
-/*	borders {
-		"13.0 39.6"
-		"12.3 57.1"
-		"-16.9 69.6"
-		"-46.8 69.4"
-		"-43.6 38.6"
-		"-30.6 33.2"
-		"-5.3 38.8"
-		"10.5 34.6"
-	}*/
 }
 
 nation asia
