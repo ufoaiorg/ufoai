@@ -2388,8 +2388,6 @@ static void B_PackInitialEquipment_f (void)
 {
 	int i, p, container, price = 0;
 	equipDef_t *ed;
-	character_t *chr;
-	invList_t *ic, *next;
 	base_t *base = baseCurrent;
 	int aircraft_idxInBase;
 	aircraft_t *aircraft;
@@ -2417,7 +2415,7 @@ static void B_PackInitialEquipment_f (void)
 		chr_list_temp.num = 0;
 		for (i = 0; i < aircraft->maxTeamSize; i++) {
 			if (aircraft->teamIdxs[i] != -1) {
-				chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+				character_t *chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
 				/* pack equipment */
 				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
 				INVSH_EquipActor(chr->inv, ed->num, MAX_OBJDEFS, name, chr);
@@ -2434,12 +2432,12 @@ static void B_PackInitialEquipment_f (void)
 		for (container = 0; container < csi.numIDs; container++) {
 			for (p = 0; p < aircraft->maxTeamSize; p++) {
 				if (aircraft->teamIdxs[p] != -1) {
-					chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
-					for (ic = chr->inv->c[container]; ic; ic = next) {
-						item_t item = ic->item;
+					const invList_t *ic;
+					const character_t *chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+					for (ic = chr->inv->c[container]; ic; ic = ic->next) {
+						const item_t item = ic->item;
 						price += csi.ods[item.t].price;
 						Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f()... adding price for %s, price: %i\n", csi.ods[item.t].id, price);
-						next = ic->next;
 					}
 				}
 			}
