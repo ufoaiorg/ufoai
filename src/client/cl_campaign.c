@@ -368,7 +368,7 @@ static mission_t *CP_GetMissionById (const char *missionId)
 /**
  * @brief Get a mission in ccs.missions by ufo.
  */
-static mission_t *CP_GetMissionByUFO (aircraft_t *ufo)
+static mission_t* CP_GetMissionByUFO (aircraft_t *ufo)
 {
 	const linkedList_t *list = ccs.missions;
 
@@ -1086,6 +1086,14 @@ static void CP_MissionIsOver (mission_t *mission)
 	default:
 		Com_Printf("CP_MissionIsOver: Unknown type of mission: %i\n", mission->category);
 	}
+}
+
+/**
+ * @brief Mission is finished because Phalanx team ended it.
+ */
+inline void CP_MissionIsOverByUfo (aircraft_t *ufocraft)
+{
+	CP_MissionIsOver(CP_GetMissionByUFO(ufocraft));
 }
 
 /**

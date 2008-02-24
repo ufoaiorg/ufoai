@@ -405,17 +405,6 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 
 	if (phalanxWon) {
 		assert(aircraft);
-		/* get the color value of the map at the crash position */
-		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
-		/* if this color value is not the value for water ...
-		 * and we hit the probability to spawn a crashsite mission */
-		if (!MapIsWater(color)) {
-			CP_SpawnCrashSiteMission(aircraft);
-			/* don't remove ufo from global array: the mission is not over yet */
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
-			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
-		}
 		/* change destination of other projectiles aiming aircraft */
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
 		/* now update the projectile for the destroyed aircraft, too */
@@ -432,6 +421,18 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 					AIR_AircraftReturnToBase(&base->aircraft[j]);
 				}
 			}
+		}
+		/* get the color value of the map at the crash position */
+		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
+		/* if this color value is not the value for water ...
+		 * and we hit the probability to spawn a crashsite mission */
+		if (!MapIsWater(color)) {
+			CP_SpawnCrashSiteMission(aircraft);
+			/* don't remove ufo from global array: the mission is not over yet */
+		} else {
+			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
+			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
+			CP_MissionIsOverByUfo(aircraft);;
 		}
 	} else {
 		/* change destination of other projectiles aiming aircraft */
