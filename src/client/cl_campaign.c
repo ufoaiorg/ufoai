@@ -1097,13 +1097,13 @@ static inline void CP_SetMissionName (mission_t *mission)
 {
 	int num = 0;
 
-	/* maybe the mission list is still empty */
-	if (!ccs.missions)
-		return;
-
 	do {
 		Com_sprintf(mission->id, sizeof(mission->id), "cat%i_interest%i_%i",
 			mission->category, mission->initialOverallInterest, num);
+
+		/* if mission list is empty, the id is unique for sure */
+		if (!ccs.missions)
+			return;
 
 		/* check whether a mission with the same id already exists in the list
 		 * if so, generate a new name by using an increased num values - otherwise
