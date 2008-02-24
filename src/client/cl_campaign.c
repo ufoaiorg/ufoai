@@ -1300,15 +1300,13 @@ static const char* CP_GetAlienByInterest (const mission_t *mission)
  */
 static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 {
-	int stage;
+	int stage = 1 + ccs.overallInterest / (330 - difficulty->integer * 20);
 
-	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "stage");
-
-	stage = 1 + ccs.overallInterest / (330 - difficulty->integer * 20);
 	if (stage > 4)
 		stage = 4;
 	if (stage < 1)
 		stage = 1;
+
 	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "stage%i_%s", stage, "soldiers");
 }
 
