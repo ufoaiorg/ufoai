@@ -2173,7 +2173,9 @@ void CL_GameTimeSlow (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
 
-	if (!gd.numBases)
+	/* check the stats value - already build bases might have been destroyed
+	 * so the gd.numBases values is pointless here */
+	if (!campaignStats.basesBuild)
 		return;
 
 	if (gameLapse == 0)
@@ -2198,7 +2200,9 @@ void CL_GameTimeFast (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
 
-	if (!gd.numBases)
+	/* check the stats value - already build bases might have been destroyed
+	 * so the gd.numBases values is pointless here */
+	if (!campaignStats.basesBuild)
 		return;
 
 	if (gameLapse == NUM_TIMELAPSE - 1)
