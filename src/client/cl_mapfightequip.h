@@ -74,6 +74,7 @@ void AII_RemoveItemFromSlot(base_t* base, aircraftSlot_t *slot, qboolean ammo);
 void AIM_AircraftEquipAddItem_f(void);
 void AIM_AircraftEquipDeleteItem_f(void);
 void AIM_AircraftEquipMenuClick_f(void);
+void AIM_AutoEquipAircraft(aircraft_t *aircraft);
 void AII_InitialiseSlot(aircraftSlot_t *slot, int aircraftIdx, aircraftItemType_t type);
 void AII_UpdateAircraftStats(aircraft_t *aircraft);
 int AII_GetSlotItems(aircraftItemType_t type, const aircraft_t *aircraft);

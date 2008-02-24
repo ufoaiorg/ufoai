@@ -38,12 +38,12 @@ equipment campaign_player
 	craft_weapon_shiva	2
 	craft_ammo_shiva_API	30
 	craft_ammo_shiva_HEI	30
-	craft_weapon_sparrowhawk	2
+	craft_weapon_sparrowhawk	3
 	craft_ammo_sparrowhawk		16
 	craft_weapon_tr20		1
 	craft_ammo_tr20		6
-	craft_el_fuelpod		2
-	craft_shield_polymer	2
+	craft_el_fuelpod		1
+	craft_shield_polymer	1
 }
 
 equipment campaign_market

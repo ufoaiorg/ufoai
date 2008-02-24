@@ -1000,7 +1000,6 @@ void B_SetUpBase (base_t* base)
 {
 	int i, j;
 	building_t *building = NULL;
-	aircraft_t *aircraft = NULL;
 	const int newBaseAlienInterest = 10;
 
 	assert(base);
@@ -1039,17 +1038,6 @@ void B_SetUpBase (base_t* base)
 				/* A few more things for first base.
 				 * @todo: this shouldn't be hard coded, but in *.ufo files */
 				if (gd.numBases == 1) {
-					/* buy two first aircraft */
-					if (building->buildingType == B_HANGAR) {
-						Cbuf_AddText("aircraft_new craft_drop_firebird\n");
-						aircraft = AIR_GetAircraft("craft_drop_firebird");
-						CL_UpdateCredits(ccs.credits - aircraft->price);
-					} else if (building->buildingType == B_SMALL_HANGAR) {
-						Cbuf_AddText("aircraft_new craft_inter_stiletto\n");
-						aircraft = AIR_GetAircraft("craft_inter_stiletto");
-						CL_UpdateCredits(ccs.credits - aircraft->price);
-					}
-
 					/* build a second quarter */
 					if (building->buildingType == B_QUARTERS) {
 						building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
@@ -2369,7 +2357,7 @@ static void CL_SwapSkills (chrList_t *team)
 /**
  * @brief Assigns initial team of soldiers with equipment to aircraft
  * @note If assign_initial is called with one parameter (e.g. a 1), this is for
- * multiplayer - assign_initial with no parameters is for singleplayer
+ * multiplayer - assign_initial with no parameters is for singleplayer	aircraft_t *aircraft = NULL;
  */
 static void B_AssignInitial_f (void)
 {
@@ -2503,7 +2491,22 @@ static void B_BuildBase_f (void)
 
 			/* initial base equipment */
 			if (gd.numBases == 1) {
+				aircraft_t *aircraft;
 				INV_InitialEquipment(baseCurrent, curCampaign);
+				/* buy two first aircraft */
+				if (baseCurrent->hasBuilding[B_HANGAR]) {
+						aircraft = AIR_GetAircraft("craft_drop_firebird");
+						if (aircraft)
+							AIR_NewAircraft(baseCurrent, "craft_drop_firebird");
+						CL_UpdateCredits(ccs.credits - aircraft->price);
+				}
+				if (baseCurrent->hasBuilding[B_SMALL_HANGAR]) {
+					aircraft = AIR_GetAircraft("craft_inter_stiletto");
+					if (aircraft)
+						AIR_NewAircraft(baseCurrent, "craft_inter_stiletto");
+					CL_UpdateCredits(ccs.credits - aircraft->price);
+					AIM_AutoEquipAircraft(&baseCurrent->aircraft[1]);
+				}
 				CL_GameTimeFast();
 				CL_GameTimeFast();
 			}

@@ -1722,6 +1722,41 @@ void AIM_AircraftEquipMenuClick_f (void)
 }
 
 /**
+ * @brief Auto Add weapon and ammo to an aircraft.
+ * @param[in] aircraft Pointer to the aircraft
+ * @note This is used to auto equip interceptor of first base
+ * @sa B_SetUpBase
+ */
+void AIM_AutoEquipAircraft (aircraft_t *aircraft)
+{
+	int i;
+	aircraftSlot_t *slot;
+	int itemIdx;
+	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
+
+	assert(aircraft);
+	assert(aircraft->homebase);
+
+	airequipID = AC_ITEM_WEAPON;
+
+	itemIdx = AII_GetAircraftItemByID(tech->provides);
+	if (itemIdx == NONE)
+		return;
+	for (i = 0; i < aircraft->maxWeapons; i++) {
+		slot = &aircraft->weapons[i];
+		if (slot->size < AII_GetItemWeightBySize(&csi.ods[itemIdx]))
+			continue;
+		if (aircraft->homebase->storage.num[itemIdx] <= 0)
+			continue;
+		AII_AddItemToSlot(aircraft->homebase, tech, slot);
+		AIM_AutoAddAmmo(aircraft->homebase, aircraft, slot);
+		slot->installationTime = 0;
+	}
+
+	AII_UpdateAircraftStats(aircraft);
+}
+
+/**
  * @brief Initialise values of one slot of an aircraft or basedefense common to all types of items.
  * @param[in] slot Pointer to the slot to initialize
  * @param[in] index The index of the aircraft or the base
