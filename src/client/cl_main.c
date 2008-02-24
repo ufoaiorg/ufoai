@@ -1690,6 +1690,8 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		AIR_ParseAircraft(name, text, qfalse);
 	else if (!Q_strncmp(type, "campaign", 8))
 		CL_ParseCampaign(name, text);
+	else if (!Q_strncmp(type, "music", 5))
+		CL_ParseMusic(name, text);
 	else if (!Q_strncmp(type, "tips", 4))
 		CL_ParseTipsOfTheDay(name, text);
 	else if (!Q_strncmp(type, "language", 8))

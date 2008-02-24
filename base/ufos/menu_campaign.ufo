@@ -173,6 +173,6 @@ menu campaigns
 
 	func init
 	{
-		cmd "getcampaigns;"
+		cmd "cp_getcampaigns;"
 	}
 }

@@ -347,7 +347,6 @@ typedef struct mapDef_s {
 	char *description;		/**< the description to show in the menus */
 	char *loadingscreen;	/**< the loading screen */
 	char *size;				/**< small, medium, big */
-	char *music;			/**< music that should be played during this mission */
 
 	/* multiplayer */
 	qboolean multiplayer;	/**< is this map multiplayer ready at all */

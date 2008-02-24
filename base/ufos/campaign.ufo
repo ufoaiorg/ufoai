@@ -1,154 +1,50 @@
-// code ensures there are at least 3 missions between repetitions
-// of any mission in a given stage set, or at least 2 mission
-// if the total number of missions is 3, etc.
-// so 'number n', where n <= 4 ensures not repetitions
-// and 'quota n', where n <= 4, ensures no repetitions if all missions are won
-
-stage intro
+music main
 {
-	set first
-	{
-		sequence	intro
-					// y d h
-		delay		"0 0 10"	// time in comments is given as elapsed game time
-		frame		"0 3 0"		// mission starts between 0d 10h and 1d 10h
-		expire		"0 6 0"		// expires not sooner than 2d 10h
-								// and not later than 5d 10h
-		missions	"or_tabelbala"
-		number		1			// no quota --- give scared newbies some slack...
-	}
-	set terror_only
-	{
-		needed		first
-		delay		"0 5 12"	// set starts not sooner than 5d 22h
-								// and not later than 10d 22h
-		frame		"0 9 0"		// 1st mission starts not sooner than 8d 22h
-								// and not later than 16d 22h
-		expire		"0 8 0"		// average expire time is 4d
-								// minimum interval between missions is 3d
-								// so you have 2 or less on geoscape any time
-		missions	"africa_excavation transport mine mart italy estate"
-		number		11			// don't torment the player with the same missions
-		quota		6
-		ufos		2
-	}
-	set soldier_terror
-	{
-		needed		terror_only
-		delay		"0 10 7"
-		frame		"0 15 0"	// big missions, but less traffic
-		expire		"0 45 0"	// three at geoscape, but lots of time to do them
-		missions	"bunker japan dam spedition stadium druglord rzeszow"
-		number		7
-		quota		7
-		ufos		2
-	}
-	set landed_ships
-	{
-		needed		soldier_terror
-		delay		"0 5 2"
-		frame		"0 6 0"
-		expire		"0 5 0"
-		missions	"industrial rivertown farm frozen_alienlandingindustrial"
-		quota		4
-		ufos		1
-	}
-	// from this place on, due to not enough missions in RC5,
-	// and only 19 scientists total, I increase all "frame" settings
-	set ultimate_terror	// stage2 equipment start here
-	{
-		needed		soldier_terror
-		delay		"0 15 7"
-//		frame		"0 6 0"	// change of pace --- quick ones
-		frame		"0 27 0"
-		expire		"0 5 0"
-		missions	"oriental city subway gasstation tower village convoy"
-		quota		7		// torment the player until he's done
-		nextstage	ufos_are_coming
-		ufos		2
-	}
-	set stop
-	{
-		needed		ultimate_terror
-		delay		"0 20 0"
-		endstage	intro
-	}
+	van_theme
 }
 
-stage ufos_are_coming
+music geoscape
 {
-	set first_coming	// set names have to be unique for game saving
-	{
-		sequence	activate_xvi
-		delay		"0 2 7"
-//		frame		"0 12 0"
-		frame		"0 20 0"
-		expire		"0 5 0"
-		missions	"fighter_crash"
-		activatexvi	1
-		quota		1
-		ufos		4
-	}
-	set crashed_and_landed	// stage3 equipment start here
-	{
-		needed		first_coming
-		delay		"0 0 1"
-//		frame		"0 10 0"
-		frame		"0 23 0"
-		expire		"0 8 0"
-		missions	"construction office harbor resort bridge tropic_river shelter_standard"
-		quota		6
-		nextstage	invasion
-		ufos		2
-	}
-	set stop_coming
-	{
-		needed		crashed_and_landed
-		delay		"0 11 0"
-		endstage	ufos_are_coming
-	}
+	van_geoscape
+	karlmacklin_geoscape
 }
 
-stage invasion
+music battlescape
 {
-	set first_invasion	// stage4 equipment start here
-	{
-		sequence	invasion
-		delay		"0 5 1"
-//		frame		"0 10 0"
-		frame		"0 30 0"
-		expire		"0 7 0"
-		missions	"africa scout_crash lake_ice harvester_crash qatar"
-		humanattack	1
-		quota		6
-		nextstage	alienbase
-	}
-	set stop_invasion
-	{
-		needed		first_invasion
-		delay		"0 11 0"
-		endstage	invasion
-	}
+	David01
+	David02
+	alBasrahM
+	turinItalyM
+	ufo1
+	ufo2
+	AlexSullencity
+	AlexFightmare
+	AlexForest
+	PsymongN1
+	PsymongN2
+	PsymongN3
+	PsymongN4
+	PsymongN5
+	PsymongR1
+	PsymongR2
+	PsymongR3
+	PsymongR4
+	PsymongR5
+	PsymongO1
+	PsymongO2
+	PsymongO3
+	PsymongO4
+	PsymongO5
+	PsymongO6
+	van_mission
+	van_mission2
+	van_mission3
+	van_mission4
+	dawn
+	dbsea
+	greecei
+	space
 }
-
-stage alienbase
-{
-	set first_alienbase
-	{
-		cutscene	alienbase
-		delay		"0 11 0"
-		missions	"corrupt_city"
-		quota		1
-	}
-	set stop_alienbase
-	{
-		needed		first_alienbase
-		delay		"0 12 0"
-		endstage	alienbase
-		commands	"mn_push endgame"
-	}
-}
-
 
 campaign veryhard
 {
@@ -171,7 +67,6 @@ campaign veryhard
 	visible		true
 
 	date		"2084 79 6"
-	firststage	intro
 }
 
 campaign hard
@@ -198,7 +93,6 @@ campaign hard
 	visible		true
 
 	date		"2084 79 6"
-	firststage	intro
 }
 
 campaign main
@@ -244,7 +138,6 @@ campaign main
 	visible		true
 
 	date		"2084 79 6"
-	firststage	intro
 }
 
 campaign easy
@@ -271,7 +164,6 @@ campaign easy
 	visible		true
 
 	date		"2084 79 6"
-	firststage	intro
 }
 
 campaign veryeasy
@@ -313,7 +205,6 @@ campaign veryeasy
 	visible		true
 
 	date		"2084 79 6"
-	firststage	intro
 }
 
 /*
@@ -335,7 +226,6 @@ campaign aliencampaign
 	visible		true
 
 	date		"2084 79 6"
-	firststage	intro
 }
 
 campaign test
@@ -358,6 +248,5 @@ campaign test
 	visible		false
 
 	date		"2084 0 7"
-	firststage	ufos_are_coming
 }
 */

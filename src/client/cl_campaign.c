@@ -2982,19 +2982,11 @@ static void CP_SetMissionVars (void)
 	mission = ccs.battleParameters.mission;
 	assert(mission->mapDef);
 
-	Com_DPrintf(DEBUG_CLIENT, "CP_SetMissionVars:\n");
-
 	/* start the map */
 	Cvar_SetValue("ai_numaliens", (float) ccs.battleParameters.aliens);
 	Cvar_SetValue("ai_numcivilians", (float) ccs.battleParameters.civilians);
 	Cvar_Set("ai_civilian", ccs.battleParameters.civTeam);
 	Cvar_Set("ai_equipment", ccs.battleParameters.alienEquipment);
-	if (mission->mapDef->music) {
-		Cvar_Set("snd_music", mission->mapDef->music);
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "..mission '%s' doesn't have a music track assigned\n", mission->id);
-		Cbuf_AddText("music_randomtrack;");
-	}
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
@@ -3002,13 +2994,12 @@ static void CP_SetMissionVars (void)
 		csi.alienTeams[i] = ccs.battleParameters.alienTeams[i];
 	csi.numAlienTeams = ccs.battleParameters.numAlienTeams;
 
-	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..alienTeams: '%i'\n..civTeam: '%s'\n..alienEquip: '%s'\n..music: '%s'\n",
+	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..alienTeams: '%i'\n..civTeam: '%s'\n..alienEquip: '%s'\n",
 		ccs.battleParameters.aliens,
 		ccs.battleParameters.civilians,
 		ccs.battleParameters.numAlienTeams,
 		ccs.battleParameters.civTeam,
-		ccs.battleParameters.alienEquipment,
-		mission->mapDef->music);
+		ccs.battleParameters.alienEquipment);
 }
 
 /**
@@ -4010,7 +4001,6 @@ static const value_t campaign_vals[] = {
 	{"market", V_STRING, offsetof(campaign_t, market), 0},
 	{"researched", V_STRING, offsetof(campaign_t, researched), 0},
 	{"difficulty", V_INT, offsetof(campaign_t, difficulty), MEMBER_SIZEOF(campaign_t, difficulty)},
-	{"firststage", V_STRING, offsetof(campaign_t, firststage), 0},
 	{"map", V_STRING, offsetof(campaign_t, map), 0},
 	{"credits", V_INT, offsetof(campaign_t, credits), MEMBER_SIZEOF(campaign_t, credits)},
 	{"visible", V_BOOL, offsetof(campaign_t, visible), MEMBER_SIZEOF(campaign_t, visible)},
@@ -4051,7 +4041,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 	cp = &campaigns[numCampaigns++];
 	memset(cp, 0, sizeof(campaign_t));
 
-	cp->idx = numCampaigns-1;
+	cp->idx = numCampaigns - 1;
 	Q_strncpyz(cp->id, name, sizeof(cp->id));
 
 	/* some default values */
@@ -5440,7 +5430,7 @@ void CL_ResetCampaign (void)
 
 	/* commands */
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
-	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
+	Cmd_AddCommand("cp_getcampaigns", CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("game_skirmish", CL_GameSkirmish_f, "Start the new skirmish game");
 	Cmd_AddCommand("game_new", CL_GameNew_f, "Start the new campaign");
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);

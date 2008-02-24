@@ -2172,7 +2172,6 @@ static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_MANUAL_STRING, offsetof(mapDef_t, description), 0},
 	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
 	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
-	{"music", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, music), 0},
 	{"loadingscreen", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, loadingscreen), 0},
 	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
 

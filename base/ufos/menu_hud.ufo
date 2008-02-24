@@ -507,7 +507,7 @@ menu hud
 		texh	"52 112"
 		click	{ cmd "standcrouch;" }
 	}
-	
+
 	confunc crouch_checkbox_disable_s { *bt_crouch_reservation image menu/checkbox_disabled }
 	confunc crouch_checkbox_clear_s	{ *bt_crouch_reservation image menu/checkbox_unchecked }
 	confunc crouch_checkbox_check_s	{ *bt_crouch_reservation image menu/checkbox_checked }
@@ -866,6 +866,7 @@ menu hud
 
 	func init
 	{
+		cmd "music_change battlescape;"
 		cmd "set hud_refresh 1;"
 		cmd "set mn_showchatbuttons 0;"
 	}

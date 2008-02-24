@@ -32,6 +32,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include "../ports/windows/win_local.h"
 #endif
 
+#define MUSIC_MAIN 0
+#define MUSIC_GEOSCAPE 1
+#define MUSIC_BATTLESCAPE 2
+#define MUSIC_MAX 3
+#define MUSIC_MAX_ENTRIES 64
+static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
+static int musicArrayLength[MUSIC_MAX];
+
 /*
 =======================================================================
 Internal sound data & structures
@@ -623,6 +631,45 @@ static qboolean SND_Init (void)
 }
 
 /**
+ * @brief Changes the music if it suits the current situation
+ * @todo Make the music a scriptable list
+ */
+static void S_Music_Change_f (void)
+{
+	const char* type;
+	int rnd;
+	int category;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <geoscape|battlescape|main>\n", Cmd_Argv(0));
+		return;
+	}
+	type = Cmd_Argv(1);
+	if (!Q_strcmp(type, "geoscape")) {
+		category = MUSIC_GEOSCAPE;
+		if (cls.state == ca_active) {
+			Com_DPrintf(DEBUG_SOUND, "Not changing music to geoscape - we are in Battlescape\n");
+			return;
+		}
+	} else if (!Q_strcmp(type, "battlescape")) {
+		category = MUSIC_BATTLESCAPE;
+	} else if (!Q_strcmp(type, "main")) {
+		category = MUSIC_MAIN;
+	} else {
+		Com_Printf("Invalid parameter given\n");
+		return;
+	}
+
+	if (!musicArrayLength[category]) {
+		Com_Printf("Could not find any %s music tracks\n", type);
+		return;
+	}
+	rnd = rand() % musicArrayLength[category];
+	Cvar_Set("snd_music", musicArrays[category][rnd]);
+	Com_Printf("music change to %s\n", musicArrays[category][rnd]);
+}
+
+/**
  * @sa S_Shutdown
  * @sa S_Restart_f
  * @todo: openal should be an replacement for the 'normal' snd_ref
@@ -649,6 +696,7 @@ void S_Init (void)
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
 	Cmd_AddCommand("music_start", S_Music_Play_f, "Starts the background music track from cvar snd_music");
+	Cmd_AddCommand("music_change", S_Music_Change_f, "Changes the music theme");
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
 	/* @todo: Complete functions */
@@ -688,4 +736,50 @@ void S_Shutdown (void)
 	Mem_FreePool(cl_soundSysPool);
 	memset(sfx_hash, 0, sizeof(sfx_hash));
 	sound_started = qfalse;
+}
+
+/**
+ * @brief Parses music definitions for different situations
+ * @note We can have lists for geoscape and battlescape e.g.
+ */
+void CL_ParseMusic (const char *name, const char **text)
+{
+	const char *errhead = "CL_ParseMusic: unexpected end of file (campaign ";
+	const char *token;
+	int i;
+
+	if (!Q_strcmp(name, "geoscape"))
+		i = MUSIC_GEOSCAPE;
+	else if (!Q_strcmp(name, "battlescape"))
+		i = MUSIC_BATTLESCAPE;
+	else if (!Q_strcmp(name, "main"))
+		i = MUSIC_MAIN;
+	else {
+		Com_Printf("CL_ParseMusic: Invalid music id '%s'\n", name);
+		FS_SkipBlock(text);
+		return;
+	}
+
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseMusic: music def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		if (musicArrayLength[i] >= MUSIC_MAX_ENTRIES) {
+			Com_Printf("Too many music entries for category: '%s'\n", name);
+			FS_SkipBlock(text);
+			break;
+		}
+		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup(token, cl_soundSysPool, CL_TAG_NONE);
+		musicArrayLength[i]++;
+	} while (*text);
 }

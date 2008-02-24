@@ -211,7 +211,6 @@ typedef struct campaign_s {
 	equipDef_t *marketDef;
 	char text[MAX_VAR];			/**< placeholder for gettext stuff */
 	char map[MAX_VAR];			/**< geoscape map */
-	char firststage[MAX_VAR];
 	int soldiers;				/**< start with x soldiers */
 	int scientists;				/**< start with x scientists */
 	int workers;				/**< start with x workers */
@@ -413,7 +412,6 @@ qboolean CL_NewBase(base_t* base, vec2_t pos);
 void CL_ParseMission(const char *name, const char **text);
 mission_t* CL_AddMission(const char *name);
 void CP_RemoveLastMission(void);
-void CL_ParseStage(const char *name, const char **text);
 void CL_ParseCampaign(const char *name, const char **text);
 void CL_ParseNations(const char *name, const char **text);
 void CL_UpdateCredits(int credits);

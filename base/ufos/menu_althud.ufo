@@ -1114,6 +1114,7 @@ menu althud
 
 	func init
 	{
+		cmd "music_change battlescape;"
 		cmd "set hud_refresh 1;"
 		show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
