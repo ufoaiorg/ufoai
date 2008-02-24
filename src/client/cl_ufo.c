@@ -551,7 +551,6 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 	}
 
 	/* Notications */
-	CL_PopupInterceptNotifyUFORemoved(ufo);
 	AIR_AircraftsNotifyUFORemoved(ufo);
 	MAP_NotifyUFORemoved(ufo);
 }
@@ -604,7 +603,6 @@ void UFO_CampaignCheckEvents (void)
 
 				/* Notify that ufo disappeared */
 				AIR_AircraftsUFODisappear(ufo);
-				CL_PopupInterceptNotifyUFORemoved(ufo);
 				MAP_NotifyUFODisappear(ufo);
 			}
 		}

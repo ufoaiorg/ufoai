@@ -166,27 +166,6 @@ static void CL_PopupAircraftClick_f (void)
 	}
 }
 
-/**
- * @brief Notify the popup_aircraft system that a mission has been removed
- */
-static void CL_PopupAircraftNotifyMissionRemoved (const mission_t* mission)
-{
-#if 0
-FIXME: why decreasing aircraft idx if this is the mission that changes ?
-	int num = mission - ccs.missionOld, i;
-
-	/* Deactive elements of list that allow to move to removed mission */
-	for (i = 0; i < popupAircraft.nbItems; i++)
-		if (popupAircraft.itemsAction[i] == POPUP_AIRCRAFT_ACTION_MOVETOMISSION) {
-			if (popupAircraft.itemsId[i] == num)
-				popupAircraft.itemsAction[i] = POPUP_AIRCRAFT_ACTION_NONE;
-			else if (popupAircraft.itemsId[i] > num)
-				popupAircraft.itemsId[i]--;
-		}
-#endif
-}
-
-
 /*========================================
 POPUP_INTERCEPT
 ========================================*/
@@ -426,34 +405,6 @@ static void CL_PopupInterceptBaseClick_f (void)
 		gd.bases[baseIdx].targetLaserIdx[i] = selectedUFO - gd.ufos;
 
 	MN_PopMenu(qfalse);
-}
-
-/**
- * @brief Notify the popup_intercept system that a mission has been removed
- */
-static void CL_PopupInterceptNotifyMissionRemoved (const mission_t* mission)
-{
-	if (popupIntercept.mission == mission)
-		popupIntercept.mission = NULL;
-}
-
-/**
- * @brief Notify the popup_intercept system that a UFO has been removed
- */
-void CL_PopupInterceptNotifyUFORemoved (const aircraft_t* ufo)
-{
-	if (popupIntercept.ufo == ufo)
-		popupIntercept.ufo = NULL;
-}
-
-/**
- * @brief Notify that a mission has been removed
- */
-void CL_PopupNotifyMissionRemoved (const mission_t* mission)
-{
-	/* Notify all popups */
-	CL_PopupAircraftNotifyMissionRemoved(mission);
-	CL_PopupInterceptNotifyMissionRemoved(mission);
 }
 
 /**

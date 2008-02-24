@@ -496,7 +496,6 @@ static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 	/* Notifications */
 	MAP_NotifyMissionRemoved(mission);
 	AIR_AircraftsNotifyMissionRemoved(mission);
-	CL_PopupNotifyMissionRemoved(mission);
 }
 
 /**
@@ -2130,10 +2129,11 @@ typedef struct gameLapse_s {
 	int scale;
 } gameLapse_t;
 
-#define NUM_TIMELAPSE 6
+#define NUM_TIMELAPSE 7
 
 /** @brief The possible geoscape time intervalls */
 static const gameLapse_t lapse[NUM_TIMELAPSE] = {
+	{"stopped", 0},
 	{"5 sec", 5},
 	{"5 mins", 5 * 60},
 	{"1 hour", 60 * 60},

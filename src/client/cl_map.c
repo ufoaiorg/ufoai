@@ -222,37 +222,6 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	}
 }
 
-/**
- * @brief Notify the multi select system that a mission has been removed
- */
-static void MAP_MultiSelectNotifyMissionRemoved (const mission_t* mission)
-{
-	int num = MAP_GetIdxByMission(mission);
-	int i;
-
-	for (i = 0; i < multiSelect.nbSelect; i++)
-		if (multiSelect.selectType[i] == MULTISELECT_TYPE_MISSION) {
-			if (multiSelect.selectId[i] == num)
-				multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
-			else if (multiSelect.selectId[i] > num)
-				multiSelect.selectId[i]--;
-		}
-}
-
-/**
- * @brief Notify the multi select system that a UFO has been removed
- */
-static void MAP_MultiSelectNotifyUFORemoved (const aircraft_t* ufo)
-{
-	int i;
-
-	/* Deactive all ufos */
-	/* @todo : Determine THE corresponding ufo in the multi select list */
-	for (i = 0; i < multiSelect.nbSelect; i++)
-		if (multiSelect.selectType[i] == MULTISELECT_TYPE_UFO)
-			multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
-}
-
 #define MN_MAP_DIST_SELECTION 15
 
 /**
@@ -346,6 +315,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
  	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
 		mn.menuText[TEXT_MULTISELECTION] = multiSelect.popupText;
+		CL_GameTimeStop();
 		MN_PushMenu("popup_multi_selection");
 	} else {
 		/* Nothing selected */
@@ -1532,9 +1502,6 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
 	/* Unselect the current selected mission if it's the same */
 	if (selectedMission == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
 		MAP_ResetAction();
-
-	/* Notify the multi selection popup */
-	MAP_MultiSelectNotifyMissionRemoved(mission);
 }
 
 /**
@@ -1547,9 +1514,6 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo)
 		MAP_ResetAction();
 	else if (selectedUFO > ufo)
 		selectedUFO--;
-
-	/* Notify the multi selection popup */
-	MAP_MultiSelectNotifyUFORemoved(ufo);
 }
 
 /**
@@ -1917,9 +1881,6 @@ void MAP_NotifyUFODisappear (const aircraft_t* ufo)
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUFO == ufo)
 		MAP_ResetAction();
-
-	/* Notify the multi selection popup */
-	MAP_MultiSelectNotifyUFORemoved(ufo);
 }
 
 /**
