@@ -727,9 +727,6 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 
 	mission->mapDef->timesAlreadyUsed++;
 
-	/* @todo: check that id is unique in ccs.missions */
-	Com_sprintf(mission->id, sizeof(mission->id), "recon%.0f:%.0f", mission->pos[0], mission->pos[1]);
-
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
 		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
@@ -997,8 +994,6 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 
 	Vector2Copy(base->pos, mission->pos);
 
-	/* @todo: check that id is unique in ccs.missions */
-	Com_sprintf(mission->id, sizeof(mission->id), base->name);
 	Com_sprintf(mission->location, sizeof(mission->location), base->name);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
@@ -1094,10 +1089,36 @@ static void CP_MissionIsOver (mission_t *mission)
 }
 
 /**
+ * @brief Set mission name.
+ * @note that mission name must be unique in mission global array
+ * @sa CP_CreateNewMission
+ */
+static void CP_SetMissionName (mission_t *mission)
+{
+	int num = 0;
+	qboolean missionIdAlreadyExists = qtrue;
+
+	for (; missionIdAlreadyExists; num++) {
+		const linkedList_t *list = ccs.missions;
+
+		missionIdAlreadyExists = qfalse;
+		Com_sprintf(mission->id, sizeof(mission->id), "cat%i_interest%i_%i",
+			mission->category, mission->initialOverallInterest, num);
+		for (; list; list = list->next) {
+			const mission_t *mis = (mission_t *)list->data;
+			/* check whether current selected gametype is a valid one */
+			if (Q_strncmp(mission->id, mis->id, MAX_VAR)) {
+				missionIdAlreadyExists = qtrue;
+				break;
+			}
+		}
+	}
+}
+
+/**
  * @brief Create a new mission of given category.
  * @sa CP_SpawnNewMissions
  * @sa CP_MissionStageEnd
- * @todo Implement me
  */
 static void CP_CreateNewMission (int category)
 {
@@ -1118,6 +1139,7 @@ static void CP_CreateNewMission (int category)
 	mission.ufo = NULL;
 	mission.startDate = Date_Add(ccs.date, Date_Random(nextSpawningDate));
 	mission.finalDate = mission.startDate;
+	CP_SetMissionName(&mission);
 
 	/* Add mission to global array */
 	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
