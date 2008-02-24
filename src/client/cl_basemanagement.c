@@ -967,7 +967,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 
 	building->buildingStatus = status;
 
-	/* we update the status of the building (we'll call this building building 1 */
+	/* we update the status of the building (we'll call this building building 1) */
 	test = B_CheckUpdateBuilding(building, base);
 	if (test)
 		B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
@@ -2794,7 +2794,7 @@ static void B_ChangeBaseName_f (void)
  */
 static void B_CheckBuildingStatusForMenu_f (void)
 {
-	int i;
+	int i, num;
 	int baseIdx;
 	const char *buildingID;
 	building_t *building, *dependenceBuilding;
@@ -2832,16 +2832,24 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		return;
 	}
 
-	if (B_GetNumberOfBuildingsInBaseByType(baseIdx, building->buildingType) > 0) {
-		/* there is a building of this type in base, but not working */
-		for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-			if (gd.buildings[baseIdx][i].buildingType == building->buildingType
-			 && gd.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-				/* this is because the construction of the building is not over yet */
-				Com_sprintf(popupText, sizeof(popupText), va(ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.", gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart)), gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart)));
-				MN_Popup(_("Notice"), popupText);
-				return;
+	num = B_GetNumberOfBuildingsInBaseByType(baseIdx, building->buildingType);
+	if (num > 0) {
+		int numUnderConstruction;
+		/* maybe all buildings of this type are under construction ? */
+		B_CheckBuildingTypeStatus(baseCurrent, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
+		if (numUnderConstruction == num) {
+			int minDay = 99999;
+			/* Find the building whose construction will finish first */
+			for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
+				if (gd.buildings[baseIdx][i].buildingType == building->buildingType
+					&& gd.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION
+					&& minDay > gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart))
+					minDay = gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart);
 			}
+			Com_sprintf(popupText, sizeof(popupText), va(ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
+				minDay), minDay));
+			MN_Popup(_("Notice"), popupText);
+			return;
 		}
 		dependenceBuilding = gd.buildingTypes + building->dependsBuilding;
 		if (!B_CheckBuildingDependencesStatus(baseCurrent, building)) {
