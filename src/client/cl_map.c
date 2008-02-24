@@ -1415,15 +1415,17 @@ void MAP_DrawMap (const menuNode_t* node)
 			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize));
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Speed:\t\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
+				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert(3600.0f * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
 		default:
 			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize));
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Speed:\t\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
+			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
 				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
@@ -1431,7 +1433,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	} else if (selectedUFO) {
 		/* @todo: translate selectedUFO->name? */
 		Com_sprintf(text_standard, sizeof(text_standard), va("%s\n", selectedUFO->name));
-		Q_strcat(text_standard, va(_("Speed:\t%i\n"), selectedUFO->stats[AIR_STATS_SPEED]), sizeof(text_standard));
+		Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 		mn.menuText[TEXT_STANDARD] = text_standard;
 	}
 }

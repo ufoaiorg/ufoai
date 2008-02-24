@@ -1759,6 +1759,27 @@ static void CP_CheckEvents (void)
 	}
 }
 
+/**
+ * @brief Converts a number of second into a char to display.
+ * @param[in] second Number of second.
+ */
+const char* CL_SecondConvert (int second)
+{
+	int num;
+
+	if (second > 3600) {
+		num = second / 3600;
+		return va(ngettext("%i hour", "%i hours", num), num);
+	}
+
+	if (second > 60) {
+		num = second / 60;
+		return va(ngettext("%i min", "%i mins", num), num);
+	}
+
+	return va(ngettext("%i sec", "%i sec", second), second);
+}
+
 static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 /**
