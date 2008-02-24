@@ -1464,7 +1464,6 @@ static int CP_GetAverageXVIRate (void)
 
 /**
  * @brief Checks whether the player has lost the campaign
- * @note
  */
 static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civiliansKilled)
 {
@@ -1524,7 +1523,7 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 nation_t *CL_GetNationByID (const char *nationID)
 {
 	int i;
-	nation_t *nation = NULL;
+	nation_t *nation;
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
@@ -1606,8 +1605,8 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				delta_happiness = 0.1f * performance * alienHostile * (1.0f - nation->stats[0].happiness);
 				/* No spreading of XVI infection in other nations */
 			}
-				/* the happiness you can gain depends on the difficulty of the campaign */
-				delta_happiness *= (0.2f + pow(4.0f - difficulty->integer, 2) / 32.0f);
+			/* the happiness you can gain depends on the difficulty of the campaign */
+			delta_happiness *= (0.2f + pow(4.0f - difficulty->integer, 2) / 32.0f);
 		}
 
 		/* update happiness */
@@ -1674,7 +1673,7 @@ static void CP_CheckEvents (void)
 {
 	const linkedList_t *list = ccs.missions;
 
-	for  (; list; list = list->next) {
+	for (; list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
 		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(ccs.date, mission->finalDate)) {
 			CP_MissionStageEnd(mission);
