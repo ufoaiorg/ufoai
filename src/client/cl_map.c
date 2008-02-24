@@ -229,7 +229,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
  */
 void MAP_MapClick (const menuNode_t* node, int x, int y)
 {
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 	int i;
 	vec2_t pos;
 	nation_t* nation;

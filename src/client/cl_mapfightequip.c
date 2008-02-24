@@ -1190,9 +1190,9 @@ void AIM_AircraftEquipSlotSelect_f (void)
 void AIM_AircraftEquipZoneSelect_f (void)
 {
 	int zone;
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
-	const menu_t *activeMenu = NULL;
+	const menu_t *activeMenu;
 	qboolean aircraftMenu;
 
 	if (!baseCurrent)
@@ -1210,6 +1210,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	zone = atoi(Cmd_Argv(1));
 
 	if (aircraftMenu) {
+		assert(baseCurrent->aircraftCurrent >= 0);
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		assert(aircraft);
 		/* Select slot */
@@ -1217,7 +1218,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	} else {
 		/* Select slot */
 		slot = BDEF_SelectBaseSlot(baseCurrent);
-		assert(!aircraft);
+		aircraft = NULL;
 	}
 
 	/* ammos are only available for weapons */

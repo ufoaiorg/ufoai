@@ -2392,7 +2392,7 @@ static void B_PackInitialEquipment_f (void)
 	invList_t *ic, *next;
 	base_t *base = baseCurrent;
 	int aircraft_idxInBase;
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("cl_equip");
 	chrList_t chr_list_temp;
 

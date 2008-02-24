@@ -128,7 +128,7 @@ void INV_CollectingItems (int won)
 	le_t *le;
 	invList_t *item;
 	itemsTmp_t *cargo;
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 
 	aircraft = cls.missionaircraft;
 

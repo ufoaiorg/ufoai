@@ -3320,10 +3320,10 @@ static void CL_GameAutoCheck_f (void)
 void CL_GameAutoGo (mission_t *mis)
 {
 	qboolean won;
-	aircraft_t *aircraft = NULL;
+	aircraft_t *aircraft;
 	int i, amount = 0;
 	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
-	aliensTmp_t *cargo = NULL;
+	aliensTmp_t *cargo;
 
 	assert(mis);
 
@@ -3358,6 +3358,7 @@ void CL_GameAutoGo (mission_t *mis)
 	} else {
 		baseCurrent = (base_t*)mis->data;
 		assert(baseCurrent);
+		aircraft = NULL;
 		/* FIXME: This needs work */
 		won = qtrue;
 	}
@@ -5260,9 +5261,9 @@ static void CP_UFOCrashed_f (void)
 {
 	int i, j;
 	ufoType_t UFOtype;
-	aircraft_t *aircraft = NULL, *ufocraft = NULL;
+	aircraft_t *aircraft, *ufocraft;
 	qboolean ufofound = qfalse;
-	components_t *comp = NULL;
+	components_t *comp;
 	objDef_t *compod;
 	itemsTmp_t *cargo;
 
