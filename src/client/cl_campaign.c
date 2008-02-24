@@ -1097,6 +1097,10 @@ static inline void CP_SetMissionName (mission_t *mission)
 {
 	int num = 0;
 
+	/* maybe the mission list is still empty */
+	if (!ccs.missions)
+		return;
+
 	do {
 		Com_sprintf(mission->id, sizeof(mission->id), "cat%i_interest%i_%i",
 			mission->category, mission->initialOverallInterest, num);
