@@ -4797,7 +4797,7 @@ static void CP_CampaignStats_f (void)
 void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 {
 	int i, j;
-	components_t *comp = NULL;
+	components_t *comp;
 	objDef_t *compod;
 	eventMail_t *mail;
 	char body[512] = "";
@@ -5119,7 +5119,7 @@ static int UFOprices[MAX_NATIONS];
 static void CP_UFORecoveryNationSelectPopup_f (void)
 {
 	int i, j = -1, num;
-	nation_t *nation;
+	const nation_t *nation;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <nationid>\n", Cmd_Argv(0));
@@ -5183,14 +5183,14 @@ static void CP_UFOSellStart_f (void)
 static void CP_UFORecoveredSell_f (void)
 {
 	int i, nations = 0;
-	nation_t *nation = NULL;
-	aircraft_t *ufocraft = NULL;
+	aircraft_t *ufocraft;
 	static char recoveryNationSelectPopup[512];
 
 	/* Do nothing if recovery process is finished. */
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
 
+	ufocraft = NULL;
 	/* Find ufo sample of given ufotype. */
 	for (i = 0; i < numAircraft_samples; i++) {
 		ufocraft = &aircraft_samples[i];
@@ -5201,22 +5201,25 @@ static void CP_UFORecoveredSell_f (void)
 	}
 
 	if (Cvar_VariableInteger("mission_recoverynation") == -1)
-		memset (UFOprices, 0, sizeof(UFOprices));
+		memset(UFOprices, 0, sizeof(UFOprices));
+
 	recoveryNationSelectPopup[0] = '\0';
+
 	for (i = 0; i < gd.numNations; i++) {
-		nation = &gd.nations[i];
+		const nation_t *nation = &gd.nations[i];
 		/* @todo only nations with proper alien infiltration values */
 		nations++;
 		/* Calculate price offered by nation only if this is first popup opening. */
 		if (Cvar_VariableInteger("mission_recoverynation") == -1)
 			UFOprices[i] = ufocraft->price + (int)(frand() * 100000);
-		Q_strcat(recoveryNationSelectPopup, _(gd.nations[i].name), sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, _(nation->name), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, va("%i", UFOprices[i]), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, CL_GetNationHappinessString(nation), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
 	}
+
 	Q_strcat(recoveryNationSelectPopup, _("\n\nSelected nation:\t\t\t"), sizeof(recoveryNationSelectPopup));
 	if (Cvar_VariableInteger("mission_recoverynation") != -1) {
 		for (i = 0; i < gd.numNations; i++) {
@@ -5376,10 +5379,10 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 	float posX, posY;
 
 	/* RASTER might reduce amount of tested locations to get a better performance */
-	float maskWidth = 360.0 / RASTER;
-	float maskHeight = 180.0 / RASTER;
+	const float maskWidth = 360.0 / RASTER;
+	const float maskHeight = 180.0 / RASTER;
 	/* RASTER is minimizing the amount of locations, so an offset is introduced to enable access to all locations, depending on a random factor */
-	float offset = rand() % RASTER;
+	const float offset = rand() % RASTER;
 	vec2_t posT;
 	int hits = 0;
 
