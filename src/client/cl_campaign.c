@@ -487,6 +487,30 @@ int CP_CountMissionOnGeoscape (void)
 }
 
 /**
+ * @brief List all current mission to console.
+ * @note Use with debug_missionlist
+ */
+static void CL_DebugMissionList_f (void)
+{
+	const linkedList_t *list = ccs.missions;
+
+	for (; list; list = list->next) {
+		const mission_t *mission = (mission_t *)list->data;
+		Com_Printf("mission: '%s'\n", mission->id);
+		Com_Printf("...category %i -- stage %i\n", mission->category, mission->stage);
+		Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
+		Com_Printf("...location: '%s'\n", mission->location);
+		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
+			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
+		if (mission->onGeoscape)
+			Com_Printf("...pos (%f, %f) -- on Geoscape\n", mission->pos[0], mission->pos[1]);
+		else
+			Com_Printf("...pos (%f, %f) -- not on Geoscape\n", mission->pos[0], mission->pos[1]);
+		Com_Printf("...UFO %s\n", mission->ufo ? mission->ufo->id : "No UFO");
+	}
+}
+
+/**
  * @brief Removes a mission from geoscape: make it non visible and call notify functions
  */
 static void CP_MissionRemoveFromGeoscape (mission_t *mission)
@@ -4298,6 +4322,7 @@ static const cmdList_t game_commands[] = {
 	{"debug_newemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
 	{"debug_itemlist", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
+	{"debug_missionlist", CL_DebugMissionList_f, "Debug function to show all missions"},
 	{"debug_interestlist", CP_AlienInterestList_f, "Debug function to show alien interest values"},
 #endif
 	{NULL, NULL, NULL}
