@@ -1200,8 +1200,9 @@ void CP_CheckNextStageDestination (aircraft_t *ufo)
  */
 qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 {
+	const nation_t *nation;
 	mission_t *mission;
-	base_t *base;
+	const base_t *base;
 
 	mission = CP_GetMissionByUFO(ufo);
 	if (!mission)
@@ -1226,6 +1227,13 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	if (!mission->mapDef)
 		return qfalse;
+
+	nation = MAP_GetNation(mission->pos);
+	if (nation) {
+		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
+	} else {
+		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
+	}
 
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	ufo->notOnGeoscape = qtrue;
