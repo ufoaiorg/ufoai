@@ -551,7 +551,7 @@ static void UP_BuildingDescription (technology_t* t)
 void UP_AircraftItemDescription (int idx)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
-	objDef_t *item = NULL;
+	objDef_t *item;
 	int i;
 
 	/* Set menu text node content to null. */

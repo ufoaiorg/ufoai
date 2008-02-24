@@ -1486,7 +1486,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft;
-	const menu_t *activeMenu = NULL;
+	const menu_t *activeMenu;
 	qboolean aircraftMenu;
 	base_t* base;
 
@@ -1596,7 +1596,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft;
-	const menu_t *activeMenu = NULL;
+	const menu_t *activeMenu;
 	qboolean aircraftMenu;
 
 	if (!baseCurrent)
@@ -1733,6 +1733,9 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 	aircraftSlot_t *slot;
 	int itemIdx;
 	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
+
+	if (!tech)
+		Sys_Error("Could not get tech rs_craft_weapon_sparrowhawk");
 
 	assert(aircraft);
 	assert(aircraft->homebase);

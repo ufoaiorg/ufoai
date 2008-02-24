@@ -3183,8 +3183,8 @@ static void CL_GameGo (void)
 static void CP_AddItemAsCollected (void)
 {
 	int i, baseID;
-	objDef_t *item = NULL;
-	const char* id = NULL;
+	objDef_t *item;
+	const char* id;
 
 	/* baseid is appened in mission trigger function */
 	if (Cmd_Argc() < 3) {

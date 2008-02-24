@@ -1620,7 +1620,7 @@ void INVSH_PrintItemDescription (int i)
 int INVSH_GetItemByID (const char *id)
 {
 	int i;
-	objDef_t *item = NULL;
+	objDef_t *item;
 
 #ifdef DEBUG
 	if (!id || !*id) {
