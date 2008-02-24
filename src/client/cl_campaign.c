@@ -1093,7 +1093,7 @@ static void CP_MissionIsOver (mission_t *mission)
  * @note that mission name must be unique in mission global array
  * @sa CP_CreateNewMission
  */
-static void CP_SetMissionName (mission_t *mission)
+static inline void CP_SetMissionName (mission_t *mission)
 {
 	int num = 0;
 
@@ -1149,15 +1149,15 @@ static void CP_CreateNewMission (int category)
 static void CP_SpawnNewMissions (void)
 {
 	const int delayBetweenIncrease = 3;		/* Number of days between events are spawned */
-	int i, newMissionNum, type;
+	int i;
 
 	ccs.lastMissionSpawnedDelay++;
 
 	if (ccs.lastMissionSpawnedDelay > delayBetweenIncrease) {
 		/* How many missions will be spawned until next cycle ? */
-		newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
+		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
 		for (i = 0; i < newMissionNum; i++) {
-			type = CP_SelectNewMissionType();
+			const int type = CP_SelectNewMissionType();
 			CP_CreateNewMission(type);
 		}
 
@@ -1209,7 +1209,7 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	/* Check if new mission is close from an existing base */
 	base = CP_PositionCloseToBase(mission->pos);
 	if (base) {
-		float dist = MAP_GetDistance(ufo->pos, base->pos);
+		const float dist = MAP_GetDistance(ufo->pos, base->pos);
 		if (dist > UFO_EPSILON) {
 			mission->pos[0] = base->pos[0] + (ufo->pos[0] - base->pos[0]) * distMinBaseMission / dist;
 			mission->pos[1] = base->pos[1] + (ufo->pos[1] - base->pos[1]) * distMinBaseMission / dist;
