@@ -918,7 +918,7 @@ void CL_ParticleFree (ptl_t *p)
  */
 void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 {
-	char *particle = NULL;
+	char *particle;
 	int levelflags;
 	vec3_t origin;
 	le_t* le;

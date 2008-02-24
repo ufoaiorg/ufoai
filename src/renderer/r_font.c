@@ -97,7 +97,7 @@ void R_FontShutdown (void)
  */
 static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyle, int size)
 {
-	font_t *f = NULL;
+	font_t *f;
 	int ttfSize;
 
 	if (numFonts >= MAX_FONTS)
@@ -152,8 +152,8 @@ static font_t *R_FontGetFont (const char *name)
  */
 static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *width, int *height)
 {
-	char *space = NULL;
-	char *newlineTest = NULL;
+	char *space;
+	char *newlineTest;
 	int w = 0, oldW = 0;
 	int h = 0;
 
@@ -224,7 +224,7 @@ static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *wid
  */
 void R_FontLength (const char *font, char *c, int *width, int *height)
 {
-	font_t *f = NULL;
+	font_t *f;
 
 	if (width && height)
 		*width = *height = 0;
@@ -246,7 +246,7 @@ void R_FontListCache_f (void)
 {
 	int i = 0;
 	int collCount = 0, collSum = 0;
-	fontCache_t *f = NULL;
+	fontCache_t *f;
 
 	Com_Printf("Font cache info\n========================\n");
 	Com_Printf("...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache);
@@ -293,7 +293,7 @@ static int R_FontHash (const char *string, int maxlen)
  */
 static fontCache_t *R_FontGetFromCache (const char *s)
 {
-	fontCache_t *font = NULL;
+	fontCache_t *font;
 	int hashValue;
 
 	hashValue = R_FontHash(s, MAX_HASH_STRING);
@@ -330,14 +330,13 @@ static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 static fontCache_t* R_FontAddToCache (const char *s, SDL_Surface *pixel, int w, int h)
 {
 	int hashValue;
-	fontCache_t *font = NULL;
 
 	if (numInCache >= MAX_FONT_CACHE)
 		R_FontCleanCache();
 
 	hashValue = R_FontHash(s, MAX_HASH_STRING);
 	if (hash[hashValue]) {
-		font = hash[hashValue];
+		fontCache_t *font = hash[hashValue];
 		/* go to end of list */
 		while (font->next)
 			font = font->next;
@@ -356,7 +355,7 @@ static fontCache_t* R_FontAddToCache (const char *s, SDL_Surface *pixel, int w, 
 		Sys_Error("...font cache exceeded with %i\n", hashValue);
 
 	numInCache++;
-	return &fontCache[numInCache-1];
+	return &fontCache[numInCache - 1];
 }
 
 /**
@@ -371,8 +370,8 @@ static fontCache_t* R_FontAddToCache (const char *s, SDL_Surface *pixel, int w, 
 static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, font_t * f, int maxWidth)
 {
 	int w, h;
-	SDL_Surface *textSurface = NULL;
-	SDL_Surface *openGLSurface = NULL;
+	SDL_Surface *textSurface;
+	SDL_Surface *openGLSurface;
 	SDL_Rect rect = { 0, 0, 0, 0 };
 	fontCache_t *result;
 
@@ -477,7 +476,7 @@ static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absY, 
 
 static void R_FontConvertChars (char *buffer)
 {
-	char *replace = NULL;
+	char *replace;
 
 	/* convert all \\ to \n */
 	replace = strstr(buffer, "\\");
@@ -553,7 +552,7 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 {
 	int w = 0, h = 0, locX;
 	float returnHeight = 0; /* Rounding errors break mouse-text correlation. */
-	font_t *f = NULL;
+	font_t *f;
 	char *buffer = buf;
 	char *pos;
 	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];

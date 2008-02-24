@@ -925,7 +925,7 @@ void Key_SetDest (int key_dest)
  */
 void Key_Event (int key, qboolean down, unsigned time)
 {
-	char *kb = NULL;
+	const char *kb = NULL;
 	char cmd[MAX_STRING_CHARS];
 
 	/* unbindable key */

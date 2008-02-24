@@ -2485,7 +2485,7 @@ static const vec4_t graphColorSelected = {1, 1, 1, 1};
  */
 static int CL_NationsMaxFunding (void)
 {
-	nation_t *nation = NULL;
+	nation_t *nation;
 	int m, n;
 	int funding;
 	int max = 0;
@@ -2587,8 +2587,8 @@ static void CL_NationStatsUpdate_f (void)
 {
 	int i;
 	int funding, maxFunding;
-	menuNode_t *colorNode = NULL;
-	menuNode_t *graphNode = NULL;
+	menuNode_t *colorNode;
+	menuNode_t *graphNode;
 	const vec4_t colorAxes = {1, 1, 1, 0.5};
 	int dy = 10;
 

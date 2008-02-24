@@ -121,7 +121,7 @@ void G_PrintStats (const char *buffer)
  */
 void G_PrintActorStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
 {
-	const char *victimName = NULL, *attackerName = NULL;
+	const char *victimName, *attackerName;
 	char buffer[512];
 
 	if (victim->pnum != attacker->pnum) {
@@ -232,46 +232,6 @@ edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type
 
 	return NULL;
 }
-
-#if 0
-/**
- * @brief Searches all active entities for the next one that holds
- * the matching string at fieldofs (use the offsetof() macro) in the structure.
- *
- * @note Searches beginning at the edict after from, or the beginning if NULL
- * @return NULL will be returned if the end of the list is reached.
- * @note unused
- */
-#define MAXCHOICES	8
-
-edict_t *G_PickTarget (char *targetname)
-{
-	edict_t *ent = NULL;
-	int num_choices = 0;
-	edict_t *choice[MAXCHOICES];
-
-	if (!targetname) {
-		Com_DPrintf(DEBUG_GAME, "G_PickTarget called with NULL targetname\n");
-		return NULL;
-	}
-
-	while (1) {
-		ent = G_Find(ent, offsetof(edict_t, targetname), targetname);
-		if (!ent)
-			break;
-		choice[num_choices++] = ent;
-		if (num_choices == MAXCHOICES)
-			break;
-	}
-
-	if (!num_choices) {
-		Com_DPrintf(DEBUG_GAME, "G_PickTarget: target %s not found\n", targetname);
-		return NULL;
-	}
-
-	return choice[rand() % num_choices];
-}
-#endif
 
 /**
  * @sa G_CompleteRecalcRouting

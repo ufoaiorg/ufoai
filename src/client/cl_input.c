@@ -633,7 +633,7 @@ static void CL_LeftClickDown_f (void)
 static void CL_DrawSpottedLines_f (void)
 {
 	le_t *watcher; /** @todo make this a parameter for use in other functions? */
-	le_t *le = NULL;
+	le_t *le;
 	int i;
 	trace_t tr;
 	vec3_t from, at;
@@ -687,7 +687,7 @@ static int lastAlien = 0;
 static void CL_NextAlienVisibleFromActor_f (void)
 {
 	le_t *watcher; /** @todo make this a parameter for use in other fucntions? */
-	le_t *le = NULL;
+	le_t *le;
 	int i;
 	trace_t tr;
 	vec3_t from, at;
@@ -754,7 +754,7 @@ static void CL_LeftClickUp_f (void)
 
 static void CL_NextAlien_f (void)
 {
-	le_t *le = NULL;
+	le_t *le;
 	int i;
 
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)

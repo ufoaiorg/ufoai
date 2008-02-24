@@ -1452,7 +1452,7 @@ static void B_BuildingInit (base_t* base)
 {
 	int i;
 	int numSameBuildings;
-	building_t *buildingType = NULL;
+	building_t *buildingType;
 
 	/* maybe someone call this command before the bases are parsed?? */
 	if (!base)
@@ -1942,7 +1942,7 @@ void MN_BaseMapDraw (const menuNode_t * node)
 	int width, height, row, col, time, colSecond;
 	static vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
 	char image[MAX_QPATH];
-	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
+	building_t *building, *secondBuilding = NULL, *hoverBuilding = NULL;
 
 	if (!baseCurrent) {
 		MN_PopMenu(qfalse);
@@ -2452,7 +2452,7 @@ static void B_PackInitialEquipment_f (void)
  */
 static void B_BuildBase_f (void)
 {
-	const nation_t *nation = NULL;
+	const nation_t *nation;
 
 	if (!baseCurrent)
 		return;
@@ -3093,7 +3093,7 @@ int B_GetFoundedBaseCount (void)
  */
 void B_UpdateBaseData (void)
 {
-	building_t *b = NULL;
+	building_t *b;
 	int i, j;
 	int newBuilding = 0, new;
 
@@ -3218,7 +3218,7 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
  */
 int B_ItemInBase (int item_idx, base_t *base)
 {
-	equipDef_t *ed = NULL;
+	equipDef_t *ed;
 
 	if (!base)
 		return -1;

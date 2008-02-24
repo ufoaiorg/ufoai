@@ -300,7 +300,6 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  */
 static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
-	player_t *player = NULL;
 	qboolean stun = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damStun);
 	qboolean shock = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damShock);
 
@@ -366,7 +365,7 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 	/* Apply armour effects. */
 	if (damage > 0) {
 		if (ent->i.c[gi.csi->idArmour]) {
-			objDef_t *ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
+			const objDef_t *ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
 			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i",
 				ent->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
 			damage = max(1, damage - ad->protection[fd->dmgweight]);
@@ -397,7 +396,7 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (ent->team != attacker->team) {
-				player = game.players + ent->pnum;
+				const player_t *player = game.players + ent->pnum;
 				/* FIXME: there should be a possible protection, too */
 				ent->TU = 0; /* flashbangs kill TUs */
 				ent->state |= STATE_DAZED; /* entity is dazed */

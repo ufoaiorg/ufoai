@@ -1215,7 +1215,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
  */
 void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 {
-	objDef_t *obj = NULL;
+	const objDef_t *obj;
 	item_t item;
 
 	assert(chr);

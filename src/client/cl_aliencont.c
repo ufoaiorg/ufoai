@@ -46,7 +46,7 @@ static aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment.
 void AL_FillInContainment (base_t *base)
 {
 	int i, j, counter = 0;
-	aliensCont_t *containment = NULL;
+	aliensCont_t *containment;
 
 	assert(base);
 	containment = base->alienscont;
@@ -100,7 +100,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 {
 	int i, j;
 	le_t *le = NULL;
-	aliensTmp_t *cargo = NULL;
+	aliensTmp_t *cargo;
 
 	/* @todo: Check whether there are already aliens and add the new
 	 * ones without removing the old ones*/
@@ -285,7 +285,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 	int j, toremove;
 	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
 	int maxidx = 0;
-	aliensCont_t *containment = NULL;
+	aliensCont_t *containment;
 
 	assert(base);
 	containment = base->alienscont;
@@ -435,7 +435,7 @@ int AL_GetAlienGlobalIdx (int idx)
  */
 int AL_GetAlienAmount (int idx, requirementType_t reqtype, base_t *base)
 {
-	aliensCont_t *containment = NULL;
+	aliensCont_t *containment;
 
 	assert(base);
 	containment = base->alienscont;
@@ -842,7 +842,7 @@ static void AC_KillAll_f (void)
 static void AC_KillOne_f (void)
 {
 	int num, i, step;
-	aliensCont_t *containment = NULL;
+	aliensCont_t *containment;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign)
@@ -890,7 +890,7 @@ static void AC_KillOne_f (void)
 static void AC_AddOne_f (void)
 {
 	const char *alienType;
-	aliensCont_t *containment = NULL;
+	aliensCont_t *containment;
 	qboolean updateAlive;
 	int j;
 
@@ -977,7 +977,7 @@ static void AC_Init (void)
 	/* Tmp buffer for string generating. */
 	char tmp[128];
 	technology_t* tech;
-	aliensCont_t *containment = NULL;
+	aliensCont_t *containment;
 	qboolean killall_state = qfalse;
 
 	/* Reset the aliencont list. */
@@ -1075,7 +1075,7 @@ static void AC_Init (void)
 static void AC_AlienListClick_f (void)
 {
 	int num, i, step;
-	aliensCont_t *containment = NULL;
+	aliensCont_t *containment;
 
 	if (Cmd_Argc() < 2 || !baseCurrent) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));

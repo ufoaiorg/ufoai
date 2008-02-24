@@ -102,7 +102,7 @@ static const value_t tutValues[] = {
  */
 void TUT_ParseTutorials (const char *name, const char **text)
 {
-	tutorial_t *t = NULL;
+	tutorial_t *t;
 	const char *errhead = "TUT_ParseTutorials: unexpected end of file (tutorial ";
 	const char *token;
 	const value_t *v;

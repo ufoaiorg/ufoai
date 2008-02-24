@@ -222,16 +222,12 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t *destbase)
 {
 	int i, hangarStorage, numAircraftTransfer = 0;
-	aircraft_t *aircraftOnList = NULL;
 	assert(aircraft && srcbase && destbase);
 
 	/* Count weight and number of all aircraft already on the transfer list. */
-	for (i = 0; i < MAX_AIRCRAFT; i++) {
-		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			aircraftOnList = AIR_AircraftGetFromIdx(i);
+	for (i = 0; i < MAX_AIRCRAFT; i++)
+		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)
 			numAircraftTransfer++;
-		}
-	}
 
 	/* Hangars in destbase functional? */
 	if (!destbase->hasBuilding[B_POWER]) {
@@ -376,7 +372,7 @@ static qboolean TR_AircraftListSelect (int i)
 /**
  * @brief Reset scrolling of node containing item-in-base list.
  */
-static void TR_ResetScrooling_f (void)
+static void TR_ResetScrolling_f (void)
 {
 	/* for reseting the scrolling */
 	static menuNode_t *trans_list = NULL;
@@ -587,7 +583,7 @@ static void TR_TransferListClear_f (void)
 	/* Update cargo list and items list. */
 	TR_CargoList();
  	TR_TransferSelect_f();
-	TR_ResetScrooling_f();
+	TR_ResetScrolling_f();
 }
 
 /**
@@ -600,7 +596,7 @@ static void TR_TransferListClear_f (void)
 void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 {
 	int i, j;
-	base_t *destination = NULL;
+	base_t *destination;
 	employee_t *employee;
 	aircraft_t *aircraft;
 	char message[256];
@@ -617,6 +613,8 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		assert(transfer->destBase < gd.numBases);
 		destination = &gd.bases[transfer->destBase];
 		assert(destination);
+	} else {
+		destination = NULL;
 	}
 
 	if (transfer->hasItems && success) {	/* Items. */
@@ -870,7 +868,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
  */
 void TR_TransferEnd (transfer_t *transfer)
 {
-	base_t* destination = NULL;
+	base_t* destination;
 	char message[256];
 
 	assert(transfer);
@@ -1620,7 +1618,7 @@ void TR_Reset (void)
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_select", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
-	Cmd_AddCommand("trans_resetscroll", TR_ResetScrooling_f, "Reset scrolling items-in-base list");
+	Cmd_AddCommand("trans_resetscroll", TR_ResetScrolling_f, "Reset scrolling items-in-base list");
 	Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");

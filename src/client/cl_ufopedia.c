@@ -222,8 +222,8 @@ static void UP_DisplayTechTree (technology_t* t)
 {
 	int i = 0;
 	static char up_techtree[1024];
-	requirements_t *required = NULL;
-	technology_t *techRequired = NULL;
+	requirements_t *required;
+	technology_t *techRequired;
 	required = &t->require_AND;
 	up_techtree[0] = '\0';
 	for (; i < required->numLinks; i++) {
@@ -275,11 +275,11 @@ void UP_ItemDescription (int item)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
 	objDef_t *od;
-	objDef_t *odAmmo = NULL;
+	objDef_t *odAmmo;
 	int i;
 	int up_numresearchedlink = 0;
 	int up_weapon_id = NONE;
-	const menu_t *activeMenu = NULL;
+	const menu_t *activeMenu;
 
 	assert(item != NONE);
 
@@ -337,8 +337,10 @@ void UP_ItemDescription (int item)
 
 			/* Needed for writing stats below */
 			odAmmo = od;
-		} else
+		} else {
 			up_researchedlink = 0;
+			odAmmo = NULL;
+		}
 	} else if (od->weapon && !od->reload) {
 		/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
 		upCurrentTech = od->tech;
@@ -389,8 +391,10 @@ void UP_ItemDescription (int item)
 		} else {
 			/* Reset up_researchedLink to make sure we don't hit an assert while drawing ammo */
 			up_researchedlink = 0;
+			odAmmo = NULL;
 		}
-	}
+	} else
+		odAmmo = NULL;
 
 	/* set description text if item as been researched or one of its ammo/weapon has been researched */
 	if (RS_IsResearched_ptr(od->tech) || up_numresearchedlink > 0) {
@@ -951,7 +955,6 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 static void UP_DrawAssociatedAmmo (technology_t* tech)
 {
 	int idx;
-	technology_t *t_associated = NULL;
 
 	if (!tech)
 		return;
@@ -962,7 +965,7 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (csi.ods[idx].numAmmos > 0) {
 		/* We set t_associated to ammo to display */
-		t_associated = csi.ods[csi.ods[idx].ammo_idx[up_researchedlink]].tech;
+		const technology_t *t_associated = csi.ods[csi.ods[idx].ammo_idx[up_researchedlink]].tech;
 		assert(t_associated);
 		Cvar_Set("mn_upmodel_bottom", t_associated->mdl_top);
 	}
@@ -1131,14 +1134,13 @@ static void UP_Content_f (void)
 static void UP_Index_f (void)
 {
 	technology_t* t;
-	char *upIndex = NULL;
-	int chapter = 0;
+	char *upIndex;
 
 	if (Cmd_Argc() < 2 && currentChapter == -1) {
 		Com_Printf("Usage: %s <chapter-id>\n", Cmd_Argv(0));
 		return;
 	} else if (Cmd_Argc() == 2) {
-		chapter = atoi(Cmd_Argv(1));
+		int chapter = atoi(Cmd_Argv(1));
 		if (chapter < gd.numChapters && chapter >= 0) {
 			currentChapter = chapter;
 		}
@@ -1197,7 +1199,7 @@ static void UP_Back_f (void)
  */
 static void UP_Prev_f (void)
 {
-	technology_t *t = NULL;
+	technology_t *t;
 
 	if (!upCurrentTech) /* if called from console */
 		return;
@@ -1231,7 +1233,7 @@ static void UP_Prev_f (void)
  */
 static void UP_Next_f (void)
 {
-	technology_t *t = NULL;
+	technology_t *t;
 
 	if (!upCurrentTech) /* if called from console */
 		return;
@@ -1280,7 +1282,7 @@ static void UP_RightClick_f (void)
 static void UP_Click_f (void)
 {
 	int num;
-	technology_t *t = NULL;
+	technology_t *t;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -1339,8 +1341,8 @@ static void UP_TechTreeClick_f (void)
 {
 	int num;
 	int i;
-	requirements_t *required_AND = NULL;
-	technology_t *techRequired = NULL;
+	requirements_t *required_AND;
+	technology_t *techRequired;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -1448,7 +1450,7 @@ static void UP_MailClientClick_f (void)
  */
 static void UP_ResearchedLinkClick_f (void)
 {
-	technology_t *t = NULL;
+	technology_t *t;
 	int i;
 	if (!upCurrentTech) /* if called from console */
 		return;
@@ -1675,7 +1677,7 @@ static void UP_OpenMail_f (void)
  */
 static void UP_IncreaseWeapon_f (void)
 {
-	technology_t *t = NULL;
+	technology_t *t;
 	int up_researchedlink_temp;
 	int i;
 
@@ -1725,7 +1727,7 @@ static void UP_IncreaseWeapon_f (void)
  */
 static void UP_DecreaseWeapon_f (void)
 {
-	technology_t *t = NULL;
+	technology_t *t;
 	int up_researchedlink_temp;
 	int i;
 
@@ -1775,17 +1777,14 @@ static void UP_DecreaseWeapon_f (void)
  */
 static void UP_IncreaseFiremode_f (void)
 {
-	technology_t *t = NULL;
 	int i;
 
 	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrentTech;
-
 	up_firemode++;
 
-	i = INVSH_GetItemByID(t->provides);
+	i = INVSH_GetItemByID(upCurrentTech->provides);
 	if (i != NONE)
 		UP_ItemDescription(i);
 }
@@ -1796,17 +1795,14 @@ static void UP_IncreaseFiremode_f (void)
  */
 static void UP_DecreaseFiremode_f (void)
 {
-	technology_t *t = NULL;
 	int i;
 
 	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrentTech;
-
 	up_firemode--;
 
-	i = INVSH_GetItemByID(t->provides);
+	i = INVSH_GetItemByID(upCurrentTech->provides);
 	if (i != NONE)
 		UP_ItemDescription(i);
 }

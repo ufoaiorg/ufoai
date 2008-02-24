@@ -43,7 +43,7 @@ static int eTempCredits;		/**< Used to count temporary credits for item selling.
 static void INV_CollectingAmmo (const invList_t *magazine, aircraft_t *aircraft)
 {
 	int i;
-	itemsTmp_t *cargo = NULL;
+	itemsTmp_t *cargo;
 
 	cargo = aircraft->itemcargo;
 

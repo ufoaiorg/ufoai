@@ -607,7 +607,7 @@ static void CL_StartGame (struct dbuffer *msg)
 static void CL_StartingGameDone (struct dbuffer *msg)
 {
 	int actor_idx;
-	character_t * chr = NULL;
+	character_t *chr;
 
 	/* Set default reaction-firemode (or re-set already working one to update TUs) on game-start. */
 	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
@@ -895,7 +895,7 @@ static void CL_ActorDoStartMove (struct dbuffer *msg)
  */
 void CL_DrawLineOfSight (le_t *watcher, le_t *target)
 {
-	ptl_t *ptl = NULL;
+	ptl_t *ptl;
 	vec3_t eyes;
 
 	if (!watcher || !target)

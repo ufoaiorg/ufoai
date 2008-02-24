@@ -280,7 +280,7 @@ void CL_UGVCvars (character_t *chr)
  */
 static void CL_ActorGlobalCVars (void)
 {
-	le_t *le = NULL;
+	le_t *le;
 	char str[MAX_VAR];
 	int i;
 
@@ -525,7 +525,7 @@ static void HideFiremodes (void)
  */
 static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fds_idx)
 {
-	invList_t *invlist_weapon = NULL;
+	invList_t *invlist_weapon;
 	objDef_t *item, *itemAmmo;
 
 	assert(weap_fds_idx);
@@ -587,8 +587,7 @@ void CL_ListReactionAndReservations_f (void)
  */
 qboolean CL_WorkingReactionFiremode (const le_t * actor)
 {
-	character_t * chr = NULL;
-
+	character_t *chr;
 	objDef_t *ammo = NULL;
 	int weap_fds_idx = -1;
 
@@ -637,7 +636,7 @@ qboolean CL_WorkingReactionFiremode (const le_t * actor)
  */
 int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 {
-	character_t *chr = NULL;
+	character_t *chr;
 
 	if (!le) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: No le_t given.\n");
@@ -724,7 +723,7 @@ static int CL_UsableReactionTUs (const le_t * le)
  */
 void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int tus)
 {
-	character_t *chr = NULL;
+	character_t *chr;
 
 	if (!le || tus < 0) {
 		return;
@@ -765,7 +764,7 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
  */
 void CL_SetReactionFiremode (le_t * actor, const int handidx, const int obj_idx, const int fd_idx)
 {
-	character_t * chr = NULL;
+	character_t *chr;
 
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
 		/* This check is just here (additional to the one in CL_DisplayFiremodes_f) in case a possible situation was missed. */
@@ -878,8 +877,8 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
  */
 void CL_PopupFiremodeReservation_f (void)
 {
-	objDef_t *ammo = NULL;
-	objDef_t *weapon = NULL;
+	objDef_t *ammo;
+	objDef_t *weapon;
 	int weap_fds_idx = -1;
 	char hand = 'r';
 	int i;
@@ -1074,9 +1073,9 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	objDef_t *ammo = NULL;
 	int weap_fds_idx = -1;
 	int i = -1;
-	character_t *chr = NULL;
+	character_t *chr;
 
-	int handidx = (hand == 'r') ? 0 : 1;
+	const int handidx = (hand == 'r') ? 0 : 1;
 
 	if (!actor) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: No actor given!\n");
@@ -1499,9 +1498,9 @@ void CL_FireWeapon_f (void)
  */
 static void CL_RefreshWeaponButtons (int time)
 {
-	invList_t *weaponr = NULL;
-	invList_t *weaponl = NULL;
-	invList_t *headgear = NULL;
+	invList_t *weaponr;
+	invList_t *weaponl;
+	invList_t *headgear;
 	int minweaponrtime = 100, minweaponltime = 100;
 	int minheadgeartime = 100;
 	int weaponr_fds_idx = -1, weaponl_fds_idx = -1;
@@ -1518,6 +1517,8 @@ static void CL_RefreshWeaponButtons (int time)
 	/* check for two-handed weapon - if not, also define weaponl */
 	if (!weaponr || !csi.ods[weaponr->item.t].holdTwoHanded)
 		weaponl = LEFT(selActor);
+	else
+		weaponl = NULL;
 
 	/* crouch/stand button */
 	if (selActor->state & STATE_CROUCHED) {
@@ -2277,7 +2278,7 @@ qboolean CL_ActorSelect (le_t * le)
  */
 qboolean CL_ActorSelectList (int num)
 {
-	le_t *le = NULL;
+	le_t *le;
 
 	/* check if actor exists */
 	if (num >= cl.numTeamList)
@@ -2302,7 +2303,7 @@ qboolean CL_ActorSelectList (int num)
  */
 qboolean CL_ActorSelectNext (void)
 {
-	le_t *le = NULL;
+	le_t *le;
 	int selIndex = -1;
 	int num = cl.numTeamList;
 	int i;
@@ -2360,7 +2361,7 @@ int fb_length;
  */
 static void CL_BuildForbiddenList (void)
 {
-	le_t *le = NULL;
+	le_t *le;
 	int i;
 
 	fb_length = 0;
@@ -2395,9 +2396,9 @@ static void CL_BuildForbiddenList (void)
  */
 void CL_DisplayBlockedPaths_f (void)
 {
-	le_t *le = NULL;
+	le_t *le;
 	int i, j;
-	ptl_t *ptl = NULL;
+	ptl_t *ptl;
 	vec3_t s;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
@@ -2826,7 +2827,7 @@ void CL_ActorResetClientAction (struct dbuffer *msg)
 void CL_InvCheckHands (struct dbuffer *msg)
 {
 	int entnum;
-	le_t *le = NULL;
+	le_t *le;
 	int actor_idx = -1;
 	int hand = -1;		/**< 0=right, 1=left -1=undef*/
 
@@ -2872,7 +2873,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
  */
 void CL_ActorDoMove (struct dbuffer *msg)
 {
-	le_t *le = NULL;
+	le_t *le;
 	int number, i;
 
 	number = NET_ReadShort(msg);
@@ -2974,7 +2975,7 @@ void CL_ActorTurnMouse (void)
  */
 void CL_ActorDoTurn (struct dbuffer *msg)
 {
-	le_t *le = NULL;
+	le_t *le;
 	int entnum, dir;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_TURN], &entnum, &dir);
@@ -3232,7 +3233,7 @@ static qboolean firstShot = qfalse;
 void CL_ActorDoShoot (struct dbuffer *msg)
 {
 	fireDef_t *fd;
-	le_t *le = NULL;
+	le_t *le;
 	vec3_t muzzle, impact;
 	int flags, normal, number;
 	int obj_idx;
@@ -3381,7 +3382,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 void CL_ActorStartShoot (struct dbuffer *msg)
 {
 	fireDef_t *fd;
-	le_t *le = NULL;
+	le_t *le;
 	pos3_t from, target;
 	int number;
 	int obj_idx;
@@ -3446,7 +3447,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
  */
 void CL_ActorDie (struct dbuffer *msg)
 {
-	le_t *le = NULL;
+	le_t *le;
 	int number, state;
 	int i;
 	char tmpbuf[128];
@@ -3784,11 +3785,11 @@ void CL_ActorMouseTrace (void)
 	pos3_t testPos;
 	pos3_t actor2x2[3];
 
-	int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	le_t *le = NULL;
+	le_t *le;
 
 	/* get cursor position as a -1 to +1 range for projection */
 	cur[0] = (mousePosX * viddef.rx - viddef.viewWidth * 0.5 - viddef.x) / (viddef.viewWidth * 0.5);
@@ -4170,7 +4171,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 	float distance, pseudosin, width, height, acc, perpX, perpY, hitchance,
 		stdevupdown, stdevleftright, crouch, commonfactor;
 	int distx, disty, i, n;
-	le_t *le = NULL;
+	le_t *le;
 
 	if (!selActor || !selFD)
 		return 0.0;
@@ -4281,7 +4282,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 static void CL_Targeting_Radius (vec3_t center)
 {
 	const vec4_t color = {0, 1, 0, 0.3};
-	ptl_t *particle = NULL;
+	ptl_t *particle;
 
 	assert(selFD);
 
@@ -4312,7 +4313,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	int oldLevel, i;
 	float d;
 	qboolean crossNo;
-	le_t *le = NULL;
+	le_t *le;
 	le_t *target = NULL;
 
 	if (!selActor || !selFD)
@@ -4391,10 +4392,10 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	int oldLevel;
 	qboolean obstructed = qfalse;
 	int i;
-	le_t *le = NULL;
+	le_t *le;
 	le_t *target = NULL;
 
-	if (!selActor || (fromPos[0] == toPos[0] && fromPos[1] == toPos[1]))
+	if (!selActor || Vector2Compare(fromPos, toPos))
 		return;
 
 	/* get vectors, paint cross */

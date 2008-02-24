@@ -171,7 +171,7 @@ static int PR_RequirementsMet (int amount, requirements_t *req, base_t* base)
 static void PR_UpdateRequiredItemsInBasestorage (base_t* base, int amount, requirements_t *req)
 {
 	int i;
-	equipDef_t *ed = NULL;
+	equipDef_t *ed;
 
 	if (!base)
 		return;
@@ -546,7 +546,6 @@ static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
 	objDef_t *od, *compod;
 	int objID;
 	int time, i, j;
-	components_t *comp = NULL;
 	float prodPerHour;
 
 	assert(base);
@@ -587,6 +586,8 @@ static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
 			Cvar_Set("mn_item", "");
 		}
 	} else {	/* Disassembling. */
+		components_t *comp = NULL;
+
 		/* Find related components array. */
 		for (i = 0; i < gd.numComponents; i++) {
 			comp = &gd.components[i];

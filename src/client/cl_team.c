@@ -308,7 +308,7 @@ ugv_t *CL_GetUgvById (const char *ugvID)
  */
 void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_t employeeType, const ugv_t *ugvType)
 {
-	character_t *chr = NULL;
+	character_t *chr;
 	char teamDefName[MAX_VAR];
 	int teamValue = TEAM_CIVILIAN;
 	qboolean multiplayer = (sv_maxclients->integer >= 2);
@@ -402,7 +402,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 void CL_ResetCharacters (base_t* const base)
 {
 	int i;
-	character_t *chr = NULL;
+	character_t *chr;
 
 	/* Reset inventory data of all hired emplyoees that can be sent into combat (i.e. characters with inventories). */
 	for (i = 0; i < MAX_EMPLOYEES; i++) {
@@ -437,7 +437,7 @@ static void CL_ChangeName_f (void)
 {
 	int sel = Cvar_VariableInteger("mn_employee_idx");
 	int type = Cvar_VariableInteger("mn_employee_type");
-	const menu_t *activeMenu = NULL;
+	const menu_t *activeMenu;
 
 	/* Maybe called without base initialized or active. */
 	if (!baseCurrent)
@@ -909,8 +909,8 @@ static void CL_GenerateEquipment_f (void)
 static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container)
 {
 	int container;
-	invList_t *ic = NULL;
-	invList_t *ic_temp = NULL;
+	invList_t *ic;
+	invList_t *ic_temp;
 
 	if (!inv)
 		return;
@@ -984,7 +984,7 @@ static void CL_Select_f (void)
 	int num;
 	selectSoldierModes_t mode;
 	employeeType_t employeeType;
-	const menu_t *activeMenu = NULL;
+	const menu_t *activeMenu;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -1917,8 +1917,10 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
  */
 void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 {
-	character_t *chr = NULL;
+	character_t *chr;
 	int i, j;
+
+	assert(baseCurrent);
 
 	/* clean temp inventory */
 	CL_CleanTempInventory(baseCurrent);
@@ -2345,7 +2347,7 @@ static const value_t rankValues[] = {
  */
 void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank)
 {
-	rank_t *rank = NULL;
+	rank_t *rank;
 	const char *errhead = "CL_ParseMedalsAndRanks: unexpected end of file (medal/rank ";
 	const char *token;
 	const value_t	*v;

@@ -1068,7 +1068,7 @@ static void G_InventoryToFloor (edict_t * ent)
 	int k;
 	edict_t *floor;
 #ifdef ADJACENT
-	edict_t *floorAdjacent = NULL;
+	edict_t *floorAdjacent;
 	int i;
 #endif
 
@@ -1112,15 +1112,15 @@ static void G_InventoryToFloor (edict_t * ent)
 			vec2_t oldPos; /**< if we have to place it to adjacent  */
 #endif
 			/* Save the next inv-list before it gets overwritten below.
-			   Do not put this in the "for" statement,
-			   unless you want an endless loop. ;) */
+			 * Do not put this in the "for" statement,
+			 * unless you want an endless loop. ;) */
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
 			Com_FindSpace(&floor->i, &ic->item, gi.csi->idFloor, &x, &y);
 			if (x == NONE) {
 				assert(y == NONE);
 				/* Run out of space on the floor or the item is armour
-				   destroy the offending item if no adjacent places are free */
+				 * destroy the offending item if no adjacent places are free */
 				/* store pos for later restoring the original value */
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
@@ -1209,7 +1209,7 @@ int fb_length;
  */
 static void G_BuildForbiddenList (int team)
 {
-	edict_t *ent = NULL;
+	edict_t *ent;
 	int vis_mask;
 	int i;
 
@@ -1266,7 +1266,7 @@ void G_MoveCalc (int team, pos3_t from, int size, int distance)
  */
 static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 {
-	edict_t *ent = NULL;
+	edict_t *ent;
 	pos3_t pos;
 	int i;
 
@@ -1310,7 +1310,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	vec3_t pointTrace;
 	char* stepAmount = NULL;
 	qboolean triggers = qfalse;
-	edict_t* client_action = NULL;
+	edict_t* client_action;
 	int oldState;
 	qboolean moveDiagonal;
 
@@ -2206,7 +2206,7 @@ int G_ClientAction (player_t * player)
 	int from, fx, fy, to, tx, ty;
 	int hand, fd_idx, obj_idx;
 	int resType, resState, resValue;
-	edict_t * ent = NULL;
+	edict_t *ent;
 
 	/* read the header */
 	action = gi.ReadByte();

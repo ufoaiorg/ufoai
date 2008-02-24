@@ -54,7 +54,7 @@ static void SV_dprintf (const char *fmt, ...)
  * @brief Print to a single client
  * @sa SV_BroadcastPrintf
  */
-static void SV_cprintf (player_t * player, int level, const char *fmt, ...)
+static void SV_cprintf (const player_t * player, int level, const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;

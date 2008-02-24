@@ -239,7 +239,7 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
  */
 void MN_Click (int x, int y)
 {
-	menuNode_t *node, *execute_node = NULL;
+	menuNode_t *node, *execute_node;
 	menu_t *menu;
 	int sp, mouseOver;
 	qboolean clickedInside = qfalse;

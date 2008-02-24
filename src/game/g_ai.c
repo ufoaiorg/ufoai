@@ -452,7 +452,6 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	aiAction_t aia, bestAia;
 	pos3_t oldPos, to;
 	vec3_t oldOrigin;
-	edict_t *checkPoint = NULL;
 	int xl, yl, xh, yh;
 	int i = 0;
 	float guete, best;
@@ -498,6 +497,7 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 				}
 
 	if (ent->team == TEAM_CIVILIAN) {
+		edict_t *checkPoint = NULL;
 		while ((checkPoint = G_FindRadius(checkPoint, ent->origin, 768, ET_CIVILIANTARGET)) != NULL) {
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {

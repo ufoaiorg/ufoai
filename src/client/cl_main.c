@@ -734,8 +734,8 @@ static void CL_WaitInit_f (void)
 static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 {
 	char *s = NET_ReadString(msg);
-	char *var = NULL;
-	char *value = NULL;
+	char *var;
+	char *value;
 	int cnt = 0, n;
 
 	if (!s) {
@@ -815,7 +815,7 @@ static char userInfoText[MAX_MESSAGE_TEXT];
  */
 static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 {
-	const char *value = NULL;
+	const char *value;
 	const char *users;
 	int team;
 	const char *token;
@@ -1019,8 +1019,8 @@ static void CL_ServerConnect_f (void)
 static void CL_BookmarkAdd_f (void)
 {
 	int i;
-	const char *bookmark = NULL;
-	const char *newBookmark = NULL;
+	const char *bookmark;
+	const char *newBookmark;
 
 	if (Cmd_Argc() < 2) {
 		newBookmark = Cvar_VariableString("mn_server_ip");

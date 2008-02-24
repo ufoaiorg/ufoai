@@ -72,7 +72,7 @@ qboolean MN_TextScroll (menuNode_t *node, int offset)
 static void MN_TextScroll_f (void)
 {
 	int offset = 0;
-	menuNode_t *node = NULL;
+	menuNode_t *node;
 
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <nodename> <+/-offset>\n", Cmd_Argv(0));
@@ -104,10 +104,7 @@ static void MN_TextScroll_f (void)
  */
 void MN_TextScrollBottom (const char* nodeName)
 {
-	menuNode_t *node = NULL;
-
-	node = MN_GetNodeFromCurrentMenu(nodeName);
-
+	menuNode_t *node = MN_GetNodeFromCurrentMenu(nodeName);
 	if (!node) {
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' could not be found\n", nodeName);
 		return;
