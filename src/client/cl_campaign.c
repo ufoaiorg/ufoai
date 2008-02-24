@@ -2125,7 +2125,7 @@ void CL_CampaignRun (void)
 /* =========================================================== */
 
 typedef struct gameLapse_s {
-	const char name[16];
+	const char *name;
 	int scale;
 } gameLapse_t;
 
@@ -2149,8 +2149,10 @@ static int gameLapse;
  */
 void CL_GameTimeStop (void)
 {
-	/* don't allow time scale in tactical mode */
-	if (!CL_OnBattlescape()) {
+	const menu_t *menu = MN_GetActiveMenu();
+
+	/* don't allow time scale in tactical mode - only on the geoscape */
+	if (menu && !Q_strcmp(menu->name, "map")) {
 		gameLapse = 0;
 		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
 		gd.gameTimeScale = lapse[gameLapse].scale;
@@ -2165,17 +2167,21 @@ void CL_GameTimeStop (void)
  */
 void CL_GameTimeSlow (void)
 {
-	/* don't allow time scale in tactical mode */
-	if (!CL_OnBattlescape()) {
-		/*first we have to set up a home base */
-		if (!gd.numBases)
-			CL_GameTimeStop();
-		else {
-			if (gameLapse > 0)
-				gameLapse--;
-			Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-			gd.gameTimeScale = lapse[gameLapse].scale;
-		}
+	const menu_t *menu = MN_GetActiveMenu();
+
+	if (!gd.numBases)
+		return;
+
+	if (gameLapse == 0)
+		return;
+
+	assert(gameLapse >= 0);
+
+	/* don't allow time scale in tactical mode - only on the geoscape */
+	if (menu && !Q_strcmp(menu->name, "map")) {
+		gameLapse--;
+		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
+		gd.gameTimeScale = lapse[gameLapse].scale;
 	}
 }
 
@@ -2186,17 +2192,21 @@ void CL_GameTimeSlow (void)
  */
 void CL_GameTimeFast (void)
 {
-	/* don't allow time scale in tactical mode */
-	if (!CL_OnBattlescape()) {
-		/*first we have to set up a home base */
-		if (!gd.numBases)
-			CL_GameTimeStop();
-		else {
-			if (gameLapse < NUM_TIMELAPSE - 1)
-				gameLapse++;
-			Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-			gd.gameTimeScale = lapse[gameLapse].scale;
-		}
+	const menu_t *menu = MN_GetActiveMenu();
+
+	if (!gd.numBases)
+		return;
+
+	if (gameLapse == NUM_TIMELAPSE - 1)
+		return;
+
+	assert(gameLapse < NUM_TIMELAPSE);
+
+	/* don't allow time scale in tactical mode - only on the geoscape */
+	if (menu && !Q_strcmp(menu->name, "map")) {
+		gameLapse++;
+		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
+		gd.gameTimeScale = lapse[gameLapse].scale;
 	}
 }
 
