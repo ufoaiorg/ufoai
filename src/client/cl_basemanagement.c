@@ -999,7 +999,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 void B_SetUpBase (base_t* base)
 {
 	int i, j;
-	building_t *building = NULL;
+	building_t *building;
 	const int newBaseAlienInterest = 10;
 
 	assert(base);
@@ -1215,9 +1215,6 @@ static void B_NewBuilding (base_t* base)
  */
 void B_SetBuildingByClick (int row, int col)
 {
-	building_t *building = NULL;
-	building_t *secondBuildingPart = NULL;
-
 #ifdef DEBUG
 	if (!baseCurrent)
 		Sys_Error("no current base\n");
@@ -1232,7 +1229,7 @@ void B_SetBuildingByClick (int row, int col)
 	/*@todo: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical) */
 	/* if the building is in gd.buildingTypes[] */
 	if (baseCurrent->buildingCurrent->base_idx < 0) {
-		building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
+		building_t *building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 
 		/* copy building from type-list to base-buildings-list */
 		*building = gd.buildingTypes[baseCurrent->buildingCurrent->type_idx];
@@ -1249,17 +1246,17 @@ void B_SetBuildingByClick (int row, int col)
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
 		switch (baseCurrent->map[row][col]) {
 		case BASE_FREESLOT:
-			if (baseCurrent->buildingCurrent->needs)
-				secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
-			if (secondBuildingPart) {
+			if (baseCurrent->buildingCurrent->needs) {
+				building_t *secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
+
 				if (col + 1 == BASE_SIZE) {
-					if (baseCurrent->map[row][col-1] != BASE_FREESLOT) {
+					if (baseCurrent->map[row][col - 1] != BASE_FREESLOT) {
 						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
 					col--;
-				} else if (baseCurrent->map[row][col+1] != BASE_FREESLOT) {
-					if (baseCurrent->map[row][col-1] != BASE_FREESLOT || !col) {
+				} else if (baseCurrent->map[row][col + 1] != BASE_FREESLOT) {
+					if (baseCurrent->map[row][col - 1] != BASE_FREESLOT || !col) {
 						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
@@ -1541,7 +1538,7 @@ static void B_BuildingInfoClick_f (void)
 static void B_BuildingClick_f (void)
 {
 	int num;
-	building_t *building = NULL;
+	building_t *building;
 
 	if (Cmd_Argc() < 2 || !baseCurrent) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1628,12 +1625,12 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
  */
 void B_ParseBuildings (const char *name, const char **text, qboolean link)
 {
-	building_t *building = NULL;
-	building_t *dependsBuilding = NULL;
-	technology_t *tech_link = NULL;
-	const value_t *vp = NULL;
+	building_t *building;
+	building_t *dependsBuilding;
+	technology_t *tech_link;
+	const value_t *vp;
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
-	const char *token = NULL;
+	const char *token;
 	int i;
 
 	/* get id list body */
@@ -1716,12 +1713,10 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 							}
 							break;
 						}
+					if (!vp->string)
+						Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
 				}
 			}
-
-			if (!vp->string)
-				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
-
 		} while (*text);
 	} else {
 		building = B_GetBuildingType(name);
@@ -1765,7 +1760,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t type, qboolean onlyWorking)
 {
 	int i;
-	building_t *building = NULL;
+	building_t *building;
 
 	/* we maybe only want to get the working building (e.g. it might the
 	 * case that we don't have a powerplant and thus the searched building

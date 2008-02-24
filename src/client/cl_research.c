@@ -601,10 +601,10 @@ void RS_RequiredIdxAssign (void)
 void RS_InitTree (qboolean load)
 {
 	int i, j;
-	technology_t *tech = NULL;
-	objDef_t *item = NULL;
-	building_t *building = NULL;
-	aircraft_t *air_samp = NULL;
+	technology_t *tech;
+	objDef_t *item;
+	building_t *building;
+	aircraft_t *air_samp;
 	byte found;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -867,9 +867,9 @@ static void CL_ResearchSelect_f (void)
  */
 void RS_AssignScientist (technology_t* tech)
 {
-	building_t *building = NULL;
-	employee_t *employee = NULL;
-	base_t *base = NULL;
+	building_t *building;
+	employee_t *employee;
+	base_t *base;
 
 	assert(tech);
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
