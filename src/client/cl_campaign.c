@@ -3213,7 +3213,7 @@ static void CP_AddItemAsCollected (void)
  */
 static void CP_ChangeNationHappiness_f (void)
 {
-	float multiplier = 0;
+	float multiplier;
 	nation_t *nation;
 
 	if (Cmd_Argc() < 2) {
@@ -3272,10 +3272,10 @@ void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
 	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
-	if (won && *m->onwin) {
+	if (won && m->onwin[0] != '\0') {
 		Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
 		Cbuf_AddText(va("%s\n", m->onwin));
-	} else if (!won && *m->onlose) {
+	} else if (!won && m->onlose[0] != '\0') {
 		Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->onlose);
 		Cbuf_AddText(va("%s\n", m->onlose));
 	}
@@ -3464,8 +3464,8 @@ static void CL_GameAbort_f (void)
  */
 static void CL_UpdateCharacterStats (int won)
 {
-	character_t *chr = NULL;
-	rank_t *rank = NULL;
+	character_t *chr;
+	rank_t *rank;
 	aircraft_t *aircraft;
 	int i, j, idx = 0;
 
@@ -3480,7 +3480,7 @@ static void CL_UpdateCharacterStats (int won)
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, gd.interceptAircraft) ) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
-			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(idx+1));
+			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(idx + 1));
 			assert(chr);
 			/* count every hired soldier in aircraft */
 			idx++;
@@ -3659,7 +3659,7 @@ static void CL_GameResults_f (void)
 	base_t *base;
 	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
-	character_t *chr = NULL;
+	character_t *chr;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
 
@@ -3847,7 +3847,7 @@ void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 	const char *errhead = "CL_ParseResearchedCampaignItems: unexpected end of file (equipment ";
 	const char *token;
 	int i;
-	campaign_t* campaign = NULL;
+	campaign_t* campaign;
 	technology_t *tech;
 
 	campaign = CL_GetCampaign(cl_campaign->string);
@@ -3902,7 +3902,7 @@ void CL_ParseResearchableCampaignStates (const char *name, const char **text, qb
 	const char *errhead = "CL_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	const char *token;
 	int i;
-	campaign_t* campaign = NULL;
+	campaign_t* campaign;
 	technology_t *tech;
 
 	campaign = CL_GetCampaign(cl_campaign->string);
