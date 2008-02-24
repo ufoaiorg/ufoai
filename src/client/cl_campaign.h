@@ -365,6 +365,9 @@ typedef struct ccs_s {
 	vec3_t angles;			/**< 3d geoscape rotation */
 	vec2_t center;
 	float zoom;
+
+	/* governs zero build time for first base if empty base option chosen */
+	int instant_build;
 } ccs_t;
 
 /** possible geoscape actions */

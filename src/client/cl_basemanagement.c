@@ -265,7 +265,7 @@ static void B_ResetBuildingCurrent (base_t* base)
 static void B_ResetBuildingCurrent_f (void)
 {
 	if (Cmd_Argc() == 2)
-		gd.instant_build = atoi(Cmd_Argv(1));
+		ccs.instant_build = atoi(Cmd_Argv(1));
 
 	B_ResetBuildingCurrent(baseCurrent);
 }
@@ -1018,74 +1018,75 @@ void B_SetUpBase (base_t* base)
 	/* this cvar is needed by B_SetBuildingByClick below*/
 	Cvar_SetValue("mn_base_id", base->idx);
 
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		if (gd.buildingTypes[i].autobuild
-			|| (gd.numBases == 1
-				&& gd.buildingTypes[i].firstbase
-				&& cl_start_buildings->integer)) {
-			/* @todo: implement check for moreThanOne */
-			building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-			*building = gd.buildingTypes[i];
-			/* self-link to building-list in base */
-			building->idx = gd.numBuildings[base->idx];
-			gd.numBuildings[base->idx]++;
-			/* Link to the base. */
-			building->base_idx = base->idx;
-			Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0], building->pos[1]);
-			base->buildingCurrent = building;
-			/* fake a click to basemap */
-			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
-			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-
-			/* A few more things for first base.
-				@todo: this shouldn't be hard coded, but in *.ufo files */
-			if (gd.numBases == 1) {
-				/* buy two first aircraft */
-				if (building->buildingType == B_HANGAR) {
-					Cbuf_AddText("aircraft_new craft_drop_firebird\n");
-					aircraft = AIR_GetAircraft("craft_drop_firebird");
-					CL_UpdateCredits(ccs.credits - aircraft->price);
-				} else if (building->buildingType == B_SMALL_HANGAR) {
-					Cbuf_AddText("aircraft_new craft_inter_stiletto\n");
-					aircraft = AIR_GetAircraft("craft_inter_stiletto");
-					CL_UpdateCredits(ccs.credits - aircraft->price);
-				}
-
-				/* build a second quarter */
-				if (building->buildingType == B_QUARTERS) {
-					building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-					*building = gd.buildingTypes[i];
-					/* self-link to building-list in base */
-					building->idx = gd.numBuildings[base->idx];
-					gd.numBuildings[base->idx]++;
-					/* Link to the base. */
-					building->base_idx = base->idx;
-					/* Build second quarter just above first one */
-					Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0] - 1, building->pos[1]);
-					base->buildingCurrent = building;
-					/* fake a click to basemap */
-					B_SetBuildingByClick((int) building->pos[0] - 1, (int) building->pos[1]);
-					B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-				}
-			}
-
-			/* now call the onconstruct trigger */
-			if (*building->onConstruct) {
+	if (cl_start_buildings->integer) {
+		for (i = 0; i < gd.numBuildingTypes; i++) {
+			if (gd.buildingTypes[i].autobuild
+		 	 || (gd.numBases == 1 && gd.buildingTypes[i].firstbase)) {
+				/* @todo: implement check for moreThanOne */
+				building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+				*building = gd.buildingTypes[i];
+				/* self-link to building-list in base */
+				building->idx = gd.numBuildings[base->idx];
+				gd.numBuildings[base->idx]++;
+				/* Link to the base. */
+				building->base_idx = base->idx;
+				Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0], building->pos[1]);
 				base->buildingCurrent = building;
-				Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
-				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
+				/* fake a click to basemap */
+				B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
+				B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+
+				/* A few more things for first base.
+				 * @todo: this shouldn't be hard coded, but in *.ufo files */
+				if (gd.numBases == 1) {
+					/* buy two first aircraft */
+					if (building->buildingType == B_HANGAR) {
+						Cbuf_AddText("aircraft_new craft_drop_firebird\n");
+						aircraft = AIR_GetAircraft("craft_drop_firebird");
+						CL_UpdateCredits(ccs.credits - aircraft->price);
+					} else if (building->buildingType == B_SMALL_HANGAR) {
+						Cbuf_AddText("aircraft_new craft_inter_stiletto\n");
+						aircraft = AIR_GetAircraft("craft_inter_stiletto");
+						CL_UpdateCredits(ccs.credits - aircraft->price);
+					}
+
+					/* build a second quarter */
+					if (building->buildingType == B_QUARTERS) {
+						building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+						*building = gd.buildingTypes[i];
+						/* self-link to building-list in base */
+						building->idx = gd.numBuildings[base->idx];
+						gd.numBuildings[base->idx]++;
+						/* Link to the base. */
+						building->base_idx = base->idx;
+						/* Build second quarter just above first one */
+						Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0] - 1, building->pos[1]);
+						base->buildingCurrent = building;
+						/* fake a click to basemap */
+						B_SetBuildingByClick((int) building->pos[0] - 1, (int) building->pos[1]);
+						B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+					}
+				}
+
+				/* now call the onconstruct trigger */
+				if (*building->onConstruct) {
+					base->buildingCurrent = building;
+					Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
+					Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
+				}
+
+				/* update the building-list */
+				B_BuildingInit(base);
+
+				if (cl_start_employees->integer)
+					B_HireForBuilding(base, building, -1);
 			}
-
-			/* update the building-list */
-			B_BuildingInit(base);
-
-			if (cl_start_employees->integer)
-				B_HireForBuilding(base, building, -1);
 		}
 	}
 	/* if no autobuild, set up zero build time for the first base */
 	if (gd.numBases == 1 && !cl_start_buildings->integer)
-		gd.instant_build = 1;
+		ccs.instant_build = 1;
+
 	/* Set up default buy/sell factors for this base. */
 	base->sellfactor = 5;
 	base->buyfactor = 1;
@@ -1187,7 +1188,7 @@ static qboolean B_ConstructBuilding (base_t* base)
 		building_to_build->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		base->buildingToBuild = -1;
 	}
-	if (!gd.instant_build) {
+	if (!ccs.instant_build) {
 		base->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		base->buildingCurrent->timeStart = ccs.date.day;
 	} else {
