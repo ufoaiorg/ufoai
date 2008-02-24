@@ -841,7 +841,6 @@ static void PR_UpdateProductionList (base_t* base)
 	production_queue_t *queue;
 	production_t *prod;
 	aircraft_t *aircraft, *aircraftbase;
-	technology_t *tech = NULL;
 
 	assert(base);
 
@@ -882,13 +881,11 @@ static void PR_UpdateProductionList (base_t* base)
 	/* then go through all object definitions */
 	if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircraft. */
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+			assert(od->tech);
 			/* we will not show items with producetime = -1 - these are not producible */
-			if (*od->id)
-				tech = RS_GetTechByProvided(od->id);
-
 			/* we can produce what was researched before */
 			if (BUYTYPE_MATCH(od->buytype, produceCategory) && RS_IsResearched_ptr(od->tech)
-			&& *od->name && tech && (tech->produceTime > 0)) {
+			 && *od->name && (od->tech->produceTime > 0)) {
 				Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 				Q_strcat(productionAmount, va("%i\n", base->storage.num[i]), sizeof(productionAmount));
 				Q_strcat(productionQueued, "\n", sizeof(productionQueued));

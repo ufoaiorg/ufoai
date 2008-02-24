@@ -76,8 +76,8 @@ static void INV_CollectingAmmo (const invList_t *magazine, aircraft_t *aircraft)
 static void INV_CarriedItems (const le_t *soldier)
 {
 	int container;
-	invList_t *item = NULL;
-	technology_t *tech = NULL;
+	invList_t *item;
+	technology_t *tech;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].temp) /* Items collected as ET_ITEM in INV_CollectingItems(). */
@@ -239,8 +239,8 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 {
 	int i, j, numitems = 0, gained = 0, sold = 0;
 	char str[128];
-	itemsTmp_t *cargo = NULL;
-	technology_t *tech = NULL;
+	itemsTmp_t *cargo;
+	technology_t *tech;
 	base_t *base;
 	qboolean notenoughspace = qfalse;
 
@@ -307,7 +307,7 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 void INV_EnableAutosell (const technology_t *tech)
 {
 	int i = 0, j;
-	technology_t *ammotech = NULL;
+	technology_t *ammotech;
 
 	/* If the tech leads to weapon or armour, find related item and enable autosell. */
 	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOUR)) {

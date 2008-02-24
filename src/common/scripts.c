@@ -2104,11 +2104,11 @@ MAIN SCRIPT PARSING FUNCTION
  */
 void Com_AddObjectLinks (void)
 {
-	objDef_t *od = NULL;
+	objDef_t *od;
 	int i, n, m;
 	byte j, k;
 #ifndef DEDICATED_ONLY
-	technology_t *tech = NULL;
+	technology_t *tech;
 #endif
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {

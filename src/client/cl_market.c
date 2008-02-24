@@ -643,7 +643,6 @@ static void BS_SellItem_f (void)
 static void BS_Autosell_f (void)
 {
 	int num, item;
-	technology_t *tech = NULL;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent || !curCampaign)
@@ -668,8 +667,7 @@ static void BS_Autosell_f (void)
 		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell false\n", csi.ods[item].name);
 	} else {
 		/* Don't allow to enable autosell for items not researched. */
-		tech = csi.ods[item].tech;
-		if (!RS_IsResearched_ptr(tech))
+		if (!RS_IsResearched_ptr(csi.ods[item].tech))
 			return;
 		gd.autosell[item] = qtrue;
 		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell true\n", csi.ods[item].name);

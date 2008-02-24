@@ -680,7 +680,7 @@ void UP_AircraftDescription (technology_t* t)
 void UP_UGVDescription (const ugv_t *ugvType)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	assert(ugvType);
 
@@ -1051,8 +1051,8 @@ void UP_OpenCopyWith (const char *name)
  */
 static void UP_FindEntry_f (void)
 {
-	const char *id = NULL;
-	technology_t *tech = NULL;
+	const char *id;
+	technology_t *tech;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <id>\n", Cmd_Argv(0));

@@ -233,7 +233,7 @@ static qboolean RS_RequirementsResearchable (requirements_t *required_AND, requi
 	int i;
 	qboolean met_AND = qfalse;
 	qboolean met_OR = qfalse;
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	if (!required_AND && !required_OR) {
 		Com_Printf("RS_RequirementsResearchable: No requirement list(s) given as parameter.\n");
@@ -306,8 +306,8 @@ static qboolean RS_TechIsResearchable (technology_t * tech, base_t *base)
  */
 char *RS_GetDescription (descriptions_t *desc)
 {
-	technology_t *tech = NULL;
-	base_t* base = NULL;
+	technology_t *tech;
+	base_t* base;
 	int i = 0;
 
 	/* Return (unparsed) default description (0) if nothing is defined.
@@ -385,7 +385,7 @@ static qboolean RS_CheckCollected (requirements_t *required)
 	int i;
 	int amount;
 	qboolean something_collected_from_each = qtrue;
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	if (!required)
 		return qfalse;
@@ -451,10 +451,12 @@ static qboolean RS_CheckCollected (requirements_t *required)
  */
 void RS_CheckAllCollected (void)
 {
+#if 0
 	int i;
-	technology_t *tech = NULL;
-	requirements_t *required = NULL;
+	technology_t *tech;
+	requirements_t *required;
 
+	/* FIXME */
 	if (!required)
 		return;
 
@@ -468,6 +470,7 @@ void RS_CheckAllCollected (void)
 			RS_MarkCollected(tech);
 		}
 	}
+#endif
 }
 
 /**
@@ -480,7 +483,7 @@ void RS_CheckAllCollected (void)
 void RS_MarkResearchable (qboolean init)
 {
 	int i;
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	/* Set all entries to initial value. */
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -576,7 +579,7 @@ static void RS_AssignTechIdxs (requirements_t *req)
 void RS_RequiredIdxAssign (void)
 {
 	int i;
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = RS_GetTechByIDX(i);
@@ -731,7 +734,7 @@ void RS_InitTree (qboolean load)
  */
 const char *RS_GetName (const char *id)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	tech = RS_GetTechByID(id);
 	if (!tech) {
@@ -754,7 +757,7 @@ const char *RS_GetName (const char *id)
 static void RS_ResearchDisplayInfo (const base_t* base)
 {
 	char tmpbuf[128];
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	/* reset cvars */
 	Cvar_Set("mn_research_imagetop", "");
@@ -1038,7 +1041,7 @@ static void RS_RemoveScientist_f (void)
  */
 static void RS_ResearchStart_f (void)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	/* We are not in base view. */
 	if (!baseCurrent)
@@ -1107,7 +1110,7 @@ static void RS_ResearchStart_f (void)
  */
 static void RS_ResearchStop_f (void)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	/* we are not in base view */
 	if (!baseCurrent)
@@ -1151,7 +1154,7 @@ static void RS_ResearchStop_f (void)
  */
 static void RS_ShowPedia_f (void)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	/* We are not in base view. */
 	if (!baseCurrent)
@@ -1180,7 +1183,7 @@ void RS_UpdateData (base_t* base)
 	char name[MAX_VAR];
 	int i, j;
 	int available[MAX_BASES];
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cmd_ExecuteString("research_clear");
@@ -1350,7 +1353,7 @@ static void CL_ResearchType_f (void)
 static qboolean RS_DependsOn (char *id1, char *id2)
 {
 	int i;
-	technology_t *tech = NULL;
+	technology_t *tech;
 	stringlist_t required;
 
 	tech = RS_GetTechByID(id1);
@@ -1389,7 +1392,7 @@ static void RS_MarkResearched (technology_t *tech)
 void CL_CheckResearchStatus (void)
 {
 	int i, newResearch = 0;
-	technology_t *tech = NULL;
+	technology_t *tech;
 	base_t* checkBases[MAX_BASES];
 	base_t *base;
 
@@ -1480,8 +1483,8 @@ static const char *RS_TechTypeToName (researchType_t type)
 static void RS_TechnologyList_f (void)
 {
 	int i, j;
-	technology_t *tech = NULL;
-	requirements_t *req = NULL;
+	technology_t *tech;
+	requirements_t *req;
 
 	Com_Printf("#techs: %i\n", gd.numTechnologies);
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -1573,7 +1576,7 @@ void RS_MarkResearchedAll (void)
  */
 static void RS_DebugResearchAll (void)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	if (Cmd_Argc() != 2) {
 		RS_MarkResearchedAll();
@@ -1592,7 +1595,7 @@ static void RS_DebugResearchAll (void)
 static void RS_DebugResearchableAll (void)
 {
 	int i;
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	if (Cmd_Argc() != 2) {
 		for (i = 0; i < gd.numTechnologies; i++) {
@@ -1709,14 +1712,14 @@ static const value_t valid_techmail_vars[] = {
  */
 void RS_ParseTechnologies (const char *name, const char **text)
 {
-	const value_t *vp = NULL;
-	technology_t *tech = NULL;
+	const value_t *vp;
+	technology_t *tech;
 	unsigned hash;
 	int tech_old;
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
-	const char *token = NULL;
-	requirements_t *required_temp = NULL;
-	descriptions_t *desc_temp = NULL;
+	const char *token;
+	requirements_t *required_temp;
+	descriptions_t *desc_temp;
 	int i;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -2126,7 +2129,7 @@ qboolean RS_IsResearched_ptr (const technology_t * tech)
  */
 qboolean RS_ItemIsResearched (const char *id_provided)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	/* in multiplaer everyting is researched */
 	if (!ccs.singleplayer)
@@ -2177,7 +2180,7 @@ qboolean RS_TechIsResearched (int tech_idx)
 void RS_GetProvided (char *id, char *provided)
 {
 	int i, j;
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = RS_GetTechByIDX(i);
@@ -2294,11 +2297,13 @@ technology_t **RS_GetTechsByType (researchType_t type)
  */
 technology_t *RS_GetTechWithMostScientists (int base_idx)
 {
-	technology_t *tech = NULL;
-	technology_t *tech_temp = NULL;
-	int i = 0;
-	int max = 0;
+	technology_t *tech;
+	technology_t *tech_temp;
+	int i;
+	int max;
 
+	tech = NULL;
+	max = 0;
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech_temp = RS_GetTechByIDX(i);
 		if ((tech_temp->statusResearch == RS_RUNNING) && (tech_temp->base_idx == base_idx)) {

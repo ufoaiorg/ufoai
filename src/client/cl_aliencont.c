@@ -594,13 +594,12 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
  */
 static void AC_SelectAlien_f (void)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	if (!aliencontCurrent || !baseCurrent)
 		return;
 
 	tech = RS_GetTechByIDX(aliencontCurrent->techIdx);
-
 	if (!tech) {
 		MN_MenuTextReset(TEXT_UFOPEDIA);
 		return;
@@ -775,7 +774,7 @@ static void AC_PrevAC_f (void)
  */
 static void AC_OpenUFOpedia_f (void)
 {
-	technology_t *tech = NULL;
+	technology_t *tech;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
