@@ -744,7 +744,7 @@ static void AC_PrevAC_f (void)
 {
 	int i;
 	qboolean found = qfalse;
-	base_t *base = NULL;
+	base_t *base;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)

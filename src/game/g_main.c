@@ -480,6 +480,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	if (chr->empl_type == EMPL_ROBOT)
 		return;
 
+	totalGainedXP = 0;
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
 		maxXP = CHRSH_CharGetMaxExperiencePerMission(i);
 		gainedXP = G_GetEarnedExperience(i, chr);

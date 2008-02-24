@@ -1668,8 +1668,8 @@ void AIM_AircraftEquipDeleteItem_f (void)
  */
 void AIM_AircraftEquipMenuClick_f (void)
 {
-	aircraft_t *aircraft = NULL;
-	base_t *base = NULL;
+	aircraft_t *aircraft;
+	base_t *base;
 	int num;
 	technology_t **list;
 	const menu_t *activeMenu;
@@ -1689,13 +1689,12 @@ void AIM_AircraftEquipMenuClick_f (void)
 		if (baseCurrent->aircraftCurrent < 0)
 			return;
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-		assert(aircraft);
-		assert(!base);
+		base = NULL;
 	} else if (!Q_strncmp(activeMenu->name, "basedefense", 11)) {
 		base = baseCurrent;
-		assert(base);
-		assert(!aircraft);
-	}
+		aircraft = NULL;
+	} else
+		return;
 
 	/* Which entry in the list? */
 	num = atoi(Cmd_Argv(1));

@@ -1378,8 +1378,8 @@ static int spawnCountFromServer = -1;
  */
 static void CL_SpawnSoldiers_f (void)
 {
-	int n = cl_teamnum->integer;
-	base_t *base = NULL;
+	const int n = cl_teamnum->integer;
+	base_t *base;
 	aircraft_t *aircraft = cls.missionaircraft;
 	chrList_t chr_list_temp;
 	int i;

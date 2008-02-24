@@ -479,7 +479,7 @@ void UP_ItemDescription (int item)
  */
 static void UP_ArmourDescription (technology_t* t)
 {
-	objDef_t *od = NULL;
+	objDef_t *od;
 	int i;
 
 	/* select item */

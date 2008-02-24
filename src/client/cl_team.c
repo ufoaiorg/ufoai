@@ -1117,8 +1117,8 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
 	int i, p;
 	int hired_in_base;
-	employee_t *employee = NULL;
-	base_t *base = NULL;
+	employee_t *employee;
+	base_t *base;
 
 	assert(aircraft);
 	base = aircraft->homebase;
@@ -1482,7 +1482,7 @@ static void CL_TeamListDebug_f (void)
 	int i;
 	character_t *chr;
 	employee_t *employee;
-	base_t *base = NULL;
+	base_t *base;
 	aircraft_t *aircraft;
 
 	base = CP_GetMissionBase();
@@ -1517,7 +1517,7 @@ static void CL_TeamListDebug_f (void)
 static void CL_AssignSoldier_f (void)
 {
 	int num = -1;
-	employee_t *employee = NULL;
+	employee_t *employee;
 	aircraft_t *aircraft;
 	employeeType_t employeeType =
 		display_heavy_equipment_list
@@ -2023,19 +2023,17 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
 	static int num = 0;
 	int i, j;
-	character_t* chr = NULL;
-	employee_t* employee = NULL;
+	character_t* chr;
+	employee_t* employee;
 
 	if (updateCharacter) {
 		for (i = 0; i < num; i++) {
-			chr = NULL;
 			employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
-			if (employee) {
-				chr = &employee->chr;
-			} else {
+			if (!employee) {
 				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
 				continue;
 			}
+			chr = &employee->chr;
 			chr->HP = updateCharacterArray[i].HP;
 			chr->STUN = updateCharacterArray[i].STUN;
 			chr->morale = updateCharacterArray[i].morale;
@@ -2113,7 +2111,7 @@ void CL_ParseResults (struct dbuffer *msg)
 	int our_surviviurs, our_killed, our_stunned;
 	int thier_surviviurs, thier_killed, thier_stunned;
 	int civilian_surviviurs, civilian_killed, civilian_stunned;
-	base_t *base = NULL;
+	base_t *base;
 
 	/* get number of teams */
 	num = NET_ReadByte(msg);

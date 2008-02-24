@@ -486,6 +486,7 @@ int CP_CountMissionOnGeoscape (void)
 	return counterVisibleMission;
 }
 
+#ifdef DEBUG
 /**
  * @brief List all current mission to console.
  * @note Use with debug_missionlist
@@ -509,6 +510,7 @@ static void CL_DebugMissionList_f (void)
 		Com_Printf("...UFO %s\n", mission->ufo ? mission->ufo->id : "No UFO");
 	}
 }
+#endif
 
 /**
  * @brief Removes a mission from geoscape: make it non visible and call notify functions
@@ -3109,7 +3111,7 @@ static void CL_GameGo (void)
 {
 	mission_t *mis;
 	aircraft_t *aircraft;
-	base_t *base = NULL;
+	base_t *base;
 
 	if (!curCampaign) {
 		Com_DPrintf(DEBUG_CLIENT, "curCampaign: %p, selectedMission: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selectedMission, gd.interceptAircraft);
@@ -4871,8 +4873,8 @@ static void CP_UFORecovered_f (void)
 {
 	int i;
 	ufoType_t UFOtype;
-	base_t *base = NULL;
-	aircraft_t *ufocraft = NULL;
+	base_t *base;
+	aircraft_t *ufocraft;
 	qboolean store = qfalse, ufofound = qfalse;
 
 	if (Cmd_Argc() < 2) {
@@ -4890,6 +4892,7 @@ static void CP_UFORecovered_f (void)
 	/* At the beginning we enable all UFO recovery options. */
 	Cmd_ExecuteString("menuwon_update_buttons");
 
+	ufocraft = NULL;
 	/* Find ufo sample of given ufotype. */
 	for (i = 0; i < numAircraft_samples; i++) {
 		ufocraft = &aircraft_samples[i];
@@ -4906,6 +4909,7 @@ static void CP_UFORecovered_f (void)
 		return;
 	}
 
+	base = NULL;
 	/* Now we have to check whether we can store the UFO in any base. */
 	for (i = 0; i < gd.numBases; i++) {
 		base = B_GetBase(i);
@@ -4916,13 +4920,16 @@ static void CP_UFORecovered_f (void)
 			break;
 		}
 	}
+
 	/* Put relevant info into missionresults array. */
 	missionresults.recovery = qtrue;
 	missionresults.crashsite = qfalse;
 	missionresults.ufotype = ufocraft->ufotype;
+
 	/* Do nothing without any base. */
 	if (!base)
 		return;
+
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
@@ -5021,8 +5028,8 @@ static void CP_UFORecoveredStart_f (void)
 static void CP_UFORecoveredStore_f (void)
 {
 	int i, baseHasUFOHangarCount = 0, recoveryBase = -1;
-	base_t *base = NULL;
-	aircraft_t *ufocraft = NULL;
+	base_t *base;
+	aircraft_t *ufocraft;
 	static char recoveryBaseSelectPopup[512];
 	qboolean ufofound = qfalse;
 

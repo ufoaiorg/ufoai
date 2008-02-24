@@ -123,8 +123,8 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 void AIR_UpdateHangarCapForAll (int base_idx)
 {
 	int i;
-	base_t *base = NULL;
-	aircraft_t *aircraft = NULL;
+	base_t *base;
+	aircraft_t *aircraft;
 
 	base = B_GetBase(base_idx);
 
@@ -776,10 +776,10 @@ void AIR_NewAircraft (base_t *base, const char *name)
  */
 void AIR_DeleteAircraft (aircraft_t *aircraft)
 {
-	int i = 0;
-	base_t *base = NULL;
-	aircraft_t *aircraft_temp = NULL;
-	int previous_aircraftCurrent = baseCurrent->aircraftCurrent;
+	int i;
+	base_t *base;
+	aircraft_t *aircraft_temp;
+	const int previous_aircraftCurrent = baseCurrent->aircraftCurrent;
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: no aircraft given (NULL)\n");

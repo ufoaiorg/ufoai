@@ -294,7 +294,7 @@ static void HOS_UpdateMenu (void)
 	char rank[128];
 	int i, j, k, type;
 	int entry;
-	employee_t* employee = NULL;
+	employee_t* employee;
 
 	/* Reset list. */
 	Cbuf_AddText("hospital_clear\n");
@@ -394,7 +394,7 @@ static void HOS_Init_f (void)
 static void HOS_HealAll_f (void)
 {
 	int i, type;
-	employee_t* employee = NULL;
+	employee_t* employee;
 
 	if (!baseCurrent)
 		return;
@@ -414,14 +414,16 @@ static void HOS_HealAll_f (void)
  */
 static void HOS_HurtAll_f (void)
 {
-	int i, type, amount = 1;
-	employee_t* employee = NULL;
+	int i, type, amount;
+	employee_t* employee;
 
 	if (!baseCurrent)
 		return;
 
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
+	else
+		amount = 1;
 
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {

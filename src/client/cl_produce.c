@@ -207,9 +207,8 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t* base, int amount, requi
 static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signed int objID, signed int amount, qboolean disassembling)
 {
 	int numWorkshops = 0;
-	objDef_t *od = NULL;
-	aircraft_t *aircraft = NULL;
-	production_t *prod = NULL;
+	production_t *prod;
+	technology_t *tech;
 
 	assert(base);
 
@@ -231,11 +230,10 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 	/* initialize */
 	prod = &queue->items[queue->numItems];
 	memset(prod, 0, sizeof(production_t));
-	if (produceCategory != BUY_AIRCRAFT) {
-		od = &csi.ods[objID];
-		assert(od->tech);
-	} else
-		aircraft = &aircraft_samples[objID];
+	if (produceCategory != BUY_AIRCRAFT)
+		tech = csi.ods[objID].tech;
+	else
+		tech = aircraft_samples[objID].tech;
 
 	/* We cannot queue new aircraft if no free hangar space. */
 	if (produceCategory == BUY_AIRCRAFT) {
@@ -263,19 +261,14 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 		prod->percentDone = 0.0f;
 	} else {	/* Production. */
 		prod->production = qtrue;
-		if (produceCategory == BUY_AIRCRAFT) {
+		if (produceCategory == BUY_AIRCRAFT)
 			prod->aircraft = qtrue;
-			if (aircraft->tech->produceTime < 0)
-				return NULL;
-			else
-				prod->percentDone = 0.0f;
-		} else {
-			/* Don't try to add to queue an item which is not producible. */
-			if (od->tech->produceTime < 0)
-				return NULL;
-			else
-				prod->percentDone = 0.0f;
-		}
+
+		/* Don't try to add to queue an item which is not producible. */
+		if (tech->produceTime < 0)
+			return NULL;
+		else
+			prod->percentDone = 0.0f;
 	}
 
 	queue->numItems++;
@@ -292,8 +285,8 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 static void PR_QueueDelete (base_t* base, production_queue_t *queue, int index)
 {
 	int i;
-	objDef_t *od = NULL;
-	production_t *prod = NULL;
+	objDef_t *od;
+	production_t *prod;
 
 	prod = &queue->items[index];
 
@@ -384,8 +377,8 @@ static void PR_QueueNext (base_t* base)
 void PR_ProductionRun (void)
 {
 	int i;
-	objDef_t *od = NULL;
-	aircraft_t *aircraft = NULL;
+	objDef_t *od;
+	aircraft_t *aircraft;
 	production_t *prod;
 	aircraft_t *ufocraft;
 	base_t *base;
@@ -409,10 +402,13 @@ void PR_ProductionRun (void)
 
 		prod = &gd.productions[i].items[0];
 		assert(prod->objID >= 0);
-		if (!prod->aircraft)
+		if (!prod->aircraft) {
 			od = &csi.ods[prod->objID];
-		else
+			aircraft = NULL;
+		} else {
 			aircraft = &aircraft_samples[prod->objID];
+			od = NULL;
+		}
 
 		if (prod->production) {	/* This is production, not disassembling. */
 			if (!prod->aircraft) {
@@ -666,8 +662,8 @@ static void PR_AircraftInfo (const base_t* base)
 static void PR_ProductionListRightClick_f (void)
 {
 	int i, j, num, idx;
-	objDef_t *od = NULL;
-	production_queue_t *queue = NULL;
+	objDef_t *od;
+	production_queue_t *queue;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
@@ -718,11 +714,11 @@ static void PR_ProductionListRightClick_f (void)
 static void PR_ProductionListClick_f (void)
 {
 	int i, j, num, idx;
-	objDef_t *od = NULL;
-	aircraft_t *aircraft = NULL;
-	components_t *comp = NULL;
-	production_queue_t *queue = NULL;
-	production_t *prod = NULL;
+	objDef_t *od;
+	aircraft_t *aircraft;
+	components_t *comp;
+	production_queue_t *queue;
+	production_t *prod;
 	base_t* base;
 
 	/* can be called from everywhere without a started game */
@@ -1139,10 +1135,10 @@ static void PR_ProductionIncrease_f (void)
 {
 	int amount = 1, amount_temp = 0;
 	int producible_amount;
-	production_queue_t *queue = NULL;
-	objDef_t *od = NULL;
-	aircraft_t *aircraft = NULL;
-	production_t *prod = NULL;
+	production_queue_t *queue;
+	objDef_t *od;
+	aircraft_t *aircraft;
+	production_t *prod;
 	base_t* base;
 
 	if (!baseCurrent)

@@ -113,8 +113,8 @@ static void E_EmployeeListScroll_f (void)
 static void E_EmployeeList_f (void)
 {
 	int i, j;
-	employee_t* employee = NULL;
-	int employeeIdx = -1;
+	employee_t* employee;
+	int employeeIdx;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !curCampaign)
@@ -131,6 +131,8 @@ static void E_EmployeeList_f (void)
 
 	if (Cmd_Argc() == 3)
 		employeeIdx = atoi(Cmd_Argv(2));
+	else
+		employeeIdx = -1;
 
 	/* reset the employee count */
 	employeesInCurrentList = 0;
@@ -833,7 +835,7 @@ void E_DeleteAllEmployees (base_t* base)
  */
 qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 {
-	employee_t * employee = NULL;
+	employee_t * employee;
 
 	switch (type) {
 	case EMPL_SOLDIER:

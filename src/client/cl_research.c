@@ -500,7 +500,7 @@ void RS_MarkResearchable (qboolean init)
 			/* Check for collected items/aliens/etc... */
 
 			if (tech->statusResearch != RS_FINISH) {
-				base_t* base = NULL;
+				base_t* base;
 				Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
@@ -952,8 +952,8 @@ static void RS_AssignScientist_f (void)
  */
 void RS_RemoveScientist (technology_t* tech)
 {
-	employee_t *employee = NULL;
-	base_t *base = NULL;
+	employee_t *employee;
+	base_t *base;
 
 	assert(tech);
 
@@ -968,6 +968,9 @@ void RS_RemoveScientist (technology_t* tech)
 			/* Remove the sci from the lab and set number of used lab-space. */
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
 		}
+	} else {
+		employee = NULL;
+		base = NULL;
 	}
 
 	assert(tech->scientists >= 0);
@@ -995,7 +998,7 @@ void RS_RemoveScientist (technology_t* tech)
  */
 static void RS_MaxOutResearch (const base_t *base, technology_t* tech)
 {
-	employee_t *employee = NULL;
+	employee_t *employee;
 
 	if (!base || !tech)
 		return;

@@ -397,10 +397,10 @@ void INV_InitialEquipment (base_t *base, const campaign_t* campaign)
 void INV_ParseComponents (const char *name, const char **text)
 {
 	int i;
-	objDef_t *od = NULL;
-	components_t *comp = NULL;
+	objDef_t *od;
+	components_t *comp;
 	const char *errhead = "INV_ParseComponents: unexpected end of file.";
-	const char *token = NULL;
+	const char *token;
 
 	/* get body */
 	token = COM_Parse(text);

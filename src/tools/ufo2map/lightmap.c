@@ -1121,7 +1121,7 @@ void BuildFacelights (unsigned int facenum)
 void FinalLightFace (unsigned int facenum)
 {
 	dBspFace_t *f;
-	int i, j, k, st, pfacenum;
+	int i, j, k, pfacenum;
 	patch_t *patch;
 	triangulation_t *trian = NULL;
 	facelight_t	*fl;
@@ -1186,8 +1186,8 @@ void FinalLightFace (unsigned int facenum)
 
 	for (j = 0; j < fl->numsamples; j++) {
 		VectorCopy((fl->samples + j * 3), lb);
-		if (config.numbounce > 0 && st == 0) {
-			vec3_t	add;
+		if (config.numbounce > 0) {
+			vec3_t add;
 			SampleTriangulation(fl->origins + j * 3, trian, add);
 			VectorAdd(lb, add, lb);
 		}
@@ -1218,7 +1218,7 @@ void FinalLightFace (unsigned int facenum)
 			newmax = 0;		/* roundoff problems */
 		if (newmax > config.maxlight)
 			newmax = config.maxlight;
-			for (k = 0; k < 3; k++) {
+		for (k = 0; k < 3; k++) {
 			*dest++ = lb[k] * newmax / max;
 		}
 	}

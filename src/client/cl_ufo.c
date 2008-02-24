@@ -616,8 +616,8 @@ void UFO_CampaignCheckEvents (void)
 void UFO_UpdateUFOHangarCapForAll (int base_idx)
 {
 	int i;
-	base_t *base = NULL;
-	aircraft_t *ufocraft = NULL;
+	base_t *base;
+	aircraft_t *ufocraft;
 
 	base = B_GetBase(base_idx);
 

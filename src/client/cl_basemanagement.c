@@ -2996,7 +2996,7 @@ static void B_CheckMaxBases_f (void)
 static void B_PrintCapacities_f (void)
 {
 	int i, j;
-	base_t *base = NULL;
+	base_t *base;
 	buildingType_t building;
 
 	if (Cmd_Argc() < 2) {

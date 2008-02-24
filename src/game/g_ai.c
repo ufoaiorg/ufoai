@@ -168,7 +168,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 	/* shooting */
 	maxDmg = 0.0;
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
-		objDef_t *od = NULL;	/* Ammo pointer */
+		objDef_t *od;	/* Ammo pointer */
 		int weap_idx = NONE;		/* Weapon index */
 		fireDef_t *fd;
 
@@ -191,6 +191,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			od = &gi.csi->ods[LEFT(ent)->item.m];
 			weap_idx = LEFT(ent)->item.t;
 		} else {
+			od = NULL;
 			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcGuete: @todo: grenade/knife toss from inventory using empty hand\n");
 			/* @todo: grenade/knife toss from inventory using empty hand */
 			/* @todo: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */

@@ -403,8 +403,8 @@ static void TR_TransferSelect_f (void)
 	int type, empltype;
 	int numempl[MAX_EMPL], trempl[MAX_EMPL];
 	int i, j, cnt = 0;
-	employee_t* employee = NULL;
-	aircraft_t *aircraft = NULL;
+	employee_t* employee;
+	aircraft_t *aircraft;
 	char str[128];
 
 	if (!transferBase || !baseCurrent)
@@ -1220,7 +1220,7 @@ static void TR_TransferBaseSelect (base_t *base)
 static void TR_NextBase_f (void)
 {
 	int i, counter;
-	base_t *base = NULL;
+	base_t *base;
 
 	if (!baseCurrent)
 		return;
@@ -1258,7 +1258,7 @@ static void TR_NextBase_f (void)
 static void TR_PrevBase_f (void)
 {
 	int i, counter;
-	base_t *base = NULL;
+	base_t *base;
 
 	if (!baseCurrent)
 		return;

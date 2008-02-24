@@ -180,10 +180,10 @@ static void BS_MarketClick_f (void)
  */
 static int AIR_GetStorageSupply (const char *airCharId, qboolean inbase)
 {
-	base_t *base = NULL;
-	aircraft_t *aircraft = NULL;
+	base_t *base;
+	aircraft_t *aircraft;
 	int i, j;
-	int amount = 0, storage = 0, supply = 0;
+	int amount = 0, storage = 0, supply;
 
 	assert(baseCurrent);
 
