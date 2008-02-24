@@ -322,11 +322,6 @@ typedef struct nation_s {
 	int maxUgvs;		/**< How many (monthly) ugvs (robots).
 				 * @todo this needs to be removed here and added into the buy&produce menues.
 				 */
-
-	/** A list if points where the border of this nation is located
-	@todo not used right now? */
-	vec2_t borders[MAX_NATION_BORDERS];	/**< GL_LINE_LOOP coordinates */
-	int numBorders;		/**< coordinate count */
 } nation_t;
 
 #define MAX_NATIONS 8

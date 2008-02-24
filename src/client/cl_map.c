@@ -1152,10 +1152,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	aircraft_t *aircraft;
 	const linkedList_t *list = ccs.missions;
 	aircraftProjectile_t *projectile;
-	int x, y, i, j;
+	int x, y, i;
 	base_t* base;
-	const char* font = NULL;
-	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
+	const char* font;
 	const vec2_t northPole = {0.0f, 90.0f};
 	float angle = 0.0f;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
@@ -1326,23 +1325,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
 	}
 
-	/* FIXME */
-	/* use the latitude and longitude values from nation border definition to draw a polygon */
-	for (i = 0; i < gd.numNations; i++) {
-		if (gd.nations[i].numBorders) {
-			for (j = 0; j < gd.nations[i].numBorders; j++) {
-				/* FIXME: doesn't work for scrolling the map */
-				MAP_AllMapToScreen(node, gd.nations[i].borders[j], &x, &y, NULL);
-				borders[j * 2] = x;
-				borders[j * 2 + 1] = y;
-			}
-			R_DrawPolygon(gd.nations[i].numBorders, borders);
-			R_DrawLineLoop(gd.nations[i].numBorders, borders);
-		}
-	}
-
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
-
 
 	/* Draw nation names */
 	for (i = 0; i < gd.numNations; i++) {
