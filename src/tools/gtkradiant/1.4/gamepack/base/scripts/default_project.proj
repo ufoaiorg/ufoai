@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE project SYSTEM "dtds/project.dtd">
+<!--
+project template
+the $* strings will be expanded following these rules:
+$TEMPLATEapppath: path to the Radiant .. C:\Program Files\Gtkradiant
+$TEMPLATEenginepath: path to the engine .. C:\Program Files\UFO Alien Invasion\GameData
+$TEMPLATEtoolspath: path to the tools directory (enginepath)radiant
+  (NOTE: on win32 tools directory is usually where the editor is .. but it's not true on linux)
+$TEMPLATEuserhomepath: on linux, the directory with write permissions for saving maps etc.
+  on win32, == $TEMPLATEenginepath
+$TEMPLATEbasedir: base game dir
+
+Note : Default project settings are for single player... this can be changed throught the projects select in the File Menu
+
+-->
+<project>
+  <key name="version" value="1"/>
+  <key name="basepath" value="$TEMPLATEenginepath$TEMPLATEbasedir/"/>
+  <key name="rshcmd" value=""/>
+  <key name="remotebasepath" value="$TEMPLATEenginepath$TEMPLATEbasedir/"/>
+  <key name="entitypath" value="$TEMPLATEtoolspath$TEMPLATEbasedir/scripts/entities.def"/>
+  <key name="texturepath" value="$TEMPLATEenginepath$TEMPLATEbasedir/textures/"/>
+  <key name="autosave" value="$TEMPLATEuserhomepath$TEMPLATEbasedir/maps/autosave.map"/>
+  <key name="mapspath" value="$TEMPLATEuserhomepath$TEMPLATEbasedir/maps/"/>
+
+  <key name="bsp_Q3Map2: (fast)" value="! &quot;$TEMPLATEapppathufo2map&quot; $"/>
+
+</project>
+
