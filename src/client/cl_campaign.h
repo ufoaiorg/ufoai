@@ -415,7 +415,7 @@ void CL_ParseNations(const char *name, const char **text);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameInit(qboolean load);
-void AIR_NewAircraft(base_t * base, const char *name);
+aircraft_t* AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);

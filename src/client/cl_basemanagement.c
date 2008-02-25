@@ -2488,17 +2488,19 @@ static void B_BuildBase_f (void)
 				INV_InitialEquipment(baseCurrent, curCampaign);
 				/* buy two first aircraft */
 				if (baseCurrent->hasBuilding[B_HANGAR]) {
-						aircraft = AIR_GetAircraft("craft_drop_firebird");
-						if (aircraft)
-							AIR_NewAircraft(baseCurrent, "craft_drop_firebird");
-						CL_UpdateCredits(ccs.credits - aircraft->price);
+					aircraft = AIR_GetAircraft("craft_drop_firebird");
+					if (!aircraft)
+						Sys_Error("Could not find craft_drop_firebird definition");
+					AIR_NewAircraft(baseCurrent, "craft_drop_firebird");
+					CL_UpdateCredits(ccs.credits - aircraft->price);
 				}
 				if (baseCurrent->hasBuilding[B_SMALL_HANGAR]) {
 					aircraft = AIR_GetAircraft("craft_inter_stiletto");
-					if (aircraft)
-						AIR_NewAircraft(baseCurrent, "craft_inter_stiletto");
+					if (!aircraft)
+						Sys_Error("Could not find craft_inter_stiletto definition");
+					aircraft = AIR_NewAircraft(baseCurrent, "craft_inter_stiletto");
 					CL_UpdateCredits(ccs.credits - aircraft->price);
-					AIM_AutoEquipAircraft(&baseCurrent->aircraft[1]);
+					AIM_AutoEquipAircraft(aircraft);
 				}
 				CL_GameTimeFast();
 				CL_GameTimeFast();

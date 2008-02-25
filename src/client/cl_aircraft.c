@@ -715,7 +715,7 @@ aircraft_t *AIR_GetAircraft (const char *name)
  * @param[in] name Id of aircraft to add (aircraft->id).
  * @sa B_Load
  */
-void AIR_NewAircraft (base_t *base, const char *name)
+aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 {
 	aircraft_t *aircraft;
 
@@ -763,7 +763,9 @@ void AIR_NewAircraft (base_t *base, const char *name)
 			/* also update the base menu buttons */
 			Cmd_ExecuteString("base_init");
 		}
+		return aircraft;
 	}
+	return NULL;
 }
 
 /**
