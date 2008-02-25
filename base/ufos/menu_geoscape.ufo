@@ -548,7 +548,7 @@ menu popup_intercept_ready
 
 	func init
 	{
-		cmd 	"game_auto_check;game_timestop;"
+		cmd 	"game_auto_check;"
 	}
 }
 
@@ -644,7 +644,7 @@ menu popup_base_attack
 
 	func init
 	{
-		cmd	"game_auto_check;game_timestop;"
+		cmd	"game_auto_check;"
 	}
 }
 
@@ -987,11 +987,6 @@ menu popup_baseattack
 		string	"_Enter"
 		pos		"618 466"
 		align	cc
-	}
-
-	func init
-	{
-		cmd		"game_timestop;"
 	}
 }
 
