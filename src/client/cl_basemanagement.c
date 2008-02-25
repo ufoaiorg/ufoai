@@ -1094,6 +1094,27 @@ void B_SetUpBase (base_t* base)
 		Com_Printf("B_SetUpBase()... A new base should have an entrance.\n");
 	}
 
+	/* Add aircraft to the first base */
+	base->numAircraftInBase = 0;
+	if (gd.numBases == 1) {
+		aircraft_t *aircraft;
+		/* buy two first aircraft */
+		if (base->hasBuilding[B_HANGAR]) {
+			aircraft = AIR_GetAircraft("craft_drop_firebird");
+			if (!aircraft)
+				Sys_Error("Could not find craft_drop_firebird definition");
+			AIR_NewAircraft(base, "craft_drop_firebird");
+			CL_UpdateCredits(ccs.credits - aircraft->price);
+		}
+		if (base->hasBuilding[B_SMALL_HANGAR]) {
+			aircraft = AIR_GetAircraft("craft_inter_stiletto");
+			if (!aircraft)
+				Sys_Error("Could not find craft_inter_stiletto definition");
+			AIR_NewAircraft(base, "craft_inter_stiletto");
+			CL_UpdateCredits(ccs.credits - aircraft->price);
+		}
+	}
+
 	/* a new base is not discovered (yet) */
 	base->alienInterest = newBaseAlienInterest;
 
@@ -2462,7 +2483,6 @@ static void B_BuildBase_f (void)
 			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
-			baseCurrent->numAircraftInBase = 0;
 			baseCurrent->baseStatus = BASE_WORKING;
 			campaignStats.basesBuild++;
 			gd.mapAction = MA_NONE;
@@ -2481,23 +2501,14 @@ static void B_BuildBase_f (void)
 
 			/* initial base equipment */
 			if (gd.numBases == 1) {
-				aircraft_t *aircraft;
+				int i;
+
 				INV_InitialEquipment(baseCurrent, curCampaign);
-				/* buy two first aircraft */
-				if (baseCurrent->hasBuilding[B_HANGAR]) {
-					aircraft = AIR_GetAircraft("craft_drop_firebird");
-					if (!aircraft)
-						Sys_Error("Could not find craft_drop_firebird definition");
-					AIR_NewAircraft(baseCurrent, "craft_drop_firebird");
-					CL_UpdateCredits(ccs.credits - aircraft->price);
-				}
-				if (baseCurrent->hasBuilding[B_SMALL_HANGAR]) {
-					aircraft = AIR_GetAircraft("craft_inter_stiletto");
-					if (!aircraft)
-						Sys_Error("Could not find craft_inter_stiletto definition");
-					CL_UpdateCredits(ccs.credits - aircraft->price);
-					aircraft = AIR_NewAircraft(baseCurrent, "craft_inter_stiletto");
-					if (aircraft)
+				/* Auto equip interceptors with weapons and ammos */
+				for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
+					aircraft_t *aircraft = &baseCurrent->aircraft[i];
+					assert(aircraft);
+					if (aircraft->type == AIRCRAFT_INTERCEPTOR)
 						AIM_AutoEquipAircraft(aircraft);
 				}
 				CL_GameTimeFast();
