@@ -881,12 +881,9 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
  */
 void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 {
-	int i, j, c, mask;
+	int i, j, mask;
 	byte *p;
-	float f;
-
-	p = (byte *)in;
-	c = width * height;
+	const int c = width * height;
 
 	switch (type) {
 	case it_effect:
@@ -903,10 +900,10 @@ void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 		break;
 	}
 
-	for (i = 0; i < c; i++, p += 4) {
+	for (i = 0, p = (byte *)in; i < c; i++, p += 4) {
 		for (j = 0; j < 3; j++) {
 			/* first brightness */
-			f = p[j] / 255.0;  /* as float */
+			float f = p[j] / 255.0;  /* as float */
 
 			if (type != it_lightmap)  /* scale */
 				f *= r_brightness->value;
@@ -969,11 +966,11 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	if (scaled_height < 1)
 		scaled_height = 1;
 
-	scaled = data;
-
 	if (scaled_width != width || scaled_height != height) {  /* whereas others need to be scaled */
 		scaled = (unsigned *)Mem_PoolAlloc(scaled_width * scaled_height * sizeof(unsigned), vid_imagePool, 0);
 		R_ScaleTexture(data, width, height, scaled, scaled_width, scaled_height);
+	} else {
+		scaled = data;
 	}
 
 	/* and filter */
@@ -982,9 +979,9 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;
-	scan = ((byte *) scaled) + 3;
 	samples = gl_compressed_solid_format ? gl_compressed_solid_format : gl_solid_format;
-	for (i = 0; i < c; i++, scan += 4) {
+	/* set scan to the first alpha byte */
+	for (i = 0, scan = ((byte *) scaled) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
 			samples = gl_compressed_alpha_format ? gl_compressed_alpha_format : gl_alpha_format;
 			break;
