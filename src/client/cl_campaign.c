@@ -1071,7 +1071,7 @@ static void CP_MissionStageEnd (mission_t *mission)
 /**
  * @brief Mission is finished because Phalanx team ended it.
  */
-static void CP_MissionIsOver (mission_t *mission)
+static inline void CP_MissionIsOver (mission_t *mission)
 {
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
@@ -1091,7 +1091,7 @@ static void CP_MissionIsOver (mission_t *mission)
 /**
  * @brief Mission is finished because Phalanx team ended it.
  */
-inline void CP_MissionIsOverByUfo (aircraft_t *ufocraft)
+void CP_MissionIsOverByUfo (aircraft_t *ufocraft)
 {
 	CP_MissionIsOver(CP_GetMissionByUFO(ufocraft));
 }
