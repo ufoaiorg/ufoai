@@ -11,9 +11,9 @@ FAST_UFO2MAPFLAGS =
 all: $(BSPS)
 	echo $(MAPSRCS)
 
-# Doesn't seem to work under Windows (I just remove the "-extra" from UFO2MAPFLAGS right now. Is ther a better way? --Hoehrer)
 fast:
-	$(MAKE) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
+	# "Makefile.win" should best be replaced by a variable with that exact info. Does anybody know how it's called?
+	$(MAKE) -fMakefile.win all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
 
 clean:
 	echo "Deleting all .bsp files in all subdirectories..."
