@@ -687,13 +687,16 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 	trace_t trace;
 	cBspModel_t *model;
 	const char **name;
+	int worldFound;
 
 	/* trace against world first */
 	if (CM_TestLine(start, stop))
-		return 1;
+		worldFound = 1;
+	else
+		worldFound = 0;
 	/* no local models */
 	if (!inlineList)
-		return 0;
+		return worldFound;
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
@@ -710,7 +713,7 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 	}
 
 	/* not blocked */
-	return 0;
+	return worldFound;
 }
 
 
@@ -2184,7 +2187,7 @@ static void BuildTracingNode_r (int node, int level)
 		/* FIXME: What about visibility checks - should LEVEL_ACTORCLIP
 		 * be removed here, too? Problem is, the tnode functions are used
 		 * for pathfinding, too */
-		if (level <= LEVEL_WEAPONCLIP) {
+		if (level <= LEVEL_LASTVISIBLE) {
 			curTile->cheads[curTile->numcheads].cnode = node;
 			curTile->cheads[curTile->numcheads].level = level;
 			curTile->numcheads++;
@@ -2219,7 +2222,10 @@ static void CM_MakeTracingNodes (void)
 		curTile->numtheads++;
 		assert(curTile->numtheads < LEVEL_MAX);
 
-		BuildTracingNode_r(curTile->cmodels[i].headnode, i);
+		/* If this level (i) is the last visible level or earlier, then trace it.
+		 * Otherwise don't; we have separate checks for entities. */
+		if (i <= LEVEL_LASTVISIBLE)
+			BuildTracingNode_r(curTile->cmodels[i].headnode, i);
 	}
 }
 
@@ -3026,6 +3032,9 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 		return;
 	}
 	inlineList = list;
+
+	/* Update the tracing nodes to ensure that we have the shortest paths */
+	CM_MakeTracingNodes();
 
 	/* get dimensions */
 	if (VectorNotEmpty(angles)) {
