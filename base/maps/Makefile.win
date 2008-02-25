@@ -1,20 +1,23 @@
 MAPSDIR = .
 
-UFO2MAP = ufo2map.exe
+UFO2MAP = ..\..\ufo2map.exe
 
 MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "tutorial" | findstr /V "autosave") # Windows version. Excludes "*tutorial*", "*prefab*" and "*autosave*" maps (what about test*?)
 BSPS = $(MAPSRCS:%.map=%.bsp)
 
 UFO2MAPFLAGS = -extra
 FAST_UFO2MAPFLAGS =
+ENTS_UFO2MAPFLAGS = -onlyents
 
 all: $(BSPS)
-	echo $(MAPSRCS)
 
 fast:
 #	Call make again with this makefile but with the new compiler-flags.
 	$(MAKE) -f$(MAKEFILE_LIST) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
 
+ents:
+	$(MAKE) -f$(MAKEFILE_LIST) all UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
+	
 clean:
 	echo "Deleting all .bsp files in all subdirectories..."
 	del /S $(MAPSDIR)\*.bsp
