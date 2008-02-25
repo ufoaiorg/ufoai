@@ -134,6 +134,7 @@ static void S_Music_Start (const char *file)
 		Com_Printf("Could not load '%s' background track\n", name);
 		return;
 	}
+	assert(!music.data);
 	music.data = Mix_LoadMUS_RW(music.musicSrc);
 
 	if (music.data) {
@@ -580,6 +581,7 @@ void S_Frame (void)
 	}
 	if (music.nextMusicTrack) {
 		if (!Mix_PlayingMusic()) {
+			S_Music_Stop(); /* free the allocated memory */
 			S_Music_Start(music.nextMusicTrack);
 			Mem_Free(music.nextMusicTrack);
 			music.nextMusicTrack = NULL;
@@ -665,8 +667,8 @@ static void S_Music_Change_f (void)
 		return;
 	}
 	rnd = rand() % musicArrayLength[category];
+	Com_Printf("music change to %s (from %s)\n", musicArrays[category][rnd], snd_music->string);
 	Cvar_Set("snd_music", musicArrays[category][rnd]);
-	Com_Printf("music change to %s\n", musicArrays[category][rnd]);
 }
 
 /**
