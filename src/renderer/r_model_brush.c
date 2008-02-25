@@ -586,7 +586,6 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	int i;
 	unsigned *buffer;
 	dBspHeader_t *header;
-	mBspHeader_t *bm;
 
 	/* get new model */
 	if ((r_numModels < 0) || (r_numModels >= MAX_MOD_KNOWN))
@@ -643,6 +642,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	 * are the models of the different levels, don't
 	 * care about them */
 	for (i = LEVEL_TRACING - 1; i < loadmodel->bsp.numsubmodels; i++) {
+		const mBspHeader_t *bm;
 		model_t *starmod;
 
 		bm = &loadmodel->bsp.submodels[i];
@@ -658,9 +658,6 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 		VectorCopy(bm->maxs, starmod->maxs);
 		VectorCopy(bm->mins, starmod->mins);
 		starmod->radius = bm->radius;
-
-		if (i == 0)
-			*loadmodel = *starmod;
 
 		starmod->bsp.numleafs = bm->visleafs;
 		r_numModelsInline++;
