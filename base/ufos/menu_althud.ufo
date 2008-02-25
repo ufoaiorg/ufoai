@@ -646,24 +646,28 @@ menu althud
 
 	pic bt_reloadright
 	{
-		tooltip	"_Reload right hand weapon"
+		tooltip	"*cvar mn_reloadright_tt"
 		image	althud/buttons_althud1
 		pos		"991 497"
 		texl	"0 37"
 		texh	"25 70"
 		mousefx	true
 		click	{ cmd "reloadright;" }
+		in	{ cmd "remaining_tus reload_r 1;" }
+		out	{ cmd "remaining_tus reload_r 0;" }
 	}
 
 	pic bt_reloadleft
 	{
-		tooltip	"_Reload left hand weapon"
+		tooltip	"*cvar mn_reloadleft_tt"
 		image	althud/buttons_althud1
 		pos		"991 497"
 		texl	"0 37"
 		texh	"25 70"
 		mousefx	true
 		click	{ cmd "reloadleft;" }
+		in	{ cmd "remaining_tus reload_l 1;" }
+		out	{ cmd "remaining_tus reload_l 0;" }
 	}
 
 	confunc deselstanda  { *bt_duck texl "27 37" *bt_duck texh "52 70" *bt_duck image althud/buttons_althud1 }
@@ -674,13 +678,15 @@ menu althud
 	pic bt_duck
 	{
 		key "*binding standcrouch"
-		tooltip	"_Crouch/Stand up"
+		tooltip	"*cvar mn_crouchstand_tt"
 		image	althud/buttons_althud1
 		mousefx true
 		pos		"991 536"
 		texl	"27 37"
 		texh	"52 70"
 		click	{ cmd "standcrouch;" }
+		in	{ cmd "remaining_tus crouch 1;" }
+		out	{ cmd "remaining_tus crouch 0;" }
 	}
 
 	confunc crouch_checkbox_disable_a { *bt_crouch_reservation image menu/checkbox_disabled }

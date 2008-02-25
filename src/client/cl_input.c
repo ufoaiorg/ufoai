@@ -1714,6 +1714,7 @@ void IN_Init (void)
 	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("sel_shotreservation", CL_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
 	Cmd_AddCommand("reserve_shot", CL_ReserveShot_f, "Reserve The TUs for the selected entry in the popup.");
+	Cmd_AddCommand("remaining_tus", CL_RemainingTus_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
 
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
 	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));

@@ -76,6 +76,7 @@ void CL_FireWeapon_f(void);
 void CL_SelectReactionFiremode_f(void);
 void CL_PopupFiremodeReservation_f(void);
 void CL_ReserveShot_f(void);
+void CL_RemainingTus_f(void);
 
 character_t *CL_GetActorChr(const le_t * le);
 qboolean CL_WorkingReactionFiremode(const le_t * actor);

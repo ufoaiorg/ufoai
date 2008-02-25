@@ -40,6 +40,8 @@ static character_t *selChr;
 static int selToHit;
 static pos3_t mousePos;
 
+static qboolean displayRemainingTus[3];	/**< 0=reload_r, 1=reload_l, 2=crouch */
+
 /**
  * @brief If you want to change the z level of targetting and shooting,
  * use this value. Negative and positiv offsets are possible
@@ -339,7 +341,7 @@ static int CL_GetReactionState (const le_t * le)
 
 /**
  * @brief Calculate total reload time for selected actor.
- * @param[in] weapon_id Item in (currently only right) hand.
+ * @param[in] weaponIdx Item in (currently only right) hand.
  * @return Time needed to reload or >= 999 if no suitable ammo found.
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
@@ -347,7 +349,7 @@ static int CL_GetReactionState (const le_t * le)
  * @sa CL_RefreshWeaponButtons
  * @sa CL_CheckMenuAction
  */
-static int CL_CalcReloadTime (int weapon_id)
+static int CL_CalcReloadTime (int weaponIdx)
 {
 	invList_t *ic;
 	int container;
@@ -359,7 +361,7 @@ static int CL_CalcReloadTime (int weapon_id)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].out < tu) {
 			for (ic = selActor->i.c[container]; ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(&csi.ods[ic->item.t], weapon_id)) {
+				if (INVSH_LoadableInWeapon(&csi.ods[ic->item.t], weaponIdx)) {
 					tu = csi.ids[container].out;
 					break;
 				}
@@ -368,7 +370,7 @@ static int CL_CalcReloadTime (int weapon_id)
 
 	/* total TU cost is the sum of 3 numbers:
 	 * TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
-	tu += csi.ods[weapon_id].reload + csi.ids[csi.idRight].in;
+	tu += csi.ods[weaponIdx].reload + csi.ids[csi.idRight].in;
 	return tu;
 }
 
@@ -1492,6 +1494,35 @@ void CL_FireWeapon_f (void)
 }
 
 /**
+ * @brief Remember if we hover over a button that would cost some TUs when pressed.
+ * @note tis is used in CL_ActorUpdateCVars to update the "remaining TUs" bar correctly.
+ * @note commandline:remaining_tus
+ */
+void CL_RemainingTus_f (void)
+{
+	qboolean state;
+	const char *type;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <type> <popupindex>\n", Cmd_Argv(0));
+		return;
+	}
+
+	type = Cmd_Argv(1);
+	state = atoi(Cmd_Argv(2));
+
+	if (!Q_strncmp(type, "reload_r", 8)) {
+		displayRemainingTus[0] = state;
+	} else if (!Q_strncmp(type, "reload_l", 8)) {
+		displayRemainingTus[1] = state;
+	} else if (!Q_strncmp(type, "crouch", 6)) {
+		displayRemainingTus[2] = state;
+	}
+	/* Update "remaining TUs" bar in HUD.*/
+	CL_ActorUpdateCVars();
+}
+
+/**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] time The amount of TU (of an actor) left in case of action.
  * @sa CL_ActorUpdateCVars
@@ -1506,7 +1537,7 @@ static void CL_RefreshWeaponButtons (int time)
 	int weaponr_fds_idx = -1, weaponl_fds_idx = -1;
 	int headgear_fds_idx = -1;
 	qboolean isammo = qfalse;
-	int i;
+	int i, reloadtime;
 
 	if (!selActor)
 		return;
@@ -1523,16 +1554,22 @@ static void CL_RefreshWeaponButtons (int time)
 	/* crouch/stand button */
 	if (selActor->state & STATE_CROUCHED) {
 		weaponButtonState[BT_STAND] = -1;
-		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH)
+		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
+			Cvar_Set("mn_crouchstand_tt", ("Not enough TUs for standing up."));
 			SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
-		else
+		} else {
+			Cvar_Set("mn_crouchstand_tt", va(_("Stand up (%i TU)"), TU_CROUCH));
 			SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
+		}
 	} else {
 		weaponButtonState[BT_CROUCH] = -1;
-		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH)
+		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
+			Cvar_Set("mn_crouchstand_tt", ("Not enough TUs for crouching."));
 			SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
-		else
+		} else {
+			Cvar_Set("mn_crouchstand_tt", va(_("Crouch (%i TU)"), TU_CROUCH));
 			SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
+		}
 	}
 
 	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
@@ -1617,20 +1654,30 @@ static void CL_RefreshWeaponButtons (int time)
 		}
 	}
 
-	/* reload buttons */
+	/** Reload buttons  @sa CL_ActorUpdateCVars*/
+	if (weaponr)
+		reloadtime = CL_CalcReloadTime(weaponr->item.t);
 	if (!weaponr || weaponr->item.m == NONE
 		 || !csi.ods[weaponr->item.t].reload
-		 || time < CL_CalcReloadTime(weaponr->item.t))
+		 || time < reloadtime) {
 		SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
-	else
+		Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand."));
+	} else {
 		SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
+		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), reloadtime));
+	}
 
+	if (weaponl)
+		reloadtime = CL_CalcReloadTime(weaponl->item.t);
 	if (!weaponl || weaponl->item.m == NONE
 		 || !csi.ods[weaponl->item.t].reload
-		 || time < CL_CalcReloadTime(weaponl->item.t))
+		 || time < reloadtime) {
 		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
-	else
+		Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand."));
+	} else {
 		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
+		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), reloadtime));
+	}
 
 	/* Weapon firing buttons. (nearly the same code as for headgear buttons above).*/
 	/** @todo Make a generic function out of this? */
@@ -1805,6 +1852,8 @@ void CL_ActorUpdateCVars (void)
 	const char *animName;
 	int time;
 	fireDef_t *old;
+	invList_t *weapon;	/**< Used for hovering over buttons. See displayRemainingTus[] */
+	int reloadtime;
 
 	if (cls.state != ca_active)
 		return;
@@ -1916,7 +1965,30 @@ void CL_ActorUpdateCVars (void)
 			Com_sprintf(infoText, sizeof(infoText), cl.msgText);
 
 		/* update HUD stats etc in more or shoot modes */
-		if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
+		if (displayRemainingTus[0] || displayRemainingTus[1] || displayRemainingTus[2]) {
+			/* We are hovering over a "reload" button */
+			/** @sa CL_RefreshWeaponButtons */
+			if (displayRemainingTus[0] && RIGHT(selActor)) {
+				weapon = RIGHT(selActor);
+				reloadtime = CL_CalcReloadTime(weapon->item.t);
+				if (weapon->item.m != NONE
+					 && csi.ods[weapon->item.t].reload
+					 && CL_UsableTUs(selActor) >= reloadtime) {
+					time = reloadtime;
+				}
+			} else if (displayRemainingTus[1] && LEFT(selActor)) {
+				weapon = LEFT(selActor);
+				reloadtime = CL_CalcReloadTime(weapon->item.t);
+				if (weapon && weapon->item.m != NONE
+					 && csi.ods[weapon->item.t].reload
+					 && CL_UsableTUs(selActor) >= reloadtime) {
+					time = 	reloadtime;
+				}
+			} else if (displayRemainingTus[2]) {
+				if (CL_UsableTUs(selActor) >= TU_CROUCH)
+					time = TU_CROUCH;
+			}
+		} else if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 			int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is ROUTING_NOT_REACHABLE */
@@ -1987,7 +2059,7 @@ void CL_ActorUpdateCVars (void)
 		}
 
 		/* Calculate remaining TUs. */
-		/* We use the full count of TUs sicne the "reserved" bar is overlaid over this one. */
+		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
 		time = max(0, selActor->TU - time);
 
 		Cvar_Set("mn_turemain", va("%i", time));
