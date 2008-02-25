@@ -2,7 +2,7 @@ MAPSDIR = .
 
 UFO2MAP = ufo2map.exe
 
-MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "tutorial") # Windows version. Excludes "*tutorial*" and "*prefab*" maps.
+MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "tutorial" | findstr /V "autosave") # Windows version. Excludes "*tutorial*", "*prefab*" and "*autosave*" maps (what about test*?)
 BSPS = $(MAPSRCS:%.map=%.bsp)
 
 UFO2MAPFLAGS = -extra
