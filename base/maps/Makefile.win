@@ -12,8 +12,8 @@ all: $(BSPS)
 	echo $(MAPSRCS)
 
 fast:
-	# "Makefile.win" should best be replaced by a variable with that exact info. Does anybody know how it's called?
-	$(MAKE) -fMakefile.win all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
+#	Call make again with this makefile but with the new compiler-flags.
+	$(MAKE) -f$(MAKEFILE_LIST) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
 
 clean:
 	echo "Deleting all .bsp files in all subdirectories..."
