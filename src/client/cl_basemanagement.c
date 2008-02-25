@@ -2,10 +2,7 @@
  * @file cl_basemanagement.c
  * @brief Handles everything that is located in or accessed trough a base.
  * @note Basemanagement functions prefix: B_
-
- *
- * See "base/ufos/basemanagement.ufo", "base/ufos/menu_bases.ufo" and "base/ufos/menu_buildings.ufo" for the underlying content.
- * @todo New game does not reset basemangagement
+ * @note See "base/ufos/basemanagement.ufo", "base/ufos/menu_bases.ufo" and "base/ufos/menu_buildings.ufo" for the underlying content.
  */
 
 /*
