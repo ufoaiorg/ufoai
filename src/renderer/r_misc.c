@@ -42,16 +42,16 @@ void R_InitMiscTexture (void)
 	int x, y;
 	byte data[MISC_TEXTURE_SIZE][MISC_TEXTURE_SIZE][4];
 
+	memset(data, 0, sizeof(data));
+
 	/* also use this for bad textures, but without alpha */
-	for (x = 0; x < MISC_TEXTURE_SIZE/2; x++) {
-		for (y = 0; y < MISC_TEXTURE_SIZE/2; y++) {
+	for (x = 0; x < 8; x++) {
+		for (y = 0; y < 8; y++) {
 			data[y][x][0] = gridtexture[x][y] * 255;
-			data[y][x][1] = 0;
-			data[y][x][2] = 0;
 			data[y][x][3] = 255;
 		}
 	}
-	r_notexture = R_LoadPic("***r_notexture***", (byte *) data, MISC_TEXTURE_SIZE/2, MISC_TEXTURE_SIZE/2, it_effect);
+	r_notexture = R_LoadPic("***r_notexture***", (byte *) data, 8, 8, it_effect);
 
 	for (x = 0; x < MISC_TEXTURE_SIZE; x++) {
 		for (y = 0; y < MISC_TEXTURE_SIZE; y++) {
