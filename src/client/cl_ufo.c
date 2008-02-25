@@ -845,6 +845,6 @@ void UFO_Reset (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_destroyallufos", UFO_DestroyAllUFOsOnGeoscape_f, "Destroy all UFOs on geoscape and spawn the crashsite missions (if not over water)");
 	Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
-	Cvar_Get("debug_showufos", "0", 0, "Show all UFOs on geoscape");
+	Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
 #endif
 }

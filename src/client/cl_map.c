@@ -232,7 +232,6 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 	aircraft_t *aircraft;
 	int i;
 	vec2_t pos;
-	nation_t* nation;
 	char clickBuffer[30];
 	const linkedList_t *list = ccs.missions;
 
@@ -252,12 +251,13 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			newBasePos[0] = pos[0];
-			newBasePos[1] = pos[1];
-			Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
-			nation = MAP_GetNation(pos);
+			const nation_t* nation = MAP_GetNation(newBasePos);
 			if (nation)
 				Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base in nation '%s'\n", nation->id);
+
+			Vector2Copy(newBasePos, pos);
+			Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
+
 			CL_GameTimeStop();
 			MN_PushMenu("popup_newbase");
 			return;
