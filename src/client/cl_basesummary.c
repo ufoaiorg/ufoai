@@ -66,8 +66,6 @@ static void BaseSummary_Init_f (void)
 		baseCapacities_t cap;
 		building_t* b;
 		production_queue_t *queue;
-		production_t *production;
-		objDef_t *objDef;
 		technology_t *tech;
 		int totalEmployees = 0;
 		int tmp;
@@ -126,13 +124,14 @@ static void BaseSummary_Init_f (void)
 		Q_strcat(textStatsBuffer, _("^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
 		queue = &gd.productions[base->idx];
 		if (queue->numItems > 0) {
-			production = &queue->items[0];
+			for (i = 0; i < queue->numItems; i++) {
+				const production_t *production = &queue->items[i];
+				const objDef_t *objDef = &csi.ods[production->objID];
 
-			objDef = &csi.ods[production->objID];
-
-			/* FIXME: use the same method as we do in PR_ProductionInfo */
-			Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), objDef->name,
-				production->amount, production->percentDone), sizeof(textStatsBuffer));
+				/* FIXME: use the same method as we do in PR_ProductionInfo */
+				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), objDef->name,
+					production->amount, production->percentDone * 100), sizeof(textStatsBuffer));
+			}
 		} else {
 			Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
 		}
