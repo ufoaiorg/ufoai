@@ -2495,9 +2495,10 @@ static void B_BuildBase_f (void)
 					aircraft = AIR_GetAircraft("craft_inter_stiletto");
 					if (!aircraft)
 						Sys_Error("Could not find craft_inter_stiletto definition");
-					aircraft = AIR_NewAircraft(baseCurrent, "craft_inter_stiletto");
 					CL_UpdateCredits(ccs.credits - aircraft->price);
-					AIM_AutoEquipAircraft(aircraft);
+					aircraft = AIR_NewAircraft(baseCurrent, "craft_inter_stiletto");
+					if (aircraft)
+						AIM_AutoEquipAircraft(aircraft);
 				}
 				CL_GameTimeFast();
 				CL_GameTimeFast();
