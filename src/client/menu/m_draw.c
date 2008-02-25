@@ -307,7 +307,9 @@ void MN_DrawMenus (void)
 
 				case MN_MAP:
 					if (curCampaign) {
-						CL_CampaignRun();	/* advance time */
+						/* don't run the campaign in console mode */
+						if (cls.key_dest != key_console)
+							CL_CampaignRun();	/* advance time */
 						MAP_DrawMap(node); /* Draw geoscape */
 					}
 					break;
