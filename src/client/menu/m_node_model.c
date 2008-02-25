@@ -171,6 +171,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	mi.scale = node->scale;
 	mi.center = node->center;
 	mi.color = node->color;
+	mi.mesh = 0;
 
 	/* autoscale? */
 	if (!node->scale[0]) {
