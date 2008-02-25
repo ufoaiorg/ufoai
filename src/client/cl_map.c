@@ -258,6 +258,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 			nation = MAP_GetNation(pos);
 			if (nation)
 				Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base in nation '%s'\n", nation->id);
+			CL_GameTimeStop();
 			MN_PushMenu("popup_newbase");
 			return;
 		} else {

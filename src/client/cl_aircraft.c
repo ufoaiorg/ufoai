@@ -955,6 +955,7 @@ void CL_CampaignRunAircraft (int dt)
 							MAP_SelectMission(cls.missionaircraft->mission);
 							gd.interceptAircraft = cls.missionaircraft->idx;
 							Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft);
+							CL_GameTimeStop();
 							MN_PushMenu("popup_intercept_ready");
 							break;
 						case AIR_RETURNING:
