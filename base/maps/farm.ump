@@ -154,8 +154,8 @@ a      +c      +c      +c      +c      +c      a
 }
 
 // ---------------------------------
-// UFO - Corrupter
-tile +ufo_corrupter
+// UFO - Bomber
+tile +ufo_bomber
 {
 6 10
 0      a       a       a       a       0
@@ -317,5 +317,5 @@ grid "1 1"
 +stables_a "0 1"
 +stables_b "0 1"
 *rm_drop +drop_firebird "1 1"
-*rm_ufo +ufo_corrupter "1 1"
+*rm_ufo +ufo_bomber "1 1"
 }
