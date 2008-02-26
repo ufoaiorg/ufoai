@@ -2644,7 +2644,7 @@ void G_ClientTeamInfo (player_t * player)
 			/** Scores
 			 * @sa G_ClientSkipActorInfo
 			 * @sa inv_shared.h:chrScoreGlobal_t */
-			for (k = 0; k < SKILL_NUM_TYPES+1; k++)	/* new attributes */
+			for (k = 0; k < SKILL_NUM_TYPES + 1; k++)	/* new attributes */
 				ent->chr.score.experience[k] = gi.ReadLong();
 			for (k = 0; k < SKILL_NUM_TYPES; k++)	/* new attributes */
 				ent->chr.score.skills[k] = gi.ReadByte();

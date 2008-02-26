@@ -1946,7 +1946,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 		NET_WriteByte(buf, chr->morale);
 
 		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-		for (j = 0; j < SKILL_NUM_TYPES+1; j++)
+		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 			NET_WriteLong(buf, chr->score.experience[j]);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
 			NET_WriteByte(buf, chr->score.skills[j]);
@@ -1964,35 +1964,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 	}
 }
 
-#if 0
-/** For updating after click on continue
- * @todo how could this be merged with chrScoreNEW_s? */
-typedef struct
- {
-	int ucn;
-	int kills[KILLED_NUM_TYPES];
-	int HP, STUN;
-	int morale;
-
-	/* Those are chrScore_t. */
-	int alienskilled;
-	int aliensstunned;
-	int civilianskilled;
-	int civiliansstunned;
-	int teamkilled;
-	int teamstunned;
-	int closekills;
-	int heavykills;
-	int assaultkills;
-	int sniperkills;
-	int explosivekills;
-	int accuracystat;
-	int powerstat;
-} updateCharacter_t;
-#endif
-
-typedef struct
- {
+typedef struct {
 	int ucn;
 	int HP;
 	int STUN;
