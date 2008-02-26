@@ -1750,7 +1750,7 @@ static void CP_CheckEvents (void)
 	}
 
 	/* Check UFOs events. */
-	UFO_CampaignCheckEvents();
+	UFO_CampaignCheckEvents(qtrue);
 
 	/* XVI spreading has started */
 	if (ccs.overallInterest > 500) {

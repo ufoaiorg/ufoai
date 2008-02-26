@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_save.h"
 #include "cl_hospital.h"
+#include "cl_ufo.h"
 #include "menu/m_popup.h"
 
 saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
@@ -138,6 +139,9 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 			}
 		}
 	}
+
+	/* Update visible status of UFO and detected UFO on radar */
+	UFO_CampaignCheckEvents(qtrue);
 
 	return qtrue;
 }

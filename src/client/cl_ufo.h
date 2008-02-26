@@ -38,7 +38,7 @@ void UFO_SetRandomDest(aircraft_t* ufo);
 void UFO_FleePhalanxAircraft(aircraft_t *ufo, const vec2_t v);
 void UFO_CheckShootBack(aircraft_t *ufo, aircraft_t* phalanxAircraft);
 void UFO_CampaignRunUFOs(int dt);
-void UFO_CampaignCheckEvents(void);
+void UFO_CampaignCheckEvents(qboolean checkStatusChanged);
 void UFO_Reset(void);
 aircraft_t *UFO_AddToGeoscape(ufoType_t ufotype, vec2_t pos);
 void UFO_RemoveFromGeoscape(aircraft_t* ufo);

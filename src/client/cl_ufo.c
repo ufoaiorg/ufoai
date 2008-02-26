@@ -566,8 +566,9 @@ static void UFO_RemoveFromGeoscape_f (void)
 
 /**
  * @brief Check events for ufos : appears or disappears on radars
+ * @param[in] checkStatusChanged True if you want to check if UFO status changed from visible to non visible (and opposite)
  */
-void UFO_CampaignCheckEvents (void)
+void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 {
 	qboolean visible;
 	aircraft_t *ufo, *aircraft;
@@ -594,7 +595,7 @@ void UFO_CampaignCheckEvents (void)
 					ufo->visible |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, qtrue);
 
 		/* Check if ufo appears or disappears on radar */
-		if (visible != ufo->visible) {
+		if (checkStatusChanged && visible != ufo->visible) {
 			if (ufo->visible) {
 				MN_AddNewMessage(_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_STANDARD, NULL);
 				CL_GameTimeStop();
