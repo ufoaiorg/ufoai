@@ -439,7 +439,7 @@ static float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 /**
  * @brief test if check is visible by team (or if visibility changed?)
  * @sa G_CheckVisTeam
- * @sa AI_FighterCalcGuete
+ * @sa AI_FighterCalcBestAction
  * @param[in] team the team the edict may become visible for or perish from
  * their view
  * @param[in] check the edict we are talking about - which may become visible

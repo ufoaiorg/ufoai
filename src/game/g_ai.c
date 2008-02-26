@@ -114,20 +114,20 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
  * @sa AI_ActorThink
  * @todo fix firedef stuff
  */
-static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
+static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check;
 	int move, delta = 0, tu;
 	int i, fm, shots, reaction_trap = 0;
 	float dist, minDist, nspread;
-	float guete, dmg, maxDmg, best_time = -1, vis;
+	float bestActionPoints, dmg, maxDmg, best_time = -1, vis;
 	objDef_t *ad;
 	int still_searching = 1;
 
 	int weap_fds_idx; /* Weapon-Firedefs index in fd[x] */
 	int fd_idx;	/* firedef index fd[][x]*/
 
-	guete = 0.0;
+	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(aiAction_t));
 	move = gi.MoveLength(gi.routingMap, to, qtrue);
 	tu = ent->TU - move;
@@ -144,11 +144,8 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			 && !(check->state & STATE_DEAD)
 			 /* also check if we are in range of the weapon's primary mode */
 			 && check->state & STATE_REACTION) {
-			qboolean frustum;
-			float actorVis;
-
-			actorVis = G_ActorVis(check->origin, ent, qtrue);
-			frustum = G_FrustumVis(check, ent->origin);
+			qboolean frustum = G_FrustumVis(check, ent->origin);
+			const float actorVis = G_ActorVis(check->origin, ent, qtrue);
 			if (actorVis > 0.6 && frustum
 				&& (VectorDistSqr(check->origin, ent->origin)
 					> MAX_SPOT_DIST * MAX_SPOT_DIST))
@@ -157,7 +154,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 
 	/* don't waste TU's when in reaction fire trap */
 	/* learn to escape such traps if move == 2 || move == 3 */
-	guete -= move * reaction_trap * GUETE_REACTION_FEAR_FACTOR;
+	bestActionPoints -= move * reaction_trap * GUETE_REACTION_FEAR_FACTOR;
 
 	/* set basic parameters */
 	VectorCopy(to, ent->pos);
@@ -192,7 +189,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			weap_idx = LEFT(ent)->item.t;
 		} else {
 			od = NULL;
-			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcGuete: @todo: grenade/knife toss from inventory using empty hand\n");
+			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: @todo: grenade/knife toss from inventory using empty hand\n");
 			/* @todo: grenade/knife toss from inventory using empty hand */
 			/* @todo: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
@@ -299,9 +296,9 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			}
 		} /* firedefs */
 	}
-	/* add damage to guete */
+	/* add damage to bestActionPoints */
 	if (aia->target) {
-		guete += maxDmg;
+		bestActionPoints += maxDmg;
 		assert(best_time > 0);
 		tu -= best_time;
 	}
@@ -310,7 +307,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 		/* hide */
 		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
-			guete += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
+			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= 2) {
 			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
@@ -320,7 +317,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			 * e.g. they may now choose only the closer doors;
 			 * however it's still better than going three times around soldier
 			 * and only then firing at him */
-			guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
+			bestActionPoints += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
 			G_MoveCalc(0, to, ent->fieldSize, HIDE_DIST);
@@ -357,7 +354,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 		} else {
 			/* found a hiding spot */
 			VectorCopy(ent->pos, aia->stop);
-			guete += GUETE_HIDE;
+			bestActionPoints += GUETE_HIDE;
 			tu -= delta;
 			/* @todo: also add bonus for fleeing from reaction fire
 			 * and a huge malus if more than 1 move under reaction */
@@ -373,9 +370,9 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			if (dist < minDist)
 				minDist = dist;
 		}
-	guete += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
+	bestActionPoints += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
 
-	return guete;
+	return bestActionPoints;
 }
 
 
@@ -389,16 +386,16 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
+static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check;
 	int i, move, tu;
 	float dist, minDist;
-	float guete;
+	float bestActionPoints;
 	teamDef_t* teamDef;
 
 	/* set basic parameters */
-	guete = 0.0;
+	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(aiAction_t));
 	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
@@ -416,9 +413,9 @@ static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 	if (ent->chr.teamDefIndex >= 0) {
 		teamDef = &gi.csi->teamDef[ent->chr.teamDefIndex];
 		if (ent->state & ~STATE_PANIC && teamDef->weapons)
-			return AI_FighterCalcGuete(ent, to, aia);
+			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
-		Com_Printf("AI_CivilianCalcGuete: Error - civilian team with no teamdef\n");
+		Com_Printf("AI_FighterCalcBestAction: Error - civilian team with no teamdef\n");
 
 	/* run away */
 	minDist = RUN_AWAY_DIST;
@@ -428,16 +425,16 @@ static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 			if (dist < minDist)
 				minDist = dist;
 		}
-	guete += GUETE_RUN_AWAY * minDist / RUN_AWAY_DIST;
+	bestActionPoints += GUETE_RUN_AWAY * minDist / RUN_AWAY_DIST;
 
 	/* add laziness */
 	if (ent->TU)
-		guete += GUETE_CIV_LAZINESS * tu / ent->TU;
+		bestActionPoints += GUETE_CIV_LAZINESS * tu / ent->TU;
 
 	/* add random effects */
-	guete += GUETE_CIV_RANDOM * frand();
+	bestActionPoints += GUETE_CIV_RANDOM * frand();
 
-	return guete;
+	return bestActionPoints;
 }
 
 #define AI_MAX_DIST	30
@@ -454,7 +451,7 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
 	int i = 0;
-	float guete, best;
+	float bestActionPoints, best;
 
 	/* calculate move table */
 	G_MoveCalc(0, ent->pos, ent->fieldSize, MAX_ROUTE);
@@ -486,13 +483,13 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 			for (to[0] = xl; to[0] < xh; to[0]++)
 				if (gi.MoveLength(gi.routingMap, to, qtrue) <= ent->TU) {
 					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
-						guete = AI_CivilianCalcGuete(ent, to, &aia);
+						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
 					else
-						guete = AI_FighterCalcGuete(ent, to, &aia);
+						bestActionPoints = AI_FighterCalcBestAction(ent, to, &aia);
 
-					if (guete > best) {
+					if (bestActionPoints > best) {
 						bestAia = aia;
-						best = guete;
+						best = bestActionPoints;
 					}
 				}
 
@@ -545,8 +542,8 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
  * @brief The think function for the ai controlled aliens
  * @param[in] player
  * @param[in] ent
- * @sa AI_FighterCalcGuete
- * @sa AI_CivilianCalcGuete
+ * @sa AI_FighterCalcBestAction
+ * @sa AI_CivilianCalcBestAction
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
