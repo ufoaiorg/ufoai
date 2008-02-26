@@ -44,6 +44,7 @@ typedef struct ufoTypeList_s {
  * here, otherwise they are not translateable because they don't appear in the po files
  * @note Every ufotype (id) that doesn't have nogeoscape set to true must have an assembly
  * in the ufocrash[dn].ump files
+ * @todo remove name and use the tech entry
  */
 static const ufoTypeList_t ufoTypeList[] = {
 	{"ufo_scout", "UFO - Scout", UFO_SCOUT},
