@@ -134,7 +134,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 0" }
+		click { cmd "employee_hire 0;" }
+		rclick { cmd "employee_delete 0;" }
 		out	{ *bt_employee0 texl "0 0" *bt_employee0 texh "20 20" }
 		in	{ *bt_employee0 texl "0 20" *bt_employee0 texh "20 40" }
 	}
@@ -145,7 +146,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 1" }
+		click { cmd "employee_hire 1;" }
+		rclick { cmd "employee_delete 1;" }
 		out	{ *bt_employee1 texl "0 0" *bt_employee1 texh "20 20" }
 		in	{ *bt_employee1 texl "0 20" *bt_employee1 texh "20 40" }
 	}
@@ -156,7 +158,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 2" }
+		click { cmd "employee_hire 2;" }
+		rclick { cmd "employee_delete 2;" }
 		out	{ *bt_employee2 texl "0 0" *bt_employee2 texh "20 20" }
 		in	{ *bt_employee2 texl "0 20" *bt_employee2 texh "20 40" }
 	}
@@ -167,7 +170,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 3" }
+		click { cmd "employee_hire 3;" }
+		rclick { cmd "employee_delete 3;" }
 		out	{ *bt_employee3 texl "0 0" *bt_employee3 texh "20 20" }
 		in	{ *bt_employee3 texl "0 20" *bt_employee3 texh "20 40" }
 	}
@@ -178,7 +182,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 4" }
+		click { cmd "employee_hire 4;" }
+		rclick { cmd "employee_delete 4;" }
 		out	{ *bt_employee4 texl "0 0" *bt_employee4 texh "20 20" }
 		in	{ *bt_employee4 texl "0 20" *bt_employee4 texh "20 40" }
 	}
@@ -189,7 +194,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 5" }
+		click { cmd "employee_hire 5;" }
+		rclick { cmd "employee_delete 5;" }
 		out	{ *bt_employee5 texl "0 0" *bt_employee5 texh "20 20" }
 		in	{ *bt_employee5 texl "0 20" *bt_employee5 texh "20 40" }
 	}
@@ -200,7 +206,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 6" }
+		click { cmd "employee_hire 6;" }
+		rclick { cmd "employee_delete 6;" }
 		out	{ *bt_employee6 texl "0 0" *bt_employee6 texh "20 20" }
 		in	{ *bt_employee6 texl "0 20" *bt_employee6 texh "20 40" }
 	}
@@ -211,7 +218,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 7" }
+		click { cmd "employee_hire 7;" }
+		rclick { cmd "employee_delete 7;" }
 		out	{ *bt_employee7 texl "0 0" *bt_employee7 texh "20 20" }
 		in	{ *bt_employee7 texl "0 20" *bt_employee7 texh "20 40" }
 	}
@@ -222,7 +230,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 8" }
+		click { cmd "employee_hire 8;" }
+		rclick { cmd "employee_delete 8;" }
 		out	{ *bt_employee8 texl "0 0" *bt_employee8 texh "20 20" }
 		in	{ *bt_employee8 texl "0 20" *bt_employee8 texh "20 40" }
 	}
@@ -233,7 +242,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 9" }
+		click { cmd "employee_hire 9;" }
+		rclick { cmd "employee_delete 9;" }
 		out	{ *bt_employee9 texl "0 0" *bt_employee9 texh "20 20" }
 		in	{ *bt_employee9 texl "0 20" *bt_employee9 texh "20 40" }
 	}
@@ -244,7 +254,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 10" }
+		click { cmd "employee_hire 10;" }
+		rclick { cmd "employee_delete 10;" }
 		out	{ *bt_employee10 texl "0 0" *bt_employee10 texh "20 20" }
 		in	{ *bt_employee10 texl "0 20" *bt_employee10 texh "20 40" }
 	}
@@ -255,7 +266,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 11" }
+		click { cmd "employee_hire 11;" }
+		rclick { cmd "employee_delete 11;" }
 		out	{ *bt_employee11 texl "0 0" *bt_employee11 texh "20 20" }
 		in	{ *bt_employee11 texl "0 20" *bt_employee11 texh "20 40" }
 	}
@@ -266,7 +278,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 12" }
+		click { cmd "employee_hire 12;" }
+		rclick { cmd "employee_delete 12;" }
 		out	{ *bt_employee12 texl "0 0" *bt_employee12 texh "20 20" }
 		in	{ *bt_employee12 texl "0 20" *bt_employee12 texh "20 40" }
 	}
@@ -277,7 +290,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 13" }
+		click { cmd "employee_hire 13;" }
+		rclick { cmd "employee_delete 13;" }
 		out	{ *bt_employee13 texl "0 0" *bt_employee13 texh "20 20" }
 		in	{ *bt_employee13 texl "0 20" *bt_employee13 texh "20 40" }
 	}
@@ -288,7 +302,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 14" }
+		click { cmd "employee_hire 14;" }
+		rclick { cmd "employee_delete 14;" }
 		out	{ *bt_employee14 texl "0 0" *bt_employee14 texh "20 20" }
 		in	{ *bt_employee14 texl "0 20" *bt_employee14 texh "20 40" }
 	}
@@ -299,7 +314,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 15" }
+		click { cmd "employee_hire 15;" }
+		rclick { cmd "employee_delete 15;" }
 		out	{ *bt_employee15 texl "0 0" *bt_employee15 texh "20 20" }
 		in	{ *bt_employee15 texl "0 20" *bt_employee15 texh "20 40" }
 	}
@@ -310,7 +326,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 16" }
+		click { cmd "employee_hire 16;" }
+		rclick { cmd "employee_delete 16;" }
 		out	{ *bt_employee16 texl "0 0" *bt_employee16 texh "20 20" }
 		in	{ *bt_employee16 texl "0 20" *bt_employee16 texh "20 40" }
 	}
@@ -321,7 +338,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 17" }
+		click { cmd "employee_hire 17;" }
+		rclick { cmd "employee_delete 17;" }
 		out	{ *bt_employee17 texl "0 0" *bt_employee17 texh "20 20" }
 		in	{ *bt_employee17 texl "0 20" *bt_employee17 texh "20 40" }
 	}
@@ -332,7 +350,8 @@ menu employees
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "employee_hire 18" }
+		click { cmd "employee_hire 18;" }
+		rclick { cmd "employee_delete 18;" }
 		out	{ *bt_employee18 texl "0 0" *bt_employee18 texh "20 20" }
 		in	{ *bt_employee18 texl "0 20" *bt_employee18 texh "20 40" }
 	}
@@ -345,7 +364,7 @@ menu employees
 		pos	"28 30"
 		texh	"48 48"
 		texl	"32 32"
-		click	{ cmd "mn_textscroll employee_list -1; employee_scroll" }
+		click	{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
 		repeat	true
 		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
 		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
@@ -359,7 +378,7 @@ menu employees
 		pos	"28 720"
 		texl	"32 48"
 		texh	"48 64"
-		click	{ cmd "mn_textscroll employee_list 1; employee_scroll" }
+		click	{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
 		repeat	true
 		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
 		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
@@ -376,7 +395,7 @@ menu employees
 		num		1
 //		bgcolor	"1 1 1 0.5"
 		click
-		wheel	{ cmd "employee_scroll" }
+		wheel	{ cmd "employee_scroll;" }
 	}
 
 	// ==================
@@ -406,7 +425,7 @@ menu employees
 		texh	"16 64"
 		click
 		{
-			cmd "msgmenu ?mn_name"
+			cmd "msgmenu ?mn_name;"
 			*name mousefx true
 		}
 	}
@@ -821,7 +840,7 @@ menu employees
 		pos		"940 686"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -832,7 +851,7 @@ menu employees
 	{
 		employee_clear
 		empl_soldiers
-		cmd "employee_init 0"
+		cmd "employee_init 0;"
 	}
 
 	func close
