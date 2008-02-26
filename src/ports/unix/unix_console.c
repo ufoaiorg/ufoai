@@ -157,6 +157,7 @@ static void Sys_ConsoleCompleteCommand (void)
 	const char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
 	int cntCmd = 0, cntCvar = 0, cntParams = 0;
 	char cmdLine[BUF_LEN] = "";
+	char cmdBase[MAXCMDLINE] = "";
 	qboolean append = qtrue;
 	char *tmp;
 
@@ -167,14 +168,23 @@ static void Sys_ConsoleCompleteCommand (void)
 	/* don't try to search a command or cvar if we are already in the
 	 * parameter stage */
 	if (strstr(s, " ")) {
-		tmp = cmdLine;
+		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
+		/* remove the last whitespace */
+		cmdLine[strlen(cmdLine) - 1] = '\0';
+
+		tmp = cmdBase;
 		while (*s != ' ')
 			*tmp++ = *s++;
-		/* terminate the string at whitespace position to seperate the cmd */
-		*tmp++ = '\0';
 		/* get rid of the whitespace */
 		s++;
-		cntParams = Cmd_CompleteCommandParameters(cmdLine, s, &cmd);
+		/* terminate the string at whitespace position to seperate the cmd */
+		*tmp = '\0';
+
+		/* now strip away that part that is not yet completed */
+		tmp = strrchr(cmdLine, ' ');
+		*tmp = '\0';
+
+		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
 		if (cntParams == 1) {
 			/* append the found parameter */
 			Q_strcat(cmdLine, " ", sizeof(cmdLine));
@@ -182,6 +192,7 @@ static void Sys_ConsoleCompleteCommand (void)
 			append = qfalse;
 			use = cmdLine;
 		} else if (cntParams > 1) {
+			append = qfalse;
 			Com_Printf("\n");
 		} else
 			return;
