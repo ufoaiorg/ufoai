@@ -3347,13 +3347,16 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		return;
 	}
 
-	/* Spawn blood particles (if defined) if actor was hit. Even if actor is dead :) */
-	if (flags & SF_BODY) { /**< @todo && !(flags & SF_BOUNCED) ? */
+	/** Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead :)
+	 * Don't do it if it's a stun-attack though.
+	 * @todo Special particles for stun attack (mind you that there is electrical and gas/chemical stunning)? */
+	if ((flags & SF_BODY)
+	 && csi.ods[fd->obj_idx].dmgtype != csi.damStun) { /**< @todo && !(flags & SF_BOUNCED) ? */
 		CL_ActorHit(le, impact, normal);
 	}
 
 	if (le->state & STATE_DEAD) {
-		Com_Printf("Can't shoot, actor dead\n");
+		Com_Printf("Can't shoot, actor dead or stunned.\n");
 		return;
 	}
 
@@ -3490,7 +3493,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	}
 
 	if (le->state & STATE_DEAD) {
-		Com_Printf("CL_ActorStartShoot: Can't start shoot, actor (%i) dead\n", number);
+		Com_Printf("CL_ActorStartShoot: Can't start shoot, actor (%i) dead or stunned.\n", number);
 		return;
 	}
 
@@ -4085,8 +4088,15 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	R_AddEntity(&add);
 
-	/* add actor special effects */
-	if (le->state & STATE_DEAD)
+	/** Add actor special effects.
+	 * Only draw blood if the actor is dead or (if stunned) was damaged more than half its maximum HPs.
+	 * @todo Better value for this?	*/
+	if ((le->state & STATE_DEAD)
+	 && !(le->state & STATE_STUN))
+		ent->flags |= RF_BLOOD;
+	else if ((le->state & STATE_DEAD)
+	 && (le->state & STATE_STUN)
+	 && le->HP <= (le->maxHP / 2))
 		ent->flags |= RF_BLOOD;
 	else
 		ent->flags |= RF_SHADOW;
