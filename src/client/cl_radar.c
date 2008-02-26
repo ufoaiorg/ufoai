@@ -178,7 +178,7 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 	numAircraftSensored = RADAR_IsUFOSensored(radar, num);	/* indice of ufo in radar list */
 	dist = MAP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (radar->range + (wasUFOSensored ? radar->range * outerCircleRatio : 0) > dist) {
+	if (!ufo->notOnGeoscape && (radar->range + (wasUFOSensored ? radar->range * outerCircleRatio : 0) > dist)) {
 		/* UFO is inside the radar range */
 		if (numAircraftSensored < 0) {
 			/* UFO was not sensored by the radar */
