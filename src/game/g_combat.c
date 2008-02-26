@@ -170,7 +170,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
  * @sa CL_UpdateCharacterSkills
  * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
  */
-static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *target)
+static void G_UpdateCharacterBodycount (edict_t *attacker, fireDef_t *fd, edict_t *target)
 {
 	if (!attacker || !fd || !target)
 		return;
@@ -290,7 +290,7 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 
 /**
  * @brief Deals damage of a give type and amount to a target.
- * @param[in] ent @todo ???
+ * @param[in] target What we want to damage.
  * @param[in] fd The fire definition that defines what type of damage is dealt.
  * @param[in] damage The value of the damage.
  * @param[in] attacker The attacker.
@@ -298,118 +298,118 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  * @sa G_SplashDamage
  * @sa G_PrintActorStats
  */
-static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
+static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
 	qboolean stun = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damStun);
 	qboolean shock = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damShock);
 
-	assert(ent);
-	assert(ent->type == ET_ACTOR
-			|| ent->type == ET_ACTOR2x2
-			|| ent->type == ET_BREAKABLE
-			|| ent->type == ET_DOOR);
+	assert(target);
+	assert(target->type == ET_ACTOR
+			|| target->type == ET_ACTOR2x2
+			|| target->type == ET_BREAKABLE
+			|| target->type == ET_DOOR);
 
 	/* Breakables are immune to stun & shock damage. */
-	if ((stun || shock || mock) && (ent->type == ET_BREAKABLE || ent->type == ET_DOOR))
+	if ((stun || shock || mock) && (target->type == ET_BREAKABLE || target->type == ET_DOOR))
  		return;
 
 	/* Breakables */
-	if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
-		if (damage >= ent->HP) {
+	if (target->type == ET_BREAKABLE || target->type == ET_DOOR) {
+		if (damage >= target->HP) {
 			vec3_t origin;
 
-			VectorCenterFromMinsMaxs(ent->absmin, ent->absmax, origin);
+			VectorCenterFromMinsMaxs(target->absmin, target->absmax, origin);
 
 			gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
-			gi.WriteShort(ent->number);
-			if (ent->particle && Q_strcmp(ent->particle, "null")) {
+			gi.WriteShort(target->number);
+			if (target->particle && Q_strcmp(target->particle, "null")) {
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-				gi.WriteShort(ent->spawnflags);
+				gi.WriteShort(target->spawnflags);
 				gi.WritePos(origin);
-				gi.WriteString(ent->particle);
+				gi.WriteString(target->particle);
 				gi.EndEvents();
 			}
-			switch (ent->material) {
+			switch (target->material) {
 			case MAT_GLASS:
-				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakglass", CHAN_AUTO, 1);
+				gi.PositionedSound(PM_ALL, origin, target, "misc/breakglass", CHAN_AUTO, 1);
 				break;
 			case MAT_METAL:
-				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakmetal", CHAN_AUTO, 1);
+				gi.PositionedSound(PM_ALL, origin, target, "misc/breakmetal", CHAN_AUTO, 1);
 				break;
 			case MAT_ELECTRICAL:
-				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakelectric", CHAN_AUTO, 1);
+				gi.PositionedSound(PM_ALL, origin, target, "misc/breakelectric", CHAN_AUTO, 1);
 				break;
 			case MAT_WOOD:
-				gi.PositionedSound(PM_ALL, origin, ent, "misc/breakwood", CHAN_AUTO, 1);
+				gi.PositionedSound(PM_ALL, origin, target, "misc/breakwood", CHAN_AUTO, 1);
 				break;
 			case MAT_MAX:
 				break;
 			}
 			/* unlink to update the routing */
-			gi.UnlinkEdict(ent);
-			ent->inuse = qfalse;
-			ent->HP = 0;
-			G_RecalcRouting(ent);
+			gi.UnlinkEdict(target);
+			target->inuse = qfalse;
+			target->HP = 0;
+			G_RecalcRouting(target);
 			/* now we can destroy the edict completely */
-			G_FreeEdict(ent);
+			G_FreeEdict(target);
 		} else {
-			ent->HP = max(ent->HP - damage, 0);
+			target->HP = max(target->HP - damage, 0);
 		}
 		return;
 	}
 
 	/* Actors don't die again. */
-	if (ent->state & STATE_DEAD)
+	if (target->state & STATE_DEAD)
 		return;
 
 	/* Apply armour effects. */
 	if (damage > 0) {
-		if (ent->i.c[gi.csi->idArmour]) {
-			const objDef_t *ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
+		if (target->i.c[gi.csi->idArmour]) {
+			const objDef_t *ad = &gi.csi->ods[target->i.c[gi.csi->idArmour]->item.t];
 			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i",
-				ent->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
+				target->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
 			damage = max(1, damage - ad->protection[fd->dmgweight]);
 		} else {
 			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: 0",
-				ent->chr.name, damage, fd->dmgweight);
+				target->chr.name, damage, fd->dmgweight);
 		}
 	}
 	Com_DPrintf(DEBUG_GAME, " Total damage: %d\n", damage);
 
 	/* Apply difficulty settings. */
 	if (sv_maxclients->integer == 1) {
-		if (attacker->team == TEAM_ALIEN && ent->team < TEAM_ALIEN)
+		if (attacker->team == TEAM_ALIEN && target->team < TEAM_ALIEN)
 			damage *= pow(1.18, difficulty->integer);
-		else if (attacker->team < TEAM_ALIEN && ent->team == TEAM_ALIEN)
+		else if (attacker->team < TEAM_ALIEN && target->team == TEAM_ALIEN)
 			damage *= pow(1.18, -difficulty->integer);
 	}
 
 	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
-	assert((ent->team >= 0) && (ent->team < MAX_TEAMS));
+	assert((target->team >= 0) && (target->team < MAX_TEAMS));
 
 	if (g_nodamage != NULL && !g_nodamage->integer) {
 		/* hit */
 		if (mock) {
-			G_UpdateShotMock(mock, attacker, ent, damage);
+			G_UpdateShotMock(mock, attacker, target, damage);
 		} else if (stun) {
-			ent->STUN += damage;
+			target->STUN += damage;
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
-			if (ent->team != attacker->team) {
-				const player_t *player = game.players + ent->pnum;
+			if (target->team != attacker->team) {
+				const player_t *player = game.players + target->pnum;
 				/* FIXME: there should be a possible protection, too */
-				ent->TU = 0; /* flashbangs kill TUs */
-				ent->state |= STATE_DAZED; /* entity is dazed */
+				target->TU = 0; /* flashbangs kill TUs */
+				target->state |= STATE_DAZED; /* entity is dazed */
 				gi.cprintf(player, PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
 				return;
 			}
 		} else {
-			ent->HP = max(ent->HP - damage, 0);
+			target->HP = max(target->HP - damage, 0);
 			if (damage < 0) {
-				/* The 'attacker' is healing ent. */
+				/* The 'attacker' is healing the target. */
 				/* Update stats here to get info on how many TUs the target received. */
-				if (ent->chr.scoreMission)
-					ent->chr.scoreMission->heal += -damage;
+				if (target->chr.scoreMission)
+					target->chr.scoreMission->heal += -damage;
 
 				/** @todo Do the same for "attacker" but as "applied" healing
 					e.g. attacker->chr->scoreMission.healOthers += -damage; ? */
@@ -421,7 +421,7 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 
 				/* Update overall splash damage for stats/score. */
 				if (!mock && (damage > 0) && (fd->splrad)) /**< Check for >0 and splrad to not count this as direct hit. */
-					G_UpdateHitScore(attacker, ent, fd, damage);
+					G_UpdateHitScore(attacker, target, fd, damage);
 			}
 		}
 	}
@@ -432,58 +432,42 @@ static void G_Damage (edict_t *ent, fireDef_t *fd, int damage, edict_t * attacke
 	/* HP shouldn't become negative.
 	 * Note: This check needs to be done for every assignment to HP above anyway since a "return" could pop up in between.
 	 * I'll leave this one in here just in case. */
-	ent->HP = max(ent->HP, 0);
+	target->HP = max(target->HP, 0);
 
 	/* Check death/knockout. */
-	if (ent->HP == 0 || ent->HP <= ent->STUN) {
-		G_SendStats(ent);
+	if (target->HP == 0 || target->HP <= target->STUN) {
+		G_SendStats(target);
 		/* prints stats for multiplayer to game console */
 		if (sv_maxclients->integer > 1) {
-			G_PrintActorStats(ent, attacker, fd);
+			G_PrintActorStats(target, attacker, fd);
 		}
 
-		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN, attacker);
+		G_ActorDie(target, target->HP == 0 ? STATE_DEAD : STATE_STUN, attacker);
 
 		/* apply morale changes */
 		if (mor_panic->integer)
-			G_Morale(ML_DEATH, ent, attacker, damage);
+			G_Morale(ML_DEATH, target, attacker, damage);
 
 		/* count kills */
-		if (ent->HP == 0)
-			level.num_kills[attacker->team][ent->team]++;
+		if (target->HP == 0)
+			level.num_kills[attacker->team][target->team]++;
 		/* count stuns */
 		else
-			level.num_stuns[attacker->team][ent->team]++;
+			level.num_stuns[attacker->team][target->team]++;
 
-		/** Count score
-		 * @todo Isn't this currently counting twice (here and in G_UpdateCharacterScore)?
-		 * What doesn't G_UpdateCharacterScore do that is done here?
-		 * Expect for checking for stuns vs. kills. */
-		if (ent->team == TEAM_CIVILIAN) {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_CIVILIANS]++;
-			attacker->chr.score.kills[KILLED_CIVILIANS]++;
-		} else if (ent->team == attacker->team) {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_TEAM]++;
-			attacker->chr.score.kills[KILLED_TEAM]++;
-		} else {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_ALIENS]++;
-			attacker->chr.score.kills[KILLED_ALIENS]++;
-		}
-		G_UpdateCharacterScore(attacker, fd, ent);
+		/* Update number of killed/stunned actors for this attacker. */
+		G_UpdateCharacterBodycount(attacker, fd, target);
 
 	} else {
-		ent->chr.minHP = min(ent->chr.minHP, ent->HP);
+		target->chr.minHP = min(target->chr.minHP, target->HP);
 		if (damage > 0) {
 			if (mor_panic->integer)
-				G_Morale(ML_WOUND, ent, attacker, damage);
+				G_Morale(ML_WOUND, target, attacker, damage);
 		} else { /* medikit, etc. */
-			if (ent->HP > GET_HP(ent->chr.score.skills[ABILITY_POWER]))
-				ent->HP = max(GET_HP(ent->chr.score.skills[ABILITY_POWER]), 0);
+			if (target->HP > GET_HP(target->chr.score.skills[ABILITY_POWER]))
+				target->HP = max(GET_HP(target->chr.score.skills[ABILITY_POWER]), 0);
 		}
-		G_SendStats(ent);
+		G_SendStats(target);
 	}
 }
 
