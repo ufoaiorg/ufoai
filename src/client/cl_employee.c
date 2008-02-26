@@ -906,7 +906,11 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 		}
 
 		/* Get technology with highest scientist-count and remove one scientist. */
-		tech = RS_GetTechWithMostScientists(employee->baseIDHired);
+		if (employee->baseIDHired >= 0)
+			tech = RS_GetTechWithMostScientists(B_GetBase(employee->baseIDHired));
+		else
+			tech = NULL;
+
 		if (tech) {
 			/* Try to assign replacement scientist */
 			RS_AssignScientist(tech);
@@ -1397,7 +1401,10 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->buildingID = MSG_ReadShort(sb);
 
 			if (((saveFileHeader_t *)data)->version >= 3) { /* (2.3+) */
-				/* Read the nations identifier string, get the matching nation_t pointer. */
+				/* Read the nations identifier string, get the matching nation_t pointer.
+				 * We can do this because nations are already parsed .. will break if the parse-order is changed.
+				 * Same for the ugv string below.
+				 * We would need a Post-Load init funtion in that case. See cl_save.c:SAV_GameActionsAfterLoad */
 				e->nation = CL_GetNationByID(MSG_ReadString(sb));
 				/* Read the UGV-Type identifier and get the matching ugv_t pointer.  */
 				e->ugv = CL_GetUgvById(MSG_ReadString(sb));

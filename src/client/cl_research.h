@@ -154,8 +154,8 @@ typedef struct technology_s {
 
 	researchStatus_t statusResearch;	/**< Current status of the research. */
 
-	int base_idx;				/**< The base this tech is researched in. */
-	int scientists;				/**< How many scientists are researching this tech. */
+	struct base_s	*base;	/**< The base this tech is researched in. */
+	int scientists;			/**< How many scientists (from "base") are researching this tech. */
 
 	char *image_top;
 	char *mdl_top;
@@ -193,8 +193,7 @@ void CL_CheckResearchStatus(void);
 void RS_UpdateData(struct base_s *base);
 void RS_ParseTechnologies(const char *name, const char **text);
 qboolean RS_ItemIsResearched(const char *id_provided);
-qboolean RS_TechIsResearched(int tech_idx);
-qboolean RS_IsResearched_idx(int idx);
+qboolean RS_IsResearched_idx(int techIdx);
 qboolean RS_IsResearched_ptr(const technology_t *tech);
 int RS_Collected_(technology_t * tech);
 void RS_CheckAllCollected(void);
@@ -213,7 +212,7 @@ void RS_RemoveScientist(technology_t* tech);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t* RS_GetTechByIDX(int tech_idx);
-technology_t *RS_GetTechWithMostScientists(int base_idx);
+technology_t *RS_GetTechWithMostScientists(const struct base_s *base);
 int RS_GetTechIdxByName(const char *name);
 int RS_CountInBase(const struct base_s *base);
 qboolean RS_ScriptSanityCheck(void);

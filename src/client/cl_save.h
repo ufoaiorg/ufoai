@@ -138,5 +138,5 @@ qboolean NA_Save(sizebuf_t* sb, void* data);
 qboolean NA_Load(sizebuf_t* sb, void* data);
 qboolean TR_Save(sizebuf_t* sb, void* data);
 qboolean TR_Load(sizebuf_t* sb, void* data);
-
+void RS_PostLoadInit(void);
 #endif /* CLIENT_CL_SAVE_H */

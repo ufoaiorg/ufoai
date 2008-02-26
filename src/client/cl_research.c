@@ -140,7 +140,7 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 			switch (required_AND->type[i]) {
 			case RS_LINK_TECH:
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
-				if (!RS_TechIsResearched(required_AND->idx[i])
+				if (!RS_IsResearched_idx(required_AND->idx[i])
 					&& Q_strncmp(required_AND->id[i], "nothing", MAX_VAR)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech not researched ----> %s \n", required_AND->id[i]);
 					met_AND = qfalse;
@@ -178,7 +178,7 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 			switch (required_OR->type[i]) {
 			case RS_LINK_TECH:
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
-				if (RS_TechIsResearched(required_OR->idx[i]))
+				if (RS_IsResearched_idx(required_OR->idx[i]))
 					met_OR = qtrue;
 				break;
 			case RS_LINK_ITEM:
@@ -283,7 +283,7 @@ static qboolean RS_RequirementsResearchable (requirements_t *required_AND, requi
  * @param[in] base In what base to check reseachability.
  * "base" can be NULL (i.e. everything related to a base is ignored). See code in RS_RequirementsMet for details.
  * @return qboolean
- * @sa RS_TechIsResearched
+ * @sa RS_IsResearched_idx
  */
 static qboolean RS_TechIsResearchable (technology_t * tech, base_t *base)
 {
@@ -327,9 +327,8 @@ char *RS_GetDescription (descriptions_t *desc)
 		tech = RS_GetTechByID(desc->tech[i]);
 		if (!tech)
 			continue;
-
-		if (tech->base_idx >= 0)
-			base = B_GetBase(tech->base_idx);
+		if (tech->base)
+			base = tech->base;
 		else
 			base = baseCurrent;
 
@@ -504,8 +503,8 @@ void RS_MarkResearchable (qboolean init)
 				Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
-				if (tech->base_idx >= 0)
-					base = B_GetBase(tech->base_idx);
+				if (tech->base)
+					base = tech->base;
 				else
 					base = baseCurrent;
 
@@ -783,9 +782,9 @@ static void RS_ResearchDisplayInfo (const base_t* base)
 
 	/* Display the base this tech is researched in. */
 	if (tech->scientists > 0) {
-		assert(tech->base_idx >= 0);
-		if (tech->base_idx != base->idx)
-			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), gd.bases[tech->base_idx].name));
+		assert(tech->base);
+		if (tech->base != base)
+			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), tech->base->name));
 		else
 			Cvar_Set("mn_research_selbase", _("Researched in this base."));
 	}
@@ -877,8 +876,8 @@ void RS_AssignScientist (technology_t* tech)
 	assert(tech);
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
 
-	if (tech->base_idx >= 0) {
-		base = B_GetBase(tech->base_idx);
+	if (tech->base) {
+		base = tech->base;
 	} else {
 		base = baseCurrent;
 	}
@@ -899,7 +898,7 @@ void RS_AssignScientist (technology_t* tech)
 			/* Check the capacity. */
 			if (base->capacities[CAP_LABSPACE].max > base->capacities[CAP_LABSPACE].cur) {
 				tech->scientists++;			/* Assign a scientist to this tech. */
-				tech->base_idx = base->idx;	/* Make sure this tech has proper base_idx. */
+				tech->base = base;			/* Make sure this tech has proper base pointer. */
 				base->capacities[CAP_LABSPACE].cur++;	/* Set the amount of currently assigned in capacities. */
 
 				/* Assign the sci to the lab and set number of used lab-space. */
@@ -953,39 +952,37 @@ static void RS_AssignScientist_f (void)
 void RS_RemoveScientist (technology_t* tech)
 {
 	employee_t *employee;
-	base_t *base;
 
 	assert(tech);
 
 	if (tech->scientists > 0) {
-		base = B_GetBase(tech->base_idx);
-		employee = E_GetAssignedEmployee(base, EMPL_SCIENTIST);
+		assert(tech->base);
+		employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
 		if (employee) {
 			/* Remove the sci from the tech. */
 			tech->scientists--;
 			/* Update capacity. */
-			gd.bases[tech->base_idx].capacities[CAP_LABSPACE].cur--;
+			tech->base->capacities[CAP_LABSPACE].cur--;
 			/* Remove the sci from the lab and set number of used lab-space. */
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
 		}
 	} else {
 		employee = NULL;
-		base = NULL;
 	}
 
 	assert(tech->scientists >= 0);
 
 	if (tech->scientists == 0) {
 		/* Remove the tech from the base if no scis are left to research it. */
-		tech->base_idx = -1;
+		tech->base = NULL;
 		tech->statusResearch = RS_PAUSED;
 	}
 
 	/* we only need an update if the employee ptr is not null */
 	if (employee) {
-		assert(base);
+		assert(tech->base);
 		/* Update display-list and display-info. */
-		RS_UpdateData(base);
+		RS_UpdateData(tech->base);
 	}
 }
 
@@ -1074,7 +1071,7 @@ static void RS_ResearchStart_f (void)
 	if (tech->statusResearchable) {
 		switch (tech->statusResearch) {
 		case RS_RUNNING:
-			if (tech->base_idx == baseCurrent->idx) {
+			if (tech->base == baseCurrent) {
 				/* Research already running in current base ... try to add max amount of scis. */
 				RS_MaxOutResearch(baseCurrent, tech);
 			}else {
@@ -1231,12 +1228,12 @@ void RS_UpdateData (base_t* base)
 
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
-			if ((tech->base_idx == base->idx) || (tech->base_idx < 0)) {
+			if (tech->base == base || !tech->base) {
 				/* Maximal available scientists in the base the tech is researched. */
 				Cvar_SetValue(va("mn_researchavailable%i", j), available[base->idx]);
 			} else {
 				/* Display available scientists of other base here. */
-				Cvar_SetValue(va("mn_researchavailable%i", j), available[tech->base_idx]);
+				Cvar_SetValue(va("mn_researchavailable%i", j), available[tech->base->idx]);
 			}
 			/* @todo: Free space in all labs in this base. */
 			/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
@@ -1261,7 +1258,7 @@ void RS_UpdateData (base_t* base)
 
 			/* Display the concated text in the correct list-entry.
 			 * But embed it in brackets if it isn't researched in the current base. */
-			if ((tech->scientists > 0) && (tech->base_idx != base->idx)) {
+			if ((tech->scientists > 0) && tech->base != base) {
 				Com_sprintf(name, sizeof(name), "(%s)", _(tech->name));
 			}
 			Cvar_Set(va("mn_researchitem%i", j), _(name));
@@ -1409,7 +1406,8 @@ void CL_CheckResearchStatus (void)
 		if (tech->statusResearch == RS_RUNNING) {
 			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
 			if (tech->time > 0 && tech->scientists >= 0) {
-				base = B_GetBase(tech->base_idx);
+				assert(tech->base);
+				base = tech->base;
 				if (base->hasBuilding[B_LAB]) {
 					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
 					Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
@@ -1428,7 +1426,7 @@ void CL_CheckResearchStatus (void)
 						researchListPos = 0;
 						newResearch++;
 						/* add this base to the list that needs an update call */
-						checkBases[tech->base_idx] = base;
+						checkBases[tech->base->idx] = base;
 						tech->time = 0;
 					}
 				}
@@ -1782,7 +1780,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech->scientists = 0;
 	tech->prev = TECH_INVALID;
 	tech->next = TECH_INVALID;
-	tech->base_idx = -1;
+	tech->base = NULL;
 	tech->up_chapter = -1;
 
 	do {
@@ -2098,15 +2096,24 @@ void RS_ParseTechnologies (const char *name, const char **text)
 }
 
 /**
- * @brief Checks whether an item is already researched
+ * @brief Checks if the technology (tech-index) has been researched.
+ * @param[in] tech_idx index of the technology.
+ * @return qboolean Returns qtrue if the technology has been researched, otherwise (or on error) qfalse;
  * @sa RS_IsResearched_ptr
  */
-qboolean RS_IsResearched_idx (int idx)
+qboolean RS_IsResearched_idx (int techIdx)
 {
 	if (ccs.singleplayer == qfalse)
 		return qtrue;
-	if (idx != TECH_INVALID && idx >= 0 && gd.technologies[idx].statusResearch == RS_FINISH)
+
+	if (techIdx == TECH_INVALID)
+		return qfalse;
+
+	if ((gd.technologies[techIdx].statusResearch == RS_FINISH)
+	&& (techIdx != TECH_INVALID)
+	&& (techIdx >= 0))
 		return qtrue;
+
 	return qfalse;
 }
 
@@ -2156,23 +2163,6 @@ int RS_Collected_ (technology_t * tech)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_Collected_: NULL technology given.\n");
 	return -1;
-}
-
-/**
- * @brief Checks if the technology (tech-id) has been researched.
- * @param[in] tech_idx index of the technology.
- * @return qboolean Returns qtrue if the technology has been researched, otherwise qfalse;
- */
-qboolean RS_TechIsResearched (int tech_idx)
-{
-	if (tech_idx == TECH_INVALID)
-		return qfalse;
-
-	/* research item found */
-	if (gd.technologies[tech_idx].statusResearch == RS_FINISH)
-		return qtrue;
-
-	return qfalse;
 }
 
 /**
@@ -2295,21 +2285,25 @@ technology_t **RS_GetTechsByType (researchType_t type)
 
 /**
  * @brief Searches for the technology that has the most scientists assigned in a given base.
- * @param[in] base_idx In what base the tech should be researched.
+ * @param[in] base In what base the tech should be researched.
  * @sa E_RemoveEmployeeFromBuilding
  */
-technology_t *RS_GetTechWithMostScientists (int base_idx)
+technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 {
 	technology_t *tech;
 	technology_t *tech_temp;
 	int i;
 	int max;
 
+	if (!base)
+		return NULL;
+
 	tech = NULL;
 	max = 0;
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech_temp = RS_GetTechByIDX(i);
-		if ((tech_temp->statusResearch == RS_RUNNING) && (tech_temp->base_idx == base_idx)) {
+		if (tech_temp->statusResearch == RS_RUNNING
+		 && tech_temp->base == base) {
 			if (tech_temp->scientists > max) {
 				tech = tech_temp;
 				max = tech->scientists;
@@ -2359,7 +2353,7 @@ int RS_CountInBase (const base_t *base)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = gd.technologies + i;
 		assert(tech);
-		if (tech->statusResearchable && (tech->base_idx == base->idx)) {
+		if (tech->statusResearchable && tech->base == base) {
 			/* Get a free lab from the base. */
 			counter += tech->scientists;
 		}
@@ -2379,7 +2373,10 @@ qboolean RS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, t->statusCollected);
 		MSG_WriteFloat(sb, t->time);
 		MSG_WriteByte(sb, t->statusResearch);
-		MSG_WriteShort(sb, t->base_idx); /* may be -1 */
+		if (t->base)
+			MSG_WriteShort(sb, t->base->idx);
+		else
+			MSG_WriteShort(sb, -1);
 		MSG_WriteByte(sb, t->scientists);
 		MSG_WriteByte(sb, t->statusResearchable);
 		MSG_WriteShort(sb, t->preResearchedDateDay);
@@ -2399,14 +2396,22 @@ qboolean RS_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+static linkedList_t *loadTechBases;
+
 qboolean RS_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;
 	technology_t *t;
 	const char *techString;
 	techMailType_t mailType;
+	int tempBaseIdx;
+
+	/* Clear linked list. */
+	LIST_Delete(loadTechBases);
+	loadTechBases = NULL;
 
 	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
+
 		techString = MSG_ReadString(sb);
 		t = RS_GetTechByID(techString);
 		if (!t) {
@@ -2415,7 +2420,7 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 			MSG_ReadByte(sb);	/* statusCollected */
 			MSG_ReadFloat(sb);	/* time */
 			MSG_ReadByte(sb);	/* statusResearch */
-			MSG_ReadShort(sb);	/* base_idx */
+			MSG_ReadShort(sb);	/* tech->base->idx */
 			MSG_ReadByte(sb);	/* scientists */
 			MSG_ReadByte(sb);	/* statusResearchable */
 			MSG_ReadShort(sb);	/* preResearchedDateDay */
@@ -2434,7 +2439,12 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 		t->statusCollected = MSG_ReadByte(sb);
 		t->time = MSG_ReadFloat(sb);
 		t->statusResearch = MSG_ReadByte(sb);
-		t->base_idx = MSG_ReadShort(sb);
+
+		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
+		tempBaseIdx = MSG_ReadShort(sb);
+		LIST_AddPointer(&loadTechBases, t);
+		LIST_Add(&loadTechBases, (byte *)&tempBaseIdx, sizeof(int));
+
 		t->scientists = MSG_ReadByte(sb);
 		t->statusResearchable = MSG_ReadByte(sb);
 		t->preResearchedDateDay = MSG_ReadShort(sb);
@@ -2453,6 +2463,35 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+
+/**
+ * @brief Called after savegame-load (all subsystems) is complete. Restores the base-pointers for each tech.
+ * The base-pointer is searched with the base-index that was parsed in RS_Load.
+ * @sa RS_Load
+ * @sa cl_save.c:SAV_GameActionsAfterLoad
+ */
+void RS_PostLoadInit (void)
+{
+	technology_t *t;
+	int baseIndex;
+
+	while (loadTechBases) {
+		t = (technology_t *) loadTechBases->data;
+		loadTechBases = loadTechBases->next;
+		baseIndex = *(int*)loadTechBases->data;
+		/* Com_Printf("RS_PostLoadInit: DEBUG %s %i\n", t->id, baseIndex); */
+		if (baseIndex >= 0)
+			t->base = B_GetBase(baseIndex);
+		else
+			t->base = NULL;
+		loadTechBases = loadTechBases->next;
+	};
+
+	/* Clear linked list. */
+	LIST_Delete(loadTechBases);
+	loadTechBases = NULL;
+}
+
 /**
  * @brief Returns true if the current base is able to handle research
  * @sa B_BaseInit_f
@@ -2462,7 +2501,8 @@ qboolean RS_ResearchAllowed (const base_t* base)
 	int hiredScientistCount = E_CountHired(base, EMPL_SCIENTIST);
 
 	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && base->hasBuilding[B_LAB] && hiredScientistCount > 0) {
+	 && base->hasBuilding[B_LAB]
+	 && hiredScientistCount > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

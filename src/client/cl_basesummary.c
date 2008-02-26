@@ -142,7 +142,7 @@ static void BaseSummary_Init_f (void)
 		tmp = 0;
 		for (i = 0; i < gd.numTechnologies; i++) {
 			tech = RS_GetTechByIDX(i);
-			if (tech->base_idx == base->idx && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
+			if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
 				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"), _(tech->name),
 					tech->scientists, (1 - tech->time / tech->overalltime) * 100), sizeof(textStatsBuffer));
 				tmp++;
