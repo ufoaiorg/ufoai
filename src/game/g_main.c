@@ -397,12 +397,10 @@ static void G_SendCharacterData (const edict_t* ent)
 	gi.WriteByte(ent->morale);
 
 	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-	for (k = 0; k < SKILL_NUM_TYPES+1; k++)
+	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
 		gi.WriteLong(ent->chr.score.experience[k]);
 	for (k = 0; k < SKILL_NUM_TYPES; k++)
 		gi.WriteByte(ent->chr.score.skills[k]);
-	for (k = 0; k < SKILL_NUM_TYPES; k++)
-		gi.WriteByte(ent->chr.score.initialSkills[k]);
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.WriteShort(ent->chr.score.kills[k]);
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
@@ -571,19 +569,16 @@ void G_EndGame (int team)
 	gi.WriteByte(number_of_teams);
 	gi.WriteByte(team);
 
-	gi.WriteShort(2 * number_of_teams);
 	for (i = 0; i < number_of_teams; i++) {
 		gi.WriteByte(level.num_spawned[i]);
 		gi.WriteByte(level.num_alive[i]);
 	}
 
-	gi.WriteShort(number_of_teams * number_of_teams);
 	for (i = 0; i < number_of_teams; i++)
 		for (j = 0; j < number_of_teams; j++) {
 			gi.WriteByte(level.num_kills[i][j]);
 		}
 
-	gi.WriteShort(number_of_teams * number_of_teams);
 	for (i = 0; i < number_of_teams; i++)
 		for (j = 0; j < number_of_teams; j++) {
 			gi.WriteByte(level.num_stuns[i][j]);
@@ -596,23 +591,9 @@ void G_EndGame (int team)
 			j++;
 
 	Com_DPrintf(DEBUG_GAME, "Sending results with %i actors.\n", j);
-	/**
-	 * This is (size of updateCharacter_t) * number of phalanx actors - see cl_team.c:CL_ParseCharacterData for more info
-	 * @sa inv_shared.h:chrScoreGlobal_t
-	 * @todo THIS IS A MAJOR PITA! Better way wanted/needed. */
-	gi.WriteShort((
-			(2 * 2) +			/* ucn+HP [* 2 for shorts] */
-			(2) +				/**< STUN+morale [byte] @todo shouldn't we use a short for STUN as well? Similar to HP. */
-			( /* chrScoreGlobal_t */
-				((SKILL_NUM_TYPES+1) * 4) /* experience [* 4 for long] */
-				+(SKILL_NUM_TYPES) /* skills [byte] */
-				+(SKILL_NUM_TYPES) /* initialSkills [byte]*/
-				+(KILLED_NUM_TYPES * 2) /* kills [short] */
-				+(KILLED_NUM_TYPES * 2) /* stuns [short] */
-				+1 * 2 /* assignedMissions [short]*/
-				+1 /* rank [byte]*/
-			))
-			* j); /* For each phalanx actor */
+
+	/* number of soldiers */
+	gi.WriteByte(j);
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)

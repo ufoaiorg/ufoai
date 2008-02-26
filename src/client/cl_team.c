@@ -2009,7 +2009,7 @@ typedef struct
  * @sa E_Save
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
-void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
+void CL_ParseCharacterData (struct dbuffer *msg)
 {
 	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
 	static int num = 0;
@@ -2017,7 +2017,7 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 	character_t* chr;
 	employee_t* employee;
 
-	if (updateCharacter) {
+	if (!msg) {
 		for (i = 0; i < num; i++) {
 			employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
 			if (!employee) {
@@ -2029,7 +2029,13 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 			chr->STUN = updateCharacterArray[i].STUN;
 			chr->morale = updateCharacterArray[i].morale;
 
-			memcpy(&chr->score, &updateCharacterArray[i].chrscore, sizeof(chrScoreGlobal_t));
+			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+			memcpy(chr->score.experience, updateCharacterArray[i].chrscore.experience, sizeof(chr->score.experience));
+			memcpy(chr->score.skills, updateCharacterArray[i].chrscore.skills, sizeof(chr->score.skills));
+			memcpy(chr->score.kills, updateCharacterArray[i].chrscore.kills, sizeof(chr->score.kills));
+			memcpy(chr->score.stuns, updateCharacterArray[i].chrscore.stuns, sizeof(chr->score.stuns));
+			chr->score.assignedMissions = updateCharacterArray[i].chrscore.assignedMissions;
+			chr->score.rank = updateCharacterArray[i].chrscore.rank;
 		}
 		num = 0;
 	} else {
@@ -2037,29 +2043,13 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 		for (i = 0; i < MAX_WHOLETEAM; i++) {
 			updateCharacterArray[i].ucn = -1;
 		}
-		/** NEW
-		 * @note This is the size of updateCharacter_t - also change it in g_main.c:G_SendCharacterData
-		 * if you change something in updateCharacter_t
-		 * @sa inv_shared.h:chrScoreGlobal_t
-		 * @todo THIS IS A MAJOR PITA! Better way wanted/needed, this _can_ be done more sane..
-		 */
-		num = NET_ReadShort(msg) / (
-			(2 * 2) +			/* ucn+HP [* 2 for shorts] */
-			(2) +				/**< STUN+morale [byte] @todo shouldn't we use a short for STUN as well? Similar to HP. */
-			( /* chrScoreGlobal_t */
-				((SKILL_NUM_TYPES+1) * 4) /* experience [* 4 for long] */
-				+(SKILL_NUM_TYPES) /* skills [byte] */
-				+(SKILL_NUM_TYPES) /* initialSkills [byte]*/
-				+(KILLED_NUM_TYPES * 2) /* kills [short] */
-				+(KILLED_NUM_TYPES * 2) /* stuns [short] */
-				+1 * 2 /* assignedMissions [short]*/
-				+1 /* rank [byte]*/
-			)
-		);
-		if (num > MAX_EMPLOYEES)
+		/* number of soldiers */
+		num = NET_ReadByte(msg);
+		if (num > MAX_WHOLETEAM)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
 			Sys_Error("CL_ParseCharacterData: NET_ReadShort error (%i)\n", num);
+
 		for (i = 0; i < num; i++) {
 			/* updateCharacter_t */
 			updateCharacterArray[i].ucn = NET_ReadShort(msg);
@@ -2068,12 +2058,10 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 			updateCharacterArray[i].morale = NET_ReadByte(msg);
 
 			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-			for (j = 0; j < SKILL_NUM_TYPES+1; j++)
+			for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 				updateCharacterArray[i].chrscore.experience[j] = NET_ReadLong(msg);
 			for (j = 0; j < SKILL_NUM_TYPES; j++)
 				updateCharacterArray[i].chrscore.skills[j] = NET_ReadByte(msg);
-			for (j = 0; j < SKILL_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.initialSkills[j] = NET_ReadByte(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
 				updateCharacterArray[i].chrscore.kills[j] = NET_ReadShort(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
@@ -2118,27 +2106,24 @@ void CL_ParseResults (struct dbuffer *msg)
 	if (we > num)
 		Sys_Error("Team number %d too high (only %d teams)\n", we, num);
 
-	NET_ReadShort(msg); /* size */
 	/* get spawn and alive count */
 	for (i = 0; i < num; i++) {
 		num_spawned[i] = NET_ReadByte(msg);
 		num_alive[i] = NET_ReadByte(msg);
 	}
 
-	NET_ReadShort(msg); /* size */
 	/* get kills */
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
 			num_kills[i][j] = NET_ReadByte(msg);
 
-	NET_ReadShort(msg); /* size */
 	/* get stuns */
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
 			num_stuns[i][j] = NET_ReadByte(msg);
 
 	base = CP_GetMissionBase();
-	CL_ParseCharacterData(msg, qfalse);
+	CL_ParseCharacterData(msg);
 
 	/* init result text */
 	mn.menuText[TEXT_STANDARD] = resultText;

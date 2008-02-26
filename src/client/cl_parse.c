@@ -85,7 +85,7 @@ const char *ev_format[] =
 	"b",				/* EV_ENDROUND */
 	"bb",				/* EV_ENDROUNDANNOUNCE */
 
-	"bb****",			/* EV_RESULTS */
+	"",					/* EV_RESULTS - manually parsed */
 	"g",				/* EV_CENTERVIEW */
 
 	"sbg",				/* EV_ENT_APPEAR */

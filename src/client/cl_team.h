@@ -52,7 +52,7 @@ void CL_ResetTeams(void);
 void CL_ParseResults(struct dbuffer *msg);
 void CL_SendCurTeamInfo(struct dbuffer * buf, chrList_t *team);
 void CL_AddCarriedToEq(struct aircraft_s *aircraft, equipDef_t * equip);
-void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
+void CL_ParseCharacterData(struct dbuffer *msg);
 
 void CL_UpdateCharacterSkills(character_t *chr);
 

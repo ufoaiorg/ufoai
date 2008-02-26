@@ -3759,7 +3759,7 @@ static void CL_GameResults_f (void)
 	CP_CheckLostCondition(!won, selectedMission, civilians_killed);
 
 	/* update the character stats */
-	CL_ParseCharacterData(NULL, qtrue);
+	CL_ParseCharacterData(NULL);
 
 	/* update stats */
 	CL_UpdateCharacterStats(won);
