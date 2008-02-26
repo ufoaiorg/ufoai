@@ -2890,7 +2890,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		name = MSG_ReadString(sb);
 		if (*name) {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
-			mission.mapDef->param = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
+			mission.mapDef->timesAlreadyUsed = MSG_ReadLong(sb);
 		} else
 			mission.mapDef = NULL;
 		Q_strncpyz(mission.id, MSG_ReadString(sb), sizeof(mission.id));
@@ -3038,10 +3038,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 
 		if (mission->mapDef) {
 			MSG_WriteString(sb, mission->mapDef->id);
-			if (mission->mapDef->param)
-				MSG_WriteString(sb, mission->mapDef->param);
-			else
-				MSG_WriteString(sb, "");
+			MSG_WriteLong(sb, mission->mapDef->timesAlreadyUsed);
 		} else
 			MSG_WriteString(sb, "");
 		MSG_WriteString(sb, mission->id);
