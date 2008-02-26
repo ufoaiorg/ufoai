@@ -787,8 +787,8 @@ menu mp_serverbrowser
 		texh	"176 64"
 		texl	"0 32"
 		pos	"750 520"
-		out	{ *string_bookmarks_connect_to_ip color "0 0.5 0 1" *button_inet_connect_to_ip image menu/multi_buttons3 }
-		in	{ *string_bookmarks_connect_to_ip color "1 1 1 1" *button_inet_connect_to_ip image menu/multi_buttons3a }
+		out	{ *string_inet_connect_to_ip color "0 0.5 0 1" *button_inet_connect_to_ip image menu/multi_buttons3 }
+		in	{ *string_inet_connect_to_ip color "1 1 1 1" *button_inet_connect_to_ip image menu/multi_buttons3a }
 	}
 	string string_inet_connect_to_ip
 	{
