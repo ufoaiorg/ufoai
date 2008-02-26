@@ -1500,6 +1500,7 @@ static void CL_TeamListDebug_f (void)
 
 /**
  * @brief Adds or removes a soldier to/from an aircraft.
+ * @sa E_EmployeeHire_f
  */
 static void CL_AssignSoldier_f (void)
 {
@@ -1810,7 +1811,7 @@ void CL_ResetTeams (void)
 	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
 	Cmd_AddCommand("equip_type", CL_EquipType_f, NULL);
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
-	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, NULL);
+	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_Select_f, NULL);
 	Cmd_AddCommand("team_changename", CL_ChangeName_f, "Change the name of an actor");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");

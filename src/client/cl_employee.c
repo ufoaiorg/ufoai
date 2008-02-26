@@ -1102,7 +1102,46 @@ static inline employee_t* E_GetEmployeeByMenuIndex (const base_t* base, int num,
 }
 
 /**
+ * @brief This removes an employee from the global list so that
+ * he/she is no longer hireable.
+ */
+static void E_EmployeeDelete_f (void)
+{
+	/* num - menu index (line in text), button - number of button */
+	int num, button;
+	employee_t* employee;
+
+	if (!baseCurrent)
+		return;
+
+	/* Check syntax. */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	button = num - employeeListNode->textScroll;
+
+	employee = E_GetEmployeeByMenuIndex(baseCurrent, num, employeeCategory);
+	/* empty slot selected */
+	if (!employee)
+		return;
+
+	if (employee->hired) {
+		if (!E_UnhireEmployee(employee)) {
+			/* @todo: message - Couldn't fire employee. */
+			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
+			return;
+		}
+	}
+	E_DeleteEmployee(employee, employee->type);
+	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
+}
+
+/**
  * @brief Callback for employee_hire command
+ * @sa CL_AssignSoldier_f
  */
 static void E_EmployeeHire_f (void)
 {
@@ -1199,6 +1238,7 @@ void E_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
+	Cmd_AddCommand("employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list");
 	Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
