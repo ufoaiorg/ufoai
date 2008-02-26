@@ -117,10 +117,10 @@ static void S_Music_Start (const char *file)
 
 	/* we are still playing some background track - fade it out @sa S_Frame */
 	if (Mix_PlayingMusic()) {
-		Mix_FadeOutMusic(3000);
+		if (!Mix_FadeOutMusic(3000))
+			S_Music_Stop();
 		if (music.nextMusicTrack)
 			Mem_Free(music.nextMusicTrack);
-		music.currentlyPlaying[0] = 0;
 		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, CL_TAG_NONE);
 		return;
 	}
@@ -134,7 +134,10 @@ static void S_Music_Start (const char *file)
 		Com_Printf("Could not load '%s' background track\n", name);
 		return;
 	}
-	assert(!music.data);
+
+	/* make really sure the last track is closed and freed */
+	S_Music_Stop();
+
 	music.data = Mix_LoadMUS_RW(music.musicSrc);
 
 	if (music.data) {
@@ -162,7 +165,6 @@ static void S_Music_Play_f (void)
 			Mix_FadeOutMusic(3000);
 			if (music.nextMusicTrack)
 				Mem_Free(music.nextMusicTrack);
-			music.currentlyPlaying[0] = 0;
 			music.nextMusicTrack = Mem_PoolStrDup(Cmd_Argv(1), cl_soundSysPool, CL_TAG_NONE);
 		} else {
 			Cvar_Set("snd_music", Cmd_Argv(1));
