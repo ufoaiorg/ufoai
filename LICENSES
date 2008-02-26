@@ -328,8 +328,8 @@ base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public Lic
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span
 base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span
-base/models/aircraft/ufo_corrupter/ufo_condor.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
-base/models/aircraft/ufo_corrupter/ufo_condor.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
+base/models/aircraft/ufo_corrupter/ufo_corrupter.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
+base/models/aircraft/ufo_corrupter/ufo_corrupter.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
