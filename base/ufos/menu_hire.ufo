@@ -129,7 +129,7 @@ menu employees
 
 	pic bt_employee0
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 30"
 		texl	"0 0"
 		texh	"20 20"
@@ -141,7 +141,7 @@ menu employees
 	}
 	pic bt_employee1
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 68"
 		texl	"0 0"
 		texh	"20 20"
@@ -153,7 +153,7 @@ menu employees
 	}
 	pic bt_employee2
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 106"
 		texl	"0 0"
 		texh	"20 20"
@@ -165,7 +165,7 @@ menu employees
 	}
 	pic bt_employee3
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 144"
 		texl	"0 0"
 		texh	"20 20"
@@ -177,7 +177,7 @@ menu employees
 	}
 	pic bt_employee4
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 182"
 		texl	"0 0"
 		texh	"20 20"
@@ -189,7 +189,7 @@ menu employees
 	}
 	pic bt_employee5
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 220"
 		texl	"0 0"
 		texh	"20 20"
@@ -201,7 +201,7 @@ menu employees
 	}
 	pic bt_employee6
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 258"
 		texl	"0 0"
 		texh	"20 20"
@@ -213,7 +213,7 @@ menu employees
 	}
 	pic bt_employee7
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 296"
 		texl	"0 0"
 		texh	"20 20"
@@ -225,7 +225,7 @@ menu employees
 	}
 	pic bt_employee8
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 334"
 		texl	"0 0"
 		texh	"20 20"
@@ -237,7 +237,7 @@ menu employees
 	}
 	pic bt_employee9
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 372"
 		texl	"0 0"
 		texh	"20 20"
@@ -249,7 +249,7 @@ menu employees
 	}
 	pic bt_employee10
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 410"
 		texl	"0 0"
 		texh	"20 20"
@@ -261,7 +261,7 @@ menu employees
 	}
 	pic bt_employee11
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 448"
 		texl	"0 0"
 		texh	"20 20"
@@ -273,7 +273,7 @@ menu employees
 	}
 	pic bt_employee12
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 486"
 		texl	"0 0"
 		texh	"20 20"
@@ -285,7 +285,7 @@ menu employees
 	}
 	pic bt_employee13
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 524"
 		texl	"0 0"
 		texh	"20 20"
@@ -297,7 +297,7 @@ menu employees
 	}
 	pic bt_employee14
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 562"
 		texl	"0 0"
 		texh	"20 20"
@@ -309,7 +309,7 @@ menu employees
 	}
 	pic bt_employee15
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 600"
 		texl	"0 0"
 		texh	"20 20"
@@ -321,7 +321,7 @@ menu employees
 	}
 	pic bt_employee16
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 638"
 		texl	"0 0"
 		texh	"20 20"
@@ -333,7 +333,7 @@ menu employees
 	}
 	pic bt_employee17
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 676"
 		texl	"0 0"
 		texh	"20 20"
@@ -345,7 +345,7 @@ menu employees
 	}
 	pic bt_employee18
 	{
-		tooltip	"_Hire/Unhire"
+		tooltip	"_Hire/Unhire - Right click to remove"
 		pos	"362 714"
 		texl	"0 0"
 		texh	"20 20"
