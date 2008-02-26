@@ -1763,7 +1763,7 @@ void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_
  * @param[in] employee_idx Employee index in global array.
  * @return qtrue if an employee with given index is assigned to given aircraft.
  */
-qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
+qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
 	int i;
 

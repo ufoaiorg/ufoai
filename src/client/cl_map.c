@@ -81,9 +81,6 @@ static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
 aircraft_t *selectedUFO;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
-static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
-											zone and water by different color values */
-static int terrainWidth, terrainHeight;		/**< the width and height for the terrain pic. */
 
 /* Smoothing variables */
 static qboolean smoothRotation = qfalse;	/**< qtrue if the rotation of 3D geoscape must me smooth */
@@ -93,6 +90,10 @@ static float smoothDeltaLength = 0.0f;		/**< angle/position difference that we n
 static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
 static qboolean smoothNewClick = qfalse;		/**< New click on control panel to make geoscape rotate */
+
+static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
+											zone and water by different color values */
+static int terrainWidth, terrainHeight;		/**< the width and height for the terrain pic. */
 
 static byte *culturePic = NULL;			/**< this is the mask for separating the culture
 											zone and water by different color values */

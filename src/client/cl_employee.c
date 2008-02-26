@@ -378,6 +378,7 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
  * @brief Return a "not hired" ugv-employee pointer of a given ugv-type.
  * @param[in] ugvType What type of robot we want.
  * @param[in] hired Do we want a hire or unhired robot?
+ * @sa E_GetHiredRobot
  */
 employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
@@ -387,7 +388,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		employee = &gd.employees[EMPL_ROBOT][i];
 
-		/* If no type give we return the first ugv we find. */
+		/* If no type was given we return the first ugv we find. */
 		if (!ugvType)
 			return employee;
 
@@ -407,6 +408,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
  * @sa E_GetUnhiredEmployee
  * @sa E_HireEmployee
  * @sa E_UnhireEmployee
+ * @sa E_GetHiredCharacter
  */
 employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, int idx)
 {
@@ -448,6 +450,7 @@ employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, i
  * @brief Return a "hired" ugv-employee pointer of a given ugv-type in a given base.
  * @param[in] base Which base the ugv should be searched in.c
  * @param[in] ugvType What type of robot we want.
+ * @sa E_GetUnhiredRobot
  */
 employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 {
@@ -457,7 +460,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		employee = &gd.employees[EMPL_ROBOT][i];
 
-		/* If no type give we return the first ugv we find. */
+		/* If no type was given we return the first ugv we find. */
 		if (!ugvType)
 			return employee;
 
@@ -477,6 +480,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
  * @param[in] type Which employee type do we search
  * @param[in] employee_idx Which employee idx (index in global employee array)
  * @return character_t pointer or NULL
+ * @sa E_GetHiredEmployee
  */
 character_t* E_GetHiredCharacter (const base_t* const base, employeeType_t type, int employee_idx)
 {
@@ -489,7 +493,6 @@ character_t* E_GetHiredCharacter (const base_t* const base, employeeType_t type,
 
 /**
  * @brief Returns true if the employee is _only_ listed in the global list.
- *
  * @param[in] employee The employee_t pointer to check
  * @return qboolean
  * @sa E_EmployeeIsFree
@@ -568,12 +571,23 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		employee->baseIDHired = base->idx;
 		/* Update capacity. */
 		base->capacities[CAP_EMPLOYEES].cur++;
-		if ((employee->type == EMPL_WORKER) && (base->capacities[CAP_WORKSPACE].cur < base->capacities[CAP_WORKSPACE].max))
-			base->capacities[CAP_WORKSPACE].cur++;
-		/**@todo
-		special cases for robots/ugvs?
-		if (employee->type == EMPL_ROBOT)
-		*/
+		switch (employee->type) {
+		case EMPL_WORKER:
+			if (base->capacities[CAP_WORKSPACE].cur < base->capacities[CAP_WORKSPACE].max)
+				base->capacities[CAP_WORKSPACE].cur++;
+			break;
+		/* @todo special cases for robots/ugvs? */
+		case EMPL_ROBOT:
+			break;
+		/* don't handle these types here */
+		case EMPL_MEDIC:
+		case EMPL_SCIENTIST:
+		case EMPL_SOLDIER:
+			break;
+		/* shut up compiler */
+		case MAX_EMPL:
+			break;
+		}
 		return qtrue;
 	}
 	return qfalse;
@@ -668,8 +682,11 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 	int i;
 	employee_t *employee;
 
-	if (!base || type > MAX_EMPL)
+	if (!base)
 		return;
+
+	assert(type >= 0);
+	assert(type < MAX_EMPL);
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
@@ -735,7 +752,7 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
 /**
  * @brief Removes the employee completely from the game (buildings + global list).
  * @param[in] employee The pointer to the employee you want to remove.
- * @return True if the employee was removed sucessfully, otherwise false.
+ * @return True if the employee was removed successfully, otherwise false.
  * @sa E_CreateEmployee
  * @sa E_ResetEmployees
  * @sa E_UnhireEmployee

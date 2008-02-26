@@ -435,8 +435,8 @@ void CL_ResetCharacters (base_t* const base)
  */
 static void CL_ChangeName_f (void)
 {
-	int sel = Cvar_VariableInteger("mn_employee_idx");
-	int type = Cvar_VariableInteger("mn_employee_type");
+	const int sel = Cvar_VariableInteger("mn_employee_idx");
+	const int type = Cvar_VariableInteger("mn_employee_type");
 	const menu_t *activeMenu;
 
 	/* Maybe called without base initialized or active. */
@@ -464,11 +464,10 @@ static void CL_ChangeName_f (void)
  */
 static void CL_ChangeSkin_f (void)
 {
-	int sel, newSkin;
+	const int sel = cl_selected->integer;
 
-	sel = cl_selected->integer;
 	if (sel >= 0 && sel < chrDisplayList.num) {
-		newSkin = Cvar_VariableInteger("mn_skin") + 1;
+		int newSkin = Cvar_VariableInteger("mn_skin") + 1;
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 
@@ -585,8 +584,8 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 				chr = &gd.employees[aircraft->teamTypes[p]][aircraft->teamIdxs[p]].chr;
 				ic = chr->inv->c[container];
 				while (ic) {
-					item_t item = ic->item;
-					int type = item.t;
+					const item_t item = ic->item;
+					const int type = item.t;
 
 					next = ic->next;
 					ed->num[type]++;
@@ -612,7 +611,8 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
  */
 static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
-	int i = -1, type = item.t;	/* 'type' equals idx in "&csi.ods[idx]" */
+	int i;
+	const int type = item.t;	/* 'type' equals idx in "&csi.ods[idx]" */
 
 	assert(ed->num[type] > 0);
 	ed->num[type]--;
@@ -735,7 +735,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	assert(base);
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried()...aircraft idx: %i, team size: %i\n",
-	aircraft->idx, aircraft->teamSize);
+		aircraft->idx, aircraft->teamSize);
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
@@ -759,7 +759,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 /**
  * @brief Clears all containers that are temp containers (see script definition).
  * @sa CL_GenerateEquipment_f
- * @sa CL_ResetTeamInBase
+ * @sa CL_ResetMultiplayerTeamInBase
  * @sa CL_SaveTeamInfo
  * @sa CL_SendCurTeamInfo
  */
@@ -792,9 +792,7 @@ static void CL_GenerateEquipment_f (void)
 	equipDef_t unused;
 	int i, p;
 	aircraft_t *aircraft;
-	/* t value will be set below - a and m are not changed here */
-	item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
-	int team = 0;
+	int team;
 
 	assert(baseCurrent);
 	assert((baseCurrent->aircraftCurrent != AIRCRAFT_INBASE_INVALID) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
@@ -807,12 +805,12 @@ static void CL_GenerateEquipment_f (void)
 	}
 
 	/* Get team. */
-	if (strstr(cl_team->string, "human")) {
-		team = 0;
-		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f().. team human, id: %i\n", team);
-	} else if (strstr(Cvar_VariableString("team"), "alien")) {
+	if (strstr(Cvar_VariableString("team"), "alien")) {
 		team = 1;
 		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f().. team alien, id: %i\n", team);
+	} else {
+		team = 0;
+		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f().. team human, id: %i\n", team);
 	}
 
 	/* Store hired names. */
@@ -877,9 +875,7 @@ static void CL_GenerateEquipment_f (void)
 			continue;
 
 		while (unused.num[i]) {
-			item.t = i;
-
-			assert(unused.num[i] > 0);
+			const item_t item = {NONE_AMMO, NONE, i, 0, 0};
 
 			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
 			 * Otherwise just use the container-buytype of the item.
@@ -908,7 +904,9 @@ static void CL_GenerateEquipment_f (void)
  */
 static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container)
 {
-	int container;
+	/* Set source container to the one that is not the destination container. */
+	const int container = (buytype_container == BUY_WEAP_PRI)
+			? BUY_WEAP_SEC : BUY_WEAP_PRI;
 	invList_t *ic;
 	invList_t *ic_temp;
 
@@ -918,11 +916,6 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	/* Do nothing if no pri/sec category is shown. */
 	if ((buytype_container != BUY_WEAP_PRI) && (buytype_container != BUY_WEAP_SEC))
 		return;
-
-	/* Set source container to the one that is not the destination container. */
-	container = (buytype_container == BUY_WEAP_PRI)
-		? BUY_WEAP_SEC
-		: BUY_WEAP_PRI;
 
 	/* This is a container that might hold some of the affected items.
 	 * Move'em to the target (buytype_container) container (if there are any) */
@@ -961,7 +954,7 @@ static void CL_EquipType_f (void)
 	/* display new items */
 	baseCurrent->equipType = num;
 	if (menuInventory) {
-		CL_MoveMultiEquipment (&baseCurrent->equipByBuyType, num); /**< Move all multi-ammo items to the current container. */
+		CL_MoveMultiEquipment(&baseCurrent->equipByBuyType, num); /**< Move all multi-ammo items to the current container. */
 		menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[num];
 	}
 }
@@ -983,8 +976,6 @@ static void CL_Select_f (void)
 	character_t *chr;
 	int num;
 	selectSoldierModes_t mode;
-	employeeType_t employeeType;
-	const menu_t *activeMenu;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -1044,24 +1035,24 @@ static void CL_Select_f (void)
 		chr = chrDisplayList.chr[num];
 		break;
 	case SELECT_MODE_TEAM:
-		employeeType =
-			display_heavy_equipment_list
-				? EMPL_ROBOT
-				: EMPL_SOLDIER;
-		if (!baseCurrent || num >= E_CountHired(baseCurrent, employeeType)) {
-			/*Com_Printf("num: %i / max: %i\n", num, E_CountHired(baseCurrent, EMPL_SOLDIER));*/
-			return;
+		{
+			const employeeType_t employeeType = display_heavy_equipment_list
+					? EMPL_ROBOT : EMPL_SOLDIER;
+			if (!baseCurrent || num >= E_CountHired(baseCurrent, employeeType)) {
+				/*Com_Printf("num: %i / max: %i\n", num, E_CountHired(baseCurrent, EMPL_SOLDIER));*/
+				return;
+			}
+			chr = E_GetHiredCharacter(baseCurrent, employeeType, -(num + 1));
+			if (!chr)
+				Sys_Error("CL_Select_f: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
 		}
-		chr = E_GetHiredCharacter(baseCurrent, employeeType, -(num + 1));
-		if (!chr)
-			Sys_Error("CL_Select_f: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
 		break;
 	default:
 		Sys_Error("Unknown select mode %i\n", mode);
 	}
 
 	if (mode == SELECT_MODE_SOLDIER) {
-		activeMenu = MN_GetActiveMenu();
+		const menu_t *activeMenu = MN_GetActiveMenu();
 		if (!Q_strncmp(activeMenu->name, "employees", 9)) {
 			/* this is hire menu: we can select soldiers, worker, medics, or researcher */
 			if (num < employeesInCurrentList) {
@@ -1090,11 +1081,10 @@ static void CL_Select_f (void)
 
 	assert(chr);
 	/* set info cvars */
-	/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
-	if (chr->fieldSize == ACTOR_SIZE_NORMAL)
-		CL_CharacterCvars(chr);
-	else
+	if (chr->empl_type == EMPL_ROBOT)
 		CL_UGVCvars(chr);
+	else
+		CL_CharacterCvars(chr);
 }
 
 /**
@@ -1155,7 +1145,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
  * @note Available via script command team_reset.
  * @note Called when initializing the multiplayer menu (for init node and new team button).
  */
-void CL_ResetTeamInBase (void)
+void CL_ResetMultiplayerTeamInBase (void)
 {
 	employee_t* employee;
 
@@ -1164,7 +1154,7 @@ void CL_ResetTeamInBase (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "Reset of baseCurrent team flags.\n");
 	if (!baseCurrent) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetTeamInBase: No baseCurrent\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: No baseCurrent\n");
 		return;
 	}
 
@@ -1177,18 +1167,17 @@ void CL_ResetTeamInBase (void)
 		employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 		employee->hired = qtrue;
 		employee->baseIDHired = baseCurrent->idx;
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
 	}
 
 	/* reset the multiplayer inventory; stored in baseCurrent->storage */
 	{
-		equipDef_t *ed;
-		const char *name;
+		const equipDef_t *ed;
+		const char *name = "multiplayer";
 		int i;
 
 		/* search equipment definition */
-		name = "multiplayer";
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetTeamInBase: no curCampaign - using equipment '%s'\n", name);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: no curCampaign - using equipment '%s'\n", name);
 		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
 			if (!Q_strncmp(name, ed->name, MAX_VAR))
 				break;
@@ -1211,7 +1200,7 @@ static void CL_MarkTeam_f (void)
 	int i, j, k = 0;
 	qboolean alreadyInOtherShip = qfalse;
 	aircraft_t *aircraft;
-	employeeType_t employeeType =
+	const employeeType_t employeeType =
 		display_heavy_equipment_list
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
@@ -1312,7 +1301,7 @@ static void CL_ToggleTeamList_f (void)
 qboolean CL_SoldierInAircraft (int employee_idx, employeeType_t employeeType, int aircraft_idx)
 {
 	int i;
-	aircraft_t* aircraft;
+	const aircraft_t* aircraft;
 
 	if (employee_idx < 0 || employee_idx > gd.numEmployees[employeeType])
 		return qfalse;
@@ -1340,17 +1329,16 @@ qboolean CL_SoldierInAircraft (int employee_idx, employeeType_t employeeType, in
 qboolean CL_SoldierAwayFromBase (employee_t *employee)
 {
 	int i;
-	aircraft_t* aircraft;
 	base_t *base;
 
 	assert(employee);
 
 	/* Check that employee is hired */
-	if (employee->baseIDHired < 0)
+	if (!employee->hired)
 		return qfalse;
 
-	/* for now only soldiers can be assigned to aircraft */
-	/* @todo add pilots and 2x2 units */
+	/* for now only soldiers amd ugvs can be assigned to aircraft */
+	/* @todo add pilots */
 	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT)
 		return qfalse;
 
@@ -1358,7 +1346,7 @@ qboolean CL_SoldierAwayFromBase (employee_t *employee)
 	assert(base);
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		aircraft = &base->aircraft[i];
+		const aircraft_t *aircraft = &base->aircraft[i];
 		assert(aircraft);
 
 		if (aircraft->status > AIR_HOME && AIR_IsInAircraftTeam(aircraft, employee->idx, employee->type))
@@ -1448,7 +1436,6 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 	if (employee_idx < 0 || !aircraft)
 		return qfalse;
 
-
 	if (aircraft->idxInBase < 0)
 		return qfalse;
 
@@ -1519,7 +1506,7 @@ static void CL_AssignSoldier_f (void)
 	int num = -1;
 	employee_t *employee;
 	aircraft_t *aircraft;
-	employeeType_t employeeType =
+	const employeeType_t employeeType =
 		display_heavy_equipment_list
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
@@ -1537,7 +1524,7 @@ static void CL_AssignSoldier_f (void)
 		return;
 	}
 
-	employee = E_GetHiredEmployee(baseCurrent, employeeType, -(num+1));
+	employee = E_GetHiredEmployee(baseCurrent, employeeType, -(num + 1));
 	if (!employee)
 		Sys_Error("CL_AssignSoldier_f: Could not get employee %i\n", num);
 
@@ -1563,8 +1550,6 @@ static void CL_AssignSoldier_f (void)
 	CL_UpdateHireVar(aircraft, employee->type);
 	Cbuf_AddText(va("team_select %i\n", num));
 }
-
-#define MPTEAM_SAVE_FILE_VERSION 1
 
 /**
  * @brief Saves a team
@@ -1711,6 +1696,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	employee_t *employee;
 	aircraft_t *aircraft;
 	int i, p, num;
+	base_t *base;
 
 	/* open file */
 	f = fopen(filename, "rb");
@@ -1735,9 +1721,11 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	/* load the teamname */
 	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
 
+	base = B_GetBase(0);
+
 	/* load the team */
 	/* reset data */
-	CL_ResetCharacters(&gd.bases[0]);
+	CL_ResetCharacters(base);
 
 	/* read whole team list */
 	num = MSG_ReadByte(&sb);
@@ -1747,11 +1735,11 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		/* New employee */
 		employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 		employee->hired = qtrue;
-		employee->baseIDHired = gd.bases[0].idx;
+		employee->baseIDHired = base->idx;
 		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);
 	}
 
-	aircraft = &gd.bases[0].aircraft[0];
+	aircraft = &base->aircraft[0];
 	AIR_ResetAircraftTeam(aircraft);
 
 	/* get assignment */
@@ -1778,8 +1766,8 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 			MSG_ReadLong(&sb);
 			MSG_ReadByte(&sb);
 		} else {
-			gd.bases[0].storage.num[num] = MSG_ReadLong(&sb);
-			gd.bases[0].storage.num_loose[num] = MSG_ReadByte(&sb);
+			base->storage.num[num] = MSG_ReadLong(&sb);
+			base->storage.num_loose[num] = MSG_ReadByte(&sb);
 		}
 	}
 }
@@ -1808,7 +1796,7 @@ static void CL_LoadTeamMultiplayerSlot_f (void)
  */
 static void CL_GenerateNewTeam_f (void)
 {
-	CL_ResetTeamInBase();
+	CL_ResetMultiplayerTeamInBase();
 	Cvar_Set("mn_teamname", _("NewTeam"));
 	CL_GameExit();
 	MN_PushMenu("team");
@@ -1816,17 +1804,17 @@ static void CL_GenerateNewTeam_f (void)
 
 void CL_ResetTeams (void)
 {
-	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, NULL);
-	Cmd_AddCommand("givename", CL_GiveName_f, NULL);
-	Cmd_AddCommand("team_reset", CL_ResetTeamInBase, NULL);
+	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, "Generates a new empty team");
+	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
+	Cmd_AddCommand("team_reset", CL_ResetMultiplayerTeamInBase, NULL);
 	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
 	Cmd_AddCommand("equip_type", CL_EquipType_f, NULL);
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, NULL);
 	Cmd_AddCommand("team_select", CL_Select_f, NULL);
 	Cmd_AddCommand("team_changename", CL_ChangeName_f, "Change the name of an actor");
-	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, NULL);
-	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinOnBoard_f, NULL);
+	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
+	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinOnBoard_f, "Change the skin for the hole team in the current aircraft");
 	Cmd_AddCommand("team_comments", CL_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
 	Cmd_AddCommand("equip_select", CL_Select_f, NULL);
 	Cmd_AddCommand("soldier_select", CL_Select_f, _("Select a soldier from list"));
@@ -2350,7 +2338,8 @@ void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank
 	rank_t *rank;
 	const char *errhead = "CL_ParseMedalsAndRanks: unexpected end of file (medal/rank ";
 	const char *token;
-	const value_t	*v;
+	const value_t *v;
+	int i;
 
 	/* get name list body body */
 	token = COM_Parse(text);
@@ -2361,6 +2350,12 @@ void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank
 	}
 
 	if (parserank) {
+		for (i = 0; i < gd.numRanks; i++) {
+			if (!Q_strcmp(name, gd.ranks[i].name)) {
+				Com_Printf("CL_ParseMedalsAndRanks: Rank with same name '%s' already loaded.\n", name);
+				return;
+			}
+		}
 		/* parse ranks */
 		if (gd.numRanks >= MAX_RANKS) {
 			Com_Printf("CL_ParseMedalsAndRanks: Too many rank descriptions, '%s' ignored.\n", name);
@@ -2430,9 +2425,10 @@ static const value_t ugvValues[] = {
 void CL_ParseUGVs (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseUGVs: unexpected end of file (ugv ";
-	const char	*token;
-	const value_t	*v;
+	const char *token;
+	const value_t *v;
 	ugv_t *ugv;
+	int i;
 
 	/* get name list body body */
 	token = COM_Parse(text);
@@ -2442,6 +2438,13 @@ void CL_ParseUGVs (const char *name, const char **text)
 		return;
 	}
 
+	for (i = 0; i < gd.numUGV; i++) {
+		if (!Q_strcmp(name, gd.ugvs[i].id)) {
+			Com_Printf("Com_ParseUGVs: ugv \"%s\" with same name already loaded\n", name);
+			return;
+		}
+	}
+
 	/* parse ugv */
 	if (gd.numUGV >= MAX_UGV) {
 		Com_Printf("Too many UGV descriptions, '%s' ignored.\n", name);
@@ -2449,7 +2452,6 @@ void CL_ParseUGVs (const char *name, const char **text)
 	}
 
 	ugv = &gd.ugvs[gd.numUGV++];
-
 	memset(ugv, 0, sizeof(ugv_t));
 	ugv->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 

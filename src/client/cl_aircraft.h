@@ -231,7 +231,7 @@ void AIR_ResetAircraftTeam(aircraft_t *aircraft);
 void AIR_AddToAircraftTeam(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
 void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
 void AIR_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
-qboolean AIR_IsInAircraftTeam(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
+qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);

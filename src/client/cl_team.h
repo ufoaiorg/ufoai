@@ -36,7 +36,7 @@ void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
 void CL_CleanTempInventory(base_t* base);
 
 void CL_ResetCharacters(base_t* const base);
-void CL_ResetTeamInBase(void);
+void CL_ResetMultiplayerTeamInBase(void);
 void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t employeeType, const ugv_t *ugvType);
 ugv_t *CL_GetUgvById(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);

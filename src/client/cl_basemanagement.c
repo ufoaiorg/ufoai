@@ -2387,7 +2387,7 @@ static void B_AssignInitial_f (void)
 	assert(baseCurrent);
 
 	if (!ccs.singleplayer) {
-		CL_ResetTeamInBase();
+		CL_ResetMultiplayerTeamInBase();
 		Cvar_Set("mn_teamname", _("NewTeam"));
 	}
 

@@ -41,6 +41,8 @@ extern cvar_t *cl_lastsave;
  *          3   | 2.3          | yes
  */
 #define SAVE_FILE_VERSION 3
+#define MPTEAM_SAVE_FILE_VERSION 1
+
 /* MAX_GAMESAVESIZE has room for 3MB for dynamic data, eg geoscape messages */
 #define MAX_GAMESAVESIZE	3145728
 #define MAX_COMMENTLENGTH	32
