@@ -2902,7 +2902,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		case STAGE_BASE_ATTACK:
 			{
 				/* Load IDX of base under attack */
-				int baseidx = MSG_ReadByte(sb);
+				const int baseidx = MSG_ReadByte(sb);
 				base = B_GetBase(baseidx);
 				if (base->baseStatus != BASE_UNDER_ATTACK)
 					Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
