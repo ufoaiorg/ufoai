@@ -157,7 +157,7 @@ static void Sys_ConsoleCompleteCommand (void)
 	const char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
 	int cntCmd = 0, cntCvar = 0, cntParams = 0;
 	char cmdLine[BUF_LEN] = "";
-	char cmdBase[MAXCMDLINE] = "";
+	char cmdBase[BUF_LEN] = "";
 	qboolean append = qtrue;
 	char *tmp;
 
