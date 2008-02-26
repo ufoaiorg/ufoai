@@ -1138,10 +1138,12 @@ static inline void CP_SetMissionName (mission_t *mission)
 
 /**
  * @brief Create a new mission of given category.
+ * @param[in] category category of the mission
+ * @param[in] beginNow true if the mission should begin now
  * @sa CP_SpawnNewMissions
  * @sa CP_MissionStageEnd
  */
-static void CP_CreateNewMission (int category)
+static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 {
 	mission_t mission;
 	const date_t nextSpawningDate = {3, 0};	/* Delay between 2 mission spawning */
@@ -1158,7 +1160,11 @@ static void CP_CreateNewMission (int category)
 	mission.initialIndividualInterest = ccs.interest[category];
 	mission.stage = STAGE_NOT_ACTIVE;
 	mission.ufo = NULL;
-	mission.startDate = Date_Add(ccs.date, Date_Random(nextSpawningDate));
+	if (beginNow) {
+		mission.startDate.day = ccs.date.day;
+		mission.startDate.sec = ccs.date.sec;
+	} else
+		mission.startDate = Date_Add(ccs.date, Date_Random(nextSpawningDate));
 	mission.finalDate = mission.startDate;
 	CP_SetMissionName(&mission);
 
@@ -1183,12 +1189,73 @@ static void CP_SpawnNewMissions (void)
 		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
 		for (i = 0; i < newMissionNum; i++) {
 			const int type = CP_SelectNewMissionType();
-			CP_CreateNewMission(type);
+			CP_CreateNewMission(type, qfalse);
 		}
 
 		ccs.lastMissionSpawnedDelay -= delayBetweenIncrease;
 	}
 }
+
+#ifdef DEBUG
+/**
+ * @brief Return Name of the category of a mission.
+ */
+static const char* CP_MissionCategoryToName (interestCategory_t category)
+{
+	switch (category) {
+	case INTERESTCATEGORY_NONE:
+		return _("None");
+		break;
+	case INTERESTCATEGORY_RECON:
+		return _("Recon Mission");
+		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		return _("Terror mission");
+		break;
+	case INTERESTCATEGORY_BASE_ATTACK:
+		return _("Base attack");
+		break;
+	case INTERESTCATEGORY_BUILDING:
+		return _("Building Base");
+		break;
+	case INTERESTCATEGORY_SUPPLY:
+		return _("Supply base");
+		break;
+	case INTERESTCATEGORY_XVI:
+		return _("XVI propagation");
+		break;
+	case INTERESTCATEGORY_INTERCEPT:
+		return _("Aircraft interception");
+		break;
+	default:
+		return _("Unknown mission category");
+		break;
+	}
+}
+
+/**
+ * @brief Debug function for creating a mission.
+ * @note called with debug_addmission
+ */
+static void CP_SpawnNewMissions_f (void)
+{
+	int category;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
+		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++)
+			Com_Printf("...%i: %s\n", category, CP_MissionCategoryToName(category));
+		return;
+	}
+
+	category = atoi(Cmd_Argv(1));
+
+	if (category < INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
+		return;
+
+	CP_CreateNewMission(category, qtrue);
+}
+#endif
 
 /**
  * @brief Check if a stage mission is over when UFO reached destination.
@@ -1362,6 +1429,8 @@ static const char* CP_GetAlienByInterest (const mission_t *mission)
 	case INTERESTCATEGORY_SUPPLY:
 		return "ortnok";
 	case INTERESTCATEGORY_XVI:
+		return "ortnok";
+	case INTERESTCATEGORY_INTERCEPT:
 		return "ortnok";
 	case INTERESTCATEGORY_MAX:
 		break;
@@ -5541,5 +5610,6 @@ void CL_ResetCampaign (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 	Cmd_AddCommand("debug_campaignstats", CP_CampaignStats_f, "Print campaign stats to game console");
+	Cmd_AddCommand("debug_addmission", CP_SpawnNewMissions_f, "Add a new mission");
 #endif
 }

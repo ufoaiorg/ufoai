@@ -92,6 +92,7 @@ typedef enum interestCategory_s {
 	INTERESTCATEGORY_BUILDING,		/**< Alien build a new base or subverse governments */
 	INTERESTCATEGORY_SUPPLY,		/**< Alien supply one of their bases */
 	INTERESTCATEGORY_XVI,			/**< Alien try to spread XVI */
+	INTERESTCATEGORY_INTERCEPT,		/**< Alien try to intercept PHALANX aircraft */
 
 	INTERESTCATEGORY_MAX
 } interestCategory_t;

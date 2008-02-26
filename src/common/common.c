@@ -576,6 +576,7 @@ static void Com_DebugHelp_f (void)
 			"------------------------------\n"
 			" * aliencont_addone\n"
 			" * debug_additems\n"
+			" * debug_addmission\n"
 			" * debug_basereset\n"
 			"   reset building status and capacities of every base\n"
 			" * debug_configstrings\n"
