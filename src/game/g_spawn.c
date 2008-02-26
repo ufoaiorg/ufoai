@@ -364,6 +364,9 @@ edict_t *G_Spawn (void)
 	return e;
 }
 
+/**
+ * @brief Spawn a 1x1 unit.
+ */
 static void G_ActorSpawn (edict_t *ent)
 {
 	/* set properties */
@@ -372,7 +375,7 @@ static void G_ActorSpawn (edict_t *ent)
 	ent->type = ET_ACTORSPAWN;
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
 
-	/* fall to ground */
+	/* Fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 
@@ -385,7 +388,8 @@ static void G_ActorSpawn (edict_t *ent)
 	/* link it for collision detection */
 	ent->dir = AngleToDV(ent->angle);
 	ent->solid = SOLID_BBOX;
-	/* maybe this is already set in one of the spawn functions */
+
+	/* Set bounding box. Maybe this is already set in one of the spawn functions? */
 	if (ent->maxs[0] == 0)
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 	if (ent->mins[0] == 0)
@@ -393,7 +397,7 @@ static void G_ActorSpawn (edict_t *ent)
 }
 
 /**
- * @brief Spawn an singleplayer 2x2 unit
+ * @brief Spawn a singleplayer 2x2 unit.
  */
 static void G_Actor2x2Spawn (edict_t *ent)
 {
@@ -403,7 +407,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 	ent->type = ET_ACTOR2x2SPAWN;
 	ent->fieldSize = ACTOR_SIZE_2x2;
 
-	/* fall to ground */
+	/* Fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->pos, ent->fieldSize);
@@ -414,6 +418,12 @@ static void G_Actor2x2Spawn (edict_t *ent)
 	/* link it for collision detection */
 	ent->dir = AngleToDV(ent->angle);
 	ent->solid = SOLID_BBOX;
+
+	/* Set bounding box. Maybe this is already set in one of the spawn functions? */
+	if (ent->maxs[0] == 0)
+		VectorSet(ent->maxs, PLAYER2x2_WIDTH, PLAYER2x2_WIDTH, PLAYER_STAND);
+	if (ent->mins[0] == 0)
+		VectorSet(ent->mins, -PLAYER2x2_WIDTH, -PLAYER2x2_WIDTH, PLAYER_MIN);
 }
 
 /**

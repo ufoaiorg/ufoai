@@ -448,8 +448,8 @@ typedef enum {
 
 #define MAX_DEATH	3	/**< @sa STATE_DEAD */
 
-/* state flags - transfered as short (so max 16 bits please) */
-/* public */
+/* State flags - transfered as short (so max 16 bits please) */
+/* public states */
 #define STATE_PUBLIC		0x00FF	/**< mask to seperate private flags from events */
 #define STATE_DEAD			0x0003	/**< 0 alive, 1-3 different deaths @sa MAX_DEATH*/
 #define STATE_CROUCHED		0x0004
@@ -460,13 +460,14 @@ typedef enum {
 #define STATE_STUN			0x0043	/**< stunned - includes death */
 #define STATE_DAZED			0x0080	/**< dazed and unable to move */
 
-/* private */
+/* private states */
 #define STATE_REACTION_ONCE	0x0100
 #define STATE_REACTION_MANY	0x0200
 #define STATE_REACTION		0x0300	/**< reaction - once or many */
 #define STATE_SHAKEN		0x0400	/**< forced reaction fire */
 #define STATE_XVI			0x0800	/**< controlled by the other team */
 
+/* Sizes of the eye-levels and bounding boxes for actors/units. */
 #define EYE_STAND			15
 #define EYE_CROUCH			3
 #define PLAYER_STAND		20
@@ -474,6 +475,16 @@ typedef enum {
 #define PLAYER_DEAD			-12
 #define PLAYER_MIN			-24
 #define PLAYER_WIDTH		9
+
+/**
+#define EYE2x2_STAND		15
+#define EYE2x2_CROUCH		3
+#define PLAYER2x2_STAND		20
+#define PLAYER2x2_CROUCH	5
+#define PLAYER2x2_DEAD		-12		<--  @todo  This may be the only one needed next to PLAYER2x2_WIDTH.
+#define PLAYER2x2_MIN		-24
+*/
+#define PLAYER2x2_WIDTH		18	/**< Width of a 2x2 unit. @todo may need some tweaks. */
 
 /* field marker box */
 #define BOX_DELTA_WIDTH		11
