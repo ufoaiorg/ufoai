@@ -405,11 +405,9 @@ begin:
 void R_LightPoint (vec3_t p)
 {
 	lightmap_sample_t lms;
-	entity_t *ent;
-	model_t *m;
 	vec3_t start, end, dest;
 	float dist, d;
-	int i, j;
+	int j;
 
 	/* fullbright */
 	VectorClear(r_lightmap_sample.point);
@@ -437,31 +435,12 @@ void R_LightPoint (vec3_t p)
 			continue;
 		}
 		/* check world */
-		if (R_LightPoint_(r_mapTiles[j], r_mapTiles[j]->bsp.nodes, start, end)) {
-			lms = r_lightmap_sample;
+		if (!R_LightPoint_(r_mapTiles[j], r_mapTiles[j]->bsp.nodes, start, end))
+			continue;
+
+		if ((d = start[2] - r_lightmap_sample.point[2]) < dist) {  /* hit */
 			dist = start[2] - r_lightmap_sample.point[2];
-		}
-
-		/* check bsp models */
-		for (i = 0; i < r_numEntities; i++) {
-			ent = R_GetEntity(i);
-			m = ent->model;
-
-			if (!m || m->type != mod_brush)
-				continue;
-
-			VectorSubtract(p, ent->origin, start);
-			VectorSubtract(dest, ent->origin, end);
-
-			if (!R_LightPoint_(r_mapTiles[j], &r_mapTiles[j]->bsp.nodes[m->bsp.firstnode], start, end))
-				continue;
-
-			if ((d = start[2] - r_lightmap_sample.point[2]) < dist) {  /* hit */
-				lms = r_lightmap_sample;
-				dist = d;
-
-				VectorAdd(lms.point, ent->origin, lms.point);
-			}
+			lms = r_lightmap_sample;
 		}
 	}
 
