@@ -9,7 +9,7 @@
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
 // valid UFO values:
-// * ufo_scout, crash_scout, ufo_fighter, crash_fighter, ufo_harvester, crash_harvester, ufo_lander, crash_lander, ufo_corrupter, crash_corrupter
+// * ufo_scout, crash_scout, ufo_fighter, crash_fighter, ufo_harvester, crash_harvester, ufo_lander, crash_lander, ufo_bomber, crash_corrupter
 
 
 ///////////////////////
@@ -200,8 +200,8 @@ mapdef farm_large
 
 	ufos
 	{
-		ufo_corrupter
-		crash_corrupter
+		ufo_bomber
+		crash_bomber
 	}
 
 	terrains
@@ -1991,10 +1991,10 @@ mapdef shelter
 	}
 }
 
-mapdef corrupt_city
+mapdef bomber_city
 {
-	map				corrupt_city
-	description		"_A Corrupter has landed in the middle of a city."
+	map				bomber_city
+	description		"_A Bomber has landed in the middle of a city."
 	multiplayer		true
 	teams			4
 	gametypes {
@@ -2014,7 +2014,7 @@ mapdef corrupt_city
 
 	ufos
 	{
-		ufo_corrupter
+		ufo_bomber
 	}
 
 	terrains

@@ -508,7 +508,8 @@ tech rs_alien_ufo_theory
 		item craft_ufo_fighter 1
 		item craft_ufo_supply 1
 		item craft_ufo_carrier 1
-		item craft_ufo_condor 1
+		item craft_ufo_bomber 1
+		item craft_ufo_corrupter 1
 		item craft_ufo_harvester 1
 	}
 
@@ -3350,15 +3351,15 @@ tech rs_craft_ufo_carrier
 	mdl_top		ufo_carrier
 }
 
-tech rs_craft_ufo_condor
+tech rs_craft_ufo_bomber
 {
 	type	craft
-	name	"_UFO - Condor"
+	name	"_UFO - Bomber"
 	description {
-		default "_ufo_condor_txt"
+		default "_ufo_bomber_txt"
 	}
 	pre_description {
-		default "_ufo_condor_pre_txt"
+		default "_ufo_bomber_pre_txt"
 	}
 	up_chapter	crafts
 
@@ -3366,7 +3367,7 @@ tech rs_craft_ufo_condor
 	{
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
-		subject	"_UFO - Condor"
+		subject	"_UFO - Bomber"
 		icon	icons/tech
 	}
 
@@ -3374,7 +3375,7 @@ tech rs_craft_ufo_condor
 	{
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
-		subject	"_UFO - Condor"
+		subject	"_UFO - Bomber"
 		icon	icons/tech
 	}
 
@@ -3382,14 +3383,56 @@ tech rs_craft_ufo_condor
 	require_AND
 	{
 		tech rs_alien_ufo_theory
-		item craft_ufo_condor 1
+		item craft_ufo_bomber 1
 	}
 
-	provides	"craft_ufo_condor"
+	provides	"craft_ufo_bomber"
 	time	2500
 	producetime -1
 
-	mdl_top		ufo_condor
+	mdl_top		ufo_bomber
+}
+
+tech rs_craft_ufo_corrupter
+{
+	type	craft
+	name	"_UFO - Condor"
+	description {
+		default "_ufo_corrupter_txt"
+	}
+	pre_description {
+		default "_ufo_corrupter_pre_txt"
+	}
+	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO - Corrupter"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO - Corrupter"
+		icon	icons/tech
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech rs_alien_ufo_theory
+		item craft_ufo_corrupter 1
+	}
+
+	provides	"craft_ufo_corrupter"
+	time	2500
+	producetime -1
+
+	mdl_top		ufo_corrupter
 }
 
 tech rs_craft_ufo_harvester

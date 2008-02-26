@@ -368,7 +368,7 @@ aircraft craft_ufo_supply
 }
 
 // FIXME
-aircraft craft_ufo_condor
+aircraft craft_ufo_bomber
 {
 	param {
 		speed		25
@@ -378,11 +378,41 @@ aircraft craft_ufo_condor
 		accuracy	80
 		fuelsize	100000
 	}
-	name		"_UFO - Condor"
-	shortname	"_Condor U"
+	name		"_UFO - Bomber"
+	shortname	"_Bomber U"
 	type		ufo
-	ufotype		ufo_condor
-	model		"ufo_condor"
+	ufotype		ufo_bomber
+	model		"ufo_bomber"
+	size		4
+	weight		1
+	building	building_big_ufo_hangar
+	price		3000000
+	image		air_ufo
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+	nogeoscape	true
+}
+
+// FIXME
+aircraft craft_ufo_corrupter
+{
+	param {
+		speed		25
+		shield		0
+		ecm			100
+		damage		40
+		accuracy	80
+		fuelsize	100000
+	}
+	name		"_UFO - Corrupter"
+	shortname	"_Corrupter U"
+	type		ufo
+	ufotype		ufo_corrupter
+	model		"ufo_corrupter"
 	size		4
 	weight		1
 	building	building_big_ufo_hangar

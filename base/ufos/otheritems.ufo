@@ -61,10 +61,18 @@ item craft_ufo_harvester
 	notonmarket	true
 }
 
-item craft_ufo_condor
+item craft_ufo_bomber
 {
 	buytype dummy
-	name	"_UFO - Condor"
+	name	"_UFO - Bomber"
+	weapon false
+	notonmarket	true
+}
+
+item craft_ufo_corrupter
+{
+	buytype dummy
+	name	"_UFO - Corrupter"
 	weapon false
 	notonmarket	true
 }
