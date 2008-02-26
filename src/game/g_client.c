@@ -3158,3 +3158,13 @@ void G_ClientDisconnect (player_t * player)
 
 	gi.bprintf(PRINT_CONSOLE, "%s disconnected.\n", player->pers.netname);
 }
+
+/**
+ * @brief Called after every player has joined
+ */
+void G_ResetClientData (void)
+{
+	scoreMissionNum = 0;
+	memset(scoreMission, 0, sizeof(scoreMission));
+	sentAppearPerishEvent = qfalse;
+}

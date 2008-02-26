@@ -278,6 +278,8 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
 
+	G_ResetClientData();
+
 	ent = NULL;
 	level.activeTeam = -1;
 
