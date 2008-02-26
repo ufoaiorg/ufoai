@@ -692,7 +692,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	assert(tech);
 
 	/* Set name of ugv/robot */
-	Cvar_Set("mn_itemname", tech->name);
+	Cvar_Set("mn_itemname", _(tech->name));
 
 	/* REset all sort of info for normal items */
 	/** @todo Check if this is all needed. Any better way? */
@@ -706,7 +706,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 
 	if (RS_IsResearched_ptr(tech)) {
 		/**@todo make me shiny */
-		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), tech->name, ugvType->weapon);
+		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), _(tech->name), ugvType->weapon);
 		mn.menuText[TEXT_STANDARD] = itemText;
 	} else if (RS_Collected_(tech)) {
 		/* @todo Display crippled info and pre-research text here */

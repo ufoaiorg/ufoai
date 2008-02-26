@@ -33,8 +33,6 @@ static const float max_detecting_range = 60.0f; /**< range to detect and fire at
 
 typedef struct ufoTypeList_s {
 	const char *id;		/**< script id string */
-	const char *name;	/**< these values are already taken from script file
-						 * so we have to use gettext markers here */
 	int ufoType;		/**< ufoType_t values */
 } ufoTypeList_t;
 
@@ -44,18 +42,17 @@ typedef struct ufoTypeList_s {
  * here, otherwise they are not translateable because they don't appear in the po files
  * @note Every ufotype (id) that doesn't have nogeoscape set to true must have an assembly
  * in the ufocrash[dn].ump files
- * @todo remove name and use the tech entry
  */
 static const ufoTypeList_t ufoTypeList[] = {
-	{"ufo_scout", "UFO - Scout", UFO_SCOUT},
-	{"ufo_fighter", "UFO - Fighter", UFO_FIGHTER},
-	{"ufo_harvester", "UFO - Harvester", UFO_HARVESTER},
-	{"ufo_corrupter", "UFO - Corrupter", UFO_CORRUPTER},
-	{"ufo_bomber", "UFO - Bomber", UFO_BOMBER},
-	{"ufo_carrier", "UFO - Carrier", UFO_CARRIER},
-	{"ufo_supply", "UFO - Supply", UFO_SUPPLY},
+	{"ufo_scout", UFO_SCOUT},
+	{"ufo_fighter", UFO_FIGHTER},
+	{"ufo_harvester", UFO_HARVESTER},
+	{"ufo_corrupter", UFO_CORRUPTER},
+	{"ufo_bomber", UFO_BOMBER},
+	{"ufo_carrier", UFO_CARRIER},
+	{"ufo_supply", UFO_SUPPLY},
 
-	{NULL, NULL, 0}
+	{NULL, 0}
 };
 
 /**
@@ -103,13 +100,10 @@ const char* UFO_TypeToShortName (ufoType_t type)
  */
 const char* UFO_TypeToName (ufoType_t type)
 {
-	const ufoTypeList_t *list = ufoTypeList;
-
-	while (list->id) {
-		if (list->ufoType == type)
-			return _(list->name);
-		list++;
-	}
+	const char *id = UFO_TypeToShortName(type);
+	const technology_t *tech = RS_GetTechByProvided(id);
+	if (tech)
+		return _(tech->name);
 	Sys_Error("UFO_TypeToName(): Unknown UFO type %i\n", type);
 	return NULL; /* never reached */
 }
