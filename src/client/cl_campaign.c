@@ -174,8 +174,22 @@ static void CL_ChangeIndividualInterest (float percentage, interestCategory_t ca
 	}
 
 	if (percentage > 0.0f) {
-		/* Value increases: percentage is taken from the overall interest value */
-		ccs.interest[category] += (int) (percentage * ccs.overallInterest);
+		int gain, diff;
+		const float slowerIncreaseFraction = 0.5f; /** Fraction of individual interest that will be won if
+									individal interest becomes higher than overall interest. 0 means no increase */
+		/* Value increases: percentage is taken from the overall interest value
+			But it increase slower if the individual interest becomes higher than the overall interest value */
+		gain = (int) (percentage * ccs.overallInterest);
+		diff = ccs.overallInterest - ccs.interest[category];
+		if (diff > gain)
+			/* Final value of individual interest is below overall interest */
+			ccs.interest[category] += gain;
+		else if (diff > 0)
+			/* Initial value of individual interest is below overall interest */
+			ccs.interest[category] = ccs.overallInterest + (int) (slowerIncreaseFraction * (gain - diff));
+		else
+			/* Final value of individual interest is above overall interest */
+			ccs.interest[category] += (int) (slowerIncreaseFraction * gain);
 	} else {
 		/* Value decreases: percentage is taken from the individual interest value */
 		ccs.interest[category] += (int) (percentage * ccs.interest[category]);
