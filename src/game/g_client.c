@@ -2566,7 +2566,7 @@ void G_ClientTeamInfo (player_t * player)
 	/* find a team */
 	G_GetTeam(player);
 
-	length = gi.ReadByte();	/* Get the length of data that the clients sent. */
+	length = gi.ReadByte();	/* Get the actor amount that the client sent. */
 
 	for (i = 0; i < length; i++) {
 		/* Search for a spawn point for each entry the client sent
