@@ -361,6 +361,19 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 	int i, matches = 0;
 	const char *localMatch[MAX_COMPLETE];
 	size_t len;
+	const char *dayNightStr;
+
+	dayNightStr = strstr(partial, " ");
+	if (!dayNightStr) {
+		if (partial[0] == 'd')
+			Com_Printf("day\n");
+		else if (partial[0] == 'n')
+			Com_Printf("night\n");
+		else
+			Com_Printf("day\nnight\n");
+		return 0;
+	} else
+		partial = dayNightStr + 1;
 
 	FS_GetMaps(qfalse);
 
