@@ -1204,31 +1204,31 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 {
 	switch (category) {
 	case INTERESTCATEGORY_NONE:
-		return _("None");
+		return "None";
 		break;
 	case INTERESTCATEGORY_RECON:
-		return _("Recon Mission");
+		return "Recon Mission <0:Random, 1:Aerial, 2:Ground>";
 		break;
 	case INTERESTCATEGORY_TERROR_ATTACK:
-		return _("Terror mission");
+		return "Terror mission";
 		break;
 	case INTERESTCATEGORY_BASE_ATTACK:
-		return _("Base attack");
+		return "Base attack";
 		break;
 	case INTERESTCATEGORY_BUILDING:
-		return _("Building Base");
+		return "Building Base";
 		break;
 	case INTERESTCATEGORY_SUPPLY:
-		return _("Supply base");
+		return "Supply base";
 		break;
 	case INTERESTCATEGORY_XVI:
-		return _("XVI propagation");
+		return "XVI propagation";
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
-		return _("Aircraft interception");
+		return "Aircraft interception";
 		break;
 	default:
-		return _("Unknown mission category");
+		return "Unknown mission category";
 		break;
 	}
 }
@@ -1239,7 +1239,7 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
  */
 static void CP_SpawnNewMissions_f (void)
 {
-	int category;
+	int category, type = 0;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
@@ -1248,12 +1248,39 @@ static void CP_SpawnNewMissions_f (void)
 		return;
 	}
 
+	if (Cmd_Argc() == 3)
+		type = atoi(Cmd_Argv(2));
+
 	category = atoi(Cmd_Argv(1));
 
 	if (category < INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
 		return;
 
 	CP_CreateNewMission(category, qtrue);
+
+	if (type) {
+		const linkedList_t *list = ccs.missions;
+		mission_t *mission;
+		/* get mission: this is the last one */
+		for (;list; list = list->next)
+			mission = (mission_t *)list->data;
+		switch (category) {
+		case INTERESTCATEGORY_RECON:
+			{
+				/* Start ground mission */
+				CP_ReconMissionCreate(mission);
+				if (type == 1)
+					/* Aerial mission */
+					CP_ReconMissionAerial(mission);
+				else
+					/* This is a ground mission */
+					CP_ReconMissionGroundGo(mission);
+			}
+			break;
+		default:
+			Com_Printf("Type is not implemented for this category.\n");
+		}
+	}
 }
 #endif
 
