@@ -865,6 +865,13 @@ menu popup_intercept
 		pos		"450 240"
 	}
 
+	string ETA_label
+	{
+		if "mn_displaybaselist == 0"
+		string	"_ETA:"
+		pos		"600 240"
+	}
+
 	string base2_label
 	{
 		if "mn_displaybaselist == 1"
@@ -875,7 +882,7 @@ menu popup_intercept
 	text ships
 	{
 		pos		"150 266"
-		size	"460 260"
+		size	"560 260"
 		format	"20 150"
 		mousefx	true
 		num		9
