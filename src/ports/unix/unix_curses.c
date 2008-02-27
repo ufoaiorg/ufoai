@@ -149,9 +149,11 @@ char *Curses_Input (void)
 		switch (key) {
 		/* Return - flush command buffer */
 		case '\n':
+		case KEY_ENTER:
 			/* Mark the end of our input */
 			input[inputline][inputpos] = '\0';
 
+			Com_Printf("%c]%s\n", 1, input[historyline]);
 
 			/* Flush the command */
 			inputpos = 0;
