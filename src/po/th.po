@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-02-27 18:20+0100\n"
+"POT-Creation-Date: 2008-02-27 20:00+0100\n"
 "PO-Revision-Date: 2007-07-30 11:29+0700\n"
 "Last-Translator: Sophon Taechasivalai <mickey@metawire.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -1562,9 +1562,9 @@ msgstr "ทำงาน:"
 #: ../base/ufos/menu_aircraft.ufo:974 ../base/ufos/menu_bases.ufo:684
 #: ../base/ufos/menu_geoscape.ufo:434 ../base/ufos/menu_geoscape.ufo:489
 #: ../base/ufos/menu_geoscape.ufo:587 ../base/ufos/menu_geoscape.ufo:696
-#: ../base/ufos/menu_geoscape.ufo:764 ../base/ufos/menu_geoscape.ufo:904
-#: ../base/ufos/menu_geoscape.ufo:954 ../base/ufos/menu_geoscape.ufo:1043
-#: ../base/ufos/menu_geoscape.ufo:1113 ../base/ufos/menu_geoscape.ufo:1174
+#: ../base/ufos/menu_geoscape.ufo:764 ../base/ufos/menu_geoscape.ufo:911
+#: ../base/ufos/menu_geoscape.ufo:961 ../base/ufos/menu_geoscape.ufo:1050
+#: ../base/ufos/menu_geoscape.ufo:1120 ../base/ufos/menu_geoscape.ufo:1181
 #: ../base/ufos/menu_irc.ufo:276 ../base/ufos/menu_lostwon.ufo:387
 #: ../base/ufos/menu_lostwon.ufo:484 ../base/ufos/menu_multiplayer.ufo:1735
 #: ../base/ufos/menu_options.ufo:527 ../base/ufos/menu_singleplayer.ufo:448
@@ -1574,8 +1574,8 @@ msgstr "ปิดกรอบนี้"
 #: ../base/ufos/menu_aircraft.ufo:987 ../base/ufos/menu_bases.ufo:697
 #: ../base/ufos/menu_geoscape.ufo:502 ../base/ufos/menu_geoscape.ufo:600
 #: ../base/ufos/menu_geoscape.ufo:709 ../base/ufos/menu_geoscape.ufo:788
-#: ../base/ufos/menu_geoscape.ufo:917 ../base/ufos/menu_geoscape.ufo:967
-#: ../base/ufos/menu_geoscape.ufo:1056 ../base/ufos/menu_geoscape.ufo:1126
+#: ../base/ufos/menu_geoscape.ufo:924 ../base/ufos/menu_geoscape.ufo:974
+#: ../base/ufos/menu_geoscape.ufo:1063 ../base/ufos/menu_geoscape.ufo:1133
 #: ../base/ufos/menu_irc.ufo:289 ../base/ufos/menu_lostwon.ufo:400
 #: ../base/ufos/menu_lostwon.ufo:497 ../base/ufos/menu_options.ufo:551
 #: ../base/ufos/menu_singleplayer.ufo:461
@@ -1911,7 +1911,7 @@ msgid "Build at least one functional Hangar (click for more info)"
 msgstr ""
 
 #: ../base/ufos/menu_bases.ufo:157 ../base/ufos/menu_buy.ufo:2304
-#: ../base/ufos/menu_geoscape.ufo:1082 ../base/ufos/menu_production.ufo:827
+#: ../base/ufos/menu_geoscape.ufo:1089 ../base/ufos/menu_production.ufo:827
 #: ../base/ufos/menu_transfer.ufo:287 ../base/ufos/research.ufo:100
 #: client/cl_map.c:301
 msgid "Aircraft"
@@ -2045,7 +2045,7 @@ msgid "Destroy"
 msgstr "ทำลาย"
 
 #: ../base/ufos/menu_basesummary.ufo:82 ../base/ufos/menu_geoscape.ufo:739
-#: ../base/ufos/menu_geoscape.ufo:852 ../base/ufos/menu_geoscape.ufo:1025
+#: ../base/ufos/menu_geoscape.ufo:852 ../base/ufos/menu_geoscape.ufo:1032
 #: ../base/ufos/menu_main.ufo:245 ../base/ufos/menu_multiplayer.ufo:694
 #: ../base/ufos/menu_options.ufo:957
 msgid "Name:"
@@ -2441,7 +2441,7 @@ msgstr ""
 msgid "Go to Options"
 msgstr "ตัวเลือก"
 
-#: ../base/ufos/menu_geoscape.ufo:447 ../base/ufos/menu_geoscape.ufo:1187
+#: ../base/ufos/menu_geoscape.ufo:447 ../base/ufos/menu_geoscape.ufo:1194
 #: ../base/ufos/menu_main.ufo:235 ../base/ufos/menu_multiplayer.ufo:1748
 msgid "OK"
 msgstr "ตกลง"
@@ -2455,12 +2455,12 @@ msgid "Aircraft reached desired location - what to do?"
 msgstr "เครื่องบินถึงที่หมาย - ต้องการทำอะไร?"
 
 #: ../base/ufos/menu_geoscape.ufo:509 ../base/ufos/menu_geoscape.ufo:607
-#: ../base/ufos/menu_geoscape.ufo:974
+#: ../base/ufos/menu_geoscape.ufo:981
 msgid "Enter the battlefield"
 msgstr "เข้าสู่สนามรบ"
 
 #: ../base/ufos/menu_geoscape.ufo:522 ../base/ufos/menu_geoscape.ufo:620
-#: ../base/ufos/menu_geoscape.ufo:987
+#: ../base/ufos/menu_geoscape.ufo:994
 msgid "Enter"
 msgstr "เข้า"
 
@@ -2522,31 +2522,36 @@ msgstr "ฐานที่เลือก"
 msgid "Status:"
 msgstr "สถานะ:"
 
-#: ../base/ufos/menu_geoscape.ufo:864 ../base/ufos/menu_geoscape.ufo:871
+#: ../base/ufos/menu_geoscape.ufo:864 ../base/ufos/menu_geoscape.ufo:878
 msgid "Base:"
 msgstr "ฐาน:"
 
-#: ../base/ufos/menu_geoscape.ufo:941 client/cl_campaign.c:414
+#: ../base/ufos/menu_geoscape.ufo:871
+#, fuzzy
+msgid "ETA:"
+msgstr "ปฏิบัติการ:\t%s\n"
+
+#: ../base/ufos/menu_geoscape.ufo:948 client/cl_campaign.c:414
 msgid "Base attack"
 msgstr "การโจมตีขั้นพื้นฐาน"
 
-#: ../base/ufos/menu_geoscape.ufo:948
+#: ../base/ufos/menu_geoscape.ufo:955
 msgid "What to do?"
 msgstr "จะทำอะไร?"
 
-#: ../base/ufos/menu_geoscape.ufo:1012
+#: ../base/ufos/menu_geoscape.ufo:1019
 msgid "Select item"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_geoscape.ufo:1019
+#: ../base/ufos/menu_geoscape.ufo:1026
 msgid "Type:"
 msgstr "ประเภท:"
 
-#: ../base/ufos/menu_geoscape.ufo:1089
+#: ../base/ufos/menu_geoscape.ufo:1096
 msgid "Action:"
 msgstr "ทำงาน:"
 
-#: ../base/ufos/menu_geoscape.ufo:1095
+#: ../base/ufos/menu_geoscape.ufo:1102
 msgid "Description:"
 msgstr "คำอธิบาย:"
 
@@ -3476,7 +3481,7 @@ msgid "Medium"
 msgstr "เสนารักษ์"
 
 #: ../base/ufos/menu_options.ufo:425 ../base/ufos/menu_options.ufo:454
-#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_campaign.c:4806
+#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_campaign.c:4798
 msgid "Normal"
 msgstr "ปกติ"
 
@@ -4058,7 +4063,7 @@ msgstr "แสดงเฉพาะพนักงาน"
 msgid "Show only aliens"
 msgstr "แสดงเฉพาะมนุษย์ต่างดาว"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4850
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4842
 msgid "Aliens"
 msgstr "มนุษย์ต่างดาว"
 
@@ -15072,19 +15077,19 @@ msgstr ""
 #: client/cl_basemanagement.c:2887 client/cl_basemanagement.c:2895
 #: client/cl_basemanagement.c:2900 client/cl_basemanagement.c:2905
 #: client/cl_basemanagement.c:2910 client/cl_campaign.c:116
-#: client/cl_campaign.c:1843 client/cl_campaign.c:2064
-#: client/cl_campaign.c:2075 client/cl_campaign.c:2085
-#: client/cl_campaign.c:2095 client/cl_campaign.c:2105
-#: client/cl_campaign.c:2116 client/cl_campaign.c:2129
-#: client/cl_campaign.c:2139 client/cl_campaign.c:2146
-#: client/cl_campaign.c:2154 client/cl_campaign.c:3512
-#: client/cl_campaign.c:3564 client/cl_campaign.c:3585
-#: client/cl_campaign.c:3587 client/cl_campaign.c:3919
+#: client/cl_campaign.c:1843 client/cl_campaign.c:2056
+#: client/cl_campaign.c:2067 client/cl_campaign.c:2077
+#: client/cl_campaign.c:2087 client/cl_campaign.c:2097
+#: client/cl_campaign.c:2108 client/cl_campaign.c:2121
+#: client/cl_campaign.c:2131 client/cl_campaign.c:2138
+#: client/cl_campaign.c:2146 client/cl_campaign.c:3504
+#: client/cl_campaign.c:3556 client/cl_campaign.c:3577
+#: client/cl_campaign.c:3579 client/cl_campaign.c:3911
 #: client/cl_inventory.c:292 client/cl_inventory.c:297
 #: client/cl_inventory.c:586 client/cl_main.c:1042 client/cl_main.c:1277
 #: client/cl_map.c:266 client/cl_mapfightequip.c:829
 #: client/cl_mapfightequip.c:831 client/cl_market.c:824 client/cl_market.c:828
-#: client/cl_parse.c:1687 client/cl_popup.c:329 client/cl_produce.c:419
+#: client/cl_parse.c:1687 client/cl_popup.c:334 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
 #: client/cl_produce.c:457 client/cl_research.c:1082 client/cl_research.c:1100
 #: client/cl_research.c:1106 client/cl_research.c:1144
@@ -15222,7 +15227,7 @@ msgstr "ดักจับ"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/cl_airfight.c:450 client/cl_campaign.c:3587
+#: client/cl_airfight.c:450 client/cl_campaign.c:3579
 msgid "You've lost the battle"
 msgstr "คุณรบแพ้"
 
@@ -15404,7 +15409,7 @@ msgid ""
 msgstr "ไม่มียานบินในฐาน - คุณต้องซื้อหรือโยกย้ายยานบินก่อน\n"
 
 #: client/cl_basemanagement.c:2971 client/cl_basemanagement.c:2973
-#: client/cl_campaign.c:3318 client/cl_market.c:806 client/cl_market.c:811
+#: client/cl_campaign.c:3310 client/cl_market.c:806 client/cl_market.c:811
 #: client/cl_market.c:838 client/cl_market.c:944 client/cl_market.c:946
 #: client/cl_save.c:429 client/cl_team.c:1622 client/cl_team.c:1629
 msgid "Note"
@@ -15529,216 +15534,195 @@ msgid ""
 "destroyed."
 msgstr "ฐาน: %s ถูกถล่มย่อยยับ! พนักงานทุกคนโดนฆ่า อุปกรณ์ทั้งหมดถูกทำลาย"
 
-#: client/cl_campaign.c:1889
-#, fuzzy, c-format
-msgid "%i hour"
-msgid_plural "%i hours"
-msgstr[0] "1 ชม."
-msgstr[1] "1 ชม."
-
-#: client/cl_campaign.c:1894
-#, fuzzy, c-format
-msgid "%i min"
-msgid_plural "%i mins"
-msgstr[0] "5 นาที"
-msgstr[1] "5 นาที"
-
-#: client/cl_campaign.c:1897
-#, fuzzy, c-format
-msgid "%i sec"
-msgid_plural "%i sec"
-msgstr[0] "%i c"
-msgstr[1] "%i c"
-
-#: client/cl_campaign.c:1935
+#: client/cl_campaign.c:1927
 msgid "Jan"
 msgstr "มค."
 
-#: client/cl_campaign.c:1937
+#: client/cl_campaign.c:1929
 msgid "Feb"
 msgstr "กพ."
 
-#: client/cl_campaign.c:1939
+#: client/cl_campaign.c:1931
 msgid "Mar"
 msgstr "มีค."
 
-#: client/cl_campaign.c:1941
+#: client/cl_campaign.c:1933
 msgid "Apr"
 msgstr "เมย."
 
-#: client/cl_campaign.c:1943
+#: client/cl_campaign.c:1935
 msgid "May"
 msgstr "พค."
 
-#: client/cl_campaign.c:1945
+#: client/cl_campaign.c:1937
 msgid "Jun"
 msgstr "มิย."
 
-#: client/cl_campaign.c:1947
+#: client/cl_campaign.c:1939
 msgid "Jul"
 msgstr "กค."
 
-#: client/cl_campaign.c:1949
+#: client/cl_campaign.c:1941
 msgid "Aug"
 msgstr "สค."
 
-#: client/cl_campaign.c:1951
+#: client/cl_campaign.c:1943
 msgid "Sep"
 msgstr "กย."
 
-#: client/cl_campaign.c:1953
+#: client/cl_campaign.c:1945
 msgid "Oct"
 msgstr "ตค."
 
-#: client/cl_campaign.c:1955
+#: client/cl_campaign.c:1947
 msgid "Nov"
 msgstr "พย."
 
-#: client/cl_campaign.c:1957
+#: client/cl_campaign.c:1949
 msgid "Dec"
 msgstr "ธค."
 
-#: client/cl_campaign.c:1971
+#: client/cl_campaign.c:1963
 msgid "Giving up"
 msgstr "หมดหวัง"
 
-#: client/cl_campaign.c:1973
+#: client/cl_campaign.c:1965
 msgid "Furious"
 msgstr "หมดความอดทน"
 
-#: client/cl_campaign.c:1975
+#: client/cl_campaign.c:1967
 msgid "Angry"
 msgstr "โกรธ"
 
-#: client/cl_campaign.c:1977
+#: client/cl_campaign.c:1969
 msgid "Mad"
 msgstr "โมโห"
 
-#: client/cl_campaign.c:1979
+#: client/cl_campaign.c:1971
 msgid "Upset"
 msgstr "ไม่ค่อยพอใจ"
 
-#: client/cl_campaign.c:1981
+#: client/cl_campaign.c:1973
 msgid "Tolerant"
 msgstr "ยังทนได้"
 
-#: client/cl_campaign.c:1983
+#: client/cl_campaign.c:1975
 msgid "Neutral"
 msgstr "เฉยๆ"
 
-#: client/cl_campaign.c:1985
+#: client/cl_campaign.c:1977
 msgid "Content"
 msgstr "พอใจ"
 
-#: client/cl_campaign.c:1987
+#: client/cl_campaign.c:1979
 msgid "Pleased"
 msgstr "ถูกใจ"
 
-#: client/cl_campaign.c:1989
+#: client/cl_campaign.c:1981
 msgid "Happy"
 msgstr "ยินดี"
 
-#: client/cl_campaign.c:1991
+#: client/cl_campaign.c:1983
 msgid "Exuberant"
 msgstr "มีความสุข"
 
-#: client/cl_campaign.c:2057
+#: client/cl_campaign.c:2049
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "ได้ %i %s, %i %s, %i %s, %i %s, และ %i %s จากประเทศ %s (%s)"
 
-#: client/cl_campaign.c:2058
+#: client/cl_campaign.c:2050
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "เครดิต"
 msgstr[1] "เครดิต"
 
-#: client/cl_campaign.c:2059 client/cl_campaign.c:4859
+#: client/cl_campaign.c:2051 client/cl_campaign.c:4851
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "นักวิทยาศาสตร์"
 msgstr[1] "นักวิทยาศาสตร์"
 
-#: client/cl_campaign.c:2060 client/cl_campaign.c:4861
+#: client/cl_campaign.c:2052 client/cl_campaign.c:4853
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "เสนารักษ์"
 msgstr[1] "เสนารักษ์"
 
-#: client/cl_campaign.c:2061 client/cl_campaign.c:4858
+#: client/cl_campaign.c:2053 client/cl_campaign.c:4850
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "ทหาร"
 msgstr[1] "ทหาร"
 
-#: client/cl_campaign.c:2062 client/cl_campaign.c:4860
+#: client/cl_campaign.c:2054 client/cl_campaign.c:4852
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "คนงาน"
 msgstr[1] "คนงาน"
 
-#: client/cl_campaign.c:2073
+#: client/cl_campaign.c:2065
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "จ่าย %i เครดิต ให้ทหาร"
 
-#: client/cl_campaign.c:2083
+#: client/cl_campaign.c:2075
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "จ่าย %i เครดิต ให้คนงาน"
 
-#: client/cl_campaign.c:2093
+#: client/cl_campaign.c:2085
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "จ่าย %i เครดิต ให้นักวิทยาศาสตร์"
 
-#: client/cl_campaign.c:2103
+#: client/cl_campaign.c:2095
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "จ่าย %i เครดิต ให้เสนารักษ์"
 
-#: client/cl_campaign.c:2114
+#: client/cl_campaign.c:2106
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "จ่าย %i เครดิต สำหรับค่าหุ่นยนต์"
 
-#: client/cl_campaign.c:2127
+#: client/cl_campaign.c:2119
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "จ่าย %i เครดิต สำหรับยานบิน"
 
-#: client/cl_campaign.c:2138
+#: client/cl_campaign.c:2130
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "จ่าย %i เครดิตเป็นค่ารักษาฐาน %s"
 
-#: client/cl_campaign.c:2144
+#: client/cl_campaign.c:2136
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "จ่าย %i เครดิต เป็นค่าจัดการ"
 
-#: client/cl_campaign.c:2152
+#: client/cl_campaign.c:2144
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "จ่าย %i เครดิต เป็นค่าดอกเบี้ยเงินกู้"
 
-#: client/cl_campaign.c:2315 client/cl_event.c:248 client/cl_save.c:353
+#: client/cl_campaign.c:2307 client/cl_event.c:248 client/cl_save.c:353
 #: client/cl_ufopedia.c:809 client/cl_ufopedia.c:815
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cl_campaign.c:2317
+#: client/cl_campaign.c:2309
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:2427
+#: client/cl_campaign.c:2419
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_campaign.c:2470
+#: client/cl_campaign.c:2462
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -15749,7 +15733,7 @@ msgstr ""
 "แพ้:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:2475
+#: client/cl_campaign.c:2467
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -15760,42 +15744,42 @@ msgstr ""
 "คงอยู่:\t%i\n"
 "ถูกโจมตี:\t%i\n"
 
-#: client/cl_campaign.c:2482 client/cl_ufopedia.c:1655
+#: client/cl_campaign.c:2474 client/cl_ufopedia.c:1655
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:2521 client/cl_ufopedia.c:412
+#: client/cl_campaign.c:2513 client/cl_ufopedia.c:412
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:2527
+#: client/cl_campaign.c:2519
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "พนักงาน:\t%i c\n"
 
-#: client/cl_campaign.c:2536
+#: client/cl_campaign.c:2528
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "เครื่องบิน:\t%i c\n"
 
-#: client/cl_campaign.c:2544
+#: client/cl_campaign.c:2536
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "ฐาน (%s):\t%i c\n"
 
-#: client/cl_campaign.c:2549
+#: client/cl_campaign.c:2541
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "ค่าใช้จ่ายในการดำเนินการ:\t%i c\n"
 
-#: client/cl_campaign.c:2556
+#: client/cl_campaign.c:2548
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "หนี้สิน:\t%i c\n"
 
-#: client/cl_campaign.c:2559
+#: client/cl_campaign.c:2551
 #, c-format
 msgid ""
 "\n"
@@ -15806,41 +15790,41 @@ msgstr ""
 "\t-------\n"
 "รวม:\t%i c\n"
 
-#: client/cl_campaign.c:2564
+#: client/cl_campaign.c:2556
 #, fuzzy, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "ทีมสูงสุดในแผนที่:\t%s\n"
 
-#: client/cl_campaign.c:2569
+#: client/cl_campaign.c:2561
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/cl_campaign.c:3318
+#: client/cl_campaign.c:3310
 msgid "Assemble or load a team"
 msgstr "รวมพล หรือจัดขึ้นเครื่อง"
 
-#: client/cl_campaign.c:3512
+#: client/cl_campaign.c:3504
 msgid "Your dropship is not near the landing zone"
 msgstr "เครื่องไม่ได้อยู่ใกล้กลับบริเวณลงจอด"
 
-#: client/cl_campaign.c:3564
+#: client/cl_campaign.c:3556
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr ""
 
-#: client/cl_campaign.c:3585
+#: client/cl_campaign.c:3577
 msgid "You've won the battle"
 msgstr "คุณรบชนะ"
 
-#: client/cl_campaign.c:3674
+#: client/cl_campaign.c:3666
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s ได้เลื่อนยศเป็น %s.\n"
 
-#: client/cl_campaign.c:3676
+#: client/cl_campaign.c:3668
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -15849,44 +15833,44 @@ msgstr ""
 "%s ได้รับการเลื่อนยศเป็น %s\\ หลังการเสียชีวิต "
 "เนื่องจากได้ต่อสู้อย่างสมเกียรติในสงครามที่ไม่มีโอกาสรอด\n"
 
-#: client/cl_campaign.c:3677
+#: client/cl_campaign.c:3669
 msgid "Soldier promoted"
 msgstr "ทหารเลื่อนยศ"
 
-#: client/cl_campaign.c:3918
+#: client/cl_campaign.c:3910
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "ป้องกันฐาน: %s สำเร็จ!"
 
-#: client/cl_campaign.c:4799
+#: client/cl_campaign.c:4791
 msgid "Chicken-hearted"
 msgstr "ง่ายสุด"
 
-#: client/cl_campaign.c:4801
+#: client/cl_campaign.c:4793
 msgid "Very Easy"
 msgstr "ง่ายมาก"
 
-#: client/cl_campaign.c:4804
+#: client/cl_campaign.c:4796
 msgid "Easy"
 msgstr "ง่าย"
 
-#: client/cl_campaign.c:4809
+#: client/cl_campaign.c:4801
 msgid "Hard"
 msgstr "ยาก"
 
-#: client/cl_campaign.c:4811
+#: client/cl_campaign.c:4803
 msgid "Very Hard"
 msgstr "ยากมาก"
 
-#: client/cl_campaign.c:4813
+#: client/cl_campaign.c:4805
 msgid "Insane"
 msgstr "ยากสุด"
 
-#: client/cl_campaign.c:4848
+#: client/cl_campaign.c:4840
 msgid "Human"
 msgstr "มนุษย์"
 
-#: client/cl_campaign.c:4852
+#: client/cl_campaign.c:4844
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -15903,27 +15887,27 @@ msgstr ""
 "ความลำบาก: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4994
+#: client/cl_campaign.c:4986
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_campaign.c:5017
+#: client/cl_campaign.c:5009
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_campaign.c:5180
+#: client/cl_campaign.c:5172
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:5182 client/cl_campaign.c:5324
-#: client/cl_campaign.c:5418
+#: client/cl_campaign.c:5174 client/cl_campaign.c:5316
+#: client/cl_campaign.c:5410
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:5260
+#: client/cl_campaign.c:5252
 #, fuzzy
 msgid ""
 "\n"
@@ -15931,20 +15915,20 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "ฐานที่เลือก"
 
-#: client/cl_campaign.c:5322
+#: client/cl_campaign.c:5314
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5388
+#: client/cl_campaign.c:5380
 msgid ""
 "\n"
 "\n"
 "Selected nation:\t\t\t"
 msgstr ""
 
-#: client/cl_campaign.c:5416
+#: client/cl_campaign.c:5408
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -16638,20 +16622,20 @@ msgstr "หยุด\n"
 msgid "Mission\t%s (%s)\n"
 msgstr "ภารกิจ\t%s (%s)\n"
 
-#: client/cl_popup.c:252
+#: client/cl_popup.c:257
 msgid "No craft available, or no tactical teams assigned to available craft."
 msgstr ""
 
-#: client/cl_popup.c:254
+#: client/cl_popup.c:259
 #, fuzzy
 msgid "No craft available or no weapon or ammo equipped."
 msgstr "ไม่มีการนำเสนอโครงการวิจัยนี้"
 
-#: client/cl_popup.c:275
+#: client/cl_popup.c:280
 msgid "No defense system operational or no weapon or ammo equipped."
 msgstr ""
 
-#: client/cl_popup.c:329
+#: client/cl_popup.c:334
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -18114,6 +18098,24 @@ msgstr "ฐานถูกโจมตี"
 #: po/OTHER_STRINGS:15
 msgid "Crashed Alien Ship. Secure the area."
 msgstr ""
+
+#, fuzzy
+#~ msgid "%i hour"
+#~ msgid_plural "%i hours"
+#~ msgstr[0] "1 ชม."
+#~ msgstr[1] "1 ชม."
+
+#, fuzzy
+#~ msgid "%i min"
+#~ msgid_plural "%i mins"
+#~ msgstr[0] "5 นาที"
+#~ msgstr[1] "5 นาที"
+
+#, fuzzy
+#~ msgid "%i sec"
+#~ msgid_plural "%i sec"
+#~ msgstr[0] "%i c"
+#~ msgstr[1] "%i c"
 
 #~ msgid "Reload right hand weapon"
 #~ msgstr "บรรจุกระสุนในมือขวา"
