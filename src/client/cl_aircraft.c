@@ -1240,15 +1240,13 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 	} else {
 		for (i = 0; i < numAircraft_samples; i++) {
 			if (!Q_strcmp(aircraft_samples[i].id, name)) {
-				technology_t *tech = RS_GetTechByProvided(aircraft_samples[i].id);
-				if (!tech)
-					Sys_Error("Could not find a valid tech definition for '%s'\n", aircraft_samples[i].id);
 				air_samp = &aircraft_samples[i];
 				/* initialize slot numbers (useful when restarting a single campaign) */
 				air_samp->maxWeapons = 0;
 				air_samp->maxElectronics = 0;
 
-				air_samp->ufotype = UFO_ShortNameToID(tech->id);
+				if (air_samp->type == AIRCRAFT_UFO)
+					air_samp->ufotype = UFO_ShortNameToID(air_samp->id);
 
 				break;
 			}
