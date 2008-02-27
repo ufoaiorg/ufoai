@@ -9,7 +9,7 @@
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
 // valid UFO values:
-// * ufo_scout, crash_scout, ufo_fighter, crash_fighter, ufo_harvester, crash_harvester, ufo_lander, crash_lander, ufo_bomber, crash_corrupter
+// * craft_ufo_scout, craft_crash_scout, craft_ufo_fighter, craft_crash_fighter, craft_ufo_harvester, craft_crash_harvester, craft_ufo_lander, craft_crash_lander, craft_ufo_bomber, craft_crash_corrupter
 
 
 ///////////////////////
@@ -128,10 +128,10 @@ mapdef farm_small
 
 	ufos
 	{
-		ufo_scout
-		crash_scout
-		ufo_fighter
-		crash_fighter
+		craft_ufo_scout
+		craft_crash_scout
+		craft_ufo_fighter
+		craft_crash_fighter
 	}
 
 	terrains
@@ -165,8 +165,8 @@ mapdef farm_medium
 
 	ufos
 	{
-		ufo_harvester
-		crash_harvester
+		craft_ufo_harvester
+		craft_crash_harvester
 	}
 
 	terrains
@@ -200,8 +200,8 @@ mapdef farm_large
 
 	ufos
 	{
-		ufo_bomber
-		crash_bomber
+		craft_ufo_bomber
+		craft_crash_bomber
 	}
 
 	terrains
@@ -239,7 +239,7 @@ mapdef frozen_alienlandingindustrial
 
 	ufos
 	{
-		ufo_scout
+		craft_ufo_scout
 	}
 
 	terrains
@@ -304,7 +304,7 @@ mapdef frozen_landingnature
 
 	ufos
 	{
-		ufo_scout
+		craft_ufo_scout
 	}
 
 	terrains
@@ -1832,7 +1832,7 @@ mapdef africa
 
 	ufos
 	{
-		ufo_harvester
+		craft_ufo_harvester
 	}
 
 	terrains
@@ -1873,7 +1873,7 @@ mapdef harvester_crash
 
 	ufos
 	{
-		ufo_harvester
+		craft_ufo_harvester
 	}
 
 	terrains
@@ -2014,7 +2014,7 @@ mapdef bomber_city
 
 	ufos
 	{
-		ufo_bomber
+		craft_ufo_bomber
 	}
 
 	terrains
