@@ -963,8 +963,11 @@ void RS_RemoveScientist (technology_t* tech)
 			tech->scientists--;
 			/* Update capacity. */
 			tech->base->capacities[CAP_LABSPACE].cur--;
-			/* Remove the sci from the lab and set number of used lab-space. */
+			/* Remove the scientist from the lab and set number of used lab-space. */
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+		} else {
+			/* No assigned scientists found - serious inconsistency. */
+			/** @todo add proper handling of this case. */
 		}
 	} else {
 		/* No scientists to remove. */
