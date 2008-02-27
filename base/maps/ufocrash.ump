@@ -208,7 +208,7 @@ ac     +a     +a     +a     a     0
 // Assemblies
 // *********************************
 
-assembly ufo_harvester
+assembly craft_ufo_harvester
 {
 title "_UFO - Harvester"
 size "7 5"
@@ -222,18 +222,29 @@ size "7 5"
 *rm_drop +drop_firebird "1 1"
 }
 
-//assembly ufo_condor
+//assembly craft_ufo_corrupter
 //{
-//title "_UFO - Condor"
+//title "_UFO - Corrupter"
 //size "7 5"
 //+h01 "0 10"
 //+h02 "0 10"
 //+h03 "0 10"
-//+ufo_condor "1 1"
+//+ufo_corrupter "1 1"
 //*rm_drop +drop_firebird "1 1"
 //}
 
-assembly ufo_scout
+//assembly craft_ufo_bomber
+//{
+//title "_UFO - Bomber"
+//size "7 5"
+//+h01 "0 10"
+//+h02 "0 10"
+//+h03 "0 10"
+//+ufo_bomber "1 1"
+//*rm_drop +drop_firebird "1 1"
+//}
+
+assembly craft_ufo_scout
 {
 title "_UFO - Scout"
 size "7 5"
@@ -247,7 +258,7 @@ size "7 5"
 *rm_drop +drop_firebird "1 1"
 }
 
-assembly ufo_fighter
+assembly craft_ufo_fighter
 {
 title "_UFO - Fighter"
 size "7 5"
@@ -261,7 +272,7 @@ size "7 5"
 *rm_drop +drop_firebird "1 1"
 }
 
-assembly ufo_supply
+assembly craft_ufo_supply
 {
 title "_UFO - Supply Ship"
 size "7 5"
