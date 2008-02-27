@@ -15,7 +15,7 @@ item assault
 	scale		1.25
 	ammo		30
 	reload		12
-	price		8400
+	price		2100
 	size		20
 	buytype	weap_pri
 }
@@ -29,7 +29,7 @@ item assault_ammo
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.25
-	price		130
+	price		70
 	size		3
 	buytype	weap_pri
 	dmgtype normal
@@ -138,7 +138,7 @@ item chaingun
 	scale		1.25
 	ammo		200
 	reload		20
-	price		18400
+	price		4600
 	buytype	weap_pri
 }
 
@@ -151,7 +151,7 @@ item chaingun_ammo
 	shape		"0 0 4 2"
 	center		"-3 -6 0"
 	scale		1.6
-	price		300
+	price		150
 	buytype	weap_pri
 	dmgtype normal
 
@@ -237,7 +237,7 @@ item machinegun
 	scale		1.1
 	ammo		60
 	reload		12
-	price		8400
+	price		2100
 	size		20
 	buytype	weap_pri
 }
@@ -251,7 +251,7 @@ item machinegun_ammo
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.25
-	price		130
+	price		65
 	size		3
 	buytype	weap_pri
 	dmgtype normal
@@ -318,7 +318,7 @@ item sniper
 	scale		1.05
 	ammo		5
 	reload		10
-	price		5920
+	price		2100
 	size		30
 	buytype	weap_pri
 }
@@ -332,7 +332,7 @@ item sniper_ammo
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.15
-	price		190
+	price		85
 	size		5
 	buytype	weap_pri
 	dmgtype normal
@@ -615,7 +615,7 @@ item smg
 	scale		1.15
 	ammo		50
 	reload		12
-	price		3500
+	price		1350
 	size		8
 	buytype	weap_sec
 }
@@ -715,7 +715,7 @@ item shotgun2
 	scale		0.98
 	ammo		7
 	reload		20
-	price		3500
+	price		1500
 	size		25
 	buytype	weap_pri
 }
@@ -822,7 +822,7 @@ item shotgun
 	scale		1
 	ammo		7
 	reload		20
-	price		3500
+	price		1500
 	size		25
 	buytype	weap_pri
 }
@@ -907,7 +907,7 @@ item shotgun_micro
 	scale		2.0
 	ammo		7
 	reload		20
-	price		3500
+	price		1350
 	size		10
 	buytype	weap_sec
 }
@@ -1061,7 +1061,7 @@ item flamer
 	scale		1.2
 	ammo		6
 	reload		14
-	price		6050
+	price		1050
 	size		55
 	buytype	weap_pri
 }
@@ -1075,7 +1075,7 @@ item flamer_ammo
 	shape		"0 0 2 1"
 	center		"0 0 0"
 	scale		1.1
-	price		270
+	price		170
 	size		10
 	buytype	weap_pri
 	dmgtype fire
@@ -1167,7 +1167,7 @@ item rpg
 	scale		0.87
 	ammo		1
 	reload		12
-	price		9130
+	price		4130
 	size		70
 	buytype	weap_pri
 }
@@ -1710,7 +1710,7 @@ item grenl_plasma_ammo
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.7
-	price		530
+	price		930
 	size		6
 	buytype	weap_pri
 	dmgtype plasma

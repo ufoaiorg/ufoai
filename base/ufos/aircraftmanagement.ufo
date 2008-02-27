@@ -13,6 +13,7 @@
 //
 //	--vv-- Parameters which can get influenced by craft equipement ("craftitem"). --vv--
 //	speed - The speed of the aircraft, which tells how fast the aircraft is.
+//		to convert in km/h, multiply speed by pi / 180 * radius_of_earth = 111
 //	shield - The parameter of aircraft shield, which tells aircraft's protection.
 //	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy (in percent).
 //	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
@@ -71,18 +72,18 @@
 aircraft craft_drop_firebird
 {
 	param {
-		speed		10
+		speed		7
 		shield		0
 		ecm			100
 		damage		50
 		accuracy	70
-		fuelsize	125000
+		fuelsize	166600
 	}
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
 	type		transporter
 	model		"drop_firebird"
-	price		35000
+	price		140000
 	building	building_hangar
 	size		8
 	weight		8
@@ -109,12 +110,12 @@ aircraft craft_drop_firebird
 aircraft craft_inter_stiletto
 {
 	param {
-		speed		30
+		speed		13
 		shield		0
 		ecm		100
 		damage		30
 		accuracy	100
-		fuelsize	60000
+		fuelsize	10000
 	}
 	name		"_Stiletto-class Interceptor"
 	shortname	"_Stiletto I"
@@ -122,7 +123,7 @@ aircraft craft_inter_stiletto
 	model		"inter_stiletto"
 	size		1
 	weight		4
-	price		20000
+	price		40000
 	building	building_intercept
 	image		air_interceptor
 	slot {
@@ -153,12 +154,12 @@ aircraft craft_inter_stiletto
 aircraft craft_inter_saracen
 {
 	param {
-		speed		30
+		speed		37
 		shield		0
 		ecm		100
 		damage		40
 		accuracy	70
-		fuelsize	60000
+		fuelsize	17500
 	}
 	name		"_Saracen-class Interceptor"
 	shortname	"_Saracen I"
@@ -166,7 +167,7 @@ aircraft craft_inter_saracen
 	model		"inter_saracen"
 	size		1
 	weight		4
-	price		26000
+	price		100000
 	building	building_intercept
 	image		air_interceptor
 	slot {
@@ -197,7 +198,7 @@ aircraft craft_inter_dragon
 		ecm		100
 		damage		40
 		accuracy	80
-		fuelsize	60000
+		fuelsize	35000
 	}
 	name		"_Dragon Interceptor"
 	shortname	"_Dragon"
@@ -205,7 +206,7 @@ aircraft craft_inter_dragon
 	model		"inter_dragon"
 	size		1
 	weight		4
-	price		26000
+	price		100000
 	building	building_intercept
 	image		air_interceptor
 	slot {
@@ -236,7 +237,7 @@ aircraft craft_inter_stingray
 		ecm		100
 		damage		70
 		accuracy	100
-		fuelsize	60000
+		fuelsize	25000
 	}
 	name		"_Stingray Interceptor"
 	shortname	"_Stingray"
@@ -244,7 +245,7 @@ aircraft craft_inter_stingray
 	model		"inter_stingray"
 	size		1
 	weight		4
-	price		48000
+	price		200000
 	building	building_intercept
 	image		air_interceptor
 	slot {
@@ -277,7 +278,7 @@ aircraft craft_inter_stingray
 aircraft craft_ufo_harvester
 {
 	param {
-		speed		25
+		speed		20
 		shield		3
 		ecm		100
 		damage		40
@@ -345,7 +346,7 @@ aircraft craft_ufo_carrier
 aircraft craft_ufo_supply
 {
 	param {
-		speed		25
+		speed		15
 		shield		5
 		ecm		100
 		damage		50
@@ -397,7 +398,7 @@ aircraft craft_ufo_condor
 aircraft craft_ufo_scout
 {
 	param {
-		speed		25
+		speed		15
 		shield		0
 		ecm		100
 		damage		30
@@ -419,7 +420,7 @@ aircraft craft_ufo_scout
 aircraft craft_ufo_fighter
 {
 	param {
-		speed		18
+		speed		17
 		shield		0
 		ecm		100
 		damage		80
@@ -455,7 +456,7 @@ craftitem craft_weapon_shiva
 	crafttype		weapon
 	size		40 // light
 	installationTime	2
-	price		3000
+	price		12000
 	buytype		craftitem
 	bullets		true
 }
@@ -465,7 +466,7 @@ craftitem craft_ammo_shiva_API
 	name		"_SHIVA 20mm API Rounds"
 	crafttype	ammo
 	craftweapon		craft_weapon_shiva
-	price		150
+	price		600
 	buytype		craftitem
 
 	ammo		20
@@ -481,7 +482,7 @@ craftitem craft_ammo_shiva_HEI
 	name		"_SHIVA 20mm HEI Rounds"
 	crafttype	ammo
 	craftweapon		craft_weapon_shiva
-	price		160
+	price		640
 	buytype		craftitem
 
 	ammo		20
@@ -497,7 +498,7 @@ craftitem craft_el_raven
 	name		"_Raven ECM Unit"
 	crafttype	electronics
 	installationTime	1
-	price		5400
+	price		20000
 	buytype		craftitem
 
 	ecm		1.25
@@ -509,7 +510,7 @@ craftitem craft_weapon_sparrowhawk
 	crafttype	weapon
 	size	40	// light
 	installationTime	3
-	price		6800
+	price		27000
 	buytype		craftitem
 }
 
@@ -518,7 +519,7 @@ craftitem craft_ammo_sparrowhawk
 	name		"_Sparrowhawk Missile"
 	crafttype	ammo
 	craftweapon		craft_weapon_sparrowhawk
-	price		250
+	price		1000
 	buytype		craftitem
 
 	ammo		8
@@ -535,7 +536,7 @@ craftitem craft_weapon_tr20
 	crafttype	weapon
 	size	90	// medium
 	installationTime	2
-	price		5600
+	price		25000
 	buytype		craftitem
 
 	speed		.9
@@ -546,7 +547,7 @@ craftitem craft_ammo_tr20
 	name		"_TR-20 Rocket"
 	crafttype	ammo
 	craftweapon		craft_weapon_tr20
-	price		210
+	price		840
 	buytype		craftitem
 
 	ammo		12
@@ -563,7 +564,7 @@ craftitem craft_weapon_particle_beam
 	crafttype	weapon
 	size	90	// medium
 	installationTime	4
-	price		11400
+	price		45000
 	buytype		craftitem
 
 	wdamage		25
@@ -576,7 +577,7 @@ craftitem craft_el_targeting
 	name		"_Targeting Computer"
 	crafttype	electronics
 	installationTime	1
-	price		6400
+	price		25600
 	buytype		craftitem
 
 	accuracy	1.25
@@ -587,10 +588,10 @@ craftitem craft_el_fuelpod
 	name		"_Fuel Pod"
 	crafttype	electronics
 	installationTime	2
-	price		800
+	price		4000
 	buytype		craftitem
 
-	fuelsize	+30000
+	fuelsize	1.3
 	speed		0.9
 }
 
@@ -599,7 +600,7 @@ craftitem craft_shield_polymer
 	name		"_Polymer Aircraft Armour"
 	crafttype	shield
 	installationTime	24
-	price		8400
+	price		33600
 	buytype		craftitem
 
 	shield		+5
@@ -611,7 +612,7 @@ craftitem craft_shield_plating
 	name		"_Alien Aircraft Plating"
 	crafttype	shield
 	installationTime	36
-	price		12200
+	price		50000
 	buytype		craftitem
 
 	shield		+10
@@ -623,7 +624,7 @@ craftitem craft_alien_astrogation
 	name		"_Alien Astrogation"
 	crafttype	electronics
 	installationTime	-1
-	price		8000
+	price		32000
 	buytype		craftitem
 }
 
@@ -632,7 +633,7 @@ craftitem craft_alien_propulsion
 	name		"_Alien Propulsion"
 	crafttype	electronics
 	installationTime	-1
-	price		10000
+	price		40000
 	buytype		craftitem
 }
 
@@ -641,7 +642,7 @@ craftitem craft_alien_detection
 	name		"_Alien Detection"
 	crafttype	electronics
 	installationTime	-1
-	price		8000
+	price		32000
 	buytype		craftitem
 }
 
@@ -655,7 +656,7 @@ craftitem base_AA51_launcher
 	crafttype		base_missile
 	size	90	// medium
 	installationTime	48
-	price		7000
+	price		50000
 	buytype		dummy
 
 }
@@ -665,7 +666,7 @@ craftitem base_ammo_AA51
 	name		"_AA51 Cicada SAM"
 	crafttype		base_ammo_missile
 	craftweapon		base_AA51_launcher
-	price		310
+	price		20000	// no used (not on market)
 	buytype		dummy
 	notonmarket	true
 

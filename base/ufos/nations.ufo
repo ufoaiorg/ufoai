@@ -28,7 +28,7 @@ nation latin
 {
 	name "_The Revolutionary Countries"
 	color "0 255 128 1"
-	funding	500000
+	funding	250000
 	happiness 0.44
 	alien_friendly	0.15
 	soldiers 4
@@ -40,7 +40,7 @@ nation states
 {
 	name "_United America"
 	color "0 128 0 1"
-	funding	900000
+	funding	450000
 	happiness 0.44
 	alien_friendly	0.40
 	soldiers 4
@@ -53,7 +53,7 @@ nation europa
 	name "_The Greater European Union"
 	color "0 128 255 1"
 	pos "-7 49"
-	funding	750000
+	funding	400000
 	happiness 0.44
 	alien_friendly	0.45
 	soldiers 3
@@ -74,7 +74,7 @@ nation asia
 {
 	name "_The Asian Republic"
 	color "128 128 0 1"
-	funding	1200000
+	funding	600000
 	happiness 0.44
 	alien_friendly	0.30
 	soldiers 5
@@ -86,7 +86,7 @@ nation middle
 {
 	name "_The Middle-Eastern Alliance"
 	color "255 255 0 1"
-	funding	450000
+	funding	220000
 	happiness 0.44
 	alien_friendly	0.25
 	soldiers 1
@@ -98,7 +98,7 @@ nation africa
 {
 	name "_New Africa"
 	color "255 128 64 1"
-	funding	600000
+	funding	300000
 	happiness 0.44
 	alien_friendly	0.25
 	soldiers 5
@@ -110,7 +110,7 @@ nation russia
 {
 	name "_Russia"
 	color "128 0 0 1"
-	funding	500000
+	funding	250000
 	happiness 0.44
 	alien_friendly	0.70
 	soldiers 5
@@ -122,7 +122,7 @@ nation oceania
 {
 	name "_The Commonwealth of Oceania"
 	color "128 0 128 1"
-	funding	900000
+	funding	450000
 	happiness 0.44
 	alien_friendly	0.85
 	soldiers 4

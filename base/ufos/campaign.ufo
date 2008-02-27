@@ -161,12 +161,12 @@ campaign veryhard
 	medics		0
 	difficulty	4
 	minhappiness	0.42
-	maxdebts	20000
+	maxdebts	50000
 	xvirate		30
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
-	credits		1020200
+	credits		1300000
 	map		    map_earth
 	visible		true
 
@@ -193,7 +193,7 @@ campaign hard
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
-	credits		1040200
+	credits		1300000
 	map		    map_earth
 	visible		true
 
@@ -212,7 +212,7 @@ campaign main
 	medics		2
 	difficulty	0
 	minhappiness	0.30
-	maxdebts	150000
+	maxdebts	200000
 	xvirate		70
 	salary {
 		soldier_rankbonus 500;
@@ -239,7 +239,7 @@ campaign main
 	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
-	credits		1060200
+	credits		1350000
 	map		    map_earth
 	visible		true
 
@@ -258,7 +258,7 @@ campaign easy
 	medics		10
 	difficulty	-2
 	minhappiness	0.2
-	maxdebts	250000
+	maxdebts	350000
 	xvirate		80
 	salary {
 		soldier_base 3000
@@ -266,7 +266,7 @@ campaign easy
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
-	credits		1080200
+	credits		1500000
 	map		    map_earth
 	visible		true
 
@@ -285,7 +285,7 @@ campaign veryeasy
 	medics		20
 	difficulty	-4
 	minhappiness	0.1
-	maxdebts	300000
+	maxdebts	500000
 	xvirate		90
 	salary {
 		soldier_rankbonus 1500;
@@ -308,7 +308,7 @@ campaign veryeasy
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
-	credits		1100200
+	credits		2000000
 	map		    map_earth
 	visible		true
 
