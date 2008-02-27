@@ -210,6 +210,14 @@ void R_BeginFrame (void)
 	if (r_ext_texture_compression->modified)
 		VID_Restart_f();
 
+	if (r_light->modified) {
+		if (r_light->integer && !r_state.arb_fragment_program) {
+			Cvar_Set("r_light", "0");
+			Com_Printf("Your graphic card doesn't support fragment shaders\n");
+		}
+		r_light->modified = qfalse;
+	}
+
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->integer > r_state.maxAnisotropic) {
 			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_state.maxAnisotropic);
