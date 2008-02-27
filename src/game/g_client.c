@@ -138,9 +138,36 @@ static void G_SendPlayerStats (player_t * player)
 			G_SendStats(ent);
 }
 
+/**
+ * @brief Regenerate the "STUN" value of each (partly) stunned team member.
+ * @note The values are _not_ sent via network. This is done in G_GiveTimeUnits -  it _has_ to be called afterwards.
+ * Fully stunned
+ * @param[in] team The index of the team to update the values for.
+ * @sa G_GiveTimeUnits
+ * @todo Use dynamic value for regeneration. See comment below.
+ */
+static void G_UpdateStunState (int team)
+{
+	edict_t *ent;
+	int i;
+	const int regen = 1;	/**< @todo Make this depend on the character-attributes.
+							 * See http://lists.cifrid.net/pipermail/ufoai/2008-February/000346.html
+							 */
+
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && G_IsLivingActor(ent) && ent->team == team) {
+			if (ent->STUN > 0 && (ent->state & ~STATE_STUN)) {
+				if (regen > ent->STUN)
+					ent->STUN = 0;
+				else
+					ent->STUN -= regen;
+			}
+		}
+}
 
 /**
- * @brief Network function to update the time units
+ * @brief Network function to update the time units (TUs) for each team-member.
+ * @param[in] team The index of the team to update the values for.
  * @sa G_SendStats
  */
 void G_GiveTimeUnits (int team)
@@ -2873,6 +2900,9 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 
 	/* store the round start time to be able to abort the round after a give time */
 	level.roundstartTime = level.time;
+
+	/** Update the state of stuned team-members. @note The actul stats are sent in G_GiveTimeUnits below! */
+	G_UpdateStunState(level.activeTeam);
 
 	/* Give the actors of the now active team their TUs. */
 	G_GiveTimeUnits(level.activeTeam);
