@@ -82,7 +82,7 @@ particle corona
 	}
 }
 
-particle corona
+particle corona_yellow
 {
 	init
 	{
