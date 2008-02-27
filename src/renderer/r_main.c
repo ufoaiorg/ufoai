@@ -213,8 +213,11 @@ void R_BeginFrame (void)
 	if (r_light->modified) {
 		if (r_light->integer && !r_state.arb_fragment_program) {
 			Cvar_Set("r_light", "0");
+			Cvar_Get("mn_rlight", "0", CVAR_NOSET, NULL);
 			Com_Printf("Your graphic card doesn't support fragment shaders\n");
-		}
+		} else
+			Cvar_Get("mn_rlight", "1", CVAR_NOSET, NULL);
+
 		r_light->modified = qfalse;
 	}
 
