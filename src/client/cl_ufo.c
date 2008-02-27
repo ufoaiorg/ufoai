@@ -104,7 +104,7 @@ const char* UFO_TypeToName (ufoType_t type)
 	const technology_t *tech = RS_GetTechByProvided(id);
 	if (tech)
 		return _(tech->name);
-	Sys_Error("UFO_TypeToName(): Unknown UFO type %i\n", type);
+	Sys_Error("UFO_TypeToName(): Unknown UFO type %i - no tech for '%s'\n", type, id);
 	return NULL; /* never reached */
 }
 
