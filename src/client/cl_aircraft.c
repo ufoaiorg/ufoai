@@ -1240,10 +1240,16 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 	} else {
 		for (i = 0; i < numAircraft_samples; i++) {
 			if (!Q_strcmp(aircraft_samples[i].id, name)) {
+				technology_t *tech = RS_GetTechByProvided(aircraft_samples[i].id);
+				if (!tech)
+					Sys_Error("Could not find a valid tech definition for '%s'\n", aircraft_samples[i].id);
 				air_samp = &aircraft_samples[i];
 				/* initialize slot numbers (useful when restarting a single campaign) */
 				air_samp->maxWeapons = 0;
 				air_samp->maxElectronics = 0;
+
+				air_samp->ufotype = UFO_ShortNameToID(tech->id);
+
 				break;
 			}
 		}
@@ -1471,13 +1477,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					if (!vp->string)
 						Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 				} while (*text); /* dummy condition */
-			} else if (!Q_strncmp(token, "ufotype", 7)) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				air_samp->ufotype = UFO_ShortNameToID(token);
-				if (air_samp->ufotype == UFO_MAX)
-					Sys_Error("AIR_ParseAircraft: Unknown ufotype %s\n", token);
 			} else if (!vp->string) {
 				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
 				COM_EParse(text, errhead, name);
