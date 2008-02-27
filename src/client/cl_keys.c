@@ -196,7 +196,7 @@ LINE TYPING INTO THE CONSOLE
  * @sa Key_Console
  * @sa Cmd_CompleteCommand
  * @sa Cvar_CompleteVariable
- * @sa Sys_ConsoleCompleteCommand
+ * @sa Curses_ConsoleCompleteCommand
  */
 static void Key_CompleteCommand (void)
 {

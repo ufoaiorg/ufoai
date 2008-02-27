@@ -25,46 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/common.h"
 
-#ifndef __linux__
-#undef HAVE_CURSES
-#endif
-
-/* only dedicated servers with curses input */
-#ifndef DEDICATED_ONLY
-#undef HAVE_CURSES
-#endif
-
-#define CURSES_COLOR
-
 #ifdef HAVE_CURSES
-#include <ncurses.h>
-#define MAXKEYLINES 32
-static WINDOW *win_log, *win_cmd;
-static int history_line = 0;
-static int edit_line = 0;
-
-#define BUF_LEN 256
-static char cmdbuf[MAXKEYLINES][BUF_LEN];
-static int cmdbuf_pos = 0;
-#define COLOR_MAX 7
-#define COLOR_DEFAULT 7
+#include "unix_curses.h"
 #endif /* HAVE_CURSES */
 
 qboolean stdin_active = qtrue;
-
-#ifdef HAVE_CURSES
-/**
- * @brief reset the input field
- */
-static void Sys_ConsoleInputReset (void)
-{
-	werase(win_cmd);
-	wmove(win_cmd, 0, 0);
-	waddch(win_cmd, ']');
-
-	wrefresh(win_cmd);
-}
-#endif
 
 void Sys_ShowConsole (qboolean show)
 {
@@ -76,9 +41,7 @@ void Sys_ShowConsole (qboolean show)
 void Sys_ConsoleShutdown (void)
 {
 #ifdef HAVE_CURSES
-	delwin(win_log);
-	delwin(win_cmd);
-	endwin();
+	Curses_Shutdown();
 #endif
 }
 
@@ -88,282 +51,15 @@ void Sys_ConsoleShutdown (void)
 void Sys_ConsoleInit (void)
 {
 #ifdef HAVE_CURSES
-	WINDOW *stdwin = initscr();
-	cbreak();					/* disable input line buffering */
-	noecho();					/* don't show type characters */
-	keypad(stdwin, TRUE);		/* enable special keys */
-	nodelay(stdwin, TRUE); 		/* non-blocking input */
-	curs_set(1);				/* enable the cursor */
-
-#ifdef CURSES_COLOR
-	/* Add colors */
-	start_color();
-
-	/* Initialise our palette */
-	use_default_colors();
-	init_pair(1, COLOR_RED, -1);
-	init_pair(2, COLOR_GREEN, -1);
-	init_pair(3, COLOR_YELLOW, -1);
-	init_pair(4, COLOR_BLUE, -1);
-	init_pair(5, COLOR_CYAN, -1);
-	init_pair(6, COLOR_MAGENTA, -1);
-	init_pair(7, -1, -1);
-#endif /* CURSES_COLOR */
-
-	/* Add the log window */
-	win_log = newwin(LINES - 1, 0, 0, 0);
-	scrollok(win_log, TRUE);
-
-	/* Add the command prompt */
-	win_cmd = newwin(1, 0, LINES - 1, 0);
-	nodelay(win_cmd, TRUE);
-	noecho();
-	keypad(win_cmd, TRUE);
-	Sys_ConsoleInputReset();
-	Com_Printf("use curses\n");
+	Curses_Init();
 #endif /* HAVE_CURSES */
 }
 
+char *Sys_ConsoleInput (void)
+{
 #ifdef HAVE_CURSES
-/**
- * @brief refresh the console (after window resizement)
- */
-static void Sys_ConsoleRefresh (void)
-{
-	wrefresh(win_log);
-	wrefresh(win_cmd);
-}
-
-static void Sys_ConsoleAddHistory (int line)
-{
-	Sys_ConsoleInputReset();
-	Q_strncpyz(cmdbuf[edit_line], cmdbuf[history_line], BUF_LEN);
-	cmdbuf_pos = 0;
-	while (cmdbuf[edit_line][cmdbuf_pos] != '\0') {
-		waddch(win_cmd, cmdbuf[edit_line][cmdbuf_pos]);
-		cmdbuf_pos++;
-	}
-	wrefresh(win_cmd);
-}
-
-/**
- * @brief Console completion for command and variables
- * @sa Key_CompleteCommand
- * @sa Cmd_CompleteCommand
- * @sa Cvar_CompleteVariable
- */
-static void Sys_ConsoleCompleteCommand (void)
-{
-	const char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
-	int cntCmd = 0, cntCvar = 0, cntParams = 0;
-	char cmdLine[BUF_LEN] = "";
-	char cmdBase[BUF_LEN] = "";
-	qboolean append = qtrue;
-	char *tmp;
-
-	s = cmdbuf[edit_line];
-	if (!*s || *s == ' ')
-		return;
-
-	/* don't try to search a command or cvar if we are already in the
-	 * parameter stage */
-	if (strstr(s, " ")) {
-		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
-		/* remove the last whitespace */
-		cmdLine[strlen(cmdLine) - 1] = '\0';
-
-		tmp = cmdBase;
-		while (*s != ' ')
-			*tmp++ = *s++;
-		/* get rid of the whitespace */
-		s++;
-		/* terminate the string at whitespace position to seperate the cmd */
-		*tmp = '\0';
-
-		/* now strip away that part that is not yet completed */
-		tmp = strrchr(cmdLine, ' ');
-		*tmp = '\0';
-
-		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
-		if (cntParams == 1) {
-			/* append the found parameter */
-			Q_strcat(cmdLine, " ", sizeof(cmdLine));
-			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
-			append = qfalse;
-			use = cmdLine;
-		} else if (cntParams > 1) {
-			append = qfalse;
-			Com_Printf("\n");
-		} else
-			return;
-	} else {
-		cntCmd = Cmd_CompleteCommand(s, &cmd);
-		cntCvar = Cvar_CompleteVariable(s, &cvar);
-
-		if (cntCmd == 1 && !cntCvar)
-			use = cmd;
-		else if (!cntCmd && cntCvar == 1)
-			use = cvar;
-		else
-			Com_Printf("\n");
-	}
-
-	if (use) {
-		Sys_ConsoleInputReset();
-		Q_strncpyz(cmdbuf[edit_line], use, BUF_LEN);
-		cmdbuf_pos = strlen(use);
-		if (append) {
-			cmdbuf[edit_line][cmdbuf_pos] = ' ';
-			cmdbuf_pos++;
-		}
-		cmdbuf[edit_line][cmdbuf_pos] = 0;
-		/* and now add this to the curses command line */
-		cmdbuf_pos = 0;
-		while (cmdbuf[edit_line][cmdbuf_pos] != '\0') {
-			waddch(win_cmd, cmdbuf[edit_line][cmdbuf_pos]);
-			cmdbuf_pos++;
-		}
-		wrefresh(win_cmd);
-	}
-}
-
-/**
- * @brief check for console input and return a command when a newline is detected
- */
-char *Sys_ConsoleInput (void)
-{
-	int key = wgetch(win_cmd);
-	int line;
-
-	/* No input */
-	if (key == ERR)
-		return NULL;
-
-	/* Basic character input */
-	if ((key >= ' ') && (key <= '~') && (cmdbuf_pos < BUF_LEN - 1)) {
-		cmdbuf[edit_line][cmdbuf_pos++] = key;
-		waddch(win_cmd, key);
-		return NULL;
-	}
-
-	wnoutrefresh(win_log);
-	wnoutrefresh(win_cmd);
-
-	switch (key) {
-	/* Return - flush command buffer */
-	case '\n':
-		/* Mark the end of our input */
-		cmdbuf[edit_line][cmdbuf_pos] = '\0';
-
-		/* Reset our prompt */
-		Sys_ConsoleInputReset();
-
-		/* Flush the command */
-		cmdbuf_pos = 0;
-		line = edit_line;
-		edit_line = (edit_line + 1) & (MAXKEYLINES-1);
-		history_line = edit_line;
-
-		return cmdbuf[line];
-
-	case '\t':
-		Sys_ConsoleCompleteCommand();
-		break;
-
-	/* Page Down and Page Up - scrolling */
-	case KEY_NPAGE:
-		wscrl(win_log, 4);
-		wrefresh(win_log);
-		break;
-
-	case KEY_PPAGE:
-		wscrl(win_log, -4);
-		wrefresh(win_log);
-		break;
-
-	case KEY_HOME:
-		break;
-
-	case KEY_UP:
-		do {
-			history_line = (history_line - 1) & (MAXKEYLINES-1);
-		} while (history_line != edit_line && !cmdbuf[history_line][1]);
-
-		if (history_line == edit_line)
-			history_line = (edit_line + 1) & (MAXKEYLINES-1);
-
-		Sys_ConsoleAddHistory(history_line);
-		break;
-
-	case KEY_DOWN:
-		if (history_line == edit_line)
-			break;
-		do {
-			history_line = (history_line + 1) & (MAXKEYLINES-1);
-		} while (history_line != edit_line && !cmdbuf[history_line][0]);
-
-		Sys_ConsoleAddHistory(history_line);
-		break;
-
-	case KEY_LEFT:
-	case KEY_RIGHT:
-		break;
-
-	/* Backspace - remove character */
-	case '\b':
-	case 127:
-	case KEY_BACKSPACE:
-		if (cmdbuf_pos) {
-			cmdbuf_pos--;
-			cmdbuf[edit_line][cmdbuf_pos] = '\0';
-			waddstr(win_cmd, "\b \b");
-			wrefresh(win_cmd);
-		}
-		break;
-
-#if 0
-	default:
-		if ((key < ' ') || (key > '~')) {
-			Com_Printf("key: %i\n", key);
-		}
-#endif
-	}
-
-	/* Return nothing by default */
-	return NULL;
-}
-
-/**
- * @brief print a message to the curses console
- */
-void Sys_ConsoleOutput (const char *msg)
-{
-	int i;
-
-#ifdef CURSES_COLOR
-	/* Set the default color at the beginning of the line */
-	wattron(win_log, COLOR_PAIR(COLOR_DEFAULT));
-
-	if (*msg == 1) {
-		wattron(win_log, COLOR_PAIR(COLOR_GREEN));
-		msg++;
-	}
+	return Curses_Input();
 #else
-	/* skip color char */
-	if (*msg == 1)
-		msg++;
-#endif
-
-	for (i = 0; i < strlen(msg); i++)
-		waddch(win_log, msg[i]);
-
-	Sys_ConsoleRefresh();
-}
-
-#else /* HAVE_CURSES */
-
-char *Sys_ConsoleInput (void)
-{
 	static char text[256];
 	int len;
 	fd_set fdset;
@@ -393,10 +89,14 @@ char *Sys_ConsoleInput (void)
 	text[len - 1] = '\0'; /* rip off the \n and terminate */
 
 	return text;
+#endif /* HAVE_CURSES */
 }
 
 void Sys_ConsoleOutput (const char *string)
 {
+#ifdef HAVE_CURSES
+	Curses_Output(string);
+#else
 	char text[2048];
 	int i, j;
 
@@ -424,5 +124,5 @@ void Sys_ConsoleOutput (const char *string)
 	text[i] = 0;
 
 	fputs(string, stdout);
-}
 #endif /* HAVE_CURSES */
+}

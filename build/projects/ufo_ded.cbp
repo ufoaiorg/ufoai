@@ -161,6 +161,10 @@
 			<Option link="1" />
 			<Option target="macosx" />
 		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_curses.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_console.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />

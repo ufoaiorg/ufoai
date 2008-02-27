@@ -24,8 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include <fcntl.h>
+#include <signal.h>
 
 #include "../../common/common.h"
+#include "../unix/unix_curses.h"
 
 uid_t saved_euid;
 
@@ -45,6 +47,31 @@ void Sys_Init (void)
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
+
+/**
+ * @brief Catch kernel interrupts and dispatch the appropriate exit routine.
+ */
+static void Sys_Signal (int s)
+{
+	switch (s) {
+	case SIGHUP:
+	case SIGINT:
+	case SIGQUIT:
+	case SIGTERM:
+		Com_Printf("Received signal %d, quitting..\n", s);
+		Sys_Quit();
+		break;
+#ifdef HAVE_CURSES
+	case SIGWINCH:
+		Curses_Resize();
+		break;
+#endif
+	default:
+		Sys_Error("Received signal %d.\n", s);
+		break;
+	}
+}
+
 /**
  * @brief The entry point for linux server and client.
  *
@@ -58,6 +85,18 @@ int main (int argc, const char **argv)
 	Qcommon_Init(argc, argv);
 
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
+
+#ifdef HAVE_CURSES
+	signal(SIGWINCH, Sys_Signal);
+#endif
+	signal(SIGHUP, Sys_Signal);
+	signal(SIGINT, Sys_Signal);
+	signal(SIGQUIT, Sys_Signal);
+	signal(SIGILL, Sys_Signal);
+	signal(SIGABRT, Sys_Signal);
+	signal(SIGFPE, Sys_Signal);
+	signal(SIGSEGV, Sys_Signal);
+	signal(SIGTERM, Sys_Signal);
 
 	while (1)
 		Qcommon_Frame();

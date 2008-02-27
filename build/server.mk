@@ -39,6 +39,7 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	SERVER_SRCS += \
 		ports/linux/linux_main.c \
 		ports/unix/unix_console.c \
+		ports/unix/unix_curses.c \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
 endif
