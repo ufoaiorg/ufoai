@@ -159,15 +159,18 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
  */
-static qboolean SAV_GameLoad (const char *filename, char **error)
+static qboolean SAV_GameLoad (const char *file, char **error)
 {
 	uLongf len = MAX_GAMESAVESIZE;
+	char filename[MAX_OSPATH];
 	qFILE f;
 	byte *buf, *cbuf;
 	int res, clen, i, diff;
 	sizebuf_t sb;
 	saveFileHeader_t header;
 	int check;
+
+	Q_strncpyz(filename, file, sizeof(filename));
 
 	/* open file */
 	f.f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
