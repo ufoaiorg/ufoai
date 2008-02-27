@@ -213,6 +213,7 @@ menu won
 
 	func close
 	{
+		cmd "mn_push map;"
 		cmd "game_results 1;"
 	}
 }
@@ -324,7 +325,7 @@ menu lost
 		texl	"0 0"
 		texh	"128 53"
 		mousefx	true
-		click	{ cmd "set game_tryagain 0;mn_pop;" }
+		click	{ cmd "set game_tryagain 0; mn_pop; mn_push map;" }
 	}
 
 	string s_continue

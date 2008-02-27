@@ -149,15 +149,7 @@ static void S_Music_Play_f (void)
 	}
 
 	if (Cmd_Argc() == 2) {
-		if (Mix_PlayingMusic()) {
-			Mix_FadeOutMusic(3000);
-			if (music.nextMusicTrack)
-				Mem_Free(music.nextMusicTrack);
-			music.currentlyPlaying[0] = 0;
-			music.nextMusicTrack = Mem_PoolStrDup(Cmd_Argv(1), cl_soundSysPool, CL_TAG_NONE);
-		} else {
-			Cvar_Set("snd_music", Cmd_Argv(1));
-		}
+		S_Music_Start(Cmd_Argv(1));
 	} else
 		snd_music->modified = qtrue;
 }

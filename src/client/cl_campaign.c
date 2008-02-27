@@ -4306,16 +4306,25 @@ void CL_GameExit (void)
 		SV_Shutdown("Game exit", qfalse);
 	else
 		CL_Disconnect();
+
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_active", "");
 
 	/* singleplayer commands are no longer available */
-	if (curCampaign) {
+	if (ccs.singleplayer) {
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		for (commands = game_commands; commands->name; commands++) {
 			Com_DPrintf(DEBUG_CLIENT, "...%s\n", commands->name);
 			Cmd_RemoveCommand(commands->name);
 		}
+		CL_Disconnect();
+		MN_PopMenu(qtrue);
+		MN_PushMenu("main");
+	} else {
+		MN_PushMenu("main");
+		Cbuf_Execute();
+		MN_PushMenu("multiplayer");
+		CL_Disconnect();
 	}
 	curCampaign = NULL;
 }

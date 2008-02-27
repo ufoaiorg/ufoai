@@ -232,7 +232,6 @@ void Com_Error (int code, const char *fmt, ...)
 
 	switch (code) {
 	case ERR_DISCONNECT:
-		Cvar_Set("mn_afterdrop", "popup");
 		CL_Drop();
 		recursive = qfalse;
 		longjmp(abortframe, -1);

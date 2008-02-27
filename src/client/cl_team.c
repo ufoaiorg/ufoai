@@ -1764,7 +1764,7 @@ static void CL_GenerateNewTeam_f (void)
 {
 	CL_ResetTeamInBase();
 	Cvar_Set("mn_teamname", _("NewTeam"));
-	CL_GameExit();
+	CL_Disconnect();
 	MN_PushMenu("team");
 }
 

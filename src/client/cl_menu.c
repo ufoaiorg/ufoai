@@ -906,6 +906,7 @@ static void MN_StartServer_f (void)
 	Cvar_Set("mn_main", "multiplayerInGame");
 	MN_PushMenu("multiplayer_wait");
 	Cvar_Set("mn_active", "multiplayer_wait");
+	Cbuf_AddText("music_randomtrack");
 }
 
 /**

@@ -174,7 +174,7 @@ menu main
 
 	func init
 	{
-		cmd "check_cvars;mn_push popup_tipoftheday;"
+		cmd "snd_music PsymongN3; check_cvars; mn_push popup_tipoftheday;"
 	}
 }
 

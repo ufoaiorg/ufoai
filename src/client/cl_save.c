@@ -429,6 +429,8 @@ static void SAV_GameLoad_f (void)
 		Cbuf_Execute(); /* wipe outstanding campaign commands */
 		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 		MN_Popup(_("Error"), popupText);
+	} else {
+		MN_PushMenu("map");
 	}
 }
 
@@ -452,6 +454,8 @@ static void SAV_GameContinue_f (void)
 			Cbuf_Execute(); /* wipe outstanding campaign commands */
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 			MN_Popup(_("Error"), popupText);
+		} else {
+			MN_PushMenu("map");
 		}
 		if (!curCampaign)
 			return;

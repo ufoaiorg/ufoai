@@ -277,11 +277,11 @@ void CL_Drop (void)
 	if (ccs.singleplayer && curCampaign) {
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
-		MN_PushMenu("map");
+		MN_PushMenu("singleplayerInGame");
 	} else {
 		Cvar_Set("mn_main", "main");
 		Cvar_Set("mn_active", "");
-		MN_PushMenu("main");
+		MN_PushMenu("multiplayer");
 		/* the main menu may have a init node - execute it */
 		Cbuf_Execute();
 	}

@@ -128,7 +128,7 @@ menu multiplayer
 	func init
 	{
 		// first switch to multiplayer - otherwise we will crash
-		cmd "sv_maxclients 2;mn_escpop 5;mn_push mp_serverbrowser;"
+		cmd "sv_maxclients 2; mn_escpop 5; mn_push mp_serverbrowser;"
 		// mn_slot 0; loadteamslot;
 	}
 }
@@ -340,7 +340,7 @@ menu mp_team
 		in	{ *string_auto color "1 1 1 1" *button_auto texl "0 64" *button_auto texh "128 128" }
 		click
 		{
-			cmd "game_exit;assign_initial;"
+			cmd "new_team; assign_initial;"
 		}
 	}
 
@@ -1386,7 +1386,7 @@ menu mp_create_server
 	pic button_server
 	{
 		pos	"570 630"
-		click	{ cmd "mn_startserver;music_randomtrack;" }
+		click	{ cmd "mn_startserver;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"

@@ -116,7 +116,7 @@ menu multiplayerInGame
 	pic button_abort
 	{
 		pos	"640 520"
-		click	{ cmd "game_exit;mn_pop;" }
+		click	{ cmd "game_exit;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
