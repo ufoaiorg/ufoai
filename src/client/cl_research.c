@@ -967,6 +967,7 @@ void RS_RemoveScientist (technology_t* tech)
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
 		}
 	} else {
+		/* No scientists to remove. */
 		employee = NULL;
 	}
 
@@ -978,9 +979,8 @@ void RS_RemoveScientist (technology_t* tech)
 		tech->statusResearch = RS_PAUSED;
 	}
 
-	/* we only need an update if the employee ptr is not null */
-	if (employee) {
-		assert(tech->base);
+	/* We only need an update if the employee pointer is set and the tech still is still assigned to a base. */
+	if (employee && tech->base) {
 		/* Update display-list and display-info. */
 		RS_UpdateData(tech->base);
 	}
