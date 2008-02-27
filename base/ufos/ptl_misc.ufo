@@ -82,6 +82,17 @@ particle corona
 	}
 }
 
+particle corona
+{
+	init
+	{
+		image sfx/corona_y
+		blend add
+		style facing
+		size  "30 30"
+	}
+}
+
 particle coronaImpact
 {
 	init
