@@ -6,10 +6,10 @@
  */
 
 //"+frozend multiplayercoop" coop2
-industrial06d 1on1
-italy05d 1on1
-farm08d 1on1
-africa04d 1on1
-estate01d 1on1
-japan06d 1on1
-tower06d 1on1
+industrial 1on1
+italy 1on1
+farm 1on1
+africa 1on1
+estate 1on1
+japan 1on1
+tower 1on1
