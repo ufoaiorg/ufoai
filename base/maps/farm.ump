@@ -116,7 +116,7 @@ abc    +a      +a      +a      +a      abc
 
 // ---------------------------------
 // UFO - Scout
-tile +ufo_scout
+tile +craft_ufo_scout
 {
 6 6
 0      a       a       a       a       0
@@ -129,7 +129,7 @@ a      +c      +c      +c      +c      a
 
 // ---------------------------------
 // UFO - Fighter (obsolete?)
-tile +ufo_fighter
+tile +craft_ufo_fighter
 {
 6 6
 0      a       a       a       a       0
@@ -142,7 +142,7 @@ a      +c      +c      +c      +c      a
 
 // ---------------------------------
 // UFO - Harvester
-tile +ufo_harvester
+tile +craft_ufo_harvester
 {
 7 6
 0      a       a       a       a       a       0
@@ -155,7 +155,7 @@ a      +c      +c      +c      +c      +c      a
 
 // ---------------------------------
 // UFO - Bomber
-tile +ufo_bomber
+tile +craft_ufo_bomber
 {
 6 10
 0      a       a       a       a       0
@@ -269,7 +269,7 @@ grid "1 1"
 +stables_a "0 1"
 +stables_b "0 1"
 *rm_drop +drop_firebird "1 1"
-*rm_ufo +ufo_scout "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
 }
 
 assembly medium
@@ -293,7 +293,7 @@ grid "1 1"
 +stables_a "0 1"
 +stables_b "0 1"
 *rm_drop +drop_firebird "1 1"
-*rm_ufo +ufo_harvester "1 1"
+*rm_ufo +craft_ufo_harvester "1 1"
 }
 
 assembly large
@@ -317,5 +317,5 @@ grid "1 1"
 +stables_a "0 1"
 +stables_b "0 1"
 *rm_drop +drop_firebird "1 1"
-*rm_ufo +ufo_bomber "1 1"
+*rm_ufo +craft_ufo_bomber "1 1"
 }

@@ -14,7 +14,7 @@ base icen/ice_
 
 // ---------------------------------
 // Dropship on ice map
-tile +drop
+tile +drop_firebird
 {
 4 4
 0      abc     abc     0
@@ -77,16 +77,16 @@ size "6 6"
 +r02 "1 8"
 +r03 "0 8"
 +r04 "1 6"
-+drop "1 1"
++drop_firebird "1 1"
 }
 
 // *********************************
 // ***** Maps for screenshots *****
 
-// assembly drop
+// assembly drop_firebird
 // {
 // size "2 2"
-// +drop "1 1"
+// +drop_firebird "1 1"
 // }
 //
 // assembly r1

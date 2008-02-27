@@ -31,6 +31,8 @@ base/maps/corrupter_crash.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country.ump | GNU General Public License 2.0
 base/maps/country/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_c02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/country/c_craft_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/country/c_craft_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_d01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_d02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_d03.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -79,8 +81,6 @@ base/maps/country/c_s05_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_s06.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_s06_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_s07.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/country/c_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/country/c_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_v01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country/c_v01_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/dam.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -92,6 +92,10 @@ base/maps/farm.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/farm.ump | GNU General Public License 2.0
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0
 base/maps/farm/f_barn_b.map | GNU General Public License 2.0
+base/maps/farm/f_craft_ufo_bomber.map | GNU General Public License 2.0
+base/maps/farm/f_craft_ufo_fighter.map | GNU General Public License 2.0
+base/maps/farm/f_craft_ufo_harvester.map | GNU General Public License 2.0
+base/maps/farm/f_craft_ufo_scout.map | GNU General Public License 2.0
 base/maps/farm/f_drop_firebird.map | GNU General Public License 2.0
 base/maps/farm/f_farmhouse_a.map | GNU General Public License 2.0
 base/maps/farm/f_farmhouse_b.map | GNU General Public License 2.0
@@ -106,13 +110,10 @@ base/maps/farm/f_filler_s.map | GNU General Public License 2.0
 base/maps/farm/f_silo.map | GNU General Public License 2.0
 base/maps/farm/f_stables_a.map | GNU General Public License 2.0
 base/maps/farm/f_stables_b.map | GNU General Public License 2.0
-base/maps/farm/f_ufo_bomber.map | GNU General Public License 2.0
-base/maps/farm/f_ufo_fighter.map | GNU General Public License 2.0
-base/maps/farm/f_ufo_harvester.map | GNU General Public License 2.0
-base/maps/farm/f_ufo_scout.map | GNU General Public License 2.0
 base/maps/fighter_crash.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/frozen.ump | GNU General Public License 2.0
-base/maps/frozen/st_drop.map | GNU General Public License 2.0
+base/maps/frozen/st_craft_ufo_fighter.map | GNU General Public License 2.0
+base/maps/frozen/st_drop_firebird.map | GNU General Public License 2.0
 base/maps/frozen/st_h01.map | GNU General Public License 2.0
 base/maps/frozen/st_h02.map | GNU General Public License 2.0
 base/maps/frozen/st_h03.map | GNU General Public License 2.0
@@ -131,12 +132,11 @@ base/maps/frozen/st_n02.map | GNU General Public License 2.0
 base/maps/frozen/st_n03.map | GNU General Public License 2.0
 base/maps/frozen/st_n04.map | GNU General Public License 2.0
 base/maps/frozen/st_n05.map | GNU General Public License 2.0
-base/maps/frozen/st_ufofighter.map | GNU General Public License 2.0
 base/maps/gasstation.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/harbor.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/harvester_crash.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/ice.ump | GNU General Public License 2.0
-base/maps/ice/ice_drop.map | GNU General Public License 2.0
+base/maps/ice/ice_drop_firebird.map | GNU General Public License 2.0
 base/maps/ice/ice_r01.map | GNU General Public License 2.0
 base/maps/ice/ice_r02.map | GNU General Public License 2.0
 base/maps/ice/ice_r03.map | GNU General Public License 2.0
@@ -206,7 +206,7 @@ base/maps/subway.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/tower.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/transport.map | GNU General Public License 2.0
 base/maps/tropic.ump | GNU General Public License 2.0
-base/maps/tropic/tr_drop.map | GNU General Public License 2.0
+base/maps/tropic/tr_drop_firebird.map | GNU General Public License 2.0
 base/maps/tropic/tr_f01.map | GNU General Public License 2.0
 base/maps/tropic/tr_f02.map | GNU General Public License 2.0
 base/maps/tropic/tr_f03.map | GNU General Public License 2.0
@@ -226,6 +226,10 @@ base/maps/tropic/tr_r03.map | GNU General Public License 2.0
 base/maps/tropic/tr_r04.map | GNU General Public License 2.0
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0
 base/maps/ufocrash.ump | GNU General Public License 2.0
+base/maps/ufocrash/uc_craft_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ufocrash/uc_craft_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ufocrash/uc_craft_ufo_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
+base/maps/ufocrash/uc_craft_ufo_supply.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_supply and terrain08
 base/maps/ufocrash/uc_drop_firebird.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h02.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -233,10 +237,6 @@ base/maps/ufocrash/uc_h03.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h04.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h05.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h06.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/ufocrash/uc_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/ufocrash/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/ufocrash/uc_ufo_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
-base/maps/ufocrash/uc_ufo_supply.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_supply and terrain08
 base/maps/village.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/village.ump | GNU General Public License 2.0
 base/maps/village/vil_c01.map | GNU General Public License 2.0

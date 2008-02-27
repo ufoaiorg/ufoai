@@ -200,8 +200,8 @@ abc     +a     abc
 0      abc     0
 }
 
-// dropship
-tile +drop
+// drop_firebird
+tile +drop_firebird
 {
 5 4
 
@@ -241,7 +241,7 @@ title "_Tropical river"
 +p01 "0 3"
 +p02 "0 3"
 
-+drop "1 1"
++drop_firebird "1 1"
 }
 
 
@@ -267,5 +267,5 @@ title "_Tropical drug"
 +p01 "0 8"
 +p02 "0 8"
 
-+drop "1 1"
++drop_firebird "1 1"
 }

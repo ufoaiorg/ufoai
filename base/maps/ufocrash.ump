@@ -148,7 +148,7 @@ ac     +a     +a     ac
 // ---------------------------------
 // harvester
 // ---------------------------------
-tile +ufo_harvester
+tile +craft_ufo_harvester
 {
 8 6
 
@@ -163,7 +163,7 @@ ac     +a     +a     +a     +a     +a     +a     z
 // ---------------------------------
 // fighter
 // ---------------------------------
-tile +ufo_fighter
+tile +craft_ufo_fighter
 {
 7 5
 
@@ -177,7 +177,7 @@ ac     +a     +a    +a    a     ab    0
 // ---------------------------------
 // scout
 // ---------------------------------
-tile +ufo_scout
+tile +craft_ufo_scout
 {
 4 5
 
@@ -191,7 +191,7 @@ ac     +a     +a     ac
 // ---------------------------------
 // supply
 // ---------------------------------
-tile +ufo_supply
+tile +craft_ufo_supply
 {
 6 7
 
@@ -218,7 +218,7 @@ size "7 5"
 +h04 "0 1"
 +h05 "0 2"
 +h06 "0 2"
-+ufo_harvester "1 1"
++craft_ufo_harvester "1 1"
 *rm_drop +drop_firebird "1 1"
 }
 
@@ -229,7 +229,7 @@ size "7 5"
 //+h01 "0 10"
 //+h02 "0 10"
 //+h03 "0 10"
-//+ufo_corrupter "1 1"
+//+craft_ufo_corrupter "1 1"
 //*rm_drop +drop_firebird "1 1"
 //}
 
@@ -240,7 +240,7 @@ size "7 5"
 //+h01 "0 10"
 //+h02 "0 10"
 //+h03 "0 10"
-//+ufo_bomber "1 1"
+//+craft_ufo_bomber "1 1"
 //*rm_drop +drop_firebird "1 1"
 //}
 
@@ -254,7 +254,7 @@ size "7 5"
 +h04 "0 1"
 +h05 "0 2"
 +h06 "0 2"
-+ufo_scout "1 1"
++craft_ufo_scout "1 1"
 *rm_drop +drop_firebird "1 1"
 }
 
@@ -268,7 +268,7 @@ size "7 5"
 +h04 "0 1"
 +h05 "0 2"
 +h06 "0 2"
-+ufo_fighter "1 1"
++craft_ufo_fighter "1 1"
 *rm_drop +drop_firebird "1 1"
 }
 
@@ -282,6 +282,6 @@ size "7 5"
 +h04 "0 1"
 +h05 "0 2"
 +h06 "0 2"
-+ufo_supply "1 1"
++craft_ufo_supply "1 1"
 *rm_drop +drop_firebird "1 1"
 }
