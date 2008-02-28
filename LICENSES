@@ -572,6 +572,8 @@ base/models/objects/aircraft/heli/heli_uvw.tga | GNU General Public License 2.0 
 base/models/objects/aircraft/heli/license.txt | GNU General Public License 2.0
 base/models/objects/aircraft/heli2/heli2.jpg | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
 base/models/objects/aircraft/heli2/heli2.md2 | GNU General Public License 2.0 and Creative Commons attribution share-alike | Ingo Ruhnke <grumbel@gmx.de>
+base/models/objects/alien/battery/battery.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/battery/battery.md2 | GNU General Public License 2.0 | Lucas Beyeler
 base/models/objects/alien/disassembled/ufo_fighter.jpg | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_fighter.md2 | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_harvester.jpg | GNU General Public License 2.0
@@ -582,8 +584,19 @@ base/models/objects/alien/ion_condenser/ion_condenser.jpg | GNU General Public L
 base/models/objects/alien/ion_condenser/ion_condenser.md2 | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.mtl | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.png | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
-base/models/objects/alien/panel/panel.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
-base/models/objects/alien/panel/panel_uvw.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/panel/panel.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/panel/panel.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/panel/panel_uvw.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/pstation/pstation01.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/pstation/pstation01.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/pstation/pstation02.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/pstation/pstation02.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/pstation/pstation03.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/pstation/pstation03.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/pstation/pstation04.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/pstation/pstation04.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/seat/seat.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/seat/seat.md2 | GNU General Public License 2.0 | Lucas Beyeler
 base/models/objects/alien/ufo_crashed/acrash_engine.jpg | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_engine.md2 | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_hull.jpg | GNU General Public License 2.0
