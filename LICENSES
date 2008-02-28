@@ -717,36 +717,36 @@ base/models/objects/industrial/valve/valve.md2 | Creative Commons Attribution-Sh
 base/models/objects/industrial/valve/valve.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/lorry/lorry.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/lorry/lorry.png | GNU General Public License 2.0 | Willem "Sitters"
-base/models/objects/rubbish/barrel.md2 |  | Yoshiboy
-base/models/objects/rubbish/blue_car.jpg |  | Yoshiboy
-base/models/objects/rubbish/bottle1.md2 |  | Yoshiboy
-base/models/objects/rubbish/bottle2.md2 |  | Yoshiboy
-base/models/objects/rubbish/box1.md2 |  | Yoshiboy
-base/models/objects/rubbish/box2.md2 |  | Yoshiboy
-base/models/objects/rubbish/car1.md2 |  | Yoshiboy
-base/models/objects/rubbish/car2.md2 |  | Yoshiboy
-base/models/objects/rubbish/container.md2 |  | Yoshiboy
-base/models/objects/rubbish/container_green.jpg |  | Yoshiboy
-base/models/objects/rubbish/container_grey.jpg |  | Yoshiboy
-base/models/objects/rubbish/container_red.jpg |  | Yoshiboy
-base/models/objects/rubbish/fence.md2 |  | Yoshiboy
-base/models/objects/rubbish/fence.tga |  | Yoshiboy
+base/models/objects/rubbish/barrel.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/blue_car.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/bottle1.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/bottle2.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/box1.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/box2.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/car1.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/car2.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/container.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/container_green.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/container_grey.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/container_red.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/fence.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/fence.tga | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/gravel/gravel.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/rubbish/green_barrel.jpg |  | Yoshiboy
-base/models/objects/rubbish/grey_barrel.jpg |  | Yoshiboy
-base/models/objects/rubbish/grey_car.jpg |  | Yoshiboy
-base/models/objects/rubbish/oil_can.md2 |  | Yoshiboy
-base/models/objects/rubbish/rusty_bar.md2 |  | Yoshiboy
-base/models/objects/rubbish/scrap.jpg |  | Yoshiboy
-base/models/objects/rubbish/scrap1.md2 |  | Yoshiboy
-base/models/objects/rubbish/scrap2.md2 |  | Yoshiboy
-base/models/objects/rubbish/scrap3.md2 |  | Yoshiboy
-base/models/objects/rubbish/scrap4.md2 |  | Yoshiboy
-base/models/objects/rubbish/tire.md2 |  | Yoshiboy
-base/models/objects/rubbish/woodern_plank1.md2 |  | Yoshiboy
-base/models/objects/rubbish/woodern_plank2.md2 |  | Yoshiboy
-base/models/objects/rubbish/yellow_barrel.jpg |  | Yoshiboy
+base/models/objects/rubbish/green_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/grey_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/grey_car.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/oil_can.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/rusty_bar.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/scrap.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/scrap1.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/scrap2.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/scrap3.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/scrap4.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/tire.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/woodern_plank1.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/woodern_plank2.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/yellow_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/snowman/snowman.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/snowman/snowman.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/tanker/small_pipes.md2 | GNU General Public License 2.0 | Willem "Sitters"
