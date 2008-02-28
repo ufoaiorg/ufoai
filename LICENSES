@@ -833,6 +833,8 @@ base/models/objects/tanker/small_pipes.md2 | GNU General Public License 2.0 | Wi
 base/models/objects/tanker/tanker.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/tanker/tanker_a.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/tanker/tanker_b.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/tent/tent.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/tent/tent.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/trucks/truck/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/trucks/truck/cement_trailer.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/trucks/truck/cement_trailer.md2 | GNU General Public License 2.0 | Willem "Sitters"
@@ -885,6 +887,12 @@ base/models/objects/vegi/plant_hang/plant2.png | GNU General Public License 2.0 
 base/models/objects/vegi/plant_hang/plant_hang.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plant_v1/plant_v1.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/plants/plant_a.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/vegi/plants/plantb.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/vegi/plants/plantc.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/vegi/plants/plantd.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/vegi/plants/plante.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/vegi/plants/plants.tga | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vehicles/bicycle/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
