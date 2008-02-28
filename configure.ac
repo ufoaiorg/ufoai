@@ -1,5 +1,7 @@
-^AC_INIT
+^AC_INIT()
+
 AC_CONFIG_SRCDIR([src/server/sv_main.c])
+AC_CONFIG_AUX_DIR(.)
 
 # check build/host/target systems
 # (build  = system we're building on,
@@ -552,6 +554,12 @@ fi
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
+# Wipe the LIBS string
+#---------------------------------------------------------------------------------------------
+
+LIBS=
+
+#---------------------------------------------------------------------------------------------
 # Check for client
 #---------------------------------------------------------------------------------------------
 
@@ -618,6 +626,30 @@ then
 else
 	AC_SUBST([PROFILING],0)
 fi
+
+
+#---------------------------------------------------------------------------------------------
+# Fill in path variables
+#---------------------------------------------------------------------------------------------
+
+test "$prefix" = "NONE" && prefix=/usr/local
+test "$exec_prefix" = "NONE" && exec_prefix=$prefix
+
+eval PKGLIBDIR="$libdir/ufoai"
+AC_DEFINE_UNQUOTED(PKGLIBDIR, "$PKGLIBDIR",
+	[Define this to the path containing the shared modules.]
+)
+
+datarootdir=$prefix/share
+test "$datadir" = "NONE" && datadir=$datarootdir
+
+eval PKGDATADIR="$datadir/ufoai"
+AC_DEFINE_UNQUOTED(PKGDATADIR, "$PKGDATADIR",
+	[Define this to the path containing the game data.]
+)
+AC_SUBST(PKGDATADIR)
+
+eval BINDIR="$bindir"
 
 #---------------------------------------------------------------------------------------------
 
