@@ -1428,8 +1428,9 @@ void CL_CheckResearchStatus (void)
 						researchListLength = 0;
 						researchListPos = 0;
 						newResearch++;
-						/* add this base to the list that needs an update call */
-						checkBases[tech->base->idx] = base;
+						/* Add this base to the list that needs an update call.
+						 * tech->base was set to NULL with the last call of RS_RemoveScientist. */
+						checkBases[base->idx] = base;
 						tech->time = 0;
 					}
 				}
