@@ -1408,8 +1408,8 @@ void CL_CheckResearchStatus (void)
 		tech = RS_GetTechByIDX(i);
 		if (tech->statusResearch == RS_RUNNING) {
 			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
-			if (tech->time > 0 && tech->scientists >= 0) {
-				assert(tech->base);
+			if (tech->time > 0 && tech->scientists > 0) {
+				assert(tech->base);	/**< If there are scientitsst there _has_ to be a base. */
 				base = tech->base;
 				if (base->hasBuilding[B_LAB]) {
 					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
