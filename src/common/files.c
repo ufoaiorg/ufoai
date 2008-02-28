@@ -526,6 +526,13 @@ static void FS_AddGameDirectory (const char *dir)
 	int pakfile_count = 0;
 	char pattern[MAX_OSPATH];
 
+	search = fs_searchpaths;
+	while (search) {
+		if (!Q_strcmp(search->filename, dir))
+			return;
+		search = search->next;
+	}
+
 	Com_Printf("Adding game dir: %s\n", dir);
 
 	Com_sprintf(pattern, sizeof(pattern), "%s/*.zip", dir);
