@@ -339,7 +339,7 @@ menu lost
 
 	func init
 	{
-		cmd "snd_music ufo2;"
+		cmd "snd_music ufo1;"
 	}
 
 	func close
