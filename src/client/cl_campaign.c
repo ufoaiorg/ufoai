@@ -558,6 +558,10 @@ static void CP_MissionRemove (mission_t *mission)
 	if (mission->ufo)
 		UFO_RemoveFromGeoscape(mission->ufo);
 
+	/* Remove from ccs.battleParameters */
+	if (mission == ccs.battleParameters.mission)
+		ccs.battleParameters.mission = NULL;
+
 	/* Notifications */
 	CP_MissionRemoveFromGeoscape(mission);
 
