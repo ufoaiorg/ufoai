@@ -141,7 +141,7 @@ static void G_SendPlayerStats (player_t * player)
 /**
  * @brief Regenerate the "STUN" value of each (partly) stunned team member.
  * @note The values are _not_ sent via network. This is done in G_GiveTimeUnits -  it _has_ to be called afterwards.
- * Fully stunned
+ * Fully stunned team members are not considered here (yet) - they remain fully stunned (i.e. on the floor).
  * @param[in] team The index of the team to update the values for.
  * @sa G_GiveTimeUnits
  * @todo Use dynamic value for regeneration. See comment below.
@@ -1996,7 +1996,8 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		ent->state |= (1 + rand() % MAX_DEATH);
 		break;
 	case STATE_STUN:
-		ent->STUN = 0;
+		ent->STUN = 0;	/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
+						 * @sa g_client.c:CL_ActorDie */
 		ent->state = state;
 		break;
 	default:

@@ -1744,6 +1744,7 @@ static const value_t teamDefValues[] = {
 	{"civilian", V_BOOL, offsetof(teamDef_t, civilian), MEMBER_SIZEOF(teamDef_t, civilian)}, /**< is this a civilian? */
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
+	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)}, /**< Is this a robotic unit? */
 	{NULL, 0, 0, 0}
 };
 
@@ -2080,8 +2081,10 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 				csi.damPlasma = csi.numDTs;
 			else if (!Q_strncmp(token, "particle", 7))
 				csi.damParticle = csi.numDTs;
-			else if (!Q_strncmp(token, "stun", 4))
-				csi.damStun = csi.numDTs;
+			else if (!Q_strncmp(token, "stun_electro", 12))
+				csi.damStunElectro = csi.numDTs;
+			else if (!Q_strncmp(token, "stun_gas", 8))
+				csi.damStunGas = csi.numDTs;
 
 			csi.numDTs++;
 			if (csi.numDTs >= MAX_DAMAGETYPES)
@@ -2286,7 +2289,7 @@ void Com_ParseScripts (void)
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
 	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmour = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
-	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStun = NONE;
+	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");

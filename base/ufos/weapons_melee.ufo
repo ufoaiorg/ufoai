@@ -155,7 +155,7 @@ item stunrod
 	thrown	false
 	oneshot true
 	ammo 4
-	dmgtype stun
+	dmgtype stun_electro
 
 	weapon_mod stunrod
 	{

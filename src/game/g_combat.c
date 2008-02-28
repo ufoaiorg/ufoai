@@ -300,18 +300,27 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  */
 static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
-	qboolean stun = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damStun);
+	qboolean stunEl = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damStunElectro);
+	qboolean stunGas = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damStunGas);
 	qboolean shock = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damShock);
-
+	qboolean isRobot;
 	assert(target);
 	assert(target->type == ET_ACTOR
 			|| target->type == ET_ACTOR2x2
 			|| target->type == ET_BREAKABLE
 			|| target->type == ET_DOOR);
 
+
+	isRobot = gi.csi->teamDef[target->chr.teamDefIndex].robot;
+
 	/* Breakables are immune to stun & shock damage. */
-	if ((stun || shock || mock) && (target->type == ET_BREAKABLE || target->type == ET_DOOR))
+	if ((stunEl || stunGas || shock || mock) && (target->type == ET_BREAKABLE || target->type == ET_DOOR))
  		return;
+
+	/* Robots can't be healed. */
+	if (damage < 0 && isRobot)
+		/** @todo We can't 'repair' robots yet :) The least we need for this would be a seperation of medikit vs. a repair-kit. */
+		return;
 
 	/* Breakables */
 	if (target->type == ET_BREAKABLE || target->type == ET_DOOR) {
@@ -391,9 +400,11 @@ static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * atta
 		/* hit */
 		if (mock) {
 			G_UpdateShotMock(mock, attacker, target, damage);
-		} else if (stun) {
+		} else if (stunEl) {
 			target->STUN += damage;
-		} else if (shock) {
+		} else if (stunGas && !isRobot) {
+			target->STUN += damage;
+		} else if (shock && !isRobot) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (target->team != attacker->team) {
 				const player_t *player = game.players + target->pnum;

@@ -3351,7 +3351,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	 * Don't do it if it's a stun-attack though.
 	 * @todo Special particles for stun attack (mind you that there is electrical and gas/chemical stunning)? */
 	if ((flags & SF_BODY)
-	 && csi.ods[fd->obj_idx].dmgtype != csi.damStun) { /**< @todo && !(flags & SF_BOUNCED) ? */
+	 && csi.ods[fd->obj_idx].dmgtype != csi.damStunGas) {	/**< @todo && !(flags & SF_BOUNCED) ? */
 		CL_ActorHit(le, impact, normal);
 	}
 
@@ -3568,7 +3568,8 @@ void CL_ActorDie (struct dbuffer *msg)
 
 	/* set relevant vars */
 	FLOOR(le) = NULL;
-	le->STUN = 0;
+	le->STUN = 0;	/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
+					 * @sa g_client.c:G_ActorDie */
 	le->state = state;
 
 	/* play animation */

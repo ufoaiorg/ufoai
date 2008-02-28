@@ -536,7 +536,7 @@ static void SP_civilian_start (edict_t *ent)
 	}
 	ent->team = TEAM_CIVILIAN;
 	/* set stats */
-	ent->STUN = 99;
+	ent->STUN = 99;	/** @todo Does anybody know _why_ this is set to 99? */
 	ent->HP = MAX_HP;
 	ent->count = 100; /* current waypoint */
 	G_ActorSpawn(ent);

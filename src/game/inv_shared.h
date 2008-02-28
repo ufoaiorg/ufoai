@@ -264,7 +264,8 @@ typedef struct objDef_s {
 							     Maximum value for fireDef_t.weap_fds_idx <= MAX_WEAPONS_PER_OBJDEF. */
 
 	struct technology_s *tech;	/**< Technology link to item. */
-	struct technology_s *extension_tech;	/**< Technology link to item to use this extension for (if this is an extension). @todo: is this used anywhere? */
+	struct technology_s *extension_tech;	/**< Technology link to item to use this extension for (if this is an extension).
+											 * @todo Is this used anywhere? */
 
 	/* Armour specific */
 	short protection[MAX_DAMAGETYPES];	/**< Protection values for each armour and every damage type. */
@@ -396,9 +397,14 @@ typedef struct csi_s {
 	int idArmour, idFloor, idEquip;
 
 	/** Damage type ids */
-	int damNormal, damBlast, damFire, damShock;
+	int damNormal, damBlast, damFire;
+	int damShock;	/**< Flashbang-type 'damage' (i.e. Blinding). */
+
 	/** Damage type ids */
-	int damLaser, damPlasma, damParticle, damStun;
+	int damLaser, damPlasma, damParticle;
+	int damStunGas;		/**< Stun gas attack (only effective against organic targets).
+						 * @todo Maybe even make a differentiation between aliens/humans here? */
+	int damStunElectro;	/**< Electro-Shock attack (effective against organic and robotic targets). */
 
 	/** Equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];

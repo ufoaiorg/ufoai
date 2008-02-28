@@ -210,7 +210,9 @@ void AL_AddAliens (aircraft_t *aircraft)
 					continue;
 				if (!alienBreathing
 				&& (Q_strncmp(cargo[i].alientype, "Bloodspider", MAX_VAR))) {
-					/** @todo Make this check more versatile (i.e. check for something like "robot" or "not a live alien") */
+					/** @todo Make this check more versatile (i.e. check for something like "robot" or "not a live alien")
+						We could use the gi.csi->teamDef[target->chr.teamDefIndex].robot info here.
+						Dunno if something like (!csi.teamDef[cargo[i].alientype].robot) would work here? */
 					/* We cannot store alive (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
 					/* Add breathing apparatuses as well and update storage capacity. */

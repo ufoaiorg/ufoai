@@ -554,43 +554,35 @@ typedef enum {
 } nametypes_t;
 
 typedef struct teamDef_s {
-	/** the index in the teamDef array */
-	int index;
-	/** id from script file */
-	char id[MAX_VAR];
-	/** translateable name */
-	char name[MAX_VAR];
-	/** tech id from research.ufo */
-	char tech[MAX_VAR];
-	/** names list per gender */
-	linkedList_t *names[NAME_NUM_TYPES];
-	/** amount of names in this list for all different genders */
-	int numNames[NAME_NUM_TYPES];
-	/** models list per gender */
-	linkedList_t *models[NAME_LAST];
-	/** amount of models in this list for all different genders */
-	int numModels[NAME_LAST];
-	/** sounds list per gender and per sound type */
-	linkedList_t *sounds[SND_MAX][NAME_LAST];
-	/** amount of sounds in this list for all different genders and soundtypes */
-	int numSounds[SND_MAX][NAME_LAST];
-	/** is this an alien teamdesc definition */
-	qboolean alien;
-	/** is this a civilian teamdesc definition */
-	qboolean civilian;
-	/** able to use weapons/armour */
-	qboolean armour, weapons;
-	/** ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
-	 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
-	 * the ability to melee attack their victims. They get a weapon assigned with several
-	 * bloodspider melee attack firedefitions */
-	int onlyWeaponIndex;
-	/** What size is this unit on the field (1=1x1 or 2=2x2)? */
-	int size;
-	/** Particle id of what particle effect should be spawned if a unit of this type is hit.
-	 * @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
-	 * @todo "hitbody" will not spawn blood in the future. */
-	char hitParticle[MAX_VAR];
+	int index;	/**< The index in the teamDef array. */
+	char id[MAX_VAR];	/**< id from script file. */
+	char name[MAX_VAR];	/**< Translateable name. */
+	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
+
+	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
+	int numNames[NAME_NUM_TYPES];	/**< Amount of names in this list for all different genders. */
+
+	linkedList_t *models[NAME_LAST];	/**< Models list per gender. */
+	int numModels[NAME_LAST];	/**< Amount of models in this list for all different genders. */
+
+	linkedList_t *sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
+	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
+
+	qboolean alien;		/**< Is this an alien teamdesc definition? */
+	qboolean civilian;	/**< Is this a civilian teamdesc definition? */
+	qboolean robot;		/**< Is this a robotic team? */
+
+	qboolean armour;	/**< Does this team use armour. */
+	qboolean weapons;	/**< Does this team use weapons. */
+	int onlyWeaponIndex;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
+	 						 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
+							 * the ability to melee attack their victims. They get a weapon assigned with several
+							 * bloodspider melee attack firedefitions */
+
+	int size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit.
+								* @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
+								* @todo "hitbody" will not spawn blood in the future. */
 } teamDef_t;
 
 #endif /* GAME_Q_SHARED_H */
