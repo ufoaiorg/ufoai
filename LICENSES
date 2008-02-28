@@ -617,8 +617,13 @@ base/models/objects/base/radar/radar_b.jpg | GNU General Public License 2.0 | Lu
 base/models/objects/base/radar/radar_b.md2 | GNU General Public License 2.0 | Lucas Beyeler
 base/models/objects/base/radar/radar_c.jpg | GNU General Public License 2.0 | Lucas Beyeler
 base/models/objects/base/radar/radar_c.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/boat/boat.md2 | GNU General Public License 2.0
+base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/canoe.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/boat/canoe.tga | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/boat/engine.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/boat/engine.md2 | GNU General Public License 2.0
 base/models/objects/cars/4x4/4x4.jpg | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.md2 | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_t.md2 | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
