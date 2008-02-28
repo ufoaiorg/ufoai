@@ -109,7 +109,7 @@ static void S_Music_Start (const char *file)
 
 	/* we are still playing some background track - fade it out @sa S_Frame */
 	if (Mix_PlayingMusic()) {
-		Mix_FadeOutMusic(3000);
+		Mix_FadeOutMusic(1500);
 		if (music.nextMusicTrack)
 			Mem_Free(music.nextMusicTrack);
 		music.currentlyPlaying[0] = 0;
