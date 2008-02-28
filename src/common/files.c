@@ -609,17 +609,29 @@ static void FS_AddHomeAsGameDirectory (const char *dir)
 
 void FS_ExecAutoexec (void)
 {
-	const char *dir;
 	char name[MAX_QPATH];
+	searchpath_t *s, *end;
 
-	dir = Cvar_VariableString("fs_gamedir");
-	if (*dir)
-		Com_sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir->string, dir);
+	/* don't look in default if gamedir is set */
+	if (fs_searchpaths == fs_base_searchpaths)
+		end = NULL;
 	else
-		Com_sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir->string, BASEDIRNAME);
-	if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM))
-		Cbuf_AddText("exec autoexec.cfg\n");
-	Sys_FindClose();
+		end = fs_base_searchpaths;
+
+	/* search through all the paths for an autoexec.cfg file */
+	for (s = fs_searchpaths; s != end; s = s->next) {
+		snprintf(name, sizeof(name), "%s/autoexec.cfg", s->filename);
+
+		if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM)) {
+			Cbuf_AddText("exec autoexec.cfg\n");
+			Sys_FindClose();
+			break;
+		}
+
+		Sys_FindClose();
+	}
+
+	Cbuf_Execute();  /* execute it */
 }
 
 
