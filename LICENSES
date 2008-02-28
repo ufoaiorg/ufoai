@@ -1515,17 +1515,36 @@ base/pics/geoscape/map_earth_nations_overlay.tga | GNU General Public License 2.
 base/pics/geoscape/map_earth_night.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_stars.jpg | GNU General Public License 2.0 | Olivier Alloschery
 base/pics/geoscape/map_sun.tga | GNU General Public License 2.0 | Olivier Alloschery
+base/pics/hud/bar_chat.tga | GNU General Public License 2.0
+base/pics/hud/bar_chat_choice.tga | GNU General Public License 2.0
+base/pics/hud/bar_floor.tga | GNU General Public License 2.0
+base/pics/hud/bar_game.tga | GNU General Public License 2.0
+base/pics/hud/bar_head.tga | GNU General Public License 2.0
+base/pics/hud/bar_infoscreen.tga | GNU General Public License 2.0
+base/pics/hud/bar_inventory.tga | GNU General Public License 2.0
+base/pics/hud/bar_leftweapon.tga | GNU General Public License 2.0
+base/pics/hud/bar_name.tga | GNU General Public License 2.0
+base/pics/hud/bar_nextround.tga | GNU General Public License 2.0
+base/pics/hud/bar_phys.tga | GNU General Public License 2.0
+base/pics/hud/bar_popup.tga | GNU General Public License 2.0
+base/pics/hud/bar_rightweapon.tga | GNU General Public License 2.0
+base/pics/hud/bar_teammember.tga | GNU General Public License 2.0
 base/pics/hud/button_assigned.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/button_chat.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/button_chat2.tga | GNU General Public License 2.0
 base/pics/hud/button_guard.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
+base/pics/hud/button_notassigned.tga | GNU General Public License 2.0
 base/pics/hud/buttons1.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/buttons1a.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/buttons1g.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/buttons2.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/buttons2g.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/checkbox.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/hud/close.tga | GNU General Public License 2.0
 base/pics/hud/event_log.tga | GNU General Public License 2.0 | Werner Hoehrer
-base/pics/hud/firemode.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/hud/firemode.tga | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/pics/hud/phys_ekg_noclamp.tga | GNU General Public License 2.0
+base/pics/hud/phys_mor_noclamp.tga | GNU General Public License 2.0
 base/pics/icons/air.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/alien.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/artifact.tga | GNU General Public License 2.0 | Gerd Heisse
