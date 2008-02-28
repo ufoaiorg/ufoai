@@ -34,7 +34,7 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 BINDIR=@bindir@
 datarootdir=@datarootdir@
-DATADIR=@datadir@/$(PACKAGE)
+DATADIR=@datadir@/ufoai
 INSTALL=./install-sh
 
 VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
