@@ -704,9 +704,24 @@ static void BS_BuyAircraft_f (void)
 }
 
 /**
+ * @brief Update the market and the player's credits
+ * @sa BS_SellAircraft_f
+ */
+static void BS_ProcessCraftItemSale (const int craftitemID)
+{
+	if (craftitemID != NONE) {
+		assert(craftitemID < MAX_OBJDEFS);
+		ccs.eMarket.num[craftitemID]++;
+		/* reinit the menu */
+		Cmd_BufClear();
+		BS_BuyType_f();
+		CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[craftitemID]);
+	}
+}
+
+/**
  * @brief Sells aircraft or craftitem.
  * @sa BS_BuyAircraft_f
- * @todo Selling aircraft should remove craftitems and put them into base storage.
  */
 static void BS_SellAircraft_f (void)
 {
@@ -751,11 +766,29 @@ static void BS_SellAircraft_f (void)
 		/* ok, we've found an empty aircraft (no team) in a base
 		 * so now we can sell it */
 		if (found) {
+			/* sell off any items which are mounted on it */
+			for (j = 0; j < aircraft->maxWeapons; j++) {
+				BS_ProcessCraftItemSale(aircraft->weapons[j].itemIdx);
+				BS_ProcessCraftItemSale(aircraft->weapons[j].ammoIdx);
+			}
+
+			BS_ProcessCraftItemSale(aircraft->shield.itemIdx);
+			/* there should be no ammo here, but checking can't hurt */
+			BS_ProcessCraftItemSale(aircraft->shield.ammoIdx);
+
+			for (j = 0; j < aircraft->maxElectronics; j++) {
+				BS_ProcessCraftItemSale(aircraft->electronics[j].itemIdx);
+				/* there should be no ammo here, but checking can't hurt */
+				BS_ProcessCraftItemSale(aircraft->electronics[j].ammoIdx);
+			}
+
 			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
+
 			/* the capacities are also updated here */
 			AIR_DeleteAircraft(aircraft);
 
-			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
+			/* @todo make aircraft use the market */
+			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price * BID_FACTOR);
 			/* reinit the menu */
 			Cmd_BufClear();
 			BS_BuyType_f();
@@ -774,11 +807,7 @@ static void BS_SellAircraft_f (void)
 
 		if (baseCurrent->storage.num[craftitemID]) {
 			B_UpdateStorageAndCapacity(baseCurrent, craftitemID, -1, qfalse, qfalse);
-			ccs.eMarket.num[craftitemID]++;
-			/* reinit the menu */
-			Cmd_BufClear();
-			BS_BuyType_f();
-			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[craftitemID]);
+			BS_ProcessCraftItemSale(craftitemID);
 		}
 	}
 }
