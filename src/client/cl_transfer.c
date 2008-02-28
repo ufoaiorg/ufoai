@@ -479,7 +479,7 @@ static void TR_TransferSelect_f (void)
 	case TRANS_TYPE_ALIEN:
 		if (transferBase->hasBuilding[B_ALIEN_CONTAINMENT]) {
 			for (i = 0; i < gd.numAliensTD; i++) {
-				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
+				if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)\n"),
 						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD],
@@ -490,7 +490,7 @@ static void TR_TransferSelect_f (void)
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
-				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
+				if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_alive > 0) {
 					if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)\n"),
 						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE],
@@ -766,7 +766,7 @@ static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
 			for (j = 0; j < gd.numAliensTD; j++) {
 				if (!csi.teamDef[j].alien)
 					continue;
-				if (Q_strncmp(transferBase->alienscont[j].alientype, transferStartAircraft->aliencargo[i].alientype, MAX_VAR) == 0) {
+				if (transferBase->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
 					transfer->hasAliens = qtrue;
 					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = transferStartAircraft->aliencargo[i].amount_alive;
 					transferStartAircraft->aliencargo[j].amount_alive = 0;
@@ -778,7 +778,7 @@ static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
 			for (j = 0; j < gd.numAliensTD; j++) {
 				if (!csi.teamDef[j].alien)
 					continue;
-				if (Q_strncmp(transferBase->alienscont[j].alientype, transferStartAircraft->aliencargo[i].alientype, MAX_VAR) == 0) {
+				if (transferBase->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
 					transfer->hasAliens = qtrue;
 					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = transferStartAircraft->aliencargo[i].amount_dead;
 					transferStartAircraft->aliencargo[j].amount_dead = 0;
@@ -1091,7 +1091,7 @@ static void TR_TransferListSelect_f (void)
 		if (!transferBase->hasBuilding[B_ALIEN_CONTAINMENT])
 			return;
 		for (i = 0; i < gd.numAliensTD; i++) {
-			if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
+			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][TRANS_ALIEN_DEAD]++;
 					/* Remove the corpse from Alien Containment. */
@@ -1100,7 +1100,7 @@ static void TR_TransferListSelect_f (void)
 				}
 				cnt++;
 			}
-			if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
+			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
 					if (TR_CheckAlien(i, baseCurrent, transferBase)) {
 						trAliensTmp[i][TRANS_ALIEN_ALIVE]++;

@@ -3455,8 +3455,8 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			case AIR_RETURNING:
 				/* aliencargo */
 				for (l = 0; l < aircraft->alientypes; l++) {
-					assert(*aircraft->aliencargo[l].alientype);
-					MSG_WriteString(sb, aircraft->aliencargo[l].alientype);
+					assert(aircraft->aliencargo[l].teamDef);
+					MSG_WriteString(sb, aircraft->aliencargo[l].teamDef->name);
 					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
 					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
 				}
@@ -3493,7 +3493,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 		/* Alien Containment. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
-			MSG_WriteString(sb, b->alienscont[k].alientype);
+			MSG_WriteString(sb, b->alienscont[k].teamDef->name);
 			MSG_WriteShort(sb, b->alienscont[k].amount_alive);
 			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
 		}
@@ -3697,7 +3697,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			case AIR_RETURNING:
 				/* aliencargo */
 				for (l = 0; l < aircraft->alientypes; l++) {
-					Q_strncpyz(aircraft->aliencargo[l].alientype, MSG_ReadString(sb), sizeof(aircraft->aliencargo[l].alientype));
+					aircraft->aliencargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
 					aircraft->aliencargo[l].amount_alive = MSG_ReadShort(sb);
 					aircraft->aliencargo[l].amount_dead = MSG_ReadShort(sb);
 				}

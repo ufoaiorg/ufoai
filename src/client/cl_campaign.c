@@ -3551,7 +3551,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 		aircraft->alientypes = ccs.battleParameters.numAlienTeams;
 		for (i = 0; i < aircraft->alientypes; i++) {
-			Q_strncpyz(cargo[i].alientype, ccs.battleParameters.alienTeams[i]->name, sizeof(cargo[i].alientype));
+			cargo[i].teamDef = ccs.battleParameters.alienTeams[i];
 			/* FIXME: This could lead to more aliens in their sum */
 			cargo[i].amount_dead = rand() % ccs.battleParameters.aliens;
 			amount += cargo[i].amount_dead;
