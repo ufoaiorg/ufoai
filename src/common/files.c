@@ -669,8 +669,11 @@ void FS_SetGamedir (const char *dir)
 		Cvar_FullSet("fs_gamedir", "", CVAR_LATCH | CVAR_SERVERINFO);
 	} else {
 		Cvar_FullSet("fs_gamedir", dir, CVAR_SERVERINFO | CVAR_NOSET);
+#ifdef PKGDATADIR
+		/* add the system search path */
 		FS_AddGameDirectory(va(PKGLIBDIR"/%s", dir));
 		FS_AddGameDirectory(va(PKGDATADIR"/%s", dir));
+#endif
 		FS_AddHomeAsGameDirectory(dir);
 	}
 }
@@ -908,9 +911,11 @@ void FS_InitFilesystem (void)
 	/* allows the game to run from outside the data tree */
 	fs_basedir = Cvar_Get("fs_basedir", ".", CVAR_NOSET, "Allows the game to run from outside the data tree");
 
+#ifdef PKGDATADIR
 	/* add the system search path */
 	FS_AddGameDirectory(PKGLIBDIR"/"BASEDIRNAME);
 	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME);
+#endif
 
 	/* start up with base by default */
 	FS_AddGameDirectory(va("%s/" BASEDIRNAME, fs_basedir->string));
