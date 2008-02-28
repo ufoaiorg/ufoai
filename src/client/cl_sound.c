@@ -152,6 +152,7 @@ static void S_Music_Start (const char *file)
 
 /**
  * @brief Plays the music file given via commandline parameter
+ * @todo Is it safe to simply have this as a wrapper for S_Music_Play() ?
  */
 static void S_Music_Play_f (void)
 {
@@ -162,10 +163,7 @@ static void S_Music_Play_f (void)
 
 	if (Cmd_Argc() == 2) {
 		if (Mix_PlayingMusic()) {
-			Mix_FadeOutMusic(3000);
-			if (music.nextMusicTrack)
-				Mem_Free(music.nextMusicTrack);
-			music.nextMusicTrack = Mem_PoolStrDup(Cmd_Argv(1), cl_soundSysPool, CL_TAG_NONE);
+			S_Music_Start(Cmd_Argv(1));
 		} else {
 			Cvar_Set("snd_music", Cmd_Argv(1));
 		}
