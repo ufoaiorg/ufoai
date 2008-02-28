@@ -658,6 +658,10 @@ base/models/objects/cars/van/van1_blue.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1_brown.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1_green.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1t.md2 | GNU General Public License 2.0
+base/models/objects/cars/van2/pickup.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/cars/van2/roof1.md2 | GNU General Public License 2.0 | Martin Gerhardy
+base/models/objects/cars/van2/roof2.md2 | GNU General Public License 2.0 | Martin Gerhardy
+base/models/objects/cars/van2/van2.md2 | GNU General Public License 2.0 | Martin Gerhardy
 base/models/objects/cars/van3/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/van3/van.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/van3/van.tga | GNU General Public License 2.0 | Willem "Sitters"
