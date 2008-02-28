@@ -632,6 +632,13 @@ base/models/objects/cars/carcrashed/car1.md2 | GNU General Public License 2.0 | 
 base/models/objects/cars/carcrashed/car1.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/carcrashed/car2.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/carcrashed/car2.tga | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/cars/golf/car1.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/cars/golf/car1_brown.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/cars/golf/car1_dmg.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/cars/golf/car1_red.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/cars/golf/car1_white.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/cars/golf/car1t.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/cars/golf/cars_tires.jpg | GNU General Public License 2.0 | Lucas Beyeler
 base/models/objects/cars/hummer/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/hummer/hummer.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/hummer/hummer.tga | GNU General Public License 2.0 | Willem "Sitters"
@@ -641,6 +648,12 @@ base/models/objects/cars/policecar/policecar.md2 | GNU General Public License 2.
 base/models/objects/cars/policecar/policecar.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.tga | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/cars/van/cars_tires.jpg | GNU General Public License 2.0
+base/models/objects/cars/van/van1.md2 | GNU General Public License 2.0
+base/models/objects/cars/van/van1_blue.jpg | GNU General Public License 2.0
+base/models/objects/cars/van/van1_brown.jpg | GNU General Public License 2.0
+base/models/objects/cars/van/van1_green.jpg | GNU General Public License 2.0
+base/models/objects/cars/van/van1t.md2 | GNU General Public License 2.0
 base/models/objects/cars/van3/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/van3/van.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/van3/van.tga | GNU General Public License 2.0 | Willem "Sitters"
