@@ -55,6 +55,7 @@ ifeq ($(TARGET_OS),darwin)
 	SERVER_SRCS+=\
 		ports/macosx/osx_main.m \
 		ports/unix/unix_console.c \
+		ports/unix/unix_curses.c \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
 endif
