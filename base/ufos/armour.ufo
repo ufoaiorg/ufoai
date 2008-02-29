@@ -53,7 +53,6 @@ item light
 {
 	name		"_Combat Armour"
 	image		armour/light
-	model		soldiers/malelight/body
 	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
@@ -116,7 +115,6 @@ item lightadv
 {
 	name		"_Advanced Combat Armour"
 	image		armour/lightadv
-	model		soldiers/malelightadv/body
 	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
@@ -179,7 +177,6 @@ item medium
 {
 	name		"_Nanocomposite Armour"
 	image		armour/medium
-	model		soldiers/malemedium/body
 	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
@@ -243,7 +240,6 @@ item power
 {
 	name		"_Power Armour"
 	image		armour/power
-	model		soldiers/malepower/body
 	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
@@ -305,7 +301,6 @@ item power
 //{
 //	name		"_Advanced Combat Armour"
 //	image		armour/power
-//	model		soldiers/malepower/body
 //	type		armour
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
@@ -364,7 +359,6 @@ item power
 //{
 //	name		"_Advanced Nanocomposite Armour"
 //	image		armour/power
-//	model		soldiers/malepower/body
 //	type		armour
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
@@ -423,7 +417,6 @@ item power
 //{
 //	name		"_Advanced Power Armour"
 //	image		armour/power
-//	model		soldiers/malepower/body
 //	type		armour
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
@@ -482,7 +475,6 @@ item power
 //{
 //	name		"_Jumpsuit"
 //	image		armour/power
-//	model		soldiers/malepower/body
 //	type		armour
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
@@ -545,7 +537,6 @@ item light_alien
 {
 	name		"_Alien Body Armour"
 	image		armour/taman_light
-	model		aliens/tamanlight/body01
 	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
@@ -608,7 +599,6 @@ item medium_alien
 {
 	name		"_Medium Alien Armour"
 	image		armour/taman_medium
-	model		aliens/tamanmedium/body01
 	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
