@@ -2170,48 +2170,29 @@ int RS_Collected_ (technology_t * tech)
 }
 
 /**
- * @brief Returns a list of .ufo items that are producible when this item has been researched (=provided)
- * This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
+ * @brief Returns the technology pointer fo a tech index.
+ * You can use this instead of "&gd.technologies[techIdx]" to avoid having to check valid indices.
+ * @param[in] techIdx Index in the global gd.technologies[] array.
+ * @return technology_t pointer or NULL if an error occured.
  */
-#if 0
-void RS_GetProvided (char *id, char *provided)
+technology_t* RS_GetTechByIDX (int techIdx)
 {
-	int i, j;
-	technology_t *tech;
-
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
-		if (!Q_strncmp(id, tech->id, MAX_VAR)) {
-			for (j = 0; j < MAX_TECHLINKS; j++)
-				Com_sprintf(provided[j], MAX_VAR, tech->provides);
-			/*@todo: search for dependent items. */
-			for (j = 0; j < gd.numTechnologies; j++) {
-				if (RS_DependsOn(tech->id, id)) {
-					/* @todo: append researchtree[j]->provided to *provided */
-				}
-			}
-			return;
-		}
+	if (techIdx >= MAX_TECHNOLOGIES) {
+		Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: Index (%i) is bigger than MAX_TECHNOLOGIES (%i).\n", techIdx, MAX_TECHNOLOGIES);
+		return NULL;
 	}
-	Com_Printf("RS_GetProvided: research item \"%s\" not found.\n", id);
-}
-#endif
 
-/**
- * @brief Returns the tech pointer
- * @param id unique id of a technology_t
- */
-technology_t* RS_GetTechByIDX (int tech_idx)
-{
-	if (tech_idx == TECH_INVALID || tech_idx >= gd.numTechnologies)
+	if (techIdx == TECH_INVALID || techIdx >= gd.numTechnologies)
 		return NULL;
 	else
-		return &gd.technologies[tech_idx];
+		return &gd.technologies[techIdx];
 }
 
 
 /**
  * @brief return a pointer to the technology identified by given id string
+ * @param[in] id Unique identifier of the tech as defined in the research.ufo file (e.g. "tech xxxx").
+ * @return technology_t pointer or NULL if an error occured.
  */
 technology_t *RS_GetTechByID (const char *id)
 {
