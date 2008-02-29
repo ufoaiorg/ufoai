@@ -2923,6 +2923,7 @@ base/textures/tex_nature/dirt.tga | GNU General Public License 2.0 | OpenArena G
 base/textures/tex_nature/drymud.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/data/textures/evil3_floors/bdirt.jpg
 base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/textures/tex_nature/grass.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_nature/grass001.jpg | GNU General Public License 2.0 |  | grass_lash.tga
 base/textures/tex_nature/grass003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_d2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_hor.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
