@@ -1179,9 +1179,10 @@ mapdef industrial
 	}
 	maxaliens		20
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_scout
+	}
 
 	terrains
 	{
