@@ -218,13 +218,13 @@ static void U2M_RAD_Parameter (int argc, char** argv)
  */
 static void U2M_SetDefaultConfigValues (void)
 {
-	config.subdivideSize = 2048.0f;
+	config.subdivideSize = 1024.0f; /* bsp subdiv */
 	config.block_xl = -8;
 	config.block_xh = 7;
 	config.block_yl = -8;
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
-	config.subdiv = 2048.0f;
+	config.subdiv = 1024.0f; /* rad chop/subdiv */
 
 	config.night_ambient_red = 0.0;
 	config.night_ambient_green = 0.0;
