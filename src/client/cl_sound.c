@@ -125,6 +125,9 @@ static void S_Music_Start (const char *file)
 		return;
 	}
 
+	/* make really sure the last track is closed and freed */
+	S_Music_Stop();
+
 	/* load it in */
 	if ((size = FS_LoadFile(va("music/%s.ogg", name), (byte **)&musicBuf)) != -1) {
 		music.musicSrc = SDL_RWFromMem(musicBuf, size);
@@ -134,9 +137,6 @@ static void S_Music_Start (const char *file)
 		Com_Printf("Could not load '%s' background track\n", name);
 		return;
 	}
-
-	/* make really sure the last track is closed and freed */
-	S_Music_Stop();
 
 	music.data = Mix_LoadMUS_RW(music.musicSrc);
 
