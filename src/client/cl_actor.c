@@ -3599,7 +3599,7 @@ void CL_ActorDie (struct dbuffer *msg)
 			break;
 		case (TEAM_ALIEN):
 			if (le->teamDef) {
-				if (RS_IsResearched_idx(RS_GetTechIdxByName(le->teamDef->tech))) {
+				if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 						Com_sprintf(tmpbuf, sizeof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
 						SCR_DisplayHudMessage(tmpbuf, 2000);
@@ -4608,7 +4608,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
 					if (mouseActor->teamDef) {
-						if (RS_IsResearched_idx(RS_GetTechIdxByName(mouseActor->teamDef->tech)))
+						if (RS_IsResearched_ptr(RS_GetTechByID(mouseActor->teamDef->tech)))
 							mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _(mouseActor->teamDef->name);
 						else
 							mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _("Unknown alien race");

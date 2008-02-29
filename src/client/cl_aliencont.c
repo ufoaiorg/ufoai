@@ -186,7 +186,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 
 	cargo = aircraft->aliencargo;
 
-	alienBreathing = RS_IsResearched_idx(RS_GetTechIdxByName("rs_alien_breathing"));
+	alienBreathing = RS_IsResearched_ptr(RS_GetTechByID("rs_alien_breathing"));
 	albridx = INVSH_GetItemByID("brapparatus");
 	if (albridx == NONE)
 		Sys_Error("AL_AddAliens: Could not get brapparatus item definition");
