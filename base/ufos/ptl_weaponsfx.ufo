@@ -24,8 +24,7 @@ particle bolter
 		blend  add
 		style  beam
 		thinkfade  out
-		push   float 2.0
-		pop    *size.2
+		size	"0 2"
 		tps    4.0
 	}
 	think { kill }
@@ -101,8 +100,7 @@ particle bullet
 		blend  add
 		style  beam
 		thinkfade  out
-		push   float 2.0
-		pop    *size.2
+		size	"0 2"
 		tps    4.0
 	}
 	think { kill }
@@ -115,24 +113,24 @@ particle bulletImpact
 		image  sfx/smoke
 		blend  add
 		style  facing
-		thinkfade  sin
-		size   "20 20"
+		thinkfade  sin		// fade the think function with a sinus function
+		size   "20 20"		// set the size vector to 20x20
 
-		push   *v
-		mul    float 5.0
-		kpop   *v
-		add    *s
-		pop    *s
-		tps    1.0
+		push   *v			// push velocity vector on the stack
+		mul    float 5.0	// scalar multiple velocity vector
+		kpop   *v			// write it back into the particle structure (but keep it on the stack)
+		add    *s			// add the current position (v + s)
+		pop    *s			// write it back into the particle structure and remove from stack
+		tps    1.0			// think per seconds to 1
 
-		push   int 20
-		nspawn bulletFragment
+		push   int 20		// push 20 to the stack
+		nspawn bulletFragment	// use the 20 from stack and spawn that many particles
 	}
 	run
 	{
-		push *color
-		mul  float 0.5
-		pop  *color
+		push *color			// push the color onto the stack
+		mul  float 0.5		// scalar multiply with 0.5
+		pop  *color			// write it back into the particle structure and remove from stack
 	}
 	think { kill }
 }
@@ -342,8 +340,7 @@ particle laserPulse
 		style  beam
 		thinkfade  sin
 		tps    6.0
-		push   float 2.2
-		pop    *size.2
+		size	"0 2.2"
 	}
 	think { kill }
 }
@@ -357,8 +354,7 @@ particle laserOverload
 		style  beam
 		thinkfade  sin
 		tps    2.0
-		push   float 2.7
-		pop    *size.2
+		size	"0 2.7"
 	}
 	think { kill }
 }
