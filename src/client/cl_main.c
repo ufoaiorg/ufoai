@@ -1577,7 +1577,7 @@ static void CL_PrecacheModels (void)
 	loading = cls.loadingPercent;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (!(csi.ods[i].weapon || csi.ods[i].extension || csi.ods[i].headgear))
+		if (!(csi.ods[i].weapon || csi.ods[i].extension || csi.ods[i].headgear || csi.ods[i].thrown))
 			continue;
 
 		if (*csi.ods[i].model) {
