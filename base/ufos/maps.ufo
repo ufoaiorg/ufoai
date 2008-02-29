@@ -1123,12 +1123,12 @@ mapdef scout_crash
 
 mapdef farm
 {
-	map				farm08
+	map				farm
 	description		"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 	size			"medium"
 	teams			2
 	multiplayer		true
-	loadingscreen	farm08
+	loadingscreen	farm
 	gametypes {
 		1on1
 		1on1on1
