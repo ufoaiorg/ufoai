@@ -6,6 +6,7 @@ base/maps/alienb/a_tunnel_h.map | GNU General Public License 2.0 | Martin Gerhar
 base/maps/alienb/a_tunnel_v.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/alienb/a_tunnel_x.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/alienb/a_tunnel_x2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/alienbase.ump | GNU General Public License 2.0
 base/maps/b/aliencont.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/antimatter.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/base_empty.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -179,6 +180,7 @@ base/maps/prefabs/prefab_inter_saracen.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_inter_stiletto.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_machines.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_misc.map | GNU General Public License 2.0
+base/maps/prefabs/prefab_mountain.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_office.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_pipes.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_shop.map | GNU General Public License 2.0
