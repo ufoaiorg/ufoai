@@ -1577,13 +1577,15 @@ static void CL_PrecacheModels (void)
 	loading = cls.loadingPercent;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (!(csi.ods[i].weapon || csi.ods[i].extension || csi.ods[i].headgear || csi.ods[i].thrown))
+		if (csi.ods[i].type[0] == '\0' || !Q_strcmp(csi.ods[i].type, "dummy"))
 			continue;
 
 		if (*csi.ods[i].model) {
 			cls.model_weapons[i] = R_RegisterModelShort(csi.ods[i].model);
 			if (!cls.model_weapons[i])
 				Com_Printf("CL_PrecacheModels: Could not register object model: '%s'\n", csi.ods[i].model);
+			else
+				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", csi.ods[i].model, i);
 		}
 		cls.loadingPercent += percent / csi.numODs;
 		SCR_DrawPrecacheScreen(qtrue);
