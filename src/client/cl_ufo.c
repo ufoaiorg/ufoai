@@ -123,18 +123,21 @@ void UFO_SetRandomDest (aircraft_t* ufo)
 }
 
 /**
- * @brief Give a random destination to the given UFO, and make him to move there
+ * @brief Give a random position to the given UFO
  * @todo Sometimes the ufos aren't changing the routes - UFO_SetRandomDest
  * returns correct values, but it seams, that MAP_MapCalcLine is not doing the correct
  * things - set debug_showufos to 1
  * @sa UFO_SetRandomDest
  */
-static void UFO_SetDest (aircraft_t* ufo, vec2_t pos)
+static void UFO_SetRandomPos (aircraft_t* ufo)
 {
-	ufo->status = AIR_TRANSIT;
-	ufo->time = 0;
-	ufo->point = 0;
-	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
+	vec2_t pos;
+
+	pos[0] = (rand() % 180) - (rand() % 180);
+	pos[1] = (rand() % 90) - (rand() % 90);
+	Com_DPrintf(DEBUG_CLIENT, "Get random pos on geoscape %.2f:%.2f\n", pos[0], pos[1]);
+
+	Vector2Copy(pos, ufo->pos);
 }
 
 #ifdef UFO_ATTACK_BASES
@@ -503,7 +506,7 @@ static void UFO_ListOnGeoscape_f (void)
  * @sa UFO_RemoveFromGeoscape
  * @sa UFO_RemoveFromGeoscape_f
  */
-aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t pos, mission_t *mission)
+aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t *mission)
 {
 	int newUFONum;
 	aircraft_t *ufo = NULL;
@@ -537,11 +540,12 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t pos, mission_t *mission
 	gd.numUFOs++;
 
 	/* Initialise ufo data */
+	UFO_SetRandomPos(ufo);
 	AII_ReloadWeapon(ufo);					/* Load its weapons */
 	ufo->visible = qfalse;					/* Not visible in radars (just for now) */
 	ufo->mission = mission;
-	if (pos)
-		UFO_SetDest(ufo, pos);
+	if (destination)
+		UFO_SendToDestination(ufo, destination);
 	else
 		UFO_SetRandomDest(ufo);				/* Random destination */
 

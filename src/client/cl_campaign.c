@@ -266,7 +266,6 @@ static void CP_AlienInterestList_f (void)
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwars)
  * @param[in] mapIdx idx of the map
  * @return qfalse if map is not selectable
- * @sa UFO_AddToGeoscape
  */
 static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
 {
