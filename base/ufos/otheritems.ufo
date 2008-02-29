@@ -1,5 +1,7 @@
 // ===========
 // Dummy items
+// We use "type dummy" if we do not want their mdoels to be pre-cached.
+// TODO: Are there other checks for type==dummy in the code?
 // ===========
 item antimatter
 {
@@ -36,8 +38,9 @@ item alienmaterials
 
 item craft_ufo_scout
 {
-	buytype dummy
 	name	"_UFO - Scout"
+	type	dummy
+	buytype dummy
 	weapon	false
 	model	objects/alien/disassembled/ufo_scout
 	notonmarket	true
@@ -45,8 +48,9 @@ item craft_ufo_scout
 
 item craft_ufo_fighter
 {
-	buytype dummy
 	name	"_UFO - Fighter"
+	type	dummy
+	buytype dummy
 	weapon	false
 	model	objects/alien/disassembled/ufo_fighter
 	notonmarket	true
@@ -54,8 +58,9 @@ item craft_ufo_fighter
 
 item craft_ufo_harvester
 {
-	buytype dummy
 	name	"_UFO - Harvester"
+	type	dummy
+	buytype dummy
 	weapon	false
 	model	objects/alien/disassembled/ufo_harvester
 	notonmarket	true
@@ -63,32 +68,36 @@ item craft_ufo_harvester
 
 item craft_ufo_bomber
 {
-	buytype dummy
 	name	"_UFO - Bomber"
+	type	dummy
+	buytype dummy
 	weapon false
 	notonmarket	true
 }
 
 item craft_ufo_corrupter
 {
-	buytype dummy
 	name	"_UFO - Corrupter"
+	type	dummy
+	buytype dummy
 	weapon false
 	notonmarket	true
 }
 
 item craft_ufo_carrier
 {
-	buytype dummy
 	name	"_UFO - Carrier"
+	type	dummy
+	buytype dummy
 	weapon false
 	notonmarket	true
 }
 
 item craft_ufo_supply
 {
-	buytype dummy
 	name	"_UFO - Supply Ship"
+	type	dummy
+	buytype dummy
 	weapon false
 	notonmarket	true
 }
@@ -99,7 +108,7 @@ item craft_ufo_supply
 
 item bloodspider_weapon
 {
-	name	"Bloodspider weapon"
+	name	"Bloodspider weapon"	// TODO Will this ever be displayed? If se we would need gettext support.
 	model	weapons/knife/knife	//FIXME
 	weapon	true
 	type	melee
