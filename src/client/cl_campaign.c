@@ -380,22 +380,6 @@ mission_t *CP_GetMissionById (const char *missionId)
 }
 
 /**
- * @brief Get a mission in ccs.missions by ufo.
- */
-static mission_t* CP_GetMissionByUFO (aircraft_t *ufo)
-{
-	const linkedList_t *list = ccs.missions;
-
-	for (;list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
-		if (mission->ufo == ufo)
-			return mission;
-	}
-
-	return NULL;
-}
-
-/**
  * @brief Return the type of mission.
  * @todo implement me
  */
@@ -1220,18 +1204,22 @@ static inline void CP_MissionIsOver (mission_t *mission)
 
 /**
  * @brief Mission is finished because Phalanx team ended it.
+ * @param[in] ufocraft Pointer to the UFO involved in this mission
  */
 void CP_MissionIsOverByUfo (aircraft_t *ufocraft)
 {
-	CP_MissionIsOver(CP_GetMissionByUFO(ufocraft));
+	assert(ufocraft->mission);
+	CP_MissionIsOver(ufocraft->mission);
 }
 
 /**
- * @brief Mission is finished because Phalanx team ended it.
+ * @brief Stage of mission is finished.
+ * @param[in] ufocraft Pointer to the UFO involved in this mission
  */
 void CP_MissionStageEndByUfo (aircraft_t *ufocraft)
 {
-	CP_MissionStageEnd(CP_GetMissionByUFO(ufocraft));
+	assert(ufocraft->mission);
+	CP_MissionStageEnd(ufocraft->mission);
 }
 
 /**
@@ -1418,9 +1406,8 @@ void CP_CheckNextStageDestination (aircraft_t *ufo)
 {
 	mission_t *mission;
 
-	mission = CP_GetMissionByUFO(ufo);
-	if (!mission)
-		return;
+	mission = ufo->mission;
+	assert(mission);
 
 	switch (mission->stage) {
 	case STAGE_COME_FROM_ORBIT:
@@ -1444,7 +1431,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	mission_t *mission;
 	const base_t *base;
 
-	mission = CP_GetMissionByUFO(ufo);
+	mission = ufo->mission;
 	if (!mission)
 		Sys_Error("CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
 
