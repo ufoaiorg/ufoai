@@ -1394,6 +1394,23 @@ static void CP_SpawnNewMissions_f (void)
 		}
 	}
 }
+
+/**
+ * @brief Debug function for deleting all mission in global array.
+ * @note called with debug_delmissions
+ */
+static void CP_DeleteMissions_f (void)
+{
+	int n = CP_CountMission();
+	const linkedList_t *list = ccs.missions;
+
+	for (;list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		CP_MissionRemove(mission);
+	}
+	Com_Printf("Removed %i mission from global array\n", n);
+}
+
 #endif
 
 /**
@@ -5736,5 +5753,6 @@ void CL_ResetCampaign (void)
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 	Cmd_AddCommand("debug_campaignstats", CP_CampaignStats_f, "Print campaign stats to game console");
 	Cmd_AddCommand("debug_addmission", CP_SpawnNewMissions_f, "Add a new mission");
+	Cmd_AddCommand("debug_delmissions", CP_DeleteMissions_f, "Remove all missions from global array");
 #endif
 }
