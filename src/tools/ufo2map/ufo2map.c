@@ -172,6 +172,7 @@ static void U2M_RAD_Parameter (int argc, char** argv)
 			config.extrasamples = qtrue;
 			Com_Printf("extrasamples = true\n");
 		} else if (!strcmp(argv[i],"-radchop")) {
+			Com_Printf("radiosity subdivide size = %s\n", argv[i + 1]);
 			config.subdiv = atoi(argv[i + 1]);
 			i++;
 		} else if (!strcmp(argv[i],"-quant")) {
