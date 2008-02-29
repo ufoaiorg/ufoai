@@ -426,8 +426,13 @@ employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, i
 
 #ifdef PARANOID
 	i = E_CountHired(base, type);
-	if (i < abs(idx))
-		Sys_Error("Try to get the %ith employee - but you only have %i hired\n", abs(idx), i);
+	if (idx < 0) {
+		if (i < abs(idx))
+			Sys_Error("Trying to get the %ith employee - but you only have %i hired in the base.\n", abs(idx), i);
+	} else {
+		if (gd.employees[type][idx].baseIDHired != base->idx)
+			Sys_Error("Trying to get hired employee %i (base %i) in base %i - but he is not hired in this base.\n", idx, gd.employees[type][idx].baseIDHired, base->idx);
+	}
 #endif
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
