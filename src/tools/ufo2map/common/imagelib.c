@@ -358,7 +358,7 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 
 	/* Check Colour Components */
 	if (cinfo.output_components != 3 && cinfo.output_components != 4) {
-		Com_Printf("Invalid JPEG colour components: %s\n");
+		Com_Printf("Invalid JPEG colour components\n");
 		jpeg_destroy_decompress(&cinfo);
 		free(rawdata);
 		return;
