@@ -346,7 +346,6 @@ typedef struct mapDef_s {
 	char *map;				/**< bsp or ump base filename (without extension and day or night char) */
 	char *param;			/**< in case of ump file, the assembly to use */
 	char *description;		/**< the description to show in the menus */
-	char *loadingscreen;	/**< the loading screen */
 	char *size;				/**< small, medium, big */
 
 	/* multiplayer */

@@ -133,10 +133,10 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 		if (FS_CheckFile(va("pics/maps/loading/%s.jpg", tmpPicName)) > 0)
 			Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s.jpg", tmpPicName);
 		else
-			Q_strncpyz(loadingPic, "maps/loading/default.jpg", sizeof(loadingPic));
+			Q_strncpyz(loadingPic, "maps/loading/default", sizeof(loadingPic));
 		Cvar_Set("mn_mappicbig", loadingPic);
 	} else {
-		Q_strncpyz(loadingPic, "maps/loading/default.jpg", sizeof(loadingPic));
+		Q_strncpyz(loadingPic, "maps/loading/default", sizeof(loadingPic));
 		Cvar_Set("mn_mappicbig", loadingPic);
 	}
 	return Cvar_VariableString("mn_mappicbig");

@@ -2175,7 +2175,6 @@ static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_MANUAL_STRING, offsetof(mapDef_t, description), 0},
 	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
 	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
-	{"loadingscreen", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, loadingscreen), 0},
 	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
 
 	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
@@ -2264,9 +2263,6 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 			} while (*text);
 		}
 	} while (*text);
-
-	if (!md->loadingscreen)
-		md->loadingscreen = "default.jpg";
 
 	if (!md->map) {
 		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
