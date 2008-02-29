@@ -112,6 +112,7 @@ typedef enum missionStage_s {
 	STAGE_SUBVERT_GOV,				/**< Subvert government */
 	STAGE_SUPPLY,					/**< Supply already existing base */
 	STAGE_SPREAD_XVI,				/**< Spreading XVI Virus */
+	STAGE_INTERCEPT,				/**< UFO attacks any encountered PHALANX aircraft */
 
 	STAGE_RETURN_TO_ORBIT,			/**< UFO is going back to base */
 
@@ -437,10 +438,12 @@ mission_t* MAP_GetMissionByIdx(int id);
 int CP_CountMission(void);
 int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
+mission_t *CP_GetMissionById(const char *missionId);
 const char *CP_MissionToTypeString(const mission_t *mission);
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 void CP_MissionIsOverByUfo(aircraft_t *ufocraft);
+void CP_MissionStageEndByUfo(aircraft_t *ufocraft);
 
 base_t *CP_GetMissionBase(void);
 void CP_SpawnCrashSiteMission(aircraft_t *ufo);

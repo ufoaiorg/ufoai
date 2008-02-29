@@ -184,7 +184,8 @@ typedef struct aircraft_s {
 
 	int numUpgrades;
 
-	struct mission_s* mission;	/**< The mission the aircraft is moving to */
+	struct mission_s* mission;	/**< The mission the aircraft is moving to if this is a PHALANX aircraft
+									The mission the UFO is involved if this is a UFO */
 	char *missionID;			/**< if this is a crashsite, we need the string here
 								 * this is needed because we won't find the ufocrash mission
 								 * in the parsed missions in csi.missions until we loaded the campaign */

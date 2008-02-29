@@ -365,7 +365,7 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 /**
  * @brief Get a mission in ccs.missions by Id.
  */
-static mission_t *CP_GetMissionById (const char *missionId)
+mission_t *CP_GetMissionById (const char *missionId)
 {
 	const linkedList_t *list = ccs.missions;
 
@@ -614,6 +614,7 @@ static void CP_ReconMissionIsSuccess (mission_t *mission)
 	CL_ChangeIndividualInterest(0.15f, INTERESTCATEGORY_BUILDING);
 #endif
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
+	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
 
 	CP_MissionRemove(mission);
 }
@@ -624,7 +625,8 @@ static void CP_ReconMissionIsSuccess (mission_t *mission)
  */
 static void CP_ReconMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.2f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
 #if 0
 	/* @todo add me when INTERESTCATEGORY_BUILDING will be available */
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
@@ -668,7 +670,7 @@ static qboolean CP_ReconMissionChoose (mission_t *mission)
  */
 static void CP_ReconMissionAerial (mission_t *mission)
 {
-	const date_t reconDelay = {2, 0};		/* How long the UFO with fly on earth */
+	const date_t reconDelay = {2, 0};		/* How long the UFO will fly on earth */
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(reconDelay));
 	mission->stage = STAGE_RECON_AIR;
@@ -809,7 +811,8 @@ static void CP_ReconMissionCreate (mission_t *mission)
 {
 	CP_MissionDisableTimeLimit(mission);
 	/* @todo: type of ufo may change */
-	mission->ufo = UFO_AddToGeoscape(UFO_SCOUT, NULL);
+	mission->ufo = UFO_AddToGeoscape(UFO_SCOUT, NULL, mission);
+	assert(mission->ufo);
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }
 
@@ -847,7 +850,7 @@ static void CP_ReconMissionNextStage (mission_t *mission)
 	}
 }
 
-/*****	Recon Mission *****/
+/*****	Base attack Mission *****/
 
 /**
  * @brief Base attack mission is over and is a success (from an alien point of view): change interest values.
@@ -1027,7 +1030,8 @@ static void CP_BaseAttackMissionCreate (mission_t *mission)
 {
 	CP_MissionDisableTimeLimit(mission);
 	/* @todo: type of ufo may change */
-	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL);
+	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
+	assert(mission->ufo);
 	/* @todo: it may be a ground mission */
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }
@@ -1065,6 +1069,108 @@ static void CP_BaseAttackMissionNextStage (mission_t *mission)
 	}
 }
 
+/*****	Intercept Mission *****/
+
+/**
+ * @brief Intercept mission is over and is a success: change interest values.
+ * @note Intercept mission
+ */
+static void CP_InterceptMissionIsSuccess (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Intercept mission is over and is a success: change interest values.
+ * @note Intercept mission
+ */
+static void CP_InterceptMissionIsFailure (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Intercept mission ends: UFO leave earth.
+ * @note Intercept mission -- Stage 2
+ */
+static void CP_InterceptMissionLeave (mission_t *mission)
+{
+	CP_MissionDisableTimeLimit(mission);
+	assert(mission->ufo);
+	UFO_SetRandomDest(mission->ufo);
+	CP_MissionRemoveFromGeoscape(mission);
+	/* Display UFO on geoscape if it is visible */
+	mission->ufo->notOnGeoscape = qfalse;
+
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+}
+
+/**
+ * @brief Set Intercept mission: UFO looks for new target.
+ * @note Intercept mission -- Stage 1
+ */
+static void CP_InterceptMissionSet (mission_t *mission)
+{
+	const date_t reconDelay = {6, 0};		/* How long the UFO should stay on earth */
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(reconDelay));
+	mission->stage = STAGE_INTERCEPT;
+}
+
+/**
+ * @brief Intercept mission begins: UFO arrive on earth.
+ * @note Intercept mission -- Stage 0
+ */
+static void CP_InterceptMissionCreate (mission_t *mission)
+{
+	CP_MissionDisableTimeLimit(mission);
+	/* @todo: type of ufo may change */
+	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
+	assert(mission->ufo);
+	mission->stage = STAGE_COME_FROM_ORBIT;
+}
+
+/**
+ * @brief Determine what action should be performed when a Intercept mission stage ends.
+ */
+static void CP_InterceptNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		/* Create Intercept mission */
+		CP_InterceptMissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		/* UFO start looking for target */
+		CP_InterceptMissionSet(mission);
+		break;
+	case STAGE_INTERCEPT:
+		/* Leave earth */
+		if (AIRFIGHT_ChooseWeapon(mission->ufo->weapons, mission->ufo->maxWeapons, mission->ufo->pos, mission->ufo->pos) !=
+			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT && mission->ufo->status == AIR_UFO) {
+			/* UFO is fighting and has still ammo, wait a little bit before leaving */
+			const date_t AdditionalDelay = {1, 0};	/* 1 day */
+			mission->finalDate = Date_Add(ccs.date, AdditionalDelay);
+		} else
+			CP_InterceptMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_InterceptMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_ReconMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
+
 /*****	General Mission Code *****/
 
 /**
@@ -1080,6 +1186,9 @@ static void CP_MissionStageEnd (mission_t *mission)
 		break;
 	case INTERESTCATEGORY_BASE_ATTACK:
 		CP_BaseAttackMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_INTERCEPT:
+		CP_InterceptNextStage(mission);
 		break;
 	default:
 		Com_Printf("CP_MissionStageEnd: Unknown type of mission: %i\n", mission->category);
@@ -1101,6 +1210,9 @@ static inline void CP_MissionIsOver (mission_t *mission)
 		else
 			CP_BaseAttackMissionIsSuccess(mission);
 		break;
+	case INTERESTCATEGORY_INTERCEPT:
+		CP_InterceptMissionIsFailure(mission);
+		break;
 	default:
 		Com_Printf("CP_MissionIsOver: Unknown type of mission: %i\n", mission->category);
 	}
@@ -1112,6 +1224,14 @@ static inline void CP_MissionIsOver (mission_t *mission)
 void CP_MissionIsOverByUfo (aircraft_t *ufocraft)
 {
 	CP_MissionIsOver(CP_GetMissionByUFO(ufocraft));
+}
+
+/**
+ * @brief Mission is finished because Phalanx team ended it.
+ */
+void CP_MissionStageEndByUfo (aircraft_t *ufocraft)
+{
+	CP_MissionStageEnd(CP_GetMissionByUFO(ufocraft));
 }
 
 /**

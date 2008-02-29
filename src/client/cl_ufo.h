@@ -40,7 +40,7 @@ void UFO_CheckShootBack(aircraft_t *ufo, aircraft_t* phalanxAircraft);
 void UFO_CampaignRunUFOs(int dt);
 void UFO_CampaignCheckEvents(qboolean checkStatusChanged);
 void UFO_Reset(void);
-aircraft_t *UFO_AddToGeoscape(ufoType_t ufotype, vec2_t pos);
+aircraft_t *UFO_AddToGeoscape(ufoType_t ufotype, vec2_t pos, mission_t *mission);
 void UFO_RemoveFromGeoscape(aircraft_t* ufo);
 void UFO_UpdateUFOHangarCapForAll(int base_idx);
 void UFO_PrepareRecovery(base_t *base);

@@ -338,9 +338,14 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			AIR_SendAircraftPursuingUFO(shooter, target);
 	} else {
 		/* no ammo left, or no weapon, you should flee ! */
-		if (shooter->type == AIRCRAFT_UFO)
-			shooter->status = AIR_TRANSIT;
-		else {
+		if (shooter->type == AIRCRAFT_UFO) {
+			/* Every UFO on geoscape should have a mission assigned */
+			assert (shooter->mission);
+			if (shooter->mission->category == INTERESTCATEGORY_INTERCEPT)
+				CP_MissionStageEndByUfo(shooter);	/* mission is over */
+			else
+				shooter->status = AIR_TRANSIT;		/* continue stage */
+		} else {
 			MN_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
 			AIR_AircraftReturnToBase(shooter);
 		}

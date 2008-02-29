@@ -1819,6 +1819,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
 			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
 		MSG_WritePos(sb, gd.ufos[i].direction);
+		MSG_WriteString(sb, gd.ufos[i].mission->id);
 		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++) {
 #ifdef DEBUG
 			if (gd.ufos[i].stats[j] < 0)
@@ -1960,6 +1961,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			for (j = 0; j < tmp_int; j++)
 				MSG_Read2Pos(sb, tmp_vec2t);	/* route points */
 			MSG_ReadPos(sb, tmp_vec3t);		/* direction */
+			MSG_ReadString(sb);			/* Mission id */
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				MSG_ReadLong(sb);
 			MSG_ReadShort(sb);			/* baseTarget index */
@@ -2000,6 +2002,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			for (j = 0; j < ufo->route.numPoints; j++)
 				MSG_Read2Pos(sb, ufo->route.point[j]);
 			MSG_ReadPos(sb, ufo->direction);
+			gd.ufos[i].mission = CP_GetMissionById(MSG_ReadString(sb));
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				ufo->stats[j] = MSG_ReadLong(sb);
 			tmp_int = MSG_ReadShort(sb);

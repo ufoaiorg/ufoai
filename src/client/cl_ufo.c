@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "cl_ufo.h"
 
-static const float max_detecting_range = 60.0f; /**< range to detect and fire at phalanx aircraft */
+static const float max_detecting_range = 25.0f; /**< range to detect and fire at phalanx aircraft */
 
 typedef struct ufoTypeList_s {
 	const char *id;		/**< script id string */
@@ -237,39 +237,98 @@ static qboolean UFO_SendAttackBase (aircraft_t* ufo, base_t* base)
 /**
  * @brief Check if the ufo can shoot at a Base
  */
-static void UFO_SearchTarget (aircraft_t *ufo)
+static void UFO_SearchBaseTarget (aircraft_t *ufo)
 {
 	base_t* base;
-	aircraft_t* phalanxAircraft;
 	float distance = 999999., dist;
+
+	/* check if the ufo is already attacking an aircraft */
+	if (ufo->aircraftTarget)
+		return;
 
 	/* check if the ufo is already attacking a base */
 	if (ufo->baseTarget) {
 		AIRFIGHT_ExecuteActions(ufo, NULL);
-	/* check if the ufo is already attacking an aircraft */
-	} else if (ufo->aircraftTarget) {
-		/* check if the target flee in a base */
-		if (ufo->aircraftTarget->status > AIR_HOME)
-			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
-		else
-			ufo->aircraftTarget = NULL;
-	} else {
-		ufo->status = AIR_TRANSIT;
-		/* reverse order - because bases can be destroyed in here */
-		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-			/* check if the ufo can attack a base (if it's not too far) */
-			if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
-				if (UFO_SendAttackBase(ufo, base))
-					/* don't check for aircraft if we can destroy a base */
-					continue;
-			}
+		return;
+	}
+
+	/* No target, try to find a new base to attack */
+	ufo->status = AIR_TRANSIT;
+	/* reverse order - because bases can be destroyed in here */
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+		/* check if the ufo can attack a base (if it's not too far) */
+		if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
+			if (UFO_SendAttackBase(ufo, base))
+				/* don't check for aircraft if we can destroy a base */
+				continue;
 		}
 	}
 }
 #endif
 
 /**
- * @brief Make the specified UFO purchasing a phalanx aircraft.
+ * @brief Check if the ufo can shoot at a PHALANX aircraft
+ */
+static void UFO_SearchAircraftTarget (aircraft_t *ufo)
+{
+	base_t* base;
+	aircraft_t* phalanxAircraft;
+	float distance = 999999., dist;
+
+	/* Every UFO on geoscape should have a mission assigned */
+	assert(ufo->mission);
+
+	/* UFO never try to attack a PHALANX aircraft except if they came on earth for that */
+	if (ufo->mission->stage != STAGE_INTERCEPT)
+		return;
+
+#ifdef UFO_ATTACK_BASES
+	/* check if the ufo is already attacking a base */
+	if (ufo->baseTarget)
+		return;
+#endif
+
+	/* check if the ufo is already attacking an aircraft */
+	if (ufo->aircraftTarget) {
+		/* check if the target disappeared from geoscape (fled in a base) */
+		if (ufo->aircraftTarget->status > AIR_HOME)
+			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
+		else
+			ufo->aircraftTarget = NULL;
+		return;
+	}
+
+	ufo->status = AIR_TRANSIT;
+	/* reverse order - because bases can be destroyed in here */
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+		/* check if the ufo can attack an aircraft
+		 * reverse order - because aircraft can be destroyed in here */
+		for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
+			/* check that aircraft is flying */
+			if (phalanxAircraft->status > AIR_HOME) {
+				/* get the distance from ufo to aircraft */
+				dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
+				/* check out of reach */
+				if (dist > max_detecting_range)
+					continue;
+				/* choose the nearest target */
+				if (dist < distance) {
+					distance = dist;
+					if (UFO_SendPursuingAircraft(ufo, phalanxAircraft)) {
+						/* Stop Time */
+						CL_GameTimeStop();
+						/* Send a message to player to warn him */
+						MN_AddNewMessage(_("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse, MSG_STANDARD, NULL);
+						/* @todo: present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
+ * @brief Make the specified UFO pursue a phalanx aircraft.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] aircraft Pointer to the target aircraft.
  * @sa UFO_SendAttackBase
@@ -287,9 +346,6 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 		/* no ammo left: stop attack */
 		ufo->status = AIR_TRANSIT;
 		return qfalse;
-	} else if (slotIdx < AIRFIGHT_WEAPON_CAN_SHOOT) {
-		/* Don't flee: can't fire atm, but maybe we'll be able to attack later */
-		return qfalse;
 	}
 
 	MAP_MapCalcLine(ufo->pos, aircraft->pos, &ufo->route);
@@ -298,14 +354,6 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->point = 0;
 	ufo->aircraftTarget = aircraft;
 	ufo->baseTarget = NULL;
-
-	/* Stop Time */
-	CL_GameTimeStop();
-
-	/* Send a message to player to warn him */
-	MN_AddNewMessage(_("Notice"), va(_("A UFO is shooting at %s"), aircraft->name), qfalse, MSG_STANDARD, NULL);
-
-	/* @todo: present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
 
 	return qtrue;
 }
@@ -377,6 +425,9 @@ void UFO_CampaignRunUFOs (int dt)
 			CP_CheckNextStageDestination(ufo);
 		}
 
+		/* is there a PHALANX aircraft to shoot at ? */
+		UFO_SearchAircraftTarget(ufo);
+
 #ifdef UFO_ATTACK_BASES
 		/* is there a PHALANX base to shoot at ? */
 		UFO_SearchBaseTarget(ufo);
@@ -447,12 +498,12 @@ static void UFO_ListOnGeoscape_f (void)
  * @brief Add a UFO to geoscape
  * @param[in] ufotype The type of ufo (fighter, scout, ...).
  * @param[in] pos Position where the ufo should go. NULL is randomly chosen
+ * @param[in] mission Pointer to the mission the UFO is involved in
  * @todo: UFOs are not assigned unique idx fields. Could be handy...
- * @sa UFO_AddToGeoscape_f
  * @sa UFO_RemoveFromGeoscape
  * @sa UFO_RemoveFromGeoscape_f
  */
-aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t pos)
+aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t pos, mission_t *mission)
 {
 	int newUFONum;
 	aircraft_t *ufo = NULL;
@@ -488,6 +539,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t pos)
 	/* Initialise ufo data */
 	AII_ReloadWeapon(ufo);					/* Load its weapons */
 	ufo->visible = qfalse;					/* Not visible in radars (just for now) */
+	ufo->mission = mission;
 	if (pos)
 		UFO_SetDest(ufo, pos);
 	else
@@ -497,30 +549,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t pos)
 }
 
 /**
- * @brief Add a UFO to geoscape
- * @sa UFO_RemoveFromGeoscape
- * @sa UFO_RemoveFromGeoscape_f
- */
-static void UFO_AddToGeoscape_f (void)
-{
-	ufoType_t ufotype = UFO_MAX;
-
-	/* check max amount */
-	if (gd.numUFOs >= MAX_UFOONGEOSCAPE)
-		return;
-
-	if (Cmd_Argc() == 2) {
-		ufotype = atoi(Cmd_Argv(1));
-		if (ufotype > UFO_MAX || ufotype < 0)
-			ufotype = 0;
-	}
-
-	UFO_AddToGeoscape(ufotype, NULL);
-}
-
-/**
  * @brief Remove the specified ufo from geoscape
- * @sa UFO_AddToGeoscape_f
  */
 void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 {
@@ -808,39 +837,13 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
 	return qtrue;
 }
 
-#ifdef DEBUG
-/**
- * @brief This function will destroy all ufos on the geoscape and
- * spawn the crash site missions when the ufo was "shot" over land
- * @note Give a parameter (a number) to spawn new ufos and crash
- * them afterwards
- */
-static void UFO_DestroyAllUFOsOnGeoscape_f (void)
-{
-	int i, cnt;
-
-	/* add new ufos to destroy */
-	if (Cmd_Argc() == 2) {
-		cnt = atoi(Cmd_Argv(1));
-		Cmd_BufClear();
-		for (i = 0; i < cnt; i++)
-			UFO_AddToGeoscape_f();
-	}
-
-	for (i = 0; i < gd.numUFOs; i++)
-		AIRFIGHT_ActionsAfterAirfight(NULL, &gd.ufos[i], qtrue);
-}
-#endif
-
 /**
  * @sa MN_ResetMenus
  */
 void UFO_Reset (void)
 {
-	Cmd_AddCommand("addufo", UFO_AddToGeoscape_f, "Add a new UFO to geoscape");
 	Cmd_AddCommand("removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_destroyallufos", UFO_DestroyAllUFOsOnGeoscape_f, "Destroy all UFOs on geoscape and spawn the crashsite missions (if not over water)");
 	Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
 	Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
 #endif
