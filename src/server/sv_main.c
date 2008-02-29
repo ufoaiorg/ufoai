@@ -179,10 +179,7 @@ static void SVC_Status (struct net_stream *s)
  */
 static void SVC_Info (struct net_stream *s)
 {
-	char string[64];
-	int i, count;
 	int version;
-	char infostring[MAX_INFO_STRING];
 
 	if (sv_maxclients->integer == 1) {
 		Com_DPrintf(DEBUG_SERVER, "Ignore info string in singleplayer mode\n");
@@ -191,10 +188,15 @@ static void SVC_Info (struct net_stream *s)
 
 	version = atoi(Cmd_Argv(1));
 
-	if (version != PROTOCOL_VERSION)
+	if (version != PROTOCOL_VERSION) {
+		char string[MAX_VAR];
 		Com_sprintf(string, sizeof(string), "%s: wrong version (client: %i, host: %i)\n", sv_hostname->string, version, PROTOCOL_VERSION);
-	else {
-		count = 0;
+		NET_OOB_Printf(s, "print\n%s", string);
+	} else {
+		char infostring[MAX_INFO_STRING];
+		int i;
+		int count = 0;
+
 		for (i = 0; i < sv_maxclients->integer; i++)
 			if (svs.clients[i].state >= cs_spawning)
 				count++;
@@ -209,9 +211,8 @@ static void SVC_Info (struct net_stream *s)
 		Info_SetValueForKey(infostring, "clients", va("%i", count));
 		Info_SetValueForKey(infostring, "sv_maxclients", sv_maxclients->string);
 		Info_SetValueForKey(infostring, "sv_version", UFO_VERSION);
+		NET_OOB_Printf(s, "info\n%s", infostring);
 	}
-
-	NET_OOB_Printf(s, "info\n%s", infostring);
 }
 
 

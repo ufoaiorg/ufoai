@@ -521,6 +521,20 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 }
 
 /**
+ * @sa CL_ShowConfigstrings_f
+ */
+static void SV_PrintConfigStrings_f (void)
+{
+	int i;
+
+	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
+		if (sv.configstrings[i][0] == '\0')
+			continue;
+		Com_Printf("sv.configstrings[%3i]: %s\n", i, sv.configstrings[i]);
+	}
+}
+
+/**
  * @sa SV_Init
  */
 void SV_InitOperatorCommands (void)
@@ -549,6 +563,7 @@ void SV_InitOperatorCommands (void)
 #endif
 
 	Cmd_AddCommand("killserver", SV_KillServer_f, "Shuts the server down - and disconnect all clients");
+	Cmd_AddCommand("sv_configstrings", SV_PrintConfigStrings_f, "Prints the server config strings to game console");
 
 	Cmd_AddCommand("sv", SV_ServerCommand_f, "Server command");
 	Cmd_AddParamCompleteFunction("sv", SV_CompleteServerCommand);

@@ -882,7 +882,7 @@ static void SV_PrepareTilesToPlace (void)
 	numToPlace = 0;
 	memset(&mToPlace[0], 0, sizeof(mToPlace));
 
-	for (i=0; i < numTiles; i++) {
+	for (i = 0; i < numTiles; i++) {
 		if (mAsm->max[i]) {
 			mToPlace[numToPlace].tile = &mTile[i];
 			mToPlace[numToPlace].min = mAsm->min[i];

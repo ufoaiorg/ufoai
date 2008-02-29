@@ -1884,18 +1884,22 @@ static void CL_CheckCvars_f (void)
 	}
 }
 
-#ifdef DEBUG
 /**
  * @brief Print the configstrings to game console
+ * @sa SV_PrintConfigStrings_f
  */
 static void CL_ShowConfigstrings_f (void)
 {
 	int i;
-	for (i = 0; i < MAX_CONFIGSTRINGS; i++)
-		if (*cl.configstrings[i])
-			Com_Printf("cl.configstrings[%2i]: %s\n", i, cl.configstrings[i]);
+
+	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
+		if (cl.configstrings[i][0] == '\0')
+			continue;
+		Com_Printf("cl.configstrings[%3i]: %s\n", i, cl.configstrings[i]);
+	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Shows the sizes some parts of globalData_t uses - this is only to
  * analyse where the most optimization potential is hiding
@@ -2152,9 +2156,10 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("info", NULL, NULL);
 	Cmd_AddCommand("playerlist", NULL, NULL);
 	Cmd_AddCommand("players", NULL, NULL);
+
+	Cmd_AddCommand("cl_configstrings", CL_ShowConfigstrings_f, "Print client configstrings to game console");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_aircraftsamplelist", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
-	Cmd_AddCommand("debug_configstrings", CL_ShowConfigstrings_f, "Print configstrings to game console");
 	Cmd_AddCommand("debug_gddump", CL_DumpGlobalDataToFile_f, "Dumps gd to a file");
 	Cmd_AddCommand("debug_gdstats", CL_GlobalDataSizes_f, "Show globalData_t sizes");
 	Cmd_AddCommand("actorinvlist", NULL, "Shows the inventory list of all actors");
