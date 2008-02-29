@@ -555,18 +555,18 @@ static void CL_Reconnect_f (void)
 /**
  * @sa CL_PingServerCallback
  */
-static void CL_ProcessPingReply (serverList_t *server, const char *msg)
+static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
 {
 	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Protocol mismatch\n");
-		return;
+		return qfalse;
 	}
 	if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Version mismatch\n");
 	}
 
 	if (server->pinged)
-		return;
+		return qfalse;
 
 	server->pinged = qtrue;
 	Q_strncpyz(server->sv_hostname, Info_ValueForKey(msg, "sv_hostname"),
@@ -580,6 +580,7 @@ static void CL_ProcessPingReply (serverList_t *server, const char *msg)
 	server->clients = atoi(Info_ValueForKey(msg, "clients"));
 	server->sv_dedicated = atoi(Info_ValueForKey(msg, "sv_dedicated"));
 	server->sv_maxclients = atoi(Info_ValueForKey(msg, "sv_maxclients"));
+	return qtrue;
 }
 
 /**
@@ -597,7 +598,8 @@ static void CL_PingServerCallback (struct net_stream *s)
 		str = NET_ReadString(buf);
 		if (!str)
 			return;
-		CL_ProcessPingReply(server, str);
+		if (!CL_ProcessPingReply(server, str))
+			return;
 	} else
 		return;
 
