@@ -77,7 +77,7 @@ int SV_ModelIndex (const char *name)
  */
 #define MAX_MAPASSEMBLIES 32
 #define MAX_TILETYPES 64
-#define MAX_TILESIZE 10
+#define MAX_TILESIZE 16
 #define MAX_FIXEDTILES 32
 
 #define MAX_RANDOM_MAP_WIDTH 32
