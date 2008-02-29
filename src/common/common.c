@@ -45,7 +45,7 @@ cvar_t *http_timeout;
 cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
-cvar_t *gametype;
+cvar_t *sv_gametype;
 cvar_t *masterserver_url;
 cvar_t *port;
 
@@ -511,7 +511,7 @@ void Com_SetGameType (void)
 
 	for (i = 0; i < numGTs; i++) {
 		gt = &gts[i];
-		if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
+		if (!Q_strncmp(gt->id, sv_gametype->string, MAX_VAR)) {
 			if (sv_dedicated->integer)
 				Com_Printf("set gametype to: %s\n", gt->id);
 			for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++) {
@@ -525,7 +525,7 @@ void Com_SetGameType (void)
 	}
 
 	if (i == numGTs)
-		Com_Printf("Can't set the gametype - unknown value for cvar gametype: '%s'\n", gametype->string);
+		Com_Printf("Can't set the gametype - unknown value for cvar gametype: '%s'\n", sv_gametype->string);
 }
 
 static void Com_GameTypeList_f (void)
@@ -781,7 +781,7 @@ void Qcommon_Init (int argc, const char **argv)
 	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to reduce cpu usage");
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
-	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
+	sv_gametype = Cvar_Get("sv_gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 	http_proxy = Cvar_Get("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
 	http_timeout = Cvar_Get("http_timeout", "3", CVAR_ARCHIVE, "Http connection timeout");
 	port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
@@ -792,7 +792,7 @@ void Qcommon_Init (int argc, const char **argv)
 	sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
 	/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
-	gametype->modified = qfalse;
+	sv_gametype->modified = qfalse;
 
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language");
 	s_language->modified = qfalse;
@@ -802,7 +802,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get("version", s, CVAR_NOSET, "Full version string");
-	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
+	Cvar_Get("ver", UFO_VERSION, CVAR_NOSET, "Version number");
 
 	if (sv_dedicated->integer)
 		Cmd_AddCommand("quit", Com_Quit, "Quits the game");

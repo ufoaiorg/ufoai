@@ -1150,7 +1150,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	Com_SetServerState(ss_game);
 
 	/* set serverinfo variable */
-	sv_mapname = Cvar_FullSet("mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
+	sv_mapname = Cvar_FullSet("sv_mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
 
 	Com_Printf("-------------------------------------\n");
 }

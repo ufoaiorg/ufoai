@@ -157,7 +157,7 @@ PROTOCOL
 
 /* protocol.h -- communications protocols */
 
-#define	PROTOCOL_VERSION	3
+#define	PROTOCOL_VERSION	4
 
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910
@@ -261,7 +261,7 @@ extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
 extern cvar_t *cl_maxfps;
 extern cvar_t *teamnum;
-extern cvar_t *gametype;
+extern cvar_t *sv_gametype;
 extern cvar_t *masterserver_url;
 extern cvar_t *port;
 

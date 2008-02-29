@@ -71,7 +71,7 @@ static void MN_ChangeGametype_f (void)
 		linkedList_t *list = md->gameTypes;
 		linkedList_t *old = NULL;
 		while (list) {
-			if (!Q_strcmp((const char*)list->data, gametype->string)) {
+			if (!Q_strcmp((const char*)list->data, sv_gametype->string)) {
 				if (next) {
 					if (list->next)
 						newGameTypeID = (const char *)list->next->data;
@@ -98,7 +98,7 @@ static void MN_ChangeGametype_f (void)
 	} else {
 		for (i = 0; i < numGTs; i++) {
 			gt = &gts[i];
-			if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
+			if (!Q_strncmp(gt->id, sv_gametype->string, MAX_VAR)) {
 				if (next) {
 					newType = (i + 1);
 					if (newType >= numGTs)
@@ -115,7 +115,7 @@ static void MN_ChangeGametype_f (void)
 		}
 	}
 	if (newGameTypeID) {
-		Cvar_Set("gametype", newGameTypeID);
+		Cvar_Set("sv_gametype", newGameTypeID);
 		Com_SetGameType();
 	}
 }
@@ -321,7 +321,7 @@ static void MN_MapInfo (int step)
 				list = list->next;
 			}
 			Cvar_Set("mn_mapgametypes", buf);
-			list = LIST_ContainsString(md->gameTypes, gametype->string);
+			list = LIST_ContainsString(md->gameTypes, sv_gametype->string);
 			/* the map doesn't support the current selected gametype - switch to the next valid */
 			if (!list)
 				MN_ChangeGametype_f();

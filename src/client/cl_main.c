@@ -568,31 +568,32 @@ static void CL_Reconnect_f (void)
  * @sa CL_PingServerCallback
  * @sa SVC_Info
  */
-static void CL_ProcessPingReply (serverList_t *server, const char *msg)
+static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
 {
-	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
+	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "sv_protocol"))) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Protocol mismatch\n");
-		return;
+		return qfalse;
 	}
-	if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
+	if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "sv_version"))) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Version mismatch\n");
 	}
 
 	if (server->pinged)
-		return;
+		return qfalse;
 
 	server->pinged = qtrue;
 	Q_strncpyz(server->sv_hostname, Info_ValueForKey(msg, "sv_hostname"),
 		sizeof(server->sv_hostname));
-	Q_strncpyz(server->version, Info_ValueForKey(msg, "version"),
+	Q_strncpyz(server->version, Info_ValueForKey(msg, "sv_version"),
 		sizeof(server->version));
-	Q_strncpyz(server->mapname, Info_ValueForKey(msg, "mapname"),
+	Q_strncpyz(server->mapname, Info_ValueForKey(msg, "sv_mapname"),
 		sizeof(server->mapname));
-	Q_strncpyz(server->gametype, Info_ValueForKey(msg, "gametype"),
+	Q_strncpyz(server->gametype, Info_ValueForKey(msg, "sv_gametype"),
 		sizeof(server->gametype));
 	server->clients = atoi(Info_ValueForKey(msg, "clients"));
 	server->sv_dedicated = atoi(Info_ValueForKey(msg, "sv_dedicated"));
 	server->sv_maxclients = atoi(Info_ValueForKey(msg, "sv_maxclients"));
+	return qtrue;
 }
 
 typedef enum {
@@ -616,7 +617,8 @@ static void CL_PingServerCallback (struct net_stream *s)
 		str = NET_ReadString(buf);
 		if (!str)
 			return;
-		CL_ProcessPingReply(server, str);
+		if (!CL_ProcessPingReply(server, str))
+			return;
 	} else
 		return;
 
@@ -839,7 +841,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		Cvar_Set("mn_server_need_password", "0"); /* string */
 
 		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), stream_peer_name(stream, buf, sizeof(buf), qtrue));
-		value = Info_ValueForKey(s, "mapname");
+		value = Info_ValueForKey(s, "sv_mapname");
 		assert(value);
 		Cvar_Set("mn_svmapname", value);
 		Q_strncpyz(buf, value, sizeof(buf));
@@ -856,11 +858,11 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		}
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(s, "sv_hostname"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), Info_ValueForKey(s, "sv_enablemorale"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(s, "gametype"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(s, "ver"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(s, "sv_gametype"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(s, "sv_version"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Dedicated server:\t%s\n"), Info_ValueForKey(s, "sv_dedicated"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Operating system:\t%s\n"), Info_ValueForKey(s, "sys_os"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(s, "protocol"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(s, "sv_protocol"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(s, "sv_roundtimelimit"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Teamplay:\t%s\n"), Info_ValueForKey(s, "sv_teamplay"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(s, "sv_maxplayersperteam"));

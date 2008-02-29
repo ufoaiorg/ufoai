@@ -201,14 +201,14 @@ static void SVC_Info (struct net_stream *s)
 
 		infostring[0] = '\0';
 
-		Info_SetValueForKey(infostring, "protocol", va("%i", PROTOCOL_VERSION));
+		Info_SetValueForKey(infostring, "sv_protocol", va("%i", PROTOCOL_VERSION));
 		Info_SetValueForKey(infostring, "sv_hostname", sv_hostname->string);
 		Info_SetValueForKey(infostring, "sv_dedicated", sv_dedicated->string);
-		Info_SetValueForKey(infostring, "gametype", gametype->string);
-		Info_SetValueForKey(infostring, "mapname", sv.name);
+		Info_SetValueForKey(infostring, "sv_gametype", sv_gametype->string);
+		Info_SetValueForKey(infostring, "sv_mapname", sv.name);
 		Info_SetValueForKey(infostring, "clients", va("%i", count));
 		Info_SetValueForKey(infostring, "sv_maxclients", sv_maxclients->string);
-		Info_SetValueForKey(infostring, "version", UFO_VERSION);
+		Info_SetValueForKey(infostring, "sv_version", UFO_VERSION);
 	}
 
 	NET_OOB_Printf(s, "info\n%s", infostring);
@@ -466,7 +466,7 @@ void SV_NextMapcycle (void)
 				base = strstr(expanded, " ");
 				if (base) {
 					*base = '\0'; /* split the strings */
-					Q_strncpyz(assembly, base+1, sizeof(assembly));
+					Q_strncpyz(assembly, base + 1, sizeof(assembly));
 					/* get current position */
 					if (!Q_strcmp(sv.name, expanded) && !Q_strcmp(sv.assembly, assembly)) {
 						/* next map in cycle */
@@ -545,7 +545,7 @@ void SV_NextMapcycle (void)
 
 	/* check whether we want to change the gametype, too */
 	if (gameType && *gameType)
-		Cvar_Set("gametype", gameType);
+		Cvar_Set("sv_gametype", gameType);
 
 	/* @todo make day and night configureable, too */
 	Com_sprintf(cmd, sizeof(cmd), "map day %s", map);
@@ -670,9 +670,9 @@ static qboolean SV_RunGameFrame (void)
 void SV_Frame (int now, void *data)
 {
 	/* change the gametype even if no server is running (e.g. the first time) */
-	if (sv_dedicated->integer && gametype->modified) {
+	if (sv_dedicated->integer && sv_gametype->modified) {
 		Com_SetGameType();
-		gametype->modified = qfalse;
+		sv_gametype->modified = qfalse;
 	}
 
 	/* if server is not active, do nothing */
@@ -794,7 +794,7 @@ void SV_Init (void)
 
 	rcon_password = Cvar_Get("rcon_password", "", 0, NULL);
 	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
-	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
+	Cvar_Get("sv_protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	sv_hostname = Cvar_Get("sv_hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");

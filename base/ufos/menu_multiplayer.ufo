@@ -994,7 +994,7 @@ menu mp_create_server
 	}
 	string gametype_value
 	{
-		string	"*cvar gametype"
+		string	"*cvar sv_gametype"
 		pos	"840 160"
 		align	ur
 	}

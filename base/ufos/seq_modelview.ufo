@@ -46,17 +46,29 @@ sequence view
 
 	precache models
 	{
+		animals/bird/bird
 	}
 
 	camera cam1
 	{
-		zoom	6.0
+		zoom	1.0
 		angles	"20 0 0"
 		omega   "0 0 0"
-		dist	100
+		dist	1000
 		origin  "0 0 0"
 	}
 
+	model bird
+	{
+		//model	models/aliens/bloodspider/bloodspider.md2
+		anim	flying
+		model	animals/bird/bird
+		origin	"1000 1000 1000"
+		omega "0 -30 0"
+	}
+
+	click 1
+	rem bird
 
 	model bloodspider
 	{
