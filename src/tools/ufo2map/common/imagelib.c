@@ -338,7 +338,7 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 
 	/* Knightmare- check for bad data */
 	if (rawdata[6] != 'J' || rawdata[7] != 'F' || rawdata[8] != 'I' || rawdata[9] != 'F') {
-		Sys_FPrintf(SYS_VRB, "Bad jpg file %s\n", filename);
+		Com_Printf("Bad jpg file %s\n", filename);
 		free(rawdata);
 		return;
 	}
@@ -358,7 +358,7 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 
 	/* Check Colour Components */
 	if (cinfo.output_components != 3 && cinfo.output_components != 4) {
-		Sys_FPrintf(SYS_VRB, "Invalid JPEG colour components\n");
+		Com_Printf("Invalid JPEG colour components: %s\n");
 		jpeg_destroy_decompress(&cinfo);
 		free(rawdata);
 		return;
@@ -367,7 +367,7 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	/* Allocate Memory for decompressed image */
 	rgbadata = malloc(cinfo.output_width * cinfo.output_height * 4);
 	if (!rgbadata) {
-		Sys_FPrintf(SYS_VRB, "Insufficient RAM for JPEG buffer\n");
+		Com_Printf("Insufficient RAM for JPEG buffer\n");
 		jpeg_destroy_decompress(&cinfo);
 		free(rawdata);
 		return;
@@ -380,7 +380,7 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	/* Allocate Scanline buffer */
 	scanline = malloc(cinfo.output_width * 4);
 	if (!scanline) {
-		Sys_FPrintf(SYS_VRB, "Insufficient RAM for JPEG scanline buffer\n");
+		Com_Printf("Insufficient RAM for JPEG scanline buffer\n");
 		free(rgbadata);
 		jpeg_destroy_decompress(&cinfo);
 		free(rawdata);
