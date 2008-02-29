@@ -2019,6 +2019,15 @@ base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-Share Alike 3.0 |
 base/pics/ranks/ranks.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/reactionfire.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/reactionfiremany.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/sfx/b_flame1.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/b_flame2.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/b_flame3.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/b_flame4.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/b_flame5.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/b_flame6.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/b_flame7.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/b_flame8.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/b_flameball.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/blood_0.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
 base/pics/sfx/blood_1.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
 base/pics/sfx/blood_2.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
@@ -2034,14 +2043,25 @@ base/pics/sfx/blood_oil_2.tga | GNU General Public License 2.0 | J. W. Bjerk (El
 base/pics/sfx/blood_purple_0.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
 base/pics/sfx/blood_purple_1.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
 base/pics/sfx/blood_purple_2.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
+base/pics/sfx/blueflare.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/bubble.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/sfx/corona_y.jpg |  |  | corona.jpg
+base/pics/sfx/electricgrade3.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/electricslime.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/exhaust.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/sfx/explosions1.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/explosions2.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/explosions3.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/explosions4.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/fireball.jpg |  |  | Public Domain Golgotha
+base/pics/sfx/flame1.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/flame2.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/flame3.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/flame4.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/flame5.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/flame6.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/flame7.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/flame8.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/flare_blue.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/flare_red.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/foe.png | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported | (c) 2007 Pat Raynor
@@ -2050,6 +2070,8 @@ base/pics/sfx/greenball.tga |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_00.tga |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_07.tga |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplasbeam.tga |  | Martin Gerhardy
+base/pics/sfx/lightningscroll.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/powerup_flare3.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_00.png | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported | (c) 2007 Pat Raynor
 base/pics/sfx/smoke_01.png | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported | (c) 2007 Pat Raynor
@@ -2061,6 +2083,7 @@ base/pics/sfx/smoke_puff2.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff3.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff4.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff5.jpg |  |  | Public Domain Golgotha
+base/pics/sfx/tesla1.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/techs/alien_breathing.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/antimatter.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/laser.blend | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Scientist model by Lukas Beyeler (Rasta) - GPL2
