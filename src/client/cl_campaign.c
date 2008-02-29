@@ -275,9 +275,9 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, 
 	if (csi.mds[mapIdx].storyRelated)
 		return qfalse;
 
-	if (pos) {
-		/* @todo Check that this map fits position conditions */
-	}
+	if (pos && !MAP_PositionFitsTCPNTypes(pos, csi.mds[mapIdx].terrains,
+		csi.mds[mapIdx].cultures,csi.mds[mapIdx].populations, NULL))
+		return qfalse;
 
 	if (!mission->ufo) {
 		/* a mission without UFO should not use a map with UFO */
@@ -336,7 +336,8 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	}
 
 	if (!maxHits) {
-		Com_Printf("CP_ChooseMap: Could not find map with %s.\n", mission->ufo->id);
+		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
+		Com_Printf("  ufo: %s -- crashed: %i -- pos: %s\n", mission->ufo->id, ufoCrashed, pos ? va(("(%f, %f)"), pos[0], pos[1]) : "none");
 		return qfalse;
 	}
 
@@ -737,7 +738,7 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 			return;
 		}
 	} else {
-		Com_Printf("CP_ReconMissionGroundGo: Error, could not set map.\n");
+		Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -1317,7 +1318,7 @@ void CP_CheckNextStageDestination (aircraft_t *ufo)
 /**
  * @brief Spawn a new crash site after a UFO has been destroyed.
  */
-qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
+void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 {
 	const nation_t *nation;
 	mission_t *mission;
@@ -1329,7 +1330,11 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	assert(mission);
 
-	CP_ChooseMap(mission, ufo->pos, qtrue);
+	if (!CP_ChooseMap(mission, ufo->pos, qtrue)) {
+		Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");
+		CP_MissionRemove(mission);
+		return;
+	}
 	/* Check if new mission is close from an existing base */
 	base = CP_PositionCloseToBase(mission->pos);
 	if (base) {
@@ -1344,9 +1349,6 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	} else
 		Vector2Copy(ufo->pos, mission->pos);
 
-	if (!mission->mapDef)
-		return qfalse;
-
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
 		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
@@ -1354,14 +1356,11 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t *ufo)
 		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
 	}
 
-	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	/* ufo becomes invisible on geoscape */
 	ufo->notOnGeoscape = qtrue;
 	CP_MissionDisableTimeLimit(mission);
-
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
-
-	return qtrue;
 }
 
 

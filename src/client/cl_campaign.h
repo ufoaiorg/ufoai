@@ -443,7 +443,7 @@ void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 void CP_MissionIsOverByUfo(aircraft_t *ufocraft);
 
 base_t *CP_GetMissionBase(void);
-qboolean CP_SpawnCrashSiteMission(aircraft_t *ufo);
+void CP_SpawnCrashSiteMission(aircraft_t *ufo);
 void CP_UFOSendMail(const aircraft_t *ufocraft, const base_t *base);
 
 technology_t *CP_IsXVIResearched(void);
