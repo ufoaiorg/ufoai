@@ -1589,7 +1589,7 @@ mapdef fighter_crash
 
 	ufos
 	{
-		crash_fighter
+		craft_crash_fighter
 	}
 
 	terrains
@@ -1631,7 +1631,7 @@ mapdef bridge
 
 	ufos
 	{
-		crash_fighter
+		craft_crash_fighter
 	}
 
 	terrains

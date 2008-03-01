@@ -269,8 +269,6 @@ static void CP_AlienInterestList_f (void)
  */
 static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
 {
-	char ufoname[MAX_VAR];
-
 	if (csi.mds[mapIdx].storyRelated)
 		return qfalse;
 
@@ -287,10 +285,13 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, 
 		 * first check that list is not empty */
 		if (!csi.mds[mapIdx].ufos)
 			return qfalse;
-		Com_sprintf(ufoname, sizeof(ufoname), UFO_TypeToShortName(mission->ufo->ufotype));
-		/* @todo The name of the UFO is not the same if the UFO is crashed (e.g. crash_fighter) */
-		if (!LIST_ContainsString(csi.mds[mapIdx].ufos, ufoname))
-			return qfalse;
+		if (ufoCrashed) {
+			if (!LIST_ContainsString(csi.mds[mapIdx].ufos, UFO_CrashedTypeToShortName(mission->ufo->ufotype)))
+				return qfalse;
+		} else {
+			if (!LIST_ContainsString(csi.mds[mapIdx].ufos, UFO_TypeToShortName(mission->ufo->ufotype)))
+				return qfalse;
+		}
 	}
 
 	return qtrue;
@@ -336,7 +337,7 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 
 	if (!maxHits) {
 		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-		Com_Printf("  ufo: %s -- crashed: %i -- pos: %s\n", mission->ufo->id, ufoCrashed, pos ? va(("(%f, %f)"), pos[0], pos[1]) : "none");
+		Com_Printf("  ufo: %s -- pos: %s\n", ufoCrashed ? UFO_CrashedTypeToShortName(mission->ufo->ufotype) : UFO_TypeToShortName(mission->ufo->ufotype), pos ? va(("(%f, %f)"), pos[0], pos[1]) : "none");
 		return qfalse;
 	}
 
@@ -1699,10 +1700,9 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	if (selectedMission->ufo) {
 		if (CP_UFOIsCrashed(mission)) {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_ufocrashed %i;", mission->ufo->ufotype);
-			/* @todo FIXME: this should be crashed UFO tiles when they'll be implemented */
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+')
-				Cvar_Set("rm_ufo", va("+%s", UFO_TypeToShortName(selectedMission->ufo->ufotype)));
+				Cvar_Set("rm_ufo", va("+%s", UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype)));
 		} else {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */

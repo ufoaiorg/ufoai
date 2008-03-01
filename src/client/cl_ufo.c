@@ -33,6 +33,7 @@ static const float max_detecting_range = 25.0f; /**< range to detect and fire at
 
 typedef struct ufoTypeList_s {
 	const char *id;		/**< script id string */
+	const char *crashedId;		/**< script id string */
 	int ufoType;		/**< ufoType_t values */
 } ufoTypeList_t;
 
@@ -44,13 +45,13 @@ typedef struct ufoTypeList_s {
  * in the ufocrash[dn].ump files
  */
 static const ufoTypeList_t ufoTypeList[] = {
-	{"craft_ufo_scout", UFO_SCOUT},
-	{"craft_ufo_fighter", UFO_FIGHTER},
-	{"craft_ufo_harvester", UFO_HARVESTER},
-	{"craft_ufo_corrupter", UFO_CORRUPTER},
-	{"craft_ufo_bomber", UFO_BOMBER},
-	{"craft_ufo_carrier", UFO_CARRIER},
-	{"craft_ufo_supply", UFO_SUPPLY},
+	{"craft_ufo_scout", "craft_crash_scout", UFO_SCOUT},
+	{"craft_ufo_fighter", "craft_crash_fighter", UFO_FIGHTER},
+	{"craft_ufo_harvester", "craft_crash_harvester", UFO_HARVESTER},
+	{"craft_ufo_corrupter", "craft_crash_corrupter", UFO_CORRUPTER},
+	{"craft_ufo_bomber", "craft_crash_bomber", UFO_BOMBER},
+	{"craft_ufo_carrier", "craft_crash_carrier", UFO_CARRIER},
+	{"craft_ufo_supply", "craft_crash_supply", UFO_SUPPLY},
 
 	{NULL, 0}
 };
@@ -85,6 +86,23 @@ const char* UFO_TypeToShortName (ufoType_t type)
 	while (list->id) {
 		if (list->ufoType == type)
 			return list->id;
+		list++;
+	}
+	Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
+	return NULL; /* never reached */
+}
+
+/**
+ * @brief Translate UFO type to short name when UFO is crashed.
+ * @sa UFO_TypeToShortName
+ */
+const char* UFO_CrashedTypeToShortName (ufoType_t type)
+{
+	const ufoTypeList_t *list = ufoTypeList;
+
+	while (list->id) {
+		if (list->ufoType == type)
+			return list->crashedId;
 		list++;
 	}
 	Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
