@@ -800,6 +800,11 @@ static void CP_ReconMissionCreate (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	/* @todo: type of ufo may change */
 	mission->ufo = UFO_AddToGeoscape(UFO_SCOUT, NULL, mission);
+	if(!mission->ufo) {
+		Com_Printf("CP_ReconMissionCreate: Could not add UFO for recon mission, remove mission\n");
+		CP_MissionRemove(mission);
+		return;
+	}
 	assert(mission->ufo);
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }
@@ -1019,7 +1024,12 @@ static void CP_BaseAttackMissionCreate (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	/* @todo: type of ufo may change */
 	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
-	assert(mission->ufo);
+	if(!mission->ufo) {
+		Com_Printf("CP_BaseAttackMissionCreate: Could not add UFO for base attack mission, remove mission\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+	
 	/* @todo: it may be a ground mission */
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }
@@ -1120,6 +1130,11 @@ static void CP_InterceptMissionCreate (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	/* @todo: type of ufo may change */
 	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
+	if(!mission->ufo) {
+		Com_Printf("CP_InterceptMissionCreate: Could not add UFO for intercept mission, remove mission\n");
+		CP_MissionRemove(mission);
+		return;
+	}
 	assert(mission->ufo);
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }

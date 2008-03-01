@@ -890,11 +890,13 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
  */
 qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 {
-	const float dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
+	float dist;
 
 	/* calc distance */
 	aircraft->time += dt;
 	aircraft->fuel -= dt;
+
+	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
 
 	/* Check if destination reached */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1)) {
@@ -1830,8 +1832,9 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteString(sb, gd.ufos[i].mission->id);
 		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++) {
 #ifdef DEBUG
-			if (gd.ufos[i].stats[j] < 0)
-				Com_Printf("Warning: ufo '%s' stats %i is smaller than 0\n", gd.ufos[i].id, gd.ufos[i].stats[j]);
+			/* UFO HP can be < 0 if the UFO has been destroyed */
+			if (j != AIR_STATS_DAMAGE && gd.ufos[i].stats[j] < 0)
+				Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", gd.ufos[i].id, j, gd.ufos[i].stats[j]);
 #endif
 			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
 		}
