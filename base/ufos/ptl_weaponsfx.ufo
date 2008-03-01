@@ -37,18 +37,18 @@ particle bolterImpact
 		image  sfx/smoke
 		blend  add
 		style  facing
-		thinkfade  sin
+		thinkfade  sin		// fade the think function with a sinus function
 		size   "20 20"
 
-		push   *v
-		mul    float 5.0
-		kpop   *v
-		add    *s
-		pop    *s
+		push   *v			// push velocity onto the stack
+		mul    float 5.0	// multiply the value on the stack (velocity)
+		kpop   *v			// write it back into particle structure but keep it on the stack
+		add    *s			// add the current position to stack (new velocity)
+		pop    *s			// write it back into particle position
 		tps    1.0
 
-		push   int 10
-		nspawn bolterFragment
+		push   int 10		// push the value onto the stack
+		nspawn bolterFragment	// spawn that many bolterCannonade particles as the current value on the stack tells us
 	}
 	run
 	{
@@ -69,21 +69,21 @@ particle bolterFragment
 		thinkfade  out
 		size   "2 2"
 
-		push   *v
-		rand   float 28.0
-		add    float 3.0
-		mul    #
-		crand  vector "15 15 15"
-		add    #
-		pop    *v
+		push   *v			// push the velocity onto the stack
+		rand   float 28.0	// get a random value between 0 and 28
+		add    float 3.0	// ensure the value is at least 3
+		mul    #			// multiply the random value (which is at least 3) with the current stack value (velocity)
+		crand  vector "15 15 15"	// get a random vector between -15 and 15
+		add    #			// add this to the stack value (velocity)
+		pop    *v			// write it back into the particle structure
 
-		crand  vector "5 5 5"
-		add    *s
-		pop    *s
+		crand  vector "5 5 5"	// get a random value between -5 and 5
+		add    *s		// add the current world position to the random value
+		pop    *s		// write the stack value (world pos + random value) back into the particle structure
 
-		rand   float 1.3
-		add    float 1.2
-		pop    *tps
+		rand   float 1.3	// get a random value between 0 and 1.3
+		add    float 1.2	// ensure it is at least 1.2
+		pop    *tps			// write this value into the think per second particle structure
 	}
 	think { kill }
 }
