@@ -206,11 +206,13 @@ particle fireImpact
 	}
 	run
 	{
-		push   pos "140 140"
-		mul    *t
-		add    pos "40 40"
-		pop    *size
+		// this lets the size gets bigger the longer the particle is active
+		push   pos "140 140"	// push the given vector onto the stack
+		mul    *t				// multiple with current stack vector with the values from particle structure t (time)
+		add    pos "40 40"		// add the vector to the current stack values (ensure at least a minimum value of the given vector)
+		pop    *size			// write the value into the size particle structure
 	}
+	// this is an impact particle - need to be explicitly killed
 	think { kill }
 }
 
@@ -229,6 +231,7 @@ particle rocket
 	}
 	think
 	{
+		// these particles are killed in their think functions
 		spawn rocketSmoke
 		spawn rocketFire
 	}
@@ -244,21 +247,26 @@ particle rocketSmoke
 		thinkfade  out
 		tps    0.8
 		color  ".5 .5 .5 1"
-		v      "0 0 20"
+		v      "0 0 20"			// let the smoketrail get higher as time advances
 	}
+	// run is executed more often as think
 	run
 	{
-		push   pos "15 15"
-		mul    *t
-		add    pos "10 10"
-		pop    *size
-		push   *color
-		mul    float .5
-		pop    *color
+		// change the size of the smoketrail (make it bigger as time advances)
+		push   pos "15 15"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "10 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
 
-		crand  vector "1 1 1"
-		add    *s
-		pop    *s
+		// change the color of the smoketrail (more more transparent as time advances)
+		push   *color	// get the color onto the stack
+		mul    float .5	// scalar multiple with 0.5 (to make it more transparent)
+		pop    *color	// write the stack value back into particle structure color and remove from stack
+
+		// change the position a little bit randomly
+		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
 	}
 	think { kill }
 }
