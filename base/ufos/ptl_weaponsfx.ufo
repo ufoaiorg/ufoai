@@ -249,7 +249,7 @@ particle rocketSmoke
 		color  ".5 .5 .5 1"
 		v      "0 0 20"			// let the smoketrail get higher as time advances
 	}
-	// run is executed more often as think
+	// run is executed more often as think (every frame - and think execution depends on the tps value)
 	run
 	{
 		// change the size of the smoketrail (make it bigger as time advances)
@@ -309,6 +309,7 @@ particle rocket_inc
 	init
 	{
 		model  weapons/rpg/rocket
+		// FIXME: Export this model
 //		model  weapons/rpg/rocket_inc
 		color  ".5 .5 .5 1"
 		tps    40.0
