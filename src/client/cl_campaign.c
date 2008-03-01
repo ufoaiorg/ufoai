@@ -678,7 +678,7 @@ static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
 /**
  * @brief Minimum distance between a new mission and an existing base.
  */
-const float distMinBaseMission = 4.0f;
+static const float distMinBaseMission = 4.0f;
 
 /**
  * @brief Check if given pos is close to an existing base.
