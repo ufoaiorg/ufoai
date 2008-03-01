@@ -1424,6 +1424,7 @@ teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 		if (!Q_strncmp(team, csi.teamDef[i].id, MAX_VAR))
 			return &csi.teamDef[i];
 
+	Com_Printf("Com_GetTeamDefinitionByID: could not find team definition for '%s' in team definitions\n", team);
 	return NULL;
 }
 

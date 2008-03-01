@@ -3456,7 +3456,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				/* aliencargo */
 				for (l = 0; l < aircraft->alientypes; l++) {
 					assert(aircraft->aliencargo[l].teamDef);
-					MSG_WriteString(sb, aircraft->aliencargo[l].teamDef->name);
+					MSG_WriteString(sb, aircraft->aliencargo[l].teamDef->id);
 					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
 					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
 				}
