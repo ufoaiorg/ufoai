@@ -132,6 +132,7 @@ particle bulletImpact
 		mul  float 0.5		// scalar multiply with 0.5
 		pop  *color			// write it back into the particle structure and remove from stack
 	}
+	// this is an impact particle - need to be explicitly killed
 	think { kill }
 }
 
@@ -161,6 +162,7 @@ particle bulletFragment
 		add    float 1.2	// make sure we have a minimum
 		pop    *tps			// write the into think per second particle structure and remove it from the stack
 	}
+	// this is spawned from an impact particle - need to be explicitly killed
 	think { kill }
 }
 
