@@ -581,7 +581,6 @@ static void Com_DebugHelp_f (void)
 			"   reset building status and capacities of every base\n"
 			" * debug_configstrings\n"
 			" * debug_delmissions\n"
-			" * debug_destroyallufos\n"
 			" * debug_drawblocked\n"
 			"   prints forbidden list to console\n"
 			" * debug_error\n"
