@@ -456,6 +456,12 @@ static const char *netStringErrorWin (int code)
 }
 #endif
 
+/**
+ * @brief
+ * @sa new_stream
+ * @sa close_stream
+ * @sa find_free_datagram_socket
+ */
 static int find_free_stream (void)
 {
 	static int start = 0;
@@ -465,12 +471,16 @@ static int find_free_stream (void)
 		int pos = (i + start) % MAX_STREAMS;
 		if (streams[pos] == NULL) {
 			start = (pos + 1) % MAX_STREAMS;
+			Com_DPrintf(DEBUG_SERVER, "New stream at index: %i\n", pos);
 			return pos;
 		}
 	}
 	return -1;
 }
 
+/**
+ * @sa new_stream
+ */
 static int find_free_datagram_socket (void)
 {
 	static int start = 0;
@@ -480,12 +490,17 @@ static int find_free_datagram_socket (void)
 		int pos = (i + start) % MAX_DATAGRAM_SOCKETS;
 		if (datagram_sockets[pos] == NULL) {
 			start = (pos + 1) % MAX_DATAGRAM_SOCKETS;
+			Com_DPrintf(DEBUG_SERVER, "New datagram at index: %i\n", pos);
 			return pos;
 		}
 	}
 	return -1;
 }
 
+/**
+ * @sa find_free_stream
+ * @sa close_stream
+ */
 static struct net_stream *new_stream (int index)
 {
 	struct net_stream *s = malloc(sizeof(*s));
@@ -554,6 +569,7 @@ void NET_Shutdown (void)
 
 /**
  * @sa stream_finished
+ * @sa new_stream
  */
 static void close_stream (struct net_stream *s)
 {
@@ -581,6 +597,7 @@ static void close_stream (struct net_stream *s)
 	}
 
 	s->closed = qtrue;
+	Com_DPrintf(DEBUG_SERVER, "Close stream at index: %i\n", s->index);
 
 	/* If we have a loopback peer, don't free the outbound buffer,
 	 * because it's our peer's inbound buffer */
