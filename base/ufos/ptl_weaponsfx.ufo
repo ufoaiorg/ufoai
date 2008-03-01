@@ -142,24 +142,24 @@ particle bulletFragment
 		image  sfx/spark
 		blend  add
 		style  facing
-		thinkfade  out
+		thinkfade  out		// fade the thinkfunction out
 		size   "2 2"
 
-		push   *v
-		rand   float 28.0
-		add    float 3.0
-		mul    #
-		crand  vector "15 15 15"
-		add    #
-		pop    *v
+		push   *v			// get velocity onto the stack
+		rand   float 28.0	// get a random value between 0 and 28
+		add    float 3.0	// add a value onto the random value to ensure a minimum velocity
+		mul    #			// multiply the value with the current stack value (velocity)
+		crand  vector "15 15 15" // get a random vector between -15 and 15
+		add    #			// Add the value to the current stack value (velocity)
+		pop    *v			// write it back into particle structure and remove it from the stack
 
-		crand  vector "5 5 5"
-		add    *s
-		pop    *s
+		crand  vector "5 5 5"	// get a random value between -5 and 5
+		add    *s			// add the value of s to the current stack value (the random value)
+		pop    *s			// write it into particle structure and remove it from the stack
 
-		rand   float 1.3
-		add    float 1.2
-		pop    *tps
+		rand   float 1.3	// get a random value between 0 and 1.3
+		add    float 1.2	// make sure we have a minimum
+		pop    *tps			// write the into think per second particle structure and remove it from the stack
 	}
 	think { kill }
 }
@@ -182,12 +182,14 @@ particle fireBall
 	}
 	run
 	{
-		push   vector "80 80"
-		mul    *t
-		add    vector "10 10"
-		pop    *size
+		// this lets the size gets bigger the longer the particle is active
+		push   vector "80 80"		// push the given vector onto the stack
+		mul    *t					// multiple with current stack vector with the values from particle structure t (time)
+		add    vector "10 10"		// add the vector to the current stack values (ensure at least a minimum value of the given vector)
+		pop    *size				// write the value into the size particle structure
 	}
-	think { thinkfade  out }
+	// no kill needed - this is a shooting particle and is automatically freed in the local entity code
+	think { thinkfade out }
 }
 
 particle fireImpact
