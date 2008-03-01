@@ -978,7 +978,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 
 	base = CP_BaseAttackChooseBase(mission);
 	if (!base) {
-		/* no base found */
+		Com_Printf("CP_BaseAttackGoToBase: no base found\n");
 		CP_MissionRemove(mission);
 		return;
 	}
