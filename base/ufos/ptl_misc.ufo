@@ -14,7 +14,7 @@ particle null
 	}
 }
 
-particle water_fountain // preliminary, no way to test now
+particle water_fountain
 {
 	init
 	{
@@ -36,25 +36,28 @@ particle water_drop
 		blend  add
 		style  facing
 		thinkfade  out
-		rand   float 1.0
-		add    float 2.5
-		pop    *tps
+		rand   float 1.0	// random value between 0 and 1
+		add    float 2.5	// ensure a minimum value
+		pop    *tps			// write the current stack value back into particle structure
 		color  ".5 .5 .5 1"
-		crand  vector "2 2 2"
-		add    *s
-		pop    *s
+		crand  vector "2 2 2"	// get a random vector between -2 and 2
+		add    *s				// add this vector to the particle structure starting vector
+		pop    *s				// write it back into the particle
 
-		a      "0 0 -100"
-		crand  vector "8 8 8"
-		add    vector "-4 -4 50"
-		pop    *v
+		a      "0 0 -100"		// the acceleration is going downwards
+		crand  vector "8 8 8"	// get a random vector with values between -8 and 8
+		add    vector "-4 -4 50"	// add some values to the random vector
+		pop    *v				// move it back into particle structure (velocity)
 	}
 	run
 	{
+		// change the size
 		push   pos "1 1"
 		mul    *t
 		add    pos "4 4"
 		pop    *size
+
+		// change the color (fade out)
 		push   *color
 		mul    float .01
 		pop    *color
@@ -63,11 +66,37 @@ particle water_drop
 }
 
 // this should be the particle for the aliencontainment map
-// FIXME
 particle bubble
 {
 	init {
-		kill
+		image	sfx/bubble
+		blend	add
+		style	facing
+		tps		0.5
+		v		"0 0 20"
+		size	"2 2"
+		crand	vector "20 20 2"	// get a random vector
+		add		*s				// add this vector to the particle structure starting vector
+		pop		*s				// write it back into the particle
+	}
+	run
+	{
+		crand	vector "0.3 0.3 0.3"
+		add		*s
+		pop 	*s
+	}
+	think { kill }
+}
+
+particle bubbles
+{
+	init
+	{
+		tps	4
+	}
+	think
+	{
+		spawn bubble
 	}
 }
 
