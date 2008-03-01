@@ -983,18 +983,13 @@ static qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
 	int weap_fds_idx = -1;
 	int i;
 
-	/* Get ammo and weapon-index in ammo. */
+	/* Get ammo and weapon-index in ammo (if there is a weapon in that hand). */
 	CL_GetWeaponAndAmmo(actor, hand, &weapon, &ammo, &weap_fds_idx);
 
-	if (weap_fds_idx == -1) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_WeaponWithReaction: No weapondefinition in ammo found\n");
-		return qfalse;
-	}
-
-	if (!weapon || !ammo)
+	if (weap_fds_idx == -1 || !weapon || !ammo)
 		return qfalse;
 
-	/* check ammo for reaction-enabled firemodes */
+	/* Check ammo for reaction-enabled firemodes. */
 	for (i = 0; i < ammo->numFiredefs[weap_fds_idx]; i++) {
 		if (ammo->fd[weap_fds_idx][i].reaction) {
 			return qtrue;
@@ -1066,6 +1061,7 @@ static qboolean CL_DisplayImpossibleReaction (const le_t * actor)
 
 /**
  * @brief Updates the information in RFmode for the selected actor with the given data from the parameters.
+ * @param[in] actor The actor we want to update the reaction-fire firemode for.
  * @param[in] hand Which weapon(-hand) to use (l|r).
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
@@ -1086,22 +1082,16 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 
 	CL_GetWeaponAndAmmo(actor, hand, &weapon, &ammo, &weap_fds_idx);
 
-	if (weap_fds_idx == -1) {
+	if (weap_fds_idx == -1 || !weapon) {
 		CL_DisplayImpossibleReaction(actor);
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: No weap_fds_idx found for %c hand.\n", hand);
 		return;
 	}
 
-	if (!weapon) {
-		CL_DisplayImpossibleReaction(actor);
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: No weapon found for %c hand.\n", hand);
-		return;
-	}
-
-	/* ammo is definitly set here - otherwise the both checks above would have
-	 * left this function already */
+	/* "ammo" is definitly set here - otherwise the check above
+	 * would have left this function already. */
+	assert(ammo);
 	if (!RS_ItemIsResearched(csi.ods[ammo->weap_idx[weap_fds_idx]].id)) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fiR_\n", csi.ods[ammo->weap_idx[weap_fds_idx]].id);
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", csi.ods[ammo->weap_idx[weap_fds_idx]].id);
 		return;
 	}
 
@@ -1115,7 +1105,6 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 		i = FIRESH_GetDefaultReactionFire(ammo, weap_fds_idx);
 
 		if (i >= 0) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG i>=0\n");
 			/* Found usable firemode for the weapon in _this_ hand. */
 			CL_SetReactionFiremode(actor, handidx, ammo->weap_idx[weap_fds_idx], i);
 
@@ -1127,13 +1116,11 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 				CL_DisplayImpossibleReaction(actor);
 			}
 		} else {
-			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG else (i>=0)\n");
 			/* Weapon in _this_ hand not RF-capable. */
 			if (CL_WeaponWithReaction(actor, (hand == 'r') ? 'l' : 'r')) {
 				/* The _other_ hand has usable firemodes for RF, use it instead. */
 				CL_UpdateReactionFiremodes(actor, (hand == 'r') ? 'l' : 'r', -1);
 
-				Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG inverse hand\n");
 #if 0
 				/** This should already be be handled in the call of CL_UpdateReactionFiremodes above. */
 				if (CL_UsableReactionTUs(&actor) >= ammo->fd[weap_fds_idx][xxxxxxx].time) {
@@ -1145,7 +1132,6 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 				}
 #endif
 			} else {
-				Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG no rf-items in hands\n");
 				/* No RF-capable item in either hand. */
 
 				/* Display "impossible" (red) reaction button. */
@@ -1160,7 +1146,10 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	}
 
 	chr = CL_GetActorChr(actor);
+	assert(chr);
+
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%s handidx%i weapfdidx%i\n", chr->name, handidx, weap_fds_idx);
+
 	if (chr->RFmode.wpIdx == ammo->weap_idx[weap_fds_idx]
 	 && chr->RFmode.hand == handidx) {
 		if (ammo->fd[weap_fds_idx][firemodeActive].reaction) {
