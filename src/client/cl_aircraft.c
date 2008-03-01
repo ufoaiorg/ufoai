@@ -974,6 +974,7 @@ void CL_CampaignRunAircraft (int dt)
 							aircraft->status = AIR_REFUEL;
 							break;
 						case AIR_TRANSFER:
+						case AIR_UFO:
 							break;
 						default:
 							aircraft->status = AIR_IDLE;

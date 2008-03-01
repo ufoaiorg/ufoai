@@ -744,7 +744,7 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 			return;
 		}
 	} else {
-		Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");
+		Com_Printf("CP_ReconMissionGroundGo: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
