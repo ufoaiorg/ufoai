@@ -484,36 +484,6 @@ int CP_CountMissionOnGeoscape (void)
 	return counterVisibleMission;
 }
 
-#ifdef DEBUG
-/**
- * @brief List all current mission to console.
- * @note Use with debug_missionlist
- */
-static void CL_DebugMissionList_f (void)
-{
-	const linkedList_t *list = ccs.missions;
-	qboolean noMission = qtrue;
-
-	for (; list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
-		Com_Printf("mission: '%s'\n", mission->id);
-		Com_Printf("...category %i -- stage %i\n", mission->category, mission->stage);
-		Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
-		Com_Printf("...location: '%s'\n", mission->location);
-		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
-			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
-		if (mission->onGeoscape)
-			Com_Printf("...pos (%f, %f) -- on Geoscape\n", mission->pos[0], mission->pos[1]);
-		else
-			Com_Printf("...pos (%f, %f) -- not on Geoscape\n", mission->pos[0], mission->pos[1]);
-		Com_Printf("...UFO %s\n", mission->ufo ? mission->ufo->id : "No UFO");
-		noMission = qfalse;
-	}
-	if (noMission)
-		Com_Printf("No mission currently in game.\n");
-}
-#endif
-
 /**
  * @brief Removes a mission from geoscape: make it non visible and call notify functions
  */
@@ -1353,7 +1323,7 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 		return "None";
 		break;
 	case INTERESTCATEGORY_RECON:
-		return "Recon Mission <0:Random, 1:Aerial, 2:Ground>";
+		return "Recon Mission";
 		break;
 	case INTERESTCATEGORY_TERROR_ATTACK:
 		return "Terror mission";
@@ -1380,6 +1350,63 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 }
 
 /**
+ * @brief Return Name of the category of a mission.
+ */
+static const char* CP_MissionStageToName (missionStage_t stage)
+{
+	switch (stage) {
+	case STAGE_NOT_ACTIVE:
+		return "Not active yet";
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		return "UFO coming from orbit";
+		break;
+	case STAGE_RECON_AIR:
+		return "Aerial recon underway";
+		break;
+	case STAGE_RECON_GOTO_GROUND:
+		return "Going to Ground recon mission";
+		break;
+	case STAGE_RECON_GROUND:
+		return "Ground recon mission underway";
+		break;
+	case STAGE_TERROR_MISSION:
+		return "Terror mission underway";
+		break;
+	case STAGE_BUILD_BASE:
+		return "Building base";
+		break;
+	case STAGE_BASE_ATTACK_GOTO:
+		return "Going to attack base";
+		break;
+	case STAGE_BASE_ATTACK:
+		return "Attacking a base";
+		break;
+	case STAGE_SUBVERT_GOV:
+		return "Subverting a government";
+		break;
+	case STAGE_SUPPLY:
+		return "Supplying";
+		break;
+	case STAGE_SPREAD_XVI:
+		return "Spreading XVI";
+		break;
+	case STAGE_INTERCEPT:
+		return "Intercepting aircraft";
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		return "Leaving earth";
+		break;
+	case STAGE_OVER:
+		return "Mission over";
+		break;
+	default:
+		return "Unknown mission category";
+		break;
+	}
+}
+
+/**
  * @brief Debug function for creating a mission.
  * @note called with debug_addmission
  */
@@ -1390,7 +1417,10 @@ static void CP_SpawnNewMissions_f (void)
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
 		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++)
-			Com_Printf("...%i: %s\n", category, CP_MissionCategoryToName(category));
+			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
+			if (category == INTERESTCATEGORY_RECON)
+ 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>\n");
+			Com_Printf("\n");
 		return;
 	}
 
@@ -1430,6 +1460,35 @@ static void CP_SpawnNewMissions_f (void)
 }
 
 /**
+ * @brief List all current mission to console.
+ * @note Use with debug_missionlist
+ */
+static void CL_DebugMissionList_f (void)
+{
+	const linkedList_t *list = ccs.missions;
+	qboolean noMission = qtrue;
+
+	for (; list; list = list->next) {
+		const mission_t *mission = (mission_t *)list->data;
+		Com_Printf("mission: '%s'\n", mission->id);
+		Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
+			CP_MissionCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
+		Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
+		Com_Printf("...location: '%s'\n", mission->location);
+		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
+			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
+		if (mission->onGeoscape)
+			Com_Printf("...pos (%f, %f) -- on Geoscape\n", mission->pos[0], mission->pos[1]);
+		else
+			Com_Printf("...pos (%f, %f) -- not on Geoscape\n", mission->pos[0], mission->pos[1]);
+		Com_Printf("...UFO %s\n", mission->ufo ? mission->ufo->id : "No UFO");
+		noMission = qfalse;
+	}
+	if (noMission)
+		Com_Printf("No mission currently in game.\n");
+}
+
+/**
  * @brief Debug function for deleting all mission in global array.
  * @note called with debug_delmissions
  */
@@ -1447,7 +1506,6 @@ static void CP_DeleteMissions_f (void)
 	if (gd.numUFOs != 0)
 		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions\n", gd.numUFOs);
 }
-
 #endif
 
 /**
