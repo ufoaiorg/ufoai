@@ -523,6 +523,21 @@ static struct net_stream *new_stream (int index)
 	return s;
 }
 
+static void NET_ShowStreams_f (void)
+{
+	int i;
+	char buf[256];
+	int cnt = 0;
+
+	for (i = 0; i < MAX_STREAMS; i++) {
+		if (streams[i] != NULL) {
+			Com_Printf("Steam %i is opened: %s\n", i, stream_peer_name(streams[i], buf, sizeof(buf), qfalse));
+			cnt++;
+		}
+	}
+	Com_Printf("%i/%i streams opened\n", cnt, MAX_STREAMS);
+}
+
 /**
  * @sa NET_Shutdown
  * @sa Qcommon_Init
@@ -555,6 +570,7 @@ void NET_Init (void)
 #endif
 
 	net_ipv4 = Cvar_Get("net_ipv4", "1", CVAR_ARCHIVE, "Only use ipv4");
+	Cmd_AddCommand("net_showstreams", NET_ShowStreams_f, "Show opened streams");
 }
 
 /**
