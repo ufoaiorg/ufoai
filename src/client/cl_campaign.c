@@ -491,6 +491,7 @@ int CP_CountMissionOnGeoscape (void)
 static void CL_DebugMissionList_f (void)
 {
 	const linkedList_t *list = ccs.missions;
+	qboolean noMission = qtrue;
 
 	for (; list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
@@ -505,7 +506,10 @@ static void CL_DebugMissionList_f (void)
 		else
 			Com_Printf("...pos (%f, %f) -- not on Geoscape\n", mission->pos[0], mission->pos[1]);
 		Com_Printf("...UFO %s\n", mission->ufo ? mission->ufo->id : "No UFO");
+		noMission = qfalse;
 	}
+	if (noMission)
+		Com_Printf("No mission currently in game.\n");
 }
 #endif
 
@@ -1408,7 +1412,10 @@ static void CP_DeleteMissions_f (void)
 		mission_t *mission = (mission_t *)list->data;
 		CP_MissionRemove(mission);
 	}
-	Com_Printf("Removed %i mission from global array\n", n);
+	Com_Printf("Removed %i mission(s) from global array\n", n);
+
+	if (gd.numUFOs != 0)
+		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions\n", gd.numUFOs);
 }
 
 #endif
