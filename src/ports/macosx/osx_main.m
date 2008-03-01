@@ -106,6 +106,7 @@ int main (int argc, const char **argv)
 
 	SetWorkingDirectory(argv);
 
+	Sys_ConsoleInit();
 	Qcommon_Init(argc, argv);
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 
