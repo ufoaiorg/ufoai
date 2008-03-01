@@ -55,7 +55,7 @@ typedef struct sfx_s {
 typedef struct music_s {
 	char currentlyPlaying[MAX_QPATH];
 	Mix_Music *data;
-	SDL_RWops *musicSrc;
+	SDL_RWops *musicSrc;		/**< freed by SDL_mixer */
 	char *nextMusicTrack;
 } music_t;
 

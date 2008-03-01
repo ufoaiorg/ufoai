@@ -77,7 +77,7 @@ void S_Music_Stop (void)
 		Mix_HaltMusic();
 		Mix_FreeMusic(music.data);
 		music.data = NULL;
-/*		SDL_RWclose(music.musicSrc);*/
+		/* this is freed in the SDL_mixer callback functions */
 		music.musicSrc = NULL;
 	}
 }
