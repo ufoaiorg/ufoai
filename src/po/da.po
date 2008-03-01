@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-01-25 16:49+0100\n"
+"POT-Creation-Date: 2008-03-01 16:21+0100\n"
 "PO-Revision-Date: 2007-12-16 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -67,28 +67,28 @@ msgid "Tropical drug"
 msgstr "Tropisk medicin"
 
 #: ../base/maps/ufocrashd.ump:214 ../base/maps/ufocrashn.ump:213
-#: ../base/ufos/aircraftmanagement.ufo:287 ../base/ufos/otheritems.ufo:60
+#: ../base/ufos/aircraftmanagement.ufo:288 ../base/ufos/otheritems.ufo:60
 #: ../base/ufos/research.ufo:3322 ../base/ufos/research.ufo:3335
 #: ../base/ufos/research.ufo:3343
 msgid "UFO - Harvester"
 msgstr "Ufo - høstmaskine"
 
 #: ../base/maps/ufocrashd.ump:240 ../base/maps/ufocrashn.ump:238
-#: ../base/ufos/aircraftmanagement.ufo:407 ../base/ufos/otheritems.ufo:40
+#: ../base/ufos/aircraftmanagement.ufo:408 ../base/ufos/otheritems.ufo:40
 #: ../base/ufos/research.ufo:3113 ../base/ufos/research.ufo:3126
 #: ../base/ufos/research.ufo:3134
 msgid "UFO - Scout"
 msgstr "Ufo - rekognoscering"
 
 #: ../base/maps/ufocrashd.ump:254 ../base/maps/ufocrashn.ump:252
-#: ../base/ufos/aircraftmanagement.ufo:429 ../base/ufos/otheritems.ufo:50
+#: ../base/ufos/aircraftmanagement.ufo:430 ../base/ufos/otheritems.ufo:50
 #: ../base/ufos/research.ufo:3154 ../base/ufos/research.ufo:3167
 #: ../base/ufos/research.ufo:3175
 msgid "UFO - Fighter"
 msgstr "Ufo - Jager"
 
 #: ../base/maps/ufocrashd.ump:268 ../base/maps/ufocrashn.ump:266
-#: ../base/ufos/aircraftmanagement.ufo:355 ../base/ufos/otheritems.ufo:88
+#: ../base/ufos/aircraftmanagement.ufo:356 ../base/ufos/otheritems.ufo:88
 #: ../base/ufos/research.ufo:3196 ../base/ufos/research.ufo:3209
 #: ../base/ufos/research.ufo:3217
 msgid "UFO - Supply Ship"
@@ -111,153 +111,153 @@ msgid "Village big"
 msgstr "Landsby stor"
 
 # Ikke afklaret
-#: ../base/ufos/aircraftmanagement.ufo:81
+#: ../base/ufos/aircraftmanagement.ufo:82
 msgid "Firebird-class Dropship"
 msgstr "Transportfly af ildfugle-klasse"
 
-#: ../base/ufos/aircraftmanagement.ufo:82
+#: ../base/ufos/aircraftmanagement.ufo:83
 msgid "Firebird D"
 msgstr "Ildfugl D"
 
-#: ../base/ufos/aircraftmanagement.ufo:119
+#: ../base/ufos/aircraftmanagement.ufo:120
 msgid "Stiletto-class Interceptor"
 msgstr "Kortrækkende jagerfly af stilet-klasse"
 
-#: ../base/ufos/aircraftmanagement.ufo:120
+#: ../base/ufos/aircraftmanagement.ufo:121
 msgid "Stiletto I"
 msgstr "Stilet I"
 
-#: ../base/ufos/aircraftmanagement.ufo:163
+#: ../base/ufos/aircraftmanagement.ufo:164
 msgid "Saracen-class Interceptor"
 msgstr "Kortrækkende jagerfly af saracen-klasse"
 
-#: ../base/ufos/aircraftmanagement.ufo:164
+#: ../base/ufos/aircraftmanagement.ufo:165
 msgid "Saracen I"
 msgstr "Saracen I"
 
-#: ../base/ufos/aircraftmanagement.ufo:202
+#: ../base/ufos/aircraftmanagement.ufo:203
 msgid "Dragon Interceptor"
 msgstr "Kortrækkende dragon-jagerfly "
 
-#: ../base/ufos/aircraftmanagement.ufo:203
+#: ../base/ufos/aircraftmanagement.ufo:204
 msgid "Dragon"
 msgstr "Dragon"
 
 # Stingray er indenfor zoologi en pilrokke
-#: ../base/ufos/aircraftmanagement.ufo:241
+#: ../base/ufos/aircraftmanagement.ufo:242
 msgid "Stingray Interceptor"
 msgstr "Kortrækkende stingray-jagerfly "
 
 # i zoologien er en stingray en pilrokke.
-#: ../base/ufos/aircraftmanagement.ufo:242
+#: ../base/ufos/aircraftmanagement.ufo:243
 msgid "Stingray"
 msgstr "Stingray"
 
-#: ../base/ufos/aircraftmanagement.ufo:288
+#: ../base/ufos/aircraftmanagement.ufo:289
 msgid "Harvester U"
 msgstr "Høstmaskine U"
 
-#: ../base/ufos/aircraftmanagement.ufo:331 ../base/ufos/otheritems.ufo:79
+#: ../base/ufos/aircraftmanagement.ufo:332 ../base/ufos/otheritems.ufo:79
 #: ../base/ufos/research.ufo:3238 ../base/ufos/research.ufo:3251
 #: ../base/ufos/research.ufo:3259
 msgid "UFO - Carrier"
 msgstr "Ufo - transport"
 
-#: ../base/ufos/aircraftmanagement.ufo:356
+#: ../base/ufos/aircraftmanagement.ufo:357
 msgid "Supply U"
 msgstr "Forsyning U"
 
-#: ../base/ufos/aircraftmanagement.ufo:378 ../base/ufos/otheritems.ufo:70
+#: ../base/ufos/aircraftmanagement.ufo:379 ../base/ufos/otheritems.ufo:70
 #: ../base/ufos/research.ufo:3280 ../base/ufos/research.ufo:3293
 #: ../base/ufos/research.ufo:3301
 msgid "UFO - Condor"
 msgstr "Ufo - Condor"
 
-#: ../base/ufos/aircraftmanagement.ufo:379
+#: ../base/ufos/aircraftmanagement.ufo:380
 msgid "Condor U"
 msgstr "Condor U"
 
-#: ../base/ufos/aircraftmanagement.ufo:408
+#: ../base/ufos/aircraftmanagement.ufo:409
 msgid "Scout U"
 msgstr "Rekognosceringsfly U"
 
-#: ../base/ufos/aircraftmanagement.ufo:430
+#: ../base/ufos/aircraftmanagement.ufo:431
 msgid "Fighter U"
 msgstr "Jager U"
 
-#: ../base/ufos/aircraftmanagement.ufo:454
+#: ../base/ufos/aircraftmanagement.ufo:455
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva roterende kanon"
 
-#: ../base/ufos/aircraftmanagement.ufo:465 ../base/ufos/research.ufo:3900
+#: ../base/ufos/aircraftmanagement.ufo:466 ../base/ufos/research.ufo:3900
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20 mm API-runder"
 
-#: ../base/ufos/aircraftmanagement.ufo:481 ../base/ufos/research.ufo:3921
+#: ../base/ufos/aircraftmanagement.ufo:482 ../base/ufos/research.ufo:3921
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20 mm HEI-runder"
 
-#: ../base/ufos/aircraftmanagement.ufo:497
+#: ../base/ufos/aircraftmanagement.ufo:498
 msgid "Raven ECM Unit"
 msgstr "Raven ECM-enhed"
 
-#: ../base/ufos/aircraftmanagement.ufo:508
+#: ../base/ufos/aircraftmanagement.ufo:509
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Sparrowhawk AA Missilhylde"
 
-#: ../base/ufos/aircraftmanagement.ufo:518
+#: ../base/ufos/aircraftmanagement.ufo:519
 msgid "Sparrowhawk Missile"
 msgstr "Sparrowhawk missil"
 
-#: ../base/ufos/aircraftmanagement.ufo:534 ../base/ufos/research.ufo:3981
+#: ../base/ufos/aircraftmanagement.ufo:535 ../base/ufos/research.ufo:3981
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 raketholder"
 
-#: ../base/ufos/aircraftmanagement.ufo:546 ../base/ufos/research.ufo:4000
+#: ../base/ufos/aircraftmanagement.ufo:547 ../base/ufos/research.ufo:4000
 msgid "TR-20 Rocket"
 msgstr "TR-20 raket"
 
-#: ../base/ufos/aircraftmanagement.ufo:562 ../base/ufos/research.ufo:4021
+#: ../base/ufos/aircraftmanagement.ufo:563 ../base/ufos/research.ufo:4021
 #: ../base/ufos/research.ufo:4035 ../base/ufos/research.ufo:4043
 msgid "Particle Beam Weapon"
 msgstr "Lyspartikel våben"
 
-#: ../base/ufos/aircraftmanagement.ufo:576 ../base/ufos/research.ufo:4066
+#: ../base/ufos/aircraftmanagement.ufo:577 ../base/ufos/research.ufo:4066
 msgid "Targeting Computer"
 msgstr "Våbencomputer"
 
-#: ../base/ufos/aircraftmanagement.ufo:587 ../base/ufos/research.ufo:4084
+#: ../base/ufos/aircraftmanagement.ufo:588 ../base/ufos/research.ufo:4084
 msgid "Fuel Pod"
 msgstr "Brændstofsholder"
 
-#: ../base/ufos/aircraftmanagement.ufo:599 ../base/ufos/research.ufo:3733
+#: ../base/ufos/aircraftmanagement.ufo:600 ../base/ufos/research.ufo:3733
 msgid "Polymer Aircraft Armour"
 msgstr "Poplymert luftfartøjsbeskyttelse"
 
-#: ../base/ufos/aircraftmanagement.ufo:611 ../base/ufos/research.ufo:3751
+#: ../base/ufos/aircraftmanagement.ufo:612 ../base/ufos/research.ufo:3751
 msgid "Alien Aircraft Plating"
 msgstr "Rumvæsenluftfartøjsbeklædning"
 
-#: ../base/ufos/aircraftmanagement.ufo:623 ../base/ufos/research.ufo:3773
+#: ../base/ufos/aircraftmanagement.ufo:624 ../base/ufos/research.ufo:3773
 #: ../base/ufos/research.ufo:3784 ../base/ufos/research.ufo:3791
 msgid "Alien Astrogation"
 msgstr "Rumvæsen rumrejse"
 
-#: ../base/ufos/aircraftmanagement.ufo:632 ../base/ufos/research.ufo:3810
+#: ../base/ufos/aircraftmanagement.ufo:633 ../base/ufos/research.ufo:3810
 #: ../base/ufos/research.ufo:3821 ../base/ufos/research.ufo:3828
 msgid "Alien Propulsion"
 msgstr "Rumvæsen fremdrift"
 
-#: ../base/ufos/aircraftmanagement.ufo:641 ../base/ufos/research.ufo:3846
+#: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/research.ufo:3846
 #: ../base/ufos/research.ufo:3857 ../base/ufos/research.ufo:3864
 msgid "Alien Detection"
 msgstr "Rumvæsen opdagelse"
 
-#: ../base/ufos/aircraftmanagement.ufo:654 ../base/ufos/research.ufo:3674
+#: ../base/ufos/aircraftmanagement.ufo:655 ../base/ufos/research.ufo:3674
 msgid "AA51 missile launcher"
 msgstr "AA51 missilrampe"
 
-#: ../base/ufos/aircraftmanagement.ufo:665 ../base/ufos/research.ufo:3693
+#: ../base/ufos/aircraftmanagement.ufo:666 ../base/ufos/research.ufo:3693
 msgid "AA51 Cicada SAM"
 msgstr "AA51 Cicada JTL-missil"
 
@@ -1126,7 +1126,7 @@ msgid "Build at least one workshop"
 msgstr "Byg mindst et værksted"
 
 #: ../base/ufos/menu_aircraft.ufo:255 ../base/ufos/menu_aircraft.ufo:264
-#: ../base/ufos/menu_aircraft.ufo:1057
+#: ../base/ufos/menu_aircraft.ufo:1058
 msgid "Produce"
 msgstr "Byg"
 
@@ -1215,38 +1215,38 @@ msgstr "Ammo til dette våben"
 msgid "Select this slot"
 msgstr "Vælg denne plads"
 
-#: ../base/ufos/menu_aircraft.ufo:986
+#: ../base/ufos/menu_aircraft.ufo:987
 msgid "Action"
 msgstr "Aktion"
 
-#: ../base/ufos/menu_aircraft.ufo:993 ../base/ufos/menu_bases.ufo:684
+#: ../base/ufos/menu_aircraft.ufo:994 ../base/ufos/menu_bases.ufo:684
 #: ../base/ufos/menu_geoscape.ufo:449 ../base/ufos/menu_geoscape.ufo:547
 #: ../base/ufos/menu_geoscape.ufo:655 ../base/ufos/menu_geoscape.ufo:723
 #: ../base/ufos/menu_geoscape.ufo:863 ../base/ufos/menu_geoscape.ufo:913
 #: ../base/ufos/menu_geoscape.ufo:1007 ../base/ufos/menu_geoscape.ufo:1077
 #: ../base/ufos/menu_geoscape.ufo:1138 ../base/ufos/menu_irc.ufo:271
-#: ../base/ufos/menu_lostwon.ufo:387 ../base/ufos/menu_lostwon.ufo:484
-#: ../base/ufos/menu_multiplayer.ufo:1725 ../base/ufos/menu_options.ufo:438
+#: ../base/ufos/menu_lostwon.ufo:388 ../base/ufos/menu_lostwon.ufo:485
+#: ../base/ufos/menu_multiplayer.ufo:1734 ../base/ufos/menu_options.ufo:438
 #: ../base/ufos/menu_singleplayer.ufo:448
 msgid "Close this dialogue"
 msgstr "Luk denne besked"
 
-#: ../base/ufos/menu_aircraft.ufo:1006 ../base/ufos/menu_bases.ufo:697
+#: ../base/ufos/menu_aircraft.ufo:1007 ../base/ufos/menu_bases.ufo:697
 #: ../base/ufos/menu_geoscape.ufo:462 ../base/ufos/menu_geoscape.ufo:560
 #: ../base/ufos/menu_geoscape.ufo:668 ../base/ufos/menu_geoscape.ufo:747
 #: ../base/ufos/menu_geoscape.ufo:876 ../base/ufos/menu_geoscape.ufo:926
 #: ../base/ufos/menu_geoscape.ufo:1020 ../base/ufos/menu_geoscape.ufo:1090
-#: ../base/ufos/menu_irc.ufo:284 ../base/ufos/menu_lostwon.ufo:400
-#: ../base/ufos/menu_lostwon.ufo:497 ../base/ufos/menu_options.ufo:462
+#: ../base/ufos/menu_irc.ufo:284 ../base/ufos/menu_lostwon.ufo:401
+#: ../base/ufos/menu_lostwon.ufo:498 ../base/ufos/menu_options.ufo:462
 #: ../base/ufos/menu_singleplayer.ufo:461
 msgid "Cancel"
 msgstr "Afbryd"
 
-#: ../base/ufos/menu_aircraft.ufo:1014
+#: ../base/ufos/menu_aircraft.ufo:1015
 msgid "You don't have any aircraft in the base - what do you want to do?"
 msgstr "Du har ingen luftfartøjer på basen - hvad vil du gøre?"
 
-#: ../base/ufos/menu_aircraft.ufo:1022 ../base/ufos/menu_buy.ufo:1795
+#: ../base/ufos/menu_aircraft.ufo:1023 ../base/ufos/menu_buy.ufo:1795
 #: ../base/ufos/menu_buy.ufo:1799 ../base/ufos/menu_buy.ufo:1803
 #: ../base/ufos/menu_buy.ufo:1807 ../base/ufos/menu_buy.ufo:1811
 #: ../base/ufos/menu_buy.ufo:1815 ../base/ufos/menu_buy.ufo:1819
@@ -1259,11 +1259,11 @@ msgstr "Du har ingen luftfartøjer på basen - hvad vil du gøre?"
 msgid "Buy aircraft"
 msgstr "Køb luftfartøj"
 
-#: ../base/ufos/menu_aircraft.ufo:1035
+#: ../base/ufos/menu_aircraft.ufo:1036
 msgid "Buy"
 msgstr "Køb"
 
-#: ../base/ufos/menu_aircraft.ufo:1043
+#: ../base/ufos/menu_aircraft.ufo:1044
 msgid "Produce aircraft"
 msgstr "Producer luftfartøj"
 
@@ -2181,7 +2181,7 @@ msgstr "Status:"
 msgid "Base:"
 msgstr "Base:"
 
-#: ../base/ufos/menu_geoscape.ufo:900 client/cl_campaign.c:641
+#: ../base/ufos/menu_geoscape.ufo:900 client/cl_campaign.c:640
 msgid "Base attack"
 msgstr "Baseangreb"
 
@@ -2206,7 +2206,7 @@ msgid "Description:"
 msgstr "Beskrivelse:"
 
 #: ../base/ufos/menu_geoscape.ufo:1151 ../base/ufos/menu_main.ufo:234
-#: ../base/ufos/menu_multiplayer.ufo:1738
+#: ../base/ufos/menu_multiplayer.ufo:1747
 msgid "OK"
 msgstr "Ok"
 
@@ -2556,6 +2556,7 @@ msgid "Floor"
 msgstr "Gulv"
 
 #: ../base/ufos/menu_irc.ufo:47 ../base/ufos/menu_multiplayer.ufo:750
+#: ../base/ufos/menu_multiplayer.ufo:1810
 #: ../base/ufos/menu_multiplayeringame.ufo:111
 msgid "Lobby"
 msgstr "Forhal"
@@ -2627,16 +2628,16 @@ msgstr "Ødelæg erobret ufo"
 msgid "Destroy UFO"
 msgstr "Ødelæg ufo"
 
-#: ../base/ufos/menu_lostwon.ufo:151 ../base/ufos/menu_lostwon.ufo:281
+#: ../base/ufos/menu_lostwon.ufo:151 ../base/ufos/menu_lostwon.ufo:282
 msgid "Retry this mission"
 msgstr "Spil missionen igen"
 
-#: ../base/ufos/menu_lostwon.ufo:166 ../base/ufos/menu_lostwon.ufo:296
+#: ../base/ufos/menu_lostwon.ufo:166 ../base/ufos/menu_lostwon.ufo:297
 msgid "Try again"
 msgstr "Forsøg igen"
 
 #: ../base/ufos/menu_lostwon.ufo:191 ../base/ufos/menu_lostwon.ufo:206
-#: ../base/ufos/menu_lostwon.ufo:321 ../base/ufos/menu_lostwon.ufo:336
+#: ../base/ufos/menu_lostwon.ufo:322 ../base/ufos/menu_lostwon.ufo:337
 #: ../base/ufos/menu_multiplayeringame.ufo:69
 #: ../base/ufos/menu_singleplayer.ufo:158
 #: ../base/ufos/menu_singleplayer.ufo:207
@@ -2645,39 +2646,39 @@ msgstr "Forsøg igen"
 msgid "Continue"
 msgstr "Fortsæt"
 
-#: ../base/ufos/menu_lostwon.ufo:367
+#: ../base/ufos/menu_lostwon.ufo:368
 msgid "Select base for UFO recovery"
 msgstr "Vælg base til ufo-indsamling"
 
-#: ../base/ufos/menu_lostwon.ufo:407
+#: ../base/ufos/menu_lostwon.ufo:408
 msgid "Begin UFO recovery process"
 msgstr "Begynd ufo-indsamling"
 
-#: ../base/ufos/menu_lostwon.ufo:420
+#: ../base/ufos/menu_lostwon.ufo:421
 msgid "Recover"
 msgstr "Hent"
 
-#: ../base/ufos/menu_lostwon.ufo:444
+#: ../base/ufos/menu_lostwon.ufo:445
 msgid "Select nation for UFO recovery"
 msgstr "Vælg nation til ufo-indsamling"
 
-#: ../base/ufos/menu_lostwon.ufo:452
+#: ../base/ufos/menu_lostwon.ufo:453
 msgid "Nation:"
 msgstr "Nation:"
 
-#: ../base/ufos/menu_lostwon.ufo:458
+#: ../base/ufos/menu_lostwon.ufo:459
 msgid "Price:"
 msgstr "Pris:"
 
-#: ../base/ufos/menu_lostwon.ufo:464
+#: ../base/ufos/menu_lostwon.ufo:465
 msgid "Relations:"
 msgstr "Forbindelser:"
 
-#: ../base/ufos/menu_lostwon.ufo:504
+#: ../base/ufos/menu_lostwon.ufo:505
 msgid "Begin UFO sell process"
 msgstr "Begynd ufo salgsproces"
 
-#: ../base/ufos/menu_lostwon.ufo:517
+#: ../base/ufos/menu_lostwon.ufo:518
 msgid "Sell"
 msgstr "Sælg"
 
@@ -2871,187 +2872,202 @@ msgstr "Slet dette bogmærke"
 msgid "Day version:"
 msgstr "Dag version:"
 
-#: ../base/ufos/menu_multiplayer.ufo:951
+#: ../base/ufos/menu_multiplayer.ufo:948
+msgid ""
+"Make sure that you've opened the TCP port 27910 in your firewall settings"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:960
 msgid "Make this server public:"
 msgstr "Gør denne server offentlig:"
 
-#: ../base/ufos/menu_multiplayer.ufo:967
+#: ../base/ufos/menu_multiplayer.ufo:976
 msgid "Enable morale states:"
 msgstr "Slå moral til:"
 
-#: ../base/ufos/menu_multiplayer.ufo:982
+#: ../base/ufos/menu_multiplayer.ufo:991
 msgid "Gametype:"
 msgstr "Spiltype:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1021
+#: ../base/ufos/menu_multiplayer.ufo:1030
 msgid "Teamplay:"
 msgstr "Holdspil:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1036
+#: ../base/ufos/menu_multiplayer.ufo:1045
 msgid "Max. clients:"
 msgstr "Maks klienter:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1038
+#: ../base/ufos/menu_multiplayer.ufo:1047
 msgid "Sets the max allowed clients to connect"
 msgstr "Sætter maks tilladte klienter der kan slutte sig til"
 
-#: ../base/ufos/menu_multiplayer.ufo:1070
+#: ../base/ufos/menu_multiplayer.ufo:1079
 msgid "Max. soldiers per team:"
 msgstr "Maks soldater per hold:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1072
+#: ../base/ufos/menu_multiplayer.ufo:1081
 msgid "Sets the max allowed soldiers per team"
 msgstr "Sætter maks tilladte soldater per hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1104
+#: ../base/ufos/menu_multiplayer.ufo:1113
 msgid "Max. soldiers per player:"
 msgstr "Maks. soldater per spiller:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1106
+#: ../base/ufos/menu_multiplayer.ufo:1115
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Sætter det tilladte maks soldater per spiller i holdspil"
 
-#: ../base/ufos/menu_multiplayer.ufo:1139
+#: ../base/ufos/menu_multiplayer.ufo:1148
 msgid "Max. human players per team:"
 msgstr "Maks spillere per hold:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1172
+#: ../base/ufos/menu_multiplayer.ufo:1181
 msgid "Max. AI actors:"
 msgstr "Maks computerespillere:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1174
+#: ../base/ufos/menu_multiplayer.ufo:1183
 msgid "Max AI actors for teamplay mode"
 msgstr "Maks computerespillere i holdspil"
 
-#: ../base/ufos/menu_multiplayer.ufo:1206
+#: ../base/ufos/menu_multiplayer.ufo:1215
 msgid "AI autojoin:"
 msgstr "Automatisk computere:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1208
+#: ../base/ufos/menu_multiplayer.ufo:1217
 msgid "AI autojoin on free teams"
 msgstr "Computere automatisk på ledige hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1222
+#: ../base/ufos/menu_multiplayer.ufo:1231
 msgid "Server-Password:"
 msgstr "Serveradganskode:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1245
+#: ../base/ufos/menu_multiplayer.ufo:1254
 msgid "RCON-Password:"
 msgstr "RCON-adgangskode:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1268
+#: ../base/ufos/menu_multiplayer.ufo:1277
 msgid "Hostname:"
 msgstr "Værtsnavn:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1291
+#: ../base/ufos/menu_multiplayer.ufo:1300
 msgid "Map"
 msgstr "Kort"
 
-#: ../base/ufos/menu_multiplayer.ufo:1393
+#: ../base/ufos/menu_multiplayer.ufo:1402
 msgid "Start server"
 msgstr "Start server"
 
-#: ../base/ufos/menu_multiplayer.ufo:1443
+#: ../base/ufos/menu_multiplayer.ufo:1452
 msgid "Team selection"
 msgstr "Hold udvælgelse"
 
-#: ../base/ufos/menu_multiplayer.ufo:1452
+#: ../base/ufos/menu_multiplayer.ufo:1461
 msgid "Click the big button in the lower right corner when ready"
 msgstr "Klik på den store knap i det nederste højre hjørne når klar"
 
-#: ../base/ufos/menu_multiplayer.ufo:1488
+#: ../base/ufos/menu_multiplayer.ufo:1497
 msgid "Max. players per team"
 msgstr "Maks. spillere per hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1500
+#: ../base/ufos/menu_multiplayer.ufo:1509
 msgid "Max. teams for this map"
 msgstr "Maks hold til dette kort"
 
-#: ../base/ufos/menu_multiplayer.ufo:1512
+#: ../base/ufos/menu_multiplayer.ufo:1521
 msgid "Team preference:"
 msgstr "Hold indstillinger:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1523
+#: ../base/ufos/menu_multiplayer.ufo:1532
 msgid "Next free team"
 msgstr "Næste ledige hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1533
+#: ../base/ufos/menu_multiplayer.ufo:1542
 msgid "Previous free team"
 msgstr "Tidligere ledige hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1544
+#: ../base/ufos/menu_multiplayer.ufo:1553
 msgid "Finish the teamselection and start the game"
 msgstr "Afslut holdudvælgelsen og begynd spillet"
 
-#: ../base/ufos/menu_multiplayer.ufo:1562
+#: ../base/ufos/menu_multiplayer.ufo:1571
 msgid "Activate chat"
 msgstr "Aktiver snak"
 
-#: ../base/ufos/menu_multiplayer.ufo:1625
+#: ../base/ufos/menu_multiplayer.ufo:1634
 msgid "Please wait"
 msgstr "Vent venligst"
 
-#: ../base/ufos/menu_multiplayer.ufo:1632
+#: ../base/ufos/menu_multiplayer.ufo:1641
 msgid "Players connected, waiting for others"
 msgstr "Spillere forbundet, venter på de andre"
 
-#: ../base/ufos/menu_multiplayer.ufo:1645
+#: ../base/ufos/menu_multiplayer.ufo:1654
 msgid "Start the game even if not all teams have joined"
 msgstr "Start spillet selv om ikke alle hold er tilsluttet"
 
-#: ../base/ufos/menu_multiplayer.ufo:1659
+#: ../base/ufos/menu_multiplayer.ufo:1668
 msgid "Force start"
 msgstr "Fremprovoker start"
 
-#: ../base/ufos/menu_multiplayer.ufo:1697
+#: ../base/ufos/menu_multiplayer.ufo:1706
 msgid "Enter server password"
 msgstr "Indtast serveradgangskode"
 
-#: ../base/ufos/menu_multiplayer.ufo:1705
+#: ../base/ufos/menu_multiplayer.ufo:1714
 msgid "Password:"
 msgstr "Adgangskode:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1746
+#: ../base/ufos/menu_multiplayer.ufo:1780
+#, fuzzy
+msgid "Personal message"
+msgstr "Åben beskeder"
+
+#: ../base/ufos/menu_multiplayer.ufo:1797
+#, fuzzy
+msgid "Go into the lobby"
+msgstr "Forbind til IP"
+
+#: ../base/ufos/menu_multiplayer.ufo:1818
 msgid "1on1"
 msgstr "1mod1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1760
+#: ../base/ufos/menu_multiplayer.ufo:1832
 msgid "1on1on1"
 msgstr "1mod1mod1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1774
+#: ../base/ufos/menu_multiplayer.ufo:1846
 msgid "2on2"
 msgstr "2mod2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1788
+#: ../base/ufos/menu_multiplayer.ufo:1860
 msgid "2on2on2"
 msgstr "2mod2mod2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1802
+#: ../base/ufos/menu_multiplayer.ufo:1874
 msgid "3on3"
 msgstr "3mod3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1816
+#: ../base/ufos/menu_multiplayer.ufo:1888
 msgid "3on3on3"
 msgstr "3mod3mod3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1830
+#: ../base/ufos/menu_multiplayer.ufo:1902
 msgid "4on4"
 msgstr "4mod4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1844
+#: ../base/ufos/menu_multiplayer.ufo:1916
 msgid "4on4on4"
 msgstr "4mod4mod4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1858
+#: ../base/ufos/menu_multiplayer.ufo:1930
 msgid "Coop 2 players"
 msgstr "2 samarbejdende"
 
-#: ../base/ufos/menu_multiplayer.ufo:1872
+#: ../base/ufos/menu_multiplayer.ufo:1944
 msgid "Coop 3 players"
 msgstr "3 samarbejdende"
 
-#: ../base/ufos/menu_multiplayer.ufo:1886
+#: ../base/ufos/menu_multiplayer.ufo:1958
 msgid "Coop 4 players"
 msgstr "4 samarbejdende"
 
@@ -3140,7 +3156,7 @@ msgid "Medium"
 msgstr "Mellem"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2254
+#: client/cl_main.c:2241
 msgid "Normal"
 msgstr "Normal"
 
@@ -3681,7 +3697,7 @@ msgstr "Vis kun ansatte"
 msgid "Show only aliens"
 msgstr "Vis kun rumvæsener"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4527
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4535
 msgid "Aliens"
 msgstr "Rumvæsener"
 
@@ -9190,25 +9206,25 @@ msgstr ""
 #: client/cl_aliencont.c:232 client/cl_aliencont.c:245
 #: client/cl_basemanagement.c:1138 client/cl_basemanagement.c:2354
 #: client/cl_basemanagement.c:2673 client/cl_basemanagement.c:2722
-#: client/cl_basemanagement.c:2731 client/cl_basemanagement.c:2742
-#: client/cl_basemanagement.c:2751 client/cl_basemanagement.c:2762
-#: client/cl_basemanagement.c:2769 client/cl_basemanagement.c:2777
-#: client/cl_basemanagement.c:2782 client/cl_basemanagement.c:2787
-#: client/cl_basemanagement.c:2792 client/cl_campaign.c:300
-#: client/cl_campaign.c:1129 client/cl_campaign.c:1187
-#: client/cl_campaign.c:1202 client/cl_campaign.c:1390
-#: client/cl_campaign.c:1401 client/cl_campaign.c:1411
-#: client/cl_campaign.c:1421 client/cl_campaign.c:1431
-#: client/cl_campaign.c:1442 client/cl_campaign.c:1455
-#: client/cl_campaign.c:1465 client/cl_campaign.c:1472
-#: client/cl_campaign.c:1480 client/cl_campaign.c:2852
-#: client/cl_campaign.c:2966 client/cl_campaign.c:3025
-#: client/cl_campaign.c:3042 client/cl_campaign.c:3044
-#: client/cl_campaign.c:3378 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1031
-#: client/cl_main.c:1278 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_basemanagement.c:2731 client/cl_basemanagement.c:2751
+#: client/cl_basemanagement.c:2759 client/cl_basemanagement.c:2770
+#: client/cl_basemanagement.c:2777 client/cl_basemanagement.c:2785
+#: client/cl_basemanagement.c:2790 client/cl_basemanagement.c:2795
+#: client/cl_basemanagement.c:2800 client/cl_campaign.c:300
+#: client/cl_campaign.c:1128 client/cl_campaign.c:1186
+#: client/cl_campaign.c:1201 client/cl_campaign.c:1389
+#: client/cl_campaign.c:1400 client/cl_campaign.c:1410
+#: client/cl_campaign.c:1420 client/cl_campaign.c:1430
+#: client/cl_campaign.c:1441 client/cl_campaign.c:1454
+#: client/cl_campaign.c:1464 client/cl_campaign.c:1471
+#: client/cl_campaign.c:1479 client/cl_campaign.c:2851
+#: client/cl_campaign.c:2965 client/cl_campaign.c:3024
+#: client/cl_campaign.c:3041 client/cl_campaign.c:3043
+#: client/cl_campaign.c:3377 client/cl_inventory.c:292
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1032
+#: client/cl_main.c:1267 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
-#: client/cl_parse.c:1591 client/cl_popup.c:386 client/cl_produce.c:419
+#: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
 #: client/cl_produce.c:458 client/cl_research.c:1073 client/cl_research.c:1091
 #: client/cl_research.c:1097 client/cl_research.c:1135
@@ -9323,8 +9339,8 @@ msgstr "En ufo skyder på %s"
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "Vores luftfartøj har ikke mere ammo tilbage - returnerer til base."
 
-#: client/cl_airfight.c:411 client/cl_airfight.c:448 client/cl_campaign.c:561
-#: client/cl_campaign.c:567 client/cl_campaign.c:609 client/cl_campaign.c:613
+#: client/cl_airfight.c:411 client/cl_airfight.c:448 client/cl_campaign.c:560
+#: client/cl_campaign.c:566 client/cl_campaign.c:608 client/cl_campaign.c:612
 msgid "Interception"
 msgstr "Forfølgelse"
 
@@ -9332,7 +9348,7 @@ msgstr "Forfølgelse"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Ufo forfølgelse succesfuld -- ufo tabt over havet."
 
-#: client/cl_airfight.c:448 client/cl_campaign.c:3044
+#: client/cl_airfight.c:448 client/cl_campaign.c:3043
 msgid "You've lost the battle"
 msgstr "Du har tabt slaget"
 
@@ -9466,7 +9482,7 @@ msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
 "Du skal bruge mindst en hangar (og dens afhængigheder) for at anvende luftfartøjer."
 
-#: client/cl_basemanagement.c:2741
+#: client/cl_basemanagement.c:2749
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -9477,58 +9493,58 @@ msgid_plural ""
 msgstr[0] "Konstruktion af bygning er færdig om %i dag."
 msgstr[1] "Konstruktion af bygning er færdig om %i dage."
 
-#: client/cl_basemanagement.c:2750
+#: client/cl_basemanagement.c:2758
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Du skal bruge bygning %s for at gøre bygning %s funktionsdygtig."
 
-#: client/cl_basemanagement.c:2760
+#: client/cl_basemanagement.c:2768
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 "Byging %s er ikke færdig endnu, og er nødvendig for at kunne bruge bygning %s."
 
-#: client/cl_basemanagement.c:2767
+#: client/cl_basemanagement.c:2775
 #, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 "Vær sikker på at afhængighederne for bygning %s (%s) er funktionsdygtige, så at bygning %s kan anvendes."
 
-#: client/cl_basemanagement.c:2775 client/cl_basemanagement.c:2780
-#: client/cl_basemanagement.c:2785
+#: client/cl_basemanagement.c:2783 client/cl_basemanagement.c:2788
+#: client/cl_basemanagement.c:2793
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "Du skal rekruttere %s for at bruge bygning %s."
 
-#: client/cl_basemanagement.c:2791
+#: client/cl_basemanagement.c:2799
 #, c-format
 msgid "Build a %s first."
 msgstr "Byg en %s først."
 
-#: client/cl_basemanagement.c:2853
+#: client/cl_basemanagement.c:2861
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr ""
 "Intet luftfartøj på denne base. Du må først købe eller overføre et luftfartøj\n"
 
-#: client/cl_basemanagement.c:2853 client/cl_basemanagement.c:2855
-#: client/cl_campaign.c:2760 client/cl_market.c:655 client/cl_market.c:660
-#: client/cl_market.c:687 client/cl_market.c:766 client/cl_market.c:768
-#: client/cl_save.c:350 client/cl_team.c:1598 client/cl_team.c:1605
+#: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
+#: client/cl_campaign.c:2759 client/cl_market.c:655 client/cl_market.c:660
+#: client/cl_market.c:687 client/cl_market.c:799 client/cl_market.c:801
+#: client/cl_save.c:367 client/cl_team.c:1598 client/cl_team.c:1605
 msgid "Note"
 msgstr "Bemærk"
 
-#: client/cl_basemanagement.c:2855
+#: client/cl_basemanagement.c:2863
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Ingen luftfartøj på denne base - Du må først købe et luftfartøj\n"
 
-#: client/cl_basemanagement.c:3045
+#: client/cl_basemanagement.c:3053
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Konstruktion af %s bygning er færdig på base %s."
 
-#: client/cl_basemanagement.c:3046
+#: client/cl_basemanagement.c:3054
 msgid "Building finished"
 msgstr "Bygning færdig"
 
@@ -9563,8 +9579,8 @@ msgstr "%s:  M: %d, allerede produceret: %.2f %%"
 msgid "%s: %1.2f%% (%d %s)\n"
 msgstr "%s - %1.2f%% (%d %s)\n"
 
-#: client/cl_basesummary.c:186 client/cl_campaign.c:1385
-#: client/cl_campaign.c:4536
+#: client/cl_basesummary.c:186 client/cl_campaign.c:1384
+#: client/cl_campaign.c:4544
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "videnskabsmand"
@@ -9574,63 +9590,63 @@ msgstr[1] "videnskabsmænd"
 msgid "Could not set up your base at this location"
 msgstr "Kunne ikke bygge en base på dette sted"
 
-#: client/cl_campaign.c:561 client/cl_campaign.c:567 client/cl_campaign.c:613
+#: client/cl_campaign.c:560 client/cl_campaign.c:566 client/cl_campaign.c:612
 msgid "UFO interception successful -- UFO lost."
 msgstr "Ufo forfølgelse var succesfuld -- Ufo tabt."
 
-#: client/cl_campaign.c:585 client/cl_campaign.c:2317
+#: client/cl_campaign.c:584 client/cl_campaign.c:2316
 msgid "UFO crash site"
 msgstr "Ufo nedstyrningssted"
 
-#: client/cl_campaign.c:590 client/cl_campaign.c:2322
+#: client/cl_campaign.c:589 client/cl_campaign.c:2321
 msgid "No nation"
 msgstr "Ingen nation"
 
-#: client/cl_campaign.c:609
+#: client/cl_campaign.c:608
 msgid "UFO interception successful -- New mission available."
 msgstr "Ufo forfølgelse succesfuld -- Ny mission tilgængelig."
 
-#: client/cl_campaign.c:804
+#: client/cl_campaign.c:803
 #, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Rumvæsenaktivitet er blevet rapporteret: »%s«"
 
-#: client/cl_campaign.c:805
+#: client/cl_campaign.c:804
 msgid "Alien activity"
 msgstr "Rumvæsenaktivitet"
 
-#: client/cl_campaign.c:961
+#: client/cl_campaign.c:960
 msgid "You've gone too far into debt."
 msgstr "Du er blevet for forgældet."
 
-#: client/cl_campaign.c:967
+#: client/cl_campaign.c:966
 msgid ""
 "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 "Du er mislykkedes i din opgave vedrørende jordens beskyttelse. Vores hjem og vort folk er faldet for den fremmede infektion. Kun en håndfuld af jordens folk er stadig mennesker, og de tilbageværende har ingen chance for at stoppe udviklingen. Din kommando er ophørt; FALANKS kan ikke længere fungere som en aktiv enhed. Intet står imellem rumvæsenerne og total sejr."
 
-#: client/cl_campaign.c:985
+#: client/cl_campaign.c:984
 #, fuzzy
 msgid ""
 "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 "Under din kommando har FALANKS operationer konstant fejlet i beskyttelsen af uskyldige civile. Utallige har mistet deres liv på grund af din manglende evne til at håndtere truslen fra rumvæsenerne. FN, stærkt utilfreds med din indsats, har besluttet sig for at fjerne dig fra din kommando og efterfølgende at opløse FALANKS-projektet som en effektiv styrke. Ingen yderligere forsøg på international samarbejde vil blive udført. Jordens nationer står nu alene i kampen mod rumvæsenerne og vil til sidst falde en for en."
 
-#: client/cl_campaign.c:1128
+#: client/cl_campaign.c:1127
 #, c-format
 msgid ""
 "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
 msgstr ""
 "Din base: %s er blevet plyndret! Alle ansatte er myrdet og alt udstyr er ødelagt."
 
-#: client/cl_campaign.c:1186
+#: client/cl_campaign.c:1185
 #, c-format
 msgid "The mission %s expired and %i civilian died."
 msgid_plural "The mission %s expired and %i civilians died."
 msgstr[0] "Missionen %s udløb og %i civil døde."
 msgstr[1] "Missionen %s udløb og %i civile døde."
 
-#: client/cl_campaign.c:1201
+#: client/cl_campaign.c:1200
 #, c-format
 msgid "The aliens had enough time to kill %i civilian at %s."
 msgid_plural "The aliens had enough time to kill %i civilians at %s."
@@ -9638,190 +9654,190 @@ msgstr[0] "Rumvæsenerne havde nok tid til at dræbe %i civil i %s."
 msgstr[1] "Rumvæsenerne havde nok tid til at dræbe %i civile i %s."
 
 # # cl_campaign.c
-#: client/cl_campaign.c:1261
+#: client/cl_campaign.c:1260
 msgid "Jan"
 msgstr "Jan"
 
-#: client/cl_campaign.c:1263
+#: client/cl_campaign.c:1262
 msgid "Feb"
 msgstr "Feb"
 
-#: client/cl_campaign.c:1265
+#: client/cl_campaign.c:1264
 msgid "Mar"
 msgstr "Mar"
 
-#: client/cl_campaign.c:1267
+#: client/cl_campaign.c:1266
 msgid "Apr"
 msgstr "Apr"
 
-#: client/cl_campaign.c:1269
+#: client/cl_campaign.c:1268
 msgid "May"
 msgstr "Maj"
 
-#: client/cl_campaign.c:1271
+#: client/cl_campaign.c:1270
 msgid "Jun"
 msgstr "Jun"
 
-#: client/cl_campaign.c:1273
+#: client/cl_campaign.c:1272
 msgid "Jul"
 msgstr "Jul"
 
-#: client/cl_campaign.c:1275
+#: client/cl_campaign.c:1274
 msgid "Aug"
 msgstr "Aug"
 
-#: client/cl_campaign.c:1277
+#: client/cl_campaign.c:1276
 msgid "Sep"
 msgstr "Sep"
 
-#: client/cl_campaign.c:1279
+#: client/cl_campaign.c:1278
 msgid "Oct"
 msgstr "Okt"
 
-#: client/cl_campaign.c:1281
+#: client/cl_campaign.c:1280
 msgid "Nov"
 msgstr "Nov"
 
-#: client/cl_campaign.c:1283
+#: client/cl_campaign.c:1282
 msgid "Dec"
 msgstr "Dec"
 
-#: client/cl_campaign.c:1297
+#: client/cl_campaign.c:1296
 msgid "Giving up"
 msgstr "Overgivelse"
 
-#: client/cl_campaign.c:1299
+#: client/cl_campaign.c:1298
 msgid "Furious"
 msgstr "Rasende"
 
-#: client/cl_campaign.c:1301
+#: client/cl_campaign.c:1300
 msgid "Angry"
 msgstr "Vred"
 
-#: client/cl_campaign.c:1303
+#: client/cl_campaign.c:1302
 msgid "Mad"
 msgstr "Gal"
 
-#: client/cl_campaign.c:1305
+#: client/cl_campaign.c:1304
 msgid "Upset"
 msgstr "Oprørt"
 
-#: client/cl_campaign.c:1307
+#: client/cl_campaign.c:1306
 msgid "Tolerant"
 msgstr "Tolerant"
 
-#: client/cl_campaign.c:1309
+#: client/cl_campaign.c:1308
 msgid "Neutral"
 msgstr "Neutral"
 
 # #ufopedia
-#: client/cl_campaign.c:1311
+#: client/cl_campaign.c:1310
 msgid "Content"
 msgstr "Indhold"
 
-#: client/cl_campaign.c:1313
+#: client/cl_campaign.c:1312
 msgid "Pleased"
 msgstr "Tilfreds"
 
-#: client/cl_campaign.c:1315
+#: client/cl_campaign.c:1314
 msgid "Happy"
 msgstr "Glad"
 
-#: client/cl_campaign.c:1317
+#: client/cl_campaign.c:1316
 msgid "Exuberant"
 msgstr "Overstadig"
 
-#: client/cl_campaign.c:1383
+#: client/cl_campaign.c:1382
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Opnåede %i %s, %i %s, %i %s, %i %s, og %i %s fra nation %s (%s)"
 
-#: client/cl_campaign.c:1384
+#: client/cl_campaign.c:1383
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "beløb"
 msgstr[1] "beløb"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4538
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4546
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "læge"
 msgstr[1] "læger"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4535
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4543
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldater"
 
-#: client/cl_campaign.c:1388 client/cl_campaign.c:4537
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4545
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "arbejder"
 msgstr[1] "arbejdere"
 
-#: client/cl_campaign.c:1399
+#: client/cl_campaign.c:1398
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Betalte %i kr til soldater"
 
-#: client/cl_campaign.c:1409
+#: client/cl_campaign.c:1408
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "Betalte %i kr til arbejdere"
 
-#: client/cl_campaign.c:1419
+#: client/cl_campaign.c:1418
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Betalte %i kr til videnskabsmænd"
 
-#: client/cl_campaign.c:1429
+#: client/cl_campaign.c:1428
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "Betalte %i kr til læger"
 
-#: client/cl_campaign.c:1440
+#: client/cl_campaign.c:1439
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "Betalte %i kr til robotter"
 
-#: client/cl_campaign.c:1453
+#: client/cl_campaign.c:1452
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Betalte %i kr for luftfartøjer"
 
-#: client/cl_campaign.c:1464
+#: client/cl_campaign.c:1463
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Betalte %i kr for vedligeholdelse af base %s"
 
-#: client/cl_campaign.c:1470
+#: client/cl_campaign.c:1469
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Betalte %i kr for administrative omk."
 
-#: client/cl_campaign.c:1478
+#: client/cl_campaign.c:1477
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Betalte %i kr i rente for gælden."
 
-#: client/cl_campaign.c:1639 client/cl_event.c:248 client/cl_save.c:274
+#: client/cl_campaign.c:1638 client/cl_event.c:248 client/cl_save.c:291
 #: client/cl_ufopedia.c:754 client/cl_ufopedia.c:760
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cl_campaign.c:1641
+#: client/cl_campaign.c:1640
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:1736
+#: client/cl_campaign.c:1735
 #, c-format
 msgid "%i c"
 msgstr "%i kr"
 
-#: client/cl_campaign.c:1779
+#: client/cl_campaign.c:1778
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -9832,7 +9848,7 @@ msgstr ""
 "Tab:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1784
+#: client/cl_campaign.c:1783
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -9843,42 +9859,42 @@ msgstr ""
 "Aktive:\t%i\n"
 "Angrebet:\t%i\n"
 
-#: client/cl_campaign.c:1791 client/cl_ufopedia.c:1608
+#: client/cl_campaign.c:1790 client/cl_ufopedia.c:1608
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:1830 client/cl_ufopedia.c:406
+#: client/cl_campaign.c:1829 client/cl_ufopedia.c:406
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:1836
+#: client/cl_campaign.c:1835
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Arbejdere:\t%i kr\n"
 
-#: client/cl_campaign.c:1845
+#: client/cl_campaign.c:1844
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Luftfartøj:\t%i kr\n"
 
-#: client/cl_campaign.c:1853
+#: client/cl_campaign.c:1852
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s):\t%i kr\n"
 
-#: client/cl_campaign.c:1858
+#: client/cl_campaign.c:1857
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Administrative omk.:\t%i kr\n"
 
-#: client/cl_campaign.c:1865
+#: client/cl_campaign.c:1864
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Gæld:\t%i kr\n"
 
-#: client/cl_campaign.c:1868
+#: client/cl_campaign.c:1867
 #, c-format
 msgid ""
 "\n"
@@ -9889,12 +9905,12 @@ msgstr ""
 "\t-------\n"
 "Sum:\t%i kr\n"
 
-#: client/cl_campaign.c:1873
+#: client/cl_campaign.c:1872
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Maksimal tilladt gæld: %i kr\n"
 
-#: client/cl_campaign.c:1878
+#: client/cl_campaign.c:1877
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -9903,56 +9919,56 @@ msgstr ""
 "Maks. tilladt udenjordisk virus-infektion: %i%%\n"
 "Nuværende udenjordisk virus-infektion: %i%%"
 
-#: client/cl_campaign.c:2760
+#: client/cl_campaign.c:2759
 msgid "Assemble or load a team"
 msgstr "Saml eller hent et hold"
 
-#: client/cl_campaign.c:2966
+#: client/cl_campaign.c:2965
 msgid "Your dropship is not near the landing zone"
 msgstr "Dit landingsfly er ikke nær landingszonen"
 
-#: client/cl_campaign.c:3025
+#: client/cl_campaign.c:3024
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr "Indsamlede %i døde rumvæsenkroppe"
 
-#: client/cl_campaign.c:3042
+#: client/cl_campaign.c:3041
 msgid "You've won the battle"
 msgstr "Du har vundet slaget"
 
-#: client/cl_campaign.c:3129
+#: client/cl_campaign.c:3128
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s er blevet forfremmet til %s.\n"
 
-#: client/cl_campaign.c:3131
+#: client/cl_campaign.c:3130
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 "%s er posthum blevet tildelt range af %s\\for inspirerende mod i mødet med overhængende fare.\n"
 
-#: client/cl_campaign.c:3132
+#: client/cl_campaign.c:3131
 msgid "Soldier promoted"
 msgstr "Soldat forfremmet"
 
-#: client/cl_campaign.c:3377
+#: client/cl_campaign.c:3376
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Baseforsvar: %s succesfuld!"
 
-#: client/cl_campaign.c:4525
+#: client/cl_campaign.c:4533
 msgid "Human"
 msgstr "Menneske"
 
-#: client/cl_campaign.c:4529
-#, fuzzy
+#: client/cl_campaign.c:4537
+#, fuzzy, c-format
 msgid ""
 "Race: %s\n"
 "Recruits: %i %s, %i %s, %i %s, %i %s\n"
 "Credits: %ic\n"
 "Difficulty: %s\n"
-"Min. happiness of nations: %i \\%\n"
+"Min. happiness of nations: %i %%\n"
 "Max. allowed debts: %ic\n"
 "%s\n"
 msgstr ""
@@ -9964,27 +9980,27 @@ msgstr ""
 "Maks tilladt gæld: %i kr\n"
 "%s\n"
 
-#: client/cl_campaign.c:4682
+#: client/cl_campaign.c:4690
 #, c-format
 msgid "  * %i x\t%s\n"
 msgstr "  * %i x\t%s\n"
 
-#: client/cl_campaign.c:4705
+#: client/cl_campaign.c:4713
 #, c-format
 msgid "  * %s\n"
 msgstr "  * %s\n"
 
-#: client/cl_campaign.c:4863
+#: client/cl_campaign.c:4871
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "Fandt %s på slagmarken. Ufo transporteres til base %s"
 
-#: client/cl_campaign.c:4865 client/cl_campaign.c:5007
-#: client/cl_campaign.c:5098
+#: client/cl_campaign.c:4873 client/cl_campaign.c:5015
+#: client/cl_campaign.c:5106
 msgid "UFO Recovery"
 msgstr "Ufo indsamling"
 
-#: client/cl_campaign.c:4943
+#: client/cl_campaign.c:4951
 msgid ""
 "\n"
 "\n"
@@ -9994,13 +10010,13 @@ msgstr ""
 "\n"
 "Valgt base:\t\t\t"
 
-#: client/cl_campaign.c:5005
+#: client/cl_campaign.c:5013
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
 
-#: client/cl_campaign.c:5068
+#: client/cl_campaign.c:5076
 msgid ""
 "\n"
 "\n"
@@ -10010,7 +10026,7 @@ msgstr ""
 "\n"
 "Valgt nation:\t\t\t"
 
-#: client/cl_campaign.c:5096
+#: client/cl_campaign.c:5104
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "Sikret %s blev ødelagt."
@@ -10233,14 +10249,14 @@ msgid ""
 msgstr ""
 "Base %s har ikke antistof lagerrum. %i enheder af antistof blev fjernet."
 
-#: client/cl_main.c:344 client/cl_main.c:988
+#: client/cl_main.c:354 client/cl_main.c:989
 msgid "Assemble a team first"
 msgstr "Saml et hold først"
 
-#: client/cl_main.c:344 client/cl_main.c:709 client/cl_main.c:988
-#: client/cl_main.c:1496 client/cl_main.c:1501 client/cl_main.c:1507
-#: client/cl_main.c:1515 client/cl_save.c:414 client/cl_save.c:437
-#: client/cl_save.c:578
+#: client/cl_main.c:354 client/cl_main.c:709 client/cl_main.c:989
+#: client/cl_main.c:1485 client/cl_main.c:1490 client/cl_main.c:1496
+#: client/cl_main.c:1504 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_save.c:599
 msgid "Error"
 msgstr "Fejl"
 
@@ -10341,85 +10357,85 @@ msgstr "Maks soldater per hold:\t%s\n"
 msgid "Password protected:\t%s\n"
 msgstr "Adgangskode beskyttet:\t%s\n"
 
-#: client/cl_main.c:1031
+#: client/cl_main.c:1032
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 "Alle bogmærkepladser er anvendt - fjern venligst ubrugte henvisninger og forsøg igen"
 
-#: client/cl_main.c:1117
+#: client/cl_main.c:1106
 msgid "Select a free team or your coop team"
 msgstr "Vælg et ledigt hold eller dit samabejdshold"
 
 # # in game
-#: client/cl_main.c:1339 client/cl_main.c:1353
+#: client/cl_main.c:1328 client/cl_main.c:1342
 #, c-format
 msgid "Current team: %i"
 msgstr "Nuværende hold: %i"
 
-#: client/cl_main.c:1343 client/cl_main.c:1357
+#: client/cl_main.c:1332 client/cl_main.c:1346
 msgid "Team is already in use"
 msgstr "Hold er allerede i brug"
 
-#: client/cl_main.c:1367 client/cl_main.c:1405
+#: client/cl_main.c:1356 client/cl_main.c:1394
 msgid "Invalid or full team"
 msgstr "Ugyldig eller fyldt hold"
 
-#: client/cl_main.c:1495
+#: client/cl_main.c:1484
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Lokal spilversion (%s) afviger fra serveren"
 
-#: client/cl_main.c:1501
+#: client/cl_main.c:1490
 msgid "Local map version differs from server"
 msgstr "Lokal kortversion afviger fra serveren"
 
-#: client/cl_main.c:1507
+#: client/cl_main.c:1496
 msgid "Script files are not the same"
 msgstr "Skript filer er ikke de samme"
 
-#: client/cl_main.c:1514
+#: client/cl_main.c:1503
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Lokal spilversion (%s) afviger fra serverne (%s)"
 
-#: client/cl_main.c:2113
+#: client/cl_main.c:2100
 msgid "Target your shot to the ground"
 msgstr "Send dit skud mod jorden"
 
-#: client/cl_main.c:2114
+#: client/cl_main.c:2101
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Åben soldatens rygsæk mens vi er på taktisk mission"
 
-#: client/cl_main.c:2229 client/cl_view.c:422
+#: client/cl_main.c:2216 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr "Afventer spilstart"
 
-#: client/cl_main.c:2247
+#: client/cl_main.c:2234
 msgid "Chicken-hearted"
 msgstr "Kylling"
 
-#: client/cl_main.c:2249
+#: client/cl_main.c:2236
 msgid "Very Easy"
 msgstr "Meget nem"
 
-#: client/cl_main.c:2252
+#: client/cl_main.c:2239
 msgid "Easy"
 msgstr "Nem"
 
-#: client/cl_main.c:2257
+#: client/cl_main.c:2244
 msgid "Hard"
 msgstr "Svær"
 
-#: client/cl_main.c:2259
+#: client/cl_main.c:2246
 msgid "Very Hard"
 msgstr "Meget svær"
 
-#: client/cl_main.c:2261
+#: client/cl_main.c:2248
 msgid "Insane"
 msgstr "Vanvittig"
 
-#: client/cl_main.c:2313
+#: client/cl_main.c:2300
 msgid "Custom"
 msgstr "Bruger"
 
@@ -10556,55 +10572,55 @@ msgstr "Flyudstyr blev med succes installeret."
 msgid "Base defense item was successfully installed."
 msgstr "Baseforsvarsudstyr blev med succes installeret."
 
-#: client/cl_mapfightequip.c:1051
+#: client/cl_mapfightequip.c:1077
 msgid "No item assigned.\n"
 msgstr "Intet udstyr er tildelt.\n"
 
-#: client/cl_mapfightequip.c:1052
+#: client/cl_mapfightequip.c:1078
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Denne plads er til %s eller mindre udstyr."
 
-#: client/cl_mapfightequip.c:1057
+#: client/cl_mapfightequip.c:1083
 msgid "This item is functional.\n"
 msgstr "Dette udstyr er funktionelt.\n"
 
-#: client/cl_mapfightequip.c:1059
+#: client/cl_mapfightequip.c:1085
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Dette udstyr vil være installeret om %i timer.\n"
 
-#: client/cl_mapfightequip.c:1061
+#: client/cl_mapfightequip.c:1087
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Dette udstyr vil blive fjernet om %i timer.\n"
 
-#: client/cl_mapfightequip.c:1068
+#: client/cl_mapfightequip.c:1094
 msgid "No item assigned."
 msgstr "Intet udstyr tildelt."
 
-#: client/cl_mapfightequip.c:1072
+#: client/cl_mapfightequip.c:1098
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr "Dette udstyr vil være operationelt om %i timer.\n"
 
-#: client/cl_mapfightequip.c:1081
+#: client/cl_mapfightequip.c:1108
 msgid "No ammo assigned to this weapon."
 msgstr "Intet ammo tildelt dette våben."
 
-#: client/cl_mapfightequip.c:1847
+#: client/cl_mapfightequip.c:1876
 msgid "Light weight"
 msgstr "Let vægt"
 
-#: client/cl_mapfightequip.c:1850
+#: client/cl_mapfightequip.c:1879
 msgid "Medium weight"
 msgstr "Mellem vægt"
 
-#: client/cl_mapfightequip.c:1853
+#: client/cl_mapfightequip.c:1882
 msgid "Heavy weight"
 msgstr "Tung vægt"
 
-#: client/cl_mapfightequip.c:1856
+#: client/cl_mapfightequip.c:1885
 msgid "Unknown weight"
 msgstr "Ukendt vægt"
 
@@ -10655,11 +10671,11 @@ msgstr ""
 "Du kan ikke købe dette luftfartøj.\n"
 "Ikke nok penge.\n"
 
-#: client/cl_market.c:766
+#: client/cl_market.c:799
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Du kan ikke sælge et luftfartøj hvis det stadig har et hold tildelt"
 
-#: client/cl_market.c:768
+#: client/cl_market.c:801
 #, fuzzy
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Du kan ikke sælge et luftfartøj hvis det stadig har et hold tildelt"
@@ -10672,47 +10688,56 @@ msgstr "ja"
 msgid "no"
 msgstr "nej"
 
-#: client/cl_menu.c:890
+#: client/cl_menu.c:885
+#, fuzzy
+msgid "No team assigned"
+msgstr "Intet udstyr tildelt."
+
+#: client/cl_menu.c:885
+msgid "Please choose and equip your team first"
+msgstr ""
+
+#: client/cl_menu.c:891
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Sæt soldater per spiller lavere end soldater per hold"
 
-#: client/cl_menu.c:890
+#: client/cl_menu.c:891
 msgid "Settings doesn't make sense"
 msgstr "Indstillinger giver ikke mening"
 
-#: client/cl_menu.c:935
+#: client/cl_menu.c:937
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "Ind: %i Ud: %i"
 
-#: client/cl_menu.c:2258
+#: client/cl_menu.c:2260
 #, c-format
 msgid "Key: %s"
 msgstr "Nøgle: %s"
 
-#: client/cl_menu.c:2323 client/cl_menu.c:2330
+#: client/cl_menu.c:2325 client/cl_menu.c:2332
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "Ammo: %i\n"
 
-#: client/cl_menu.c:2328
+#: client/cl_menu.c:2330
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s hentet\n"
 
-#: client/cl_menu.c:2337
+#: client/cl_menu.c:2339
 msgid "Usable in:\n"
 msgstr "Brugbar i:\n"
 
-#: client/cl_menu.c:4023
+#: client/cl_menu.c:4025
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Gem HUD'en (tryk ESC for at genaktivere HUD)"
 
-#: client/cl_menu.c:4933
+#: client/cl_menu.c:4935
 msgid "all"
 msgstr "alle"
 
-#: client/cl_menu.c:5047
+#: client/cl_menu.c:5049
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
@@ -10743,7 +10768,7 @@ msgstr "Fjende set!\n"
 msgid "Civilian spotted!\n"
 msgstr "Civil set!\n"
 
-#: client/cl_parse.c:1591
+#: client/cl_parse.c:1599
 msgid "The server has disconnected.\n"
 msgstr "Serveren er blevet afbrudt.\n"
 
@@ -10820,7 +10845,7 @@ msgstr ""
 "Byg flere værksteder.\n"
 
 #: client/cl_produce.c:242 client/cl_produce.c:245 client/cl_produce.c:249
-#: client/cl_produce.c:1130 client/cl_transfer.c:195 client/cl_transfer.c:198
+#: client/cl_produce.c:1138 client/cl_transfer.c:195 client/cl_transfer.c:198
 #: client/cl_transfer.c:201
 msgid "Hangars not ready"
 msgstr "Hangarer ikke klar"
@@ -10841,7 +10866,7 @@ msgstr ""
 "Du kan ikke sætte luftfartøj i kø.\n"
 "Ingen hangarer på denne base..\n"
 
-#: client/cl_produce.c:249 client/cl_produce.c:1130
+#: client/cl_produce.c:249 client/cl_produce.c:1138
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -10901,7 +10926,7 @@ msgstr "Intet udstyr valgt"
 msgid "Costs per item\t%i c\n"
 msgstr "Pris per udstyr\t%i kr\n"
 
-#: client/cl_produce.c:568 client/cl_produce.c:630
+#: client/cl_produce.c:568 client/cl_produce.c:638
 #, fuzzy, c-format
 msgid "Production time\t%ih\n"
 msgstr "Produktionstid\t%ih\n"
@@ -10931,49 +10956,49 @@ msgstr "%s (%i) "
 msgid "Disassembly time\t%ih\n"
 msgstr "Afmonteringstid\t%ih\n"
 
-#: client/cl_produce.c:628
+#: client/cl_produce.c:636
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr "Produktionspris\t%i kr\n"
 
-#: client/cl_produce.c:632
+#: client/cl_produce.c:640
 msgid "No aircraft selected."
 msgstr "Intet luftfartøj valgt."
 
-#: client/cl_produce.c:1162
+#: client/cl_produce.c:1170
 msgid "Queue full!"
 msgstr "Kø fyldt!"
 
-#: client/cl_produce.c:1162
+#: client/cl_produce.c:1170
 msgid "You cannot queue any more items!"
 msgstr "Du kan ikke sætte mere udstyr i kø!"
 
-#: client/cl_produce.c:1184 client/cl_produce.c:1200
+#: client/cl_produce.c:1192 client/cl_produce.c:1208
 msgid "Not enough material!"
 msgstr "Ikke nok materiale!"
 
-#: client/cl_produce.c:1184
+#: client/cl_produce.c:1192
 #, c-format
 msgid ""
 "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr ""
 "Du har ikke nok materiale til at producere alle (%i) enheder. Produktionen vil fortsætte med et nedsat antal (%i) enheder."
 
-#: client/cl_produce.c:1188 client/cl_produce.c:1210
+#: client/cl_produce.c:1196 client/cl_produce.c:1218
 #, c-format
 msgid "Production of %s started"
 msgstr "Produktion af %s påbegyndt"
 
-#: client/cl_produce.c:1189 client/cl_produce.c:1192 client/cl_produce.c:1211
+#: client/cl_produce.c:1197 client/cl_produce.c:1200 client/cl_produce.c:1219
 msgid "Production started"
 msgstr "Produktion påbegyndt"
 
-#: client/cl_produce.c:1191
+#: client/cl_produce.c:1199
 #, c-format
 msgid "Disassembling of %s started"
 msgstr "Afmontering af %s påbegyndt"
 
-#: client/cl_produce.c:1200
+#: client/cl_produce.c:1208
 msgid "You don't have enough of the needed material to produce this item."
 msgstr ""
 "Du har ikke nok af det krævede materiale til at producere dette udstyr."
@@ -11138,52 +11163,52 @@ msgstr ""
 "\n"
 "Se spilkonsolen for yderligere information"
 
-#: client/cl_save.c:226
+#: client/cl_save.c:243
 msgid "No campaign active."
 msgstr "Ingen kampagne aktiv."
 
-#: client/cl_save.c:232
+#: client/cl_save.c:249
 msgid "Nothing to save yet."
 msgstr "Intet at gemme endnu."
 
-#: client/cl_save.c:243
+#: client/cl_save.c:260
 msgid "Could not allocate enough memory to save this game"
 msgstr "Kunne ikke tildele nok hukommelse til at gemme spillet"
 
-#: client/cl_save.c:286
+#: client/cl_save.c:303
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 "Hukommelsesfejl under pakning af gemte spildata - sat gem_pakket cvar til 0"
 
-#: client/cl_save.c:307
+#: client/cl_save.c:324
 msgid "Size mismatch - failed to save the campaign"
 msgstr "Størrelse misforhold - mislykkedes i at gemme kampagnen"
 
-#: client/cl_save.c:347 client/cl_save.c:349
+#: client/cl_save.c:364 client/cl_save.c:366
 msgid "Error saving game."
 msgstr "Fejl under gem spil."
 
-#: client/cl_save.c:413 client/cl_save.c:436 client/cl_save.c:577
+#: client/cl_save.c:430 client/cl_save.c:455 client/cl_save.c:598
 msgid "Error loading game."
 msgstr "Fejl under hentning af spil."
 
-#: client/cl_save.c:556
+#: client/cl_save.c:577
 msgid "Campaign was successfully saved."
 msgstr "Kampagne blev gemt med succes."
 
-#: client/cl_save.c:556
+#: client/cl_save.c:577
 msgid "Quicksave"
 msgstr "Gemhurtigt"
 
-#: client/cl_save.c:580
+#: client/cl_save.c:601
 msgid "Campaign loaded"
 msgstr "Kampagne hentet"
 
-#: client/cl_save.c:580
+#: client/cl_save.c:601
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Hurtiggem kampagne blev indlæst med succes."
 
-#: client/cl_save.c:628
+#: client/cl_save.c:649
 msgid "Saves to the quick save slot"
 msgstr "Gemmer via hurtiggem"
 
@@ -11538,7 +11563,7 @@ msgstr ""
 msgid "%s (%i for transfer)\n"
 msgstr "%s (%i til overførsel)\n"
 
-#: client/cl_transfer.c:254 client/cl_transfer.c:397
+#: client/cl_transfer.c:254 client/cl_transfer.c:415
 #, c-format
 msgid "Soldier %s %s\n"
 msgstr "Soldat %s %s\n"
@@ -11548,183 +11573,183 @@ msgstr "Soldat %s %s\n"
 msgid "Corpse of %s (%i for transfer)\n"
 msgstr "Lig af %s (%i til overførsel)\n"
 
-#: client/cl_transfer.c:302 client/cl_transfer.c:461
+#: client/cl_transfer.c:302 client/cl_transfer.c:479
 #, c-format
 msgid "Aircraft %s\n"
 msgstr "Luftfartøj %s\n"
 
-#: client/cl_transfer.c:373 client/cl_transfer.c:408
+#: client/cl_transfer.c:391 client/cl_transfer.c:426
 #, c-format
 msgid "%s (%i for transfer, %i left)\n"
 msgstr "%s (%i til overførsel, %i tilbage)\n"
 
-#: client/cl_transfer.c:375 client/cl_transfer.c:410
+#: client/cl_transfer.c:393 client/cl_transfer.c:428
 #, c-format
 msgid "%s (%i available)\n"
 msgstr "%s (%i tilgængelig)\n"
 
-#: client/cl_transfer.c:380
+#: client/cl_transfer.c:398
 msgid "Storage is empty.\n"
 msgstr "Lager er tomt.\n"
 
-#: client/cl_transfer.c:382
+#: client/cl_transfer.c:400
 msgid "Transfer is not possible - the base doesn't have a Storage."
 msgstr "Overførsel er ikke mulig - basen har ikke noget lagerrum."
 
-#: client/cl_transfer.c:384 client/cl_transfer.c:452
+#: client/cl_transfer.c:402 client/cl_transfer.c:470
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "Overførsel er ikke mulig - basen har ikke nogen energiforsyning."
 
-#: client/cl_transfer.c:417
+#: client/cl_transfer.c:435
 msgid "Living Quarters empty.\n"
 msgstr "Beboelseskvarter tomt.\n"
 
-#: client/cl_transfer.c:419
+#: client/cl_transfer.c:437
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr ""
 "Overførsel er ikke tilgængelig - basen har ikke nogen beboelseskvarterer."
 
-#: client/cl_transfer.c:426
+#: client/cl_transfer.c:444
 #, c-format
 msgid "Corpse of %s (%i for transfer, %i left)\n"
 msgstr "Lig af %s (%i til overførsel, %i tilbage)\n"
 
-#: client/cl_transfer.c:430
+#: client/cl_transfer.c:448
 #, c-format
 msgid "Corpse of %s (%i available)\n"
 msgstr "Lig af %s (%i tilgængelig)\n"
 
-#: client/cl_transfer.c:437
+#: client/cl_transfer.c:455
 #, c-format
 msgid "Alive %s (%i for transfer, %i left)\n"
 msgstr "Levende %s (%i til overførsel, %i tilbage)\n"
 
-#: client/cl_transfer.c:441
+#: client/cl_transfer.c:459
 #, c-format
 msgid "Alive %s (%i available)\n"
 msgstr "Levende %s (%i tilgængelig)\n"
 
-#: client/cl_transfer.c:448
+#: client/cl_transfer.c:466
 msgid "Alien Containment is empty.\n"
 msgstr "Rumvæsenopbevaringsrum er tomt.\n"
 
-#: client/cl_transfer.c:450
+#: client/cl_transfer.c:468
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Overførsel er ikke mulig - basen har ikke et rumvæsenopbevaringsrum."
 
-#: client/cl_transfer.c:468
+#: client/cl_transfer.c:486
 msgid "No aircraft available for transfer.\n"
 msgstr "Intet luftfartøj tilgængelig for overførsel.\n"
 
-#: client/cl_transfer.c:470
+#: client/cl_transfer.c:488
 msgid "Transfer is not possible - the base doesn't hangar functional."
 msgstr "Overførsel er ikke mulig - basen har ingen hangarer."
 
-#: client/cl_transfer.c:552
+#: client/cl_transfer.c:571
 #, c-format
 msgid "Base %s does not have Storage, items are removed!"
 msgstr "Base %s har intet lager, udstyr fjernes!"
 
-#: client/cl_transfer.c:553 client/cl_transfer.c:571 client/cl_transfer.c:599
-#: client/cl_transfer.c:626 client/cl_transfer.c:710 client/cl_transfer.c:798
-#: client/cl_transfer.c:905 client/cl_transfer.c:1373
+#: client/cl_transfer.c:572 client/cl_transfer.c:590 client/cl_transfer.c:618
+#: client/cl_transfer.c:645 client/cl_transfer.c:729 client/cl_transfer.c:817
+#: client/cl_transfer.c:924 client/cl_transfer.c:1392
 msgid "Transport mission"
 msgstr "Transportmission"
 
-#: client/cl_transfer.c:570
+#: client/cl_transfer.c:589
 #, c-format
 msgid "Base %s does not have Living Quarters, employees got unhired!"
 msgstr "Base %s har ikke nogen beboelseskvarterer, ansatte er fritstillet!"
 
-#: client/cl_transfer.c:598
+#: client/cl_transfer.c:617
 #, c-format
 msgid "Base %s does not have Alien Containment, Aliens are removed!"
 msgstr "Base %s har ikke et rumvæsenopbevaringsrum, rumvæsener fjernes!"
 
-#: client/cl_transfer.c:625
+#: client/cl_transfer.c:644
 #, c-format
 msgid "Base %s does not have enough free space in hangars. Aircraft is lost!"
 msgstr "Base %s har ikke nok ledig plads i hangarerne. Luftfartøj er tabt!"
 
-#: client/cl_transfer.c:709 client/cl_transfer.c:904
+#: client/cl_transfer.c:728 client/cl_transfer.c:923
 #, c-format
 msgid "Transport mission started, cargo is being transported to base %s"
 msgstr "Transportmission påbegyndt, last transporteres til base %s"
 
-#: client/cl_transfer.c:777
+#: client/cl_transfer.c:796
 #, c-format
 msgid "(can host %i alive alien)\n"
 msgid_plural "(can host %i alive aliens)\n"
 msgstr[0] "(kan opbevare %i levende rumvæsen)\n"
 msgstr[1] "(kan opbevare %i levende rumvæsener)\n"
 
-#: client/cl_transfer.c:797
+#: client/cl_transfer.c:816
 #, c-format
 msgid "Transport mission ended, unloading cargo in base %s"
 msgstr "Transportmission fuldført, last placeres på base %s"
 
-#: client/cl_transfer.c:929
+#: client/cl_transfer.c:948
 msgid "No target base selected"
 msgstr "Ingen base er valgt"
 
-#: client/cl_transfer.c:929
+#: client/cl_transfer.c:948
 msgid "Please select the target base from the list"
 msgstr "Vælg venligst basen fra listen"
 
-#: client/cl_transfer.c:1074
+#: client/cl_transfer.c:1093
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Du kan overføre udstyr - denne base har et lagerrum.\n"
 
-#: client/cl_transfer.c:1076
+#: client/cl_transfer.c:1095
 msgid "No Storage in this base.\n"
 msgstr "Intet lagerrum på denne base.\n"
 
-#: client/cl_transfer.c:1079 client/cl_transfer.c:1092
-#: client/cl_transfer.c:1100 client/cl_transfer.c:1110
+#: client/cl_transfer.c:1098 client/cl_transfer.c:1111
+#: client/cl_transfer.c:1119 client/cl_transfer.c:1129
 msgid "No power supplies in this base.\n"
 msgstr "Ingen energiforsyning på denne base.\n"
 
-#: client/cl_transfer.c:1082
+#: client/cl_transfer.c:1101
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Du kan overføre ansatte - denne base har beboelseskvarterer.\n"
 
-#: client/cl_transfer.c:1084
+#: client/cl_transfer.c:1103
 msgid "No Living Quarters in this base.\n"
 msgstr "Ingen beboelseskvarterer på denne base.\n"
 
-#: client/cl_transfer.c:1087
+#: client/cl_transfer.c:1106
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr ""
 "Du kan overføre rumvæsener - denne base har et rumvæsenopbevaringsrum.\n"
 
-#: client/cl_transfer.c:1089
+#: client/cl_transfer.c:1108
 msgid "No Alien Containment in this base.\n"
 msgstr "Intet rumvæsenopbevaringsrum på denne base.\n"
 
-#: client/cl_transfer.c:1095
+#: client/cl_transfer.c:1114
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr ""
 "Du kan overføre antistof - denne base har lagerkapacitet til antistof.\n"
 
-#: client/cl_transfer.c:1097
+#: client/cl_transfer.c:1116
 msgid "No Antimatter Storage in this base.\n"
 msgstr "Intet lagerrum til antistof på denne base.\n"
 
-#: client/cl_transfer.c:1103
+#: client/cl_transfer.c:1122
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Du kan overføre luftfartøj - denne base har en hangar.\n"
 
-#: client/cl_transfer.c:1105
+#: client/cl_transfer.c:1124
 msgid ""
 "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr ""
 "Overførsel af luftfartøj ikke mulig - denne base har ikke en kommandocentral.\n"
 
-#: client/cl_transfer.c:1107
+#: client/cl_transfer.c:1126
 msgid "No Hangar in this base.\n"
 msgstr "Ingen hangar på denne base.\n"
 
-#: client/cl_transfer.c:1373
+#: client/cl_transfer.c:1392
 msgid ""
 "The destination base no longer exists! Transfer cargo are lost, personel got unhired."
 msgstr ""

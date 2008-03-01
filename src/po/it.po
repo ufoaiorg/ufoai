@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-01-25 16:49+0100\n"
+"POT-Creation-Date: 2008-03-01 16:21+0100\n"
 "PO-Revision-Date: 2007-04-16 23:11+0100\n"
 "Last-Translator: Daniele C <legolas558@users.sourceforge.net>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -65,28 +65,28 @@ msgid "Tropical drug"
 msgstr "Droga tropicale"
 
 #: ../base/maps/ufocrashd.ump:214 ../base/maps/ufocrashn.ump:213
-#: ../base/ufos/aircraftmanagement.ufo:287 ../base/ufos/otheritems.ufo:60
+#: ../base/ufos/aircraftmanagement.ufo:288 ../base/ufos/otheritems.ufo:60
 #: ../base/ufos/research.ufo:3322 ../base/ufos/research.ufo:3335
 #: ../base/ufos/research.ufo:3343
 msgid "UFO - Harvester"
 msgstr "UFO - Mietitore"
 
 #: ../base/maps/ufocrashd.ump:240 ../base/maps/ufocrashn.ump:238
-#: ../base/ufos/aircraftmanagement.ufo:407 ../base/ufos/otheritems.ufo:40
+#: ../base/ufos/aircraftmanagement.ufo:408 ../base/ufos/otheritems.ufo:40
 #: ../base/ufos/research.ufo:3113 ../base/ufos/research.ufo:3126
 #: ../base/ufos/research.ufo:3134
 msgid "UFO - Scout"
 msgstr "UFO - Scout"
 
 #: ../base/maps/ufocrashd.ump:254 ../base/maps/ufocrashn.ump:252
-#: ../base/ufos/aircraftmanagement.ufo:429 ../base/ufos/otheritems.ufo:50
+#: ../base/ufos/aircraftmanagement.ufo:430 ../base/ufos/otheritems.ufo:50
 #: ../base/ufos/research.ufo:3154 ../base/ufos/research.ufo:3167
 #: ../base/ufos/research.ufo:3175
 msgid "UFO - Fighter"
 msgstr "UFO - Intercettore"
 
 #: ../base/maps/ufocrashd.ump:268 ../base/maps/ufocrashn.ump:266
-#: ../base/ufos/aircraftmanagement.ufo:355 ../base/ufos/otheritems.ufo:88
+#: ../base/ufos/aircraftmanagement.ufo:356 ../base/ufos/otheritems.ufo:88
 #: ../base/ufos/research.ufo:3196 ../base/ufos/research.ufo:3209
 #: ../base/ufos/research.ufo:3217
 #, fuzzy
@@ -109,166 +109,166 @@ msgstr "Villaggio commerciale"
 msgid "Village big"
 msgstr "Villaggio grande"
 
-#: ../base/ufos/aircraftmanagement.ufo:81
+#: ../base/ufos/aircraftmanagement.ufo:82
 msgid "Firebird-class Dropship"
 msgstr "Nave da trasporto classe Firebird"
 
-#: ../base/ufos/aircraftmanagement.ufo:82
+#: ../base/ufos/aircraftmanagement.ufo:83
 msgid "Firebird D"
 msgstr "Firebird D"
 
-#: ../base/ufos/aircraftmanagement.ufo:119
+#: ../base/ufos/aircraftmanagement.ufo:120
 msgid "Stiletto-class Interceptor"
 msgstr "Intercettore classe Stiletto"
 
-#: ../base/ufos/aircraftmanagement.ufo:120
+#: ../base/ufos/aircraftmanagement.ufo:121
 msgid "Stiletto I"
 msgstr "Stiletto I"
 
-#: ../base/ufos/aircraftmanagement.ufo:163
+#: ../base/ufos/aircraftmanagement.ufo:164
 msgid "Saracen-class Interceptor"
 msgstr "Intercettore classe Saracen"
 
-#: ../base/ufos/aircraftmanagement.ufo:164
+#: ../base/ufos/aircraftmanagement.ufo:165
 msgid "Saracen I"
 msgstr "Saracen I"
 
-#: ../base/ufos/aircraftmanagement.ufo:202
+#: ../base/ufos/aircraftmanagement.ufo:203
 #, fuzzy
 msgid "Dragon Interceptor"
 msgstr "Intercettatore"
 
-#: ../base/ufos/aircraftmanagement.ufo:203
+#: ../base/ufos/aircraftmanagement.ufo:204
 #, fuzzy
 msgid "Dragon"
 msgstr "Fatto"
 
-#: ../base/ufos/aircraftmanagement.ufo:241
+#: ../base/ufos/aircraftmanagement.ufo:242
 #, fuzzy
 msgid "Stingray Interceptor"
 msgstr "Intercettatore"
 
-#: ../base/ufos/aircraftmanagement.ufo:242
+#: ../base/ufos/aircraftmanagement.ufo:243
 #, fuzzy
 msgid "Stingray"
 msgstr "Raffica"
 
-#: ../base/ufos/aircraftmanagement.ufo:288
+#: ../base/ufos/aircraftmanagement.ufo:289
 #, fuzzy
 msgid "Harvester U"
 msgstr "UFO - Mietitore"
 
-#: ../base/ufos/aircraftmanagement.ufo:331 ../base/ufos/otheritems.ufo:79
+#: ../base/ufos/aircraftmanagement.ufo:332 ../base/ufos/otheritems.ufo:79
 #: ../base/ufos/research.ufo:3238 ../base/ufos/research.ufo:3251
 #: ../base/ufos/research.ufo:3259
 #, fuzzy
 msgid "UFO - Carrier"
 msgstr "UFO - Mietitore"
 
-#: ../base/ufos/aircraftmanagement.ufo:356
+#: ../base/ufos/aircraftmanagement.ufo:357
 msgid "Supply U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:378 ../base/ufos/otheritems.ufo:70
+#: ../base/ufos/aircraftmanagement.ufo:379 ../base/ufos/otheritems.ufo:70
 #: ../base/ufos/research.ufo:3280 ../base/ufos/research.ufo:3293
 #: ../base/ufos/research.ufo:3301
 #, fuzzy
 msgid "UFO - Condor"
 msgstr "UFO - Scout"
 
-#: ../base/ufos/aircraftmanagement.ufo:379
+#: ../base/ufos/aircraftmanagement.ufo:380
 msgid "Condor U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:408
+#: ../base/ufos/aircraftmanagement.ufo:409
 msgid "Scout U"
 msgstr "Scout U"
 
-#: ../base/ufos/aircraftmanagement.ufo:430
+#: ../base/ufos/aircraftmanagement.ufo:431
 msgid "Fighter U"
 msgstr "Intercettore U"
 
-#: ../base/ufos/aircraftmanagement.ufo:454
+#: ../base/ufos/aircraftmanagement.ufo:455
 #, fuzzy
 msgid "Shiva Rotary Cannon"
 msgstr "Cannone Rotante SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:465 ../base/ufos/research.ufo:3900
+#: ../base/ufos/aircraftmanagement.ufo:466 ../base/ufos/research.ufo:3900
 msgid "SHIVA 20mm API Rounds"
 msgstr "Proiettili 20mm API per SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:481 ../base/ufos/research.ufo:3921
+#: ../base/ufos/aircraftmanagement.ufo:482 ../base/ufos/research.ufo:3921
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "Proiettili 20mm HEI per SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:497
+#: ../base/ufos/aircraftmanagement.ufo:498
 #, fuzzy
 msgid "Raven ECM Unit"
 msgstr "Unità ECM 'Raven'"
 
-#: ../base/ufos/aircraftmanagement.ufo:508
+#: ../base/ufos/aircraftmanagement.ufo:509
 #, fuzzy
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Batteria di Missili AA 'Sparrowhawk'"
 
-#: ../base/ufos/aircraftmanagement.ufo:518
+#: ../base/ufos/aircraftmanagement.ufo:519
 #, fuzzy
 msgid "Sparrowhawk Missile"
 msgstr "Missile 'Sparrowhawk'"
 
-#: ../base/ufos/aircraftmanagement.ufo:534 ../base/ufos/research.ufo:3981
+#: ../base/ufos/aircraftmanagement.ufo:535 ../base/ufos/research.ufo:3981
 msgid "TR-20 Rocket Pod"
 msgstr "Capsula Missile TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:546 ../base/ufos/research.ufo:4000
+#: ../base/ufos/aircraftmanagement.ufo:547 ../base/ufos/research.ufo:4000
 msgid "TR-20 Rocket"
 msgstr "Missile TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:562 ../base/ufos/research.ufo:4021
+#: ../base/ufos/aircraftmanagement.ufo:563 ../base/ufos/research.ufo:4021
 #: ../base/ufos/research.ufo:4035 ../base/ufos/research.ufo:4043
 msgid "Particle Beam Weapon"
 msgstr "Arma a Flusso di Particelle"
 
-#: ../base/ufos/aircraftmanagement.ufo:576 ../base/ufos/research.ufo:4066
+#: ../base/ufos/aircraftmanagement.ufo:577 ../base/ufos/research.ufo:4066
 msgid "Targeting Computer"
 msgstr "Sistema di Puntamento"
 
-#: ../base/ufos/aircraftmanagement.ufo:587 ../base/ufos/research.ufo:4084
+#: ../base/ufos/aircraftmanagement.ufo:588 ../base/ufos/research.ufo:4084
 msgid "Fuel Pod"
 msgstr "Capsula per il Carburante"
 
-#: ../base/ufos/aircraftmanagement.ufo:599 ../base/ufos/research.ufo:3733
+#: ../base/ufos/aircraftmanagement.ufo:600 ../base/ufos/research.ufo:3733
 msgid "Polymer Aircraft Armour"
 msgstr "Armatura Aliena Polimerica"
 
-#: ../base/ufos/aircraftmanagement.ufo:611 ../base/ufos/research.ufo:3751
+#: ../base/ufos/aircraftmanagement.ufo:612 ../base/ufos/research.ufo:3751
 #, fuzzy
 msgid "Alien Aircraft Plating"
 msgstr "Velivolo alieno individuato"
 
-#: ../base/ufos/aircraftmanagement.ufo:623 ../base/ufos/research.ufo:3773
+#: ../base/ufos/aircraftmanagement.ufo:624 ../base/ufos/research.ufo:3773
 #: ../base/ufos/research.ufo:3784 ../base/ufos/research.ufo:3791
 #, fuzzy
 msgid "Alien Astrogation"
 msgstr "Le Origini degli Alieni"
 
-#: ../base/ufos/aircraftmanagement.ufo:632 ../base/ufos/research.ufo:3810
+#: ../base/ufos/aircraftmanagement.ufo:633 ../base/ufos/research.ufo:3810
 #: ../base/ufos/research.ufo:3821 ../base/ufos/research.ufo:3828
 #, fuzzy
 msgid "Alien Propulsion"
 msgstr "Specie aliena"
 
-#: ../base/ufos/aircraftmanagement.ufo:641 ../base/ufos/research.ufo:3846
+#: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/research.ufo:3846
 #: ../base/ufos/research.ufo:3857 ../base/ufos/research.ufo:3864
 #, fuzzy
 msgid "Alien Detection"
 msgstr "Specie aliena"
 
-#: ../base/ufos/aircraftmanagement.ufo:654 ../base/ufos/research.ufo:3674
+#: ../base/ufos/aircraftmanagement.ufo:655 ../base/ufos/research.ufo:3674
 msgid "AA51 missile launcher"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:665 ../base/ufos/research.ufo:3693
+#: ../base/ufos/aircraftmanagement.ufo:666 ../base/ufos/research.ufo:3693
 msgid "AA51 Cicada SAM"
 msgstr ""
 
@@ -1217,7 +1217,7 @@ msgid "Build at least one workshop"
 msgstr "Costruisci un laboratorio prima"
 
 #: ../base/ufos/menu_aircraft.ufo:255 ../base/ufos/menu_aircraft.ufo:264
-#: ../base/ufos/menu_aircraft.ufo:1057
+#: ../base/ufos/menu_aircraft.ufo:1058
 #, fuzzy
 msgid "Produce"
 msgstr "Produzione"
@@ -1314,39 +1314,39 @@ msgstr ""
 msgid "Select this slot"
 msgstr "Seleziona oggetto"
 
-#: ../base/ufos/menu_aircraft.ufo:986
+#: ../base/ufos/menu_aircraft.ufo:987
 #, fuzzy
 msgid "Action"
 msgstr "Azione:"
 
-#: ../base/ufos/menu_aircraft.ufo:993 ../base/ufos/menu_bases.ufo:684
+#: ../base/ufos/menu_aircraft.ufo:994 ../base/ufos/menu_bases.ufo:684
 #: ../base/ufos/menu_geoscape.ufo:449 ../base/ufos/menu_geoscape.ufo:547
 #: ../base/ufos/menu_geoscape.ufo:655 ../base/ufos/menu_geoscape.ufo:723
 #: ../base/ufos/menu_geoscape.ufo:863 ../base/ufos/menu_geoscape.ufo:913
 #: ../base/ufos/menu_geoscape.ufo:1007 ../base/ufos/menu_geoscape.ufo:1077
 #: ../base/ufos/menu_geoscape.ufo:1138 ../base/ufos/menu_irc.ufo:271
-#: ../base/ufos/menu_lostwon.ufo:387 ../base/ufos/menu_lostwon.ufo:484
-#: ../base/ufos/menu_multiplayer.ufo:1725 ../base/ufos/menu_options.ufo:438
+#: ../base/ufos/menu_lostwon.ufo:388 ../base/ufos/menu_lostwon.ufo:485
+#: ../base/ufos/menu_multiplayer.ufo:1734 ../base/ufos/menu_options.ufo:438
 #: ../base/ufos/menu_singleplayer.ufo:448
 msgid "Close this dialogue"
 msgstr "Chiudi questa finestra"
 
-#: ../base/ufos/menu_aircraft.ufo:1006 ../base/ufos/menu_bases.ufo:697
+#: ../base/ufos/menu_aircraft.ufo:1007 ../base/ufos/menu_bases.ufo:697
 #: ../base/ufos/menu_geoscape.ufo:462 ../base/ufos/menu_geoscape.ufo:560
 #: ../base/ufos/menu_geoscape.ufo:668 ../base/ufos/menu_geoscape.ufo:747
 #: ../base/ufos/menu_geoscape.ufo:876 ../base/ufos/menu_geoscape.ufo:926
 #: ../base/ufos/menu_geoscape.ufo:1020 ../base/ufos/menu_geoscape.ufo:1090
-#: ../base/ufos/menu_irc.ufo:284 ../base/ufos/menu_lostwon.ufo:400
-#: ../base/ufos/menu_lostwon.ufo:497 ../base/ufos/menu_options.ufo:462
+#: ../base/ufos/menu_irc.ufo:284 ../base/ufos/menu_lostwon.ufo:401
+#: ../base/ufos/menu_lostwon.ufo:498 ../base/ufos/menu_options.ufo:462
 #: ../base/ufos/menu_singleplayer.ufo:461
 msgid "Cancel"
 msgstr "Annulla"
 
-#: ../base/ufos/menu_aircraft.ufo:1014
+#: ../base/ufos/menu_aircraft.ufo:1015
 msgid "You don't have any aircraft in the base - what do you want to do?"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:1022 ../base/ufos/menu_buy.ufo:1795
+#: ../base/ufos/menu_aircraft.ufo:1023 ../base/ufos/menu_buy.ufo:1795
 #: ../base/ufos/menu_buy.ufo:1799 ../base/ufos/menu_buy.ufo:1803
 #: ../base/ufos/menu_buy.ufo:1807 ../base/ufos/menu_buy.ufo:1811
 #: ../base/ufos/menu_buy.ufo:1815 ../base/ufos/menu_buy.ufo:1819
@@ -1359,11 +1359,11 @@ msgstr ""
 msgid "Buy aircraft"
 msgstr "Compra velivolo"
 
-#: ../base/ufos/menu_aircraft.ufo:1035
+#: ../base/ufos/menu_aircraft.ufo:1036
 msgid "Buy"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:1043
+#: ../base/ufos/menu_aircraft.ufo:1044
 #, fuzzy
 msgid "Produce aircraft"
 msgstr "Squadra libera precedente"
@@ -2334,7 +2334,7 @@ msgstr "Stato:"
 msgid "Base:"
 msgstr "Base:"
 
-#: ../base/ufos/menu_geoscape.ufo:900 client/cl_campaign.c:641
+#: ../base/ufos/menu_geoscape.ufo:900 client/cl_campaign.c:640
 msgid "Base attack"
 msgstr "Attacco alla Base"
 
@@ -2359,7 +2359,7 @@ msgid "Description:"
 msgstr "Descrizione:"
 
 #: ../base/ufos/menu_geoscape.ufo:1151 ../base/ufos/menu_main.ufo:234
-#: ../base/ufos/menu_multiplayer.ufo:1738
+#: ../base/ufos/menu_multiplayer.ufo:1747
 msgid "OK"
 msgstr "OK"
 
@@ -2716,6 +2716,7 @@ msgid "Floor"
 msgstr "Piano"
 
 #: ../base/ufos/menu_irc.ufo:47 ../base/ufos/menu_multiplayer.ufo:750
+#: ../base/ufos/menu_multiplayer.ufo:1810
 #: ../base/ufos/menu_multiplayeringame.ufo:111
 msgid "Lobby"
 msgstr "Ingresso"
@@ -2791,16 +2792,16 @@ msgstr ""
 msgid "Destroy UFO"
 msgstr "Distruggi"
 
-#: ../base/ufos/menu_lostwon.ufo:151 ../base/ufos/menu_lostwon.ufo:281
+#: ../base/ufos/menu_lostwon.ufo:151 ../base/ufos/menu_lostwon.ufo:282
 msgid "Retry this mission"
 msgstr "Riprova questa missione"
 
-#: ../base/ufos/menu_lostwon.ufo:166 ../base/ufos/menu_lostwon.ufo:296
+#: ../base/ufos/menu_lostwon.ufo:166 ../base/ufos/menu_lostwon.ufo:297
 msgid "Try again"
 msgstr "Riprova"
 
 #: ../base/ufos/menu_lostwon.ufo:191 ../base/ufos/menu_lostwon.ufo:206
-#: ../base/ufos/menu_lostwon.ufo:321 ../base/ufos/menu_lostwon.ufo:336
+#: ../base/ufos/menu_lostwon.ufo:322 ../base/ufos/menu_lostwon.ufo:337
 #: ../base/ufos/menu_multiplayeringame.ufo:69
 #: ../base/ufos/menu_singleplayer.ufo:158
 #: ../base/ufos/menu_singleplayer.ufo:207
@@ -2809,43 +2810,43 @@ msgstr "Riprova"
 msgid "Continue"
 msgstr "Continua"
 
-#: ../base/ufos/menu_lostwon.ufo:367
+#: ../base/ufos/menu_lostwon.ufo:368
 #, fuzzy
 msgid "Select base for UFO recovery"
 msgstr "Selezionare una base dove trasferire"
 
-#: ../base/ufos/menu_lostwon.ufo:407
+#: ../base/ufos/menu_lostwon.ufo:408
 msgid "Begin UFO recovery process"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:420
+#: ../base/ufos/menu_lostwon.ufo:421
 msgid "Recover"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:444
+#: ../base/ufos/menu_lostwon.ufo:445
 msgid "Select nation for UFO recovery"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:452
+#: ../base/ufos/menu_lostwon.ufo:453
 #, fuzzy
 msgid "Nation:"
 msgstr "Nazioni"
 
-#: ../base/ufos/menu_lostwon.ufo:458
+#: ../base/ufos/menu_lostwon.ufo:459
 #, fuzzy
 msgid "Price:"
 msgstr "Esperto"
 
-#: ../base/ufos/menu_lostwon.ufo:464
+#: ../base/ufos/menu_lostwon.ufo:465
 #, fuzzy
 msgid "Relations:"
 msgstr "Risoluzione:"
 
-#: ../base/ufos/menu_lostwon.ufo:504
+#: ../base/ufos/menu_lostwon.ufo:505
 msgid "Begin UFO sell process"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:517
+#: ../base/ufos/menu_lostwon.ufo:518
 #, fuzzy
 msgid "Sell"
 msgstr "Vendi oggetto"
@@ -3046,192 +3047,207 @@ msgstr "Cancella questo segnalibro"
 msgid "Day version:"
 msgstr "Versione:\t%s\n"
 
-#: ../base/ufos/menu_multiplayer.ufo:951
+#: ../base/ufos/menu_multiplayer.ufo:948
+msgid ""
+"Make sure that you've opened the TCP port 27910 in your firewall settings"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:960
 msgid "Make this server public:"
 msgstr "Fai diventare pubblico questo server:"
 
-#: ../base/ufos/menu_multiplayer.ufo:967
+#: ../base/ufos/menu_multiplayer.ufo:976
 msgid "Enable morale states:"
 msgstr "Abilita morale:"
 
-#: ../base/ufos/menu_multiplayer.ufo:982
+#: ../base/ufos/menu_multiplayer.ufo:991
 msgid "Gametype:"
 msgstr "Tipo di gioco:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1021
+#: ../base/ufos/menu_multiplayer.ufo:1030
 msgid "Teamplay:"
 msgstr "Gioco di squadra:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1036
+#: ../base/ufos/menu_multiplayer.ufo:1045
 msgid "Max. clients:"
 msgstr "Max. giocatori:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1038
+#: ../base/ufos/menu_multiplayer.ufo:1047
 msgid "Sets the max allowed clients to connect"
 msgstr "Scegli il numero massimo di giocatori"
 
-#: ../base/ufos/menu_multiplayer.ufo:1070
+#: ../base/ufos/menu_multiplayer.ufo:1079
 msgid "Max. soldiers per team:"
 msgstr "Max. soldati per squadra:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1072
+#: ../base/ufos/menu_multiplayer.ufo:1081
 msgid "Sets the max allowed soldiers per team"
 msgstr "Scegli il massimo di soldati per squadra"
 
-#: ../base/ufos/menu_multiplayer.ufo:1104
+#: ../base/ufos/menu_multiplayer.ufo:1113
 msgid "Max. soldiers per player:"
 msgstr "Max. soldati per giocatore:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1106
+#: ../base/ufos/menu_multiplayer.ufo:1115
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Scegli il max soldati per giocatore quando si gioca in squadra"
 
-#: ../base/ufos/menu_multiplayer.ufo:1139
+#: ../base/ufos/menu_multiplayer.ufo:1148
 #, fuzzy
 msgid "Max. human players per team:"
 msgstr "Max. giocatori per squadra:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1172
+#: ../base/ufos/menu_multiplayer.ufo:1181
 msgid "Max. AI actors:"
 msgstr "Max. attori IA:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1174
+#: ../base/ufos/menu_multiplayer.ufo:1183
 msgid "Max AI actors for teamplay mode"
 msgstr ""
 "Numero massimo degli attori gestiti dal computer (IA) nel gioco di squadra"
 
-#: ../base/ufos/menu_multiplayer.ufo:1206
+#: ../base/ufos/menu_multiplayer.ufo:1215
 msgid "AI autojoin:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1208
+#: ../base/ufos/menu_multiplayer.ufo:1217
 msgid "AI autojoin on free teams"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1222
+#: ../base/ufos/menu_multiplayer.ufo:1231
 msgid "Server-Password:"
 msgstr "Password Server:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1245
+#: ../base/ufos/menu_multiplayer.ufo:1254
 msgid "RCON-Password:"
 msgstr "Password RCON:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1268
+#: ../base/ufos/menu_multiplayer.ufo:1277
 msgid "Hostname:"
 msgstr "Nome host:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1291
+#: ../base/ufos/menu_multiplayer.ufo:1300
 msgid "Map"
 msgstr "Mappa"
 
-#: ../base/ufos/menu_multiplayer.ufo:1393
+#: ../base/ufos/menu_multiplayer.ufo:1402
 msgid "Start server"
 msgstr "Avvia server"
 
-#: ../base/ufos/menu_multiplayer.ufo:1443
+#: ../base/ufos/menu_multiplayer.ufo:1452
 msgid "Team selection"
 msgstr "Selezione della squadra"
 
-#: ../base/ufos/menu_multiplayer.ufo:1452
+#: ../base/ufos/menu_multiplayer.ufo:1461
 msgid "Click the big button in the lower right corner when ready"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1488
+#: ../base/ufos/menu_multiplayer.ufo:1497
 msgid "Max. players per team"
 msgstr "Max. giocatori per squadra"
 
-#: ../base/ufos/menu_multiplayer.ufo:1500
+#: ../base/ufos/menu_multiplayer.ufo:1509
 msgid "Max. teams for this map"
 msgstr "Max. squadre su questa mappa"
 
-#: ../base/ufos/menu_multiplayer.ufo:1512
+#: ../base/ufos/menu_multiplayer.ufo:1521
 msgid "Team preference:"
 msgstr "Preferenze squadra:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1523
+#: ../base/ufos/menu_multiplayer.ufo:1532
 msgid "Next free team"
 msgstr "Prossima squadra libera"
 
-#: ../base/ufos/menu_multiplayer.ufo:1533
+#: ../base/ufos/menu_multiplayer.ufo:1542
 msgid "Previous free team"
 msgstr "Squadra libera precedente"
 
-#: ../base/ufos/menu_multiplayer.ufo:1544
+#: ../base/ufos/menu_multiplayer.ufo:1553
 msgid "Finish the teamselection and start the game"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1562
+#: ../base/ufos/menu_multiplayer.ufo:1571
 #, fuzzy
 msgid "Activate chat"
 msgstr "Attiva spiegazioni"
 
-#: ../base/ufos/menu_multiplayer.ufo:1625
+#: ../base/ufos/menu_multiplayer.ufo:1634
 msgid "Please wait"
 msgstr "Attendere prego"
 
-#: ../base/ufos/menu_multiplayer.ufo:1632
+#: ../base/ufos/menu_multiplayer.ufo:1641
 msgid "Players connected, waiting for others"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1645
+#: ../base/ufos/menu_multiplayer.ufo:1654
 msgid "Start the game even if not all teams have joined"
 msgstr "Inizia la partita anche se non tutte le squadre sono entrate"
 
-#: ../base/ufos/menu_multiplayer.ufo:1659
+#: ../base/ufos/menu_multiplayer.ufo:1668
 msgid "Force start"
 msgstr "Forza a cominciare"
 
-#: ../base/ufos/menu_multiplayer.ufo:1697
+#: ../base/ufos/menu_multiplayer.ufo:1706
 #, fuzzy
 msgid "Enter server password"
 msgstr "Password Server:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1705
+#: ../base/ufos/menu_multiplayer.ufo:1714
 #, fuzzy
 msgid "Password:"
 msgstr "Password RCON:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1746
+#: ../base/ufos/menu_multiplayer.ufo:1780
+#, fuzzy
+msgid "Personal message"
+msgstr "Leggi messaggi"
+
+#: ../base/ufos/menu_multiplayer.ufo:1797
+#, fuzzy
+msgid "Go into the lobby"
+msgstr "Conetti all'IP"
+
+#: ../base/ufos/menu_multiplayer.ufo:1818
 msgid "1on1"
 msgstr "1vs1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1760
+#: ../base/ufos/menu_multiplayer.ufo:1832
 msgid "1on1on1"
 msgstr "1vs1vs1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1774
+#: ../base/ufos/menu_multiplayer.ufo:1846
 msgid "2on2"
 msgstr "2vs2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1788
+#: ../base/ufos/menu_multiplayer.ufo:1860
 msgid "2on2on2"
 msgstr "2vs2vs2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1802
+#: ../base/ufos/menu_multiplayer.ufo:1874
 msgid "3on3"
 msgstr "3vs3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1816
+#: ../base/ufos/menu_multiplayer.ufo:1888
 msgid "3on3on3"
 msgstr "3vs3vs3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1830
+#: ../base/ufos/menu_multiplayer.ufo:1902
 msgid "4on4"
 msgstr "4vs4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1844
+#: ../base/ufos/menu_multiplayer.ufo:1916
 msgid "4on4on4"
 msgstr "4vs4vs4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1858
+#: ../base/ufos/menu_multiplayer.ufo:1930
 msgid "Coop 2 players"
 msgstr "Coop 2 giocatori"
 
-#: ../base/ufos/menu_multiplayer.ufo:1872
+#: ../base/ufos/menu_multiplayer.ufo:1944
 msgid "Coop 3 players"
 msgstr "Coop 3 giocatori"
 
-#: ../base/ufos/menu_multiplayer.ufo:1886
+#: ../base/ufos/menu_multiplayer.ufo:1958
 msgid "Coop 4 players"
 msgstr "Coop 4 giocatori"
 
@@ -3318,7 +3334,7 @@ msgid "Medium"
 msgstr "Medico"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2254
+#: client/cl_main.c:2241
 msgid "Normal"
 msgstr "Normale"
 
@@ -3881,7 +3897,7 @@ msgstr "Mostra solo impiegati"
 msgid "Show only aliens"
 msgstr "Mostra solo alieni"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4527
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4535
 msgid "Aliens"
 msgstr "Alieni"
 
@@ -5350,16 +5366,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:868 ../base/ufos/research.ufo:905
 msgid "bolterrifle_pre_txt"
-msgstr ""
-"Commander, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
-"\n"
-"At least, that's what we thought, until the aliens showed up.\n"
-"\n"
-"Seeing alien craft hurtling through our skies, advanced robots scuttling through our streets, and high-powered energy weapons tearing up our people has given us a whole host of new ideas. It has also caused us to take a very close look through our collected UN research data. It's nothing short of a gold mine in disguise. By combining the best of these individual cluttered pieces, we believe we may be able to devise a new weapon for our tactical teams that will be both man-portable and combat-effective. This weapon would have extreme range and power and may serve us well in the days ahead.\n"
-"\n"
-"This idea holds a lot of promise, Commander. We would like your authorisation for lab time and funding in order finally make electromagnetic weaponry a reality.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Nessuna informazione disponibile prima della ricerca."
 
 #: ../base/ufos/research.ufo:875 ../base/ufos/research.ufo:883
 #: ../base/ufos/research.ufo:912 ../base/ufos/research.ufo:920
@@ -7051,249 +7058,251 @@ msgstr "Velocità"
 #: ../base/ufos/research.ufo:2703
 msgid "b_aliencontainment_txt"
 msgstr ""
-"Blueprints -- Alien Containment Facility\n"
+"Progetto -- Unità di Contenimento Alieni\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Research Document, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 16 February 1958\n"
+"Data: 16 Febbraio 1958\n"
 "\n"
-"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The first priority of the Extraterrestrial Response Unit is to prepare for a time when it may be needed. The PHALANX Containment Facility is an important part of any invasion response plan. It contains atmospheric habitation chambers, interrogation machinery, nutrition distribution units, and all the other apparatus required to sustain any extraterrestrial life that we could comprehend.\n"
-"\n"
-"Firstly, the airtight habitation chambers provide a place to store and keep extraterrestrials (EXT) for a significant period of time. Their atmosphere generators are capable of pumping any individual chamber full of any desired mix of gases. This can provide an EXT with breathable air for at least several weeks, well beyond the expected lifespan for a specimen in our research programs. Trace elements that do not occur naturally on Earth may be difficult to come by, but the likelihood of this becoming an impediment to our research is infinitessimal. In a worst-case scenario, the atmosphere generators are designed to allow links to recovered life support equipment.\n"
-"\n"
-"Secondly, waldo-operated medical and interrogation apparatus is present in each habitation chamber, able to apply sedation, medication or other chemical injections via a pneumatic dart launcher, or to administer electroshocks for interrogation purposes. There is also a so-called \"panic button\" installed on each chamber individually and in the control room for every block of chambers. The panic button can immediately incinerate the contents of its chamber during an emergency.\n"
-"\n"
-"The chambers and corridors of the Containment Facility are specially designed to allow EXTs of any shape and size to be transported and held. The facility also has a fully-equipped cryo-morgue to store corpses and samples for later review.\n"
+"Da: Maggiore Marcel LeClerck, Comandante della base, PHALANX, Comando Operativo del Pacifico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"In the case of an invasion, the Containment Unit should be used to its full extent, storing both live and dead EXTs for research and allowing us to examine them in their living state. There is no greater priority than the discovery of the thought processes of the extraterrestrial mind, to learn their motivations and perhaps find a compromise, an opportunity for communication, or a suitable counterstrategy to neutralise the enemy once and for all.\n"
+"Descrizione Generale\n"
 "\n"
-"If a PHALANX base were to be attacked, immediate consideration should be given to hit the panic button on the entire Containment Facility. Unless there are irreplaceable specimens in storage, we cannot risk the attacking EXTs freeing their captured comrades. Immediate and complete sedation is another, more risky strategy -- however, I stress that we will not win a war with half measures.\n"
+"La più alta priorità dell'Unità di Risposta Extraterrestre é di prepararsi per quando ci sarà bisogno di essa. L'Unità di Contenimento Alieni della PHALANX é una parte importante del piano di risposta ad ogni invasione. Questa struttura contiene camere abitative ad atmosfera controllata, macchinari per l'interrogatorio, unità di distribuzione di sostanze nutritive, e tutti gli apparati richiesti per mantenere qualsiasi tipo di vita extraterrestre siamo in grado di immaginare.\n"
+"\n"
+"Innanzitutto, le camere a chiusura ermetica forniscono un luogo dove raccogliere e mantenere extraterrestri (EXT) per un lungo periodo di tempo. I generatori di atmosfera sono in grado di pompare in qualsiasi camera ogni tipo di miscela di gas. Questo può fornire una aria respirabile per qualsiasi EXT per almeno diverse settimane, un tempo ben al di sopra della speranza di vita di una cavia nei nostri programmi di ricerca. Alcuni oligoelementi che non sono presenti naturalmente sulla Terra possono essere difficili da procurare, ma le possibilità che questo sia di impedimento alla nostra ricerca sono infinitesimali. Nel caso peggiore, i generatori di atmosfera sono progettati in modo da poter essere collegati a dispositivi di supporto vitale recuperati sul campo di battaglia.\n"
+"\n"
+"Inoltre, in ogni camera abitativa sono presenti strumenti medici e per l'interrogazione comandati a distanza, capaci di applicare sedativi, farmaci o altre iniezioni chimiche tramite un sistema di lancio di dardi pneumatico, o di amministrare elettro-shock a scopo di interrogatorio. Ci sono anche dei 'bottoni anti-panico' installati individualmente in ogni camera e nella sala di controllo per ogni blocco di camere. Questi bottoni possono incenerire immediatamente il contenuto della cella corrispondente durante una emergenza.\n"
+"\n"
+"Le camere e i corridoi delle Infrastrutture di Contenimento Alieni sono progettate appositamente per trasportare e contenere EXT di qualsiasi forma e dimensioni. La struttura é inoltre equipaggiata con un crio-obitorio per immagazzinare corpi e campioni per studi successivi.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"To whatever future Commanders might be reviewing this file: Keep in mind that the machinery in the Containment Facility, like a fair portion of PHALANX equipment, has yet to undergo its true acid test against an extraterrestrial force. Upgrades or adjustments may be required for it to perform up to its design spec."
+"In caso di invasione, l'Unità di Contenimento Alieni deve essere utilizzata al massimo delle sue possibilità, immagazzinando EXT sia morti che vivi per ricerca e per studiare il loro modo di vivere. Questo non é di minore priorità rispetto a scoprire il processo di pensiero della mente extraterrestre, per capire le loro motivazioni ed eventualmente trovare un compromesso, una possibilità di comunicazione, o una strategia adatta a neutralizzare il nemico una volta per tutte.\n"
+"\n"
+"Nel caso una base PHALANX venga attaccata, deve essere presa subito in considerazione l'opzione di premere il bottone anti-panico per l'intera Unità di Contenimento. A meno che non vi siano soggetti insostitubili catturati, non possiamo correre il rischio che gli EXT liberino i loro compagni. La sedazione immediata e completa é un'altra strategia, più rischiosa -- in ogni caso, vorrei sottolineare che non possiamo vincere una guerra con mezze misure.\n"
+"\n"
+"\n"
+"Aggiunte\n"
+"\n"
+"A qualsiasi Comandante rilegga questo file in futuro:\n"
+"\n"
+"tieni presente che i macchinari presenti nell'Unità di Contenimento, così come una grossa parte dell'equipaggiamento PHALANX, devono ancora passare il test definitivo contro una forza extraterrestre. Aggiornamenti o aggiustamenti potrebbero essere necessari affinché la struttura possa funzionare per ciò per cui é stata progettata."
 
 #: ../base/ufos/research.ufo:2721
 msgid "b_command_txt"
 msgstr ""
-"Blueprints -- Command Centre\n"
+"Progetto -- Quartier Generale\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 30 July 2027\n"
+"Data: 30 July 2027\n"
 "\n"
-"By: Dr. Richard Strohm, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"To any noble personages reading this report -- yeah, right -- I should warn you that I'm somewhat drunk and am dictating the last of my paperwork before they close the base down forever. And I'll probably be long-dead before anyone digs up any info about this old project, so I can't get in trouble for whatever I say here. Just for the record, the bastarding SecDef can get buggered with a chainsaw. 'Budget cuts' my ass.\n"
-"\n"
-"Anyway, we've made some upgrades to the CC lately, so I've got to submit a new report.\n"
-"\n"
-"The Command Centre is the nerve centre of any PHALANX base. It coordinates all base activity from research to engineering, it gathers and interprets data from our radar installations, it serves as a war room for mission planning, and it is the C3 (Command/Control/Communications) hub that launches and directs our air-to-air interceptions. A base can still operate without a functional Command Centre, but it would be blind, deaf and dumb; our interceptors couldn't even launch for lack of traffic control.\n"
-"\n"
-"The CC is packed floor to ceiling with a brand new H-9000 mainframe and state-of-the-art communications gear, all of which is being ripped out by a gang of jackhammer-equipped thugs even as we speak. This equipment can't function without a power plant to supply it with enough electricity.\n"
-"\n"
-"In my experience, most of the command staff actually lives in the CC, but I'm told that lower-ranking individuals do get to see their bunks once every few days. Speaking for myself, though, that's anecdotal evidence at best.\n"
+"Da: Dr. Richard Strohm, Comandante della base, PHALANX, Comando Operativo del Pacifico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"In the unlikely event that this type of installation is ever built again, keep it supplied with enough power to run it properly, and place it in a well-protected spot some distance from the entrance and hangars. If a base does get attacked, defending the CC should be a top priority, because without it we will be unable to put up any kind of effective fight until it can be repaired.\n"
+"Descrizione generale\n"
+"\n"
+"A tutte le persone nobili che leggeranno questo rapporto -- sì, certo -- (il mio dovere é quello di ) devo avvisarvi che sono completamente sbronzo e sto dettando l'ultimo rapporto prima che la base venga chiusa per sempre. Probabilmente sarò già morto da tempo prima che qualcuno trovi informazioni su questo vecchio progetto, quindi non avrò problemi per qualunque cosa dirò. Per la cronaca, spero che quel bastardo di un Segretario alla Difesa abbia fatto una brutta fine. 'Tagli al bilancio' un corno.\n"
+"\n"
+"A ogni nobile personaggio che legga questo rapporto -- si, certo -- dovrei avvisarti che sono sbronzo e sto dettando il mio ultimo rapporto prima che la base sia chiusa per sempre. Probabilmente sarò già morto da tempo prima che qualcuno trovi informazioni su questo vecchio progetto, quindi non avrò problemi per qualunque cosa dirò. Per la cronaca, che quel bastardo di un Segretario alla Difesa possa morire (troviamo un'alternativa per: \"can get buggered with a chainsaw\" cercando di evitare parolacce gratuite). 'Tagli al bilancio' un corno (qui ho evitato \"un cazzo\" anche se forse era più letterale).\n"
+"\n"
+"In ogni caso, recentemente abbiamo apportato alcuni aggiornamenti al QG (nota: CC tradotto come QG, Quartier Generale), e perciò sono costretto a inviare un nuovo rapporto.\n"
+"\n"
+"Il Quartier Generale é il punto nevralgico di qualsiasi base PHALANX. Coordina tutte le attività dalla ricerca all'ingegneria, raccoglie e interpreta i dati ricevuti dalle installazioni radar, serve come stanza di guerra per pianificare le missioni, ed é il centro a 'Tripla C' (Comando, Controllo, Comunicazioni) che lancia e dirige le nostre intercettazioni aeree. Una base potrebbe ancora funzionare senza un Quartier Generale, ma sarebbe cieca, sorda e impotente; non si potrebbero nemmeno lanciare intercettazioni per la mancanza di un controllo del traffico.\n"
+"\n"
+"Le pareti del QG sono ricoperte dal pavimento al soffitto con un scintillante nuovo mainframe H-9000 e con apparecchiature di comunicazione allo stato dell'arte, che in questo preciso momento stanno venendo strappate via da una banda di bulli dell'esercito armati di fucile (nota: i soldati.. come tradurre a gang of jackhammer-equipped thugs?) mentre parliamo. Questo equipaggiamento non può funzionare senza un Generatore che lo supporti con energia elettrica sufficente.\n"
+"\n"
+"Per la mia esperienza, la maggior parte dello staff di comando vive costantemente nel QG, anche se mi é stato detto che agli individui più a basso rango viene concesso di tornare a dormire nelle proprie stanze ogni tanto. Per quello che mi riguarda, comunque, si tratta solo di un anneddoto.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"Addendum, Executive Officer Abel S. Howard, 18 March 2084:\n"
+"Nel caso improbabile che questo tipo di installazione venga costruito ancora, assicurati che venga coperto da abbastanza energia elettrica da poter funzionare correttamente, e posizionalo in una posizione ben protetta e con una certa distanza dall'entrata e dagli hangar. Se una base viene attaccata, la difesa del QG deve essere una priorità, perché senza di esso sarà impossibile organizzare qualsiasi tipo di combattimento o controffensiva finché non sarà riparato.\n"
 "\n"
-"The old CC blueprints have been updated by our engineers to replace the ancient H-9000 mainframe and terminals with up-to-date holo-workstations and a fresh supercomputer installation. All other components are still viable and effective."
+"\n"
+"Aggiunte\n"
+"\n"
+"Aggiunta, Ufficiale Esecutivo Abel S. Howard, 18 Marzo 2084:\n"
+"\n"
+"I vecchi piani per il QG sono stati aggiornati dai nostri ingegneri per rimpiazzare l'antico mainframe H-9000 con stazioni di lavoro olografiche all'ultima tecnologia e l'installazione di un nuovo supercomputer. Tutti gli altri componenti sono ancora utilizzabili ed efficaci."
 
 #: ../base/ufos/research.ufo:2739
 msgid "b_entrance_txt"
 msgstr ""
-"Blueprints -- Entrance\n"
+"Progetto -- Ingresso\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 26 January 1958\n"
+"Data: 26 January 1958\n"
 "\n"
-"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The Base Entrance is the first structure built at any new PHALANX location. It is the primary -- and sometimes only -- way for equipment and personnel to enter the base. It consists of a vehicle ramp and a stairway that allow easy movement between base and surface. A small, camouflaged gatehouse is built on top for security and will also hide the entrance from flyovers. Like all our surface installations, it is coated with radar- and infrared-absorbing paints to reduce the chance of detection.\n"
+"Da: Maggiore Marcel LeClerc, Comandante della base, PHALANX, Comando Operativo del Pacifico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"By its very nature, the Entrance is one of the most vulnerable facilities in any base. Hostile extraterrestrials will almost certainly attempt to gain access here. It is one of the focal points for the defence of a base, and should be placed at a considered distance to the Command Centre so that on-duty soldiers can respond to an attack with utmost alacrity without putting the CC at risk.\n"
-"\n"
-"On its own the Entrance facility has little tactical value. It can be assumed that any EXTs will merely try to hold the Entrance and choose more tempting targets to actually assault, since the Entrance usually contains nothing volatile and it has no areas that are particularly sensitive to destruction. Having no advanced equipment or components, it is also quick and cheap to repair. If damaged, other structures can temporarily take over the Entrance's functions without significantly impeding base operation.\n"
+"Descrizione Generale\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"Per la sue stessa natura, l'Ingresso é una delle infrastrutture più vulnerabili in qualsiasi base. Forze extraterrestri ostili cercheranno sicuramente di ottenere un accesso qui. E' uno dei punti focali per la difesa di una base, e deve essere posizionata ad una distanza significativa dal Quartier Generale in modo che i soldati di guardia possano rispondere ad un attacco con rapidità seza mettere in pericolo il QG.\n"
+"\n"
+"L'Ingresso di per sè non ha un gran valore tattico. E' opinione comune che qualsiasi forza extraterrestre cercherà di prendere controllo di questa struttura e utilizzarla come punto di partenza per scegliere obiettivi da assaltare, visto che non contiene niente di volatile e non ha aree particolarmente sensibili alla distruzione. Poiché non possiede equipaggiamento o componenti, l'Ingresso é anche molto economico da riparare. Se danneggiato, altre strutture possono prenderne il ruolo senza ritardare eccessivamente le operazioni della base.\n"
+"\n"
+"\n"
+"Aggiunte\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2753 ../base/ufos/research.ufo:3677
 #: ../base/ufos/research.ufo:3696
 msgid "b_missile_txt"
 msgstr ""
-"Blueprints -- Missile Battery\n"
+"Progetto -- Batteria Missilistica\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 18 March 2084\n"
+"Data: 18 Marzo 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Missiles have gotten more and more dangerous since World War 2, while countermeasure technologies have only been becoming effective since the start of the 21st century. In a contest between attack and defence, the attacker has always had the advantage. However, this has not deterred the aliens from developing defences to blow our minds.\n"
-"\n"
-"As an example, GEU forces have engaged alien craft with SAMs (Surface-to-Air Missiles) in the skies above Bonn. Forty missiles were launched from batteries across Europe while they had radar lock on two of the alien craft. Later, nearby infantry units fired between twelve and fifteen shoulder-mounted anti-air weapons.\n"
-"\n"
-"The number of hits scored? One. Just one. The UFO suffered a minor drop in acceleration during its landing at Bonn and later took off again without a hitch.\n"
-"\n"
-"The conclusions are obvious: alien EW (Electronic Warfare) capability is miles in advance of our own. However, we at PHALANX have made a thorough study of the sole hit scored, and it was not a matter of luck. What happened is that the UFO exposed itself at a less stealthy angle while dodging other incoming munitions, allowing the missile to hold lock all the way to its target.\n"
-"\n"
-"This proves that the aliens are not invulnerable to our missiles. We simply need the best ones for the job. These realisations have led us to adapt some old missile battery plans and reequip them with brand-new launchers. Our results are promising.\n"
-"\n"
-"The battery consists of 4 launchers that 'pop up' to the surface when engaging a target. Each launcher carries 20 of the AA51 \"Cicada\" SAM. This is the most advanced missile on Earth, packing more electronics than an airliner, designed to knock enemy aircraft right out of the sky regardless of how fast they're going. There is no better emergency defence weapon on the planet at the time of this writing.\n"
-"\n"
-"Against alien craft, the \"Cicada\"'s chances to hit will still be low, but in sufficient numbers it will hurt them. The missile and its electronics suite are of course highly expensive, well outside our budget range in the numbers required to succesfully engage incoming UFOs. Fortunately the UN has agreed to supply us all standard SAMs from its own strategic reserves at no cost to us.\n"
+"Da: Comandante Paul Navarre, R&S: Dipartimento Ingegneristico, PHALANX, Comando Operativo dell'Atlantico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"If built at one of our bases, the missile battery can be ordered to engage any UFO in range or wait until a UFO is identified as preparing to attack the base in question. This decision is up to the Base Commander. Assisting our interceptors by 'softening up' a UFO with SAMs would help take some of the pressure off our pilots and aircraft, but there is simply no way to completely hide our missile launches despite our best attempts to camouflage them. Repeated large-scale launches will give away our position sooner or later.\n"
+"Descrizione Generale\n"
 "\n"
-"The missile battery will be at moderate risk during a base attack. It is designed to prevent base attacks; if one has gotten through, it should no longer matter to the current attackers unless they're paving the way for a follow-up. It may be a tempting target of opportunity, however, because while our missiles are well-protected they will detonate if subjected to enough abuse. An explosion in the missile battery could have disastrous effects on the facility and the base at large.\n"
+"I missili sono diventati sempre più pericolosi fin dalla Seconda Guerra Mondiale, mentre le tecnologie di contromisura hanno iniziato ad essere efficaci solo a partire dell'inizio del ventunesimo secolo. In un confronto tra attacco e difesa, l'attaccante ha sempre avuto il vantaggio. Comunque, questo non ha dissuaso gli alieni dallo sviluppare difese da farci perdere la testa.\n"
+"\n"
+"Per fare un esempio, forze della Grande Unione Europea hanno ingaggiato battaglia con navi aliene utilizzando missili SAM (Missili Terra-Aria) nei cieli sopra Bohn. Sono stati lanciati quaranta missili dalle batterie di tutta Europa dopo che i loro radar hanno individuato due velivoli alieni.Successivamente, unità di infanteria nelle zona hanno lanciato tra dodici e quindici armi anti-aeree portatili.\n"
+"\n"
+"Il numero di colpi assestati? Uno. Solo uno. L'UFO ha accusato un piccolo rallentamento nella fase di accelerazione durante l'atterraggio a Bohn e successivamente si é rialzato senza nessun intoppo.\n"
+"\n"
+"Le conclusioni sono ovvie: le capacità dell'arte bellica aliena (EW), sono avanti diverse miglia dalla nostra. Comunque, noi di PHALANX abbiamo portato avanti uno studio approfondito del singolo colpo assestato, e scoperto che non si é trattato di un colpo di fortuna. Quello che é successo é che l'UFO si é esposto ad un angolo meno prudente mentre evitava gli altri colpi, permettendo al missile di mantenersi agganciato all'obiettivo fino alla fine.\n"
+"\n"
+"Questo prova che gli alieni non sono invulnerabili ai nostri missili. Abbiamo solo bisogno dei migliori a questo scopo. Le nostre scoperte ci hanno portato ad adattare alcuni vecchi piani di costruzioni di batterie missilistiche e riequipaggiarle con lanciamissili di ultima generazione. I nostri risultati sono promettenti.\n"
+"\n"
+"La Batteria Missilistica consiste di 4 lanciamissili che 'appaiono' sulla superficie quando agganciano un obiettivo. Ogni lanciamissili contiene 20 munizioni del tipo AA51 'Cicada' SAM. Si tratta dei missili più avanzati sulla terra, equipaggiati con più elettronica di un aereo di compagnia, progettati per buttare giù dal cielo un aereo nemico indipendentemente da quanto sia veloce. Non c'é nessuna arma di difesa di emergenza migliore sulla terra nel momento in cui scrivo.\n"
+"\n"
+"Contro le navi aliene, le possibilità di colpire dei missili Cicada rimangono ancora basse, ma in numeri sufficenti saranno in grado di provocare danni. I missili e le apparecchiature elettroniche sono naturalmente molto costosi, ben al di sopra del nostro bilancio nei numeri necessari ad ingaggiare con successo gli UFO. Fortunatamente la ONU si é mostrata d'accordo nel fornirci tutti i missili SAM standard dalle sue riserve strategiche senza nessun costo.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"Se costruita in una delle nostre base, la Batteria Missilistica può essere utilizzata per attaccare qualsiasi UFO nel raggio di azione o aspettare finché non venga identificato un UFO in fase di preparazione ad un attacco contro la base. Questa decisione é lasciata al Comandante. Assistere gli intercettori indebolendo un UFO con i missili SAM potrebbe aiutare a ridurre la pressione sopra i nostri piloti e velivoli, ma purtroppo non c'é modo di nascondere completamente i nostri lanciamissili nonostante tutti i nostri sforzi di camuffarli. Lanci ripetuti su larga scala faranno scoprire la nostra posizione prima o poi.\n"
+"\n"
+"La Batteria Missilistica dovrebbe essere ad un moderato livello di allerta durante un attacco. E' progettata per prevenire gli attacchi alla base; se qualcuno é già riuscito a penetrare all'interno, non dovrebbe interessare più agli attaccanti a meno che non stiano preparando la strada per una invasione successiva più pesante. Potrebbe essere un buon obiettivo di opportunità, comunque, perchè anche se i nostri missili sono ben protetti esploderanno se sottoposti a troppi maltrattamenti. Una esplosione nella Batteria Missilistica può avere effetti disastrosi sulla struttura e alla base nell'insieme.\n"
+"\n"
+"\n"
+"Aggiunte\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2771
 msgid "b_large_hangar_txt"
 msgstr ""
-"Blueprints -- Large Hangar\n"
+"Progetto -- Hangar Grande\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 11 August 2008\n"
+"Data: 11 Agosto 2008\n"
 "\n"
-"By: Gen. E. Baxter, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Due to the recent restructuring of our airfleet, we've had to make a complete reassessment and redesign of our hangar facilities. The VTOL (Vertical Take-Off and Landing) requirement for all new PHALANX aircraft has eliminated our need for runways. This has allowed us to move all hangar facilities into the actual base to improve security and response times.\n"
-"\n"
-"The Large Hangar provides underground space to store and maintain 1 large VTOL aircraft. Repairs, rearmament and refuelling can be carried out in complete obscurity. The aircraft never even sees the light of day until it's time for launch. During a launch, the hangar roof folds open and the large hydraulic lift raises the aircraft to a position above the roof where it can safely take off.\n"
-"\n"
-"For landing procedures, the lift features several tall catchhooks that -- once engaged by the undercarrige of a hovering pilot -- gently pull the aircraft down into a landing position. The catchhooks can intelligently adjust their own grip and even pass the grip from hook to hook to properly line up the undercarriage for landing. Once the catchhooks have snared the undercarriage and pulled it down to the landing surface, all the pilot needs to do is power down his engines. The system is simple and easy to use once a pilot gets the hang of it.\n"
-"\n"
-"A nearly-identical system has been implemented for the Small Hangar.\n"
-"\n"
-"The Large Hangar cannot house small craft due to incompatible support equipment such as fuel lines.\n"
+"Da: Gen. E. Baxter, Comandante della base, PHALANX, Comando Operativo del Pacifico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"The primary function of the Large Hangar is to house dropships for rapid deployment of troops to sites of alien activity. Alternately it can house and support larger combat craft. Please refer to specific aircraft files to review their capabilities and deployment strategy.\n"
+"Descrizione Generale\n"
 "\n"
-"Every PHALANX aircraft requires 1 hangar of appropriate size for storage, maintenance and deployment.\n"
+"In seguito alla recente ristrutturazione della nostra flotta aerea, abbiamo avuto bisogno di una riorganizzazione e un restyling della nostre infrastrutture di hangar. Il requisito VTOL (Decollo e Atterraggio Verticale) applicato a tutti i nuovi velivoli PHALANX ha eliminato la necessità di una rampa di atterraggio. Questo ci ha permesso di spostare tutte le infrastrutture di hangar all'interno della base, migliorando la sicurezza e il tempo di reazione.\n"
 "\n"
-"Hangars are a particularly vulnerable installation due to their direct connection to the surface. They will be a primary point of entrance for any extraterrestrial attackers. They are an extreme damage risk, filled with volatiles such as jet fuel and possibly high-explosive aircraft munitions. Worse, any aircraft left behind at the base will be a highly tempting target; severe damage to our interceptors -- or even more frightening, the dropship -- might put us out of action for weeks.\n"
+"L'Hangar Grande fornisce spazio sotterraneo sufficente per ospitare e mantenere un velivolo VTOL grande. La riparazione, il riarmo (riarmamento / se trovo un termine più tecnico ti faccio sapere, questo mi \"suona male\" -> riarmo?) e il rifornimento di carburante possono essere portati avanti nella completa oscurità. Il velivolo non vede nemmeno mai la luce del sole finché non arriva l'ora del lancio. Durante il decollo, il soffitto dell'hangar si apre e un grande ascensore idraulico trasporta il velivolo fino ad una posizione sicura dalla quale si possa alzare in volo.\n"
 "\n"
-"If possible, all aircraft should be scrambled before an impending base attack and moved out of the area until the attack is over. They may be engaged in the air by an approaching UFO, but at least they will have the advantage of being able to manoeuvre. Still, this may not always be a viable tactic. Scrambling our craft within range of a heavily-armed attack ship could have more disastrous results than leaving them in their hangars, as tempting a target as that would make them.\n"
+"Per quanto riguarda le procedure di atterraggio, l'ascensore é equipaggiato con un certo numero di lunghi ganci che -- una volta attivati dal carrello abbassato da un pilota in volo stazionario -- pongono gentilmente il velivolo in posizione di atterraggio. I ganci possono aggiustare gentilmente la loro presa e addirittura distribuire la stretta da uno all'altro in modo da allineare correttamente il carrello di atterraggio in posizione. Una volta che il velivo é stato intrappolato (eliminato alcune ripetizioni) e portato sopra la pista, tutto quello che il pilota deve fare é spegnere i motori. Il sistema é semplice e facile da utilizzare una volta che il pilota vi si é abituato.\n"
+"\n"
+"Un sistema praticamente identico é stato implementato per l'Hangar Piccolo.\n"
+"\n"
+"L'Hangar Grande non può ospitare piccoli velivoli a causa di incompatibilità nell'equipaggiamento di supporto, come per esempio le linee di rifornimento di carburante.\n"
+"\n"
+"\n"
+"Raccomandazioni\n"
+"\n"
+"La funzione primaria dell'Hangar Grande é di ospitare le navi di trasporto per una dispiegazione rapida delle truppe in siti di attività aliena. In alternativa può ospitare e supportare grandi navi da combattimento. Fate riferimento ai file specifici dei singoli velivoli per visionare la loro capacità e strategia di schieramento.\n"
+"\n"
+"Ogni velivolo PHALANX richiede almeno 1 hangar della dimensione adeguata per immagazzinamento, manutenzione e schieramento.\n"
+"\n"
+"Gli Hangar sono installazioni particolarmente vulnerabili a causa della loro connessione diretta alla superfice. Essi sono punti di ingresso primario per qualsiasi attaccante extraterrestre. Sono un punto di rischio estremo, essendo presenti sostanze infiammabili come il carburante dei jet e le munizioni potenzialmente esplosive. Ancora peggio, qualsiasi velivolo rimasto nella base sarò un obiettivo molto desiderabile; danni massivi ai nostri intercettori -- o più pericolosamente, alla nave di trasporto -- può metterci fuori combattimento per settimane.\n"
+"\n"
+"Se possibile, ogni velivolo dovrebbe essere portato via prima di un imminente attacco alla base e spostato fuori dall'area finchè l'attacco non é concluso. Tienga però in considerazione che anche questa ultima tattica presenta dei grossi rischi. Mandare i nostri velivoli nel raggio di azioni di navi da battaglia nemiche pesantemente armate può avere risultati ancora più disastrosi che lasciarli negli hangar, sebbene questo le renda dei buoni obiettivi per i nemici.\n"
 "\n"
 "\n"
 "Addenda\n"
 "\n"
-"None."
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2789
 msgid "b_hospital_txt"
 msgstr ""
-"Blueprints -- Hospital\n"
+"Progetto -- Ospedale\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 19 March 2084\n"
+"Data: 19 marzo 2084\n"
 "\n"
-"By: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This conflict is going to be ugly, Commander. In order to treat the heavily-injured battlefield casualties we're going to see, we need advanced facilities with equipment no standard civilian or military hospital has available. This much is obvious; hundreds died needlessly in Mumbai hospitals because no proper machinery was available to treat the horrific bone-deep plasma burns inflicted by the alien weapons. We must be better prepared than that.\n"
-"\n"
-"The old PHALANX hospital designs are woefully inadequate to deal with the coming storm. They have never been updated since their creation in 1960 and contained little to no purpose-designed equipment. In the end we've had to completely replace them with new plans created by myself, with the help of Cdr. Navarre and our building experts. How the previous management expected to deal with battle wounds from unknown alien weaponry I will never know.\n"
-"\n"
-"As it stands, our hospital facilities are now the finest in the world. We are the leading experts in treating burn trauma, especially the removal and regeneration of charred tissue. We encourage injured flesh to regrow itself through intensive therapy which includes a heavy course of drugs, electrical nerve and muscle stimulation, and nanobot infusions directly into the wound. Theoretically, we should be able to restore any living human being to full health in six weeks. This includes psychological evaluation and injury counselling. Lighter injuries will of course take less time to heal.\n"
-"\n"
-"We also have facilities to carry out amputation and major bionic surgery. Powerful cybernetic limbs have been made available to us by our military sources around the world, as well as armoured torso cages, electronic eyes and other internal machinery. These can be installed into our soldiers at the Hospital facility to upgrade their combat efficiency if we can afford the high cost and convalescence time.\n"
-"\n"
-"The Hospital requires a Power Plant to fuel its high and continuous electricity demand.\n"
+"Da: Chirurgo-Capitano Helen Floydd, Divisione Medica, PHALANX, Comando Operativo dell'Atlantico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"Every base with armed-response troops should contain a Hospital for treatment. If there is no PHALANX Hospital available, soldiers will have to be sent out to standard hospitals where suboptimal treatment could result in a permanent loss of ability or even death.\n"
+"Descrizione Generale\n"
 "\n"
-"The advantages of upgrading our soldiers with mechanical parts should be obvious. These procedures can only be performed on a healthy body; convalescing troops who have sustained recent physical hardships or surgery must complete their convalescence before they can become eligible for bionic upgrades. Keep in mind also that bionic limb or eye replacement may have a negative impact on the patient's morale.\n"
+"Capitano, questo conflitto sarà molto pesante. Se vogliamo essere in grado di trattare i soldati gravemente feriti che vedremo, abbiamo bisogno di infrastrutture avanzate con equipaggiamento che nessun ospedale normale civile o militare possiede. Questo dovrebbe essere chiaro: negli ospedali di Mumbai centinaia di persone sono morte inutilmente, per la mancanza dei macchinari necessari a trattare le orribili bruciature al plasma profonde fino alle ossa inflitte dalle armi nemiche. Dobbiamo essere preparati meglio per il futuro.\n"
 "\n"
-"Tactically, the Hospital is a moderate threat area. The aliens may try to kill our wounded and deprive us of proper medical facilities, but it is relatively unlikely that any attackers would select the Hospital as their primary target. Still, if we are attacked, a guard should be posted at the Hospital immediately.\n"
+"I vecchi piani per ospedali PHALANX sono chiaramente inadeguati per trattare la tempesta in arrivo. Non sono mai stati aggiornati sin dalla loro creazione nel 1960 e contengono equipaggiamente scarso e con poca utilità. In poche parole abbiamo dovuto rimpiazzarli completamente con nuovi piani che ho creato io stessa, con l'aiuto del Comandante Navarre e i nostri esperti di costruzione. In che modo la direzione precedente prevedeva di affrontare ferite di battaglia dovute ad armi aliene sconosciute, per me rimarrà sempre un mistero.\n"
+"\n"
+"Adesso, le nostre infrastrutture ospedaliere sono le più raffinate al mondo. Siamo gli esperti di punta nel trattamento di traumi e bruciature, specialmente nella rimozione e rigenerazione di tessuto carbonizzato. Stimoliamo i tessuti danneggiati a ricrescere da soli attraverso una terapia intensiva che include un uso pesante di farmaci, stimolazione elettrica di nervi e muscoli, e infusioni di nanobot direttamente nella ferita. Teoricamente, siamo in grado di portare a guarigione completa qualsiasi essere umano in sei settimane. Questo tempo include una valutazione psicologica e una consulenza sul trauma. Ferite più leggere saranno ovviamente curate più rapidamente.\n"
+"\n"
+"Abbiamo anche infrastrutture in grado di eseguire amputazioni e chirurgia bionica superiore. Potenti arti cybernetici sono stati messi a disposizione da fonti militari di tutto il mondo, così come casse toragiche, occhi elettronici e altri macchinari interni. Questi possono essere installati sui nostri soldati nell'infrastruttura ospedaliera in modo da aumentare la loro efficenza in combattimento, se possiamo permetterci gli alti costi e il periodo di convalescenza.\n"
+"\n"
+"L'Ospedale richiede un Generatore di Corrente per rifornire il suo alto e continuo bisogno di energia elettrica.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"Qualsiasi base con truppe armate o di difesa dovrebbe contenere un ospedale per il trattamento. Nel caso non vi sia un ospedale PHALANX disponibile, i soldati verranno mandati in ospedali standard dove trattamenti sotto-ottimali potrebbero risultare in perdite permanenti di abilità o addirittura morte.\n"
+"\n"
+"I vantaggi di aggiornare i nostri soldati con parti meccaniche dovrebbe essere ovvio. Queste procedure possono essere condotte solo su un corpo in piena salute; truppe convalescenti che hanno sostenuto privazioni o chirurgie recenti dovrebbero completare il loro periodo di convalescenza prima di poter essere candidati ad upgrade bionici. Bisogna inoltre tenere a mente che il rimpiazzo di un occhio o un arto bionico può avere un effetto negativo sul morale del paziente.\n"
+"\n"
+"Tatticamente, l'Ospedale é una area di allerta moderata. Gli alieni potrebbero tentare di uccidere i nostri feriti e cercare di privarci delle nostre infrastrutture mediche, ma é piuttosto improbabile che un attaccante selezioni l'Ospedale come proprio obiettivo primario. In ogni caso, se attaccati, una guardia dovrebbe essere posizionata in questa infrastruttura immediatamente.\n"
+"\n"
+"\n"
+"Aggiunte\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2807
 msgid "b_small_hangar_txt"
@@ -7343,424 +7352,414 @@ msgstr ""
 #: ../base/ufos/research.ufo:2825
 msgid "b_lab_txt"
 msgstr ""
-"Blueprints -- Laboratory\n"
+"Progetto -- Laboratorio di Ricerca e Sviluppo\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 02 October 2021\n"
+"Data: 02 Ottobre 2021\n"
 "\n"
-"By: Dr. Richard Strohm, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"Da: Dr. Richard Strohm, R&S: Divisione Bio & Contenimento, PHALANX, Comando Operativo dell'Atlantico\n"
 "\n"
 "\n"
 "\n"
-"Overview\n"
+"Descrizione Generale\n"
 "\n"
-"There is a reason why PHALANX labs have been considered the best in the US for the past 50 years. We invented aircraft Stealth technology in the 1960s with the XD4 stealth interceptor and have remained at the forefront with the first production of artificial spider silk four years ago. These are the results of combining the brightest people with the finest equipment available. By keeping ourselves at the forefront, we ensure readiness against a possible extraterrestrial threat.\n"
+"C'é una ragione per cui i laboratori PHALANX sono stati considerati i migliori in US negli ultimi 50 anni. Abbiamo inventato la tecnologia Stealth per i velivoli negli anni 1960 con l'intercettore stealth XD4 e siamo rimasti in prima linea con la produzione della seta di ragno artificiale 4 anni fa. Questi sono i risultati del combinare insieme gli elementi più intelligenti con il migliore equipaggiamento disponibile. Rimanendo sempre all'avanguardia, ci assicuriamo di essere pronti contro un possibile pericolo extraterrestre.\n"
 "\n"
-"Our new laboratories are equipped for any kind of research; biotechnology, nanotechnology, high-energy lasers, particle physics and more. There is nothing that can fit inside the laboratory's walls that cannot be properly studied, dissected or disassembled. It comes standard with growing vats that can create any organic matter we might need, hologram projectors for testing and 3D simulation, laser and maser installations, a miniature tokamak fusion chamber for plasma research, and a powerful particle accelerator.\n"
+"I nostri laboratori sono equipaggiati per qualsiasi tipo di ricerca; biotecnologie, nanotecnologie, laser ad alta energia, fisica delle particelle e molto altro. Non esiste niente che possa entrare fisicamente all'interno delle mura del laboratorio che non possa essere studiato, dissezionato o disassemblato. Non è un risultato inaspettato considerato le strutture di crescita con le quali possiamo creare qualsiasi materia organica possa essere necesaria, proiettori olografici per il testing e simulazioni 3D, installazioni laser e maser, e una camera di fusione tokamak in miniatura per la ricerca sul plasma, e un potente acceleratore di particelle.\n"
 "\n"
-"Any one of these installations would cost a fortune for a civilian operation or military contractor, but due to our experience and efficiency, we can build and maintain all of them at a fraction of the cost. Project times are also greatly reduced by having many types of equipment available at a moment's notice. Our high-level research makes full and continuous use of all of it.\n"
+"Una qualsiasi di queste strutture costerebbe una fortuna per una operazione civile o per un appaltatore militare, ma grazie alla nostra esperienza ed efficenza, possiamo costruire e mantentere tutto questo ad una frazione del costo. I tempi di progetto sono inoltre ridotti per avere diversti tipo di equipaggiamento disponibile in pochi momenti. La nostra ricerca ad alti livelli fa un uso pieno e continuo di tutto questo.\n"
 "\n"
-"As long as we keep receiving the funding we need, the laboratory will remain one of the most essential parts of our defence strategy. In order to defeat any enemy, we must first come to know him, perhaps even understand him. To do that we'll need the best research facilities humanity can build, and ours are it.\n"
+"Finché riceveremo i fondi di cui necessitiamo, il laboratorio rimarrà una delle parti essenziali della nostra strategia di ricerca. Se vogliamo sconfiggere qualsiasi nemico, dobbiamo prima arrivare a conoscerlo, e forse addirittura a comprenderlo. Per fare questo abbiamo bisogno delle infrastrutture di ricerca migliori che l'umanità possa costruire, e le nostre lo sono.\n"
 "\n"
-"The Laboratory requires a working Power Plant and Command Centre to function.\n"
+"Il Laboratorio di Ricerca e Sviluppo richiede un Generatore di Corrente e un Quartier Generale attivo per essere funzionante.\n"
 "\n"
 "\n"
 "Recommended Doctrine\n"
 "\n"
-"Our scientists don't need a lab to live in a base, but they can't do their work without one. We should construct and operate as many labs as may be needed and/or affordable. All extraterrestrial technology must be analysed and reverse-engineered (if possible) as soon as we can.\n"
+"I nostri scienziati non hanno bisogno di un laboratorio per vivere nella vase, ma non possono fare il loro lavoro senza di uno di essi. Dobbiamo costruire e rendere operativi quanti più laboratori sia necessario e che possiamo permetterci. Tutta la tecnologia extraterrestre deve essere analizzata e retro-ingegnerizzata (se possibile) il più presto possibile.\n"
 "\n"
-"As laboratories go, ours are quite cost-effective to build and provide work space for up to 10 scientists each, working full-time.\n"
+"Se i laboratori funzionano, i nostri sono abbastanza convenienti come costi da costruire e forniscono spazio per fino a 10 scienziati ciascuno, che lavorano a tempo pieno.\n"
 "\n"
-"During a possible base attack, they are a moderate-priority target. If extraterrestrial attackers are aware enough of our existence to attack our bases directly, they will most certainly want to shut down our research programs. There are easier targets that can threaten the survival entire base -- especially the power plant -- but if presented as a target of opportunity, the EXTs may very well take the time to set off explosives inside the lab, which tends to be full of volatile substances. Severe damage to the base could result if our labs are not adequately protected.\n"
+"Durante un attacco, sono aree di allerta di priorità moderata. Se un attaccante extraterrestre é abbastanza consapevole della nostra esistenza per attaccare le nostre basi direttamente, essi cercheranno sicuramente di chiudere i nostri programmi di ricerca.Ci sono obiettivi più semplici che possono mettere in pericolo la sopravvivenza dell'intera base -- specialmente il generatore di corrente -- ma se presentato come obiettivo di opportunità, gli alieni potrebbero facilmente prendersi il tempo di piazzare cariche esplosive all'interno del lab, che generalmente é pieno di sostanze volatili. Danni seri possono essere apportati alla base se i nostri laboratori non sono adeguatamente protetti.\n"
 "\n"
 "\n"
 "Addenda\n"
 "\n"
-"Addendum, Dr. Dolan Connor, 16 March 2084:\n"
+"Addendum, Dr. Dolan Connor, 16 Marzo 2084:\n"
 "\n"
-"Reviewing the files on PHALANX laboratory facilities, I have concluded that these blueprints were well ahead of their time. The design is still viable and can be adapted to our use with only minor equipment upgrades."
+"Riguardando i file di PHALANX sulle infrastrutture di ricerca, ho concluso che i piani erano abbastanza avanzati per il loro tempo. Il design é ancora utilizzabile e può essere adattato alle nostre necessità con piccoli aggiornamenti dell'equipaggiamento."
 
 #: ../base/ufos/research.ufo:2843
 msgid "b_powerplant_txt"
 msgstr ""
-"Blueprints -- Power Plant\n"
+"Progetto -- Generatore\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 16 March 2084\n"
+"Data: 16 Marzo 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"Da: Comandante Paul Navarre, R&S: Dipartimento Ingegneria, PHALANX, Comando Operativo dell'Atlantico\n"
 "\n"
 "\n"
 "\n"
-"Overview\n"
+"Descrizione Generale\n"
 "\n"
-"PHALANX has had trouble generating enough power to meet its needs ever since the organisation was first conceived in 1955. The old bases were forced to constantly pump in electricity from large, non-emitting sources (like hydroelectric dams) via many kilometres of wiring. They were completely dependent on outside power and were paralysed whenever the grid went down. It has taken the Russian nuclear revolution to enable full electrical autonomy for our underground bases, even when factoring high-energy research.\n"
+"PHALANX ha avuto alcuni problemi nel generare sufficente energia per soddisfare i propri fabbisogni sin da quando l'organizzazione é stata concepita per la prima volta nel 1955.\n"
 "\n"
-"Our plant of choice is the German HEFR (High-Energy Fission Reactor), a very efficient energy amplifier design. It is a subcritical reactor, a reactor that produces fission without achieving a sustained chain reaction. Instead it uses an external source of neutrons -- in this case a particle accelerator -- to stimulate the reaction. This method releases enough power to keep the particle accelerator running, as well as a power surplus that is redirected to feed the rest of the base.\n"
+"Le vecchie basi erano forzate ad pompare costantemente elettricità da grandi fonti non emittenti (come dighe idroelettriche) attraverso cavi di chilometri di lunghezza. Esse erano completamente dipendenti dall'energia esterna e paralizzate quando la griglia cadeva. C'é stato bisogno della rivoluzione nucleare Russa per garantire piena autonomia elettrica alle nostre basi sotterranee, nonostante la ricerca ad alti livelli.\n"
 "\n"
-"The HEFR runs on thorium rather than uranium, and most of its waste output will decay naturally to the radioactive level of coal ash in only 500 years. By comparison, the half-lives of the isotopes most frequently used in nuclear weapons and old reactors are 24,110 years for plutonium (Pu-239) and 700 million years for uranium (U-235). The short-lived waste output is particularly easy to handle for the depleted element postprocessor integrated into the design. After a full trip through the postprocessor, the HEFR's reactor waste will take only weeks to decay to human-safe levels of radioactivity.\n"
+"Il nostro impianto di scelta é il tedesco RFAE (Reattore di Fissione ad Alta Energia), un disegno veramente efficente di amplificazione di energia. E' un reattore sub-critico, che produce fissione senza dare luogo ad una reazione a catena. Invece utilizza una fonte esterna di neutroni -- in questo caso un acceleratore di particelle -- per stimolare la reazione. Questo metodo rilascia abbastanza potenza per mantenere l'acceleratore di particelle funzionante, così come un surplus di energia che viene reindirizzato per soddisfare il resto della base.\n"
 "\n"
-"In our design, the reactor core and operational machinery are built into a special shell located far deeper than the rest of the base. Only the coolant tanks and control/service entrances poke up to the base level. This protects against the possible but minuscule risk of a meltdown in case we completely lose refrigeration of the core.\n"
+"Il reattore RFAE utilizza thorio invece che uranio, e la maggior parte delle sue scorie decade naturalmente al livello radiattivo del carbone in soli 500 anni. Per confronto, l'emi-vita degli isotopi più frequentemente utilizzati in armi nucleari e vecchi reattori sono 24.110 per il plutonio (Pu-239) e 700 milioni di anni per l'uranio (U-235).Questi rifiuti a bassa emi-vita sono particolarmente semplici da gestire per il post-processatore di elementi ridotti integrato nel design. Dopo un giro completo nel post-processatore, le scorie del RFAE impiegano solo alcune settimane per decadere a livelli di radioattività sicuri per l'uomo.\n"
 "\n"
-"I admit, I copied half of the specifics verbatim from the various briefs I've read -- nuclear physics are a touch above my head -- but I understand the stats well enough. The power output of one plant is enough to fully meet the needs of a standard base. If a base is equipped with many high-energy buildings such as laboratories, a second plant may be required, but a subsequent increase in base defences and security will be required to properly protect it. We can easily and safely store enough fuel on-site for a decade of continued operation. A protected container is installed with every reactor, and it can be refuelled if necessary.\n"
+"Nel nostro progetto, il cuore del reattore e i macchinari operativi sono costruiti in un edificio speciale localizzato molto in profondità e lontano dalla base. Solo i serbatoi di raffreddamento e le entrate di controllo/servizio arrivano al livello della base. Questo protegge contro il minuscolo ma possibile rischio di fusione nel caso perdessimo completamente il raffreddamente del core.\n"
+"\n"
+"Lo ammetto, ho copiato metà delle parole specifiche da diversi rapporti brevi che ho letto -- la fisica nucleare é un poco al di sopra delle mie possibilità -- ma ho compreso le statistiche sufficentemente bene. La potenza di un impianto é necessaria a soddisfare i requisiti di una base standard. Se una base é equipaggiata con diverse strutture ad alta energia come laboratori di ricerca e sviluppo, potrebbe essere necessario un secondo Generatore, ma in questo caso sarebbe obbligatorio un incremento della difesa della base e della sicurezza per proteggerlo.Un contenitore protetto é installato in ogni reattore, e può venire rifornito se necessario.\n"
 "\n"
 "\n"
 "Recommended Doctrine\n"
 "\n"
-"Every base needs at least one power plant. Without a power plant, many facilities -- including the Command Centre -- can't function. Bases with exceptional power use may need two or more to keep all our facilities working at top performance.\n"
+"Ogni base ha bisogno di almeno un Generatore. Senza di esso, molte strutture -- incluso il Quartier Generale -- non possono funzionare. Le basi con richieste di energia eccezionale possono aver bisogno di due o più Generatori per mantenere tutte le strutture al massimo dell'efficenza.\n"
 "\n"
-"Our base defence strategy should pay particular attention to defending the power plant. Damage to the coolant tanks could be disastrous; if we lose too much coolant a meltdown will be hard to avoid. We may consider stepping down the reactor in anticipation of an attack, but it would take a long time to get it started up again, during which we wouldn't be able to operate any energy-intensive equipment. Things like radar, laboratory equipment, even hangar lifts.\n"
+"La nostra strategia di difesa deve portare particolare attenzione alla difesa del Generatore. Un danno ai contenitori di raffreddamento sarebbe disastroso; se perdiamo troppo liquido refrigerante, sarà difficile evitare una fusione. Dovremmo considerare di spegnere il reattore prima di un attacco, ma richiederebbe troppo tempo per ripartire, durante il quale non saremmo in grado di utilizzare nessun equipaggiamento ad alta energia. Come per esempio i radar, i laboratori, e perfino gli elevatori degli hangar.\n"
 "\n"
 "\n"
 "Addenda\n"
 "\n"
-"None."
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2861
 msgid "b_quarters_txt"
 msgstr ""
-"Blueprints -- Living Quarters\n"
+"Progetto -- Aree Residenziali\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 22 January 1958\n"
+"Data: 22 Gennaio 1958\n"
 "\n"
-"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The Living Quarters facility is the standard habitation unit for PHALANX personnel. It provides living space and sanitation for up to 20 people and several necessary ancillary personnel.\n"
-"\n"
-"The facility's lower floor contains a soldiers' barracks, communal showers, bathrooms, and a common area where troops can spend their off-duty time. Each soldier receives 1 bunk and 1 locker partition to store their personel effects such as civilian clothes. It is also intended for storage of uniforms and other on-duty equipment.\n"
-"\n"
-"The upper floor contains officers' quarters, generally used for any ranking/important personnel. Each private quarters has its own bed, desk, storage space and sanitary unit, and the level as a whole sports shared but separate shower cabins. This level is located above-ground and receives natural sunlight.\n"
-"\n"
-"In the case of an emergency, the Living Quarters has a special partition designed to function as a disaster shelter where non-combat personnel can take refuge until the all clear is given. The shelter provides oxygen and supplies for up to 12 people for 1 week. The access hatch is made of tungsten-reinforced titanium and will open for little short of a nuclear blast.\n"
-"\n"
-"The Living Quarters does not depend upon any other structures to operate.\n"
+"Da: Maggior Marcel LeClerc, Comandante della Base, PHALANX, Comando Operativo del Pacifico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"The Living Quarters are an important part of evacuation procedures in the event of a base attack. All non-combat personnel are to drop their current tasks immediately and retreat to the nearest shelter or strongpoint, be it the Command Centre, Living Quarters or other appropriate facility. Seven minutes after the attack alarm sounds, all disaster shelter doors will close -- regardless of how many personnel are accounted for -- and afterwards they will refuse to open except from the inside. Everyone who is not going to participate in the fight should be inside by that time.\n"
+"Descrizione Generale\n"
 "\n"
-"The facility is almost worthless from a tactical standpoint, and will most likely be ignored by any extraterrestrials. It is thoroughly unimportant during an attack, as well as cheap to build and easy to repair. There is very little a hostile force could do short of total destruction that can really inconvenience a Living Quarters.\n"
+"Le Aree Residenziali sono le abitazioni standard per il personale PHALANX. Forniscono lo spazio vitale e sanitario per un massimo di 20 persone e numeroso personale ausiliario.\n"
+"\n"
+"Il piano inferiore contiene una caserma militare, docce comuni, bagni, e un'area comune dove i residenti possono passare il proprio tempo fuori servizio. Ogni soldato dispone di una cuccetta e un armadietto nel quale depositare i propri effetti personali come gli abiti civili. E' anche utilizzato come magazzino per le uniformi e altro equipaggiamento di servizio.\n"
+"\n"
+"Il piano superiore contiene gli alloggi degli ufficiali, generalmente riservati a personale importante o di grado elevato. Ogni alloggiamento possiede un proprio letto, scrivania, ripostiglio e unità sanitaria, e il livello intero é fornito di docce comuni ma separate. Questo livello é localizzato al di sopra della superfice e riceve luce naturale.\n"
+"\n"
+"In caso di emergenza, le Aree Residenziali possiedono una area speciale pensata per funzionare come rifugio nel quale il personale civile si può nascondere finché non viene dato il segnale di cessato pericolo. Il rifugio fornisce ossigeno e rifornimenti necessari a mantenere fino a 12 persone per una settimana. La botola di ingresso é fatta di titanio rinforzato al tungsteno e si apre per poche cose che siano più deboli di una esplosione nucleare.\n"
+"\n"
+"Le Aree Residenziali non dipendono da altre strutture per essere operative.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"Le Aree Residenziali sono importanti per le procedure di evacuazione in caso di attacco alla base. Tutto il personale non combattente deve abbandonare immediatamente il proprio incarico e recarsi al rifugio o alla camera blindata più vicina, che sia il Quartier Generale, le Aree Residenziali o un'altra struttura adeguata. Sette minuti dopo l'allarme, tutte le porte di sicurezza dei rifugi vengono chiuse -- indipendentemente da quanti vi siano dentro -- e successivamente non si apriranno se non dall'interno. Tutti coloro che non partecipano alla difesa della base devono essere all'interno dei rifugi entro questo tempo.\n"
+"\n"
+"La struttura è praticamente inutile dal punto di vista tattico, e sarà molto probabilmente ignorata dagli extraterrestri. E' perciò poco importante durante un attacco, così come economico da costruire e da riparare. C'é veramente poco che una forza ostile possa fare nelle Aree Residenziali per darci fastidio, a parte distruggerle completamente.\n"
+"\n"
+"\n"
+"Note\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2879
 msgid "b_radar_txt"
 msgstr ""
-"Blueprints -- Radar\n"
+"Progetto -- Radar\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 18 March 2084\n"
+"Data: 18 Marzo 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Commander, we've had to make extensive changes to our old Radar facility designs to bring them up to date. The old report is no longer applicable, so I've decided to replace it with this one.\n"
-"\n"
-"Our Radar facility is not a large radar array in itself. It's actually a control centre for a series of camouflaged dishes placed on high ground around the base. There are between 8 and 12 dishes set up for each installation, depending on the available space and the dishes' individual coverage. Each dish is equipped with several means of detection rather than simply radar, as radar has trouble maintaining a lock on alien contacts. Supplemental systems include, but are not limited to, infrared and laser rangefinding.\n"
-"\n"
-"Building more than one Radar installation at a base will suitably increase the extent of our radar coverage.\n"
-"\n"
-"The facility is manned round-the-clock in 6-hour shifts, reviewing the processed data after our computers have gathered all discernible information from a contact. Human operators are absolutely necessary and should be present to supervise at all times; what the computers might dismiss as a radar ghost can turn out to be a stealthed alien harvester ready to hit a mass off civilians. Instinct and experience count just as much as software intelligence.\n"
-"\n"
-"Our radar is patched directly into the UN aircraft registry and can cross-reference the transponder data of any civilian aircraft with its flight plan and cargo manifest. Non-PHALANX military aircraft are also required to log their routes into our database, but we can't know for certain if the various militaries will be very conscientious in following that directive.\n"
-"\n"
-"The Radar facility cannot function without a working Power Plant or a Command Centre to coordinate our radar into our tactical efforts.\n"
+"Da: Cdr. Paul Navarre, R&S: Dipartimento Ingegneristico, PHALANX, Comando Operativo dell'Atlantico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"Since our radar-emitting dishes are not located at the base site, there is no direct threat of discovery to a base from using active radar. Considering the number of other military radar sources around, it's unlikely that alien craft will be able to learn anything from a dedicated backtrace. At most they'll be able to find the general area of a base.\n"
+"Descrizione Generale\n"
 "\n"
-"However, any UFOs spotted patrolling the area may be trying to zero in on our installation, and should not be allowed to complete their mission under any circumstances.\n"
+"Comandante, abbiamo dovuto apportare estesi cambiamenti alle nostre vecchie planimetrie per le infrastrutture Radar per renderle aggiornate. Il vecchio rapporto non é più applicabile, perciò ho deciso di sostituirlo con questo.\n"
 "\n"
-"During an attack, the Radar facility will be at high risk. It is our eyes and ears. Without working radar coverage, we wouldn't be able to see the UFOs we're supposed to respond to. If any attacking aliens approach the facility they will almost certainly attempt to damage or destroy it with explosives. We must not let that happen.\n"
+"La nostra infrastruttura Radar di per sé non é una grande batteria radar. E' piuttosto un centro di controllo per una serie di dischi-antenna camuffati disposti su terreni rialzati intorno alla base. Vi é un numero compreso tra 8 e 12 di dischi per ogni installazione, a seconda dello spazio disponibile e della loro copertura individuale. Ognuno di essi é equipaggiato con diversi sistemi di detezione piuttosto che essere un semplice radar, poiché i radar hanno dei problemi a mantenere un focus su contatti alieni. I sistemi supplementari includono, tra gli altri, mezzi di ricerca laser e infrarossi.\n"
+"\n"
+"Costruire più di una infrastruttura Radar in una base incrementerà notevolmente la nostra area di copertura.\n"
+"\n"
+"La struttura é gestita completamente in turni di 6 ore, controllando manualmente tutti i dati processati dopo che i nostri computer hanno raccolto qualsiasi informazione ottenibile da un contatto. Gli operatori umani sono assolutamente necessari e dovrebbero essere presenti per la supervisione in ogni momento; ciò che il computer potrebbe scartare come un fantasma sul radar potrebbe essere un mietitore alieno furtivamente pronto a colpire masse di civili. Intuito ed esperienza contano allo stesso modo di software intelligenti.\n"
+"\n"
+"Il nostro radar é collegato direttamente al registro di velivoli delle Nazioni Unite e può risalire alle caratteristiche di risposta al radar di qualsiasi velivelo civile in volo e del suo carico. I velivoli non militari PHALANX sono anch'essi costretti a registrari i loro spostamenti nel database, ma non possiamo essere sicuri che le varie istituzioni militari siano scrupolose nell'applicare le stesse direttive.\n"
+"\n"
+"Il radar non può funzionare senza un Generatore di Corrente funzionante e un Quartier Generale per coordinare il radar con i nostri sforzi tattici.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"Addendum, Executive Officer Abel S. Howard, 18 March 2084:\n"
+"Dato che le nostre antenne emittenti-radar non sono localizzate all'interno della base, non c'é un pericolo diretto di essere scoperti a causa del loro utilizzo. Consideranto il numero di altre sorgenti radar militari in giro, é poco probabile che delle navi aliene siano in grado di comprendere qualcosa da un rintracciamento. Al massimo saranno in grado di capire la posizione generale di una base.\n"
 "\n"
-"We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
+"In ogni caso, qualsiasi UFO scoperto in ricognizione nell'area potrebbe essere alla ricerca di un modo in cui iniziare l'attacco, e non bisogna permettere che completi la propria missione in nessuna circostanza.\n"
+"\n"
+"Durante un attacco, l'infrastruttura Radar sarà a rischio elevato. Rappresenta i nostri occhi e le nostre orecchie. Senza un radar funzionante, non saremo in grado di vedere gli UFO ai quali é nostro compito rispondere. Non dobbiamo permettere che ciò accada.\n"
+"\n"
+"\n"
+"Aggiunte\n"
+"\n"
+"Aggiunta, Ufficiale Esecutivo Abel S. Howard, 18 Marzo 2084:\n"
+"\n"
+"Non dovremmo considerare le infrastrutture Radar come il mezzo finale per il rilevamento di UFO. Anche con sistemi supplementari la nostra copertura non é completamente affidabile, e dovremo ricercare metodi per migliorare la nostra tecnologia di rilevamento se vogliamo avere qualche possibilità di fermare questi bastardi."
 
 #: ../base/ufos/research.ufo:2897
 msgid "b_storage_txt"
 msgstr ""
-"Blueprints -- Storage\n"
+"Progetto -- Magazzino\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 26 January 1958\n"
+"Data: 26 Gennaio 1958\n"
 "\n"
-"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The Storage facility is the base's repository for ammunition, weapons, and other equipment not currently in use. All small-arms, vehicle and aircraft ammunition that is not earmarked for emergency response resides in the Storage facility. It also serves as a garage for our battlefield vehicles. These remain in their bays until mission time, with fully-loaded magazines in case of a base attack.\n"
-"\n"
-"Cameras and alarms maintain round-the-clock vigilance to ensure no unauthorised removals are made. All removals must be approved by the officer on duty before the alarm is deactivated. Live ammunition and other sensitive equipment such as alien artifacts are kept in locked containers in the quartermaster's office behind rigorous security; checking anything out of locked storage requires the presence of the base quartermaster and written authorisation from the Command Centre.\n"
-"\n"
-"All item requisitions necessary for research, production and aircraft maintenance are handled by the appropriate officers; no input from the Base Commander is required. Only mission equipment and battlefield vehicles require the Commander's direct supervision.\n"
-"\n"
-"The Storage facility can fit a maximum of 50 standard-sized pallets of equipment. The amount of items in a pallet is relatively unimportant, size is the main restricting factor with regards to Storage facility space. The contents of each individual pallet are scrupulously tracked by magnetic labels and detailed punch-card logs.\n"
-"\n"
-"It does not depend upon any other base facilities to function.\n"
+"Da: Maggior Marcel LeClerc, Comandante della Base, PHALANX, Comando Operativo del Pacifico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"In the case of an invasion, we will need all the storage space we can get. Large stores of ammunition may need to be squared away for long periods of time. Recovered artifacts will need to be adequately contained and protected, as anything with nebulous alien capabilities should be kept in our explosion-proof lockers or be destroyed. If all the lockers are full, we may have no choice in the matter.\n"
+"Descrizione Generale\n"
 "\n"
-"During a base attack, the Storage facility would not be more than a target of opportunity. Any sensitive equipment in the facility will most likely be protected and require significant effort to destroy. Even the facility itself is cheap and easy to repair. The only threat comes from stored explosives and ammunition, which may present a risk due to the possibility of sympathetic detonation.\n"
+"L'edificio del Magazzino é il punto di raccolta di munizioni, armi, ed equipaggiamento non correntemente utilizzato. Tutte le armi personali, i veicoli e le munizione per velivoli che non sono marcati per risposte ad emergenze risiede in questa infrastruttura. Inoltre funziona anche da garage per i nostri veicoli da campo. Questi rimangono nei loro piazzali fino al momento della missione, con magazzini completamente carichi nel caso di un attacco alla base.\n"
 "\n"
-"Still, any extraterrestrials are unlikely to spend the time and effort getting into our explosion-proof lockers when there are easier targets nearby.\n"
+"Camere e allarmi mantengono costantemente la vigilanza per assicurare che non avvengano rimozioni non autorizzate. Tutti i ritiri di equipaggiamento devono essere approvati dall'ufficiale in servizio prima che l'allarme possa essere disattivato. Munizioni importanti e altri oggetti importanti come artefatti alieni sono tenuti in contenitori chiusi nell'ufficio del responsabile dell'area sotto rigorosa sicurezza; tirare fuori qualsiasi cosa dai contenitori chiusi richiede la presenza del responsabile e l'autorizzazione scritta del Quartier Generale.\n"
+"\n"
+"Tutti gli oggetti necessari per la ricerca, produzione e mantenimenti di velivoli é gestito dagli ufficiali appropriati; non é necessario nessun input dal Quartier Generale. Solo l'equipaggiamento di missione e i veicoli da campo richiedono la supervisione diretta del Comandante.\n"
+"\n"
+"L'infrastruttura de Magazzini può contenere fino ad un massimo di 50 palette standard di equipaggiamento. La quantità di un oggetto in ogni paletta é relativamente poco importante, poiché il fattore chiave per la capacità della base sono le dimensioni. Il contenuto di ogni paletta é scrupolosamente segnato da etichette magnetiche e un dettagliato registro a schede forate.\n"
+"\n"
+"Questa struttura non dipende da nessun altro edificio per funzionare.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"Nel caso di una invasione, avremo bisogno di tutto lo spazio di magazzino che possiamo ottenere. Grandi quantità di munizioni potrebbere essere messe in ordine per lunghi periodi di tempo. Artefatti recuperati sul campo avranno bisogno di essere contenuti e protetti adeguatamente, così come qualsiasi cosa con anche lontane capacità aliene dovrà essere rinchiuso nei nostri armadi a prova di esplosione o distrutto. Se tutti i nostri contenitori sono pieni, potremmo non avere nessuna scelta in tal senso.\n"
+"\n"
+"Durante un attacco alla base, i Magazzini on saranno niente di più che un obiettivo facoltativo. Qualsiasi equipaggiamento sensibile sarà già adeguatamente protetto e richiederà sforzi significativi per essere distrutto. la stessa struttura in sè é facile e poco costosa da riparare. L'unico pericolo viene dalle munizione e gli esplosivi immagazzinati, che potrebbero rappresentare un rischio in caso di detonazioni.\n"
+"\n"
+"Comunque, é difficile che una qualsiasi forza extraterrestre scelga di spendere tempo e fatica per aprire i nostri lucchetti a prova di esplosioni, quando vi sono obiettivi più semplici nelle vicinanze.\n"
+"\n"
+"\n"
+"Aggiunte\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2915
 msgid "b_teamroom_txt"
 msgstr ""
-"Blueprints -- Team Room\n"
+"Progetto -- Sala di Ricreazione\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 11 August 2008\n"
+"Data: 11 Agosto 2008\n"
 "\n"
-"By: Gen. E. Baxter, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"It is painfully clear that soldiers during wartime lead highly stressful lives. In order to maintain morale they need a place to unwind and interact in a rank-free environment. We have sought to provide this kind of R&R in the form of the Team Room facility.\n"
-"\n"
-"It is equipped with a variety of entertainments, from sports tables to high-tech game consoles. It also features a modest wall-mounted cinema display for communal movie screenings. There are vending machines with alcoholic and non-alcoholic beverages, and a separate sitting room for our soldiers to achieve some amount of privacy from the closeness of base living. To this end the sitting room can be locked from the inside for up to 30 minutes per day by each team member. The lock may be overridden from the Control Centre or by a present Command Centre or medical officer in case of an emergency.\n"
-"\n"
-"All our equipment requires maintenance, and I would argue that our soldiers require the most maintenance of all. The Team Room is one of the best ways to keep them mentally healthy and in fighting trim.\n"
-"\n"
-"Unless it has access to an operational Power Plant, the Team Room will be shut down to avoid non-vital power consumption.\n"
+"Da: Gen. E. Baxter, Comandante della Base, PHALANX, Comando Operativo del Pacifico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"The Team Room is an important tool in maintaining good morale amongst our soldiers and should be built in any base that houses a combat team. It provides them with various vital means of stress relief, which will ease the stressful effects of continued combat, life-threatening situations, and the near-certain death of team members in the field. High morale is essential for our battlefield performance and must be maintained at all costs.\n"
+"Descrizione Generale\n"
 "\n"
-"However, I must stress that the Team Room is not a replacement for base leave. Our soldiers will still need to be allowed off-base from time to time in order to maintain their connection with the outside world and their sanity.\n"
+"Sappiamo che sfortunatamente durante tempi di guerra, i soldati soffrono una vita altamente stressante. Allo scopo di mantenere il loro morale, essi hanno bisogno di un posto dove lasciarsi andare in un ambiente libero da gradi e gerarchie. Abbiamo cercato di fornire questo tipo di Relax & Riposo nella forma della struttura della Sala di Ricreazione.\n"
 "\n"
-"For the purposes of a base attack, the Team Room is an extremely low-risk installation with little to no strategic value. If encountered by extraterrestrial attackers, it will almost certainly be bypassed altogether in favour of more sensitive installations.\n"
+"E' equipaggiata con una varietà di intrattenimenti, da tavoli per sport a console di gioco all'ultimo grido. E' provvista inoltre di un piccolo schermo da cinema montato su una parete, per visioni di film in compagnia. Vi sono macchine automatiche per la vendita di bibite alcoliche e non-alcoliche, e un salotto affinché i nostri soldati possano ottenere un grado di privacy lontano dal soffocamento per la stretta convivenza nella base. Per questo motivo il salotto può essere chiuso dall'interno per un massimo di 30 minuti al giorno da ogni membro del team. Il lucchetto può essere aperto dal Quartier Generale o da un ufficiale del Quartier Generale o del dipartimento medico in caso di emergenza.\n"
+"\n"
+"Tutto il nostro equipaggiamento richiede mantenimento, e oserei suggerire che i nostri soldati richiedono la migliore manutenzione in assoluto. La Stanza di Ricreazione é uno dei metodi migliori per mantenerli mentalmente in salute e in buona forma.\n"
+"\n"
+"Nel caso non abbia accesso ad un Generatore di Corrente operativo, la Sala di Ricreazione verrà chiusa per evitare consumi di energia non necessari.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"La Sala di Ricreazione é uno strumento importante per mantenere il buon morale tra i soldati e dovrebbe essere costruita in ogni base che ospiti una squadra di combattimento. Fornisce loro diversi strumenti vitali per l'allievamento dello stress, che renderà più facile gli effetti stancanti dovuti all'affrontare continuamente combattimenti, situazioni di rischio di vita, e la morte quasi sicura di membri della squadra sul campo. Un alto morale é essenziale per la nostra performance nel campo di battaglia e deve essere mantenuto ad ogni costo.\n"
+"\n"
+"Comunque, devo sottolinere che la Sala di Ricreazione non é un sostituto per l'uscita dalla base. I nostri soldati necessiterano ancora di permessi di quando in quando in modo da mantenere la connessione con il mondo esterno e la loro salute mentale.\n"
+"\n"
+"Per quello che riguarda gli attacchi alla base, la Sala di Ricreazione é una installazione a basso rischio con poco o nessun valore strategico. Se degli attaccanti extraterrestri si ritrovassero in questo edificio, sicuramente passerebbero oltre alla ricerca di infrastrutture più sensibili.\n"
+"\n"
+"\n"
+"Aggiunte\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2933
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
-"Blueprints -- Small UFO Hangar\n"
+"Progetto -- Hangar Piccolo per UFO\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Research Document, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 19 March 2084\n"
+"Data: 16 Marzo 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"These are the finished plans for our new UFO storage hangars. They are designed to house one recovered UFO for disassembly, and will be marked as occupied until the craft has been fully broken down into its component parts and the parts transferred to base Storage. UFOs require significant disassembly before they will fit inside Storage, so they must be dismantled before we can begin to store or use the recovered parts. Doing this job on-site is highly inadvisable. It could be hazardous to the health of our scientists and engineers, it might attract looters, and it would without doubt severely compromise the safety and secrecy of our operation.\n"
-"\n"
-"The importance of studying captured UFOs should be more than obvious. It will give us insight into the workings and vulnerabilities of alien craft, and it may result in the discovery of new techniques to improve our own craft's effectiveness. Once a recovered UFO is secured for transport, it is carried to a PHALANX base by means of transport helicopters. Salvage operations are handled by local UN forces to relieve pressure on our limited resources.\n"
-"\n"
-"The Small UFO Hangar can store 1 alien craft of limited size. We will assess the size of each UFO type as we encounter them and determine what hangar is required to store them.\n"
-"\n"
-"The Small UFO Hangar requires a Power Plant to feed its high-power machinery and plasma-based cutting tools. It also requires a Workshop and Storage to handle the dismantling.\n"
+"Da: Comandante Paul Navarre, R&S: Dipartimento Ingegneristico, PHALANX, Comando Operativo dell'Atlantico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"All salvaged UFOs should be permanently disabled once delivered into our hands. Should the base come under attack from alien forces, we can't afford the extra risk of stored UFOs being reactivated and used against us. Even without a drive unit, any weapon systems left active would present a grave threat to our base.\n"
+"Descrizione Generale\n"
 "\n"
-"If this procedure is followed, the UFO Hangar will be of minor tactical importance to alien attackers and will most likely be ignored except as a target of opportunity. Preventing us from dismantling UFOs would be far less attractive than shutting down our research or production, or destroying our base outright.\n"
+"Questi sono i piani di costruzione definitivi per i nostri nuovi hangar di storaggio UFO. Sono progettati per immagazzinare un UFO recuperato per il disassemblaggio, rimanendo contrassegnati come pieni finchè questo non sarà completamente ridotto alle proprie componenti base e i pezzi trasferiti ad un Magazzino. Gli UFO richiedono un lavoro pesante di disassemblaggio prima di poter essere depositati nel Magazzino, perciò é necessario dismantellarli prima di poter iniziare a mettere da parte o utilizzare i pezzi recuperati. Fare questo lavoro sul luogo di ritrovamento é decisamente poco conveniente. Sarebbe pericoloso per la vita dei nostri scienziati e ingegneri, potrebbe attirare saccheggiatori, e comprometterebbe senza dubbio la segretezza della nostra operazione.\n"
 "\n"
-"We will most likely be needing several of these installations to strip and/or examine several UFOs at a time. However, if necessary, we can remove a craft from our hangars and have it destroyed to make room for a new one. In this scenario all parts already transferred to Storage will be available, but everything not yet removed from the UFO will be destroyed with it.\n"
+"L'importanza di studiare gli UFO catturati dovrebbe essere più che ovvia. Ci darà una maggiore percezione del funzionamento e delle vulnerabilità della navicella aliena, e potrebbe portare alla scoperta di nuove tecniche per aumentare l'efficacia dei nostri stessi velivoli. Una volta che un UFO recuperato é stato assicurato per il trasporto, viene trasportato alla base PHALANX tramite elicotteri di trasporto. Le operazioni di recupero sono gestite da forze dell'ONU locali per allievare la pressione sulle nostre limitate risorse.\n"
+"\n"
+"Un Hangar Piccolo per UFO può contenere un velivolo alieno di dimensioni limitate. Giudicheremo le dimensioni di ogni tipo di UFO nel momento in cui lo troveremo e determineremo quale hangar sarà necessario per immagazzinarlo.\n"
+"\n"
+"L'Hangar Piccolo per UFO richiede un Generatore per rifornire i suoi macchinari ad alta energia e gli strumenti di taglio alimentati a plasma. Richiede inoltre un Magazzino e una Officina per gestire il dismantellamento.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"Tutti gli UFO recuperati dovranno essere disattivati permanentemente una volta consegnati nelle nostre mani. Nel caso la base finisca sotto attacco di forze aliene, non ci possiamo permettere il rischio extra che un UFO immagazzinato venga riattivato e utilizzato contro di noi. Anche senza una unità di guida, qualsiasi sistema di armamento rimasto attivo rappresenterebbe una grave minaccia contro la nostra base.\n"
+"\n"
+"Se questa procedura verrà seguita, l'Hangar UFO sarà un obiettivo di minore importanza tattica per attaccanti alinei e sarà probabilmete ignorato se non come obiettivo facoltativo. Impedirci di dismantellare gli UFO dovrebbe essere decisamente meno attraente che bloccare la nostra ricerca o produzione, o distruggere la nostra base completamente.\n"
+"\n"
+"Avremo probabilmente bisogno di molte di queste installazioni per smontare e/o esaminare diversi UFO contemporaneamente. Comunque, se necessario, potremo rimuovere una nave dai nostri hangar e farla distruggere per fare spazio ad una nuova. In questo scenario tutti i pezzi già trasferiti al Magazzino rimarrano disponibili, ma qualsiasi pezzo non ancora rimosso dall'UFO verrà distrutto con esso.\n"
+"\n"
+"\n"
+"Aggiunta\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2951
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
-"Blueprints -- Large UFO Hangar\n"
+"Progetto -- Hangar Piccolo per UFO\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Research Document, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 19 March 2084\n"
+"Data: 16 Marzo 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"These are the finished plans for our new UFO storage hangars. They are designed to house one recovered UFO for disassembly, and will be marked as occupied until the craft has been fully broken down into its component parts and the parts transferred to base Storage. UFOs require significant disassembly before they will fit inside Storage, so they must be dismantled before we can begin to store or use the recovered parts. Doing this job on-site is highly inadvisable. It could be hazardous to the health of our scientists and engineers, it might attract looters, and it would without doubt severely compromise the safety and secrecy of our operation.\n"
-"\n"
-"The importance of studying captured UFOs should be more than obvious. It will give us insight into the workings and vulnerabilities of alien craft, and it may result in the discovery of new techniques to improve our own craft's effectiveness. Once a recovered UFO is secured for transport, it is carried to a PHALANX base by means of transport helicopters. Salvage operations are handled by local UN forces to relieve pressure on our limited resources.\n"
-"\n"
-"The Large UFO Hangar can store 1 alien craft of significant size. We will assess the size of each UFO type as we encounter them and determine what hangar is required to store them.\n"
-"\n"
-"The Large UFO Hangar requires a Power Plant to feed its high-power machinery and plasma-based cutting tools. It also requires a Workshop and Storage to handle the dismantling.\n"
+"Da: Comandante Paul Navarre, R&S: Dipartimento Ingegneristico, PHALANX, Comando Operativo dell'Atlantico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"All salvaged UFOs should be permanently disabled once delivered into our hands. Should the base come under attack from alien forces, we can't afford the extra risk of stored UFOs being reactivated and used against us. Even without a drive unit, any weapon systems left active would present a grave threat to our base.\n"
+"Descrizione Generale\n"
 "\n"
-"If this procedure is followed, the UFO Hangar will be of minor tactical importance to alien attackers and will most likely be ignored except as a target of opportunity. Preventing us from dismantling UFOs would be far less attractive than shutting down our research or production, or destroying our base outright.\n"
+"Questi sono i piani di costruzione definitivi per i nostri nuovi hangar di storaggio UFO. Sono progettati per immagazzinare un UFO recuperato per il disassemblaggio, rimanendo contrassegnati come pieni finchè questo non sarà completamente ridotto alle proprie componenti base e i pezzi trasferiti ad un Magazzino. Gli UFO richiedono un lavoro pesante di disassemblaggio prima di poter essere depositati nel Magazzino, perciò é necessario dismantellarli prima di poter iniziare a mettere da parte o utilizzare i pezzi recuperati. Fare questo lavoro sul luogo di ritrovamento é decisamente poco conveniente. Sarebbe pericoloso per la vita dei nostri scienziati e ingegneri, potrebbe attirare saccheggiatori, e comprometterebbe senza dubbio la segretezza della nostra operazione.\n"
 "\n"
-"We will most likely be needing several of these installations to strip and/or examine several UFOs at a time. However, if necessary, we can remove a craft from our hangars and have it destroyed to make room for a new one. In this scenario all parts already transferred to Storage will be available, but everything not yet removed from the UFO will be destroyed with it.\n"
+"L'importanza di studiare gli UFO catturati dovrebbe essere più che ovvia. Ci darà una maggiore percezione del funzionamento e delle vulnerabilità della navicella aliena, e potrebbe portare alla scoperta di nuove tecniche per aumentare l'efficacia dei nostri stessi velivoli. Una volta che un UFO recuperato é stato assicurato per il trasporto, viene trasportato alla base PHALANX tramite elicotteri di trasporto. Le operazioni di recupero sono gestite da forze dell'ONU locali per allievare la pressione sulle nostre limitate risorse.\n"
+"\n"
+"Un Hangar Grande per UFO può contenere un velivolo alieno di grosse dimensioni. Giudicheremo le dimensioni di ogni tipo di UFO nel momento in cui lo troveremo e determineremo quale hangar sarà necessario per immagazzinarlo.\n"
+"\n"
+"L'Hangar Grande per UFO richiede un Generatore per rifornire i suoi macchinari ad alta energia e gli strumenti di taglio alimentati a plasma. Richiede inoltre un Magazzino e una Officina per gestire il dismantellamento.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"Tutti gli UFO recuperati dovranno essere disattivati permanentemente una volta consegnati nelle nostre mani. Nel caso la base finisca sotto attacco di forze aliene, non ci possiamo permettere il rischio extra che un UFO immagazzinato venga riattivato e utilizzato contro di noi. Anche senza una unità di guida, qualsiasi sistema di armamento rimasto attivo rappresenterebbe una grave minaccia contro la nostra base.\n"
+"\n"
+"Se questa procedura verrà seguita, l'Hangar UFO sarà un obiettivo di minore importanza tattica per attaccanti alinei e sarà probabilmete ignorato se non come obiettivo facoltativo. Impedirci di dismantellare gli UFO dovrebbe essere decisamente meno attraente che bloccare la nostra ricerca o produzione, o distruggere la nostra base completamente.\n"
+"\n"
+"Avremo probabilmente bisogno di molte di queste installazioni per smontare e/o esaminare diversi UFO contemporaneamente. Comunque, se necessirio, potremo rimuovere una nave dai nostri hangar e farla distruggere per fare spazio ad una nuova. In questo scenario tutti i pezzi già trasferiti al Magazzino rimarrano disponibili, ma qualsiasi pezzo non ancora rimosso dall'UFO verrà distrutto con esso.\n"
+"\n"
+"\n"
+"Aggiunta\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2969
 msgid "b_workshop_txt"
 msgstr ""
-"Blueprints -- Workshop\n"
+"Progetto -- Quartier Generale\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"CLASSIFICATO: LIVELLO NERO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unità di Risposta [all'attività] Extraterrestre PHALANX\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Costruzione Precis, Autorizzazione Sigma -- Riservato: SOLO per il Comandante\n"
 "\n"
-"Filed: 28 January 1958\n"
+"Data: 28 Gennaio 1958\n"
 "\n"
-"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The PHALANX Workshop is a small-scale production line equipped with the most high-tech military manufacturing processes available. It is designed for the production of classified materials and parts for which no other facility on Earth is equipped; even the replication of extraterrestrial technology.\n"
-"\n"
-"All parts produced by the Workshop are machined by hand with as much robotic assistance as possible. It requires the most highly-skilled engineers in the world to operate its advanced machinery, and to install new machines whenever our researchers devise a new or improved production process. The Workshop provides working space for up to 10 engineers at once.\n"
-"\n"
-"A Power Plant is required to keep the production line going. Without an operational plant, all production must be halted until power is restored. The Workshop also depends upon a Command Centre to coordinate construction efforts.\n"
+"Da: Maggior Marcel LeClerc, Comandante della base, PHALANX, Comando Operativo del Pacifico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"During a possible EXT war, we will be depending heavily on Workshop facilities to manufacture the weapons we need. H.G. Wells's War of the Worlds comes to mind for its frightening depiction of how our present technology might fare against an invasion force. Even the A-bomb may not be a sufficient deterrent. In a worst-case scenario we may be forced to resort to nuclear missiles if we have no other hope of staving off the assault.\n"
+"Descrizione generale\n"
 "\n"
-"The Workshop is a high-security area due to its sensitive, often classified projects. The various hazardous or volatile substances used in production make it a dangerous place to be, and it will certainly be at risk during any base attack as a target of opportunity or even a moderate-risk mission objective. Shutting down our production for any length of time would be a victory for any extraterrestrial hostiles, especially if they manage to destroy a large project in progress such as the construction of a new aircraft.\n"
+"Le Officine PHALANX sono una piccola linea di produzione equipaggiate con i macchinari militari più avanzati disponibili. Sono progettati per la produzione di materiali riservati e pezzi per i quali nessuna altra fabbrica sulla Terra é equipaggiata; perfino per la replicazione di tecnologia extraterrestre.\n"
 "\n"
-"Reproducing interplanetary spacecraft technology will be one of the absolute necessities if we are ever to take the initiative against an extraterrestrial force. We cannot sit on Earth maintaining a defensive posture if we wish to put a definitive end to a military conflict. Our faithful Workshops and Laboratories are what will arm us against these nightmare scenarios.\n"
+"Tutte le parti prodotte dalle Officine sono costruite a mano con quanta più assistenza robotica possibile. Sono necessari gli ingegneri più abili al mondo per operare macchinari così avanzati, e per installare nuovi macchinari quando i nostri ricercatori ideano un nuovo processo produttivo o un aggiornamento. Le Officine forniscono spazio necessario per un massimo di 10 ingegneri alla volta.\n"
+"\n"
+"Un Generatore é necessario per mantenere la linea di produzione in funzionamento. Senza la parte operativa, tutta la produzione deve essere messa in pausa finché la corrente non viene ripristinata. Le Officine richiedono anche un Quartier Generale per coordinare gli sforzi di costruzione.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Raccomandazioni\n"
 "\n"
-"None."
+"Durante una possibile guerra contro gli extraterrestri, avremo pesante bisogno delle infrastrutture delle Officine per produrre le armi che saranno necessarie. Ci viene in mente il libro 'La Guerra dei Mondi' di H. G. Wells per descrivere come la nostra tecnologia potrebbe pagare nei confronti di una forza di invasione aliena. Perfino le Bombe-A potrebbero non essere sufficentemente persuasive. Nello scenario peggiore potremmo essere costretti a tornare ad usare missili nucleari come ultima speranza di respingere l'assalto.\n"
+"\n"
+"Le Officine sono una area ad alta sicurezza a causa dei loro piani di ricerca suscettibili e spesso riservati. Le varie sostanze pericolose o esplosive utilizzate nella produzione le rendono un posto pericoloso dove trovarsi, e saranno sicuramente a rischio durante qualsiasi attacco alla base come obiettivo di opportunità, o addirittura come un obiettivo primario a rischio moderato. Bloccare la nostra produzione per un qualsiasi periodo di tempo sarebbe una vittoria per le forze ostili extraterrestri, specialmente se esse riuscissero a distruggere un grosso progetto in corso di costruzione come l'assemblaggio di un nuovo velivolo.\n"
+"\n"
+"La riproduzione della tecnologia per navi interplanetarie sarà una necessità assoluta se abbiamo intenzione di prendere iniziativa contro una forza extraterrestre. Non possiamo rimanere fermi sulla terra in una posizione di difesa se vogliamo porre fine ad un conflitto militare. Le nostre fedeli Officine e Laboratori di Ricerca e Sviluppo sono gli strumenti che ci equipaggeranno in questi scenari da incubo.\n"
+"\n"
+"\n"
+"Aggiunte\n"
+"\n"
+"Nessuna."
 
 #: ../base/ufos/research.ufo:2987
 msgid "b_antimatter_txt"
 msgstr ""
-"Result\n"
+"Descrizione Generale\n"
 "\n"
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"L'edificio del Magazzino Antimateria é progettato per conservare antimateria in maniera sicura per un utilizzo successivo, almeno per quanto è possibile conservare in maniera sicura l'antimateria. E' basato su un sistema di contenimento magnetivo che abbiamo derivato dalla tecnologia antimateria aliena, e che chiamiamo 'il guscio interno'. Il 'guscio esterno' consiste di diverse camere di equilibrio per le radiazioni nei corridoi principali, un centro di controllo pesantemente blindato, e una moltitudine di altri sistemi di contenimento e di sicurezza -- tutti progettati per mantenere qualsiasi radiazione non al di fuori del guscio esterno.\n"
 "\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"Il design del guscio esterno é pesantemente ispirato a quello di alcune discariche per munizioni militari dell'ONU. In caso di problemi nello strato interno, vi é un sistema di sicurezza automatico che chiude i dislivelli di contenimento istantaneo sotto livelli sicuri. La struttura chiude prima le sue porte a prova di esplosione, quindi chiuderà le camere di equilibrio con barre di tungsteno, riempirà l'atmosfera con gas in grado di ritardare le radiazioni e inietterà schiuma anti-shock dietro alle mura, e infine cercherà di contenere l'inevitabile esplosione.\n"
 "\n"
-"DATE: %02i %s %i\n"
+"La procedura non darà possibilità di salvezza a nessun personale accidentalmente rinchiuso all'interno, ma questo é il prezzo da pagare se vogliamo avere una possibilità di salvare l'intera base.\n"
 "\n"
-"SUB: Blueprints -- Antimatter Storage\n"
+"Per far capire quanto questa struttura sia veramente pericolosa, per costruire un Magazzino Antimateria saremo costretti a iscrivere la nostra base nel registro di siti nucleari dell'ONU. Alla massima capacità -- 10 grammi di antimateria -- una sola struttura di deposito conterrà l'equivalente di quasi una mezza tonnellata di TNT. Anche se questo non é molto in confronto alle moderne armi termonucleari, é abbastanza per ridurre la nostra base e qualsiasi cosa all'interno in cenere in meno di un secondo. E' difficile 'far esplodere' l'antimateria, ma sotto le circostanza sbagliate, può succedere.\n"
 "\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The Antimatter Storage facility is designed to safely store antimatter for later use, at least as safely as antimatter can possibly be stored. It is based around an advanced magnetic containment system we've derived from alien antimatter technology, which we call the 'inner shell'. The 'outer shell' consists of several radiation airlocks over the main passages, a heavily-armoured control room, and a host of other security and containment measures -- all designed to keep any radiation inside the outer shell.\n"
-"\n"
-"The outer shell's design borrows heavily from that of UN nuclear ammo dumps. In case of problems in the inner shell, there's an automatic security system which will lock down the instant containment drops below safe levels. The facility will first close its blast doors, then secure every airlock with tungsten locking rods, fill the outer shell atmosphere with radiation-retardant gas and inject anti-shock foam behind the walls, and then try to contain the inevitable blast.\n"
-"\n"
-"This procedure will not give any personnel caught inside time to escape, but that's the price we'll have to pay if we want to have a chance of saving the entire base.\n"
-"\n"
-"To understand how dangerous this facility really is, building an Antimatter Storage at one of our bases will require us to list that base with the UN nuclear site register. At full capacity -- 10 grammes of antimatter -- just one storage facility will be containing the equivalent of nearly half a megaton of TNT. While this isn't much compared to modern thermonuclear weapons, it's enough to turn the entire base and everything inside to cinders in less than a second. It's difficult to 'blow up' antimatter, but under the wrong circumstances, it can happen.\n"
-"\n"
-"Even if no explosion occurs, a loss of containment would result in the annihilation of the stored antimatter with the normal matter of the containment system. If there were any fault or damage in the outer shell at this point, then the ensuing blast of gamma radiation and high-speed particles would escape and strip the area clean of life. The base would be poisoned and rendered uninhabitable for centuries to come.\n"
+"Anche se non avviene alcuna esplosione, una perdita nel contenimento risulterà nell'annilichimento della antimateria immagazzinata con la materia normale del sistema di contenimento. Se ci fosse qualche malfunzionamento o danno nel guscio esterno in questa situazione, la conseguente esplosione di radiazioni gamma e di particelle ad alta velocità riuscirebbe a fuggire dalla camera e cancellerebbe qualsiasi forma di vita nella zona. La base verrebbe avvelenata e resterebbe inabitabile per secoli a venire.\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
+"Raccomandazioni\n"
 "\n"
-"I believe I've already stressed that this facility must be the most heavily-defended building in any PHALANX base, taking priority even over the Command Centre. Losing the CC would be a blow, but it can be rebuilt. The cost would be a trifle compared to the kind of armageddon that can result from a mishap at the Antimatter Storage.\n"
+"Credo di aver già fatto notare che questa struttura deve essere l'edificio meglio e più pesantemente protetto di qualsiasi altra costruzione PHALANX nella base, con maggiore priorità perfino del Quartier Generale. Perdere il QG sarebbe una perdita, ma potrebbe essere ricostruito. Il costo sarebbe una sciocchezza in confronto alla catastrofe che risulterebbe per un incidente nel Magazzino Antimateria.\n"
 "\n"
-"Although this facility will be essential to our continued success in this war, it's going to be very expensive to build and operate due to the advanced tech and materials required. It may be necessary to hold off on building one until we're sure our budget can stretch that far.\n"
+"Anche se questa struttura sarà essenziale per il nostro continuo successo durante questa guerra, sarà molto costosa da costruire ed operare a causa della tecnologia avazata e dei materiali richiesti. Potrebbe essere necessario aspettare che il nostro bilancio non sia cresciuto abbastanza prima di costruirne uno.\n"
 "\n"
-"Having said that, until we manage to build one of these facilities, we'll be completely unable to store or use any recovered antimatter. We can't just build up a pile of unstable, alien, possibly-damaged tanks of nuclear-level explosive. Everything we find will have to be destroyed for safety.\n"
+"Detto questo, finché non riusciamo a costruire una di queste infrastrutture, saremo completamente incapaci di immagazzinare o utilizzare qualsiasi quantità di antimateria recuperata. Non possiamo semplicemente mettere su una pila di contenitori alieni instabili, potenzialmente danneggiati, e capaci di esplosioni nucleari. Tutto ciò che troveremo dovrà essere distrutto per sicurezza.\n"
 "\n"
-"Considering that we can't duplicate the stuff, we're going to need every microgramme we can get our hands on.\n"
+"Considerando che non possiamo duplicare questa roba in quantità apprezzabili, avremo bisogno di ogni microgrammo sul quale riusciremo a mettere le mani sopra.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Aggiunte\n"
 "\n"
-"None."
+"Nessuna."
 
 #: ../base/ufos/research.ufo:3000
 #, fuzzy
@@ -7770,61 +7769,63 @@ msgstr "Antimateria"
 #: ../base/ufos/research.ufo:3015
 msgid "drop_firebird_txt"
 msgstr ""
-"Descrizione del velivolo -- Nave da sbarco Classe Firebird\n"
+"Aircraft Evaluation -- Firebird-class Dropship\n"
 "\n"
 "CLASSIFIED LEVEL BLACK\n"
 "\n"
 "PHALANX Extraterrestrial Response Unit\n"
 "\n"
-"Documentazione tecnica, Qualifica Sigma -- Riservato al Comandante\n"
+"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
 "\n"
-"Registrato: 17 Marzo 2084\n"
+"Filed: 17 March 2084\n"
 "\n"
-"da: Cdr. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle operazioni Atlantiche\n"
-"\n"
-"\n"
-"\n"
-"Introduzione\n"
-"\n"
-"Comandante, ho lavorato su questi vecchi files prima di lei, e ho deciso di rimpiazzarli con una mia analisi e con alcune conclusioni riguardo la scelta delle nostre navi da sbarco. Mi scuso se ho oltrepassato i miei limiti, ma i vecchi trasportatori PHALANX rimasti non sono semplicemente adeguati alle specifiche attuali. Addirittura nessuno di essi, nemmeno quando erano nuovi, ha mai superato lo stadio di prototipo. Abbiamo recuperato solo due esemplari funzionanti, ed entrambi hanno trascorso gli ultimi sessant'anni ad ammuffire in qualche magazzino del governo: non vale nemmeno la pena di cercare di recuperarli. La situazione dell'equipaggiamento che abbiamo ereditato è drammatica, non riesco a trovare nemmeno la metà del materiale che in teoria avrebbe dovuto esserci. Sto facendo del mio meglio per trovare le alternative migliori per sostituire l'equipaggiamento non più adeguato all'uso.\n"
-"\n"
-"L'unico piccolo colpo di fortuna in questa disastrosa situazione è che sono riuscito a convincere il nostro rappresentante all'ONU a far accantonare una parte del budget per l'acquisto di un nuovo aeroveicolo, e penso che le piacerà.\n"
-"\n"
-"Il Galeoth Firebird VTOL (Vertical Take-Off and Landing, ovvero in grado di atterrare e decollare verticalmente) è il miglior aereo che potessimo sperare di avere nel ruolo di nave da sbarco. E' stato progettato come aereo da carico, ma sin da subito è stato acquisito dalle società di forniture militari e riadattato a trasporto truppe. Da allora è diventato una buona alternativa agli elicotteri sia per quanto riguarda il mondo militare, sia per quello civile, grazie ai suoi quattro motori jet a impulso HM-5600, che danno al Firebird la possibilità di effettuare decolli VTOL e possiedono una buona efficienza energetica, con molte meno parti mobili di qualsiasi motore da elicottero. Questo ne aumenta la affidabilità e permette di avere un veicolo decisamente più veloce grazie all'assenza di eliche rotanti. Gli HM-5600 sono comunque motori assai esigenti quanto a carburante, e il loro combustibile aeronautico ad alto potenziale spesso è troppo costoso per incoraggiarne le applicazioni civili.\n"
-"\n"
-"La velocità di crociera del Firebird è di Mach 0,74. Alla sua velocità massima di Mach 1.03 può a malapena farsi strada attraverso la barreira del suono, ma questo causa un carico eccessivo sul telaio e sarebbe da evitare al di fuori dei casi di emergenza. Il Firebird ha un punto di montaggio per armi localizzato sul naso, che può montare armi antiaeree come cannoni da aviazione o missili. Può anche portare dell'equipaggiamento extra per migliorarne le prestazioni di combattimento o le caratteristiche di volo. Fino a 8 soldati possono trovare posto in altrettanti ammortizzatori inerziali, e c'è un'area di carico che può contenere e sbarcare dei piccoli veicoli da combattimento.\n"
-"\n"
-"Non c'è nulla nel cielo altrettanto adatto al ruolo di nave da sbarco come lo è il Firebird. E' più veloce di un elicottero, più manovrabile di qualunque aereo, e può rispondere in modo rapido ed efficiente a qualsiasi tipo di minaccia in qualsiasi punto del mondo\n"
-"\n"
-"Il Firebird richiede un Hangar grande per essere alloggiato, riparato e rifornito. E' dotato di un hardpoint medio per le armi.\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
 "\n"
-"Dottrina suggerita\n"
 "\n"
-"Le navi da sbarco saranno quelle che porteranno le nostre truppe in giro per il mondo per rispondere agli attacchi alieni a terra o per ripulire i siti dove gli UFO sono stati abbattuti. Dovrebbero essere inviate immediatamente verso i siti di attività aliena o dove c'è una nave aliena da recuperare.\n"
+"Overview\n"
 "\n"
-"Una volta che dal campo di battaglia sono stati eliminati tutti gli alieni vivi, i soldati feriti dovranno essere immediatamente inviati al trattamento medico. Le restanti truppe renderanno l'area sicura finchè non arriverà un team PHALANX a presidiare l'area e a prendere il controllo delle operazioni per riportare tutti gli artefatti alieni alle nostre basi. Questo è cruciale, poichè tentativi di sciacallaggio di oggetti lasciati sul campo di battaglia potrebbero diventare un problema nelle regioni più densamente popolate. Non possiamo permetterci di perdere nessun prezioso pezzo di tecnologia aliena solo perchè un idiota vuole prendersi un ricordino.\n"
+"Commander, I've been over these old files before you, and I have decided to replace them with my own assessment and conclusions about our choice of dropship. Apologies if I'm overstepping my bounds, but the old PHALANX dropships in storage are simply not up to modern spec. None of them even got out of the prototype stage when they were new. There are only two surviving examples, and both of those ships have been left mothballed in government warehouses for the past 60 years, not worth the trouble to dig out of storage. We've inherited a real mess with regards to equipment, I can't even find half the stuff that's supposed to be waiting for us. I'm doing my best to find superior alternatives for gear that just isn't up to the task.\n"
 "\n"
-"Nonostante sia armato, una nave di classe Firebird non è in grado di reggere il confronto con veicoli da combattimento, e non dovrebbe mai essere mandato come unico intercettore in caso di avvistamento di UFO.\n"
+"The one bit of good luck in this dropship mess is that I managed to persuade our UN rep to earmark some budget for a new ship, and I think you'll like it.\n"
+"\n"
+"The Galeoth Firebird VTOL (Vertical Take-Off and Landing) is the best aircraft we can hope to employ in our dropship role. It was designed as a cargo hauler, but has quickly been picked up and adapted into a troop transport by military contractors. It has since become a popular alternative to helicopters in both the military and civilian worlds due to its four HM-5600 pulse detonation engines, which provide the Firebird with VTOL capability and achieve good fuel-efficiency with far fewer moving parts than any helicopter engine. This increases reliability across the board and makes for a vastly faster aircraft partly due to the lack of rotor blades. The HM-5600s are still very thirsty engines, however, and the high-powered aviation fuel can be too expensive for civilian applications.\n"
+"\n"
+"The Firebird's cruising speed is Mach 0.74. At a maximum velocity of Mach 1.03 it can just barely squeak through the sound barrier, but this causes a lot of stress on the airframe and should be avoided outside of emergencies. It has one variable weapons hardpoint located on its nose, which will mount anti-air weapons such as aircraft cannons or missile racks. It can also carry additional equipment to improve its flight characteristics and combat performance. There are acceleration harnesses for up to 8 soldiers and a cargo bay which can contain and deploy small battlefield vehicles.\n"
+"\n"
+"There is nothing else in the sky as well-suited to our dropship role as the Firebird. It is faster than any helicopter, more manoeuvrable than any fixed-wing aeroplane, and it can respond quickly and efficiently to threats all over the world.\n"
+"\n"
+"The Firebird requires 1 Large Hangar for storage, maintenance and deployment. It has 1 medium weapon hardpoint located in the nose.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The dropship is what will carry our troops around the world, in order to respond to alien attacks on the ground or to clear UFO crash sites for recovery. It should be deployed immediately to sites of alien activity and to recover downed alien craft.\n"
+"\n"
+"Once a site has been cleared of live aliens, heavily-wounded soldiers will immediately be dispatched for medical treatment. The remaining troops will secure the area until a PHALANX recovery team can take over and ensure delivery of any and all alien artifacts to our facilities. This is important because attempted looting of items left on the battlefield may become a problem in densely-populated regions. We can't afford to lose valuable alien technology because some idiot feels the need to take a souvenir.\n"
+"\n"
+"While armed, a Firebird-class dropship is not able to stand up to dedicated fighters, and it should never be sent as the sole interceptor to any UFO sighting.\n"
 "\n"
 "\n"
 "Addenda\n"
 "\n"
-"Nessuno.\n"
+"None.\n"
 "\n"
-"Statistiche del velivolo:\n"
 "\n"
-"Dimensioni: 8m x 30m x 5m\n"
+"Aircraft statistics:\n"
 "\n"
-"Velocità di crociera: 785 km/h\n"
 "\n"
-"Velocità massima: 1,083km/h\n"
+"Size: 8m x 30m x 5m\n"
 "\n"
-"Raggio operativo: 18,000km\n"
+"Cruising speed: 785 km/h\n"
 "\n"
-"Equipaggio: 3, più 8 un massimo di soldati\n"
+"Top speed: 1,083km/h\n"
 "\n"
-"Hardpoints: 1 hardpoint medio (naso), 2 aree di carico equipaggiamento, 1 spazio per armatura"
+"Operational range: 18,000km\n"
+"\n"
+"Crew capacity: 3 crew, 8 soldiers max.\n"
+"\n"
+"Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3032
 msgid "inter_stiletto_txt"
@@ -7894,59 +7895,61 @@ msgstr ""
 #: ../base/ufos/research.ufo:3049
 msgid "inter_saracen_txt"
 msgstr ""
-"Descrizione del velivolo -- Intercettore Classe Saracen\n"
+"Aircraft Evaluation -- Saracen-class Interceptor\n"
 "\n"
 "CLASSIFIED LEVEL BLACK\n"
 "\n"
 "PHALANX Extraterrestrial Response Unit\n"
 "\n"
-"Documentazione tecnica, Qualifica Sigma -- Riservato al Comandante\n"
+"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
 "\n"
-"Registrato: 19 Marzo 2084\n"
+"Filed: 19 March 2084\n"
 "\n"
-"da: Cdr. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle Operazioni Atlantiche\n"
-"\n"
-"\n"
-"\n"
-"Introduzione\n"
-"\n"
-"E' palese come l'intercettore Classe Stiletto, nonostante sia un mezzo incredibile, non copra tutte le nostre necessità. Dobbiamo essere pronti a difendere il nostro pianeta e la nostra gente in qualunque punto del mondo. Il raggio operativo dello Stiletto è troppo limitato e non è sufficientemente veloce per entrare in combattimento con tutti gli UFO che potrebbe capitarci di rilevare.\n"
-"\n"
-"Un solo velivolo al mondo è in grado di ricoprire questa carenza operativa che ci si prospetta: il KB-550 Hypersonic Wing argentino, soprannominato \"Saracen\" secondo il codice NATO. Unendo vecchie e nuove tecnologie stealth su un unico scafo, il Saracen ricorda da vicino il vecchio SR-71 \"Blackbird\" per forma e comportamento. Anch'esso è nero come la notte, coperto di una vernice radioassorbente che lo rende praticamente invisibile a radar, lidar e alla maggior parte degli altri sistemi di scansione attiva.Il suo scafo è composto quasi per intero di nanotubi di carbonio e di fogli di grafite rinforzata da plastiche. Questo rende il mezzo estremamente solido e resistente al calore, abbastanza per sopportare le temperature che si sviluppano a velocità di crociera superiori a Mach 4. Il Saracen è il più veloce aereo militare attualmente in grado di volare.\n"
-"\n"
-"Per quanto riguarda le sue prestazioni, il Saracen porta il nostro raggio di intercezione su scala internazionale. I suoi enormi serbatoi corazzati e la stupefacente efficienza energetica gli consentono di andare - e di tornare- ovunque nel raggio di 10.000 chilometri dall'hangar di partenza, a velocità ipersonica mantenento abbastanza carburante per le manovre di combattimento. Le sue capacità stealth, la velocità e il suo scafo resistente gli permettono di sfidare UFO che per il nostro intercettore Classe Stiletto sarebbero semplicemente fuori portata. E' dotato di un'armatura pesante e può ritornare alla base anche con un solo motore funzionante. Grazie alla potenza dei suoi motori e ad un gruppo di attuatori direzionali sul suo scafo inferiore, può decollare praticamente in verticale; questo è sufficiente a renderlo adatto ai limiti dei nostri hangar.\n"
-"\n"
-"La sua dotazione di elettronica è altrettanto impressionante. Possiede computer di tracciamento che sono allo stato dell'arte, sistemi radar e lidar avanzati, contromisure elettroniche di ultima generazione, un impianto di visualizzazione in realtà virtuale nell'elmetto del pilota, e molto altro. Il Saracen può portare a bordo circa il doppio degli impianti elettronici dello Stiletto, con abbastanza spazio per aggiungere ulteriori moduli di equipaggiamento addizionali.\n"
-"\n"
-"Sfortunatamente, per via di tutti i suoi punti di forza, è costoso da acquisire e manutenere, e il suo massiccio carico di carburante e corazzatura influiscono negativamente sulla capacità di portare armamenti. Il Saracen non può competere in potenza di fuoco con lo Stiletto, nonostante quest'ultimo sa di gran lunga più piccolo ed economico. E nemmeno può sperare di raggiungere la manovrabilità dello Stiletto. Nonostante la sua tecnologia per la direzione della spinta (cioè la capacità di cambiare la forma degli eiettori dei motori per dirigere i getti), la superficie alare elettroelastica (che lo rende in grado di cambiare dinamicamente la forma delle ali) e altri notevoli vantaggi, il Saracen è pur sempre un grande aereo ad ala fissa, con tutte le limitazioni che ne derivano. Nonostante possa sostenere molto più danno dello Stiletto e rimanere funzionale, il Saracen non può comportarsi altrettanto bene in un combattimento con un mezzo alieno.\n"
-"\n"
-"Il Saracen richiede un hangar grande per essere alloggiato e mantenuto. Possiede due punti di montaggio armi e due spazi di carico nella parte inferiore.\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
 "\n"
-"Dottrina raccomandata\n"
 "\n"
-"Per farla breve, il Saracen è un intercettore a lungo raggio destinato ad essere usato contro UFO che si trovano a grande distanza. Al contrario dei velivoli alieni, è influenzato pochissimo dalla presenza dell'atmosfera terrestre, rendendolo seppur di poco più veloce della maggior parte degli UFO che abbiamo avvistato sinora. Questo permetterà alla PHALANX di raggiungere gli alieni ovunque stiano andando, tranne che nello spazio interplanetario.\n"
+"Overview\n"
 "\n"
-"Come sempre, le prestazioni del Saracen contro veicoli alieni non possono essere misurate se non con accurate osservazioni raccolte in uno scontro reale. Tuttavia, se impiegato in stormi abbastanza numerosi, dovrebbe essere in grado di reggere il confronto con qualunque tipo di mezzo alieno.\n"
+"It is clear that the Stiletto-class Interceptor, while a terrific aircraft, does not cover all our needs. We must be ready to defend our planet and our people anywhere across the globe. The Stiletto's operational range is too limited and it is not fast enough to engage all the UFOs we might detect.\n"
+"\n"
+"Only one aircraft in the world is capable of filling the operational gap we face; the Argentinian KB-550 Hypersonic Wing, dubbed the \"Saracen\" in NATO code. Mixing old and new stealth technology into a single airframe, the Saracen most resembles the ancient SR-71 \"Blackbird\" in its shape and bearing. It is black as the night itself, covered in radiation-absorbing paint that makes it practically invisible to radar, lidar and most other forms of active scanning. Its fuselage is composed almost entirely of carbon nanotubes and sheets of graphite-reinforced plastic. This makes the craft extremely strong and heat-resistant enough to cope with the temperatures of cruising at speeds in excess of Mach 4. The Saracen is the fastest military airplane still flying today.\n"
+"\n"
+"In terms of its capabilities, the Saracen pushes our interception range into international territory. Its huge, armoured tanks and amazing fuel-efficiency allow it to go anywhere up to 10,000 kilometres from its hangar at hypersonic speeds -- and back again -- with fuel to spare for combat manoeuvres. Its stealthy design, high speed and tough airframe allow it to engage UFOs that our Stiletto-class Interceptors may simply be unable to catch. It has tough armour and can fly home even on one engine. Thanks to the power of its engines and a set of additional manoeuvring thrusters in its belly, it can take off almost vertically; this is definitely within the restrictions of our hangar facilities.\n"
+"\n"
+"Its electronics suite is similarly impressive. It has state-of-the-art targeting computers, advanced radar and lidar systems, advanced ECM (Electronic Counter-Measures) equipment, in-helmet VR imaging for the pilot, and more. The Saracen can carry about twice the electronics load of a Stiletto-class Interceptor, with room to spare for further modular equipment.\n"
+"\n"
+"Unfortunately, for all its strengths, it is costly to lease and maintain, and its heavy load of fuel and armour cuts badly into weapons capacity. The Saracen cannot equal the weapons load of the far smaller and less expensive Stiletto. Nor can it hope to equal the Stiletto's manoeuvrability. Despite thrust-vectoring technology (the ability to change the shape of its engine nozzles to direct thrust), electro-elastic wing surface (the ability to dynamically change the shape of its wings) and other terrific advances, the Saracen is still a large fixed-wing aircraft with all the limitations that implies. Though it can take much more damage than a Stiletto and remain effective, the Saracen will not perform as well in combat with alien craft.\n"
+"\n"
+"The Saracen requires 1 Large Hangar for storage, maintenance and deployment. It has 2 weapon hardpoints; 2 medium belly bays.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"At its heart the Saracen is a long-range interceptor to be used against extremely distant or fast UFOs. Unlike the alien craft, it is barely slowed by moving inside Earth atmosphere, making it slightly faster than most of the UFOs we have observed so far. This will allow PHALANX to catch the aliens wherever they may be going -- short of interplanetary space.\n"
+"\n"
+"As always, the Saracen's performance against extraterrestrial craft can't be measured without solid observational data from at least one real combat encounter. However, if deployed in large enough flights, it should be able to cut up alien craft of all varieties.\n"
 "\n"
 "\n"
 "Addenda\n"
 "\n"
-"Nessuno.\n"
+"None.\n"
 "\n"
-"Statistiche del velivolo:\n"
 "\n"
-"Dimensioni: 10m x 27m x 5m\n"
+"Aircraft statistics:\n"
 "\n"
-"Velocità di crociera: 4,110 km/h\n"
 "\n"
-"Velocità massima: 4,600km/h\n"
+"Size: 10m x 27m x 5m\n"
 "\n"
-"Raggio operativo: 10,000km\n"
+"Cruising speed: 4,110 km/h\n"
 "\n"
-"Equipaggio: 1\n"
+"Top speed: 4,600km/h\n"
 "\n"
-"Hardpoints: 2 medi (scafo inferiore), 2 vani equipaggiamento, 1 spazio per armatura"
+"Operational range: 10,000km\n"
+"\n"
+"Crew capacity: 1 crew\n"
+"\n"
+"Hardpoints: 2 Medium hardpoints (belly), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3066
 #, fuzzy
@@ -8849,7 +8852,7 @@ msgstr ""
 "\n"
 "Quoting from my previous report:\n"
 "\n"
-"(UFO -- Scout)\"The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\"\n"
+"(UFO Theory) \"The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\"\n"
 "\n"
 "With this project we've learned a lot about how these engines are constructed, how to control them, and how we might retrofit them to our current airfleet. We should now be able to replicate these engines and use them for any applications we might come up. I have to warn you, though; they will be extremely expensive to produce. Between the complex use of alien materials, the sensitive electromagnetics and the liquid nitrogen cooling system, this really stretches the limits of our production capacity.\n"
 "\n"
@@ -10832,25 +10835,25 @@ msgstr ""
 #: client/cl_aliencont.c:232 client/cl_aliencont.c:245
 #: client/cl_basemanagement.c:1138 client/cl_basemanagement.c:2354
 #: client/cl_basemanagement.c:2673 client/cl_basemanagement.c:2722
-#: client/cl_basemanagement.c:2731 client/cl_basemanagement.c:2742
-#: client/cl_basemanagement.c:2751 client/cl_basemanagement.c:2762
-#: client/cl_basemanagement.c:2769 client/cl_basemanagement.c:2777
-#: client/cl_basemanagement.c:2782 client/cl_basemanagement.c:2787
-#: client/cl_basemanagement.c:2792 client/cl_campaign.c:300
-#: client/cl_campaign.c:1129 client/cl_campaign.c:1187
-#: client/cl_campaign.c:1202 client/cl_campaign.c:1390
-#: client/cl_campaign.c:1401 client/cl_campaign.c:1411
-#: client/cl_campaign.c:1421 client/cl_campaign.c:1431
-#: client/cl_campaign.c:1442 client/cl_campaign.c:1455
-#: client/cl_campaign.c:1465 client/cl_campaign.c:1472
-#: client/cl_campaign.c:1480 client/cl_campaign.c:2852
-#: client/cl_campaign.c:2966 client/cl_campaign.c:3025
-#: client/cl_campaign.c:3042 client/cl_campaign.c:3044
-#: client/cl_campaign.c:3378 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1031
-#: client/cl_main.c:1278 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_basemanagement.c:2731 client/cl_basemanagement.c:2751
+#: client/cl_basemanagement.c:2759 client/cl_basemanagement.c:2770
+#: client/cl_basemanagement.c:2777 client/cl_basemanagement.c:2785
+#: client/cl_basemanagement.c:2790 client/cl_basemanagement.c:2795
+#: client/cl_basemanagement.c:2800 client/cl_campaign.c:300
+#: client/cl_campaign.c:1128 client/cl_campaign.c:1186
+#: client/cl_campaign.c:1201 client/cl_campaign.c:1389
+#: client/cl_campaign.c:1400 client/cl_campaign.c:1410
+#: client/cl_campaign.c:1420 client/cl_campaign.c:1430
+#: client/cl_campaign.c:1441 client/cl_campaign.c:1454
+#: client/cl_campaign.c:1464 client/cl_campaign.c:1471
+#: client/cl_campaign.c:1479 client/cl_campaign.c:2851
+#: client/cl_campaign.c:2965 client/cl_campaign.c:3024
+#: client/cl_campaign.c:3041 client/cl_campaign.c:3043
+#: client/cl_campaign.c:3377 client/cl_inventory.c:292
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1032
+#: client/cl_main.c:1267 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
-#: client/cl_parse.c:1591 client/cl_popup.c:386 client/cl_produce.c:419
+#: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
 #: client/cl_produce.c:458 client/cl_research.c:1073 client/cl_research.c:1091
 #: client/cl_research.c:1097 client/cl_research.c:1135
@@ -10963,8 +10966,8 @@ msgstr ""
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr ""
 
-#: client/cl_airfight.c:411 client/cl_airfight.c:448 client/cl_campaign.c:561
-#: client/cl_campaign.c:567 client/cl_campaign.c:609 client/cl_campaign.c:613
+#: client/cl_airfight.c:411 client/cl_airfight.c:448 client/cl_campaign.c:560
+#: client/cl_campaign.c:566 client/cl_campaign.c:608 client/cl_campaign.c:612
 msgid "Interception"
 msgstr "Intercettazione"
 
@@ -10972,7 +10975,7 @@ msgstr "Intercettazione"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/cl_airfight.c:448 client/cl_campaign.c:3044
+#: client/cl_airfight.c:448 client/cl_campaign.c:3043
 msgid "You've lost the battle"
 msgstr "Hai perso la battaglia"
 
@@ -11109,7 +11112,7 @@ msgstr "Base sotto attacco"
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
 
-#: client/cl_basemanagement.c:2741
+#: client/cl_basemanagement.c:2749
 #, fuzzy, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -11120,56 +11123,56 @@ msgid_plural ""
 msgstr[0] "Costruzione di %s edificio finita nella base %s."
 msgstr[1] "Costruzione di %s edificio finita nella base %s."
 
-#: client/cl_basemanagement.c:2750
+#: client/cl_basemanagement.c:2758
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr ""
 
-#: client/cl_basemanagement.c:2760
+#: client/cl_basemanagement.c:2768
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:2767
+#: client/cl_basemanagement.c:2775
 #, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 
-#: client/cl_basemanagement.c:2775 client/cl_basemanagement.c:2780
-#: client/cl_basemanagement.c:2785
+#: client/cl_basemanagement.c:2783 client/cl_basemanagement.c:2788
+#: client/cl_basemanagement.c:2793
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:2791
+#: client/cl_basemanagement.c:2799
 #, fuzzy, c-format
 msgid "Build a %s first."
 msgstr "Costruisci un hangar prima"
 
-#: client/cl_basemanagement.c:2853
+#: client/cl_basemanagement.c:2861
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr ""
 "Nessun velivolo in questa base - Devi prima comprare o trasferire un velivolo\n"
 
-#: client/cl_basemanagement.c:2853 client/cl_basemanagement.c:2855
-#: client/cl_campaign.c:2760 client/cl_market.c:655 client/cl_market.c:660
-#: client/cl_market.c:687 client/cl_market.c:766 client/cl_market.c:768
-#: client/cl_save.c:350 client/cl_team.c:1598 client/cl_team.c:1605
+#: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
+#: client/cl_campaign.c:2759 client/cl_market.c:655 client/cl_market.c:660
+#: client/cl_market.c:687 client/cl_market.c:799 client/cl_market.c:801
+#: client/cl_save.c:367 client/cl_team.c:1598 client/cl_team.c:1605
 msgid "Note"
 msgstr "Nota"
 
-#: client/cl_basemanagement.c:2855
+#: client/cl_basemanagement.c:2863
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Nessun velivolo in questa base - Devi prima comprare un velivolo\n"
 
-#: client/cl_basemanagement.c:3045
+#: client/cl_basemanagement.c:3053
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Costruzione di %s edificio finita nella base %s."
 
-#: client/cl_basemanagement.c:3046
+#: client/cl_basemanagement.c:3054
 msgid "Building finished"
 msgstr "Costruzione finita"
 
@@ -11205,8 +11208,8 @@ msgstr ""
 msgid "%s: %1.2f%% (%d %s)\n"
 msgstr ""
 
-#: client/cl_basesummary.c:186 client/cl_campaign.c:1385
-#: client/cl_campaign.c:4536
+#: client/cl_basesummary.c:186 client/cl_campaign.c:1384
+#: client/cl_campaign.c:4544
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "scienziato"
@@ -11216,62 +11219,62 @@ msgstr[1] "scienziati"
 msgid "Could not set up your base at this location"
 msgstr "Non puoi costruire una base qui"
 
-#: client/cl_campaign.c:561 client/cl_campaign.c:567 client/cl_campaign.c:613
+#: client/cl_campaign.c:560 client/cl_campaign.c:566 client/cl_campaign.c:612
 msgid "UFO interception successful -- UFO lost."
 msgstr ""
 
-#: client/cl_campaign.c:585 client/cl_campaign.c:2317
+#: client/cl_campaign.c:584 client/cl_campaign.c:2316
 #, fuzzy
 msgid "UFO crash site"
 msgstr "Sito dello Schianto"
 
-#: client/cl_campaign.c:590 client/cl_campaign.c:2322
+#: client/cl_campaign.c:589 client/cl_campaign.c:2321
 #, fuzzy
 msgid "No nation"
 msgstr "Nazioni"
 
-#: client/cl_campaign.c:609
+#: client/cl_campaign.c:608
 msgid "UFO interception successful -- New mission available."
 msgstr ""
 
-#: client/cl_campaign.c:804
+#: client/cl_campaign.c:803
 #, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Attività aliena riportata: '%s'"
 
-#: client/cl_campaign.c:805
+#: client/cl_campaign.c:804
 msgid "Alien activity"
 msgstr "Attività aliena"
 
-#: client/cl_campaign.c:961
+#: client/cl_campaign.c:960
 msgid "You've gone too far into debt."
 msgstr ""
 
-#: client/cl_campaign.c:967
+#: client/cl_campaign.c:966
 msgid ""
 "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
-#: client/cl_campaign.c:985
+#: client/cl_campaign.c:984
 msgid ""
 "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/cl_campaign.c:1128
+#: client/cl_campaign.c:1127
 #, c-format
 msgid ""
 "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
 msgstr ""
 "La tua base %s è stata saccheggiata! Tutti gli impiegati sono stati uccisi e l'equipaggiamento distrutto."
 
-#: client/cl_campaign.c:1186
+#: client/cl_campaign.c:1185
 #, fuzzy, c-format
 msgid "The mission %s expired and %i civilian died."
 msgid_plural "The mission %s expired and %i civilians died."
 msgstr[0] "Il tempo e' scaduto e %i civile è morto."
 msgstr[1] "Il tempo e' scaduto e %i civili sono morti."
 
-#: client/cl_campaign.c:1201
+#: client/cl_campaign.c:1200
 #, c-format
 msgid "The aliens had enough time to kill %i civilian at %s."
 msgid_plural "The aliens had enough time to kill %i civilians at %s."
@@ -11279,190 +11282,190 @@ msgstr[0] ""
 msgstr[1] ""
 
 # # cl_campaign.c
-#: client/cl_campaign.c:1261
+#: client/cl_campaign.c:1260
 msgid "Jan"
 msgstr "Gen"
 
-#: client/cl_campaign.c:1263
+#: client/cl_campaign.c:1262
 msgid "Feb"
 msgstr "Feb"
 
-#: client/cl_campaign.c:1265
+#: client/cl_campaign.c:1264
 msgid "Mar"
 msgstr "Mar"
 
-#: client/cl_campaign.c:1267
+#: client/cl_campaign.c:1266
 msgid "Apr"
 msgstr "Apr"
 
-#: client/cl_campaign.c:1269
+#: client/cl_campaign.c:1268
 msgid "May"
 msgstr "Mag"
 
-#: client/cl_campaign.c:1271
+#: client/cl_campaign.c:1270
 msgid "Jun"
 msgstr "Giu"
 
-#: client/cl_campaign.c:1273
+#: client/cl_campaign.c:1272
 msgid "Jul"
 msgstr "Lug"
 
-#: client/cl_campaign.c:1275
+#: client/cl_campaign.c:1274
 msgid "Aug"
 msgstr "Ago"
 
-#: client/cl_campaign.c:1277
+#: client/cl_campaign.c:1276
 msgid "Sep"
 msgstr "Set"
 
-#: client/cl_campaign.c:1279
+#: client/cl_campaign.c:1278
 msgid "Oct"
 msgstr "Ott"
 
-#: client/cl_campaign.c:1281
+#: client/cl_campaign.c:1280
 msgid "Nov"
 msgstr "Nov"
 
-#: client/cl_campaign.c:1283
+#: client/cl_campaign.c:1282
 msgid "Dec"
 msgstr "Dic"
 
-#: client/cl_campaign.c:1297
+#: client/cl_campaign.c:1296
 msgid "Giving up"
 msgstr "Demoralizzato"
 
-#: client/cl_campaign.c:1299
+#: client/cl_campaign.c:1298
 msgid "Furious"
 msgstr "Furioso"
 
-#: client/cl_campaign.c:1301
+#: client/cl_campaign.c:1300
 msgid "Angry"
 msgstr "Arrabbiato"
 
-#: client/cl_campaign.c:1303
+#: client/cl_campaign.c:1302
 msgid "Mad"
 msgstr "Pazzo"
 
-#: client/cl_campaign.c:1305
+#: client/cl_campaign.c:1304
 msgid "Upset"
 msgstr "Sconvolto"
 
-#: client/cl_campaign.c:1307
+#: client/cl_campaign.c:1306
 msgid "Tolerant"
 msgstr "Tollerante"
 
-#: client/cl_campaign.c:1309
+#: client/cl_campaign.c:1308
 msgid "Neutral"
 msgstr "Neutrale"
 
-#: client/cl_campaign.c:1311
+#: client/cl_campaign.c:1310
 msgid "Content"
 msgstr "Contento"
 
-#: client/cl_campaign.c:1313
+#: client/cl_campaign.c:1312
 msgid "Pleased"
 msgstr "Soddisfatto"
 
-#: client/cl_campaign.c:1315
+#: client/cl_campaign.c:1314
 msgid "Happy"
 msgstr "Felice"
 
-#: client/cl_campaign.c:1317
+#: client/cl_campaign.c:1316
 msgid "Exuberant"
 msgstr "Esuberante"
 
-#: client/cl_campaign.c:1383
+#: client/cl_campaign.c:1382
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr ""
 "Hai ottenuto %i %s, %i %s, %i %s, %i %s, and %i %s dalle nazioni %s (%s)"
 
-#: client/cl_campaign.c:1384
+#: client/cl_campaign.c:1383
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "credito"
 msgstr[1] "crediti"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4538
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4546
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "medico"
 msgstr[1] "medici"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4535
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4543
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldato"
 msgstr[1] "soldati"
 
-#: client/cl_campaign.c:1388 client/cl_campaign.c:4537
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4545
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "operaio"
 msgstr[1] "operai"
 
-#: client/cl_campaign.c:1399
+#: client/cl_campaign.c:1398
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Paghi %i crediti per i soldati"
 
-#: client/cl_campaign.c:1409
+#: client/cl_campaign.c:1408
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "Paghi %i crediti per gli operai"
 
-#: client/cl_campaign.c:1419
+#: client/cl_campaign.c:1418
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Paghi %i crediti per gli scienziati"
 
-#: client/cl_campaign.c:1429
+#: client/cl_campaign.c:1428
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "Paghi %i crediti per i medici"
 
-#: client/cl_campaign.c:1440
+#: client/cl_campaign.c:1439
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "Paghi %i crediti per i robots"
 
-#: client/cl_campaign.c:1453
+#: client/cl_campaign.c:1452
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Paghi %i crediti per il velivolo"
 
-#: client/cl_campaign.c:1464
+#: client/cl_campaign.c:1463
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Paghi %i crediti di mantenimento della base %s"
 
-#: client/cl_campaign.c:1470
+#: client/cl_campaign.c:1469
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Paghi %i crediti per amministrazione."
 
-#: client/cl_campaign.c:1478
+#: client/cl_campaign.c:1477
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Paghi %i interessi sui tuoi debiti."
 
-#: client/cl_campaign.c:1639 client/cl_event.c:248 client/cl_save.c:274
+#: client/cl_campaign.c:1638 client/cl_event.c:248 client/cl_save.c:291
 #: client/cl_ufopedia.c:754 client/cl_ufopedia.c:760
 #, fuzzy, c-format
 msgid "%i %s %02i"
 msgstr "%02i %s %i"
 
-#: client/cl_campaign.c:1641
+#: client/cl_campaign.c:1640
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:1736
+#: client/cl_campaign.c:1735
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_campaign.c:1779
+#: client/cl_campaign.c:1778
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -11473,7 +11476,7 @@ msgstr ""
 "Perse:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1784
+#: client/cl_campaign.c:1783
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -11484,42 +11487,42 @@ msgstr ""
 "Attive:\t%i\n"
 "Attaccate:\t%i\n"
 
-#: client/cl_campaign.c:1791 client/cl_ufopedia.c:1608
+#: client/cl_campaign.c:1790 client/cl_ufopedia.c:1608
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:1830 client/cl_ufopedia.c:406
+#: client/cl_campaign.c:1829 client/cl_ufopedia.c:406
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:1836
+#: client/cl_campaign.c:1835
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Impiegati:\t%i c\n"
 
-#: client/cl_campaign.c:1845
+#: client/cl_campaign.c:1844
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Velivoli:\t%i c\n"
 
-#: client/cl_campaign.c:1853
+#: client/cl_campaign.c:1852
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s):\t%i c\n"
 
-#: client/cl_campaign.c:1858
+#: client/cl_campaign.c:1857
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Costi d'amministrazione:\t%i c\n"
 
-#: client/cl_campaign.c:1865
+#: client/cl_campaign.c:1864
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Debito:\t%i c\n"
 
-#: client/cl_campaign.c:1868
+#: client/cl_campaign.c:1867
 #, c-format
 msgid ""
 "\n"
@@ -11530,68 +11533,68 @@ msgstr ""
 "\t-------\n"
 "Somma:\t%i c\n"
 
-#: client/cl_campaign.c:1873
+#: client/cl_campaign.c:1872
 #, fuzzy, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Max. squadre permesse in questa mappa:\t%s\n"
 
-#: client/cl_campaign.c:1878
+#: client/cl_campaign.c:1877
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/cl_campaign.c:2760
+#: client/cl_campaign.c:2759
 msgid "Assemble or load a team"
 msgstr "Crea o carica una squadra"
 
-#: client/cl_campaign.c:2966
+#: client/cl_campaign.c:2965
 msgid "Your dropship is not near the landing zone"
 msgstr "Le nave trasporto è lontana dalla zona d'atterraggio"
 
-#: client/cl_campaign.c:3025
+#: client/cl_campaign.c:3024
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr ""
 
-#: client/cl_campaign.c:3042
+#: client/cl_campaign.c:3041
 msgid "You've won the battle"
 msgstr "Hai vinto la battaglia"
 
-#: client/cl_campaign.c:3129
+#: client/cl_campaign.c:3128
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s e'stato promosso a %s.\n"
 
-#: client/cl_campaign.c:3131
+#: client/cl_campaign.c:3130
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 "%s è stato promosso al grado postumo di %s\\per il coraggio dimostrato in una situazione di pericolo mortale.\n"
 
-#: client/cl_campaign.c:3132
+#: client/cl_campaign.c:3131
 msgid "Soldier promoted"
 msgstr "Soldato promosso"
 
-#: client/cl_campaign.c:3377
+#: client/cl_campaign.c:3376
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Difesa della base: %s operazione riuscita!"
 
-#: client/cl_campaign.c:4525
+#: client/cl_campaign.c:4533
 msgid "Human"
 msgstr "Umano"
 
-#: client/cl_campaign.c:4529
-#, fuzzy
+#: client/cl_campaign.c:4537
+#, fuzzy, c-format
 msgid ""
 "Race: %s\n"
 "Recruits: %i %s, %i %s, %i %s, %i %s\n"
 "Credits: %ic\n"
 "Difficulty: %s\n"
-"Min. happiness of nations: %i \\%\n"
+"Min. happiness of nations: %i %%\n"
 "Max. allowed debts: %ic\n"
 "%s\n"
 msgstr ""
@@ -11601,27 +11604,27 @@ msgstr ""
 "Difficoltà: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4682
+#: client/cl_campaign.c:4690
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "%s\t%s\t(%i/%i)\n"
 
-#: client/cl_campaign.c:4705
+#: client/cl_campaign.c:4713
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "%s\t%s\t(%i/%i)\n"
 
-#: client/cl_campaign.c:4863
+#: client/cl_campaign.c:4871
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4865 client/cl_campaign.c:5007
-#: client/cl_campaign.c:5098
+#: client/cl_campaign.c:4873 client/cl_campaign.c:5015
+#: client/cl_campaign.c:5106
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4943
+#: client/cl_campaign.c:4951
 #, fuzzy
 msgid ""
 "\n"
@@ -11629,13 +11632,13 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "Base selezionata"
 
-#: client/cl_campaign.c:5005
+#: client/cl_campaign.c:5013
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5068
+#: client/cl_campaign.c:5076
 #, fuzzy
 msgid ""
 "\n"
@@ -11643,7 +11646,7 @@ msgid ""
 "Selected nation:\t\t\t"
 msgstr "Seleziona oggetto"
 
-#: client/cl_campaign.c:5096
+#: client/cl_campaign.c:5104
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -11865,14 +11868,14 @@ msgid ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
-#: client/cl_main.c:344 client/cl_main.c:988
+#: client/cl_main.c:354 client/cl_main.c:989
 msgid "Assemble a team first"
 msgstr "Crea una squadra prima"
 
-#: client/cl_main.c:344 client/cl_main.c:709 client/cl_main.c:988
-#: client/cl_main.c:1496 client/cl_main.c:1501 client/cl_main.c:1507
-#: client/cl_main.c:1515 client/cl_save.c:414 client/cl_save.c:437
-#: client/cl_save.c:578
+#: client/cl_main.c:354 client/cl_main.c:709 client/cl_main.c:989
+#: client/cl_main.c:1485 client/cl_main.c:1490 client/cl_main.c:1496
+#: client/cl_main.c:1504 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_save.c:599
 msgid "Error"
 msgstr "Errore"
 
@@ -11973,85 +11976,85 @@ msgstr "Max. soldati persquadra:\t%s\n"
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1031
+#: client/cl_main.c:1032
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 "Tutti i segnalibri sono stati usati - per favore cancella quelli inutilizzati e ripeti questa operazione"
 
-#: client/cl_main.c:1117
+#: client/cl_main.c:1106
 msgid "Select a free team or your coop team"
 msgstr "Seleziona una squadra libera o la tua squadra coop"
 
 # # in game
-#: client/cl_main.c:1339 client/cl_main.c:1353
+#: client/cl_main.c:1328 client/cl_main.c:1342
 #, c-format
 msgid "Current team: %i"
 msgstr "Squadra corrente: %i"
 
-#: client/cl_main.c:1343 client/cl_main.c:1357
+#: client/cl_main.c:1332 client/cl_main.c:1346
 msgid "Team is already in use"
 msgstr "Squadra già in uso"
 
-#: client/cl_main.c:1367 client/cl_main.c:1405
+#: client/cl_main.c:1356 client/cl_main.c:1394
 msgid "Invalid or full team"
 msgstr "Squadra non valida o piena"
 
-#: client/cl_main.c:1495
+#: client/cl_main.c:1484
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "La versione del gioco locale (%s) differisce da quella sui server"
 
-#: client/cl_main.c:1501
+#: client/cl_main.c:1490
 msgid "Local map version differs from server"
 msgstr "La versione locale della mappa differisce da quella sul server"
 
-#: client/cl_main.c:1507
+#: client/cl_main.c:1496
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1514
+#: client/cl_main.c:1503
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "La versione del gioco locale (%s) differisce da quella sui server (%s)"
 
-#: client/cl_main.c:2113
+#: client/cl_main.c:2100
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2114
+#: client/cl_main.c:2101
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2229 client/cl_view.c:422
+#: client/cl_main.c:2216 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/cl_main.c:2247
+#: client/cl_main.c:2234
 msgid "Chicken-hearted"
 msgstr "Pollo"
 
-#: client/cl_main.c:2249
+#: client/cl_main.c:2236
 msgid "Very Easy"
 msgstr "Facilissimo"
 
-#: client/cl_main.c:2252
+#: client/cl_main.c:2239
 msgid "Easy"
 msgstr "Facile"
 
-#: client/cl_main.c:2257
+#: client/cl_main.c:2244
 msgid "Hard"
 msgstr "Difficile"
 
-#: client/cl_main.c:2259
+#: client/cl_main.c:2246
 msgid "Very Hard"
 msgstr "Molto Difficile"
 
-#: client/cl_main.c:2261
+#: client/cl_main.c:2248
 msgid "Insane"
 msgstr "Insano"
 
-#: client/cl_main.c:2313
+#: client/cl_main.c:2300
 #, fuzzy
 msgid "Custom"
 msgstr "Automatico"
@@ -12192,59 +12195,59 @@ msgstr ""
 msgid "Base defense item was successfully installed."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1051
+#: client/cl_mapfightequip.c:1077
 #, fuzzy
 msgid "No item assigned.\n"
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:1052
+#: client/cl_mapfightequip.c:1078
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1057
+#: client/cl_mapfightequip.c:1083
 msgid "This item is functional.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1059
+#: client/cl_mapfightequip.c:1085
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1061
+#: client/cl_mapfightequip.c:1087
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1068
+#: client/cl_mapfightequip.c:1094
 #, fuzzy
 msgid "No item assigned."
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:1072
+#: client/cl_mapfightequip.c:1098
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1081
+#: client/cl_mapfightequip.c:1108
 msgid "No ammo assigned to this weapon."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1847
+#: client/cl_mapfightequip.c:1876
 msgid "Light weight"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1850
+#: client/cl_mapfightequip.c:1879
 #, fuzzy
 msgid "Medium weight"
 msgstr "Medico"
 
-#: client/cl_mapfightequip.c:1853
+#: client/cl_mapfightequip.c:1882
 #, fuzzy
 msgid "Heavy weight"
 msgstr "Laser Pesante"
 
-#: client/cl_mapfightequip.c:1856
+#: client/cl_mapfightequip.c:1885
 #, fuzzy
 msgid "Unknown weight"
 msgstr "Abilità sconosciuta"
@@ -12289,11 +12292,11 @@ msgid ""
 "Not enough credits.\n"
 msgstr ""
 
-#: client/cl_market.c:766
+#: client/cl_market.c:799
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Non puoi vendere un velivolo se c'è ancora una squadra assegnata"
 
-#: client/cl_market.c:768
+#: client/cl_market.c:801
 #, fuzzy
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Non puoi vendere un velivolo se c'è ancora una squadra assegnata"
@@ -12308,49 +12311,58 @@ msgstr "Sì"
 msgid "no"
 msgstr "Neve"
 
-#: client/cl_menu.c:890
+#: client/cl_menu.c:885
+#, fuzzy
+msgid "No team assigned"
+msgstr "Nessun oggetto assegnato"
+
+#: client/cl_menu.c:885
+msgid "Please choose and equip your team first"
+msgstr ""
+
+#: client/cl_menu.c:891
 #, fuzzy
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Scegli il massimo di soldati per squadra"
 
-#: client/cl_menu.c:890
+#: client/cl_menu.c:891
 msgid "Settings doesn't make sense"
 msgstr "Le impostazioni non hanno senso"
 
-#: client/cl_menu.c:935
+#: client/cl_menu.c:937
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "In: %i Out: %i"
 
-#: client/cl_menu.c:2258
+#: client/cl_menu.c:2260
 #, c-format
 msgid "Key: %s"
 msgstr "Pulsante: %s"
 
-#: client/cl_menu.c:2323 client/cl_menu.c:2330
+#: client/cl_menu.c:2325 client/cl_menu.c:2332
 #, fuzzy, c-format
 msgid "Ammo: %i\n"
 msgstr "Max. munizioni:\t%i\n"
 
-#: client/cl_menu.c:2328
+#: client/cl_menu.c:2330
 #, c-format
 msgid "%s loaded\n"
 msgstr ""
 
-#: client/cl_menu.c:2337
+#: client/cl_menu.c:2339
 msgid "Usable in:\n"
 msgstr ""
 
-#: client/cl_menu.c:4023
+#: client/cl_menu.c:4025
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Nascondi l'HUD (Premi ESC per riattivarlo)"
 
-#: client/cl_menu.c:4933
+#: client/cl_menu.c:4935
 #, fuzzy
 msgid "all"
 msgstr "Palla"
 
-#: client/cl_menu.c:5047
+#: client/cl_menu.c:5049
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr ""
@@ -12382,7 +12394,7 @@ msgstr "Nemico individuato!\n"
 msgid "Civilian spotted!\n"
 msgstr "Civile individuato!\n"
 
-#: client/cl_parse.c:1591
+#: client/cl_parse.c:1599
 msgid "The server has disconnected.\n"
 msgstr ""
 
@@ -12450,7 +12462,7 @@ msgid ""
 msgstr "Non puoi mettere in coda altri oggetti!"
 
 #: client/cl_produce.c:242 client/cl_produce.c:245 client/cl_produce.c:249
-#: client/cl_produce.c:1130 client/cl_transfer.c:195 client/cl_transfer.c:198
+#: client/cl_produce.c:1138 client/cl_transfer.c:195 client/cl_transfer.c:198
 #: client/cl_transfer.c:201
 msgid "Hangars not ready"
 msgstr ""
@@ -12470,7 +12482,7 @@ msgid ""
 "No hangars in this base.\n"
 msgstr "Nessun magazzino in questa base\n"
 
-#: client/cl_produce.c:249 client/cl_produce.c:1130
+#: client/cl_produce.c:249 client/cl_produce.c:1138
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -12529,7 +12541,7 @@ msgstr "Nessun oggetto selezionato"
 msgid "Costs per item\t%i c\n"
 msgstr "Costo per oggetto\t%i c\n"
 
-#: client/cl_produce.c:568 client/cl_produce.c:630
+#: client/cl_produce.c:568 client/cl_produce.c:638
 #, fuzzy, c-format
 msgid "Production time\t%ih\n"
 msgstr "Tempo di produzione\t%ih\n"
@@ -12559,50 +12571,50 @@ msgstr "%s (%s)\n"
 msgid "Disassembly time\t%ih\n"
 msgstr ""
 
-#: client/cl_produce.c:628
+#: client/cl_produce.c:636
 #, fuzzy, c-format
 msgid "Production costs\t%i c\n"
 msgstr "Tempo di produzione\t%ih\n"
 
-#: client/cl_produce.c:632
+#: client/cl_produce.c:640
 #, fuzzy
 msgid "No aircraft selected."
 msgstr "Non hai selezionato il velivolo"
 
-#: client/cl_produce.c:1162
+#: client/cl_produce.c:1170
 msgid "Queue full!"
 msgstr "Coda piena!"
 
-#: client/cl_produce.c:1162
+#: client/cl_produce.c:1170
 msgid "You cannot queue any more items!"
 msgstr "Non puoi mettere in coda altri oggetti!"
 
-#: client/cl_produce.c:1184 client/cl_produce.c:1200
+#: client/cl_produce.c:1192 client/cl_produce.c:1208
 #, fuzzy
 msgid "Not enough material!"
 msgstr "Non ci sono abbastanza dormitori"
 
-#: client/cl_produce.c:1184
+#: client/cl_produce.c:1192
 #, c-format
 msgid ""
 "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr ""
 
-#: client/cl_produce.c:1188 client/cl_produce.c:1210
+#: client/cl_produce.c:1196 client/cl_produce.c:1218
 #, c-format
 msgid "Production of %s started"
 msgstr "Produzione di %s iniziata"
 
-#: client/cl_produce.c:1189 client/cl_produce.c:1192 client/cl_produce.c:1211
+#: client/cl_produce.c:1197 client/cl_produce.c:1200 client/cl_produce.c:1219
 msgid "Production started"
 msgstr "Produzione iniziata"
 
-#: client/cl_produce.c:1191
+#: client/cl_produce.c:1199
 #, fuzzy, c-format
 msgid "Disassembling of %s started"
 msgstr "Produzione di %s iniziata"
 
-#: client/cl_produce.c:1200
+#: client/cl_produce.c:1208
 #, fuzzy
 msgid "You don't have enough of the needed material to produce this item."
 msgstr "Non hai abbastanza dormitori per i tuoi impiegati."
@@ -12760,56 +12772,56 @@ msgid ""
 "See game console for more information."
 msgstr ""
 
-#: client/cl_save.c:226
+#: client/cl_save.c:243
 msgid "No campaign active."
 msgstr ""
 
-#: client/cl_save.c:232
+#: client/cl_save.c:249
 #, fuzzy
 msgid "Nothing to save yet."
 msgstr "Niente da ricercare"
 
-#: client/cl_save.c:243
+#: client/cl_save.c:260
 msgid "Could not allocate enough memory to save this game"
 msgstr ""
 
-#: client/cl_save.c:286
+#: client/cl_save.c:303
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 
-#: client/cl_save.c:307
+#: client/cl_save.c:324
 msgid "Size mismatch - failed to save the campaign"
 msgstr ""
 
-#: client/cl_save.c:347 client/cl_save.c:349
+#: client/cl_save.c:364 client/cl_save.c:366
 #, fuzzy
 msgid "Error saving game."
 msgstr ""
 "Errore nel salvataggio del gioco. Controlla se c'è abbastanza spazio libero sul disco!"
 
-#: client/cl_save.c:413 client/cl_save.c:436 client/cl_save.c:577
+#: client/cl_save.c:430 client/cl_save.c:455 client/cl_save.c:598
 #, fuzzy
 msgid "Error loading game."
 msgstr "caricamento modelli..."
 
-#: client/cl_save.c:556
+#: client/cl_save.c:577
 msgid "Campaign was successfully saved."
 msgstr ""
 
-#: client/cl_save.c:556
+#: client/cl_save.c:577
 msgid "Quicksave"
 msgstr ""
 
-#: client/cl_save.c:580
+#: client/cl_save.c:601
 #, fuzzy
 msgid "Campaign loaded"
 msgstr "Campagne"
 
-#: client/cl_save.c:580
+#: client/cl_save.c:601
 msgid "Quicksave campaign was successfully loaded."
 msgstr ""
 
-#: client/cl_save.c:628
+#: client/cl_save.c:649
 msgid "Saves to the quick save slot"
 msgstr ""
 
@@ -13163,7 +13175,7 @@ msgstr ""
 msgid "%s (%i for transfer)\n"
 msgstr "%s (%i a bordo)\n"
 
-#: client/cl_transfer.c:254 client/cl_transfer.c:397
+#: client/cl_transfer.c:254 client/cl_transfer.c:415
 #, fuzzy, c-format
 msgid "Soldier %s %s\n"
 msgstr "Soldati"
@@ -13173,198 +13185,198 @@ msgstr "Soldati"
 msgid "Corpse of %s (%i for transfer)\n"
 msgstr "Cadavere di %s (%i a bordo)\n"
 
-#: client/cl_transfer.c:302 client/cl_transfer.c:461
+#: client/cl_transfer.c:302 client/cl_transfer.c:479
 #, fuzzy, c-format
 msgid "Aircraft %s\n"
 msgstr "Velivoli"
 
-#: client/cl_transfer.c:373 client/cl_transfer.c:408
+#: client/cl_transfer.c:391 client/cl_transfer.c:426
 #, fuzzy, c-format
 msgid "%s (%i for transfer, %i left)\n"
 msgstr "%s (%i a bordo, %i rimasti)\n"
 
-#: client/cl_transfer.c:375 client/cl_transfer.c:410
+#: client/cl_transfer.c:393 client/cl_transfer.c:428
 #, c-format
 msgid "%s (%i available)\n"
 msgstr "%s (%i disponibili)\n"
 
-#: client/cl_transfer.c:380
+#: client/cl_transfer.c:398
 msgid "Storage is empty.\n"
 msgstr "Il magazzino è vuoto.\n"
 
-#: client/cl_transfer.c:382
+#: client/cl_transfer.c:400
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a Storage."
 msgstr "Trasferimento impossibile - la base non ha un magazzino."
 
-#: client/cl_transfer.c:384 client/cl_transfer.c:452
+#: client/cl_transfer.c:402 client/cl_transfer.c:470
 #, fuzzy
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "Trasferimento impossibile - la base non ha un magazzino."
 
-#: client/cl_transfer.c:417
+#: client/cl_transfer.c:435
 #, fuzzy
 msgid "Living Quarters empty.\n"
 msgstr "Aree residenziali"
 
-#: client/cl_transfer.c:419
+#: client/cl_transfer.c:437
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "Trasferimento impossibile - la base non ha dormitori"
 
-#: client/cl_transfer.c:426
+#: client/cl_transfer.c:444
 #, fuzzy, c-format
 msgid "Corpse of %s (%i for transfer, %i left)\n"
 msgstr "Cadavere di %s (%i a bordo, %i rimasti)\n"
 
-#: client/cl_transfer.c:430
+#: client/cl_transfer.c:448
 #, c-format
 msgid "Corpse of %s (%i available)\n"
 msgstr "Cadavere di %s (%i disponibili)\n"
 
-#: client/cl_transfer.c:437
+#: client/cl_transfer.c:455
 #, fuzzy, c-format
 msgid "Alive %s (%i for transfer, %i left)\n"
 msgstr "Esemplare vivo di %s (%i a bordo, %i rimasti)\n"
 
-#: client/cl_transfer.c:441
+#: client/cl_transfer.c:459
 #, c-format
 msgid "Alive %s (%i available)\n"
 msgstr "Esemplare vivo di %s (%i disponibili)\n"
 
-#: client/cl_transfer.c:448
+#: client/cl_transfer.c:466
 msgid "Alien Containment is empty.\n"
 msgstr "Unità di Contenimento Alieni vuota.\n"
 
-#: client/cl_transfer.c:450
+#: client/cl_transfer.c:468
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Trasferimento impossibile - la base non ha unità di contenimento"
 
-#: client/cl_transfer.c:468
+#: client/cl_transfer.c:486
 #, fuzzy
 msgid "No aircraft available for transfer.\n"
 msgstr "Nessuna proposta di ricerca per questo progetto."
 
-#: client/cl_transfer.c:470
+#: client/cl_transfer.c:488
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't hangar functional."
 msgstr "Trasferimento impossibile - la base non ha un magazzino."
 
-#: client/cl_transfer.c:552
+#: client/cl_transfer.c:571
 #, c-format
 msgid "Base %s does not have Storage, items are removed!"
 msgstr ""
 
-#: client/cl_transfer.c:553 client/cl_transfer.c:571 client/cl_transfer.c:599
-#: client/cl_transfer.c:626 client/cl_transfer.c:710 client/cl_transfer.c:798
-#: client/cl_transfer.c:905 client/cl_transfer.c:1373
+#: client/cl_transfer.c:572 client/cl_transfer.c:590 client/cl_transfer.c:618
+#: client/cl_transfer.c:645 client/cl_transfer.c:729 client/cl_transfer.c:817
+#: client/cl_transfer.c:924 client/cl_transfer.c:1392
 msgid "Transport mission"
 msgstr "Missione di trasporto"
 
-#: client/cl_transfer.c:570
+#: client/cl_transfer.c:589
 #, c-format
 msgid "Base %s does not have Living Quarters, employees got unhired!"
 msgstr ""
 
-#: client/cl_transfer.c:598
+#: client/cl_transfer.c:617
 #, c-format
 msgid "Base %s does not have Alien Containment, Aliens are removed!"
 msgstr ""
 
-#: client/cl_transfer.c:625
+#: client/cl_transfer.c:644
 #, c-format
 msgid "Base %s does not have enough free space in hangars. Aircraft is lost!"
 msgstr ""
 
-#: client/cl_transfer.c:709 client/cl_transfer.c:904
+#: client/cl_transfer.c:728 client/cl_transfer.c:923
 #, fuzzy, c-format
 msgid "Transport mission started, cargo is being transported to base %s"
 msgstr "Missione di trasporto terminata, velivolo assegnato alla nuova base."
 
-#: client/cl_transfer.c:777
+#: client/cl_transfer.c:796
 #, c-format
 msgid "(can host %i alive alien)\n"
 msgid_plural "(can host %i alive aliens)\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_transfer.c:797
+#: client/cl_transfer.c:816
 #, fuzzy, c-format
 msgid "Transport mission ended, unloading cargo in base %s"
 msgstr "Missione di trasporto terminata, ora ritorno alla base di provenienza."
 
-#: client/cl_transfer.c:929
+#: client/cl_transfer.c:948
 msgid "No target base selected"
 msgstr "Non hai selezionato la base di destinazione"
 
-#: client/cl_transfer.c:929
+#: client/cl_transfer.c:948
 msgid "Please select the target base from the list"
 msgstr "Perfavore, seleziona la base destinazione dalla lista"
 
-#: client/cl_transfer.c:1074
+#: client/cl_transfer.c:1093
 #, fuzzy
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Puoi trasferire equipaggiamento - questa base ha un magazzino\n"
 
-#: client/cl_transfer.c:1076
+#: client/cl_transfer.c:1095
 #, fuzzy
 msgid "No Storage in this base.\n"
 msgstr "Nessun magazzino in questa base\n"
 
-#: client/cl_transfer.c:1079 client/cl_transfer.c:1092
-#: client/cl_transfer.c:1100 client/cl_transfer.c:1110
+#: client/cl_transfer.c:1098 client/cl_transfer.c:1111
+#: client/cl_transfer.c:1119 client/cl_transfer.c:1129
 #, fuzzy
 msgid "No power supplies in this base.\n"
 msgstr "Nessun magazzino in questa base\n"
 
-#: client/cl_transfer.c:1082
+#: client/cl_transfer.c:1101
 #, fuzzy
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Puoi trasferire impiegati - questa base ha dei dormitori\n"
 
-#: client/cl_transfer.c:1084
+#: client/cl_transfer.c:1103
 #, fuzzy
 msgid "No Living Quarters in this base.\n"
 msgstr "Nessun dormitorio in questa base\n"
 
-#: client/cl_transfer.c:1087
+#: client/cl_transfer.c:1106
 #, fuzzy
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "Puoi trasferire alieni - questa base ha un'unità di contenimanto\n"
 
-#: client/cl_transfer.c:1089
+#: client/cl_transfer.c:1108
 #, fuzzy
 msgid "No Alien Containment in this base.\n"
 msgstr "Nessuna unità di contenimento alieni in questa base\n"
 
-#: client/cl_transfer.c:1095
+#: client/cl_transfer.c:1114
 #, fuzzy
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Puoi trasferire alieni - questa base ha un'unità di contenimanto\n"
 
-#: client/cl_transfer.c:1097
+#: client/cl_transfer.c:1116
 #, fuzzy
 msgid "No Antimatter Storage in this base.\n"
 msgstr "Nessun dormitorio in questa base\n"
 
-#: client/cl_transfer.c:1103
+#: client/cl_transfer.c:1122
 #, fuzzy
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Puoi trasferire equipaggiamento - questa base ha un magazzino\n"
 
-#: client/cl_transfer.c:1105
+#: client/cl_transfer.c:1124
 #, fuzzy
 msgid ""
 "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "Trasferimento impossibile - la base non ha un magazzino."
 
-#: client/cl_transfer.c:1107
+#: client/cl_transfer.c:1126
 #, fuzzy
 msgid "No Hangar in this base.\n"
 msgstr "Nessun magazzino in questa base\n"
 
-#: client/cl_transfer.c:1373
+#: client/cl_transfer.c:1392
 msgid ""
 "The destination base no longer exists! Transfer cargo are lost, personel got unhired."
 msgstr ""
