@@ -709,6 +709,7 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 	assert(mission->ufo);
 
 	CP_MissionRemoveFromGeoscape(mission);
+	mission->ufo->notOnGeoscape = qfalse;
 
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
