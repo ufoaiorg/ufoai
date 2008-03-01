@@ -596,10 +596,6 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			Radar_NotifyUFORemoved(&aircraft->radar, ufo);
 	}
-
-	/* Notications */
-	AIR_AircraftsNotifyUFORemoved(ufo);
-	MAP_NotifyUFORemoved(ufo);
 }
 
 /**

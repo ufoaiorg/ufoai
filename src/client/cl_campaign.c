@@ -536,6 +536,19 @@ static inline void CP_MissionAddToGeoscape (mission_t *mission)
 }
 
 /**
+ * @brief Removes a UFO from geoscape: make it non visible and call notify functions
+ * @note We don't destroy the UFO because we can use later, e.g. if it takes off
+ */
+static void CP_UFORemoveFromGeoscape (mission_t *mission)
+{
+	mission->ufo->notOnGeoscape = qtrue;
+
+	/* Notications */
+	AIR_AircraftsNotifyUFORemoved(mission->ufo);
+	MAP_NotifyUFORemoved(mission->ufo);
+}
+
+/**
  * @brief Removes a mission from mission global array.
  */
 static void CP_MissionRemove (mission_t *mission)
@@ -544,8 +557,10 @@ static void CP_MissionRemove (mission_t *mission)
 	mission_t *removedMission;
 
 	/* Destroy UFO */
-	if (mission->ufo)
+	if (mission->ufo) {
+		CP_UFORemoveFromGeoscape(mission);		/* for the notifications */
 		UFO_RemoveFromGeoscape(mission->ufo);
+	}
 
 	/* Remove from ccs.battleParameters */
 	if (mission == ccs.battleParameters.mission)
@@ -758,10 +773,9 @@ static void CP_ReconMissionGround (mission_t *mission)
 
 	assert(mission->ufo);
 
-	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	mission->ufo->notOnGeoscape = qtrue;
 	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
-
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 
@@ -919,8 +933,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	mission->ufo->notOnGeoscape = qtrue;
-
+	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 
@@ -1503,9 +1516,9 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
 	}
 
-	/* ufo becomes invisible on geoscape */
-	ufo->notOnGeoscape = qtrue;
 	CP_MissionDisableTimeLimit(mission);
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 }
