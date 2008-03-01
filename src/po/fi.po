@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-02-27 20:00+0100\n"
+"POT-Creation-Date: 2008-03-01 18:10+0100\n"
 "PO-Revision-Date: 2007-05-09 19:10+0300\n"
 "Last-Translator: Niklas Laxstrom\n"
 "Language-Team: Finnish\n"
@@ -71,25 +71,25 @@ msgid "Tropical drug"
 msgstr ""
 
 #: ../base/maps/ufocrash.ump:213 ../base/ufos/aircraftmanagement.ufo:290
-#: ../base/ufos/otheritems.ufo:58 ../base/ufos/research.ufo:3441
+#: ../base/ufos/otheritems.ufo:61 ../base/ufos/research.ufo:3441
 #: ../base/ufos/research.ufo:3454 ../base/ufos/research.ufo:3462
 msgid "UFO - Harvester"
 msgstr ""
 
 #: ../base/maps/ufocrash.ump:249 ../base/ufos/aircraftmanagement.ufo:435
-#: ../base/ufos/otheritems.ufo:40 ../base/ufos/research.ufo:3190
+#: ../base/ufos/otheritems.ufo:41 ../base/ufos/research.ufo:3190
 #: ../base/ufos/research.ufo:3203 ../base/ufos/research.ufo:3211
 msgid "UFO - Scout"
 msgstr ""
 
 #: ../base/maps/ufocrash.ump:263 ../base/ufos/aircraftmanagement.ufo:456
-#: ../base/ufos/otheritems.ufo:49 ../base/ufos/research.ufo:3231
+#: ../base/ufos/otheritems.ufo:51 ../base/ufos/research.ufo:3231
 #: ../base/ufos/research.ufo:3244 ../base/ufos/research.ufo:3252
 msgid "UFO - Fighter"
 msgstr ""
 
 #: ../base/maps/ufocrash.ump:277 ../base/ufos/aircraftmanagement.ufo:356
-#: ../base/ufos/otheritems.ufo:91 ../base/ufos/research.ufo:3273
+#: ../base/ufos/otheritems.ufo:98 ../base/ufos/research.ufo:3273
 #: ../base/ufos/research.ufo:3286 ../base/ufos/research.ufo:3294
 msgid "UFO - Supply Ship"
 msgstr ""
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Harvester U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:333 ../base/ufos/otheritems.ufo:83
+#: ../base/ufos/aircraftmanagement.ufo:333 ../base/ufos/otheritems.ufo:89
 #: ../base/ufos/research.ufo:3315 ../base/ufos/research.ufo:3328
 #: ../base/ufos/research.ufo:3336
 msgid "UFO - Carrier"
@@ -165,7 +165,7 @@ msgstr ""
 msgid "Supply U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:378 ../base/ufos/otheritems.ufo:67
+#: ../base/ufos/aircraftmanagement.ufo:378 ../base/ufos/otheritems.ufo:71
 #: ../base/ufos/research.ufo:3357 ../base/ufos/research.ufo:3370
 #: ../base/ufos/research.ufo:3378
 msgid "UFO - Bomber"
@@ -175,7 +175,7 @@ msgstr ""
 msgid "Bomber U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:407 ../base/ufos/otheritems.ufo:75
+#: ../base/ufos/aircraftmanagement.ufo:407 ../base/ufos/otheritems.ufo:80
 #: ../base/ufos/research.ufo:3412 ../base/ufos/research.ufo:3420
 msgid "UFO - Corrupter"
 msgstr ""
@@ -315,26 +315,26 @@ msgstr ""
 msgid "Combat Armour"
 msgstr ""
 
-#: ../base/ufos/armour.ufo:117
+#: ../base/ufos/armour.ufo:116
 msgid "Advanced Combat Armour"
 msgstr ""
 
-#: ../base/ufos/armour.ufo:180 ../base/ufos/research.ufo:2362
+#: ../base/ufos/armour.ufo:178 ../base/ufos/research.ufo:2362
 #: ../base/ufos/research.ufo:2370
 msgid "Nanocomposite Armour"
 msgstr ""
 
-#: ../base/ufos/armour.ufo:244
+#: ../base/ufos/armour.ufo:241
 #, fuzzy
 msgid "Power Armour"
 msgstr "Näytä panssarit"
 
-#: ../base/ufos/armour.ufo:546 ../base/ufos/research.ufo:2438
+#: ../base/ufos/armour.ufo:538 ../base/ufos/research.ufo:2438
 #: ../base/ufos/research.ufo:2446
 msgid "Alien Body Armour"
 msgstr ""
 
-#: ../base/ufos/armour.ufo:609
+#: ../base/ufos/armour.ufo:600
 msgid "Medium Alien Armour"
 msgstr ""
 
@@ -1004,8 +1004,7 @@ msgstr ""
 #: ../base/ufos/maps.ufo:123 ../base/ufos/maps.ufo:160
 #: ../base/ufos/maps.ufo:195
 msgid ""
-"A farm in a rural area. Lots of land to cover, but few obstacles to impair "
-"line of sight."
+"A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:237 ../base/ufos/maps.ufo:302
@@ -1042,130 +1041,127 @@ msgstr ""
 msgid "A small office in a mountainous region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:683
+#: ../base/ufos/maps.ufo:682
 msgid ""
-"A kind of communal gathering centre annex foraging facility, known as a "
-"supermarket."
+"A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:726
+#: ../base/ufos/maps.ufo:725
 msgid "An old mine."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:770
+#: ../base/ufos/maps.ufo:769
 msgid "An industial area, used for loading and unloading goods."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:809
+#: ../base/ufos/maps.ufo:808
 msgid "A bunker used in a previous conflict."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:850
+#: ../base/ufos/maps.ufo:849
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:889
+#: ../base/ufos/maps.ufo:888
 msgid "A classic eastern suburban area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:928
+#: ../base/ufos/maps.ufo:927
 msgid "A small industrial area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:967
+#: ../base/ufos/maps.ufo:966
 msgid "A stadium used for various recreational events."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1009
+#: ../base/ufos/maps.ufo:1008
 msgid ""
 "A tropical area where several suspected criminals have made their homes."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1127
+#: ../base/ufos/maps.ufo:1126
 msgid ""
-"A farmhouse surrounded by fields and sheds. A UFO has landed in one of the "
-"fields."
+"A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1168
+#: ../base/ufos/maps.ufo:1166
 msgid "An industrial compound."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1209
+#: ../base/ufos/maps.ufo:1208
 msgid "A rather old-fashioned suburban district."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1253
+#: ../base/ufos/maps.ufo:1252
 msgid "A small neighbourhood in a warm urban region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1293
+#: ../base/ufos/maps.ufo:1292
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1335 ../base/ufos/maps.ufo:1374
+#: ../base/ufos/maps.ufo:1334 ../base/ufos/maps.ufo:1373
 msgid "An urban district in an oriental region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1413
+#: ../base/ufos/maps.ufo:1412
 msgid "A subway station in a suburban part of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1454
+#: ../base/ufos/maps.ufo:1453
 msgid "An office complex in the center of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1497
+#: ../base/ufos/maps.ufo:1496
 msgid "A suburban district."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1537
+#: ../base/ufos/maps.ufo:1536
 msgid "A military convoy has caught the eye of the aliens."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1577 ../base/ufos/maps.ufo:1617
+#: ../base/ufos/maps.ufo:1576 ../base/ufos/maps.ufo:1616
 msgid "A small UFO has crashed in this mining region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1659
+#: ../base/ufos/maps.ufo:1658
 msgid "An office complex under constuction."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1699
+#: ../base/ufos/maps.ufo:1698
 msgid "A local harbor."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1739
+#: ../base/ufos/maps.ufo:1738
 msgid "An office complex on the outskirts of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1779
+#: ../base/ufos/maps.ufo:1778
 msgid "A luxurious vacation resort."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1830
+#: ../base/ufos/maps.ufo:1829
 msgid "An african suburb that has received a visit from a Harvester."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1871
+#: ../base/ufos/maps.ufo:1870
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1909
+#: ../base/ufos/maps.ufo:1908
 msgid "A small settlement in winter."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1954
+#: ../base/ufos/maps.ufo:1953
 msgid ""
-"A shelter that was built to house people in times of major disasters. Some "
-"internal blast doors may have been closed."
+"A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1997
+#: ../base/ufos/maps.ufo:1996
 msgid "A Bomber has landed in the middle of a city."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2043
+#: ../base/ufos/maps.ufo:2042
 msgid "A place where people come to relax and mingle."
 msgstr ""
 
@@ -1185,8 +1181,8 @@ msgstr "Tutkija"
 msgid "Medic"
 msgstr "Lääkintämies"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:503
-#: ../base/ufos/team_humans.ufo:524 client/cl_employee.c:237
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:504
+#: ../base/ufos/team_humans.ufo:526 client/cl_employee.c:237
 msgid "UGV"
 msgstr ""
 
@@ -1464,7 +1460,7 @@ msgstr "Kansakunnat"
 #: ../base/ufos/menu_geoscape.ufo:1120 ../base/ufos/menu_geoscape.ufo:1181
 #: ../base/ufos/menu_irc.ufo:276 ../base/ufos/menu_lostwon.ufo:387
 #: ../base/ufos/menu_lostwon.ufo:484 ../base/ufos/menu_multiplayer.ufo:1735
-#: ../base/ufos/menu_options.ufo:527 ../base/ufos/menu_singleplayer.ufo:448
+#: ../base/ufos/menu_options.ufo:529 ../base/ufos/menu_singleplayer.ufo:448
 msgid "Close this dialogue"
 msgstr "Sulje tämä dialogi"
 
@@ -1474,7 +1470,7 @@ msgstr "Sulje tämä dialogi"
 #: ../base/ufos/menu_geoscape.ufo:924 ../base/ufos/menu_geoscape.ufo:974
 #: ../base/ufos/menu_geoscape.ufo:1063 ../base/ufos/menu_geoscape.ufo:1133
 #: ../base/ufos/menu_irc.ufo:289 ../base/ufos/menu_lostwon.ufo:400
-#: ../base/ufos/menu_lostwon.ufo:497 ../base/ufos/menu_options.ufo:551
+#: ../base/ufos/menu_lostwon.ufo:497 ../base/ufos/menu_options.ufo:553
 #: ../base/ufos/menu_singleplayer.ufo:461
 msgid "Cancel"
 msgstr "Peruuta"
@@ -1935,7 +1931,7 @@ msgstr "Tuhoa"
 #: ../base/ufos/menu_basesummary.ufo:82 ../base/ufos/menu_geoscape.ufo:739
 #: ../base/ufos/menu_geoscape.ufo:852 ../base/ufos/menu_geoscape.ufo:1032
 #: ../base/ufos/menu_main.ufo:245 ../base/ufos/menu_multiplayer.ufo:694
-#: ../base/ufos/menu_options.ufo:957
+#: ../base/ufos/menu_options.ufo:959
 msgid "Name:"
 msgstr "Nimi:"
 
@@ -2239,7 +2235,7 @@ msgstr "Takaisin"
 
 #: ../base/ufos/menu_campaign.ufo:148 ../base/ufos/menu_hire.ufo:361
 #: ../base/ufos/menu_hospital.ufo:406 ../base/ufos/menu_irc.ufo:173
-#: ../base/ufos/menu_options.ufo:723 ../base/ufos/menu_production.ufo:149
+#: ../base/ufos/menu_options.ufo:725 ../base/ufos/menu_production.ufo:149
 #: ../base/ufos/menu_production.ufo:646 ../base/ufos/menu_transfer.ufo:126
 #: ../base/ufos/menu_ufopedia.ufo:270 ../base/ufos/menu_ufopedia.ufo:300
 msgid "Scroll up"
@@ -2247,7 +2243,7 @@ msgstr ""
 
 #: ../base/ufos/menu_campaign.ufo:162 ../base/ufos/menu_hire.ufo:375
 #: ../base/ufos/menu_hospital.ufo:420 ../base/ufos/menu_irc.ufo:187
-#: ../base/ufos/menu_options.ufo:737 ../base/ufos/menu_production.ufo:163
+#: ../base/ufos/menu_options.ufo:739 ../base/ufos/menu_production.ufo:163
 #: ../base/ufos/menu_production.ufo:660 ../base/ufos/menu_transfer.ufo:140
 #: ../base/ufos/menu_ufopedia.ufo:285 ../base/ufos/menu_ufopedia.ufo:315
 msgid "Scroll down"
@@ -2415,7 +2411,7 @@ msgstr "Tukikohta:"
 msgid "ETA:"
 msgstr "Panssari"
 
-#: ../base/ufos/menu_geoscape.ufo:948 client/cl_campaign.c:414
+#: ../base/ufos/menu_geoscape.ufo:948 client/cl_campaign.c:398
 msgid "Base attack"
 msgstr "Tukikohtahyökkäys"
 
@@ -2954,15 +2950,15 @@ msgstr ""
 msgid "Save settings"
 msgstr "Peliasetukset"
 
-#: ../base/ufos/menu_main.ufo:269 ../base/ufos/menu_options.ufo:594
+#: ../base/ufos/menu_main.ufo:269 ../base/ufos/menu_options.ufo:596
 msgid "Volume Control"
 msgstr "Äänenvoimakkuuden hallinta"
 
-#: ../base/ufos/menu_main.ufo:275 ../base/ufos/menu_options.ufo:599
+#: ../base/ufos/menu_main.ufo:275 ../base/ufos/menu_options.ufo:601
 msgid "Effects:"
 msgstr "Tehosteet:"
 
-#: ../base/ufos/menu_main.ufo:296 ../base/ufos/menu_options.ufo:621
+#: ../base/ufos/menu_main.ufo:296 ../base/ufos/menu_options.ufo:623
 msgid "Music:"
 msgstr "Musiikki:"
 
@@ -2970,7 +2966,7 @@ msgstr "Musiikki:"
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:330 ../base/ufos/menu_options.ufo:1053
+#: ../base/ufos/menu_main.ufo:330 ../base/ufos/menu_options.ufo:1055
 #, fuzzy
 msgid "Language"
 msgstr "Pelin lataaminen ei onnistunut."
@@ -2983,7 +2979,7 @@ msgstr ""
 msgid "Tip of the day"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:412 ../base/ufos/menu_options.ufo:908
+#: ../base/ufos/menu_main.ufo:412 ../base/ufos/menu_options.ufo:910
 msgid "Show tip of the day"
 msgstr ""
 
@@ -3323,197 +3319,197 @@ msgstr ""
 msgid "Isometric Mode:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:296
+#: ../base/ufos/menu_options.ufo:297
 msgid "Per pixel lighting:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:308
+#: ../base/ufos/menu_options.ufo:310
 msgid "Weather effects:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:320
+#: ../base/ufos/menu_options.ufo:322
 msgid "Gamma:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:342
+#: ../base/ufos/menu_options.ufo:344
 #, fuzzy
 msgid "Contrast:"
 msgstr "Hinta:"
 
-#: ../base/ufos/menu_options.ufo:364
+#: ../base/ufos/menu_options.ufo:366
 msgid "Brightness:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:386
+#: ../base/ufos/menu_options.ufo:388
 msgid "Lightmap scale:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:415 ../base/ufos/menu_options.ufo:444
+#: ../base/ufos/menu_options.ufo:417 ../base/ufos/menu_options.ufo:446
 msgid "Low"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:420 ../base/ufos/menu_options.ufo:449
+#: ../base/ufos/menu_options.ufo:422 ../base/ufos/menu_options.ufo:451
 #, fuzzy
 msgid "Medium"
 msgstr "Lääkintämies"
 
-#: ../base/ufos/menu_options.ufo:425 ../base/ufos/menu_options.ufo:454
-#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_campaign.c:4798
+#: ../base/ufos/menu_options.ufo:427 ../base/ufos/menu_options.ufo:456
+#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_campaign.c:4947
 msgid "Normal"
 msgstr "Normaali"
 
-#: ../base/ufos/menu_options.ufo:430 ../base/ufos/menu_options.ufo:459
+#: ../base/ufos/menu_options.ufo:432 ../base/ufos/menu_options.ufo:461
 #, fuzzy
 msgid "High"
 msgstr "Yö"
 
-#: ../base/ufos/menu_options.ufo:464 client/cl_actor.c:156
+#: ../base/ufos/menu_options.ufo:466 client/cl_actor.c:156
 msgid "Excellent"
 msgstr "loistava"
 
-#: ../base/ufos/menu_options.ufo:469
+#: ../base/ufos/menu_options.ufo:471
 msgid "Extreme"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:514
+#: ../base/ufos/menu_options.ufo:516
 msgid "Maintain resolution"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:521
+#: ../base/ufos/menu_options.ufo:523
 msgid "Want To Maintain resolution"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:538
+#: ../base/ufos/menu_options.ufo:540
 msgid "Change the resolution"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:559
+#: ../base/ufos/menu_options.ufo:561
 msgid "Accept"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:586
+#: ../base/ufos/menu_options.ufo:588
 msgid "Sound settings"
 msgstr "Ääniasetukset"
 
-#: ../base/ufos/menu_options.ufo:643
+#: ../base/ufos/menu_options.ufo:645
 #, fuzzy
 msgid "Sound rate:"
 msgstr "Toistojärjestelmä:"
 
-#: ../base/ufos/menu_options.ufo:648
+#: ../base/ufos/menu_options.ufo:650
 msgid "Restart sound to change the settings"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:702
+#: ../base/ufos/menu_options.ufo:704
 msgid "Show key bindings"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:765
+#: ../base/ufos/menu_options.ufo:767
 msgid "Game settings"
 msgstr "Peliasetukset"
 
-#: ../base/ufos/menu_options.ufo:776
+#: ../base/ufos/menu_options.ufo:778
 msgid "Camera Scroll:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:802
+#: ../base/ufos/menu_options.ufo:804
 msgid "Camera Rotation:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:828
+#: ../base/ufos/menu_options.ufo:830
 msgid "Precache models:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:836
+#: ../base/ufos/menu_options.ufo:838
 msgid "Precache models (faster menus)"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:844
+#: ../base/ufos/menu_options.ufo:846
 msgid "Tooltips:"
 msgstr "Kontekstivihjeet:"
 
-#: ../base/ufos/menu_options.ufo:852
+#: ../base/ufos/menu_options.ufo:854
 msgid "Activates tooltips"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:860
+#: ../base/ufos/menu_options.ufo:862
 msgid "Centre view:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:868
+#: ../base/ufos/menu_options.ufo:870
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:876
+#: ../base/ufos/menu_options.ufo:878
 msgid "Cursor tooltips:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:884
+#: ../base/ufos/menu_options.ufo:886
 msgid "Activates cursor tooltips"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:892
+#: ../base/ufos/menu_options.ufo:894
 msgid "3D Geoscape:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:900
+#: ../base/ufos/menu_options.ufo:902
 msgid "Use 3D geoscape"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:925
+#: ../base/ufos/menu_options.ufo:927
 msgid "Start with employees:"
 msgstr "Valmiiksi palkattuja työntekijöitä"
 
-#: ../base/ufos/menu_options.ufo:933
+#: ../base/ufos/menu_options.ufo:935
 msgid "Employees already hired at campaign start"
 msgstr "Kampanjan alussa on valmiiksi palkattuja työntekijöitä"
 
-#: ../base/ufos/menu_options.ufo:941
+#: ../base/ufos/menu_options.ufo:943
 msgid "Start with buildings:"
 msgstr "Rakenna perusrakennukset:"
 
-#: ../base/ufos/menu_options.ufo:949
+#: ../base/ufos/menu_options.ufo:951
 msgid "Buildings already built in the initial base"
 msgstr "Ensimmäisessä tukikohdassa on perusrakennukset"
 
-#: ../base/ufos/menu_options.ufo:980
+#: ../base/ufos/menu_options.ufo:982
 msgid "Joystick threshold:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1006
+#: ../base/ufos/menu_options.ufo:1008
 msgid "Joystick speed:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1042
+#: ../base/ufos/menu_options.ufo:1044
 msgid "Keys"
 msgstr "Pikanäppäimet"
 
-#: ../base/ufos/menu_options.ufo:1071
+#: ../base/ufos/menu_options.ufo:1073
 msgid "HUD Design:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1082
+#: ../base/ufos/menu_options.ufo:1084
 msgid "Original HUD"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1087
+#: ../base/ufos/menu_options.ufo:1089
 msgid "Alternative HUD"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1098
+#: ../base/ufos/menu_options.ufo:1100
 msgid "Confirm Actions:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1109 client/cl_aliencont.c:1020
+#: ../base/ufos/menu_options.ufo:1111 client/cl_aliencont.c:1019
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1114 po/OTHER_STRINGS:5
+#: ../base/ufos/menu_options.ufo:1116 po/OTHER_STRINGS:5
 msgid "No"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1119
+#: ../base/ufos/menu_options.ufo:1121
 msgid "Only for moving"
 msgstr ""
 
@@ -3696,8 +3692,7 @@ msgstr "Vaikea kampanja"
 
 #: ../base/ufos/menu_singleplayer.ufo:439
 msgid ""
-"Are you sure that you really want to reload the last automatically saved "
-"campaign state?"
+"Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr ""
 
 #: ../base/ufos/menu_singleplayer.ufo:468
@@ -3931,7 +3926,7 @@ msgstr "Näytä vain työntekijät"
 msgid "Show only aliens"
 msgstr "Näytä vain muukalaiset"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4842
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4991
 msgid "Aliens"
 msgstr "muukalaiset"
 
@@ -4019,25 +4014,25 @@ msgstr "Venäjä"
 msgid "The Commonwealth of Oceania"
 msgstr "Oseanian liittovaltio"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:150
+#: ../base/ufos/otheritems.ufo:9 ../base/ufos/research.ufo:150
 #: ../base/ufos/research.ufo:165 ../base/ufos/research.ufo:173
 #: ../base/ufos/research.ufo:189
 msgid "Antimatter"
 msgstr ""
 
-#: ../base/ufos/otheritems.ufo:16 ../base/ufos/research.ufo:244
+#: ../base/ufos/otheritems.ufo:18 ../base/ufos/research.ufo:244
 #: ../base/ufos/research.ufo:257 ../base/ufos/research.ufo:265
 #: ../base/ufos/research.ufo:284
 msgid "Alien Breathing Apparatus"
 msgstr ""
 
-#: ../base/ufos/otheritems.ufo:26 ../base/ufos/research.ufo:4266
+#: ../base/ufos/otheritems.ufo:28 ../base/ufos/research.ufo:4266
 #: ../base/ufos/research.ufo:4278 ../base/ufos/research.ufo:4286
 #: ../base/ufos/research.ufo:4302
 msgid "Alien Materials"
 msgstr ""
 
-#: ../base/ufos/otheritems.ufo:117 ../base/ufos/weapons_melee.ufo:26
+#: ../base/ufos/otheritems.ufo:126 ../base/ufos/weapons_melee.ufo:26
 #: ../base/ufos/weapons_melee.ufo:87 ../base/ufos/weapons_melee.ufo:227
 msgid "Stab"
 msgstr ""
@@ -4561,7 +4556,6 @@ msgid "stungren_alien_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1968
-#, fuzzy
 msgid "stungren_alien_pre_txt"
 msgstr "<TODO>"
 
@@ -4901,7 +4895,6 @@ msgid "ufo_bomber_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3362
-#, fuzzy
 msgid "ufo_bomber_pre_txt"
 msgstr "<TODO>"
 
@@ -4915,7 +4908,6 @@ msgid "ufo_corrupter_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3404
-#, fuzzy
 msgid "ufo_corrupter_pre_txt"
 msgstr "<TODO>"
 
@@ -5046,7 +5038,6 @@ msgid "ugv_chaingun_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3797
-#, fuzzy
 msgid "ugv_chaingun_pre_txt"
 msgstr "<TODO>"
 
@@ -5056,7 +5047,6 @@ msgid "ugv_chaingun_belt_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3817
-#, fuzzy
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "<TODO>"
 
@@ -5567,50 +5557,42 @@ msgstr ""
 msgid "Bloodspider"
 msgstr ""
 
-#: ../base/ufos/team_humans.ufo:506
+#: ../base/ufos/team_humans.ufo:507
 msgid "Phoenix"
 msgstr ""
 
-#: ../base/ufos/team_humans.ufo:527
+#: ../base/ufos/team_humans.ufo:529
 msgid "Ares W"
 msgstr ""
 
 #: ../base/ufos/tips.ufo:5
 msgid ""
-"Use the [Shift] key to align your targeting height - useful to shoot a "
-"rocketlauncher in front of an alien group, for example."
+"Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:6
 msgid ""
-"Assemble and save different teams for multiplayer matches - 4 player teams, "
-"8 player teams and so on. This way you can quickly load the right one for a "
-"fast match."
+"Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:7
 msgid ""
-"With multiplayer teams, make sure your best soldiers are at the top of the "
-"team list. When the soldier limit is lower than the amount of soldiers in "
-"your team, the soldiers at the top of the list will be used for the game."
+"With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:8
 msgid ""
-"Always make sure that you have enough Time Units (TUs) left to hide after "
-"you shoot."
+"Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:9
 msgid ""
-"When using Reaction Fire, remember that you can set which fire mode to use "
-"by enabling the corresponding check box on the fire mode panel."
+"When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:10
 msgid ""
-"Remember to give your soldiers a varying array of weapons, you never know "
-"when a certain weapon may come in handy."
+"Remember to give your soldiers a varying array of weapons, you never know when a certain weapon may come in handy."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:11
@@ -5623,58 +5605,47 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:13
 msgid ""
-"You can use a flashbang to deactivate your opponents Reaction Fire mode or "
-"to take all of his remaining Time Units (TUs) for his next round."
+"You can use a flashbang to deactivate your opponents Reaction Fire mode or to take all of his remaining Time Units (TUs) for his next round."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:14
 msgid ""
-"In multiplayer, you can chat by pressing [k] (to all), [l] (team members "
-"only), or by pressing the chat buttons on the HUD."
+"In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:15
 msgid ""
-"To make a soldier look into a certain direction (i.e. to turn him/her) place "
-"the cursor and press the right mouse button or the [Ctrl] key. This will "
-"cost you Time Units (TUs)."
+"To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:16
 msgid ""
-"Be sure to hire as many scientists as you can. The earlier you know your "
-"enemy, the easier he is to defeat."
+"Be sure to hire as many scientists as you can. The earlier you know your enemy, the easier he is to defeat."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:17
 msgid ""
-"Be sure to hire as many engineers as you can. The faster your production "
-"lines, the sooner you can get access to better equipment and resupplies."
+"Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:18
 msgid ""
-"Be sure to visit our website, http://ufoai.sf.net/ and drop by our community "
-"channel. You can do so by going to the Multiplayer menu and clicking on the "
-"Lobby button."
+"Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:19
 msgid ""
-"Remember that you need an active Command Centre in order to launch "
-"interceptors."
+"Remember that you need an active Command Centre in order to launch interceptors."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:20
 msgid ""
-"Never pass up an opportunity to capture a live alien, even one you have "
-"already researched."
+"Never pass up an opportunity to capture a live alien, even one you have already researched."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:21
 msgid ""
-"Watch your back! Your soldiers can only see enemies in an arc in front of "
-"them."
+"Watch your back! Your soldiers can only see enemies in an arc in front of them."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:22
@@ -5683,110 +5654,87 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:23
 msgid ""
-"You can make soldiers crouch to better protect them from enemy fire. But "
-"remember that crouching and standing up cost Time Units (TUs), and moving "
-"while crouched costs more TUs than walking normally."
+"You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:24
 msgid ""
-"Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if "
-"another soldier is moving."
+"Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:25
 msgid ""
-"Use [c] to toggle crouching. Crouching makes some weapons considerably more "
-"precise. It also makes your soldier a smaller target."
+"Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:26
 msgid ""
-"If you are short of Time Units (TUs) and have dangerous enemies, using a "
-"flashbang to incapacitate them until the start of your next round may be the "
-"best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+"If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:27
 msgid ""
-"Use the first-person view (toggle with [v]) to check if moving one square to "
-"the left will make that shoot-through-the-building shot possible."
+"Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:28
 msgid ""
-"Use a fast soldier with pistols, one handed melee weapons, grenades, "
-"flashbangs and medikits."
+"Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
-"Build a hospital to be able to heal your soldiers faster for their next "
-"mission."
+"Build a hospital to be able to heal your soldiers faster for their next mission."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:30
 msgid ""
-"Plasma grenades do the most damage, but frag grenades can be useful, as they "
-"can be thrown slightly further."
+"Plasma grenades do the most damage, but frag grenades can be useful, as they can be thrown slightly further."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:31
 msgid ""
-"Use [x] to cycle through the Reaction Fire settings: none, one shot, "
-"multiple shots."
+"Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:32
 msgid ""
-"Keep soldiers close, so that they can support each other (heal each other, "
-"shoot when one runs out of Time Units (TUs)). Keep a wall between them at "
-"the end of your turn, so that they can't be killed with one grenade."
+"Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with one grenade."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:33
 msgid ""
-"Always have a disposable soldier or two, so you don't have to put your "
-"primary units into very risky situations."
+"Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:34
 msgid ""
-"You can increase a base's radar range by building an advanced radar "
-"facility. Remember that you have to research it first!"
+"You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
 msgstr ""
 
 #: ../base/ufos/tips.ufo:35
 msgid ""
-"Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction "
-"Fire, you cannot turn it back on without enough Time Units (TU). You can, "
-"however, leave it on. Try not to adjust zeroed units until you're sure."
+"Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:36
 msgid ""
-"Air Burst from the Grenade Launcher lets you explode those grenades in a "
-"specific place. Very useful when targetting something near the edge of the "
-"map, or on a ledge."
+"Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:37
 msgid ""
-"When throwing grenades, try to avoid straight throws along the grid. With at "
-"least a little bit of an angle, the chances of bouncing it back at yourself "
-"becomes much less on a 'missed' throw."
+"When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:38
 msgid ""
-"Before throwing a grenade, look closely at the shape of the land. A slight "
-"slope will affect the direction that the grenade bounces."
+"Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:39
 msgid ""
-"You can include your own maps for multiplayer games or create your own "
-"campaigns. Just have a look at our wiki to read about content creation."
+"You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:40
@@ -5795,8 +5743,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:41
 msgid ""
-"You can also accelerate/decelerate time on geoscape by using mouse wheel on "
-"the time buttons, or [m], [n]."
+"You can also accelerate/decelerate time on geoscape by using mouse wheel on the time buttons, or [m], [n]."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:42
@@ -5805,14 +5752,12 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:43
 msgid ""
-"Remember that items will slow an aircraft. To intercept fast UFOs, you may "
-"prefer to send several lightly equipped aircraft."
+"Remember that items will slow an aircraft. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:44
 msgid ""
-"Your attacked aircraft may flee to one of your bases to avoid being "
-"destroyed by UFOs."
+"Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:45
@@ -5821,22 +5766,17 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:46
 msgid ""
-"Spotted enemies: While on a ground mission you can press [Space] to cycle "
-"through all spotted enemies. Pressing [t] key will draw a line to each enemy "
-"the selected soldier can see."
+"Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] key will draw a line to each enemy the selected soldier can see."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:47
 msgid ""
-"You can use the right mouse button in the soldier equipment screen to equip "
-"or unequip weapons, ammo and armour. This only works in the base equipment, "
-"not in the tactical missions where such an action would cost TUs."
+"You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base equipment, not in the tactical missions where such an action would cost TUs."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:48
 msgid ""
-"You should ensure that not too many civilians lose their lives. Otherwise "
-"you might lose the game sooner than you'd expect."
+"You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr ""
 
 #: ../base/ufos/weapons.ufo:6
@@ -6459,65 +6399,65 @@ msgid ""
 "You need to research it and its ammunition first.\n"
 msgstr ""
 
-#: client/cl_actor.c:3583
+#: client/cl_actor.c:3584
 #, c-format
 msgid "%s %s was stunned\n"
 msgstr ""
 
-#: client/cl_actor.c:3587
+#: client/cl_actor.c:3588
 #, fuzzy, c-format
 msgid "%s %s was killed\n"
 msgstr "tapettiin.\n"
 
-#: client/cl_actor.c:3595
+#: client/cl_actor.c:3596
 msgid "A civilian was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:3597
+#: client/cl_actor.c:3598
 msgid "A civilian was killed.\n"
 msgstr ""
 
-#: client/cl_actor.c:3603
+#: client/cl_actor.c:3604
 #, fuzzy, c-format
 msgid "An alien was stunned: %s\n"
 msgstr "Muukalainen!\n"
 
-#: client/cl_actor.c:3606
+#: client/cl_actor.c:3607
 #, fuzzy, c-format
 msgid "An alien was killed: %s\n"
 msgstr "Muukalaisia tapettu\t%i\n"
 
-#: client/cl_actor.c:3611 client/cl_actor.c:3617
+#: client/cl_actor.c:3612 client/cl_actor.c:3618
 msgid "An alien was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:3613 client/cl_actor.c:3619
+#: client/cl_actor.c:3614 client/cl_actor.c:3620
 msgid "An alien was killed.\n"
 msgstr ""
 
-#: client/cl_actor.c:3624
+#: client/cl_actor.c:3625
 msgid "A soldier was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:3626
+#: client/cl_actor.c:3627
 msgid "A soldier was killed.\n"
 msgstr ""
 
-#: client/cl_actor.c:3630
+#: client/cl_actor.c:3631
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:3632
+#: client/cl_actor.c:3633
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr ""
 
-#: client/cl_actor.c:3817
+#: client/cl_actor.c:3818
 msgid "Your round started!\n"
 msgstr ""
 
-#: client/cl_actor.c:4613
+#: client/cl_actor.c:4614
 msgid "Unknown alien race"
 msgstr ""
 
@@ -6529,10 +6469,10 @@ msgid ""
 msgstr ""
 
 #: client/cl_aircraft.c:264 client/cl_aircraft.c:277 client/cl_aircraft.c:749
-#: client/cl_aircraft.c:989 client/cl_aircraft.c:1086
-#: client/cl_aircraft.c:1112 client/cl_airfight.c:344
-#: client/cl_aliencont.c:190 client/cl_aliencont.c:220
-#: client/cl_aliencont.c:233 client/cl_aliencont.c:244
+#: client/cl_aircraft.c:999 client/cl_aircraft.c:1096
+#: client/cl_aircraft.c:1122 client/cl_airfight.c:349
+#: client/cl_aliencont.c:183 client/cl_aliencont.c:212
+#: client/cl_aliencont.c:225 client/cl_aliencont.c:236
 #: client/cl_basemanagement.c:1243 client/cl_basemanagement.c:2525
 #: client/cl_basemanagement.c:2783 client/cl_basemanagement.c:2832
 #: client/cl_basemanagement.c:2841 client/cl_basemanagement.c:2861
@@ -6540,16 +6480,16 @@ msgstr ""
 #: client/cl_basemanagement.c:2887 client/cl_basemanagement.c:2895
 #: client/cl_basemanagement.c:2900 client/cl_basemanagement.c:2905
 #: client/cl_basemanagement.c:2910 client/cl_campaign.c:116
-#: client/cl_campaign.c:1843 client/cl_campaign.c:2056
-#: client/cl_campaign.c:2067 client/cl_campaign.c:2077
-#: client/cl_campaign.c:2087 client/cl_campaign.c:2097
-#: client/cl_campaign.c:2108 client/cl_campaign.c:2121
-#: client/cl_campaign.c:2131 client/cl_campaign.c:2138
-#: client/cl_campaign.c:2146 client/cl_campaign.c:3504
-#: client/cl_campaign.c:3556 client/cl_campaign.c:3577
-#: client/cl_campaign.c:3579 client/cl_campaign.c:3911
+#: client/cl_campaign.c:1992 client/cl_campaign.c:2205
+#: client/cl_campaign.c:2216 client/cl_campaign.c:2226
+#: client/cl_campaign.c:2236 client/cl_campaign.c:2246
+#: client/cl_campaign.c:2257 client/cl_campaign.c:2270
+#: client/cl_campaign.c:2280 client/cl_campaign.c:2287
+#: client/cl_campaign.c:2295 client/cl_campaign.c:3653
+#: client/cl_campaign.c:3705 client/cl_campaign.c:3726
+#: client/cl_campaign.c:3728 client/cl_campaign.c:4060
 #: client/cl_inventory.c:292 client/cl_inventory.c:297
-#: client/cl_inventory.c:586 client/cl_main.c:1042 client/cl_main.c:1277
+#: client/cl_inventory.c:586 client/cl_main.c:1044 client/cl_main.c:1279
 #: client/cl_map.c:266 client/cl_mapfightequip.c:829
 #: client/cl_mapfightequip.c:831 client/cl_market.c:824 client/cl_market.c:828
 #: client/cl_parse.c:1687 client/cl_popup.c:334 client/cl_produce.c:419
@@ -6557,8 +6497,8 @@ msgstr ""
 #: client/cl_produce.c:457 client/cl_research.c:1082 client/cl_research.c:1100
 #: client/cl_research.c:1106 client/cl_research.c:1144
 #: client/cl_research.c:1175 client/cl_research.c:1342
-#: client/cl_research.c:1345 client/cl_ufo.c:306 client/cl_ufo.c:596
-#: client/cl_ufo.c:599
+#: client/cl_research.c:1345 client/cl_ufo.c:324 client/cl_ufo.c:629
+#: client/cl_ufo.c:632
 msgid "Notice"
 msgstr ""
 
@@ -6663,73 +6603,72 @@ msgstr ""
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Tukikohtaan %2$s saatiin uusi lentokone %1$s"
 
-#: client/cl_aircraft.c:989
+#: client/cl_aircraft.c:999
 msgid "Your dropship is low on fuel and returns to base"
 msgstr ""
 
-#: client/cl_aircraft.c:1086
+#: client/cl_aircraft.c:1096
 msgid "Assign a team to aircraft"
 msgstr ""
 
-#: client/cl_aircraft.c:1112
+#: client/cl_aircraft.c:1122
 msgid ""
-"Your aircraft doesn't have enough fuel to go there and then come back to its "
-"home base."
+"Your aircraft doesn't have enough fuel to go there and then come back to its home base."
 msgstr ""
 
-#: client/cl_airfight.c:344
+#: client/cl_airfight.c:349
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr ""
 
-#: client/cl_airfight.c:434 client/cl_airfight.c:450
+#: client/cl_airfight.c:439 client/cl_airfight.c:455
 msgid "Interception"
 msgstr ""
 
-#: client/cl_airfight.c:434
+#: client/cl_airfight.c:439
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/cl_airfight.c:450 client/cl_campaign.c:3579
+#: client/cl_airfight.c:455 client/cl_campaign.c:3728
 msgid "You've lost the battle"
 msgstr ""
 
-#: client/cl_airfight.c:582 client/cl_airfight.c:594 client/cl_airfight.c:613
+#: client/cl_airfight.c:587 client/cl_airfight.c:599 client/cl_airfight.c:618
 #, fuzzy
 msgid "Base facility destroyed"
 msgstr "Rakennukset"
 
-#: client/cl_airfight.c:582
+#: client/cl_airfight.c:587
 msgid "You've lost a missile battery system."
 msgstr ""
 
-#: client/cl_airfight.c:594
+#: client/cl_airfight.c:599
 msgid "You've lost a laser battery system."
 msgstr ""
 
-#: client/cl_airfight.c:612
+#: client/cl_airfight.c:617
 #, c-format
 msgid "You've lost a base facility (%s)."
 msgstr ""
 
-#: client/cl_aliencont.c:190
+#: client/cl_aliencont.c:183
 msgid ""
 "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr ""
 
-#: client/cl_aliencont.c:220
+#: client/cl_aliencont.c:212
 msgid "You cannot hold alive aliens yet. Aliens died."
 msgstr ""
 
-#: client/cl_aliencont.c:233
+#: client/cl_aliencont.c:225
 msgid ""
 "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr ""
 
-#: client/cl_aliencont.c:244
+#: client/cl_aliencont.c:236
 msgid "You've captured new aliens."
 msgstr ""
 
-#: client/cl_aliencont.c:1020
+#: client/cl_aliencont.c:1019
 msgid "Needs autopsy!"
 msgstr ""
 
@@ -6845,8 +6784,7 @@ msgstr ""
 #: client/cl_basemanagement.c:2885
 #, c-format
 msgid ""
-"Make sure that the dependencies of building %s (%s) are operational, so that "
-"building %s may be used."
+"Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 
 #: client/cl_basemanagement.c:2893 client/cl_basemanagement.c:2898
@@ -6862,12 +6800,11 @@ msgstr "Laboratorio pitää rakentaa ensin"
 
 #: client/cl_basemanagement.c:2971
 msgid ""
-"No aircraft in this base - You first have to purchase or transfer an "
-"aircraft\n"
+"No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr ""
 
 #: client/cl_basemanagement.c:2971 client/cl_basemanagement.c:2973
-#: client/cl_campaign.c:3310 client/cl_market.c:806 client/cl_market.c:811
+#: client/cl_campaign.c:3459 client/cl_market.c:806 client/cl_market.c:811
 #: client/cl_market.c:838 client/cl_market.c:944 client/cl_market.c:946
 #: client/cl_save.c:429 client/cl_team.c:1622 client/cl_team.c:1629
 msgid "Note"
@@ -6933,252 +6870,242 @@ msgstr "%i / %i"
 msgid "Could not set up your base at this location"
 msgstr "Tukikohdan perustaminen tähän kohtaan ei onnistunut"
 
-#: client/cl_campaign.c:406
+#: client/cl_campaign.c:390
 msgid "Landed UFO"
 msgstr ""
 
-#: client/cl_campaign.c:410
+#: client/cl_campaign.c:394
 #, fuzzy
 msgid "Terror mission"
 msgstr "Taktiset tehtävät"
 
-#: client/cl_campaign.c:418
+#: client/cl_campaign.c:402
 msgid "Unknown"
 msgstr ""
 
-#: client/cl_campaign.c:420
+#: client/cl_campaign.c:404
 #, fuzzy
 msgid "Crashed UFO"
 msgstr "Varasto"
 
-#: client/cl_campaign.c:747 client/cl_campaign.c:1350
+#: client/cl_campaign.c:742 client/cl_campaign.c:1502
 #, fuzzy
 msgid "No nation"
 msgstr "Kansakunnat"
 
-#: client/cl_campaign.c:1650
+#: client/cl_campaign.c:1799
 msgid "You've gone too far into debt."
 msgstr ""
 
-#: client/cl_campaign.c:1655
+#: client/cl_campaign.c:1804
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 
-#: client/cl_campaign.c:1661
+#: client/cl_campaign.c:1810
 msgid ""
-"You have failed in your charter to protect Earth. Our home and our people "
-"have fallen to the alien infection. Only a handful of people on Earth remain "
-"human, and the remaining few no longer have a chance to stem the tide. Your "
-"command is no more; PHALANX is no longer able to operate as a functioning "
-"unit. Nothing stands between the aliens and total victory."
+"You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
-#: client/cl_campaign.c:1679
+#: client/cl_campaign.c:1828
 msgid ""
-"Under your command, PHALANX operations have consistently failed to protect "
-"nations. The UN, highly unsatisfied with your performance, has decided to "
-"remove you from command and subsequently disbands the PHALANX project as an "
-"effective task force. No further attempts at global cooperation are made. "
-"Earth's nations each try to stand alone against the aliens, and eventually "
-"fall one by one."
+"Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/cl_campaign.c:1842
+#: client/cl_campaign.c:1991
 #, c-format
 msgid ""
-"Your base: %s has been ransacked! All employees killed and all equipment "
-"destroyed."
+"Your base: %s has been ransacked! All employees killed and all equipment destroyed."
 msgstr ""
 
-#: client/cl_campaign.c:1927
+#: client/cl_campaign.c:2076
 msgid "Jan"
 msgstr "tammikuu"
 
-#: client/cl_campaign.c:1929
+#: client/cl_campaign.c:2078
 msgid "Feb"
 msgstr "helmikuu"
 
-#: client/cl_campaign.c:1931
+#: client/cl_campaign.c:2080
 msgid "Mar"
 msgstr "maaliskuu"
 
-#: client/cl_campaign.c:1933
+#: client/cl_campaign.c:2082
 msgid "Apr"
 msgstr "huhtikuu"
 
-#: client/cl_campaign.c:1935
+#: client/cl_campaign.c:2084
 msgid "May"
 msgstr "toukokuu"
 
-#: client/cl_campaign.c:1937
+#: client/cl_campaign.c:2086
 msgid "Jun"
 msgstr "kesäkuu"
 
-#: client/cl_campaign.c:1939
+#: client/cl_campaign.c:2088
 msgid "Jul"
 msgstr "heinäkuu"
 
-#: client/cl_campaign.c:1941
+#: client/cl_campaign.c:2090
 msgid "Aug"
 msgstr "elokuu"
 
-#: client/cl_campaign.c:1943
+#: client/cl_campaign.c:2092
 msgid "Sep"
 msgstr "syyskuu"
 
-#: client/cl_campaign.c:1945
+#: client/cl_campaign.c:2094
 msgid "Oct"
 msgstr "lokakuu"
 
-#: client/cl_campaign.c:1947
+#: client/cl_campaign.c:2096
 msgid "Nov"
 msgstr "marraskuu"
 
-#: client/cl_campaign.c:1949
+#: client/cl_campaign.c:2098
 msgid "Dec"
 msgstr "joulukuu"
 
-#: client/cl_campaign.c:1963
+#: client/cl_campaign.c:2112
 msgid "Giving up"
 msgstr ""
 
-#: client/cl_campaign.c:1965
+#: client/cl_campaign.c:2114
 msgid "Furious"
 msgstr ""
 
-#: client/cl_campaign.c:1967
+#: client/cl_campaign.c:2116
 msgid "Angry"
 msgstr ""
 
-#: client/cl_campaign.c:1969
+#: client/cl_campaign.c:2118
 msgid "Mad"
 msgstr ""
 
-#: client/cl_campaign.c:1971
+#: client/cl_campaign.c:2120
 msgid "Upset"
 msgstr ""
 
-#: client/cl_campaign.c:1973
+#: client/cl_campaign.c:2122
 msgid "Tolerant"
 msgstr ""
 
-#: client/cl_campaign.c:1975
+#: client/cl_campaign.c:2124
 msgid "Neutral"
 msgstr "neutraali"
 
-#: client/cl_campaign.c:1977
+#: client/cl_campaign.c:2126
 msgid "Content"
 msgstr ""
 
-#: client/cl_campaign.c:1979
+#: client/cl_campaign.c:2128
 msgid "Pleased"
 msgstr ""
 
-#: client/cl_campaign.c:1981
+#: client/cl_campaign.c:2130
 msgid "Happy"
 msgstr ""
 
-#: client/cl_campaign.c:1983
+#: client/cl_campaign.c:2132
 msgid "Exuberant"
 msgstr ""
 
-#: client/cl_campaign.c:2049
+#: client/cl_campaign.c:2198
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr ""
 
-#: client/cl_campaign.c:2050
+#: client/cl_campaign.c:2199
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "ör"
 msgstr[1] "ör"
 
-#: client/cl_campaign.c:2051 client/cl_campaign.c:4851
+#: client/cl_campaign.c:2200 client/cl_campaign.c:5000
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "tutkija"
 msgstr[1] "tutkijaa"
 
-#: client/cl_campaign.c:2052 client/cl_campaign.c:4853
+#: client/cl_campaign.c:2201 client/cl_campaign.c:5002
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "lääkintämies"
 msgstr[1] "lääkintämiestä"
 
-#: client/cl_campaign.c:2053 client/cl_campaign.c:4850
+#: client/cl_campaign.c:2202 client/cl_campaign.c:4999
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "sotilas"
 msgstr[1] "sotilasta"
 
-#: client/cl_campaign.c:2054 client/cl_campaign.c:4852
+#: client/cl_campaign.c:2203 client/cl_campaign.c:5001
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "työläinen"
 msgstr[1] "työläistä"
 
-#: client/cl_campaign.c:2065
+#: client/cl_campaign.c:2214
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Maksa %i öriä sotilaille"
 
-#: client/cl_campaign.c:2075
+#: client/cl_campaign.c:2224
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "Maksa %i öriä työläisille"
 
-#: client/cl_campaign.c:2085
+#: client/cl_campaign.c:2234
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Maksa %i öriä tutkijoille"
 
-#: client/cl_campaign.c:2095
+#: client/cl_campaign.c:2244
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "Maksa %i öriä lääkintämiehille"
 
-#: client/cl_campaign.c:2106
+#: client/cl_campaign.c:2255
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr ""
 
-#: client/cl_campaign.c:2119
+#: client/cl_campaign.c:2268
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr ""
 
-#: client/cl_campaign.c:2130
+#: client/cl_campaign.c:2279
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr ""
 
-#: client/cl_campaign.c:2136
+#: client/cl_campaign.c:2285
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr ""
 
-#: client/cl_campaign.c:2144
+#: client/cl_campaign.c:2293
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr ""
 
-#: client/cl_campaign.c:2307 client/cl_event.c:248 client/cl_save.c:353
+#: client/cl_campaign.c:2456 client/cl_event.c:248 client/cl_save.c:353
 #: client/cl_ufopedia.c:809 client/cl_ufopedia.c:815
 #, fuzzy, c-format
 msgid "%i %s %02i"
 msgstr "%i. %sta %i"
 
-#: client/cl_campaign.c:2309
+#: client/cl_campaign.c:2458
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:2419
+#: client/cl_campaign.c:2568
 #, c-format
 msgid "%i c"
 msgstr "%i ör"
 
-#: client/cl_campaign.c:2462
+#: client/cl_campaign.c:2611
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -7189,7 +7116,7 @@ msgstr ""
 "Hävittyjä:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:2467
+#: client/cl_campaign.c:2616
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -7200,42 +7127,42 @@ msgstr ""
 "Aktiivisia:\t%i\n"
 "Hyökättyjä:\t%i\n"
 
-#: client/cl_campaign.c:2474 client/cl_ufopedia.c:1655
+#: client/cl_campaign.c:2623 client/cl_ufopedia.c:1655
 #, c-format
 msgid "%s\t%s\n"
 msgstr ""
 
-#: client/cl_campaign.c:2513 client/cl_ufopedia.c:412
+#: client/cl_campaign.c:2662 client/cl_ufopedia.c:412
 #, c-format
 msgid "%s\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:2519
+#: client/cl_campaign.c:2668
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Työntekijät:\t%i ör\n"
 
-#: client/cl_campaign.c:2528
+#: client/cl_campaign.c:2677
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Lentokoneet:\t%i ör\n"
 
-#: client/cl_campaign.c:2536
+#: client/cl_campaign.c:2685
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr ""
 
-#: client/cl_campaign.c:2541
+#: client/cl_campaign.c:2690
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Hallintokustannukset:\t%i ör\n"
 
-#: client/cl_campaign.c:2548
+#: client/cl_campaign.c:2697
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr ""
 
-#: client/cl_campaign.c:2551
+#: client/cl_campaign.c:2700
 #, c-format
 msgid ""
 "\n"
@@ -7246,85 +7173,84 @@ msgstr ""
 "\t-------\n"
 "Yhteensä:\t%i ör\n"
 
-#: client/cl_campaign.c:2556
+#: client/cl_campaign.c:2705
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr ""
 
-#: client/cl_campaign.c:2561
+#: client/cl_campaign.c:2710
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/cl_campaign.c:3310
+#: client/cl_campaign.c:3459
 msgid "Assemble or load a team"
 msgstr ""
 
-#: client/cl_campaign.c:3504
+#: client/cl_campaign.c:3653
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/cl_campaign.c:3556
+#: client/cl_campaign.c:3705
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr ""
 
-#: client/cl_campaign.c:3577
+#: client/cl_campaign.c:3726
 msgid "You've won the battle"
 msgstr ""
 
-#: client/cl_campaign.c:3666
+#: client/cl_campaign.c:3815
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr ""
 
-#: client/cl_campaign.c:3668
+#: client/cl_campaign.c:3817
 #, c-format
 msgid ""
-"%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
-"in the face of overwhelming odds.\n"
+"%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:3669
+#: client/cl_campaign.c:3818
 msgid "Soldier promoted"
 msgstr ""
 
-#: client/cl_campaign.c:3910
+#: client/cl_campaign.c:4059
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr ""
 
-#: client/cl_campaign.c:4791
+#: client/cl_campaign.c:4940
 msgid "Chicken-hearted"
 msgstr "pelkureille"
 
-#: client/cl_campaign.c:4793
+#: client/cl_campaign.c:4942
 msgid "Very Easy"
 msgstr "erittäin helppo"
 
-#: client/cl_campaign.c:4796
+#: client/cl_campaign.c:4945
 msgid "Easy"
 msgstr "helppo"
 
-#: client/cl_campaign.c:4801
+#: client/cl_campaign.c:4950
 msgid "Hard"
 msgstr "vaikea"
 
-#: client/cl_campaign.c:4803
+#: client/cl_campaign.c:4952
 msgid "Very Hard"
 msgstr "erittäin vaikea"
 
-#: client/cl_campaign.c:4805
+#: client/cl_campaign.c:4954
 msgid "Insane"
 msgstr "järjetön"
 
-#: client/cl_campaign.c:4840
+#: client/cl_campaign.c:4989
 msgid "Human"
 msgstr "ihmiset"
 
-#: client/cl_campaign.c:4844
+#: client/cl_campaign.c:4993
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -7341,27 +7267,27 @@ msgstr ""
 "Vaikeusaste: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4986
+#: client/cl_campaign.c:5135
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "%i / %i"
 
-#: client/cl_campaign.c:5009
+#: client/cl_campaign.c:5158
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "%i / %i"
 
-#: client/cl_campaign.c:5172
+#: client/cl_campaign.c:5321
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:5174 client/cl_campaign.c:5316
-#: client/cl_campaign.c:5410
+#: client/cl_campaign.c:5323 client/cl_campaign.c:5465
+#: client/cl_campaign.c:5559
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:5252
+#: client/cl_campaign.c:5401
 #, fuzzy
 msgid ""
 "\n"
@@ -7369,13 +7295,13 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "Valitse tukikohta"
 
-#: client/cl_campaign.c:5314
+#: client/cl_campaign.c:5463
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5380
+#: client/cl_campaign.c:5529
 #, fuzzy
 msgid ""
 "\n"
@@ -7383,7 +7309,7 @@ msgid ""
 "Selected nation:\t\t\t"
 msgstr "Valitse tukikohta"
 
-#: client/cl_campaign.c:5408
+#: client/cl_campaign.c:5557
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -7404,11 +7330,11 @@ msgstr ""
 msgid "Soldier"
 msgstr "Sotilas"
 
-#: client/cl_employee.c:564
+#: client/cl_employee.c:569
 msgid "Not enough quarters"
 msgstr "Ei tarpeeksi asuinhuoneistoja"
 
-#: client/cl_employee.c:564
+#: client/cl_employee.c:569
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -7594,170 +7520,168 @@ msgstr[1] ""
 #: client/cl_inventory.c:584
 #, c-format
 msgid ""
-"Base %s does not have Antimatter Storage Facility. %i units of Antimatter "
-"got removed."
+"Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
-#: client/cl_main.c:368 client/cl_main.c:999
+#: client/cl_main.c:368 client/cl_main.c:1001
 msgid "Assemble a team first"
 msgstr ""
 
-#: client/cl_main.c:368 client/cl_main.c:720 client/cl_main.c:999
-#: client/cl_main.c:1499 client/cl_main.c:1504 client/cl_main.c:1510
-#: client/cl_main.c:1518 client/cl_save.c:493 client/cl_save.c:516
+#: client/cl_main.c:368 client/cl_main.c:722 client/cl_main.c:1001
+#: client/cl_main.c:1501 client/cl_main.c:1506 client/cl_main.c:1512
+#: client/cl_main.c:1520 client/cl_save.c:493 client/cl_save.c:516
 #: client/cl_save.c:657
 msgid "Error"
 msgstr ""
 
-#: client/cl_main.c:720
+#: client/cl_main.c:722
 msgid "Server needs restarting - something went wrong"
 msgstr ""
 
-#: client/cl_main.c:793
+#: client/cl_main.c:795
 msgid "No player connected\n"
 msgstr ""
 
-#: client/cl_main.c:841
+#: client/cl_main.c:843
 #, c-format
 msgid ""
 "IP\t%s\n"
 "\n"
 msgstr ""
 
-#: client/cl_main.c:847
+#: client/cl_main.c:849
 #, c-format
 msgid "Map:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:857
+#: client/cl_main.c:859
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:858
+#: client/cl_main.c:860
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:859
+#: client/cl_main.c:861
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:860
+#: client/cl_main.c:862
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:861
+#: client/cl_main.c:863
 #, fuzzy, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Esivaatimus:\t%s\n"
 
-#: client/cl_main.c:862
+#: client/cl_main.c:864
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:863
+#: client/cl_main.c:865
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:864
+#: client/cl_main.c:866
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:865
+#: client/cl_main.c:867
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:866
+#: client/cl_main.c:868
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:867
+#: client/cl_main.c:869
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:868
+#: client/cl_main.c:870
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:869
+#: client/cl_main.c:871
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:870
+#: client/cl_main.c:872
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:871
+#: client/cl_main.c:873
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1042
+#: client/cl_main.c:1044
 msgid ""
-"All bookmark slots are used - please removed unused entries and repeat this "
-"step"
+"All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
-#: client/cl_main.c:1116
+#: client/cl_main.c:1118
 msgid "Select a free team or your coop team"
 msgstr ""
 
-#: client/cl_main.c:1341 client/cl_main.c:1355
+#: client/cl_main.c:1343 client/cl_main.c:1357
 #, c-format
 msgid "Current team: %i"
 msgstr ""
 
-#: client/cl_main.c:1345 client/cl_main.c:1359
+#: client/cl_main.c:1347 client/cl_main.c:1361
 msgid "Team is already in use"
 msgstr ""
 
-#: client/cl_main.c:1369 client/cl_main.c:1407
+#: client/cl_main.c:1371 client/cl_main.c:1409
 msgid "Invalid or full team"
 msgstr ""
 
-#: client/cl_main.c:1498
+#: client/cl_main.c:1500
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:1504
+#: client/cl_main.c:1506
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:1510
+#: client/cl_main.c:1512
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1517
+#: client/cl_main.c:1519
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:2101
+#: client/cl_main.c:2109
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2102
+#: client/cl_main.c:2110
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2228 client/cl_view.c:285
+#: client/cl_main.c:2237 client/cl_view.c:285
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/cl_main.c:2282
+#: client/cl_main.c:2291
 #, fuzzy
 msgid "Custom"
 msgstr "Automaattinen"
@@ -7994,15 +7918,23 @@ msgstr ""
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Tukikohdan nimi"
 
-#: client/cl_menu.c:147
+#: client/cl_menu.c:142
+msgid "No team assigned"
+msgstr ""
+
+#: client/cl_menu.c:142
+msgid "Please choose and equip your team first"
+msgstr ""
+
+#: client/cl_menu.c:148
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr ""
 
-#: client/cl_menu.c:147
+#: client/cl_menu.c:148
 msgid "Settings doesn't make sense"
 msgstr ""
 
-#: client/cl_menu.c:328
+#: client/cl_menu.c:329
 msgid "all"
 msgstr ""
 
@@ -8230,8 +8162,7 @@ msgstr "Ei tarpeeksi asuinhuoneistoja"
 #: client/cl_produce.c:1217
 #, c-format
 msgid ""
-"You don't have enough material to produce all (%i) items. Production will "
-"continue with a reduced (%i) number."
+"You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr ""
 
 #: client/cl_produce.c:1221 client/cl_produce.c:1243
@@ -8321,8 +8252,7 @@ msgstr "Tila: tutkimus valmis"
 
 #: client/cl_research.c:820
 msgid ""
-"Status: We don't currently have all the materials or background knowledge "
-"needed to research this topic."
+"Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr ""
 
 #: client/cl_research.c:822
@@ -8371,11 +8301,11 @@ msgstr "Ei tutkittavaa"
 msgid "Build a laboratory first"
 msgstr "Laboratorio pitää rakentaa ensin"
 
-#: client/cl_research.c:1762
+#: client/cl_research.c:1763
 msgid "No description available."
 msgstr "Ei kuvausta."
 
-#: client/cl_research.c:1763
+#: client/cl_research.c:1764
 #, fuzzy
 msgid "No research proposal available."
 msgstr "Näytä tutkimusehdotus"
@@ -8991,20 +8921,19 @@ msgstr "Tukikohdan nimi"
 
 #: client/cl_transfer.c:1474
 msgid ""
-"The destination base no longer exists! Transfer cargo are lost, personel got "
-"unhired."
+"The destination base no longer exists! Transfer cargo are lost, personel got unhired."
 msgstr ""
 
-#: client/cl_ufo.c:306
+#: client/cl_ufo.c:324
 #, c-format
-msgid "A UFO is shooting at %s"
+msgid "A UFO is flying toward %s"
 msgstr ""
 
-#: client/cl_ufo.c:596
+#: client/cl_ufo.c:629
 msgid "Our radar detected a new UFO"
 msgstr ""
 
-#: client/cl_ufo.c:599
+#: client/cl_ufo.c:632
 msgid "Our radar has lost the tracking on a UFO"
 msgstr ""
 
@@ -9364,8 +9293,7 @@ msgstr ""
 
 #: game/g_client.c:943
 msgid ""
-"Can't perform action - weapon already fully loaded with the same "
-"ammunition!\n"
+"Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr ""
 
 #: game/g_client.c:1632
@@ -9392,36 +9320,36 @@ msgstr ""
 msgid "%s is currently shaken.\n"
 msgstr ""
 
-#: game/g_client.c:2509 game/g_svcmds.c:348
+#: game/g_client.c:2510 game/g_svcmds.c:348
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr ""
 
-#: game/g_client.c:2761
+#: game/g_client.c:2762
 msgid "4 minutes left until forced round end\n"
 msgstr ""
 
-#: game/g_client.c:2764
+#: game/g_client.c:2765
 msgid "3 minutes left until forced round end\n"
 msgstr ""
 
-#: game/g_client.c:2767
+#: game/g_client.c:2768
 msgid "2 minutes left until forced round end\n"
 msgstr ""
 
-#: game/g_client.c:2770
+#: game/g_client.c:2771
 msgid "1 minute left until forced round end\n"
 msgstr ""
 
-#: game/g_client.c:2773
+#: game/g_client.c:2774
 msgid "30 seconds left until forced round end\n"
 msgstr ""
 
-#: game/g_client.c:2776
+#: game/g_client.c:2777
 msgid "15 seconds left until forced round end\n"
 msgstr ""
 
-#: game/g_client.c:2784
+#: game/g_client.c:2785
 msgid "Current active team hit the max round time\n"
 msgstr ""
 
