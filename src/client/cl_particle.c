@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static mapParticle_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 
-#define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
+#define RADR(x)		((x < 0) ? (byte*)p - x : (byte*)pcmdData + x)
 #define RSTACK		-0xFFF0
 #define F(x)		(1<<x)
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
@@ -47,7 +47,7 @@ typedef enum pf_s {
 	PF_RUN,
 	PF_THINK,
 	PF_ROUND,
-	PF_PHYSICS,	/**< if a particle hit the ground */
+	PF_PHYSICS,	/**< if a particle hits the ground */
 
 	PF_NUM_PTLFUNCS
 } pf_t;
@@ -170,7 +170,7 @@ typedef enum art_s {
 /* =========================================================== */
 
 #define		MAX_PTLDEFS		256
-#define		MAX_PTLCMDS		(MAX_PTLDEFS*32)
+#define		MAX_PTLCMDS		(MAX_PTLDEFS * 32)
 
 static ptlDef_t ptlDef[MAX_PTLDEFS];
 static ptlCmd_t ptlCmd[MAX_PTLCMDS];
@@ -178,7 +178,7 @@ static ptlCmd_t ptlCmd[MAX_PTLCMDS];
 static int numPtlDefs;
 static int numPtlCmds;
 
-#define		MAX_PCMD_DATA	(MAX_PTLCMDS*8)
+#define		MAX_PCMD_DATA	(MAX_PTLCMDS * 8)
 
 static byte pcmdData[MAX_PCMD_DATA];
 static int pcmdPos;
@@ -1320,7 +1320,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 					if (len) {
 						/* get single component */
 						if ((1 << pp->type) & V_VECS) {
-							int component = (baseComponentToken[len - 1] - '1');
+							const int component = (baseComponentToken[len - 1] - '1');
 							/* get the component we want to modify */
 							if (component > 3) {
 								Com_Printf("CL_ParsePtlCmds: bad component value - it's bigger than 3: %i (particle %s)\n", component, name);

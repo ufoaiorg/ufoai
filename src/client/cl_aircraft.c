@@ -890,34 +890,33 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
  */
 qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 {
-	float dist, frac;
-	int p;
+	const float dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
 
 	/* calc distance */
 	aircraft->time += dt;
 	aircraft->fuel -= dt;
-	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
 
 	/* Check if destination reached */
-	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
+	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1)) {
 		return qtrue;
+	} else {
+		/* calc new position */
+		float frac = dist / aircraft->route.distance;
+		const int p = (int) frac;
+		frac -= p;
+		aircraft->point = p;
+		aircraft->pos[0] = (1 - frac) * aircraft->route.point[p][0] + frac * aircraft->route.point[p + 1][0];
+		aircraft->pos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
 
-	/* calc new position */
-	frac = dist / aircraft->route.distance;
-	p = (int) frac;
-	frac -= p;
-	aircraft->point = p;
-	aircraft->pos[0] = (1 - frac) * aircraft->route.point[p][0] + frac * aircraft->route.point[p + 1][0];
-	aircraft->pos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
-
-	while (aircraft->pos[0] > 180.0)
-		aircraft->pos[0] -= 360.0;
-	while (aircraft->pos[0] < -180.0)
-		aircraft->pos[0] += 360.0;
-	while (aircraft->pos[1] > 90.0)
-		aircraft->pos[1] -= 180.0;
-	while (aircraft->pos[1] < -90.0)
-		aircraft->pos[1] += 180.0;
+		while (aircraft->pos[0] > 180.0)
+			aircraft->pos[0] -= 360.0;
+		while (aircraft->pos[0] < -180.0)
+			aircraft->pos[0] += 360.0;
+		while (aircraft->pos[1] > 90.0)
+			aircraft->pos[1] -= 180.0;
+		while (aircraft->pos[1] < -90.0)
+			aircraft->pos[1] += 180.0;
+	}
 
 	return qfalse;
 }
