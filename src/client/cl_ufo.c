@@ -160,75 +160,6 @@ static void UFO_SetRandomPos (aircraft_t* ufo)
 
 #ifdef UFO_ATTACK_BASES
 /**
- * @brief Check if a UFO is the target of a base
- * @param[in] ufoIdx idx of the ufo in gd.ufos[]
- * @param[in] base Pointer to the base
- * @return 0 if ufo is not a target, 1 if target of a missile, 2 if target of a laser
- */
-static int UFO_IsTargetOfBase (int ufoIdx, base_t *base)
-{
-	int i;
-
-	for (i = 0; i < base->maxBatteries; i++) {
-		if (base->targetMissileIdx[i] == ufoIdx)
-			return UFO_IS_TARGET_OF_MISSILE;
-	}
-
-	for (i = 0; i < base->maxLasers; i++) {
-		if (base->targetLaserIdx[i] == ufoIdx)
-			return UFO_IS_TARGET_OF_LASER;
-	}
-
-	return UFO_IS_NO_TARGET;
-}
-
-/**
- * @brief Check if a UFO found a new base
- * @param[in] ufo Pointer to the aircraft_t
- * @param[in] dt Elapsed time since last check
- */
-static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
-{
-	base_t* base;
-	float baseProbability;
-	float distance;
-
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-		/* if base has already been discovered, skip */
-		if (base->isDiscovered == qtrue)
-			continue;
-
-		/* ufo can't find base if it's too far */
-		distance = MAP_GetDistance(ufo->pos, base->pos);
-		if (distance > max_detecting_range)
-			continue;
-
-		switch (UFO_IsTargetOfBase(ufo - gd.ufos, base)) {
-		case UFO_IS_TARGET_OF_MISSILE:
-			baseProbability = 0.001f;
-			break;
-		case UFO_IS_TARGET_OF_LASER:
-			baseProbability = 0.0001f;
-			break;
-		default:
-			baseProbability = 0.00001f;
-			break;
-		}
-
-		/* decrease probability if the ufo is far from base */
-		if (distance > 10.0f)
-			baseProbability /= 5.0f;
-
-		baseProbability *= dt;
-
-		if (frand() < baseProbability) {
-			base->isDiscovered = qtrue;
-			Com_DPrintf(DEBUG_CLIENT, "Base '%s' has been discoverd by UFO\n", base->name);
-		}
-	}
-}
-
-/**
  * @brief Make the specified UFO attack a base.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] base Pointer to the target base.
@@ -286,6 +217,99 @@ static void UFO_SearchBaseTarget (aircraft_t *ufo)
 	}
 }
 #endif
+
+/**
+ * @brief Check if a UFO is the target of a base
+ * @param[in] ufoIdx idx of the ufo in gd.ufos[]
+ * @param[in] base Pointer to the base
+ * @return 0 if ufo is not a target, 1 if target of a missile, 2 if target of a laser
+ */
+static int UFO_IsTargetOfBase (int ufoIdx, base_t *base)
+{
+	int i;
+
+	for (i = 0; i < base->maxBatteries; i++) {
+		if (base->targetMissileIdx[i] == ufoIdx)
+			return UFO_IS_TARGET_OF_MISSILE;
+	}
+
+	for (i = 0; i < base->maxLasers; i++) {
+		if (base->targetLaserIdx[i] == ufoIdx)
+			return UFO_IS_TARGET_OF_LASER;
+	}
+
+	return UFO_IS_NO_TARGET;
+}
+
+/**
+ * @brief Update alien interest for one PHALANX base
+ * @param[in] ufo Pointer to the aircraft_t
+ * @param[in] dt Elapsed time since last check
+ * @param[in] base Pointer to the base 
+ * @note This algorithm is far from perfect. Feel free to improve / change it. The problem
+ * here is that this function will be called on each time increase, for each ufo and for each base.
+ * So it must not need a lot of complex calculations.
+ * At the moment, alien interest update will depend on @c dt: if a UFO flies close to a base and leave,
+ * the final alien interest for this base will be different whether the player was on full-speed time scale
+ * or on low speed time scale. Ideally, this should be fix -- and therefore probably depend on the position
+ * of UFO @c dt before now.
+ * (note however that this function will only be used to determine WHICH base will be attacked,
+ * and not IF a base will be attacked)
+ * For example, a base without radar will be less attacked than a base without radar, because time stops when
+ * a UFO enter radar range.
+ */
+static void UFO_UpdateAlienInterestForOneBase (aircraft_t *ufo, int dt, base_t *base)
+{
+	float probability;
+	float distance;
+	const float decreasingDistance = 10.0f;	/**< above this distance, probability to detect base will
+												decrease by @c decreasingFactor */
+	const float decreasingFactor = 5.0f;
+
+	/* ufo can't find base if it's too far */
+	distance = MAP_GetDistance(ufo->pos, base->pos);
+	if (distance > max_detecting_range)
+		return;
+
+	/* UFO has an increased probability to find a base if it is firing at it */
+	switch (UFO_IsTargetOfBase(ufo - gd.ufos, base)) {
+	case UFO_IS_TARGET_OF_MISSILE:
+		probability = 0.01f;
+		break;
+	case UFO_IS_TARGET_OF_LASER:
+		probability = 0.001f;
+		break;
+	default:
+		probability = 0.0001f;
+		break;
+	}
+
+	/* decrease probability if the ufo is far from base */
+	if (distance > decreasingDistance)
+		probability /= decreasingFactor;
+
+	/* probability must depend on time scale */
+	probability *= dt;
+
+	base->alienInterest += probability;
+}
+
+/**
+ * @brief Update alien interest for all PHALANX bases
+ * @param[in] ufo Pointer to the aircraft_t
+ * @param[in] dt Elapsed time since last check
+ * @sa UFO_UpdateAlienInterestForOneBase
+ */
+static void UFO_UpdateAlienInterestForAllBases (aircraft_t *ufo, int dt)
+{
+	base_t* base;
+
+	assert(ufo);
+
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+		UFO_UpdateAlienInterestForOneBase(ufo, dt, base);
+	}
+}
 
 /**
  * @brief Check if the ufo can shoot at a PHALANX aircraft
@@ -445,6 +469,9 @@ void UFO_CampaignRunUFOs (int dt)
 			UFO_SetRandomDest(ufo);
 			CP_CheckNextStageDestination(ufo);
 		}
+
+		/* Update alien interest for bases */
+		UFO_UpdateAlienInterestForAllBases(ufo, dt);
 
 		/* is there a PHALANX aircraft to shoot at ? */
 		UFO_SearchAircraftTarget(ufo);

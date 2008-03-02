@@ -997,7 +997,7 @@ void B_SetUpBase (base_t* base)
 {
 	int i, j;
 	building_t *building;
-	const int newBaseAlienInterest = 10;
+	const int newBaseAlienInterest = 1.0f;
 
 	assert(base);
 	/* Resent current capacities. */
@@ -2751,6 +2751,7 @@ static void B_BaseList_f (void)
 		Com_Printf("Base numLaserBattery %i\n", base->maxLasers);
 		Com_Printf("Base sensorWidth %i\n", base->radar.range);
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUFOs);
+		Com_Printf("Base Alien interest %f\n", base->alienInterest);
 		Com_Printf("Base hasBuilding[]: ");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
 			Com_Printf("%i ", base->hasBuilding[j]);
@@ -3383,7 +3384,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		}
 		MSG_WriteShort(sb, gd.numBuildings[i]);
 		MSG_WriteByte(sb, b->baseStatus);
-		MSG_WriteShort(sb, b->alienInterest);
+		MSG_WriteFloat(sb, b->alienInterest);
 
 		MSG_WriteByte(sb, b->maxBatteries);
 		B_SaveItemSlots(b->batteries, b->maxBatteries, b->targetMissileIdx, sb);
@@ -3598,7 +3599,15 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 		gd.numBuildings[i] = MSG_ReadShort(sb);
 		b->baseStatus = MSG_ReadByte(sb);
+#if 1
+/* remove me in next commit */
 		b->alienInterest = MSG_ReadShort(sb);
+		b->alienInterest = 1.0f;
+#endif
+#if 0
+/* add me in next commit */
+		b->alienInterest = MSG_ReadFloat(sb);
+#endif
 		BDEF_InitialiseBaseSlots(b);
 
 		/* read missile battery slots */

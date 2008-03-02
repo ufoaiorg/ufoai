@@ -206,7 +206,8 @@ static void CL_ChangeIndividualInterest (float percentage, interestCategory_t ca
  */
 static void CP_IncreaseAlienInterest (void)
 {
-	const int delayBetweenIncrease = 28;	/* Number of hours between 2 overall interest increase */
+	const int delayBetweenIncrease = 28;	/**< Number of hours between 2 overall interest increase
+											 * @todo This should depend on difficulty */
 
 	ccs.lastInterestIncreaseDelay++;
 
@@ -942,15 +943,26 @@ static void CP_BaseAttackStartMission (mission_t *mission)
  * @brief Choose Base that will be attacked, and add it to mission description.
  * @note Base attack mission -- Stage 1
  * @return Pointer to the base, NULL if no base set
- * @todo implement me (use base->alienInterest)
  */
 static base_t* CP_BaseAttackChooseBase (mission_t *mission)
 {
+	float randomNumber, sum = 0.0f;
 	base_t *base;
 
 	assert(mission);
-	base = B_GetBase(0);
-	assert(base);
+
+	/* Choose randomly a base depending on alienIterest values for those bases */
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+		if (!base->founded)
+			continue;
+		sum += base->alienInterest;
+	}
+	randomNumber = frand() * sum;
+	for (base = gd.bases + gd.numBases - 1; randomNumber >= 0; base--) {
+		if (!base->founded)
+			continue;
+		randomNumber -= base->alienInterest;
+	}
 
 	/* base is already under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK)
