@@ -149,8 +149,6 @@ particle white_smoke
 	}
 }
 
-
-
 particle corona
 {
 	init
@@ -834,5 +832,39 @@ particle cross_no
 		style  facing
 		size   "16 16"
 		life   0.0001
+	}
+}
+
+particle teleport_emit
+{
+	init
+	{
+		life	2.9
+		thinkfade	out
+		image	sfx/flare_red
+		blend	add
+		style	rotated
+		angles	"90 0 0"
+		omega	"0 0 40"
+		size	"32 32"
+		tps		3
+	}
+	think
+	{
+		push	vector "0 0 5"
+		add		*s
+		pop		*s
+	}
+}
+
+particle teleport
+{
+	init
+	{
+		tps		9
+	}
+	think
+	{
+		spawn teleport_emit
 	}
 }
