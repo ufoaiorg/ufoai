@@ -1945,7 +1945,7 @@ item bolterrifle_ammo
 		{
 			name    "_Cannonade"
 			skill   assault
-			projtl  bolterCannonade
+			projtl  bolter
 			impact  bolterImpact
 			hitbody null
 			firesnd weapons/boltercannonade
