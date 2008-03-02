@@ -112,6 +112,7 @@ typedef enum missionStage_s {
 	STAGE_SUPPLY,					/**< Supply already existing base */
 	STAGE_SPREAD_XVI,				/**< Spreading XVI Virus */
 	STAGE_INTERCEPT,				/**< UFO attacks any encountered PHALANX aircraft */
+	STAGE_BASE_DISCOVERED,			/**< PHALANX discovered the base */
 
 	STAGE_RETURN_TO_ORBIT,			/**< UFO is going back to base */
 
@@ -445,6 +446,8 @@ void CP_MissionStageEndByUfo(aircraft_t *ufocraft);
 
 base_t *CP_GetMissionBase(void);
 void CP_SpawnCrashSiteMission(aircraft_t *ufo);
+struct alienBase_s;
+void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
 void CP_UFOSendMail(const aircraft_t *ufocraft, const base_t *base);
 
 technology_t *CP_IsXVIResearched(void);

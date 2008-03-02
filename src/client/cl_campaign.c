@@ -367,7 +367,7 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 /**
  * @brief Get a mission in ccs.missions by Id.
  */
-mission_t *CP_GetMissionById (const char *missionId)
+mission_t* CP_GetMissionById (const char *missionId)
 {
 	const linkedList_t *list = ccs.missions;
 
@@ -380,12 +380,26 @@ mission_t *CP_GetMissionById (const char *missionId)
 	Com_Printf("CP_GetMissionById: Could not find mission %s\n", missionId);
 	return NULL;
 }
+/**
+ * @brief Get last mission added to ccs.missions.
+ * @return Last mission added to ccs.missions, NULL if no mission.
+ */
+static mission_t* CP_GetLastMissionAdded (void)
+{
+	const linkedList_t *list = ccs.missions;
+	mission_t *mission = NULL;
+
+	for (;list; list = list->next)
+		mission = (mission_t *)list->data;
+
+	return mission;
+}
 
 /**
  * @brief Return the type of mission.
  * @todo implement me
  */
-const char *CP_MissionToTypeString (const mission_t *mission)
+const char* CP_MissionToTypeString (const mission_t *mission)
 {
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
@@ -399,6 +413,13 @@ const char *CP_MissionToTypeString (const mission_t *mission)
 	case INTERESTCATEGORY_BASE_ATTACK:
 		if (mission->stage == STAGE_BASE_ATTACK)
 			return _("Base attack");
+		break;
+	case INTERESTCATEGORY_BUILDING:
+		if (mission->stage == STAGE_BASE_DISCOVERED)
+			return _("Alien Base");
+		break;
+	case INTERESTCATEGORY_SUPPLY:
+	case INTERESTCATEGORY_INTERCEPT:
 		break;
 	default:
 		Com_Printf("CP_MissionToTypeString: Unknow category %i\n", mission->category);
@@ -1087,6 +1108,18 @@ static void CP_BuildBaseMissionIsFailure (mission_t *mission)
 
 	CP_MissionRemove(mission);
 }
+/**
+ * @brief Alien base has been destroyed: change interest values.
+ * @note Build Base mission
+ */
+static void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_INTERCEPT);
+
+	AB_DestroyBase((alienBase_t *) mission->data);
+	CP_MissionRemove(mission);
+}
 
 /**
  * @brief Build Base mission ends: UFO leave earth.
@@ -1110,7 +1143,6 @@ static void CP_BuildBaseMissionLeave (mission_t *mission)
 static void CP_BuildBaseSetUpBase (mission_t *mission)
 {
 	alienBase_t *base;
-	const nation_t *nation;
 	const date_t buildingTime = {10, 0};	/**< Time needed to start a new base construction */
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(buildingTime));
@@ -1121,22 +1153,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-
-	/* @todo: change the mapDef to alien base when this will be implemented */
-	mission->mapDef = Com_GetMapDefinitionByID("baseattack");
-	if (!mission->mapDef) {
-		CP_MissionRemove(mission);
-		Sys_Error("Could not find mapdef alienbase");
-		return;
-	}
 	mission->data = (void *) base;
-
-	nation = MAP_GetNation(mission->pos);
-	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
-	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
-	}
 
 	/* ufo becomes invisible on geoscape */
 	CP_UFORemoveFromGeoscape(mission);
@@ -1516,6 +1533,8 @@ static inline void CP_MissionIsOver (mission_t *mission)
 	case INTERESTCATEGORY_BUILDING:
 		if (mission->stage <= STAGE_BUILD_BASE)
 			CP_BuildBaseMissionIsFailure(mission);
+		else if (mission->stage == STAGE_BASE_DISCOVERED)
+			CP_BuildBaseMissionBaseDestroyed(mission);
 		else
 			CP_BuildBaseMissionIsSuccess(mission);
 		break;
@@ -1761,11 +1780,11 @@ static void CP_SpawnNewMissions_f (void)
 	CP_CreateNewMission(category, qtrue);
 
 	if (type) {
-		const linkedList_t *list = ccs.missions;
-		mission_t *mission;
-		/* get mission: this is the last one */
-		for (;list; list = list->next)
-			mission = (mission_t *)list->data;
+		mission_t *mission = CP_GetLastMissionAdded();
+		if (!mission) {
+			Com_Printf("CP_SpawnNewMissions_f: Could not add mission, abort\n");
+			return;
+		}
 		switch (category) {
 		case INTERESTCATEGORY_RECON:
 			{
@@ -1909,6 +1928,47 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	CP_MissionAddToGeoscape(mission);
 }
 
+/**
+ * @brief Spawn a new alien base mission after it has been discovered.
+ */
+void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
+{
+	const nation_t *nation;
+	mission_t *mission;
+
+	CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qtrue);
+	mission = CP_GetLastMissionAdded();
+	if (!mission) {
+		Com_Printf("CP_SpawnAlienBaseMission: Could not add mission, abort\n");
+		return;
+	}
+
+	mission->data = (void *) alienBase;
+
+	/* @todo: change the mapDef to alien base when this will be implemented */
+	mission->mapDef = Com_GetMapDefinitionByID("excavation");
+	if (!mission->mapDef) {
+		CP_MissionRemove(mission);
+		Sys_Error("Could not find mapdef alienbase");
+		return;
+	}
+
+	Vector2Copy(alienBase->pos, mission->pos);
+
+	nation = MAP_GetNation(mission->pos);
+	if (nation) {
+		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
+	} else {
+		Com_sprintf(mission->location, sizeof(mission->location), _("Alien base"));
+	}
+
+	/* Alien base stay until it's destroyed */
+	CP_MissionDisableTimeLimit(mission);
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission);
+
+	mission->stage = STAGE_BASE_DISCOVERED;
+}
 
 /**
  * @brief Find mission corresponding to idx

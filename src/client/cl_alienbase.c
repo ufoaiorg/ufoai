@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "cl_alienbase.h"
+#include "cl_map.h"
 
 static alienBase_t alienBases[MAX_ALIEN_BASES];		/**< Alien bases spawned in game */
 static int numAlienBases;							/**< Number of alien bases in game */
@@ -109,6 +110,67 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
 }
 
 /**
+ * @brief Update stealth value of every base after aircraft moved
+ * @param[in] aircraft Pointer to the aircraft_t
+ * @param[in] dt Elapsed time since last check
+ * @param[in] base Pointer to the alien base 
+ * @sa UFO_UpdateAlienInterestForOneBase
+ */
+static void AB_UpdateStealthForOneBase (aircraft_t *aircraft, int dt, alienBase_t *base)
+{
+	float distance;
+	float probability = 0.0001f;			/**< base probability, will be modified below */
+	const float decreasingDistance = 5.0f;	/**< above this distance, probability to detect base will
+												decrease by @c decreasingFactor */
+	const float decreasingFactor = 5.0f;
+
+	/* base is already discovered */
+	if (base->stealth < 0)
+		return;
+
+	/* aircraft can't find base if it's too far */
+	distance = MAP_GetDistance(aircraft->pos, base->pos);
+	if (distance > aircraft->radar.range)
+		return;
+
+	/* the bigger the base, the higher the probability to find it */
+	probability *= base->supply;
+
+	/* decrease probability if the aircraft is far from base */
+	if (distance > decreasingDistance)
+		probability /= decreasingFactor;
+
+	/* probability must depend on time scale */
+	probability *= dt;
+
+	base->stealth -= probability;
+
+	/* base discovered ? */
+	if (base->stealth < 0) {
+		base->stealth = -10.0f;		/* just to avoid rounding errors */
+		CP_SpawnAlienBaseMission(base);
+	}
+}
+
+/**
+ * @brief Update stealth value of every base after aircraft moved
+ * @param[in] aircraft Pointer to the aircraft_t
+ * @param[in] dt Elapsed time since last check
+ * @param[in] base Pointer to the base 
+ * @sa UFO_UpdateAlienInterestForOneBase
+ */
+void AB_UpdateStealthForAllBase (aircraft_t *aircraft, int dt)
+{
+	alienBase_t* base;
+
+	assert(aircraft);
+
+	for (base = alienBases + numAlienBases - 1; base >= alienBases; base--) {
+		AB_UpdateStealthForOneBase(aircraft, dt, base);
+	}
+}
+
+/**
  * @brief Check if a supply mission is possible.
  * @return True if there is at least one base to supply.
  */
@@ -142,11 +204,24 @@ void AB_SupplyBase (alienBase_t *base, qboolean decreaseStealth)
 	assert(base);
 
 	base->supply++;
-	if (decreaseStealth)
+	if (decreaseStealth && base->stealth >= 0.0f)
 		base->stealth -= decreasedStealthValue;
 }
 
 #ifdef DEBUG
+/**
+ * @brief Print Alien Bases information to game console
+ */
+static void AB_AlienBaseDiscovered_f (void)
+{
+	int i;
+
+	for (i = 0; i < numAlienBases; i++) {
+		alienBases[i].stealth = -10.0f;
+		CP_SpawnAlienBaseMission(&alienBases[i]);
+	}
+}
+
 /**
  * @brief Print Alien Bases information to game console
  */
@@ -180,6 +255,7 @@ void AB_Reset (void)
 {
 #ifdef DEBUG
 	Cmd_AddCommand("debug_alienbaselist", AB_AlienBaseList_f, "Print Alien Bases information to game console");
+	Cmd_AddCommand("debug_alienbasevisible", AB_AlienBaseDiscovered_f, "Set all alien bases to discovered");
 #endif
 }
 

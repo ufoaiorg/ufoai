@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_hospital.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
+#include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
@@ -983,6 +984,7 @@ void CL_CampaignRunAircraft (int dt)
 							break;
 						}
 					}
+					AB_UpdateStealthForAllBase(aircraft, dt);
 				} else if (aircraft->status == AIR_IDLE) {
 					/* Aircraft idle out of base */
 					aircraft->fuel -= dt;

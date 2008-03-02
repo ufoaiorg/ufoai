@@ -257,6 +257,7 @@ static int UFO_IsTargetOfBase (int ufoIdx, base_t *base)
  * and not IF a base will be attacked)
  * For example, a base without radar will be less attacked than a base without radar, because time stops when
  * a UFO enter radar range.
+ * @sa AB_UpdateStealthForOneBase
  */
 static void UFO_UpdateAlienInterestForOneBase (aircraft_t *ufo, int dt, base_t *base)
 {
