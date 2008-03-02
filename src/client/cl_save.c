@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_save.h"
 #include "cl_hospital.h"
 #include "cl_ufo.h"
+#include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
 saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
@@ -68,6 +69,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_MAXOBJ] = MAX_OBJDEFS;		/* #define MAX_OBJDEFS */
 	presaveArray[PRE_MAXBUL] = BULLETS_PER_SHOT;/* #define BULLETS_PER_SHOT */
 	presaveArray[PRE_MBUITY] = MAX_BUILDING_TYPE;	/* MAX_BUILDING_TYPE in buildingType_t */
+	presaveArray[PRE_MAXALB] = MAX_ALIEN_BASES;		/* #define MAX_ALIEN_BASES */
 
 	MSG_WriteByte(sb, PRE_MAX);
 	for (i = 0; i < PRE_MAX; i++) {
@@ -681,6 +683,7 @@ void SAV_Init (void)
 	static saveSubsystems_t stats_subsystem = {"stats", STATS_Save, STATS_Load, 0xA};
 	static saveSubsystems_t na_subsystem = {"nations", NA_Save, NA_Load, 0xB};
 	static saveSubsystems_t trans_subsystem = {"transfer", TR_Save, TR_Load, 0xC};
+	static saveSubsystems_t ab_subsystem = {"alien base", TR_Save, TR_Load, 0xD};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
@@ -702,6 +705,7 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&stats_subsystem);
 	SAV_AddSubsystem(&na_subsystem);
 	SAV_AddSubsystem(&trans_subsystem);
+	SAV_AddSubsystem(&ab_subsystem);
 
 	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Check whether there is a quicksave at all");
 	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, _("Saves to the quick save slot"));

@@ -103,6 +103,7 @@ typedef enum {
 	PRE_MAXOBJ, /* #define MAX_OBJDEFS */
 	PRE_MAXBUL, /* #define BULLETS_PER_SHOT */
 	PRE_MBUITY, /* MAX_BUILDING_TYPE in buildingType_t */
+	PRE_MAXALB,	/* #define MAX_ALIEN_BASES */
 
 	PRE_MAX
 } presaveType_t;
@@ -138,5 +139,7 @@ qboolean NA_Save(sizebuf_t* sb, void* data);
 qboolean NA_Load(sizebuf_t* sb, void* data);
 qboolean TR_Save(sizebuf_t* sb, void* data);
 qboolean TR_Load(sizebuf_t* sb, void* data);
+qboolean AB_Save(sizebuf_t* sb, void* data);
+qboolean AB_Load(sizebuf_t* sb, void* data);
 void RS_PostLoadInit(void);
 #endif /* CLIENT_CL_SAVE_H */

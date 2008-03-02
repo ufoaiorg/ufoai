@@ -1800,7 +1800,7 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
  * @param[in] cultureTypes A linkedList_t containing a list of strings determining the culture types to be tested for (e.g. "western") may be NULL
  * @param[in] populationTypes A linkedList_t containing a list of strings determining the population types to be tested for (e.g. "suburban") may be NULL
  * @param[in] nations A linkedList_t containing a list of strings determining the nations to be tested for (e.g. "asia") may be NULL
- * @return true if a location was found, otherwise false
+ * @return true if a location was found, otherwise false. If map is water, return false
  * @note The name TCPNTypes comes from terrain, culture, population, nation types
  */
 qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
@@ -1808,6 +1808,9 @@ qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, const linkedList_t* terrainTypes
 	const char *terrainType = MAP_GetTerrainTypeByPos(pos);
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);
 	const char *populationType = MAP_GetPopulationTypeByPos(pos);
+
+	if (MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)))
+		return qfalse;
 
 	if (!terrainTypes || LIST_ContainsString(terrainTypes, terrainType)) {
 		if (!cultureTypes || LIST_ContainsString(cultureTypes, cultureType)) {

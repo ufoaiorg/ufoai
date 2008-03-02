@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
+#include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
 /* public vars */
@@ -582,11 +583,8 @@ static inline qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
  */
 static void CP_ReconMissionIsSuccess (mission_t *mission)
 {
-#if 0
-	/* @todo add me when INTERESTCATEGORY_BUILDING will be available */
 	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(0.15f, INTERESTCATEGORY_BUILDING);
-#endif
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
 
@@ -601,10 +599,7 @@ static void CP_ReconMissionIsFailure (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-#if 0
-	/* @todo add me when INTERESTCATEGORY_BUILDING will be available */
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
-#endif
 
 	CP_MissionRemove(mission);
 }
@@ -731,7 +726,7 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
 
-	mission->stage = STAGE_RECON_GOTO_GROUND;
+	mission->stage = STAGE_MISSION_GOTO;
 }
 
 /**
@@ -797,6 +792,7 @@ static void CP_ReconMissionCreate (mission_t *mission)
 
 /**
  * @brief Determine what action should be performed when a Recon mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
  */
 static void CP_ReconMissionNextStage (mission_t *mission)
 {
@@ -810,7 +806,7 @@ static void CP_ReconMissionNextStage (mission_t *mission)
 		/* Choose if a new ground mission should be started */
 		CP_ReconMissionSelect(mission);
 		break;
-	case STAGE_RECON_GOTO_GROUND:
+	case STAGE_MISSION_GOTO:
 		/* just arrived on a new ground mission: start it */
 		CP_ReconMissionGround(mission);
 		break;
@@ -912,7 +908,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	 * phalanx soldiers have their starting positions here
 	 * @note There should also always be an entrance - the aliens start there */
 	if (!B_GetNumberOfBuildingsInBaseByType(base->idx, B_COMMAND)) {
-		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are not Command Center in this base\n", base->name);
+		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are no Command Center in this base\n", base->name);
 		CP_BaseAttackMissionLeave(mission);
 		return;
 	}
@@ -970,7 +966,7 @@ static base_t* CP_BaseAttackChooseBase (mission_t *mission)
 
 	/* HACK FIXME */
 	if (!base->numAircraftInBase) {
-		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are not crafts in this base\n", base->name);
+		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are no crafts in this base\n", base->name);
 		return NULL;
 	}
 
@@ -979,7 +975,7 @@ static base_t* CP_BaseAttackChooseBase (mission_t *mission)
 }
 
 /**
- * @brief Set ground mission, and go to ground mission pos.
+ * @brief Set base attack mission, and go to base position.
  * @note Base attack mission -- Stage 1
  */
 static void CP_BaseAttackGoToBase (mission_t *mission)
@@ -1008,7 +1004,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
 
-	mission->stage = STAGE_BASE_ATTACK_GOTO;
+	mission->stage = STAGE_MISSION_GOTO;
 }
 
 /**
@@ -1032,19 +1028,20 @@ static void CP_BaseAttackMissionCreate (mission_t *mission)
 
 /**
  * @brief Determine what action should be performed when a Base Attack mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
  */
 static void CP_BaseAttackMissionNextStage (mission_t *mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
-		/* Create Recon mission */
+		/* Create mission */
 		CP_BaseAttackMissionCreate(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Choose a base to attack and go to this base */
 		CP_BaseAttackGoToBase(mission);
 		break;
-	case STAGE_BASE_ATTACK_GOTO:
+	case STAGE_MISSION_GOTO:
 		/* just arrived on base location: attack it */
 		CP_BaseAttackStartMission(mission);
 		break;
@@ -1058,6 +1055,155 @@ static void CP_BaseAttackMissionNextStage (mission_t *mission)
 		break;
 	default:
 		Com_Printf("CP_BaseAttackMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
+
+/*****	Build Base Mission *****/
+
+/**
+ * @brief Build Base mission is over and is a success (from an alien point of view): change interest values.
+ * @note Build Base mission
+ * @todo implement me
+ */
+static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(-0.8f, INTERESTCATEGORY_BUILDING);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Build Base mission is over and is a success (from an alien point of view): change interest values.
+ * @note Build Base mission
+ * @todo implement me
+ */
+static void CP_BuildBaseMissionIsFailure (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Build Base mission ends: UFO leave earth.
+ * @note Build Base mission -- Stage 3
+ */
+static void CP_BuildBaseMissionLeave (mission_t *mission)
+{
+	CP_MissionDisableTimeLimit(mission);
+	UFO_SetRandomDest(mission->ufo);
+	/* Display UFO on geoscape if it is visible */
+	mission->ufo->notOnGeoscape = qfalse;
+
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+}
+
+/**
+ * @brief UFO arrived on new base destination: build base.
+ * @param[in|out] mission Pointer to the mission
+ * @note Build Base mission -- Stage 2
+ */
+static void CP_BuildBaseSetUpBase (mission_t *mission)
+{
+	alienBase_t *base;
+	const nation_t *nation;
+	const date_t buildingTime = {10, 0};	/**< Time needed to start a new base construction */
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(buildingTime));
+
+	base = AB_BuildBase(mission->pos);
+	if (!base) {
+		Com_Printf("CP_BuildBaseGoToBase: could not create base\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	/* @todo: change the mapDef to alien base when this will be implemented */
+	mission->mapDef = Com_GetMapDefinitionByID("baseattack");
+	if (!mission->mapDef) {
+		CP_MissionRemove(mission);
+		Sys_Error("Could not find mapdef alienbase");
+		return;
+	}
+	mission->data = (void *) base;
+
+	nation = MAP_GetNation(mission->pos);
+	if (nation) {
+		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
+	} else {
+		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
+	}
+
+	/* ufo becomes invisible on geoscape */
+	CP_UFORemoveFromGeoscape(mission);
+
+	mission->stage = STAGE_BUILD_BASE;
+}
+
+/**
+ * @brief Go to new base position.
+ * @param[in|out] mission Pointer to the mission
+ * @note Build Base mission -- Stage 1
+ */
+static void CP_BuildBaseGoToBase (mission_t *mission)
+{
+	CP_GetRandomPosOnGeoscape(mission->pos, NULL, NULL, NULL, NULL);
+
+	UFO_SendToDestination(mission->ufo, mission->pos);
+
+	mission->stage = STAGE_MISSION_GOTO;
+}
+
+/**
+ * @brief Build Base mission begins: UFO arrive on earth.
+ * @note Build Base mission -- Stage 0
+ */
+static void CP_BuildBaseMissionCreate (mission_t *mission)
+{
+	CP_MissionDisableTimeLimit(mission);
+	/* @todo: type of ufo may change */
+	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
+	if(!mission->ufo) {
+		Com_Printf("CP_BuildBaseMissionCreate: Could not add UFO for base attack mission, remove mission\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->stage = STAGE_COME_FROM_ORBIT;
+}
+
+/**
+ * @brief Determine what action should be performed when a Build Base mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
+ */
+static void CP_BuildBaseMissionNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		/* Create mission */
+		CP_BuildBaseMissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		/* Go to new base position */
+		CP_BuildBaseGoToBase(mission);
+		break;
+	case STAGE_MISSION_GOTO:
+		/* just arrived on base location: build base */
+		CP_BuildBaseSetUpBase(mission);
+		break;
+	case STAGE_BUILD_BASE:
+		/* Leave earth */
+		CP_BuildBaseMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_BuildBaseMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_BuildBaseMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}
@@ -1137,6 +1283,7 @@ static void CP_InterceptMissionCreate (mission_t *mission)
 
 /**
  * @brief Determine what action should be performed when a Intercept mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
  */
 static void CP_InterceptNextStage (mission_t *mission)
 {
@@ -1174,6 +1321,7 @@ static void CP_InterceptNextStage (mission_t *mission)
 
 /**
  * @brief Determine what action should be performed when a mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
  */
 static void CP_MissionStageEnd (mission_t *mission)
 {
@@ -1186,6 +1334,9 @@ static void CP_MissionStageEnd (mission_t *mission)
 	case INTERESTCATEGORY_BASE_ATTACK:
 		CP_BaseAttackMissionNextStage(mission);
 		break;
+	case INTERESTCATEGORY_BUILDING:
+		CP_BuildBaseMissionNextStage(mission);
+		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		CP_InterceptNextStage(mission);
 		break;
@@ -1196,6 +1347,7 @@ static void CP_MissionStageEnd (mission_t *mission)
 
 /**
  * @brief Mission is finished because Phalanx team ended it.
+ * @param[in] mission Pointer to the mission that is ended.
  */
 static inline void CP_MissionIsOver (mission_t *mission)
 {
@@ -1208,6 +1360,12 @@ static inline void CP_MissionIsOver (mission_t *mission)
 			CP_BaseAttackMissionIsFailure(mission);
 		else
 			CP_BaseAttackMissionIsSuccess(mission);
+		break;
+	case INTERESTCATEGORY_BUILDING:
+		if (mission->stage <= STAGE_BUILD_BASE)
+			CP_BuildBaseMissionIsFailure(mission);
+		else
+			CP_BuildBaseMissionIsSuccess(mission);
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		CP_InterceptMissionIsFailure(mission);
@@ -1376,8 +1534,8 @@ static const char* CP_MissionStageToName (missionStage_t stage)
 	case STAGE_RECON_AIR:
 		return "Aerial recon underway";
 		break;
-	case STAGE_RECON_GOTO_GROUND:
-		return "Going to Ground recon mission";
+	case STAGE_MISSION_GOTO:
+		return "Going to mission position";
 		break;
 	case STAGE_RECON_GROUND:
 		return "Ground recon mission underway";
@@ -1387,9 +1545,6 @@ static const char* CP_MissionStageToName (missionStage_t stage)
 		break;
 	case STAGE_BUILD_BASE:
 		return "Building base";
-		break;
-	case STAGE_BASE_ATTACK_GOTO:
-		return "Going to attack base";
 		break;
 	case STAGE_BASE_ATTACK:
 		return "Attacking a base";
@@ -1428,11 +1583,12 @@ static void CP_SpawnNewMissions_f (void)
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
-		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++)
+		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
 			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
  				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>\n");
 			Com_Printf("\n");
+		}
 		return;
 	}
 
@@ -1535,8 +1691,7 @@ void CP_CheckNextStageDestination (aircraft_t *ufocraft)
 	switch (mission->stage) {
 	case STAGE_COME_FROM_ORBIT:
 	case STAGE_RETURN_TO_ORBIT:
-	case STAGE_RECON_GOTO_GROUND:
-	case STAGE_BASE_ATTACK_GOTO:
+	case STAGE_MISSION_GOTO:
 		CP_MissionStageEnd(mission);
 		break;
 	default:
@@ -3121,10 +3276,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		mission.active = MSG_ReadByte(sb);
 		Q_strncpyz(mission.onwin, MSG_ReadString(sb), sizeof(mission.onwin));
 		Q_strncpyz(mission.onlose, MSG_ReadString(sb), sizeof(mission.onlose));
-		switch (mission.stage) {
-		case STAGE_BASE_ATTACK_GOTO:
-		case STAGE_BASE_ATTACK:
-			{
+		mission.category = MSG_ReadShort(sb);
+		mission.stage = MSG_ReadShort(sb);
+		switch (mission.category) {
+		case INTERESTCATEGORY_BASE_ATTACK:
+			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
 				/* Load IDX of base under attack */
 				const int baseidx = MSG_ReadByte(sb);
 				base = B_GetBase(baseidx);
@@ -3134,12 +3290,22 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 					mission.data = (void *) base;
 			}
 			break;
+		case INTERESTCATEGORY_BUILDING:
+			if (mission.stage >= STAGE_BUILD_BASE) {
+				alienBase_t *alienBase;
+				const int baseidx = MSG_ReadByte(sb);
+				/* don't check baseidx value here: alien bases are not loaded yet */
+				alienBase = AB_GetBase(baseidx, 0);
+				if (alienBase)
+					mission.data = (void *) alienBase;
+				else
+					Com_Printf("Error while loading Alien Base mission (mission %i)\n", i);
+			}
+			break;
 		default:
 			break;
 		}
 		Q_strncpyz(mission.location, MSG_ReadString(sb), sizeof(mission.location));
-		mission.category = MSG_ReadShort(sb);
-		mission.stage = MSG_ReadShort(sb);
 		mission.initialOverallInterest = MSG_ReadShort(sb);
 		mission.initialIndividualInterest = MSG_ReadShort(sb);
 		mission.startDate.day = MSG_ReadLong(sb);
@@ -3269,13 +3435,23 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteByte(sb, mission->active);
 		MSG_WriteString(sb, mission->onwin);
 		MSG_WriteString(sb, mission->onlose);
-		switch (mission->stage) {
-		case STAGE_BASE_ATTACK_GOTO:
-		case STAGE_BASE_ATTACK:
-			{
+		MSG_WriteShort(sb, mission->category);
+		MSG_WriteShort(sb, mission->stage);
+		switch (mission->category) {
+		case INTERESTCATEGORY_BASE_ATTACK:
+			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_BASE_ATTACK) {
 				const base_t *base;
 				/* save IDX of base under attack if required */
 				base = (base_t*)mission->data;
+				assert(base);
+				MSG_WriteByte(sb, base->idx);
+			}
+			break;
+		case INTERESTCATEGORY_BUILDING:
+			if (mission->stage >= STAGE_BUILD_BASE) {
+				const alienBase_t *base;
+				/* save IDX of base under attack if required */
+				base = (alienBase_t*)mission->data;
 				assert(base);
 				MSG_WriteByte(sb, base->idx);
 			}
@@ -3284,8 +3460,6 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 			break;
 		}
 		MSG_WriteString(sb, mission->location);
-		MSG_WriteShort(sb, mission->category);
-		MSG_WriteShort(sb, mission->stage);
 		MSG_WriteShort(sb, mission->initialOverallInterest);
 		MSG_WriteShort(sb, mission->initialIndividualInterest);
 		MSG_WriteLong(sb, mission->startDate.day);
@@ -4970,6 +5144,9 @@ static void CL_GameNew_f (void)
 
 	/* Initialize alien interest */
 	CL_ResetAlienInterest();
+
+	/* Reset alien bases */
+	AB_ResetAlienBases();
 
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main", "singleplayerInGame");

@@ -103,11 +103,10 @@ typedef enum missionStage_s {
 	STAGE_COME_FROM_ORBIT,			/**< UFO is arriving */
 
 	STAGE_RECON_AIR,				/**< Aerial Recon */
-	STAGE_RECON_GOTO_GROUND,		/**< Going to a new ground mission position */
+	STAGE_MISSION_GOTO,				/**< Going to a new position */
 	STAGE_RECON_GROUND,				/**< Ground Recon */
 	STAGE_TERROR_MISSION,			/**< Ground Recon */
 	STAGE_BUILD_BASE,				/**< Building a base */
-	STAGE_BASE_ATTACK_GOTO,			/**< Go to Base attack */
 	STAGE_BASE_ATTACK,				/**< Base attack */
 	STAGE_SUBVERT_GOV,				/**< Subvert government */
 	STAGE_SUPPLY,					/**< Supply already existing base */
@@ -125,7 +124,7 @@ typedef struct mission_s {
 
 	char id[MAX_VAR];				/**< script id */
 	qboolean active;				/**< aircraft at place? */
-	void* data;						/**< may be related to mission type (like pointer to base attacked) */
+	void* data;						/**< may be related to mission type (like pointer to base attacked, or to alien base) */
 	char location[MAX_VAR];			/**< The name of the ground mission that will appear on geoscape */
 	interestCategory_t category;	/**< The category of the event */
 	missionStage_t stage;			/**< in which stage is this event? */
