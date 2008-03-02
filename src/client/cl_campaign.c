@@ -1671,8 +1671,11 @@ static void CP_DeleteMissions_f (void)
 	}
 	Com_Printf("Removed %i mission(s) from global array\n", n);
 
-	if (gd.numUFOs != 0)
-		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions\n", gd.numUFOs);
+	if (gd.numUFOs != 0) {
+		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions. Force removal.\n", gd.numUFOs);
+		while (gd.numUFOs)
+			UFO_RemoveFromGeoscape(gd.ufos);
+	}
 }
 #endif
 

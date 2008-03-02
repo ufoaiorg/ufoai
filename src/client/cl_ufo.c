@@ -887,9 +887,9 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
  */
 void UFO_Reset (void)
 {
-	Cmd_AddCommand("removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
+	Cmd_AddCommand("debug_ufolist", UFO_ListOnGeoscape_f, "Print UFO information to game console");
+	Cmd_AddCommand("removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
 	Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
 #endif
 }
