@@ -59,6 +59,9 @@ void R_ModModellist_f (void)
 		case mod_alias_md2:
 			Com_Printf("MD2 ");
 			break;
+		case mod_alias_dpm:
+			Com_Printf("DPM ");
+			break;
 		default:
 			Com_Printf("%3i ", mod->type);
 			break;
@@ -129,6 +132,10 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		R_ModLoadAliasMD2Model(mod, buf, modfilelen);
 		break;
 
+	case DPMHEADER:
+		/*R_ModLoadAliasDPMModel(mod, buf, modfilelen);*/
+		break;
+
 	case IDMD3HEADER:
 		/* MD3 header */
 		R_ModLoadAliasMD3Model(mod, buf, modfilelen);
@@ -162,6 +169,7 @@ static model_t *R_RegisterModel (const char *name)
 	if (mod) {
 		/* register any images used by the models */
 		switch (mod->type) {
+		case mod_alias_dpm:
 		case mod_alias_md2:
 		case mod_alias_md3:
 			break;

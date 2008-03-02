@@ -304,6 +304,7 @@ static void R_DrawMeshEntities (entity_t *ents)
 			R_DrawBox(e);
 		} else {
 			switch (e->model->type) {
+			case mod_alias_dpm:
 			case mod_alias_md2:
 			case mod_alias_md3:
 				R_DrawAliasModel(e);
@@ -513,6 +514,7 @@ void R_DrawEntities (void)
 			case mod_brush:
 				chain = &r_bsp_entities;
 				break;
+			case mod_alias_dpm:
 			case mod_alias_md2:
 			case mod_alias_md3:
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
