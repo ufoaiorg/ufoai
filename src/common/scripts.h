@@ -101,7 +101,7 @@ typedef enum {
 	V_NUM_TYPES
 } valueTypes_t;
 
-extern const char *vt_names[V_NUM_TYPES];
+extern const char *vt_names[];
 
 /** possible alien values - see also align_names */
 typedef enum {
@@ -151,11 +151,11 @@ typedef enum {
 	FADE_LAST
 } fade_t;
 
-extern const char *align_names[ALIGN_LAST];
-extern const char *blend_names[BLEND_LAST];
-extern const char *style_names[STYLE_LAST];
-extern const char *fade_names[FADE_LAST];
-extern const char *air_slot_type_strings[MAX_ACITEMS];
+extern const char *align_names[];
+extern const char *blend_names[];
+extern const char *style_names[];
+extern const char *fade_names[];
+extern const char *air_slot_type_strings[];
 
 /** used e.g. in our parsers */
 typedef struct value_s {

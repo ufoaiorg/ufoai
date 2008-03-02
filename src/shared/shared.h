@@ -100,6 +100,7 @@ const char *COM_EParse(const char **text, const char *errhead, const char *errin
 
 /** returns the amount of elements - not the amount of bytes */
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
+#define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
 
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
 int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));

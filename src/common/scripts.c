@@ -31,53 +31,59 @@
  * @brief possible values for parsing functions
  * @sa valueTypes_t
  */
-const char *vt_names[V_NUM_TYPES] = {
+const char *vt_names[] = {
 	"",
 	"bool",
 	"char",
 	"int",
 	"int2",
-	"float",
+	"float", /* 5 */
 	"pos",
 	"vector",
 	"color",
 	"rgba",
-	"string",
+	"string", /* 10 */
 	"translation_string",
 	"translation2_string",
 	"longstring",
 	"align",
-	"blend",
+	"blend", /* 15 */
 	"style",
 	"fade",
 	"shapes",
 	"shapeb",
-	"dmgtype",
+	"dmgtype", /* 20 */
+	"dmgweight",
 	"date",
 	"if",
 	"relabs",
-	"client_hunk",
+	"client_hunk", /* 25 */
 	"client_hunk_string"
 };
+CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
-const char *align_names[ALIGN_LAST] = {
+const char *align_names[] = {
 	"ul", "uc", "ur", "cl", "cc", "cr", "ll", "lc", "lr"
 };
+CASSERT(lengthof(align_names) == ALIGN_LAST);
 
-const char *blend_names[BLEND_LAST] = {
+const char *blend_names[] = {
 	"replace", "blend", "add", "filter", "invfilter"
 };
+CASSERT(lengthof(blend_names) == BLEND_LAST);
 
-const char *style_names[STYLE_LAST] = {
-	"facing", "rotated", "beam", "line", "axis"
+const char *style_names[] = {
+	"facing", "rotated", "beam", "line", "axis", "circle"
 };
+CASSERT(lengthof(style_names) == STYLE_LAST);
 
-const char *fade_names[FADE_LAST] = {
+const char *fade_names[] = {
 	"none", "in", "out", "sin", "saw", "blend"
 };
+CASSERT(lengthof(fade_names) == FADE_LAST);
 
 #ifndef DEDICATED_ONLY
-const static char *if_strings[IF_SIZE] = {
+static const char *if_strings[] = {
 	"==",
 	"<=",
 	">=",
@@ -88,6 +94,7 @@ const static char *if_strings[IF_SIZE] = {
 	"eq",
 	"ne"
 };
+CASSERT(lengthof(if_strings) == IF_SIZE);
 
 /**
  * @brief Translate the condition string to menuIfCondition_t enum value
@@ -110,7 +117,7 @@ static int Com_ParseConditionType (const char* conditionString, const char *toke
 #endif
 
 /** @brief target sizes for buffer */
-static const size_t vt_sizes[V_NUM_TYPES] = {
+static const size_t vt_sizes[] = {
 	0,	/* V_NULL */
 	sizeof(qboolean),	/* V_BOOL */
 	sizeof(char),	/* V_CHAR */
@@ -139,6 +146,7 @@ static const size_t vt_sizes[V_NUM_TYPES] = {
 	0,	/* V_CLIENT_HUNK */
 	0	/* V_CLIENT_HUNK_STRING */
 };
+CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
 /**
  * @note translateable string are marked with _ at the beginning
@@ -892,7 +900,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
  * @brief List of valid strings for slot types
  * @note slot names are the same as the item types (and must be in the same order)
  */
-const char *air_slot_type_strings[MAX_ACITEMS] = {
+const char *air_slot_type_strings[] = {
 	"base_missile",
 	"base_laser",
 	"weapon",
@@ -902,6 +910,7 @@ const char *air_slot_type_strings[MAX_ACITEMS] = {
 	"base_ammo_missile",
 	"base_ammo_laser"
 };
+CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
 
 /**
  * @brief Parses weapon, equipment, craft items and armour
