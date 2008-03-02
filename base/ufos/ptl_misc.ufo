@@ -107,23 +107,19 @@ particle white_single_smoke
 		image	sfx/smoke_gren
 		blend	add
 		style	facing
-		tps		0.1
 		color	"1 1 1 1"
-		v		"0 0 8"
+		v		"0 0 10"
 		size	"16 16"
 		crand	vector "2 2 8"	// get a random vector
 		add		*s				// add this vector to the particle structure starting vector
 		pop		*s				// write it back into the particle
 
-		// make alpha value a little bit random
-		push *color
-		rand float 1
-		add float 0.8
-		pop *color.4
+		tps 	1
+		life	5
 	}
 	run
 	{
-		crand	vector "0.2 0.2 0.3"
+		crand	vector "0.5 0.5 0"
 		add		*s
 		pop 	*s
 
@@ -132,15 +128,13 @@ particle white_single_smoke
 		mul    *t
 		add    pos "4 4"
 		pop    *size
-
-		// scale alpha value
-		push	*color
-		rand	float 0.1
-		sub		*color.4
-		pop		*color.4
 	}
-	think { kill }
-
+	think
+	{
+		push   *color
+		mul    float 0.5
+		pop    *color
+	}
 }
 
 particle white_smoke
@@ -389,10 +383,10 @@ particle smokesmall
 	{
 		image  sfx/smoke
 		blend  invfilter
-		style  rotated
+		style  facing
 		thinkfade  out
-		tps    0.3
-		v      "0 0 0"
+		tps    0.5
+		v      "0 0 10"
 		a      "0 0 0"
 	}
 	run
@@ -428,7 +422,10 @@ particle burnFlame
 		add    pos "10 10"
 		pop    *size
 	}
-	think { kill }
+	think {
+		spawn smokesmall
+ 		kill
+	}
 }
 
 particle greensmokebig
