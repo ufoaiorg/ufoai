@@ -3599,15 +3599,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 		gd.numBuildings[i] = MSG_ReadShort(sb);
 		b->baseStatus = MSG_ReadByte(sb);
-#if 1
-/* remove me in next commit */
-		b->alienInterest = MSG_ReadShort(sb);
-		b->alienInterest = 1.0f;
-#endif
-#if 0
-/* add me in next commit */
 		b->alienInterest = MSG_ReadFloat(sb);
-#endif
 		BDEF_InitialiseBaseSlots(b);
 
 		/* read missile battery slots */
