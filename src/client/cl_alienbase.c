@@ -67,6 +67,7 @@ alienBase_t* AB_BuildBase (vec2_t pos)
 
 /**
  * @brief Destroy an alien base
+ * @param[in] base Pointer to the alien base
  */
 qboolean AB_DestroyBase (alienBase_t *base)
 {
@@ -87,6 +88,7 @@ qboolean AB_DestroyBase (alienBase_t *base)
 
 /**
  * @brief Get Alien Base per Idx
+ * @param[in] baseIDX IDX of the alien Base in alienBases[]
  * @param[in] checkIdx True if you want to check if baseIdx is lower than number of base
  */
 alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
