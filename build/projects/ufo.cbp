@@ -62,12 +62,13 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
-					<Add directory="\usr\include\SDL" />
+					<Add option="`sdl-config --cflags`" />
+					<Add option="`curl-config --cflags`" />
 				</Compiler>
-				<Environment>
-					<Variable name="sdl_libs" value='&quot;`sdl-config --libs`&quot;' />
-					<Variable name="sdl" value='&quot;`sdl-config --cflags`&quot;' />
-				</Environment>
+				<Linker>
+					<Add option="`sdl-config --libs`" />
+					<Add option="`curl-config --libs`" />
+				</Linker>
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
