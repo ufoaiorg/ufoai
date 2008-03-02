@@ -2,6 +2,7 @@ CLIENT_CFLAGS+=
 
 CLIENT_SRCS = \
 	client/cl_actor.c \
+	client/cl_alienbase.c \
 	client/cl_aliencont.c \
 	client/cl_aircraft.c \
 	client/cl_airfight.c \

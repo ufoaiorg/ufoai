@@ -118,6 +118,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_airfight.h" />
+		<Unit filename="..\..\src\client\cl_alienbase.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_alienbase.h" />
 		<Unit filename="..\..\src\client\cl_aliencont.c">
 			<Option compilerVar="CC" />
 		</Unit>
