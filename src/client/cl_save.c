@@ -70,6 +70,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_MAXBUL] = BULLETS_PER_SHOT;/* #define BULLETS_PER_SHOT */
 	presaveArray[PRE_MBUITY] = MAX_BUILDING_TYPE;	/* MAX_BUILDING_TYPE in buildingType_t */
 	presaveArray[PRE_MAXALB] = MAX_ALIEN_BASES;		/* #define MAX_ALIEN_BASES */
+	presaveArray[PRE_MAXCAT] = INTERESTCATEGORY_MAX;	/* INTERESTCATEGORY_MAX in interestCategory_t */
 
 	MSG_WriteByte(sb, PRE_MAX);
 	for (i = 0; i < PRE_MAX; i++) {
@@ -683,7 +684,7 @@ void SAV_Init (void)
 	static saveSubsystems_t stats_subsystem = {"stats", STATS_Save, STATS_Load, 0xA};
 	static saveSubsystems_t na_subsystem = {"nations", NA_Save, NA_Load, 0xB};
 	static saveSubsystems_t trans_subsystem = {"transfer", TR_Save, TR_Load, 0xC};
-	static saveSubsystems_t ab_subsystem = {"alien base", TR_Save, TR_Load, 0xD};
+	static saveSubsystems_t ab_subsystem = {"alien base", AB_Save, AB_Load, 0xD};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));

@@ -3410,7 +3410,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.lastInterestIncreaseDelay = MSG_ReadShort(sb);
 	ccs.lastMissionSpawnedDelay = MSG_ReadShort(sb);
 	ccs.overallInterest = MSG_ReadShort(sb);
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+	for (i = 0; i < presaveArray[PRE_MAXCAT]; i++)
 		ccs.interest[i] = MSG_ReadShort(sb);
 
 	/* read other campaign data */
@@ -3574,7 +3574,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteShort(sb, ccs.lastInterestIncreaseDelay);
 	MSG_WriteShort(sb, ccs.lastMissionSpawnedDelay);
 	MSG_WriteShort(sb, ccs.overallInterest);
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+	for (i = 0; i < presaveArray[PRE_MAXCAT]; i++)
 		MSG_WriteShort(sb, ccs.interest[i]);
 
 	/* store other campaign data */
