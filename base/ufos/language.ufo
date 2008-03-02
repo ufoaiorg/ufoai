@@ -124,12 +124,12 @@ language da {
 	}
 }
 
-language est {
+language et {
 	"_Estonian"
 	{
-		est.UTF-8
+		et.UTF-8
 		et_EE.UTF-8
-		est.utf8
+		et.utf8
 		et_EE.utf8
 	}
 }
@@ -169,6 +169,16 @@ language gr {
 		gr_GR.UTF-8
 		gr.utf8
 		gr_GR.utf8
+	}
+}
+
+language hu {
+	"_Hungarian"
+	{
+		hu.UTF-8
+		hu_HU.UTF-8
+		hu.utf8
+		hu_HU.utf8
 	}
 }
 
