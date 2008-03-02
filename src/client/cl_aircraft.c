@@ -1830,6 +1830,10 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
 			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
 		MSG_WritePos(sb, gd.ufos[i].direction);
+#ifdef DEBUG
+		if (!gd.ufos[i].mission)
+			Com_Printf("Error: UFO '%s' (#%i) is not linked to any mission\n", gd.ufos[i].id, i);
+#endif
 		MSG_WriteString(sb, gd.ufos[i].mission->id);
 		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++) {
 #ifdef DEBUG
