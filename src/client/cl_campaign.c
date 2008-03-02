@@ -592,7 +592,7 @@ static void CP_ReconMissionIsSuccess (mission_t *mission)
 }
 
 /**
- * @brief Recon mission is over and is a success: change interest values.
+ * @brief Recon mission is over and is a failure: change interest values.
  * @note Recon mission
  */
 static void CP_ReconMissionIsFailure (mission_t *mission)
@@ -786,7 +786,7 @@ static void CP_ReconMissionCreate (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-	assert(mission->ufo);
+
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }
 
@@ -841,7 +841,7 @@ static void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 }
 
 /**
- * @brief Base attack mission is over and is a success (from an alien point of view): change interest values.
+ * @brief Base attack mission is over and is a failure (from an alien point of view): change interest values.
  * @note Base attack mission
  * @todo implement me
  */
@@ -1070,13 +1070,14 @@ static void CP_BaseAttackMissionNextStage (mission_t *mission)
 static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_SUPPLY);
 	CL_ChangeIndividualInterest(-0.8f, INTERESTCATEGORY_BUILDING);
 
 	CP_MissionRemove(mission);
 }
 
 /**
- * @brief Build Base mission is over and is a success (from an alien point of view): change interest values.
+ * @brief Build Base mission is over and is a failure (from an alien point of view): change interest values.
  * @note Build Base mission
  * @todo implement me
  */
@@ -1209,6 +1210,154 @@ static void CP_BuildBaseMissionNextStage (mission_t *mission)
 	}
 }
 
+/*****	Supply Mission *****/
+
+/**
+ * @brief Supply mission is over and is a success (from an alien point of view): change interest values.
+ * @note Supply mission
+ * @todo implement me
+ */
+static void CP_SupplyMissionIsSuccess (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_SUPPLY);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Supply mission is over and is a failure (from an alien point of view): change interest values.
+ * @note Supply mission
+ * @todo implement me
+ */
+static void CP_SupplyMissionIsFailure (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_SUPPLY);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Supply mission ends: UFO leave earth.
+ * @note Supply mission -- Stage 3
+ */
+static void CP_SupplyMissionLeave (mission_t *mission)
+{
+	CP_MissionDisableTimeLimit(mission);
+	UFO_SetRandomDest(mission->ufo);
+	/* Display UFO on geoscape if it is visible */
+	mission->ufo->notOnGeoscape = qfalse;
+
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+}
+
+/**
+ * @brief UFO arrived on new base destination: Supply base.
+ * @param[in|out] mission Pointer to the mission
+ * @note Supply mission -- Stage 2
+ */
+static void CP_SupplySetStayAtBase (mission_t *mission)
+{
+	const date_t supplyTime = {10, 0};	/**< Max time needed to supply base */
+
+	/* Maybe base has been destroyed since mission creation ? */
+	if (!AB_CheckSupplyMissionPossible()) {
+		Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(supplyTime));
+
+	AB_SupplyBase((alienBase_t *) mission->data, mission->ufo->visible);
+
+	/* ufo becomes invisible on geoscape */
+	CP_UFORemoveFromGeoscape(mission);
+
+	mission->stage = STAGE_SUPPLY;
+}
+
+/**
+ * @brief Go to base position.
+ * @param[in|out] mission Pointer to the mission
+ * @note Supply mission -- Stage 1
+ */
+static void CP_SupplyGoToBase (mission_t *mission)
+{
+	assert(mission->ufo);
+
+	/* Maybe base has been destroyed since mission creation ? */
+	if (!AB_CheckSupplyMissionPossible()) {
+		Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->data = (void *) AB_ChooseBaseToSupply(mission->pos);
+
+	UFO_SendToDestination(mission->ufo, mission->pos);
+
+	mission->stage = STAGE_MISSION_GOTO;
+}
+
+/**
+ * @brief Supply mission begins: UFO arrive on earth.
+ * @note Supply mission -- Stage 0
+ */
+static void CP_SupplyMissionCreate (mission_t *mission)
+{
+	/* Maybe base has been destroyed since mission creation ? */
+	if (!AB_CheckSupplyMissionPossible()) {
+		Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	CP_MissionDisableTimeLimit(mission);
+	/* @todo: type of ufo may change */
+	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
+	if(!mission->ufo) {
+		Com_Printf("CP_BuildBaseMissionCreate: Could not add UFO for base attack mission, remove mission\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->stage = STAGE_COME_FROM_ORBIT;
+}
+
+/**
+ * @brief Determine what action should be performed when a Supply mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
+ */
+static void CP_SupplyMissionNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		/* Create mission */
+		CP_SupplyMissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		/* Go to base position */
+		CP_SupplyGoToBase(mission);
+		break;
+	case STAGE_MISSION_GOTO:
+		/* just arrived on base location: Supply base */
+		CP_SupplySetStayAtBase(mission);
+		break;
+	case STAGE_SUPPLY:
+		/* Leave earth */
+		CP_SupplyMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_SupplyMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_SupplyMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
+
 /*****	Intercept Mission *****/
 
 /**
@@ -1225,7 +1374,7 @@ static void CP_InterceptMissionIsSuccess (mission_t *mission)
 }
 
 /**
- * @brief Intercept mission is over and is a success: change interest values.
+ * @brief Intercept mission is over and is a failure: change interest values.
  * @note Intercept mission
  */
 static void CP_InterceptMissionIsFailure (mission_t *mission)
@@ -1277,7 +1426,7 @@ static void CP_InterceptMissionCreate (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-	assert(mission->ufo);
+
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }
 
@@ -1337,6 +1486,9 @@ static void CP_MissionStageEnd (mission_t *mission)
 	case INTERESTCATEGORY_BUILDING:
 		CP_BuildBaseMissionNextStage(mission);
 		break;
+	case INTERESTCATEGORY_SUPPLY:
+		CP_SupplyMissionNextStage(mission);
+		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		CP_InterceptNextStage(mission);
 		break;
@@ -1366,6 +1518,12 @@ static inline void CP_MissionIsOver (mission_t *mission)
 			CP_BuildBaseMissionIsFailure(mission);
 		else
 			CP_BuildBaseMissionIsSuccess(mission);
+		break;
+	case INTERESTCATEGORY_SUPPLY:
+		if (mission->stage <= STAGE_SUPPLY)
+			CP_SupplyMissionIsFailure(mission);
+		else
+			CP_SupplyMissionIsSuccess(mission);
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		CP_InterceptMissionIsFailure(mission);
@@ -1586,7 +1744,7 @@ static void CP_SpawnNewMissions_f (void)
 		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
 			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
- 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>\n");
+ 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
 			Com_Printf("\n");
 		}
 		return;
@@ -3294,7 +3452,8 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			}
 			break;
 		case INTERESTCATEGORY_BUILDING:
-			if (mission.stage >= STAGE_BUILD_BASE) {
+		case INTERESTCATEGORY_SUPPLY:
+			if (mission.stage >= STAGE_MISSION_GOTO) {
 				alienBase_t *alienBase;
 				const int baseidx = MSG_ReadByte(sb);
 				/* don't check baseidx value here: alien bases are not loaded yet */
@@ -3451,7 +3610,8 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 			}
 			break;
 		case INTERESTCATEGORY_BUILDING:
-			if (mission->stage >= STAGE_BUILD_BASE) {
+		case INTERESTCATEGORY_SUPPLY:
+			if (mission->stage >= STAGE_MISSION_GOTO) {
 				const alienBase_t *base;
 				/* save IDX of base under attack if required */
 				base = (alienBase_t*)mission->data;

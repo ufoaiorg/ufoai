@@ -66,14 +66,17 @@ alienBase_t* AB_BuildBase (vec2_t pos)
 }
 
 /**
- * @brief Destroy an alien base
- * @param[in] base Pointer to the alien base
+ * @brief Destroy an alien base.
+ * @param[in] base Pointer to the alien base.
  */
-qboolean AB_DestroyBase (alienBase_t *base)
+void AB_DestroyBase (alienBase_t *base)
 {
 	int i;
-	int idx = base->idx;
+	int idx;
 
+	assert(base);
+
+	idx = base->idx;
 	numAlienBases--;
 	assert(numAlienBases >= idx);
 	memmove(base, base + 1, (numAlienBases - idx) * sizeof(*base));
@@ -83,13 +86,16 @@ qboolean AB_DestroyBase (alienBase_t *base)
 	for (i = idx; i < numAlienBases; i++)
 		alienBases[i].idx--;
 
-	return qtrue;
+	/* Alien loose all their interest in supply if there's no base to send the supply */
+	if (!numAlienBases)
+		ccs.interest[INTERESTCATEGORY_SUPPLY] = 0;
 }
 
 /**
- * @brief Get Alien Base per Idx
- * @param[in] baseIDX IDX of the alien Base in alienBases[]
- * @param[in] checkIdx True if you want to check if baseIdx is lower than number of base
+ * @brief Get Alien Base per Idx.
+ * @param[in] baseIDX IDX of the alien Base in alienBases[].
+ * @param[in] checkIdx True if you want to check if baseIdx is lower than number of base.
+ * @return Pointer to the base.
  */
 alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
 {
@@ -100,6 +106,44 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
 		return NULL;
 
 	return &alienBases[baseIDX];
+}
+
+/**
+ * @brief Check if a supply mission is possible.
+ * @return True if there is at least one base to supply.
+ */
+qboolean AB_CheckSupplyMissionPossible (void)
+{
+	return numAlienBases;
+}
+
+/**
+ * @brief Choose Alien Base that should be supplied.
+ * @param[out] pos Position of the base.
+ * @return Pointer to the base.
+ */
+alienBase_t* AB_ChooseBaseToSupply (vec2_t pos)
+{
+	const int baseIDX = rand() % numAlienBases;
+
+	Vector2Copy(alienBases[baseIDX].pos, pos);
+
+	return &alienBases[baseIDX];
+}
+
+/**
+ * @brief Supply a base.
+ * @param[in] base Pointer to the supplied base.
+ */
+void AB_SupplyBase (alienBase_t *base, qboolean decreaseStealth)
+{
+	const float decreasedStealthValue = 5.0f;				/**< How much stealth is reduced because Supply UFO was seen */
+
+	assert(base);
+
+	base->supply++;
+	if (decreaseStealth)
+		base->stealth -= decreasedStealthValue;
 }
 
 #ifdef DEBUG

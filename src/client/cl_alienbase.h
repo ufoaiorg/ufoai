@@ -38,8 +38,11 @@ typedef struct alienBase_s {
 
 void AB_ResetAlienBases(void);
 alienBase_t* AB_BuildBase(vec2_t pos);
-qboolean AB_DestroyBase(alienBase_t *base);
+void AB_DestroyBase(alienBase_t *base);
 alienBase_t* AB_GetBase(int baseIDX, qboolean checkIdx);
+qboolean AB_CheckSupplyMissionPossible(void);
+alienBase_t* AB_ChooseBaseToSupply(vec2_t pos);
+void AB_SupplyBase(alienBase_t *base, qboolean decreaseStealth);
 void AB_Reset(void);
 
 #endif	/* CLIENT_CL_ALIENBASE_H */
