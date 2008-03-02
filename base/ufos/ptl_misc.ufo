@@ -835,7 +835,7 @@ particle cross_no
 	}
 }
 
-particle teleport_emit
+particle energy_emit
 {
 	init
 	{
@@ -857,7 +857,7 @@ particle teleport_emit
 	}
 }
 
-particle teleport
+particle energy
 {
 	init
 	{
@@ -865,6 +865,6 @@ particle teleport
 	}
 	think
 	{
-		spawn teleport_emit
+		spawn energy_emit
 	}
 }
