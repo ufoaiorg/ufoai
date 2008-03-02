@@ -102,6 +102,43 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
 	return &alienBases[baseIDX];
 }
 
+#ifdef DEBUG
+/**
+ * @brief Print Alien Bases information to game console
+ */
+static void AB_AlienBaseList_f (void)
+{
+	int i;
+
+	if (numAlienBases == 0) {
+		Com_Printf("No alien base founded\n");
+		return;
+	}
+
+	for (i = 0; i < numAlienBases; i++) {
+		Com_Printf("Alien Base: %i\n", i);
+		if (i != alienBases[i].idx)
+			Com_Printf("Warning: bad idx (%i instead of %i)\n", alienBases[i].idx, i);
+		Com_Printf("...pos: (%f, %f)\n", alienBases[i].pos[0], alienBases[i].pos[1]);
+		Com_Printf("...supply: %i\n", alienBases[i].supply);
+		if (alienBases[i].stealth < 0)
+			Com_Printf("...base discovered\n");
+		else
+			Com_Printf("...stealth: %f\n", alienBases[i].stealth);
+	}
+}
+#endif
+
+/**
+ * @sa MN_ResetMenus
+ */
+void AB_Reset (void)
+{
+#ifdef DEBUG
+	Cmd_AddCommand("debug_alienbaselist", AB_AlienBaseList_f, "Print Alien Bases information to game console");
+#endif
+}
+
 /**
  * @brief Load callback for alien base data
  * @sa AB_Save

@@ -560,6 +560,7 @@ static void Com_DebugHelp_f (void)
 			"Listing commands:\n"
 			"------------------------------\n"
 			" * debug_aircraftlist\n"
+			" * debug_alienbaselist\n"
 			" * debug_baselist\n"
 			" * debug_buildinglist\n"
 			" * debug_campaignstats\n"

@@ -40,5 +40,6 @@ void AB_ResetAlienBases(void);
 alienBase_t* AB_BuildBase(vec2_t pos);
 qboolean AB_DestroyBase(alienBase_t *base);
 alienBase_t* AB_GetBase(int baseIDX, qboolean checkIdx);
+void AB_Reset(void);
 
 #endif	/* CLIENT_CL_ALIENBASE_H */

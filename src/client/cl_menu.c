@@ -385,5 +385,6 @@ void MN_ResetMenus (void)
 	MAP_ResetAction();
 	UFO_Reset();
 	TR_Reset();
+	AB_Reset();
 	BaseSummary_Reset();
 }
