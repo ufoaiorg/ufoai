@@ -613,6 +613,7 @@ static void Think_Mission (edict_t *self)
 	if (self->particle) {
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(self->spawnflags);
+		gi.WriteByte(0);
 		gi.WritePos(self->origin);
 		gi.WriteString(self->particle);
 		gi.EndEvents();

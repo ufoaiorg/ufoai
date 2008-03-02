@@ -334,6 +334,7 @@ static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * atta
 			if (target->particle && Q_strcmp(target->particle, "null")) {
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 				gi.WriteShort(target->spawnflags);
+				gi.WriteByte(1);
 				gi.WritePos(origin);
 				gi.WriteString(target->particle);
 				gi.EndEvents();
@@ -589,10 +590,13 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 	}
 
 	/* FIXME: splash might also hit other surfaces */
-	if (tr && gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damFire && tr->contentFlags & CONTENTS_BURN) {
+	if (tr && tr->contentFlags & CONTENTS_BURN
+	 && (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damFire || gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damBlast)) {
 		/* sent particle to all players */
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(tr->contentFlags >> 8);
+		gi.WriteByte(0);
+		VectorMA(impact, 1, tr->plane.normal, impact);
 		gi.WritePos(impact);
 		gi.WriteString("burning");
 		gi.EndEvents();
@@ -935,10 +939,14 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 			if (i == 0 && (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damFire
 			 || gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damBlast) && tr.contentFlags & CONTENTS_BURN) {
+				vec3_t origin;
+
 				/* sent particle to all players */
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 				gi.WriteShort(tr.contentFlags >> 8);
-				gi.WritePos(impact);
+				gi.WriteByte(1);
+				VectorMA(impact, 1, tr.plane.normal, origin);
+				gi.WritePos(origin);
 				gi.WriteString("fire");
 				gi.EndEvents();
 			}
@@ -1128,7 +1136,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 
 	if (!G_GetShotFromType(ent, type, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
-			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - object not activable!\n"));
+			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - object not activateable!\n"));
 		return qfalse;
 	}
 

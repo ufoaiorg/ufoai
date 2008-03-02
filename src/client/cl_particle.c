@@ -915,16 +915,18 @@ void CL_ParticleFree (ptl_t *p)
  * @brief Spawn a particle given by EV_SPAWN_PARTICLE event
  * @param[in] sb sizebuf that holds the network transfer
  * @sa CL_ParticleSpawn
+ * @sa EV_SPAWN_PARTICLE
  */
 void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 {
 	char *particle;
-	int levelflags;
+	int levelflags, autohide;
 	vec3_t origin;
 	le_t* le;
 
 	/* read data */
-	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &levelflags, &origin, &particle);
+	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &levelflags, &autohide, &origin, &particle);
+	Com_Printf("Spawn particle '%s'\n", particle);
 
 	if (particle && *particle && Q_strcmp(particle, "null")) {
 		le = LE_Add(0);
@@ -933,15 +935,18 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 			return;
 		}
 		le->type = ET_PARTICLE;
-		le->invis = qtrue;
+		le->invis = !cl_leshowinvis->integer;
 		le->levelflags = levelflags;
 		le->particleID = Mem_PoolStrDup(particle, cl_localPool, 0);
 		VectorCopy(origin, le->origin);
 		VecToPos(le->origin, le->pos);
-		le->autohide = qtrue;
-		le->think = LET_ProjectileAutoHide;
-		le->think(le);
-	}
+		le->autohide = autohide;
+		if (le->autohide) {
+			le->think = LET_ProjectileAutoHide;
+			le->think(le);
+		}
+	} else
+		Com_DPrintf(DEBUG_CLIENT, "CL_ParticleSpawnFromSizeBuf: Could not get a particle name in EV_SPAWN_PARTICLE event\n");
 }
 
 static void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)

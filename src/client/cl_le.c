@@ -739,7 +739,7 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 	le = LE_Add(0);
 	if (!le)
 		return;
-	le->invis = qtrue;
+	le->invis = !cl_leshowinvis->integer;
 	le->autohide = autohide;
 	/* bind particle */
 	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle, NULL, NULL);
@@ -817,7 +817,7 @@ void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 	le = LE_Add(0);
 	if (!le)
 		return;
-	le->invis = qtrue;
+	le->invis = !cl_leshowinvis->integer;
 
 	/* bind particle */
 	VectorSet(accel, 0, 0, -GRAVITY);
@@ -907,7 +907,7 @@ void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, int lev
 	le->sfx->volume = -1; /* at least one volume change */
 	le->volume = min(volume, MIX_MAX_VOLUME);
 	VectorCopy(origin, le->origin);
-	le->invis = qtrue;
+	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;
 	le->think = LET_PlayAmbientSound;
 	Com_DPrintf(DEBUG_SOUND, "Add ambient sound '%s'\n", sound);

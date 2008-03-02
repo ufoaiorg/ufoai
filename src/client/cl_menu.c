@@ -56,7 +56,7 @@ static void MN_ChangeGametype_f (void)
 	if (numGTs == 0)
 		return;
 
-	md = &csi.mds[ccs.multiplayerMapDefinitionIndex];
+	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
 	if (!md || !md->multiplayer) {
 		Com_Printf("MN_ChangeGametype_f: No mapdef for the map\n");
 		return;
@@ -149,7 +149,7 @@ static void MN_StartServer_f (void)
 		return;
 	}
 
-	md = &csi.mds[ccs.multiplayerMapDefinitionIndex];
+	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
 	if (!md || !md->multiplayer)
 		return;
 	assert(md->map);
@@ -275,26 +275,26 @@ static void MN_MapInfo (int step)
 	if (!csi.numMDs)
 		return;
 
-	ccs.multiplayerMapDefinitionIndex += step;
+	cls.multiplayerMapDefinitionIndex += step;
 
-	if (ccs.multiplayerMapDefinitionIndex < 0)
-		ccs.multiplayerMapDefinitionIndex = csi.numMDs - 1;
+	if (cls.multiplayerMapDefinitionIndex < 0)
+		cls.multiplayerMapDefinitionIndex = csi.numMDs - 1;
 
-	ccs.multiplayerMapDefinitionIndex %= csi.numMDs;
+	cls.multiplayerMapDefinitionIndex %= csi.numMDs;
 
 	if (!ccs.singleplayer) {
-		while (!csi.mds[ccs.multiplayerMapDefinitionIndex].multiplayer) {
+		while (!csi.mds[cls.multiplayerMapDefinitionIndex].multiplayer) {
 			i++;
-			ccs.multiplayerMapDefinitionIndex += (step ? step : 1);
-			if (ccs.multiplayerMapDefinitionIndex < 0)
-				ccs.multiplayerMapDefinitionIndex = csi.numMDs - 1;
-			ccs.multiplayerMapDefinitionIndex %= csi.numMDs;
+			cls.multiplayerMapDefinitionIndex += (step ? step : 1);
+			if (cls.multiplayerMapDefinitionIndex < 0)
+				cls.multiplayerMapDefinitionIndex = csi.numMDs - 1;
+			cls.multiplayerMapDefinitionIndex %= csi.numMDs;
 			if (i >= csi.numMDs)
 				Sys_Error("MN_MapInfo: There is no multiplayer map in any mapdef\n");
 		}
 	}
 
-	md = &csi.mds[ccs.multiplayerMapDefinitionIndex];
+	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
 
 	Cvar_Set("mn_svmapname", md->map);
 	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", md->map)) != -1)

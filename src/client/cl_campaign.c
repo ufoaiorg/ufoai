@@ -1025,7 +1025,7 @@ static void CP_BaseAttackMissionCreate (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-	
+
 	/* @todo: it may be a ground mission */
 	mission->stage = STAGE_COME_FROM_ORBIT;
 }
@@ -4825,7 +4825,7 @@ static void CL_GameSkirmish_f (void)
 		return;
 	}
 
-	md = &csi.mds[ccs.multiplayerMapDefinitionIndex];
+	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
 	if (!md)
 		return;
 

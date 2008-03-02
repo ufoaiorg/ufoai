@@ -196,6 +196,8 @@ typedef struct client_static_s {
 
 	int playingCinematic;	/**< Set to cinematic playing flags or 0 when not playing */
 
+	int multiplayerMapDefinitionIndex;	/**< current selected multiplayer map */
+
 	char downloadName[MAX_OSPATH];
 	size_t downloadPosition;
 	int downloadPercent;
@@ -244,6 +246,7 @@ extern cvar_t *cl_http_filelists;
 extern cvar_t *cl_http_max_connections;
 extern cvar_t *cl_isometric;
 extern cvar_t *cl_particleweather;
+extern cvar_t *cl_leshowinvis;
 extern cvar_t *cl_fps;
 extern cvar_t *cl_logevents;
 extern cvar_t *cl_centerview;

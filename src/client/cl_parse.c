@@ -116,7 +116,7 @@ const char *ev_format[] =
 	"sbsbbbb",			/* EV_INV_TRANSFER */
 
 	"s",				/* EV_MODEL_EXPLODE */
-	"sp&",				/* EV_SPAWN_PARTICLE */
+	"sbp&",				/* EV_SPAWN_PARTICLE */
 
 	"s",				/* EV_DOOR_OPEN */
 	"s",				/* EV_DOOR_CLOSE */
