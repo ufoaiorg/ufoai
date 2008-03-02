@@ -133,7 +133,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		break;
 
 	case DPMHEADER:
-		/*R_ModLoadAliasDPMModel(mod, buf, modfilelen);*/
+		R_ModLoadAliasDPMModel(mod, buf, modfilelen);
 		break;
 
 	case IDMD3HEADER:

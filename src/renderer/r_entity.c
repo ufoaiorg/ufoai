@@ -524,7 +524,7 @@ void R_DrawEntities (void)
 					chain = &r_opaque_mesh_entities;
 				break;
 			default:
-				Sys_Error("Unknown model type in R_DrawEntities entity chain");
+				Sys_Error("Unknown model type in R_DrawEntities entity chain: %i", e->model->type);
 				break;
 			}
 		}
