@@ -568,6 +568,7 @@ void INV_UpdateAntimatterCap (base_t *base)
 /**
  * @brief Manages Antimatter (adding, removing) through Antimatter Storage Facility.
  * @param[in] base Pointer to the base.
+ * @param[in] amount quantity of antimatter to add/remove (> 0 even if antimatter is removed)
  * @param[in] add True if we are adding antimatter, false when removing.
  * @note This function should be called whenever we add or remove antimatter from Antimatter Storage Facility.
  * @note Call with amount = 0 if you want to remove ALL antimatter from given base.

@@ -1525,11 +1525,11 @@ static void CP_DeleteMissions_f (void)
  * @param[in] ufocraft Pointer to the ufo that reached destination
  * @sa UFO_CampaignRunUFOs
  */
-void CP_CheckNextStageDestination (aircraft_t *ufo)
+void CP_CheckNextStageDestination (aircraft_t *ufocraft)
 {
 	mission_t *mission;
 
-	mission = ufo->mission;
+	mission = ufocraft->mission;
 	assert(mission);
 
 	switch (mission->stage) {

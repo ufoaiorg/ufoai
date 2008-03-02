@@ -55,10 +55,11 @@ static menuNode_t *node1, *node2, *prodlist;
 
 /**
  * @brief Conditions for disassembling.
+ * @param[in] base Pointer to base where the component is stored.
  * @param[in] comp Pointer to components definition.
  * @return qtrue if disassembling is ready, qfalse otherwise.
  */
-static qboolean PR_ConditionsDisassembly (base_t* base, components_t *comp)
+static qboolean PR_ConditionsDisassembly (base_t *base, components_t *comp)
 {
 	objDef_t *od;
 
@@ -135,9 +136,10 @@ static float PR_CalculateProductionPercentDone (const base_t *base, technology_t
  * @brief Checks if the production requirements are met for a defined amount.
  * @param[in] amount How many items are planned to be produced.
  * @param[in] req The production requirements of the item that is to be produced.
+ * @param[in] base Pointer to base.
  * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
  */
-static int PR_RequirementsMet (int amount, requirements_t *req, base_t* base)
+static int PR_RequirementsMet (int amount, requirements_t *req, base_t *base)
 {
 	int a, i;
 	int producible_amount = 0;
@@ -163,12 +165,13 @@ static int PR_RequirementsMet (int amount, requirements_t *req, base_t* base)
 }
 
 /**
- * @brief Remove or add the required items from/to the current base.
+ * @brief Remove or add the required items from/to the a base.
+ * @param[in] base Pointer to base.
  * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
  * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
  * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
  */
-static void PR_UpdateRequiredItemsInBasestorage (base_t* base, int amount, requirements_t *req)
+static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *req)
 {
 	int i;
 	equipDef_t *ed;
@@ -198,13 +201,14 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t* base, int amount, requi
 
 /**
  * @brief Add a new item to the bottom of the production queue.
- * @param[in] queue
+ * @param[in] base Pointer to base, where the queue is.
+ * @param[in] queue Pointer to the queue.
  * @param[in] objID Index of object to produce (in csi.ods[]).
  * @param[in] amount Desired amount to produce.
  * @param[in] disassembling True if this is disassembling, false if production.
  * @return
  */
-static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signed int objID, signed int amount, qboolean disassembling)
+static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, signed int objID, signed int amount, qboolean disassembling)
 {
 	int numWorkshops = 0;
 	production_t *prod;
@@ -278,11 +282,11 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 
 /**
  * @brief Delete the selected entry from the queue.
+ * @param[in] base Pointer to base, where the queue is.
  * @param[in] queue Pointer to the queue.
  * @param[in] index Selected index in queue.
- * @param[in] baseidx Index of base in gd.bases[], where the queue is.
  */
-static void PR_QueueDelete (base_t* base, production_queue_t *queue, int index)
+static void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 {
 	int i;
 	objDef_t *od;
@@ -320,7 +324,7 @@ static void PR_QueueDelete (base_t* base, production_queue_t *queue, int index)
 
 /**
  * @brief Moves the given queue item in the given direction.
- * @param[in] queue
+ * @param[in] queue Pointer to the queue.
  * @param[in] index
  * @param[in] dir
  */
@@ -351,9 +355,9 @@ static void PR_QueueMove (production_queue_t *queue, int index, int dir)
 
 /**
  * @brief Queues the next production in the queue.
- * @param[in] base The index of the base
+ * @param[in] base Pointer to the base
  */
-static void PR_QueueNext (base_t* base)
+static void PR_QueueNext (base_t *base)
 {
 	production_queue_t *queue = &gd.productions[base->idx];
 
@@ -537,10 +541,11 @@ void PR_ProductionRun (void)
 
 /**
  * @brief Prints information about the selected item in production.
+ * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] disassembly True, if we are trying to display disassembly info.
  * @note -1 for objID means that there is no production in this base.
  */
-static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
+static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 {
 	static char productionInfo[512];
 	objDef_t *od, *compod;
@@ -630,8 +635,9 @@ static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
 
 /**
  * @brief Prints information about the selected aircraft in production.
+ * @param[in] base Pointer to the base where informations should be printed.
  */
-static void PR_AircraftInfo (const base_t* base)
+static void PR_AircraftInfo (const base_t *base)
 {
 	aircraft_t *aircraft;
 	int aircraftIdx = NONE;
@@ -827,7 +833,10 @@ static void PR_ProductionListClick_f (void)
 #endif
 }
 
-/** @brief update the list of queued and available items */
+/**
+ * @brief update the list of queued and available items
+ * @param[in] base Pointer to the base.
+ */
 static void PR_UpdateProductionList (base_t* base)
 {
 	int i, j, counter;
@@ -1066,6 +1075,7 @@ static void PR_ProductionList_f (void)
 
 /**
  * @brief Returns true if the current base is able to produce items
+ * @param[in] base Pointer to the base.
  * @sa B_BaseInit_f
  */
 qboolean PR_ProductionAllowed (const base_t* base)
@@ -1118,6 +1128,7 @@ void PR_Init (void)
 
 /**
  * @brief Update the current capacity of Workshop
+ * @param[in] base Pointer to the base containing workshop.
  */
 void PR_UpdateProductionCap (base_t *base)
 {
