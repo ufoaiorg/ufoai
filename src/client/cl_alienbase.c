@@ -106,8 +106,6 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
  */
 qboolean AB_Load (sizebuf_t *sb, void *data)
 {
-#if 0
-/* add me in next commit */
 	int i;
 
 	numAlienBases = MSG_ReadShort(sb);
@@ -118,7 +116,6 @@ qboolean AB_Load (sizebuf_t *sb, void *data)
 		base->supply = MSG_ReadShort(sb);
 		base->stealth = MSG_ReadFloat(sb);
 	}
-#endif
 	return qtrue;
 }
 
