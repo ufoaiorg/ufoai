@@ -190,7 +190,7 @@ void MSG_WriteCoord (sizebuf_t * sb, float f)
 /**
  * @sa MSG_Read2Pos
  */
-void MSG_Write2Pos (sizebuf_t * sb, vec2_t pos)
+void MSG_Write2Pos (sizebuf_t * sb, const vec2_t pos)
 {
 	MSG_WriteLong(sb, (long) (pos[0] * 32.));
 	MSG_WriteLong(sb, (long) (pos[1] * 32.));
@@ -199,7 +199,7 @@ void MSG_Write2Pos (sizebuf_t * sb, vec2_t pos)
 /**
  * @sa MSG_ReadPos
  */
-void MSG_WritePos (sizebuf_t * sb, vec3_t pos)
+void MSG_WritePos (sizebuf_t * sb, const vec3_t pos)
 {
 	MSG_WriteLong(sb, (long) (pos[0] * 32.));
 	MSG_WriteLong(sb, (long) (pos[1] * 32.));
