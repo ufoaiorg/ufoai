@@ -1425,7 +1425,7 @@ void PR_ResetProduction (void)
  * @sa PR_Load
  * @sa SAV_GameSave
  */
-qboolean PR_Save (sizebuf_t* sb, void* data)
+qboolean PR_Save (sizebuf_t *sb, void *data)
 {
 	int i, j;
 	production_queue_t *pq;
@@ -1450,7 +1450,7 @@ qboolean PR_Save (sizebuf_t* sb, void* data)
  * @sa PR_Save
  * @sa SAV_GameLoad
  */
-qboolean PR_Load (sizebuf_t* sb, void* data)
+qboolean PR_Load (sizebuf_t *sb, void *data)
 {
 	int i, j, k;
 	const char *s;
