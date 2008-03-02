@@ -189,7 +189,7 @@ static model_t *R_RegisterModel (const char *name)
  * @sa modtype_t
  */
 static const char *mod_extensions[] = {
-	"md2", "md3", NULL
+	"md2", "md3", "dpm", NULL
 };
 
 /**
@@ -218,7 +218,7 @@ model_t *R_RegisterModelShort (const char *name)
 
 		while (mod_extensions[i]) {
 			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);
-			mod = R_RegisterModel(filename);
+				mod = R_RegisterModel(filename);
 			if (mod)
 				return mod;
 			i++;

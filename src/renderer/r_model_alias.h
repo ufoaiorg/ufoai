@@ -79,6 +79,12 @@ typedef struct mAliasAnim_s {
 	int time;
 } mAliasAnim_t;
 
+typedef struct mAliasBone_s {
+	char name[MAX_VAR];
+	int flags;
+	int parent; /* -1 for no parent */
+} mAliasBone_t;
+
 typedef	struct	mAliasModel_s {
 	int		num_frames;
 	mAliasFrame_t	*frames;
@@ -88,6 +94,9 @@ typedef	struct	mAliasModel_s {
 
 	int		num_meshes;
 	mAliasMesh_t	*meshes;
+
+	int		num_bones;
+	mAliasBone_t	*data_bones;
 
 	/** animation data */
 	char animname[MAX_QPATH];

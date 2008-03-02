@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_entity.h"
 #include "r_model_alias.h"
 #include "r_model_brush.h"
+#include "r_model_dpm.h"
 #include "r_model_md2.h"
 #include "r_model_md3.h"
 

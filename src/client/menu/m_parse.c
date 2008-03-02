@@ -83,7 +83,7 @@ static const value_t nps[] = {
 	{"tooltip", V_STRING, -5, 0},	/* translated in MN_Tooltip */
 	{"image", V_STRING, 0, 0},
 	{"roq", V_STRING, 0, 0},
-	{"md2", V_STRING, 0, 0},
+	{"md2", V_STRING, 0, 0},	/* FIXME: Rename into model */
 	{"anim", V_STRING, -1, 0},
 	{"tag", V_STRING, -2, 0},
 	{"cvar", V_STRING, -3, 0},	/* for selectbox */
