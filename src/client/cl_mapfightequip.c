@@ -822,7 +822,6 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 		slot->installationTime--;
 		/* check if installation is over */
 		if (slot->installationTime <= 0) {
-			slot->installationTime = 0;
 			/* Update stats values */
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
@@ -840,8 +839,17 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 				Sys_Error("AII_UpdateOneInstallationDelay: aircraft->homebase and base pointers are out of sync\n");
 #endif
 			AII_RemoveItemFromSlot(base, slot, qfalse);
-			if (aircraft)
+			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
+				/* Only stop time and post a notice, if no new item to install is assigned */
+				if (slot->itemIdx == NONE) {
+					MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully removed."), qfalse, MSG_STANDARD, NULL);
+					CL_GameTimeStop();
+				}
+			} else if (slot->itemIdx == NONE) {
+				MN_AddNewMessage(_("Notice"), _("Base defense item was successfully removed."), qfalse, MSG_STANDARD, NULL);
+				CL_GameTimeStop();
+			}
 		}
 	}
 }
