@@ -109,6 +109,7 @@ CLIENT_SRCS = \
 	renderer/r_model.c \
 	renderer/r_model_alias.c \
 	renderer/r_model_brush.c \
+	renderer/r_model_dpm.c \
 	renderer/r_model_md2.c \
 	renderer/r_model_md3.c \
 	renderer/r_main.c \

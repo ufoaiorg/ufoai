@@ -497,6 +497,9 @@
 		<Unit filename="..\..\src\renderer\r_model_brush.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\renderer\r_model_dpm.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\renderer\r_model_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
