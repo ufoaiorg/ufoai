@@ -113,10 +113,10 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
  * @brief Update stealth value of every base after aircraft moved
  * @param[in] aircraft Pointer to the aircraft_t
  * @param[in] dt Elapsed time since last check
- * @param[in] base Pointer to the alien base 
+ * @param[in] base Pointer to the alien base
  * @sa UFO_UpdateAlienInterestForOneBase
  */
-static void AB_UpdateStealthForOneBase (aircraft_t *aircraft, int dt, alienBase_t *base)
+static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, int dt, alienBase_t *base)
 {
 	float distance;
 	float probability = 0.0001f;			/**< base probability, will be modified below */
@@ -156,10 +156,10 @@ static void AB_UpdateStealthForOneBase (aircraft_t *aircraft, int dt, alienBase_
  * @brief Update stealth value of every base after aircraft moved
  * @param[in] aircraft Pointer to the aircraft_t
  * @param[in] dt Elapsed time since last check
- * @param[in] base Pointer to the base 
+ * @param[in] base Pointer to the base
  * @sa UFO_UpdateAlienInterestForOneBase
  */
-void AB_UpdateStealthForAllBase (aircraft_t *aircraft, int dt)
+void AB_UpdateStealthForAllBase (const aircraft_t *aircraft, int dt)
 {
 	alienBase_t* base;
 

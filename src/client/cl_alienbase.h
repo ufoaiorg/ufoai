@@ -40,7 +40,7 @@ void AB_ResetAlienBases(void);
 alienBase_t* AB_BuildBase(vec2_t pos);
 void AB_DestroyBase(alienBase_t *base);
 alienBase_t* AB_GetBase(int baseIDX, qboolean checkIdx);
-void AB_UpdateStealthForAllBase(aircraft_t *aircraft, int dt);
+void AB_UpdateStealthForAllBase(const aircraft_t *aircraft, int dt);
 qboolean AB_CheckSupplyMissionPossible(void);
 alienBase_t* AB_ChooseBaseToSupply(vec2_t pos);
 void AB_SupplyBase(alienBase_t *base, qboolean decreaseStealth);
