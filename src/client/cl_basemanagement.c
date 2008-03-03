@@ -3216,6 +3216,11 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	INV_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
 	RS_MarkResearchable(qfalse);		/**< Mark new technologies researchable. */
 
+	/** @note Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground
+	* @todo this should be removed when new inventory code will be over */
+	assert(aircraft->homebase);
+	INV_UpdateStorageCap(aircraft->homebase);
+
 	/* Now empty alien/item cargo just in case. */
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
