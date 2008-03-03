@@ -15,7 +15,7 @@ Note : Default project settings are for single player... this can be changed thr
 
 -->
 <project>
-  <key name="version" value="1"/>
+  <key name="version" value="2"/>
   <key name="basepath" value="$TEMPLATEenginepath$TEMPLATEbasedir/"/>
   <key name="rshcmd" value=""/>
   <key name="remotebasepath" value="$TEMPLATEenginepath$TEMPLATEbasedir/"/>
