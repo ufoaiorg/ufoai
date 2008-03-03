@@ -2108,6 +2108,24 @@ mapdef community_centre
 //	}
 //}
 
+///////////////////////
+// ALIEN BASE
+///////////////////////
+
+mapdef alienbase
+{
+	map				"+alienbase"
+	multiplayer		false
+	description		"_An alien base."
+	storyrelated	true
+	multiplayer		false
+	maxaliens		8
+}
+
+///////////////////////
+// BASE ATTACK
+///////////////////////
+
 mapdef baseattack
 {
 	map				".baseattack"

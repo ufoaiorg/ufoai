@@ -1945,8 +1945,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 
 	mission->data = (void *) alienBase;
 
-	/* @todo: change the mapDef to alien base when this will be implemented */
-	mission->mapDef = Com_GetMapDefinitionByID("excavation");
+	mission->mapDef = Com_GetMapDefinitionByID("alienbase");
 	if (!mission->mapDef) {
 		CP_MissionRemove(mission);
 		Sys_Error("Could not find mapdef alienbase");
