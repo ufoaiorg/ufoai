@@ -110,19 +110,20 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
 }
 
 /**
- * @brief Update stealth value of every base after aircraft moved
- * @param[in] aircraft Pointer to the aircraft_t
- * @param[in] dt Elapsed time since last check
- * @param[in] base Pointer to the alien base
+ * @brief Update stealth value of every base after aircraft moved.
+ * @param[in] aircraft Pointer to the aircraft_t.
+ * @param[in] dt Elapsed time since last check.
+ * @param[in] base Pointer to the alien base.
+ * @note base stealth decreases if it is inside an aircraft radar range, and even more if it's
+ * 	inside @c radarratio times radar range.
  * @sa UFO_UpdateAlienInterestForOneBase
  */
 static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, int dt, alienBase_t *base)
 {
 	float distance;
 	float probability = 0.0001f;			/**< base probability, will be modified below */
-	const float decreasingDistance = 5.0f;	/**< above this distance, probability to detect base will
-												decrease by @c decreasingFactor */
-	const float decreasingFactor = 5.0f;
+	const float radarratio = 0.4f;			/**< stealth decreases faster if base is inside radarratio times radar range */
+	const float decreasingFactor = 5.0f;	/**< factor applied when outside @c radarratio times radar range */
 
 	/* base is already discovered */
 	if (base->stealth < 0)
@@ -136,8 +137,8 @@ static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, int dt, alie
 	/* the bigger the base, the higher the probability to find it */
 	probability *= base->supply;
 
-	/* decrease probability if the aircraft is far from base */
-	if (distance > decreasingDistance)
+	/* decrease probability if the base is far from aircraft */
+	if (distance > aircraft->radar.range * radarratio)
 		probability /= decreasingFactor;
 
 	/* probability must depend on time scale */
