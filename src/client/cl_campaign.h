@@ -93,6 +93,7 @@ typedef enum interestCategory_s {
 	INTERESTCATEGORY_SUPPLY,		/**< Alien supply one of their bases */
 	INTERESTCATEGORY_XVI,			/**< Alien try to spread XVI */
 	INTERESTCATEGORY_INTERCEPT,		/**< Alien try to intercept PHALANX aircraft */
+	INTERESTCATEGORY_HARVEST,		/**< Alien try to harvest */
 
 	INTERESTCATEGORY_MAX
 } interestCategory_t;

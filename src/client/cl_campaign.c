@@ -596,6 +596,56 @@ static inline qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
 	return mission->finalDate.day != 0;
 }
 
+/**
+ * @brief Choose UFO type for a given mission category.
+ * @param[in] Pointer to the mission where the UFO will be added
+ * @todo Parse those values from script files ?
+ */
+static int CP_MissionChooseUFO (const mission_t *mission)
+{
+	switch (mission->category) {
+		case INTERESTCATEGORY_TERROR_ATTACK:
+		case INTERESTCATEGORY_INTERCEPT:
+		case INTERESTCATEGORY_BASE_ATTACK:
+			return UFO_FIGHTER;
+		case INTERESTCATEGORY_BUILDING:
+		case INTERESTCATEGORY_SUPPLY:
+			return UFO_SUPPLY;
+		case INTERESTCATEGORY_XVI:
+			return UFO_CORRUPTER;
+		case INTERESTCATEGORY_HARVEST:
+			return UFO_HARVESTER;
+		case INTERESTCATEGORY_NONE:
+		case INTERESTCATEGORY_MAX:
+			Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
+			break;
+		case INTERESTCATEGORY_RECON:
+			break;
+	}
+
+	return UFO_SCOUT;
+}
+
+/**
+ * @brief mission begins: UFO arrive on earth.
+ * @note Stage 0 -- This function is common to several mission category
+ */
+static void CP_MissionCreate (mission_t *mission)
+{
+	int ufoType;
+
+	CP_MissionDisableTimeLimit(mission);
+	ufoType = CP_MissionChooseUFO(mission);
+	mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
+	if(!mission->ufo) {
+		Com_Printf("CP_MissionCreate: Could not add UFO '%s', remove mission\n", UFO_TypeToShortName(ufoType));
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->stage = STAGE_COME_FROM_ORBIT;
+}
+
 /*****	Recon Mission *****/
 
 /**
@@ -794,24 +844,6 @@ static void CP_ReconMissionSelect (mission_t *mission)
 }
 
 /**
- * @brief Recon mission begins: UFO arrive on earth.
- * @note Recon mission -- Stage 0
- */
-static void CP_ReconMissionCreate (mission_t *mission)
-{
-	CP_MissionDisableTimeLimit(mission);
-	/* @todo: type of ufo may change */
-	mission->ufo = UFO_AddToGeoscape(UFO_SCOUT, NULL, mission);
-	if(!mission->ufo) {
-		Com_Printf("CP_ReconMissionCreate: Could not add UFO for recon mission, remove mission\n");
-		CP_MissionRemove(mission);
-		return;
-	}
-
-	mission->stage = STAGE_COME_FROM_ORBIT;
-}
-
-/**
  * @brief Determine what action should be performed when a Recon mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
@@ -820,7 +852,7 @@ static void CP_ReconMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Recon mission */
-		CP_ReconMissionCreate(mission);
+		CP_MissionCreate(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 	case STAGE_RECON_GROUND:
@@ -1029,25 +1061,6 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 }
 
 /**
- * @brief Base attack mission begins: UFO arrive on earth.
- * @note Base attack mission -- Stage 0
- */
-static void CP_BaseAttackMissionCreate (mission_t *mission)
-{
-	CP_MissionDisableTimeLimit(mission);
-	/* @todo: type of ufo may change */
-	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
-	if(!mission->ufo) {
-		Com_Printf("CP_BaseAttackMissionCreate: Could not add UFO for base attack mission, remove mission\n");
-		CP_MissionRemove(mission);
-		return;
-	}
-
-	/* @todo: it may be a ground mission */
-	mission->stage = STAGE_COME_FROM_ORBIT;
-}
-
-/**
  * @brief Determine what action should be performed when a Base Attack mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
@@ -1056,7 +1069,7 @@ static void CP_BaseAttackMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create mission */
-		CP_BaseAttackMissionCreate(mission);
+		CP_MissionCreate(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Choose a base to attack and go to this base */
@@ -1176,24 +1189,6 @@ static void CP_BuildBaseGoToBase (mission_t *mission)
 }
 
 /**
- * @brief Build Base mission begins: UFO arrive on earth.
- * @note Build Base mission -- Stage 0
- */
-static void CP_BuildBaseMissionCreate (mission_t *mission)
-{
-	CP_MissionDisableTimeLimit(mission);
-	/* @todo: type of ufo may change */
-	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
-	if(!mission->ufo) {
-		Com_Printf("CP_BuildBaseMissionCreate: Could not add UFO for base attack mission, remove mission\n");
-		CP_MissionRemove(mission);
-		return;
-	}
-
-	mission->stage = STAGE_COME_FROM_ORBIT;
-}
-
-/**
  * @brief Determine what action should be performed when a Build Base mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
@@ -1202,7 +1197,7 @@ static void CP_BuildBaseMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create mission */
-		CP_BuildBaseMissionCreate(mission);
+		CP_MissionCreate(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Go to new base position */
@@ -1322,6 +1317,8 @@ static void CP_SupplyGoToBase (mission_t *mission)
  */
 static void CP_SupplyMissionCreate (mission_t *mission)
 {
+	int ufoType;
+
 	/* Maybe base has been destroyed since mission creation ? */
 	if (!AB_CheckSupplyMissionPossible()) {
 		Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
@@ -1330,8 +1327,8 @@ static void CP_SupplyMissionCreate (mission_t *mission)
 	}
 
 	CP_MissionDisableTimeLimit(mission);
-	/* @todo: type of ufo may change */
-	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
+	ufoType = CP_MissionChooseUFO(mission);
+	mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
 	if(!mission->ufo) {
 		Com_Printf("CP_BuildBaseMissionCreate: Could not add UFO for base attack mission, remove mission\n");
 		CP_MissionRemove(mission);
@@ -1430,24 +1427,6 @@ static void CP_InterceptMissionSet (mission_t *mission)
 }
 
 /**
- * @brief Intercept mission begins: UFO arrive on earth.
- * @note Intercept mission -- Stage 0
- */
-static void CP_InterceptMissionCreate (mission_t *mission)
-{
-	CP_MissionDisableTimeLimit(mission);
-	/* @todo: type of ufo may change */
-	mission->ufo = UFO_AddToGeoscape(UFO_FIGHTER, NULL, mission);
-	if(!mission->ufo) {
-		Com_Printf("CP_InterceptMissionCreate: Could not add UFO for intercept mission, remove mission\n");
-		CP_MissionRemove(mission);
-		return;
-	}
-
-	mission->stage = STAGE_COME_FROM_ORBIT;
-}
-
-/**
  * @brief Determine what action should be performed when a Intercept mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
@@ -1456,7 +1435,7 @@ static void CP_InterceptNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Intercept mission */
-		CP_InterceptMissionCreate(mission);
+		CP_MissionCreate(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* UFO start looking for target */
@@ -1690,10 +1669,15 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 	case INTERESTCATEGORY_INTERCEPT:
 		return "Aircraft interception";
 		break;
-	default:
+	case INTERESTCATEGORY_HARVEST:
+		return "Harvest";
+		break;
+	case INTERESTCATEGORY_MAX:
 		return "Unknown mission category";
 		break;
 	}
+	assert(0);
+	return "";
 }
 
 /**
@@ -1741,13 +1725,15 @@ static const char* CP_MissionStageToName (missionStage_t stage)
 	case STAGE_RETURN_TO_ORBIT:
 		return "Leaving earth";
 		break;
+	case STAGE_BASE_DISCOVERED:
+		return "Base visible";
+		break;
 	case STAGE_OVER:
 		return "Mission over";
 		break;
-	default:
-		return "Unknown mission category";
-		break;
 	}
+	assert(0);
+	return "";
 }
 
 /**
@@ -1789,7 +1775,7 @@ static void CP_SpawnNewMissions_f (void)
 		case INTERESTCATEGORY_RECON:
 			{
 				/* Start ground mission */
-				CP_ReconMissionCreate(mission);
+				CP_MissionCreate(mission);
 				if (type == 1)
 					/* Aerial mission */
 					CP_ReconMissionAerial(mission);
@@ -2066,6 +2052,8 @@ static const char* CP_GetAlienByInterest (const mission_t *mission)
 	case INTERESTCATEGORY_XVI:
 		return "ortnok";
 	case INTERESTCATEGORY_INTERCEPT:
+		return "ortnok";
+	case INTERESTCATEGORY_HARVEST:
 		return "ortnok";
 	case INTERESTCATEGORY_MAX:
 		break;
