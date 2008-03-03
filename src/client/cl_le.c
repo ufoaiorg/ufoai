@@ -190,6 +190,8 @@ void LE_Explode (struct dbuffer *msg)
 
 	le->inuse = qfalse;
 
+	/* Recalc the client routing table because this le (and the inline model) is now gone */
+	CL_CompleteRecalcRouting();
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
