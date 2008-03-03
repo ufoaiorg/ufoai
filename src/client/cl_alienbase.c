@@ -166,7 +166,7 @@ void AB_UpdateStealthForAllBase (const aircraft_t *aircraft, int dt)
 
 	assert(aircraft);
 
-	for (base = alienBases + numAlienBases - 1; base >= alienBases; base--) {
+	for (base = alienBases; base < alienBases + numAlienBases; base++) {
 		AB_UpdateStealthForOneBase(aircraft, dt, base);
 	}
 }

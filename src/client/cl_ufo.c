@@ -307,7 +307,7 @@ static void UFO_UpdateAlienInterestForAllBases (aircraft_t *ufo, int dt)
 
 	assert(ufo);
 
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
 		UFO_UpdateAlienInterestForOneBase(ufo, dt, base);
 	}
 }
