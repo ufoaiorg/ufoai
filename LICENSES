@@ -2946,6 +2946,7 @@ base/textures/tex_nature/grass_tall_green_b.jpg | GNU General Public License 2.0
 base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
 base/textures/tex_nature/ice001.jpg |  |  | Public Domain Golgotha
+base/textures/tex_nature/ice003.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/icefloor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock1.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock16.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2953,6 +2954,8 @@ base/textures/tex_nature/pjrock17.jpg | GNU General Public License 2.0 | OpenAre
 base/textures/tex_nature/pjrock21.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/sand.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_nature/snow001.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_nature/snow003.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/snowey.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/soil001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/soil002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
