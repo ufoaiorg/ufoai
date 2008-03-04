@@ -33,16 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define BID_FACTOR 0.9
 
-/* Mission Constants */
-#define MAX_MISSIONS	255
-#define MAX_REQMISSIONS	4
-#define MAX_ACTMISSIONS	16
-#define MAX_SETMISSIONS	16
-
-/* Stage Constants */
-#define MAX_STAGESETS	256
-#define MAX_STAGES		64
-
 /* check for water */
 /* blue value is 64 */
 #define MapIsWater(color)        (color[0] ==   0 && color[1] ==   0 && color[2] ==  64)

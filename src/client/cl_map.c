@@ -223,8 +223,6 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	}
 }
 
-#define MN_MAP_DIST_SELECTION 15
-
 /**
  * @brief Click on the map/geoscape
  */
@@ -338,7 +336,10 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 GEOSCAPE DRAWING AND COORDINATES
 ==============================================================
 */
-
+/** 
+ * @brief maximum distance (in pixel) to get a valid mouse click
+ * @note this is for a 1024 * 768 screen
+ */
 #define MN_MAP_DIST_SELECTION 15
 /**
  * @brief Tell if the specified position is considered clicked
