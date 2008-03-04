@@ -131,18 +131,18 @@ typedef struct fireDef_s {
  */
 typedef enum {
 	/* weapons */
-	AC_ITEM_BASE_MISSILE,
-	AC_ITEM_BASE_LASER,
-	AC_ITEM_WEAPON,
+	AC_ITEM_BASE_MISSILE,	/**< base weapon */
+	AC_ITEM_BASE_LASER,		/**< base weapon */
+	AC_ITEM_WEAPON,			/**< aircraft weapon */
 
 	/* misc */
-	AC_ITEM_SHIELD,
-	AC_ITEM_ELECTRONICS,
+	AC_ITEM_SHIELD,			/**< aircraft shield */
+	AC_ITEM_ELECTRONICS,	/**< aircraft electronics */
 
 	/* ammos */
-	AC_ITEM_AMMO,			/* aircraft ammos */
-	AC_ITEM_AMMO_MISSILE,	/* base ammos */
-	AC_ITEM_AMMO_LASER,		/* base ammos */
+	AC_ITEM_AMMO,			/**< aircraft ammos */
+	AC_ITEM_AMMO_MISSILE,	/**< base ammos */
+	AC_ITEM_AMMO_LASER,		/**< base ammos */
 
 	MAX_ACITEMS
 } aircraftItemType_t;
@@ -166,6 +166,11 @@ typedef enum {
 	AIR_STATS_OP_RANGE	/**< Operationnal range of the aircraft (after AIR_STATS_MAX because not needed in stats[AIR_STATS_MAX], only in CL_AircraftMenuStatsValues */
 } aircraftParams_t;
 
+/**
+ * @brief Aircraft items.
+ * @note This is a part of objDef, only filled for aircraft items (weapons, shield, electronics).
+ * @sa objDef_t
+ */
 typedef struct craftitem_s {
 	aircraftItemType_t type;		/**< The type of the aircraft item. */
 	float stats[AIR_STATS_MAX];	/**< All coefficient that can affect aircraft->stats */

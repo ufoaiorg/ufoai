@@ -56,6 +56,9 @@ typedef enum {
 	AIRCRAFT_LARGE = 2,
 } aircraftSize_t;
 
+/** @brief All different Hangar size.
+ * @note for Phalanx aircraft and UFO.
+ */
 typedef enum {
 	AIRCRAFT_HANGAR_NONE = 0,
 	AIRCRAFT_HANGAR_SMALL = 1,
