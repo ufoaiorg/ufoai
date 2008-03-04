@@ -629,8 +629,9 @@ static int CP_MissionChooseUFO (const mission_t *mission)
 /**
  * @brief mission begins: UFO arrive on earth.
  * @note Stage 0 -- This function is common to several mission category
+ * @return true if mission was created, false else.
  */
-static void CP_MissionCreate (mission_t *mission)
+static qboolean CP_MissionCreate (mission_t *mission)
 {
 	int ufoType;
 
@@ -640,10 +641,11 @@ static void CP_MissionCreate (mission_t *mission)
 	if(!mission->ufo) {
 		Com_Printf("CP_MissionCreate: Could not add UFO '%s', remove mission\n", UFO_TypeToShortName(ufoType));
 		CP_MissionRemove(mission);
-		return;
+		return qfalse;
 	}
 
 	mission->stage = STAGE_COME_FROM_ORBIT;
+	return qtrue;
 }
 
 /*****	Recon Mission *****/
@@ -1775,7 +1777,8 @@ static void CP_SpawnNewMissions_f (void)
 		case INTERESTCATEGORY_RECON:
 			{
 				/* Start ground mission */
-				CP_MissionCreate(mission);
+				if (!CP_MissionCreate(mission))
+					return;
 				if (type == 1)
 					/* Aerial mission */
 					CP_ReconMissionAerial(mission);
@@ -6142,10 +6145,10 @@ base_t *CP_GetMissionBase (void)
  * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be NULL.
  * @param[in] nations A linkedList_t containing a list of strings determining the acceptable nations (e.g. "asia"). May be NULL
  * @return true if a location was found, otherwise false
+ * @note There may be no position fitting the parameters. The higher RASTER, the lower the probability to find a position.
  * @sa LIST_AddString
  * @sa LIST_Delete
- * @note When all parameters contain the string "Any", the algorithm assumes that it does not need to include "water" terrains when determining a random position
- * @note The function is nondeterministic when RASTER is set to a value > 1. The amount of possible alternatives is exactly defined by RASTER. I.e. if RASTER is set to 3, there are 3 different lists from which the random positions are chosen. The list is then chosen randomly.
+ * @note When all parameters are NULL, the algorithm assumes that it does not need to include "water" terrains when determining a random position
  */
 qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
@@ -6155,10 +6158,11 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 	float posX, posY;
 
 	/* RASTER might reduce amount of tested locations to get a better performance */
-	const float maskWidth = 360.0 / RASTER;
-	const float maskHeight = 180.0 / RASTER;
+	/**< Number of points in latitude and longitude that will be tested */
+	const float numPoints = 360.0 / RASTER;
 	/* RASTER is minimizing the amount of locations, so an offset is introduced to enable access to all locations, depending on a random factor */
-	const float offset = rand() % RASTER;
+	const float offsetX = frand() * RASTER;
+	const float offsetY = -1.0 + frand() * 2.0 / numPoints;
 	vec2_t posT;
 	int hits = 0;
 
@@ -6166,10 +6170,10 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 	/* prepare 1st iteration */
 
 	/* ITERATION 1 */
-	for (y = 0; y < maskHeight; y++) {
-		for (x = 0; x < maskWidth; x++) {
-			posX = x * 360.0 / maskWidth - 180.0 + offset;
-			posY = y * 180.0 / maskHeight - 90.0 + offset;
+	for (y = 0; y < numPoints; y++) {
+		posY = asin(2.0 * y / numPoints + offsetY) * todeg;	/* Use non-uniform distribution otherwise we favour the poles */
+		for (x = 0; x < numPoints; x++) {
+			posX = x * RASTER - 180.0 + offsetX;
 
 			Vector2Set(posT, posX, posY);
 
@@ -6191,10 +6195,10 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 	randomNum = num = rand() % hits;
 
 	/* ITERATION 2 */
-	for (y = 0; y < maskHeight; y++) {
-		for (x = 0; x < maskWidth; x++) {
-			posX = x * 360.0 / maskWidth - 180.0 + offset;
-			posY = y * 180.0 / maskHeight - 90.0 + offset;
+	for (y = 0; y < numPoints; y++) {
+		posY = asin(2.0 * y / numPoints + offsetY) * todeg;
+		for (x = 0; x < numPoints; x++) {
+			posX = x * RASTER - 180.0 + offsetX;
 
 			Vector2Set(posT,posX,posY);
 
