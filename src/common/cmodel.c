@@ -2120,7 +2120,8 @@ static void MakeTracingNode (int nodenum)
 
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
-			if (curTile->leafs[-(node->children[i]) - 1].contentFlags & CONTENTS_SOLID)
+			const cBspLeaf_t *leaf = &curTile->leafs[-(node->children[i]) - 1];
+			if ((leaf->contentFlags & CONTENTS_SOLID) && !(leaf->contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = 1 | (1 << 31);
 			else
 				t->children[i] = (1 << 31);
