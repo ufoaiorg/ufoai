@@ -264,9 +264,9 @@ static void CP_AlienInterestList_f (void)
 
 /**
  * @brief Check if a map may be selected for mission.
- * @param[in] mission Pointer to the mission
- * @param[in] pos position of the mission (NULL if the position will be chosen afterwars)
- * @param[in] mapIdx idx of the map
+ * @param[in] mission Pointer to the mission where mapDef should be added
+ * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
+ * @param[in] mapIdx idx of the map in csi.mds[]
  * @return qfalse if map is not selectable
  */
 static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
@@ -301,8 +301,8 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, 
 
 /**
  * @brief Choose a map for given mission.
- * @param[in] mission Pointer to the mission
- * @param[in] pos position of the mission (NULL if the position will be chosen afterwars)
+ * @param[in] mission Pointer to the mission where a new map should be added
+ * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
  * @param[in] ufoCrashed true if the ufo is crashed
  * @return qfalse if could not set mission
  */

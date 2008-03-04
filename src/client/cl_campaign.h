@@ -112,9 +112,8 @@ typedef enum missionStage_s {
 
 /** mission definition */
 typedef struct mission_s {
-	mapDef_t* mapDef;
-
-	char id[MAX_VAR];				/**< script id */
+	char id[MAX_VAR];				/**< script id (must be first element of mission_t to use LIST_ContainsString) */
+	mapDef_t* mapDef;				/**< mapDef used for this mission */
 	qboolean active;				/**< aircraft at place? */
 	void* data;						/**< may be related to mission type (like pointer to base attacked, or to alien base) */
 	char location[MAX_VAR];			/**< The name of the ground mission that will appear on geoscape */
