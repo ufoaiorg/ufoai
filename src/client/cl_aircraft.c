@@ -44,8 +44,6 @@ aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
  */
 int numAircraft_samples = 0;
 
-static const int DISTANCE = 15;
-
 /**
  * @brief Updates hangar capacities for one aircraft in given base.
  * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
