@@ -771,7 +771,7 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 		const int maxLoop = 10;	/* There is a limited number of loop to avoid infinite loops */
 		int counter;
 		for (counter = 0; counter < maxLoop; counter++) {
-			if (!CP_GetRandomPosOnGeoscape(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
+			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
 				continue;
 			if (CP_PositionCloseToBase(mission->pos))
 				continue;
@@ -1183,7 +1183,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
  */
 static void CP_BuildBaseGoToBase (mission_t *mission)
 {
-	CP_GetRandomPosOnGeoscape(mission->pos, NULL, NULL, NULL, NULL);
+	CP_GetRandomPosOnGeoscape(mission->pos, qtrue);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
 
@@ -6138,8 +6138,26 @@ base_t *CP_GetMissionBase (void)
 }
 
 /**
+ * @brief Determines a random position on Geoscape
+ * @param[out] pos The position that will be overwritten
+ * @param[in] noWater True if the position should not be on water
+ * @sa CP_GetRandomPosOnGeoscapeWithParameters
+ * @note The random positions should be roughly uniform thanks to the non-uniform distribution used.
+ * @note This function always returns a value.
+ */
+void CP_GetRandomPosOnGeoscape (vec2_t pos, qboolean noWater)
+{
+	do {
+		pos[0] = (frand() - 0.5f) * 360.0f;
+		pos[1] = asin((frand() - 0.5f) * 2.0f) * todeg;
+	} while (noWater && MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+
+	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: Get random position on geoscape %.2f:%.2f\n", pos[0], pos[1]);
+}
+
+/**
  * @brief Determines a random position on Geoscape that fulfills certain criteria given via parameters
- * @param[in] pos The position that will be overwritten with the random point fulfilling the criterias
+ * @param[out] pos The position that will be overwritten with the random point fulfilling the criterias
  * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass") May be NULL.
  * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western") May be NULL.
  * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be NULL.
@@ -6149,8 +6167,9 @@ base_t *CP_GetMissionBase (void)
  * @sa LIST_AddString
  * @sa LIST_Delete
  * @note When all parameters are NULL, the algorithm assumes that it does not need to include "water" terrains when determining a random position
+ * @note You should rather use CP_GetRandomPosOnGeoscape if there are no parameters (except water) to choose a random position
  */
-qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
+qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
 	float x, y;
 	int num;
@@ -6158,7 +6177,8 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 	float posX, posY;
 
 	/* RASTER might reduce amount of tested locations to get a better performance */
-	/**< Number of points in latitude and longitude that will be tested */
+	/**< Number of points in latitude and longitude that will be tested. Therefore, the total number of position tried
+	 * will be numPoints * numPoints */
 	const float numPoints = 360.0 / RASTER;
 	/* RASTER is minimizing the amount of locations, so an offset is introduced to enable access to all locations, depending on a random factor */
 	const float offsetX = frand() * RASTER;
@@ -6207,7 +6227,7 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 
 				if (num < 1) {
 					Vector2Set(pos, posX, posY);
-					Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+					Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
 						pos[0], pos[1], randomNum, hits);
 					return qtrue;
 				}
@@ -6215,7 +6235,7 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes
 		}
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
 		pos[0], pos[1], num, hits);
 
 	return qtrue;

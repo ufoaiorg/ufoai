@@ -127,35 +127,31 @@ const char* UFO_TypeToName (ufoType_t type)
 }
 
 /**
- * @brief Give a random destination to the given UFO, and make him to move there
+ * @brief Give a random destination to the given UFO, and make him to move there.
+ * @param[in] ufocraft Pointer to the UFO which destination will be changed.
+ * @sa UFO_SetRandomPos
  */
-void UFO_SetRandomDest (aircraft_t* ufo)
+void UFO_SetRandomDest (aircraft_t* ufocraft)
 {
 	vec2_t pos;
 
-	pos[0] = (rand() % 180) - (rand() % 180);
-	pos[1] = (rand() % 90) - (rand() % 90);
-	Com_DPrintf(DEBUG_CLIENT, "Get random pos on geoscape %.2f:%.2f\n", pos[0], pos[1]);
+	CP_GetRandomPosOnGeoscape(pos, qfalse);
 
-	UFO_SendToDestination(ufo, pos);
+	UFO_SendToDestination(ufocraft, pos);
 }
 
 /**
  * @brief Give a random position to the given UFO
- * @todo Sometimes the ufos aren't changing the routes - UFO_SetRandomDest
- * returns correct values, but it seams, that MAP_MapCalcLine is not doing the correct
- * things - set debug_showufos to 1
+ * @param[in] ufocraft Pointer to the UFO which position will be changed.
  * @sa UFO_SetRandomDest
  */
-static void UFO_SetRandomPos (aircraft_t* ufo)
+static void UFO_SetRandomPos (aircraft_t* ufocraft)
 {
 	vec2_t pos;
 
-	pos[0] = (rand() % 180) - (rand() % 180);
-	pos[1] = (rand() % 90) - (rand() % 90);
-	Com_DPrintf(DEBUG_CLIENT, "Get random pos on geoscape %.2f:%.2f\n", pos[0], pos[1]);
+	CP_GetRandomPosOnGeoscape(pos, qfalse);
 
-	Vector2Copy(pos, ufo->pos);
+	Vector2Copy(pos, ufocraft->pos);
 }
 
 #ifdef UFO_ATTACK_BASES

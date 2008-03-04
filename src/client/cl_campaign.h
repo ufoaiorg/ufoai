@@ -69,7 +69,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MapIsRural(color)        (color[0] == 128 && color[1] == 128 && color[2] == 255)
 #define MapIsNopopulation(color) (color[0] == 128 && color[1] == 255 && color[2] ==   0)
 
-/* RASTER enables a better performance for CP_GetRandomPosOnGeoscape set it to 1-6
+/* RASTER enables a better performance for CP_GetRandomPosOnGeoscapeWithParameters set it to 1-6
  * the higher the value the better the performance, but the smaller the coverage */
 #define RASTER 2
 
@@ -426,7 +426,8 @@ const char* CL_SecondConvert(int second);
 
 nation_t *CL_GetNationByID(const char *nationID);
 
-qboolean CP_GetRandomPosOnGeoscape(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
+void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
+qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
 
 campaign_t* CL_GetCampaign(const char *name);
 void CL_GameExit(void);
