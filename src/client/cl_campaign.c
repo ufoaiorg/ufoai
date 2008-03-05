@@ -880,6 +880,132 @@ static void CP_ReconMissionNextStage (mission_t *mission)
 	}
 }
 
+/*****	Terror attack Mission *****/
+
+/**
+ * @brief Terror attack mission is over and is a success: change interest values.
+ * @note Terror attack mission
+ */
+static void CP_TerrorMissionIsSuccess (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_TERROR_ATTACK);
+	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Terror attack mission is over and is a failure: change interest values.
+ * @note Terror attack mission
+ */
+static void CP_TerrorMissionIsFailure (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Start Terror attack mission.
+ * @note Terror attack mission -- Stage 2
+ */
+static void CP_TerrorMissionStart (mission_t *mission)
+{
+	const date_t missionDelay = {3, 0};
+
+	assert(mission->ufo);
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	CP_UFORemoveFromGeoscape(mission);
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission);
+
+	mission->stage = STAGE_TERROR_MISSION;
+}
+
+/**
+ * @brief Set Terror attack mission, and go to Terror attack mission pos.
+ * @note Terror attack mission -- Stage 1
+ */
+static void CP_TerrorMissionGo (mission_t *mission)
+{
+	const nation_t *nation;
+
+	assert(mission->ufo);
+
+	/* Choose a map */
+	if (CP_ChooseMap(mission, NULL, qfalse)) {
+		const int maxLoop = 10;	/* There is a limited number of loop to avoid infinite loops */
+		int counter;
+		for (counter = 0; counter < maxLoop; counter++) {
+			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
+				continue;
+			if (CP_PositionCloseToBase(mission->pos))
+				continue;
+			break;
+		}
+		if (counter >= maxLoop) {
+			Com_Printf("CP_TerrorMissionGo: Error, could not set position.\n");
+			CP_MissionRemove(mission);
+			return;
+		}
+	} else {
+		Com_Printf("CP_TerrorMissionGo: No map found, remove mission.\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->mapDef->timesAlreadyUsed++;
+
+	nation = MAP_GetNation(mission->pos);
+	if (nation) {
+		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
+	} else {
+		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
+	}
+
+	UFO_SendToDestination(mission->ufo, mission->pos);
+
+	mission->stage = STAGE_MISSION_GOTO;
+}
+
+/**
+ * @brief Determine what action should be performed when a Terror attack mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
+ */
+static void CP_TerrorMissionNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		/* Create Terror attack mission */
+		CP_MissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		/* Go to mission */
+		CP_TerrorMissionGo(mission);
+		break;
+	case STAGE_MISSION_GOTO:
+		/* just arrived on a new Terror attack mission: start it */
+		CP_TerrorMissionStart(mission);
+		break;
+	case STAGE_TERROR_MISSION:
+		/* Leave earth */
+		CP_ReconMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_TerrorMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_TerrorMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
+
 /*****	Base attack Mission *****/
 
 /**
@@ -1476,6 +1602,9 @@ static void CP_MissionStageEnd (mission_t *mission)
 	case INTERESTCATEGORY_RECON:
 		CP_ReconMissionNextStage(mission);
 		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		CP_TerrorMissionNextStage(mission);
+		break;
 	case INTERESTCATEGORY_BASE_ATTACK:
 		CP_BaseAttackMissionNextStage(mission);
 		break;
@@ -1502,6 +1631,9 @@ static inline void CP_MissionIsOver (mission_t *mission)
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
 		CP_ReconMissionIsFailure(mission);
+		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		CP_TerrorMissionIsFailure(mission);
 		break;
 	case INTERESTCATEGORY_BASE_ATTACK:
 		if (mission->stage <= STAGE_BASE_ATTACK)
