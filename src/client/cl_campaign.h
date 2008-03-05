@@ -434,6 +434,7 @@ qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 void CP_MissionIsOverByUfo(aircraft_t *ufocraft);
 void CP_MissionStageEndByUfo(aircraft_t *ufocraft);
+const char* MAP_GetMissionModel(const mission_t *mission);
 
 base_t *CP_GetMissionBase(void);
 void CP_SpawnCrashSiteMission(aircraft_t *ufo);

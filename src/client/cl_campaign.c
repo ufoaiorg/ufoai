@@ -931,7 +931,6 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
-	CP_MissionRemoveFromGeoscape(mission);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
 
@@ -956,8 +955,6 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
-	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission);
 
 	/* we always need at least one command centre in the base - because the
 	 * phalanx soldiers have their starting positions here
@@ -995,7 +992,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
  * @note Base attack mission -- Stage 1
  * @return Pointer to the base, NULL if no base set
  */
-static base_t* CP_BaseAttackChooseBase (mission_t *mission)
+static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
 {
 	float randomNumber, sum = 0.0f;
 	base_t *base;
@@ -1003,30 +1000,30 @@ static base_t* CP_BaseAttackChooseBase (mission_t *mission)
 	assert(mission);
 
 	/* Choose randomly a base depending on alienIterest values for those bases */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
 		if (!base->founded)
 			continue;
 		sum += base->alienInterest;
 	}
 	randomNumber = frand() * sum;
-	for (base = gd.bases + gd.numBases - 1; randomNumber >= 0; base--) {
+	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
 		if (!base->founded)
 			continue;
 		randomNumber -= base->alienInterest;
+		if (randomNumber < 0)
+			break;
 	}
 
 	/* base is already under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK)
 		return NULL;
-
 	/* HACK FIXME */
 	if (!base->numAircraftInBase) {
 		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are no crafts in this base\n", base->name);
 		return NULL;
 	}
 
-	mission->data = (void *)base;
-	return mission->data;
+	return base;
 }
 
 /**
@@ -1045,6 +1042,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
+	mission->data = (void *)base;
 
 	mission->mapDef = Com_GetMapDefinitionByID("baseattack");
 	if (!mission->mapDef) {
@@ -2004,7 +2002,7 @@ Set Battle
  * @sa CP_CreateBattleParameters
  * @return true if the UFO is crashed, false if it's intact
  */
-static qboolean CP_UFOIsCrashed (mission_t *mission)
+static qboolean CP_UFOIsCrashed (const mission_t *mission)
 {
 	switch (mission->stage) {
 	case STAGE_RECON_GROUND:
@@ -2163,6 +2161,50 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+')
 		Cvar_Set("rm_drop", "+drop_firebird");
+}
+
+/**
+ * @brief Get mission model string
+ * @param[in] mission Pointer to the mission drawn on geoscape
+ * @sa MAP_DrawMapMarkers
+ */
+const char* MAP_GetMissionModel (const mission_t *mission)
+{
+	/* Mission shouldn't be drawn on geoscape if mapDef is not defined */
+	assert(mission->mapDef);
+
+	if (mission->ufo && CP_UFOIsCrashed(mission))
+		/* @todo Should be a special crashed UFO mission model */
+		return "mission";
+
+	if (mission->mapDef->storyRelated) {
+#if 0
+/* @todo alienbase md2 is broken, fix it before decommenting thoses lines */
+		if (mission->category == INTERESTCATEGORY_BUILDING)
+			return "alienbase";
+		else
+#endif
+			/* @todo Should be a special story related mission model */
+			return "mission";
+	}
+
+	switch (mission->category) {
+	/* @todo each category should have a its own model */
+	case INTERESTCATEGORY_RECON:
+	case INTERESTCATEGORY_XVI:
+	case INTERESTCATEGORY_HARVEST:
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		return "mission";
+	case INTERESTCATEGORY_BUILDING:		/* Should not be reached: alien base mission is storyrelated */
+	case INTERESTCATEGORY_BASE_ATTACK:	/* Should not be reached, this mission category is not drawn on geoscape */
+	case INTERESTCATEGORY_SUPPLY:		/* Should not be reached, this mission category is not drawn on geoscape */
+	case INTERESTCATEGORY_INTERCEPT:	/* Should not be reached, this mission category is not drawn on geoscape */
+	case INTERESTCATEGORY_NONE:			/* Should not be reached, this mission category is not drawn on geoscape */
+	case INTERESTCATEGORY_MAX:			/* Should not be reached, this mission category is not drawn on geoscape */
+		break;
+	}
+	assert(0);
+	return "";
 }
 
 /**

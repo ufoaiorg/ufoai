@@ -1202,7 +1202,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
 			if (cl_3dmap->integer) {
 				angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
-				MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, "mission");
+				MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms));
 			} else
 				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
 
