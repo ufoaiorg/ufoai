@@ -2050,7 +2050,7 @@ base/pics/sfx/explosions1.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/explosions2.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/explosions3.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/explosions4.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/fireball.jpg |  |  | Public Domain Golgotha
+base/pics/sfx/fireball.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/flame1.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/flame2.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/flame3.tga | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2059,8 +2059,8 @@ base/pics/sfx/flame5.tga | GNU General Public License 2.0 | OpenArena GPLed Cont
 base/pics/sfx/flame6.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/flame7.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/flame8.tga | GNU General Public License 2.0 | OpenArena GPLed Content
-base/pics/sfx/flare_blue.jpg |  |  | Public Domain Golgotha
-base/pics/sfx/flare_red.jpg |  |  | Public Domain Golgotha
+base/pics/sfx/flare_blue.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/flare_red.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/foe.png | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported | (c) 2007 Pat Raynor
 base/pics/sfx/friend.png | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported | (c) 2007 Pat Raynor
 base/pics/sfx/greenball.tga |  | Mikolaj Konarski (bandobraz)
@@ -2069,7 +2069,7 @@ base/pics/sfx/greenplas_07.tga |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplasbeam.tga |  | Martin Gerhardy
 base/pics/sfx/lightningscroll.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/pics/sfx/powerup_flare3.jpg |  |  | Public Domain Golgotha
+base/pics/sfx/powerup_flare3.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/smoke_00.png | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported | (c) 2007 Pat Raynor
 base/pics/sfx/smoke_01.png | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported | (c) 2007 Pat Raynor
 base/pics/sfx/smoke_02.png | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported | (c) 2007 Pat Raynor
@@ -2423,7 +2423,7 @@ base/textures/tex_buildings/pent_metalbridge06.jpg | GNU General Public License 
 base/textures/tex_buildings/pewter.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/q1metal7_99.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/q1metal7_99_broke.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_buildings/roof004.jpg |  |  | Public Domain Golgotha
+base/textures/tex_buildings/roof004.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_buildings/roof006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/roof007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/roof10.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2949,7 +2949,7 @@ base/textures/tex_nature/grass_tall_green_a.jpg | GNU General Public License 2.0
 base/textures/tex_nature/grass_tall_green_b.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
-base/textures/tex_nature/ice001.jpg |  |  | Public Domain Golgotha
+base/textures/tex_nature/ice001.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_nature/ice003.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/icefloor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock1.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
