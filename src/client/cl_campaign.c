@@ -49,6 +49,7 @@ static int numCampaigns = 0;
 static technology_t *rs_alien_xvi;
 static salary_t salaries[MAX_CAMPAIGNS];
 static cvar_t *cl_campaign;
+static const int maxLoop = 10;				/**< Maximum number of loops to choose a mission position (to avoid infinite loops) */
 
 /**
  * @brief Check wheter given date and time is later than current date.
@@ -648,6 +649,40 @@ static qboolean CP_MissionCreate (mission_t *mission)
 	return qtrue;
 }
 
+/**
+ * @brief Choose if a new ground mission should be started.
+ * @note Recon mission -- Stage 1
+ * @note Already one ground mission has been made
+ * @todo implement me (for now, there's only one ground mission possible)
+ * @sa CP_ReconMissionSelect
+ * @todo implement me
+ */
+static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
+{
+	return (frand() > 0.7f);
+}
+/**
+ * @brief Minimum distance between a new mission and an existing base.
+ */
+static const float distMinBaseMission = 4.0f;
+
+/**
+ * @brief Check if given pos is close to an existing base.
+ * @return Pointer to the base if one base is closer than distMinBaseMission from pos, NULL else
+ */
+static base_t* CP_PositionCloseToBase (vec2_t pos)
+{
+	base_t *base;
+	int i;
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+		if (MAP_GetDistance(pos, base->pos) < distMinBaseMission) {
+			return base;
+		}
+
+	return NULL;
+}
+
 /*****	Recon Mission *****/
 
 /**
@@ -719,40 +754,6 @@ static void CP_ReconMissionAerial (mission_t *mission)
 }
 
 /**
- * @brief Choose if a new ground mission should be started.
- * @note Recon mission -- Stage 1
- * @note Already one ground mission has been made
- * @todo implement me (for now, there's only one ground mission possible)
- * @sa CP_ReconMissionSelect
- * @todo implement me
- */
-static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
-{
-	return (frand() > 0.7f);
-}
-/**
- * @brief Minimum distance between a new mission and an existing base.
- */
-static const float distMinBaseMission = 4.0f;
-
-/**
- * @brief Check if given pos is close to an existing base.
- * @return Pointer to the base if one base is closer than distMinBaseMission from pos, NULL else
- */
-static base_t* CP_PositionCloseToBase (vec2_t pos)
-{
-	base_t *base;
-	int i;
-
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		if (MAP_GetDistance(pos, base->pos) < distMinBaseMission) {
-			return base;
-		}
-
-	return NULL;
-}
-
-/**
  * @brief Set ground mission, and go to ground mission pos.
  * @note Recon mission -- Stage 1
  * @sa CP_ReconMissionSelect
@@ -768,7 +769,6 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
-		const int maxLoop = 10;	/* There is a limited number of loop to avoid infinite loops */
 		int counter;
 		for (counter = 0; counter < maxLoop; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
@@ -938,7 +938,6 @@ static void CP_TerrorMissionGo (mission_t *mission)
 
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
-		const int maxLoop = 10;	/* There is a limited number of loop to avoid infinite loops */
 		int counter;
 		for (counter = 0; counter < maxLoop; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
@@ -1145,7 +1144,7 @@ static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
 		return NULL;
 	/* HACK FIXME */
 	if (!base->numAircraftInBase) {
-		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are no crafts in this base\n", base->name);
+		Com_Printf("CP_BaseAttackChooseBase: FIXME: This base (%s) can not be set under attack - because there are no crafts in this base\n", base->name);
 		return NULL;
 	}
 
@@ -1288,7 +1287,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 
 	base = AB_BuildBase(mission->pos);
 	if (!base) {
-		Com_Printf("CP_BuildBaseGoToBase: could not create base\n");
+		Com_Printf("CP_BuildBaseSetUpBase: could not create base\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -1307,7 +1306,18 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
  */
 static void CP_BuildBaseGoToBase (mission_t *mission)
 {
-	CP_GetRandomPosOnGeoscape(mission->pos, qtrue);
+	int counter;
+	for (counter = 0; counter < maxLoop; counter++) {
+		CP_GetRandomPosOnGeoscape(mission->pos, qtrue);
+		if (CP_PositionCloseToBase(mission->pos))
+			continue;
+		break;
+	}
+	if (counter >= maxLoop) {
+		Com_Printf("CP_BuildBaseGoToBase: Error, could not set position.\n");
+		CP_MissionRemove(mission);
+		return;
+	}
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
 
@@ -1582,7 +1592,7 @@ static void CP_InterceptNextStage (mission_t *mission)
 		CP_InterceptMissionIsSuccess(mission);
 		break;
 	default:
-		Com_Printf("CP_ReconMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		Com_Printf("CP_InterceptNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
 	}
