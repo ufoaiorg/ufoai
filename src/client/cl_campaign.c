@@ -49,7 +49,7 @@ static int numCampaigns = 0;
 static technology_t *rs_alien_xvi;
 static salary_t salaries[MAX_CAMPAIGNS];
 static cvar_t *cl_campaign;
-static const int maxLoop = 10;				/**< Maximum number of loops to choose a mission position (to avoid infinite loops) */
+static const int MAX_POS_LOOP = 10;				/**< Maximum number of loops to choose a mission position (to avoid infinite loops) */
 
 /**
  * @brief Check wheter given date and time is later than current date.
@@ -664,11 +664,11 @@ static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
 /**
  * @brief Minimum distance between a new mission and an existing base.
  */
-static const float distMinBaseMission = 4.0f;
+static const float MIN_DIST_BASE = 4.0f;
 
 /**
  * @brief Check if given pos is close to an existing base.
- * @return Pointer to the base if one base is closer than distMinBaseMission from pos, NULL else
+ * @return Pointer to the base if one base is closer than MIN_DIST_BASE from pos, NULL else
  */
 static base_t* CP_PositionCloseToBase (vec2_t pos)
 {
@@ -676,7 +676,7 @@ static base_t* CP_PositionCloseToBase (vec2_t pos)
 	int i;
 
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		if (MAP_GetDistance(pos, base->pos) < distMinBaseMission) {
+		if (MAP_GetDistance(pos, base->pos) < MIN_DIST_BASE) {
 			return base;
 		}
 
@@ -770,14 +770,14 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
 		int counter;
-		for (counter = 0; counter < maxLoop; counter++) {
+		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
 				continue;
 			if (CP_PositionCloseToBase(mission->pos))
 				continue;
 			break;
 		}
-		if (counter >= maxLoop) {
+		if (counter >= MAX_POS_LOOP) {
 			Com_Printf("CP_ReconMissionGroundGo: Error, could not set position.\n");
 			CP_MissionRemove(mission);
 			return;
@@ -939,14 +939,14 @@ static void CP_TerrorMissionGo (mission_t *mission)
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
 		int counter;
-		for (counter = 0; counter < maxLoop; counter++) {
+		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
 				continue;
 			if (CP_PositionCloseToBase(mission->pos))
 				continue;
 			break;
 		}
-		if (counter >= maxLoop) {
+		if (counter >= MAX_POS_LOOP) {
 			Com_Printf("CP_TerrorMissionGo: Error, could not set position.\n");
 			CP_MissionRemove(mission);
 			return;
@@ -1307,13 +1307,13 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 static void CP_BuildBaseGoToBase (mission_t *mission)
 {
 	int counter;
-	for (counter = 0; counter < maxLoop; counter++) {
+	for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 		CP_GetRandomPosOnGeoscape(mission->pos, qtrue);
 		if (CP_PositionCloseToBase(mission->pos))
 			continue;
 		break;
 	}
-	if (counter >= maxLoop) {
+	if (counter >= MAX_POS_LOOP) {
 		Com_Printf("CP_BuildBaseGoToBase: Error, could not set position.\n");
 		CP_MissionRemove(mission);
 		return;
@@ -2034,11 +2034,11 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	if (base) {
 		const float dist = MAP_GetDistance(ufo->pos, base->pos);
 		if (dist > UFO_EPSILON) {
-			mission->pos[0] = base->pos[0] + (ufo->pos[0] - base->pos[0]) * distMinBaseMission / dist;
-			mission->pos[1] = base->pos[1] + (ufo->pos[1] - base->pos[1]) * distMinBaseMission / dist;
+			mission->pos[0] = base->pos[0] + (ufo->pos[0] - base->pos[0]) * MIN_DIST_BASE / dist;
+			mission->pos[1] = base->pos[1] + (ufo->pos[1] - base->pos[1]) * MIN_DIST_BASE / dist;
 		} else {
 			mission->pos[0] = base->pos[0];
-			mission->pos[1] = base->pos[1] + distMinBaseMission;
+			mission->pos[1] = base->pos[1] + MIN_DIST_BASE;
 		}
 	} else
 		Vector2Copy(ufo->pos, mission->pos);

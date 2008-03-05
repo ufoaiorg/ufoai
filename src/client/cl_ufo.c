@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "cl_ufo.h"
 
-static const float max_detecting_range = 25.0f; /**< range to detect and fire at phalanx aircraft */
+static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at phalanx aircraft */
 
 typedef struct ufoTypeList_s {
 	const char *id;		/**< script id string */
@@ -205,7 +205,7 @@ static void UFO_SearchBaseTarget (aircraft_t *ufo)
 	/* reverse order - because bases can be destroyed in here */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 		/* check if the ufo can attack a base (if it's not too far) */
-		if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
+		if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < MAX_DETECTING_RANGE)) {
 			if (UFO_SendAttackBase(ufo, base))
 				/* don't check for aircraft if we can destroy a base */
 				continue;
@@ -265,7 +265,7 @@ static void UFO_UpdateAlienInterestForOneBase (aircraft_t *ufo, int dt, base_t *
 
 	/* ufo can't find base if it's too far */
 	distance = MAP_GetDistance(ufo->pos, base->pos);
-	if (distance > max_detecting_range)
+	if (distance > MAX_DETECTING_RANGE)
 		return;
 
 	/* UFO has an increased probability to find a base if it is firing at it */
@@ -351,7 +351,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 				/* get the distance from ufo to aircraft */
 				dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
 				/* check out of reach */
-				if (dist > max_detecting_range)
+				if (dist > MAX_DETECTING_RANGE)
 					continue;
 				/* choose the nearest target */
 				if (dist < distance) {
