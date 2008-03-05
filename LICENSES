@@ -2901,9 +2901,9 @@ base/textures/tex_misc/e8jumpspawn02b.jpg | GNU General Public License 2.0 | Nex
 base/textures/tex_misc/mtl_l1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/mtl_l1_fx.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/pad.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_misc/pipes001.jpg |  |  | Public Domain Golgotha
-base/textures/tex_misc/pipes002.jpg |  |  | Public Domain Golgotha
-base/textures/tex_misc/pipes003.jpg |  |  | Public Domain Golgotha
+base/textures/tex_misc/pipes001.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/pipes002.jpg | Public Domain |  | Public Domain Golgotha
+base/textures/tex_misc/pipes003.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/sign_falloutshelter.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
