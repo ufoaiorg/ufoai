@@ -153,6 +153,7 @@ typedef struct technology_s {
 					 * counting only if a day has passed and they still are met. */
 
 	researchStatus_t statusResearch;	/**< Current status of the research. */
+	char *finishedResearchEvent;		/**< NULL or string with scriptable commands that are executed after the tech was successfully researched */
 
 	struct base_s	*base;	/**< The base this tech is researched in. */
 	int scientists;			/**< How many scientists (from "base") are researching this tech. */

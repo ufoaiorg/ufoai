@@ -65,6 +65,8 @@ static void RS_PushNewsWhenResearched (technology_t* tech)
  */
 void RS_ResearchFinish (technology_t* tech)
 {
+	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
+		Cbuf_AddText(va("%s\n", tech->finishedResearchEvent));
 	tech->statusResearch = RS_FINISH;
 	CL_DateConvert(&ccs.date, &tech->researchedDateDay, &tech->researchedDateMonth);
 	tech->researchedDateYear = ccs.date.day / 365;
@@ -1684,6 +1686,7 @@ void RS_ResetHash (void)
 static const value_t valid_tech_vars[] = {
 	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(technology_t, name), 0},
 	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
+	{"event", V_CLIENT_HUNK_STRING, offsetof(technology_t, finishedResearchEvent), 0},
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
