@@ -244,6 +244,8 @@ void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 
 void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
 void Com_Drop(void);
 void Com_Quit(void);
+void Com_WriteConfigToFile(const char *filename);
+void Cvar_WriteVariables(qFILE *f);
 
 int Com_ServerState(void);		/* this should have just been a cvar... */
 void Com_SetServerState(int state);

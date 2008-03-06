@@ -68,9 +68,32 @@ void COM_StripExtension (const char *in, char *out, size_t size)
 		*out = 0;
 }
 
+
 /**
-  * @brief Returns the path up to, but not including the last /
-  */
+ * @brief Sets a default extension if there is none
+ */
+void COM_DefaultExtension (char *path, size_t len, const char *extension)
+{
+	char oldPath[MAX_QPATH];
+	const char *src;
+
+	/* if path doesn't have a .EXT, append extension
+	 * (extension should include the .) */
+	src = path + strlen(path) - 1;
+
+	while (*src != '/' && src != path) {
+		if (*src == '.')
+			return;
+		src--;
+	}
+
+	Q_strncpyz(oldPath, path, sizeof(oldPath));
+	Com_sprintf(path, len, "%s%s", oldPath, extension);
+}
+
+/**
+ * @brief Returns the path up to, but not including the last /
+ */
 void COM_FilePath (const char *in, char *out)
 {
 	const char *s;

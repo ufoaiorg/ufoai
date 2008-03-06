@@ -196,13 +196,13 @@ void RS_ParseTechnologies(const char *name, const char **text);
 qboolean RS_ItemIsResearched(const char *id_provided);
 qboolean RS_IsResearched_idx(int techIdx);
 qboolean RS_IsResearched_ptr(const technology_t *tech);
-int RS_Collected_(technology_t * tech);
+int RS_Collected_(const technology_t * tech);
 void RS_CheckAllCollected(void);
 
 void RS_AddObjectTechs(void);
 void RS_RequiredIdxAssign(void);
 void RS_InitTree(qboolean load);
-char *RS_GetDescription(descriptions_t *desc);
+const char *RS_GetDescription(descriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
 void RS_MarkResearchable(qboolean init);
 void RS_ResearchFinish(technology_t* tech);

@@ -328,7 +328,7 @@ int main (int argc, char **argv)
 	if (config.info) {
 		strcpy(name, ExpandArg(argv[argc - 1]));
 		COM_StripExtension(name, source, sizeof(source));
-		DefaultExtension(name, ".bsp");
+		COM_DefaultExtension(name, sizeof(name), ".bsp");
 
 		LoadBSPFile(name);
 		PrintBSPFileSizes();
@@ -337,7 +337,7 @@ int main (int argc, char **argv)
 
 	strcpy(name, ExpandArg(argv[argc - 1]));
 	COM_StripExtension(name, source, sizeof(source));
-	DefaultExtension(name, ".map");
+	COM_DefaultExtension(name, sizeof(name), ".map");
 
 	snprintf(out, sizeof(out), "%s.bsp", source);
 
@@ -389,7 +389,7 @@ int main (int argc, char **argv)
 			Com_Printf("%5.0f seconds elapsed\n", end - start);
 		}
 
-		DefaultExtension(source, ".bsp");
+		COM_DefaultExtension(source, sizeof(source), ".bsp");
 		Com_Printf("writing %s\n", source);
 		WriteBSPFile(source);
 

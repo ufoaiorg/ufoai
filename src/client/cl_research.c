@@ -125,7 +125,7 @@ void RS_MarkOneResearchable (technology_t* tech)
  * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
  * @todo Add support for the "delay" value.
  */
-static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t *required_OR, base_t* base)
+static qboolean RS_RequirementsMet (const requirements_t *required_AND, const requirements_t *required_OR, const base_t* base)
 {
 	int i;
 	qboolean met_AND = qfalse;
@@ -287,7 +287,7 @@ static qboolean RS_RequirementsResearchable (requirements_t *required_AND, requi
  * @return qboolean
  * @sa RS_IsResearched_idx
  */
-static qboolean RS_TechIsResearchable (technology_t * tech, base_t *base)
+static qboolean RS_TechIsResearchable (const technology_t * tech, const base_t *base)
 {
 	if (!tech)
 		return qfalse;
@@ -306,18 +306,14 @@ static qboolean RS_TechIsResearchable (technology_t * tech, base_t *base)
  * @brief returns the currently used description for a technology.
  * @param[in] desc A list of possible descriptions (with tech-links that decide which one is the correct one)
  */
-char *RS_GetDescription (descriptions_t *desc)
+const char *RS_GetDescription (descriptions_t *desc)
 {
-	technology_t *tech;
-	base_t* base;
-	int i = 0;
+	int i;
 
 	/* Return (unparsed) default description (0) if nothing is defined.
 	 * it is _always_ set, even if numDescriptions is zero. See RS_ParseTechnologies (standard values). */
-	if (desc->numDescriptions == 0) {
-		desc->usedDescription = 0;	/**< Stored used description */
+	if (desc->numDescriptions == 0)
 		return desc->text[0];
-	}
 
 	/* Return already used description if it's defined. */
 	if (desc->usedDescription >= 0)
@@ -326,7 +322,8 @@ char *RS_GetDescription (descriptions_t *desc)
 	/* Search for useable description text (first match is returned => order is important)
 	 * The default (0) entry is skipped here. */
 	for (i = 1; i < desc->numDescriptions; i++) {
-		tech = RS_GetTechByID(desc->tech[i]);
+		const technology_t *tech = RS_GetTechByID(desc->tech[i]);
+		const base_t* base;
 		if (!tech)
 			continue;
 		if (tech->base)
@@ -340,8 +337,6 @@ char *RS_GetDescription (descriptions_t *desc)
 		}
 	}
 
-	/* Nothing found, return (parsed) default description. */
-	desc->usedDescription = 0;	/**< Stored used description */
 	return desc->text[0];
 }
 
@@ -2163,7 +2158,7 @@ qboolean RS_ItemIsResearched (const char *id_provided)
  * @sa RS_ItemCollected
  * Call this function if you already hold a tech pointer.
  */
-int RS_Collected_ (technology_t * tech)
+int RS_Collected_ (const technology_t * tech)
 {
 	if (tech)
 		return tech->statusCollected;

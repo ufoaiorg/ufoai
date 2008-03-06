@@ -73,7 +73,7 @@ void AL_AddAliens(struct aircraft_s *aircraft);
 void AL_RemoveAliens(struct base_s *base, teamDef_t *alienType, int amount, alienCalcType_t action);
 int AL_GetAlienIdx(const char *id);
 int AL_GetAlienGlobalIdx(int idx);
-int AL_GetAlienAmount(int idx, requirementType_t reqtype, struct base_s *base);
+int AL_GetAlienAmount(int idx, requirementType_t reqtype, const struct base_s *base);
 void AL_ChangeAliveAlienNumber(struct base_s *base, aliensCont_t *containment, int num);
 qboolean AL_CheckAliveFreeSpace(struct base_s *base, aliensCont_t *containment, int num);
 int AL_CountInBase(const struct base_s *base);

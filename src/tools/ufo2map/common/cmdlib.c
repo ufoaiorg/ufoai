@@ -481,25 +481,6 @@ int TryLoadFile (const char *filename, void **bufferptr)
 /**
  * @brief
  */
-void DefaultExtension (char *path, const char *extension)
-{
-	char *src;
-	/* if path doesnt have a .EXT, append extension
-	 * (extension should include the .) */
-	src = path + strlen(path) - 1;
-
-	while (*src != '/' && *src != '\\' && src != path) {
-		if (*src == '.')
-			return; /* it has an extension */
-		src--;
-	}
-
-	strcat(path, extension);
-}
-
-/**
- * @brief
- */
 void Sys_FPrintf (int flag, const char *format, ...)
 {
 	char out_buffer[4096];

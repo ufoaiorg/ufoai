@@ -3236,9 +3236,9 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
  * @return amount Number of available items in base
  * @note Formerly known as RS_ItemInBase.
  */
-int B_ItemInBase (int item_idx, base_t *base)
+int B_ItemInBase (int item_idx, const base_t *base)
 {
-	equipDef_t *ed;
+	const equipDef_t *ed;
 
 	if (!base)
 		return -1;

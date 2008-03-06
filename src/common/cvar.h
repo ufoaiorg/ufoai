@@ -94,12 +94,6 @@ void Cvar_UpdateLatchedVars(void);
  */
 qboolean Cvar_Command(void);
 
-/**
- * @brief appends lines containing "set variable value" for all variables
- * with the archive flag set to true.
- */
-void Cvar_WriteVariables(const char *path);
-
 void Cvar_Init(void);
 
 /**

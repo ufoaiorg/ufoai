@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Statics for menu. */
 static char aliencontText[1024];		/**< Used in menu lists. */
 static int numAliensOnList = 0;			/**< Number of aliens on AC menu list. */
-static aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment. */
+static const aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment. */
 
 /**
  * Collecting aliens functions
@@ -169,7 +169,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 {
 	int i, j, k, albridx;
 	base_t *tobase;
-	aliensTmp_t *cargo;
+	const aliensTmp_t *cargo;
 	qboolean messageAlreadySet = qfalse;
 	qboolean alienBreathing = qfalse;
 	technology_t *tech;
@@ -201,9 +201,8 @@ void AL_AddAliens (aircraft_t *aircraft)
 				B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_dead, qfalse, qfalse);
 				if (cargo[i].amount_alive <= 0)
 					continue;
-				if (!alienBreathing
-				&& !cargo[i].teamDef->robot) {
-					/* We cannot store alive (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
+				if (!alienBreathing && !cargo[i].teamDef->robot) {
+					/* We can not store alive (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
 					/* Add breathing apparatuses as well and update storage capacity. */
 					B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_alive, qfalse, qfalse);
@@ -425,9 +424,9 @@ int AL_GetAlienGlobalIdx (int idx)
  * @sa RS_RequirementsMet
  * @sa RS_CheckCollected
  */
-int AL_GetAlienAmount (int idx, requirementType_t reqtype, base_t *base)
+int AL_GetAlienAmount (int idx, requirementType_t reqtype, const base_t *base)
 {
-	aliensCont_t *containment;
+	const aliensCont_t *containment;
 
 	assert(base);
 	containment = base->alienscont;
@@ -736,7 +735,7 @@ static void AC_PrevAC_f (void)
 {
 	int i;
 	qboolean found = qfalse;
-	base_t *base;
+	const base_t *base;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
@@ -766,7 +765,7 @@ static void AC_PrevAC_f (void)
  */
 static void AC_OpenUFOpedia_f (void)
 {
-	technology_t *tech;
+	const technology_t *tech;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
@@ -975,8 +974,6 @@ static void AC_Init (void)
 	int i;
 	/* Tmp buffer for string generating. */
 	char tmp[128];
-	technology_t* tech;
-	aliensCont_t *containment;
 	qboolean killall_state = qfalse;
 
 	/* Reset the aliencont list. */
@@ -994,7 +991,8 @@ static void AC_Init (void)
 	Cvar_Set("mn_al_alive", "");
 
 	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
-		containment = baseCurrent->alienscont;
+		const aliensCont_t *containment = baseCurrent->alienscont;
+		const technology_t* tech;
 		for (i = 0; i < gd.numAliensTD; i++) {
 			if (containment[i].teamDef) {
 				tech = containment[i].tech;
@@ -1073,8 +1071,7 @@ static void AC_Init (void)
  */
 static void AC_AlienListClick_f (void)
 {
-	int num, i, step;
-	aliensCont_t *containment;
+	int num;
 
 	if (Cmd_Argc() < 2 || !baseCurrent) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1092,7 +1089,8 @@ static void AC_AlienListClick_f (void)
 	}
 
 	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
-		containment = baseCurrent->alienscont;
+		const aliensCont_t *containment = baseCurrent->alienscont;
+		int i, step;
 
 		for (i = 0, step = 0; i < gd.numAliensTD; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)

@@ -369,7 +369,7 @@ qboolean WindingIsTiny (winding_t *w)
 /**
  * @brief Returns true if the winding still has one of the points from basewinding for plane
  */
-static qboolean WindingIsHuge(winding_t *w)
+static qboolean WindingIsHuge (const winding_t *w)
 {
 	int i, j;
 
@@ -408,7 +408,7 @@ static void LeafNode (node_t *node, bspbrush_t *brushes)
 }
 
 
-static void CheckPlaneAgainstParents (int pnum, node_t *node)
+static void CheckPlaneAgainstParents (int pnum, const node_t *node)
 {
 	node_t *p;
 

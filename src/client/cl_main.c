@@ -1844,25 +1844,6 @@ void CL_ReadSinglePlayerData (void)
 	Com_Printf("\n");
 }
 
-/**
- * @brief Writes key bindings and archived cvars to config.cfg
- */
-static void CL_WriteConfiguration (void)
-{
-	char path[MAX_OSPATH];
-
-	if (cls.state == ca_uninitialized)
-		return;
-
-	if (strlen(FS_Gamedir()) >= MAX_OSPATH) {
-		Com_Printf("Error: Can't save. Write path exceeded MAX_OSPATH\n");
-		return;
-	}
-	Com_sprintf(path, sizeof(path), "%s/config.cfg", FS_Gamedir());
-	Com_Printf("Save user settings to %s\n", path);
-	Cvar_WriteVariables(path);
-}
-
 /** @brief Cvars for initial check (popup at first start) */
 static cvarList_t checkcvar[] = {
 	{"cl_name", NULL, NULL},
@@ -2105,8 +2086,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
-
-	Cmd_AddCommand("saveconfig", CL_WriteConfiguration, "Save the configuration");
 
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, _("Target your shot to the ground"));
 	Cmd_AddCommand("invopen", CL_ActorInventoryOpen_f, _("Open the actors inventory while we are in tactical mission"));
@@ -2544,7 +2523,6 @@ void CL_Shutdown (void)
 
 	CL_HTTP_Cleanup();
 	Irc_Shutdown();
-	CL_WriteConfiguration();
 	Con_SaveConsoleHistory(FS_Gamedir());
 	S_Shutdown();
 	R_Shutdown();
