@@ -27,16 +27,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define mAliasCoord_t vec2_t
 
-typedef	struct	mAliasVertex_s {
+typedef struct mAliasVertex_s {
 	vec3_t	point;
 	vec3_t	normal;
 } mAliasVertex_t;
 
-typedef	struct mAliasFrame_s {
+typedef struct mAliasBoneMatrix_s {
+	vec3_t	matrix[4];
+} mAliasBoneMatrix_t;
+
+typedef struct mAliasBoneVertex_s {
+	vec3_t	origin; /**< vertex location (these blend) */
+	float	influence; /**< influence fraction (these must add up to 1) */
+	vec3_t	normal; /**< surface normal (these blend) */
+	unsigned int bonenum; /**< number of the bone */
+} mAliasBoneVertex_t;
+
+typedef struct mAliasFrame_s {
 	vec3_t	mins, maxs;
 	vec3_t	translate;
 	vec3_t	scale;
 	float	radius;
+	mAliasBoneMatrix_t	*boneMatrix;
 } mAliasFrame_t;
 
 typedef struct mAliasTagOrientation_s {
@@ -44,7 +56,7 @@ typedef struct mAliasTagOrientation_s {
 	float axis[3][3];
 } mAliasTagOrientation_t;
 
-typedef	struct mAliasTag_s {
+typedef struct mAliasTag_s {
 	char	name[MODEL_MAX_PATH];
 	mAliasTagOrientation_t	orient;
 } mAliasTag_t;
@@ -63,6 +75,9 @@ typedef	struct mAliasMesh_s {
 
 	int	num_tris;
 	int32_t	*indexes;
+
+	int		num_bones;
+	mAliasBoneVertex_t	*bonesVertexes;
 
 	int		num_skins;
 	int		skinHeight;
@@ -96,7 +111,7 @@ typedef	struct	mAliasModel_s {
 	mAliasMesh_t	*meshes;
 
 	int		num_bones;
-	mAliasBone_t	*data_bones;
+	mAliasBone_t	*bones;
 
 	/** animation data */
 	char animname[MAX_QPATH];

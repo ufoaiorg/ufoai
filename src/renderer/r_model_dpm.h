@@ -24,3 +24,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 void R_ModLoadAliasDPMModel(struct model_s *mod, void *buffer, int bufSize);
+void R_ModelLoadDPMVertsForFrame(struct model_s *mod, int frame);
