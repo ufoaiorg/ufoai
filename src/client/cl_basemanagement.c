@@ -1009,7 +1009,7 @@ void B_SetUpBase (base_t* base)
 	Com_DPrintf(DEBUG_CLIENT, "Set up for %i\n", base->idx);
 
 	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
-	Cvar_Set("mn_base_count", va("%i", mn_base_count->integer + 1));
+	Cvar_Set("mn_base_count", va("%i", gd.numBases));
 
 	/* this cvar is needed by B_SetBuildingByClick below*/
 	Cvar_SetValue("mn_base_id", base->idx);
