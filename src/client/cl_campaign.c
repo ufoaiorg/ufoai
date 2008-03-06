@@ -5518,6 +5518,7 @@ static void CL_GameNew_f (void)
 
 	/* base setup */
 	gd.numBases = 0;
+	Cvar_Set("mn_base_count", "0");
 	gd.numAircraft = 0;
 
 	B_NewBases();

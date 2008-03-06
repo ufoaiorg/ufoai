@@ -3801,6 +3801,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		baseCurrent = b;
 	}
 	gd.numBases = bases;
+	Cvar_Set("mn_base_count", va("%i", gd.numBases));
 
 	return qtrue;
 }
