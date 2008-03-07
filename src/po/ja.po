@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-01 18:10+0100\n"
+"POT-Creation-Date: 2008-03-07 09:56+0100\n"
 "PO-Revision-Date: 2007-11-18 16:39+0900\n"
 "Last-Translator: Arkblade <arkblade@hotmail.com>\n"
 "Language-Team: UFO: Alien Invasion JP\n"
@@ -934,34 +934,38 @@ msgid "Greek"
 msgstr ""
 
 #: ../base/ufos/language.ufo:176
+msgid "Hungarian"
+msgstr ""
+
+#: ../base/ufos/language.ufo:186
 msgid "Italien"
 msgstr "イタリア語"
 
-#: ../base/ufos/language.ufo:188
+#: ../base/ufos/language.ufo:198
 msgid "Portuguese"
 msgstr "ポルトガル語"
 
-#: ../base/ufos/language.ufo:200
+#: ../base/ufos/language.ufo:210
 msgid "Russian"
 msgstr "ロシア語"
 
-#: ../base/ufos/language.ufo:212
+#: ../base/ufos/language.ufo:222
 msgid "Slovenian"
 msgstr "スロベニア語"
 
-#: ../base/ufos/language.ufo:222
+#: ../base/ufos/language.ufo:232
 msgid "Swedish"
 msgstr "スウェーデン語"
 
-#: ../base/ufos/language.ufo:234
+#: ../base/ufos/language.ufo:244
 msgid "Thai"
 msgstr "タイ語"
 
-#: ../base/ufos/language.ufo:244
+#: ../base/ufos/language.ufo:254
 msgid "Japanese"
 msgstr ""
 
-#: ../base/ufos/language.ufo:252
+#: ../base/ufos/language.ufo:262
 msgid "No language"
 msgstr "No language"
 
@@ -971,8 +975,7 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:123 ../base/ufos/maps.ufo:160
 #: ../base/ufos/maps.ufo:195
-msgid ""
-"A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:237 ../base/ufos/maps.ufo:302
@@ -1010,8 +1013,7 @@ msgid "A small office in a mountainous region."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:682
-msgid ""
-"A kind of communal gathering centre annex foraging facility, known as a supermarket."
+msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:725
@@ -1043,13 +1045,11 @@ msgid "A stadium used for various recreational events."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:1008
-msgid ""
-"A tropical area where several suspected criminals have made their homes."
+msgid "A tropical area where several suspected criminals have made their homes."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:1126
-msgid ""
-"A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
+msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:1166
@@ -1121,8 +1121,7 @@ msgid "A small settlement in winter."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:1953
-msgid ""
-"A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:1996
@@ -1132,6 +1131,11 @@ msgstr ""
 #: ../base/ufos/maps.ufo:2042
 msgid "A place where people come to relax and mingle."
 msgstr ""
+
+#: ../base/ufos/maps.ufo:2119
+#, fuzzy
+msgid "An alien base."
+msgstr "項目の選択"
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
@@ -1748,7 +1752,7 @@ msgstr "最低1つの格納庫を建設してください"
 #: ../base/ufos/menu_bases.ufo:157 ../base/ufos/menu_buy.ufo:2304
 #: ../base/ufos/menu_geoscape.ufo:1089 ../base/ufos/menu_production.ufo:827
 #: ../base/ufos/menu_transfer.ufo:287 ../base/ufos/research.ufo:100
-#: client/cl_map.c:301
+#: client/cl_map.c:299
 msgid "Aircraft"
 msgstr "航空機"
 
@@ -2350,7 +2354,7 @@ msgstr "基地:"
 msgid "ETA:"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:948 client/cl_campaign.c:398
+#: ../base/ufos/menu_geoscape.ufo:948 client/cl_campaign.c:416
 msgid "Base attack"
 msgstr ""
 
@@ -3030,8 +3034,7 @@ msgid "Day version:"
 msgstr "昼間戦:"
 
 #: ../base/ufos/menu_multiplayer.ufo:949 ../base/ufos/seq_tutorials.ufo:785
-msgid ""
-"Make sure that you've opened the TCP port 27910 in your firewall settings"
+msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr ""
 
 #: ../base/ufos/menu_multiplayer.ufo:961
@@ -3278,7 +3281,7 @@ msgid "Medium"
 msgstr "中"
 
 #: ../base/ufos/menu_options.ufo:427 ../base/ufos/menu_options.ufo:456
-#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_campaign.c:4947
+#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_campaign.c:5604
 msgid "Normal"
 msgstr "普通"
 
@@ -3422,7 +3425,7 @@ msgstr "Alternative HUD"
 msgid "Confirm Actions:"
 msgstr "行動の確認:"
 
-#: ../base/ufos/menu_options.ufo:1111 client/cl_aliencont.c:1019
+#: ../base/ufos/menu_options.ufo:1111 client/cl_aliencont.c:1017
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr ""
@@ -3608,8 +3611,7 @@ msgid "Reload campaign"
 msgstr ""
 
 #: ../base/ufos/menu_singleplayer.ufo:439
-msgid ""
-"Are you sure that you really want to reload the last automatically saved campaign state?"
+msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr ""
 
 #: ../base/ufos/menu_singleplayer.ufo:468
@@ -3837,7 +3839,7 @@ msgstr ""
 msgid "Show only aliens"
 msgstr ""
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4991
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:5648
 msgid "Aliens"
 msgstr ""
 
@@ -9303,8 +9305,7 @@ msgstr "準備が出来たらミッションが出現するまで時間を早送
 
 #: ../base/ufos/seq_tutorials.ufo:254
 msgid "Select the mission (doubleclick) and choose aircraft from list"
-msgstr ""
-"ミッションが出現したらミッションをダブルクリックで選択して、出撃する航空機を選択してください"
+msgstr "ミッションが出現したらミッションをダブルクリックで選択して、出撃する航空機を選択してください"
 
 #: ../base/ufos/seq_tutorials.ufo:273
 msgid "Hit the start or auto-mission button to fight the aliens"
@@ -9415,35 +9416,27 @@ msgid "Ares W"
 msgstr ""
 
 #: ../base/ufos/tips.ufo:5
-msgid ""
-"Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
-msgstr ""
-"[Shift] キーで攻撃する高さを変更する事ができます。 - ロケットランチャーで前方のエイリアンの集団を攻撃することなどに有効です。"
+msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
+msgstr "[Shift] キーで攻撃する高さを変更する事ができます。 - ロケットランチャーで前方のエイリアンの集団を攻撃することなどに有効です。"
 
 #: ../base/ufos/tips.ufo:6
-msgid ""
-"Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
-msgstr ""
-"マルチプレイヤー用のチームは複数設定・保存しておく事ができます。 - 4プレイヤー用、8プレイヤー用など。それによって素早くゲームを開始する事ができます。"
+msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
+msgstr "マルチプレイヤー用のチームは複数設定・保存しておく事ができます。 - 4プレイヤー用、8プレイヤー用など。それによって素早くゲームを開始する事ができます。"
 
 #: ../base/ufos/tips.ufo:7
-msgid ""
-"With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
+msgid "With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:8
-msgid ""
-"Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
+msgid "Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:9
-msgid ""
-"When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
+msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:10
-msgid ""
-"Remember to give your soldiers a varying array of weapons, you never know when a certain weapon may come in handy."
+msgid "Remember to give your soldiers a varying array of weapons, you never know when a certain weapon may come in handy."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:11
@@ -9455,140 +9448,112 @@ msgid "Don't forget to equip your soldiers with armour."
 msgstr "兵士にアーマーを装備させるのを忘れないでください。"
 
 #: ../base/ufos/tips.ufo:13
-msgid ""
-"You can use a flashbang to deactivate your opponents Reaction Fire mode or to take all of his remaining Time Units (TUs) for his next round."
+msgid "You can use a flashbang to deactivate your opponents Reaction Fire mode or to take all of his remaining Time Units (TUs) for his next round."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:14
-msgid ""
-"In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
+msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:15
-msgid ""
-"To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
+msgid "To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:16
-msgid ""
-"Be sure to hire as many scientists as you can. The earlier you know your enemy, the easier he is to defeat."
+msgid "Be sure to hire as many scientists as you can. The earlier you know your enemy, the easier he is to defeat."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:17
-msgid ""
-"Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
+msgid "Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:18
-msgid ""
-"Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
+msgid "Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:19
-msgid ""
-"Remember that you need an active Command Centre in order to launch interceptors."
+msgid "Remember that you need an active Command Centre in order to launch interceptors."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:20
-msgid ""
-"Never pass up an opportunity to capture a live alien, even one you have already researched."
+msgid "Never pass up an opportunity to capture a live alien, even one you have already researched."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:21
-msgid ""
-"Watch your back! Your soldiers can only see enemies in an arc in front of them."
+msgid "Watch your back! Your soldiers can only see enemies in an arc in front of them."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:22
 msgid "Build a workshop and UFO hangars to be able to disassemble UFOs."
-msgstr ""
-"工房とUFO 格納庫を建設する事によってUFO の解体が行なえるようになります。"
+msgstr "工房とUFO 格納庫を建設する事によってUFO の解体が行なえるようになります。"
 
 #: ../base/ufos/tips.ufo:23
-msgid ""
-"You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
+msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:24
-msgid ""
-"Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
+msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:25
-msgid ""
-"Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
+msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:26
-msgid ""
-"If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:27
-msgid ""
-"Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
+msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:28
-msgid ""
-"Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits."
+msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:29
 #, fuzzy
-msgid ""
-"Build a hospital to be able to heal your soldiers faster for their next mission."
-msgstr ""
-"医療施設を建設する事によって次のミッションまでにより早く兵士を治療する事ができます。"
+msgid "Build a hospital to be able to heal your soldiers faster for their next mission."
+msgstr "医療施設を建設する事によって次のミッションまでにより早く兵士を治療する事ができます。"
 
 #: ../base/ufos/tips.ufo:30
-msgid ""
-"Plasma grenades do the most damage, but frag grenades can be useful, as they can be thrown slightly further."
+msgid "Plasma grenades do the most damage, but frag grenades can be useful, as they can be thrown slightly further."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:31
-msgid ""
-"Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:32
-msgid ""
-"Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with one grenade."
+msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with one grenade."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:33
-msgid ""
-"Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
+msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:34
-msgid ""
-"You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
+msgid "You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
 msgstr ""
 
 #: ../base/ufos/tips.ufo:35
-msgid ""
-"Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
+msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:36
-msgid ""
-"Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
+msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:37
-msgid ""
-"When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
+msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:38
-msgid ""
-"Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
+msgid "Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:39
-msgid ""
-"You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
+msgid "You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:40
@@ -9596,8 +9561,7 @@ msgid "You can use [space] to cycle between all geoscape items."
 msgstr "[space] キーで世界地図での項目を順送りする事ができます。"
 
 #: ../base/ufos/tips.ufo:41
-msgid ""
-"You can also accelerate/decelerate time on geoscape by using mouse wheel on the time buttons, or [m], [n]."
+msgid "You can also accelerate/decelerate time on geoscape by using mouse wheel on the time buttons, or [m], [n]."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:42
@@ -9605,33 +9569,27 @@ msgid "Be sure to equip your interceptor with weapons before launching it."
 msgstr "迎撃機には発進の前に必ず装備を行なっておいてください。"
 
 #: ../base/ufos/tips.ufo:43
-msgid ""
-"Remember that items will slow an aircraft. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
+msgid "Remember that items will slow an aircraft. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:44
-msgid ""
-"Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
+msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:45
 msgid "Build an alien containment to be able to imprison aliens alive."
-msgstr ""
-"エイリアン収容施設を建設する事によってエイリアンを生きたまま捕らえる事ができるようになります。"
+msgstr "エイリアン収容施設を建設する事によってエイリアンを生きたまま捕らえる事ができるようになります。"
 
 #: ../base/ufos/tips.ufo:46
-msgid ""
-"Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] key will draw a line to each enemy the selected soldier can see."
+msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] key will draw a line to each enemy the selected soldier can see."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:47
-msgid ""
-"You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base equipment, not in the tactical missions where such an action would cost TUs."
+msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base equipment, not in the tactical missions where such an action would cost TUs."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:48
-msgid ""
-"You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
+msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr ""
 
 #: ../base/ufos/weapons.ufo:6
@@ -10127,7 +10085,7 @@ msgstr ""
 msgid "Shot Reservation"
 msgstr ""
 
-#: client/cl_actor.c:1490 client/cl_actor.c:1824
+#: client/cl_actor.c:1479 client/cl_actor.c:1813
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -10135,58 +10093,58 @@ msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: client/cl_actor.c:1561
+#: client/cl_actor.c:1550
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr ""
 
-#: client/cl_actor.c:1570
+#: client/cl_actor.c:1559
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr ""
 
-#: client/cl_actor.c:1664
+#: client/cl_actor.c:1653
 msgid "No reload possible for right hand."
 msgstr ""
 
-#: client/cl_actor.c:1667 client/cl_actor.c:1679
+#: client/cl_actor.c:1656 client/cl_actor.c:1668
 #, fuzzy, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "弾薬を装填します"
 
-#: client/cl_actor.c:1676
+#: client/cl_actor.c:1665
 msgid "No reload possible for left hand."
 msgstr ""
 
-#: client/cl_actor.c:1787
+#: client/cl_actor.c:1776
 msgid "No item in hand.\n"
 msgstr ""
 
-#: client/cl_actor.c:1800
+#: client/cl_actor.c:1789
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
 msgstr ""
 
-#: client/cl_actor.c:1805
+#: client/cl_actor.c:1794
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 msgstr ""
 
-#: client/cl_actor.c:1814
+#: client/cl_actor.c:1803
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
 msgstr ""
 
-#: client/cl_actor.c:1819
+#: client/cl_actor.c:1808
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
 msgstr ""
 
-#: client/cl_actor.c:1885
+#: client/cl_actor.c:1874
 #, c-format
 msgid ""
 "Time Units\n"
@@ -10195,17 +10153,17 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/cl_actor.c:1999
+#: client/cl_actor.c:1988
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr ""
 
-#: client/cl_actor.c:2001
+#: client/cl_actor.c:1990
 #, fuzzy, c-format
 msgid "Morale  %i"
 msgstr "アーマー　  %i\t　士気  %i\n"
 
-#: client/cl_actor.c:2009
+#: client/cl_actor.c:1998
 #, fuzzy, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -10214,7 +10172,7 @@ msgstr ""
 "アーマー　  %i\t　士気  %i\n"
 "移動に必要なTU %i (残りTU %i)\n"
 
-#: client/cl_actor.c:2011
+#: client/cl_actor.c:2000
 #, fuzzy, c-format
 msgid ""
 "Morale  %i\n"
@@ -10223,7 +10181,7 @@ msgstr ""
 "アーマー　  %i\t　士気  %i\n"
 "移動に必要なTU %i (残りTU %i)\n"
 
-#: client/cl_actor.c:2031
+#: client/cl_actor.c:2020
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -10231,26 +10189,26 @@ msgstr ""
 "未知のアイテムを使用することは出来ません。\n"
 "このアイテムを使用するためには研究が必要です。\n"
 
-#: client/cl_actor.c:2048
+#: client/cl_actor.c:2037
 #, c-format
 msgid ""
 "%s\n"
 "(empty)\n"
 msgstr ""
 
-#: client/cl_actor.c:2057
+#: client/cl_actor.c:2046
 msgid "Currently panics!\n"
 msgstr ""
 
-#: client/cl_actor.c:2544
+#: client/cl_actor.c:2533
 msgid "Nobody selected\n"
 msgstr ""
 
-#: client/cl_actor.c:2554
+#: client/cl_actor.c:2543
 msgid "This isn't your round\n"
 msgstr "今はあなたのラウンドではありません\n"
 
-#: client/cl_actor.c:2783
+#: client/cl_actor.c:2772
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -10258,222 +10216,222 @@ msgstr ""
 "未知のアイテムを装填することは出来ません。\n"
 "このアイテムを装填するためには研究が必要です。\n"
 
-#: client/cl_actor.c:3584
+#: client/cl_actor.c:3573
 #, c-format
 msgid "%s %s was stunned\n"
 msgstr ""
 
-#: client/cl_actor.c:3588
+#: client/cl_actor.c:3577
 #, fuzzy, c-format
 msgid "%s %s was killed\n"
 msgstr "エイリアンを撃破しました.\n"
 
-#: client/cl_actor.c:3596
+#: client/cl_actor.c:3585
 msgid "A civilian was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:3598
+#: client/cl_actor.c:3587
 msgid "A civilian was killed.\n"
 msgstr ""
 
-#: client/cl_actor.c:3604
+#: client/cl_actor.c:3593
 #, fuzzy, c-format
 msgid "An alien was stunned: %s\n"
 msgstr "エイリアンを撃破しました.\n"
 
-#: client/cl_actor.c:3607
+#: client/cl_actor.c:3596
 #, fuzzy, c-format
 msgid "An alien was killed: %s\n"
 msgstr "エイリアンを撃破しました.\n"
 
-#: client/cl_actor.c:3612 client/cl_actor.c:3618
+#: client/cl_actor.c:3601 client/cl_actor.c:3607
 msgid "An alien was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:3614 client/cl_actor.c:3620
+#: client/cl_actor.c:3603 client/cl_actor.c:3609
 msgid "An alien was killed.\n"
 msgstr "エイリアンを撃破しました.\n"
 
-#: client/cl_actor.c:3625
+#: client/cl_actor.c:3614
 msgid "A soldier was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:3627
+#: client/cl_actor.c:3616
 msgid "A soldier was killed.\n"
 msgstr ""
 
-#: client/cl_actor.c:3631
+#: client/cl_actor.c:3620
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:3633
+#: client/cl_actor.c:3622
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr ""
 
-#: client/cl_actor.c:3818
+#: client/cl_actor.c:3807
 msgid "Your round started!\n"
 msgstr "あなたのラウンドです！\n"
 
-#: client/cl_actor.c:4614
+#: client/cl_actor.c:4603
 msgid "Unknown alien race"
 msgstr "詳細不明なエイリアン"
 
-#: client/cl_aircraft.c:264
+#: client/cl_aircraft.c:263
 msgid ""
 "No Command Centre operational in this base.\n"
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
 
-#: client/cl_aircraft.c:264 client/cl_aircraft.c:277 client/cl_aircraft.c:749
-#: client/cl_aircraft.c:999 client/cl_aircraft.c:1096
-#: client/cl_aircraft.c:1122 client/cl_airfight.c:349
-#: client/cl_aliencont.c:183 client/cl_aliencont.c:212
-#: client/cl_aliencont.c:225 client/cl_aliencont.c:236
+#: client/cl_aircraft.c:263 client/cl_aircraft.c:276 client/cl_aircraft.c:748
+#: client/cl_aircraft.c:1002 client/cl_aircraft.c:1099
+#: client/cl_aircraft.c:1125 client/cl_airfight.c:349
+#: client/cl_aliencont.c:183 client/cl_aliencont.c:211
+#: client/cl_aliencont.c:224 client/cl_aliencont.c:235
 #: client/cl_basemanagement.c:1243 client/cl_basemanagement.c:2525
-#: client/cl_basemanagement.c:2783 client/cl_basemanagement.c:2832
-#: client/cl_basemanagement.c:2841 client/cl_basemanagement.c:2861
-#: client/cl_basemanagement.c:2869 client/cl_basemanagement.c:2880
-#: client/cl_basemanagement.c:2887 client/cl_basemanagement.c:2895
-#: client/cl_basemanagement.c:2900 client/cl_basemanagement.c:2905
-#: client/cl_basemanagement.c:2910 client/cl_campaign.c:116
-#: client/cl_campaign.c:1992 client/cl_campaign.c:2205
-#: client/cl_campaign.c:2216 client/cl_campaign.c:2226
-#: client/cl_campaign.c:2236 client/cl_campaign.c:2246
-#: client/cl_campaign.c:2257 client/cl_campaign.c:2270
-#: client/cl_campaign.c:2280 client/cl_campaign.c:2287
-#: client/cl_campaign.c:2295 client/cl_campaign.c:3653
-#: client/cl_campaign.c:3705 client/cl_campaign.c:3726
-#: client/cl_campaign.c:3728 client/cl_campaign.c:4060
+#: client/cl_basemanagement.c:2784 client/cl_basemanagement.c:2833
+#: client/cl_basemanagement.c:2842 client/cl_basemanagement.c:2862
+#: client/cl_basemanagement.c:2870 client/cl_basemanagement.c:2881
+#: client/cl_basemanagement.c:2888 client/cl_basemanagement.c:2896
+#: client/cl_basemanagement.c:2901 client/cl_basemanagement.c:2906
+#: client/cl_basemanagement.c:2911 client/cl_campaign.c:118
+#: client/cl_campaign.c:2625 client/cl_campaign.c:2838
+#: client/cl_campaign.c:2849 client/cl_campaign.c:2859
+#: client/cl_campaign.c:2869 client/cl_campaign.c:2879
+#: client/cl_campaign.c:2890 client/cl_campaign.c:2903
+#: client/cl_campaign.c:2913 client/cl_campaign.c:2920
+#: client/cl_campaign.c:2928 client/cl_campaign.c:4307
+#: client/cl_campaign.c:4359 client/cl_campaign.c:4380
+#: client/cl_campaign.c:4382 client/cl_campaign.c:4714
 #: client/cl_inventory.c:292 client/cl_inventory.c:297
-#: client/cl_inventory.c:586 client/cl_main.c:1044 client/cl_main.c:1279
-#: client/cl_map.c:266 client/cl_mapfightequip.c:829
-#: client/cl_mapfightequip.c:831 client/cl_market.c:824 client/cl_market.c:828
-#: client/cl_parse.c:1687 client/cl_popup.c:334 client/cl_produce.c:419
-#: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
-#: client/cl_produce.c:457 client/cl_research.c:1082 client/cl_research.c:1100
-#: client/cl_research.c:1106 client/cl_research.c:1144
-#: client/cl_research.c:1175 client/cl_research.c:1342
-#: client/cl_research.c:1345 client/cl_ufo.c:324 client/cl_ufo.c:629
-#: client/cl_ufo.c:632
+#: client/cl_inventory.c:587 client/cl_main.c:1045 client/cl_main.c:1280
+#: client/cl_map.c:264 client/cl_mapfightequip.c:828
+#: client/cl_mapfightequip.c:830 client/cl_mapfightequip.c:846
+#: client/cl_mapfightequip.c:850 client/cl_market.c:824 client/cl_market.c:828
+#: client/cl_parse.c:1687 client/cl_popup.c:334 client/cl_produce.c:423
+#: client/cl_produce.c:432 client/cl_produce.c:442 client/cl_produce.c:451
+#: client/cl_produce.c:461 client/cl_research.c:1079 client/cl_research.c:1097
+#: client/cl_research.c:1103 client/cl_research.c:1141
+#: client/cl_research.c:1172 client/cl_research.c:1339
+#: client/cl_research.c:1342 client/cl_ufo.c:363 client/cl_ufo.c:667
+#: client/cl_ufo.c:670
 msgid "Notice"
 msgstr "Notice"
 
-#: client/cl_aircraft.c:277
+#: client/cl_aircraft.c:276
 msgid "Aircraft started"
 msgstr "航空機を発進させました"
 
-#: client/cl_aircraft.c:300
+#: client/cl_aircraft.c:299
 msgid "ON RED ALERT"
 msgstr ""
 
-#: client/cl_aircraft.c:304
+#: client/cl_aircraft.c:303
 msgid "Nothing - should not be displayed"
 msgstr ""
 
-#: client/cl_aircraft.c:306
+#: client/cl_aircraft.c:305
 msgid "At homebase"
 msgstr "基地で待機中"
 
-#: client/cl_aircraft.c:308
+#: client/cl_aircraft.c:307
 msgid "Refuel"
 msgstr "整備中"
 
-#: client/cl_aircraft.c:310
+#: client/cl_aircraft.c:309
 msgid "Idle"
 msgstr "待機中"
 
-#: client/cl_aircraft.c:312
+#: client/cl_aircraft.c:311
 msgid "On transit"
 msgstr "目的地へ移動中"
 
-#: client/cl_aircraft.c:314
+#: client/cl_aircraft.c:313
 msgid "Moving to mission"
 msgstr "ミッションへ移動中"
 
-#: client/cl_aircraft.c:316
+#: client/cl_aircraft.c:315
 msgid "Pursuing a UFO"
 msgstr ""
 
-#: client/cl_aircraft.c:318
+#: client/cl_aircraft.c:317
 msgid "Ready for drop down"
 msgstr ""
 
-#: client/cl_aircraft.c:320
+#: client/cl_aircraft.c:319
 msgid "On interception"
 msgstr ""
 
-#: client/cl_aircraft.c:322
+#: client/cl_aircraft.c:321
 msgid "Being transfered"
 msgstr ""
 
-#: client/cl_aircraft.c:324
+#: client/cl_aircraft.c:323
 msgid "Back to base"
 msgstr "基地へ帰還中"
 
-#: client/cl_aircraft.c:509
+#: client/cl_aircraft.c:508
 #, fuzzy
 msgid "Interceptor"
 msgstr "迎撃機:"
 
-#: client/cl_aircraft.c:511
+#: client/cl_aircraft.c:510
 #, fuzzy
 msgid "Transporter"
 msgstr "輸送機:"
 
-#: client/cl_aircraft.c:513 client/cl_map.c:312
+#: client/cl_aircraft.c:512 client/cl_map.c:310
 msgid "UFO"
 msgstr "UFO"
 
-#: client/cl_aircraft.c:663 client/cl_map.c:1420 client/cl_map.c:1429
-#: client/cl_map.c:1443
+#: client/cl_aircraft.c:662 client/cl_map.c:1421 client/cl_map.c:1430
+#: client/cl_map.c:1444
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "速度:\t%i\n"
 
-#: client/cl_aircraft.c:665 client/cl_map.c:1421 client/cl_map.c:1430
+#: client/cl_aircraft.c:664 client/cl_map.c:1422 client/cl_map.c:1431
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "燃料:\t%i/%i\n"
 
-#: client/cl_aircraft.c:667 client/cl_ufopedia.c:656
+#: client/cl_aircraft.c:666 client/cl_ufopedia.c:656
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr ""
 
-#: client/cl_aircraft.c:669
+#: client/cl_aircraft.c:668
 #, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "武装:\t装備数 %i 最大 %i\n"
 
-#: client/cl_aircraft.c:670
+#: client/cl_aircraft.c:669
 #, c-format
 msgid "Armours:\t%i on 1\n"
 msgstr "防御装備:\t装備数 %i 最大 1\n"
 
-#: client/cl_aircraft.c:671
+#: client/cl_aircraft.c:670
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "補助装備:\t装備数 %i 最大 %i"
 
-#: client/cl_aircraft.c:748
+#: client/cl_aircraft.c:747
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "航空機 (%s) が基地 %s に配備されました"
 
-#: client/cl_aircraft.c:999
+#: client/cl_aircraft.c:1002
 msgid "Your dropship is low on fuel and returns to base"
 msgstr ""
 
-#: client/cl_aircraft.c:1096
+#: client/cl_aircraft.c:1099
 msgid "Assign a team to aircraft"
 msgstr ""
 
-#: client/cl_aircraft.c:1122
-msgid ""
-"Your aircraft doesn't have enough fuel to go there and then come back to its home base."
+#: client/cl_aircraft.c:1125
+msgid "Your aircraft doesn't have enough fuel to go there and then come back to its home base."
 msgstr ""
 
 #: client/cl_airfight.c:349
@@ -10488,7 +10446,7 @@ msgstr ""
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO の迎撃に成功しました -- UFO は海に消えました"
 
-#: client/cl_airfight.c:455 client/cl_campaign.c:3728
+#: client/cl_airfight.c:455 client/cl_campaign.c:4382
 msgid "You've lost the battle"
 msgstr "戦闘に敗北しました"
 
@@ -10510,24 +10468,22 @@ msgid "You've lost a base facility (%s)."
 msgstr ""
 
 #: client/cl_aliencont.c:183
-msgid ""
-"You cannot process aliens yet. Alien Containment not ready in this base."
+msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr ""
 
-#: client/cl_aliencont.c:212
+#: client/cl_aliencont.c:211
 msgid "You cannot hold alive aliens yet. Aliens died."
 msgstr ""
 
-#: client/cl_aliencont.c:225
-msgid ""
-"You don't have enough space in Alien Containment. Some aliens got killed."
+#: client/cl_aliencont.c:224
+msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr ""
 
-#: client/cl_aliencont.c:236
+#: client/cl_aliencont.c:235
 msgid "You've captured new aliens."
 msgstr ""
 
-#: client/cl_aliencont.c:1019
+#: client/cl_aliencont.c:1017
 msgid "Needs autopsy!"
 msgstr ""
 
@@ -10607,19 +10563,19 @@ msgstr ""
 msgid "Not enough credits to set up a new base."
 msgstr "新しい基地を建設するための資金が足りません！"
 
-#: client/cl_basemanagement.c:2783
+#: client/cl_basemanagement.c:2784
 msgid "You've reached the base limit."
 msgstr "基地の数はこれ以上増やす事が出来ません"
 
-#: client/cl_basemanagement.c:2831
+#: client/cl_basemanagement.c:2832
 msgid "Base is under attack, you can't access this building !"
 msgstr ""
 
-#: client/cl_basemanagement.c:2840
+#: client/cl_basemanagement.c:2841
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
 
-#: client/cl_basemanagement.c:2859
+#: client/cl_basemanagement.c:2860
 #, fuzzy, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -10630,55 +10586,53 @@ msgid_plural ""
 msgstr[0] "%s が基地 %s で完成しました"
 msgstr[1] "%s が基地 %s で完成しました"
 
-#: client/cl_basemanagement.c:2868
+#: client/cl_basemanagement.c:2869
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr ""
 
-#: client/cl_basemanagement.c:2878
+#: client/cl_basemanagement.c:2879
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:2885
+#: client/cl_basemanagement.c:2886
 #, c-format
-msgid ""
-"Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
+msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 
-#: client/cl_basemanagement.c:2893 client/cl_basemanagement.c:2898
-#: client/cl_basemanagement.c:2903
+#: client/cl_basemanagement.c:2894 client/cl_basemanagement.c:2899
+#: client/cl_basemanagement.c:2904
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:2909
+#: client/cl_basemanagement.c:2910
 #, c-format
 msgid "Build a %s first."
 msgstr ""
 
-#: client/cl_basemanagement.c:2971
-msgid ""
-"No aircraft in this base - You first have to purchase or transfer an aircraft\n"
+#: client/cl_basemanagement.c:2972
+msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2971 client/cl_basemanagement.c:2973
-#: client/cl_campaign.c:3459 client/cl_market.c:806 client/cl_market.c:811
+#: client/cl_basemanagement.c:2972 client/cl_basemanagement.c:2974
+#: client/cl_campaign.c:4113 client/cl_market.c:806 client/cl_market.c:811
 #: client/cl_market.c:838 client/cl_market.c:944 client/cl_market.c:946
-#: client/cl_save.c:429 client/cl_team.c:1622 client/cl_team.c:1629
+#: client/cl_save.c:432 client/cl_team.c:1622 client/cl_team.c:1629
 msgid "Note"
 msgstr ""
 
-#: client/cl_basemanagement.c:2973
+#: client/cl_basemanagement.c:2974
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:3124
+#: client/cl_basemanagement.c:3125
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "%s が基地 %s で完成しました"
 
-#: client/cl_basemanagement.c:3125
+#: client/cl_basemanagement.c:3126
 msgid "Building finished"
 msgstr "建設が完了しました"
 
@@ -10724,245 +10678,251 @@ msgstr ""
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/cl_campaign.c:116 client/cl_map.c:266
+#: client/cl_campaign.c:118 client/cl_map.c:264
 msgid "Could not set up your base at this location"
 msgstr "この位置に基地を建設する事は出来ません"
 
-#: client/cl_campaign.c:390
+#: client/cl_campaign.c:408
 msgid "Landed UFO"
 msgstr ""
 
-#: client/cl_campaign.c:394
+#: client/cl_campaign.c:412
 #, fuzzy
 msgid "Terror mission"
 msgstr "Auto mission"
 
-#: client/cl_campaign.c:402
+#: client/cl_campaign.c:420
+#, fuzzy
+msgid "Alien Base"
+msgstr "項目の選択"
+
+#: client/cl_campaign.c:427
 msgid "Unknown"
 msgstr ""
 
-#: client/cl_campaign.c:404
+#: client/cl_campaign.c:429
 msgid "Crashed UFO"
 msgstr ""
 
-#: client/cl_campaign.c:742 client/cl_campaign.c:1502
+#: client/cl_campaign.c:797 client/cl_campaign.c:966 client/cl_campaign.c:2050
 msgid "No nation"
 msgstr ""
 
-#: client/cl_campaign.c:1799
+#: client/cl_campaign.c:2090
+#, fuzzy
+msgid "Alien base"
+msgstr "項目の選択"
+
+#: client/cl_campaign.c:2432
 msgid "You've gone too far into debt."
 msgstr ""
 
-#: client/cl_campaign.c:1804
+#: client/cl_campaign.c:2437
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 
-#: client/cl_campaign.c:1810
-msgid ""
-"You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
+#: client/cl_campaign.c:2443
+msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
-#: client/cl_campaign.c:1828
-msgid ""
-"Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
+#: client/cl_campaign.c:2461
+msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/cl_campaign.c:1991
+#: client/cl_campaign.c:2624
 #, c-format
-msgid ""
-"Your base: %s has been ransacked! All employees killed and all equipment destroyed."
+msgid "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
 msgstr "基地: %s は徹底的に破壊されて、全ての人員と設備が失なわれました！"
 
-#: client/cl_campaign.c:2076
+#: client/cl_campaign.c:2709
 msgid "Jan"
 msgstr ""
 
-#: client/cl_campaign.c:2078
+#: client/cl_campaign.c:2711
 msgid "Feb"
 msgstr ""
 
-#: client/cl_campaign.c:2080
+#: client/cl_campaign.c:2713
 msgid "Mar"
 msgstr ""
 
-#: client/cl_campaign.c:2082
+#: client/cl_campaign.c:2715
 msgid "Apr"
 msgstr ""
 
-#: client/cl_campaign.c:2084
+#: client/cl_campaign.c:2717
 msgid "May"
 msgstr ""
 
-#: client/cl_campaign.c:2086
+#: client/cl_campaign.c:2719
 msgid "Jun"
 msgstr ""
 
-#: client/cl_campaign.c:2088
+#: client/cl_campaign.c:2721
 msgid "Jul"
 msgstr ""
 
-#: client/cl_campaign.c:2090
+#: client/cl_campaign.c:2723
 msgid "Aug"
 msgstr ""
 
-#: client/cl_campaign.c:2092
+#: client/cl_campaign.c:2725
 msgid "Sep"
 msgstr ""
 
-#: client/cl_campaign.c:2094
+#: client/cl_campaign.c:2727
 msgid "Oct"
 msgstr ""
 
-#: client/cl_campaign.c:2096
+#: client/cl_campaign.c:2729
 msgid "Nov"
 msgstr ""
 
-#: client/cl_campaign.c:2098
+#: client/cl_campaign.c:2731
 msgid "Dec"
 msgstr ""
 
-#: client/cl_campaign.c:2112
+#: client/cl_campaign.c:2745
 msgid "Giving up"
 msgstr ""
 
-#: client/cl_campaign.c:2114
+#: client/cl_campaign.c:2747
 msgid "Furious"
 msgstr ""
 
-#: client/cl_campaign.c:2116
+#: client/cl_campaign.c:2749
 msgid "Angry"
 msgstr ""
 
-#: client/cl_campaign.c:2118
+#: client/cl_campaign.c:2751
 msgid "Mad"
 msgstr ""
 
-#: client/cl_campaign.c:2120
+#: client/cl_campaign.c:2753
 msgid "Upset"
 msgstr ""
 
-#: client/cl_campaign.c:2122
+#: client/cl_campaign.c:2755
 msgid "Tolerant"
 msgstr ""
 
-#: client/cl_campaign.c:2124
+#: client/cl_campaign.c:2757
 msgid "Neutral"
 msgstr ""
 
-#: client/cl_campaign.c:2126
+#: client/cl_campaign.c:2759
 msgid "Content"
 msgstr ""
 
-#: client/cl_campaign.c:2128
+#: client/cl_campaign.c:2761
 msgid "Pleased"
 msgstr ""
 
-#: client/cl_campaign.c:2130
+#: client/cl_campaign.c:2763
 msgid "Happy"
 msgstr ""
 
-#: client/cl_campaign.c:2132
+#: client/cl_campaign.c:2765
 msgid "Exuberant"
 msgstr ""
 
-#: client/cl_campaign.c:2198
+#: client/cl_campaign.c:2831
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
-msgstr ""
-"%i %s, %i 人の%s, %i 人の%s, %i 人の%s, と %i 人の%s の出資を %s (%s) より受けました"
+msgstr "%i %s, %i 人の%s, %i 人の%s, %i 人の%s, と %i 人の%s の出資を %s (%s) より受けました"
 
-#: client/cl_campaign.c:2199
+#: client/cl_campaign.c:2832
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "クレジット"
 msgstr[1] "クレジット"
 
-#: client/cl_campaign.c:2200 client/cl_campaign.c:5000
+#: client/cl_campaign.c:2833 client/cl_campaign.c:5657
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_campaign.c:2201 client/cl_campaign.c:5002
+#: client/cl_campaign.c:2834 client/cl_campaign.c:5659
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "医師"
 msgstr[1] "医師"
 
-#: client/cl_campaign.c:2202 client/cl_campaign.c:4999
+#: client/cl_campaign.c:2835 client/cl_campaign.c:5656
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "兵士"
 msgstr[1] "兵士"
 
-#: client/cl_campaign.c:2203 client/cl_campaign.c:5001
+#: client/cl_campaign.c:2836 client/cl_campaign.c:5658
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "作業員"
 msgstr[1] "作業員"
 
-#: client/cl_campaign.c:2214
+#: client/cl_campaign.c:2847
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "%i クレジットを兵士に支払いました"
 
-#: client/cl_campaign.c:2224
+#: client/cl_campaign.c:2857
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "%i クレジットを作業員に支払いました"
 
-#: client/cl_campaign.c:2234
+#: client/cl_campaign.c:2867
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "%i クレジットを科学者に支払いました"
 
-#: client/cl_campaign.c:2244
+#: client/cl_campaign.c:2877
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "%i クレジットを医師に支払いました"
 
-#: client/cl_campaign.c:2255
+#: client/cl_campaign.c:2888
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "%i クレジットをロボットの整備に使用しました"
 
-#: client/cl_campaign.c:2268
+#: client/cl_campaign.c:2901
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "%i クレジットを航空機の整備に使用しました"
 
-#: client/cl_campaign.c:2279
+#: client/cl_campaign.c:2912
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "%i を基地 %s の維持に使用しました"
 
-#: client/cl_campaign.c:2285
+#: client/cl_campaign.c:2918
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "各種管理費に %i クレジットを支払いました"
 
-#: client/cl_campaign.c:2293
+#: client/cl_campaign.c:2926
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr ""
 
-#: client/cl_campaign.c:2456 client/cl_event.c:248 client/cl_save.c:353
+#: client/cl_campaign.c:3089 client/cl_event.c:248 client/cl_save.c:356
 #: client/cl_ufopedia.c:809 client/cl_ufopedia.c:815
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cl_campaign.c:2458
+#: client/cl_campaign.c:3091
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:2568
+#: client/cl_campaign.c:3201
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_campaign.c:2611
+#: client/cl_campaign.c:3244
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -10973,7 +10933,7 @@ msgstr ""
 "敗北回数:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:2616
+#: client/cl_campaign.c:3249
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -10984,42 +10944,42 @@ msgstr ""
 "稼動中:\t%i\n"
 "攻撃を受けた回数:\t%i\n"
 
-#: client/cl_campaign.c:2623 client/cl_ufopedia.c:1655
+#: client/cl_campaign.c:3256 client/cl_ufopedia.c:1655
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:2662 client/cl_ufopedia.c:412
+#: client/cl_campaign.c:3295 client/cl_ufopedia.c:412
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:2668
+#: client/cl_campaign.c:3301
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "雇用費:\t%i c\n"
 
-#: client/cl_campaign.c:2677
+#: client/cl_campaign.c:3310
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "航空機整備代:\t%i c\n"
 
-#: client/cl_campaign.c:2685
+#: client/cl_campaign.c:3318
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "基地維持費 (%s):\t%i c\n"
 
-#: client/cl_campaign.c:2690
+#: client/cl_campaign.c:3323
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "管理費:\t%i c\n"
 
-#: client/cl_campaign.c:2697
+#: client/cl_campaign.c:3330
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "借金:\t%i c\n"
 
-#: client/cl_campaign.c:2700
+#: client/cl_campaign.c:3333
 #, c-format
 msgid ""
 "\n"
@@ -11030,12 +10990,12 @@ msgstr ""
 "\t-------\n"
 "合計:\t%i c\n"
 
-#: client/cl_campaign.c:2705
+#: client/cl_campaign.c:3338
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "赤字の限界: %i c\n"
 
-#: client/cl_campaign.c:2710
+#: client/cl_campaign.c:3343
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -11044,72 +11004,71 @@ msgstr ""
 "許容される eXtraterrestial Viral Infection 値: %i \n"
 "現在の eXtraterrestial Viral Infection 値: %i"
 
-#: client/cl_campaign.c:3459
+#: client/cl_campaign.c:4113
 msgid "Assemble or load a team"
 msgstr ""
 
-#: client/cl_campaign.c:3653
+#: client/cl_campaign.c:4307
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/cl_campaign.c:3705
+#: client/cl_campaign.c:4359
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr ""
 
-#: client/cl_campaign.c:3726
+#: client/cl_campaign.c:4380
 msgid "You've won the battle"
 msgstr "戦闘に勝利しました"
 
-#: client/cl_campaign.c:3815
+#: client/cl_campaign.c:4469
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s は %s に昇進しました\n"
 
-#: client/cl_campaign.c:3817
+#: client/cl_campaign.c:4471
 #, c-format
-msgid ""
-"%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
+msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:3818
+#: client/cl_campaign.c:4472
 msgid "Soldier promoted"
 msgstr ""
 
-#: client/cl_campaign.c:4059
+#: client/cl_campaign.c:4713
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr ""
 
-#: client/cl_campaign.c:4940
+#: client/cl_campaign.c:5597
 msgid "Chicken-hearted"
 msgstr "臆病者用"
 
-#: client/cl_campaign.c:4942
+#: client/cl_campaign.c:5599
 msgid "Very Easy"
 msgstr "とても簡単"
 
-#: client/cl_campaign.c:4945
+#: client/cl_campaign.c:5602
 msgid "Easy"
 msgstr "簡単"
 
-#: client/cl_campaign.c:4950
+#: client/cl_campaign.c:5607
 msgid "Hard"
 msgstr "難しい"
 
-#: client/cl_campaign.c:4952
+#: client/cl_campaign.c:5609
 msgid "Very Hard"
 msgstr "非常に難しい"
 
-#: client/cl_campaign.c:4954
+#: client/cl_campaign.c:5611
 msgid "Insane"
 msgstr "狂気的"
 
-#: client/cl_campaign.c:4989
+#: client/cl_campaign.c:5646
 msgid "Human"
 msgstr ""
 
-#: client/cl_campaign.c:4993
+#: client/cl_campaign.c:5650
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -11128,47 +11087,46 @@ msgstr ""
 "許容される赤字: %i c\n"
 "%s\n"
 
-#: client/cl_campaign.c:5135
+#: client/cl_campaign.c:5792
 #, c-format
 msgid "  * %i x\t%s\n"
 msgstr ""
 
-#: client/cl_campaign.c:5158
+#: client/cl_campaign.c:5815
 #, c-format
 msgid "  * %s\n"
 msgstr ""
 
-#: client/cl_campaign.c:5321
+#: client/cl_campaign.c:5978
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "%s を戦場から回収しました. UFO は %s に輸送中です"
 
-#: client/cl_campaign.c:5323 client/cl_campaign.c:5465
-#: client/cl_campaign.c:5559
+#: client/cl_campaign.c:5980 client/cl_campaign.c:6122
+#: client/cl_campaign.c:6216
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:5401
+#: client/cl_campaign.c:6058
 msgid ""
 "\n"
 "\n"
 "Selected base:\t\t\t"
 msgstr ""
 
-#: client/cl_campaign.c:5463
+#: client/cl_campaign.c:6120
 #, c-format
-msgid ""
-"Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
+msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5529
+#: client/cl_campaign.c:6186
 msgid ""
 "\n"
 "\n"
 "Selected nation:\t\t\t"
 msgstr ""
 
-#: client/cl_campaign.c:5557
+#: client/cl_campaign.c:6214
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -11376,208 +11334,206 @@ msgid_plural "%i items were sold."
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_inventory.c:584
+#: client/cl_inventory.c:585
 #, c-format
-msgid ""
-"Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
+msgid "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
-#: client/cl_main.c:368 client/cl_main.c:1001
+#: client/cl_main.c:369 client/cl_main.c:1002
 msgid "Assemble a team first"
 msgstr ""
 
-#: client/cl_main.c:368 client/cl_main.c:722 client/cl_main.c:1001
-#: client/cl_main.c:1501 client/cl_main.c:1506 client/cl_main.c:1512
-#: client/cl_main.c:1520 client/cl_save.c:493 client/cl_save.c:516
-#: client/cl_save.c:657
+#: client/cl_main.c:369 client/cl_main.c:723 client/cl_main.c:1002
+#: client/cl_main.c:1502 client/cl_main.c:1507 client/cl_main.c:1513
+#: client/cl_main.c:1521 client/cl_save.c:496 client/cl_save.c:519
+#: client/cl_save.c:660
 msgid "Error"
 msgstr ""
 
-#: client/cl_main.c:722
+#: client/cl_main.c:723
 msgid "Server needs restarting - something went wrong"
 msgstr ""
 
-#: client/cl_main.c:795
+#: client/cl_main.c:796
 msgid "No player connected\n"
 msgstr ""
 
-#: client/cl_main.c:843
+#: client/cl_main.c:844
 #, c-format
 msgid ""
 "IP\t%s\n"
 "\n"
 msgstr ""
 
-#: client/cl_main.c:849
+#: client/cl_main.c:850
 #, c-format
 msgid "Map:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:859
+#: client/cl_main.c:860
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:860
+#: client/cl_main.c:861
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:861
+#: client/cl_main.c:862
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:862
+#: client/cl_main.c:863
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:863
+#: client/cl_main.c:864
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:864
+#: client/cl_main.c:865
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:865
+#: client/cl_main.c:866
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:866
+#: client/cl_main.c:867
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:867
+#: client/cl_main.c:868
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:868
+#: client/cl_main.c:869
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:869
+#: client/cl_main.c:870
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:870
+#: client/cl_main.c:871
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:871
+#: client/cl_main.c:872
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:872
+#: client/cl_main.c:873
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:873
+#: client/cl_main.c:874
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1044
-msgid ""
-"All bookmark slots are used - please removed unused entries and repeat this step"
+#: client/cl_main.c:1045
+msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
-#: client/cl_main.c:1118
+#: client/cl_main.c:1119
 msgid "Select a free team or your coop team"
 msgstr ""
 
-#: client/cl_main.c:1343 client/cl_main.c:1357
+#: client/cl_main.c:1344 client/cl_main.c:1358
 #, c-format
 msgid "Current team: %i"
 msgstr ""
 
-#: client/cl_main.c:1347 client/cl_main.c:1361
+#: client/cl_main.c:1348 client/cl_main.c:1362
 msgid "Team is already in use"
 msgstr ""
 
-#: client/cl_main.c:1371 client/cl_main.c:1409
+#: client/cl_main.c:1372 client/cl_main.c:1410
 msgid "Invalid or full team"
 msgstr ""
 
-#: client/cl_main.c:1500
+#: client/cl_main.c:1501
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:1506
+#: client/cl_main.c:1507
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:1512
+#: client/cl_main.c:1513
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1519
+#: client/cl_main.c:1520
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:2109
+#: client/cl_main.c:2090
 msgid "Target your shot to the ground"
 msgstr "攻撃目標を地面に設定します"
 
-#: client/cl_main.c:2110
+#: client/cl_main.c:2091
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "キャラのインベントリーを開く"
 
-#: client/cl_main.c:2237 client/cl_view.c:285
+#: client/cl_main.c:2218 client/cl_view.c:285
 msgid "Awaiting game start"
 msgstr "ゲーム開始を待っています"
 
-#: client/cl_main.c:2291
+#: client/cl_main.c:2272
 msgid "Custom"
 msgstr ""
 
-#: client/cl_map.c:295
+#: client/cl_map.c:293
 msgid "Base"
 msgstr ""
 
-#: client/cl_map.c:1191
+#: client/cl_map.c:1192
 msgid "Day"
 msgstr "日中"
 
-#: client/cl_map.c:1191
+#: client/cl_map.c:1192
 msgid "Night"
 msgstr "夜間"
 
-#: client/cl_map.c:1337
+#: client/cl_map.c:1338
 #, fuzzy, c-format
 msgid "%s\t%0.2f%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/cl_map.c:1384
+#: client/cl_map.c:1385
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "新しい基地を建設するマップ上の位置を選択してください\n"
 
-#: client/cl_map.c:1389
+#: client/cl_map.c:1390
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 
-#: client/cl_map.c:1394
+#: client/cl_map.c:1395
 msgid "Select ufo or mission on map\n"
 msgstr ""
 
-#: client/cl_map.c:1399
+#: client/cl_map.c:1400
 msgid "UFO in radar range\n"
 msgstr ""
 
-#: client/cl_map.c:1407
+#: client/cl_map.c:1408
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -11588,22 +11544,22 @@ msgstr ""
 "状況: %s\n"
 "目的: %s"
 
-#: client/cl_map.c:1417 client/cl_map.c:1427
+#: client/cl_map.c:1418 client/cl_map.c:1428
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "名前:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:1418 client/cl_map.c:1428
+#: client/cl_map.c:1419 client/cl_map.c:1429
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "状態:\t%s\n"
 
-#: client/cl_map.c:1419
+#: client/cl_map.c:1420
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/cl_map.c:1423 client/cl_map.c:1435
+#: client/cl_map.c:1424 client/cl_map.c:1436
 #, c-format
 msgid "ETA:\t%s\n"
 msgstr ""
@@ -11660,64 +11616,74 @@ msgid_plural " (%i missiles left)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_mapfightequip.c:829
+#: client/cl_mapfightequip.c:828
 msgid "Aircraft item was successfully installed."
 msgstr "航空機への装備が終了しました"
 
-#: client/cl_mapfightequip.c:831
+#: client/cl_mapfightequip.c:830
 msgid "Base defense item was successfully installed."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1084
+#: client/cl_mapfightequip.c:846
+#, fuzzy
+msgid "Aircraft item was successfully removed."
+msgstr "航空機への装備が終了しました"
+
+#: client/cl_mapfightequip.c:850
+#, fuzzy
+msgid "Base defense item was successfully removed."
+msgstr "航空機への装備が終了しました"
+
+#: client/cl_mapfightequip.c:1092
 msgid "No item assigned.\n"
 msgstr "何も装備されていません\n"
 
-#: client/cl_mapfightequip.c:1085
+#: client/cl_mapfightequip.c:1093
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "このスロットには重量 %s 以下のアイテムを装備する事ができます"
 
-#: client/cl_mapfightequip.c:1090
+#: client/cl_mapfightequip.c:1098
 msgid "This item is functional.\n"
 msgstr "装備は正常に動作中です\n"
 
-#: client/cl_mapfightequip.c:1092
+#: client/cl_mapfightequip.c:1100
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "アイテムの装備に後 %i 時間掛かります\n"
 
-#: client/cl_mapfightequip.c:1094
+#: client/cl_mapfightequip.c:1102
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "アイテムの取り外しに後 %i 時間掛かります\n"
 
-#: client/cl_mapfightequip.c:1101
+#: client/cl_mapfightequip.c:1109
 msgid "No item assigned."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1105
+#: client/cl_mapfightequip.c:1113
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1115
+#: client/cl_mapfightequip.c:1123
 msgid "No ammo assigned to this weapon."
 msgstr "武器に弾薬が装備されていません"
 
-#: client/cl_mapfightequip.c:1983
+#: client/cl_mapfightequip.c:1991
 msgid "Light weight"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1986
+#: client/cl_mapfightequip.c:1994
 #, fuzzy
 msgid "Medium weight"
 msgstr "中"
 
-#: client/cl_mapfightequip.c:1989
+#: client/cl_mapfightequip.c:1997
 msgid "Heavy weight"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1992
+#: client/cl_mapfightequip.c:2000
 msgid "Unknown weight"
 msgstr ""
 
@@ -11772,24 +11738,24 @@ msgstr ""
 msgid "You can't sell an aircraft that is not in base"
 msgstr "航空機 (%s) が基地 %s に配備されました"
 
-#: client/cl_menu.c:142
+#: client/cl_menu.c:143
 #, fuzzy
 msgid "No team assigned"
 msgstr "何も装備されていません\n"
 
-#: client/cl_menu.c:142
+#: client/cl_menu.c:143
 msgid "Please choose and equip your team first"
 msgstr ""
 
-#: client/cl_menu.c:148
+#: client/cl_menu.c:149
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr ""
 
-#: client/cl_menu.c:148
+#: client/cl_menu.c:149
 msgid "Settings doesn't make sense"
 msgstr ""
 
-#: client/cl_menu.c:329
+#: client/cl_menu.c:330
 msgid "all"
 msgstr ""
 
@@ -11861,321 +11827,319 @@ msgid ""
 "Aircraft cannot start.\n"
 msgstr ""
 
-#: client/cl_produce.c:219
+#: client/cl_produce.c:223
 msgid "Not enough workers"
 msgstr ""
 
-#: client/cl_produce.c:219
+#: client/cl_produce.c:223
 msgid ""
 "You cannot queue productions without workers hired in this base.\n"
 "\n"
 "Hire workers."
 msgstr ""
 
-#: client/cl_produce.c:226
+#: client/cl_produce.c:230
 msgid "Not enough workshops"
 msgstr ""
 
-#: client/cl_produce.c:226
+#: client/cl_produce.c:230
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 msgstr ""
 
-#: client/cl_produce.c:241 client/cl_produce.c:244 client/cl_produce.c:249
-#: client/cl_produce.c:1162 client/cl_transfer.c:234 client/cl_transfer.c:237
+#: client/cl_produce.c:245 client/cl_produce.c:248 client/cl_produce.c:253
+#: client/cl_produce.c:1173 client/cl_transfer.c:234 client/cl_transfer.c:237
 #: client/cl_transfer.c:240
 msgid "Hangars not ready"
 msgstr ""
 
-#: client/cl_produce.c:241
+#: client/cl_produce.c:245
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
 msgstr ""
 
-#: client/cl_produce.c:244
+#: client/cl_produce.c:248
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
 msgstr ""
 
-#: client/cl_produce.c:249 client/cl_produce.c:1162
+#: client/cl_produce.c:253 client/cl_produce.c:1173
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
 msgstr ""
 
-#: client/cl_produce.c:364
+#: client/cl_produce.c:368
 #, c-format
 msgid "Production queue for base %s is empty"
 msgstr "基地 %s の生産予定が消化されました"
 
-#: client/cl_produce.c:365
+#: client/cl_produce.c:369
 msgid "Production queue empty"
 msgstr ""
 
-#: client/cl_produce.c:418 client/cl_produce.c:437
+#: client/cl_produce.c:422 client/cl_produce.c:441
 #, c-format
 msgid "Not enough credits to finish production in base %s.\n"
 msgstr ""
 
-#: client/cl_produce.c:427
+#: client/cl_produce.c:431
 #, c-format
 msgid "Not enough free storage space in base %s. Production paused.\n"
 msgstr ""
 
-#: client/cl_produce.c:446
+#: client/cl_produce.c:450
 #, c-format
 msgid "Not enough free hangar space in base %s. Production paused.\n"
 msgstr ""
 
-#: client/cl_produce.c:456
+#: client/cl_produce.c:460
 #, c-format
 msgid "Not enough free storage space in base %s. Disassembling paused.\n"
 msgstr ""
 
-#: client/cl_produce.c:487 client/cl_produce.c:499
+#: client/cl_produce.c:491 client/cl_produce.c:503
 #, c-format
 msgid "The production of %s has finished."
 msgstr "%s の生産が終了しました"
 
-#: client/cl_produce.c:488 client/cl_produce.c:500 client/cl_produce.c:530
+#: client/cl_produce.c:492 client/cl_produce.c:504 client/cl_produce.c:534
 msgid "Production finished"
 msgstr ""
 
-#: client/cl_produce.c:529
+#: client/cl_produce.c:533
 #, c-format
 msgid "The disassembling of %s has finished."
 msgstr ""
 
-#: client/cl_produce.c:566 client/cl_produce.c:585
+#: client/cl_produce.c:571 client/cl_produce.c:590
 msgid "No item selected"
 msgstr "アイテムが選択されていません"
 
-#: client/cl_produce.c:578
+#: client/cl_produce.c:583
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "生産毎に掛かる費用\t%i c\n"
 
-#: client/cl_produce.c:580 client/cl_produce.c:652
+#: client/cl_produce.c:585 client/cl_produce.c:658
 #, fuzzy, c-format
 msgid "Production time\t%ih\n"
 msgstr "生産に必要な時間\t%ih\n"
 
-#: client/cl_produce.c:581
+#: client/cl_produce.c:586
 #, c-format
 msgid "Item size\t%i\n"
 msgstr "アイテムの大きさ\t%i\n"
 
-#: client/cl_produce.c:611
+#: client/cl_produce.c:616
 #, c-format
 msgid "%s - disassembly\n"
 msgstr ""
 
-#: client/cl_produce.c:612
+#: client/cl_produce.c:617
 msgid "Components: "
 msgstr ""
 
-#: client/cl_produce.c:619
+#: client/cl_produce.c:624
 #, c-format
 msgid "%s (%i) "
 msgstr ""
 
-#: client/cl_produce.c:623
+#: client/cl_produce.c:628
 #, c-format
 msgid "Disassembly time\t%ih\n"
 msgstr ""
 
-#: client/cl_produce.c:650
+#: client/cl_produce.c:656
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr ""
 
-#: client/cl_produce.c:654
+#: client/cl_produce.c:660
 msgid "No aircraft selected."
 msgstr ""
 
-#: client/cl_produce.c:1195
+#: client/cl_produce.c:1206
 msgid "Queue full!"
 msgstr ""
 
-#: client/cl_produce.c:1195
+#: client/cl_produce.c:1206
 msgid "You cannot queue any more items!"
 msgstr ""
 
-#: client/cl_produce.c:1217 client/cl_produce.c:1233
+#: client/cl_produce.c:1228 client/cl_produce.c:1244
 msgid "Not enough material!"
 msgstr ""
 
-#: client/cl_produce.c:1217
+#: client/cl_produce.c:1228
 #, c-format
-msgid ""
-"You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
+msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr ""
 
-#: client/cl_produce.c:1221 client/cl_produce.c:1243
+#: client/cl_produce.c:1232 client/cl_produce.c:1254
 #, c-format
 msgid "Production of %s started"
 msgstr "%s の生産を開始しました"
 
-#: client/cl_produce.c:1222 client/cl_produce.c:1225 client/cl_produce.c:1244
+#: client/cl_produce.c:1233 client/cl_produce.c:1236 client/cl_produce.c:1255
 msgid "Production started"
 msgstr "生産を開始しました"
 
-#: client/cl_produce.c:1224
+#: client/cl_produce.c:1235
 #, c-format
 msgid "Disassembling of %s started"
 msgstr ""
 
-#: client/cl_produce.c:1233
+#: client/cl_produce.c:1244
 msgid "You don't have enough of the needed material to produce this item."
 msgstr ""
 
-#: client/cl_research.c:81
+#: client/cl_research.c:83
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "研究が完了しました: %s\n"
 
-#: client/cl_research.c:82
+#: client/cl_research.c:84
 msgid "Research finished"
 msgstr ""
 
-#: client/cl_research.c:104 client/cl_research.c:361
+#: client/cl_research.c:106 client/cl_research.c:358
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "新しい研究提案: %s\n"
 
-#: client/cl_research.c:105
+#: client/cl_research.c:107
 msgid "Unknown Technology researchable"
 msgstr ""
 
-#: client/cl_research.c:362
+#: client/cl_research.c:359
 msgid "Unknown Technology found"
 msgstr ""
 
-#: client/cl_research.c:770
+#: client/cl_research.c:767
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "研究スペース (使用中/全体): %i/%i"
 
-#: client/cl_research.c:776
+#: client/cl_research.c:773
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr "科学者 (空き人数/全体): %i/%i"
 
-#: client/cl_research.c:781
+#: client/cl_research.c:778
 msgid "Not researched in any base."
 msgstr "どの基地でも研究されていません"
 
-#: client/cl_research.c:787
+#: client/cl_research.c:784
 #, c-format
 msgid "Researched in %s"
 msgstr "%s で研究されています"
 
-#: client/cl_research.c:789
+#: client/cl_research.c:786
 msgid "Researched in this base."
 msgstr "この基地で研究されています"
 
-#: client/cl_research.c:801
+#: client/cl_research.c:798
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "進行度: %.1f%%"
 
-#: client/cl_research.c:804
+#: client/cl_research.c:801
 msgid "Progress: Not available."
 msgstr "進行度: 進行不可"
 
-#: client/cl_research.c:809
+#: client/cl_research.c:806
 msgid "Status: Under research"
 msgstr "状態: 研究中"
 
-#: client/cl_research.c:812
+#: client/cl_research.c:809
 msgid "Status: Research paused"
 msgstr "状態: 研究中断中"
 
-#: client/cl_research.c:815
+#: client/cl_research.c:812
 msgid "Status: Research finished"
 msgstr "状態: 研究終了"
 
-#: client/cl_research.c:820
-msgid ""
-"Status: We don't currently have all the materials or background knowledge needed to research this topic."
+#: client/cl_research.c:817
+msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr "状態: 研究前提不足"
 
-#: client/cl_research.c:822
+#: client/cl_research.c:819
 msgid "Status: Unknown technology"
 msgstr "状態: 未知のテクノロジー"
 
-#: client/cl_research.c:907 client/cl_research.c:911
+#: client/cl_research.c:904 client/cl_research.c:908
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
 msgstr ""
 
-#: client/cl_research.c:907 client/cl_research.c:911
+#: client/cl_research.c:904 client/cl_research.c:908
 msgid "Not enough laboratories"
 msgstr ""
 
-#: client/cl_research.c:1082
+#: client/cl_research.c:1079
 msgid "This item is currently under research in another base."
 msgstr ""
 
-#: client/cl_research.c:1100 client/cl_research.c:1144
+#: client/cl_research.c:1097 client/cl_research.c:1141
 msgid "The research on this item is complete."
 msgstr ""
 
-#: client/cl_research.c:1106
+#: client/cl_research.c:1103
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
 
-#: client/cl_research.c:1175
+#: client/cl_research.c:1172
 msgid "No research proposal available for this project."
 msgstr ""
 
-#: client/cl_research.c:1243
+#: client/cl_research.c:1240
 #, fuzzy
 msgid "mx."
 msgstr "最大"
 
-#: client/cl_research.c:1342
+#: client/cl_research.c:1339
 msgid "Nothing to research"
 msgstr ""
 
-#: client/cl_research.c:1345
+#: client/cl_research.c:1342
 msgid "Build a laboratory first"
 msgstr "研究を行なう前に、まず研究所を建設してください"
 
-#: client/cl_research.c:1763
+#: client/cl_research.c:1761
 msgid "No description available."
 msgstr ""
 
-#: client/cl_research.c:1764
+#: client/cl_research.c:1762
 msgid "No research proposal available."
 msgstr ""
 
-#: client/cl_save.c:178
+#: client/cl_save.c:181
 msgid "Couldn't open file"
 msgstr ""
 
-#: client/cl_save.c:209
+#: client/cl_save.c:212
 msgid "Error decompressing data"
 msgstr ""
 
-#: client/cl_save.c:222
+#: client/cl_save.c:225
 msgid "The file is a more recent version than is supported"
 msgstr ""
 
-#: client/cl_save.c:242
+#: client/cl_save.c:245
 msgid ""
 "Error in loading a subsystem.\n"
 "\n"
 "See game console for more information."
 msgstr ""
 
-#: client/cl_save.c:249
+#: client/cl_save.c:252
 msgid ""
 "Error in loading a subsystem. Sentinel doesn't match.\n"
 "\n"
@@ -12184,51 +12148,51 @@ msgid ""
 "See game console for more information."
 msgstr ""
 
-#: client/cl_save.c:305
+#: client/cl_save.c:308
 msgid "No campaign active."
 msgstr ""
 
-#: client/cl_save.c:311
+#: client/cl_save.c:314
 msgid "Nothing to save yet."
 msgstr ""
 
-#: client/cl_save.c:322
+#: client/cl_save.c:325
 msgid "Could not allocate enough memory to save this game"
 msgstr ""
 
-#: client/cl_save.c:365
+#: client/cl_save.c:368
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 
-#: client/cl_save.c:386
+#: client/cl_save.c:389
 msgid "Size mismatch - failed to save the campaign"
 msgstr ""
 
-#: client/cl_save.c:426 client/cl_save.c:428
+#: client/cl_save.c:429 client/cl_save.c:431
 msgid "Error saving game."
 msgstr ""
 
-#: client/cl_save.c:492 client/cl_save.c:515 client/cl_save.c:656
+#: client/cl_save.c:495 client/cl_save.c:518 client/cl_save.c:659
 msgid "Error loading game."
 msgstr ""
 
-#: client/cl_save.c:635
+#: client/cl_save.c:638
 msgid "Campaign was successfully saved."
 msgstr ""
 
-#: client/cl_save.c:635
+#: client/cl_save.c:638
 msgid "Quicksave"
 msgstr ""
 
-#: client/cl_save.c:659
+#: client/cl_save.c:662
 msgid "Campaign loaded"
 msgstr ""
 
-#: client/cl_save.c:659
+#: client/cl_save.c:662
 msgid "Quicksave campaign was successfully loaded."
 msgstr ""
 
-#: client/cl_save.c:707
+#: client/cl_save.c:712
 msgid "Saves to the quick save slot"
 msgstr ""
 
@@ -12755,8 +12719,7 @@ msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr ""
 
 #: client/cl_transfer.c:1194
-msgid ""
-"Aircraft transfer not possible - this base does not have a Command Centre.\n"
+msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr ""
 
 #: client/cl_transfer.c:1196
@@ -12764,20 +12727,19 @@ msgid "No Hangar in this base.\n"
 msgstr ""
 
 #: client/cl_transfer.c:1474
-msgid ""
-"The destination base no longer exists! Transfer cargo are lost, personel got unhired."
+msgid "The destination base no longer exists! Transfer cargo are lost, personel got unhired."
 msgstr ""
 
-#: client/cl_ufo.c:324
+#: client/cl_ufo.c:363
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr ""
 
-#: client/cl_ufo.c:629
+#: client/cl_ufo.c:667
 msgid "Our radar detected a new UFO"
 msgstr "レーダーがUFO を感知しました"
 
-#: client/cl_ufo.c:632
+#: client/cl_ufo.c:670
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "レーダーはUFO を見失いました"
 
@@ -13131,8 +13093,7 @@ msgid "Can't perform action - not enough TUs!\n"
 msgstr ""
 
 #: game/g_client.c:943
-msgid ""
-"Can't perform action - weapon already fully loaded with the same ammunition!\n"
+msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr ""
 
 #: game/g_client.c:1632
@@ -13346,9 +13307,7 @@ msgstr ""
 #~ msgstr "'%s'　でエイリアンの活動が報告されました"
 
 #~ msgid "Build more radars in the same base to increase the radar range."
-#~ msgstr ""
-#~ "同じ基地に複数のレーダーを建設する事によってレーダーの範囲を増加させること"
-#~ "ができます。"
+#~ msgstr "同じ基地に複数のレーダーを建設する事によってレーダーの範囲を増加させることができます。"
 
 #, fuzzy
 #~ msgid "%s: %i/%i"
