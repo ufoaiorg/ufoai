@@ -671,6 +671,41 @@ static void S_Music_Change_f (void)
 	Cvar_Set("snd_music", musicArrays[category][rnd]);
 }
 
+static int S_CompleteMusic (const char *partial, const char **match)
+{
+	const char *filename;
+	int matches = 0;
+	const char *localMatch[MAX_COMPLETE];
+	size_t len;
+
+	FS_BuildFileList("music/*.ogg");
+
+	len = strlen(partial);
+	if (!len) {
+		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
+			Com_Printf("%s\n", filename);
+		}
+		FS_NextFileFromFileList(NULL);
+		return 0;
+	}
+
+	/* start from first file entry */
+	FS_NextFileFromFileList(NULL);
+
+	/* check for partial matches */
+	while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
+		if (!Q_strncmp(partial, filename, len)) {
+			Com_Printf("%s\n", filename);
+			localMatch[matches++] = filename;
+			if (matches >= MAX_COMPLETE)
+				break;
+		}
+	}
+	FS_NextFileFromFileList(NULL);
+
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+}
+
 /**
  * @sa S_Shutdown
  * @sa S_Restart_f
@@ -701,6 +736,7 @@ void S_Init (void)
 	Cmd_AddCommand("music_change", S_Music_Change_f, "Changes the music theme");
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
+	Cmd_AddParamCompleteFunction("music_start", S_CompleteMusic);
 	/* @todo: Complete functions */
 
 	if (!SND_Init()) {
