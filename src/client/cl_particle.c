@@ -261,7 +261,7 @@ void CL_ParticleRegisterArt (void)
  * @note We have to use the char* cast here because the image_t and model_t
  * have their names at the beginning of their structs
  */
-static int CL_ParticleGetArt (const char *name, int frame, char type)
+static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, char type)
 {
 	ptlArt_t *a;
 	int i;
@@ -272,7 +272,7 @@ static int CL_ParticleGetArt (const char *name, int frame, char type)
 			break;
 
 	if (i < r_numParticlesArt)
-		return i;
+		return a;
 
 	if (i >= MAX_PTL_ART)
 		Sys_Error("CL_ParticleGetArt: MAX_PTL_ART overflow\n");
@@ -295,7 +295,7 @@ static int CL_ParticleGetArt (const char *name, int frame, char type)
 
 	/* check for an error */
 	if (!a->art)
-		return -1;
+		return NULL;
 
 	a->skin = 0;
 	a->type = type;
@@ -303,14 +303,14 @@ static int CL_ParticleGetArt (const char *name, int frame, char type)
 	Q_strncpyz(a->name, name, sizeof(a->name));
 	r_numParticlesArt++;
 
-	return r_numParticlesArt - 1;
+	return a;
 }
 
 /*==============================================================================
 PARTICLE EDITOR
 ==============================================================================*/
 
-static int activeParticle = -1;
+static ptlDef_t *activeParticle = NULL;
 static char ptledit_ptlName[MAX_VAR];
 static ptl_t* ptledit_ptl = NULL;
 static cvar_t* ptledit_loop;
@@ -396,14 +396,14 @@ static void PE_LoadParticle_f (void)
 		r_particles[i].inuse = qfalse;
 	r_numParticles = 0;
 
-	activeParticle = -1;
+	activeParticle = NULL;
 	for (i = 0; i < numPtlDefs; i++)
 		if (!Q_strncmp(ptlDef[i].name, Cmd_Argv(1), sizeof(ptlDef[i].name)))
-			activeParticle = i;
+			activeParticle = &ptlDef[i];
 
-	if (activeParticle != -1) {
-		PE_UpdateMenu(&ptlDef[activeParticle]);
-		ptledit_ptl = CL_ParticleSpawn(ptlDef[activeParticle].name, 0, ptleditMenu.renderZone->origin, bytedirs[0], bytedirs[0]);
+	if (activeParticle) {
+		PE_UpdateMenu(activeParticle);
+		ptledit_ptl = CL_ParticleSpawn(activeParticle->name, 0, ptleditMenu.renderZone->origin, bytedirs[0], bytedirs[0]);
 	} else
 		PE_UpdateMenu(NULL);
 }
@@ -416,14 +416,14 @@ static void PE_Frame_f (void)
 	if (ptledit_ptl) {
 		if (ptledit_ptl->inuse) {
 			CL_ParticleRun2(ptledit_ptl);
-			PE_UpdateMenu(&ptlDef[activeParticle]);
+			PE_UpdateMenu(activeParticle);
 		} else {
 			/* let main particles respawn if the ptledit_loop cvar is set */
 			if (ptledit_loop->integer && !ptledit_ptl->parent) {
-				ptledit_ptl = CL_ParticleSpawn(ptlDef[activeParticle].name, 0, ptleditMenu.renderZone->origin, bytedirs[0], bytedirs[0]);
+				ptledit_ptl = CL_ParticleSpawn(activeParticle->name, 0, ptleditMenu.renderZone->origin, bytedirs[0], bytedirs[0]);
 			} else {
 				if (ptledit_ptl->parent)
-					Com_Printf("particle '%s' - lifetime exceeded\n", ptlDef[activeParticle].name);
+					Com_Printf("particle '%s' - lifetime exceeded\n", activeParticle->name);
 				PE_UpdateMenu(NULL);
 				ptledit_ptl = NULL;
 			}
@@ -742,16 +742,23 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			return;
 
 		case PC_SPAWN:
-#if 1
-			if (CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a) == NULL)
-				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
-#else
 			pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
 			if (pnew) {
-				/* Also hand down the "angles" values. */
+#if 0
+				/** @todo
+				 * Also hand down "size" if children is a "beam"-style particle.
+				 * It can only be copied down if the parent is also a "beam"-style particle because
+				 * the value is only set for "infinite speed" particles (such as "beam"-style particles) in LE_AddProjectile. */
+				if (pnew->style == STYLE_BEAM && p->style == STYLE_BEAM) {
+					Vector2Copy(p->size, pnew->size);
+				}
+
+				/** @todo Also hand down the "angles" values. (if it is needed?) */
 				VectorCopy(p->angles, pnew->angles);
-			}
 #endif
+			} else {
+				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
+			}
 			break;
 
 		case PC_NSPAWN:
@@ -767,16 +774,23 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			e -= sizeof(int);
 
 			for (i = 0; i < n; i++) {
-#if 1
-				if (CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a) == NULL)
-					Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
-#else
 				pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
 				if (pnew) {
-					/* Also hand down the "angles" values. */
+#if 0
+					/** @todo
+					 * Also hand down "size" if children is a "beam"-style particle.
+					 * It can only be copied down if the parent is also a "beam"-style particle because
+					 * the value is only set for "infinite speed" particles (such as "beam"-style particles) in LE_AddProjectile. */
+					if (pnew->style == STYLE_BEAM && p->style == STYLE_BEAM) {
+						Vector2Copy(p->size, pnew->size);
+					}
+
+					/** @todo Also hand down the "angles" values (if it is needed?) */
 					VectorCopy(p->angles, pnew->angles);
-				}
 #endif
+				} else {
+					Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
+				}
 			}
 			break;
 
@@ -855,8 +869,8 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	p->ctrl = pd;
 	Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
 
-	p->pic = -1;
-	p->model = -1;
+	p->pic = NULL;
+	p->model = NULL;
 
 	/* copy location */
 	if (s) {
@@ -1059,7 +1073,8 @@ static void CL_ParticleRun2 (ptl_t *p)
 		p->lastFrame -= 1.0 / p->fps;
 
 		/* load next frame */
-		p->pic = CL_ParticleGetArt(r_particlesArt[p->pic].name, p->frame, ART_PIC);
+		assert(p->pic);
+		p->pic = CL_ParticleGetArt(p->pic->name, p->frame, ART_PIC);
 	}
 
 	/* fading */

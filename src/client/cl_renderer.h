@@ -96,11 +96,22 @@ typedef struct ptlDef_s {
 	ptlCmd_t *init, *run, *think, *round, *physics;
 } ptlDef_t;
 
+typedef struct ptlArt_s {
+	byte type;
+	byte frame;
+	char name[MAX_VAR];
+	int skin;
+	char *art;
+} ptlArt_t;
+
 typedef struct ptl_s {
 	/* used by ref */
 	qboolean inuse;			/**< particle active? */
 	qboolean invis;			/**< is this particle invisible */
-	int pic, model;			/**< index of pic or model */
+
+	ptlArt_t *pic; 			/**< Picture link. */
+	ptlArt_t *model;		/**< Model link. */
+
 	byte blend;				/**< blend mode */
 	byte style;				/**< style mode */
 	vec2_t size;
@@ -145,14 +156,6 @@ typedef struct ptl_s {
 	qboolean weather;	/**< used to identify weather particles (can be switched
 						 * off via cvar cl_particleweather) */
 } ptl_t;
-
-typedef struct ptlArt_s {
-	byte type;
-	byte frame;
-	char name[MAX_VAR];
-	int skin;
-	char *art;
-} ptlArt_t;
 
 typedef struct {
 	int x, y, width, height;	/**< in virtual screen coordinates */

@@ -86,7 +86,8 @@ static void R_DrawSprite (const ptl_t * p)
 	vec3_t pos;
 
 	/* load texture set up coordinates */
-	R_BindTexture(((image_t *) r_particlesArt[p->pic].art)->texnum);
+	assert(p->pic);
+	R_BindTexture(((image_t *) (p->pic->art))->texnum);
 
 	/* calculate main position and normalised up and right vectors */
 	q = p->parent ? p->parent : p;
@@ -151,7 +152,8 @@ static void R_DrawPtlModel (ptl_t * p)
 	mi.color = p->color;
 	mi.origin = p->s;
 	mi.angles = p->angles;
-	mi.model = (model_t *) r_particlesArt[p->model].art;
+	assert(p->model);
+	mi.model = (model_t *) p->model->art;
 	mi.skin = p->skin;
 
 	/* draw it */
@@ -279,9 +281,9 @@ void R_DrawParticles (void)
 				R_DrawPtlCircle(p);
 				break;
 			}
-			if (p->pic != -1)
+			if (p->pic)
 				R_DrawSprite(p);
-			if (p->model != -1)
+			if (p->model)
 				R_DrawPtlModel(p);
 			R_TexEnv(GL_MODULATE);
 		}
