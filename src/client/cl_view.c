@@ -285,7 +285,6 @@ void CL_LoadMedia (void)
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
 	SCR_UpdateScreen();
 	cl.refresh_prepped = qtrue;
-	cl.force_refdef = qtrue;	/* make sure we have a valid refdef */
 }
 
 /**
