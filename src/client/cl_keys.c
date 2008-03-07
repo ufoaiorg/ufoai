@@ -230,7 +230,8 @@ static void Key_CompleteCommand (void)
 
 		/* now strip away that part that is not yet completed */
 		tmp = strrchr(cmdLine, ' ');
-		*tmp = '\0';
+		if (tmp)
+			*tmp = '\0';
 
 		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
 		if (cntParams == 1) {
