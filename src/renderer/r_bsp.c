@@ -296,7 +296,6 @@ void R_GetLevelSurfaceLists (void)
 
 	for (tile = 0; tile < r_numMapTiles; tile++) {
 		/* don't draw weapon-, actorclip and stepon */
-		/* @note Change this to 258 to see the actorclip brushes in-game */
 		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
 			/* check the worldlevel flags */
 			if (i && !(i & mask))

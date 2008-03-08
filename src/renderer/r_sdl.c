@@ -144,6 +144,7 @@ qboolean Rimp_Init (void)
 qboolean R_InitGraphics (void)
 {
 	uint32_t flags;
+	int i;
 
 	vid_fullscreen->modified = qfalse;
 	vid_mode->modified = qfalse;
@@ -167,7 +168,19 @@ qboolean R_InitGraphics (void)
 
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, r_swapinterval->integer);
+
+	/* valid values are between 0 and 4 */
+	i = min(4, max(0, r_multisample->integer));
+	if (i > 0) {
+		Com_Printf("I: set multisample buffers to %i\n", i);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, i);
+	}
+
+	/* valid values are between 0 and 2 */
+	i = min(2, max(0, r_swapinterval->integer));
+	Com_Printf("I: set swap control to %i\n", i);
+	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, i);
 
 	flags = SDL_OPENGL;
 	if (viddef.fullscreen)

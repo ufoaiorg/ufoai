@@ -317,6 +317,60 @@ menu options_video
 		align	ur
 	}
 
+	string swapcontrol_str
+	{
+		string	"_Swap control:"
+		pos		"500 415"
+	}
+	checkbox swapcontrol
+	{
+		cvar	"*cvar r_swapinterval"
+		pos		"840 415"
+		align	ur
+	}
+
+	string vbo_str
+	{
+		string	"_Vertex buffers:"
+		pos		"500 440"
+	}
+	checkbox vbo
+	{
+		cvar	"*cvar r_vertexbuffers"
+		pos		"840 440"
+		align	ur
+	}
+
+	string samplebuf_str
+	{
+		string	"_Multisample buffers:"
+		pos		"500 465"
+	}
+	string samplebuf_value
+	{
+		string	"*cvar r_multisample"
+		pos		"840 465"
+		align	ur
+	}
+	pic samplebuf_dec
+	{
+		image	menu/buttons_small
+		pos		"868 469"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify r_multisample -1 0 4;" }
+	}
+	pic samplebuf_inc
+	{
+		image	menu/buttons_small
+		pos		"884 469"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify r_multisample +1 0 4;" }
+	}
+
 	string gamma_str
 	{
 		string	"_Gamma:"
