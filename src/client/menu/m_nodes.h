@@ -43,6 +43,7 @@ typedef enum mn_s {
 	MN_STRING,
 	MN_TEXT,
 	MN_BAR,
+	MN_TBAR,
 	MN_MODEL,
 	MN_CONTAINER,
 	MN_ITEM,
@@ -152,6 +153,8 @@ typedef struct menuNode_s {
 	struct menuNode_s *next;
 	struct menu_s *menu;	/**< backlink */
 	lineStrips_t linestrips;	/**< List of lines to draw. (MN_LINESTRIP) */
+	float pointWidth; 		/**< MN_TBAR: texture pixels per one point */
+	int gapWidth; 				/**< MN_TBAR: tens separator width */
 	const value_t *scriptValues;
 } menuNode_t;
 

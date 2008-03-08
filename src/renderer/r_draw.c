@@ -257,7 +257,7 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
  */
 int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
 {
-	float nx, ny, nw = 0.0, nh = 0.0;
+	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 	image_t *gl;
 
 	gl = R_RegisterPic(name);
@@ -266,53 +266,75 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 		return 0;
 	}
 
-	/* normalize */
-	nx = x * viddef.rx;
-	ny = y * viddef.ry;
+	/* normalize to the screen resolution */
+	x1 = x * viddef.rx;
+	y1 = y * viddef.ry;
 
-	if (w && h) {
+	/* provided width and height (if any) take precedence */
+	if (w)
 		nw = w * viddef.rx;
+	
+	if (h)
 		nh = h * viddef.ry;
-	}
 
-	if (sh && th) {
-		if (!w || !h) {
+
+	/* horizontal texture mapping */
+	if (sh) {
+		if (!w)
 			nw = (sh - sl) * viddef.rx;
-			nh = (th - tl) * viddef.ry;
-		}
-		sl = sl / (float)gl->width;
-		sh = sh / (float)gl->width;
-		tl = tl / (float)gl->height;
-		th = th / (float)gl->height;
+		sh /= gl->width;
 	} else {
-		if (!w || !h) {
-			nw = (float)gl->width * viddef.rx;
-			nh = (float)gl->height * viddef.ry;
-		}
+		if (!w)
+			nw = ((float)gl->width - sl) * viddef.rx;
 		sh = 1.0f;
+	}
+	sl /= gl->width;
+
+	/* vertical texture mapping */
+	if (th) {
+		if (!h)
+			nh = (th - tl) * viddef.ry;
+		th /= gl->height;
+	} else {
+		if (!h)
+			nh = ((float)gl->height - tl) * viddef.ry;
 		th = 1.0f;
 	}
+	tl /= gl->height;
 
-	/* get alignement */
-	/* (do nothing if left aligned or unknown) */
+	/* alignment */
 	if (align > 0 && align < ALIGN_LAST) {
+		/* horizontal (0 is left) */
 		switch (align % 3) {
 		case 1:
-			nx -= nw * 0.5;
+			x1 -= nw * 0.5;
 			break;
 		case 2:
-			nx -= nw;
+			x1 -= nw;
 			break;
 		}
 
-		switch (align / 3) {
+		/* vertical (0 is upper) */
+		switch ((align % 9) / 3) {
 		case 1:
-			ny -= nh * 0.5;
+			y1 -= nh * 0.5;
 			break;
 		case 2:
-			ny -= nh;
+			y1 -= nh;
 			break;
 		}
+	}
+
+	/* fill the rest of the coordinates to make a rectangle */
+	x4 = x1;
+	x3 = x2 = x1 + nw;
+	y2 = y1;
+	y4 = y3 = y1 + nh;
+
+	/* slanting */
+	if (align >= 9 && align < ALIGN_LAST) {
+		x1 += nh;
+		x2 += nh;
 	}
 
 	if (blend)
@@ -321,13 +343,13 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	R_BindTexture(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(sl, tl);
-	qglVertex2f(nx, ny);
+	qglVertex2f(x1, y1);
 	qglTexCoord2f(sh, tl);
-	qglVertex2f(nx + nw, ny);
+	qglVertex2f(x2, y2);
 	qglTexCoord2f(sh, th);
-	qglVertex2f(nx + nw, ny + nh);
+	qglVertex2f(x3, y3);
 	qglTexCoord2f(sl, th);
-	qglVertex2f(nx, ny + nh);
+	qglVertex2f(x4, y4);
 	qglEnd();
 
 	if (blend)

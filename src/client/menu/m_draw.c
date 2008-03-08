@@ -274,6 +274,19 @@ void MN_DrawMenus (void)
 					}
 					break;
 
+				case MN_TBAR:
+					{
+						/* data[0] is the texture name, data[1] is the minimum value, data[2] is the current value */
+						float ps, shx;
+						if (node->pointWidth) {
+							ps = MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1]);
+							shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
+						} else
+							shx = node->texh[0];
+						R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],	shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
+					}
+					break;
+
 				case MN_LINESTRIP:
 					if (node->linestrips.numStrips > 0) {
 						/* Draw all linestrips. */
@@ -342,6 +355,8 @@ void MN_DrawMenus (void)
 
 				if (mn_debugmenu->integer)
 					MN_DrawTooltip("f_small", node->name, node->pos[0], node->pos[1], node->size[1], 0);
+
+				R_ColorBlend(NULL);
 			}	/* if */
 
 		}	/* for */

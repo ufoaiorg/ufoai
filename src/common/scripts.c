@@ -63,7 +63,7 @@ const char *vt_names[] = {
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
 const char *align_names[] = {
-	"ul", "uc", "ur", "cl", "cc", "cr", "ll", "lc", "lr"
+	"ul", "uc", "ur", "cl", "cc", "cr", "ll", "lc", "lr", "ul_rsl", "uc_rsl", "ur_rsl", "cl_rsl", "cc_rsl", "cr_rsl", "ll_rsl", "lc_rsl", "lr_rsl"
 };
 CASSERT(lengthof(align_names) == ALIGN_LAST);
 

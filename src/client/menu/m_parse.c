@@ -101,6 +101,8 @@ static const value_t nps[] = {
 	{"repeat", V_BOOL, offsetof(menuNode_t, repeat), MEMBER_SIZEOF(menuNode_t, repeat)},
 	{"scrollbar", V_BOOL, offsetof(menuNode_t, scrollbar), MEMBER_SIZEOF(menuNode_t, scrollbar)},
 	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, scrollbarLeft), MEMBER_SIZEOF(menuNode_t, scrollbarLeft)},
+	{"point_width", V_FLOAT, offsetof(menuNode_t, pointWidth), MEMBER_SIZEOF(menuNode_t, pointWidth)},
+	{"gap_width", V_INT, offsetof(menuNode_t, gapWidth), MEMBER_SIZEOF(menuNode_t, gapWidth)},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -145,6 +147,7 @@ static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"string",
 	"text",
 	"bar",
+	"tbar",
 	"model",
 	"container",
 	"item",

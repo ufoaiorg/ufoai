@@ -47,50 +47,50 @@ menu physdata
 	// abilities
 	// ==================
 
-	string pwr_lbl { pos "480 126"  string "_Strength:" }
-	string pwr_val { pos "744 126"  string "*cvar mn_tpwr" align ur }
-	pic pwr_rahmen { pos "483 139"  image menu/bar_rahmen }
-	bar pwr_bar    { pos "492 144" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string pwr_lbl { pos "480 128"  string "_Strength:" }
+	string pwr_val { pos "744 128"  string "*cvar mn_tpwr" align ur }
+	pic pwr_bdr    { pos "478 144"  image menu/bar_border align ul_rsl }
+	tbar pwr_bar   { pos "482 144"  align ul_rsl current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
-	string spd_lbl { pos "480 158" string "_Speed:" }
-	string spd_val { pos "744 158" string "*cvar mn_tspd" align ur }
-	pic spd_rahmen { pos "483 171" image menu/bar_rahmen }
-	bar spd_bar    { pos "492 176" current "*cvar mn_vspd" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string spd_lbl { pos "480 160" string "_Speed:" }
+	string spd_val { pos "744 160" string "*cvar mn_tspd" align ur }
+	pic spd_bdr    { pos "478 176" image menu/bar_border align ul_rsl }
+	tbar spd_bar   { pos "482 176" align ul_rsl current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
-	string acc_lbl { pos "480 190" string "_Accuracy:" }
-	string acc_val { pos "744 190" string "*cvar mn_tacc" align ur }
-	pic acc_rahmen { pos "483 203" image menu/bar_rahmen }
-	bar acc_bar    { pos "492 208" current "*cvar mn_vacc" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string acc_lbl { pos "480 192" string "_Accuracy:" }
+	string acc_val { pos "744 192" string "*cvar mn_tacc" align ur }
+	pic acc_bdr    { pos "478 208" image menu/bar_border align ul_rsl }
+	tbar acc_bar   { pos "482 208" align ul_rsl current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
-	string mnd_lbl { pos "480 222" string "_Mind:" }
-	string mnd_val { pos "744 222" string "*cvar mn_tmnd" align ur }
-	pic mnd_rahmen { pos "483 235" image menu/bar_rahmen }
-	bar mnd_bar    { pos "492 240" current "*cvar mn_vmnd" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string mnd_lbl { pos "480 224" string "_Mind:" }
+	string mnd_val { pos "744 224" string "*cvar mn_tmnd" align ur }
+	pic mnd_bdr    { pos "478 240" image menu/bar_border align ul_rsl }
+	tbar mnd_bar   { pos "482 240" align ul_rsl current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
-	string cls_lbl { pos "480 270" string "_Close Combat:" }
-	string cls_val { pos "744 270" string "*cvar mn_tcls" align ur }
-	pic cls_rahmen { pos "483 283" image menu/bar_rahmen }
-	bar cls_bar    { pos "492 288" current "*cvar mn_vcls" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string cls_lbl { pos "480 262" string "_Close Combat:" }
+	string cls_val { pos "744 262" string "*cvar mn_tcls" align ur }
+	pic cls_bdr    { pos "478 278" image menu/bar_border align ul_rsl }
+	tbar cls_bar   { pos "482 278" align ul_rsl current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
-	string hvy_lbl { pos "480 301" string "_Heavy Weapons:" }
-	string hvy_val { pos "744 301" string "*cvar mn_thvy" align ur }
-	pic hvy_rahmen { pos "483 314" image menu/bar_rahmen }
-	bar hvy_bar    { pos "492 319" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string hvy_lbl { pos "480 294" string "_Heavy Weapons:" }
+	string hvy_val { pos "744 294" string "*cvar mn_thvy" align ur }
+	pic hvy_bdr    { pos "478 310" image menu/bar_border align ul_rsl }
+	tbar hvy_bar   { pos "482 310" align ul_rsl current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
-	string ass_lbl { pos "480 333" string "_Assault Weapons:" }
-	string ass_val { pos "744 333" string "*cvar mn_tass" align ur }
-	pic ass_rahmen { pos "483 346" image menu/bar_rahmen }
-	bar ass_bar    { pos "492 351" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string ass_lbl { pos "480 326" string "_Assault Weapons:" }
+	string ass_val { pos "744 326" string "*cvar mn_tass" align ur }
+	pic ass_bdr    { pos "478 342" image menu/bar_border align ul_rsl }
+	tbar ass_bar   { pos "482 342" align ul_rsl current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
-	string snp_lbl { pos "480 365" string "_Sniper Rifles:" }
-	string snp_val { pos "744 365" string "*cvar mn_tsnp" align ur }
-	pic snp_rahmen { pos "483 378" image menu/bar_rahmen }
-	bar snp_bar    { pos "492 383" current "*cvar mn_vsnp" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string snp_lbl { pos "480 358" string "_Sniper Rifles:" }
+	string snp_val { pos "744 358" string "*cvar mn_tsnp" align ur }
+	pic snp_bdr    { pos "478 374" image menu/bar_border align ul_rsl }
+	tbar snp_bar   { pos "482 374" align ul_rsl current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
-	string exp_lbl { pos "480 397" string "_High-Explosives:" }
-	string exp_val { pos "744 397" string "*cvar mn_texp" align ur }
-	pic exp_rahmen { pos "483 410" image menu/bar_rahmen }
-	bar exp_bar    { pos "492 415" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 100 align uc }
+	string exp_lbl { pos "480 392" string "_High-Explosives:" }
+	string exp_val { pos "744 392" string "*cvar mn_texp" align ur }
+	pic exp_bdr    { pos "478 408" image menu/bar_border align ul_rsl }
+	tbar exp_bar   { pos "482 408" align ul_rsl current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
 	// ==================
 	// health and morale
