@@ -128,6 +128,8 @@ qboolean Rimp_Init (void)
 		Com_Printf("I: got %d bits for blue\n", attrValue);
 	if (!SDL_GL_GetAttribute(SDL_GL_ALPHA_SIZE, &attrValue))
 		Com_Printf("I: got %d bits for alpha\n", attrValue);
+	if (!SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &attrValue))
+		Com_Printf("I: got %d bits for multisample buffer\n", attrValue);
 
 	/* we need this in the renderer because if we issue an vid_restart we have
 	 * to set these values again, too */
