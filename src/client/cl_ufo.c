@@ -241,7 +241,7 @@ static int UFO_IsTargetOfBase (int ufoIdx, base_t *base)
  * @brief Update alien interest for one PHALANX base
  * @param[in] ufo Pointer to the aircraft_t
  * @param[in] dt Elapsed time since last check
- * @param[in] base Pointer to the base 
+ * @param[in] base Pointer to the base
  * @note This algorithm is far from perfect. Feel free to improve / change it. The problem
  * here is that this function will be called on each time increase, for each ufo and for each base.
  * So it must not need a lot of complex calculations.
@@ -622,6 +622,7 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Remove a UFO from the geoscape
   */
@@ -630,6 +631,7 @@ static void UFO_RemoveFromGeoscape_f (void)
 	if (gd.numUFOs > 0)
 		UFO_RemoveFromGeoscape(gd.ufos);
 }
+#endif
 
 /**
  * @brief Check events for ufos : appears or disappears on radars
