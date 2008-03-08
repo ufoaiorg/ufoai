@@ -1084,9 +1084,10 @@ image_t *r_dayandnighttexture;
 void R_CalcDayAndNight (float q)
 {
 	int x, y;
-	float phi, dphi, a, da;
-	float sin_q, cos_q, root;
-	float pos;
+	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
+	const float da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
+	const float sin_q = sin(q);
+	const float cos_q = cos(q);
 	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
 	byte *px;
 
@@ -1103,16 +1104,8 @@ void R_CalcDayAndNight (float q)
 	assert(r_dayandnighttexture->texnum);
 	R_BindTexture(r_dayandnighttexture->texnum);
 
-	/* init geometric data */
-	dphi = (float) 2 * M_PI / DAN_WIDTH;
-
-	da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
-
-	/* precalculate trigonometric functions */
-	sin_q = sin(q);
-	cos_q = cos(q);
 	for (x = 0; x < DAN_WIDTH; x++) {
-		phi = x * dphi - q;
+		const float phi = x * dphi - q;
 		sin_phi[x] = sin(phi);
 		cos_phi[x] = cos(phi);
 	}
@@ -1120,10 +1113,10 @@ void R_CalcDayAndNight (float q)
 	/* calculate */
 	px = r_dayandnightalpha;
 	for (y = 0; y < DAN_HEIGHT; y++) {
-		a = sin(M_PI / 2 * HIGH_LAT - y * da);
-		root = sqrt(1 - a * a);
+		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
+		const float root = sqrt(1 - a * a);
 		for (x = 0; x < DAN_WIDTH; x++) {
-			pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
+			const float pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
 
 			if (pos >= DAWN)
 				*px++ = 255;
