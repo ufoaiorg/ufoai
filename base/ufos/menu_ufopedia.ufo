@@ -437,6 +437,7 @@ menu ufopedia
 
 	zone weapon_name_click
 	{
+		if "mn_displayweapon > 0"
 		pos		"285 702"
 		size	"220 20"
 		click
