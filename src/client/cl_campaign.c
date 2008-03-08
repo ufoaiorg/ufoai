@@ -2229,10 +2229,14 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 static void CP_CreateAlienTeam (mission_t *mission)
 {
 	const char *alienType;
+	int numAliens;
 
 	assert(mission->pos);
 
-	ccs.battleParameters.aliens = mission->mapDef->maxAliens;
+	numAliens = 4 + rand() % (2 + ccs.overallInterest / 100);
+	if (numAliens > mission->mapDef->maxAliens)
+		numAliens = mission->mapDef->maxAliens;
+	ccs.battleParameters.aliens = numAliens;
 
 	alienType = CP_GetAlienByInterest(mission);
 
