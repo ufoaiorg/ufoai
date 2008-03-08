@@ -2291,7 +2291,11 @@ static void CP_CreateBattleParameters (mission_t *mission)
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_ufocrashed %i;", mission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+')
+				Cvar_Set("rm_ufo", va("+%s", UFO_TypeToShortName(selectedMission->ufo->ufotype)));
+#if 0
+/* @todo replace previous line by this one when random map assemblies will have crashed map tiles */
 				Cvar_Set("rm_ufo", va("+%s", UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype)));
+#endif
 		} else {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */
