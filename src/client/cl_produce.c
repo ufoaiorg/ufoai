@@ -1114,7 +1114,7 @@ void PR_ProductionInit (void)
  */
 void PR_Init (void)
 {
-	menu_t* menu = MN_GetMenu("production");
+	const menu_t* menu = MN_GetMenu("production");
 	if (!menu)
 		Sys_Error("Could not find the production menu\n");
 
@@ -1146,10 +1146,7 @@ void PR_UpdateProductionCap (base_t *base)
 static void PR_ProductionIncrease_f (void)
 {
 	int amount = 1, amount_temp = 0;
-	int producible_amount;
 	production_queue_t *queue;
-	objDef_t *od;
-	aircraft_t *aircraft;
 	production_t *prod;
 	base_t* base;
 
@@ -1209,12 +1206,10 @@ static void PR_ProductionIncrease_f (void)
 
 		if (produceCategory != BUY_AIRCRAFT) {
 			/* Get technology of the item in the selected queue-entry. */
-			od = &csi.ods[prod->objID];
-
+			const objDef_t *od = &csi.ods[prod->objID];
+			int producible_amount = amount;
 			if (od->tech)
 				producible_amount = PR_RequirementsMet(amount, &od->tech->require_for_production, base);
-			else
-				producible_amount = amount;
 
 			if (producible_amount > 0) {	/* Check if production requirements have been (even partially) met. */
 				if (od->tech) {
@@ -1248,8 +1243,8 @@ static void PR_ProductionIncrease_f (void)
 				 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
 			}
 		} else {
+			const aircraft_t *aircraft = &aircraft_samples[prod->objID];
 			prod->aircraft = qtrue;
-			aircraft = &aircraft_samples[prod->objID];
 			Com_DPrintf(DEBUG_CLIENT, "Increasing %s\n", aircraft->name);
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), _(aircraft->name));
 			MN_AddNewMessage(_("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
