@@ -365,8 +365,13 @@ void MN_DrawMenus (void)
 	}
 
 	/* draw a special notice */
-	if (cl.time < cl.msgTime)
-		MN_DrawNotice(500, 110);
+	if (cl.time < cl.msgTime) {
+		menu = MN_GetActiveMenu();
+		if (menu->noticePos[0] || menu->noticePos[1])
+			MN_DrawNotice(menu->noticePos[0], menu->noticePos[1]);
+		else
+			MN_DrawNotice(500, 110);
+	}
 
 	R_ColorBlend(NULL);
 }

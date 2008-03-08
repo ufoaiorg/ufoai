@@ -609,8 +609,34 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 
 		/* get node type */
 		do {
-			found = qfalse;
+			/* parse special menu values */
+			if (token[0] == '{') {
+				do {
+					found = qfalse;
+					/* get new token */
+					token = COM_EParse(text, errhead, menu->name);
+					if (!*text)
+						return qfalse;
+					if (token[0] == '}')
+						break;
 
+					if (!Q_strcmp(token, "noticepos")) {
+						/* get new token */
+						token = COM_EParse(text, errhead, menu->name);
+						if (!*text)
+							return qfalse;
+						Com_ParseValue(menu->noticePos, token, V_POS, 0, sizeof(vec2_t));
+						found = qtrue;
+					} else
+						Com_Printf("Invalid special menu value '%s'\n", token);
+				} while (found);
+
+				/* get new token */
+				token = COM_EParse(text, errhead, menu->name);
+				if (!*text)
+					return qfalse;
+			}
+			found = qfalse;
 			for (i = 0; i < MN_NUM_NODETYPE; i++)
 				if (!Q_strcmp(token, nt_strings[i])) {
 					/* found node */
