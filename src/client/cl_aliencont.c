@@ -29,9 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /** Statics for menu. */
-static char aliencontText[1024];		/**< Used in menu lists. */
 static int numAliensOnList = 0;			/**< Number of aliens on AC menu list. */
 static const aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment. */
+
+/** @brief First line in aliencont menu. */
+static int alienContFirstEntry;
 
 /**
  * Collecting aliens functions
@@ -367,7 +369,6 @@ void AL_RemoveAliens (base_t *base, teamDef_t *alienType, int amount, alienCalcT
 	default:
 		break;
 	}
-	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
 	return;
 }
 
@@ -531,7 +532,7 @@ qboolean AL_CheckAliveFreeSpace (base_t *base, aliensCont_t *containment, int nu
  * @note aliens from alien containment.
  * @return amount of all alive aliens stored in containments
  * @sa CL_AircraftReturnedToHomeBase
- * @sa AC_Init
+ * @sa AC_Init_f
  */
 int AL_CountAll (void)
 {
@@ -557,7 +558,6 @@ int AL_CountAll (void)
  * @param[in] alientype
  * @param[in] alive boolean whether the alien is alive or already dead
  * @return amount of killed aliens of given type
- * @sa AC_SelectAlien_f
  */
 static int AL_CountForMenu (int alienidx, qboolean alive)
 {
@@ -581,80 +581,7 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 }
 
 /**
- * @brief Update menu cvars for selected alien.
- */
-static void AC_SelectAlien_f (void)
-{
-	technology_t *tech;
-
-	if (!aliencontCurrent || !baseCurrent)
-		return;
-
-	tech = aliencontCurrent->tech;
-	if (!tech) {
-		MN_MenuTextReset(TEXT_UFOPEDIA);
-		return;
-	}
-
-	Cvar_Set("mn_al_alienmodel", tech->mdl_top);
-	assert(aliencontCurrent->teamDef);
-	Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
-	Cvar_SetValue("mn_al_techidx", tech->idx);
-	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->teamDef->index, qfalse));
-	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->index, qtrue));
-
-	UP_Article(tech, NULL);
-
-	/* Set state of Research and UFOpedia buttons. */
-	if (tech && RS_IsResearched_idx(tech->idx))
-		Cbuf_AddText("aliencont_researchg;aliencont_ufopediab\n");
-	else
-		Cbuf_AddText("aliencont_researchb;aliencont_ufopediag\n");
-}
-
-/**
- * @brief Check if there is working Alien Containment in next base.
- * @sa AC_PrevAC
- * @sa AC_PrevAC_f
- * @sa AC_NextAC_f
- * @return qtrue if there is working Alien Containment in next base.
- */
-static qboolean AC_NextAC (void)
-{
-	int i, baseID;
-	qboolean found = qfalse;
-
-	if (!baseCurrent)
-		return qfalse;
-
-	baseID = baseCurrent->idx;
-
-	/* not all maxbases must be founded already */
-	i = (baseID + 1) & (MAX_BASES - 1);
-	if (i >= gd.numBases)
-		i = 0; /* i -= gd.numBases - but 0 should work, too */
-
-	for (; i < gd.numBases; i++) {
-		if (!gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
-			continue;
-		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
-			baseID = i;
-			found = qtrue;
-			break;
-		}
-	}
-
-	/* might still be the case */
-	if (baseID == baseCurrent->idx)
-		return qfalse;
-	else
-		return found;
-}
-
-/**
  * @brief Open menu for next Alien Containment.
- * @sa AC_NextAC
- * @sa AC_PrevAC
  * @sa AC_PrevAC_f
  */
 static void AC_NextAC_f (void)
@@ -693,42 +620,7 @@ static void AC_NextAC_f (void)
 }
 
 /**
- * @brief Check if there is working Alien Containment in previous base.
- * @sa AC_PrevAC_f
- * @sa AC_NextAC
- * @sa AC_NextAC_f
- * @return qtrue if there is working Alien Containment in previous base.
- */
-static qboolean AC_PrevAC (void)
-{
-	int i, baseID;
-	qboolean found = qfalse;
-
-	if (!baseCurrent)
-		return qfalse;
-
-	baseID = baseCurrent->idx;
-
-	for (i = (baseID - 1) & (MAX_BASES - 1); i >= 0; i--) {
-		if (!gd.bases[i].founded || !gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
-			continue;
-		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
-			baseID = i;
-			found = qtrue;
-			break;
-		}
-	}
-
-	if (baseID == baseCurrent->idx)
-		return qfalse;
-	else
-		return found;
-}
-
-/**
  * @brief Open menu for previous Alien Containment.
- * @sa AC_PrevAC
- * @sa AC_NextAC
  * @sa AC_NextAC_f
  */
 static void AC_PrevAC_f (void)
@@ -810,7 +702,6 @@ void AC_KillAll (base_t *base)
 	AL_RemoveAliens(base, NULL, 0, AL_KILL);
 
 	/* Reinit menu to display proper values. */
-	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");
 }
 
@@ -846,9 +737,6 @@ static void AC_KillOne_f (void)
 
 	/* which item from the list? */
 	num = atoi(Cmd_Argv(1));
-
-	Com_DPrintf(DEBUG_CLIENT, "AC_KillOne_f: listnumber %i\n", num);
-
 	if (num >= numAliensOnList || num < 0) {
 		Com_DPrintf(DEBUG_CLIENT, "AC_KillOne_f: max exceeded %i/%i\n", num, numAliensOnList);
 		return;
@@ -870,7 +758,6 @@ static void AC_KillOne_f (void)
 
 	AL_RemoveAliens(baseCurrent, containment[num].teamDef, 1, AL_KILLONE);
 	/* Reinit menu to display proper values. */
-	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");
 }
 
@@ -939,7 +826,6 @@ static void AC_AddOne_f (void)
 		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDDEAD);
 	}
 	/* Reinit menu to display proper values. */
-	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");
 }
 #endif
@@ -949,129 +835,28 @@ static void AC_AddOne_f (void)
  */
 static void AC_ResearchAlien_f (void)
 {
-	int techidx;
+	const technology_t *tech;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
 		return;
 
-	techidx = Cvar_VariableInteger("mn_al_techidx");
+	tech = aliencontCurrent->tech;
+	if (!tech)
+		Sys_Error("aliencontCurrent without tech pointer");
 
-	if (techidx >= 0 && techidx != TECH_INVALID)
-		return;
-
-	if (!RS_IsResearched_idx(techidx))
+	if (!RS_IsResearched_ptr(tech))
 		Cbuf_AddText("mn_push research\n");
-}
-
-/**
- * @brief Alien containment menu init function.
- * @note Command to call this: aliencont_init
- * @note Should be called whenever the alien containment menu gets active.
- */
-static void AC_Init (void)
-{
-	int i;
-	/* Tmp buffer for string generating. */
-	char tmp[128];
-	qboolean killall_state = qfalse;
-
-	/* Reset the aliencont list. */
-	aliencontText[0] = '\0';
-	numAliensOnList = 0;
-
-	if (!baseCurrent) {
-		Com_Printf("No base selected\n");
-		return;
-	}
-
-	Cvar_Set("mn_al_alientype", "");
-	Cvar_Set("mn_al_alienmodel", "");
-	Cvar_Set("mn_al_killed", "");
-	Cvar_Set("mn_al_alive", "");
-
-	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
-		const aliensCont_t *containment = baseCurrent->alienscont;
-		const technology_t* tech;
-		for (i = 0; i < gd.numAliensTD; i++) {
-			if (containment[i].teamDef) {
-				tech = containment[i].tech;
-				if (!tech) {
-					Com_Printf("AC_Init: Tech entry for containment %i not set!\n", i);
-					/* to let the click function still work */
-					Q_strcat(aliencontText, "missing tech\n", sizeof(aliencontText));
-					continue;
-				}
-				if (!aliencontCurrent) {
-					aliencontCurrent = &containment[i];
-				}
-				if ((containment[i].amount_alive > 0) || (containment[i].amount_dead > 0)) {
-					/* Set state of KillOne button. */
-					if (containment[i].amount_alive > 0)
-						Cbuf_AddText(va("aliencont_alienb%i\n", numAliensOnList));
-					else
-						Cbuf_AddText(va("aliencont_alieng%i\n", numAliensOnList));
-					/* Generate a list entry. */
-					Com_sprintf(tmp, sizeof(tmp), "%s\t%s\t%i\n",
-						_(containment[i].teamDef->name),
-						(RS_IsResearched_ptr(tech) ? _("Yes") : _("Needs autopsy!")),
-						containment[i].amount_alive);
-					Q_strcat(aliencontText, tmp, sizeof(aliencontText));
-					numAliensOnList++;
-				}
-			}
-		}
-
-		/* Disable KillOne buttons for empty entries. */
-		for (i = 0; i < 10; i++) {
-			if (i < numAliensOnList)
-				continue;
-			Cbuf_AddText(va("aliencont_aliend%i\n", i));
-		}
-
-		/* Set state of KillAll button. */
-		for (i = 0; i < gd.numAliensTD; i++) {
-			if (containment[i].amount_alive > 0) {
-				killall_state = qtrue;
-				break;
-			}
-		}
-		if (killall_state)
-			Cbuf_AddText("aliencont_killb\n");
-		else
-			Cbuf_AddText("aliencont_killg\n");
-
-		/* By default Research and UFOpedia buttons should be disabled. */
-		Cbuf_AddText("aliencont_researchg;aliencont_ufopediag\n");
-
-		/* State of next and prev AC buttons. */
-		if (AC_NextAC())
-			Cbuf_AddText("aliencont_nextbb\n");
-		else
-			Cbuf_AddText("aliencont_nextbg\n");
-		if (AC_PrevAC())
-			Cbuf_AddText("aliencont_prevbb\n");
-		else
-			Cbuf_AddText("aliencont_prevbg\n");
-
-		Cvar_SetValue("mn_al_globalamount", AL_CountAll());
-		Cvar_SetValue("mn_al_localamount", baseCurrent->capacities[CAP_ALIENS].cur);
-		Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].max);
-		Cvar_Set("mn_al_base", baseCurrent->name);
-
-		mn.menuText[TEXT_STANDARD] = aliencontText;
-	} else
-		MN_MenuTextReset(TEXT_STANDARD);
-	MN_MenuTextReset(TEXT_UFOPEDIA);
 }
 
 /**
  * @brief Click function for aliencont menu list.
  * @sa AC_Reset
  */
-static void AC_AlienListClick_f (void)
+static void AC_AlienClick_f (void)
 {
 	int num;
+	const technology_t *tech;
 
 	if (Cmd_Argc() < 2 || !baseCurrent) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1081,10 +866,10 @@ static void AC_AlienListClick_f (void)
 	/* which item from the list? */
 	num = atoi(Cmd_Argv(1));
 
-	Com_DPrintf(DEBUG_CLIENT, "AC_AlienListClick_f: listnumber %i\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "AC_AlienClick_f: listnumber %i\n", num);
 
 	if (num >= numAliensOnList || num < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "AC_AlienListClick_f: max exceeded %i/%i\n", num, numAliensOnList);
+		Com_DPrintf(DEBUG_CLIENT, "AC_AlienClick_f: max exceeded %i/%i\n", num, numAliensOnList);
 		return;
 	}
 
@@ -1105,7 +890,139 @@ static void AC_AlienListClick_f (void)
 		return;
 
 	aliencontCurrent = &baseCurrent->alienscont[num];
-	AC_SelectAlien_f();
+	tech = aliencontCurrent->tech;
+	Cvar_Set("mn_al_alienimage", tech->image_top);
+	assert(aliencontCurrent->teamDef);
+	Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
+	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->index, qtrue));
+	Cvar_SetValue("mn_al_dead", AL_CountForMenu(aliencontCurrent->teamDef->index, qfalse));
+}
+
+
+/**
+ * @brief Maximal entries in aliencont menu.
+ * @sa MAX_TEAMDEFS
+ */
+#define AC_MENU_MAX_ENTRIES 12
+
+/** @brief Number of entries in a line of the aliencont menu. */
+#define AC_MENU_LINE_ENTRIES 2
+
+/**
+ * @brief Updates the alienscont menu.
+ */
+static void AC_UpdateMenu (void)
+{
+	int i, j;
+
+	/* Reset list. */
+	Cbuf_AddText("aliencont_clear\n");
+
+	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
+		const aliensCont_t *containment = baseCurrent->alienscont;
+		const technology_t* tech;
+		for (i = 0, j = 0; i < gd.numAliensTD; i++) {
+			if ((j >= alienContFirstEntry) && (j < AC_MENU_MAX_ENTRIES)) {
+				if (containment[i].teamDef) {
+					tech = containment[i].tech;
+					if (!tech) {
+						Com_Printf("AC_UpdateMenu: Tech entry for containment %i not set!\n", i);
+						/* to let the click function still work */
+						continue;
+					}
+					if (!aliencontCurrent) {
+						aliencontCurrent = &containment[i];
+					}
+					if (containment[i].amount_alive > 0 || containment[i].amount_dead > 0) {
+						/* Generate a list entry. */
+						if (RS_IsResearched_ptr(tech)) {
+							Cvar_Set(va("mn_ac_statusstr%i", j), _("Already researched"));
+						} else {
+							Cvar_Set(va("mn_ac_statusstr%i", j), _("Needs autopsy!"));
+							if (!containment[i].amount_dead) {
+								Cbuf_AddText(va("aliencontkill%i\n", j));
+							} else {
+								Cbuf_AddText(va("aliencontneedautopsy%i\n", j));
+							}
+						}
+						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overalltime) * 100);
+						/* Display name in the correct list-entry. */
+						Cvar_Set(va("mn_ac_name%i", j), _(containment[i].teamDef->name));
+						/* Display amount of dead aliens in the correct list-entry. */
+						Cvar_SetValue(va("mn_ac_dead%i", j), containment[i].amount_dead);
+						/* Display amount of alive aliens in the correct list-entry. */
+						Cvar_SetValue(va("mn_ac_alive%i", j), containment[i].amount_alive);
+						j++;
+					}
+				}
+			}
+		}
+
+		numAliensOnList = j;
+
+		for (; j < AC_MENU_MAX_ENTRIES; j++) {
+			Cvar_Set(va("mn_ac_statusstr%i", j), _("Free slot"));
+			Cvar_Set(va("mn_ac_name%i", j), _("None"));
+			Cvar_Set(va("mn_ac_dead%i", j), "");
+			Cvar_Set(va("mn_ac_alive%i", j), "");
+			Cvar_SetValue(va("mn_ac_progress%i", j), 0);
+		}
+	}
+	/* @todo Select the containment we (maybe) just clicked again */
+	Cbuf_AddText("aliencont_click 0\n");
+}
+
+
+/**
+ * @brief Alien containment menu init function.
+ * @note Command to call this: aliencont_init
+ * @note Should be called whenever the alien containment menu gets active.
+ */
+static void AC_Init_f (void)
+{
+	/* Reset the aliencont list. */
+	numAliensOnList = 0;
+
+	if (!baseCurrent) {
+		Com_Printf("No base selected\n");
+		return;
+	}
+
+	Cvar_Set("mn_al_alientype", "");
+	Cvar_Set("mn_al_alienimage", "");
+	Cvar_SetValue("mn_al_dead", 0);
+	Cvar_SetValue("mn_al_alive", 0);
+	Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].max);
+
+	AC_UpdateMenu();
+}
+
+/**
+ * @brief Click function for scrolling up the aliencont list.
+ */
+static void AC_ListUp_f (void)
+{
+	if (!baseCurrent)
+		return;
+
+	if (alienContFirstEntry >= AC_MENU_LINE_ENTRIES)
+		alienContFirstEntry -= AC_MENU_LINE_ENTRIES;
+
+	AC_UpdateMenu();
+}
+
+/**
+ * @brief Click function for scrolling down the aliencont list.
+ */
+static void AC_ListDown_f (void)
+{
+	if (!baseCurrent)
+		return;
+
+	if (alienContFirstEntry + AC_MENU_MAX_ENTRIES < numAliensOnList)
+		alienContFirstEntry += AC_MENU_LINE_ENTRIES;
+
+	AC_UpdateMenu();
 }
 
 /**
@@ -1115,19 +1032,19 @@ static void AC_AlienListClick_f (void)
 void AC_Reset (void)
 {
 	/* add commands */
-	Cmd_AddCommand("aliencont_init", AC_Init, "Init function for alien containment menu");
-	Cmd_AddCommand("aliencontlist_click", AC_AlienListClick_f, "Click function for aliencont list");
-	Cmd_AddCommand("aliencont_select", AC_SelectAlien_f, "Updates the menu cvars for the current selected alien");
+	Cmd_AddCommand("aliencont_init", AC_Init_f, "Init function for alien containment menu");
+	Cmd_AddCommand("aliencont_click", AC_AlienClick_f, "Click function for aliencont list");
 	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
 	Cmd_AddCommand("aliencont_killall", AC_KillAll_f, "Kills all aliens in current base");
 	Cmd_AddCommand("aliencont_research", AC_ResearchAlien_f, "Opens research menu");
 	Cmd_AddCommand("aliencont_nextbase", AC_NextAC_f, "Opens Alien Containment menu in next base");
 	Cmd_AddCommand("aliencont_prevbase", AC_PrevAC_f, "Opens Alien Containment menu in previous base");
 	Cmd_AddCommand("aliencont_killone", AC_KillOne_f, "Kills one alien of a given type");
+	Cmd_AddCommand("aliencont_list_up", AC_ListUp_f, "Scroll up function for aliencont list");
+	Cmd_AddCommand("aliencont_list_down", AC_ListDown_f, "Scroll down function for aliencont list");
 #ifdef DEBUG
-	Cmd_AddCommand("aliencont_addone", AC_AddOne_f, "Add one alien of a given type");
+	Cmd_AddCommand("debug_addalientocont", AC_AddOne_f, "Add one alien of a given type");
 #endif
-	memset(aliencontText, 0, sizeof(aliencontText));
 	aliencontCurrent = NULL;
 }
 

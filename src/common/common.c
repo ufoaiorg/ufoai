@@ -575,7 +575,7 @@ static void Com_DebugHelp_f (void)
 			"\n"
 			"Debugging commands:\n"
 			"------------------------------\n"
-			" * aliencont_addone\n"
+			" * debug_addalientocont\n"
 			" * debug_additems\n"
 			" * debug_addmission\n"
 			" * debug_alienbasevisible\n"
