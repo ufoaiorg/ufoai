@@ -992,7 +992,8 @@ static void AC_Init_f (void)
 	Cvar_Set("mn_al_alienimage", "");
 	Cvar_SetValue("mn_al_dead", 0);
 	Cvar_SetValue("mn_al_alive", 0);
-	Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].max);
+	Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].cur);
+	Cvar_SetValue("mn_al_capacity_max", baseCurrent->capacities[CAP_ALIENS].max);
 
 	AC_UpdateMenu();
 }

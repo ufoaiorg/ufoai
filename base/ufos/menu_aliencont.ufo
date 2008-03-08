@@ -537,7 +537,7 @@ menu aliencont
 	string txt_alc_limit_v
 	{
 		font	f_small
-		string "*cvar mn_al_capacity"
+		string "*cvar mn_al_capacity / *cvar mn_al_capacity_max"
 		pos		"240 730"
 		align	ur
 	}
