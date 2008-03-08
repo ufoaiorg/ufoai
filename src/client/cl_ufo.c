@@ -45,12 +45,12 @@ typedef struct ufoTypeList_s {
  * in the ufocrash[dn].ump files
  */
 static const ufoTypeList_t ufoTypeList[] = {
-	{"craft_ufo_scout", "craft_crash_scout", UFO_SCOUT},
-	{"craft_ufo_fighter", "craft_crash_fighter", UFO_FIGHTER},
-	{"craft_ufo_harvester", "craft_crash_harvester", UFO_HARVESTER},
-	{"craft_ufo_corrupter", "craft_crash_corrupter", UFO_CORRUPTER},
 	{"craft_ufo_bomber", "craft_crash_bomber", UFO_BOMBER},
 	{"craft_ufo_carrier", "craft_crash_carrier", UFO_CARRIER},
+	{"craft_ufo_corrupter", "craft_crash_corrupter", UFO_CORRUPTER},
+	{"craft_ufo_fighter", "craft_crash_fighter", UFO_FIGHTER},
+	{"craft_ufo_harvester", "craft_crash_harvester", UFO_HARVESTER},
+	{"craft_ufo_scout", "craft_crash_scout", UFO_SCOUT},
 	{"craft_ufo_supply", "craft_crash_supply", UFO_SUPPLY},
 
 	{NULL, 0}
