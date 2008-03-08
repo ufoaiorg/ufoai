@@ -161,6 +161,10 @@ menu options
 
 menu options_video
 {
+	{
+		noticepos	"500 110"
+	}
+
 	string videosettings
 	{
 		string	"_Video settings"
