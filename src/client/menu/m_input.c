@@ -29,8 +29,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "m_inventory.h"
 #include "m_node_text.h"
+#include "m_draw.h"
 
 cvar_t *mn_inputlength;
+
+/**
+ * @sa MN_DisplayNotice
+ */
+static void MN_CheckCvar (const cvar_t *cvar)
+{
+	if (cvar->modified) {
+		if (cvar->flags & CVAR_CONTEXT) {
+			MN_DisplayNotice(_("This change requires a restart"), 2000);
+		} else if (cvar->flags & CVAR_IMAGES) {
+			MN_DisplayNotice(_("This change might require a restart"), 2000);
+		}
+	}
+}
+
+/**
+ * @param[in] str Might be NULL if you want to set a float value
+ */
+static void MN_SetCvar (const char *name, const char *str, float value)
+{
+	const cvar_t *cvar;
+	cvar = Cvar_FindVar(name);
+	if (!cvar) {
+		Com_Printf("Could not find cvar '%s'\n", name);
+		return;
+	}
+	/* strip '*cvar ' from data[0] - length is already checked above */
+	if (str)
+		Cvar_Set(cvar->name, str);
+	else
+		Cvar_SetValue(cvar->name, value);
+	MN_CheckCvar(cvar);
+}
 
 /**
  * @sa IN_Parse
@@ -70,14 +104,16 @@ qboolean MN_CursorOnMenu (int x, int y)
 static void MN_CheckboxClick (menuNode_t * node)
 {
 	int value;
+	const char *cvarName;
 
 	assert(node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 	/* no cvar? */
 	if (Q_strncmp(node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
 		return;
 
-	value = Cvar_VariableInteger(&((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6]) ^ 1;
-	Cvar_SetValue(&((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6], value);
+	cvarName = &((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+	value = Cvar_VariableInteger(cvarName) ^ 1;
+	MN_SetCvar(cvarName, NULL, value);
 }
 
 /**
@@ -117,11 +153,11 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 			clickedAtOption--;
 		}
 		if (selectBoxOption) {
-			/* strip '*cvar ' from data[0] - length is already checked above */
-			Cvar_Set(&((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6], selectBoxOption->value);
+			const char *cvarName = &((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+			MN_SetCvar(cvarName, selectBoxOption->value, 0);
 			if (*selectBoxOption->action) {
 #ifdef DEBUG
-				if (selectBoxOption->action[strlen(selectBoxOption->action)-1] != ';')
+				if (selectBoxOption->action[strlen(selectBoxOption->action) - 1] != ';')
 					Com_Printf("selectbox option with none terminated action command");
 #endif
 				Cbuf_AddText(selectBoxOption->action);
@@ -137,21 +173,20 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 static void MN_BarClick (menu_t * menu, menuNode_t * node, int x)
 {
 	char var[MAX_VAR];
-	float frac, min;
 
 	if (!node->mousefx)
 		return;
 
 	Q_strncpyz(var, node->data[2], sizeof(var));
 	/* no cvar? */
-	if (Q_strncmp(var, "*cvar", 5))
-		return;
-
-	/* normalize it */
-	frac = (float) (x - node->pos[0]) / node->size[0];
-	/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
-	min = MN_GetReferenceFloat(menu, node->data[1]);
-	Cvar_SetValue(&var[6], min + frac * (MN_GetReferenceFloat(menu, node->data[0]) - min));
+	if (!Q_strncmp(var, "*cvar", 5)) {
+		/* normalize it */
+		const float frac = (float) (x - node->pos[0]) / node->size[0];
+		const float min = MN_GetReferenceFloat(menu, node->data[1]);
+		const float value = min + frac * (MN_GetReferenceFloat(menu, node->data[0]) - min);
+		/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
+		MN_SetCvar(&var[6], NULL, value);
+	}
 }
 
 /**

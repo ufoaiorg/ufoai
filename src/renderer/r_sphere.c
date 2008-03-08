@@ -177,9 +177,9 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 
 	/* solid globe texture */
 	if (sphere->overlay)
-		qglBindTexture(GL_TEXTURE_2D, sphere->overlay->texnum);
+		R_BindTexture(sphere->overlay->texnum);
 	else
-		qglBindTexture(GL_TEXTURE_2D, sphere->texture->texnum);
+		R_BindTexture(sphere->texture->texnum);
 
 	qglEnable(GL_CULL_FACE);
 	qglCallList(sphere->list);

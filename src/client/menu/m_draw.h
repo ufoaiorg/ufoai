@@ -29,5 +29,6 @@ extern cvar_t *mn_show_tooltips;
 
 void MN_DrawMenus(void);
 void MN_DrawMenusInit(void);
+void MN_DisplayNotice(const char *text, int time);
 
 #endif

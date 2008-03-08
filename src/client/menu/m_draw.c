@@ -364,6 +364,10 @@ void MN_DrawMenus (void)
 		}
 	}
 
+	/* draw a special notice */
+	if (cl.time < cl.msgTime)
+		MN_DrawNotice(500, 110);
+
 	R_ColorBlend(NULL);
 }
 
@@ -371,4 +375,16 @@ void MN_DrawMenusInit (void)
 {
 	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes");
 	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
+}
+
+/**
+ * @brief Displays a message over all menus.
+ * @sa SCR_DisplayHudMessage
+ * @param[in] time is a ms values
+ * @param[in] text text is already translated here
+ */
+void MN_DisplayNotice (const char *text, int time)
+{
+	cl.msgTime = cl.time + time;
+	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
 }

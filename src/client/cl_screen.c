@@ -498,7 +498,7 @@ void SCR_Init (void)
 
 /**
  * @brief Displays a message on the hud.
- *
+ * @sa MN_DisplayNotice
  * @param[in] time is a ms values
  * @param[in] text text is already translated here
  */

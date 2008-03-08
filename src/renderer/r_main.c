@@ -413,8 +413,8 @@ static void R_Register (void)
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
-	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, "The maximum texture resolution UFO should use");
-	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");
+	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_IMAGES, "The maximum texture resolution UFO should use");
+	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE | CVAR_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
@@ -429,8 +429,8 @@ static void R_Register (void)
 	Cvar_SetCheckFunction("r_maxlightmap", R_CvarCheckMaxLightmap);
 
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
-	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE, NULL);
-	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE, NULL);
+	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_CONTEXT, NULL);
+	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_CONTEXT, NULL);
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);

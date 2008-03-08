@@ -136,3 +136,8 @@ void Cvar_FixCheatVars(void);
  * @brief Function to remove the cvar and free the space
  */
 qboolean Cvar_Delete(const char *var_name);
+
+/**
+ * @brief Searches for a cvar given by parameter
+ */
+cvar_t *Cvar_FindVar(const char *var_name);

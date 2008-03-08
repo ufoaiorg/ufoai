@@ -64,12 +64,11 @@ static qboolean Cvar_InfoValidate (const char *s)
  * @sa Cvar_VariableString
  * @sa Cvar_SetValue
  */
-static cvar_t *Cvar_FindVar (const char *var_name)
+cvar_t *Cvar_FindVar (const char *var_name)
 {
-	unsigned hash;
 	cvar_t *var;
+	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 
-	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 	for (var = cvar_vars_hash[hash]; var; var = var->hash_next)
 		if (!Q_strcmp(var_name, var->name))
 			return var;
@@ -340,8 +339,8 @@ qboolean Cvar_Delete (const char *var_name)
  */
 cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const char* desc)
 {
-	unsigned hash;
 	cvar_t *var;
+	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 
 	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO))
 		if (!Cvar_InfoValidate(var_name)) {
@@ -349,16 +348,15 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 			return NULL;
 		}
 
-	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
-	for (var = cvar_vars_hash[hash]; var; var = var->hash_next)
-		if (!Q_stricmp(var_name, var->name)) {
-			if (!var->default_string && flags & CVAR_CHEAT)
-				var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
-			var->flags |= flags;
-			if (desc)
-				var->description = desc;
-			return var;
-		}
+	var = Cvar_FindVar(var_name);
+	if (var) {
+		if (!var->default_string && flags & CVAR_CHEAT)
+			var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
+		var->flags |= flags;
+		if (desc)
+			var->description = desc;
+		return var;
+	}
 
 	if (!var_value)
 		return NULL;

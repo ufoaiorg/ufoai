@@ -61,13 +61,13 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 
 	R_FontGenerateCacheList(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, height, string, lines, 0, NULL, qfalse, &cacheList);
 
-	if (x + cacheList.width +3 > VID_NORM_WIDTH)
+	if (x + cacheList.width + 3 > VID_NORM_WIDTH)
 		dx = -(cacheList.width + 10);
 	else
 		dx = 0;
 
 /** @todo
-	if (y + cacheList.height +3 > VID_NORM_HEIGHT)
+	if (y + cacheList.height + 3 > VID_NORM_HEIGHT)
 		dy = -(cacheList.height + 10);
 */
 
@@ -108,3 +108,39 @@ void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 		MN_DrawTooltip("f_verysmall", node->key, x, y, width,0);
 	}
 }
+
+/**
+ * @brief Generic notice function
+ */
+int MN_DrawNotice (int x, int y)
+{
+	const vec4_t noticeBG = { 1.0f, 0.0f, 0.0f, 0.2f };
+	const vec4_t noticeColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+	int height = 0, width = 0;
+	const int maxWidth = 320;
+	const int maxHeight = 100;
+	const char *font = "f_normal";
+	int lines = 5;
+	int dx; /**< Delta-x position. Relative to original x position. */
+
+	/* Get height of string. The width will be ignored (except for the check below). */
+	R_FontLength(font, cl.msgText, &width, &height);
+
+	if (!width)
+		return 0;
+
+	R_FontGenerateCacheList(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, height, cl.msgText, lines, 0, NULL, qfalse, &cacheList);
+
+	if (x + cacheList.width + 3 > VID_NORM_WIDTH)
+		dx = -(cacheList.width + 10);
+	else
+		dx = 0;
+
+	R_DrawFill(x - 1 + dx, y - 1, cacheList.width + 4, cacheList.height + 4, 0, noticeBG);
+	R_ColorBlend(noticeColor);
+	R_FontRenderCacheList(&cacheList, y + 1, maxWidth, maxHeight, dx, 0);
+
+	R_ColorBlend(NULL);
+	return cacheList.width;
+}
+

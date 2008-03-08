@@ -179,6 +179,7 @@ CVARS (console variables)
 #define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
 #define CVAR_CHEAT      64      /**< clamp to the default value when cheats are off */
 #define CVAR_IMAGES     128     /**< effects image filtering */
+#define CVAR_CONTEXT    256     /**< vid shutdown if such a cvar was modified */
 
 /**
  * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
