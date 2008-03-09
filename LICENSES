@@ -3167,6 +3167,7 @@ base/ufos/weapons_melee.ufo | GNU General Public License 2.0
 base/ufos/weapons_particle.ufo | GNU General Public License 2.0
 base/ufos/weapons_plasma.ufo | GNU General Public License 2.0
 base/ufos/weapons_ugv.ufo | GNU General Public License 2.0
+contrib/scripts/compile_po.bat |  | Kildor
 src/common/pqueue.c | Public Domain
 src/common/pqueue.h | Public Domain
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner Höhrer (hoehrer)
