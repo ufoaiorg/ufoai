@@ -16,7 +16,6 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
 					<Add option="-DWIN_ERROR" />
-					<Add option="-DDEVCPP" />
 					<Add option="-ffloat-store" />
 				</Compiler>
 				<Linker>
@@ -37,7 +36,7 @@
 					<Add option="-D_M_IX86=500" />
 					<Add option="-DWIN_ERROR" />
 					<Add option="-DDEBUG" />
-					<Add option="-DDEVCPP" />
+					<Add option="-ffloat-store" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
