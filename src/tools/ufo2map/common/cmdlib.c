@@ -175,6 +175,20 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 static char gamedir[1024];
 
 /**
+ * @brief Get the current working dir and ensures that there is a trailing slash
+ */
+static inline void FS_getwd (char *out, size_t size)
+{
+#ifdef _WIN32
+	_getcwd(out, size);
+#else
+	if (getcwd(out, size) == NULL)
+		Com_Printf("Warning, getcwd failed\n");
+#endif
+	strcat(out, "/");
+}
+
+/**
  * @sa FS_Init
  */
 const char* FS_GameDir (void)
@@ -214,26 +228,11 @@ char *ExpandArg (const char *path)
 
 	if (path[0] != '/' && path[0] != '\\' && path[1] != ':') {
 		FS_getwd(full, sizeof(full));
-		strcat(full, path);
+		strncat(full, path, sizeof(full));
 	} else
 		strncpy(full, path, sizeof(full));
 
 	return full;
-}
-
-/**
- * @brief
- */
-void FS_getwd (char *out, size_t size)
-{
-#ifdef _WIN32
-	_getcwd(out, size);
-	strcat(out, "\\");
-#else
-	if (getcwd(out, size) == NULL)
-		Com_Printf("Warning, getcwd failed\n");
-	strcat(out, "/");
-#endif
 }
 
 /*
