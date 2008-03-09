@@ -2029,6 +2029,11 @@ static void MAP_SetOverlay_f (void)
 			r_geoscape_overlay->integer ^= OVERLAY_NATION;
 		else
 			r_geoscape_overlay->integer |= OVERLAY_NATION;
+	} else if (!Q_strcmp(arg, "xvi")) {
+		if (r_geoscape_overlay->integer & OVERLAY_XVI)
+			r_geoscape_overlay->integer ^= OVERLAY_XVI;
+		else
+			r_geoscape_overlay->integer |= OVERLAY_XVI;
 	}
 }
 

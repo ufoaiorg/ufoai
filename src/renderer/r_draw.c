@@ -463,6 +463,24 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		qglEnd();
 		R_EnableBlend(qfalse);
 	}
+	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
+		assert(r_xviTexture);
+
+		R_EnableBlend(qtrue);
+		/* draw day image */
+		R_BindTexture(r_xviTexture->texnum);
+		qglBegin(GL_QUADS);
+		qglTexCoord2f(cx - iz, cy - iz);
+		qglVertex2f(nx, ny);
+		qglTexCoord2f(cx + iz, cy - iz);
+		qglVertex2f(nx + nw, ny);
+		qglTexCoord2f(cx + iz, cy + iz);
+		qglVertex2f(nx + nw, ny + nh);
+		qglTexCoord2f(cx - iz, cy + iz);
+		qglVertex2f(nx, ny + nh);
+		qglEnd();
+		R_EnableBlend(qfalse);
+	}
 
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
@@ -787,6 +805,14 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
 		if (r_globeEarth.overlay == r_notexture)
 			Sys_Error("Could not load geoscape nation overlay image");
+		R_EnableBlend(qtrue);
+		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
+		R_EnableBlend(qfalse);
+		r_globeEarth.overlay = NULL;
+	}
+	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
+		assert(r_xviTexture);
+		r_globeEarth.overlay = r_xviTexture;
 		R_EnableBlend(qtrue);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 		R_EnableBlend(qfalse);

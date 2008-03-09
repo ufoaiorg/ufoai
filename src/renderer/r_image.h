@@ -89,6 +89,10 @@ void R_FilterTexture(unsigned *in, int width, int height, imagetype_t type);
 void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
+void R_BlurXVIOverlay(void);
+void R_ApplyXVIOverlay(void);
+void R_InitializeXVIOverlay(void);
+void R_IncreaseXVIOverlay(const vec2_t pos, int alpha);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG
@@ -106,6 +110,6 @@ extern image_t *blood[MAX_DEATH]; /**< draw this when actor is dead */
 extern image_t *r_notexture;
 extern image_t *r_warptexture;
 extern image_t *r_dayandnighttexture;
-
+extern image_t *r_xviTexture;
 
 #endif

@@ -36,6 +36,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
+void R_BlurXVIOverlay(void);
+void R_InitializeXVIOverlay(void);
+void R_IncreaseXVIOverlay(const vec2_t pos, int alpha);
+
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
 campaign_t *curCampaign;			/**< Current running campaign */
@@ -2358,6 +2362,15 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 }
 
 /**
+ * @brief Spread XVI
+ * @note Daily called
+ */
+static void CP_SpreadXVI (void)
+{
+	R_BlurXVIOverlay();
+}
+
+/**
  * @brief Returns the alien XVI tech if the tech was already researched
  */
 technology_t *CP_IsXVIResearched (void)
@@ -3073,6 +3086,7 @@ void CL_CampaignRun (void)
 			HOS_HospitalRun();
 			BDEF_ReloadBattery();
 			CP_SpawnNewMissions();
+			CP_SpreadXVI();
 		}
 
 		/* check for campaign events */
@@ -5549,6 +5563,9 @@ static void CL_GameNew_f (void)
 
 	/* Initialize alien interest */
 	CL_ResetAlienInterest();
+
+	/* Initialze XVI overlay */
+	R_InitializeXVIOverlay();
 
 	/* Reset alien bases */
 	AB_ResetAlienBases();

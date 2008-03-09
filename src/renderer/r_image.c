@@ -1138,6 +1138,126 @@ void R_CalcDayAndNight (float q)
 	R_CheckError();
 }
 
+#define XVI_WIDTH		512		/**< Width of xvi propagation texture */
+#define XVI_HEIGHT		256		/**< Height of xvi propagation texture */
+static const int maxAlpha = 256;		/**< Number of alpha level */
+
+image_t *r_xviTexture;								/**< XVI texture */
+static byte *r_xviPic;								/**< XVI picture */
+
+/**
+ * @brief Applies spreading on xvi transparency channel
+ * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
+ */
+void R_BlurXVIOverlay (void)
+{
+	byte *out;			/**< copy of r_xviAlpha where the calculations will be made */
+	const int bpp = 4;	/**< byte per pixel */
+	int i, j;
+
+	/* soften into a copy of the original image, as in-place would be incorrect */
+	out = (byte *)Mem_PoolAlloc(bpp * XVI_WIDTH * XVI_HEIGHT, vid_imagePool, 0);
+	if (!out)
+		Sys_Error("TagMalloc: failed on allocation of %i bytes for R_BlurTransparency", bpp * XVI_WIDTH * XVI_HEIGHT);
+
+	memcpy(out, r_xviPic, bpp * XVI_WIDTH * XVI_HEIGHT);
+
+	/** 
+	 * @note We use a cross to integrate alpha value.
+	 * As we integrate on a globe (and not a plane), we can't use a cross whose width is the same than its height
+	 * The width (blurringWidth) depend on the latitude of the point we are averaging
+	 * Total width of the cross will be (2 * blurringWidth + 1)
+	 * Total height of the cross will be 3
+	 * Total areas of the cross will be (2 * (blurringWidth + 1) + 1)
+	 */
+
+	for (i = bpp; i < bpp * (XVI_HEIGHT - 1); i += bpp) {
+		/* Note that blurringWidth would be Nan if i = 0 or i = XVI_HEIGHT */
+		const int blurringWidth = round(1.0 / sin(M_PI * i / ((float) (bpp * (XVI_HEIGHT - 1.0f)))));
+		assert(blurringWidth > 0);
+		for (j = bpp; j < bpp * (XVI_WIDTH - 1); j += bpp) {
+			const byte *src = r_xviPic + 3 + i * XVI_WIDTH + j;		/**< current input alpha */
+			byte *dest = out + 3 + i * XVI_WIDTH + j;				/**< current output pixel */
+			const int yu = -bpp * XVI_WIDTH;	/**< index of the point above current one */
+			const int yd = bpp * XVI_WIDTH;	/**< index of the point below current one */
+			int k;
+
+			/** @todo Blur will not work properly on the poles */
+			/* Sum all pixels within the cross we use to integrate */
+			dest[0] = src[0] + src[yu] + src[yd];
+			for (k = bpp; k <= bpp * blurringWidth; k += bpp) {
+				int xl, xr;
+				if (k > j)
+					/* xl is on the other side of the texture */
+					xl = bpp * XVI_WIDTH - k;
+				else
+					xl = -k;
+				if (k + j >= bpp * XVI_WIDTH)
+					/* xr is on the other side of the texture */
+					xr = k - bpp * XVI_WIDTH;
+				else
+					xr = k;
+				dest[0] += src[xl] + src[xr];
+			}
+			if (dest[0] > 0) {
+				dest[0] = 200;
+			}
+		}
+	}
+
+	/* copy the softened image over the input image, and free it */
+	memcpy(r_xviPic, out, bpp * XVI_WIDTH * XVI_HEIGHT);
+	Mem_Free(out);
+
+	R_BindTexture(r_xviTexture->texnum);
+	R_UploadTexture((unsigned *) r_xviPic, r_xviTexture->upload_width, r_xviTexture->upload_height, r_xviTexture);
+}
+
+/**
+ * @brief Initialize XVI overlay on geoscape.
+ * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
+ */
+void R_InitializeXVIOverlay (void)
+{
+	int xviWidth, xviHeight;
+	int i;
+	byte *start;
+
+	/* Load the XVI texture */
+	R_LoadImage("pics/geoscape/map_earth_xvi_overlay.tga", &r_xviPic, &xviWidth, &xviHeight);
+	if ((xviWidth != XVI_WIDTH) || (xviHeight != XVI_HEIGHT))
+		Sys_Error("R_InitializeXVIOverlay: Wrong XVI overlay image size (%i x %i)\n", xviWidth, xviHeight);
+
+	/* Initialize to zero XVI rate */
+	start = r_xviPic + 3;	/* to get the first alpha value */
+	for (i = 0; i < XVI_WIDTH * XVI_HEIGHT * 4; i++, start += 4) {
+		start[0] = 0;
+	}
+
+	/* Set an image */
+	r_xviTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay.tga", r_xviPic, xviWidth, xviHeight, it_wrappic);
+}
+
+/**
+ * @brief Increase SVI rate on the geoscape.
+ * @param[in] pos Position on the geoscape in longitude/latitude
+ * @param[in] alpha Alpha value, must be between 0 and maxAlpha
+ */
+void R_IncreaseXVIOverlay (const vec2_t pos, int alpha)
+{
+	const int x = round((pos[0] + 180) * XVI_WIDTH / 360.0f);
+	const int y = round((90 - pos[1]) * XVI_HEIGHT / 180.0f);
+
+	assert(x >= 0);
+	assert(x <= XVI_WIDTH);
+	assert(y >= 0);
+	assert(y <= XVI_HEIGHT);
+
+	if ((alpha < 0) || (alpha >= maxAlpha))
+		Sys_Error("R_IncreaseXVI: alpha value %i is outside alpha range\n", alpha);
+
+	r_xviPic[3 + 4 * (y * XVI_WIDTH + x)] = alpha;
+}
 
 /**
  * @brief This is also used as an entry point for the generated r_notexture
