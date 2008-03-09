@@ -46,15 +46,14 @@ static pack_t *pak;
 #include <zlib.h>
 
 #ifdef _WIN32
-#include <direct.h>
-#include <io.h>
+# include <direct.h>
+# include <io.h>
+# include <windows.h>
 #else
-#include <unistd.h>
-#include <dirent.h>
+# include <unistd.h>
+# include <dirent.h>
 #endif
 
-#ifdef WIN_ERROR
-#include <windows.h>
 /**
  * @brief For abnormal program terminations in windowed apps
  */
@@ -62,44 +61,19 @@ void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[2048];
-	char text2[2048];
-	int err, len;
-
-	err = GetLastError();
 
 	va_start(argptr, error);
-	len = _vsnprintf(text, sizeof(text), error, argptr);
-	if (len != -1) {
-		text[strlen(text)-1] = '\0';
-		va_end(argptr);
-		snprintf(text2, sizeof(text2), "%s\n\nGetLastError() = %i", text, err);
-		MessageBox(NULL, text2, "Error", MB_OK|MB_ICONINFORMATION);
-	} else {
-		MessageBox(NULL, "Buffer too short to display error message", "Error", MB_OK|MB_ICONINFORMATION);
-	}
-
-	exit(1);
-}
-
-#else
-/**
- * @brief For abnormal program terminations in console apps
- */
-void Sys_Error (const char *error, ...)
-{
-	va_list argptr;
-	char text[2048];
-
-	Com_Printf("\n************ ERROR ************\n");
-
-	va_start(argptr, error);
-	vsnprintf(text, sizeof(text), error, argptr);
+	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
+#ifdef _WIN32
+	MessageBox(NULL, va("%s\n\nGetLastError() = %i", text, GetLastError()), "Error", MB_OK|MB_ICONINFORMATION);
+#else
+	Com_Printf("\n************ ERROR ************\n");
 	Com_Printf("%s\n", text);
+#endif
 
 	exit(1);
 }
-#endif
 
 /**
  * @brief Takes an explicit (not game tree related) path to a pak file.
@@ -172,7 +146,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 /**
  * @brief gamedir will hold the game directory (base, etc)
  */
-static char gamedir[1024];
+static char gamedir[MAX_OSPATH];
 
 /**
  * @brief Get the current working dir and ensures that there is a trailing slash
@@ -287,7 +261,7 @@ static qFILE *SafeOpenRead (const char *filename, qFILE *f)
 	if (!f->f && pak) {
 		len = strlen(gamedir);
 		strncpy(path, filename, sizeof(path));
-		path[len-1] = '\0';
+		path[len - 1] = '\0';
 		filename = &path[len];
 		if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
 			if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
