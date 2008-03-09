@@ -31,9 +31,8 @@ void Q_getwd(char *out);
 
 int Q_filelength(qFILE *f);
 
-void SetQdirFromPath(char *path);
+void FS_Init(char *path);
 char *ExpandArg(const char *path);	/* from cmd line */
-char *ExpandPath(const char *path);	/* from scripts */
 
 qFILE *SafeOpenWrite(const char *filename, qFILE *f);
 qFILE *SafeOpenRead(const char *filename, qFILE *f);

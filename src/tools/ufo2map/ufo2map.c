@@ -323,7 +323,7 @@ int main (int argc, char **argv)
 	start = time(NULL);
 
 	Com_Printf("path: '%s'\n", argv[argc - 1]);
-	SetQdirFromPath(argv[argc - 1]);
+	FS_Init(argv[argc - 1]);
 
 	if (config.info) {
 		strcpy(name, ExpandArg(argv[argc - 1]));

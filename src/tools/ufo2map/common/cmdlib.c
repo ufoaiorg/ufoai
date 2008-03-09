@@ -120,19 +120,14 @@ static qboolean FileExists (const char *filename)
 }
 
 /**
- * qdir will hold the path up to the quake directory, including the slash
- * f:\quake\
- * /raid/quake/
- * gamedir will hold qdir + the game directory (id1, id2, etc)
+ * @brief gamedir will hold the game directory (base, etc)
  */
-
-char qdir[1024];
 char gamedir[1024];
 
 /**
  * @brief
  */
-void SetQdirFromPath (char *path)
+void FS_Init (char *path)
 {
 	char temp[1024] = "";
 	char c[1024] = "";
@@ -164,7 +159,7 @@ void SetQdirFromPath (char *path)
 			return;
 		}
 	}
-	Sys_Error("SetQdirFromPath: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
+	Sys_Error("FS_Init: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
 }
 
 /**
@@ -180,22 +175,6 @@ char *ExpandArg (const char *path)
 	} else
 		strncpy(full, path, sizeof(full));
 
-	return full;
-}
-
-/**
- * @brief
- */
-char *ExpandPath (const char *path)
-{
-	static char full[1024];
-	if (!qdir)
-		Sys_Error("ExpandPath called without qdir set");
-	if (path[0] == '/' || path[0] == '\\' || path[1] == ':') {
-		strncpy(full, path, sizeof(full));
-		return full;
-	}
-	snprintf(full, sizeof(full), "%s%s", qdir, path);
 	return full;
 }
 
