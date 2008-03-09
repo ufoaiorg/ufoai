@@ -1047,8 +1047,8 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 
 	memcpy(out, in, width * height * bpp);
 
-	for (i = 1; i < height - 1; i++){
-		for (j = 1; j < width - 1; j++){
+	for (i = 1; i < height - 1; i++) {
+		for (j = 1; j < width - 1; j++) {
 
 			src = in + ((i * width) + j) * bpp;  /* current input pixel */
 

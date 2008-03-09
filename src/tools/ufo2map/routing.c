@@ -25,10 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "bsp.h"
 
-/* some essential definitions */
-#define WIDTH	256
-#define HEIGHT	8
-
 #define QUANT	4
 #define PLAYER_HEIGHT		(UNIT_HEIGHT - 16)
 #define SH_BIG	9

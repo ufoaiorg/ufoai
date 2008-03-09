@@ -83,10 +83,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NONE		-1
 #define NONE_AMMO	0
 
-/* Battlescape map dimensions (WIDTH*WIDTH*HEIGHT) */
-#define WIDTH       256         /* absolute max */
-#define HEIGHT      8           /* 15 max */
-
 /* Move/Routing values */
 #define MAX_ROUTE       31
 #define MAX_MOVELENGTH  60

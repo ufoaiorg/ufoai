@@ -194,6 +194,10 @@ COLLISION DETECTION
 
 #define ROUTING_NOT_REACHABLE 0xFF
 
+/* Battlescape map dimensions (WIDTH*WIDTH*HEIGHT) */
+#define WIDTH       256         /* absolute max */
+#define HEIGHT      8           /* 15 max */
+
 #define LEVEL_LASTVISIBLE 255
 #define LEVEL_WEAPONCLIP 256
 #define LEVEL_ACTORCLIP 257
