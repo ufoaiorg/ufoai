@@ -2,4 +2,4 @@ Welcome to the UFO: Alien Invasion multiplayer lobby.
 If you are searching for players, make sure to stay connected. You can close this window and return to it always by pressing F10.
 You can also send messages to players directly into the game when you add the name of the player at the start of your message.
 
-If you want to host a game. Make sure, that your TCP port 27910 is opened in your firewall.
+If you want to host a game, make sure, that TCP port 27910 is opened in your firewall.
