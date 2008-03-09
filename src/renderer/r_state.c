@@ -39,6 +39,10 @@ void R_SelectTexture (gltexunit_t *texunit)
 	if (texunit == r_state.active_texunit)
 		return;
 
+	/* not supported */
+	if (texunit->texture >= r_config.maxTextureUnits + GL_TEXTURE0_ARB)
+		return;
+
 	r_state.active_texunit = texunit;
 
 	qglActiveTexture(texunit->texture);
@@ -418,6 +422,8 @@ void R_SetDefaultState (void)
 
 	r_state.texture_texunit.texture = GL_TEXTURE0_ARB;
 	r_state.lightmap_texunit.texture = GL_TEXTURE1_ARB;
+	r_state.third_texunit.texture = GL_TEXTURE2_ARB;
+	r_state.fourth_texunit.texture = GL_TEXTURE3_ARB;
 
 	R_SelectTexture(&r_state.texture_texunit);
 

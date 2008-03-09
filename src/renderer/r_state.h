@@ -51,6 +51,8 @@ typedef struct {
 	/* multitexture texunits */
 	gltexunit_t texture_texunit;
 	gltexunit_t lightmap_texunit;
+	gltexunit_t third_texunit;
+	gltexunit_t fourth_texunit;
 
 	/* texunit in use */
 	gltexunit_t *active_texunit;
