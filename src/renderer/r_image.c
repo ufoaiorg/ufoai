@@ -774,21 +774,21 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 
 	strcpy(ename, ".tga");
 	if (FS_CheckFile(filename_temp) != -1) {
-		R_LoadTGA (filename_temp, pic, width, height);
+		R_LoadTGA(filename_temp, pic, width, height);
 		if (pic)
 			return;
 	}
 
 	strcpy(ename, ".jpg");
 	if (FS_CheckFile(filename_temp) != -1) {
-		R_LoadJPG (filename_temp, pic, width, height);
+		R_LoadJPG(filename_temp, pic, width, height);
 		if (pic)
 			return;
 	}
 
 	strcpy(ename, ".png");
 	if (FS_CheckFile(filename_temp) != -1) {
-		R_LoadPNG (filename_temp, pic, width, height);
+		R_LoadPNG(filename_temp, pic, width, height);
 	}
 }
 
