@@ -2095,6 +2095,8 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 				csi.damStunElectro = csi.numDTs;
 			else if (!Q_strncmp(token, "stun_gas", 8))
 				csi.damStunGas = csi.numDTs;
+			else
+				Com_Printf("Unknown dmgtype: '%s'\n", token);
 
 			csi.numDTs++;
 			if (csi.numDTs >= MAX_DAMAGETYPES)
