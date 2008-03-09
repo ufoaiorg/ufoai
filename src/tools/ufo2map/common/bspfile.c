@@ -405,6 +405,16 @@ static void StripTrailing (char *e)
 
 /**
  * @brief
+ */
+static inline char *copystring (const char *s)
+{
+	char *b = (char*)malloc(sizeof(char) * (strlen(s) + 1));
+	strcpy(b, s);
+	return b;
+}
+
+/**
+ * @brief
  * @sa ParseEntity
  * @sa ParseMapEntity
  */

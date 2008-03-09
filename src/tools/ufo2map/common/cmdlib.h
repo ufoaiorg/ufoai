@@ -44,6 +44,4 @@ void CloseFile(qFILE *f);
 void FreeFile(void *buffer);
 int TryLoadFile(const char *filename, void **bufferptr);
 
-char *copystring(const char *s);
-
 #endif

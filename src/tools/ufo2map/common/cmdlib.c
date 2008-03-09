@@ -147,17 +147,6 @@ char *ExpandArg (const char *path)
 /**
  * @brief
  */
-char *copystring (const char *s)
-{
-	char *b;
-	b = (char*)malloc(sizeof(char)*(strlen(s)+1));
-	strcpy(b, s);
-	return b;
-}
-
-/**
- * @brief
- */
 void FS_getwd (char *out, size_t size)
 {
 #ifdef _WIN32
