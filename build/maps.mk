@@ -1,6 +1,6 @@
-MAPSDIR = .
+MAPSDIR = base/maps
 
-UFO2MAP = ../../ufo2map
+UFO2MAP = ./ufo2map
 
 MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'prefab*' \! -name 'test*' )
 BSPS = $(MAPSRCS:.map=.bsp)
@@ -9,15 +9,15 @@ UFO2MAPFLAGS = -nice 19 -extra
 FAST_UFO2MAPFLAGS = -nice 19
 ENTS_UFO2MAPFLAGS = -nice 19 -onlyents
 
-all: $(BSPS)
+maps: $(UFO2MAP_TARGET) $(BSPS)
 
-fast:
+maps-fast:
 	$(MAKE) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
 
-ents:
+maps-ents:
 	$(MAKE) all UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
-clean:
+maps-clean:
 	find $(MAPSDIR) -name '*.bsp' | xargs rm
 
 $(BSPS): %.bsp: %.map

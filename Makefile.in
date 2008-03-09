@@ -99,12 +99,8 @@ echo_info:
 include build/lang.mk
 include build/install.mk
 include build/various.mk
+include build/maps.mk
 
-maps: $(UFO2MAP_TARGET)
-	@$(MAKE) -C base/maps all
-
-mapsents: $(UFO2MAP_TARGET)
-	@$(MAKE) -C base/maps ents
 #
 # Target to install the whole game - executables and game data.
 #
