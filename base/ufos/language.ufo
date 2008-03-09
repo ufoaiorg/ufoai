@@ -162,13 +162,13 @@ language fr {
 	}
 }
 
-language gr {
+language el {
 	"_Greek"
 	{
-		gr.UTF-8
-		gr_GR.UTF-8
-		gr.utf8
-		gr_GR.utf8
+		el.UTF-8
+		el_GR.UTF-8
+		el.utf8
+		el_GR.utf8
 	}
 }
 
