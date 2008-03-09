@@ -37,10 +37,10 @@ static const vec3_t move_vec[4] = { {UNIT_SIZE, 0, 0}, {-UNIT_SIZE, 0, 0}, {0, U
 static const vec3_t testvec[5] = { {-UNIT_SIZE/2+5,-UNIT_SIZE/2+5,0}, {UNIT_SIZE/2-5,UNIT_SIZE/2-5,0}, {-UNIT_SIZE/2+5,UNIT_SIZE/2-5,0}, {UNIT_SIZE/2-5,-UNIT_SIZE/2+5,0}, {0,0,0} };
 
 /** routing data structures */
-byte	route[HEIGHT][WIDTH][WIDTH];
-byte	fall[WIDTH][WIDTH];
-byte	step[WIDTH][WIDTH];
-byte	filled[WIDTH][WIDTH];	/**< totally blocked units */
+static byte route[HEIGHT][WIDTH][WIDTH];
+static byte fall[WIDTH][WIDTH];
+static byte step[WIDTH][WIDTH];
+static byte filled[WIDTH][WIDTH];	/**< totally blocked units */
 
 /** @brief world min and max values converted from vec to pos */
 static ipos3_t wpMins, wpMaxs;
