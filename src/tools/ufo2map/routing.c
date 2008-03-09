@@ -37,10 +37,10 @@ static const vec3_t move_vec[4] = { {UNIT_SIZE, 0, 0}, {-UNIT_SIZE, 0, 0}, {0, U
 static const vec3_t testvec[5] = { {-UNIT_SIZE/2+5,-UNIT_SIZE/2+5,0}, {UNIT_SIZE/2-5,UNIT_SIZE/2-5,0}, {-UNIT_SIZE/2+5,UNIT_SIZE/2-5,0}, {UNIT_SIZE/2-5,-UNIT_SIZE/2+5,0}, {0,0,0} };
 
 /** routing data structures */
-static byte route[HEIGHT][WIDTH][WIDTH];
-static byte fall[WIDTH][WIDTH];
-static byte step[WIDTH][WIDTH];
-static byte filled[WIDTH][WIDTH];	/**< totally blocked units */
+static byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+static byte fall[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+static byte step[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+static byte filled[PATHFINDING_WIDTH][PATHFINDING_WIDTH];	/**< totally blocked units */
 
 /** @brief world min and max values converted from vec to pos */
 static ipos3_t wpMins, wpMaxs;
@@ -58,9 +58,9 @@ static void CheckUnit (unsigned int unitnum)
 	float height;
 
 	/* get coordinates of that unit */
-	z = unitnum / WIDTH / WIDTH;
-	y = (unitnum / WIDTH) % WIDTH;
-	x = unitnum % WIDTH;
+	z = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
+	y = (unitnum / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
+	x = unitnum % PATHFINDING_WIDTH;
 
 	/* test bounds */
 	if (x > wpMaxs[0] || y > wpMaxs[1] || z > wpMaxs[2]
@@ -173,13 +173,13 @@ static void CheckConnections (unsigned int unitnum)
 	const byte deep_fall[] = {0x01, 0x03, 0x06, 0x0c, 0x18, 0x30, 0x60, 0xc0};
 
 	/* get coordinates of that unit */
-	z = unitnum / WIDTH / WIDTH;
-	y = (unitnum / WIDTH) % WIDTH;
-	x = unitnum % WIDTH;
+	z = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
+	y = (unitnum / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
+	x = unitnum % PATHFINDING_WIDTH;
 
-	assert(z < HEIGHT);
-	assert(y < WIDTH);
-	assert(x < WIDTH);
+	assert(z < PATHFINDING_HEIGHT);
+	assert(y < PATHFINDING_WIDTH);
+	assert(x < PATHFINDING_WIDTH);
 
 	/* totally blocked unit */
 	if (filled[y][x] & (1 << z))
@@ -198,8 +198,8 @@ static void CheckConnections (unsigned int unitnum)
 	h = (h + sh) % 0x10;
 
 	/* range check */
-	if (sz >= HEIGHT) {
-		sz = HEIGHT - 1;
+	if (sz >= PATHFINDING_HEIGHT) {
+		sz = PATHFINDING_HEIGHT - 1;
 		h = 0x0F;
 	}
 
@@ -225,7 +225,7 @@ static void CheckConnections (unsigned int unitnum)
 			break;
 		}
 		/* range check*/
-		if ( x < 0 || x >= WIDTH || y < 0 || y >= WIDTH)
+		if (x < 0 || x >= PATHFINDING_WIDTH || y < 0 || y >= PATHFINDING_WIDTH)
 			continue;
 		/* height check */
 		if ((route[sz][ay][ax] & 0x0F) > h)
@@ -302,18 +302,18 @@ void DoRouting (void)
 /*	Com_Printf("(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
 
 	/* scan area heights */
-	U2M_ProgressBar(CheckUnit, HEIGHT * WIDTH * WIDTH, qtrue, "UNITCHECK");
+	U2M_ProgressBar(CheckUnit, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, qtrue, "UNITCHECK");
 
 	/* scan connections */
-	U2M_ProgressBar(CheckConnections, HEIGHT * WIDTH * WIDTH, qtrue, "CONNCHECK");
+	U2M_ProgressBar(CheckConnections, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, qtrue, "CONNCHECK");
 
 	/* store the data */
 	data = droutedata;
 	*data++ = SH_LOW;
 	*data++ = SH_BIG;
-	data = CompressRouting(&(route[0][0][0]), data, WIDTH * WIDTH * HEIGHT);
-	data = CompressRouting(&(fall[0][0]), data, WIDTH * WIDTH);
-	data = CompressRouting(&(step[0][0]), data, WIDTH * WIDTH);
+	data = CompressRouting(&(route[0][0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT);
+	data = CompressRouting(&(fall[0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
+	data = CompressRouting(&(step[0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
 
 	routedatasize = data - droutedata;
 

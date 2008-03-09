@@ -465,11 +465,11 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	if (yl < 0)
 		yl = 0;
 	xh = (int) ent->pos[0] + AI_MAX_DIST;
-	if (xh > WIDTH)
-		xl = WIDTH;
+	if (xh > PATHFINDING_WIDTH)
+		xl = PATHFINDING_WIDTH;
 	yh = (int) ent->pos[1] + AI_MAX_DIST;
-	if (yh > WIDTH)
-		yh = WIDTH;
+	if (yh > PATHFINDING_WIDTH)
+		yh = PATHFINDING_WIDTH;
 
 	/* search best action */
 	best = AI_ACTION_NOTHING_FOUND;
@@ -478,7 +478,7 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 
 	/* evaluate moving to every possible location in the search area,
 	   including combat considerations */
-	for (to[2] = 0; to[2] < HEIGHT; to[2]++)
+	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++)
 				if (gi.MoveLength(gi.routingMap, to, qtrue) <= ent->TU) {

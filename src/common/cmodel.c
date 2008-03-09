@@ -161,12 +161,12 @@ typedef struct {
  *
  */
 typedef struct routing_s {
-	byte route[HEIGHT][WIDTH][WIDTH];
-	byte fall[WIDTH][WIDTH];
-	byte step[WIDTH][WIDTH];
+	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	byte fall[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	byte step[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
-	byte area[HEIGHT][WIDTH][WIDTH];
-	byte areaStored[HEIGHT][WIDTH][WIDTH];
+	byte area[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	byte areaStored[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
 	/* forbidden list */
 	pos_t **fblist;	/**< pointer to forbidden list (entities are standing here) */
@@ -765,9 +765,9 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 /**
  * @brief Routing Function to update the connection between two fields
  * @param[in] map Routing field of the current loaded map
- * @param[in] x The x position in the routing arrays (0 - WIDTH-1)
- * @param[in] y The y position in the routing arrays (0 - WIDTH-1)
- * @param[in] z The z position in the routing arrays (0 - HEIGHT-1)
+ * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
+ * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
+ * @param[in] z The z position in the routing arrays (0 - PATHFINDING_HEIGHT-1)
  * @param[in] dir Direction to check the connection into (0 - BASE_DIRECTIONS-1)
  * @sa dvecs
  * @param[in] fill
@@ -784,9 +784,9 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 	const byte deep_fall[] = {0x01, 0x03, 0x06, 0x0c, 0x18, 0x30, 0x60, 0xc0};
 
 	assert(map);
-	assert((x >= 0) && (x < WIDTH));
-	assert((y >= 0) && (y < WIDTH));
-	assert(z < HEIGHT);
+	assert((x >= 0) && (x < PATHFINDING_WIDTH));
+	assert((y >= 0) && (y < PATHFINDING_WIDTH));
+	assert(z < PATHFINDING_HEIGHT);
 	assert(dir < BASE_DIRECTIONS);
 
 	/* assume no connection */
@@ -809,12 +809,12 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 	VectorSet(end, start[0] + (UNIT_HEIGHT / 2) * dvecs[dir][0], start[1] + (UNIT_HEIGHT / 2) * dvecs[dir][1], start[2]);
 
 	ax = x + dvecs[dir][0];
-	assert((ax >= 0) && (ax < WIDTH));
+	assert((ax >= 0) && (ax < PATHFINDING_WIDTH));
 	ay = y + dvecs[dir][1];
-	assert((ay >= 0) && (ay < WIDTH));
+	assert((ay >= 0) && (ay < PATHFINDING_WIDTH));
 	az = z + (h + sh) / 0x10;
-	if (az >= HEIGHT) {
-		Com_Printf("CM_UpdateConnection: The max has more than %i levels - skipping the higher levels.\n", HEIGHT);
+	if (az >= PATHFINDING_HEIGHT) {
+		Com_Printf("CM_UpdateConnection: The max has more than %i levels - skipping the higher levels.\n", PATHFINDING_HEIGHT);
 		return;
 	}
 	h = (h + sh) % 0x10;
@@ -846,9 +846,9 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 
 
 /**
- * @param[in] x The x position in the routing arrays (0 - WIDTH-1)
- * @param[in] y The y position in the routing arrays (0 - WIDTH-1)
- * @param[in] z The z position in the routing arrays (0 - HEIGHT-1)
+ * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
+ * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
+ * @param[in] z The z position in the routing arrays (0 - PATHFINDING_HEIGHT-1)
  * @sa Grid_RecalcRouting
  */
 static void CM_CheckUnit (routing_t * map, int x, int y, pos_t z)
@@ -863,9 +863,9 @@ static void CM_CheckUnit (routing_t * map, int x, int y, pos_t z)
 	assert(inlineList);
 
 	assert(map);
-	assert((x >= 0) && (x < WIDTH));
-	assert((y >= 0) && (y < WIDTH));
-	assert(z < HEIGHT);
+	assert((x >= 0) && (x < PATHFINDING_WIDTH));
+	assert((y >= 0) && (y < PATHFINDING_WIDTH));
+	assert(z < PATHFINDING_HEIGHT);
 
 	/* reset flags */
 	filled[y][x] &= ~(1 << z);
@@ -965,12 +965,12 @@ static void CMod_GetMapSize (routing_t * map)
 
 	assert(map);
 
-	VectorSet(min, WIDTH - 1, WIDTH - 1, 0);
+	VectorSet(min, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, 0);
 	VectorSet(max, 0, 0, 0);
 
 	/* get border */
-	for (y = 0; y < WIDTH; y++)
-		for (x = 0; x < WIDTH; x++)
+	for (y = 0; y < PATHFINDING_WIDTH; y++)
+		for (x = 0; x < PATHFINDING_WIDTH; x++)
 			/* ROUTING_NOT_REACHABLE means that we can't walk there */
 			if (map->fall[y][x] != ROUTING_NOT_REACHABLE) {
 				if (x < min[0])
@@ -995,17 +995,17 @@ static void CMod_GetMapSize (routing_t * map)
 
 /**
  * @param[in] l Routing lump ... (routing data lump from bsp file)
- * @param[in] sX The x position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
- * @param[in] sY The y position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
- * @param[in] sZ The height level on the world plane (grid position) - values from 0 - HEIGHT are allowed
+ * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
+ * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
+ * @param[in] sZ The height level on the world plane (grid position) - values from 0 - PATHFINDING_HEIGHT are allowed
  * @sa CM_AddMapTile
  */
 static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 {
-	static byte temp_route[HEIGHT][WIDTH][WIDTH];
-	static byte temp_fall[WIDTH][WIDTH];
-	static byte temp_step[WIDTH][WIDTH];
-	static byte route_again[WIDTH][WIDTH];
+	static byte temp_route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	static byte temp_fall[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	static byte temp_step[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	static byte route_again[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 	byte *source;
 	int length;
 	int x, y;
@@ -1027,12 +1027,12 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	if (!l->filelen)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has NO routing lump");
 
-	assert((sX > -(WIDTH/2)) && (sX < (WIDTH/2)));
-	assert((sY > -(WIDTH/2)) && (sY < (WIDTH/2)));
-	assert((sZ >= 0) && (sZ < HEIGHT));
+	assert((sX > -(PATHFINDING_WIDTH / 2)) && (sX < (PATHFINDING_WIDTH / 2)));
+	assert((sY > -(PATHFINDING_WIDTH / 2)) && (sY < (PATHFINDING_WIDTH / 2)));
+	assert((sZ >= 0) && (sZ < PATHFINDING_HEIGHT));
 
 	/* routing must be redone for overlapping tiles and borders */
-	memset(&(route_again[0][0]), 0, WIDTH * WIDTH);
+	memset(&(route_again[0][0]), 0, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
 
 	source = cmod_base + l->fileofs;
 	sh_low = *source++;
@@ -1042,13 +1042,13 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	length += CMod_DeCompressRouting(&source, &temp_step[0][0]);
 
 	/* 10 => HEIGHT (8), level 257 (1), level 258 (1) */
-	if (length != WIDTH * WIDTH * 10)
+	if (length != PATHFINDING_WIDTH * PATHFINDING_WIDTH * 10)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has BAD routing lump");
 
 	/* shift and merge the routing information
 	 * in case of map assemble (random maps) */
-	maxX = sX > 0 ? WIDTH - sX : WIDTH;
-	maxY = sY > 0 ? WIDTH - sY : WIDTH;
+	maxX = sX > 0 ? PATHFINDING_WIDTH - sX : PATHFINDING_WIDTH;
+	maxY = sY > 0 ? PATHFINDING_WIDTH - sY : PATHFINDING_WIDTH;
 	/* no z movement */
 	sZ = 0;
 
@@ -1066,7 +1066,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 						ay = y + dvecs[i][1];
 
 						/* reroute if a border is found */
-						if (ax < 0 || ax >= WIDTH || ay < 0 || ay >= WIDTH ||
+						if (ax < 0 || ax >= PATHFINDING_WIDTH || ay < 0 || ay >= PATHFINDING_WIDTH ||
 							temp_fall[ay][ax] == ROUTING_NOT_REACHABLE)
 								route_again[y][x] |= ((0x10 << i) & UCHAR_MAX);
 					}
@@ -1097,7 +1097,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 				}
 
 				/* copy or combine routing info */
-				for (z = 0; z < HEIGHT; z++) {
+				for (z = 0; z < PATHFINDING_HEIGHT; z++) {
 					if (overwrite) {
 						clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
 					} else if ((clMap.route[z][y + sY][x + sX] & 0x0f) == (temp_route[z][y][x] & 0x0f)) {
@@ -1120,7 +1120,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 						ay = y + dvecs[i][1];
 
 						/* reroute */
-						for (z = 0; z < HEIGHT; z++) {
+						for (z = 0; z < PATHFINDING_HEIGHT; z++) {
 							CM_UpdateConnection(&clMap, x + sX, y + sY, z, i, qfalse);
 							CM_UpdateConnection(&clMap, ax + sX, ay + sY, z, i ^ 1, qfalse);
 						}
@@ -1215,9 +1215,9 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 /**
  * @brief Adds in a single map tile
  * @param[in] name The (file-)name of the tile to add.
- * @param[in] sX The x position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
- * @param[in] sY The y position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
- * @param[in] sZ The height level on the world plane (grid position) - values from 0 up to HEIGHT are allowed
+ * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
+ * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
+ * @param[in] sZ The height level on the world plane (grid position) - values from 0 up to PATHFINDING_HEIGHT are allowed
  * @note The sX and sY values are grid positions - max. grid size is 256 - unit size is
  * 32 => ends up at 8192 (the worldplace size - or [-4096, 4096])
  * @return The checksum of the maptile
@@ -1239,9 +1239,9 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i\n", name, sX, sY);
 	assert(name);
 	assert(name[0]);
-	assert((sX > -(WIDTH/2)) && (sX < (WIDTH/2)));
-	assert((sY > -(WIDTH/2)) && (sY < (WIDTH/2)));
-	assert(sZ < HEIGHT);
+	assert((sX > -(PATHFINDING_WIDTH / 2)) && (sX < (PATHFINDING_WIDTH / 2)));
+	assert((sY > -(PATHFINDING_WIDTH / 2)) && (sY < (PATHFINDING_WIDTH / 2)));
+	assert(sZ < PATHFINDING_HEIGHT);
 
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
@@ -1327,9 +1327,9 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 	c_traces = c_brush_traces = numInline = numTiles = 0;
 	map_entitystring[0] = base[0] = 0;
 
-	memset(&(clMap.fall[0][0]), ROUTING_NOT_REACHABLE, WIDTH * WIDTH);
-	memset(&(clMap.step[0][0]), 0, WIDTH * WIDTH);
-	memset(&(clMap.route[0][0][0]), 0, WIDTH * WIDTH * HEIGHT);
+	memset(&(clMap.fall[0][0]), ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
+	memset(&(clMap.step[0][0]), 0, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
+	memset(&(clMap.route[0][0][0]), 0, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT);
 
 	if (pos && *pos)
 		Com_Printf("CM_LoadMap: \"%s\" \"%s\"\n", tiles, pos);
@@ -2521,8 +2521,8 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 		return;
 
 #ifdef PARANOID
-	if (z >= HEIGHT) {
-		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, HEIGHT);
+	if (z >= PATHFINDING_HEIGHT) {
+		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, PATHFINDING_HEIGHT);
 		return;
 	}
 	/*
@@ -2549,7 +2549,7 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 	switch (actor_size) {
 	case ACTOR_SIZE_NORMAL:
 		/* Range check of new values (1x1) */
-		if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= WIDTH)
+		if (nx < 0 || nx >= PATHFINDING_WIDTH || ny < 0 || ny >= PATHFINDING_WIDTH)
 			return;
 
 		/* Connection checks for 1x1 actor. */
@@ -2579,10 +2579,10 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 		Vector2Set(poslistNew[2], nx,     ny + 1);
 		Vector2Set(poslistNew[3], nx + 1, ny + 1);
 
-		if (poslistNew[0][0] < 0 || poslistNew[0][0] >= WIDTH || poslistNew[0][1] < 0 || poslistNew[0][1] >= WIDTH
-		||  poslistNew[1][0] < 0 || poslistNew[1][0] >= WIDTH || poslistNew[1][1] < 0 || poslistNew[1][1] >= WIDTH
-		||  poslistNew[2][0] < 0 || poslistNew[2][0] >= WIDTH || poslistNew[2][1] < 0 || poslistNew[2][1] >= WIDTH
-		||  poslistNew[3][0] < 0 || poslistNew[3][0] >= WIDTH || poslistNew[3][1] < 0 || poslistNew[3][1] >= WIDTH)
+		if (poslistNew[0][0] < 0 || poslistNew[0][0] >= PATHFINDING_WIDTH || poslistNew[0][1] < 0 || poslistNew[0][1] >= PATHFINDING_WIDTH
+		 || poslistNew[1][0] < 0 || poslistNew[1][0] >= PATHFINDING_WIDTH || poslistNew[1][1] < 0 || poslistNew[1][1] >= PATHFINDING_WIDTH
+		 || poslistNew[2][0] < 0 || poslistNew[2][0] >= PATHFINDING_WIDTH || poslistNew[2][1] < 0 || poslistNew[2][1] >= PATHFINDING_WIDTH
+		 || poslistNew[3][0] < 0 || poslistNew[3][0] >= PATHFINDING_WIDTH || poslistNew[3][1] < 0 || poslistNew[3][1] >= PATHFINDING_WIDTH)
 			return;
 
 		/* Connection checks for actor (2x2) */
@@ -2745,7 +2745,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 	pos3_t pos;
 	/* reset move data */
 	/* ROUTING_NOT_REACHABLE means, not reachable */
-	memset(map->area, ROUTING_NOT_REACHABLE, WIDTH * WIDTH * HEIGHT);
+	memset(map->area, ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT);
 	map->fblist = fb_list;
 	map->fblength = fb_length;
 
@@ -2798,7 +2798,7 @@ void Grid_MoveStore (struct routing_s *map)
 pos_t Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 {
 #ifdef PARANOID
-	if (to[2] >= HEIGHT) {
+	if (to[2] >= PATHFINDING_HEIGHT) {
 		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveLength: WARNING to[2] = %i(>= HEIGHT)\n", to[2]);
 		return ROUTING_NOT_REACHABLE;
 	}
@@ -2829,8 +2829,8 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, pos_t sz, byte l)
 	pos3_t dummy;
 
 #ifdef PARANOID
-	if (sz >= HEIGHT) {
-		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveCheck: WARNING sz = %i(>= HEIGHT %i)\n", sz, HEIGHT);
+	if (sz >= PATHFINDING_HEIGHT) {
+		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveCheck: WARNING sz = %i(>= HEIGHT %i)\n", sz, PATHFINDING_HEIGHT);
 		return 0xFF;
 	}
 #endif
@@ -2841,9 +2841,9 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, pos_t sz, byte l)
 		dy = -dvecs[dir][1];
 
 		/* range check */
-		if (dx > 0 && pos[0] >= WIDTH - 1)
+		if (dx > 0 && pos[0] >= PATHFINDING_WIDTH - 1)
 			continue;
-		if (dy > 0 && pos[1] >= WIDTH - 1)
+		if (dy > 0 && pos[1] >= PATHFINDING_WIDTH - 1)
 			continue;
 		if (dx < 0 && pos[0] <= 0)
 			continue;
@@ -2914,7 +2914,7 @@ pos_t Grid_MoveNext (struct routing_s *map, pos3_t from)
 	}
 
 	/* do tests */
-	for (z = 0; z < HEIGHT; z++) {
+	for (z = 0; z < PATHFINDING_HEIGHT; z++) {
 		/* suppose it's possible at that height */
 		dv = Grid_MoveCheck(map, from, z, l);
 		if (dv < DIRECTIONS)
@@ -2931,7 +2931,7 @@ pos_t Grid_MoveNext (struct routing_s *map, pos3_t from)
 pos_t Grid_Height (struct routing_s *map, pos3_t pos)
 {
 	/* max 8 levels */
-	if (pos[2] >= HEIGHT) {
+	if (pos[2] >= PATHFINDING_HEIGHT) {
 		Com_Printf("Grid_Height: Warning: z level is bigger than 7: %i\n", pos[2]);
 		pos[2] &= 7;
 	}
@@ -2952,8 +2952,8 @@ pos_t Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 	pos_t z = pos[2];
 
 	/* is z off-map? */
-	if (z >= HEIGHT) {
-		Com_DPrintf(DEBUG_ENGINE, "Grid_Fall: z (height) out of bounds): z=%i max=%i\n", z, HEIGHT);
+	if (z >= PATHFINDING_HEIGHT) {
+		Com_DPrintf(DEBUG_ENGINE, "Grid_Fall: z (height) out of bounds): z=%i max=%i\n", z, PATHFINDING_HEIGHT);
 		return 0xFF;
 	}
 
@@ -2996,7 +2996,7 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
 {
 	PosToVec(pos, vec);
 #ifdef PARANOID
-	if (pos[2] >= HEIGHT)
+	if (pos[2] >= PATHFINDING_HEIGHT)
 		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
 #endif
 	vec[2] += Grid_Height(map, pos);
@@ -3063,12 +3063,12 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 		VecToPos(model->maxs, max);
 	}
 
-	memset(filled, 0, WIDTH * WIDTH);
+	memset(filled, 0, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
 
 	/* fit min/max into the world size */
-	max[0] = min(max[0] + 2, WIDTH - 1);
-	max[1] = min(max[1] + 2, WIDTH - 1);
-	max[2] = min(max[2] + 2, HEIGHT - 1);
+	max[0] = min(max[0] + 2, PATHFINDING_WIDTH - 1);
+	max[1] = min(max[1] + 2, PATHFINDING_WIDTH - 1);
+	max[2] = min(max[2] + 2, PATHFINDING_HEIGHT - 1);
 	for (i = 0; i < 3; i++)
 		min[i] = max(min[i] - 2, 0);
 

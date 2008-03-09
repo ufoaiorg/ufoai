@@ -3957,7 +3957,7 @@ void CL_ActorMouseTrace (void)
 	}
 
 	/* test if the selected grid is out of the world */
-	if (restingLevel < 0 || restingLevel >= HEIGHT)
+	if (restingLevel < 0 || restingLevel >= PATHFINDING_HEIGHT)
 		return;
 
 	testPos[2] = restingLevel;
