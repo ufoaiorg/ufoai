@@ -430,6 +430,10 @@ void R_SetDefaultState (void)
 
 	/* setup texture units */
 	for (i = 0; i < MAX_GL_TEXUNITS; i++) {
+		if (i >= r_config.maxTextureUnits - 1) {
+			Com_Printf("Don't init more than %i texunits\n", rconfig.maxTextureUnits);
+			break;
+		}
 		tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0_ARB + i;
 
