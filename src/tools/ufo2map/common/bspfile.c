@@ -290,7 +290,7 @@ void LoadBSPFile (const char *filename)
 	lightdatasize[LIGHTMAP_DAY] = CopyLump(LUMP_LIGHTING_DAY, dlightdata[LIGHTMAP_DAY], 1);
 	entdatasize = CopyLump(LUMP_ENTITIES, dentdata, 1);
 
-	free(header);		/* everything has been copied out */
+	FreeFile(header);		/* everything has been copied out */
 
 	/* swap everything */
 	SwapBSPFile();
