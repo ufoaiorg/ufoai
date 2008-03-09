@@ -34,19 +34,23 @@ const float default_texcoords[] = {
 	0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0
 };
 
-void R_SelectTexture (gltexunit_t *texunit)
+/**
+ * @brief Returns qfalse if the texunit is not supported
+ */
+qboolean R_SelectTexture (gltexunit_t *texunit)
 {
 	if (texunit == r_state.active_texunit)
-		return;
+		return qtrue;
 
 	/* not supported */
 	if (texunit->texture >= r_config.maxTextureUnits + GL_TEXTURE0_ARB)
-		return;
+		return qfalse;
 
 	r_state.active_texunit = texunit;
 
 	qglActiveTexture(texunit->texture);
 	qglClientActiveTexture(texunit->texture);
+	return qtrue;
 }
 
 void R_BindTexture (int texnum)
@@ -433,12 +437,11 @@ void R_SetDefaultState (void)
 
 	/* setup texture units */
 	for (i = 0; i < MAX_GL_TEXUNITS; i++) {
-		if (i >= r_config.maxTextureUnits - 1) {
-			Com_Printf("Don't init more than %i texunits\n", r_config.maxTextureUnits);
-			break;
-		}
 		tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0_ARB + i;
+
+		if (i >= r_config.maxTextureUnits - 1)
+			continue;
 
 		R_EnableMultitexture(tex, qtrue);
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
@@ -467,6 +470,9 @@ void R_SetDefaultState (void)
 
 	if (developer->integer & DEBUG_RENDERER)
 		R_StatePrint();
+
+	/* reset gl error state */
+	R_CheckError();
 }
 
 void R_TexEnv (GLenum mode)

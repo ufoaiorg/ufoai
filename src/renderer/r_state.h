@@ -94,7 +94,7 @@ void R_SetDefaultState(void);
 void R_SetupGL2D(void);
 void R_SetupGL3D(void);
 void R_EnableMultitexture(gltexunit_t *texunit, qboolean enable);
-void R_SelectTexture(gltexunit_t *texunit);
+qboolean R_SelectTexture(gltexunit_t *texunit);
 void R_BindTexture(int texnum);
 void R_BindLightmapTexture(GLuint texnum);
 void R_BindBuffer(GLenum target, GLenum type, GLuint id);
