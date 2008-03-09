@@ -1,5 +1,5 @@
 /**
- * @file qrad3.c
+ * @file radiosity.c
  * @note every surface must be divided into at least two patches each axis
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "qrad.h"
+#include "radiosity.h"
 
 patch_t		*face_patches[MAX_MAP_FACES];
 entity_t	*face_entity[MAX_MAP_FACES];

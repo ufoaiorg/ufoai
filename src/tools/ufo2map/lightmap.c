@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#include "qrad.h"
+#include "radiosity.h"
 
 typedef struct {
 	dBspFace_t		*faces[2];

@@ -1,5 +1,5 @@
 /**
- * @file qbsp.h
+ * @file bsp.h
  */
 
 /*
@@ -261,6 +261,6 @@ void PruneNodes(node_t *node);
 
 void DoRouting(void);
 
-/* qbsp3.c */
+/* bsp.c */
 
 void ProcessModels(const char *filename);

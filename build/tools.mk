@@ -4,8 +4,8 @@
 
 UFO2MAP_SRCS = \
 	tools/ufo2map/ufo2map.c \
-	tools/ufo2map/qrad3.c \
-	tools/ufo2map/qbsp3.c \
+	tools/ufo2map/radiosity.c \
+	tools/ufo2map/bsp.c \
 	tools/ufo2map/brushbsp.c \
 	tools/ufo2map/csg.c \
 	tools/ufo2map/faces.c \

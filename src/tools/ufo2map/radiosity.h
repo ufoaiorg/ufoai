@@ -1,5 +1,5 @@
 /**
- * @file qrad.h
+ * @file radiosity.h
  */
 
 /*

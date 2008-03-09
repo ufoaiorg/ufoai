@@ -144,12 +144,12 @@
 		<Unit filename="..\..\src\tools\ufo2map\portals.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\qbsp.h" />
-		<Unit filename="..\..\src\tools\ufo2map\qbsp3.c">
+		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
+		<Unit filename="..\..\src\tools\ufo2map\bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\qrad.h" />
-		<Unit filename="..\..\src\tools\ufo2map\qrad3.c">
+		<Unit filename="..\..\src\tools\ufo2map\radiosity.h" />
+		<Unit filename="..\..\src\tools\ufo2map\radiosity.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\routing.c">

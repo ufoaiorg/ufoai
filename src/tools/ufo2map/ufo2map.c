@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define VERSION "1.2.1"
 
-#include "qrad.h"
-#include "qbsp.h"
+#include "radiosity.h"
+#include "bsp.h"
 #include "../../shared/shared.h"
 
 #ifdef HAVE_SYS_TIME_H

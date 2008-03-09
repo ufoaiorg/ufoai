@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "qbsp.h"
+#include "bsp.h"
 
 static int c_nofaces;
 static int c_facenodes;
