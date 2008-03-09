@@ -28,15 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/byte.h"
 
 void FS_getwd(char *out, size_t size);
-
-int Q_filelength(qFILE *f);
-
 void FS_Init(char *path);
+
 char *ExpandArg(const char *path);	/* from cmd line */
 
 qFILE *SafeOpenWrite(const char *filename, qFILE *f);
-qFILE *SafeOpenRead(const char *filename, qFILE *f);
-void SafeRead(qFILE *f, void *buffer, int count);
 void SafeWrite(qFILE *f, void *buffer, int count);
 
 int LoadFile(const char *filename, void **bufferptr);

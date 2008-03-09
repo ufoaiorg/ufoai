@@ -168,7 +168,7 @@ MISC FUNCTIONS
 /**
  * @brief
  */
-int Q_filelength (qFILE *f)
+static int FS_filelength (qFILE *f)
 {
 	int pos, end = 0;
 
@@ -269,7 +269,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 /**
  * @brief
  */
-qFILE *SafeOpenRead (const char *filename, qFILE *f)
+static qFILE *SafeOpenRead (const char *filename, qFILE *f)
 {
 	char path[MAX_OSPATH];
 	size_t len;
@@ -305,7 +305,7 @@ qFILE *SafeOpenRead (const char *filename, qFILE *f)
  * @brief
  * @sa LoadFile
  */
-void SafeRead (qFILE *f, void *buffer, int count)
+static void SafeRead (qFILE *f, void *buffer, int count)
 {
 	if (f->f) {
 		if (fread(buffer, 1, count, f->f) != (size_t)count)
@@ -353,7 +353,7 @@ int LoadFile (const char *filename, void **bufferptr)
 	SafeOpenRead(filename, &f);
 	if (!f.f && !f.z)
 		Sys_Error("Could not load %s", filename);
-	length = Q_filelength(&f);
+	length = FS_filelength(&f);
 	buffer = malloc(length + 1);
 	((char *)buffer)[length] = 0;
 	SafeRead(&f, buffer, length);
@@ -392,7 +392,7 @@ int TryLoadFile (const char *filename, void **bufferptr)
 	SafeOpenRead(filename, &f);
 	if (!f.f && !f.z)
 		return -1;
-	length = Q_filelength(&f);
+	length = FS_filelength(&f);
 	buffer = malloc(length + 1);
 	((char *)buffer)[length] = 0;
 	SafeRead(&f, buffer, length);
