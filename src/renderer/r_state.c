@@ -428,10 +428,13 @@ void R_SetDefaultState (void)
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 	qglDisableClientState(GL_NORMAL_ARRAY);
 
+	/* reset gl error state */
+	R_CheckError();
+
 	/* setup texture units */
 	for (i = 0; i < MAX_GL_TEXUNITS; i++) {
 		if (i >= r_config.maxTextureUnits - 1) {
-			Com_Printf("Don't init more than %i texunits\n", rconfig.maxTextureUnits);
+			Com_Printf("Don't init more than %i texunits\n", r_config.maxTextureUnits);
 			break;
 		}
 		tex = &r_state.texunits[i];
@@ -442,6 +445,8 @@ void R_SetDefaultState (void)
 
 		if (i > 0)  /* turn them off for now */
 			R_EnableMultitexture(tex, qfalse);
+
+		R_CheckError();
 	}
 
 	R_SelectTexture(&texunit_diffuse);
