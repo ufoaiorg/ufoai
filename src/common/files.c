@@ -767,6 +767,8 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 			Q_strlwr(tempList[nfiles]);
 #endif
 			nfiles++;
+			if (nfiles >= MAX_FILES)
+				break;
 		}
 		s = Sys_FindNext(musthave, canthave);
 	}
