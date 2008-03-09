@@ -51,7 +51,6 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Linker>
-					<Add library="pthread" />
 					<Add library="z" />
 					<Add library="jpeg" />
 				</Linker>
@@ -74,11 +73,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="D:\Programme\Dev-Cpp\include" />
 		</Compiler>
-		<Linker>
-			<Add directory="C:\Dev-Cpp\lib" />
-		</Linker>
 		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
