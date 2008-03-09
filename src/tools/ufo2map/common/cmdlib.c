@@ -55,8 +55,6 @@ static pack_t *FS_LoadPackFile(const char *packfile);
 #include <dirent.h>
 #endif
 
-#define	BASEDIR_ID_FILE	".gamedir"	/* This is the name of the "trunk" directory. */
-
 #ifdef WIN_ERROR
 #include <windows.h>
 /**
@@ -106,60 +104,28 @@ void Sys_Error (const char *error, ...)
 #endif
 
 /**
- * @brief
- */
-static qboolean FileExists (const char *filename)
-{
-	qFILE f;
-
-	SafeOpenRead(filename, &f);
-	if (!f.f && !f.z)
-		return qfalse;
-	CloseFile(&f);
-	return qtrue;
-}
-
-/**
  * @brief gamedir will hold the game directory (base, etc)
  */
 char gamedir[1024];
 
 /**
  * @brief
+ * @param[in] path The path to the map filename - relative or absolute
  */
 void FS_Init (char *path)
 {
-	char temp[1024] = "";
-	char c[1024] = "";
-	int pathlength = 0;
+	char ufoPath[MAX_QPATH];
+	const char *fullPath = ExpandArg(path);
 
-	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':')) {	/* path is partial */
-		Q_getwd(temp);
-		strcat(temp, path);
-		path = temp;
-	}
+	COM_FilePath(fullPath, ufoPath);
 
-	/* search for ".gamedir"-file in path */
-	strncpy(c, path, strlen(path) - 1);
-	for (pathlength = strlen(c) - 1; pathlength > 0; pathlength--) {
-		c[pathlength] = 0;
-		if ((!c[strlen(c)-1] == '/')
-		 && (!c[strlen(c)-1] == '\\')
-		 && (!c[strlen(c)-1] == ':'))
-			continue;
-		snprintf(temp, sizeof(temp), "%s/%s", c, BASEDIR_ID_FILE);
-		if (FileExists(temp)) {
-			strncpy(gamedir, c, strlen(c) - 1);
-			strncat(gamedir, "/"BASEDIRNAME"/", sizeof(gamedir));
-			Com_Printf("gamedir: %s\n", gamedir);
-			snprintf(c, sizeof(c) - 1, "%s0pics.pk3", gamedir);
-			pak = FS_LoadPackFile(c);
-			if (!pak)
-				Com_Printf("Could not load image pk3 (%s)\n", c);
-			return;
-		}
-	}
-	Sys_Error("FS_Init: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
+	FS_getwd(gamedir, sizeof(gamedir));
+	strncat(gamedir, BASEDIRNAME"/", sizeof(gamedir));
+
+	Com_Printf("gamedir: %s\n", gamedir);
+	pak = FS_LoadPackFile(va("%s0pics.pk3", gamedir));
+	if (!pak)
+		Com_Printf("Could not load image pk3\n");
 }
 
 /**
@@ -170,7 +136,7 @@ char *ExpandArg (const char *path)
 	static char full[1024];
 
 	if (path[0] != '/' && path[0] != '\\' && path[1] != ':') {
-		Q_getwd(full);
+		FS_getwd(full, sizeof(full));
 		strcat(full, path);
 	} else
 		strncpy(full, path, sizeof(full));
@@ -192,13 +158,13 @@ char *copystring (const char *s)
 /**
  * @brief
  */
-void Q_getwd (char *out)
+void FS_getwd (char *out, size_t size)
 {
 #ifdef _WIN32
-	_getcwd(out, 256);
+	_getcwd(out, size);
 	strcat(out, "\\");
 #else
-	if (getcwd(out, 256) == NULL)
+	if (getcwd(out, size) == NULL)
 		Com_Printf("Warning, getcwd failed\n");
 	strcat(out, "/");
 #endif
