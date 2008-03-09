@@ -452,7 +452,7 @@ static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absY, 
 
 	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
 
-	memcpy(&r_state.texcoord_array, default_texcoords, sizeof(float) * 8);
+	memcpy(&texunit_diffuse.texcoord_array, default_texcoords, sizeof(float) * 8);
 
 	r_state.vertex_array_2d[0] = nx;
 	r_state.vertex_array_2d[1] = ny;

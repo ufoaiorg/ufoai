@@ -62,14 +62,14 @@ void R_BindTexture (int texnum)
 
 void R_BindLightmapTexture (GLuint texnum)
 {
-	if (texnum == r_state.lightmap_texunit.texnum)
+	if (texnum == texunit_lightmap.texnum)
 		return;  /* small optimization to save state changes */
 
-	R_SelectTexture(&r_state.lightmap_texunit);
+	R_SelectTexture(&texunit_lightmap);
 
 	R_BindTexture(texnum);
 
-	R_SelectTexture(&r_state.texture_texunit);
+	R_SelectTexture(&texunit_diffuse);
 }
 
 void R_BindArray (GLenum target, GLenum type, void *array)
@@ -97,10 +97,7 @@ void R_BindDefaultArray (GLenum target)
 		R_BindArray(target, GL_FLOAT, r_state.vertex_array_3d);
 		break;
 	case GL_TEXTURE_COORD_ARRAY:
-		if (r_state.active_texunit == &r_state.lightmap_texunit)
-			R_BindArray(target, GL_FLOAT, r_state.lmtexcoord_array);
-		else
-			R_BindArray(target, GL_FLOAT, r_state.texcoord_array);
+		R_BindArray(target, GL_FLOAT, r_state.active_texunit->texcoord_array);
 		break;
 	case GL_COLOR_ARRAY:
 		R_BindArray(target, GL_FLOAT, r_state.color_array);
@@ -162,19 +159,19 @@ void R_EnableAlphaTest (qboolean enable)
 		qglDisable(GL_ALPHA_TEST);
 }
 
-void R_EnableMultitexture (qboolean enable)
+void R_EnableMultitexture (gltexunit_t *texunit, qboolean enable)
 {
-	if (enable == r_state.multitexture_enabled)
+	if (enable == texunit->enabled)
 		return;
 
-	r_state.multitexture_enabled = enable;
+	texunit->enabled = enable;
 
-	R_SelectTexture(&r_state.lightmap_texunit);
+	R_SelectTexture(texunit);
 
 	if (enable) {
-		/* activate lightmap texture unit */
+		/* activate texture unit */
 		qglEnable(GL_TEXTURE_2D);
-		if (r_lightmap->modified) {
+		if (texunit == &texunit_lightmap && r_lightmap->modified) {
 			r_lightmap->modified = qfalse;
 			if (r_lightmap->integer)
 				R_TexEnv(GL_REPLACE);
@@ -187,7 +184,7 @@ void R_EnableMultitexture (qboolean enable)
 		qglDisable(GL_TEXTURE_2D);
 		qglDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
-	R_SelectTexture(&r_state.texture_texunit);
+	R_SelectTexture(&texunit_diffuse);
 }
 
 void R_EnableLighting (qboolean enable)
@@ -207,7 +204,7 @@ void R_EnableLighting (qboolean enable)
 	if (enable) {  /* toggle state */
 		qglEnable(GL_LIGHTING);
 
-		if (r_state.multitexture_enabled)
+		if (texunit_lightmap.enabled)
 			activeLightShader = lighting_mtex_shader;
 		else
 			activeLightShader = lighting_shader;
@@ -236,7 +233,7 @@ void R_EnableWarp (qboolean enable)
 
 	r_state.warp_enabled = enable;
 
-	R_SelectTexture(&r_state.lightmap_texunit);
+	R_SelectTexture(&texunit_lightmap);
 
 	if (enable) {
 		R_BindTexture(r_warptexture->texnum);
@@ -254,7 +251,7 @@ void R_EnableWarp (qboolean enable)
 
 	R_CheckError();
 
-	R_SelectTexture(&r_state.texture_texunit);
+	R_SelectTexture(&texunit_diffuse);
 }
 
 void R_DisableEffects (void)
@@ -385,16 +382,9 @@ void R_StatePrint (void)
 	Com_Printf("%c... blend src: %i, blend dest: %i\n", 1, r_state.blend_src, r_state.blend_dest);
 	Com_Printf("%c... blend enabled: %s\n", 1, r_state.blend_enabled ? "Yes" : "No");
 	Com_Printf("%c... alpha test enabled: %s\n", 1, r_state.alpha_test_enabled ? "Yes" : "No");
-	Com_Printf("%c... multitexture enabled: %s\n", 1, r_state.multitexture_enabled ? "Yes" : "No");
 	Com_Printf("%c... lighting enabled: %s\n", 1, r_state.lighting_enabled ? "Yes" : "No");
 	Com_Printf("%c... warp enabled: %s\n", 1, r_state.warp_enabled ? "Yes" : "No");
 	Com_Printf("%c... ortho projection enabled: %s\n", 1, r_state.ortho ? "Yes" : "No");
-	Com_Printf("%c... 1st texunit:\n", 1);
-	Com_Printf("%c..... texenv: %i\n", 1, r_state.texture_texunit.texenv);
-	Com_Printf("%c..... texture: %i\n", 1, r_state.texture_texunit.texnum);
-	Com_Printf("%c... 2nd texunit\n", 1);
-	Com_Printf("%c..... texenv: %i\n", 1, r_state.lightmap_texunit.texenv);
-	Com_Printf("%c..... texture: %i\n", 1, r_state.lightmap_texunit.texnum);
 	Com_Printf("%c... solid format: %i\n", 1, gl_solid_format);
 	Com_Printf("%c... alpha format: %i\n", 1, gl_alpha_format);
 	Com_Printf("%c... compressed solid format: %i\n", 1, gl_compressed_solid_format);
@@ -416,16 +406,9 @@ static const vec4_t material = {
 void R_SetDefaultState (void)
 {
 	int i;
+	gltexunit_t *tex;
 
-	/* setup texture units */
-	r_state.active_texunit = NULL;
-
-	r_state.texture_texunit.texture = GL_TEXTURE0_ARB;
-	r_state.lightmap_texunit.texture = GL_TEXTURE1_ARB;
-	r_state.third_texunit.texture = GL_TEXTURE2_ARB;
-	r_state.fourth_texunit.texture = GL_TEXTURE3_ARB;
-
-	R_SelectTexture(&r_state.texture_texunit);
+	R_SelectTexture(&texunit_diffuse);
 
 	qglEnable(GL_TEXTURE_2D);
 	R_Color(NULL);
@@ -437,9 +420,6 @@ void R_SetDefaultState (void)
 	qglEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	qglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-
 	qglEnableClientState(GL_COLOR_ARRAY);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 	qglDisableClientState(GL_COLOR_ARRAY);
@@ -448,6 +428,19 @@ void R_SetDefaultState (void)
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 	qglDisableClientState(GL_NORMAL_ARRAY);
 
+	/* setup texture units */
+	for (i = 0; i < MAX_GL_TEXUNITS; i++) {
+		tex = &r_state.texunits[i];
+		tex->texture = GL_TEXTURE0_ARB + i;
+
+		R_EnableMultitexture(tex, qtrue);
+		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+
+		if (i > 0)  /* turn them off for now */
+			R_EnableMultitexture(tex, qfalse);
+	}
+
+	R_SelectTexture(&texunit_diffuse);
 	/* alpha test parameters */
 	qglAlphaFunc(GL_GREATER, 0.01f);
 

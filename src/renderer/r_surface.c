@@ -49,10 +49,10 @@ static inline void R_SetVertexArrayState (const model_t* mod)
 
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoords);
 
-	if (r_state.multitexture_enabled) {  /* lightmap texcoords */
-		R_SelectTexture(&r_state.lightmap_texunit);
+	if (texunit_lightmap.enabled) {  /* lightmap texcoords */
+		R_SelectTexture(&texunit_lightmap);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoords);
-		R_SelectTexture(&r_state.texture_texunit);
+		R_SelectTexture(&texunit_diffuse);
 	}
 
 	if (r_state.lighting_enabled)  /* normal vectors for lighting */
@@ -69,10 +69,10 @@ static inline void R_SetVertexBufferState (const model_t* mod)
 
 	R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoord_buffer);
 
-	if (r_state.multitexture_enabled) {  /* lightmap texcoords */
-		R_SelectTexture(&r_state.lightmap_texunit);
+	if (texunit_lightmap.enabled) {  /* lightmap texcoords */
+		R_SelectTexture(&texunit_lightmap);
 		R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoord_buffer);
-		R_SelectTexture(&r_state.texture_texunit);
+		R_SelectTexture(&texunit_diffuse);
 	}
 
 	if (r_state.lighting_enabled)  /* normal vectors for lighting */
@@ -87,10 +87,10 @@ static void R_ResetVertexArrayState (void)
 
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 
-	if (r_state.multitexture_enabled) {
-		R_SelectTexture(&r_state.lightmap_texunit);
+	if (texunit_lightmap.enabled) {
+		R_SelectTexture(&texunit_lightmap);
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-		R_SelectTexture(&r_state.texture_texunit);
+		R_SelectTexture(&texunit_diffuse);
 	}
 
 	if (r_state.lighting_enabled)
@@ -141,7 +141,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 
 	R_BindTexture(surf->texinfo->image->texnum);  /* texture */
 
-	if (r_state.multitexture_enabled)  /* lightmap */
+	if (texunit_lightmap.enabled)  /* lightmap */
 		R_BindLightmapTexture(surf->lightmaptexturenum);
 
 	R_CheckError();
@@ -188,13 +188,13 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 	if (!surfs->count)
 		return;
 
-	R_EnableMultitexture(qtrue);
+	R_EnableMultitexture(&texunit_lightmap, qtrue);
 
 	R_EnableLighting(qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableLighting(qfalse);
 
-	R_EnableMultitexture(qfalse);
+	R_EnableMultitexture(&texunit_lightmap, qfalse);
 }
 
 /**
@@ -221,9 +221,9 @@ void R_DrawAlphaSurfaces (const mBspSurfaces_t *surfs)
 		return;
 
 	assert(r_state.blend_enabled);
-	R_EnableMultitexture(qtrue);
+	R_EnableMultitexture(&texunit_lightmap, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableMultitexture(qfalse);
+	R_EnableMultitexture(&texunit_lightmap, qfalse);
 }
 
 /**

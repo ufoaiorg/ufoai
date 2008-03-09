@@ -273,7 +273,7 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	/* provided width and height (if any) take precedence */
 	if (w)
 		nw = w * viddef.rx;
-	
+
 	if (h)
 		nh = h * viddef.ry;
 
@@ -472,10 +472,10 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	/* init combiner */
 	R_EnableBlend(qtrue);
 
-	R_SelectTexture(&r_state.texture_texunit);
+	R_SelectTexture(&texunit_diffuse);
 	R_BindTexture(gl->texnum);
 
-	R_SelectTexture(&r_state.lightmap_texunit);
+	R_SelectTexture(&texunit_lightmap);
 	if (!r_dayandnighttexture || lastQ != q) {
 		R_CalcDayAndNight(q);
 		lastQ = q;
@@ -504,7 +504,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
-	R_SelectTexture(&r_state.texture_texunit);
+	R_SelectTexture(&texunit_diffuse);
 
 	R_EnableBlend(qfalse);
 }

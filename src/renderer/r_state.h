@@ -29,13 +29,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_STATE_H
 #define R_STATE_H
 
+/* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
+extern const float default_texcoords[];
 
+/** @brief texunits maintain multitexture state */
 typedef struct gltexunit_s {
-	GLenum texture;  /* e.g. GL_TEXTURE0_ARB */
-	GLint texnum;  /* e.g 123 */
-	GLenum texenv;  /* e.g. GL_MODULATE */
+	qboolean enabled;	/**< GL_TEXTURE_2D on / off */
+	GLenum texture;		/**< e.g. GL_TEXTURE0_ARB */
+	GLint texnum;		/**< e.g 123 */
+	GLenum texenv;		/**< e.g. GL_MODULATE */
+	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
 } gltexunit_t;
+
+#define MAX_GL_TEXUNITS		4
+
+/* these are defined for convenience */
+#define texunit_diffuse		r_state.texunits[0]
+#define texunit_lightmap	r_state.texunits[1]
+#define texunit_normal		r_state.texunits[2]
+#define texunit_specular	r_state.texunits[3]
 
 typedef struct {
 	qboolean fullscreen;
@@ -43,16 +56,11 @@ typedef struct {
 	/* arrays */
 	GLfloat vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
 	GLshort vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
-	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
-	GLfloat lmtexcoord_array[MAX_GL_ARRAY_LENGTH * 2];
 	GLfloat color_array[MAX_GL_ARRAY_LENGTH * 4];
 	GLfloat normal_array[MAX_GL_ARRAY_LENGTH * 3];
 
 	/* multitexture texunits */
-	gltexunit_t texture_texunit;
-	gltexunit_t lightmap_texunit;
-	gltexunit_t third_texunit;
-	gltexunit_t fourth_texunit;
+	gltexunit_t texunits[MAX_GL_TEXUNITS];
 
 	/* texunit in use */
 	gltexunit_t *active_texunit;
@@ -69,7 +77,6 @@ typedef struct {
 	/* states */
 	qboolean blend_enabled;
 	qboolean alpha_test_enabled;
-	qboolean multitexture_enabled;
 	qboolean lighting_enabled;
 	qboolean warp_enabled;
 
@@ -82,12 +89,11 @@ typedef struct {
 } rstate_t;
 
 extern rstate_t r_state;
-extern const float default_texcoords[];
 
 void R_SetDefaultState(void);
 void R_SetupGL2D(void);
 void R_SetupGL3D(void);
-void R_EnableMultitexture(qboolean enable);
+void R_EnableMultitexture(gltexunit_t *texunit, qboolean enable);
 void R_SelectTexture(gltexunit_t *texunit);
 void R_BindTexture(int texnum);
 void R_BindLightmapTexture(GLuint texnum);

@@ -515,8 +515,8 @@ static void R_LoadBspVertexArrays (void)
 			t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
 			t /= surf->texinfo->image->height;
 
-			r_state.texcoord_array[coordind + 0] = s;
-			r_state.texcoord_array[coordind + 1] = t;
+			texunit_diffuse.texcoord_array[coordind + 0] = s;
+			texunit_diffuse.texcoord_array[coordind + 1] = t;
 
 			if (surf->flags & MSURF_LIGHTMAP) {  /* lightmap coordinates */
 				s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
@@ -532,8 +532,8 @@ static void R_LoadBspVertexArrays (void)
 				t /= r_maxlightmap->integer * surf->lightmap_scale;
 			}
 
-			r_state.lmtexcoord_array[coordind + 0] = s;
-			r_state.lmtexcoord_array[coordind + 1] = t;
+			texunit_lightmap.texcoord_array[coordind + 0] = s;
+			texunit_lightmap.texcoord_array[coordind + 1] = t;
 
 			/* normal vectors */
 			memcpy(&r_state.normal_array[vertind], surf->normal, sizeof(vec3_t));
@@ -548,10 +548,10 @@ static void R_LoadBspVertexArrays (void)
 	memcpy(loadmodel->bsp.verts, r_state.vertex_array_3d, vertind * sizeof(GLfloat));
 
 	loadmodel->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_lightPool, 0);
-	memcpy(loadmodel->bsp.texcoords, r_state.texcoord_array, coordind * sizeof(GLfloat));
+	memcpy(loadmodel->bsp.texcoords, texunit_diffuse.texcoord_array, coordind * sizeof(GLfloat));
 
 	loadmodel->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_lightPool, 0);
-	memcpy(loadmodel->bsp.lmtexcoords, r_state.lmtexcoord_array, coordind * sizeof(GLfloat));
+	memcpy(loadmodel->bsp.lmtexcoords, texunit_lightmap.texcoord_array, coordind * sizeof(GLfloat));
 
 	loadmodel->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_lightPool, 0);
 	memcpy(loadmodel->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));

@@ -170,10 +170,10 @@ static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const material
 
 	/* and optionally the lightmap */
 	if (stage->flags & STAGE_LIGHTMAP) {
-		R_EnableMultitexture(qtrue);
+		R_EnableMultitexture(&texunit_lightmap, qtrue);
 		R_BindLightmapTexture(surf->lightmaptexturenum);
 	} else
-		R_EnableMultitexture(qfalse);
+		R_EnableMultitexture(&texunit_lightmap, qfalse);
 
 	/* set the blend function, ensuring a good default */
 	if (stage->flags & STAGE_BLEND)
@@ -215,14 +215,14 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 
 		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
 
-		R_StageTexcoord(stage, v, st, &r_state.texcoord_array[i * 2]);
+		R_StageTexcoord(stage, v, st, &texunit_diffuse.texcoord_array[i * 2]);
  		if (stage->flags & STAGE_TERRAIN)
 			R_StageColor(stage, v, &r_state.color_array[i * 4]);
 
-		if (r_state.multitexture_enabled) {
+		if (texunit_lightmap.enabled) {
 			st = &r_mapTiles[surf->tile]->bsp.lmtexcoords[surf->index * 2 + i * 2];
-			r_state.lmtexcoord_array[i * 2 + 0] = st[0];
-			r_state.lmtexcoord_array[i * 2 + 1] = st[1];
+			texunit_lightmap.texcoord_array[i * 2 + 0] = st[0];
+			texunit_lightmap.texcoord_array[i * 2 + 1] = st[1];
 		}
 	}
 
@@ -276,7 +276,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_EnableMultitexture(qfalse);
+	R_EnableMultitexture(&texunit_lightmap, qfalse);
 }
 
 /**
