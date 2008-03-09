@@ -172,7 +172,20 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 /**
  * @brief gamedir will hold the game directory (base, etc)
  */
-char gamedir[1024];
+static char gamedir[1024];
+
+/**
+ * @sa FS_Init
+ */
+const char* FS_GameDir (void)
+{
+	if (gamedir[0] == '\0') {
+		FS_getwd(gamedir, sizeof(gamedir));
+		strncat(gamedir, BASEDIRNAME"/", sizeof(gamedir));
+		Com_Printf("gamedir: %s\n", gamedir);
+	}
+	return gamedir;
+}
 
 /**
  * @brief
@@ -185,10 +198,8 @@ void FS_Init (char *path)
 
 	COM_FilePath(fullPath, ufoPath);
 
-	FS_getwd(gamedir, sizeof(gamedir));
-	strncat(gamedir, BASEDIRNAME"/", sizeof(gamedir));
+	FS_GameDir();
 
-	Com_Printf("gamedir: %s\n", gamedir);
 	pak = FS_LoadPackFile(va("%s0pics.pk3", gamedir));
 	if (!pak)
 		Com_Printf("Could not load image pk3\n");

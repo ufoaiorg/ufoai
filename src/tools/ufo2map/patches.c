@@ -44,6 +44,7 @@ void CalcTextureReflectivity (void)
 	float r;
 	miptex_t *mt;
 	qboolean loaded = qfalse;
+	const char *gamedir = FS_GameDir();
 
 	/* always set index 0 even if no textures */
 	texture_reflectivity[0][0] = 0.5;

@@ -40,6 +40,7 @@ int FindMiptex (const char *name)
 	char path[1024];
 	qboolean loaded = qfalse;
 	miptex_t *mt;
+	const char *gamedir = FS_GameDir();
 
 	for (i = 0; i < nummiptex; i++)
 		if (!strcmp(name, textureref[i].name)) {
