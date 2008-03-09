@@ -213,16 +213,6 @@ char *copystring (const char *s)
 /**
  * @brief
  */
-double I_FloatTime (void)
-{
-	time_t t;
-	time(&t);
-	return t;
-}
-
-/**
- * @brief
- */
 void Q_getwd (char *out)
 {
 #ifdef _WIN32

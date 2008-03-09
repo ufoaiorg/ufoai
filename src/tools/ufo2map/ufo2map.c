@@ -320,7 +320,7 @@ int main (int argc, char **argv)
 
 	Swap_Init();
 
-	start = I_FloatTime();
+	start = time(NULL);
 
 	Com_Printf("path: '%s'\n", argv[argc - 1]);
 	SetQdirFromPath(argv[argc - 1]);
@@ -362,7 +362,7 @@ int main (int argc, char **argv)
 		ProcessModels(source);
 	}
 
-	end = I_FloatTime();
+	end = time(NULL);
 	Com_Printf("%5.0f seconds elapsed\n", end-start);
 
 	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
@@ -374,18 +374,18 @@ int main (int argc, char **argv)
 
 		if (config.noradiosity != RADIOSITY_DAY_ONLY) {
 			/* compile night version */
-			start = I_FloatTime();
+			start = time(NULL);
 			RadWorld();
-			end = I_FloatTime();
+			end = time(NULL);
 			Com_Printf("%5.0f seconds elapsed\n", end - start);
 		}
 
 		if (config.noradiosity != RADIOSITY_NIGHT_ONLY) {
 			/* compile day version */
 			config.compile_for_day = 1;
-			start = I_FloatTime();
+			start = time(NULL);
 			RadWorld();
-			end = I_FloatTime();
+			end = time(NULL);
 			Com_Printf("%5.0f seconds elapsed\n", end - start);
 		}
 

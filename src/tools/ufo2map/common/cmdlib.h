@@ -35,8 +35,6 @@ void SetQdirFromPath(char *path);
 char *ExpandArg(const char *path);	/* from cmd line */
 char *ExpandPath(const char *path);	/* from scripts */
 
-double I_FloatTime(void);
-
 qFILE *SafeOpenWrite(const char *filename, qFILE *f);
 qFILE *SafeOpenRead(const char *filename, qFILE *f);
 void SafeRead(qFILE *f, void *buffer, int count);

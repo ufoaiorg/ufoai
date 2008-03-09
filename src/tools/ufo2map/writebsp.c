@@ -34,7 +34,7 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 	int	start = 0, end;
 
 	if (showProgress) {
-		start = I_FloatTime();
+		start = time(NULL);
 		fprintf(stdout, "%10s: ", id);
 		fflush(stdout);
 	}
@@ -51,7 +51,7 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 		func(i);
 	}
 	if (showProgress) {
-		end = I_FloatTime();
+		end = time(NULL);
 		Com_Printf(" (time: %4is, count: %i)\n", end - start, count);
 	}
 }
