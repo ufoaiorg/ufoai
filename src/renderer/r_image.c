@@ -951,7 +951,7 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	int i, c;
 	byte *scan;
 	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
-	qboolean clamp = (image->type == it_pic && image->type != it_chars);
+	qboolean clamp = (image->type == it_pic);
 
 	for (scaled_width = 1; scaled_width < width; scaled_width <<= 1);
 	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1);
@@ -1162,7 +1162,7 @@ void R_BlurXVIOverlay (void)
 
 	memcpy(out, r_xviPic, bpp * xviWidth * xviHeight);
 
-	/** 
+	/**
 	 * @note We use a cross to integrate alpha value.
 	 * As we integrate on a globe (and not a plane), we can't use a cross whose width is the same than its height
 	 * The width (blurringWidth) depend on the latitude of the point we are averaging
