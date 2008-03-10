@@ -151,7 +151,7 @@ static void S_Music_Start (const char *file)
 	if (music.data) {
 		Com_Printf("S_Music_Start: Playing music: 'music/%s'\n", name);
 		Q_strncpyz(music.currentlyPlaying, name, sizeof(music.currentlyPlaying));
-		if (Cvar_VariableInteger("snd_music_crackleWorkaround")) {
+		if (snd_music_crackleWorkaround->integer) {
 			if (Mix_FadeInMusic(music.data, 1, 1500) == -1)
 				Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
 			Mix_HookMusicFinished(musicFinished);
@@ -749,7 +749,7 @@ void S_Init (void)
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
-	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_start\" if you experience crackling when background music loops (bug #1853933)");
+	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_start\" if you experience crackling when background music loops");
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
