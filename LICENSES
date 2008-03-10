@@ -2904,12 +2904,17 @@ base/textures/tex_misc/crate001.jpg | GNU General Public License 2.0 | Werner H�
 base/textures/tex_misc/crate001a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/d_tech_dw2gb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_misc/drawer001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/drkmtl_grlpltmech.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/dvdshop.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
 base/textures/tex_misc/e8_btrim02.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8_btrim05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8beam02.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8jumpspawn02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_misc/fridge001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/laminate001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/microwave001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/microwave001_side.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/mtl_l1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/mtl_l1_fx.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/pad.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2919,6 +2924,7 @@ base/textures/tex_misc/pipes003.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/sign_falloutshelter.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/yellowcamelcrossing.jpg | Public Domain |  | Public Domain Golgotha
