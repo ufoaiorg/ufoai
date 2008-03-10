@@ -1958,7 +1958,7 @@ void MN_BaseMapDraw (const menuNode_t * node)
 {
 	int x, y, xHover = -1, yHover = -1, widthHover = 1;
 	int width, height, row, col, time, colSecond;
-	static vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
+	const vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
 	char image[MAX_QPATH];
 	building_t *building, *secondBuilding = NULL, *hoverBuilding = NULL;
 

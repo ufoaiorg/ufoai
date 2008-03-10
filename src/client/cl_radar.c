@@ -52,6 +52,8 @@ void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t po
 
 	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
 	MAP_MapDrawEquidistantPoints(node, pos, rangeTracking, color);
+
+	R_Color(NULL);
 }
 
 /**
