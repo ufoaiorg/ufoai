@@ -59,6 +59,7 @@ static cvar_t *snd_channels;
 static cvar_t *snd_rate;
 static cvar_t *snd_music;
 static cvar_t *snd_music_volume;
+static cvar_t *snd_music_crackleWorkaround;
 
 static int audio_rate, audio_channels;
 uint16_t audio_format;
@@ -81,6 +82,15 @@ void S_Music_Stop (void)
 		music.musicSrc = NULL;
 		Q_strncpyz(music.currentlyPlaying, "", sizeof(music.currentlyPlaying));
 	}
+}
+
+/* prototype */
+static void S_Music_Start (const char *file);
+
+static void musicFinished()
+{
+	S_Music_Stop();
+	S_Music_Start(Cvar_VariableString("snd_music"));
 }
 
 /**
@@ -141,8 +151,14 @@ static void S_Music_Start (const char *file)
 	if (music.data) {
 		Com_Printf("S_Music_Start: Playing music: 'music/%s'\n", name);
 		Q_strncpyz(music.currentlyPlaying, name, sizeof(music.currentlyPlaying));
-		if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
-			Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
+		if (Cvar_VariableInteger("snd_music_crackleWorkaround")) {
+			if (Mix_FadeInMusic(music.data, 1, 1500) == -1)
+				Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
+			Mix_HookMusicFinished(musicFinished);
+		} else {
+			if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
+				Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
+		}
 	} else {
 		Com_Printf("S_Music_Start: Could not load music: 'music/%s' (%s)\n", name, Mix_GetError());
 	}
@@ -733,6 +749,7 @@ void S_Init (void)
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
+	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_start\" if you experience crackling when background music loops (bug #1853933)");
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
