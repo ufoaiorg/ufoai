@@ -86,9 +86,6 @@ static void S_Music_Start (const char *file)
 	byte *musicBuf;
 	int size;
 
-	if (!sound_started)
-		return;
-
 	if (!file || !*file)
 		return;
 
