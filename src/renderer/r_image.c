@@ -124,7 +124,7 @@ void R_ImageList_f (void)
 			break;
 		}
 
-		Com_Printf(" %3i %3i RGB: %s\n", image->upload_width, image->upload_height, image->name);
+		Com_Printf(" %3i %3i RGB: %5i idx: %i - %s\n", image->upload_width, image->upload_height, image->texnum, image->index, image->name);
 	}
 	Com_Printf("Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
@@ -1095,11 +1095,14 @@ void R_CalcDayAndNight (float q)
 	if (!r_dayandnighttexture) {
 		if (numgltextures >= MAX_GLTEXTURES)
 			Com_Error(ERR_DROP, "MAX_GLTEXTURES");
-		r_dayandnighttexture = &gltextures[numgltextures++];
+		r_dayandnighttexture = &gltextures[numgltextures];
+		r_dayandnighttexture->index = numgltextures;
+		Q_strncpyz(r_dayandnighttexture->name, "day_and_night_mask", sizeof(r_dayandnighttexture->name));
 		r_dayandnighttexture->width = DAN_WIDTH;
 		r_dayandnighttexture->height = DAN_HEIGHT;
 		r_dayandnighttexture->type = it_pic;
 		r_dayandnighttexture->texnum = TEXNUM_IMAGES + (r_dayandnighttexture - gltextures);
+		numgltextures++;
 	}
 	assert(r_dayandnighttexture->texnum);
 	R_BindTexture(r_dayandnighttexture->texnum);
@@ -1278,11 +1281,12 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 			break;
 
 	if (i == numgltextures) {
-		if (numgltextures == MAX_GLTEXTURES)
-			Com_Error(ERR_DROP, "MAX_GLTEXTURES");
+		if (numgltextures >= MAX_GLTEXTURES)
+			Com_Error(ERR_DROP, "R_LoadPic: MAX_GLTEXTURES hit");
 		numgltextures++;
 	}
 	image = &gltextures[i];
+	image->index = i;
 
 	image->type = type;
 

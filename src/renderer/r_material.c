@@ -303,7 +303,7 @@ static GLenum R_ConstByName (const char *c)
 
 static int R_LoadAnimImages (materialStage_t *s)
 {
-	char *c, name[MAX_QPATH];
+	char name[MAX_QPATH];
 	int i, j;
 
 	strncpy(name, s->image->name, sizeof(name));
@@ -322,7 +322,7 @@ static int R_LoadAnimImages (materialStage_t *s)
 
 	/* now load the rest */
 	for (i = 1; i < s->anim.num_frames; i++) {
-		c = va("textures/%s%d", name, i);
+		const char *c = va("textures/%s%d", name, i);
 		s->anim.images[i] = R_FindImage(c, it_material);
 		if (s->anim.images[i] == r_notexture) {
 			Com_Printf("R_LoadAnimImages: Failed to resolve texture: %s\n", c);

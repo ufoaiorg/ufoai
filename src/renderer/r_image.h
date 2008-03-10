@@ -62,6 +62,7 @@ typedef struct image_s {
 	int registration_sequence;			/**< 0 = free */
 	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
 	GLuint texnum;						/**< gl texture binding */
+	int index;							/**< index in gltexture array */
 	qboolean has_alpha;
 	material_t material;
 } image_t;
