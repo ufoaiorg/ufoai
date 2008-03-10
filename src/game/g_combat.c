@@ -403,11 +403,12 @@ static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * atta
 			G_UpdateShotMock(mock, attacker, target, damage);
 		} else if (stunEl) {
 			target->STUN += damage;
-		} else if (stunGas && !isRobot) {
-			target->STUN += damage;
-		} else if (shock && !isRobot) {
+		} else if (stunGas) {
+			if (!isRobot)
+				target->STUN += damage;
+		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
-			if (target->team != attacker->team) {
+			if (!isRobot && target->team != attacker->team) {
 				const player_t *player = game.players + target->pnum;
 				/* FIXME: there should be a possible protection, too */
 				target->TU = 0; /* flashbangs kill TUs */
