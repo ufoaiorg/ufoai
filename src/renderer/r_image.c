@@ -1234,7 +1234,7 @@ void R_InitializeXVIOverlay (void)
 
 	/* Initialize to zero XVI rate */
 	start = r_xviPic + 3;	/* to get the first alpha value */
-	for (i = 0; i < xviWidth * xviHeight * 4; i++, start += 4) {
+	for (i = 0; i < xviWidth * xviHeight; i++, start += 4) {
 		start[0] = 0;
 	}
 
