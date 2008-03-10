@@ -86,9 +86,9 @@ void S_Music_Stop (void)
 }
 
 /* prototype */
-static void S_Music_Start (const char *file);
+static void S_Music_Start(const char *file);
 
-static void musicFinished()
+static void S_MusicHookFinished (void)
 {
 	S_Music_Stop();
 	S_Music_Start(Cvar_VariableString("snd_music"));
@@ -155,7 +155,7 @@ static void S_Music_Start (const char *file)
 		if (snd_music_crackleWorkaround->integer) {
 			if (Mix_FadeInMusic(music.data, 1, 1500) == -1)
 				Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
-			Mix_HookMusicFinished(musicFinished);
+			Mix_HookMusicFinished(S_MusicHookFinished);
 		} else {
 			if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
 				Com_Printf("S_Music_Start: Could not play music: 'music/%s' (%s)\n", name, Mix_GetError());
