@@ -79,6 +79,7 @@ void S_Music_Stop (void)
 		music.data = NULL;
 		/* this is freed in the SDL_mixer callback functions */
 		music.musicSrc = NULL;
+		Q_strncpyz(music.currentlyPlaying, "", sizeof(music.currentlyPlaying));
 	}
 }
 
