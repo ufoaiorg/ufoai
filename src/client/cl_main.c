@@ -1591,6 +1591,9 @@ void CL_InitAfter (void)
 	menuNode_t* vidModesOptions;
 	selectBoxOptions_t* selectBoxOption;
 
+	/* start the music track already while precaching data */
+	S_Frame();
+
 	cls.loadingPercent = 2.0f;
 
 	/* precache loading screen */
