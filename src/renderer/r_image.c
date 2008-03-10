@@ -1138,10 +1138,8 @@ void R_CalcDayAndNight (float q)
 	R_CheckError();
 }
 
-#define XVI_WIDTH		512		/**< Width of xvi propagation texture */
-#define XVI_HEIGHT		256		/**< Height of xvi propagation texture */
-static const int maxAlpha = 256;		/**< Number of alpha level */
 
+static const int maxAlpha = 256;		/**< Number of alpha level */
 image_t *r_xviTexture;								/**< XVI texture */
 static byte *r_xviPic;								/**< XVI picture */
 
@@ -1154,13 +1152,15 @@ void R_BlurXVIOverlay (void)
 	byte *out;			/**< copy of r_xviAlpha where the calculations will be made */
 	const int bpp = 4;	/**< byte per pixel */
 	int i, j;
+	const int xviWidth = r_xviTexture->width;
+	const int xviHeight = r_xviTexture->height;
 
 	/* soften into a copy of the original image, as in-place would be incorrect */
-	out = (byte *)Mem_PoolAlloc(bpp * XVI_WIDTH * XVI_HEIGHT, vid_imagePool, 0);
+	out = (byte *)Mem_PoolAlloc(bpp * xviWidth * xviHeight, vid_imagePool, 0);
 	if (!out)
-		Sys_Error("TagMalloc: failed on allocation of %i bytes for R_BlurTransparency", bpp * XVI_WIDTH * XVI_HEIGHT);
+		Sys_Error("TagMalloc: failed on allocation of %i bytes for R_BlurTransparency", bpp * xviWidth * xviHeight);
 
-	memcpy(out, r_xviPic, bpp * XVI_WIDTH * XVI_HEIGHT);
+	memcpy(out, r_xviPic, bpp * xviWidth * xviHeight);
 
 	/** 
 	 * @note We use a cross to integrate alpha value.
@@ -1171,15 +1171,15 @@ void R_BlurXVIOverlay (void)
 	 * Total areas of the cross will be (2 * (blurringWidth + 1) + 1)
 	 */
 
-	for (i = bpp; i < bpp * (XVI_HEIGHT - 1); i += bpp) {
-		/* Note that blurringWidth would be Nan if i = 0 or i = XVI_HEIGHT */
-		const int blurringWidth = round(1.0 / sin(M_PI * i / ((float) (bpp * (XVI_HEIGHT - 1.0f)))));
+	for (i = bpp; i < bpp * (xviHeight - 1); i += bpp) {
+		/* Note that blurringWidth would be Nan if i = 0 or i = xviHeight */
+		const int blurringWidth = round(1.0 / sin(M_PI * i / ((float) (bpp * (xviHeight - 1.0f)))));
 		assert(blurringWidth > 0);
-		for (j = bpp; j < bpp * (XVI_WIDTH - 1); j += bpp) {
-			const byte *src = r_xviPic + 3 + i * XVI_WIDTH + j;		/**< current input alpha */
-			byte *dest = out + 3 + i * XVI_WIDTH + j;				/**< current output pixel */
-			const int yu = -bpp * XVI_WIDTH;	/**< index of the point above current one */
-			const int yd = bpp * XVI_WIDTH;	/**< index of the point below current one */
+		for (j = bpp; j < bpp * (xviWidth - 1); j += bpp) {
+			const byte *src = r_xviPic + 3 + i * xviWidth + j;		/**< current input alpha */
+			byte *dest = out + 3 + i * xviWidth + j;				/**< current output pixel */
+			const int yu = -bpp * xviWidth;	/**< index of the point above current one */
+			const int yd = bpp * xviWidth;	/**< index of the point below current one */
 			int k;
 
 			/** @todo Blur will not work properly on the poles */
@@ -1189,12 +1189,12 @@ void R_BlurXVIOverlay (void)
 				int xl, xr;
 				if (k > j)
 					/* xl is on the other side of the texture */
-					xl = bpp * XVI_WIDTH - k;
+					xl = bpp * xviWidth - k;
 				else
 					xl = -k;
-				if (k + j >= bpp * XVI_WIDTH)
+				if (k + j >= bpp * xviWidth)
 					/* xr is on the other side of the texture */
-					xr = k - bpp * XVI_WIDTH;
+					xr = k - bpp * xviWidth;
 				else
 					xr = k;
 				dest[0] += src[xl] + src[xr];
@@ -1206,7 +1206,7 @@ void R_BlurXVIOverlay (void)
 	}
 
 	/* copy the softened image over the input image, and free it */
-	memcpy(r_xviPic, out, bpp * XVI_WIDTH * XVI_HEIGHT);
+	memcpy(r_xviPic, out, bpp * xviWidth * xviHeight);
 	Mem_Free(out);
 
 	R_BindTexture(r_xviTexture->texnum);
@@ -1229,12 +1229,12 @@ void R_InitializeXVIOverlay (void)
 
 	/* Load the XVI texture */
 	R_LoadImage("pics/geoscape/map_earth_xvi_overlay.tga", &r_xviPic, &xviWidth, &xviHeight);
-	if ((xviWidth != XVI_WIDTH) || (xviHeight != XVI_HEIGHT))
-		Sys_Error("R_InitializeXVIOverlay: Wrong XVI overlay image size (%i x %i)\n", xviWidth, xviHeight);
+
+	assert(r_xviPic);
 
 	/* Initialize to zero XVI rate */
 	start = r_xviPic + 3;	/* to get the first alpha value */
-	for (i = 0; i < XVI_WIDTH * XVI_HEIGHT * 4; i++, start += 4) {
+	for (i = 0; i < xviWidth * xviHeight * 4; i++, start += 4) {
 		start[0] = 0;
 	}
 
@@ -1249,18 +1249,18 @@ void R_InitializeXVIOverlay (void)
  */
 void R_IncreaseXVIOverlay (const vec2_t pos, int alpha)
 {
-	const int x = round((pos[0] + 180) * XVI_WIDTH / 360.0f);
-	const int y = round((90 - pos[1]) * XVI_HEIGHT / 180.0f);
+	const int x = round((pos[0] + 180) * r_xviTexture->width / 360.0f);
+	const int y = round((90 - pos[1]) * r_xviTexture->height / 180.0f);
 
 	assert(x >= 0);
-	assert(x <= XVI_WIDTH);
+	assert(x <= r_xviTexture->width);
 	assert(y >= 0);
-	assert(y <= XVI_HEIGHT);
+	assert(y <= r_xviTexture->height);
 
 	if ((alpha < 0) || (alpha >= maxAlpha))
 		Sys_Error("R_IncreaseXVI: alpha value %i is outside alpha range\n", alpha);
 
-	r_xviPic[3 + 4 * (y * XVI_WIDTH + x)] = alpha;
+	r_xviPic[3 + 4 * (y * r_xviTexture->width + x)] = alpha;
 }
 
 /**
