@@ -141,9 +141,16 @@ static void S_Music_Start (const char *file)
 
 /**
  * @brief Plays the music file given via commandline parameter
+ * @todo Is it safe to simply have this as a wrapper for S_Music_Start() ?
  */
 static void S_Music_Play_f (void)
 {
++/* @todo the chunk below would make S_Music_Play_f() a wrapper for S_Music_Start()
++	if (Cmd_Argc() == 2)
++		Cvar_Set("snd_music", Cmd_Argv(1));
++
++	S_Music_Start(Cvar_VariableString("snd_music"));
++*/
 	if (!sound_started) {
 		Com_Printf("No audio activated\n");
 		return;
