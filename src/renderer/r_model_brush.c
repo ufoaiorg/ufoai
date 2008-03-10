@@ -684,13 +684,13 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 	assert(mapName);
 
+	/* next registration sequence */
+	registration_sequence++;
+
 	if (*mapName == '+')
 		R_LoadMaterials(mapName + 1);
 	else
 		R_LoadMaterials(mapName);
-
-	/* next registration sequence */
-	registration_sequence++;
 
 	/* fix this, currently needed, slows down loading times */
 	R_ShutdownModels();
