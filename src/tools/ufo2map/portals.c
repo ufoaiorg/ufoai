@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static int c_active_portals = 0;
 static int c_peak_portals = 0;
+static int c_tinyportals = 0;
 
 static portal_t *AllocPortal (void)
 {
@@ -51,8 +52,6 @@ void FreePortal (portal_t *p)
 	free(p);
 }
 
-/*============================================================== */
-
 /**
  * @brief Returns the single content bit of the strongest visible content present
  */
@@ -66,10 +65,6 @@ int VisibleContents (int contentFlags)
 
 	return 0;
 }
-
-/*============================================================================= */
-
-static int c_tinyportals = 0;
 
 static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 {

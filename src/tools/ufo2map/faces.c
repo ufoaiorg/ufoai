@@ -49,12 +49,12 @@ static vec3_t edge_start;
 static int num_edge_verts;
 static int edge_verts[MAX_MAP_VERTS];
 
-static face_t *NewFaceFromFace (face_t *f);
+static face_t *NewFaceFromFace(face_t *f);
 
 #define	HASH_SIZE	64
 
 static int vertexchain[MAX_MAP_VERTS];		/* the next vertex in a hash chain */
-static int hashverts[HASH_SIZE*HASH_SIZE];	/* a vertex number, or 0 for no verts */
+static int hashverts[HASH_SIZE * HASH_SIZE];	/* a vertex number, or 0 for no verts */
 
 
 static unsigned HashVec (vec3_t vec)

@@ -899,18 +899,17 @@ nextpatch:;
  */
 static void FacesWithVert (int vert, int *faces, int *nfaces)
 {
-	dBspFace_t *face;
-	int i, j, k, e, v;
+	int i, j, k, v;
 
 	k = 0;
 	for (i = 0; i < numfaces; i++) {
-		face = &dfaces[i];
+		const dBspFace_t *face = &dfaces[i];
 
 		if (!(texinfo[face->texinfo].surfaceFlags & SURF_PHONG))
 			continue;
 
 		for (j = 0; j < face->numedges; j++) {
-			e = dsurfedges[face->firstedge + j];
+			const int e = dsurfedges[face->firstedge + j];
 
 			v = e >= 0 ? dedges[e].v[0] : dedges[-e].v[1];
 
@@ -1177,6 +1176,8 @@ void FinalLightFace (unsigned int facenum)
 				AddPointToTriangulation(patch, trian);
 			}
 		}
+		for (i = 0; i < trian->numpoints; i++)
+			memset(trian->edgematrix[i], 0, trian->numpoints * sizeof(trian->edgematrix[0][0]));
 		TriangulatePoints(trian);
 	}
 

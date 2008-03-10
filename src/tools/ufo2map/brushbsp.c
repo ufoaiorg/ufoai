@@ -548,8 +548,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 			}
 		}
 
-		/* if we found a good plane, don't bother trying any
-		 * other passes */
+		/* if we found a good plane, don't bother trying any other passes */
 		if (bestside) {
 			if (pass > 1)
 				c_nonvis++;
@@ -643,22 +642,22 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 
 	/* the brush isn't really split */
 	if (!w || WindingIsTiny(w)) {
-		int side = BrushMostlyOnSide(brush, plane);
+		const int side = BrushMostlyOnSide(brush, plane);
 		if (side == PSIDE_FRONT)
 			*front = CopyBrush(brush);
-		if (side == PSIDE_BACK)
+		else if (side == PSIDE_BACK)
 			*back = CopyBrush(brush);
 		return;
 	}
 
 	if (WindingIsHuge(w))
-		Sys_FPrintf(SYS_VRB, "WARNING: huge winding\n");
+		Com_Printf("WARNING: Large winding\n");
 
 	midwinding = w;
 
 	/* split it for real */
 	for (i = 0; i < 2; i++) {
-		b[i] = AllocBrush(brush->numsides+1);
+		b[i] = AllocBrush(brush->numsides + 1);
 		b[i]->original = brush->original;
 	}
 

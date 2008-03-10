@@ -670,6 +670,10 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			side->surfaceFlags = td.surfaceFlags = atoi(parsedToken);
 			GetToken(qfalse);
 			td.value = atoi(parsedToken);
+		} else {
+			side->contentFlags = CONTENTS_SOLID;
+			side->surfaceFlags = 0;
+			td.value = 0;
 		}
 
 		/* resolve implicit surface and contents flags */

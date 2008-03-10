@@ -216,6 +216,9 @@ static void MakePatchForFace (int facenum, winding_t *w)
 
 	VectorCopy(texture_reflectivity[f->texinfo], patch->reflectivity);
 
+	VectorClear(patch->baselight);
+	VectorClear(patch->totallight);
+
 	/* non-bmodel patches can emit light */
 	if (facenum < dmodels[0].numfaces || (texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
 		BaseLightForFace(f, patch->baselight);
@@ -251,7 +254,6 @@ void MakePatches (void)
 {
 	int i, j, k;
 	dBspFace_t *f;
-	int facenum;
 	winding_t *w;
 	dBspModel_t *mod;
 	vec3_t origin;
@@ -267,7 +269,7 @@ void MakePatches (void)
 		GetVectorForKey(ent, "origin", origin);
 
 		for (j = 0; j < mod->numfaces; j++) {
-			facenum = mod->firstface + j;
+			const int facenum = mod->firstface + j;
 			VectorCopy(origin, face_offset[facenum]);
 			f = &dfaces[facenum];
 			w = WindingFromFace(f);
