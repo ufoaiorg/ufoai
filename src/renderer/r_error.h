@@ -35,7 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static inline void R_CheckErrorDebug (const char *file, int line, const char *function)
 {
-	if (qglGetError && r_checkerror && r_checkerror->integer) {
+	/* binding are not yet initialized */
+	if (!qglGetError)
+		return;
+
+	if (r_checkerror && r_checkerror->integer) {
 		GLenum error = qglGetError();
 		if (error != GL_NO_ERROR)
 			Com_Printf("OpenGL err: %s (%d): %s 0x%X\n", file, line, function, error);
