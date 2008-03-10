@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "bsp.h"
 
-#define QUANT	4
-#define PLAYER_HEIGHT		(UNIT_HEIGHT - 16)
 #define SH_BIG	9
 #define SH_LOW	2
 
@@ -80,8 +78,8 @@ static void CheckUnit (unsigned int unitnum)
 
 	/* prepare fall down check */
 	VectorCopy(end, start);
-	start[2] -= UNIT_HEIGHT / 2 - 4;
-	end[2]   -= UNIT_HEIGHT / 2 + 4;
+	start[2] -= UNIT_HEIGHT / 2 - QUANT;
+	end[2]   -= UNIT_HEIGHT / 2 + QUANT;
 
 	/* FIXME: Don't allow falling over more than 1 level (z-direction) */
 	/* test for fall down */
@@ -190,6 +188,7 @@ static void CheckConnections (unsigned int unitnum)
 	/* prepare trace */
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, start);
+	/* Adjust height to actual floor height. */
 	start[2] += h * QUANT;
 	VectorCopy(start, ts);
 
@@ -224,8 +223,8 @@ static void CheckConnections (unsigned int unitnum)
 			ay = y - 1;
 			break;
 		}
-		/* range check*/
-		if (x < 0 || x >= PATHFINDING_WIDTH || y < 0 || y >= PATHFINDING_WIDTH)
+		/* range check- ensure that ax and ay are on the map*/
+		if (ax < 0 || ax >= PATHFINDING_WIDTH || ay < 0 || ay >= PATHFINDING_WIDTH)
 			continue;
 		/* height check */
 		if ((route[sz][ay][ax] & 0x0F) > h)
@@ -237,7 +236,7 @@ static void CheckConnections (unsigned int unitnum)
 		if ((fall[ay][ax] & deep_fall[sz]) == deep_fall[sz])
 			continue;
 
-		/* test for walls */
+		/* Create the end point of the line to test. */
 		VectorAdd(start, move_vec[i], te);
 
 		/* center check */

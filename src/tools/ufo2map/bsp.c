@@ -76,7 +76,7 @@ static void ProcessSubModel (int entityNum)
 		list = ChopBrushes(list);
 	tree = BrushBSP(list, mins, maxs);
 	if (tree->headnode->planenum == PLANENUM_LEAF)
-		Sys_Error("No head node bmodel of %s\n", ValueForKey(e, "classname"));
+		Sys_Error("No head node bmodel of %s (%i)\n", ValueForKey(e, "classname"), entityNum);
 	MakeTreePortals(tree);
 	MarkVisibleSides(tree, start, end);
 	MakeFaces(tree->headnode);

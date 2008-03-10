@@ -33,6 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* important units */
 #define UNIT_SIZE   32
 #define UNIT_HEIGHT 64
+/* player height - 12 to be able to walk trough doors
+ * UNIT_HEIGHT is the height of one level */
+#define PLAYER_HEIGHT		(UNIT_HEIGHT - 16)
+#define QUANT	4
 
 #define MAX_VAR     64
 

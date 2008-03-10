@@ -134,9 +134,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* substract this from the ent->pos[z] to get the ground position */
 #define GROUND_DELTA        28
-/* player height - 12 to be able to walk trough doors
- * UNIT_HEIGHT is the height of one level */
-#define PLAYER_HEIGHT		(UNIT_HEIGHT-12)
 
 /* LINKED LIST STUFF */
 

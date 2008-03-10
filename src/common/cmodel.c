@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "pqueue.h"
 #define	ON_EPSILON	0.1
-#define QUANT	4
 #define GRENADE_ALPHAFAC	0.7
 #define GRENADE_MINALPHA	M_PI/6
 #define GRENADE_MAXALPHA	M_PI*7/16
@@ -122,7 +121,7 @@ typedef struct {
 } mapTile_t;
 
 /**
- * @brief Pathfinding routing structure
+ * @brief Pathfinding routing structure and tile layout
  * @note Comments strongly WIP!
  *
  * ROUTE
@@ -158,6 +157,17 @@ typedef struct {
  *
  * AREASTORED
  * 	The stored mask (the cached move) of the routing data. (See Grid_MoveLength)
+ *
+ * TILE LAYOUT AND PATHING
+ *  Maps are comprised of tiles.  Each tile has a number of levels corresponding to entities in game.
+ *  All static entities in the tile are located in levels 0-255, with the main world located in 0.
+ *  Levels 256-258 are reserved, see LEVEL_* constants in src/shared/shared.h.  Non-static entities
+ *  (ET_BREAKABLE and ET_ROTATING, ET_DOOR, etc.) are contained in levels 259 and above. These entities'
+ *  models are named *##, beginning from 1, and each corresponds to level LEVEL_STEPON + ##.
+ *
+ *  The code that handles the pathing has separate checks for the static and non-static levels in a tile.
+ *  The static levels have their bounds precalculated by CM_MakeTracingNodes and stored in tile->theads.
+ *  The other levels are checked in the fly when Grid_CheckUnit is called.
  *
  */
 typedef struct routing_s {
@@ -803,9 +813,14 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 	/* get step height and trace vectors */
 	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 	h = R_HEIGHT(map, x, y, z);
+
+	/* Setup the points used to check for walls and such */
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, start);
-	start[2] += h * 4;
+	/* Adjust height to the actual floor height. */
+	start[2] += h * QUANT;
+	/* Set the end point to the edge of the field unit in the direction traveling */
+	/** @todo: should this check into the center of the adjacent field unit insead of just to the edge? */
 	VectorSet(end, start[0] + (UNIT_HEIGHT / 2) * dvecs[dir][0], start[1] + (UNIT_HEIGHT / 2) * dvecs[dir][1], start[2]);
 
 	ax = x + dvecs[dir][0];
@@ -831,12 +846,13 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 	if (R_HEIGHT(map, ax, ay, az) > h)
 		return;
 
+	/** @todo: Do we need to use a bounding box to check for things in the way of this move? */
 	/* center check */
 	if (CM_EntTestLine(start, end))
 		return;
 
 	/* lower check */
-	start[2] = end[2] -= UNIT_HEIGHT / 2 - sh * 4 - 2;
+	start[2] = end[2] -= UNIT_HEIGHT / 2 - sh * QUANT - 2;
 	if (CM_EntTestLine(start, end))
 		return;
 
@@ -1157,7 +1173,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 	if (l->filelen + 1 > MAX_MAP_ENTSTRING)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump");
 
-	/* marge entitystring information */
+	/* merge entitystring information */
 	es = (char *) (cmod_base + l->fileofs);
 	while (1) {
 		/* parse the opening brace */
@@ -1734,6 +1750,8 @@ static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 
 /**
  * @sa CM_ClipBoxToBrush
+ * @sa CM_TestBoxInBrush
+ * @sa CM_RecursiveHullCheck
  */
 static void CM_TraceToLeaf (int leafnum)
 {
@@ -2855,8 +2873,11 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, pos_t sz, byte l)
 		y = pos[1] - dy;
 		z = sz;
 
-		/** @todo: What exactly is checked here? Exact description wanted/needed. */
-		if (R_AREA(map, x, y, z) != (l - TU_MOVE_STRAIGHT) - (dir > 3))
+		/**
+		 * This code verifies the TE table. If the table does not match the movement calculation,
+		 * we skip this invalid comparison.
+		*/
+		if (R_AREA(map, x, y, z) != l - ((dir > 3) ? TU_MOVE_DIAGONAL : TU_MOVE_STRAIGHT))
 			continue;
 
 		/* connection checks */
@@ -2922,7 +2943,7 @@ pos_t Grid_MoveNext (struct routing_s *map, pos3_t from)
 	}
 
 	/* shouldn't happen */
-	Com_Printf("failed...\n");
+	Com_Printf("Grid_MoveNext failed...\n");
 	/* ROUTING_NOT_REACHABLE means, not possible/reachable */
 	return ROUTING_NOT_REACHABLE;
 }
