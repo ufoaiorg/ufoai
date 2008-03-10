@@ -2367,10 +2367,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
  */
 static void CP_SpreadXVI (void)
 {
-#if 0
-/* Temporary disabled XVI spreading otherwise game crash when loading game -- Kracken */
 	R_BlurXVIOverlay();
-#endif
 }
 
 /**
@@ -3792,6 +3789,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			}
 		}
 	}
+
+	/* Load WVI map */
+	R_InitializeXVIOverlay();
+	/* @todo Implement me */
+
 	return qtrue;
 }
 
