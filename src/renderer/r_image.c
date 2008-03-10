@@ -1223,6 +1223,10 @@ void R_InitializeXVIOverlay (void)
 	int i;
 	byte *start;
 
+	/* Initialize only once per game */
+	if (r_xviTexture)
+		return;
+
 	/* Load the XVI texture */
 	R_LoadImage("pics/geoscape/map_earth_xvi_overlay.tga", &r_xviPic, &xviWidth, &xviHeight);
 	if ((xviWidth != XVI_WIDTH) || (xviHeight != XVI_HEIGHT))
