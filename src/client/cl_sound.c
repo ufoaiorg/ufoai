@@ -71,6 +71,7 @@ void S_Music_Stop (void)
 		music.data = NULL;
 /*		SDL_RWclose(music.musicSrc);*/
 		music.musicSrc = NULL;
+		Q_strncpyz(music.currentlyPlaying, "", sizeof(music.currentlyPlaying));
 	}
 }
 
