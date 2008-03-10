@@ -66,7 +66,7 @@ void Sys_Error (const char *error, ...)
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 #ifdef _WIN32
-	MessageBox(NULL, va("%s\n\nGetLastError() = %i", text, GetLastError()), "Error", MB_OK|MB_ICONINFORMATION);
+	MessageBox(NULL, va("%s\n\nGetLastError() = %i", text, (int)GetLastError()), "Error", MB_OK|MB_ICONINFORMATION);
 #else
 	Com_Printf("\n************ ERROR ************\n");
 	Com_Printf("%s\n", text);
