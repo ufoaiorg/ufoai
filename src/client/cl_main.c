@@ -214,6 +214,13 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		/* this is needed to let 'soldier_select 0' do
 		 * the right thing while we are on geoscape */
 		sv_maxclients->modified = qtrue;
+
+		/* set the menus up */
+		MN_PopMenu(qtrue);
+		Cvar_Set("mn_main", "singleplayerInGame");
+		Cvar_Set("mn_active", "map");
+		MN_PushMenu(Cvar_VariableString("mn_main"));
+		MN_PushMenu(Cvar_VariableString("mn_active"));
 	} else {
 		const char *max_s, *max_spp;
 		max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
