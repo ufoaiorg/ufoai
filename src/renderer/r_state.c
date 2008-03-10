@@ -381,6 +381,8 @@ void R_SetupGL2D (void)
  */
 void R_StatePrint (void)
 {
+	int i;
+
 	Com_Printf("\n------- render state ---------------\n");
 	Com_Printf("%c... color: %.1f:%.1f:%.1f:%.1f\n", 1, r_state.color[0], r_state.color[1], r_state.color[2], r_state.color[3]);
 	Com_Printf("%c... blend src: %i, blend dest: %i\n", 1, r_state.blend_src, r_state.blend_dest);
@@ -395,6 +397,17 @@ void R_StatePrint (void)
 	Com_Printf("%c... compressed alpha format: %i\n", 1, gl_compressed_alpha_format);
 	Com_Printf("%c... filter min: %i\n", 1, gl_filter_min);
 	Com_Printf("%c... filter max: %i\n", 1, gl_filter_max);
+
+	for (i = 0; i < MAX_GL_TEXUNITS; i++) {
+		const gltexunit_t *tex = &r_state.texunits[i];
+		if (i >= r_config.maxTextureUnits)
+			continue;
+		Com_Printf("%c... texunit: %i\n", 1, i);
+		Com_Printf("%c..... enabled: %i\n", 1, tex->enabled);
+		Com_Printf("%c..... texture: %i\n", 1, tex->texture);
+		Com_Printf("%c..... texture env: %i\n", 1, tex->texenv);
+		Com_Printf("%c..... texture num: %i\n", 1, tex->texnum);
+	}
 }
 
 /* global ambient lighting */
@@ -440,7 +453,7 @@ void R_SetDefaultState (void)
 		tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0_ARB + i;
 
-		if (i >= r_config.maxTextureUnits - 1)
+		if (i >= r_config.maxTextureUnits)
 			continue;
 
 		R_EnableMultitexture(tex, qtrue);
