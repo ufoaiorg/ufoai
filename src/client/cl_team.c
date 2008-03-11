@@ -1219,10 +1219,10 @@ static void CL_MarkTeam_f (void)
 	}
 
 	/* create a team if there isn't one already */
-	if ( gd.numEmployees[employeeType] < 1 ) {
+	if (gd.numEmployees[employeeType] < 1) {
 		Cmd_ExecuteString("new_team");
 		MN_Popup(_("New team created"), _("A new team has been created for you."));
-	};
+	}
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	CL_UpdateHireVar(aircraft, employeeType);
