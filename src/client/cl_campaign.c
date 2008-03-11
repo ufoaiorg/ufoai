@@ -5340,6 +5340,10 @@ void CL_GameExit (void)
 			Com_DPrintf(DEBUG_CLIENT, "...%s\n", commands->name);
 			Cmd_RemoveCommand(commands->name);
 		}
+
+		/* @todo: make sure all of gd is empty */
+		gd.numBases=0;
+		E_ResetEmployees();
 	}
 	curCampaign = NULL;
 }
