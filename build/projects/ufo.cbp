@@ -26,6 +26,9 @@
 					<Add library="user32" />
 					<Add library="gdi32" />
 				</Linker>
+				<ExtraCommands>
+					<Add after="../../contrib/scripts/compile_po.bat c:\programme\poedit\msgfmt.exe" />
+				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
@@ -52,6 +55,9 @@
 					<Add library="gdi32" />
 					<Add library="gmon" />
 				</Linker>
+				<ExtraCommands>
+					<Add after="../../contrib/scripts/compile_po.bat c:\programme\poedit\msgfmt.exe" />
+				</ExtraCommands>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
@@ -566,6 +572,8 @@
 		<Unit filename="..\..\src\shared\vertex_normals.h" />
 		<Extensions>
 			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
