@@ -682,6 +682,7 @@ int CheckBSPFile (const char *filename)
 	return 0;
 }
 
+
 /**
  * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
@@ -689,24 +690,23 @@ int CheckBSPFile (const char *filename)
  * @sa CM_TestLine
  * @sa CM_InlineModel
  * @sa CM_TransformedBoxTrace
- * @return 1 - hit something
- * @return 0 - hit nothing
+ * @return qtrue - hit something
+ * @return qfalse - hit nothing
  */
-static int CM_EntTestLine (vec3_t start, vec3_t stop)
+static qboolean CM_EntTestLine (vec3_t start, vec3_t stop)
 {
 	trace_t trace;
 	cBspModel_t *model;
 	const char **name;
-	int worldFound;
 
 	/* trace against world first */
 	if (CM_TestLine(start, stop))
-		worldFound = 1;
-	else
-		worldFound = 0;
-	/* no local models */
+		/* We hit the world, so we didn't make it anyway... */
+		return qtrue;
+
+	/* no local models, so we made it. */
 	if (!inlineList)
-		return worldFound;
+		return qfalse;
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
@@ -719,11 +719,35 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
-			return 1;
+			return qtrue;
 	}
 
 	/* not blocked */
-	return worldFound;
+	return qfalse;
+}
+
+
+/**
+ * @brief Checks traces against the world and all inline models
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[in] list of entities that might be on this line
+ * @sa CM_EntTestLine
+ * @return qtrue - hit something
+ * @return qfalse - hit nothing
+ */
+qboolean CM_TestLineWithEnt (vec3_t start, vec3_t stop, const char **entlist)
+{
+	qboolean hit;
+
+	/* set the list of entities to check */
+	inlineList = entlist;
+	/* do the line test */
+	hit = CM_EntTestLine(start, stop);
+	/* zero the list */
+	inlineList = NULL;
+
+	return hit;
 }
 
 

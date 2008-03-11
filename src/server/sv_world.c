@@ -497,8 +497,15 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 	clip.maxs = maxs;
 	clip.passedict = passedict;
 
-	/* create the bounding box of the entire move */
+	/* create the bounding box for the entire path traveled by the shot */
 	SV_TraceBounds(start, clip.mins, clip.maxs, end, clip.boxmins, clip.boxmaxs);
+
+#if 0
+	/* Output the trace bounds */
+	Com_Printf("Trace: (%i, %i, %i) (%i, %i, %i)\n",
+		(int) clip.boxmins[0], (int) clip.boxmins[1], (int) clip.boxmins[2],
+		(int) clip.boxmaxs[0], (int) clip.boxmaxs[1], (int) clip.boxmaxs[2]);
+#endif
 
 	/* clip to other solid entities */
 	SV_ClipMoveToEntities(&clip);

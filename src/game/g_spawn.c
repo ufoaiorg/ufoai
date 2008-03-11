@@ -297,13 +297,20 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 			ent = g_edicts;
 		else
 			ent = G_Spawn();
+
 		entities = ED_ParseEdict(entities, ent);
 
-		VecToPos(ent->origin, ent->pos);
-		gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
-
 		ent->mapNum = entnum++;
+
+		/* Set the position of the entity */
+		VecToPos(ent->origin, ent->pos);
+
+		/* Call this entity's specific initializer (sets ent->type) */
 		ED_CallSpawn(ent);
+
+		/* if this entity is an bbox (e.g. actor), then center its origin based on its position */
+		if (ent->solid == SOLID_BBOX)
+			gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
 	}
 
 	/* spawn ai players, if needed */

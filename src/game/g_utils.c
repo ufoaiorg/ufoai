@@ -234,21 +234,32 @@ edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type
 }
 
 /**
- * @sa G_CompleteRecalcRouting
- * @sa Grid_RecalcRouting
+ * @brief creates an entity list
+ * @param[out] entList A list of all active inline model entities
+ * @sa G_RecalcRouting
+ * @sa G_LineVis
  */
-void G_RecalcRouting (const edict_t * self)
+void G_GenerateEntList (const char *entList[MAX_EDICTS])
 {
 	int i;
 	edict_t *ent;
-	const char *entList[MAX_EDICTS];
 
 	/* generate entity list */
 	for (i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
 		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP)
 			entList[i++] = ent->model;
 	entList[i] = NULL;
+}
 
+/**
+ * @sa G_CompleteRecalcRouting
+ * @sa Grid_RecalcRouting
+ */
+void G_RecalcRouting (const edict_t * self)
+{
+	const char *entList[MAX_EDICTS];
+	/* generate entity list */
+	G_GenerateEntList(entList);
 	/* recalculate routing */
 	gi.GridRecalcRouting(gi.routingMap, self->model, self->angles, entList);
 }

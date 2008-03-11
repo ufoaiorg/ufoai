@@ -51,6 +51,7 @@ trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, cons
 trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask);
 
 qboolean CM_TestLine(const vec3_t start, const vec3_t stop);
+qboolean CM_TestLineWithEnt(vec3_t start, vec3_t stop, const char **entlist);
 qboolean CM_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end);
 
 /*==========================================================

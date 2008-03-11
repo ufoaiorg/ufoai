@@ -151,6 +151,7 @@ typedef struct {
 	int (IMPORT *BoxEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
 
 	qboolean (IMPORT *TestLine) (const vec3_t start, const vec3_t stop);
+	qboolean (IMPORT *TestLineWithEnt) (vec3_t start, vec3_t stop, const char **entlist);
 	float (IMPORT *GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
 	void (IMPORT *MoveCalc) (struct routing_s * map, pos3_t from, int size, int distance, pos_t ** fb_list, int fb_length);

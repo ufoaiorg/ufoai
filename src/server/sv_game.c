@@ -388,6 +388,7 @@ void SV_InitGameProgs (void)
 	import.BoxEdicts = SV_AreaEdicts;
 
 	import.TestLine = CM_TestLine;
+	import.TestLineWithEnt = CM_TestLineWithEnt;
 	import.GrenadeTarget = Com_GrenadeTarget;
 
 	import.MoveCalc = Grid_MoveCalc;
