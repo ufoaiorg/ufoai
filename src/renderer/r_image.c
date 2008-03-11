@@ -1423,6 +1423,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (palette)
 		Mem_Free(palette);
 
+	if (type == it_world)  /* resolve normalmaps */
+		image->normalmap = R_FindImage(va("%s_normal", lname), it_material);
+
 	return image;
 }
 

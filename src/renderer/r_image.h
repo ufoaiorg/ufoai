@@ -65,6 +65,7 @@ typedef struct image_s {
 	int index;							/**< index in gltexture array */
 	qboolean has_alpha;
 	material_t material;
+	struct image_s *normalmap;
 } image_t;
 
 #define MAX_GLERRORTEX		4096

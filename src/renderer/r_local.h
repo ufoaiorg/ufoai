@@ -92,6 +92,7 @@ extern cvar_t *r_drawbuffer;
 extern cvar_t *r_driver;
 extern cvar_t *r_swapinterval;
 extern cvar_t *r_multisample;
+extern cvar_t *r_normalmap;
 extern cvar_t *r_texturemode;
 extern cvar_t *r_texturealphamode;
 extern cvar_t *r_texturesolidmode;

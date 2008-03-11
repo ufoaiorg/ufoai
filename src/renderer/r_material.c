@@ -368,7 +368,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			if (i > -1 && i < MAX_ENVMAPTEXTURES)
 				s->image = r_envmaptextures[i];
 			else
-				s->image = R_FindImage(va("pics/envmaps/%s", c), it_static);
+				s->image = R_FindImage(va("pics/envmaps/%s", c), it_material);
 
 			if (s->image == r_notexture) {
 				Com_Printf("R_ParseStage: Failed to resolve envmap: %s\n", c);

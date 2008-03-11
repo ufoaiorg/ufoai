@@ -76,6 +76,18 @@ void R_BindLightmapTexture (GLuint texnum)
 	R_SelectTexture(&texunit_diffuse);
 }
 
+void R_BindNormalmapTexture (GLuint texnum)
+{
+	if (texnum == texunit_normalmap.texnum)
+		return;  /* small optimization to save state changes */
+
+	R_SelectTexture(&texunit_normalmap);
+
+	R_BindTexture(texnum);
+
+	R_SelectTexture(&texunit_diffuse);
+}
+
 void R_BindArray (GLenum target, GLenum type, void *array)
 {
 	switch (target) {
@@ -189,6 +201,19 @@ void R_EnableMultitexture (gltexunit_t *texunit, qboolean enable)
 		qglDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 	R_SelectTexture(&texunit_diffuse);
+}
+
+void R_EnableNormalmap (qboolean enable)
+{
+	if (!r_state.arb_fragment_program)
+		return;
+
+	if (!r_normalmap->integer || r_state.normalmap_enabled == enable)
+		return;
+
+	r_state.normalmap_enabled = enable;
+
+	R_EnableMultitexture(&texunit_normalmap, enable);
 }
 
 void R_EnableLighting (qboolean enable)
