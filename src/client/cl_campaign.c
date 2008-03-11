@@ -4318,6 +4318,11 @@ void CL_GameExit (void)
 			Cmd_RemoveCommand(commands->name);
 		}
 		CL_Disconnect();
+
+		/* @todo: make sure all of gd is empty */
+		gd.numBases=0;
+		E_ResetEmployees();
+
 		MN_PopMenu(qtrue);
 		MN_PushMenu("main");
 	} else {
