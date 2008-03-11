@@ -421,7 +421,7 @@ const char* CP_MissionToTypeString (const mission_t *mission)
 		break;
 	case INTERESTCATEGORY_BUILDING:
 		if (mission->stage == STAGE_BASE_DISCOVERED)
-			return _("Alien Base");
+			return _("Alien base");
 		break;
 	case INTERESTCATEGORY_SUPPLY:
 	case INTERESTCATEGORY_INTERCEPT:
