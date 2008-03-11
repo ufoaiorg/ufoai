@@ -9,6 +9,9 @@
 
 // if the damage type starts with _ it is marked at translateable and thus shown
 // in the menus, if there is no such character the damagetype will not be shown.
+
+// TODO: why is steelblade and monomolecularblade defined here and not in scripts.c:Com_ParseDamageTypes?
+
 damagetypes standard
 {
 	"_normal"
@@ -41,7 +44,8 @@ damagetypes standard
 	"particlebeam_medium"
 	"particlebeam_heavy"
 	"particlebeam_power"
-	"_stun"
+	"_stun_electro"
+	"_stun_gas"
 }
 
 // =======================
@@ -93,7 +97,8 @@ item light
 		particlebeam_medium	6
 		particlebeam_heavy	5
 
-		stun				0
+		stun_electro		0
+		stun_gas		0
 	}
 
 	rating {
@@ -106,7 +111,8 @@ item light
 		plasma				10
 		laser				20
 		particlebeam		10
-		stun				10
+		stun_electro			10
+		stun_gas			10
 	}
 }
 
@@ -155,7 +161,8 @@ item lightadv
 		particlebeam_medium	6
 		particlebeam_heavy	5
 
-		stun				0
+		stun_electro		0
+		stun_gas		0
 	}
 
 	rating {
@@ -168,7 +175,8 @@ item lightadv
 		plasma				10
 		laser				20
 		particlebeam		10
-		stun				10
+		stun_electro			10
+		stun_gas			10
 	}
 }
 
@@ -217,7 +225,8 @@ item medium
 		particlebeam_medium	17
 		particlebeam_heavy	14
 
-		stun				10
+		stun_electro			10
+		stun_gas			10
 	}
 
 	rating {
@@ -230,7 +239,8 @@ item medium
 		plasma				40
 		laser				50
 		particlebeam		30
-		stun				30
+		stun_electro			30
+		stun_gas			30
 	}
 }
 
@@ -279,7 +289,8 @@ item power
 		particlebeam_medium	50
 		particlebeam_heavy	50
 
-		stun				20
+		stun_electro			20
+		stun_gas			20
 	}
 
 	rating {
@@ -292,7 +303,8 @@ item power
 		plasma				60
 		laser				40
 		particlebeam		70
-		stun				50
+		stun_electro			50
+		stun_gas			50
 	}
 }
 
@@ -337,7 +349,8 @@ item power
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun				20
+//		stun_electro			20
+//		stun_gas			20
 //	}
 //
 //	rating {
@@ -350,7 +363,8 @@ item power
 //		plasma				50
 //		laser				60
 //		particlebeam		40
-//		stun				40
+//		stun_electro			40
+//		stun_gas			40
 //	}
 //}
 
@@ -395,7 +409,8 @@ item power
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun				20
+//		stun_electro			20
+//		stun_gas			20
 //	}
 //
 //	rating {
@@ -408,7 +423,8 @@ item power
 //		plasma				100
 //		laser				70
 //		particlebeam		60
-//		stun				80
+//		stun_electro			80
+//		stun_gas			80
 //	}
 //}
 
@@ -453,7 +469,8 @@ item power
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun				20
+//		stun_electro			20
+//		stun_gas			20
 //	}
 //
 //	rating {
@@ -466,7 +483,8 @@ item power
 //		plasma				80
 //		laser				100
 //		particlebeam		100
-//		stun				100
+//		stun_electro			100
+//		stun_gas			100
 //	}
 //}
 
@@ -511,7 +529,8 @@ item power
 //		particlebeam_medium	16
 //		particlebeam_heavy	14
 //
-//		stun				20
+//		stun_electro			20
+//		stun_gas			20
 //	}
 //
 //	rating {
@@ -524,7 +543,8 @@ item power
 //		plasma				60
 //		laser				80
 //		particlebeam		80
-//		stun				80
+//		stun_electro			80
+//		stun_gas			80
 //	}
 //}
 
@@ -577,7 +597,8 @@ item light_alien
 		particlebeam_medium	19
 		particlebeam_heavy	17
 
-		stun				0
+		stun_electro			0
+		stun_gas			0
 	}
 
 	rating {
@@ -590,7 +611,8 @@ item light_alien
 		plasma				30
 		laser				20
 		particlebeam		30
-		stun				10
+		stun_electro			10
+		stun_gas			10
 	}
 }
 
@@ -639,7 +661,8 @@ item medium_alien
 		particlebeam_medium	27
 		particlebeam_heavy	24
 
-		stun				10
+		stun_electro			10
+		stun_gas			10
 	}
 
 	rating {
@@ -652,6 +675,7 @@ item medium_alien
 		plasma				50
 		laser				40
 		particlebeam		50
-		stun				30
+		stun_electro			30
+		stun_gas			30
 	}
 }
