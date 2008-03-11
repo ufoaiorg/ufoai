@@ -311,7 +311,7 @@ void UP_ItemDescription (int item)
 		/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
 		/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
 		for (i = 0; i < od->numWeapons; i++) {
-			if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech))
+			if (RS_IsResearched_ptr(csi.ods[od->weapIdx[i]].tech))
 				up_numresearchedlink++;
 		}
 		if (up_numresearchedlink > 1)
@@ -322,7 +322,7 @@ void UP_ItemDescription (int item)
 			/* We check that up_researchedlink exists for this ammo (in case we switched from an ammo or a weapon with higher value)*/
 			if (up_researchedlink > od->numWeapons - 1) {
 				for (up_researchedlink = 0; up_researchedlink < od->numWeapons; up_researchedlink++) {
-					if (RS_IsResearched_ptr(csi.ods[od->weap_idx[up_researchedlink]].tech))
+					if (RS_IsResearched_ptr(csi.ods[od->weapIdx[up_researchedlink]].tech))
 						break;
 					up_researchedlink++;
 				}
@@ -332,8 +332,8 @@ void UP_ItemDescription (int item)
 
 			/* Display the name of the associated weapon */
 			Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
-			Cvar_Set("mn_researchedlinkname", csi.ods[od->weap_idx[up_researchedlink]].name);
-			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), csi.ods[od->weap_idx[up_researchedlink]].name));
+			Cvar_Set("mn_researchedlinkname", csi.ods[od->weapIdx[up_researchedlink]].name);
+			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), csi.ods[od->weapIdx[up_researchedlink]].name));
 
 			/* Needed for writing stats below */
 			odAmmo = od;
@@ -361,7 +361,7 @@ void UP_ItemDescription (int item)
 		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo */
 		/* up_numresearchedlink contains the number of researched ammos useable with this weapon */
 		for (i = 0; i < od->numAmmos; i++) {
-			if (RS_IsResearched_ptr(csi.ods[od->ammo_idx[i]].tech))
+			if (RS_IsResearched_ptr(csi.ods[od->ammoIdx[i]].tech))
 				up_numresearchedlink++;
 		}
 		if (up_numresearchedlink > 1)
@@ -372,16 +372,16 @@ void UP_ItemDescription (int item)
 			/* We check that up_researchedlink exists for this weapon (in case we switched from an ammo or a weapon with higher value)*/
 			if (up_researchedlink > od->numAmmos - 1) {
 				for (up_researchedlink = 0; up_researchedlink < od->numAmmos; up_researchedlink++) {
-					if (RS_IsResearched_ptr(csi.ods[od->ammo_idx[up_researchedlink]].tech))
+					if (RS_IsResearched_ptr(csi.ods[od->ammoIdx[up_researchedlink]].tech))
 						break;
 					up_researchedlink++;
 				}
 			}
 
 			/* Everything that follows depends only of the ammunition, so we change od to it */
-			odAmmo = &csi.ods[od->ammo_idx[up_researchedlink]];
+			odAmmo = &csi.ods[od->ammoIdx[up_researchedlink]];
 			for (i = 0; i < odAmmo->numWeapons; i++) {
-				if (odAmmo->weap_idx[i] == item)
+				if (odAmmo->weapIdx[i] == item)
 					up_weapon_id = i;
 			}
 
@@ -965,7 +965,7 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (csi.ods[idx].numAmmos > 0) {
 		/* We set t_associated to ammo to display */
-		const technology_t *t_associated = csi.ods[csi.ods[idx].ammo_idx[up_researchedlink]].tech;
+		const technology_t *t_associated = csi.ods[csi.ods[idx].ammoIdx[up_researchedlink]].tech;
 		assert(t_associated);
 		Cvar_Set("mn_upmodel_bottom", t_associated->mdl_top);
 	}
@@ -1460,11 +1460,11 @@ static void UP_ResearchedLinkClick_f (void)
 	assert(i != NONE);
 
 	if (!Q_strncmp(csi.ods[i].type, "ammo", 4)) {
-		t = csi.ods[csi.ods[i].weap_idx[up_researchedlink]].tech;
+		t = csi.ods[csi.ods[i].weapIdx[up_researchedlink]].tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	} else if (csi.ods[i].weapon && csi.ods[i].reload) {
-		t = csi.ods[csi.ods[i].ammo_idx[up_researchedlink]].tech;
+		t = csi.ods[csi.ods[i].ammoIdx[up_researchedlink]].tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	}
@@ -1695,7 +1695,7 @@ static void UP_IncreaseWeapon_f (void)
 	/* We only try to change the value of up_researchedlink if this is possible */
 	if (up_researchedlink < csi.ods[i].numWeapons-1) {
 		/* this is an ammo */
-		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].weap_idx[up_researchedlink_temp]].tech)) {
+		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].weapIdx[up_researchedlink_temp]].tech)) {
 			up_researchedlink_temp++;
 			if (up_researchedlink_temp > csi.ods[i].numWeapons)
 				break;
@@ -1707,7 +1707,7 @@ static void UP_IncreaseWeapon_f (void)
 		}
 	} else if (up_researchedlink < csi.ods[i].numAmmos-1) {
 		/* this is a weapon */
-		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].ammo_idx[up_researchedlink_temp]].tech)) {
+		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].ammoIdx[up_researchedlink_temp]].tech)) {
 			up_researchedlink_temp++;
 			if (up_researchedlink_temp > csi.ods[i].numAmmos)
 				break;
@@ -1745,7 +1745,7 @@ static void UP_DecreaseWeapon_f (void)
 	/* We only try to change the value of up_researchedlink if this is possible */
 	if (up_researchedlink > 0 && csi.ods[i].numWeapons > 0) {
 		/* this is an ammo */
-		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].weap_idx[up_researchedlink_temp]].tech)) {
+		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].weapIdx[up_researchedlink_temp]].tech)) {
 			up_researchedlink_temp--;
 			if (up_researchedlink_temp < 0)
 				break;
@@ -1757,7 +1757,7 @@ static void UP_DecreaseWeapon_f (void)
 		}
 	} else if (up_researchedlink > 0 && csi.ods[i].numAmmos > 0) {
 		/* this is a weapon */
-		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].ammo_idx[up_researchedlink_temp]].tech)) {
+		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].ammoIdx[up_researchedlink_temp]].tech)) {
 			up_researchedlink_temp--;
 			if (up_researchedlink_temp < 0)
 				break;

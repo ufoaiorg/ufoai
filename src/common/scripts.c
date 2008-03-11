@@ -923,7 +923,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	objDef_t *od;
 	const char *token;
 	int i,j;
-	int weap_fds_idx, fd_idx;
+	int weapFdsIdx, fdIdx;
 
 	/* search for items with same name */
 	for (i = 0; i < csi.numODs; i++)
@@ -945,8 +945,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	memset(od, 0, sizeof(objDef_t));
 
 	/* default value is no ammo */
-	memset(od->weap_idx, NONE, sizeof(od->weap_idx));
-	memset(od->ammo_idx, NONE, sizeof(od->ammo_idx));
+	memset(od->weapIdx, NONE, sizeof(od->weapIdx));
+	memset(od->ammoIdx, NONE, sizeof(od->ammoIdx));
 	od->craftitem.type = MAX_ACITEMS; /* default is no craftitem */
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
@@ -984,7 +984,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 					case OD_WEAPON:
 						/* Save the weapon id. */
 						token = COM_Parse(text);
-						Q_strncpyz(od->weap_id[od->numWeapons], token, sizeof(od->weap_id[od->numWeapons]));
+						Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons]));
 
 						/* get it's body */
 						token = COM_Parse(text);
@@ -995,7 +995,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 						}
 
 						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-							weap_fds_idx = od->numWeapons;
+							weapFdsIdx = od->numWeapons;
 							/* For parse each firedef entry for this weapon.  */
 							do {
 								token = COM_EParse(text, errhead, name);
@@ -1005,16 +1005,16 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 									break;
 
 								if (!Q_strncmp(token, "firedef", MAX_VAR)) {
-									if (od->numFiredefs[weap_fds_idx] < MAX_FIREDEFS_PER_WEAPON) {
-										fd_idx = od->numFiredefs[weap_fds_idx];
-										od->fd[weap_fds_idx][fd_idx].relFireVolume = DEFAULT_SOUND_PACKET_VOLUME;
-										od->fd[weap_fds_idx][fd_idx].relImpactVolume = DEFAULT_SOUND_PACKET_VOLUME;
+									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
+										fdIdx = od->numFiredefs[weapFdsIdx];
+										od->fd[weapFdsIdx][fdIdx].relFireVolume = DEFAULT_SOUND_PACKET_VOLUME;
+										od->fd[weapFdsIdx][fdIdx].relImpactVolume = DEFAULT_SOUND_PACKET_VOLUME;
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
-										Com_ParseFire(name, text, &od->fd[weap_fds_idx][fd_idx]);
+										Com_ParseFire(name, text, &od->fd[weapFdsIdx][fdIdx]);
 										/* Self-link fd */
-										od->fd[weap_fds_idx][fd_idx].fd_idx = fd_idx;
+										od->fd[weapFdsIdx][fdIdx].fdIdx = fdIdx;
 										/* Self-link weapon_mod */
-										od->fd[weap_fds_idx][fd_idx].weap_fds_idx = weap_fds_idx;
+										od->fd[weapFdsIdx][fdIdx].weapFdsIdx = weapFdsIdx;
 										od->numFiredefs[od->numWeapons]++;
 									} else {
 										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
@@ -1060,7 +1060,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 			} else if (!Q_strcmp(token, "craftweapon")) {
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
-				Q_strncpyz(od->weap_id[od->numWeapons], token, sizeof(od->weap_id[od->numWeapons]));
+				Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons]));
 				od->numWeapons++;
 			} else if (!Q_strcmp(token, "crafttype")) {
 				/* Craftitem type definition. */
@@ -2144,14 +2144,14 @@ void Com_AddObjectLinks (void)
 
 		/* Add links to weapons. */
 		for (j = 0; j < od->numWeapons; j++ ) {
-			od->weap_idx[j] = INVSH_GetItemByID(od->weap_id[j]);
-			if (od->weap_idx[j] == NONE) {
+			od->weapIdx[j] = INVSH_GetItemByID(od->weapId[j]);
+			if (od->weapIdx[j] == NONE) {
 				Sys_Error("Com_AddObjectLinks: Could not get item '%s' for linking into item '%s'\n",
-					od->weap_id[j], od->id);
+					od->weapId[j], od->id);
 			}
 			/* Back-link the obj-idx inside the fds */
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {
-				od->fd[j][k].obj_idx = i;
+				od->fd[j][k].objIdx = i;
 			}
 		}
 	}
@@ -2163,9 +2163,9 @@ void Com_AddObjectLinks (void)
 			/* this is a weapon, an aircraft weapon, or a base defense system */
 			for (n = 0; n < csi.numODs; n++) {
 				for (m = 0; m < csi.ods[n].numWeapons; m++) {
-					if (csi.ods[n].weap_idx[m] == i) {
+					if (csi.ods[n].weapIdx[m] == i) {
 						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);
-						od->ammo_idx[od->numAmmos++] = n;
+						od->ammoIdx[od->numAmmos++] = n;
 					}
 				}
 			}

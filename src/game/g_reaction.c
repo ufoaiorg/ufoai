@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode)
 {
-	int weapon_fd_idx;
+	int weaponFdIdx;
 	int tmp = -2;
 
 	/* The caller doesn't use this parameter, use a temporary one instead. */
@@ -47,22 +47,22 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 	if (RIGHT(ent) && (RIGHT(ent)->item.m != NONE)
 	 && gi.csi->ods[RIGHT(ent)->item.t].weapon
 	 && (!gi.csi->ods[RIGHT(ent)->item.t].reload || RIGHT(ent)->item.a > 0)) {
-		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
-		assert(weapon_fd_idx >= 0);
+		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
+		assert(weaponFdIdx >= 0);
 
 		if (ent->chr.RFmode.hand == 0
 		 && ent->chr.RFmode.fmIdx >= 0
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
 			*firemode = ent->chr.RFmode.fmIdx; /* Get selected (if any) firemode for the weapon in the right hand. */
 
-			if (gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-			 && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
+			if (gi.csi->ods[RIGHT(ent)->item.m].fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+			 && gi.csi->ods[RIGHT(ent)->item.m].fd[weaponFdIdx][*firemode].range > VectorDist(ent->origin, target->origin)) {
 				if (fire_hand_type) {
 					*fire_hand_type = ST_RIGHT_REACTION;
 				}
 
 				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: right entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
-				return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer;
+				return gi.csi->ods[RIGHT(ent)->item.m].fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer;
 			}
 		}
 	}
@@ -71,22 +71,22 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 	if (LEFT(ent) && (LEFT(ent)->item.m != NONE)
 	 && gi.csi->ods[LEFT(ent)->item.t].weapon
 	 && (!gi.csi->ods[LEFT(ent)->item.t].reload || LEFT(ent)->item.a > 0)) {
-		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
-		assert(weapon_fd_idx >= 0);
+		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
+		assert(weaponFdIdx >= 0);
 
 		if (ent->chr.RFmode.hand == 1
 		 && ent->chr.RFmode.fmIdx >= 0
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a LEFT-hand firemode is selected and sane. */
 			*firemode = ent->chr.RFmode.fmIdx; /* Get selected firemode for the weapon in the left hand. */
 
-			if (gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-			 && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
+			if (gi.csi->ods[LEFT(ent)->item.m].fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+			 && gi.csi->ods[LEFT(ent)->item.m].fd[weaponFdIdx][*firemode].range > VectorDist(ent->origin, target->origin)) {
 				if (fire_hand_type) {
 					*fire_hand_type = ST_LEFT_REACTION;
 				}
 
 				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: left entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
-				return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer;
+				return gi.csi->ods[LEFT(ent)->item.m].fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer;
 			}
 		}
 	}

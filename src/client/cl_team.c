@@ -338,9 +338,14 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	else if (strstr(team, "alien"))
 		teamValue = TEAM_ALIEN;
 
-	/* Set default reaction-mode for all character-types to "once". */
-	/** @todo Set aliens to "multi"? */
+	/** Set default reaction-mode for all character-types to "once".
+	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa g_ai.c:G_SpawnAIPlayer */
 	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
+
+	/* Set this to an undefined value just in case. */
+	chr->reservedTus.shotSettings.hand = -1;
+	chr->reservedTus.shotSettings.fmIdx = -1;
+	chr->reservedTus.shotSettings.wpIdx = -1;
 
 	/* Generate character stats, models & names. */
 	switch (employeeType) {
@@ -617,7 +622,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	assert(ed->num[type] > 0);
 	ed->num[type]--;
 
-	if (csi.ods[type].weap_idx[0] != NONE) {
+	if (csi.ods[type].weapIdx[0] != NONE) {
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
 		if (csi.ods[type].oneshot) {
 			/* "Recharge" the oneshot weapon. */

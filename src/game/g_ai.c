@@ -124,8 +124,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	objDef_t *ad;
 	int still_searching = 1;
 
-	int weap_fds_idx; /* Weapon-Firedefs index in fd[x] */
-	int fd_idx;	/* firedef index fd[][x]*/
+	int weapFdsIdx; /* Weapon-Firedefs index in fd[x] */
+	int fdIdx;	/* firedef index fd[][x]*/
 
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(aiAction_t));
@@ -166,7 +166,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	maxDmg = 0.0;
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
 		objDef_t *od;	/* Ammo pointer */
-		int weap_idx = NONE;		/* Weapon index */
+		int weapIdx = NONE;		/* Weapon index */
 		fireDef_t *fd;
 
 		/* optimization: reaction fire is automatic */;
@@ -179,14 +179,14 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 				|| RIGHT(ent)->item.a > 0)) {
 			od = &gi.csi->ods[RIGHT(ent)->item.m];
-			weap_idx = RIGHT(ent)->item.t;
+			weapIdx = RIGHT(ent)->item.t;
 		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
 			&& (LEFT(ent)->item.m != NONE)
 			&& gi.csi->ods[LEFT(ent)->item.t].weapon
 			&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 				|| LEFT(ent)->item.a > 0)) {
 			od = &gi.csi->ods[LEFT(ent)->item.m];
-			weap_idx = LEFT(ent)->item.t;
+			weapIdx = LEFT(ent)->item.t;
 		} else {
 			od = NULL;
 			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: @todo: grenade/knife toss from inventory using empty hand\n");
@@ -194,17 +194,17 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* @todo: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
 
-		if (!od || weap_idx == NONE)
+		if (!od || weapIdx == NONE)
 			continue;
 
-		weap_fds_idx = FIRESH_FiredefsIDXForWeapon(od, weap_idx);
-		/* if od was not null and weap_idx was not NONE - then we have a problem here
+		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapIdx);
+		/* if od was not null and weapIdx was not NONE - then we have a problem here
 		 * maybe this is only a maptest and thus no scripts parsed */
-		if (weap_fds_idx == -1)
+		if (weapFdsIdx == -1)
 			continue;
 		/* FIXME: timed firedefs that bounce around should not be thrown/shooten about the hole distance */
-		for (fd_idx = 0; fd_idx < od->numFiredefs[weap_fds_idx]; fd_idx++) {
-			fd = &od->fd[weap_fds_idx][fd_idx];
+		for (fdIdx = 0; fdIdx < od->numFiredefs[weapFdsIdx]; fdIdx++) {
+			fd = &od->fd[weapFdsIdx][fdIdx];
 
 			nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));

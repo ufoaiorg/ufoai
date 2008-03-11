@@ -1331,11 +1331,9 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, e->chr.reservedTus.reserveCrouch);
 			MSG_WriteShort(sb, e->chr.reservedTus.crouch);
 			MSG_WriteShort(sb, e->chr.reservedTus.shot);
-			/**@todo Write dummy values to not break savegames later on when adding new types of reservations.*/
-			MSG_WriteShort(sb, -1);
-			MSG_WriteShort(sb, -1);
-			MSG_WriteShort(sb, -1);
-			/** Store character stats @todo see chrScoreGlobal_t */
+			MSG_WriteShort(sb, e->chr.reservedTus.shotSettings.hand);
+			MSG_WriteShort(sb, e->chr.reservedTus.shotSettings.fmIdx);
+			MSG_WriteShort(sb, e->chr.reservedTus.shotSettings.wpIdx);
 
 #if 0 /** old way (pre 2.3) */
 			MSG_WriteShort(sb, e->chr.assigned_missions);
@@ -1452,13 +1450,12 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				e->chr.reservedTus.reserveCrouch = MSG_ReadShort(sb);
 				e->chr.reservedTus.crouch = MSG_ReadShort(sb);
 				e->chr.reservedTus.shot = MSG_ReadShort(sb);
+
 				if (e->chr.reservedTus.shot == -1)	/** @todo Check for dummy value. I think it's save to remove this later on (e.g. before 2.3 release). */
 					e->chr.reservedTus.shot = 0;
-
-				/** Read dummy values */
-				MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
+				e->chr.reservedTus.shotSettings.hand = MSG_ReadShort(sb);
+				e->chr.reservedTus.shotSettings.fmIdx = MSG_ReadShort(sb);
+				e->chr.reservedTus.shotSettings.wpIdx = MSG_ReadShort(sb);
 			}
 
 			if (((saveFileHeader_t *)data)->version < 3) {

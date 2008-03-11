@@ -267,7 +267,7 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 	if (airequipID >= AC_ITEM_AMMO) {
 		/* FIXME: This only works for ammo that is useable in exactly one weapon
 		 * check the weap_idx array and not only the first value */
-		if (csi.ods[itemIdx].weap_idx[0] != slot->itemIdx)
+		if (csi.ods[itemIdx].weapIdx[0] != slot->itemIdx)
 			return qfalse;
 	}
 
@@ -1311,7 +1311,7 @@ static void AIM_AutoAddAmmo (base_t *base, aircraft_t *aircraft, aircraftSlot_t 
 	if (itemIdx != NONE) {
 		/* Try every ammo usable with this weapon until we find one we have in storage */
 		for (k = 0; k < csi.ods[itemIdx].numAmmos; k++) {
-			ammoIdx = csi.ods[itemIdx].ammo_idx[k];
+			ammoIdx = csi.ods[itemIdx].ammoIdx[k];
 			if (ammoIdx != NONE) {
 				ammo_tech = csi.ods[ammoIdx].tech;
 				if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {

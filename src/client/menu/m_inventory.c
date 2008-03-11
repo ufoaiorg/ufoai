@@ -347,7 +347,7 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 {
 	int i;
-	int weapon_idx;
+	int weaponIdx;
 
 	assert(item.t != NONE);
 
@@ -372,13 +372,13 @@ void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 			}
 		} else if (csi.ods[item.t].numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
-			if (!(csi.ods[item.t].numWeapons == 1 && csi.ods[item.t].weap_idx[0] == item.t)) {
+			if (!(csi.ods[item.t].numWeapons == 1 && csi.ods[item.t].weapIdx[0] == item.t)) {
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltiptext, _("Usable in:\n"), string_maxlength);
 				for (i = 0; i < csi.ods[item.t].numWeapons; i++) {
-					weapon_idx = csi.ods[item.t].weap_idx[i];
-					if (RS_ItemIsResearched(csi.ods[weapon_idx].id)) {
-						Q_strcat(tooltiptext, va("* %s\n", csi.ods[weapon_idx].name), string_maxlength);
+					weaponIdx = csi.ods[item.t].weapIdx[i];
+					if (RS_ItemIsResearched(csi.ods[weaponIdx].id)) {
+						Q_strcat(tooltiptext, va("* %s\n", csi.ods[weaponIdx].name), string_maxlength);
 					}
 				}
 			}

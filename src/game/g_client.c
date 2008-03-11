@@ -2238,7 +2238,7 @@ int G_ClientAction (player_t * player)
 	int i;
 	int firemode;
 	int from, fx, fy, to, tx, ty;
-	int hand, fd_idx, obj_idx;
+	int hand, fdIdx, objIdx;
 	int resType, resState, resValue;
 	edict_t *ent;
 
@@ -2282,16 +2282,16 @@ int G_ClientAction (player_t * player)
 
 	case PA_REACT_SELECT:
 		hand = -1;
-		fd_idx = -1;
-		obj_idx = -1;
-		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx, &obj_idx);
-		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fd_idx, obj_idx);
+		fdIdx = -1;
+		objIdx = -1;
+		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
+		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fdIdx, objIdx);
 		/* @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
 		ent = g_edicts + num;
 		if (ent) {
 			ent->chr.RFmode.hand = hand;
-			ent->chr.RFmode.fmIdx = fd_idx;
-			ent->chr.RFmode.wpIdx = obj_idx;
+			ent->chr.RFmode.fmIdx = fdIdx;
+			ent->chr.RFmode.wpIdx = objIdx;
 		}
 		break;
 
@@ -2319,6 +2319,8 @@ int G_ClientAction (player_t * player)
 				ent->chr.reservedTus.reserveReaction = resState;
 				ent->chr.reservedTus.reaction = resValue;
 				break;
+#if 0
+/* These are actually not needed on the server-side */
 			case RES_CROUCH:
 				ent->chr.reservedTus.reserveCrouch = resState;
 				ent->chr.reservedTus.crouch = resValue;
@@ -2327,8 +2329,9 @@ int G_ClientAction (player_t * player)
 				/* resState is ignored here right now */
 				ent->chr.reservedTus.shot = resValue;
 				break;
+#endif
 			default:
-				gi.error("G_ClientAction: Unknown reservation type!\n");
+				gi.error("G_ClientAction: Unknown reservation type (on the server-side)!\n");
 				break;
 			}
 		}

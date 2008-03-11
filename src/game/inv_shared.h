@@ -66,13 +66,13 @@ typedef struct fireDef_s {
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
-	int obj_idx;		/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in.
+	int objIdx;		/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in.
 						 ** So you can get the containing object by acceessing e.g. csi.ods[obj_idx]. */
-	int weap_fds_idx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weap_fds_idx]) this fd is located in.
-						 ** Depending on this value you can find out via objDef_t->weap_idx[weap_fds_idx] what weapon this firemode is used for.
+	int weapFdsIdx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weapFdsIdx]) this fd is located in.
+						 ** Depending on this value you can find out via objDef_t->weapIdx[weapFdsIdx] what weapon this firemode is used for.
 						 ** This does _NOT_ equal the index of the weapon object in ods.
 						 */
-	int fd_idx;		/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
+	int fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
 
 	qboolean soundOnce;
 	qboolean gravity;			/**< Does gravity has any influence on this item? */
@@ -254,19 +254,19 @@ typedef struct objDef_s {
 	int useable;			/**< Defines which team can use this item: 0 - human, 1 - alien.
 					     Used in checking the right team when filling the containers with available armours. */
 
-	int ammo_idx[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
+	int ammoIdx[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
 	int numAmmos;			/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
-	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>". */
-	int weap_idx[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object indices. The index of the weapon in csi.ods[xxx].
-								Correct index for this array can be get from fireDef_t.weap_fds_idx. or
+	char weapId[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>". */
+	int weapIdx[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object indices. The index of the weapon in csi.ods[xxx].
+								Correct index for this array can be get from fireDef_t.weapFdsIdx. or
 								FIRESH_FiredefsIDXForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
 	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon.
-							     Maximum value for fireDef_t.fd_idx <= MAX_FIREDEFS_PER_WEAPON. */
+							     Maximum value for fireDef_t.fdIdx <= MAX_FIREDEFS_PER_WEAPON. */
 	int numWeapons;					/**< Number of weapons this ammo can be used in.
-							     Maximum value for fireDef_t.weap_fds_idx <= MAX_WEAPONS_PER_OBJDEF. */
+							     Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
 
 	struct technology_s *tech;	/**< Technology link to item. */
 	struct technology_s *extension_tech;	/**< Technology link to item to use this extension for (if this is an extension).
@@ -568,11 +568,11 @@ typedef struct chrScoreGlobal_s {
 	int rank;					/**< Index of rank (in gd.ranks). */
 } chrScoreGlobal_t;
 
-typedef struct chrReactionSettings_s {
+typedef struct chrFiremodeSettings_s {
 	int hand;	/**< Stores the used hand (0=right, 1=left, -1=undef) */
 	int fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	int wpIdx;	/**< Stores the weapon idx in ods. (for faster access and checks) -1=undef */
-} chrReactionSettings_t;
+} chrFiremodeSettings_t;
 
 /**
  * @brief How many TUs (and of what type) did a player reserve for a unit?
@@ -580,28 +580,26 @@ typedef struct chrReactionSettings_s {
  * @sa CL_ReservedTUs
  * @sa CL_ReserveTUs
  * @todo Would a list be better here? See the enum reservation_types_t
- * @note The "reserveCrouch" is no qboolean to keep all types the same (@sa PA_RESERVE_STATE functions).
  */
 typedef struct chrReservations_s {
-	int reserveReaction; /** Stores if the player has activated or disabled reservation for RF. states can be 0, STATE_REACTION_ONCE or STATE_REACTION_MANY See also le_t->state. This is only for remembering over missions. @sa: g_client:G_ClientSpawn*/
+	/* Reaction fire reservation (for current round and next enemy round) */
+	int reserveReaction; /**< Stores if the player has activated or disabled reservation for RF. states can be 0, STATE_REACTION_ONCE or STATE_REACTION_MANY See also le_t->state. This is only for remembering over missions. @sa: g_client:G_ClientSpawn*/
 	int reaction;	/**< Did the player activate RF with a usable firemode? (And at the same time storing the TU-costs of this firemode) */
 
-	int reserveCrouch; /** Stores if the player has activated or disabled reservation for crouching/standing up. @sa cl_parse:CL_StartingGameDone */
+	/* Crouch reservation (for current round)	*/
+	qboolean reserveCrouch; /**< Stores if the player has activated or disabled reservation for crouching/standing up. @sa cl_parse:CL_StartingGameDone */
 	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH.
 			 * @sa cl_actor:CL_ActorStandCrouch_f
 			 * @sa cl_parse:CL_ActorStateChange
 			 */
-	/**
-	@todo These two would bring up the same problems (of remembering&updating the correct information)
-	as we have with character_t->RFmode right now :-/
-	We would need to update this whenever the weapon(s) in hand change - same as RFmode.
-	int reserveShotFM;		*< The firemode of the weapon to reserve the TUs for.
-	int reserveShotHand;	*< The hand the weapon is in.
-	*/
-	int shot;	/**< If non-zero we reserved a shot in this turn. Will be cleared on turn end. See todo comment above. */
+
+	/** Shot reservation (for current round)
+	 * @sa cl_actor.c:CL_PopupFiremodeReservation_f (sel_shotreservation) */
+	int shot;	/**< If non-zero we reserved a shot in this turn. */
+	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon (and hand) was used for "shot" reservation. */
 
 /*
-	int reserveCustom;	**< Did the player activate reservation for hte custom value?
+	int reserveCustom;	**< Did the player activate reservation for the custom value?
 	int custom;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to provide a numerical input-field.
 */
 } chrReservations_t;
@@ -647,11 +645,11 @@ typedef struct character_s {
 	int teamDefIndex;			/**< teamDef array index. */
 	int gender;					/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
-	chrReactionSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
 
-#define THIS_REACTION(chr, HAND, fd_idx)	(chr->RFmode.hand == HAND && chr->RFmode.fmIdx == fd_idx)
-#define SANE_REACTION(chr)	(((chr->RFmode.hand >= 0) && (chr->RFmode.fmIdx >=0 && chr->RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) && (chr->RFmode.fmIdx >= 0)))
+#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == HAND && (fm)->fmIdx == fdIdx)
+#define SANE_FIREMODE(fm)	((((fm)->hand >= 0) && ((fm)->fmIdx >=0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON) && ((fm)->fmIdx >= 0)))
 
 /** @brief The types of employees. */
 /** @note If you will change order, make sure personel transfering still works. */

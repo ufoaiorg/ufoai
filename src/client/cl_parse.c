@@ -611,7 +611,7 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 
 	/* Set default reaction-firemode (or re-set already working one to update TUs) on game-start. */
 	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-		if (CL_WorkingReactionFiremode(cl.teamList[actor_idx])) {
+		if (CL_WorkingFiremode(cl.teamList[actor_idx], qtrue)) {
 			/* Rewrite/-send selected reaction firemode in case reserved-TUs or server is outdated. */
 			chr = CL_GetActorChr(cl.teamList[actor_idx]);
 			CL_SetReactionFiremode(cl.teamList[actor_idx], chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
@@ -629,6 +629,11 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 			}
 		} else {
 			CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
+		}
+
+		/**@todo Check for changed settings here. */
+		if (CL_WorkingFiremode(cl.teamList[actor_idx], qfalse)) {
+		} else {
 		}
 	}
 }

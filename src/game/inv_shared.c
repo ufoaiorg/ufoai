@@ -1463,6 +1463,9 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 		/* Aliens get special treatment. */
 		soldierTemplate = alienSoldier;
 		/* Add modifiers for difficulty setting here! */
+	} else if (team == TEAM_CIVILIAN) {
+		/* Civilian team gets special treatment. */
+		soldierTemplate = civilSoldier;
 	} else if (!multiplayer) {
 		float soldierRoll;
 		/* Determine which soldier template to use.
@@ -1604,8 +1607,8 @@ void INVSH_PrintItemDescription (int i)
 	Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
 	Com_Printf("... usable for weapon (if type is ammo):\n");
 	for (i = 0; i < ods_temp->numWeapons; i++) {
-		if (ods_temp->weap_idx[i] != NONE)
-			Com_Printf("    ... %s\n", CSI->ods[ods_temp->weap_idx[i]].name);
+		if (ods_temp->weapIdx[i] != NONE)
+			Com_Printf("    ... %s\n", CSI->ods[ods_temp->weapIdx[i]].name);
 	}
 	Com_Printf("\n");
 }
@@ -1643,29 +1646,29 @@ int INVSH_GetItemByID (const char *id)
 /**
  * @brief Checks if an item can be used to reload a weapon.
  * @param[in] od The object definition of the ammo.
- * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
+ * @param[in] weaponIdx The index of the weapon (in the inventory) to check the item with.
  * @return qboolean Returns qtrue if the item can be used in the given weapon, otherwise qfalse.
  * @sa INVSH_PackAmmoAndWeapon
  */
-qboolean INVSH_LoadableInWeapon (objDef_t *od, int weapon_idx)
+qboolean INVSH_LoadableInWeapon (objDef_t *od, int weaponIdx)
 {
 	int i;
 	qboolean usable = qfalse;
 
 	for (i = 0; i < od->numWeapons; i++) {
 #ifdef DEBUG
-		if (od->weap_idx[i] == NONE) {
-			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
+		if (od->weapIdx[i] == NONE) {
+			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: negative weapIdx entry (%s) found in item '%s'.\n", od->weapId[i], od->id );
 			break;
 		}
 #endif
-		if (weapon_idx == od->weap_idx[i]) {
+		if (weaponIdx == od->weapIdx[i]) {
 			usable = qtrue;
 			break;
 		}
 	}
 #if 0
-	Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
+	Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weaponIdx].id );
 #endif
 	return usable;
 }
@@ -1679,11 +1682,11 @@ FIREMODE MANAGEMENT FUNCTIONS
 /**
  * @brief Returns the index of the array that has the firedefinitions for a given weapon/ammo (-index)
  * @param[in] od The object definition of the ammo item.
- * @param[in] weapon_idx The index of the weapon (in the inventory) to check the ammo item with.
+ * @param[in] weaponIdx The index of the weapon (in the inventory) to check the ammo item with.
  * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 (equals the default firemode) if an invalid or unknown weapon idx was given.
  * @note the return value of -1 is in most cases a fatal error (except the scripts are not parsed while e.g. maptesting)
  */
-int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
+int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weaponIdx)
 {
 	int i;
 
@@ -1692,20 +1695,20 @@ int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 		return -1;
 	}
 
-	if (weapon_idx == NONE) {
-		Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: bad weapon_idx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
-		/* FIXME: this won't work if there is no weapon_idx, don't it? - should be -1 here, too */
+	if (weaponIdx == NONE) {
+		Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: bad weaponIdx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
+		/* FIXME: this won't work if there is no weaponIdx, don't it? - should be -1 here, too */
 		return 0;
 	}
 
 	for (i = 0; i < od->numWeapons; i++) {
-		if (weapon_idx == od->weap_idx[i])
+		if (weaponIdx == od->weapIdx[i])
 			return i;
 	}
 
 	/* No firedef index found for this weapon/ammo. */
 #ifdef DEBUG
-	Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weap_idx:%i).\n", od->id, weapon_idx);
+	Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weapIdx:%i).\n", od->id, weaponIdx);
 #endif
 	return -1;
 }
@@ -1713,29 +1716,29 @@ int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 /**
  * @brief Returns the default reaction firemode for a given ammo in a given weapon.
  * @param[in] ammo The ammo(or weapon-)object that contains the firedefs
- * @param[in] weapon_fds_idx The index in objDef[x]
+ * @param[in] weaponFdsIdx The index in objDef[x]
  * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
  */
-int FIRESH_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
+int FIRESH_GetDefaultReactionFire (objDef_t *ammo, int weaponFdsIdx)
 {
-	int fd_idx;
-	if (weapon_fds_idx >= MAX_WEAPONS_PER_OBJDEF) {
-		Com_Printf("FIRESH_GetDefaultReactionFire: bad weapon_fds_idx (%i) Maximum is %i.\n", weapon_fds_idx, MAX_WEAPONS_PER_OBJDEF-1);
+	int fdIdx;
+	if (weaponFdsIdx >= MAX_WEAPONS_PER_OBJDEF) {
+		Com_Printf("FIRESH_GetDefaultReactionFire: bad weaponFdsIdx (%i) Maximum is %i.\n", weaponFdsIdx, MAX_WEAPONS_PER_OBJDEF-1);
 		return -1;
 	}
-	if (weapon_fds_idx < 0) {
-		Com_Printf("FIRESH_GetDefaultReactionFire: Negative weapon_fds_idx given.\n");
+	if (weaponFdsIdx < 0) {
+		Com_Printf("FIRESH_GetDefaultReactionFire: Negative weaponFdsIdx given.\n");
 		return -1;
 	}
 
-	if (ammo->numFiredefs[weapon_fds_idx] == 0) {
+	if (ammo->numFiredefs[weaponFdsIdx] == 0) {
 		Com_Printf("FIRESH_GetDefaultReactionFire: Probably not an ammo-object: %s\n", ammo->id);
 		return -1;
 	}
 
-	for (fd_idx = 0; fd_idx < ammo->numFiredefs[weapon_fds_idx]; fd_idx++) {
-		if (ammo->fd[weapon_fds_idx][fd_idx].reaction)
-			return fd_idx;
+	for (fdIdx = 0; fdIdx < ammo->numFiredefs[weaponFdsIdx]; fdIdx++) {
+		if (ammo->fd[weaponFdsIdx][fdIdx].reaction)
+			return fdIdx;
 	}
 
 	return -1; /* -1 = undef firemode. Default for objects without a reaction-firemode */
