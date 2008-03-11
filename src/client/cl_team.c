@@ -1683,6 +1683,9 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->score.assignedMissions = MSG_ReadShort(sb);
 	chr->score.rank = MSG_ReadByte(sb);
 
+	/* Load user-defined (default) reaction-state. */
+	chr->reservedTus.reserveReaction = MSG_ReadShort(sb);
+
 	/* Inventory */
 	INVSH_DestroyInventory(chr->inv);
 	CL_LoadInventory(sb, chr->inv);
@@ -1899,6 +1902,9 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteShort(buf, chr->score.assignedMissions);
 		MSG_WriteByte(buf, chr->score.rank);
 
+		/* Save user-defined (default) reaction-state. */
+		MSG_WriteShort(buf, chr->reservedTus.reserveReaction);
+
 		/* inventory */
 		CL_SaveInventory(buf, chr->inv);
 	}
@@ -1964,6 +1970,9 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 			NET_WriteShort(buf, chr->score.stuns[j]);
 		NET_WriteShort(buf, chr->score.assignedMissions);
 		NET_WriteByte(buf, chr->score.rank);
+
+		/* Send user-defined (default) reaction-state. */
+		NET_WriteShort(buf, chr->reservedTus.reserveReaction);
 
 		/* inventory */
 		CL_NetSendInventory(buf, chr->inv);

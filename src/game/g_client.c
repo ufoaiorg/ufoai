@@ -1605,7 +1605,7 @@ static void G_ClientTurn (player_t * player, int num, int dv)
  * don't even use the G_ActionCheck function
  * @note Use checkaction true only for e.g. spawning values
  */
-static void G_ClientStateChange (player_t * player, int num, int reqState, qboolean checkaction)
+void G_ClientStateChange (player_t * player, int num, int reqState, qboolean checkaction)
 {
 	edict_t *ent;
 
@@ -2575,6 +2575,8 @@ static inline void G_ClientSkipActorInfo (void)
 	gi.ReadShort(); /* score.assigned missions */
 	gi.ReadByte(); /* score.rank */
 
+	gi.ReadShort(); /* reservedTus.reserveReaction */
+
 	/* skip inventory */
 	j = gi.ReadShort();
 	for (k = 0; k < j; k++)
@@ -2691,6 +2693,9 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.score.assignedMissions = gi.ReadShort();
 			ent->chr.score.rank = gi.ReadByte();
 
+			/* Read user-defined reaction-state. */
+			ent->chr.reservedTus.reserveReaction = gi.ReadShort();
+
 			/* Mission Scores */
 			memset(&scoreMission[scoreMissionNum], 0, sizeof(chrScoreMission_t));
 			ent->chr.scoreMission = &scoreMission[scoreMissionNum];
@@ -2705,7 +2710,7 @@ void G_ClientTeamInfo (player_t * player)
 					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y);
 
 					Com_AddToInventory(&ent->i, item, container, x, y, 1);
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: add %s to inventory (container %i - idArmour: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].id, container, gi.csi->idArmour);
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n", container, gi.csi->idArmour, gi.csi->ods[ent->i.c[container]->item.t].id);
 				}
 			}
 
@@ -3038,8 +3043,8 @@ void G_ClientBegin (player_t* player)
 }
 
 /**
- * @brief Sets the team, init the TU and sends the player stats. Returns
- * true if player spawns.
+ * @brief Sets the team, init the TU and sends the player stats.
+ * @return Returns qtrue if player spawns, otherwise qfalse.
  * @sa G_SendPlayerStats
  * @sa G_GetTeam
  * @sa G_GiveTimeUnits
@@ -3083,11 +3088,13 @@ qboolean G_ClientSpawn (player_t * player)
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 
-	/* Set initial state of reaction fire to previously stored state for all teams. */
-	/* This (and the second loop below) defines the default reaction-mode. */
-	/** @sa cl_team:CL_GenerateCharacter for the initial default value. */
+	/** Set initial state of reaction fire to previously stored state for all team-members.
+	 * This (and the second loop below) defines the default reaction-mode.
+	 * @sa cl_team:CL_GenerateCharacter for the initial default value.
+	 * @sa g_ai.c:G_SpawnAIPlayer */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+		if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+			Com_DPrintf(DEBUG_GAME, "G_ClientSpawn: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
 			G_ClientStateChange(player, i, ent->chr.reservedTus.reserveReaction, qfalse);
 		}
 

@@ -306,6 +306,7 @@ void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet
 void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop, qboolean quiet);
 void G_MoveCalc(int team, pos3_t from, int size, int distance);
 void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet);
+void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
 
 qboolean G_FrustumVis(edict_t * from, vec3_t point);
 float G_ActorVis(vec3_t from, edict_t * check, qboolean full);

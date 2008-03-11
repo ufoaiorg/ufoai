@@ -152,8 +152,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				reaction_trap++;
 		}
 
-	/* don't waste TU's when in reaction fire trap */
-	/* learn to escape such traps if move == 2 || move == 3 */
+	/** Don't waste TU's when in reaction fire trap
+	 * @todo Learn to escape such traps if move == 2 || move == 3 */
 	bestActionPoints -= move * reaction_trap * GUETE_REACTION_FEAR_FACTOR;
 
 	/* set basic parameters */
@@ -712,8 +712,8 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->pnum = player->num;
 			gi.LinkEdict(ent);
 
-			/* skills; @todo: more power to Ortnoks, more mind to Tamans */
-			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
+			/** skills; @todo: more power to Ortnoks, more mind to Tamans */
+			CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2);	/**< For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
 			ent->chr.score.skills[ABILITY_MIND] += 100;
 			if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
 				ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
@@ -740,7 +740,18 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
+
+			/** Set default reaction mode.
+			 * @sa cl_team:CL_GenerateCharacter This function sets the initial default value for (newly created) non-AI actors.
+			 * @todo Make the AI change the value (and its state) if needed while playing! */
+			ent->chr.reservedTus.reserveReaction = STATE_REACTION_ONCE;
+
+			/** Set initial state of reaction fire to previously stored state for this actor.
+			 * @sa g_client.c:G_ClientSpawn */
+			Com_DPrintf(DEBUG_GAME, "G_SpawnAIPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
+			G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
 		} else {
+			/* Civilians */
 			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
 			ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]) / 2;
 			ent->HP = ent->chr.HP;

@@ -1448,7 +1448,7 @@ static const int MPSoldier[][2] =
  * @brief Generates a skill and ability set for any character.
  * @param[in] chr Pointer to the character, for which we generate stats.
  * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
- * @param[in] type This is the employee type you want to generate the skills for
+ * @param[in] type This is the employee type you want to generate the skills for. This is MAX_EMPL for aliens.
  * @param[in] multiplayer If this is true we use the skill values from MPSoldier
  * mulitplayer is a special case here
  */
