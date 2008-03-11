@@ -2061,7 +2061,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		/* gettext marker */
+		/* Gettext marker (also indicates that it is a dmgtype value - additional to beeing a dmgweight value) */
 		if (*token == '_') {
 			token++;
 			csi.dts[csi.numDTs].showInMenu = qtrue;
@@ -2072,31 +2072,37 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 			if (!Q_strncmp(token, csi.dts[i].id, MAX_VAR))
 				break;
 
-		/* not found in the for loop */
+		/* Not found in the for loop. */
 		if (i == csi.numDTs) {
 			Q_strncpyz(csi.dts[csi.numDTs].id, token, sizeof(csi.dts[csi.numDTs].id));
 
-			/* special IDs */
-			if (!Q_strncmp(token, "normal", 6))
-				csi.damNormal = csi.numDTs;
-			else if (!Q_strncmp(token, "blast", 5))
-				csi.damBlast = csi.numDTs;
-			else if (!Q_strncmp(token, "fire", 4))
-				csi.damFire = csi.numDTs;
-			else if (!Q_strncmp(token, "shock", 5))
-				csi.damShock = csi.numDTs;
-			else if (!Q_strncmp(token, "laser", 5))
-				csi.damLaser = csi.numDTs;
-			else if (!Q_strncmp(token, "plasma", 6))
-				csi.damPlasma = csi.numDTs;
-			else if (!Q_strncmp(token, "particle", 7))
-				csi.damParticle = csi.numDTs;
-			else if (!Q_strncmp(token, "stun_electro", 12))
-				csi.damStunElectro = csi.numDTs;
-			else if (!Q_strncmp(token, "stun_gas", 8))
-				csi.damStunGas = csi.numDTs;
-			else
-				Com_Printf("Unknown dmgtype: '%s'\n", token);
+			/* Check dmgtype IDs and store their IDs in csi. */
+			if (csi.dts[csi.numDTs].showInMenu) {
+				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgtype/dmgweight %s\n", token);
+				/* Special IDs */
+				if (!Q_strncmp(token, "normal", 6))
+					csi.damNormal = csi.numDTs;
+				else if (!Q_strncmp(token, "blast", 5))
+					csi.damBlast = csi.numDTs;
+				else if (!Q_strncmp(token, "fire", 4))
+					csi.damFire = csi.numDTs;
+				else if (!Q_strncmp(token, "shock", 5))
+					csi.damShock = csi.numDTs;
+				else if (!Q_strncmp(token, "laser", 5))
+					csi.damLaser = csi.numDTs;
+				else if (!Q_strncmp(token, "plasma", 6))
+					csi.damPlasma = csi.numDTs;
+				else if (!Q_strncmp(token, "particle", 7))
+					csi.damParticle = csi.numDTs;
+				else if (!Q_strncmp(token, "stun_electro", 12))
+					csi.damStunElectro = csi.numDTs;
+				else if (!Q_strncmp(token, "stun_gas", 8))
+					csi.damStunGas = csi.numDTs;
+				else
+					Com_Printf("Unknown dmgtype: '%s'\n", token);
+			} else {
+				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmyweight %s\n", token);
+			}
 
 			csi.numDTs++;
 			if (csi.numDTs >= MAX_DAMAGETYPES)
