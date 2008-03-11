@@ -117,7 +117,7 @@ item bloodspider_weapon
 	size	6
 	buytype dummy
 	firetwohanded   true
-	dmgtype		monomolecularblade
+	dmgtype		normal
 
 	weapon_mod bloodspider_weapon
 	{
@@ -135,7 +135,7 @@ item bloodspider_weapon
 			time		12			//FIXME
 			damage		"40 20"			//FIXME
 			reaction	true
-			dmgweight   monomolecularblade
+			dmgweight   normal_monomolecularblade
 		}
 	}
 }

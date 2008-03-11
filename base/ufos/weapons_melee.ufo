@@ -1,8 +1,6 @@
 // =======================
 // COMBAT KNIFE
 // =======================
-// all knife firedefs now use steelblade dmgtype.
-// this ensures the knife is rubbish against armour
 item knife
 {
 	name		"_Combat Knife"
@@ -17,7 +15,7 @@ item knife
 	size		6
 	buytype	weap_sec
 	thrown		true
-	dmgtype steelblade
+	dmgtype normal
 
 	weapon_mod knife
 	{
@@ -34,7 +32,7 @@ item knife
 			shots	1
 			time	4
 			damage	"40 20"
-			dmgweight steelblade
+			dmgweight normal_steelblade
 			reaction	true
 		}
 		firedef
@@ -53,7 +51,7 @@ item knife
 			ammo	1
 			time	8
 			damage	"35 15"
-			dmgweight steelblade
+			dmgweight normal_steelblade
 			reaction	true
 		}
 	}
@@ -62,8 +60,6 @@ item knife
 // =======================
 // MONOMOLECULAR KNIFE
 // =======================
-// all monomolecular firedefs now use monomolecularblade dmgtype.
-// this ensures the monomolecular blades are better than the combat knife against armour
 item knifemono
 {
 	name		"_Monomolecular Knife"
@@ -78,7 +74,7 @@ item knifemono
 	size		12
 	buytype	weap_sec
 	thrown		true
-	dmgtype monomolecularblade
+	dmgtype normal
 
 	weapon_mod knifemono
 	{
@@ -95,7 +91,7 @@ item knifemono
 			shots	1
 			time	6
 			damage	"70 18"
-			dmgweight monomolecularblade
+			dmgweight normal_monomolecularblade
 			reaction	true
 		}
 //		firedef
@@ -111,7 +107,7 @@ item knifemono
 //			shots	1
 //			time	12
 //			damage	"140 35"
-//			dmgweight monomolecularblade
+//			dmgweight normal_monomolecularblade
 //			reaction	true
 //		}
 		firedef
@@ -130,7 +126,7 @@ item knifemono
 			ammo	1
 			time	8
 			damage	"60 15"
-			dmgweight monomolecularblade
+			dmgweight normal_monomolecularblade
 			reaction	true
 		}
 	}
@@ -202,8 +198,6 @@ item stunrod
 // =======================
 // KERRBLADE
 // =======================
-// all monomolecular firedefs now use monomolecularblade dmgtype.
-// this ensures the monomolecular blades are better than the combat knife against armour
 item kerrblade
 {
 	name		"_Kerrblade"
@@ -218,7 +212,7 @@ item kerrblade
 	size		20
 	buytype	weap_sec
 	thrown		true
-	dmgtype monomolecularblade
+	dmgtype normal
 
 	weapon_mod kerrblade
 	{
@@ -235,7 +229,7 @@ item kerrblade
 			shots	1
 			time	8
 			damage	"95 25"
-			dmgweight monomolecularblade
+			dmgweight normal_monomolecularblade
 			reaction	true
 		}
 		firedef
@@ -251,7 +245,7 @@ item kerrblade
 			shots	1
 			time	14
 			damage	"180 45"
-			dmgweight monomolecularblade
+			dmgweight normal_monomolecularblade
 			reaction	true
 		}
 	}

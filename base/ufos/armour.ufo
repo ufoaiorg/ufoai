@@ -1,16 +1,26 @@
-// useable parameter for amours defines which team can use it: 0 - human, 1 - alien
-/*	steelblade is here for the combat knife
-	monomolecularblade is here for the kerrblade (and similar)
-	it ensures that the superior tech blades are much better against armour
-	and keeps the kerrblade scary
+/*	Description of the armour items:
+
+	useable
+		Parameter that defines which team can use it:
+		0 - human
+		1 - alien
+
+	protection ("dmgweight" values)
+		See "damagetypes" below (the ones without the "_").
+		normal_steelblade - is here for the combat knife
+		normal_monomolecularblade - is here for the kerrblade (and similar monomolecular weapons)
+			It ensures that the superior tech blades are much better against armour
+			and keeps the kerrblade scary.
+
+	rating	("dmgtype" values)
+		See "damagetypes" below (the ones with the "_").
+		See also scripts.c:Com_ParseDamageTypes
 */
 
 // TODO/FIXME: Is the model parameter needed in the armour definitions?
 
 // if the damage type starts with _ it is marked at translateable and thus shown
 // in the menus, if there is no such character the damagetype will not be shown.
-
-// TODO: why is steelblade and monomolecularblade defined here and not in scripts.c:Com_ParseDamageTypes?
 
 damagetypes standard
 {
@@ -20,8 +30,8 @@ damagetypes standard
 	"normal_medium"
 	"normal_heavy"
 	"normal_power"
-	"_steelblade"
-	"_monomolecularblade"
+	"normal_steelblade"
+	"normal_monomolecularblade"
 	"_blast"
 	"_fire"
 	"fire_light"
@@ -73,9 +83,8 @@ item light
 		normal_heavy		11
 		normal_spray        9
 
-		steelblade			10
-
-		monomolecularblade	5
+		normal_steelblade			10
+		normal_monomolecularblade	5
 
 		blast				25
 
@@ -103,8 +112,6 @@ item light
 
 	rating {
 		normal				30
-		steelblade			20
-		monomolecularblade	10
 		blast				30
 		fire				20
 		shock				10
@@ -137,9 +144,8 @@ item lightadv
 		normal_heavy		11
 		normal_spray        9
 
-		steelblade			10
-
-		monomolecularblade	5
+		normal_steelblade		10
+		normal_monomolecularblade	5
 
 		blast				25
 
@@ -167,8 +173,6 @@ item lightadv
 
 	rating {
 		normal				30
-		steelblade			20
-		monomolecularblade	10
 		blast				30
 		fire				20
 		shock				10
@@ -201,9 +205,8 @@ item medium
 		normal_heavy		16
 		normal_spray        12
 
-		steelblade			20
-
-		monomolecularblade	12
+		normal_steelblade		20
+		normal_monomolecularblade	12
 
 		blast				38
 
@@ -231,8 +234,6 @@ item medium
 
 	rating {
 		normal				50
-		steelblade			40
-		monomolecularblade	30
 		blast				50
 		fire				40
 		shock				30
@@ -265,9 +266,8 @@ item power
 		normal_heavy		41
 		normal_spray        19
 
-		steelblade			25
-
-		monomolecularblade	19
+		normal_steelblade		25
+		normal_monomolecularblade	19
 
 		blast				49
 
@@ -295,8 +295,6 @@ item power
 
 	rating {
 		normal				80
-		steelblade			60
-		monomolecularblade	50
 		blast				60
 		fire				50
 		shock				40
@@ -326,9 +324,8 @@ item power
 //		normal_medium		22
 //		normal_heavy		20
 //
-//		steelblade			40
-//
-//		monomolecularblade	10
+//		normal_steelblade		40
+//		normal_monomolecularblade	10
 //
 //		blast				15
 //
@@ -355,8 +352,6 @@ item power
 //
 //	rating {
 //		normal				50
-//		steelblade			50
-//		monomolecularblade	30
 //		blast				40
 //		fire				40
 //		shock				40
@@ -386,9 +381,8 @@ item power
 //		normal_medium		22
 //		normal_heavy		20
 //
-//		steelblade			40
-//
-//		monomolecularblade	10
+//		normal_steelblade		40
+//		normal_monomolecularblade	10
 //
 //		blast				15
 //
@@ -415,8 +409,6 @@ item power
 //
 //	rating {
 //		normal				60
-//		steelblade			70
-//		monomolecularblade	70
 //		blast				100
 //		fire				70
 //		shock				70
@@ -446,9 +438,8 @@ item power
 //		normal_medium		22
 //		normal_heavy		20
 //
-//		steelblade			40
-//
-//		monomolecularblade	10
+//		normal_steelblade		40
+//		normal_monomolecularblade	10
 //
 //		blast				15
 //
@@ -475,8 +466,6 @@ item power
 //
 //	rating {
 //		normal				100
-//		steelblade			100
-//		monomolecularblade	100
 //		blast				60
 //		fire				100
 //		shock				100
@@ -506,9 +495,8 @@ item power
 //		normal_medium		22
 //		normal_heavy		20
 //
-//		steelblade			40
-//
-//		monomolecularblade	10
+//		normal_steelblade		40
+//		normal_monomolecularblade	10
 //
 //		blast				15
 //
@@ -535,8 +523,6 @@ item power
 //
 //	rating {
 //		normal				80
-//		steelblade			80
-//		monomolecularblade	80
 //		blast				40
 //		fire				80
 //		shock				80
@@ -573,9 +559,8 @@ item light_alien
 		normal_heavy		5
 		normal_spray        9
 
-		steelblade			10
-
-		monomolecularblade	5
+		normal_steelblade		10
+		normal_monomolecularblade	5
 
 		blast				25
 
@@ -603,8 +588,6 @@ item light_alien
 
 	rating {
 		normal				10
-		steelblade			20
-		monomolecularblade	10
 		blast				30
 		fire				20
 		shock				10
@@ -637,9 +620,8 @@ item medium_alien
 		normal_heavy		16
 		normal_spray        12
 
-		steelblade			20
-
-		monomolecularblade	12
+		normal_steelblade		20
+		normal_monomolecularblade	12
 
 		blast				38
 
@@ -667,8 +649,6 @@ item medium_alien
 
 	rating {
 		normal				40
-		steelblade			40
-		monomolecularblade	30
 		blast				50
 		fire				40
 		shock				30
