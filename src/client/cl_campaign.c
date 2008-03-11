@@ -36,9 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
-void R_BlurXVIOverlay(void);
+void R_IncreaseXVILevel(vec2_t pos);
 void R_InitializeXVIOverlay(void);
-void R_IncreaseXVIOverlay(const vec2_t pos, int alpha);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -2367,7 +2366,6 @@ const char* MAP_GetMissionModel (const mission_t *mission)
  */
 static void CP_SpreadXVI (void)
 {
-	R_BlurXVIOverlay();
 }
 
 /**

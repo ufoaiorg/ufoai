@@ -1146,71 +1146,72 @@ static const int maxAlpha = 256;		/**< Number of alpha level */
 image_t *r_xviTexture;								/**< XVI texture */
 static byte *r_xviPic;								/**< XVI picture */
 
+float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
+
 /**
- * @brief Applies spreading on xvi transparency channel
+ * @brief Applies spreading on xvi transparency channel centered on a given pos
+ * @param[in] pos Position of the center of XVI spreading
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
+ * XVI spreads in circle, and the alpha value of one pixel indicates the XVI level of infection.
+ * This is necessary to take into account a new event that would spread in the zone where XVI is already spread.
  */
-void R_BlurXVIOverlay (void)
+void R_IncreaseXVILevel (vec2_t pos)
 {
-	byte *out;			/**< copy of r_xviAlpha where the calculations will be made */
-	const int bpp = 4;	/**< byte per pixel */
-	int i, j;
+	const int bpp = 4;							/**< byte per pixel */
+	const int minAlpha = 100;					/**< minimum value of alpha when spreading XVI
+													255 - minAlpha is the maximum XVI level */
+	int xviLevel;								/**< XVI level rate at position pos */
+	vec2_t currentPos;							/**< current position (in latitude / longitude) */
+	int x, y;									/**< current position (in pixel) */
 	const int xviWidth = r_xviTexture->width;
 	const int xviHeight = r_xviTexture->height;
+	const int xCenter = bpp * round((pos[0] + 180) * r_xviTexture->width / 360.0f);
+	const int yCenter = bpp * round((90 - pos[1]) * r_xviTexture->height / 180.0f);
+	float radius;								/**< radius of the new XVI circle */
 
-	/* soften into a copy of the original image, as in-place would be incorrect */
-	out = (byte *)Mem_PoolAlloc(bpp * xviWidth * xviHeight, vid_imagePool, 0);
-	if (!out)
-		Sys_Error("TagMalloc: failed on allocation of %i bytes for R_BlurTransparency", bpp * xviWidth * xviHeight);
+	assert(xCenter >= 0);
+	assert(xCenter < bpp * r_xviTexture->width);
+	assert(yCenter >= 0);
+	assert(yCenter < bpp * r_xviTexture->height);
 
-	memcpy(out, r_xviPic, bpp * xviWidth * xviHeight);
+	if (r_xviPic[3 + yCenter * xviWidth + xCenter] < minAlpha) {
+		/* This zone wasn't infected */
+		r_xviPic[3 + yCenter * xviWidth + xCenter] = minAlpha;
+		return;
+	}
 
-	/**
-	 * @note We use a cross to integrate alpha value.
-	 * As we integrate on a globe (and not a plane), we can't use a cross whose width is the same than its height
-	 * The width (blurringWidth) depend on the latitude of the point we are averaging
-	 * Total width of the cross will be (2 * blurringWidth + 1)
-	 * Total height of the cross will be 3
-	 * Total areas of the cross will be (2 * (blurringWidth + 1) + 1)
-	 */
+	/* Get xvi Level infection at pos */
+	xviLevel = r_xviPic[3 + yCenter * xviWidth + xCenter] - minAlpha;
+	/* Calculate radius of new spreading */
+	xviLevel++;
+	radius = sqrt(15.0f * xviLevel);
 
-	for (i = bpp; i < bpp * (xviHeight - 1); i += bpp) {
-		/* Note that blurringWidth would be Nan if i = 0 or i = xviHeight */
-		const int blurringWidth = round(1.0 / sin(M_PI * i / ((float) (bpp * (xviHeight - 1.0f)))));
-		assert(blurringWidth > 0);
-		for (j = bpp; j < bpp * (xviWidth - 1); j += bpp) {
-			const byte *src = r_xviPic + 3 + i * xviWidth + j;		/**< current input alpha */
-			byte *dest = out + 3 + i * xviWidth + j;				/**< current output pixel */
-			const int yu = -bpp * xviWidth;	/**< index of the point above current one */
-			const int yd = bpp * xviWidth;	/**< index of the point below current one */
-			int k;
-
-			/** @todo Blur will not work properly on the poles */
-			/* Sum all pixels within the cross we use to integrate */
-			dest[0] = src[0] + src[yu] + src[yd];
-			for (k = bpp; k <= bpp * blurringWidth; k += bpp) {
-				int xl, xr;
-				if (k > j)
-					/* xl is on the other side of the texture */
-					xl = bpp * xviWidth - k;
+	for (y = bpp; y < bpp * (xviHeight - 1); y += bpp) {
+		for (x = bpp; x < bpp * (xviWidth - 1); x += bpp) {
+			float distance;
+			Vector2Set(currentPos,
+				360.0f * x / ((float) r_xviTexture->width * bpp) - 180.0f,
+				90.0f - 180.0f * y / ((float) r_xviTexture->height * bpp));
+			distance = MAP_GetDistance(pos, currentPos);
+			if (distance <= 1.1 * radius) {
+				int newValue;
+				if ((xCenter == x) && (yCenter == y))
+					/* Make sure that XVI level increases, even if rounding problems makes radius constant */
+					newValue = minAlpha + xviLevel;
+				else if (distance > radius)
+					newValue = round(minAlpha * (1.1 * radius - distance) / (0.1 * radius));
 				else
-					xl = -k;
-				if (k + j >= bpp * xviWidth)
-					/* xr is on the other side of the texture */
-					xr = k - bpp * xviWidth;
-				else
-					xr = k;
-				dest[0] += src[xl] + src[xr];
-			}
-			if (dest[0] > 0) {
-				dest[0] = 200;
+					newValue = round(minAlpha + (xviLevel * (radius - distance)) / radius);
+				if (newValue > 255) {
+					Com_DPrintf(DEBUG_CLIENT, "Maximum alpha value reached\n");
+					newValue = 255;
+				}
+				if (r_xviPic[3 + y * xviWidth + x] < newValue) {
+					r_xviPic[3 + y * xviWidth + x] = newValue;
+				}
 			}
 		}
 	}
-
-	/* copy the softened image over the input image, and free it */
-	memcpy(r_xviPic, out, bpp * xviWidth * xviHeight);
-	Mem_Free(out);
 
 	R_BindTexture(r_xviTexture->texnum);
 	R_UploadTexture((unsigned *) r_xviPic, r_xviTexture->upload_width, r_xviTexture->upload_height, r_xviTexture);
@@ -1243,27 +1244,6 @@ void R_InitializeXVIOverlay (void)
 
 	/* Set an image */
 	r_xviTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay.tga", r_xviPic, xviWidth, xviHeight, it_wrappic);
-}
-
-/**
- * @brief Increase SVI rate on the geoscape.
- * @param[in] pos Position on the geoscape in longitude/latitude
- * @param[in] alpha Alpha value, must be between 0 and maxAlpha
- */
-void R_IncreaseXVIOverlay (const vec2_t pos, int alpha)
-{
-	const int x = round((pos[0] + 180) * r_xviTexture->width / 360.0f);
-	const int y = round((90 - pos[1]) * r_xviTexture->height / 180.0f);
-
-	assert(x >= 0);
-	assert(x <= r_xviTexture->width);
-	assert(y >= 0);
-	assert(y <= r_xviTexture->height);
-
-	if ((alpha < 0) || (alpha >= maxAlpha))
-		Sys_Error("R_IncreaseXVI: alpha value %i is outside alpha range\n", alpha);
-
-	r_xviPic[3 + 4 * (y * r_xviTexture->width + x)] = alpha;
 }
 
 /**
