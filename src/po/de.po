@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-03-07 09:56+0100\n"
-"PO-Revision-Date: 2008-03-07 10:38+0100\n"
+"PO-Revision-Date: 2008-03-11 12:37+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1205,7 +1205,7 @@ msgstr "Griechisch"
 
 #: ../base/ufos/language.ufo:176
 msgid "Hungarian"
-msgstr ""
+msgstr "Ungarisch"
 
 #: ../base/ufos/language.ufo:186
 msgid "Italien"
@@ -2606,14 +2606,12 @@ msgid "No hangars in this base"
 msgstr "Kein Hangar in dieser Basis"
 
 #: ../base/ufos/menu_buy.ufo:2278
-#, fuzzy
 msgid "No storage in this base"
-msgstr "Kein Lager in dieser Basis."
+msgstr "Kein Lager in dieser Basis"
 
 #: ../base/ufos/menu_buy.ufo:2281
-#, fuzzy
 msgid "Buy or sell aircrafts"
-msgstr "Flugzeuge kaufen oder verkaufen."
+msgstr "Kaufe und verkaufe Flugzeuge"
 
 #: ../base/ufos/menu_buy.ufo:2284
 msgid "Buy or sell craftitems"
@@ -4347,9 +4345,8 @@ msgid "Max AI actors for this game"
 msgstr "Max. KI-Spieler für dieses Spiel"
 
 #: ../base/ufos/menu_skirmish.ufo:219
-#, fuzzy
 msgid "Start game"
-msgstr "Starte Kampagne"
+msgstr "Starte Spiel"
 
 #: ../base/ufos/menu_stats.ufo:63
 msgid "Missions"
@@ -11284,9 +11281,8 @@ msgid "Crouch (%i TU)"
 msgstr "Hinknien (%i ZE)"
 
 #: client/cl_actor.c:1653
-#, fuzzy
 msgid "No reload possible for right hand."
-msgstr "Lade die Waffe in der rechten Hand nach"
+msgstr "Kann die Waffe in der rechten Hand nicht nachladen."
 
 #: client/cl_actor.c:1656
 #: client/cl_actor.c:1668
@@ -11295,9 +11291,8 @@ msgid "Reload weapon (%i TU)."
 msgstr "Waffen nachladen (%i ZE)."
 
 #: client/cl_actor.c:1665
-#, fuzzy
 msgid "No reload possible for left hand."
-msgstr "Lade die Waffe in der linken Hand nach"
+msgstr "Kann die Waffe in der linken Hand nicht nachladen."
 
 #: client/cl_actor.c:1776
 msgid "No item in hand.\n"
@@ -11636,9 +11631,9 @@ msgstr "Treibstoff:\t%i/%i\n"
 
 #: client/cl_aircraft.c:666
 #: client/cl_ufopedia.c:656
-#, fuzzy, c-format
+#, c-format
 msgid "Operational range:\t%i km\n"
-msgstr "Betriebssystem:\t%s\n"
+msgstr "Reichweite:\t%i km\n"
 
 #: client/cl_aircraft.c:668
 #, c-format
@@ -13053,9 +13048,8 @@ msgid "You can't sell an aircraft that is not in base"
 msgstr "Flugzeug kann nicht verkauft werden solange es nicht in der Basis ist"
 
 #: client/cl_menu.c:143
-#, fuzzy
 msgid "No team assigned"
-msgstr "Keinen Gegenstand zugewiesen."
+msgstr "Kein Team zugewiesen"
 
 #: client/cl_menu.c:143
 msgid "Please choose and equip your team first"
@@ -14135,9 +14129,9 @@ msgid "The destination base no longer exists! Transfer cargo are lost, personel 
 msgstr "Die Zielbasis existiert nicht mehr! Die Ladung ist verloren, das Personal wurde entlassen."
 
 #: client/cl_ufo.c:363
-#, fuzzy, c-format
+#, c-format
 msgid "A UFO is flying toward %s"
-msgstr "Ein UFO schießt auf %s"
+msgstr "Ein UFO fliegt auf %s zu"
 
 #: client/cl_ufo.c:667
 msgid "Our radar detected a new UFO"
