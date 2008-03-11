@@ -2278,7 +2278,7 @@ menu buyaircraft
 		*bt_craftitems tooltip "_No storage in this base"
 	}
 	confunc abuy_enableaircrafts	 { *bt_aircrafts image "menu/button_blue"
-		*bt_aircrafts tooltip "_Buy or sell aircrafts"
+		*bt_aircrafts tooltip "_Buy or sell aircraft"
 	}
 	confunc abuy_enableitems	 { *bt_craftitems image "menu/button_blue"
 		*bt_craftitems tooltip "_Buy or sell craftitems"
