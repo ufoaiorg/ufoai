@@ -5342,7 +5342,7 @@ void CL_GameExit (void)
 		}
 
 		/* @todo: make sure all of gd is empty */
-		gd.numBases=0;
+		gd.numBases = 0;
 		E_ResetEmployees();
 	}
 	curCampaign = NULL;
