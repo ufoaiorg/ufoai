@@ -27,7 +27,7 @@
 					<Add library="gdi32" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="../../contrib/scripts/compile_po.bat c:\MinGW\bin\msgfmt.exe" />
+					<Add after="..\..\contrib\scripts\compile_po.bat c:\MinGW\bin\msgfmt.exe" />
 				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
@@ -56,7 +56,7 @@
 					<Add library="gmon" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="../../contrib/scripts/compile_po.bat c:\MinGW\bin\msgfmt.exe" />
+					<Add after="..\..\contrib\scripts\compile_po.bat c:\MinGW\bin\msgfmt.exe" />
 				</ExtraCommands>
 			</Target>
 			<Target title="linux">
