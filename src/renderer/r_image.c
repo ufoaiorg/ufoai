@@ -1231,7 +1231,7 @@ void R_InitializeXVIOverlay (void)
 		return;
 
 	/* Load the XVI texture */
-	R_LoadImage("pics/geoscape/map_earth_xvi_overlay.tga", &r_xviPic, &xviWidth, &xviHeight);
+	R_LoadImage("pics/geoscape/map_earth_xvi_overlay", &r_xviPic, &xviWidth, &xviHeight);
 
 	assert(r_xviPic);
 
