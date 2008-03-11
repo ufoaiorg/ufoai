@@ -2286,7 +2286,7 @@ menu buyaircraft
 
 	pic bt_aircrafts
 	{
-		tooltip	"_Show aircrafts"
+		tooltip	"_Show aircraft"
 		image	menu/button_blue
 		mousefx	true
 		pos		"615 560"
