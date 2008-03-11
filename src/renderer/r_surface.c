@@ -159,7 +159,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	if (texunit_lightmap.enabled)  /* lightmap */
 		R_BindLightmapTexture(surf->lightmaptexturenum);
 
-	if (texunit_normalmap.enabled)  /* normalmap */
+	if (texunit_normalmap.enabled && surf->texinfo->image->normalmap)  /* normalmap */
 		R_BindNormalmapTexture(surf->texinfo->image->normalmap->texnum);
 
 	R_CheckError();
