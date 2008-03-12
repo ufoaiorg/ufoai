@@ -645,6 +645,10 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 
 	/* For each ufo in geoscape */
 	for (ufo = gd.ufos + gd.numUFOs - 1; ufo >= gd.ufos; ufo--) {
+		/* don't update UFO status id UFO is landed or crashed */
+		if (ufo->notOnGeoscape)
+			continue;
+
 		visible = ufo->visible;
 		ufo->visible = qfalse;
 
