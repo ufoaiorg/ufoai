@@ -37,7 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 
 void R_IncreaseXVILevel(vec2_t pos);
-void R_InitializeXVIOverlay(void);
+void R_InitializeXVIOverlay(byte *data, int width, int height);
+qboolean R_XVIMapCopy(byte *out, int size);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -405,29 +406,18 @@ static mission_t* CP_GetLastMissionAdded (void)
  */
 const char* CP_MissionToTypeString (const mission_t *mission)
 {
-	switch (mission->category) {
-	case INTERESTCATEGORY_RECON:
-		if (mission->stage == STAGE_RECON_GROUND)
-			return _("Landed UFO");
-		break;
-	case INTERESTCATEGORY_TERROR_ATTACK:
-		if (mission->stage == STAGE_TERROR_MISSION)
-			return _("Terror mission");
-		break;
-	case INTERESTCATEGORY_BASE_ATTACK:
-		if (mission->stage == STAGE_BASE_ATTACK)
-			return _("Base attack");
-		break;
-	case INTERESTCATEGORY_BUILDING:
-		if (mission->stage == STAGE_BASE_DISCOVERED)
-			return _("Alien base");
-		break;
-	case INTERESTCATEGORY_SUPPLY:
-	case INTERESTCATEGORY_INTERCEPT:
-		break;
+	switch (mission->stage) {
+	case STAGE_RECON_GROUND:
+	case STAGE_SPREAD_XVI:
+		return _("Landed UFO");
+	case STAGE_TERROR_MISSION:
+		return _("Terror mission");
+	case STAGE_BASE_ATTACK:
+		return _("Base attack");
+	case STAGE_BASE_DISCOVERED:
+		return _("Alien base");
 	default:
-		Com_Printf("CP_MissionToTypeString: Unknow category %i\n", mission->category);
-		return _("Unknown");
+		break;
 	}
 	return _("Crashed UFO");
 }
@@ -598,6 +588,28 @@ static inline void CP_MissionDisableTimeLimit (mission_t *mission)
 static inline qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
 {
 	return mission->finalDate.day != 0;
+}
+
+/**
+ * @brief Sread XVI at a given position.
+ * @param[in] pos Position where XVI should be spread.
+ */
+static void CP_SpreadXVIAtPos (vec2_t pos)
+{
+	nation_t *nation;
+
+#ifdef DEBUG
+	if (!ccs.XVISpreadActivated) {
+		Com_Printf("CP_SpreadXVIAtPos: Try to spread XVI but XVISpread is not activated\n");
+		return;
+	}
+#endif
+
+	nation = MAP_GetNation(pos);
+	if (nation)
+		nation->stats[0].xviInfection++;
+
+	R_IncreaseXVILevel(pos);
 }
 
 /**
@@ -1231,9 +1243,16 @@ static void CP_BaseAttackMissionNextStage (mission_t *mission)
  */
 static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 {
+	alienBase_t *base;
+
 	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_SUPPLY);
 	CL_ChangeIndividualInterest(-0.8f, INTERESTCATEGORY_BUILDING);
+
+	/* Spread XVI */
+	base = (alienBase_t *) mission->data;
+	assert(base);
+	CP_SpreadXVIAtPos(base->pos);
 
 	CP_MissionRemove(mission);
 }
@@ -1370,7 +1389,13 @@ static void CP_BuildBaseMissionNextStage (mission_t *mission)
  */
 static void CP_SupplyMissionIsSuccess (mission_t *mission)
 {
+	alienBase_t *base;
 	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_SUPPLY);
+
+	/* Spread XVI */
+	base = (alienBase_t *) mission->data;
+	assert(base);
+	CP_SpreadXVIAtPos(base->pos);
 
 	CP_MissionRemove(mission);
 }
@@ -1511,6 +1536,85 @@ static void CP_SupplyMissionNextStage (mission_t *mission)
 	}
 }
 
+/*****	XVI Spreading Mission *****/
+
+/**
+ * @brief XVI Spreading mission is over and is a success: change interest values.
+ * @note XVI Spreading mission
+ */
+static void CP_XVIMissionIsSuccess (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_XVI);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief XVI Spreading mission is over and is a failure: change interest values.
+ * @note XVI Spreading mission
+ */
+static void CP_XVIMissionIsFailure (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Start XVI Spreading mission.
+ * @note XVI Spreading mission -- Stage 2
+ */
+static void CP_XVIMissionStart (mission_t *mission)
+{
+	const date_t missionDelay = {3, 0};
+
+	assert(mission->ufo);
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	CP_UFORemoveFromGeoscape(mission);
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission);
+
+	mission->stage = STAGE_SPREAD_XVI;
+}
+
+/**
+ * @brief Determine what action should be performed when a XVI Spreading mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
+ */
+static void CP_XVIMissionNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		/* Create Terror attack mission */
+		CP_MissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		/* Go to mission */
+		CP_TerrorMissionGo(mission);
+		break;
+	case STAGE_MISSION_GOTO:
+		/* just arrived on a new Terror attack mission: start it */
+		CP_XVIMissionStart(mission);
+		break;
+	case STAGE_SPREAD_XVI:
+		/* Leave earth */
+		CP_ReconMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_XVIMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_XVIMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
+
 /*****	Intercept Mission *****/
 
 /**
@@ -1627,6 +1731,9 @@ static void CP_MissionStageEnd (mission_t *mission)
 	case INTERESTCATEGORY_SUPPLY:
 		CP_SupplyMissionNextStage(mission);
 		break;
+	case INTERESTCATEGORY_XVI:
+		CP_XVIMissionNextStage(mission);
+		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		CP_InterceptNextStage(mission);
 		break;
@@ -1667,6 +1774,12 @@ static inline void CP_MissionIsOver (mission_t *mission)
 			CP_SupplyMissionIsFailure(mission);
 		else
 			CP_SupplyMissionIsSuccess(mission);
+		break;
+	case INTERESTCATEGORY_XVI:
+		if (mission->stage <= STAGE_SPREAD_XVI)
+			CP_XVIMissionIsFailure(mission);
+		else
+			CP_XVIMissionIsSuccess(mission);
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
 		CP_InterceptMissionIsFailure(mission);
@@ -2361,11 +2474,18 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 }
 
 /**
- * @brief Spread XVI
+ * @brief Spread XVI for each mission that needs to be daily spread.
  * @note Daily called
  */
 static void CP_SpreadXVI (void)
 {
+	const linkedList_t *list = ccs.missions;
+
+	for (;list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		if (mission->stage == STAGE_SPREAD_XVI)
+			CP_SpreadXVIAtPos(mission->pos);
+	}
 }
 
 /**
@@ -2417,11 +2537,10 @@ static void CP_EndCampaign (qboolean won)
 /**
  * @brief Return the average XVI rate
  * @note XVI = eXtraterrestial Viral Infection
- * @return value between 0 and 100 (and not between 0.00 and 1.00)
  */
 static int CP_GetAverageXVIRate (void)
 {
-	float XVIRate = 0;
+	int XVIRate = 0;
 	int i;
 	nation_t* nation;
 
@@ -2429,10 +2548,9 @@ static int CP_GetAverageXVIRate (void)
 
 	/* check for XVI infection rate */
 	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
-		XVIRate += nation->stats[0].xvi_infection;
+		XVIRate += nation->stats[0].xviInfection;
 	}
 	XVIRate /= gd.numNations;
-	XVIRate *= 100;
 	return (int) XVIRate;
 }
 
@@ -2533,7 +2651,6 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
 	float performance = civilianRatio * 0.5 + alienRatio * 0.5;
 	float delta_happiness;
-	float xvi_infection_factor;
 
 	if (lost) {
 		campaignStats.missionsLost++;
@@ -2545,44 +2662,24 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		nation_t *nation = &gd.nations[i];
 		float alienHostile = 1.0f - nation->stats[0].alienFriendly;
 		delta_happiness = 0.0f;
-		xvi_infection_factor = 1.0f;
 
 		if (lost) {
 			if (nation == ccs.battleParameters.nation) {
 				/* Strong negative reaction (happiness_factor must be < 1) */
 				delta_happiness = - (1.0f - performance) * nation->stats[0].alienFriendly * nation->stats[0].happiness;
 				is_on_Earth++;
-				if (ccs.XVISpreadActivated) {
-					/* if there wasn't any XVI infection in this country (or small infection), start it */
-					if (nation->stats[0].xvi_infection < XVI_LOST_START_PERCENTAGE)
-						nation->stats[0].xvi_infection = XVI_LOST_START_PERCENTAGE;
-					else
-						/* increase infection by 50% */
-						xvi_infection_factor = 1.50f;
-				}
 			} else {
 				/* Minor negative reaction (10 times lower than if the failed mission were in the nation) */
 				delta_happiness = - 0.1f * (1.0f - performance) * nation->stats[0].alienFriendly * nation->stats[0].happiness;
-				/* increase infection by 10% for country already infected */
-				xvi_infection_factor = 1.10f;
 			}
 		} else {
 			if (nation == ccs.battleParameters.nation) {
 				/* Strong positive reaction (happiness_factor must be > 1) */
 				delta_happiness = performance * alienHostile * (1.0f - nation->stats[0].happiness);
 				is_on_Earth++;
-				if (ccs.XVISpreadActivated) {
-					/* if there wasn't any XVI infection in this country, start it */
-					if (nation->stats[0].xvi_infection < XVI_WON_START_PERCENTAGE)
-						nation->stats[0].xvi_infection = XVI_WON_START_PERCENTAGE;
-					else
-						/* increase infection by 10% */
-						xvi_infection_factor = 1.10f;
-				}
 			} else {
 				/* Minor positive reaction (10 times lower than if the mission were in the nation) */
 				delta_happiness = 0.1f * performance * alienHostile * (1.0f - nation->stats[0].happiness);
-				/* No spreading of XVI infection in other nations */
 			}
 			/* the happiness you can gain depends on the difficulty of the campaign */
 			delta_happiness *= (0.2f + pow(4.0f - difficulty->integer, 2) / 32.0f);
@@ -2595,15 +2692,6 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 			nation->stats[0].happiness = 1.0f;
 		else if (nation->stats[0].happiness < 0.0f)
 			nation->stats[0].happiness = 0.0f;
-
-		/* update xvi_infection value (note that there will be an effect only
-		 * on nations where at least one mission already took place (for others, nation->stats[0].xvi_infection = 0) */
-		if (ccs.XVISpreadActivated) {
-			/* @todo: Send mails about critical rates */
-			nation->stats[0].xvi_infection *= xvi_infection_factor;
-			if (nation->stats[0].xvi_infection > 1.0f)
-				nation->stats[0].xvi_infection = 1.0f;
-		}
 	}
 	if (!is_on_Earth)
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->id, ccs.battleParameters.nation ? ccs.battleParameters.nation->id : "no nation");
@@ -3788,10 +3876,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		}
 	}
 
-	/* Load WVI map */
-	R_InitializeXVIOverlay();
-	/* @todo Implement me */
-
 	return qtrue;
 }
 
@@ -3970,7 +4054,7 @@ qboolean NA_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			MSG_WriteByte(sb, gd.nations[i].stats[j].inuse);
 			MSG_WriteFloat(sb, gd.nations[i].stats[j].happiness);
-			MSG_WriteFloat(sb, gd.nations[i].stats[j].xvi_infection);
+			MSG_WriteLong(sb, gd.nations[i].stats[j].xviInfection);
 			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly);
 		}
 	}
@@ -3988,10 +4072,84 @@ qboolean NA_Load (sizebuf_t* sb, void* data)
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			gd.nations[i].stats[j].inuse = MSG_ReadByte(sb);
 			gd.nations[i].stats[j].happiness = MSG_ReadFloat(sb);
-			gd.nations[i].stats[j].xvi_infection = MSG_ReadFloat(sb);
+#if 0
+/* remove me*/
+			gd.nations[i].stats[j].xviInfection = MSG_ReadFloat(sb);
+#endif
+#if 1
+/* add me */
+			gd.nations[i].stats[j].xviInfection = MSG_ReadLong(sb);
+#endif
+
 			gd.nations[i].stats[j].alienFriendly = MSG_ReadFloat(sb);
 		}
 	}
+	return qtrue;
+}
+
+/**
+ * @brief XVI map saving callback
+ * @note Only save transparency
+ */
+qboolean XVI_Save (sizebuf_t *sb, void *data)
+{
+	byte out[512 * 256];
+	int x, y;
+	int width = 512;
+	int height = 256;
+
+	if (!R_XVIMapCopy(out, sizeof(out))) {
+		/* Size of out is not the same than XVI map */
+		MSG_WriteShort(sb, 0);
+		MSG_WriteShort(sb, 0);
+		return qtrue;
+	}
+
+	MSG_WriteShort(sb, width);
+	MSG_WriteShort(sb, height);
+
+	for (y = 0; y < height; y++) {
+		for (x = 0; x < width; x++)
+			MSG_WriteByte(sb, out[y * width + x]);
+	}
+
+	return qtrue;
+}
+
+/**
+ * @brief XVI map loading callback
+ */
+qboolean XVI_Load (sizebuf_t *sb, void *data)
+{
+#if 1
+/* remove me */
+	R_InitializeXVIOverlay(NULL, 0, 0);
+#endif
+#if 0
+/* add me */
+
+	byte *out;
+	int i, j;
+	int width, height;
+
+	width = MSG_ReadShort(sb);
+	height = MSG_ReadShort(sb);
+
+	out = (byte *)Mem_PoolAlloc(width * height, vid_imagePool, 0);
+	if (!out)
+		Sys_Error("TagMalloc: failed on allocation of %i bytes for XVI_Load", width * height);
+
+	for (i = 0; i < width; i++) {
+		for (j = 0; j < height; j++) {
+			out[j * width + i] = MSG_ReadByte(sb);
+		}
+	}
+
+	R_InitializeXVIOverlay(out, width, height);
+
+	Mem_Free(out);
+#endif
+
 	return qtrue;
 }
 
@@ -5256,6 +5414,7 @@ static void CL_NationList_f (void)
 		Com_Printf("...max-funding %i c\n", gd.nations[i].maxFunding);
 		Com_Printf("...alienFriendly %0.2f\n", gd.nations[i].stats[0].alienFriendly);
 		Com_Printf("...happiness %0.2f\n", gd.nations[i].stats[0].happiness);
+		Com_Printf("...xviInfection %i\n", gd.nations[i].stats[0].xviInfection);
 		Com_Printf("...max-soldiers %i\n", gd.nations[i].maxSoldiers);
 		Com_Printf("...max-scientists %i\n", gd.nations[i].maxScientists);
 		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", gd.nations[i].color[0], gd.nations[i].color[1], gd.nations[i].color[2], gd.nations[i].color[3]);
@@ -5572,7 +5731,7 @@ static void CL_GameNew_f (void)
 	CL_ResetAlienInterest();
 
 	/* Initialze XVI overlay */
-	R_InitializeXVIOverlay();
+	R_InitializeXVIOverlay(NULL, 0, 0);
 
 	/* Reset alien bases */
 	AB_ResetAlienBases();

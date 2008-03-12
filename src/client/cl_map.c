@@ -1335,7 +1335,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
 			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse);
 		if (showXVI) {
-			Q_strcat(buffer, va(_("%s\t%0.2f%%\n"), _(gd.nations[i].name), gd.nations[i].stats[0].xvi_infection), sizeof(buffer));
+			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(gd.nations[i].name), gd.nations[i].stats[0].xviInfection), sizeof(buffer));
 		}
 	}
 	if (showXVI)

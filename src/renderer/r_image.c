@@ -1143,8 +1143,8 @@ void R_CalcDayAndNight (float q)
 
 
 static const int maxAlpha = 256;		/**< Number of alpha level */
-image_t *r_xviTexture;								/**< XVI texture */
-static byte *r_xviPic;								/**< XVI picture */
+image_t *r_xviTexture;					/**< XVI texture */
+static byte *r_xviPic;					/**< XVI picture */
 
 float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 
@@ -1165,7 +1165,7 @@ void R_IncreaseXVILevel (vec2_t pos)
 	int x, y;									/**< current position (in pixel) */
 	const int xviWidth = r_xviTexture->width;
 	const int xviHeight = r_xviTexture->height;
-	const int xCenter = bpp * round((pos[0] + 180) * r_xviTexture->width / 360.0f);
+	const int xCenter = bpp * round((180 - pos[0]) * r_xviTexture->width / 360.0f);
 	const int yCenter = bpp * round((90 - pos[1]) * r_xviTexture->height / 180.0f);
 	float radius;								/**< radius of the new XVI circle */
 
@@ -1186,11 +1186,11 @@ void R_IncreaseXVILevel (vec2_t pos)
 	xviLevel++;
 	radius = sqrt(15.0f * xviLevel);
 
-	for (y = bpp; y < bpp * (xviHeight - 1); y += bpp) {
-		for (x = bpp; x < bpp * (xviWidth - 1); x += bpp) {
+	for (y = 0; y < bpp * xviHeight; y += bpp) {
+		for (x = 0; x < bpp * xviWidth; x += bpp) {
 			float distance;
 			Vector2Set(currentPos,
-				360.0f * x / ((float) r_xviTexture->width * bpp) - 180.0f,
+				180.0f - 360.0f * x / ((float) r_xviTexture->width * bpp),
 				90.0f - 180.0f * y / ((float) r_xviTexture->height * bpp));
 			distance = MAP_GetDistance(pos, currentPos);
 			if (distance <= 1.1 * radius) {
@@ -1219,13 +1219,17 @@ void R_IncreaseXVILevel (vec2_t pos)
 
 /**
  * @brief Initialize XVI overlay on geoscape.
+ * @param[in] data Pointer to the data containing values to store in XVI map. Can be NULL for new games.
+ * @param[in] width Width of data (used only if data is not NULL)
+ * @param[in] height Height of data (used only if data is not NULL)
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  */
-void R_InitializeXVIOverlay (void)
+void R_InitializeXVIOverlay (byte *data, int width, int height)
 {
 	int xviWidth, xviHeight;
-	int i;
+	int x, y;
 	byte *start;
+	qboolean setToZero = qtrue;
 
 	/* Initialize only once per game */
 	if (r_xviTexture)
@@ -1236,14 +1240,39 @@ void R_InitializeXVIOverlay (void)
 
 	assert(r_xviPic);
 
-	/* Initialize to zero XVI rate */
+	if (data && (width == xviWidth) && (height == xviHeight))
+		setToZero = qfalse;
+
+	/* Initialize XVI rate */
 	start = r_xviPic + 3;	/* to get the first alpha value */
-	for (i = 0; i < xviWidth * xviHeight; i++, start += 4) {
-		start[0] = 0;
+	for (y = 0; y < xviHeight; y++)
+		for (x = 0; x < xviWidth; x++, start += 4) {
+			start[0] = setToZero ? 0 : data[y * xviWidth + x];
 	}
 
 	/* Set an image */
 	r_xviTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay.tga", r_xviPic, xviWidth, xviHeight, it_wrappic);
+}
+
+/**
+ * @brief Copy XVI transparency map for saving purpose
+ * @sa CP_XVIMapSave
+ */
+qboolean R_XVIMapCopy (byte *out, int size)
+{
+	int x, y;
+	const int bpp = 4;
+
+	if (size != r_xviTexture->width * r_xviTexture->height) {
+		Com_Printf("XVI_Save: Size of array doesn't match XVI map overlay size. Please change.\n");
+		return qfalse;
+	}
+
+	for (y = 0; y < r_xviTexture->height; y++) {
+		for (x = 0; x < r_xviTexture->width; x++)
+			out[y * r_xviTexture->width + x] = r_xviPic[3 + (y * r_xviTexture->width + x) * bpp];
+	}
+	return qtrue;
 }
 
 /**

@@ -247,6 +247,10 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
+#if 1
+/* Remove me */
+		if (saveSubsystems[i].check != 0xE) {
+#endif
 		check = MSG_ReadByte(&sb);
 		if (check != saveSubsystems[i].check) {
 			*error = _("Error in loading a subsystem. Sentinel doesn't match.\n\n"
@@ -256,6 +260,10 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 				saveSubsystems[i].name, check, saveSubsystems[i].check);
 			return qfalse;
 		}
+#if 1
+/* Remove me */
+		}
+#endif
 	}
 
 #ifdef DEBUG
@@ -685,6 +693,7 @@ void SAV_Init (void)
 	static saveSubsystems_t na_subsystem = {"nations", NA_Save, NA_Load, 0xB};
 	static saveSubsystems_t trans_subsystem = {"transfer", TR_Save, TR_Load, 0xC};
 	static saveSubsystems_t ab_subsystem = {"alien base", AB_Save, AB_Load, 0xD};
+	static saveSubsystems_t xvi_subsystem = {"xvirate", XVI_Save, XVI_Load, 0xE};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
@@ -707,6 +716,7 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&na_subsystem);
 	SAV_AddSubsystem(&trans_subsystem);
 	SAV_AddSubsystem(&ab_subsystem);
+	SAV_AddSubsystem(&xvi_subsystem);
 
 	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Check whether there is a quicksave at all");
 	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, _("Saves to the quick save slot"));

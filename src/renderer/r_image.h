@@ -92,8 +92,8 @@ void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
 void R_IncreaseXVILevel(vec2_t pos);
-void R_ApplyXVIOverlay(void);
-void R_InitializeXVIOverlay(void);
+void R_InitializeXVIOverlay(byte *data, int width, int height);
+qboolean R_XVIMapCopy(byte *out, int size);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG
