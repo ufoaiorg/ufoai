@@ -546,19 +546,16 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 {
 	base_t *base;
 	float distance = 0;
-	mapline_t line;
 
 	assert(aircraft);
 	base = (base_t *) aircraft->homebase;
 	assert(base);
 
 	/* Calculate the line that the aircraft should follow to go to destination */
-	MAP_MapCalcLine(aircraft->pos, destination, &line);
-	distance = line.distance * (line.numPoints - 1);
+	distance = MAP_GetDistance(aircraft->pos, destination);
 
 	/* Calculate the line that the aircraft should then follow to go back home */
-	MAP_MapCalcLine(destination, base->pos, &line);
-	distance += line.distance * (line.numPoints - 1);
+	distance += MAP_GetDistance(destination, base->pos);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
 	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f)
