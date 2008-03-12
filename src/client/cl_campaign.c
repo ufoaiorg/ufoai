@@ -938,6 +938,10 @@ static void CP_TerrorMissionStart (mission_t *mission)
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 
+	/* Notify the player */
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Alien activity has been detected in %s."), mission->location);
+	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+
 	mission->stage = STAGE_TERROR_MISSION;
 }
 
