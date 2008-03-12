@@ -247,10 +247,6 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
-#if 1
-/* Remove me */
-		if (saveSubsystems[i].check != 0xE) {
-#endif
 		check = MSG_ReadByte(&sb);
 		if (check != saveSubsystems[i].check) {
 			*error = _("Error in loading a subsystem. Sentinel doesn't match.\n\n"
@@ -260,10 +256,6 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 				saveSubsystems[i].name, check, saveSubsystems[i].check);
 			return qfalse;
 		}
-#if 1
-/* Remove me */
-		}
-#endif
 	}
 
 #ifdef DEBUG

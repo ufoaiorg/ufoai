@@ -4072,15 +4072,7 @@ qboolean NA_Load (sizebuf_t* sb, void* data)
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			gd.nations[i].stats[j].inuse = MSG_ReadByte(sb);
 			gd.nations[i].stats[j].happiness = MSG_ReadFloat(sb);
-#if 0
-/* remove me*/
-			gd.nations[i].stats[j].xviInfection = MSG_ReadFloat(sb);
-#endif
-#if 1
-/* add me */
 			gd.nations[i].stats[j].xviInfection = MSG_ReadLong(sb);
-#endif
-
 			gd.nations[i].stats[j].alienFriendly = MSG_ReadFloat(sb);
 		}
 	}
@@ -4121,13 +4113,6 @@ qboolean XVI_Save (sizebuf_t *sb, void *data)
  */
 qboolean XVI_Load (sizebuf_t *sb, void *data)
 {
-#if 1
-/* remove me */
-	R_InitializeXVIOverlay(NULL, 0, 0);
-#endif
-#if 0
-/* add me */
-
 	byte *out;
 	int i, j;
 	int width, height;
@@ -4148,7 +4133,6 @@ qboolean XVI_Load (sizebuf_t *sb, void *data)
 	R_InitializeXVIOverlay(out, width, height);
 
 	Mem_Free(out);
-#endif
 
 	return qtrue;
 }
