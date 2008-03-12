@@ -2130,5 +2130,6 @@ mapdef baseattack
 {
 	map				".baseattack"
 	multiplayer		false
+	description		"_Base is under attack."
 	maxaliens		9
 }

@@ -1124,6 +1124,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 
 	mission->stage = STAGE_BASE_ATTACK;
 
+	CL_GameTimeStop();
 	MN_PushMenu("popup_base_attack");
 }
 
