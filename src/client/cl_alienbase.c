@@ -172,6 +172,37 @@ void AB_UpdateStealthForAllBase (const aircraft_t *aircraft, int dt)
 }
 
 /**
+ * @brief Nations help in searching alien base.
+ * @note called once per day, but will update stealth only every @c dayPerWeek day
+ * @sa CL_CampaignRun
+ */
+void AB_BaseSearchedByNations (void)
+{
+	const int daysPerWeek = 7;				/**< delay (in days) between base stealth update */
+	float probability = 1.0f;				/**< base probability, will be modified below */
+	const float xviLevel = 20.0f;			/**< xviInfection value of nation that will divide probability to 
+											 * find alien base by 2*/
+	alienBase_t* base;
+
+	/* Stealth is updated only once a week */
+	if (ccs.date.day % daysPerWeek)
+		return;
+
+	for (base = alienBases; base < alienBases + numAlienBases; base++) {
+		const nation_t *nation = MAP_GetNation(base->pos);
+
+		/* If nation is a lot infected, it won't help in finding base (government infected) */
+		if (nation && nation->stats[0].xviInfection)
+			probability /= 1.0f + nation->stats[0].xviInfection / xviLevel;
+
+		/* the bigger the base, the higher the probability to find it */
+		probability *= base->supply;
+
+		base->stealth -= probability;
+	}
+}
+
+/**
  * @brief Check if a supply mission is possible.
  * @return True if there is at least one base to supply.
  */

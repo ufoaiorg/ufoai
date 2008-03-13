@@ -3178,6 +3178,7 @@ void CL_CampaignRun (void)
 			BDEF_ReloadBattery();
 			CP_SpawnNewMissions();
 			CP_SpreadXVI();
+			AB_BaseSearchedByNations();
 		}
 
 		/* check for campaign events */
