@@ -336,7 +336,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 GEOSCAPE DRAWING AND COORDINATES
 ==============================================================
 */
-/** 
+/**
  * @brief maximum distance (in pixel) to get a valid mouse click
  * @note this is for a 1024 * 768 screen
  */
@@ -1769,7 +1769,6 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 		break;
 	default:
 		Sys_Error("Unknown maptype %i\n", type);
-		return NULL;
 	}
 
 	assert(pos[0] >= -180);

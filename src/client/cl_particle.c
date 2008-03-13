@@ -560,7 +560,6 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 					radr = (float *) stackPtr[s] + (i - 1);
 				} else {
 					Com_Error(ERR_FATAL, "CL_ParticleFunction: can't get components of a non-vector type (particle %s)", p->ctrl->name);
-					radr = NULL;
 				}
 			}
 		}

@@ -108,9 +108,7 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 			Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
-
 	}
-	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 }
 
 /**
