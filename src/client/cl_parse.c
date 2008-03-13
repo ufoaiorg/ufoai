@@ -769,6 +769,8 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	le->levelflags = levelflags;
 	le->addFunc = LE_BrushModelAction;
 	le->think = LET_BrushModel;
+	/* The origin is REQUIRED for doors to work! */
+	VectorCopy(origin, le->origin);
 
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
 	model = cl.model_clip[le->modelnum1];
@@ -798,6 +800,7 @@ static qboolean CL_AddEdictFunc (le_t *le, entity_t *ent)
 	ent->alpha = 1.0;
 	VectorCopy(le->mins, ent->mins);
 	VectorCopy(le->maxs, ent->maxs);
+	VectorCopy(le->origin, ent->origin);
 	return qtrue;
 }
 
