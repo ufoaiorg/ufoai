@@ -731,7 +731,6 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 
 	{
 		vec_t v1;
-		int i;
 
 		for (i = 0; i < 2; i++) {
 			v1 = BrushVolume(b[i]);

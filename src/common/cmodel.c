@@ -3086,7 +3086,6 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 	if (VectorNotEmpty(angles)) {
 		vec3_t minVec, maxVec;
 		float maxF, v;
-		int i;
 
 		maxF = 0;
 		for (i = 0; i < 3; i++) {

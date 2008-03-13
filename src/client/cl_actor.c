@@ -2697,7 +2697,6 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 			return;
 		PosAddDV(pos, dv);
 		Grid_PosToVec(&clMap, pos, vec);
-
 	}
 }
 

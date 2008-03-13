@@ -719,14 +719,14 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
  * @sa TR_TransferBaseListClick_f
  * @sa TR_TransferStart_f
  */
-static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
+static void TR_TransferAlienAfterMissionStart (base_t *base)
 {
 	int i, j;
 	transfer_t *transfer = NULL;
 	float time;
 	char message[256];
 
-	if (!transferBase) {
+	if (!base) {
 		Com_Printf("TR_TransferAlienAfterMissionStart_f: No base selected!\n");
 		return;
 	}
@@ -748,7 +748,7 @@ static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
 
 	/* Initialize transfer.
 	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = MAP_GetDistance(transferBase->pos, transferStartAircraft->pos) / 90.0f;
+	time = MAP_GetDistance(base->pos, transferStartAircraft->pos) / 90.0f;
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * 3600 * 24;	/* convert remaining time in second */
 	transfer->event.sec = ccs.date.sec + round(time);
@@ -757,7 +757,7 @@ static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
 		transfer->event.sec -= 3600 * 24;
 		transfer->event.day++;
 	}
-	transfer->destBase = transferBase->idx; /* Destination base index. */
+	transfer->destBase = base->idx; /* Destination base index. */
 	transfer->srcBase = TR_NO_BASE;	/* Source base index. */
 	transfer->active = qtrue;
 
@@ -766,7 +766,7 @@ static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
 			for (j = 0; j < gd.numAliensTD; j++) {
 				if (!csi.teamDef[j].alien)
 					continue;
-				if (transferBase->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
+				if (base->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
 					transfer->hasAliens = qtrue;
 					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = transferStartAircraft->aliencargo[i].amount_alive;
 					transferStartAircraft->aliencargo[j].amount_alive = 0;
@@ -778,7 +778,7 @@ static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
 			for (j = 0; j < gd.numAliensTD; j++) {
 				if (!csi.teamDef[j].alien)
 					continue;
-				if (transferBase->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
+				if (base->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
 					transfer->hasAliens = qtrue;
 					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = transferStartAircraft->aliencargo[i].amount_dead;
 					transferStartAircraft->aliencargo[j].amount_dead = 0;

@@ -526,7 +526,7 @@ void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
 	stream_enqueue(s, (char *)&len, 4);
 
 	while (dbuffer_len(buf)) {
-		int len = dbuffer_extract(buf, tmp, sizeof(tmp));
+		len = dbuffer_extract(buf, tmp, sizeof(tmp));
 		stream_enqueue(s, tmp, len);
 	}
 

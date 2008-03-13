@@ -124,7 +124,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 	tree_t *tree;
 	vec3_t diff, bmins, bmaxs;
 	int nn[3];
-	node_t *n;
+	node_t *node;
 
 	/* calculate bounds, stop if no brushes are available */
 	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
@@ -193,9 +193,9 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 		PruneNodes(tree->headnode);
 
 	/* correct bounds */
-	n = tree->headnode;
-	VectorAdd(bmins, v_epsilon, n->mins);
-	VectorSubtract(bmaxs, v_epsilon, n->maxs);
+	node = tree->headnode;
+	VectorAdd(bmins, v_epsilon, node->mins);
+	VectorSubtract(bmaxs, v_epsilon, node->maxs);
 
 	/* finish model */
 	WriteBSP(tree->headnode);
