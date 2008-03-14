@@ -96,6 +96,7 @@ static const value_t nps[] = {
 	{"current", V_FLOAT, -2, 0},
 	{"weapon", V_STRING, 0, 0},
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
+	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
 	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
 	{"if", V_IF, offsetof(menuNode_t, depends), 0},
 	{"repeat", V_BOOL, offsetof(menuNode_t, repeat), MEMBER_SIZEOF(menuNode_t, repeat)},

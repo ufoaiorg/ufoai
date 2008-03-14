@@ -388,6 +388,7 @@ menu employees
 	{
 		format	"38 100"
 		color	"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		mousefx	true
 		height	"19"
 		pos	"60 32"

@@ -140,7 +140,6 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	int x1, y1; /* variable x and y position */
 	const vec4_t scrollbarColorBG = {0.03, 0.41, 0.05, 0.5};
 	const vec4_t scrollbarColorBar = {0.03, 0.41, 0.05, 1.0};
-	const vec4_t colorSelected = {1.0, 1.0, 1.0, 1.0}; /** @todo Set/get this in/from node? */
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -155,8 +154,8 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	colorHover[3] = node->color[3];
 
 	/* Hover darkening effect for selected text lines. */
-	VectorScale(colorSelected, 0.8, colorSelectedHover);
-	colorSelectedHover[3] = colorSelected[3];
+	VectorScale(node->selectedColor, 0.8, colorSelectedHover);
+	colorSelectedHover[3] =  node->selectedColor[3];
 
 	if (node->scrollbar) {
 		width -= SCROLLBAR_WIDTH; /* scrollbar space */
@@ -209,7 +208,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		if (node) {
 			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
 				/* Draw current line in "selected" color (if the linenumber is stored). */
-				R_Color(colorSelected);
+				R_Color(node->selectedColor);
 			}
 
 			if (node->mousefx && node->textLines + 1 == node->state) {

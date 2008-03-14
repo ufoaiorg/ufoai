@@ -881,6 +881,7 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 
 static linkedList_t* popupListText = NULL;
 static linkedList_t* popupListData = NULL;
+static menuNode_t* popupListNode = NULL;
 
 /**
  * @brief Creates a (text) list of all firemodes of the currently selected actor.
@@ -898,10 +899,14 @@ void CL_PopupFiremodeReservation_f (void)
 	char hand = 'r';
 	int i;
 	static char text[MAX_VAR];
+	int selectedEntry;
 
 	if (!selActor)
 		return;
 
+	selChr = CL_GetActorChr(selActor);
+	assert(selChr);
+	
 	LIST_Delete(popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
@@ -920,7 +925,7 @@ void CL_PopupFiremodeReservation_f (void)
 	LIST_Add(&popupListData, (byte *)&tempInvalid, sizeof(int));	/* wpIdx */
 	LIST_Add(&popupListData, (byte *)&tempZero, sizeof(int));	/* TUs */
 	popupNum++;
-
+	selectedEntry = 0;
 	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
 		ammo = NULL;
 		weapon = NULL;
@@ -949,6 +954,12 @@ void CL_PopupFiremodeReservation_f (void)
 					LIST_Add(&popupListData, (byte *)&i, sizeof(int));								/* fmIdx */
 					LIST_Add(&popupListData, (byte *)&ammo->weapIdx[weapFdsIdx], sizeof(int));		/* wpIdx */
 					LIST_Add(&popupListData, (byte *)&ammo->fd[weapFdsIdx][i].time, sizeof(int));	/* TUs */
+
+					/* Remember the line that is currently selected (if any). */
+					if ((selChr->reservedTus.shotSettings.hand == ((hand == 'r')?0:1))
+					&& (selChr->reservedTus.shotSettings.fmIdx == i)
+					&& (selChr->reservedTus.shotSettings.wpIdx == ammo->weapIdx[weapFdsIdx]))
+						selectedEntry = popupNum;
 					popupNum++;
 				}
 			}
@@ -962,7 +973,11 @@ void CL_PopupFiremodeReservation_f (void)
 		}
 	} while (hand != 0);
 
-	MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
+	popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
+	VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
+	popupListNode->selectedColor[3] = 1.0;
+	popupListNode->textLineSelected = selectedEntry;
+	
 }
 
 /**
@@ -1031,7 +1046,9 @@ void CL_ReserveShot_f (void)
 		/** @todo
 		MSG_Write_PA(PA_RESERVE_SHOT_FM, selActor->entnum, hand, fmIdx, weapIdx);
 		*/
-
+		if (popupListNode) {
+			popupListNode->textLineSelected = selectedPopupIndex;
+		}
 	}
 }
 

@@ -28,6 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern char popupText[MAX_SMALLMENUTEXTLEN];
 
 void MN_Popup(const char *title, const char *text);
-void MN_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+menuNode_t *MN_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
 
 #endif

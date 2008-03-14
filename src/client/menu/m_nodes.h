@@ -132,7 +132,7 @@ typedef struct menuNode_s {
 	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
 	int textScroll;				/**< textfields - current scroll position */
 	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
-	int textLineSelected;		/**< WHich line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. */
+	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
@@ -143,6 +143,7 @@ typedef struct menuNode_s {
 	vec4_t color;				/**< rgba */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
+	vec4_t selectedColor;			/**< rgba The color to draw the line specified by textLineSelected in. */
 	struct menuAction_s *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut, *wheelUp, *wheelDown;
 	qboolean repeat;			/**< repeat action when "click" is holded */
 	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */

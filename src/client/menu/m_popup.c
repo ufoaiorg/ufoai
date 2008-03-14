@@ -46,7 +46,7 @@ void MN_Popup (const char *title, const char *text)
 	MN_PushMenu(POPUP_MENU_NAME);
 }
 
-void MN_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
+menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
 {
 	menu_t* popupListMenu;
 	menuNode_t* listNode;
@@ -84,4 +84,5 @@ void MN_PopupList (const char *title, const char *headline, linkedList_t* entrie
 	}
 
 	MN_PushMenu(popupListMenu->name);
+	return listNode;	
 }
