@@ -638,23 +638,23 @@ static void CP_SpreadXVIAtPos (const vec2_t pos)
 static int CP_MissionChooseUFO (const mission_t *mission)
 {
 	switch (mission->category) {
-		case INTERESTCATEGORY_TERROR_ATTACK:
-		case INTERESTCATEGORY_INTERCEPT:
-		case INTERESTCATEGORY_BASE_ATTACK:
-			return UFO_FIGHTER;
-		case INTERESTCATEGORY_BUILDING:
-		case INTERESTCATEGORY_SUPPLY:
-			return UFO_SUPPLY;
-		case INTERESTCATEGORY_XVI:
-			return UFO_CORRUPTER;
-		case INTERESTCATEGORY_HARVEST:
-			return UFO_HARVESTER;
-		case INTERESTCATEGORY_NONE:
-		case INTERESTCATEGORY_MAX:
-			Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
-			break;
-		case INTERESTCATEGORY_RECON:
-			break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_BASE_ATTACK:
+		return UFO_FIGHTER;
+	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUPPLY:
+		return UFO_SUPPLY;
+	case INTERESTCATEGORY_XVI:
+		return UFO_CORRUPTER;
+	case INTERESTCATEGORY_HARVEST:
+		return UFO_HARVESTER;
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
+		Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
+		break;
+	case INTERESTCATEGORY_RECON:
+		break;
 	}
 
 	return UFO_SCOUT;
@@ -703,7 +703,7 @@ static const float MIN_DIST_BASE = 4.0f;
  * @brief Check if given pos is close to an existing base.
  * @return Pointer to the base if one base is closer than MIN_DIST_BASE from pos, NULL else
  */
-base_t* CP_PositionCloseToBase (vec2_t pos)
+base_t* CP_PositionCloseToBase (const vec2_t pos)
 {
 	base_t *base;
 	int i;
