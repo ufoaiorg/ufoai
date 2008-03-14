@@ -521,6 +521,7 @@ static void UFO_ListOnGeoscape_f (void)
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
 		Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
 			ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
+		Com_Printf("...linked to mission '%s'\n", ufo->mission ? ufo->mission->id : "no mission");
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (k = 0; k < ufo->maxWeapons; k++) {
 			if (ufo->weapons[k].itemIdx > -1) {
@@ -596,6 +597,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 
 /**
  * @brief Remove the specified ufo from geoscape
+ * @sa CP_MissionRemove
  */
 void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 {

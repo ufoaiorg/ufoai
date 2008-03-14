@@ -523,7 +523,7 @@ static inline void CP_MissionAddToGeoscape (mission_t *mission)
 }
 
 /**
- * @brief Removes a UFO from geoscape: make it non visible and call notify functions
+ * @brief Removes (temporarily) a UFO from geoscape: make it non visible and call notify functions
  * @note We don't destroy the UFO because we can use later, e.g. if it takes off
  */
 static void CP_UFORemoveFromGeoscape (mission_t *mission)
@@ -537,6 +537,7 @@ static void CP_UFORemoveFromGeoscape (mission_t *mission)
 
 /**
  * @brief Removes a mission from mission global array.
+ * @sa UFO_RemoveFromGeoscape
  */
 static void CP_MissionRemove (mission_t *mission)
 {
@@ -545,6 +546,13 @@ static void CP_MissionRemove (mission_t *mission)
 
 	/* Destroy UFO */
 	if (mission->ufo) {
+		/* Update UFO idx */
+		for (; list; list = list->next) {
+			removedMission = (mission_t *)list->data;
+			if (removedMission->ufo && (removedMission->ufo > mission->ufo))
+				removedMission->ufo--;
+		}
+
 		CP_UFORemoveFromGeoscape(mission);		/* for the notifications */
 		UFO_RemoveFromGeoscape(mission->ufo);
 	}
@@ -556,6 +564,7 @@ static void CP_MissionRemove (mission_t *mission)
 	/* Notifications */
 	CP_MissionRemoveFromGeoscape(mission);
 
+	list = ccs.missions;
 	for (; list; list = list->next) {
 		removedMission = (mission_t *)list->data;
 		if (removedMission == mission) {
@@ -566,6 +575,15 @@ static void CP_MissionRemove (mission_t *mission)
 	}
 
 	Com_Printf("CP_MissionRemove: Could not find mission '%s' to remove.\n", mission->id);
+#ifdef DEBUG
+	Com_Printf("   missions in list are: ");
+	list = ccs.missions;
+	for (; list; list = list->next) {
+		removedMission = (mission_t *)list->data;
+		Com_Printf("'%s', ", removedMission->id);
+	}
+	Com_Printf("\n");
+#endif
 }
 
 /**
@@ -654,7 +672,7 @@ static qboolean CP_MissionCreate (mission_t *mission)
 	CP_MissionDisableTimeLimit(mission);
 	ufoType = CP_MissionChooseUFO(mission);
 	mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
-	if(!mission->ufo) {
+	if (!mission->ufo) {
 		Com_Printf("CP_MissionCreate: Could not add UFO '%s', remove mission\n", UFO_TypeToShortName(ufoType));
 		CP_MissionRemove(mission);
 		return qfalse;
@@ -1732,7 +1750,8 @@ static void CP_MissionStageEnd (mission_t *mission)
 		CP_InterceptNextStage(mission);
 		break;
 	default:
-		Com_Printf("CP_MissionStageEnd: Unknown type of mission: %i\n", mission->category);
+		Com_Printf("CP_MissionStageEnd: Unknown type of mission (%i), remove mission\n", mission->category);
+		CP_MissionRemove(mission);
 	}
 }
 
@@ -1779,7 +1798,8 @@ static inline void CP_MissionIsOver (mission_t *mission)
 		CP_InterceptMissionIsFailure(mission);
 		break;
 	default:
-		Com_Printf("CP_MissionIsOver: Unknown type of mission: %i\n", mission->category);
+		Com_Printf("CP_MissionIsOver: Unknown type of mission (%i), remove mission\n", mission->category);
+		CP_MissionRemove(mission);
 	}
 }
 
@@ -4535,7 +4555,18 @@ void CL_GameAutoGo (mission_t *mis)
 	if (won && missionresults.recovery)
 		Cmd_ExecuteString("cp_uforecoverystore");
 
-	if (won)
+	/* handle base attack mission */
+	if (selectedMission->stage == STAGE_BASE_ATTACK) {
+		const base_t *base = (base_t*)selectedMission->data;
+		assert(base);
+		if (won) {
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defense of base: %s successful!"), base->name);
+			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+			CP_BaseAttackMissionIsFailure(selectedMission);
+			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
+		} else
+			CP_BaseAttackMissionLeave(selectedMission);
+	} else if (won)
 		CP_MissionIsOver(mis);
 
 	if (won)
@@ -4878,9 +4909,7 @@ static void CL_GameResults_f (void)
 			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CP_BaseAttackMissionLeave(selectedMission);
-	}
-
-	if (won)
+	} else if (won)
 		CP_MissionIsOver(selectedMission);
 }
 

@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "menu/m_nodes.h"
 
-#define MAX_UFOONGEOSCAPE	4
+#define MAX_UFOONGEOSCAPE	8
 extern const float baseRadarRange;
 extern const float aircraftRadarRange;
 
