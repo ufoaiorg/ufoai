@@ -1750,7 +1750,7 @@ static void CP_MissionStageEnd (mission_t *mission)
 		CP_InterceptNextStage(mission);
 		break;
 	default:
-		Com_Printf("CP_MissionStageEnd: Unknown type of mission (%i), remove mission\n", mission->category);
+		Com_Printf("CP_MissionStageEnd: Unknown type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
 		CP_MissionRemove(mission);
 	}
 }
