@@ -141,7 +141,7 @@ apply_sed()
 			mv -f $output_file.tmp $output_file
 			printf "__________________________________________\n\n" >> $log_file
 		else
-			echo "   found same translation in wiki than in $input_file"
+			echo "   found same translation in wiki and in $input_file"
 			fi
 		return 1
 	else
@@ -360,7 +360,7 @@ update_txt()
 		$0 ~ /<.*>/ {
 			if (h3 == h3_nb) {exit}}
 		$0 ~ /^<.*>$/ {next}
-		$0 ~ /statistics:[ /t]*$/ {
+		$0 ~ /statistics:[ \t]*$/ {
 			gsub (/[ \t]*$/,"")
 			$0="\\n\n"$0"\\n\n"}
 		$0 !~ /^[ \t\n]*$/ {
