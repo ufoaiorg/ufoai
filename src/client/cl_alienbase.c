@@ -42,6 +42,56 @@ void AB_ResetAlienBases (void)
 }
 
 /**
+ * @brief Set new base position
+ * @param[out] pos Position of the new base.
+ * @note This function generates @c maxLoopPosition random positions, and select among those the one that
+ * is the farthest from every other alien bases. This is intended to get a rather uniform distribution
+ * of alien bases, while still keeping a random base localisation.
+ */
+void AB_SetAlienBasePosition (vec2_t position)
+{
+	int counter;
+	vec2_t pos;
+	alienBase_t* base;
+	float minDistance = 0.0f;			/**< distance between current selected alien base */
+	const int maxLoopPosition = 6;		/**< Number of random position among which the final one will be selected */
+
+	counter = 0;
+	while (counter < maxLoopPosition) {
+		float distance = 0.0f;
+
+		/* Get a random position */
+		CP_GetRandomPosOnGeoscape(pos, qtrue);
+
+		/* Alien base must not be too close from phalanx base */
+		if (CP_PositionCloseToBase(pos))
+			continue;
+
+		/* If this is the first alien base, there's no further condition: select this pos and quit */
+		if (!numAlienBases) {
+			Vector2Copy(pos, position);
+			return;
+		}
+
+		/* Calculate minimim distance between THIS position (pos) and all alien bases */
+		for (base = alienBases; base < alienBases + numAlienBases; base++) {
+			const float currentDistance = MAP_GetDistance(base->pos, pos);
+			if (distance < currentDistance) {
+				distance = currentDistance;
+			}
+		}
+
+		/* If this position is farther than previous ones, select it */
+		if (minDistance < distance) {
+			Vector2Copy(pos, position);
+			minDistance = distance;
+		}
+
+		counter++;
+	}
+}
+
+/**
  * @brief Build a new alien base
  * @param[in] pos Position of the new base.
  * @return Pointer to the base that has been built.

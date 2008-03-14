@@ -685,7 +685,7 @@ static const float MIN_DIST_BASE = 4.0f;
  * @brief Check if given pos is close to an existing base.
  * @return Pointer to the base if one base is closer than MIN_DIST_BASE from pos, NULL else
  */
-static base_t* CP_PositionCloseToBase (vec2_t pos)
+base_t* CP_PositionCloseToBase (vec2_t pos)
 {
 	base_t *base;
 	int i;
@@ -1333,18 +1333,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
  */
 static void CP_BuildBaseGoToBase (mission_t *mission)
 {
-	int counter;
-	for (counter = 0; counter < MAX_POS_LOOP; counter++) {
-		CP_GetRandomPosOnGeoscape(mission->pos, qtrue);
-		if (CP_PositionCloseToBase(mission->pos))
-			continue;
-		break;
-	}
-	if (counter >= MAX_POS_LOOP) {
-		Com_Printf("CP_BuildBaseGoToBase: Error, could not set position.\n");
-		CP_MissionRemove(mission);
-		return;
-	}
+	AB_SetAlienBasePosition(mission->pos);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
 

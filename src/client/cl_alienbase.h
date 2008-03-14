@@ -37,6 +37,7 @@ typedef struct alienBase_s {
 } alienBase_t;
 
 void AB_ResetAlienBases(void);
+void AB_SetAlienBasePosition(vec2_t position);
 alienBase_t* AB_BuildBase(vec2_t pos);
 void AB_DestroyBase(alienBase_t *base);
 alienBase_t* AB_GetBase(int baseIDX, qboolean checkIdx);

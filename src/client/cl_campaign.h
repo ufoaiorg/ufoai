@@ -430,6 +430,7 @@ int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
 mission_t *CP_GetMissionById(const char *missionId);
 const char *CP_MissionToTypeString(const mission_t *mission);
+base_t* CP_PositionCloseToBase(vec2_t pos);
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 void CP_MissionIsOverByUfo(aircraft_t *ufocraft);
