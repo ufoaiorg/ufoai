@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-01 16:21+0100\n"
+"POT-Creation-Date: 2008-03-14 15:40+0100\n"
 "PO-Revision-Date: 2007-12-16 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -497,7 +497,8 @@ msgstr "Rumvæsenfly observeret"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr "e-post_fra_fn"
+msgstr ""
+"GenSek. Mahouf Serra, Forende Nationer, New York"
 
 #: ../base/ufos/events.ufo:61 ../base/ufos/events.ufo:71
 #: ../base/ufos/events.ufo:81 ../base/ufos/events.ufo:91
@@ -570,7 +571,8 @@ msgstr "e-post_fra_fn"
 #: ../base/ufos/research.ufo:4212 ../base/ufos/research.ufo:4242
 #: ../base/ufos/research.ufo:4249
 msgid "mail_to_base_commander"
-msgstr "e-post_til_øverstkommanderende"
+msgstr ""
+"Øverst befalende, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -582,7 +584,22 @@ msgstr "Held og lykke"
 
 #: ../base/ufos/events.ufo:64
 msgid "mail_prolog"
-msgstr "e-post_prolog"
+msgstr ""
+"Velkommen til den nye post, øverstbefalende. Du har nu fuld kommando over FALANKS, rumvæsenudrykningsenheden. Din mission er at beskytte verdensbefolkningen og stoppe truslen fra rumvæserne for enhver pris. Hvordan du opnår dette er op til dig, vores eneste krav er at det lykkes.\n"
+"\n"
+"Din første opgave er at oprette et hovedkvarter. FN har adgang til militære baser over alt i verden, så du må vælge et vilkårligt sted til dit hovedkvarter. Vælg stedet med omhu, da det vil have indflydelse på chancen for succes for FALANKS projektet.\n"
+"\n"
+"En nylig analyse af angrebene på Mumbai og Bonn afslører at UFO observationer og rumvæsen aktivitet ser ud til at fokuserer sig omkring de mest befolkningsrige områder på jorden, f.eks. kystområdet i Nord- og Syd-Amerika, Europa, Asien, Syd- og Midt-Afrika og Australien. Du bør overveje at inkludere disse territorier i dit operations område.\n"
+"\n"
+"Når du har oprettet din første base, må du klargøre dine soldater. De soldater vi har udvalgt til FALANKS projektet skal tilknyttes et landingsfartøj og så udstyres til kamp.\n"
+"\n"
+"Tag godt vare på dine soldater, øverstbefalende. Resten af verden regner med dig og beder for din succes.\n"
+"\n"
+"Det er alt. Held og lykke, samt god jagt.\n"
+"\n"
+"note\n"
+"\n"
+"Finder du fejl eller mangler i den danske oversættelse kan du rapporterer dette på hjemmesiden (ufoai.sf.net) under punktet Forum.Dette kræver at du opretter dig som bruger. Du kan også deltage direkte i oversættelsen ved at bruge wiki'en."
 
 #: ../base/ufos/events.ufo:72 ../base/ufos/events.ufo:82
 #: ../base/ufos/events.ufo:92 ../base/ufos/events.ufo:102
@@ -632,7 +649,8 @@ msgstr "e-post_prolog"
 #: ../base/ufos/research.ufo:4041 ../base/ufos/research.ufo:4117
 #: ../base/ufos/research.ufo:4125
 msgid "mail_from_paul_navarre"
-msgstr "e-post_fra_paul_navarre"
+msgstr ""
+"Kommandør Paul Navarre, F&U; Ingeniørdivisionen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 msgid "Recovery Report -- %s"
@@ -640,11 +658,19 @@ msgstr "Indbringningsrapport -- %s"
 
 #: ../base/ufos/events.ufo:75
 msgid "mail_alien_ufo_crashed"
-msgstr "e-post_rumvæsenufo_styrtet_ned"
+msgstr ""
+"Sir, %s is too damaged to be recovered. However we were able to salvage some viable equipment from the wreckage. The following items will arrive in %s with our dropship:\n"
+"\n"
+"%s"
 
 #: ../base/ufos/events.ufo:85
 msgid "mail_alien_ufo_recovered"
-msgstr "e-post_rumvæsenufo_indbragt"
+msgstr ""
+"Sir, our team has secured a %s in the field. I've arranged it to be escorted to %s, ETA within two days.\n"
+"\n"
+"We'll want to disassemble it for parts when it arrives. Our engineers list the following equipment as viable:\n"
+"\n"
+"%s"
 
 #: ../base/ufos/events.ufo:94
 msgid "Not Enough Money -- %s"
@@ -668,7 +694,10 @@ msgstr "Produktion færdig -- %s"
 
 #: ../base/ufos/events.ufo:115
 msgid "mail_production_finished"
-msgstr "e-post_produktion_færdig"
+msgstr ""
+"The engineering team has completed production of {item} at {location}. All equipment is tested and ready for use.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/events.ufo:122 ../base/ufos/events.ufo:142
 #: ../base/ufos/events.ufo:152 ../base/ufos/events.ufo:162
@@ -676,7 +705,8 @@ msgstr "e-post_produktion_færdig"
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "e-post_fra_xo"
+msgstr ""
+"NK Abel S. Howard, Stabsafdelingen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -748,7 +778,8 @@ msgstr "Rumvæsenbase opdaget -- %s"
 
 #: ../base/ufos/events.ufo:205
 msgid "mail_alien_base_discovered"
-msgstr "e-post_rumvæsenbase_opdaget"
+msgstr ""
+"Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/events.ufo:214
 msgid "Lost Radar Tracking -- %s"
@@ -771,7 +802,8 @@ msgstr "e-post_ny_radarkontakt"
 #: ../base/ufos/research.ufo:464 ../base/ufos/research.ufo:534
 #: ../base/ufos/research.ufo:542
 msgid "mail_from_col_falkland"
-msgstr "e-post_fra_oberst_falkland"
+msgstr ""
+"Oberst Ingrid Falkland, Efterretningstjenesten, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -795,13 +827,21 @@ msgstr "Rumvæsenaktivitet rapporteret -- %s"
 
 #: ../base/ufos/events.ufo:255
 msgid "mail_alien_activity_reported"
-msgstr "e-post_rumvæsenaktivitet_rapporteret"
+msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"We have a confirmed sighting of live aliens in %s. Civilians are at risk; I recommend we send troops over there right away. Good luck and good hunting.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/events.ufo:262 ../base/ufos/events.ufo:272
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "e-post_fra_air_cdr"
+msgstr ""
+"Kommandør Subakh al-Kuhar, Luftstyrkerne, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -817,7 +857,10 @@ msgstr "Luftfartøj mistede målet -- %s"
 
 #: ../base/ufos/events.ufo:275
 msgid "mail_aircraft_lost_target"
-msgstr "e-post_luftfartøj_mistede_målet"
+msgstr ""
+"Commander, %s has lost radar tracking of %s and is unable to reacquire. Please provide further orders.\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/events.ufo:284
 msgid "Aircraft Ready -- %s"
@@ -825,7 +868,10 @@ msgstr "Luftfartøj klar -- %s"
 
 #: ../base/ufos/events.ufo:285
 msgid "mail_aircraft_ready"
-msgstr "e-post_luftfartøj_klar"
+msgstr ""
+"Commander, %s has been %s and is ready for action.\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/events.ufo:294
 msgid "Aircraft Bingo Fuel -- %s"
@@ -833,7 +879,10 @@ msgstr "Luftfartøj bingobrændstof -- %s"
 
 #: ../base/ufos/events.ufo:295
 msgid "mail_aircraft_bingo_fuel"
-msgstr "e-post_luftfartøj_bingobrændstof"
+msgstr ""
+"Commander, %s has run out of flight time. It has only enough fuel left to return to %s. Mission has been aborted.\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/events.ufo:304
 msgid "Aircraft Landed -- %s"
@@ -841,7 +890,10 @@ msgstr "Luftfartøj landet -- %s"
 
 #: ../base/ufos/events.ufo:305
 msgid "mail_aircraft_landed"
-msgstr "e-post_luftfartøj_landet"
+msgstr ""
+"Commander, %s has landed at %s. It is now being %s. Estimated work time on this craft before she can be launched again is %s hours.\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:22
 #: ../base/ufos/fonts.ufo:28 ../base/ufos/fonts.ufo:35
@@ -956,8 +1008,8 @@ msgstr "Videnskabsmand"
 msgid "Medic"
 msgstr "Læge"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:502
-#: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:221
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1990
+#: ../base/ufos/team_humans.ufo:2011 client/cl_employee.c:221
 msgid "UGV"
 msgstr "UGV"
 
@@ -3156,7 +3208,7 @@ msgid "Medium"
 msgstr "Mellem"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2241
+#: client/cl_main.c:2251
 msgid "Normal"
 msgstr "Normal"
 
@@ -3491,7 +3543,7 @@ msgstr "Hent den sidst gemte kampagne."
 msgid "Reload"
 msgstr "Hent igen"
 
-#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2252
+#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2258
 msgid "You've lost the game"
 msgstr "Du har tabt spillet"
 
@@ -3697,7 +3749,7 @@ msgstr "Vis kun ansatte"
 msgid "Show only aliens"
 msgstr "Vis kun rumvæsener"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4535
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4540
 msgid "Aliens"
 msgstr "Rumvæsener"
 
@@ -4192,7 +4244,7 @@ msgstr "Fortsat bølgelaseroperation"
 #: ../base/ufos/research.ufo:119
 msgid "laser_txt"
 msgstr ""
-"Kommandør, jeg er særdeles glad for at kunne rapportere at vores projekt har været succesfuldt. Jeg har inkluderet billeder af vores laservåbenprototype, som har opnået bølgeenergi i en bærbar version.\n"
+"Øverstbefalende, jeg er særdeles glad for at kunne rapportere at vores projekt har været succesfuldt. Jeg har inkluderet billeder af vores laservåbenprototype, som har opnået bølgeenergi i en bærbar version.\n"
 "\n"
 "Den praktiske løsning gik ikke ud på at bygge stadig større batterier, men snarere i at anvende radikale miniature teknologier til at gøre eksisterende kemisk funderede laserkomponenter lettere og mindre. Kemiske lasere har været i anvendelse i meget lang tid, og har været en del af eksperimentelle våbensprogrammer siden det sene 20. århundrede, men de har altid haft mange problemer. De eneste kemiske lasere med brugbar militært potentiale har været for store og besværlige for en infanterist i kamp. Indtil nu har deres muligheder været begrænset til laserkanoner på kampvogne eller antimissil-batterier på skibe.\n"
 "\n"
@@ -4202,7 +4254,7 @@ msgstr ""
 "\n"
 "Filteret skal skiftes efter hver mission, men vi har designet et system som gør det nemt og problemfrit. Hvis filteret af en eller anden grund bliver skadet under missionen, bliver våbnet øjeblikkeligt ufunktionsdygtigt for at forhindre en eventuel forurening.\n"
 "\n"
-"Laseren fungerer i midten af de infrarøde-bølgelængder, så den viser ingen synlig stråle for andre den dem med infrarøde briller.\n"
+"Laseren fungerer i midten af de infrarøde-bølgelængder, så den viser ingen synlig stråle for andre end dem med infrarøde briller.\n"
 "\n"
 "Prototypen vi har bygget er endnu ikke klar til fuld produktion som et infanterivåben, da yderligere raffinering og afbalancering kræves hvis mennesker skal anvende den, men de fremskridt vi har gjort kan også anvendes på køretøjer -- måske endda på fly. Jeg har vedlagt flere nye forslag i din indbakke til yderligere undersøgelser af de ideer vi her har skitseret.\n"
 "\n"
@@ -4215,7 +4267,7 @@ msgid "laser_pre_txt"
 msgstr ""
 "Vores indsamlede FN forskningsfiler har givet en masse værdifuld information vedrørende våbenudvikling på jorden siden begyndelsen af dette århundrede. Et af de mest interessante emner har været produktion af DEV (Dirigerede energivåben), våben som overfører energi til et mål ved brug af andet end et projektil. Vi er især interesseret i filerne omkring udvidet bølgelaserteknologi.\n"
 "\n"
-"En del lande og firmaer har forsøgt at opfinde laservåben igennem årene, men ingen har været i stand til at bygge en laser som kan bæres af en person og som har en styrke der kan konkurrere med gængse våben. Nu har vi fået adgang til den samlede forskning indenfor dette område, såvel som hele biblioteker med den fremmeste teknologi på jorden. Jeg er overbevidst om at vi ikke kun kan bygge et effektivt bærbart laservåben, men at vi også kan gøre den mindre end man tidligere har set en DEV være.\n"
+"En del lande og firmaer har forsøgt at opfinde laservåben igennem årene, men ingen har været i stand til at bygge en laser som kan bæres af en person og som har en styrke der kan konkurrere med gængse våben. Nu har vi fået adgang til den samlede forskning indenfor dette område, såvel som hele biblioteker med den fremmeste teknologi på jorden. Jeg er overbevidst om at vi ikke kun kan bygge et effektivt bærbart laservåben, men at vi også kan gøre det mindre end man tidligere har set en DEV være.\n"
 "\n"
 "Kommandør vi bør forfølge denne forskningsretning så hurtigt som muligt. Variation i vores arsenal vil gøre vores styrker langt sværere at forsvare sig imod, og vores indsamlede viden kan føre os i retning af udvikling af luftvåbenlasere som med større nøjagtighed end gængse våben kan ramme hurtige UFO'er.\n"
 "\n"
@@ -4232,7 +4284,7 @@ msgstr ""
 "\n"
 "Det første kunstigt produceret antistof på jorden bestod af 9 atomer af anti-hydrogen og blev skabt på CERNs partikellaboratorium, beliggende nær Geneva på grænsen mellem Frankrig og Schweiz. Ikke lang tid herefter producerede et andet laboratorium cirka 100 atomer. Vi har gjort små fremskridt over årene, men selvom vi nu kan producere antiprotoner i millionvis, er det nemt at glemme hvor lidt det i virkeligheden er.\n"
 "\n"
-"Den største hurdle i vores brug af rumvæsenernes brændstof er tilgængeligheden af antiprotoner. Vi er kommet langt siden 1995, men selv hvis hele verdens partikellaboratoriumer producerer så mange antiprotoner som muligt vil det take 80 millioner år at producere 1 gram antiprotoner. Til sammenligning overgår mængden i et ufo-rekognosceringsfartøj det antistof som er blevet produceret på jorden i de sidste 100 år.\n"
+"Den største hurdle i vores brug af rumvæsenernes brændstof er tilgængeligheden af antiprotoner. Vi er kommet langt siden 1995, men selv hvis hele verdens partikellaboratoriumer producerer så mange antiprotoner som muligt vil det tage 80 millioner år at producere 1 gram antiprotoner. Til sammenligning overgår mængden i et ufo-rekognosceringsfartøj det antistof som er blevet produceret på jorden i de sidste 100 år.\n"
 "\n"
 "Menneskeheden er langt fra at kunne producere antiprotoner i et omfang der er nødvendigt for at drive stof-antistof raketter. Resultatet er at vi ikke kan kopiere rumvæsenernes teknologi. Vi ved ikke hvordan de producerer deres antistof eller hvordan de håndterer at skabe nok elektricitet til at foretage produktionen. Med mindre og indtil vi kan få fat i deres udstyr, vil vores anstrengelser være forgæves.\n"
 "\n"
@@ -4245,23 +4297,21 @@ msgstr ""
 #: ../base/ufos/research.ufo:154
 msgid "antimatter_extra_txt"
 msgstr ""
-"Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
+"Vores forskning omkring antistof er færdig, øverstbefaldende, og vi er klar til at præsentere vores resultater. Jeg er bange for at vores opdagelser hovedsagelig er af dårlig karakter.\n"
 "\n"
-"There are a lot of things the aliens know that we don't. Nowhere is this more clear in their widespread use of antimatter. It seems to be plentiful for them, at least plentiful enough to send out UFO after UFO to Earth, burning tanks full of antiprotons. Human experiments into antimatter, on the other hand . . .\n"
+"Rumvæsenerne har stor viden om ting vi intet ved om. Dette er specielt klart i deres omfangsrige brug af antistof. De ser ud til at have stoffet i stor mængde, i det mindste i stor nok mængde til at sende ufo efter ufo til jorden under afbrænding af tankfulde af antiprotoner. Menneskets eksperimenter er på den anden side . . .\n"
 "\n"
-"The first artificially produced antimatter on Earth consisted of 9 atoms of anti-hydrogen created at the CERN particle physics laboratory, situated near Geneva on the border between France and Switzerland. Not long after, another lab produced approximately 100 atoms. We've come slowly forward over the years in tiny, tiny steps, but even though we can now produce antiprotons by the millions, it's easy to forget just how little that really is.\n"
+"Det første kunstigt produceret antistof på jorden bestod af 9 atomer af anti-hydrogen og blev skabt på CERNs partikellaboratorium, beliggende nær Geneva på grænsen mellem Frankrig og Schweiz. Ikke lang tid herefter producerede et andet laboratorium cirka 100 atomer. Vi har gjort små fremskridt over årene, men selvom vi nu kan producere antiprotoner i millionvis, er det nemt at glemme hvor lidt det i virkeligheden er.\n"
 "\n"
-"In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in a Scout UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.\n"
+"Den største hurdle i vores brug af rumvæsenernes brændstof er tilgængeligheden af antiprotoner. Vi er kommet langt siden 1995, men selv hvis hele verdens partikellaboratoriumer producerer så mange antiprotoner som muligt vil det tage 80 millioner år at producere 1 gram antiprotoner. Til sammenligning overgår mængden i et ufo-rekognosceringsfartøj det antistof som er blevet produceret på jorden i de sidste 100 år.\n"
 "\n"
-"Another worrying point is that the aliens also seem to be using antimatter as part of their weapons systems. Antimatter-fuelled alien missiles are one thing; what if they begin using antimatter itself as an explosive? My staff has come up with more than one disconcerting idea along these lines. For myself, I think we should try to head the aliens off at the pass in this regard. A special program regarding antimatter-based weapons may be a highly interesting option to pursue -- it may be a more economical prospect than trying to adapt alien rockets to our interceptor craft.\n"
+"Menneskeheden er langt fra at kunne producere antiprotoner i et omfang der er nødvendigt for at drive stof-antistof raketter. Resultatet er at vi ikke kan kopiere rumvæsenernes teknologi. Vi ved ikke hvordan de producerer deres antistof eller hvordan de håndterer at skabe nok elektricitet til at foretage produktionen. Med mindre og indtil vi kan få fat i deres udstyr, vil vores anstrengelser være forgæves.\n"
 "\n"
-"Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless.\n"
+"Vores eneste væsentlige succes har været studiet af hvordan rumvæsenerne opbevarer deres antistof. Vi er sikker på at vi kan anvende den samme magnetiske lagringsmetode, oprette specielle faciliteter for sikker opbevaring af op til 10 gram antistof. Jeg har sendt dig en tegning i en separat besked du kan kigge på ved lejlighed. Vi har også designet antistof-brændselstanke som vil passe i vores fly hvis disse fly får en ombygning. Vi har selvfølgelig behov for en fuldstændig forståelse af rumvæsenernes motorer før vi kan begynde at implementere disse.\n"
 "\n"
-"Our only major successes have come from studying how the aliens store their antimatter. We're confident we can employ the same magnetic storage techniques, creating special facilities for safely storing up to ten grammes of antimatter. I've sent you a set of blueprints in a separate message to peruse at your convenience. We've also designed antimatter fuel tanks that should fit in our interceptors given some major overhaul. Of course we'll need a full understanding of the alien engines before we can begin incorporating it.\n"
+"Vi er ikke i stand til at kopiere rumvæsenernes brændstof. Hvis vi anvender antistof i vores egen teknologi vil vi være afhængig af at erobre antistoffet fra rumvæsenerne. Dette kan virke som en farlig vej at gå, men vi har måske ikke noget valg; vi har behov for denne teknologi så hurtigt som muligt, hvis vi skal have mulighed for at standse denne invasion.\n"
 "\n"
-"For all intents and purposes, we are unable to replicate the alien fuel. If we use antimatter in our own technology we will be dependent upon recovering it from alien sources. This seems a dangerous course of action, but we may have no choice; we need to adapt this technology as soon as possible if we are to have any chance of truly stopping the invasion.\n"
-"\n"
-"--Cdr. Navarre"
+"--Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:157
 msgid "antimatter_pre_txt"
@@ -4275,11 +4325,11 @@ msgstr ""
 #: ../base/ufos/research.ufo:158
 msgid "antimatter_extra_pre_txt"
 msgstr ""
-"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
+"Øverstbefalende, baseret på de meget interessante opdagelser vi gjorde under undersøgelsen af rekognosceringsufoen, ønsker jeg din tilladelse til at anvende laboratorietid til nærmere at analysere rumvæsenernes udbredte brug af antistof og stoffets indvirkning på denne krig.\n"
 "\n"
-"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
+"Specielt ønsker jeg at undersøge, om vi kan finde en metode til at kopiere antistof til eget formål. Stof-antistof tilintetgørelse har et overraskende potentiale som brændstof. I energimæssig forstand har det sikkert det bedste størrelse til vægt forhold i sammenligning med ethvert andet stof i universet; evnen til at anvende stoffet på samme måde som rumvæsenerne vil sende vores teknologiniveau med raketfart ind i fremtiden. Vi må forske i dette område snarest muligt!\n"
 "\n"
-"--Cdr. Navarre"
+"--Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:206 ../base/ufos/research.ufo:219
 #: ../base/ufos/research.ufo:227
@@ -4307,7 +4357,8 @@ msgstr "Ingen information om tidligere forskning tilgængelig"
 #: ../base/ufos/research.ufo:4211 ../base/ufos/research.ufo:4241
 #: ../base/ufos/research.ufo:4248
 msgid "mail_from_dr_connor"
-msgstr "e-post_fra_dr_connor"
+msgstr ""
+"Dr. Connor, Bio- & Opbevaringsafdelingen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/research.ufo:247 ../base/ufos/research.ufo:286
 msgid "alien_breathing_txt"
@@ -6676,13 +6727,13 @@ msgstr "Egenskab for fart"
 #: ../base/ufos/research.ufo:2703
 msgid "b_aliencontainment_txt"
 msgstr ""
-"Rettesnor -- Rumvæsenopbevaringsrum\n"
+"Tegninger -- Rumvæsenopbevaringsrum\n"
 "\n"
 "KLASSIFIKATIONSNIVEAU SORT\n"
 "\n"
 "FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Forskningsdokument, Sigma tilladelse -- Kun for kommandørens øjne\n"
+"Forskningsdokument, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 16. februar 1958\n"
 "\n"
@@ -6692,9 +6743,9 @@ msgstr ""
 "\n"
 "Oversigt\n"
 "\n"
-"Den første prioritet for rumvæsenudrykningsenheden er at klargøre sig til en tid hvor der er behov for den. FALANKS rumvæsenopbevaringsrum er en vigtig del af enhver invasionsreaktionsplan. Den indeholder atmosfæriske beboelseskamre, forhørsmaskiner, fødevarer og alle de andre apparater som vi har kunnet forudse de er behov for til at holde liv i udenjordisk liv.\n"
+"Den første prioritet for rumvæsenudrykningsenheden er at klargøre sig til en tid hvor der er behov for den. FALANKS rumvæsenopbevaringsrum er en vigtig del af enhver invasionsreaktionsplan. Den indeholder atmosfæriske beboelseskamre, forhørsmaskiner, fødevarer og alle de andre apparater som vi har kunnet forudse der er behov for til at holde liv i udenjordisk liv.\n"
 "\n"
-"De lufttætte beboelseskamre udgør et sted at opbevare og holde rumvæsener i liv i en betydelig tidsperiode. Deres generatorer kan pumpe ethvert kammer fuld af et ønsket miks af gasser. Dette kan forsyne et rumvæsen med åndbar luft i flere uger, hvilket er længere tid end den forventede levetid for et individ i vores forskningsprogram. Indhold som ikke forefindes naturligt på jorden kan være svære at opdrive, men sandsyndligheden for at dette vil blive en hindrig for vores forskning er uendelig lille. I det værste tilfælde er generatorerne designet til at kunne tilsluttes respiratorudstyr.\n"
+"De lufttætte beboelseskamre udgør et sted at opbevare og holde rumvæsener i liv i en betydelig tidsperiode. Deres generatorer kan pumpe ethvert kammer fuld af et ønsket miks af gasser. Dette kan forsyne et rumvæsen med åndbar luft i flere uger, hvilket er længere tid end den forventede levetid for et individ i vores forskningsprogram. Indhold som ikke forefindes naturligt på jorden kan være svære at opdrive, men sandsyndligheden for at dette vil blive en hindring for vores forskning er uendelig lille. I det værste tilfælde er generatorerne designet til at kunne tilsluttes respiratorudstyr.\n"
 "\n"
 "For det andet er waldo-opereret medicinske apparater og forhørsapparater til stede i hvert beboelseskammer; disse kan tildele beroligende midler, medicin eller andre kemiske indsprøjtninger via en pneumatisk pilaffyrer, eller de kan tildele elektro-chok i forhørsøjemed. Der er også en såkaldt »panikknap« installeret i hvert kammer og i kontrolrummet er en panikknap for hver blok af kamre placeret. Panikknappen kan i en nødsituation øjeblikkeligt destruere indholdet af kammeret.\n"
 "\n"
@@ -6721,7 +6772,7 @@ msgstr ""
 "\n"
 "FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Forskningsdokument, Sigma tilladelse -- Kun for kommandørens øjne\n"
+"Forskningsdokument, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 30. juli 2027\n"
 "\n"
@@ -6762,11 +6813,11 @@ msgstr ""
 "\n"
 "FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Forskningsdokument, Sigma tilladelse -- Kun for kommandørens øjne\n"
+"Forskningsdokument, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 26. januar 1958\n"
 "\n"
-"Af: Maj. Marcel LeClerc, Basekommandør, FALANKS, Stillehavskommandoen\n"
+"Af: Major Marcel LeClerc, Basekommandør, FALANKS, Stillehavskommandoen\n"
 "\n"
 "\n"
 "\n"
@@ -6794,11 +6845,11 @@ msgstr ""
 "\n"
 "FALANKS rumvæsenudrykningsenhed\n"
 "\n"
-"Bygningstegninger, sigma tilladelse -- Kun for kommandørens øjne\n"
+"Bygningstegninger, sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 18. marts 2084\n"
 "\n"
-"Af: Kommandør Paul Navarre, U&F: Ingeniørdivisionen, FALANKS, Atlanterhavskommandoen\n"
+"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Hovedkvarteret\n"
 "\n"
 "\n"
 "\n"
@@ -6806,11 +6857,11 @@ msgstr ""
 "\n"
 "Missiler er blevet mere og mere farlige siden 2. verdenskrig, mens teknologierne til imødegåelse af missiler kun har været effektive siden begyndelsen af det 21. århundrede. I en duel mellem angreb og forsvar har angriberen altid haft fordelen. Dette har du ikke afholdt rumvæsenerne fra at udvikle et forsvar der har udfordret os.\n"
 "\n"
-"For eksempel har GEU-styrker angreb rumvæsenfartøjer med JTL'er (jord-til-luft missiler) i luftrummet over Bonn. 40 missiler blev affyret fra batterier over Europa, mens radaren havde 2 rumvæsenfartøjer fastlåst. Senere affyrede infanterienheder i området mellem 12 og 15 skulderbaseret missiler.\n"
+"For eksempel har SEU-styrker angrebet rumvæsenfartøjer med JTL'er (jord-til-luft missiler) i luftrummet over Bonn. 40 missiler blev affyret fra batterier over Europa, mens radaren havde 2 rumvæsenfartøjer fastlåst. Senere affyrede infanterienheder i området mellem 12 og 15 skulderbaseret missiler.\n"
 "\n"
 "Antallet af missiler der ramte? 1. Kun et. Ufoen oplevede et mindre tab af acceleration under sin landing ved Bonn og tog senere af sted igen uden problemer.\n"
 "\n"
-"Konklusionen er indlystende: Rumvæsenernes EK (Elektronisk krigsførelse) er langt foran vores. Vi har dog her hos FALANKS lavet et grundig studie af det missil som rent faktisk ramte, og det var ikke et tilfælde. Hvad der skete var at ufoen udsatte sig selv i en mindre skjult vinkel mens den undveg andre indgående missiler, hvilket gjorde at dette missil kunne fastholde ufoen hele vejen frem.\n"
+"Konklusionen er indlysende: Rumvæsenernes EK (Elektronisk krigsførelse) er langt foran vores. Vi har dog her hos FALANKS lavet et grundig studie af det missil som rent faktisk ramte, og det var ikke et tilfælde. Hvad der skete var at ufoen udsatte sig selv i en mindre skjult vinkel mens den undveg andre indgående missiler, hvilket gjorde at dette missil kunne fastholde ufoen hele vejen frem.\n"
 "\n"
 "Dette beviser at rumvæsenerne ikke er fuldstændig usårlige overfor vores missiler. Vi behøver bare de bedste af dem til jobbet. Denne indsigt har gjort, at vi har tilpasset nogle gamle missilbatterier og udstyret dem med sprit nye affyringsramper. Vores resultater ser lovende ud.\n"
 "\n"
@@ -6821,7 +6872,7 @@ msgstr ""
 "\n"
 "Anbefalet doktrin\n"
 "\n"
-"Hvis missilbatteriet bygge på en af vores baser kan det angribe enhver ufo indenfor rækkevidde eller vente indtil en ufo forventes at forberede et angreb på basen. Denne beslutning er op til basekommandøren. Assistance til vores kortrækkende jagerfly, på den måde at de kan »opbløde« en ufo med JTL-missiler, vil tage noget af presset fra vores piloter og luftfartøjer, men vi kan på ingen måde fuldstændig skjule vores missilbatterier selvom vi gør meget ud af kamuflagen. Gentagne affyringer vil før eller siden afsløre vores position.\n"
+"Hvis missilbatteriet bygges på en af vores baser kan det angribe enhver ufo indenfor rækkevidde eller vente indtil en ufo forventes at forberede et angreb på basen. Denne beslutning er op til basekommandøren. Det kan også yde assistance til vores kortrækkende jagerfly, på den måde at de kan »opbløde« en ufo med JTL-missiler, hvilket vil tage noget af presset fra vores piloter og luftfartøjer, men vi kan på ingen måde fuldstændig skjule vores missilbatterier selvom vi gør meget ud af kamuflagen. Gentagne affyringer vil før eller siden afsløre vores position.\n"
 "\n"
 "Missilbatteriet vil være et angrebsmål med moderat risiko. Den er bygget for at forhindre angreb på basen; hvis en angriber når frem til basen, bør batteriet ikke være væsentlig for angriberen, med mindre det er en, som skal give plads for en ny bølge af angribere. Det kan dog være et indbydende mål hvis lejligheden byder sig, da vores missiler vil detonere såfremt de bliver hårdt nok ramt. De er dog godt beskyttede. En eksplosion i et missilbatteri kan have et altødelæggende omfang på både denne facilitet, men også for basen som helhed.\n"
 "\n"
@@ -6839,11 +6890,11 @@ msgstr ""
 "\n"
 "FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Konstruktionstegninger, Sigma tilladelse -- Kun for kommandørens øjne\n"
+"Konstruktionstegninger, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 11. august 2008\n"
 "\n"
-"Af: Gen. E. Baxter, Basekommandør, FALANKS, Stillehavskommandoen\n"
+"Af: General E. Baxter, Basekommandør, FALANKS, Stillehavskommandoen\n"
 "\n"
 "\n"
 "\n"
@@ -6884,23 +6935,23 @@ msgstr ""
 "\n"
 "FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Konstruktionstegninger, Sigma tilladelse -- Kun for kommandørens øjne\n"
+"Konstruktionstegninger, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 19. marts 2084\n"
 "\n"
-"Af: Kirurg-kaptajn Helen Floydd, Medicindivisionen, FALANKS, Atlanterhavskommandoen\n"
+"Af: Cheflæge Helen Floydd, Medicinsk division, FALANKS, Hovedkvateret\n"
 "\n"
 "\n"
 "\n"
 "Overblik\n"
 "\n"
-"Denne konflikt bliver beskidt kommandør. For at kunne tilse de svært sårede fra slagmarken som vi må forvente kommer, har vi behov for avanceret udstyr som intet standardhospital eller militærhospital her tilgængeligt. Så meget er indlysende; hundredvis døde uden grund i Mumbais hospitaler fordi der ikke var korrekt udstyr til at behandle de frygtlige knogledybe plasmaskader som rumvæsenernes våben forårsagede. Vi må være bedre forberedt.\n"
+"Denne konflikt bliver beskidt kommandør. For at kunne tilse de svært sårede fra slagmarken som vi må forvente kommer, har vi behov for avanceret udstyr som intet standardhospital eller militærhospital har tilgængeligt. Så meget er indlysende; hundredvis døde uden grund i Mumbais hospitaler fordi der ikke var korrekt udstyr til at behandle de frygtlige knogledybe plasmaskader som rumvæsenernes våben forårsagede. Vi må være bedre forberedt.\n"
 "\n"
-"Det gamle FALANKS hospitals konstruktion er ikke tilstrækkeligt til den forventede storm. De er ikke blevet opdateret siden deres oprettelse i 1960 og indeholder minimalt til intet formålsdesignet udstyr. Vi måtte fuldstændig erstatte dem med nye tegninger fremstillet af os selv, med hjælp fra kommandør Navarre og vores bygningseksperter. Hvordan den tidligere ledelse forventede at håndtere ukendte skader fra slagmarken med rumvæsenerne får jeg aldrig opklaret.\n"
+"Det gamle FALANKS hospitals konstruktion er ikke tilstrækkeligt til den forventede storm. De er ikke blevet opdateret siden deres oprettelse i 1960 og indeholder minimalt til intet formålsegnet udstyr. Vi måtte fuldstændig erstatte dem med nye tegninger fremstillet af os selv, med hjælp fra kommandør Navarre og vores bygningseksperter. Hvordan den tidligere ledelse forventede at håndtere ukendte skader fra slagmarken med rumvæsenerne får jeg aldrig opklaret.\n"
 "\n"
-"Som det ser ud er vores hospitalsfaciliteter de bedste i verden. Vi er de førende eksperte i behandling af forbrændingstraumaer, speciel fjernelse og genopbyggelse af beskadiget hud. Vi hjælper beskadiget kød med at genskabe sig selv igen igennem intensiv terapi som inkluderer stor benyttelse af medicin, elektrisk nerve- og muskelstimulering, og nano-indsprøjtninger direkte i såret. Teoretisk bør vi være i stand til at behandle ethvert menneske til fuld styrke indenfor seks uger. Dette indbefatter psykologisk behandling og skaderådgivning. Mindre skader vil tage mindre tid at behandle.\n"
+"Som det ser ud er vores hospitalsfaciliteter de bedste i verden. Vi er de førende eksperter i behandling af forbrændingstraumaer, specielt fjernelse og genopbyggelse af beskadiget hud. Vi hjælper beskadiget kød med at genskabe sig selv igen igennem intensiv terapi som inkluderer stor benyttelse af medicin, elektrisk nerve- og muskelstimulering, og nano-indsprøjtninger direkte i såret. Teoretisk bør vi være i stand til at behandle ethvert menneske til fuld styrke indenfor seks uger. Dette indbefatter psykologisk behandling og skaderådgivning. Mindre skader vil tage mindre tid at behandle.\n"
 "\n"
-"We also have facilities to carry out amputation and major bionic surgery. Powerful cybernetic limbs have been made available to us by our military sources around the world, as well as armoured torso cages, electronic eyes and other internal machinery. These can be installed into our soldiers at the Hospital facility to upgrade their combat efficiency if we can afford the high cost and convalescence time.\n"
+"Vi råder også over faciliter til at udføre amputationer og omfattende bionic kirugi. Kraftfulde cybernetiske lemmer er blevet stillet til rådighed for os, af vores militære kilder rundt om i verden, såvel som bryst beskyttelses bure, elektroniske øjne og andet internt maskineri. Disse kan indopereres i vores soldater i hospitalet, således at deres kamp effektivitet øges, hvis vi har råd til den høje pris og helbredelsesperiode.\n"
 "\n"
 "Hospitalet kræver et elektricitetsværk til sit høje og stigende elektricitetbehov.\n"
 "\n"
@@ -6927,7 +6978,7 @@ msgstr ""
 "\n"
 "FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Konstruktionstegninger, Sigma tilladelse -- Kun for kommandørens øjne\n"
+"Konstruktionstegninger, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 11. august 2008\n"
 "\n"
@@ -6943,7 +6994,7 @@ msgstr ""
 "\n"
 "Under landingen har liften flere lange fangkroge som -- når de er påsat af en landingspilot -- forsigtigt sætter luftfartøjet ned i landingsposition. Fangkrogene er intelligente og kan justere deres greb og endda overføre grebet fra krog til krog så understellet af luftfartøjet er i korrekt position. Så snart fangkrogene har sat luftfartøjet i position og sænket det ned på landingsområdet, har piloten kun en opgave tilbage, nemlig at slukke for motorerne. Systemet er simpelt og nemt at håndtere når først en pilot har fanget systemet.\n"
 "\n"
-"Et næsten identisk system er indført for den lille hangar.\n"
+"Et næsten identisk system er indført for den store hangar.\n"
 "\n"
 "Den lille hangar kan ikke håndtere store luftfartøjer på grund af størrelsesforholdene.\n"
 "\n"
@@ -7017,32 +7068,32 @@ msgstr ""
 "\n"
 "FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Konstruktionstegninger, Sigma tilladelse -- Kun for kommandørens øjne\n"
+"Konstruktionstegninger, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 16. marts 2084\n"
 "\n"
-"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Atlanterhavskommandoen\n"
+"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Hovedkvateret\n"
 "\n"
 "\n"
 "\n"
 "Overblik\n"
 "\n"
-"FALANKS har haft problemer med tilstrækkelig strømforsyning siden organisationen først blev dannet i 1955. De gamle baser var afhængig af udefrakommende elektricitet fra store ikke-udledende kilder (som vandkraft) igennem mange kilometers ledningsværk. De var fuldstændig afhængig af denne eksterne kraft og var paralyseret når netværket var nede. It has taken the Russian nuclear revolution to enable full electrical autonomy for our underground bases, even when factoring high-energy research.\n"
+"FALANKS har haft problemer med tilstrækkelig strømforsyning siden organisationen først blev dannet i 1955. De gamle baser var afhængig af udefrakommende elektricitet fra store ikke-udledende kilder (som vandkraft) igennem mange kilometers ledningsværk. De var fuldstændig afhængig af denne eksterne kraft og var paralyseret når netværket var nede. Takket være den russike atom revolution er det nu muligt at lave selvforsynende underjordiske baser, selv nogle med et stort behov for strøm.\n"
 "\n"
-"Our plant of choice is the German HEFR (High-Energy Fission Reactor), a very efficient energy amplifier design. It is a subcritical reactor, a reactor that produces fission without achieving a sustained chain reaction. Instead it uses an external source of neutrons -- in this case a particle accelerator -- to stimulate the reaction. This method releases enough power to keep the particle accelerator running, as well as a power surplus that is redirected to feed the rest of the base.\n"
+"Vi har valgt at bruge en tysk HEFR (Høj-Energi Fission Reaktor), som har et yderst effektivt energiforstærkning system. Det er en subkritisk reaktor, en reaktor som laver fission uden at opnå en vedvarende kædereaktion. I stedet for bruger den en ekstern neutron kilde -- i dette tilfælde en partikel accelerator -- til at stimulerer reaktionen. Denne metode frigiver nok energi til at holde partikel acceleratoren kørende, samt nok strøm til at drive resten af basen.\n"
 "\n"
-"The HEFR runs on thorium rather than uranium, and most of its waste output will decay naturally to the radioactive level of coal ash in only 500 years. By comparison, the half-lives of the isotopes most frequently used in nuclear weapons and old reactors are 24,110 years for plutonium (Pu-239) and 700 million years for uranium (U-235). The short-lived waste output is particularly easy to handle for the depleted element postprocessor integrated into the design. After a full trip through the postprocessor, the HEFR's reactor waste will take only weeks to decay to human-safe levels of radioactivity.\n"
+"HEFR'en bruger thorium fromfor uran som brændstof, og det meste af det affaldsprodukter vil henfalde til det radioaktive niveau svarende til kulaske på kun 500 år. Til sammenligning er halveringstiden for de mest brugte isotoper i atomvåben og gamle reaktorer 24.110 år for plutonium (Pu-239) og 700 millioner år from uran (U-235). Det kort levende affaldsprodukt er særligt nemt at behandle for restelement efterbehandleren integreret i designet. Efter en fuld tur igennem efterbehandleren, vil HEFR's affald kun tage 1 uge for at henfalde til et menneske sikkert radioaktivitets niveau.\n"
 "\n"
-"In our design, the reactor core and operational machinery are built into a special shell located far deeper than the rest of the base. Only the coolant tanks and control/service entrances poke up to the base level. This protects against the possible but minuscule risk of a meltdown in case we completely lose refrigeration of the core.\n"
+"I vores design er reaktor kerne og tilknyttet udstyr bygget ind i en særlig skal langt under den øvrige base. Kun køletanke og kontrol/service indgange ses på base niveauet. Dette beskytter os, mod den usandsynlige hændelse en nedsmletning er, hvis vi helt mister nedkøling af kernen.\n"
 "\n"
-"I admit, I copied half of the specifics verbatim from the various briefs I've read -- nuclear physics are a touch above my head -- but I understand the stats well enough. The power output of one plant is enough to fully meet the needs of a standard base. If a base is equipped with many high-energy buildings such as laboratories, a second plant may be required, but a subsequent increase in base defences and security will be required to properly protect it. We can easily and safely store enough fuel on-site for a decade of continued operation. A protected container is installed with every reactor, and it can be refuelled if necessary.\n"
+"Jeg indrømmer at jeg kopieret halvdelen af beskrivelsen fra de forskellige beskrivelser jeg har læst -- atom fysik er lidt over mit niveau -- men jeg forstår specifikatioerne godt nok. Energi forsyningen fra et kraftværk er nok til at behovet på en normal base. Hvis en base har mange slugende bygninger som f.eks. laboratoriumer og radar kan det kræve en ekstra reaktor, men en forøgelse af forsvarsværker og sikkerhed vil være nødvendig for at beskytte den. Vi kan nemt og sikkert opbevare brændstof til et årtis fortløbende forbrug. En beskyttet brændstoftank er installeret ved hver reaktor og den kan genopfyldes hvis nødvendigt.\n"
 "\n"
 "\n"
 "Anbefalet doktrin\n"
 "\n"
 "Hver base skal bruge mindst et kraftværk. Uden et kraftværk, vil mange bygninger -- inklusiv kommandocentralen -- ikke fungere. Baser med specielt mange bygninger kan kræve op til to eller flere kraftværker for at holde alle funktioner fuldt funktionsdygtige.\n"
 "\n"
-"Vores forsvar bør lægge specielt væk på forsvaret af kraftværket. Skade på de kølende tanke kan være katastrofale; hvis vi mister for meget kølervæske, vil en nedsmeltning være svær at undgå. Vi kan overveje at nedtrappe reaktoren ved forventning om et angreb, men det tager lang tid at få den op at køre igen, og i denne tid vil vi ikke kunne operere energitungt udstyr. Herunder radar, laboratorier og enddog hangarer.\n"
+"Vores forsvar bør lægge specielt vægt på forsvaret af kraftværket. Skade på de kølende tanke kan være katastrofale; hvis vi mister for meget køleevne, vil en nedsmeltning være svær at undgå. Vi kan overveje at nedtrappe reaktoren ved forventning om et angreb, men det tager lang tid at få den op at køre igen, og i den tid vil vi ikke kunne operere energitungt udstyr. Herunder radar, laboratorier og enddog hangarer.\n"
 "\n"
 "\n"
 "Tilføjelse\n"
@@ -7052,109 +7103,109 @@ msgstr ""
 #: ../base/ufos/research.ufo:2861
 msgid "b_quarters_txt"
 msgstr ""
-"Blueprints -- Living Quarters\n"
+"Tegninger -- Beboelseskvarter\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"KLASSIFIKATIONSNIVEAU SORT\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Konstruktionstegninger, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
-"Filed: 22 January 1958\n"
+"Arkiveret: 22. januar 1958\n"
 "\n"
-"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The Living Quarters facility is the standard habitation unit for PHALANX personnel. It provides living space and sanitation for up to 20 people and several necessary ancillary personnel.\n"
-"\n"
-"The facility's lower floor contains a soldiers' barracks, communal showers, bathrooms, and a common area where troops can spend their off-duty time. Each soldier receives 1 bunk and 1 locker partition to store their personel effects such as civilian clothes. It is also intended for storage of uniforms and other on-duty equipment.\n"
-"\n"
-"The upper floor contains officers' quarters, generally used for any ranking/important personnel. Each private quarters has its own bed, desk, storage space and sanitary unit, and the level as a whole sports shared but separate shower cabins. This level is located above-ground and receives natural sunlight.\n"
-"\n"
-"In the case of an emergency, the Living Quarters has a special partition designed to function as a disaster shelter where non-combat personnel can take refuge until the all clear is given. The shelter provides oxygen and supplies for up to 12 people for 1 week. The access hatch is made of tungsten-reinforced titanium and will open for little short of a nuclear blast.\n"
-"\n"
-"The Living Quarters does not depend upon any other structures to operate.\n"
+"Af: Major Marcel LeClerc, Base Kommandør, FALANKS, Stillehavs kommandoen\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"The Living Quarters are an important part of evacuation procedures in the event of a base attack. All non-combat personnel are to drop their current tasks immediately and retreat to the nearest shelter or strongpoint, be it the Command Centre, Living Quarters or other appropriate facility. Seven minutes after the attack alarm sounds, all disaster shelter doors will close -- regardless of how many personnel are accounted for -- and afterwards they will refuse to open except from the inside. Everyone who is not going to participate in the fight should be inside by that time.\n"
+"Overblik\n"
 "\n"
-"The facility is almost worthless from a tactical standpoint, and will most likely be ignored by any extraterrestrials. It is thoroughly unimportant during an attack, as well as cheap to build and easy to repair. There is very little a hostile force could do short of total destruction that can really inconvenience a Living Quarters.\n"
+"Beboelseskvarteret er levestedet for al FALANKS personale. Hver enhed giver rum og sanitets forhold for 20 personer og adskillige sekundære personer.\n"
+"\n"
+"Det første niveau indeholder en barak til soldater, fælles brusere, toiletter og et fælles område, hvor tropperne kan tilbringe deres fritid. Hver soldat bliver tildelt 1 seng og 1 skab til at gemme deres personlige ejendele, såsom deres civile tøj. Det bruges også til at opbevare uniformer og andet \"arbejds\" relevant udstyr.\n"
+"\n"
+"Det andet niveau indeholder officers kvarterer, som benyttes til senior/vigtigt personale. Hver kvarter har sin egen seng, skrivebord, opbevaringssted og toilet, og niveauet har fælles bad, med brusekabiner. Niveauet ligger over jorden og får dermed sollys ind.\n"
+"\n"
+"I tilfælde af nødsituationer har beboelseskvarteret en special afdeling,der virker som et beskyttelsesrum, hvor ikke kamp-personale kan søge tilflugt indtil alt er meldt klar igen. Rummet kan leverer ilt og fornødenheder for op til 12 personer i 1 uge. Adgangslemmen er lavet tungsten-forstærket titanium og vil ikke ødelægges af mindre end en atombombe.\n"
+"\n"
+"Beboelseskvarteret afhænger ikke af andre faciliteter.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Anbefalet doktrin\n"
 "\n"
-"None."
+"Beboelseskvarteret er en vigtig del af evakuerings proceduren i tilfælde af et base angreb. Alt ikke-kamp personale skal smide alt hvad de har i hænderne og straks begive sig til det nærmeste beskyttelsesrum eller sikrede sted, det være sig kommandocentralen, beboelseskvarter eller anden passende facilitet. Syv minutter efter at angrebsalarmen har lydt, vil alle beskyttelses døre lukke sig -- uanset om der mangler noget personale -- og efter dette vil det være umuligt at åbne dørene undtagen indefra. Alle som ikke skal kæmpe bør være indenfor på det tidspunkt.\n"
+"\n"
+"Beboelseskvarteret er næsten værdiløst fra et taktisk synspunkt, og vil mest sandsynligt blive ignoreret af rumvæsner. Det er fuldstændigt ligegyldigt i forbindelse med et angreb, samt billigt at bygge og let at reparere. Det er meget begrænset hvad fjender kan gøre, som vil være til gene, bortset fra total ødelæggelse.\n"
+"\n"
+"\n"
+"Tilføjelse\n"
+"\n"
+"Ingen."
 
 #: ../base/ufos/research.ufo:2879
 msgid "b_radar_txt"
 msgstr ""
-"Blueprints -- Radar\n"
+"Tegninger -- Radar\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"KLASSIFIKATIONSNIVEAU SORT\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"FALANKS Rumvæsenudrykningsenhed\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Bygningstegninger, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
-"Filed: 18 March 2084\n"
+"Arkiveret: 18. marts 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Commander, we've had to make extensive changes to our old Radar facility designs to bring them up to date. The old report is no longer applicable, so I've decided to replace it with this one.\n"
-"\n"
-"Our Radar facility is not a large radar array in itself. It's actually a control centre for a series of camouflaged dishes placed on high ground around the base. There are between 8 and 12 dishes set up for each installation, depending on the available space and the dishes' individual coverage. Each dish is equipped with several means of detection rather than simply radar, as radar has trouble maintaining a lock on alien contacts. Supplemental systems include, but are not limited to, infrared and laser rangefinding.\n"
-"\n"
-"Building more than one Radar installation at a base will suitably increase the extent of our radar coverage.\n"
-"\n"
-"The facility is manned round-the-clock in 6-hour shifts, reviewing the processed data after our computers have gathered all discernible information from a contact. Human operators are absolutely necessary and should be present to supervise at all times; what the computers might dismiss as a radar ghost can turn out to be a stealthed alien harvester ready to hit a mass off civilians. Instinct and experience count just as much as software intelligence.\n"
-"\n"
-"Our radar is patched directly into the UN aircraft registry and can cross-reference the transponder data of any civilian aircraft with its flight plan and cargo manifest. Non-PHALANX military aircraft are also required to log their routes into our database, but we can't know for certain if the various militaries will be very conscientious in following that directive.\n"
-"\n"
-"The Radar facility cannot function without a working Power Plant or a Command Centre to coordinate our radar into our tactical efforts.\n"
+"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Hovedkvateret\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"Since our radar-emitting dishes are not located at the base site, there is no direct threat of discovery to a base from using active radar. Considering the number of other military radar sources around, it's unlikely that alien craft will be able to learn anything from a dedicated backtrace. At most they'll be able to find the general area of a base.\n"
+"Overblik\n"
 "\n"
-"However, any UFOs spotted patrolling the area may be trying to zero in on our installation, and should not be allowed to complete their mission under any circumstances.\n"
+"Øverstbefalende, det har været nødvendigt at foretage omfattende ændringer på de gamle radar tegninger for at de er tidssvarende. De gamle rapporter er ikke længere gældende, så jeg har besluttet erstatte dem. Vores radar bygning er ikke et stort radar array i sig selv. Det er faktisk et kontrol center for en række kamuflerede paraboler placeret på høje steder omkring basen. Der er mellem 8 og 12 paraboler ved hver base, afhængig af tilgængelig plads og den enkelte parabols dæknings evne. Hver parabol er udstyret med flere detektions metoder, fremfor blot simpel radar, da radar har problemer med at fastholde kontakten med UFOer.\n"
 "\n"
-"During an attack, the Radar facility will be at high risk. It is our eyes and ears. Without working radar coverage, we wouldn't be able to see the UFOs we're supposed to respond to. If any attacking aliens approach the facility they will almost certainly attempt to damage or destroy it with explosives. We must not let that happen.\n"
+"De yderligere systemer omfatter blandt andet infrarød og laser afstandsbedømmelse.\n"
+"\n"
+"Konstruktionen af yderligere radar installationer på en base vil øge rækkevidden af vores radar dækning.\n"
+"\n"
+"Radaren er bemandet døgnet rundt, i skiftehold af 6 timer, som behandler de færdige resultater når computeren har samlet al den information den kan om en kontakt. Menneskelige operatører er absolut nødvendige og bør være tilstede til enhver tid; hvad computeren måske bare betragter som et radar spøgelse kan vise sig at være en kamufleret opsamler, klar til at ramme massevis af civile. Instinkt og erfaring betyder lige så meget som software intelligens.\n"
+"\n"
+"Vores radar er koblet direkte til FN's flyoversigt og kan kryds checke transponder data fra ethvert civilt fly med dets flyveplan og transportmanifest. Ikke FALANKS militære fly er forpligtiget til at angive deres ruter i vores database, men vi kan ikke være sikker på at de forskellige hære vil være omhyggelige med at følge dette direktiv.\n"
+"\n"
+"Radaren kræver et virkende kraftværk eller en kommandocentral til at koordinere vores data til taktiske handlinger.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Anbefalet doktrin\n"
 "\n"
-"Addendum, Executive Officer Abel S. Howard, 18 March 2084:\n"
+"Da vores rader-udsendende paraboler ikke findes i selve basen, er der ikke en direkte fare for opdagelse af vores base ved at bruge aktiv radar. I betragtning af antallet af øvrige militære radarkilder rundt omkring er det usandsynligt at en UFO vil noget nyttigt fra en dedikeret sporing. De kan allerhøjest finde det generelle område vores base er i.\n"
 "\n"
-"We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
+"På trods af dette kan enhver UFO som patruljerene i området være på udkig efter vores base og den bør ikke få lov til at fuldføre sin mission under nogen omstændigheder.\n"
+"\n"
+"Ved et base angreb vil radarrummet være et højrisiko område. Det er vores øjne og ører. Uden virkende radar, er vi ude afstand til at se UFOer som vi burde reagere overfor. Hvis rumvæsner kommer i nærheden af radaren vil de med stor sandsynlighed prøve at skade eller ødelægge den med sprængstoffer. Dette må ikke ske.\n"
+"\n"
+"\n"
+"Tilføjelse\n"
+"\n"
+"Tilføjelse, NæstKommanderende Abel S. Howard, 18. marts 2084:\n"
+"\n"
+"Vi bør ikke opfatte radaren som den endelige løsning til opdagelse af ufoer. Selv med ekstra udstyr er vores dækning ikke fuld troværdig, og vi bør forske i andre måder at øge vores teknologiske muligheder for at opdage ufoer; hvis vi skal have en mulighed for at stoppe disse røvhuller."
 
 #: ../base/ufos/research.ufo:2897
 msgid "b_storage_txt"
 msgstr ""
-"Blueprints -- Storage\n"
+"Konstruktionstegninger -- Lagerrum\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"KLASSIFIKATIONSNIVEAU SORT\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"FALANKS rumvæsenudrykningsenhed\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Konstruktionstegninger, sigma tilladelse -- Kun for kommandørens øjne\n"
 "\n"
-"Filed: 26 January 1958\n"
+"Arkiveret: 26. januar 1958\n"
 "\n"
-"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations Command\n"
+"Af: Major Marcel LeClerc, basekommandør, FALANKS, Stillehavshavskommandoen\n"
 "\n"
 "\n"
 "\n"
-"Overview\n"
+"Overblik\n"
 "\n"
 "The Storage facility is the base's repository for ammunition, weapons, and other equipment not currently in use. All small-arms, vehicle and aircraft ammunition that is not earmarked for emergency response resides in the Storage facility. It also serves as a garage for our battlefield vehicles. These remain in their bays until mission time, with fully-loaded magazines in case of a base attack.\n"
 "\n"
@@ -7167,7 +7218,7 @@ msgstr ""
 "It does not depend upon any other base facilities to function.\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
+"Anbefalet doktrin\n"
 "\n"
 "In the case of an invasion, we will need all the storage space we can get. Large stores of ammunition may need to be squared away for long periods of time. Recovered artifacts will need to be adequately contained and protected, as anything with nebulous alien capabilities should be kept in our explosion-proof lockers or be destroyed. If all the lockers are full, we may have no choice in the matter.\n"
 "\n"
@@ -7176,45 +7227,45 @@ msgstr ""
 "Still, any extraterrestrials are unlikely to spend the time and effort getting into our explosion-proof lockers when there are easier targets nearby.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Tilføjelse\n"
 "\n"
-"None."
+"Ingen."
 
 #: ../base/ufos/research.ufo:2915
 msgid "b_teamroom_txt"
 msgstr ""
 "Konstruktionstegninger -- Holdrum\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"KLASSIFIKATIONSNIVEAU SORT\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"FALANKS rumvæsenudrykningsenhed\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"Konstruktionstegninger, sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
-"Filed: 11 August 2008\n"
+"Arkiveret: 11. august 2008\n"
 "\n"
-"By: Gen. E. Baxter, Base Commander, PHALANX, Pacific Operations Command\n"
+"Af: General E. Baxter, basekommandør, FALANKS, Stillehavskommandoen\n"
 "\n"
 "\n"
 "\n"
 "Overblik\n"
 "\n"
-"It is painfully clear that soldiers during wartime lead highly stressful lives. In order to maintain morale they need a place to unwind and interact in a rank-free environment. We have sought to provide this kind of R&R in the form of the Team Room facility.\n"
+"Det er indlysende at soldater i krigstid lever et meget stressfuldt liv. For at kunne holde moralen oppe har de brug for et sted hvor de kan slappe af og omgås uden tanke på rang og stilling. Vi har forsøgt at opnå dette i form af et holdrum.\n"
 "\n"
-"It is equipped with a variety of entertainments, from sports tables to high-tech game consoles. It also features a modest wall-mounted cinema display for communal movie screenings. There are vending machines with alcoholic and non-alcoholic beverages, and a separate sitting room for our soldiers to achieve some amount of privacy from the closeness of base living. To this end the sitting room can be locked from the inside for up to 30 minutes per day by each team member. The lock may be overridden from the Control Centre or by a present Command Centre or medical officer in case of an emergency.\n"
+"Holdrummet er udstyret med en række underholdningselementer, fra sportsborde til de nyeste spilkonsoller. Holdrummet har også en beskeden vægmonteret filmafspiller. Der er automater med alkohol og ikke-alkoholiske drikkevarer, og et seperat pauseværelse hvor vores soldater kan opnå en smule privatliv fra basens tætte omgangsform. Pauseværelset kan låses indefra i op til 30 minutter om dagen af hvert holdmedlem. Låsen kan, i tilfælde af en nødsituation, omgås fra kontrolcentret eller fra en tilstedeværende lægeofficer.\n"
 "\n"
 "Al vort udstyr kræver vedligeholdelse, og jeg vil argumentere for at vores soldater har mest brug for vedligeholdelse. Holdrummet er en af de bedste måder at holde dem både mentalt klar og i god træning.\n"
 "\n"
-"Unless it has access to an operational Power Plant, the Team Room will be shut down to avoid non-vital power consumption.\n"
+"Medmindre holdrummet har adgang til et funktionsdygtig kraftværk, bliver det lukket ned for at undgå brug af ikke-vital strømforbrug.\n"
 "\n"
 "\n"
 "Anbefalet doktrin\n"
 "\n"
-"The Team Room is an important tool in maintaining good morale amongst our soldiers and should be built in any base that houses a combat team. It provides them with various vital means of stress relief, which will ease the stressful effects of continued combat, life-threatening situations, and the near-certain death of team members in the field. High morale is essential for our battlefield performance and must be maintained at all costs.\n"
+"Holdrummet er et vigtigt værktøj i at holde moralen højt blandt vores soldater og bør bygges i enhver base som har en kampgruppe. Rummet giver dem adgang til forskellige vigtige metoder til at undgå stres, som vil gøre belastningen fra fortsat kamp, livstruende situationer, og den næsten sikre død for holdmedlemmer i marken mindre. Høj moral er vigtig for krigsindsatsen og bør opretholdes uanset omkostningen.\n"
 "\n"
-"However, I must stress that the Team Room is not a replacement for base leave. Our soldiers will still need to be allowed off-base from time to time in order to maintain their connection with the outside world and their sanity.\n"
+"Det må understreges at holdrummet ikke er en erstatning for orlov. Vores soldater vil fortsat have behov for at kunne forlade basen fra tid til tid for at bevare forbindelsen til verden udenfor og deres fornuft.\n"
 "\n"
-"For the purposes of a base attack, the Team Room is an extremely low-risk installation with little to no strategic value. If encountered by extraterrestrial attackers, it will almost certainly be bypassed altogether in favour of more sensitive installations.\n"
+"Under baseangreb er holdrummet ikke særlig udsat, da det ingen strategisk værdi har. Hvis det opdages af rumvæsener vil det næsten helt sikkert blive omgået til fordel for mere væsentlige installationer.\n"
 "\n"
 "\n"
 "Tilføjelse\n"
@@ -7224,38 +7275,38 @@ msgstr ""
 #: ../base/ufos/research.ufo:2933
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
-"Blueprints -- Small UFO Hangar\n"
+"Tegninger -- Lille ufo-hangar\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"KLASSIFIKATIONSNIVEAU SORT\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"FALANKS rumvæsenudrykningsenhed\n"
 "\n"
-"Research Document, Sigma Clearance -- Commander's Eyes Only\n"
+"Forskningsdokument, sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
-"Filed: 19 March 2084\n"
+"Arkiveret: 19. marts 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"These are the finished plans for our new UFO storage hangars. They are designed to house one recovered UFO for disassembly, and will be marked as occupied until the craft has been fully broken down into its component parts and the parts transferred to base Storage. UFOs require significant disassembly before they will fit inside Storage, so they must be dismantled before we can begin to store or use the recovered parts. Doing this job on-site is highly inadvisable. It could be hazardous to the health of our scientists and engineers, it might attract looters, and it would without doubt severely compromise the safety and secrecy of our operation.\n"
-"\n"
-"The importance of studying captured UFOs should be more than obvious. It will give us insight into the workings and vulnerabilities of alien craft, and it may result in the discovery of new techniques to improve our own craft's effectiveness. Once a recovered UFO is secured for transport, it is carried to a PHALANX base by means of transport helicopters. Salvage operations are handled by local UN forces to relieve pressure on our limited resources.\n"
-"\n"
-"The Small UFO Hangar can store 1 alien craft of limited size. We will assess the size of each UFO type as we encounter them and determine what hangar is required to store them.\n"
-"\n"
-"The Small UFO Hangar requires a Power Plant to feed its high-power machinery and plasma-based cutting tools. It also requires a Workshop and Storage to handle the dismantling.\n"
+"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Hovedkvarteret\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"All salvaged UFOs should be permanently disabled once delivered into our hands. Should the base come under attack from alien forces, we can't afford the extra risk of stored UFOs being reactivated and used against us. Even without a drive unit, any weapon systems left active would present a grave threat to our base.\n"
+"Overblik\n"
 "\n"
-"If this procedure is followed, the UFO Hangar will be of minor tactical importance to alien attackers and will most likely be ignored except as a target of opportunity. Preventing us from dismantling UFOs would be far less attractive than shutting down our research or production, or destroying our base outright.\n"
+"Dette er de færdige planer for vores nye små ufo-hangarer. De er beregnet til at kunne servicere en bjærget ufo som kan skilles ad her, og bygningen vil være markeret som besat indtil fartøjet er helt skilt ad i sine enkeltdele og delene er overført til lageret. Ufoer kræver lang tid at skille ad, før de passer ind i lageret, så ufoerne må skilles ad, før vi kan begynde at opmagasinere eller anvende enkeltdelene. At udføre dette arbejde på nedstyrtningsstedet må stærkt frarådes. Det kan være farligt for vores videnskabsmænd og ingeniørers helbred, det kan tiltrække røvere, og det vil uden tvivl kompromitere sikkerheden og hemmeligheden ved vores operation.\n"
 "\n"
-"We will most likely be needing several of these installations to strip and/or examine several UFOs at a time. However, if necessary, we can remove a craft from our hangars and have it destroyed to make room for a new one. In this scenario all parts already transferred to Storage will be available, but everything not yet removed from the UFO will be destroyed with it.\n"
+"Vigtigheden af at studere erobrede ufoer er indlysende. Det vil give os viden, om måden de fungerer på og deres svagheder, og det kan føre til opdagelsen af nye teknologier der kan forbedre vores egne fartøjers effektivitet. Når først en erobret ufo er sikret til transport bliver den transporteret til vores FALANKS base ved brug af transporthelikoptere. Bjærgningen håndteres af lokale FN-styrker for at mindske presset på vores ressourcer.\n"
+"\n"
+"Den lille ufo-hangar kan håndtere 1 rumvæsenfartøj af mindre størrelse. Vi vil vurdere størrelsen af hver enkel ufo, efterhånden som vi møder dem og derefter afgøre hvilken hangar der kræves for at kunne opbevare dem.\n"
+"\n"
+"Den lille ufo-hangar kræver et kraftværk til sit maskineri og plasmaskærende værktøj, der kræver meget energi. Hangaren kræver også et værksted og et lager til håndteringen af afmonteringen.\n"
+"\n"
+"\n"
+"Anbefalet doktrin\n"
+"\n"
+"Alle bjærgede ufoer bør skilles ad når først de er kommet i vores hænder. Kommer basen under angreb fra rumvæsener, kan vi ikke risikere at opbevarede ufoer bliver genaktiveret og brugt imod os. Selv uden drivmiddel vil ethvert våbensystem stadig aktivt udgøre en alvorlig trussel mod vores base.\n"
+"\n"
+"Hvis denne procedure følges, vil ufo-hangaren være af mindre taktisk værdi for en eventuel angriber og vil højst sandsynlig blive ignoreret eller anset for at være et mindre angrebsmål. At forhindre os i at skille ufoer ad er langt mindre attraktivt end at lukke vores forskning eller produktion ned, eller endog helt at ødelægge vores base.\n"
+"\n"
+"Vi vil højst sandsynlig skulle bruge flere af disse installationer for at kunne skille og undersøge flere ufoer på samme tid. Hvis nødvendigt kan vi fjerne et luftfartøj fra vores hangarer og knuse den for at skabe plads for et nyt ufo-luftfartøj. I dette tilfælde vil allerede overførte dele til lageret stadig være tilgængelige, men alt endnu ikke fjernet fra ufoen ødelægges med den.\n"
 "\n"
 "\n"
 "Tilføjelse\n"
@@ -7271,32 +7322,32 @@ msgstr ""
 "\n"
 "FALANKS rumvæsenudrykningsenhed\n"
 "\n"
-"Forskningsdokument, sigma tilladelse -- Kun for kommandørens øjne\n"
+"Forskningsdokument, sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 19. marts 2084\n"
 "\n"
-"Af: Kommandør Paul Navarre, U&F: Ingeniørdivisionen, FALANKS, Atlanterhavskommandoen\n"
+"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Hovedkvateret\n"
 "\n"
 "\n"
 "\n"
 "Overblik\n"
 "\n"
-"These are the finished plans for our new UFO storage hangars. They are designed to house one recovered UFO for disassembly, and will be marked as occupied until the craft has been fully broken down into its component parts and the parts transferred to base Storage. UFOs require significant disassembly before they will fit inside Storage, so they must be dismantled before we can begin to store or use the recovered parts. Doing this job on-site is highly inadvisable. It could be hazardous to the health of our scientists and engineers, it might attract looters, and it would without doubt severely compromise the safety and secrecy of our operation.\n"
+"Dette er de færdige planer for vores nye store ufo-hangarer. De er beregnet til at kunne servicere en bjærget ufo som kan skilles ad her, og bygningen vil være markeret som besat indtil fartøjet er helt skilt ad i sine enkeltdele og delene er overført til lageret. Ufoer kræver lang tid at skille ad, før de passer ind i lageret, så ufoerne må skilles ad, før vi kan begynde at opmagasinere eller anvende enkeltdelene. At udføre dette arbejde på nedstyrtningsstedet må stærkt frarådes. Det kan være farligt for vores videnskabsmænd og ingeniørers helbred, det kan tiltrække røvere, og det vil uden tvivl kompromitere sikkerheden og hemmeligheden ved vores operation.\n"
 "\n"
-"The importance of studying captured UFOs should be more than obvious. It will give us insight into the workings and vulnerabilities of alien craft, and it may result in the discovery of new techniques to improve our own craft's effectiveness. Once a recovered UFO is secured for transport, it is carried to a PHALANX base by means of transport helicopters. Salvage operations are handled by local UN forces to relieve pressure on our limited resources.\n"
+"Vigtigheden af at studere erobrede ufoer er indlysende. Det vil give os viden, om måden de fungerer på og deres svagheder, og det kan føre til opdagelsen af nye teknologier der kan forbedre vores egne fartøjers effektivitet. Når først en erobret ufo er sikret til transport bliver den transporteret til vores FALANKS base ved brug af transporthelikoptere. Bjærgningen håndteres af lokale FN-styrker for at mindske presset på vores ressourcer.\n"
 "\n"
-"The Large UFO Hangar can store 1 alien craft of significant size. We will assess the size of each UFO type as we encounter them and determine what hangar is required to store them.\n"
+"Den store ufo-hangar kan håndtere 1 rumvæsenfartøj af betydelig størrelse. Vi vil vurdere størrelsen af hver enkel ufo, efterhånden som vi møder dem og derefter afgøre hvilken hangar der kræves for at kunne opbevare dem.\n"
 "\n"
-"The Large UFO Hangar requires a Power Plant to feed its high-power machinery and plasma-based cutting tools. It also requires a Workshop and Storage to handle the dismantling.\n"
+"Den store ufo-hangar kræver et kraftværk til sit maskineri og plasmaskærende værktøj, der kræver meget energi. Hangaren kræver også et værksted og et lager til håndteringen af afmonteringen.\n"
 "\n"
 "\n"
 "Anbefalet doktrin\n"
 "\n"
-"All salvaged UFOs should be permanently disabled once delivered into our hands. Should the base come under attack from alien forces, we can't afford the extra risk of stored UFOs being reactivated and used against us. Even without a drive unit, any weapon systems left active would present a grave threat to our base.\n"
+"Alle bjærgede ufoer bør skilles ad når først de er kommet i vores hænder. Kommer basen under angreb fra rumvæsener, kan vi ikke risikere at opbevarede ufoer bliver genaktiveret og brugt imod os. Selv uden drivmiddel vil ethvert våbensystem stadig aktivt udgøre en alvorlig trussel mod vores base.\n"
 "\n"
-"If this procedure is followed, the UFO Hangar will be of minor tactical importance to alien attackers and will most likely be ignored except as a target of opportunity. Preventing us from dismantling UFOs would be far less attractive than shutting down our research or production, or destroying our base outright.\n"
+"Hvis denne procedure følges, vil ufo-hangaren være af mindre taktisk værdi for en eventuel angriber og vil højst sandsynlig blive ignoreret eller anset for at være et mindre angrebsmål. At forhindre os i at skille ufoer ad er langt mindre attraktivt end at lukke vores forskning eller produktion ned, eller enddog helt at ødelægge vores base.\n"
 "\n"
-"We will most likely be needing several of these installations to strip and/or examine several UFOs at a time. However, if necessary, we can remove a craft from our hangars and have it destroyed to make room for a new one. In this scenario all parts already transferred to Storage will be available, but everything not yet removed from the UFO will be destroyed with it.\n"
+"Vi vil højst sandsynlig skulle bruge flere af disse installationer for at kunne skille og undersøge flere ufoer på samme tid. Hvis nødvendigt kan vi fjerne et luftfartøj fra vores hangarer og knuse den for at skabe plads for et nyt ufo-luftfartøj. I dette tilfælde vil allerede overførte dele til lageret stadig være tilgængelige, men alt endnu ikke fjernet fra ufoen ødelægges med den.\n"
 "\n"
 "\n"
 "Tilføjelse\n"
@@ -7312,7 +7363,7 @@ msgstr ""
 "\n"
 "FALANKS rumvæsenudrykningsenhed\n"
 "\n"
-"Bygningstegninger, sigma tilladelse -- Kun for kommandørens øjne\n"
+"Bygningstegninger, sigma tilladelse -- Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 28. januar 1958\n"
 "\n"
@@ -7322,18 +7373,18 @@ msgstr ""
 "\n"
 "Oversigt\n"
 "\n"
-"FALANKS-værkstedet er en lille produktionslinje udstyret med det mest moderne højteknologiske militære produktionsanlæg. Den er beregnet til produktion af hemmeligholdte materialer og dele som ikke kan produceres andre steder på jorden; endda kopiering og fremstilling af rumvæsenteknologi.\n"
+"FALANKS-værkstedet er en lille produktionslinje udstyret med det mest moderne højteknologiske militære produktionsanlæg. Værkstedet er beregnet til produktion af hemmeligholdte materialer og dele som ikke kan produceres andre steder på jorden; endda kopiering og fremstilling af rumvæsenteknologi.\n"
 "\n"
-"Alle dele produceret på værkstedet fremstilles i hånden med så stor hjælp fra robotter som muligt. Den kræver de bedst egnede ingeniører i verden at håndtere det avancerede maskineri og installere nye maskiner når vores forskere finder en ny maskine eller forbedrer vores produktionsproces. Værkstedet yder arbejdsrum for op til 10 ingeniører ad gangen.\n"
+"Alle dele produceret på værkstedet fremstilles i hånden med så stor hjælp fra robotter som muligt. Værkstedet kræver de bedste ingeniører i verden for at kunne håndtere det avancerede maskineri og installere nye maskiner, når vores forskere finder en ny maskine eller forbedrer vores produktionsproces. Værkstedet yder arbejdsrum for op til 10 ingeniører ad gangen.\n"
 "\n"
-"Et kraftværk er nødvendigt for at holde produktionslinjen i gang. Uden et operationsdygtigt kraftværk vil al produktion stoppe indtil strømmen er tilbage. Værkstedet er også afhængig af en kommandocentral der kan koordinere produktionen.\n"
+"Et kraftværk er nødvendigt for at holde produktionslinjen i gang. Uden et operationsdygtigt kraftværk vil al produktion stoppe indtil strømmen er tilbage. Værkstedet er også afhængig af en kommandocentral, der kan koordinere produktionen.\n"
 "\n"
 "\n"
 "Anbefalet doktrin\n"
 "\n"
-"Under en mulig krig med rumvæsener vil vi være stærk afhængig af værkstedets faciliteter, så vi kan fremstille de våben vi skal bruge. H.G. Wells War of the Worlds springer i øjenene for sin fremstilling af hvordan vores nuværende teknologi vil kunne håndtere en invasionsstyrke. Måske er selv ikke atombomben nok som afskrækkelse. I det værste tilfælde kan vi blive tvunget til at anvende atommissiler, hvis vi ikke kan afværge et angreb på nogen anden måde.\n"
+"Under en mulig krig med rumvæsener vil vi være stærk afhængig af værkstedets faciliteter, så vi kan fremstille de våben vi skal bruge. H.G. Wells War of the Worlds springer i øjenene for sin fremstilling af hvordan vores nuværende teknologi vil kunne håndtere en invasionsstyrke. Måske er selv ikke atombomben nok som afskrækkelse. I det værst tænkelige tilfælde, hvor vi ikke kan afværge et angreb på nogen anden måde, kan vi blive tvunget til at anvende atommissiler.\n"
 "\n"
-"Værkstedet er et sikkerhedsområde på grund af sine ofte hemmeligstemplede projekter. De forskellige farlige og eksplosionsfarlige stoffer der bruges i produktionen gør det til et farligt sted at opholde sig, og det vil helt sikkert være et risikoområde under et baseangreb som et målområde for angriberne da det i sig selv kan være et mellemrisikomål. At lukke vores produktion uanset perioden vil være en sejr for ethvert fjendtlig rumvæsen, specielt hvis det lykkes at ødelægge et stort igangværende projekt; for eksempel produktionen af et nyt luftfartøj.\n"
+"Værkstedet er et sikkerhedsområde på grund af sine ofte hemmeligstemplede projekter. De forskellige farlige og eksplosionsfarlige stoffer der bruges i produktionen gør det til et farligt sted at opholde sig, og det vil helt sikkert være et risikoområde under et baseangreb som et målområde for angriberne, da det i sig selv kan være et mellemrisikomål. At lukke vores produktion uanset perioden vil være en sejr for ethvert fjendtlig rumvæsen, specielt hvis det lykkes at ødelægge et stort igangværende projekt; for eksempel produktionen af et nyt luftfartøj.\n"
 "\n"
 "Genskabelse af rumvæsenernes rumfartøjsteknologi vil være fuldstændig nødvendigt hvis vi nogen sinde skal kunne opnå initiativet mod en styrke af rumvæsener. Vi kan ikke blive på jorden og nøjes med at indtage en defensiv position, hvis vi ønsker at afslutte en militær konflikt. Vores værksteder og laboratorier er de bygninger som skal udstyre os imod disse mareridtsscenarier.\n"
 "\n"
@@ -7353,7 +7404,7 @@ msgstr ""
 "\n"
 "Denne procedure giver ikke tid til at et eventuelt personale fanget indenfor kan nå ud, men det er prisen vi må betale hvis vi skal redde hele basen.\n"
 "\n"
-"Bygningens farlighedsgrad gør at vi skal registrere os på lisen i FN over atomare anlæg. Ved fuld kapacitet -- 10 gram antistof -- kun et lagerrum vil indeholde hvad der svarer til næsten et halv megaton TNT. Selv om dette ikke er meget i forhold til vores dages moderne termonukleare våben, er det nok til at destruere alt på basen på mindre end et sekund. Det er svært at få antistof til at »eksplodere«, men under de uheldigste omstændigheder, kan det ske.\n"
+"Bygningens farlighedsgrad gør at vi skal registrere os på lisen i FN over atomare anlæg. Ved fuld kapacitet -- 10 gram antistof -- vil et lagerrum indeholde hvad der svarer til næsten et halv megaton TNT. Selv om dette ikke er meget i forhold til vores dages moderne termonukleare våben, er det nok til at destruere alt på basen på mindre end et sekund. Det er svært at få antistof til at »eksplodere«, men under de uheldigste omstændigheder, kan det ske.\n"
 "\n"
 "Selv hvis ingen eksplosion opstår, vil tabet af lagerrummet føre til ødelæggelse af det opbevarede antistof. Hvis der på dette tidspunkt er en fejl eller skade i den ydre skal, vil eksplosionen af gammastråling og højhastighedspartikler lægge området øde for liv. Basen vil være forgiftet og uboelig i århundreder.\n"
 "\n"
@@ -7768,11 +7819,11 @@ msgstr "Den politiske situation før invasionen"
 #: ../base/ufos/research.ufo:4166
 msgid "news_initial_political_situation_txt"
 msgstr ""
-"I året 2084 er jorden i bedre form end den har været i et århundrede. For første gang er fred og samarbejde normen fremfor undtagelsen. Den nuværende situation kan kun forklares ud fra den brutale historie i det 21. århundrede.\n"
+"I året 2084 er jorden i bedre form end den har været i et hundrede år. For første gang er fred og samarbejde normen fremfor undtagelsen. Den nuværende situation kan kun forklares ud fra den brutale historie i det 21. århundrede.\n"
 "\n"
-"I det første årti af det 21. århundrede var Mellemøsten den største bekymring i verden. Spændingen øgedes da Iran, Syrien, Jordan og Afghanistan dannede Mellemøsten-alliancen, en politisk gruppering der skulle forene den islamiske verden. Snart efter gjorde valg i Irak at USA mistede indflydelse i landet, og Irak blev en del af Mellemøsten-alliancen sammen med Pakistan og Libanon senere det år. Som modspil tilsluttede Israel sig den udvidet Europæiske Union, og kom derfor ind under den mere strikse EU-lovgivning vedrørende menneskerettigheder og krigsførsel. Dets militære tilstedeværelse i regionen blev markant reduceret over årene som en følge deraf.\n"
+"I det første årti af det 21. århundrede var Mellemøsten den største bekymring i verden. Spændingen øgedes da Iran, Syrien, Jordan og Afghanistan dannede Mellemøst-alliancen, en politisk gruppering der skulle forene den islamiske verden. Snart efter gjorde valg i Irak at USA mistede indflydelse i landet, og Irak blev en del af Mellemøst-alliancen sammen med Pakistan og Libanon senere det år. Som modspil tilsluttede Israel sig den udvidede Europæiske Union, og kom derfor ind under den mere strikse EU-lovgivning vedrørende menneskerettigheder og krigsførsel. Dets militære tilstedeværelse i regionen blev markant reduceret over årene som en følge deraf.\n"
 "\n"
-"Da 2009 blev til 2010 blev fokus dog fjernet fra Mellemøsten da Kinas øgede styrke begyndte at vise sig. Folkets republik havde bidt af sine naboer i flere år, men i december 2010, efter årtier med hårde ord og truende attituder, blev Taiwan erobret i en omfangsrig kinesisk militær invasion. FN udsendte flere reprimander som blev ignoreret. Det internationale samfund debaterede sagen men gjorde intet.\n"
+"Da 2009 blev til 2010 blev fokus dog fjernet fra Mellemøsten da Kinas øgede styrke begyndte at vise sig. Folkets republik havde bidt af sine naboer i flere år, men i december 2010, efter årtier med hårde ord og truende attituder, blev Taiwan erobret i en omfangsrig kinesisk militær invasion. FN udsendte flere reprimander som blev ignoreret. Det internationale samfund debaterede sagen, men gjorde intet.\n"
 "\n"
 "Den 2. kolde krig mellem USA og Kina begyndte da Kina besatte Nord- og Sydkorea i 2012, efter at hemmelige agenter var lykkedes med at afkoble hele Nordkoreas atomarsenal under den 3-dage lange invasion. Den veltrænede og veludrustede folkets hær var langt større end de koreanske divisioner; de besatte begge lande lang tid før koreanerne kunne få hjælp fra andre. Invasionen blev endnu et nederlag for FN og kølige diplomatiske forbindelser mellem Kina og Rusland varede i årtier.\n"
 "\n"
@@ -7782,7 +7833,7 @@ msgstr ""
 "\n"
 "Den følgende borgerkrig var den største jorden havde set. Officerer henviste ofte til den som et barn af Vietnam og 1. verdenskrig. Der var bombninger af hele befolkningsområder, massehenrettelser af krigsfanger, og taktiske atomvåbenangreb på flere byer -- inklusiv Shanghai, Seoul og Ny Delhi -- den 7. juni 2034. Regeringsloyalister smed i alt seks 50-tons bomber på stærkt befæstet oprørspositioner, inklusiv de civile befolkningsgrupper som oprørerne beskyttede.\n"
 "\n"
-"Loyalisthæren fik massive deserteringer i de følgende dage; det var den enkel begivenhed som til sidst førte til regeringens afgang. Mere end seks millioner liv blev tabt før loyaliststyrkerne overgav sig den 15. august 2036; efter hårde kampe hvor de anvendte den brændte jords taktik, mens oprørerne langsomt tvang dem ud i Det Indiske Ocean. Dette blev den officielle afslutning på den 2. kolde krig."
+"Loyalisthæren fik massive deserteringer i de følgende dage; det var den enkelte begivenhed som til sidst førte til regeringens afgang. Mere end seks millioner liv blev tabt før loyaliststyrkerne overgav sig den 15. august 2036; efter hårde kampe hvor de anvendte den brændte jords taktik, mens oprørerne langsomt tvang dem ud i Det Indiske Ocean. Dette blev den officielle afslutning på den 2. kolde krig."
 
 #: ../base/ufos/research.ufo:4177
 msgid "After The War"
@@ -7793,7 +7844,7 @@ msgid "news_after_the_war_txt"
 msgstr ""
 "Asiatiske Republik:\n"
 "\n"
-"I årene der fulgte lod den reformerede kinesiske republik -- med sit gamle førkommunistiske navn -- sine erobrede territorier gå, inklusiv dem der blev besat for århundreder siden. De fik et valg mellem uafhængighed eller en plads i det nye regeringsråd som en lige og respekteret partner i den nye republik. Kæmpende på oprørssiden igennem hele borgerkrigen var Taiwan den første der slog sig sammen med den nye republik. De kom overens med hovedlandet efter at den kommunistiske regering overgav sig. Taiwan blev hurtigt en vigtig spiller i det nye råd og stod bag at de fangne regeringsledere blev sendt til Haag til krigstribunalet anklaget for krigsforbrydelser. Nordkorea, endnu en oprørsnation, valgte også at blive i republikken. De kunne se muligheder for en bedre økonomi og frihed fra et diktatur. De ville ikke blive skuffet.\n"
+"I årene der fulgte lod den reformerede kinesiske republik -- med sit gamle førkommunistiske navn -- sine erobrede territorier gå, inklusiv dem der blev besat for hundreder af år siden. De fik et valg mellem uafhængighed eller en plads i det nye regeringsråd som en lige og respekteret partner i den nye republik. Af de kæmpende på oprørssiden igennem hele borgerkrigen var Taiwan den første der slog sig sammen med den nye republik. De kom overens med hovedlandet efter at den kommunistiske regering overgav sig. Taiwan blev hurtigt en vigtig spiller i det nye råd og stod bag at de tilfangetagende regeringsledere blev sendt til Haag til krigstribunalet anklaget for krigsforbrydelser. Nordkorea, endnu en oprørsnation, valgte også at blive i republikken. De kunne se muligheder for en bedre økonomi og frihed fra et diktatur. De ville ikke blive skuffet.\n"
 "\n"
 "Den kinesiske økonomis genopståen blev anset som et mirakel af samtidens historikere. Det første gennembrud i nanoteknologi blev gjort af kinesiske videnskabsmænd, hvilket indbragte store medicinske og industrielle ordrer fra hele verden. På trods af gammelt had og mistro, tilsluttede andre østasiatiske lande sig langsomt republikken, som snart blev omdøbt til Den Asiatiske Republik for at ære sine nye medlemmer. Selv Japan tilsluttede sig til sidst for at give ekstra liv til sin stagnerende økonomi og befolkning som var blevet formindsket under krigsårene. Republikken fortsatte hovedsagelig tro mod sine principper da borgerkrigen stadig var frisk i erindringen. Igennem årene fik den ry for at håndtere sine medlemslande i en god tone, og opbyggede dermed nok tillid og solidaritet til at den nu kan tale med en stemme for alle de mange milliarder af mennesker i Sydøstasien.\n"
 "\n"
@@ -7801,61 +7852,61 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"Revolutionärsländerna:\n"
+"De Revolutionære lande:\n"
 "\n"
-"With the successive fall of both the United States and China, Socialism in South-America waxed and waned during the post-war years. The US's economic death brought on a surge of revolutionary fervor, swaying several nations away from the influence of capitalism. However, with a democratic framework already halfway in place in most countries, the ideal of rule of the people could for the first time be realised without corruption. This new wave proposed to unite the principles of democracy with true Socialist ideals.\n"
+"Efter at USA og Kina begge faldt, gik socialismen op og ned i sydamerika i efterkrigsårene. Den økonomiske død i USA bragte en lavine af revolutionære følelser, hvilket overbeviste adskillige nationer om at gå væk fra kapitalisme. Men da den demokratiske grundstruktur delvist var på plads, i de fleste lande, blev det muligt at lave det ideelle folkestyre uden korruption. Denne nye bølge formåede at koble demokratiske principper sammen med socialistiske idealer.\n"
 "\n"
-"The whole continent watched in horror at the nuking of Shanghai during the Second Cold War, televised all over the globe right up to the final second. The new wave suffered another major blow when China fell. In that, everyone could see a first-hand example of what might happen to the revolution if it went the way of dictatorship and totalitarianism. It didn't take long for the leaders to respond.\n"
+"Hele kontinentet var chokeret over atomangrebet på Shanghaj, uden den 2. kolde krig, som blev vist på fjernsyn lige op til det sidste sekund. Den nye bølge led et større tilbageslag da Kina faldt. Med dette første hånds indtryk af hvad der kunne ske, hvis revolutionen gik over i diktatur og totallirisme, tog det ikke lang tid for lederne at reagere.\n"
 "\n"
-"Several dictator-led countries immediately tried to turn on the thumbscrews, trying to head off a rebellion before it began, which caused a huge backlash in the larger democratic nations, particularly Cuba, Brazil and Argentina. Suddenly, the last remaining kings of South-America were left with no friends at all.\n"
+"Adskillige diktaturer prøvede at bruge tommelskrue metoder for at forhindre oprør i at opstå. Dette medførte negative reaktioner i større demokratiske lande, især Cuba, Brasilien og Argentina. Pludselig var den sidste arabiske konge uden venner.\n"
 "\n"
-"One by one, they caved to public and political pressure and were replaced by elected houses. The revolution picked up speed instead of losing it; they encouraged greater trade, closer integration, and eventually followed Europe's example of open borders. A new network of highways all over the continent strengthened economies and allowed far more efficient use of arable land. South-America's natural riches were tapped like never before, and they demanded fair prices for every bit of it.\n"
+"En efter en, overgav de sig under det folkelige og politiske pres og blev erstattet af folkevalgte organer. Revolutionen skete hurtigere og hurtigere, fremfor at gå langsommere. Der blev opmuntret til større større samhandel, bedre integration og til sidst fulgte de Europas eksempel med åbne grænser.Et nyt motorvejsnet over hele kontinentet styrkede økonomien og tillod bedre dyrkelse af landbrugsjorden. Syd Amerikas natur rigdomme blev udnyttet som aldrig før og de krævede kun rimelig betaling for alt sammen.\n"
 "\n"
-"Today, the member nations have merged so closely that they are better known as a single body: the Revolutionary Countries. One joint government represents the entire continent, and they manage an economical juggernaut surpassed only by the Greater European Union. Their military is small but has state-of-the-art equipment. Their training is not exceptional.\n"
-"\n"
-"\n"
-"\n"
-"Förenade Amerika:\n"
-"\n"
-"As the US economy started to break down in the late 2020s, more and more people abandoned the country for the greener pastures of Canada and, ironically, Mexico. The value of the dollar plummeted to unprecedented depths, impoverishing millions until its price was fixed by the IMF and the international banking community. The country was then saddled with a brutal reform plan, requiring it to sell off or mothball over half of its military arsenal. To cope with the repayment on sixteen trillion dollars of debt, its interest rate was frozen and its exports shifted to technology and luxury goods. Successful restructuring of NASA, combined with a functional spaceplane prototype, also turned outer space into a money-maker for the post-collapse US. Cape Canaveral began offering the cheapest space launches anywhere on the planet, first with their prototype, later with fully-functional advanced spaceplane designs. This significantly helped the beleaguered country claw its way back towards the black.\n"
-"\n"
-"The cooperation between North-American nations began with financial aid from Canada and Mexico, which saw their exports to the US dipping dangerously and wanted to help fix their most important trading partner. The growing number of expatriates also served to create closer ties. Then, in the most unexpected political turnaround in 2042, Mexico elected the US expatriate Esteban Villa-Lobos Garcia to the office of president.\n"
-"\n"
-"The election was hotly contested. However, the decision held through two recounts, and the new president was inaugurated in July of 2042. Eventually, a combination of sound policies and personal charisma brought most of the country around on Garcia; and then he proposed the Tomorrow Plan.\n"
-"\n"
-"Under the plan, Mexico, Canada and the USA would unite into one country to reawaken the North American superpower. In a number of controversial public votes, the general population in all three countries gave majority support for the Tomorrow Plan; 52% in the United States, 64% in Canada, and 71% in Mexico. The merger was eventually finalised in 2050, creating a United America out of the dominant powers of the New World. The booming space industry quickly spread throughout the new country, and despite a few stumbles along the way, North America steamed headlong towards recovery.\n"
-"\n"
-"Today, UA's debt has decreased from sixteen trillion to two, and standards of living have nearly recovered to what they were before the crash. UA has the most advanced space industry on the planet; NASA performs almost 70% of commercial space launches around the globe. It exports vast quantities of goods to every other nation and is projected to return to solvency in less than three years. Militarily, the UA is the weakest of all the meganations. It has only a small volunteer army and a tiny defence budget as mandated by the IMF. However, what forces the UA does have are highly-trained and can turn on a dime, able to reach any place in the country within two hours.\n"
+"I dag er medlemslandene så tæt knyttet at de er at betragte som en enhed: De revolutionære lande. En fælles regering repræsenterer det samlede kontinent og de administrerer et økonomiske lokomotiv, som kun overgås af den Europæiske Union. Deres militær er lille men med det nyeste i udstyr. Deres træning er dog ikke exceptionel.\n"
 "\n"
 "\n"
 "\n"
-"Storeuropeiska gemenskapen:\n"
+"Forende Amerika:\n"
 "\n"
-"Slowly but surely, the European Union has expanded borders further and further with every passing decade. It first moved into the Middle-East when it accepted Israel as an associate member in 2011, and then upgraded both Israel and Turkey to full membership in 2017. Several Atlantic islands were also accepted in the same resolution, making it the single greatest EU expansion of the 21st century.\n"
+"Da USA's økonomi startede med at bryde sammen i de sene 2020'ere, flygtede flere og flere mennesker til de grønnere græsgange i Canada og, ironisk nok, Mexico. Dollarværdien dykkede til nye dybder, hvilket gjorde millioner af mennesker ludfattige, indtil dens værdi blev fastfrosset af verdensbanken og det internationale bankvæsen. USA blev underlagt en brutal reform plan, som krævede at halvdelen af militærudstyret blev solgt eller lagt i mølposen. For at kunne håndtere betalingen af gælden på 16 trillioner dollars, blev renten også fastfrosset og eksporten gik over til teknologi og luksusvarer. En succesfuld omstrukturering af NASA, kombineret med et funktionelt prototype rumfly, ændrede det rummet til en pengemaskine for efter-kollaps USA. Cape Canavaral begyndte at tilbyde de billigste rum opsendinger i verden, først med deres prototype, senere med fuldt funktionsdygtige rumfly. Dette var en væsentlig faktor i at hjælpe det gældsplagede land til at kæmpe sig mod sorte tal.\n"
 "\n"
-"Following Israel's controversial entrance as an associate member, the EU passed stricter laws on human rights, freedom of religion and separation of church and state. It was also the first Western superpower to officially recognise the Middle-Eastern Alliance, and fostered close relations with the Alliance -- despite United States protests -- in the hope of reducing culture clash and the ongoing threat of terrorism. For the most part, they were successful.\n"
+"Samarbejdet mellem de nord amerikanske stater begyndte med økonomisk hjælp fra Canada og Mexico, som måtte se deres eksport til USA blive faretruende lav. Så de valgte at hjælpe deres vigtigste handelspartner. Det stigende antal immigranter hjalp også til at styrke båndene. I den mest uventede politiske omvæltning, valgte Mexico den amerikanske immigrant Esteban Villa-Lobos Garcia som præsident.\n"
 "\n"
-"In 2028, Greenland -- having grown strong due to immigration from the United States -- formally declared its independence from Denmark. No battles were fought; the Danish government grudgingly recognised the independence due to political pressure from other European countries. In the following months, Greenland briefly considered joining the US as a protectorate, but reconsidered when the EU offered a full membership. This, along with the defection of several US island protectorates in the Atlantic, impelled the EU to rename itself the 'Greater European Union'.\n"
+"Valget blev meget omstridt, men valget stod fast efter to om tællinger, og den nye præsident blev indsat i juli 2042. En kombination af sund politik og personlig karisma samlede det meste af landet omkring Garcia, så han foreslog \"Planen for i morgen\".\n"
 "\n"
-"In the aftermath of the Second Cold War, the GEU has always been on the forefront of political development. It was the only Western nation to second the Middle-Eastern Alliance's vote of no confidence on the old United Nations, after the UN's complete failure to act during the Chinese expansion and eventual civil war. The GEU also strongly supported the Alliance's efforts to create a new UN, providing fair representation to all the world's nations, and with enough teeth to live up to the principles under which it was first created.\n"
+"I følge planen skulle Mexico, Canada og USA samles til et land for at bringe den nord amerikanske supermagt til live igen. Efter et antal kontroversielle folkeafstemninger besluttede et flertal i alle 3 lande at vedtage \"Planen for i morgen\", 52% i USA, 64% i Canada og 71% i Mexico. Sammenslutningen blev endeligt afsluttet i 2050, og skabte Forenet Amerika, ud af de dominerende lande i den Ny verden. Den voksende rumfarts industri spredte sig hurtigt i hele det nye land, og på trods af mindre tilbageslag, rullede nord amerika fremad mod helbredelse.\n"
 "\n"
-"Today, the GEU is the strongest economical and political force in the world. However, its vast bureaucracy and large number of members -- members who don't always see eye-to-eye -- make it slow to manoeuvre in every way. Its military is large and powerful but poorly-integrated, with each individual army sticking to the language and traditions of their country. Military cooperation is difficult to achieve and requires going through huge amounts of red tape. The GEU contributes a majority of UN troops, but they are only ever used as peacekepeers. Whether or not the GEU militaries have lost their 'edge' has been a subject of hot debate in Brussels for many years, and there appears to be no decision in sight.\n"
+"I dag er FA's gæld skrumpet fra 16 trillioner til 2 og levestandarden er næsten tilbage til hvad den var før sammenbruddet. FA har den mest avancerede rumfarts industri i verden og NASA udfører næsten 70% af alle kommercielle rumopsendelser. Det eksporterer umådelige mængder af varer til hver eneste nation i verden og den forventes at landet er solvent om mindre end 3 år. Militært er FA den svageste gruppe af alle mega-nationerne. Det har kun en begrænset frivillig hær og meget lidt forsvarsbudget som krævet af verdensbanken. Trods dette er FA's styrker meget veltrænede and dreje på en 50 øre, og nå et hvert sted i landet på under 2 timer.\n"
 "\n"
 "\n"
 "\n"
-"Mellanösternalliansen:\n"
+"Store Europæiske Union:\n"
 "\n"
-"The rise of the Middle-Eastern Alliance was a surprise to everyone, including the people involved. It was designed solely to weaken Western influence in the Middle-East. The principal designers and first members -- Iran, Syria, Jordan and Afghanistan -- never meant the Alliance to last more than a decade, by which time they expected it to fragment and disband under the weight of its own differences.\n"
+"Langsomt men sikkert udvidede den Europæiske Union sine grænser mere og mere for hvert årti der gik. Det udvidede for første gang i mellemøsten da det optog Israel som tilknyttet medlem i 2011, og gav siden fuld medlemskab til både Israel og Tyrkiet i 2017. Adskillige øer i atlanterhavet blev også optaget ved samme resolution, hvilket gjorde den til den største udvidelse af EU i det 21 århundred.\n"
 "\n"
-"The Second Cold War changed everything. The People's Republic of China was no longer a nearby ally against the West; it became an expanding threat with an appetite, casting hungry eyes on Nepal, chunks of India, and possibly even the sovereign states on China's western border. Pakistan, Tajikistan and Kyrgyzstan rushed into the arms of the Alliance in order to guard themselves against invasion. The Arabian subcontinent joined the Alliance not a year later, seeking to expand their political pull with the West. Without even realising it, they had formed a power block covering nearly the entire Middle-East. Their position was simply too good to allow it to crumble.\n"
+"Efter Israel's kontroversielle optagelse som tilknyttet medlem, vedtog EU mere stramme regler for menneskerettigheder, religionsfrihed og adskillelse af kirke og stat. EU var først til officielt at anerkende den mellemøstlige alliance, og skabte dermed tætte bånd med alliancen -- på trods af USA's protester -- i håbet om at begrænse kulturforskellen og den evige trussel om terror. For det meste med succes.\n"
 "\n"
-"The expanded Alliance, now recognised by the European Union, stepped onto the international stage with knife in hand. They had a stranglehold on most of the world's remaining oil supplies and the will to exploit it.\n"
+"I 2028 erklærede Grønland -- som havde vokset sig stærk p.g.a. immigration fra USA -- sig uafhængig af Danmark. Ingen kampe blev udkæmpet; den danske regering anerkendte modvilligt uafhængigheden p.g.a. politisk pres fra de øvrige europæiske lande. I de følgende måneder overvejede Grønland kortvarigt at slutte sig til USA som vasal stat, men ombestemte sig da EU tilbød fuldt medlemskab. Dette sammen med adskillige atlanterhavs øer som forlod USA's beskyttelse, fik EU til ændre sit navn til \"Store Europæiske Union\".\n"
 "\n"
-"The Alliance's economic power grew as outside oil reserves dwindled. Pharmaceutical manufacturers packed up in droves and moved to the Middle-East, the only place left in the world where oil was cheap and plentiful. This, along with the many other applications of crude oil, allowed the Middle-East to survive the Russian 'nuclear revolution' and the subsequent worldwide migration to nuclear power. It continued its expansion with Egypt, Uzbekistan, Turkmenistan, and disputed chunks of Africa around the Red Sea. The entire Red Sea region was quickly pacified when the Alliance moved in its military to assist the new African members.\n"
+"Efter afslutningen af den 2. kolde krig, har SEU altid være forrest i den politiske udvikling. Det var den eneste vestlige nation som støttede Mellemøst alliancens mistillidsvotum i det gamle Forende Nationer, efter FN's komplette mangel på handling under den kinesiske udvidelse og følgende borgerkrig. SEU var også stærke støtter af alliancens forsøg på at skabe et nyt FN med lige repræsentation for alle verdens nationer og med vilje nok til at leve op til de principper som den blev skabt på.\n"
 "\n"
-"Today, the spread of prosperity has turned the Middle-East away from dogma and towards secular law and gender equality. It is still ruled by individuals -- Sultans, Emirs, Maliks, Presidents and Generals -- but their personal power is kept in check by the rest of the Alliance, rulers who do not want their colleagues stepping out of line. Political dissent is tolerated due to pressure from the EU and other nations, but even in 2084 few of the Alliance's member nations have a functioning democratic process.\n"
+"I dag er SEU den stærkeste økonomiske og politiske magtfaktor i verden. Desværre gør det omfattende bureaukrati og store antal medlemmer -- medlemmer som ikke altid ser ens på tingene -- det langsomt til at manøvre på alle måder. Dets militær er stort og stærkt men dårligt organiseret, hvor hver enkelt hær holder sig til sit sprog og traditioner. Militært samarbejde er vanskeligt at opnå og kræver masser af papir skubberi. SEU leverer størstedelen af FN's tropper, men de bruges udelukkende til fredsbevarende operationer. Hvor vidt SEU's militær har mistet sin skarphed eller ej, har været debatteret i Bruxelles i mange år, og ser ikke ud til at der bliver truffet en beslutning i nær fremtid.\n"
 "\n"
-"The Alliance military is large, fast and mean. It is one of the most elite and well-equipped forces in the world, and it uses more permissive rules of engagement than either United America or the Asian Republic. Their clause for 'acceptable civilian casualties' has been the source of huge amounts of criticism from across the world, but the Alliance has stubbornly maintained this clause throughout the four decades it has been in effect.\n"
+"\n"
+"\n"
+"Mellemøst alliancen:\n"
+"\n"
+"Oprettelsen af den Mellemøstlige alliance, var en stor overraskelse for alle, inklusiv de folk som den omfatter. Den blev udelukkende lavet for at svække den vestlige indflydelse i mellemøsten. Hovedaktørene og de første medlemer -- Iran, Syrien, Jordan og Afghanistan -- havde aldrig tænkt sig at at alliancen skulle holde mere end et årti. De forventede at alliancen ville opløses grundet deres interne forskelle.\n"
+"\n"
+"Den 2. kolde krig ændrede alting. Folkerepublikken Kina var ikke længere a nær allieret mod vesten; det blev en voksende trussel med en appetit, som kiggede sulten på Nepal, dele af Indien and muligvis de selvstændige stater ved den vestlige grænse. Pakistan, Tajikistan og Kyrgyzstan styrtede ind i armene på alliancen for at beskytte dem selv mod invasion. Den arabiske havlø meldte sig ind inden for et år, for at udvide deres politiske rækkevidde i vesten. Uden at ville det, have de oprettet en magtfaktor dækkende næsten hele mellemøsten. Denne position var simpelthen for god at opgive.\n"
+"\n"
+"Den udvidede alliance, nu anerkendt af den europæiske union, stod frem på den internationale scene med en kniv i hånden. De havde fuld kontrol over de meste af verdens restrende olie forekomster og viljen til at udnytte det.\n"
+"\n"
+"Alliancen økonomiske magt voksede efterhånden som andre olie lagre svandt ind. Medicinindustrien flyttede i hobetal deres produktion til mellemøsten, det eneste sted i verden hvor olien stadig var billig og rigelig. Dette, sammen med de mange andre olie baserede produkter, tillod mellemøsten at overleve den russiske 'atom revolution' og den efterfølgende verdensomspændende overgang til atomkraft. Den har fortsat sin udvidelse med Ægypten, Uzbekistan, Turkmenistan og gjort krav på områder af Afrika omkring det røde hav. Hele røde hav regionen var hurtigt pacificeret da alliancen støttede de nye afrikanske medlemmer militært.\n"
+"\n"
+"I dag har spredning af velfærd ændret mellemøsten fra dogme, mod sekulære love og ligestilling. Den er stadig styret af individer -- Sultaner, Emirer, Maliks, Præsidenter og Generaler -- men deres personlige magt er holdt i skak af den øvrige alliance, som ikke ønsker at deres kolleager træder over stregen. Politiske modstandere tolereres p.g.a. pres fra EU and andre nationer, men alligevel har nogle medlemslande fungerende demokratiske processer.\n"
+"\n"
+"Alliancen's militær er stort, hurtigt og hårde. De er nogle af de meste elitære og vel udrustede tropper i verden, og der tillades vide kampregler, end USA eller den asiatiske republik. Deres definition på 'acceptable civile tab' har været kilde til meget kritik fra hele verden, men alliancen har stædigt fastholdt deres definition igennem fire årtier.\n"
 "\n"
 "\n"
 "\n"
@@ -7863,11 +7914,11 @@ msgstr ""
 "\n"
 "Født af vold og kamp har Ny Afrika fundet sin enhed i opdeling. Kontinentet slæbte sig frem i de første tre årtier af det 21. århundrede, med borgerkrige, etniske udrensninger og krigsforbydelser af den værste slags. Lige indtil en række Centralafrikanske lande startede et stort projekt i 2039 hvor diamantkartellernes indflydelse blev forsøgt brudt og pengene brugt til langsigtet udvikling.\n"
 "\n"
-"Resultatet blev et militært og økonomisk blodblad. FN forsøgte med forskellige tiltag for at stoppe kampene, men endnu mere tandløs end tidligere, førte det ikke til noget. However, the league of nations was eventually joined by several others, tired of being pushed around by Western conglomerates, and after several years of bitter fighting they were successful in taking down the cartels one by one. This left them with some of the largest, most advanced diamond and gold mines in the world; it made their combined territory the largest single supplier of natural diamonds in the world. It also gave them a new sense of what they could accomplish together. The core of New Africa was born.\n"
+"Resultatet blev et militært og økonomisk blodblad. FN forsøgte med forskellige tiltag for at stoppe kampene, men endnu mere tandløs end tidligere, førte det ikke til noget. Imidlertid blev gruppen af lande udvidet med flere lande, som var trætte af at blive skubbet rundt i manegen af vestlige karteller og efter adskillige års hårde kampe lykkedes det at nedlægge kartellerne en efter en. Det gav dem nogle af de største og mest avancerede diamant- og guldminer i verden; det gjorde samlede lande til den største leverandør af naturlige diamanter i verden. Det gav dem også følelsen at de kunne opnå noget hvis de stod sammen. Grundstammen i Ny afrika var født.\n"
 "\n"
-"All the African nations involved in the anti-cartel war, with the exception of territories loyal to the Commonwealth of Oceania and the Middle-Eastern Alliance, began to work much more closely together, taking cues from South-America in building a dependable road network to fuel trade and communication. It also allowed a much better distribution of food. Over the next thirty years, New Africa completely eliminated famine within its borders, which it changed completely to accomodate ethnicity and a desire for independence within its territories, and brought socialised public health-care to its people at near-ruinous cost. However, it also found new exports in the commercialised, sustainable growth of tropical hardwood and exotic fruit. The new cooperation made price agreements across the continent possible for the first time; like the Revolutionary Countries, New Africa forced the rest of the world to pay fairly for all goods and services.\n"
+"Alle de afrikanske lande som var involveret i anti-kartel krigen, med undtagelse af de områder som var loyale over Oceanien eller ellemøst alliancen, begyndte at arbejde tættere sammen, efterlignede Syd-Amerika og byggede et brugbart vejnet som kunne understøtte handel og kommunikation. Det tillod også bedre distribution af mad. Over de næste 30 år udryddede Ny Afrika sult og hungersnød indenfor deres grænser, ændrede sig til at rumme etniske mindretal og ønsket om uafhængighed og bragte offentlig sygehjælp til folket til næsten uhørte omkostninger. Imidlertid fandt det også nye eksport muligheder i kommerciel, bæredygtig dyrkelse af tropisk træ og eksotisk frugt. Den nye sammenslutning gjorde det muligt at lave prisaftaler på tværs af kontinentet.Ligesom De Revolutionære Lande, tvang Ny Afrika resten af verden til at betale rimelige priser for alle varer og ydelser.\n"
 "\n"
-"Today, New Africa is still the weakest of the great powers economically, but it is growing fast. It has a large, motivated standing army, but the troops are not well-equipped, armed mostly with former US antiques and even century-old Soviet equipment. They also have trouble getting to remote locations due to frequent equipment failures and the continent's difficult geography. Most of the time, the best the New Africans can do is spot UFOs as they land with one of thousands of scouts and small patrols out in the country to combat poaching and smuggling.\n"
+"I dag er Ny Afrika stadig den svageste, af de store, økonomiske magtfaktorer, men den vokser stærkt. Den har en stor motiveret stående hær, men tropperne er ikke veludrustet, hovedsaligt udstyret med tidligere USA antikviteter eller endog hundred år gamle russisk udstyr. De har også problemer med at nå til de mere fjerntliggende områder p.g.a. nedbrud i udstyret og kontinentets besværlige geografi. Det meste af tiden, det bedste som Ny Afrika kan gøre at er opdage UFOer når de lander, med deres tusindvis af spejdere og små patruljer som kører rundt i landet for at bekæmpe snigskytteri og smugling.\n"
 "\n"
 "\n"
 "\n"
@@ -7877,29 +7928,29 @@ msgstr ""
 "\n"
 "Tingene begyndte endelig at se lysere ud for Rusland da premiereminister Yevgeny Karamozov gav fuld uafhængighed til Tjetjenien i 2047. Mens den nylig udnævnte tjetjenske republik eksploderede i en storm af vold der skulle afgøre hvem der egentlig skulle regere, vendte Rusland sig væk og koncentrerede sig om sine egne problemer og overlod dermed Tjetjenien til sig selv -- og til det nye og forbedrede FN, som straks forsøgte at stoppe blodsudgydelserne. Desværre skete dette ikke lige med det samme, og selv da kunne Tjetjenien kun returnere til Ruslands interessesfære, men for første gang med en fuldt anerkendt stemme.\n"
 "\n"
-"Economic salvation for Russia -- especially with oil supplies from the Middle-East dwindling -- began with drilling the country's own oil in Siberia, with new techniques and equipment able to survive the harsh winter conditions, and later with the construction of a series of new nuclear power plants. Russia invested heavily in research to make the new plants smaller, safer and -- more importantly -- sustainable. This involved a switch from enriched uranium to thorium as the main nuclear fuel for all the new Russian plants, and advanced new designs based upon the 'energy amplifier', a new type of fission reactor first test-built near Rome from 2004 to 2011. Two of the new reactors even consumed plutonium from dismantled nuclear weapons and from the stored waste of older power plants.\n"
+"Den økonomiske redning for Rusland -- specielt efter at olie leverancerne fra mellemøsten svandt ind -- begyndte med at bore efter landets egen olie i Sibirien, med nye teknikker og udstyr som kunne holde til den hårde vinter, og senere med konstruktionen af en række nye atomkraftværker. Rusland investerede massivt i forskning for at gøre de nye kraftværker mindre, sikrer -- og mest vigtigt -- rentable. Dette involverede et skift fra beriget uran til thorium som det centrale nukleare brændstof i alle de nye russiske kraftværker, og avancerede nye designs baseret på \"energi forstærkning\", en ny type fissions reaktor, første forsøgs værk bygget uden for Rom 2004-2011. To af de nye reaktorer brugte endda plutonium fra de nedlagte atomvåben og fra gemte affaldsdepoter fra tidligere værker.\n"
 "\n"
-"Then, eight years after the Chechen independence, Russia's 'nuclear revolution' really came into its own with the invention of the depleted element postprocessor, which could convert 90% of an energy amplifier's waste into radiation-free elements in weeks instead of centuries. The Russians ended the age-old energy crisis almost overnight; nuclear fission became safe, relatively clean, and global thorium supplies would see the world clear into the year 3000.\n"
+"Så, 80 år efter den tjekkiske løsrivelse, kom Ruslands \"atom revolution\" til sin fulde ret, med opfindelsen af \"restelement efterbehandleren\", som kunne konvertere 90% af en \"energi forstærkers\" affaldsprodukt til strålings-frie elementer på uger i stedet for århundredere. Russerne sluttede en åre-lang energi krise næsten over en nat; atom fission blev sikker, relativ ren og de globale thorium reserver vil række til mindst år 3000.\n"
 "\n"
-"Today, many of the ex-Soviet republics have rejoined Russia, following the example of the other great nations, eager to take advantage of the power generation and nuclear technology that are now Russia's main exports. The nuclear revolution continues even today with the gradual development and commercialisation of fusion power. Though its economy is still troubled, the country is now in better shape than it has been for centuries -- whether under the khans, the czars or the Soviets. Its military is somewhat antiquated but highly-trained, well-disciplined and professional, and it does not lack for manpower.\n"
+"I dag har mange af de tidligere ex-sovjet republikker genforenet sig med Rusland, som opfølgning på de øvrige store nationers handlinger, ivrige efter at drage fordel af den energi produktion og atom teknologi som nu er Ruslands vigtigste eksportkilde. Den atomare revolution fortsætter den dag i dag med løbende udvikling og kommercialisering af fusions kraft. Selv om økonomien stadig lider, er landet i bedre form nu, end det har været længe -- enten under Khanerne, Zarene eller Sovjetterne. Dets militær er lettere forældet men veltrænnet, veldisciplineret og professionelt, og det mangler ikke soldater.\n"
 "\n"
 "\n"
 "\n"
-"Samfälligheten Oceanien:\n"
+"Oceanien:\n"
 "\n"
-"The Commonwealth of Nations, a political organisation made up of most of the countries of the old British Empire, lost a great deal of power going into the Second Cold War. First, Pakistan cut its ties to the Commonwealth when joining the Middle-Eastern Alliance. Then, as the United States crashed and burned, Britain and Canada became more and more concerned with their own parts of the world and let their participation dwindle to nothing. By 2030, they were members in name only.\n"
+"\"Commonwealth of Nations\" en politisk organisation som hovedsaligt bestod af lande fra det tidligere britiske emperium, mistede en stor del af sin styrke ved starten af den 2. kolde krig. Først afbrød Pakistan sine forbindelser, da de gik over til mellemøst alliancen. Derefter, samtidig med at USA kollapsede, blev England og Canada mere og mere fokuseret på deres egne dele af verden og lod deres deltagelse svinde ind. I 2030 var de kun medlem af navn.\n"
 "\n"
-"The growing power of China throughout the war caused a huge expansion in military budgets for India and Australia, budgets which their economies had trouble supporting. Then, in 2035, India became one more battlefield in the Chinese civil war. Veteran government troops easily defeated the Indian military in several short but bloody engagements and seized most of the country while the rebels pursued.\n"
+"Den stigende kiniske styrke igennem hele krigen, forudsagdede en kraftig forøgesle i de militære budgetter i både Indien og Australien, budgetter som deres økonomi havde svært ved at bære. I 2035 blev Indien igen en slagmark i den Kinesiske borgerkrig. Elite regeringstropper nedkæmpede nemt det indiske militær i adskillige korte men blodige kampe og overtog det meste af landet, mens oprørene forfulgte dem.\n"
 "\n"
-"Australia pledged a full-scale military intervention along with several South-African Commonwealth members. After weeks of brutal fighting, the Australian divisions managed to link up with Chinese rebel forces and the surviving regiments of the Indian army, and together they nearly annihilated the governmental army before the surrender in 2036.\n"
+"Australien lovede en storstilet militær indgriben sammen med adskillige syd afrikanske medlemslande. Efter uger med brutale kampe lykkedes det de australeske enheder at få forbindelse med de kinesiske oprører og de overlevende indiske regimenter, og sammen lykkedes det næsten at udrydde regeringshæren inden de overgav sig i 2036.\n"
 "\n"
-"The cost was high. The conquered parts of India were a wasteland, the country had no government left after the nuking of New Delhi, and famines were already starting to grip the population. It began ceding worthless parts of land to other nations and gave independence to several small regions along its border. The remaining Commonwealth nations undertook the vast task of reconstructing India, though many abandoned the project and the Commonwealth in favour of the other growing superpowers.\n"
+"Prisen var høj. De eroberede område i Indien var en ødemark, landet havde næsten ingen regering tilbage efter atombomben over New Delhi, and sult var allerede ved at få greb i befolkningen. De begyndte at give værdiløse dele af landet væk til andre nationer og giv uafhængighed til adskillige små regioner langs dets grænser. Den øvrige \"commenwealth\" nation påtog sig den enorme opgave at genopbygge Indien, på trods af at mange forlod projektet og commenwealth til fordel for andre voksende supermagter.\n"
 "\n"
-"The reconstruction of India eventually united the Commonwealth into one great nation, taking advantage of their geographic location around the Indian Ocean and the South Pacific to charge strategic tariffs for ships passing through their waters. Commonwealth shipping, on the other hand, was free from tariffs and quickly rose to dominance in the competitive market. Later, with the breaking of the diamond cartels in Africa, the Commonwealth seized several leaderless mines inside its borders and used them to their full potential.\n"
+"Rekonstruktionen af Indien bragte efterhånden commenwealth tættere sammen og tilsidst blev det en stor nation, som udnyttede sin geografiske situation omkring det indiske ocean og det sydlige stillehav til at opkræve strategiske toldbeløb af skibe som passerede igennem deres teritorium. Commenwealth skibe var selvfølgelig undtaget for disse toldbeløb, og overtog hurtigt dominansen i det konkurrence prægede marked. Senere da de afrikanse diamant karteller blev brudt, var commenwealth hurtigere til at overtage herreløse miner i deres territorium og udnytte dem til fulde.\n"
 "\n"
-"Today, the Commonwealth of Nations is better known as the 'Commonwealth of Oceania' or just 'Oceania'. Since its inception it has accepted several non-Commonwealth countries into its midst, notably Madagascar, Zimbabwe and Indonesia, extending its control over the Oceanian waters. While it still can't compete economically with the richer nations, it has carved out its own niche, and is quite happy to go on prospering in it.\n"
+"I dag er commenwealth bedre kendt som \"Det sammenhørende Oceanien\" eller bare \"Oceanien\". Siden sin oprettelse har det optaget adskillige ikke commenwealth lande, mest betydningsfulde Madagascar, Zimbabwe og Indonesien, og dermed udvidet sin kontrol over oceaneske vande. Selvom det stadig ikke kan konkurrerer økonomisk med de rigere lande har det oprettet en niche og er ret glade for at udnytte dets fulde potentiale.\n"
 "\n"
-"Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations."
+"Oceaniens militær består hovedsaligt af en kraftige flådestyrke. Den landbaserede hær er ret lille sammenlignet med de øvrige nationer, undtaget USA, og har kun en forsvars rolle, og har en middelmådig træning og udstyr. Den kan dog reagere hurtigt i nødsituationer."
 
 #: ../base/ufos/research.ufo:4190
 msgid "PHALANX And The Mumbai Aftermath"
@@ -7912,25 +7963,25 @@ msgstr ""
 "\n"
 "Projektets fortalere brugte to år på at opbygge støtte blandt klodens ledere. Endelig, i 1957, fik FALANKS sin første ressourcetildeling. En væsentlig del af det første års »sorte budget« blev brugt til at bygge et avanceret underjordisk kompleks i Nevada-ørkenen på Nellis luftbasen. Komplekset blev navngivet »FALANKS Stillehavskommando«, og fyldt med førsteklasses udstyr og de bedste og skarpeste hjerner til at udtænke hvordan et udenjordisk angreb på USA skulle imødegås.\n"
 "\n"
-"Verden gik dog videre, mens FALANKS, fortsatte forberedelserne på noget som aldrig skete. Vietnamkrigen som førte til en stor stigning i militærbudgetterne, hvoraf næsten intet blev tildelt FALANKS eller lignende projekter, førte også til at FALANKS budget blev skåret ned og til sidst forsvandt til fordel for krigsindsatsen. På trods af gentagne foreslag for yderligere ressourcer, tog overkommandoen beslutning om at projektet alene skulle fortsætte for den del som vedrørte forskning. En smule ressourcer blev dog afsat til at holde det gamle udstyr parat og laboratorierne i gang.\n"
+"Verden gik dog videre, mens FALANKS, fortsatte forberedelserne på noget som aldrig skete. Vietnamkrigen som førte til en stor stigning i militærbudgetterne, hvoraf næsten intet blev tildelt FALANKS eller lignende projekter, førte også til at FALANKS budget blev skåret ned og til sidst forsvandt til fordel for krigsindsatsen. På trods af gentagne forslag for yderligere ressourcer, tog overkommandoen beslutning om at projektet alene skulle fortsætte for den del som vedrørte forskning. En smule ressourcer blev dog afsat til at holde det gamle udstyr parat og laboratorierne i gang.\n"
 "\n"
 "FALANKS kom aldrig rigtig i gang igen efter krigen. De fik aldrig det samme budget som de havde i 1950'erne; de gyldne år var forbi. De fik nogen ny teknologi som også blev anvendt i Golfkrigen, og fik et lille løft i begyndelsen af det 21. århundrede, på grund af stigende amerikanske militærbudgetter, men efter denne korte periode gik projektet igen ind i en periode med ubemærkethed.\n"
 "\n"
-"Den anden kolde krig fjernede det sidste liv tilbage i projektet. Dets kommandører kæmpede for at holde det i gang selv uden penge til at holde flyene i luftet, men selv opfindelsen af kunstig edderkopsilke kunne ikke redde dem fra USA's kriseramte økonomi. Landets vej ind i ruin førte til en standsning af alle ikkevæsentlige militære programmer, en efter en, og FALANKS blev endelig strøget af budgettet i 2027. Det var fem måneder før dets 70 års jubilæum. Personalet blev afskediget, basen afmonteret, det unikke udstyr pakket sammen og smidt på lagerrum. Projektet blev hurtigt glemt.\n"
+"Den anden kolde krig fjernede det sidste liv tilbage i projektet. Dets kommandører kæmpede for at holde det i gang selv uden penge til at holde flyene i luften, men selv opfindelsen af kunstig edderkopsilke kunne ikke redde dem fra USA's kriseramte økonomi. Landets vej ind i ruin førte til en standsning af alle ikke væsentlige militære programmer, en efter en, og FALANKS blev endelig strøget af budgettet i 2027. Det var fem måneder før dets 70 års jubilæum. Personalet blev afskediget, basen afmonteret, det unikke udstyr pakket sammen og smidt på lagerrum. Projektet blev hurtigt glemt.\n"
 "\n"
 "Indtil det blev genopdaget den 9. marts 2084 af en gammel mand som huskede at have læst om det i en støvet fil i hans forlængst nedlagte kontor.\n"
 "\n"
-"The horror and enormity of the events in Mumbai shocked the world. The existence of intelligent alien life in the universe was no longer a matter of faith. Not only did it exist, it had made contact in the worst way. The massacres were too large and visible for Earth's governments to keep them secret. Video evidence of the smoking, blood-stained streets aired on television sets around the world. The aliens had left no other evidence of their visit; they diligently recovered their dead and collected every scrap of dropped technology before pulling out.\n"
+"Forfærdelsen og det enorme omfang af hændelsen i Mumbai chokerede verden. Eksistensen af intelligent live i universet var ikke længere et spørgsmål om tro. Ikke alene eksisterede de, de har lavet kontakt på den værste måde. Massakeren var så omfattende og synlige at jordens regeringer ikke kunne holde det hemmeligt. Video optagelser af det rygende, blod dråbende gader blev vist på fjernsyn over hele verden. Rumvæsenerne havde ikke efterladt noget andet spor af deres besøg; de fjernede omhyggeligt deres døde og samlede hver eneste tabt stykke udstyr før de trak sig tilbage.\n"
 "\n"
-"Panic spread like wildfire in the wake of the Mumbai broadcasts, and things got worse as word reached the general public about the slaughter in Bonn, Johannesburg and Bangkok. The world knew it had been visited, and now it began to realise it was under attack.\n"
+"Panik spredte sig som løbeild efter udsendelserne fra Mumbai, and ting blev kun værre da nyheden om nedslagtningen i Bonn, Johannesborg og Bangkok nåede befolkningen. Jorden var blevet besøgt og begyndte nu at opfatte at den var under angreb.\n"
 "\n"
-"The quest for solutions was frantic. The United Nations remained in session continuously for over a week. Plans were drawn up and burnt down with lightning speed. The world was completely defenceless against an alien invasion, both militarily and psychologically. No one had prepared for this. It was one of the forgotten doomsday scenarios that sat crumbling to dust in the back closet of some strategic planning office, unread and unheeded. Now, however, the public demanded answers that no one knew, action that no one could provide.\n"
+"Søgen efter løsninger var hektisk. FN holdt møde uafbrudt i over en uge. Planer blev lavet og skudt ned med lynets hastighed. Jorden var fuldstændig forsvarsløs mod invasionen fra rumvæsenerne, både militært og psykologisk. Ingen var forberedt på dette. Det var et dommedags scenarie som samlede støv bagerst i et skab i et eller andet stratetisk planlægningskontor, ulæst og ubemærket. Men nu krævede befolkningen svar, som ingen kendte og handling, som ingen kunne give.\n"
 "\n"
-"The UN could agree only on a few token gestures; at the order of the Security Council, NASA evacuated International Space Stations 1 and 2, as well as the permanent colony on the moon. The entire range of planned missions to Mars was stricken from the calendar. On all the matters that counted, the UN was deadlocked. Some nations wanted to build massive orbital defences while others insisted they should be permitted to use nuclear missiles for UFO interception. Still others had even more outlandish projects to push. The situation grew worse as the days wore on, until one aging diplomat remembered the PHALANX project.\n"
+"FN kunne blive enige om nogle få meningsløse gestuser; efter ordre fra sikkerhedsrådet, evakuere NASA de internationale rumstationer 1 og 2, samt den permanente koloni på månen. Alle de planlagte rejser til Mars blev fjernet fra kalenderen. På alle de områder der betød noget, var FN fastlåst. Nogle nationer ønskede at bygge enorme flyvende rumfæstninger, mens andre insisterede på at de skulle have lov til at bruge atommissiler til nedskydning af UFOer. Andre igen havde endnu vildere projekter de ønskede gennemført. Situationen blev værre og værre som tiden gik, indtil en aldrende diplomat huskede FALANKS projektet.\n"
 "\n"
-"Med fuld adgang til de gamle USA-filer, blev FN chokeret over at finde planer, beskrivelser, udstyr og træningsmanualer; en detaljeret forsvarsplan til imødegåelse af en invasion af rumvæsener. De besluttede øjeblikkeligt at genoplive FALANKS og udstyre den så den kunne beskytte jorden fra truslen fra rumvæsenerne. Desværre var alle som engang var en del af FALANKS enten død eller døende. De havde brug for nye personale.\n"
+"Med fuld adgang til de gamle USA-filer, blev FN chokeret over at finde planer, beskrivelser, udstyr og træningsmanualer; en detaljeret forsvarsplan til imødegåelse af en invasion af rumvæsener. De besluttede øjeblikkeligt at genoplive FALANKS og udstyre den så den kunne beskytte jorden fra truslen fra rumvæsenerne. Desværre var alle som engang var en del af FALANKS enten død eller døende. De havde brug for nyt personale.\n"
 "\n"
-"Ved enstemmighed blev det besluttet at holde projektet så hemmeligt som muligt, kun kendt af de højest rangernede politikere og militære ledere i verden. Offentligheden blev beroliget med afledninger og små løgne mens en håndplukket gruppe af agenter fra hele verden kæmpede med at få gjort FALANKS til en operationsdygtig funktion. Gammelt udstyr blev opsporet og hevet frem fra gamle lagre, gulnede manualer blev tørret af og skilte våben blev samlet til brug igen. Med den hemmelige støtte far alle otte store magter havde projektet nu ressourcer og de mænd der skulle bruges til at føre krig.\n"
+"Ved enstemmighed blev det besluttet at holde projektet så hemmeligt som muligt, kun kendt af de højest rangerende politikere og militære ledere i verden. Offentligheden blev beroliget med afledninger og små løgne mens en håndplukket gruppe af agenter fra hele verden kæmpede med at få gjort FALANKS til en operationsdygtig funktion. Gammelt udstyr blev opsporet og hevet frem fra gamle lagre, gulnede manualer blev støvet af og skilte våben blev samlet til brug igen. Med den hemmelige støtte fra alle otte store magter havde projektet nu ressourcer og de mænd der skulle bruges til at føre krig.\n"
 "\n"
 "Alt hvad projektet manglede var en leder."
 
@@ -8134,12 +8185,12 @@ msgstr "<TODO>"
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
 msgstr ""
-"Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder men ikke så langt væk, at den er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
+"Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder, men ikke så langt væk, at den er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
 msgstr ""
-"Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter de. 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerna hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen stiger nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber -- og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af af verden."
+"Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter de. 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerne hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen sker nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber -- og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af af verden."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
@@ -8149,12 +8200,12 @@ msgstr ""
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
 msgstr ""
-"Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden uden, at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
+"Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden, uden at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
 msgstr ""
-"Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle uofer forsvinder uden et sport -- men ingen tvivler på, at de kommer tilbage."
+"Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle uofer forsvinder uden spor -- men ingen tvivler på, at de kommer tilbage."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
@@ -8304,11 +8355,11 @@ msgstr "Shevaar"
 msgid "Bloodspider"
 msgstr "Blodedderkop"
 
-#: ../base/ufos/team_humans.ufo:505
+#: ../base/ufos/team_humans.ufo:1993
 msgid "Phoenix"
 msgstr "Føniks"
 
-#: ../base/ufos/team_humans.ufo:526
+#: ../base/ufos/team_humans.ufo:2014
 msgid "Ares W"
 msgstr "Ares W"
 
@@ -9200,8 +9251,8 @@ msgstr ""
 "Luftfartøj kan ikke lette.\n"
 
 #: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:542
-#: client/cl_aircraft.c:730 client/cl_aircraft.c:985 client/cl_aircraft.c:1082
-#: client/cl_aircraft.c:1689 client/cl_airfight.c:339
+#: client/cl_aircraft.c:730 client/cl_aircraft.c:987 client/cl_aircraft.c:1084
+#: client/cl_aircraft.c:1691 client/cl_airfight.c:339
 #: client/cl_aliencont.c:189 client/cl_aliencont.c:219
 #: client/cl_aliencont.c:232 client/cl_aliencont.c:245
 #: client/cl_basemanagement.c:1138 client/cl_basemanagement.c:2354
@@ -9221,8 +9272,8 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1032
-#: client/cl_main.c:1267 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1039
+#: client/cl_main.c:1274 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
@@ -9322,15 +9373,15 @@ msgstr "Elektronik:\t%i på %i"
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Du har et nyt luftfartøj (en/et %s) på base %s"
 
-#: client/cl_aircraft.c:985
+#: client/cl_aircraft.c:987
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "Dit landingsfly er næsten tomt og returnerer til basen"
 
-#: client/cl_aircraft.c:1082
+#: client/cl_aircraft.c:1084
 msgid "Assign a team to aircraft"
 msgstr "Tildel et hold til luftfartøj"
 
-#: client/cl_aircraft.c:1689
+#: client/cl_aircraft.c:1691
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "En ufo skyder på %s"
@@ -9447,7 +9498,7 @@ msgid_plural "%i days left"
 msgstr[0] "%i dag tilbage"
 msgstr[1] "%i dage tilbage"
 
-#: client/cl_basemanagement.c:2230 client/cl_team.c:1552 client/cl_team.c:1766
+#: client/cl_basemanagement.c:2230 client/cl_team.c:1558 client/cl_team.c:1772
 msgid "NewTeam"
 msgstr "Nythold"
 
@@ -9531,7 +9582,7 @@ msgstr ""
 #: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
 #: client/cl_campaign.c:2759 client/cl_market.c:655 client/cl_market.c:660
 #: client/cl_market.c:687 client/cl_market.c:799 client/cl_market.c:801
-#: client/cl_save.c:367 client/cl_team.c:1598 client/cl_team.c:1605
+#: client/cl_save.c:367 client/cl_team.c:1604 client/cl_team.c:1611
 msgid "Note"
 msgstr "Bemærk"
 
@@ -9580,7 +9631,7 @@ msgid "%s: %1.2f%% (%d %s)\n"
 msgstr "%s - %1.2f%% (%d %s)\n"
 
 #: client/cl_basesummary.c:186 client/cl_campaign.c:1384
-#: client/cl_campaign.c:4544
+#: client/cl_campaign.c:4549
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "videnskabsmand"
@@ -9758,19 +9809,19 @@ msgid_plural "credits"
 msgstr[0] "beløb"
 msgstr[1] "beløb"
 
-#: client/cl_campaign.c:1385 client/cl_campaign.c:4546
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4551
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "læge"
 msgstr[1] "læger"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4543
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4548
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldater"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4545
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4550
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "arbejder"
@@ -9957,11 +10008,11 @@ msgstr "Soldat forfremmet"
 msgid "Defense of base: %s successful!"
 msgstr "Baseforsvar: %s succesfuld!"
 
-#: client/cl_campaign.c:4533
+#: client/cl_campaign.c:4538
 msgid "Human"
 msgstr "Menneske"
 
-#: client/cl_campaign.c:4537
+#: client/cl_campaign.c:4542
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -9980,27 +10031,27 @@ msgstr ""
 "Maks tilladt gæld: %i kr\n"
 "%s\n"
 
-#: client/cl_campaign.c:4690
+#: client/cl_campaign.c:4695
 #, c-format
 msgid "  * %i x\t%s\n"
 msgstr "  * %i x\t%s\n"
 
-#: client/cl_campaign.c:4713
+#: client/cl_campaign.c:4718
 #, c-format
 msgid "  * %s\n"
 msgstr "  * %s\n"
 
-#: client/cl_campaign.c:4871
+#: client/cl_campaign.c:4876
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "Fandt %s på slagmarken. Ufo transporteres til base %s"
 
-#: client/cl_campaign.c:4873 client/cl_campaign.c:5015
-#: client/cl_campaign.c:5106
+#: client/cl_campaign.c:4878 client/cl_campaign.c:5020
+#: client/cl_campaign.c:5111
 msgid "UFO Recovery"
 msgstr "Ufo indsamling"
 
-#: client/cl_campaign.c:4951
+#: client/cl_campaign.c:4956
 msgid ""
 "\n"
 "\n"
@@ -10010,13 +10061,13 @@ msgstr ""
 "\n"
 "Valgt base:\t\t\t"
 
-#: client/cl_campaign.c:5013
+#: client/cl_campaign.c:5018
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
 
-#: client/cl_campaign.c:5076
+#: client/cl_campaign.c:5081
 msgid ""
 "\n"
 "\n"
@@ -10026,7 +10077,7 @@ msgstr ""
 "\n"
 "Valgt nation:\t\t\t"
 
-#: client/cl_campaign.c:5104
+#: client/cl_campaign.c:5109
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "Sikret %s blev ødelagt."
@@ -10249,26 +10300,26 @@ msgid ""
 msgstr ""
 "Base %s har ikke antistof lagerrum. %i enheder af antistof blev fjernet."
 
-#: client/cl_main.c:354 client/cl_main.c:989
+#: client/cl_main.c:361 client/cl_main.c:996
 msgid "Assemble a team first"
 msgstr "Saml et hold først"
 
-#: client/cl_main.c:354 client/cl_main.c:709 client/cl_main.c:989
-#: client/cl_main.c:1485 client/cl_main.c:1490 client/cl_main.c:1496
-#: client/cl_main.c:1504 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_main.c:361 client/cl_main.c:716 client/cl_main.c:996
+#: client/cl_main.c:1492 client/cl_main.c:1497 client/cl_main.c:1503
+#: client/cl_main.c:1511 client/cl_save.c:431 client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "Fejl"
 
-#: client/cl_main.c:709
+#: client/cl_main.c:716
 msgid "Server needs restarting - something went wrong"
 msgstr "Server har behov for genstart - noget gik galt"
 
-#: client/cl_main.c:782
+#: client/cl_main.c:789
 msgid "No player connected\n"
 msgstr "Ingen spillere forbundet\n"
 
-#: client/cl_main.c:830
+#: client/cl_main.c:837
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -10277,165 +10328,165 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:837
+#: client/cl_main.c:844
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Kort:\t%s\n"
 
-#: client/cl_main.c:847
+#: client/cl_main.c:854
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Servernavn:\t%s\n"
 
-#: client/cl_main.c:848
+#: client/cl_main.c:855
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralstatus:\t%s\n"
 
-#: client/cl_main.c:849
+#: client/cl_main.c:856
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Spiltype:\t%s\n"
 
-#: client/cl_main.c:850
+#: client/cl_main.c:857
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Spilversion:\t%s\n"
 
-#: client/cl_main.c:851
+#: client/cl_main.c:858
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Dedikeret server:\t%s\n"
 
-#: client/cl_main.c:852
+#: client/cl_main.c:859
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Operativsystem:\t%s\n"
 
-#: client/cl_main.c:853
+#: client/cl_main.c:860
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Netværksprotokol:\t%s\n"
 
-#: client/cl_main.c:854
+#: client/cl_main.c:861
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Rundetid:\t%s\n"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:862
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Holdspil:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:863
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maks spillere per hold:\t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:864
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Maks hold tilladt på dette kort:\t%s\n"
 
-#: client/cl_main.c:858
+#: client/cl_main.c:865
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maks klienter:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:866
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maks soldater per spiller:\t%s\n"
 
-#: client/cl_main.c:860
+#: client/cl_main.c:867
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maks soldater per hold:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:868
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Adgangskode beskyttet:\t%s\n"
 
-#: client/cl_main.c:1032
+#: client/cl_main.c:1039
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 "Alle bogmærkepladser er anvendt - fjern venligst ubrugte henvisninger og forsøg igen"
 
-#: client/cl_main.c:1106
+#: client/cl_main.c:1113
 msgid "Select a free team or your coop team"
 msgstr "Vælg et ledigt hold eller dit samabejdshold"
 
 # # in game
-#: client/cl_main.c:1328 client/cl_main.c:1342
+#: client/cl_main.c:1335 client/cl_main.c:1349
 #, c-format
 msgid "Current team: %i"
 msgstr "Nuværende hold: %i"
 
-#: client/cl_main.c:1332 client/cl_main.c:1346
+#: client/cl_main.c:1339 client/cl_main.c:1353
 msgid "Team is already in use"
 msgstr "Hold er allerede i brug"
 
-#: client/cl_main.c:1356 client/cl_main.c:1394
+#: client/cl_main.c:1363 client/cl_main.c:1401
 msgid "Invalid or full team"
 msgstr "Ugyldig eller fyldt hold"
 
-#: client/cl_main.c:1484
+#: client/cl_main.c:1491
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Lokal spilversion (%s) afviger fra serveren"
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1497
 msgid "Local map version differs from server"
 msgstr "Lokal kortversion afviger fra serveren"
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1503
 msgid "Script files are not the same"
 msgstr "Skript filer er ikke de samme"
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1510
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Lokal spilversion (%s) afviger fra serverne (%s)"
 
-#: client/cl_main.c:2100
+#: client/cl_main.c:2110
 msgid "Target your shot to the ground"
 msgstr "Send dit skud mod jorden"
 
-#: client/cl_main.c:2101
+#: client/cl_main.c:2111
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Åben soldatens rygsæk mens vi er på taktisk mission"
 
-#: client/cl_main.c:2216 client/cl_view.c:422
+#: client/cl_main.c:2226 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr "Afventer spilstart"
 
-#: client/cl_main.c:2234
+#: client/cl_main.c:2244
 msgid "Chicken-hearted"
 msgstr "Kylling"
 
-#: client/cl_main.c:2236
+#: client/cl_main.c:2246
 msgid "Very Easy"
 msgstr "Meget nem"
 
-#: client/cl_main.c:2239
+#: client/cl_main.c:2249
 msgid "Easy"
 msgstr "Nem"
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2254
 msgid "Hard"
 msgstr "Svær"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2256
 msgid "Very Hard"
 msgstr "Meget svær"
 
-#: client/cl_main.c:2248
+#: client/cl_main.c:2258
 msgid "Insane"
 msgstr "Vanvittig"
 
-#: client/cl_main.c:2300
+#: client/cl_main.c:2310
 msgid "Custom"
 msgstr "Bruger"
 
@@ -11251,34 +11302,43 @@ msgstr "CCCP"
 msgid "%i of %i"
 msgstr "%i af %i"
 
-#: client/cl_team.c:1598
+#: client/cl_team.c:1197
+msgid "A new team has been created for you."
+msgstr ""
+
+#: client/cl_team.c:1197
+#, fuzzy
+msgid "New team created"
+msgstr "Intet udstyr tildelt."
+
+#: client/cl_team.c:1604
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "Intet at gemme endnu."
 
-#: client/cl_team.c:1605
+#: client/cl_team.c:1611
 msgid "Error saving team. Check free disk space!"
 msgstr "Fejl gem hold. Undersøg ledig plads på harddisk!"
 
-#: client/cl_team.c:1786
+#: client/cl_team.c:1792
 msgid "Select a soldier from list"
 msgstr "Vælg en soldat fra listen"
 
-#: client/cl_team.c:1787
+#: client/cl_team.c:1793
 msgid "Toggle to next soldier"
 msgstr "Skift til næste soldat"
 
-#: client/cl_team.c:2151 client/cl_team.c:2195
+#: client/cl_team.c:2157 client/cl_team.c:2201
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Rumvæsener dræbt\t%i\n"
 
-#: client/cl_team.c:2154
+#: client/cl_team.c:2160
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Fjender dræbt\t%i\n"
 
-#: client/cl_team.c:2159
+#: client/cl_team.c:2165
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -11287,7 +11347,7 @@ msgstr ""
 "Rumvæsener fanget\t%i\n"
 "\n"
 
-#: client/cl_team.c:2160 client/cl_team.c:2199
+#: client/cl_team.c:2166 client/cl_team.c:2205
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -11296,7 +11356,7 @@ msgstr ""
 "Overlevende rumvæsener\t%i\n"
 "\n"
 
-#: client/cl_team.c:2162
+#: client/cl_team.c:2168
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -11305,7 +11365,7 @@ msgstr ""
 "Fjender fanget\t%i\n"
 "\n"
 
-#: client/cl_team.c:2163
+#: client/cl_team.c:2169
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -11314,22 +11374,22 @@ msgstr ""
 "Overlevende fjender\t%i\n"
 "\n"
 
-#: client/cl_team.c:2167
+#: client/cl_team.c:2173
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Holdtab\t%i\n"
 
-#: client/cl_team.c:2168
+#: client/cl_team.c:2174
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Hold tabt i aktion\t%i\n"
 
-#: client/cl_team.c:2169
+#: client/cl_team.c:2175
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Tab til venlig ild\t%i\n"
 
-#: client/cl_team.c:2170
+#: client/cl_team.c:2176
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -11338,22 +11398,22 @@ msgstr ""
 "Hold overlevere\t%i\n"
 "\n"
 
-#: client/cl_team.c:2173
+#: client/cl_team.c:2179
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civile dræbt af rumvæsener\t%i\n"
 
-#: client/cl_team.c:2175
+#: client/cl_team.c:2181
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civile dræbt af fjender\t%i\n"
 
-#: client/cl_team.c:2177
+#: client/cl_team.c:2183
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civile dræbt af dit hold\t%i\n"
 
-#: client/cl_team.c:2178
+#: client/cl_team.c:2184
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11364,27 +11424,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2198
+#: client/cl_team.c:2204
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Rumvæsener fanget\t%i\n"
 
-#: client/cl_team.c:2202
+#: client/cl_team.c:2208
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "FALANKS soldater dræbt af rumvæsener\t%i\n"
 
-#: client/cl_team.c:2203
+#: client/cl_team.c:2209
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "FALANKS soldater forsvundet i aktion\t%i\n"
 
-#: client/cl_team.c:2204
+#: client/cl_team.c:2210
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "FALANKS døde under venlig ild\t%i\n"
 
-#: client/cl_team.c:2205
+#: client/cl_team.c:2211
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -11393,17 +11453,17 @@ msgstr ""
 "FALANKS overlevende\t%i\n"
 "\n"
 
-#: client/cl_team.c:2207
+#: client/cl_team.c:2213
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civile dræbt af rumvæsener\t%i\n"
 
-#: client/cl_team.c:2208
+#: client/cl_team.c:2214
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civile dræbt af vendlig ild\t%i\n"
 
-#: client/cl_team.c:2209
+#: client/cl_team.c:2215
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11412,12 +11472,12 @@ msgstr ""
 "Civile reddet\t%i\n"
 "\n"
 
-#: client/cl_team.c:2210
+#: client/cl_team.c:2216
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Indsamlet udstyr (typer/alle)\t%i/%i\n"
 
-#: client/cl_team.c:2230
+#: client/cl_team.c:2236
 #, c-format
 msgid ""
 "\n"
@@ -11426,7 +11486,7 @@ msgstr ""
 "\n"
 "Sikret nedstyrtet %s\n"
 
-#: client/cl_team.c:2232
+#: client/cl_team.c:2238
 #, c-format
 msgid ""
 "\n"
@@ -11435,7 +11495,7 @@ msgstr ""
 "\n"
 "Sikret landet %s\n"
 
-#: client/cl_team.c:2243
+#: client/cl_team.c:2249
 #, c-format
 msgid ""
 "\n"
@@ -11448,15 +11508,15 @@ msgstr ""
 "Fjender dræbt:  %i\n"
 "Holdoverlevende:  %i"
 
-#: client/cl_team.c:2245
+#: client/cl_team.c:2251
 msgid "You won the game!"
 msgstr "Du vandt spillet!"
 
-#: client/cl_team.c:2247
+#: client/cl_team.c:2253
 msgid "Congratulations"
 msgstr "Tillyke"
 
-#: client/cl_team.c:2249
+#: client/cl_team.c:2255
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -11466,11 +11526,11 @@ msgstr ""
 "\n"
 "Ingen overlevende tilbage."
 
-#: client/cl_team.c:2250
+#: client/cl_team.c:2256
 msgid "Game Drawn!"
 msgstr "Spil uafgjort!"
 
-#: client/cl_team.c:2254
+#: client/cl_team.c:2260
 msgid "Better luck next time"
 msgstr "Bedre held næste gang"
 

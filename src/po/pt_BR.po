@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO-AI\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-01 16:21+0100\n"
+"POT-Creation-Date: 2008-03-14 15:40+0100\n"
 "PO-Revision-Date: 2007-04-28 08:08+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -1023,8 +1023,8 @@ msgstr "Cientista"
 msgid "Medic"
 msgstr "Médico"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:502
-#: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:221
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1990
+#: ../base/ufos/team_humans.ufo:2011 client/cl_employee.c:221
 msgid "UGV"
 msgstr "Robô"
 
@@ -3315,7 +3315,7 @@ msgid "Medium"
 msgstr "Médico"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2241
+#: client/cl_main.c:2251
 msgid "Normal"
 msgstr "Normal"
 
@@ -3664,7 +3664,7 @@ msgstr ""
 msgid "Reload"
 msgstr "Pronto"
 
-#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2252
+#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2258
 #, fuzzy
 msgid "You've lost the game"
 msgstr "Você perdeu a batalha"
@@ -3882,7 +3882,7 @@ msgstr "Mostrar apenas empregados"
 msgid "Show only aliens"
 msgstr "Mostrar apenas aliens"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4535
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4540
 msgid "Aliens"
 msgstr "Alienígenas"
 
@@ -4424,13 +4424,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:122
 msgid "laser_pre_txt"
 msgstr ""
-"Nossa pesquisa nos arquivos coletados da ONU nos rendeu muitas informações valiosas sobre o desenvolvimento de armas feitas na Terra desde o começo deste século. Um dos tópicos mais interessantes foi a produção de AEDs (Armas de Energia Direcionada), armas que transferem energia para um alvo sem utilizar projéteis. Nós estamos particularmente interessados nos arquivos sobre Lasers de Onda Contínua.\n"
+"Nossa pesquisa nos arquivos coletados da ONU nos rendeu muitas informações valiosas sobre o desenvolvimento de armas feitas na Terra desde o começo deste século. Um dos tópicos mais interessantes foi o da produção de AEDs (Armas de Energia Direcionada), armas que transferem energia para um alvo sem utilizar projéteis. Nós estamos particularmente interessados nos arquivos sobre Lasers de Onda Contínua.\n"
 "\n"
-"Muitos países e empresas tentaram criar armas lasers por anos, mas ninguém conseguiu criar um laser que fosse portátil e com uma saída de energia forte o bastante para competir com as armas de fogo comuns. Agora, entretanto, nós tivemos acesso a toda esta pesquisa combinada, assim como a bibliotecas inteiras cheias da mais alta tecnologia na Terra. Eu acredito que podemos não apenas criar uma arma laser portátil e eficiente, como também podemos fazê-la em tamanhos previamente impossíveis para uma AED.\n"
+"Muitos países e empresas tentaram criar laser da classe de armas por anos, mas ninguém conseguiu criar um laser que fosse portátil e com uma saída de energia forte o bastante para competir com as armas de fogo comuns. Agora, entretanto, nós tivemos acesso a toda esta pesquisa combinada, assim como a bibliotecas inteiras cheias da mais alta tecnologia na Terra. Eu acredito que podemos não apenas criar uma arma laser portátil eficiente, como também podemos fazê-la em tamanhos previamente impossíveis para uma AED.\n"
 "\n"
-"Comandante, nós deveríamos iniciar esta pesquisa o mais rápido possível. A diversificação de nosso arsenal o tornará muito mais eficiente contra as defesas inimigas, e nossa experiência pode nos levar ao desenvolvimento de lasers para aeronaves, que poderiam alvejar os velozes OVNIs de forma mais eficaz que as armas de fogo convencionais.\n"
+"Comandante, nós deveríamos iniciar esta pesquisa o mais rápido possível. A diversificação de nosso arsenal o tornará muito mais difícil de se defender contra, e nossa experiência pode nos levar ao desenvolvimento de lasers viáveis para aeronaves, que poderiam alvejar os velozes OVNIs de forma mais eficaz que as armas de fogo convencionais.\n"
 "\n"
-"Até onde sei, nós da FALANGE estamos prontos para fazer o impossível, e podemos começar tão logo você aprove esta proposta.\n"
+"Até onde sei, nós da FALANGE estamos para fazer o impossível, e podemos começar tão logo você aprove esta proposta.\n"
 "\n"
 "--Com. Navarre"
 
@@ -6833,127 +6833,127 @@ msgstr "Feixes de Partícula portáteis"
 #: ../base/ufos/research.ufo:2278
 msgid "combat_armour_txt"
 msgstr ""
-"Technical Specifications: Combat Armour\n"
+"Especificações Técnicas: Armadura de Combate\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"NÍVEL CONFIDENCIAL AMARELO\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Unidade FALANGE de Resposta Extraterrestre\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"Documento Técnico, Autorização Delta\n"
 "\n"
-"Filed: 20 March 2084\n"
+"Enviado em: 20 de Março de 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created not only to find the right weapons to combat the alien threat, but also to find armour and other items of battlefield utility to help our soldiers complete their missions and return to base alive. These items are designed to increase a soldier's combat effectiveness or general survivability.\n"
-"\n"
-"The use of armour on the battlefield never quite died out completely, though it was rendered ineffective in most forms between the early 18th century and the late 20th. It began to find its way back to common use in World War 1 in the form of steel helmets. This practice continued through WW2, and was later superceded by the invention of kevlar. Today, however, kevlar is thoroughly obsolete in nearly all its forms; it's now used only by civilians and police forces with budget problems. Even more advanced types of 20th-century body armour have been rendered useless by modern weapons. New materials were needed, materials to make armour stronger and its wearers tougher than ever before.\n"
-"\n"
-"Surprisingly, several ancient files we've unearthed seem to confirm that PHALANX was responsible for some amazing technological breakthroughs in the past, technologies that were later adopted across the world. Every attempt at producing artificial spider silk had failed, but researchers at the PHALANX Pacific Operations Command base finally managed it in 2017. Their technique is still in use today, centred around a device called the 'organic loom'; a large feeding armature supporting hundreds of individual silk glands and spinnerets, designed solely for the mass-production of spider silk.\n"
-"\n"
-"The first widespread use of military combat armour made from spider silk came as a joint effort by NATO in 2023, after ballistic tests proved that Chinese rounds tore right through their aging standard-issue kevlar vests. The armour itself is a layercake of spider silk and treated ultra high molecular weight polyethylene, giving it astonishing strength and flexibility. The resulting fabric is about 18 times stronger than steel and provides a performance increase over kevlar that is estimated between 300 and 400%. Suits made primarily from polyethylene became obsolete after artificial spider silk was released into the wider market, and the new composite armour soon replaced it in military use throughout the world. The armour has been upgraded to move with the times, being so effective that it is still in common use today. It features pockets on the front and back that can take ceramic or metal inserts to further protect vital areas.\n"
-"\n"
-"The Combat Armour's only disadvantage is its relatively high weight compared to older suits, but this is mainly due to the number of layers required to properly protect against modern weapons. The weight is evenly distributed, making it quite comfortable to wear and much less bulky than experimental nanocomposite armours. This armour will save lives while preserving the soldier's all-important mobility.\n"
+"Por: Comandante Paul Navarre, Pesquisado/Desenvolvido: Divisão de Engenharia, FALANGE, Comando de Operações do Atlântico\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"Where possible, PHALANX troops should always wear armour whenever they are sent into a combat situation. The Combat Armour should be considered the basic protection no soldier can afford to go without. For some soldiers, the Combat Armour will remain a viable choice compared to heavier, more advanced armours due to the freedom of movement it provides. Snipers and anyone else not expected to be at the front line will be able to make good use of the extra mobility.\n"
+"Resumo\n"
+"\n"
+"O ataque alienígena em Mumbai deixou nossa situação dolorosamente clara. A tecnologia deles é muito mais avançada que a nossa. A completa incapacidade das Tropas da Confederação em resistir na ofensiva alienígena em Mumbai revelou fraqueza nos atuais treinamentos e equipamentos militares. Eles perderam três batalhões apenas para interromper o avanço alienígena sem causar significantes baixas alienígenas. FALANGE precisa superar essas situações, e para fazer isso nós precisamos da mais alta tecnologia humana disponível.\n"
+"\n"
+"O Programa Excalibur foi criado não apenas para encontrar as armas corretas para combater a ameaça alienígena, mas também para encontrar armaduras e outros itens militares a fim de ajudar nossos soldados a completarem suas missões e retornarem vivos à base. Esses itens têm o objetivo de aumentar a eficácia do soldado em combate ou sobrevivência em geral.\n"
+"\n"
+"O uso de armadura no campo de batalha nunca desapareceu completamente, embora tenha se mostrado ineficiente na maioria das formas do início do século XVIII ao final do século XX. Ela começou a ser reutilizada na Primeira Guerra Mundial na forma de capacetes de aço. Esta prática continuou através da Segunda Guerra Mundial, e mais tarde foi substituída pelo kevlar. Hoje, no entanto, kevlar está completamente obsoleto em praticamente todas as suas formas; é usado apenas por civis e forças policiais em problemas simples. Mesmo os tipos de armaduras mais avançadas do século XX se tornaram inúteis frente às modernas armas. Novos materiais são necessários, materiais para se fazer armaduras mais fortes e seus usuários mais resistentes como jamais foram.\n"
+"\n"
+"Surpreendentemente, vários arquivos antigos que encontramos confirmam que a FALANGE foi responsável por algumas das incríveis descobertas tecnológicas no passado, tecnologias que mais tarde foram adotadas através do mundo. Toda tentativa de produzir teia de aranha artificial falhou, mas pesquisadores na base FALANGE do Comando de Operações do Atlântico finalmente conseguiram em 2017. Suas técnicas ainda são usadas atualmente, com base em um dispositivo denominado 'tear orgânico'; uma grande carapaça de alimentação apoiando centenas de glândulas individuais de seda e tubos, objetivando unicamente a produção em massa de seda de aranha.\n"
+"\n"
+"O primeiro uso militar comum de armadura de combate feito da seda de aranha veio de um trabalho conjunto por NATO em 2023, após testes balísticos provarem que armas Chinesas atravessavam as vestimentas padrões de kevlar. A armadura em si é uma peça de teia de aranha e se comporta como um polietileno de peso molecular extremamente algo, oferecendo uma incrível força e espantosa flexibilidade. A armadura resultante é aproximadamente 18 vezes mais forte que o aço e provê uma maior performance sobre o kevlar que está entre 300 e 400%. Roupas feitas basicamente de polietileno tornaram-se obsoletas depois que roupas de teia de aranha artificial foram lançadas no mercado, e o novo composto começou a ser incorporado nas armaduras militares através do mundo. As armaduras foram melhoradas através dos tempos, tornando-se tão eficientes que estão em uso até hoje. Há peças frontais e traseiras que podem usar implantes cerâmicos ou metálicos para proteger áreas vitais.\n"
+"\n"
+"A única desvantagem da Armadura de Combate é seu relativo maior peso comparado com roupas antigas, mas isso se deve ao fato de possuir mais camadas para proteger contra armas modernas. O peso é bem distribuído, fazendo-a bastante confortável e bem menos volumosa que armaduras experimentais de nano compostos. Esta armadura salvará vidas preservando a importante mobilidade que o soldado requer.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Doutrina Recomendada\n"
 "\n"
-"None."
+"Onde possível, tropas da FALANGE devem sempre usar armaduras sempre que forem enviados em situações de combate. A Armadura de Combate deve ser considerada a proteção básica que não deve faltar a nenhum soldado. Para alguns soldados, a Armadura de Combate ainda será uma valiosa opção, comparada às armaduras mais avançadas e pesadas, em razão da liberdade de movimentos que ela oferece. Atiradores de elite e qualquer um que não se espera estar na linha de frente poderão fazer um bom uso da mobilidade extra.\n"
+"\n"
+"\n"
+"Adendo\n"
+"\n"
+"Nenhum."
 
 #: ../base/ufos/research.ufo:2294
 msgid "nano_armour_txt"
 msgstr ""
-"Commander, I would like to report the success of our nanocomposite production research!\n"
+"Comandante, gostaria de reportar o sucesso da nossa pesquisa para produção de nano compostos!\n"
 "\n"
-"I won't bore you with the intricacies of CNT production; suffice it to say that, by close study of the telltale traces left by alien production lines, we've been able to identify some of their processes. Apparently they use some kind of plasma furnace in order to spin, shape and press the nanotubes into a latticework pattern. We've been able to create a prototype furnace of our own, and have made various modifications to our nanotube production methods based on the alien examples. The result is a significant increase in power efficiency and production volume.\n"
+"Não vou entediá-lo com os detalhes da produção CNT; Basta dizer que por estudos precisos dos traços deixados pelas linhas de produção alienígenas, nós fomos capazes de identificar alguns dos processos deles. Aparentemente eles usam algum tipo de forno de plasma para manipular os nanotubes em padrões de formas. Nós fomos capazes de criar um protótipo de forno e fizemos várias modificações em nossos métodos de produção de nanotubos baseadas nos exemplos alienígenas. O resultado é um acréscimo significante na eficiência do uso de energia e volume de produção.\n"
 "\n"
-"From here on I'll restrict my summary to the capabilities and tactical applications of the new armour, which I trust you will find both fascinating and encouraging.\n"
+"Agora eu vou restringir meu relatório nas capacidades e aplicações táticas da nova armadura, que, estou certo, você achará fascinantes e encorajadoras.\n"
 "\n"
-"We've managed to duplicate almost all the functionality of the alien armour, from the nanocomposite plates to the servo-assisted movement. It is incredibly light for its bulk, though still considerably heavier than our Combat Armour. It is almost as protective as the alien model, and bestows similar quickness of movement and more precise aiming.\n"
+"Fomos capazes de duplicar quase todas as funcionalidades da armadura alienígena, das placas de nano compostos a servo-assistentes de movimento. É incrivelmente leve para o seu volume, apesar de ser consideravelmente mais forte que nossa Armadura de Combate. Tem praticamente a mesma proteção que o modelo alienígena, e provê rapidez de movimento similar e mais precisão de tiro.\n"
 "\n"
-"However, there are some limitations that we just can't get around. The fact is that the aliens have a good deal more experience with these materials and can work them a lot more elegantly than we can. Our armour is bulkier and heavier, more stiffly-constructed, and its electronics do not perform as well. This may negatively impact firing speed and reaction time. Our version of the polymer isn't quite as good as theirs, it tends to crack more easily. Our servomotors in particular are large and unwieldy compared to the compact alien designs. There's no way to reduce their size any further than we already have.\n"
+"No entando, há algumas limitações que nós não pudemos resolver. O fato é que os alienígenas têm mais experiência com estes materiais e podem trabalhá-los mais elegantemente que nós. Nossa armadura é mais volumosa e pesada, construída mais dificilmente, e suas partes eletrônicas não funcionam tão bem. Isso pode impactar negativamente na velocidade de tiro e tempo de reação. A versão do nosso polímero não é tão bom quanto o deles, e tende a quebrar mais facilmente. Nossos servo-motores são particularmente mais largos e incômodos comparados aos dos alienígenas. Não há mais como reduzir seu tamanho além do já conseguimos.\n"
 "\n"
-"We're really quite embarrassed about the boots in particular, but they are honestly the best we could do. We simply don't have the precision machinery needed to make servos like the aliens do. Regardless, we've tried our best to make the boots safe and light, with a powerful suspension system in the soles to make them springy enough for rapid movement.\n"
+"Estamos particularmente muito envergonhados com relação às botas, mas, honestamente, elas são o melhor que podemos fazer. Nós não possuímos maquinários precisos para produzir servos como os alienígenas. Apesar disso, nós tentamos nosso melhor para fazer botas duráveis e leves, com um poderoso sistema de suspensão nas solas para fazê-las suficientemente flexíveis para um movimento rápido.\n"
 "\n"
-"The new armour's tactical applications are extensive. It's light enough to be worn by forward elements of our tac teams, yet protective enough to resist heavy weapons fire. It will serve exceptionally well for close assault troops that need both speed and armour to perform their best.\n"
+"As aplicações táticas da nova armadura são extensas. São leves o bastante para serem usadas por nossas equipes táticas na frente de combate, além de ser protegível o bastante para resistir tiros de armas pesadas. Servirão excepcionalmente bem para tropas de combate de assalto que precisam tanto velocidade quanto armadura para realizarem o seu melhor trabalho.\n"
 "\n"
-"--Cdr. Navarre"
+"--Com. Navarre"
 
 #: ../base/ufos/research.ufo:2297
 msgid "nano_armour_pre_txt"
 msgstr ""
-"Our examination of the alien body armour has led us to many interesting realisations. Obviously, the key to creating more effective mobile armour based on the alien suits lies in the direction of nanocomposites. This will require large amounts of carbon nanotubes.\n"
+"Nosso exame da armadura corporal alienígena levou-nos a várias descobertas interessantes.Obviamente, a chave para criar armaduras portáveis mais eficientes, baseadas em tecnologia alienígena, é trabalhar com nano compostos. Isso exigirá uma quantidade muito grande de nano tubos de carbono.\n"
 "\n"
-"In the past, carbon nanotubes have been difficult and expensive to produce, and trying to work them into a proper shape was even worse. Because of this nanocomposite armour has never been used except in high-cost vehicles such as aircraft and tanks, and then only in plating that requires minimal shaping or other work. The alien armour, however, uses carbon nanotube composites in abundance. It's our manufacturing processes that are holding us back.\n"
+"No passado, nano tubos de carbono eram difíceis e caros para serem produzidos, e tentar transformá-los em uma forma decente era ainda pior. Por isso armaduras de nano compostos nunca foram usadas, exceto em veículos altamente caros como Naves e Tanques e, depois, somente em placas que exigiam o mínimo de acabamento ou outro trabalho. A armadura alienígena, no entanto, usa nano tubos de carbono em abundância. É nosso processo de produção que está no atrasando.\n"
 "\n"
-"With the alien armour in hand and enough resources at our disposal, I believe that we can devise new production methods and shaping processes that will allow us to mass-produce shaped nanocomposite plates, finally bringing this technology into our reach.\n"
+"Com a armadura alienígena em mãos e recursos suficientes à nossa disposição, acredito que possamos criar novos métodos de produção e processos de modelagem que irão nos possibilitar produzir em larga escala placas de nano compostos, trazendo finalmente esta tecnologia ao nosso alcance.\n"
 "\n"
-"This project will require a fair amount of lab time and funding. We'll start work as soon as we receive your authorisation, Commander.\n"
+"Este projeto exigirá uma considerável quantidade de tempo e dinheiro. Nós poderemos começar o trabalho assim que recebermos sua autorização, Comandante.\n"
 "\n"
-"--Cdr. Navarre"
+"--Com. Navarre"
 
 #: ../base/ufos/research.ufo:2370
 msgid "alien_body_armour_txt"
 msgstr ""
-"Commander, we've got a full report on the alien armour for you.\n"
+"Comandante, temos um relatório completo sobre a armadura alienígena para você.\n"
 "\n"
-"It was something of a surprise to learn that the alien armour is made of a composite of plastics and carbon containing no metal whatsoever. In fact, the most important element is something with which humanity is already well-acquainted: carbon nanotubes. Carbon nanotubes (also known as CNTs or 'buckytubes') are cylindrical carbon molecules that are incredibly strong, one of the strongest materials known to humankind. They have been relatively little-used on Earth because of their extreme cost. No economical means of mass-production has been found to date, restricting their use to the most expensive programs on Earth, such as aeronautics and space exploration.\n"
+"Foi uma surpresa constatar que a armadura alienígena é feita de um composto plástico e carbono sem nenhum metal envolvido. De fato, o elemento mais importante é algo que a humanidade já conhece muito bem: nano tubos de carbono. Também conhecidos como NTCs, são moléculas de carbono cilíndricas incrivelmente fortes, um dos materiais mais fortes conhecidos pela humanidade. Eles foram relativamente pouco usados na Terra em razão do seu alto custo. Nenhuma forma comercial de produção em massa foi desenvolvida até hoje, restringindo seu uso aos programas mais caros na Terra, como aeronáutica e exploração espacial.\n"
 "\n"
-"The alien armour uses CNTs as its penetration layer, i.e. the layer that stops bullets and other incoming ordnance from penetrating into the body. The nanotubes are woven into long latticework patterns and recessed into a bed of hard polymer, backed by a layer of semi-liquid gel that very effectively dampens the energy of a blow and spreads the remaining force across a very large area. The final layer -- woven from flexible aramid fibre -- serves to contain the gel and doubles as a spall liner, catching any fragments that may be blown loose from the inside of the armour.\n"
+"A armadura alienígena usa NTCs na sua camada de penetração, ou seja, a camada que impede os projéteis e outros materiais de penetrarem no corpo. Os nano tubos são tecidos em longos padrões entrelaçados, seguido por uma camada de um gel semi líquido que muito eficientemente dispersa a energia de um impacto e espalha o restante da força em uma grande área. A camada final -- trançada com fibra flexível de polímero -- serve para conter o gel e dobra a linha de retenção, segurando qualquer fragmento que possa quebrar dentro da armadura.\n"
 "\n"
-"Thanks to the conductive properties of carbon nanotubes, the armour performs very well against plasma as well as against ordinary bullets, lasers and explosives. However ironically, it's not very effective against incendiary devices or flamethrowers, since these weapons also raise the atmospheric temperature around the wearer. In this scenario the armour is left with no place to effectively dump its heat and will not protect the wearer as he roasts inside his suit.\n"
+"Graças às propriedades condutivas dos nano tubos de carbono, a armadura se comporta muito bem contra plasma como em projéteis comuns, lasers e explosivos. Ironicamente, no entanto, não é eficaz contra equipamento incendiário e lançadores de chamas, já que essas armas também aumentam a temperatura da atmosfera ao redor do usúario da armadura. Neste cenário a armadura não conseguirá dissipar seu calor e não protegerá o usuário deixando-o assar dentro da sua vestimenta.\n"
 "\n"
-"Other features of the armour include servo-assisted movement in the boots, allowing the wearer to move more quickly, and a curious system built into the bracers that automatically assists the wearer's aim by selectively applying pressure to parts of the forearm. We are looking into many new uses for this technology.\n"
+"Outras funcionalidades da armadura incluem servo assistente de movimento nas botas, permitindo ao usuário mover-se rapidamente, e um curioso sistema nos braços que automaticamente ajuda a mira do usuário aplicando pressão específica nas partes do membro. Estamos estudando vários usos para esta tecnologia.\n"
 "\n"
-"Adapting this armour to a human body would be impossible due to the differences in physique and the difficulty of working with the materials involved. However, I've written up a separate research proposal to investigate the possibility of designing and mass-producing our own armour using the alien suit as a template. It will be in your inbox presently, Commander.\n"
+"Adaptar esta armadura ao corpo humano poderá ser possível apesar da diferença física e dificuldade em trabalhar com os materiais envolvidos. No entanto, escrevi uma proposta separada de pesquisa para investigar a possibilidade de desenhar e produzir em massa nossa própria armadura usando a padrão da roupa alienígena. A proposta estará em sua caixa postal, Comandante.\n"
 "\n"
-"--Cdr. Navarre"
+"--Comandante Navarre"
 
 #: ../base/ufos/research.ufo:2373
 msgid "alien_body_armour_pre_txt"
 msgstr ""
-"Commander, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers due to its very high resistance to various types of damage; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.\n"
+"Comandante, nós recuperamos uma armadura alienígena do campo de batalha. Esta armadura tem sido uma barreira para nossos soldados devido a sua alta resistência a vários tipos de dano; alienígenas que a usavam pararam tiros que teriam estraçalhado seus amigos sem a armadura. Não é surpresa que ainda não conseguimos abri-la para estudar sua composição. Nós precisamos investigar a fraqueza da armadura o mais breve possível e, talvez, encontrar uma forma de adaptá-la às nossas necessidades.\n"
 "\n"
-"This project will require a moderate amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
+"Este projeto exigirá uma quantidade moderada de tempo em laboratório e dinheiro. O trabalho começará assim que recebermos sua autorização, Comandante.\n"
 "\n"
-"--Cdr. Navarre"
+"--Comandante Navarre"
 
 #: ../base/ufos/research.ufo:2406
 msgid "alien_medium_armour_txt"
 msgstr ""
-"Where armour is concerned, the aliens' design philosophy seems to be, \"If it works, let's use more of it.\" This new armour is similar in design to the alien body armour, but it does away with the compromises and delicate balances of light armour. Instead of just protecting the torso and head, the medium armour attempts to cover all vital areas with much more dense nanopolymer plates, including major arteries and sensitive nerve clusters. In comparison with the alien body armour, the medium suit has double the number of nanotube strands per square centimetre. As a result these plates are nearly impenetrable to standard human firearms and even the softer mesh covering the joints can stop bullets with disturbing ease.\n"
+"Até onde pudemos observar, a filosofia alienígena de desenvolvimento parece ser: \"Se funciona, vamos usar mais ainda.\". Esta nova armadura é similar ao desenho da Armadura Alienígena, mas está longe do compromisso e delicado balanço das armaduras leves. Ao invés de somente proteger o dorso e cabeça, a Armadura Média tenta cobrir todas as áreas vitais com placas de nano polímero muito mais denso, incluindo artérias e sensíveis grupos de nervos. Em comparação com a Armadura Alienígena, a armadura média tem o dobro de número de nano tubos por centímetro quadrado. Como resultado, as placas são quase impenetráveis por armas normais humanas e mesmo a roupa mais macia pode parar balas com facilidade desconcertante.\n"
 "\n"
-"As I mentioned before, the suit strongly emphasises protection over mobility. The large trauma plates get in the wearer's way no matter what race or size he might be, and the dense nanotube polymers used are so heavy that the overall weight will slow down even an Ortnok. There are numerous mini-servos and other mechanical parts that help deal with some of the weight, but their effect is limited overall. Other devices are integrated into the armour to assist aiming and vision. These are quite interesting and we may be able to replicate them on a larger scale as weapon enhancements.\n"
+"Como mencionado anteriormente, a armadura enfatiza muito mais a proteção que a mobilidade. As grandes placas atrapalham o usuário, não importa qual a sua raça ou tamanho, e os densos nano polímeros usados são tão pesados que deixará mais lento até mesmo um Ortnok. Há inúmeros mini servos e outras partes mecânicas que ajudam a lidar com parte do peso, mas são limitados. Outros equipamentos são integrados à armadura para ajudar na mira e visão. São muito interessantes e talvez nós possamos replicá-los em larga escala como melhoria para armas.\n"
 "\n"
-"The aliens seem to have designed this armour with the war against humanity in mind. Besides being virtually bulletproof, its performance against lasers, incendiary and plasma weapons is much improved over the Alien Body Armour, though it's still somewhat vulnerable to particle beams. Aliens wearing this armour will suffer minimal damage from crossing open flame or brief shots from our flamethrower, but prolonged exposure will still overheat the suit and cook the alien inside.\n"
+"Os alienígenas parecem ter desenvolvido esta armadura com a guerra contra a humanidade em mente. Além de ser quase à prova de balas, seu desempenho contra lasers, lança chamas e armas de plasma é muito maior que a da Armadura Alienígena, apesar de alguma forma ser vulnerável às partículas atômicas. Alienígenas que usam esta armadura sofrerão dano mínimo em chamas ou breve uso do nosso lança chamas, mas exposição prolongada ainda aumentará muito a temperatura da armadura e cozinhará o alienígena.\n"
 "\n"
-"In better news, the armour does not fully enclose the alien, leaving some skin or breathing passages exposed to air. That means blister gas will remain effective, though it will take longer for the gas to reach its full effect.\n"
+"A boa notícia é que a armadura não cobre completamente o alienígena, deixando alguma pele ou passagem de respiração exposta ao ar. Isso significa que gás ainda será eficaz, apesar de levar mais tempo para que o efeito seja completo.\n"
 "\n"
-"The alien suits won't fit our troops without modifications that would critically weaken them. We've taken a few stabs at replicating the dense nanopolymers, but our Workshop machinery is currently unable to weave so many nanotubes at once. I have a few ideas about how to upgrade it, though, as well as some designs for a new armour to take advantage of those upgrades. The proposal should be in your queue now, Commander.\n"
+"Esta armadura não servirá às nossas tropas sem modificações que a enfraquecerão criticamente. Nós fizemos algumas tentativas de replicar os densos nano polímeros, mas nosso maquinário atual é incapaz de entrelaçar tantos nano tubos de uma vez só. Eu tenho algumas idéias para aprimorá-lo, além de alguns desenhos para a nova armadura, com base nas vantagens dessa melhoria. A proposta deverá estar em sua caixa postal agora, Comandante.\n"
 "\n"
-"Now please excuse me, sir -- I was due in my rack twelve hours ago and I think my eyes are starting to bleed. Goodnight!\n"
+"Desculpe-me agora, senhor -- Eu estive trabalhando 12 horas seguidas e meus olhos estão começando a sangrar. Boa noite!\n"
 "\n"
-"--Cdr. Navarre"
+"--Comandante Navarre"
 
 #: ../base/ufos/research.ufo:2409
 msgid "alien_medium_armour_pre_txt"
 msgstr ""
-"Commander, we've salvaged a new suit of alien armour from the field. It's much heavier than the alien armour we've encountered previously, and it seems to stop ordinary firearms without taking so much as a scratch. Its trauma plates are made of the densest CNT (Carbon Nanotube) weave I've ever seen. We need to research this armour right away to determine which weapons will remain effective against aliens wearing it, and to try and find a method to replicate it for our own troops. As long as we can't match this technology, we are at a severe disadvantage.\n"
+"Comandante, nós recuperamos uma nova armadura alienígena do campo de batalha. É muito mais pesada que a armadura que encontramos anteriormente, e aparentemente resiste projéteis de armas comuns sem sofrer sequer um arranhão. Suas placas são feitas do mais denso NTC (Nano Tubo de Carbono) que já vimos. Nós precisamos pesquisar esta armadura imediatamente para determinar quais armas ainda serão eficazes contra alienígenas que a usam, e para tentar encontrar alguma forma de replicá-la para as nossas tropas. Enquanto não dominarmos esta tecnologia, estaremos em grande desvantagem.\n"
 "\n"
-"This project will require a significant amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
+"Este projeto exigirá significante quantidade de tempo em laboratório e dinheiro. O trabalho terá início assim que recebermos sua autorização, Comandante.\n"
 "\n"
-"--Cdr. Navarre"
+"--Comandante Navarre"
 
 #: ../base/ufos/research.ufo:2416 ../base/ufos/research.ufo:2424
 #, fuzzy
@@ -7986,7 +7986,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3069
 msgid "inter_dragon_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3088
 #, fuzzy
@@ -8058,7 +8059,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3091
 msgid "inter_stingray_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3115
 msgid "ufo_scout_txt"
@@ -9708,11 +9710,11 @@ msgid "Bloodspider"
 msgstr ""
 
 # não vou traduzir os nomes tipo Harvester, phoenix, etc. pois são nomes próprios
-#: ../base/ufos/team_humans.ufo:505
+#: ../base/ufos/team_humans.ufo:1993
 msgid "Phoenix"
 msgstr ""
 
-#: ../base/ufos/team_humans.ufo:526
+#: ../base/ufos/team_humans.ufo:2014
 msgid "Ares W"
 msgstr ""
 
@@ -10588,8 +10590,8 @@ msgid ""
 msgstr ""
 
 #: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:542
-#: client/cl_aircraft.c:730 client/cl_aircraft.c:985 client/cl_aircraft.c:1082
-#: client/cl_aircraft.c:1689 client/cl_airfight.c:339
+#: client/cl_aircraft.c:730 client/cl_aircraft.c:987 client/cl_aircraft.c:1084
+#: client/cl_aircraft.c:1691 client/cl_airfight.c:339
 #: client/cl_aliencont.c:189 client/cl_aliencont.c:219
 #: client/cl_aliencont.c:232 client/cl_aliencont.c:245
 #: client/cl_basemanagement.c:1138 client/cl_basemanagement.c:2354
@@ -10609,8 +10611,8 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1032
-#: client/cl_main.c:1267 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1039
+#: client/cl_main.c:1274 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
@@ -10710,16 +10712,16 @@ msgstr ""
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Você tem uma aeronave nova (uma %s) na base %s"
 
-#: client/cl_aircraft.c:985
+#: client/cl_aircraft.c:987
 #, fuzzy
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "O seu transporte de tropas tem pouco combustível e retorna à base"
 
-#: client/cl_aircraft.c:1082
+#: client/cl_aircraft.c:1084
 msgid "Assign a team to aircraft"
 msgstr "Designar uma equipe para aeronave"
 
-#: client/cl_aircraft.c:1689
+#: client/cl_aircraft.c:1691
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr ""
@@ -10839,7 +10841,7 @@ msgid_plural "%i days left"
 msgstr[0] "%i dias faltando"
 msgstr[1] "%i dias faltando"
 
-#: client/cl_basemanagement.c:2230 client/cl_team.c:1552 client/cl_team.c:1766
+#: client/cl_basemanagement.c:2230 client/cl_team.c:1558 client/cl_team.c:1772
 msgid "NewTeam"
 msgstr "Nova Equipe"
 
@@ -10920,7 +10922,7 @@ msgstr ""
 #: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
 #: client/cl_campaign.c:2759 client/cl_market.c:655 client/cl_market.c:660
 #: client/cl_market.c:687 client/cl_market.c:799 client/cl_market.c:801
-#: client/cl_save.c:367 client/cl_team.c:1598 client/cl_team.c:1605
+#: client/cl_save.c:367 client/cl_team.c:1604 client/cl_team.c:1611
 msgid "Note"
 msgstr "Nota"
 
@@ -10970,7 +10972,7 @@ msgid "%s: %1.2f%% (%d %s)\n"
 msgstr ""
 
 #: client/cl_basesummary.c:186 client/cl_campaign.c:1384
-#: client/cl_campaign.c:4544
+#: client/cl_campaign.c:4549
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
@@ -11155,21 +11157,21 @@ msgid_plural "credits"
 msgstr[0] "Créditos"
 msgstr[1] "Créditos"
 
-#: client/cl_campaign.c:1385 client/cl_campaign.c:4546
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4551
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Créditos"
 msgstr[1] "Créditos"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4543
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4548
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Soldado 8"
 msgstr[1] "Soldado 8"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4545
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4550
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -11346,12 +11348,12 @@ msgstr "Soldado promovido"
 msgid "Defense of base: %s successful!"
 msgstr "Defesa de base: %s bem-sucedida!"
 
-#: client/cl_campaign.c:4533
+#: client/cl_campaign.c:4538
 #, fuzzy
 msgid "Human"
 msgstr "Rajada"
 
-#: client/cl_campaign.c:4537
+#: client/cl_campaign.c:4542
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -11367,27 +11369,27 @@ msgstr ""
 "Créditos: %i c\n"
 "%s\n"
 
-#: client/cl_campaign.c:4690
+#: client/cl_campaign.c:4695
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "Dano:\t%i / %i\n"
 
-#: client/cl_campaign.c:4713
+#: client/cl_campaign.c:4718
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "Dano:\t%i / %i\n"
 
-#: client/cl_campaign.c:4871
+#: client/cl_campaign.c:4876
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4873 client/cl_campaign.c:5015
-#: client/cl_campaign.c:5106
+#: client/cl_campaign.c:4878 client/cl_campaign.c:5020
+#: client/cl_campaign.c:5111
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4951
+#: client/cl_campaign.c:4956
 #, fuzzy
 msgid ""
 "\n"
@@ -11395,13 +11397,13 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "Base selecionada"
 
-#: client/cl_campaign.c:5013
+#: client/cl_campaign.c:5018
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5076
+#: client/cl_campaign.c:5081
 #, fuzzy
 msgid ""
 "\n"
@@ -11409,7 +11411,7 @@ msgid ""
 "Selected nation:\t\t\t"
 msgstr "Selecionar item"
 
-#: client/cl_campaign.c:5104
+#: client/cl_campaign.c:5109
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -11629,26 +11631,26 @@ msgid ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
-#: client/cl_main.c:354 client/cl_main.c:989
+#: client/cl_main.c:361 client/cl_main.c:996
 msgid "Assemble a team first"
 msgstr "Monte uma equipe primeiro"
 
-#: client/cl_main.c:354 client/cl_main.c:709 client/cl_main.c:989
-#: client/cl_main.c:1485 client/cl_main.c:1490 client/cl_main.c:1496
-#: client/cl_main.c:1504 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_main.c:361 client/cl_main.c:716 client/cl_main.c:996
+#: client/cl_main.c:1492 client/cl_main.c:1497 client/cl_main.c:1503
+#: client/cl_main.c:1511 client/cl_save.c:431 client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "Erro"
 
-#: client/cl_main.c:709
+#: client/cl_main.c:716
 msgid "Server needs restarting - something went wrong"
 msgstr ""
 
-#: client/cl_main.c:782
+#: client/cl_main.c:789
 msgid "No player connected\n"
 msgstr ""
 
-#: client/cl_main.c:830
+#: client/cl_main.c:837
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -11657,166 +11659,166 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:837
+#: client/cl_main.c:844
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:847
+#: client/cl_main.c:854
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nome do servidor:\t%s\n"
 
-#: client/cl_main.c:848
+#: client/cl_main.c:855
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Estados de moral:\t%s\n"
 
-#: client/cl_main.c:849
+#: client/cl_main.c:856
 #, fuzzy, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Jogo"
 
-#: client/cl_main.c:850
+#: client/cl_main.c:857
 #, fuzzy, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Versão:\t%s\n"
 
-#: client/cl_main.c:851
+#: client/cl_main.c:858
 #, fuzzy, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Servidor dedicado:"
 
-#: client/cl_main.c:852
+#: client/cl_main.c:859
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:853
+#: client/cl_main.c:860
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:854
+#: client/cl_main.c:861
 #, fuzzy, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Equipamentos"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:862
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Jogo de Equipes:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:863
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Máx. de jogadores por time:\t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:864
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:858
+#: client/cl_main.c:865
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Máx. de jogadores:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:866
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Máx. de soldados por jogador:\t%s\n"
 
-#: client/cl_main.c:860
+#: client/cl_main.c:867
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Máx de soldados por time:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:868
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1032
+#: client/cl_main.c:1039
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
-#: client/cl_main.c:1106
+#: client/cl_main.c:1113
 msgid "Select a free team or your coop team"
 msgstr ""
 
-#: client/cl_main.c:1328 client/cl_main.c:1342
+#: client/cl_main.c:1335 client/cl_main.c:1349
 #, fuzzy, c-format
 msgid "Current team: %i"
 msgstr "Equipe atual"
 
-#: client/cl_main.c:1332 client/cl_main.c:1346
+#: client/cl_main.c:1339 client/cl_main.c:1353
 #, fuzzy
 msgid "Team is already in use"
 msgstr "Já existe %i na base"
 
-#: client/cl_main.c:1356 client/cl_main.c:1394
+#: client/cl_main.c:1363 client/cl_main.c:1401
 msgid "Invalid or full team"
 msgstr ""
 
-#: client/cl_main.c:1484
+#: client/cl_main.c:1491
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1497
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1503
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1510
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:2100
+#: client/cl_main.c:2110
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2101
+#: client/cl_main.c:2111
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2216 client/cl_view.c:422
+#: client/cl_main.c:2226 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/cl_main.c:2234
+#: client/cl_main.c:2244
 msgid "Chicken-hearted"
 msgstr ""
 
-#: client/cl_main.c:2236
+#: client/cl_main.c:2246
 msgid "Very Easy"
 msgstr ""
 
-#: client/cl_main.c:2239
+#: client/cl_main.c:2249
 msgid "Easy"
 msgstr ""
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2254
 #, fuzzy
 msgid "Hard"
 msgstr "Hangar"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2256
 msgid "Very Hard"
 msgstr ""
 
-#: client/cl_main.c:2248
+#: client/cl_main.c:2258
 #, fuzzy
 msgid "Insane"
 msgstr "sem nome"
 
-#: client/cl_main.c:2300
+#: client/cl_main.c:2310
 #, fuzzy
 msgid "Custom"
 msgstr "Automático"
@@ -12635,43 +12637,52 @@ msgstr ""
 msgid "%i of %i"
 msgstr "%i de %i"
 
-#: client/cl_team.c:1598
+#: client/cl_team.c:1197
+msgid "A new team has been created for you."
+msgstr ""
+
+#: client/cl_team.c:1197
+#, fuzzy
+msgid "New team created"
+msgstr "Nenhum item selecionado"
+
+#: client/cl_team.c:1604
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "Parar a pesquisa"
 
-#: client/cl_team.c:1605
+#: client/cl_team.c:1611
 msgid "Error saving team. Check free disk space!"
 msgstr ""
 
-#: client/cl_team.c:1786
+#: client/cl_team.c:1792
 #, fuzzy
 msgid "Select a soldier from list"
 msgstr "Selecione os soldados clicando"
 
-#: client/cl_team.c:1787
+#: client/cl_team.c:1793
 #, fuzzy
 msgid "Toggle to next soldier"
 msgstr "Alternar reação ao fogo"
 
-#: client/cl_team.c:2151 client/cl_team.c:2195
+#: client/cl_team.c:2157 client/cl_team.c:2201
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Alienígenas mortos\t%i\n"
 
-#: client/cl_team.c:2154
+#: client/cl_team.c:2160
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Inimigos mortos\t%i\n"
 
-#: client/cl_team.c:2159
+#: client/cl_team.c:2165
 #, fuzzy, c-format
 msgid ""
 "Aliens captured\t%i\n"
 "\n"
 msgstr "Alienígenas mortos\t%i\n"
 
-#: client/cl_team.c:2160 client/cl_team.c:2199
+#: client/cl_team.c:2166 client/cl_team.c:2205
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12680,14 +12691,14 @@ msgstr ""
 "Alienígenas sobreviventes\t%i\n"
 "\n"
 
-#: client/cl_team.c:2162
+#: client/cl_team.c:2168
 #, fuzzy, c-format
 msgid ""
 "Enemies captured\t%i\n"
 "\n"
 msgstr "Inimigos mortos\t%i\n"
 
-#: client/cl_team.c:2163
+#: client/cl_team.c:2169
 #, fuzzy, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -12696,22 +12707,22 @@ msgstr ""
 "Inimigos sobreviventes\t%i\n"
 "\n"
 
-#: client/cl_team.c:2167
+#: client/cl_team.c:2173
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Baixas da equipe\t%i\n"
 
-#: client/cl_team.c:2168
+#: client/cl_team.c:2174
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr ""
 
-#: client/cl_team.c:2169
+#: client/cl_team.c:2175
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Baixas por fogo amigo\t%i\n"
 
-#: client/cl_team.c:2170
+#: client/cl_team.c:2176
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -12720,22 +12731,22 @@ msgstr ""
 "Sobreviventes da equipe\t%i\n"
 "\n"
 
-#: client/cl_team.c:2173
+#: client/cl_team.c:2179
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civis mortos pelos alienígenas\t%i\n"
 
-#: client/cl_team.c:2175
+#: client/cl_team.c:2181
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civis mortos pelos inimigos\t%i\n"
 
-#: client/cl_team.c:2177
+#: client/cl_team.c:2183
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civis mortos pela sua equipe\t%i\n"
 
-#: client/cl_team.c:2178
+#: client/cl_team.c:2184
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12746,27 +12757,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2198
+#: client/cl_team.c:2204
 #, fuzzy, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Alienígenas mortos\t%i\n"
 
-#: client/cl_team.c:2202
+#: client/cl_team.c:2208
 #, fuzzy, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Civis mortos pelos alienígenas\t%i\n"
 
-#: client/cl_team.c:2203
+#: client/cl_team.c:2209
 #, fuzzy, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Civis mortos pelos alienígenas\t%i\n"
 
-#: client/cl_team.c:2204
+#: client/cl_team.c:2210
 #, fuzzy, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Baixas por fogo amigo\t%i\n"
 
-#: client/cl_team.c:2205
+#: client/cl_team.c:2211
 #, fuzzy, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12775,17 +12786,17 @@ msgstr ""
 "Alienígenas sobreviventes\t%i\n"
 "\n"
 
-#: client/cl_team.c:2207
+#: client/cl_team.c:2213
 #, fuzzy, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civis mortos pelos alienígenas\t%i\n"
 
-#: client/cl_team.c:2208
+#: client/cl_team.c:2214
 #, fuzzy, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civis mortos pelos alienígenas\t%i\n"
 
-#: client/cl_team.c:2209
+#: client/cl_team.c:2215
 #, fuzzy, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12795,12 +12806,12 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2210
+#: client/cl_team.c:2216
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/cl_team.c:2230
+#: client/cl_team.c:2236
 #, c-format
 msgid ""
 "\n"
@@ -12808,14 +12819,14 @@ msgid ""
 msgstr ""
 
 # secure=>assegurar/conter ?
-#: client/cl_team.c:2232
+#: client/cl_team.c:2238
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured landed %s\n"
 msgstr "Ocupe toda a Área"
 
-#: client/cl_team.c:2243
+#: client/cl_team.c:2249
 #, c-format
 msgid ""
 "\n"
@@ -12824,27 +12835,27 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_team.c:2245
+#: client/cl_team.c:2251
 #, fuzzy
 msgid "You won the game!"
 msgstr "Você ganhou a batalha"
 
-#: client/cl_team.c:2247
+#: client/cl_team.c:2253
 msgid "Congratulations"
 msgstr ""
 
-#: client/cl_team.c:2249
+#: client/cl_team.c:2255
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_team.c:2250
+#: client/cl_team.c:2256
 msgid "Game Drawn!"
 msgstr ""
 
-#: client/cl_team.c:2254
+#: client/cl_team.c:2260
 msgid "Better luck next time"
 msgstr ""
 

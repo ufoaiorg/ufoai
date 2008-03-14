@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-01 16:21+0100\n"
+"POT-Creation-Date: 2008-03-14 15:40+0100\n"
 "PO-Revision-Date: 2006-11-13 05:27+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -986,8 +986,8 @@ msgstr "teadlane(sed)"
 msgid "Medic"
 msgstr "Meedik"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:502
-#: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:221
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1990
+#: ../base/ufos/team_humans.ufo:2011 client/cl_employee.c:221
 #, fuzzy
 msgid "UGV"
 msgstr "Mehitamata masinad"
@@ -3306,7 +3306,7 @@ msgid "Medium"
 msgstr "Meedik"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2241
+#: client/cl_main.c:2251
 msgid "Normal"
 msgstr "Tavaline"
 
@@ -3657,7 +3657,7 @@ msgstr ""
 msgid "Reload"
 msgstr "Valmis"
 
-#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2252
+#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2258
 #, fuzzy
 msgid "You've lost the game"
 msgstr "Sa KAOTASID lahingu"
@@ -3884,7 +3884,7 @@ msgstr "Näita ainult kehakaitseid"
 msgid "Show only aliens"
 msgstr "Näita ainult kehakaitseid"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4535
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4540
 #, fuzzy
 msgid "Aliens"
 msgstr "Tulnukas"
@@ -4434,16 +4434,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:122
 msgid "laser_pre_txt"
-msgstr ""
-"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
-"\n"
-"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
-"\n"
-"Commander, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
-"\n"
-"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:153 ../base/ufos/research.ufo:191
 msgid "antimatter_txt"
@@ -4487,21 +4478,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:157
 msgid "antimatter_pre_txt"
-msgstr ""
-"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
-"\n"
-"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:158
 msgid "antimatter_extra_pre_txt"
-msgstr ""
-"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
-"\n"
-"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:206 ../base/ufos/research.ufo:219
 #: ../base/ufos/research.ufo:227
@@ -4560,18 +4541,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:250
 msgid "alien_breathing_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"During autopsy of the alien corpses we've recovered, my team and I uncovered some peculiar machinery implanted into the throat of the alien specimen. It consists of two metal spheres located on either side of the brainstem, connected directly to the windpipe by way of a small tube. The windpipe itself is protected by some manner of valve or filter. We believe this interconnected apparatus may be some kind of breathing equipment or rebreather, or even something else entirely; we're not sure how it works yet.\n"
-"\n"
-"I would like your permission and funding to examine these items more closely than our autopsy would allow. At this point in the war, anything that enhances our knowledge base about the alien threat is useful, and we may discover critical clues about alien technology and biology. Certainly we need to find out what the aliens breathe before we can accomodate them in our Containment unit for any period of time.\n"
-"\n"
-"Cdr. Navarre and his team will be assisting us on the technical side. He has committed his full support to the proposal.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:303 ../base/ufos/research.ufo:316
 #: ../base/ufos/research.ufo:324
@@ -4628,22 +4598,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:381
 msgid "alien_communication_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"The increasing intellect of the captive aliens in our Containment unit leads me to conclude that we can finally begin to get a real handle on alien communication and, more importantly, getting some useable information out of them. Quoting from my report:\n"
-"\n"
-"(Odd Behaviour)\"There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers.\"\n"
-"\n"
-"\"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\"\n"
-"\n"
-"Dr. Yamamura is beginning to make real progress on this front, teaching the aliens several new words of sign language every day, but we require lab time and funding for a proper study of what these aliens know and how it can help us. The ability to interrogate aliens about their own technology could be of incomparable value to our soldiers and engineers. Cdr. Navarre was so excited at the prospect, he almost argued in favour of DivBio on this one.\n"
-"\n"
-"Thank you for your time, Commander. Please approve this program as soon as feasible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:410 ../base/ufos/research.ufo:423
 #: ../base/ufos/research.ufo:431
@@ -4671,16 +4626,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:416
 msgid "universal_serum_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.\n"
-"\n"
-"There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.\n"
-"\n"
-"To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.\n"
-"\n"
-"Sincerely,Dr. Connor"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:445 ../base/ufos/research.ufo:458
 #: ../base/ufos/research.ufo:466
@@ -4721,20 +4667,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:451
 msgid "alien_origins_pre_txt"
-msgstr ""
-"Good morning, Sir.\n"
-"\n"
-"Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?\n"
-"\n"
-"We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.\n"
-"\n"
-"Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.\n"
-"\n"
-"This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.\n"
-"\n"
-"With kind regards,\n"
-"\n"
-"Col. Falkland"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:481 ../base/ufos/research.ufo:493
 #: ../base/ufos/research.ufo:501
@@ -4767,12 +4700,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:486
 msgid "alien_theory_pre_txt"
-msgstr ""
-"Commander, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.\n"
-"\n"
-"We're ready to start work whenever you say, but we will need some lab time and funding to make a proper assessment of this amazing technology.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:523 ../base/ufos/research.ufo:536
 #: ../base/ufos/research.ufo:544
@@ -4804,20 +4732,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:529
 msgid "alien_xvi_pre_txt"
-msgstr ""
-"Good morning, Sir.\n"
-"\n"
-"With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.\n"
-"\n"
-"What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
-"\n"
-"This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
-"\n"
-"All we need is your signature on the dotted line, Sir.\n"
-"\n"
-"With kind regards,\n"
-"\n"
-"Col. Falkland"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:565
 msgid "pistol_txt"
@@ -7409,12 +7324,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3775
 msgid "craft_alien_astrogation_pre_txt"
-msgstr ""
-"Commander, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
-"\n"
-"Along with Alien Propulsion and Alien Detection, Alien Astrogation is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3778
 msgid "craft_alien_astrogation_txt"
@@ -7437,12 +7347,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3812
 msgid "craft_alien_propulsion_pre_txt"
-msgstr ""
-"Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
-"\n"
-"Along with Alien Astrogation and Alien Detection, Alien Propulsion is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3815
 msgid "craft_alien_propulsion_txt"
@@ -7469,14 +7374,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3848
 msgid "craft_alien_detection_pre_txt"
-msgstr ""
-"Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
-"\n"
-"If you'll let us take the suite apart, I believe we can find out what everything does and how to operate it, and how to replicate most if not all of the alien detection equipment. It would be an immense boost to our defence efforts on Earth if we can get this technology working for us, and its long-term potential for spacecraft development is vital. There's no way we could build a viable space-capable fighter with human sensors.\n"
-"\n"
-"Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3851
 msgid "craft_alien_detection_txt"
@@ -7586,12 +7484,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4112
 msgid "alien_materials_pre_txt"
-msgstr ""
-"Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
-"\n"
-"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilites.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4164
 #, fuzzy
@@ -8013,12 +7906,12 @@ msgstr ""
 msgid "Bloodspider"
 msgstr "Shevaar - Kehaehitus"
 
-#: ../base/ufos/team_humans.ufo:505
+#: ../base/ufos/team_humans.ufo:1993
 #, fuzzy
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#: ../base/ufos/team_humans.ufo:526
+#: ../base/ufos/team_humans.ufo:2014
 msgid "Ares W"
 msgstr ""
 
@@ -8918,8 +8811,8 @@ msgid ""
 msgstr ""
 
 #: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:542
-#: client/cl_aircraft.c:730 client/cl_aircraft.c:985 client/cl_aircraft.c:1082
-#: client/cl_aircraft.c:1689 client/cl_airfight.c:339
+#: client/cl_aircraft.c:730 client/cl_aircraft.c:987 client/cl_aircraft.c:1084
+#: client/cl_aircraft.c:1691 client/cl_airfight.c:339
 #: client/cl_aliencont.c:189 client/cl_aliencont.c:219
 #: client/cl_aliencont.c:232 client/cl_aliencont.c:245
 #: client/cl_basemanagement.c:1138 client/cl_basemanagement.c:2354
@@ -8939,8 +8832,8 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1032
-#: client/cl_main.c:1267 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1039
+#: client/cl_main.c:1274 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
@@ -9038,16 +8931,16 @@ msgstr ""
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Sul on valmis uus lennuk (a %s) baasis %s"
 
-#: client/cl_aircraft.c:985
+#: client/cl_aircraft.c:987
 #, fuzzy
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "Sinu transpordilaeval on vähe kütust ja see pöördub tagasi baasi"
 
-#: client/cl_aircraft.c:1082
+#: client/cl_aircraft.c:1084
 msgid "Assign a team to aircraft"
 msgstr "Paiguta tiim lennumasinale"
 
-#: client/cl_aircraft.c:1689
+#: client/cl_aircraft.c:1691
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr ""
@@ -9166,7 +9059,7 @@ msgid_plural "%i days left"
 msgstr[0] "%i päeva järel"
 msgstr[1] "%i päeva järel"
 
-#: client/cl_basemanagement.c:2230 client/cl_team.c:1552 client/cl_team.c:1766
+#: client/cl_basemanagement.c:2230 client/cl_team.c:1558 client/cl_team.c:1772
 msgid "NewTeam"
 msgstr "Uus tiim"
 
@@ -9247,7 +9140,7 @@ msgstr ""
 #: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
 #: client/cl_campaign.c:2759 client/cl_market.c:655 client/cl_market.c:660
 #: client/cl_market.c:687 client/cl_market.c:799 client/cl_market.c:801
-#: client/cl_save.c:367 client/cl_team.c:1598 client/cl_team.c:1605
+#: client/cl_save.c:367 client/cl_team.c:1604 client/cl_team.c:1611
 msgid "Note"
 msgstr "Teade"
 
@@ -9297,7 +9190,7 @@ msgid "%s: %1.2f%% (%d %s)\n"
 msgstr ""
 
 #: client/cl_basesummary.c:186 client/cl_campaign.c:1384
-#: client/cl_campaign.c:4544
+#: client/cl_campaign.c:4549
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
@@ -9475,21 +9368,21 @@ msgid_plural "credits"
 msgstr[0] "Autorid ja abilised"
 msgstr[1] "Autorid ja abilised"
 
-#: client/cl_campaign.c:1385 client/cl_campaign.c:4546
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4551
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Meedik"
 msgstr[1] "Meedik"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4543
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4548
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Sõdur"
 msgstr[1] "Sõdur"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4545
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4550
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -9674,12 +9567,12 @@ msgstr "Sõdur sai ametikõrgendust"
 msgid "Defense of base: %s successful!"
 msgstr "Baasi kaitse: %s edukas"
 
-#: client/cl_campaign.c:4533
+#: client/cl_campaign.c:4538
 #, fuzzy
 msgid "Human"
 msgstr "Busan"
 
-#: client/cl_campaign.c:4537
+#: client/cl_campaign.c:4542
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -9696,27 +9589,27 @@ msgstr ""
 "Raskusaste: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4690
+#: client/cl_campaign.c:4695
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "Nimii:\t%s (%i/%i)\n"
 
-#: client/cl_campaign.c:4713
+#: client/cl_campaign.c:4718
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "Nimii:\t%s (%i/%i)\n"
 
-#: client/cl_campaign.c:4871
+#: client/cl_campaign.c:4876
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4873 client/cl_campaign.c:5015
-#: client/cl_campaign.c:5106
+#: client/cl_campaign.c:4878 client/cl_campaign.c:5020
+#: client/cl_campaign.c:5111
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4951
+#: client/cl_campaign.c:4956
 #, fuzzy
 msgid ""
 "\n"
@@ -9724,13 +9617,13 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "Vali ese"
 
-#: client/cl_campaign.c:5013
+#: client/cl_campaign.c:5018
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5076
+#: client/cl_campaign.c:5081
 #, fuzzy
 msgid ""
 "\n"
@@ -9738,7 +9631,7 @@ msgid ""
 "Selected nation:\t\t\t"
 msgstr "Vali ese"
 
-#: client/cl_campaign.c:5104
+#: client/cl_campaign.c:5109
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -9954,26 +9847,26 @@ msgid ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
-#: client/cl_main.c:354 client/cl_main.c:989
+#: client/cl_main.c:361 client/cl_main.c:996
 msgid "Assemble a team first"
 msgstr "Kogu tiim enne"
 
-#: client/cl_main.c:354 client/cl_main.c:709 client/cl_main.c:989
-#: client/cl_main.c:1485 client/cl_main.c:1490 client/cl_main.c:1496
-#: client/cl_main.c:1504 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_main.c:361 client/cl_main.c:716 client/cl_main.c:996
+#: client/cl_main.c:1492 client/cl_main.c:1497 client/cl_main.c:1503
+#: client/cl_main.c:1511 client/cl_save.c:431 client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "VIGA"
 
-#: client/cl_main.c:709
+#: client/cl_main.c:716
 msgid "Server needs restarting - something went wrong"
 msgstr ""
 
-#: client/cl_main.c:782
+#: client/cl_main.c:789
 msgid "No player connected\n"
 msgstr ""
 
-#: client/cl_main.c:830
+#: client/cl_main.c:837
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -9982,164 +9875,164 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:837
+#: client/cl_main.c:844
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Kaart:\t%s\n"
 
-#: client/cl_main.c:847
+#: client/cl_main.c:854
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Serverinimi:\t%s\n"
 
-#: client/cl_main.c:848
+#: client/cl_main.c:855
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Meeleseisundid:\t%s\n"
 
-#: client/cl_main.c:849
+#: client/cl_main.c:856
 #, fuzzy, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Mäng"
 
-#: client/cl_main.c:850
+#: client/cl_main.c:857
 #, fuzzy, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Versioon:\t%s\n"
 
-#: client/cl_main.c:851
+#: client/cl_main.c:858
 #, fuzzy, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Eriserver"
 
-#: client/cl_main.c:852
+#: client/cl_main.c:859
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:853
+#: client/cl_main.c:860
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:854
+#: client/cl_main.c:861
 #, fuzzy, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Relvasta"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:862
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Tiimimäng:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:863
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maksimum mängijaid ühe tiimi kohta: \t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:864
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:858
+#: client/cl_main.c:865
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maksimum kliente:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:866
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maksimum sõdureid mängija kohta:\t%s\n"
 
-#: client/cl_main.c:860
+#: client/cl_main.c:867
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maks. Sõdureid ühe tiimi kohta:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:868
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1032
+#: client/cl_main.c:1039
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
-#: client/cl_main.c:1106
+#: client/cl_main.c:1113
 msgid "Select a free team or your coop team"
 msgstr ""
 
-#: client/cl_main.c:1328 client/cl_main.c:1342
+#: client/cl_main.c:1335 client/cl_main.c:1349
 #, fuzzy, c-format
 msgid "Current team: %i"
 msgstr "Praegune tiim"
 
-#: client/cl_main.c:1332 client/cl_main.c:1346
+#: client/cl_main.c:1339 client/cl_main.c:1353
 #, fuzzy
 msgid "Team is already in use"
 msgstr "Juba %i baasis"
 
-#: client/cl_main.c:1356 client/cl_main.c:1394
+#: client/cl_main.c:1363 client/cl_main.c:1401
 msgid "Invalid or full team"
 msgstr ""
 
-#: client/cl_main.c:1484
+#: client/cl_main.c:1491
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1497
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1503
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1510
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:2100
+#: client/cl_main.c:2110
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2101
+#: client/cl_main.c:2111
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2216 client/cl_view.c:422
+#: client/cl_main.c:2226 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/cl_main.c:2234
+#: client/cl_main.c:2244
 msgid "Chicken-hearted"
 msgstr "Kartlik"
 
-#: client/cl_main.c:2236
+#: client/cl_main.c:2246
 msgid "Very Easy"
 msgstr "Väga kerge"
 
-#: client/cl_main.c:2239
+#: client/cl_main.c:2249
 msgid "Easy"
 msgstr "Kerge"
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2254
 msgid "Hard"
 msgstr "Raske"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2256
 msgid "Very Hard"
 msgstr "Väga Raske"
 
-#: client/cl_main.c:2248
+#: client/cl_main.c:2258
 msgid "Insane"
 msgstr "Hullumeelne"
 
-#: client/cl_main.c:2300
+#: client/cl_main.c:2310
 #, fuzzy
 msgid "Custom"
 msgstr "Sihtimata Valang"
@@ -10951,35 +10844,44 @@ msgstr ""
 msgid "%i of %i"
 msgstr "%i  %i"
 
-#: client/cl_team.c:1598
+#: client/cl_team.c:1197
+msgid "A new team has been created for you."
+msgstr ""
+
+#: client/cl_team.c:1197
+#, fuzzy
+msgid "New team created"
+msgstr "Pole ühtegi kilpi"
+
+#: client/cl_team.c:1604
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "Peata uurimine"
 
-#: client/cl_team.c:1605
+#: client/cl_team.c:1611
 msgid "Error saving team. Check free disk space!"
 msgstr "Ei õnnestu salvestad tiimi. Kontrolli ketta vaba ruumi!"
 
-#: client/cl_team.c:1786
+#: client/cl_team.c:1792
 msgid "Select a soldier from list"
 msgstr "Vali sõdurenimekirjast"
 
-#: client/cl_team.c:1787
+#: client/cl_team.c:1793
 #, fuzzy
 msgid "Toggle to next soldier"
 msgstr "Järgmine tulnukas"
 
-#: client/cl_team.c:2151 client/cl_team.c:2195
+#: client/cl_team.c:2157 client/cl_team.c:2201
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_team.c:2154
+#: client/cl_team.c:2160
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Vastaseid tapetud\t%i\n"
 
-#: client/cl_team.c:2159
+#: client/cl_team.c:2165
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -10988,7 +10890,7 @@ msgstr ""
 "Tulnukaid kinnipüütud\t%i\n"
 "\n"
 
-#: client/cl_team.c:2160 client/cl_team.c:2199
+#: client/cl_team.c:2166 client/cl_team.c:2205
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -10997,7 +10899,7 @@ msgstr ""
 "Tulnukate ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:2162
+#: client/cl_team.c:2168
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -11006,7 +10908,7 @@ msgstr ""
 "Vastaseid kinnipüütud\t%i\n"
 "\n"
 
-#: client/cl_team.c:2163
+#: client/cl_team.c:2169
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -11015,22 +10917,22 @@ msgstr ""
 "Vastase ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:2167
+#: client/cl_team.c:2173
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Tiimi kaotusi\t%i\n"
 
-#: client/cl_team.c:2168
+#: client/cl_team.c:2174
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Kaotasid tiimi:\t%i\n"
 
-#: client/cl_team.c:2169
+#: client/cl_team.c:2175
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Enda poolt tapetud tiimikaaslasi\t%i\n"
 
-#: client/cl_team.c:2170
+#: client/cl_team.c:2176
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -11039,22 +10941,22 @@ msgstr ""
 "Tiimis ellujäänuid?t%i\n"
 "\n"
 
-#: client/cl_team.c:2173
+#: client/cl_team.c:2179
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Tulnukate poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:2175
+#: client/cl_team.c:2181
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Vastaste poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:2177
+#: client/cl_team.c:2183
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Sinu poolt mõrvatud inimesi\t%i\n"
 
-#: client/cl_team.c:2178
+#: client/cl_team.c:2184
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11065,27 +10967,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2198
+#: client/cl_team.c:2204
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Tulnukaid kinnipüütud\t%i\n"
 
-#: client/cl_team.c:2202
+#: client/cl_team.c:2208
 #, fuzzy, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Phalanxi sõdureid tapetud tulnukate poolt\t%i\n"
 
-#: client/cl_team.c:2203
+#: client/cl_team.c:2209
 #, fuzzy, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Phalanxi sõdureid kadunud lahingus\t%i\n"
 
-#: client/cl_team.c:2204
+#: client/cl_team.c:2210
 #, fuzzy, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Enda poolt tapetud tiimikaaslasi\t%i\n"
 
-#: client/cl_team.c:2205
+#: client/cl_team.c:2211
 #, fuzzy, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -11094,17 +10996,17 @@ msgstr ""
 "Tulnukate ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:2207
+#: client/cl_team.c:2213
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Tulnukate tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:2208
+#: client/cl_team.c:2214
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Phalanxi poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:2209
+#: client/cl_team.c:2215
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11113,26 +11015,26 @@ msgstr ""
 "Inimesi päästetud\t%i\n"
 "\n"
 
-#: client/cl_team.c:2210
+#: client/cl_team.c:2216
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/cl_team.c:2230
+#: client/cl_team.c:2236
 #, c-format
 msgid ""
 "\n"
 "Secured crashed %s\n"
 msgstr ""
 
-#: client/cl_team.c:2232
+#: client/cl_team.c:2238
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured landed %s\n"
 msgstr "Valluta ala"
 
-#: client/cl_team.c:2243
+#: client/cl_team.c:2249
 #, c-format
 msgid ""
 "\n"
@@ -11141,27 +11043,27 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_team.c:2245
+#: client/cl_team.c:2251
 #, fuzzy
 msgid "You won the game!"
 msgstr "Sa VÕITSID lahingu"
 
-#: client/cl_team.c:2247
+#: client/cl_team.c:2253
 msgid "Congratulations"
 msgstr ""
 
-#: client/cl_team.c:2249
+#: client/cl_team.c:2255
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_team.c:2250
+#: client/cl_team.c:2256
 msgid "Game Drawn!"
 msgstr ""
 
-#: client/cl_team.c:2254
+#: client/cl_team.c:2260
 msgid "Better luck next time"
 msgstr ""
 

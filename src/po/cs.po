@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-01 16:21+0100\n"
+"POT-Creation-Date: 2008-03-14 15:40+0100\n"
 "PO-Revision-Date: 2007-12-19 17:07+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -1025,8 +1025,8 @@ msgstr "Vědec"
 msgid "Medic"
 msgstr "Lékař"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:502
-#: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:221
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1990
+#: ../base/ufos/team_humans.ufo:2011 client/cl_employee.c:221
 msgid "UGV"
 msgstr "PVBO"
 
@@ -3210,7 +3210,7 @@ msgid "Medium"
 msgstr "Střední"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2241
+#: client/cl_main.c:2251
 msgid "Normal"
 msgstr "Normální"
 
@@ -3546,7 +3546,7 @@ msgstr "Zvovu načíst poslední automaticky uložený stav kampaně."
 msgid "Reload"
 msgstr "Zvovu načíst"
 
-#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2252
+#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2258
 msgid "You've lost the game"
 msgstr "Prohrál jste hru"
 
@@ -3752,7 +3752,7 @@ msgid "Show only aliens"
 msgstr "Ukázat jen cizáky"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4535
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4540
 msgid "Aliens"
 msgstr "Cizáci"
 
@@ -5390,45 +5390,45 @@ msgstr ""
 #: ../base/ufos/research.ufo:1035
 msgid "flashbang_txt"
 msgstr ""
-"Technical Specifications: Flashbang\n"
+"Technické Specifikace: Oslepující granát\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"STUPEŇ UTAJENÍ: ŽLUTÁ\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"PHALANX -- Jednotka pro boj s mimozemšťany\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"Technická dokumentace, prověření Delta\n"
 "\n"
-"Filed: 20 March 2084\n"
+"Zaznamenáno: 20. března 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"The flashbang is a non-lethal grenade that produces a blinding flash and a deafening blast to temporarily confuse or disorient targets in the area of effect. The grenade body does not explode or fragment upon detonation. In fact, if the body remains undamaged, it can be easily refilled and used again.\n"
-"\n"
-"Humans affected by a flashbang suffer temporary deafness and impaired balance, as well as complete loss of eyesight for up to five seconds before the effect fades and vision returns to normal. This makes the flashbang an excellent weapon for distracting and temporarily disabling the enemy, especially when assaulting heavily-defended positions. From combat reports, we've concluded that flashbangs have much the same effect on aliens as they do on humans; alien targets are effectively blind and deaf for a short time after the flashbang is deployed, rendering them helpless. We can't say exactly how long this period is, and it will undoubtedly vary from alien to alien, but it's still long enough to make the difference in a firefight.\n"
-"\n"
-"Aside from being a useful tactical tool, the flashbang will allow our soldiers to get in close and personal without being cut to shreds by the alien weapons. It allows the commander to choose exactly which weapons are applied in a given situation whilst avoiding the collateral damage potential of a frag grenade. A very quick enemy can take precautions to negate flashbang effects simply by closing his eyes and plugging his ears, but he will have very little warning and in most cases will require special training to respond in time. From what we can tell the aliens have had no prior experience with this type of weapon and have no defensive doctrine against it. Even a prepared enemy will still be distracted by a flashbang and could be engaged by fast-action troops before being able to reclaim his weapon and take aim.\n"
-"\n"
-"The flashbang's strengths far outweigh its weaknesses. It has served with distinction in many wars before this one, and it will continue to do so until all its functions can be replaced somehow by a new system.\n"
+"Kým: Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"The flashbang does no physical damage to anyone caught in its area of effect, and for that reason alone this weapon should be used over frag grenades and other explosive ordnance during any mission where civilians are placed at risk.\n"
+"Přehled\n"
 "\n"
-"It is an indispensible weapon in any terrain that features large amounts of available cover. If aliens are lying in wait and charging around a corner might be suicide, the mere act of popping a flashbang down the corridor can significantly change the outcome of the ensuing firefight in favour of our troops. Its utility is not to be underestimated.\n"
+"Cizácký útok na Bombaj nám bolestivě ozřejmil naši situaci. Jejich technologie jsou daleko pokročilejší než naše. Naprostá neschopnost jednotek Společenství otupit ostří Bombajské ofenzívy odhalila zásadní chyby soudobého vojenského výcviku a vybavení. Přišli o tři prapory a postup cizáků pouze zastavili, aniž by způsobili vážnější ztráty. PHALANX musí překonat tyto nepříznivé okolnosti a k tomu potřebujeme to nejlepší, co lidská technika může nabídnout.\n"
+"\n"
+"Program Excalibur byl spuštěn za účelem nalezení nejúčinnějších pozemských zbraní porovnáním jejich výrobních standardů, odolnosti, zkušeností z nasazení a bojovou účinností v situacích, kdy se nám podařilo bojovat proti cizákům.\n"
+"\n"
+"Oslepující granát (dělobuch) je nesmrtící granát, který vytváří oslepující záblesk a ohlušující ránu způsobující dočasné zmatení a dezorientaci cílů v zasažené oblasti. Tělo granátu při detonaci nevybuchuje ani se netříští. Ve skutečnosti, pokud se nepoškodí, je snadné je znovu naplnit a použít.\n"
+"\n"
+"Lidé zasažení oslepujícím granátem utrpí dočasné ohluchnutí a poruchu rovnováhy a také kompletní ztrátu zraku až na pět vteřin, než účinky pominou a vidění se vrátí k normálu. To dělá z oslepujícího granátu výbornou zbraň pro zmatení a dočasné vyřazení nepřítele, obzvláště při útoku na silně bráněné pozice. Studiem bojových hlášení jsme dospěli k názoru, že oslepující granáty mají na cizáky více méně stejný účinek jako na lidi; cizácké cíle jsou efektivně slepé a hluché po krátkou dobu po použití granátu, což je činí bezmocné. Nemůžeme říct přesně, jak je tato doba dlouhá a nejspíš se bude lišit podle druhu cizáků, ale je dostatečně dlouhá na to, aby ovlivnila výsledek přestřelky.\n"
+"\n"
+"Kromě toho, že jsou užitečným taktickým prostředkem, oslepující granáty umožní našim vojákům, aby se dostali na blízko bez toho, aby je cizácké zbraně rozsekaly na maděru. Umožní veliteli, aby vybral přesně, které zbraně budou v dané situaci použity, a zároveň se vyhnul nežádoucím účinkům tříštivého granátu. Velmi pohotový nepřítel se může účinku oslepujícího granátu jednoduše vyhnout tím, že včas zavře oči a zacpe si uši, ale téměř nic ho nebude varovat a většina by musela mít zvláštní výcvik, aby stihli včas zareagovat. Podle našich poznatků nemají cizáci se zbraněmi tohoto typu žádnou předchozí zkušenost a neví, jak se proti nim bránit. Dokonce i připraveného nepřítele oslepující granát dostatečně zmate, aby na něj mohly zaútočit jednotky s rychlou reakcí, než dostane vlastní zbraň pod kontrolu a zamíří.\n"
+"\n"
+"Výhody oslepujícího granátu daleko předčí jeho slabiny. Sloužil se ctí v mnoha válkách před touto a bude v tom pokračovat do té doby, než všechny jeho funkce budou nějak nahrazeny něčím novým.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Taktická doporučení\n"
 "\n"
-"Naturally the flashbang is only effective against organic aliens with eyes and ears."
+"Oslepující granáty nezpůsobují fyzické zranění osobám v zasažené oblasti, a už kvůli tomu by se měly požívat místo tříštivých granátů a jiných výbušných zařízení při každé akci, kdy jsou ohroženi civilisté.\n"
+"\n"
+"Je to nepostradatelná zbraň v každém terénu, který poskytuje množství možných úkrytů. Pokud cizáci čekají v záloze a zaútočit za roh může být sebevražda, pouhý akt hození oslepujícího granátu dál do chodby může významně ovlivnit výsledek následné přestřelky ve prospěch našich chlapců. Jejich užitečnost by se neměla podceňovat.\n"
+"\n"
+"\n"
+"Dodatky\n"
+"\n"
+"Oslepující granát je pochopitelně účinný pouze proti organickým cizákům s očima a ušima."
 
 #: ../base/ufos/research.ufo:1054
 msgid "fraggren_txt"
@@ -5474,45 +5474,45 @@ msgstr ""
 #: ../base/ufos/research.ufo:1073
 msgid "incgren_txt"
 msgstr ""
-"Technical Specifications: Incendiary Grenade\n"
+"Technické Specifikace: Zápalný granát\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"STUPEŇ UTAJENÍ: ŽLUTÁ\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"PHALANX -- Jednotka pro boj s mimozemšťany\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"Technická dokumentace, prověření Delta\n"
 "\n"
-"Filed: 20 March 2084\n"
+"Zaznamenáno: 20. března 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"Incendiary grenades are area-denial weapons, covering a large stretch of ground with very hot flames that are almost impossible to extinguish. Once thrown, the body of the grenade explodes, spreading the incendiary compound over the surrounding area -- and anyone unlucky enough to be inside the area of effect. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent. The grenade's delayed fuse is ignited by first pulling the pin and then releasing the handle, usually released as the grenade is thrown. It will detonate after a period of several seconds.\n"
-"\n"
-"The standard American M71 grenade consists of a core of C8 explosive, an inner layer of incendiary agent, and an outer plastic casing that provides no fragmentation but more importantly doesn't slow down or otherwise impede the delivery of the payload over a large area. The M71's casing is a smooth cylinder shape, unlike the old 'pineapple' grenades of World War 2, to make it easier to roll across various surfaces.\n"
-"\n"
-"Like all hand grenades, their range is limited, but they can be an essential tool for achieving control of the battlefield.\n"
+"Kým: Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"Incendiary grenades are tactical weapons that should be used to contain or herd the enemy into disadvantageous ground. They cannot be thrown very far, but they can serve to block off escape routes, to flush out rooms, or simply to catch the enemy in a blazing inferno.\n"
+"Přehled\n"
 "\n"
-"Care should be taken that no friendlies (especially civilians) are caught in the area of effect, as the effect of the thermate cocktail on human tissue is a particular public relations nightmare. In such situations the use of lethal grenades is strongly discouraged; flashbangs should be given preference.\n"
+"Cizácký útok na Bombaj nám bolestivě ozřejmil naši situaci. Jejich technologie jsou daleko pokročilejší než naše. Naprostá neschopnost jednotek Společenství otupit ostří Bombajské ofenzívy odhalila zásadní chyby soudobého vojenského výcviku a vybavení. Přišli o tři prapory a postup cizáků pouze zastavili, aniž by způsobili vážnější ztráty. PHALANX musí překonat tyto nepříznivé okolnosti a k tomu potřebujeme to nejlepší, co lidská technika může nabídnout.\n"
 "\n"
-"It's recommended that all soldiers carrying non-heavy weapons should be equipped with at least one grenade of some variety -- be it an incendiary grenade, frag grenade, flashbang or other -- in case the need should arise. Two or more are strongly recommended.\n"
+"Program Excalibur byl spuštěn za účelem nalezení nejúčinnějších pozemských zbraní porovnáním jejich výrobních standardů, odolnosti, zkušeností z nasazení a bojovou účinností v situacích, kdy se nám podařilo bojovat proti cizákům.\n"
+"\n"
+"Zápalné granáty jsou zbraně pro zabrání území (area-denial) tím, že pokryjí rozsáhlý kus země žhavými plameny, které je skoro nemožné uhasit. Po hodu tělo granátu exploduje a pokryje hořící látkou okolní oblast -- a každého , kdo má tu smůlu, že se v ní nachází. Vlastní náplň je modifikace směsi, která se používá už od druhé světové války; termit, barit dusičný, síra a přilnavý agent. Časový zápalovač granátu je spuštěn vytáhnutím kroužku přepravní pojistky a uvolněním páky vrhové pojistky, k uvolnění dojde obvykle při vržení granátu. Výbuch nastává po několika vteřinách.\n"
+"\n"
+"Standardní americký granát M71 se skládá z jádra z trhaviny C8, vnitřní vrstvy zápalného agentu a vnějšího umělohmotného pláště, který sice nevytváří žádné střepiny, ale zato nezpomaluje ani jinak nebrání rozmetání náplně do širokého okolí. M71 má hladký plášť válcového tvaru, na rozdíl od \"ananasových\" granátů z druhé světové války, aby jej bylo možné snadno koulet po různých podkladech.\n"
+"\n"
+"Jako u všech ručních granátů je dosah omezený, ale i tak mohou být zásadním nástrojem pro dosažení kontroly nad bojištěm.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Taktická doporučení\n"
 "\n"
-"None."
+"Zápalné granáty jsou taktické zbraně, které by se měly použít na zabránění pohybu nepřítele nebo jeho nahnání na nevýhodné místo. Nelze je vrhnout na velkou vzdálenost, ale můžou posloužit k zablokování ústupové cesty, vyprázdnění místností anebo prostě k uvěznění nepřítele ve žhnoucím pekle.\n"
+"\n"
+"Je třeba dát pozor na to, aby v cílové oblasti nebyli vlastní vojáci nebo dokonce civilisté, neboť účinek termitového koktejlu na lidskou tkáň je obzvláštní noční můra pro vztahy s veřejností. V takových případech se nasazení smrtícího granátu silně nedoporučuje a měla by se raději dát přednost oslepujícímu granátu.\n"
+"\n"
+"Navrhujeme, aby každý voják nevyzbrojený těžkou zbraní byl vybaven minimálně jedním granátem některého druhu, ať už zápalným, tříštivým, oslepujícím nebo jiným, pro případ potřeby. Doporučujeme dva a více.\n"
+"\n"
+"\n"
+"Dodatky\n"
+"\n"
+"Žádné."
 
 #: ../base/ufos/research.ufo:1092
 msgid "grenl_txt"
@@ -7819,7 +7819,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3069
 msgid "inter_dragon_pre_txt"
-msgstr "Před výzkumem nejsou dostupné žádné informace."
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3088
 msgid "inter_stingray_txt"
@@ -7829,7 +7830,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3091
 msgid "inter_stingray_pre_txt"
-msgstr "Před výzkumem nejsou dostupné žádné informace."
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3115
 msgid "ufo_scout_txt"
@@ -9666,11 +9668,11 @@ msgstr "Shevaar"
 msgid "Bloodspider"
 msgstr "Bloodspider"
 
-#: ../base/ufos/team_humans.ufo:505
+#: ../base/ufos/team_humans.ufo:1993
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#: ../base/ufos/team_humans.ufo:526
+#: ../base/ufos/team_humans.ufo:2014
 msgid "Ares W"
 msgstr "Ares W"
 
@@ -10561,8 +10563,8 @@ msgstr ""
 "Letoun nemůže odstartovat.\n"
 
 #: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:542
-#: client/cl_aircraft.c:730 client/cl_aircraft.c:985 client/cl_aircraft.c:1082
-#: client/cl_aircraft.c:1689 client/cl_airfight.c:339
+#: client/cl_aircraft.c:730 client/cl_aircraft.c:987 client/cl_aircraft.c:1084
+#: client/cl_aircraft.c:1691 client/cl_airfight.c:339
 #: client/cl_aliencont.c:189 client/cl_aliencont.c:219
 #: client/cl_aliencont.c:232 client/cl_aliencont.c:245
 #: client/cl_basemanagement.c:1138 client/cl_basemanagement.c:2354
@@ -10582,8 +10584,8 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1032
-#: client/cl_main.c:1267 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1039
+#: client/cl_main.c:1274 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
@@ -10683,15 +10685,15 @@ msgstr "Elektronika:\t%i on %i"
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Máte nový letoun (%s) na základně %s."
 
-#: client/cl_aircraft.c:985
+#: client/cl_aircraft.c:987
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "Transportér má málo paliva a vrací se na základnu"
 
-#: client/cl_aircraft.c:1082
+#: client/cl_aircraft.c:1084
 msgid "Assign a team to aircraft"
 msgstr "Přidělit tým k letounu"
 
-#: client/cl_aircraft.c:1689
+#: client/cl_aircraft.c:1691
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr "UFO střílí na %s"
@@ -10810,7 +10812,7 @@ msgstr[0] "zbývá %i den"
 msgstr[1] "zbývají %i dny"
 msgstr[2] "zbývá %i dnů"
 
-#: client/cl_basemanagement.c:2230 client/cl_team.c:1552 client/cl_team.c:1766
+#: client/cl_basemanagement.c:2230 client/cl_team.c:1558 client/cl_team.c:1772
 msgid "NewTeam"
 msgstr "Nový tým"
 
@@ -10903,7 +10905,7 @@ msgstr ""
 #: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
 #: client/cl_campaign.c:2759 client/cl_market.c:655 client/cl_market.c:660
 #: client/cl_market.c:687 client/cl_market.c:799 client/cl_market.c:801
-#: client/cl_save.c:367 client/cl_team.c:1598 client/cl_team.c:1605
+#: client/cl_save.c:367 client/cl_team.c:1604 client/cl_team.c:1611
 msgid "Note"
 msgstr "Poznámka"
 
@@ -10953,7 +10955,7 @@ msgid "%s: %1.2f%% (%d %s)\n"
 msgstr "%s: %1.2f%% (%d %s)\n"
 
 #: client/cl_basesummary.c:186 client/cl_campaign.c:1384
-#: client/cl_campaign.c:4544
+#: client/cl_campaign.c:4549
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "vědec"
@@ -11133,21 +11135,21 @@ msgstr[0] "kredit"
 msgstr[1] "kredity"
 msgstr[2] "kreditů"
 
-#: client/cl_campaign.c:1385 client/cl_campaign.c:4546
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4551
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "lékař"
 msgstr[1] "lékaři"
 msgstr[2] "lékařů"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4543
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4548
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "voják"
 msgstr[1] "vojáci"
 msgstr[2] "vojáků"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4545
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4550
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "dělník"
@@ -11336,11 +11338,11 @@ msgstr "Voják povýšen"
 msgid "Defense of base: %s successful!"
 msgstr "Obrana základny %s byla úspěšná!"
 
-#: client/cl_campaign.c:4533
+#: client/cl_campaign.c:4538
 msgid "Human"
 msgstr "Lidé"
 
-#: client/cl_campaign.c:4537
+#: client/cl_campaign.c:4542
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -11359,27 +11361,27 @@ msgstr ""
 "Tolerované dluhy: %i k\n"
 "%s\n"
 
-#: client/cl_campaign.c:4690
+#: client/cl_campaign.c:4695
 #, c-format
 msgid "  * %i x\t%s\n"
 msgstr "  * %i x\t%s\n"
 
-#: client/cl_campaign.c:4713
+#: client/cl_campaign.c:4718
 #, c-format
 msgid "  * %s\n"
 msgstr "  * %s\n"
 
-#: client/cl_campaign.c:4871
+#: client/cl_campaign.c:4876
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "Ukořistěné %s je přepravováno na základnu %s."
 
-#: client/cl_campaign.c:4873 client/cl_campaign.c:5015
-#: client/cl_campaign.c:5106
+#: client/cl_campaign.c:4878 client/cl_campaign.c:5020
+#: client/cl_campaign.c:5111
 msgid "UFO Recovery"
 msgstr "UFO - Zpracování"
 
-#: client/cl_campaign.c:4951
+#: client/cl_campaign.c:4956
 msgid ""
 "\n"
 "\n"
@@ -11389,13 +11391,13 @@ msgstr ""
 "\n"
 "Vybraná základna:\t\t\t"
 
-#: client/cl_campaign.c:5013
+#: client/cl_campaign.c:5018
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Ukořistěné %s bylo prodáno státu %s a získal jste za něj %i kreditů."
 
-#: client/cl_campaign.c:5076
+#: client/cl_campaign.c:5081
 msgid ""
 "\n"
 "\n"
@@ -11405,7 +11407,7 @@ msgstr ""
 "\n"
 "Vybraný stát:\t\t\t"
 
-#: client/cl_campaign.c:5104
+#: client/cl_campaign.c:5109
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "Zajištěné %s bylo zničeno."
@@ -11630,26 +11632,26 @@ msgid ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr "Základna %s nemá sklad antihnoty. %i jednotek antihmoty bylo odebráno."
 
-#: client/cl_main.c:354 client/cl_main.c:989
+#: client/cl_main.c:361 client/cl_main.c:996
 msgid "Assemble a team first"
 msgstr "Nejprve sestavte tým"
 
-#: client/cl_main.c:354 client/cl_main.c:709 client/cl_main.c:989
-#: client/cl_main.c:1485 client/cl_main.c:1490 client/cl_main.c:1496
-#: client/cl_main.c:1504 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_main.c:361 client/cl_main.c:716 client/cl_main.c:996
+#: client/cl_main.c:1492 client/cl_main.c:1497 client/cl_main.c:1503
+#: client/cl_main.c:1511 client/cl_save.c:431 client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "Chyba"
 
-#: client/cl_main.c:709
+#: client/cl_main.c:716
 msgid "Server needs restarting - something went wrong"
 msgstr "Server vyžaduje restart - něco dopadlo špatně"
 
-#: client/cl_main.c:782
+#: client/cl_main.c:789
 msgid "No player connected\n"
 msgstr "Žádný hráč není připojen\n"
 
-#: client/cl_main.c:830
+#: client/cl_main.c:837
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -11658,166 +11660,166 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:837
+#: client/cl_main.c:844
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:847
+#: client/cl_main.c:854
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Jméno serveru:\t%s\n"
 
-#: client/cl_main.c:848
+#: client/cl_main.c:855
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Stavy morálky:\t%s\n"
 
-#: client/cl_main.c:849
+#: client/cl_main.c:856
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Druh hry:\t%s\n"
 
-#: client/cl_main.c:850
+#: client/cl_main.c:857
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Verze hry:\t%s\n"
 
-#: client/cl_main.c:851
+#: client/cl_main.c:858
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Vyhrazený server:\t%s\n"
 
-#: client/cl_main.c:852
+#: client/cl_main.c:859
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Operační systém:\t%s\n"
 
-#: client/cl_main.c:853
+#: client/cl_main.c:860
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Síťový protokol:\t%s\n"
 
-#: client/cl_main.c:854
+#: client/cl_main.c:861
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Délka tahu:\t%s\n"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:862
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Týmová hra:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:863
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maximum hráčů na tým:\t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:864
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Maximum týmů v této mapě:\t%s\n"
 
-#: client/cl_main.c:858
+#: client/cl_main.c:865
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maximum klientů:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:866
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maximum vojáků na hráče:\t%s\n"
 
-#: client/cl_main.c:860
+#: client/cl_main.c:867
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maximum vojáků na tým:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:868
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Chráněno heslem:\t%s\n"
 
 # doladit
-#: client/cl_main.c:1032
+#: client/cl_main.c:1039
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 "Není místo pro další oblíbené - smažte prosím nepoužívané záznamy a zkuste to znovu"
 
-#: client/cl_main.c:1106
+#: client/cl_main.c:1113
 msgid "Select a free team or your coop team"
 msgstr "Zvolte volný tým nebo tým pro spolupráci"
 
-#: client/cl_main.c:1328 client/cl_main.c:1342
+#: client/cl_main.c:1335 client/cl_main.c:1349
 #, c-format
 msgid "Current team: %i"
 msgstr "Nynější tým: %i"
 
-#: client/cl_main.c:1332 client/cl_main.c:1346
+#: client/cl_main.c:1339 client/cl_main.c:1353
 msgid "Team is already in use"
 msgstr "Tým je již používán"
 
-#: client/cl_main.c:1356 client/cl_main.c:1394
+#: client/cl_main.c:1363 client/cl_main.c:1401
 msgid "Invalid or full team"
 msgstr "Neplatný nebo plný tým"
 
-#: client/cl_main.c:1484
+#: client/cl_main.c:1491
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Vaše verze hry (%s) se liší od té na serveru"
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1497
 msgid "Local map version differs from server"
 msgstr "Vaše verze mapy se liší od té na serveru"
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1503
 msgid "Script files are not the same"
 msgstr "Skriptové soubory nejsou shodné"
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1510
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 
 # doladit
-#: client/cl_main.c:2100
+#: client/cl_main.c:2110
 msgid "Target your shot to the ground"
 msgstr "Zamířit výstřel k zemi"
 
-#: client/cl_main.c:2101
+#: client/cl_main.c:2111
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Vstoupit do inventáře postavy (během bojové mise)"
 
-#: client/cl_main.c:2216 client/cl_view.c:422
+#: client/cl_main.c:2226 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr "Očekávám start hry"
 
-#: client/cl_main.c:2234
+#: client/cl_main.c:2244
 msgid "Chicken-hearted"
 msgstr "Pro sraby"
 
-#: client/cl_main.c:2236
+#: client/cl_main.c:2246
 msgid "Very Easy"
 msgstr "Velice snadné"
 
-#: client/cl_main.c:2239
+#: client/cl_main.c:2249
 msgid "Easy"
 msgstr "Snadné"
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2254
 msgid "Hard"
 msgstr "Těžké"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2256
 msgid "Very Hard"
 msgstr "Velice těžké"
 
-#: client/cl_main.c:2248
+#: client/cl_main.c:2258
 msgid "Insane"
 msgstr "Nemožné"
 
-#: client/cl_main.c:2300
+#: client/cl_main.c:2310
 msgid "Custom"
 msgstr "Uživatelský"
 
@@ -12634,34 +12636,43 @@ msgstr "SSSR"
 msgid "%i of %i"
 msgstr "%i z %i"
 
-#: client/cl_team.c:1598
+#: client/cl_team.c:1197
+msgid "A new team has been created for you."
+msgstr ""
+
+#: client/cl_team.c:1197
+#, fuzzy
+msgid "New team created"
+msgstr "Není přiřazeno žádné vybavení."
+
+#: client/cl_team.c:1604
 msgid "Error saving team. Nothing to save yet."
 msgstr "Chyba při ukládání týmu. Zatím není co uložit."
 
-#: client/cl_team.c:1605
+#: client/cl_team.c:1611
 msgid "Error saving team. Check free disk space!"
 msgstr ""
 "Chyba při ukládání týmu. Zkontrolujte zda je na disku dostatek volného místa!"
 
-#: client/cl_team.c:1786
+#: client/cl_team.c:1792
 msgid "Select a soldier from list"
 msgstr "Vybrat vojáka ze seznamu"
 
-#: client/cl_team.c:1787
+#: client/cl_team.c:1793
 msgid "Toggle to next soldier"
 msgstr "Přepnout na dalšího vojáka"
 
-#: client/cl_team.c:2151 client/cl_team.c:2195
+#: client/cl_team.c:2157 client/cl_team.c:2201
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Zabitých cizáků\t%i\n"
 
-#: client/cl_team.c:2154
+#: client/cl_team.c:2160
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Zabitých nepřátel\t%i\n"
 
-#: client/cl_team.c:2159
+#: client/cl_team.c:2165
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -12670,7 +12681,7 @@ msgstr ""
 "Zajatých cizáků\t%i\n"
 "\n"
 
-#: client/cl_team.c:2160 client/cl_team.c:2199
+#: client/cl_team.c:2166 client/cl_team.c:2205
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12679,7 +12690,7 @@ msgstr ""
 "Přeživší cizáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:2162
+#: client/cl_team.c:2168
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -12688,7 +12699,7 @@ msgstr ""
 "Zajatých nepřátel\t%i\n"
 "\n"
 
-#: client/cl_team.c:2163
+#: client/cl_team.c:2169
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -12697,22 +12708,22 @@ msgstr ""
 "Přeživších nepřátel\t%i\n"
 "\n"
 
-#: client/cl_team.c:2167
+#: client/cl_team.c:2173
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Tým - ztráty\t%i\n"
 
-#: client/cl_team.c:2168
+#: client/cl_team.c:2174
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Tým - pohřešováno\t%i\n"
 
-#: client/cl_team.c:2169
+#: client/cl_team.c:2175
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Zabito spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:2170
+#: client/cl_team.c:2176
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -12721,22 +12732,22 @@ msgstr ""
 "Tým - přeživší\t%i\n"
 "\n"
 
-#: client/cl_team.c:2173
+#: client/cl_team.c:2179
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:2175
+#: client/cl_team.c:2181
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilistů zabitých nepřáteli\t%i\n"
 
-#: client/cl_team.c:2177
+#: client/cl_team.c:2183
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilistů zabitých tvým týmem\t%i\n"
 
-#: client/cl_team.c:2178
+#: client/cl_team.c:2184
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12747,27 +12758,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2198
+#: client/cl_team.c:2204
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Zajatých cizáků\t%i\n"
 
-#: client/cl_team.c:2202
+#: client/cl_team.c:2208
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Členů PHALANXu zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:2203
+#: client/cl_team.c:2209
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Členů PHALANXu pohřešovaných v boji\t%i\n"
 
-#: client/cl_team.c:2204
+#: client/cl_team.c:2210
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Členů PHALANXu zabitých spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:2205
+#: client/cl_team.c:2211
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12776,17 +12787,17 @@ msgstr ""
 "Členů PHALANXu přeživších\t%i\n"
 "\n"
 
-#: client/cl_team.c:2207
+#: client/cl_team.c:2213
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:2208
+#: client/cl_team.c:2214
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civilistů zabitých spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:2209
+#: client/cl_team.c:2215
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12795,12 +12806,12 @@ msgstr ""
 "Zachráněných civilistů\t%i\n"
 "\n"
 
-#: client/cl_team.c:2210
+#: client/cl_team.c:2216
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Získaných předmětů (typů/všech)\t%i/%i\n"
 
-#: client/cl_team.c:2230
+#: client/cl_team.c:2236
 #, c-format
 msgid ""
 "\n"
@@ -12809,7 +12820,7 @@ msgstr ""
 "\n"
 "Zabezpečeno místo havárie %s\n"
 
-#: client/cl_team.c:2232
+#: client/cl_team.c:2238
 #, c-format
 msgid ""
 "\n"
@@ -12818,7 +12829,7 @@ msgstr ""
 "\n"
 "Zabezpečeno místo přistání %s\n"
 
-#: client/cl_team.c:2243
+#: client/cl_team.c:2249
 #, c-format
 msgid ""
 "\n"
@@ -12831,15 +12842,15 @@ msgstr ""
 "Zabito nepřátel:  %i\n"
 "Tým - přeživší:  %i"
 
-#: client/cl_team.c:2245
+#: client/cl_team.c:2251
 msgid "You won the game!"
 msgstr "Vyhrál jste hru!"
 
-#: client/cl_team.c:2247
+#: client/cl_team.c:2253
 msgid "Congratulations"
 msgstr "Blahopřejeme"
 
-#: client/cl_team.c:2249
+#: client/cl_team.c:2255
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -12849,11 +12860,11 @@ msgstr ""
 "\n"
 "Na žádné straně nikdo nepřežil."
 
-#: client/cl_team.c:2250
+#: client/cl_team.c:2256
 msgid "Game Drawn!"
 msgstr "Nerozhodně!"
 
-#: client/cl_team.c:2254
+#: client/cl_team.c:2260
 msgid "Better luck next time"
 msgstr "Příště více štestí"
 

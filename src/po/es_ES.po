@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-01 16:21+0100\n"
+"POT-Creation-Date: 2008-03-14 15:40+0100\n"
 "PO-Revision-Date: 2007-01-06 19:30+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -1043,8 +1043,8 @@ msgstr "Científico"
 msgid "Medic"
 msgstr "Médico"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:502
-#: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:221
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1990
+#: ../base/ufos/team_humans.ufo:2011 client/cl_employee.c:221
 #, fuzzy
 msgid "UGV"
 msgstr "UGV"
@@ -3370,7 +3370,7 @@ msgid "Medium"
 msgstr "Médico"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2241
+#: client/cl_main.c:2251
 msgid "Normal"
 msgstr "Normal"
 
@@ -3721,7 +3721,7 @@ msgstr ""
 msgid "Reload"
 msgstr "Listo"
 
-#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2252
+#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2258
 #, fuzzy
 msgid "You've lost the game"
 msgstr "Has perdido la batalla"
@@ -3943,7 +3943,7 @@ msgstr "Mostrar sólo empleados"
 msgid "Show only aliens"
 msgstr "Mostrar sólo objetos"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4535
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4540
 #, fuzzy
 msgid "Aliens"
 msgstr "Aliens"
@@ -4902,42 +4902,42 @@ msgstr ""
 #: ../base/ufos/research.ufo:526
 msgid "alien_xvi_txt"
 msgstr ""
-"Good morning, Sir.\n"
+"Buenos días, Señor.\n"
 "\n"
-"The XVI census program has just gone into effect. Weekly rolling tests have commenced this morning, and I've got a full report on our estimated performance levels and operational details.\n"
+"El programa censo XVI acaba de entrar en efecto. Las pruebas semanales han comenzado esta mañana, y tengo un informe completo sobre nuestros niveles de rendimiento estimado y detalles operativos.\n"
 "\n"
-"Our strategy is based around local medical centres, where the XVI tests are performed by existing nursing staff under the supervision of a small police or military guard. If a test turns out positive, this guard will perform the arrest and turn the infected prisoners over to the UN for containment and study. Once the aliens figure out this scheme -- I don't think it'll take them long -- the infected people will start avoiding the census, thereby giving us the data we need simply by their absence.\n"
+"Nuestra estrategia se basa en torno a los centros médicos locales, en donde la XVI pruebas son realizadas por personal de enfermería existente bajo la supervisión de una pequeña guardia policial o militar. Si la prueba resulta positiva, esta guardia realizará la detención y aprisionamiento del individuo en las Naciones Unidas para su contención y el estudio. Una vez que los alienígenas se den cuenta del plan -no creo que les lleve mucho- las personas infectadas comenzará a evitar el censo, lo que nos dará los datos que necesitamos, simplemente por su ausencia.\n"
 "\n"
-"As always there's good news and bad news. I'll start with the bad news.\n"
+"Como siempre, hay buenas y malas noticias. Empezaré con las malas noticias.\n"
 "\n"
-"Despite our best efforts, the census data will have some limitations. 99.9% of the planet's population is registered with one national authority or another, but out of ten billion people that still leaves several million unaccounted for. We will be able to extrapolate figures that are accurate to within several thousand heads, but the statistics we generate won't ever be exact. This means the program is less useful for identifying those who have been infected, but still a godsend for keeping track of XVI spread and alien activity on a global basis. After all, we need to know what kind of progress we're making against this new threat.\n"
+"A pesar de nuestros mejores esfuerzos, los datos del censo poseen algunas limitaciones. El 99,9% de la población del planeta está registrada por una autoridad nacional o de otro tipo, pero a pesar de ello, de cada diez millones de personas existen todavía varios millones con paradero desconocido. Podemos extrapolar las cifras para que sean precisas en varias miles de cabezas, pero las estadísticas que generamos nunca serán exactas. Esto significa que el programa no será tan útil para la identificación de las personas que han sido infectadas, pero sigue siendo una buena idea para hacer el seguimiento de la propagación y actividad alienígena a nivel mundial. Después de todo, tenemos que saber qué tipo de progreso estamos teniendo en contra de esta nueva amenaza.\n"
 "\n"
-"The good news is that the UN and the member nations have agreed to shoulder the entire cost of the census program. They are handling all the equipment and manpower locally, with strenuous checks as to the reliability of personnel and the validity of the results. The information will be piped directly to our command centre at no charge to us.\n"
+"Las buenas noticias es que tanto la ONU como las naciones miembro han aceptado sufragar el coste total del programa de censo. Ellos están manejando todo el equipamiento y la mano de obra localmente, con concienzudas comprobaciones sobre la confiabilidad del personal y de la validez de los resultados. La información será canalizada directamente a nuestro centro de mando sin cargo alguno.\n"
 "\n"
-"The best thing about this program is that we can now keep track of infection levels and how much threat each region is under from XVI. This will work in conjunction with our normal detection methods to warn us where alien activity is worst and allow us to intervene before the situation becomes critical.\n"
+"Lo mejor de este programa es que ahora podemos seguir la pista de los niveles de infección y como de amenazada está cada región por el XVI. Esto funcionará en conjunto con nuestro métodos normales de detección para alertarnos dónde la actividad alienígena es peor y nos permitirá intervenir antes de que la situación se vuelva critica.\n"
 "\n"
-"Any area where XVI seems to be gaining ground should be posted with additional air patrols, and we should be on the lookout for any attempts by the aliens to solidify their hold on the ground. Alien activity reports in this area should be investigated and responded to with extreme prejudice.\n"
+"Cualquier arena donde parezca que el XVI está ganando terreno debe ser apostada con patrullas aéreas adicionales, y debemos vigilar cualquier intento por parte de los alienígenas de consolidar su posición en tierra. Toda actividad alienígena en este área debe ser investigada y respondida de forma extremadamente perjudicial.\n"
 "\n"
-"With kind regards,\n"
+"Atentamente,\n"
 "\n"
-"Col. Falkland"
+"Cnl. Falkland"
 
 #: ../base/ufos/research.ufo:529
 msgid "alien_xvi_pre_txt"
 msgstr ""
-"Good morning, Sir.\n"
+"Buenos días, Señor.\n"
 "\n"
-"With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.\n"
+"En relación a los acontecimientos sobre de la infección de la población civil de la Tierra por un organismo alienígena, surge la necesidad de poseer una forma de determinar el número de personas infectadas en varias regiones y la tasa de propagación. Es más fácil de decir que de hacer, lo sé, pero puede ser tan importante como la búsqueda de una cura. No podemos ayudar a nadie si no sabemos que están enfermos.\n"
 "\n"
-"What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
+"Lo que me propongo hacer es crear un censo continuo por un tiempo prolongado de control de infección XVI sobre todas las personas registradas en el planeta, por medio de una pequeña prueba de sangre. Todo el mundo se debe presentar a esta prueba una vez por semana para asegurarse de que estén limpios; con mayor frecuencia en donde estén bajo sospecha de infección. Las muestras sólo requerirán una sola gota de sangre, tomadas de una vena aleatoria para evitar la manipulación. Afortunadamente el organismo XVI es lo suficientemente grande y dominante que podemos hacer pruebas de estas muestras en el lugar con resultados confiables casi al 100%.\n"
 "\n"
-"This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
+"Esto va a ser una empresa de gran envergadura, que requiere un cuidadoso enlace con los servicios de inteligencia de las ocho grandes naciones de la Tierra. Ya he preparado planes y simulaciones para demostrar el funcionamiento y eficacia de este programa. Con un poco de tiempo y de financiación, podemos convencerlos de la importancia del proyecto y tener todo en funcionamiento en cuestión de semanas.\n"
 "\n"
-"All we need is your signature on the dotted line, Sir.\n"
+"Todo lo que necesitamos es su firma en la linea de puntos, Señor.\n"
 "\n"
-"With kind regards,\n"
+"Atentamente,\n"
 "\n"
-"Col. Falkland"
+"Cnl. Falkland"
 
 #: ../base/ufos/research.ufo:565
 msgid "pistol_txt"
@@ -8277,7 +8277,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3069
 msgid "inter_dragon_pre_txt"
-msgstr "No existe información disponible previa a la investigación."
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3088
 #, fuzzy
@@ -8349,7 +8350,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3091
 msgid "inter_stingray_pre_txt"
-msgstr "No existe información disponible previa a la investigación."
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3115
 msgid "ufo_scout_txt"
@@ -10266,12 +10268,12 @@ msgstr "Shevaar"
 msgid "Bloodspider"
 msgstr "Araña Sanguinaria"
 
-#: ../base/ufos/team_humans.ufo:505
+#: ../base/ufos/team_humans.ufo:1993
 #, fuzzy
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#: ../base/ufos/team_humans.ufo:526
+#: ../base/ufos/team_humans.ufo:2014
 msgid "Ares W"
 msgstr ""
 
@@ -11178,8 +11180,8 @@ msgid ""
 msgstr ""
 
 #: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:542
-#: client/cl_aircraft.c:730 client/cl_aircraft.c:985 client/cl_aircraft.c:1082
-#: client/cl_aircraft.c:1689 client/cl_airfight.c:339
+#: client/cl_aircraft.c:730 client/cl_aircraft.c:987 client/cl_aircraft.c:1084
+#: client/cl_aircraft.c:1691 client/cl_airfight.c:339
 #: client/cl_aliencont.c:189 client/cl_aliencont.c:219
 #: client/cl_aliencont.c:232 client/cl_aliencont.c:245
 #: client/cl_basemanagement.c:1138 client/cl_basemanagement.c:2354
@@ -11199,8 +11201,8 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1032
-#: client/cl_main.c:1267 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1039
+#: client/cl_main.c:1274 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
@@ -11302,16 +11304,16 @@ msgstr ""
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Tienes una nueva nave (una %s) en la base %s"
 
-#: client/cl_aircraft.c:985
+#: client/cl_aircraft.c:987
 #, fuzzy
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "Tu nave tiene poco combustible y regresa a la base"
 
-#: client/cl_aircraft.c:1082
+#: client/cl_aircraft.c:1084
 msgid "Assign a team to aircraft"
 msgstr "Asigna un equipo a la nave"
 
-#: client/cl_aircraft.c:1689
+#: client/cl_aircraft.c:1691
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr ""
@@ -11429,7 +11431,7 @@ msgid_plural "%i days left"
 msgstr[0] "%i dias faltan"
 msgstr[1] "%i dias faltan"
 
-#: client/cl_basemanagement.c:2230 client/cl_team.c:1552 client/cl_team.c:1766
+#: client/cl_basemanagement.c:2230 client/cl_team.c:1558 client/cl_team.c:1772
 #, fuzzy
 msgid "NewTeam"
 msgstr "NewTeam"
@@ -11511,7 +11513,7 @@ msgstr ""
 #: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
 #: client/cl_campaign.c:2759 client/cl_market.c:655 client/cl_market.c:660
 #: client/cl_market.c:687 client/cl_market.c:799 client/cl_market.c:801
-#: client/cl_save.c:367 client/cl_team.c:1598 client/cl_team.c:1605
+#: client/cl_save.c:367 client/cl_team.c:1604 client/cl_team.c:1611
 msgid "Note"
 msgstr "Nota"
 
@@ -11561,7 +11563,7 @@ msgid "%s: %1.2f%% (%d %s)\n"
 msgstr ""
 
 #: client/cl_basesummary.c:186 client/cl_campaign.c:1384
-#: client/cl_campaign.c:4544
+#: client/cl_campaign.c:4549
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
@@ -11741,21 +11743,21 @@ msgid_plural "credits"
 msgstr[0] "Creditos"
 msgstr[1] "Creditos"
 
-#: client/cl_campaign.c:1385 client/cl_campaign.c:4546
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4551
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Médico"
 msgstr[1] "Médico"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4543
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4548
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Soldado"
 msgstr[1] "Soldado"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4545
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4550
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -11942,12 +11944,12 @@ msgstr "Soldado ascendido"
 msgid "Defense of base: %s successful!"
 msgstr "La defensa de la base %s ha sido un exito!"
 
-#: client/cl_campaign.c:4533
+#: client/cl_campaign.c:4538
 #, fuzzy
 msgid "Human"
 msgstr "Busan"
 
-#: client/cl_campaign.c:4537
+#: client/cl_campaign.c:4542
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -11964,27 +11966,27 @@ msgstr ""
 "Dificultad: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4690
+#: client/cl_campaign.c:4695
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "Name:\t%s (%i/%i)\n"
 
-#: client/cl_campaign.c:4713
+#: client/cl_campaign.c:4718
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "Name:\t%s (%i/%i)\n"
 
-#: client/cl_campaign.c:4871
+#: client/cl_campaign.c:4876
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4873 client/cl_campaign.c:5015
-#: client/cl_campaign.c:5106
+#: client/cl_campaign.c:4878 client/cl_campaign.c:5020
+#: client/cl_campaign.c:5111
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4951
+#: client/cl_campaign.c:4956
 #, fuzzy
 msgid ""
 "\n"
@@ -11992,13 +11994,13 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "Selecciona objeto"
 
-#: client/cl_campaign.c:5013
+#: client/cl_campaign.c:5018
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5076
+#: client/cl_campaign.c:5081
 #, fuzzy
 msgid ""
 "\n"
@@ -12006,7 +12008,7 @@ msgid ""
 "Selected nation:\t\t\t"
 msgstr "Selecciona objeto"
 
-#: client/cl_campaign.c:5104
+#: client/cl_campaign.c:5109
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -12223,26 +12225,26 @@ msgid ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
-#: client/cl_main.c:354 client/cl_main.c:989
+#: client/cl_main.c:361 client/cl_main.c:996
 msgid "Assemble a team first"
 msgstr "Forma un equipo antes"
 
-#: client/cl_main.c:354 client/cl_main.c:709 client/cl_main.c:989
-#: client/cl_main.c:1485 client/cl_main.c:1490 client/cl_main.c:1496
-#: client/cl_main.c:1504 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_main.c:361 client/cl_main.c:716 client/cl_main.c:996
+#: client/cl_main.c:1492 client/cl_main.c:1497 client/cl_main.c:1503
+#: client/cl_main.c:1511 client/cl_save.c:431 client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "Error"
 
-#: client/cl_main.c:709
+#: client/cl_main.c:716
 msgid "Server needs restarting - something went wrong"
 msgstr ""
 
-#: client/cl_main.c:782
+#: client/cl_main.c:789
 msgid "No player connected\n"
 msgstr "No hay jugadores conectados\n"
 
-#: client/cl_main.c:830
+#: client/cl_main.c:837
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -12251,165 +12253,165 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:837
+#: client/cl_main.c:844
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:847
+#: client/cl_main.c:854
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nombre del servidor:\t%s\n"
 
-#: client/cl_main.c:848
+#: client/cl_main.c:855
 #, fuzzy, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralestates:\t%s\n"
 
-#: client/cl_main.c:849
+#: client/cl_main.c:856
 #, fuzzy, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Juego"
 
-#: client/cl_main.c:850
+#: client/cl_main.c:857
 #, fuzzy, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Versión:\t%s\n"
 
-#: client/cl_main.c:851
+#: client/cl_main.c:858
 #, fuzzy, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Servidor dedicado:"
 
-#: client/cl_main.c:852
+#: client/cl_main.c:859
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:853
+#: client/cl_main.c:860
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:854
+#: client/cl_main.c:861
 #, fuzzy, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Equipamiento"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:862
 #, fuzzy, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Teamplay:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:863
 #, fuzzy, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. players per team:\t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:864
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Máximo número de equipos para este mapa:\t%s\n"
 
-#: client/cl_main.c:858
+#: client/cl_main.c:865
 #, fuzzy, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. clients:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:866
 #, fuzzy, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. soldiers per player:\t%s\n"
 
-#: client/cl_main.c:860
+#: client/cl_main.c:867
 #, fuzzy, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldiers per team:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:868
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1032
+#: client/cl_main.c:1039
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
-#: client/cl_main.c:1106
+#: client/cl_main.c:1113
 msgid "Select a free team or your coop team"
 msgstr "Selecciona un equipo libre o a tu equipo acompañante"
 
-#: client/cl_main.c:1328 client/cl_main.c:1342
+#: client/cl_main.c:1335 client/cl_main.c:1349
 #, fuzzy, c-format
 msgid "Current team: %i"
 msgstr "Equipo actual"
 
-#: client/cl_main.c:1332 client/cl_main.c:1346
+#: client/cl_main.c:1339 client/cl_main.c:1353
 #, fuzzy
 msgid "Team is already in use"
 msgstr "Already %i in base"
 
-#: client/cl_main.c:1356 client/cl_main.c:1394
+#: client/cl_main.c:1363 client/cl_main.c:1401
 msgid "Invalid or full team"
 msgstr "Acción invalida o equipo completo"
 
-#: client/cl_main.c:1484
+#: client/cl_main.c:1491
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1497
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1503
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1510
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:2100
+#: client/cl_main.c:2110
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2101
+#: client/cl_main.c:2111
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2216 client/cl_view.c:422
+#: client/cl_main.c:2226 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/cl_main.c:2234
+#: client/cl_main.c:2244
 #, fuzzy
 msgid "Chicken-hearted"
 msgstr "Chicken-hearted"
 
-#: client/cl_main.c:2236
+#: client/cl_main.c:2246
 msgid "Very Easy"
 msgstr "Muy fácil"
 
-#: client/cl_main.c:2239
+#: client/cl_main.c:2249
 msgid "Easy"
 msgstr "Fácil"
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2254
 msgid "Hard"
 msgstr "Difícil"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2256
 msgid "Very Hard"
 msgstr "Muy difícil"
 
-#: client/cl_main.c:2248
+#: client/cl_main.c:2258
 msgid "Insane"
 msgstr "Locura"
 
-#: client/cl_main.c:2300
+#: client/cl_main.c:2310
 #, fuzzy
 msgid "Custom"
 msgstr "Auto"
@@ -13222,34 +13224,43 @@ msgstr ""
 msgid "%i of %i"
 msgstr "%i de %i"
 
-#: client/cl_team.c:1598
+#: client/cl_team.c:1197
+msgid "A new team has been created for you."
+msgstr ""
+
+#: client/cl_team.c:1197
+#, fuzzy
+msgid "New team created"
+msgstr "No tiene asignado blindaje"
+
+#: client/cl_team.c:1604
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "Parar investigación"
 
-#: client/cl_team.c:1605
+#: client/cl_team.c:1611
 msgid "Error saving team. Check free disk space!"
 msgstr "Error guardando el equipo. Comprueba el espacio del disco!."
 
-#: client/cl_team.c:1786
+#: client/cl_team.c:1792
 msgid "Select a soldier from list"
 msgstr "Selecciona un soldado de la lista"
 
-#: client/cl_team.c:1787
+#: client/cl_team.c:1793
 msgid "Toggle to next soldier"
 msgstr "Cambiar al siguiente soldado"
 
-#: client/cl_team.c:2151 client/cl_team.c:2195
+#: client/cl_team.c:2157 client/cl_team.c:2201
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens muertos\t%i\n"
 
-#: client/cl_team.c:2154
+#: client/cl_team.c:2160
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Enemigos muertos\t%i\n"
 
-#: client/cl_team.c:2159
+#: client/cl_team.c:2165
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -13258,7 +13269,7 @@ msgstr ""
 "Aliens capturados\t%i\n"
 "\n"
 
-#: client/cl_team.c:2160 client/cl_team.c:2199
+#: client/cl_team.c:2166 client/cl_team.c:2205
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -13267,7 +13278,7 @@ msgstr ""
 "Supervivientes Alien\t%i\n"
 "\n"
 
-#: client/cl_team.c:2162
+#: client/cl_team.c:2168
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -13276,7 +13287,7 @@ msgstr ""
 "Enemigos capturados\t%i\n"
 "\n"
 
-#: client/cl_team.c:2163
+#: client/cl_team.c:2169
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -13285,22 +13296,22 @@ msgstr ""
 "Supervivientes enemigos\t%i\n"
 "\n"
 
-#: client/cl_team.c:2167
+#: client/cl_team.c:2173
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Perdidas del equipo\t%i\n"
 
-#: client/cl_team.c:2168
+#: client/cl_team.c:2174
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Equipo desaparecido en combate\t%i\n"
 
-#: client/cl_team.c:2169
+#: client/cl_team.c:2175
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Perdidas por fuego amigo\t%i\n"
 
-#: client/cl_team.c:2170
+#: client/cl_team.c:2176
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -13309,22 +13320,22 @@ msgstr ""
 "Supervivientes del equipo\t%i\n"
 "\n"
 
-#: client/cl_team.c:2173
+#: client/cl_team.c:2179
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civiles asesinados por los Aliens\t%i\n"
 
-#: client/cl_team.c:2175
+#: client/cl_team.c:2181
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civiles asesinados por el enemigo\t%i\n"
 
-#: client/cl_team.c:2177
+#: client/cl_team.c:2183
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civiles asesinados por tu equipo\t%i\n"
 
-#: client/cl_team.c:2178
+#: client/cl_team.c:2184
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13335,27 +13346,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2198
+#: client/cl_team.c:2204
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Aliens capturados\t%i\n"
 
-#: client/cl_team.c:2202
+#: client/cl_team.c:2208
 #, fuzzy, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Soldados de Phalanx asesinados por los Aliens\t%i\n"
 
-#: client/cl_team.c:2203
+#: client/cl_team.c:2209
 #, fuzzy, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Soldados de Phalanx desaparecidos en combate\t%i\n"
 
-#: client/cl_team.c:2204
+#: client/cl_team.c:2210
 #, fuzzy, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Perdidas por fuego amigo\t%i\n"
 
-#: client/cl_team.c:2205
+#: client/cl_team.c:2211
 #, fuzzy, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -13364,17 +13375,17 @@ msgstr ""
 "Supervivientes Alien\t%i\n"
 "\n"
 
-#: client/cl_team.c:2207
+#: client/cl_team.c:2213
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civiles asesinados por los Aliens\t%i\n"
 
-#: client/cl_team.c:2208
+#: client/cl_team.c:2214
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civiles muertos por fuego aliado\t%i\n"
 
-#: client/cl_team.c:2209
+#: client/cl_team.c:2215
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13383,26 +13394,26 @@ msgstr ""
 "Civiles salvados\t%i\n"
 "\n"
 
-#: client/cl_team.c:2210
+#: client/cl_team.c:2216
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/cl_team.c:2230
+#: client/cl_team.c:2236
 #, c-format
 msgid ""
 "\n"
 "Secured crashed %s\n"
 msgstr ""
 
-#: client/cl_team.c:2232
+#: client/cl_team.c:2238
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured landed %s\n"
 msgstr "Asegura el área"
 
-#: client/cl_team.c:2243
+#: client/cl_team.c:2249
 #, c-format
 msgid ""
 "\n"
@@ -13411,27 +13422,27 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_team.c:2245
+#: client/cl_team.c:2251
 #, fuzzy
 msgid "You won the game!"
 msgstr "Has ganado la batalla"
 
-#: client/cl_team.c:2247
+#: client/cl_team.c:2253
 msgid "Congratulations"
 msgstr ""
 
-#: client/cl_team.c:2249
+#: client/cl_team.c:2255
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_team.c:2250
+#: client/cl_team.c:2256
 msgid "Game Drawn!"
 msgstr ""
 
-#: client/cl_team.c:2254
+#: client/cl_team.c:2260
 msgid "Better luck next time"
 msgstr ""
 

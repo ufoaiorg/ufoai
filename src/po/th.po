@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-01 16:21+0100\n"
+"POT-Creation-Date: 2008-03-14 15:40+0100\n"
 "PO-Revision-Date: 2007-07-30 11:29+0700\n"
 "Last-Translator: Sophon Taechasivalai <mickey@metawire.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -1031,8 +1031,8 @@ msgstr "นักวิทยาศาสตร์"
 msgid "Medic"
 msgstr "เสนารักษ์"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:502
-#: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:221
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1990
+#: ../base/ufos/team_humans.ufo:2011 client/cl_employee.c:221
 msgid "UGV"
 msgstr "UGV"
 
@@ -3302,7 +3302,7 @@ msgid "Medium"
 msgstr "เสนารักษ์"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2241
+#: client/cl_main.c:2251
 msgid "Normal"
 msgstr "ปกติ"
 
@@ -3647,7 +3647,7 @@ msgstr ""
 msgid "Reload"
 msgstr "พร้อม"
 
-#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2252
+#: ../base/ufos/menu_singleplayer.ufo:887 client/cl_team.c:2258
 #, fuzzy
 msgid "You've lost the game"
 msgstr "คุณแพ้"
@@ -3863,7 +3863,7 @@ msgstr "แสดงเฉพาะพนักงาน"
 msgid "Show only aliens"
 msgstr "แสดงเฉพาะมนุษย์ต่างดาว"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4535
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4540
 msgid "Aliens"
 msgstr "มนุษย์ต่างดาว"
 
@@ -7820,7 +7820,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3069
 msgid "inter_dragon_pre_txt"
-msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3088
 #, fuzzy
@@ -7892,7 +7893,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3091
 msgid "inter_stingray_pre_txt"
-msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3115
 msgid "ufo_scout_txt"
@@ -9863,11 +9865,11 @@ msgstr "เชฟวาร์"
 msgid "Bloodspider"
 msgstr "แมงมุมโลหิต"
 
-#: ../base/ufos/team_humans.ufo:505
+#: ../base/ufos/team_humans.ufo:1993
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#: ../base/ufos/team_humans.ufo:526
+#: ../base/ufos/team_humans.ufo:2014
 msgid "Ares W"
 msgstr ""
 
@@ -10726,8 +10728,8 @@ msgid ""
 msgstr ""
 
 #: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:542
-#: client/cl_aircraft.c:730 client/cl_aircraft.c:985 client/cl_aircraft.c:1082
-#: client/cl_aircraft.c:1689 client/cl_airfight.c:339
+#: client/cl_aircraft.c:730 client/cl_aircraft.c:987 client/cl_aircraft.c:1084
+#: client/cl_aircraft.c:1691 client/cl_airfight.c:339
 #: client/cl_aliencont.c:189 client/cl_aliencont.c:219
 #: client/cl_aliencont.c:232 client/cl_aliencont.c:245
 #: client/cl_basemanagement.c:1138 client/cl_basemanagement.c:2354
@@ -10747,8 +10749,8 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1032
-#: client/cl_main.c:1267 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1039
+#: client/cl_main.c:1274 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
@@ -10846,15 +10848,15 @@ msgstr ""
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "มีเครื่องบินใหม่ ( %s) ในฐาน %s"
 
-#: client/cl_aircraft.c:985
+#: client/cl_aircraft.c:987
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "เครื่องบินเหลือเชื้อเพลิงน้อยและกำลังกลับฐาน"
 
-#: client/cl_aircraft.c:1082
+#: client/cl_aircraft.c:1084
 msgid "Assign a team to aircraft"
 msgstr "จัดทีมในเครื่อง"
 
-#: client/cl_aircraft.c:1689
+#: client/cl_aircraft.c:1691
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr ""
@@ -10973,7 +10975,7 @@ msgid_plural "%i days left"
 msgstr[0] "ขาดอีด %i วัน"
 msgstr[1] "ขาดอีก %i วัน"
 
-#: client/cl_basemanagement.c:2230 client/cl_team.c:1552 client/cl_team.c:1766
+#: client/cl_basemanagement.c:2230 client/cl_team.c:1558 client/cl_team.c:1772
 msgid "NewTeam"
 msgstr "ทีมใหม่"
 
@@ -11054,7 +11056,7 @@ msgstr "ไม่มียานบินในฐาน - คุณต้อง
 #: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
 #: client/cl_campaign.c:2759 client/cl_market.c:655 client/cl_market.c:660
 #: client/cl_market.c:687 client/cl_market.c:799 client/cl_market.c:801
-#: client/cl_save.c:367 client/cl_team.c:1598 client/cl_team.c:1605
+#: client/cl_save.c:367 client/cl_team.c:1604 client/cl_team.c:1611
 msgid "Note"
 msgstr "ข้อสังเกต"
 
@@ -11104,7 +11106,7 @@ msgid "%s: %1.2f%% (%d %s)\n"
 msgstr ""
 
 #: client/cl_basesummary.c:186 client/cl_campaign.c:1384
-#: client/cl_campaign.c:4544
+#: client/cl_campaign.c:4549
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "นักวิทยาศาสตร์"
@@ -11278,19 +11280,19 @@ msgid_plural "credits"
 msgstr[0] "เครดิต"
 msgstr[1] "เครดิต"
 
-#: client/cl_campaign.c:1385 client/cl_campaign.c:4546
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4551
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "เสนารักษ์"
 msgstr[1] "เสนารักษ์"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4543
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4548
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "ทหาร"
 msgstr[1] "ทหาร"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4545
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4550
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "คนงาน"
@@ -11475,11 +11477,11 @@ msgstr "ทหารเลื่อนยศ"
 msgid "Defense of base: %s successful!"
 msgstr "ป้องกันฐาน: %s สำเร็จ!"
 
-#: client/cl_campaign.c:4533
+#: client/cl_campaign.c:4538
 msgid "Human"
 msgstr "มนุษย์"
 
-#: client/cl_campaign.c:4537
+#: client/cl_campaign.c:4542
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -11496,27 +11498,27 @@ msgstr ""
 "ความลำบาก: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4690
+#: client/cl_campaign.c:4695
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_campaign.c:4713
+#: client/cl_campaign.c:4718
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_campaign.c:4871
+#: client/cl_campaign.c:4876
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4873 client/cl_campaign.c:5015
-#: client/cl_campaign.c:5106
+#: client/cl_campaign.c:4878 client/cl_campaign.c:5020
+#: client/cl_campaign.c:5111
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4951
+#: client/cl_campaign.c:4956
 #, fuzzy
 msgid ""
 "\n"
@@ -11524,20 +11526,20 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "ฐานที่เลือก"
 
-#: client/cl_campaign.c:5013
+#: client/cl_campaign.c:5018
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5076
+#: client/cl_campaign.c:5081
 msgid ""
 "\n"
 "\n"
 "Selected nation:\t\t\t"
 msgstr ""
 
-#: client/cl_campaign.c:5104
+#: client/cl_campaign.c:5109
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -11756,26 +11758,26 @@ msgid ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
-#: client/cl_main.c:354 client/cl_main.c:989
+#: client/cl_main.c:361 client/cl_main.c:996
 msgid "Assemble a team first"
 msgstr "จัดตั้งทีมก่อน"
 
-#: client/cl_main.c:354 client/cl_main.c:709 client/cl_main.c:989
-#: client/cl_main.c:1485 client/cl_main.c:1490 client/cl_main.c:1496
-#: client/cl_main.c:1504 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_main.c:361 client/cl_main.c:716 client/cl_main.c:996
+#: client/cl_main.c:1492 client/cl_main.c:1497 client/cl_main.c:1503
+#: client/cl_main.c:1511 client/cl_save.c:431 client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "ผิดพลาด"
 
-#: client/cl_main.c:709
+#: client/cl_main.c:716
 msgid "Server needs restarting - something went wrong"
 msgstr ""
 
-#: client/cl_main.c:782
+#: client/cl_main.c:789
 msgid "No player connected\n"
 msgstr "ไม่มีผู้เล่น\n"
 
-#: client/cl_main.c:830
+#: client/cl_main.c:837
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -11784,163 +11786,163 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:837
+#: client/cl_main.c:844
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "แผนที่:\t%s\n"
 
-#: client/cl_main.c:847
+#: client/cl_main.c:854
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "ชื่อเซอร์เวอร์:\t%s\n"
 
-#: client/cl_main.c:848
+#: client/cl_main.c:855
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "กำลังใจ:\t%s\n"
 
-#: client/cl_main.c:849
+#: client/cl_main.c:856
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "รูปแบบเกม:\t%s\n"
 
-#: client/cl_main.c:850
+#: client/cl_main.c:857
 #, fuzzy, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "เวอร์ชั่น:\t%s\n"
 
-#: client/cl_main.c:851
+#: client/cl_main.c:858
 #, fuzzy, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "ขึ้นกับ:\t%s\n"
 
-#: client/cl_main.c:852
+#: client/cl_main.c:859
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:853
+#: client/cl_main.c:860
 #, fuzzy, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "ต้องใส่รหัส:\t%s\n"
 
-#: client/cl_main.c:854
+#: client/cl_main.c:861
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "เวลาในรอบ:\t%s\n"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:862
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "เล่นเป็นทีม:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:863
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "ผู้เล่นสูงสุดต่อทีม:\t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:864
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "ทีมสูงสุดในแผนที่:\t%s\n"
 
-#: client/cl_main.c:858
+#: client/cl_main.c:865
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "ลูกข่ายสูงสุด:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:866
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "ทหารสูงสุดของแต่ละผู้เล่นr:\t%s\n"
 
-#: client/cl_main.c:860
+#: client/cl_main.c:867
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "ทหารสูงสุดแต่ละทีม:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:868
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "ต้องใส่รหัส:\t%s\n"
 
-#: client/cl_main.c:1032
+#: client/cl_main.c:1039
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "ใช้ตัวคั่นหมด - ยกเลิกอันที่ไม่ใช่และทำซ้ำอีกครั้ง"
 
-#: client/cl_main.c:1106
+#: client/cl_main.c:1113
 msgid "Select a free team or your coop team"
 msgstr "เลือกทีมว่าง หรือทีมร่วมมือ"
 
-#: client/cl_main.c:1328 client/cl_main.c:1342
+#: client/cl_main.c:1335 client/cl_main.c:1349
 #, c-format
 msgid "Current team: %i"
 msgstr "ทีมปัจจุบัน: %i"
 
-#: client/cl_main.c:1332 client/cl_main.c:1346
+#: client/cl_main.c:1339 client/cl_main.c:1353
 msgid "Team is already in use"
 msgstr "ทีมถูกใช้แล้ว"
 
-#: client/cl_main.c:1356 client/cl_main.c:1394
+#: client/cl_main.c:1363 client/cl_main.c:1401
 msgid "Invalid or full team"
 msgstr "ทีมนี้ใช้ไม่ได้ หรือเต็มแล้ว"
 
-#: client/cl_main.c:1484
+#: client/cl_main.c:1491
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "เวอร์ชั่นของเกม (%s) ไม่ตรงกับของเซอร์เวอร์"
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1497
 msgid "Local map version differs from server"
 msgstr "เวอร์ชั่นแผนที่ไม่ตรงกับของเซอร์เวอร์"
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1503
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1510
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "เวอร์ชั่นเกม (%s) ต่างกับของเซอร์เวอร์ (%s)"
 
-#: client/cl_main.c:2100
+#: client/cl_main.c:2110
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2101
+#: client/cl_main.c:2111
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2216 client/cl_view.c:422
+#: client/cl_main.c:2226 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/cl_main.c:2234
+#: client/cl_main.c:2244
 msgid "Chicken-hearted"
 msgstr "ง่ายสุด"
 
-#: client/cl_main.c:2236
+#: client/cl_main.c:2246
 msgid "Very Easy"
 msgstr "ง่ายมาก"
 
-#: client/cl_main.c:2239
+#: client/cl_main.c:2249
 msgid "Easy"
 msgstr "ง่าย"
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2254
 msgid "Hard"
 msgstr "ยาก"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2256
 msgid "Very Hard"
 msgstr "ยากมาก"
 
-#: client/cl_main.c:2248
+#: client/cl_main.c:2258
 msgid "Insane"
 msgstr "ยากสุด"
 
-#: client/cl_main.c:2300
+#: client/cl_main.c:2310
 #, fuzzy
 msgid "Custom"
 msgstr "อัตโนมัติ"
@@ -12761,34 +12763,43 @@ msgstr ""
 msgid "%i of %i"
 msgstr "%i จาก %i"
 
-#: client/cl_team.c:1598
+#: client/cl_team.c:1197
+msgid "A new team has been created for you."
+msgstr ""
+
+#: client/cl_team.c:1197
+#, fuzzy
+msgid "New team created"
+msgstr "ไม่ได้ติดตั้งโล่"
+
+#: client/cl_team.c:1604
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "ยังไม่มีอะไรจะบันทึก"
 
-#: client/cl_team.c:1605
+#: client/cl_team.c:1611
 msgid "Error saving team. Check free disk space!"
 msgstr "เกิดข้อผิดพลาดในการบันทึกทีม ตรวจที่ว่างในดิสค์!"
 
-#: client/cl_team.c:1786
+#: client/cl_team.c:1792
 msgid "Select a soldier from list"
 msgstr "เลือกทหารจากรายชื่อ"
 
-#: client/cl_team.c:1787
+#: client/cl_team.c:1793
 msgid "Toggle to next soldier"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/cl_team.c:2151 client/cl_team.c:2195
+#: client/cl_team.c:2157 client/cl_team.c:2201
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "ฆ่ามนุษย์ต่างดาว\t%i\n"
 
-#: client/cl_team.c:2154
+#: client/cl_team.c:2160
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "ฆ่าศัตรู\t%i\n"
 
-#: client/cl_team.c:2159
+#: client/cl_team.c:2165
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -12797,7 +12808,7 @@ msgstr ""
 "จับมนุษย์ต่างดาวได้\t%i\n"
 "\n"
 
-#: client/cl_team.c:2160 client/cl_team.c:2199
+#: client/cl_team.c:2166 client/cl_team.c:2205
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -12806,7 +12817,7 @@ msgstr ""
 "มนุษย์ต่างดาวเหลือรอด\t%i\n"
 "\n"
 
-#: client/cl_team.c:2162
+#: client/cl_team.c:2168
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -12815,7 +12826,7 @@ msgstr ""
 "จับศัตรู\t%i\n"
 "\n"
 
-#: client/cl_team.c:2163
+#: client/cl_team.c:2169
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -12824,22 +12835,22 @@ msgstr ""
 "ศัตรูเหลือรอด\t%i\n"
 "\n"
 
-#: client/cl_team.c:2167
+#: client/cl_team.c:2173
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "ทีมแพ้\t%i\n"
 
-#: client/cl_team.c:2168
+#: client/cl_team.c:2174
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "ทีมที่หายสาปสูญ\t%i\n"
 
-#: client/cl_team.c:2169
+#: client/cl_team.c:2175
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "สูญเสียจากการยิงของฝ่ายเดียวกัน\t%i\n"
 
-#: client/cl_team.c:2170
+#: client/cl_team.c:2176
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -12848,22 +12859,22 @@ msgstr ""
 "คนหลงเหลือในทีม\t%i\n"
 "\n"
 
-#: client/cl_team.c:2173
+#: client/cl_team.c:2179
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "พลเรือนที่ถูกมนุษย์ต่างดาวฆ่า\t%i\n"
 
-#: client/cl_team.c:2175
+#: client/cl_team.c:2181
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "พลเรือนที่ถูกศัตรูฆ่า\t%i\n"
 
-#: client/cl_team.c:2177
+#: client/cl_team.c:2183
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "พลเรือนที่ถูกทีมเราฆ่า\t%i\n"
 
-#: client/cl_team.c:2178
+#: client/cl_team.c:2184
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12874,27 +12885,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2198
+#: client/cl_team.c:2204
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "จับมนุษย์ต่างดาวได้\t%i\n"
 
-#: client/cl_team.c:2202
+#: client/cl_team.c:2208
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "ทหาร PHALANX ที่ถูกฆ่าโดยมนุษย์ต่างดาว\t%i\n"
 
-#: client/cl_team.c:2203
+#: client/cl_team.c:2209
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "ทหาร PHALANX หายสาปสูญ\t%i\n"
 
-#: client/cl_team.c:2204
+#: client/cl_team.c:2210
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "ทหาร PHALANX ตายด้วยกระสุนฝ่ายตนเอง\t%i\n"
 
-#: client/cl_team.c:2205
+#: client/cl_team.c:2211
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -12903,17 +12914,17 @@ msgstr ""
 "ผู้เหลือรอด PHALANX \t%i\n"
 "\n"
 
-#: client/cl_team.c:2207
+#: client/cl_team.c:2213
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "พลเรือนที่ถูกมนุษย์ต่างดาวฆ่า\t%i\n"
 
-#: client/cl_team.c:2208
+#: client/cl_team.c:2214
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "พลเรือนที่ตายด้วยกระสุนฝ่ายเราเอง\t%i\n"
 
-#: client/cl_team.c:2209
+#: client/cl_team.c:2215
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -12922,26 +12933,26 @@ msgstr ""
 "พลเรือนที่ช่วยได้\t%i\n"
 "\n"
 
-#: client/cl_team.c:2210
+#: client/cl_team.c:2216
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/cl_team.c:2230
+#: client/cl_team.c:2236
 #, c-format
 msgid ""
 "\n"
 "Secured crashed %s\n"
 msgstr ""
 
-#: client/cl_team.c:2232
+#: client/cl_team.c:2238
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured landed %s\n"
 msgstr "ปิดล้อมพื้นที่"
 
-#: client/cl_team.c:2243
+#: client/cl_team.c:2249
 #, c-format
 msgid ""
 "\n"
@@ -12954,15 +12965,15 @@ msgstr ""
 "ฆ่าศัตรูได้:  %i\n"
 "ผู้รอดชีวิต:  %i"
 
-#: client/cl_team.c:2245
+#: client/cl_team.c:2251
 msgid "You won the game!"
 msgstr "คุณชนะ!"
 
-#: client/cl_team.c:2247
+#: client/cl_team.c:2253
 msgid "Congratulations"
 msgstr "ขอแสดงความยินดี"
 
-#: client/cl_team.c:2249
+#: client/cl_team.c:2255
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -12972,11 +12983,11 @@ msgstr ""
 "\n"
 "ไม่เหลือผู้มีชีวิตรอดทั้งสองฝ่าย"
 
-#: client/cl_team.c:2250
+#: client/cl_team.c:2256
 msgid "Game Drawn!"
 msgstr "เสมอ!"
 
-#: client/cl_team.c:2254
+#: client/cl_team.c:2260
 msgid "Better luck next time"
 msgstr "ขอให้โชคดีคราวหน้า"
 
