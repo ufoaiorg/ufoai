@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
-void R_IncreaseXVILevel(vec2_t pos);
+void R_IncreaseXVILevel(const vec2_t pos);
 void R_InitializeXVIOverlay(byte *data, int width, int height);
 qboolean R_XVIMapCopy(byte *out, int size);
 
@@ -612,7 +612,7 @@ static inline qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
  * @brief Sread XVI at a given position.
  * @param[in] pos Position where XVI should be spread.
  */
-static void CP_SpreadXVIAtPos (vec2_t pos)
+static void CP_SpreadXVIAtPos (const vec2_t pos)
 {
 	nation_t *nation;
 
@@ -1826,6 +1826,7 @@ void CP_MissionStageEndByUfo (aircraft_t *ufocraft)
 /**
  * @brief Set mission name.
  * @note that mission name must be unique in mission global array
+ * @param[out] mission The mission to set the name for
  * @sa CP_CreateNewMission
  */
 static inline void CP_SetMissionName (mission_t *mission)
@@ -2205,11 +2206,8 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 	mission->data = (void *) alienBase;
 
 	mission->mapDef = Com_GetMapDefinitionByID("alienbase");
-	if (!mission->mapDef) {
-		CP_MissionRemove(mission);
+	if (!mission->mapDef)
 		Sys_Error("Could not find mapdef alienbase");
-		return;
-	}
 
 	Vector2Copy(alienBase->pos, mission->pos);
 
@@ -2411,7 +2409,7 @@ static void CP_CreateCivilianTeam (mission_t *mission)
 static void CP_CreateBattleParameters (mission_t *mission)
 {
 	const char *zoneType;
-	byte *color;
+	const byte *color;
 
 	assert(mission->pos);
 
@@ -2496,7 +2494,7 @@ static void CP_SpreadXVI (void)
 	const linkedList_t *list = ccs.missions;
 
 	for (;list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
+		const mission_t *mission = (mission_t *)list->data;
 		if (mission->stage == STAGE_SPREAD_XVI)
 			CP_SpreadXVIAtPos(mission->pos);
 	}

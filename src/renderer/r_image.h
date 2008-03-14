@@ -91,7 +91,7 @@ void R_FilterTexture(unsigned *in, int width, int height, imagetype_t type);
 void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
-void R_IncreaseXVILevel(vec2_t pos);
+void R_IncreaseXVILevel(const vec2_t pos);
 void R_InitializeXVIOverlay(byte *data, int width, int height);
 qboolean R_XVIMapCopy(byte *out, int size);
 

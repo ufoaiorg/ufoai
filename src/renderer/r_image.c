@@ -1155,7 +1155,7 @@ float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
  * XVI spreads in circle, and the alpha value of one pixel indicates the XVI level of infection.
  * This is necessary to take into account a new event that would spread in the zone where XVI is already spread.
  */
-void R_IncreaseXVILevel (vec2_t pos)
+void R_IncreaseXVILevel (const vec2_t pos)
 {
 	const int bpp = 4;							/**< byte per pixel */
 	const int minAlpha = 100;					/**< minimum value of alpha when spreading XVI
