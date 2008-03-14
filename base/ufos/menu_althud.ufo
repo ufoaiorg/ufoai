@@ -670,6 +670,7 @@ menu althud
 		out	{ cmd "remaining_tus reload_l 0;" }
 	}
 
+	// CROUCH/STAND UP BUTTON
 	confunc deselstanda  { *bt_duck texl "27 37" *bt_duck texh "52 70" *bt_duck image althud/buttons_althud1 }
 	confunc deselcroucha { *bt_duck texl "54 37" *bt_duck texh "79 70" *bt_duck image althud/buttons_althud1 }
 	confunc disstanda    { *bt_duck texl "27 37" *bt_duck texh "52 70" *bt_duck image althud/buttons_althud1g }
@@ -696,13 +697,44 @@ menu althud
 	pic bt_crouch_reservation
 	{
 		tooltip	"_Reserve TUs for crouching/standing up."
-		pos	"966 536"
+		pos	"969 536"
 		texl	"0 0"
 		texh	"17 16"
 		mousefx true
 		click { cmd "togglecrouchreserve" }
 //		out	{ *bt_crouch_reservation texl "0 0" *bt_crouch_reservation texh "17 16" }	// activate this if we ever get a "hover" version
 //		in	{ *bt_crouch_reservation texl "0 17" *bt_crouch_reservation texh "17 33" }
+	}
+
+	// "RESERVATION FOR SHOT" BUTTON
+	confunc reserve_shot_clear_a
+	{
+		*bt_shot_reservation texl	"0 0"
+		*bt_shot_reservation texh	"51 32"
+		*bt_shot_reservation tooltip "_Reserve TUs for shooting."
+	}
+	confunc reserve_shot_check_a
+	{
+		*bt_shot_reservation texl	"0 32"
+		*bt_shot_reservation texh	"51 64"
+		*bt_shot_reservation tooltip "_Clear reserved TUs for shooting."
+	}
+	confunc reserve_shot_disable_a
+	{
+		*bt_shot_reservation texl	"64 32"
+		*bt_shot_reservation texh	"127 64"
+		*bt_shot_reservation tooltip "_Reserving TUs for shooting not possile."
+	}
+	pic bt_shot_reservation
+	{
+		tooltip	"_Reserve TUs for shooting."
+		key "*binding sel_shotreservation"
+		image hud/button_reserve_shot	// fixme
+		pos	"965 497"
+		texl	"64 32"	// Inital pic - will be overwritten once the game's compeletly started.
+		texh	"127 64"
+		mousefx true
+		click	{ cmd "sel_shotreservation;" }
 	}
 
 	pic bt_floorup

@@ -885,11 +885,15 @@ static linkedList_t* popupListData = NULL;
 /**
  * @brief Creates a (text) list of all firemodes of the currently selected actor.
  * @note console command: cl_input.c:sel_shotreservation
+ * @todo Fix the usage of LIST_Add with constant values like 0,1 and -1. See also the "tempxxx" variables.
  */
 void CL_PopupFiremodeReservation_f (void)
 {
 	objDef_t *ammo;
 	objDef_t *weapon;
+	int tempInvalid = -1;
+	int tempZero = 0;
+	int tempOne = 1;
 	int weapFdsIdx = -1;
 	char hand = 'r';
 	int i;
@@ -911,10 +915,10 @@ void CL_PopupFiremodeReservation_f (void)
 
 	/* Add list-entry for deactivation of the reservation. */
 	LIST_AddPointer(&popupListText, _("[0 TU] No reservation"));
-	LIST_Add(&popupListData, (byte *)-1, sizeof(int));	/* hand */
-	LIST_Add(&popupListData, (byte *)-1, sizeof(int));	/* fmIdx */
-	LIST_Add(&popupListData, (byte *)-1, sizeof(int));	/* wpIdx */
-	LIST_Add(&popupListData, (byte *)0, sizeof(int));	/* TUs */
+	LIST_Add(&popupListData, (byte *)&tempInvalid, sizeof(int));	/* hand */
+	LIST_Add(&popupListData, (byte *)&tempInvalid, sizeof(int));	/* fmIdx */
+	LIST_Add(&popupListData, (byte *)&tempInvalid, sizeof(int));	/* wpIdx */
+	LIST_Add(&popupListData, (byte *)&tempZero, sizeof(int));	/* TUs */
 	popupNum++;
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
@@ -927,7 +931,7 @@ void CL_PopupFiremodeReservation_f (void)
 
 		if (weapon && ammo) {
 			for (i = 0; i < ammo->numFiredefs[weapFdsIdx]; i++) {
-				if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weapFdsIdx][i].time) {
+				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weapFdsIdx][i].time) {
 					/** Get weapon name, firemode name and TUs. */
 					Com_sprintf(text, sizeof(text),
 						_("[%i TU] %s - %s"),
@@ -938,9 +942,9 @@ void CL_PopupFiremodeReservation_f (void)
 					/* Store text for popup */
 					LIST_AddString(&popupListText, text);
 					if (hand == 'r')
-						LIST_Add(&popupListData, (byte *)0, sizeof(int));
+						LIST_Add(&popupListData, (byte *)&tempZero, sizeof(int));
 					else
-						LIST_Add(&popupListData, (byte *)1, sizeof(int));
+						LIST_Add(&popupListData, (byte *)&tempOne, sizeof(int));
 					/* Store Data for popup-callback. */
 					LIST_Add(&popupListData, (byte *)&i, sizeof(int));								/* fmIdx */
 					LIST_Add(&popupListData, (byte *)&ammo->weapIdx[weapFdsIdx], sizeof(int));		/* wpIdx */
@@ -967,6 +971,7 @@ void CL_PopupFiremodeReservation_f (void)
  */
 void CL_ReserveShot_f (void)
 {
+	linkedList_t* popup = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
 	int selectedPopupIndex;
 	int hand, fmIdx, weapIdx, TUs;
 	int i;
@@ -987,27 +992,27 @@ void CL_ReserveShot_f (void)
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
 		return;
 
-	if (!popupListData || !popupListData->next)
+	if (!popup || !popup->next)
 		return;
 
 	/* Get data from popup-list index */
 	i = 0;
-	while (popupListData) {
-		assert(popupListData);
-		hand = *(int*)popupListData->data;
-		popupListData = popupListData->next;
+	while (popup) {
+		assert(popup);
+		hand = *(int*)popup->data;
+		popup = popup->next;
 
-		assert(popupListData);
-		fmIdx = *(int*)popupListData->data;
-		popupListData = popupListData->next;
+		assert(popup);
+		fmIdx = *(int*)popup->data;
+		popup = popup->next;
 
-		assert(popupListData);
-		weapIdx = *(int*)popupListData->data;
-		popupListData = popupListData->next;
+		assert(popup);
+		weapIdx = *(int*)popup->data;
+		popup = popup->next;
 
-		assert(popupListData);
-		TUs	= *(int*)popupListData->data;
-		popupListData = popupListData->next;
+		assert(popup);
+		TUs	= *(int*)popup->data;
+		popup = popup->next;
 
 		if (i == selectedPopupIndex)
 			break;
@@ -1016,7 +1021,8 @@ void CL_ReserveShot_f (void)
 	}
 
 	/* Check if we have enough TUs (again) */
-	if ((CL_UsableTUs(selActor) - CL_ReservedTUs(selActor, RES_SHOT)) >= TUs) {
+	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: popup-index: %i TUs:%i (%i + %i)\n", selectedPopupIndex, TUs, CL_UsableTUs(selActor), CL_ReservedTUs(selActor, RES_SHOT));
+	if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT)) >= TUs) {
 		CL_ReserveTUs(selActor, RES_SHOT, TUs);
 		selChr->reservedTus.shotSettings.hand = hand;
 		selChr->reservedTus.shotSettings.fmIdx = fmIdx;
@@ -1627,19 +1633,14 @@ static void CL_RefreshWeaponButtons (int time)
 		Cbuf_AddText("crouch_checkbox_disable\n");
 	}
 
-/**
-@todo Handle RES_SHOT vs. button stuff here.
-	selChr = CL_GetActorChr(selActor);
-	assert(selChr);
-
-	if (selChr->reservedTus.shot > 0) {	** todo selChr->reservedTus.reserveShot
-
+	/* Shot-reservation button. */
+	if (CL_ReservedTUs(selActor, RES_CROUCH)) {
+		Cbuf_AddText("reserve_shot_check\n");
 	} else {
-
+		Cbuf_AddText("reserve_shot_clear\n");
 	}
-*/
 
-	/* headgear button (nearly the same code as for weapon firing buttons below). */
+	/* Headgear button (nearly the same code as for weapon firing buttons below). */
 	/** @todo Make a generic function out of this? */
 	if (headgear) {
 		assert(headgear->item.t != NONE);

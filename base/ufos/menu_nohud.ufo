@@ -49,6 +49,10 @@ menu nohud
 	confunc crouch_checkbox_clear	{ cmd "crouch_checkbox_clear_s;crouch_checkbox_clear_a;" }
 	confunc crouch_checkbox_check	{ cmd "crouch_checkbox_check_s;crouch_checkbox_check_a;" }
 
+	confunc reserve_shot_clear	{ cmd "reserve_shot_clear_s;reserve_shot_clear_a;" }
+	confunc reserve_shot_check	{ cmd "reserve_shot_check_s;reserve_shot_check_a;" }
+	confunc reserve_shot_disable	{ cmd "reserve_shot_disable_s;reserve_shot_disable_a;" }
+	
 	confunc startreactionmany { cmd "startreactionmanys;startreactionmanya;" }
 	confunc startreactionmany_impos { cmd "startreactionmanys_impos;startreactionmanya_impos;" }
 	confunc startreactiononce { cmd "startreactiononces;startreactiononcea;" }
