@@ -683,18 +683,6 @@ static qboolean CP_MissionCreate (mission_t *mission)
 }
 
 /**
- * @brief Choose if a new ground mission should be started.
- * @note Recon mission -- Stage 1
- * @note Already one ground mission has been made
- * @todo implement me (for now, there's only one ground mission possible)
- * @sa CP_ReconMissionSelect
- * @todo implement me
- */
-static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
-{
-	return (frand() > 0.7f);
-}
-/**
  * @brief Minimum distance between a new mission and an existing base.
  */
 static const float MIN_DIST_BASE = 4.0f;
@@ -725,7 +713,8 @@ base_t* CP_PositionCloseToBase (const vec2_t pos)
 static void CP_ReconMissionIsSuccess (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(0.15f, INTERESTCATEGORY_BUILDING);
+	if (ccs.XVISpreadActivated)
+		CL_ChangeIndividualInterest(0.15f, INTERESTCATEGORY_BUILDING);
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
 
@@ -740,7 +729,8 @@ static void CP_ReconMissionIsFailure (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	if (ccs.XVISpreadActivated)
+		CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 
 	CP_MissionRemove(mission);
 }
@@ -855,6 +845,19 @@ static void CP_ReconMissionGround (mission_t *mission)
 }
 
 /**
+ * @brief Choose if a new ground mission should be started.
+ * @note Recon mission -- Stage 1
+ * @note Already one ground mission has been made
+ * @todo implement me (for now, there's only one ground mission possible)
+ * @sa CP_ReconMissionSelect
+ * @todo implement me
+ */
+static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
+{
+	return (frand() > 0.7f);
+}
+
+/**
  * @brief Set recon mission type (aerial or ground).
  * @note Recon mission -- Stage 1
  * @todo implement me
@@ -935,7 +938,8 @@ static void CP_TerrorMissionIsFailure (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	if (ccs.XVISpreadActivated)
+		CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 
 	CP_MissionRemove(mission);
 }
@@ -1053,6 +1057,7 @@ static void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(-0.8f, INTERESTCATEGORY_BASE_ATTACK);
+	CL_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);
 }
@@ -1911,6 +1916,31 @@ static void CP_SpawnNewMissions (void)
 	}
 }
 
+/**
+ * @brief Start XVI spreading in campaign.
+ * @note This is called when 'a new twist' technology is discovered
+ */
+static void CP_StartXVISpreading_f (void)
+{
+	int i, numAlienBases;
+
+	ccs.XVISpreadActivated = qtrue;
+
+	/* Spawn a few alien bases depending on difficulty level */
+	if (difficulty->integer > 0)
+		numAlienBases = 3;
+	else if (difficulty->integer < 0)
+		numAlienBases = 1;
+	else
+		numAlienBases = 2;
+
+	for (i = 0; i < numAlienBases; i++)
+		CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qfalse);
+
+	/* Is it still needed ? I don't even know what it's used for... Kracken */
+	RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
+}
+
 #ifdef DEBUG
 /**
  * @brief Return Name of the category of a mission.
@@ -2761,13 +2791,6 @@ static void CP_CheckEvents (void)
 
 	/* Check UFOs events. */
 	UFO_CampaignCheckEvents(qtrue);
-
-	/* XVI spreading has started */
-	if (ccs.overallInterest > 500) {
-		ccs.XVISpreadActivated = qtrue;
-		/* Mark prequesite of "rs_alien_xvi" as met. */
-		RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
-	}
 
 	/* humans start to attacking player */
 	if (ccs.overallInterest > 700) {
@@ -5469,6 +5492,7 @@ static const cmdList_t game_commands[] = {
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"map_zoom", MAP_Zoom_f, ""},
 	{"map_scroll", MAP_Scroll_f, ""},
+	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 #ifdef DEBUG
 	{"debug_aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},

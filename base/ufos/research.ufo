@@ -4380,6 +4380,8 @@ tech news_newtwist
 		tech rs_alien_oddbehaviour
 	}
 
+	event "cp_start_xvi_spreading;"
+
 	time		0
 	pushnews	true
 }

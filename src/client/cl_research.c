@@ -1584,6 +1584,8 @@ static void RS_DebugResearchAll (void)
 		RS_MarkResearchedAll();
 	} else {
 		tech= RS_GetTechByID(Cmd_Argv(1));
+		if (!tech)
+			return;
 		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 		RS_MarkOneResearchable(tech);
 		RS_ResearchFinish(tech);
