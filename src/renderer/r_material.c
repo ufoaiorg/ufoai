@@ -88,7 +88,7 @@ static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t in, 
 
 		s = tmp[0];
 		t = tmp[1];
-	} else {  /* or use the ones from the vertex */
+	} else {  /* or use the ones we were given */
 		s = in[0];
 		t = in[1];
 	}
@@ -510,6 +510,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			}
 
 			s->flags |= STAGE_TERRAIN;
+			continue;
 		}
 
 		if (!strcmp(c, "anim")) {

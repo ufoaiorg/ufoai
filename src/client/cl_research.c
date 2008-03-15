@@ -1573,7 +1573,7 @@ void RS_MarkResearchedAll (void)
 
 #ifdef DEBUG
 /**
- * @brief Set all item to researched
+ * @brief Set all items to researched
  * @note Just for debugging purposes
  */
 static void RS_DebugResearchAll (void)
