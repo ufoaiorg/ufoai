@@ -956,7 +956,7 @@ void CL_PopupFiremodeReservation_f (void)
 					LIST_Add(&popupListData, (byte *)&ammo->fd[weapFdsIdx][i].time, sizeof(int));	/* TUs */
 
 					/* Remember the line that is currently selected (if any). */
-					if ((selChr->reservedTus.shotSettings.hand == ((hand == 'r')?0:1))
+					if ((selChr->reservedTus.shotSettings.hand == ((hand == 'r') ? 0 : 1))
 					&& (selChr->reservedTus.shotSettings.fmIdx == i)
 					&& (selChr->reservedTus.shotSettings.wpIdx == ammo->weapIdx[weapFdsIdx]))
 						selectedEntry = popupNum;
