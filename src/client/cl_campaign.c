@@ -36,9 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
-void R_IncreaseXVILevel(const vec2_t pos);
-void R_InitializeXVIOverlay(byte *data, int width, int height);
-qboolean R_XVIMapCopy(byte *out, int size);
+extern void R_IncreaseXVILevel(const vec2_t pos);
+extern void R_InitializeXVIOverlay(byte *data, int width, int height);
+extern qboolean R_XVIMapCopy(byte *out, int size);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -5760,7 +5760,7 @@ static void CL_GameNew_f (void)
 	/* Initialize alien interest */
 	CL_ResetAlienInterest();
 
-	/* Initialze XVI overlay */
+	/* Initialize XVI overlay */
 	R_InitializeXVIOverlay(NULL, 0, 0);
 
 	/* Reset alien bases */

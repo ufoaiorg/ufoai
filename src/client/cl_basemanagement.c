@@ -449,7 +449,7 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 	switch (type) {
 	case B_RADAR:
 		level = B_GetMaxBuildingLevel(base, B_RADAR);
-		Radar_Initialise(&base->radar, baseRadarRange, level);
+		RADAR_Initialise(&base->radar, baseRadarRange, level);
 		break;
 	case B_WORKSHOP:
 		PR_UpdateProductionCap(baseCurrent);
@@ -481,7 +481,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		break;
 	case B_RADAR:
 		level = B_GetMaxBuildingLevel(base, B_RADAR);
-		Radar_Initialise(&base->radar, baseRadarRange, level);
+		RADAR_Initialise(&base->radar, baseRadarRange, level);
 		break;
 	default:
 		break;
@@ -502,8 +502,9 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		AC_KillAll(base);
 		break;
 	case B_RADAR:
-		if (!base->hasBuilding[type])
-			Radar_Initialise(&base->radar, 0.0f, 0.0f);
+		if (!base->hasBuilding[type]) {
+			RADAR_Initialise(&base->radar, 0.0f, 0.0f);
+		}
 		break;
 	default:
 		break;
@@ -1000,7 +1001,7 @@ void B_SetUpBase (base_t* base)
 	const int newBaseAlienInterest = 1.0f;
 
 	assert(base);
-	/* Resent current capacities. */
+	/* Reset current capacities. */
 	for (i = 0; i < MAX_CAP; i++)
 		base->capacities[i].cur = 0;
 
@@ -2497,7 +2498,7 @@ static void B_BuildBase_f (void)
 			else
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 			MN_AddNewMessage(_("Base built"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-			Radar_Initialise(&(baseCurrent->radar), 0.0f, 1.0f);
+			RADAR_Initialise(&(baseCurrent->radar), 0.0f, 1.0f);
 			B_ResetAllStatusAndCapacities(baseCurrent, qtrue);
 			AL_FillInContainment(baseCurrent);
 			PR_UpdateProductionCap(baseCurrent);

@@ -1170,9 +1170,9 @@ void R_IncreaseXVILevel (const vec2_t pos)
 	float radius;								/**< radius of the new XVI circle */
 
 	assert(xCenter >= 0);
-	assert(xCenter < bpp * r_xviTexture->width);
+	assert(xCenter < bpp * xviWidth);
 	assert(yCenter >= 0);
-	assert(yCenter < bpp * r_xviTexture->height);
+	assert(yCenter < bpp * xviHeight);
 
 	if (r_xviPic[3 + yCenter * xviWidth + xCenter] < minAlpha) {
 		/* This zone wasn't infected */
@@ -1190,8 +1190,8 @@ void R_IncreaseXVILevel (const vec2_t pos)
 		for (x = 0; x < bpp * xviWidth; x += bpp) {
 			float distance;
 			Vector2Set(currentPos,
-				180.0f - 360.0f * x / ((float) r_xviTexture->width * bpp),
-				90.0f - 180.0f * y / ((float) r_xviTexture->height * bpp));
+				180.0f - 360.0f * x / ((float) xviWidth * bpp),
+				90.0f - 180.0f * y / ((float) xviHeight * bpp));
 			distance = MAP_GetDistance(pos, currentPos);
 			if (distance <= 1.1 * radius) {
 				int newValue;
@@ -1248,7 +1248,7 @@ void R_InitializeXVIOverlay (byte *data, int width, int height)
 	for (y = 0; y < xviHeight; y++)
 		for (x = 0; x < xviWidth; x++, start += 4) {
 			start[0] = setToZero ? 0 : data[y * xviWidth + x];
-	}
+		}
 
 	/* Set an image */
 	r_xviTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay.tga", r_xviPic, xviWidth, xviHeight, it_wrappic);

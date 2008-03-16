@@ -617,10 +617,10 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 
 	/* Remove ufo from bases and aircraft radars */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-		Radar_NotifyUFORemoved(&base->radar, ufo);
+		RADAR_NotifyUFORemoved(&base->radar, ufo);
 
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
-			Radar_NotifyUFORemoved(&aircraft->radar, ufo);
+			RADAR_NotifyUFORemoved(&aircraft->radar, ufo);
 	}
 }
 

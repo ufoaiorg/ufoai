@@ -70,7 +70,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 		return;
 
 	/* Show radar range zones */
-	RADAR_DrawCoverage(node,radar,pos);
+	RADAR_DrawCoverage(node, radar, pos);
 
 	/* Set color */
 	R_Color(color);
@@ -134,7 +134,7 @@ static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
 /**
  * @brief Notify that the specified ufo has been removed from geoscape
  **/
-void Radar_NotifyUFORemoved (radar_t* radar, const aircraft_t* ufo)
+void RADAR_NotifyUFORemoved (radar_t* radar, const aircraft_t* ufo)
 {
 	int i, numUFO = ufo - gd.ufos;
 
@@ -150,7 +150,7 @@ void Radar_NotifyUFORemoved (radar_t* radar, const aircraft_t* ufo)
 /**
  * @brief Initialise radar
  */
-void Radar_Initialise (radar_t* radar, float range, float level)
+void RADAR_Initialise (radar_t* radar, float range, float level)
 {
 	if (!level)
 		radar->range = 0.0f;
