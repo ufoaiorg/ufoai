@@ -75,6 +75,10 @@ void IN_JoystickMove (void)
 	int total = 0;
 	int i = 0;
 
+	/* check whether a user has changed the joystick number */
+	if (in_joystickNo->modified)
+		IN_StartupJoystick();
+
 	if (!stick)
 		return;
 
@@ -327,6 +331,7 @@ void IN_StartupJoystick (void)
 
 	if (in_joystickNo->integer < 0 || in_joystickNo->integer >= total)
 		Cvar_Set("in_joystickNo", "0");
+	in_joystickNo->modified = qfalse;
 
 	stick = SDL_JoystickOpen(in_joystickNo->integer);
 
