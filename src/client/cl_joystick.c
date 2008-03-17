@@ -287,6 +287,14 @@ void IN_JoystickInitMenu (void)
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), SDL_JoystickName(i));
 		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), va("%i", i));
 	}
+
+	if (!total) {
+		selectBoxOption = MN_AddSelectboxOption(joystickOptions);
+		if (selectBoxOption) {
+			Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), "None");
+			Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "0");
+		}
+	}
 }
 
 /**
