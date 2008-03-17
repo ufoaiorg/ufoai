@@ -1650,6 +1650,8 @@ void CL_InitAfter (void)
 		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "%i", vid_modes[i].mode);
 	}
 
+	IN_JoystickInitMenu();
+
 	CL_LanguageInit();
 
 	/* now make sure that all the precached models are stored until we quit the game

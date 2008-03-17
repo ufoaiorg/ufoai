@@ -92,11 +92,12 @@ typedef enum {
 #define SELECTBOX_SIDE_WIDTH 7.0f
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
 #define SELECTBOX_SPACER 2.0f
+#define SELECTBOX_MAX_VALUE_LENGTH 32
 
 /** @brief MN_SELECTBOX definition */
 typedef struct selectBoxOptions_s {
 	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
-	char label[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
+	char label[SELECTBOX_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
 	char action[MAX_VAR];	/**< execute this when the value is selected */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node

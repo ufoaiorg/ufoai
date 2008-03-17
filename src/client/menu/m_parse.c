@@ -110,7 +110,7 @@ static const value_t nps[] = {
 
 /** @brief valid properties for a select box */
 static const value_t selectBoxValues[] = {
-	{"label", V_TRANSLATION_MANUAL_STRING, offsetof(selectBoxOptions_t, label), 0},
+	{"label", V_TRANSLATION_MANUAL_STRING, offsetof(selectBoxOptions_t, label), sizeof(char) * SELECTBOX_MAX_VALUE_LENGTH},
 	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},
 	{"value", V_STRING, offsetof(selectBoxOptions_t, value), 0},
 
@@ -560,7 +560,22 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 						*token = COM_EParse(text, errhead, node->name);
 						if (!*text)
 							return qfalse;
-						Com_ParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, val->type, val->ofs, val->size);
+						switch (val->type) {
+						case V_TRANSLATION_MANUAL_STRING:
+							if (val->size) {
+								/* selectbox values are static arrays */
+								char *target = ((char*)&mn.menuSelectBoxes[mn.numSelectBoxes] + val->ofs);
+								const char *translateableToken = *token;
+								if (*translateableToken == '_')
+									translateableToken++;
+								Q_strncpyz(target, translateableToken, val->size);
+								break;
+							}
+							/* otherwise fall through */
+						default:
+							Com_ParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, val->type, val->ofs, val->size);
+							break;
+						}
 						break;
 					}
 				if (!val->string)

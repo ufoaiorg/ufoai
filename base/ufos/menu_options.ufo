@@ -1171,13 +1171,17 @@ menu options_input
 	}
 
 	// ===================
+	// JOYSTICK
+	// ===================
+	string joystick_settings_str
+	{
+		string	"_Joystick settings:"
+		pos		"500 505"
+	}
+
+	// ===================
 	// JOYSTICK THRESHOLD
 	// ===================
-	string joystick_str
-	{
-		string	"_Joystick:"
-		pos		"500 530"
-	}
 	string joystick_threshold_str
 	{
 		string	"_Threshold:"
@@ -1250,6 +1254,8 @@ menu options_input
 		align	cc
 	}
 
+	// selectboxes must be the last clickable nodes
+
 	// ===================
 	// CONFIRM ACTIONS
 	// ===================
@@ -1280,5 +1286,23 @@ menu options_input
 			value	"2"
 			action	""
 		}
+	}
+
+
+	// ===================
+	// JOYSTICK SELECTION
+	// ===================
+	string joystick_str
+	{
+		string	"_Joystick:"
+		pos		"500 530"
+	}
+	selectbox select_joystick
+	{
+		image	"menu/selectbox_green"
+		pos		"658 530"
+		size	"230 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar in_joystickNo"
 	}
 }

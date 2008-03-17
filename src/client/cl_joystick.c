@@ -258,6 +258,32 @@ void IN_JoystickMove (void)
 	stick_state.oldaxes = axes;
 }
 
+/**
+ * @brief Adds joysticks to the options menu
+ */
+void IN_JoystickInitMenu (void)
+{
+	int i, total;
+	menu_t* menu;
+	menuNode_t* joystickOptions;
+	selectBoxOptions_t* selectBoxOption;
+
+	menu = MN_GetMenu("options_input");
+	if (!menu)
+		Sys_Error("Could not find menu options_input\n");
+	joystickOptions = MN_GetNode(menu, "select_joystick");
+	if (!joystickOptions)
+		Sys_Error("Could not find node joystickOptions in menu options_input\n");
+
+	total = SDL_NumJoysticks();
+	for (i = 0; i < total; i++) {
+		selectBoxOption = MN_AddSelectboxOption(joystickOptions);
+		if (!selectBoxOption)
+			break;
+		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), SDL_JoystickName(i));
+		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), va("%i", i));
+	}
+}
 
 /**
  * @brief Init available joysticks
