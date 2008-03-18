@@ -448,7 +448,7 @@ void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 		return;
 	}
 
-	for (i = 0; i < csi.numODs; item.t++)
+	for (i = 0; i < csi.numODs; i++)
 		if (!Q_strncmp(itemName, csi.ods[i].id, MAX_VAR))
 			break;
 	if (i == csi.numODs)
