@@ -285,7 +285,7 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no models");
 	if (count > MAX_MAP_MODELS)
-		Com_Error(ERR_DROP, "Map has too many models");
+		Com_Error(ERR_DROP, "Map has too many models: %i", count);
 
 	out = Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
 	curTile->cmodels = out;
@@ -1302,7 +1302,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 
 	/* init */
 	if (numTiles >= MAX_MAPTILES)
-		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded");
+		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded %i", numTiles);
 
 	curTile = &mapTiles[numTiles];
 	memset(curTile, 0, sizeof(mapTile_t));
