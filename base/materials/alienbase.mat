@@ -5,11 +5,3 @@
 		scroll.s 1
 	}
 }
-{
-	material tex_alienbase/floor01
-	{
-		texture tex_alienbase/floor02
-		pulse 0.3
-		lightmap
-	}
-}
