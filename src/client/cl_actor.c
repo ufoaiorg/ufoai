@@ -340,7 +340,7 @@ static int CL_GetReactionState (const le_t * le)
 
 /**
  * @brief Calculate total reload time for selected actor.
- * @param[in] weaponIdx Item in (currently only right) hand.
+ * @param[in] weapon Item in (currently only right) hand.
  * @return Time needed to reload or >= 999 if no suitable ammo found.
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
@@ -348,7 +348,7 @@ static int CL_GetReactionState (const le_t * le)
  * @sa CL_RefreshWeaponButtons
  * @sa CL_CheckMenuAction
  */
-static int CL_CalcReloadTime (int weaponIdx)
+static int CL_CalcReloadTime (objDef_t *weapon)
 {
 	invList_t *ic;
 	int container;
@@ -357,10 +357,13 @@ static int CL_CalcReloadTime (int weaponIdx)
 	if (!selActor)
 		return tu;
 
+	if (!weapon)
+		return tu;
+
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].out < tu) {
 			for (ic = selActor->i.c[container]; ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(&csi.ods[ic->item.t], weaponIdx)) {
+				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
 					tu = csi.ids[container].out;
 					break;
 				}
@@ -369,7 +372,7 @@ static int CL_CalcReloadTime (int weaponIdx)
 
 	/* total TU cost is the sum of 3 numbers:
 	 * TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
-	tu += csi.ods[weaponIdx].reload + csi.ids[csi.idRight].in;
+	tu += weapon->reload + csi.ids[csi.idRight].in;
 	return tu;
 }
 
@@ -526,7 +529,7 @@ static void HideFiremodes (void)
  */
 static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weapFdsIdx)
 {
-	invList_t *invlist_weapon;
+	invList_t *invlistWeapon;
 	objDef_t *item, *itemAmmo;
 
 	assert(weapFdsIdx);
@@ -535,24 +538,21 @@ static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapo
 		return;
 
 	if (hand == 'r')
-		invlist_weapon = RIGHT(actor);
+		invlistWeapon = RIGHT(actor);
 	else
-		invlist_weapon = LEFT(actor);
+		invlistWeapon = LEFT(actor);
 
-	if (!invlist_weapon || invlist_weapon->item.t == NONE)
+	if (!invlistWeapon || !invlistWeapon->item.t)
 		return;
 
-	item = &csi.ods[invlist_weapon->item.t];
-
-	if (!item)
-		return;
+	item = invlistWeapon->item.t;
 
 	if (item->numWeapons) /** @todo "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
 		itemAmmo = item; /* This weapon doesn't need ammo it already has firedefs */
 	else
-		itemAmmo = &csi.ods[invlist_weapon->item.m];
+		itemAmmo = invlistWeapon->item.m;
 
-	*weapFdsIdx = FIRESH_FiredefsIDXForWeapon(itemAmmo, invlist_weapon->item.t);
+	*weapFdsIdx = FIRESH_FiredefsIDXForWeapon(itemAmmo, invlistWeapon->item.t);
 	if (ammo)
 		*ammo = itemAmmo;
 	if (weapon)
@@ -624,7 +624,7 @@ qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 		return qfalse;
 	}
 
-	if (ammo->weapIdx[weapFdsIdx] == fmSettings->wpIdx
+	if (ammo->weapons[weapFdsIdx]->idx == fmSettings->wpIdx
 	&&  fmSettings->fmIdx >= 0
 	&&  fmSettings->fmIdx < ammo->numFiredefs[weapFdsIdx]) {
 		/* Stored firemode settings up to date - nothin has to be changed */
@@ -906,7 +906,7 @@ void CL_PopupFiremodeReservation_f (void)
 
 	selChr = CL_GetActorChr(selActor);
 	assert(selChr);
-	
+
 	LIST_Delete(popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
@@ -952,13 +952,13 @@ void CL_PopupFiremodeReservation_f (void)
 						LIST_Add(&popupListData, (byte *)&tempOne, sizeof(int));
 					/* Store Data for popup-callback. */
 					LIST_Add(&popupListData, (byte *)&i, sizeof(int));								/* fmIdx */
-					LIST_Add(&popupListData, (byte *)&ammo->weapIdx[weapFdsIdx], sizeof(int));		/* wpIdx */
+					LIST_AddPointer(&popupListText, &ammo->weapons[weapFdsIdx]);					/* wpIdx pointer*/
 					LIST_Add(&popupListData, (byte *)&ammo->fd[weapFdsIdx][i].time, sizeof(int));	/* TUs */
 
 					/* Remember the line that is currently selected (if any). */
 					if ((selChr->reservedTus.shotSettings.hand == ((hand == 'r') ? 0 : 1))
 					&& (selChr->reservedTus.shotSettings.fmIdx == i)
-					&& (selChr->reservedTus.shotSettings.wpIdx == ammo->weapIdx[weapFdsIdx]))
+					&& (selChr->reservedTus.shotSettings.wpIdx == ammo->weapons[weapFdsIdx]->idx))
 						selectedEntry = popupNum;
 					popupNum++;
 				}
@@ -977,7 +977,7 @@ void CL_PopupFiremodeReservation_f (void)
 	VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 	popupListNode->selectedColor[3] = 1.0;
 	popupListNode->textLineSelected = selectedEntry;
-	
+
 }
 
 /**
@@ -1171,8 +1171,8 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	/* "ammo" is definitly set here - otherwise the check above
 	 * would have left this function already. */
 	assert(ammo);
-	if (!RS_ItemIsResearched(csi.ods[ammo->weapIdx[weapFdsIdx]].id)) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", csi.ods[ammo->weapIdx[weapFdsIdx]].id);
+	if (!RS_ItemIsResearched(ammo->weapons[weapFdsIdx]->id)) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", ammo->weapons[weapFdsIdx]->id);
 		return;
 	}
 
@@ -1187,7 +1187,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 
 		if (i >= 0) {
 			/* Found usable firemode for the weapon in _this_ hand. */
-			CL_SetReactionFiremode(actor, handidx, ammo->weapIdx[weapFdsIdx], i);
+			CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, i);
 
 			if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][i].time) {
 				/* Display 'usable" (blue) reaction buttons */
@@ -1231,7 +1231,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%s handidx%i weapfdidx%i\n", chr->name, handidx, weapFdsIdx);
 
-	if (chr->RFmode.wpIdx == ammo->weapIdx[weapFdsIdx]
+	if (chr->RFmode.wpIdx == ammo->weapons[weapFdsIdx]->idx
 	 && chr->RFmode.hand == handidx) {
 		if (ammo->fd[weapFdsIdx][firemodeActive].reaction) {
 			if (chr->RFmode.fmIdx == firemodeActive)
@@ -1250,12 +1250,12 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 			if (i == firemodeActive) {
 				/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
 				if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][firemodeActive].time) {
-					CL_SetReactionFiremode(actor, handidx, ammo->weapIdx[weapFdsIdx], i);
+					CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, i);
 				}
 #if 0
 				else {
 					/** @todo Popup that tells the player no enough TUs? */
-					CL_SetReactionFiremode(actor, handidx, ammo->weapIdx[weapFdsIdx], i);
+					CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, i);
 					CL_ReserveTUs(actor, RES_REACTION, 0);
 					CL_DisplayImpossibleReaction(actor);
 				}
@@ -1616,7 +1616,7 @@ static void CL_RefreshWeaponButtons (int time)
 	headgear = HEADGEAR(selActor);
 
 	/* check for two-handed weapon - if not, also define weaponl */
-	if (!weaponr || !csi.ods[weaponr->item.t].holdTwoHanded)
+	if (!weaponr || !weaponr->item.t->holdTwoHanded)
 		weaponl = LEFT(selActor);
 	else
 		weaponl = NULL;
@@ -1660,38 +1660,38 @@ static void CL_RefreshWeaponButtons (int time)
 	/* Headgear button (nearly the same code as for weapon firing buttons below). */
 	/** @todo Make a generic function out of this? */
 	if (headgear) {
-		assert(headgear->item.t != NONE);
+		assert(headgear->item.t);
 		/* Check whether this item use ammo. */
-		if (headgear->item.m == NONE) {
+		if (!headgear->item.m) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (csi.ods[headgear->item.t].numWeapons > 0) {
+			if (headgear->item.t->numWeapons > 0) {
 				/* Get firedef from the weapon entry instead. */
-				headgear_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[headgear->item.t], headgear->item.t);
+				headgear_fds_idx = FIRESH_FiredefsIDXForWeapon(headgear->item.t, headgear->item.t);
 			} else {
 				headgear_fds_idx = -1;
 			}
 			isammo = qfalse;
 		} else {
 			/* This item uses ammo, get the firedefs from ammo. */
-			headgear_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[headgear->item.m], headgear->item.t);
+			headgear_fds_idx = FIRESH_FiredefsIDXForWeapon(headgear->item.m, headgear->item.t);
 			isammo = qtrue;
 		}
 		if (isammo) {
 			/* Search for the smallest TU needed to shoot. */
 			if (headgear_fds_idx != -1)
 				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!csi.ods[headgear->item.m].fd[headgear_fds_idx][i].time)
+					if (!headgear->item.m->fd[headgear_fds_idx][i].time)
 						continue;
-					if (csi.ods[headgear->item.m].fd[headgear_fds_idx][i].time < minheadgeartime)
-					minheadgeartime = csi.ods[headgear->item.m].fd[headgear_fds_idx][i].time;
+					if (headgear->item.m->fd[headgear_fds_idx][i].time < minheadgeartime)
+					minheadgeartime = headgear->item.m->fd[headgear_fds_idx][i].time;
 				}
 		} else {
 			if (headgear_fds_idx != -1)
 				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!csi.ods[headgear->item.t].fd[headgear_fds_idx][i].time)
+					if (!headgear->item.t->fd[headgear_fds_idx][i].time)
 						continue;
-					if (csi.ods[headgear->item.t].fd[headgear_fds_idx][i].time < minheadgeartime)
-						minheadgeartime = csi.ods[headgear->item.t].fd[headgear_fds_idx][i].time;
+					if (headgear->item.t->fd[headgear_fds_idx][i].time < minheadgeartime)
+						minheadgeartime = headgear->item.t->fd[headgear_fds_idx][i].time;
 				}
 		}
 		if (time < minheadgeartime) {
@@ -1722,8 +1722,8 @@ static void CL_RefreshWeaponButtons (int time)
 	/** Reload buttons  @sa CL_ActorUpdateCVars*/
 	if (weaponr)
 		reloadtime = CL_CalcReloadTime(weaponr->item.t);
-	if (!weaponr || weaponr->item.m == NONE
-		 || !csi.ods[weaponr->item.t].reload
+	if (!weaponr || !weaponr->item.m
+		 || !weaponr->item.t->reload
 		 || time < reloadtime) {
 		SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 		Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand."));
@@ -1734,8 +1734,8 @@ static void CL_RefreshWeaponButtons (int time)
 
 	if (weaponl)
 		reloadtime = CL_CalcReloadTime(weaponl->item.t);
-	if (!weaponl || weaponl->item.m == NONE
-		 || !csi.ods[weaponl->item.t].reload
+	if (!weaponl || !weaponl->item.m
+		 || !weaponl->item.t->reload
 		 || time < reloadtime) {
 		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 		Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand."));
@@ -1747,38 +1747,38 @@ static void CL_RefreshWeaponButtons (int time)
 	/* Weapon firing buttons. (nearly the same code as for headgear buttons above).*/
 	/** @todo Make a generic function out of this? */
 	if (weaponr) {
-		assert(weaponr->item.t != NONE);
+		assert(weaponr->item.t);
 		/* Check whether this item use ammo. */
-		if (weaponr->item.m == NONE) {
+		if (!weaponr->item.m) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (csi.ods[weaponr->item.t].numWeapons > 0) {
+			if (weaponr->item.t->numWeapons > 0) {
 				/* Get firedef from the weapon entry instead. */
-				weaponr_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[weaponr->item.t], weaponr->item.t);
+				weaponr_fds_idx = FIRESH_FiredefsIDXForWeapon(weaponr->item.t, weaponr->item.t);
 			} else {
 				weaponr_fds_idx = -1;
 			}
 			isammo = qfalse;
 		} else {
 			/* This item uses ammo, get the firedefs from ammo. */
-			weaponr_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m], weaponr->item.t);
+			weaponr_fds_idx = FIRESH_FiredefsIDXForWeapon(weaponr->item.m, weaponr->item.t);
 			isammo = qtrue;
 		}
 		if (isammo) {
 			/* Search for the smallest TU needed to shoot. */
 			if (weaponr_fds_idx != -1)
 				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time)
+					if (!weaponr->item.m->fd[weaponr_fds_idx][i].time)
 						continue;
-					if (csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time < minweaponrtime)
-					minweaponrtime = csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time;
+					if (weaponr->item.m->fd[weaponr_fds_idx][i].time < minweaponrtime)
+					minweaponrtime = weaponr->item.m->fd[weaponr_fds_idx][i].time;
 				}
 		} else {
 			if (weaponr_fds_idx != -1)
 				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!csi.ods[weaponr->item.t].fd[weaponr_fds_idx][i].time)
+					if (!weaponr->item.t->fd[weaponr_fds_idx][i].time)
 						continue;
-					if (csi.ods[weaponr->item.t].fd[weaponr_fds_idx][i].time < minweaponrtime)
-						minweaponrtime = csi.ods[weaponr->item.t].fd[weaponr_fds_idx][i].time;
+					if (weaponr->item.t->fd[weaponr_fds_idx][i].time < minweaponrtime)
+						minweaponrtime = weaponr->item.t->fd[weaponr_fds_idx][i].time;
 				}
 		}
 		if (time < minweaponrtime)
@@ -1790,38 +1790,38 @@ static void CL_RefreshWeaponButtons (int time)
 	}
 
 	if (weaponl) {
-		assert(weaponl->item.t != NONE);
-		/* Check whether this item use ammo. */
-		if (weaponl->item.m == NONE) {
+		assert(weaponl->item.t);
+		/* Check whether this item uses ammo. */
+		if (!weaponl->item.m) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (csi.ods[weaponl->item.t].numWeapons > 0) {
+			if (weaponl->item.t->numWeapons > 0) {
 				/* Get firedef from the weapon entry instead. */
-				weaponl_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[weaponl->item.t], weaponl->item.t);
+				weaponl_fds_idx = FIRESH_FiredefsIDXForWeapon(weaponl->item.t, weaponl->item.t);
 			} else {
 				weaponl_fds_idx = -1;
 			}
 			isammo = qfalse;
 		} else {
 			/* This item uses ammo, get the firedefs from ammo. */
-			weaponl_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m], weaponl->item.t);
+			weaponl_fds_idx = FIRESH_FiredefsIDXForWeapon(weaponl->item.m, weaponl->item.t);
 			isammo = qtrue;
 		}
 		if (isammo) {
 			/* Search for the smallest TU needed to shoot. */
 			if (weaponl_fds_idx != -1)
 				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time)
+					if (!weaponl->item.m->fd[weaponl_fds_idx][i].time)
 						continue;
-					if (csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time < minweaponltime)
-						minweaponltime = csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time;
+					if (weaponl->item.m->fd[weaponl_fds_idx][i].time < minweaponltime)
+						minweaponltime = weaponl->item.m->fd[weaponl_fds_idx][i].time;
 				}
 		} else {
 			if (weaponl_fds_idx != -1)
 				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time)
+					if (!weaponl->item.t->fd[weaponl_fds_idx][i].time)
 						continue;
-					if (csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time < minweaponltime)
-						minweaponltime = csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time;
+					if (weaponl->item.t->fd[weaponl_fds_idx][i].time < minweaponltime)
+						minweaponltime = weaponl->item.t->fd[weaponl_fds_idx][i].time;
 				}
 		}
 		if (time < minweaponltime)
@@ -1848,7 +1848,7 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
 	/* No item in hand. */
 	/** @todo Ignore this condition when ammo in hand. */
-	if (!weapon || weapon->item.t == NONE) {
+	if (!weapon || !weapon->item.t) {
 		SCR_DisplayHudMessage(_("No item in hand.\n"), 2000);
 		return qfalse;
 	}
@@ -1861,12 +1861,12 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 		 * elsewhere for the correct firemode. */
 
 		/* Cannot shoot because of lack of ammo. */
-		if (weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
+		if (weapon->item.a <= 0 && weapon->item.t->reload) {
 			SCR_DisplayHudMessage(_("Can't perform action:\nout of ammo.\n"), 2000);
 			return qfalse;
 		}
 		/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
-		if (csi.ods[weapon->item.t].fireTwoHanded && LEFT(selActor)) {
+		if (weapon->item.t->fireTwoHanded && LEFT(selActor)) {
 			SCR_DisplayHudMessage(_("This weapon cannot be fired\none handed.\n"), 2000);
 			return qfalse;
 		}
@@ -1875,7 +1875,7 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 		/* Check if reload is possible. Also checks for the correct amount of TUs. */
 
 		/* Cannot reload because this item is not reloadable. */
-		if (!csi.ods[weapon->item.t].reload) {
+		if (!weapon->item.t->reload) {
 			SCR_DisplayHudMessage(_("Can't perform action:\nthis item is not reloadable.\n"), 2000);
 			return qfalse;
 		}
@@ -1964,9 +1964,9 @@ void CL_ActorUpdateCVars (void)
 		if (animName)
 			Cvar_Set("mn_anim", animName);
 		if (RIGHT(selActor))
-			Cvar_Set("mn_rweapon", csi.ods[RIGHT(selActor)->item.t].model);
+			Cvar_Set("mn_rweapon", RIGHT(selActor)->item.t->model);
 		if (LEFT(selActor))
-			Cvar_Set("mn_lweapon", csi.ods[LEFT(selActor)->item.t].model);
+			Cvar_Set("mn_lweapon", LEFT(selActor)->item.t->model);
 
 		/* get weapon */
 		if (IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
@@ -1977,26 +1977,24 @@ void CL_ActorUpdateCVars (void)
 			selWeapon = RIGHT(selActor);
 		}
 
-		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].holdTwoHanded)
+		if (!selWeapon && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
 			selWeapon = RIGHT(selActor);
 
 		if (selWeapon) {
-			if (selWeapon->item.t == NONE) {
+			if (!selWeapon->item.t) {
 				/* No valid weapon in the hand. */
 				selFD = NULL;
 			} else {
 				/* Check whether this item uses/has ammo. */
-				if (selWeapon->item.m == NONE) {
+				if (!selWeapon->item.m) {
 					/* This item does not use ammo, check for existing firedefs in this item. */
 					/* This is supposed to be a weapon or other usable item. */
-					if (csi.ods[selWeapon->item.t].numWeapons > 0) {
-						if (csi.ods[selWeapon->item.t].weapon || (csi.ods[selWeapon->item.t].weapIdx[0] == selWeapon->item.t)) {
+					if (selWeapon->item.t->numWeapons > 0) {
+						if (selWeapon->item.t->weapon || (selWeapon->item.t->weapons[0] == selWeapon->item.t)) {
 							/* Get firedef from the weapon (or other usable item) entry instead. */
 							selFD = FIRESH_GetFiredef(
 								selWeapon->item.t,
-								FIRESH_FiredefsIDXForWeapon(
-									&csi.ods[selWeapon->item.t],
-									selWeapon->item.t),
+								FIRESH_FiredefsIDXForWeapon(selWeapon->item.t, selWeapon->item.t),
 								cl.cfiremode);
 						} else {
 							/* This is ammo */
@@ -2010,9 +2008,7 @@ void CL_ActorUpdateCVars (void)
 					/* This item uses ammo, get the firedefs from ammo. */
 					old = FIRESH_GetFiredef(
 						selWeapon->item.m,
-						FIRESH_FiredefsIDXForWeapon(
-							&csi.ods[selWeapon->item.m],
-							selWeapon->item.t),
+						FIRESH_FiredefsIDXForWeapon(selWeapon->item.m, selWeapon->item.t),
 						cl.cfiremode);
 					/* reset the align if we switched the firemode */
 					if (old != selFD)
@@ -2036,16 +2032,16 @@ void CL_ActorUpdateCVars (void)
 			if (displayRemainingTus[0] && RIGHT(selActor)) {
 				weapon = RIGHT(selActor);
 				reloadtime = CL_CalcReloadTime(weapon->item.t);
-				if (weapon->item.m != NONE
-					 && csi.ods[weapon->item.t].reload
+				if (weapon->item.m
+					 && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
 					time = reloadtime;
 				}
 			} else if (displayRemainingTus[1] && LEFT(selActor)) {
 				weapon = LEFT(selActor);
 				reloadtime = CL_CalcReloadTime(weapon->item.t);
-				if (weapon && weapon->item.m != NONE
-					 && csi.ods[weapon->item.t].reload
+				if (weapon && weapon->item.m
+					 && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
 					time = 	reloadtime;
 				}
@@ -2092,25 +2088,25 @@ void CL_ActorUpdateCVars (void)
 			MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 			/* in multiplayer RS_ItemIsResearched always returns true,
 			 * so we are able to use the aliens weapons */
-			if (selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].id)) {
+			if (selWeapon && !RS_ItemIsResearched(selWeapon->item.t->id)) {
 				SCR_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {
 				Com_sprintf(infoText, sizeof(infoText),
-							"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+							"%s\n%s (%i) [%i%%] %i\n", selWeapon->item.t->name, selFD->name, selFD->ammo, selToHit, selFD->time);
 				Com_sprintf(mouseText, sizeof(mouseText),
-							"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
+							"%s: %s (%i) [%i%%] %i\n", selWeapon->item.t->name, selFD->name, selFD->ammo, selToHit, selFD->time);
 
 				mn.menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;	/* Save the text for later display next to the cursor. */
 
 				time = selFD->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
-				if (CL_UsableTUs(selActor) < time || (csi.ods[selWeapon->item.t].reload && selWeapon->item.a <= 0)) {
+				if (CL_UsableTUs(selActor) < time || (selWeapon->item.t->reload && selWeapon->item.a <= 0)) {
 					cl.cmode = M_MOVE;
 					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 				}
 			} else if (selWeapon) {
-				Com_sprintf(infoText, sizeof(infoText), _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
+				Com_sprintf(infoText, sizeof(infoText), _("%s\n(empty)\n"), selWeapon->item.t->name);
 			} else {
 				cl.cmode = M_MOVE;
 				CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
@@ -2142,7 +2138,7 @@ void CL_ActorUpdateCVars (void)
 		}
 
 		if (!LEFT(selActor) && RIGHT(selActor)
-			&& csi.ods[RIGHT(selActor)->item.t].holdTwoHanded)
+			&& RIGHT(selActor)->item.t->holdTwoHanded)
 			Cvar_Set("mn_ammoleft", Cvar_VariableString("mn_ammoright"));
 
 		/* change stand-crouch & reaction button state */
@@ -2810,7 +2806,8 @@ void CL_ActorReload (int hand)
 {
 	inventory_t *inv;
 	invList_t *ic;
-	int weapon, x, y, tu;
+	objDef_t *weapon;
+	int x, y, tu;
 	int container, bestContainer;
 
 	if (!CL_CheckAction())
@@ -2828,7 +2825,7 @@ void CL_ActorReload (int hand)
 	if (inv->c[hand]) {
 		weapon = inv->c[hand]->item.t;
 	} else if (hand == csi.idLeft
-		&& csi.ods[inv->c[csi.idRight]->item.t].holdTwoHanded) {
+		&& inv->c[csi.idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = csi.idRight;
 		weapon = inv->c[hand]->item.t;
@@ -2836,14 +2833,14 @@ void CL_ActorReload (int hand)
 		/* otherwise we could use weapon uninitialized */
 		return;
 
-	if (weapon == NONE)
+	if (!weapon)
 		return;
 
 	/* return if the weapon is not reloadable */
-	if (!csi.ods[weapon].reload)
+	if (!weapon->reload)
 		return;
 
-	if (!RS_ItemIsResearched(csi.ods[weapon].id)) {
+	if (!RS_ItemIsResearched(weapon->id)) {
 		SCR_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
 		return;
 	}
@@ -2855,8 +2852,8 @@ void CL_ActorReload (int hand)
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(&csi.ods[ic->item.t], weapon)
-				 && RS_ItemIsResearched(csi.ods[ic->item.t].id)) {
+				if (INVSH_LoadableInWeapon(ic->item.t, weapon)
+				 && RS_ItemIsResearched(ic->item.t->id)) {
 					x = ic->x;
 					y = ic->y;
 					tu = csi.ids[container].out;
@@ -3375,6 +3372,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	vec3_t muzzle, impact;
 	int flags, normal, number;
 	int objIdx;
+	const objDef_t *obj;
 	int weapFdsIdx, fdIdx, surfaceFlags;
 
 	/* read data */
@@ -3384,7 +3382,8 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	le = LE_Get(number);
 
 	/* get the fire def */
-	fd = FIRESH_GetFiredef(objIdx, weapFdsIdx, fdIdx);
+	obj = &csi.ods[objIdx];
+	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal, qtrue);
@@ -3417,7 +3416,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	 * Don't do it if it's a stun-attack though.
 	 * @todo Special particles for stun attack (mind you that there is electrical and gas/chemical stunning)? */
 	if ((flags & SF_BODY)
-	 && csi.ods[fd->objIdx].dmgtype != csi.damStunGas) {	/**< @todo && !(flags & SF_BOUNCED) ? */
+	 && fd->obj->dmgtype != csi.damStunGas) {	/**< @todo && !(flags & SF_BOUNCED) ? */
 		CL_ActorHit(le, impact, normal);
 	}
 
@@ -3459,15 +3458,17 @@ void CL_ActorDoShoot (struct dbuffer *msg)
  */
 void CL_ActorShootHidden (struct dbuffer *msg)
 {
-	fireDef_t	*fd;
+	const fireDef_t *fd;
 	int first;
 	int objIdx;
+	const objDef_t *obj;
 	int weapFdsIdx, fdIdx;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &objIdx, &weapFdsIdx, &fdIdx);
 
 	/* get the fire def */
-	fd = FIRESH_GetFiredef(objIdx, weapFdsIdx, fdIdx);
+	obj = &csi.ods[objIdx];
+	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* start the sound; @todo: is check for SF_BOUNCED needed? */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0]) {
@@ -3490,13 +3491,15 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	int flags;
 	int dtime;
 	int objIdx;
+	const objDef_t *obj;
 	int weapFdsIdx, fdIdx;
 
 	/* read data */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_THROW], &dtime, &objIdx, &weapFdsIdx, &fdIdx, &flags, &muzzle, &v0);
 
 	/* get the fire def */
-	fd = FIRESH_GetFiredef(objIdx, weapFdsIdx, fdIdx);
+	obj = &csi.ods[objIdx];
+	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* add effect le (local entity) */
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
@@ -3522,16 +3525,18 @@ void CL_ActorDoThrow (struct dbuffer *msg)
  */
 void CL_ActorStartShoot (struct dbuffer *msg)
 {
-	fireDef_t *fd;
+	const fireDef_t *fd;
 	le_t *le;
 	pos3_t from, target;
 	int number;
 	int objIdx;
+	const objDef_t *obj;
 	int weapFdsIdx, fdIdx;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &from, &target);
 
-	fd = FIRESH_GetFiredef(objIdx, weapFdsIdx, fdIdx);
+	obj = &csi.ods[objIdx];
+	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* shooting actor */
 	le = LE_Get(number);

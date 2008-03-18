@@ -109,8 +109,8 @@ void G_SendStats (edict_t * ent)
  */
 static void G_WriteItem (item_t item, int container, int x, int y)
 {
-	assert(item.t != NONE);
-	gi.WriteFormat("sbsbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
+	assert(item.t);
+	gi.WriteFormat("sbsbbbb", item.t->idx, item.a, item.m->idx, container, x, y, item.rotated);
 }
 
 /**
@@ -120,7 +120,10 @@ static void G_WriteItem (item_t item, int container, int x, int y)
  */
 static void G_ReadItem (item_t * item, int * container, int * x, int * y)
 {
-	gi.ReadFormat("sbsbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
+	int t, m;
+	gi.ReadFormat("sbsbbbb", &t, &item->a, &m, container, x, y, &item->rotated);
+	item->t = &gi.csi->ods[t];
+	item->m = &gi.csi->ods[m];
 }
 
 
@@ -264,13 +267,13 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 			gi.WriteGPos(check->pos);
 			gi.WriteByte(check->dir);
 			if (RIGHT(check)) {
-				gi.WriteShort(RIGHT(check)->item.t);
+				gi.WriteShort(RIGHT(check)->item.t->idx);
 			} else {
 				gi.WriteShort(NONE);
 			}
 
 			if (LEFT(check)) {
-				gi.WriteShort(LEFT(check)->item.t);
+				gi.WriteShort(LEFT(check)->item.t->idx);
 			} else {
 				gi.WriteShort(NONE);
 			}
@@ -1007,8 +1010,8 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		 * probably needed so that red rifle on the floor changes color,
 		 * but this needs testing. */
 		gi.WriteShort(to == gi.csi->idFloor ? floor->number : num);
-		gi.WriteByte(gi.csi->ods[item.t].ammo);
-		gi.WriteByte(item.m);
+		gi.WriteByte(item.t->ammo);
+		gi.WriteByte(item.m->idx);
 		gi.WriteByte(to);
 		gi.WriteByte(ic->x);
 		gi.WriteByte(ic->y);
@@ -1135,7 +1138,7 @@ static void G_InventoryToFloor (edict_t * ent)
 		   not idFloor */
 		if (k == gi.csi->idArmour) {
 			if (ent->i.c[gi.csi->idArmour])
-				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor()... this actor has armour: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t].name);
+				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor()... this actor has armour: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
 			continue;
 		}
 		/* now cycle through all items for the container of the character (or the entity) */
@@ -1190,17 +1193,17 @@ static void G_InventoryToFloor (edict_t * ent)
 					continue;
 				}
 #endif
-				if (Q_strncmp(gi.csi->ods[ic->item.t].type, "armour", MAX_VAR))
-					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].id);
+				if (Q_strncmp(ic->item.t->type, "armour", MAX_VAR))
+					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n", ic->item.t->id);
 				if (!Com_RemoveFromInventory(&ent->i, k, ic->x, ic->y))
-					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", gi.csi->ods[ic->item.t].id);
+					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", ic->item.t->id);
 			} else {
 				ic->x = x;
 				ic->y = y;
 				ic->next = FLOOR(floor);
 				FLOOR(floor) = ic;
 #ifdef PARANOID
-				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].id);
+				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: item to floor: %s\n", ic->item.t->id);
 #endif
 			}
 		}
@@ -1212,7 +1215,7 @@ static void G_InventoryToFloor (edict_t * ent)
 	FLOOR(ent) = FLOOR(floor);
 
 	if (ent->i.c[gi.csi->idArmour])
-		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has armour in idArmour container: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t].name);
+		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has armour in idArmour container: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
 	else
 		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has NOT armour in idArmour container\n");
 
@@ -1852,7 +1855,8 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	edict_t *ent;
 	invList_t *ic;
 	int hand;
-	int weapon, x, y, tu;
+	objDef_t *weapon;
+	int x, y, tu;
 	int container, bestContainer;
 
 	ent = g_edicts + entnum;
@@ -1867,7 +1871,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	if (ent->i.c[hand]) {
 		weapon = ent->i.c[hand]->item.t;
 	} else if (hand == gi.csi->idLeft
-			&& gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdTwoHanded) {
+			&& ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;
@@ -1875,7 +1879,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	else
 		return;
 
-	assert(weapon != NONE);
+	assert(weapon);
 
 	/* LordHavoc: Check if item is researched when in singleplayer? I don't think this is really a
 	 * cheat issue as in singleplayer there is no way to inject fake client commands in the virtual
@@ -1888,7 +1892,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon)) {
+				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
 					x = ic->x;
 					y = ic->y;
 					tu = gi.csi->ids[container].out;
@@ -1912,7 +1916,8 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 {
 	edict_t *ent;
 	invList_t *ic;
-	int hand, weapon;
+	int hand;
+	objDef_t *weapon;
 	int container;
 
 	ent = g_edicts + entnum;
@@ -1923,18 +1928,18 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 	if (ent->i.c[hand]) {
 		weapon = ent->i.c[hand]->item.t;
 	} else if (hand == gi.csi->idLeft
-	 && gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdTwoHanded) {
+	 && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;
 	} else
 		return qfalse;
 
-	assert(weapon != NONE);
+	assert(weapon);
 
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->i.c[container]; ic; ic = ic->next)
-			if (INVSH_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon))
+			if (INVSH_LoadableInWeapon(ic->item.t, weapon))
 				return qtrue;
 	return qfalse;
 }
@@ -1972,8 +1977,8 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next) {
-				assert(ic->item.t != NONE);
-				if (gi.csi->ods[ic->item.t].weapon && (ic->item.a > 0 || !gi.csi->ods[ic->item.t].reload)) {
+				assert(ic->item.t);
+				if (ic->item.t->weapon && (ic->item.a > 0 || !ic->item.t->reload)) {
 					x = ic->x;
 					y = ic->y;
 					tu = gi.csi->ids[container].out;
@@ -2710,10 +2715,10 @@ void G_ClientTeamInfo (player_t * player)
 
 				for (; nr-- > 0;) {
 					G_ReadItem(&item, &container, &x, &y);
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y);
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx : NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
 
 					Com_AddToInventory(&ent->i, item, container, x, y, 1);
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n", container, gi.csi->idArmour, gi.csi->ods[ent->i.c[container]->item.t].id);
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n", container, gi.csi->idArmour, ent->i.c[container]->item.t->id);
 				}
 			}
 

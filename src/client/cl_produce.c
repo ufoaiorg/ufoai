@@ -66,10 +66,10 @@ static qboolean PR_ConditionsDisassembly (base_t *base, components_t *comp)
 	assert(base);
 	assert(comp);
 
-	od = &csi.ods[comp->assembly_idx];
+	od = comp->asItem;
 	assert(od);
 
-	if (RS_IsResearched_ptr(od->tech) && (base->storage.num[comp->assembly_idx] > 0))
+	if (RS_IsResearched_ptr(od->tech) && (base->storage.num[od->idx] > 0))
 		return qtrue;
 	else
 		return qfalse;
@@ -548,9 +548,9 @@ void PR_ProductionRun (void)
 static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 {
 	static char productionInfo[512];
-	objDef_t *od, *compod;
+	objDef_t *od, *compOd;
 	int objID;
-	int time, i, j;
+	int time, i;
 	float prodPerHour;
 
 	assert(base);
@@ -596,8 +596,8 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 		/* Find related components array. */
 		for (i = 0; i < gd.numComponents; i++) {
 			comp = &gd.components[i];
-			Com_DPrintf(DEBUG_CLIENT, "components definition: %s item: %s\n", comp->assembly_id, csi.ods[comp->assembly_idx].id);
-			if (comp->assembly_idx == objID)
+			Com_DPrintf(DEBUG_CLIENT, "components definition: %s item: %s\n", comp->asId, comp->asItem->id);
+			if (comp->asItem->idx == objID)
 				break;
 		}
 		assert(comp);
@@ -617,11 +617,9 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 			Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
 			/* Print components. */
 			for (i = 0; i < comp->numItemtypes; i++) {
-				for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
-					if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
-						break;
-				}
-				Q_strcat(productionInfo, va(_("%s (%i) "), compod->name, comp->item_amount[i]),
+				compOd = comp->items[i];
+				assert(compOd);
+				Q_strcat(productionInfo, va(_("%s (%i) "), compOd->name, comp->item_amount[i]),
 					sizeof(productionInfo));
 			}
 			Q_strcat(productionInfo, "\n", sizeof(productionInfo));
@@ -819,7 +817,7 @@ static void PR_ProductionListClick_f (void)
 					continue;
 				if (j == idx) {
 					selectedQueueItem = qfalse;
-					selectedIndex = gd.components[i].assembly_idx;
+					selectedIndex = gd.components[i].asItem->idx;
 					PR_ProductionInfo(base, qtrue);
 					return;
 				}
@@ -944,6 +942,7 @@ static void PR_UpdateDisassemblingList_f (void)
 	static char productionQueued[256];
 	static char productionAmount[256];
 	objDef_t *od;
+	objDef_t *asOd;
 	production_queue_t *queue;
 	production_t *prod;
 	components_t *comp;
@@ -976,12 +975,13 @@ static void PR_UpdateDisassemblingList_f (void)
 	}
 
 	for (i = 0; i < gd.numComponents; i++) {
-		if (gd.components[i].assembly_idx <= 0)
+		asOd = gd.components[i].asItem;
+		if (!asOd)
 			continue;
 		comp = &gd.components[i];
 		if (PR_ConditionsDisassembly(base, comp)) {
-			Q_strcat(productionList, va("%s\n", csi.ods[gd.components[i].assembly_idx].name), sizeof(productionList));
-			Q_strcat(productionAmount, va("%i\n", base->storage.num[gd.components[i].assembly_idx]), sizeof(productionAmount));
+			Q_strcat(productionList, va("%s\n", asOd->name), sizeof(productionList));
+			Q_strcat(productionAmount, va("%i\n", base->storage.num[asOd->idx]), sizeof(productionAmount));
 			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 		}
 	}
@@ -1447,7 +1447,8 @@ qboolean PR_Save (sizebuf_t *sb, void *data)
  */
 qboolean PR_Load (sizebuf_t *sb, void *data)
 {
-	int i, j, k;
+	int i, j;
+	objDef_t *od;
 	const char *s;
 	production_queue_t *pq;
 
@@ -1456,8 +1457,8 @@ qboolean PR_Load (sizebuf_t *sb, void *data)
 		pq->numItems = MSG_ReadByte(sb);
 		for (j = 0; j < pq->numItems; j++) {
 			s = MSG_ReadString(sb);
-			k = INVSH_GetItemByID(s);
-			if (k == NONE || k >= MAX_OBJDEFS) {
+			od = INVSH_GetItemByID(s);
+			if (!od) {
 				Com_Printf("PR_Load: Could not find item '%s'\n", s);
 				MSG_ReadLong(sb); /* amount */
 				MSG_ReadFloat(sb); /* percentDone */
@@ -1465,7 +1466,7 @@ qboolean PR_Load (sizebuf_t *sb, void *data)
 				MSG_ReadByte(sb); /* aircraft */
 				MSG_ReadByte(sb); /* items_cached */
 			} else {
-				pq->items[j].objID = k;
+				pq->items[j].objID = od->idx;
 				pq->items[j].amount = MSG_ReadLong(sb);
 				pq->items[j].percentDone = MSG_ReadFloat(sb);
 				pq->items[j].production = MSG_ReadByte(sb);

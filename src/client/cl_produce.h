@@ -39,7 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 typedef struct production_s
 {
-	signed int objID;	/**< Item index in global csi.ods struct for items, aircraft index in aircraft_samples array for aircraft. */
+	signed int objID;	/**< Item index in global csi.ods struct for items, aircraft index in aircraft_samples array for aircraft.
+						 * @todo Make this into 2 pointer? One objDef_t* and one for an aircraft? */
 	signed int amount;	/**< How much are we producing. */
 	float percentDone;		/**< Fraction of the item which is already produced.
 							 * 0 if production is not started, 1 if production is over */

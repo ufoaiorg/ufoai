@@ -5980,9 +5980,9 @@ static void CP_CampaignStats_f (void)
  */
 void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 {
-	int i, j;
+	int i;
 	components_t *comp;
-	objDef_t *compod;
+	objDef_t *compOd;
 	eventMail_t *mail;
 	char body[512] = "";
 
@@ -5999,18 +5999,15 @@ void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 			Sys_Error("CP_UFOSendMail: ufo_crashed_report has no mail body");
 
 		/* Find components definition. */
-		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id));
+		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id)->idx);
 		assert(comp);
 
 		/* List all components of crashed UFO. */
 		for (i = 0; i < comp->numItemtypes; i++) {
-			for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
-				if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
-					break;
-			}
-			assert(compod);
+			compOd = comp->items[i];
+			assert(compOd);
 			if (comp->item_amount2[i] > 0)
-				Q_strcat(body, va(_("  * %i x\t%s\n"), comp->item_amount2[i], compod->name), sizeof(body));
+				Q_strcat(body, va(_("  * %i x\t%s\n"), comp->item_amount2[i], compOd->name), sizeof(body));
 		}
 	} else {
 		/* take the source mail and create a copy of it */
@@ -6022,18 +6019,15 @@ void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 			Sys_Error("CP_UFOSendMail: ufo_recovery_report has no mail body");
 
 		/* Find components definition. */
-		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id));
+		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id)->idx);
 		assert(comp);
 
 		/* List all components of crashed UFO. */
 		for (i = 0; i < comp->numItemtypes; i++) {
-			for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
-				if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
-					break;
-			}
-			assert(compod);
+			compOd = comp->items[i];
+			assert(compOd);
 			if (comp->item_amount[i] > 0)
-				Q_strcat(body, va(_("  * %s\n"), compod->name), sizeof(body));
+				Q_strcat(body, va(_("  * %s\n"), compOd->name), sizeof(body));
 		}
 	}
 	assert(mail);
@@ -6451,7 +6445,7 @@ static void CP_UFOCrashed_f (void)
 	aircraft_t *aircraft, *ufocraft;
 	qboolean ufofound = qfalse;
 	components_t *comp;
-	objDef_t *compod;
+	objDef_t *compOd;
 	itemsTmp_t *cargo;
 
 	if (!baseCurrent || gd.interceptAircraft == AIRCRAFT_INVALID)
@@ -6495,17 +6489,14 @@ static void CP_UFOCrashed_f (void)
 	cargo = aircraft->itemcargo;
 
 	/* Find components definition. */
-	comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id));
+	comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id)->idx);
 	assert(comp);
 
 	/* Add components of crashed UFO to dropship. */
 	for (i = 0; i < comp->numItemtypes; i++) {
-		for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
-			if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
-				break;
-		}
-		assert(compod);
-		Com_DPrintf(DEBUG_CLIENT, "CP_UFOCrashed_f()... Collected %i of %s\n", comp->item_amount2[i], comp->item_id[i]);
+		compOd = comp->items[i];
+		assert(compOd);
+		Com_DPrintf(DEBUG_CLIENT, "CP_UFOCrashed_f()... Collected %i of %s\n", comp->item_amount2[i], comp->items[i]->id);
 		/* Add items to cargo, increase itemtypes. */
 		cargo[aircraft->itemtypes].idx = j;
 		cargo[aircraft->itemtypes].amount = comp->item_amount2[i];

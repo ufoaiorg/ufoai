@@ -66,8 +66,7 @@ typedef struct fireDef_s {
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
-	int objIdx;		/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in.
-						 ** So you can get the containing object by acceessing e.g. csi.ods[obj_idx]. */
+	struct objDef_s *obj;		/**< The weapon/ammo item this fd is located in. */
 	int weapFdsIdx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weapFdsIdx]) this fd is located in.
 						 ** Depending on this value you can find out via objDef_t->weapIdx[weapFdsIdx] what weapon this firemode is used for.
 						 ** This does _NOT_ equal the index of the weapon object in ods.
@@ -219,6 +218,7 @@ typedef enum {
  */
 typedef struct objDef_s {
 	/* Common */
+	int idx;	/**< Index of the objDef in the global item list (ods). */
 	char name[MAX_VAR];		/**< Item name taken from scriptfile. */
 	char id[MAX_VAR];		/**< Identifier of the item being item definition in scriptfile. */
 	char model[MAX_VAR];		/**< Model name - relative to game dir. */
@@ -246,27 +246,26 @@ typedef struct objDef_s {
 	/* Weapon specific. */
 	int ammo;			/**< How much can we load into this weapon at once. @todo: what is this? isn't it ammo-only specific which defines amount of bullets in clip? */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
-	qboolean oneshot;		/**< This weapon contains its own ammo (it is loaded in the base).
-					     int ammo of objDef_s defines the amount of ammo used in oneshoot weapons. */
-	qboolean deplete;		/**< This weapon useless after all ("oneshot") ammo is used up.
-				  	     If true this item will not be collected on mission-end. (see INV_CollectinItems). */
+	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
+						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
+	qboolean deplete;	/**< This weapon useless after all ("oneshot") ammo is used up.
+						 * If true this item will not be collected on mission-end. (see INV_CollectinItems). */
 
-	int useable;			/**< Defines which team can use this item: 0 - human, 1 - alien.
-					     Used in checking the right team when filling the containers with available armours. */
+	int useable;		/**< Defines which team can use this item: 0 - human, 1 - alien.
+						 * Used in checking the right team when filling the containers with available armours. */
 
-	int ammoIdx[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
+	struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
 	int numAmmos;			/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
-	char weapId[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>". */
-	int weapIdx[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object indices. The index of the weapon in csi.ods[xxx].
-								Correct index for this array can be get from fireDef_t.weapFdsIdx. or
-								FIRESH_FiredefsIDXForWeapon. */
+	struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where thsi item can be used in.
+															 * Correct index for this array can be get from fireDef_t.weapFdsIdx. or
+															 * FIRESH_FiredefsIDXForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
 	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon.
-							     Maximum value for fireDef_t.fdIdx <= MAX_FIREDEFS_PER_WEAPON. */
-	int numWeapons;					/**< Number of weapons this ammo can be used in.
-							     Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
+												 * Maximum value for fireDef_t.fdIdx <= MAX_FIREDEFS_PER_WEAPON. */
+	int numWeapons;		/**< Number of weapons this ammo can be used in.
+						 * Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
 
 	struct technology_s *tech;	/**< Technology link to item. */
 	struct technology_s *extension_tech;	/**< Technology link to item to use this extension for (if this is an extension).
@@ -287,7 +286,7 @@ enum {
 	INV_FITS_ONLY_ROTATED
 };
 
-#define MAX_INVDEFS     16
+#define MAX_INVDEFS	16
 
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {
@@ -303,8 +302,8 @@ typedef struct invDef_s {
 	int in, out;	/**< TU costs */
 } invDef_t;
 
-#define MAX_CONTAINERS  MAX_INVDEFS
-#define MAX_INVLIST     1024
+#define MAX_CONTAINERS	MAX_INVDEFS
+#define MAX_INVLIST		1024
 
 /**
  * @brief item definition
@@ -313,11 +312,11 @@ typedef struct invDef_s {
  * ammo loaded or assigned to this weapon
  */
 typedef struct item_s {
-	int a;	/**< number of ammo rounds left - see NONE_AMMO */
-	int m;	/**< unique index of ammo type on csi->ods - see NONE */
-	int t;	/**< unique index of weapon in csi.ods array - see NONE */
-	int amount;	/**< the amount of items of this type on the same x and y location in the container */
-	int rotated; /**< If the item is currently displayed rotated (1) or not (0) */
+	int a;			/**< Number of ammo rounds left - see NONE_AMMO */
+	objDef_t *m;	/**< Pointer to ammo type. */
+	objDef_t *t;	/**< Pointer to weapon. */
+	int amount;		/**< The amount of items of this type on the same x and y location in the container */
+	int rotated;	/**< If the item is currently displayed rotated (1) or not (0) */
 } item_t;
 
 /** @brief container/inventory list (linked list) with items */
@@ -430,7 +429,7 @@ typedef struct csi_s {
 
 /** @todo Medals. Still subject to (major) changes. */
 
-#define MAX_SKILL           100
+#define MAX_SKILL	100
 
 #define GET_HP_HEALING( ab ) (1 + (ab) * 10/MAX_SKILL)
 #define GET_HP( ab )        (min((80 + (ab) * 90/MAX_SKILL), 255))
@@ -467,7 +466,7 @@ typedef enum { /** @note Changing order/entries also changes network-transmissio
 #define ABILITY_NUM_TYPES SKILL_CLOSE
 
 
-#define MAX_UGV         8
+#define MAX_UGV	8
 /** @brief Defines a type of UGV/Robot */
 typedef struct ugv_s {
 	char *id;
@@ -478,7 +477,7 @@ typedef struct ugv_s {
 	int price;
 } ugv_t;
 
-#define MAX_RANKS           32
+#define MAX_RANKS	32
 
 /** @brief Describes a rank that a recruit can gain */
 typedef struct rank_s {
@@ -492,8 +491,8 @@ typedef struct rank_s {
 	int killed_others;		/**< needed amount of other actors killed */
 } rank_t;
 
-extern rank_t ranks[MAX_RANKS]; /**< Global list of all ranks defined in medals.ufo. */
-extern int numRanks;            /**< The number of entries in the list above. */
+extern rank_t ranks[MAX_RANKS];	/**< Global list of all ranks defined in medals.ufo. */
+extern int numRanks;			/**< The number of entries in the list above. */
 
 /**
  * @brief Structure of all stats collected in a mission.
@@ -559,7 +558,7 @@ typedef struct chrScoreGlobal_s {
 	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. This is the total value. */
 	int initialSkills[SKILL_NUM_TYPES];		/**< Array of initial skills and abilities. This is the value generated at character generation time. */
 
-	/* Kills & Stuns  */
+	/* Kills & Stuns */
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
 	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
 
@@ -696,17 +695,17 @@ void INVSH_EquipActor(inventory_t* const inv, const int *equip, int anzEquip, co
 void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_PrintContainerToConsole(inventory_t* const i);
 
-void INVSH_PrintItemDescription(int i);
-int INVSH_GetItemByID(const char *id);
-qboolean INVSH_LoadableInWeapon(objDef_t *od, int weapon_idx);
+void INVSH_PrintItemDescription(objDef_t *od);
+objDef_t *INVSH_GetItemByID(const char *id);
+qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 
 /* =============================== */
 /*  FIREMODE MANAGEMENT FUNCTIONS  */
 /* =============================== */
 
-fireDef_t* FIRESH_GetFiredef(int objIdx, int weapFdsIdx, int fdIdx);
-int FIRESH_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
-int FIRESH_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
+fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, int weapFdsIdx, int fdIdx);
+int FIRESH_FiredefsIDXForWeapon(const objDef_t *od, const objDef_t *weapon);
+int FIRESH_GetDefaultReactionFire(const objDef_t *ammo, int weapon_fds_idx);
 
 void Com_MergeShapes(uint32_t *shape, uint32_t itemshape, int x, int y);
 qboolean Com_CheckShape(const uint32_t *shape, int x, int y);

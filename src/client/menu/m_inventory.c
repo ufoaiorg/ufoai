@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 inventory_t *menuInventory = NULL;
 
 int dragFrom, dragFromX, dragFromY;
-item_t dragItem = {NONE_AMMO, NONE, NONE, 1, 0}; /* to crash as soon as possible */
+item_t dragItem = {NONE_AMMO, NULL, NULL, 1, 0}; /* to crash as soon as possible */
 
 /**
  * @note: node->mousefx is the container id
@@ -75,12 +75,12 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 				} else {
 					qboolean packed = qfalse;
 
-					assert(ic->item.t != NONE);
+					assert(ic->item.t);
 					/* armour can only have one target */
-					if (!Q_strncmp(csi.ods[ic->item.t].type, "armour", MAX_VAR)) {
+					if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
 						packed = INV_MoveItem(baseCurrent, menuInventory, csi.idArmour, 0, 0, node->mousefx, ic->x, ic->y);
 					/* ammo or item */
-					} else if (!Q_strncmp(csi.ods[ic->item.t].type, "ammo", MAX_VAR)) {
+					} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
 						Com_FindSpace(menuInventory, &ic->item, csi.idBelt, &px, &py);
 						packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBelt, px, py, node->mousefx, ic->x, ic->y);
 						if (!packed) {
@@ -92,7 +92,7 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBackpack, px, py, node->mousefx, ic->x, ic->y);
 						}
 					} else {
-						if (csi.ods[ic->item.t].headgear) {
+						if (ic->item.t->headgear) {
 							Com_FindSpace(menuInventory, &ic->item, csi.idHeadgear, &px, &py);
 							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idHeadgear, px, py, node->mousefx, ic->x, ic->y);
 						} else {
@@ -123,14 +123,14 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 						return;
 				}
 			}
-			UP_ItemDescription(ic->item.t);
+			UP_ItemDescription(ic->item.t->idx);
 /*			MN_DrawTooltip("f_verysmall", csi.ods[dragItem.t].name, px, py, 0);*/
 		}
 	} else {
 		/* end drag */
 		mouseSpace = MS_NULL;
-		px = (int) ((x - node->pos[0] - C_UNIT * ((csi.ods[dragItem.t].sx - 1) / 2.0)) / C_UNIT);
-		py = (int) ((y - node->pos[1] - C_UNIT * ((csi.ods[dragItem.t].sy - 1) / 2.0)) / C_UNIT);
+		px = (int) ((x - node->pos[0] - C_UNIT * ((dragItem.t->sx - 1) / 2.0)) / C_UNIT);
+		py = (int) ((y - node->pos[1] - C_UNIT * ((dragItem.t->sy - 1) / 2.0)) / C_UNIT);
 
 		/* tactical mission */
 		if (selActor) {
@@ -202,8 +202,8 @@ void MN_DrawItem (const vec3_t org, item_t item, int sx, int sy, int x, int y, c
 {
 	objDef_t *od;
 
-	assert(item.t != NONE);
-	od = &csi.ods[item.t];
+	assert(item.t);
+	od = item.t;
 
 	if (od->image[0]) {
 		/* draw the image */
@@ -295,10 +295,8 @@ void MN_DrawFree (int container, const menuNode_t *node, int posx, int posy, int
  */
 void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 {
-	/* get the 'type' of the dragged item */
-	int item = dragItem.t;
+	objDef_t *od = dragItem.t;	/**< Get the 'type' of the dragged item. */
 	int container = node->mousefx;
-	uint32_t itemshape;
 
 	qboolean showTUs = qtrue;
 
@@ -313,17 +311,16 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	/* if single container (hands, extension, headgear) */
 	if (csi.ids[container].single) {
 		/* if container is free or the dragged-item is in it */
-		if (node->mousefx == dragFrom || Com_CheckToInventory(inv, item, container, 0, 0))
+		if (node->mousefx == dragFrom || Com_CheckToInventory(inv, od->idx, container, 0, 0))
 			MN_DrawFree(container, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
 	} else {
 		memset(free, 0, sizeof(free));
 		for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 			for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 				/* Check if the current position is usable (topleft of the item) */
-				if (Com_CheckToInventory(inv, item, container, x, y)) {
-					itemshape = csi.ods[dragItem.t].shape;
+				if (Com_CheckToInventory(inv, od->idx, container, x, y)) {
 					/* add '1's to each position the item is 'blocking' */
-					Com_MergeShapes(free, itemshape, x, y);
+					Com_MergeShapes(free, (uint32_t)od->shape, x, y);
 				}
 				/* Only draw on existing positions */
 				if (Com_CheckShape(csi.ids[container].shape, x, y)) {
@@ -347,38 +344,38 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 {
 	int i;
-	int weaponIdx;
+	objDef_t *weapon;
 
-	assert(item.t != NONE);
+	assert(item.t);
 
 	if (item.amount > 1)
-		Q_strncpyz(tooltiptext, va("%i x %s\n", item.amount, csi.ods[item.t].name), string_maxlength);
+		Q_strncpyz(tooltiptext, va("%i x %s\n", item.amount, item.t->name), string_maxlength);
 	else
-		Q_strncpyz(tooltiptext, va("%s\n", csi.ods[item.t].name), string_maxlength);
+		Q_strncpyz(tooltiptext, va("%s\n", item.t->name), string_maxlength);
 
 	/* Only display further info if item.t is researched */
-	if (RS_ItemIsResearched(csi.ods[item.t].id)) {
-		if (csi.ods[item.t].weapon) {
+	if (RS_ItemIsResearched(item.t->id)) {
+		if (item.t->weapon) {
 			/* Get info about used ammo (if there is any) */
 			if (item.t == item.m) {
 				/* Item has no ammo but might have shot-count */
 				if (item.a) {
 					Q_strcat(tooltiptext, va(_("Ammo: %i\n"), item.a), string_maxlength);
 				}
-			} else if (item.m != NONE) {
+			} else if (item.m) {
 				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltiptext, va(_("%s loaded\n"), csi.ods[item.m].name), string_maxlength);
+				Q_strcat(tooltiptext, va(_("%s loaded\n"), item.m->name), string_maxlength);
 				Q_strcat(tooltiptext, va(_("Ammo: %i\n"),  item.a), string_maxlength);
 			}
-		} else if (csi.ods[item.t].numWeapons) {
+		} else if (item.t->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
-			if (!(csi.ods[item.t].numWeapons == 1 && csi.ods[item.t].weapIdx[0] == item.t)) {
+			if (!(item.t->numWeapons == 1 && item.t->weapons[0] == item.t)) {
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltiptext, _("Usable in:\n"), string_maxlength);
-				for (i = 0; i < csi.ods[item.t].numWeapons; i++) {
-					weaponIdx = csi.ods[item.t].weapIdx[i];
-					if (RS_ItemIsResearched(csi.ods[weaponIdx].id)) {
-						Q_strcat(tooltiptext, va("* %s\n", csi.ods[weaponIdx].name), string_maxlength);
+				for (i = 0; i < item.t->numWeapons; i++) {
+					weapon = item.t->weapons[i];
+					if (RS_ItemIsResearched(weapon->id)) {
+						Q_strcat(tooltiptext, va("* %s\n", weapon->name), string_maxlength);
 					}
 				}
 			}
@@ -407,12 +404,12 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		/* single item container (special case for left hand) */
 		if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
 			color[3] = 0.5;
-			if (menuInventory->c[csi.idRight] && csi.ods[menuInventory->c[csi.idRight]->item.t].holdTwoHanded)
+			if (menuInventory->c[csi.idRight] && menuInventory->c[csi.idRight]->item.t->holdTwoHanded)
 				MN_DrawItem(node->pos, menuInventory->c[csi.idRight]->item, node->size[0] / C_UNIT,
 							node->size[1] / C_UNIT, 0, 0, scale, color);
 		} else if (menuInventory->c[node->mousefx]) {
 			if (node->mousefx == csi.idRight &&
-					csi.ods[menuInventory->c[csi.idRight]->item.t].fireTwoHanded &&
+					menuInventory->c[csi.idRight]->item.t->fireTwoHanded &&
 					menuInventory->c[csi.idLeft]) {
 				color[0] = color[1] = color[2] = color[3] = 0.5;
 				MN_DrawDisabled(node);
@@ -423,7 +420,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	} else {
 		/* standard container */
 		for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
-			MN_DrawItem(node->pos, ic->item, csi.ods[ic->item.t].sx, csi.ods[ic->item.t].sy, ic->x, ic->y, scale, color);
+			MN_DrawItem(node->pos, ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, color);
 		}
 	}
 	/* draw free space if dragging - but not for idEquip */
@@ -440,7 +437,8 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 {
-	item_t item = {1, NONE, NONE, 0, 0}; /* 1 so it's not reddish; fake item anyway */
+	int i;
+	item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not reddish; fake item anyway */
 	const vec4_t color = {1, 1, 1, 1};
 
 	if (node->mousefx == C_UNDEFINED)
@@ -450,11 +448,13 @@ void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 		return;
 	}
 
-	for (item.t = 0; item.t < csi.numODs; item.t++)
-		if (!Q_strncmp(itemName, csi.ods[item.t].id, MAX_VAR))
+	for (i = 0; i < csi.numODs; item.t++)
+		if (!Q_strncmp(itemName, csi.ods[i].id, MAX_VAR))
 			break;
-	if (item.t == csi.numODs)
+	if (i == csi.numODs)
 		return;
+
+	item.t = &csi.ods[i];
 
 	MN_DrawItem(node->pos, item, 0, 0, 0, 0, node->scale, color);
 }

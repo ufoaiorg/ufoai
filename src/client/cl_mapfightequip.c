@@ -267,7 +267,7 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 	if (airequipID >= AC_ITEM_AMMO) {
 		/* FIXME: This only works for ammo that is useable in exactly one weapon
 		 * check the weap_idx array and not only the first value */
-		if (csi.ods[itemIdx].weapIdx[0] != slot->itemIdx)
+		if (csi.ods[itemIdx].weapons[0]->idx != slot->itemIdx)
 			return qfalse;
 	}
 
@@ -1290,8 +1290,9 @@ void AIM_AircraftEquipZoneSelect_f (void)
  */
 static void AIM_AutoAddAmmo (base_t *base, aircraft_t *aircraft, aircraftSlot_t *slot)
 {
-	int k, itemIdx, ammoIdx;
+	int k, itemIdx;
 	technology_t *ammo_tech;
+	objDef_t *ammo;
 
 	assert(slot);
 
@@ -1311,11 +1312,11 @@ static void AIM_AutoAddAmmo (base_t *base, aircraft_t *aircraft, aircraftSlot_t 
 	if (itemIdx != NONE) {
 		/* Try every ammo usable with this weapon until we find one we have in storage */
 		for (k = 0; k < csi.ods[itemIdx].numAmmos; k++) {
-			ammoIdx = csi.ods[itemIdx].ammoIdx[k];
-			if (ammoIdx != NONE) {
-				ammo_tech = csi.ods[ammoIdx].tech;
+			ammo = csi.ods[itemIdx].ammos[k];
+			if (ammo) {
+				ammo_tech = ammo->tech;
 				if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {
-					AII_AddAmmoToSlot(csi.ods[ammoIdx].notOnMarket ? NULL : base, ammo_tech, slot);
+					AII_AddAmmoToSlot(ammo->notOnMarket ? NULL : base, ammo_tech, slot);
 					/* base missile are free, you have 20 when you build a new base defense */
 					if (csi.ods[itemIdx].craftitem.type == AC_ITEM_BASE_MISSILE && (slot->ammoLeft < 0)) {
 						/* we use < 0 here, and not <= 0, because we give missiles only on first build

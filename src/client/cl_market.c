@@ -537,7 +537,7 @@ static void BS_BuyItem_f (void)
 		/* The list entry is an actual ugv/robot */
 		ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
 		qboolean ugvWeaponBuyable;
-		int ugvWeaponIdx;
+		objDef_t *ugvWeapon;
 
 		UP_UGVDescription(ugv);
 
@@ -546,18 +546,18 @@ static void BS_BuyItem_f (void)
 		if ((ccs.credits >= ugv->price)
 		&&  (E_CountUnhiredRobotsByType(ugv) > 0)) {
 			/* Check if we have a weapon for this ugv in the market and there is enough storage-room for it. */
-			ugvWeaponIdx = INVSH_GetItemByID(ugv->weapon);
-			if (ugvWeaponIdx == NONE)
+			ugvWeapon = INVSH_GetItemByID(ugv->weapon);
+			if (!ugvWeapon)
 				Sys_Error("BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 			ugvWeaponBuyable = qfalse;
-			if (ccs.eMarket.num[ugvWeaponIdx]
-			&& baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[ugvWeaponIdx].size)
+			if (ccs.eMarket.num[ugvWeapon->idx]
+			&& baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= ugvWeapon->size)
 					ugvWeaponBuyable = qtrue;
 
 			if (ugvWeaponBuyable && E_HireRobot(baseCurrent, ugv)) {
 				/* Move the item into the storage. */
-				B_UpdateStorageAndCapacity(baseCurrent, ugvWeaponIdx, 1, qfalse, qfalse);
-				ccs.eMarket.num[ugvWeaponIdx]--;
+				B_UpdateStorageAndCapacity(baseCurrent, ugvWeapon->idx, 1, qfalse, qfalse);
+				ccs.eMarket.num[ugvWeapon->idx]--;
 
 				/* Update Display/List and credits. */
 				BS_BuyType();
@@ -621,15 +621,15 @@ static void BS_SellItem_f (void)
 			employee_t *employee;
 			/* The list entry is an actual ugv/robot */
 			ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
-			int ugvWeaponIdx;
+			objDef_t *ugvWeapon;
 
 			UP_UGVDescription(ugv);
 
 			/** @todo Storage/capacity checks for UGVs. */
 
 			/* Check if we have a weapon for this ugv in the market and there is enough storage-room for it. */
-			ugvWeaponIdx = INVSH_GetItemByID(ugv->weapon);
-			if (ugvWeaponIdx == NONE)
+			ugvWeapon = INVSH_GetItemByID(ugv->weapon);
+			if (!ugvWeapon)
 				Sys_Error("BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
 			employee = E_GetHiredRobot(baseCurrent, ugv);
@@ -637,10 +637,10 @@ static void BS_SellItem_f (void)
 				/** @todo: message - Couldn't fire employee. */
 				Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
 			} else {
-				if (baseCurrent->storage.num[ugvWeaponIdx]) {
+				if (baseCurrent->storage.num[ugvWeapon->idx]) {
 					/* If we have a weapon we sell it as well. */
-					B_UpdateStorageAndCapacity(baseCurrent, ugvWeaponIdx, -1, qfalse, qfalse);
-					ccs.eMarket.num[ugvWeaponIdx]++;
+					B_UpdateStorageAndCapacity(baseCurrent, ugvWeapon->idx, -1, qfalse, qfalse);
+					ccs.eMarket.num[ugvWeapon->idx]++;
 				}
 				BS_BuyType();
 				CL_UpdateCredits(ccs.credits + ugv->price);	/** @todo make this depend on market as well? */
@@ -1005,14 +1005,15 @@ qboolean BS_Save (sizebuf_t* sb, void* data)
  */
 qboolean BS_Load (sizebuf_t* sb, void* data)
 {
-	int i, j;
+	int i;
+	objDef_t *od;
 	const char *s;
 
 	/* read market */
 	for (i = 0; i < presaveArray[PRE_NUMODS]; i++) {
 		s = MSG_ReadString(sb);
-		j = INVSH_GetItemByID(s);
-		if (j == NONE || j >= MAX_OBJDEFS) {
+		od = INVSH_GetItemByID(s);
+		if (!od) {
 			Com_Printf("BS_Load: Could not find item '%s'\n", s);
 			MSG_ReadLong(sb);
 			MSG_ReadLong(sb);
@@ -1020,11 +1021,11 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
 			MSG_ReadFloat(sb);
 			MSG_ReadByte(sb);
 		} else {
-			ccs.eMarket.num[j] = MSG_ReadLong(sb);
-			ccs.eMarket.bid[j] = MSG_ReadLong(sb);
-			ccs.eMarket.ask[j] = MSG_ReadLong(sb);
-			ccs.eMarket.cumm_supp_diff[j] = MSG_ReadFloat(sb);
-			gd.autosell[j] = MSG_ReadByte(sb);
+			ccs.eMarket.num[od->idx] = MSG_ReadLong(sb);
+			ccs.eMarket.bid[od->idx] = MSG_ReadLong(sb);
+			ccs.eMarket.ask[od->idx] = MSG_ReadLong(sb);
+			ccs.eMarket.cumm_supp_diff[od->idx] = MSG_ReadFloat(sb);
+			gd.autosell[od->idx] = MSG_ReadByte(sb);
 		}
 	}
 

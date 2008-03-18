@@ -537,6 +537,7 @@ void RS_MarkResearchable (qboolean init)
 static void RS_AssignTechIdxs (requirements_t *req)
 {
 	int i;
+	const objDef_t *od;
 
 	for (i = 0; i < req->numLinks; i++) {
 		switch (req->type[i]) {
@@ -546,7 +547,8 @@ static void RS_AssignTechIdxs (requirements_t *req)
 			break;
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
-			req->idx[i] = INVSH_GetItemByID(req->id[i]);
+			od = INVSH_GetItemByID(req->id[i]);
+			req->idx[i] = od->idx;
 			if (req->idx[i] == NONE)
 				Sys_Error("RS_AssignTechIdxs: Could not get item definition for '%s'", req->id[i]);
 			break;

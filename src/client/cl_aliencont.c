@@ -169,7 +169,8 @@ void AL_CollectingAliens (aircraft_t *aircraft)
  */
 void AL_AddAliens (aircraft_t *aircraft)
 {
-	int i, j, k, albridx;
+	int i, j, k;
+	const objDef_t *alBrOd;
 	base_t *tobase;
 	const aliensTmp_t *cargo;
 	qboolean messageAlreadySet = qfalse;
@@ -189,8 +190,8 @@ void AL_AddAliens (aircraft_t *aircraft)
 	cargo = aircraft->aliencargo;
 
 	alienBreathing = RS_IsResearched_ptr(RS_GetTechByID("rs_alien_breathing"));
-	albridx = INVSH_GetItemByID("brapparatus");
-	if (albridx == NONE)
+	alBrOd = INVSH_GetItemByID("brapparatus");
+	if (!alBrOd)
 		Sys_Error("AL_AddAliens: Could not get brapparatus item definition");
 
 	for (i = 0; i < aircraft->alientypes; i++) {
@@ -200,14 +201,14 @@ void AL_AddAliens (aircraft_t *aircraft)
 			if (tobase->alienscont[j].teamDef == cargo[i].teamDef) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
 				/* Add breathing apparatuses as well and update storage capacity. */
-				B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_dead, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(tobase, alBrOd->idx, cargo[i].amount_dead, qfalse, qfalse);
 				if (cargo[i].amount_alive <= 0)
 					continue;
 				if (!alienBreathing && !cargo[i].teamDef->robot) {
 					/* We can not store alive (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
 					/* Add breathing apparatuses as well and update storage capacity. */
-					B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_alive, qfalse, qfalse);
+					B_UpdateStorageAndCapacity(tobase, alBrOd->idx, cargo[i].amount_alive, qfalse, qfalse);
 					/* only once */
 					if (!messageAlreadySet) {
 						MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens died."), qfalse, MSG_STANDARD, NULL);
@@ -229,7 +230,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							/* Just kill aliens which don't fit the limit. */
 							tobase->alienscont[j].amount_dead++;
 							/* Add breathing apparatus as well and update storage capacity. */
-							B_UpdateStorageAndCapacity(tobase, albridx, 1, qfalse, qfalse);
+							B_UpdateStorageAndCapacity(tobase, alBrOd->idx, 1, qfalse, qfalse);
 						}
 					}
 					/* only once */

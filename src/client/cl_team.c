@@ -103,12 +103,12 @@ const char* CL_GetTeamSkinName (int id)
  */
 static void CL_SaveItem (sizebuf_t *buf, item_t item, int container, int x, int y)
 {
-	assert(item.t != NONE);
+	assert(item.t);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
 	MSG_WriteFormat(buf, "bbbbbl", item.a, container, x, y, item.rotated, item.amount);
-	MSG_WriteString(buf, csi.ods[item.t].id);
+	MSG_WriteString(buf, item.t->id);
 	if (item.a > NONE_AMMO)
-		MSG_WriteString(buf, csi.ods[item.m].id);
+		MSG_WriteString(buf, item.m->id);
 }
 
 /**
@@ -139,7 +139,7 @@ static void CL_LoadItem (sizebuf_t *buf, item_t *item, int *container, int *x, i
 	const char *itemID;
 
 	/* reset */
-	item->t = item->m = NONE;
+	item->t = item->m = NULL;
 	item->a = NONE_AMMO;
 
 	MSG_ReadFormat(buf, "bbbbbl", &item->a, container, x, y, &item->rotated, &item->amount);
@@ -178,10 +178,11 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
  */
 static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y)
 {
-	assert(item.t != NONE);
+	int ammoIdx = item.m ? item.m->idx : NONE;
+	assert(item.t);
 	Com_DPrintf(DEBUG_CLIENT, "CL_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
-		csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);
-	NET_WriteFormat(buf, ev_format[EV_INV_TRANSFER], item.t, item.a, item.m, container, x, y, item.rotated);
+		item.t->id, container, item.t->idx, item.a, ammoIdx, x, y);
+	NET_WriteFormat(buf, ev_format[EV_INV_TRANSFER], item.t->idx, item.a, ammoIdx, container, x, y, item.rotated);
 }
 
 /**
@@ -211,10 +212,16 @@ static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i)
 void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *x, int *y)
 {
 	/* reset */
-	item->t = item->m = NONE;
+	int t, m;
+	item->t = item->m = NULL;
 	item->a = NONE_AMMO;
+	NET_ReadFormat(buf, ev_format[EV_INV_TRANSFER], &t, &item->a, &m, container, x, y, &item->rotated);
 
-	NET_ReadFormat(buf, ev_format[EV_INV_TRANSFER], &item->t, &item->a, &item->m, container, x, y, &item->rotated);
+	if (t != NONE)
+		item->t = &csi.ods[t];
+
+	if (m != NONE)
+		item->m = &csi.ods[m];
 }
 
 /**
@@ -590,18 +597,18 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 				ic = chr->inv->c[container];
 				while (ic) {
 					const item_t item = ic->item;
-					const int type = item.t;
+					const objDef_t *type = item.t;
 
 					next = ic->next;
-					ed->num[type]++;
+					ed->num[type->idx]++;
 					if (item.a) {
-						assert(csi.ods[type].reload);
-						assert(item.m != NONE);
-						ed->num_loose[item.m] += item.a;
+						assert(type->reload);
+						assert(item.m);
+						ed->num_loose[item.m->idx] += item.a;
 						/* Accumulate loose ammo into clips */
-						if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
-							ed->num_loose[item.m] -= csi.ods[type].ammo;
-							ed->num[item.m]++;
+						if (ed->num_loose[item.m->idx] >= type->ammo) {
+							ed->num_loose[item.m->idx] -= type->ammo;
+							ed->num[item.m->idx]++;
 						}
 					}
 					ic = next;
@@ -617,36 +624,36 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
 	int i;
-	const int type = item.t;	/* 'type' equals idx in "&csi.ods[idx]" */
+	objDef_t *type = item.t;
 
-	assert(ed->num[type] > 0);
-	ed->num[type]--;
+	assert(ed->num[type->idx] > 0);
+	ed->num[type->idx]--;
 
-	if (csi.ods[type].weapIdx[0] != NONE) {
+	if (type->weapons[0]) {
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
-		if (csi.ods[type].oneshot) {
+		if (type->oneshot) {
 			/* "Recharge" the oneshot weapon. */
-			item.a = csi.ods[type].ammo;
+			item.a = type->ammo;
 			item.m = item.t; /* Just in case this hasn't been done yet. */
-			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", csi.ods[type].id);
+			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
 			return item;
 		} else {
 			/* No change, nothing needs to be done to this item. */
 			return item;
 		}
-	} else if (!csi.ods[type].reload) {
+	} else if (!type->reload) {
 		/* The given item is a weapon but no ammo is needed,
 		 * so fire definitions are in t (the weapon). Setting equal. */
 		item.m = item.t;
 		return item;
 	} else if (item.a) {
-		assert(item.m != NONE);
+		assert(item.m);
 		/* The item is a weapon and it was reloaded one time. */
-		if (item.a == csi.ods[type].ammo) {
+		if (item.a == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			assert(item.m != NONE);	/* @todo: Isn't this redundant here? */
-			if (ed->num[item.m] > 0) {
-				ed->num[item.m]--;
+			assert(item.m);	/* @todo: Isn't this redundant here? */
+			if (ed->num[item.m->idx] > 0) {
+				ed->num[item.m->idx]--;
 				return item;
 			} else {
 				/* Your clip has been sold; give it back. */
@@ -657,9 +664,9 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	}
 
 	/* Check for complete clips of the same kind */
-	if (item.m != NONE && ed->num[item.m] > 0) {
-		ed->num[item.m]--;
-		item.a = csi.ods[type].ammo;
+	if (item.m && ed->num[item.m->idx] > 0) {
+		ed->num[item.m->idx]--;
+		item.a = type->ammo;
 		return item;
 	}
 
@@ -668,8 +675,8 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		if (INVSH_LoadableInWeapon(&csi.ods[i], type)) {
 			if (ed->num[i] > 0) {
 				ed->num[i]--;
-				item.a = csi.ods[type].ammo;
-				item.m = i;
+				item.a = type->ammo;
+				item.m = &csi.ods[i];
 				return item;
 			}
 		}
@@ -683,9 +690,9 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 	/* Failed to find a complete clip - see if there's any loose ammo
 	 * of the same kind; if so, gather it all in this weapon. */
-	if (item.m != NONE && ed->num_loose[item.m] > 0) {
-		item.a = ed->num_loose[item.m];
-		ed->num_loose[item.m] = 0;
+	if (item.m && ed->num_loose[item.m->idx] > 0) {
+		item.a = ed->num_loose[item.m->idx];
+		ed->num_loose[item.m->idx] = 0;
 		return item;
 	}
 
@@ -699,15 +706,15 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 				 * loose ammo of a different (but appropriate) type with
 				 * more bullets.  Put the previously found ammo back, so
 				 * we'll take the new type. */
-				assert(item.m != NONE);
-				ed->num_loose[item.m] = item.a;
+				assert(item.m);
+				ed->num_loose[item.m->idx] = item.a;
 				/* We don't have to accumulate loose ammo into clips
 				   because we did it previously and we create no new ammo */
 			}
 			/* Found some loose ammo to load the weapon with */
 			item.a = ed->num_loose[i];
 			ed->num_loose[i] = 0;
-			item.m = i;
+			item.m = &csi.ods[i];
 		}
 	}
 	return item;
@@ -749,7 +756,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 				assert(cp);
 				for (ic = cp->inv->c[container]; ic; ic = next) {
 					next = ic->next;
-					if (ed->num[ic->item.t] > 0) {
+					if (ed->num[ic->item.t->idx] > 0) {
 						ic->item = CL_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */
@@ -880,7 +887,7 @@ static void CL_GenerateEquipment_f (void)
 			continue;
 
 		while (unused.num[i]) {
-			const item_t item = {NONE_AMMO, NONE, i, 0, 0};
+			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
 
 			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
 			 * Otherwise just use the container-buytype of the item.
@@ -928,7 +935,7 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: container:%i\n", container);
 	ic = inv->c[container];
 	while (ic) {
-		if (csi.ods[ic->item.t].buytype == BUY_MULTI_AMMO) {
+		if (ic->item.t->buytype == BUY_MULTI_AMMO) {
 			ic_temp = ic->next;
 			Com_MoveInInventoryIgnore(inv, container, ic->x, ic->y, buytype_container, NONE, NONE, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
 			ic = ic_temp;
@@ -1712,6 +1719,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	aircraft_t *aircraft;
 	int i, p, num;
 	base_t *base;
+	objDef_t *od;
 
 	/* open file */
 	f = fopen(filename, "rb");
@@ -1776,7 +1784,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	/* read equipment */
 	p = MSG_ReadShort(&sb);
 	for (i = 0; i < p; i++) {
-		num = INVSH_GetItemByID(MSG_ReadString(&sb));
+		od = INVSH_GetItemByID(MSG_ReadString(&sb));
 		if (num == -1) {
 			MSG_ReadLong(&sb);
 			MSG_ReadByte(&sb);

@@ -34,15 +34,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa INV_ParseComponents
  */
 typedef struct components_s {
-	char assembly_id[MAX_VAR];	/**< The name of the assemly (i.e. the UFO) */
-	int assembly_idx;			/**< Index of object in csi.ods. */
+	char asId[MAX_VAR];	/**< The name of the assemly (i.e. the UFO) */
+	objDef_t *asItem;	/**< Index of object (that is an assembly) in csi.ods.*/
 
 	int time;	/**< The time (in hours) until the disassembly is finished. */
 
-	int numItemtypes;					/**< Number of item-types listed below. (max is MAX_COMP) */
-	char item_id[MAX_COMP][MAX_VAR];	/**< id of the item (in ods[]). */
-/**	int item_idx[MAX_COMP];			< @todo index of item in ods[] array */
-	int item_amount[MAX_COMP];			/**< How many items of this type are in this assembly. */
+	int numItemtypes;				/**< Number of item-types listed below. (max is MAX_COMP) */
+	objDef_t *items[MAX_COMP];		/**< List of parts (item-types). */
+	int item_amount[MAX_COMP];		/**< How many items of this type are in this assembly. */
 	int item_amount2[MAX_COMP];		/**< How many items of this type are in this assembly when it crashed (max-value?). */
 } components_t;
 

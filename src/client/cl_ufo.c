@@ -818,7 +818,7 @@ void UFO_PrepareRecovery (base_t *base)
  */
 void UFO_Recovery (void)
 {
-	int i, item;
+	int i;
 	objDef_t *od;
 	base_t *base;
 	aircraft_t *ufocraft;
@@ -840,13 +840,12 @@ void UFO_Recovery (void)
 			assert(ufocraft);
 			/* Get item. */
 			/* We can do this because aircraft id is the same as dummy item id. */
-			item = INVSH_GetItemByID(ufocraft->id);
-			assert(item != NONE);
-			od = &csi.ods[item];
+			od = INVSH_GetItemByID(ufocraft->id);
 			assert(od);
+
 			/* Process UFO recovery. */
 			/* don't call B_UpdateStorageAndCapacity here - it's a dummy item */
-			base->storage.num[item]++;	/* Add dummy UFO item to enable research topic. */
+			base->storage.num[od->idx]++;	/* Add dummy UFO item to enable research topic. */
 			RS_MarkCollected(od->tech);	/* Enable research topic. */
 			/* Reset this recovery. */
 			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));

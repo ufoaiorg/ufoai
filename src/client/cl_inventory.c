@@ -48,21 +48,21 @@ static void INV_CollectingAmmo (const invList_t *magazine, aircraft_t *aircraft)
 	cargo = aircraft->itemcargo;
 
 	/* Let's add remaining ammo to market. */
-	eTempEq.num_loose[magazine->item.m] += magazine->item.a;
-	if (eTempEq.num_loose[magazine->item.m] >= csi.ods[magazine->item.t].ammo) {
+	eTempEq.num_loose[magazine->item.m->idx] += magazine->item.a;
+	if (eTempEq.num_loose[magazine->item.m->idx] >= magazine->item.t->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.num_loose[magazine->item.m] -= csi.ods[magazine->item.t].ammo;
+		eTempEq.num_loose[magazine->item.m->idx] -= magazine->item.t->ammo;
 		for (i = 0; i < aircraft->itemtypes; i++) {
-			if (cargo[i].idx == magazine->item.m) {
+			if (cargo[i].idx == magazine->item.m->idx) {
 				cargo[i].amount++;
-				Com_DPrintf(DEBUG_CLIENT, "Collecting item in INV_CollectingAmmo(): %i name: %s amount: %i\n", cargo[i].idx, csi.ods[magazine->item.m].name, cargo[i].amount);
+				Com_DPrintf(DEBUG_CLIENT, "Collecting item in INV_CollectingAmmo(): %i name: %s amount: %i\n", cargo[i].idx, magazine->item.m->name, cargo[i].amount);
 				break;
 			}
 		}
 		if (i == aircraft->itemtypes) {
-			cargo[i].idx = magazine->item.m;
+			cargo[i].idx = magazine->item.m->idx;
 			cargo[i].amount++;
-			Com_DPrintf(DEBUG_CLIENT, "Adding item in INV_CollectingAmmo(): %i, name: %s\n", cargo[i].idx, csi.ods[magazine->item.m].name);
+			Com_DPrintf(DEBUG_CLIENT, "Adding item in INV_CollectingAmmo(): %i, name: %s\n", cargo[i].idx, magazine->item.m->name);
 			aircraft->itemtypes++;
 		}
 	}
@@ -84,23 +84,23 @@ static void INV_CarriedItems (const le_t *soldier)
 			continue;
 		for (item = soldier->i.c[container]; item; item = item->next) {
 			/* Fake item. */
-			assert(item->item.t != NONE);
+			assert(item->item.t);
 			/* Twohanded weapons and container is left hand container. */
 			/* FIXME: */
 			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdTwoHanded); */
 
-			ccs.eMission.num[item->item.t]++;
-			tech = csi.ods[item->item.t].tech;
+			ccs.eMission.num[item->item.t->idx]++;
+			tech = item->item.t->tech;
 			if (!tech)
-				Sys_Error("INV_CarriedItems: No tech for %s / %s\n", csi.ods[item->item.t].id, csi.ods[item->item.t].name);
+				Sys_Error("INV_CarriedItems: No tech for %s / %s\n", item->item.t->id, item->item.t->name);
 			RS_MarkCollected(tech);
 
-			if (!csi.ods[item->item.t].reload || item->item.a == 0)
+			if (!item->item.t->reload || item->item.a == 0)
 				continue;
-			ccs.eMission.num_loose[item->item.m] += item->item.a;
-			if (ccs.eMission.num_loose[item->item.m] >= csi.ods[item->item.t].ammo) {
-				ccs.eMission.num_loose[item->item.m] -= csi.ods[item->item.t].ammo;
-				ccs.eMission.num[item->item.m]++;
+			ccs.eMission.num_loose[item->item.m->idx] += item->item.a;
+			if (ccs.eMission.num_loose[item->item.m->idx] >= item->item.t->ammo) {
+				ccs.eMission.num_loose[item->item.m->idx] -= item->item.t->ammo;
+				ccs.eMission.num[item->item.m->idx]++;
 			}
 			/* The guys keep their weapons (half-)loaded. Auto-reload
 			 * will happen at equip screen or at the start of next mission,
@@ -153,11 +153,11 @@ void INV_CollectingItems (int won)
 			if (won) {
 				for (item = FLOOR(le); item; item = item->next) {
 					for (j = 0; j < aircraft->itemtypes; j++) {
-						if (cargo[j].idx == item->item.t) {
+						if (cargo[j].idx == item->item.t->idx) {
 							cargo[j].amount++;
-							Com_DPrintf(DEBUG_CLIENT, "Collecting item: %i name: %s amount: %i\n", cargo[j].idx, csi.ods[item->item.t].name, cargo[j].amount);
+							Com_DPrintf(DEBUG_CLIENT, "Collecting item: %i name: %s amount: %i\n", cargo[j].idx, item->item.t->name, cargo[j].amount);
 							/* If this is not reloadable item, or no ammo left, break... */
-							if (!csi.ods[item->item.t].reload || item->item.a == 0)
+							if (!item->item.t->reload || item->item.a == 0)
 								break;
 							/* ...otherwise collect ammo as well. */
 							INV_CollectingAmmo(item, aircraft);
@@ -165,12 +165,12 @@ void INV_CollectingItems (int won)
 						}
 					}
 					if (j == aircraft->itemtypes) {
-						cargo[j].idx = item->item.t;
+						cargo[j].idx = item->item.t->idx;
 						cargo[j].amount++;
-						Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].idx, csi.ods[item->item.t].name);
+						Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].idx, item->item.t->name);
 						aircraft->itemtypes++;
 						/* If this is not reloadable item, or no ammo left, break... */
-						if (!csi.ods[item->item.t].reload || item->item.a == 0)
+						if (!item->item.t->reload || item->item.a == 0)
 							continue;
 						/* ...otherwise collect ammo as well. */
 						INV_CollectingAmmo(item, aircraft);
@@ -187,16 +187,16 @@ void INV_CollectingItems (int won)
 					if (le->i.c[csi.idArmour]) {
 						item = le->i.c[csi.idArmour];
 						for (j = 0; j < aircraft->itemtypes; j++) {
-							if (cargo[j].idx == item->item.t) {
+							if (cargo[j].idx == item->item.t->idx) {
 								cargo[j].amount++;
-								Com_DPrintf(DEBUG_CLIENT, "Collecting armour: %i name: %s amount: %i\n", cargo[j].idx, csi.ods[item->item.t].name, cargo[j].amount);
+								Com_DPrintf(DEBUG_CLIENT, "Collecting armour: %i name: %s amount: %i\n", cargo[j].idx, item->item.t->name, cargo[j].amount);
 								break;
 							}
 						}
 						if (j == aircraft->itemtypes) {
-							cargo[j].idx = item->item.t;
+							cargo[j].idx = item->item.t->idx;
 							cargo[j].amount++;
-							Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].idx, csi.ods[item->item.t].name);
+							Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].idx, item->item.t->name);
 							aircraft->itemtypes++;
 						}
 					}
@@ -325,7 +325,7 @@ void INV_EnableAutosell (const technology_t *tech)
 	if ((tech->type == RS_WEAPON) && (csi.ods[i].reload)) {
 		for (j = 0; j < csi.numODs; j++) {
 			/* Find all suitable ammos for this weapon. */
-			if (INVSH_LoadableInWeapon(&csi.ods[j], i)) {
+			if (INVSH_LoadableInWeapon(&csi.ods[j], &csi.ods[i])) {
 				ammotech = RS_GetTechByProvided(csi.ods[j].id);
 				/* If the ammo is not producible, don't enable autosell. */
 				if (ammotech && (ammotech->produceTime < 0))
@@ -396,7 +396,6 @@ void INV_InitialEquipment (base_t *base, const campaign_t* campaign)
  */
 void INV_ParseComponents (const char *name, const char **text)
 {
-	int i;
 	objDef_t *od;
 	components_t *comp;
 	const char *errhead = "INV_ParseComponents: unexpected end of file.";
@@ -420,14 +419,9 @@ void INV_ParseComponents (const char *name, const char **text)
 	memset(comp, 0, sizeof(components_t));
 
 	/* set standard values */
-	Q_strncpyz(comp->assembly_id, name, sizeof(comp->assembly_id));
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		if (!Q_strncmp(od->id, name, MAX_VAR)) {
-			comp->assembly_idx = i;
-			Com_DPrintf(DEBUG_CLIENT, "INV_ParseComponents()... linked item: %s idx %i with components: %s idx %i \n", od->id, i, comp->assembly_id, comp->assembly_idx);
-			break;
-		}
-	}
+	Q_strncpyz(comp->asId, name, sizeof(comp->asId));
+	comp->asItem = INVSH_GetItemByID(comp->asId);
+	Com_DPrintf(DEBUG_CLIENT, "INV_ParseComponents()... linked item: %s with components: %s\n", od->id, comp->asId);
 
 	do {
 		/* get the name type */
@@ -443,7 +437,8 @@ void INV_ParseComponents (const char *name, const char **text)
 			if (comp->numItemtypes < MAX_COMP) {
 				/* Parse item name */
 				token = COM_Parse(text);
-				Q_strncpyz(comp->item_id[comp->numItemtypes], token, sizeof(comp->item_id[comp->numItemtypes]));
+
+				comp->items[comp->numItemtypes] = INVSH_GetItemByID(token);	/* item id -> item pointer */
 
 				/* Parse number of items. */
 				token = COM_Parse(text);
@@ -480,10 +475,10 @@ components_t *INV_GetComponentsByItemIdx (int itemIdx)
 
 	for (i = 0; i < gd.numComponents; i++) {
 		comp = &gd.components[i];
-		if (comp->assembly_idx == itemIdx)
+		if (comp->asItem == &csi.ods[itemIdx])
 			break;
 	}
-	Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItemIdx()... found components id: %s\n", comp->assembly_id);
+	Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItemIdx()... found components id: %s\n", comp->asId);
 	return comp;
 }
 
@@ -497,26 +492,23 @@ components_t *INV_GetComponentsByItemIdx (int itemIdx)
 int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 {
 	int i, j, size = 0;
-	objDef_t *compod;
+	objDef_t *compOd;
 
 	assert(comp);
 	if (!calculate && !base)	/* We need base only if this is real disassembling. */
 		Sys_Error("INV_DisassemblyItem: No base given");
 
 	for (i = 0; i < comp->numItemtypes; i++) {
-		for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
-			if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
-				break;
-		}
-		assert(compod);
-		size += compod->size * comp->item_amount[i];
+		compOd = comp->items[i];
+		assert(compOd);
+		size += compOd->size * comp->item_amount[i];
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
-			if (!Q_strncmp(compod->id, "antimatter", 10))
+			if (!Q_strncmp(compOd->id, "antimatter", 10))
 				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
 				B_UpdateStorageAndCapacity(base, j, comp->item_amount[i], qfalse, qfalse);
-			Com_DPrintf(DEBUG_CLIENT, "INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compod->id);
+			Com_DPrintf(DEBUG_CLIENT, "INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compOd->id);
 		}
 	}
 	return size;
@@ -627,7 +619,7 @@ void INV_InventoryList_f (void)
 	int i;
 
 	for (i = 0; i < csi.numODs; i++)
-		INVSH_PrintItemDescription(i);
+		INVSH_PrintItemDescription(&csi.ods[i]);
 }
 #endif
 
@@ -668,7 +660,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 
 		i = Com_SearchInInventory(inv, fromContainer, fromX, fromY);
 		if (i) {
-			et = csi.ods[i->item.t].buytype;
+			et = i->item.t->buytype;
 			if (et == BUY_MULTI_AMMO) {
 				et = (base->equipType == BUY_WEAP_SEC)
 					? BUY_WEAP_SEC
@@ -700,8 +692,8 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 		if (fromContainer == csi.idEquip) {
 			/* Check buytype of first (last added) item */
 			if (!BUYTYPE_MATCH(et, base->equipType)) {
-				item_t item_temp = {NONE_AMMO, NONE, inv->c[csi.idEquip]->item.t, 0, 0};
-				et = csi.ods[inv->c[csi.idEquip]->item.t].buytype;
+				item_t item_temp = {NONE_AMMO, NULL, inv->c[csi.idEquip]->item.t, 0, 0};
+				et = inv->c[csi.idEquip]->item.t->buytype;
 				if (BUY_PRI(et)) {
 					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);
 					Com_TryAddToBuyType(&base->equipByBuyType, item_temp, BUY_WEAP_PRI, 1);

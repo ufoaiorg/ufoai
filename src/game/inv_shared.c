@@ -34,7 +34,7 @@ INVENTORY MANAGEMENT FUNCTIONS
 
 static csi_t *CSI;
 static invList_t *invUnused;
-static item_t cacheItem = {NONE_AMMO, NONE, NONE, 0, 0}; /* to crash as soon as possible */
+static item_t cacheItem = {NONE_AMMO, NULL, NULL, 0, 0}; /* to crash as soon as possible */
 
 /**
  * @brief Initializes csi_t *CSI pointer.
@@ -49,22 +49,22 @@ void INVSH_InitCSI (csi_t * import)
 
 /**
  * @brief Get the fire defintion for a given object
- * @param[in] objIdx The object index to get the firedef for
+ * @param[in] obj The object to get the firedef for
  * @param[in] weapFdsIdx
  * @param[in] fdIdx
  * @return Will never return NULL
  */
-inline fireDef_t* FIRESH_GetFiredef (int objIdx, int weapFdsIdx, int fdIdx)
+inline fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, int weapFdsIdx, int fdIdx)
 {
 #ifdef DEBUG
-	if (objIdx == NONE || objIdx >= MAX_OBJDEFS) \
-		Sys_Error("FIRESH_GetFiredef: objIdx out of bounds [%i]\n", objIdx);
+	if (!obj) \
+		Sys_Error("FIRESH_GetFiredef: no obj given.\n");
 	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
 		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i]\n", weapFdsIdx);
 	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
 		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i]\n", fdIdx);
 #endif
-	return (&CSI->ods[objIdx & (MAX_OBJDEFS-1)].fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF-1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON-1)]);
+	return (fireDef_t*)&obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF-1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON-1)];
 }
 
 /**
@@ -127,7 +127,7 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const int co
 		/* add other items to mask */
 		for (ic = i->c[container]; ic; ic = ic->next)
 			for (j = 0; j < SHAPE_SMALL_MAX_HEIGHT && ic->y + j < SHAPE_BIG_MAX_HEIGHT; j++)
-				mask[ic->y + j] |= ((CSI->ods[ic->item.t].shape >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << ic->x;
+				mask[ic->y + j] |= ((ic->item.t->shape >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << ic->x;
 	}
 
 	/* test for collisions with newly generated mask */
@@ -172,7 +172,7 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 
 	/* left hand is busy if right wields twohanded */
 	if (container == CSI->idLeft) {
-		if (i->c[CSI->idRight] && CSI->ods[i->c[CSI->idRight]->item.t].holdTwoHanded)
+		if (i->c[CSI->idRight] && i->c[CSI->idRight]->item.t->holdTwoHanded)
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
@@ -237,7 +237,7 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int
 	for (ic = i->c[container]; ic; ic = ic->next)
 		if (x >= ic->x && y >= ic->y
 		&& x < ic->x + SHAPE_SMALL_MAX_WIDTH && y < ic->y + SHAPE_SMALL_MAX_HEIGHT
-		&& ((CSI->ods[ic->item.t].shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+		&& ((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
 			return ic;
 
 	/* found nothing */
@@ -261,7 +261,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 {
 	invList_t *ic;
 
-	if (item.t == NONE)
+	if (!item.t)
 		return NULL;
 
 	if (!invUnused)
@@ -307,7 +307,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 			if (Com_CompareItem(&ic->item, &item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "Com_AddToInventory: Amount of '%s': %i\n",
-					CSI->ods[ic->item.t].name, ic->item.amount);
+					ic->item.t->name, ic->item.amount);
 				return ic;
 			}
 	}
@@ -328,7 +328,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 
 	/* Set point ic to the new "first item" (i.e. the yet empty entry). */
 	ic = i->c[container];
-/*	Com_Printf("Add to container %i: %s\n", container, CSI->ods[item.t].id);*/
+/*	Com_Printf("Add to container %i: %s\n", container, item.t->id);*/
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = item;
@@ -393,7 +393,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 		if (CSI->ids[container].temp && ic->item.amount > 1) {
 			ic->item.amount--;
 			Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
-				CSI->ods[ic->item.t].name, ic->item.amount);
+				ic->item.t->name, ic->item.amount);
 			return qtrue;
 		}
 		/* an item in other containers as idFloor and idEquip should always
@@ -417,7 +417,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 			if (!ignore_type && ic->item.amount > 1 && CSI->ids[container].temp) {
 				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
-					CSI->ods[ic->item.t].name, ic->item.amount);
+					ic->item.t->name, ic->item.amount);
 				return qtrue;
 			}
 			oldUnused = invUnused;
@@ -513,7 +513,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		for (; ic; ic = ic->next) {
 			if (ic->x == fx && ic->y == fy) {
 				if (ic->item.amount > 1) {
-					checkedTo = Com_CheckToInventory(i, ic->item.t, to, tx, ty);
+					checkedTo = Com_CheckToInventory(i, ic->item.t->idx, to, tx, ty);
 					if (checkedTo == INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
@@ -528,10 +528,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	if (!Com_RemoveFromInventoryIgnore(i, from, fx, fy, ignore_type))
 		return IA_NONE;
 
-	if (cacheItem.t == NONE)
+	if (!cacheItem.t)
 		return IA_NONE;
-
-	assert(cacheItem.t < MAX_OBJDEFS);
 
 	/* We are in base-equip screen (multi-ammo workaround) and can skip a lot of checks. */
 	if (ignore_type) {
@@ -544,7 +542,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */
-	if (CSI->ods[cacheItem.t].fireTwoHanded && to == CSI->idLeft && from == CSI->idRight) {
+	if (cacheItem.t->fireTwoHanded && to == CSI->idLeft && from == CSI->idRight) {
 		Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 		return IA_NONE;
 	}
@@ -552,18 +550,18 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	/* if non-armour moved to an armour slot then
 	 * move item back to source location and break
 	 * same for non extension items when moved to an extension slot */
-	if ((CSI->ids[to].armour && Q_strcmp(CSI->ods[cacheItem.t].type, "armour"))
-	 || (CSI->ids[to].extension && !CSI->ods[cacheItem.t].extension)
-	 || (CSI->ids[to].headgear && !CSI->ods[cacheItem.t].headgear)) {
+	if ((CSI->ids[to].armour && Q_strcmp(cacheItem.t->type, "armour"))
+	 || (CSI->ids[to].extension && !cacheItem.t->extension)
+	 || (CSI->ids[to].headgear && !cacheItem.t->headgear)) {
 		Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 		return IA_NONE;
 	}
 
 	/* check if the target is a blocked inv-armour and source!=dest */
 	if (CSI->ids[to].single)
-		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, 0, 0);
+		checkedTo = Com_CheckToInventory(i, cacheItem.t->idx, to, 0, 0);
 	else
-		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, tx, ty);
+		checkedTo = Com_CheckToInventory(i, cacheItem.t->idx, to, tx, ty);
 
 	if (CSI->ids[to].armour && from != to && !checkedTo) {
 		item_t cacheItem2;
@@ -578,29 +576,29 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	} else if (!checkedTo) {
 		ic = Com_SearchInInventory(i, to, tx, ty);	/* Get the target-invlist (e.g. a weapon) */
 
-		if (ic && INVSH_LoadableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
+		if (ic && INVSH_LoadableInWeapon(cacheItem.t, ic->item.t)) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
 
 			/** @todo (or do this in two places in cl_menu.c):
-			if (!RS_ItemIsResearched(CSI->ods[ic->item.t].id)
-				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].id)) {
+			if (!RS_ItemIsResearched(ic->item.t->id)
+				 || !RS_ItemIsResearched(cacheItem.t->id)) {
 				return IA_NORELOAD;
 			} */
-			if (ic->item.a >= CSI->ods[ic->item.t].ammo
+			if (ic->item.a >= ic->item.t->ammo
 				&& ic->item.m == cacheItem.t) {
 				/* Weapon already fully loaded with the same ammunition.
 				 * => back to source location. */
 				Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 				return IA_NORELOAD;
 			}
-			time += CSI->ods[ic->item.t].reload;
+			time += ic->item.t->reload;
 			if (!TU || *TU >= time) {
 				if (TU)
 					*TU -= time;
-				if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
+				if (ic->item.a >= ic->item.t->ammo) {
 					/* exchange ammo */
-					item_t item = {NONE_AMMO, NONE, ic->item.m, 0, 0};
+					item_t item = {NONE_AMMO, NULL, ic->item.m, 0, 0};
 
 					/* Add the currently used ammo in a free place of the "from" container. */
 					/**
@@ -619,7 +617,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 				} else {
 					ic->item.m = cacheItem.t;
 					/* loose ammo of type ic->item.m saved on server side */
-					ic->item.a = CSI->ods[ic->item.t].ammo;
+					ic->item.a = ic->item.t->ammo;
 					if (icp)
 						*icp = ic;
 					return IA_RELOAD;
@@ -648,14 +646,14 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
-	if (CSI->ods[cacheItem.t].fireTwoHanded && to == CSI->idLeft) {
+	if (cacheItem.t->fireTwoHanded && to == CSI->idLeft) {
 #ifdef DEBUG
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory - don't move the item to CSI->idLeft it's fireTwoHanded\n");
 #endif
 		to = CSI->idRight;
 	}
 #ifdef PARANOID
-	else if (CSI->ods[cacheItem.t].fireTwoHanded)
+	else if (cacheItem.t->fireTwoHanded)
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: move fireTwoHanded item to container: %s\n", CSI->ids[to].name);
 #endif
 
@@ -685,7 +683,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		*icp = ic;
 
 	if (to == CSI->idArmour) {
-		assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armour"));
+		assert(!Q_strcmp(cacheItem.t->type, "armour"));
 		return IA_ARMOUR;
 	} else
 		return IA_MOVE;
@@ -769,12 +767,12 @@ void Com_FindSpace (const inventory_t* const inv, item_t *item, const int contai
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			checkedTo = Com_CheckToInventory(inv, item->t, container, x, y);
+			checkedTo = Com_CheckToInventory(inv, item->t->idx, container, x, y);
 			if (checkedTo) {
 				if (checkedTo == INV_FITS_ONLY_ROTATED) {
 					/* Set rotated tag */
 					/** @todo remove this again when moving out of a container. */
-					Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: setting rotate tag (%s: %s in %s)\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);
+					Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: setting rotate tag (%s: %s in %s)\n", item->t->type, item->t->id, CSI->ids[container].name);
 					item->rotated = 1;
 				}
 				cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
@@ -862,11 +860,11 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
 		ic = i->c[container];
 		Com_Printf("Container: %i\n", container);
 		while (ic) {
-			Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n", ic->item.t, ic->item.m, ic->item.a, ic->x, ic->y);
-			if (ic->item.t != NONE)
-				Com_Printf(".... weapon: %s\n", CSI->ods[ic->item.t].id);
-			if (ic->item.m != NONE)
-				Com_Printf(".... ammo:   %s (%i)\n", CSI->ods[ic->item.m].id, ic->item.a);
+			Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n", (ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE), ic->item.a, ic->x, ic->y);
+			if (ic->item.t)
+				Com_Printf(".... weapon: %s\n", ic->item.t->id);
+			if (ic->item.m)
+				Com_Printf(".... ammo:   %s (%i)\n", ic->item.m->id, ic->item.a);
 			ic = ic->next;
 		}
 	}
@@ -885,12 +883,12 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
  * @param[in] missed_primary
  * @sa INVSH_LoadableInWeapon
  */
-static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
+static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const objDef_t* weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
-	int ammo = NONE; /* this variable is never used before being set */
-	item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
+	const objDef_t *ammo;
+	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 	int i, max_price, prev_price;
-	objDef_t obj;
+	objDef_t *obj;
 	qboolean allowLeft;
 	qboolean packed;
 	int ammoMult = 1;
@@ -901,20 +899,20 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 	}
 #endif
 
-	assert(Q_strcmp(CSI->ods[weapon].type, "armour"));
-	item.t = weapon;
+	assert(Q_strcmp(weapon->type, "armour"));
+	item.t = (objDef_t *)weapon;
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->c[CSI->idRight] && CSI->ods[inv->c[CSI->idRight]->item.t].fireTwoHanded);
+	allowLeft = !(inv->c[CSI->idRight] && inv->c[CSI->idRight]->item.t->fireTwoHanded);
 
-	if (!CSI->ods[weapon].reload) {
+	if (!weapon->reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
 	} else {
-		if (CSI->ods[weapon].oneshot) {
+		if (weapon->oneshot) {
 			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
-			item.a = CSI->ods[weapon].ammo;
-			item.m = weapon;
-			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+			item.a = weapon->ammo;
+			item.m = (objDef_t *)weapon;
+			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, name);
 		} else {
 			max_price = 0;
 			/* find some suitable ammo for the weapon */
@@ -922,22 +920,22 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 				if (equip[i]
 				&& INVSH_LoadableInWeapon(&CSI->ods[i], weapon)
 				&& (CSI->ods[i].price > max_price) ) {
-					ammo = i;
+					ammo = &CSI->ods[i];
 					max_price = CSI->ods[i].price;
 				}
 
-			if (ammo < 0) {
-				Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+			if (!ammo) {
+				Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, name);
 				return 0;
 			}
 			/* load ammo */
-			item.a = CSI->ods[weapon].ammo;
-			item.m = ammo;
+			item.a = weapon->ammo;
+			item.m = (objDef_t *)ammo;
 		}
 	}
 
-	if (item.m == NONE) {
-		Com_Printf("INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+	if (!item.m) {
+		Com_Printf("INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, name);
 		return 0;
 	}
 
@@ -960,11 +958,11 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 		prev_price = max_price;
 		max_price = 0;
 		for (i = 0; i < CSI->numODs; i++) {
-			obj = CSI->ods[i];
-			if (equip[i] && INVSH_LoadableInWeapon(&obj, weapon)) {
-				if (obj.price > max_price && obj.price < prev_price) {
-					max_price = obj.price;
-					ammo = i;
+			obj = &CSI->ods[i];
+			if (equip[i] && INVSH_LoadableInWeapon(obj, weapon)) {
+				if (obj->price > max_price && obj->price < prev_price) {
+					max_price = obj->price;
+					ammo = obj;
 				}
 			}
 		}
@@ -975,21 +973,21 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 
 			/* how many clips? */
 			num = min(
-				equip[ammo] / equip[weapon]
-				+ (equip[ammo] % equip[weapon] > rand() % equip[weapon])
+				equip[ammo->idx] / equip[weapon->idx]
+				+ (equip[ammo->idx] % equip[weapon->idx] > rand() % equip[weapon->idx])
 				+ (PROB_COMPENSATION > 40 * frand())
 				+ (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0, 20);
 
 			assert(num >= 0);
 			/* pack some more ammo */
 			while (num--) {
-				item_t mun = {NONE_AMMO, NONE, NONE, 0, 0};
+				item_t mun = {NONE_AMMO, NULL, NULL, 0, 0};
 
-				mun.t = ammo;
+				mun.t = (objDef_t *)ammo;
 				/* ammo to backpack; belt is for knives and grenades */
 				numpacked += Com_TryAddToInventory(inv, mun, CSI->idBackpack);
 				/* no problem if no space left; one ammo already loaded */
-				if (numpacked > ammoMult || numpacked*CSI->ods[weapon].ammo > 11)
+				if (numpacked > ammoMult || numpacked*weapon->ammo > 11)
 					break;
 			}
 		}
@@ -1013,11 +1011,11 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
  */
 void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr)
 {
-	int weapon = NONE; /* this variable is never used before being set */
+	objDef_t *weapon;
 	int i, max_price, prev_price;
 	int has_weapon = 0, has_armour = 0, repeat = 0, missed_primary = 0;
 	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
-	objDef_t obj;
+	objDef_t *obj;
 
 	if (chr->weapons) {
 		/* primary weapons */
@@ -1028,16 +1026,16 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 			prev_price = max_price;
 			max_price = 0;
 			for (i = lastPos; i >= 0; i--) {
-				obj = CSI->ods[i];
-				if (equip[i] && obj.weapon && BUY_PRI(obj.buytype) && obj.fireTwoHanded) {
+				obj = &CSI->ods[i];
+				if (equip[i] && obj->weapon && BUY_PRI(obj->buytype) && obj->fireTwoHanded) {
 					if (frand() < 0.15) { /* small chance to pick any weapon */
-						weapon = i;
-						max_price = obj.price;
+						weapon = obj;
+						max_price = obj->price;
 						lastPos = i - 1;
 						break;
-					} else if (obj.price > max_price && obj.price < prev_price) {
-						max_price = obj.price;
-						weapon = i;
+					} else if (obj->price > max_price && obj->price < prev_price) {
+						max_price = obj->price;
+						weapon = obj;
 						lastPos = i - 1;
 					}
 				}
@@ -1045,7 +1043,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 			/* see if there is any */
 			if (max_price) {
 				/* see if the actor picks it */
-				if (equip[weapon] >= (28 - PROB_COMPENSATION) * frand()) {
+				if (equip[weapon->idx] >= (28 - PROB_COMPENSATION) * frand()) {
 					/* not decrementing equip[weapon]
 					* so that we get more possible squads */
 					has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
@@ -1068,7 +1066,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 						missed_primary = 0;
 					}
 				} else {
-					missed_primary += equip[weapon];
+					missed_primary += equip[weapon->idx];
 				}
 			}
 		} while (max_price);
@@ -1086,24 +1084,24 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 				 * we pick cheapest sidearms first */
 				max_price = primary ? 0 : INT_MAX;
 				for (i = 0; i < CSI->numODs; i++) {
-					obj = CSI->ods[i];
-					if (equip[i] && obj.weapon
-						&& BUY_SEC(obj.buytype) && obj.reload) {
+					obj = &CSI->ods[i];
+					if (equip[i] && obj->weapon
+						&& BUY_SEC(obj->buytype) && obj->reload) {
 						if (primary
-							? obj.price > max_price && obj.price < prev_price
-							: obj.price < max_price && obj.price > prev_price) {
-							max_price = obj.price;
-							weapon = i;
+							? obj->price > max_price && obj->price < prev_price
+							: obj->price < max_price && obj->price > prev_price) {
+							max_price = obj->price;
+							weapon = obj;
 						}
 					}
 				}
 				if (!(max_price == (primary ? 0 : INT_MAX))) {
-					if (equip[weapon] >= 40 * frand()) {
+					if (equip[weapon->idx] >= 40 * frand()) {
 						has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missed_primary, name);
 						if (has_weapon) {
 							/* try to get the second akimbo pistol */
 							if (primary == 2
-								&& !CSI->ods[weapon].fireTwoHanded
+								&& !weapon->fireTwoHanded
 								&& frand() < AKIMBO_CHANCE) {
 								INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 							}
@@ -1126,19 +1124,19 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 				prev_price = max_price;
 				max_price = 0;
 				for (i = 0; i < CSI->numODs; i++) {
-					obj = CSI->ods[i];
-					if (equip[i] && ((obj.weapon && BUY_SEC(obj.buytype) && !obj.reload)
-							|| obj.buytype == BUY_MISC) ) {
-						if (obj.price > max_price && obj.price < prev_price) {
-							max_price = obj.price;
-							weapon = i;
+					obj = &CSI->ods[i];
+					if (equip[i] && ((obj->weapon && BUY_SEC(obj->buytype) && !obj->reload)
+							|| obj->buytype == BUY_MISC) ) {
+						if (obj->price > max_price && obj->price < prev_price) {
+							max_price = obj->price;
+							weapon = obj;
 						}
 					}
 				}
 				if (max_price) {
 					int num;
 
-					num = equip[weapon] / 40 + (equip[weapon] % 40 >= 40 * frand());
+					num = equip[weapon->idx] / 40 + (equip[weapon->idx] % 40 >= 40 * frand());
 					while (num--)
 						has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 				}
@@ -1150,11 +1148,11 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
 			max_price = 0;
 			for (i = 0; i < CSI->numODs; i++) {
-				obj = CSI->ods[i];
-				if (equip[i] && obj.weapon && BUY_SEC(obj.buytype) && !obj.reload) {
-					if (obj.price > max_price && obj.price < prev_price) {
-						max_price = obj.price;
-						weapon = i;
+				obj = &CSI->ods[i];
+				if (equip[i] && obj->weapon && BUY_SEC(obj->buytype) && !obj->reload) {
+					if (obj->price > max_price && obj->price < prev_price) {
+						max_price = obj->price;
+						weapon = obj;
 					}
 				}
 			}
@@ -1184,17 +1182,17 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 			prev_price = max_price;
 			max_price = 0;
 			for (i = 0; i < CSI->numODs; i++) {
-				obj = CSI->ods[i];
-				if (equip[i] && obj.buytype == BUY_ARMOUR) {
-					if (obj.price > max_price && obj.price < prev_price) {
-						max_price = obj.price;
-						weapon = i;
+				obj = &CSI->ods[i];
+				if (equip[i] && obj->buytype == BUY_ARMOUR) {
+					if (obj->price > max_price && obj->price < prev_price) {
+						max_price = obj->price;
+						weapon = obj;
 					}
 				}
 			}
 			if (max_price) {
-				if (equip[weapon] >= 40 * frand()) {
-					item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
+				if (equip[weapon->idx] >= 40 * frand()) {
+					item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 
 					item.t = weapon;
 					if (Com_TryAddToInventory(inv, item, CSI->idArmour)) {
@@ -1231,7 +1229,7 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	chr->teamDefIndex, CSI->teamDef[chr->teamDefIndex].id, CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex, obj->id);
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
-	item.t = CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex;
+	item.t = &CSI->ods[CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex];
 	item.m = item.t;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
@@ -1543,11 +1541,11 @@ char *CHRSH_CharGetBody (character_t * const chr)
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv->c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmour]->item.t].type, "armour"));
-/*		Com_Printf("CHRSH_CharGetBody: Use '%s' as armour\n", CSI->ods[chr->inv->c[CSI->idArmour]->item.t].id);*/
+		assert(!Q_strcmp(chr->inv->c[CSI->idArmour]->item.t->type, "armour"));
+/*		Com_Printf("CHRSH_CharGetBody: Use '%s' as armour\n", chr->inv->c[CSI->idArmour]->item.t->id);*/
 
 		/* check for the underline */
-		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmour]->item.t].id, sizeof(id));
+		Q_strncpyz(id, chr->inv->c[CSI->idArmour]->item.t->id, sizeof(id));
 		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';
@@ -1573,11 +1571,11 @@ char *CHRSH_CharGetHead (character_t * const chr)
 
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv->c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmour]->item.t].type, "armour"));
-/*		Com_Printf("CHRSH_CharGetHead: Use '%s' as armour\n", CSI->ods[chr->inv->c[CSI->idArmour]->item.t].id);*/
+		assert(!Q_strcmp(chr->inv->c[CSI->idArmour]->item.t->type, "armour"));
+/*		Com_Printf("CHRSH_CharGetHead: Use '%s' as armour\n", chr->inv->c[CSI->idArmour]->item.t->id);*/
 
 		/* check for the underline */
-		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmour]->item.t].id, sizeof(id));
+		Q_strncpyz(id, chr->inv->c[CSI->idArmour]->item.t->id, sizeof(id));
 		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';
@@ -1590,25 +1588,27 @@ char *CHRSH_CharGetHead (character_t * const chr)
 
 /**
  * @brief Prints a description of an object
- * @param[in] index of object in CSI
+ * @param[in] object to display the info for
  */
-void INVSH_PrintItemDescription (int i)
+void INVSH_PrintItemDescription (objDef_t *od)
 {
-	objDef_t *ods_temp;
+	int i;
 
-	ods_temp = &CSI->ods[i];
-	Com_Printf("Item: %i %s\n", i, ods_temp->id);
-	Com_Printf("... name          -> %s\n", ods_temp->name);
-	Com_Printf("... type          -> %s\n", ods_temp->type);
-	Com_Printf("... category      -> %i\n", ods_temp->animationIndex);
-	Com_Printf("... weapon        -> %i\n", ods_temp->weapon);
-	Com_Printf("... holdtwohanded -> %i\n", ods_temp->holdTwoHanded);
-	Com_Printf("... firetwohanded -> %i\n", ods_temp->fireTwoHanded);
-	Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
+	if (!od)
+		return;
+
+	Com_Printf("Item: %i %s\n", i, od->id);
+	Com_Printf("... name          -> %s\n", od->name);
+	Com_Printf("... type          -> %s\n", od->type);
+	Com_Printf("... category      -> %i\n", od->animationIndex);
+	Com_Printf("... weapon        -> %i\n", od->weapon);
+	Com_Printf("... holdtwohanded -> %i\n", od->holdTwoHanded);
+	Com_Printf("... firetwohanded -> %i\n", od->fireTwoHanded);
+	Com_Printf("... thrown        -> %i\n", od->thrown);
 	Com_Printf("... usable for weapon (if type is ammo):\n");
-	for (i = 0; i < ods_temp->numWeapons; i++) {
-		if (ods_temp->weapIdx[i] != NONE)
-			Com_Printf("    ... %s\n", CSI->ods[ods_temp->weapIdx[i]].name);
+	for (i = 0; i < od->numWeapons; i++) {
+		if (od->weapons[i])
+			Com_Printf("    ... %s\n", od->weapons[i]->name);
 	}
 	Com_Printf("\n");
 }
@@ -1620,7 +1620,7 @@ void INVSH_PrintItemDescription (int i)
  * @note previously known as RS_GetItem
  * @param[in] id the item id in our object definition array (csi.ods)
  */
-int INVSH_GetItemByID (const char *id)
+objDef_t *INVSH_GetItemByID (const char *id)
 {
 	int i;
 	objDef_t *item;
@@ -1628,47 +1628,47 @@ int INVSH_GetItemByID (const char *id)
 #ifdef DEBUG
 	if (!id || !*id) {
 		Com_Printf("INVSH_GetItemByID: Called with empty id\n");
-		return NONE;
+		return NULL;
 	}
 #endif
 
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
 		item = &CSI->ods[i];
 		if (!Q_strncmp(id, item->id, MAX_VAR)) {
-			return i;
+			return item;
 		}
 	}
 
 	Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
-	return NONE;
+	return NULL;
 }
 
 /**
  * @brief Checks if an item can be used to reload a weapon.
  * @param[in] od The object definition of the ammo.
- * @param[in] weaponIdx The index of the weapon (in the inventory) to check the item with.
+ * @param[in] weapon The weapon (in the inventory) to check the item with.
  * @return qboolean Returns qtrue if the item can be used in the given weapon, otherwise qfalse.
  * @sa INVSH_PackAmmoAndWeapon
  */
-qboolean INVSH_LoadableInWeapon (objDef_t *od, int weaponIdx)
+qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 {
 	int i;
 	qboolean usable = qfalse;
 
 	for (i = 0; i < od->numWeapons; i++) {
 #ifdef DEBUG
-		if (od->weapIdx[i] == NONE) {
-			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: negative weapIdx entry (%s) found in item '%s'.\n", od->weapId[i], od->id );
+		if (!od->weapons[i]) {
+			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: No weapon pointer set for the %i. entry found in item '%s'.\n", i, od->id );
 			break;
 		}
 #endif
-		if (weaponIdx == od->weapIdx[i]) {
+		if (weapon == od->weapons[i]) {
 			usable = qtrue;
 			break;
 		}
 	}
 #if 0
-	Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weaponIdx].id );
+	Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, weapon->id );
 #endif
 	return usable;
 }
@@ -1682,11 +1682,11 @@ FIREMODE MANAGEMENT FUNCTIONS
 /**
  * @brief Returns the index of the array that has the firedefinitions for a given weapon/ammo (-index)
  * @param[in] od The object definition of the ammo item.
- * @param[in] weaponIdx The index of the weapon (in the inventory) to check the ammo item with.
+ * @param[in] weapon The weapon (in the inventory) to check the ammo item with.
  * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 (equals the default firemode) if an invalid or unknown weapon idx was given.
  * @note the return value of -1 is in most cases a fatal error (except the scripts are not parsed while e.g. maptesting)
  */
-int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weaponIdx)
+int FIRESH_FiredefsIDXForWeapon (const objDef_t *od, const objDef_t *weapon)
 {
 	int i;
 
@@ -1695,20 +1695,19 @@ int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weaponIdx)
 		return -1;
 	}
 
-	if (weaponIdx == NONE) {
-		Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: bad weaponIdx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
-		/* FIXME: this won't work if there is no weaponIdx, don't it? - should be -1 here, too */
+	if (!weapon) {
+		Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: no weapon given (item '%s') using default weapon/firemodes.\n", od->id);
 		return 0;
 	}
 
 	for (i = 0; i < od->numWeapons; i++) {
-		if (weaponIdx == od->weapIdx[i])
+		if (weapon == od->weapons[i])
 			return i;
 	}
 
 	/* No firedef index found for this weapon/ammo. */
 #ifdef DEBUG
-	Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weapIdx:%i).\n", od->id, weaponIdx);
+	Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weapIdx:%i).\n", od->id, weapon->idx);
 #endif
 	return -1;
 }
@@ -1719,7 +1718,7 @@ int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weaponIdx)
  * @param[in] weaponFdsIdx The index in objDef[x]
  * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
  */
-int FIRESH_GetDefaultReactionFire (objDef_t *ammo, int weaponFdsIdx)
+int FIRESH_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
 {
 	int fdIdx;
 	if (weaponFdsIdx >= MAX_WEAPONS_PER_OBJDEF) {

@@ -300,9 +300,9 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  */
 static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
-	qboolean stunEl = (gi.csi->ods[fd->objIdx].dmgtype == gi.csi->damStunElectro);
-	qboolean stunGas = (gi.csi->ods[fd->objIdx].dmgtype == gi.csi->damStunGas);
-	qboolean shock = (gi.csi->ods[fd->objIdx].dmgtype == gi.csi->damShock);
+	qboolean stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
+	qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
+	qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 	qboolean isRobot;
 	assert(target);
 	assert(target->type == ET_ACTOR
@@ -375,7 +375,7 @@ static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * atta
 	/* Apply armour effects. */
 	if (damage > 0) {
 		if (target->i.c[gi.csi->idArmour]) {
-			const objDef_t *ad = &gi.csi->ods[target->i.c[gi.csi->idArmour]->item.t];
+			const objDef_t *ad = target->i.c[gi.csi->idArmour]->item.t;
 			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i",
 				target->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
 			damage = max(1, damage - ad->protection[fd->dmgweight]);
@@ -535,7 +535,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 	int damage;
 	int i;
 
-	qboolean shock = (gi.csi->ods[fd->objIdx].dmgtype == gi.csi->damShock);
+	qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 
 	assert(fd->splrad);
 
@@ -592,7 +592,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 
 	/* FIXME: splash might also hit other surfaces */
 	if (tr && tr->contentFlags & CONTENTS_BURN
-	 && (gi.csi->ods[fd->objIdx].dmgtype == gi.csi->damFire || gi.csi->ods[fd->objIdx].dmgtype == gi.csi->damBlast)) {
+	 && (fd->obj->dmgtype == gi.csi->damFire || fd->obj->dmgtype == gi.csi->damBlast)) {
 		/* sent particle to all players */
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(tr->contentFlags >> 8);
@@ -712,7 +712,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 					/* explode */
 					gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 					gi.WriteShort(dt * 1000);
-					gi.WriteShort(fd->objIdx);
+					gi.WriteShort(fd->obj->idx);
 					gi.WriteByte(fd->weapFdsIdx);
 					gi.WriteByte(fd->fdIdx);
 					if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))
@@ -730,7 +730,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 					G_SplashDamage(ent, fd, tr.endpos, mock, &tr);
 				} else if (!mock) {
 					/* spawn the stone on the floor */
-					if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
+					if (fd->ammo && !fd->splrad && weapon->t->thrown) {
 						pos3_t drop;
 						edict_t *floor, *actor;
 
@@ -769,7 +769,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 				/* send */
 				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 				gi.WriteShort(dt * 1000);
-				gi.WriteShort(fd->objIdx);
+				gi.WriteShort(fd->obj->idx);
 				gi.WriteByte(fd->weapFdsIdx);
 				gi.WriteByte(fd->fdIdx);
 				gi.WriteByte(flags);
@@ -922,7 +922,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			/* send shot */
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
-			gi.WriteShort(fd->objIdx);
+			gi.WriteShort(fd->obj->idx);
 			gi.WriteByte(fd->weapFdsIdx);
 			gi.WriteByte(fd->fdIdx);
 			gi.WriteByte(flags);
@@ -934,12 +934,12 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			/* send shot sound to the others */
 			gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 			gi.WriteByte(qfalse);
-			gi.WriteShort(fd->objIdx);
+			gi.WriteShort(fd->obj->idx);
 			gi.WriteByte(fd->weapFdsIdx);
 			gi.WriteByte(fd->fdIdx);
 
-			if (i == 0 && (gi.csi->ods[fd->objIdx].dmgtype == gi.csi->damFire
-			 || gi.csi->ods[fd->objIdx].dmgtype == gi.csi->damBlast) && tr.contentFlags & CONTENTS_BURN) {
+			if (i == 0 && (fd->obj->dmgtype == gi.csi->damFire
+			 || fd->obj->dmgtype == gi.csi->damBlast) && tr.contentFlags & CONTENTS_BURN) {
 				vec3_t origin;
 
 				/* sent particle to all players */
@@ -998,7 +998,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 	if (!mock) {
 		/* spawn the throwable item on the floor but only if it is not depletable */
-		if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown && !gi.csi->ods[weapon->t].deplete) {
+		if (fd->ammo && !fd->splrad && weapon->t->thrown && !weapon->t->deplete) {
 			pos3_t drop;
 			edict_t *floor, *actor;
 
@@ -1084,26 +1084,26 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 		*container = gi.csi->idLeft;
 	}
 
-	if ((*weapon)->m == NONE) {
+	if (!(*weapon)->m) {
 		/* This weapon does not use ammo, check for existing firedefs in the weapon. */
-		if (&gi.csi->ods[(*weapon)->t].numWeapons > 0) {
+		if ((*weapon)->t->numWeapons > 0) {
 			/* Get firedef from the weapon entry instead */
-			Com_DPrintf(DEBUG_GAME, "od->numWeapons: %i\n", gi.csi->ods[(*weapon)->t].numWeapons);
-			weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->t], (*weapon)->t);
-			Com_DPrintf(DEBUG_GAME, "weaponFdIdx: %i (%s), firemode: %i\n", weaponFdIdx, gi.csi->ods[(*weapon)->t].name, firemode);
+			Com_DPrintf(DEBUG_GAME, "od->numWeapons: %i\n", (*weapon)->t->numWeapons);
+			weaponFdIdx = FIRESH_FiredefsIDXForWeapon((*weapon)->t, (*weapon)->t);
+			Com_DPrintf(DEBUG_GAME, "weaponFdIdx: %i (%s), firemode: %i\n", weaponFdIdx, (*weapon)->t->name, firemode);
 			assert(weaponFdIdx >= 0);
 			/* fd = od[weaponFdIdx][firemodeidx] */
-			*fd = &gi.csi->ods[(*weapon)->t].fd[weaponFdIdx][firemode];
+			*fd = &(*weapon)->t->fd[weaponFdIdx][firemode];
 		} else {
 			*weapon = NULL;
 			return qfalse;
 		}
 	} else {
 		/* Get firedef from the ammo entry. */
-		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
+		weaponFdIdx = FIRESH_FiredefsIDXForWeapon((*weapon)->m, (*weapon)->t);
 		assert(weaponFdIdx >= 0);
 		/* fd = od[weaponFdIdx][firemodeidx] */
-		*fd = &gi.csi->ods[(*weapon)->m].fd[weaponFdIdx][firemode];
+		*fd = &(*weapon)->m->fd[weaponFdIdx][firemode];
 	}
 
 	return qtrue;
@@ -1153,14 +1153,14 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		return qfalse;
 
 	/* check that we're not firing a twohanded weapon with one hand! */
-	if (gi.csi->ods[weapon->t].fireTwoHanded &&	LEFT(ent)) {
+	if (weapon->t->fireTwoHanded &&	LEFT(ent)) {
 		if (!quiet)
 			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - weapon cannot be fired one handed!\n"));
 		return qfalse;
 	}
 
 	/* check we're not out of ammo */
-	if (!ammo && fd->ammo && !gi.csi->ods[weapon->t].thrown) {
+	if (!ammo && fd->ammo && !weapon->t->thrown) {
 		if (!quiet)
 			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - no ammo!\n"));
 		return qfalse;
@@ -1199,7 +1199,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 
 	/* fire shots */
 	shots = fd->shots;
-	if (fd->ammo && !gi.csi->ods[weapon->t].thrown) {
+	if (fd->ammo && !weapon->t->thrown) {
 		/**
 		 * If loaded ammo is less than needed ammo from firedef
 		 * then reduce shot-number relative to the difference.
@@ -1256,7 +1256,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		/* start shoot */
 		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
 		gi.WriteShort(ent->number);
-		gi.WriteShort(fd->objIdx);
+		gi.WriteShort(fd->obj->idx);
 		gi.WriteByte(fd->weapFdsIdx);
 		gi.WriteByte(fd->fdIdx);
 		gi.WriteGPos(ent->pos);
@@ -1265,17 +1265,17 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		/* send shot sound to the others */
 		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 		gi.WriteByte(qtrue);
-		gi.WriteShort(fd->objIdx);
+		gi.WriteShort(fd->obj->idx);
 		gi.WriteByte(fd->weapFdsIdx);
 		gi.WriteByte(fd->fdIdx);
 
 		/* ammo... */
 		if (fd->ammo) {
-			if (ammo > 0 || !gi.csi->ods[weapon->t].thrown) {
+			if (ammo > 0 || !weapon->t->thrown) {
 				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
 				gi.WriteShort(num);
 				gi.WriteByte(ammo);
-				gi.WriteByte(weapon->m);
+				gi.WriteByte(weapon->m->idx);
 				weapon->a = ammo;
 				if (IS_SHOT_RIGHT(type))
 					gi.WriteByte(gi.csi->idRight);
@@ -1294,7 +1294,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		}
 
 		/* remove throwable oneshot && deplete weapon from inventory */
-		if (gi.csi->ods[weapon->t].thrown && gi.csi->ods[weapon->t].oneshot && gi.csi->ods[weapon->t].deplete) {
+		if (weapon->t->thrown && weapon->t->oneshot && weapon->t->deplete) {
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
 			gi.WriteShort(num);
 			gi.WriteByte(container);

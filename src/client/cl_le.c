@@ -810,7 +810,7 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 }
 
 
-void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
+void LE_AddGrenade (fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 {
 	le_t *le;
 	vec3_t accel;

@@ -121,7 +121,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	int i, fm, shots, reaction_trap = 0;
 	float dist, minDist, nspread;
 	float bestActionPoints, dmg, maxDmg, best_time = -1, vis;
-	objDef_t *ad;
+	const objDef_t *ad;
 	int still_searching = 1;
 
 	int weapFdsIdx; /* Weapon-Firedefs index in fd[x] */
@@ -165,28 +165,28 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	/* shooting */
 	maxDmg = 0.0;
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
-		objDef_t *od;	/* Ammo pointer */
-		int weapIdx = NONE;		/* Weapon index */
-		fireDef_t *fd;
+		const objDef_t *od;		/* Ammo pointer. */
+		const objDef_t *weapon;	/* Weapon pointer. */
+		const fireDef_t *fd;	/* Fire-definition pointer. */
 
 		/* optimization: reaction fire is automatic */;
 		if (IS_SHOT_REACTION(fm))
 			continue;
 
 		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)
-			&& RIGHT(ent)->item.m != NONE
-			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
-			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
+			&& RIGHT(ent)->item.m
+			&& RIGHT(ent)->item.t->weapon
+			&& (!RIGHT(ent)->item.t->reload
 				|| RIGHT(ent)->item.a > 0)) {
-			od = &gi.csi->ods[RIGHT(ent)->item.m];
-			weapIdx = RIGHT(ent)->item.t;
+			od = RIGHT(ent)->item.m;
+			weapon = RIGHT(ent)->item.t;
 		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
-			&& (LEFT(ent)->item.m != NONE)
-			&& gi.csi->ods[LEFT(ent)->item.t].weapon
-			&& (!gi.csi->ods[LEFT(ent)->item.t].reload
+			&& LEFT(ent)->item.m
+			&& LEFT(ent)->item.t->weapon
+			&& (!LEFT(ent)->item.t->reload
 				|| LEFT(ent)->item.a > 0)) {
-			od = &gi.csi->ods[LEFT(ent)->item.m];
-			weapIdx = LEFT(ent)->item.t;
+			od = LEFT(ent)->item.m;
+			weapon = LEFT(ent)->item.t;
 		} else {
 			od = NULL;
 			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: @todo: grenade/knife toss from inventory using empty hand\n");
@@ -194,11 +194,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* @todo: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
 
-		if (!od || weapIdx == NONE)
+		if (!od || !weapon)
 			continue;
 
-		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapIdx);
-		/* if od was not null and weapIdx was not NONE - then we have a problem here
+		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapon);
+		/* if od was not null and weapon not null - then we have a problem here
 		 * maybe this is only a maptest and thus no scripts parsed */
 		if (weapFdsIdx == -1)
 			continue;
@@ -236,7 +236,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 						/* take into account armour */
 						if (check->i.c[gi.csi->idArmour]) {
-							ad = &gi.csi->ods[check->i.c[gi.csi->idArmour]->item.t];
+							ad = check->i.c[gi.csi->idArmour]->item.t;
 							dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
 						}
 
@@ -557,7 +557,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!(ent->state & STATE_PANIC)) {
-		if (RIGHT(ent) && gi.csi->ods[RIGHT(ent)->item.t].reload && RIGHT(ent)->item.a == 0) {
+		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
 #ifdef PARANOID
 				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Reloading right hand weapon\n");
@@ -570,7 +570,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
 			}
 		}
-		if (LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0) {
+		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
 #ifdef PARANOID
 				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Reloading left hand weapon\n");

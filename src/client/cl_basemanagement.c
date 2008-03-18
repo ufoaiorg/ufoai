@@ -2269,43 +2269,43 @@ static void CL_SwapSkills (chrList_t *team)
 				cp1 = team->chr[i1];
 				weaponr_fd_idx = -1;
 				weaponh_fd_idx = -1;
-				if (RIGHT(cp1) && RIGHT(cp1)->item.m != NONE && RIGHT(cp1)->item.t != NONE)
-					weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp1)->item.m], RIGHT(cp1)->item.t);
-				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m != NONE && HOLSTER(cp1)->item.t != NONE)
-					weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
+				if (RIGHT(cp1) && RIGHT(cp1)->item.m && RIGHT(cp1)->item.t)
+					weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(RIGHT(cp1)->item.m, RIGHT(cp1)->item.t);
+				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m && HOLSTER(cp1)->item.t)
+					weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(HOLSTER(cp1)->item.m, HOLSTER(cp1)->item.t);
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
 					/* @todo: Is there a better way to check for this case? */
 					Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 				} else {
-					no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
-						+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
-						+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-						   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
-						+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-						   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
+					no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
+						+ 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode2].weaponSkill)
+						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.t->reload
+						   && skill == HOLSTER(cp1)->item.m->fd[weaponh_fd_idx][fmode1].weaponSkill)
+						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.t->reload
+						   && skill == HOLSTER(cp1)->item.m->fd[weaponh_fd_idx][fmode2].weaponSkill);
 
 					for (i2 = i1 + 1; i2 < team->num; i2++) {
 						cp2 = team->chr[i2];
 						weaponr_fd_idx = -1;
 						weaponh_fd_idx = -1;
 
-						if (RIGHT(cp2) && RIGHT(cp2)->item.m != NONE && RIGHT(cp2)->item.t != NONE)
-							weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
-						if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
-							weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
+						if (RIGHT(cp2) && RIGHT(cp2)->item.m && RIGHT(cp2)->item.t)
+							weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(RIGHT(cp2)->item.m, RIGHT(cp2)->item.t);
+						if (HOLSTER(cp2) && HOLSTER(cp2)->item.m && HOLSTER(cp2)->item.t)
+							weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(HOLSTER(cp2)->item.m, HOLSTER(cp2)->item.t);
 
 						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
 							/* @todo: Is there a better way to check for this case? */
 							Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 						} else {
-							no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
-								+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
-								+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-								   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
-								+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-								   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
+							no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
+								+ 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode2].weaponSkill)
+								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.t->reload
+								   && skill == HOLSTER(cp2)->item.m->fd[weaponh_fd_idx][fmode1].weaponSkill)
+								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.t->reload
+								   && skill == HOLSTER(cp2)->item.m->fd[weaponh_fd_idx][fmode2].weaponSkill);
 
 							if (no1 > no2 /* more use of this skill */
 								 || (no1 && no1 == no2)) { /* or earlier on list */
@@ -2458,8 +2458,8 @@ static void B_PackInitialEquipment_f (void)
 					const character_t *chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
 					for (ic = chr->inv->c[container]; ic; ic = ic->next) {
 						const item_t item = ic->item;
-						price += csi.ods[item.t].price;
-						Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f()... adding price for %s, price: %i\n", csi.ods[item.t].id, price);
+						price += item.t->price;
+						Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f()... adding price for %s, price: %i\n", item.t->id, price);
 					}
 				}
 			}
@@ -3572,7 +3572,9 @@ static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* t
  */
 qboolean B_Load (sizebuf_t* sb, void* data)
 {
-	int i, bases, k, l, m, amount, ufoIdx;
+	int i, bases, k, l, amount, ufoIdx;
+	const objDef_t *od;
+	objDef_t *od2;
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
@@ -3711,12 +3713,12 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				/* itemcargo */
 				for (l = 0; l < aircraft->itemtypes; l++) {
 					const char *const s = MSG_ReadString(sb);
-					m = INVSH_GetItemByID(s);
-					if (m == NONE || m >= MAX_OBJDEFS) {
+					od = INVSH_GetItemByID(s);
+					if (!od) {
 						Com_Printf("B_Load: Could not find item '%s'\n", s);
 						MSG_ReadShort(sb);
 					} else {
-						aircraft->itemcargo[l].idx = m;
+						aircraft->itemcargo[l].idx = od->idx;
 						aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
 					}
 				}
@@ -3734,14 +3736,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		/* read equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
 			const char *const s = MSG_ReadString(sb);
-			l = INVSH_GetItemByID(s);
-			if (l == NONE || l >= MAX_OBJDEFS) {
+			od2 = INVSH_GetItemByID(s);
+			if (!od2) {
 				Com_Printf("B_Load: Could not find item '%s'\n", s);
 				MSG_ReadShort(sb);
 				MSG_ReadByte(sb);
 			} else {
-				b->storage.num[l] = MSG_ReadShort(sb);
-				b->storage.num_loose[l] = MSG_ReadByte(sb);
+				b->storage.num[od2->idx] = MSG_ReadShort(sb);
+				b->storage.num_loose[od2->idx] = MSG_ReadByte(sb);
 			}
 		}
 

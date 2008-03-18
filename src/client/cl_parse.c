@@ -1197,13 +1197,14 @@ static void CL_ActorStateChange (struct dbuffer *msg)
  * @return the item index in the csi.ods array
  * @note Only call this for none empty invList_t - see FLOOR, LEFT, RIGHT and so on macros
  */
-static int CL_BiggestItem (invList_t *ic)
+static objDef_t *CL_BiggestItem (invList_t *ic)
 {
-	int size, max = -1;
+	int size;
+	objDef_t *max;
 	int maxSize = 0;
 
 	for (max = ic->item.t; ic; ic = ic->next) {
-		size = Com_ShapeUsage(csi.ods[ic->item.t].shape);
+		size = Com_ShapeUsage(ic->item.t->shape);
 		if (size > maxSize) {
 			max = ic->item.t;
 			maxSize = size;
@@ -1211,7 +1212,7 @@ static int CL_BiggestItem (invList_t *ic)
 	}
 
 	/* there must be an item in the invList_t */
-	assert(max != -1);
+	assert(max);
 	return max;
 }
 
@@ -1222,7 +1223,7 @@ static int CL_BiggestItem (invList_t *ic)
 static void CL_PlaceItem (le_t *le)
 {
 	le_t *actor;
-	int	biggest;
+	objDef_t *biggest;
 	int i;
 
 	/* search owners (there can be many, some of them dead) */
@@ -1239,9 +1240,9 @@ static void CL_PlaceItem (le_t *le)
 
 	if (FLOOR(le)) {
 		biggest = CL_BiggestItem(FLOOR(le));
-		le->model1 = cls.model_weapons[biggest];
+		le->model1 = cls.model_weapons[biggest->idx];
 		Grid_PosToVec(&clMap, le->pos, le->origin);
-		VectorSubtract(le->origin, csi.ods[biggest].center, le->origin);
+		VectorSubtract(le->origin, biggest->center, le->origin);
 		le->angles[ROLL] = 90;
 		/*le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
 		le->origin[2] -= GROUND_DELTA;
@@ -1290,11 +1291,11 @@ static void CL_InvAdd (struct dbuffer *msg)
 		Com_AddToInventory(&le->i, item, container, x, y, 1);
 
 		if (container == csi.idRight)
-			le->right = item.t;
+			le->right = item.t->idx;
 		else if (container == csi.idLeft)
-			le->left = item.t;
+			le->left = item.t->idx;
 		else if (container == csi.idExtension)
-			le->extension = item.t;
+			le->extension = item.t->idx;
 	}
 
 	switch (le->type) {
@@ -1372,7 +1373,7 @@ static void CL_InvAmmo (struct dbuffer *msg)
 
 	/* set new ammo */
 	ic->item.a = ammo;
-	ic->item.m = type;
+	ic->item.m = &csi.ods[type];
 }
 
 
@@ -1405,19 +1406,19 @@ static void CL_InvReload (struct dbuffer *msg)
 	/* store them as loose, unless the removed clip was full */
 	if (curCampaign
 		 && ic->item.a > 0
-		 && ic->item.a != csi.ods[ic->item.t].ammo) {
-		assert(ammo == csi.ods[ic->item.t].ammo);
-		ccs.eMission.num_loose[ic->item.m] += ic->item.a;
+		 && ic->item.a != ic->item.t->ammo) {
+		assert(ammo == ic->item.t->ammo);
+		ccs.eMission.num_loose[ic->item.m->idx] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
-		if (ccs.eMission.num_loose[ic->item.m] >= csi.ods[ic->item.t].ammo) {
-			ccs.eMission.num_loose[ic->item.m] -= csi.ods[ic->item.t].ammo;
-			ccs.eMission.num[ic->item.m]++;
+		if (ccs.eMission.num_loose[ic->item.m->idx] >= ic->item.t->ammo) {
+			ccs.eMission.num_loose[ic->item.m->idx] -= ic->item.t->ammo;
+			ccs.eMission.num[ic->item.m->idx]++;
 		}
 	}
 
 	/* set new ammo */
 	ic->item.a = ammo;
-	ic->item.m = type;
+	ic->item.m = &csi.ods[type];
 }
 
 /**
@@ -1578,16 +1579,18 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			{
 				const fireDef_t *fd;
 				int first;
-				int obj_idx;
+				int objIdx;
+				objDef_t *obj;
 				int weap_fds_idx, fd_idx;
 
-				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
+				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &objIdx, &weap_fds_idx, &fd_idx);
 
+				obj = &csi.ods[objIdx];
 				if (first) {
 					nextTime += 500;
 					impactTime = shootTime = nextTime;
 				} else {
-					fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
+					fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
 					/* impact right away - we don't see it at all
 					 * bouncing is not needed here, too (we still don't see it) */
 					impactTime = shootTime;
@@ -1602,14 +1605,16 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			{
 				const fireDef_t	*fd;
 				int flags, dummy;
-				int obj_idx, surfaceFlags;
+				int objIdx, surfaceFlags;
+				objDef_t *obj;
 				int weap_fds_idx, fd_idx;
 				vec3_t muzzle, impact;
 
 				/* read data */
-				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
+				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &objIdx, &weap_fds_idx, &fd_idx, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
-				fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
+				obj = &csi.ods[objIdx];
+				fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
 
 				if (!(flags & SF_BOUNCED)) {
 					/* shooting */

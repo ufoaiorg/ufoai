@@ -912,6 +912,10 @@ const char *air_slot_type_strings[] = {
 };
 CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
 
+
+static linkedList_t *parseItemWeapons;	/**< Temporary list of weapon ids as parsed from the ufo file "weapon_mod <id>"
+										 * in Com_ParseItem and used in Com_AddObjectLinks. */
+
 /**
  * @brief Parses weapon, equipment, craft items and armour
  * @sa Com_ParseArmour
@@ -944,12 +948,11 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	od = &csi.ods[csi.numODs++];
 	memset(od, 0, sizeof(objDef_t));
 
-	/* default value is no ammo */
-	memset(od->weapIdx, NONE, sizeof(od->weapIdx));
-	memset(od->ammoIdx, NONE, sizeof(od->ammoIdx));
-	od->craftitem.type = MAX_ACITEMS; /* default is no craftitem */
+	od->craftitem.type = MAX_ACITEMS; /**< default is no craftitem */
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
+
+	od->idx = csi.numODs - 1;
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -984,17 +987,21 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 					case OD_WEAPON:
 						/* Save the weapon id. */
 						token = COM_Parse(text);
-						Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons]));
-
-						/* get it's body */
-						token = COM_Parse(text);
-
-						if (!*text || *token != '{') {
-							Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
-							break;
-						}
-
 						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
+							/** Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
+							LIST_AddPointer(&parseItemWeapons, od);
+							LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
+							LIST_AddString(&parseItemWeapons, token);
+							/** @todo delete me Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons])); */
+
+							/* get it's body */
+							token = COM_Parse(text);
+
+							if (!*text || *token != '{') {
+								Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
+								break;
+							}
+
 							weapFdsIdx = od->numWeapons;
 							/* For parse each firedef entry for this weapon.  */
 							do {
@@ -1060,8 +1067,17 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 			} else if (!Q_strcmp(token, "craftweapon")) {
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
-				Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons]));
-				od->numWeapons++;
+				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
+					/** Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
+					LIST_AddPointer(&parseItemWeapons, od);
+					LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
+					LIST_AddString(&parseItemWeapons, token);
+					/** @todo delete me Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons])); */
+
+					od->numWeapons++;
+				} else {
+					Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
+				}
 			} else if (!Q_strcmp(token, "crafttype")) {
 				/* Craftitem type definition. */
 				token = COM_EParse(text, errhead, name);
@@ -1823,11 +1839,15 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 		if (!v->string) {
 			if (!Q_strcmp(token, "onlyWeapon")) {
+				const objDef_t *od;
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				td->onlyWeaponIndex = INVSH_GetItemByID(token);
-				if (td->onlyWeaponIndex == NONE)
+				od = INVSH_GetItemByID(token);
+
+				if (od)
+					td->onlyWeaponIndex = od->idx;
+				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
 			} else if (!Q_strcmp(token, "models"))
 				Com_ParseActorModels(name, text, td);
@@ -2125,36 +2145,57 @@ MAIN SCRIPT PARSING FUNCTION
  */
 void Com_AddObjectLinks (void)
 {
+	linkedList_t* ll = parseItemWeapons;	/**< Use this so we do not change the original popupListData pointer. */
 	objDef_t *od;
 	int i, n, m;
-	byte j, k;
+	byte k, weaponsIdx;
+	char *id;
 #ifndef DEDICATED_ONLY
 	technology_t *tech;
 #endif
 
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 #ifndef DEDICATED_ONLY
-		/* Add links to technologies. */
+	/* Add links to technologies. */
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		tech = RS_GetTechByProvided(od->id);
 		od->tech = tech;
 		if (!od->tech) {
 			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->id);
 		}
-#endif
+	}
+	#endif
 
-		/* Add links to weapons. */
-		for (j = 0; j < od->numWeapons; j++ ) {
-			od->weapIdx[j] = INVSH_GetItemByID(od->weapId[j]);
-			if (od->weapIdx[j] == NONE) {
-				Sys_Error("Com_AddObjectLinks: Could not get item '%s' for linking into item '%s'\n",
-					od->weapId[j], od->id);
-			}
-			/* Back-link the obj-idx inside the fds */
-			for (k = 0; k < od->numFiredefs[j]; k++ ) {
-				od->fd[j][k].objIdx = i;
-			}
+	/* Add links to weapons. */
+	while (ll) {
+		/* Get the data stored in the linked list. */
+		assert(ll);
+		od = (objDef_t *) ll->data;
+		ll = ll->next;
+
+		assert(ll);
+		weaponsIdx = *(int*)ll->data;
+		ll = ll->next;
+
+		assert(ll);
+		id = (char*)ll->data;
+		ll = ll->next;
+
+		/* Link the weapon pointers for this item. */
+		od->weapons[weaponsIdx] = INVSH_GetItemByID(id);
+		if (!od->weapons[weaponsIdx]) {
+			Sys_Error("Com_AddObjectLinks: Could not get item '%s' for linking into item '%s'\n",
+				id , od->id);
+		}
+
+		/* Back-link the obj-idx inside the fds */
+		for (k = 0; k < od->numFiredefs[weaponsIdx]; k++ ) {
+			od->fd[weaponsIdx][k].obj = od;
 		}
 	}
+
+	/* Clear the temporary list. */
+	LIST_Delete(parseItemWeapons);
+	parseItemWeapons = NULL;
 
 	/* Add links to ammos */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
@@ -2163,9 +2204,9 @@ void Com_AddObjectLinks (void)
 			/* this is a weapon, an aircraft weapon, or a base defense system */
 			for (n = 0; n < csi.numODs; n++) {
 				for (m = 0; m < csi.ods[n].numWeapons; m++) {
-					if (csi.ods[n].weapIdx[m] == i) {
+					if (csi.ods[n].weapons[m] == &csi.ods[i]) {
 						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);
-						od->ammoIdx[od->numAmmos++] = n;
+						od->ammos[od->numAmmos++] = &csi.ods[n];
 					}
 				}
 			}
