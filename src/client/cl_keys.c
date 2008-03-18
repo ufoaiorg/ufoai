@@ -947,13 +947,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 	if (key == K_SHIFT)
 		shift_down = down;
 
-	/* console key is hardcoded, so the user can never unbind it */
-	if (key == '`' || key == '~' || (key == K_ESCAPE && shift_down)) {
-		if (down)
-			Con_ToggleConsole_f();
-		return;
-	}
-
 	if (cls.key_dest != key_console && down) {
 		switch (key) {
 		case K_ESCAPE:

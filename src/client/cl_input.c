@@ -1481,11 +1481,11 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 			*key = (int) keysym->sym;
 		break;
 	}
-	if ((keysym->unicode & 0xFF80) == 0) {  /* maps to ASCII? */
+
+	/* maps to ASCII? */
+	if ((keysym->unicode & 0xFF80) == 0)
 		buf = (int) keysym->unicode & 0x7F;
-		if (buf == '~')
-			*key = '~'; /* console HACK */
-	}
+
 	if (in_debug->integer)
 		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
 
@@ -1613,6 +1613,12 @@ void IN_Frame (void)
 				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 				Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
 				break; /* ignore this key */
+			}
+
+			/* console key is hardcoded, so the user can never unbind it */
+			if (event.key.keysym.mod & KMOD_SHIFT && event.key.keysym.sym == SDLK_ESCAPE) {
+				Con_ToggleConsole_f();
+				break;
 			}
 
 			p = IN_TranslateKey(&event.key.keysym, &key);
