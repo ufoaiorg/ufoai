@@ -54,7 +54,7 @@ void INVSH_InitCSI (csi_t * import)
  * @param[in] fdIdx
  * @return Will never return NULL
  */
-inline fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, int weapFdsIdx, int fdIdx)
+inline fireDef_t* FIRESH_GetFiredef (objDef_t *obj, const int weapFdsIdx, const int fdIdx)
 {
 #ifdef DEBUG
 	if (!obj) \
@@ -883,9 +883,9 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
  * @param[in] missed_primary
  * @sa INVSH_LoadableInWeapon
  */
-static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const objDef_t* weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
+static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
-	const objDef_t *ammo;
+	objDef_t *ammo;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 	int i, max_price, prev_price;
 	objDef_t *obj;

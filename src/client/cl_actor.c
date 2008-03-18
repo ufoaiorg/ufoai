@@ -3372,7 +3372,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	vec3_t muzzle, impact;
 	int flags, normal, number;
 	int objIdx;
-	const objDef_t *obj;
+	objDef_t *obj;
 	int weapFdsIdx, fdIdx, surfaceFlags;
 
 	/* read data */
@@ -3461,7 +3461,7 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 	const fireDef_t *fd;
 	int first;
 	int objIdx;
-	const objDef_t *obj;
+	objDef_t *obj;
 	int weapFdsIdx, fdIdx;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &objIdx, &weapFdsIdx, &fdIdx);
@@ -3491,7 +3491,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	int flags;
 	int dtime;
 	int objIdx;
-	const objDef_t *obj;
+	objDef_t *obj;
 	int weapFdsIdx, fdIdx;
 
 	/* read data */
@@ -3530,7 +3530,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	pos3_t from, target;
 	int number;
 	int objIdx;
-	const objDef_t *obj;
+	objDef_t *obj;
 	int weapFdsIdx, fdIdx;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &from, &target);
