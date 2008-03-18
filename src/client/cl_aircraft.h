@@ -251,7 +251,7 @@ qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* missi
 qboolean AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
 void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
-void AIR_UpdateHangarCapForAll(int base_idx);
+void AIR_UpdateHangarCapForAll(struct base_s *base);
 qboolean AIR_ScriptSanityCheck(void);
 int AIR_CalculateHangarStorage(int aircraftID, struct base_s *base, int used);
 int CL_AircraftMenuStatsValues(const int value, const int stat);

@@ -635,7 +635,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
 
 			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)] ||
 				base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)])
-				AIR_UpdateHangarCapForAll(baseIdx);
+				AIR_UpdateHangarCapForAll(base);
 
 			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)])
 				base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);

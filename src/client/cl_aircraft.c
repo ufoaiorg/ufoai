@@ -113,17 +113,14 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 
 /**
  * @brief Updates current capacities for hangars in given base.
- * @param[in] base_idx Index of base in global array.
+ * @param[in] base The base we want to update.
  * @note Call this function whenever you sell/loss aircraft in given base.
  * @sa BS_SellAircraft_f
  */
-void AIR_UpdateHangarCapForAll (int base_idx)
+void AIR_UpdateHangarCapForAll (base_t *base)
 {
 	int i;
-	base_t *base;
 	aircraft_t *aircraft;
-
-	base = B_GetBase(base_idx);
 
 	if (!base) {
 #ifdef DEBUG
@@ -131,7 +128,7 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 #endif
 		return;
 	}
-	assert(base);
+
 	/* Reset current capacities for hangar. */
 	base->capacities[CAP_AIRCRAFTS_BIG].cur = 0;
 	base->capacities[CAP_AIRCRAFTS_SMALL].cur = 0;
@@ -847,7 +844,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	/* @todo: Return successful deletion status here. */
 
 	/* update hangar capacities */
-	AIR_UpdateHangarCapForAll(base->idx);
+	AIR_UpdateHangarCapForAll(base);
 }
 
 /**
