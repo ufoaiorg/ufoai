@@ -905,12 +905,12 @@ static qboolean ParseMapEntity (const char *filename)
 	} else if (!strcmp("func_breakable", entName) || !strcmp("func_door", entName) || !strcmp("func_rotating", entName)) {
 		if (mapent->numbrushes == 0) {
 			num_entities--;
-			Com_Printf("%s has no brushes assigned\n", entName);
+			Com_Printf("Warning: %s has no brushes assigned\n", entName);
 		}
 	} else if (!strcmp("worldspawn", entName)) {
 		worldspawnCount++;
 		if (worldspawnCount > 1)
-			Com_Printf("more than one %s in one map\n", entName);
+			Com_Printf("Warning: more than one %s in one map\n", entName);
 	}
 	return qtrue;
 }
