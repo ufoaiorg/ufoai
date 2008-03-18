@@ -154,12 +154,12 @@ char *Curses_Input (void)
 			/* Mark the end of our input */
 			input[inputline][inputpos] = '\0';
 
-			Com_Printf("%c]%s\n", 1, input[historyline]);
+			Com_Printf("%c]%s\n", COLORED_GREEN, input[historyline]);
 
 			/* Flush the command */
 			inputpos = 0;
 			line = inputline;
-			inputline = (inputline + 1) & (CURSES_HISTORYSIZE-1);
+			inputline = (inputline + 1) & (CURSES_HISTORYSIZE - 1);
 			historyline = inputline;
 
 			curses_redraw |= 2;

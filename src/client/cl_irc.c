@@ -754,7 +754,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		}
 
 		if (menu && Q_strcmp(menu->name, "irc")) {
-			Com_Printf("%c<%s@lobby> %s\n", 1, nick, trailing);
+			Com_Printf("%c<%s@lobby> %s\n", COLORED_GREEN, nick, trailing);
 		}
 	}
 }

@@ -834,7 +834,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		/* server info cvars and users are seperated via newline */
 		users = strstr(s, "\n");
 		if (!users) {
-			Com_Printf("%c%s\n", 1, s);
+			Com_Printf("%c%s\n", COLORED_GREEN, s);
 			return;
 		}
 
@@ -888,7 +888,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		Cvar_Set("mn_server_ip", stream_peer_name(stream, buf, sizeof(buf), qtrue));
 		MN_PushMenu("serverinfo");
 	} else
-		Com_Printf("%c%s", 1, s);
+		Com_Printf("%c%s", COLORED_GREEN, s);
 }
 
 /**

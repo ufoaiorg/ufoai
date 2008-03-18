@@ -353,7 +353,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 
 	if (cl.pnum >= 0) {
 		/* seperate the printfs so the server message can have a color */
-/*		Com_Printf("%c%s\n", 2, str);*/
+/*		Com_Printf("%c%s\n", COLORED_GREEN, str);*/
 		/* need to prep refresh at next oportunity */
 		cl.refresh_prepped = qfalse;
 	}
