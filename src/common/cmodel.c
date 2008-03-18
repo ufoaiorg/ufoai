@@ -1423,10 +1423,10 @@ cBspModel_t *CM_InlineModel (const char *name)
 	int i, num, models;
 
 	if (!name || name[0] != '*')
-		Com_Error(ERR_DROP, "CM_InlineModel: bad name");
+		Com_Error(ERR_DROP, "CM_InlineModel: bad name: '%s'", name ? name : "");
 	num = atoi(name + 1) - 1;
-	if (num < 0 || num >= curTile->numcmodels)
-		Com_Error(ERR_DROP, "CM_InlineModel: bad number");
+	if (num < 0 || num >= MAX_MODELS)
+		Com_Error(ERR_DROP, "CM_InlineModel: bad number %i - max inline models are %i", num, MAX_MODELS);
 
 	for (i = 0; i < numTiles; i++) {
 		models = mapTiles[i].numcmodels - LEVEL_STEPON;
