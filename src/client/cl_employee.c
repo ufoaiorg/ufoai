@@ -1426,8 +1426,10 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.weapons = MSG_ReadByte(sb);
 			e->chr.teamDef = NULL;
 			td = MSG_ReadByte(sb);
-			if (td != NONE)
+			if (td != NONE) {
+				assert(csi.numTeamDefs);
 				e->chr.teamDef = &csi.teamDef[td];
+			}
 			e->chr.gender = MSG_ReadByte(sb);
 			e->chr.ucn = MSG_ReadShort(sb);
 			e->chr.maxHP = MSG_ReadShort(sb);
