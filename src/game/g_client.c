@@ -261,7 +261,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
 			gi.WriteByte(check->team);
-			gi.WriteByte(check->chr.teamDefIndex);
+			gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
 			gi.WriteByte(check->chr.gender);
 			gi.WriteByte(check->pnum);
 			gi.WriteGPos(check->pos);
@@ -533,7 +533,7 @@ void G_SendInvisible (player_t* player)
 					gi.AddEvent(P_MASK(player), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->team);
-					gi.WriteByte(ent->chr.teamDefIndex);
+					gi.WriteByte(ent->chr.teamDef ? ent->chr.teamDef->idx : NONE);
 					gi.WriteByte(ent->chr.gender);
 					gi.WriteByte(ent->pnum);
 					gi.WriteGPos(ent->pos);
@@ -2564,7 +2564,7 @@ static inline void G_ClientSkipActorInfo (void)
 
 	gi.ReadShort(); /* HP */
 	gi.ReadShort(); /* maxHP */
-	gi.ReadByte(); /* teamDefIndex */
+	gi.ReadByte(); /* teamDef->idx */
 	gi.ReadByte(); /* gender */
 	gi.ReadByte(); /* STUN */
 	gi.ReadByte(); /* morale */
@@ -2606,6 +2606,7 @@ void G_ClientTeamInfo (player_t * player)
 	int container, x, y;
 	item_t item;
 	int dummyFieldSize = 0;
+	int td;		/**< teamDef_t index */
 
 	/* find a team */
 	G_GetTeam(player);
@@ -2680,7 +2681,11 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.HP = gi.ReadShort();
 			ent->chr.minHP = ent->chr.HP;
 			ent->chr.maxHP = gi.ReadShort();
-			ent->chr.teamDefIndex = gi.ReadByte();
+			ent->chr.teamDef = NULL;
+			td = gi.ReadByte();
+			if (td != NONE)
+				ent->chr.teamDef = &gi.csi->teamDef[td];
+
 			ent->chr.gender = gi.ReadByte();
 			ent->chr.STUN = gi.ReadByte();
 			ent->chr.morale = gi.ReadByte();

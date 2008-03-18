@@ -1218,22 +1218,22 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 
 	assert(chr);
 	assert(!chr->weapons);
-	assert(chr->teamDefIndex >= 0);
-	assert(CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex != NONE);
-	assert(CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex < CSI->numODs);
+	assert(chr->teamDef);
+	assert(chr->teamDef->onlyWeaponIndex != NONE);
+	assert(chr->teamDef->onlyWeaponIndex < CSI->numODs);
 
 	/* Get weapon */
-	obj = &CSI->ods[CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex];
+	obj = &CSI->ods[chr->teamDef->onlyWeaponIndex];
 	assert(obj);
 	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon %i: %s\n",
-	chr->teamDefIndex, CSI->teamDef[chr->teamDefIndex].id, CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex, obj->id);
+	chr->teamDef->idx, chr->teamDef->id, chr->teamDef->onlyWeaponIndex, obj->id);
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
-	item.t = &CSI->ods[CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex];
+	item.t = &CSI->ods[chr->teamDef->onlyWeaponIndex];
 	item.m = item.t;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
-		Sys_Error("INVSH_EquipActorMelee()... melee weapon %s for team %s is not firetwohanded!\n", obj->id, CSI->teamDef[chr->teamDefIndex].id);
+		Sys_Error("INVSH_EquipActorMelee()... melee weapon %s for team %s is not firetwohanded!\n", obj->id, chr->teamDef->id);
 	Com_TryAddToInventory(inv, item, CSI->idRight);
 }
 

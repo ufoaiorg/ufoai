@@ -1311,7 +1311,7 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.skin);
 			MSG_WriteByte(sb, e->chr.armour);
 			MSG_WriteByte(sb, e->chr.weapons);
-			MSG_WriteByte(sb, e->chr.teamDefIndex);
+			MSG_WriteByte(sb, e->chr.teamDef ? e->chr.teamDef->idx : NONE);
 			MSG_WriteByte(sb, e->chr.gender);
 			MSG_WriteShort(sb, e->chr.ucn);
 			MSG_WriteShort(sb, e->chr.maxHP);
@@ -1388,6 +1388,7 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 qboolean E_Load (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
+	int td;	/**< Team-definition index */
 	employee_t* e;
 
 	/* load inventories */
@@ -1423,7 +1424,10 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.empl_type = j;
 			e->chr.armour = MSG_ReadByte(sb);
 			e->chr.weapons = MSG_ReadByte(sb);
-			e->chr.teamDefIndex = MSG_ReadByte(sb);
+			e->chr.teamDef = NULL;
+			td = MSG_ReadByte(sb);
+			if (td != NONE)
+				e->chr.teamDef = &csi.teamDef[td];
 			e->chr.gender = MSG_ReadByte(sb);
 			e->chr.ucn = MSG_ReadShort(sb);
 			e->chr.maxHP = MSG_ReadShort(sb);

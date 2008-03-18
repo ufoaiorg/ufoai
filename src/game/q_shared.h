@@ -548,7 +548,7 @@ typedef enum {
 } nametypes_t;
 
 typedef struct teamDef_s {
-	int index;	/**< The index in the teamDef array. */
+	int idx;			/**< The index in the teamDef array. */
 	char id[MAX_VAR];	/**< id from script file. */
 	char name[MAX_VAR];	/**< Translateable name. */
 	char tech[MAX_VAR];	/**< technology_t id from research.ufo */

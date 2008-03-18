@@ -311,7 +311,7 @@ static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * atta
 			|| target->type == ET_DOOR);
 
 
-	isRobot = gi.csi->teamDef[target->chr.teamDefIndex].robot;
+	isRobot = target->chr.teamDef->robot;
 
 	/* Breakables are immune to stun & shock damage. */
 	if ((stunEl || stunGas || shock || mock) && (target->type == ET_BREAKABLE || target->type == ET_DOOR))

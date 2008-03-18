@@ -481,9 +481,9 @@ typedef struct ugv_s {
 
 /** @brief Describes a rank that a recruit can gain */
 typedef struct rank_s {
-	char *id;		/**< Index in gd.ranks */
+	char *id;		/**< Unique identifier as parsed from the ufo files. */
 	char name[MAX_VAR];	/**< Rank name (Captain, Squad Leader) */
-	char shortname[8];		/**< Rank shortname (Cpt, Sqd Ldr) */
+	char shortname[8];	/**< Rank shortname (Cpt, Sqd Ldr) */
 	char *image;		/**< Image to show in menu */
 	int type;			/**< employeeType_t */
 	int mind;			/**< character mind attribute needed */
@@ -641,7 +641,7 @@ typedef struct character_s {
 	qboolean armour;			/**< Able to use armour. */
 	qboolean weapons;			/**< Able to use weapons. */
 
-	int teamDefIndex;			/**< teamDef array index. */
+	teamDef_t *teamDef;			/**< Pointer to team definition. */
 	int gender;					/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */

@@ -895,8 +895,8 @@ static void AC_AlienClick_f (void)
 	Cvar_Set("mn_al_alienimage", tech->image_top);
 	assert(aliencontCurrent->teamDef);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
-	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->index, qtrue));
-	Cvar_SetValue("mn_al_dead", AL_CountForMenu(aliencontCurrent->teamDef->index, qfalse));
+	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue));
+	Cvar_SetValue("mn_al_dead", AL_CountForMenu(aliencontCurrent->teamDef->idx, qfalse));
 }
 
 

@@ -1655,6 +1655,7 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
 static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int version)
 {
 	int i, num;
+	int td; /**< Team-definition index. */
 
 	/* unique character number */
 	chr->fieldSize = MSG_ReadByte(sb);
@@ -1671,7 +1672,10 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 
 	chr->HP = MSG_ReadShort(sb);
 	chr->maxHP = MSG_ReadShort(sb);
-	chr->teamDefIndex = MSG_ReadByte(sb);
+	chr->teamDef = NULL;
+	td = MSG_ReadByte(sb);
+	if (td != NONE)
+		chr->teamDef = &csi.teamDef[td];
 	chr->gender = MSG_ReadByte(sb);
 	chr->STUN = MSG_ReadByte(sb);
 	chr->morale = MSG_ReadByte(sb);
@@ -1891,7 +1895,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 
 		MSG_WriteShort(buf, chr->HP);
 		MSG_WriteShort(buf, chr->maxHP);
-		MSG_WriteByte(buf, chr->teamDefIndex);
+		MSG_WriteByte(buf, chr->teamDef ? chr->teamDef->idx : NONE);
 		MSG_WriteByte(buf, chr->gender);
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->morale);
@@ -1965,7 +1969,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 
 		NET_WriteShort(buf, chr->HP);
 		NET_WriteShort(buf, chr->maxHP);
-		NET_WriteByte(buf, chr->teamDefIndex);
+		NET_WriteByte(buf, chr->teamDef ? chr->teamDef->idx : NONE);
 		NET_WriteByte(buf, chr->gender);
 		NET_WriteByte(buf, chr->STUN);
 		NET_WriteByte(buf, chr->morale);

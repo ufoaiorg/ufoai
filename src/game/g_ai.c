@@ -410,8 +410,8 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		return AI_ACTION_NOTHING_FOUND;
 
 	/* check whether this civilian can use weapons */
-	if (ent->chr.teamDefIndex >= 0) {
-		teamDef = &gi.csi->teamDef[ent->chr.teamDefIndex];
+	if (ent->chr.teamDef) {
+		teamDef = ent->chr.teamDef;
 		if (ent->state & ~STATE_PANIC && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
@@ -729,7 +729,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			/* pack equipment */
 			if (ent->chr.weapons)	/* actor can handle equipment */
 				INVSH_EquipActor(&ent->i, ed->num, MAX_OBJDEFS, name, &ent->chr);
-			else if (ent->chr.teamDefIndex >= 0)
+			else if (ent->chr.teamDef)
 				/* actor cannot handle equipment */
 				INVSH_EquipActorMelee(&ent->i, &ent->chr);
 			else

@@ -1474,8 +1474,8 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 		if (!Q_strncmp(team, csi.teamDef[i].id, MAX_VAR))
 			break;
 
-	/* if no team was found this should be -1 for error checking */
-	chr->teamDefIndex = -1;
+	/* If no team was found this should be NULL for error checking. */
+	chr->teamDef = NULL;
 
 	if (i < csi.numTeamDefs)
 		td = &csi.teamDef[i];
@@ -1496,7 +1496,7 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 	}
 	chr->weapons = td->weapons;
 	chr->armour = td->armour;
-	chr->teamDefIndex = i;
+	chr->teamDef = &csi.teamDef[i];
 
 	/* get the models */
 	while (retry--) {
@@ -1792,7 +1792,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 		if (csi.numTeamDefs < MAX_TEAMDEFS) {
 			memset(td, 0, sizeof(teamDef_t));
 			/* index backlink */
-			td->index = csi.numTeamDefs;
+			td->idx = csi.numTeamDefs;
 			csi.numTeamDefs++;
 		} else {
 			Com_Printf("CL_ParseTeam: Too many team definitions, '%s' ignored.\n", name);
