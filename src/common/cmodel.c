@@ -1438,8 +1438,7 @@ cBspModel_t *CM_InlineModel (const char *name)
 			return &mapTiles[i].cmodels[LEVEL_STEPON + num];
 	}
 
-	Com_Printf("CM_InlineModel: cannot find model %s\n", name);
-	Com_Error(ERR_DROP, "CM_InlineModel: impossible error ;)");
+	Com_Error(ERR_DROP, "CM_InlineModel: Error cannot find model '%s'\n", name);
 	return NULL;
 }
 
