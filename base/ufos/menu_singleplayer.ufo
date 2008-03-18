@@ -1027,6 +1027,6 @@ menu endgame
 	zone leave
 	{
 		size	"1024 768"
-		click	{ cmd "mn_pop;mn_push main;seq_start credits;" }
+		click	{ cmd "mn_pop; seq_start credits;" }
 	}
 }

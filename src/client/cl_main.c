@@ -281,17 +281,21 @@ void CL_Drop (void)
 
 	/* make sure that we are in the correct menus in singleplayer after
 	 * dropping the game due to a failure */
-	if (ccs.singleplayer && curCampaign) {
-		Cvar_Set("mn_main", "singleplayerInGame");
-		Cvar_Set("mn_active", "map");
-		MN_PushMenu("singleplayerInGame");
+	if (ccs.singleplayer) {
+		if (curCampaign) {
+			Cvar_Set("mn_main", "singleplayerInGame");
+			Cvar_Set("mn_active", "map");
+		} else {
+			Cvar_Set("mn_main", "main");
+			Cvar_Set("mn_active", "main");
+		}
 	} else {
 		Cvar_Set("mn_main", "main");
-		Cvar_Set("mn_active", "");
-		MN_PushMenu("multiplayer");
-		/* the main menu may have a init node - execute it */
-		Cbuf_Execute();
+		Cvar_Set("mn_active", "multiplayer");
 	}
+	MN_PushMenu(Cvar_VariableString("mn_main"));
+	/* the main menu may have a init node - execute it */
+	Cbuf_Execute();
 
 	if (*mn_afterdrop->string) {
 		MN_PushMenu(mn_afterdrop->string);
