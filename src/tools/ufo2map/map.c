@@ -836,7 +836,9 @@ static qboolean ParseMapEntity (const char *filename)
 {
 	entity_t *mapent;
 	epair_t *e;
+	const char *entName;
 	int startbrush, startsides;
+	static int worldspawnCount = 0;
 
 	if (!GetToken(qtrue))
 		return qfalse;
@@ -895,12 +897,21 @@ static qboolean ParseMapEntity (const char *filename)
 
 	/* group entities are just for editor convenience
 	 * toss all brushes into the world entity */
-	if (!strcmp("func_group", ValueForKey(mapent, "classname"))) {
+	entName = ValueForKey(mapent, "classname");
+	if (!strcmp("func_group", entName)) {
 		MoveBrushesToWorld(mapent);
 		mapent->numbrushes = 0;
 		num_entities--;
+	} else if (!strcmp("func_breakable", entName) || !strcmp("func_door", entName) || !strcmp("func_rotating", entName)) {
+		if (mapent->numbrushes == 0) {
+			num_entities--;
+			Com_Printf("%s has no brushes assigned\n", entName);
+		}
+	} else if (!strcmp("worldspawn", entName)) {
+		worldspawnCount++;
+		if (worldspawnCount > 1)
+			Com_Printf("more than one %s in one map\n", entName);
 	}
-
 	return qtrue;
 }
 
