@@ -96,16 +96,18 @@ typedef enum {
 /** @brief slot of aircraft */
 typedef struct aircraftSlot_s {
 	int idx;					/**< self link */
-	int aircraftIdx;			/**< Global index of this aircraft. See also gd.numAircraft. */
+	struct base_s *base;		/**< A link to the base. (if defined by aircraftItemType_t) */
+	struct aircraft_s *aircraft;		/**< A link to the aircraft (if defined by aircraftItemType_t). */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
-	int itemIdx;				/**< The index in csi.ods[] of item that is currently in the slot. -1 if empty */
-	int ammoIdx;				/**< The index in csi.ods[] of the ammo that is currently in the slot. -1 if empty */
+
+	objDef_t *item;				/**< Item that is currently in the slot. NULL if empty. */
+	objDef_t *ammo;				/**< Ammo that is currently in the slot. NULL if empty. */
 	itemWeight_t size;			/**< The maximum size (weight) of item that can fit in this slot. */
 	int ammoLeft;				/**< The number of ammo left in this slot */
 	int delayNextShot;			/**< The delay before the next projectile can be shot */
 	int installationTime;		/**< The time (in hours) left before the item is finished to be installed or removed in/from slot
 								  *	This is > 0 if the item is being installed, < 0 if the item is being removed, 0 if the item is in place */
-	int nextItemIdx;			/**< Indice in csi.ods[] of the next item to install when the current item in slot will be removed
+	objDef_t *nextItem;			/**< Next item to install when the current item in slot will be removed
 								  *	(Should be used only if installationTime is different of 0 */
 	itemPos_t pos;				/**< Position of the slot on the aircraft */
 } aircraftSlot_t;
@@ -241,7 +243,7 @@ qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, int employee_idx, empl
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIdx(int idx);
-int AII_GetAircraftItemByID(const char *id);
+objDef_t *AII_GetAircraftItemByID(const char *id);
 qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
 void AII_ReloadWeapon(aircraft_t *aircraft);

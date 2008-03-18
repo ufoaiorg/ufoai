@@ -859,6 +859,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 void UP_Article (technology_t* tech, eventMail_t *mail)
 {
 	int i;
+	objDef_t *item;
 
 	MN_MenuTextReset(TEXT_UFOPEDIA);
 	MN_MenuTextReset(TEXT_LIST);
@@ -916,8 +917,8 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 					UP_AircraftDescription(tech);
 					break;
 				case RS_CRAFTITEM:
-					i = AII_GetAircraftItemByID(tech->provides);
-					UP_AircraftItemDescription(i);
+					item = AII_GetAircraftItemByID(tech->provides);
+					UP_AircraftItemDescription(item->idx);
 					break;
 				case RS_BUILDING:
 					UP_BuildingDescription(tech);

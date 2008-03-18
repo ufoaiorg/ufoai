@@ -64,7 +64,7 @@ inline fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, int weapFdsIdx, int fd
 	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
 		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i]\n", fdIdx);
 #endif
-	return (fireDef_t*)&obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF-1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON-1)];
+	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF-1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON-1)];
 }
 
 /**
@@ -900,7 +900,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const objDef_t* weap
 #endif
 
 	assert(Q_strcmp(weapon->type, "armour"));
-	item.t = (objDef_t *)weapon;
+	item.t = weapon;
 
 	/* are we going to allow trying the left hand */
 	allowLeft = !(inv->c[CSI->idRight] && inv->c[CSI->idRight]->item.t->fireTwoHanded);
@@ -911,7 +911,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const objDef_t* weap
 		if (weapon->oneshot) {
 			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 			item.a = weapon->ammo;
-			item.m = (objDef_t *)weapon;
+			item.m = weapon;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, name);
 		} else {
 			max_price = 0;
@@ -930,7 +930,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const objDef_t* weap
 			}
 			/* load ammo */
 			item.a = weapon->ammo;
-			item.m = (objDef_t *)ammo;
+			item.m = ammo;
 		}
 	}
 
@@ -983,7 +983,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const objDef_t* weap
 			while (num--) {
 				item_t mun = {NONE_AMMO, NULL, NULL, 0, 0};
 
-				mun.t = (objDef_t *)ammo;
+				mun.t = ammo;
 				/* ammo to backpack; belt is for knives and grenades */
 				numpacked += Com_TryAddToInventory(inv, mun, CSI->idBackpack);
 				/* no problem if no space left; one ammo already loaded */

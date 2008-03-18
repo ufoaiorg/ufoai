@@ -3326,17 +3326,17 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebuf_t* sb)
 {
 	int i;
-	int ammoIdx;
+	objDef_t *ammo;
 
 	for (i = 0; i < num; i++) {
-		if (slot[i].itemIdx != NONE) {
-			ammoIdx = slot[i].ammoIdx;
-			MSG_WriteString(sb, csi.ods[slot[i].itemIdx].id);
+		if (slot[i].item) {
+			ammo = slot[i].ammo;
+			MSG_WriteString(sb, slot[i].item->id);
 			MSG_WriteShort(sb, slot[i].ammoLeft);
 			MSG_WriteShort(sb, slot[i].delayNextShot);
 			MSG_WriteShort(sb, slot[i].installationTime);
 			/* if there is no ammo MSG_WriteString will write an empty string */
-			MSG_WriteString(sb, ammoIdx != NONE ? csi.ods[ammoIdx].id : "");
+			MSG_WriteString(sb, ammo ? ammo->id : "");
 		} else {
 			MSG_WriteString(sb, "");
 			MSG_WriteShort(sb, -1);	/* must be the same value as in AII_InitialiseSlot */
@@ -3421,9 +3421,9 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 			/* save shield slots - currently only one */
 			MSG_WriteByte(sb, 1);
-			if (aircraft->shield.itemIdx != NONE) {
-				assert(aircraft->shield.itemIdx < csi.numODs);
-				MSG_WriteString(sb, csi.ods[aircraft->shield.itemIdx].id);
+			if (aircraft->shield.item) {
+				assert(aircraft->shield.item);
+				MSG_WriteString(sb, aircraft->shield.item->id);
 				MSG_WriteShort(sb, aircraft->shield.installationTime);
 			} else {
 				MSG_WriteString(sb, "");
@@ -3432,9 +3432,9 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			/* save electronics slots */
 			MSG_WriteByte(sb, aircraft->maxElectronics);
 			for (l = 0; l < aircraft->maxElectronics; l++) {
-				if (aircraft->electronics[l].itemIdx != NONE) {
-					assert(aircraft->electronics[l].itemIdx < csi.numODs);
-					MSG_WriteString(sb, csi.ods[aircraft->electronics[l].itemIdx].id);
+				if (aircraft->electronics[l].item) {
+					assert(aircraft->electronics[l].item);
+					MSG_WriteString(sb, aircraft->electronics[l].item->id);
 					MSG_WriteShort(sb, aircraft->electronics[l].installationTime);
 				} else {
 					MSG_WriteString(sb, "");
@@ -3554,9 +3554,9 @@ static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* t
 		slot[i].installationTime = MSG_ReadShort(sb);
 		tech = RS_GetTechByProvided(MSG_ReadString(sb));
 		if (tech)
-			slot[i].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+			slot[i].ammo = AII_GetAircraftItemByID(tech->provides);
 		else
-			slot[i].ammoIdx = NONE;
+			slot[i].ammo = NULL;
 		if (targets) {
 			/* read target of this weapon */
 			targets[i] = MSG_ReadShort(sb);

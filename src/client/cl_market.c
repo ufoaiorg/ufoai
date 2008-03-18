@@ -916,18 +916,18 @@ static void BS_SellAircraft_f (void)
 		if (found) {
 			/* sell off any items which are mounted on it */
 			for (j = 0; j < aircraft->maxWeapons; j++) {
-				BS_ProcessCraftItemSale(aircraft->weapons[j].itemIdx);
-				BS_ProcessCraftItemSale(aircraft->weapons[j].ammoIdx);
+				BS_ProcessCraftItemSale(aircraft->weapons[j].item->idx);
+				BS_ProcessCraftItemSale(aircraft->weapons[j].ammo->idx);
 			}
 
-			BS_ProcessCraftItemSale(aircraft->shield.itemIdx);
+			BS_ProcessCraftItemSale(aircraft->shield.item->idx);
 			/* there should be no ammo here, but checking can't hurt */
-			BS_ProcessCraftItemSale(aircraft->shield.ammoIdx);
+			BS_ProcessCraftItemSale(aircraft->shield.ammo->idx);
 
 			for (j = 0; j < aircraft->maxElectronics; j++) {
-				BS_ProcessCraftItemSale(aircraft->electronics[j].itemIdx);
+				BS_ProcessCraftItemSale(aircraft->electronics[j].item->idx);
 				/* there should be no ammo here, but checking can't hurt */
-				BS_ProcessCraftItemSale(aircraft->electronics[j].ammoIdx);
+				BS_ProcessCraftItemSale(aircraft->electronics[j].ammo->idx);
 			}
 
 			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);

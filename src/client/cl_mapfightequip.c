@@ -129,7 +129,7 @@ static void AIM_CheckAirequipID (void)
 static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 {
 	/* You can choose an ammo only if a weapon has already been selected */
-	if (airequipID >= AC_ITEM_AMMO && slot->itemIdx == NONE) {
+	if (airequipID >= AC_ITEM_AMMO && !slot->item) {
 		airequipSelectedZone = ZONE_MAIN;
 		switch (airequipID) {
 		case AC_ITEM_AMMO:
@@ -148,7 +148,7 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 	}
 
 	/* You can select an item to install after removing only if you're removing an item */
-	if (airequipSelectedZone == ZONE_NEXT && (slot->installationTime >= 0 || slot->itemIdx == NONE)) {
+	if (airequipSelectedZone == ZONE_NEXT && (slot->installationTime >= 0 || !slot->item)) {
 		airequipSelectedZone = ZONE_MAIN;
 		switch (airequipID) {
 		case AC_ITEM_AMMO:
@@ -243,7 +243,7 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
  */
 static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, technology_t *tech)
 {
-	int itemIdx;
+	objDef_t *item;
 	aircraftSlot_t *slot;
 
 	if (aircraft)
@@ -259,33 +259,33 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
 
-	itemIdx = AII_GetAircraftItemByID(tech->provides);
-	if (itemIdx == NONE)
+	item = AII_GetAircraftItemByID(tech->provides);
+	if (!item)
 		return qfalse;
 
 	/* you can choose an ammo only if it fits the weapons installed in this slot */
 	if (airequipID >= AC_ITEM_AMMO) {
 		/* FIXME: This only works for ammo that is useable in exactly one weapon
 		 * check the weap_idx array and not only the first value */
-		if (csi.ods[itemIdx].weapons[0]->idx != slot->itemIdx)
+		if (item->weapons[0] != slot->item)
 			return qfalse;
 	}
 
 	/* you can install an item only if its weight is small enough for the slot */
-	if (AII_GetItemWeightBySize(&csi.ods[itemIdx]) > slot->size)
+	if (AII_GetItemWeightBySize(item) > slot->size)
 		return qfalse;
 
 	/* you can't install an item that you don't possess
 	 * missiles does not need to be possessed */
 	if (aircraft) {
-		if (aircraft->homebase->storage.num[itemIdx] <= 0)
+		if (aircraft->homebase->storage.num[item->idx] <= 0)
 			return qfalse;
-	} else if (base->storage.num[itemIdx] <= 0 && !csi.ods[itemIdx].notOnMarket)
+	} else if (base->storage.num[item->idx] <= 0 && !item->notOnMarket)
 			return qfalse;
 
 	/* you can't install an item that does not have an installation time (alien item)
 	 * except for ammo which does not have installation time */
-	if (csi.ods[itemIdx].craftitem.installationTime == -1 && airequipID < AC_ITEM_AMMO)
+	if (item->craftitem.installationTime == -1 && airequipID < AC_ITEM_AMMO)
 		return qfalse;
 
 	return qtrue;
@@ -460,7 +460,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenseType_t basedefType, int idx)
 			memmove(base->batteries + idx, base->batteries + idx + 1, sizeof(aircraftSlot_t) * (base->maxBatteries - idx - 1));
 		base->maxBatteries--;
 		/* just for security */
-		AII_InitialiseSlot(base->batteries + base->maxBatteries, base->idx, AC_ITEM_BASE_MISSILE);
+		AII_InitialiseSlot(base->batteries + base->maxBatteries, NULL, base, AC_ITEM_BASE_MISSILE);
 		break;
 	case BASEDEF_LASER: /* this is a laser battery */
 		/* we must have at least one laser battery to remove it */
@@ -471,7 +471,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenseType_t basedefType, int idx)
 			memmove(base->lasers + idx, base->lasers + idx + 1, sizeof(aircraftSlot_t) * (base->maxLasers - idx - 1));
 		base->maxLasers--;
 		/* just for security */
-		AII_InitialiseSlot(base->lasers + base->maxLasers, base->idx, AC_ITEM_BASE_LASER);
+		AII_InitialiseSlot(base->lasers + base->maxLasers, NULL, base, AC_ITEM_BASE_LASER);
 		break;
 	default:
 		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defense system.\n");
@@ -569,8 +569,8 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 	int i;
 
 	for (i = 0; i < MAX_BASE_SLOT; i++) {
-		AII_InitialiseSlot(base->batteries + i, base->idx, AC_ITEM_BASE_MISSILE);
-		AII_InitialiseSlot(base->lasers + i, base->idx, AC_ITEM_BASE_LASER);
+		AII_InitialiseSlot(base->batteries + i, NULL, base, AC_ITEM_BASE_MISSILE);
+		AII_InitialiseSlot(base->lasers + i, NULL, base, AC_ITEM_BASE_LASER);
 		base->targetMissileIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 		base->targetLaserIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 	}
@@ -696,10 +696,10 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
 		else {
 			for (i = 0; i < baseCurrent->maxBatteries; i++) {
-				if (baseCurrent->batteries[i].itemIdx == NONE)
+				if (!baseCurrent->batteries[i].item)
 					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 				else {
-					item = csi.ods + baseCurrent->batteries[i].itemIdx;
+					item = baseCurrent->batteries[i].item;
 					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
 				}
 			}
@@ -710,10 +710,10 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
 		else {
 			for (i = 0; i < baseCurrent->maxLasers; i++) {
-				if (baseCurrent->lasers[i].itemIdx == NONE)
+				if (!baseCurrent->lasers[i].item)
 					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 				else {
-					item = csi.ods + baseCurrent->lasers[i].itemIdx;
+					item = baseCurrent->lasers[i].item;
 					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
 				}
 			}
@@ -726,12 +726,12 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
-	if (slot->itemIdx == NONE) {
+	if (!slot->item) {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No defense system assigned.\n"));
 		/* Weight are not used for base defense atm
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1)); */
 	} else {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(csi.ods[slot->itemIdx].tech->name));
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(slot->item->tech->name));
 		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, _("This defense system is functional.\n"), sizeof(smallbuffer1));
@@ -743,29 +743,31 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
 	/* Second slot: next item to install when the first one will be removed */
-	if (slot->itemIdx != NONE && slot->installationTime < 0) {
-		if (slot->nextItemIdx == NONE)
+	if (slot->item && slot->installationTime < 0) {
+		if (!slot->nextItem)
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No defense system assigned."));
 		else {
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(csi.ods[slot->nextItemIdx].tech->name));
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(slot->nextItem->tech->name));
 			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This defense system will be operational in %i hours.\n"), csi.ods[slot->nextItemIdx].craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
+			Q_strcat(smallbuffer2, va(_("This defense system will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
 		}
-	} else
+	} else {
 		*smallbuffer2 = '\0';
+	}
 	mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
 
 	/* Third slot: ammo slot (only used for weapons) */
-	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->itemIdx != NONE) {
-		if (slot->ammoIdx == NONE)
+	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->item) {
+		if (!slot->ammo)
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defense system."));
 		else
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(csi.ods[slot->ammoIdx].tech->name));
+			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(slot->ammo->tech->name));
 		/* show remaining missile in battery for missiles */
 		if ((airequipID == AC_ITEM_AMMO_MISSILE) || (airequipID == AC_ITEM_BASE_MISSILE))
 			Q_strcat(smallbuffer3, va(ngettext(" (%i missile left)", " (%i missiles left)", slot->ammoLeft), slot->ammoLeft), sizeof(smallbuffer3));
-	} else
+	} else {
 		*smallbuffer3 = '\0';
+	}
 	mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
 
 	/* Draw selected zone */
@@ -842,11 +844,11 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
 				/* Only stop time and post a notice, if no new item to install is assigned */
-				if (slot->itemIdx == NONE) {
+				if (!slot->item) {
 					MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully removed."), qfalse, MSG_STANDARD, NULL);
 					CL_GameTimeStop();
 				}
-			} else if (slot->itemIdx == NONE) {
+			} else if (!slot->item) {
 				MN_AddNewMessage(_("Notice"), _("Base defense item was successfully removed."), qfalse, MSG_STANDARD, NULL);
 				CL_GameTimeStop();
 			}
@@ -968,9 +970,9 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 						Vector2Set(node->texl, 0, 0);
 						Vector2Set(node->texh, 64, 64);
 					}
-					if (slot->itemIdx >= 0) {
-						assert(csi.ods[slot->itemIdx].tech);
-						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), csi.ods[slot->itemIdx].tech->mdl_top);
+					if (slot->item) {
+						assert(slot->item->tech);
+						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), slot->item->tech->mdl_top);
 					} else
 						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 				}
@@ -1088,11 +1090,11 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
-	if (slot->itemIdx == NONE) {
+	if (!slot->item) {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 	} else {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(csi.ods[slot->itemIdx].tech->name));
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(slot->item->tech->name));
 		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
@@ -1104,29 +1106,30 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
 	/* Second slot: next item to install when the first one will be removed */
-	if (slot->itemIdx != NONE && slot->installationTime < 0) {
-		if (slot->nextItemIdx == NONE)
+	if (slot->item && slot->installationTime < 0) {
+		if (!slot->nextItem)
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No item assigned."));
 		else {
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(csi.ods[slot->nextItemIdx].tech->name));
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(slot->nextItem->tech->name));
 			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), csi.ods[slot->nextItemIdx].craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
+			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
 		}
 	} else
 		*smallbuffer2 = '\0';
 	mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
 
 	/* Third slot: ammo slot (only used for weapons) */
-	if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->itemIdx != NONE) {
-		if (slot->ammoIdx == NONE) {
+	if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->item) {
+		if (!slot->ammo) {
 			AIM_EmphazeAmmoSlotText();
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon."));
 		} else {
 			AIM_NoEmphazeAmmoSlotText();
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(csi.ods[slot->ammoIdx].tech->name));
+			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(slot->ammo->tech->name));
 		}
-	} else
+	} else {
 		*smallbuffer3 = '\0';
+	}
 	mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
 
 	/* Draw existing slots for this aircraft */
@@ -1234,19 +1237,19 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	/* a weapon was selected - select ammo type corresponding to this weapon */
 	case AC_ITEM_WEAPON:
 		if (zone == ZONE_AMMO) {
-			if (slot->itemIdx != NONE)
+			if (slot->item)
 				airequipID = AC_ITEM_AMMO;
 		}
 		break;
 	case AC_ITEM_BASE_MISSILE:
 		if (zone == ZONE_AMMO) {
-			if (slot->itemIdx != NONE)
+			if (slot->item)
 				airequipID = AC_ITEM_AMMO_MISSILE;
 		}
 		break;
 	case AC_ITEM_BASE_LASER:
 		if (zone == ZONE_AMMO) {
-			if (slot->itemIdx != NONE)
+			if (slot->item)
 				airequipID = AC_ITEM_AMMO_LASER;
 		}
 		break;
@@ -1290,43 +1293,42 @@ void AIM_AircraftEquipZoneSelect_f (void)
  */
 static void AIM_AutoAddAmmo (base_t *base, aircraft_t *aircraft, aircraftSlot_t *slot)
 {
-	int k, itemIdx;
+	int k;
 	technology_t *ammo_tech;
 	objDef_t *ammo;
+	objDef_t *item;
 
 	assert(slot);
 
-	/* Get idx of the weapon */
-	itemIdx = slot->itemIdx;
+	/* Get the weapon */
+	item = slot->item;
 
-	if (itemIdx == NONE)
+	if (!item)
 		return;
 
-	if (csi.ods[itemIdx].craftitem.type > AC_ITEM_WEAPON)
+	if (item->craftitem.type > AC_ITEM_WEAPON)
 		return;
 
 	/* don't try to add ammo to a slot that already has ammo */
-	if (slot->ammoIdx != NONE)
+	if (slot->ammo)
 		return;
 
-	if (itemIdx != NONE) {
-		/* Try every ammo usable with this weapon until we find one we have in storage */
-		for (k = 0; k < csi.ods[itemIdx].numAmmos; k++) {
-			ammo = csi.ods[itemIdx].ammos[k];
-			if (ammo) {
-				ammo_tech = ammo->tech;
-				if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {
-					AII_AddAmmoToSlot(ammo->notOnMarket ? NULL : base, ammo_tech, slot);
-					/* base missile are free, you have 20 when you build a new base defense */
-					if (csi.ods[itemIdx].craftitem.type == AC_ITEM_BASE_MISSILE && (slot->ammoLeft < 0)) {
-						/* we use < 0 here, and not <= 0, because we give missiles only on first build
-						 * (not when player removes base defense and re-add it)
-						 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
-						slot->ammoLeft = 20;
-					} else if (aircraft)
-						AII_ReloadWeapon(aircraft);
-					break;
-				}
+	/* Try every ammo usable with this weapon until we find one we have in storage */
+	for (k = 0; k < item->numAmmos; k++) {
+		ammo = item->ammos[k];
+		if (ammo) {
+			ammo_tech = ammo->tech;
+			if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {
+				AII_AddAmmoToSlot(ammo->notOnMarket ? NULL : base, ammo_tech, slot);
+				/* base missile are free, you have 20 when you build a new base defense */
+				if (item->craftitem.type == AC_ITEM_BASE_MISSILE && (slot->ammoLeft < 0)) {
+					/* we use < 0 here, and not <= 0, because we give missiles only on first build
+					 * (not when player removes base defense and re-add it)
+					 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
+					slot->ammoLeft = 20;
+				} else if (aircraft)
+					AII_ReloadWeapon(aircraft);
+				break;
 			}
 		}
 	}
@@ -1347,41 +1349,41 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 
 	if (ammo) {
 		/* only remove the ammo */
-		if (slot->ammoIdx != NONE) {
+		if (slot->ammo) {
 			if (base)
-				B_UpdateStorageAndCapacity(base, slot->ammoIdx, 1, qfalse, qfalse);
-			slot->ammoIdx = NONE;
+				B_UpdateStorageAndCapacity(base, slot->ammo->idx, 1, qfalse, qfalse);
+			slot->ammo = NULL;
 		}
-	} else if (slot->itemIdx != NONE) {
+	} else if (slot->item) {
 		if (base)
-			B_UpdateStorageAndCapacity(base, slot->itemIdx, 1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, slot->item->idx, 1, qfalse, qfalse);
 		/* the removal is over */
-		if (slot->nextItemIdx != NONE) {
+		if (slot->nextItem) {
 			/* there is anoter item to install after this one */
-			slot->itemIdx = slot->nextItemIdx;
+			slot->item = slot->nextItem;
 			if (base) {
 				/* remove next item from storage (maybe we don't have anymore item ?) */
-				if (B_UpdateStorageAndCapacity(base, slot->nextItemIdx, -1, qfalse, qfalse)) {
-					slot->itemIdx = slot->nextItemIdx;
-					slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
+				if (B_UpdateStorageAndCapacity(base, slot->nextItem->idx, -1, qfalse, qfalse)) {
+					slot->item = slot->nextItem;
+					slot->installationTime = slot->item->craftitem.installationTime;
 				} else {
-					slot->itemIdx = NONE;
+					slot->item = NULL;
 					slot->installationTime = 0;
 				}
 			} else {
-				slot->itemIdx = slot->nextItemIdx;
-				slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
+				slot->item = slot->nextItem;
+				slot->installationTime = slot->item->craftitem.installationTime;
 			}
-			slot->nextItemIdx = NONE;
+			slot->nextItem = NULL;
 		} else {
-			slot->itemIdx = NONE;
+			slot->item = NULL;
 			slot->installationTime = 0;
 		}
 		/* also remove ammo */
-		if (slot->ammoIdx != NONE) {
+		if (slot->ammo) {
 			if (base)
-				B_UpdateStorageAndCapacity(base, slot->ammoIdx, 1, qfalse, qfalse);
-			slot->ammoIdx = NONE;
+				B_UpdateStorageAndCapacity(base, slot->ammo->idx, 1, qfalse, qfalse);
+			slot->ammo = NULL;
 		}
 	}
 }
@@ -1396,33 +1398,33 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
  */
 qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
 {
-	int ammoIdx;
+	objDef_t *ammo;
 
 	assert(slot);
 	assert(tech);
 
-	ammoIdx = AII_GetAircraftItemByID(tech->provides);
-	if (ammoIdx == NONE) {
+	ammo = AII_GetAircraftItemByID(tech->provides);
+	if (!ammo) {
 		Com_Printf("AII_AddAmmoToSlot: Could not add item (%s) to slot\n", tech->provides);
 		return qfalse;
 	}
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO
 	 * and base ammo defense are not stored in storage */
-	if (base && csi.ods[ammoIdx].craftitem.type <= AC_ITEM_AMMO) {
-		if (base->storage.num[ammoIdx] <= 0) {
-			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", csi.ods[ammoIdx].id);
+	if (base && ammo->craftitem.type <= AC_ITEM_AMMO) {
+		if (base->storage.num[ammo->idx] <= 0) {
+			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", ammo->id);
 			return qfalse;
 		}
 	}
 
 	/* remove any applied ammo in the current slot */
 	AII_RemoveItemFromSlot(base, slot, qtrue);
-	slot->ammoIdx = ammoIdx;
+	slot->ammo = ammo;
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
-	if (base && csi.ods[ammoIdx].craftitem.type <= AC_ITEM_AMMO)
-		B_UpdateStorageAndCapacity(base, ammoIdx, -1, qfalse, qfalse);
+	if (base && ammo->craftitem.type <= AC_ITEM_AMMO)
+		B_UpdateStorageAndCapacity(base, ammo->idx, -1, qfalse, qfalse);
 
 	return qtrue;
 }
@@ -1435,20 +1437,20 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
  */
 qboolean AII_AddItemToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
 {
-	int itemIdx;
+	objDef_t *item;
 
 	assert(slot);
 	assert(tech);
 
-	itemIdx = AII_GetAircraftItemByID(tech->provides);
-	if (itemIdx == NONE) {
+	item = AII_GetAircraftItemByID(tech->provides);
+	if (!item) {
 		Com_Printf("AII_AddItemToSlot: Could not add item (%s) to slot\n", tech->provides);
 		return qfalse;
 	}
 
 	/* Sanity check : the type of the item should be the same than the slot type */
-	if (slot->type != csi.ods[itemIdx].craftitem.type) {
-		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s -- %i) doesn't match type of the slot (%i)\n", csi.ods[itemIdx].id, csi.ods[itemIdx].craftitem.type, slot->type);
+	if (slot->type != item->craftitem.type) {
+		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s -- %i) doesn't match type of the slot (%i)\n", item->id, item->craftitem.type, slot->type);
 		return qfalse;
 	}
 
@@ -1456,29 +1458,29 @@ qboolean AII_AddItemToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	/* Sanity check : the type of the item cannot be an ammo */
 	/* note that this should never be reached because a slot type should never be an ammo
 	 * , so the test just before should be wrong */
-	if (csi.ods[itemIdx].craftitem.type >= AC_ITEM_AMMO) {
-		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s) should be a weapon, a shield, or electronics (no ammo)\n", csi.ods[itemIdx].id);
+	if (item->craftitem.type >= AC_ITEM_AMMO) {
+		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s) should be a weapon, a shield, or electronics (no ammo)\n", item->id);
 		return qfalse;
 	}
 #endif
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 	if (base) {
-		if (base->storage.num[itemIdx] <= 0) {
-			Com_Printf("AII_AddItemToSlot: No more item of this type to equip (%s)\n", csi.ods[itemIdx].id);
+		if (base->storage.num[item->idx] <= 0) {
+			Com_Printf("AII_AddItemToSlot: No more item of this type to equip (%s)\n", item->id);
 			return qfalse;
 		}
 	}
 
-	if (slot->size >= AII_GetItemWeightBySize(&csi.ods[itemIdx])) {
-		slot->itemIdx = itemIdx;
-		slot->installationTime = csi.ods[itemIdx].craftitem.installationTime;
+	if (slot->size >= AII_GetItemWeightBySize(item)) {
+		slot->item = item;
+		slot->installationTime = item->craftitem.installationTime;
 		/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 		if (base)
-			B_UpdateStorageAndCapacity(base, itemIdx, -1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, item->idx, -1, qfalse, qfalse);
 	} else {
 		Com_Printf("AII_AddItemToSlot: Could not add item '%s' to slot %i (slot-size: %i - item-weight: %i)\n",
-			csi.ods[itemIdx].id, slot->idx, slot->size, csi.ods[itemIdx].size);
+			item->id, slot->idx, slot->size, item->size);
 		return qfalse;
 	}
 
@@ -1534,7 +1536,7 @@ void AIM_AircraftEquipAddItem_f (void)
 		return;
 
 	/* there's no item in ZONE_MAIN: you can't use zone ZONE_NEXT */
-	if (zone == ZONE_NEXT && slot->itemIdx == NONE)
+	if (zone == ZONE_NEXT && !slot->item)
 		return;
 
 	/* check if the zone exists */
@@ -1548,27 +1550,27 @@ void AIM_AircraftEquipAddItem_f (void)
 	case ZONE_MAIN:
 		/* we add the weapon, shield, item, or base defense if slot is free or the installation of
 			current item just began */
-		if (slot->itemIdx == NONE || slot->installationTime == csi.ods[slot->itemIdx].craftitem.installationTime) {
+		if (!slot->item || slot->installationTime == slot->item->craftitem.installationTime) {
 			AII_RemoveItemFromSlot(base, slot, qfalse);
 			AII_AddItemToSlot(base, airequipSelectedTechnology, slot); /* Aircraft stats are updated below */
 			AIM_AutoAddAmmo(base, aircraft, slot);
 			break;
-		} else if (slot->itemIdx == AII_GetAircraftItemByID(airequipSelectedTechnology->provides) &&
-			slot->installationTime == -csi.ods[slot->itemIdx].craftitem.installationTime) {
+		} else if (slot->item == AII_GetAircraftItemByID(airequipSelectedTechnology->provides) &&
+			slot->installationTime == -slot->item->craftitem.installationTime) {
 			/* player changed he's mind: he just want to readd the item he just removed */
 			slot->installationTime = 0;
-			slot->nextItemIdx = NONE;
+			slot->nextItem = NULL;
 			AIM_AutoAddAmmo(base, aircraft, slot);
 		} else {
 			AII_RemoveItemFromSlot(base, slot, qtrue); /* remove ammo */
 			/* We start removing current item in slot, and the selected item will be installed afterwards */
-			slot->installationTime = -csi.ods[slot->itemIdx].craftitem.installationTime;
+			slot->installationTime = -slot->item->craftitem.installationTime;
 			/* more below (don't use break) */
 			}
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
 		 * of the one in the slot atm */
-		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
+		slot->nextItem = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 		/* do not remove item from storage now, this will be done in AII_RemoveItemFromSlot */
 		break;
 	case ZONE_AMMO:
@@ -1637,8 +1639,8 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	case ZONE_MAIN:
 		/* we change the weapon, shield, item, or base defense that is already in the slot */
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
-		if (slot->installationTime < csi.ods[slot->itemIdx].craftitem.installationTime) {
-			slot->installationTime = -csi.ods[slot->itemIdx].craftitem.installationTime;
+		if (slot->installationTime < slot->item->craftitem.installationTime) {
+			slot->installationTime = -slot->item->craftitem.installationTime;
 			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue); /* we remove only ammo, not item */
 		} else {
 			AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
@@ -1648,7 +1650,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
 		 * of the one in the slot atm */
-		slot->nextItemIdx = NONE;
+		slot->nextItem = NULL;
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defense system) */
@@ -1720,7 +1722,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 			/* found it */
 			if (num <= 0) {
 				airequipSelectedTechnology = *list;
-				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
+				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides)->idx);
 				break;
 			}
 			num--;
@@ -1740,7 +1742,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 {
 	int i;
 	aircraftSlot_t *slot;
-	int itemIdx;
+	objDef_t *item;
 	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
 
 	if (!tech)
@@ -1751,14 +1753,15 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 
 	airequipID = AC_ITEM_WEAPON;
 
-	itemIdx = AII_GetAircraftItemByID(tech->provides);
-	if (itemIdx == NONE)
+	item = AII_GetAircraftItemByID(tech->provides);
+	if (!item)
 		return;
+
 	for (i = 0; i < aircraft->maxWeapons; i++) {
 		slot = &aircraft->weapons[i];
-		if (slot->size < AII_GetItemWeightBySize(&csi.ods[itemIdx]))
+		if (slot->size < AII_GetItemWeightBySize(item))
 			continue;
-		if (aircraft->homebase->storage.num[itemIdx] <= 0)
+		if (aircraft->homebase->storage.num[item->idx] <= 0)
 			continue;
 		AII_AddItemToSlot(aircraft->homebase, tech, slot);
 		AIM_AutoAddAmmo(aircraft->homebase, aircraft, slot);
@@ -1771,18 +1774,23 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 /**
  * @brief Initialise values of one slot of an aircraft or basedefense common to all types of items.
  * @param[in] slot Pointer to the slot to initialize
- * @param[in] index The index of the aircraft or the base
+ * @param[in] aircraft	Pointer to aircraft.
+ * @param[in] base	Pointer to base.
+ * @param[in] type
  */
-void AII_InitialiseSlot (aircraftSlot_t *slot, int index, aircraftItemType_t type)
+void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraft, base_t *base, aircraftItemType_t type)
 {
+	assert ((!base && aircraft) ||(base && !aircraft));	/* Only one of them is allowed. */
+
 	memset(slot, 0, sizeof(slot)); /* all values to 0 */
-	slot->aircraftIdx = index;
-	slot->itemIdx = NONE;
-	slot->ammoIdx = NONE;
+	slot->aircraft = aircraft;
+	slot->base = base;
+	slot->item = NULL;
+	slot->ammo = NULL;
 	slot->size = ITEM_HEAVY;
-	slot->nextItemIdx = NONE;
+	slot->nextItem = NULL;
 	slot->type = type;
-	slot->ammoLeft = -1; /* sa BDEF_AddBattery: it needs to be -1 and not 0 */
+	slot->ammoLeft = -1; /** sa BDEF_AddBattery: it needs to be -1 and not 0 @sa B_SaveItemSlots */
 }
 
 /**
@@ -1798,12 +1806,12 @@ static qboolean AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int st
 	assert(slot);
 
 	/* there's no item */
-	if (slot->itemIdx == NONE)
+	if (!slot->item)
 		return qfalse;
 
 	/* you can not have advantages from items if it is being installed or removed, but only disavantages */
 	if (slot->installationTime != 0) {
-		item = &csi.ods[slot->itemIdx];
+		item = slot->item;
 		if (item->craftitem.stats[stat] > 1.0f) /* advandages for relative and absolute values */
 			return qfalse;
 	}
@@ -1835,7 +1843,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		for (i = 0; i < aircraft->maxElectronics; i++) {
 			if (!AII_CheckUpdateAircraftStats (&aircraft->electronics[i], currentStat))
 				continue;
-			item = &csi.ods[aircraft->electronics[i].itemIdx];
+			item = aircraft->electronics[i].item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += (int) item->craftitem.stats[currentStat];
 			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
@@ -1847,7 +1855,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		for (i = 0; i < aircraft->maxWeapons; i++) {
 			if (!AII_CheckUpdateAircraftStats (&aircraft->weapons[i], currentStat))
 				continue;
-			item = &csi.ods[aircraft->weapons[i].itemIdx];
+			item = aircraft->weapons[i].item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
 			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
@@ -1856,7 +1864,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by shield (do nothing if the value of stat is 0) */
 		if (AII_CheckUpdateAircraftStats (&aircraft->shield, currentStat)) {
-			item = &csi.ods[aircraft->shield.itemIdx];
+			item = aircraft->shield.item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
 			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
@@ -1869,8 +1877,8 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 	for (i = 0; i < aircraft->maxWeapons; i++) {
 		if (!AII_CheckUpdateAircraftStats (&aircraft->weapons[i], AIR_STATS_WRANGE))
 			continue;
-		item = &csi.ods[aircraft->weapons[i].ammoIdx];
-		if (item->craftitem.stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE])
+		item = aircraft->weapons[i].ammo;
+		if (item && item->craftitem.stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE])	/***@todo Check if the "ammo" is _supposed_ to be set here! */
 			aircraft->stats[AIR_STATS_WRANGE] = item->craftitem.stats[AIR_STATS_WRANGE];
 	}
 
@@ -1902,7 +1910,7 @@ int AII_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
 
 	switch (type) {
 	case AC_ITEM_SHIELD:
-		if (aircraft->shield.itemIdx != NONE)
+		if (aircraft->shield.item)
 			return 1;
 		else
 			return 0;
@@ -1921,7 +1929,7 @@ int AII_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
 	}
 
 	for (i = 0; i < max; i++)
-		if (slot[i].itemIdx != NONE)
+		if (slot[i].item)
 			cnt++;
 
 	return cnt;
@@ -1940,8 +1948,8 @@ int AII_AircraftCanShoot (const aircraft_t *aircraft)
 	assert(aircraft);
 
 	for (i = 0; i < aircraft->maxWeapons; i++)
-		if (aircraft->weapons[i].itemIdx != NONE
-		 && aircraft->weapons[i].ammoIdx != NONE && aircraft->weapons[i].ammoLeft > 0)
+		if (aircraft->weapons[i].item
+		 && aircraft->weapons[i].ammo && aircraft->weapons[i].ammoLeft > 0)
 			return qtrue;
 
 	return qfalse;
@@ -1962,8 +1970,8 @@ int AII_BaseCanShoot (const base_t *base)
 	if (base->hasBuilding[B_DEFENSE_MISSILE]) {
 	/* base has missile battery and any needed building */
 		for (i = 0; i < base->maxBatteries; i++)
-			if (base->batteries[i].itemIdx != NONE
-			 && base->batteries[i].ammoIdx != NONE && base->batteries[i].ammoLeft > 0
+			if (base->batteries[i].item
+			 && base->batteries[i].ammo && base->batteries[i].ammoLeft > 0
 			 && base->batteries[i].installationTime == 0)
 				return qtrue;
 	}
@@ -1971,8 +1979,8 @@ int AII_BaseCanShoot (const base_t *base)
 	if (base->hasBuilding[B_DEFENSE_LASER]) {
 	/* base has laser battery and any needed building */
 		for (i = 0; i < base->maxLasers; i++)
-			if (base->lasers[i].itemIdx != NONE
-			 && base->lasers[i].ammoIdx != NONE && base->lasers[i].ammoLeft > 0
+			if (base->lasers[i].item
+			 && base->lasers[i].ammo && base->lasers[i].ammoLeft > 0
 			 && base->lasers[i].installationTime == 0)
 				return qtrue;
 	}

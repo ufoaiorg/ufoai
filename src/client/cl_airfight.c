@@ -96,15 +96,15 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t 
 
 	projectile = &gd.projectiles[gd.numProjectiles];
 
-	if (weaponSlot->ammoIdx == NONE) {
+	if (!weaponSlot->ammo) {
 		Com_Printf("AIRFIGHT_AddProjectile: Error - no ammo assigned\n");
 		return qfalse;
 	}
 
-	assert(weaponSlot->itemIdx != NONE);
+	assert(weaponSlot->item);
 
 	projectile->idx = gd.numProjectiles;
-	projectile->aircraftItemsIdx = weaponSlot->ammoIdx;
+	projectile->aircraftItem = weaponSlot->ammo;
 	if (!attackingBase) {
 		assert(attacker);
 		projectile->attackingAircraft = attacker;
@@ -128,7 +128,7 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t 
 	projectile->angle = 0.0f;
 	projectile->bullets = qfalse;
 
-	if (csi.ods[weaponSlot->itemIdx].craftitem.bullets) {
+	if (weaponSlot->item->craftitem.bullets) {
 		projectile->bullets = qtrue;
 
 		for (i = 0; i < BULLETS_PER_SHOT; i++) {
@@ -179,21 +179,18 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
  */
 static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 {
-	int ammoIdx;
-
 	assert(slot);
 
 	/* check if there is a functional weapon in this slot */
-	if (slot->itemIdx == NONE || slot->installationTime != 0)
+	if (!slot->item || slot->installationTime != 0)
 		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 		/* check if there is still ammo in this weapon */
-	if (slot->ammoIdx == NONE || slot->ammoLeft <= 0)
+	if (!slot->ammo || slot->ammoLeft <= 0)
 		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
-	ammoIdx = slot->ammoIdx;
 	/* check if the target is within range of this weapon */
-	if (distance > csi.ods[ammoIdx].craftitem.stats[AIR_STATS_WRANGE])
+	if (distance > slot->ammo->craftitem.stats[AIR_STATS_WRANGE])
 		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT;
 
 	/* check if weapon is reloaded */
@@ -256,23 +253,20 @@ int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t
  */
 static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraft_t *target, const aircraftSlot_t *slot)
 {
-	int idx;
 	float probability = 0.0f;
 
-	idx = slot->itemIdx;
-	if (idx == NONE) {
+	if (!slot->item) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
 
-	idx = slot->ammoIdx;
-	if (idx == NONE) {
+	if (!slot->ammo) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
 	}
 
 	/* Take Base probability from the ammo of the attacking aircraft */
-	probability = csi.ods[idx].craftitem.stats[AIR_STATS_ACCURACY];
+	probability = slot->ammo->craftitem.stats[AIR_STATS_ACCURACY];
 	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Base probablity: %f\n", probability);
 
 	/* Modify this probability by items of the attacking aircraft (stats is in percent) */
@@ -295,7 +289,8 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
  */
 void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 {
-	int ammoIdx, slotIdx;
+	int slotIdx;
+	objDef_t *ammo;
 	float probability;
 
 	/* some asserts */
@@ -311,11 +306,11 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 
 	/* if weapon found that can shoot */
 	if (slotIdx >= AIRFIGHT_WEAPON_CAN_SHOOT) {
-		ammoIdx = shooter->weapons[slotIdx].ammoIdx;
+		ammo = shooter->weapons[slotIdx].ammo;
 
 		/* shoot */
 		if (AIRFIGHT_AddProjectile(NULL, shooter, shooter->baseTarget, target, shooter->weapons + slotIdx)) {
-			shooter->weapons[slotIdx].delayNextShot = csi.ods[ammoIdx].craftitem.weaponDelay;
+			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			probability = frand();
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
@@ -481,8 +476,8 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *pr
 	}
 
 	/* check if the projectile went farther than it's range */
-	distance = (float) projectile->time * csi.ods[projectile->aircraftItemsIdx].craftitem.weaponSpeed / 3600.0f;
-	if (distance > csi.ods[projectile->aircraftItemsIdx].craftitem.stats[AIR_STATS_WRANGE]) {
+	distance = (float) projectile->time * projectile->aircraftItem->craftitem.weaponSpeed / 3600.0f;
+	if (distance > projectile->aircraftItem->craftitem.stats[AIR_STATS_WRANGE]) {
 		return qtrue;
 	}
 
@@ -532,7 +527,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (AIR_IsAircraftInBase(target))
 		return;
 
-	damage = AIRFIGHT_GetDamage(&csi.ods[projectile->aircraftItemsIdx], target);
+	damage = AIRFIGHT_GetDamage(projectile->aircraftItem, target);
 
 	/* apply resulting damages - but only if damage > 0 - because the target might
 	 * already be destroyed, and we don't want to execute the actions after airfight
@@ -564,12 +559,12 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 	assert(base);
 
 	/* base damage is given by the ammo */
-	damage = csi.ods[projectile->aircraftItemsIdx].craftitem.weaponDamage;
+	damage = projectile->aircraftItem->craftitem.weaponDamage;
 
 	/* damages are divided between defense system and base. */
 	damage = frand() * damage;
 	base->batteryDamage -= damage;
-	base->baseDamage -= csi.ods[projectile->aircraftItemsIdx].craftitem.weaponDamage - damage;
+	base->baseDamage -= projectile->aircraftItem->craftitem.weaponDamage - damage;
 
 	if (base->batteryDamage <= 0) {
 		/* projectile destroyed a base defense system */
@@ -653,7 +648,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 	for (idx = gd.numProjectiles - 1; idx >= 0; idx--) {
 		projectile = &gd.projectiles[idx];
 		projectile->time += dt;
-		movement = (float) dt * csi.ods[projectile->aircraftItemsIdx].craftitem.weaponSpeed / 3600.0f;
+		movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / 3600.0f;
 		/* Check if the projectile reached its destination (aircraft or idle point) */
 		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
 			/* check if it got the ennemy */
@@ -726,12 +721,12 @@ static void AIRFIGHT_BaseShoot (const base_t *base, aircraftSlot_t *slot, int ma
 		else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
 			continue;
 		/* target is too far, wait to see if UFO comes closer */
-		else if (distance > csi.ods[slot[i].ammoIdx].craftitem.stats[AIR_STATS_WRANGE])
+		else if (distance > slot[i].ammo->craftitem.stats[AIR_STATS_WRANGE])
 			continue;
 
 		/* shoot */
 		if (AIRFIGHT_AddProjectile(base, NULL, NULL, gd.ufos + targetIdx[i], slot + i)) {
-			slot[i].delayNextShot = csi.ods[slot[i].ammoIdx].craftitem.weaponDelay;
+			slot[i].delayNextShot = slot[i].ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
 				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
