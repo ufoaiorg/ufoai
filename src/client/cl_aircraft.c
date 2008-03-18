@@ -2208,7 +2208,7 @@ qboolean AIR_ScriptSanityCheck (void)
 /**
  * @brief Calculates free space in hangars in given base.
  * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
- * @param[in] base_idx Index of base in global array.
+ * @param[in] base The base to calc the free space in.
  * @param[in] used Additional space "used" in hangars (use that when calculating space for more than one aircraft).
  * @return Amount of free space in hangars suitable for given aircraft type.
  * @note Returns -1 in case of error. Returns 0 if no error but no free space.
