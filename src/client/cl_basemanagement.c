@@ -680,7 +680,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
  */
 qboolean B_BuildingDestroy (base_t* base, building_t* building)
 {
-	buildingType_t type = building->type;
+	const buildingType_t type = building->type;
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 	char onDestroy[MAX_VAR];
 	qboolean test;
