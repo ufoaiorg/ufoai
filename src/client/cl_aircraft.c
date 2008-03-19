@@ -728,7 +728,12 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	base->aircraftCurrent = 0;
 
 	aircraft = AIR_GetAircraft(name);
-	if (aircraft && base->numAircraftInBase < MAX_AIRCRAFT) {
+	if (!aircraft) {
+		Com_Printf("Could not find aircraft with id: '%s'\n", name);
+		return NULL;
+	}
+
+	if (base->numAircraftInBase < MAX_AIRCRAFT) {
 		/* copy generic aircraft description to individal aircraft in base */
 		/* we do this because every aircraft can have its own parameters */
 		base->aircraft[base->numAircraftInBase] = *aircraft;

@@ -1540,6 +1540,11 @@ static void CL_AssignSoldier_f (void)
 		return;
 	}
 
+	if (!baseCurrent->numAircraftInBase) {
+		Com_Printf("CL_AssignSoldier_f: No aircraft in base\n");
+		return;
+	}
+
 	employee = E_GetHiredEmployee(baseCurrent, employeeType, -(num + 1));
 	if (!employee)
 		Sys_Error("CL_AssignSoldier_f: Could not get employee %i\n", num);
