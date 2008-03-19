@@ -209,7 +209,7 @@ qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type)
  * @param[in] type value of building->buildingType
  * @param[in] newStatus New value of the status
  */
-void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newStatus)
+static inline void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newStatus)
 {
 	assert(base);
 
@@ -767,7 +767,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
 		if (B_GetNumberOfBuildingsInBaseByType(base, type) <= 0) {
-			base->hasBuilding[B_ANTIMATTER] = qfalse;
+			B_SetBuildingStatus(base, type, qfalse);
 			/* Remove antimatter. */
 			INV_ManageAntimatter(base, 0, qfalse);
 			test = qtrue;
