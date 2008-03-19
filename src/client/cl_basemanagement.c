@@ -47,7 +47,7 @@ static cvar_t *cl_equip;
 /** @brief allocate memory for mn.menuText[TEXT_STANDARD] contained the information about a building */
 static char buildingText[MAX_LIST_CHAR];
 
-static buildingType_t BuildingConstructionList[MAX_BUILDINGS];
+static buildingType_t buildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
 static void B_BuildingInit(base_t* base);
@@ -1406,7 +1406,7 @@ static void B_BuildingAddToList (building_t * building)
 	assert(building->name);
 
 	Q_strcat(baseCurrent->allBuildingsList, va("%s\n", _(building->name)), MAX_LIST_CHAR);
-	BuildingConstructionList[numBuildingConstructionList] = building->type;
+	buildingConstructionList[numBuildingConstructionList] = building->type;
 	numBuildingConstructionList++;
 }
 
@@ -1552,7 +1552,7 @@ static void B_BuildingClick_f (void)
 		return;
 	}
 
-	building = &gd.buildingTypes[BuildingConstructionList[num]];
+	building = &gd.buildingTypes[buildingConstructionList[num]];
 
 	baseCurrent->buildingCurrent = building;
 	B_DrawBuilding(baseCurrent, building);
