@@ -188,6 +188,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			od = LEFT(ent)->item.m;
 			weapon = LEFT(ent)->item.t;
 		} else {
+			weapon = NULL;
 			od = NULL;
 			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: @todo: grenade/knife toss from inventory using empty hand\n");
 			/* @todo: grenade/knife toss from inventory using empty hand */
@@ -252,7 +253,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						/* ammo is limited and shooting gives away your position */
 						if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
 							|| (dmg < 10.0 && vis < 0.6) /* uber-armour */
-							|| dmg < 0.1) /* at point blank hit even with a stick*/
+							|| dmg < 0.1) /* at point blank hit even with a stick */
 							continue;
 
 						/* civilian malus */
@@ -305,9 +306,13 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 	if (!(ent->state & STATE_RAGE)) {
 		/* hide */
+		/* TODO: Only hide if the visible actors have long range weapons in their hands
+		 * otherwise make it depended on the mood (or some skill) of the alien whether
+		 * it tries to attack by trying to get as close as possible or to try to hide */
 		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
+		/* FIXME: What is this 2? */
 		} else if (aia->target && tu >= 2) {
 			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
@@ -351,6 +356,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* nothing found */
 			VectorCopy(to, ent->pos);
 			gi.GridPosToVec(gi.routingMap, to, ent->origin);
+			/* TODO: Try to crouch if no hiding spot was found - randomized */
 		} else {
 			/* found a hiding spot */
 			VectorCopy(ent->pos, aia->stop);
@@ -477,7 +483,7 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	VectorCopy(ent->origin, oldOrigin);
 
 	/* evaluate moving to every possible location in the search area,
-	   including combat considerations */
+	 * including combat considerations */
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++)
@@ -597,7 +603,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	/* shoot('n'hide) */
 	if (bestAia.target) {
 		/* @todo: check whether shoot is needed or enemy died already;
-		   use the remaining TUs for reaction fire */
+		 * use the remaining TUs for reaction fire */
 		while (bestAia.shots) {
 			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, 0, NULL, qtrue, 0); /* 0 = first firemode */
 			bestAia.shots--;
