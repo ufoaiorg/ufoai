@@ -103,7 +103,7 @@ static void BaseSummary_Init_f (void)
 				continue;
 
 			/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
-			if (base->hasBuilding[b->type]) {
+			if (B_GetBuildingStatus(base, b->type)) {
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
 					base->capacities[cap].cur, base->capacities[cap].max), sizeof(textStatsBuffer));
 			} else {

@@ -656,7 +656,7 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 
 		/* Check for ufo detection by bases */
 		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-			if (!base->founded || !base->hasBuilding[B_POWER])
+			if (!base->founded || !B_GetBuildingStatus(base, B_POWER))
 				continue;
 			/* maybe the ufo is already visible, don't reset it */
 			ufo->visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
@@ -865,7 +865,7 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
 
 	if (ufocraft->weight == AIRCRAFT_LARGE) {
 		/* Large UFOs can only fit large UFO hangars */
-		if (!base->hasBuilding[B_UFO_HANGAR])
+		if (!B_GetBuildingStatus(base, B_UFO_HANGAR))
 			return qfalse;
 
 		/* Check there is still enough room for this UFO */
@@ -875,7 +875,7 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
 		/* This is a small UFO, can only fit in small hangar */
 
 		/* There's no small hangar functional */
-		if (!base->hasBuilding[B_UFO_SMALL_HANGAR])
+		if (!B_GetBuildingStatus(base, B_UFO_SMALL_HANGAR))
 			return qfalse;
 
 		/* Check there is still enough room for this UFO */

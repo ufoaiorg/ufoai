@@ -1967,8 +1967,8 @@ int AII_BaseCanShoot (const base_t *base)
 
 	assert(base);
 
-	if (base->hasBuilding[B_DEFENSE_MISSILE]) {
-	/* base has missile battery and any needed building */
+	if (B_GetBuildingStatus(base, B_DEFENSE_MISSILE)) {
+		/* base has missile battery and any needed building */
 		for (i = 0; i < base->maxBatteries; i++)
 			if (base->batteries[i].item
 			 && base->batteries[i].ammo && base->batteries[i].ammoLeft > 0
@@ -1976,8 +1976,8 @@ int AII_BaseCanShoot (const base_t *base)
 				return qtrue;
 	}
 
-	if (base->hasBuilding[B_DEFENSE_LASER]) {
-	/* base has laser battery and any needed building */
+	if (B_GetBuildingStatus(base, B_DEFENSE_LASER)) {
+		/* base has laser battery and any needed building */
 		for (i = 0; i < base->maxLasers; i++)
 			if (base->lasers[i].item
 			 && base->lasers[i].ammo && base->lasers[i].ammoLeft > 0

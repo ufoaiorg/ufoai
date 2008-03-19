@@ -759,9 +759,9 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 		}
 
 		if (AII_BaseCanShoot(base)) {
-			if (base->hasBuilding[B_DEFENSE_MISSILE])
+			if (B_GetBuildingStatus(base, B_DEFENSE_MISSILE))
 				AIRFIGHT_BaseShoot(base, base->batteries, base->maxBatteries, base->targetMissileIdx);
-			if (base->hasBuilding[B_DEFENSE_LASER])
+			if (B_GetBuildingStatus(base, B_DEFENSE_LASER))
 				AIRFIGHT_BaseShoot(base, base->lasers, base->maxLasers, base->targetLaserIdx);
 		}
 	}

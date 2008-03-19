@@ -182,7 +182,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	tobase = aircraft->homebase;
 	assert(tobase);
 
-	if (!tobase->hasBuilding[B_ALIEN_CONTAINMENT]) {
+	if (!B_GetBuildingStatus(tobase, B_ALIEN_CONTAINMENT)) {
 		MN_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
 	}
@@ -481,7 +481,7 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 	if (!AL_CheckAliveFreeSpace(base, containment, num)) {
 		Com_Printf("AL_ChangeAliveAlienNumber: Can't add/remove %i alive aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
 			num, base->capacities[CAP_ALIENS].cur, base->capacities[CAP_ALIENS].max,
-			base->hasBuilding[B_ALIEN_CONTAINMENT]);
+			B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT));
 		return;
 	}
 
@@ -506,7 +506,7 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 qboolean AL_CheckAliveFreeSpace (base_t *base, aliensCont_t *containment, int num)
 {
 	/* you need Alien Containment and it's dependencies to handle aliens */
-	if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
+	if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 		return qfalse;
 
 	if (num > 0) {
@@ -544,7 +544,7 @@ int AL_CountAll (void)
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
 		if (!base->founded)
 			continue;
-		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
+		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
 		for (j = 0; j < gd.numAliensTD; j++) {
 			if (base->alienscont[j].teamDef)
@@ -569,7 +569,7 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
 		if (!base->founded)
 			continue;
-		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
+		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
 		if (base->alienscont[alienidx].teamDef) {
 			if (alive == qfalse)
@@ -636,7 +636,7 @@ static void AC_PrevAC_f (void)
 
 	for (i = (baseCurrent->idx - 1) & (MAX_BASES - 1); i >= 0; i--) {
 		base = B_GetBase(i);
-		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
+		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
 		if (B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			found = qtrue;
@@ -743,7 +743,7 @@ static void AC_KillOne_f (void)
 		return;
 	}
 
-	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
+	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
 		containment = baseCurrent->alienscont;
 		for (i = 0, step = 0; i < gd.numAliensTD; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
@@ -814,7 +814,7 @@ static void AC_AddOne_f (void)
 	}
 
 	/* update alien counter*/
-	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
+	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
 		containment = baseCurrent->alienscont;
 	} else {
 		return;
@@ -874,7 +874,7 @@ static void AC_AlienClick_f (void)
 		return;
 	}
 
-	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
+	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = baseCurrent->alienscont;
 		int i, step;
 
@@ -919,7 +919,7 @@ static void AC_UpdateMenu (void)
 	/* Reset list. */
 	Cbuf_AddText("aliencont_clear\n");
 
-	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
+	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = baseCurrent->alienscont;
 		const technology_t* tech;
 		for (i = 0, j = 0; i < gd.numAliensTD; i++) {
@@ -1078,7 +1078,7 @@ qboolean AC_Load (sizebuf_t* sb, void* data)
  */
 qboolean AC_ContainmentAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasBuilding[B_ALIEN_CONTAINMENT]) {
+	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		return qtrue;
 	} else {
 		return qfalse;

@@ -249,17 +249,17 @@ static void BS_UpdateAircraftBSButtons (void)
 	if (!baseCurrent)
 		return;
 	/* We cannot buy aircraft without any hangar. */
-	if (!baseCurrent->hasBuilding[B_HANGAR] && !baseCurrent->hasBuilding[B_SMALL_HANGAR])
+	if (!B_GetBuildingStatus(baseCurrent, B_HANGAR) && !B_GetBuildingStatus(baseCurrent, B_SMALL_HANGAR))
 		Cbuf_AddText("abuy_disableaircrafts2\n");
 	else
 		Cbuf_AddText("abuy_enableaircrafts\n");
 	/* We cannot buy aircraft if there is no power in our base. */
-	if (!baseCurrent->hasBuilding[B_POWER])
+	if (!B_GetBuildingStatus(baseCurrent, B_POWER))
 		Cbuf_AddText("abuy_disableaircrafts1\n");
 	else
 		Cbuf_AddText("abuy_enableaircrafts\n");
 	/* We cannot buy any item without storage. */
-	if (!baseCurrent->hasBuilding[B_STORAGE])
+	if (!B_GetBuildingStatus(baseCurrent, B_STORAGE))
 		Cbuf_AddText("abuy_disableitems\n");
 	else
 		Cbuf_AddText("abuy_enableitems\n");
@@ -802,12 +802,12 @@ static void BS_BuyAircraft_f (void)
 
 	if (buyCategory == BUY_AIRCRAFT) {
 		/* We cannot buy aircraft if there is no power in our base. */
-		if (!baseCurrent->hasBuilding[B_POWER]) {
+		if (!B_GetBuildingStatus(baseCurrent, B_POWER)) {
 			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
 			return;
 		}
 		/* We cannot buy aircraft without any hangar. */
-		if (!baseCurrent->hasBuilding[B_HANGAR] && !baseCurrent->hasBuilding[B_SMALL_HANGAR]) {
+		if (!B_GetBuildingStatus(baseCurrent, B_HANGAR) && !B_GetBuildingStatus(baseCurrent, B_SMALL_HANGAR)) {
 			MN_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}
@@ -834,7 +834,7 @@ static void BS_BuyAircraft_f (void)
 			}
 		}
 	} else {
-		if (!baseCurrent->hasBuilding[B_STORAGE]) {
+		if (!B_GetBuildingStatus(baseCurrent, B_STORAGE)) {
 			MN_Popup(_("Note"), _("No storage in this base."));
 			return;
 		}
@@ -1039,7 +1039,7 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
 qboolean BS_BuySellAllowed (const base_t* base)
 {
 	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && base->hasBuilding[B_STORAGE]) {
+	 && B_GetBuildingStatus(base, B_STORAGE)) {
 		return qtrue;
 	} else {
 		return qfalse;

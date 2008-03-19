@@ -1053,7 +1053,7 @@ static void RS_ResearchStart_f (void)
 		return;
 
 	/* Check if laboratory is available. */
-	if (!baseCurrent->hasBuilding[B_LAB])
+	if (!B_GetBuildingStatus(baseCurrent, B_LAB))
 		return;
 
 	/* get the currently selected research-item */
@@ -1122,7 +1122,7 @@ static void RS_ResearchStop_f (void)
 		return;
 
 	/* Check if laboratory is available. */
-	if (!baseCurrent->hasBuilding[B_LAB])
+	if (!B_GetBuildingStatus(baseCurrent, B_LAB))
 		return;
 
 	/* get the currently selected research-item */
@@ -1339,7 +1339,7 @@ static void CL_ResearchType_f (void)
 		MN_PopMenu(qfalse);
 		if (!researchListLength)
 			MN_Popup(_("Notice"), _("Nothing to research"));
-	} else if (baseCurrent && !baseCurrent->hasBuilding[B_LAB]) {
+	} else if (!B_GetBuildingStatus(baseCurrent, B_LAB)) {
 		MN_PopMenu(qfalse);
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
 	}
@@ -1410,7 +1410,7 @@ void CL_CheckResearchStatus (void)
 			if (tech->time > 0 && tech->scientists > 0) {
 				assert(tech->base);	/**< If there are scientitsst there _has_ to be a base. */
 				base = tech->base;
-				if (base->hasBuilding[B_LAB]) {
+				if (B_GetBuildingStatus(base, B_LAB)) {
 					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
 					Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
 					/* @todo: Just for testing, better formular may be needed. */
@@ -2488,7 +2488,7 @@ qboolean RS_ResearchAllowed (const base_t* base)
 	int hiredScientistCount = E_CountHired(base, EMPL_SCIENTIST);
 
 	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && base->hasBuilding[B_LAB]
+	 && B_GetBuildingStatus(base, B_LAB)
 	 && hiredScientistCount > 0) {
 		return qtrue;
 	} else {

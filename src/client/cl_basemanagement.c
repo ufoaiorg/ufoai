@@ -209,16 +209,17 @@ qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type)
  * @param[in] type value of building->buildingType
  * @param[in] newStatus New value of the status
  */
-static inline void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newStatus)
+void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newStatus)
 {
 	assert(base);
 
 	if (type == B_MISC)
 		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
-	else if (type < MAX_BUILDING_TYPE)
+	else if (type < MAX_BUILDING_TYPE) {
 		base->hasBuilding[type] = newStatus;
-	else
-		Com_Printf("B_SetBuildingStatus()... Type of building %i does not exists\n", type);
+		Com_DPrintf(DEBUG_CLIENT, "B_SetBuildingStatus: set status for %i to %i\n", type, newStatus);
+	} else
+		Com_Printf("B_SetBuildingStatus: Type of building %i does not exists\n", type);
 }
 
 /**
@@ -393,7 +394,7 @@ static float B_GetMaxBuildingLevel (base_t* base, buildingType_t type)
 	int i;
 	float max = 0.0f;
 
-	if (base->hasBuilding[type]) {
+	if (B_GetBuildingStatus(base, type)) {
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 			if (gd.buildings[base->idx][i].type == type && gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING) {
 				max = max(gd.buildings[base->idx][i].level, max);
@@ -503,7 +504,7 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		AC_KillAll(base);
 		break;
 	case B_RADAR:
-		if (!base->hasBuilding[type]) {
+		if (!B_GetBuildingStatus(base, type)) {
 			RADAR_Initialise(&base->radar, 0.0f, 0.0f);
 		}
 		break;
@@ -596,13 +597,13 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 
 	/* reset all values of hasBuilding[] */
 	for (i = 0; i < MAX_BUILDING_TYPE; i++)
-		base->hasBuilding[i] = qfalse;
+		B_SetBuildingStatus(base, i, qfalse);
 
 	/* activate all buildings that needs to be activated */
 	while (test) {
 		test = qfalse;
 		for (buildingIdx = 0; buildingIdx < gd.numBuildings[base->idx]; buildingIdx++) {
-			if (!base->hasBuilding[gd.buildings[base->idx][buildingIdx].type] && B_CheckUpdateBuilding(&gd.buildings[base->idx][buildingIdx], base)) {
+			if (!B_GetBuildingStatus(base, gd.buildings[base->idx][buildingIdx].type) && B_CheckUpdateBuilding(&gd.buildings[base->idx][buildingIdx], base)) {
 				if (firstEnable)
 					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].type, base);
 				test = qtrue;
@@ -632,33 +633,33 @@ static void B_ResetAllStatusAndCapacities_f (void)
 			B_ResetAllStatusAndCapacities(base, qfalse);
 
 			/* calculate capacities.cur for every capacity */
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_ALIENS)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
 				base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)] ||
-				base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)) ||
+				B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)))
 				AIR_UpdateHangarCapForAll(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
 				base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_ITEMS)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
 				INV_UpdateStorageCap(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_LABSPACE)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
 				base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_WORKSPACE)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
 				PR_UpdateProductionCap(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)))
 				HOS_UpdateHospitalCapForAll(base);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)] ||
-				base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)) ||
+				B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)))
 				UFO_UpdateUFOHangarCapForAll(baseIdx);
 
-			if (base->hasBuilding[B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)])
+			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)))
 				INV_UpdateAntimatterCap(base);
 
 			/* Check that current capacity is possible -- if we changed values in *.ufo */
@@ -803,7 +804,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	/* Remove aliens if needed. */
 	if (type == B_ALIEN_CONTAINMENT) {
-		if (!base->hasBuilding[B_ALIEN_CONTAINMENT]) {	/* Just clean containment. */
+		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {	/* Just clean containment. */
 			AL_FillInContainment(base);
 		} else {	/* Check capacities and remove needed amount. */
 			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
@@ -1091,9 +1092,9 @@ void B_SetUpBase (base_t* base)
 
 	if (B_GetNumberOfBuildingsInBaseByType(base, B_ENTRANCE)) {
 		/* Set hasBuilding[B_ENTRANCE] to correct value, because it can't be updated afterwards.*/
-		base->hasBuilding[B_ENTRANCE] = qtrue;
+		B_SetBuildingStatus(base, B_ENTRANCE, qtrue);
 	} else {
-		/* base can't start without an entrance, because this is where the alien will arrive during base attack */
+		/* base can't start without an entrance, because this is where the aliens will arrive during base attack */
 		Com_Printf("B_SetUpBase()... A new base should have an entrance.\n");
 	}
 
@@ -1102,14 +1103,14 @@ void B_SetUpBase (base_t* base)
 	if (gd.numBases == 1) {
 		const aircraft_t *aircraft;
 		/* buy two first aircraft */
-		if (base->hasBuilding[B_HANGAR]) {
+		if (B_GetBuildingStatus(base, B_HANGAR)) {
 			aircraft = AIR_GetAircraft("craft_drop_firebird");
 			if (!aircraft)
 				Sys_Error("Could not find craft_drop_firebird definition");
 			AIR_NewAircraft(base, "craft_drop_firebird");
 			CL_UpdateCredits(ccs.credits - aircraft->price);
 		}
-		if (base->hasBuilding[B_SMALL_HANGAR]) {
+		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			aircraft = AIR_GetAircraft("craft_inter_stiletto");
 			if (!aircraft)
 				Sys_Error("Could not find craft_inter_stiletto definition");
@@ -1761,7 +1762,7 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t type, 
 	/* we maybe only want to get the working building (e.g. it might the
 	 * case that we don't have a powerplant and thus the searched building
 	 * is not functional) */
-	if (onlyWorking && !base->hasBuilding[type])
+	if (onlyWorking && !B_GetBuildingStatus(base, type))
 		return NULL;
 
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
@@ -2730,7 +2731,7 @@ static void B_BaseList_f (void)
 		Com_Printf("Base Alien interest %f\n", base->alienInterest);
 		Com_Printf("Base hasBuilding[]: ");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
-			Com_Printf("%i ", base->hasBuilding[j]);
+			Com_Printf("%i ", B_GetBuildingStatus(base, j));
 		Com_Printf("\nBase aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			Com_Printf("Base aircraft-team %i\n", base->aircraft[j].teamSize);
@@ -3350,7 +3351,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WritePos(sb, b->pos);
 		MSG_WriteByte(sb, b->founded);
 		for (k = 0; k < presaveArray[PRE_MBUITY]; k++)
-			MSG_WriteByte(sb, b->hasBuilding[k]);
+			MSG_WriteByte(sb, B_GetBuildingStatus(b, k));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				MSG_WriteShort(sb, b->map[k][l]);
@@ -3566,7 +3567,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 		b->founded = MSG_ReadByte(sb);
 		for (k = 0; k < presaveArray[PRE_MBUITY]; k++)
-			b->hasBuilding[k] = MSG_ReadByte(sb);
+			B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				b->map[k][l] = MSG_ReadShort(sb);
