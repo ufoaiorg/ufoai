@@ -1546,8 +1546,8 @@ static void CL_AssignSoldier_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: employee with idx %i selected\n", employee->idx);
 	aircraft = baseCurrent->aircraftCurrent;
+	assert(aircraft);
 	Com_DPrintf(DEBUG_CLIENT, "aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, AIR_GetAircraftIdxInBase(aircraft));
-	assert(aircraft == baseCurrent->aircraftCurrent);
 
 	if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft->idx)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: removing\n");
