@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
+/* FIXME: Is this really needed - we have base_t->aircraftCurrent - isn't that the same? */
 static aircraft_t *menuAircraft = NULL;
 aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
 /**
@@ -593,15 +594,18 @@ void AIR_AircraftReturnToBase_f (void)
  * @param[in] aircraft The aircraft to get the index for.
  * @return The array index or AIRCRAFT_INBASE_INVALID on error.
  */
-int AIR_GetAircraftIdxInBase (aircraft_t* aircraft)
+int AIR_GetAircraftIdxInBase (const aircraft_t* aircraft)
 {
 	int i;
-	if (!aircraft || !aircraft->homebase) {
-		return AIRCRAFT_INBASE_INVALID;
-	}
+	const base_t *base;
 
-	for (i = 0; i < aircraft->homebase->numAircraftInBase; i++) {
-		if (&aircraft->homebase->aircraft[i] == aircraft)
+	if (!aircraft || !aircraft->homebase)
+		return AIRCRAFT_INBASE_INVALID;
+
+	base = aircraft->homebase;
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		if (&base->aircraft[i] == aircraft)
 			return i;
 	}
 
