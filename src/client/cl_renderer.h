@@ -32,13 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL.h>
 
-#define GAME_TITLE "UFO:AI"
-#define GAME_TITLE_LONG "UFO:Alien Invasion"
+#define EARTH_RADIUS 8192.0f
+#define MOON_RADIUS 1024.0f /* FIXME */
 
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
-#define	MAX_DLIGHTS		32
 #define	MAX_ENTITIES	512
 #define MAX_PTL_ART		512
 #define MAX_PTLS		2048
@@ -170,6 +169,8 @@ typedef struct {
 	const char *mapZone;	/**< used to replace textures in base assembly */
 } refdef_t;
 
+extern refdef_t refdef;
+
 struct model_s *R_RegisterModelShort(const char *name);
 struct image_s *R_RegisterPic(const char *name);
 
@@ -186,10 +187,5 @@ void R_LoadImage(const char *name, byte **pic, int *width, int *height);
 void R_FontRegister(const char *name, int size, const char *path, const char *style);
 int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
 void R_FontLength(const char *font, char *c, int *width, int *height);
-
-#define EARTH_RADIUS 8192.0f
-#define MOON_RADIUS 1024.0f /* FIXME */
-
-extern refdef_t refdef;
 
 #endif /* CLIENT_REF_H */
