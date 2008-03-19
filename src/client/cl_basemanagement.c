@@ -1100,7 +1100,7 @@ void B_SetUpBase (base_t* base)
 	/* Add aircraft to the first base */
 	base->numAircraftInBase = 0;
 	if (gd.numBases == 1) {
-		aircraft_t *aircraft;
+		const aircraft_t *aircraft;
 		/* buy two first aircraft */
 		if (base->hasBuilding[B_HANGAR]) {
 			aircraft = AIR_GetAircraft("craft_drop_firebird");
