@@ -63,7 +63,6 @@ static const spawn_t spawns[] = {
 	{"info_civilian_start", SP_civilian_start},
 	{"info_civilian_target", SP_civilian_target},
 	{"info_2x2_start", SP_2x2_start},
-	{"info_ugv_start", SP_2x2_start}, /* FIXME: Remove me */
 	{"info_null", SP_dummy},
 	{"func_breakable", SP_func_breakable},
 	{"func_door", SP_func_door},
