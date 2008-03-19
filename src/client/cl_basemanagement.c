@@ -230,7 +230,7 @@ void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newS
  */
 qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t* building)
 {
-	building_t *dependsBuilding;
+	const building_t *dependsBuilding;
 
 	assert(base);
 	assert(building);
@@ -533,6 +533,7 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qbool
 	 * We check that, but only for buildings which needed building */
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 		buildingType = gd.buildings[base->idx][i].dependsBuilding;
+		assert(buildingType < MAX_BUILDING_TYPE);
 		if (type == gd.buildingTypes[buildingType].type) {
 			/* gd.buildings[base->idx][i] needs built/removed building */
 			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].type)) {
@@ -2785,7 +2786,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 	int i, num;
 	int baseIdx;
 	const char *buildingID;
-	building_t *building, *dependenceBuilding;
+	building_t *building;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: %s buildingID\n", Cmd_Argv(0));
@@ -2840,8 +2841,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			return;
 		}
 
-		dependenceBuilding = &gd.buildingTypes[building->dependsBuilding];
 		if (!B_CheckBuildingDependencesStatus(baseCurrent, building)) {
+			const building_t *dependenceBuilding = &gd.buildingTypes[building->dependsBuilding];
 			assert(building->dependsBuilding < MAX_BUILDING_TYPE);
 			if (B_GetNumberOfBuildingsInBaseByType(baseCurrent, dependenceBuilding->type) <= 0) {
 				/* the dependence of the building is not built */
