@@ -128,17 +128,19 @@ typedef struct cap_maxcur_s {
 	int cur;		/**< Currently used capacity. */
 } capacities_t;
 
-/** @brief A building with all it's data */
+/** @brief A building with all it's data. */
 typedef struct building_s {
-	int idx;					/**< self link in "buildings" list. */
-	int type_idx;				/**< self link in "buildingTypes" list. */
-	int base_idx;				/**< Number/index of base this building is located in. */
+	int idx;				/**< Index in in "buildings" list.
+							 * @todo What value is this supposed to be for building_t entries in buildingTypes? */
+	buildingType_t type;	/**< Self link (index) in "buildingTypes" list. This way we can rename the buildings without loosing the control.
+							 * @todo Check if it would be saner to use a building_t pointer? */
+	struct base_s *base;	/**< The base this building is located in. */
 
 	char *id;
 	char *name;
 	char *image, *mapPart, *pedia;
-	/** needs determines the second building part */
-	char *needs;		/**< if the buildign has a second part */
+
+	char *needs;		/**< "needs" determines the second building part. */
 	int fixCosts, varCosts;
 
 	/**
@@ -151,13 +153,12 @@ typedef struct building_s {
 
 	buildingStatus_t buildingStatus;	/**< [BASE_SIZE*BASE_SIZE]; */
 
-	/** if we can build more than one building of the same type: */
-	qboolean visible;	/**< is this building visible in the building list */
+	qboolean visible;	/**< Is this building visible in the building list. */
 	/** needed for baseassemble
 	 * when there are two tiles (like hangar) - we only load the first tile */
 	int used;
 
-	/** event handler functions */
+	/** Event handler functions */
 	char onConstruct[MAX_VAR];
 	char onAttack[MAX_VAR];
 	char onDestroy[MAX_VAR];
@@ -165,27 +166,18 @@ typedef struct building_s {
 	char onRepair[MAX_VAR];
 	char onClick[MAX_VAR];
 
-	/** more than one building of the same type allowed? */
-	int moreThanOne;
+	int moreThanOne;	/**< More than one building of the same type allowed? */
 
-	/** position of autobuild */
-	vec2_t pos;
 
-	/** autobuild when base is set up */
-	qboolean autobuild;
-
-	/** autobuild when base is set up */
-	qboolean firstbase;
+	vec2_t pos;			/**< Position of autobuild. */
+	qboolean autobuild;	/**< Autobuild when base is set up. */
+	qboolean firstbase;	/**< Autobuild when first base is set up. */
 
 	/** How many employees to hire on construction in the first base */
 	int maxEmployees;
 
-	/** this way we can rename the buildings without loosing the control */
-	buildingType_t buildingType;
-
-	technology_t *tech;					/**< link to the building-technology */
-	/** if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes */
-	int dependsBuilding;
+	technology_t *tech;				/**< Link to the building-technology. */
+	buildingType_t dependsBuilding;	/**< If the building needs another one to work (= to be buildable). This links to gd.buildingTypes @sa building_t.type */
 
 	int capacity;		/**< Capacity of this building (used in calculate base capacities). */
 } building_t;
@@ -292,8 +284,7 @@ void B_NewBases(void);
 void B_BuildingStatus(base_t* base, building_t* building);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
-int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx);
-int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type);
+int B_GetNumberOfBuildingsInBaseByType(base_t *base, buildingType_t type);
 
 int B_ItemInBase(int item_idx, const base_t *base);
 

@@ -98,12 +98,12 @@ static void BaseSummary_Init_f (void)
 			if (!RS_IsResearched_ptr(b->tech))
 				continue;
 
-			cap = B_GetCapacityFromBuildingType(b->buildingType);
+			cap = B_GetCapacityFromBuildingType(b->type);
 			if (cap == MAX_CAP)
 				continue;
 
 			/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
-			if (base->hasBuilding[b->buildingType]) {
+			if (base->hasBuilding[b->type]) {
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
 					base->capacities[cap].cur, base->capacities[cap].max), sizeof(textStatsBuffer));
 			} else {
@@ -116,7 +116,7 @@ static void BaseSummary_Init_f (void)
 					Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), base->capacities[cap].cur, 0), sizeof(textStatsBuffer));
 				}
 			}
-			Q_strcat(textStatsBuffer, va("\t\t\t\t%i\n", B_GetNumberOfBuildingsInBaseByType(base->idx, b->buildingType)), sizeof(textStatsBuffer));
+			Q_strcat(textStatsBuffer, va("\t\t\t\t%i\n", B_GetNumberOfBuildingsInBaseByType(base, b->type)), sizeof(textStatsBuffer));
 		}
 
 		Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
