@@ -1071,7 +1071,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		return;
 	}
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	aircraft = baseCurrent->aircraftCurrent;
 
 	assert(aircraft);
 	assert(node);
@@ -1156,7 +1156,7 @@ void AIM_AircraftEquipSlotSelect_f (void)
 		return;
 	}
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	aircraft = baseCurrent->aircraftCurrent;
 	assert(aircraft);
 
 	pos = atoi(Cmd_Argv(1));
@@ -1222,7 +1222,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 
 	if (aircraftMenu) {
 		assert(baseCurrent->aircraftCurrent >= 0);
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
 		/* Select slot */
 		slot = AII_SelectAircraftSlot(aircraft);
@@ -1521,7 +1521,7 @@ void AIM_AircraftEquipAddItem_f (void)
 
 	/* check in which menu we are */
 	if (aircraftMenu) {
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
 		base = aircraft->homebase;
 		slot = AII_SelectAircraftSlot(aircraft);
@@ -1625,7 +1625,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 
 	/* check in which menu we are */
 	if (aircraftMenu) {
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		aircraft = baseCurrent->aircraftCurrent;
 		slot = AII_SelectAircraftSlot(aircraft);
 	} else {
 		slot = BDEF_SelectBaseSlot(baseCurrent);
@@ -1700,7 +1700,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	if (!Q_strncmp(activeMenu->name, "aircraft_equip", 14)) {
 		if (baseCurrent->aircraftCurrent < 0)
 			return;
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		aircraft = baseCurrent->aircraftCurrent;
 		base = NULL;
 	} else if (!Q_strncmp(activeMenu->name, "basedefense", 11)) {
 		base = baseCurrent;

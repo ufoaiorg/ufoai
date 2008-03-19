@@ -4504,7 +4504,7 @@ void CL_GameAutoGo (mission_t *mis)
 		assert(aircraft);
 		baseCurrent = aircraft->homebase;
 		assert(baseCurrent);
-		baseCurrent->aircraftCurrent = aircraft->idxInBase; /* Might not be needed, but it's used later on in AIR_AircraftReturnToBase_f */
+		baseCurrent->aircraftCurrent = aircraft;	/* Might not be needed, but it's used later on in AIR_AircraftReturnToBase_f */
 
 		if (!mis->active) {
 			MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
@@ -4859,7 +4859,7 @@ static void CL_GameResults_f (void)
 	} else {
 		assert(gd.interceptAircraft != AIRCRAFT_INVALID);
 		baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
-		baseCurrent->aircraftCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
+		baseCurrent->aircraftCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft);
 	}
 
 	/* add the looted goods to base storage and market */
@@ -4907,14 +4907,14 @@ static void CL_GameResults_f (void)
 	/* no transfer or campaign effects for base attack missions */
 	if (selectedMission->stage != STAGE_BASE_ATTACK) {
 		/* Check for alien containment in aircraft homebase. */
-		if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
+		if (baseCurrent->aircraftCurrent->alientypes && !baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
-			TR_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
+			TR_TransferAircraftMenu(baseCurrent->aircraftCurrent);
 		} else {
 			/* The aircraft can be savely sent to its homebase without losing aliens */
 
 			/* @todo: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
-			baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
+			baseCurrent->aircraftCurrent->homebase = baseCurrent;
 		}
 		AIR_AircraftReturnToBase_f();
 	}

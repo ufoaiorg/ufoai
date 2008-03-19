@@ -159,7 +159,6 @@ typedef struct aircraft_s {
 	vec3_t direction;		/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
 	int point;
 	int time;
-	int idxInBase;			/**< Index in base. See also base_t->numAircraftInBase. */
 	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
 						is being parked in (CAP_AIRCRAFTS_SMALL/CAP_AIRCRAFTS_BIG). */
 
@@ -226,6 +225,7 @@ void AIM_NextAircraft_f(void);
 void AIM_PrevAircraft_f(void);
 void AIR_AircraftReturnToBase_f(void);
 
+int AIR_GetAircraftIdxInBase(aircraft_t* aircraft);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
 void AIR_AircraftSelect(aircraft_t *aircraft);

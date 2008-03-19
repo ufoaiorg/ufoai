@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_POPUP_H
 
 void CL_PopupInit(void);
-void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
+void CL_DisplayPopupAircraft(aircraft_t* aircraft);
 void CL_DisplayPopupIntercept(mission_t* mission, aircraft_t* ufo);
 
 #endif

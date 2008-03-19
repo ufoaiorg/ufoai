@@ -62,7 +62,7 @@ static void CL_MultiplayerEnvironment_f (void)
 	if (!cls.missionaircraft) {
 		Sys_Error("Make sure that you've set sv_maxclients to a value higher than 1");
 	}
-	baseCurrent->aircraftCurrent = cls.missionaircraft->idxInBase;
+	baseCurrent->aircraftCurrent = cls.missionaircraft;
 }
 
 /**
@@ -507,7 +507,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 		return;
 
 	/** @todo Do we really need to check aircraftcurrent here? */
-	if ((baseCurrent->aircraftCurrent != AIRCRAFT_INBASE_INVALID) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
+	if (baseCurrent->aircraftCurrent) {
 		/* aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent]; */
 	} else {
 #ifdef DEBUG
@@ -807,8 +807,8 @@ static void CL_GenerateEquipment_f (void)
 	int team;
 
 	assert(baseCurrent);
-	assert((baseCurrent->aircraftCurrent != AIRCRAFT_INBASE_INVALID) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	assert(baseCurrent->aircraftCurrent);
+	aircraft = baseCurrent->aircraftCurrent;
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
 	if (!aircraft->teamSize) {
@@ -1025,7 +1025,7 @@ static void CL_Select_f (void)
 		/* we are still in the menu - so fall through */
 	case SELECT_MODE_EQUIP:
 		/* no base or no aircraft selected */
-		if (!baseCurrent || baseCurrent->aircraftCurrent == AIRCRAFT_INBASE_INVALID)
+		if (!baseCurrent || !baseCurrent->aircraftCurrent)
 			return;
 		/* no soldiers in the current aircraft */
 		if (chrDisplayList.num <= 0) {
@@ -1224,7 +1224,7 @@ static void CL_MarkTeam_f (void)
 		MN_PopMenu(qfalse);
 		return;
 	}
-	if (baseCurrent->aircraftCurrent == AIRCRAFT_INBASE_INVALID) {
+	if (!baseCurrent->aircraftCurrent) {
 		Com_Printf("No aircraft selected\n");
 		MN_PopMenu(qfalse);
 		return;
@@ -1236,7 +1236,7 @@ static void CL_MarkTeam_f (void)
 		MN_Popup(_("New team created"), _("A new team has been created for you."));
 	}
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	aircraft = baseCurrent->aircraftCurrent;
 	CL_UpdateHireVar(aircraft, employeeType);
 
 	for (i = 0; i < gd.numEmployees[employeeType]; i++) {
@@ -1427,7 +1427,7 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 
 	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
 
-	if (!aircraft || aircraft->idxInBase < 0 || aircraft->idxInBase >= base->numAircraftInBase)
+	if (!aircraft)
 		return;
 
 	/* Counting backwards because aircraft->teamIdxs and teamTypes are changed in CL_RemoveSoldierFromAircraft */
@@ -1452,9 +1452,6 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t employeeType, aircraft_t *aircraft)
 {
 	if (employee_idx < 0 || !aircraft)
-		return qfalse;
-
-	if (aircraft->idxInBase < 0)
 		return qfalse;
 
 	if (aircraft->teamSize < MAX_ACTIVETEAM) {
@@ -1548,9 +1545,9 @@ static void CL_AssignSoldier_f (void)
 		Sys_Error("CL_AssignSoldier_f: Could not get employee %i\n", num);
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: employee with idx %i selected\n", employee->idx);
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	Com_DPrintf(DEBUG_CLIENT, "aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, aircraft->idxInBase);
-	assert(aircraft->idxInBase == baseCurrent->aircraftCurrent);
+	aircraft = baseCurrent->aircraftCurrent;
+	Com_DPrintf(DEBUG_CLIENT, "aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, AIR_GetAircraftIdxInBase(aircraft));
+	assert(aircraft == baseCurrent->aircraftCurrent);
 
 	if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft->idx)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: removing\n");
@@ -1583,7 +1580,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	int i, res;
 
 	assert(baseCurrent);
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	aircraft = baseCurrent->aircraftCurrent;
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);

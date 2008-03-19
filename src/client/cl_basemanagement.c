@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_team.h"
 #include "cl_mapfightequip.h"
+#include "cl_aircraft.h"
 #include "cl_hospital.h"
 #include "cl_view.h"
 #include "cl_map.h"
@@ -2387,7 +2388,6 @@ static void B_PackInitialEquipment_f (void)
 	int i, p, container, price = 0;
 	equipDef_t *ed;
 	base_t *base = baseCurrent;
-	int aircraft_idxInBase;
 	aircraft_t *aircraft;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("cl_equip");
 	chrList_t chr_list_temp;
@@ -2400,7 +2400,6 @@ static void B_PackInitialEquipment_f (void)
 
 	if (!base)
 		return;
-	aircraft_idxInBase = base->aircraftCurrent;
 
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
 		if (!Q_strncmp(name, ed->name, MAX_VAR))
@@ -2408,8 +2407,8 @@ static void B_PackInitialEquipment_f (void)
 
 	if (i == csi.numEDs) {
 		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
-	} else if ((aircraft_idxInBase != AIRCRAFT_INVALID) && (aircraft_idxInBase < base->numAircraftInBase)) {
-		aircraft = &base->aircraft[base->aircraftCurrent];
+	} else if (base->aircraftCurrent) {
+		aircraft = base->aircraftCurrent;
 		chr_list_temp.num = 0;
 		for (i = 0; i < aircraft->maxTeamSize; i++) {
 			if (aircraft->teamIdxs[i] != -1) {
@@ -3376,7 +3375,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->maxLasers);
 		B_SaveItemSlots(b->lasers, b->maxLasers, b->targetLaserIdx, sb);
 
-		MSG_WriteShort(sb, b->aircraftCurrent); /* Might be AIRCRAFT_INBASE_INVALID (-1) */
+		MSG_WriteShort(sb, AIR_GetAircraftIdxInBase(b->aircraftCurrent));
 		MSG_WriteByte(sb, b->numAircraftInBase);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = &b->aircraft[k];
@@ -3553,6 +3552,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	int i, bases, k, l, amount, ufoIdx;
 	const objDef_t *od;
 	objDef_t *od2;
+	int aircraftIdxInBase;
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
@@ -3596,7 +3596,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		b->maxLasers = MSG_ReadByte(sb);
 		B_LoadItemSlots(b, b->lasers, b->maxLasers, b->targetLaserIdx, sb);
 
-		b->aircraftCurrent = MSG_ReadShort(sb);
+		b->aircraftCurrent = NULL;
+		aircraftIdxInBase = MSG_ReadShort(sb);
+		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID)
+			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
+
 		b->numAircraftInBase = MSG_ReadByte(sb);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft_t *aircraft;
@@ -3610,7 +3614,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->idx = MSG_ReadShort(sb);
 			aircraft->homebase = b;
 			/* this is the aircraft array id in current base */
-			aircraft->idxInBase = k;
 			aircraft->status = MSG_ReadByte(sb);
 			aircraft->fuel = MSG_ReadLong(sb);
 			MSG_ReadPos(sb, aircraft->pos);

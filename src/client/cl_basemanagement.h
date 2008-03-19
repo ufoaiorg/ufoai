@@ -208,7 +208,7 @@ typedef struct base_s {
 	  @todo: make me a linked list (see cl_market.c aircraft selling) */
 	aircraft_t aircraft[MAX_AIRCRAFT];
 	int numAircraftInBase;	/**< How many aircraft are in this base. */
-	int aircraftCurrent;		/**< Index of the currently selected aircraft in this base (NOT a global one). Max is numAircraftInBase-1  */
+	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
 
 	int posX[BASE_SIZE][BASE_SIZE];	/**< the x coordinates for the basemap (see map[BASE_SIZE][BASE_SIZE]) */
 	int posY[BASE_SIZE][BASE_SIZE];	/**< the y coordinates for the basemap (see map[BASE_SIZE][BASE_SIZE]) */

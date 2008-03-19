@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
+static aircraft_t *menuAircraft = NULL;
 aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
 /**
  * @todo: should be reset to 0 each time scripts are read anew; also
@@ -167,7 +168,7 @@ void AIR_ListAircraft_f (void)
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
-			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
+			Com_Printf("...idx cur/global %i/%i\n", i, aircraft->idx);
 			for (k = 0; k < aircraft->maxWeapons; k++) {
 				if (aircraft->weapons[k].item) {
 					Com_Printf("...weapon slot %i contains %s", k, aircraft->weapons[k].item->id);
@@ -246,9 +247,9 @@ void AIM_AircraftStart_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (baseCurrent->aircraftCurrent == AIRCRAFT_INBASE_INVALID || baseCurrent->aircraftCurrent >= baseCurrent->numAircraftInBase) {
+	if (!baseCurrent->aircraftCurrent) {
 #ifdef DEBUG
-		Com_Printf("Error - there is no aircraftCurrent in this base\n");
+		Com_Printf("Error - there is no current aircraft in this base\n");
 #endif
 		return;
 	}
@@ -259,7 +260,7 @@ void AIM_AircraftStart_f (void)
 		return;
 	}
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	aircraft = baseCurrent->aircraftCurrent;
 	if (aircraft->status < AIR_IDLE) {
 		aircraft->pos[0] = baseCurrent->pos[0] + 2;
 		aircraft->pos[1] = baseCurrent->pos[1] + 2;
@@ -391,9 +392,7 @@ void AIR_NewAircraft_f (void)
  */
 void AIM_ResetAircraftCvars_f (void)
 {
-	int aircraftID;
-
-	if (!baseCurrent || (baseCurrent->numAircraftInBase < 0))
+	if (!baseCurrent || baseCurrent->numAircraftInBase < 0)
 		return;
 
 	/* Maybe we sold displayed aircraft ? */
@@ -404,14 +403,11 @@ void AIM_ResetAircraftCvars_f (void)
 		return;
 	}
 
-	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
-
-	if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
-		/* Bad aircraft idx found (no or no sane aircraft).
+	if (!menuAircraft || menuAircraft->homebase != baseCurrent) {
+		/* Bad aircraft found.
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf(DEBUG_CLIENT, "AIM_ResetAircraftCvars_f: bad aircraft idx found.\n");
-		aircraftID = 0;
-		Cvar_SetValue("mn_aircraft_idx", aircraftID);
+		Com_DPrintf(DEBUG_CLIENT, "AIM_ResetAircraftCvars_f: Bad aircraft found. Setting to first in base.\n");
+		menuAircraft = &baseCurrent->aircraft[0];
 	}
 
 	AIR_AircraftSelect(NULL);
@@ -424,25 +420,23 @@ void AIM_ResetAircraftCvars_f (void)
  */
 void AIM_NextAircraft_f (void)
 {
-	int aircraftID;
-
 	if (!baseCurrent || (baseCurrent->numAircraftInBase <= 0))
 		return;
 
-	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
-
-	if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
-		/* Bad aircraft idx found (no or no sane aircraft).
+	if (!menuAircraft || menuAircraft->homebase != baseCurrent) {
+		/* Bad aircraft found.
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: bad aircraft idx found.\n");
-		aircraftID = 0;
-		Cvar_SetValue("mn_aircraft_idx", aircraftID);
+		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: Bad aircraft found. Setting to first in base.\n");
+		menuAircraft = &baseCurrent->aircraft[0];
 		AIR_AircraftSelect(NULL);
 		return;
 	}
 
+	if (menuAircraft == &baseCurrent->aircraft[baseCurrent->numAircraftInBase-1])
+		menuAircraft = &baseCurrent->aircraft[0];
+	else
+		menuAircraft++;
 
-	Cvar_SetValue("mn_aircraft_idx",(aircraftID + 1) % baseCurrent->numAircraftInBase);
 	AIR_AircraftSelect(NULL);
 }
 
@@ -453,24 +447,23 @@ void AIM_NextAircraft_f (void)
  */
 void AIM_PrevAircraft_f (void)
 {
-	int aircraftID;
-
 	if (!baseCurrent || (baseCurrent->numAircraftInBase <= 0))
 		return;
 
-	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
-
-	if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
-		/* Bad aircraft idx found (no or no sane aircraft).
+	if (!menuAircraft || menuAircraft->homebase != baseCurrent) {
+		/* Bad aircraft found.
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf(DEBUG_CLIENT, "AIM_PrevAircraft_f: bad aircraft idx found.\n");
-		aircraftID = 0;
-		Cvar_SetValue("mn_aircraft_idx", aircraftID);
+		Com_DPrintf(DEBUG_CLIENT, "AIM_PrevAircraft_f: Bad aircraft found. Setting to first in base.\n");
+		menuAircraft = &baseCurrent->aircraft[0];
 		AIR_AircraftSelect(NULL);
 		return;
 	}
 
-	Cvar_SetValue("mn_aircraft_idx",(aircraftID - 1 + baseCurrent->numAircraftInBase) % baseCurrent->numAircraftInBase);
+	if (menuAircraft == &baseCurrent->aircraft[0])
+		menuAircraft = &baseCurrent->aircraft[baseCurrent->numAircraftInBase-1];
+	else
+		menuAircraft--;
+
 	AIR_AircraftSelect(NULL);
 }
 
@@ -589,28 +582,45 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
  */
 void AIR_AircraftReturnToBase_f (void)
 {
-	aircraft_t *aircraft;
-
-	if (baseCurrent && (baseCurrent->aircraftCurrent != AIRCRAFT_INBASE_INVALID) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-		AIR_AircraftReturnToBase(aircraft);
-		AIR_AircraftSelect(aircraft);
+	if (baseCurrent && baseCurrent->aircraftCurrent) {
+		AIR_AircraftReturnToBase(baseCurrent->aircraftCurrent);
+		AIR_AircraftSelect(baseCurrent->aircraftCurrent);
 	}
+}
+
+/**
+ * @brief Returns the index of the aircraft in the base->aircraft array.
+ * @param[in] aircraft The aircraft to get the index for.
+ * @return The array index or AIRCRAFT_INBASE_INVALID on error.
+ */
+int AIR_GetAircraftIdxInBase (aircraft_t* aircraft)
+{
+	int i;
+	if (!aircraft || !aircraft->homebase) {
+		return AIRCRAFT_INBASE_INVALID;
+	}
+
+	for (i = 0; i < aircraft->homebase->numAircraftInBase; i++) {
+		if (&aircraft->homebase->aircraft[i] == aircraft)
+			return i;
+	}
+
+	/* Aircraft not found in base */
+	return AIRCRAFT_INBASE_INVALID;
 }
 
 /**
  * @brief Sets aircraftCurrent and updates related cvars.
  * @param[in] aircraft Pointer to given aircraft.
- * @note If param[in] is NULL, it uses mn_aircraft_idx to determine aircraft.
- * @note If either pointer is NULL or no aircraft in mn_aircraft_idx, it takes
- * @note first aircraft in base (if there is any).
+ * @note If param[in] is NULL, it uses menuAircraft pointer to determine aircraft.
+ * If either pointer is NULL or no aircraft is set in menuAircraft, it takes
+ * first aircraft in base (if there is any).
  * @todo If the assert about homebase and baseCurrent isn't hit, we should not
  * use baseCurrent but aircraft->homebase
  */
 void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	menuNode_t *node = NULL;
-	int aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 	static char aircraftInfo[256];
 
 	/* calling from console? with no baseCurrent? */
@@ -625,20 +635,18 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 		 * aircraft at this point because baseCurrent->numAircraftInBase was zero)
 		 * if a non-sane idx was found.
 		 */
-		if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
-			aircraftID = 0;
-			Cvar_SetValue("mn_aircraft_idx", aircraftID);
+		if (!menuAircraft || menuAircraft->homebase != baseCurrent) {
+			menuAircraft = &baseCurrent->aircraft[0];
 		}
-		aircraft = &baseCurrent->aircraft[aircraftID];
+		aircraft = menuAircraft;
 	} else {
-		aircraftID = aircraft->idxInBase;
-		Cvar_SetValue("mn_aircraft_idx", aircraftID);
+		menuAircraft = aircraft;
 	}
 
 	node = MN_GetNodeFromCurrentMenu("aircraft");
 
-	/* we were not in the aircraft menu yet */
-	baseCurrent->aircraftCurrent = aircraftID;
+	/* We were not in the aircraft menu yet. */
+	baseCurrent->aircraftCurrent = aircraft;
 
 	assert(aircraft);
 	assert(aircraft->homebase == baseCurrent);
@@ -647,7 +655,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
-	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", _(aircraft->name), (aircraftID + 1), baseCurrent->numAircraftInBase));
+	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", _(aircraft->name), AIR_GetAircraftIdxInBase(aircraft) + 1, baseCurrent->numAircraftInBase));	/**< @todo Comment on the "+1" part here. */
 	Cvar_Set("mn_aircraft_model", aircraft->model);
 
 	/* generate aircraft info text */
@@ -675,9 +683,9 @@ void AIR_AircraftSelect_f (void)
 		return;
 	}
 
-	baseCurrent->aircraftCurrent = AIRCRAFT_INBASE_INVALID;
+	baseCurrent->aircraftCurrent = NULL;
 	AIR_AircraftSelect(NULL);
-	if (baseCurrent->aircraftCurrent == AIRCRAFT_INBASE_INVALID)
+	if (!baseCurrent->aircraftCurrent)
 		MN_PopMenu(qfalse);
 }
 
@@ -728,9 +736,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		AII_UpdateAircraftStats(aircraft);
 		/* give him some fuel */
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
-		/* this is the aircraft array id in current base */
-		/* NOTE: when we send the aircraft to another base this has to be changed, too */
-		aircraft->idxInBase = base->numAircraftInBase;
+
 		/* set initial direction of the aircraft */
 		VectorSet(aircraft->direction, 1, 0, 0);
 
@@ -772,7 +778,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	int i;
 	base_t *base;
 	aircraft_t *aircraft_temp;
-	const int previous_aircraftCurrent = baseCurrent->aircraftCurrent;
+	aircraft_t *previous_aircraftCurrent = baseCurrent->aircraftCurrent;
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: no aircraft given (NULL)\n");
@@ -818,14 +824,13 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	 * Every single idnext that points to an aircraft after this one will need to be updated.
 	 */
 	base->numAircraftInBase--;
-	for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
+	for (i = AIR_GetAircraftIdxInBase(aircraft); i < base->numAircraftInBase; i++) {
 		/* Remove aircraft and rearrange the aircraft-list (in base). */
 		aircraft_temp = &base->aircraft[i];
 		memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
-		aircraft_temp->idxInBase = i;	/**< Re-set the number of aircraft in the base. */
 
 		/* Update index of aircraftCurrent in base if it is affected by the index-change. */
-		if (i == previous_aircraftCurrent)
+		if (aircraft_temp == previous_aircraftCurrent)
 			base->aircraftCurrent--;
 	}
 
@@ -835,7 +840,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		Cvar_Set("mn_aircraftinbase", "0");
 		Cvar_Set("mn_aircraftname", "");
 		Cvar_Set("mn_aircraft_model", "");
-		base->aircraftCurrent = AIRCRAFT_INBASE_INVALID;
+		base->aircraftCurrent = NULL;
 	}
 
 	/* also update the base menu buttons */
@@ -1731,7 +1736,7 @@ void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employe
 			return;
 		}
 	}
-	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n", employee_idx, aircraft->idx, aircraft->idxInBase, baseCurrent->idx);
+	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n", employee_idx, aircraft->idx, AIR_GetAircraftIdxInBase(aircraft), baseCurrent->idx);
 }
 
 /**

@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* popup_aircraft display the actions availables for an aircraft */
 
 #define POPUP_AIRCRAFT_MAX_ITEMS	10		/**< Max items displayed in popup_aircraft */
-#define POPUP_AIRCARFT_MAX_TEXT		2048	/**< Max size of text displayed in popup_aircraft */
+#define POPUP_AIRCRAFT_MAX_TEXT		2048	/**< Max size of text displayed in popup_aircraft */
 
 /**
  * @brief Enumerate type of actions available for popup_aircraft
@@ -50,12 +50,12 @@ typedef enum {
 /**
  * @brief Structure to store information about popup_aircraft
  */
-typedef struct popup_aircarft_s {
+typedef struct popup_aircraft_s {
 	int nbItems;			/**< Count of items displayed in popup_aircraft */
-	int aircraft_idx;		/**< Aircraft linked to popup_aircraft */
+	aircraft_t *aircraft;		/**< Aircraft linked to popup_aircraft */
 	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
-	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];	/**< IDs corresponding to items */
-	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
+	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];		/**< IDs corresponding to items */
+	char text_popup[POPUP_AIRCRAFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
 } popup_aircraft_t;
 
 /** FIXME: Save me */
@@ -67,8 +67,7 @@ static popup_aircraft_t popupAircraft; /**< Data about popup_aircraft */
 
 typedef struct popup_intercept_s {
 	int numAircraft;	/**< Count of aircraft displayed in list */
-	int idBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< Base ID of aircraft in list */
-	int idInBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< ID in base of aircraft in list */
+	aircraft_t *aircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< List of aircrafts. */
 	mission_t* mission;	/**< Mission the selected aircraft have to move to */
 	aircraft_t* ufo;		/**< UFO the selected aircraft have to move to */
 } popup_intercept_t;
@@ -83,23 +82,23 @@ POPUP_AIRCRAFT
  * @brief Display the popup_aircraft
  * @sa CL_DisplayPopupIntercept
  */
-void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
+void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 {
 	const linkedList_t *list = ccs.missions;
 
 	/* Initialise popup_aircraft datas */
 	if (!aircraft)
 		return;
-	popupAircraft.aircraft_idx = aircraft->idx;
+	popupAircraft.aircraft = aircraft;
 	popupAircraft.nbItems = 0;
 	memset(popupAircraft.text_popup, 0, sizeof(popupAircraft.text_popup));
 	mn.menuText[TEXT_POPUP] = popupAircraft.text_popup;
 
 	/* Set static datas in popup_aircraft */
 	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
-	Q_strcat(popupAircraft.text_popup, va(_("Back to base\t%s\n"), aircraft->homebase->name), POPUP_AIRCARFT_MAX_TEXT);
+	Q_strcat(popupAircraft.text_popup, va(_("Back to base\t%s\n"), aircraft->homebase->name), POPUP_AIRCRAFT_MAX_TEXT);
 	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_STOP;
-	Q_strcat(popupAircraft.text_popup, _("Stop\n"), POPUP_AIRCARFT_MAX_TEXT);
+	Q_strcat(popupAircraft.text_popup, _("Stop\n"), POPUP_AIRCRAFT_MAX_TEXT);
 
 	/* Set missions in popup_aircraft */
 	if (aircraft->teamSize > 0) {
@@ -111,7 +110,7 @@ void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 			if (tempMission->pos) {
 				popupAircraft.itemsId[popupAircraft.nbItems] = MAP_GetIdxByMission(tempMission);
 				popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
-				Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), CP_MissionToTypeString(tempMission), 	_(tempMission->location)), POPUP_AIRCARFT_MAX_TEXT);
+				Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), CP_MissionToTypeString(tempMission), 	_(tempMission->location)), POPUP_AIRCRAFT_MAX_TEXT);
 			}
 		}
 	}
@@ -142,7 +141,7 @@ static void CL_PopupAircraftClick_f (void)
 	MN_PopMenu(qfalse); /* Close popup */
 
 	/* Get aircraft associated with the popup_aircraft */
-	aircraft = AIR_AircraftGetFromIdx(popupAircraft.aircraft_idx);
+	aircraft = popupAircraft.aircraft;
 	if (aircraft == NULL)
 		return;
 
@@ -241,8 +240,8 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 				s = va("%s (%i/%i)\t%s\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), gd.bases[j].name, CL_SecondConvert(3600.0f * distance / air->stats[AIR_STATS_SPEED]));
 			}
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
-			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;
-			popupIntercept.idInBaseAircraft[popupIntercept.numAircraft] = i;
+			assert(air->homebase == &gd.bases[j]);
+			popupIntercept.aircraft[popupIntercept.numAircraft] = air;
 			popupIntercept.numAircraft++;
 			if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
 				break;
@@ -308,10 +307,9 @@ static aircraft_t* CL_PopupInterceptGetAircraft (void)
 		return NULL;
 
 	MN_PopMenu(qfalse);
-	if (popupIntercept.idBaseAircraft[num] >= gd.numBases
-		|| popupIntercept.idInBaseAircraft[num] >= gd.bases[popupIntercept.idBaseAircraft[num]].numAircraftInBase)
+	if (!popupIntercept.aircraft[num])
 		return NULL;
-	return gd.bases[popupIntercept.idBaseAircraft[num]].aircraft + popupIntercept.idInBaseAircraft[num];
+	return popupIntercept.aircraft[num];
 }
 
 /**
