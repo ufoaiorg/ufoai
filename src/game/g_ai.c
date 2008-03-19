@@ -306,7 +306,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 	if (!(ent->state & STATE_RAGE)) {
 		/* hide */
-		/* TODO: Only hide if the visible actors have long range weapons in their hands
+		/* @todo: Only hide if the visible actors have long range weapons in their hands
 		 * otherwise make it depended on the mood (or some skill) of the alien whether
 		 * it tries to attack by trying to get as close as possible or to try to hide */
 		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
@@ -356,7 +356,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* nothing found */
 			VectorCopy(to, ent->pos);
 			gi.GridPosToVec(gi.routingMap, to, ent->origin);
-			/* TODO: Try to crouch if no hiding spot was found - randomized */
+			/* @todo: Try to crouch if no hiding spot was found - randomized */
 		} else {
 			/* found a hiding spot */
 			VectorCopy(ent->pos, aia->stop);
