@@ -1249,13 +1249,17 @@ void B_SetBuildingByClick (int row, int col)
 		return;
 	}
 
-	/** @todo: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTemplates at all ... it's just not logical) */
-	/* if the building is in gd.buildingTemplates[] */
+	/** @todo This is a bad idea ... baseCurrent->buildingCurrent shouldn't link
+	 * to anything in gd.buildingTemplates at all IMO.
+	 * It can easily lead to confusion (if it's used elsewhere for some reason). */
+	/* If the building is in gd.buildingTemplates[] ... */
 	if (!baseCurrent->buildingCurrent->base) {
+		assert(baseCurrent->buildingCurrent == baseCurrent->buildingCurrent->tpl); /**< Templates link to themself. */
 		building_t *building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 
 		/* copy building from template list to base-buildings-list */
-		*building = *(baseCurrent->buildingCurrent->tpl);
+		*building = *baseCurrent->buildingCurrent->tpl;
+		assert(building != baseCurrent->buildingCurrent->tpl);
 
 		/* self-link to building-list in base */
 		building->idx = gd.numBuildings[baseCurrent->idx];
@@ -1263,7 +1267,7 @@ void B_SetBuildingByClick (int row, int col)
 
 		/* Link to the base. */
 		building->base = baseCurrent;
-		baseCurrent->buildingCurrent = building;
+		baseCurrent->buildingCurrent = building;	/**< Set current building to a real one (not a template) again. */
 	}
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
@@ -1482,7 +1486,7 @@ static void B_BuildingInit (base_t* base)
 {
 	int i;
 	int numSameBuildings;
-	building_t *type;
+	building_t *tpl;
 
 	/* maybe someone call this command before the bases are parsed?? */
 	if (!base)
@@ -1497,13 +1501,13 @@ static void B_BuildingInit (base_t* base)
 	numBuildingConstructionList = 0;
 
 	for (i = 0; i < gd.numBuildingTemplates; i++) {
-		type = &gd.buildingTemplates[i];
+		tpl = &gd.buildingTemplates[i];
 		/*make an entry in list for this building */
 
-		if (type->visible) {
-			numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, type);
+		if (tpl->visible) {
+			numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
 
-			if (type->moreThanOne) {
+			if (tpl->moreThanOne) {
 				/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
 				if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
 					continue;
@@ -1512,11 +1516,11 @@ static void B_BuildingInit (base_t* base)
 			}
 
 			/* if the building is researched add it to the list */
-			if (RS_IsResearched_ptr(type->tech)) {
-				B_BuildingAddToList(type);
+			if (RS_IsResearched_ptr(tpl->tech)) {
+				B_BuildingAddToList(tpl);
 			} else {
 				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n",
-					type->id, type->tech ? type->tech->idx : 0);
+					tpl->id, tpl->tech ? tpl->tech->idx : 0);
 			}
 		}
 	}
@@ -1691,7 +1695,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
 
 		/*set standard values */
-		building->tpl = building;	/* Self-link just in case ... this way we can check if it is a templyte or not. */
+		building->tpl = building;	/* Self-link just in case ... this way we can check if it is a template or not. */
 		building->idx = -1;			/* No entry in buildings list (yet). */
 		building->base = NULL;
 		building->buildingType = MAX_BUILDING_TYPE;
