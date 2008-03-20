@@ -44,8 +44,6 @@ static cvar_t *mn_base_count;
 static cvar_t *mn_base_id;
 static cvar_t *cl_equip;
 
-const static char *buildingTypeNames[];
-
 /** @brief allocate memory for mn.menuText[TEXT_STANDARD] contained the information about a building */
 static char buildingText[MAX_LIST_CHAR];
 
@@ -194,13 +192,19 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t buildingType)
 {
 	assert(base);
+	assert(buildingType >= 0);
+
+	if (!base) {
+		Com_DPrintf(DEBUG_CLIENT, "B_GetBuildingStatus: No base given!\n");
+		return qfalse;
+	}
 
 	if (buildingType == B_MISC)
 		return qtrue;
 	else if (buildingType < MAX_BUILDING_TYPE)
 		return base->hasBuilding[buildingType];
 	else {
-		Com_Printf("B_GetBuildingStatus()... Type %i does not exists.\n", buildingType);
+		Com_Printf("B_GetBuildingStatus()... Building-type %i does not exist.\n", buildingType);
 		return qfalse;
 	}
 }
