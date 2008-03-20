@@ -1254,8 +1254,8 @@ void B_SetBuildingByClick (int row, int col)
 	 * It can easily lead to confusion (if it's used elsewhere for some reason). */
 	/* If the building is in gd.buildingTemplates[] ... */
 	if (!baseCurrent->buildingCurrent->base) {
-		assert(baseCurrent->buildingCurrent == baseCurrent->buildingCurrent->tpl); /**< Templates link to themself. */
 		building_t *building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
+		assert(baseCurrent->buildingCurrent == baseCurrent->buildingCurrent->tpl); /**< Templates link to themself. */
 
 		/* copy building from template list to base-buildings-list */
 		*building = *baseCurrent->buildingCurrent->tpl;
@@ -2901,7 +2901,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 					if (gd.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
 					 && gd.buildings[baseIdx][i].buildTime > (ccs.date.day - gd.buildings[baseIdx][i].timeStart)) {
 						Com_sprintf(popupText, sizeof(popupText), va(_("Building %s is not finished yet, and is needed to use building %s."),
-							_(dependenceBuilding->name)), _(building->name));
+							_(dependenceBuilding->name), _(building->name)));
 						MN_Popup(_("Notice"), popupText);
 						return;
 					}
