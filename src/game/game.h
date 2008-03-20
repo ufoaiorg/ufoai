@@ -126,6 +126,9 @@ typedef struct {
 	/** the *index functions create configstrings and some internal server state */
 	int (IMPORT *ModelIndex) (const char *name);
 
+	/** This updates the inline model's orientation */
+	void (IMPORT *SetInlineModelOrientation) (const char *name, const vec3_t origin, const vec3_t angles);
+
 	void (IMPORT *SetModel) (edict_t * ent, const char *name);
 
 	/** @brief collision detection
@@ -161,7 +164,7 @@ typedef struct {
 	pos_t (IMPORT *GridHeight) (struct routing_s * map, pos3_t pos);
 	pos_t (IMPORT *GridFall) (struct routing_s * map, pos3_t pos, int actor_size);
 	void (IMPORT *GridPosToVec) (struct routing_s * map, pos3_t pos, vec3_t vec);
-	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const vec3_t angles, const char **list);
+	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
 
 	/* filesystem functions */
 	const char *(IMPORT *FS_Gamedir) (void);

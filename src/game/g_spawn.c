@@ -249,7 +249,16 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		if (keyname[0] == '_')
 			continue;
 
+		Com_DPrintf(DEBUG_GAME, "Entity:%i class:%s key:%s\n", ent->number, ent->classname, keyname);
+
 		ED_ParseField(keyname, com_token, ent);
+
+#if 0
+		if (!Q_stricmp(keyname, "origin")) {
+				Com_Printf("Origin issued: (%i, %i, %i)\n",
+					(int) ent->origin[0], (int) ent->origin[1], (int) ent->origin[2]);
+		}
+#endif
 	}
 
 	if (!init)
@@ -298,6 +307,14 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 			ent = G_Spawn();
 
 		entities = ED_ParseEdict(entities, ent);
+
+	Com_DPrintf(DEBUG_GAME, "entity: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
+			ent->model, ent->mapNum, ent->solid,
+			(int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
+			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
+			(int)ent->absmin[0], (int)ent->absmin[1], (int)ent->absmin[2],
+			(int)ent->absmax[0], (int)ent->absmax[1], (int)ent->absmax[2],
+			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 
 		ent->mapNum = entnum++;
 

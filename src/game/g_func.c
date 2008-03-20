@@ -98,6 +98,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 			gi.WriteShort(activator->number);
 			gi.WriteShort(activator->client_action->number);
 			gi.EndEvents();
+			Com_DPrintf(DEBUG_GAME, "Touch_DoorTrigger: Assigned door as the current client action\n");
 		} else {
 			Com_DPrintf(DEBUG_GAME, "Touch_DoorTrigger: Door is already the current client action\n");
 		}
@@ -123,7 +124,6 @@ void SP_func_door (edict_t *ent)
 	gi.SetModel(ent, ent->model);
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
-
 	ent->moveinfo.state = STATE_CLOSED;
 
 	/* spawn the trigger entity */
@@ -132,9 +132,12 @@ void SP_func_door (edict_t *ent)
 
 	ent->child = other;
 
-	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
+	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
+			ent->model, ent->mapNum, ent->solid,
+			(int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
 			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
+			(int)ent->absmin[0], (int)ent->absmin[1], (int)ent->absmin[2],
+			(int)ent->absmax[0], (int)ent->absmax[1], (int)ent->absmax[2],
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 }
 

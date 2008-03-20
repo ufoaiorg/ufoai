@@ -797,6 +797,46 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 }
 
 /**
+ * @brief Displays the results of a trace. Used to see if a bullet hit something.
+ * @param[in] start The starting loaction of the trace.
+ * @param[in] trace The trace data.
+ */
+static void DumpTrace (vec3_t start, trace_t tr)
+{
+	Com_DPrintf(DEBUG_GAME, "start (%i, %i, %i) end (%i, %i, %i)\n",
+		(int)start[0], (int)start[1], (int)start[2],
+		(int)tr.endpos[0], (int)tr.endpos[1], (int)tr.endpos[2]);
+	Com_DPrintf(DEBUG_GAME, "allsolid:%s startsolid:%s fraction:%f contentFlags:%X\n",
+		tr.allsolid ? "true" : "false",
+		tr.startsolid ? "true" : "false",
+		tr.fraction, tr.contentFlags);
+	Com_DPrintf(DEBUG_GAME, "is entity:%s %s %i\n",
+		tr.ent ? "yes" : "no",
+		tr.ent ? tr.ent->classname : "",
+		tr.ent ? tr.ent->HP : 0);
+}
+
+/**
+ * @brief Displays data about all server entities.
+ */
+static void DumpAllEntities (void)
+{
+	int i;
+	edict_t *check;
+
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		Com_DPrintf(DEBUG_GAME, "%i %s %s %s (%i, %i, %i) (%i, %i, %i) [%i, %i, %i] [%i, %i, %i]\n", i,
+			check->inuse ? "in use" : "unused",
+			check->classname,
+			check->model,
+			(int) check->absmin[0], (int) check->absmin[1], (int) check->absmin[2],
+			(int) check->absmax[0], (int) check->absmax[1], (int) check->absmax[2],
+			(int) check->mins[0], (int) check->mins[1], (int) check->mins[2],
+			(int) check->maxs[0], (int) check->maxs[1], (int) check->maxs[2]);
+	}
+}
+
+/**
  * @brief Fires straight shots.
  * @param[in] ent The attacker.
  * @param[in] fd The fire definition that is used for the shot.
@@ -882,10 +922,14 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 		 * but rather the 'endofrange' location, see below for another use.*/
 		VectorMA(cur_loc, range, dir, impact);
 
+		DumpAllEntities();
+
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
 		/* mins and maxs should be set via localModel_t don't they? */
 		tr = gi.trace(tracefrom, NULL, NULL, impact, ent, MASK_SHOT);
+
+		DumpTrace(tracefrom, tr);
 
 		/* maybe we start the trace from within a brush (e.g. in case of throughWall) */
 		if (tr.startsolid)
@@ -957,6 +1001,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			/* check for shooting through wall */
 			if (throughWall && tr.contentFlags & CONTENTS_SOLID) {
 				throughWall--;
+				Com_DPrintf(DEBUG_GAME, "Shot through wall, %i walls left.\n", throughWall);
 				/* reduce damage */
 				/* TODO: reduce even more if the wall was hit far away and
 				 * not close by the shooting actor */

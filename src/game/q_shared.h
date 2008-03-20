@@ -247,13 +247,14 @@ extern cvar_t* sys_os;
 typedef struct cBspPlane_s {
 	vec3_t normal;
 	float dist;
-	byte type;                  /**< for fast side tests */
-	byte signbits;              /**< signx + (signy<<1) + (signz<<1) */
+	byte type;					/**< for fast side tests */
+	byte signbits;				/**< signx + (signy<<1) + (signz<<1) */
 	byte pad[2];
 } cBspPlane_t;
 
 typedef struct cBspModel_s {
 	vec3_t mins, maxs;
+	vec3_t origin, angles;		/**< used to orient doors and rotating entities */
 	int tile;					/**< which tile in assembly */
 	int headnode;
 } cBspModel_t;

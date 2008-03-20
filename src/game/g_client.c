@@ -1491,6 +1491,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
 					triggers = qtrue;
+					Com_DPrintf(DEBUG_GAME, "G_ClientMove: Touching trigger\n");
 					if (!client_action) {
 						status |= VIS_STOP;
 						steps = 0;
@@ -1551,6 +1552,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				ent->client_action = NULL;
 				gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
 				gi.WriteShort(ent->number);
+				Com_DPrintf(DEBUG_GAME, "G_ClientMove: Reseting current client action\n");
 			}
 
 			/* end the move */
@@ -2194,14 +2196,13 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 
 		/* FIXME */
 		/* change rotation and relink */
-		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
+		door->angles[YAW] += DOOR_ROTATION_ANGLE;
 		gi.LinkEdict(door);
 
 		/* let everybody know, that the door opens */
 		gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
 		gi.WriteShort(door->number);
 		gi.WriteShort(door->mapNum);
-		G_RecalcRouting(door);
 
 		actor->TU -= TU_DOOR_ACTION;
 		/* send the new TUs */
@@ -2213,14 +2214,12 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 
 		/* FIXME */
 		/* change rotation and relink */
-		door->angles[YAW] += DOOR_ROTATION_ANGLE;
+		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
 		gi.LinkEdict(door);
 
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 		gi.WriteShort(door->number);
-
-		G_RecalcRouting(door);
 
 		actor->TU -= TU_DOOR_ACTION;
 		/* send the new TUs */
@@ -2228,6 +2227,13 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 
 		gi.EndEvents();
 	}
+
+	/* Update model orientation */
+	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
+	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
+	/* Update path finding table */
+	G_RecalcRouting(door);
+
 	return qtrue;
 }
 
@@ -2974,6 +2980,9 @@ static void G_SendEdictsAndBrushModels (int team)
 		 * a map assembly */
 		switch (ent->solid) {
 		case SOLID_BSP:
+			if (ent->type == ET_DOOR)
+				Com_DPrintf(DEBUG_GAME, "Sending door origin (%i, %i, %i)\n",
+					(int) ent->origin[0], (int) ent->origin[1], (int) ent->origin[2]);
 			/* skip the world(s) in case of map assembly */
 			if (ent->type) {
 				gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
@@ -2982,6 +2991,7 @@ static void G_SendEdictsAndBrushModels (int team)
 				gi.WriteShort(ent->modelindex);
 				gi.WriteByte(ent->spawnflags & 0xFF);
 				gi.WritePos(ent->origin);
+				gi.WritePos(ent->angles);
 				gi.WriteShort(ent->speed);
 				gi.WriteByte(ent->angle);
 				ent->visflags |= ~ent->visflags;

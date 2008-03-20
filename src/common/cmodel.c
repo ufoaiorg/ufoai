@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 #include "pqueue.h"
+
 #define	ON_EPSILON	0.1
 #define GRENADE_ALPHAFAC	0.7
 #define GRENADE_MINALPHA	M_PI/6
@@ -715,7 +716,7 @@ static qboolean CM_EntTestLine (vec3_t start, vec3_t stop)
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, vec3_origin, vec3_origin);
+		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, model->angles);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
@@ -759,7 +760,7 @@ qboolean CM_TestLineWithEnt (vec3_t start, vec3_t stop, const char **entlist)
  * @sa CM_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
-static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
+static qboolean CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 {
 	trace_t trace;
 	cBspModel_t *model;
@@ -778,15 +779,15 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, vec3_origin, vec3_origin);
+		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, model->angles);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
 			VectorCopy(start, end);
-			return 1;
+			return qtrue;
 		}
 		/* trace not finishd */
 		if (trace.fraction < 1.0) {
-			blocked = 1;
+			blocked = qtrue;
 			VectorCopy(trace.endpos, end);
 		}
 	}
@@ -915,8 +916,8 @@ static void CM_CheckUnit (routing_t * map, int x, int y, pos_t z)
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, end);
 	VectorCopy(end, start);
-	start[2] -= UNIT_HEIGHT / 2 - 4;
-	end[2] -= UNIT_HEIGHT / 2 + 4;
+	start[2] -= UNIT_HEIGHT / 2 - QUANT;
+	end[2] -= UNIT_HEIGHT / 2 + QUANT;
 
 	/* test for fall down */
 	if (CM_EntTestLine(start, end)) {
@@ -1440,6 +1441,24 @@ cBspModel_t *CM_InlineModel (const char *name)
 
 	Com_Error(ERR_DROP, "CM_InlineModel: Error cannot find model '%s'\n", name);
 	return NULL;
+}
+
+/**
+ * @brief This function updates a model's orientation
+ * @param[in] name The name of the model, must include the '*'
+ * @param[in] origin The new origin for the model
+ * @param[in] angles The new facing angles for the model
+ * @note This is used whenever a model's orientation changes, eg doors and rotating models
+ * @sa LE_DoorAction
+ * @sa G_ClientUseDoor
+ */
+void CM_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)
+{
+	cBspModel_t *model;
+	model = CM_InlineModel(name);
+	assert(model);
+	VectorCopy(origin, model->origin);
+	VectorCopy(angles, model->angles);
 }
 
 int CM_NumInlineModels (void)
@@ -2059,10 +2078,11 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, con
 	VectorSubtract(end, origin, end_l);
 
 	/* rotate start and end into the models frame of reference */
-	if (headnode != curTile->box_headnode && VectorNotEmpty(angles))
+	if (headnode != curTile->box_headnode && VectorNotEmpty(angles)) {
 		rotated = qtrue;
-	else
+	} else {
 		rotated = qfalse;
+	}
 
 	if (rotated) {
 		AngleVectors(angles, forward, right, up);
@@ -2229,7 +2249,7 @@ static void BuildTracingNode_r (int node, int level)
 		/* FIXME: What about visibility checks - should LEVEL_ACTORCLIP
 		 * be removed here, too? Problem is, the tnode functions are used
 		 * for pathfinding, too */
-		if (level <= LEVEL_LASTVISIBLE) {
+		if (level <= LEVEL_LASTVISIBLE || level == LEVEL_ACTORCLIP) {
 			curTile->cheads[curTile->numcheads].cnode = node;
 			curTile->cheads[curTile->numcheads].level = level;
 			curTile->numcheads++;
@@ -2475,7 +2495,105 @@ qboolean CM_TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end)
 */
 
 /**
- * @brief Checks one field (square) on the grid of the given routing data (i.e. the map).
+ * @brief  Dumps contents of a map to console for inspection.
+ * @sa Grid_RecalcRouting
+ * @param[in] map The routing map (either server or client map)
+ * @param[in] lx  The low end of the x range updated
+ * @param[in] ly  The low end of the y range updated
+ * @param[in] lz  The low end of the z range updated
+ * @param[in] hx  The high end of the x range updated
+ * @param[in] hy  The high end of the y range updated
+ * @param[in] hz  The high end of the z range updated
+ */
+static void Grid_DumpMap (struct routing_s *map, int lx, int ly, int lz, int hx, int hy, int hz)
+{
+	int x, y, z;
+
+	Com_Printf("\nGrid_DumpMap (%i %i %i) (%i %i %i)\n", lx, ly, lz, hx, hy, hz);
+	for (z = hz; z >= lz; --z) {
+		Com_Printf("\nLayer %i:\n   ", z);
+		for (x = lx; x <= hx; ++x) {
+			Com_Printf("%9i", x);
+		}
+		Com_Printf("\n");
+		for (y = hy; y >= ly; --y) {
+			Com_Printf("%3i ", y);
+			for (x = lx; x <= hx; ++x) {
+				Com_Printf("%s%s%s%s%s%s%2i "
+					, R_CONN_NX(map, x, y, z) ? "w" : " "
+					, R_CONN_PY(map, x, y, z) ? "n" : " "
+					, R_CONN_NY(map, x, y, z) ? "s" : " "
+					, R_CONN_PX(map, x, y, z) ? "e" : " "
+					, R_STEP(map, x, y, z) ? "S" : " "
+					, R_FALL(map, x, y, z) ? "F" : " "
+					, R_HEIGHT(map, x, y, z));
+			}
+			Com_Printf("\n");
+		}
+	}
+}
+
+/**
+ * @brief  Dumps contents of the entire client map to console for inspection.
+ * @sa CL_InitLocal
+ */
+void Grid_DumpWholeMap (void)
+{
+	vec3_t mins, maxs, normal, origin;
+	pos3_t start, end, test;
+	trace_t trace;
+	int i;
+
+	/* Initialize start, end, and normal */
+	VectorSet(start, 0, 0, 0);
+	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
+	VectorSet(normal, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
+	VectorCopy(vec3_origin, origin);
+
+	for (i = 0; i < 3; i++) {
+		/* Lower positive boundary */
+		while (end[i]>start[i]) {
+			/* Adjust ceiling */
+			VectorCopy(start, test);
+			test[i] = end[i] - 1; /* test is now one floor lower than end */
+			/* Prep boundary box */
+			PosToVec(test, mins);
+			VectorSubtract(mins, normal, mins);
+			PosToVec(end, maxs);
+			VectorAdd(maxs, normal, maxs);
+			/* Test for stuff in a small box, if there is something then exit while */
+			trace = CM_CompleteBoxTrace(origin, origin, mins, maxs, 0x1FF, MASK_ALL);
+			if (trace.fraction < 1.0)
+				break;
+			/* There is nothing, lower the boundary. */
+			end[i]--;
+		}
+
+		/* Raise negative boundary */
+		while (end[i]>start[i]) {
+			/* Adjust ceiling */
+			VectorCopy(end, test);
+			test[i] = start[i] + 1; /* test is now one floor lower than end */
+			/* Prep boundary box */
+			PosToVec(start, mins);
+			VectorSubtract(mins, normal, mins);
+			PosToVec(test, maxs);
+			VectorAdd(maxs, normal, maxs);
+			/* Test for stuff in a small box, if there is something then exit while */
+			trace = CM_CompleteBoxTrace(origin, origin, mins, maxs, 0x1FF, MASK_ALL);
+			if (trace.fraction < 1.0)
+				break;
+			/* There is nothing, raise the boundary. */
+			start[i]++;
+		}
+	}
+
+	/* Dump the client map */
+	Grid_DumpMap(&clMap, start[0], start[1], start[2], end[0], end[1], end[2]);
+}
+
+/**
+* @brief Checks one field (square) on the grid of the given routing data (i.e. the map).
  * @param[in] map Routing data/map.
  * @param[in] x Field in x direction
  * @param[in] y Field in y direction
@@ -3052,11 +3170,12 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  * @sa CM_UpdateConnection
  * @sa CMod_LoadSubmodels
  * @param[in] map The routing map (either server or client map)
- * @param[in] Name of the inline model to compute the mins/maxs for
- * @param[in] Rotation of the inline model
+ * @param[in] name Name of the inline model to compute the mins/maxs for
+ * @param[in] origin Offset of the inline model (used by ET_DOOR and ET_ROTATING)
+ * @param[in] angles Rotation of the inline model
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t angles, const char **list)
+void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **list)
 {
 	cBspModel_t *model;
 	pos3_t min, max;
@@ -3078,11 +3197,8 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 	}
 	inlineList = list;
 
-	/* Update the tracing nodes to ensure that we have the shortest paths */
-	CM_MakeTracingNodes();
-
 	/* get dimensions */
-	if (VectorNotEmpty(angles)) {
+	if (VectorNotEmpty(model->angles)) {
 		vec3_t minVec, maxVec;
 		float maxF, v;
 
@@ -3099,11 +3215,18 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 			minVec[i] = -maxF;
 			maxVec[i] = maxF;
 		}
+		/* Now offset by origin then convert to position (Doors do not have 0 origins) */
+		VectorAdd(minVec, model->origin, minVec);
 		VecToPos(minVec, min);
+		VectorAdd(maxVec, model->origin, maxVec);
 		VecToPos(maxVec, max);
 	} else {  /* normal */
-		VecToPos(model->mins, min);
-		VecToPos(model->maxs, max);
+		vec3_t temp;
+		/* Now offset by origin then convert to position (Doors do not have 0 origins) */
+		VectorAdd(model->mins, model->origin, temp);
+		VecToPos(temp, min);
+		VectorAdd(model->maxs, model->origin, temp);
+		VecToPos(temp, max);
 	}
 
 	memset(filled, 0, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
@@ -3116,9 +3239,13 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 		min[i] = max(min[i] - 2, 0);
 
 #if 0
-	Com_Printf("routing: (%i %i %i) (%i %i %i)\n",
+	Com_Printf("routing: %s (%i %i %i) (%i %i %i)\n", name,
 		(int)min[0], (int)min[1], (int)min[2],
 		(int)max[0], (int)max[1], (int)max[2]);
+#endif
+
+#if 0
+	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
 #endif
 
 	/* check unit heights */
@@ -3127,6 +3254,10 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 			for (x = min[0]; x < max[0]; x++)
 				CM_CheckUnit(map, x, y, z);
 
+#if 0
+	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
+#endif
+
 	/* check connections */
 	for (z = min[2]; z < max[2]; z++)
 		for (y = min[1]; y < max[1]; y++)
@@ -3134,6 +3265,10 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const vec3_t a
 				/* check all directions */
 				for (i = 0; i < BASE_DIRECTIONS; i++)
 					CM_UpdateConnection(map, x, y, z, i, qtrue);
+
+#if 0
+	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
+#endif
 
 	inlineList = NULL;
 }

@@ -261,7 +261,7 @@ void G_RecalcRouting (const edict_t * self)
 	/* generate entity list */
 	G_GenerateEntList(entList);
 	/* recalculate routing */
-	gi.GridRecalcRouting(gi.routingMap, self->model, self->angles, entList);
+	gi.GridRecalcRouting(gi.routingMap, self->model, entList);
 }
 
 /**
@@ -273,8 +273,12 @@ void G_CompleteRecalcRouting (void)
 
 	/* generate entity list */
 	for (ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP)
+		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP) {
+			Com_DPrintf(DEBUG_GAME, "Processing entity %i: inuse:%i model:%s solid:%i\n", ent->number, ent->inuse, ent->model, ent->solid);
 			G_RecalcRouting(ent);
+		} else {
+			Com_DPrintf(DEBUG_GAME, "Did not process entity %i: inuse:%i model:%s solid:%i\n", ent->number, ent->inuse, ent->model, ent->solid);
+		}
 }
 
 /**
@@ -292,6 +296,7 @@ int G_TouchTriggers (edict_t *ent)
 
 	/* be careful, it is possible to have an entity in this
 	* list removed before we get to it(killtriggered) */
+	Com_DPrintf(DEBUG_GAME, "G_TouchTriggers: Found %i possible triggers.\n", num);
 	for (i = 0; i < num; i++) {
 		hit = touch[i];
 		if (!hit->inuse)

@@ -69,7 +69,17 @@ void CL_CompleteRecalcRouting (void)
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
 		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
-			Grid_RecalcRouting(&clMap, le->inlineModelName, le->angles, leInlineModelList);
+			Grid_RecalcRouting(&clMap, le->inlineModelName, leInlineModelList);
+}
+
+/**
+ * @sa G_CompleteRecalcRouting
+ */
+void CL_RecalcRouting (const le_t* le)
+{
+	LE_GenerateInlineModelList();
+	if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
+		Grid_RecalcRouting(&clMap, le->inlineModelName, leInlineModelList);
 }
 
 /**
@@ -143,15 +153,18 @@ static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 		return;
 	}
 
-	if (!openDoor) {
-		/* FIXME */
-		le->angles[YAW] -= DOOR_ROTATION_ANGLE;
-	} else {
+	if (openDoor) {
 		/* FIXME */
 		le->angles[YAW] += DOOR_ROTATION_ANGLE;
+	} else {
+		/* FIXME */
+		le->angles[YAW] -= DOOR_ROTATION_ANGLE;
 	}
 
-	CL_CompleteRecalcRouting();
+	Com_DPrintf(DEBUG_CLIENT, "Client processed door movement.\n");
+
+	CM_SetInlineModelOrientation(le->inlineModelName, le->origin, le->angles);
+	CL_RecalcRouting(le);
 
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
@@ -191,7 +204,7 @@ void LE_Explode (struct dbuffer *msg)
 	le->inuse = qfalse;
 
 	/* Recalc the client routing table because this le (and the inline model) is now gone */
-	CL_CompleteRecalcRouting();
+	CL_RecalcRouting(le);
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
@@ -862,6 +875,11 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 	switch (le->type) {
 	case ET_ROTATING:
 	case ET_DOOR:
+		/* These cause the model to render correctly */
+		VectorCopy(ent->mins, le->mins);
+		VectorCopy(ent->maxs, le->maxs);
+		VectorCopy(ent->origin, le->origin);
+		VectorCopy(ent->angles, le->angles);
 		break;
 	case ET_BREAKABLE:
 		break;
@@ -1026,8 +1044,8 @@ void LE_AddToScene (void)
 			ent.skinnum = le->skinnum;
 
 			switch (le->contents) {
-			/* SOLID_BSP models don't have animations nor do they use their
-			 * origin here (e.g. func_breakable or func_door) */
+			/* Only breakables do not use their origin; func_doors and func_rotating do!!!
+			 * But none of them have animations. */
 			case CONTENTS_SOLID:
 			case CONTENTS_DETAIL: /* they use mins/maxs */
 				break;
@@ -1042,6 +1060,11 @@ void LE_AddToScene (void)
 				break;
 			}
 
+			if (le->type == ET_DOOR || le->type == ET_ROTATING) {
+				VectorCopy(le->angles, ent.angles);
+				VectorCopy(le->origin, ent.origin);
+				VectorCopy(le->origin, ent.oldorigin);
+			}
 
 			/**
 			 * Offset the model to be inside the cursor box

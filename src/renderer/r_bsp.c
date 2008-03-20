@@ -142,7 +142,7 @@ void R_DrawBrushModel (entity_t * e)
 	if (R_CullBox(mins, maxs))
 		return;
 
-	VectorSubtract(refdef.vieworg, e->origin, modelorg);
+	VectorCopy(refdef.vieworg, modelorg);
 	if (rotated) {
 		vec3_t temp;
 		vec3_t forward, right, up;
@@ -153,6 +153,7 @@ void R_DrawBrushModel (entity_t * e)
 		modelorg[1] = -DotProduct(temp, right);
 		modelorg[2] = DotProduct(temp, up);
 	}
+	VectorSubtract(modelorg, e->origin, modelorg);
 
 	qglPushMatrix();
 	qglMultMatrixf(e->transform.matrix);

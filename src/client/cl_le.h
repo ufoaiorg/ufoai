@@ -157,6 +157,7 @@ void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 
 qboolean LE_BrushModelAction(le_t * le, entity_t * ent);
+void CL_RecalcRouting(const le_t* le);
 void CL_CompleteRecalcRouting(void);
 
 void LE_Explode(struct dbuffer *msg);

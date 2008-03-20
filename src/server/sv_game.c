@@ -116,8 +116,12 @@ static void SV_SetModel (edict_t * ent, const char *name)
 	if (name[0] == '*') {
 		mod = CM_InlineModel(name);
 		assert(mod);
+		/* Copy model mins and maxs to entity */
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
+		/* This is to help the entity collision code out */
+		/* Copy entity origin and angles to model*/
+		CM_SetInlineModelOrientation(name, ent->origin, ent->angles);
 	}
 }
 
@@ -401,6 +405,8 @@ void SV_InitGameProgs (void)
 	import.GridRecalcRouting = Grid_RecalcRouting;
 
 	import.ModelIndex = SV_ModelIndex;
+
+	import.SetInlineModelOrientation = CM_SetInlineModelOrientation;
 
 	import.SetModel = SV_SetModel;
 

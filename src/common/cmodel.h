@@ -35,6 +35,7 @@ extern vec3_t map_min, map_max;
 void CM_LoadMap(const char *tiles, const char *pos, unsigned *checksum);
 int CheckBSPFile(const char *filename);
 cBspModel_t *CM_InlineModel(const char *name);	/* *0, *1, *2, etc */
+void CM_SetInlineModelOrientation(const char *name, const vec3_t origin, const vec3_t angles);
 
 int CM_NumClusters(void);
 int CM_NumInlineModels(void);
@@ -60,7 +61,8 @@ GRID ORIENTED MOVEMENT AND SCANNING
 
 extern struct routing_s svMap, clMap;
 
-void Grid_RecalcRouting(struct routing_s *map, const char *name, const vec3_t angles, const char **list);
+void Grid_DumpWholeMap(void);
+void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
 void Grid_MoveCalc(struct routing_s *map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(struct routing_s *map);
 pos_t Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored);

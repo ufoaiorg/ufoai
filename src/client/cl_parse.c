@@ -90,7 +90,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
-	"sssbpsb",			/* EV_ADD_BRUSH_MODEL */
+	"sssbppsb",			/* EV_ADD_BRUSH_MODEL */
 	"sspp",				/* EV_ADD_EDICT */
 
 	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
@@ -745,9 +745,9 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	int entnum, modelnum1, type, levelflags, speed;
 	cBspModel_t *model;
 	int angle;
-	vec3_t origin;
+	vec3_t origin, angles;
 
-	NET_ReadFormat(msg, ev_format[EV_ADD_BRUSH_MODEL], &type, &entnum, &modelnum1, &levelflags, &origin, &speed, &angle);
+	NET_ReadFormat(msg, ev_format[EV_ADD_BRUSH_MODEL], &type, &entnum, &modelnum1, &levelflags, &origin, &angles, &speed, &angle);
 
 	if (type != ET_BREAKABLE && type != ET_DOOR && type != ET_ROTATING)
 		Com_Error(ERR_DROP, "Invalid le announced via EV_ADD_BRUSH_MODEL type: %i\n", type);
@@ -769,8 +769,9 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	le->levelflags = levelflags;
 	le->addFunc = LE_BrushModelAction;
 	le->think = LET_BrushModel;
-	/* The origin is REQUIRED for doors to work! */
+	/* The origin and angles are REQUIRED for doors to work! */
 	VectorCopy(origin, le->origin);
+	VectorCopy(angles, le->angles);
 
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
 	model = cl.model_clip[le->modelnum1];
@@ -780,13 +781,17 @@ static void CL_AddBrushModel (struct dbuffer *msg)
 	if (!le->model1)
 		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not register inline model %i", le->modelnum1);
 
+	/* Transfer model mins and maxs to entity */
 	VectorCopy(model->mins, le->mins);
 	VectorCopy(model->maxs, le->maxs);
+	/* This is to help the entity collision code out */
+	/* Copy entity origin and angles to model*/
+	CM_SetInlineModelOrientation(le->inlineModelName, le->origin, le->angles);
 
 	/* to allow tracing against this le */
 	le->contents = CONTENTS_SOLID;
 
-	CL_CompleteRecalcRouting();
+	CL_RecalcRouting(le);
 }
 
 
