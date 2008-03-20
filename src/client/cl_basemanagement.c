@@ -420,8 +420,8 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
 	assert(base);
 	assert(building);
 
-	/* Status of Entrance and Miscellenious buildings cannot change. */
-	if (building->buildingType == B_ENTRANCE || building->buildingType == B_MISC)
+	/* Status of Miscellenious buildings cannot change. */
+	if (building->buildingType == B_MISC)
 		return qfalse;
 
 	oldValue = B_GetBuildingStatus(base, building->buildingType);
@@ -599,9 +599,10 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	Com_DPrintf(DEBUG_CLIENT, "Reseting base %s:\n", base->name);
 
 	/* reset all values of hasBuilding[] */
-	for (i = 0; i < MAX_BUILDING_TYPE; i++)
-		B_SetBuildingStatus(base, i, qfalse);
-
+	for (i = 0; i < MAX_BUILDING_TYPE; i++) {
+		if (i != B_MISC)
+			B_SetBuildingStatus(base, i, qfalse);
+	}
 	/* activate all buildings that needs to be activated */
 	while (test) {
 		test = qfalse;
