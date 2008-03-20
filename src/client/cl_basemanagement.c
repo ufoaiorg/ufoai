@@ -194,11 +194,6 @@ qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t buildingT
 	assert(base);
 	assert(buildingType >= 0);
 
-	if (!base) {
-		Com_DPrintf(DEBUG_CLIENT, "B_GetBuildingStatus: No base given!\n");
-		return qfalse;
-	}
-
 	if (buildingType == B_MISC)
 		return qtrue;
 	else if (buildingType < MAX_BUILDING_TYPE)
@@ -220,6 +215,7 @@ qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t buildingT
 void B_SetBuildingStatus (base_t* const base, buildingType_t buildingType, qboolean newStatus)
 {
 	assert(base);
+	assert(buildingType >= 0);
 
 	if (buildingType == B_MISC)
 		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
