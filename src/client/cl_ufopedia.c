@@ -529,12 +529,12 @@ static void UP_TechDescription (technology_t* t)
  */
 static void UP_BuildingDescription (technology_t* t)
 {
-	building_t* b = B_GetBuildingType(t->provides);
+	building_t* b = B_GetBuildingTemplate(t->provides);
 
 	if (!b) {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find building"));
 	} else {
-		Com_sprintf(upBuffer, sizeof(upBuffer), _("Needs:\t%s\n"), b->dependsBuilding >= 0 ? _(gd.buildingTypes[b->dependsBuilding].name) : _("None"));
+		Com_sprintf(upBuffer, sizeof(upBuffer), _("Needs:\t%s\n"), b->dependsBuilding ? _(b->dependsBuilding->name) : _("None"));
 		Q_strcat(upBuffer, va(ngettext("Construction time:\t%i day\n", "Construction time:\t%i days\n", b->buildTime), b->buildTime), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Cost:\t%i c\n"), b->fixCosts), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), b->varCosts), sizeof(upBuffer));

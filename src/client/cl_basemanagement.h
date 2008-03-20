@@ -131,9 +131,8 @@ typedef struct cap_maxcur_s {
 /** @brief A building with all it's data. */
 typedef struct building_s {
 	int idx;				/**< Index in in "buildings" list.
-							 * @todo What value is this supposed to be for building_t entries in buildingTypes? */
-	buildingType_t type;	/**< Self link (index) in "buildingTypes" list. This way we can rename the buildings without loosing the control.
-							 * @todo Check if it would be saner to use a building_t pointer? */
+							 * @todo What value is this supposed to be for building_t entries in buildingTemplates? */
+	struct building_s *tpl;	/**< Self link in "buildingTemplates" list. */
 	struct base_s *base;	/**< The base this building is located in. */
 
 	char *id;
@@ -176,8 +175,9 @@ typedef struct building_s {
 	/** How many employees to hire on construction in the first base */
 	int maxEmployees;
 
+	buildingType_t buildingType;	/**< This way we can rename the buildings without loosing the control. @note Not to be confused with "tpl".*/
 	technology_t *tech;				/**< Link to the building-technology. */
-	buildingType_t dependsBuilding;	/**< If the building needs another one to work (= to be buildable). This links to gd.buildingTypes @sa building_t.type */
+	struct building_s *dependsBuilding;	/**< If the building needs another one to work (= to be buildable). @sa "buildingTemplates" list*/
 
 	int capacity;		/**< Capacity of this building (used in calculate base capacities). */
 } building_t;
@@ -250,7 +250,7 @@ typedef struct base_s {
 	int batteryDamage;			/**< Hit points of defense system */
 	int baseDamage;			/**< Hit points of base */
 
-	int buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTypes) */
+	building_t *buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTemplates) */
 
 	struct building_s *buildingCurrent; /**< needn't be saved */
 } base_t;
@@ -267,7 +267,7 @@ void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus(base_t* const base);
 building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, qboolean onlyWorking);
 building_t *B_GetBuildingByIdx(base_t* base, int idx);
-building_t *B_GetBuildingType(const char *buildingName);
+building_t *B_GetBuildingTemplate(const char *buildingName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 
 /** Coordinates to place the new base at (long, lat) */
@@ -284,7 +284,8 @@ void B_NewBases(void);
 void B_BuildingStatus(base_t* base, building_t* building);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
-int B_GetNumberOfBuildingsInBaseByType(base_t *base, buildingType_t type);
+int B_GetNumberOfBuildingsInBaseByTemplate(base_t *base, building_t *type);
+int B_GetNumberOfBuildingsInBaseByBuildingType(base_t *base, buildingType_t type);
 
 int B_ItemInBase(int item_idx, const base_t *base);
 

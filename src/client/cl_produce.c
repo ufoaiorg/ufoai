@@ -224,7 +224,7 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, signe
 		return NULL;
 	}
 
-	numWorkshops = max(B_GetNumberOfBuildingsInBaseByType(base, B_WORKSHOP), 0);
+	numWorkshops = max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
 
 	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
 		MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
@@ -1053,7 +1053,7 @@ static void PR_ProductionList_f (void)
 
 	PR_ProductionInfo(baseCurrent, qfalse);
 
-	numWorkshops = B_GetNumberOfBuildingsInBaseByType(baseCurrent, B_WORKSHOP);
+	numWorkshops = B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, B_WORKSHOP);
 	numWorkshops = (numWorkshops >= 0) ? numWorkshops : 0;
 
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);

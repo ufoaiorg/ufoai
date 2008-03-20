@@ -76,8 +76,8 @@ typedef struct globalData_s
 
 	/* == buildings in bases == */
 	/* A list of all possible unique buldings. */
-	building_t buildingTypes[MAX_BUILDINGS];
-	int numBuildingTypes;
+	building_t buildingTemplates[MAX_BUILDINGS];
+	int numBuildingTemplates;
 	/*  A list of the building-list per base. (new buildings in a base get copied from buildingTypes) */
 	building_t buildings[MAX_BASES][MAX_BUILDINGS];
 	/* Total number of buildings per base. */

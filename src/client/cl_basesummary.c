@@ -91,19 +91,19 @@ static void BaseSummary_Init_f (void)
 		mn.menuText[TEXT_STANDARD] = textInfoBuffer;
 
 		Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
-		for (i = 0; i < gd.numBuildingTypes; i++) {
-			b = &gd.buildingTypes[i];
+		for (i = 0; i < gd.numBuildingTemplates; i++) {
+			b = &gd.buildingTemplates[i];
 
 			/* only show already researched buildings */
 			if (!RS_IsResearched_ptr(b->tech))
 				continue;
 
-			cap = B_GetCapacityFromBuildingType(b->type);
+			cap = B_GetCapacityFromBuildingType(b->buildingType);
 			if (cap == MAX_CAP)
 				continue;
 
 			/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
-			if (B_GetBuildingStatus(base, b->type)) {
+			if (B_GetBuildingStatus(base, b->buildingType)) {
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
 					base->capacities[cap].cur, base->capacities[cap].max), sizeof(textStatsBuffer));
 			} else {
@@ -116,7 +116,7 @@ static void BaseSummary_Init_f (void)
 					Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name), base->capacities[cap].cur, 0), sizeof(textStatsBuffer));
 				}
 			}
-			Q_strcat(textStatsBuffer, va("\t\t\t\t%i\n", B_GetNumberOfBuildingsInBaseByType(base, b->type)), sizeof(textStatsBuffer));
+			Q_strcat(textStatsBuffer, va("\t\t\t\t%i\n", B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType)), sizeof(textStatsBuffer));
 		}
 
 		Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));

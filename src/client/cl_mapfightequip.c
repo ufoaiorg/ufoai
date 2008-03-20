@@ -540,7 +540,7 @@ void BDEF_RemoveBattery_f (void)
 		}
 
 		for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-			if (gd.buildings[baseIdx][i].type == type
+			if (gd.buildings[baseIdx][i].buildingType == type
 				&& gd.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
 				workingNum++;
 		}

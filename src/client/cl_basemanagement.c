@@ -44,10 +44,12 @@ static cvar_t *mn_base_count;
 static cvar_t *mn_base_id;
 static cvar_t *cl_equip;
 
+const static char *buildingTypeNames[];
+
 /** @brief allocate memory for mn.menuText[TEXT_STANDARD] contained the information about a building */
 static char buildingText[MAX_LIST_CHAR];
 
-static buildingType_t buildingConstructionList[MAX_BUILDINGS];
+static building_t *buildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
 static void B_BuildingInit(base_t* base);
@@ -94,7 +96,7 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 	int cntlocal = 0, i;
 
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		if (gd.buildings[base->idx][i].type == type
+		if (gd.buildings[base->idx][i].buildingType == type
 		 && gd.buildings[base->idx][i].buildingStatus == status) {
 			cntlocal++;
 			/* don't count any further - the caller doesn't want to know the value */
@@ -184,20 +186,21 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 
 /**
  * @brief Get the status associated to a building
- * @param[in] type value of building->buildingType
+ * @param[in] buildingType value of building->buildingType
  * @param[in] building
  * @return true if the building is functional
+ * @sa B_SetBuildingStatus
  */
-qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type)
+qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t buildingType)
 {
 	assert(base);
 
-	if (type == B_MISC)
+	if (buildingType == B_MISC)
 		return qtrue;
-	else if (type < MAX_BUILDING_TYPE)
-		return base->hasBuilding[type];
+	else if (buildingType < MAX_BUILDING_TYPE)
+		return base->hasBuilding[buildingType];
 	else {
-		Com_Printf("B_GetBuildingStatus()... Type %i does not exists.\n", type);
+		Com_Printf("B_GetBuildingStatus()... Type %i does not exists.\n", buildingType);
 		return qfalse;
 	}
 }
@@ -206,41 +209,38 @@ qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type)
 /**
  * @brief Set status associated to a building
  * @param[in] base Base to check
- * @param[in] type value of building->buildingType
+ * @param[in] buildingType value of building->buildingType
  * @param[in] newStatus New value of the status
+ * @sa B_GetBuildingStatus
  */
-void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newStatus)
+void B_SetBuildingStatus (base_t* const base, buildingType_t buildingType, qboolean newStatus)
 {
 	assert(base);
 
-	if (type == B_MISC)
+	if (buildingType == B_MISC)
 		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
-	else if (type < MAX_BUILDING_TYPE) {
-		base->hasBuilding[type] = newStatus;
-		Com_DPrintf(DEBUG_CLIENT, "B_SetBuildingStatus: set status for %i to %i\n", type, newStatus);
+	else if (buildingType < MAX_BUILDING_TYPE) {
+		base->hasBuilding[buildingType] = newStatus;
+		Com_DPrintf(DEBUG_CLIENT, "B_SetBuildingStatus: set status for %i to %i\n", buildingType, newStatus);
 	} else
-		Com_Printf("B_SetBuildingStatus: Type of building %i does not exists\n", type);
+		Com_Printf("B_SetBuildingStatus: Type of building %i does not exists\n", buildingType);
 }
 
 /**
- * @brief Chech that the dependences of a building is operationnal
+ * @brief Check that the dependences of a building is operationnal
  * @param[in] base Base to check
  * @param[in] building
  * @return true if base contains needed dependence for entering building
  */
 qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t* building)
 {
-	const building_t *dependsBuilding;
-
 	assert(base);
 	assert(building);
 
-	if (building->dependsBuilding >= MAX_BUILDING_TYPE)
+	if (!building->dependsBuilding)
 		return qtrue;
 
-	dependsBuilding = &gd.buildingTypes[building->dependsBuilding];
-
-	return B_GetBuildingStatus(base, dependsBuilding->type);
+	return B_GetBuildingStatus(base, building->dependsBuilding->buildingType);
 }
 
 /**
@@ -251,7 +251,7 @@ static void B_ResetBuildingCurrent (base_t* base)
 {
 	if (base) {
 		base->buildingCurrent = NULL;
-		base->buildingToBuild = -1;
+		base->buildingToBuild = NULL;
 	}
 	gd.baseAction = BA_NONE;
 }
@@ -396,7 +396,8 @@ static float B_GetMaxBuildingLevel (base_t* base, buildingType_t type)
 
 	if (B_GetBuildingStatus(base, type)) {
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			if (gd.buildings[base->idx][i].type == type && gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING) {
+			if (gd.buildings[base->idx][i].buildingType == type
+			 && gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING) {
 				max = max(gd.buildings[base->idx][i].level, max);
 			}
 		}
@@ -420,17 +421,18 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
 	assert(building);
 
 	/* Status of Entrance and Miscellenious buildings cannot change. */
-	if (building->type == B_ENTRANCE || building->type == B_MISC)
+	if (building->buildingType == B_ENTRANCE || building->buildingType == B_MISC)
 		return qfalse;
 
-	oldValue = B_GetBuildingStatus(base, building->type);
-	if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-		B_SetBuildingStatus(base, building->type, qtrue);
+	oldValue = B_GetBuildingStatus(base, building->buildingType);
+	if (building->buildingStatus == B_STATUS_WORKING
+	 && B_CheckBuildingDependencesStatus(base, building))
+		B_SetBuildingStatus(base, building->buildingType, qtrue);
 	else
-		B_SetBuildingStatus(base, building->type, qfalse);
+		B_SetBuildingStatus(base, building->buildingType, qfalse);
 
-	if (B_GetBuildingStatus(base, building->type) != oldValue) {
-		Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n", building->name, B_GetBuildingStatus(base, building->type));
+	if (B_GetBuildingStatus(base, building->buildingType) != oldValue) {
+		Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n", building->name, B_GetBuildingStatus(base, building->buildingType));
 		return qtrue;
 	}
 
@@ -516,42 +518,42 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 /**
  * @brief Update status of every building when a building has been built/destroyed
  * @param[in] base
- * @param[in] building The building that has been built / removed
+ * @param[in] buildingType The building-type that has been built / removed.
  * @param[in] onBuilt qtrue if building has been built, qfalse else
  * @sa B_BuildingDestroy
  * @sa B_UpdateAllBaseBuildingStatus
  * @return qtrue if at least one building status has been modified
  */
-static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qboolean onBuilt)
+static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingType, qboolean onBuilt)
 {
 	qboolean test = qfalse;
 	qboolean returnValue = qfalse;
 	int i;
-	buildingType_t buildingType;
+	building_t *dependsBuilding;
 
 	/* Construction / destruction may have changed the status of other building
 	 * We check that, but only for buildings which needed building */
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		buildingType = gd.buildings[base->idx][i].dependsBuilding;
-		assert(buildingType < MAX_BUILDING_TYPE);
-		if (type == gd.buildingTypes[buildingType].type) {
+		dependsBuilding = gd.buildings[base->idx][i].dependsBuilding;
+		if (dependsBuilding
+		 && buildingType == dependsBuilding->buildingType) {
 			/* gd.buildings[base->idx][i] needs built/removed building */
-			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].type)) {
+			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].type, base);
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
 				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].type, base);
-			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].type)) {
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].type, base);
+					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
 				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].type, base);
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
 			}
 		}
 	}
@@ -560,20 +562,20 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qbool
 	while (test) {
 		test = qfalse;
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].type)) {
+			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].type, base);
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].type, base);
-			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].type)) {
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].type, base);
+					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].type, base);
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
 			}
 		}
 	}
@@ -604,12 +606,12 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	while (test) {
 		test = qfalse;
 		for (buildingIdx = 0; buildingIdx < gd.numBuildings[base->idx]; buildingIdx++) {
-			if (!B_GetBuildingStatus(base, gd.buildings[base->idx][buildingIdx].type) && B_CheckUpdateBuilding(&gd.buildings[base->idx][buildingIdx], base)) {
+			if (!B_GetBuildingStatus(base, gd.buildings[base->idx][buildingIdx].buildingType) && B_CheckUpdateBuilding(&gd.buildings[base->idx][buildingIdx], base)) {
 				if (firstEnable)
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].type, base);
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
 				test = qtrue;
 			} else
-				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][buildingIdx].type, base);
+				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][buildingIdx].buildingType, base);
 		}
 	}
 
@@ -681,13 +683,13 @@ static void B_ResetAllStatusAndCapacities_f (void)
  */
 qboolean B_BuildingDestroy (base_t* base, building_t* building)
 {
-	const buildingType_t type = building->type;
+	const buildingType_t buildingType = building->buildingType;
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 	char onDestroy[MAX_VAR];
 	qboolean test;
 
 	/* Don't allow to destroy an entrance. */
-	if (type == B_ENTRANCE)
+	if (buildingType == B_ENTRANCE)
 		return qfalse;
 
 	Q_strncpyz(onDestroy, building->onDestroy, sizeof(onDestroy));
@@ -739,7 +741,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	test = qfalse;
 
-	switch (type) {
+	switch (buildingType) {
 	/* building has a capacity */
 	case B_WORKSHOP:
 	case B_STORAGE:
@@ -751,7 +753,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	case B_COMMAND:
 	case B_UFO_HANGAR:
 	case B_UFO_SMALL_HANGAR:
-		cap = B_GetCapacityFromBuildingType(type);
+		cap = B_GetCapacityFromBuildingType(buildingType);
 		/* no break, we want to update status below */
 	/* building has no capacity */
 	case B_POWER:
@@ -760,16 +762,16 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	case B_DEFENSE_MISSILE:
 	case B_DEFENSE_LASER:
 	case B_RADAR:
-		if (B_GetNumberOfBuildingsInBaseByType(base, type) <= 0) {
-			B_SetBuildingStatus(base, type, qfalse);
+		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
+			B_SetBuildingStatus(base, buildingType, qfalse);
 			test = qtrue;
 		}
-		B_UpdateOneBaseBuildingStatus(type, base);
+		B_UpdateOneBaseBuildingStatus(buildingType, base);
 		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
-		if (B_GetNumberOfBuildingsInBaseByType(base, type) <= 0) {
-			B_SetBuildingStatus(base, type, qfalse);
+		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
+			B_SetBuildingStatus(base, buildingType, qfalse);
 			/* Remove antimatter. */
 			INV_ManageAntimatter(base, 0, qfalse);
 			test = qtrue;
@@ -778,19 +780,19 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	case B_MISC:
 		break;
 	default:
-		Com_Printf("B_BuildingDestroy: Unknown building type: %i.\n", type);
+		Com_Printf("B_BuildingDestroy: Unknown building type: %i.\n", buildingType);
 		break;
 	}
 
 	/* now, the destruction of this building may have changed the status of other building. */
 	if (test) {
-		B_UpdateStatusBuilding(base, type, qfalse);
+		B_UpdateStatusBuilding(base, buildingType, qfalse);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
 	} else {
 		/* no other status than status of destroyed building has been modified
 		 * update only status of destroyed building */
-		cap = B_GetCapacityFromBuildingType(building->type);
+		cap = B_GetCapacityFromBuildingType(building->buildingType);
 		if (cap != MAX_CAP)
 			B_UpdateBaseCapacities(cap, base);
 	}
@@ -804,7 +806,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	B_BaseInit_f();
 
 	/* Remove aliens if needed. */
-	if (type == B_ALIEN_CONTAINMENT) {
+	if (buildingType == B_ALIEN_CONTAINMENT) {
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {	/* Just clean containment. */
 			AL_FillInContainment(base);
 		} else {	/* Check capacities and remove needed amount. */
@@ -870,7 +872,7 @@ void B_BuildingStatus (base_t* base, building_t* building)
 
 	switch (building->buildingStatus) {
 	case B_STATUS_NOT_SET:
-		numberOfBuildings = B_GetNumberOfBuildingsInBaseByType(base, building->type);
+		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl);
 		if (numberOfBuildings >= 0)
 			Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
@@ -920,7 +922,7 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 		num = building->maxEmployees;
 
 	if (num) {
-		switch (building->type) {
+		switch (building->buildingType) {
 		case B_WORKSHOP:
 			employeeType = EMPL_WORKER;
 			break;
@@ -934,10 +936,10 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 			employeeType = EMPL_SOLDIER;
 			break;
 		case B_MISC:
-			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Misc building type: %i with employees: %i.\n", building->type, num);
+			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
 			return;
 		default:
-			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Unknown building type: %i.\n", building->type);
+			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
 			return;
 		}
 		/* don't try to hire more that available - see E_CreateEmployee */
@@ -972,20 +974,20 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	/* we update the status of the building (we'll call this building building 1) */
 	test = B_CheckUpdateBuilding(building, base);
 	if (test)
-		B_UpdateOneBaseBuildingStatusOnEnable(building->type, base);
+		B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
 	else
-		B_UpdateOneBaseBuildingStatus(building->type, base);
+		B_UpdateOneBaseBuildingStatus(building->buildingType, base);
 
 	/* now, the status of this building may have changed the status of other building.
 	 * We check that, but only for buildings which needed building 1 */
 	if (test) {
-		B_UpdateStatusBuilding(base, building->type, qtrue);
+		B_UpdateStatusBuilding(base, building->buildingType, qtrue);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
 	} else {
 		/* no other status than status of building 1 has been modified
 		 * update only status of building 1 */
-		cap = B_GetCapacityFromBuildingType(building->type);
+		cap = B_GetCapacityFromBuildingType(building->buildingType);
 		if (cap != MAX_CAP)
 			B_UpdateBaseCapacities(cap, base);
 	}
@@ -1020,12 +1022,12 @@ void B_SetUpBase (base_t* base)
 	Cvar_SetValue("mn_base_id", base->idx);
 
 	if (cl_start_buildings->integer) {
-		for (i = 0; i < gd.numBuildingTypes; i++) {
-			if (gd.buildingTypes[i].autobuild
-		 	 || (gd.numBases == 1 && gd.buildingTypes[i].firstbase)) {
+		for (i = 0; i < gd.numBuildingTemplates; i++) {
+			if (gd.buildingTemplates[i].autobuild
+		 	 || (gd.numBases == 1 && gd.buildingTemplates[i].firstbase)) {
 				/* @todo: implement check for moreThanOne */
 				building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-				*building = gd.buildingTypes[i];
+				*building = gd.buildingTemplates[i];
 				/* self-link to building-list in base */
 				building->idx = gd.numBuildings[base->idx];
 				gd.numBuildings[base->idx]++;
@@ -1041,9 +1043,9 @@ void B_SetUpBase (base_t* base)
 				 * @todo: this shouldn't be hard coded, but in *.ufo files */
 				if (gd.numBases == 1) {
 					/* build a second quarter */
-					if (building->type == B_QUARTERS) {
+					if (building->buildingType == B_QUARTERS) {
 						building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-						*building = gd.buildingTypes[i];
+						*building = gd.buildingTemplates[i];
 						/* self-link to building-list in base */
 						building->idx = gd.numBuildings[base->idx];
 						gd.numBuildings[base->idx]++;
@@ -1091,7 +1093,7 @@ void B_SetUpBase (base_t* base)
 		}
 	}
 
-	if (B_GetNumberOfBuildingsInBaseByType(base, B_ENTRANCE)) {
+	if (B_GetNumberOfBuildingsInBaseByBuildingType(base, B_ENTRANCE)) {
 		/* Set hasBuilding[B_ENTRANCE] to correct value, because it can't be updated afterwards.*/
 		B_SetBuildingStatus(base, B_ENTRANCE, qtrue);
 	} else {
@@ -1131,19 +1133,17 @@ void B_SetUpBase (base_t* base)
 
 /**
  * @brief Returns the building in the global building-types list that has the unique name buildingID.
- *
  * @param[in] buildingName The unique id of the building (building_t->id).
- *
  * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
  */
-building_t *B_GetBuildingType (const char *buildingName)
+building_t *B_GetBuildingTemplate (const char *buildingName)
 {
 	int i = 0;
 
 	assert(buildingName);
-	for (i = 0; i < gd.numBuildingTypes; i++)
-		if (!Q_strcasecmp(gd.buildingTypes[i].id, buildingName))
-			return &gd.buildingTypes[i];
+	for (i = 0; i < gd.numBuildingTemplates; i++)
+		if (!Q_strcasecmp(gd.buildingTemplates[i].id, buildingName))
+			return &gd.buildingTemplates[i];
 
 	Com_Printf("Building %s not found\n", buildingName);
 	return NULL;
@@ -1194,10 +1194,10 @@ static qboolean B_ConstructBuilding (base_t* base)
 	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", base->buildingCurrent->id);
 
 	/* second building part */
-	if (base->buildingToBuild >= 0) {
-		building_to_build = &gd.buildingTypes[base->buildingToBuild];
+	if (base->buildingToBuild) {
+		building_to_build = base->buildingToBuild;
 		building_to_build->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-		base->buildingToBuild = -1;
+		base->buildingToBuild = NULL;
 	}
 	if (!ccs.instant_build) {
 		base->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
@@ -1249,13 +1249,13 @@ void B_SetBuildingByClick (int row, int col)
 		return;
 	}
 
-	/*@todo: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical) */
-	/* if the building is in gd.buildingTypes[] */
+	/** @todo: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTemplates at all ... it's just not logical) */
+	/* if the building is in gd.buildingTemplates[] */
 	if (!baseCurrent->buildingCurrent->base) {
 		building_t *building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 
-		/* copy building from type-list to base-buildings-list */
-		*building = gd.buildingTypes[baseCurrent->buildingCurrent->type];
+		/* copy building from template list to base-buildings-list */
+		*building = *(baseCurrent->buildingCurrent->tpl);
 
 		/* self-link to building-list in base */
 		building->idx = gd.numBuildings[baseCurrent->idx];
@@ -1270,7 +1270,7 @@ void B_SetBuildingByClick (int row, int col)
 		switch (baseCurrent->map[row][col]) {
 		case BASE_FREESLOT:
 			if (baseCurrent->buildingCurrent->needs) {
-				building_t *secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
+				building_t *secondBuildingPart = B_GetBuildingTemplate(baseCurrent->buildingCurrent->needs);	/* template link */
 
 				if (col + 1 == BASE_SIZE) {
 					if (baseCurrent->map[row][col - 1] != BASE_FREESLOT) {
@@ -1287,12 +1287,12 @@ void B_SetBuildingByClick (int row, int col)
 				}
 
 				baseCurrent->map[row][col + 1] = baseCurrent->buildingCurrent->idx;
-				baseCurrent->buildingToBuild = secondBuildingPart->idx;
+				baseCurrent->buildingToBuild = secondBuildingPart;
 				/* where is this building located in our base? */
 				secondBuildingPart->pos[1] = col + 1;
 				secondBuildingPart->pos[0] = row;
 			} else {
-				baseCurrent->buildingToBuild = -1;
+				baseCurrent->buildingToBuild = NULL;
 			}
 			/* credits are updated here, too */
 			B_NewBuilding(baseCurrent);
@@ -1377,8 +1377,8 @@ static void B_DrawBuilding (base_t* base, building_t* building)
 	if (building->varCosts)
 		Q_strcat(buildingText, va(_("Running costs:\t%i c\n"), building->varCosts), sizeof(buildingText));
 
-	if (building->dependsBuilding < MAX_BUILDING_TYPE)
-		Q_strcat(buildingText, va(_("Needs:\t%s\n"), _(gd.buildingTypes[building->dependsBuilding].name)), sizeof(buildingText));
+	if (building->dependsBuilding)
+		Q_strcat(buildingText, va(_("Needs:\t%s\n"), _(building->dependsBuilding->name)), sizeof(buildingText));
 
 	if (building->name)
 		Cvar_Set("mn_building_name", _(building->name));
@@ -1407,35 +1407,67 @@ static void B_BuildingAddToList (building_t * building)
 	assert(building->name);
 
 	Q_strcat(baseCurrent->allBuildingsList, va("%s\n", _(building->name)), MAX_LIST_CHAR);
-	buildingConstructionList[numBuildingConstructionList] = building->type;
+	buildingConstructionList[numBuildingConstructionList] = building->tpl;
 	numBuildingConstructionList++;
 }
+
 
 /**
  * @brief Counts the number of buildings of a particular type in a base.
  *
  * @param[in] base Which base to count in.
- * @param[in] type Building type value.
+ * @param[in] tpl The template type in the gd.buildingTemplates list.
  * @return The number of buildings.
  * @return -1 on error (e.g. base index out of range)
  */
-int B_GetNumberOfBuildingsInBaseByType (base_t *base, buildingType_t type)
+int B_GetNumberOfBuildingsInBaseByTemplate (base_t *base, building_t *tpl)
 {
 	int i;
 	int NumberOfBuildings = 0;
 
 	if (!base) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByType: No base given!\n");
+		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No base given!\n");
 		return -1;
 	}
 
-	if (type >= MAX_BUILDING_TYPE) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByType: no building-type given!\n");
+	if (!tpl) {
+		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: no building-type given!\n");
 		return -1;
 	}
 
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		if (gd.buildings[base->idx][i].type == type
+		if (gd.buildings[base->idx][i].tpl == tpl
+		 && gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
+			NumberOfBuildings++;
+	}
+	return NumberOfBuildings;
+}
+
+/**
+ * @brief Counts the number of buildings of a particular buuilding type in a base.
+ *
+ * @param[in] base Which base to count in.
+ * @param[in] buildingType Building type value.
+ * @return The number of buildings.
+ * @return -1 on error (e.g. base index out of range)
+ */
+int B_GetNumberOfBuildingsInBaseByBuildingType (base_t *base, buildingType_t buildingType)
+{
+	int i;
+	int NumberOfBuildings = 0;
+
+	if (!base) {
+		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: No base given!\n");
+		return -1;
+	}
+
+	if (buildingType >= MAX_BUILDING_TYPE) {
+		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: no building-type given!\n");
+		return -1;
+	}
+
+	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+		if (gd.buildings[base->idx][i].buildingType == buildingType
 		 && gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
 			NumberOfBuildings++;
 	}
@@ -1450,7 +1482,7 @@ static void B_BuildingInit (base_t* base)
 {
 	int i;
 	int numSameBuildings;
-	building_t *buildingType;
+	building_t *type;
 
 	/* maybe someone call this command before the bases are parsed?? */
 	if (!base)
@@ -1464,14 +1496,14 @@ static void B_BuildingInit (base_t* base)
 	mn.menuText[TEXT_BUILDINGS] = base->allBuildingsList;
 	numBuildingConstructionList = 0;
 
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		buildingType = &gd.buildingTypes[i];
+	for (i = 0; i < gd.numBuildingTemplates; i++) {
+		type = &gd.buildingTemplates[i];
 		/*make an entry in list for this building */
 
-		if (buildingType->visible) {
-			numSameBuildings = B_GetNumberOfBuildingsInBaseByType(base, buildingType->type);
+		if (type->visible) {
+			numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, type);
 
-			if (buildingType->moreThanOne) {
+			if (type->moreThanOne) {
 				/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
 				if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
 					continue;
@@ -1480,11 +1512,11 @@ static void B_BuildingInit (base_t* base)
 			}
 
 			/* if the building is researched add it to the list */
-			if (RS_IsResearched_ptr(buildingType->tech)) {
-				B_BuildingAddToList(buildingType);
+			if (RS_IsResearched_ptr(type->tech)) {
+				B_BuildingAddToList(type);
 			} else {
 				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n",
-					buildingType->id, buildingType->tech ? buildingType->tech->idx : 0);
+					type->id, type->tech ? type->tech->idx : 0);
 			}
 		}
 	}
@@ -1553,7 +1585,7 @@ static void B_BuildingClick_f (void)
 		return;
 	}
 
-	building = &gd.buildingTypes[buildingConstructionList[num]];
+	building = buildingConstructionList[num];
 
 	baseCurrent->buildingCurrent = building;
 	B_DrawBuilding(baseCurrent, building);
@@ -1637,35 +1669,36 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
 		return;
 	}
-	if (gd.numBuildingTypes >= MAX_BUILDINGS) {
+	if (gd.numBuildingTemplates >= MAX_BUILDINGS) {
 		Com_Printf("B_ParseBuildings: too many buildings\n");
-		gd.numBuildingTypes = MAX_BUILDINGS;	/* just in case it's bigger. */
+		gd.numBuildingTemplates = MAX_BUILDINGS;	/* just in case it's bigger. */
 		return;
 	}
 
 	if (!link) {
-		for (i = 0; i < gd.numBuildingTypes; i++) {
-			if (!Q_strcmp(gd.buildingTypes[i].id, name)) {
+		for (i = 0; i < gd.numBuildingTemplates; i++) {
+			if (!Q_strcmp(gd.buildingTemplates[i].id, name)) {
 				Com_Printf("B_ParseBuildings: Second buliding with same name found (%s) - second ignored\n", name);
 				return;
 			}
 		}
 
 		/* new entry */
-		building = &gd.buildingTypes[gd.numBuildingTypes];
+		building = &gd.buildingTemplates[gd.numBuildingTemplates];
 		memset(building, 0, sizeof(building_t));
 		building->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
 
 		/*set standard values */
-		building->type = gd.numBuildingTypes;
-		building->idx = -1;
+		building->tpl = building;	/* Self-link just in case ... this way we can check if it is a templyte or not. */
+		building->idx = -1;			/* No entry in buildings list (yet). */
 		building->base = NULL;
-		building->dependsBuilding = MAX_BUILDING_TYPE;
+		building->buildingType = MAX_BUILDING_TYPE;
+		building->dependsBuilding = NULL;
 		building->visible = qtrue;
 
-		gd.numBuildingTypes++;
+		gd.numBuildingTemplates++;
 		do {
 			/* get the name type */
 			token = COM_EParse(text, errhead, name);
@@ -1680,8 +1713,8 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				if (!*text)
 					return;
 
-				building->type = B_GetBuildingTypeByBuildingID(token);
-				if (building->type >= MAX_BUILDING_TYPE)
+				building->buildingType = B_GetBuildingTypeByBuildingID(token);
+				if (building->buildingType >= MAX_BUILDING_TYPE)
 					Com_Printf("didn't find buildingType '%s'\n", token);
 			} else {
 				/* no linking yet */
@@ -1717,7 +1750,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			}
 		} while (*text);
 	} else {
-		building = B_GetBuildingType(name);
+		building = B_GetBuildingTemplate(name);
 		if (!building)			/* i'm paranoid */
 			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", name);
 
@@ -1739,10 +1772,10 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				break;
 			/* get values */
 			if (!Q_strncmp(token, "depends", MAX_VAR)) {
-				dependsBuilding = B_GetBuildingType(COM_EParse(text, errhead, name));
+				dependsBuilding = B_GetBuildingTemplate(COM_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					Sys_Error("Could not find building depend of %s\n", building->id);
-				building->dependsBuilding = dependsBuilding->type;
+				building->dependsBuilding = dependsBuilding;
 				if (!*text)
 					return;
 			}
@@ -1753,9 +1786,10 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 /**
  * @brief Gets a building of a given type in the given base
  * @param[in] base The base to search the building in
+ * @param[in] buildingType What building-type to get.
  * @return The building or NULL if base has no building of that type
  */
-building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t type, qboolean onlyWorking)
+building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, qboolean onlyWorking)
 {
 	int i;
 	building_t *building;
@@ -1763,12 +1797,12 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t type, 
 	/* we maybe only want to get the working building (e.g. it might the
 	 * case that we don't have a powerplant and thus the searched building
 	 * is not functional) */
-	if (onlyWorking && !B_GetBuildingStatus(base, type))
+	if (onlyWorking && !B_GetBuildingStatus(base, buildingType))
 		return NULL;
 
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 		building = &gd.buildings[base->idx][i];
-		if (building->type == type)
+		if (building->buildingType == buildingType)
 			return building;
 	}
 	return NULL;
@@ -1866,7 +1900,7 @@ void B_ParseBases (const char *name, const char **text)
 		base = B_GetBase(gd.numBaseNames);
 		memset(base, 0, sizeof(base_t));
 		base->idx = gd.numBaseNames;
-		base->buildingToBuild = -1;
+		base->buildingToBuild = NULL;
 		memset(base->map, BASE_FREESLOT, sizeof(base->map));
 
 		/* get the title */
@@ -1984,7 +2018,7 @@ void MN_BaseMapDraw (const menuNode_t * node)
 						/*Com_DPrintf(DEBUG_CLIENT, "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx); */
 					}
 				} else if (building->needs) {
-					secondBuilding = B_GetBuildingType(building->needs);
+					secondBuilding = B_GetBuildingTemplate(building->needs);
 					if (!secondBuilding)
 						Sys_Error("Error in ufo-scriptfile - could not find the needed building\n");
 					Q_strncpyz(image, secondBuilding->image, sizeof(image));
@@ -2690,7 +2724,7 @@ static void B_BuildingList_f (void)
 		building = &gd.buildings[base->idx][i];
 		Com_Printf("\nBase id %i: %s\n", i, base->name);
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
-			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByType(baseCurrent, building->type),
+			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByTemplate(baseCurrent, building->tpl),
 				building->idx);
 			Com_Printf("...image: %s\n", building->image);
 			Com_Printf(".....Status:\n");
@@ -2793,7 +2827,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		return;
 	}
 	buildingID = Cmd_Argv(1);
-	building = B_GetBuildingType(buildingID);
+	building = B_GetBuildingTemplate(buildingID);
 
 	if (!building) {
 		Com_Printf("B_CheckBuildingStatusForMenu_f: building pointer is NULL\n");
@@ -2814,23 +2848,23 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 	baseIdx = baseCurrent->idx;
 
-	if (building->type == B_HANGAR) {
+	if (building->buildingType == B_HANGAR) {
 		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
 		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependencies) to use aircraft."));
 		MN_Popup(_("Notice"), popupText);
 		return;
 	}
 
-	num = B_GetNumberOfBuildingsInBaseByType(baseCurrent, building->type);
+	num = B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, building->buildingType);
 	if (num > 0) {
 		int numUnderConstruction;
 		/* maybe all buildings of this type are under construction ? */
-		B_CheckBuildingTypeStatus(baseCurrent, building->type, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
+		B_CheckBuildingTypeStatus(baseCurrent, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
 		if (numUnderConstruction == num) {
 			int minDay = 99999;
 			/* Find the building whose construction will finish first */
 			for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-				if (gd.buildings[baseIdx][i].type == building->type
+				if (gd.buildings[baseIdx][i].buildingType == building->buildingType
 					&& gd.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION
 					&& minDay > gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart))
 					minDay = gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart);
@@ -2842,9 +2876,9 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		}
 
 		if (!B_CheckBuildingDependencesStatus(baseCurrent, building)) {
-			const building_t *dependenceBuilding = &gd.buildingTypes[building->dependsBuilding];
-			assert(building->dependsBuilding < MAX_BUILDING_TYPE);
-			if (B_GetNumberOfBuildingsInBaseByType(baseCurrent, dependenceBuilding->type) <= 0) {
+			building_t *dependenceBuilding = building->dependsBuilding;
+			assert(building->dependsBuilding);
+			if (B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
 				Com_sprintf(popupText, sizeof(popupText), va(_("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name)));
 				MN_Popup(_("Notice"), popupText);
@@ -2854,33 +2888,33 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
 				 * is not use for every building (for exemple Command Centre) */
 				for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-					if (gd.buildings[baseIdx][i].type == dependenceBuilding->type
+					if (gd.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
 					 && gd.buildings[baseIdx][i].buildTime > (ccs.date.day - gd.buildings[baseIdx][i].timeStart)) {
 						Com_sprintf(popupText, sizeof(popupText), va(_("Building %s is not finished yet, and is needed to use building %s."),
-							_(dependenceBuilding->name), _(building->name)));
+							_(dependenceBuilding->name)), _(building->name));
 						MN_Popup(_("Notice"), popupText);
 						return;
 					}
 				}
 				/* the dependence is built but doesn't work - must be because of their dependendes */
 				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
-					_(dependenceBuilding->name), _(gd.buildingTypes[dependenceBuilding->dependsBuilding].name), _(building->name)));
+					_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name)));
 				MN_Popup(_("Notice"), popupText);
 				return;
 			}
 		}
 		/* all buildings are OK: employees must be missing */
-		if ((building->type == B_WORKSHOP) && (E_CountHired(baseCurrent, EMPL_WORKER) <= 0)) {
+		if ((building->buildingType == B_WORKSHOP) && (E_CountHired(baseCurrent, EMPL_WORKER) <= 0)) {
 			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_WORKER), _(building->name)));
 			MN_Popup(_("Notice"), popupText);
 			return;
-		} else if ((building->type == B_HOSPITAL) && (E_CountHired(baseCurrent, EMPL_MEDIC) <= 0)) {
+		} else if ((building->buildingType == B_HOSPITAL) && (E_CountHired(baseCurrent, EMPL_MEDIC) <= 0)) {
 			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_MEDIC), _(building->name)));
 			MN_Popup(_("Notice"), popupText);
 			return;
-		} else if ((building->type == B_LAB) && (E_CountHired(baseCurrent, EMPL_SCIENTIST) <= 0)) {
+		} else if ((building->buildingType == B_LAB) && (E_CountHired(baseCurrent, EMPL_SCIENTIST) <= 0)) {
 			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name)));
 			MN_Popup(_("Notice"), popupText);
@@ -2899,10 +2933,10 @@ static void B_CheckBuildingStatusForMenu_f (void)
 static void B_BuildingOpen_f (void)
 {
 	if (baseCurrent && baseCurrent->buildingCurrent) {
-		if (!B_GetBuildingStatus(baseCurrent, baseCurrent->buildingCurrent->type)) {
+		if (!B_GetBuildingStatus(baseCurrent, baseCurrent->buildingCurrent->buildingType)) {
 			UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 		} else {
-			switch (baseCurrent->buildingCurrent->type) {
+			switch (baseCurrent->buildingCurrent->buildingType) {
 			case B_LAB:
 				if (RS_ResearchAllowed(baseCurrent))
 					MN_PushMenu("research");
@@ -2990,7 +3024,7 @@ static void B_PrintCapacities_f (void)
 {
 	int i, j;
 	base_t *base;
-	buildingType_t building;
+	buildingType_t buildingType;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -3004,16 +3038,16 @@ static void B_PrintCapacities_f (void)
 	}
 	base = B_GetBase(i);
 	for (i = 0; i < MAX_CAP; i++) {
-		building = B_GetBuildingTypeByCapacity(i);
-		if (building >= MAX_BUILDING_TYPE)
+		buildingType = B_GetBuildingTypeByCapacity(i);
+		if (buildingType >= MAX_BUILDING_TYPE)
 			Com_Printf("B_PrintCapacities_f()... Could not find building associated with capacity %i\n", i);
 		else {
-			for (j = 0; j < gd.numBuildingTypes; j++) {
-				if (gd.buildingTypes[j].type == building)
+			for (j = 0; j < gd.numBuildingTemplates; j++) {
+				if (gd.buildingTemplates[j].buildingType == buildingType)
 					break;
 			}
 			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-			gd.buildingTypes[j].id, base->capacities[i].max, base->capacities[i].cur);
+			gd.buildingTemplates[j].id, base->capacities[i].max, base->capacities[i].cur);
 		}
 	}
 }
@@ -3244,10 +3278,10 @@ int B_ItemInBase (int item_idx, const base_t *base)
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 {
 	int i, j, capacity = 0, b_idx = -1;
-	buildingType_t building;
+	buildingType_t buildingType;
 
 	/* Get building type. */
-	building = B_GetBuildingTypeByCapacity(cap);
+	buildingType = B_GetBuildingTypeByCapacity(cap);
 
 	switch (cap) {
 	case CAP_ALIENS:		/**< Update Aliens capacity in base. */
@@ -3264,24 +3298,24 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		/* Reset given capacity in current base. */
 		base->capacities[cap].max = 0;
 		/* Get building capacity. */
-		for (i = 0; i < gd.numBuildingTypes; i++) {
-			if (gd.buildingTypes[i].type == building) {
-				capacity = gd.buildingTypes[i].capacity;
-				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
+		for (i = 0; i < gd.numBuildingTemplates; i++) {
+			if (gd.buildingTemplates[i].buildingType == buildingType) {
+				capacity = gd.buildingTemplates[i].capacity;
+				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", gd.buildingTemplates[i].id, capacity);
 				b_idx = i;
 				break;
 			}
 		}
 		/* Finally update capacity. */
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
-			if ((gd.buildings[base->idx][j].type == building)
+			if ((gd.buildings[base->idx][j].buildingType == buildingType)
 			&& (gd.buildings[base->idx][j].buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)) {
 				base->capacities[cap].max += capacity;
 			}
 		}
 		if (b_idx != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
-				gd.buildingTypes[b_idx].id, base->capacities[cap].max);
+				gd.buildingTemplates[b_idx].id, base->capacities[cap].max);
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities()... going to update ALL capacities.\n");
@@ -3361,7 +3395,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building = &gd.buildings[i][k];
-			MSG_WriteByte(sb, building->type);
+			MSG_WriteByte(sb, building->tpl ? building->tpl - gd.buildingTemplates : -1);
 			MSG_WriteByte(sb, building->buildingStatus);
 			MSG_WriteLong(sb, building->timeStart);
 			MSG_WriteLong(sb, building->buildTime);
@@ -3577,7 +3611,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building_t *const building = &gd.buildings[i][k];
-			*building = gd.buildingTypes[MSG_ReadByte(sb)];
+			*building = gd.buildingTemplates[MSG_ReadByte(sb)];
 			building->idx = k;
 			building->base = b;
 			building->buildingStatus = MSG_ReadByte(sb);
@@ -3846,7 +3880,7 @@ qboolean B_ScriptSanityCheck (void)
 	int i, error = 0;
 	building_t* b;
 
-	for (i = 0, b = gd.buildingTypes; i < gd.numBuildingTypes; i++, b++) {
+	for (i = 0, b = gd.buildingTemplates; i < gd.numBuildingTemplates; i++, b++) {
 		if (!b->mapPart && b->visible) {
 			error++;
 			Com_Printf("...... no mappart for building '%s' given\n", b->id);

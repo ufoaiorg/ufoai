@@ -664,8 +664,8 @@ void RS_InitTree (qboolean load)
 			break;
 		case RS_BUILDING:
 			found = qfalse;
-			for (j = 0; j < gd.numBuildingTypes; j++) {
-				building = &gd.buildingTypes[j];
+			for (j = 0; j < gd.numBuildingTemplates; j++) {
+				building = &gd.buildingTemplates[j];
 				/* This building has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, building->id, MAX_VAR)) {
 					found = qtrue;

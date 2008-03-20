@@ -1126,7 +1126,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	/* we always need at least one command centre in the base - because the
 	 * phalanx soldiers have their starting positions here
 	 * @note There should also always be an entrance - the aliens start there */
-	if (!B_GetNumberOfBuildingsInBaseByType(base, B_COMMAND)) {
+	if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, B_COMMAND)) {
 		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are no Command Center in this base\n", base->name);
 		CP_BaseAttackMissionLeave(mission);
 		return;

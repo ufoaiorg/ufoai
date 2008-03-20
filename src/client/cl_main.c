@@ -1841,7 +1841,7 @@ void CL_ReadSinglePlayerData (void)
 
 	Com_Printf("Global data loaded - size "UFO_SIZE_T" bytes\n", sizeof(gd));
 	Com_Printf("...techs: %i\n", gd.numTechnologies);
-	Com_Printf("...buildings: %i\n", gd.numBuildingTypes);
+	Com_Printf("...buildings: %i\n", gd.numBuildingTemplates);
 	Com_Printf("...ranks: %i\n", gd.numRanks);
 	Com_Printf("...nations: %i\n", gd.numNations);
 	Com_Printf("\n");
@@ -1912,7 +1912,7 @@ static void CL_GlobalDataSizes_f (void)
 		sizeof(gd.ranks),
 		sizeof(gd.ugvs),
 		sizeof(gd.productions),
-		sizeof(gd.buildingTypes),
+		sizeof(gd.buildingTemplates),
 		sizeof(gd.employees),
 		sizeof(gd.eventMails),
 		sizeof(gd.upChapters),
