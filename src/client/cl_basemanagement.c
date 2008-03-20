@@ -1471,8 +1471,8 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (base_t *base, buildingType_t bui
 		return -1;
 	}
 
-	if (buildingType >= MAX_BUILDING_TYPE) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: no building-type given!\n");
+	if (buildingType >= MAX_BUILDING_TYPE || buildingType < 0) {
+		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: no sane building-type given!\n");
 		return -1;
 	}
 
