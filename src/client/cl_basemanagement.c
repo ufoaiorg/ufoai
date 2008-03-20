@@ -1439,6 +1439,12 @@ int B_GetNumberOfBuildingsInBaseByTemplate (base_t *base, building_t *tpl)
 		return -1;
 	}
 
+	/* Check if the template really is one. */
+	if (tpl != tpl->tpl) {
+		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No building-type given as paramter. It's probably a normal building!\n");
+		return -1;
+	}
+
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 		if (gd.buildings[base->idx][i].tpl == tpl
 		 && gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
