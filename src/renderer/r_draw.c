@@ -273,10 +273,13 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	/* provided width and height (if any) take precedence */
 	if (w)
 		nw = w * viddef.rx;
+	else
+		nw = 0;
 
 	if (h)
 		nh = h * viddef.ry;
-
+	else
+		nh = 0;
 
 	/* horizontal texture mapping */
 	if (sh) {
