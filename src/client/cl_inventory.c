@@ -396,7 +396,6 @@ void INV_InitialEquipment (base_t *base, const campaign_t* campaign)
  */
 void INV_ParseComponents (const char *name, const char **text)
 {
-	objDef_t *od;
 	components_t *comp;
 	const char *errhead = "INV_ParseComponents: unexpected end of file.";
 	const char *token;
@@ -421,7 +420,7 @@ void INV_ParseComponents (const char *name, const char **text)
 	/* set standard values */
 	Q_strncpyz(comp->asId, name, sizeof(comp->asId));
 	comp->asItem = INVSH_GetItemByID(comp->asId);
-	Com_DPrintf(DEBUG_CLIENT, "INV_ParseComponents()... linked item: %s with components: %s\n", od->id, comp->asId);
+	Com_DPrintf(DEBUG_CLIENT, "INV_ParseComponents: linked item: %s with components: %s\n", name, comp->asId);
 
 	do {
 		/* get the name type */
@@ -458,7 +457,7 @@ void INV_ParseComponents (const char *name, const char **text)
 			token = COM_Parse(text);
 			comp->time = atoi(token);
 		} else {
-			Com_Printf("INV_ParseComponents error in \"%s\" - unknown token: \"%s\".\n", name, token);
+			Com_Printf("INV_ParseComponents: Error in \"%s\" - unknown token: \"%s\".\n", name, token);
 		}
 	} while (*text);
 }
@@ -491,15 +490,14 @@ components_t *INV_GetComponentsByItemIdx (int itemIdx)
  */
 int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 {
-	int i, j, size = 0;
-	objDef_t *compOd;
+	int i, size = 0;
 
 	assert(comp);
 	if (!calculate && !base)	/* We need base only if this is real disassembling. */
 		Sys_Error("INV_DisassemblyItem: No base given");
 
 	for (i = 0; i < comp->numItemtypes; i++) {
-		compOd = comp->items[i];
+		const objDef_t *compOd = comp->items[i];
 		assert(compOd);
 		size += compOd->size * comp->item_amount[i];
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
@@ -507,7 +505,7 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 			if (!Q_strncmp(compOd->id, "antimatter", 10))
 				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
-				B_UpdateStorageAndCapacity(base, j, comp->item_amount[i], qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, compOd->idx, comp->item_amount[i], qfalse, qfalse);
 			Com_DPrintf(DEBUG_CLIENT, "INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compOd->id);
 		}
 	}
