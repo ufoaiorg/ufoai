@@ -87,18 +87,16 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftSample)
 static void BS_MarketScroll_f (void)
 {
 	menuNode_t* node;
-	objDef_t *od;
 	int i;
-	technology_t *tech;
 
 	if (!baseCurrent)
 		return;
 
 	node = MN_GetNodeFromCurrentMenu("market");
-	if (node)
-		buyList.scroll = node->textScroll;
-	else
+	if (!node)
 		return;
+
+	buyList.scroll = node->textScroll;
 
 	if (buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES) {
 		buyList.scroll = buyList.length - MAX_MARKET_MENU_ENTRIES;
@@ -119,18 +117,22 @@ static void BS_MarketScroll_f (void)
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++)
 		Cbuf_AddText(va("buy_autoselld%i\n", i));
+
+	assert(buyList.scroll >= 0);
+
 	/* get item list */
 	for (i = buyList.scroll; i < buyList.length - buyList.scroll; i++) {
 		if (i >= MAX_MARKET_MENU_ENTRIES)
 			break;
-		assert(i >= 0);
-		od = buyList.l[i].item;
-		tech = od->tech;
-		/* Check whether the proper buytype, storage in current base and market. */
-		if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[buyList.l[i].item->idx] || ccs.eMarket.num[buyList.l[i].item->idx])) {
-			Cbuf_AddText(va("buy_show%i\n", i - buyList.scroll));
-			if (gd.autosell[buyList.l[i].item->idx])
-				Cbuf_AddText(va("buy_autoselle%i\n", i - buyList.scroll));
+		else {
+			const objDef_t *od = buyList.l[i].item;
+			const technology_t *tech = od->tech;
+			/* Check whether the proper buytype, storage in current base and market. */
+			if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[buyList.l[i].item->idx] || ccs.eMarket.num[buyList.l[i].item->idx])) {
+				Cbuf_AddText(va("buy_show%i\n", i - buyList.scroll));
+				if (gd.autosell[buyList.l[i].item->idx])
+					Cbuf_AddText(va("buy_autoselle%i\n", i - buyList.scroll));
+			}
 		}
 	}
 }
@@ -181,21 +183,19 @@ static void BS_MarketClick_f (void)
 
 /**
  * @brief Calculates amount of aircraft in base and on the market.
+ * @param[in] base The base to get the storage amount from
  * @param[in] airCharId Aircraft id (type).
  * @param[in] inbase True if function has to return storage, false - when supply (market).
  * @return Amount of aircraft in base or amount of aircraft on the market.
  */
-static int AIR_GetStorageSupply (const char *airCharId, qboolean inbase)
+static int AIR_GetStorageSupply (base_t *base, const char *airCharId, qboolean inbase)
 {
-	base_t *base;
 	aircraft_t *aircraft;
 	int i, j;
 	int amount = 0, storage = 0, supply;
 
-	assert(baseCurrent);
-
 	/* Get storage amount in baseCurrent. */
-	for (j = 0, aircraft = baseCurrent->aircraft; j < baseCurrent->numAircraftInBase; j++, aircraft++) {
+	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
 		if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
 			storage++;
 	}
@@ -251,22 +251,23 @@ static void BS_AddToList (const char *name, int storage, int market, int price)
 /**
  * @brief Updates status of category buttons in aircraft buy/sell menu.
  */
-static void BS_UpdateAircraftBSButtons (void)
+static void BS_UpdateAircraftBSButtons (const base_t* base)
 {
-	if (!baseCurrent)
+	if (!base)
 		return;
+
 	/* We cannot buy aircraft without any hangar. */
-	if (!B_GetBuildingStatus(baseCurrent, B_HANGAR) && !B_GetBuildingStatus(baseCurrent, B_SMALL_HANGAR))
+	if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR))
 		Cbuf_AddText("abuy_disableaircrafts2\n");
 	else
 		Cbuf_AddText("abuy_enableaircrafts\n");
 	/* We cannot buy aircraft if there is no power in our base. */
-	if (!B_GetBuildingStatus(baseCurrent, B_POWER))
+	if (!B_GetBuildingStatus(base, B_POWER))
 		Cbuf_AddText("abuy_disableaircrafts1\n");
 	else
 		Cbuf_AddText("abuy_enableaircrafts\n");
 	/* We cannot buy any item without storage. */
-	if (!B_GetBuildingStatus(baseCurrent, B_STORAGE))
+	if (!B_GetBuildingStatus(base, B_STORAGE))
 		Cbuf_AddText("abuy_disableitems\n");
 	else
 		Cbuf_AddText("abuy_enableitems\n");
@@ -302,7 +303,7 @@ static void BS_BuyType (void)
 	case BUY_AIRCRAFT:	/* Aircraft */
 		{
 		technology_t* tech;
-		BS_UpdateAircraftBSButtons();
+		BS_UpdateAircraftBSButtons(baseCurrent);
 		for (i = 0, j = 0, air_samp = aircraftTemplates; i < numAircraftTemplates; i++, air_samp++) {
 			if (air_samp->type == AIRCRAFT_UFO || air_samp->price == -1)
 				continue;
@@ -313,7 +314,7 @@ static void BS_BuyType (void)
 					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
 					Cbuf_AddText(va("buy_tooltip_aircraft%i\n", j - buyList.scroll));
 				}
-				BS_AddToList(air_samp->name, AIR_GetStorageSupply(air_samp->id, qtrue), AIR_GetStorageSupply(air_samp->id, qfalse), air_samp->price);
+				BS_AddToList(air_samp->name, AIR_GetStorageSupply(baseCurrent, air_samp->id, qtrue), AIR_GetStorageSupply(baseCurrent, air_samp->id, qfalse), air_samp->price);
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = air_samp;
@@ -324,7 +325,7 @@ static void BS_BuyType (void)
 		}
 		break;
 	case BUY_CRAFTITEM:	/* Aircraft items */
-		BS_UpdateAircraftBSButtons();
+		BS_UpdateAircraftBSButtons(baseCurrent);
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			if (od->notOnMarket)
