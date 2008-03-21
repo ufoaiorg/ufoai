@@ -91,7 +91,7 @@ typedef struct globalData_s
 	/* how fast the game is running */
 	int gameTimeScale;
 	/* selected aircraft for interceptions */
-	int interceptAircraft;
+	aircraft_t *interceptAircraft;
 	/* already paid in this month? */
 	qboolean fund;
 	/* missions last seen on geoscape */
@@ -125,7 +125,7 @@ typedef struct globalData_s
 	/* == Aircraft == */
 	/* UFOs on geoscape: @todo update their inner pointers if needed */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
-	int numUFOs;	/**< the current amount of UFOS on the geoscape */
+	int numUFOs;	/**< The current amount of UFOS on the geoscape. */
 
 	/* Projectiles on geoscape (during fights) */
 	aircraftProjectile_t projectiles[MAX_PROJECTILESONGEOSCAPE];

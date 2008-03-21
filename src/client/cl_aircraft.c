@@ -969,8 +969,8 @@ void CL_CampaignRunAircraft (int dt)
 							aircraft->status = AIR_DROP;
 							cls.missionaircraft = aircraft;
 							MAP_SelectMission(cls.missionaircraft->mission);
-							gd.interceptAircraft = cls.missionaircraft->idx;
-							Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft);
+							gd.interceptAircraft = cls.missionaircraft;
+							Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft->idx);
 							CL_GameTimeStop();
 							MN_PushMenu("popup_intercept_ready");
 							break;
@@ -1068,7 +1068,7 @@ aircraft_t* AIR_AircraftGetFromIdx (int idx)
 	base_t* base;
 	aircraft_t* aircraft;
 
-	if (idx == AIRCRAFT_INVALID) {
+	if (idx == AIRCRAFT_INVALID || idx >= gd.numAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: bad aircraft index: %i\n", idx);
 		return NULL;
 	}
@@ -1115,8 +1115,8 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 		AII_ReloadWeapon(aircraft);
 	}
 
-	/* ensure interceptAircraft IDX is set correctly */
-	gd.interceptAircraft = aircraft->idx;
+	/* ensure interceptAircraft is set correctly */
+	gd.interceptAircraft = aircraft;
 
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */

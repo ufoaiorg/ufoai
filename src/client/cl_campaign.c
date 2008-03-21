@@ -4277,7 +4277,7 @@ static void CL_GameGo (void)
 	base_t *base;
 
 	if (!curCampaign) {
-		Com_DPrintf(DEBUG_CLIENT, "curCampaign: %p, selectedMission: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selectedMission, gd.interceptAircraft);
+		Com_DPrintf(DEBUG_CLIENT, "curCampaign: %p, selectedMission: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selectedMission, gd.interceptAircraft->idx);
 		return;
 	}
 
@@ -4456,7 +4456,7 @@ void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
  */
 static void CL_GameAutoCheck_f (void)
 {
-	if (!curCampaign || !selectedMission || gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
+	if (!curCampaign || !selectedMission || !gd.interceptAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoCheck_f: No update after automission\n");
 		return;
 	}
@@ -4495,12 +4495,12 @@ void CL_GameAutoGo (mission_t *mis)
 	CP_CreateBattleParameters(mis);
 
 	if (mis->stage != STAGE_BASE_ATTACK) {
-		if (gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
+		if (!gd.interceptAircraft) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 			return;
 		}
 
-		aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
+		aircraft = gd.interceptAircraft;
 		assert(aircraft);
 		baseCurrent = aircraft->homebase;
 		assert(baseCurrent);
@@ -4646,7 +4646,7 @@ static void CL_UpdateCharacterStats (int won)
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
 	/* aircraft = &baseCurrent->aircraft[gd.interceptAircraft]; remove this @todo: check if baseCurrent has the currect aircraftCurrent.  */
-	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
+	aircraft = gd.interceptAircraft;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
 
@@ -4857,9 +4857,9 @@ static void CL_GameResults_f (void)
 	if (selectedMission->stage == STAGE_BASE_ATTACK) {
 		baseCurrent = (base_t*)selectedMission->data;
 	} else {
-		assert(gd.interceptAircraft != AIRCRAFT_INVALID);
-		baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
-		baseCurrent->aircraftCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft);
+		assert(gd.interceptAircraft);
+		baseCurrent = gd.interceptAircraft->homebase;
+		baseCurrent->aircraftCurrent = gd.interceptAircraft;
 	}
 
 	/* add the looted goods to base storage and market */
@@ -6448,7 +6448,7 @@ static void CP_UFOCrashed_f (void)
 	objDef_t *compOd;
 	itemsTmp_t *cargo;
 
-	if (!baseCurrent || gd.interceptAircraft == AIRCRAFT_INVALID)
+	if (!baseCurrent || !gd.interceptAircraft)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -6484,7 +6484,7 @@ static void CP_UFOCrashed_f (void)
 	}
 
 	/* Find dropship. */
-	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
+	aircraft = gd.interceptAircraft;
 	assert(aircraft);
 	cargo = aircraft->itemcargo;
 

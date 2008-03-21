@@ -1459,7 +1459,7 @@ void MAP_ResetAction (void)
 	if (gd.numBases)
 		gd.mapAction = MA_NONE;
 
-	gd.interceptAircraft = AIRCRAFT_INVALID;
+	gd.interceptAircraft = NULL;
 
 	selectedMission = NULL;
 	selectedAircraft = NULL;

@@ -167,7 +167,7 @@ static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t 
 	switch (employee->type) {
 	case EMPL_SOLDIER:
 		/* Is this a soldier assigned to aircraft? */
-		if (CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
+		if (CL_SoldierInAircraft(employee->idx, employee->type, NULL)) {
 			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 			gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 			MN_Popup(_("Soldier in aircraft"), popupText);

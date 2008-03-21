@@ -41,7 +41,7 @@ void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t
 ugv_t *CL_GetUgvById(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 
-qboolean CL_SoldierInAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx);
+qboolean CL_SoldierInAircraft(int employee_idx, employeeType_t employeeType, struct aircraft_s *aircraft);
 void CL_RemoveSoldierFromAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx, struct base_s *base);
 void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
 

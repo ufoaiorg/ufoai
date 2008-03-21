@@ -927,7 +927,7 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 
 	case EMPL_SOLDIER:
 		/* Remove soldier from aircraft/team if he was assigned to one. */
-		if (CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
+		if (CL_SoldierInAircraft(employee->idx, employee->type, NULL)) {
 			CL_RemoveSoldierFromAircraft(employee->idx, employee->type, -1, base);
 		}
 		break;

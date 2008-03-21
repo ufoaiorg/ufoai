@@ -1139,7 +1139,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 		if (!employee)
 			Sys_Error("CL_UpdateHireVar: Could not get employee %i\n", i);
 
-		if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft->idx)) {
+		if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft)) {
 			chrDisplayList.chr[chrDisplayList.num] = &employee->chr;
 			chrDisplayList.num++;
 		}
@@ -1250,14 +1250,14 @@ static void CL_MarkTeam_f (void)
 			if (j == aircraft->idx)
 				continue;
 			/* already on another aircraft */
-			if (CL_SoldierInAircraft(i, employeeType, j))
+			if (CL_SoldierInAircraft(i, employeeType, AIR_AircraftGetFromIdx(j)))
 				alreadyInOtherShip = qtrue;
 		}
 
 		Cvar_ForceSet(va("mn_name%i", k), gd.employees[employeeType][i].chr.name);
 		/* change the buttons */
 		Cbuf_AddText(va("listdel%i\n", k));
-		if (!alreadyInOtherShip && CL_SoldierInAircraft(i, employeeType, aircraft->idx))
+		if (!alreadyInOtherShip && CL_SoldierInAircraft(i, employeeType, aircraft))
 			Cbuf_AddText(va("listadd%i\n", k));
 		/* disable the button - the soldier is already on another aircraft */
 		else if (alreadyInOtherShip)
@@ -1316,26 +1316,22 @@ static void CL_ToggleTeamList_f (void)
  * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
  * @todo params should be employee_t* and aircraft_t*
  */
-qboolean CL_SoldierInAircraft (int employee_idx, employeeType_t employeeType, int aircraft_idx)
+qboolean CL_SoldierInAircraft (int employee_idx, employeeType_t employeeType, aircraft_t* aircraft)
 {
 	int i;
-	const aircraft_t* aircraft;
 
 	if (employee_idx < 0 || employee_idx > gd.numEmployees[employeeType])
 		return qfalse;
 
-	if (aircraft_idx < 0) {
+	if (!aircraft) {
 		/* Search if he is in _any_ aircraft and return true if it's the case. */
 		for (i = 0; i < gd.numAircraft; i++) {
-			if (CL_SoldierInAircraft(employee_idx, employeeType, i))
+			if (CL_SoldierInAircraft(employee_idx, employeeType, AIR_AircraftGetFromIdx(i)))
 				return qtrue;
 		}
 		return qfalse;
 	}
 
-	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
-	if (!aircraft)
-		Com_Printf("CL_SoldierInAircraft: Error No aircraft found for index %i\n", aircraft_idx);
 	return AIR_IsInAircraftTeam(aircraft, employee_idx, employeeType);
 }
 
@@ -1393,7 +1389,7 @@ void CL_RemoveSoldierFromAircraft (int employee_idx, employeeType_t employeeType
 	if (aircraft_idx < 0) {
 		/* Search if he is in _any_ aircraft and set the aircraft_idx if found.. */
 		for (i = 0; i < gd.numAircraft; i++) {
-			if (CL_SoldierInAircraft(employee_idx, employeeType, i) ) {
+			if (CL_SoldierInAircraft(employee_idx, employeeType, AIR_AircraftGetFromIdx(i)) ) {
 				aircraft_idx = i;
 				break;
 			}
@@ -1458,7 +1454,7 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 		/* Check whether the soldier is already on another aircraft */
 		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee_idx);
 
-		if (CL_SoldierInAircraft(employee_idx,employeeType, -1)) {
+		if (CL_SoldierInAircraft(employee_idx,employeeType, NULL)) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: found idx '%d' \n",employee_idx);
 			return qfalse;
 		}
@@ -1554,7 +1550,7 @@ static void CL_AssignSoldier_f (void)
 	assert(aircraft);
 	Com_DPrintf(DEBUG_CLIENT, "aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, AIR_GetAircraftIdxInBase(aircraft));
 
-	if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft->idx)) {
+	if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: removing\n");
 		/* Remove soldier from aircraft/team. */
 		Cbuf_AddText(va("listdel%i\n", num));
