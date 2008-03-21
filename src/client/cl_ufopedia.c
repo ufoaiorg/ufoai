@@ -549,7 +549,7 @@ static void UP_BuildingDescription (const technology_t* t)
  * @todo Don't display things like speed for base defense items - a missile
  * facility isn't getting slower or faster due a special weapon or ammunition
  */
-void UP_AircraftItemDescription (objDef_t *item)
+void UP_AircraftItemDescription (const objDef_t *item)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
 	int i;
@@ -629,8 +629,6 @@ void UP_AircraftItemDescription (objDef_t *item)
  */
 void UP_AircraftDescription (const technology_t* t)
 {
-	int i;
-
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
 
@@ -639,6 +637,7 @@ void UP_AircraftDescription (const technology_t* t)
 		if (!aircraft) {
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft"));
 		} else {
+			int i;
 			for (i = 0; i < AIR_STATS_MAX; i++) {
 				switch (i) {
 				case AIR_STATS_SPEED:
@@ -678,7 +677,7 @@ void UP_AircraftDescription (const technology_t* t)
 void UP_UGVDescription (const ugv_t *ugvType)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
-	technology_t *tech;
+	const technology_t *tech;
 
 	assert(ugvType);
 
@@ -720,7 +719,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
  */
 int UP_GetUnreadMails (void)
 {
-	message_t *m = mn.messageStack;
+	const message_t *m = mn.messageStack;
 
 	if (gd.numUnreadMails != -1)
 		return gd.numUnreadMails;
@@ -854,7 +853,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 void UP_Article (technology_t* tech, eventMail_t *mail)
 {
 	int i;
-	objDef_t *item;
+	const objDef_t *item;
 
 	MN_MenuTextReset(TEXT_UFOPEDIA);
 	MN_MenuTextReset(TEXT_LIST);

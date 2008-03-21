@@ -81,7 +81,7 @@ int AII_GetSlotItems(aircraftItemType_t type, const aircraft_t *aircraft);
 int AII_AircraftCanShoot(const aircraft_t *aircraft);
 int AII_BaseCanShoot(const base_t *base);
 
-itemWeight_t AII_GetItemWeightBySize(objDef_t *od);
+itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
 const char* AII_WeightToName(itemWeight_t weight);
 

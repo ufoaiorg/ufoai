@@ -41,7 +41,7 @@ static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy
  * @return itemWeight_t
  * @sa AII_WeightToName
  */
-itemWeight_t AII_GetItemWeightBySize (objDef_t *od)
+itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
 {
 	assert(od);
 	assert(od->craftitem.type >= 0);
