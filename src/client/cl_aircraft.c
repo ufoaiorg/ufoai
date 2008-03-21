@@ -731,7 +731,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	base->aircraftCurrent = 0;
 
 	aircraftSample = AIR_GetAircraft(name);
-	if (!aircraft) {
+	if (!aircraftSample) {
 		Com_Printf("Could not find aircraft with id: '%s'\n", name);
 		return NULL;
 	}
@@ -1231,6 +1231,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		return;
 	}
 
+	aircraftSample = NULL;
 	if (!assignAircraftItems) {
 		for (i = 0; i < numAircraftTemplates; i++) {
 			if (!Q_strcmp(aircraftTemplates[i].id, name)) {
@@ -1294,6 +1295,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			break;
 
 		if (assignAircraftItems) {
+			assert(aircraftSample);
 			/* write into cl_localPool - this data is reparsed on every new game */
 			/* blocks like param { [..] } - otherwise we would leave the loop too early */
 			if (*token == '{') {
