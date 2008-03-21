@@ -1917,7 +1917,7 @@ void CL_ActorUpdateCVars (void)
 	const char *animName;
 	int time;
 	fireDef_t *old;
-	invList_t *weapon;	/**< Used for hovering over buttons. See displayRemainingTus[] */
+	const invList_t *weapon;	/**< Used for hovering over buttons. See displayRemainingTus[] */
 	int reloadtime;
 
 	if (cls.state != ca_active)
@@ -1939,7 +1939,7 @@ void CL_ActorUpdateCVars (void)
 	Cvar_Set("mn_lweapon", "");
 
 	if (selActor) {
-		invList_t *selWeapon;
+		const invList_t *selWeapon;
 
 		/* set generic cvars */
 		Cvar_Set("mn_tu", va("%i", selActor->TU));
@@ -2050,7 +2050,7 @@ void CL_ActorUpdateCVars (void)
 					time = TU_CROUCH;
 			}
 		} else if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
-			int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
+			const int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is ROUTING_NOT_REACHABLE */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
@@ -2436,7 +2436,7 @@ qboolean CL_ActorSelectList (int num)
  */
 qboolean CL_ActorSelectNext (void)
 {
-	le_t *le;
+	const le_t *le;
 	int selIndex = -1;
 	int num = cl.numTeamList;
 	int i;
