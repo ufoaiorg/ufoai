@@ -5672,6 +5672,8 @@ static void CL_GameSkirmish_f (void)
 		}
 	}
 
+	base->aircraftCurrent = cls.missionaircraft;
+
 	if (!cls.missionaircraft || !cls.missionaircraft->homebase) {
 		Com_Printf("CL_GameSkirmish_f: Error - could not set the mission aircraft: %i\n", base->numAircraftInBase);
 		return;
