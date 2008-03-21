@@ -629,14 +629,13 @@ void UP_AircraftItemDescription (objDef_t *item)
  */
 void UP_AircraftDescription (const technology_t* t)
 {
-	aircraft_t* aircraft;
 	int i;
 
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
 
 	if (RS_IsResearched_ptr(t)) {
-		aircraft = AIR_GetAircraft(t->provides);
+		const aircraft_t* aircraft = AIR_GetAircraft(t->provides);
 		if (!aircraft) {
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft"));
 		} else {
