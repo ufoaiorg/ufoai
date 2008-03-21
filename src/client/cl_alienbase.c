@@ -37,7 +37,7 @@ static int numAlienBases;							/**< Number of alien bases in game */
  */
 void AB_ResetAlienBases (void)
 {
-	memset(&alienBases[MAX_ALIEN_BASES], 0, sizeof(alienBases[MAX_ALIEN_BASES]));
+	memset(alienBases, 0, sizeof(alienBases));
 	numAlienBases = 0;
 }
 
@@ -230,7 +230,7 @@ void AB_BaseSearchedByNations (void)
 {
 	const int daysPerWeek = 7;				/**< delay (in days) between base stealth update */
 	float probability = 1.0f;				/**< base probability, will be modified below */
-	const float xviLevel = 20.0f;			/**< xviInfection value of nation that will divide probability to 
+	const float xviLevel = 20.0f;			/**< xviInfection value of nation that will divide probability to
 											 * find alien base by 2*/
 	alienBase_t* base;
 
