@@ -1457,42 +1457,20 @@ qboolean PR_Load (sizebuf_t *sb, void *data)
 		pq = &gd.productions[i];
 		pq->numItems = MSG_ReadByte(sb);
 
-		if (((saveFileHeader_t *)data)->version < 3) {
-			byte aircraft;
+		for (j = 0; j < pq->numItems; j++) {
 			s1 = MSG_ReadString(sb);
 			pq->items[j].item = INVSH_GetItemByID(s1);
 			pq->items[j].amount = MSG_ReadLong(sb);
 			pq->items[j].percentDone = MSG_ReadFloat(sb);
 			pq->items[j].production = MSG_ReadByte(sb);
-			aircraft = MSG_ReadByte(sb);
+			s2 = MSG_ReadString(sb);
+			pq->items[j].aircraft = AIR_GetAircraft(s2);
 			pq->items[j].items_cached = MSG_ReadByte(sb);
 
-			if (!aircraft) {
-				if (!pq->items[j].item) {
-					Com_Printf("PR_Load: Could not find item '%s'\n", s1);
-				}
-			} else {
-				pq->items[j].aircraft = AIR_GetAircraft(s2);
-				if (!pq->items[j].aircraft)
-					Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
-			}
-
-		} else {
-			for (j = 0; j < pq->numItems; j++) {
-				s1 = MSG_ReadString(sb);
-				pq->items[j].item = INVSH_GetItemByID(s1);
-				pq->items[j].amount = MSG_ReadLong(sb);
-				pq->items[j].percentDone = MSG_ReadFloat(sb);
-				pq->items[j].production = MSG_ReadByte(sb);
-				s2 = MSG_ReadString(sb);
-				pq->items[j].aircraft = AIR_GetAircraft(s2);
-				pq->items[j].items_cached = MSG_ReadByte(sb);
-
-				if (!pq->items[j].item && s1)
-					Com_Printf("PR_Load: Could not find item '%s'\n", s1);
-				if (!pq->items[j].aircraft && s2)
-					Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
-			}
+			if (!pq->items[j].item && s1)
+				Com_Printf("PR_Load: Could not find item '%s'\n", s1);
+			if (!pq->items[j].aircraft && s2)
+				Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
 		}
 	}
 	return qtrue;
