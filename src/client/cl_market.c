@@ -49,7 +49,8 @@ typedef struct buyList_s {
 	int scroll;		/**< Scroll Position. Start of the buylist index - due to scrolling. */
 } buyList_t;
 
-static buyList_t buyList;	/**< Current entry on the list. */
+static buyList_t buyList;	/**< Current buylist that is shown in the menu. */
+static objDef_t *currentSelectedMenuEntry;	/**< Current selected entry on the list. */
 static int buyCategory = -1;			/**< Category of items in the menu. */
 
 /** @brief Max amount of aircraft type calculated for the market. */
@@ -163,17 +164,17 @@ static void BS_MarketClick_f (void)
 	case BUY_HEAVY:
 		if (buyList.l[num].ugv) {
 			UP_UGVDescription(buyList.l[num].ugv);
-			Cvar_SetValue("mn_bs_current", -1);
+			currentSelectedMenuEntry = NULL;
 		} else {
 			UP_ItemDescription(buyList.l[num].item);
-			Cvar_SetValue("mn_bs_current", buyList.l[num].item->idx);
+			currentSelectedMenuEntry = buyList.l[num].item;
 		}
 		break;
 	case -1:
 		break;
 	default:
 		UP_ItemDescription(buyList.l[num].item);
-		Cvar_SetValue("mn_bs_current", buyList.l[num].item->idx);
+		currentSelectedMenuEntry = buyList.l[num].item;
 		break;
 	}
 }
@@ -469,16 +470,16 @@ static void BS_BuyType (void)
 		case BUY_CRAFTITEM:
 			Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? See also BS_MarketClick_f */
 			/* Select current item or first one. */
-			if (Cvar_VariableInteger("mn_bs_current") > 0) {
-				UP_AircraftItemDescription(&csi.ods[Cvar_VariableInteger("mn_bs_current")]);
+			if (currentSelectedMenuEntry) {
+				UP_AircraftItemDescription(currentSelectedMenuEntry);
 			} else {
 				UP_AircraftItemDescription(buyList.l[0].item);
 			}
 			break;
 		case BUY_HEAVY:
-			/**@todo select first heavy item */
-			if (Cvar_VariableInteger("mn_bs_current") > 0) {
-				UP_ItemDescription(&csi.ods[Cvar_VariableInteger("mn_bs_current")]);
+			/** @todo select first heavy item */
+			if (currentSelectedMenuEntry) {
+				UP_ItemDescription(currentSelectedMenuEntry);
 			} else if (buyList.l[0].ugv) {
 				UP_UGVDescription(buyList.l[0].ugv);
 			}
@@ -486,8 +487,8 @@ static void BS_BuyType (void)
 		default:
 			assert(buyCategory != -1);
 			/* Select current item or first one. */
-			if (Cvar_VariableInteger("mn_bs_current") > 0)
-				UP_ItemDescription(&csi.ods[Cvar_VariableInteger("mn_bs_current")]);
+			if (currentSelectedMenuEntry)
+				UP_ItemDescription(currentSelectedMenuEntry);
 			else
 				UP_ItemDescription(buyList.l[0].item);
 			break;
@@ -582,7 +583,7 @@ static void BS_BuyItem_f (void)
 		}
 	} else {
 		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
-		Cvar_SetValue("mn_bs_current", item->idx);
+		currentSelectedMenuEntry = item;
 		UP_ItemDescription(item);
 		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %s\n", item->id);
 		for (i = 0; i < baseCurrent->buyfactor; i++) {
@@ -662,7 +663,7 @@ static void BS_SellItem_f (void)
 		item = buyList.l[num + buyList.scroll].item;
 		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
 		assert(item);
-		Cvar_SetValue("mn_bs_current", item->idx);
+		currentSelectedMenuEntry = item;
 		UP_ItemDescription(item);
 		for (i = 0; i < baseCurrent->sellfactor; i++) {
 			if (baseCurrent->storage.num[item->idx]) {
