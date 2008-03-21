@@ -764,13 +764,12 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
  */
 qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 {
-	int i, idx;
+	int i;
 	qboolean found = qfalse;
 
 	if (!employee)
 		return qfalse;
 
-	idx = employee->idx;
 	/* Fire the employee. This will also:
 	 * 1) remove him from buildings&work
 	 * 2) remove his inventory */
@@ -782,7 +781,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 
 	/* Remove the employee from the global list. */
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		if (gd.employees[type][i].idx == employee->idx)
+		if (&gd.employees[type][i] == employee)
 			found = qtrue;
 
 		if (found) {
@@ -795,12 +794,13 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 			}
 		}
 	}
+
 	if (found) {
 		gd.numEmployees[type]--;
 
 		if (type == EMPL_SOLDIER || type == EMPL_ROBOT) {
- 			for (i = 0; i < gd.numAircraft; i++)
-				AIR_DecreaseAircraftTeamIdxGreaterThan(AIR_AircraftGetFromIdx(i),idx, EMPL_SOLDIER);
+			for (i = 0; i < gd.numAircraft; i++)
+				AIR_DecreaseAircraftTeamIdxGreaterThan(AIR_AircraftGetFromIdx(i), employee->idx, EMPL_SOLDIER);
 		}
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "E_DeleteEmployee: Employee wasn't in the global list.\n");
