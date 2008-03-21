@@ -218,11 +218,11 @@ static const char* CL_AircraftStatToName (int stat)
  * @todo Add support for "require_AND"
  * @todo re-iterate trough logic blocks (i.e. append the tech-names it references recursively)
  */
-static void UP_DisplayTechTree (technology_t* t)
+static void UP_DisplayTechTree (const technology_t* t)
 {
 	int i = 0;
 	static char up_techtree[1024];
-	requirements_t *required;
+	const requirements_t *required;
 	technology_t *techRequired;
 	required = &t->require_AND;
 	up_techtree[0] = '\0';
@@ -479,7 +479,7 @@ void UP_ItemDescription (const objDef_t *od)
  * @brief Prints the UFOpaedia description for armours
  * @sa UP_DrawEntry
  */
-static void UP_ArmourDescription (technology_t* t)
+static void UP_ArmourDescription (const technology_t* t)
 {
 	objDef_t *od;
 	int i;
@@ -516,7 +516,7 @@ static void UP_ArmourDescription (technology_t* t)
  * @brief Prints the UFOpaedia description for technologies
  * @sa UP_DrawEntry
  */
-static void UP_TechDescription (technology_t* t)
+static void UP_TechDescription (const technology_t* t)
 {
 	UP_DisplayTechTree(t);
 }
@@ -525,7 +525,7 @@ static void UP_TechDescription (technology_t* t)
  * @brief Prints the UFOpaedia description for buildings
  * @sa UP_DrawEntry
  */
-static void UP_BuildingDescription (technology_t* t)
+static void UP_BuildingDescription (const technology_t* t)
 {
 	building_t* b = B_GetBuildingTemplate(t->provides);
 
@@ -627,7 +627,7 @@ void UP_AircraftItemDescription (objDef_t *item)
  * @sa BS_MarketAircraftDescription
  * @sa UP_DrawEntry
  */
-void UP_AircraftDescription (technology_t* t)
+void UP_AircraftDescription (const technology_t* t)
 {
 	aircraft_t* aircraft;
 	int i;

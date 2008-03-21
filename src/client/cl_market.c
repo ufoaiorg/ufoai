@@ -65,9 +65,9 @@ static const int MAX_BS_FACTORS = 10;
  * @sa UP_AircraftDescription
  * @sa UP_AircraftItemDescription
  */
-static void BS_MarketAircraftDescription (aircraft_t *aircraftSample)
+static void BS_MarketAircraftDescription (const aircraft_t *aircraftSample)
 {
-	technology_t *tech;
+	const technology_t *tech;
 
 	/* Break if no airaft was given or if  it's no sample-aircraft (i.e. template). */
 	if (!aircraftSample || aircraftSample != aircraftSample->tpl)
