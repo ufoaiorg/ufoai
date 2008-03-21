@@ -240,6 +240,9 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t*
 	if (!building->dependsBuilding)
 		return qtrue;
 
+	/* Make sure the dependsBuilding pointer is really a template .. just in case. */
+	assert(building->dependsBuilding == building->dependsBuilding->tpl);
+
 	return B_GetBuildingStatus(base, building->dependsBuilding->buildingType);
 }
 
@@ -607,7 +610,8 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	while (test) {
 		test = qfalse;
 		for (buildingIdx = 0; buildingIdx < gd.numBuildings[base->idx]; buildingIdx++) {
-			if (!B_GetBuildingStatus(base, gd.buildings[base->idx][buildingIdx].buildingType) && B_CheckUpdateBuilding(&gd.buildings[base->idx][buildingIdx], base)) {
+			if (!B_GetBuildingStatus(base, gd.buildings[base->idx][buildingIdx].buildingType)
+			 && B_CheckUpdateBuilding(&gd.buildings[base->idx][buildingIdx], base)) {
 				if (firstEnable)
 					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
 				test = qtrue;
@@ -1256,11 +1260,12 @@ void B_SetBuildingByClick (int row, int col)
 	/* If the building is in gd.buildingTemplates[] ... */
 	if (!baseCurrent->buildingCurrent->base) {
 		building_t *building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
-		assert(baseCurrent->buildingCurrent == baseCurrent->buildingCurrent->tpl); /**< Templates link to themself. */
+		assert(baseCurrent->buildingCurrent == baseCurrent->buildingCurrent->tpl); /**< Templates link to themself -  we make sure this is a template. */
 
 		/* copy building from template list to base-buildings-list */
 		*building = *baseCurrent->buildingCurrent->tpl;
 		assert(building != baseCurrent->buildingCurrent->tpl);
+		assert(building->tpl == baseCurrent->buildingCurrent->tpl);
 
 		/* self-link to building-list in base */
 		building->idx = gd.numBuildings[baseCurrent->idx];
