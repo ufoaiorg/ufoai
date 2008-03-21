@@ -20602,6 +20602,7 @@
 // entity 263
 {
 "classname" "func_door"
+"spawnflags" "255"
 // brush 0
 {
 ( -248 -288 62 ) ( -248 -320 62 ) ( -256 -288 62 ) tex_common/origin 0 0 0 0.015625 0.125
