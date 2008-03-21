@@ -915,6 +915,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, name);
 		} else {
 			max_price = 0;
+			ammo = NULL;
 			/* find some suitable ammo for the weapon */
 			for (i = CSI->numODs - 1; i >= 0; i--)
 				if (equip[i]
@@ -957,6 +958,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 		/* search for the most expensive matching ammo in the equipment */
 		prev_price = max_price;
 		max_price = 0;
+		ammo = NULL;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = &CSI->ods[i];
 			if (equip[i] && INVSH_LoadableInWeapon(obj, weapon)) {
@@ -1011,11 +1013,11 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
  */
 void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr)
 {
-	objDef_t *weapon;
 	int i, max_price, prev_price;
 	int has_weapon = 0, has_armour = 0, repeat = 0, missed_primary = 0;
 	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
 	objDef_t *obj;
+	objDef_t *weapon;
 
 	if (chr->weapons) {
 		/* primary weapons */
@@ -1025,6 +1027,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 			/* search for the most expensive primary weapon in the equipment */
 			prev_price = max_price;
 			max_price = 0;
+			weapon = NULL;
 			for (i = lastPos; i >= 0; i--) {
 				obj = &CSI->ods[i];
 				if (equip[i] && obj->weapon && BUY_PRI(obj->buytype) && obj->fireTwoHanded) {
@@ -1080,6 +1083,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 			max_price = primary ? INT_MAX : 0;
 			do {
 				prev_price = max_price;
+				weapon = NULL;
 				/* if primary is a particle or normal damage weapon,
 				 * we pick cheapest sidearms first */
 				max_price = primary ? 0 : INT_MAX;
@@ -1123,6 +1127,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 			do {
 				prev_price = max_price;
 				max_price = 0;
+				weapon = NULL;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
 					if (equip[i] && ((obj->weapon && BUY_SEC(obj->buytype) && !obj->reload)
@@ -1597,7 +1602,7 @@ void INVSH_PrintItemDescription (objDef_t *od)
 	if (!od)
 		return;
 
-	Com_Printf("Item: %i %s\n", i, od->id);
+	Com_Printf("Item: %s\n", od->id);
 	Com_Printf("... name          -> %s\n", od->name);
 	Com_Printf("... type          -> %s\n", od->type);
 	Com_Printf("... category      -> %i\n", od->animationIndex);
