@@ -126,7 +126,7 @@ static void BaseSummary_Init_f (void)
 		if (queue->numItems > 0) {
 			for (i = 0; i < queue->numItems; i++) {
 				const production_t *production = &queue->items[i];
-				const objDef_t *objDef = &csi.ods[production->objID];
+				const objDef_t *objDef = production->item;
 
 				/* FIXME: use the same method as we do in PR_ProductionInfo */
 				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), objDef->name,

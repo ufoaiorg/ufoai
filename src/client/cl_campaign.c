@@ -2759,7 +2759,7 @@ void CL_BaseRansacked (base_t *base)
 	/* Destroy all items in storage */
 	for (item = 0; item < csi.numODs; item++)
 		/* reset storage and capacity */
-		B_UpdateStorageAndCapacity(base, item, 0, qtrue, qfalse);
+		B_UpdateStorageAndCapacity(base, &csi.ods[item], 0, qtrue, qfalse);
 
 	/* Remove all aircraft from the base. */
 	for (ac = base->numAircraftInBase - 1; ac >= 0; ac--)
@@ -4720,7 +4720,7 @@ static void CL_DebugAllItems_f (void)
 	for (i = 0; i < csi.numODs; i++) {
 		if (!csi.ods[i].weapon && !csi.ods[i].numWeapons)
 			continue;
-		B_UpdateStorageAndCapacity(base, i, 1, qfalse, qtrue);
+		B_UpdateStorageAndCapacity(base, &csi.ods[i], 1, qfalse, qtrue);
 		if (base->storage.num[i] > 0) {
 			tech = csi.ods[i].tech;
 			if (!tech)
@@ -6001,7 +6001,7 @@ void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 			Sys_Error("CP_UFOSendMail: ufo_crashed_report has no mail body");
 
 		/* Find components definition. */
-		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id)->idx);
+		comp = INV_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
 		assert(comp);
 
 		/* List all components of crashed UFO. */
@@ -6021,7 +6021,7 @@ void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 			Sys_Error("CP_UFOSendMail: ufo_recovery_report has no mail body");
 
 		/* Find components definition. */
-		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id)->idx);
+		comp = INV_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
 		assert(comp);
 
 		/* List all components of crashed UFO. */
@@ -6075,8 +6075,8 @@ static void CP_UFORecovered_f (void)
 
 	ufocraft = NULL;
 	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraft_samples; i++) {
-		ufocraft = &aircraft_samples[i];
+	for (i = 0; i < numAircraftTemplates; i++) {
+		ufocraft = &aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
 		if (ufocraft->ufotype == UFOtype) {
@@ -6219,8 +6219,8 @@ static void CP_UFORecoveredStore_f (void)
 		return;
 
 	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraft_samples; i++) {
-		ufocraft = &aircraft_samples[i];
+	for (i = 0; i < numAircraftTemplates; i++) {
+		ufocraft = &aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
 		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype")) {
@@ -6372,8 +6372,8 @@ static void CP_UFORecoveredSell_f (void)
 
 	ufocraft = NULL;
 	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraft_samples; i++) {
-		ufocraft = &aircraft_samples[i];
+	for (i = 0; i < numAircraftTemplates; i++) {
+		ufocraft = &aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
 		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype"))
@@ -6469,8 +6469,8 @@ static void CP_UFOCrashed_f (void)
 	}
 
 	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraft_samples; i++) {
-		ufocraft = &aircraft_samples[i];
+	for (i = 0; i < numAircraftTemplates; i++) {
+		ufocraft = &aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
 		if (ufocraft->ufotype == UFOtype) {
@@ -6491,7 +6491,7 @@ static void CP_UFOCrashed_f (void)
 	cargo = aircraft->itemcargo;
 
 	/* Find components definition. */
-	comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id)->idx);
+	comp = INV_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
 	assert(comp);
 
 	/* Add components of crashed UFO to dropship. */
@@ -6500,7 +6500,7 @@ static void CP_UFOCrashed_f (void)
 		assert(compOd);
 		Com_DPrintf(DEBUG_CLIENT, "CP_UFOCrashed_f: Collected %i of %s\n", comp->item_amount2[i], comp->items[i]->id);
 		/* Add items to cargo, increase itemtypes. */
-		cargo[aircraft->itemtypes].idx = compOd->idx;
+		cargo[aircraft->itemtypes].item = compOd;
 		cargo[aircraft->itemtypes].amount = comp->item_amount2[i];
 		aircraft->itemtypes++;
 	}

@@ -565,20 +565,20 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 		return NULL;
 	}
 
-	for (newUFONum = 0; newUFONum < numAircraft_samples; newUFONum++)
-		if (aircraft_samples[newUFONum].type == AIRCRAFT_UFO
-		 && ufoType == aircraft_samples[newUFONum].ufotype
-		 && !aircraft_samples[newUFONum].notOnGeoscape)
+	for (newUFONum = 0; newUFONum < numAircraftTemplates; newUFONum++)
+		if (aircraftTemplates[newUFONum].type == AIRCRAFT_UFO
+		 && ufoType == aircraftTemplates[newUFONum].ufotype
+		 && !aircraftTemplates[newUFONum].notOnGeoscape)
 			break;
 
-	if (newUFONum == numAircraft_samples) {
+	if (newUFONum == numAircraftTemplates) {
 		Com_DPrintf(DEBUG_CLIENT, "Could not add ufo type %i to geoscape\n", ufoType);
 		return NULL;
 	}
 
 	/* Create ufo */
 	ufo = gd.ufos + gd.numUFOs;
-	memcpy(ufo, aircraft_samples + newUFONum, sizeof(aircraft_t));
+	memcpy(ufo, aircraftTemplates + newUFONum, sizeof(aircraft_t));
 	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (gd.numUFOs: %i, newUFONum: %i)\n", ufo->id, gd.numUFOs, newUFONum);
 	gd.numUFOs++;
 
@@ -751,8 +751,8 @@ void UFO_PrepareRecovery (base_t *base)
 	assert(base);
 
 	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraft_samples; i++) {
-		ufocraft = &aircraft_samples[i];
+	for (i = 0; i < numAircraftTemplates; i++) {
+		ufocraft = &aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
 		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype"))
@@ -783,8 +783,8 @@ void UFO_PrepareRecovery (base_t *base)
 	event.day += 2;
 	/* Prepare recovery. */
 	recovery->active = qtrue;
-	recovery->baseID = base->idx;
-	recovery->ufotype = ufocraft->idx_sample;
+	recovery->base = base;
+	recovery->ufotype = ufocraft->tpl;
 	recovery->event = event;
 
 	/* Update base capacity. */
@@ -804,8 +804,8 @@ void UFO_PrepareRecovery (base_t *base)
 			Com_Printf("UFO_PrepareRecovery: No room in small UFO hangars to store %s\n", ufocraft->name);
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
-		base->name, recovery->ufotype, recovery->event.day);
+	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
+		base->name, recovery->ufotype->id, recovery->event.day);
 
 	/* Send an email */
 	CP_UFOSendMail(ufocraft, base);
@@ -827,7 +827,7 @@ void UFO_Recovery (void)
 	for (i = 0; i < MAX_RECOVERIES; i++) {
 		recovery = &gd.recoveries[i];
 		if (recovery->active && recovery->event.day == ccs.date.day) {
-			base = B_GetBase(recovery->baseID);
+			base = recovery->base;
 			if (!base->founded) {
 				/* Destination base was destroyed meanwhile. */
 				/* UFO is lost, send proper message to the user.*/
@@ -836,7 +836,7 @@ void UFO_Recovery (void)
 				return;
 			}
 			/* Get ufocraft. */
-			ufocraft = &aircraft_samples[recovery->ufotype];
+			ufocraft = recovery->ufotype;
 			assert(ufocraft);
 			/* Get item. */
 			/* We can do this because aircraft id is the same as dummy item id. */

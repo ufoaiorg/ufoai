@@ -156,8 +156,8 @@ typedef struct battleParam_s {
 /** @brief Structure of UFO recoveries (all of them). */
 typedef struct ufoRecoveries_s {
 	qboolean active;		/**< True if the recovery is under processing. */
-	int baseID;			/**< Base idx where the recovery will be processing. */
-	int ufotype;			/**< Index of UFO in aircraft_samples array. */
+	base_t *base;			/**< Base where the recovery will be processing. */
+	aircraft_t *ufotype;		/**< Entry of UFO in aircraft_samples array. */
 	date_t event;			/**< When the process will start (UFO got transported to base). */
 } ufoRecoveries_t;
 

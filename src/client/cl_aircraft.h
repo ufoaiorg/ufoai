@@ -115,8 +115,8 @@ typedef struct aircraftSlot_s {
 
 /** @brief A cargo of items collected after mission. */
 typedef struct itemsTmp_s {
-	int idx;		/**< Item idx (csi.ods[idx]). */
-	int amount;		/**< Amount of collected items of this idx. */
+	objDef_t *item;		/**< Collected item. */
+	int amount;			/**< Amount of collected items. */
 } itemsTmp_t;
 
 /**
@@ -140,8 +140,9 @@ typedef enum {
 typedef struct aircraft_s {
 	int idx;			/**< Global index of this aircraft. See also gd.numAircraft and AIRCRAFT_INVALID
 						 * this index is also updated when AIR_DeleteAircraft was called
-						 * for all the other aircraft.  */
-	int idx_sample;			/**< Self-link in aircraft_sample list. */
+						 * for all the other aircraft.
+						 * For aircraftTemplates[] aicrafts this is the index in that array. */
+	struct aircraft_s *tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
 	char *id;			/**< Internal id from script file. */
 	char *name;			/**< Translateable name. */
 	char *shortname;		/**< Translateable shortname (being used in small popups). */
@@ -208,8 +209,8 @@ typedef struct aircraft_s {
 @todo: for later, this is used quite a lot in the code.
 #define AIRCRAFTCURRENT_IS_SANE(base) (((base)->aircraftCurrent >= 0) && ((base)->aircraftCurrent < (base)->numAircraftInBase))
 */
-extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /**< available aircraft types */
-extern int numAircraft_samples;
+extern aircraft_t aircraftTemplates[MAX_AIRCRAFT]; /**< available aircraft types */
+extern int numAircraftTemplates;
 
 /* script functions */
 
@@ -255,7 +256,7 @@ void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(struct base_s *base);
 qboolean AIR_ScriptSanityCheck(void);
-int AIR_CalculateHangarStorage(int aircraftID, struct base_s *base, int used);
+int AIR_CalculateHangarStorage(const aircraft_t *aircraft, struct base_s *base, int used);
 int CL_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 const char *AIR_GetAircraftString(aircraftType_t aircraftType);

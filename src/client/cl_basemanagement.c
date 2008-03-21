@@ -3498,7 +3498,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				}
 				/* itemcargo */
 				for (l = 0; l < aircraft->itemtypes; l++) {
-					MSG_WriteString(sb, csi.ods[aircraft->itemcargo[l].idx].id);
+					MSG_WriteString(sb, aircraft->itemcargo[l].item->id);
 					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
 				}
 				break;
@@ -3602,7 +3602,7 @@ static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* t
 qboolean B_Load (sizebuf_t* sb, void* data)
 {
 	int i, bases, k, l, amount, ufoIdx;
-	const objDef_t *od;
+	objDef_t *od;
 	objDef_t *od2;
 	int aircraftIdxInBase;
 
@@ -3751,7 +3751,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 						Com_Printf("B_Load: Could not find item '%s'\n", s);
 						MSG_ReadShort(sb);
 					} else {
-						aircraft->itemcargo[l].idx = od->idx;
+						aircraft->itemcargo[l].item = od;
 						aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
 					}
 				}
@@ -3845,42 +3845,42 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 /**
  * @brief Update the storage amount and the capacities for the storages in the base
  * @param[in] base The base which storage and capacity should be updated
- * @param[in] objIDX The idx in csi.ods
+ * @param[in] obj The item.
  * @param[in] amount Amount to be added to removed
  * @param[in] reset Set this to true (amount is not needed) if you want to reset the
  * storage amount and capacities (e.g. in case of a base ransack)
  * @param[in] ignorecap qtrue if we won't check freespace but will just add items.
  * @sa CL_BaseRansacked
  */
-qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qboolean reset, qboolean ignorecap)
+qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap)
 {
 	assert(base);
-	assert(objIDX < csi.numODs);
+	assert(obj);
 	if (reset) {
-		base->storage.num[objIDX] = 0;
-		base->storage.num_loose[objIDX] = 0; /* FIXME: needed? */
+		base->storage.num[obj->idx] = 0;
+		base->storage.num_loose[obj->idx] = 0; /* FIXME: needed? */
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
 		if (!ignorecap && (amount > 0)) {
 			/* Only add items if there is enough room in storage */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < (csi.ods[objIDX].size * amount)) {
-				Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %i, amount: %i)\n", objIDX, amount);
+			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < (obj->size * amount)) {
+				Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %s, amount: %i)\n", obj->id, amount);
 				return qfalse;
 			}
 		}
 
-		base->storage.num[objIDX] += amount;
-		if (csi.ods[objIDX].size > 0)
-			base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
+		base->storage.num[obj->idx] += amount;
+		if (obj->size > 0)
+			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
 
 		if (base->capacities[CAP_ITEMS].cur < 0) {
 			Com_Printf("B_UpdateStorageAndCapacity: current storage capacity is negative (%i): reset to 0\n", base->capacities[CAP_ITEMS].cur);
 			base->capacities[CAP_ITEMS].cur = 0;
 		}
 
-		if (base->storage.num[objIDX] < 0) {
-			Com_Printf("B_UpdateStorageAndCapacity: current number of item '%s' is negative: reset to 0\n", csi.ods[objIDX].id);
-			base->storage.num[objIDX] = 0;
+		if (base->storage.num[obj->idx] < 0) {
+			Com_Printf("B_UpdateStorageAndCapacity: current number of item '%s' is negative: reset to 0\n", obj->id);
+			base->storage.num[obj->idx] = 0;
 		}
 	}
 

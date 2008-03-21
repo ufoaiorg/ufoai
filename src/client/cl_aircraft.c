@@ -38,17 +38,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* FIXME: Is this really needed - we have base_t->aircraftCurrent - isn't that the same? */
 static aircraft_t *menuAircraft = NULL;
-aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
+aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 /**
  * @todo: should be reset to 0 each time scripts are read anew; also
- * aircraft_samples memory should be freed at that time,
+ * aircraftTemplates memory should be freed at that time,
  * or old memory used for new records
  */
-int numAircraft_samples = 0;
+int numAircraftTemplates = 0;
 
 /**
  * @brief Updates hangar capacities for one aircraft in given base.
- * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
+ * @param[in] aircraftSample Aircraft template.
  * @param[in] base Pointer to base.
  * @return AIRCRAFT_HANGAR_BIG if aircraft was placed in big hangar
  * @return AIRCRAFT_HANGAR_SMALL if small
@@ -56,13 +56,14 @@ int numAircraft_samples = 0;
  * @sa AIR_NewAircraft
  * @sa AIR_UpdateHangarCapForAll
  */
-static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
+static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftSample, base_t *base)
 {
 	int aircraftSize = 0, freespace = 0;
 
-	assert(aircraftID != AIRCRAFT_INBASE_INVALID);
+	assert(aircraftSample);
+	assert(aircraftSample == aircraftSample->tpl);
 
-	aircraftSize = aircraft_samples[aircraftID].weight;
+	aircraftSize = aircraftSample->weight;
 
 	if (aircraftSize < AIRCRAFT_SMALL) {
 #ifdef DEBUG
@@ -138,7 +139,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		aircraft = &base->aircraft[i];
 		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base: %s, aircraft: %s\n", base->name, aircraft->id);
-		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
+		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 	}
 	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 }
@@ -704,12 +705,12 @@ aircraft_t *AIR_GetAircraft (const char *name)
 	int i;
 
 	assert(name);
-	for (i = 0; i < numAircraft_samples; i++) {
-		if (!Q_strncmp(aircraft_samples[i].id, name, MAX_VAR))
-			return &aircraft_samples[i];
+	for (i = 0; i < numAircraftTemplates; i++) {
+		if (!Q_strncmp(aircraftTemplates[i].id, name, MAX_VAR))
+			return &aircraftTemplates[i];
 	}
 
-	Com_Printf("Aircraft '%s' not found (%i).\n", name, numAircraft_samples);
+	Com_Printf("Aircraft '%s' not found (%i).\n", name, numAircraftTemplates);
 	return NULL;
 }
 
@@ -721,6 +722,7 @@ aircraft_t *AIR_GetAircraft (const char *name)
  */
 aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 {
+	aircraft_t *aircraftSample;
 	aircraft_t *aircraft;
 
 	assert(base);
@@ -728,7 +730,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	/* First aircraft in base is default aircraft. */
 	base->aircraftCurrent = 0;
 
-	aircraft = AIR_GetAircraft(name);
+	aircraftSample = AIR_GetAircraft(name);
 	if (!aircraft) {
 		Com_Printf("Could not find aircraft with id: '%s'\n", name);
 		return NULL;
@@ -737,10 +739,10 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	if (base->numAircraftInBase < MAX_AIRCRAFT) {
 		/* copy generic aircraft description to individal aircraft in base */
 		/* we do this because every aircraft can have its own parameters */
-		base->aircraft[base->numAircraftInBase] = *aircraft;
+		base->aircraft[base->numAircraftInBase] = *aircraftSample;
 		/* now lets use the aircraft array for the base to set some parameters */
 		aircraft = &base->aircraft[base->numAircraftInBase];
-		aircraft->idx = gd.numAircraft;
+		aircraft->idx = gd.numAircraft;	/**< Overwrite index in template list with global aircraft index. */
 		aircraft->homebase = base;
 		/* Update the values of its stats */
 		AII_UpdateAircraftStats(aircraft);
@@ -761,10 +763,10 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
-		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->idx_sample, aircraft->id, aircraft->weight);
+		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->weight);
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		if (ccs.singleplayer) {
-			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
+			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 			if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
 				Com_Printf("AIR_NewAircraft()... ERROR, new aircraft but no free space in hangars!\n");
 			/* also update the base menu buttons */
@@ -1217,65 +1219,62 @@ static const value_t aircraft_vals[] = {
 void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAircraftItems)
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
-	aircraft_t *air_samp = NULL;
+	aircraft_t *aircraftSample;
 	const value_t *vp;
 	const char *token;
 	int i;
 	technology_t *tech;
 	aircraftItemType_t itemType = MAX_ACITEMS;
 
-	if (numAircraft_samples >= MAX_AIRCRAFT) {
+	if (numAircraftTemplates >= MAX_AIRCRAFT) {
 		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
 		return;
 	}
 
 	if (!assignAircraftItems) {
-		for (i = 0; i < numAircraft_samples; i++) {
-			if (!Q_strcmp(aircraft_samples[i].id, name)) {
+		for (i = 0; i < numAircraftTemplates; i++) {
+			if (!Q_strcmp(aircraftTemplates[i].id, name)) {
 				Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
 				return;
 			}
 		}
 
 		/* initialize the menu */
-		air_samp = &aircraft_samples[numAircraft_samples];
-		memset(air_samp, 0, sizeof(aircraft_t));
+		aircraftSample = &aircraftTemplates[numAircraftTemplates];
+		memset(aircraftSample, 0, sizeof(aircraft_t));
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		/* FIXME: is this needed here? I think not, because the index of available aircraft
 		 * are set when we create these aircraft from the samples - but i might be wrong here
 		 * if i'm not wrong, the gd.numAircraft++ from a few lines below can go into trashbin, too */
-		air_samp->idx = gd.numAircraft;
-		air_samp->idx_sample = numAircraft_samples;
-		air_samp->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
-		air_samp->status = AIR_HOME;
+		aircraftSample->idx = numAircraftTemplates;
+		aircraftSample->tpl = aircraftSample;
+		aircraftSample->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
+		aircraftSample->status = AIR_HOME;
 		/* default is no ufo */
-		air_samp->ufotype = UFO_MAX;
-		AII_InitialiseAircraftSlots(air_samp);
+		aircraftSample->ufotype = UFO_MAX;
+		AII_InitialiseAircraftSlots(aircraftSample);
 
-		/* TODO: document why do we have two values for this
-		 * gd.numAircraft is reset for every new game */
-		numAircraft_samples++;
-		gd.numAircraft++;
+		numAircraftTemplates++;
 	} else {
-		for (i = 0; i < numAircraft_samples; i++) {
-			if (!Q_strcmp(aircraft_samples[i].id, name)) {
-				air_samp = &aircraft_samples[i];
+		for (i = 0; i < numAircraftTemplates; i++) {
+			if (!Q_strcmp(aircraftTemplates[i].id, name)) {
+				aircraftSample = &aircraftTemplates[i];
 				/* initialize slot numbers (useful when restarting a single campaign) */
-				air_samp->maxWeapons = 0;
-				air_samp->maxElectronics = 0;
+				aircraftSample->maxWeapons = 0;
+				aircraftSample->maxElectronics = 0;
 
-				if (air_samp->type == AIRCRAFT_UFO)
-					air_samp->ufotype = UFO_ShortNameToID(air_samp->id);
+				if (aircraftSample->type == AIRCRAFT_UFO)
+					aircraftSample->ufotype = UFO_ShortNameToID(aircraftSample->id);
 
 				break;
 			}
 		}
-		if (i == numAircraft_samples) {
-			for (i = 0; i < numAircraft_samples; i++) {
-				Com_Printf("aircraft id: %s\n", aircraft_samples[i].id);
+		if (i == numAircraftTemplates) {
+			for (i = 0; i < numAircraftTemplates; i++) {
+				Com_Printf("aircraft id: %s\n", aircraftTemplates[i].id);
 			}
-			Sys_Error("AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n", name, numAircraft_samples);
+			Sys_Error("AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n", name, numAircraftTemplates);
 		}
 	}
 
@@ -1303,10 +1302,10 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, air_samp->id);
+				Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, aircraftSample->id);
 				tech = RS_GetTechByID(token);
 				if (tech)
-					air_samp->shield.item = AII_GetAircraftItemByID(tech->provides);
+					aircraftSample->shield.item = AII_GetAircraftItemByID(tech->provides);
 			} else if (!Q_strncmp(token, "slot", 4)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
@@ -1329,10 +1328,10 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 								itemType = i;
 								switch (itemType) {
 								case AC_ITEM_WEAPON:
-									air_samp->maxWeapons++;
+									aircraftSample->maxWeapons++;
 									break;
 								case AC_ITEM_ELECTRONICS:
-									air_samp->maxElectronics++;
+									aircraftSample->maxElectronics++;
 									break;
 								default:
 									itemType = MAX_ACITEMS;
@@ -1350,10 +1349,10 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							if (!Q_strcmp(token, air_position_strings[i])) {
 								switch (itemType) {
 								case AC_ITEM_WEAPON:
-									air_samp->weapons[air_samp->maxWeapons - 1].pos = i;
+									aircraftSample->weapons[aircraftSample->maxWeapons - 1].pos = i;
 									break;
 								case AC_ITEM_ELECTRONICS:
-									air_samp->electronics[air_samp->maxElectronics - 1].pos = i;
+									aircraftSample->electronics[aircraftSample->maxElectronics - 1].pos = i;
 									break;
 								default:
 									i = AIR_POSITIONS_MAX;
@@ -1371,12 +1370,12 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						if (tech) {
 							switch (itemType) {
 							case AC_ITEM_WEAPON:
-								air_samp->weapons[air_samp->maxWeapons - 1].item = AII_GetAircraftItemByID(tech->provides);
-								Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, air_samp->id);
+								aircraftSample->weapons[aircraftSample->maxWeapons - 1].item = AII_GetAircraftItemByID(tech->provides);
+								Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, aircraftSample->id);
 								break;
 							case AC_ITEM_ELECTRONICS:
-								air_samp->electronics[air_samp->maxElectronics - 1].item = AII_GetAircraftItemByID(tech->provides);
-								Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, air_samp->id);
+								aircraftSample->electronics[aircraftSample->maxElectronics - 1].item = AII_GetAircraftItemByID(tech->provides);
+								Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, aircraftSample->id);
 								break;
 							default:
 								Com_Printf("Ignoring item value '%s' due to unknown slot type\n", token);
@@ -1389,8 +1388,8 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						tech = RS_GetTechByID(token);
 						if (tech) {
 							if (itemType == AC_ITEM_WEAPON) {
-								air_samp->weapons[air_samp->maxWeapons - 1].ammo = AII_GetAircraftItemByID(tech->provides);
-								Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, air_samp->id);
+								aircraftSample->weapons[aircraftSample->maxWeapons - 1].ammo = AII_GetAircraftItemByID(tech->provides);
+								Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, aircraftSample->id);
 							} else
 								Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
 						}
@@ -1400,11 +1399,11 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							return;
 						if (itemType == AC_ITEM_WEAPON) {
 							if (!Q_strncmp(token, "light", MAX_VAR))
-								air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_LIGHT;
+								aircraftSample->weapons[aircraftSample->maxWeapons - 1].size = ITEM_LIGHT;
 							else if (!Q_strncmp(token, "medium", MAX_VAR))
-								air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_MEDIUM;
+								aircraftSample->weapons[aircraftSample->maxWeapons - 1].size = ITEM_MEDIUM;
 							else if (!Q_strncmp(token, "heavy", MAX_VAR))
-								air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_HEAVY;
+								aircraftSample->weapons[aircraftSample->maxWeapons - 1].size = ITEM_HEAVY;
 							else
 								Com_Printf("Unknown size value for aircraft slot: '%s'\n", token);
 						} else
@@ -1429,19 +1428,19 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					case V_TRANSLATION_MANUAL_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
+						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftSample + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
 						break;
 					default:
-						Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+						Com_ParseValue(aircraftSample, token, vp->type, vp->ofs, vp->size);
 					}
 
 					break;
 				}
 
 			if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
-				if (air_samp->maxTeamSize > MAX_ACTIVETEAM) {
+				if (aircraftSample->maxTeamSize > MAX_ACTIVETEAM) {
 					Com_DPrintf(DEBUG_CLIENT, "AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
-					air_samp->maxTeamSize = MAX_ACTIVETEAM;
+					aircraftSample->maxTeamSize = MAX_ACTIVETEAM;
 				}
 			}
 
@@ -1450,11 +1449,11 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				if (!*text)
 					return;
 				if (!Q_strncmp(token, "transporter", 11))
-					air_samp->type = AIRCRAFT_TRANSPORTER;
+					aircraftSample->type = AIRCRAFT_TRANSPORTER;
 				else if (!Q_strncmp(token, "interceptor", 11))
-					air_samp->type = AIRCRAFT_INTERCEPTOR;
+					aircraftSample->type = AIRCRAFT_INTERCEPTOR;
 				else if (!Q_strncmp(token, "ufo", 3))
-					air_samp->type = AIRCRAFT_UFO;
+					aircraftSample->type = AIRCRAFT_UFO;
 			} else if (!Q_strncmp(token, "slot", 5)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
@@ -1485,10 +1484,10 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							case V_TRANSLATION_MANUAL_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
+								Mem_PoolStrDupTo(token, (char**) ((char*)aircraftSample + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
 								break;
 							default:
-								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+								Com_ParseValue(aircraftSample, token, vp->type, vp->ofs, vp->size);
 							}
 							break;
 						}
@@ -1509,25 +1508,25 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
  */
 void AIR_ListAircraftSamples_f (void)
 {
-	int i = 0, max = numAircraft_samples;
+	int i = 0, max = numAircraftTemplates;
 	const value_t *vp;
-	aircraft_t *air_samp;
+	aircraft_t *aircraftSample;
 
 	Com_Printf("%i aircraft\n", max);
 	if (Cmd_Argc() == 2) {
 		max = atoi(Cmd_Argv(1));
-		if (max >= numAircraft_samples || max < 0)
+		if (max >= numAircraftTemplates || max < 0)
 			return;
 		i = max - 1;
 	}
 	for (; i < max; i++) {
-		air_samp = &aircraft_samples[i];
-		Com_Printf("aircraft: '%s'\n", air_samp->id);
+		aircraftSample = &aircraftTemplates[i];
+		Com_Printf("aircraft: '%s'\n", aircraftSample->id);
 		for (vp = aircraft_vals; vp->string; vp++) {
-			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(air_samp, vp->type, vp->ofs));
+			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(aircraftSample, vp->type, vp->ofs));
 		}
 		for (vp = aircraft_param_vals; vp->string; vp++) {
-			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(air_samp, vp->type, vp->ofs));
+			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(aircraftSample, vp->type, vp->ofs));
 		}
 	}
 }
@@ -1938,8 +1937,8 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	/* Save recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
 		MSG_WriteByte(sb, gd.recoveries[i].active);
-		MSG_WriteByte(sb, gd.recoveries[i].baseID);
-		MSG_WriteByte(sb, gd.recoveries[i].ufotype);
+		MSG_WriteByte(sb, gd.recoveries[i].base->idx);
+		MSG_WriteByte(sb, gd.recoveries[i].ufotype->idx);	/**@todo At some point we really need to save a unique string here. */
 		MSG_WriteLong(sb, gd.recoveries[i].event.day);
 		MSG_WriteLong(sb, gd.recoveries[i].event.sec);
 	}
@@ -2132,8 +2131,9 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	/* Load recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
 		gd.recoveries[i].active = MSG_ReadByte(sb);
-		gd.recoveries[i].baseID = MSG_ReadByte(sb);
-		gd.recoveries[i].ufotype = MSG_ReadByte(sb);
+		gd.recoveries[i].base = B_GetBase(MSG_ReadByte(sb));
+		assert(numAircraftTemplates);
+		gd.recoveries[i].ufotype = &aircraftTemplates[MSG_ReadByte(sb)];
 		gd.recoveries[i].event.day = MSG_ReadLong(sb);
 		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
 	}
@@ -2174,7 +2174,7 @@ qboolean AIR_ScriptSanityCheck (void)
 	int var;
 	aircraft_t* a;
 
-	for (i = 0, a = aircraft_samples; i < numAircraft_samples; i++, a++) {
+	for (i = 0, a = aircraftTemplates; i < numAircraftTemplates; i++, a++) {
 		if (!a->name) {
 			error++;
 			Com_Printf("...... aircraft '%s' has no name\n", a->id);
@@ -2220,19 +2220,20 @@ qboolean AIR_ScriptSanityCheck (void)
 
 /**
  * @brief Calculates free space in hangars in given base.
- * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
+ * @param[in] aircraftSample aircraft in aircraftTemplates list.
  * @param[in] base The base to calc the free space in.
  * @param[in] used Additional space "used" in hangars (use that when calculating space for more than one aircraft).
  * @return Amount of free space in hangars suitable for given aircraft type.
  * @note Returns -1 in case of error. Returns 0 if no error but no free space.
  */
-int AIR_CalculateHangarStorage (int aircraftID, base_t *base, int used)
+int AIR_CalculateHangarStorage (const aircraft_t *aircraftSample, base_t *base, int used)
 {
 	int aircraftSize = 0, freespace = 0;
 
-	assert(aircraftID != AIRCRAFT_INBASE_INVALID);
+	assert(aircraftSample);
+	assert(aircraftSample == aircraftSample->tpl);
 
-	aircraftSize = aircraft_samples[aircraftID].weight;
+	aircraftSize = aircraftSample->weight;
 
 	if (aircraftSize < AIRCRAFT_SMALL) {
 #ifdef DEBUG

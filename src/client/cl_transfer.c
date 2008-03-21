@@ -241,7 +241,7 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 		return qfalse;
 	}
 	/* Is there a place for this aircraft in destination base? */
-	hangarStorage = AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, numAircraftTransfer);
+	hangarStorage = AIR_CalculateHangarStorage(aircraft->tpl, destbase, numAircraftTransfer);
 	if (hangarStorage == 0) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin hangars.\n"));
 		return qfalse;
@@ -565,7 +565,7 @@ static void TR_TransferListClear_f (void)
 				else
 					baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
 			} else
-				B_UpdateStorageAndCapacity(baseCurrent, i, trItemsTmp[i], qfalse, qfalse);
+				B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], trItemsTmp[i], qfalse, qfalse);
 		}
  	}
 	for (i = 0; i < gd.numAliensTD; i++) {	/* Return aliens. */
@@ -641,7 +641,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 							}
 						}
 					} else
-						B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse, qtrue);
+						B_UpdateStorageAndCapacity(destination, &csi.ods[i], transfer->itemAmount[i], qfalse, qtrue);
 				}
 			}
 		}
@@ -697,7 +697,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft = AIR_AircraftGetFromIdx(i);
 				assert(aircraft);
-				if (AIR_CalculateHangarStorage(aircraft->idx_sample, destination, 0) > 0) {
+				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
 					/* Aircraft relocated to new base, just add new one. */
 					AIR_NewAircraft(destination, aircraft->id);
 					/* Remove aircraft from old base. */
@@ -1027,7 +1027,7 @@ static void TR_TransferListSelect_f (void)
 						trItemsTmp[i]++;
 						if (!Q_strncmp(od->id, "antimatter", 10))
 							INV_ManageAntimatter(baseCurrent, 1, qfalse);
-						else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
+						else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 							const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 							assert(ufocraft);
 							/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
@@ -1037,7 +1037,7 @@ static void TR_TransferListSelect_f (void)
 							else
 								baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur--;
 						} else
-							B_UpdateStorageAndCapacity(baseCurrent, i, -1, qfalse, qfalse);
+							B_UpdateStorageAndCapacity(baseCurrent, od, -1, qfalse, qfalse);
 						break;
 					} else
 						return;
@@ -1322,7 +1322,7 @@ static void TR_CargoListSelect_f (void)
 						else
 							baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
 					} else
-						B_UpdateStorageAndCapacity(baseCurrent, i, 1, qfalse, qfalse);
+						B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], 1, qfalse, qfalse);
 					break;
 				}
 				cnt++;

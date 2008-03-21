@@ -685,8 +685,8 @@ void RS_InitTree (qboolean load)
 			break;
 		case RS_CRAFT:
 			found = qfalse;
-			for (j = 0; j < numAircraft_samples; j++) {
-				air_samp = &aircraft_samples[j];
+			for (j = 0; j < numAircraftTemplates; j++) {
+				air_samp = &aircraftTemplates[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, air_samp->id, MAX_VAR)) {
 					found = qtrue;

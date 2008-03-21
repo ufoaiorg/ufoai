@@ -53,16 +53,16 @@ static void INV_CollectingAmmo (const invList_t *magazine, aircraft_t *aircraft)
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
 		eTempEq.num_loose[magazine->item.m->idx] -= magazine->item.t->ammo;
 		for (i = 0; i < aircraft->itemtypes; i++) {
-			if (cargo[i].idx == magazine->item.m->idx) {
+			if (cargo[i].item == magazine->item.m) {
 				cargo[i].amount++;
-				Com_DPrintf(DEBUG_CLIENT, "Collecting item in INV_CollectingAmmo(): %i name: %s amount: %i\n", cargo[i].idx, magazine->item.m->name, cargo[i].amount);
+				Com_DPrintf(DEBUG_CLIENT, "Collecting item in INV_CollectingAmmo(): %i name: %s amount: %i\n", cargo[i].item->idx, magazine->item.m->name, cargo[i].amount);
 				break;
 			}
 		}
 		if (i == aircraft->itemtypes) {
-			cargo[i].idx = magazine->item.m->idx;
+			cargo[i].item = magazine->item.m;
 			cargo[i].amount++;
-			Com_DPrintf(DEBUG_CLIENT, "Adding item in INV_CollectingAmmo(): %i, name: %s\n", cargo[i].idx, magazine->item.m->name);
+			Com_DPrintf(DEBUG_CLIENT, "Adding item in INV_CollectingAmmo(): %i, name: %s\n", cargo[i].item->idx, magazine->item.m->name);
 			aircraft->itemtypes++;
 		}
 	}
@@ -153,9 +153,9 @@ void INV_CollectingItems (int won)
 			if (won) {
 				for (item = FLOOR(le); item; item = item->next) {
 					for (j = 0; j < aircraft->itemtypes; j++) {
-						if (cargo[j].idx == item->item.t->idx) {
+						if (cargo[j].item == item->item.t) {
 							cargo[j].amount++;
-							Com_DPrintf(DEBUG_CLIENT, "Collecting item: %i name: %s amount: %i\n", cargo[j].idx, item->item.t->name, cargo[j].amount);
+							Com_DPrintf(DEBUG_CLIENT, "Collecting item: %i name: %s amount: %i\n", cargo[j].item->idx, item->item.t->name, cargo[j].amount);
 							/* If this is not reloadable item, or no ammo left, break... */
 							if (!item->item.t->reload || item->item.a == 0)
 								break;
@@ -165,9 +165,9 @@ void INV_CollectingItems (int won)
 						}
 					}
 					if (j == aircraft->itemtypes) {
-						cargo[j].idx = item->item.t->idx;
+						cargo[j].item = item->item.t;
 						cargo[j].amount++;
-						Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].idx, item->item.t->name);
+						Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].item->idx, item->item.t->name);
 						aircraft->itemtypes++;
 						/* If this is not reloadable item, or no ammo left, break... */
 						if (!item->item.t->reload || item->item.a == 0)
@@ -187,16 +187,16 @@ void INV_CollectingItems (int won)
 					if (le->i.c[csi.idArmour]) {
 						item = le->i.c[csi.idArmour];
 						for (j = 0; j < aircraft->itemtypes; j++) {
-							if (cargo[j].idx == item->item.t->idx) {
+							if (cargo[j].item == item->item.t) {
 								cargo[j].amount++;
-								Com_DPrintf(DEBUG_CLIENT, "Collecting armour: %i name: %s amount: %i\n", cargo[j].idx, item->item.t->name, cargo[j].amount);
+								Com_DPrintf(DEBUG_CLIENT, "Collecting armour: %i name: %s amount: %i\n", cargo[j].item->idx, cargo[j].item->name, cargo[j].amount);
 								break;
 							}
 						}
 						if (j == aircraft->itemtypes) {
-							cargo[j].idx = item->item.t->idx;
+							cargo[j].item = item->item.t;
 							cargo[j].amount++;
-							Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].idx, item->item.t->name);
+							Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].item->idx, cargo[j].item->id);
 							aircraft->itemtypes++;
 						}
 					}
@@ -225,7 +225,7 @@ void INV_CollectingItems (int won)
 	/* Print all of collected items. */
 	for (i = 0; i < aircraft->itemtypes; i++) {
 		if (cargo[i].amount > 0)
-			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].idx, csi.ods[cargo[i].idx].name, cargo[i].amount);
+			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].item->idx, cargo[i].item->name, cargo[i].amount);
 	}
 #endif
 }
@@ -252,32 +252,32 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 	cargo = aircraft->itemcargo;
 
 	for (i = 0; i < aircraft->itemtypes; i++) {
-		tech = csi.ods[cargo[i].idx].tech;
+		tech = cargo[i].item->tech;
 		if (!tech)
-			Sys_Error("INV_SellOrAddItems: No tech for %s / %s\n", csi.ods[cargo[i].idx].id, csi.ods[cargo[i].idx].name);
+			Sys_Error("INV_SellOrAddItems: No tech for %s / %s\n", cargo[i].item->id, cargo[i].item->name);
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			B_UpdateStorageAndCapacity(base, cargo[i].idx, cargo[i].amount, qfalse, qtrue);
+			B_UpdateStorageAndCapacity(base, cargo[i].item, cargo[i].amount, qfalse, qtrue);
 			if (cargo[i].amount > 0)
 				RS_MarkCollected(tech);
 			continue;
 		} else {
 			/* If the related technology is researched, check the autosell option. */
-			if (gd.autosell[cargo[i].idx]) { /* Sell items if autosell is enabled. */
-				ccs.eMarket.num[cargo[i].idx] += cargo[i].amount;
-				eTempCredits += (csi.ods[cargo[i].idx].price * cargo[i].amount);
+			if (gd.autosell[cargo[i].item->idx]) { /* Sell items if autosell is enabled. */
+				ccs.eMarket.num[cargo[i].item->idx] += cargo[i].amount;
+				eTempCredits += (cargo[i].item->price * cargo[i].amount);
 				numitems += cargo[i].amount;
 			} else {
 				/* Check whether there is enough space for adding this item.
 				 * If yes - add. If not - sell. */
 				for (j = 0; j < cargo[i].amount; j++) {
-					if (!B_UpdateStorageAndCapacity(base, cargo[i].idx, 1, qfalse, qfalse)) {
+					if (!B_UpdateStorageAndCapacity(base, cargo[i].item, 1, qfalse, qfalse)) {
 						/* Not enough space, sell item. */
 						notenoughspace = qtrue;
 						sold++;
-						ccs.eMarket.num[cargo[i].idx]++;
-						eTempCredits += csi.ods[cargo[i].idx].price;
+						ccs.eMarket.num[cargo[i].item->idx]++;
+						eTempCredits += cargo[i].item->price;
 					}
 				}
 			}
@@ -463,21 +463,21 @@ void INV_ParseComponents (const char *name, const char **text)
 }
 
 /**
- * @brief Returns components definition by item idx in csi.ods[].
- * @param[in] itemIdx Global item index in csi.ods[].
+ * @brief Returns components definition for an item.
+ * @param[in] item Item to search the components for.
  * @return comp Pointer to components_t definition.
  */
-components_t *INV_GetComponentsByItemIdx (int itemIdx)
+components_t *INV_GetComponentsByItem (const objDef_t *item)
 {
 	int i;
 	components_t *comp = NULL;
 
 	for (i = 0; i < gd.numComponents; i++) {
 		comp = &gd.components[i];
-		if (comp->asItem == &csi.ods[itemIdx])
+		if (comp->asItem == item)
 			break;
 	}
-	Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItemIdx()... found components id: %s\n", comp->asId);
+	Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItem()... found components id: %s\n", comp->asId);
 	return comp;
 }
 
@@ -505,7 +505,7 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 			if (!Q_strncmp(compOd->id, "antimatter", 10))
 				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
-				B_UpdateStorageAndCapacity(base, compOd->idx, comp->item_amount[i], qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, compOd, comp->item_amount[i], qfalse, qfalse);
 			Com_DPrintf(DEBUG_CLIENT, "INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compOd->id);
 		}
 	}

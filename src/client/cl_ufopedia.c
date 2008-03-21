@@ -271,22 +271,20 @@ static void UP_DisplayTechTree (technology_t* t)
  * weapon and ammo stats
  * @todo Do we need to add checks for (od->type == "dummy") here somewhere?
  */
-void UP_ItemDescription (int item)
+void UP_ItemDescription (const objDef_t *od)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
-	objDef_t *od;
-	objDef_t *odAmmo;
+	const objDef_t *odAmmo;
 	int i;
 	int up_numresearchedlink = 0;
 	int up_weapon_id = NONE;
 	const menu_t *activeMenu;
 
-	assert(item != NONE);
+	assert(od);
 
 	activeMenu = MN_GetActiveMenu();
 
 	/* select item */
-	od = &csi.ods[item];
 	Cvar_Set("mn_itemname", od->name);
 	Cvar_Set("mn_item", od->id);
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
@@ -551,17 +549,16 @@ static void UP_BuildingDescription (technology_t* t)
  * @todo Don't display things like speed for base defense items - a missile
  * facility isn't getting slower or faster due a special weapon or ammunition
  */
-void UP_AircraftItemDescription (int idx)
+void UP_AircraftItemDescription (objDef_t *item)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
-	objDef_t *item;
 	int i;
 
 	/* Set menu text node content to null. */
 	MN_MenuTextReset(TEXT_STANDARD);
 
 	/* no valid item id given */
-	if (idx == NONE) {
+	if (!item) {
 		/* Reset all used menu variables/nodes. TEXT_STANDARD is already reset. */
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
@@ -574,7 +571,6 @@ void UP_AircraftItemDescription (int idx)
 	}
 
 	/* select item */
-	item = &csi.ods[idx];
 	assert(item->craftitem.type >= 0);
 	assert(item->tech);
 	Cvar_Set("mn_itemname", _(item->tech->name));
@@ -904,7 +900,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 				case RS_WEAPON:
 					for (i = 0; i < csi.numODs; i++) {
 						if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
-							UP_ItemDescription(i);
+							UP_ItemDescription(&csi.ods[i]);
 							UP_DisplayTechTree(tech);
 							break;
 						}
@@ -918,7 +914,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 					break;
 				case RS_CRAFTITEM:
 					item = AII_GetAircraftItemByID(tech->provides);
-					UP_AircraftItemDescription(item->idx);
+					UP_AircraftItemDescription(item);
 					break;
 				case RS_BUILDING:
 					UP_BuildingDescription(tech);
@@ -1704,7 +1700,7 @@ static void UP_IncreaseWeapon_f (void)
 
 		if (up_researchedlink_temp < od->numWeapons) {
 			up_researchedlink = up_researchedlink_temp;
-			UP_ItemDescription(od->idx);
+			UP_ItemDescription(od);
 		}
 	} else if (up_researchedlink < od->numAmmos-1) {
 		/* this is a weapon */
@@ -1717,7 +1713,7 @@ static void UP_IncreaseWeapon_f (void)
 		if (up_researchedlink_temp < od->numAmmos) {
 			up_researchedlink = up_researchedlink_temp;
 			UP_DrawAssociatedAmmo(t);
-			UP_ItemDescription(od->idx);
+			UP_ItemDescription(od);
 		}
 	}
 }
@@ -1754,7 +1750,7 @@ static void UP_DecreaseWeapon_f (void)
 
 		if (up_researchedlink_temp >= 0) {
 			up_researchedlink = up_researchedlink_temp;
-			UP_ItemDescription(od->idx);
+			UP_ItemDescription(od);
 		}
 	} else if (up_researchedlink > 0 && od->numAmmos > 0) {
 		/* this is a weapon */
@@ -1767,7 +1763,7 @@ static void UP_DecreaseWeapon_f (void)
 		if (up_researchedlink_temp >= 0) {
 			up_researchedlink = up_researchedlink_temp;
 			UP_DrawAssociatedAmmo(t);
-			UP_ItemDescription(od->idx);
+			UP_ItemDescription(od);
 		}
 	}
 }
@@ -1787,7 +1783,7 @@ static void UP_IncreaseFiremode_f (void)
 
 	od = INVSH_GetItemByID(upCurrentTech->provides);
 	if (od)
-		UP_ItemDescription(od->idx);
+		UP_ItemDescription(od);
 }
 
 /**
@@ -1805,7 +1801,7 @@ static void UP_DecreaseFiremode_f (void)
 
 	od = INVSH_GetItemByID(upCurrentTech->provides);
 	if (od)
-		UP_ItemDescription(od->idx);
+		UP_ItemDescription(od);
 }
 
 /**

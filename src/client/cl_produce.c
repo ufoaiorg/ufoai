@@ -203,17 +203,19 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requi
  * @brief Add a new item to the bottom of the production queue.
  * @param[in] base Pointer to base, where the queue is.
  * @param[in] queue Pointer to the queue.
- * @param[in] objID Index of object to produce (in csi.ods[]).
+ * @param[in] item Item to add.
+ * @param[in] aircraft aircraft to add.
  * @param[in] amount Desired amount to produce.
  * @param[in] disassembling True if this is disassembling, false if production.
  * @return
  */
-static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, signed int objID, signed int amount, qboolean disassembling)
+static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftSample, signed int amount, qboolean disassembling)
 {
 	int numWorkshops = 0;
 	production_t *prod;
 	technology_t *tech;
 
+	assert ((item && !aircraftSample) || (!item && aircraftSample));
 	assert(base);
 
 	if (queue->numItems >= MAX_PRODUCTIONS)
@@ -235,9 +237,9 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, signe
 	prod = &queue->items[queue->numItems];
 	memset(prod, 0, sizeof(production_t));
 	if (produceCategory != BUY_AIRCRAFT)
-		tech = csi.ods[objID].tech;
+		tech = item->tech;
 	else
-		tech = aircraft_samples[objID].tech;
+		tech = aircraftSample->tech;
 
 	/* We cannot queue new aircraft if no free hangar space. */
 	if (produceCategory == BUY_AIRCRAFT) {
@@ -249,24 +251,23 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, signe
 			return NULL;
 		}
 		/* @todo FIXME: we should also count aircraft that are already in the queue list */
-		if (AIR_CalculateHangarStorage(objID, base, 0) <= 0) {
+		if (AIR_CalculateHangarStorage(aircraftSample, base, 0) <= 0) {
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return NULL;
 		}
 	}
 
-	prod->objID = objID;
+	prod->item = item;
+	prod->aircraft = aircraftSample;
 	prod->amount = amount;
 	if (disassembling) {	/* Disassembling. */
 		prod->production = qfalse;
 		/* We have to remove amount of items being disassembled from base storage. */
-		base->storage.num[objID] -= amount;
+		base->storage.num[item->idx] -= amount;
 		/* Now find related components definition. */
 		prod->percentDone = 0.0f;
 	} else {	/* Production. */
 		prod->production = qtrue;
-		if (produceCategory == BUY_AIRCRAFT)
-			prod->aircraft = qtrue;
 
 		/* Don't try to add to queue an item which is not producible. */
 		if (tech->produceTime < 0)
@@ -298,7 +299,7 @@ static void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 
 	if (prod->items_cached && !prod->aircraft) {
 		/* Get technology of the item in the selected queue-entry. */
-		od = &csi.ods[prod->objID];
+		od = prod->item;
 		if (od->tech) {
 			/* Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
 			PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &od->tech->require_for_production);
@@ -310,7 +311,7 @@ static void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 
 	/* Readd disassembly to base storage. */
 	if (!prod->production)
-		base->storage.num[prod->objID] += prod->amount;
+		base->storage.num[prod->item->idx] += prod->amount;
 
 	queue->numItems--;
 	if (queue->numItems < 0)
@@ -405,13 +406,14 @@ void PR_ProductionRun (void)
 			continue;
 
 		prod = &gd.productions[i].items[0];
-		assert(prod->objID >= 0);
-		if (!prod->aircraft) {
-			od = &csi.ods[prod->objID];
+
+		if (prod->item) {
+			od = prod->item;
 			aircraft = NULL;
 		} else {
-			aircraft = &aircraft_samples[prod->objID];
+			assert(prod->aircraft);
 			od = NULL;
+			aircraft = prod->aircraft;
 		}
 
 		if (prod->production) {	/* This is production, not disassembling. */
@@ -445,7 +447,7 @@ void PR_ProductionRun (void)
 					continue;
 				}
 				/* Not enough free space in hangars for this aircraft. */
-				if (AIR_CalculateHangarStorage(prod->objID, base, 0) <= 0) {
+				if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
 					if (!prod->spacemessage) {
 						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free hangar space in base %s. Production paused.\n"), base->name);
 						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -455,7 +457,7 @@ void PR_ProductionRun (void)
 				}
 			}
 		} else {		/* This is disassembling. */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < INV_DisassemblyItem(NULL, INV_GetComponentsByItemIdx(prod->objID), qtrue)) {
+			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < INV_DisassemblyItem(NULL, INV_GetComponentsByItem(prod->item), qtrue)) {
 				if (!prod->spacemessage) {
 					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Disassembling paused.\n"), base->name);
 					MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -467,7 +469,7 @@ void PR_ProductionRun (void)
 
 #ifdef DEBUG
 		if (!prod->aircraft && !od->tech)
-			Sys_Error("PR_ProductionRun: No tech pointer for object id %i ('%s')\n", prod->objID, od->id);
+			Sys_Error("PR_ProductionRun: No tech pointer for object %s ('%s')\n", prod->item->id, od->id);
 #endif
 		if (prod->production) {	/* This is production, not disassembling. */
 			if (!prod->aircraft)
@@ -475,7 +477,7 @@ void PR_ProductionRun (void)
 			else
 				prod->percentDone += PR_CalculateProductionPercentDone(base, aircraft->tech, NULL, qfalse);
 		} else /* This is disassembling. */
-			prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+			prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, INV_GetComponentsByItem(prod->item), qtrue);
 
 		if (prod->percentDone >= 1.0f) {
 			if (prod->production) {	/* This is production, not disassembling. */
@@ -484,7 +486,7 @@ void PR_ProductionRun (void)
 					prod->percentDone = 0.0f;
 					prod->amount--;
 					/* Now add it to equipment and update capacity. */
-					B_UpdateStorageAndCapacity(base, prod->objID, 1, qfalse, qfalse);
+					B_UpdateStorageAndCapacity(base, prod->item, 1, qfalse, qfalse);
 
 					/* queue the next production */
 					if (prod->amount <= 0) {
@@ -506,7 +508,7 @@ void PR_ProductionRun (void)
 					}
 				}
 			} else {	/* This is disassembling. */
-				base->capacities[CAP_ITEMS].cur += INV_DisassemblyItem(base, INV_GetComponentsByItemIdx(prod->objID), qfalse);
+				base->capacities[CAP_ITEMS].cur += INV_DisassemblyItem(base, INV_GetComponentsByItem(prod->item), qfalse);
 				prod->percentDone = 0.0f;
 				prod->amount--;
 				/* If this is aircraft dummy item, update UFO hangars capacity. */
@@ -549,7 +551,6 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 {
 	static char productionInfo[512];
 	objDef_t *od, *compOd;
-	int objID;
 	int time, i;
 	float prodPerHour;
 
@@ -557,14 +558,13 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 
 	if (selectedQueueItem) {
 		assert(selectedIndex != NONE);
-		objID = gd.productions[base->idx].items[selectedIndex].objID;
+		od = gd.productions[base->idx].items[selectedIndex].item;
 	} else {
-		objID = selectedIndex;
+		od = &csi.ods[selectedIndex];
 	}
 
 	if (!disassembly) {
-		if (objID >= 0) {
-			od = &csi.ods[objID];
+		if (od) {
 			assert(od->tech);
 			/* Don't try to display the item which is not producible. */
 			if (od->tech->produceTime < 0) {
@@ -575,7 +575,7 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 				prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse);
 				/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
 				assert(prodPerHour > 0);
-				if (objID == gd.productions[base->idx].items[0].objID)
+				if (od == gd.productions[base->idx].items[0].item)
 					time = ceil((1.0f - gd.productions[base->idx].items[0].percentDone) / prodPerHour);
 				else
 					time = ceil(1.0f / prodPerHour);
@@ -584,7 +584,7 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 					sizeof(productionInfo));
 				Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
 				Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
-				UP_ItemDescription(objID);
+				UP_ItemDescription(od);
 			}
 		} else {
 			Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
@@ -597,19 +597,18 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 		for (i = 0; i < gd.numComponents; i++) {
 			comp = &gd.components[i];
 			Com_DPrintf(DEBUG_CLIENT, "components definition: %s item: %s\n", comp->asId, comp->asItem->id);
-			if (comp->asItem->idx == objID)
+			if (comp->asItem == od)
 				break;
 		}
 		assert(comp);
-		if (objID >= 0) {
-			od = &csi.ods[objID];
+		if (od) {
 			assert(od->tech);
 
 			/* If item is first in queue, take percentDone into account. */
 			prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, comp, qtrue);
 			/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
 			assert(prodPerHour > 0);
-			if (objID == gd.productions[base->idx].items[0].objID)
+			if (od == gd.productions[base->idx].items[0].item)
 				time = ceil((1.0f - gd.productions[base->idx].items[0].percentDone) / prodPerHour);
 			else
 				time = ceil(1.0f / prodPerHour);
@@ -625,7 +624,7 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 			Q_strcat(productionInfo, "\n", sizeof(productionInfo));
 			Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time),
 				sizeof(productionInfo));
-			UP_ItemDescription(objID);
+			UP_ItemDescription(od);
 		}
 	}
 	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
@@ -637,23 +636,21 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
  */
 static void PR_AircraftInfo (const base_t *base)
 {
-	aircraft_t *aircraft;
-	int aircraftIdx = NONE;
+	aircraft_t *aircraftSample;
 	static char productionInfo[512];
 
 	if (selectedQueueItem) {
 		assert(selectedIndex != NONE);
-		aircraftIdx = gd.productions[base->idx].items[selectedIndex].objID;
+		aircraftSample = gd.productions[base->idx].items[selectedIndex].aircraft;
 	} else {
-		aircraftIdx = selectedIndex;
+		aircraftSample = AIR_AircraftGetFromIdx(selectedIndex);
 	}
 
 	if (selectedIndex != NONE) {
-		aircraft = &aircraft_samples[aircraftIdx];
-		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraft->name));
-		Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
+		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftSample->name));
+		Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraftSample->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 			sizeof(productionInfo));
-		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraft->tech->produceTime), sizeof(productionInfo));
+		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraftSample->tech->produceTime), sizeof(productionInfo));
 	} else {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No aircraft selected."));
 	}
@@ -686,7 +683,7 @@ static void PR_ProductionListRightClick_f (void)
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
-		od = &csi.ods[queue->items[num].objID];
+		od = queue->items[num].item;
 		assert(od->tech);
 		UP_OpenWith(od->tech->id);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
@@ -794,8 +791,8 @@ static void PR_ProductionListClick_f (void)
 					}
 				}
 			} else {	/* Aircraft. */
-				for (j = 0, i = 0; i < numAircraft_samples; i++) {
-					aircraft = &aircraft_samples[j];
+				for (j = 0, i = 0; i < numAircraftTemplates; i++) {
+					aircraft = &aircraftTemplates[j];
 					/* ufo research definition must not have a tech assigned
 					 * only RS_CRAFT types have
 					 * @sa RS_InitTree */
@@ -844,7 +841,7 @@ static void PR_UpdateProductionList (base_t* base)
 	objDef_t *od;
 	production_queue_t *queue;
 	production_t *prod;
-	aircraft_t *aircraft, *aircraftbase;
+	aircraft_t *aircraftSample, *aircraftbase;
 
 	assert(base);
 
@@ -857,17 +854,18 @@ static void PR_UpdateProductionList (base_t* base)
 	for (i = 0; i < queue->numItems; i++) {
 		prod = &queue->items[i];
 		if (!prod->aircraft) {
-			od = &csi.ods[prod->objID];
+			od = prod->item;
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
-			Q_strcat(productionAmount, va("%i\n", base->storage.num[prod->objID]), sizeof(productionAmount));
+			Q_strcat(productionAmount, va("%i\n", base->storage.num[prod->item->idx]), sizeof(productionAmount));
 			Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
 		} else {
-			aircraft = &aircraft_samples[prod->objID];
-			Q_strcat(productionList, va("%s\n", _(aircraft->name)), sizeof(productionList));
+			aircraftSample = prod->aircraft;
+			Q_strcat(productionList, va("%s\n", _(aircraftSample->name)), sizeof(productionList));
 			for (j = 0, counter = 0; j < gd.numAircraft; j++) {
 				aircraftbase = AIR_AircraftGetFromIdx(j);
 				assert(aircraftbase);
-				if ((aircraftbase->homebase == base) && (aircraftbase->idx_sample == i))
+				if (aircraftbase->homebase == base
+				 && aircraftbase->tpl == aircraftSample)
 					counter++;
 			}
 			Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
@@ -896,22 +894,23 @@ static void PR_UpdateProductionList (base_t* base)
 			}
 		}
 	} else {
-		for (i = 0; i < numAircraft_samples; i++) {
-			aircraft = &aircraft_samples[i];
+		for (i = 0; i < numAircraftTemplates; i++) {
+			aircraftSample = &aircraftTemplates[i];
 			/* don't allow producing ufos */
-			if (aircraft->ufotype != UFO_MAX)
+			if (aircraftSample->ufotype != UFO_MAX)
 				continue;
-			if (!aircraft->tech) {
-				Com_Printf("PR_UpdateProductionList()... no technology for craft %s!\n", aircraft->id);
+			if (!aircraftSample->tech) {
+				Com_Printf("PR_UpdateProductionList()... no technology for craft %s!\n", aircraftSample->id);
 				continue;
 			}
-			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraft->id, aircraft->ufotype, aircraft->tech->id, aircraft->tech->produceTime);
-			if (aircraft->tech->produceTime > 0 && RS_IsResearched_ptr(aircraft->tech)) {
-				Q_strcat(productionList, va("%s\n", _(aircraft->name)), sizeof(productionList));
+			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraftSample->id, aircraftSample->ufotype, aircraftSample->tech->id, aircraftSample->tech->produceTime);
+			if (aircraftSample->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftSample->tech)) {
+				Q_strcat(productionList, va("%s\n", _(aircraftSample->name)), sizeof(productionList));
 				for (j = 0, counter = 0; j < gd.numAircraft; j++) {
 					aircraftbase = AIR_AircraftGetFromIdx(j);
 					assert(aircraftbase);
-					if ((aircraftbase->homebase == base) && (aircraftbase->idx_sample == i))
+					if (aircraftbase->homebase == base
+					 && aircraftbase->tpl == aircraftSample)
 						counter++;
 				}
 				Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
@@ -960,10 +959,10 @@ static void PR_UpdateDisassemblingList_f (void)
 	/* first add all the queue items */
 	for (i = 0; i < queue->numItems; i++) {
 		prod = &queue->items[i];
-		od = &csi.ods[prod->objID];
+		od = prod->item;
 
 		Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
-		Q_strcat(productionAmount, va("%i\n", base->storage.num[prod->objID]), sizeof(productionAmount));
+		Q_strcat(productionAmount, va("%i\n", base->storage.num[od->idx]), sizeof(productionAmount));
 		Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
 	}
 
@@ -1166,7 +1165,7 @@ static void PR_ProductionIncrease_f (void)
 		if (prod->production) {		/* Production. */
 			if (prod->aircraft) {
 				/* Don't allow to queue more aircraft if there is no free space. */
-				if (AIR_CalculateHangarStorage(prod->objID, base, 0) <= 0) {
+				if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
 					MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 					return;
 				}
@@ -1174,27 +1173,27 @@ static void PR_ProductionIncrease_f (void)
 			prod->amount += amount;
 		} else {			/* Disassembling. */
 			/* We can disassembly only as many items as we have in base storage. */
-			if (base->storage.num[prod->objID] > amount)
+			if (base->storage.num[prod->item->idx] > amount)
 				amount_temp = amount;
 			else
-				amount_temp = base->storage.num[prod->objID];
-			Com_DPrintf(DEBUG_CLIENT, "PR_ProductionIncrease_f()... amounts: storage: %i, param: %i, temp: %i\n", base->storage.num[prod->objID], amount, amount_temp);
+				amount_temp = base->storage.num[prod->item->idx];
+			Com_DPrintf(DEBUG_CLIENT, "PR_ProductionIncrease_f()... amounts: storage: %i, param: %i, temp: %i\n", base->storage.num[prod->item->idx], amount, amount_temp);
 			/* Now remove the amount we just added to queue from base storage. */
-			base->storage.num[prod->objID] -= amount_temp;
+			base->storage.num[prod->item->idx] -= amount_temp;
 			prod->amount += amount_temp;
 		}
 	} else {
 		if (selectedIndex == NONE)
 			return;
 		if (!production_disassembling) {
-			prod = PR_QueueNew(base, queue, selectedIndex, amount, qfalse);	/* Production. */
+			prod = PR_QueueNew(base, queue, &csi.ods[selectedIndex], NULL, amount, qfalse);	/* Production. */
 		} else {
 			/* We can disassembly only as many items as we have in base storage. */
 			if (base->storage.num[selectedIndex] > amount)
 				amount_temp = amount;
 			else
 				amount_temp = base->storage.num[selectedIndex];
-			prod = PR_QueueNew(base, queue, selectedIndex, amount_temp, qtrue);	/* Disassembling. */
+			prod = PR_QueueNew(base, queue, &csi.ods[selectedIndex], NULL, amount_temp, qtrue);	/* Disassembling. */
 		}
 		/* prod is NULL when queue limit is reached */
 		/* @todo FIXME: this popup hides any previous popup, like popup created in PR_QueueNew */
@@ -1206,7 +1205,7 @@ static void PR_ProductionIncrease_f (void)
 
 		if (produceCategory != BUY_AIRCRAFT) {
 			/* Get technology of the item in the selected queue-entry. */
-			const objDef_t *od = &csi.ods[prod->objID];
+			const objDef_t *od = prod->item;
 			int producible_amount = amount;
 			if (od->tech)
 				producible_amount = PR_RequirementsMet(amount, &od->tech->require_for_production, base);
@@ -1243,10 +1242,12 @@ static void PR_ProductionIncrease_f (void)
 				 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
 			}
 		} else {
-			const aircraft_t *aircraft = &aircraft_samples[prod->objID];
-			prod->aircraft = qtrue;
-			Com_DPrintf(DEBUG_CLIENT, "Increasing %s\n", aircraft->name);
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), _(aircraft->name));
+			const aircraft_t *aircraftSample = prod->aircraft;
+			assert(aircraftSample);
+			assert(aircraftSample == aircraftSample->tpl);
+
+			Com_DPrintf(DEBUG_CLIENT, "Increasing %s\n", aircraftSample->name);
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), _(aircraftSample->name));
 			MN_AddNewMessage(_("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 			/* Now we select the item we just created. */
 			selectedQueueItem = qtrue;
@@ -1337,7 +1338,7 @@ static void PR_ProductionDecrease_f (void)
 	prod->amount -= amount_temp;
 	/* We need to readd items being disassembled to base storage. */
 	if (!prod->production)
-		base->storage.num[prod->objID] += amount_temp;
+		base->storage.num[prod->item->idx] += amount_temp;
 
 	if (prod->amount <= 0) {
 		PR_ProductionStop_f();
@@ -1429,11 +1430,11 @@ qboolean PR_Save (sizebuf_t *sb, void *data)
 		pq = &gd.productions[i];
 		MSG_WriteByte(sb, pq->numItems);
 		for (j = 0; j < pq->numItems; j++) {
-			MSG_WriteString(sb, csi.ods[pq->items[j].objID].id);
+			MSG_WriteString(sb, pq->items[j].item->id);
 			MSG_WriteLong(sb, pq->items[j].amount);
 			MSG_WriteFloat(sb, pq->items[j].percentDone);
 			MSG_WriteByte(sb, pq->items[j].production);
-			MSG_WriteByte(sb, pq->items[j].aircraft);
+			MSG_WriteString(sb, pq->items[j].aircraft->id);
 			MSG_WriteByte(sb, pq->items[j].items_cached);
 		}
 	}
@@ -1448,30 +1449,49 @@ qboolean PR_Save (sizebuf_t *sb, void *data)
 qboolean PR_Load (sizebuf_t *sb, void *data)
 {
 	int i, j;
-	objDef_t *od;
-	const char *s;
+	const char *s1;
+	const char *s2;
 	production_queue_t *pq;
 
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
 		pq = &gd.productions[i];
 		pq->numItems = MSG_ReadByte(sb);
-		for (j = 0; j < pq->numItems; j++) {
-			s = MSG_ReadString(sb);
-			od = INVSH_GetItemByID(s);
-			if (!od) {
-				Com_Printf("PR_Load: Could not find item '%s'\n", s);
-				MSG_ReadLong(sb); /* amount */
-				MSG_ReadFloat(sb); /* percentDone */
-				MSG_ReadByte(sb); /* production */
-				MSG_ReadByte(sb); /* aircraft */
-				MSG_ReadByte(sb); /* items_cached */
+
+		if (((saveFileHeader_t *)data)->version < 3) {
+			byte aircraft;
+			s1 = MSG_ReadString(sb);
+			pq->items[j].item = INVSH_GetItemByID(s1);
+			pq->items[j].amount = MSG_ReadLong(sb);
+			pq->items[j].percentDone = MSG_ReadFloat(sb);
+			pq->items[j].production = MSG_ReadByte(sb);
+			aircraft = MSG_ReadByte(sb);
+			pq->items[j].items_cached = MSG_ReadByte(sb);
+
+			if (!aircraft) {
+				if (!pq->items[j].item) {
+					Com_Printf("PR_Load: Could not find item '%s'\n", s1);
+				}
 			} else {
-				pq->items[j].objID = od->idx;
+				pq->items[j].aircraft = AIR_GetAircraft(s2);
+				if (!pq->items[j].aircraft)
+					Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
+			}
+
+		} else {
+			for (j = 0; j < pq->numItems; j++) {
+				s1 = MSG_ReadString(sb);
+				pq->items[j].item = INVSH_GetItemByID(s1);
 				pq->items[j].amount = MSG_ReadLong(sb);
 				pq->items[j].percentDone = MSG_ReadFloat(sb);
 				pq->items[j].production = MSG_ReadByte(sb);
-				pq->items[j].aircraft = MSG_ReadByte(sb);
+				s2 = MSG_ReadString(sb);
+				pq->items[j].aircraft = AIR_GetAircraft(s2);
 				pq->items[j].items_cached = MSG_ReadByte(sb);
+
+				if (!pq->items[j].item && s1)
+					Com_Printf("PR_Load: Could not find item '%s'\n", s1);
+				if (!pq->items[j].aircraft && s2)
+					Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
 			}
 		}
 	}

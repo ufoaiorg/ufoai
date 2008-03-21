@@ -123,7 +123,7 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 						return;
 				}
 			}
-			UP_ItemDescription(ic->item.t->idx);
+			UP_ItemDescription(ic->item.t);
 /*			MN_DrawTooltip("f_verysmall", csi.ods[dragItem.t].name, px, py, 0);*/
 		}
 	} else {

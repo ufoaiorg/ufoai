@@ -304,7 +304,7 @@ qboolean B_BuildingDestroy(base_t* base, building_t* building);
 void CL_AircraftReturnedToHomeBase(aircraft_t* aircraft);
 
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
-qboolean B_UpdateStorageAndCapacity(base_t* base, int objIDX, int amount, qboolean reset, qboolean ignorecap);
+qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 
 qboolean B_ScriptSanityCheck(void);

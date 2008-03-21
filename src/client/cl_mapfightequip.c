@@ -332,7 +332,7 @@ static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 	else {
 		/* no element in list, no tech selected */
 		airequipSelectedTechnology = NULL;
-		UP_AircraftItemDescription(NONE);
+		UP_AircraftItemDescription(NULL);
 	}
 }
 
@@ -1351,19 +1351,19 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 		/* only remove the ammo */
 		if (slot->ammo) {
 			if (base)
-				B_UpdateStorageAndCapacity(base, slot->ammo->idx, 1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
 			slot->ammo = NULL;
 		}
 	} else if (slot->item) {
 		if (base)
-			B_UpdateStorageAndCapacity(base, slot->item->idx, 1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, slot->item, 1, qfalse, qfalse);
 		/* the removal is over */
 		if (slot->nextItem) {
 			/* there is anoter item to install after this one */
 			slot->item = slot->nextItem;
 			if (base) {
 				/* remove next item from storage (maybe we don't have anymore item ?) */
-				if (B_UpdateStorageAndCapacity(base, slot->nextItem->idx, -1, qfalse, qfalse)) {
+				if (B_UpdateStorageAndCapacity(base, slot->nextItem, -1, qfalse, qfalse)) {
 					slot->item = slot->nextItem;
 					slot->installationTime = slot->item->craftitem.installationTime;
 				} else {
@@ -1382,7 +1382,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 		/* also remove ammo */
 		if (slot->ammo) {
 			if (base)
-				B_UpdateStorageAndCapacity(base, slot->ammo->idx, 1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
 			slot->ammo = NULL;
 		}
 	}
@@ -1424,7 +1424,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 	if (base && ammo->craftitem.type <= AC_ITEM_AMMO)
-		B_UpdateStorageAndCapacity(base, ammo->idx, -1, qfalse, qfalse);
+		B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
 
 	return qtrue;
 }
@@ -1477,7 +1477,7 @@ qboolean AII_AddItemToSlot (base_t* base, const technology_t *tech, aircraftSlot
 		slot->installationTime = item->craftitem.installationTime;
 		/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 		if (base)
-			B_UpdateStorageAndCapacity(base, item->idx, -1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, item, -1, qfalse, qfalse);
 	} else {
 		Com_Printf("AII_AddItemToSlot: Could not add item '%s' to slot %i (slot-size: %i - item-weight: %i)\n",
 			item->id, slot->idx, slot->size, item->size);
@@ -1722,7 +1722,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 			/* found it */
 			if (num <= 0) {
 				airequipSelectedTechnology = *list;
-				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides)->idx);
+				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
 				break;
 			}
 			num--;
@@ -1832,7 +1832,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 	assert(aircraft);
 
-	source = &aircraft_samples[aircraft->idx_sample];
+	source = aircraft->tpl;
 
 	/* we scan all the stats except AIR_STATS_WRANGE (see below) */
 	for (currentStat = 0; currentStat < AIR_STATS_MAX - 1; currentStat++) {
