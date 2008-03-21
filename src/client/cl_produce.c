@@ -59,9 +59,9 @@ static menuNode_t *node1, *node2, *prodlist;
  * @param[in] comp Pointer to components definition.
  * @return qtrue if disassembling is ready, qfalse otherwise.
  */
-static qboolean PR_ConditionsDisassembly (base_t *base, components_t *comp)
+static qboolean PR_ConditionsDisassembly (const base_t *base, const components_t *comp)
 {
-	objDef_t *od;
+	const objDef_t *od;
 
 	assert(base);
 	assert(comp);
@@ -209,13 +209,13 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requi
  * @param[in] disassembling True if this is disassembling, false if production.
  * @return
  */
-static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftSample, signed int amount, qboolean disassembling)
+static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, const objDef_t *item, const aircraft_t *aircraftSample, signed int amount, qboolean disassembling)
 {
 	int numWorkshops = 0;
 	production_t *prod;
-	technology_t *tech;
+	const technology_t *tech;
 
-	assert ((item && !aircraftSample) || (!item && aircraftSample));
+	assert((item && !aircraftSample) || (!item && aircraftSample));
 	assert(base);
 
 	if (queue->numItems >= MAX_PRODUCTIONS)
@@ -290,7 +290,7 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 static void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 {
 	int i;
-	objDef_t *od;
+	const objDef_t *od;
 	production_t *prod;
 
 	prod = &queue->items[index];
@@ -331,7 +331,7 @@ static void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
  */
 static void PR_QueueMove (production_queue_t *queue, int index, int dir)
 {
-	int newIndex = index + dir;
+	const int newIndex = index + dir;
 	int i;
 	production_t saved;
 
@@ -382,10 +382,10 @@ static void PR_QueueNext (base_t *base)
 void PR_ProductionRun (void)
 {
 	int i;
-	objDef_t *od;
-	aircraft_t *aircraft;
+	const objDef_t *od;
+	const aircraft_t *aircraft;
 	production_t *prod;
-	aircraft_t *ufocraft;
+	const aircraft_t *ufocraft;
 	base_t *base;
 
 	/* Loop through all founded bases. Then check productions
@@ -550,7 +550,7 @@ void PR_ProductionRun (void)
 static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 {
 	static char productionInfo[512];
-	objDef_t *od, *compOd;
+	const objDef_t *od, *compOd;
 	int time, i;
 	float prodPerHour;
 
@@ -636,7 +636,7 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
  */
 static void PR_AircraftInfo (const base_t *base)
 {
-	aircraft_t *aircraftSample;
+	const aircraft_t *aircraftSample;
 	static char productionInfo[512];
 
 	if (selectedQueueItem) {
@@ -664,8 +664,8 @@ static void PR_AircraftInfo (const base_t *base)
 static void PR_ProductionListRightClick_f (void)
 {
 	int i, j, num, idx;
-	objDef_t *od;
-	production_queue_t *queue;
+	const objDef_t *od;
+	const production_queue_t *queue;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
@@ -838,10 +838,10 @@ static void PR_UpdateProductionList (base_t* base)
 	static char productionList[1024];
 	static char productionQueued[256];
 	static char productionAmount[256];
-	objDef_t *od;
-	production_queue_t *queue;
-	production_t *prod;
-	aircraft_t *aircraftSample, *aircraftbase;
+	const objDef_t *od;
+	const production_queue_t *queue;
+	const production_t *prod;
+	const aircraft_t *aircraftSample, *aircraftbase;
 
 	assert(base);
 
@@ -940,12 +940,12 @@ static void PR_UpdateDisassemblingList_f (void)
 	static char productionList[1024];
 	static char productionQueued[256];
 	static char productionAmount[256];
-	objDef_t *od;
-	objDef_t *asOd;
-	production_queue_t *queue;
-	production_t *prod;
-	components_t *comp;
-	base_t* base;
+	const objDef_t *od;
+	const objDef_t *asOd;
+	const production_queue_t *queue;
+	const production_t *prod;
+	const components_t *comp;
+	const base_t* base;
 
 	if (!baseCurrent)
 		return;

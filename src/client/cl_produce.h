@@ -39,17 +39,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 typedef struct production_s
 {
-	/**@todo remove me
-	signed int objID;	< Item index in global csi.ods struct for items, aircraft index in aircraft_samples array for aircraft.
-						 * @todo Make this into 2 pointer? One objDef_t* and one for an aircraft? */
-	/* Only one pointer is supposed to be set at any time. */
-	objDef_t *item;			/**< Item to be produced. */
-	struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
+	/**
+	 * @note Only one pointer is supposed to be set at any time.
+	 * @todo Make this a union
+	 */
+	const objDef_t *item;			/**< Item to be produced. */
+	const struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
 
 	signed int amount;	/**< How much are we producing. */
 	float percentDone;		/**< Fraction of the item which is already produced.
 							 * 0 if production is not started, 1 if production is over */
-	/**int workers;		Amount of workers assigned to the production. @todo unused? */
 	qboolean spacemessage;	/**< Used in No Free Space message adding. */
 	qboolean creditmessage;	/**< Used in No Credits message adding. */
 	qboolean production;	/**< True if this is real production, false when disassembling. */
