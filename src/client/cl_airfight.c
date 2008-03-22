@@ -290,7 +290,6 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
 void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 {
 	int slotIdx;
-	objDef_t *ammo;
 	float probability;
 
 	/* some asserts */
@@ -306,7 +305,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 
 	/* if weapon found that can shoot */
 	if (slotIdx >= AIRFIGHT_WEAPON_CAN_SHOOT) {
-		ammo = shooter->weapons[slotIdx].ammo;
+		const objDef_t *ammo = shooter->weapons[slotIdx].ammo;
 
 		/* shoot */
 		if (AIRFIGHT_AddProjectile(NULL, shooter, shooter->baseTarget, target, shooter->weapons + slotIdx)) {

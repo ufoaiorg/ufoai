@@ -3355,11 +3355,10 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebuf_t* sb)
 {
 	int i;
-	objDef_t *ammo;
 
 	for (i = 0; i < num; i++) {
 		if (slot[i].item) {
-			ammo = slot[i].ammo;
+			const objDef_t *ammo = slot[i].ammo;
 			MSG_WriteString(sb, slot[i].item->id);
 			MSG_WriteShort(sb, slot[i].ammoLeft);
 			MSG_WriteShort(sb, slot[i].delayNextShot);

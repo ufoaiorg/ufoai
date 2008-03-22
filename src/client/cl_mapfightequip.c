@@ -241,7 +241,7 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
  * @param[in] tech Pointer to the technology to test
  * @return qtrue if the aircraft item should be displayed, qfalse else
  */
-static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, technology_t *tech)
+static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, const technology_t *tech)
 {
 	objDef_t *item;
 	aircraftSlot_t *slot;
@@ -613,7 +613,6 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	static char smallbuffer1[128];
 	static char smallbuffer2[128];
 	static char smallbuffer3[128];
-	objDef_t *item;
 	aircraftSlot_t *slot;
 	int i;
 	int type;
@@ -699,7 +698,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 				if (!baseCurrent->batteries[i].item)
 					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 				else {
-					item = baseCurrent->batteries[i].item;
+					const objDef_t *item = baseCurrent->batteries[i].item;
 					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
 				}
 			}
@@ -713,7 +712,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 				if (!baseCurrent->lasers[i].item)
 					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 				else {
-					item = baseCurrent->lasers[i].item;
+					const objDef_t *item = baseCurrent->lasers[i].item;
 					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
 				}
 			}
@@ -1294,9 +1293,9 @@ void AIM_AircraftEquipZoneSelect_f (void)
 static void AIM_AutoAddAmmo (base_t *base, aircraft_t *aircraft, aircraftSlot_t *slot)
 {
 	int k;
-	technology_t *ammo_tech;
-	objDef_t *ammo;
-	objDef_t *item;
+	const technology_t *ammo_tech;
+	const objDef_t *ammo;
+	const objDef_t *item;
 
 	assert(slot);
 

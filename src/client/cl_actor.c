@@ -617,7 +617,7 @@ qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 
 	/**@todo Get Weapon&Firedef and compare with settings. */
 	/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-	CL_GetWeaponAndAmmo(actor, (fmSettings->hand==1)?'l':'r', NULL, &ammo, &weapFdsIdx);
+	CL_GetWeaponAndAmmo(actor, (fmSettings->hand == 1) ? 'l' : 'r', NULL, &ammo, &weapFdsIdx);
 
 	if (!ammo || weapFdsIdx < 0) {
 		/* No weapon&ammo found or bad index returned. Stored settings possibly bad. */
@@ -799,7 +799,7 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 		int weapFdsIdx = -1;
 
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-		CL_GetWeaponAndAmmo(actor, handidx==1?'l':'r', NULL, &ammo, &weapFdsIdx);
+		CL_GetWeaponAndAmmo(actor, handidx == 1 ? 'l' : 'r', NULL, &ammo, &weapFdsIdx);
 
 		/* Get The firedefinition of the selected firemode */
 		fd = &ammo->fd[weapFdsIdx][fdIdx];

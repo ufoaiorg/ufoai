@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief projectile used during fight between two or more aircraft */
 typedef struct aircraftProjectile_s {
-	objDef_t *aircraftItem;		/**< Corresponding ammo in the array csi.ods[] */
+	const objDef_t *aircraftItem;		/**< Corresponding ammo in the array csi.ods[] */
 	int idx;				/**< self link of the idx in gd.projectiles[] */
 	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
 	vec3_t idleTarget;		/**< target of the projectile
