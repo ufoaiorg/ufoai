@@ -92,13 +92,13 @@ typedef struct le_s {
 	const char *particleID;
 	int levelflags;	/**< the levels this particle should be visible at */
 	ptl_t *ptl;				/**< particle pointer to display */
-	char *ref1, *ref2;
+	const char *ref1, *ref2;
 	inventory_t i;
 	int left, right, extension;
 	int fieldSize;				/**< ACTOR_SIZE_* */
 	teamDef_t* teamDef;
 	int gender;
-	fireDef_t *fd;	/**< in case this is a projectile */
+	const fireDef_t *fd;	/**< in case this is a projectile */
 
 	/** is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
@@ -137,18 +137,18 @@ static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD
 
 qboolean CL_OutsideMap(vec3_t impact);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
-void LE_AddProjectile(fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide);
-void LE_AddGrenade(fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
+void LE_AddProjectile(const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide);
+void LE_AddGrenade(const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
 void LE_AddAmbientSound(const char *sound, vec3_t origin, float volume, int levelflags);
 le_t *LE_GetClosestActor(const vec3_t origin);
 
 void LE_Think(void);
 /* think functions */
-void LET_StartIdle(le_t * le);
-void LET_Appear(le_t * le);
-void LET_StartPathMove(le_t * le);
+void LET_StartIdle(le_t *le);
+void LET_Appear(le_t *le);
+void LET_StartPathMove(le_t *le);
 void LET_ProjectileAutoHide(le_t *le);
-void LET_PlayAmbientSound(le_t * le);
+void LET_PlayAmbientSound(le_t *le);
 void LET_BrushModel(le_t *le);
 
 /* local model functions */
@@ -156,8 +156,8 @@ localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t 
 void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 
-qboolean LE_BrushModelAction(le_t * le, entity_t * ent);
-void CL_RecalcRouting(const le_t* le);
+qboolean LE_BrushModelAction(le_t *le, entity_t *ent);
+void CL_RecalcRouting(const le_t *le);
 void CL_CompleteRecalcRouting(void);
 
 void LE_Explode(struct dbuffer *msg);

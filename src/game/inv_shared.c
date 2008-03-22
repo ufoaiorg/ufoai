@@ -54,7 +54,7 @@ void INVSH_InitCSI (csi_t * import)
  * @param[in] fdIdx
  * @return Will never return NULL
  */
-inline fireDef_t* FIRESH_GetFiredef (objDef_t *obj, const int weapFdsIdx, const int fdIdx)
+inline const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
 {
 #ifdef DEBUG
 	if (!obj) \

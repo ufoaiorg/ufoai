@@ -703,7 +703,7 @@ qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 /*  FIREMODE MANAGEMENT FUNCTIONS  */
 /* =============================== */
 
-fireDef_t* FIRESH_GetFiredef(objDef_t *obj, const int weapFdsIdx, const int fdIdx);
+const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, const int fdIdx);
 int FIRESH_FiredefsIDXForWeapon(const objDef_t *od, const objDef_t *weapon);
 int FIRESH_GetDefaultReactionFire(const objDef_t *ammo, int weapon_fds_idx);
 

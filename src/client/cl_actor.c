@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* public */
 le_t *selActor;
-static fireDef_t *selFD;
+static const fireDef_t *selFD;
 static character_t *selChr;
 static int selToHit;
 static pos3_t mousePos;
@@ -1916,7 +1916,7 @@ void CL_ActorUpdateCVars (void)
 	qboolean refresh;
 	const char *animName;
 	int time;
-	fireDef_t *old;
+	const fireDef_t *old;
 	const invList_t *weapon;	/**< Used for hovering over buttons. See displayRemainingTus[] */
 	int reloadtime;
 
@@ -3367,12 +3367,12 @@ static qboolean firstShot = qfalse;
  */
 void CL_ActorDoShoot (struct dbuffer *msg)
 {
-	fireDef_t *fd;
+	const fireDef_t *fd;
 	le_t *le;
 	vec3_t muzzle, impact;
 	int flags, normal, number;
 	int objIdx;
-	objDef_t *obj;
+	const objDef_t *obj;
 	int weapFdsIdx, fdIdx, surfaceFlags;
 
 	/* read data */
@@ -3486,12 +3486,12 @@ void CL_ActorShootHidden (struct dbuffer *msg)
  */
 void CL_ActorDoThrow (struct dbuffer *msg)
 {
-	fireDef_t *fd;
+	const fireDef_t *fd;
 	vec3_t muzzle, v0;
 	int flags;
 	int dtime;
 	int objIdx;
-	objDef_t *obj;
+	const objDef_t *obj;
 	int weapFdsIdx, fdIdx;
 
 	/* read data */

@@ -1585,7 +1585,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				const fireDef_t *fd;
 				int first;
 				int objIdx;
-				objDef_t *obj;
+				const objDef_t *obj;
 				int weap_fds_idx, fd_idx;
 
 				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &objIdx, &weap_fds_idx, &fd_idx);
