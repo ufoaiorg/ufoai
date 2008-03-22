@@ -5846,13 +5846,14 @@ static void CP_CampaignsClick_f (void)
 {
 	int num;
 	const char *racetype;
+	menuNode_t *campaignlist;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
 
-	/*which building? */
+	/* Which campaign in the list? */
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= numCampaigns)
 		return;
@@ -5884,6 +5885,11 @@ static void CP_CampaignsClick_f (void)
 			(int)(round(campaigns[num].minhappiness * 100.0f)), campaigns[num].negativeCreditsUntilLost,
 			_(campaigns[num].text));
 	mn.menuText[TEXT_STANDARD] = campaignDesc;
+	
+	/* Highlight currently selected entry */
+	campaignlist = MN_GetNodeFromCurrentMenu("campaignlist");
+	campaignlist->textLineSelected = num;
+	
 }
 
 /**
