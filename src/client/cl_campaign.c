@@ -5871,11 +5871,12 @@ static void CP_CampaignsClick_f (void)
 	else
 		racetype = _("Aliens");
 
-	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
+	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("%s\n\nRace: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
 		"Max. allowed debts: %ic\n"
 		"%s\n"),
+			campaigns[num].name,
 			racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
