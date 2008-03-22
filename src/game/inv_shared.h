@@ -705,7 +705,7 @@ qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 
 const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, const int fdIdx);
 int FIRESH_FiredefsIDXForWeapon(const objDef_t *od, const objDef_t *weapon);
-int FIRESH_GetDefaultReactionFire(const objDef_t *ammo, int weapon_fds_idx);
+int FIRESH_GetDefaultReactionFire(const objDef_t *ammo, int weapFdsIdx);
 
 void Com_MergeShapes(uint32_t *shape, uint32_t itemshape, int x, int y);
 qboolean Com_CheckShape(const uint32_t *shape, int x, int y);
