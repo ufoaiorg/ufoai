@@ -5,6 +5,3 @@ all:
 clean:
 	-rm chapters/*.aux
 	-rm *.aux *.log *.out *.toc *.pdf
-
-clean:
-	rm *.{aux,log,pdf,toc,out} chapters/*.aux
