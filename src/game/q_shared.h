@@ -93,6 +93,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TU_MOVE_STRAIGHT 2	/**< Time units used to move straight to the next field/square. */
 #define TU_MOVE_DIAGONAL 3	/**< Time units used to move to a diagonal field/square. */
 #define TU_DOOR_ACTION 1	/**< Time units used to interact with doors */
+#define TU_CROUCH_WALKING_FACTOR 1.5	/**< The factor the normal movement is multiplied with in crouching mode */
 
 /* door states */
 #define STATE_OPENED		0

@@ -1423,7 +1423,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4);
 				div = moveDiagonal ? TU_MOVE_DIAGONAL : TU_MOVE_STRAIGHT;
 				if (ent->state & STATE_CROUCHED)
-					div *= 1.5;
+					div *= TU_CROUCH_WALKING_FACTOR;
 				if ((int) (tu + div) > ent->TU)
 					break;
 				tu += div;

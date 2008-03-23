@@ -579,7 +579,7 @@ static void LET_PathMove (le_t * le)
 			PosAddDV(le->pos, dv);
 			tuCost = Grid_MoveLength(&clMap, le->pos, qfalse) - Grid_MoveLength(&clMap, le->oldPos, qfalse);
 			if (le->state & STATE_CROUCHED)
-				tuCost *= 1.5;
+				tuCost *= TU_CROUCH_WALKING_FACTOR;
 			le->TU -= tuCost;
 			if (le == selActor)
 				actorMoveLength -= tuCost;
