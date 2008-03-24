@@ -21,5 +21,6 @@
 	default_scale="1.0"
 	engine="ufo"
 	basegame="base"
+	prefix=".ufoai"
 	shaderpath="scripts/"
 />
