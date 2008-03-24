@@ -425,7 +425,7 @@ static void R_Register (void)
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
-	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE, "Use vertex buffers for better performance");
+	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Use vertex buffers for better performance");
 	r_maxlightmap = Cvar_Get("r_maxlightmap", "2048", CVAR_ARCHIVE | CVAR_LATCH, "Reduce this value on older hardware");
 	Cvar_SetCheckFunction("r_maxlightmap", R_CvarCheckMaxLightmap);
 
@@ -593,11 +593,21 @@ static void R_InitExtension (void)
 
 	/* vertex buffer objects */
 	if (strstr(r_config.extensions_string, "GL_ARB_vertex_buffer_object")){
-		r_state.vertex_buffers = qtrue;
-		if (r_vertexbuffers->integer)
-			Com_Printf("using GL_ARB_vertex_buffer_object\n");
-		else
+		if (r_vertexbuffers->integer) {
+			qglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
+			qglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
+			qglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
+			qglBufferData = SDL_GL_GetProcAddress("glBufferData");
+			if (qglGenBuffers && qglDeleteBuffers && qglBindBuffer && qglBufferData) {
+				r_state.vertex_buffers = qtrue;
+				Com_Printf("using GL_ARB_vertex_buffer_object\n");
+			} else {
+				Com_Printf("could not use GL_ARB_vertex_buffer_object\n");
+			}
+		} else {
 			Com_Printf("ignoring GL_ARB_vertex_buffer_object\n");
+			r_state.vertex_buffers = qfalse;
+		}
 	} else {
 		Com_Printf("GL_ARB_vertex_buffer_object not found\n");
 		r_state.vertex_buffers = qfalse;

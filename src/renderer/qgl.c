@@ -1168,10 +1168,10 @@ void QR_Link (void)
 	qglActiveTexture             = SDL_GL_GetProcAddress("glActiveTexture");
 	qglClientActiveTexture       = SDL_GL_GetProcAddress("glClientActiveTexture");
 
-	qglGenBuffers                = SDL_GL_GetProcAddress("glGenBuffers");
-	qglDeleteBuffers             = SDL_GL_GetProcAddress("glDeleteBuffers");
-	qglBindBuffer                = SDL_GL_GetProcAddress("glBindBuffer");
-	qglBufferData                = SDL_GL_GetProcAddress("glBufferData");
+	qglGenBuffers                = NULL;
+	qglDeleteBuffers             = NULL;
+	qglBindBuffer                = NULL;
+	qglBufferData                = NULL;
 
 	qglLockArraysEXT             = NULL;
 	qglUnlockArraysEXT           = NULL;

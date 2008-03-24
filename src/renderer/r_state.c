@@ -126,7 +126,7 @@ void R_BindDefaultArray (GLenum target)
 
 void R_BindBuffer (GLenum target, GLenum type, GLuint id)
 {
-	if (!r_state.vertex_buffers || !r_vertexbuffers->integer)
+	if (!r_state.vertex_buffers)
 		return;
 
 	qglBindBuffer(GL_ARRAY_BUFFER, id);
