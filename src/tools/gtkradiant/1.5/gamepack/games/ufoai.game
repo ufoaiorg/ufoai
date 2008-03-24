@@ -19,6 +19,7 @@
   modeltypes="md2 md3 ase obj"
   maptypes="mapq2"
   shaders="quake3"
+  shaderpath="scripts"
   entityclass="quake3"
   entityclasstype="def"
   entities="quake3"
