@@ -342,7 +342,7 @@ void MN_DrawMenus (void)
 							CIN_PlayCinematic(node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 						if (cls.playingCinematic) {
 							/* only set replay to true if video was found and is running */
-							CIN_SetParameters(node->pos[0], node->pos[1], node->size[0], node->size[1], CIN_STATUS_MENU);
+							CIN_SetParameters(node->pos[0], node->pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
 							CIN_RunCinematic();
 						}
 					}

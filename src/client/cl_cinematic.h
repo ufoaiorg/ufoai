@@ -29,7 +29,7 @@ void CIN_StopCinematic(void);
 void CIN_PlayCinematic(const char *name);
 void CIN_Shutdown(void);
 void CIN_Init(void);
-void CIN_SetParameters(int x, int y, int w, int h, int cinStatus);
+void CIN_SetParameters(int x, int y, int w, int h, int cinStatus, qboolean noSound);
 
 typedef enum {
 	CIN_STATUS_NONE,	/**< not playing */

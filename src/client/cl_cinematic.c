@@ -82,11 +82,13 @@ typedef struct {
 	int				frameRate;
 	byte *			frameBuffer[2];
 
-	int				frameTime;	/**< cinematic start timestamp */
+	int				startTime;	/**< cinematic start timestamp */
 	int				currentFrame;
 
 	byte			data[ROQ_MAX_CHUNK_SIZE + ROQ_CHUNK_HEADER_SIZE];
 	byte *			header;
+
+	qboolean		noSound;	/**< no sound while playing the cinematic */
 
 	roqChunk_t		chunk;
 	roqQuadVector_t	quadVectors[256];
@@ -477,7 +479,7 @@ static qboolean CIN_DecodeChunk (void)
 {
 	int frame;
 
-	if (cin.frameTime + ((1000 / cin.frameRate) * cin.currentFrame) > cls.realtime)
+	if (cin.startTime + ((1000 / cin.frameRate) * cin.currentFrame) > cls.realtime)
 		return qtrue;
 
 	frame = cin.currentFrame;
@@ -487,13 +489,9 @@ static qboolean CIN_DecodeChunk (void)
 			return qfalse;	/* Finished */
 
 		/* Parse the chunk header */
-		cin.chunk.id = cin.header[0] | (cin.header[1] << 8);
-		cin.chunk.size = cin.header[2] | (cin.header[3] << 8) | (cin.header[4] << 16) | (cin.header[5] << 24);
-		cin.chunk.flags = cin.header[6] | (cin.header[7] << 8);
-
-		cin.chunk.id = LittleShort(cin.chunk.id);
-		cin.chunk.size = LittleLong(cin.chunk.size);
-		cin.chunk.flags = LittleShort(cin.chunk.flags);
+		cin.chunk.id = LittleShort(*(short *)&cin.header[0]);
+		cin.chunk.size = LittleLong(*(int *)&cin.header[2]);
+		cin.chunk.flags = LittleShort(*(short *)&cin.header[6]);
 
 		if (cin.chunk.id == ROQ_IDENT || cin.chunk.size > ROQ_MAX_CHUNK_SIZE) {
 			Com_Printf("Invalid chunk\n");
@@ -519,10 +517,15 @@ static qboolean CIN_DecodeChunk (void)
 			CIN_DecodeVideo(cin.data);
 			break;
 		case ROQ_SOUND_MONO:
-			CIN_DecodeSoundMono(cin.data);
+			if (!cin.noSound)
+				CIN_DecodeSoundMono(cin.data);
 			break;
 		case ROQ_SOUND_STEREO:
-			CIN_DecodeSoundStereo(cin.data);
+			if (!cin.noSound)
+				CIN_DecodeSoundStereo(cin.data);
+			break;
+		default:
+			Com_Printf("Invalid chunk id: %i\n", cin.chunk.id);
 			break;
 		}
 	/* loop until we finally got a new frame */
@@ -536,7 +539,7 @@ static qboolean CIN_DecodeChunk (void)
  * @note Coordinates should be relative to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are normalized inside this function
  */
-void CIN_SetParameters (int x, int y, int w, int h, int cinStatus)
+void CIN_SetParameters (int x, int y, int w, int h, int cinStatus, qboolean noSound)
 {
 	cin.x = x * viddef.rx;
 	cin.y = y * viddef.ry;
@@ -544,6 +547,7 @@ void CIN_SetParameters (int x, int y, int w, int h, int cinStatus)
 	cin.h = h * viddef.ry;
 	if (cinStatus > CIN_STATUS_NONE)
 		cls.playingCinematic = cinStatus;
+	cin.noSound = noSound;
 }
 
 /**
@@ -614,9 +618,9 @@ void CIN_PlayCinematic (const char *name)
 	/* Parse the header */
 	FS_Read(header, sizeof(header), &cin.file);
 
-	chunk.id = header[0] | (header[1] << 8);
-	chunk.size = header[2] | (header[3] << 8) | (header[4] << 16) | (header[5] << 24);
-	chunk.flags = header[6] | (header[7] << 8);
+	chunk.id = LittleShort(*(short *)&header[0]);
+	chunk.size = LittleLong(*(int *)&header[2]);
+	chunk.flags = LittleShort(*(short *)&header[6]);
 
 	if (chunk.id != ROQ_IDENT) {
 		FS_FCloseFile(&cin.file);
@@ -627,14 +631,14 @@ void CIN_PlayCinematic (const char *name)
 	Q_strncpyz(cin.name, name, sizeof(cin.name));
 
 	/* Set to play the cinematic in fullscreen mode */
-	CIN_SetParameters(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, CIN_STATUS_FULLSCREEN);
+	CIN_SetParameters(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, CIN_STATUS_FULLSCREEN, qfalse);
 
 	cin.size = size;
 	cin.offset = sizeof(header);
 
 	cin.frameWidth = 0;
 	cin.frameHeight = 0;
-	cin.frameTime = cls.realtime;
+	cin.startTime = cls.realtime;
 	cin.frameRate = (chunk.flags != 0) ? chunk.flags : 30;
 	if (cin.frameBuffer[0]) {
 		Mem_Free(cin.frameBuffer[0]);
