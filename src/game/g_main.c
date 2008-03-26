@@ -481,11 +481,11 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	}
 
 	/* Mostly for debugging */
-	if (chr->empl_type >= MAX_EMPL)
-		Com_DPrintf(DEBUG_GAME, "G_UpdateCharacterSkills Soldier %s has employee-type of %i - please check if this is ok.\n", chr->name, chr->empl_type);
+	if (chr->emplType >= MAX_EMPL)
+		Com_DPrintf(DEBUG_GAME, "G_UpdateCharacterSkills Soldier %s has employee-type of %i - please check if this is ok.\n", chr->name, chr->emplType);
 
 	/* Robots/UGVs do not get skill-upgrades. */
-	if (chr->empl_type == EMPL_ROBOT)
+	if (chr->emplType == EMPL_ROBOT)
 		return;
 
 	totalGainedXP = 0;

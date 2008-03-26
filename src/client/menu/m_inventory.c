@@ -145,7 +145,7 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 	/* We are in the base or multiplayer inventory */
 	if (sel < chrDisplayList.num) {
 		assert(chrDisplayList.chr[sel]);
-		if (chrDisplayList.chr[sel]->empl_type == EMPL_ROBOT)
+		if (chrDisplayList.chr[sel]->emplType == EMPL_ROBOT)
 			CL_UGVCvars(chrDisplayList.chr[sel]);
 		else
 			CL_CharacterCvars(chrDisplayList.chr[sel]);

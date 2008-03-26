@@ -2421,6 +2421,7 @@ static void B_AssignInitial_f (void)
 
 	if (!ccs.singleplayer) {
 		CL_ResetMultiplayerTeamInBase();
+		CL_GenTeamList();	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be polulated. */
 		Cvar_Set("mn_teamname", _("NewTeam"));
 	}
 
@@ -2442,7 +2443,7 @@ static void B_PackInitialEquipment_f (void)
 	base_t *base = baseCurrent;
 	aircraft_t *aircraft;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("cl_equip");
-	chrList_t chr_list_temp;
+	chrList_t chrListTemp;
 
 	/* check syntax */
 	if (Cmd_Argc() > 1) {
@@ -2461,28 +2462,29 @@ static void B_PackInitialEquipment_f (void)
 		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
 	} else if (base->aircraftCurrent) {
 		aircraft = base->aircraftCurrent;
-		chr_list_temp.num = 0;
+		chrListTemp.num = 0;
 		for (i = 0; i < aircraft->maxTeamSize; i++) {
-			if (aircraft->teamIdxs[i] != -1) {
-				character_t *chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+			if (aircraft->acTeam[i]) {
+				character_t *chr = &aircraft->acTeam[i]->chr;
 				/* pack equipment */
 				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
 				INVSH_EquipActor(chr->inv, ed->num, MAX_OBJDEFS, name, chr);
 				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: armour: %i, weapons: %i\n", chr->armour, chr->weapons);
-				chr_list_temp.chr[chr_list_temp.num] = chr;
-				chr_list_temp.num++;
+				chrListTemp.chr[chrListTemp.num] = chr;
+				chrListTemp.num++;
 			}
 		}
+
 		CL_AddCarriedToEq(aircraft, &base->storage);
 		INV_UpdateStorageCap(base);
-		CL_SwapSkills(&chr_list_temp);
+		CL_SwapSkills(&chrListTemp);
 
 		/* pay for the initial equipment */
 		for (container = 0; container < csi.numIDs; container++) {
 			for (p = 0; p < aircraft->maxTeamSize; p++) {
-				if (aircraft->teamIdxs[p] != -1) {
+				if (aircraft->acTeam[p]) {
 					const invList_t *ic;
-					const character_t *chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+					const character_t *chr = &aircraft->acTeam[p]->chr;
 					for (ic = chr->inv->c[container]; ic; ic = ic->next) {
 						const item_t item = ic->item;
 						price += item.t->price;
@@ -3470,12 +3472,12 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				}
 			}
 
-			/* Save team on board */
-			/** @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize */
+			/** Save team on board
+			 * @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
+				MSG_WriteShort(sb, aircraft->acTeam[l]->idx);
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				MSG_WriteShort(sb, aircraft->teamTypes[l]);
+				MSG_WriteShort(sb, aircraft->acTeam[l]->type);
 
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
@@ -3604,6 +3606,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	objDef_t *od;
 	objDef_t *od2;
 	int aircraftIdxInBase;
+	int teamIdxs[PRE_ACTTEA];	/**< Temp list of employee indices. */
+	int teamTypes[PRE_ACTTEA];	/**< Temp list of employee-types. */
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
@@ -3714,16 +3718,20 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				}
 			}
 
-			/* Load team on board */
-			/** @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize */
+			/** Load team on board
+			 * @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */
+			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
+				teamIdxs[l] = MSG_ReadShort(sb);
+			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
+				teamTypes[l] = MSG_ReadShort(sb);
 			aircraft->teamSize = 0;
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++) {
-				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
-				if (aircraft->teamIdxs[l] >= 0)
+				if (teamIdxs[l] >= 0) {
+					assert(gd.numEmployees[teamTypes[l]] > 0);
+					aircraft->acTeam[l] = &gd.employees[teamTypes[l]][teamIdxs[l]];
 					aircraft->teamSize++;
+				}
 			}
-			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				aircraft->teamTypes[l] = MSG_ReadShort(sb);
 
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);

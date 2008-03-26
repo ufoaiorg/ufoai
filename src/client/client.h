@@ -308,6 +308,7 @@ typedef struct chr_list_s {
  * @brief List of currently displayed or equipeable characters.
  */
 extern chrList_t chrDisplayList;
+struct employee_s;
 
 #include "cl_le.h"
 #include "cl_menu.h"

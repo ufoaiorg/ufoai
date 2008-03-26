@@ -108,7 +108,7 @@ static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 	base_t *base;
 
 	assert(employee);
-	base = B_GetBase(employee->baseIDHired);
+	base = employee->baseHired;
 	assert(base);
 
 	if (base->hospitalListCount[employee->type] <= 0)
@@ -592,9 +592,9 @@ void HOS_RemoveEmployeesInHospital (const aircraft_t *aircraft)
 */
 	/* select all soldiers from aircraft who are healing in an hospital */
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->teamIdxs[i] > -1) {
+		if (aircraft->acTeam[i]) {
 			/* Check whether any team member is in base->hospitalList. */
-			employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
+			employee = aircraft->acTeam[i];
 			assert(employee);
 			for (j = 0; j < base->hospitalListCount[EMPL_SOLDIER]; j++) {
 				/* If the soldier is in base->hospitalList, remove him ... */
@@ -628,12 +628,12 @@ void HOS_ReaddEmployeesInHospital (const aircraft_t *aircraft)
 		return;
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->teamIdxs[i] > -1) {
+		if (aircraft->acTeam[i]) {
 			for (j = 0; j < base->hospitalMissionListCount; j++) {
-				if ((aircraft->teamIdxs[i] == base->hospitalMissionList[j])) {
-					employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
+				/** @note hospitalMissionList only stores EMPL_SOLDIER. */
+				employee = (base->hospitalMissionList[j] > -1) ? &gd.employees[EMPL_SOLDIER][base->hospitalMissionList[j]] : NULL;
+				if (aircraft->acTeam[i] && aircraft->acTeam[i] == employee) {
 					assert(employee);
-
 					/* If the soldier is in base->hospitalMissionList, remove him ... */
 					HOS_RemoveFromMissionList(employee, base);
 					/* Soldier goes back to hospital only if he hasn't recover all his HP during mission (medikit). */
@@ -658,7 +658,7 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
 
 	assert(employee);
 
-	base = B_GetBase(employee->baseIDHired);
+	base = employee->baseHired;
 	assert(base);
 
 	/* Do nothing if the base does not have hospital. */

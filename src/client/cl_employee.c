@@ -31,13 +31,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "menu/m_popup.h"
 
-/* holds the current active employee category */
+/** Currently selected employee. @sa cl_employee.h */
+employee_t *selectedEmployee = NULL;
+/* Holds the current active employee category */
 static int employeeCategory = 0;
 /* the menu node of the employee list */
 static menuNode_t *employeeListNode;
 
-/* how many employees in current list (changes on every catergory change, too) */
-int employeesInCurrentList = 0;
+/* List of (hired) employees in the current category (employeeType). */
+linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
+/* How many employees in current list (changes on every catergory change, too) */
+int employeesInCurrentList;
 
 /*****************************************************
 VISUAL/GUI STUFF
@@ -76,7 +80,7 @@ static void E_EmployeeListScroll_f (void)
 
 	for (i = 0, employee = &(gd.employees[employeeCategory][0]); i < gd.numEmployees[employeeCategory]; i++, employee++) {
 		/* don't show employees of other bases */
-		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
+		if (employee->baseHired != baseCurrent && employee->hired)
 			continue;
 
 		/* drop the first j entries */
@@ -86,7 +90,7 @@ static void E_EmployeeListScroll_f (void)
 		}
 		/* change the buttons */
 		if (employee->hired) {
-			if (employee->baseIDHired == baseCurrent->idx)
+			if (employee->baseHired == baseCurrent)
 				Cbuf_AddText(va("employeeadd%i\n", cnt));
 			else
 				Cbuf_AddText(va("employeedisable%i\n", cnt));
@@ -114,7 +118,7 @@ static void E_EmployeeList_f (void)
 {
 	int i, j;
 	employee_t* employee;
-	int employeeIdx;
+	int hiredEmployeeIdx;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !curCampaign)
@@ -130,16 +134,20 @@ static void E_EmployeeList_f (void)
 		employeeCategory = EMPL_SOLDIER;
 
 	if (Cmd_Argc() == 3)
-		employeeIdx = atoi(Cmd_Argv(2));
+		hiredEmployeeIdx = atoi(Cmd_Argv(2));
 	else
-		employeeIdx = -1;
+		hiredEmployeeIdx = -1;
 
 	/* reset the employee count */
 	employeesInCurrentList = 0;
 
-	if (employeeIdx < 0) {
+	LIST_Delete(employeeList);
+	employeeList = NULL;
+
+
+	if (hiredEmployeeIdx < 0) {
 		/* Reset scrolling when no specific entry was given. */
-		/** @todo Is there a case where employeeIdx is <0 and the textScroll must be reset? */
+		/** @todo Is there a case where hiredEmployeeIdx is <0 and the textScroll must be reset? */
 		employeeListNode->textScroll = 0;
 	} else {
 		/** @todo If employee is given but outside the current visible list (defined by employeeListNode->textScroll) we need to calculate the new employeeListNode->textScroll */
@@ -150,17 +158,21 @@ static void E_EmployeeList_f (void)
 
 	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
 		/* don't show employees of other bases */
-		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
+		if (employee->baseHired != baseCurrent && employee->hired)
 			continue;
 
 		LIST_AddPointer(&mn.menuTextLinkedList[TEXT_LIST], employee->chr.name);
+		LIST_AddPointer(&employeeList, employee);
 		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
 		/** @todo Check if the "textScroll % cl_numnames->integer" calculation is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
 		if ((employeesInCurrentList >= employeeListNode->textScroll)
 		&& (employeesInCurrentList < (employeeListNode->textScroll + cl_numnames->integer))) {
 			if (employee->hired) {
-				if (employee->baseIDHired == baseCurrent->idx) {
-					Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
+				if (employee->baseHired == baseCurrent) {
+					if (employee->transfer)
+						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"),employee->chr.name));
+					else
+						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
 					Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
 				} else
 					Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
@@ -196,10 +208,10 @@ static void E_EmployeeList_f (void)
 
 	/* Select the current employee if name was changed or first one. Use the direct string
 	 * execution here - otherwise the employeeCategory might be out of sync */
-	if (employeeIdx < 0)
+	if (hiredEmployeeIdx < 0)
 		Cmd_ExecuteString("employee_select 0\n");
 	else
-		Cmd_ExecuteString(va("employee_select %i;", Cvar_VariableInteger("mn_employee_idx")));
+		Cmd_ExecuteString(va("employee_select %i;", selectedEmployee ? selectedEmployee->idx : 0));
 }
 
 
@@ -212,7 +224,7 @@ EMPLOYEE BACKEND STUFF
  */
 qboolean E_IsInBase (employee_t* empl, const base_t* const base)
 {
-	if (empl->baseIDHired == base->idx)
+	if (empl->baseHired == base)
 		return qtrue;
 	return qfalse;
 }
@@ -328,7 +340,7 @@ employee_t* E_GetEmployee (const base_t* const base, employeeType_t type, int id
 		return NULL;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		if (i == idx && (!gd.employees[type][i].hired || gd.employees[type][i].baseIDHired == base->idx))
+		if (i == idx && (!gd.employees[type][i].hired || gd.employees[type][i].baseHired == base))
 			return &gd.employees[type][i];
 	}
 
@@ -378,6 +390,7 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
  * @brief Return a "not hired" ugv-employee pointer of a given ugv-type.
  * @param[in] ugvType What type of robot we want.
  * @param[in] hired Do we want a hire or unhired robot?
+ * @return employee_t pointer on success or NULL on error.
  * @sa E_GetHiredRobot
  */
 employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
@@ -400,100 +413,78 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 }
 
 /**
- * @brief Return a given hired employee pointer in the given base of a given type
- * @param[in] base Which base the employee should be searched in.
+ * @brief Return a list of hired employees in the given base of a given type
+ * @param[in] base Which base the employee should be searched in. If NULL is given employees in all bases will be listed.
  * @param[in] type Which employee type to search for.
- * @param[in] idx Which employee id (in global employee array). Use -1, -2, etc.. to return the first/ second, etc... "hired" employee.
- * @return employee_t pointer or NULL
- * @sa E_GetUnhiredEmployee
- * @sa E_HireEmployee
- * @sa E_UnhireEmployee
- * @sa E_GetHiredCharacter
+ * @param[out] hiredEmployees Linked list of hired employees in the base.
+ * @return Number of hired employees int he base.
  */
-employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, int idx)
+int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees)
 {
-	int i;
-	int j = -1;	/* The number of found hired employees. Ignore the minus. */
+	int i;	/* Index in the gd.employee[type][i] array. */
+	int j;	/* The number/index of found hired employees. */
 	employee_t *employee;
 
-	if (!base)
-		return NULL;
-
 	if (type >= MAX_EMPL) {
-		Com_Printf("E_GetHiredEmployee: Unknown EmployeeType: %i\n", type);
-		return NULL;
+		Com_Printf("E_GetHiredEmployees: Unknown EmployeeType: %i\n", type);
+		return -1;
 	}
 
-#ifdef PARANOID
-	i = E_CountHired(base, type);
-	if (idx < 0) {
-		if (i < abs(idx))
-			Sys_Error("Trying to get the %ith employee - but you only have %i hired in the base.\n", abs(idx), i);
-	} else {
-		if (gd.employees[type][idx].baseIDHired != base->idx)
-			Sys_Error("Trying to get hired employee %i (base %i) in base %i - but he is not hired in this base.\n", idx, gd.employees[type][idx].baseIDHired, base->idx);
-	}
-#endif
+	if (hiredEmployees)
+		LIST_Delete(*hiredEmployees);
+	*hiredEmployees = NULL;
+	j = 0;
 
-	for (i = 0; i < gd.numEmployees[type]; i++) {
+
+	for (i = 0, j = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx) {
-			if (i == idx)
-				return employee;
-			if (idx < 0) {
-				if (idx == j)
-					return employee;
-				j--;
-			}
-		} else
-			continue;
+		if (employee->hired
+		 && (employee->baseHired == base || !base)
+		 && !employee->transfer) {
+			LIST_AddPointer(hiredEmployees, employee);
+			j++;
+		}
 	}
-	return NULL;
+
+	return j;
 }
 
 /**
  * @brief Return a "hired" ugv-employee pointer of a given ugv-type in a given base.
  * @param[in] base Which base the ugv should be searched in.c
  * @param[in] ugvType What type of robot we want.
+ * @return employee_t pointer on success or NULL on error.
  * @sa E_GetUnhiredRobot
  */
 employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 {
-	int i;
+	linkedList_t *hiredEmployees = NULL;
+	linkedList_t *hiredEmployeesTemp;
 	employee_t *employee;
 
-	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		employee = &gd.employees[EMPL_ROBOT][i];
+	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
+	hiredEmployeesTemp = hiredEmployees;
 
-		/* If no type was given we return the first ugv we find. */
-		if (!ugvType)
-			return employee;
+	employee = NULL;
+	while (hiredEmployeesTemp) {
+		employee = (employee_t*)hiredEmployeesTemp->data;
 
-		if (((employee->ugv == ugvType) || !ugvType)
-		&& (employee->baseIDHired == base->idx)) {
+		if ((employee->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
+		&& employee->baseHired == base) {		/* It has to be in the defined base. */
 			assert(employee->hired);
-			return employee;
+			break;
 		}
+
+		hiredEmployeesTemp = hiredEmployeesTemp->next;
 	}
-	Com_Printf("Could not get unhired ugv/robot.\n");
-	return NULL;
-}
 
-/**
- * @brief Return a given character pointer of a hired employee in the given base of a given type
- * @param[in] base Which base the employee should be hired in
- * @param[in] type Which employee type do we search
- * @param[in] employee_idx Which employee idx (index in global employee array)
- * @return character_t pointer or NULL
- * @sa E_GetHiredEmployee
- */
-character_t* E_GetHiredCharacter (const base_t* const base, employeeType_t type, int employee_idx)
-{
-	employee_t* employee = E_GetHiredEmployee(base, type, employee_idx);	 /* Parameter sanity is checked here. */
-	if (employee)
-		return &(employee->chr);
+	LIST_Delete(hiredEmployees);
+	hiredEmployees = NULL;
 
-	return NULL;
+	if (!employee)
+		Com_Printf("Could not get unhired ugv/robot.\n");
+
+	return employee;
 }
 
 /**
@@ -507,7 +498,7 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 	if (!employee)
 		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
 
-	return (employee->buildingID < 0);
+	return (!employee->building);
 }
 
 /**
@@ -526,7 +517,7 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx
+		if (employee->baseHired == base
 			&& !E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
@@ -548,7 +539,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t ty
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx
+		if (employee->baseHired == base
 			&& E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
@@ -573,7 +564,7 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 	if (employee) {
 		/* Now uses quarter space. */
 		employee->hired = qtrue;
-		employee->baseIDHired = base->idx;
+		employee->baseHired = base;
 		/* Update capacity. */
 		base->capacities[CAP_EMPLOYEES].cur++;
 		switch (employee->type) {
@@ -637,9 +628,9 @@ void E_ResetEmployee (employee_t *employee)
 
 	assert(employee);
 	assert(employee->hired);
-	assert(employee->baseIDHired != -1);
+	assert(employee->baseHired);
 
-	base = B_GetBase(employee->baseIDHired);
+	base = employee->baseHired;
 
 	/* Remove employee from building (and tech/production). */
 	E_RemoveEmployeeFromBuilding(employee);
@@ -661,15 +652,15 @@ void E_ResetEmployee (employee_t *employee)
  */
 qboolean E_UnhireEmployee (employee_t* employee)
 {
-	if (employee && employee->hired) {
-		base_t *base = B_GetBase(employee->baseIDHired);
+	if (employee && employee->hired && !employee->transfer) {
+		base_t *base = employee->baseHired;
 		/* Update capacity of Living Quarters. */
 		base->capacities[CAP_EMPLOYEES].cur--;
 
 		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
-		employee->baseIDHired = -1;
+		employee->baseHired = NULL;
 
 		return qtrue;
 	} else
@@ -695,7 +686,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->hired && employee->baseIDHired == base->idx)
+		if (employee->hired && employee->baseHired == base)
 			E_UnhireEmployee(employee);
 	}
 }
@@ -724,8 +715,8 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
 
 	employee->idx = gd.numEmployees[type];
 	employee->hired = qfalse;
-	employee->baseIDHired = -1;
-	employee->buildingID = -1;
+	employee->baseHired = NULL;
+	employee->building = NULL;
 	employee->type = type;
 	employee->nation = nation;
 
@@ -774,7 +765,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 	 * 1) remove him from buildings&work
 	 * 2) remove his inventory */
 
-	if (employee->baseIDHired >= 0) {
+	if (employee->baseHired) {
 		HOS_RemoveDeadEmployeeFromLists(employee);
 		E_UnhireEmployee(employee);
 	}
@@ -789,7 +780,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 				/* Move all the following employees in the list one place forward and correct its index. */
 				gd.employees[type][i] = gd.employees[type][i + 1];
 				gd.employees[type][i].idx = i;
-				gd.employees[type][i].chr.empl_idx = i;
+				gd.employees[type][i].chr.emplIdx = i;
 				gd.employees[type][i].chr.inv = &gd.employees[type][i].inv;
 			}
 		}
@@ -797,11 +788,6 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 
 	if (found) {
 		gd.numEmployees[type]--;
-
-		if (type == EMPL_SOLDIER || type == EMPL_ROBOT) {
-			for (i = 0; i < gd.numAircraft; i++)
-				AIR_DecreaseAircraftTeamIdxGreaterThan(AIR_AircraftGetFromIdx(i), employee->idx, EMPL_SOLDIER);
-		}
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "E_DeleteEmployee: Employee wasn't in the global list.\n");
 		return qfalse;
@@ -832,10 +818,10 @@ void E_DeleteAllEmployees (base_t* base)
 		for (i = gd.numEmployees[type]-1; i >= 0; i--) {
 			Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: %i\n", i);
 			employee = &gd.employees[type][i];
-			if (employee->baseIDHired == base->idx) {
+			if (employee->baseHired == base) {
 				E_DeleteEmployee(employee, type);
 				Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees:	 Removing empl.\n");
-			} else if (employee->baseIDHired >= 0) {
+			} else if (employee->baseHired) {
 				Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees:	 Not removing empl. (other base)\n");
 			}
 		}
@@ -865,7 +851,7 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 	case EMPL_SCIENTIST:
 		employee = E_GetUnassignedEmployee(B_GetBase(building->base_idx), type);
 		if (employee) {
-			employee->buildingID = building->idx;
+			employee->building = building;
 		} else {
 			/* @todo: message -> no employee available */
 		}
@@ -894,14 +880,14 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 
 	/* not assigned to any building */
 	/* FIXME: are soldiers assigned to a building, too? quarters? */
-	if (employee->buildingID < 0 && employee->type != EMPL_SOLDIER)
+	if (!employee->building && employee->type != EMPL_SOLDIER)
 		return qfalse;
 
 	/* we can assume this because otherwise there should be no buildingID */
-	assert(employee->baseIDHired != -1);
-	base = B_GetBase(employee->baseIDHired);
+	assert(employee->baseHired);
+	base = employee->baseHired;
 
-	assert(employee->type == employee->chr.empl_type);
+	assert(employee->type == employee->chr.emplType);
 
 	switch (employee->type) {
 	case EMPL_SCIENTIST:
@@ -911,8 +897,8 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 		}
 
 		/* Get technology with highest scientist-count and remove one scientist. */
-		if (employee->baseIDHired >= 0)
-			tech = RS_GetTechWithMostScientists(B_GetBase(employee->baseIDHired));
+		if (employee->baseHired)
+			tech = RS_GetTechWithMostScientists(employee->baseHired);
 		else
 			tech = NULL;
 
@@ -921,14 +907,14 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 			RS_AssignScientist(tech);
 			RS_RemoveScientist(tech);
 		} else {
-			assert(employee->buildingID != -1);
+			assert(employee->building);
 		}
 		break;
 
 	case EMPL_SOLDIER:
 		/* Remove soldier from aircraft/team if he was assigned to one. */
-		if (CL_SoldierInAircraft(employee->idx, employee->type, NULL)) {
-			CL_RemoveSoldierFromAircraft(employee->idx, employee->type, -1, base);
+		if (CL_SoldierInAircraft(employee, NULL)) {
+			CL_RemoveSoldierFromAircraft(employee, NULL);
 		}
 		break;
 
@@ -971,7 +957,7 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->hired && employee->baseIDHired == base->idx)
+		if (employee->hired && employee->baseHired == base)
 			count++;
 	}
 	return count;
@@ -991,7 +977,7 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		employee = &gd.employees[EMPL_ROBOT][i];
 		if (employee->hired
-		&&  employee->baseIDHired == base->idx
+		&&  employee->baseHired == base
 		&& employee->ugv == ugvType)
 			count++;
 	}
@@ -1072,7 +1058,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->buildingID < 0 && employee->baseIDHired == base->idx)
+		if (!employee->building && employee->baseHired == base)
 			count++;
 	}
 	return count;
@@ -1080,33 +1066,26 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 
 /**
  * @brief Find an hired or free employee by the menu index
- * @param[in] num The index from the hire menu screen.
- * @param[in] category The employee category (e.g EMPL_SOLDIER)
+ * @param[in] num The index from the hire menu screen (index inemployeeList).
  */
-static inline employee_t* E_GetEmployeeByMenuIndex (const base_t* base, int num, int category)
+inline employee_t* E_GetEmployeeByMenuIndex (int num)
 {
-	int i, j;
+	int i;
 	employee_t* employee;
-
-	assert(base);
-
-	/* Some sanity checks (is category valid?). */
-	if (category < EMPL_SOLDIER || category >= MAX_EMPL)
-		return NULL;
+	linkedList_t *emplList = employeeList;
 
 	if (num >= employeesInCurrentList || num < 0)
 		return NULL;
 
-	for (i = 0, j = 0, employee = &(gd.employees[category][0]); i < gd.numEmployees[category]; i++, employee++) {
-		/* don't count employees of other bases */
-		if (employee->baseIDHired != base->idx && employee->hired)
-			continue;
-
-		if (num == j)
+	i = 0;
+	while (emplList) {
+		employee = (employee_t*)emplList->data;
+		if (i == num)
 			return employee;
-
-		j++;
+		i++;
+		emplList = emplList->next;
 	}
+
 	return NULL;
 }
 
@@ -1132,7 +1111,7 @@ static void E_EmployeeDelete_f (void)
 	num = atoi(Cmd_Argv(1));
 	button = num - employeeListNode->textScroll;
 
-	employee = E_GetEmployeeByMenuIndex(baseCurrent, num, employeeCategory);
+	employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
 	if (!employee)
 		return;
@@ -1183,7 +1162,7 @@ static void E_EmployeeHire_f (void)
 		num = button + employeeListNode->textScroll;
 	}
 
-	employee = E_GetEmployeeByMenuIndex(baseCurrent, num, employeeCategory);
+	employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
 	if (!employee)
 		return;
@@ -1222,10 +1201,10 @@ static void E_EmployeeSelect_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= gd.numEmployees[employeeCategory])
+	if (num < 0 || num >= employeesInCurrentList)
 		return;
 
-	employee = E_GetEmployeeByMenuIndex(baseCurrent, num, employeeCategory);
+	employee = E_GetEmployeeByMenuIndex(num);
 	if (employee) {
 		/* mn_employee_hired is needed to allow renaming */
 		Cvar_SetValue("mn_employee_hired", employee->hired? 1: 0);
@@ -1288,9 +1267,10 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			e = &gd.employees[j][i];
 			MSG_WriteByte(sb, e->type);
 			MSG_WriteByte(sb, e->hired);
+			/** @note e->transfer is not saved here because it'll be restored via cl_transfer.c:TR_Load. */
 			MSG_WriteShort(sb, e->idx);
-			MSG_WriteShort(sb, e->baseIDHired);
-			MSG_WriteShort(sb, e->buildingID);
+			MSG_WriteShort(sb, e->baseHired->idx);
+			MSG_WriteShort(sb, e->building->idx);
 			/* 2.3++ Store the nations identifier string. */
 			if (e->nation)
 				MSG_WriteString(sb, e->nation->id);
@@ -1387,9 +1367,11 @@ qboolean E_Save (sizebuf_t* sb, void* data)
  */
 qboolean E_Load (sizebuf_t* sb, void* data)
 {
-	int i, j, k;
+	int i, k;
+	employeeType_t j;
 	int td;	/**< Team-definition index */
 	employee_t* e;
+	int building;
 
 	/* load inventories */
 	for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
@@ -1400,9 +1382,12 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			if (e->type != j)
 				Com_Printf("......error in loading employee - type values doesn't match\n");
 			e->hired = MSG_ReadByte(sb);
+			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			e->idx = MSG_ReadShort(sb);
-			e->baseIDHired = MSG_ReadShort(sb);
-			e->buildingID = MSG_ReadShort(sb);
+			assert(gd.numBases);	/**@just in case the order is ever changed. */
+			e->baseHired = B_GetBase(MSG_ReadShort(sb));
+			building = MSG_ReadShort(sb);
+			e->building = (e->baseHired && building >= 0) ? &gd.buildings[e->baseHired->idx][building] : NULL;
 
 			if (((saveFileHeader_t *)data)->version >= 3) { /* (2.3+) */
 				/* Read the nations identifier string, get the matching nation_t pointer.
@@ -1420,8 +1405,8 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			Q_strncpyz(e->chr.path, MSG_ReadString(sb), sizeof(e->chr.path));
 			Q_strncpyz(e->chr.head, MSG_ReadString(sb), sizeof(e->chr.head));
 			e->chr.skin = MSG_ReadByte(sb);
-			e->chr.empl_idx = i;
-			e->chr.empl_type = j;
+			e->chr.emplIdx = i;
+			e->chr.emplType = j;
 			e->chr.armour = MSG_ReadByte(sb);
 			e->chr.weapons = MSG_ReadByte(sb);
 			e->chr.teamDef = NULL;

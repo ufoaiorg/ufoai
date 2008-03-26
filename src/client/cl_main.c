@@ -1385,7 +1385,7 @@ static void CL_SpawnSoldiers_f (void)
 	const int n = cl_teamnum->integer;
 	base_t *base;
 	aircraft_t *aircraft = cls.missionaircraft;
-	chrList_t chr_list_temp;
+	chrList_t chrListTemp;
 	int i;
 
 	if (!cls.missionaircraft) {
@@ -1419,19 +1419,19 @@ static void CL_SpawnSoldiers_f (void)
 	/* maybe we start the map directly from commandline for testing */
 	if (base) {
 		/* convert aircraft team to chr_list */
-		for (i = 0, chr_list_temp.num = 0; i < aircraft->maxTeamSize; i++) {
-			if (aircraft->teamIdxs[i] != -1) {
-				chr_list_temp.chr[chr_list_temp.num] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
-				chr_list_temp.num++;
+		for (i = 0, chrListTemp.num = 0; i < aircraft->maxTeamSize; i++) {
+			if (aircraft->acTeam[i]) {
+				chrListTemp.chr[chrListTemp.num] = &aircraft->acTeam[i]->chr;
+				chrListTemp.num++;
 			}
 		}
 
-		if (chr_list_temp.num <= 0) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chr_list_temp.num);
+		if (chrListTemp.num <= 0) {
+			Com_DPrintf(DEBUG_CLIENT, "CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chrListTemp.num);
 		} else {
 			/* send team info */
 			struct dbuffer *msg = new_dbuffer();
-			CL_SendCurTeamInfo(msg, &chr_list_temp);
+			CL_SendCurTeamInfo(msg, &chrListTemp);
 			NET_WriteMsg(cls.stream, msg);
 		}
 	} else

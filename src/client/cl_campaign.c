@@ -4641,7 +4641,7 @@ static void CL_UpdateCharacterStats (int won)
 	character_t *chr;
 	rank_t *rank;
 	aircraft_t *aircraft;
-	int i, j, idx = 0;
+	int i, j;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
@@ -4652,12 +4652,14 @@ static void CL_UpdateCharacterStats (int won)
 
 	/** @todo What about UGVs/Tanks? */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, gd.interceptAircraft) ) {
+		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], gd.interceptAircraft) ) {
+			assert(gd.employees[EMPL_SOLDIER][i].hired && gd.employees[EMPL_SOLDIER][i].baseHired == baseCurrent);
+
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
-			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(idx + 1));
+			chr = &gd.employees[EMPL_SOLDIER][i].chr;
 			assert(chr);
-			/* count every hired soldier in aircraft */
-			idx++;
+
+			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;
 
 			/** CL_UpdateCharacterSkills(chr);
@@ -4688,9 +4690,7 @@ static void CL_UpdateCharacterStats (int won)
 					}
 				}
 			}
-		/* also count the employees that are only hired but not in the aircraft */
-		} else if (E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i))
-			idx++;
+		}
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: Done\n");
 }
 
@@ -4806,14 +4806,20 @@ static void CL_DebugNewEmployees_f (void)
 static void CL_DebugChangeCharacterStats_f (void)
 {
 	int i, j;
+	employee_t *employee;
 	character_t *chr;
 
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
-		if (chr) {
-			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				chr->score.kills[j]++;
-		}
+		employee = &gd.employees[EMPL_SOLDIER][i];
+
+		if (!employee->hired && employee->baseHired != baseCurrent)
+			continue;
+
+		chr = &(employee->chr);
+		assert (chr);
+
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			chr->score.kills[j]++;
 	}
 	CL_UpdateCharacterStats(1);
 }
@@ -4882,14 +4888,14 @@ static void CL_GameResults_f (void)
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
 		/* if employee is marked as dead */
-		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, gd.interceptAircraft))	/* DEBUG? */
+		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], gd.interceptAircraft))	/* DEBUG? */
 			numberofsoldiers++;
 
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
-		employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
+		employee = &gd.employees[EMPL_SOLDIER][i];
 
-		if (employee != NULL) {
-			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+		if (employee->hired && employee->baseHired == baseCurrent) {
+			chr = &(employee->chr);
 			assert(chr);
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n",chr->ucn, chr->HP);
 			if (chr->HP <= 0) { /* @todo: <= -50, etc. */

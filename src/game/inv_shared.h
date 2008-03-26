@@ -612,6 +612,19 @@ typedef enum {
 	RES_TYPES /**< Max. */
 } reservation_types_t;
 
+/**
+ * @brief The types of employees.
+ * @note If you will change order, make sure personel transfering still works.
+ */
+typedef enum {
+	EMPL_SOLDIER,
+	EMPL_SCIENTIST,
+	EMPL_WORKER,
+	EMPL_MEDIC,
+	EMPL_ROBOT,
+	MAX_EMPL		/**< For counting over all available enums. */
+} employeeType_t;
+
 /** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;
@@ -631,35 +644,25 @@ typedef struct character_s {
 	chrScoreMission_t *scoreMission;		/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */
 
 	/** @sa memcpy in Grid_CheckForbidden */
-	int fieldSize;				/**< ACTOR_SIZE_* */
+	int fieldSize;				/**< @sa ACTOR_SIZE_**** */
 
 	inventory_t *inv;			/**< Inventory definition. */
 
-	int empl_idx;				/**< Backlink to employee-struct - global employee index. */
-	int empl_type;				/**< Employee type. */
+	/** @note These unfortunately need to be indices 'cause in the battlescape there is no employee-info anywhere (AFAIK). */
+	int emplIdx;				/**< Backlink to employee-struct - global employee index (gd.employees[][emplIdx]). */
+	employeeType_t emplType;				/**< Employee type.  (gd.employees[emplType][]). */
 
 	qboolean armour;			/**< Able to use armour. */
 	qboolean weapons;			/**< Able to use weapons. */
 
 	teamDef_t *teamDef;			/**< Pointer to team definition. */
-	int gender;					/**< Gender index. */
+	int gender;				/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 } character_t;
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == HAND && (fm)->fmIdx == fdIdx)
 #define SANE_FIREMODE(fm)	((((fm)->hand >= 0) && ((fm)->fmIdx >=0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON) && ((fm)->fmIdx >= 0)))
-
-/** @brief The types of employees. */
-/** @note If you will change order, make sure personel transfering still works. */
-typedef enum {
-	EMPL_SOLDIER,
-	EMPL_SCIENTIST,
-	EMPL_WORKER,
-	EMPL_MEDIC,
-	EMPL_ROBOT,
-	MAX_EMPL					/**< for counting over all available enums */
-} employeeType_t;
 
 #define MAX_CAMPAIGNS	16
 

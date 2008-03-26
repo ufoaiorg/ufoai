@@ -901,7 +901,7 @@ void RS_AssignScientist (technology_t* tech)
 				base->capacities[CAP_LABSPACE].cur++;	/* Set the amount of currently assigned in capacities. */
 
 				/* Assign the sci to the lab and set number of used lab-space. */
-				employee->buildingID = building->idx;
+				employee->building = building;
 			} else {
 				MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 				return;
@@ -963,7 +963,7 @@ void RS_RemoveScientist (technology_t* tech)
 			/* Update capacity. */
 			tech->base->capacities[CAP_LABSPACE].cur--;
 			/* Remove the scientist from the lab and set number of used lab-space. */
-			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+			employee->building = NULL; /* See also E_RemoveEmployeeFromBuilding */
 		} else {
 			/* No assigned scientists found - serious inconsistency. */
 			/** @todo add proper handling of this case. */

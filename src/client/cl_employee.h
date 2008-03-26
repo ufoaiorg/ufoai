@@ -46,12 +46,15 @@ typedef struct employee_s {
 	int idx;					/**< self link in global employee-list. */
 
 	qboolean hired;				/**< this is true if the employee was already hired - default is false */
-	int baseIDHired;			/**< baseID where the soldier is hired atm */
+	base_t *baseHired;			/**< Base where the soldier is hired it atm. */
 
 	char speed;					/**< Speed of this Worker/Scientist at research/construction. */
 
-	int buildingID;				/**< assigned to this building in gd.buildings[baseIDHired][buildingID] */
+	building_t *building;				/**< Assigned to this building in gd.buildings[baseIDXHired][buildingID] */
 
+	qboolean transfer;			/**< Is this employee currently transferred?
+								 * @sa Set in TR_TransferStart_f
+								 * @todo make use of this whereever needed. */
 	character_t chr;			/**< Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
 	inventory_t inv;			/**< employee inventory */
 	employeeType_t type;		/**< back link to employee type in gd.employees */
@@ -59,8 +62,13 @@ typedef struct employee_s {
 	ugv_t *ugv;	/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal emplyoees this is NULL. */
 } employee_t;
 
-/* how many employees in current list (changes on every catergory change, too) */
+/* List of (hired) emplyoees in the current category (employeeType). */
+extern linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
+/* How many employees in current list (changes on every category change, too) */
 extern int employeesInCurrentList;
+
+/* Currentlky selected employee. */
+extern employee_t *selectedEmployee;
 
 void E_ResetEmployees(void);
 employee_t* E_CreateEmployee(employeeType_t type, nation_t *nation, ugv_t *ugvType);
@@ -78,9 +86,8 @@ int E_EmployeesInBase(const base_t* const base, employeeType_t type, qboolean fr
 
 employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int num);
 employee_t* E_GetUnhiredRobot(const ugv_t *ugvType);
-employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, int num);
+int E_GetHiredEmployees(const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees);
 employee_t* E_GetHiredRobot(const base_t* const base, const ugv_t *ugvType);
-character_t* E_GetHiredCharacter(const base_t* const base, employeeType_t type, int num);
 employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);
 employee_t* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
 employee_t* E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t type, int ucn);
@@ -92,6 +99,7 @@ int E_CountAllHired(const base_t* const base);
 int E_CountUnhired(employeeType_t type);
 int E_CountUnhiredRobotsByType(const ugv_t *ugvType);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
+inline employee_t* E_GetEmployeeByMenuIndex(int num);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
 qboolean E_IsInBase(employee_t* empl, const base_t* const base);

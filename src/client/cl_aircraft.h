@@ -22,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-
 #ifndef CLIENT_CL_AIRCRAFT_H
 #define CLIENT_CL_AIRCRAFT_H
 
@@ -154,7 +153,7 @@ typedef struct aircraft_s {
 
 	int price;			/**< Price of this aircraft type. */
 	int fuel;			/**< Current fuel amount. */
-	int maxTeamSize;	/**< Max amount of soldiers onboard. */
+	int maxTeamSize;	/**< Max amount of soldiers onboard. @todo How do we handle 2x2 units here? */
 	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/* @todo: rename me to size. */
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;		/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
@@ -164,13 +163,8 @@ typedef struct aircraft_s {
 						is being parked in (CAP_AIRCRAFTS_SMALL/CAP_AIRCRAFTS_BIG). */
 
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
-	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team).
-						 * @note ATTENTION do not use this in "for" loops or similar.
-						 * Entries in teamIdxs and teamTypes are not stored in order and may contain "empties" (see teamIdxs).
-						 */
-	int teamIdxs[MAX_ACTIVETEAM];	/**< Array of team members on board (global employee idx).
-					 * This value is -1 if the entry is unused/empty. (See teamSize) */
-	employeeType_t teamTypes[MAX_ACTIVETEAM];	/**< Array of team member types on board (=employee type). */
+	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team). */
+	struct employee_s *acTeam[MAX_ACTIVETEAM];			/**< List of employees. i.e. current team for this aircraft. @todo Make this a linked list? */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft (empty or not) */
@@ -236,10 +230,9 @@ void AIR_DeleteAircraft(aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
-void AIR_AddToAircraftTeam(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
-void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
-void AIR_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
-qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
+void AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
+void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
+qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);

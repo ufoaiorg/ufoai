@@ -190,8 +190,9 @@ void CL_CharacterCvars (character_t * chr)
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 	/* These two will be needed in Hire menu. */
-	Cvar_Set("mn_employee_idx", va("%i", chr->empl_idx));
-	Cvar_Set("mn_employee_type", va("%i", chr->empl_type));
+	if (chr->emplType >= 0 && chr->emplType < MAX_EMPL
+	 && chr->emplIdx >= 0 && chr->emplIdx < MAX_EMPLOYEES )
+		selectedEmployee = &gd.employees[chr->emplType][chr->emplIdx];
 
 	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
 	if (chr->score.rank >= 0 && gd.numRanks) {
@@ -453,13 +454,13 @@ static void SetWeaponButton (int button, weaponButtonState_t state)
  */
 static int CL_GetActorNumber (const le_t * le)
 {
-	int actor_idx;
+	int actorIdx;
 
 	assert(le);
 
-	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-		if (cl.teamList[actor_idx] == le)
-			return actor_idx;
+	for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
+		if (cl.teamList[actorIdx] == le)
+			return actorIdx;
 	}
 	return -1;
 }
@@ -472,7 +473,7 @@ static int CL_GetActorNumber (const le_t * le)
  */
 character_t *CL_GetActorChr (const le_t * le)
 {
-	int actor_idx;
+	int actorIdx;
 	aircraft_t *aircraft = cls.missionaircraft;
 	int i, p;
 
@@ -483,22 +484,23 @@ character_t *CL_GetActorChr (const le_t * le)
 
 	assert(le);
 
-	actor_idx = CL_GetActorNumber(le);
+	actorIdx = CL_GetActorNumber(le);
 
-	if (actor_idx < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: BAD ACTOR IDX!\n");
+	if (actorIdx < 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: BAD ACTOR INDEX!\n");
 		return NULL;
 	}
 
 	/* Search in the aircraft team (we skip unused entries) for this actor. */
 	for (i = 0, p = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->teamIdxs[i] != -1) {
-			if (actor_idx == p) {
-				return &gd.employees[aircraft->teamTypes[actor_idx]][aircraft->teamIdxs[actor_idx]].chr;
+		if (aircraft->acTeam[p]) {
+			if (actorIdx == p) {
+				return &aircraft->acTeam[p]->chr;
 			}
 			p++;
 		}
 	}
+
 	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: no character info found!\n");
 	return NULL;
 }
