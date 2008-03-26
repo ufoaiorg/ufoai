@@ -126,6 +126,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 	int32_t *outIndex;
 	int frameSize, numIndexes, numVerts, skinWidth, skinHeight;
 	double isw, ish;
+	const char *md2Path;
 	size_t l;
 
 	/* fixed values */
@@ -169,9 +170,9 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 		return;
 	}
 	outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
+	md2Path = (char *) md2 + LittleLong(md2->ofs_skins);
 	for (i = 0; i < outMesh->num_skins; i++) {
-		outMesh->skins[i].skin = R_AliasModelGetSkin(mod,
-			(char *) md2 + md2->ofs_skins + i * MD2_MAX_SKINNAME);
+		outMesh->skins[i].skin = R_AliasModelGetSkin(mod, md2Path + i * MD2_MAX_SKINNAME);
 		Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
 	}
 	outMesh->skinWidth = skinWidth;
