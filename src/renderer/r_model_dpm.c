@@ -33,8 +33,8 @@ void R_ModelLoadDPMVertsForFrame (model_t *mod, int frame)
 	int i, j;
 	mAliasMesh_t *mesh;
 	mAliasVertex_t *outVertex;
-	mAliasBoneVertex_t *boneVertex;
-	mAliasBoneMatrix_t *boneMatrix;
+	const mAliasBoneVertex_t *boneVertex;
+	const mAliasBoneMatrix_t *boneMatrix;
 
 	assert(mod);
 	assert(frame >= 0);
@@ -75,6 +75,7 @@ void R_ModLoadAliasDPMModel (model_t *mod, void *buffer, int bufSize)
 	mAliasFrame_t *outFrame;
 	mAliasBone_t *outBones;
 	mAliasBoneMatrix_t *outBoneMatrix;
+	mAliasBoneVertex_t *outBoneVertexes;
 	int32_t *outIndex, *index;
 	int num;
 	int i, j, k;
@@ -134,10 +135,10 @@ void R_ModLoadAliasDPMModel (model_t *mod, void *buffer, int bufSize)
 		Q_strncpyz(outMesh->skins[0].name, outMesh->skins[0].skin->name, sizeof(outMesh->skins[0].name));
 
 		/* load bone verts */
+		num = 0;
 		for (j = 0, vert = (dpmvertex_t *)((byte *)dpm + mesh->ofs_verts); j < outMesh->num_verts; j++) {
 			vert->numbones = BigLong(vert->numbones);
 			for (k = 0, bonevert = (dpmbonevert_t *)(vert + 1); k < vert->numbones; k++, bonevert++) {
-				/* TODO: Put this into mAliasModel_t */
 				bonevert->origin[0] = BigFloat(bonevert->origin[0]);
 				bonevert->origin[1] = BigFloat(bonevert->origin[1]);
 				bonevert->origin[2] = BigFloat(bonevert->origin[2]);
@@ -146,6 +147,18 @@ void R_ModLoadAliasDPMModel (model_t *mod, void *buffer, int bufSize)
 				bonevert->normal[1] = BigFloat(bonevert->normal[1]);
 				bonevert->normal[2] = BigFloat(bonevert->normal[2]);
 				bonevert->bonenum = BigLong(bonevert->bonenum);
+			}
+			num += vert->numbones; /* count the boneverts to know how much mem we have to allocate for them */
+			vert = (dpmvertex_t *)bonevert;
+		}
+
+		outMesh->bonesVertexes = outBoneVertexes = Mem_PoolAlloc(sizeof(mAliasBoneVertex_t) * num, vid_modelPool, 0);
+		for (j = 0, vert = (dpmvertex_t *)((byte *)dpm + mesh->ofs_verts); j < outMesh->num_verts; j++) {
+			for (k = 0, bonevert = (dpmbonevert_t *)(vert + 1); k < vert->numbones; k++, bonevert++, outBoneVertexes++) {
+				VectorCopy(bonevert->origin, outBoneVertexes->origin);
+				outBoneVertexes->influence = bonevert->influence;
+				VectorCopy(bonevert->normal, outBoneVertexes->normal);
+				outBoneVertexes->bonenum = bonevert->bonenum;
 			}
 			vert = (dpmvertex_t *)bonevert;
 		}
