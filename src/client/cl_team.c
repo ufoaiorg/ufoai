@@ -1595,7 +1595,7 @@ static void CL_AssignSoldier_f (void)
 		return;
 	}
 
-	Com_Printf("CL_AssignSoldier_f: Trying to get employee with hired-idx %i.\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: Trying to get employee with hired-idx %i.\n", num);
 
 	/* In case we didn't populate the list before we do it now. */
 	if (!employeeList) {
