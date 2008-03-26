@@ -126,7 +126,7 @@ menu campaigns
 		format	"20 0"
 		num	13
 		click	{ }
-		color	"0.75 0.75 0.75 1"
+		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
 		height	"10"
 		wheel
