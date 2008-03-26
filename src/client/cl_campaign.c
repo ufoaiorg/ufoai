@@ -5886,11 +5886,11 @@ static void CP_CampaignsClick_f (void)
 			(int)(round(campaigns[num].minhappiness * 100.0f)), campaigns[num].negativeCreditsUntilLost,
 			_(campaigns[num].text));
 	mn.menuText[TEXT_STANDARD] = campaignDesc;
-	
+
 	/* Highlight currently selected entry */
 	campaignlist = MN_GetNodeFromCurrentMenu("campaignlist");
 	campaignlist->textLineSelected = num;
-	
+
 }
 
 /**
@@ -6161,6 +6161,7 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 {
 	int num;
 	base_t* base;
+	menuNode_t *baseList;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseid>\n", Cmd_Argv(0));
@@ -6180,6 +6181,10 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n", base->name);
 	MN_PopMenu(qfalse);
 	Cmd_ExecuteString("cp_uforecoverystore");
+
+	/* Highlight currently selected entry */
+	baseList = MN_GetNodeFromCurrentMenu("cp_uforecovery_baselist");
+	baseList->textLineSelected = num;
 }
 
 /**
@@ -6307,6 +6312,7 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 {
 	int i, j = -1, num;
 	const nation_t *nation;
+	menuNode_t *nationList;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <nationid>\n", Cmd_Argv(0));
@@ -6328,6 +6334,10 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 	MN_PopMenu(qfalse);
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 	Cmd_ExecuteString("cp_uforecoverysell");
+
+	/* Highlight currently selected entry */
+	nationList = MN_GetNodeFromCurrentMenu("cp_uforecovery_nationlist");
+	nationList->textLineSelected = num;
 }
 
 /**
