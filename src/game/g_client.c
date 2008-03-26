@@ -909,6 +909,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	invList = Com_SearchInInventory(&ent->i, from, fx, fy);
 
 	/* check if action is possible */
+	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
 	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
 		return;
 
@@ -1607,7 +1608,7 @@ static void G_ClientTurn (player_t * player, int num, int dv)
 
 
 /**
- * @brief Changes the thate of a player/soldier.
+ * @brief Changes the state of a player/soldier.
  * @param[in,out] player The player who controlls the actor
  * @param[in] num The index of the edict in the global g_edicts array
  * @param[in] reqState The bit-map of the requested state change

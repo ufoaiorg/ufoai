@@ -531,8 +531,13 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 		return bestAia;
 	}
 
+	/* check if the actor is in crouched state and try to stand up before doing the move */
+	if (ent->state & STATE_CROUCHED)
+		G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
+
 	/* do the move */
-	/* FIXME: Why 0 - and not ent->team? */
+	/* FIXME: Why 0 - and not ent->team?
+	 * I think this has something to do with the vis check in G_BuildForbiddenList */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
 #if 0
@@ -600,20 +605,25 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	bestAia = AI_PrepBestAction(player, ent);
 
-	/* shoot('n'hide) */
+	/* shoot and hide */
 	if (bestAia.target) {
-		/* @todo: check whether shoot is needed or enemy died already;
-		 * use the remaining TUs for reaction fire */
+		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
 			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, 0, NULL, qtrue, 0); /* 0 = first firemode */
 			bestAia.shots--;
+			/* check for target's death */
 			if (bestAia.target->state & STATE_DEAD) {
 				bestAia = AI_PrepBestAction(player, ent);
+				/* no other target found - so no need to hide */
 				if (!bestAia.target)
 					return;
 			}
 		}
+		/* now hide */
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
+		/* TODO: Add some calculation to decide whether the actor maybe wants to go crouched */
+		if (1)
+			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 	}
 }
 
@@ -756,6 +766,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			 * @sa g_client.c:G_ClientSpawn */
 			Com_DPrintf(DEBUG_GAME, "G_SpawnAIPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
 			G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
+			/* FIXME The statechange is not send here - is that intended? */
 		} else {
 			/* Civilians */
 			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
