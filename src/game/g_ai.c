@@ -621,9 +621,13 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		}
 		/* now hide */
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
+		/* no shots left, but possible targets left - maybe they shoot back
+		 * or maybe they are still close after hiding */
 		/* TODO: Add some calculation to decide whether the actor maybe wants to go crouched */
 		if (1)
 			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
+		/* TODO: If possible targets that can shoot back (check their inventory for weapons, not for ammo)
+		 * are close, go into reaction fire mode, too */
 	}
 }
 
