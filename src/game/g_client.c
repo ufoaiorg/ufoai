@@ -1355,6 +1355,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	edict_t* client_action;
 	int oldState;
 	qboolean moveDiagonal;
+	qboolean autoCrouchRequired = qfalse;
 
 	ent = g_edicts + num;
 
@@ -1365,6 +1366,22 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, MAX_ROUTE);
 	length = gi.MoveLength(gi.routingMap, to, qfalse);
+
+	/* FIXME: if they are shot by enemy RF (and so stop walking),
+	 * they auto-crouch again. probably should not. */
+	/* FIXME: Control this behaviour with a hud button or game option cvar */
+	/* Autostand: check if the actor is crouched...*/
+	if (ent->state & STATE_CROUCHED) {
+		/* ...and if this is a long walk... */
+		if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_WALKING_FACTOR - 1.0f)) {
+			/* ...make them stand first. If the player really wants them to walk a long
+			 * way crouched, he can move the actor in several stages.
+			 * Uses the threshold at which standing, moving and crouching again takes
+			 * fewer TU than just crawling while crouched. */
+			G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
+			autoCrouchRequired = qtrue;
+		}
+	}
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length < ROUTING_NOT_REACHABLE) {
@@ -1566,6 +1583,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			gi.EndEvents();
 		}
 	}
+
+	if (autoCrouchRequired)
+		/* toggle back to crouched state */
+		G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
 }
 
 

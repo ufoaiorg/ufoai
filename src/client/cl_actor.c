@@ -2761,23 +2761,6 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	/* change mode to move now */
 	cl.cmode = M_MOVE;
 
-#if 0
-	/* FIXME: Also crouch again after finishing move
-	 * This might be the wrong location to do this - should be done serverside */
-	/* If it is a long move and they are crouched, then make them stand first. */
-	if ((le->state & STATE_CROUCHED)) {
-		const float diff = ((float)length * TU_CROUCH_WALKING_FACTOR) - length;
-		const int crouchTUs = (TU_CROUCH * 2) + diff;
-		if (length > crouchTUs) {
-			/* If the player really wants them to walk a long way crouched, he can move
-			 * the actor in several stages.
-			 * crouchTUs TU is the cut off at which standing, moving and crouching again takes
-			 * fewer TU than just crawling while crouched. */
-			MSG_Write_PA(PA_STATE, le->entnum, STATE_CROUCHED);
-		}
-	}
-#endif
-
 	/* move seems to be possible; send request to server */
 	MSG_Write_PA(PA_MOVE, le->entnum, toReal);
 }
