@@ -522,7 +522,7 @@ menu hud
 
 	pic bt_crouch_reservation
 	{
-		tooltip	"_Reserve TUs for crouching/standing up."
+		tooltip	"*cvar mn_crouch_reservation_tt"
 		pos	"828 723"
 		texl	"0 0"
 		texh	"17 16"
@@ -537,30 +537,28 @@ menu hud
 	{
 		*bt_shot_reservation texl	"0 0"
 		*bt_shot_reservation texh	"51 32"
-		*bt_shot_reservation tooltip "_Reserve TUs for shooting."
 	}
 	confunc reserve_shot_check_s
 	{
 		*bt_shot_reservation texl	"0 32"
 		*bt_shot_reservation texh	"51 64"
-		*bt_shot_reservation tooltip "_Clear reserved TUs for shooting."
 	}
 	confunc reserve_shot_disable_s
 	{
 		*bt_shot_reservation texl	"64 32"
 		*bt_shot_reservation texh	"127 64"
-		*bt_shot_reservation tooltip "_Reserving TUs for shooting not possile."
 	}
 	pic bt_shot_reservation
 	{
-		tooltip	"_Reserve TUs for shooting."
+		tooltip	"*cvar mn_shot_reservation_tt"
 		key "*binding sel_shotreservation"
-		image hud/button_reserve_shot	// fixme
+		image hud/button_reserve_shot
 		pos	"303 681"
-		texl	"64 32"	// Inital pic - will be overwritten once the game's compeletly started.
+		texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
 		texh	"127 64"
 		mousefx true
 		click	{ cmd "sel_shotreservation;" }
+		rclick	{ cmd "sel_shotreservation 0;" }
 	}
 
 	// REACTION MODE BUTTON

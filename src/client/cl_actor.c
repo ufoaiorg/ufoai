@@ -880,6 +880,54 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 		return;
 	}
 }
+/**
+ * @brief Check if at least one firemode is available for reservation.
+ * @return qtrue if there is at least one firemode - qfalse otherwise.
+ * @sa CL_RefreshWeaponButtons
+ * @sa CL_PopupFiremodeReservation_f
+ */
+static qboolean CL_CheckFiremodeReservation (void)
+{
+	objDef_t *ammo;
+	objDef_t *weapon;
+	int weapFdsIdx = -1;
+	char hand = 'r';
+	int i;
+
+	if (!selActor)
+		return qfalse;
+
+	/* Reset the length of the TU-list. */
+	popupNum = 0;
+
+	/* Add list-entry for deactivation of the reservation. */
+	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
+		ammo = NULL;
+		weapon = NULL;
+		weapFdsIdx = -1;
+
+		/* Get weapon (and its ammo) from the hand. */
+		CL_GetWeaponAndAmmo(selActor, hand, &weapon, &ammo, &weapFdsIdx);
+
+		if (weapon && ammo) {
+			for (i = 0; i < ammo->numFiredefs[weapFdsIdx]; i++) {
+				/* Check if at least one firemode is available for reservation. */
+				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weapFdsIdx][i].time)
+					return qtrue;
+			}
+		}
+
+		/* Prepare for next run or for end of loop. */
+		if (hand == 'r') {
+			hand = 'l';	/* First run. Set hand for second run of the loop (other hand) */
+		} else {
+			hand = 0;	/* Second (&last) run -> quit. */
+		}
+	} while (hand != 0);
+
+	/* No reservation possible */
+	return qfalse;
+}
 
 static linkedList_t* popupListText = NULL;
 static linkedList_t* popupListData = NULL;
@@ -889,6 +937,7 @@ static menuNode_t* popupListNode = NULL;
  * @brief Creates a (text) list of all firemodes of the currently selected actor.
  * @note console command: cl_input.c:sel_shotreservation
  * @todo Fix the usage of LIST_Add with constant values like 0,1 and -1. See also the "tempxxx" variables.
+ * @sa CL_CheckFiremodeReservation
  */
 void CL_PopupFiremodeReservation_f (void)
 {
@@ -908,6 +957,17 @@ void CL_PopupFiremodeReservation_f (void)
 
 	selChr = CL_GetActorChr(selActor);
 	assert(selChr);
+
+	if (Cmd_Argc() == 2) {
+		/* A second parameter (the value itself will be ignored) was given.
+		 * This is used to reset the shot-reservation.*/
+		CL_ReserveTUs(selActor, RES_SHOT, 0);
+		selChr->reservedTus.shotSettings.hand = -1;
+		selChr->reservedTus.shotSettings.fmIdx = -1;
+		selChr->reservedTus.shotSettings.wpIdx = -1;
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
+		return;
+	}
 
 	LIST_Delete(popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
@@ -975,10 +1035,8 @@ void CL_PopupFiremodeReservation_f (void)
 		}
 	} while (hand != 0);
 
-	/* FIXME currently this is always true because the 0 TUs entry to revert the TU reservation
-	 * is always in the list - this should be fixed in a better way */
-	/* only display the popup when there are valid firemodes in the list */
-	if (popupNum) {
+	if (popupNum > 1) {
+		/* We have more entries that the "0 TUs" one. */
 		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
@@ -1627,11 +1685,11 @@ static void CL_RefreshWeaponButtons (int time)
 	else
 		weaponl = NULL;
 
-	/* crouch/stand button */
+	/* Crouch/stand button. */
 	if (selActor->state & STATE_CROUCHED) {
 		weaponButtonState[BT_STAND] = -1;
 		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
-			Cvar_Set("mn_crouchstand_tt", ("Not enough TUs for standing up."));
+			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
 			SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
 		} else {
 			Cvar_Set("mn_crouchstand_tt", va(_("Stand up (%i TU)"), TU_CROUCH));
@@ -1640,7 +1698,7 @@ static void CL_RefreshWeaponButtons (int time)
 	} else {
 		weaponButtonState[BT_CROUCH] = -1;
 		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
-			Cvar_Set("mn_crouchstand_tt", ("Not enough TUs for crouching."));
+			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
 			SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		} else {
 			Cvar_Set("mn_crouchstand_tt", va(_("Crouch (%i TU)"), TU_CROUCH));
@@ -1648,19 +1706,28 @@ static void CL_RefreshWeaponButtons (int time)
 		}
 	}
 
+	/* Crouch/stand reservation checkbox. */
 	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 		Cbuf_AddText("crouch_checkbox_check\n");
+		Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."), CL_ReservedTUs(selActor, RES_CROUCH)));
 	} else if (time >= TU_CROUCH) {
 		Cbuf_AddText("crouch_checkbox_clear\n");
+		Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
 	} else {
 		Cbuf_AddText("crouch_checkbox_disable\n");
+		Cvar_Set("mn_crouch_reservation_tt", _("Not enough TUs left to reserve for crouching/standing up."));
 	}
 
-	/* Shot-reservation button. */
-	if (CL_ReservedTUs(selActor, RES_CROUCH)) {
+	/* Shot reservation button. */
+	if (CL_ReservedTUs(selActor, RES_SHOT)) {
 		Cbuf_AddText("reserve_shot_check\n");
-	} else {
+		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."), CL_ReservedTUs(selActor, RES_SHOT)));
+	} else if (CL_CheckFiremodeReservation()) {
 		Cbuf_AddText("reserve_shot_clear\n");
+		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
+	} else {
+		Cbuf_AddText("reserve_shot_disable\n");
+		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possile."));
 	}
 
 	/* Headgear button (nearly the same code as for weapon firing buttons below). */
