@@ -1360,7 +1360,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	ent = g_edicts + num;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, 2, quiet))
+	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT, quiet))
 		return;
 
 	/* calculate move table */
