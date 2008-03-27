@@ -1718,7 +1718,7 @@ static void CL_RefreshWeaponButtons (int time)
 		Cvar_Set("mn_crouch_reservation_tt", _("Not enough TUs left to reserve for crouching/standing up."));
 	}
 
-	/* Shot reservation button. */
+	/* Shot reservation button. mn_shot_reservation_tt is the tooltip text */
 	if (CL_ReservedTUs(selActor, RES_SHOT)) {
 		Cbuf_AddText("reserve_shot_check\n");
 		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."), CL_ReservedTUs(selActor, RES_SHOT)));
@@ -1727,7 +1727,7 @@ static void CL_RefreshWeaponButtons (int time)
 		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
 	} else {
 		Cbuf_AddText("reserve_shot_disable\n");
-		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possile."));
+		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possible."));
 	}
 
 	/* Headgear button (nearly the same code as for weapon firing buttons below). */
