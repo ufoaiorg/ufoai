@@ -665,7 +665,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
 
 			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)) ||
 				B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)))
-				UFO_UpdateUFOHangarCapForAll(baseIdx);
+				UFO_UpdateUFOHangarCapForAll(base);
 
 			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)))
 				INV_UpdateAntimatterCap(base);

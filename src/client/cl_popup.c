@@ -179,6 +179,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	static char baseListText[1024];
 	char *s;
 	int i, j;
+	base_t *base;
 	aircraft_t *air;
 	qboolean somethingWritten, notEnoughFuel;
 
@@ -192,21 +193,24 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	popupIntercept.numAircraft = 0;
 	memset(aircraftListText, 0, sizeof(aircraftListText));
 	for (j = 0; j < gd.numBases; j++) {
-		if (!gd.bases[j].founded)
+		base = B_GetBase(j);
+		assert(base);
+
+		if (!base->founded)
 			continue;
 
-		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
-			air = &gd.bases[j].aircraft[i];
+		for (i = 0; i < base->numAircraftInBase; i++) {
+			air = &base->aircraft[i];
 			notEnoughFuel = qfalse;
 
 			/* if dependencies of hangar are missing, you can't send aircraft */
 			switch (air->weight) {
 			case AIRCRAFT_SMALL:
-				if (!gd.bases[j].hasBuilding[B_SMALL_HANGAR])
+				if (!base->hasBuilding[B_SMALL_HANGAR])
 					continue;
 				break;
 			case AIRCRAFT_LARGE:
-				if (!gd.bases[j].hasBuilding[B_HANGAR])
+				if (!base->hasBuilding[B_HANGAR])
 					continue;
 				break;
 			default:
@@ -234,13 +238,13 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			if (!notEnoughFuel)
 				Q_strcat(aircraftListText, "^B", sizeof(aircraftListText));
 			if (ufo)
-				s = va("%s (%i/%i)\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), gd.bases[j].name);
+				s = va("%s (%i/%i)\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), base->name);
 			else {
 				const float distance = MAP_GetDistance(air->pos, mission->pos);
-				s = va("%s (%i/%i)\t%s\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), gd.bases[j].name, CL_SecondConvert(3600.0f * distance / air->stats[AIR_STATS_SPEED]));
+				s = va("%s (%i/%i)\t%s\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), base->name, CL_SecondConvert(3600.0f * distance / air->stats[AIR_STATS_SPEED]));
 			}
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
-			assert(air->homebase == &gd.bases[j]);
+			assert(air->homebase == base);
 			popupIntercept.aircraft[popupIntercept.numAircraft] = air;
 			popupIntercept.numAircraft++;
 			if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
@@ -249,7 +253,8 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 		/* also leave the outer loop */
 		if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
 			break;
-	}
+	}	/* bases */
+
 	if (popupIntercept.numAircraft)
 		mn.menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 	else if (mission)
@@ -263,13 +268,16 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 		/* Create the list of base, and write the text to display in popup
 		 * don't use the same loop than above, to avoid leaving the loop if popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT */
 		for (j = 0; j < gd.numBases; j++) {
-			if (!gd.bases[j].founded)
+			base = B_GetBase(j);
+			assert(base);
+
+			if (!base->founded)
 				continue;
 
 			/* Check if the base should be displayed in base list
 			 * don't check range because maybe UFO will get closer */
-			if (AII_BaseCanShoot(B_GetBase(j))) {
-				Q_strcat(baseListText, va("^B%s\n", gd.bases[j].name), sizeof(baseListText));
+			if (AII_BaseCanShoot(base)) {
+				Q_strcat(baseListText, va("^B%s\n", base->name), sizeof(baseListText));
 				somethingWritten = qtrue;
 			}
 		}
@@ -367,6 +375,7 @@ static void CL_PopupInterceptRClick_f (void)
 static void CL_PopupInterceptBaseClick_f (void)
 {
 	int num, baseIdx, i;
+	base_t* base;
 	qboolean atLeastOneBase = qfalse;
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
@@ -380,11 +389,14 @@ static void CL_PopupInterceptBaseClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
-		if (!gd.bases[baseIdx].founded)
+		base = B_GetBase(baseIdx);
+		assert(base);
+
+		if (!base->founded)
 			continue;
 
 		/* Check if the base should be displayed in base list */
-		if (AII_BaseCanShoot(B_GetBase(baseIdx))) {
+		if (AII_BaseCanShoot(base)) {
 			num--;
 			atLeastOneBase = qtrue;
 			if (num < 0)
@@ -402,10 +414,10 @@ static void CL_PopupInterceptBaseClick_f (void)
 		return;
 	}
 
-	for (i = 0; i < gd.bases[baseIdx].maxBatteries; i++)
-		gd.bases[baseIdx].targetMissileIdx[i] = selectedUFO - gd.ufos;
-	for (i = 0; i < gd.bases[baseIdx].maxLasers; i++)
-		gd.bases[baseIdx].targetLaserIdx[i] = selectedUFO - gd.ufos;
+	for (i = 0; i < base->maxBatteries; i++)
+		base->targetMissileIdx[i] = selectedUFO - gd.ufos;
+	for (i = 0; i < base->maxLasers; i++)
+		base->targetLaserIdx[i] = selectedUFO - gd.ufos;
 
 	MN_PopMenu(qfalse);
 }

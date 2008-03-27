@@ -43,7 +43,7 @@ void UFO_CampaignCheckEvents(qboolean checkStatusChanged);
 void UFO_Reset(void);
 aircraft_t *UFO_AddToGeoscape(ufoType_t ufotype, vec2_t destination, mission_t *mission);
 void UFO_RemoveFromGeoscape(aircraft_t* ufo);
-void UFO_UpdateUFOHangarCapForAll(int base_idx);
+void UFO_UpdateUFOHangarCapForAll(base_t *base);
 void UFO_PrepareRecovery(base_t *base);
 void UFO_Recovery(void);
 qboolean UFO_ConditionsForStoring(const base_t *base, const aircraft_t *ufocraft);

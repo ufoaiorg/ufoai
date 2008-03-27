@@ -849,7 +849,7 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 	case EMPL_SOLDIER:
 		break;
 	case EMPL_SCIENTIST:
-		employee = E_GetUnassignedEmployee(B_GetBase(building->base_idx), type);
+		employee = E_GetUnassignedEmployee(building->base, type);
 		if (employee) {
 			employee->building = building;
 		} else {

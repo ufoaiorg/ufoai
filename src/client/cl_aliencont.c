@@ -587,37 +587,44 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
  */
 static void AC_NextAC_f (void)
 {
-	int i, baseID;
+	base_t *base;
 	qboolean found = qfalse;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
 		return;
 
-	baseID = baseCurrent->idx;
+	/* Get next base */
+	if (baseCurrent->idx >= MAX_BASES -1)
+		base = B_GetBase(0);
+	else
+		base = B_GetBase(baseCurrent->idx + 1);
+	assert(base);
 
-	/* not all maxbases must be founded already */
-	i = (baseID + 1) & (MAX_BASES - 1);
-	if (i >= gd.numBases)
-		i = 0; /* i -= gd.numBases - but 0 should work, too */
-
-	for (; i < gd.numBases; i++) {
-		if (!gd.bases[i].founded || !gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
+	/* Loop until we hit the original base. */
+	while (base != baseCurrent) {
+		if (!base->founded || !base->hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
-		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
-			baseID = i;
+
+		if (B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			found = qtrue;
 			break;
 		}
+
+		/* Get next base */
+		if (base->idx >= MAX_BASES - 1)
+			base = B_GetBase(0);	/* Wrap around from last to first base. */
+		else
+			base = B_GetBase(base->idx + 1);
 	}
 
 	if (!found)
-		baseID = baseCurrent->idx;
+		base = baseCurrent;
 
-	if (!gd.bases[baseID].founded)
+	if (!base->founded)
 		return;
 	else
-		Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push aliencont\n", baseID));
+		Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push aliencont\n", base->idx));
 }
 
 /**
@@ -626,7 +633,6 @@ static void AC_NextAC_f (void)
  */
 static void AC_PrevAC_f (void)
 {
-	int i;
 	qboolean found = qfalse;
 	const base_t *base;
 
@@ -634,18 +640,32 @@ static void AC_PrevAC_f (void)
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
 		return;
 
-	for (i = (baseCurrent->idx - 1) & (MAX_BASES - 1); i >= 0; i--) {
-		base = B_GetBase(i);
-		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
+	/* Get previous base */
+	if (baseCurrent->idx <= 0)
+		base = B_GetBase(MAX_BASES - 1);
+	else
+		base = B_GetBase(baseCurrent->idx - 1);
+	assert(base);
+
+	/* Loop until we hit the original base. */
+	while (base != baseCurrent) {
+		if (!base->founded || !base->hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
+
 		if (B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			found = qtrue;
 			break;
 		}
+
+		/* Get previous base */
+		if (base->idx <= 0)
+			base = B_GetBase(MAX_BASES - 1);	/* Wrap around from first to last base. */
+		else
+			base = B_GetBase(base->idx - 1);
 	}
 
 	if (!found)
-		base = B_GetBase(baseCurrent->idx);
+		base = baseCurrent;
 
 	if (!base->founded)
 		return;

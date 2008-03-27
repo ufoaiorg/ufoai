@@ -689,17 +689,14 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
  * @brief Updates current capacities for UFO hangars in given base.
  * @param[in] base_idx Index of base in global array.
  */
-void UFO_UpdateUFOHangarCapForAll (int base_idx)
+void UFO_UpdateUFOHangarCapForAll (base_t *base)
 {
 	int i;
-	base_t *base;
 	aircraft_t *ufocraft;
-
-	base = B_GetBase(base_idx);
 
 	if (!base) {
 #ifdef DEBUG
-		Com_Printf("UFO_UpdateUFOHangarCapForAll()... base does not exist!\n");
+		Com_Printf("UFO_UpdateUFOHangarCapForAll()... no base given!\n");
 #endif
 		return;
 	}
