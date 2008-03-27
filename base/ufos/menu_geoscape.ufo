@@ -383,10 +383,13 @@ menu map
 
 menu popup_list
 {
-	zone popup
-	{
-		invis true
-	}
+	// NOTE: This is only used in battlefield on top of the hud right now
+	// If we will ever use this in other places (on geoscape e.g.) we maybe
+	// have to readd the popup zone node
+//	zone popup
+//	{
+//		invis true
+//	}
 	pic back
 	{
 		image	menu/popup
