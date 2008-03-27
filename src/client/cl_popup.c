@@ -388,6 +388,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	num = atoi(Cmd_Argv(1));
 
+	base = NULL;
 	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
 		base = B_GetBase(baseIdx);
 		assert(base);
@@ -414,6 +415,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 		return;
 	}
 
+	assert(base);
 	for (i = 0; i < base->maxBatteries; i++)
 		base->targetMissileIdx[i] = selectedUFO - gd.ufos;
 	for (i = 0; i < base->maxLasers; i++)
