@@ -975,6 +975,9 @@ void CL_PopupFiremodeReservation_f (void)
 		}
 	} while (hand != 0);
 
+	/* FIXME currently this is always true because the 0 TUs entry to revert the TU reservation
+	 * is always in the list - this should be fixed in a better way */
+	/* only display the popup when there are valid firemodes in the list */
 	if (popupNum) {
 		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
