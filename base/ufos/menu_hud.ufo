@@ -506,7 +506,7 @@ menu hud
 	{
 		key "*binding standcrouch"
 		tooltip	"*cvar mn_crouchstand_tt"
-		
+
 		image hud/buttons2g
 		pos		"776 723"
 		texl	"0 75"
@@ -527,7 +527,7 @@ menu hud
 		texl	"0 0"
 		texh	"17 16"
 		mousefx true
-		click { cmd "togglecrouchreserve" }
+		click { cmd "togglecrouchreserve;" }
 //		out	{ *bt_crouch_reservation texl "0 0" *bt_crouch_reservation texh "17 16" }	// activate this if we ever get a "hover" version
 //		in	{ *bt_crouch_reservation texl "0 17" *bt_crouch_reservation texh "17 33" }
 	}
