@@ -628,6 +628,8 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 		/* TODO: If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
+		/* TODO: turn in the direction the AI actor has to walk to reach the last visible target
+		 * actor - this allows the AI to use reaction fire while securing a room */
 	}
 }
 
