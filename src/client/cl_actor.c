@@ -104,6 +104,7 @@ typedef enum {
 
 static weaponButtonState_t weaponButtonState[BT_NUM_TYPES];
 
+static void CL_RefreshWeaponButtons(int time);
 /**
  * @brief Writes player action with its data
  */
@@ -966,6 +967,9 @@ void CL_PopupFiremodeReservation_f (void)
 		selChr->reservedTus.shotSettings.fmIdx = -1;
 		selChr->reservedTus.shotSettings.wpIdx = -1;
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
+		
+		/* Refresh button and tooltip. */
+		CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 		return;
 	}
 
@@ -1114,6 +1118,9 @@ void CL_ReserveShot_f (void)
 			popupListNode->textLineSelected = selectedPopupIndex;
 		}
 	}
+
+	/* Refresh button and tooltip. */
+	CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 }
 
 /**
@@ -3282,19 +3289,18 @@ void CL_ActorToggleCrouchReservation_f (void)
 		CL_ReserveTUs(selActor, RES_CROUCH, 0);
 		selChr->reservedTus.reserveCrouch = qfalse;
 		/* MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_CROUCH, selChr->reservedTus.reserveCrouch, selChr->reservedTus.crouch); Update server-side settings */
-		Cbuf_AddText("crouch_checkbox_clear\n");
 	} else {
 		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
 		if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
 			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
-			Cbuf_AddText("crouch_checkbox_check\n");
-		} else {
-			Cbuf_AddText("crouch_checkbox_disable\n");
 		}
 		/* Player wants to reserve Tus for crouching - remember this. */
 		selChr->reservedTus.reserveCrouch = qtrue;
 		/* MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_CROUCH, selChr->reservedTus.reserveCrouch, selChr->reservedTus.crouch); Update server-side settings */
 	}
+
+	/* Refresh checkbox and tooltip. */
+	CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 }
 
 /**
@@ -3387,6 +3393,9 @@ void CL_ActorToggleReaction_f (void)
 		/* Set RF-mode info to undef. */
 		CL_SetReactionFiremode(selActor, -1, NONE, -1); /* Includes PA_RESERVE_STATE */
 	}
+	
+	/* Refresh button and tooltip. */
+	CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 }
 
 /**
