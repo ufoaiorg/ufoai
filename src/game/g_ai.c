@@ -769,8 +769,8 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			/** Set initial state of reaction fire to previously stored state for this actor.
 			 * @sa g_client.c:G_ClientSpawn */
 			Com_DPrintf(DEBUG_GAME, "G_SpawnAIPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
+			/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 			G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
-			/* FIXME The statechange is not send here - is that intended? */
 		} else {
 			/* Civilians */
 			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
