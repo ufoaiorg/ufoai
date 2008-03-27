@@ -88,7 +88,7 @@ static const char *shoot_type_strings[BT_NUM_TYPES] = {
 };
 
 /* Reservation-popup info */
-static int popupNum;	/* Number of entries int he popup list */
+static int popupNum;	/* Number of entries in the popup list */
 
 /**
  * @brief Defines the various states of a button.
@@ -954,7 +954,7 @@ void CL_PopupFiremodeReservation_f (void)
 						LIST_Add(&popupListData, (byte *)&tempOne, sizeof(int));
 					/* Store Data for popup-callback. */
 					LIST_Add(&popupListData, (byte *)&i, sizeof(int));								/* fmIdx */
-					LIST_AddPointer(&popupListText, &ammo->weapons[weapFdsIdx]);					/* wpIdx pointer*/
+					LIST_AddPointer(&popupListData, &ammo->weapons[weapFdsIdx]);					/* wpIdx pointer*/
 					LIST_Add(&popupListData, (byte *)&ammo->fd[weapFdsIdx][i].time, sizeof(int));	/* TUs */
 
 					/* Remember the line that is currently selected (if any). */
@@ -975,11 +975,12 @@ void CL_PopupFiremodeReservation_f (void)
 		}
 	} while (hand != 0);
 
-	popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
-	VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
-	popupListNode->selectedColor[3] = 1.0;
-	popupListNode->textLineSelected = selectedEntry;
-
+	if (popupNum) {
+		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
+		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
+		popupListNode->selectedColor[3] = 1.0;
+		popupListNode->textLineSelected = selectedEntry;
+	}
 }
 
 /**

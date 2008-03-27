@@ -39,7 +39,7 @@ typedef struct menuTransform_s {
 
 	vec3_t scale;		/**< Scale values to be used instead of the ones defined in the menu. */
 	vec3_t angles;		/**< Angle values to be used instead of the ones defined in the menu. */
-	vec3_t origin;		/**< The _relative_ offset ont he screen. It is added to the "origin" value defined int he menu (-file). */
+	vec3_t origin;		/**< The _relative_ offset on the screen. It is added to the "origin" value defined in the menu (-file). */
 } menuTransform_t;
 
 /** @brief Model that have more than one part (head, body) but may only use one menu node */

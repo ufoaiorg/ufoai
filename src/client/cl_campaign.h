@@ -297,7 +297,7 @@ typedef struct nation_s {
 	char *id;		/**< Unique ID of this nation. */
 	char *name;		/**< Full name of the nation. */
 
-	vec4_t color;		/**< The color this nation uses int he color-coded earth-map */
+	vec4_t color;		/**< The color this nation uses in the color-coded earth-map */
 	vec2_t pos;		/**< Nation name position on geoscape. */
 
 	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about the history of this nations relationship toward PHALANX and the aliens.

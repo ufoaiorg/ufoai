@@ -417,7 +417,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
  * @param[in] base Which base the employee should be searched in. If NULL is given employees in all bases will be listed.
  * @param[in] type Which employee type to search for.
  * @param[out] hiredEmployees Linked list of hired employees in the base.
- * @return Number of hired employees int he base.
+ * @return Number of hired employees in the base.
  */
 int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees)
 {
