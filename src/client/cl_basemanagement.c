@@ -3799,20 +3799,12 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		AL_FillInContainment(b);	/* Fill Alien Containment with default values. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
 			const char *const s = MSG_ReadString(sb);
-			for (l = 0; l < csi.numTeamDefs; l++) {
-				if (!csi.teamDef[l].alien)
-					continue;
-				if (!Q_strncmp(s, csi.teamDef[l].name, MAX_VAR))
-					break;
-			}
-			if (l == csi.numTeamDefs) {
-				Com_Printf("B_Load: Could not find teamDef: %s - skipping the aliencont (%i)\n", s, csi.numTeamDefs);
-				MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
-			} else {
-				b->alienscont[k].amount_alive = MSG_ReadShort(sb);
-				b->alienscont[k].amount_dead = MSG_ReadShort(sb);
-			}
+			b->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
+			if (!b->alienscont[k].teamDef)
+				Com_Printf("B_Load: Could not find teamDef: '%s' (aliencont %i) ... continuing anyway!\n", s, k);
+			b->alienscont[k].amount_alive = MSG_ReadShort(sb);
+			b->alienscont[k].amount_dead = MSG_ReadShort(sb);
+			/** @todo What about the "tech" pointer? */
 		}
 
 		/* Base capacities. */
