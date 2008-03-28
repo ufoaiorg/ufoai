@@ -336,7 +336,8 @@ base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public Licen
 base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_herakles/herakles.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/drop_herakles/herakles.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_carryall.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_pod.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 | Willem "Sitters"
