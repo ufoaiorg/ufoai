@@ -214,7 +214,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		 * maybe this is only a maptest and thus no scripts parsed */
 		if (weapFdsIdx == -1)
 			continue;
-		/* FIXME: timed firedefs that bounce around should not be thrown/shooten about the hole distance */
+		/* @todo: timed firedefs that bounce around should not be thrown/shooten about the hole distance */
 		for (fdIdx = 0; fdIdx < od->numFiredefs[weapFdsIdx]; fdIdx++) {
 			fd = &od->fd[weapFdsIdx][fdIdx];
 
@@ -325,7 +325,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
-		/* FIXME: What is this 2? */
+		/* @todo: What is this 2? */
 		} else if (aia->target && tu >= 2) {
 			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
@@ -383,8 +383,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	/* reward closing in */
 	minDist = CLOSE_IN_DIST;
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		/* FIXME: check the edict type here */
-		if (check->inuse && check->team != ent->team && !(check->state & STATE_DEAD)) {
+		if (check->inuse && check->team != ent->team && G_IsLivingActor(ent)) {
 			dist = VectorDist(ent->origin, check->origin);
 			if (dist < minDist)
 				minDist = dist;
@@ -581,7 +580,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 		G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 
 	/* do the move */
-	/* FIXME: Why 0 - and not ent->team?
+	/* @todo: Why 0 - and not ent->team?
 	 * I think this has something to do with the vis check in G_BuildForbiddenList */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
@@ -628,35 +627,19 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 {
 	aiAction_t bestAia;
 
-#ifdef PARANOID
-	Com_DPrintf(DEBUG_GAME, "AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum);
-#endif
-
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!(ent->state & STATE_PANIC)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
-#ifdef PARANOID
-				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Reloading right hand weapon\n");
-#endif
 				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD, QUIET);
 			} else {
-#ifdef PARANOID
-				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Dropping right hand weapon\n");
-#endif
 				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
 			}
 		}
 		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
-#ifdef PARANOID
-				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Reloading left hand weapon\n");
-#endif
 				G_ClientReload(player, ent->number, ST_LEFT_RELOAD, QUIET);
 			} else {
-#ifdef PARANOID
-				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Dropping left hand weapon\n");
-#endif
 				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
 			}
 		}
@@ -692,7 +675,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
-		/* TODO: Add some calculation to decide whether the actor maybe wants to go crouched */
+		/* @todo: Add some calculation to decide whether the actor maybe wants to go crouched */
 		if (1)
 			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 
@@ -700,7 +683,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		 * actor once he sees the ai, too */
 		AI_TurnIntoDirection(ent, bestAia.target->pos);
 
-		/* TODO: If possible targets that can shoot back (check their inventory for weapons, not for ammo)
+		/* @todo: If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
 	}
 }
@@ -856,7 +839,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 			ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_civilian"), &ent->chr);
 			ent->chr.inv = &ent->i;
-			/* FIXME: Maybe we have civilians with armour, too - police and so on */
+			/* @todo: Maybe we have civilians with armour, too - police and so on */
 			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
