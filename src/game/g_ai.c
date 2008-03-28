@@ -403,7 +403,6 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	int i, move, tu;
 	float dist, minDist;
 	float bestActionPoints;
-	teamDef_t* teamDef;
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
@@ -422,7 +421,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 
 	/* check whether this civilian can use weapons */
 	if (ent->chr.teamDef) {
-		teamDef = ent->chr.teamDef;
+		const teamDef_t* teamDef = ent->chr.teamDef;
 		if (ent->state & ~STATE_PANIC && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
