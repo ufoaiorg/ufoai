@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mem.h"
 #include "http.h"
 
-#define UFO_VERSION "2.2"
+#define UFO_VERSION "2.2.1"
 
 #ifdef _WIN32
 #  ifdef DEBUG
