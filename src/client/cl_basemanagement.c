@@ -68,13 +68,13 @@ int B_GetEmployeeCount (const base_t* const base)
 }
 
 /**
- * @brief Array bound check for the base id
+ * @brief Array bound check for the base index.
  */
-base_t* B_GetBase (int id)
+base_t* B_GetBase (int baseIdx)
 {
-	assert(id < MAX_BASES);
-	assert(id >= 0);
-	return &gd.bases[id];
+	assert(baseIdx < MAX_BASES);
+	assert(baseIdx >= 0);
+	return &gd.bases[baseIdx];
 }
 
 /**
@@ -3800,10 +3800,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
 			const char *const s = MSG_ReadString(sb);
 			b->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
-			if (!b->alienscont[k].teamDef)
-				Com_Printf("B_Load: Could not find teamDef: '%s' (aliencont %i) ... continuing anyway!\n", s, k);
-			b->alienscont[k].amount_alive = MSG_ReadShort(sb);
-			b->alienscont[k].amount_dead = MSG_ReadShort(sb);
+			if (!b->alienscont[k].teamDef) {
+				Com_Printf("B_Load: Could not find teamDef: '%s' (aliencont %i) ... skipped!\n", s, k);
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+			} else {
+				b->alienscont[k].amount_alive = MSG_ReadShort(sb);
+				b->alienscont[k].amount_dead = MSG_ReadShort(sb);
+			}
 			/** @todo What about the "tech" pointer? */
 		}
 
