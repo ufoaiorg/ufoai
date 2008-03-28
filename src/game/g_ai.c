@@ -25,12 +25,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/** @brief There shouldn't really be more than 32 shoots per actor per round */
+#define MAX_AI_SHOOTS 32
+
 typedef struct {
 	pos3_t to;			/**< grid pos to walk to */
 	pos3_t stop;		/**< grid pos to stop at (e.g. hiding spots) */
 	byte mode;			/**< shoot_types_t */
 	byte shots;			/**< how many shoots can this actor do */
 	edict_t *target;	/**< the target edict */
+	int firemodes[MAX_AI_SHOOTS];	/**< the firemodes to use for shooting */
+	int z_aligns[MAX_AI_SHOOTS];		/**< the z-align for every shoot */
 } aiAction_t;
 
 /**
@@ -81,6 +86,14 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 #define GUETE_REACTION_FEAR_FACTOR 20
 #define GUETE_CIV_FACTOR	0.25
 
+#define GUETE_CIV_RANDOM	10
+#define GUETE_RUN_AWAY		50
+#define GUETE_CIV_LAZINESS	5
+#define RUN_AWAY_DIST		160
+#define WAYPOINT_CIV_DIST	768
+
+#define GUETE_MISSION_TARGET	40
+
 #define AI_ACTION_NOTHING_FOUND -10000.0
 
 #define CLOSE_IN_DIST		1200.0
@@ -113,6 +126,7 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 /**
  * @sa AI_ActorThink
  * @todo fix firedef stuff
+ * @todo fill z_aligns and firemodes values
  */
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
@@ -128,7 +142,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	int fdIdx;	/* firedef index fd[][x]*/
 
 	bestActionPoints = 0.0;
-	memset(aia, 0, sizeof(aiAction_t));
+	memset(aia, 0, sizeof(*aia));
 	move = gi.MoveLength(gi.routingMap, to, qtrue);
 	tu = ent->TU - move;
 
@@ -381,13 +395,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	return bestActionPoints;
 }
 
-
-#define GUETE_CIV_RANDOM	10
-#define GUETE_RUN_AWAY		50
-#define GUETE_CIV_LAZINESS	5
-#define RUN_AWAY_DIST		160
-
-
 /**
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
@@ -402,7 +409,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
-	memset(aia, 0, sizeof(aiAction_t));
+	memset(aia, 0, sizeof(*aia));
 	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
@@ -443,20 +450,76 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	return bestActionPoints;
 }
 
+/**
+ * @brief Searches the map for mission edicts and try to get there
+ * @sa AI_PrepBestAction
+ * @note The routing table is still valid, so we can still use
+ * gi.MoveLength for the given edict here
+ */
+static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t *aia)
+{
+	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
+
+	memset(aia, 0, sizeof(*aia));
+	switch (ent->team) {
+	case TEAM_CIVILIAN:
+	{
+		edict_t *checkPoint = NULL;
+		int length;
+		int i = 0;
+		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
+		 * around until they came close */
+		while ((checkPoint = G_FindRadius(checkPoint, ent->origin, WAYPOINT_CIV_DIST, ET_CIVILIANTARGET)) != NULL) {
+			/* the lower the count value - the nearer the final target */
+			if (checkPoint->count < ent->count) {
+				i++;
+				Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
+				/* test for time and distance */
+				length = ent->TU - gi.MoveLength(gi.routingMap, checkPoint->pos, qtrue);
+				bestActionPoints = GUETE_MISSION_TARGET + length;
+
+				ent->count = checkPoint->count;
+				VectorCopy(checkPoint->pos, aia->to);
+			}
+		}
+		/* reset the count value for this civilian to restart the search */
+		if (!i)
+			ent->count = 100;
+		break;
+	}
+	case TEAM_ALIEN:
+	{
+		edict_t *mission;
+		int i;
+		/* search for a mission edict */
+		for (i = 0, mission = g_edicts; i < globals.num_edicts; i++, mission++)
+			if (mission->inuse && mission->type == ET_MISSION && player->pers.team == mission->team) {
+				VectorCopy(mission->pos, aia->to);
+				aia->target = mission;
+				bestActionPoints = GUETE_MISSION_TARGET;
+				break;
+			}
+
+		break;
+	}
+	}
+
+	return bestActionPoints;
+}
+
 #define AI_MAX_DIST	30
 /**
  * @brief Attempts to find the best action for an alien. Moves the alien
  * into the starting position for that action and returns the action.
- * @param[in] player
- * @param[in] ent
+ * @param[in] player The AI player
+ * @param[in] ent The AI actor
  */
-static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
+static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 {
 	aiAction_t aia, bestAia;
 	pos3_t oldPos, to;
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
-	int i = 0;
 	float bestActionPoints, best;
 
 	/* calculate move table */
@@ -499,31 +562,14 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 					}
 				}
 
-	if (ent->team == TEAM_CIVILIAN) {
-		edict_t *checkPoint = NULL;
-		while ((checkPoint = G_FindRadius(checkPoint, ent->origin, 768, ET_CIVILIANTARGET)) != NULL) {
-			/* the lower the count value - the nearer the final target */
-			if (checkPoint->count < ent->count) {
-				i++;
-				Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
-				/* test for time */
-				if (ent->TU - gi.MoveLength(gi.routingMap, checkPoint->pos, qtrue) < 0) {
-					Com_DPrintf(DEBUG_GAME, "civtarget too far away (%i)\n", checkPoint->count);
-					/* FIXME: Nevertheless walk to that direction */
-					continue;
-				}
-
-				ent->count = checkPoint->count;
-				VectorCopy(checkPoint->pos, bestAia.to);
-			}
-		}
-		/* reset the count value for this civilian to restart the search */
-		if (!i)
-			ent->count = 100;
-	}
-
 	VectorCopy(oldPos, ent->pos);
 	VectorCopy(oldOrigin, ent->origin);
+
+	bestActionPoints = AI_CheckForMissionTargets(player, ent, &aia);
+	if (bestActionPoints > best) {
+		bestAia = aia;
+		best = bestActionPoints;
+	}
 
 	/* nothing found to do */
 	if (best == AI_ACTION_NOTHING_FOUND) {
@@ -628,17 +674,20 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* shoot and hide */
 	if (bestAia.target) {
+		int shot = 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, 0, NULL, qtrue, 0); /* 0 = first firemode */
+			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, bestAia.firemodes[shot], NULL, qtrue, bestAia.z_aligns[shot]);
 			bestAia.shots--;
 			/* check for target's death */
 			if (bestAia.target->state & STATE_DEAD) {
+				/* search another target now */
 				bestAia = AI_PrepBestAction(player, ent);
 				/* no other target found - so no need to hide */
 				if (!bestAia.target)
 					return;
 			}
+			shot++;
 		}
 		/* now hide */
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
