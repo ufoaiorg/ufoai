@@ -103,6 +103,7 @@ cvar_t *m_rage;
 cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
+cvar_t *g_aidebug;
 cvar_t *g_nodamage;
 cvar_t *g_notu;
 cvar_t *flood_msgs;
@@ -205,6 +206,7 @@ static void G_Init (void)
 	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH, NULL);
 	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH, NULL);
 
+	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER, "All AI actors are visible");
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER, "No damage in developer mode");
 	g_notu = gi.Cvar_Get("g_notu", "0", CVAR_DEVELOPER, "No TU costs while moving around (e.g. for map testing)");
 

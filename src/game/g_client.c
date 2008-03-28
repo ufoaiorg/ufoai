@@ -498,6 +498,10 @@ int G_TestVis (int team, edict_t * check, int flags)
 
 	/* store old flag */
 	old = (check->visflags & (1 << team)) ? 1 : 0;
+
+	if (g_aidebug->integer)
+		return VIS_YES | !old;
+
 	if (!(flags & VT_PERISH) && old)
 		return VIS_YES;
 

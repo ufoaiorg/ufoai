@@ -552,6 +552,7 @@ static void Com_DebugHelp_f (void)
 	Com_Printf("Debugging cvars:\n"
 			"------------------------------\n"
 			" * developer\n"
+			" * g_aidebug\n"
 			" * g_nodamage\n"
 			" * g_notu\n"
 			" * mn_debugmenu\n"

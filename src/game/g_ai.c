@@ -540,11 +540,11 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	 * I think this has something to do with the vis check in G_BuildForbiddenList */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
-#if 0
-	Com_DPrintf(DEBUG_GAME, "(%i %i %i) (%i %i %i)\n",
-		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
-		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2]);
-#endif
+	if (g_aidebug->integer)
+		Com_DPrintf(DEBUG_GAME, "bestAIAction.to (%i %i %i) stop (%i %i %i)\n",
+			(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
+			(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2]);
+
 	return bestAia;
 }
 
@@ -749,7 +749,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		level.num_alive[team]++;
 		if (team != TEAM_CIVILIAN) {
 			if (gi.csi->numAlienTeams) {
-				int alienTeam = rand() % gi.csi->numAlienTeams;
+				const int alienTeam = rand() % gi.csi->numAlienTeams;
 				assert(gi.csi->alienTeams[alienTeam]);
 				ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
 			} else
