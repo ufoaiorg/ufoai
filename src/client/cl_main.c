@@ -268,7 +268,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 					RS_ParseTechnologies(name, &text);
 
 			/* fill in IDXs for required research techs */
-			RS_RequiredIdxAssign();
+			RS_RequiredLinksAssign();
 			Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 		}
 	}
@@ -1829,7 +1829,7 @@ void CL_ReadSinglePlayerData (void)
 		CL_ParseScriptFirst(type, name, &text);
 
 	/* fill in IDXs for required research techs */
-	RS_RequiredIdxAssign();
+	RS_RequiredLinksAssign();
 
 	/* stage two parsing */
 	FS_NextScriptHeader(NULL, NULL, NULL);

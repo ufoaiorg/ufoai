@@ -554,16 +554,20 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 		req = &reqs->links[i];
 		switch (req->type) {
 		case RS_LINK_TECH:
-			/* Get the index in the techtree. */
-			req->link = RS_GetTechByID(req->id);
-			if (!req->link)
-				Sys_Error("RS_AssignTechIdxs: Could not get tech definition for '%s'", req->id);
+			/* Only get tech-link if it isn't a fixed keyword */
+			if (Q_strncmp(req->id, "nothing", MAX_VAR)
+			 && Q_strncmp(req->id, "initial", MAX_VAR)) {
+				/* Get the index in the techtree. */
+				req->link = RS_GetTechByID(req->id);
+				if (!req->link)
+					Sys_Error("RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
+			}
 			break;
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
 			req->link = INVSH_GetItemByID(req->id);
 			if (!req->link)
-				Sys_Error("RS_AssignTechIdxs: Could not get item definition for '%s'", req->id);
+				Sys_Error("RS_AssignTechLinks: Could not get item definition for '%s'", req->id);
 			break;
 		case RS_LINK_EVENT:
 			/* @todo: Get index of event in event-list. */
@@ -572,7 +576,7 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 		case RS_LINK_ALIEN_DEAD:
 			req->link = Com_GetTeamDefinitionByID(req->id);
 			if (!req->link)
-				Sys_Error("RS_AssignTechIdxs: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
+				Sys_Error("RS_AssignTechLinks: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
 			break;
 #if 0
 		case RS_LINK_ALIEN_GLOBAL:
@@ -586,10 +590,10 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 }
 
 /**
- * @brief Assign IDXs to all required techs/items/etc...
+ * @brief Assign Link pointers to all required techs/items/etc...
  * @note This replaces the RS_InitRequirementList function (since the switch to the _OR and _AND list)
  */
-void RS_RequiredIdxAssign (void)
+void RS_RequiredLinksAssign (void)
 {
 	int i;
 	technology_t *tech;

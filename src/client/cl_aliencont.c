@@ -378,7 +378,7 @@ void AL_RemoveAliens (base_t *base, teamDef_t *alienType, int amount, alienCalcT
  * @param[in] alienType Pointer to alien type.
  * @return Index of alien in alien containment (so < gd.numAliensTD)
  * @note It does NOT return the global team index from csi.teamDef array. That would be alienType->idx
- * @sa RS_AssignTechIdxs
+ * @sa RS_AssignTechLinks
  * @sa AL_GetAlienGlobalIdx
  */
 int AL_GetAlienIdx (const teamDef_t *alienType)

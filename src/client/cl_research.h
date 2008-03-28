@@ -212,7 +212,7 @@ int RS_Collected_(const technology_t * tech);
 void RS_CheckAllCollected(void);
 
 void RS_AddObjectTechs(void);
-void RS_RequiredIdxAssign(void);
+void RS_RequiredLinksAssign(void);
 void RS_InitTree(qboolean load);
 const char *RS_GetDescription(descriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
