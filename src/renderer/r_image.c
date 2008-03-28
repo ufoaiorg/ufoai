@@ -569,7 +569,10 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 	out = Mem_PoolAlloc(size, vid_imagePool, 0);
 
 	/* Fill in header */
-	out[2] = TGA_UNMAP_UNCOMP;		/* Uncompressed type */
+	/* byte 0: image ID field length */
+	/* byte 1: color map type */
+	out[2] = TGA_UNMAP_UNCOMP;		/* image type: Uncompressed type */
+	/* byte 3 - 11: palette data */
 	/* image width */
 	out[12] = width & 255;
 	out[13] = width >> 8;
@@ -577,6 +580,7 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 	out[14] = height & 255;
 	out[15] = height >> 8;
 	out[16] = 24;	/* Pixel size 24 (RGB) or 32 (RGBA) */
+	/* byte 17: image descriptor byte */
 
 	/* Copy to temporary buffer */
 	memcpy(out + 18, buffer, width * height * 3);
