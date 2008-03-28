@@ -620,8 +620,8 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 			line = *cur_line;
 
 			if (box_height > 0 && line > box_height + scroll_pos) {
-				/* Due to scrolling this line and the following are not visible */
-				return -1;
+				/* due to scrolling this line and the following are not visible, but we need to continue to get a proper line count */
+				skipline = qtrue;
 			}
 			if (line <= scroll_pos) {
 				/* Due to scrolling this line is not visible. See if (!skipline)" code below.*/

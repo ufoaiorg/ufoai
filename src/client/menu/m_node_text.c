@@ -117,7 +117,6 @@ void MN_TextScrollBottom (const char* nodeName)
 }
 
 
-#define SCROLLBAR_WIDTH 10
 /**
  * @brief Handles line breaks and drawing for MN_TEXT menu nodes
  * @sa MN_DrawMenus
@@ -130,6 +129,8 @@ void MN_TextScrollBottom (const char* nodeName)
  */
 void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* font, menuNode_t* node, int x, int y, int width, int height)
 {
+	const vec4_t scrollbarBackground = {0.03, 0.41, 0.05, 0.5};
+	const vec4_t scrollbarColor = {0.03, 0.41, 0.05, 1.0};
 	char textCopy[MAX_MENUTEXTLEN];
 	int lineHeight = 0;
 	char newFont[MAX_VAR];
@@ -138,8 +139,6 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
 	int x1, y1; /* variable x and y position */
-	const vec4_t scrollbarColorBG = {0.03, 0.41, 0.05, 0.5};
-	const vec4_t scrollbarColorBar = {0.03, 0.41, 0.05, 1.0};
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -157,10 +156,11 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	VectorScale(node->selectedColor, 0.8, colorSelectedHover);
 	colorSelectedHover[3] =  node->selectedColor[3];
 
+	/* scrollbar space */
 	if (node->scrollbar) {
-		width -= SCROLLBAR_WIDTH; /* scrollbar space */
+		width -= MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 		if (node->scrollbarLeft)
-			x += SCROLLBAR_WIDTH;
+			x += MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 	}
 
 	y1 = y;
@@ -180,6 +180,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			oldFont = NULL;
 		}
 
+		/* text styles and inline images */
 		if (cur[0] == '^') {
 			switch (toupper(cur[1])) {
 			case 'B':
@@ -205,6 +206,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			/* let end point to the next char after the \n (or \0 now) */
 			*end++ = '\0';
 
+		/* highlighting */
 		if (node) {
 			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
 				/* Draw current line in "selected" color (if the linenumber is stored). */
@@ -224,7 +226,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		}
 
 
-		/* we assume all the tabs fit on a single line */
+		/* tabulation, we assume all the tabs fit on a single line */
 		do {
 			tab = strchr(cur, '\t');
 			/* if this string does not contain any tabstops break this do while ... */
@@ -271,27 +273,23 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	} while (cur);
 
 	/* draw scrollbars */
-	if (node->scrollbar && node->height  && node->textLines > node->height) {
-		int scrollBarX, nodePixelHeight;
-		float scrollBarHeight, scrollBarY;
+	if (node->scrollbar && node->height && node->textLines > node->height) {
+		const int sbx = node->pos[0] + (node->scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
+		const float sbh = node->size[1] * node->height / node->textLines * MN_SCROLLBAR_HEIGHT;
 
-		if (!node->texh[0])
-			Sys_Error("MN_DrawTextNode: no format height for node '%s'\n", node->name);
+		R_DrawFill(sbx, 
+			node->pos[1], 
+			MN_SCROLLBAR_WIDTH, 
+			node->size[1], 
+			ALIGN_UL, 
+			scrollbarBackground);
 
-		nodePixelHeight = node->height * node->texh[0];
-		if (!node->scrollbarLeft)
-			scrollBarX = node->pos[0] + node->size[0] - SCROLLBAR_WIDTH;
-		else
-			scrollBarX = node->pos[0];
-		scrollBarY = node->pos[1];
-
-		/* draw background of scrollbar */
-		R_DrawFill(scrollBarX, scrollBarY, SCROLLBAR_WIDTH, nodePixelHeight, 0, scrollbarColorBG);
-
-		/* draw scroll bar */
-		scrollBarHeight = nodePixelHeight * (nodePixelHeight / (node->textLines * node->texh[0]));
-		scrollBarY += node->textScroll * (scrollBarHeight / node->height);
-		R_DrawFill(scrollBarX, scrollBarY, SCROLLBAR_WIDTH, scrollBarHeight, 0, scrollbarColorBar);
+		R_DrawFill(sbx, 
+			node->pos[1] + (node->size[1] - sbh) * node->textScroll / (node->textLines - node->height),
+			MN_SCROLLBAR_WIDTH, 
+			sbh, 
+			ALIGN_UL, 
+			scrollbarColor);
 	}
 }
 
