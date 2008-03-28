@@ -79,7 +79,7 @@ aircraft craft_drop_firebird
 		ecm			100
 		damage		50
 		accuracy	70
-		fuelsize	166600
+		fuelsize	250000
 	}
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
