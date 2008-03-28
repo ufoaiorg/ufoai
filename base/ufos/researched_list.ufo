@@ -66,10 +66,14 @@ researched rslist_human
 	rs_ugv_chaingun
 	rs_ugv_chaingun_belt
 	rs_craft_el_raven
+	rs_craft_el_targeting
+	rs_craft_el_fuelpod
 	rs_craft_shield_polymer
 	rs_craft_weapon_shiva
 	rs_craft_weapon_sparrowhawk
 	rs_craft_weapon_tr20
+	rs_base_AA51_launcher
+	rs_base_ammo_AA51
 	news_init_political_situation
 	news_after_the_war
 	news_phalanx_mumbai_aftermath

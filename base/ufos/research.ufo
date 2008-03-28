@@ -55,10 +55,6 @@
 //
 //	NOTE: require_AND and require_OR are logically connected like (require_AND || require_OR).
 //	This means that if the the requirements in require_AND and/or in require_OR are met the tech can be researched (i.e. it is researchable).
-//
-//	[Still true? 	NOTE: Every tech entry must have a require_AND or require_OR section if
-//	[		it is to be researchable (even if it is just a null requirement like "require_AND { tech nothing }")
-//	[		If these are skipped then both entries default to 0 (i.e. not met).
 //=================
 //	require_for_production { item id amount }
 //		A list of requirements that ALL need to be met in order that one item (of 'provides') can be produced.
@@ -137,8 +133,6 @@ tech rs_laser
 		subject	"_Continuous Wave Laser Operation"
 		icon	icons/tech
 	}
-
-	require_AND { tech nothing }
 
 	time	1500
 	image_top	techs/laser
@@ -467,10 +461,6 @@ tech rs_alien_origins
 		icon	icons/intelligence
 	}
 
-	require_AND
-	{
-		tech nothing
-	}
 	time		2700
 }
 
@@ -2321,8 +2311,6 @@ tech rs_combat_armour
 	}
 	// pre_description	"_combat_armour_pre_txt"
 
-	require_AND { tech nothing }
-
 	provides	light
 	time	0
 	producetime	72
@@ -2336,8 +2324,6 @@ tech rs_advanced_combat_armour
 		default "_advanced_combat_armour_txt"
 	}
 	// pre_description	"_advanced_combat_armour_pre_txt"
-
-	require_AND { tech nothing }
 
 	provides	lightadv
 	time	0
@@ -2504,7 +2490,6 @@ tech rs_damage_blast
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/blast_damage
@@ -2518,7 +2503,6 @@ tech rs_damage_fire
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/fire_damage
@@ -2550,7 +2534,6 @@ tech rs_damage_normal
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/normal_damage
@@ -2564,7 +2547,6 @@ tech rs_damage_shock
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/shock_damage
@@ -2599,7 +2581,6 @@ tech rs_damage_stun
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/stun_damage
@@ -2614,7 +2595,6 @@ tech rs_damage_pbeam
 		default "_none"
 	}
 
-	require_AND 	{ tech nothing }
 
 	time	0
 //	image_top	techs/pbeam_damage
@@ -2632,7 +2612,6 @@ tech rs_skill_accuracy
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/accuracy_skill
@@ -2646,7 +2625,6 @@ tech rs_skill_assault
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/assault_skill
@@ -2660,7 +2638,6 @@ tech rs_skill_close
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/close_skill
@@ -2674,7 +2651,6 @@ tech rs_skill_explosive
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/explosive_skill
@@ -2688,7 +2664,6 @@ tech rs_skill_heavy
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/heavy_skill
@@ -2702,7 +2677,6 @@ tech rs_skill_mind
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/mind_skill
@@ -2716,7 +2690,6 @@ tech rs_skill_power
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/power_skill
@@ -2730,7 +2703,6 @@ tech rs_skill_sniper
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/sniper_skill
@@ -2744,7 +2716,6 @@ tech rs_skill_speed
 	description {
 		default "_none"
 	}
-	require_AND { tech nothing }
 
 	time	0
 //	image_top	techs/speed_skill
@@ -2798,7 +2769,6 @@ tech rs_building_entrance
 	}
 	// pre_description	"_b_entrance_pre_txt"
 	up_chapter	buildings
-	require_AND { tech nothing }
 
 	provides	building_entrance
 	time	0
@@ -2920,11 +2890,6 @@ tech rs_building_quarters
 	}
 	// pre_description	"_b_quarters_pre_txt"
 	up_chapter	buildings
-
-	require_AND
-	{
-		tech nothing
-	}
 
 	provides	building_quarters
 	time	0
@@ -3095,7 +3060,6 @@ tech rs_craft_drop_firebird
 	up_chapter	crafts
 
 	provides	craft_drop_firebird
-	require_AND { tech nothing }
 	time	0
 	producetime	336 //Two weeks.
 
@@ -3112,7 +3076,6 @@ tech rs_craft_inter_stiletto
 	up_chapter	crafts
 
 	provides	craft_inter_stiletto
-	require_AND { tech nothing }
 	time	0
 	producetime	336
 
@@ -3129,7 +3092,6 @@ tech rs_craft_inter_saracen
 	up_chapter	crafts
 
 	provides	craft_inter_saracen
-	require_AND { tech nothing }
 	time	0
 	producetime	400
 
@@ -3497,7 +3459,7 @@ tech rs_alien_bloodspider_live
 
 	require_AND
 	{
-		alien Bloodspider 1
+		alien bloodspider 1
 	}
 	time	0
 
@@ -3535,7 +3497,7 @@ tech rs_alien_bloodspider_autopsy
 
 	require_AND
 	{
-		alien_dead Bloodspider 1
+		alien_dead bloodspider 1
 	}
 	time	1500
 
@@ -3593,7 +3555,7 @@ tech rs_alien_ortnok_autopsy
 
 	require_AND
 	{
-		alien_dead Ortnok 1
+		alien_dead ortnok 1
 	}
 	time	1500
 
@@ -3636,7 +3598,7 @@ tech rs_alien_taman_autopsy
 
 	require_AND
 	{
-		alien_dead Taman 1
+		alien_dead taman 1
 	}
 	time	1500
 
@@ -3679,7 +3641,7 @@ tech rs_alien_shevaar_autopsy
 
 	require_AND
 	{
-		alien_dead Shevaar 1
+		alien_dead shevaar 1
 	}
 	time	1500
 
@@ -3758,7 +3720,6 @@ tech rs_ugv_phoenix
 	}
 
 	provides	ugv_phoenix
-	require_AND { tech nothing }
 	time	0
 	producetime	400
 }
@@ -3778,7 +3739,6 @@ tech rs_ugv_ares_w
 	}
 
 	provides	ugv_ares_w
-	require_AND { tech nothing }
 	time	0
 	producetime	200
 }
@@ -3798,7 +3758,6 @@ tech rs_ugv_chaingun
 	}
 */
 	provides	ugv_chaingun
-	require_AND { tech nothing }
 	time	0
 	producetime	50	// Not really needed since this should (at least in the beginning) be produced with the tank itself.
 }
@@ -3818,7 +3777,6 @@ tech rs_ugv_chaingun_belt
 	}
 */
 	provides	ugv_chaingun_belt
-	require_AND { tech nothing }
 	time	0
 	producetime	10	// @todo fixme
 }
@@ -3838,7 +3796,6 @@ tech rs_base_AA51_launcher
 	}
 
 	provides	base_AA51_launcher
-	require_AND { tech nothing }
 	time		0
 	producetime	200
 
@@ -3857,7 +3814,6 @@ tech rs_base_ammo_AA51
 	}
 
 	provides	base_ammo_AA51
-	require_AND { tech nothing }
 	time		0
 	producetime	12
 
@@ -3879,7 +3835,6 @@ tech rs_craft_el_raven
 	}
 
 	provides	craft_el_raven
-	require_AND { tech nothing }
 	time		0
 	producetime	100
 
@@ -3897,7 +3852,6 @@ tech rs_craft_shield_polymer
 	}
 
 	provides	craft_shield_polymer
-	require_AND { tech nothing }
 	time		0
 	producetime	140
 
@@ -4046,7 +4000,6 @@ tech rs_craft_weapon_shiva
 	}
 
 	provides	craft_weapon_shiva
-	require_AND { tech nothing }
 	time		0
 	producetime	100
 
@@ -4106,7 +4059,6 @@ tech rs_craft_weapon_sparrowhawk
 	}
 
 	provides	craft_weapon_sparrowhawk
-	require_AND { tech nothing }
 	time		0
 	producetime	100
 
@@ -4145,7 +4097,6 @@ tech rs_craft_weapon_tr20
 	}
 
 	provides	craft_weapon_tr20
-	require_AND { tech nothing }
 	time		0
 	producetime	100
 
@@ -4229,7 +4180,6 @@ tech rs_craft_el_targeting
 	}
 
 	provides	craft_el_targeting
-	require_AND	{ tech nothing }
 	time		0
 	producetime	571
 
@@ -4247,7 +4197,6 @@ tech rs_craft_el_fuelpod
 	}
 
 	provides	craft_el_fuelpod
-	require_AND	{ tech nothing }
 	time		0
 	producetime	80
 
@@ -4326,7 +4275,6 @@ tech news_init_political_situation
 	}
 	up_chapter	news
 
-	require_AND { tech nothing }
 	time	0
 }
 
@@ -4339,7 +4287,6 @@ tech news_after_the_war
 	}
 	up_chapter	news
 
-	require_AND { tech nothing }
 	time	0
 }
 
@@ -4352,7 +4299,6 @@ tech news_phalanx_mumbai_aftermath
 	}
 	up_chapter	news
 
-	require_AND { tech nothing }
 	time	0
 }
 

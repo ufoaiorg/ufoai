@@ -20,9 +20,9 @@ tech rs_contained_organic_alien
 	name	"LOGIC:One Live Organic Alien"
 	require_OR
 	{
-		alien Taman 1
-		alien Ortnok 1
-		alien Shevaar 1
+		alien taman 1
+		alien ortnok 1
+		alien shevaar 1
 	}
 }
 
