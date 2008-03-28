@@ -381,10 +381,11 @@ void AL_RemoveAliens (base_t *base, teamDef_t *alienType, int amount, alienCalcT
  * @sa RS_AssignTechLinks
  * @sa AL_GetAlienGlobalIdx
  */
-int AL_GetAlienIdx (const teamDef_t *alienType)
+static int AL_GetAlienIdx (const teamDef_t *alienType)
 {
 	int i, index;
 
+	index = 0;
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (alienType == &csi.teamDef[i])
 			return index;
