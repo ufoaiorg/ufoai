@@ -624,7 +624,7 @@ void RS_InitTree (qboolean load)
 	for (i = 0, tech = gd.technologies; i < gd.numTechnologies; i++, tech++) {
 		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
 			if (tech->markResearched.markOnly[j] && !Q_strncmp(tech->markResearched.campaign[j], curCampaign->researched, MAX_VAR)) {
-				Com_Printf("Mark '%s' as researched\n", tech->id);
+				Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 				RS_ResearchFinish(tech);
 				break;
 			}
