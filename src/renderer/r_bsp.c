@@ -309,7 +309,8 @@ void R_GetLevelSurfaceLists (void)
 		}
 		if (r_drawspecialbrushes->integer) {
 			for (; i < LEVEL_MAX; i++) {
-				if (!r_mapTiles[tile]->bsp.submodels[i].numfaces)
+				/* FIXME: numfaces and headnode might get screwed up in some cases (segfault) */
+				if (r_mapTiles[tile]->bsp.submodels[i].numfaces > 0)
 					continue;
 
 				R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);

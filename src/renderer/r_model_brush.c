@@ -62,7 +62,7 @@ static void R_ModLoadVertexes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Mem_PoolAlloc(count * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...verts: %i\n", count);
 
 	loadmodel->bsp.vertexes = out;
@@ -101,7 +101,7 @@ static void R_ModLoadSubmodels (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Mem_PoolAlloc(count * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...submodels: %i\n", count);
 
 	loadmodel->bsp.submodels = out;
@@ -130,7 +130,7 @@ static void R_ModLoadEdges (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Mem_PoolAlloc((count + 1) * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc((count + 1) * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...edges: %i\n", count);
 
 	loadmodel->bsp.edges = out;
@@ -156,7 +156,7 @@ static void R_ModLoadTexinfo (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Mem_PoolAlloc(count * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...texinfo: %i\n", count);
 
 	loadmodel->bsp.texinfo = out;
@@ -249,7 +249,7 @@ static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Mem_PoolAlloc(count * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...faces: %i\n", count);
 
 	loadmodel->bsp.surfaces = out;
@@ -320,7 +320,7 @@ static void R_ModLoadNodes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Mem_PoolAlloc(count * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...nodes: %i\n", count);
 
 	loadmodel->bsp.nodes = out;
@@ -369,7 +369,7 @@ static void R_ModLoadLeafs (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Mem_PoolAlloc(count * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...leafs: %i\n", count);
 
 	loadmodel->bsp.leafs = out;
@@ -398,7 +398,7 @@ static void R_ModLoadSurfedges (lump_t * l)
 	if (count < 1 || count >= MAX_MAP_SURFEDGES)
 		Com_Error(ERR_DROP, "R_ModLoadSurfedges: bad surfedges count in %s: %i", loadmodel->name, count);
 
-	out = Mem_PoolAlloc(count * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...surface edges: %i\n", count);
 
 	loadmodel->bsp.surfedges = out;
@@ -423,7 +423,7 @@ static void R_ModLoadPlanes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Mem_PoolAlloc(count * 2 * sizeof(*out), vid_lightPool, 0);
+	out = Mem_PoolAlloc(count * 2 * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...planes: %i\n", count);
 
 	loadmodel->bsp.planes = out;
@@ -547,16 +547,16 @@ static void R_LoadBspVertexArrays (void)
 	}
 
 	/* populate the vertex arrays */
-	loadmodel->bsp.verts = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_lightPool, 0);
+	loadmodel->bsp.verts = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
 	memcpy(loadmodel->bsp.verts, r_state.vertex_array_3d, vertind * sizeof(GLfloat));
 
-	loadmodel->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_lightPool, 0);
+	loadmodel->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
 	memcpy(loadmodel->bsp.texcoords, texunit_diffuse.texcoord_array, coordind * sizeof(GLfloat));
 
-	loadmodel->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_lightPool, 0);
+	loadmodel->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
 	memcpy(loadmodel->bsp.lmtexcoords, texunit_lightmap.texcoord_array, coordind * sizeof(GLfloat));
 
-	loadmodel->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_lightPool, 0);
+	loadmodel->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
 	memcpy(loadmodel->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
 
 	if (r_state.vertex_buffers) {
