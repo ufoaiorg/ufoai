@@ -87,7 +87,7 @@ void R_ScreenShot_f (void)
 	int		type, shotNum, quality = 100;
 	const char	*ext;
 	byte	*buffer;
-	FILE	*f;
+	qFILE	f;
 
 	/* Find out what format to save in */
 	if (Cmd_Argc() > 1)
@@ -131,25 +131,27 @@ void R_ScreenShot_f (void)
 	/* Find a file name to save it to */
 	for (shotNum = 0; shotNum < 1000; shotNum++) {
 		Com_sprintf(checkName, MAX_OSPATH, "%s/scrnshot/ufo%i%i.%s", FS_Gamedir(), shotNum / 10, shotNum % 10, ext);
-		f = fopen(checkName, "rb");
-		if (!f)
+		f.f = fopen(checkName, "rb");
+		if (!f.f)
 			break;
-		fclose(f);
+		fclose(f.f);
 	}
 
 	FS_CreatePath(checkName);
 
-	/* Open it */
-	f = fopen(checkName, "wb");
+	memset(&f, 0, sizeof(f));
 
-	if (!f) {
+	/* Open it */
+	FS_FOpenFileWrite(checkName, &f);
+
+	if (!f.f) {
 		Com_Printf("R_ScreenShot_f: Couldn't create file: %s\n", checkName);
 		return;
 	}
 
 	if (shotNum == 1000) {
 		Com_Printf("R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
-		fclose(f);
+		FS_FCloseFile(&f);
 		return;
 	}
 
@@ -157,7 +159,7 @@ void R_ScreenShot_f (void)
 	buffer = Mem_PoolAlloc(viddef.width * viddef.height * 3, vid_imagePool, 0);
 	if (!buffer) {
 		Com_Printf("R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", viddef.width * viddef.height * 3);
-		fclose(f);
+		FS_FCloseFile(&f);
 		return;
 	}
 
@@ -168,24 +170,24 @@ void R_ScreenShot_f (void)
 	/* Write */
 	switch (type) {
 	case SSHOTTYPE_TGA:
-		R_WriteTGA(f, buffer, viddef.width, viddef.height);
+		R_WriteTGA(&f, buffer, viddef.width, viddef.height);
 		break;
 
 	case SSHOTTYPE_TGA_COMP:
-		R_WriteCompressedTGA(f, buffer, viddef.width, viddef.height);
+		R_WriteCompressedTGA(&f, buffer, viddef.width, viddef.height);
 		break;
 
 	case SSHOTTYPE_PNG:
-		R_WritePNG(f, buffer, viddef.width, viddef.height);
+		R_WritePNG(&f, buffer, viddef.width, viddef.height);
 		break;
 
 	case SSHOTTYPE_JPG:
-		R_WriteJPG(f, buffer, viddef.width, viddef.height, quality);
+		R_WriteJPG(&f, buffer, viddef.width, viddef.height, quality);
 		break;
 	}
 
 	/* Finish */
-	fclose(f);
+	FS_FCloseFile(&f);
 	Mem_Free(buffer);
 
 	Com_Printf("Wrote %s\n", checkName);

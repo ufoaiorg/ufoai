@@ -274,7 +274,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
  * @sa R_LoadJPG
  * @sa R_FindImage
  */
-void R_WritePNG (FILE *f, byte *buffer, int width, int height)
+void R_WritePNG (qFILE *f, byte *buffer, int width, int height)
 {
 	int			i;
 	png_structp	png_ptr;
@@ -294,7 +294,7 @@ void R_WritePNG (FILE *f, byte *buffer, int width, int height)
 		return;
 	}
 
-	png_init_io(png_ptr, f);
+	png_init_io(png_ptr, f->f);
 
 	png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB,
 				PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
@@ -559,7 +559,7 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
  * @sa R_LoadTGA
  * @sa R_WriteCompressedTGA
  */
-void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
+void R_WriteTGA (qFILE *f, byte *buffer, int width, int height)
 {
 	int i, temp;
 	const int channels = 3;
@@ -594,7 +594,7 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 		out[i + 2] = temp;
 	}
 
-	if (fwrite(out, 1, size, f) != size)
+	if (FS_Write(out, size, f) != size)
 		Com_Printf("R_WriteTGA: Failed to write the tga file\n");
 
 	Mem_Free(out);
@@ -605,7 +605,7 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
  * @sa R_LoadTGA
  * @sa R_WriteTGA
  */
-void R_WriteCompressedTGA (FILE *f, byte *buffer, int width, int height)
+void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 {
 	const int channels = 3;
 	byte pixel_data[channels];
@@ -637,7 +637,7 @@ void R_WriteCompressedTGA (FILE *f, byte *buffer, int width, int height)
 	header[17] = 0x20;	/* Origin at bottom left */
 
 	/* write header */
-	fwrite(header, 1, sizeof(header), f);
+	FS_Write(header, sizeof(header), f);
 
 	for (y = height - 1; y >= 0; y--) {
 		for (x = 0; x < width; x++) {
@@ -663,8 +663,8 @@ void R_WriteCompressedTGA (FILE *f, byte *buffer, int width, int height)
 						if (block_length > 1) {
 							/* write the uncompressed block */
 							rle_packet = block_length - 2;
-							fwrite(&rle_packet, 1, 1, f);
-							fwrite(block_data, 1, (block_length - 1) * channels, f);
+							FS_Write(&rle_packet,1, f);
+							FS_Write(block_data, (block_length - 1) * channels, f);
 							block_length = 1;
 						}
 						memcpy(block_data, pixel_data, channels);
@@ -680,8 +680,8 @@ void R_WriteCompressedTGA (FILE *f, byte *buffer, int width, int height)
 						if (block_length > 1) {
 							/* write the compressed block */
 							rle_packet = block_length + 127;
-							fwrite(&rle_packet, 1, 1, f);
-							fwrite(block_data, 1, channels, f);
+							FS_Write(&rle_packet, 1, f);
+							FS_Write(block_data, channels, f);
 							block_length = 0;
 						}
 						memcpy(&block_data[block_length * channels], pixel_data, channels);
@@ -694,12 +694,12 @@ void R_WriteCompressedTGA (FILE *f, byte *buffer, int width, int height)
 			if (block_length == 128) {
 				rle_packet = block_length - 1;
 				if (!compress) {
-					fwrite(&rle_packet, 1, 1, f);
-					fwrite(block_data, 1, 128 * channels, f);
+					FS_Write(&rle_packet, 1, f);
+					FS_Write(block_data, 128 * channels, f);
 				} else {
 					rle_packet += 128;
-					fwrite(&rle_packet, 1, 1, f);
-					fwrite(block_data, 1, channels, f);
+					FS_Write(&rle_packet, 1, f);
+					FS_Write(block_data, channels, f);
 				}
 
 				block_length = 0;
@@ -712,12 +712,12 @@ void R_WriteCompressedTGA (FILE *f, byte *buffer, int width, int height)
 	if (block_length) {
 		rle_packet = block_length - 1;
 		if (!compress) {
-			fwrite(&rle_packet, 1, 1, f);
-			fwrite(block_data, 1, block_length * channels, f);
+			FS_Write(&rle_packet, 1, f);
+			FS_Write(block_data, block_length * channels, f);
 		} else {
 			rle_packet += 128;
-			fwrite(&rle_packet, 1, 1, f);
-			fwrite(block_data, 1, channels, f);
+			FS_Write(&rle_packet, 1, f);
+			FS_Write(block_data, channels, f);
 		}
 	}
 
@@ -725,7 +725,7 @@ void R_WriteCompressedTGA (FILE *f, byte *buffer, int width, int height)
 	strncpy(&footer[8] , "TRUEVISION-XFILE", 16);
 	footer[24] = '.';
 	footer[25] = 0;
-	fwrite(footer, 1, sizeof(footer), f);
+	FS_Write(footer, sizeof(footer), f);
 }
 
 /*
@@ -931,7 +931,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
  * @sa R_ScreenShot_f
  * @sa R_LoadJPG
  */
-void R_WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
+void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
 {
 	int offset, w3;
 	struct jpeg_compress_struct cinfo;
@@ -941,7 +941,7 @@ void R_WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 	/* Initialise the jpeg compression object */
 	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_compress(&cinfo);
-	jpeg_stdio_dest(&cinfo, f);
+	jpeg_stdio_dest(&cinfo, f->f);
 
 	/* Setup jpeg parameters */
 	cinfo.image_width = width;

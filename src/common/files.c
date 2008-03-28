@@ -1470,7 +1470,7 @@ int FS_Write (const void *buffer, int len, qFILE * f)
 		remaining -= written;
 		buf += written;
 	}
-/* 	fflush( f->f ); */
+/* 	fflush(f->f); */
 	return len;
 }
 

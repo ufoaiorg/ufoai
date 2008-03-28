@@ -75,10 +75,10 @@ typedef struct image_s {
 #define TEXNUM_LIGHTMAPS	MAX_GLTEXTURES
 #define TEXNUM_IMAGES		(TEXNUM_LIGHTMAPS + MAX_GLLIGHTMAPS)
 
-void R_WritePNG(FILE *f, byte *buffer, int width, int height);
-void R_WriteJPG(FILE *f, byte *buffer, int width, int height, int quality);
-void R_WriteTGA(FILE *f, byte *buffer, int width, int height);
-void R_WriteCompressedTGA(FILE *f, byte *buffer, int width, int height);
+void R_WritePNG(qFILE *f, byte *buffer, int width, int height);
+void R_WriteJPG(qFILE *f, byte *buffer, int width, int height, int quality);
+void R_WriteTGA(qFILE *f, byte *buffer, int width, int height);
+void R_WriteCompressedTGA(qFILE *f, byte *buffer, int width, int height);
 
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
 
