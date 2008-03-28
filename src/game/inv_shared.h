@@ -336,7 +336,7 @@ typedef struct inventory_s {
 typedef struct equipDef_s {
 	char name[MAX_VAR];
 	int num[MAX_OBJDEFS];
-	byte num_loose[MAX_OBJDEFS];
+	byte numLoose[MAX_OBJDEFS];
 } equipDef_t;
 
 #define MAX_TEAMS_PER_MISSION 4

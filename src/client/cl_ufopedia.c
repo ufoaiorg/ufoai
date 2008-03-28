@@ -220,22 +220,26 @@ static const char* CL_AircraftStatToName (int stat)
  */
 static void UP_DisplayTechTree (const technology_t* t)
 {
-	int i = 0;
+	int i;
 	static char up_techtree[1024];
 	const requirements_t *required;
+	const requirement_t *req;
 	technology_t *techRequired;
+
 	required = &t->require_AND;
 	up_techtree[0] = '\0';
-	for (; i < required->numLinks; i++) {
-		if (required->type[i] == RS_LINK_TECH) {
-			if (!Q_strncmp(required->id[i], "nothing", MAX_VAR)
-			 || !Q_strncmp(required->id[i], "initial", MAX_VAR)) {
+
+	for (i = 0; i < required->numLinks; i++) {
+		req = &required->links[i];
+		if (req->type == RS_LINK_TECH) {
+			if (!Q_strncmp(req->id, "nothing", MAX_VAR)
+			 || !Q_strncmp(req->id, "initial", MAX_VAR)) {
 				Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
 				continue;
 			} else {
-				techRequired = RS_GetTechByIDX(required->idx[i]);
+				techRequired = req->link;
 				if (!techRequired)
-					Sys_Error("Could not find the tech for '%s'\n", required->id[i]);
+					Sys_Error("Could not find the tech for '%s'\n", req->id);
 
 				/** Only display tech if it isn't ok to do so.
 				 * @todo If it is one (a logic tech) we may want to re-iterate from its requirements? */
@@ -1351,17 +1355,17 @@ static void UP_TechTreeClick_f (void)
 
 	/* skip every tech which have not been displayed in techtree */
 	for (i = 0; i <= num; i++) {
-		if (required_AND->type[i] != RS_LINK_TECH)
+		if (required_AND->links[i].type != RS_LINK_TECH)
 			num++;
 	}
 
-	if (!Q_strncmp(required_AND->id[num], "nothing", MAX_VAR)
-		|| !Q_strncmp(required_AND->id[num], "initial", MAX_VAR))
+	if (!Q_strncmp(required_AND->links[num].id, "nothing", MAX_VAR)
+		|| !Q_strncmp(required_AND->links[num].id, "initial", MAX_VAR))
 		return;
 
-	techRequired = RS_GetTechByIDX(required_AND->idx[num]);
+	techRequired = required_AND->links[num].link;
 	if (!techRequired)
-		Sys_Error("Could not find the tech for '%s'\n", required_AND->id[num]);
+		Sys_Error("Could not find the tech for '%s'\n", required_AND->links[num].id);
 
 	/* maybe there is no UFOpaedia chapter assigned - this tech should not be opened at all */
 	if (techRequired->up_chapter == -1)

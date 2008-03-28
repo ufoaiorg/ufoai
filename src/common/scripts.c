@@ -1806,7 +1806,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	Q_strncpyz(td->id, name, sizeof(td->id));
 	td->armour = td->weapons = qtrue; /* default values */
-	td->onlyWeaponIndex = NONE;
+	td->onlyWeapon = NULL;
 
 	/* get name list body body */
 	token = COM_Parse(text);
@@ -1839,14 +1839,14 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 		if (!v->string) {
 			if (!Q_strcmp(token, "onlyWeapon")) {
-				const objDef_t *od;
+				objDef_t *od;
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				od = INVSH_GetItemByID(token);
 
 				if (od)
-					td->onlyWeaponIndex = od->idx;
+					td->onlyWeapon = od;
 				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
 			} else if (!Q_strcmp(token, "models"))

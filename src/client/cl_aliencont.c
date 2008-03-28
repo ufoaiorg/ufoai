@@ -375,24 +375,24 @@ void AL_RemoveAliens (base_t *base, teamDef_t *alienType, int amount, alienCalcT
 
 /**
  * @brief Get index of alien.
- * @param[in] id Pointer to alien type.
+ * @param[in] alienType Pointer to alien type.
  * @return Index of alien in alien containment (so < gd.numAliensTD)
- * @note It does not return the global team index from csi.teamDef array.
+ * @note It does NOT return the global team index from csi.teamDef array. That would be alienType->idx
  * @sa RS_AssignTechIdxs
  * @sa AL_GetAlienGlobalIdx
  */
-int AL_GetAlienIdx (const char *id)
+int AL_GetAlienIdx (const teamDef_t *alienType)
 {
-	int i, index = 0;
+	int i, index;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (!Q_strncmp(id, AL_AlienTypeToName(i), MAX_VAR))
+		if (alienType == &csi.teamDef[i])
 			return index;
 		if (csi.teamDef[i].alien)
 			index++;
 	}
 
-	Com_Printf("AL_GetAlienIdx(): Alien \"%s\" not found!\n", id);
+	Com_Printf("AL_GetAlienType: Alien \"%s\" not found!\n", alienType->id);
 	return -1;
 }
 
@@ -421,24 +421,28 @@ int AL_GetAlienGlobalIdx (int idx)
  * @brief Get amount of live aliens or alien bodies stored in Containment.
  * @param[in] idx Index of alien.
  * @param[in] reqtype Requirement type (RS_LINK_ALIEN/RS_LINK_ALIEN_DEAD).
- * @param[in] base Pointer to a base where we search aliens.
  * @return Amount of desired alien/body.
  * @sa RS_RequirementsMet
  * @sa RS_CheckCollected
  */
-int AL_GetAlienAmount (int idx, requirementType_t reqtype, const base_t *base)
+int AL_GetAlienAmount (const teamDef_t *alienType, requirementType_t reqtype, const base_t *base)
 {
 	const aliensCont_t *containment;
+	int alienTypeIndex;
 
+	assert(alienType);
 	assert(base);
-	containment = base->alienscont;
+	alienTypeIndex = AL_GetAlienIdx(alienType);
+	assert(alienTypeIndex >= 0);
+	containment = &base->alienscont[alienTypeIndex];
+
 	switch (reqtype) {
 	case RS_LINK_ALIEN:
-		return containment[idx].amount_alive;
+		return containment->amount_alive;
 	case RS_LINK_ALIEN_DEAD:
-		return containment[idx].amount_dead;
+		return containment->amount_dead;
 	default:
-		return containment[idx].amount_dead;
+		return containment->amount_dead;
 	}
 }
 

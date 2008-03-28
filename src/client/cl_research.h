@@ -69,13 +69,25 @@ typedef enum requirementType_s {
 	MAX_RS_LINKTYPES
 } requirementType_t;
 
+typedef struct requirement_s {
+	requirementType_t type;	/**< What type the requ. is: item (in store/quarantine), event, etc... */
+	char *id;	/**< dependency id (text-id) */
+	void *link;	/**< Dependency pointer (depends on the type)
+				 * RS_LINK_TECH -> technology_t*
+				 * RS_LINK_ITEM -> objDef_t*
+				 * RS_LINK_EVENT -> nothing yet
+				 * RS_LINK_ALIEN		-> teamDef_t*
+				 * RS_LINK_ALIEN_DEAD	-> teamDef_t*
+				 * RS_LINK_ALIEN_GLOBAL -> NULL
+				 */
+
+	int amount;	/**< How many items are needed for research ... if any. (fix) */
+	int collected;	/**< How many items have been collected. (varies) */
+} requirement_t;
+
 typedef struct requirements_s {
 	int numLinks;			/**< The number of requirements for this tech. */
-	requirementType_t type[MAX_TECHLINKS];	/**< What type the requ. is: item (in store/quarantine), event, etc... */
-	char *id[MAX_TECHLINKS];	/**< dependency id (text-id) */
-	int idx[MAX_TECHLINKS];		/**< Dependency index (index in relation to array depends on the type) */
-	int amount[MAX_TECHLINKS];	/**< How many items are needed for research ... if any. (fix) */
-	int collected[MAX_TECHLINKS];	/**< How many items have been collected. (varies) */
+	requirement_t links[MAX_TECHLINKS];
 } requirements_t;
 
 typedef struct stringlist_s {

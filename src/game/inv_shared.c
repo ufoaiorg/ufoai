@@ -1218,23 +1218,21 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
  */
 void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 {
-	const objDef_t *obj;
+	objDef_t *obj;
 	item_t item;
 
 	assert(chr);
 	assert(!chr->weapons);
 	assert(chr->teamDef);
-	assert(chr->teamDef->onlyWeaponIndex != NONE);
-	assert(chr->teamDef->onlyWeaponIndex < CSI->numODs);
+	assert(chr->teamDef->onlyWeapon);
 
 	/* Get weapon */
-	obj = &CSI->ods[chr->teamDef->onlyWeaponIndex];
-	assert(obj);
+	obj = chr->teamDef->onlyWeapon;
 	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon %i: %s\n",
-	chr->teamDef->idx, chr->teamDef->id, chr->teamDef->onlyWeaponIndex, obj->id);
+	chr->teamDef->idx, chr->teamDef->id, obj->idx, obj->id);
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
-	item.t = &CSI->ods[chr->teamDef->onlyWeaponIndex];
+	item.t = obj;
 	item.m = item.t;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)

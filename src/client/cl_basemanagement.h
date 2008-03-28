@@ -287,7 +287,7 @@ building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(base_t *base, building_t *type);
 int B_GetNumberOfBuildingsInBaseByBuildingType(base_t *base, buildingType_t type);
 
-int B_ItemInBase(int item_idx, const base_t *base);
+int B_ItemInBase(const objDef_t *item, const base_t *base);
 
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
 void B_ReviveSoldiersInBase(base_t* base); /* @todo */

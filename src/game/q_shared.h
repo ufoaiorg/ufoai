@@ -570,7 +570,7 @@ typedef struct teamDef_s {
 
 	qboolean armour;	/**< Does this team use armour. */
 	qboolean weapons;	/**< Does this team use weapons. */
-	int onlyWeaponIndex;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
+	struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
 	 						 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
 							 * the ability to melee attack their victims. They get a weapon assigned with several
 							 * bloodspider melee attack firedefitions */

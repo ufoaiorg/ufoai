@@ -3268,7 +3268,7 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
  * @return amount Number of available items in base
  * @note Formerly known as RS_ItemInBase.
  */
-int B_ItemInBase (int item_idx, const base_t *base)
+int B_ItemInBase (const objDef_t *item, const base_t *base)
 {
 	const equipDef_t *ed;
 
@@ -3282,7 +3282,7 @@ int B_ItemInBase (int item_idx, const base_t *base)
 
 	/* Com_DPrintf(DEBUG_CLIENT, "B_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].id); */
 
-	return ed->num[item_idx];
+	return ed->num[item->idx];
 }
 
 /**
@@ -3523,7 +3523,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
 			MSG_WriteString(sb, csi.ods[k].id);
 			MSG_WriteShort(sb, b->storage.num[k]);
-			MSG_WriteByte(sb, b->storage.num_loose[k]);
+			MSG_WriteByte(sb, b->storage.numLoose[k]);
 		}
 
 		MSG_WriteShort(sb, b->radar.range);
@@ -3783,7 +3783,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				MSG_ReadByte(sb);
 			} else {
 				b->storage.num[od2->idx] = MSG_ReadShort(sb);
-				b->storage.num_loose[od2->idx] = MSG_ReadByte(sb);
+				b->storage.numLoose[od2->idx] = MSG_ReadByte(sb);
 			}
 		}
 
@@ -3865,7 +3865,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 	assert(obj);
 	if (reset) {
 		base->storage.num[obj->idx] = 0;
-		base->storage.num_loose[obj->idx] = 0; /* FIXME: needed? */
+		base->storage.numLoose[obj->idx] = 0; /* FIXME: needed? */
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
 		if (!ignorecap && (amount > 0)) {

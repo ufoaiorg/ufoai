@@ -139,19 +139,22 @@ static float PR_CalculateProductionPercentDone (const base_t *base, technology_t
  * @param[in] base Pointer to base.
  * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
  */
-static int PR_RequirementsMet (int amount, requirements_t *req, base_t *base)
+static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
 {
 	int a, i;
 	int producible_amount = 0;
 	qboolean producible = qfalse;
+	requirement_t *req;
 
 	for (a = 0; a < amount; a++) {
 		producible = qtrue;
-		for (i = 0; i < req->numLinks; i++) {
-			if (req->type[i] == RS_LINK_ITEM) {
+		for (i = 0; i < reqs->numLinks; i++) {
+			req = &reqs->links[i];
+			if (req->type == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
-				if (B_ItemInBase(req->idx[i], base) < req->amount[i]) {
+				assert(req->link);
+				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
+				if (B_ItemInBase(req->link, base) < req->amount) {
 					producible = qfalse;
 				}
 			}
@@ -171,10 +174,12 @@ static int PR_RequirementsMet (int amount, requirements_t *req, base_t *base)
  * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
  * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
  */
-static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *req)
+static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs)
 {
 	int i;
 	equipDef_t *ed;
+	requirement_t *req;
+	objDef_t *item;
 
 	if (!base)
 		return;
@@ -186,14 +191,17 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requi
 	if (amount == 0)
 		return;
 
-	for (i = 0; i < req->numLinks; i++) {
-		if (req->type[i] == RS_LINK_ITEM) {
+	for (i = 0; i < reqs->numLinks; i++) {
+		req = &reqs->links[i];
+		if (req->type == RS_LINK_ITEM) {
+			assert(req->link);
+			item = req->link;
 			if (amount > 0) {
 				/* Add items to the base-storage. */
-				ed->num[req->idx[i]] += (req->amount[i] * amount);
+				ed->num[item->idx] += (req->amount * amount);
 			} else { /* amount < 0 */
 				/* Remove items from the base-storage. */
-				ed->num[req->idx[i]] -= (req->amount[i] * -amount);
+				ed->num[item->idx] -= (req->amount * -amount);
 			}
 		}
 	}

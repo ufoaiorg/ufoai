@@ -48,10 +48,10 @@ static void INV_CollectingAmmo (const invList_t *magazine, aircraft_t *aircraft)
 	cargo = aircraft->itemcargo;
 
 	/* Let's add remaining ammo to market. */
-	eTempEq.num_loose[magazine->item.m->idx] += magazine->item.a;
-	if (eTempEq.num_loose[magazine->item.m->idx] >= magazine->item.t->ammo) {
+	eTempEq.numLoose[magazine->item.m->idx] += magazine->item.a;
+	if (eTempEq.numLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.num_loose[magazine->item.m->idx] -= magazine->item.t->ammo;
+		eTempEq.numLoose[magazine->item.m->idx] -= magazine->item.t->ammo;
 		for (i = 0; i < aircraft->itemtypes; i++) {
 			if (cargo[i].item == magazine->item.m) {
 				cargo[i].amount++;
@@ -97,9 +97,9 @@ static void INV_CarriedItems (const le_t *soldier)
 
 			if (!item->item.t->reload || item->item.a == 0)
 				continue;
-			ccs.eMission.num_loose[item->item.m->idx] += item->item.a;
-			if (ccs.eMission.num_loose[item->item.m->idx] >= item->item.t->ammo) {
-				ccs.eMission.num_loose[item->item.m->idx] -= item->item.t->ammo;
+			ccs.eMission.numLoose[item->item.m->idx] += item->item.a;
+			if (ccs.eMission.numLoose[item->item.m->idx] >= item->item.t->ammo) {
+				ccs.eMission.numLoose[item->item.m->idx] -= item->item.t->ammo;
 				ccs.eMission.num[item->item.m->idx]++;
 			}
 			/* The guys keep their weapons (half-)loaded. Auto-reload

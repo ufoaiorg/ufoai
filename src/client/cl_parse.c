@@ -1413,10 +1413,10 @@ static void CL_InvReload (struct dbuffer *msg)
 		 && ic->item.a > 0
 		 && ic->item.a != ic->item.t->ammo) {
 		assert(ammo == ic->item.t->ammo);
-		ccs.eMission.num_loose[ic->item.m->idx] += ic->item.a;
+		ccs.eMission.numLoose[ic->item.m->idx] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
-		if (ccs.eMission.num_loose[ic->item.m->idx] >= ic->item.t->ammo) {
-			ccs.eMission.num_loose[ic->item.m->idx] -= ic->item.t->ammo;
+		if (ccs.eMission.numLoose[ic->item.m->idx] >= ic->item.t->ammo) {
+			ccs.eMission.numLoose[ic->item.m->idx] -= ic->item.t->ammo;
 			ccs.eMission.num[ic->item.m->idx]++;
 		}
 	}

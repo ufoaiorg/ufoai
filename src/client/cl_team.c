@@ -584,8 +584,8 @@ static void CL_MultiplayerTeamSlotComments_f (void)
 
 /**
  * @brief Move all the equipment carried by the team on the aircraft into the given equipment
- * @param[in] aircraft The craft with the tream (and thus equipment) onboard
- * @param[out] ed The equipment definition which will receive all teh stuff from the aircraft-team.
+ * @param[in] aircraft The craft with the team (and thus equipment) onboard.
+ * @param[out] ed The equipment definition which will receive all the stuff from the aircraft-team.
  */
 void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 {
@@ -621,10 +621,10 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 					if (item.a) {
 						assert(type->reload);
 						assert(item.m);
-						ed->num_loose[item.m->idx] += item.a;
+						ed->numLoose[item.m->idx] += item.a;
 						/* Accumulate loose ammo into clips */
-						if (ed->num_loose[item.m->idx] >= type->ammo) {
-							ed->num_loose[item.m->idx] -= type->ammo;
+						if (ed->numLoose[item.m->idx] >= type->ammo) {
+							ed->numLoose[item.m->idx] -= type->ammo;
 							ed->num[item.m->idx]++;
 						}
 					}
@@ -707,9 +707,9 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 	/* Failed to find a complete clip - see if there's any loose ammo
 	 * of the same kind; if so, gather it all in this weapon. */
-	if (item.m && ed->num_loose[item.m->idx] > 0) {
-		item.a = ed->num_loose[item.m->idx];
-		ed->num_loose[item.m->idx] = 0;
+	if (item.m && ed->numLoose[item.m->idx] > 0) {
+		item.a = ed->numLoose[item.m->idx];
+		ed->numLoose[item.m->idx] = 0;
 		return item;
 	}
 
@@ -717,20 +717,20 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
 		if (INVSH_LoadableInWeapon(&csi.ods[i], type)
-		&& (ed->num_loose[i] > item.a) ) {
+		&& (ed->numLoose[i] > item.a) ) {
 			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with
 				 * more bullets.  Put the previously found ammo back, so
 				 * we'll take the new type. */
 				assert(item.m);
-				ed->num_loose[item.m->idx] = item.a;
+				ed->numLoose[item.m->idx] = item.a;
 				/* We don't have to accumulate loose ammo into clips
 				   because we did it previously and we create no new ammo */
 			}
 			/* Found some loose ammo to load the weapon with */
-			item.a = ed->num_loose[i];
-			ed->num_loose[i] = 0;
+			item.a = ed->numLoose[i];
+			ed->numLoose[i] = 0;
 			item.m = &csi.ods[i];
 		}
 	}
@@ -739,14 +739,14 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 /**
  * @brief Reloads weapons and removes "not assigned" ones from containers.
- * @param[in] aircraft	Pointer to an aircraft for given team.
+ * @param[in] aircraft Pointer to an aircraft for given team.
  * @param[in] ed equipDef_t pointer to equipment of given character in a team.
  * @sa CL_AddWeaponAmmo
  */
 void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 {
 	base_t *base;
-	character_t *cp;
+	character_t *chr;
 	invList_t *ic, *next;
 	int p, container;
 
@@ -769,15 +769,15 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
-				cp = &aircraft->acTeam[p]->chr;
-				assert(cp);
-				for (ic = cp->inv->c[container]; ic; ic = next) {
+				chr = &aircraft->acTeam[p]->chr;
+				assert(chr);
+				for (ic = chr->inv->c[container]; ic; ic = next) {
 					next = ic->next;
 					if (ed->num[ic->item.t->idx] > 0) {
 						ic->item = CL_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */
-						Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
+						Com_RemoveFromInventory(chr->inv, container, ic->x, ic->y);
 					}
 				}
 			}
@@ -1681,7 +1681,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	for (i = 0; i < csi.numODs; i++) {
 		MSG_WriteString(&sb, csi.ods[i].id);
 		MSG_WriteLong(&sb, baseCurrent->storage.num[i]);
-		MSG_WriteByte(&sb, baseCurrent->storage.num_loose[i]);
+		MSG_WriteByte(&sb, baseCurrent->storage.numLoose[i]);
 	}
 
 	/* write data */
@@ -1865,7 +1865,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 			MSG_ReadByte(&sb);
 		} else {
 			base->storage.num[num] = MSG_ReadLong(&sb);
-			base->storage.num_loose[num] = MSG_ReadByte(&sb);
+			base->storage.numLoose[num] = MSG_ReadByte(&sb);
 		}
 	}
 }
