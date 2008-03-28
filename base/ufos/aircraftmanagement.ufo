@@ -77,7 +77,7 @@ aircraft craft_drop_firebird
 		ecm			100
 		damage		50
 		accuracy	70
-		fuelsize	166600
+		fuelsize	250000
 	}
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
@@ -110,7 +110,7 @@ aircraft craft_drop_firebird
 aircraft craft_inter_stiletto
 {
 	param {
-		speed		13
+		speed		20
 		shield		0
 		ecm		100
 		damage		30
@@ -278,7 +278,7 @@ aircraft craft_inter_stingray
 aircraft craft_ufo_harvester
 {
 	param {
-		speed		20
+		speed		15
 		shield		3
 		ecm		100
 		damage		40
@@ -369,7 +369,7 @@ aircraft craft_ufo_supply
 aircraft craft_ufo_condor
 {
 	param {
-		speed		25
+		speed		15
 		shield		0
 		ecm			100
 		damage		40
@@ -398,7 +398,7 @@ aircraft craft_ufo_condor
 aircraft craft_ufo_scout
 {
 	param {
-		speed		15
+		speed		10
 		shield		0
 		ecm		100
 		damage		30
@@ -420,7 +420,7 @@ aircraft craft_ufo_scout
 aircraft craft_ufo_fighter
 {
 	param {
-		speed		17
+		speed		15
 		shield		0
 		ecm		100
 		damage		80
