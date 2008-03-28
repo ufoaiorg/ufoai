@@ -25,17 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-/** @brief There shouldn't really be more than 32 shoots per actor per round */
-#define MAX_AI_SHOOTS 32
-
 typedef struct {
 	pos3_t to;			/**< grid pos to walk to */
 	pos3_t stop;		/**< grid pos to stop at (e.g. hiding spots) */
 	byte mode;			/**< shoot_types_t */
 	byte shots;			/**< how many shoots can this actor do */
 	edict_t *target;	/**< the target edict */
-	int firemodes[MAX_AI_SHOOTS];	/**< the firemodes to use for shooting */
-	int z_aligns[MAX_AI_SHOOTS];		/**< the z-align for every shoot */
+	const fireDef_t *fd;/**< the firemode to use for shooting */
+	int z_align;		/**< the z-align for every shoot */
 } aiAction_t;
 
 /**
@@ -126,7 +123,7 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 /**
  * @sa AI_ActorThink
  * @todo fix firedef stuff
- * @todo fill z_aligns and firemodes values
+ * @todo fill z_align values
  */
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
@@ -284,6 +281,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							aia->mode = fm;
 							aia->shots = shots;
 							aia->target = check;
+							aia->fd = fd;
 						}
 					}
 
@@ -303,6 +301,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							aia->mode = fm;
 							aia->shots = shots;
 							aia->target = check;
+							aia->fd = fd;
 							best_time = fd->time * shots;
 							/* take the first best breakable or door and try to shoot it */
 							break;
@@ -674,10 +673,10 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* shoot and hide */
 	if (bestAia.target) {
-		int shot = 0;
+		const int fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, bestAia.firemodes[shot], NULL, qtrue, bestAia.z_aligns[shot]);
+			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, fdIdx, NULL, qtrue, bestAia.z_align);
 			bestAia.shots--;
 			/* check for target's death */
 			if (bestAia.target->state & STATE_DEAD) {
@@ -687,7 +686,6 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 				if (!bestAia.target)
 					return;
 			}
-			shot++;
 		}
 		/* now hide */
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
