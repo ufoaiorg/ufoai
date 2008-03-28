@@ -152,8 +152,7 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
 			req = &reqs->links[i];
 			if (req->type == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
-				assert(req->link);
-				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
+				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
 				if (B_ItemInBase(req->link, base) < req->amount) {
 					producible = qfalse;
 				}

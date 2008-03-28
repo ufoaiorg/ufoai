@@ -145,8 +145,7 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 			case RS_LINK_TECH:
 				assert(req->link);
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
-				if (!RS_IsResearched_ptr(req->link)
-					&& Q_strncmp(req->id, "nothing", MAX_VAR)) {
+				if (!RS_IsResearched_ptr(req->link)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech not researched ----> %s \n", req->id);
 					met_AND = qfalse;
 				}
@@ -255,8 +254,7 @@ static qboolean RS_RequirementsResearchable (requirements_t *required_AND, requi
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsResearchable: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
 				tech = RS_GetTechByIDX(required_AND->idx[i]);
 
-				if (!RS_TechIsResearchable(tech, base)
-					&& Q_strncmp(required_AND->id[i], "nothing", MAX_VAR)) {
+				if (!RS_TechIsResearchable(tech, base)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsResearchable: this tech not researchable ----> %s \n", required_AND->id[i]);
 					met_AND = qfalse;
 				}
@@ -554,14 +552,10 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 		req = &reqs->links[i];
 		switch (req->type) {
 		case RS_LINK_TECH:
-			/* Only get tech-link if it isn't a fixed keyword */
-			if (Q_strncmp(req->id, "nothing", MAX_VAR)
-			 && Q_strncmp(req->id, "initial", MAX_VAR)) {
-				/* Get the index in the techtree. */
-				req->link = RS_GetTechByID(req->id);
-				if (!req->link)
-					Sys_Error("RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
-			}
+			/* Get the index in the techtree. */
+			req->link = RS_GetTechByID(req->id);
+			if (!req->link)
+				Sys_Error("RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
 			break;
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
@@ -2260,9 +2254,6 @@ technology_t *RS_GetTechByID (const char *id)
 	if (!id || !*id)
 		return NULL;
 
-	if (!Q_strncmp(id, "nothing", MAX_VAR))
-		return NULL;
-
 	hash = Com_HashKey(id, TECH_HASH_SIZE);
 	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)
 		if (!Q_stricmp(id, tech->id))
@@ -2367,10 +2358,6 @@ int RS_GetTechIdxByName (const char *name)
 {
 	technology_t *tech;
 	unsigned hash;
-
-	/* return TECH_INVALID if tech matches "nothing" */
-	if (!Q_strncmp(name, "nothing", MAX_VAR))
-		return TECH_INVALID;
 
 	hash = Com_HashKey(name, TECH_HASH_SIZE);
 	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)

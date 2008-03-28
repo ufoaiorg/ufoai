@@ -393,7 +393,7 @@ static int AL_GetAlienIdx (const teamDef_t *alienType)
 			index++;
 	}
 
-	Com_Printf("AL_GetAlienType: Alien \"%s\" not found!\n", alienType->id);
+	Com_Printf("AL_GetAlienIdx: Alien \"%s\" not found!\n", alienType->id);
 	return -1;
 }
 

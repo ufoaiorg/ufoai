@@ -3272,6 +3272,9 @@ int B_ItemInBase (const objDef_t *item, const base_t *base)
 {
 	const equipDef_t *ed;
 
+	if (!item)
+		return -1;
+
 	if (!base)
 		return -1;
 

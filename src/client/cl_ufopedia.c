@@ -229,14 +229,12 @@ static void UP_DisplayTechTree (const technology_t* t)
 	required = &t->require_AND;
 	up_techtree[0] = '\0';
 
-	for (i = 0; i < required->numLinks; i++) {
-		req = &required->links[i];
-		if (req->type == RS_LINK_TECH) {
-			if (!Q_strncmp(req->id, "nothing", MAX_VAR)
-			 || !Q_strncmp(req->id, "initial", MAX_VAR)) {
-				Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
-				continue;
-			} else {
+	if (required->numLinks <= 0)
+		Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
+	else
+		for (i = 0; i < required->numLinks; i++) {
+			req = &required->links[i];
+			if (req->type == RS_LINK_TECH) {
 				techRequired = req->link;
 				if (!techRequired)
 					Sys_Error("Could not find the tech for '%s'\n", req->id);
@@ -254,10 +252,9 @@ static void UP_DisplayTechTree (const technology_t* t)
 					*/
 					continue;
 				}
+				Q_strcat(up_techtree, "\n", sizeof(up_techtree));
 			}
-			Q_strcat(up_techtree, "\n", sizeof(up_techtree));
 		}
-	}
 	/* and now set the buffer to the right mn.menuText */
 	mn.menuText[TEXT_LIST] = up_techtree;
 }
@@ -1358,10 +1355,6 @@ static void UP_TechTreeClick_f (void)
 		if (required_AND->links[i].type != RS_LINK_TECH)
 			num++;
 	}
-
-	if (!Q_strncmp(required_AND->links[num].id, "nothing", MAX_VAR)
-		|| !Q_strncmp(required_AND->links[num].id, "initial", MAX_VAR))
-		return;
 
 	techRequired = required_AND->links[num].link;
 	if (!techRequired)
