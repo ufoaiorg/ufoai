@@ -86,6 +86,7 @@ enum {
 	SSHOTTYPE_JPG,
 	SSHOTTYPE_PNG,
 	SSHOTTYPE_TGA,
+	SSHOTTYPE_TGA_COMP,
 };
 
 void R_ScreenShot_f (void)
@@ -107,11 +108,12 @@ void R_ScreenShot_f (void)
 	else if (!Q_stricmp (ext, "jpg"))
 		type = SSHOTTYPE_JPG;
 	else
-		type = SSHOTTYPE_TGA;
+		type = SSHOTTYPE_TGA_COMP;
 
 	/* Set necessary values */
 	switch (type) {
 	case SSHOTTYPE_TGA:
+	case SSHOTTYPE_TGA_COMP:
 		Com_Printf("Taking TGA screenshot...\n");
 		ext = "tga";
 		break;
@@ -175,6 +177,10 @@ void R_ScreenShot_f (void)
 	switch (type) {
 	case SSHOTTYPE_TGA:
 		R_WriteTGA(f, buffer, viddef.width, viddef.height);
+		break;
+
+	case SSHOTTYPE_TGA_COMP:
+		R_WriteCompressedTGA(f, buffer, viddef.width, viddef.height);
 		break;
 
 	case SSHOTTYPE_PNG:

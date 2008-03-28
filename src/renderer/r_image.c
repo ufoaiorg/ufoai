@@ -557,15 +557,17 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 
 /**
  * @sa R_LoadTGA
+ * @sa R_WriteCompressedTGA
  */
 void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 {
 	int i, temp;
+	const int channels = 3;
 	byte *out;
 	size_t size;
 
 	/* Allocate an output buffer */
-	size = (width * height * 3) + 18;
+	size = (width * height * channels) + 18;
 	out = Mem_PoolAlloc(size, vid_imagePool, 0);
 
 	/* Fill in header */
@@ -575,18 +577,18 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 	/* byte 3 - 11: palette data */
 	/* image width */
 	out[12] = width & 255;
-	out[13] = width >> 8;
+	out[13] = (width >> 8) & 255;
 	/* image height */
 	out[14] = height & 255;
-	out[15] = height >> 8;
-	out[16] = 24;	/* Pixel size 24 (RGB) or 32 (RGBA) */
+	out[15] = (height >> 8) & 255;
+	out[16] = channels * 8;	/* Pixel size 24 (RGB) or 32 (RGBA) */
 	/* byte 17: image descriptor byte */
 
 	/* Copy to temporary buffer */
-	memcpy(out + 18, buffer, width * height * 3);
+	memcpy(out + 18, buffer, width * height * channels);
 
 	/* Swap rgb to bgr */
-	for (i = 18; i < size; i += 3) {
+	for (i = 18; i < size; i += channels) {
 		temp = out[i];
 		out[i] = out[i+2];
 		out[i + 2] = temp;
@@ -598,6 +600,133 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 	Mem_Free(out);
 }
 
+
+/**
+ * @sa R_LoadTGA
+ * @sa R_WriteTGA
+ */
+void R_WriteCompressedTGA (FILE *f, byte *buffer, int width, int height)
+{
+	const int channels = 3;
+	byte pixel_data[channels];
+	byte block_data[channels * 128];
+	byte rle_packet;
+	int compress = 0;
+	size_t block_length = 0;
+	byte header[18];
+	char footer[26];
+
+	int y;
+	size_t x;
+
+	memset(header, 0, sizeof(header));
+	memset(footer, 0, sizeof(footer));
+
+	/* Fill in header */
+	/* byte 0: image ID field length */
+	/* byte 1: color map type */
+	header[2] = TGA_UNMAP_COMP;		/* image type: Truecolor RLE encoded */
+	/* byte 3 - 11: palette data */
+	/* image width */
+	header[12] = width & 255;
+	header[13] = (width >> 8) & 255;
+	/* image height */
+	header[14] = height & 255;
+	header[15] = (height >> 8) & 255;
+	header[16] = 24;	/* Pixel size 24 (RGB) or 32 (RGBA) */
+	header[17] = 0x20;	/* Origin at bottom left */
+
+	/* write header */
+	fwrite(header, 1, sizeof(header), f);
+
+	for (y = height - 1; y >= 0; y--) {
+		for (x = 0; x < width; x++) {
+			const size_t index = y * width * channels + x * channels;
+			pixel_data[0] = buffer[index + 2];
+			pixel_data[1] = buffer[index + 1];
+			pixel_data[2] = buffer[index];
+
+			if (block_length == 0) {
+				memcpy(block_data, pixel_data, channels);
+				block_length++;
+				compress = 0;
+			} else {
+				if (!compress) {
+					/* uncompressed block and pixel_data differs from the last pixel */
+					if (memcmp(&block_data[(block_length - 1) * channels], pixel_data, channels) != 0) {
+						/* append pixel */
+						memcpy(&block_data[block_length * channels], pixel_data, channels);
+
+						block_length++;
+					} else {
+						/* uncompressed block and pixel data is identical */
+						if (block_length > 1) {
+							/* write the uncompressed block */
+							rle_packet = block_length - 2;
+							fwrite(&rle_packet, 1, 1, f);
+							fwrite(block_data, 1, (block_length - 1) * channels, f);
+							block_length = 1;
+						}
+						memcpy(block_data, pixel_data, channels);
+						block_length++;
+						compress = 1;
+					}
+				} else {
+					/* compressed block and pixel data is identical */
+					if (memcmp(block_data, pixel_data, channels) == 0) {
+						block_length++;
+					} else {
+						/* compressed block and pixel data differs */
+						if (block_length > 1) {
+							/* write the compressed block */
+							rle_packet = block_length + 127;
+							fwrite(&rle_packet, 1, 1, f);
+							fwrite(block_data, 1, channels, f);
+							block_length = 0;
+						}
+						memcpy(&block_data[block_length * channels], pixel_data, channels);
+						block_length++;
+						compress = 0;
+					}
+				}
+			}
+
+			if (block_length == 128) {
+				rle_packet = block_length - 1;
+				if (!compress) {
+					fwrite(&rle_packet, 1, 1, f);
+					fwrite(block_data, 1, 128 * channels, f);
+				} else {
+					rle_packet += 128;
+					fwrite(&rle_packet, 1, 1, f);
+					fwrite(block_data, 1, channels, f);
+				}
+
+				block_length = 0;
+				compress = 0;
+			}
+		}
+	}
+
+	/* write remaining bytes */
+	if (block_length) {
+		rle_packet = block_length - 1;
+		if (!compress) {
+			fwrite(&rle_packet, 1, 1, f);
+			fwrite(block_data, 1, block_length * channels, f);
+		} else {
+			rle_packet += 128;
+			fwrite(&rle_packet, 1, 1, f);
+			fwrite(block_data, 1, channels, f);
+		}
+	}
+
+	/* write footer (optional, but the specification recommends it) */
+	strncpy(&footer[8] , "TRUEVISION-XFILE", 16);
+	footer[24] = '.';
+	footer[25] = 0;
+	fwrite(footer, 1, sizeof(footer), f);
+}
 
 /*
 =================================================================

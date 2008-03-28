@@ -78,6 +78,7 @@ typedef struct image_s {
 void R_WritePNG(FILE *f, byte *buffer, int width, int height);
 void R_WriteJPG(FILE *f, byte *buffer, int width, int height, int quality);
 void R_WriteTGA(FILE *f, byte *buffer, int width, int height);
+void R_WriteCompressedTGA(FILE *f, byte *buffer, int width, int height);
 
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
 
