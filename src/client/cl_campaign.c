@@ -3103,13 +3103,14 @@ static void CL_CampaignInitMarket (qboolean load)
 	for (i = 0; i < csi.numODs; i++) {
 		if (ccs.eMarket.ask[i] == 0) {
 			ccs.eMarket.ask[i] = csi.ods[i].price;
-			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i]*BID_FACTOR);
+			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
 		}
 
 		if (!ed->num[i])
 			continue;
+
 		if (!RS_ItemIsResearched(csi.ods[i].id))
-			Com_Printf("CL_CampaignInitMarket: Could not add item %s to the market - not marked as researched\n", csi.ods[i].id);
+			Com_Printf("CL_CampaignInitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n", csi.ods[i].id, curCampaign->id);
 		else
 			/* the other relevant values were already set in CL_CampaignInitMarket */
 			ccs.eMarket.num[i] = ed->num[i];
@@ -5562,8 +5563,8 @@ void CL_GameInit (qboolean load)
 
 	CL_GameTimeStop();
 
-	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
-	RS_InitTree(load);	/* Initialise all data in the research tree. */
+	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
+	RS_InitTree(load);		/**< Initialise all data in the research tree. */
 
 	CL_CampaignInitMarket(load);
 
