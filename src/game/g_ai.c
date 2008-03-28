@@ -548,6 +548,27 @@ static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	return bestAia;
 }
 
+/**
+ * @brief This function will turn the AI actor into the direction that is needed to walk
+ * to the given location
+ * @param[in] pos The position to set the direction for
+ */
+static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
+{
+	byte dv;
+
+	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, MAX_ROUTE);
+	dv = gi.MoveNext(gi.routingMap, pos);
+	if (dv < ROUTING_NOT_REACHABLE) {
+		const int status = G_DoTurn(aiActor, dv);
+		if (status) {
+			/* send the turn */
+			gi.AddEvent(G_VisToPM(aiActor->visflags), EV_ACTOR_TURN);
+			gi.WriteShort(aiActor->number);
+			gi.WriteByte(aiActor->dir);
+		}
+	}
+}
 
 /**
  * @brief The think function for the ai controlled aliens
@@ -623,13 +644,17 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
+
 		/* TODO: Add some calculation to decide whether the actor maybe wants to go crouched */
 		if (1)
 			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
+
+		/* actor is still alive - try to turn into the appropriate direction to see the target
+		 * actor once he sees the ai, too */
+		AI_TurnIntoDirection(ent, bestAia.target->pos);
+
 		/* TODO: If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
-		/* TODO: turn in the direction the AI actor has to walk to reach the last visible target
-		 * actor - this allows the AI to use reaction fire while securing a room */
 	}
 }
 

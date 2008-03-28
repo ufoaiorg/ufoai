@@ -686,7 +686,7 @@ void G_ClearVisFlags (int team)
  * @return Bitmask of visible (VIS_*) values
  * @sa G_CheckVisTeam
  */
-static int G_DoTurn (edict_t * ent, byte toDV)
+int G_DoTurn (edict_t * ent, byte toDV)
 {
 	float angleDiv;
 	const byte *rot;
@@ -1593,7 +1593,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (player_t * player, int num, int dv)
+static void G_ClientTurn (player_t * player, int num, byte dv)
 {
 	edict_t *ent;
 
@@ -1612,7 +1612,7 @@ static void G_ClientTurn (player_t * player, int num, int dv)
 	gi.WriteShort(ent->number);
 
 	/* do the turn */
-	G_DoTurn(ent, (byte) dv);
+	G_DoTurn(ent, dv);
 	ent->TU -= TU_TURN;
 
 	/* send the turn */
@@ -2290,7 +2290,8 @@ int G_ClientAction (player_t * player)
 
 	case PA_TURN:
 		gi.ReadFormat(pa_format[PA_TURN], &i);
-		G_ClientTurn(player, num, i);
+		/* FIXME: endian safe? */
+		G_ClientTurn(player, num, (byte) i);
 		break;
 
 	case PA_MOVE:
