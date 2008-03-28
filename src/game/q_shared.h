@@ -83,6 +83,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NONE		-1
 #define NONE_AMMO	0
 
+/* Used for saving/transfering (byte) indices */
+#define BYTES_NONE	0xFF
+
 /* Move/Routing values */
 #define MAX_ROUTE       31
 #define MAX_MOVELENGTH  60

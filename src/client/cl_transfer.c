@@ -1556,7 +1556,7 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
 			MSG_WriteShort(sb, transfer->aircraftArray[j]);
-		MSG_WriteByte(sb, transfer->destBase ? transfer->destBase->idx : NONE);
+		MSG_WriteByte(sb, transfer->destBase ? transfer->destBase->idx : BYTES_NONE);
 		MSG_WriteShort(sb, transfer->srcBase ? transfer->srcBase->idx : -1);	/** @todo Could get < 0 at some point in the past, but is not used anymore. -> byte */
 		MSG_WriteByte(sb, transfer->active);
 		MSG_WriteByte(sb, transfer->hasItems);
@@ -1601,7 +1601,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 			transfer->aircraftArray[j] = MSG_ReadShort(sb);
 		assert(gd.numBases);
 		destBase = MSG_ReadByte(sb);
-		transfer->destBase = (destBase != 0xFF) ? B_GetBase(destBase) : NULL;
+		transfer->destBase = (destBase != BYTES_NONE) ? B_GetBase(destBase) : NULL;
 		srcBase = MSG_ReadShort(sb);
 		transfer->srcBase = (srcBase >= 0) ? B_GetBase(srcBase) : NULL;
 		transfer->active = MSG_ReadByte(sb);

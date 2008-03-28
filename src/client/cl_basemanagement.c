@@ -3415,7 +3415,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building = &gd.buildings[i][k];
-			MSG_WriteByte(sb, building->tpl ? building->tpl - gd.buildingTemplates : -1);
+			MSG_WriteByte(sb, building->tpl ? building->tpl - gd.buildingTemplates : BYTES_NONE);
 			MSG_WriteByte(sb, building->buildingStatus);
 			MSG_WriteLong(sb, building->timeStart);
 			MSG_WriteLong(sb, building->buildTime);
@@ -3633,7 +3633,10 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building_t *const building = &gd.buildings[i][k];
-			*building = gd.buildingTemplates[MSG_ReadByte(sb)];
+			byte buildingTpl;
+			buildingTpl = MSG_ReadByte(sb);
+			if (buildingTpl != BYTES_NONE)
+				*building = gd.buildingTemplates[buildingTpl];
 			building->idx = k;
 			building->base = b;
 			building->buildingStatus = MSG_ReadByte(sb);

@@ -1,6 +1,7 @@
 /**
  * @file cl_aircraft.c
  * @brief Most of the aircraft related stuff.
+ * @sa cl_airfight.c
  * @note Aircraft management functions prefix: AIR_
  * @note Aircraft menu(s) functions prefix: AIM_
  * @note Aircraft equipement handling functions prefix: AII_
@@ -40,7 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static aircraft_t *menuAircraft = NULL;
 aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 /**
- * @todo: should be reset to 0 each time scripts are read anew; also
+ * Number of aircraft templates.
+ * @todo Should be reset to 0 each time scripts are read anew; also
  * aircraftTemplates memory should be freed at that time,
  * or old memory used for new records
  */
@@ -436,7 +438,7 @@ void AIM_NextAircraft_f (void)
 		return;
 	}
 
-	if (menuAircraft == &baseCurrent->aircraft[baseCurrent->numAircraftInBase-1])
+	if (menuAircraft == &baseCurrent->aircraft[baseCurrent->numAircraftInBase - 1])
 		menuAircraft = &baseCurrent->aircraft[0];
 	else
 		menuAircraft++;
@@ -464,7 +466,7 @@ void AIM_PrevAircraft_f (void)
 	}
 
 	if (menuAircraft == &baseCurrent->aircraft[0])
-		menuAircraft = &baseCurrent->aircraft[baseCurrent->numAircraftInBase-1];
+		menuAircraft = &baseCurrent->aircraft[baseCurrent->numAircraftInBase - 1];
 	else
 		menuAircraft--;
 
@@ -1918,8 +1920,8 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	/* Save recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
 		MSG_WriteByte(sb, gd.recoveries[i].active);
-		MSG_WriteByte(sb, gd.recoveries[i].base ? gd.recoveries[i].base->idx : NONE);
-		MSG_WriteByte(sb, gd.recoveries[i].ufotype ? gd.recoveries[i].ufotype->idx :NONE);	/**@todo At some point we really need to save a unique string here. */
+		MSG_WriteByte(sb, gd.recoveries[i].base ? gd.recoveries[i].base->idx : BYTES_NONE);
+		MSG_WriteByte(sb, gd.recoveries[i].ufotype ? gd.recoveries[i].ufotype->idx : BYTES_NONE);	/**@todo At some point we really need to save a unique string here. */
 		MSG_WriteLong(sb, gd.recoveries[i].event.day);
 		MSG_WriteLong(sb, gd.recoveries[i].event.sec);
 	}
@@ -2114,10 +2116,10 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		byte base, ufotype;
 		gd.recoveries[i].active = MSG_ReadByte(sb);
 		base = MSG_ReadByte(sb);
-		gd.recoveries[i].base = (base != 0xFF) ? B_GetBase(MSG_ReadByte(sb)) : NULL;
+		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBase((byte)base ) : NULL;
 		assert(numAircraftTemplates);
 		ufotype = MSG_ReadByte(sb);
-		gd.recoveries[i].ufotype = (ufotype != 0xFF) ? &aircraftTemplates[ufotype] : NULL;;
+		gd.recoveries[i].ufotype = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
 		gd.recoveries[i].event.day = MSG_ReadLong(sb);
 		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
 	}
