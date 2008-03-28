@@ -1269,8 +1269,8 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->hired);
 			/** @note e->transfer is not saved here because it'll be restored via cl_transfer.c:TR_Load. */
 			MSG_WriteShort(sb, e->idx);
-			MSG_WriteShort(sb, e->baseHired->idx);
-			MSG_WriteShort(sb, e->building->idx);
+			MSG_WriteShort(sb, e->baseHired ? e->baseHired->idx : -1);
+			MSG_WriteShort(sb, e->building ? e->building->idx : -1);
 			/* 2.3++ Store the nations identifier string. */
 			if (e->nation)
 				MSG_WriteString(sb, e->nation->id);
@@ -1371,7 +1371,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 	employeeType_t j;
 	int td;	/**< Team-definition index */
 	employee_t* e;
-	int building;
+	int base, building;
 
 	/* load inventories */
 	for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
@@ -1384,8 +1384,9 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->hired = MSG_ReadByte(sb);
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			e->idx = MSG_ReadShort(sb);
-			assert(gd.numBases);	/**@just in case the order is ever changed. */
-			e->baseHired = B_GetBase(MSG_ReadShort(sb));
+			assert(gd.numBases);	/**< Just in case the order is ever changed. */
+			base = MSG_ReadShort(sb);
+			e->baseHired = (base >= 0) ? B_GetBase(MSG_ReadShort(sb)) : NULL;
 			building = MSG_ReadShort(sb);
 			e->building = (e->baseHired && building >= 0) ? &gd.buildings[e->baseHired->idx][building] : NULL;
 

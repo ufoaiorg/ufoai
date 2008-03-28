@@ -880,14 +880,14 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] equip The equipment that shows how many clips to pack
  * @param[in] name The name of the equipment for debug messages
- * @param[in] missed_primary
+ * @param[in] missedPrimary
  * @sa INVSH_LoadableInWeapon
  */
-static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
+static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, const int equip[MAX_OBJDEFS], int missedPrimary, const char *name)
 {
 	objDef_t *ammo;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-	int i, max_price, prev_price;
+	int i, maxPrice, prevPrice;
 	objDef_t *obj;
 	qboolean allowLeft;
 	qboolean packed;
@@ -914,15 +914,15 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			item.m = weapon;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, name);
 		} else {
-			max_price = 0;
+			maxPrice = 0;
 			ammo = NULL;
 			/* find some suitable ammo for the weapon */
 			for (i = CSI->numODs - 1; i >= 0; i--)
 				if (equip[i]
 				&& INVSH_LoadableInWeapon(&CSI->ods[i], weapon)
-				&& (CSI->ods[i].price > max_price) ) {
+				&& (CSI->ods[i].price > maxPrice) ) {
 					ammo = &CSI->ods[i];
-					max_price = CSI->ods[i].price;
+					maxPrice = CSI->ods[i].price;
 				}
 
 			if (!ammo) {
@@ -953,23 +953,23 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 	if (!packed)
 		return 0;
 
-	max_price = INT_MAX;
+	maxPrice = INT_MAX;
 	do {
 		/* search for the most expensive matching ammo in the equipment */
-		prev_price = max_price;
-		max_price = 0;
+		prevPrice = maxPrice;
+		maxPrice = 0;
 		ammo = NULL;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = &CSI->ods[i];
 			if (equip[i] && INVSH_LoadableInWeapon(obj, weapon)) {
-				if (obj->price > max_price && obj->price < prev_price) {
-					max_price = obj->price;
+				if (obj->price > maxPrice && obj->price < prevPrice) {
+					maxPrice = obj->price;
 					ammo = obj;
 				}
 			}
 		}
 		/* see if there is any */
-		if (max_price) {
+		if (maxPrice) {
 			int num;
 			int numpacked = 0;
 
@@ -978,7 +978,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 				equip[ammo->idx] / equip[weapon->idx]
 				+ (equip[ammo->idx] % equip[weapon->idx] > rand() % equip[weapon->idx])
 				+ (PROB_COMPENSATION > 40 * frand())
-				+ (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0, 20);
+				+ (float) missedPrimary * (1 + frand() * PROB_COMPENSATION) / 40.0, 20);
 
 			assert(num >= 0);
 			/* pack some more ammo */
@@ -993,222 +993,11 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 					break;
 			}
 		}
-	} while (max_price);
+	} while (maxPrice);
 
 	return qtrue;
 }
 
-
-/**
- * @brief Fully equip one actor
- * @param[in] inv The inventory that will get the weapon
- * @param[in] equip The equipment that shows what is available - a list of obj ids
- * @param[in] anzEquip the number of object ids in the field
- * @param[in] name The name of the equipment for debug messages
- * @param[in] chr Pointer to character data - to get the weapon and armour bools
- * @note The code below is a complete implementation
- * of the scheme sketched at the beginning of equipment_missions.ufo.
- * Beware: if two weapons in the same category have the same price,
- * only one will be considered for inventory.
- */
-void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr)
-{
-	int i, max_price, prev_price;
-	int has_weapon = 0, has_armour = 0, repeat = 0, missed_primary = 0;
-	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
-	objDef_t *obj;
-	objDef_t *weapon;
-
-	if (chr->weapons) {
-		/* primary weapons */
-		max_price = INT_MAX;
-		do {
-			int lastPos = min(CSI->numODs - 1, anzEquip - 1);
-			/* search for the most expensive primary weapon in the equipment */
-			prev_price = max_price;
-			max_price = 0;
-			weapon = NULL;
-			for (i = lastPos; i >= 0; i--) {
-				obj = &CSI->ods[i];
-				if (equip[i] && obj->weapon && BUY_PRI(obj->buytype) && obj->fireTwoHanded) {
-					if (frand() < 0.15) { /* small chance to pick any weapon */
-						weapon = obj;
-						max_price = obj->price;
-						lastPos = i - 1;
-						break;
-					} else if (obj->price > max_price && obj->price < prev_price) {
-						max_price = obj->price;
-						weapon = obj;
-						lastPos = i - 1;
-					}
-				}
-			}
-			/* see if there is any */
-			if (max_price) {
-				/* see if the actor picks it */
-				if (equip[weapon->idx] >= (28 - PROB_COMPENSATION) * frand()) {
-					/* not decrementing equip[weapon]
-					* so that we get more possible squads */
-					has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
-					if (has_weapon) {
-						int ammo;
-
-						/* find the first possible ammo to check damage type */
-						for (ammo = 0; ammo < CSI->numODs; ammo++)
-							if (equip[ammo] && INVSH_LoadableInWeapon(&CSI->ods[ammo], weapon))
-								break;
-						if (ammo < CSI->numODs) {
-							primary =
-								/* to avoid two particle weapons */
-								!(CSI->ods[ammo].dmgtype == CSI->damParticle)
-								/* to avoid SMG + Assault Rifle */
-								&& !(CSI->ods[ammo].dmgtype == CSI->damNormal);
-								/* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
-						}
-						max_price = 0; /* one primary weapon is enough */
-						missed_primary = 0;
-					}
-				} else {
-					missed_primary += equip[weapon->idx];
-				}
-			}
-		} while (max_price);
-
-		/* sidearms (secondary weapons with reload) */
-		if (!has_weapon)
-			repeat = WEAPONLESS_BONUS > frand();
-		else
-			repeat = 0;
-		do {
-			max_price = primary ? INT_MAX : 0;
-			do {
-				prev_price = max_price;
-				weapon = NULL;
-				/* if primary is a particle or normal damage weapon,
-				 * we pick cheapest sidearms first */
-				max_price = primary ? 0 : INT_MAX;
-				for (i = 0; i < CSI->numODs; i++) {
-					obj = &CSI->ods[i];
-					if (equip[i] && obj->weapon
-						&& BUY_SEC(obj->buytype) && obj->reload) {
-						if (primary
-							? obj->price > max_price && obj->price < prev_price
-							: obj->price < max_price && obj->price > prev_price) {
-							max_price = obj->price;
-							weapon = obj;
-						}
-					}
-				}
-				if (!(max_price == (primary ? 0 : INT_MAX))) {
-					if (equip[weapon->idx] >= 40 * frand()) {
-						has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missed_primary, name);
-						if (has_weapon) {
-							/* try to get the second akimbo pistol */
-							if (primary == 2
-								&& !weapon->fireTwoHanded
-								&& frand() < AKIMBO_CHANCE) {
-								INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
-							}
-							/* enough sidearms */
-							max_price = primary ? 0 : INT_MAX;
-						}
-					}
-				}
-			} while (!(max_price == (primary ? 0 : INT_MAX)));
-		} while (!has_weapon && repeat--);
-
-		/* misc items and secondary weapons without reload */
-		if (!has_weapon)
-			repeat = WEAPONLESS_BONUS > frand();
-		else
-			repeat = 0;
-		do {
-			max_price = INT_MAX;
-			do {
-				prev_price = max_price;
-				max_price = 0;
-				weapon = NULL;
-				for (i = 0; i < CSI->numODs; i++) {
-					obj = &CSI->ods[i];
-					if (equip[i] && ((obj->weapon && BUY_SEC(obj->buytype) && !obj->reload)
-							|| obj->buytype == BUY_MISC) ) {
-						if (obj->price > max_price && obj->price < prev_price) {
-							max_price = obj->price;
-							weapon = obj;
-						}
-					}
-				}
-				if (max_price) {
-					int num;
-
-					num = equip[weapon->idx] / 40 + (equip[weapon->idx] % 40 >= 40 * frand());
-					while (num--)
-						has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
-				}
-			} while (max_price);
-		} while (repeat--); /* gives more if no serious weapons */
-
-		/* if no weapon at all, bad guys will always find a blade to wield */
-		if (!has_weapon) {
-			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
-			max_price = 0;
-			for (i = 0; i < CSI->numODs; i++) {
-				obj = &CSI->ods[i];
-				if (equip[i] && obj->weapon && BUY_SEC(obj->buytype) && !obj->reload) {
-					if (obj->price > max_price && obj->price < prev_price) {
-						max_price = obj->price;
-						weapon = obj;
-					}
-				}
-			}
-			if (max_price)
-				has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
-		}
-		/* if still no weapon, something is broken, or no blades in equip */
-		if (!has_weapon)
-			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
-
-		/* armour; especially for those without primary weapons */
-		repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
-	} else {
-		/* @todo: for melee actors we should not be able to get into this function, this can be removed */
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
-		return;
-	}
-
-	if (!chr->armour) {
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry armour\n", chr->name);
-		return;
-	}
-
-	do {
-		max_price = INT_MAX;
-		do {
-			prev_price = max_price;
-			max_price = 0;
-			for (i = 0; i < CSI->numODs; i++) {
-				obj = &CSI->ods[i];
-				if (equip[i] && obj->buytype == BUY_ARMOUR) {
-					if (obj->price > max_price && obj->price < prev_price) {
-						max_price = obj->price;
-						weapon = obj;
-					}
-				}
-			}
-			if (max_price) {
-				if (equip[weapon->idx] >= 40 * frand()) {
-					item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-
-					item.t = weapon;
-					if (Com_TryAddToInventory(inv, item, CSI->idArmour)) {
-						has_armour++;
-						max_price = 0; /* one armour is enough */
-					}
-				}
-			}
-		} while (max_price);
-	} while (!has_armour && repeat--);
-}
 
 /**
  * @brief Equip melee actor with item defined per teamDefs.
@@ -1228,8 +1017,8 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 
 	/* Get weapon */
 	obj = chr->teamDef->onlyWeapon;
-	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon %i: %s\n",
-	chr->teamDef->idx, chr->teamDef->id, obj->idx, obj->id);
+	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon: %s\n",
+	chr->teamDef->idx, chr->teamDef->id, obj->id);
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
 	item.t = obj;
@@ -1238,6 +1027,247 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee()... melee weapon %s for team %s is not firetwohanded!\n", obj->id, chr->teamDef->id);
 	Com_TryAddToInventory(inv, item, CSI->idRight);
+}
+
+/**
+ * @brief Equip robot actor with default weapon. (defined in ugv_t->weapon)
+ * @param[in] inv The inventory that will get the weapon.
+ * @param[in] chr Pointer to character data.
+ */
+void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* weapon)
+{
+	item_t item;
+
+	assert(chr);
+	assert(weapon);
+	assert(chr->emplType == EMPL_ROBOT);
+	/** assert(!chr->weapons); @todo remove/change? */
+	/** assert(chr->teamDef->onlyWeapon); @todo remove/change? */
+
+	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon %i: %s\n",
+		chr->teamDef->idx, chr->teamDef->id, weapon->idx, weapon->id);
+
+	/* Prepare weapon in item. */
+	item.t = weapon;
+
+	/* Get ammo for item/weapon. */
+	assert(weapon->numAmmos > 0);	/**< There _has_ to be at least one ammo-type. */
+	assert(weapon->ammos[0]);
+	item.m = weapon->ammos[0];
+
+	Com_TryAddToInventory(inv, item, CSI->idRight);
+}
+
+
+/**
+ * @brief Fully equip one actor
+ * @param[in] inv The inventory that will get the weapon
+ * @param[in] equip The equipment that shows what is available - a list of obj ids
+ * @param[in] anzEquip the number of object ids in the field
+ * @param[in] name The name of the equipment for debug messages
+ * @param[in] chr Pointer to character data - to get the weapon and armour bools
+ * @note The code below is a complete implementation
+ * of the scheme sketched at the beginning of equipment_missions.ufo.
+ * Beware: if two weapons in the same category have the same price,
+ * only one will be considered for inventory.
+ */
+void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr)
+{
+	int i, maxPrice, prevPrice;
+	int hasWeapon = 0, hasArmour = 0, repeat = 0, missedPrimary = 0;
+	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
+	objDef_t *obj;
+	objDef_t *weapon;
+
+	if (chr->weapons) {
+		/* primary weapons */
+		maxPrice = INT_MAX;
+		do {
+			int lastPos = min(CSI->numODs - 1, anzEquip - 1);
+			/* search for the most expensive primary weapon in the equipment */
+			prevPrice = maxPrice;
+			maxPrice = 0;
+			weapon = NULL;
+			for (i = lastPos; i >= 0; i--) {
+				obj = &CSI->ods[i];
+				if (equip[i] && obj->weapon && BUY_PRI(obj->buytype) && obj->fireTwoHanded) {
+					if (frand() < 0.15) { /* small chance to pick any weapon */
+						weapon = obj;
+						maxPrice = obj->price;
+						lastPos = i - 1;
+						break;
+					} else if (obj->price > maxPrice && obj->price < prevPrice) {
+						maxPrice = obj->price;
+						weapon = obj;
+						lastPos = i - 1;
+					}
+				}
+			}
+			/* see if there is any */
+			if (maxPrice) {
+				/* see if the actor picks it */
+				if (equip[weapon->idx] >= (28 - PROB_COMPENSATION) * frand()) {
+					/* not decrementing equip[weapon]
+					* so that we get more possible squads */
+					hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+					if (hasWeapon) {
+						int ammo;
+
+						/* find the first possible ammo to check damage type */
+						for (ammo = 0; ammo < CSI->numODs; ammo++)
+							if (equip[ammo] && INVSH_LoadableInWeapon(&CSI->ods[ammo], weapon))
+								break;
+						if (ammo < CSI->numODs) {
+							primary =
+								/* to avoid two particle weapons */
+								!(CSI->ods[ammo].dmgtype == CSI->damParticle)
+								/* to avoid SMG + Assault Rifle */
+								&& !(CSI->ods[ammo].dmgtype == CSI->damNormal);
+								/* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
+						}
+						maxPrice = 0; /* one primary weapon is enough */
+						missedPrimary = 0;
+					}
+				} else {
+					missedPrimary += equip[weapon->idx];
+				}
+			}
+		} while (maxPrice);
+
+		/* sidearms (secondary weapons with reload) */
+		if (!hasWeapon)
+			repeat = WEAPONLESS_BONUS > frand();
+		else
+			repeat = 0;
+		do {
+			maxPrice = primary ? INT_MAX : 0;
+			do {
+				prevPrice = maxPrice;
+				weapon = NULL;
+				/* if primary is a particle or normal damage weapon,
+				 * we pick cheapest sidearms first */
+				maxPrice = primary ? 0 : INT_MAX;
+				for (i = 0; i < CSI->numODs; i++) {
+					obj = &CSI->ods[i];
+					if (equip[i] && obj->weapon
+						&& BUY_SEC(obj->buytype) && obj->reload) {
+						if (primary
+							? obj->price > maxPrice && obj->price < prevPrice
+							: obj->price < maxPrice && obj->price > prevPrice) {
+							maxPrice = obj->price;
+							weapon = obj;
+						}
+					}
+				}
+				if (!(maxPrice == (primary ? 0 : INT_MAX))) {
+					if (equip[weapon->idx] >= 40 * frand()) {
+						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missedPrimary, name);
+						if (hasWeapon) {
+							/* try to get the second akimbo pistol */
+							if (primary == 2
+								&& !weapon->fireTwoHanded
+								&& frand() < AKIMBO_CHANCE) {
+								INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+							}
+							/* enough sidearms */
+							maxPrice = primary ? 0 : INT_MAX;
+						}
+					}
+				}
+			} while (!(maxPrice == (primary ? 0 : INT_MAX)));
+		} while (!hasWeapon && repeat--);
+
+		/* misc items and secondary weapons without reload */
+		if (!hasWeapon)
+			repeat = WEAPONLESS_BONUS > frand();
+		else
+			repeat = 0;
+		do {
+			maxPrice = INT_MAX;
+			do {
+				prevPrice = maxPrice;
+				maxPrice = 0;
+				weapon = NULL;
+				for (i = 0; i < CSI->numODs; i++) {
+					obj = &CSI->ods[i];
+					if (equip[i] && ((obj->weapon && BUY_SEC(obj->buytype) && !obj->reload)
+							|| obj->buytype == BUY_MISC) ) {
+						if (obj->price > maxPrice && obj->price < prevPrice) {
+							maxPrice = obj->price;
+							weapon = obj;
+						}
+					}
+				}
+				if (maxPrice) {
+					int num;
+
+					num = equip[weapon->idx] / 40 + (equip[weapon->idx] % 40 >= 40 * frand());
+					while (num--)
+						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+				}
+			} while (maxPrice);
+		} while (repeat--); /* gives more if no serious weapons */
+
+		/* if no weapon at all, bad guys will always find a blade to wield */
+		if (!hasWeapon) {
+			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
+			maxPrice = 0;
+			for (i = 0; i < CSI->numODs; i++) {
+				obj = &CSI->ods[i];
+				if (equip[i] && obj->weapon && BUY_SEC(obj->buytype) && !obj->reload) {
+					if (obj->price > maxPrice && obj->price < prevPrice) {
+						maxPrice = obj->price;
+						weapon = obj;
+					}
+				}
+			}
+			if (maxPrice)
+				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+		}
+		/* if still no weapon, something is broken, or no blades in equip */
+		if (!hasWeapon)
+			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
+
+		/* armour; especially for those without primary weapons */
+		repeat = (float) missedPrimary * (1 + frand() * PROB_COMPENSATION) / 40.0;
+	} else {
+		/* @todo: for melee actors we should not be able to get into this function, this can be removed */
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
+		return;
+	}
+
+	if (!chr->armour) {
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry armour\n", chr->name);
+		return;
+	}
+
+	do {
+		maxPrice = INT_MAX;
+		do {
+			prevPrice = maxPrice;
+			maxPrice = 0;
+			for (i = 0; i < CSI->numODs; i++) {
+				obj = &CSI->ods[i];
+				if (equip[i] && obj->buytype == BUY_ARMOUR) {
+					if (obj->price > maxPrice && obj->price < prevPrice) {
+						maxPrice = obj->price;
+						weapon = obj;
+					}
+				}
+			}
+			if (maxPrice) {
+				if (equip[weapon->idx] >= 40 * frand()) {
+					item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
+
+					item.t = weapon;
+					if (Com_TryAddToInventory(inv, item, CSI->idArmour)) {
+						hasArmour++;
+						maxPrice = 0; /* one armour is enough */
+					}
+				}
+			}
+		} while (maxPrice);
+	} while (!hasArmour && repeat--);
 }
 
 /*

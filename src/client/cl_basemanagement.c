@@ -3478,9 +3478,9 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			/** Save team on board
 			 * @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				MSG_WriteShort(sb, aircraft->acTeam[l]->idx);
+				MSG_WriteShort(sb, aircraft->acTeam[l] ? aircraft->acTeam[l]->idx : -1);
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				MSG_WriteShort(sb, aircraft->acTeam[l]->type);
+				MSG_WriteShort(sb, aircraft->acTeam[l] ? aircraft->acTeam[l]->type : MAX_EMPL);
 
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);

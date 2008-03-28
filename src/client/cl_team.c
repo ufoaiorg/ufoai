@@ -766,6 +766,20 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried()...aircraft idx: %i, team size: %i\n",
 		aircraft->idx, aircraft->teamSize);
 
+
+	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
+	for (p = 0; p < aircraft->maxTeamSize; p++) {
+		if (aircraft->acTeam[p] && aircraft->acTeam[p]->ugv) {
+			/** This is an UGV */
+			chr = &aircraft->acTeam[p]->chr;
+			assert(chr);
+
+			/* Check if there is a weapon and add it if there isn't. */
+			if (!chr->inv->c[csi.idRight] || !chr->inv->c[csi.idRight]->item.t)
+				INVSH_EquipActorRobot(chr->inv, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
+		}
+	}
+
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
@@ -1263,7 +1277,7 @@ static void CL_MarkTeam_f (void)
 	employee_t * employee;
 	qboolean alreadyInOtherShip = qfalse;
 	aircraft_t *aircraft;
-	linkedList_t *emplList = employeeList;
+	linkedList_t *emplList;
 
 	const employeeType_t employeeType =
 		displayHeavyEquipmentList
@@ -1293,7 +1307,7 @@ static void CL_MarkTeam_f (void)
 	CL_UpdateHireVar(aircraft, employeeType);
 
 	CL_GenTeamList();	/* Populate employeeList */
-
+ 	emplList = employeeList;
 	while (emplList) {
 		employee = (employee_t*)emplList->data;
 		assert(employee->hired

@@ -1552,12 +1552,12 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 		}
 		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)
-				MSG_WriteShort(sb, transfer->trEmployees[j][k]->idx);
+				MSG_WriteShort(sb, transfer->trEmployees[j][k] ? transfer->trEmployees[j][k]->idx : -1);
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
 			MSG_WriteShort(sb, transfer->aircraftArray[j]);
-		MSG_WriteByte(sb, transfer->destBase->idx);
-		MSG_WriteShort(sb, transfer->srcBase->idx);	/** @todo Could get < 0 at some point in the past, but is not used anymore. -> byte */
+		MSG_WriteByte(sb, transfer->destBase ? transfer->destBase->idx : NONE);
+		MSG_WriteShort(sb, transfer->srcBase ? transfer->srcBase->idx : -1);	/** @todo Could get < 0 at some point in the past, but is not used anymore. -> byte */
 		MSG_WriteByte(sb, transfer->active);
 		MSG_WriteByte(sb, transfer->hasItems);
 		MSG_WriteByte(sb, transfer->hasEmployees);
@@ -1578,6 +1578,8 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
 	transfer_t *transfer;
+	int emplIdx, srcBase;
+	byte destBase;
 
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
 		transfer = &gd.alltransfers[i];
@@ -1589,7 +1591,8 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		}
 		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
-				transfer->trEmployees[j][k] = &gd.employees[j][MSG_ReadShort(sb)];
+				emplIdx = MSG_ReadShort(sb);
+				transfer->trEmployees[j][k] = (emplIdx >= 0) ? &gd.employees[j][MSG_ReadShort(sb)] : NULL;
 				/* Restore transfer flag if an employee is currently in progress. */
 				gd.employees[j][MSG_ReadShort(sb)].transfer = qtrue;
 			}
@@ -1597,8 +1600,10 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
 			transfer->aircraftArray[j] = MSG_ReadShort(sb);
 		assert(gd.numBases);
-		transfer->destBase = B_GetBase(MSG_ReadByte(sb));
-		transfer->srcBase = B_GetBase(MSG_ReadShort(sb));
+		destBase = MSG_ReadByte(sb);
+		transfer->destBase = (destBase != 0xFF) ? B_GetBase(destBase) : NULL;
+		srcBase = MSG_ReadShort(sb);
+		transfer->srcBase = (srcBase >= 0) ? B_GetBase(srcBase) : NULL;
 		transfer->active = MSG_ReadByte(sb);
 		transfer->hasItems = MSG_ReadByte(sb);
 		transfer->hasEmployees = MSG_ReadByte(sb);

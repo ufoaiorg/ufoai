@@ -1918,8 +1918,8 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	/* Save recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
 		MSG_WriteByte(sb, gd.recoveries[i].active);
-		MSG_WriteByte(sb, gd.recoveries[i].base->idx);
-		MSG_WriteByte(sb, gd.recoveries[i].ufotype->idx);	/**@todo At some point we really need to save a unique string here. */
+		MSG_WriteByte(sb, gd.recoveries[i].base ? gd.recoveries[i].base->idx : NONE);
+		MSG_WriteByte(sb, gd.recoveries[i].ufotype ? gd.recoveries[i].ufotype->idx :NONE);	/**@todo At some point we really need to save a unique string here. */
 		MSG_WriteLong(sb, gd.recoveries[i].event.day);
 		MSG_WriteLong(sb, gd.recoveries[i].event.sec);
 	}
@@ -2111,10 +2111,13 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 
 	/* Load recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
+		byte base, ufotype;
 		gd.recoveries[i].active = MSG_ReadByte(sb);
-		gd.recoveries[i].base = B_GetBase(MSG_ReadByte(sb));
+		base = MSG_ReadByte(sb);
+		gd.recoveries[i].base = (base != 0xFF) ? B_GetBase(MSG_ReadByte(sb)) : NULL;
 		assert(numAircraftTemplates);
-		gd.recoveries[i].ufotype = &aircraftTemplates[MSG_ReadByte(sb)];
+		ufotype = MSG_ReadByte(sb);
+		gd.recoveries[i].ufotype = (ufotype != 0xFF) ? &aircraftTemplates[ufotype] : NULL;;
 		gd.recoveries[i].event.day = MSG_ReadLong(sb);
 		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
 	}
