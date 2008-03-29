@@ -174,7 +174,7 @@ void R_DrawBrushModel (entity_t * e)
 
 			Vector4Copy(tmp, bbox[i]);
 		}
-		R_EntityDrawlBBox(bbox);
+		R_EntityDrawBBox(bbox);
 	}
 
 	qglPopMatrix();

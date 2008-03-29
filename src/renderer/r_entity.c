@@ -67,7 +67,7 @@ static inline void R_DrawHighlight (const entity_t * e)
 
 /**
  * @brief Compute the bouding box for an entity out of the mins, maxs
- * @sa R_EntityDrawlBBox
+ * @sa R_EntityDrawBBox
  */
 void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec4_t bbox[8])
 {
@@ -89,7 +89,7 @@ void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec4_t bb
  * @brief Draws the model bounding box
  * @sa R_EntityComputeBoundingBox
  */
-void R_EntityDrawlBBox (vec4_t bbox[8])
+void R_EntityDrawBBox (vec4_t bbox[8])
 {
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -143,7 +143,7 @@ static void R_DrawBox (const entity_t * e)
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
 		vec4_t bbox[8];
 		R_EntityComputeBoundingBox(e->mins, e->maxs, bbox);
-		R_EntityDrawlBBox(bbox);
+		R_EntityDrawBBox(bbox);
 	} else {
 		VectorCopy(e->origin, lower);
 		VectorCopy(e->origin, upper);

@@ -360,7 +360,7 @@ void R_DrawAliasModel (entity_t *e)
 	/* show model bounding box */
 	if (r_showbox->integer) {
 		R_EntityComputeBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs, bbox);
-		R_EntityDrawlBBox(bbox);
+		R_EntityDrawBBox(bbox);
 	}
 
 	qglPopMatrix();

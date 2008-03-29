@@ -64,7 +64,7 @@ void R_AddEntity(entity_t * ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
 void R_EntityComputeBoundingBox(const vec3_t mins, const vec3_t maxs, vec4_t bbox[8]);
-void R_EntityDrawlBBox(vec4_t bbox[8]);
+void R_EntityDrawBBox(vec4_t bbox[8]);
 
 extern int r_numEntities;
 
