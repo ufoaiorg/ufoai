@@ -80,7 +80,7 @@ Used as a positional target for spotlights, etc.
 */
 
 /*QUAKED info_civilian_target (0.5 0.8 0.1) (-16 -16 -24) (16 16 32)
-Used as a target where civilians try to get in a mission (TODO: Implement me)
+Used as a target where civilians try to get in a mission
 "count"	The priority of this waypoint - the lower the number, the nearer the end-target
 */
 
@@ -96,6 +96,7 @@ Defines a mission target
 "time"	if set the entity has to be occupied x rounds to win the mission
 "radius"	if the entity has to be occupied this defines the radius that is needed
 "health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
+"group"		allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match
 */
 
 /*QUAKED misc_mission_alien (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
