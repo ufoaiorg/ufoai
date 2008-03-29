@@ -96,6 +96,7 @@ static const field_t fields[] = {
 	{"targetname", offsetof(edict_t, targetname), F_LSTRING, 0},
 	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
 	{"team", offsetof(edict_t, team), F_INT, 0},
+	{"group", offsetof(edict_t, group), F_LSTRING, 0},
 	{"size", offsetof(edict_t, fieldSize), F_INT, 0},
 	{"wait", offsetof(edict_t, wait), F_FLOAT, 0},
 	{"delay", offsetof(edict_t, delay), F_FLOAT, 0},
@@ -268,6 +269,51 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 }
 
 /**
+ * @brief Chain together all entities with a matching team field.
+ * All but the first will have the FL_GROUPSLAVE flag set.
+ * All but the last will have the groupchain field set to the next one
+ */
+static void G_FindEdictGroups (void)
+{
+	edict_t *e, *e2, *chain;
+	int i, j;
+	int c, c2;
+
+	c = 0;
+	c2 = 0;
+	for (i = 1, e = g_edicts + i; i < globals.num_edicts; i++, e++) {
+		if (!e->inuse)
+			continue;
+		if (!e->group)
+			continue;
+		if (e->flags & FL_GROUPSLAVE)
+			continue;
+		chain = e;
+		e->groupMaster = e;
+		c++;
+		c2++;
+		for (j = i + 1, e2 = e + 1; j < globals.num_edicts; j++, e2++) {
+			if (!e2->inuse)
+				continue;
+			if (!e2->group)
+				continue;
+			if (e2->flags & FL_GROUPSLAVE)
+				continue;
+			if (!strcmp(e->group, e2->group)) {
+				c2++;
+				chain->groupChain = e2;
+				e2->groupMaster = e;
+				chain = e2;
+				e2->flags |= FL_GROUPSLAVE;
+			}
+		}
+	}
+
+	Com_DPrintf(DEBUG_GAME, "%i groups with %i entities\n", c, c2);
+}
+
+
+/**
  * @brief Creates a server's entity / program execution context
  * by parsing textual entity definitions out of an ent file.
  * @sa CM_EntityString
@@ -308,7 +354,7 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 
 		entities = ED_ParseEdict(entities, ent);
 
-	Com_DPrintf(DEBUG_GAME, "entity: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
+		Com_DPrintf(DEBUG_GAME, "entity: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
 			ent->model, ent->mapNum, ent->solid,
 			(int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
 			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
@@ -348,6 +394,8 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 		Com_Printf("(sv_maxclients %i, ai_numactors: %i, alien spawnpoints: %i)\n", sv_maxclients->integer, ai_numactors->integer, level.num_spawnpoints[TEAM_ALIEN]);
 #endif
 	}
+
+	G_FindEdictGroups();
 }
 
 /**

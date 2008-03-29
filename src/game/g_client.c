@@ -2205,17 +2205,10 @@ void G_ListMissionScore_f (void)
  * @param[in] entnum The entity number of the door
  * @todo: Do we have to change the trigger position here, too? I don't think this is really needed.
  */
-qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
+qboolean G_ClientUseDoor (player_t *player, edict_t *actor, edict_t *door)
 {
-	edict_t *actor = g_edicts + entnum;
-	edict_t* door = actor->client_action;
 	if (!door) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientUseDoor: No client_action set for entnum: %i\n", entnum);
-		return qfalse;
-	}
-
-	if (doornum != door->number) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientUseDoor: Invalid door number: %i - should be %i\n", doornum, door->number);
+		Com_DPrintf(DEBUG_GAME, "G_ClientUseDoor: No door set for actor: %i\n", actor->number);
 		return qfalse;
 	}
 
@@ -2225,7 +2218,7 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 	if (door->moveinfo.state == STATE_CLOSED) {
 		door->moveinfo.state = STATE_OPENED;
 
-		/* FIXME */
+		/* FIXME Check if the door can be opened - there should not be anything in the way (e.g. an actor) */
 		/* change rotation and relink */
 		door->angles[YAW] += DOOR_ROTATION_ANGLE;
 		gi.LinkEdict(door);
@@ -2233,17 +2226,10 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 		/* let everybody know, that the door opens */
 		gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
 		gi.WriteShort(door->number);
-		gi.WriteShort(door->mapNum);
-
-		actor->TU -= TU_DOOR_ACTION;
-		/* send the new TUs */
-		G_SendStats(actor);
-
-		gi.EndEvents();
 	} else if (door->moveinfo.state == STATE_OPENED) {
 		door->moveinfo.state = STATE_CLOSED;
 
-		/* FIXME */
+		/* FIXME Check if the door can be opened - there should not be anything in the way (e.g. an actor) */
 		/* change rotation and relink */
 		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
 		gi.LinkEdict(door);
@@ -2251,19 +2237,31 @@ qboolean G_ClientUseDoor (player_t *player, int entnum, int doornum)
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 		gi.WriteShort(door->number);
+	} else
+		return qfalse;
 
+	if (!(door->flags & FL_GROUPSLAVE)) {
 		actor->TU -= TU_DOOR_ACTION;
 		/* send the new TUs */
 		G_SendStats(actor);
-
-		gi.EndEvents();
 	}
+
+	gi.EndEvents();
 
 	/* Update model orientation */
 	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
 	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
 	/* Update path finding table */
 	G_RecalcRouting(door);
+
+	/* only the master door is calling the opening for the other door parts */
+	if (!(door->flags & FL_GROUPSLAVE)) {
+		edict_t* chain = door->groupChain;
+		while (chain) {
+			G_ClientUseDoor(player, actor, chain);
+			chain = chain->groupChain;
+		}
+	}
 
 	return qtrue;
 }
@@ -2319,8 +2317,26 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_USE_DOOR:
-		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
-		G_ClientUseDoor(player, num, i);
+		{
+			edict_t *door;
+			edict_t *actor = (g_edicts + num);
+
+			/* read the door the client wants to open */
+			gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
+
+			/* get the door edict */
+			door = g_edicts + i;
+
+			if (actor->client_action == door) {
+				/* check whether it's part of an edict group but not the master */
+				if (door->flags & FL_GROUPSLAVE)
+					door = door->groupMaster;
+
+				G_ClientUseDoor(player, actor, door);
+			} else
+				Com_DPrintf(DEBUG_GAME, "client_action and door ent differ: %i - %i\n",
+					actor->client_action->number, door->number);
+		}
 		break;
 
 	case PA_REACT_SELECT:

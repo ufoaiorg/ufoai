@@ -88,7 +88,9 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 
 	if (activator->team == TEAM_CIVILIAN || activator->team == TEAM_ALIEN) {
 		/* let the ai interact with the door */
-		return G_ClientUseDoor(game.players + activator->pnum, activator->number, self->number);
+		if (self->flags & FL_GROUPSLAVE)
+			self = self->groupMaster;
+		return G_ClientUseDoor(game.players + activator->pnum, activator, self);
 	} else {
 		if (activator->client_action != self->owner) {
 			/* prepare for client action */

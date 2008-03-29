@@ -277,7 +277,7 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 #define MAX_DVTAB 32
 
 void G_FlushSteps(void);
-qboolean G_ClientUseDoor(player_t *player, int entnum, int doornum);
+qboolean G_ClientUseDoor(player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet);
 void G_SendStats(edict_t * ent);
 edict_t *G_SpawnFloor(pos3_t pos);
@@ -427,6 +427,12 @@ struct player_s {
 	client_persistant_t pers;
 };
 
+/**
+ * @brief not the first on the team
+ * @sa groupMaster and groupChain
+ */
+#define FL_GROUPSLAVE 0x00000008
+
 struct edict_s {
 	qboolean inuse;
 	int linkcount;
@@ -493,6 +499,11 @@ struct edict_s {
 	int head;
 	int skin;
 
+	char *group;				/**< this can be used to trigger a group of entities
+								 * e.g. for two-part-doors - set the group to the same
+								 * string for each door part and they will open both
+								 * if you open one */
+
 	/** delayed reaction fire */
 	edict_t *reactionTarget;
 	float	reactionTUs;
@@ -541,6 +552,10 @@ struct edict_s {
 
 	/** e.g. doors */
 	moveinfo_t		moveinfo;
+
+	edict_t *groupChain;
+	edict_t *groupMaster;
+	int flags;		/**< FL_* */
 };
 
 #endif /* GAME_G_LOCAL_H */
