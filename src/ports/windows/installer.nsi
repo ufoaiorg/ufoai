@@ -178,6 +178,8 @@ SectionGroup /e "Mapping" SECGROUP02
     File "..\..\..\base\maps\frozen\*.map"
     SetOutPath "$INSTDIR\base\maps\ice"
     File "..\..\..\base\maps\ice\*.map"
+    SetOutPath "$INSTDIR\base\maps\cemetery"
+    File "..\..\..\base\maps\cemetery\*.map"
     SetOutPath "$INSTDIR\base\maps\oriental"
     File "..\..\..\base\maps\oriental\*.map"
     SetOutPath "$INSTDIR\base\maps\tropic"
