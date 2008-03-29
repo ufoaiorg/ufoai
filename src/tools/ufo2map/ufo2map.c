@@ -197,18 +197,21 @@ static void U2M_RAD_Parameter (int argc, char** argv)
 			config.maxlight = atof(argv[i + 1]) * 128;
 			i++;
 		} else if (!strcmp(argv[i], "-noradiosity")) {
-			Com_Printf("noradiosity = true\n");
-			if (!strcmp(argv[i + 1], "day")) {
-				config.noradiosity = RADIOSITY_NIGHT_ONLY;
-				i++;
-			} else if (!strcmp(argv[i + 1], "night")) {
-				config.noradiosity = RADIOSITY_DAY_ONLY;
-				i++;
-			} else if (!strcmp(argv[i + 1], "all")) {
-				config.noradiosity = RADIOSITY_NONE;
-				i++;
+			if (argc > i + 1) {
+				if (!strcmp(argv[i + 1], "day")) {
+					Com_Printf("noradiosity = day\n");
+					config.noradiosity = RADIOSITY_NIGHT_ONLY;
+					i++;
+				} else if (!strcmp(argv[i + 1], "night")) {
+					Com_Printf("noradiosity = night\n");
+					config.noradiosity = RADIOSITY_DAY_ONLY;
+					i++;
+				} else {
+					Com_Printf("noradiosity = none\n");
+					config.noradiosity = RADIOSITY_NONE;
+				}
 			} else {
-				config.noradiosity = RADIOSITY_NONE;
+				Sys_Error("invalid parameter count\n");
 			}
 		}
 	}
