@@ -431,7 +431,12 @@ struct player_s {
  * @brief not the first on the team
  * @sa groupMaster and groupChain
  */
-#define FL_GROUPSLAVE 0x00000008
+#define FL_GROUPSLAVE	0x00000008
+/**
+ * @brief If an edict has a health set but is not destroyable in general
+ * @note e.g. misc_mission
+ */
+#define FL_DESTROYABLE	0x00000004
 
 struct edict_s {
 	qboolean inuse;

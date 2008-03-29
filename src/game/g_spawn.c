@@ -678,6 +678,8 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
  */
 static void Think_Mission (edict_t *self)
 {
+	edict_t *chain = self->groupMaster;
+
 	/* when every player has joined the match - spawn the mission target
 	 * particle (if given) to mark the trigger */
 	if (self->particle) {
@@ -692,13 +694,27 @@ static void Think_Mission (edict_t *self)
 		self->particle = NULL;
 	}
 
-	/* occupied by a special team */
-	if (self->count) {
-		if (level.actualRound - self->count >= self->time) {
-			/* mission succeeds */
-			/* @todo implement this */
+	if (!chain)
+		chain = self;
+	while (chain) {
+		if (chain->type == ET_MISSION) {
+			if (chain->time) {
+				/* not every edict in the group chain has
+				 * been occupied long enough */
+				if (!chain->count || level.actualRound - chain->count < chain->time)
+					return;
+			}
+			/* not destroyed yet */
+			if ((chain->flags & FL_DESTROYABLE) && chain->HP)
+				return;
 		}
+		chain = chain->groupChain;
 	}
+
+	/* mission succeeds */
+	Com_Printf("Mission won for team %i\n", self->team);
+
+	/* @todo implement this */
 }
 
 /**
@@ -716,6 +732,9 @@ static void SP_misc_mission (edict_t *ent)
 		ent->team = TEAM_PHALANX;
 
 	ent->solid = SOLID_BBOX;
+
+	if (ent->HP)
+		ent->flags |= FL_DESTROYABLE;
 
 	/* think function values */
 	ent->think = Think_Mission;
