@@ -304,26 +304,19 @@ static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * atta
 	qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
 	qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 	qboolean isRobot;
+
 	assert(target);
 	assert(target->type == ET_ACTOR
 			|| target->type == ET_ACTOR2x2
 			|| target->type == ET_BREAKABLE
 			|| target->type == ET_DOOR);
 
-
-	isRobot = target->chr.teamDef->robot;
-
-	/* Breakables are immune to stun & shock damage. */
-	if ((stunEl || stunGas || shock || mock) && (target->type == ET_BREAKABLE || target->type == ET_DOOR))
- 		return;
-
-	/* Robots can't be healed. */
-	if (damage < 0 && isRobot)
-		/** @todo We can't 'repair' robots yet :) The least we need for this would be a seperation of medikit vs. a repair-kit. */
-		return;
-
 	/* Breakables */
 	if (target->type == ET_BREAKABLE || target->type == ET_DOOR) {
+		/* Breakables are immune to stun & shock damage. */
+		if (stunEl || stunGas || shock || mock)
+ 			return;
+
 		if (damage >= target->HP) {
 			vec3_t origin;
 
@@ -372,6 +365,10 @@ static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * atta
 	if (target->state & STATE_DEAD)
 		return;
 
+	/* only actors after this point - and they must have a teamdef */
+	assert(target->chr.teamDef);
+	isRobot = target->chr.teamDef->robot;
+
 	/* Apply armour effects. */
 	if (damage > 0) {
 		if (target->i.c[gi.csi->idArmour]) {
@@ -383,6 +380,11 @@ static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * atta
 			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: 0",
 				target->chr.name, damage, fd->dmgweight);
 		}
+	} else if (damage < 0) {
+		/* Robots can't be healed. */
+		/** @todo We can't 'repair' robots yet :) The least we need for this would be a seperation of medikit vs. a repair-kit. */
+		if (isRobot)
+			return;
 	}
 	Com_DPrintf(DEBUG_GAME, " Total damage: %d\n", damage);
 

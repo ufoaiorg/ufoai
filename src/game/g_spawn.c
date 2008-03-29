@@ -312,7 +312,6 @@ static void G_FindEdictGroups (void)
 	Com_DPrintf(DEBUG_GAME, "%i groups with %i entities\n", c, c2);
 }
 
-
 /**
  * @brief Creates a server's entity / program execution context
  * by parsing textual entity definitions out of an ent file.
