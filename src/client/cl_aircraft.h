@@ -226,7 +226,7 @@ qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
 void AIR_AircraftSelect(aircraft_t *aircraft);
 void AIR_AircraftSelect_f(void);
 
-void AIR_DeleteAircraft(aircraft_t *aircraft);
+void AIR_DeleteAircraft(struct base_s *base, aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);

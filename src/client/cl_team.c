@@ -290,7 +290,7 @@ static void CL_GiveName_f (void)
  * @return ugv_t pointer or NULL if not found.
  * @note If there ever is a problem because an id with the name "NULL" isn't found then this is because NULL pointers in E_Save/Employee_t are stored like that (duh) ;).
  */
-ugv_t *CL_GetUgvById (const char *ugvID)
+ugv_t *CL_GetUgvByID (const char *ugvID)
 {
 	int i;
 
@@ -300,7 +300,7 @@ ugv_t *CL_GetUgvById (const char *ugvID)
 		}
 	}
 #if 0
-	Com_Printf("CL_GetUgvById: DEBUG No ugv_t entry found for id '%s' in %i entries.\n", ugvID, gd.numUGV);
+	Com_Printf("CL_GetUgvByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, gd.numUGV);
 #endif
 	return NULL;
 }

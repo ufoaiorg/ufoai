@@ -2763,7 +2763,7 @@ void CL_BaseRansacked (base_t *base)
 
 	/* Remove all aircraft from the base. */
 	for (ac = base->numAircraftInBase - 1; ac >= 0; ac--)
-		AIR_DeleteAircraft(&base->aircraft[ac]);
+		AIR_DeleteAircraft(base, &base->aircraft[ac]);
 
 	/* @todo: Maybe reset research in progress. ... needs playbalance
 	 * need another value in technology_t to remember researched
@@ -4795,11 +4795,11 @@ static void CL_DebugNewEmployees_f (void)
 
 	for (j = 0; j < 5; j++)
 		/* Create a ares  ugv. */
-		E_CreateEmployee(EMPL_ROBOT, NULL, CL_GetUgvById("ugv_ares_w"));
+		E_CreateEmployee(EMPL_ROBOT, NULL, CL_GetUgvByID("ugv_ares_w"));
 
 	for (j = 0; j < 5; j++)
 		/* Create a phoenix  ugv. */
-		E_CreateEmployee(EMPL_ROBOT, NULL, CL_GetUgvById("ugv_phoenix"));
+		E_CreateEmployee(EMPL_ROBOT, NULL, CL_GetUgvByID("ugv_phoenix"));
 }
 
 /**

@@ -697,12 +697,12 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 					/* Aircraft relocated to new base, just add new one. */
 					AIR_NewAircraft(destination, aircraft->id);
 					/* Remove aircraft from old base. */
-					AIR_DeleteAircraft(aircraft);
+					AIR_DeleteAircraft(baseCurrent, aircraft);
 				} else {
 					/* No space, aircraft will be lost. */
 					Com_sprintf(message, sizeof(message), _("Base %s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
 					MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-					AIR_DeleteAircraft(aircraft);
+					AIR_DeleteAircraft(baseCurrent, aircraft);
 				}
 			}
 		}

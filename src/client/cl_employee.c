@@ -1397,7 +1397,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 				 * We would need a Post-Load init funtion in that case. See cl_save.c:SAV_GameActionsAfterLoad */
 				e->nation = CL_GetNationByID(MSG_ReadString(sb));
 				/* Read the UGV-Type identifier and get the matching ugv_t pointer.  */
-				e->ugv = CL_GetUgvById(MSG_ReadString(sb));
+				e->ugv = CL_GetUgvByID(MSG_ReadString(sb));
 			}
 
 			/* Load the character data */

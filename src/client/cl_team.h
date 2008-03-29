@@ -39,7 +39,7 @@ void CL_ResetCharacters(base_t* const base);
 void CL_ResetMultiplayerTeamInBase(void);
 void CL_GenTeamList(void);
 void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t employeeType, const ugv_t *ugvType);
-ugv_t *CL_GetUgvById(const char *ugvID);
+ugv_t *CL_GetUgvByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 
 qboolean CL_SoldierInAircraft(const employee_t *employee, aircraft_t* aircraft);

@@ -125,7 +125,6 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftSample, base_t *base)
 void AIR_UpdateHangarCapForAll (base_t *base)
 {
 	int i;
-	aircraft_t *aircraft;
 
 	if (!base) {
 #ifdef DEBUG
@@ -139,7 +138,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 	base->capacities[CAP_AIRCRAFTS_SMALL].cur = 0;
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		aircraft = &base->aircraft[i];
+		const aircraft_t *aircraft = &base->aircraft[i];
 		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base: %s, aircraft: %s\n", base->name, aircraft->id);
 		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 	}
@@ -789,12 +788,11 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
  * @todo Return status of deletion for better error handling.
  * @todo also remove the assigned items in the slots - like weapons, armours and so on
  */
-void AIR_DeleteAircraft (aircraft_t *aircraft)
+void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 {
 	int i;
-	base_t *base;
 	aircraft_t *aircraft_temp;
-	aircraft_t *previous_aircraftCurrent = baseCurrent->aircraftCurrent;
+	aircraft_t *previous_aircraftCurrent = base->aircraftCurrent;
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: no aircraft given (NULL)\n");
@@ -843,7 +841,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	for (i = AIR_GetAircraftIdxInBase(aircraft); i < base->numAircraftInBase; i++) {
 		/* Remove aircraft and rearrange the aircraft-list (in base). */
 		aircraft_temp = &base->aircraft[i];
-		memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
+		memcpy(aircraft_temp, &base->aircraft[i + 1], sizeof(aircraft_t));
 
 		/* Update index of aircraftCurrent in base if it is affected by the index-change. */
 		if (aircraft_temp == previous_aircraftCurrent)
@@ -892,7 +890,7 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 
  	aircraft->status = AIR_HOME;
 
-	AIR_DeleteAircraft(aircraft);
+	AIR_DeleteAircraft(aircraft->homebase, aircraft);
 }
 
 /**
