@@ -286,8 +286,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				if (!aia->target) {
 					/* search best none human target */
 					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-						if (check->inuse && ((check->type == ET_DOOR && check->HP)
-							|| check->type == ET_BREAKABLE)) {
+						if (check->inuse && (check->flags & FL_DESTROYABLE)) {
 
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 								continue;

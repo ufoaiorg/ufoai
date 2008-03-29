@@ -435,8 +435,9 @@ struct player_s {
  */
 #define FL_GROUPSLAVE	0x00000008
 /**
- * @brief If an edict has a health set but is not destroyable in general
- * @note e.g. misc_mission
+ * @brief If an edict is destroyable (like ET_BREAKABLE, ET_DOOR [if health set]
+ * or maybe a ET_MISSION [if health set])
+ * @note e.g. misc_mission, func_breakable, func_door
  */
 #define FL_DESTROYABLE	0x00000004
 

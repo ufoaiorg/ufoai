@@ -56,6 +56,8 @@ void SP_func_breakable (edict_t *ent)
 	ent->classname = "breakable";
 	ent->type = ET_BREAKABLE;
 
+	ent->flags |= FL_DESTROYABLE;
+
 	/* set an inline model */
 	gi.SetModel(ent, ent->model);
 	ent->solid = SOLID_BSP;
@@ -127,6 +129,9 @@ void SP_func_door (edict_t *ent)
 	ent->solid = SOLID_BSP;
 	gi.LinkEdict(ent);
 	ent->moveinfo.state = STATE_CLOSED;
+
+	if (ent->HP)
+		ent->flags |= FL_DESTROYABLE;
 
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);

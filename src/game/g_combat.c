@@ -1020,7 +1020,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 		}
 
 		/* do damage if the trace hit an entity */
-		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2 || tr.ent->type == ET_BREAKABLE)) {
+		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2 || (tr.ent->flags & FL_DESTROYABLE))) {
 			G_Damage(tr.ent, fd, damage, ent, mock);
 
 			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
