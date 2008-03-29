@@ -3225,7 +3225,9 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 	gi.ConfigString(CS_PLAYERNAMES + player->num, player->pers.netname);
 }
 
-
+/**
+ * @sa G_ClientDisconnect
+ */
 qboolean G_ClientConnect (player_t * player, char *userinfo)
 {
 	const char *value;
@@ -3258,6 +3260,9 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	return qtrue;
 }
 
+/**
+ * @sa G_ClientConnect
+ */
 void G_ClientDisconnect (player_t * player)
 {
 	/* only if the player already sent his began */
