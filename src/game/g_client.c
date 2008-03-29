@@ -2212,6 +2212,12 @@ qboolean G_ClientUseDoor (player_t *player, edict_t *actor, edict_t *door)
 		return qfalse;
 	}
 
+	/* there may be other edicts in this chain, too */
+	if (door->type != ET_DOOR) {
+		Com_DPrintf(DEBUG_GAME, "G_ClientUseDoor: Edict is not a door, but: %i\n", door->type);
+		return qfalse;
+	}
+
 	if (!G_ActionCheck(player, actor, TU_DOOR_ACTION, qfalse))
 		return qfalse;
 
