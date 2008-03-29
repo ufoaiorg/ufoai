@@ -58,7 +58,7 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && check->type == ET_ACTOR && ent != check && check->team == ent->team && !(check->state & STATE_DEAD)) {
+		if (check->inuse && G_IsLivingActor(check) && ent != check && check->team == ent->team) {
 			/* found ally */
 			VectorSubtract(check->origin, ent->origin, dcheck);
 			if (DotProduct(dtarget, dcheck) > 0.0) {
@@ -114,7 +114,7 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 		return qfalse;
 
 	/* check FF */
-	if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
+	if (!(ent->state & STATE_INSANE) && AI_CheckFF(ent, check->origin, fd->spread[0]))
 		return qfalse;
 
 	return qtrue;
