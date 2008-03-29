@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-14 15:40+0100\n"
+"POT-Creation-Date: 2008-03-29 12:29+0100\n"
 "PO-Revision-Date: 2008-01-15 16:02+0200\n"
 "Last-Translator: n.mamos <n.mamos@hotmail.com>\n"
 "Language-Team: \n"
@@ -1044,8 +1044,8 @@ msgstr "Επιστήμονας"
 msgid "Medic"
 msgstr "Νοσοκόμος"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1990
-#: ../base/ufos/team_humans.ufo:2011 client/cl_employee.c:221
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1561
+#: ../base/ufos/team_humans.ufo:1582 client/cl_employee.c:221
 msgid "UGV"
 msgstr "UGV"
 
@@ -3226,7 +3226,7 @@ msgid "Medium"
 msgstr "Μέση"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2251
+#: client/cl_main.c:2255
 msgid "Normal"
 msgstr "Κανονική"
 
@@ -14191,11 +14191,11 @@ msgstr "Shevaar"
 msgid "Bloodspider"
 msgstr "Bloodspider"
 
-#: ../base/ufos/team_humans.ufo:1993
+#: ../base/ufos/team_humans.ufo:1564
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#: ../base/ufos/team_humans.ufo:2014
+#: ../base/ufos/team_humans.ufo:1585
 msgid "Ares W"
 msgstr "Ares W"
 
@@ -15202,8 +15202,8 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1039
-#: client/cl_main.c:1274 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1043
+#: client/cl_main.c:1278 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
@@ -15568,7 +15568,7 @@ msgid "%s: %1.2f%% (%d %s)\n"
 msgstr "%s - %1.2f%% (%d %s)\n"
 
 #: client/cl_basesummary.c:186 client/cl_campaign.c:1384
-#: client/cl_campaign.c:4549
+#: client/cl_campaign.c:4550
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "επιστήμονας"
@@ -15765,19 +15765,19 @@ msgid_plural "credits"
 msgstr[0] "credit"
 msgstr[1] "credits"
 
-#: client/cl_campaign.c:1385 client/cl_campaign.c:4551
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4552
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "νοσοκόμος"
 msgstr[1] "νοσοκόμοι"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4548
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4549
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "στρατιώτης"
 msgstr[1] "στρατιώτες"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4550
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4551
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "εργάτης"
@@ -15973,6 +15973,8 @@ msgstr "Άνθρωπος"
 #: client/cl_campaign.c:4542
 #, fuzzy, c-format
 msgid ""
+"%s\n"
+"\n"
 "Race: %s\n"
 "Recruits: %i %s, %i %s, %i %s, %i %s\n"
 "Credits: %ic\n"
@@ -15989,28 +15991,28 @@ msgstr ""
 "Max. allowed debts: %ic\n"
 "%s\n"
 
-#: client/cl_campaign.c:4695
+#: client/cl_campaign.c:4696
 #, c-format
 msgid "  * %i x\t%s\n"
 msgstr "  * %i x\t%s\n"
 
-#: client/cl_campaign.c:4718
+#: client/cl_campaign.c:4719
 #, c-format
 msgid "  * %s\n"
 msgstr "  * %s\n"
 
-#: client/cl_campaign.c:4876
+#: client/cl_campaign.c:4877
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 "Recovered %s from the battlefield. UFO is being transported to base %s."
 
-#: client/cl_campaign.c:4878 client/cl_campaign.c:5020
-#: client/cl_campaign.c:5111
+#: client/cl_campaign.c:4879 client/cl_campaign.c:5021
+#: client/cl_campaign.c:5112
 msgid "UFO Recovery"
 msgstr "UFO Recovery"
 
-#: client/cl_campaign.c:4956
+#: client/cl_campaign.c:4957
 msgid ""
 "\n"
 "\n"
@@ -16020,14 +16022,14 @@ msgstr ""
 "\n"
 "Selected base:\t\t\t"
 
-#: client/cl_campaign.c:5018
+#: client/cl_campaign.c:5019
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 
-#: client/cl_campaign.c:5081
+#: client/cl_campaign.c:5082
 msgid ""
 "\n"
 "\n"
@@ -16037,7 +16039,7 @@ msgstr ""
 "\n"
 "Selected nation:\t\t\t"
 
-#: client/cl_campaign.c:5109
+#: client/cl_campaign.c:5110
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "Secured %s was destroyed."
@@ -16264,26 +16266,26 @@ msgstr ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter "
 "got removed."
 
-#: client/cl_main.c:361 client/cl_main.c:996
+#: client/cl_main.c:365 client/cl_main.c:1000
 msgid "Assemble a team first"
 msgstr "Assemble a team first"
 
-#: client/cl_main.c:361 client/cl_main.c:716 client/cl_main.c:996
-#: client/cl_main.c:1492 client/cl_main.c:1497 client/cl_main.c:1503
-#: client/cl_main.c:1511 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_main.c:365 client/cl_main.c:720 client/cl_main.c:1000
+#: client/cl_main.c:1496 client/cl_main.c:1501 client/cl_main.c:1507
+#: client/cl_main.c:1515 client/cl_save.c:431 client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "Error"
 
-#: client/cl_main.c:716
+#: client/cl_main.c:720
 msgid "Server needs restarting - something went wrong"
 msgstr "Server needs restarting - something went wrong"
 
-#: client/cl_main.c:789
+#: client/cl_main.c:793
 msgid "No player connected\n"
 msgstr "No player connected\n"
 
-#: client/cl_main.c:837
+#: client/cl_main.c:841
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -16292,87 +16294,87 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:844
+#: client/cl_main.c:848
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Map:\t%s\n"
 
-#: client/cl_main.c:854
+#: client/cl_main.c:858
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Servername:\t%s\n"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:859
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralestates:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:860
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Gametype:\t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:861
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Gameversion:\t%s\n"
 
-#: client/cl_main.c:858
+#: client/cl_main.c:862
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Dedicated server:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:863
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Operating system:\t%s\n"
 
-#: client/cl_main.c:860
+#: client/cl_main.c:864
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Network protocol:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:865
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Roundtime:\t%s\n"
 
-#: client/cl_main.c:862
+#: client/cl_main.c:866
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Teamplay:\t%s\n"
 
-#: client/cl_main.c:863
+#: client/cl_main.c:867
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. players per team:\t%s\n"
 
-#: client/cl_main.c:864
+#: client/cl_main.c:868
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Max. teams allowed in this map:\t%s\n"
 
-#: client/cl_main.c:865
+#: client/cl_main.c:869
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. clients:\t%s\n"
 
-#: client/cl_main.c:866
+#: client/cl_main.c:870
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. soldiers per player:\t%s\n"
 
-#: client/cl_main.c:867
+#: client/cl_main.c:871
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldiers per team:\t%s\n"
 
-#: client/cl_main.c:868
+#: client/cl_main.c:872
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Password protected:\t%s\n"
 
-#: client/cl_main.c:1039
+#: client/cl_main.c:1043
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
@@ -16380,78 +16382,78 @@ msgstr ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
 
-#: client/cl_main.c:1113
+#: client/cl_main.c:1117
 msgid "Select a free team or your coop team"
 msgstr "Select a free team or your coop team"
 
-#: client/cl_main.c:1335 client/cl_main.c:1349
+#: client/cl_main.c:1339 client/cl_main.c:1353
 #, c-format
 msgid "Current team: %i"
 msgstr "Current team: %i"
 
-#: client/cl_main.c:1339 client/cl_main.c:1353
+#: client/cl_main.c:1343 client/cl_main.c:1357
 msgid "Team is already in use"
 msgstr "Team is already in use"
 
-#: client/cl_main.c:1363 client/cl_main.c:1401
+#: client/cl_main.c:1367 client/cl_main.c:1405
 msgid "Invalid or full team"
 msgstr "Invalid or full team"
 
-#: client/cl_main.c:1491
+#: client/cl_main.c:1495
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Local game version (%s) differs from the servers"
 
-#: client/cl_main.c:1497
+#: client/cl_main.c:1501
 msgid "Local map version differs from server"
 msgstr "Local map version differs from server"
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1507
 msgid "Script files are not the same"
 msgstr "Script files are not the same"
 
-#: client/cl_main.c:1510
+#: client/cl_main.c:1514
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Local game version (%s) differs from the servers (%s)"
 
-#: client/cl_main.c:2110
+#: client/cl_main.c:2114
 msgid "Target your shot to the ground"
 msgstr "Target your shot to the ground"
 
-#: client/cl_main.c:2111
+#: client/cl_main.c:2115
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Open the actors inventory while we are in tactical mission"
 
-#: client/cl_main.c:2226 client/cl_view.c:422
+#: client/cl_main.c:2230 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr "Awaiting game start"
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2248
 msgid "Chicken-hearted"
 msgstr "Chicken-hearted"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2250
 msgid "Very Easy"
 msgstr "Πολύ εύκολο"
 
-#: client/cl_main.c:2249
+#: client/cl_main.c:2253
 msgid "Easy"
 msgstr "Έυκολο"
 
-#: client/cl_main.c:2254
+#: client/cl_main.c:2258
 msgid "Hard"
 msgstr "Δύσκολο"
 
-#: client/cl_main.c:2256
+#: client/cl_main.c:2260
 msgid "Very Hard"
 msgstr "Πολύ δύσκολο"
 
-#: client/cl_main.c:2258
+#: client/cl_main.c:2262
 msgid "Insane"
 msgstr "Τρελό"
 
-#: client/cl_main.c:2310
+#: client/cl_main.c:2314
 msgid "Custom"
 msgstr "Παραμετροποιημένο"
 

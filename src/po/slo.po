@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-14 15:40+0100\n"
+"POT-Creation-Date: 2008-03-29 12:29+0100\n"
 "PO-Revision-Date: 2006-10-24 13:25+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -973,12 +973,14 @@ msgstr "Zgradbe"
 
 #: ../base/ufos/maps.ufo:387
 msgid ""
-"A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
+"A farmhouse surrounded by fields and sheds. A UFO has landed in one of the "
+"fields."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:934
 msgid ""
-"A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+"A shelter that was built to house people in times of major disasters. Some "
+"internal blast doors may have been closed."
 msgstr ""
 
 #: ../base/ufos/medals.ufo:3
@@ -999,8 +1001,8 @@ msgstr "Dodaj znanstvenika"
 msgid "Medic"
 msgstr "Zahvale"
 
-#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1990
-#: ../base/ufos/team_humans.ufo:2011 client/cl_employee.c:221
+#: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:1561
+#: ../base/ufos/team_humans.ufo:1582 client/cl_employee.c:221
 msgid "UGV"
 msgstr "NZV"
 
@@ -3344,7 +3346,7 @@ msgid "Medium"
 msgstr "Zahvale"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2251
+#: client/cl_main.c:2255
 #, fuzzy
 msgid "Normal"
 msgstr "običajen"
@@ -3682,7 +3684,8 @@ msgstr "Težka misija"
 
 #: ../base/ufos/menu_singleplayer.ufo:439
 msgid ""
-"Are you sure that you really want to reload the last automatically saved campaign state?"
+"Are you sure that you really want to reload the last automatically saved "
+"campaign state?"
 msgstr ""
 
 #: ../base/ufos/menu_singleplayer.ufo:468
@@ -4062,9 +4065,11 @@ msgstr "Wellington"
 #: ../base/ufos/missions.ufo:126
 #, fuzzy
 msgid ""
-"There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
+"There are rumors of a mine being overrun by aliens. Although this source of "
+"information is doubtful, you'll need to investigate."
 msgstr ""
-"Pojavljajo se govorice o rudniku\\preplavljenim z nezemljani. Kljub temu,\\da je vir nezanesljiv,\\pojdi in odkrij renico.\\"
+"Pojavljajo se govorice o rudniku\\preplavljenim z nezemljani. Kljub temu,"
+"\\da je vir nezanesljiv,\\pojdi in odkrij renico.\\"
 
 #: ../base/ufos/missions.ufo:142
 msgid "Greeneville"
@@ -4116,7 +4121,8 @@ msgstr ""
 #: ../base/ufos/missions.ufo:707 ../base/ufos/missions.ufo:827
 #, fuzzy
 msgid ""
-"Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+"Damn it, you've let some of them get away again! Reequip your squad and get "
+"after them!"
 msgstr ""
 "Prekleto, nekateri so \\spet ušli! Opremi svojo ekipo \\ in pojdi za njimi!\\"
 
@@ -4190,11 +4196,13 @@ msgstr ""
 #, fuzzy
 msgid "The aliens have attacked a military convoy. Go and secure that area."
 msgstr ""
-"Nezemljani so zavzeli izstrelišče rakete. Pojdi in ga pridobi nazaj, v našo oblast."
+"Nezemljani so zavzeli izstrelišče rakete. Pojdi in ga pridobi nazaj, v našo "
+"oblast."
 
 #: ../base/ufos/missions.ufo:492
 msgid ""
-"Because convoy was not secured, happiness of United America falls dramaticaly."
+"Because convoy was not secured, happiness of United America falls "
+"dramaticaly."
 msgstr ""
 
 #: ../base/ufos/missions.ufo:504
@@ -4222,7 +4230,8 @@ msgstr "Uppsala"
 
 #: ../base/ufos/missions.ufo:546
 msgid ""
-"There is a construction site being attacked by aliens. Protect workers and their equipment."
+"There is a construction site being attacked by aliens. Protect workers and "
+"their equipment."
 msgstr ""
 
 #: ../base/ufos/missions.ufo:562
@@ -4363,7 +4372,8 @@ msgstr "Drugotni napad"
 
 #: ../base/ufos/missions.ufo:921
 msgid ""
-"The aliens are trying to spread their XVI virus amongst the populace. Prevent them from succeeding at all costs!"
+"The aliens are trying to spread their XVI virus amongst the populace. "
+"Prevent them from succeeding at all costs!"
 msgstr ""
 
 #: ../base/ufos/nations.ufo:29
@@ -5773,13 +5783,23 @@ msgstr "Avtorske pravice 2004-2006 - UFO: AI Team"
 #, fuzzy
 msgid "seq_invasion_sentence1"
 msgstr ""
-"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile izbojevane, stare meje izbrisane in postavljene nove, vlade so bile ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
+"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile "
+"izbojevane, stare meje izbrisane in postavljene nove, vlade so bile "
+"ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in "
+"preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja "
+"ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da "
+"bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
 
 #: ../base/ufos/seq_ingame.ufo:51
 #, fuzzy
 msgid "seq_xvi_sentence1"
 msgstr ""
-"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile izbojevane, stare meje izbrisane in postavljene nove, vlade so bile ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
+"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile "
+"izbojevane, stare meje izbrisane in postavljene nove, vlade so bile "
+"ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in "
+"preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja "
+"ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da "
+"bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
 
 #: ../base/ufos/seq_ingame.ufo:59
 #, fuzzy
@@ -5790,7 +5810,12 @@ msgstr "... ampak invazija se je začela ..."
 #, fuzzy
 msgid "seq_alienbase_sentence1"
 msgstr ""
-"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile izbojevane, stare meje izbrisane in postavljene nove, vlade so bile ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
+"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile "
+"izbojevane, stare meje izbrisane in postavljene nove, vlade so bile "
+"ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in "
+"preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja "
+"ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da "
+"bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
 
 #: ../base/ufos/seq_ingame.ufo:97
 #, fuzzy
@@ -5801,12 +5826,19 @@ msgstr "... ampak invazija se je začela ..."
 #, fuzzy
 msgid "seq_alienbase_sentence3"
 msgstr ""
-"Med tem časom so Zemljo napadli nezemljani. Njihova prva tarča je bilo mesto Mumbai, eno izmed najgosteje poseljenih območij na zemlji. Stotine tisočev nedolžnih ljudi je bilo ubitih preden so jih Zemeljske sile končno odgnale."
+"Med tem časom so Zemljo napadli nezemljani. Njihova prva tarča je bilo mesto "
+"Mumbai, eno izmed najgosteje poseljenih območij na zemlji. Stotine tisočev "
+"nedolžnih ljudi je bilo ubitih preden so jih Zemeljske sile končno odgnale."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
 msgstr ""
-"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile izbojevane, stare meje izbrisane in postavljene nove, vlade so bile ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
+"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile "
+"izbojevane, stare meje izbrisane in postavljene nove, vlade so bile "
+"ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in "
+"preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja "
+"ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da "
+"bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
@@ -5815,35 +5847,59 @@ msgstr "... ampak invazija se je začela ..."
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
 msgstr ""
-"Med tem časom so Zemljo napadli nezemljani. Njihova prva tarča je bilo mesto Mumbai, eno izmed najgosteje poseljenih območij na zemlji. Stotine tisočev nedolžnih ljudi je bilo ubitih preden so jih Zemeljske sile končno odgnale."
+"Med tem časom so Zemljo napadli nezemljani. Njihova prva tarča je bilo mesto "
+"Mumbai, eno izmed najgosteje poseljenih območij na zemlji. Stotine tisočev "
+"nedolžnih ljudi je bilo ubitih preden so jih Zemeljske sile končno odgnale."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
 msgstr ""
-"Nihče ni vedel od kod so prišli. Vsi poskusi navezanja stika so se srečali s silo. 48 ur po prvem napadu je vseh sedem svetovnih velesil napovedalo vojno. Dva tedna so se sile Zemlje borile proti prišlekom, a so izbojevali le nekaj dragocenih zmag. Združeni narodi so se s podporo vseh sedmih velesil na koncu odločili, da bodo ustanovili posebno bojno enoto: PHALANX"
+"Nihče ni vedel od kod so prišli. Vsi poskusi navezanja stika so se srečali s "
+"silo. 48 ur po prvem napadu je vseh sedem svetovnih velesil napovedalo "
+"vojno. Dva tedna so se sile Zemlje borile proti prišlekom, a so izbojevali "
+"le nekaj dragocenih zmag. Združeni narodi so se s podporo vseh sedmih "
+"velesil na koncu odločili, da bodo ustanovili posebno bojno enoto: PHALANX"
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
 msgstr ""
-"Da bi se lahko uspešno borili proti nezemljanom, so posebne bojne enote ustanovile vse velesile. Te bojevnike so sestavljali najboljši izmed najboljših vojakov njihovih vojska. Ampak kljub temu je še vedno neznano, če se bo PHALANX uspel uspešno boriti proti nezemljanom..."
+"Da bi se lahko uspešno borili proti nezemljanom, so posebne bojne enote "
+"ustanovile vse velesile. Te bojevnike so sestavljali najboljši izmed "
+"najboljših vojakov njihovih vojska. Ampak kljub temu je še vedno neznano, če "
+"se bo PHALANX uspel uspešno boriti proti nezemljanom..."
 
 #: ../base/ufos/seq_intro.ufo:48
 #, fuzzy
 msgid "intro_sentence6"
 msgstr ""
-"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile izbojevane, stare meje izbrisane in postavljene nove, vlade so bile ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
+"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile "
+"izbojevane, stare meje izbrisane in postavljene nove, vlade so bile "
+"ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in "
+"preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja "
+"ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da "
+"bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
 
 #: ../base/ufos/seq_intro.ufo:56
 #, fuzzy
 msgid "intro_sentence7"
 msgstr ""
-"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile izbojevane, stare meje izbrisane in postavljene nove, vlade so bile ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
+"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile "
+"izbojevane, stare meje izbrisane in postavljene nove, vlade so bile "
+"ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in "
+"preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja "
+"ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da "
+"bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
 
 #: ../base/ufos/seq_intro.ufo:64
 #, fuzzy
 msgid "intro_sentence8"
 msgstr ""
-"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile izbojevane, stare meje izbrisane in postavljene nove, vlade so bile ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
+"2084 - Čas navideznega miru se je končno naselil na Zemlji. Vojne so bile "
+"izbojevane, stare meje izbrisane in postavljene nove, vlade so bile "
+"ustanovljene. Prejšnji rodovi so se povezali v močne politične sile in "
+"preostali neuvrščeni narodi so tesno sodelovali. Prebivalcem Zemlje blaginja "
+"ni več tujec, kot je bila v 20. stoletju in ljudstvo zaupa voditeljem, da "
+"bodo ohranili ravnotežje in jih varno popeljali v mirno 22. stoletje."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -5983,42 +6039,50 @@ msgstr "Shevaar"
 msgid "Bloodspider"
 msgstr "Shevaar - obdukcija"
 
-#: ../base/ufos/team_humans.ufo:1993
+#: ../base/ufos/team_humans.ufo:1564
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#: ../base/ufos/team_humans.ufo:2014
+#: ../base/ufos/team_humans.ufo:1585
 msgid "Ares W"
 msgstr ""
 
 #: ../base/ufos/tips.ufo:5
 msgid ""
-"Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
+"Use the [Shift] key to align your targeting height - useful to shoot a "
+"rocketlauncher in front of an alien group, for example."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:6
 msgid ""
-"Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
+"Assemble and save different teams for multiplayer matches - 4 player teams, "
+"8 player teams and so on. This way you can quickly load the right one for a "
+"fast match."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:7
 msgid ""
-"With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
+"With multiplayer teams, make sure your best soldiers are at the top of the "
+"team list. When the soldier limit is lower than the amount of soldiers in "
+"your team, the soldiers at the top of the list will be used for the game."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:8
 msgid ""
-"Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
+"Always make sure that you have enough Time Units (TUs) left to hide after "
+"you shoot."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:9
 msgid ""
-"When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
+"When using Reaction Fire, remember that you can set which fire mode to use "
+"by enabling the corresponding check box on the fire mode panel."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:10
 msgid ""
-"Remember to give your soldiers a varying array of weapons, you never know when a certain weapon may come in handy."
+"Remember to give your soldiers a varying array of weapons, you never know "
+"when a certain weapon may come in handy."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:11
@@ -6031,47 +6095,58 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:13
 msgid ""
-"You can use a flashbang to deactivate your opponents Reaction Fire mode or to take all of his remaining Time Units (TUs) for his next round."
+"You can use a flashbang to deactivate your opponents Reaction Fire mode or "
+"to take all of his remaining Time Units (TUs) for his next round."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:14
 msgid ""
-"In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
+"In multiplayer, you can chat by pressing [k] (to all), [l] (team members "
+"only), or by pressing the chat buttons on the HUD."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:15
 msgid ""
-"To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
+"To make a soldier look into a certain direction (i.e. to turn him/her) place "
+"the cursor and press the right mouse button or the [Ctrl] key. This will "
+"cost you Time Units (TUs)."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:16
 msgid ""
-"Be sure to hire as many scientists as you can. The earlier you know your enemy, the easier he is to defeat."
+"Be sure to hire as many scientists as you can. The earlier you know your "
+"enemy, the easier he is to defeat."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:17
 msgid ""
-"Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
+"Be sure to hire as many engineers as you can. The faster your production "
+"lines, the sooner you can get access to better equipment and resupplies."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:18
 msgid ""
-"Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
+"Be sure to visit our website, http://ufoai.sf.net/ and drop by our community "
+"channel. You can do so by going to the Multiplayer menu and clicking on the "
+"Lobby button."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:19
 msgid ""
-"Remember that you need an active Command Centre in order to launch interceptors."
+"Remember that you need an active Command Centre in order to launch "
+"interceptors."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:20
 msgid ""
-"Never pass up an opportunity to capture a live alien, even one you have already researched."
+"Never pass up an opportunity to capture a live alien, even one you have "
+"already researched."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:21
 msgid ""
-"Watch your back! Your soldiers can only see enemies in an arc in front of them."
+"Watch your back! Your soldiers can only see enemies in an arc in front of "
+"them."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:22
@@ -6080,82 +6155,104 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:23
 msgid ""
-"You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
+"You can make soldiers crouch to better protect them from enemy fire. But "
+"remember that crouching and standing up cost Time Units (TUs), and moving "
+"while crouched costs more TUs than walking normally."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:24
 msgid ""
-"Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
+"Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if "
+"another soldier is moving."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:25
 msgid ""
-"Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
+"Use [c] to toggle crouching. Crouching makes some weapons considerably more "
+"precise. It also makes your soldier a smaller target."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:26
 msgid ""
-"If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+"If you are short of Time Units (TUs) and have dangerous enemies, using a "
+"flashbang to incapacitate them until the start of your next round may be the "
+"best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:27
 msgid ""
-"Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
+"Use the first-person view (toggle with [v]) to check if moving one square to "
+"the left will make that shoot-through-the-building shot possible."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:28
 msgid ""
-"Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits."
+"Use a fast soldier with pistols, one handed melee weapons, grenades, "
+"flashbangs and medikits."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
-"Build a hospital to be able to heal your soldiers faster for their next mission."
+"Build a hospital to be able to heal your soldiers faster for their next "
+"mission."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:30
 msgid ""
-"Plasma grenades do the most damage, but frag grenades can be useful, as they can be thrown slightly further."
+"Plasma grenades do the most damage, but frag grenades can be useful, as they "
+"can be thrown slightly further."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:31
 msgid ""
-"Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
+"Use [x] to cycle through the Reaction Fire settings: none, one shot, "
+"multiple shots."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:32
 msgid ""
-"Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with one grenade."
+"Keep soldiers close, so that they can support each other (heal each other, "
+"shoot when one runs out of Time Units (TUs)). Keep a wall between them at "
+"the end of your turn, so that they can't be killed with one grenade."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:33
 msgid ""
-"Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
+"Always have a disposable soldier or two, so you don't have to put your "
+"primary units into very risky situations."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:34
 msgid ""
-"Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
+"Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction "
+"Fire, you cannot turn it back on without enough Time Units (TU). You can, "
+"however, leave it on. Try not to adjust zeroed units until you're sure."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:35
 msgid ""
-"Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
+"Air Burst from the Grenade Launcher lets you explode those grenades in a "
+"specific place. Very useful when targetting something near the edge of the "
+"map, or on a ledge."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:36
 msgid ""
-"When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
+"When throwing grenades, try to avoid straight throws along the grid. With at "
+"least a little bit of an angle, the chances of bouncing it back at yourself "
+"becomes much less on a 'missed' throw."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:37
 msgid ""
-"Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
+"Before throwing a grenade, look closely at the shape of the land. A slight "
+"slope will affect the direction that the grenade bounces."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:38
 msgid ""
-"You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
+"You can include your own maps for multiplayer games or create your own "
+"campaigns. Just have a look at our wiki to read about content creation."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:39
@@ -6164,7 +6261,8 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:40
 msgid ""
-"You can also accelerate/decelerate time on geoscape by using mouse wheel on the time buttons, or [m], [n]."
+"You can also accelerate/decelerate time on geoscape by using mouse wheel on "
+"the time buttons, or [m], [n]."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:41
@@ -6173,12 +6271,14 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:42
 msgid ""
-"Remember that items will slow an aircraft. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
+"Remember that items will slow an aircraft. To intercept fast UFOs, you may "
+"prefer to send several lightly equipped aircraft."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:43
 msgid ""
-"Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
+"Your attacked aircraft may flee to one of your bases to avoid being "
+"destroyed by UFOs."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:44
@@ -6187,17 +6287,22 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:45
 msgid ""
-"Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] key will draw a line to each enemy the selected soldier can see."
+"Spotted enemies: While on a ground mission you can press [Space] to cycle "
+"through all spotted enemies. Pressing [t] key will draw a line to each enemy "
+"the selected soldier can see."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:46
 msgid ""
-"You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base equipment, not in the tactical missions where such an action would cost TUs."
+"You can use the right mouse button in the soldier equipment screen to equip "
+"or unequip weapons, ammo and armour. This only works in the base equipment, "
+"not in the tactical missions where such an action would cost TUs."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:47
 msgid ""
-"You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
+"You should ensure that not too many civilians lose their lives. Otherwise "
+"you might lose the game sooner than you'd expect."
 msgstr ""
 
 #: ../base/ufos/weapons.ufo:6
@@ -6907,8 +7012,8 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1039
-#: client/cl_main.c:1274 client/cl_map.c:313 client/cl_mapfightequip.c:824
+#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1043
+#: client/cl_main.c:1278 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
 #: client/cl_produce.c:428 client/cl_produce.c:438 client/cl_produce.c:447
@@ -6975,7 +7080,8 @@ msgstr "Nazaj na zemljevid baze"
 
 #: client/cl_aircraft.c:542
 msgid ""
-"Your aircraft doesn't have enough fuel to go there and then come back to its home base."
+"Your aircraft doesn't have enough fuel to go there and then come back to its "
+"home base."
 msgstr ""
 
 #: client/cl_aircraft.c:642 client/cl_map.c:1451
@@ -7195,7 +7301,8 @@ msgstr ""
 #: client/cl_basemanagement.c:2775
 #, c-format
 msgid ""
-"Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
+"Make sure that the dependencies of building %s (%s) are operational, so that "
+"building %s may be used."
 msgstr ""
 
 #: client/cl_basemanagement.c:2783 client/cl_basemanagement.c:2788
@@ -7211,7 +7318,8 @@ msgstr "Najprej zgradi v laboratoriju"
 
 #: client/cl_basemanagement.c:2861
 msgid ""
-"No aircraft in this base - You first have to purchase or transfer an aircraft\n"
+"No aircraft in this base - You first have to purchase or transfer an "
+"aircraft\n"
 msgstr ""
 
 #: client/cl_basemanagement.c:2861 client/cl_basemanagement.c:2863
@@ -7267,7 +7375,7 @@ msgid "%s: %1.2f%% (%d %s)\n"
 msgstr ""
 
 #: client/cl_basesummary.c:186 client/cl_campaign.c:1384
-#: client/cl_campaign.c:4549
+#: client/cl_campaign.c:4550
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
@@ -7311,18 +7419,28 @@ msgstr ""
 
 #: client/cl_campaign.c:966
 msgid ""
-"You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
+"You have failed in your charter to protect Earth. Our home and our people "
+"have fallen to the alien infection. Only a handful of people on Earth remain "
+"human, and the remaining few no longer have a chance to stem the tide. Your "
+"command is no more; PHALANX is no longer able to operate as a functioning "
+"unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
 #: client/cl_campaign.c:984
 msgid ""
-"Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
+"Under your command, PHALANX operations have consistently failed to protect "
+"nations. The UN, highly unsatisfied with your performance, has decided to "
+"remove you from command and subsequently disbands the PHALANX project as an "
+"effective task force. No further attempts at global cooperation are made. "
+"Earth's nations each try to stand alone against the aliens, and eventually "
+"fall one by one."
 msgstr ""
 
 #: client/cl_campaign.c:1127
 #, c-format
 msgid ""
-"Your base: %s has been ransacked! All employees killed and all equipment destroyed."
+"Your base: %s has been ransacked! All employees killed and all equipment "
+"destroyed."
 msgstr ""
 
 #: client/cl_campaign.c:1185
@@ -7452,21 +7570,21 @@ msgid_plural "credits"
 msgstr[0] "Zahvale"
 msgstr[1] "Zahvale"
 
-#: client/cl_campaign.c:1385 client/cl_campaign.c:4551
+#: client/cl_campaign.c:1385 client/cl_campaign.c:4552
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Zahvale"
 msgstr[1] "Zahvale"
 
-#: client/cl_campaign.c:1386 client/cl_campaign.c:4548
+#: client/cl_campaign.c:1386 client/cl_campaign.c:4549
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Vojak 8"
 msgstr[1] "Vojak 8"
 
-#: client/cl_campaign.c:1387 client/cl_campaign.c:4550
+#: client/cl_campaign.c:1387 client/cl_campaign.c:4551
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -7631,7 +7749,8 @@ msgstr "%s je bil povišan v %s.\n"
 #: client/cl_campaign.c:3130
 #, c-format
 msgid ""
-"%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
+"%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
+"in the face of overwhelming odds.\n"
 msgstr ""
 
 #: client/cl_campaign.c:3131
@@ -7651,6 +7770,8 @@ msgstr "Rafal"
 #: client/cl_campaign.c:4542
 #, fuzzy, c-format
 msgid ""
+"%s\n"
+"\n"
 "Race: %s\n"
 "Recruits: %i %s, %i %s, %i %s, %i %s\n"
 "Credits: %ic\n"
@@ -7664,27 +7785,27 @@ msgstr ""
 "Denar: %ic\n"
 "%s\n"
 
-#: client/cl_campaign.c:4695
+#: client/cl_campaign.c:4696
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "Poškodbe:\t%i / %i\n"
 
-#: client/cl_campaign.c:4718
+#: client/cl_campaign.c:4719
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "Poškodbe:\t%i / %i\n"
 
-#: client/cl_campaign.c:4876
+#: client/cl_campaign.c:4877
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4878 client/cl_campaign.c:5020
-#: client/cl_campaign.c:5111
+#: client/cl_campaign.c:4879 client/cl_campaign.c:5021
+#: client/cl_campaign.c:5112
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4956
+#: client/cl_campaign.c:4957
 #, fuzzy
 msgid ""
 "\n"
@@ -7692,13 +7813,13 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "Izberi predmet"
 
-#: client/cl_campaign.c:5018
+#: client/cl_campaign.c:5019
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5081
+#: client/cl_campaign.c:5082
 #, fuzzy
 msgid ""
 "\n"
@@ -7706,7 +7827,7 @@ msgid ""
 "Selected nation:\t\t\t"
 msgstr "Izberi predmet"
 
-#: client/cl_campaign.c:5109
+#: client/cl_campaign.c:5110
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -7735,7 +7856,8 @@ msgstr ""
 #: client/cl_employee.c:504
 #, c-format
 msgid ""
-"You don't have enough living quarters to house all of your personnel. You need to fire %i personnel until more living space becomes available."
+"You don't have enough living quarters to house all of your personnel. You "
+"need to fire %i personnel until more living space becomes available."
 msgstr ""
 
 #: client/cl_employee.c:508
@@ -7923,29 +8045,30 @@ msgstr[1] "Nihče ni izbran\n"
 #: client/cl_inventory.c:541
 #, c-format
 msgid ""
-"Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
+"Base %s does not have Antimatter Storage Facility. %i units of Antimatter "
+"got removed."
 msgstr ""
 
-#: client/cl_main.c:361 client/cl_main.c:996
+#: client/cl_main.c:365 client/cl_main.c:1000
 msgid "Assemble a team first"
 msgstr "Najprej sestavi ekipo"
 
-#: client/cl_main.c:361 client/cl_main.c:716 client/cl_main.c:996
-#: client/cl_main.c:1492 client/cl_main.c:1497 client/cl_main.c:1503
-#: client/cl_main.c:1511 client/cl_save.c:431 client/cl_save.c:456
+#: client/cl_main.c:365 client/cl_main.c:720 client/cl_main.c:1000
+#: client/cl_main.c:1496 client/cl_main.c:1501 client/cl_main.c:1507
+#: client/cl_main.c:1515 client/cl_save.c:431 client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "Napaka"
 
-#: client/cl_main.c:716
+#: client/cl_main.c:720
 msgid "Server needs restarting - something went wrong"
 msgstr ""
 
-#: client/cl_main.c:789
+#: client/cl_main.c:793
 msgid "No player connected\n"
 msgstr ""
 
-#: client/cl_main.c:837
+#: client/cl_main.c:841
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -7954,166 +8077,167 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:844
+#: client/cl_main.c:848
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Karta:\t%s\n"
 
-#: client/cl_main.c:854
+#: client/cl_main.c:858
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Ime strežnika:\t%s\n"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:859
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralna načela:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:860
 #, fuzzy, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Igra"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:861
 #, fuzzy, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Različica:\t%s\n"
 
-#: client/cl_main.c:858
+#: client/cl_main.c:862
 #, fuzzy, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Namenski strežnik:"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:863
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:860
+#: client/cl_main.c:864
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:861
+#: client/cl_main.c:865
 #, fuzzy, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Kupi/Prodaj Opremo"
 
-#: client/cl_main.c:862
+#: client/cl_main.c:866
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Ekipna igra:\t%s\n"
 
-#: client/cl_main.c:863
+#: client/cl_main.c:867
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Največje število igralcev v ekipi:\t%s\n"
 
-#: client/cl_main.c:864
+#: client/cl_main.c:868
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:865
+#: client/cl_main.c:869
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Največje število klientov:\t%s\n"
 
-#: client/cl_main.c:866
+#: client/cl_main.c:870
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Največje število vojakov na igralca:\t%s\n"
 
-#: client/cl_main.c:867
+#: client/cl_main.c:871
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Največje število vojakov na ekipo:\t%s\n"
 
-#: client/cl_main.c:868
+#: client/cl_main.c:872
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:1039
+#: client/cl_main.c:1043
 msgid ""
-"All bookmark slots are used - please removed unused entries and repeat this step"
+"All bookmark slots are used - please removed unused entries and repeat this "
+"step"
 msgstr ""
 
-#: client/cl_main.c:1113
+#: client/cl_main.c:1117
 msgid "Select a free team or your coop team"
 msgstr ""
 
-#: client/cl_main.c:1335 client/cl_main.c:1349
+#: client/cl_main.c:1339 client/cl_main.c:1353
 #, fuzzy, c-format
 msgid "Current team: %i"
 msgstr "Trenutna ekipa"
 
-#: client/cl_main.c:1339 client/cl_main.c:1353
+#: client/cl_main.c:1343 client/cl_main.c:1357
 #, fuzzy
 msgid "Team is already in use"
 msgstr "Že %i v bazi"
 
-#: client/cl_main.c:1363 client/cl_main.c:1401
+#: client/cl_main.c:1367 client/cl_main.c:1405
 msgid "Invalid or full team"
 msgstr ""
 
-#: client/cl_main.c:1491
+#: client/cl_main.c:1495
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:1497
+#: client/cl_main.c:1501
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1507
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1510
+#: client/cl_main.c:1514
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:2110
+#: client/cl_main.c:2114
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2111
+#: client/cl_main.c:2115
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2226 client/cl_view.c:422
+#: client/cl_main.c:2230 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2248
 msgid "Chicken-hearted"
 msgstr ""
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2250
 msgid "Very Easy"
 msgstr ""
 
-#: client/cl_main.c:2249
+#: client/cl_main.c:2253
 msgid "Easy"
-msgstr ""
-
-#: client/cl_main.c:2254
-#, fuzzy
-msgid "Hard"
-msgstr "Hangar"
-
-#: client/cl_main.c:2256
-msgid "Very Hard"
 msgstr ""
 
 #: client/cl_main.c:2258
 #, fuzzy
+msgid "Hard"
+msgstr "Hangar"
+
+#: client/cl_main.c:2260
+msgid "Very Hard"
+msgstr ""
+
+#: client/cl_main.c:2262
+#, fuzzy
 msgid "Insane"
 msgstr "neimenovan"
 
-#: client/cl_main.c:2310
+#: client/cl_main.c:2314
 #, fuzzy
 msgid "Custom"
 msgstr "Samodejno "
@@ -8660,7 +8784,8 @@ msgstr "Ustavi raziskavo"
 #: client/cl_produce.c:1192
 #, c-format
 msgid ""
-"You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
+"You don't have enough material to produce all (%i) items. Production will "
+"continue with a reduced (%i) number."
 msgstr ""
 
 #: client/cl_produce.c:1196 client/cl_produce.c:1218
@@ -8754,7 +8879,8 @@ msgstr "Stanje: raziskovanje končano"
 
 #: client/cl_research.c:819
 msgid ""
-"Status: We don't currently have all the materials or background knowledge needed to research this topic."
+"Status: We don't currently have all the materials or background knowledge "
+"needed to research this topic."
 msgstr ""
 
 #: client/cl_research.c:821
@@ -9429,7 +9555,8 @@ msgstr "Prosti laboratoriji v bazi: %i"
 
 #: client/cl_transfer.c:1392
 msgid ""
-"The destination base no longer exists! Transfer cargo are lost, personel got unhired."
+"The destination base no longer exists! Transfer cargo are lost, personel got "
+"unhired."
 msgstr ""
 
 #: client/cl_ufo.c:508
@@ -9758,7 +9885,8 @@ msgstr "Ne morem izvesti dejanja - ni dovolj korakov!\n"
 #: game/g_client.c:906
 #, fuzzy
 msgid ""
-"Can't perform action - weapon already fully loaded with the same ammunition!\n"
+"Can't perform action - weapon already fully loaded with the same "
+"ammunition!\n"
 msgstr "Ne morem izvesti dejanja - orožje je že napolnjeno!\n"
 
 #: game/g_client.c:1548

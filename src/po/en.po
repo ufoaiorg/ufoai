@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-14 15:40+0100\n"
-"PO-Revision-Date: 2008-03-14 15:41+0100\n"
-"Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
+"POT-Creation-Date: 2008-03-29 12:29+0100\n"
+"PO-Revision-Date: 2008-03-29 12:35+0100\n"
+"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -541,8 +541,7 @@ msgstr "Alien aircraft spotted"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr ""
-"SecGen. Mahouf Serra, United Nations, New York City"
+msgstr "SecGen. Mahouf Serra, United Nations, New York City"
 
 #: ../base/ufos/events.ufo:61
 #: ../base/ufos/events.ufo:71
@@ -684,8 +683,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4242
 #: ../base/ufos/research.ufo:4249
 msgid "mail_to_base_commander"
-msgstr ""
-"Base Commander, PHALANX, Atlantic Operations Command"
+msgstr "Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -804,8 +802,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4117
 #: ../base/ufos/research.ufo:4125
 msgid "mail_from_paul_navarre"
-msgstr ""
-"Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:74
 #: ../base/ufos/events.ufo:84
@@ -866,8 +863,7 @@ msgstr ""
 #: ../base/ufos/events.ufo:212
 #: ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr ""
-"XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
+msgstr "XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -939,8 +935,7 @@ msgstr "Alien Base Discovered -- %s"
 
 #: ../base/ufos/events.ufo:205
 msgid "mail_alien_base_discovered"
-msgstr ""
-"Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/events.ufo:214
 msgid "Lost Radar Tracking -- %s"
@@ -966,8 +961,7 @@ msgstr "<TODO: mail_new_radar_contact>"
 #: ../base/ufos/research.ufo:534
 #: ../base/ufos/research.ufo:542
 msgid "mail_from_col_falkland"
-msgstr ""
-"Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
+msgstr "Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -1006,8 +1000,7 @@ msgstr ""
 #: ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr ""
-"Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
+msgstr "Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -1176,8 +1169,8 @@ msgid "Medic"
 msgstr "Medic"
 
 #: ../base/ufos/medals.ufo:44
-#: ../base/ufos/team_humans.ufo:1990
-#: ../base/ufos/team_humans.ufo:2011
+#: ../base/ufos/team_humans.ufo:1561
+#: ../base/ufos/team_humans.ufo:1582
 #: client/cl_employee.c:221
 msgid "UGV"
 msgstr "UGV"
@@ -3719,7 +3712,7 @@ msgstr "Medium"
 
 #: ../base/ufos/menu_options.ufo:365
 #: ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2251
+#: client/cl_main.c:2255
 msgid "Normal"
 msgstr "Normal"
 
@@ -5019,8 +5012,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4241
 #: ../base/ufos/research.ufo:4248
 msgid "mail_from_dr_connor"
-msgstr ""
-"Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:247
 #: ../base/ufos/research.ufo:286
@@ -8566,8 +8558,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3069
 msgid "inter_dragon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3088
 msgid "inter_stingray_txt"
@@ -8575,8 +8566,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3091
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3115
 msgid "ufo_scout_txt"
@@ -10244,43 +10234,35 @@ msgstr "<TODO: seq_alienbase_sentence3>"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
-"It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
+msgstr "It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
-"Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
+msgstr "Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
-"To many people on Earth, it seems like things are going all right."
+msgstr "To many people on Earth, it seems like things are going all right."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
-"The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
+msgstr "The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
-"An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
+msgstr "An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
-"Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
+msgstr "Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
-"Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
+msgstr "Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
-"Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
+msgstr "Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -10414,11 +10396,11 @@ msgstr "Shevaar"
 msgid "Bloodspider"
 msgstr "Bloodspider"
 
-#: ../base/ufos/team_humans.ufo:1993
+#: ../base/ufos/team_humans.ufo:1564
 msgid "Phoenix"
 msgstr "Phoenix"
 
-#: ../base/ufos/team_humans.ufo:2014
+#: ../base/ufos/team_humans.ufo:1585
 msgid "Ares W"
 msgstr "Ares W"
 
@@ -11322,8 +11304,8 @@ msgstr ""
 #: client/cl_inventory.c:292
 #: client/cl_inventory.c:297
 #: client/cl_inventory.c:543
-#: client/cl_main.c:1039
-#: client/cl_main.c:1274
+#: client/cl_main.c:1043
+#: client/cl_main.c:1278
 #: client/cl_map.c:313
 #: client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826
@@ -11707,7 +11689,7 @@ msgstr "%s: %1.2f%% (%d %s)\n"
 
 #: client/cl_basesummary.c:186
 #: client/cl_campaign.c:1384
-#: client/cl_campaign.c:4549
+#: client/cl_campaign.c:4550
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "scientist"
@@ -11882,21 +11864,21 @@ msgstr[0] "credit"
 msgstr[1] "credits"
 
 #: client/cl_campaign.c:1385
-#: client/cl_campaign.c:4551
+#: client/cl_campaign.c:4552
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "medic"
 msgstr[1] "medics"
 
 #: client/cl_campaign.c:1386
-#: client/cl_campaign.c:4548
+#: client/cl_campaign.c:4549
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldier"
 msgstr[1] "soldiers"
 
 #: client/cl_campaign.c:1387
-#: client/cl_campaign.c:4550
+#: client/cl_campaign.c:4551
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "worker"
@@ -12093,6 +12075,8 @@ msgstr "Human"
 #: client/cl_campaign.c:4542
 #, c-format
 msgid ""
+"%s\n"
+"\n"
 "Race: %s\n"
 "Recruits: %i %s, %i %s, %i %s, %i %s\n"
 "Credits: %ic\n"
@@ -12101,6 +12085,8 @@ msgid ""
 "Max. allowed debts: %ic\n"
 "%s\n"
 msgstr ""
+"%s\n"
+"\n"
 "Race: %s\n"
 "Recruits: %i %s, %i %s, %i %s, %i %s\n"
 "Credits: %ic\n"
@@ -12109,28 +12095,28 @@ msgstr ""
 "Max. allowed debts: %ic\n"
 "%s\n"
 
-#: client/cl_campaign.c:4695
+#: client/cl_campaign.c:4696
 #, c-format
 msgid "  * %i x\t%s\n"
 msgstr "  * %i x\t%s\n"
 
-#: client/cl_campaign.c:4718
+#: client/cl_campaign.c:4719
 #, c-format
 msgid "  * %s\n"
 msgstr "  * %s\n"
 
-#: client/cl_campaign.c:4876
+#: client/cl_campaign.c:4877
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "Recovered %s from the battlefield. UFO is being transported to base %s."
 
-#: client/cl_campaign.c:4878
-#: client/cl_campaign.c:5020
-#: client/cl_campaign.c:5111
+#: client/cl_campaign.c:4879
+#: client/cl_campaign.c:5021
+#: client/cl_campaign.c:5112
 msgid "UFO Recovery"
 msgstr "UFO Recovery"
 
-#: client/cl_campaign.c:4956
+#: client/cl_campaign.c:4957
 msgid ""
 "\n"
 "\n"
@@ -12140,12 +12126,12 @@ msgstr ""
 "\n"
 "Selected base:\t\t\t"
 
-#: client/cl_campaign.c:5018
+#: client/cl_campaign.c:5019
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 
-#: client/cl_campaign.c:5081
+#: client/cl_campaign.c:5082
 msgid ""
 "\n"
 "\n"
@@ -12155,7 +12141,7 @@ msgstr ""
 "\n"
 "Selected nation:\t\t\t"
 
-#: client/cl_campaign.c:5109
+#: client/cl_campaign.c:5110
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "Secured %s was destroyed."
@@ -12378,33 +12364,33 @@ msgstr[1] "%i items were sold."
 msgid "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 
-#: client/cl_main.c:361
-#: client/cl_main.c:996
+#: client/cl_main.c:365
+#: client/cl_main.c:1000
 msgid "Assemble a team first"
 msgstr "Assemble a team first"
 
-#: client/cl_main.c:361
-#: client/cl_main.c:716
-#: client/cl_main.c:996
-#: client/cl_main.c:1492
-#: client/cl_main.c:1497
-#: client/cl_main.c:1503
-#: client/cl_main.c:1511
+#: client/cl_main.c:365
+#: client/cl_main.c:720
+#: client/cl_main.c:1000
+#: client/cl_main.c:1496
+#: client/cl_main.c:1501
+#: client/cl_main.c:1507
+#: client/cl_main.c:1515
 #: client/cl_save.c:431
 #: client/cl_save.c:456
 #: client/cl_save.c:599
 msgid "Error"
 msgstr "Error"
 
-#: client/cl_main.c:716
+#: client/cl_main.c:720
 msgid "Server needs restarting - something went wrong"
 msgstr "Server needs restarting - something went wrong"
 
-#: client/cl_main.c:789
+#: client/cl_main.c:793
 msgid "No player connected\n"
 msgstr "No player connected\n"
 
-#: client/cl_main.c:837
+#: client/cl_main.c:841
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -12413,166 +12399,166 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:844
+#: client/cl_main.c:848
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Map:\t%s\n"
 
-#: client/cl_main.c:854
+#: client/cl_main.c:858
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Servername:\t%s\n"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:859
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralestates:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:860
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Gametype:\t%s\n"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:861
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Gameversion:\t%s\n"
 
-#: client/cl_main.c:858
+#: client/cl_main.c:862
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Dedicated server:\t%s\n"
 
-#: client/cl_main.c:859
+#: client/cl_main.c:863
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Operating system:\t%s\n"
 
-#: client/cl_main.c:860
+#: client/cl_main.c:864
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Network protocol:\t%s\n"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:865
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Roundtime:\t%s\n"
 
-#: client/cl_main.c:862
+#: client/cl_main.c:866
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Teamplay:\t%s\n"
 
-#: client/cl_main.c:863
+#: client/cl_main.c:867
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. players per team:\t%s\n"
 
-#: client/cl_main.c:864
+#: client/cl_main.c:868
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Max. teams allowed in this map:\t%s\n"
 
-#: client/cl_main.c:865
+#: client/cl_main.c:869
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. clients:\t%s\n"
 
-#: client/cl_main.c:866
+#: client/cl_main.c:870
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. soldiers per player:\t%s\n"
 
-#: client/cl_main.c:867
+#: client/cl_main.c:871
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldiers per team:\t%s\n"
 
-#: client/cl_main.c:868
+#: client/cl_main.c:872
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Password protected:\t%s\n"
 
-#: client/cl_main.c:1039
+#: client/cl_main.c:1043
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "All bookmark slots are used - please removed unused entries and repeat this step"
 
-#: client/cl_main.c:1113
+#: client/cl_main.c:1117
 msgid "Select a free team or your coop team"
 msgstr "Select a free team or your coop team"
 
-#: client/cl_main.c:1335
-#: client/cl_main.c:1349
+#: client/cl_main.c:1339
+#: client/cl_main.c:1353
 #, c-format
 msgid "Current team: %i"
 msgstr "Current team: %i"
 
-#: client/cl_main.c:1339
-#: client/cl_main.c:1353
+#: client/cl_main.c:1343
+#: client/cl_main.c:1357
 msgid "Team is already in use"
 msgstr "Team is already in use"
 
-#: client/cl_main.c:1363
-#: client/cl_main.c:1401
+#: client/cl_main.c:1367
+#: client/cl_main.c:1405
 msgid "Invalid or full team"
 msgstr "Invalid or full team"
 
-#: client/cl_main.c:1491
+#: client/cl_main.c:1495
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Local game version (%s) differs from the servers"
 
-#: client/cl_main.c:1497
+#: client/cl_main.c:1501
 msgid "Local map version differs from server"
 msgstr "Local map version differs from server"
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1507
 msgid "Script files are not the same"
 msgstr "Script files are not the same"
 
-#: client/cl_main.c:1510
+#: client/cl_main.c:1514
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Local game version (%s) differs from the servers (%s)"
 
-#: client/cl_main.c:2110
+#: client/cl_main.c:2114
 msgid "Target your shot to the ground"
 msgstr "Target your shot to the ground"
 
-#: client/cl_main.c:2111
+#: client/cl_main.c:2115
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Open the actors inventory while we are in tactical mission"
 
-#: client/cl_main.c:2226
+#: client/cl_main.c:2230
 #: client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr "Awaiting game start"
 
-#: client/cl_main.c:2244
+#: client/cl_main.c:2248
 msgid "Chicken-hearted"
 msgstr "Chicken-hearted"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2250
 msgid "Very Easy"
 msgstr "Very Easy"
 
-#: client/cl_main.c:2249
+#: client/cl_main.c:2253
 msgid "Easy"
 msgstr "Easy"
 
-#: client/cl_main.c:2254
+#: client/cl_main.c:2258
 msgid "Hard"
 msgstr "Hard"
 
-#: client/cl_main.c:2256
+#: client/cl_main.c:2260
 msgid "Very Hard"
 msgstr "Very Hard"
 
-#: client/cl_main.c:2258
+#: client/cl_main.c:2262
 msgid "Insane"
 msgstr "Insane"
 
-#: client/cl_main.c:2310
+#: client/cl_main.c:2314
 msgid "Custom"
 msgstr "Custom"
 
