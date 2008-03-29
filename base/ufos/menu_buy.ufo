@@ -1238,7 +1238,7 @@ menu buy
 	string txt_sellfactor
 	{
 		string 	"_Sell factor:"
-		pos		"805 90"
+		pos		"793 90"
 		font		f_small
 		align		ul
 	}
