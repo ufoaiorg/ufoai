@@ -335,6 +335,7 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 
 	ent = NULL;
 	level.activeTeam = -1;
+	ai_waypointList = NULL;
 
 	/* parse ents */
 	entnum = 0;
@@ -616,6 +617,8 @@ static void SP_civilian_start (edict_t *ent)
  * @brief QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
  * Way point for a civilian.
  * @sa SP_civilian_start
+ * @todo These waypoints should be placeable by the human player (e.g. spawn a special particle on the waypoint)
+ * to direct the civilians to a special location
  */
 static void SP_civilian_target (edict_t *ent)
 {
@@ -624,6 +627,9 @@ static void SP_civilian_target (edict_t *ent)
 	ent->classname = "civtarget";
 	ent->type = ET_CIVILIANTARGET;
 	ent->fieldSize = ACTOR_SIZE_NORMAL; /* to let the grid fall function work */
+
+	/* add the edict to the list of known waypoints */
+	G_AddToWayPointList(ent);
 
 	/* fall to ground */
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
@@ -735,6 +741,12 @@ static void SP_misc_mission (edict_t *ent)
 
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
+
+	if (!ent->HP && !ent->time) {
+		G_FreeEdict(ent);
+		Com_Printf("misc_mission given with no objective\n");
+		return;
+	}
 
 	/* think function values */
 	ent->think = Think_Mission;

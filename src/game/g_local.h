@@ -341,6 +341,8 @@ qboolean G_ReactToMove(edict_t *target, qboolean mock);
 void G_ReactToEndTurn(void);
 
 /* g_ai.c */
+extern edict_t *ai_waypointList;
+void G_AddToWayPointList(edict_t *ent);
 void AI_Run(void);
 void AI_ActorThink(player_t * player, edict_t * ent);
 player_t *AI_CreatePlayer(int team);

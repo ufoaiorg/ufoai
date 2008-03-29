@@ -150,9 +150,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	/* see if we are very well visible by a reacting enemy */
 	/* @todo: this is worthless now; need to check all squares along our way! */
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && check->type == ET_ACTOR && ent != check
+		if (check->inuse && G_IsLivingActor(check) && ent != check
 			 && (check->team != ent->team || ent->state & STATE_INSANE)
-			 && !(check->state & STATE_DEAD)
 			 /* also check if we are in range of the weapon's primary mode */
 			 && check->state & STATE_REACTION) {
 			qboolean frustum = G_FrustumVis(check, ent->origin);
@@ -225,9 +224,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			if (shots) {
 				/* search best target */
 				for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-					if (check->inuse && check->type == ET_ACTOR && ent != check
-						&& (check->team != ent->team || ent->state & STATE_INSANE)
-						&& !(check->state & STATE_DEAD)) {
+					if (check->inuse && G_IsLivingActor(check) && ent != check
+						&& (check->team != ent->team || ent->state & STATE_INSANE)) {
 
 						/* don't shoot civilians in mp */
 						if (check->team == TEAM_CIVILIAN && sv_maxclients->integer > 1 && !(ent->state & STATE_INSANE))
@@ -286,7 +284,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 					}
 
 				if (!aia->target) {
-					/* search best target none human target */
+					/* search best none human target */
 					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 						if (check->inuse && ((check->type == ET_DOOR && check->HP)
 							|| check->type == ET_BREAKABLE)) {
@@ -447,6 +445,28 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	return bestActionPoints;
 }
 
+edict_t *ai_waypointList;
+
+void G_AddToWayPointList (edict_t *ent)
+{
+	edict_t *e;
+	int i = 1;
+
+	if (!ai_waypointList)
+		ai_waypointList = ent;
+	else {
+		e = ai_waypointList;
+		while (e->groupChain) {
+			e = e->groupChain;
+			i++;
+		}
+		i++;
+		e->groupChain = ent;
+	}
+
+	Com_DPrintf(DEBuG_GAME, "%i waypoints in this map\n", i);
+}
+
 /**
  * @brief Searches the map for mission edicts and try to get there
  * @sa AI_PrepBestAction
@@ -466,18 +486,28 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 		int i = 0;
 		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
 		 * around until they came close */
-		while ((checkPoint = G_FindRadius(checkPoint, ent->origin, WAYPOINT_CIV_DIST, ET_CIVILIANTARGET)) != NULL) {
+		checkPoint = ai_waypointList;
+		while (checkPoint != NULL) {
+			if (!checkPoint->inuse)
+				continue;
+
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
-				i++;
-				Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
-				/* test for time and distance */
-				length = ent->TU - gi.MoveLength(gi.routingMap, checkPoint->pos, qtrue);
-				bestActionPoints = GUETE_MISSION_TARGET + length;
+				vec3_t distVec;
+				VectorSubtract(ent->origin, checkPoint->origin, distVec);
+				if (VectorLength(distVec) <= WAYPOINT_CIV_DIST) {
+					i++;
+					Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
+					/* test for time and distance */
+					length = ent->TU - gi.MoveLength(gi.routingMap, checkPoint->pos, qtrue);
+					bestActionPoints = GUETE_MISSION_TARGET + length;
 
-				ent->count = checkPoint->count;
-				VectorCopy(checkPoint->pos, aia->to);
+					ent->count = checkPoint->count;
+					VectorCopy(checkPoint->pos, aia->to);
+				} else
+					Com_DPrintf(DEBUG_GAME, "Waypoint too far away: %.2f, %i (entnum: %i)\n", VectorLength(distVec), WAYPOINT_CIV_DIST, ent->number);
 			}
+			checkPoint = checkPoint->groupChain;
 		}
 		/* reset the count value for this civilian to restart the search */
 		if (!i)
