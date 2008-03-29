@@ -464,7 +464,7 @@ void G_AddToWayPointList (edict_t *ent)
 		e->groupChain = ent;
 	}
 
-	Com_DPrintf(DEBuG_GAME, "%i waypoints in this map\n", i);
+	Com_DPrintf(DEBUG_GAME, "%i waypoints in this map\n", i);
 }
 
 /**
