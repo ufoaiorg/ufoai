@@ -94,7 +94,7 @@ menu aircraft
 	{
 		// no soldiers available
 		if "mn_equipsoldierstate == 2"
-		string	"_NA"
+		string	"_Assign Soldiers"
 		color	"0.5 0.5 0.5 1"
 		pos	"164 133"
 		font	f_menu
