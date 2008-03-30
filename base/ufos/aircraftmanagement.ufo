@@ -114,6 +114,7 @@ aircraft craft_inter_stiletto
 {
 	param {
 		speed		13
+		speed		20
 		shield		0
 		ecm		100
 		damage		30
@@ -158,6 +159,7 @@ aircraft craft_inter_saracen
 {
 	param {
 		speed		37
+		maxspeed	41
 		shield		0
 		ecm		100
 		damage		40
@@ -197,6 +199,7 @@ aircraft craft_inter_dragon
 {
 	param {
 		speed		30
+		maxspeed	37
 		shield		0
 		ecm		100
 		damage		40
@@ -236,6 +239,7 @@ aircraft craft_inter_stingray
 {
 	param {
 		speed		45
+		maxspeed	55
 		shield		3
 		ecm		100
 		damage		70
@@ -282,6 +286,7 @@ aircraft craft_ufo_harvester
 {
 	param {
 		speed		20
+		maxspeed	37
 		shield		3
 		ecm		100
 		damage		40
@@ -325,6 +330,7 @@ aircraft craft_ufo_carrier
 {
 	param {
 		speed		25
+		maxspeed	40
 		shield		0
 		ecm		100
 		damage		60
@@ -348,6 +354,7 @@ aircraft craft_ufo_supply
 {
 	param {
 		speed		15
+		maxspeed	27
 		shield		5
 		ecm		100
 		damage		50
@@ -370,6 +377,7 @@ aircraft craft_ufo_bomber
 {
 	param {
 		speed		25
+		maxspeed	30
 		shield		0
 		ecm			100
 		damage		40
@@ -399,6 +407,7 @@ aircraft craft_ufo_corrupter
 {
 	param {
 		speed		25
+		maxspeed	35
 		shield		0
 		ecm			100
 		damage		40
@@ -427,6 +436,7 @@ aircraft craft_ufo_scout
 {
 	param {
 		speed		15
+		maxspeed	27
 		shield		0
 		ecm		100
 		damage		30
@@ -448,6 +458,7 @@ aircraft craft_ufo_fighter
 {
 	param {
 		speed		17
+		maxspeed	32
 		shield		0
 		ecm		100
 		damage		80
