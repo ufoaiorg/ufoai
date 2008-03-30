@@ -516,6 +516,7 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
 {
 	switch (stat) {
 	case AIR_STATS_SPEED:
+	case AIR_STATS_MAXSPEED:
 		/* Convert into km/h, and round this value */
 		return 10 * (int) (111.2 * value / 10.0f);
 	case AIR_STATS_FUELSIZE:
@@ -1181,6 +1182,7 @@ static const char *air_position_strings[AIR_POSITIONS_MAX] = {
 /** @brief Valid aircraft parameter definitions from script files. */
 static const value_t aircraft_param_vals[] = {
 	{"speed", V_INT, offsetof(aircraft_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"maxspeed", V_INT, offsetof(aircraft_t, stats[AIR_STATS_MAXSPEED]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"shield", V_INT, offsetof(aircraft_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"ecm", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"damage", V_INT, offsetof(aircraft_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},

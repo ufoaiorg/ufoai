@@ -186,7 +186,10 @@ static const char* CL_AircraftStatToName (int stat)
 {
 	switch (stat) {
 	case AIR_STATS_SPEED:
-		return _("Speed");
+		return _("Cruising speed");
+		break;
+	case AIR_STATS_MAXSPEED:
+		return _("Maximum speed");
 		break;
 	case AIR_STATS_SHIELD:
 		return _("Armour");
@@ -642,6 +645,11 @@ void UP_AircraftDescription (const technology_t* t)
 			for (i = 0; i < AIR_STATS_MAX; i++) {
 				switch (i) {
 				case AIR_STATS_SPEED:
+					/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
+					Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
+						CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
+					break;
+				case AIR_STATS_MAXSPEED:
 					/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
 					Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
 						CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));

@@ -15,7 +15,7 @@
 //
 //	--vv-- Parameters which can get influenced by craft equipement ("craftitem"). --vv--
 //	speed - The speed of the aircraft, which tells how fast the aircraft is.
-//		to convert in km/h, multiply speed by pi / 180 * radius_of_earth = 111
+//		to convert in km/h, multiply speed by 111 (= pi / 180 * radius_of_earth)
 //	shield - The parameter of aircraft shield, which tells aircraft's protection.
 //	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy (in percent).
 //	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
@@ -75,6 +75,7 @@ aircraft craft_drop_firebird
 {
 	param {
 		speed		7
+		maxspeed	10
 		shield		0
 		ecm			100
 		damage		50
@@ -565,6 +566,7 @@ craftitem craft_weapon_tr20
 	buytype		craftitem
 
 	speed		.9
+	maxspeed	.9
 }
 
 craftitem craft_ammo_tr20
@@ -596,6 +598,7 @@ craftitem craft_weapon_particle_beam
 
 	wdamage		25
 	speed		0.8
+	maxspeed	0.8
 	wrange		5
 }
 
@@ -620,6 +623,7 @@ craftitem craft_el_fuelpod
 
 	fuelsize	1.3
 	speed		0.9
+	maxspeed	0.9
 }
 
 craftitem craft_shield_polymer
@@ -632,6 +636,7 @@ craftitem craft_shield_polymer
 
 	shield		+5
 	speed		0.9
+	maxspeed	0.9
 }
 
 craftitem craft_shield_plating
@@ -644,6 +649,7 @@ craftitem craft_shield_plating
 
 	shield		+10
 	speed		0.8
+	maxspeed	0.8
 }
 
 craftitem craft_alien_astrogation
