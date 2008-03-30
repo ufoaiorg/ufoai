@@ -1540,10 +1540,9 @@ static void TR_TransferClose_f (void)
 qboolean TR_Save (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
-	transfer_t *transfer;
 
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		transfer = &gd.alltransfers[i];
+		const transfer_t *transfer = &gd.alltransfers[i];
 		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
 			MSG_WriteByte(sb, transfer->itemAmount[j]);
 		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
@@ -1552,12 +1551,13 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 		}
 		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)
-				MSG_WriteShort(sb, transfer->trEmployees[j][k] ? transfer->trEmployees[j][k]->idx : -1);
+				MSG_WriteShort(sb, (transfer->trEmployees[j][k] ? transfer->trEmployees[j][k]->idx : -1));
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
 			MSG_WriteShort(sb, transfer->aircraftArray[j]);
-		MSG_WriteByte(sb, transfer->destBase ? transfer->destBase->idx : BYTES_NONE);
-		MSG_WriteShort(sb, transfer->srcBase ? transfer->srcBase->idx : -1);	/** @todo Could get < 0 at some point in the past, but is not used anymore. -> byte */
+
+		MSG_WriteByte(sb, (transfer->destBase ? transfer->destBase->idx : BYTES_NONE));
+		MSG_WriteByte(sb, (transfer->srcBase ? transfer->srcBase->idx : BYTES_NONE));
 		MSG_WriteByte(sb, transfer->active);
 		MSG_WriteByte(sb, transfer->hasItems);
 		MSG_WriteByte(sb, transfer->hasEmployees);
@@ -1578,8 +1578,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
 	transfer_t *transfer;
-	int emplIdx, srcBase;
-	byte destBase;
+	byte destBase, srcBase;
 
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
 		transfer = &gd.alltransfers[i];
@@ -1591,19 +1590,19 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		}
 		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
-				emplIdx = MSG_ReadShort(sb);
-				transfer->trEmployees[j][k] = (emplIdx >= 0) ? &gd.employees[j][MSG_ReadShort(sb)] : NULL;
+				const int emplIdx = MSG_ReadShort(sb);
+				transfer->trEmployees[j][k] = ((emplIdx >= 0) ? &gd.employees[j][emplIdx] : NULL);
 				/* Restore transfer flag if an employee is currently in progress. */
-				gd.employees[j][MSG_ReadShort(sb)].transfer = qtrue;
+				gd.employees[j][emplIdx].transfer = qtrue;
 			}
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
 			transfer->aircraftArray[j] = MSG_ReadShort(sb);
 		assert(gd.numBases);
 		destBase = MSG_ReadByte(sb);
-		transfer->destBase = (destBase != BYTES_NONE) ? B_GetBase(destBase) : NULL;
-		srcBase = MSG_ReadShort(sb);
-		transfer->srcBase = (srcBase >= 0) ? B_GetBase(srcBase) : NULL;
+		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBase(destBase) : NULL);
+		srcBase = MSG_ReadByte(sb);
+		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBase(srcBase) : NULL);
 		transfer->active = MSG_ReadByte(sb);
 		transfer->hasItems = MSG_ReadByte(sb);
 		transfer->hasEmployees = MSG_ReadByte(sb);
