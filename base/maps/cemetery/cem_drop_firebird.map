@@ -778,12 +778,12 @@
 }
 // brush 86
 {
-( 628 244 12 ) ( 608 244 12 ) ( 608 204 12 ) tex_material/c_yellow 4 8 90 0.5 0.5 0 128 0
-( 628 244 28 ) ( 628 204 28 ) ( 608 204 32 ) tex_material/c_yellow 4 8 90 0.5 0.5 0 128 0
-( 628 220 28 ) ( 628 220 12 ) ( 608 204 12 ) tex_material/c_yellow 4 8 90 0.5 0.5 0 128 0
-( 628 220 12 ) ( 628 220 28 ) ( 628 232 28 ) tex_material/c_yellow 4 8 90 0.5 0.5 0 128 0
-( 628 232 12 ) ( 628 232 28 ) ( 608 244 32 ) tex_material/c_yellow 4 8 90 0.5 0.5 0 128 0
-( 608 244 56 ) ( 608 204 56 ) ( 608 204 4 ) tex_material/c_yellow 4 8 90 0.5 0.5 0 128 0
+( 628 244 12 ) ( 608 244 12 ) ( 608 204 12 ) tex_common/nodraw 4 8 90 0.5 0.5 0 128 0
+( 628 244 28 ) ( 628 204 28 ) ( 608 204 32 ) tex_common/nodraw 4 8 90 0.5 0.5 0 128 0
+( 628 220 28 ) ( 628 220 12 ) ( 608 204 12 ) tex_common/nodraw 4 8 90 0.5 0.5 0 128 0
+( 628 220 12 ) ( 628 220 28 ) ( 628 232 28 ) tex_common/nodraw 4 8 90 0.5 0.5 0 128 0
+( 628 232 12 ) ( 628 232 28 ) ( 608 244 32 ) tex_common/nodraw 4 8 90 0.5 0.5 0 128 0
+( 608 244 56 ) ( 608 204 56 ) ( 608 204 4 ) tex_common/nodraw 4 8 90 0.5 0.5 0 128 0
 }
 // brush 87
 {
@@ -1137,7 +1137,7 @@
 "classname" "misc_model"
 "model" "models/aircraft/drop_firebird/firebird_glass.md2"
 "origin" "384 224 36"
-"spawnflags" "254"
+"spawnflags" "255"
 "angle" "-180"
 }
 // entity 6
