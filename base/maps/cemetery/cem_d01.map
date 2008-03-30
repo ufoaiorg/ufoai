@@ -4,31 +4,22 @@
 "classname" "worldspawn"
 // brush 0
 {
-( 256 256 60 ) ( 256 0 60 ) ( 0 256 60 ) tex_nature/dirt001 0 128 0 0.5 0.5
-( 256 256 64 ) ( 0 256 64 ) ( 256 256 -64 ) tex_common/nodraw 0 0 0 0.5 0.5
-( 256 256 64 ) ( 256 256 -64 ) ( 256 0 64 ) tex_common/nodraw 0 0 0 0.5 0.5
-( 0 0 0 ) ( 256 0 0 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.5 0.5
-( 0 0 -64 ) ( 0 0 64 ) ( 256 0 -64 ) tex_common/nodraw 0 0 0 0.5 0.5
-( 0 0 -64 ) ( 0 256 -64 ) ( 0 0 64 ) tex_common/nodraw 0 0 0 0.5 0.5
-}
-// brush 1
-{
-( 256 24 68 ) ( 0 24 68 ) ( 256 280 68 ) tex_nature/grass004 0 384 0 0.5 0.5 65024 0 0
-( 256 0 320 ) ( 256 256 320 ) ( 256 0 64 ) tex_common/nodraw 0 0 0 0.5 0.5 65024 0 0
-( 184 0 320 ) ( 184 0 64 ) ( -72 0 320 ) tex_common/nodraw 0 0 0 0.5 0.5 65024 0 0
-( 0 256 60 ) ( 0 0 60 ) ( 256 256 60 ) tex_common/nodraw 0 0 0 0.5 0.5 65024 0 0
-( 0 256 64 ) ( 0 256 320 ) ( 0 0 64 ) tex_common/nodraw 0 0 0 0.5 0.5 65024 0 0
-( 0 256 64 ) ( 256 256 64 ) ( 0 256 320 ) tex_common/nodraw 0 0 0 0.5 0.5 65024 0 0
+( 256 24 4 ) ( 0 24 4 ) ( 256 280 4 ) tex_nature/grass004 0 384 0 0.5 0.5 65280 0 0
+( 256 0 256 ) ( 256 256 256 ) ( 256 0 0 ) tex_common/nodraw 0 -0 0 0.5 0.5 65280 0 0
+( 184 0 256 ) ( 184 0 0 ) ( -72 0 256 ) tex_common/nodraw 0 -0 0 0.5 0.5 65280 0 0
+( 0 256 -4 ) ( 0 0 -4 ) ( 256 256 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
+( 0 256 0 ) ( 0 256 256 ) ( 0 0 0 ) tex_common/nodraw 0 -0 0 0.5 0.5 65280 0 0
+( 0 256 0 ) ( 256 256 0 ) ( 0 256 256 ) tex_common/nodraw 0 -0 0 0.5 0.5 65280 0 0
 }
 }
 // entity 1
 {
 "classname" "info_civilian_start"
-"origin" "208 144 96"
+"origin" "208 144 32"
 }
 // entity 2
 {
 "classname" "info_alien_start"
-"origin" "48 112 96"
+"origin" "48 112 32"
 "angle" "180"
 }
