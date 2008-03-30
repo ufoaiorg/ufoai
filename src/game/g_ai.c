@@ -29,7 +29,7 @@ typedef struct {
 	pos3_t to;			/**< grid pos to walk to */
 	pos3_t stop;		/**< grid pos to stop at (e.g. hiding spots) */
 	byte mode;			/**< shoot_types_t */
-	byte shots;			/**< how many shoots can this actor do */
+	byte shots;			/**< how many shoots can this actor do - only set this if the target is an actor */
 	edict_t *target;	/**< the target edict */
 	const fireDef_t *fd;/**< the firemode to use for shooting */
 	int z_align;		/**< the z-align for every shoot */
@@ -89,7 +89,7 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 #define RUN_AWAY_DIST		160
 #define WAYPOINT_CIV_DIST	768
 
-#define GUETE_MISSION_TARGET	40
+#define GUETE_MISSION_TARGET	60
 
 #define AI_ACTION_NOTHING_FOUND -10000.0
 
@@ -492,9 +492,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
-				vec3_t distVec;
-				VectorSubtract(ent->origin, checkPoint->origin, distVec);
-				if (VectorLength(distVec) <= WAYPOINT_CIV_DIST) {
+				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
 					i++;
 					Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
 					/* test for time and distance */
@@ -503,8 +501,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 
 					ent->count = checkPoint->count;
 					VectorCopy(checkPoint->pos, aia->to);
-				} else
-					Com_DPrintf(DEBUG_GAME, "Waypoint too far away: %.2f, %i (entnum: %i)\n", VectorLength(distVec), WAYPOINT_CIV_DIST, ent->number);
+				}
 			}
 			checkPoint = checkPoint->groupChain;
 		}
