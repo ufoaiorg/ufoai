@@ -89,6 +89,7 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 #define RUN_AWAY_DIST		160
 #define WAYPOINT_CIV_DIST	768
 
+#define GUETE_MISSION_OPPONENT_TARGET	50
 #define GUETE_MISSION_TARGET	60
 
 #define AI_ACTION_NOTHING_FOUND -10000.0
@@ -476,7 +477,9 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 {
 	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
 
+	/* reset any previous given action set */
 	memset(aia, 0, sizeof(*aia));
+
 	switch (ent->team) {
 	case TEAM_CIVILIAN:
 	{
@@ -516,11 +519,15 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 		int i;
 		/* search for a mission edict */
 		for (i = 0, mission = g_edicts; i < globals.num_edicts; i++, mission++)
-			if (mission->inuse && mission->type == ET_MISSION && player->pers.team == mission->team) {
+			if (mission->inuse && mission->type == ET_MISSION) {
 				VectorCopy(mission->pos, aia->to);
 				aia->target = mission;
-				bestActionPoints = GUETE_MISSION_TARGET;
-				break;
+				if (player->pers.team == mission->team) {
+					bestActionPoints = GUETE_MISSION_TARGET;
+					break;
+				} else
+					/* try to prevent the phalanx from reaching their mission target */
+					bestActionPoints = GUETE_MISSION_OPPONENT_TARGET;
 			}
 
 		break;
