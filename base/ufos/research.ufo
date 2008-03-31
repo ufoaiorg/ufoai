@@ -3066,6 +3066,28 @@ tech rs_craft_drop_firebird
 	mdl_top		drop_firebird
 }
 
+tech rs_craft_drop_herakles
+{
+	type	craft
+	description {
+		default "_drop_herakles_txt"
+	}
+	// pre_description	"_drop_herakles_pre_txt"
+	up_chapter	crafts
+
+	// FIXME
+	require_OR {
+		tech rs_craft_ufo_scout
+		tech rs_craft_ufo_fighter
+	}
+
+	provides	craft_drop_herakles
+	time	3000
+	producetime	336 //Two weeks.
+
+	mdl_top		drop_herakles
+}
+
 tech rs_craft_inter_stiletto
 {
 	type	craft

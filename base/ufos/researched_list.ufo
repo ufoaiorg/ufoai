@@ -71,7 +71,7 @@ researched rslist_human
 	rs_skill_assault
 	rs_skill_sniper
 	rs_skill_explosive
-	
+
 	// CRAFTS
 	rs_craft_drop_firebird
 	rs_craft_inter_stiletto
@@ -89,7 +89,7 @@ researched rslist_human
 	// BASE EQUIPMENT
 	rs_base_AA51_launcher
 	rs_base_ammo_AA51
-	
+
 	// NEWS
 	news_init_political_situation
 	news_after_the_war
