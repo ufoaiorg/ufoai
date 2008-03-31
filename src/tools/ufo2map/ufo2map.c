@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bsp.h"
 #include "../../shared/shared.h"
 
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
@@ -64,6 +67,9 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 		} else if (!strcmp(argv[i], "-noshare")) {
 			Com_Printf("noshare = true\n");
 			config.noshare = qtrue;
+		} else if (!strcmp(argv[i], "-onlynewer")) {
+			Com_Printf("onlynewer = true\n");
+			config.onlynewer = qtrue;
 		} else if (!strcmp(argv[i], "-notjunc")) {
 			Com_Printf("notjunc = true\n");
 			config.notjunc = qtrue;
@@ -107,7 +113,7 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			Com_Printf("generateFootstepFile = false\n");
 		} else if (!strcmp(argv[i],"-nomaterial")) {
 			config.generateMaterialFile = qfalse;
-			Com_Printf("generateFootstepFile = false\n");
+			Com_Printf("generateMaterialFile = false\n");
 		} else if (!strcmp(argv[i], "-nofill")) {
 			Com_Printf("nofill = true\n");
 			config.nofill = qtrue;
@@ -266,6 +272,42 @@ static void U2M_SetDefaultConfigValues (void)
 	config.generateMaterialFile = qtrue;
 }
 
+static int CheckTimeDiff (const char *map, const char *bsp)
+{
+#ifdef HAVE_SYS_STAT_H
+	struct stat mapStat, bspStat;
+	if (stat(map, &mapStat) == -1)
+		return 0;
+	if (stat(bsp, &bspStat) == -1)
+		return 0;
+	if (difftime(mapStat.st_mtime, bspStat.st_mtime) < 0)
+		return 1;
+#else
+# ifdef _WIN32
+	FILETIME ftCreate, ftAccess, ftWriteMap, ftWriteBsp;
+	HANDLE hMapFile, hBspFile;
+	/* open the files */
+	hMapFile = CreateFile(map, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+	if (hMapFile == INVALID_HANDLE_VALUE)
+		return 0;
+	hBspFile = CreateFile(bsp, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+	if (hBspFile == INVALID_HANDLE_VALUE)
+		return 0;
+
+	if (!GetFileTime(hMapFile, &ftCreate, &ftAccess, &ftWriteMap))
+		return 0;
+
+	if (!GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp))
+		return 0;
+
+	if (CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1)
+		return 1;
+# endif
+#endif
+	/* not up-to-date - recompile */
+	return 0;
+}
+
 int main (int argc, char **argv)
 {
 	double begin, start, end;
@@ -345,6 +387,11 @@ int main (int argc, char **argv)
 	snprintf(out, sizeof(out), "%s.bsp", source);
 
 	Com_Printf("...map: '%s'\n...bsp: '%s'\n", name, out);
+
+	if (config.onlynewer && CheckTimeDiff(name, out)) {
+		Com_Printf("bsp file is up-to-date\n");
+		return 0;
+	}
 
 	/* if onlyents just grab the entites and resave */
 	if (config.onlyents) {

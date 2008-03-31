@@ -117,6 +117,8 @@ typedef struct mapConfig_s {
 	float direct_scale;
 	float entity_scale;
 
+	int onlynewer;	/**< only compile (update) the bsp if the map file is newer */
+
 	int compile_for_day;	/**< set this to 1 if you want to compile the day version of the lightmap */
 } mapConfig_t;
 
