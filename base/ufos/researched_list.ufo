@@ -75,6 +75,7 @@ researched rslist_human
 	// CRAFTS
 	rs_craft_drop_firebird
 	rs_craft_inter_stiletto
+	rs_craft_inter_saracen
 
 	// CRAFT EQUIPMENT
 	rs_craft_el_raven
