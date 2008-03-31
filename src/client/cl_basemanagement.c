@@ -824,7 +824,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 }
 
 /**
- * @brief We are doing the real destroy of a buliding here
+ * @brief We are doing the real destroy of a building here
  * @sa B_BuildingDestroy
  * @sa B_NewBuilding
  */
@@ -1001,13 +1001,63 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	CL_GameTimeStop();
 }
 
+static void B_AddBuildingToBase (building_t *building, base_t *base, building_t *template)
+{
+	*building = *template;
+	/* self-link to building-list in base */
+	building->idx = gd.numBuildings[base->idx];
+	gd.numBuildings[base->idx]++;
+	/* Link to the base. */
+	building->base = base;
+	base->buildingCurrent = building;
+	/* fake a click to basemap */
+	B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
+	B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+	Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, building->id, building->pos[0], building->pos[1]);
+
+	/* A few more things for first base.
+	 * @todo: this shouldn't be hard coded, but in *.ufo files */
+	if (gd.numBases == 1) {
+		/* build a second quarter */
+		if (building->buildingType == B_QUARTERS) {
+			building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+			*building = *template;
+			/* self-link to building-list in base */
+			building->idx = gd.numBuildings[base->idx];
+			gd.numBuildings[base->idx]++;
+			/* Link to the base. */
+			building->base = base;
+			/* Build second quarter just above first one */
+			Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, building->id, building->pos[0] - 1, building->pos[1]);
+			base->buildingCurrent = building;
+			/* fake a click to basemap */
+			B_SetBuildingByClick((int) building->pos[0] - 1, (int) building->pos[1]);
+			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+		}
+	}
+
+	/* now call the onconstruct trigger */
+	if (*building->onConstruct) {
+		base->buildingCurrent = building;
+		Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
+		Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
+	}
+
+	/* update the building-list */
+	B_BuildingInit(base);
+
+	if (cl_start_employees->integer)
+		B_HireForBuilding(base, building, -1);
+
+}
+
 /**
  * @brief Setup new base
  * @sa CL_NewBase
  */
 void B_SetUpBase (base_t* base)
 {
-	int i, j;
+	int i;
 	building_t *building;
 	const int newBaseAlienInterest = 1.0f;
 
@@ -1029,57 +1079,24 @@ void B_SetUpBase (base_t* base)
 	if (cl_start_buildings->integer) {
 		for (i = 0; i < gd.numBuildingTemplates; i++) {
 			if (gd.buildingTemplates[i].autobuild
-		 	 || (gd.numBases == 1 && gd.buildingTemplates[i].firstbase)) {
+			 || (gd.numBases == 1 && gd.buildingTemplates[i].firstbase)) {
 				/* @todo: implement check for moreThanOne */
 				building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-				*building = gd.buildingTemplates[i];
-				/* self-link to building-list in base */
-				building->idx = gd.numBuildings[base->idx];
-				gd.numBuildings[base->idx]++;
-				/* Link to the base. */
-				building->base = base;
-				Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0], building->pos[1]);
-				base->buildingCurrent = building;
-				/* fake a click to basemap */
-				B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
-				B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-
-				/* A few more things for first base.
-				 * @todo: this shouldn't be hard coded, but in *.ufo files */
-				if (gd.numBases == 1) {
-					/* build a second quarter */
-					if (building->buildingType == B_QUARTERS) {
-						building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-						*building = gd.buildingTemplates[i];
-						/* self-link to building-list in base */
-						building->idx = gd.numBuildings[base->idx];
-						gd.numBuildings[base->idx]++;
-						/* Link to the base. */
-						building->base = base;
-						/* Build second quarter just above first one */
-						Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0] - 1, building->pos[1]);
-						base->buildingCurrent = building;
-						/* fake a click to basemap */
-						B_SetBuildingByClick((int) building->pos[0] - 1, (int) building->pos[1]);
-						B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-					}
-				}
-
-				/* now call the onconstruct trigger */
-				if (*building->onConstruct) {
-					base->buildingCurrent = building;
-					Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
-					Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
-				}
-
-				/* update the building-list */
-				B_BuildingInit(base);
-
-				if (cl_start_employees->integer)
-					B_HireForBuilding(base, building, -1);
+				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i]);
+			}
+		}
+	} else {
+		/* set up at least one entrance */
+		for (i = 0; i < gd.numBuildingTemplates; i++) {
+			building = &gd.buildingTemplates[i];
+			if (building->buildingType == B_ENTRANCE) {
+				building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i]);
+				break;
 			}
 		}
 	}
+
 	/* if no autobuild, set up zero build time for the first base */
 	if (gd.numBases == 1 && !cl_start_buildings->integer)
 		ccs.instant_build = 1;
@@ -1089,7 +1106,7 @@ void B_SetUpBase (base_t* base)
 	base->buyfactor = 1;
 	/* the first base never has invalid fields */
 	if (base->idx > 0) {
-		j = (int) (frand() * 3 + 1.5f);
+		const int j = (int) (frand() * 3 + 1.5f);
 		for (i = 0; i < j; i++) {
 			int *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE - 1)];
 			/* set this field to invalid if there is no building yet */
@@ -1103,7 +1120,7 @@ void B_SetUpBase (base_t* base)
 		B_SetBuildingStatus(base, B_ENTRANCE, qtrue);
 	} else {
 		/* base can't start without an entrance, because this is where the aliens will arrive during base attack */
-		Com_Printf("B_SetUpBase()... A new base should have an entrance.\n");
+		Sys_Error("B_SetUpBase()... A new base should have an entrance.");
 	}
 
 	/* Add aircraft to the first base */
@@ -1514,7 +1531,7 @@ static void B_BuildingInit (base_t* base)
 
 	for (i = 0; i < gd.numBuildingTemplates; i++) {
 		tpl = &gd.buildingTemplates[i];
-		/*make an entry in list for this building */
+		/* make an entry in list for this building */
 
 		if (tpl->visible) {
 			numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
@@ -1694,7 +1711,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 	if (!link) {
 		for (i = 0; i < gd.numBuildingTemplates; i++) {
 			if (!Q_strcmp(gd.buildingTemplates[i].id, name)) {
-				Com_Printf("B_ParseBuildings: Second buliding with same name found (%s) - second ignored\n", name);
+				Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
 				return;
 			}
 		}
@@ -3096,7 +3113,7 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
 	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
-	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a buliding (select via right click in baseview first)");
+	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
 	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, NULL);
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, NULL);
