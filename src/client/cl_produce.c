@@ -566,8 +566,10 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 	if (selectedQueueItem) {
 		assert(selectedIndex != NONE);
 		od = gd.productions[base->idx].items[selectedIndex].item;
-	} else {
+	} else if (selectedIndex != NONE) {
 		od = &csi.ods[selectedIndex];
+	} else {
+		od = NULL;
 	}
 
 	if (!disassembly) {
