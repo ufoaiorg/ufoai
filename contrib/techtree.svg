@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.9409095"
-     inkscape:cx="1044.4885"
-     inkscape:cy="360.43907"
+     inkscape:cx="366.21699"
+     inkscape:cy="450.40238"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      width="40cm"
@@ -970,7 +970,8 @@
          d="M 205.56605 193.94016 A 17.551401 16.28871 0 1 1  170.46325,193.94016 A 17.551401 16.28871 0 1 1  205.56605 193.94016 z"
          sodipodi:rx="17.551401"
          id="path18405"
-         sodipodi:ry="16.28871" />
+         sodipodi:ry="16.28871"
+         inkscape:connector-avoid="true" />
       <text
          xml:space="preserve"
          style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
@@ -989,7 +990,8 @@
        x="250"
        height="24.461235"
        width="64.45829"
-       id="rect18411" />
+       id="rect18411"
+       inkscape:connector-avoid="true" />
     <text
        xml:space="preserve"
        style="font-size:6px;text-align:center;text-anchor:middle"
@@ -1947,7 +1949,7 @@
        inkscape:connection-end="#rect18265" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#4677be;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Mend);stroke-opacity:1;display:inline"
-       d="M 530,249.09448 L 530,304.09448 L 910.2977,301.28739"
+       d="M 530,249.09448 L 530,304.09448 L 910,304.09448"
        id="path10530"
        inkscape:connector-type="polyline"
        inkscape:connection-start="#rect17887"
@@ -2930,5 +2932,48 @@
        id="path4601"
        inkscape:connection-start="#rect18305"
        inkscape:connection-end="#rect18307" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4677be;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1;display:inline"
+       d="M 442.22915,638.82703 L 442.22915,653.82317"
+       inkscape:connector-type="polyline"
+       id="path4603"
+       inkscape:connection-start="#rect17955"
+       inkscape:connection-end="#rect17957" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4677be;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1;display:inline"
+       d="M 602.22915,438.82703 L 602.22915,453.82317"
+       inkscape:connector-type="polyline"
+       id="path4605"
+       inkscape:connection-start="#rect17961"
+       inkscape:connection-end="#rect17945" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4677be;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1;display:inline"
+       d="M 714.7296,426.54397 L 729.72869,426.64498"
+       inkscape:connector-type="polyline"
+       id="path4607"
+       inkscape:connection-start="#rect17963"
+       inkscape:connection-end="#rect17965" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4677be;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1;display:inline"
+       d="M 682.22915,438.82703 L 682.22915,453.82317"
+       inkscape:connector-type="polyline"
+       id="path4609"
+       inkscape:connection-start="#rect17963"
+       inkscape:connection-end="#rect17959" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4677be;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1;display:inline"
+       d="M 336.17861,250.82703 L 293.97361,271.08166"
+       inkscape:connector-type="polyline"
+       id="path4611"
+       inkscape:connection-start="#rect17883"
+       inkscape:connection-end="#g18403" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4677be;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1;display:inline"
+       d="M 221.10488,210.82703 L 220,329.09448 L 335,329.09448 L 350,339.09448"
+       inkscape:connector-type="polyline"
+       id="path4613"
+       inkscape:connection-start="#rect17857"
+       inkscape:connection-end="#path17993"
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>
