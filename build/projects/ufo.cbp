@@ -8,7 +8,7 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="..\..\ufo.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -32,7 +32,7 @@
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="..\..\ufo.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -61,7 +61,7 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="..\..\ufo.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -78,7 +78,7 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="..\..\ufo.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -144,6 +144,7 @@
 		<Unit filename="..\..\src\client\cl_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cl_campaign.h" />
 		<Unit filename="..\..\src\client\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -241,6 +242,9 @@
 		<Unit filename="..\..\src\client\cl_shader.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cl_sound.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cl_sound.h" />
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
@@ -269,65 +273,62 @@
 		</Unit>
 		<Unit filename="..\..\src\client\client.h" />
 		<Unit filename="..\..\src\client\console.h" />
+		<Unit filename="..\..\src\client\menu\m_actions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_draw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_font.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_input.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_inventory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_messages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_bar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_checkbox.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_model.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_selectbox.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_text.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_nodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_popup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_tooltip.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\os_types.h" />
 		<Unit filename="..\..\src\client\ref.h" />
-		<Unit filename="..\..\src\client\cl_sound.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_actions.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_draw.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_font.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_input.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_inventory.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_messages.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_nodes.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_node_bar.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_node_image.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_node_checkbox.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_node_model.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_node_selectbox.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_node_string.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_node_text.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_parse.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_popup.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client/menu/m_tooltip.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\vid.h" />
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
@@ -337,9 +338,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmodel.h" />
-		<Unit filename="..\..\src\common\pqueue.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\common\common.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -357,6 +355,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\filesys.h" />
+		<Unit filename="..\..\src\common\http.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\http.h" />
 		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -373,10 +375,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\msg.h" />
-		<Unit filename="..\..\src\common\http.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\common\http.h" />
 		<Unit filename="..\..\src\common\net.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -385,6 +383,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\netpack.h" />
+		<Unit filename="..\..\src\common\pqueue.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\common\qfiles.h" />
 		<Unit filename="..\..\src\common\scripts.c">
 			<Option compilerVar="CC" />
@@ -458,9 +459,6 @@
 		<Unit filename="..\..\src\renderer\qgl.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\r_mesh_anim.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\renderer\r_bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -489,6 +487,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_mesh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_mesh_anim.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_misc.c">
@@ -521,10 +522,10 @@
 		<Unit filename="..\..\src\renderer\r_shader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\r_state.c">
+		<Unit filename="..\..\src\renderer\r_sphere.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\r_sphere.c">
+		<Unit filename="..\..\src\renderer\r_state.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_surface.c">
@@ -556,14 +557,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\byte.h" />
-		<Unit filename="..\..\src\shared\mathlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\infostring.h" />
+		<Unit filename="..\..\src\shared\mathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
