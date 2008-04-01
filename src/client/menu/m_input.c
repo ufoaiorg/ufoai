@@ -204,8 +204,12 @@ static void MN_ModelClick (menuNode_t * node)
 
 /**
  * @brief Calls the script command for a text node that is clickable
- * @note The node must have the click parameter
+ * @note The node must have the click parameter in it's menu definition or there
+ * must be a console command that has the same name as the node has + _click
+ * attached.
  * @sa MN_TextRightClick
+ * @todo Check for scrollbars and when one would click them scroll according to
+ * mouse movement, maybe implement a new mousespace (MS_* - @sa cl_input.c)
  */
 static void MN_TextClick (menuNode_t * node, int mouseOver)
 {

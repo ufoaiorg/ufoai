@@ -1164,19 +1164,22 @@ static void IN_Parse (void)
 		return;
 
 	case MS_SHIFTMAP:
-		/* shift the map */
-		ccs.center[0] -= (float) (mousePosX - oldMousePosX) / (ccs.mapSize[0] * ccs.zoom);
-		ccs.center[1] -= (float) (mousePosY - oldMousePosY) / (ccs.mapSize[1] * ccs.zoom);
-		for (i = 0; i < 2; i++) {
-			while (ccs.center[i] < 0.0)
-				ccs.center[i] += 1.0;
-			while (ccs.center[i] > 1.0)
-				ccs.center[i] -= 1.0;
+		{
+			const float zoom = 0.5 / ccs.zoom;
+			/* shift the map */
+			ccs.center[0] -= (float) (mousePosX - oldMousePosX) / (ccs.mapSize[0] * ccs.zoom);
+			ccs.center[1] -= (float) (mousePosY - oldMousePosY) / (ccs.mapSize[1] * ccs.zoom);
+			for (i = 0; i < 2; i++) {
+				while (ccs.center[i] < 0.0)
+					ccs.center[i] += 1.0;
+				while (ccs.center[i] > 1.0)
+					ccs.center[i] -= 1.0;
+			}
+			if (ccs.center[1] < zoom)
+				ccs.center[1] = zoom;
+			if (ccs.center[1] > 1.0 - zoom)
+				ccs.center[1] = 1.0 - zoom;
 		}
-		if (ccs.center[1] < 0.5 / ccs.zoom)
-			ccs.center[1] = 0.5 / ccs.zoom;
-		if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
-			ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
 		return;
 
 	case MS_SHIFT3DMAP:
@@ -1196,17 +1199,20 @@ static void IN_Parse (void)
 		return;
 
 	case MS_ZOOMMAP:
-		/* zoom the map */
-		ccs.zoom *= pow(0.995, mousePosY - oldMousePosY);
-		if (ccs.zoom < cl_mapzoommin->value)
-			ccs.zoom = cl_mapzoommin->value;
-		else if (ccs.zoom > cl_mapzoommax->value)
-			ccs.zoom = cl_mapzoommax->value;
+		{
+			const float zoom = 0.5 / ccs.zoom;
+			/* zoom the map */
+			ccs.zoom *= pow(0.995, mousePosY - oldMousePosY);
+			if (ccs.zoom < cl_mapzoommin->value)
+				ccs.zoom = cl_mapzoommin->value;
+			else if (ccs.zoom > cl_mapzoommax->value)
+				ccs.zoom = cl_mapzoommax->value;
 
-		if (ccs.center[1] < 0.5 / ccs.zoom)
-			ccs.center[1] = 0.5 / ccs.zoom;
-		if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
-			ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+			if (ccs.center[1] < zoom)
+				ccs.center[1] = zoom;
+			if (ccs.center[1] > 1.0 - zoom)
+				ccs.center[1] = 1.0 - zoom;
+		}
 		return;
 
 	case MS_DRAG:
