@@ -332,7 +332,7 @@ static void Cmd_Exec_f (void)
 	int len;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("exec <filename> : execute a script file\n");
+		Com_Printf("Usage: %s <filename> : execute a script file\n", Cmd_Argv(0));
 		return;
 	}
 
