@@ -1095,7 +1095,7 @@ void B_SetUpBase (base_t* base)
 	base->sellfactor = 5;
 	base->buyfactor = 1;
 
-	/* Create random blocked fields int he base.
+	/* Create random blocked fields in the base.
 	 * The first base never has blocked fields so we skip it. */
 	if (base->idx > 0) {
 		const int j = (int) (frand() * 3 + 1.5f);
@@ -3616,25 +3616,13 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
-				if (((saveFileHeader_t *)data)->version < 3) { /* <2.3 */
-					buildingIdx = MSG_ReadShort(sb);
-					b->map[k][l].building = NULL;
-					if (buildingIdx >= 0)
-						b->map[k][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
-					else if (buildingIdx == -2)	/* 2.2: #define BASE_INVALID_SPACE = -2*/
-						b->map[k][l].blocked = qtrue;
-
-					b->map[k][l].posX = MSG_ReadShort(sb);
-					b->map[k][l].posY = MSG_ReadShort(sb);
-				} else { /* 2.3+ */
-					buildingIdx = MSG_ReadShort(sb);
-					b->map[k][l].building = NULL;
-					if (buildingIdx >= 0)
-						b->map[k][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
-					b->map[k][l].blocked = MSG_ReadByte(sb);
-					b->map[k][l].posX = MSG_ReadShort(sb);
-					b->map[k][l].posY = MSG_ReadShort(sb);
-				}
+				buildingIdx = MSG_ReadShort(sb);
+				b->map[k][l].building = NULL;
+				if (buildingIdx >= 0)
+					b->map[k][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
+				b->map[k][l].blocked = MSG_ReadByte(sb);
+				b->map[k][l].posX = MSG_ReadShort(sb);
+				b->map[k][l].posY = MSG_ReadShort(sb);
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building_t *const building = &gd.buildings[i][k];
