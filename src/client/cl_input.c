@@ -1505,7 +1505,7 @@ void IN_EventEnqueue (int key, qboolean down)
  */
 void IN_Frame (void)
 {
-	int key = -1, mouse_buttonstate, p = 0;
+	int key = -1, mouse_buttonstate, p;
 	qboolean down;
 	SDL_Event event;
 
@@ -1533,10 +1533,8 @@ void IN_Frame (void)
 		}
 	}
 
-#if 1
 	if (oldMousePosX != mousePosX || oldMousePosY != mousePosY)
 		MN_FocusRemove();
-#endif
 
 	oldMousePosX = mousePosX;
 	oldMousePosY = mousePosY;

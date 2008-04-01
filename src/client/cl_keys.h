@@ -200,7 +200,7 @@ extern char *keybindings[K_KEY_SIZE];
 void Key_SetDest(int key_dest);
 void Key_Event(int key, qboolean down, unsigned time);
 void Key_Init(void);
-void Key_WriteBindings(const char* path);
+void Key_WriteBindings(const char* filename);
 const char* Key_GetBinding(const char *binding, keyBindSpace_t space);
 const char *Key_KeynumToString(int keynum);
 

@@ -2528,6 +2528,7 @@ void CL_Shutdown (void)
 	CL_HTTP_Cleanup();
 	Irc_Shutdown();
 	Con_SaveConsoleHistory(FS_Gamedir());
+	Key_WriteBindings("keys.cfg");
 	S_Shutdown();
 	R_Shutdown();
 	MN_Shutdown();
