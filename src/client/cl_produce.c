@@ -733,7 +733,7 @@ static inline void* PR_GetLISTPointerByIndex (countedLinkedList_t *list, int num
  */
 static void PR_ProductionListRightClick_f (void)
 {
-	int i, num, idx;
+	int num, idx;
 	objDef_t *od;
 	production_queue_t *queue;
 	const aircraft_t *aircraftSample;
@@ -801,7 +801,7 @@ static void PR_ProductionListRightClick_f (void)
  */
 static void PR_ProductionListClick_f (void)
 {
-	int i, num, idx;
+	int num, idx;
 	objDef_t *od;
 	aircraft_t *aircraftTemplate;
 	production_queue_t *queue;
