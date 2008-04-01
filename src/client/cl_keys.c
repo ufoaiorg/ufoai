@@ -44,7 +44,7 @@ char msg_buffer[MAXCMDLINE];
 size_t msg_bufferlen = 0;
 
 char *keybindings[K_KEY_SIZE];
-static char *menukeybindings[K_KEY_SIZE];
+char *menukeybindings[K_KEY_SIZE];
 static int keyshift[K_KEY_SIZE];				/* key to map to if shift held down in console */
 qboolean keydown[K_KEY_SIZE];
 

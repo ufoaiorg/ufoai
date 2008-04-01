@@ -196,6 +196,7 @@ extern size_t msg_bufferlen;
 extern char key_lines[MAXKEYLINES][MAXCMDLINE];
 extern int history_line;
 extern char *keybindings[K_KEY_SIZE];
+extern char *menukeybindings[K_KEY_SIZE];
 
 void Key_SetDest(int key_dest);
 void Key_Event(int key, qboolean down, unsigned time);

@@ -132,6 +132,9 @@ void Cbuf_InsertText (const char *text)
 	char *temp;
 	int templen;
 
+	if (!text || !*text)
+		return;
+
 	/* copy off any commands still remaining in the exec buffer */
 	templen = cmd_text.cursize;
 	if (templen) {
@@ -141,7 +144,6 @@ void Cbuf_InsertText (const char *text)
 	} else
 		temp = NULL;			/* shut up compiler */
 
-	/* add the entire text of the file */
 	Cbuf_AddText(text);
 
 	/* add the copied off data */
@@ -342,9 +344,11 @@ static void Cmd_Exec_f (void)
 	Com_Printf("execing %s\n", Cmd_Argv(1));
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
-	f2 = Mem_Alloc(len + 1);
+	f2 = Mem_Alloc(len + 2);
 	memcpy(f2, f, len);
-	f2[len] = 0;
+	/* make really sure that there is a newline */
+	f2[len] = '\n';
+	f2[len + 1] = 0;
 
 	Cbuf_InsertText(f2);
 
