@@ -39,12 +39,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 typedef struct production_s
 {
+	int idx; /**< Self reference in the production list. Mainly used for moving/deleting them. */
 	/**
 	 * @note Only one pointer is supposed to be set at any time.
 	 * @todo Make this a union
 	 */
-	const objDef_t *item;			/**< Item to be produced. */
-	const struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
+	objDef_t *item;			/**< Item to be produced. */
+	struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. @todo Is there any way to make this const without cl_produce.c to break?*/
 
 	signed int amount;	/**< How much are we producing. */
 	float percentDone;		/**< Fraction of the item which is already produced.
