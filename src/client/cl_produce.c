@@ -1346,6 +1346,7 @@ static void PR_ProductionIncrease_f (void)
 			else
 				amountTemp = base->storage.num[selectedDisassembly->asItem->idx];
 
+			prod = PR_QueueNew(base, queue, selectedDisassembly->asItem, NULL, amountTemp, qtrue);	/* Disassembling. */
 			/* Check if we can add more items. */
 			if (prod->amount + amountTemp > MAX_PRODUCTION_AMOUNT) {
 				if (MAX_PRODUCTION_AMOUNT - amountTemp >= 0) {
@@ -1355,9 +1356,6 @@ static void PR_ProductionIncrease_f (void)
 					return;
 				}
 			}
-
-			prod = PR_QueueNew(base, queue, selectedDisassembly->asItem, NULL, amountTemp, qtrue);	/* Disassembling. */
-
 		}
 
 		/** prod is NULL when queue limit is reached
