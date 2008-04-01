@@ -3616,13 +3616,9 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
-#if 0
-/** @todo activate me */
 				if (((saveFileHeader_t *)data)->version < 3) { /* <2.3 */
-#endif
 					buildingIdx = MSG_ReadShort(sb);
 					b->map[k][l].building = NULL;
-
 					if (buildingIdx >= 0)
 						b->map[k][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
 					else if (buildingIdx == -2)	/* 2.2: #define BASE_INVALID_SPACE = -2*/
@@ -3630,7 +3626,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 					b->map[k][l].posX = MSG_ReadShort(sb);
 					b->map[k][l].posY = MSG_ReadShort(sb);
-#if 0
 				} else { /* 2.3+ */
 					buildingIdx = MSG_ReadShort(sb);
 					b->map[k][l].building = NULL;
@@ -3640,7 +3635,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					b->map[k][l].posX = MSG_ReadShort(sb);
 					b->map[k][l].posY = MSG_ReadShort(sb);
 				}
-#endif
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building_t *const building = &gd.buildings[i][k];
