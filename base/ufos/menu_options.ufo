@@ -1119,32 +1119,6 @@ menu options_input
 	}
 
 	// ===================
-	// CAMERA ROTATE ACCEL
-	// ===================
-	string camrotaccel_str
-	{
-		string	"_Rotate Acceleration:"
-		pos		"520 220"
-	}
-	pic camrotaccel_rahmen
-	{
-		image	menu/bar_rahmen
-		pos		"659 225"
-	}
-	bar camrotaccel_bar
-	{
-		pos		"668 230"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar cl_camrotaccel"
-		min		50
-		max		1000
-		align	ul
-		mousefx	true
-		click	{ }
-	}
-
-	// ===================
 	// CAMERA MOVE ACCEL
 	// ===================
 	string cammoveaccel_str

@@ -345,7 +345,6 @@ const float MIN_ZOOM = 0.5;
 const float MAX_ZOOM = 32.0;
 
 static cvar_t *cl_camrotspeed;
-static cvar_t *cl_camrotaccel;
 static cvar_t *cl_cammovespeed;
 static cvar_t *cl_cammoveaccel;
 static cvar_t *cl_campitchmax;
@@ -684,7 +683,7 @@ static int lastAlien = 0;
  */
 static void CL_NextAlienVisibleFromActor_f (void)
 {
-	le_t *watcher; /** @todo make this a parameter for use in other fucntions? */
+	le_t *watcher; /** @todo make this a parameter for use in other functions? */
 	le_t *le;
 	int i;
 	trace_t tr;
@@ -869,10 +868,9 @@ static float CL_GetKeyMouseState (int dir)
 
 static void CL_CameraMoveFirstPerson (void)
 {
-	float rotation_speed;
-
-	rotation_speed =
+	const float rotation_speed =
 		(cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ((cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED) : MIN_CAMROT_SPEED;
+
 	/* look left */
 	if ((in_turnleft.state & 1) && ((cl.cam.angles[YAW] - selActor->angles[YAW]) < 90))
 		cl.cam.angles[YAW] += cls.frametime * rotation_speed;
@@ -957,24 +955,17 @@ static void CL_CameraMoveRemote (void)
 	static float sy, cy;
 	vec3_t g_forward, g_right, g_up;
 	vec3_t delta;
-	float rotspeed, rotaccel;
-	float movespeed, moveaccel;
 	int i;
 
 	/* get relevant variables */
-	rotspeed =
+	const float rotspeed =
 		(cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ((cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED) : MIN_CAMROT_SPEED;
-	rotaccel =
-		(cl_camrotaccel->value > MIN_CAMROT_ACCEL) ? ((cl_camrotaccel->value < MAX_CAMROT_ACCEL) ? cl_camrotaccel->value : MAX_CAMROT_ACCEL) : MIN_CAMROT_ACCEL;
-	movespeed =
-		(cl_cammovespeed->value >
-		MIN_CAMMOVE_SPEED) ? ((cl_cammovespeed->value < MAX_CAMMOVE_SPEED) ? cl_cammovespeed->value : MAX_CAMMOVE_SPEED) : MIN_CAMMOVE_SPEED;
-	moveaccel =
-		(cl_cammoveaccel->value >
-		MIN_CAMMOVE_ACCEL) ? ((cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value : MAX_CAMMOVE_ACCEL) : MIN_CAMMOVE_ACCEL;
-
-	movespeed /= cl.cam.zoom;
-	moveaccel /= cl.cam.zoom;
+	const float movespeed =
+		(cl_cammovespeed->value > MIN_CAMMOVE_SPEED) ?
+		((cl_cammovespeed->value < MAX_CAMMOVE_SPEED) ? cl_cammovespeed->value / cl.cam.zoom : MAX_CAMMOVE_SPEED / cl.cam.zoom) : MIN_CAMMOVE_SPEED / cl.cam.zoom;
+	const float moveaccel =
+		(cl_cammoveaccel->value > MIN_CAMMOVE_ACCEL) ?
+		((cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value / cl.cam.zoom : MAX_CAMMOVE_ACCEL / cl.cam.zoom) : MIN_CAMMOVE_ACCEL / cl.cam.zoom;
 
 	/* calculate camera omega */
 	/* stop acceleration */
@@ -1662,7 +1653,6 @@ void IN_Init (void)
 	/* cvars */
 	in_debug = Cvar_Get("in_debug", "0", 0, "Show input key codes on game console");
 	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, NULL);
-	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", CVAR_ARCHIVE, NULL);
 	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", CVAR_ARCHIVE, NULL);
 	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", CVAR_ARCHIVE, NULL);
 	cl_campitchmax = Cvar_Get("cl_campitchmax", "90", 0, "Max camera pitch - over 90 presents apparent mouse inversion");
