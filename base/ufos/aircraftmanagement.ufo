@@ -669,7 +669,7 @@ craftitem craft_el_fuelpod
 	price		4000
 	buytype		craftitem
 
-	fuelsize	1.3
+	fuelsize	7000
 	speed		0.9
 	maxspeed	0.9
 }
