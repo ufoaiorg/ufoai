@@ -3250,13 +3250,13 @@ typedef struct gameLapse_s {
 
 /** @brief The possible geoscape time intervalls */
 static const gameLapse_t lapse[NUM_TIMELAPSE] = {
-	{"stopped", 0},
-	{"5 sec", 5},
-	{"5 mins", 5 * 60},
-	{"1 hour", 60 * 60},
-	{"12 hour", 12 * 3600},
-	{"1 day", 24 * 3600},
-	{"5 days", 5 * 24 * 3600}
+	{N_("stopped"), 0},
+	{N_("5 sec"), 5},
+	{N_("5 mins"), 5 * 60},
+	{N_("1 hour"), 60 * 60},
+	{N_("12 hour"), 12 * 3600},
+	{N_("1 day"), 24 * 3600},
+	{N_("5 days"), 5 * 24 * 3600}
 };
 
 static int gameLapse;
