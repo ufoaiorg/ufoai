@@ -244,10 +244,11 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
 
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++)
-			if (baseCurrent->map[row][col] > BASE_FREESLOT && x >= baseCurrent->posX[row][col]
-				&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
-				&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
-				entry = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
+			if (baseCurrent->map[row][col].building && x >= baseCurrent->map[row][col].posX
+				&& x < baseCurrent->map[row][col].posX + node->size[0] / BASE_SIZE && y >= baseCurrent->map[row][col].posY
+				&& y < baseCurrent->map[row][col].posY + node->size[1] / BASE_SIZE) {
+				assert(!baseCurrent->map[row][col].blocked);
+				entry = baseCurrent->map[row][col].building;
 				if (!entry)
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
 				B_MarkBuildingDestroy(baseCurrent, entry);

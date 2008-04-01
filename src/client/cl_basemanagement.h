@@ -47,10 +47,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_EMPLOYEES_IN_BUILDING 64
 
-#define BASE_FREESLOT		-1
-/* you can't place buildings here */
-#define BASE_INVALID_SPACE	-2
-
 /**
  * @brief Possible base states
  * @note: Don't change the order or you have to change the basemenu scriptfiles, too
@@ -182,11 +178,19 @@ typedef struct building_s {
 	int capacity;		/**< Capacity of this building (used in calculate base capacities). */
 } building_t;
 
+typedef struct baseBuildingTile_s {
+	building_t *building;
+	qboolean	blocked;	/**< qtrue if the tile is usable for buildings otherwise it's qfalse (blocked somehow). */
+	int posX;	/**< The x coordinates for the basemap. @todo What is this really? - seems to be somethign related to screen-coordinates. */
+	int posY;	/**< The y coordinates for the basemap. */
+} baseBuildingTile_t;
+
 /** @brief A base with all it's data */
 typedef struct base_s {
 	int idx;					/**< Self link. Index in the global base-list. */
 	char name[MAX_VAR];			/**< Name of the base */
-	int map[BASE_SIZE][BASE_SIZE];	/**< the base maps (holds building ids) */
+	baseBuildingTile_t map[BASE_SIZE][BASE_SIZE];	/**< The base maps (holds building pointers)
+													 * @todo  maybe integrate BASE_INVALID_SPACE and BASE_FREE_SPACE here? */
 
 	qboolean founded;	/**< already founded? */
 	vec3_t pos;		/**< pos on geoscape */
@@ -209,9 +213,6 @@ typedef struct base_s {
 	aircraft_t aircraft[MAX_AIRCRAFT];
 	int numAircraftInBase;	/**< How many aircraft are in this base. */
 	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
-
-	int posX[BASE_SIZE][BASE_SIZE];	/**< the x coordinates for the basemap (see map[BASE_SIZE][BASE_SIZE]) */
-	int posY[BASE_SIZE][BASE_SIZE];	/**< the y coordinates for the basemap (see map[BASE_SIZE][BASE_SIZE]) */
 
 	baseStatus_t baseStatus; /**< the current base status */
 
@@ -252,7 +253,7 @@ typedef struct base_s {
 
 	building_t *buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTemplates) */
 
-	struct building_s *buildingCurrent; /**< needn't be saved */
+	building_t *buildingCurrent; /**< needn't be saved */
 } base_t;
 
 /** Currently displayed/accessed base. */
@@ -266,7 +267,6 @@ void B_ParseBases(const char *name, const char **text);
 void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus(base_t* const base);
 building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, qboolean onlyWorking);
-building_t *B_GetBuildingByIdx(base_t* base, int idx);
 building_t *B_GetBuildingTemplate(const char *buildingName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 

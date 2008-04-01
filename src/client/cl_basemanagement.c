@@ -699,50 +699,40 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	Q_strncpyz(onDestroy, building->onDestroy, sizeof(onDestroy));
 
-	switch (base->map[(int)building->pos[0]][(int)building->pos[1]]) {
-	case BASE_FREESLOT:
-	case BASE_INVALID_SPACE:
+	if (!base->map[(int)building->pos[0]][(int)building->pos[1]].building
+	|| base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
 		assert(0);
 		return qfalse;
-	default:
-		if (building->needs) {
-			/* "Child" building is always right to the "parent" building". */
-			base->map[(int)building->pos[0]][((int)building->pos[1]) + 1] = BASE_FREESLOT;
-		}
-
-		base->map[(int)building->pos[0]][(int)building->pos[1]] = BASE_FREESLOT;
-		break;
 	}
+
+	if (building->needs) {
+		/* "Child" building is always right to the "parent" building". */
+		base->map[(int)building->pos[0]][((int)building->pos[1]) + 1].building = NULL;
+	}
+
+	base->map[(int)building->pos[0]][(int)building->pos[1]].building = NULL;
+
+
 	building->buildingStatus = B_STATUS_NOT_SET;
 
 	{
 		building_t* const buildings = gd.buildings[base->idx];
-		const int         cnt_bldgs = gd.numBuildings[base->idx] - 1;
+		const int         cntBldgs = gd.numBuildings[base->idx] - 1;
 		const int         idx       = building->idx;
-		int               row;
-		int               col;
 		int               i;
 
-		gd.numBuildings[base->idx] = cnt_bldgs;
+		gd.numBuildings[base->idx] = cntBldgs;
 
-		assert(idx <= cnt_bldgs);
-		memmove(building, building + 1, (cnt_bldgs - idx) * sizeof(*building));
+		assert(idx <= cntBldgs);
+		memmove(building, building + 1, (cntBldgs - idx) * sizeof(*building));
 		/* wipe the now vacant last slot */
-		memset(&buildings[cnt_bldgs], 0, sizeof(buildings[cnt_bldgs]));
-		for (i = 0; i < cnt_bldgs; i++)
+		memset(&buildings[cntBldgs], 0, sizeof(buildings[cntBldgs]));
+		for (i = 0; i < cntBldgs; i++)
 			if (buildings[i].idx >= idx)
 				buildings[i].idx--;
 
-		/* adjust the base map indices for the removed building */
-		for (row = 0; row < BASE_SIZE; ++row) {
-			for (col = 0; col < BASE_SIZE; ++col) {
-				if (base->map[row][col] > idx) {
-					--base->map[row][col];
-				}
-			}
-		}
 	}
-	/* don't use the building pointer after this point - it's zeroed or points to a wrong entry now */
+	/** @note Don't use the building pointer after this point - it's zeroed or points to a wrong entry now. */
 
 	test = qfalse;
 
@@ -1104,14 +1094,16 @@ void B_SetUpBase (base_t* base)
 	/* Set up default buy/sell factors for this base. */
 	base->sellfactor = 5;
 	base->buyfactor = 1;
-	/* the first base never has invalid fields */
+
+	/* Create random blocked fields int he base.
+	 * The first base never has blocked fields so we skip it. */
 	if (base->idx > 0) {
 		const int j = (int) (frand() * 3 + 1.5f);
 		for (i = 0; i < j; i++) {
-			int *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE - 1)];
+			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE - 1)];
 			/* set this field to invalid if there is no building yet */
-			if (*mapPtr == BASE_FREESLOT)
-				*mapPtr = BASE_INVALID_SPACE;
+			if (!mapPtr->building)
+				mapPtr->blocked = qtrue;
 		}
 	}
 
@@ -1294,26 +1286,31 @@ void B_SetBuildingByClick (int row, int col)
 	}
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
-		switch (baseCurrent->map[row][col]) {
-		case BASE_FREESLOT:
+		if (baseCurrent->map[row][col].blocked) {
+			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't build here\n");
+		} else if (!baseCurrent->map[row][col].building) {
+			/* No building in this place */
 			if (baseCurrent->buildingCurrent->needs) {
 				building_t *secondBuildingPart = B_GetBuildingTemplate(baseCurrent->buildingCurrent->needs);	/* template link */
 
 				if (col + 1 == BASE_SIZE) {
-					if (baseCurrent->map[row][col - 1] != BASE_FREESLOT) {
+					if (baseCurrent->map[row][col - 1].building
+					 || baseCurrent->map[row][col - 1].blocked) {
 						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
 					col--;
-				} else if (baseCurrent->map[row][col + 1] != BASE_FREESLOT) {
-					if (baseCurrent->map[row][col - 1] != BASE_FREESLOT || !col) {
+				} else if (baseCurrent->map[row][col + 1].building || baseCurrent->map[row][col + 1].blocked) {
+					if (baseCurrent->map[row][col - 1].building
+					 || baseCurrent->map[row][col - 1].blocked
+					 || !col) {
 						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
 					col--;
 				}
 
-				baseCurrent->map[row][col + 1] = baseCurrent->buildingCurrent->idx;
+				baseCurrent->map[row][col + 1].building = baseCurrent->buildingCurrent;
 				baseCurrent->buildingToBuild = secondBuildingPart;
 				/* where is this building located in our base? */
 				secondBuildingPart->pos[1] = col + 1;
@@ -1321,10 +1318,10 @@ void B_SetBuildingByClick (int row, int col)
 			} else {
 				baseCurrent->buildingToBuild = NULL;
 			}
-			/* credits are updated here, too */
+			/* Credits are updated here, too */
 			B_NewBuilding(baseCurrent);
 
-			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
+			baseCurrent->map[row][col].building = baseCurrent->buildingCurrent;
 
 			/* where is this building located in our base? */
 			baseCurrent->buildingCurrent->pos[0] = row;
@@ -1332,13 +1329,9 @@ void B_SetBuildingByClick (int row, int col)
 
 			B_ResetBuildingCurrent(baseCurrent);
 			B_BuildingInit(baseCurrent);	/* update the building-list */
-			break;
-		case BASE_INVALID_SPACE:
-			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't bulid here\n");
-			break;
-		default:
+		} else {
 			Com_DPrintf(DEBUG_CLIENT, "There is already a building\n");
-			Com_DPrintf(DEBUG_CLIENT, "Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col);
+			Com_DPrintf(DEBUG_CLIENT, "Building: %s at (row:%i, col:%i)\n", baseCurrent->map[row][col].building->id, row, col);
 		}
 	} else
 		Com_DPrintf(DEBUG_CLIENT, "Invalid coordinates\n");
@@ -1565,20 +1558,6 @@ static void B_BuildingInit_f (void)
 	if (!baseCurrent)
 		return;
 	B_BuildingInit(baseCurrent);
-}
-
-/**
- * @brief Gets the type of building by its index.
- *
- * @param[in] base Pointer to base_t (base has to be founded already)
- * @param[in] idx The index of the building in gd.buildings[]
- * @return buildings_t pointer to gd.buildings[idx]
- */
-building_t *B_GetBuildingByIdx (base_t* base, int idx)
-{
-	assert(base);
-	assert(idx > BASE_FREESLOT);
-	return &gd.buildings[base->idx][idx];
 }
 
 /**
@@ -1893,7 +1872,7 @@ void B_ClearBase (base_t *const base)
 			E_CreateEmployee(EMPL_MEDIC, B_RandomNation(), NULL);
 	}
 
-	memset(base->map, BASE_FREESLOT, sizeof(base->map));
+	memset(base->map, 0, sizeof(base->map));
 }
 
 /**
@@ -1934,7 +1913,7 @@ void B_ParseBases (const char *name, const char **text)
 		memset(base, 0, sizeof(base_t));
 		base->idx = gd.numBaseNames;
 		base->buildingToBuild = NULL;
-		memset(base->map, BASE_FREESLOT, sizeof(base->map));
+		memset(base->map, 0, sizeof(base->map));
 
 		/* get the title */
 		token = COM_EParse(text, errhead, name);
@@ -1981,17 +1960,12 @@ void MN_BaseMapLayout (const menuNode_t * node)
 		for (col = 0; col < BASE_SIZE; col++) {
 			x = node->pos[0] + (width * col + node->padding * (col + 1));
 			y = node->pos[1] + (height * row + node->padding * (row + 1));
-			switch (base->map[row][col]) {
-			case BASE_FREESLOT:
-				break;
-			case BASE_INVALID_SPACE:
+			if (base->map[row][col].blocked) {
 				R_DrawFill(x, y, width, height, node->align, c_gray);
-				break;
-			default:
+			} else if (base->map[row][col].building) {
 				/* maybe destroyed in the meantime */
 				if (base->founded)
 					R_DrawFill(x, y, width, height, node->align, node->color);
-				break;
 			}
 		}
 	}
@@ -2023,24 +1997,21 @@ void MN_BaseMapDraw (const menuNode_t * node)
 			x = node->pos[0] + col * width;
 			y = node->pos[1] + row * height - row * 20;
 
-			baseCurrent->posX[row][col] = x;
-			baseCurrent->posY[row][col] = y;
+			baseCurrent->map[row][col].posX = x;
+			baseCurrent->map[row][col].posY = y;
 
-			switch (baseCurrent->map[row][col]) {
-			case BASE_INVALID_SPACE:
+			if (baseCurrent->map[row][col].blocked) {
 				building = NULL;
 				Q_strncpyz(image, "base/invalid", sizeof(image));
-				break;
-			case BASE_FREESLOT:
+			} else if (!baseCurrent->map[row][col].building) {
 				building = NULL;
 				Q_strncpyz(image, "base/grid", sizeof(image));
-				break;
-			default:
-				building = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
+			} else {
+				building = baseCurrent->map[row][col].building;
 				secondBuilding = NULL;
 
 				if (!building)
-					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col]);
+					Sys_Error("Error in DrawBase - no building.\n");
 
 				if (!building->used) {
 					if (building->needs)
@@ -2057,7 +2028,6 @@ void MN_BaseMapDraw (const menuNode_t * node)
 					Q_strncpyz(image, secondBuilding->image, sizeof(image));
 					building->used = 0;
 				}
-				break;
 			}
 
 			if (*image)
@@ -2065,17 +2035,19 @@ void MN_BaseMapDraw (const menuNode_t * node)
 
 			/* check for hovering building name or outline border */
 			if (mousePosX > x && mousePosX < x + width && mousePosY > y && mousePosY < y + height - 20) {
-				switch (baseCurrent->map[row][col]) {
-				case BASE_FREESLOT:
+				if (!baseCurrent->map[row][col].building
+				 && !baseCurrent->map[row][col].blocked) {
 					if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
 						assert(baseCurrent->buildingCurrent);
 						colSecond = col;
 						if (baseCurrent->buildingCurrent->needs) {
 							if (colSecond + 1 == BASE_SIZE) {
-								if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
+								if (!baseCurrent->map[row][colSecond - 1].building
+								 && !baseCurrent->map[row][colSecond - 1].blocked)
 									colSecond--;
-							} else if (baseCurrent->map[row][colSecond + 1] != BASE_FREESLOT) {
-								if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
+							} else if (baseCurrent->map[row][colSecond + 1].building) {
+								if (!baseCurrent->map[row][colSecond - 1].building
+								 && !baseCurrent->map[row][colSecond - 1].blocked)
 									colSecond--;
 							} else {
 								colSecond++;
@@ -2091,10 +2063,8 @@ void MN_BaseMapDraw (const menuNode_t * node)
 							xHover = x;
 						yHover = y;
 					}
-					break;
-				default:
+				} else {
 					hoverBuilding = building;
-					break;
 				}
 			}
 
@@ -2641,20 +2611,20 @@ FIXME
 	/* reset the used flag */
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col] != BASE_FREESLOT && base->map[row][col] != BASE_INVALID_SPACE) {
-				entry = B_GetBuildingByIdx(base, base->map[row][col]);
+			if (base->map[row][col].building) {
+				entry = base->map[row][col].building;
 				entry->used = 0;
 			}
 		}
 
-	/* @todo: If a building is still under construction, it will be assembled as a finished part */
-	/* otherwise we need mapparts for all the maps under construction */
+	/** @todo If a building is still under construction, it will be assembled as a finished part.
+	 * Otherwise we need mapparts for all the maps under construction. */
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++) {
 			baseMapPart[0] = '\0';
 
-			if (base->map[row][col] != BASE_FREESLOT && base->map[row][col] != BASE_INVALID_SPACE) {
-				entry = B_GetBuildingByIdx(base, base->map[row][col]);
+			if (base->map[row][col].building) {
+				entry = base->map[row][col].building;
 
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
 				/* this is why we check the used flag and continue if it was set already */
@@ -2812,7 +2782,7 @@ static void B_BaseList_f (void)
 			if (row)
 				Com_Printf("\n");
 			for (col = 0; col < BASE_SIZE; col++)
-				Com_Printf("%i ", base->map[row][col]);
+				Com_Printf("%i ", base->map[row][col].building->idx);
 		}
 		Com_Printf("\n");
 	}
@@ -3426,9 +3396,10 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, B_GetBuildingStatus(b, k));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
-				MSG_WriteShort(sb, b->map[k][l]);
-				MSG_WriteShort(sb, b->posX[k][l]);
-				MSG_WriteShort(sb, b->posY[k][l]);
+				MSG_WriteShort(sb, b->map[k][l].building ? b->map[k][l].building->idx : -1);
+				MSG_WriteByte(sb, b->map[k][l].blocked);
+				MSG_WriteShort(sb, b->map[k][l].posX);
+				MSG_WriteShort(sb, b->map[k][l].posY);
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building = &gd.buildings[i][k];
@@ -3628,6 +3599,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	int aircraftIdxInBase;
 	int teamIdxs[PRE_ACTTEA];	/**< Temp list of employee indices. */
 	int teamTypes[PRE_ACTTEA];	/**< Temp list of employee-types. */
+	int buildingIdx;
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
@@ -3644,9 +3616,31 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
-				b->map[k][l] = MSG_ReadShort(sb);
-				b->posX[k][l] = MSG_ReadShort(sb);
-				b->posY[k][l] = MSG_ReadShort(sb);
+#if 0
+/** @todo activate me */
+				if (((saveFileHeader_t *)data)->version < 3) { /* <2.3 */
+#endif
+					buildingIdx = MSG_ReadShort(sb);
+					b->map[k][l].building = NULL;
+
+					if (buildingIdx >= 0)
+						b->map[k][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
+					else if (buildingIdx == -2)	/* 2.2: #define BASE_INVALID_SPACE = -2*/
+						b->map[k][l].blocked = qtrue;
+
+					b->map[k][l].posX = MSG_ReadShort(sb);
+					b->map[k][l].posY = MSG_ReadShort(sb);
+#if 0
+				} else { /* 2.3+ */
+					buildingIdx = MSG_ReadShort(sb);
+					b->map[k][l].building = NULL;
+					if (buildingIdx >= 0)
+						b->map[k][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
+					b->map[k][l].blocked = MSG_ReadByte(sb);
+					b->map[k][l].posX = MSG_ReadShort(sb);
+					b->map[k][l].posY = MSG_ReadShort(sb);
+				}
+#endif
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building_t *const building = &gd.buildings[i][k];
