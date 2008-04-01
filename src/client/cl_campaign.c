@@ -1275,7 +1275,6 @@ static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 
 	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_SUPPLY);
-	CL_ChangeIndividualInterest(-0.8f, INTERESTCATEGORY_BUILDING);
 
 	/* Spread XVI */
 	base = (alienBase_t *) mission->data;
@@ -1292,10 +1291,20 @@ static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
  */
 static void CP_BuildBaseMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(+0.6f, INTERESTCATEGORY_BUILDING);
 
 	CP_MissionRemove(mission);
 }
+
+/**
+ * @brief Build Base mission just started: change interest values.
+ * @note This function is intended to avoid the building of several alien bases at the same time
+ */
+static void CP_BuildBaseMissionStart (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(-0.7f, INTERESTCATEGORY_BUILDING);
+}
+
 /**
  * @brief Alien base has been destroyed: change interest values.
  * @note Build Base mission
@@ -1887,6 +1896,10 @@ static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 		mission.startDate = Date_Add(ccs.date, Date_Random(nextSpawningDate));
 	mission.finalDate = mission.startDate;
 	CP_SetMissionName(&mission);
+
+	/* Lower alien interest in base building if a base building mission is started to avoid several bases at the same time */
+	if (mission.category == INTERESTCATEGORY_BUILDING)
+		CP_BuildBaseMissionStart(&mission);
 
 	/* Add mission to global array */
 	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
