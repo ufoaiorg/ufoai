@@ -951,8 +951,7 @@ static void CL_ClampCamToMap (float border)
  */
 static void CL_CameraMoveRemote (void)
 {
-	float angle, frac;
-	static float sy, cy;
+	float frac;
 	vec3_t g_forward, g_right, g_up;
 	vec3_t delta;
 	int i;
@@ -1019,9 +1018,9 @@ static void CL_CameraMoveRemote (void)
 	} else {
 		/* normal camera movement */
 		/* calculate ground-based movement vectors */
-		angle = cl.cam.angles[YAW] * (M_PI * 2 / 360);
-		sy = sin(angle);
-		cy = cos(angle);
+		const float angle = cl.cam.angles[YAW] * (M_PI * 2 / 360);
+		const float sy = sin(angle);
+		const float cy = cos(angle);
 
 		VectorSet(g_forward, cy, sy, 0.0);
 		VectorSet(g_right, sy, -cy, 0.0);
