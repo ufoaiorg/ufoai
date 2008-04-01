@@ -416,10 +416,10 @@ static void CL_PopupInterceptBaseClick_f (void)
 	}
 
 	assert(base);
-	for (i = 0; i < base->maxBatteries; i++)
-		base->targetMissileIdx[i] = selectedUFO - gd.ufos;
-	for (i = 0; i < base->maxLasers; i++)
-		base->targetLaserIdx[i] = selectedUFO - gd.ufos;
+	for (i = 0; i < base->numBatteries; i++)
+		base->batteries[i].target = selectedUFO;
+	for (i = 0; i < base->numLasers; i++)
+		base->lasers[i].target = selectedUFO;
 
 	MN_PopMenu(qfalse);
 }

@@ -185,6 +185,12 @@ typedef struct baseBuildingTile_s {
 	int posY;	/**< The y coordinates for the basemap. */
 } baseBuildingTile_t;
 
+typedef struct baseWeapon_s {
+	/* int idx; */
+	aircraftSlot_t slot;	/**< Weapon. */
+	aircraft_t *target;		/**< Aimed target for the weapon. */
+} baseWeapon_t;
+
 /** @brief A base with all it's data */
 typedef struct base_s {
 	int idx;					/**< Self link. Index in the global base-list. */
@@ -208,8 +214,8 @@ typedef struct base_s {
 	/** mapZone indicated which map to load (grass, desert, arctic,...) */
 	const char *mapZone;
 
-	/** all aircraft in this base
-	  @todo: make me a linked list (see cl_market.c aircraft selling) */
+	/** All aircraft in this base
+	  @todo make me a linked list (see cl_market.c aircraft selling) */
 	aircraft_t aircraft[MAX_AIRCRAFT];
 	int numAircraftInBase;	/**< How many aircraft are in this base. */
 	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
@@ -241,12 +247,10 @@ typedef struct base_s {
 	int hospitalMissionList[MAX_EMPLOYEES];		/**< Hospital list of soldiers being healed but moved to the mission. */
 	int hospitalMissionListCount;			/**< Counter for hospitalMissionList. */
 
-	int maxBatteries;
-	aircraftSlot_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
-	int targetMissileIdx[MAX_BASE_SLOT];		/**< aimed target for missile battery */
-	int maxLasers;
-	aircraftSlot_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
-	int targetLaserIdx[MAX_BASE_SLOT];			/**< aimed target for laser battery */
+	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
+	int numBatteries;
+	baseWeapon_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
+	int numLasers;
 
 	int batteryDamage;			/**< Hit points of defense system */
 	int baseDamage;			/**< Hit points of base */

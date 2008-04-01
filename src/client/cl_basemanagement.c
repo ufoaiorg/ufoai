@@ -2764,8 +2764,8 @@ static void B_BaseList_f (void)
 		Com_Printf("Base title %s\n", base->name);
 		Com_Printf("Base founded %i\n", base->founded);
 		Com_Printf("Base numAircraftInBase %i\n", base->numAircraftInBase);
-		Com_Printf("Base numMissileBattery %i\n", base->maxBatteries);
-		Com_Printf("Base numLaserBattery %i\n", base->maxLasers);
+		Com_Printf("Base numMissileBattery %i\n", base->numBatteries);
+		Com_Printf("Base numLaserBattery %i\n", base->numLasers);
 		Com_Printf("Base sensorWidth %i\n", base->radar.range);
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUFOs);
 		Com_Printf("Base Alien interest %f\n", base->alienInterest);
@@ -3344,7 +3344,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
  * @sa B_Save
  * @sa AII_InitialiseSlot
  */
-static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebuf_t* sb)
+static void B_SaveAircraftSlots (aircraftSlot_t* slot, int num, sizebuf_t* sb)
 {
 	int i;
 
@@ -3365,13 +3365,38 @@ static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebu
 			/* if there is no ammo MSG_WriteString will write an empty string */
 			MSG_WriteString(sb, "");
 		}
-		if (targets) {
-			/* save target of this weapon */
-			MSG_WriteShort(sb, targets[i]);
-		}
 	}
 }
 
+/**
+ * @brief Saves the weapon slots of a base.
+ */
+static void B_SaveBaseSlots (baseWeapon_t *weapons, int numWeapons, sizebuf_t* sb)
+{
+	int i;
+
+	for (i = 0; i < numWeapons; i++) {
+		if (weapons[i].slot.item) {
+			const objDef_t *ammo = weapons[i].slot.ammo;
+			MSG_WriteString(sb, weapons[i].slot.item->id);
+			MSG_WriteShort(sb, weapons[i].slot.ammoLeft);
+			MSG_WriteShort(sb, weapons[i].slot.delayNextShot);
+			MSG_WriteShort(sb, weapons[i].slot.installationTime);
+			/* if there is no ammo MSG_WriteString will write an empty string */
+			MSG_WriteString(sb, ammo ? ammo->id : "");
+		} else {
+			MSG_WriteString(sb, "");
+			MSG_WriteShort(sb, -1);	/* must be the same value as in AII_InitialiseSlot */
+			MSG_WriteShort(sb, 0);
+			MSG_WriteShort(sb, 0);
+			/* if there is no ammo MSG_WriteString will write an empty string */
+			MSG_WriteString(sb, "");
+		}
+
+		/* save target of this weapon */
+		MSG_WriteShort(sb, weapons[i].target ? weapons[i].target->idx : -1);
+	}
+}
 
 /**
  * @brief Save callback for savegames
@@ -3413,11 +3438,11 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->baseStatus);
 		MSG_WriteFloat(sb, b->alienInterest);
 
-		MSG_WriteByte(sb, b->maxBatteries);
-		B_SaveItemSlots(b->batteries, b->maxBatteries, b->targetMissileIdx, sb);
+		MSG_WriteByte(sb, b->numBatteries);
+		B_SaveBaseSlots(b->batteries, b->numBatteries, sb);
 
-		MSG_WriteByte(sb, b->maxLasers);
-		B_SaveItemSlots(b->lasers, b->maxLasers, b->targetLaserIdx, sb);
+		MSG_WriteByte(sb, b->numLasers);
+		B_SaveBaseSlots(b->lasers, b->numLasers, sb);
 
 		MSG_WriteShort(sb, AIR_GetAircraftIdxInBase(b->aircraftCurrent));
 		MSG_WriteByte(sb, b->numAircraftInBase);
@@ -3435,10 +3460,10 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			if (aircraft->aircraftTarget)
 				MSG_WriteShort(sb, aircraft->aircraftTarget - gd.ufos);
 			else
-				MSG_WriteShort(sb, AIRFIGHT_NO_TARGET);
+				MSG_WriteShort(sb, -1);
 			/* save weapon slots */
 			MSG_WriteByte(sb, aircraft->maxWeapons);
-			B_SaveItemSlots(aircraft->weapons, aircraft->maxWeapons, NULL, sb);
+			B_SaveAircraftSlots(aircraft->weapons, aircraft->maxWeapons, sb);
 
 			/* save shield slots - currently only one */
 			MSG_WriteByte(sb, 1);
@@ -3552,11 +3577,11 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 }
 
 /**
- * @brief Loads the missile and laser slots data
+ * @brief Loads the weapon slots of an aircraft.
  * @sa B_Load
  * @sa B_SaveItemSlots
  */
-static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* targets, sizebuf_t* sb)
+static void B_LoadAircraftSlots (base_t* base, aircraftSlot_t* slot, int num, sizebuf_t* sb)
 {
 	int i;
 	technology_t *tech;
@@ -3578,10 +3603,39 @@ static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* t
 			slot[i].ammo = AII_GetAircraftItemByID(tech->provides);
 		else
 			slot[i].ammo = NULL;
-		if (targets) {
-			/* read target of this weapon */
-			targets[i] = MSG_ReadShort(sb);
-		}
+	}
+}
+
+/**
+ * @brief Loads the missile and laser slots of a base.
+ * @sa B_Load
+ * @sa B_SaveItemSlots
+ */
+static void B_LoadBaseSlots (base_t* base, baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb)
+{
+	int i, target;
+	technology_t *tech;
+
+	for (i = 0; i < numWeapons; i++) {
+		tech = RS_GetTechByProvided(MSG_ReadString(sb));
+		/* base is NULL here to not check against the storage amounts - they
+		 * are already loaded in the campaign load function and set to the value
+		 * after the craftitem was already removed from the initial game - thus
+		 * there might not be any of these items in the storage at this point */
+		/* @todo: Check whether storage and capacities needs updating now */
+		if (tech)
+			AII_AddItemToSlot(NULL, tech, &weapons[i].slot);
+		weapons[i].slot.ammoLeft = MSG_ReadShort(sb);
+		weapons[i].slot.delayNextShot = MSG_ReadShort(sb);
+		weapons[i].slot.installationTime = MSG_ReadShort(sb);
+		tech = RS_GetTechByProvided(MSG_ReadString(sb));
+		if (tech)
+			weapons[i].slot.ammo = AII_GetAircraftItemByID(tech->provides);
+		else
+			weapons[i].slot.ammo = NULL;
+
+		target = MSG_ReadShort(sb);
+		weapons[i].target = (target >= 0) ? gd.ufos + target : NULL;
 	}
 }
 
@@ -3643,12 +3697,12 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		BDEF_InitialiseBaseSlots(b);
 
 		/* read missile battery slots */
-		b->maxBatteries = MSG_ReadByte(sb);
-		B_LoadItemSlots(b, b->batteries, b->maxBatteries, b->targetMissileIdx, sb);
+		b->numBatteries = MSG_ReadByte(sb);
+		B_LoadBaseSlots(b, b->batteries, b->numBatteries, sb);
 
 		/* read laser battery slots */
-		b->maxLasers = MSG_ReadByte(sb);
-		B_LoadItemSlots(b, b->lasers, b->maxLasers, b->targetLaserIdx, sb);
+		b->numLasers = MSG_ReadByte(sb);
+		B_LoadBaseSlots(b, b->lasers, b->numLasers, sb);
 
 		b->aircraftCurrent = NULL;
 		aircraftIdxInBase = MSG_ReadShort(sb);
@@ -3676,14 +3730,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->hangar = MSG_ReadByte(sb);
 			/* load aircraft target */
 			ufoIdx = MSG_ReadShort(sb);
-			if (ufoIdx == AIRFIGHT_NO_TARGET)
+			if (ufoIdx <= -1)
 				aircraft->aircraftTarget = NULL;
 			else
 				aircraft->aircraftTarget = gd.ufos + ufoIdx;
 			/* read weapon slot */
 			amount = MSG_ReadByte(sb);
 			/* only read aircraft->maxWeapons here - skip the rest in the following loop */
-			B_LoadItemSlots(b, aircraft->weapons, min(amount, aircraft->maxWeapons), NULL, sb);
+			B_LoadAircraftSlots(b, aircraft->weapons, min(amount, aircraft->maxWeapons), sb);
 			/* just in case there are less slots in new game that in saved one */
 			for (l = aircraft->maxWeapons; l < amount; l++) {
 				MSG_ReadString(sb);

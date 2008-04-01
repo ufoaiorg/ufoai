@@ -220,17 +220,17 @@ static void UFO_SearchBaseTarget (aircraft_t *ufo)
  * @param[in] base Pointer to the base
  * @return 0 if ufo is not a target, 1 if target of a missile, 2 if target of a laser
  */
-static int UFO_IsTargetOfBase (int ufoIdx, base_t *base)
+static int UFO_IsTargetOfBase (aircraft_t *ufo, base_t *base)
 {
 	int i;
 
-	for (i = 0; i < base->maxBatteries; i++) {
-		if (base->targetMissileIdx[i] == ufoIdx)
+	for (i = 0; i < base->numBatteries; i++) {
+		if (base->batteries[i].target == ufo)
 			return UFO_IS_TARGET_OF_MISSILE;
 	}
 
-	for (i = 0; i < base->maxLasers; i++) {
-		if (base->targetLaserIdx[i] == ufoIdx)
+	for (i = 0; i < base->numLasers; i++) {
+		if (base->lasers[i].target == ufo)
 			return UFO_IS_TARGET_OF_LASER;
 	}
 
@@ -269,7 +269,7 @@ static void UFO_UpdateAlienInterestForOneBase (aircraft_t *ufo, int dt, base_t *
 		return;
 
 	/* UFO has an increased probability to find a base if it is firing at it */
-	switch (UFO_IsTargetOfBase(ufo - gd.ufos, base)) {
+	switch (UFO_IsTargetOfBase(ufo, base)) {
 	case UFO_IS_TARGET_OF_MISSILE:
 		probability = 0.01f;
 		break;

@@ -1226,11 +1226,11 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		/* Draw weapon range if at least one UFO is visible */
 		if (oneUFOVisible && AII_BaseCanShoot(base)) {
 			/* @todo When there will be different possible base weapon, range should change */
-			for (i = 0; i < base->maxBatteries; i++) {
-				if (base->batteries[i].item && base->batteries[i].ammoLeft > 0
-					&& base->batteries[i].installationTime == 0) {
+			for (i = 0; i < base->numBatteries; i++) {
+				if (base->batteries[i].slot.item && base->batteries[i].slot.ammoLeft > 0
+					&& base->batteries[i].slot.installationTime == 0) {
 					MAP_MapDrawEquidistantPoints(node, base->pos,
-						base->batteries[i].ammo->craftitem.stats[AIR_STATS_WRANGE], red);
+						base->batteries[i].slot.ammo->craftitem.stats[AIR_STATS_WRANGE], red);
 				}
 			}
 		}

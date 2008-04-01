@@ -208,25 +208,25 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 	switch (airequipID) {
 	case AC_ITEM_AMMO_MISSILE:
 	case AC_ITEM_BASE_MISSILE:
-		assert(base->maxBatteries > 0);
-		if (airequipSelectedSlot >= base->maxBatteries) {
+		assert(base->numBatteries > 0);
+		if (airequipSelectedSlot >= base->numBatteries) {
 			airequipSelectedSlot = 0;
 			/* update position of the arrow in front of the selected base defense */
 			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
 		}
-		slot = base->batteries + airequipSelectedSlot;
+		slot = &base->batteries[airequipSelectedSlot].slot;
 		break;
 	case AC_ITEM_AMMO_LASER:
 	case AC_ITEM_BASE_LASER:
-		assert(base->maxLasers > 0);
-		if (airequipSelectedSlot >= base->maxLasers) {
+		assert(base->numLasers > 0);
+		if (airequipSelectedSlot >= base->numLasers) {
 			airequipSelectedSlot = 0;
 			/* update position of the arrow in front of the selected base defense */
 			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
 		}
-		slot = base->lasers + airequipSelectedSlot;
+		slot = &base->lasers[airequipSelectedSlot].slot;
 		break;
 	default:
 		Com_Printf("BDEF_SelectBaseSlot: Unknown airequipID: %i\n", airequipID);
@@ -371,23 +371,23 @@ static void BDEF_AddBattery (basedefenseType_t basedefType, base_t* base)
 {
 	switch (basedefType) {
 	case BASEDEF_MISSILE:
-		if (base->maxBatteries >= MAX_BASE_SLOT) {
+		if (base->numBatteries >= MAX_BASE_SLOT) {
 			Com_Printf("BDEF_AddBattery: too many missile batteries in base\n");
 			return;
 		}
 
-		base->maxBatteries++;
+		base->numBatteries++;
 		break;
 	case BASEDEF_LASER:
-		if (base->maxLasers >= MAX_BASE_SLOT) {
+		if (base->numLasers >= MAX_BASE_SLOT) {
 			Com_Printf("BDEF_AddBattery: too many laser batteries in base\n");
 			return;
 		}
 		/* slots has a lot of ammo for now */
 		/* FIXME: it should be unlimited, no ? check that when we'll know how laser battery work */
-		base->lasers[base->maxLasers].ammoLeft = 9999;
+		base->lasers[base->numLasers].slot.ammoLeft = 9999;
 
-		base->maxLasers++;
+		base->numLasers++;
 		break;
 	default:
 		Com_Printf("BDEF_AddBattery: unknown type of base defense system.\n");
@@ -404,9 +404,9 @@ void BDEF_ReloadBattery (void)
 
 	/* Reload all ammos of aircraft */
 	for (i = 0; i < gd.numBases; i++) {
-		for (j = 0; j < gd.bases[i].maxBatteries; j++) {
-			if (gd.bases[i].batteries[j].ammoLeft >= 0 && gd.bases[i].batteries[j].ammoLeft < 20)
-				gd.bases[i].batteries[j].ammoLeft++;
+		for (j = 0; j < gd.bases[i].numBatteries; j++) {
+			if (gd.bases[i].batteries[j].slot.ammoLeft >= 0 && gd.bases[i].batteries[j].slot.ammoLeft < 20)
+				gd.bases[i].batteries[j].slot.ammoLeft++;
 		}
 	}
 }
@@ -453,25 +453,25 @@ void BDEF_RemoveBattery (base_t *base, basedefenseType_t basedefType, int idx)
 	switch (basedefType) {
 	case BASEDEF_MISSILE: /* this is a missile battery */
 		/* we must have at least one missile battery to remove it */
-		assert(base->maxBatteries > 0);
+		assert(base->numBatteries > 0);
 		if (idx < 0)
-			idx = rand() % base->maxBatteries;
-		if (idx < base->maxBatteries - 1)
-			memmove(base->batteries + idx, base->batteries + idx + 1, sizeof(aircraftSlot_t) * (base->maxBatteries - idx - 1));
-		base->maxBatteries--;
+			idx = rand() % base->numBatteries;
+		if (idx < base->numBatteries - 1)
+			memmove(base->batteries + idx, base->batteries + idx + 1, sizeof(aircraftSlot_t) * (base->numBatteries - idx - 1));
+		base->numBatteries--;
 		/* just for security */
-		AII_InitialiseSlot(base->batteries + base->maxBatteries, NULL, base, AC_ITEM_BASE_MISSILE);
+		AII_InitialiseSlot(&base->batteries[base->numBatteries].slot, NULL, base, AC_ITEM_BASE_MISSILE);
 		break;
 	case BASEDEF_LASER: /* this is a laser battery */
 		/* we must have at least one laser battery to remove it */
-		assert(base->maxLasers > 0);
+		assert(base->numLasers > 0);
 		if (idx < 0)
-			idx = rand() % base->maxLasers;
-		if (idx < base->maxLasers - 1)
-			memmove(base->lasers + idx, base->lasers + idx + 1, sizeof(aircraftSlot_t) * (base->maxLasers - idx - 1));
-		base->maxLasers--;
+			idx = rand() % base->numLasers;
+		if (idx < base->numLasers - 1)
+			memmove(base->lasers + idx, base->lasers + idx + 1, sizeof(aircraftSlot_t) * (base->numLasers - idx - 1));
+		base->numLasers--;
 		/* just for security */
-		AII_InitialiseSlot(base->lasers + base->maxLasers, NULL, base, AC_ITEM_BASE_LASER);
+		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, NULL, base, AC_ITEM_BASE_LASER);
 		break;
 	default:
 		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defense system.\n");
@@ -507,13 +507,13 @@ void BDEF_RemoveBattery_f (void)
 
 	if (basedefType == BASEDEF_RANDOM) {
 		/* Type of base defense to destroy is randomly selected */
-		if (base->maxBatteries <= 0 && base->maxLasers <= 0) {
+		if (base->numBatteries <= 0 && base->numLasers <= 0) {
 			Com_Printf("No base defense to destroy\n");
 			return;
-		} else if (base->maxBatteries <= 0) {
+		} else if (base->numBatteries <= 0) {
 			/* only laser battery is possible */
 			basedefType = BASEDEF_LASER;
-		} else if (base->maxLasers <= 0) {
+		} else if (base->numLasers <= 0) {
 			/* only missile battery is possible */
 			basedefType = BASEDEF_MISSILE;
 		} else {
@@ -528,11 +528,11 @@ void BDEF_RemoveBattery_f (void)
 		switch (basedefType) {
 		case BASEDEF_MISSILE:
 			type = B_DEFENSE_MISSILE;
-			max = base->maxBatteries;
+			max = base->numBatteries;
 			break;
 		case BASEDEF_LASER:
 			type = B_DEFENSE_MISSILE;
-			max = base->maxLasers;
+			max = base->numLasers;
 			break;
 		default:
 			Com_Printf("BDEF_RemoveBattery_f: base defense type %i doesn't exists.\n", basedefType);
@@ -569,10 +569,10 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 	int i;
 
 	for (i = 0; i < MAX_BASE_SLOT; i++) {
-		AII_InitialiseSlot(base->batteries + i, NULL, base, AC_ITEM_BASE_MISSILE);
-		AII_InitialiseSlot(base->lasers + i, NULL, base, AC_ITEM_BASE_LASER);
-		base->targetMissileIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
-		base->targetLaserIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
+		AII_InitialiseSlot(&base->batteries[i].slot, NULL, base, AC_ITEM_BASE_MISSILE);
+		AII_InitialiseSlot(&base->lasers[i].slot, NULL, base, AC_ITEM_BASE_LASER);
+		base->batteries[i].target = NULL;
+		base->lasers[i].target = NULL;
 	}
 }
 
@@ -630,7 +630,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		return;
 
 	/* Check that the base has at least 1 battery */
-	if (baseCurrent->maxBatteries + baseCurrent->maxLasers < 1) {
+	if (baseCurrent->numBatteries + baseCurrent->numLasers < 1) {
 		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defense battery in this base: you shouldn't be in this function.\n");
 		return;
 	}
@@ -666,7 +666,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	}
 
 	/* Check if we can change to laser or missile */
-	if (baseCurrent->maxBatteries > 0 && baseCurrent->maxLasers > 0) {
+	if (baseCurrent->numBatteries > 0 && baseCurrent->numLasers > 0) {
 		node = MN_GetNodeFromCurrentMenu("basedef_button_missile");
 		MN_UnHideNode(node);
 		node = MN_GetNodeFromCurrentMenu("basedef_button_missile_str");
@@ -691,28 +691,28 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	if (airequipID == AC_ITEM_BASE_MISSILE || airequipID == AC_ITEM_AMMO_MISSILE) {
 		/* we are in the base defense menu for missile */
-		if (baseCurrent->maxBatteries == 0)
+		if (baseCurrent->numBatteries == 0)
 			Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
 		else {
-			for (i = 0; i < baseCurrent->maxBatteries; i++) {
-				if (!baseCurrent->batteries[i].item)
+			for (i = 0; i < baseCurrent->numBatteries; i++) {
+				if (!baseCurrent->batteries[i].slot.item)
 					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 				else {
-					const objDef_t *item = baseCurrent->batteries[i].item;
+					const objDef_t *item = baseCurrent->batteries[i].slot.item;
 					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
 				}
 			}
 		}
 	} else if (airequipID == AC_ITEM_BASE_LASER || airequipID == AC_ITEM_AMMO_LASER) {
 		/* we are in the base defense menu for laser */
-		if (baseCurrent->maxLasers == 0)
+		if (baseCurrent->numLasers == 0)
 			Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
 		else {
-			for (i = 0; i < baseCurrent->maxLasers; i++) {
-				if (!baseCurrent->lasers[i].item)
+			for (i = 0; i < baseCurrent->numLasers; i++) {
+				if (!baseCurrent->lasers[i].slot.item)
 					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 				else {
-					const objDef_t *item = baseCurrent->lasers[i].item;
+					const objDef_t *item = baseCurrent->lasers[i].slot.item;
 					Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
 				}
 			}
@@ -791,7 +791,7 @@ void BDEF_ListClick_f (void)
 		return;
 	num = atoi(Cmd_Argv(1));
 
-	if (num < baseCurrent->maxBatteries)
+	if (num < baseCurrent->numBatteries)
 		airequipSelectedSlot = num;
 
 	/* draw an arrow in front of the selected base defense */
@@ -873,10 +873,10 @@ void AII_UpdateInstallationDelay (void)
 			continue;
 
 		/* Update base */
-		for (k = 0; k < base->maxBatteries; k++)
-			AII_UpdateOneInstallationDelay(base, NULL, base->batteries + k);
-		for (k = 0; k < base->maxLasers; k++)
-			AII_UpdateOneInstallationDelay(base, NULL, base->lasers + k);
+		for (k = 0; k < base->numBatteries; k++)
+			AII_UpdateOneInstallationDelay(base, NULL, &base->batteries[k].slot);
+		for (k = 0; k < base->numLasers; k++)
+			AII_UpdateOneInstallationDelay(base, NULL, &base->lasers[k].slot);
 
 		/* Update each aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
@@ -1968,19 +1968,19 @@ int AII_BaseCanShoot (const base_t *base)
 
 	if (B_GetBuildingStatus(base, B_DEFENSE_MISSILE)) {
 		/* base has missile battery and any needed building */
-		for (i = 0; i < base->maxBatteries; i++)
-			if (base->batteries[i].item
-			 && base->batteries[i].ammo && base->batteries[i].ammoLeft > 0
-			 && base->batteries[i].installationTime == 0)
+		for (i = 0; i < base->numBatteries; i++)
+			if (base->batteries[i].slot.item
+			 && base->batteries[i].slot.ammo && base->batteries[i].slot.ammoLeft > 0
+			 && base->batteries[i].slot.installationTime == 0)
 				return qtrue;
 	}
 
 	if (B_GetBuildingStatus(base, B_DEFENSE_LASER)) {
 		/* base has laser battery and any needed building */
-		for (i = 0; i < base->maxLasers; i++)
-			if (base->lasers[i].item
-			 && base->lasers[i].ammo && base->lasers[i].ammoLeft > 0
-			 && base->lasers[i].installationTime == 0)
+		for (i = 0; i < base->numLasers; i++)
+			if (base->lasers[i].slot.item
+			 && base->lasers[i].slot.ammo && base->lasers[i].slot.ammoLeft > 0
+			 && base->lasers[i].slot.installationTime == 0)
 				return qtrue;
 	}
 

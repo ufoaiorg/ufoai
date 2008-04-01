@@ -1592,22 +1592,24 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo)
 {
 	base_t* base;
 	aircraft_t* aircraft;
-	int i, num;
+	int i;
 
-	num = ufo - gd.ufos;
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
 		/* Base currently targeting the specified ufo loose their target */
-		for (i = 0; i < base->maxBatteries; i++) {
-			if (base->targetMissileIdx[i] == num)
-				base->targetMissileIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
-			else if (base->targetMissileIdx[i] > num)
-				base->targetMissileIdx[i]--;
+		for (i = 0; i < base->numBatteries; i++) {
+			if (base->batteries[i].target == ufo)
+				base->batteries[i].target = NULL;
+			else if (base->batteries[i].target) {
+				/** @todo get next ufo. */
+				base->batteries[i].target = NULL;
+			}
 		}
-		for (i = 0; i < base->maxLasers; i++) {
-			if (base->targetLaserIdx[i] == num)
-				base->targetLaserIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
-			else if (base->targetLaserIdx[i] > num)
-				base->targetLaserIdx[i]--;
+		for (i = 0; i < base->numLasers; i++) {
+			if (base->lasers[i].target == ufo)
+				base->lasers[i].target = NULL;
+			else if (base->lasers[i].target)
+				/** @todo get next ufo. */
+				base->lasers[i].target = NULL;
 		}
 
 		/* Aircraft currently purchasing the specified ufo will be redirect to base */

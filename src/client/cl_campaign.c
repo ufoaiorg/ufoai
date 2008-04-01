@@ -3870,7 +3870,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		mission.pos[0] = MSG_ReadFloat(sb);
 		mission.pos[1] = MSG_ReadFloat(sb);
 		ufoIdx = MSG_ReadShort(sb);
-		if (ufoIdx == AIRFIGHT_NO_TARGET)
+		if (ufoIdx <= -1)
 			mission.ufo = NULL;
 		else
 			mission.ufo = gd.ufos + ufoIdx;
@@ -4028,7 +4028,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		if (mission->ufo)
 			MSG_WriteShort(sb, mission->ufo - gd.ufos);
 		else
-			MSG_WriteShort(sb, AIRFIGHT_NO_TARGET);
+			MSG_WriteShort(sb, -1);
 		MSG_WriteByte(sb, mission->onGeoscape);
 	}
 

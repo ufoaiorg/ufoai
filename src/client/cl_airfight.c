@@ -569,11 +569,11 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		/* projectile destroyed a base defense system */
 		base->batteryDamage = MAX_BATTERY_DAMAGE;
 		rnd = rand() % 2;
-		if (base->maxBatteries + base->maxLasers <= 0)
+		if (base->numBatteries + base->numLasers <= 0)
 			rnd = -1;
-		else if (rnd == 0 && base->maxBatteries <= 0)
+		else if (rnd == 0 && base->numBatteries <= 0)
 			rnd = 1;
-		else if (rnd == 1 && base->maxLasers <= 0)
+		else if (rnd == 1 && base->numLasers <= 0)
 			rnd = 0;
 
 		if (rnd == 0) {
@@ -684,50 +684,50 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
  * @param[in] maxSlot number of slot of this type in base.
  * @param[in] targetIdx Pointer to the array of target idx of this defense system.
  */
-static void AIRFIGHT_BaseShoot (const base_t *base, aircraftSlot_t *slot, int maxSlot, int *targetIdx)
+static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int maxWeapons)
 {
 	int i, test;
 	float distance;
 
-	for (i = 0; i < maxSlot; i++) {
+	for (i = 0; i < maxWeapons; i++) {
 		/* if no target, can't shoot */
-		if (targetIdx[i] == AIRFIGHT_NO_TARGET)
+		if (!weapons[i].target)
 			continue;
 
-		/* if the weapon is not ready in base, can't shoot */
-		if (slot[i].installationTime > 0)
+		/* If the weapon is not ready in base, can't shoot. */
+		if (weapons[i].slot.installationTime > 0)
 			continue;
 
 		/* if weapon is reloading, can't shoot */
-		if (slot[i].delayNextShot > 0)
+		if (weapons[i].slot.delayNextShot > 0)
 			continue;
 
 		/* check that the ufo is still visible */
-		if (!gd.ufos[targetIdx[i]].visible) {
-			targetIdx[i] = AIRFIGHT_NO_TARGET;
+		if (!weapons[i].target->visible) {
+			weapons[i].target = NULL;
 			continue;
 		}
 
-		/* check if we can still fire on this target */
-		distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
-		test = AIRFIGHT_CheckWeapon(slot + i, distance);
+		/* Check if we can still fire on this target. */
+		distance = MAP_GetDistance(base->pos, weapons[i].target->pos);
+		test = AIRFIGHT_CheckWeapon(&weapons[i].slot + i, distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
-			targetIdx[i] = AIRFIGHT_NO_TARGET;
+			weapons[i].target = NULL;
 			continue;
 		}
 		/* we can't shoot with this weapon atm, wait to see if UFO comes closer */
 		else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
 			continue;
 		/* target is too far, wait to see if UFO comes closer */
-		else if (distance > slot[i].ammo->craftitem.stats[AIR_STATS_WRANGE])
+		else if (distance > weapons[i].slot.ammo->craftitem.stats[AIR_STATS_WRANGE])
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(base, NULL, NULL, gd.ufos + targetIdx[i], slot + i)) {
-			slot[i].delayNextShot = slot[i].ammo->craftitem.weaponDelay;
+		if (AIRFIGHT_AddProjectile(base, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
+			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
-			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
+			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
 				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 		}
 	}
@@ -747,21 +747,21 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 			continue;
 		if (base->baseStatus == BASE_UNDER_ATTACK)
 			continue;
-		for (idx = 0; idx < base->maxBatteries; idx++) {
-			if (base->batteries[idx].delayNextShot > 0)
-				base->batteries[idx].delayNextShot -= dt;
+		for (idx = 0; idx < base->numBatteries; idx++) {
+			if (base->batteries[idx].slot.delayNextShot > 0)
+				base->batteries[idx].slot.delayNextShot -= dt;
 		}
 
-		for (idx = 0; idx < base->maxLasers; idx++) {
-			if (base->lasers[idx].delayNextShot > 0)
-				base->lasers[idx].delayNextShot -= dt;
+		for (idx = 0; idx < base->numLasers; idx++) {
+			if (base->lasers[idx].slot.delayNextShot > 0)
+				base->lasers[idx].slot.delayNextShot -= dt;
 		}
 
 		if (AII_BaseCanShoot(base)) {
 			if (B_GetBuildingStatus(base, B_DEFENSE_MISSILE))
-				AIRFIGHT_BaseShoot(base, base->batteries, base->maxBatteries, base->targetMissileIdx);
+				AIRFIGHT_BaseShoot(base, base->batteries, base->numBatteries);
 			if (B_GetBuildingStatus(base, B_DEFENSE_LASER))
-				AIRFIGHT_BaseShoot(base, base->lasers, base->maxLasers, base->targetLaserIdx);
+				AIRFIGHT_BaseShoot(base, base->lasers, base->numLasers);
 		}
 	}
 }

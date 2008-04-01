@@ -42,8 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define AIRFIGHT_BASE_CAN_T_FIRE -1
 
-#define AIRFIGHT_NO_TARGET -1
-
 /** @brief projectile used during fight between two or more aircraft */
 typedef struct aircraftProjectile_s {
 	const objDef_t *aircraftItem;		/**< Corresponding ammo in the array csi.ods[] */
