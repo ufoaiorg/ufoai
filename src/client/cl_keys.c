@@ -394,7 +394,7 @@ static void Key_Console (int key)
 		} while (history_line != edit_line && !key_lines[history_line][1]);
 
 		if (history_line == edit_line)
-			history_line = (edit_line + 1) & (MAXKEYLINES-1);
+			history_line = (edit_line + 1) & (MAXKEYLINES - 1);
 
 		Q_strncpyz(key_lines[edit_line], key_lines[history_line], MAXCMDLINE);
 		key_linepos = strlen(key_lines[edit_line]);
@@ -403,7 +403,7 @@ static void Key_Console (int key)
 		if (history_line == edit_line)
 			return;
 		do {
-			history_line = (history_line + 1) & (MAXKEYLINES-1);
+			history_line = (history_line + 1) & (MAXKEYLINES - 1);
 		} while (history_line != edit_line && !key_lines[history_line][1]);
 
 		if (history_line == edit_line) {

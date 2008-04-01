@@ -179,10 +179,10 @@ typedef struct building_s {
 } building_t;
 
 typedef struct baseBuildingTile_s {
-	building_t *building;
+	building_t *building;	/**< NULL if free spot */
 	qboolean	blocked;	/**< qtrue if the tile is usable for buildings otherwise it's qfalse (blocked somehow). */
-	int posX;	/**< The x coordinates for the basemap. @todo What is this really? - seems to be somethign related to screen-coordinates. */
-	int posY;	/**< The y coordinates for the basemap. */
+	int posX;	/**< The x screen coordinate for the building on the basemap. */
+	int posY;	/**< The y screen coordinate for the building on the basemap. */
 } baseBuildingTile_t;
 
 typedef struct baseWeapon_s {
