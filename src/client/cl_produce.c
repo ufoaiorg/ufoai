@@ -772,7 +772,7 @@ static void PR_ProductionListRightClick_f (void)
 			}
 
 			if (!od->tech)
-				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id '%s'\n", od->id);
+				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object '%s'\n", od->id);
 #endif
 
 			/* Open up UFOpaedia for this entry. */
@@ -860,7 +860,7 @@ static void PR_ProductionListClick_f (void)
 				}
 
 				if (!od->tech)
-					Sys_Error("PR_ProductionListClick_f: No tech pointer for object id '%s'\n", od->id);
+					Sys_Error("PR_ProductionListClick_f: No tech pointer for object '%s'\n", od->id);
 #endif
 				/* We can only produce items that fulfill the following conditions... */
 				if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
@@ -1346,16 +1346,15 @@ static void PR_ProductionIncrease_f (void)
 			else
 				amountTemp = base->storage.num[selectedDisassembly->asItem->idx];
 
-			prod = PR_QueueNew(base, queue, selectedDisassembly->asItem, NULL, amountTemp, qtrue);	/* Disassembling. */
 			/* Check if we can add more items. */
-			if (prod->amount + amountTemp > MAX_PRODUCTION_AMOUNT) {
-				if (MAX_PRODUCTION_AMOUNT - amountTemp >= 0) {
-					/* Add as many items as possible. */
-					amountTemp = MAX_PRODUCTION_AMOUNT;
-				} else {
+			if (amountTemp > MAX_PRODUCTION_AMOUNT) {
+				/* Add as many items as possible. */
+				amountTemp = MAX_PRODUCTION_AMOUNT;
+			} else {
 					return;
-				}
 			}
+
+			prod = PR_QueueNew(base, queue, selectedDisassembly->asItem, NULL, amountTemp, qtrue);	/* Disassembling. */
 		}
 
 		/** prod is NULL when queue limit is reached
