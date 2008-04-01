@@ -772,7 +772,7 @@ static void PR_ProductionListRightClick_f (void)
 			}
 
 			if (!od->tech)
-				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
+				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id '%s'\n", od->id);
 #endif
 
 			/* Open up UFOpaedia for this entry. */
@@ -860,7 +860,7 @@ static void PR_ProductionListClick_f (void)
 				}
 
 				if (!od->tech)
-					Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
+					Sys_Error("PR_ProductionListClick_f: No tech pointer for object id '%s'\n", od->id);
 #endif
 				/* We can only produce items that fulfill the following conditions... */
 				if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
