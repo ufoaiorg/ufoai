@@ -1262,6 +1262,33 @@ menu options_input
 		}
 	}
 
+	// ===================
+	// AUTOSTANDING
+	// ===================
+	string autostand_str
+	{
+		string	"_Autostand"
+		pos		"500 310"
+	}
+	selectbox select_autostand
+	{
+		image	"menu/selectbox_green"
+		pos		"758 310"
+		size	"130 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar autostand"
+		option confirm_value {
+			label	"_Yes"
+			value	"1"
+			action	""
+		}
+		option noconfirm_value {
+			label	"_No"
+			value	"0"
+			action	""
+		}
+	}
+
 
 	// ===================
 	// JOYSTICK SELECTION

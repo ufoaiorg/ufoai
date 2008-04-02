@@ -1360,6 +1360,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	int oldState;
 	qboolean moveDiagonal;
 	qboolean autoCrouchRequired = qfalse;
+	int autoStandEnabled;
 
 	ent = g_edicts + num;
 
@@ -1371,11 +1372,11 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, MAX_ROUTE);
 	length = gi.MoveLength(gi.routingMap, to, qfalse);
 
-	/* FIXME: if they are shot by enemy RF (and so stop walking),
-	 * they auto-crouch again. probably should not. */
-	/* FIXME: Control this behaviour with a hud button or game option cvar */
-	/* Autostand: check if the actor is crouched...*/
-	if (ent->state & STATE_CROUCHED) {
+	/* Find out if player wants the autostand feature. */
+	autoStandEnabled = atoi(Info_ValueForKey(player->pers.userinfo,"autostand"));
+
+	/* Autostand: check if the actor is crouched and player wants autostanding...*/
+	if ((ent->state & STATE_CROUCHED) && autoStandEnabled) {
 		/* ...and if this is a long walk... */
 		if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_WALKING_FACTOR - 1.0f)) {
 			/* ...make them stand first. If the player really wants them to walk a long
@@ -1535,6 +1536,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				if (G_ReactToMove(ent, qtrue)) {
 					if (G_ReactToMove(ent, qfalse))
 						status |= VIS_STOP;
+					autoCrouchRequired = qfalse;
 					/* @todo Let the camera center on the attacker if he's visible
 					 * if he's invisible let the target turn in the shooting direction
 					 * of the attacker (G_Turn) - also let all team members now
