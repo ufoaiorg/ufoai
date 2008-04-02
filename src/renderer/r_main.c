@@ -79,7 +79,6 @@ cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_swapinterval;
 cvar_t *r_multisample;
-cvar_t *r_normalmap;
 cvar_t *r_texturemode;
 cvar_t *r_texturealphamode;
 cvar_t *r_texturesolidmode;
@@ -432,7 +431,6 @@ static void R_Register (void)
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_CONTEXT, NULL);
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_CONTEXT, NULL);
-	r_normalmap = Cvar_Get("r_normalmap", "1", CVAR_ARCHIVE, NULL);
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);

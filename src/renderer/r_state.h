@@ -47,7 +47,6 @@ typedef struct gltexunit_s {
 /* these are defined for convenience */
 #define texunit_diffuse		r_state.texunits[0]
 #define texunit_lightmap	r_state.texunits[1]
-#define texunit_normalmap	r_state.texunits[2]
 #define texunit_specularmap	r_state.texunits[3]
 
 typedef struct {
@@ -77,7 +76,6 @@ typedef struct {
 	/* states */
 	qboolean blend_enabled;
 	qboolean alpha_test_enabled;
-	qboolean normalmap_enabled;
 	qboolean lighting_enabled;
 	qboolean warp_enabled;
 
@@ -98,14 +96,12 @@ void R_EnableMultitexture(gltexunit_t *texunit, qboolean enable);
 qboolean R_SelectTexture(gltexunit_t *texunit);
 void R_BindTexture(int texnum);
 void R_BindLightmapTexture(GLuint texnum);
-void R_BindNormalmapTexture(GLuint texnum);
 void R_BindBuffer(GLenum target, GLenum type, GLuint id);
 void R_TexEnv(GLenum value);
 void R_BlendFunc(GLenum src, GLenum dest);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableLighting(qboolean enable);
-void R_EnableNormalmap(qboolean enable);
 void R_EnableWarp(qboolean enable);
 void R_DisableEffects(void);
 void R_BindArray(GLenum target, GLenum type, void *array);

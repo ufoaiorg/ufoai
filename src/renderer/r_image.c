@@ -1101,6 +1101,15 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	if (scaled_height < 1)
 		scaled_height = 1;
 
+	/* some images need very little attention (pics, fonts, etc..) */
+	if (!mipmap && scaled_width == width && scaled_height == height) {
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+
+		qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		return;
+	}
+
 	if (scaled_width != width || scaled_height != height) {  /* whereas others need to be scaled */
 		scaled = (unsigned *)Mem_PoolAlloc(scaled_width * scaled_height * sizeof(unsigned), vid_imagePool, 0);
 		R_ScaleTexture(data, width, height, scaled, scaled_width, scaled_height);

@@ -54,11 +54,6 @@ static inline void R_SetVertexArrayState (const model_t* mod)
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoords);
 		R_SelectTexture(&texunit_diffuse);
 	}
-	if (texunit_normalmap.enabled) {  /* normalmap texcoords */
-		R_SelectTexture(&texunit_normalmap);
-		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoords);
-		R_SelectTexture(&texunit_diffuse);
-	}
 
 	if (r_state.lighting_enabled)  /* normal vectors for lighting */
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
@@ -79,11 +74,6 @@ static inline void R_SetVertexBufferState (const model_t* mod)
 		R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoord_buffer);
 		R_SelectTexture(&texunit_diffuse);
 	}
-	if (texunit_normalmap.enabled) {  /* normalmap texcoords */
-		R_SelectTexture(&texunit_normalmap);
-		R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoord_buffer);
-		R_SelectTexture(&texunit_diffuse);
-	}
 
 	if (r_state.lighting_enabled)  /* normal vectors for lighting */
 		R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
@@ -99,11 +89,6 @@ static void R_ResetVertexArrayState (void)
 
 	if (texunit_lightmap.enabled) {
 		R_SelectTexture(&texunit_lightmap);
-		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-		R_SelectTexture(&texunit_diffuse);
-	}
-	if (texunit_normalmap.enabled) {
-		R_SelectTexture(&texunit_normalmap);
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 		R_SelectTexture(&texunit_diffuse);
 	}
@@ -159,9 +144,6 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	if (texunit_lightmap.enabled)  /* lightmap */
 		R_BindLightmapTexture(surf->lightmaptexturenum);
 
-	if (texunit_normalmap.enabled && surf->texinfo->image->normalmap)  /* normalmap */
-		R_BindNormalmapTexture(surf->texinfo->image->normalmap->texnum);
-
 	R_CheckError();
 }
 
@@ -208,11 +190,9 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 
 	R_EnableMultitexture(&texunit_lightmap, qtrue);
 
-	R_EnableNormalmap(qtrue);
 	R_EnableLighting(qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableLighting(qfalse);
-	R_EnableNormalmap(qfalse);
 
 	R_EnableMultitexture(&texunit_lightmap, qfalse);
 }
