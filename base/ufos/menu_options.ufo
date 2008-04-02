@@ -1276,7 +1276,7 @@ menu options_input
 		pos		"758 310"
 		size	"130 20"
 		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar autostand"
+		cvar	"*cvar cl_autostand"
 		option confirm_value {
 			label	"_Yes"
 			value	"1"
