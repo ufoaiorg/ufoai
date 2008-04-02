@@ -182,7 +182,7 @@ static void SV_Begin_f (void)
 
 	/* handle the case of a level changing while a client was connecting */
 	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
-		Com_Printf("SV_Begin_f from different level\n");
+		Com_Printf("SV_Begin_f from different level (%i)\n", atoi(Cmd_Argv(1)));
 		SV_New_f();
 		return;
 	}

@@ -1778,7 +1778,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	for (i = 0; i < num; i++)
 		chr->score.stuns[i] = MSG_ReadShort(sb);
 	chr->score.assignedMissions = MSG_ReadShort(sb);
-	chr->score.rank = MSG_ReadByte(sb);
+	chr->score.rank = MSG_ReadShort(sb);
 
 	/* Load user-defined (default) reaction-state. */
 	chr->reservedTus.reserveReaction = MSG_ReadShort(sb);
@@ -2010,7 +2010,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			MSG_WriteShort(buf, employee->chr.score.stuns[j]);
 		MSG_WriteShort(buf, employee->chr.score.assignedMissions);
-		MSG_WriteByte(buf, employee->chr.score.rank);
+		MSG_WriteShort(buf, employee->chr.score.rank);
 
 		/* Save user-defined (default) reaction-state. */
 		MSG_WriteShort(buf, employee->chr.reservedTus.reserveReaction);

@@ -4678,16 +4678,16 @@ static void CL_UpdateCharacterStats (int won)
 			chr->score.assignedMissions++;
 
 			/** CL_UpdateCharacterSkills(chr);
-			This is now done in g_client.c:G_UpdateCharacterSkills
-			@todo I think we can remove this later on. I've left it here just FYI for now. */
+			 * This is now done in g_client.c:G_UpdateCharacterSkills
+			 * @todo I think we can remove this later on. I've left it here just FYI for now. */
 
-			/* @todo: use chrScore_t to determine negative influence on soldier here,
-			   like killing too many civilians and teammates can lead to unhire and disband
-			   such soldier, or maybe rank degradation. */
+			/** @todo: use chrScore_t to determine negative influence on soldier here,
+			 * like killing too many civilians and teammates can lead to unhire and disband
+			 * such soldier, or maybe rank degradation. */
 
 			/* Check if the soldier meets the requirements for a higher rank
-			   and do a promotion. */
-			/* @todo: use param[in] in some way. */
+			 * and do a promotion. */
+			/** @todo: use param[in] in some way. */
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > chr->score.rank; j--) {
 					rank = &gd.ranks[j];
