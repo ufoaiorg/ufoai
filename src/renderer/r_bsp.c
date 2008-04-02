@@ -57,17 +57,12 @@ static void R_DrawInlineBrushModel (entity_t *e, vec3_t modelorg)
 	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
 
 	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
-
 		/* find which side of the surf we are on  */
 		switch(surf->plane->type){
 		case PLANE_X:
-			dot = modelorg[0] - surf->plane->dist;
-			break;
 		case PLANE_Y:
-			dot = modelorg[1] - surf->plane->dist;
-			break;
 		case PLANE_Z:
-			dot = modelorg[2] - surf->plane->dist;
+			dot = modelorg[surf->plane->type] - surf->plane->dist;
 			break;
 		default:
 			dot = DotProduct(modelorg, surf->plane->normal) - surf->plane->dist;

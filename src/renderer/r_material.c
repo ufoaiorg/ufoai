@@ -277,6 +277,11 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	R_EnableMultitexture(&texunit_lightmap, qfalse);
+
+#ifdef DEBUG
+	if (qglIsEnabled(GL_COLOR_ARRAY))
+		Com_Printf("R_DrawMaterialSurfaces: state leak - GL_COLOR_ARRAY\n");
+#endif
 }
 
 /**

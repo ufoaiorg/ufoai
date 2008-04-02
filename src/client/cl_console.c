@@ -575,7 +575,6 @@ void Con_DrawConsole (float frac)
 	int rows, row, lines;
 	char *text;
 	char version[MAX_VAR];
-	/*const vec4_t consoleBG = {0.1, 0.1, 0.1, 0.9};*/
 
 	lines = viddef.height * frac;
 	if (lines <= 0)
@@ -585,7 +584,6 @@ void Con_DrawConsole (float frac)
 		lines = viddef.height;
 
 	/* draw the background */
-	/*R_DrawFill(0, 0, viddef.width, viddef.height, ALIGN_UL, consoleBG);*/
 	R_DrawNormPic(0, lines - (int) viddef.height, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
 
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
