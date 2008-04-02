@@ -108,20 +108,17 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	const model_t* mod = r_mapTiles[surf->tile];
 
 	if (r_state.blend_enabled) {  /* alpha blend */
-		float a;
+		vec4_t color = {1.0, 1.0, 1.0, 1.0};
 		switch (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
 		case SURF_TRANS33:
-			a = 0.33;
+			color[3] = 0.33;
 			break;
 		case SURF_TRANS66:
-			a = 0.66;
-			break;
-		default:  /* both flags mean use the texture's alpha channel */
-			a = 1.0;
+			color[3] = 0.66;
 			break;
 		}
 
-		qglColor4f(1.0, 1.0, 1.0, a);
+		R_Color(color);
 	}
 
 	if (surf->texinfo->flags & SURF_ALPHATEST) {  /* alpha test */
