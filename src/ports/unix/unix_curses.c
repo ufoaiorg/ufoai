@@ -240,13 +240,20 @@ char *Curses_Input (void)
 			}
 			break;
 
+		case KEY_DC:
+			if (inputpos < strlen(input[inputline])) {
+				strcpy(input[inputline] + inputpos, input[inputline] + inputpos + 1);
+				curses_redraw |= 1;
+			}
+			break;
+
 		/* Backspace - remove character */
 		case '\b':
 		case 127:
 		case KEY_BACKSPACE:
 			if (inputpos) {
+				strcpy(input[inputline] + inputpos - 1, input[inputline] + inputpos);
 				inputpos--;
-				input[inputline][inputpos] = '\0';
 				curses_redraw |= 1;
 			}
 			break;
