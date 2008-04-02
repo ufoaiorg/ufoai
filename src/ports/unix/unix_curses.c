@@ -52,6 +52,7 @@ static int inputpos = 0;
 static char curses_text[CURSES_SIZE];
 
 static char versionstring[MAX_VAR];
+static int inputInsert = 0;
 
 /**
  * @brief refresh the console (after window resizement)
@@ -162,7 +163,7 @@ char *Curses_Input (void)
 			inputline = (inputline + 1) & (CURSES_HISTORYSIZE - 1);
 			historyline = inputline;
 
-			curses_redraw |= 2;
+			Curses_Refresh();
 
 			return input[line];
 
@@ -178,7 +179,7 @@ char *Curses_Input (void)
 				curses_scroll += CURSES_SCROLL;
 				if (curses_scroll > curses_lastline)
 					curses_scroll = curses_lastline;
-				curses_redraw |= 2;
+				Curses_Refresh();
 			}
 			break;
 
@@ -188,7 +189,7 @@ char *Curses_Input (void)
 				curses_scroll -= CURSES_SCROLL;
 				if (curses_scroll < 0)
 					curses_scroll = 0;
-				curses_redraw |= 2;
+				Curses_Refresh();
 			}
 			break;
 
@@ -258,6 +259,10 @@ char *Curses_Input (void)
 			}
 			break;
 
+		case KEY_IC:
+			inputInsert ^= 1;
+			break;
+
 		default:
 			/* Basic character input */
 			if ((key >= ' ') && (key <= '~') && (inputpos < CURSES_LINESIZE - 1)) {
@@ -280,7 +285,7 @@ void Curses_Resize (void)
 	endwin();
 	refresh();
 
-	curses_redraw = 2;
+	Curses_Refresh();
 	Curses_Draw();
 }
 
@@ -390,12 +395,12 @@ static void Curses_DrawConsole (void)
 void Curses_Draw (void)
 {
 	if (curses_redraw) {
-		if ((curses_redraw & 2) == 2) {
+		if (curses_redraw & 2) {
 			/* Refresh screen */
 			Curses_DrawBackground();
 			Curses_DrawConsole();
 			Curses_DrawInput();
-		} else if ((curses_redraw & 1) == 1) {
+		} else if (curses_redraw & 1) {
 			/* Refresh input only */
 			Curses_DrawInput();
 		}
