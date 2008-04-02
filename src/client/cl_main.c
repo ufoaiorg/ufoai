@@ -60,7 +60,7 @@ cvar_t *cl_selected;
 cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
 cvar_t *cl_numnames;
 /** Player preference: should the server make guys stand for long walks, to save TU. */
-static cvar_t *cl_autostand;
+cvar_t *cl_autostand;
 
 cvar_t *mn_main;
 cvar_t *mn_sequence;

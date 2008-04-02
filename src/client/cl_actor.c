@@ -967,7 +967,7 @@ void CL_PopupFiremodeReservation_f (void)
 		selChr->reservedTus.shotSettings.fmIdx = -1;
 		selChr->reservedTus.shotSettings.wpIdx = -1;
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
-		
+
 		/* Refresh button and tooltip. */
 		CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 		return;
@@ -2708,12 +2708,22 @@ static int CL_CheckAction (void)
  */
 static int CL_MoveLength (pos3_t to)
 {
+	const float length = Grid_MoveLength(&clMap, to, qfalse);
 	assert(selActor);
 
-	if (selActor->state & STATE_CROUCHED)
-		return Grid_MoveLength(&clMap, to, qfalse) * 1.5;
-	else
-		return Grid_MoveLength(&clMap, to, qfalse);
+	if (selActor->state & STATE_CROUCHED) {
+		if (cl_autostand->integer) { /* Is the player using autostand? */
+			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_WALKING_FACTOR - 1.0f)) {
+				return length + 2 * TU_CROUCH;
+			} else {
+				return length * TU_CROUCH_WALKING_FACTOR;
+			}
+		} else {
+			return length * TU_CROUCH_WALKING_FACTOR;
+		}
+	} else {
+		return length;
+	}
 }
 
 /**
@@ -3393,7 +3403,7 @@ void CL_ActorToggleReaction_f (void)
 		/* Set RF-mode info to undef. */
 		CL_SetReactionFiremode(selActor, -1, NONE, -1); /* Includes PA_RESERVE_STATE */
 	}
-	
+
 	/* Refresh button and tooltip. */
 	CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 }
