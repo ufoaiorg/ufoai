@@ -37,8 +37,6 @@ edict_t *g_edicts;
 
 cvar_t *password;
 
-/** Player preference: should the server make guys stand for long walks, to save TU. */
-cvar_t *autostand;
 cvar_t *sv_needpass;
 cvar_t *sv_maxplayersperteam;
 cvar_t *sv_maxsoldiersperteam;
@@ -155,7 +153,6 @@ static void G_Init (void)
 	sv_maxteams->modified = qfalse;
 
 	/* change anytime vars */
-	autostand = gi.Cvar_Get("autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
 	password = gi.Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	sv_needpass = gi.Cvar_Get("sv_needpass", "0", CVAR_SERVERINFO, NULL);
 	sv_filterban = gi.Cvar_Get("sv_filterban", "1", 0, NULL);

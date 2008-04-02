@@ -426,6 +426,9 @@ struct player_s {
 	qboolean spawned;			/**< already spawned? */
 	qboolean began;				/**< the player sent his 'begin' already */
 	qboolean ready;				/**< ready to end his round */
+
+	qboolean autostand;			/**< autostand for long walks */
+
 	client_persistant_t pers;
 };
 

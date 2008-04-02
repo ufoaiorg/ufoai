@@ -1360,7 +1360,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	int oldState;
 	qboolean moveDiagonal;
 	qboolean autoCrouchRequired = qfalse;
-	int autoStandEnabled;
 
 	ent = g_edicts + num;
 
@@ -1372,11 +1371,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, MAX_ROUTE);
 	length = gi.MoveLength(gi.routingMap, to, qfalse);
 
-	/* Find out if player wants the autostand feature. */
-	autoStandEnabled = atoi(Info_ValueForKey(player->pers.userinfo,"autostand"));
-
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
-	if ((ent->state & STATE_CROUCHED) && autoStandEnabled) {
+	if ((ent->state & STATE_CROUCHED) && player->autostand) {
 		/* ...and if this is a long walk... */
 		if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_WALKING_FACTOR - 1.0f)) {
 			/* ...make them stand first. If the player really wants them to walk a long
@@ -3222,6 +3218,9 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 	Q_strncpyz(player->pers.netname, s, sizeof(player->pers.netname));
 
 	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
+
+	s = Info_ValueForKey(userinfo, "cl_autostand");
+	player->autostand = atoi(s);
 
 	/* send the updated config string */
 	gi.ConfigString(CS_PLAYERNAMES + player->num, player->pers.netname);
