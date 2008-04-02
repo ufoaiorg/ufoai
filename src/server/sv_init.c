@@ -1205,7 +1205,7 @@ static void SV_InitGame (void)
 /**
  * @brief Loads the map
  * @note the full syntax is:
- * @note map [+]<map> [<assembly>]
+ * @code map [day|night] [+]<map> [<assembly>] @endcode
  * @sa SV_SpawnServer
  * @sa SV_Map_f
  * @param[in] day Use the day version of the map (only lightmap)

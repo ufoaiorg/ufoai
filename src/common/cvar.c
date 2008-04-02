@@ -852,7 +852,7 @@ void Cvar_FixCheatVars (void)
 {
 	cvar_t *var;
 
-	if (!(Com_ServerState() && !Cvar_VariableInteger("cheats")))
+	if (!(Com_ServerState() && !Cvar_VariableInteger("sv_cheats")))
 		return;
 
 	for (var = cvar_vars; var; var = var->next) {

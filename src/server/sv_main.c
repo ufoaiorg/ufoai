@@ -794,7 +794,7 @@ void SV_Init (void)
 	SV_InitOperatorCommands();
 
 	rcon_password = Cvar_Get("rcon_password", "", 0, NULL);
-	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
+	Cvar_Get("sv_cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	Cvar_Get("sv_protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
