@@ -75,10 +75,7 @@ const char *Sys_GetCurrentUser (void)
 	unsigned long size = sizeof(s_userName);
 
 	if (!GetUserName(s_userName, &size))
-		Q_strncpyz(s_userName, "player", sizeof(s_userName));
-
-	if (!s_userName[0])
-		Q_strncpyz(s_userName, "player", sizeof(s_userName));
+		Q_strncpyz(s_userName, "", sizeof(s_userName));
 
 	return s_userName;
 }

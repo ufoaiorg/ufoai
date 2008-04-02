@@ -2075,7 +2075,7 @@ static void CL_InitLocal (void)
 
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
-	cl_name = Cvar_Get("cl_name", "", CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
+	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
 	cl_team = Cvar_Get("cl_team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
 	cl_msg = Cvar_Get("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
