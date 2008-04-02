@@ -134,7 +134,7 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 	gd.numBases++;
 
 	/* set up the base with buildings that have the autobuild flag set */
-	B_SetUpBase(base);
+	B_SetUpBase(base, cl_start_employees->integer, cl_start_buildings->integer);
 
 	return qtrue;
 }
@@ -5630,11 +5630,6 @@ static void CL_GameSkirmish_f (void)
 	if (!ccs.singleplayer)
 		return;
 
-	if (!cl_start_employees->integer || !cl_start_buildings->integer) {
-		Com_Printf("Activate initial employees and buildings in game options to play a skirmish game\n");
-		return;
-	}
-
 	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
 	if (!md)
 		return;
@@ -5675,7 +5670,7 @@ static void CL_GameSkirmish_f (void)
 	CL_UpdateCredits(MAX_CREDITS);
 
 	/* build our pseudo base */
-	B_SetUpBase(base);
+	B_SetUpBase(base, qtrue, qtrue);
 
 	/* execute the pending commands - e.g. aircraft are added via commandbuffer */
 	Cbuf_Execute();
@@ -5700,7 +5695,7 @@ static void CL_GameSkirmish_f (void)
 		return;
 	}
 
-	INV_InitialEquipment(base, curCampaign);
+	INV_InitialEquipment(base, curCampaign, qtrue);
 
 	Cvar_Set("mn_main", "multiplayerInGame");
 

@@ -50,7 +50,7 @@ void INV_ParseComponents(const char *name, const char **text);
 void INV_CollectingItems(int won);
 void INV_SellOrAddItems(aircraft_t *aircraft);
 void INV_EnableAutosell(const technology_t *tech);
-void INV_InitialEquipment(base_t *base, const campaign_t* campaign);
+void INV_InitialEquipment(base_t *base, const campaign_t* campaign, qboolean assignInitial);
 components_t *INV_GetComponentsByItem(const objDef_t *item);
 int INV_DisassemblyItem(base_t *base, components_t *comp, qboolean calculate);
 void INV_UpdateStorageCap(base_t *base);

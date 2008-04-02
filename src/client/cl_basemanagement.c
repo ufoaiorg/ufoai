@@ -991,7 +991,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	CL_GameTimeStop();
 }
 
-static void B_AddBuildingToBase (building_t *building, base_t *base, building_t *template)
+static void B_AddBuildingToBase (building_t *building, base_t *base, building_t *template, qboolean hire)
 {
 	*building = *template;
 	/* self-link to building-list in base */
@@ -1036,16 +1036,15 @@ static void B_AddBuildingToBase (building_t *building, base_t *base, building_t 
 	/* update the building-list */
 	B_BuildingInit(base);
 
-	if (cl_start_employees->integer)
+	if (hire)
 		B_HireForBuilding(base, building, -1);
-
 }
 
 /**
  * @brief Setup new base
  * @sa CL_NewBase
  */
-void B_SetUpBase (base_t* base)
+void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 {
 	int i;
 	building_t *building;
@@ -1066,13 +1065,13 @@ void B_SetUpBase (base_t* base)
 	/* this cvar is needed by B_SetBuildingByClick below*/
 	Cvar_SetValue("mn_base_id", base->idx);
 
-	if (cl_start_buildings->integer) {
+	if (buildings) {
 		for (i = 0; i < gd.numBuildingTemplates; i++) {
 			if (gd.buildingTemplates[i].autobuild
 			 || (gd.numBases == 1 && gd.buildingTemplates[i].firstbase)) {
 				/* @todo: implement check for moreThanOne */
 				building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i]);
+				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i], hire);
 			}
 		}
 	} else {
@@ -1081,14 +1080,14 @@ void B_SetUpBase (base_t* base)
 			building = &gd.buildingTemplates[i];
 			if (building->buildingType == B_ENTRANCE) {
 				building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i]);
+				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i], hire);
 				break;
 			}
 		}
 	}
 
 	/* if no autobuild, set up zero build time for the first base */
-	if (gd.numBases == 1 && !cl_start_buildings->integer)
+	if (gd.numBases == 1 && !buildings)
 		ccs.instant_build = 1;
 
 	/* Set up default buy/sell factors for this base. */
@@ -2523,7 +2522,7 @@ static void B_BuildBase_f (void)
 			if (gd.numBases == 1) {
 				int i;
 
-				INV_InitialEquipment(baseCurrent, curCampaign);
+				INV_InitialEquipment(baseCurrent, curCampaign, cl_start_employees->integer);
 				/* Auto equip interceptors with weapons and ammos */
 				for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
 					aircraft_t *aircraft = &baseCurrent->aircraft[i];

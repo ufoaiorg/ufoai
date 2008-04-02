@@ -343,7 +343,7 @@ void INV_EnableAutosell (const technology_t *tech)
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  */
-void INV_InitialEquipment (base_t *base, const campaign_t* campaign)
+void INV_InitialEquipment (base_t *base, const campaign_t* campaign, qboolean assignInitial)
 {
 	int i, price = 0;
 	const equipDef_t *ed;
@@ -363,7 +363,7 @@ void INV_InitialEquipment (base_t *base, const campaign_t* campaign)
 		base->storage = *ed;
 
 	/* Initial soldiers and their equipment. */
-	if (cl_start_employees->integer) {
+	if (assignInitial) {
 		Cbuf_AddText("assign_initial;");
 	} else {
 		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
