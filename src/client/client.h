@@ -103,7 +103,6 @@ typedef struct client_state_s {
 
 	/** server state information */
 	int servercount;			/**< server identification for prespawns */
-	char gamedir[MAX_QPATH];	/**< the gamedir the server is running with */
 	int pnum;
 	int actTeam;
 

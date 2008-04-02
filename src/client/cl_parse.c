@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "menu/m_popup.h"
 
-extern cvar_t *fs_gamedir;
-
 /**
  * @brief see also svc_ops_e in common.h
  * @note don't change the array size - a NET_ReadByte can
@@ -334,26 +332,17 @@ static void CL_ParseServerData (struct dbuffer *msg)
 
 	cl.servercount = NET_ReadLong(msg);
 
-	/* game directory */
-	str = NET_ReadString(msg);
-	Q_strncpyz(cl.gamedir, str, sizeof(cl.gamedir));
-
-	/* set gamedir */
-	if ((*str && (!fs_gamedir->string || !*fs_gamedir->string || strcmp(fs_gamedir->string, str))) || (!*str && (fs_gamedir->string || *fs_gamedir->string)))
-		Cvar_Set("fs_gamedir", str);
-
 	/* parse player entity number */
 	cl.pnum = NET_ReadShort(msg);
 
 	/* get the full level name */
 	str = NET_ReadString(msg);
 
-	Com_DPrintf(DEBUG_CLIENT, "serverdata: count %d, gamedir %s, pnum %d, level %s\n",
-		cl.servercount, cl.gamedir, cl.pnum, str);
+	Com_DPrintf(DEBUG_CLIENT, "serverdata: count %d, pnum %d, level %s\n", cl.servercount, cl.pnum, str);
 
 	if (cl.pnum >= 0) {
 		/* seperate the printfs so the server message can have a color */
-/*		Com_Printf("%c%s\n", COLORED_GREEN, str);*/
+		/*Com_Printf("%c%s\n", COLORED_GREEN, str);*/
 		/* need to prep refresh at next oportunity */
 		cl.refresh_prepped = qfalse;
 	}

@@ -159,7 +159,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	} else {
 		Com_sprintf(dl->filePath, sizeof(dl->filePath), "%s/%s", FS_Gamedir(), entry->ufoPath);
 
-		Com_sprintf(tempFile, sizeof(tempFile), "%s/%s", cl.gamedir, entry->ufoPath);
+		Com_sprintf(tempFile, sizeof(tempFile), BASEDIRNAME"/%s", entry->ufoPath);
 		CL_EscapeHTTPPath(tempFile, escapedFilePath);
 
 		strcat(dl->filePath, ".tmp");
@@ -342,7 +342,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 		char listPath[MAX_OSPATH];
 		char filePath[MAX_OSPATH];
 
-		Com_sprintf(filePath, sizeof(filePath), "%s/%s", cl.gamedir, ufoPath);
+		Com_sprintf(filePath, sizeof(filePath), BASEDIRNAME"/%s", ufoPath);
 
 		COM_StripExtension(filePath, listPath, sizeof(listPath));
 		strcat(listPath, ".filelist");

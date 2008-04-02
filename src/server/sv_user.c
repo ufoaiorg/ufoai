@@ -58,7 +58,6 @@ sv_client and sv_player will be valid.
  */
 static void SV_New_f (void)
 {
-	const char *gamedir;
 	int playernum;
 
 	Com_DPrintf(DEBUG_SERVER, "New() from %s\n", sv_client->name);
@@ -77,9 +76,8 @@ static void SV_New_f (void)
 	/* client state to prevent multiple new from causing high cpu / overflows. */
 	SV_SetClientState(sv_client, cs_spawning);
 
-	/* serverdata needs to go over for all types of servers */
-	/* to make sure the protocol is right, and to set the gamedir */
-	gamedir = Cvar_VariableString("fs_gamedir");
+	/* serverdata needs to go over for all types of servers
+	 * to make sure the protocol is right, and to set the gamedir */
 	playernum = sv_client - svs.clients;
 
 	/* send the serverdata */
@@ -88,7 +86,6 @@ static void SV_New_f (void)
 		NET_WriteByte(msg, svc_serverdata);
 		NET_WriteLong(msg, PROTOCOL_VERSION);
 		NET_WriteLong(msg, svs.spawncount);
-		NET_WriteString(msg, gamedir);
 
 		NET_WriteShort(msg, playernum);
 

@@ -456,10 +456,6 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 				var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 				var->value = atof(var->string);
 				var->integer = atoi(var->string);
-				if (!Q_strncmp(var->name, "fs_gamedir", MAX_VAR)) {
-					FS_SetGamedir(var->string);
-					FS_ExecAutoexec();
-				}
 			}
 
 			if (var->check)
@@ -593,10 +589,6 @@ void Cvar_UpdateLatchedVars (void)
 		var->latched_string = NULL;
 		var->value = atof(var->string);
 		var->integer = atoi(var->string);
-		if (!Q_strncmp(var->name, "fs_gamedir", MAX_VAR)) {
-			FS_SetGamedir(var->string);
-			FS_ExecAutoexec();
-		}
 	}
 }
 

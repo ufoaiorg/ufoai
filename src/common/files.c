@@ -35,7 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* in memory */
 
 static cvar_t *fs_basedir;
-cvar_t *fs_gamedir;
 
 typedef struct filelink_s {
 	struct filelink_s *next;
@@ -641,51 +640,6 @@ void FS_ExecAutoexec (void)
 	Cbuf_Execute();  /* execute it */
 }
 
-
-/**
- * @brief Sets the gamedir and path to a different directory.
- */
-void FS_SetGamedir (const char *dir)
-{
-	searchpath_t *next;
-
-	if (strstr(dir, "..") || strstr(dir, "/")
-		|| strstr(dir, "\\") || strstr(dir, ":")) {
-		Com_Printf("Gamedir should be a single filename, not a path\n");
-		return;
-	}
-
-	/* free up any current game dir info */
-	while (fs_searchpaths != fs_base_searchpaths) {
-		if (fs_searchpaths->pack) {
-			FS_FCloseFile(&fs_searchpaths->pack->handle);
-
-			Mem_Free(fs_searchpaths->pack->files);
-			Mem_Free(fs_searchpaths->pack);
-		}
-		next = fs_searchpaths->next;
-		Mem_Free(fs_searchpaths);
-		fs_searchpaths = next;
-	}
-
-	/* flush all data, so it will be forced to reload */
-	if (sv_dedicated && !sv_dedicated->integer)
-		Cbuf_AddText("vid_restart\nsnd_restart\n");
-
-	if (!Q_strncmp(dir, BASEDIRNAME, strlen(BASEDIRNAME)) || (*dir == 0)) {
-		Cvar_FullSet("fs_gamedir", "", CVAR_LATCH | CVAR_SERVERINFO);
-	} else {
-		Cvar_FullSet("fs_gamedir", dir, CVAR_SERVERINFO | CVAR_NOSET);
-#ifdef PKGDATADIR
-		/* add the system search path */
-		FS_AddGameDirectory(va(PKGLIBDIR"/%s", dir));
-		FS_AddGameDirectory(va(PKGDATADIR"/%s", dir));
-#endif
-		FS_AddHomeAsGameDirectory(dir);
-	}
-}
-
-
 /**
  * @brief Creates a filelink_t
  */
@@ -935,11 +889,6 @@ void FS_InitFilesystem (void)
 
 	/* any set gamedirs will be freed up to here */
 	fs_base_searchpaths = fs_searchpaths;
-
-	/* check for game override */
-	fs_gamedir = Cvar_Get("fs_gamedir", "", CVAR_LATCH | CVAR_SERVERINFO, "If you want to start a mod not located in "BASEDIRNAME);
-	if (fs_gamedir->string[0])
-		FS_SetGamedir(fs_gamedir->string);
 }
 
 /* FIXME: This block list code is broken in terms of filename order
