@@ -194,7 +194,7 @@ char *Curses_Input (void)
 			break;
 
 		case KEY_END:
-			while (input[historyline][inputpos]) {
+			while (input[inputline][inputpos]) {
 				inputpos++;
 			}
 			curses_redraw |= 1;
@@ -211,7 +211,8 @@ char *Curses_Input (void)
 			if (*input[(historyline + CURSES_HISTORYSIZE - 1) % CURSES_HISTORYSIZE]) {
 				historyline = (historyline + CURSES_HISTORYSIZE - 1) % CURSES_HISTORYSIZE;
 				inputpos = 0;
-				while (input[historyline][inputpos])
+				snprintf(input[inputline], CURSES_LINESIZE - 1, input[historyline]);
+				while (input[inputline][inputpos])
 					inputpos++;
 				curses_redraw |= 1;
 			}
@@ -221,21 +222,22 @@ char *Curses_Input (void)
 			if (historyline != inputline) {
 				historyline = (historyline + 1) % CURSES_HISTORYSIZE;
 				inputpos = 0;
-				while (input[historyline][inputpos])
+				snprintf(input[inputline], CURSES_LINESIZE - 1, input[historyline]);
+				while (input[inputline][inputpos])
 					inputpos++;
 				curses_redraw |= 1;
 			}
 			break;
 
 		case KEY_LEFT:
-			if (*input[historyline] &&  inputpos > 0) {
+			if (*input[inputline] && inputpos > 0) {
 				inputpos--;
 				curses_redraw |= 1;
 			}
 			break;
 
 		case KEY_RIGHT:
-			if (*input[historyline] && inputpos < CURSES_LINESIZE-1 && input[historyline][inputpos]) {
+			if (*input[inputline] && inputpos < CURSES_LINESIZE - 1 && input[inputline][inputpos]) {
 				inputpos++;
 				curses_redraw |= 1;
 			}
@@ -330,7 +332,7 @@ static void Curses_DrawInput (void)
 	for (x = 2; x < stdwin->_maxx - 1; x++)
 		mvaddstr(stdwin->_maxy, x, " ");
 
-	mvaddnstr(stdwin->_maxy, 3, input[historyline], stdwin->_maxx - 5 < CURSES_LINESIZE ? stdwin->_maxx - 5 : CURSES_LINESIZE - 1);
+	mvaddnstr(stdwin->_maxy, 3, input[inputline], stdwin->_maxx - 5 < CURSES_LINESIZE ? stdwin->_maxx - 5 : CURSES_LINESIZE - 1);
 
 	/* move the cursor to input position */
 	wmove(stdwin, stdwin->_maxy, 3 + inputpos);
