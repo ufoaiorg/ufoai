@@ -1231,6 +1231,33 @@ menu options_input
 	// selectboxes must be the last clickable nodes
 
 	// ===================
+	// AUTOSTANDING
+	// ===================
+	string autostand_str
+	{
+		string	"_Autostand"
+		pos		"500 310"
+	}
+	selectbox select_autostand
+	{
+		image	"menu/selectbox_green"
+		pos		"758 310"
+		size	"130 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar cl_autostand"
+		option confirm_value {
+			label	"_Yes"
+			value	"1"
+			action	""
+		}
+		option noconfirm_value {
+			label	"_No"
+			value	"0"
+			action	""
+		}
+	}
+
+	// ===================
 	// CONFIRM ACTIONS
 	// ===================
 	string confirm_str
@@ -1261,34 +1288,6 @@ menu options_input
 			action	""
 		}
 	}
-
-	// ===================
-	// AUTOSTANDING
-	// ===================
-	string autostand_str
-	{
-		string	"_Autostand"
-		pos		"500 310"
-	}
-	selectbox select_autostand
-	{
-		image	"menu/selectbox_green"
-		pos		"758 310"
-		size	"130 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar cl_autostand"
-		option confirm_value {
-			label	"_Yes"
-			value	"1"
-			action	""
-		}
-		option noconfirm_value {
-			label	"_No"
-			value	"0"
-			action	""
-		}
-	}
-
 
 	// ===================
 	// JOYSTICK SELECTION
