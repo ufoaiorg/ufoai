@@ -45,7 +45,14 @@ my $description = {
 	type => '',
 	filename => ''
 };
-	
+
+my $technologySkipSettings = [
+	"description",		# { default "_monoknife_txt" }
+	"pre_description",	# { default "_monoknife_pre_txt" }
+	"mail",			# { from xxx to xxx ...}
+	"mail_pre"		# { from xxx to xxx ...}
+];
+
 my $technologySimpleSettings = [
 	"type",		# weapon
 	"up_chapter", 	# equipment
@@ -53,34 +60,6 @@ my $technologySimpleSettings = [
 	"time",		# 100
 	"producetime"	# 100
 ];
-
-#	description =>	[],	# { default "_monoknife_txt" }
-#	pre_description =>	[]	# { default "_monoknife_pre_txt" }
-	#~ }
-
-	#~ mail_pre
-	#~ {
-		#~ from	"_mail_from_paul_navarre"
-		#~ to		"_mail_to_base_commander"
-		#~ subject	"_Monomolecular Blades"
-		#~ icon	icons/tech
-	#~ }
-
-	#~ mail
-	#~ {
-		#~ from	"_mail_from_paul_navarre"
-		#~ to		"_mail_to_base_commander"
-		#~ subject	"_Monomolecular Blades"
-		#~ icon	icons/tech
-	#~ }
-
-	#~ require_AND
-	#~ {
-		#~ tech rs_weapon_kerrblade
-		#~ tech rs_alien_bloodspider_autopsy
-		#~ tech rs_skill_close
-		#~ tech rs_damage_normal
-	#~ }
 
 #######################################
 # Writing (.dot syntax)
@@ -142,7 +121,6 @@ sub parseUfoToken ($) {
 
 		# TODO Skip multi-line comment.
 		if ($text =~ m/^\/\*/) {
-			#$text =~ s/^.*?\*\///;	
 			$text =~ s/\/\*([^"]*?)\*\/([.\n?]*)/$2/; # Skip everything until (and including) closing "*/" characters.
 			$modified = 1;
 		}
@@ -169,6 +147,14 @@ sub parseUfoToken ($) {
 }
 
 
+
+#~ require_AND
+#~ {
+	#~ tech rs_weapon_kerrblade
+	#~ tech rs_alien_bloodspider_autopsy
+	#~ tech rs_skill_close
+	#~ tech rs_damage_normal
+#~ }
 sub parseTechRequirement ($$) {
 	my ($d, $techID) = @_;
 	my $text = $$d;
@@ -185,47 +171,69 @@ sub parseTechRequirement ($$) {
 	
 	return $req;
 }
+
+sub parseSkip ($) {
+	my ($d) = @_;
+	my $text = $$d;
 	
+	$text =~ s/\{([^\}]*?)\}([.\n?]*)/$2/;
+	
+	$$d = $text;
+}
+
 sub parseTech ($) {
 	my ($d) = @_;
 	my $text = $$d;
 
 	my $tech = {};
 	
-	my $token = parseUfoToken($d);
+	my $token = parseUfoToken(\$text);
 	
 	if ($token ne 'tech') {
-		die "Expecting 'tech' keyword, got this instead: '".$token."'\n";
+		die "Expecting 'tech' keyword, got this instead: '", $token, "'\n";
 	}
 
-	$token = parseUfoToken($d);
+	$token = parseUfoToken(\$text);
 	my $techID = $token;
 
-	$token = parseUfoToken($d);
+	$token = parseUfoToken(\$text);
 	
 	if ($token ne '{') {
 		die "Empty tech '", $techID, "' found.\n";
 	}
 	
 	# TODO parse tech
+	$token = parseUfoToken(\$text);
 	while ($token ne '}') {
-		$token = parseUfoToken($d);
-		foreach my $setting (@{$technologySimpleSettings}) {
+		foreach my $setting (@{$technologySkipSettings}) {
 			if ($token =~ m/^$setting/) {
-				$tech->{$setting} = parseUfoToken($d);
+				parseSkip(\$text);
+				$token = parseUfoToken(\$text);
+				print "after skip: $token\n";
 			}
 		}
-		
-		$token = parseUfoToken($d);
+
+		foreach my $setting (@{$technologySimpleSettings}) {
+			if ($token =~ m/^$setting/) {
+				$tech->{$setting} = parseUfoToken(\$text);
+				$token = parseUfoToken(\$text);
+				print "after set: $token\n";
+			}
+		}
 
 		if ($token eq "require_AND") {
-			$tech->{'AND'} = parseTechRequirement($d, $techID);
+			$tech->{'AND'} = parseTechRequirement(\$text, $techID);
+			print "after AND\n";
 		} elsif ($token eq "require_OR") {
-			$tech->{'OR'} = parseTechRequirement($d, $techID);
+			$tech->{'OR'} = parseTechRequirement(\$text, $techID);
+			print "after OR\n";
 		}
+		$token = parseUfoToken(\$text);
+		print "End of cycle\n";
 		
 	}
 	
+	$$d = $text;
 	return $tech;
 }
 
@@ -295,14 +303,18 @@ over several lines"
 	time	100
 	producetime	100
 }';
-my $token = 'fixme2';
-while ($token ne '' && $techTestString ne '') {
-	$token = parseUfoToken(\$techTestString);
-	print "token: '", $token, "'\n";
-	#print "text : '", $techTestString, "'\n";
-	#$token = '';
-}
+#my $token = 'fixme2';
+#while ($token ne '' && $techTestString ne '') {
+#	$token = parseUfoToken(\$techTestString);
+#	print "token: '", $token, "'\n";
+#	#print "text : '", $techTestString, "'\n";
+#	#$token = '';
+#}
 
+my $tech = {};
+$tech = parseTech(\$techTestString);
+use Data::Dumper;
+print Dumper($tech);
 
 my $graphvizExample = '
 graph G {
