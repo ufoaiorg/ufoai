@@ -2108,6 +2108,19 @@ mapdef community_centre
 //	}
 //}
 
+
+///////////////////////
+// UFOCRASH RANDOM MAPS
+///////////////////////
+
+mapdef ufocrash
+{
+	map				"+ufocrash"
+	multiplayer		false
+	description		"_UFO Crashsite."
+	maxaliens		8
+}
+
 ///////////////////////
 // ALIEN BASE
 ///////////////////////
@@ -2118,7 +2131,6 @@ mapdef alienbase
 	multiplayer		false
 	description		"_An alien base."
 	storyrelated	true
-	multiplayer		false
 	maxaliens		8
 }
 
