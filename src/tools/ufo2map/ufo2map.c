@@ -111,9 +111,9 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 		} else if (!strcmp(argv[i],"-nofootstep")) {
 			config.generateFootstepFile = qfalse;
 			Com_Printf("generateFootstepFile = false\n");
-		} else if (!strcmp(argv[i],"-nomaterial")) {
-			config.generateMaterialFile = qfalse;
-			Com_Printf("generateMaterialFile = false\n");
+		} else if (!strcmp(argv[i],"-material")) {
+			config.generateMaterialFile = qtrue;
+			Com_Printf("generateMaterialFile = true\n");
 		} else if (!strcmp(argv[i], "-nofill")) {
 			Com_Printf("nofill = true\n");
 			config.nofill = qtrue;
@@ -269,7 +269,6 @@ static void U2M_SetDefaultConfigValues (void)
 	config.entity_scale = 1.0f;
 
 	config.generateFootstepFile = qtrue;
-	config.generateMaterialFile = qtrue;
 }
 
 static int CheckTimeDiff (const char *map, const char *bsp)
@@ -350,7 +349,7 @@ int main (int argc, char **argv)
 		" -nosubdiv                : \n"
 		" -noshare                 : \n"
 		" -nofootstep              : don't generate a footstep file\n"
-		" -nomaterial              : don't generate a material file\n"
+		" -material                : generate a material file\n"
 		" -notjunc                 : \n"
 		" -nowater                 : \n"
 		" -noweld                  : \n"
