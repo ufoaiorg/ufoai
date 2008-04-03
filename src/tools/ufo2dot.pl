@@ -31,9 +31,9 @@
 #		Multi-line support for text inside ""s
 #		Hopefully fixed comment parsing - still needs some testing. Also added a repeating cleanup function.
 #		First code to parse a technology and the reuirements inside it.
+#		Requirements are parsed now.
 #######################################
 # TODO
-#	* A nice function that can skip unneeded "{  }" stuff.
 #	* Parse research.ufo. See $techTestString for an example
 #	* Write .dot file (graphviz). See $graphvizExample for an example.
 #######################################
@@ -41,11 +41,12 @@
 use strict;
 use warnings;
 
-my $description = {
-	type => '',
-	filename => ''
-};
+my $filenames = [
+	"research.ufo",
+	"research_logic.ufo"
+];
 
+# Settings inside "tech" we'll just skip for now.
 my $technologySkipSettings = [
 	"description",		# { default "_monoknife_txt" }
 	"pre_description",	# { default "_monoknife_pre_txt" }
@@ -53,6 +54,7 @@ my $technologySkipSettings = [
 	"mail_pre"		# { from xxx to xxx ...}
 ];
 
+# Settings of "tech" with just one parameter that we want to parse.
 my $technologySimpleSettings = [
 	"type",		# weapon
 	"up_chapter", 	# equipment
@@ -60,6 +62,16 @@ my $technologySimpleSettings = [
 	"time",		# 100
 	"producetime"	# 100
 ];
+
+# Settings of requirements that we want to parse
+# The number tells us how many parameters they have.
+my $technologyRequirementSettings = {
+	"tech"		=> 1,
+	"alienglobal"	=> 1,
+	"item"		=> 2,
+	"alien"		=> 2,
+	"alien_dead"	=> 2
+};
 
 #######################################
 # Writing (.dot syntax)
@@ -82,7 +94,7 @@ sub printTechGroup ($) {
 			# subgraph techID_C { techID_OR -- techID; techID_AND -- techID_OR }
 			print 'subgraph ', $tech->id, '_C { ', $tech->id, '_OR -- ', $tech->id, '; ', $tech->id, '_AND -- ', $tech->id, '_OR }';
 		}
-		
+
 		if ($tech->OR && !$tech->AND) {
 			# subgraph techID_C { techID_OR -- techID; }
 			print 'subgraph ', $tech->id, '_C { ', $tech->id, '_OR -- ', $tech->id, ' }';
@@ -104,9 +116,9 @@ sub parseUfoToken ($) {
 
 	my $token = '';
 
+	# Clean the text up a bit
 	my $modified = 1;
-	# clean the 
-	while ($modified) {		
+	while ($modified) {
 		$modified = 0;
 
 		$text =~ s/^\s*//;	# Skip whitespace
@@ -119,7 +131,7 @@ sub parseUfoToken ($) {
 
 		$text =~ s/^\s*//;	# Skip whitespace
 
-		# TODO Skip multi-line comment.
+		# Skip multi-line comment.
 		if ($text =~ m/^\/\*/) {
 			$text =~ s/\/\*([^"]*?)\*\/([.\n?]*)/$2/; # Skip everything until (and including) closing "*/" characters.
 			$modified = 1;
@@ -128,9 +140,9 @@ sub parseUfoToken ($) {
 	}
 
 	$text =~ s/^\s*//;	# Skip whitespace
-	
+
 	# Garbage is gone at this point. Only the next token.
-	
+
 	# Parse (multi-line) text encloded by ""
 	if ($text =~ m/^"/) {
 		#print "\"\"\"\"\"\"\"\"\"\n";
@@ -155,29 +167,53 @@ sub parseUfoToken ($) {
 	#~ tech rs_skill_close
 	#~ tech rs_damage_normal
 #~ }
-sub parseTechRequirement ($$) {
+sub parseTechRequirements ($$) {
 	my ($d, $techID) = @_;
 	my $text = $$d;
 
-	my $req = [];
-	
-	my $token = parseUfoToken($d);
-	
+	my $reqs = [];
+
+	my $token = parseUfoToken(\$text);
+
 	if ($token ne '{') {
 		die "Empty tech requirement in '", $techID, "' found.\n";
 	}
-	
-	# TODO parse requirements
-	
-	return $req;
+
+	$token = parseUfoToken(\$text);
+	while ($token ne '}') {
+		my $req = {};
+		if (exists($technologyRequirementSettings->{$token})) {
+			$req->{'type'} = $token;
+			$token = parseUfoToken(\$text);
+			$req->{'value1'} = $token;
+
+			if ($technologyRequirementSettings->{$token} > 1) {
+				$token = parseUfoToken(\$text);
+				$req->{'value2'} = $token;
+			}
+
+			push(@{$reqs}, $req);
+			$token = parseUfoToken(\$text);
+		} else {
+			die "Unknown requirement type '", $token ,"' in tech '", $techID ,"'\n";
+		}
+	}
+
+	$$d = $text;
+	return $reqs;
 }
 
 sub parseSkip ($) {
 	my ($d) = @_;
 	my $text = $$d;
-	
-	$text =~ s/\{([^\}]*?)\}([.\n?]*)/$2/;
-	
+
+	#$text =~ s/\{([^\}]*?)\}([.\n?]*)/$2/;	# TODO how would this work?
+
+	my $token = parseUfoToken(\$text);
+	while ($token ne '}') {
+		$token = parseUfoToken(\$text);
+	}
+
 	$$d = $text;
 }
 
@@ -186,9 +222,9 @@ sub parseTech ($) {
 	my $text = $$d;
 
 	my $tech = {};
-	
+
 	my $token = parseUfoToken(\$text);
-	
+
 	if ($token ne 'tech') {
 		die "Expecting 'tech' keyword, got this instead: '", $token, "'\n";
 	}
@@ -197,19 +233,18 @@ sub parseTech ($) {
 	my $techID = $token;
 
 	$token = parseUfoToken(\$text);
-	
+
 	if ($token ne '{') {
 		die "Empty tech '", $techID, "' found.\n";
 	}
-	
-	# TODO parse tech
+
 	$token = parseUfoToken(\$text);
 	while ($token ne '}') {
 		foreach my $setting (@{$technologySkipSettings}) {
 			if ($token =~ m/^$setting/) {
 				parseSkip(\$text);
 				$token = parseUfoToken(\$text);
-				print "after skip: $token\n";
+				print "Skipped $setting - next: $token\n";
 			}
 		}
 
@@ -217,22 +252,23 @@ sub parseTech ($) {
 			if ($token =~ m/^$setting/) {
 				$tech->{$setting} = parseUfoToken(\$text);
 				$token = parseUfoToken(\$text);
-				print "after set: $token\n";
+				print "Parsed settings $setting - next: $token\n";
 			}
 		}
 
 		if ($token eq "require_AND") {
-			$tech->{'AND'} = parseTechRequirement(\$text, $techID);
-			print "after AND\n";
+			$tech->{'AND'} = parseTechRequirements(\$text, $techID);
+			$token = parseUfoToken(\$text);
+			print "Parsed AND - next: $token\n";
 		} elsif ($token eq "require_OR") {
-			$tech->{'OR'} = parseTechRequirement(\$text, $techID);
-			print "after OR\n";
+			$tech->{'OR'} = parseTechRequirements(\$text, $techID);
+			$token = parseUfoToken(\$text);
+			print "Parsed OR - next: $token\n";
 		}
-		$token = parseUfoToken(\$text);
-		print "End of cycle\n";
-		
+
+		#print "End of cycle\n";
 	}
-	
+
 	$$d = $text;
 	return $tech;
 }
@@ -242,21 +278,11 @@ sub parseUfoTree (%$) {
 	die "\nUsage: parseUfoTree(techtree-HASHREF filename)"
 	unless ((@_                == 2      ) &&
 		(ref($self)        eq 'HASH' ) );
-	
+
 	print "Read File '", $filename, "'....\n";
 	open(SOURCE, "< $filename") or die "\nCOuldn not open file '$filename' for reading: $!\n";
-	
-	my $token = '';
 
-	my $fileUFO = do { local $/; <SOURCE> };
-
-
-	while (<SOURCE>) {
-		# todo:  get next token
-		$token = parseUfoToken($_);
-		
-		# todo: check for type of token (comment, tech-name, require_AND, require_OR, etc...)
-	}
+	# TODO parse files
 }
 
 ####################
@@ -303,6 +329,7 @@ over several lines"
 	time	100
 	producetime	100
 }';
+
 #my $token = 'fixme2';
 #while ($token ne '' && $techTestString ne '') {
 #	$token = parseUfoToken(\$techTestString);
@@ -316,6 +343,7 @@ $tech = parseTech(\$techTestString);
 use Data::Dumper;
 print Dumper($tech);
 
+###################################################################
 my $graphvizExample = '
 graph G {
 	edge [color="#0b75cf"];
@@ -368,20 +396,20 @@ graph G {
 	/* subgraph tech5_C { OR5 -- tech5; AND5 -- OR5 }	None are used. */
 	subgraph tech6_C { OR6 -- tech6; AND6 -- OR6 }
 	subgraph tech7_C { OR7 -- tech7; }	/* Only OR is used */
-	
+
 	tech1 -- AND3;
 	tech2 -- AND3;
 	tech4 -- OR3;
 	tech5 -- OR3;
 	item1 -- OR3;
-	
+
 	tech4 -- OR7;
 	tech1 -- OR7;
-	
+
 	item2 -- OR6
 	item3 -- OR6
 	tech5 -- OR6
-	
+
 	tech2 -- AND6
 
 	fontsize=20;
