@@ -35,7 +35,6 @@
 #		research.ufo file is parsed now .. but see TODO.
 #######################################
 # TODO
-#	* Check why it breaks after "rs_craft_ufo_harvester" tech.
 #	* Write .dot file (graphviz). See $graphvizExample for an example.
 #######################################
 
@@ -67,13 +66,17 @@ my $technologySimpleSettings = [
 	"provides", 	# knifemono
 	"time",		# 100
 	"producetime",	# 100
-	"delay"
+	"delay",
+	"event",
+	"pushnews"
+	
 ];
 
 # Settings of requirements that we want to parse
 # The number tells us how many parameters they have.
 my $technologyRequirementSettings = {
 	"tech"		=> 1,
+	"event"		=> 1,
 	"alienglobal"	=> 1,
 	"item"		=> 2,
 	"alien"		=> 2,
@@ -129,21 +132,23 @@ sub parseUfoToken ($) {
 		$modified = 0;
 
 		$text =~ s/^\s*//;	# Skip whitespace
-
+		
 		# Skip single-line comment.
 		if ($text =~ m/^\/\//) {
+			#print "xx";	 # DEBUG
 			$text =~ s/([^\n]*)([.\n?]*)/$2/;	# Skip everything until newline.
 			$modified = 1;
+			next;
 		}
-
-		$text =~ s/^\s*//;	# Skip whitespace
 
 		# Skip multi-line comment.
 		if ($text =~ m/^\/\*/) {
-			$text =~ s/\/\*([^"]*?)\*\/([.\n?]*)/$2/; # Skip everything until (and including) closing "*/" characters.
+			print "yy";	 # DEBUG
+			$text =~ s/\/\*([^\R]*?)\*\/([.\n?]*)/$2/; # Skip everything until (and including) closing "*/" characters.
+			print $2, "\n";
 			$modified = 1;
+			next;
 		}
-
 	}
 
 	$text =~ s/^\s*//;	# Skip whitespace
@@ -283,7 +288,7 @@ sub parseTech ($) {
 			$token = parseUfoToken(\$text);
 			print "Parsed require_for_production - next token: $token\n";
 		} else {
-			die "parseTech: Unknown requirement type: '", $token, "'\n";
+			die "parseTech: Unknown tech setting: '", $token, "'\n";
 		}
 
 		#print "End of cycle\n";
@@ -304,13 +309,14 @@ sub parseUfoTree (%$) {
 
 	my $text2 = do { local( $/ ) ; <SOURCE> } ;
 	my $text = $text2;
-	#my $text = <SOURCE>;
 
+#my $debug; # DEBUG
 	my $token = '';
 	while ($text) {
+		print "Parsing ...\n";
 		$token = parseUfoToken(\$text);
 		
-		print "Parsing '", $token ,"' ...\n";
+		print "Parsing ... token '", $token ,"' ...\n";
 		
 		if ($token eq "up_chapters") {
 			# skip for now
@@ -322,11 +328,16 @@ sub parseUfoTree (%$) {
 			if ($tech and exists($tech->{'id'})) {
 				$self->{$tech->{'id'}} =  $tech;
 				print "... finished parsing tech '", $tech->{'id'}, "'.\n";
+#				$debug = $tech->{'id'};	#my $debug; # DEBUG
 			}
 		} else {
 			print "parseUfoTree: Unknown keyword: '", $token, "'\n";
 		}
 		print "... next round ...\n";
+		
+#		if ($debug eq "rs_craft_ufo_harvester") {	 # DEBUG
+#			print Dumper($text);
+#		}
 	}
 	
 	close (SOURCE);
@@ -342,7 +353,7 @@ use Data::Dumper;
 my $tree = {};
 foreach my $filename (@{$filenames}) {
 	$tree = parseUfoTree($tree, $filename);
-	Dumper($tree);
+	print Dumper($tree);
 }
 
 ###################################################################
