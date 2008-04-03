@@ -49,8 +49,6 @@ void TestExpandBrushes(void);
 
 static int c_boxbevels = 0;
 static int c_edgebevels = 0;
-static int c_areaportals = 0;
-static int c_clipbrushes = 0;
 
 /*
 =============================================================================
@@ -895,7 +893,7 @@ static qboolean ParseMapEntity (const char *filename)
 	/* group entities are just for editor convenience
 	 * toss all brushes into the world entity */
 	entName = ValueForKey(mapent, "classname");
-	if (!strcmp("func_group", entName)) {
+	if (!config.performMapCheck && !config.fixMap && !strcmp("func_group", entName)) {
 		MoveBrushesToWorld(mapent);
 		mapent->numbrushes = 0;
 		num_entities--;
@@ -939,16 +937,14 @@ void LoadMapFile (const char *filename)
 	}
 
 	/* save a copy of the brushes */
-	memcpy(mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t)*nummapbrushes);
+	memcpy(mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t) * nummapbrushes);
 
 	Sys_FPrintf(SYS_VRB, "%5i brushes\n", nummapbrushes);
-	Sys_FPrintf(SYS_VRB, "%5i clipbrushes\n", c_clipbrushes);
 	Sys_FPrintf(SYS_VRB, "%5i total sides\n", nummapbrushsides);
 	Sys_FPrintf(SYS_VRB, "%5i boxbevels\n", c_boxbevels);
 	Sys_FPrintf(SYS_VRB, "%5i edgebevels\n", c_edgebevels);
 	Sys_FPrintf(SYS_VRB, "%5i entities\n", num_entities);
 	Sys_FPrintf(SYS_VRB, "%5i planes\n", nummapplanes);
-	Sys_FPrintf(SYS_VRB, "%5i areaportals\n", c_areaportals);
 	Sys_FPrintf(SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n",
 		map_mins[0], map_mins[1], map_mins[2], map_maxs[0], map_maxs[1], map_maxs[2]);
 }

@@ -65,6 +65,11 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			config.performMapCheck = qtrue;
 			config.generateFootstepFile = qfalse;
 			config.generateMaterialFile = qfalse;
+		} else if (!strcmp(argv[i], "-fix")) {
+			Com_Printf("fix = true\n");
+			config.fixMap = qtrue;
+			config.generateFootstepFile = qfalse;
+			config.generateMaterialFile = qfalse;
 		} else if (!strcmp(argv[i], "-info")) {
 			config.info = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
@@ -413,9 +418,13 @@ int main (int argc, char **argv)
 	} else if (config.performMapCheck) {
 		Com_Printf("Starting map check\n");
 		LoadMapFile(name);
-		SetModelNumbers();
 		CheckBrushes();
 		CheckEntities();
+		return 0;
+	} else if (config.fixMap) {
+		Com_Printf("Trying to fix the map\n");
+		LoadMapFile(name);
+		FixErrors();
 		return 0;
 	} else {
 		/* start from scratch */
