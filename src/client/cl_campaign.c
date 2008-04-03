@@ -355,9 +355,17 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	}
 
 	if (!maxHits) {
-		Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-		Com_Printf("  ufo: %s -- pos: %s\n", ufoCrashed ? UFO_CrashedTypeToShortName(mission->ufo->ufotype) : UFO_TypeToShortName(mission->ufo->ufotype), pos ? va(("(%f, %f)"), pos[0], pos[1]) : "none");
-		return qfalse;
+		if (ufoCrashed) {
+			/* default map for crashsite mission is the crashsite random map assembly */
+			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
+			if (!mission->mapDef)
+				Sys_Error("Could not find mapdef ufocrash");
+			return qtrue;
+		} else {
+			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
+			Com_Printf("  ufo: %s -- pos: %s\n", ufoCrashed ? UFO_CrashedTypeToShortName(mission->ufo->ufotype) : UFO_TypeToShortName(mission->ufo->ufotype), pos ? va(("(%f, %f)"), pos[0], pos[1]) : "none");
+			return qfalse;
+		}
 	}
 
 	randomNum = rand() % hits;
@@ -2541,11 +2549,7 @@ static void CP_CreateBattleParameters (mission_t *mission)
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_ufocrashed %i;", mission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+')
-				Cvar_Set("rm_ufo", va("+%s", UFO_TypeToShortName(selectedMission->ufo->ufotype)));
-#if 0
-/* @todo replace previous line by this one when random map assemblies will have crashed map tiles */
 				Cvar_Set("rm_ufo", va("+%s", UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype)));
-#endif
 		} else {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */

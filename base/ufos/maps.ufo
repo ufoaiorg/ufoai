@@ -129,9 +129,9 @@ mapdef farm_small
 	ufos
 	{
 		craft_ufo_scout
-		craft_crash_scout
+//		craft_crash_scout
 		craft_ufo_fighter
-		craft_crash_fighter
+//		craft_crash_fighter
 	}
 
 	terrains
@@ -166,7 +166,7 @@ mapdef farm_medium
 	ufos
 	{
 		craft_ufo_harvester
-		craft_crash_harvester
+//		craft_crash_harvester
 	}
 
 	terrains
@@ -201,7 +201,7 @@ mapdef farm_large
 	ufos
 	{
 		craft_ufo_bomber
-		craft_crash_bomber
+//		craft_crash_bomber
 	}
 
 	terrains
@@ -2118,6 +2118,7 @@ mapdef ufocrash
 	map				"+ufocrash"
 	multiplayer		false
 	description		"_UFO Crashsite."
+	storyrelated	true
 	maxaliens		8
 }
 
