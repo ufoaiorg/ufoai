@@ -2495,7 +2495,7 @@ static void CP_CreateBattleParameters (mission_t *mission)
 }
 
 /**
- * @brief Get mission model string
+ * @brief Get mission model that should be shown on the geoscape
  * @param[in] mission Pointer to the mission drawn on geoscape
  * @sa MAP_DrawMapMarkers
  */
@@ -2509,12 +2509,9 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "mission";
 
 	if (mission->mapDef->storyRelated) {
-#if 0
-/* @todo alienbase md2 is broken, fix it before decommenting thoses lines */
 		if (mission->category == INTERESTCATEGORY_BUILDING)
 			return "alienbase";
 		else
-#endif
 			/* @todo Should be a special story related mission model */
 			return "mission";
 	}

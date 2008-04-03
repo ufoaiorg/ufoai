@@ -518,6 +518,10 @@ void R_DrawEntities (void)
 			case mod_alias_md2:
 			case mod_alias_md3:
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
+				if (skin == NULL) {
+					Com_Printf("Model '%s' is broken\n", e->model->name);
+					return;
+				}
 				if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
 					chain = &r_alpha_mesh_entities;
 				else

@@ -318,6 +318,9 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 	if (*mesh < 0 || *mesh >= mod->alias.num_meshes)
 		*mesh = 0;
 
+	if (!mod->alias.meshes)
+		return NULL;
+
 	/* use default skin - this is never null - but maybe the placeholder texture */
 	if (*skin < 0 || *skin >= mod->alias.meshes[*mesh].num_skins)
 		*skin = 0;

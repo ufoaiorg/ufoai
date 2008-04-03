@@ -83,11 +83,15 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* check if the model exists */
 	if (!mi->model) {
-		Com_Printf("No model given or not in md2 format\n");
+		Com_Printf("No model given\n");
 		return;
 	}
 
 	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
+	if (skin == NULL) {
+		Com_Printf("Model '%s' is broken\n", mi->name);
+		return;
+	}
 
 	/* draw all the triangles */
 	qglPushMatrix();
@@ -179,6 +183,10 @@ void R_DrawModelParticle (modelInfo_t * mi)
 		return;
 
 	skin = R_AliasModelState(mi->model, &mi->mesh, &mi->frame, &mi->oldframe, &mi->skin);
+	if (skin == NULL) {
+		Com_Printf("Model '%s' is broken\n", mi->name);
+		return;
+	}
 
 	R_Color(mi->color);
 
