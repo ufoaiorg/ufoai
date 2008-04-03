@@ -26,37 +26,62 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/shared.h"
 #include "common/bspfile.h"
 #include "check.h"
+#include "bsp.h"
 
-static int checkLight (const entity_t *e, int entnum)
+static int checkLight (entity_t *e, int entnum)
 {
 	return 0;
 }
 
-static int checkFuncRotating(const entity_t *e, int entnum)
+static int checkFuncRotating (entity_t *e, int entnum)
 {
 	const char *val = ValueForKey(e, "spawnflags");
-	if (!*val)
+	if (!*val) {
+		char buf[16];
 		Com_Printf("func_rotating with no levelflags given - entnum: %i\n", entnum);
+		snprintf(buf, sizeof(buf) - 1, "%i", CONTENTS_LEVEL_ALL);
+		SetKeyValue(e, "spawnflags", buf);
+	}
 	return 0;
 }
 
-static int checkFuncDoor (const entity_t *e, int entnum)
+static int checkFuncDoor (entity_t *e, int entnum)
 {
 	const char *val = ValueForKey(e, "spawnflags");
-	if (!*val)
+	if (!*val) {
+		char buf[16];
 		Com_Printf("func_door with no levelflags given - entnum: %i\n", entnum);
+		snprintf(buf, sizeof(buf) - 1, "%i", CONTENTS_LEVEL_ALL);
+		SetKeyValue(e, "spawnflags", buf);
+	}
 	return 0;
 }
 
-static int checkMiscModel (const entity_t *e, int entnum)
+static int checkFuncBreakable (entity_t *e, int entnum)
 {
 	const char *val = ValueForKey(e, "spawnflags");
-	if (!*val)
-		Com_Printf("misc_model with no levelflags given - entnum: %i\n", entnum);
+	if (!*val) {
+		char buf[16];
+		Com_Printf("func_breakable with no levelflags given - entnum: %i\n", entnum);
+		snprintf(buf, sizeof(buf) - 1, "%i", CONTENTS_LEVEL_ALL);
+		SetKeyValue(e, "spawnflags", buf);
+	}
 	return 0;
 }
 
-static int checkInfoPlayerStart (const entity_t *e, int entnum)
+static int checkMiscModel (entity_t *e, int entnum)
+{
+	const char *val = ValueForKey(e, "spawnflags");
+	if (!*val) {
+		char buf[16];
+		Com_Printf("misc_model with no levelflags given - entnum: %i\n", entnum);
+		snprintf(buf, sizeof(buf) - 1, "%i", CONTENTS_LEVEL_ALL);
+		SetKeyValue(e, "spawnflags", buf);
+	}
+	return 0;
+}
+
+static int checkInfoPlayerStart (entity_t *e, int entnum)
 {
 	const char *val = ValueForKey(e, "team");
 	if (!*val)
@@ -66,11 +91,12 @@ static int checkInfoPlayerStart (const entity_t *e, int entnum)
 
 typedef struct entityCheck_s {
 	const char *name;
-	int (*checkCallback)(const entity_t* e, int entnum);
+	int (*checkCallback)(entity_t* e, int entnum);
 } entityCheck_t;
 
 static const entityCheck_t checkArray[] = {
 	{"light", checkLight},
+	{"func_breakable", checkFuncBreakable},
 	{"func_door", checkFuncDoor},
 	{"func_rotating", checkFuncRotating},
 	{"misc_model", checkMiscModel},
@@ -89,7 +115,7 @@ void CheckEntities (void)
 
 	/* 0 is the world - start at 1 */
 	for (i = 0; i < num_entities; i++) {
-		const entity_t *e = &entities[i];
+		entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 		for (v = checkArray; v->name; v++)
 			if (!strncmp(name, v->name, strlen(v->name))) {
@@ -101,13 +127,29 @@ void CheckEntities (void)
 
 void CheckBrushes (void)
 {
+	int i, j;
 
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *brush = &mapbrushes[i];
+		for (j = 0; j < brush->numsides; j++) {
+			side_t *side = &brush->original_sides[j];
+			if (brush->contentFlags != side->contentFlags)
+				Com_Printf("Brush %i: mixed face contents (f: %i, %i)\n", brush->brushnum, brush->contentFlags, side->contentFlags);
+			if (!(side->contentFlags & (CONTENTS_WEAPONCLIP | CONTENTS_ORIGIN | CONTENTS_ACTORCLIP | CONTENTS_STEPON))) {
+				/* check level 1 - level 8 */
+				if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
+					Com_Printf("Brush %i: no levelflags\n", brush->brushnum);
+					side->contentFlags |= CONTENTS_LEVEL_ALL;
+				}
+			}
+		}
+	}
 }
 
 void FixErrors (void)
 {
-	/* @todo fix brushes */
-	/* @todo fix entities */
+	CheckBrushes();
+	CheckEntities();
 
 	/* update dentdata */
 	UnparseEntities();

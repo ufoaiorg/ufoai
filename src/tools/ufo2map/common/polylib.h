@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _POLYLIB
 #define _POLYLIB
 
-typedef struct
-{
+typedef struct {
 	int		numpoints;
 	vec3_t	p[4];		/* variable sized - @todo - but why 4? */
 } winding_t;
