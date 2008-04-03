@@ -34,9 +34,10 @@
 #		Requirements are parsed now.
 #		research.ufo file is parsed now .. but see TODO.
 #		Writing basic .dot files (graphviz) works now
+#		Items are now drawn as well.
 #######################################
 # TODO
-#	* write items and other dependencies as well.
+#	* Prettify this.
 #######################################
 
 use strict;
@@ -72,7 +73,7 @@ my $technologySimpleSettings = [
 	"delay",
 	"event",
 	"pushnews"
-	
+
 ];
 
 # Settings of requirements that we want to parse
@@ -101,7 +102,7 @@ sub parseUfoToken ($) {
 		$modified = 0;
 
 		$text =~ s/^\s*//;	# Skip whitespace
-		
+
 		# Skip single-line comment.
 		if ($text =~ m/^\/\//) {
 			#print "xx";	 # DEBUG
@@ -265,48 +266,73 @@ sub parseTech ($) {
 	return $tech;
 }
 
+sub getTechItems ($) {
+	my ($tech) = @_;
+
+	my $items = {};
+
+	foreach my $req (@{$tech->{'AND'}}) {
+		if ($req->{'type'} eq "item") {
+			$items->{$req->{'value1'}} = 1;
+		}
+	}
+	foreach my $req (@{$tech->{'OR'}}) {
+		if ($req->{'type'} eq "item") {
+			$items->{$req->{'value1'}} = 1;
+		}
+	}
+	return $items;
+}
+
 sub parseUfoTree (%$) {
 	my ($self, $filename) = @_;
 	die "\nUsage: parseUfoTree(techtree-HASHREF filename)"
 	unless ((@_                == 2      ) &&
 		(ref($self)        eq 'HASH' ) );
-	
+
 	print "Read file '", $filename, "' ...\n";
 	open(SOURCE, "< $filename") or die "\nCouldn not open file '$filename' for reading: $!\n";
 
 	my $text2 = do { local( $/ ) ; <SOURCE> } ;
 	my $text = $text2;
+	my $techs = $self->{'techs'};
+	my $items = $self->{'items'};
 
 #my $debug; # DEBUG
 	my $token = '';
 	while ($text) {
 		print "Parsing ...\n";
 		$token = parseUfoToken(\$text);
-		
+
 		print "Parsing ... token '", $token ,"' ...\n";
-		
+
 		if ($token eq "up_chapters") {
 			# skip for now
 			$token = parseUfoToken(\$text);
 			parseSkip(\$text);
 		} elsif ($token eq "tech") {
 			my $tech = parseTech(\$text);
-			
+
 			if ($tech and exists($tech->{'id'})) {
-				$self->{$tech->{'id'}} =  $tech;
+				$techs->{$tech->{'id'}} =  $tech;
 				print "... finished parsing tech '", $tech->{'id'}, "'.\n";
+				my $newItems = getTechItems($tech);
+				%{$items} = (%{$items},  %{$newItems});
 #				$debug = $tech->{'id'};	#my $debug; # DEBUG
 			}
 		} else {
 			print "parseUfoTree: Unknown keyword: '", $token, "'\n";
 		}
 		print "... next round ...\n";
-		
+
 #		if ($debug eq "rs_craft_ufo_harvester") {	 # DEBUG
 #			print Dumper($text);
 #		}
 	}
-	
+
+	$self->{'techs'} = $techs;
+	$self->{'items'} = $items;
+
 	close (SOURCE);
 	return $self;
 }
@@ -320,7 +346,21 @@ sub printTechnologyStyle ($) {
 }
 sub printReqStyle ($$) {
 	my ($FH, $label) = @_;
-	printf $FH "\t".'node [shape=ellipse, label="'.$label.'", color="#71a4cf99", style=filled, fontcolor=black];'."\n";
+
+	my $color;
+	if ($label eq 'OR') {
+		$color = '#71a4cf99';
+	} else {
+		$color = '#71cf9a99';
+	}
+
+	printf $FH "\t".'node [shape=ellipse, label="'.$label.'", color="'.$color.'", style=filled, fontcolor=black];'."\n";
+}
+
+sub printItemStyle ($) {
+	my ($FH) = @_;
+
+	printf $FH "\t".'node [shape=box, color="#f7e30099", style=filled, fontcolor=black];'."\n";
 }
 
 sub printTech ($$) {
@@ -338,17 +378,23 @@ sub printTech ($$) {
 
 sub printReq ($$$) {
 	my ($tech, $FH, $label) = @_;
-	
+
 	if (exists($tech->{$label}) and length($tech->{$label}) >= 1) {
 		printf $FH "\t\t".$tech->{'id'}.'_'.$label.";\n"
 	}
 }
 
+sub printItem ($$) {
+	my ($item, $FH) = @_;
+
+	printf $FH "\t\t".$item.'[label="'.$item.'"];'."\n"
+}
+
 sub printTechGroup ($$) {
 	my ($tech, $FH) = @_;
 
-	my $hasOR = (exists($tech->{'OR'}) and length($tech->{'OR'}) > 1);
-	my $hasAND = (exists($tech->{'AND'}) and length($tech->{'AND'}) > 1);
+	my $hasOR = (exists($tech->{'OR'}) and length($tech->{'OR'}) >= 1);
+	my $hasAND = (exists($tech->{'AND'}) and length($tech->{'AND'}) >= 1);
 
 	if ($hasOR || $hasAND) {
 		if ($hasOR && $hasAND) {
@@ -370,14 +416,18 @@ sub printTechGroup ($$) {
 
 sub printTechLinks ($$) {
 	my ($tech, $FH) = @_;
-	
+
 	foreach my $req (@{$tech->{'AND'}}) {
 		if ($req->{'type'} eq "tech") {
+			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_AND'."\n";
+		} elsif ($req->{'type'} eq "item") {
 			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_AND'."\n";
 		}
 	}
 	foreach my $req (@{$tech->{'OR'}}) {
 		if ($req->{'type'} eq "tech") {
+			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_OR'."\n";
+		} elsif ($req->{'type'} eq "item") {
 			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_OR'."\n";
 		}
 	}
@@ -389,60 +439,68 @@ sub writeDotFile(%$) {
 	die "\nUsage: writeDotFile(techtree-HASHREF filename)"
 	unless ((@_                == 2      ) &&
 		(ref($self)        eq 'HASH' ) );
-	
+
+	my $techs = $self->{'techs'};
+	my $items = $self->{'items'};
+
 	print "Writing file '", $filename, "' ...\n";
 	open(my $DOT, "> $filename") or die "\nCouldn not open file '$filename' for writing: $!\n";
 	#my $DOT = <DOT>;
-	
+
 	printf $DOT 'graph G {'."\n";
 	printf $DOT '	edge [color="#0b75cf"];'."\n";
 	printf $DOT '	label = "Research Tree\nUFO: Alien Invasion";'."\n";
-	
+
 	# Draw technolgiy boxes
 	printTechnologyStyle($DOT);
-	foreach my $techId (keys %{$self}) {
-		my $tech = $self->{$techId};
+	foreach my $techId (keys %{$techs}) {
+		my $tech = $techs->{$techId};
 		printTech($tech, $DOT);
 	}
 
 	# Draw OR boxes for each technology that needs them.
 	printReqStyle($DOT, "OR");
-	foreach my $techId (keys %{$self}) {
-		my $tech = $self->{$techId};
+	foreach my $techId (keys %{$techs}) {
+		my $tech = $techs->{$techId};
 		printReq($tech, $DOT, "OR");
 	}
 
+	# Draw AND boxes for each technology that needs them.
 	printReqStyle($DOT, "AND");
-	foreach my $techId (keys %{$self}) {
-		my $tech = $self->{$techId};
+	foreach my $techId (keys %{$techs}) {
+		my $tech = $techs->{$techId};
 		printReq($tech, $DOT, "AND");
 	}
-	
-	# TODO: draw item boxes
-	
+
+	# Draw item boxes
+	printItemStyle($DOT);
+	foreach my $itemId (keys %{$items}) {
+		printItem($itemId, $DOT);
+	}
+
 	# TODO: draw items subgraph
 
 	# Draw tech subgraphs and OR/AND links
-	foreach my $techId (keys %{$self}) {
-		my $tech = $self->{$techId};
+	foreach my $techId (keys %{$techs}) {
+		my $tech = $techs->{$techId};
 		printTechGroup($tech, $DOT);
 	}
-	
-	
+
+
 	# Create requirement links
-	foreach my $techId (keys %{$self}) {
-		my $tech = $self->{$techId};
+	foreach my $techId (keys %{$techs}) {
+		my $tech = $techs->{$techId};
 		printTechLinks($tech, $DOT);
 	}
 
-	printf $DOT "\tfontsize=20;\n"
+	printf $DOT "\tfontsize=20;\n";
 	printf $DOT "}\n";
 	close $DOT;
-	
+
 	print "File '", $filenameDot, "' written.\n\n";
 	print "Use\n";
-	print " dot ", $filenameDot , "-Tpng >dia.png\n";
-	print " dot ", $filenameDot , "-Tpng >dia.png\n";
+	print " dot ", $filenameDot , " -Tpng >dia.png\n";
+	print " dot ", $filenameDot , " -Tpng >dia.png\n";
 	print "to convert it into a different format.\n";
 	print "See also: 'graphviz'\n";
 
@@ -454,7 +512,10 @@ sub writeDotFile(%$) {
 
 use Data::Dumper;
 
-my $tree = {};
+my $tree = {
+	'techs' => {},
+	'items' => {}
+};
 foreach my $filename (@{$filenames}) {
 	$tree = parseUfoTree($tree, $filename);
 #	print Dumper($tree);
