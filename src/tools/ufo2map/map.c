@@ -706,6 +706,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			continue;
 		}
 
+
 		/* see if the plane has been used already */
 		for (k = 0; k < b->numsides; k++) {
 			s2 = b->original_sides + k;
@@ -926,11 +927,11 @@ void WriteMapFile (const char *filename)
 	Com_Printf("writing map: '%s'\n", buf);
 
 	f = fopen(buf, "wb");
-	fprintf(f, "\n{\n");
 
+	fprintf(f, "\n");
 	for (i = 0; i < num_entities; i++) {
 		mapent = &entities[i];
-		fprintf(f, "// entity %i\n", i);
+		fprintf(f, "// entity %i\n{\n", i);
 		e = mapent->epairs;
 		while (e) {
 			fprintf(f, "%s \"%s\"\n", e->key, e->value);
@@ -943,6 +944,11 @@ void WriteMapFile (const char *filename)
 				const side_t *side = &brush->original_sides[k];
 				const brush_texture_t *t = &side_brushtextures[side - brushsides];
 				if (t->name[0]) {
+#if 0
+					const plane_t *plane = &mapplanes[side->planenum];
+					const winding_t *w = side->winding;
+					assert(w);
+#endif
 					fprintf(f, "( x x x ) ( y y y ) ( z z z ) %s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1], t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
 					/* name, shift, rotate, scale, contentFlags, surfaceFlags, value */
 				}

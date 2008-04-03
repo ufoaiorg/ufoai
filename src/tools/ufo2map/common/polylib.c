@@ -246,7 +246,7 @@ winding_t *ReverseWinding (winding_t *w)
 
 	c = AllocWinding(w->numpoints);
 	for (i = 0; i < w->numpoints; i++) {
-		VectorCopy(w->p[w->numpoints-1-i], c->p[i]);
+		VectorCopy(w->p[w->numpoints - 1 - i], c->p[i]);
 	}
 	c->numpoints = w->numpoints;
 	return c;

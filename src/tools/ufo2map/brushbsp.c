@@ -355,9 +355,9 @@ qboolean WindingIsTiny (winding_t *w)
 
 	edges = 0;
 	for (i = 0; i < w->numpoints; i++) {
-		j = i == w->numpoints - 1 ? 0 : i+1;
+		j = ((i == w->numpoints - 1) ? 0 : i) + 1;
 		VectorSubtract(w->p[j], w->p[i], delta);
-		len = VectorLength (delta);
+		len = VectorLength(delta);
 		if (len > EDGE_LENGTH) {
 			if (++edges == 3)
 				return qfalse;
