@@ -30,11 +30,12 @@
 #		Added first working parseUfoToken function.
 #		Multi-line support for text inside ""s
 #		Hopefully fixed comment parsing - still needs some testing. Also added a repeating cleanup function.
-#		First code to parse a technology and the reuirements inside it.
+#		First code to parse a technology and the requirements inside it.
 #		Requirements are parsed now.
+#		research.ufo file is parsed now .. but see TODO.
 #######################################
 # TODO
-#	* Parse research.ufo. See $techTestString for an example
+#	* Check why it breaks after "rs_craft_ufo_harvester" tech.
 #	* Write .dot file (graphviz). See $graphvizExample for an example.
 #######################################
 
@@ -42,8 +43,10 @@ use strict;
 use warnings;
 
 my $filenames = [
-	"research.ufo",
-	"research_logic.ufo"
+	#"research.ufo",
+	#"research_logic.ufo"
+	"../../base/ufos/research.ufo",
+	"../../base/ufos/research_logic.ufo"
 ];
 
 # Settings inside "tech" we'll just skip for now.
@@ -57,10 +60,14 @@ my $technologySkipSettings = [
 # Settings of "tech" with just one parameter that we want to parse.
 my $technologySimpleSettings = [
 	"type",		# weapon
+	"name",		# "_Continuous Wave Laser Operation"
+	"image_top",	# techs/laser
+	"mdl_top",	# weap_machine_pistol
 	"up_chapter", 	# equipment
 	"provides", 	# knifemono
 	"time",		# 100
-	"producetime"	# 100
+	"producetime",	# 100
+	"delay"
 ];
 
 # Settings of requirements that we want to parse
@@ -176,7 +183,7 @@ sub parseTechRequirements ($$) {
 	my $token = parseUfoToken(\$text);
 
 	if ($token ne '{') {
-		die "Empty tech requirement in '", $techID, "' found.\n";
+		die "parseTechRequirements: Empty tech requirement in '", $techID, "' found.\n";
 	}
 
 	$token = parseUfoToken(\$text);
@@ -187,7 +194,7 @@ sub parseTechRequirements ($$) {
 			$token = parseUfoToken(\$text);
 			$req->{'value1'} = $token;
 
-			if ($technologyRequirementSettings->{$token} > 1) {
+			if ($technologyRequirementSettings->{$req->{'type'}} > 1) {
 				$token = parseUfoToken(\$text);
 				$req->{'value2'} = $token;
 			}
@@ -195,7 +202,7 @@ sub parseTechRequirements ($$) {
 			push(@{$reqs}, $req);
 			$token = parseUfoToken(\$text);
 		} else {
-			die "Unknown requirement type '", $token ,"' in tech '", $techID ,"'\n";
+			die "parseTechRequirements: Unknown requirement type '", $token ,"' in tech '", $techID ,"'\n";
 		}
 	}
 
@@ -224,46 +231,59 @@ sub parseTech ($) {
 	my $tech = {};
 
 	my $token = parseUfoToken(\$text);
-
-	if ($token ne 'tech') {
-		die "Expecting 'tech' keyword, got this instead: '", $token, "'\n";
-	}
-
-	$token = parseUfoToken(\$text);
 	my $techID = $token;
+	$tech->{'id'} = $techID;
+	print "Tech: '", $techID, "'\n";
 
 	$token = parseUfoToken(\$text);
 
 	if ($token ne '{') {
-		die "Empty tech '", $techID, "' found.\n";
+		die "parseTech: Empty tech '", $techID, "' found.\n";
 	}
 
 	$token = parseUfoToken(\$text);
+	my $parsed;
 	while ($token ne '}') {
+		$parsed = 0;
 		foreach my $setting (@{$technologySkipSettings}) {
 			if ($token =~ m/^$setting/) {
 				parseSkip(\$text);
 				$token = parseUfoToken(\$text);
-				print "Skipped $setting - next: $token\n";
+				print "Skipped '", $setting, "' ... next token: '", $token, "'\n";
+				$parsed = 1;
 			}
 		}
+		if ($parsed) {
+			next;
+		}
 
+		$parsed = 0;
 		foreach my $setting (@{$technologySimpleSettings}) {
 			if ($token =~ m/^$setting/) {
 				$tech->{$setting} = parseUfoToken(\$text);
 				$token = parseUfoToken(\$text);
-				print "Parsed settings $setting - next: $token\n";
+				print "Parsed setting '", $setting, "' ... next token: '", $token, "'\n";
+				$parsed = 1;
 			}
+		}
+		if ($parsed) {
+			next;
 		}
 
 		if ($token eq "require_AND") {
 			$tech->{'AND'} = parseTechRequirements(\$text, $techID);
 			$token = parseUfoToken(\$text);
-			print "Parsed AND - next: $token\n";
+			print "Parsed AND - next token: $token\n";
 		} elsif ($token eq "require_OR") {
 			$tech->{'OR'} = parseTechRequirements(\$text, $techID);
 			$token = parseUfoToken(\$text);
-			print "Parsed OR - next: $token\n";
+			print "Parsed OR - next token: $token\n";
+		} elsif ($token eq "require_for_production") {
+			$tech->{'require_for_production'} = parseTechRequirements(\$text, $techID);
+			$token = parseUfoToken(\$text);
+			print "Parsed require_for_production - next token: $token\n";
+		} else {
+			die "parseTech: Unknown requirement type: '", $token, "'\n";
 		}
 
 		#print "End of cycle\n";
@@ -278,70 +298,52 @@ sub parseUfoTree (%$) {
 	die "\nUsage: parseUfoTree(techtree-HASHREF filename)"
 	unless ((@_                == 2      ) &&
 		(ref($self)        eq 'HASH' ) );
+	
+	print "Read file '", $filename, "' ...\n";
+	open(SOURCE, "< $filename") or die "\nCouldn not open file '$filename' for reading: $!\n";
 
-	print "Read File '", $filename, "'....\n";
-	open(SOURCE, "< $filename") or die "\nCOuldn not open file '$filename' for reading: $!\n";
+	my $text2 = do { local( $/ ) ; <SOURCE> } ;
+	my $text = $text2;
+	#my $text = <SOURCE>;
 
-	# TODO parse files
+	my $token = '';
+	while ($text) {
+		$token = parseUfoToken(\$text);
+		
+		print "Parsing '", $token ,"' ...\n";
+		
+		if ($token eq "up_chapters") {
+			# skip for now
+			$token = parseUfoToken(\$text);
+			parseSkip(\$text);
+		} elsif ($token eq "tech") {
+			my $tech = parseTech(\$text);
+			
+			if ($tech and exists($tech->{'id'})) {
+				$self->{$tech->{'id'}} =  $tech;
+				print "... finished parsing tech '", $tech->{'id'}, "'.\n";
+			}
+		} else {
+			print "parseUfoTree: Unknown keyword: '", $token, "'\n";
+		}
+		print "... next round ...\n";
+	}
+	
+	close (SOURCE);
+	return $self;
 }
 
 ####################
 # MAIN
 ####################
 
-my $techTestString ='tech rs_weapon_monoknife
-{
-	type	weapon
-	up_chapter	equipment // comment test
-	description {	/* comment test2 */
-		default "_monoknife_txt"	/* comment
-test3 */
-		dummydesc "dumytext spanning
-over several lines"
-	}
-	pre_description {
-		default "_monoknife_pre_txt"
-	}
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		subject	"_Monomolecular Blades"
-		icon	icons/tech
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		subject	"_Monomolecular Blades"
-		icon	icons/tech
-	}
-
-	require_AND
-	{
-		tech rs_weapon_kerrblade
-		tech rs_alien_bloodspider_autopsy
-		tech rs_skill_close
-		tech rs_damage_normal
-	}
-	provides	knifemono
-	time	100
-	producetime	100
-}';
-
-#my $token = 'fixme2';
-#while ($token ne '' && $techTestString ne '') {
-#	$token = parseUfoToken(\$techTestString);
-#	print "token: '", $token, "'\n";
-#	#print "text : '", $techTestString, "'\n";
-#	#$token = '';
-#}
-
-my $tech = {};
-$tech = parseTech(\$techTestString);
 use Data::Dumper;
-print Dumper($tech);
+
+my $tree = {};
+foreach my $filename (@{$filenames}) {
+	$tree = parseUfoTree($tree, $filename);
+	Dumper($tree);
+}
 
 ###################################################################
 my $graphvizExample = '
