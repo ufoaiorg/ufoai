@@ -92,6 +92,7 @@ typedef struct mapConfig_s {
 	qboolean info;
 	qboolean generateFootstepFile;
 	qboolean generateMaterialFile;
+	qboolean performMapCheck;
 
 	float day_ambient_red;
 	float day_ambient_green;

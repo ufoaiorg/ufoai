@@ -510,7 +510,7 @@ void UnparseEntities (void)
 		if (!ep)
 			continue;	/* ent got removed */
 
-		strcat (end,"{\n");
+		strcat (end, "{\n");
 		end += 2;
 
 		for (ep = entities[i].epairs; ep; ep = ep->next) {
@@ -523,7 +523,7 @@ void UnparseEntities (void)
 			strcat(end, line);
 			end += strlen(line);
 		}
-		strcat(end,"}\n");
+		strcat(end, "}\n");
 		end += 2;
 
 		if (end > buf + MAX_MAP_ENTSTRING)
@@ -555,12 +555,12 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 /**
  * @brief
  */
-const char *ValueForKey (entity_t *ent, const char *key)
+const char *ValueForKey (const entity_t *ent, const char *key)
 {
-	epair_t *ep;
+	const epair_t *ep;
 
 	for (ep = ent->epairs; ep; ep = ep->next)
-		if (!strcmp(ep->key, key) )
+		if (!strcmp(ep->key, key))
 			return ep->value;
 	return "";
 }

@@ -118,6 +118,9 @@
 		<Unit filename="..\..\src\tools\ufo2map\csg.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\check.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\faces.c">
 			<Option compilerVar="CC" />
 		</Unit>

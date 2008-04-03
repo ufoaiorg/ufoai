@@ -162,7 +162,7 @@ static tree_t *AllocTree (void)
 	return tree;
 }
 
-static node_t *AllocNode(void)
+static node_t *AllocNode (void)
 {
 	node_t *node;
 

@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "radiosity.h"
 #include "bsp.h"
+#include "check.h"
 #include "../../shared/shared.h"
 
 #ifdef HAVE_SYS_STAT_H
@@ -59,6 +60,11 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			/* make every point unique */
 			Com_Printf("noweld = true\n");
 			config.noweld = qtrue;
+		} else if (!strcmp(argv[i], "-check")) {
+			Com_Printf("check = true\n");
+			config.performMapCheck = qtrue;
+			config.generateFootstepFile = qfalse;
+			config.generateMaterialFile = qfalse;
 		} else if (!strcmp(argv[i], "-info")) {
 			config.info = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
@@ -325,6 +331,7 @@ int main (int argc, char **argv)
 		" -bounce <num>            : light bounces\n"
 		" -block num num           : \n"
 		" -blocks num num num num  : \n"
+		" -check                   : Performs a mapfile (source) check\n"
 		" -chop                    : \n"
 		" -direct                  : \n"
 		" -draw                    : \n"
@@ -403,6 +410,13 @@ int main (int argc, char **argv)
 		UnparseEntities();
 
 		WriteBSPFile(out);
+	} else if (config.performMapCheck) {
+		Com_Printf("Starting map check\n");
+		LoadMapFile(name);
+		SetModelNumbers();
+		CheckBrushes();
+		CheckEntities();
+		return 0;
 	} else {
 		/* start from scratch */
 		LoadMapFile(name);
