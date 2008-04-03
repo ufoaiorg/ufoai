@@ -22,7 +22,7 @@
 # ufo2dot.pl
 #	Scriot to parse (part) of the *.ufo files for UFO:Alien Invasion.
 #	It could also partly be used for similar Quake-bases scripts
-#	The main logix for parsing is in the parseUfoToken function.
+#	The main logic for parsing is in the parseUfoToken function.
 #
 #######################################
 # Changelog
@@ -30,8 +30,10 @@
 #		Added first working parseUfoToken function.
 #		Multi-line support for text inside ""s
 #		Hopefully fixed comment parsing - still needs some testing. Also added a repeating cleanup function.
+#		First code to parse a technology and the reuirements inside it.
 #######################################
 # TODO
+#	* A nice function that can skip unneeded "{  }" stuff.
 #	* Parse research.ufo. See $techTestString for an example
 #	* Write .dot file (graphviz). See $graphvizExample for an example.
 #######################################
@@ -44,11 +46,16 @@ my $description = {
 	filename => ''
 };
 	
-my $technologyStruct = {
-	type => '',	#weapon
-	up_chapter => '', #equipment
-	description =>	[],	# { default "_monoknife_txt" }
-	pre_description =>	[]	# { default "_monoknife_pre_txt" }
+my $technologySimpleSettings = [
+	"type",		# weapon
+	"up_chapter", 	# equipment
+	"provides", 	# knifemono
+	"time",		# 100
+	"producetime"	# 100
+];
+
+#	description =>	[],	# { default "_monoknife_txt" }
+#	pre_description =>	[]	# { default "_monoknife_pre_txt" }
 	#~ }
 
 	#~ mail_pre
@@ -74,10 +81,6 @@ my $technologyStruct = {
 		#~ tech rs_skill_close
 		#~ tech rs_damage_normal
 	#~ }
-	#~ provides	knifemono
-	#~ time	100
-	#~ producetime	100
-};
 
 #######################################
 # Writing (.dot syntax)
@@ -165,10 +168,28 @@ sub parseUfoToken ($) {
 	return $token;
 }
 
-sub parseTech (%$) {
-	my ($self, $d) = @_;
+
+sub parseTechRequirement ($$) {
+	my ($d, $techID) = @_;
 	my $text = $$d;
+
+	my $req = [];
 	
+	my $token = parseUfoToken($d);
+	
+	if ($token ne '{') {
+		die "Empty tech requirement in '", $techID, "' found.\n";
+	}
+	
+	# TODO parse requirements
+	
+	return $req;
+}
+	
+sub parseTech ($) {
+	my ($d) = @_;
+	my $text = $$d;
+
 	my $tech = {};
 	
 	my $token = parseUfoToken($d);
@@ -177,15 +198,35 @@ sub parseTech (%$) {
 		die "Expecting 'tech' keyword, got this instead: '".$token."'\n";
 	}
 
+	$token = parseUfoToken($d);
 	my $techID = $token;
 
-	while ($token ne '}') {
-		# todo parse tech
+	$token = parseUfoToken($d);
+	
+	if ($token ne '{') {
+		die "Empty tech '", $techID, "' found.\n";
 	}
 	
-	$self->{'techs'}->{$techID} = $tech;
+	# TODO parse tech
+	while ($token ne '}') {
+		$token = parseUfoToken($d);
+		foreach my $setting (@{$technologySimpleSettings}) {
+			if ($token =~ m/^$setting/) {
+				$tech->{$setting} = parseUfoToken($d);
+			}
+		}
+		
+		$token = parseUfoToken($d);
+
+		if ($token eq "require_AND") {
+			$tech->{'AND'} = parseTechRequirement($d, $techID);
+		} elsif ($token eq "require_OR") {
+			$tech->{'OR'} = parseTechRequirement($d, $techID);
+		}
+		
+	}
 	
-	return $self;
+	return $tech;
 }
 
 sub parseUfoTree (%$) {
