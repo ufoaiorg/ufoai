@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common/shared.h"
 #include "common/bspfile.h"
+#include "common/scriplib.h"
 #include "check.h"
 #include "bsp.h"
 
@@ -154,5 +155,5 @@ void FixErrors (void)
 	/* update dentdata */
 	UnparseEntities();
 
-	/* @todo write new map file */
+	WriteMapFile(GetScriptFile());
 }

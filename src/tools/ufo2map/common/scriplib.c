@@ -79,6 +79,11 @@ static void AddScriptToStack (const char *filename)
 	script->end_p = script->buffer + size;
 }
 
+const char *GetScriptFile (void)
+{
+	assert(script);
+	return script->filename;
+}
 
 /**
  * @brief

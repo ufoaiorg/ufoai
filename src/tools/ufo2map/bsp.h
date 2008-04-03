@@ -165,6 +165,7 @@ extern side_t brushsides[MAX_MAP_SIDES];
 extern int brush_start, brush_end;
 
 void LoadMapFile(const char *filename);
+void WriteMapFile(const char *filename);
 int FindFloatPlane(vec3_t normal, vec_t dist);
 
 /*============================================================================= */

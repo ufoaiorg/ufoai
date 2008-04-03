@@ -910,6 +910,55 @@ static qboolean ParseMapEntity (const char *filename)
 	return qtrue;
 }
 
+/**
+ * @sa LoadMapFile
+ * @sa FixErrors
+ */
+void WriteMapFile (const char *filename)
+{
+	FILE *f;
+	entity_t *mapent;
+	epair_t *e;
+	int i, j, k;
+	char buf[256];
+
+	snprintf(buf, sizeof(buf) - 1, "%s.tmp", filename);
+	Com_Printf("writing map: '%s'\n", buf);
+
+	f = fopen(buf, "wb");
+	fprintf(f, "\n{\n");
+
+	for (i = 0; i < num_entities; i++) {
+		mapent = &entities[i];
+		fprintf(f, "// entity %i\n", i);
+		e = mapent->epairs;
+		while (e) {
+			fprintf(f, "%s \"%s\"\n", e->key, e->value);
+			e = e->next;
+		}
+		for (j = 0; j < mapent->numbrushes; j++) {
+			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
+			fprintf(f, "// brush %i\n{\n", j);
+			for (k = 0; k < brush->numsides; k++) {
+				const side_t *side = &brush->original_sides[k];
+				const brush_texture_t *t = &side_brushtextures[side - brushsides];
+				if (t->name[0]) {
+					fprintf(f, "( x x x ) ( y y y ) ( z z z ) %s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1], t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
+					/* name, shift, rotate, scale, contentFlags, surfaceFlags, value */
+				}
+			}
+			fprintf(f, "}\n");
+		}
+	}
+
+	fprintf(f, "}\n");
+	fclose(f);
+}
+
+/**
+ * @sa WriteMapFile
+ * @sa ParseMapEntity
+ */
 void LoadMapFile (const char *filename)
 {
 	int i;

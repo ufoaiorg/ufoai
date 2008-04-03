@@ -33,5 +33,6 @@ void ParseFromMemory(char *buffer, int size);
 qboolean GetToken(qboolean crossline);
 qboolean TokenAvailable(void);
 int GetScriptLine(void);
+const char *GetScriptFile(void);
 
 #endif /* _SCRIPTLIB */
