@@ -4338,7 +4338,6 @@ static void CL_GameGo (void)
 	CP_CreateBattleParameters(mis);
 	CP_SetMissionVars();
 	/* Set the states of mission Cvars to proper values. */
-	Cvar_SetValue("mission_homebase", base->idx);
 	Cvar_SetValue("mission_uforecovered", 0);
 
 	/* manage inventory */
