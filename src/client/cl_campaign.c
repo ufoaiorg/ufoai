@@ -174,6 +174,8 @@ static void CL_ResetAlienInterest (void)
  */
 static void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
 {
+	const float nonOccurrencePercent = 0.2f;		/**< Non occurence probability */
+
 	if (category == INTERESTCATEGORY_MAX) {
 		Com_Printf("CL_ChangeIndividualInterest: Unsupported value of category\n");
 		return;
@@ -203,6 +205,14 @@ static void CL_ChangeIndividualInterest (float percentage, interestCategory_t ca
 			ccs.interest[category] = 0;
 		}
 	}
+
+	/* Set new non-occurence value. The aim is to have roughly a steady number of none occurrence during the
+	game, in order to include some randomness. If overall alien interest becomes higher than 1000, then the
+	none occurence goes to zero, to make more pressure on the player. */
+	if (ccs.overallInterest < 1000)
+		ccs.interest[INTERESTCATEGORY_NONE] = (int) (nonOccurrencePercent * ccs.overallInterest);
+	else
+		ccs.interest[INTERESTCATEGORY_NONE] = (int) (nonOccurrencePercent * 1000 * exp((ccs.overallInterest - 1000) / 30));
 }
 
 /**
