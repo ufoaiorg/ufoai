@@ -6213,7 +6213,7 @@ static void CP_UFORecoveredStart_f (void)
 
 	i = Cvar_VariableInteger("mission_recoverybase");
 
-	if (i < 0 || i > MAX_BASES)
+	if (i < 0 || i >= MAX_BASES)
 		return;
 
 	base = B_GetBase(i);
