@@ -28,8 +28,10 @@
 # Changelog
 #	2008-04-03 Hoehrer
 #		Added first working parseUfoToken function.
+#		Multi-line support for text inside ""s
 #######################################
 # TODO
+#	* Fix comment parsing
 #	* Parse research.ufo. See $techTestString for an example
 #	* Write .dot file (graphviz). See $graphvizExample for an example.
 #######################################
@@ -136,10 +138,11 @@ sub parseUfoToken ($) {
 	if ($text =~ m/^\/\//) {
 		$text =~ s/\/\/.*\n//;	# remove comment
 	}
-		
+	
+	# Parse (multi-line) text encloded by ""
 	if ($text =~ m/^"/) {
 		#print "\"\"\"\"\"\"\"\"\"\n";
-		$text =~ s/"([^"]*)"([.\n?]*)/$2/;
+		$text =~ s/"([^"]*?)"([.\n?]*)/$2/;
 		$token = $1;
 		$$d = $text;
 		return $token;
@@ -197,6 +200,8 @@ my $techTestString ='tech rs_weapon_monoknife
 	up_chapter	equipment
 	description {
 		default "_monoknife_txt"
+		dummydesc "dumytext spanning
+over several lines"
 	}
 	pre_description {
 		default "_monoknife_pre_txt"
