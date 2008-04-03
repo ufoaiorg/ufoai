@@ -55,6 +55,8 @@ static salary_t salaries[MAX_CAMPAIGNS];
 static cvar_t *cl_campaign;
 static const int MAX_POS_LOOP = 10;				/**< Maximum number of loops to choose a mission position (to avoid infinite loops) */
 
+static const int STARTING_BASEBUILD_INTEREST = 300;	/**< Overall alien interest value for starting constructing alien bases. */
+
 /**
  * @brief Check wheter given date and time is later than current date.
  * @param[in] now Current date.
@@ -395,6 +397,7 @@ mission_t* CP_GetMissionById (const char *missionId)
 	Com_Printf("CP_GetMissionById: Could not find mission %s\n", missionId);
 	return NULL;
 }
+
 /**
  * @brief Get last mission added to ccs.missions.
  * @return Last mission added to ccs.missions, NULL if no mission.
@@ -653,6 +656,10 @@ static int CP_MissionChooseUFO (const mission_t *mission)
 	case INTERESTCATEGORY_BASE_ATTACK:
 		return UFO_FIGHTER;
 	case INTERESTCATEGORY_BUILDING:
+		if (mission->initialIndividualInterest < STARTING_BASEBUILD_INTEREST) {
+			/* This is a subverting government mission */
+			break;
+		}
 	case INTERESTCATEGORY_SUPPLY:
 		return UFO_SUPPLY;
 	case INTERESTCATEGORY_XVI:
@@ -723,8 +730,7 @@ base_t* CP_PositionCloseToBase (const vec2_t pos)
 static void CP_ReconMissionIsSuccess (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_RECON);
-	if (ccs.XVISpreadActivated)
-		CL_ChangeIndividualInterest(0.15f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(0.15f, INTERESTCATEGORY_BUILDING);
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
 
@@ -739,8 +745,7 @@ static void CP_ReconMissionIsFailure (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	if (ccs.XVISpreadActivated)
-		CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 
 	CP_MissionRemove(mission);
 }
@@ -948,8 +953,7 @@ static void CP_TerrorMissionIsFailure (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	if (ccs.XVISpreadActivated)
-		CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 
 	CP_MissionRemove(mission);
 }
@@ -1286,10 +1290,10 @@ static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_SUPPLY);
 
-	/* Spread XVI */
+	/* Spread XVI (if this was not a subverting government mission) */
 	base = (alienBase_t *) mission->data;
-	assert(base);
-	CP_SpreadXVIAtPos(base->pos);
+	if (base)
+		CP_SpreadXVIAtPos(base->pos);
 
 	CP_MissionRemove(mission);
 }
@@ -1383,6 +1387,59 @@ static void CP_BuildBaseGoToBase (mission_t *mission)
 }
 
 /**
+ * @brief Build Base mission ends: UFO leave earth.
+ * @note Build Base mission -- Stage 3
+ */
+static void CP_BuildBaseGovernmentLeave (mission_t *mission)
+{
+	nation_t *nation;
+
+	assert(mission);
+
+	/* lower nation happiness */
+	nation = MAP_GetNation(mission->pos);
+	nation->stats[0].happiness *= 0.8;
+
+	CP_MissionDisableTimeLimit(mission);
+	UFO_SetRandomDest(mission->ufo);
+	/* Display UFO on geoscape if it is visible */
+	mission->ufo->notOnGeoscape = qfalse;
+
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+}
+
+/**
+ * @brief Start Subverting Mission.
+ * @note Build Base mission -- Stage 2
+ */
+static void CP_BuildBaseSubvertGovernment (mission_t *mission)
+{
+	const date_t missionDelay = {5, 0};
+
+	assert(mission->ufo);
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	CP_UFORemoveFromGeoscape(mission);
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission);
+
+	mission->stage = STAGE_SUBVERT_GOV;
+}
+
+/**
+ * @brief Choose if the mission should be an alien infiltration or a base attack mission.
+ * @note Build Base mission -- Stage 1
+ */
+static void CP_BuildBaseChooseMission (mission_t *mission)
+{
+	if (mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST)
+		CP_ReconMissionGroundGo(mission);
+	else
+		CP_BuildBaseGoToBase(mission);
+}
+
+/**
  * @brief Determine what action should be performed when a Build Base mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
@@ -1394,16 +1451,24 @@ static void CP_BuildBaseMissionNextStage (mission_t *mission)
 		CP_MissionCreate(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
-		/* Go to new base position */
-		CP_BuildBaseGoToBase(mission);
+		/* Choose type of mission */
+		CP_BuildBaseChooseMission(mission);
 		break;
 	case STAGE_MISSION_GOTO:
-		/* just arrived on base location: build base */
-		CP_BuildBaseSetUpBase(mission);
+		if (mission->data)
+			/* just arrived on base location: build base */
+			CP_BuildBaseSetUpBase(mission);
+		else
+			/* subverting mission */
+			CP_BuildBaseSubvertGovernment(mission);
 		break;
 	case STAGE_BUILD_BASE:
 		/* Leave earth */
 		CP_BuildBaseMissionLeave(mission);
+		break;
+	case STAGE_SUBVERT_GOV:
+		/* Leave earth */
+		CP_BuildBaseGovernmentLeave(mission);
 		break;
 	case STAGE_RETURN_TO_ORBIT:
 		/* mission is over, remove mission */
@@ -1984,7 +2049,7 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 		return "Base attack";
 		break;
 	case INTERESTCATEGORY_BUILDING:
-		return "Building Base";
+		return "Building Base or Subverting Government";
 		break;
 	case INTERESTCATEGORY_SUPPLY:
 		return "Supply base";
@@ -2509,7 +2574,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "mission";
 
 	if (mission->mapDef->storyRelated) {
-		if (mission->category == INTERESTCATEGORY_BUILDING)
+		if ((mission->category == INTERESTCATEGORY_BUILDING) && (mission->stage == STAGE_BUILD_BASE))
 			return "alienbase";
 		else
 			/* @todo Should be a special story related mission model */
@@ -2522,8 +2587,8 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	case INTERESTCATEGORY_XVI:
 	case INTERESTCATEGORY_HARVEST:
 	case INTERESTCATEGORY_TERROR_ATTACK:
+	case INTERESTCATEGORY_BUILDING:
 		return "mission";
-	case INTERESTCATEGORY_BUILDING:		/* Should not be reached: alien base mission is storyrelated */
 	case INTERESTCATEGORY_BASE_ATTACK:	/* Should not be reached, this mission category is not drawn on geoscape */
 	case INTERESTCATEGORY_SUPPLY:		/* Should not be reached, this mission category is not drawn on geoscape */
 	case INTERESTCATEGORY_INTERCEPT:	/* Should not be reached, this mission category is not drawn on geoscape */
@@ -3856,12 +3921,14 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			if (mission.stage >= STAGE_MISSION_GOTO) {
 				alienBase_t *alienBase;
 				const int baseidx = MSG_ReadByte(sb);
-				/* don't check baseidx value here: alien bases are not loaded yet */
-				alienBase = AB_GetBase(baseidx, 0);
-				if (alienBase)
-					mission.data = (void *) alienBase;
-				else
-					Com_Printf("Error while loading Alien Base mission (mission %i)\n", i);
+				if (baseidx != NONE) {
+					/* don't check baseidx value here: alien bases are not loaded yet */
+					alienBase = AB_GetBase(baseidx, 0);
+					if (alienBase)
+						mission.data = (void *) alienBase;
+					else
+						Com_Printf("Error while loading Alien Base mission (mission %i)\n", i);
+				}
 			}
 			break;
 		default:
@@ -4016,8 +4083,11 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 				const alienBase_t *base;
 				/* save IDX of base under attack if required */
 				base = (alienBase_t*)mission->data;
-				assert(base);
-				MSG_WriteByte(sb, base->idx);
+				if (base)
+					MSG_WriteByte(sb, base->idx);
+				else
+					/* there may be no base is the mission is a subverting government */
+					MSG_WriteByte(sb, NONE);
 			}
 			break;
 		default:
