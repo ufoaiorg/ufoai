@@ -158,7 +158,7 @@ void WindingCenter (winding_t *w, vec3_t center)
 /**
  * @brief
  */
-winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
+winding_t *BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 {
 	int i, x;
 	vec_t max, v;
@@ -200,7 +200,7 @@ winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 	VectorScale(vup, 8192, vup);
 	VectorScale(vright, 8192, vright);
 
-	/* project a really big	axis aligned box onto the plane */
+	/* project a really big axis aligned box onto the plane */
 	w = AllocWinding(4);
 	if (!w)
 		return NULL;

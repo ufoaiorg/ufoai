@@ -944,13 +944,12 @@ void WriteMapFile (const char *filename)
 				const side_t *side = &brush->original_sides[k];
 				const brush_texture_t *t = &side_brushtextures[side - brushsides];
 				if (t->name[0]) {
-#if 0
-					const plane_t *plane = &mapplanes[side->planenum];
-					const winding_t *w = side->winding;
-					assert(w);
-#endif
-					fprintf(f, "( x x x ) ( y y y ) ( z z z ) %s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1], t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
-					/* name, shift, rotate, scale, contentFlags, surfaceFlags, value */
+					winding_t *w = BaseWindingForPlane(mapplanes[side->planenum].normal, mapplanes[side->planenum].dist);
+					fprintf(f, "( %i %i %i ) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
+					fprintf(f, "( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
+					fprintf(f, "( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
+					fprintf(f, "%s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1], t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
+					FreeWinding(w);
 				}
 			}
 			fprintf(f, "}\n");
