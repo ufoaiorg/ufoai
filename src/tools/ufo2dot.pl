@@ -29,9 +29,9 @@
 #	2008-04-03 Hoehrer
 #		Added first working parseUfoToken function.
 #		Multi-line support for text inside ""s
+#		Hopefully fixed comment parsing - still needs some testing. Also added a repeating cleanup function.
 #######################################
 # TODO
-#	* Fix comment parsing
 #	* Parse research.ufo. See $techTestString for an example
 #	* Write .dot file (graphviz). See $graphvizExample for an example.
 #######################################
@@ -122,22 +122,33 @@ sub parseUfoToken ($) {
 
 	my $token = '';
 
-#	print $text;
-#	return '';
+	my $modified = 1;
+	# clean the 
+	while ($modified) {		
+		$modified = 0;
 
-	# Skip whitespace
-	$text =~ s/^\s*//;
+		$text =~ s/^\s*//;	# Skip whitespace
 
+		# Skip single-line comment.
+		if ($text =~ m/^\/\//) {
+			$text =~ s/([^\n]*)([.\n?]*)/$2/;	# Skip everything until newline.
+			$modified = 1;
+		}
+
+		$text =~ s/^\s*//;	# Skip whitespace
+
+		# TODO Skip multi-line comment.
+		if ($text =~ m/^\/\*/) {
+			#$text =~ s/^.*?\*\///;	
+			$text =~ s/\/\*([^"]*?)\*\/([.\n?]*)/$2/; # Skip everything until (and including) closing "*/" characters.
+			$modified = 1;
+		}
+
+	}
+
+	$text =~ s/^\s*//;	# Skip whitespace
 	
-	# todo Skip multi-line comment.
-	if ($text =~ m/^\/\*/) {
-		$text =~ s/^.*?\*\///;
-	}
-
-	# todo Skip single-line comment.
-	if ($text =~ m/^\/\//) {
-		$text =~ s/\/\/.*\n//;	# remove comment
-	}
+	# Garbage is gone at this point. Only the next token.
 	
 	# Parse (multi-line) text encloded by ""
 	if ($text =~ m/^"/) {
@@ -155,16 +166,25 @@ sub parseUfoToken ($) {
 }
 
 sub parseTech (%$) {
-	my ($self) = @_;
+	my ($self, $d) = @_;
+	my $text = $$d;
 	
-	my $text = $self->{'input'};
 	my $tech = {};
-		
-	(my $techID, $text) = split(/\s*/, $text);
+	
+	my $token = parseUfoToken($d);
+	
+	if ($token ne 'tech') {
+		die "Expecting 'tech' keyword, got this instead: '".$token."'\n";
+	}
+
+	my $techID = $token;
+
+	while ($token ne '}') {
+		# todo parse tech
+	}
 	
 	$self->{'techs'}->{$techID} = $tech;
-	$self->{'input'} = $text;
-
+	
 	return $self;
 }
 
@@ -197,9 +217,10 @@ sub parseUfoTree (%$) {
 my $techTestString ='tech rs_weapon_monoknife
 {
 	type	weapon
-	up_chapter	equipment
-	description {
-		default "_monoknife_txt"
+	up_chapter	equipment // comment test
+	description {	/* comment test2 */
+		default "_monoknife_txt"	/* comment
+test3 */
 		dummydesc "dumytext spanning
 over several lines"
 	}
