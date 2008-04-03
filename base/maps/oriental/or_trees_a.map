@@ -6,36 +6,36 @@
 {
 ( 188 68 4 ) ( 164 68 4 ) ( 164 64 4 ) tex_buildings/concrete005 -192 -192 0 0.5 0.5 0 0 0
 ( 164 64 12 ) ( 164 68 12 ) ( 188 68 12 ) tex_buildings/concrete005 -192 -192 0 0.5 0.5 0 0 0
-( 164 64 20 ) ( 188 64 20 ) ( 188 64 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 188 64 12 ) ( 188 68 12 ) ( 188 68 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 160 64 4 ) ( 160 64 12 ) ( 192 64 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 192 64 4 ) ( 192 64 12 ) ( 188 68 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 ( 188 68 20 ) ( 164 68 20 ) ( 164 68 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 164 68 12 ) ( 164 64 12 ) ( 164 64 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 160 64 12 ) ( 160 64 4 ) ( 164 68 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 }
 // brush 1
 {
 ( 188 96 4 ) ( 164 96 4 ) ( 164 92 4 ) tex_buildings/concrete005 -192 -192 0 0.5 0.5 0 0 0
 ( 164 92 12 ) ( 164 96 12 ) ( 188 96 12 ) tex_buildings/concrete005 -192 -192 0 0.5 0.5 0 0 0
 ( 164 92 20 ) ( 188 92 20 ) ( 188 92 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 188 92 12 ) ( 188 96 12 ) ( 188 96 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
-( 188 96 20 ) ( 164 96 20 ) ( 164 96 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 164 96 12 ) ( 164 92 12 ) ( 164 92 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 192 96 12 ) ( 192 96 4 ) ( 188 92 4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 192 96 4 ) ( 192 96 12 ) ( 160 96 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 160 96 4 ) ( 160 96 12 ) ( 164 92 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 }
 // brush 2
 {
 ( 192 96 4 ) ( 188 96 4 ) ( 188 64 4 ) tex_buildings/concrete005 -192 -192 0 0.5 0.5 0 0 0
 ( 188 64 12 ) ( 188 96 12 ) ( 192 96 12 ) tex_buildings/concrete005 -192 -192 0 0.5 0.5 0 0 0
-( 188 64 20 ) ( 192 64 20 ) ( 192 64 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 188 68 4 ) ( 188 68 12 ) ( 192 64 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 192 64 20 ) ( 192 96 20 ) ( 192 96 4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
-( 192 96 20 ) ( 188 96 20 ) ( 188 96 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 188 96 12 ) ( 188 64 12 ) ( 188 64 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 188 92 12 ) ( 188 92 4 ) ( 192 96 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 188 68 12 ) ( 188 68 4 ) ( 188 92 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 }
 // brush 3
 {
 ( 164 96 4 ) ( 160 96 4 ) ( 160 64 4 ) tex_buildings/concrete005 -192 -192 0 0.5 0.5 0 0 0
 ( 160 64 12 ) ( 160 96 12 ) ( 164 96 12 ) tex_buildings/concrete005 -192 -192 0 0.5 0.5 0 0 0
-( 160 64 20 ) ( 164 64 20 ) ( 164 64 16 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 164 64 12 ) ( 164 96 12 ) ( 164 96 8 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
-( 164 96 20 ) ( 160 96 20 ) ( 160 96 16 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 164 68 12 ) ( 164 68 4 ) ( 160 64 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 164 68 4 ) ( 164 68 12 ) ( 164 92 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 164 92 4 ) ( 164 92 12 ) ( 160 96 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 160 96 20 ) ( 160 64 20 ) ( 160 64 16 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 }
 // brush 4
@@ -69,37 +69,37 @@
 {
 ( 68 96 4 ) ( 64 96 4 ) ( 64 64 4 ) tex_buildings/concrete005 0 -192 0 0.5 0.5 0 0 0
 ( 64 64 12 ) ( 64 96 12 ) ( 68 96 12 ) tex_buildings/concrete005 0 -192 0 0.5 0.5 0 0 0
-( 64 64 20 ) ( 68 64 20 ) ( 68 64 16 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 68 64 12 ) ( 68 96 12 ) ( 68 96 8 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
-( 68 96 20 ) ( 64 96 20 ) ( 64 96 16 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 68 68 12 ) ( 68 68 4 ) ( 64 64 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 68 68 4 ) ( 68 68 12 ) ( 68 92 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 68 92 4 ) ( 68 92 12 ) ( 64 96 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 64 96 20 ) ( 64 64 20 ) ( 64 64 16 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 }
 // brush 8
 {
 ( 96 96 4 ) ( 92 96 4 ) ( 92 64 4 ) tex_buildings/concrete005 0 -192 0 0.5 0.5 0 0 0
 ( 92 64 12 ) ( 92 96 12 ) ( 96 96 12 ) tex_buildings/concrete005 0 -192 0 0.5 0.5 0 0 0
-( 92 64 20 ) ( 96 64 20 ) ( 96 64 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 92 68 4 ) ( 92 68 12 ) ( 96 64 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 96 64 20 ) ( 96 96 20 ) ( 96 96 4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
-( 96 96 20 ) ( 92 96 20 ) ( 92 96 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 92 96 12 ) ( 92 64 12 ) ( 92 64 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 92 92 12 ) ( 92 92 4 ) ( 96 96 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 92 68 12 ) ( 92 68 4 ) ( 92 92 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 }
 // brush 9
 {
 ( 92 96 4 ) ( 68 96 4 ) ( 68 92 4 ) tex_buildings/concrete005 0 -192 0 0.5 0.5 0 0 0
 ( 68 92 12 ) ( 68 96 12 ) ( 92 96 12 ) tex_buildings/concrete005 0 -192 0 0.5 0.5 0 0 0
 ( 68 92 20 ) ( 92 92 20 ) ( 92 92 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 92 92 12 ) ( 92 96 12 ) ( 92 96 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
-( 92 96 20 ) ( 68 96 20 ) ( 68 96 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 68 96 12 ) ( 68 92 12 ) ( 68 92 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 96 96 12 ) ( 96 96 4 ) ( 92 92 4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 96 96 4 ) ( 96 96 12 ) ( 64 96 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 64 96 4 ) ( 64 96 12 ) ( 68 92 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 }
 // brush 10
 {
 ( 92 68 4 ) ( 68 68 4 ) ( 68 64 4 ) tex_buildings/concrete005 0 -192 0 0.5 0.5 0 0 0
 ( 68 64 12 ) ( 68 68 12 ) ( 92 68 12 ) tex_buildings/concrete005 0 -192 0 0.5 0.5 0 0 0
-( 68 64 20 ) ( 92 64 20 ) ( 92 64 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 92 64 12 ) ( 92 68 12 ) ( 92 68 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 64 64 4 ) ( 64 64 12 ) ( 96 64 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 96 64 4 ) ( 96 64 12 ) ( 92 68 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 ( 92 68 20 ) ( 68 68 20 ) ( 68 68 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 68 68 12 ) ( 68 64 12 ) ( 68 64 -4 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
+( 64 64 12 ) ( 64 64 4 ) ( 68 68 12 ) tex_buildings/concrete005 192 0 0 0.5 0.5 0 0 0
 }
 // brush 11
 {
@@ -114,72 +114,72 @@
 {
 ( 164 192 4 ) ( 160 192 4 ) ( 160 160 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 160 160 12 ) ( 160 192 12 ) ( 164 192 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 160 160 20 ) ( 164 160 20 ) ( 164 160 16 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 164 160 12 ) ( 164 192 12 ) ( 164 192 8 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 164 192 20 ) ( 160 192 20 ) ( 160 192 16 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 164 164 12 ) ( 164 164 4 ) ( 160 160 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 164 164 4 ) ( 164 164 12 ) ( 164 188 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 164 188 4 ) ( 164 188 12 ) ( 160 192 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 160 192 20 ) ( 160 160 20 ) ( 160 160 16 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 }
 // brush 13
 {
 ( 192 192 4 ) ( 188 192 4 ) ( 188 160 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 188 160 12 ) ( 188 192 12 ) ( 192 192 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 188 160 20 ) ( 192 160 20 ) ( 192 160 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 188 164 4 ) ( 188 164 12 ) ( 192 160 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 192 160 20 ) ( 192 192 20 ) ( 192 192 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 192 192 20 ) ( 188 192 20 ) ( 188 192 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 188 192 12 ) ( 188 160 12 ) ( 188 160 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 188 188 12 ) ( 188 188 4 ) ( 192 192 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 188 164 12 ) ( 188 164 4 ) ( 188 188 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 }
 // brush 14
 {
 ( 188 192 4 ) ( 164 192 4 ) ( 164 188 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 164 188 12 ) ( 164 192 12 ) ( 188 192 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 164 188 20 ) ( 188 188 20 ) ( 188 188 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 188 188 12 ) ( 188 192 12 ) ( 188 192 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 188 192 20 ) ( 164 192 20 ) ( 164 192 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 164 192 12 ) ( 164 188 12 ) ( 164 188 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 192 192 12 ) ( 192 192 4 ) ( 188 188 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 192 192 4 ) ( 192 192 12 ) ( 160 192 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 160 192 4 ) ( 160 192 12 ) ( 164 188 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 }
 // brush 15
 {
 ( 188 164 4 ) ( 164 164 4 ) ( 164 160 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
 ( 164 160 12 ) ( 164 164 12 ) ( 188 164 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 164 160 20 ) ( 188 160 20 ) ( 188 160 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 188 160 12 ) ( 188 164 12 ) ( 188 164 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 160 160 4 ) ( 160 160 12 ) ( 192 160 12 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
+( 192 160 4 ) ( 192 160 12 ) ( 188 164 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 188 164 20 ) ( 164 164 20 ) ( 164 164 4 ) tex_buildings/concrete005 -192 0 0 0.5 0.5 0 0 0
-( 164 164 12 ) ( 164 160 12 ) ( 164 160 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 160 160 12 ) ( 160 160 4 ) ( 164 164 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 }
 // brush 16
 {
 ( 92 164 4 ) ( 68 164 4 ) ( 68 160 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 68 160 12 ) ( 68 164 12 ) ( 92 164 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 68 160 20 ) ( 92 160 20 ) ( 92 160 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 92 160 12 ) ( 92 164 12 ) ( 92 164 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 64 160 4 ) ( 64 160 12 ) ( 96 160 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 96 160 4 ) ( 96 160 12 ) ( 92 164 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 92 164 20 ) ( 68 164 20 ) ( 68 164 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 68 164 12 ) ( 68 160 12 ) ( 68 160 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 64 160 12 ) ( 64 160 4 ) ( 68 164 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 }
 // brush 17
 {
 ( 92 192 4 ) ( 68 192 4 ) ( 68 188 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 68 188 12 ) ( 68 192 12 ) ( 92 192 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 68 188 20 ) ( 92 188 20 ) ( 92 188 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 92 188 12 ) ( 92 192 12 ) ( 92 192 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 92 192 20 ) ( 68 192 20 ) ( 68 192 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 68 192 12 ) ( 68 188 12 ) ( 68 188 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 96 192 12 ) ( 96 192 4 ) ( 92 188 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 96 192 4 ) ( 96 192 12 ) ( 64 192 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 64 192 4 ) ( 64 192 12 ) ( 68 188 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 }
 // brush 18
 {
 ( 96 192 4 ) ( 92 192 4 ) ( 92 160 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 92 160 12 ) ( 92 192 12 ) ( 96 192 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 92 160 20 ) ( 96 160 20 ) ( 96 160 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 92 164 4 ) ( 92 164 12 ) ( 96 160 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 96 160 20 ) ( 96 192 20 ) ( 96 192 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 96 192 20 ) ( 92 192 20 ) ( 92 192 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 92 192 12 ) ( 92 160 12 ) ( 92 160 -4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 92 188 12 ) ( 92 188 4 ) ( 96 192 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 92 164 12 ) ( 92 164 4 ) ( 92 188 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 }
 // brush 19
 {
 ( 68 192 4 ) ( 64 192 4 ) ( 64 160 4 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 64 160 12 ) ( 64 192 12 ) ( 68 192 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 64 160 20 ) ( 68 160 20 ) ( 68 160 16 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 68 160 12 ) ( 68 192 12 ) ( 68 192 8 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
-( 68 192 20 ) ( 64 192 20 ) ( 64 192 16 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 68 164 12 ) ( 68 164 4 ) ( 64 160 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 68 164 4 ) ( 68 164 12 ) ( 68 188 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
+( 68 188 4 ) ( 68 188 12 ) ( 64 192 12 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 ( 64 192 20 ) ( 64 160 20 ) ( 64 160 16 ) tex_buildings/concrete005 0 0 0 0.5 0.5 0 0 0
 }
 // brush 20
