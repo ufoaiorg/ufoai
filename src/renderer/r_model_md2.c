@@ -142,7 +142,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
 
 	if (bufSize != LittleLong(md2->ofs_end))
-		Com_Error(ERR_DROP, "model %s broken offset values", mod->name);
+		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
 
 	skinHeight = LittleLong(md2->skinheight);
 	skinWidth = LittleLong(md2->skinwidth);

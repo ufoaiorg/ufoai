@@ -372,7 +372,7 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	mission->mapDef = &csi.mds[i - 1];
 	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 
-/* @todo Use me */
+	/* @todo Use me */
 	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
 	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
 	Q_strncpyz(gd.oldMis1, mission->mapDef->id, sizeof(gd.oldMis1));
