@@ -33,9 +33,10 @@
 #		First code to parse a technology and the requirements inside it.
 #		Requirements are parsed now.
 #		research.ufo file is parsed now .. but see TODO.
+#		Writing basic .dot files (graphviz) works now
 #######################################
 # TODO
-#	* Write .dot file (graphviz). See $graphvizExample for an example.
+#	* write items and other dependencies as well.
 #######################################
 
 use strict;
@@ -47,6 +48,8 @@ my $filenames = [
 	"../../base/ufos/research.ufo",
 	"../../base/ufos/research_logic.ufo"
 ];
+
+my $filenameDot = "tree.dot";
 
 # Settings inside "tech" we'll just skip for now.
 my $technologySkipSettings = [
@@ -84,40 +87,6 @@ my $technologyRequirementSettings = {
 };
 
 #######################################
-# Writing (.dot syntax)
-#######################################
-sub printTechnologyStyle ($$) {
-	print 'node [shape=box, color="#004e0099", style=filled, fontcolor=black];';
-}
-
-sub printTech ($) {
-	my ($tech) = @_;
-	# techID [label="Tech Name"];
-	print $tech->{id}, '[label="',$tech->{name},'"];';
-}
-
-sub printTechGroup ($) {
-	my ($tech) = @_;
-
-	if ($tech->OR || $tech->AND) {
-		if ($tech->OR && $tech->AND) {
-			# subgraph techID_C { techID_OR -- techID; techID_AND -- techID_OR }
-			print 'subgraph ', $tech->id, '_C { ', $tech->id, '_OR -- ', $tech->id, '; ', $tech->id, '_AND -- ', $tech->id, '_OR }';
-		}
-
-		if ($tech->OR && !$tech->AND) {
-			# subgraph techID_C { techID_OR -- techID; }
-			print 'subgraph ', $tech->id, '_C { ', $tech->id, '_OR -- ', $tech->id, ' }';
-		}
-
-		if (!$tech->OR && $tech->AND) {
-			# subgraph techID_C { techID_AND -- techID; }
-			print 'subgraph ', $tech->id, '_C { ', $tech->id, '_AND -- ', $tech->id, ' }';
-		}
-	}
-}
-
-#######################################
 # Parsing (.ufo techtree syntax)
 #######################################
 sub parseUfoToken ($) {
@@ -143,9 +112,7 @@ sub parseUfoToken ($) {
 
 		# Skip multi-line comment.
 		if ($text =~ m/^\/\*/) {
-			print "yy";	 # DEBUG
 			$text =~ s/\/\*([^\R]*?)\*\/([.\n?]*)/$2/; # Skip everything until (and including) closing "*/" characters.
-			print $2, "\n";
 			$modified = 1;
 			next;
 		}
@@ -344,6 +311,143 @@ sub parseUfoTree (%$) {
 	return $self;
 }
 
+#######################################
+# Writing (.dot syntax)
+#######################################
+sub printTechnologyStyle ($) {
+	my ($FH) = @_;
+	printf $FH "\t".'node  [shape=box, color="#004e0099", style=filled, fontcolor=black];'."\n";
+}
+sub printReqStyle ($$) {
+	my ($FH, $label) = @_;
+	printf $FH "\t".'node [shape=ellipse, label="'.$label.'", color="#71a4cf99", style=filled, fontcolor=black];'."\n";
+}
+
+sub printTech ($$) {
+	my ($tech, $FH) = @_;
+
+	# techID [label="Tech Name"];
+	my $name;
+	if (exists($tech->{'name'})) {
+		$name = $tech->{'name'};
+	} else {
+		$name = $tech->{'id'};
+	}
+	printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'"];'."\n";
+}
+
+sub printReq ($$$) {
+	my ($tech, $FH, $label) = @_;
+	
+	if (exists($tech->{$label}) and length($tech->{$label}) >= 1) {
+		printf $FH "\t\t".$tech->{'id'}.'_'.$label.";\n"
+	}
+}
+
+sub printTechGroup ($$) {
+	my ($tech, $FH) = @_;
+
+	my $hasOR = (exists($tech->{'OR'}) and length($tech->{'OR'}) > 1);
+	my $hasAND = (exists($tech->{'AND'}) and length($tech->{'AND'}) > 1);
+
+	if ($hasOR || $hasAND) {
+		if ($hasOR && $hasAND) {
+			# subgraph techID_C { techID_OR -- techID; techID_AND -- techID_OR }
+			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -- '.$tech->{'id'}.'; '.$tech->{'id'}. '_AND -- '.$tech->{'id'}.'_OR }'."\n";
+		}
+
+		if ($hasOR && !$hasAND) {
+			# subgraph techID_C { techID_OR -- techID; }
+			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -- '.$tech->{'id'}.' }'."\n";
+		}
+
+		if (!$hasOR && $hasAND) {
+			# subgraph techID_C { techID_AND -- techID; }
+			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_AND -- '.$tech->{'id'}.' }'."\n";
+		}
+	}
+}
+
+sub printTechLinks ($$) {
+	my ($tech, $FH) = @_;
+	
+	foreach my $req (@{$tech->{'AND'}}) {
+		if ($req->{'type'} eq "tech") {
+			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_AND'."\n";
+		}
+	}
+	foreach my $req (@{$tech->{'OR'}}) {
+		if ($req->{'type'} eq "tech") {
+			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_OR'."\n";
+		}
+	}
+
+}
+
+sub writeDotFile(%$) {
+	my ($self, $filename) = @_;
+	die "\nUsage: writeDotFile(techtree-HASHREF filename)"
+	unless ((@_                == 2      ) &&
+		(ref($self)        eq 'HASH' ) );
+	
+	print "Writing file '", $filename, "' ...\n";
+	open(my $DOT, "> $filename") or die "\nCouldn not open file '$filename' for writing: $!\n";
+	#my $DOT = <DOT>;
+	
+	printf $DOT 'graph G {'."\n";
+	printf $DOT '	edge [color="#0b75cf"];'."\n";
+	printf $DOT '	label = "Research Tree\nUFO: Alien Invasion";'."\n";
+	
+	# Draw technolgiy boxes
+	printTechnologyStyle($DOT);
+	foreach my $techId (keys %{$self}) {
+		my $tech = $self->{$techId};
+		printTech($tech, $DOT);
+	}
+
+	# Draw OR boxes for each technology that needs them.
+	printReqStyle($DOT, "OR");
+	foreach my $techId (keys %{$self}) {
+		my $tech = $self->{$techId};
+		printReq($tech, $DOT, "OR");
+	}
+
+	printReqStyle($DOT, "AND");
+	foreach my $techId (keys %{$self}) {
+		my $tech = $self->{$techId};
+		printReq($tech, $DOT, "AND");
+	}
+	
+	# TODO: draw item boxes
+	
+	# TODO: draw items subgraph
+
+	# Draw tech subgraphs and OR/AND links
+	foreach my $techId (keys %{$self}) {
+		my $tech = $self->{$techId};
+		printTechGroup($tech, $DOT);
+	}
+	
+	
+	# Create requirement links
+	foreach my $techId (keys %{$self}) {
+		my $tech = $self->{$techId};
+		printTechLinks($tech, $DOT);
+	}
+
+	printf $DOT "\tfontsize=20;\n"
+	printf $DOT "}\n";
+	close $DOT;
+	
+	print "File '", $filenameDot, "' written.\n\n";
+	print "Use\n";
+	print " dot ", $filenameDot , "-Tpng >dia.png\n";
+	print " dot ", $filenameDot , "-Tpng >dia.png\n";
+	print "to convert it into a different format.\n";
+	print "See also: 'graphviz'\n";
+
+}
+
 ####################
 # MAIN
 ####################
@@ -353,81 +457,11 @@ use Data::Dumper;
 my $tree = {};
 foreach my $filename (@{$filenames}) {
 	$tree = parseUfoTree($tree, $filename);
-	print Dumper($tree);
+#	print Dumper($tree);
 }
 
-###################################################################
-my $graphvizExample = '
-graph G {
-	edge [color="#0b75cf"];
-	label = "Research Tree\nUFO: Alien Invasion";
 
-	node [shape=box, color="#004e0099", style=filled, fontcolor=black];
-		tech1 [label="Test1"];
-		tech2 [label="Test2"];
-		tech3 [label="Test3"];
-		tech4 [label="Test4"];
-		tech5 [label="Test5"];
-		tech6 [label="Test6"];
-		tech7 [label="Test7"];
-
-	node [shape=ellipse, label="OR", color="#71a4cf99", style=filled, fontcolor=black];
-		/* OR1; */
-		/* OR2; */
-		OR3;
-		/* OR4; */
-		/* OR5; */
-		OR6;
-		OR7;
-
-	node [shape=ellipse, label="AND", color="#71cf9a99", style=filled, fontcolor=black];
-		/* AND1; */
-		/* AND2; */
-		AND3;
-		/* AND4; */
-		/* AND5; */
-		AND6;
-		/* AND7; */
-
-/*
-	node [shape=record,label="<AND> AND|<OR> OR"];
-		testing;
-*/
-
-	subgraph items {
-	rank=source;
-	node [shape=box, color="#f7e30099", style=filled, fontcolor=black];
-		item1 [label="Collected\nArtifact 1"];
-		item2 [label="Collected\nArtifact 2"];
-		item3 [label="Collected\nArtifact 3"];
-	}
-
-	/* subgraph tech1_C { OR1 -- tech1; AND1 -- OR1 } None are used. */
-	/* subgraph tech2_C { OR2 -- tech2; AND2 -- OR2 }	None are used. */
-	subgraph tech3_C { OR3 -- tech3; AND3 -- OR3 }	/* Both are used */
-	/* subgraph tech4_C { OR4 -- tech4; AND4 -- OR4 }	None are used. */
-	/* subgraph tech5_C { OR5 -- tech5; AND5 -- OR5 }	None are used. */
-	subgraph tech6_C { OR6 -- tech6; AND6 -- OR6 }
-	subgraph tech7_C { OR7 -- tech7; }	/* Only OR is used */
-
-	tech1 -- AND3;
-	tech2 -- AND3;
-	tech4 -- OR3;
-	tech5 -- OR3;
-	item1 -- OR3;
-
-	tech4 -- OR7;
-	tech1 -- OR7;
-
-	item2 -- OR6
-	item3 -- OR6
-	tech5 -- OR6
-
-	tech2 -- AND6
-
-	fontsize=20;
-}
-';
+writeDotFile($tree, $filenameDot);
 
 #############
 # EOF
