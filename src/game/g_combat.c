@@ -863,6 +863,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	float range;	/* ?? @todo */
 	float gauss1;
 	float gauss2;   /* For storing 2 gaussian distributed random values. */
+	float commonfactor; /* common to pitch and yaw spread, avoid extra multiplications */
+	float injurymultiplier;
 	int bounce;	/* count the bouncing */
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? @todo */
@@ -893,15 +895,21 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	/* Get 2 gaussian distributed random values */
 	gaussrand(&gauss1, &gauss2);
 
+	/* Calculate spread multiplier to give worse precision when HPs are not at max */
+	injurymultiplier = GET_INJURY_MULT(ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
+	Com_DPrintf(DEBUG_GAME, "G_ShootSingle: injury spread multiplier = %5.3f (mind %d, HP %d, maxHP %d)\n", injurymultiplier,
+		ent->chr.score.skills[ABILITY_MIND], ent->HP, ent->chr.maxHP == 0 ? 100 : ent->chr.maxHP);
+
 	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
+	commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * injurymultiplier;
 	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
-		angles[PITCH] += gauss1 * (fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * fd->crouch;
-		angles[YAW] += gauss2 * (fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * fd->crouch;
+		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
+		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
 	} else {
-		angles[PITCH] += gauss1 * (fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
-		angles[YAW] += gauss2 * (fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
+		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor);
+		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor);
 	}
 	/* Convert changed angles into new direction. */
 	AngleVectors(angles, dir, NULL, NULL);
