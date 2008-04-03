@@ -379,7 +379,7 @@ sub printTech ($$) {
 sub printReq ($$$) {
 	my ($tech, $FH, $label) = @_;
 
-	if (exists($tech->{$label}) and length($tech->{$label}) >= 1) {
+	if (exists($tech->{$label}) and $#{$tech->{$label}} >= 0) {
 		printf $FH "\t\t".$tech->{'id'}.'_'.$label.";\n"
 	}
 }
@@ -393,13 +393,13 @@ sub printItem ($$) {
 sub printTechGroup ($$) {
 	my ($tech, $FH) = @_;
 
-	my $hasOR = (exists($tech->{'OR'}) and length($tech->{'OR'}) >= 1);
-	my $hasAND = (exists($tech->{'AND'}) and length($tech->{'AND'}) >= 1);
+	my $hasOR = (exists($tech->{'OR'}) and $#{$tech->{'OR'}} >= 0);
+	my $hasAND = (exists($tech->{'AND'}) and $#{$tech->{'AND'}} >= 0);
 
 	if ($hasOR || $hasAND) {
 		if ($hasOR && $hasAND) {
 			# subgraph techID_C { techID_OR -- techID; techID_AND -- techID_OR }
-			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -- '.$tech->{'id'}.'; '.$tech->{'id'}. '_AND -- '.$tech->{'id'}.'_OR }'."\n";
+			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -- '.$tech->{'id'}.'; '.$tech->{'id'}. '_AND -- '.$tech->{'id'}.' }'."\n";
 		}
 
 		if ($hasOR && !$hasAND) {
