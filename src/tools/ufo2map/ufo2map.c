@@ -333,7 +333,7 @@ int main (int argc, char **argv)
 		" -extra                   : extra light samples\n"
 		" -entity                  : \n"
 		" -fulldetail              : don't treat details (and trans surfaces) as details\n"
-		" -info                    : print bsp file info"
+		" -info                    : print bsp file info\n"
 		" -maxlight                : \n"
 		" -micro <float>           : \n"
 #ifndef _WIN32
