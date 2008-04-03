@@ -46,7 +46,13 @@ typedef struct {
 static script_t scriptstack[MAX_INCLUDES];
 static script_t *script;
 
-char parsedToken[MAXTOKEN];
+char parsedToken[MAX_TOKEN_CHARS];
+
+int GetScriptLine (void)
+{
+	assert(script);
+	return script->line;
+}
 
 /**
  * @brief
@@ -55,6 +61,8 @@ char parsedToken[MAXTOKEN];
 static void AddScriptToStack (const char *filename)
 {
 	int size;
+
+	assert(script);
 
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
@@ -104,6 +112,8 @@ void ParseFromMemory (char *buffer, int size)
  */
 static qboolean EndOfScript (qboolean crossline)
 {
+	assert(script);
+
 	if (!crossline)
 		Sys_Error("Line %i is incomplete\n", script->line);
 
@@ -129,6 +139,8 @@ static qboolean EndOfScript (qboolean crossline)
 qboolean GetToken (qboolean crossline)
 {
 	char *token_p;
+
+	assert(script);
 
 	if (script->script_p >= script->end_p)
 		return EndOfScript(crossline);
@@ -168,7 +180,7 @@ skipspace:
 			*token_p++ = *script->script_p++;
 			if (script->script_p == script->end_p)
 				break;
-			if (token_p == &parsedToken[MAXTOKEN])
+			if (token_p == &parsedToken[MAX_TOKEN_CHARS])
 				Sys_Error("Token too large on line %i\n", script->line);
 		}
 		script->script_p++;
@@ -177,7 +189,7 @@ skipspace:
 			*token_p++ = *script->script_p++;
 			if (script->script_p == script->end_p)
 				break;
-			if (token_p == &parsedToken[MAXTOKEN])
+			if (token_p == &parsedToken[MAX_TOKEN_CHARS])
 				Sys_Error("Token too large on line %i\n", script->line);
 		}
 
@@ -193,6 +205,8 @@ skipspace:
 qboolean TokenAvailable (void)
 {
 	char *search_p;
+
+	assert(script);
 
 	search_p = script->script_p;
 

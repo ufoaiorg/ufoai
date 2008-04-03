@@ -104,7 +104,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_STRING_CHARS    1024    /* max length of a string passed to Cmd_TokenizeString */
 #define MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */
-#define MAX_TOKEN_CHARS     256 /* max length of an individual token */
 
 #define MAX_QPATH           64  /* max length of a quake game pathname */
 /* windows + linux 256, macosx 32 */

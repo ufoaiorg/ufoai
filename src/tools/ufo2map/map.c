@@ -626,7 +626,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			if (i != 0)
 				GetToken(qtrue);
 			if (*parsedToken != '(')
-				Sys_Error("parsing brush");
+				Sys_Error("parsing brush at line %i", GetScriptLine());
 
 			for (j = 0; j < 3; j++) {
 				GetToken(qfalse);
@@ -635,7 +635,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 			GetToken(qfalse);
 			if (*parsedToken != ')')
-				Sys_Error("parsing brush");
+				Sys_Error("parsing brush at line %i", GetScriptLine());
 		}
 
 		/* read the texturedef */
@@ -704,8 +704,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		/* find the plane number */
 		planenum = PlaneFromPoints(planepts[0], planepts[1], planepts[2]);
 		if (planenum == PLANENUM_LEAF) {
-			Com_Printf("Entity %i, Brush %i: plane with no normal\n"
-				, b->entitynum, b->brushnum);
+			Com_Printf("Entity %i, Brush %i: plane with no normal at line %i\n", b->entitynum, b->brushnum, GetScriptLine());
 			continue;
 		}
 
@@ -713,13 +712,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		for (k = 0; k < b->numsides; k++) {
 			s2 = b->original_sides + k;
 			if (s2->planenum == planenum) {
-				Com_Printf("Entity %i, Brush %i: duplicate plane\n"
-					, b->entitynum, b->brushnum);
+				Com_Printf("Entity %i, Brush %i: duplicate plane at line %i\n", b->entitynum, b->brushnum, GetScriptLine());
 				break;
 			}
 			if (s2->planenum == (planenum ^ 1) ) {
-				Com_Printf("Entity %i, Brush %i: mirrored plane\n"
-					, b->entitynum, b->brushnum);
+				Com_Printf("Entity %i, Brush %i: mirrored plane at line %i\n", b->entitynum, b->brushnum, GetScriptLine());
 				break;
 			}
 		}

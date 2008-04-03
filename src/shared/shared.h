@@ -220,4 +220,6 @@ COLLISION DETECTION
 
 #define COLORED_GREEN 1
 
+#define MAX_TOKEN_CHARS     256 /* max length of an individual token */
+
 #endif
