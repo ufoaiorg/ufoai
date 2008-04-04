@@ -389,7 +389,7 @@ static inline int Sys_GetNameInfo (const struct sockaddr *sa, socklen_t salen,
 
 		return 0;
 	} else {
-		/* need to dynamicly get the function adress otherwise binary
+		/* need to dynamically get the function address otherwise binary
 		 * won't start under w2k and previous */
 		if (!netLib);
 			netLib = LoadLibrary("ws2_32.dll");
