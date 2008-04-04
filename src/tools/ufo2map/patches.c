@@ -315,63 +315,6 @@ static void FinishSplit (patch_t *patch, patch_t *newp)
 }
 
 /**
- *	@brief Chops the patch only if its local bounds exceed the max size
- */
-static void SubdividePatch (patch_t *patch)
-{
-	winding_t *w, *o1, *o2;
-	vec3_t mins, maxs, total;
-	vec3_t split;
-	vec_t dist;
-	int i, j;
-	vec_t v;
-	patch_t *newp;
-
-	w = patch->winding;
-	mins[0] = mins[1] = mins[2] = 99999;
-	maxs[0] = maxs[1] = maxs[2] = -99999;
-	for (i = 0; i < w->numpoints; i++)
-		for (j = 0; j < 3; j++) {
-			v = w->p[i][j];
-			if (v < mins[j])
-				mins[j] = v;
-			if (v > maxs[j])
-				maxs[j] = v;
-		}
-	VectorSubtract(maxs, mins, total);
-	for (i = 0; i < 3; i++)
-		if (total[i] > (config.subdiv + 1))
-			break;
-	/* no splitting needed */
-	if (i == 3)
-		return;
-
-	/* split the winding */
-	VectorCopy(vec3_origin, split);
-	split[i] = 1;
-	dist = (mins[i] + maxs[i]) * 0.5;
-	ClipWindingEpsilon(w, split, dist, ON_EPSILON, &o1, &o2);
-
-	/* create a new patch */
-	if (num_patches == MAX_PATCHES)
-		Sys_Error("MAX_PATCHES (%i)", num_patches);
-	newp = &patches[num_patches];
-	num_patches++;
-
-	newp->next = patch->next;
-	patch->next = newp;
-
-	patch->winding = o1;
-	newp->winding = o2;
-
-	FinishSplit(patch, newp);
-
-	SubdividePatch(patch);
-	SubdividePatch(newp);
-}
-
-
-/**
  *	@brief Chops the patch by a global grid
  */
 static void DicePatch (patch_t *patch)
