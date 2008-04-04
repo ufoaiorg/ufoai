@@ -52,6 +52,11 @@ my $filenames = [
 
 my $filenameDot = "tree.dot";
 
+my $ignoredTechs = [
+	'rs_skill.*',
+	'rs_damage.*'
+];
+
 # Settings inside "tech" we'll just skip for now.
 my $technologySkipSettings = [
 	"description",		# { default "_monoknife_txt" }
@@ -340,6 +345,18 @@ sub parseUfoTree (%$) {
 #######################################
 # Writing (.dot syntax)
 #######################################
+
+sub skipTech ($$) {
+	my ($tech, $ignoreList) = @_;
+	
+	foreach my $ignore (@{$ignoreList}) {
+		if ($tech->{'id'} =~ m/$ignore/) {
+			return 1;
+		}
+	}
+	
+	return 0;
+}
 sub printTechnologyStyle ($) {
 	my ($FH) = @_;
 	printf $FH "\t".'node  [shape=box, color="#004e0099", style=filled, fontcolor=black];'."\n";
@@ -398,18 +415,18 @@ sub printTechGroup ($$) {
 
 	if ($hasOR || $hasAND) {
 		if ($hasOR && $hasAND) {
-			# subgraph techID_C { techID_OR -- techID; techID_AND -- techID_OR }
-			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -- '.$tech->{'id'}.'; '.$tech->{'id'}. '_AND -- '.$tech->{'id'}.' }'."\n";
+			# subgraph techID_C { techID_OR -> techID; techID_AND -> techID_OR }
+			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -> '.$tech->{'id'}.'; '.$tech->{'id'}. '_AND -> '.$tech->{'id'}.' }'."\n";
 		}
 
 		if ($hasOR && !$hasAND) {
-			# subgraph techID_C { techID_OR -- techID; }
-			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -- '.$tech->{'id'}.' }'."\n";
+			# subgraph techID_C { techID_OR -> techID; }
+			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -> '.$tech->{'id'}.' }'."\n";
 		}
 
 		if (!$hasOR && $hasAND) {
-			# subgraph techID_C { techID_AND -- techID; }
-			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_AND -- '.$tech->{'id'}.' }'."\n";
+			# subgraph techID_C { techID_AND -> techID; }
+			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_AND -> '.$tech->{'id'}.' }'."\n";
 		}
 	}
 }
@@ -419,16 +436,16 @@ sub printTechLinks ($$) {
 
 	foreach my $req (@{$tech->{'AND'}}) {
 		if ($req->{'type'} eq "tech") {
-			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_AND'."\n";
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
 		} elsif ($req->{'type'} eq "item") {
-			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_AND'."\n";
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
 		}
 	}
 	foreach my $req (@{$tech->{'OR'}}) {
 		if ($req->{'type'} eq "tech") {
-			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_OR'."\n";
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
 		} elsif ($req->{'type'} eq "item") {
-			printf $FH "\t".$req->{'value1'}.' -- '.$tech->{'id'}.'_OR'."\n";
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
 		}
 	}
 
@@ -447,7 +464,8 @@ sub writeDotFile(%$) {
 	open(my $DOT, "> $filename") or die "\nCouldn not open file '$filename' for writing: $!\n";
 	#my $DOT = <DOT>;
 
-	printf $DOT 'graph G {'."\n";
+	printf $DOT 'digraph G {'."\n";
+	printf $DOT '	ranksep="1.0 equally";'."\n";
 	printf $DOT '	edge [color="#0b75cf"];'."\n";
 	printf $DOT '	label = "Research Tree\nUFO: Alien Invasion";'."\n";
 
@@ -455,21 +473,27 @@ sub writeDotFile(%$) {
 	printTechnologyStyle($DOT);
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
-		printTech($tech, $DOT);
+		if (not skipTech($tech, $ignoredTechs)) {
+			printTech($tech, $DOT);
+		}
 	}
 
 	# Draw OR boxes for each technology that needs them.
 	printReqStyle($DOT, "OR");
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
-		printReq($tech, $DOT, "OR");
+		if (not skipTech($tech, $ignoredTechs)) {
+			printReq($tech, $DOT, "OR");
+		}
 	}
 
 	# Draw AND boxes for each technology that needs them.
 	printReqStyle($DOT, "AND");
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
-		printReq($tech, $DOT, "AND");
+		if (not skipTech($tech, $ignoredTechs)) {
+			printReq($tech, $DOT, "AND");
+		}
 	}
 
 	# Draw item boxes
@@ -483,14 +507,18 @@ sub writeDotFile(%$) {
 	# Draw tech subgraphs and OR/AND links
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
-		printTechGroup($tech, $DOT);
+		if (not skipTech($tech, $ignoredTechs)) {
+			printTechGroup($tech, $DOT);
+		}
 	}
 
 
 	# Create requirement links
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
-		printTechLinks($tech, $DOT);
+		if (not skipTech($tech, $ignoredTechs)) {
+			printTechLinks($tech, $DOT);
+		}
 	}
 
 	printf $DOT "\tfontsize=20;\n";
