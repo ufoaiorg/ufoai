@@ -6317,7 +6317,6 @@ static void CP_UFORecoveredStart_f (void)
 static void CP_UFORecoveredStore_f (void)
 {
 	int i, baseHasUFOHangarCount = 0, recoveryBase = -1;
-	base_t *base;
 	aircraft_t *ufocraft;
 	static char recoveryBaseSelectPopup[512];
 	qboolean ufofound = qfalse;
@@ -6349,7 +6348,7 @@ static void CP_UFORecoveredStore_f (void)
 	recoveryBaseSelectPopup[0] = '\0';
 	/* Check how many bases can store this UFO. */
 	for (i = 0; i < gd.numBases; i++) {
-		base = B_GetBase(i);
+		const base_t *base = B_GetBase(i);
 		if (!base->founded)
 			continue;
 		if (UFO_ConditionsForStoring(base, ufocraft)) {
@@ -6360,7 +6359,7 @@ static void CP_UFORecoveredStore_f (void)
 	}
 
 	/* Do nothing without any base. */
-	if (!base)
+	if (!gd.numBases)
 		return;
 
 	/* If only one base with UFO hangars, the recovery will be done in this base. */
