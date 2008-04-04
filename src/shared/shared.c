@@ -389,7 +389,7 @@ int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 #ifdef DEBUG
 void Q_strncpyzDebug (char *dest, const char *src, size_t destsize, const char *file, int line)
 #else
-		void Q_strncpyz (char *dest, const char *src, size_t destsize)
+void Q_strncpyz (char *dest, const char *src, size_t destsize)
 #endif
 {
 #ifdef DEBUG
