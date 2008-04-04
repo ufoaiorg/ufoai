@@ -35,6 +35,10 @@
 #		research.ufo file is parsed now .. but see TODO.
 #		Writing basic .dot files (graphviz) works now
 #		Items are now drawn as well.
+#	2008-04-04 Hoehrer
+#		Some formatting of the nodes ("ranksep")
+#		More functions to avoid code duplication.
+#		Skipping some unneeded topics (like skills and damages)
 #######################################
 # TODO
 #	* Prettify this.
@@ -393,10 +397,19 @@ sub printTech ($$) {
 	printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'"];'."\n";
 }
 
+sub reqExists($$) {
+	my ($tech, $reqType) = @_;
+	
+	if (exists($tech->{$reqType}) and $#{$tech->{$reqType}} >= 0) {
+		return 1;
+	}
+	return 0;
+}
+
 sub printReq ($$$) {
 	my ($tech, $FH, $label) = @_;
 
-	if (exists($tech->{$label}) and $#{$tech->{$label}} >= 0) {
+	if (reqExists($tech, $label)) {
 		printf $FH "\t\t".$tech->{'id'}.'_'.$label.";\n"
 	}
 }
@@ -410,8 +423,8 @@ sub printItem ($$) {
 sub printTechGroup ($$) {
 	my ($tech, $FH) = @_;
 
-	my $hasOR = (exists($tech->{'OR'}) and $#{$tech->{'OR'}} >= 0);
-	my $hasAND = (exists($tech->{'AND'}) and $#{$tech->{'AND'}} >= 0);
+	my $hasOR = reqExists($tech, 'OR');
+	my $hasAND = reqExists($tech, 'AND');
 
 	if ($hasOR || $hasAND) {
 		if ($hasOR && $hasAND) {
@@ -431,12 +444,14 @@ sub printTechGroup ($$) {
 	}
 }
 
-sub printTechLinks ($$) {
-	my ($tech, $FH) = @_;
+sub printTechLinks ($$$) {
+	my ($techs, $tech, $FH) = @_;
 
 	foreach my $req (@{$tech->{'AND'}}) {
 		if ($req->{'type'} eq "tech") {
-			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
+			if (not skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
+				printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
+			}
 		} elsif ($req->{'type'} eq "item") {
 			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
 		}
@@ -468,8 +483,10 @@ sub writeDotFile(%$) {
 	printf $DOT '	ranksep="1.0 equally";'."\n";
 	printf $DOT '	edge [color="#0b75cf"];'."\n";
 	printf $DOT '	label = "Research Tree\nUFO: Alien Invasion";'."\n";
+	printf $DOT "\n";
 
-	# Draw technolgiy boxes
+	# Draw technology boxes
+	printf $DOT "/* Technology boxes */\n";
 	printTechnologyStyle($DOT);
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
@@ -477,8 +494,10 @@ sub writeDotFile(%$) {
 			printTech($tech, $DOT);
 		}
 	}
+	printf $DOT "\n";
 
 	# Draw OR boxes for each technology that needs them.
+	printf $DOT "/* Technology 'OR' boxes */\n";
 	printReqStyle($DOT, "OR");
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
@@ -486,8 +505,10 @@ sub writeDotFile(%$) {
 			printReq($tech, $DOT, "OR");
 		}
 	}
+	printf $DOT "\n";
 
 	# Draw AND boxes for each technology that needs them.
+	printf $DOT "/* Technology 'AND' boxes */\n";
 	printReqStyle($DOT, "AND");
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
@@ -495,31 +516,38 @@ sub writeDotFile(%$) {
 			printReq($tech, $DOT, "AND");
 		}
 	}
+	printf $DOT "\n";
+
 
 	# Draw item boxes
+	printf $DOT "/* Item boxes */\n";
 	printItemStyle($DOT);
 	foreach my $itemId (keys %{$items}) {
 		printItem($itemId, $DOT);
 	}
+	printf $DOT "\n";
 
-	# TODO: draw items subgraph
 
 	# Draw tech subgraphs and OR/AND links
+	printf $DOT "/* Technology groups (with tech + AND + OR boxes) */\n";
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
 			printTechGroup($tech, $DOT);
 		}
 	}
+	printf $DOT "\n";
 
 
 	# Create requirement links
+	printf $DOT "/* Requirement edges */\n";
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
-			printTechLinks($tech, $DOT);
+			printTechLinks($techs, $tech, $DOT);
 		}
 	}
+	printf $DOT "\n";
 
 	printf $DOT "\tfontsize=20;\n";
 	printf $DOT "}\n";
