@@ -125,6 +125,46 @@ sub md2_skins_list ($) {
 	}
 }
 
+sub md2_add_skinnum ($$) {
+	my ($md2_file, $newNumber) = @_;
+	
+	# Create skin-list if it isn't there yet
+	if (!exists($md2_file->{struct}->{Path})) {
+		# print "DEBUG: Creating skin list.\n";
+		$md2_file->{struct}->{Path} = [];
+	}
+
+	# Append the new skin(s).
+	for (my $i = $md2_file->NumSkins; $i < $newNumber; $i++) {
+		push (@{$md2_file->Path}, ['dummy']);
+	}
+
+	# Update following offsets (after skin data) correctly.
+	my $data_offset_delta = ($newNumber-$md2_file->NumSkins) * 64;
+	$md2_file->struct->{OffsetST} += $data_offset_delta;		# update offset to s-t texture coordinates
+	$md2_file->struct->{OffsetTris} += $data_offset_delta;		# update offset to triangles
+	$md2_file->struct->{OffsetFrames} += $data_offset_delta;	# update offset to frame data
+	$md2_file->struct->{OffsetGLcmds} += $data_offset_delta;	# update offset to opengl commands
+	$md2_file->struct->{OffsetEnd} += $data_offset_delta;		# update offset to end of file
+
+	$md2_file->struct->{NumSkins} = $newNumber;
+		
+	return $md2_file;
+}
+
+sub getString () {
+	my $key = '';
+	my $string = '';
+	use Term::ReadKey;
+	do {
+		$key = ReadKey(0);
+		$string .= $key;
+	} while ($key ne "\n");
+
+	chomp($string);
+	return $string;
+}
+
 #######################################
 # MAIN
 #######################################
@@ -180,6 +220,14 @@ if ($param_action eq 'skinedit') {
 
 	print $md2_file->NumSkins, " Skin(s) found\n";
 
+	# If no texture parameters are given and no skins found inside the file we create one.
+	if ($#TextureString == 0) {
+		while ($md2_file->NumSkins == 0) {
+			print "No skins to edit found in this file - adding one. (Use the option 'skinnum' to increase this value.)\n";
+			$md2_file = md2_add_skinnum($md2_file, 1);
+		}
+	}
+
 	if ($md2_file->NumSkins > 0) {
 		#just to prevent warnings
 		if ( $#TextureString < $md2_file->NumSkins ) {
@@ -194,15 +242,7 @@ if ($param_action eq 'skinedit') {
 			# get new texture-path from user if no filename was given per commandline parameter.
 			if ($TextureString[$i] eq '') {
 				print "Enter new path (Enter=Skip):";
-
-				my $key = '';
-				use Term::ReadKey;
-				do {
-					$key = ReadKey(0);
-					$TextureString[$i] .= $key;
-				} while ($key ne "\n");
-
-				chomp($TextureString[$i]);
+				$TextureString[$i] = getString();
 			}
 
 			# replace texture-path
@@ -255,19 +295,10 @@ if ($param_action eq 'skinedit') {
 
 	# Ask for new skin-number
 	#use Scalar::Util::Numeric qw(isint);
-	use Term::ReadKey;
 	my $NumSkins_new = $md2_file->NumSkins;
 	do { # TODO: as until we get a sane number (integer)
 		print "Enter new skin number:";
-
-		my $key = '';
-		$NumSkins_new = '';
-		do {
-			$key = ReadKey(0);
-			$NumSkins_new .= $key;
-		} while ($key ne "\n");
-
-		chomp($NumSkins_new);
+		$NumSkins_new = getString();
 
 	#} while (!isint($NumSkins_new));
 	} while (($NumSkins_new == $md2_file->NumSkins) || ($NumSkins_new <= 0) || ($NumSkins_new eq ''));
@@ -287,26 +318,7 @@ if ($param_action eq 'skinedit') {
 		# So the magic (add skins and update offsets correctly)
 		print "Adding skins and updating offsets ...\n";
 
-		# Create skin-list if it isn't there yet
-		if (!exists($md2_file->{struct}->{Path})) {
-			# print "DEBUG: Creating skin list.\n";
-			$md2_file->{struct}->{Path} = [];
-		}
-
-		# Append the (new) skin
-		for (my $i = $md2_file->NumSkins; $i < $NumSkins_new; $i++) {
-			push (@{$md2_file->Path}, ['dummy']);
-		}
-
-		# Update following offsets (after skin data) correctly.
-		my $data_offset_delta = ($NumSkins_new-$md2_file->NumSkins) * 64;
-		$md2_file->struct->{OffsetST} += $data_offset_delta;		# update offset to s-t texture coordinates
-		$md2_file->struct->{OffsetTris} += $data_offset_delta;		# update offset to triangles
-		$md2_file->struct->{OffsetFrames} += $data_offset_delta;	# update offset to frame data
-		$md2_file->struct->{OffsetGLcmds} += $data_offset_delta;	# update offset to opengl commands
-		$md2_file->struct->{OffsetEnd} += $data_offset_delta;		# update offset to end of file
-
-		$md2_file->struct->{NumSkins} = $NumSkins_new;
+		$md2_file = md2_add_skinnum($md2_file, $NumSkins_new);
 	} else {
 		# TODO: do the magic (remove skins and update offsets correctly)
 		print "Removing skins and updating offsets ...\n";
@@ -342,34 +354,17 @@ if ($param_action eq 'skinedit') {
 	print "Current size: ", $md2_file->SkinWidth, "w x ", $md2_file->SkinHeight, "h\n";
 
 	# Ask for new skin width
-	use Term::ReadKey;
 	my $SkinWidth_new = $md2_file->SkinWidth;
 	my $SkinHeight_new = $md2_file->SkinHeight;
 	do { # TODO: as until we get a sane number (integer)
 		print "Enter new width in pixel (",$md2_file->SkinWidth,"):";
-
-		my $key = '';
-		$SkinWidth_new = '';
-		do {
-			$key = ReadKey(0);
-			$SkinWidth_new .= $key;
-		} while ($key ne "\n");
-
-		chomp($SkinWidth_new);
+		$SkinWidth_new = getString();
 	} while (($SkinWidth_new == $md2_file->SkinWidth) || ($SkinWidth_new <= 0) || ($SkinWidth_new eq ''));
 
 	# Ask for new skin height
 	do { # TODO: as until we get a sane number (integer)
 		print "Enter new height in pixel (",$md2_file->SkinHeight ,"):";
-
-		my $key = '';
-		$SkinHeight_new = '';
-		do {
-			$key = ReadKey(0);
-			$SkinHeight_new .= $key;
-		} while ($key ne "\n");
-
-		chomp($SkinHeight_new);
+		$SkinHeight_new = getString();
 	} while (($SkinHeight_new == $md2_file->SkinHeight) || ($SkinHeight_new <= 0) || ($SkinHeight_new eq ''));
 
 
