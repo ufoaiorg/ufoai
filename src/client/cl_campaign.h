@@ -140,6 +140,8 @@ typedef struct mission_s {
 typedef struct battleParam_s {
 	mission_t *mission;
 	teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< Race of aliens present in battle */
+	char *param;					/**< in case of a random map assembly we can't use the param from mapDef - because
+									 * this is global for the mapDef - but we need a local mission param */
 	int numAlienTeams;								/**< Number of different races */
 	char alienEquipment[MAX_VAR];					/**< Equipment of alien team */
 	char civTeam[MAX_VAR];							/**< Type of civilian (europeean, ...) */

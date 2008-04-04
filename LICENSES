@@ -250,10 +250,10 @@ base/maps/tropic/tr_r03.map | GNU General Public License 2.0
 base/maps/tropic/tr_r04.map | GNU General Public License 2.0
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0
 base/maps/ufocrash.ump | GNU General Public License 2.0
-base/maps/ufocrash/uc_craft_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/ufocrash/uc_craft_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/ufocrash/uc_craft_ufo_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
-base/maps/ufocrash/uc_craft_ufo_supply.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_supply and terrain08
+base/maps/ufocrash/uc_craft_crash_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ufocrash/uc_craft_crash_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ufocrash/uc_craft_crash_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
+base/maps/ufocrash/uc_craft_crash_supply.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_supply and terrain08
 base/maps/ufocrash/uc_drop_firebird.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h02.map | GNU General Public License 2.0 | Martin Gerhardy

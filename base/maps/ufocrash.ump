@@ -148,7 +148,7 @@ ac     +a     +a     ac
 // ---------------------------------
 // bomber
 // ---------------------------------
-tile +craft_ufo_bomber
+tile +craft_crash_bomber
 {
 7 5
 
@@ -168,7 +168,7 @@ ac     +a     +a    +a    a     ab    0
 // ---------------------------------
 // corrupter
 // ---------------------------------
-tile +craft_ufo_corrupter
+tile +craft_crash_corrupter
 {
 10 8
 
@@ -185,7 +185,7 @@ ac     +a     +a    +a    +a    +a    +a    +a    +a    ac
 // ---------------------------------
 // fighter
 // ---------------------------------
-tile +craft_ufo_fighter
+tile +craft_crash_fighter
 {
 7 5
 
@@ -199,7 +199,7 @@ ac     +a     +a    +a    a     ab    0
 // ---------------------------------
 // harvester
 // ---------------------------------
-tile +craft_ufo_harvester
+tile +craft_crash_harvester
 {
 8 6
 
@@ -214,7 +214,7 @@ ac     +a     +a     +a     +a     +a     +a     z
 // ---------------------------------
 // scout
 // ---------------------------------
-tile +craft_ufo_scout
+tile +craft_crash_scout
 {
 4 5
 
@@ -228,7 +228,7 @@ ac     +a     +a     ac
 // ---------------------------------
 // supply
 // ---------------------------------
-tile +craft_ufo_supply
+tile +craft_crash_supply
 {
 6 7
 
@@ -352,88 +352,6 @@ ac     +a     +a     +a     a     0
 // *********************************
 // Assemblies
 // *********************************
-
-// *********************************
-// landed UFOs
-// *********************************
-
-//assembly craft_ufo_bomber
-//{
-//title "_UFO - Bomber"
-//size "7 5"
-//+h01 "0 10"
-//+h02 "0 10"
-//+h03 "0 10"
-//+craft_ufo_bomber "1 1"
-//*rm_drop +drop_firebird "1 1"
-//}
-
-assembly craft_ufo_corrupter
-{
-title "_UFO - Corrupter"
-size "12 10"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+craft_ufo_corrupter "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_ufo_fighter
-{
-title "_UFO - Fighter"
-size "7 5"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+craft_ufo_fighter "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_ufo_harvester
-{
-title "_UFO - Harvester"
-size "7 5"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+craft_ufo_harvester "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_ufo_scout
-{
-title "_UFO - Scout"
-size "7 5"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+craft_ufo_scout "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_ufo_supply
-{
-title "_UFO - Supply Ship"
-size "7 5"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+craft_ufo_supply "1 1"
-*rm_drop +drop_firebird "1 1"
-}
 
 // *********************************
 // crashed UFOs

@@ -2539,6 +2539,10 @@ static void CP_CreateBattleParameters (mission_t *mission)
 
 	assert(mission->pos);
 
+	/* Reset parameters */
+	if (ccs.battleParameters.param)
+		Mem_Free(ccs.battleParameters.param);
+
 	ccs.battleParameters.mission = mission;
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
 	zoneType = MAP_GetTerrainType(color);
@@ -2548,13 +2552,20 @@ static void CP_CreateBattleParameters (mission_t *mission)
 		if (CP_UFOIsCrashed(mission)) {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_ufocrashed %i;", mission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */
-			if (mission->mapDef->map[0] == '+')
+			if (mission->mapDef->map[0] == '+') {
+				/* set rm_ufo to the ufo type used */
 				Cvar_Set("rm_ufo", va("+%s", UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype)));
+				/* set battleParameters.param to the ufo type: used for ufocrash random map */
+				if (!Q_strcmp(mission->mapDef->id, "ufocrash"))
+				ccs.battleParameters.param = Mem_PoolStrDup(UFO_CrashedTypeToShortName(mission->ufo->ufotype), cl_localPool, 0);
+			}
 		} else {
 			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
 			/* Set random map UFO if this is a random map */
-			if (mission->mapDef->map[0] == '+')
+			if (mission->mapDef->map[0] == '+') {
+				/* set rm_ufo to the ufo type used */
 				Cvar_Set("rm_ufo", va("+%s", UFO_TypeToShortName(selectedMission->ufo->ufotype)));
+			}
 		}
 	}
 	/* @todo change dropship to any possible aircraft when random assembly tiles will be created */
@@ -3966,6 +3977,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		ccs.battleParameters.numAlienTeams = MSG_ReadShort(sb);
 		for (i = 0; i < ccs.battleParameters.numAlienTeams; i++)
 			ccs.battleParameters.alienTeams[i] = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
+		name = MSG_ReadString(sb);
+		if (*name)
+			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_localPool, 0);
+		else
+			ccs.battleParameters.param = NULL;
 		Q_strncpyz(ccs.battleParameters.alienEquipment, MSG_ReadString(sb), sizeof(ccs.battleParameters.alienEquipment));
 		Q_strncpyz(ccs.battleParameters.civTeam, MSG_ReadString(sb), sizeof(ccs.battleParameters.civTeam));
 		ccs.battleParameters.day = MSG_ReadByte(sb);
@@ -4119,6 +4135,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteShort(sb, ccs.battleParameters.numAlienTeams);
 		for (i = 0; i < ccs.battleParameters.numAlienTeams; i++)
 			MSG_WriteString(sb, ccs.battleParameters.alienTeams[i]->id);
+		MSG_WriteString(sb, (ccs.battleParameters.param ? ccs.battleParameters.param : ""));
 		MSG_WriteString(sb, ccs.battleParameters.alienEquipment);
 		MSG_WriteString(sb, ccs.battleParameters.civTeam);
 		MSG_WriteByte(sb, ccs.battleParameters.day);
@@ -4129,10 +4146,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteString(sb, "");
 
 	/* stores the select mission on geoscape */
-	if (selectedMission)
-		MSG_WriteString(sb, selectedMission->id);
-	else
-		MSG_WriteString(sb, "");
+	MSG_WriteString(sb, selectedMission ? selectedMission->id : "");
 
 	return qtrue;
 }
@@ -4312,6 +4326,7 @@ static void CP_StartMissionMap (mission_t* mission)
 {
 	char expanded[MAX_QPATH];
 	base_t *bAttack;
+	const char *param = NULL;
 
 	/* prepare */
 	MN_PopMenu(qtrue);
@@ -4353,8 +4368,13 @@ static void CP_StartMissionMap (mission_t* mission)
 
 	SAV_QuickSave();
 
+	if (ccs.battleParameters.param)
+		param = ccs.battleParameters.param;
+	else
+		param = mission->mapDef->param;
+
 	Cbuf_AddText(va("map %s %s %s\n", (MAP_IsNight(mission->pos) ? "night" : "day"),
-		mission->mapDef->map, mission->mapDef->param ? mission->mapDef->param : ""));
+		mission->mapDef->map, param ? param : ""));
 
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = mission->mapDef;
