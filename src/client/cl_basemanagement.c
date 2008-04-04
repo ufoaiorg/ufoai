@@ -3420,7 +3420,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, B_GetBuildingStatus(b, k));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
-				MSG_WriteShort(sb, b->map[k][l].building ? b->map[k][l].building->idx : -1);
+				MSG_WriteByte(sb, b->map[k][l].building ? b->map[k][l].building->idx : BYTES_NONE);
 				MSG_WriteByte(sb, b->map[k][l].blocked);
 				MSG_WriteShort(sb, b->map[k][l].posX);
 				MSG_WriteShort(sb, b->map[k][l].posY);
@@ -3457,9 +3457,10 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, aircraft->hangar);
 			/* Save target of the ufo */
 			if (aircraft->aircraftTarget)
-				MSG_WriteShort(sb, aircraft->aircraftTarget - gd.ufos);
+				MSG_WriteByte(sb, aircraft->aircraftTarget - gd.ufos);
 			else
-				MSG_WriteShort(sb, -1);
+				MSG_WriteByte(sb, BYTES_NONE);
+
 			/* save weapon slots */
 			MSG_WriteByte(sb, aircraft->maxWeapons);
 			B_SaveAircraftSlots(aircraft->weapons, aircraft->maxWeapons, sb);
@@ -3473,6 +3474,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteString(sb, "");
 				MSG_WriteShort(sb, 0);
 			}
+
 			/* save electronics slots */
 			MSG_WriteByte(sb, aircraft->maxElectronics);
 			for (l = 0; l < aircraft->maxElectronics; l++) {
@@ -3488,9 +3490,9 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			/** Save team on board
 			 * @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				MSG_WriteShort(sb, aircraft->acTeam[l] ? aircraft->acTeam[l]->idx : -1);
+				MSG_WriteByte(sb, (aircraft->acTeam[l] ? aircraft->acTeam[l]->idx : BYTES_NONE));
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				MSG_WriteShort(sb, aircraft->acTeam[l] ? aircraft->acTeam[l]->type : MAX_EMPL);
+				MSG_WriteShort(sb, (aircraft->acTeam[l] ? aircraft->acTeam[l]->type : MAX_EMPL));
 
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
@@ -3637,6 +3639,7 @@ static void B_LoadBaseSlots (base_t* base, baseWeapon_t* weapons, int numWeapons
 	}
 }
 
+#define MAX_TEAMLIST_SIZE_FOR_LOADING 32
 /**
  * @brief Load callback for savegames
  * @sa B_Save
@@ -3647,8 +3650,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 {
 	int i, bases, k, l, amount, ufoIdx;
 	int aircraftIdxInBase;
-	int teamIdxs[PRE_ACTTEA];	/**< Temp list of employee indices. */
-	int teamTypes[PRE_ACTTEA];	/**< Temp list of employee-types. */
+	int teamIdxs[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee indices. */
+	int teamTypes[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee-types. */
 	int buildingIdx;
 
 	gd.numAircraft = MSG_ReadShort(sb);
@@ -3671,10 +3674,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
-				buildingIdx = MSG_ReadShort(sb);
-				b->map[k][l].building = NULL;
-				if (buildingIdx >= 0)
+				buildingIdx = MSG_ReadByte(sb);
+				if (buildingIdx != BYTES_NONE)
 					b->map[k][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
+				else
+					b->map[k][l].building = NULL;
 				b->map[k][l].blocked = MSG_ReadByte(sb);
 				b->map[k][l].posX = MSG_ReadShort(sb);
 				b->map[k][l].posY = MSG_ReadShort(sb);
@@ -3730,11 +3734,12 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->point = MSG_ReadShort(sb);
 			aircraft->hangar = MSG_ReadByte(sb);
 			/* load aircraft target */
-			ufoIdx = MSG_ReadShort(sb);
-			if (ufoIdx <= -1)
+			ufoIdx = MSG_ReadByte(sb);
+			if (ufoIdx == BYTES_NONE)
 				aircraft->aircraftTarget = NULL;
 			else
 				aircraft->aircraftTarget = gd.ufos + ufoIdx;
+
 			/* read weapon slot */
 			amount = MSG_ReadByte(sb);
 			/* only read aircraft->maxWeapons here - skip the rest in the following loop */
@@ -3757,6 +3762,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					AII_AddItemToSlot(NULL, tech, &aircraft->shield);
 				aircraft->shield.installationTime = MSG_ReadShort(sb);
 			}
+
 			/* read electronics slot */
 			amount = MSG_ReadByte(sb);
 			for (l = 0; l < amount; l++) {
@@ -3773,14 +3779,16 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 
 			/** Load team on board
-			 * @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */
+			 * @note presaveArray[PRE_ACTTEA] == MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */
+			assert(presaveArray[PRE_ACTTEA] < MAX_TEAMLIST_SIZE_FOR_LOADING);
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				teamIdxs[l] = MSG_ReadShort(sb);
+				teamIdxs[l] = MSG_ReadByte(sb);
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				teamTypes[l] = MSG_ReadShort(sb);
+
 			aircraft->teamSize = 0;
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++) {
-				if (teamIdxs[l] >= 0) {
+				if (teamIdxs[l] != BYTES_NONE) {
 					/** assert(gd.numEmployees[teamTypes[l]] > 0); @todo We currently seem to link to not yet parsed employees. */
 					aircraft->acTeam[l] = &gd.employees[teamTypes[l]][teamIdxs[l]];
 					aircraft->teamSize++;
@@ -3819,6 +3827,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				break;
 			case AIR_MISSION:
 				aircraft->missionID = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, 0);
+				break;
 			}
 			MSG_ReadPos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
@@ -3861,14 +3870,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* Base capacities. */
 		for (k = 0; k < presaveArray[PRE_MAXCAP]; k++) {
-			if (((saveFileHeader_t *)data)->version < 3) {
-				/* @note this was a bug in version 2.2 */
-				b->capacities[k].cur = MSG_ReadShort(sb);
-				b->capacities[k].max = MSG_ReadShort(sb);
-			} else {
-				b->capacities[k].cur = MSG_ReadLong(sb);
-				b->capacities[k].max = MSG_ReadLong(sb);
-			}
+			b->capacities[k].cur = MSG_ReadLong(sb);
+			b->capacities[k].max = MSG_ReadLong(sb);
 		}
 
 		/* Buy/Sell factors. */
