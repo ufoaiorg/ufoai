@@ -90,7 +90,7 @@ extern int num_entities;
 extern entity_t entities[MAX_MAP_ENTITIES];
 
 void ParseEntities(void);
-void UnparseEntities(void);
+const char *UnparseEntities(void);
 
 void SetKeyValue(entity_t *ent, const char *key, const char *value);
 /* will return "" if not present */

@@ -494,42 +494,35 @@ void ParseEntities (void)
  * @brief Generates the dentdata string from all the entities
  * @sa ParseEntities
  */
-void UnparseEntities (void)
+const char *UnparseEntities (void)
 {
-	char *buf, *end;
 	epair_t *ep;
 	char line[2048], key[1024], value[1024];
 	int i;
 
-	buf = dentdata;
-	end = buf;
-	*end = 0;
+	dentdata[0] = '\0';
 
 	for (i = 0; i < num_entities; i++) {
 		ep = entities[i].epairs;
 		if (!ep)
 			continue;	/* ent got removed */
 
-		strcat (end, "{\n");
-		end += 2;
+		Q_strcat(dentdata, "{\n", sizeof(dentdata));
 
 		for (ep = entities[i].epairs; ep; ep = ep->next) {
-			strncpy(key, ep->key, sizeof(key));
+			Q_strncpyz(key, ep->key, sizeof(key));
 			StripTrailing(key);
-			strncpy(value, ep->value, sizeof(value));
+			Q_strncpyz(value, ep->value, sizeof(value));
 			StripTrailing(value);
 
-			snprintf(line, sizeof(line), "\"%s\" \"%s\"\n", key, value);
-			strcat(end, line);
-			end += strlen(line);
+			snprintf(line, sizeof(line) - 1, "\"%s\" \"%s\"\n", key, value);
+			Q_strcat(dentdata, line, sizeof(dentdata));
 		}
-		strcat(end, "}\n");
-		end += 2;
-
-		if (end > buf + MAX_MAP_ENTSTRING)
-			Sys_Error("Entity text too long");
+		Q_strcat(dentdata, "}\n", sizeof(dentdata));
 	}
-	entdatasize = end - buf + 1;
+	entdatasize = strlen(dentdata);
+
+	return dentdata;
 }
 
 /**
