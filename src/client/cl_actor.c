@@ -165,6 +165,46 @@ static const char *CL_GetSkillString (const int skill)
 	}
 }
 
+/** @sa moveModeDescriptions */
+typedef enum {
+	WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH,
+	WALKTYPE_AUTOSTAND_BEING_USED,
+	WALKTYPE_WALKING,
+	WALKTYPE_CROUCH_WALKING,
+
+	WALKTYPE_MAX
+} walkType_t;
+
+/** @note Order of elements here must correspond to order of elements in walkType_t. */
+static const char *moveModeDescriptions[] = {
+	N_("Crouch walk"),
+	N_("Autostand"),
+	N_("Walk"),
+	N_("Crouch walk")
+};
+CASSERT(lengthof(moveModeDescriptions) == WALKTYPE_MAX);
+
+/**
+ * @brief Decide how the actor will walk, taking into account autostanding.
+ * @param[in] length The distance to move: units are TU required assuming actor is standing.
+ */
+static int CL_MoveMode (int length)
+{
+	if (selActor->state & STATE_CROUCHED) {
+		if (cl_autostand->integer) { /* Is the player using autostand? */
+			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_WALKING_FACTOR - 1.0f)) {
+				return WALKTYPE_AUTOSTAND_BEING_USED;
+			} else {
+				return WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH;
+			}
+		} else {
+			return WALKTYPE_CROUCH_WALKING;
+		}
+	} else {
+		return WALKTYPE_WALKING;
+	}
+}
+
 /**
  * @brief Updates the character cvars for the given character.
  *
@@ -2147,9 +2187,12 @@ void CL_ActorUpdateCVars (void)
 				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
 					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 					if (reserved_tus > 0)
-						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reserved TUs: %i\nMove %i (%i|%i TU left)\n"), selActor->morale, reserved_tus, actorMoveLength, selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
+						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
+							selActor->morale, reserved_tus, moveModeDescriptions[CL_MoveMode(actorMoveLength)], actorMoveLength,
+							selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
 					else
-						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\nMove %i (%i TU left)\n"), selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
+						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
+							moveModeDescriptions[CL_MoveMode(actorMoveLength)] , actorMoveLength, selActor->TU - actorMoveLength);
 
 					if (actorMoveLength <= CL_UsableTUs(selActor))
 						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
@@ -2711,17 +2754,15 @@ static int CL_MoveLength (pos3_t to)
 	const float length = Grid_MoveLength(&clMap, to, qfalse);
 	assert(selActor);
 
-	if (selActor->state & STATE_CROUCHED) {
-		if (cl_autostand->integer) { /* Is the player using autostand? */
-			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_WALKING_FACTOR - 1.0f)) {
-				return length + 2 * TU_CROUCH;
-			} else {
-				return length * TU_CROUCH_WALKING_FACTOR;
-			}
-		} else {
-			return length * TU_CROUCH_WALKING_FACTOR;
-		}
-	} else {
+	switch (CL_MoveMode(length)) {
+	case WALKTYPE_AUTOSTAND_BEING_USED:
+		return length + 2 * TU_CROUCH;
+	case WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH:
+	case WALKTYPE_CROUCH_WALKING:
+		return length * TU_CROUCH_WALKING_FACTOR;
+	default:
+		Com_DPrintf(DEBUG_CLIENT,"CL_MoveLength: MoveMode not recognised.\n");
+	case WALKTYPE_WALKING:
 		return length;
 	}
 }
