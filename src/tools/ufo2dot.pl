@@ -293,6 +293,42 @@ sub getTechItems ($) {
 	return $items;
 }
 
+sub getTechAliens ($) {
+	my ($tech) = @_;
+
+	my $aliens = {};
+
+	foreach my $req (@{$tech->{'AND'}}) {
+		if ($req->{'type'} eq "alien") {
+			$aliens->{$req->{'value1'}} = 1;
+		}
+	}
+	foreach my $req (@{$tech->{'OR'}}) {
+		if ($req->{'type'} eq "alien") {
+			$aliens->{$req->{'value1'}} = 1;
+		}
+	}
+	return $aliens;
+}
+
+sub getTechAliensDead ($) {
+	my ($tech) = @_;
+
+	my $aliensDead = {};
+
+	foreach my $req (@{$tech->{'AND'}}) {
+		if ($req->{'type'} eq "alien_dead") {
+			$aliensDead->{$req->{'value1'}} = 1;
+		}
+	}
+	foreach my $req (@{$tech->{'OR'}}) {
+		if ($req->{'type'} eq "alien_dead") {
+			$aliensDead->{$req->{'value1'}} = 1;
+		}
+	}
+	return $aliensDead;
+}
+
 sub parseUfoTree (%$) {
 	my ($self, $filename) = @_;
 	die "\nUsage: parseUfoTree(techtree-HASHREF filename)"
@@ -306,6 +342,8 @@ sub parseUfoTree (%$) {
 	my $text = $text2;
 	my $techs = $self->{'techs'};
 	my $items = $self->{'items'};
+	my $aliens = $self->{'aliens'};
+	my $aliens_dead = $self->{'aliens_dead'};
 
 #my $debug; # DEBUG
 	my $token = '';
@@ -326,7 +364,11 @@ sub parseUfoTree (%$) {
 				$techs->{$tech->{'id'}} =  $tech;
 				print "... finished parsing tech '", $tech->{'id'}, "'.\n";
 				my $newItems = getTechItems($tech);
+				my $newAliens = getTechAliens($tech);
+				my $newAliensDead = getTechAliensDead($tech);
 				%{$items} = (%{$items},  %{$newItems});
+				%{$aliens} = (%{$aliens},  %{$newAliens});
+				%{$aliens_dead} = (%{$aliens_dead},  %{$newAliensDead});
 #				$debug = $tech->{'id'};	#my $debug; # DEBUG
 			}
 		} else {
@@ -341,6 +383,8 @@ sub parseUfoTree (%$) {
 
 	$self->{'techs'} = $techs;
 	$self->{'items'} = $items;
+	$self->{'aliens'} = $aliens;
+	$self->{'aliens_dead'} = $aliens_dead ;
 
 	close (SOURCE);
 	return $self;
@@ -365,24 +409,6 @@ sub printTechnologyStyle ($) {
 	my ($FH) = @_;
 	printf $FH "\t".'node  [shape=box, color="#004e0099", style=filled, fontcolor=black];'."\n";
 }
-sub printReqStyle ($$) {
-	my ($FH, $label) = @_;
-
-	my $color;
-	if ($label eq 'OR') {
-		$color = '#71a4cf99';
-	} else {
-		$color = '#71cf9a99';
-	}
-
-	printf $FH "\t".'node [shape=ellipse, label="'.$label.'", color="'.$color.'", style=filled, fontcolor=black];'."\n";
-}
-
-sub printItemStyle ($) {
-	my ($FH) = @_;
-
-	printf $FH "\t".'node [shape=box, color="#f7e30099", style=filled, fontcolor=black];'."\n";
-}
 
 sub printTech ($$) {
 	my ($tech, $FH) = @_;
@@ -397,55 +423,97 @@ sub printTech ($$) {
 	printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'"];'."\n";
 }
 
-sub reqExists($$) {
-	my ($tech, $reqType) = @_;
+sub reqExists($$$) {
+	my ($tech, $reqType, $techs, $ignoredTechs) = @_;
 	
 	if (exists($tech->{$reqType}) and $#{$tech->{$reqType}} >= 0) {
-		return 1;
+		my $numReq = $#{$tech->{$reqType}};
+		foreach my $req (@{$tech->{$reqType}}) {
+			# Reduce number of requirements if there is an unwanted tech inside.
+			if ($req->{'type'} eq 'tech'
+			and skipTech($req->{'value1'}, $ignoredTechs)) {
+				$numReq--;
+			}
+			
+		}
+		if ($numReq >= 0) {
+			return 1;
+		}
 	}
 	return 0;
 }
 
-sub printReq ($$$) {
-	my ($tech, $FH, $label) = @_;
+sub printReqStyle ($$) {
+	my ($FH, $label) = @_;
 
-	if (reqExists($tech, $label)) {
-		printf $FH "\t\t".$tech->{'id'}.'_'.$label.";\n"
+	my $color;
+	if ($label eq 'OR') {
+		$color = '#71a4cf99';
+	} else {
+		$color = '#71cf9a99';
 	}
+
+	printf $FH "\t".'node [shape=ellipse, label="'.$label.'", color="'.$color.'", style=filled, fontcolor=black];'."\n";
+}
+
+sub printReq ($$$$) {
+	my ($tech, $FH, $label, $ignoredTechs) = @_;
+
+	if (reqExists($tech, $label, $ignoredTechs)) {
+		printf $FH "\t\t".$tech->{'id'}.'_'.$label.";\n";
+	}
+}
+
+sub printItemStyle ($) {
+	my ($FH) = @_;
+
+	printf $FH "\t".'node [shape=box, color="#f7e30099", style=filled, fontcolor=black];'."\n";
 }
 
 sub printItem ($$) {
 	my ($item, $FH) = @_;
 
-	printf $FH "\t\t".$item.'[label="'.$item.'"];'."\n"
+	printf $FH "\t\t".$item.' [label="'.$item.'"];'."\n";
 }
 
-sub printTechGroup ($$) {
-	my ($tech, $FH) = @_;
+sub printAlienStyle ($) {
+	my ($FH) = @_;
 
-	my $hasOR = reqExists($tech, 'OR');
-	my $hasAND = reqExists($tech, 'AND');
+	printf $FH "\t".'node [shape=box, color="#f7e30099", style=filled, fontcolor=black];'."\n";
+}
 
-	if ($hasOR || $hasAND) {
-		if ($hasOR && $hasAND) {
-			# subgraph techID_C { techID_OR -> techID; techID_AND -> techID_OR }
-			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -> '.$tech->{'id'}.'; '.$tech->{'id'}. '_AND -> '.$tech->{'id'}.' }'."\n";
-		}
+sub printAlien ($$$) {
+	my ($alien, $type, $FH) = @_;
 
-		if ($hasOR && !$hasAND) {
-			# subgraph techID_C { techID_OR -> techID; }
-			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_OR -> '.$tech->{'id'}.' }'."\n";
-		}
-
-		if (!$hasOR && $hasAND) {
-			# subgraph techID_C { techID_AND -> techID; }
-			printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { '.$tech->{'id'}.'_AND -> '.$tech->{'id'}.' }'."\n";
-		}
+	if ($type eq 'alien') {
+		printf $FH "\t\t".$alien.' [label="Live '.$alien.'"];'."\n";
+	} else {
+		printf $FH "\t\t".$alien.'_dead [label="'.$alien.' autopsy"];'."\n";
 	}
 }
 
-sub printTechLinks ($$$) {
-	my ($techs, $tech, $FH) = @_;
+sub printTechGroup ($$$) {
+	my ($tech, $FH, $ignoredTechs) = @_;
+
+	my $hasOR = reqExists($tech, 'OR', $ignoredTechs);
+	my $hasAND = reqExists($tech, 'AND', $ignoredTechs);
+
+	# subgraph techID_C { 
+	printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { ';
+	if ($hasOR) {
+		# techID_OR -> techID;
+		printf $FH $tech->{'id'}.'_OR -> '.$tech->{'id'}.';';
+	}
+
+	if ($hasAND) {
+		# techID_AND -> techID;
+		printf $FH $tech->{'id'}.'_AND -> '.$tech->{'id'}.';';
+	}
+	printf $FH " }\n";
+}
+
+sub printTechLinks ($$$$) {
+	my ($techs, $tech, $FH, $ignoredTechs) = @_;
 
 	foreach my $req (@{$tech->{'AND'}}) {
 		if ($req->{'type'} eq "tech") {
@@ -454,6 +522,12 @@ sub printTechLinks ($$$) {
 			}
 		} elsif ($req->{'type'} eq "item") {
 			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
+		} elsif ($req->{'type'} eq "alien") {
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
+		} elsif ($req->{'type'} eq "alien_dead") {
+			printf $FH "\t".$req->{'value1'}.'_dead -> '.$tech->{'id'}.'_AND'."\n";
+		} elsif ($req->{'type'} eq "alien_global") {
+			printf $FH "\t".'alien_global -> '.$tech->{'id'}.'_AND'."\n";
 		}
 	}
 	foreach my $req (@{$tech->{'OR'}}) {
@@ -463,9 +537,14 @@ sub printTechLinks ($$$) {
 			}
 		} elsif ($req->{'type'} eq "item") {
 			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
+		} elsif ($req->{'type'} eq "alien") {
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
+		} elsif ($req->{'type'} eq "alien_dead") {
+			printf $FH "\t".$req->{'value1'}.'_dead -> '.$tech->{'id'}.'_OR'."\n";
+		} elsif ($req->{'type'} eq "alien_global") {
+			printf $FH "\t".'alien_global -> '.$tech->{'id'}.'_OR'."\n";
 		}
 	}
-
 }
 
 sub writeDotFile(%$) {
@@ -476,6 +555,8 @@ sub writeDotFile(%$) {
 
 	my $techs = $self->{'techs'};
 	my $items = $self->{'items'};
+	my $aliens = $self->{'aliens'};
+	my $aliens_dead = $self->{'aliens_dead'};
 
 	print "Writing file '", $filename, "' ...\n";
 	open(my $DOT, "> $filename") or die "\nCouldn not open file '$filename' for writing: $!\n";
@@ -504,7 +585,7 @@ sub writeDotFile(%$) {
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
-			printReq($tech, $DOT, "OR");
+			printReq($tech, $DOT, "OR", $ignoredTechs);
 		}
 	}
 	printf $DOT "\n";
@@ -515,7 +596,7 @@ sub writeDotFile(%$) {
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
-			printReq($tech, $DOT, "AND");
+			printReq($tech, $DOT, "AND", $ignoredTechs);
 		}
 	}
 	printf $DOT "\n";
@@ -529,13 +610,29 @@ sub writeDotFile(%$) {
 	}
 	printf $DOT "\n";
 
+	# Draw (live) alien boxes
+	printf $DOT "/* Alien boxes */\n";
+	printAlienStyle($DOT);
+	printf $DOT "\t\t".'alien_global [label="Global Aliens"];'."\n";
+	foreach my $alien (keys %{$aliens}) {
+		printAlien($alien, 'alien', $DOT);
+	}
+	printf $DOT "\n";
+	
+	# Draw (dead) alien boxes
+	printf $DOT "/* Dead alien boxes */\n";
+	printAlienStyle($DOT);
+	foreach my $alien (keys %{$aliens}) {
+		printAlien($alien, 'alien_dead', $DOT);
+	}
+	printf $DOT "\n";
 
 	# Draw tech subgraphs and OR/AND links
 	printf $DOT "/* Technology groups (with tech + AND + OR boxes) */\n";
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
-			printTechGroup($tech, $DOT);
+			printTechGroup($tech, $DOT, $ignoredTechs);
 		}
 	}
 	printf $DOT "\n";
@@ -546,7 +643,7 @@ sub writeDotFile(%$) {
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
-			printTechLinks($techs, $tech, $DOT);
+			printTechLinks($techs, $tech, $DOT, $ignoredTechs);
 		}
 	}
 	printf $DOT "\n";
@@ -572,7 +669,9 @@ use Data::Dumper;
 
 my $tree = {
 	'techs' => {},
-	'items' => {}
+	'items' => {},
+	'aliens' => {},
+	'aliens_dead' => {}
 };
 foreach my $filename (@{$filenames}) {
 	$tree = parseUfoTree($tree, $filename);
