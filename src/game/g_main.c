@@ -509,11 +509,8 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	gainedXP = min(maxXP, totalGainedXP / 2);
 
 	chr->score.experience[i] += gainedXP;
-#if 0
-	/* FIXME: out of bound access */
-	chr->score.skills[i] = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
-	Com_DPrintf(DEBUG_GAME, "Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.\n", chr->name, gainedXP, i, chr->score.experience[i], chr->score.skills[i] - chr->score.initialSkills[i]);
-#endif
+	chr->maxHP = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
+	Com_DPrintf(DEBUG_GAME, "Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.\n", chr->name, gainedXP, i, chr->score.experience[i], chr->maxHP - chr->score.initialSkills[i]);
 }
 
 /**
