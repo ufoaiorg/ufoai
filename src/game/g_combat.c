@@ -1237,7 +1237,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 			/* Splash damage */
 			ent->chr.scoreMission->firedSplashTUs[fd->weaponSkill] += fd->time;
 			ent->chr.scoreMission->firedSplash[fd->weaponSkill]++;
-			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+			for (i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
 				ent->chr.scoreMission->firedSplashHit[i] = qfalse;
 			}
@@ -1245,7 +1245,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 			/* Direkt hits */
 			ent->chr.scoreMission->firedTUs[fd->weaponSkill] += fd->time;
 			ent->chr.scoreMission->fired[fd->weaponSkill]++;
-			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+			for (i = 0; i < KILLED_NUM_TYPES; i++) {
 				/** Reset status. @see G_UpdateHitScore for the check. */
 				ent->chr.scoreMission->firedHit[i] = qfalse;
 			}
