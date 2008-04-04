@@ -349,7 +349,7 @@ item sniper_ammo
 			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"1.5 1.5"
-			crouch	0.3
+			crouch	0.5
 			range	250
 			shots	1
 			ammo	1
@@ -368,7 +368,7 @@ item sniper_ammo
 			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"0.9 0.9"
-			crouch	0.3
+			crouch	0.5
 			range	250
 			shots	1
 			ammo	1
@@ -386,7 +386,7 @@ item sniper_ammo
 			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"0.9 0.9"
-			crouch	0.3
+			crouch	0.5
 			range	250
 			shots	1
 			ammo	1
