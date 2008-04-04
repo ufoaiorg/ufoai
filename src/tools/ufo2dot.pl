@@ -500,7 +500,7 @@ sub writeDotFile(%$) {
 	print "File '", $filenameDot, "' written.\n\n";
 	print "Use\n";
 	print " dot ", $filenameDot , " -Tpng >dia.png\n";
-	print " dot ", $filenameDot , " -Tpng >dia.png\n";
+	print " dot ", $filenameDot , " -Tsvg >dia.svg\n";
 	print "to convert it into a different format.\n";
 	print "See also: 'graphviz'\n";
 
