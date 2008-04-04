@@ -458,7 +458,9 @@ sub printTechLinks ($$$) {
 	}
 	foreach my $req (@{$tech->{'OR'}}) {
 		if ($req->{'type'} eq "tech") {
-			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
+			if (not skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
+				printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
+			}
 		} elsif ($req->{'type'} eq "item") {
 			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
 		}
