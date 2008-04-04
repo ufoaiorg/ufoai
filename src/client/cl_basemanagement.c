@@ -3646,8 +3646,6 @@ static void B_LoadBaseSlots (base_t* base, baseWeapon_t* weapons, int numWeapons
 qboolean B_Load (sizebuf_t* sb, void* data)
 {
 	int i, bases, k, l, amount, ufoIdx;
-	objDef_t *od;
-	objDef_t *od2;
 	int aircraftIdxInBase;
 	int teamIdxs[PRE_ACTTEA];	/**< Temp list of employee indices. */
 	int teamTypes[PRE_ACTTEA];	/**< Temp list of employee-types. */
@@ -3809,7 +3807,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				/* itemcargo */
 				for (l = 0; l < aircraft->itemtypes; l++) {
 					const char *const s = MSG_ReadString(sb);
-					od = INVSH_GetItemByID(s);
+					const objDef_t *od = INVSH_GetItemByID(s);
 					if (!od) {
 						Com_Printf("B_Load: Could not find aircraftitem '%s'\n", s);
 						MSG_ReadShort(sb);
@@ -3832,14 +3830,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		/* read equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
 			const char *const s = MSG_ReadString(sb);
-			od2 = INVSH_GetItemByID(s);
-			if (!od2) {
+			const objDef_t *od = INVSH_GetItemByID(s);
+			if (!od) {
 				Com_Printf("B_Load: Could not find item '%s'\n", s);
 				MSG_ReadShort(sb);
 				MSG_ReadByte(sb);
 			} else {
-				b->storage.num[od2->idx] = MSG_ReadShort(sb);
-				b->storage.numLoose[od2->idx] = MSG_ReadByte(sb);
+				b->storage.num[od->idx] = MSG_ReadShort(sb);
+				b->storage.numLoose[od->idx] = MSG_ReadByte(sb);
 			}
 		}
 
