@@ -423,7 +423,7 @@ sub printTech ($$) {
 	printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'"];'."\n";
 }
 
-sub reqExists($$$) {
+sub reqExists($$$$) {
 	my ($tech, $reqType, $techs, $ignoredTechs) = @_;
 	
 	if (exists($tech->{$reqType}) and $#{$tech->{$reqType}} >= 0) {
@@ -431,7 +431,7 @@ sub reqExists($$$) {
 		foreach my $req (@{$tech->{$reqType}}) {
 			# Reduce number of requirements if there is an unwanted tech inside.
 			if ($req->{'type'} eq 'tech'
-			and skipTech($req->{'value1'}, $ignoredTechs)) {
+			and skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
 				$numReq--;
 			}
 			
@@ -456,10 +456,10 @@ sub printReqStyle ($$) {
 	printf $FH "\t".'node [shape=ellipse, label="'.$label.'", color="'.$color.'", style=filled, fontcolor=black];'."\n";
 }
 
-sub printReq ($$$$) {
-	my ($tech, $FH, $label, $ignoredTechs) = @_;
+sub printReq ($$$$$) {
+	my ($tech, $FH, $label, $techs, $ignoredTechs) = @_;
 
-	if (reqExists($tech, $label, $ignoredTechs)) {
+	if (reqExists($tech, $label, $techs, $ignoredTechs)) {
 		printf $FH "\t\t".$tech->{'id'}.'_'.$label.";\n";
 	}
 }
@@ -492,11 +492,15 @@ sub printAlien ($$$) {
 	}
 }
 
-sub printTechGroup ($$$) {
-	my ($tech, $FH, $ignoredTechs) = @_;
+sub printTechGroup ($$$$) {
+	my ($tech, $FH, $techs, $ignoredTechs) = @_;
 
-	my $hasOR = reqExists($tech, 'OR', $ignoredTechs);
-	my $hasAND = reqExists($tech, 'AND', $ignoredTechs);
+	my $hasOR = reqExists($tech, 'OR', $techs, $ignoredTechs);
+	my $hasAND = reqExists($tech, 'AND', $techs, $ignoredTechs);
+	
+	if (!$hasOR and !$hasAND) {
+		return;
+	}
 
 	# subgraph techID_C { 
 	printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { ';
@@ -526,8 +530,8 @@ sub printTechLinks ($$$$) {
 			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
 		} elsif ($req->{'type'} eq "alien_dead") {
 			printf $FH "\t".$req->{'value1'}.'_dead -> '.$tech->{'id'}.'_AND'."\n";
-		} elsif ($req->{'type'} eq "alien_global") {
-			printf $FH "\t".'alien_global -> '.$tech->{'id'}.'_AND'."\n";
+		} elsif ($req->{'type'} eq "alienglobal") {
+			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_AND'."\n";
 		}
 	}
 	foreach my $req (@{$tech->{'OR'}}) {
@@ -541,8 +545,8 @@ sub printTechLinks ($$$$) {
 			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
 		} elsif ($req->{'type'} eq "alien_dead") {
 			printf $FH "\t".$req->{'value1'}.'_dead -> '.$tech->{'id'}.'_OR'."\n";
-		} elsif ($req->{'type'} eq "alien_global") {
-			printf $FH "\t".'alien_global -> '.$tech->{'id'}.'_OR'."\n";
+		} elsif ($req->{'type'} eq "alienglobal") {
+			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_OR'."\n";
 		}
 	}
 }
@@ -585,7 +589,7 @@ sub writeDotFile(%$) {
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
-			printReq($tech, $DOT, "OR", $ignoredTechs);
+			printReq($tech, $DOT, "OR", $techs, $ignoredTechs);
 		}
 	}
 	printf $DOT "\n";
@@ -596,7 +600,7 @@ sub writeDotFile(%$) {
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
-			printReq($tech, $DOT, "AND", $ignoredTechs);
+			printReq($tech, $DOT, "AND", $techs, $ignoredTechs);
 		}
 	}
 	printf $DOT "\n";
@@ -613,7 +617,7 @@ sub writeDotFile(%$) {
 	# Draw (live) alien boxes
 	printf $DOT "/* Alien boxes */\n";
 	printAlienStyle($DOT);
-	printf $DOT "\t\t".'alien_global [label="Global Aliens"];'."\n";
+	printf $DOT "\t\t".'alienglobal [label="Global Aliens"];'."\n";
 	foreach my $alien (keys %{$aliens}) {
 		printAlien($alien, 'alien', $DOT);
 	}
@@ -632,7 +636,7 @@ sub writeDotFile(%$) {
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
-			printTechGroup($tech, $DOT, $ignoredTechs);
+			printTechGroup($tech, $DOT, $techs, $ignoredTechs);
 		}
 	}
 	printf $DOT "\n";
