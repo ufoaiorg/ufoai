@@ -3664,8 +3664,13 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			b->mapZone = MAP_GetTerrainType(color);
 		}
 		b->founded = MSG_ReadByte(sb);
-		for (k = 0; k < presaveArray[PRE_MBUITY]; k++)
-			B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
+		for (k = 0; k < presaveArray[PRE_MBUITY]; k++) {
+			if (k != B_MISC)
+				B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
+			else
+				MSG_ReadByte(sb);
+		}
+
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				buildingIdx = MSG_ReadShort(sb);
@@ -3806,7 +3811,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					const char *const s = MSG_ReadString(sb);
 					od = INVSH_GetItemByID(s);
 					if (!od) {
-						Com_Printf("B_Load: Could not find item '%s'\n", s);
+						Com_Printf("B_Load: Could not find aircraftitem '%s'\n", s);
 						MSG_ReadShort(sb);
 					} else {
 						aircraft->itemcargo[l].item = od;
