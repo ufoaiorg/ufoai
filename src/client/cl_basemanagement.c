@@ -3467,7 +3467,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			/* save shield slots - currently only one */
 			MSG_WriteByte(sb, 1);
 			if (aircraft->shield.item) {
-				assert(aircraft->shield.item);
 				MSG_WriteString(sb, aircraft->shield.item->id);
 				MSG_WriteShort(sb, aircraft->shield.installationTime);
 			} else {
@@ -3478,7 +3477,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, aircraft->maxElectronics);
 			for (l = 0; l < aircraft->maxElectronics; l++) {
 				if (aircraft->electronics[l].item) {
-					assert(aircraft->electronics[l].item);
 					MSG_WriteString(sb, aircraft->electronics[l].item->id);
 					MSG_WriteShort(sb, aircraft->electronics[l].installationTime);
 				} else {
@@ -3514,6 +3512,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				}
 				/* itemcargo */
 				for (l = 0; l < aircraft->itemtypes; l++) {
+					assert(aircraft->itemcargo[l].item);
 					MSG_WriteString(sb, aircraft->itemcargo[l].item->id);
 					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
 				}
