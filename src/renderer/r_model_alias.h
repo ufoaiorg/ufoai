@@ -33,7 +33,7 @@ typedef struct mAliasVertex_s {
 } mAliasVertex_t;
 
 typedef struct mAliasBoneMatrix_s {
-	vec3_t	matrix[4];
+	vec4_t	matrix[3];
 } mAliasBoneMatrix_t;
 
 typedef struct mAliasBoneVertex_s {
