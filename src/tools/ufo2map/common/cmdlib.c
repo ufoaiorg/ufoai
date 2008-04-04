@@ -202,9 +202,9 @@ char *ExpandArg (const char *path)
 
 	if (path[0] != '/' && path[0] != '\\' && path[1] != ':') {
 		FS_getwd(full, sizeof(full));
-		strncat(full, path, sizeof(full));
+		Q_strcat(full, path, sizeof(full));
 	} else
-		strncpy(full, path, sizeof(full));
+		Q_strncpyz(full, path, sizeof(full));
 
 	return full;
 }
