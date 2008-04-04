@@ -2628,11 +2628,11 @@ static inline void G_ClientSkipActorInfo (void)
 	gi.ReadByte(); /* morale */
 
 	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-	for (k = 0; k < SKILL_NUM_TYPES+1; k++)
+	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
 		gi.ReadLong(); /* score.experience */
 	for (k = 0; k < SKILL_NUM_TYPES; k++)
 		gi.ReadByte(); /* score.skills */
-	for (k = 0; k < SKILL_NUM_TYPES+1; k++)
+	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
 		gi.ReadByte(); /* score.initialSkills */
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.ReadShort(); /* score.kills */
@@ -2755,7 +2755,7 @@ void G_ClientTeamInfo (player_t * player)
 				ent->chr.score.experience[k] = gi.ReadLong();
 			for (k = 0; k < SKILL_NUM_TYPES; k++)	/* new attributes */
 				ent->chr.score.skills[k] = gi.ReadByte();
-			for (k = 0; k < SKILL_NUM_TYPES+1; k++)
+			for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
 				ent->chr.score.initialSkills[k] = gi.ReadByte();
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				ent->chr.score.kills[k] = gi.ReadShort();
