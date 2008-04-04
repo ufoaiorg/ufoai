@@ -560,7 +560,7 @@ typedef struct chrScoreGlobal_s {
 	int experience[SKILL_NUM_TYPES + 1]; /**< Array of experience values for all skills, and health. */
 
 	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. This is the total value. */
-	int initialSkills[SKILL_NUM_TYPES];		/**< Array of initial skills and abilities. This is the value generated at character generation time. */
+	int initialSkills[SKILL_NUM_TYPES + 1];		/**< Array of initial skills and abilities. This is the value generated at character generation time. */
 
 	/* Kills & Stuns */
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */

@@ -400,11 +400,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		break;
 	}
 	chr->skin = Com_GetCharacterValues(teamDefName, chr);
-	/* chr->HP = GET_HP(chr->skills[ABILITY_POWER]); */
-	chr->maxHP = chr->HP;
-	chr->morale = GET_MORALE(chr->score.skills[ABILITY_MIND]);
-	if (chr->morale >= MAX_SKILL)
-		chr->morale = MAX_SKILL;
 }
 
 

@@ -1548,7 +1548,15 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 
 	/* Health. */
 	abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
-	chr->HP = (frand() * abilityWindow) + soldierTemplate[i][0];
+	temp = (frand() * abilityWindow) + soldierTemplate[i][0];
+	chr->score.initialSkills[SKILL_NUM_TYPES] = temp;
+	chr->maxHP = temp;
+	chr->HP = temp;
+
+	/* Morale */
+	chr->morale = GET_MORALE(chr->score.skills[ABILITY_MIND]);
+	if (chr->morale >= MAX_SKILL)
+		chr->morale = MAX_SKILL;
 
 	/* Initialize the experience values */
 	for (i = 0; i <= SKILL_NUM_TYPES; i++) {
