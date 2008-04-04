@@ -1995,8 +1995,8 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, SKILL_NUM_TYPES);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)	/* even new attributes */
 			MSG_WriteByte(buf, employee->chr.score.skills[j]);
-		MSG_WriteByte(buf, SKILL_NUM_TYPES);
-		for (j = 0; j < SKILL_NUM_TYPES; j++)
+		MSG_WriteByte(buf, SKILL_NUM_TYPES+1);
+		for (j = 0; j < SKILL_NUM_TYPES+1; j++)
 			MSG_WriteByte(buf, employee->chr.score.initialSkills[j]);
 		MSG_WriteByte(buf, KILLED_NUM_TYPES);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
@@ -2072,7 +2072,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 			NET_WriteLong(buf, chr->score.experience[j]);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
 			NET_WriteByte(buf, chr->score.skills[j]);
-		for (j = 0; j < SKILL_NUM_TYPES; j++)
+		for (j = 0; j < SKILL_NUM_TYPES+1; j++)
 			NET_WriteByte(buf, chr->score.initialSkills[j]);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			NET_WriteShort(buf, chr->score.kills[j]);
