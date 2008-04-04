@@ -77,7 +77,7 @@ static menuNode_t *node1, *node2, *prodlist;
 /**
  * @brief Resets all "selected" pointers to NULL.
  */
-static void PR_ClearSelected(void)
+static void PR_ClearSelected (void)
 {
 	selectedProduction = NULL;
 	selectedAircraft = NULL;
@@ -1594,11 +1594,15 @@ qboolean PR_Save (sizebuf_t *sb, void *data)
 		pq = &gd.productions[i];
 		MSG_WriteByte(sb, pq->numItems);
 		for (j = 0; j < pq->numItems; j++) {
-			MSG_WriteString(sb, pq->items[j].item->id);
+			/* FIXME: This will crash */
+			const objDef_t *item = pq->items[j].item;
+			const aircraft_t *aircraft = pq->items[j].aircraft;
+			assert(item || aircraft);
+			MSG_WriteString(sb, (item ? item->id : ""));
 			MSG_WriteLong(sb, pq->items[j].amount);
 			MSG_WriteFloat(sb, pq->items[j].percentDone);
 			MSG_WriteByte(sb, pq->items[j].production);
-			MSG_WriteString(sb, pq->items[j].aircraft->id);
+			MSG_WriteString(sb, (aircraft ? aircraft->id : ""));
 			MSG_WriteByte(sb, pq->items[j].items_cached);
 		}
 	}
@@ -1623,17 +1627,19 @@ qboolean PR_Load (sizebuf_t *sb, void *data)
 
 		for (j = 0; j < pq->numItems; j++) {
 			s1 = MSG_ReadString(sb);
-			pq->items[j].item = INVSH_GetItemByID(s1);
+			if (*s1)
+				pq->items[j].item = INVSH_GetItemByID(s1);
 			pq->items[j].amount = MSG_ReadLong(sb);
 			pq->items[j].percentDone = MSG_ReadFloat(sb);
 			pq->items[j].production = MSG_ReadByte(sb);
 			s2 = MSG_ReadString(sb);
-			pq->items[j].aircraft = AIR_GetAircraft(s2);
+			if (*s2)
+				pq->items[j].aircraft = AIR_GetAircraft(s2);
 			pq->items[j].items_cached = MSG_ReadByte(sb);
 
-			if (!pq->items[j].item && s1)
+			if (!pq->items[j].item && *s1)
 				Com_Printf("PR_Load: Could not find item '%s'\n", s1);
-			if (!pq->items[j].aircraft && s2)
+			if (!pq->items[j].aircraft && *s2)
 				Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
 		}
 	}
