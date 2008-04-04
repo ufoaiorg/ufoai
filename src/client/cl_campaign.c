@@ -3936,7 +3936,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			if (mission.stage >= STAGE_MISSION_GOTO) {
 				alienBase_t *alienBase;
 				const int baseidx = MSG_ReadByte(sb);
-				if (baseidx != 0xFF) {
+				if (baseidx != BYTES_NONE) {
 					/* don't check baseidx value here: alien bases are not loaded yet */
 					alienBase = AB_GetBase(baseidx, 0);
 					if (alienBase)
@@ -4107,7 +4107,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 					MSG_WriteByte(sb, base->idx);
 				else
 					/* there may be no base is the mission is a subverting government */
-					MSG_WriteByte(sb, 0xFF);
+					MSG_WriteByte(sb, BYTES_NONE);
 			}
 			break;
 		default:
