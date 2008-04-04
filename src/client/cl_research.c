@@ -374,6 +374,7 @@ void RS_MarkCollected (technology_t* tech)
 	tech->statusCollected = qtrue;
 }
 
+#if 0
 /**
  * @brief Checks if anything has been collected (in the current base) and correct the value for each requirement.
  * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet. tech->statusCollected is just needed so the item is at least displayed somewhere.
@@ -449,6 +450,7 @@ static qboolean RS_CheckCollected (requirements_t *required)
 	}
 	return something_collected_from_each;
 }
+#endif
 
 /**
  * @brief Checks if any items have been collected in the current base and correct the values for each requirement.

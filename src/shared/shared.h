@@ -126,6 +126,7 @@ int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
 #ifndef DEBUG
 void Q_strncpyz(char *dest, const char *src, size_t destsize) __attribute__((nonnull));
 #else
+#define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )
 void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, const char *file, int line) __attribute__((nonnull));
 #endif
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
