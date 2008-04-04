@@ -1463,12 +1463,12 @@ static void CP_BuildBaseMissionNextStage (mission_t *mission)
 		CP_BuildBaseChooseMission(mission);
 		break;
 	case STAGE_MISSION_GOTO:
-		if (mission->data)
-			/* just arrived on base location: build base */
-			CP_BuildBaseSetUpBase(mission);
-		else
+		if (mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST)
 			/* subverting mission */
 			CP_BuildBaseSubvertGovernment(mission);
+		else
+			/* just arrived on base location: build base */
+			CP_BuildBaseSetUpBase(mission);
 		break;
 	case STAGE_BUILD_BASE:
 		/* Leave earth */
@@ -2319,7 +2319,6 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
  */
 void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 {
-	const nation_t *nation;
 	mission_t *mission;
 
 	CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qtrue);
@@ -2337,12 +2336,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 
 	Vector2Copy(alienBase->pos, mission->pos);
 
-	nation = MAP_GetNation(mission->pos);
-	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
-	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), _("Alien base"));
-	}
+	Com_sprintf(mission->location, sizeof(mission->location), _("Alien base"));
 
 	/* Alien base stay until it's destroyed */
 	CP_MissionDisableTimeLimit(mission);
@@ -2589,7 +2583,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "mission";
 
 	if (mission->mapDef->storyRelated) {
-		if ((mission->category == INTERESTCATEGORY_BUILDING) && (mission->stage == STAGE_BUILD_BASE))
+		if ((mission->category == INTERESTCATEGORY_BUILDING) && (mission->stage == STAGE_BASE_DISCOVERED))
 			return "alienbase";
 		else
 			/* @todo Should be a special story related mission model */
