@@ -865,7 +865,7 @@ menu popup_intercept
 	text ships
 	{
 		pos		"150 266"
-		size	"560 260"
+		size	"460 260"
 		format	"20 150"
 		mousefx	true
 		num		9
