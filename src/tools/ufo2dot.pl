@@ -303,11 +303,12 @@ sub getTechItems ($) {
 			$items->{$req->{'value1'}} = 1;
 		}
 	}
-	
-	if (exists($tech->{'provides'})
-	&& ($tech->{'provides'} eq 'weapon' || $tech->{'provides'} eq 'armour')) {
-		$items->{$tech->{'provides'}} = 1;
-	}
+
+#TODO
+#	if (exists($tech->{'provides'})
+#	&& ($tech->{'type'} eq 'weapon' || $tech->{'type'} eq 'armour')) {
+#		$items->{$tech->{'provides'}} = 1;
+#	}
 
 	return $items;
 }
@@ -715,7 +716,7 @@ sub printTechLinks ($$$$) {
 	
 #	# TODO 'provides' info
 #	if (exists($tech->{'provides'})
-#	&& ($tech->{'provides'} eq 'weapon' || $tech->{'provides'} eq 'armour')) {
+#	&& ($tech->{'type'} eq 'weapon' || $tech->{'type'} eq 'armour')) {
 #		printf $FH "\t".$tech->{'id'}.' -> '.$tech->{'provides'}." /* Provided */\n";	
 #	}
 }
