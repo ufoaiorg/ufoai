@@ -1420,7 +1420,10 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 
 	/* Mission is a success: government is subverted => lower happiness */
 	nation = MAP_GetNation(mission->pos);
-	nation->stats[0].happiness *= 0.8;
+	/* @todo: when the mission is created, we should select a position where nation exists,
+	 * otherwise suverting a government is meaningless */
+	if (nation)
+		nation->stats[0].happiness *= 0.8;
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
@@ -2676,7 +2679,9 @@ static void CP_UpdateNationHappiness (void)
 		}
 
 		nation = MAP_GetNation(mission->pos);
-		nation->stats[0].happiness *= happinessFactor;
+		/* Some non-water location have no nation */
+		if (nation)
+			nation->stats[0].happiness *= happinessFactor;
 	}
 }
 
