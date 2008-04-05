@@ -2767,8 +2767,13 @@ static void B_BaseList_f (void)
 	base_t *base;
 
 	for (i = 0, base = gd.bases; i < MAX_BASES; i++, base++) {
-		Com_Printf("Base id %i\n", base->idx);
-		Com_Printf("Base title %s\n", base->name);
+		if (!base->founded) {
+			Com_Printf("Base idx %i not founded\n\n", i);
+			continue;
+		}
+
+		Com_Printf("Base idx %i\n", base->idx);
+		Com_Printf("Base name %s\n", base->name);
 		Com_Printf("Base founded %i\n", base->founded);
 		Com_Printf("Base numAircraftInBase %i\n", base->numAircraftInBase);
 		Com_Printf("Base numMissileBattery %i\n", base->numBatteries);
@@ -2776,22 +2781,23 @@ static void B_BaseList_f (void)
 		Com_Printf("Base sensorWidth %i\n", base->radar.range);
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUFOs);
 		Com_Printf("Base Alien interest %f\n", base->alienInterest);
-		Com_Printf("Base hasBuilding[]: ");
+		Com_Printf("Base hasBuilding[]:\n");
+		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  Cmd AMtr Entr Miss Lasr  Rdr Team\n");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
-			Com_Printf("%i ", B_GetBuildingStatus(base, j));
+			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
 		Com_Printf("\nBase aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			Com_Printf("Base aircraft-team %i\n", base->aircraft[j].teamSize);
 		}
-		Com_Printf("Base pos %f:%f\n", base->pos[0], base->pos[1]);
+		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
 		for (row = 0; row < BASE_SIZE; row++) {
 			if (row)
 				Com_Printf("\n");
 			for (col = 0; col < BASE_SIZE; col++)
-				Com_Printf("%i ", base->map[row][col].building->idx);
+				Com_Printf("%2i ", base->map[row][col].building ? base->map[row][col].building->idx : -1);
 		}
-		Com_Printf("\n");
+		Com_Printf("\n\n");
 	}
 }
 #endif
