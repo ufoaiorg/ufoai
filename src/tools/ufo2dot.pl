@@ -39,26 +39,39 @@
 #		Some formatting of the nodes ("ranksep")
 #		More functions to avoid code duplication.
 #		Skipping some unneeded topics (like skills and damages)
+#	2008-04-04 Hoehrer
+#		Parsing "researched_list" files
+#		Display techs in different color depending on their research status on game-start.
+#		Parsing (but not linking) "provided" items as well.
+#		Skip some multiplayer-only techs.
+#		Fixed a bug where (the boxes) for dead aliens where wrongly listed/printed.
 #######################################
 # TODO
-#	* Prettify this.
+#	* Prettify this even more.
+#	* MAJOR Parse all of the items/crafts/buildings/etc... files.
 #######################################
 
 use strict;
 use warnings;
 
 my $filenames = [
-	#"research.ufo",
-	#"research_logic.ufo"
-	"../../base/ufos/research.ufo",
-	"../../base/ufos/research_logic.ufo"
+	'../../base/ufos/research.ufo',
+	'../../base/ufos/research_logic.ufo'
 ];
+my $filenameResearched = '../../base/ufos/researched_list.ufo';
 
 my $filenameDot = "tree.dot";
 
+# This is regex syntax, so mind you that without the "^" and "$" characters it will not match _exactly_.
 my $ignoredTechs = [
-	'rs_skill.*',
-	'rs_damage.*'
+	'^rs_skill.*',
+	'^rs_damage.*',
+	# Multiplayer
+	'^rs_weapon_shotgun$',
+	'^rs_weapon_shotgun_ammo$',
+	'^rs_power_armour$',	# may get into SP soon
+	'^rs_weapon_chaingun$',
+	'^rs_weapon_chaingun_ammo$'
 ];
 
 # Settings inside "tech" we'll just skip for now.
@@ -290,6 +303,12 @@ sub getTechItems ($) {
 			$items->{$req->{'value1'}} = 1;
 		}
 	}
+	
+	if (exists($tech->{'provides'})
+	&& ($tech->{'provides'} eq 'weapon' || $tech->{'provides'} eq 'armour')) {
+		$items->{$tech->{'provides'}} = 1;
+	}
+
 	return $items;
 }
 
@@ -335,6 +354,7 @@ sub parseUfoTree (%$) {
 	unless ((@_                == 2      ) &&
 		(ref($self)        eq 'HASH' ) );
 
+	print "======= Parsing UFO:AI research tree ('tech') =======\n";
 	print "Read file '", $filename, "' ...\n";
 	open(SOURCE, "< $filename") or die "\nCouldn not open file '$filename' for reading: $!\n";
 
@@ -380,16 +400,89 @@ sub parseUfoTree (%$) {
 #			print Dumper($text);
 #		}
 	}
+	print "\n";
 
 	$self->{'techs'} = $techs;
 	$self->{'items'} = $items;
 	$self->{'aliens'} = $aliens;
-	$self->{'aliens_dead'} = $aliens_dead ;
+	$self->{'aliens_dead'} = $aliens_dead;
 
 	close (SOURCE);
 	return $self;
 }
+#######################################
+# Parsing (.ufo "required_list  syntax)
+#######################################
+sub parseResearchedList (%$) {
+	my ($self, $filename) = @_;
+	die "\nUsage: parseResearchedList(techtree-HASHREF filename)"
+	unless ((@_                == 2      ) &&
+		(ref($self)        eq 'HASH' ) );
 
+	print "======= Parsing researched-techs list ('researched' and 'researchable') =======\n";
+	print "Read file '", $filename, "' ...\n";
+	open(SOURCE, "< $filename") or die "\nCouldn not open file '$filename' for reading: $!\n";
+
+	my $text2 = do { local( $/ ) ; <SOURCE> } ;
+	my $text = $text2;
+	my $researched = $self->{'researched'};
+	my $researchable = $self->{'researchable'};
+
+#my $debug; # DEBUG
+	my $token = '';
+	while ($text) {
+		print "Parsing ...\n";
+		$token = parseUfoToken(\$text);
+
+		print "Parsing ... token '", $token ,"' ...\n";
+
+		my $type = $token;
+		if ($type eq "researched" || $type eq "researchable") {
+			$token = parseUfoToken(\$text);
+			my $researchedListID = $token;
+
+			$token = parseUfoToken(\$text);
+			
+			if ($token ne '{') {
+				print "parseResearchedList: Empty 'researched' list ('", $token, "'). Abort.\n";
+				exit;
+			}
+			$token = parseUfoToken(\$text);
+			
+			if ($token eq '') {
+				print "parseResearchedList: Empty 'researched' list ('", $token, "'). Abort.\n";
+				exit;
+			}
+
+			if ($token ne "}") {
+				my $researchedList = {};
+				$token = parseUfoToken(\$text);
+
+				while ($token ne "}") {
+					$researchedList->{$token} = 1;
+					$token = parseUfoToken(\$text);
+				}
+				
+				if ($type eq "researched") {
+					$researched->{$researchedListID} = $researchedList;
+				} else {
+					$researchable->{$researchedListID} = $researchedList;
+				}
+			}
+		} else {
+			print "parseResearchedList: Unknown keyword: '", $token, "'\n";
+		}
+		print "... next round ...\n";
+
+	}
+	print "\n";
+	$self->{'researched'} = $researched;
+	$self->{'researchable'} = $researchable;
+
+	close (SOURCE);
+	return $self;
+}
+#######################################
 #######################################
 # Writing (.dot syntax)
 #######################################
@@ -405,9 +498,61 @@ sub skipTech ($$) {
 	
 	return 0;
 }
-sub printTechnologyStyle ($) {
-	my ($FH) = @_;
-	printf $FH "\t".'node  [shape=box, color="#004e0099", style=filled, fontcolor=black];'."\n";
+
+sub techResearched ($$$$) {
+	my ($tech, $techs, $researchedList, $ignoredTechs) = @_;
+
+	if (exists($researchedList->{$tech->{'id'}})) {
+		return 1;
+	}
+	
+#	if ($tech->{'id'} eq 'rs_advanced_combat_armour') {	#DEBUG
+#		print Dumper($tech);
+#		print Dumper($researchedList);
+#		exit;
+#	}
+
+	if (exists($tech->{'time'})
+	&& $tech->{'time'} == 0) {
+		# Initially researched tech.
+		if (reqMet($tech, $techs, $ignoredTechs)) {
+			return 1;
+		}
+		
+		# researchtime=0, there is at least one requirement (in the AND list) and they are researched as well. (e.g. ammo)
+		if (exists($tech->{'AND'})
+		&& $#{$tech->{'AND'}} >= 0) {
+			my $reqOk = 1;
+			foreach my $req (@{$tech->{'AND'}}) {
+				if ($req->{'type'} eq 'tech'
+				&& !techResearched($techs->{$req->{'value1'}}, $techs, $researchedList, $ignoredTechs)
+				&& !skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
+					$reqOk = 0;
+				} elsif ($req->{'type'} ne 'tech') {
+					$reqOk = 0;
+				}
+			}
+			if ($reqOk) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+	
+}
+
+sub printTechnologyStyle ($$) {
+	my ($FH, $status) = @_;
+	
+	if ($status eq 'researchable') {
+		printf $FH "\t".'node  [shape=box, color="#00004e99", style=filled, fontcolor=black];'."\n";
+	} elsif ($status eq 'researched') {
+		printf $FH "\t".'node  [shape=box, color="#4e000099", style=filled, fontcolor=black];'."\n";
+	} else { # 'open'
+		# To be researched later on after req. are met.
+		printf $FH "\t".'node  [shape=box, color="#004e0099", style=filled, fontcolor=black];'."\n";
+	}
+	
 }
 
 sub printTech ($$) {
@@ -441,6 +586,23 @@ sub reqExists($$$$) {
 		}
 	}
 	return 0;
+}
+
+sub reqMet($$$) {
+	my ($tech, $techs, $ignoredTechs) = @_;
+	
+	my $orHasReqs = (exists($tech->{'OR'}) and $#{$tech->{'OR'}} >= 0);
+	my $andHasReqs = (exists($tech->{'AND'}) and $#{$tech->{'AND'}} >= 0);
+	if (!$orHasReqs && !$andHasReqs) {
+		return 1;
+	}
+	
+	if (reqExists($tech, 'OR', $techs, $ignoredTechs)
+	 || reqExists($tech, 'AND', $techs, $ignoredTechs)) {
+		return 0;
+	} else {
+		return 1;
+	}
 }
 
 sub printReqStyle ($$) {
@@ -488,7 +650,7 @@ sub printAlien ($$$) {
 	if ($type eq 'alien') {
 		printf $FH "\t\t".$alien.' [label="Live '.$alien.'"];'."\n";
 	} else {
-		printf $FH "\t\t".$alien.'_dead [label="'.$alien.' autopsy"];'."\n";
+		printf $FH "\t\t".$alien.'_dead [label="Dead '.$alien.'"];'."\n";
 	}
 }
 
@@ -519,7 +681,8 @@ sub printTechGroup ($$$$) {
 sub printTechLinks ($$$$) {
 	my ($techs, $tech, $FH, $ignoredTechs) = @_;
 
-	foreach my $req (@{$tech->{'AND'}}) {
+	my $req;
+	foreach $req (@{$tech->{'AND'}}) {
 		if ($req->{'type'} eq "tech") {
 			if (not skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
 				printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
@@ -534,7 +697,7 @@ sub printTechLinks ($$$$) {
 			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_AND'."\n";
 		}
 	}
-	foreach my $req (@{$tech->{'OR'}}) {
+	foreach $req (@{$tech->{'OR'}}) {
 		if ($req->{'type'} eq "tech") {
 			if (not skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
 				printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
@@ -549,6 +712,12 @@ sub printTechLinks ($$$$) {
 			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_OR'."\n";
 		}
 	}
+	
+#	# TODO 'provides' info
+#	if (exists($tech->{'provides'})
+#	&& ($tech->{'provides'} eq 'weapon' || $tech->{'provides'} eq 'armour')) {
+#		printf $FH "\t".$tech->{'id'}.' -> '.$tech->{'provides'}." /* Provided */\n";	
+#	}
 }
 
 sub writeDotFile(%$) {
@@ -557,10 +726,12 @@ sub writeDotFile(%$) {
 	unless ((@_                == 2      ) &&
 		(ref($self)        eq 'HASH' ) );
 
+	print "======= Writing dot (graphviz) file =======\n";
 	my $techs = $self->{'techs'};
 	my $items = $self->{'items'};
 	my $aliens = $self->{'aliens'};
 	my $aliens_dead = $self->{'aliens_dead'};
+	my $researchedList = $self->{'researched'}->{'rslist_human'};
 
 	print "Writing file '", $filename, "' ...\n";
 	open(my $DOT, "> $filename") or die "\nCouldn not open file '$filename' for writing: $!\n";
@@ -573,11 +744,38 @@ sub writeDotFile(%$) {
 	printf $DOT "\n";
 
 	# Draw technology boxes
-	printf $DOT "/* Technology boxes */\n";
-	printTechnologyStyle($DOT);
+	printf $DOT "/* Technology boxes (researchable techs) */\n";
+	printTechnologyStyle($DOT, 'researchable');
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
-		if (not skipTech($tech, $ignoredTechs)) {
+		if (!skipTech($tech, $ignoredTechs)
+		 && reqMet($tech, $techs, $ignoredTechs)
+		 && !techResearched($tech, $techs, $researchedList, $ignoredTechs)) {
+			printTech($tech, $DOT);
+		}
+	}
+	printf $DOT "\n";
+	
+	printf $DOT "/* Technology boxes (researched techs) */\n";
+	printTechnologyStyle($DOT, 'researched');
+	foreach my $techId (keys %{$techs}) {
+		my $tech = $techs->{$techId};
+		if (!skipTech($tech, $ignoredTechs)
+		 && techResearched($tech, $techs, $researchedList, $ignoredTechs)) {
+			printTech($tech, $DOT);
+		}
+	}
+	printf $DOT "\n";
+	
+	my $techId;
+	my $tech;
+	printf $DOT "/* Technology boxes (unresearched/open techs) */\n";
+	printTechnologyStyle($DOT, 'open');
+	foreach $techId (keys %{$techs}) {
+		$tech = $techs->{$techId};
+		if (!skipTech($tech, $ignoredTechs)
+		 && !techResearched($tech, $techs, $researchedList, $ignoredTechs)
+		 && !reqMet($tech, $techs, $ignoredTechs)) {
 			printTech($tech, $DOT);
 		}
 	}
@@ -586,8 +784,8 @@ sub writeDotFile(%$) {
 	# Draw OR boxes for each technology that needs them.
 	printf $DOT "/* Technology 'OR' boxes */\n";
 	printReqStyle($DOT, "OR");
-	foreach my $techId (keys %{$techs}) {
-		my $tech = $techs->{$techId};
+	foreach $techId (keys %{$techs}) {
+		$tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
 			printReq($tech, $DOT, "OR", $techs, $ignoredTechs);
 		}
@@ -597,8 +795,8 @@ sub writeDotFile(%$) {
 	# Draw AND boxes for each technology that needs them.
 	printf $DOT "/* Technology 'AND' boxes */\n";
 	printReqStyle($DOT, "AND");
-	foreach my $techId (keys %{$techs}) {
-		my $tech = $techs->{$techId};
+	foreach $techId (keys %{$techs}) {
+		$tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
 			printReq($tech, $DOT, "AND", $techs, $ignoredTechs);
 		}
@@ -614,11 +812,12 @@ sub writeDotFile(%$) {
 	}
 	printf $DOT "\n";
 
+	my $alien;
 	# Draw (live) alien boxes
 	printf $DOT "/* Alien boxes */\n";
 	printAlienStyle($DOT);
 	printf $DOT "\t\t".'alienglobal [label="Global Aliens"];'."\n";
-	foreach my $alien (keys %{$aliens}) {
+	foreach $alien (keys %{$aliens}) {
 		printAlien($alien, 'alien', $DOT);
 	}
 	printf $DOT "\n";
@@ -626,15 +825,15 @@ sub writeDotFile(%$) {
 	# Draw (dead) alien boxes
 	printf $DOT "/* Dead alien boxes */\n";
 	printAlienStyle($DOT);
-	foreach my $alien (keys %{$aliens}) {
+	foreach $alien (keys %{$aliens_dead}) {
 		printAlien($alien, 'alien_dead', $DOT);
 	}
 	printf $DOT "\n";
 
 	# Draw tech subgraphs and OR/AND links
 	printf $DOT "/* Technology groups (with tech + AND + OR boxes) */\n";
-	foreach my $techId (keys %{$techs}) {
-		my $tech = $techs->{$techId};
+	foreach $techId (keys %{$techs}) {
+		$tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
 			printTechGroup($tech, $DOT, $techs, $ignoredTechs);
 		}
@@ -644,8 +843,8 @@ sub writeDotFile(%$) {
 
 	# Create requirement links
 	printf $DOT "/* Requirement edges */\n";
-	foreach my $techId (keys %{$techs}) {
-		my $tech = $techs->{$techId};
+	foreach $techId (keys %{$techs}) {
+		$tech = $techs->{$techId};
 		if (not skipTech($tech, $ignoredTechs)) {
 			printTechLinks($techs, $tech, $DOT, $ignoredTechs);
 		}
@@ -662,6 +861,7 @@ sub writeDotFile(%$) {
 	print " dot ", $filenameDot , " -Tsvg >dia.svg\n";
 	print "to convert it into a different format.\n";
 	print "See also: 'graphviz'\n";
+	print "\n";
 
 }
 
@@ -677,11 +877,13 @@ my $tree = {
 	'aliens' => {},
 	'aliens_dead' => {}
 };
+
 foreach my $filename (@{$filenames}) {
 	$tree = parseUfoTree($tree, $filename);
 #	print Dumper($tree);
 }
 
+$tree = parseResearchedList($tree, $filenameResearched);
 
 writeDotFile($tree, $filenameDot);
 
