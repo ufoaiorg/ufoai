@@ -600,27 +600,24 @@ static void AC_NextAC_f (void)
 		return;
 
 	/* Get next base */
-	if (baseCurrent->idx >= MAX_BASES -1)
-		base = B_GetBase(0);
+	if (baseCurrent >= gd.bases + MAX_BASES -1)
+		base = &gd.bases[0];
 	else
-		base = B_GetBase(baseCurrent->idx + 1);
-	assert(base);
+		base = baseCurrent + 1;
 
 	/* Loop until we hit the original base. */
 	while (base != baseCurrent) {
-		if (!base->founded || !base->hasBuilding[B_ALIEN_CONTAINMENT])
-			continue;
-
-		if (B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
+		if (base->founded && base->hasBuilding[B_ALIEN_CONTAINMENT] &&
+			B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			found = qtrue;
 			break;
 		}
 
 		/* Get next base */
-		if (base->idx >= MAX_BASES - 1)
-			base = B_GetBase(0);	/* Wrap around from last to first base. */
+		if (base >= gd.bases + MAX_BASES - 1)
+			base = &gd.bases[0];	/* Wrap around from last to first base. */
 		else
-			base = B_GetBase(base->idx + 1);
+			base++;
 	}
 
 	if (!found)
@@ -646,27 +643,24 @@ static void AC_PrevAC_f (void)
 		return;
 
 	/* Get previous base */
-	if (baseCurrent->idx <= 0)
-		base = B_GetBase(MAX_BASES - 1);
+	if (baseCurrent <= gd.bases)
+		base = &gd.bases[MAX_BASES - 1];
 	else
-		base = B_GetBase(baseCurrent->idx - 1);
-	assert(base);
+		base = baseCurrent - 1;
 
 	/* Loop until we hit the original base. */
 	while (base != baseCurrent) {
-		if (!base->founded || !base->hasBuilding[B_ALIEN_CONTAINMENT])
-			continue;
-
-		if (B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
+		if (base->founded && base->hasBuilding[B_ALIEN_CONTAINMENT] &&
+			B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			found = qtrue;
 			break;
 		}
 
-		/* Get previous base */
-		if (base->idx <= 0)
-			base = B_GetBase(MAX_BASES - 1);	/* Wrap around from first to last base. */
+		/* Get next base */
+		if (base <= gd.bases)
+			base = &gd.bases[MAX_BASES - 1];	/* Wrap around from first to last base. */
 		else
-			base = B_GetBase(base->idx - 1);
+			base--;
 	}
 
 	if (!found)
