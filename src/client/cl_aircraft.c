@@ -1596,22 +1596,21 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo)
 	aircraft_t* aircraft;
 	int i;
 
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+	assert(ufo);
+
+	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
 		/* Base currently targeting the specified ufo loose their target */
 		for (i = 0; i < base->numBatteries; i++) {
 			if (base->batteries[i].target == ufo)
 				base->batteries[i].target = NULL;
-			else if (base->batteries[i].target) {
-				/** @todo get next ufo. */
-				base->batteries[i].target = NULL;
-			}
+			else if (base->batteries[i].target > ufo)
+				base->batteries[i].target--;
 		}
 		for (i = 0; i < base->numLasers; i++) {
 			if (base->lasers[i].target == ufo)
 				base->lasers[i].target = NULL;
-			else if (base->lasers[i].target)
-				/** @todo get next ufo. */
-				base->lasers[i].target = NULL;
+			else if (base->lasers[i].target > ufo)
+				base->lasers[i].target--;
 		}
 
 		/* Aircraft currently purchasing the specified ufo will be redirect to base */
@@ -1623,6 +1622,7 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo)
 				else if (ufo < aircraft->aircraftTarget)
 					aircraft->aircraftTarget--;
 			}
+	}
 }
 
 /**
