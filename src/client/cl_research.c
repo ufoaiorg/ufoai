@@ -119,6 +119,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 /**
  * @brief Checks if all requirements of a tech have been met so that it becomes researchable.
+ * @note If there are NO requirements defined at all it will always return true.
  * @param[in] require_AND Pointer to a list of AND-related requirements.
  * @param[in] require_OR Pointer to a list of OR-related requirements.
  * @param[in] base In what base to check the "collected" items etc..
@@ -135,6 +136,12 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 	if (!required_AND && !required_OR) {
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
 		return qfalse;
+	}
+
+	/* If there are no requirements defined at all we have 'met' them by default. */
+	if (required_AND->numLinks == 0 && required_OR->numLinks == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: No requirements set for this tech. They are 'met'.\n");
+		return qtrue;
 	}
 
 	if (required_AND->numLinks) {
