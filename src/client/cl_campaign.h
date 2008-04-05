@@ -104,6 +104,7 @@ typedef enum missionStage_s {
 	STAGE_SPREAD_XVI,				/**< Spreading XVI Virus */
 	STAGE_INTERCEPT,				/**< UFO attacks any encountered PHALANX aircraft */
 	STAGE_BASE_DISCOVERED,			/**< PHALANX discovered the base */
+	STAGE_HARVEST,					/**< Harvesting */
 
 	STAGE_RETURN_TO_ORBIT,			/**< UFO is going back to base */
 

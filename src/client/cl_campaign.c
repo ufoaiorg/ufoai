@@ -437,6 +437,8 @@ const char* CP_MissionToTypeString (const mission_t *mission)
 		return _("Base attack");
 	case STAGE_BASE_DISCOVERED:
 		return _("Alien base");
+	case STAGE_HARVEST:
+		return _("Harvesting mission");
 	default:
 		break;
 	}
@@ -1404,7 +1406,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 
 	assert(mission);
 
-	/* lower nation happiness */
+	/* Mission is a success: government is subverted => lower happiness */
 	nation = MAP_GetNation(mission->pos);
 	nation->stats[0].happiness *= 0.8;
 
@@ -2127,6 +2129,9 @@ static const char* CP_MissionStageToName (missionStage_t stage)
 	case STAGE_BASE_DISCOVERED:
 		return "Base visible";
 		break;
+	case STAGE_HARVEST:
+		return "Harvesting";
+		break;
 	case STAGE_OVER:
 		return "Mission over";
 		break;
@@ -2396,11 +2401,13 @@ static qboolean CP_UFOIsCrashed (const mission_t *mission)
 {
 	switch (mission->stage) {
 	case STAGE_RECON_GROUND:
+	case STAGE_TERROR_MISSION:
 	case STAGE_BUILD_BASE:
 	case STAGE_BASE_ATTACK:
 	case STAGE_SUBVERT_GOV:
 	case STAGE_SUPPLY:
 	case STAGE_SPREAD_XVI:
+	case STAGE_HARVEST:
 		return qfalse;
 	default:
 		return qtrue;
@@ -2621,6 +2628,38 @@ static void CP_SpreadXVI (void)
 		const mission_t *mission = (mission_t *)list->data;
 		if (mission->stage == STAGE_SPREAD_XVI)
 			CP_SpreadXVIAtPos(mission->pos);
+	}
+}
+
+/**
+ * @brief Lower happiness of nations depending on alien activity.
+ * @note Daily called
+ * @sa CP_BuildBaseGovernmentLeave
+ */
+static void CP_UpdateNationHappiness (void)
+{
+	const linkedList_t *list = ccs.missions;
+
+	for (;list; list = list->next) {
+		const mission_t *mission = (mission_t *)list->data;
+		nation_t *nation;
+		float happinessFactor;
+
+		switch (mission->stage) {
+		case STAGE_TERROR_MISSION:
+		case STAGE_SUBVERT_GOV:
+			happinessFactor = 0.99;
+		case STAGE_RECON_GROUND:
+		case STAGE_SPREAD_XVI:
+		case STAGE_HARVEST:
+			happinessFactor = 0.996;
+		default:
+			/* mission is not active on earth, skip this mission */
+			continue;
+		}
+
+		nation = MAP_GetNation(mission->pos);
+		nation->stats[0].happiness *= happinessFactor;
 	}
 }
 
@@ -3303,6 +3342,7 @@ void CL_CampaignRun (void)
 			BDEF_ReloadBattery();
 			CP_SpawnNewMissions();
 			CP_SpreadXVI();
+			CP_UpdateNationHappiness();
 			AB_BaseSearchedByNations();
 		}
 
