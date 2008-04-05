@@ -3546,7 +3546,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 		/* Alien Containment. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
-			MSG_WriteString(sb, b->alienscont[k].teamDef->name);
+			MSG_WriteString(sb, b->alienscont[k].teamDef->id);
 			MSG_WriteShort(sb, b->alienscont[k].amount_alive);
 			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
 		}
