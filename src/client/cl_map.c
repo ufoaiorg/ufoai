@@ -1162,6 +1162,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	float angle = 0.0f;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.5f};
+	const vec4_t white = {.9f, .9f, .9f, 0.5f};
 	qboolean showXVI = qfalse;
 	qboolean oneUFOVisible = qfalse;
 	static char buffer[512] = "";
@@ -1318,6 +1319,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 #endif
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL) || aircraft->notOnGeoscape)
 			continue;
+		MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
 		if (aircraft == selectedUFO) {
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
