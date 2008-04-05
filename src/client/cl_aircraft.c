@@ -173,6 +173,7 @@ void AIR_ListAircraft_f (void)
 			aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
 			Com_Printf("...idx cur/global %i/%i\n", i, aircraft->idx);
+			Com_Printf("...homebase: %s\n", aircraft->homebase ? aircraft->homebase->name : "NO HOMEBASE");
 			for (k = 0; k < aircraft->maxWeapons; k++) {
 				if (aircraft->weapons[k].item) {
 					Com_Printf("...weapon slot %i contains %s", k, aircraft->weapons[k].item->id);
@@ -793,7 +794,6 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 {
 	int i;
 	aircraft_t *aircraft_temp;
-	aircraft_t *previous_aircraftCurrent = base->aircraftCurrent;
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: no aircraft given (NULL)\n");
@@ -820,7 +820,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	if (aircraft->teamSize > 0)
 		CL_RemoveSoldiersFromAircraft(aircraft);
 
-	for (i = aircraft->idx; i < gd.numAircraft; i++) {
+	for (i = aircraft->idx + 1; i < gd.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
 		aircraft_temp = AIR_AircraftGetFromIdx(i);
 		if (aircraft_temp) {
@@ -839,15 +839,17 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	 * Every single idnext that points to an aircraft after this one will need to be updated.
 	 */
 	base->numAircraftInBase--;
-	for (i = AIR_GetAircraftIdxInBase(aircraft); i < base->numAircraftInBase; i++) {
-		/* Remove aircraft and rearrange the aircraft-list (in base). */
-		aircraft_temp = &base->aircraft[i];
-		memcpy(aircraft_temp, &base->aircraft[i + 1], sizeof(aircraft_t));
-
-		/* Update index of aircraftCurrent in base if it is affected by the index-change. */
-		if (aircraft_temp == previous_aircraftCurrent)
-			base->aircraftCurrent--;
-	}
+	/* Update index of aircraftCurrent in base if it is affected by the index-change. */
+	if (base->aircraftCurrent >= aircraft && base->aircraftCurrent->homebase == aircraft->homebase)
+		base->aircraftCurrent--;
+	/* rearrange the aircraft-list (in base) */
+	/* Find the index of aircraft in base */
+	i = AIR_GetAircraftIdxInBase(aircraft);
+	/* move other aircraft if the deleted aircraft was not the last one of the base */
+	if (i != AIRCRAFT_INBASE_INVALID)
+		memmove(aircraft, aircraft + 1, (base->numAircraftInBase - i) * sizeof(*aircraft));
+	/* wipe the now vacant last slot */
+	memset(&base->aircraft[base->numAircraftInBase], 0, sizeof(base->aircraft[base->numAircraftInBase]));
 
 	if (base->numAircraftInBase < 1) {
 		Cvar_SetValue("mn_equipsoldierstate", 0);
