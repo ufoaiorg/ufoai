@@ -1014,7 +1014,7 @@ void CL_CampaignRunAircraft (int dt)
 				if ((aircraft->status != AIR_RETURNING) && (aircraft->status >= AIR_IDLE) &&
 					!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 					/* @todo: check if aircraft can go to a closer base with free space */
-					MN_AddNewMessage(_("Notice"), _("Your dropship is low on fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
+					MN_AddNewMessage(_("Notice"), va(_("Your %s is low on fuel and returns to base"), aircraft->name), qfalse, MSG_STANDARD, NULL);
 					AIR_AircraftReturnToBase(aircraft);
 				}
 
