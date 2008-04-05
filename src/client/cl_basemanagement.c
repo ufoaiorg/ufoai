@@ -991,6 +991,9 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	CL_GameTimeStop();
 }
 
+/**
+ * @brief Build starting building in the first base, and hire employees.
+ */
 static void B_AddBuildingToBase (building_t *building, base_t *base, building_t *template, qboolean hire)
 {
 	*building = *template;
@@ -1216,6 +1219,11 @@ static qboolean B_ConstructBuilding (base_t* base)
 		base->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		base->buildingCurrent->timeStart = ccs.date.day;
 	} else {
+		/* call the onconstruct trigger */
+		if (*base->buildingCurrent->onConstruct) {
+			Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", base->buildingCurrent->onConstruct, base->idx);
+			Cbuf_AddText(va("%s %i;", base->buildingCurrent->onConstruct, base->idx));
+		}
 		B_UpdateAllBaseBuildingStatus(base->buildingCurrent, base, B_STATUS_WORKING);
 	}
 
