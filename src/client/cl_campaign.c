@@ -89,12 +89,20 @@ static date_t Date_Add (date_t a, date_t b)
 	return a;
 }
 
-static date_t Date_Random (date_t frame)
+/**
+ * @brief Return a random relative date which lies between a lower and upper limit.
+ * @param[in] minFrame Minimal date.
+ * @param[in] maxFrame Maximal date.
+ * @return A date value between minFrame and maxFrame.
+ */
+static date_t Date_Random (date_t minFrame, date_t maxFrame)
 {
-	frame.sec = (frame.day * 3600 * 24 + frame.sec) * frand();
-	frame.day = frame.sec / (3600 * 24);
-	frame.sec = frame.sec % (3600 * 24);
-	return frame;
+	maxFrame.sec = max(minFrame.day * 3600 * 24 + minFrame.sec,
+		(maxFrame.day * 3600 * 24 + maxFrame.sec) * frand());
+
+	maxFrame.day = maxFrame.sec / (3600 * 24);
+	maxFrame.sec = maxFrame.sec % (3600 * 24);
+	return maxFrame;
 }
 
 /**
@@ -795,9 +803,10 @@ static qboolean CP_ReconMissionChoose (mission_t *mission)
  */
 static void CP_ReconMissionAerial (mission_t *mission)
 {
+	const date_t minReconDelay = {1, 0};
 	const date_t reconDelay = {2, 0};		/* How long the UFO will fly on earth */
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(reconDelay));
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
 	mission->stage = STAGE_RECON_AIR;
 }
 
@@ -856,11 +865,12 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
  */
 static void CP_ReconMissionGround (mission_t *mission)
 {
+	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
 
 	assert(mission->ufo);
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
@@ -974,11 +984,12 @@ static void CP_TerrorMissionIsFailure (mission_t *mission)
  */
 static void CP_TerrorMissionStart (mission_t *mission)
 {
+	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
 
 	assert(mission->ufo);
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
@@ -1364,9 +1375,10 @@ static void CP_BuildBaseMissionLeave (mission_t *mission)
 static void CP_BuildBaseSetUpBase (mission_t *mission)
 {
 	alienBase_t *base;
+	const date_t minBuildingTime = {5, 0};	/**< Time needed to start a new base construction */
 	const date_t buildingTime = {10, 0};	/**< Time needed to start a new base construction */
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(buildingTime));
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minBuildingTime, buildingTime));
 
 	base = AB_BuildBase(mission->pos);
 	if (!base) {
@@ -1424,11 +1436,12 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
  */
 static void CP_BuildBaseSubvertGovernment (mission_t *mission)
 {
+	const date_t minMissionDelay = {3, 0};
 	const date_t missionDelay = {5, 0};
 
 	assert(mission->ufo);
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
@@ -1544,6 +1557,7 @@ static void CP_SupplyMissionLeave (mission_t *mission)
  */
 static void CP_SupplySetStayAtBase (mission_t *mission)
 {
+	const date_t minSupplyTime = {3, 0};
 	const date_t supplyTime = {10, 0};	/**< Max time needed to supply base */
 
 	/* Maybe base has been destroyed since mission creation ? */
@@ -1553,7 +1567,7 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 		return;
 	}
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(supplyTime));
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minSupplyTime, supplyTime));
 
 	AB_SupplyBase((alienBase_t *) mission->data, mission->ufo->visible);
 
@@ -1679,11 +1693,12 @@ static void CP_XVIMissionIsFailure (mission_t *mission)
  */
 static void CP_XVIMissionStart (mission_t *mission)
 {
+	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
 
 	assert(mission->ufo);
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(missionDelay));
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
@@ -1774,9 +1789,10 @@ static void CP_InterceptMissionLeave (mission_t *mission)
  */
 static void CP_InterceptMissionSet (mission_t *mission)
 {
+	const date_t minReconDelay = {3, 0};
 	const date_t reconDelay = {6, 0};		/* How long the UFO should stay on earth */
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(reconDelay));
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
 	mission->stage = STAGE_INTERCEPT;
 }
 
@@ -1960,6 +1976,7 @@ static inline void CP_SetMissionName (mission_t *mission)
 static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 {
 	mission_t mission;
+	const date_t minNextSpawningDate = {0, 0};
 	const date_t nextSpawningDate = {3, 0};	/* Delay between 2 mission spawning */
 
 	/* Some event are non-occurrence */
@@ -1978,7 +1995,7 @@ static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 		mission.startDate.day = ccs.date.day;
 		mission.startDate.sec = ccs.date.sec;
 	} else
-		mission.startDate = Date_Add(ccs.date, Date_Random(nextSpawningDate));
+		mission.startDate = Date_Add(ccs.date, Date_Random(minNextSpawningDate, nextSpawningDate));
 	mission.finalDate = mission.startDate;
 	CP_SetMissionName(&mission);
 
