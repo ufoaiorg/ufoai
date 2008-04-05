@@ -1319,7 +1319,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 #endif
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL) || aircraft->notOnGeoscape)
 			continue;
-		if (cl_3dmap->integer) {
+		if (cl_3dmap->integer)
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
 		if (aircraft == selectedUFO) {
 			if (cl_3dmap->integer)
