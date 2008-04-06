@@ -488,10 +488,10 @@ sub parseResearchedList (%$) {
 # Writing (.dot syntax)
 #######################################
 
-sub skipTech ($$) {
-	my ($tech, $ignoreList) = @_;
+sub skipTech ($) {
+	my ($tech) = @_;
 	
-	foreach my $ignore (@{$ignoreList}) {
+	foreach my $ignore (@{$ignoredTechs}) {
 		if ($tech->{'id'} =~ m/$ignore/) {
 			return 1;
 		}
@@ -500,8 +500,8 @@ sub skipTech ($$) {
 	return 0;
 }
 
-sub techResearched ($$$$) {
-	my ($tech, $techs, $researchedList, $ignoredTechs) = @_;
+sub techResearched ($$$) {
+	my ($tech, $techs, $researchedList) = @_;
 
 	if (exists($researchedList->{$tech->{'id'}})) {
 		return 1;
@@ -516,7 +516,7 @@ sub techResearched ($$$$) {
 	if (exists($tech->{'time'})
 	&& $tech->{'time'} == 0) {
 		# Initially researched tech.
-		if (reqMet($tech, $techs, $ignoredTechs)) {
+		if (reqMet($tech, $techs)) {
 			return 1;
 		}
 		
@@ -526,8 +526,8 @@ sub techResearched ($$$$) {
 			my $reqOk = 1;
 			foreach my $req (@{$tech->{'AND'}}) {
 				if ($req->{'type'} eq 'tech'
-				&& !techResearched($techs->{$req->{'value1'}}, $techs, $researchedList, $ignoredTechs)
-				&& !skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
+				&& !techResearched($techs->{$req->{'value1'}}, $techs, $researchedList)
+				&& !skipTech($techs->{$req->{'value1'}})) {
 					$reqOk = 0;
 				} elsif ($req->{'type'} ne 'tech') {
 					$reqOk = 0;
@@ -546,12 +546,12 @@ sub printTechnologyStyle ($$) {
 	my ($FH, $status) = @_;
 	
 	if ($status eq 'researchable') {
-		printf $FH "\t".'node  [shape=box, color="#00004e99", style=filled, fontcolor=black];'."\n";
+		printf $FH "\t".'node [shape=box, color="#00004e99", fillcolor="#00004e99",style=filled, fontcolor=black];'."\n";
 	} elsif ($status eq 'researched') {
-		printf $FH "\t".'node  [shape=box, color="#4e000099", style=filled, fontcolor=black];'."\n";
+		printf $FH "\t".'node [shape=box, color="#4e000099", fillcolor="#4e000099", style=filled, fontcolor=black];'."\n";
 	} else { # 'open'
 		# To be researched later on after req. are met.
-		printf $FH "\t".'node  [shape=box, color="#004e0099", style=filled, fontcolor=black];'."\n";
+		printf $FH "\t".'node [shape=box, color="#004e0099", fillcolor="#004e0099", style=filled, fontcolor=black];'."\n";
 	}
 	
 }
@@ -566,18 +566,22 @@ sub printTech ($$) {
 	} else {
 		$name = $tech->{'id'};
 	}
-	printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'"];'."\n";
+	if ($tech->{'type'} eq 'logic') {
+		printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'", color="red"];'."\n";
+	} else {
+		printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'"];'."\n";
+	}
 }
 
-sub reqExists($$$$) {
-	my ($tech, $reqType, $techs, $ignoredTechs) = @_;
+sub reqExists($$$) {
+	my ($tech, $reqType, $techs) = @_;
 	
 	if (exists($tech->{$reqType}) and $#{$tech->{$reqType}} >= 0) {
 		my $numReq = $#{$tech->{$reqType}};
 		foreach my $req (@{$tech->{$reqType}}) {
 			# Reduce number of requirements if there is an unwanted tech inside.
 			if ($req->{'type'} eq 'tech'
-			and skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
+			and skipTech($techs->{$req->{'value1'}})) {
 				$numReq--;
 			}
 			
@@ -589,8 +593,8 @@ sub reqExists($$$$) {
 	return 0;
 }
 
-sub reqMet($$$) {
-	my ($tech, $techs, $ignoredTechs) = @_;
+sub reqMet($$) {
+	my ($tech, $techs) = @_;
 	
 	my $orHasReqs = (exists($tech->{'OR'}) and $#{$tech->{'OR'}} >= 0);
 	my $andHasReqs = (exists($tech->{'AND'}) and $#{$tech->{'AND'}} >= 0);
@@ -598,8 +602,8 @@ sub reqMet($$$) {
 		return 1;
 	}
 	
-	if (reqExists($tech, 'OR', $techs, $ignoredTechs)
-	 || reqExists($tech, 'AND', $techs, $ignoredTechs)) {
+	if (reqExists($tech, 'OR', $techs)
+	 || reqExists($tech, 'AND', $techs)) {
 		return 0;
 	} else {
 		return 1;
@@ -616,13 +620,13 @@ sub printReqStyle ($$) {
 		$color = '#71cf9a99';
 	}
 
-	printf $FH "\t".'node [shape=ellipse, label="'.$label.'", color="'.$color.'", style=filled, fontcolor=black];'."\n";
+	printf $FH "\t".'node [shape=ellipse, label="'.$label.'", color="'.$color.'", fillcolor="'.$color.'",style=filled, fontcolor=black];'."\n";
 }
 
-sub printReq ($$$$$) {
-	my ($tech, $FH, $label, $techs, $ignoredTechs) = @_;
+sub printReq ($$$$) {
+	my ($tech, $FH, $label, $techs) = @_;
 
-	if (reqExists($tech, $label, $techs, $ignoredTechs)) {
+	if (reqExists($tech, $label, $techs)) {
 		printf $FH "\t\t".$tech->{'id'}.'_'.$label.";\n";
 	}
 }
@@ -630,7 +634,7 @@ sub printReq ($$$$$) {
 sub printItemStyle ($) {
 	my ($FH) = @_;
 
-	printf $FH "\t".'node [shape=box, color="#f7e30099", style=filled, fontcolor=black];'."\n";
+	printf $FH "\t".'node [shape=box, color="#f7e30099", fillcolor="#f7e30099", style=filled, fontcolor=black];'."\n";
 }
 
 sub printItem ($$) {
@@ -642,7 +646,7 @@ sub printItem ($$) {
 sub printAlienStyle ($) {
 	my ($FH) = @_;
 
-	printf $FH "\t".'node [shape=box, color="#f7e30099", style=filled, fontcolor=black];'."\n";
+	printf $FH "\t".'node [shape=box, color="#f7e30099", fillcolor="#f7e30099", style=filled, fontcolor=black];'."\n";
 }
 
 sub printAlien ($$$) {
@@ -655,11 +659,11 @@ sub printAlien ($$$) {
 	}
 }
 
-sub printTechGroup ($$$$) {
-	my ($tech, $FH, $techs, $ignoredTechs) = @_;
+sub printTechGroup ($$$) {
+	my ($tech, $FH, $techs) = @_;
 
-	my $hasOR = reqExists($tech, 'OR', $techs, $ignoredTechs);
-	my $hasAND = reqExists($tech, 'AND', $techs, $ignoredTechs);
+	my $hasOR = reqExists($tech, 'OR', $techs);
+	my $hasAND = reqExists($tech, 'AND', $techs);
 	
 	if (!$hasOR and !$hasAND) {
 		return;
@@ -679,13 +683,13 @@ sub printTechGroup ($$$$) {
 	printf $FH " }\n";
 }
 
-sub printTechLinks ($$$$) {
-	my ($techs, $tech, $FH, $ignoredTechs) = @_;
+sub printTechLinks ($$$) {
+	my ($tech, $FH, $techs) = @_;
 
 	my $req;
 	foreach $req (@{$tech->{'AND'}}) {
 		if ($req->{'type'} eq "tech") {
-			if (not skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
+			if (not skipTech($techs->{$req->{'value1'}})) {
 				printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
 			}
 		} elsif ($req->{'type'} eq "item") {
@@ -700,7 +704,7 @@ sub printTechLinks ($$$$) {
 	}
 	foreach $req (@{$tech->{'OR'}}) {
 		if ($req->{'type'} eq "tech") {
-			if (not skipTech($techs->{$req->{'value1'}}, $ignoredTechs)) {
+			if (not skipTech($techs->{$req->{'value1'}})) {
 				printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
 			}
 		} elsif ($req->{'type'} eq "item") {
@@ -749,9 +753,9 @@ sub writeDotFile(%$) {
 	printTechnologyStyle($DOT, 'researchable');
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
-		if (!skipTech($tech, $ignoredTechs)
-		 && reqMet($tech, $techs, $ignoredTechs)
-		 && !techResearched($tech, $techs, $researchedList, $ignoredTechs)) {
+		if (!skipTech($tech)
+		 && reqMet($tech, $techs)
+		 && !techResearched($tech, $techs, $researchedList)) {
 			printTech($tech, $DOT);
 		}
 	}
@@ -761,8 +765,8 @@ sub writeDotFile(%$) {
 	printTechnologyStyle($DOT, 'researched');
 	foreach my $techId (keys %{$techs}) {
 		my $tech = $techs->{$techId};
-		if (!skipTech($tech, $ignoredTechs)
-		 && techResearched($tech, $techs, $researchedList, $ignoredTechs)) {
+		if (!skipTech($tech)
+		 && techResearched($tech, $techs, $researchedList)) {
 			printTech($tech, $DOT);
 		}
 	}
@@ -774,9 +778,9 @@ sub writeDotFile(%$) {
 	printTechnologyStyle($DOT, 'open');
 	foreach $techId (keys %{$techs}) {
 		$tech = $techs->{$techId};
-		if (!skipTech($tech, $ignoredTechs)
-		 && !techResearched($tech, $techs, $researchedList, $ignoredTechs)
-		 && !reqMet($tech, $techs, $ignoredTechs)) {
+		if (!skipTech($tech)
+		 && !techResearched($tech, $techs, $researchedList)
+		 && !reqMet($tech, $techs)) {
 			printTech($tech, $DOT);
 		}
 	}
@@ -787,8 +791,8 @@ sub writeDotFile(%$) {
 	printReqStyle($DOT, "OR");
 	foreach $techId (keys %{$techs}) {
 		$tech = $techs->{$techId};
-		if (not skipTech($tech, $ignoredTechs)) {
-			printReq($tech, $DOT, "OR", $techs, $ignoredTechs);
+		if (not skipTech($tech)) {
+			printReq($tech, $DOT, "OR", $techs);
 		}
 	}
 	printf $DOT "\n";
@@ -798,8 +802,8 @@ sub writeDotFile(%$) {
 	printReqStyle($DOT, "AND");
 	foreach $techId (keys %{$techs}) {
 		$tech = $techs->{$techId};
-		if (not skipTech($tech, $ignoredTechs)) {
-			printReq($tech, $DOT, "AND", $techs, $ignoredTechs);
+		if (not skipTech($tech)) {
+			printReq($tech, $DOT, "AND", $techs);
 		}
 	}
 	printf $DOT "\n";
@@ -835,8 +839,8 @@ sub writeDotFile(%$) {
 	printf $DOT "/* Technology groups (with tech + AND + OR boxes) */\n";
 	foreach $techId (keys %{$techs}) {
 		$tech = $techs->{$techId};
-		if (not skipTech($tech, $ignoredTechs)) {
-			printTechGroup($tech, $DOT, $techs, $ignoredTechs);
+		if (not skipTech($tech)) {
+			printTechGroup($tech, $DOT, $techs);
 		}
 	}
 	printf $DOT "\n";
@@ -846,8 +850,8 @@ sub writeDotFile(%$) {
 	printf $DOT "/* Requirement edges */\n";
 	foreach $techId (keys %{$techs}) {
 		$tech = $techs->{$techId};
-		if (not skipTech($tech, $ignoredTechs)) {
-			printTechLinks($techs, $tech, $DOT, $ignoredTechs);
+		if (not skipTech($tech)) {
+			printTechLinks($tech, $DOT, $techs);
 		}
 	}
 	printf $DOT "\n";
