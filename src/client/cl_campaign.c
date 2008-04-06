@@ -2470,9 +2470,9 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 	}
 
 	/* Choose the level of the alien team:
-		use mission->initialOverallInterest and not ccs.overallInterest: the alien team should not change depending on
-		when you encounter it
-		Use the last level only if player goes over 1000 overall interest or if category mission increases the level */
+	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien team should not change depending on
+	 * when you encounter it
+	 * Use the last level only if player goes over 1000 overall interest or if category mission increases the level */
 	level += mission->initialOverallInterest / 1000 * (gd.numAlienTeams[alienTeam] - 2);
 
 	/* Check level boundary */
@@ -5246,18 +5246,20 @@ void CL_ParseAlienTeam (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		if (Q_strcmp(token, "team")) {
-			Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (alienteam %s)\n", token, name);
+			Com_Printf("CL_ParseAlienTeam: unknown token \"%s\" ignored (alienteam %s)\n", token, name);
 			continue;
 		}
 		token = COM_EParse(text, errhead, name);
 		if (!*text || *token != '{') {
-			Com_Printf("Com_ParseMapDefinition: alienteam type \"%s\" has team with no opening brace\n", name);
+			Com_Printf("CL_ParseAlienTeam: alienteam type \"%s\" has team with no opening brace\n", name);
 			break;
 		}
 		for (num = 0; *text; num++) {
 			token = COM_EParse(text, errhead, name);
 			if (!*text || *token == '}')
 				break;
+			if (num >= ALIENTEAM_MAX)
+				Sys_Error("CL_ParseAlienTeam: ALIENTEAM_MAX hit");
 			if (Com_GetTeamDefinitionByID(token))
 				gd.alienTeams[alienType][gd.numAlienTeams[alienType]][num] = Com_GetTeamDefinitionByID(token);
 		}
