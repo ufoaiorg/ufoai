@@ -787,7 +787,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	} else {
 		/* no other status than status of destroyed building has been modified
 		 * update only status of destroyed building */
-		cap = B_GetCapacityFromBuildingType(building->buildingType);
+		cap = B_GetCapacityFromBuildingType(buildingType);
 		if (cap != MAX_CAP)
 			B_UpdateBaseCapacities(cap, base);
 	}
