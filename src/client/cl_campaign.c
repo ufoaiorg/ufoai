@@ -5197,7 +5197,7 @@ void CL_ParseMission (const char *name, const char **text)
  * @return Alien Team Type
  * @sa alienTeamType_t
  */
-static int CL_GetAlienTeamTypeById (const char *type)
+static int CL_GetAlienTeamTypeByID (const char *type)
 {
 	if (!Q_strncmp(type, "default", MAX_VAR))
 		return ALIENTEAM_DEFAULT;
@@ -5230,7 +5230,7 @@ void CL_ParseAlienTeam (const char *name, const char **text)
 		return;
 	}
 
-	alienType = CL_GetAlienTeamTypeById(name);
+	alienType = CL_GetAlienTeamTypeByID(name);
 	if (alienType == ALIENTEAM_MAX)
 		return;
 
