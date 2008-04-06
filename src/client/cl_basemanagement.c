@@ -444,9 +444,7 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
 
 /**
  * @brief Actions to perform when a type of buildings may have changed its status.
- * @note This function is not only called when a building is enabled for the first time in base
- * @note but also when one of its dependencies is destroyed and then rebuilt
- * @param[in] type Type of building that has been modified from qfalse to qtrue
+ * @param[in] type Type of building that has been modified
  * @param[in] base Pointer to base with given building.
  */
 static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
@@ -705,15 +703,20 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		return qfalse;
 	}
 
+	/* Remove the building from the base map */
 	if (building->needs) {
 		/* "Child" building is always right to the "parent" building". */
 		base->map[(int)building->pos[0]][((int)building->pos[1]) + 1].building = NULL;
 	}
-
 	base->map[(int)building->pos[0]][(int)building->pos[1]].building = NULL;
 
-
 	building->buildingStatus = B_STATUS_NOT_SET;
+
+	/* Update buildingCurrent */
+	if (base->buildingCurrent > building)
+		base->buildingCurrent--;
+	else if (base->buildingCurrent == building)
+		base->buildingCurrent = NULL;
 
 	{
 		building_t* const buildings = gd.buildings[base->idx];
@@ -727,10 +730,14 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		memmove(building, building + 1, (cntBldgs - idx) * sizeof(*building));
 		/* wipe the now vacant last slot */
 		memset(&buildings[cntBldgs], 0, sizeof(buildings[cntBldgs]));
+		/* Update the link of other buildings */
 		for (i = 0; i < cntBldgs; i++)
-			if (buildings[i].idx >= idx)
+			if (buildings[i].idx >= idx) {
 				buildings[i].idx--;
-
+				base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1]].building = &buildings[i];
+				if (buildings[i].needs)
+					base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1]+1].building = &buildings[i];
+			}
 	}
 	/** @note Don't use the building pointer after this point - it's zeroed or points to a wrong entry now. */
 
@@ -2795,7 +2802,7 @@ static void B_BaseList_f (void)
 			if (row)
 				Com_Printf("\n");
 			for (col = 0; col < BASE_SIZE; col++)
-				Com_Printf("%2i (%i: %i)", (base->map[row][col].building ? base->map[row][col].building->idx : -1),
+				Com_Printf("%2i (%3i: %3i)  ", (base->map[row][col].building ? base->map[row][col].building->idx : -1),
 					base->map[row][col].posX, base->map[row][col].posY);
 		}
 		Com_Printf("\n\n");
