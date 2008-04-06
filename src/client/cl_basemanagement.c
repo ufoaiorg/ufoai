@@ -2795,7 +2795,8 @@ static void B_BaseList_f (void)
 			if (row)
 				Com_Printf("\n");
 			for (col = 0; col < BASE_SIZE; col++)
-				Com_Printf("%2i ", base->map[row][col].building ? base->map[row][col].building->idx : -1);
+				Com_Printf("%2i (%i: %i)", (base->map[row][col].building ? base->map[row][col].building->idx : -1),
+					base->map[row][col].posX, base->map[row][col].posY);
 		}
 		Com_Printf("\n\n");
 	}
