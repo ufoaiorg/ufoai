@@ -208,7 +208,7 @@ aircraft craft_inter_saracen
 	type		interceptor
 	model		"inter_saracen"
 	size		1
-	weight		1
+	weight		2
 	price		100000
 	building	building_intercept
 	image		air_interceptor
