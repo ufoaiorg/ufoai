@@ -5221,7 +5221,7 @@ void CL_ParseAlienTeam (const char *name, const char **text)
 	const char *token;
 	int alienType;
 	int num;
-Com_Printf("enter\n");
+
 	/* get it's body */
 	token = COM_Parse(text);
 
@@ -5258,11 +5258,8 @@ Com_Printf("enter\n");
 			token = COM_EParse(text, errhead, name);
 			if (!*text || *token == '}')
 				break;
-			if (Com_GetTeamDefinitionByID(token)) {
+			if (Com_GetTeamDefinitionByID(token))
 				gd.alienTeams[alienType][gd.numAlienTeams[alienType]][num] = Com_GetTeamDefinitionByID(token);
-				Com_Printf("%i.  ", gd.numAlienTeams[alienType]);
-				Com_Printf("%s\n", gd.alienTeams[alienType][gd.numAlienTeams[alienType]][num]->id);
-			}
 		}
 		gd.numAlienTeams[alienType]++;
 	} while (*text);
