@@ -19,7 +19,7 @@ rem CHECK ERRORLEVEL AND REMOVE MAP IF != 0
 )
 
 for %%i in (base\maps\*.map) DO (
-	ufo2map.exe -extra %ufo2mapparameters% base\maps\%%i
+	ufo2map.exe -extra %ufo2mapparameters% %%i
 rem CHECK ERRORLEVEL AND REMOVE MAP IF != 0
 )
 
