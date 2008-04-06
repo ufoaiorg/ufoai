@@ -856,6 +856,19 @@ sub writeDotFile(%$) {
 	}
 	printf $DOT "\n";
 
+	print $DOT '
+	subgraph clusterLegend {
+		pos="2000,2000";
+		rank="sink";
+		label="Legend";
+		legendItems [label="Captured dead/live aliens,\nitems etc..." shape=box, color="#f7e30099", fillcolor="#f7e30099", style=filled, fontcolor=black];
+		legendResearched [label="Initially\nresearched topics" shape=box, color="#4e000099", fillcolor="#4e000099", style=filled, fontcolor=black];
+		legendResearchable [label="Topics that can be researched\nfrom the beginning or are\nintroduced by the game itself" shape=box, color="#00004e99", fillcolor="#00004e99", style=filled, fontcolor=black];
+		legendLogic [label="Logic techs.\nUsed to build up complex\nrequirements or provide description\ntexts for dynamic topic." shape=box, color="red", fillcolor="white", style=filled, fontcolor=black];
+		legendOpen[label="Research Topics that\nwill be researchable once the\nrequirements are met." shape=box, color="#004e0099", fillcolor="#004e0099", style=filled, fontcolor=black];
+	}
+';
+
 	printf $DOT "\tfontsize=20;\n";
 	printf $DOT "}\n";
 	close $DOT;
