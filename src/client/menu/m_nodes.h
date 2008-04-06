@@ -122,10 +122,10 @@ typedef struct menuNode_s {
 	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
 	int type;
 	vec3_t origin, scale, angles, center;
-	vec2_t pos;			
+	vec2_t pos;
 	vec2_t size;
 	vec2_t texh; 				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
-	vec2_t texl;				/**< upper left texture coordinates */	
+	vec2_t texl;				/**< upper left texture coordinates */
 	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
 	byte state;
 	byte align;
@@ -150,6 +150,7 @@ typedef struct menuNode_s {
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
 	struct menuAction_s *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut, *wheelUp, *wheelDown;
 	qboolean repeat;			/**< repeat action when "click" is holded */
+	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
 	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
 	qboolean scrollbarLeft;		/**< true if the scrollbar should be on the left side of the text node */
 	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */

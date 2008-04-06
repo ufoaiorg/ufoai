@@ -138,6 +138,7 @@ menu map
 		pos		"868 354"
 		size	"60 30"
 		repeat	true
+		clickdelay	100
 //		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_scroll down;" }
 	}
@@ -147,6 +148,7 @@ menu map
 		pos		"868 484"
 		size	"60 30"
 		repeat	true
+		clickdelay	100
 //		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_scroll up;" }
 	}
@@ -156,6 +158,7 @@ menu map
 		pos		"818 400"
 		size	"30 60"
 		repeat	true
+		clickdelay	100
 //		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_scroll right;" }
 	}
@@ -165,6 +168,7 @@ menu map
 		pos		"950 400"
 		size	"30 60"
 		repeat	true
+		clickdelay	100
 //		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_scroll left;" }
 	}
@@ -174,6 +178,7 @@ menu map
 		pos		"872 400"
 		size	"20 60"
 		repeat	true
+		clickdelay	100
 //		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_zoom in;" }
 	}
@@ -182,8 +187,9 @@ menu map
 	{
 		pos		"898 400"
 		size	"20 60"
-//		bgcolor	"1 1 1 0.5"
 		repeat	true
+		clickdelay	100
+//		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_zoom out;" }
 	}
 

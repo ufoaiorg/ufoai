@@ -36,9 +36,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_messages.h"
 
 typedef struct {
-	menu_t *menu;				/**< mouse autorepeat - where */
-	menuAction_t *action;		/**< mouse autorepeat - what */
-	unsigned nexttime;			/**< mouse autorepeat - when */
+	menu_t *menu;				/**< where - the menu is it executed in (context) */
+	menuAction_t *action;		/**< what - the action node to be executed (the clicknode e.g.) */
+	unsigned nexttime;			/**< when (milliseconds) - calculated from cls.realtime + delay */
+	short clickDelay;			/**< milliseconds for the delay */
 } mouseRepeat_t;
 
 typedef struct menuGlobal_s {

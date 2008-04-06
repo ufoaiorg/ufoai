@@ -1213,7 +1213,9 @@ static void IN_Parse (void)
 	{
 		if (cls.realtime >= mn.mouseRepeat.nexttime) {
 			MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
-			mn.mouseRepeat.nexttime = cls.realtime + 100;	/* next "event" after 0.1 sec */
+			/* next "event" after clickdelay msec - low values (>= 100) would result in executing
+			 * repeatable click nodes more than once - only do this for menus you want this behaviour */
+			mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
 		}
 		return;
 	}
