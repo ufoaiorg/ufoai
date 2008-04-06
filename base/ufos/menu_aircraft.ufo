@@ -357,7 +357,7 @@ menu aircraft
 	{
 		pos		"480 540"
 		size	"510 200"
-		format	"20 120"
+		format	"20 220"
 		num	11
 		height	"10"
 	}
