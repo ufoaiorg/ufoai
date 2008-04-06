@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_PROJECTILESONGEOSCAPE 32
 
+#define MAX_ALIEN_TEAM_LEVEL	4
+
 /**
  * @brief This struct/variable holds the global data for a game.
  * @note This struct will be saved directly to the savegame-file.
@@ -143,6 +145,11 @@ typedef struct globalData_s
 
 	/* Alien Team Definitions. */
 	int numAliensTD;
+
+	/* Alien Team Package used during battle */
+	teamDef_t *alienTeams[ALIENTEAM_MAX][MAX_ALIEN_TEAM_LEVEL][ALIENTEAM_MAX];	/**< different alien team available
+																	 * that will be used in mission */
+	int numAlienTeams[ALIENTEAM_MAX];		/** number of alienTeams defined */
 } globalData_t;
 
 

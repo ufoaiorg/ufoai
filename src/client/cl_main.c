@@ -1747,6 +1747,8 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		CL_ParseEventMails(name, text);
 	else if (!Q_strncmp(type, "components", 10))
 		INV_ParseComponents(name, text);
+	else if (!Q_strncmp(type, "alienteam", 9))
+		CL_ParseAlienTeam(name, text);
 #if 0
 	else if (!Q_strncmp(type, "medal", 5))
 		Com_ParseMedalsAndRanks(name, &text, qfalse);

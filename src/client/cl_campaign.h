@@ -73,6 +73,15 @@ typedef enum mapType_s {
 	MAPTYPE_MAX
 } mapType_t;
 
+/** possible alien teams type */
+typedef enum alienTeamType_s {
+	ALIENTEAM_DEFAULT,
+	ALIENTEAM_XVI,
+	ALIENTEAM_HARVEST,
+
+	ALIENTEAM_MAX
+} alienTeamType_t;
+
 /** possible campaign interest categories: type of missions that aliens can undertake */
 typedef enum interestCategory_s {
 	INTERESTCATEGORY_NONE,			/**< No mission */
@@ -410,6 +419,7 @@ void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameInit(qboolean load);
 aircraft_t* AIR_NewAircraft(base_t * base, const char *name);
+void CL_ParseAlienTeam(const char *name, const char **text);
 void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);

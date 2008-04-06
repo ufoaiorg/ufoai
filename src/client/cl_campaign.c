@@ -2438,46 +2438,57 @@ static qboolean CP_UFOIsCrashed (const mission_t *mission)
  * @brief Returns the alien race for a mission (depends on the interest values)
  * @return Alien team id string (team_aliens.ufo)
  */
-static const char* CP_GetAlienByInterest (const mission_t *mission)
+static void CP_SetAlienTeamByInterest (const mission_t *mission)
 {
-	int i, max;
-	interestCategory_t maxInterest;
+	int i, level = 0;
+	int alienTeam;
 
-	max = maxInterest = 0;
-
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
-		if (ccs.interest[i] > max) {
-			maxInterest = i;
-			max = ccs.interest[i];
-		}
-	}
-
-	/* FIXME: Set the correct alien teams here
-	 * take the values from the script files */
-	switch (maxInterest) {
+	switch (mission->category) {
 	case INTERESTCATEGORY_NONE:
-		return "ortnok";
-	case INTERESTCATEGORY_RECON:
-		return "ortnok";
-	case INTERESTCATEGORY_TERROR_ATTACK:
-		return "ortnok";
-	case INTERESTCATEGORY_BASE_ATTACK:
-		return "ortnok";
-	case INTERESTCATEGORY_BUILDING:
-		return "ortnok";
-	case INTERESTCATEGORY_SUPPLY:
-		return "ortnok";
-	case INTERESTCATEGORY_XVI:
-		return "ortnok";
-	case INTERESTCATEGORY_INTERCEPT:
-		return "ortnok";
-	case INTERESTCATEGORY_HARVEST:
-		return "ortnok";
 	case INTERESTCATEGORY_MAX:
+		Sys_Error("CP_GetAlienByInterest: Try to set alien team for a mission category NONE\n");
+	case INTERESTCATEGORY_HARVEST:
+		alienTeam = ALIENTEAM_HARVEST;
+		break;
+	case INTERESTCATEGORY_XVI:
+		alienTeam = ALIENTEAM_XVI;
+		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+	case INTERESTCATEGORY_BASE_ATTACK:
+		level = 1;
+		alienTeam = ALIENTEAM_DEFAULT;
+		break;
+	case INTERESTCATEGORY_RECON:
+		alienTeam = ALIENTEAM_DEFAULT;
+		break;
+	case INTERESTCATEGORY_BUILDING:
+	case INTERESTCATEGORY_SUPPLY:
+	case INTERESTCATEGORY_INTERCEPT:
+		level = -1;
+		alienTeam = ALIENTEAM_DEFAULT;
 		break;
 	}
-	assert(0);
-	return "";
+
+	/* Choose the level of the alien team:
+		use mission->initialOverallInterest and not ccs.overallInterest: the alien team should not change depending on
+		when you encounter it
+		Use the last level only if player goes over 1000 overall interest or if category mission increases the level */
+	level += mission->initialOverallInterest / 1000 * (gd.numAlienTeams[alienTeam] - 2);
+
+	/* Check level boundary */
+	if (level < 0)
+		level = 0;
+	else if (level >= gd.numAlienTeams[alienTeam])
+		level = gd.numAlienTeams[alienTeam] - 1;
+
+	/* Copy the alien team definition to the battle parameters struct */
+	ccs.battleParameters.numAlienTeams = 0;
+	for (i = 0; i < ALIENTEAM_MAX; i++) {
+		if (!gd.alienTeams[alienTeam][level][i])
+			break;
+		ccs.battleParameters.alienTeams[i] = gd.alienTeams[alienTeam][level][i];
+		ccs.battleParameters.numAlienTeams++;
+	}
 }
 
 /**
@@ -2486,7 +2497,7 @@ static const char* CP_GetAlienByInterest (const mission_t *mission)
  */
 static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 {
-	int stage = 1 + ccs.overallInterest / (330 - difficulty->integer * 20);
+	int stage = 1 + mission->initialOverallInterest / (330 - difficulty->integer * 20);
 
 	if (stage > 4)
 		stage = 4;
@@ -2503,7 +2514,6 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
  */
 static void CP_CreateAlienTeam (mission_t *mission)
 {
-	const char *alienType;
 	int numAliens;
 
 	assert(mission->pos);
@@ -2513,13 +2523,8 @@ static void CP_CreateAlienTeam (mission_t *mission)
 		numAliens = mission->mapDef->maxAliens;
 	ccs.battleParameters.aliens = numAliens;
 
-	alienType = CP_GetAlienByInterest(mission);
+	CP_SetAlienTeamByInterest(mission);
 
-	/* @todo alien team should vary depending on interest values */
-	ccs.battleParameters.numAlienTeams = 0;
-	ccs.battleParameters.alienTeams[0] = Com_GetTeamDefinitionByID(alienType);
-	if (ccs.battleParameters.alienTeams[0])
-		ccs.battleParameters.numAlienTeams++;
 	CP_SetAlienEquipmentByInterest(mission);
 }
 
@@ -5183,6 +5188,84 @@ void CL_ParseMission (const char *name, const char **text)
 
 	} while (*text);
 #endif
+}
+
+
+/* =========================================================== */
+
+/**
+ * @return Alien Team Type
+ * @sa alienTeamType_t
+ */
+static int CL_GetAlienTeamTypePerId (const char *type)
+{
+	if (!Q_strncmp(type, "default", MAX_VAR))
+		return ALIENTEAM_DEFAULT;
+	else if (!Q_strncmp(type, "xvi", MAX_VAR))
+		return ALIENTEAM_XVI;
+	else if (!Q_strncmp(type, "harvest", MAX_VAR))
+		return ALIENTEAM_HARVEST;
+	else {
+		Com_Printf("CL_GetAlienTeamTypePerId: unknown alien type '%s'\n", type);
+		return ALIENTEAM_MAX;
+	}
+}
+
+/**
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
+ */
+void CL_ParseAlienTeam (const char *name, const char **text)
+{
+	const char *errhead = "CL_ParseAlienTeam: unexpected end of file (alienteam ";
+	const char *token;
+	int alienType;
+	int num;
+Com_Printf("enter\n");
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseAlienTeam: alien team def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	alienType = CL_GetAlienTeamTypePerId(name);
+	if (alienType == ALIENTEAM_MAX)
+		return;
+
+	if (gd.numAlienTeams[alienType] >= MAX_ALIEN_TEAM_LEVEL) {
+		Com_Printf("CL_ParseAlienTeam: maximum number of alien team type reached (%i)\n", MAX_ALIEN_TEAM_LEVEL);
+		return;
+	}
+
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		if (Q_strcmp(token, "team")) {
+			Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (alienteam %s)\n", token, name);
+			continue;
+		}
+		token = COM_EParse(text, errhead, name);
+		if (!*text || *token != '{') {
+			Com_Printf("Com_ParseMapDefinition: alienteam type \"%s\" has team with no opening brace\n", name);
+			break;
+		}
+		for (num = 0; *text; num++) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text || *token == '}')
+				break;
+			if (Com_GetTeamDefinitionByID(token)) {
+				gd.alienTeams[alienType][gd.numAlienTeams[alienType]][num] = Com_GetTeamDefinitionByID(token);
+				Com_Printf("%i.  ", gd.numAlienTeams[alienType]);
+				Com_Printf("%s\n", gd.alienTeams[alienType][gd.numAlienTeams[alienType]][num]->id);
+			}
+		}
+		gd.numAlienTeams[alienType]++;
+	} while (*text);
 }
 
 /* =========================================================== */
