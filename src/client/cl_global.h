@@ -147,7 +147,7 @@ typedef struct globalData_s
 	int numAliensTD;
 
 	/* Alien Team Package used during battle */
-	teamDef_t *alienTeams[ALIENTEAM_MAX][MAX_ALIEN_TEAM_LEVEL][MAX_TEAMDEFS];	/**< different alien team available
+	teamDef_t *alienTeams[ALIENTEAM_MAX][MAX_ALIEN_TEAM_LEVEL][MAX_TEAMS_PER_MISSION];	/**< different alien team available
 																	 * that will be used in mission */
 	int numAlienTeams[ALIENTEAM_MAX];		/** number of alienTeams defined */
 } globalData_t;

@@ -5258,8 +5258,8 @@ void CL_ParseAlienTeam (const char *name, const char **text)
 			token = COM_EParse(text, errhead, name);
 			if (!*text || *token == '}')
 				break;
-			if (num >= csi.numTeamDefs)
-				Sys_Error("CL_ParseAlienTeam: csi.numTeamDefs hit");
+			if (num >= MAX_TEAMS_PER_MISSION)
+				Sys_Error("CL_ParseAlienTeam: MAX_TEAMS_PER_MISSION hit");
 			if (Com_GetTeamDefinitionByID(token))
 				gd.alienTeams[alienType][gd.numAlienTeams[alienType]][num] = Com_GetTeamDefinitionByID(token);
 		}
