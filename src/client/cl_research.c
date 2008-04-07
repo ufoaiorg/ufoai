@@ -2176,7 +2176,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 /**
  * @brief Checks if the technology (tech-index) has been researched.
- * @param[in] tech_idx index of the technology.
+ * @param[in] techIdx index of the technology.
  * @return qboolean Returns qtrue if the technology has been researched, otherwise (or on error) qfalse;
  * @sa RS_IsResearched_ptr
  */
