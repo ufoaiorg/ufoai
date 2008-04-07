@@ -736,7 +736,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 				buildings[i].idx--;
 				base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1]].building = &buildings[i];
 				if (buildings[i].needs)
-					base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1]+1].building = &buildings[i];
+					base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1] + 1].building = &buildings[i];
 			}
 	}
 	/** @note Don't use the building pointer after this point - it's zeroed or points to a wrong entry now. */

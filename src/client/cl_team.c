@@ -1141,6 +1141,15 @@ static void CL_NextSoldier_f (void)
 	}
 }
 
+/**
+ * @brief implements the reselect command
+ */
+static void CL_ThisSoldier_f (void)
+{
+	if (CL_OnBattlescape()) {
+		CL_ActorSelectList(cl_selected->integer);
+	}
+}
 
 /**
  * @brief Updates data about teams in aircraft.
@@ -1925,6 +1934,7 @@ void CL_ResetTeams (void)
 	Cmd_AddCommand("team_comments", CL_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
 	Cmd_AddCommand("equip_select", CL_Select_f, NULL);
 	Cmd_AddCommand("soldier_select", CL_Select_f, _("Select a soldier from list"));
+	Cmd_AddCommand("soldier_reselect", CL_ThisSoldier_f, _("Reselect the current soldier"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("loadteamslot", CL_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
