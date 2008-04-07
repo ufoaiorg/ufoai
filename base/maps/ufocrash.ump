@@ -173,12 +173,12 @@ tile +craft_crash_corrupter
 10 8
 
 0      0      0     0     ab    ab    ab    ab    ab    0
-0      ab     ab     a    +a    +a    +a    +a    +a    ac
+0      0      0     a    +a    +a    +a    +a    +a    ac
 0      ab     ab     a    +a    +a    +a    +a    +a    ac
 ac     +a     +a    +a    +a    +a    +a    +a    +a    ac
 ac     +a     +a    +a    +a    +a    +a    +a    +a    ac
 0      ab     ab     a    +a    +a    +a    +a    +a    ac
-0      ab     ab     a    +a    +a    +a    +a    +a    ac
+0      0      0     a    +a    +a    +a    +a    +a    ac
 0      0      0     0     ab    ab    ab    ab    ab    0
 }
 
@@ -281,12 +281,12 @@ tile +craft_crash_corrupter
 10 8
 
 0      0      0     0     ab    ab    ab    ab    ab    0
-0      ab     ab     a    +a    +a    +a    +a    +a    ac
+0      0      0     a    +a    +a    +a    +a    +a    ac
 0      ab     ab     a    +a    +a    +a    +a    +a    ac
 ac     +a     +a    +a    +a    +a    +a    +a    +a    ac
 ac     +a     +a    +a    +a    +a    +a    +a    +a    ac
 0      ab     ab     a    +a    +a    +a    +a    +a    ac
-0      ab     ab     a    +a    +a    +a    +a    +a    ac
+0      0      0     a    +a    +a    +a    +a    +a    ac
 0      0      0     0     ab    ab    ab    ab    ab    0
 }
 
@@ -372,8 +372,8 @@ assembly craft_crash_corrupter
 {
 title "_UFO - Corrupter"
 size "12 10"
-+h01 "0 10"
-+h02 "0 10"
++h01 "0 16"
++h02 "0 14"
 +h03 "0 10"
 +craft_crash_corrupter "1 1"
 *rm_drop +drop_firebird "1 1"
