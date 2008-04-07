@@ -735,7 +735,23 @@ void RS_InitTree (qboolean load)
 			break;
 
 		} /* switch */
+
+		/* Check if we finally have a name for the tech. */
+		if (!tech->name) {
+			if (tech->type != RS_LOGIC)
+				Com_Printf("RS_InitTree: \"%s\" - no name found!\n", tech->id);
+		} else {
+			/* Fill in subject lines of tech-mails.
+			 * The tech-name is copied if nothing is defined. */
+			for (j = 0; j < TECHMAIL_MAX; j++) {
+				/* Check if no subject was defined (but it is suppsoed to be sent) */
+				if (!tech->mail[j].subject && tech->mail[j].to) {
+					tech->mail[j].subject = tech->name;
+				}
+			}
+		}
 	}
+
 
 	if (!load)
 		RS_MarkResearchable(qtrue);
