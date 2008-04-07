@@ -144,22 +144,19 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 /**
  * @brief @todo: This seems to be the function that is called for reaction fire isn't it?
  * @param[in] player The player this action belongs to (the human player or the ai)
- * @param[in] num The actor number this function is called for
+ * @param[in] shooter The actor that is trying to shoot
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @sa G_ClientShoot
  */
-static qboolean G_FireWithJudgementCall (player_t * player, int num, pos3_t at, int type, int firemode)
+static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos3_t at, int type, int firemode)
 {
+	const int minhit = shooter->reaction_minhit;
 	shot_mock_t mock;
-	edict_t *shooter;
-	int ff, i, maxff, minhit;
+	int ff, i, maxff;
 
-	shooter = g_edicts + num;
-
-	minhit = shooter->reaction_minhit;
 	if (shooter->state & STATE_INSANE)
 		maxff = 100;
 	else if (shooter->state & STATE_RAGE)
@@ -173,14 +170,14 @@ static qboolean G_FireWithJudgementCall (player_t * player, int num, pos3_t at, 
 
 	memset(&mock, 0, sizeof(mock));
 	for (i = 0; i < 100; i++)
-		G_ClientShoot(player, num, at, type, firemode, &mock, qfalse, 0);
+		G_ClientShoot(player, shooter->number, at, type, firemode, &mock, qfalse, 0);
 
 	Com_DPrintf(DEBUG_GAME, "G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d.\n",
 		mock.enemy, minhit, mock.friend, mock.civilian, mock.friend + mock.civilian, maxff, mock.self);
 
 	ff = mock.friend + (shooter->team == TEAM_ALIEN ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemy >= minhit)
-		return G_ClientShoot(player, num, at, type, firemode, NULL, qfalse, 0);
+		return G_ClientShoot(player, shooter->number, at, type, firemode, NULL, qfalse, 0);
 	else
 		return qfalse;
 }
@@ -274,7 +271,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 
 	/* take the shot */
 	Com_DPrintf(DEBUG_GAME, "G_ResolveRF: reaction shot: fd:%i\n", firemode);
-	tookShot = G_FireWithJudgementCall(player, ent->number, ent->reactionTarget->pos, fire_hand_type, firemode);
+	tookShot = G_FireWithJudgementCall(player, ent, ent->reactionTarget->pos, fire_hand_type, firemode);
 
 	/* Revert active team. */
 	level.activeTeam = team;
