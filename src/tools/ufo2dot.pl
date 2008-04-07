@@ -39,12 +39,19 @@
 #		Some formatting of the nodes ("ranksep")
 #		More functions to avoid code duplication.
 #		Skipping some unneeded topics (like skills and damages)
-#	2008-04-04 Hoehrer
+#	2008-04-05 Hoehrer
 #		Parsing "researched_list" files
 #		Display techs in different color depending on their research status on game-start.
 #		Parsing (but not linking) "provided" items as well.
 #		Skip some multiplayer-only techs.
 #		Fixed a bug where (the boxes) for dead aliens where wrongly listed/printed.
+#	2008-04-06 Hoehrer
+#		Legend
+#		Red border for "logic" techs.
+#	2008-04-07 Hoehrer
+#		Parsing tech chapters in ufopedia
+#		Handling gettext strings (read: simpyl remove the "_")
+#		
 #######################################
 # TODO
 #	* Prettify this even more.
@@ -109,6 +116,18 @@ my $technologyRequirementSettings = {
 	"alien_dead"	=> 2
 };
 
+
+#######################################
+# General functions
+#######################################
+
+# Remove leading "_" which is defined for gettext strings.
+sub convertGettextString($) {
+	my ($string) = @_;
+
+	$string =~ s/^_//;
+	return $string;
+}
 #######################################
 # Parsing (.ufo techtree syntax)
 #######################################
@@ -160,7 +179,34 @@ sub parseUfoToken ($) {
 	return $token;
 }
 
+sub parseTechChapters ($) {
+	my ($d) = @_;
+	my $text = $$d;
+	
+	my $token = parseUfoToken(\$text);
+	my $chaptersDef = { 'id' => $token};
+	
+	$token = parseUfoToken(\$text);
+	if ($token ne '{') {
+		die "parseTechChapters: Empty chapter definition found ('", $token, "').\n";
+	}
+	
 
+	$token = parseUfoToken(\$text);
+	while ($token ne '}') {		
+		my $chapter = { 'id' => $token };
+
+		$token = parseUfoToken(\$text);
+		$chapter->{'name'} = convertGettextString($token);
+		
+		$chaptersDef->{$chapter->{'id'}} = $chapter;
+		
+		$token = parseUfoToken(\$text);
+	}
+
+	$$d = $text;
+	return $chaptersDef;
+}
 
 #~ require_AND
 #~ {
@@ -241,7 +287,7 @@ sub parseTech ($) {
 	while ($token ne '}') {
 		$parsed = 0;
 		foreach my $setting (@{$technologySkipSettings}) {
-			if ($token =~ m/^$setting/) {
+			if ($token =~ m/^$setting$/) {
 				parseSkip(\$text);
 				$token = parseUfoToken(\$text);
 				print "Skipped '", $setting, "' ... next token: '", $token, "'\n";
@@ -254,11 +300,16 @@ sub parseTech ($) {
 
 		$parsed = 0;
 		foreach my $setting (@{$technologySimpleSettings}) {
-			if ($token =~ m/^$setting/) {
+			if ($token =~ m/^$setting$/) {
 				$tech->{$setting} = parseUfoToken(\$text);
 				$token = parseUfoToken(\$text);
 				print "Parsed setting '", $setting, "' ... next token: '", $token, "'\n";
 				$parsed = 1;
+				
+				# Remove gettext character from string if any.
+				if ($setting eq 'name') {
+					$tech->{$setting} = convertGettextString($tech->{$setting});
+				}
 			}
 		}
 		if ($parsed) {
@@ -365,6 +416,7 @@ sub parseUfoTree (%$) {
 	my $items = $self->{'items'};
 	my $aliens = $self->{'aliens'};
 	my $aliens_dead = $self->{'aliens_dead'};
+	my $chapters = $self->{'up_chapters'};
 
 #my $debug; # DEBUG
 	my $token = '';
@@ -375,9 +427,11 @@ sub parseUfoTree (%$) {
 		print "Parsing ... token '", $token ,"' ...\n";
 
 		if ($token eq "up_chapters") {
-			# skip for now
-			$token = parseUfoToken(\$text);
-			parseSkip(\$text);
+			my $chaptersDef;
+			$chaptersDef = parseTechChapters(\$text);
+			$chapters->{$chaptersDef->{'id'}} = $chaptersDef;
+#			print Dumper($chapters);	#DEBUG
+#			exit;				#DEBUG
 		} elsif ($token eq "tech") {
 			my $tech = parseTech(\$text);
 
@@ -407,6 +461,7 @@ sub parseUfoTree (%$) {
 	$self->{'items'} = $items;
 	$self->{'aliens'} = $aliens;
 	$self->{'aliens_dead'} = $aliens_dead;
+	$self->{'up_chapters'} = $chapters;
 
 	close (SOURCE);
 	return $self;
@@ -893,7 +948,8 @@ my $tree = {
 	'techs' => {},
 	'items' => {},
 	'aliens' => {},
-	'aliens_dead' => {}
+	'aliens_dead' => {},
+	'up_chapters' => {}
 };
 
 foreach my $filename (@{$filenames}) {
