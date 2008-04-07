@@ -2420,10 +2420,9 @@ int RS_CountInBase (const base_t *base)
 qboolean RS_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;
-	technology_t *t;
 
 	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
-		t = RS_GetTechByIDX(i);
+		const technology_t *t = RS_GetTechByIDX(i);
 		MSG_WriteString(sb, t->id);
 		MSG_WriteByte(sb, t->statusCollected);
 		MSG_WriteFloat(sb, t->time);
@@ -2456,9 +2455,6 @@ static linkedList_t *loadTechBases;
 qboolean RS_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;
-	technology_t *t;
-	const char *techString;
-	techMailType_t mailType;
 	int tempBaseIdx;
 
 	/* Clear linked list. */
@@ -2466,9 +2462,8 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 	loadTechBases = NULL;
 
 	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
-
-		techString = MSG_ReadString(sb);
-		t = RS_GetTechByID(techString);
+		const char *techString = MSG_ReadString(sb);
+		technology_t *t = RS_GetTechByID(techString);
 		if (!t) {
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
 			/* We now read dummy data to skip the unknown tech. */
@@ -2510,7 +2505,7 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 		t->researchedDateYear = MSG_ReadShort(sb);
 		t->mailSent = MSG_ReadByte(sb);
 		for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
-			mailType = MSG_ReadByte(sb);
+			const techMailType_t mailType = MSG_ReadByte(sb);
 			t->mail[mailType].read = MSG_ReadByte(sb);
 		}
 	}
