@@ -143,13 +143,12 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 
 /**
  * @brief @todo: This seems to be the function that is called for reaction fire isn't it?
- * @param[in] player @todo: The player this action belongs to (i.e. either the ai or the player)
- * @param[in] num @todo: The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
+ * @param[in] player The player this action belongs to (the human player or the ai)
+ * @param[in] num The actor number this function is called for
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
- * @sa G_ReactionFire (Not there anymore?)
  * @sa G_ClientShoot
  */
 static qboolean G_FireWithJudgementCall (player_t * player, int num, pos3_t at, int type, int firemode)
