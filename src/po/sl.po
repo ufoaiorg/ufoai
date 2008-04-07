@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-04-07 12:13+0200\n"
+"POT-Creation-Date: 2008-04-07 16:40+0200\n"
 "PO-Revision-Date: 2006-10-24 13:25+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: inzenir <simon.cedula@guest.arnes.si>\n"
@@ -4815,7 +4815,6 @@ msgid "stungren_alien_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1958
-#, fuzzy
 msgid "stungren_alien_pre_txt"
 msgstr "<TODO>"
 
@@ -5183,7 +5182,6 @@ msgid "ufo_bomber_txt"
 msgstr "Bojni nož"
 
 #: ../base/ufos/research.ufo:3346
-#, fuzzy
 msgid "ufo_bomber_pre_txt"
 msgstr "<TODO>"
 
@@ -5197,7 +5195,6 @@ msgid "ufo_corrupter_txt"
 msgstr "Plazemski atomar"
 
 #: ../base/ufos/research.ufo:3388
-#, fuzzy
 msgid "ufo_corrupter_pre_txt"
 msgstr "<TODO>"
 
@@ -5332,7 +5329,6 @@ msgid "ugv_chaingun_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3779
-#, fuzzy
 msgid "ugv_chaingun_pre_txt"
 msgstr "<TODO>"
 
@@ -5342,7 +5338,6 @@ msgid "ugv_chaingun_belt_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3798
-#, fuzzy
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "<TODO>"
 

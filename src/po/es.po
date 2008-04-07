@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-04-07 12:13+0200\n"
+"POT-Creation-Date: 2008-04-07 16:40+0200\n"
 "PO-Revision-Date: 2006-10-24 13:31+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -556,7 +556,8 @@ msgstr "Aeronave"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr "Gen.Seg. Mahouf Serra, Naciones Unidas, Ciudad de New York"
+msgstr ""
+"Gen.Seg. Mahouf Serra, Naciones Unidas, Ciudad de New York"
 
 #: ../base/ufos/events.ufo:61 ../base/ufos/events.ufo:71
 #: ../base/ufos/events.ufo:81 ../base/ufos/events.ufo:91
@@ -631,7 +632,8 @@ msgstr "Gen.Seg. Mahouf Serra, Naciones Unidas, Ciudad de New York"
 #: ../base/ufos/research.ufo:4339 ../base/ufos/research.ufo:4371
 #: ../base/ufos/research.ufo:4378
 msgid "mail_to_base_commander"
-msgstr "Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -707,7 +709,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4173 ../base/ufos/research.ufo:4247
 #: ../base/ufos/research.ufo:4255
 msgid "mail_from_paul_navarre"
-msgstr "Cmd. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cmd. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 #, fuzzy
@@ -766,7 +769,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Mando y Control, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"XO Abel S. Howard, Mando y Control, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -879,7 +883,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:205
 msgid "mail_alien_base_discovered"
-msgstr "Señor, nuestros agentes han descubierto la ubicación de una gran instalación alienígena en la Tierra en el territorio que pertenece a %s. Esta instalación representa una grave amenaza para PHALANX y de la humanidad en general, tenemos que atacarla de inmediato."
+msgstr ""
+"Señor, nuestros agentes han descubierto la ubicación de una gran instalación alienígena en la Tierra en el territorio que pertenece a %s. Esta instalación representa una grave amenaza para PHALANX y de la humanidad en general, tenemos que atacarla de inmediato."
 
 #: ../base/ufos/events.ufo:214
 msgid "Lost Radar Tracking -- %s"
@@ -902,7 +907,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:458 ../base/ufos/research.ufo:525
 #: ../base/ufos/research.ufo:533
 msgid "mail_from_col_falkland"
-msgstr "Cnl. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cnl. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -940,7 +946,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "Cmd. (Aire) Subakh al-Kuhar, Fuerza Aerea, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cmd. (Aire) Subakh al-Kuhar, Fuerza Aerea, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4495,7 +4502,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4338 ../base/ufos/research.ufo:4370
 #: ../base/ufos/research.ufo:4377
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/research.ufo:241 ../base/ufos/research.ufo:280
 msgid "alien_breathing_txt"
@@ -6199,7 +6207,6 @@ msgstr ""
 "Addenda\n"
 "\n"
 "None."
-
 # longer bursts recoil
 #: ../base/ufos/research.ufo:1427 ../base/ufos/research.ufo:1467
 msgid "plasatomizer_txt"
@@ -6219,7 +6226,6 @@ msgstr ""
 "I won't pretend to know how the aliens managed to squeeze all this stuff into a pistol, but it does look as though they've made the same tradeoffs between power and size that we have done with our handguns. It's almost certain that larger, more powerful versions of these weapons exist and will appear against us in this war. However, my team and I have figured out the control scheme of the pistols, and we've written an appropriate field manual for human use. Our soldiers will now be able to employ the plasma pistol in a combat scenario as they would any other weapon.\n"
 "\n"
 "--Cdr. Navarre"
-
 # longer bursts recoil
 #: ../base/ufos/research.ufo:1430 ../base/ufos/research.ufo:1470
 msgid "plasatomizer_pre_txt"
@@ -7277,7 +7283,6 @@ msgstr ""
 "Addenda\n"
 "\n"
 "To whatever future Commanders might be reviewing this file: Keep in mind that the machinery in the Containment Facility, like a fair portion of PHALANX equipment, has yet to undergo its true acid test against an extraterrestrial force. Upgrades or adjustments may be required for it to perform up to its design spec."
-
 # Traduci "field operatives" como "agentes de campos" Si esta mal, por favor corregir
 #: ../base/ufos/research.ufo:2750
 msgid "b_command_txt"
