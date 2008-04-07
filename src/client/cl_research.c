@@ -2288,6 +2288,8 @@ technology_t *RS_GetTechByID (const char *id)
 
 /**
  * @brief returns a pointer to the item tech (as listed in "provides")
+ * @param[in] id_provided Unique identifier of the object the tech is providing
+ * @return The tech for the given object id or NULL if not found
  */
 technology_t *RS_GetTechByProvided (const char *id_provided)
 {
