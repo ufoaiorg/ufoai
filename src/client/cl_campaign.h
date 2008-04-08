@@ -105,7 +105,7 @@ typedef enum missionStage_s {
 	STAGE_RECON_AIR,				/**< Aerial Recon */
 	STAGE_MISSION_GOTO,				/**< Going to a new position */
 	STAGE_RECON_GROUND,				/**< Ground Recon */
-	STAGE_TERROR_MISSION,			/**< Ground Recon */
+	STAGE_TERROR_MISSION,			/**< Terror mission */
 	STAGE_BUILD_BASE,				/**< Building a base */
 	STAGE_BASE_ATTACK,				/**< Base attack */
 	STAGE_SUBVERT_GOV,				/**< Subvert government */
@@ -436,6 +436,7 @@ mission_t* MAP_GetMissionByIdx(int id);
 int CP_CountMission(void);
 int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
+void CP_UpdateMissionVisibleOnGeoscape(void);
 mission_t *CP_GetMissionById(const char *missionId);
 const char *CP_MissionToTypeString(const mission_t *mission);
 base_t* CP_PositionCloseToBase(const vec2_t pos);

@@ -455,6 +455,7 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 	case B_RADAR:
 		level = B_GetMaxBuildingLevel(base, B_RADAR);
 		RADAR_Initialise(&base->radar, baseRadarRange, level);
+		CP_UpdateMissionVisibleOnGeoscape();
 		break;
 	case B_WORKSHOP:
 		PR_UpdateProductionCap(baseCurrent);
@@ -487,6 +488,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 	case B_RADAR:
 		level = B_GetMaxBuildingLevel(base, B_RADAR);
 		RADAR_Initialise(&base->radar, baseRadarRange, level);
+		CP_UpdateMissionVisibleOnGeoscape();
 		break;
 	default:
 		break;
@@ -494,8 +496,8 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 }
 
 /**
- * @brief Actions to perform when a type of buildings goes from qtrue to qfalse.
- * @param[in] type Type of building that has been modified from qtrue to qfalse
+ * @brief Actions to perform when a type of buildings goes from functional to non-functional.
+ * @param[in] type Type of building which hasBuilding value has been modified from qtrue to qfalse
  * @param[in] base Pointer to base with given building.
  * @sa B_UpdateOneBaseBuildingStatusOnEnable
  */
@@ -503,13 +505,12 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 {
 	switch (type) {
 	case B_ALIEN_CONTAINMENT:
-		/* if there an alien containment is not functional, aliens dies... */
+		/* if an alien containment is not functional, aliens dies... */
 		AC_KillAll(base);
 		break;
 	case B_RADAR:
-		if (!B_GetBuildingStatus(base, type)) {
-			RADAR_Initialise(&base->radar, 0.0f, 0.0f);
-		}
+		RADAR_Initialise(&base->radar, 0.0f, 0.0f);
+		CP_UpdateMissionVisibleOnGeoscape();
 		break;
 	default:
 		break;

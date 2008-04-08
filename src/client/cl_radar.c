@@ -161,8 +161,26 @@ void RADAR_Initialise (radar_t* radar, float range, float level)
 }
 
 /**
+ * @brief Check if the specified position is within base radar range
+ * @note aircraft radars are not checked (and this is intended)
+ * @return true if the position is inside one of the base radar range
+ */
+qboolean RADAR_CheckRadarSensored (const vec2_t pos)
+{
+	base_t *base;
+
+	for (base = gd.bases; base < gd.bases + MAX_BASES; base++) {
+		const float dist = MAP_GetDistance(pos, base->pos);		/* Distance from base to position */
+		if (dist <= base->radar.range)
+			return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Check if the specified UFO is inside the sensor range of base
- * Return true if the aircraft is inside sensor
+ * @return true if the aircraft is inside sensor
  * @sa UFO_CampaignCheckEvents
  */
 qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,

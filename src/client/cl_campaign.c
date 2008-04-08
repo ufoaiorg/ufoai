@@ -533,10 +533,51 @@ int CP_CountMissionOnGeoscape (void)
 }
 
 /**
+ * @brief Check if a mission should be visible on geoscape.
+ * @param[in] mission Pointer to mission we want to check visibility.
+ * @return qtrue if the mission should be visible on geoscape.
+ */
+static qboolean CP_CheckMissionVisibleOnGeoscape (const mission_t *mission)
+{
+	/* This function could be called before position of the mission is defined */
+	if (!mission->pos)
+		return qfalse;
+
+	switch (mission->stage) {
+	case STAGE_TERROR_MISSION:
+	case STAGE_BASE_DISCOVERED:
+	/* Crash site mission */
+	case STAGE_COME_FROM_ORBIT:
+	case STAGE_MISSION_GOTO:
+	case STAGE_INTERCEPT:
+	case STAGE_RECON_AIR:
+	case STAGE_RETURN_TO_ORBIT:
+		return qtrue;
+	case STAGE_RECON_GROUND:
+	case STAGE_SUBVERT_GOV:
+	case STAGE_SPREAD_XVI:
+	case STAGE_HARVEST:
+		if (RADAR_CheckRadarSensored(mission->pos))
+			return qtrue;
+		break;
+	case STAGE_NOT_ACTIVE:
+	case STAGE_BUILD_BASE:
+	case STAGE_BASE_ATTACK:
+	case STAGE_OVER:
+	case STAGE_SUPPLY:
+		break;
+	}
+	return qfalse;
+}
+
+/**
  * @brief Removes a mission from geoscape: make it non visible and call notify functions
  */
 static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 {
+	if (!mission->onGeoscape)
+		return;
+
 	mission->onGeoscape = qfalse;
 
 	/* Notifications */
@@ -549,8 +590,28 @@ static void CP_MissionRemoveFromGeoscape (mission_t *mission)
  */
 static inline void CP_MissionAddToGeoscape (mission_t *mission)
 {
+	if (!CP_CheckMissionVisibleOnGeoscape(mission))
+		return;
+
 	mission->onGeoscape = qtrue;
 	CL_GameTimeStop();
+}
+
+/**
+ * @brief Update all mission visible on geoscape (in base radar range).
+ * @note you can't see a mission with aircraft radar range.
+ */
+void CP_UpdateMissionVisibleOnGeoscape (void)
+{
+	const linkedList_t *list = ccs.missions;
+
+	for (; list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		if (mission->onGeoscape && !CP_CheckMissionVisibleOnGeoscape(mission))
+			CP_MissionRemoveFromGeoscape(mission);
+		else if (!mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission))
+			CP_MissionAddToGeoscape(mission);
+	}
 }
 
 /**
@@ -704,6 +765,8 @@ static qboolean CP_MissionCreate (mission_t *mission)
 {
 	int ufoType;
 
+	mission->stage = STAGE_COME_FROM_ORBIT;
+
 	CP_MissionDisableTimeLimit(mission);
 	ufoType = CP_MissionChooseUFO(mission);
 	mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
@@ -713,7 +776,6 @@ static qboolean CP_MissionCreate (mission_t *mission)
 		return qfalse;
 	}
 
-	mission->stage = STAGE_COME_FROM_ORBIT;
 	return qtrue;
 }
 
@@ -774,14 +836,14 @@ static void CP_ReconMissionIsFailure (mission_t *mission)
  */
 static void CP_ReconMissionLeave (mission_t *mission)
 {
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+
 	CP_MissionDisableTimeLimit(mission);
 	assert(mission->ufo);
 	UFO_SetRandomDest(mission->ufo);
 	CP_MissionRemoveFromGeoscape(mission);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
-
-	mission->stage = STAGE_RETURN_TO_ORBIT;
 }
 
 /**
@@ -806,8 +868,9 @@ static void CP_ReconMissionAerial (mission_t *mission)
 	const date_t minReconDelay = {1, 0};
 	const date_t reconDelay = {2, 0};		/* How long the UFO will fly on earth */
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
 	mission->stage = STAGE_RECON_AIR;
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
 }
 
 /**
@@ -820,6 +883,8 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 	const nation_t *nation;
 
 	assert(mission->ufo);
+
+	mission->stage = STAGE_MISSION_GOTO;
 
 	CP_MissionRemoveFromGeoscape(mission);
 	mission->ufo->notOnGeoscape = qfalse;
@@ -855,8 +920,6 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 	}
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
-
-	mission->stage = STAGE_MISSION_GOTO;
 }
 
 /**
@@ -870,13 +933,13 @@ static void CP_ReconMissionGround (mission_t *mission)
 
 	assert(mission->ufo);
 
+	mission->stage = STAGE_RECON_GROUND;
+
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
-
-	mission->stage = STAGE_RECON_GROUND;
 }
 
 /**
@@ -989,6 +1052,8 @@ static void CP_TerrorMissionStart (mission_t *mission)
 
 	assert(mission->ufo);
 
+	mission->stage = STAGE_TERROR_MISSION;
+
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
@@ -998,8 +1063,6 @@ static void CP_TerrorMissionStart (mission_t *mission)
 	/* Notify the player */
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Alien activity has been detected in %s."), mission->location);
 	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-
-	mission->stage = STAGE_TERROR_MISSION;
 }
 
 /**
@@ -1011,6 +1074,8 @@ static void CP_TerrorMissionGo (mission_t *mission)
 	const nation_t *nation;
 
 	assert(mission->ufo);
+
+	mission->stage = STAGE_MISSION_GOTO;
 
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
@@ -1043,8 +1108,6 @@ static void CP_TerrorMissionGo (mission_t *mission)
 	}
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
-
-	mission->stage = STAGE_MISSION_GOTO;
 }
 
 /**
@@ -1124,6 +1187,8 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 {
 	base_t *base;
 
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+
 	base = (base_t *)mission->data;
 	assert(base);
 	/* Base attack is over, alien won */
@@ -1135,8 +1200,6 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	UFO_SetRandomDest(mission->ufo);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
-
-	mission->stage = STAGE_RETURN_TO_ORBIT;
 }
 
 /**
@@ -1152,6 +1215,8 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 
 	assert(base);
 	assert(mission->ufo);
+
+	mission->stage = STAGE_BASE_ATTACK;
 
 	CP_MissionDisableTimeLimit(mission);
 
@@ -1183,8 +1248,6 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	cls.missionaircraft = &base->aircraft[0]; /* @todo FIXME */
 	assert(cls.missionaircraft);
 	assert(cls.missionaircraft->homebase == base);
-
-	mission->stage = STAGE_BASE_ATTACK;
 
 	CL_GameTimeStop();
 	MN_PushMenu("popup_base_attack");
@@ -1239,6 +1302,8 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 
 	assert(mission->ufo);
 
+	mission->stage = STAGE_MISSION_GOTO;
+
 	base = CP_BaseAttackChooseBase(mission);
 	if (!base) {
 		Com_Printf("CP_BaseAttackGoToBase: no base found\n");
@@ -1259,8 +1324,6 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 	Com_sprintf(mission->location, sizeof(mission->location), base->name);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
-
-	mission->stage = STAGE_MISSION_GOTO;
 }
 
 /**
@@ -1359,12 +1422,12 @@ static void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
  */
 static void CP_BuildBaseMissionLeave (mission_t *mission)
 {
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
-
-	mission->stage = STAGE_RETURN_TO_ORBIT;
 }
 
 /**
@@ -1378,6 +1441,8 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 	const date_t minBuildingTime = {5, 0};	/**< Time needed to start a new base construction */
 	const date_t buildingTime = {10, 0};	/**< Time needed to start a new base construction */
 
+	mission->stage = STAGE_BUILD_BASE;
+
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minBuildingTime, buildingTime));
 
 	base = AB_BuildBase(mission->pos);
@@ -1390,8 +1455,6 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 
 	/* ufo becomes invisible on geoscape */
 	CP_UFORemoveFromGeoscape(mission);
-
-	mission->stage = STAGE_BUILD_BASE;
 }
 
 /**
@@ -1401,11 +1464,11 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
  */
 static void CP_BuildBaseGoToBase (mission_t *mission)
 {
+	mission->stage = STAGE_MISSION_GOTO;
+
 	AB_SetAlienBasePosition(mission->pos);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
-
-	mission->stage = STAGE_MISSION_GOTO;
 }
 
 /**
@@ -1418,6 +1481,8 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 
 	assert(mission);
 
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+
 	/* Mission is a success: government is subverted => lower happiness */
 	nation = MAP_GetNation(mission->pos);
 	/* @todo: when the mission is created, we should select a position where nation exists,
@@ -1429,8 +1494,6 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 	UFO_SetRandomDest(mission->ufo);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
-
-	mission->stage = STAGE_RETURN_TO_ORBIT;
 }
 
 /**
@@ -1444,13 +1507,13 @@ static void CP_BuildBaseSubvertGovernment (mission_t *mission)
 
 	assert(mission->ufo);
 
+	mission->stage = STAGE_SUBVERT_GOV;
+
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
-
-	mission->stage = STAGE_SUBVERT_GOV;
 }
 
 /**
@@ -1545,12 +1608,12 @@ static void CP_SupplyMissionIsFailure (mission_t *mission)
  */
 static void CP_SupplyMissionLeave (mission_t *mission)
 {
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
-
-	mission->stage = STAGE_RETURN_TO_ORBIT;
 }
 
 /**
@@ -1562,6 +1625,8 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 {
 	const date_t minSupplyTime = {3, 0};
 	const date_t supplyTime = {10, 0};	/**< Max time needed to supply base */
+
+	mission->stage = STAGE_SUPPLY;
 
 	/* Maybe base has been destroyed since mission creation ? */
 	if (!AB_CheckSupplyMissionPossible()) {
@@ -1576,8 +1641,6 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 
 	/* ufo becomes invisible on geoscape */
 	CP_UFORemoveFromGeoscape(mission);
-
-	mission->stage = STAGE_SUPPLY;
 }
 
 /**
@@ -1589,6 +1652,8 @@ static void CP_SupplyGoToBase (mission_t *mission)
 {
 	assert(mission->ufo);
 
+	mission->stage = STAGE_MISSION_GOTO;
+
 	/* Maybe base has been destroyed since mission creation ? */
 	if (!AB_CheckSupplyMissionPossible()) {
 		Com_DPrintf(DEBUG_CLIENT, "No base in game: removing supply mission.\n");
@@ -1599,8 +1664,6 @@ static void CP_SupplyGoToBase (mission_t *mission)
 	mission->data = (void *) AB_ChooseBaseToSupply(mission->pos);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
-
-	mission->stage = STAGE_MISSION_GOTO;
 }
 
 /**
@@ -1610,6 +1673,8 @@ static void CP_SupplyGoToBase (mission_t *mission)
 static void CP_SupplyMissionCreate (mission_t *mission)
 {
 	int ufoType;
+
+	mission->stage = STAGE_COME_FROM_ORBIT;
 
 	/* Maybe base has been destroyed since mission creation ? */
 	if (!AB_CheckSupplyMissionPossible()) {
@@ -1626,8 +1691,6 @@ static void CP_SupplyMissionCreate (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-
-	mission->stage = STAGE_COME_FROM_ORBIT;
 }
 
 /**
@@ -1701,13 +1764,13 @@ static void CP_XVIMissionStart (mission_t *mission)
 
 	assert(mission->ufo);
 
+	mission->stage = STAGE_SPREAD_XVI;
+
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
-
-	mission->stage = STAGE_SPREAD_XVI;
 }
 
 /**
@@ -1776,14 +1839,14 @@ static void CP_InterceptMissionIsFailure (mission_t *mission)
  */
 static void CP_InterceptMissionLeave (mission_t *mission)
 {
+	mission->stage = STAGE_RETURN_TO_ORBIT;
+
 	CP_MissionDisableTimeLimit(mission);
 	assert(mission->ufo);
 	UFO_SetRandomDest(mission->ufo);
 	CP_MissionRemoveFromGeoscape(mission);
 	/* Display UFO on geoscape if it is visible */
 	mission->ufo->notOnGeoscape = qfalse;
-
-	mission->stage = STAGE_RETURN_TO_ORBIT;
 }
 
 /**
@@ -1795,8 +1858,8 @@ static void CP_InterceptMissionSet (mission_t *mission)
 	const date_t minReconDelay = {3, 0};
 	const date_t reconDelay = {6, 0};		/* How long the UFO should stay on earth */
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
 	mission->stage = STAGE_INTERCEPT;
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
 }
 
 /**
@@ -2346,6 +2409,8 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 {
 	mission_t *mission;
 
+	mission->stage = STAGE_BASE_DISCOVERED;
+
 	CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qtrue);
 	mission = CP_GetLastMissionAdded();
 	if (!mission) {
@@ -2367,8 +2432,6 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 	CP_MissionDisableTimeLimit(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
-
-	mission->stage = STAGE_BASE_DISCOVERED;
 }
 
 /**
