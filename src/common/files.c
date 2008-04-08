@@ -30,9 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 
-/* in memory */
-
 static cvar_t *fs_basedir;
+static int fs_openedFiles;
 
 /** @brief Links one file onto another - like a symlink */
 typedef struct filelink_s {
@@ -153,10 +152,13 @@ void FS_CreatePath (const char *path)
  */
 void FS_FCloseFile (qFILE * f)
 {
-	if (f->f)
+	if (f->f) {
 		fclose(f->f);
-	else if (f->z)
+		fs_openedFiles--;
+	} else if (f->z) {
 		unzCloseCurrentFile(f->z);
+		fs_openedFiles--;
+	}
 
 	f->f = f->z = NULL;
 }
@@ -186,6 +188,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 			file->f = fopen(netpath, "rb");
 			if (file->f) {
 				Com_DPrintf(DEBUG_ENGINE, "link file: %s\n", netpath);
+				fs_openedFiles++;
 				return FS_FileLength(file);
 			}
 			return -1;
@@ -210,6 +213,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 								Com_Error(ERR_FATAL, "Couldn't get size of %s in %s", filename, pak->filename);
 							unzGetCurrentFileInfoPosition(pak->handle.z, &file->filepos);
 							file->z = pak->handle.z;
+							fs_openedFiles++;
 							return info.uncompressed_size;
 						}
 					}
@@ -224,12 +228,14 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 			if (!file->f)
 				continue;
 
+			fs_openedFiles++;
 			/*Com_DPrintf(DEBUG_ENGINE, "FindFile: %s\n", netpath);*/
 			return FS_FileLength(file);
 		}
 	}
 
 	file->f = NULL;
+	file->z = NULL;
 	return -1;
 }
 
@@ -1505,14 +1511,11 @@ qboolean FS_FileExists (const char *filename)
  */
 void FS_Shutdown (void)
 {
-	int i;
 	searchpath_t *p, *next;
 	const cmdList_t *commands;
 
-	/* free malloc'ed space for maplist */
-	if (fs_mapsInstalledInit) {
-		for (i = 0; i <= fs_numInstalledMaps; i++)
-			Mem_Free(fs_maps[i]);
+	if (fs_openedFiles != 0) {
+		Com_Printf("There are still %i opened files\n", fs_openedFiles);
 	}
 
 	/* free everything */
@@ -1529,9 +1532,14 @@ void FS_Shutdown (void)
 
 	/* any FS_ calls will now be an error until reinitialized */
 	fs_searchpaths = NULL;
+	fs_links = NULL;
+	fs_mapsInstalledInit = qfalse;
+	fs_numInstalledMaps = -1;
 
 	for (commands = fs_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);
+
+	Mem_FreePool(com_fileSysPool);
 }
 
 /**
