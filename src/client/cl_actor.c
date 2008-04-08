@@ -3086,7 +3086,7 @@ void CL_ActorResetClientAction (struct dbuffer *msg)
 
 /**
  * @brief The client changed something in his hand-containers. This function updates the reactionfire info.
- * @param[in] msg
+ * @param[in] msg The netchannel message
  */
 void CL_InvCheckHands (struct dbuffer *msg)
 {
@@ -3134,7 +3134,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 
 /**
  * @brief Moves actor.
- * @param[in] msg
+ * @param[in] msg The netchannel message
  * @sa LET_PathMove
  * @note EV_ACTOR_MOVE
  */
@@ -3238,7 +3238,7 @@ void CL_ActorTurnMouse (void)
 
 /**
  * @brief Turns actor.
- * @param[in] msg
+ * @param[in] msg The netchannel message
  */
 void CL_ActorDoTurn (struct dbuffer *msg)
 {
@@ -3615,7 +3615,7 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 
 /**
  * @brief Throw item with actor.
- * @param[in] msg
+ * @param[in] msg The netchannel message
  */
 void CL_ActorDoThrow (struct dbuffer *msg)
 {
@@ -3649,7 +3649,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 
 /**
  * @brief Starts shooting with actor.
- * @param[in] msg
+ * @param[in] msg The netchannel message
  * @sa CL_ActorShootHidden
  * @sa CL_ActorShoot
  * @sa CL_ActorDoShoot
@@ -3722,7 +3722,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 
 /**
  * @brief Kills actor.
- * @param[in] msg
+ * @param[in] msg The netchannel message
  */
 void CL_ActorDie (struct dbuffer *msg)
 {
@@ -3996,7 +3996,7 @@ void CL_NextRound_f (void)
 
 /**
  * @brief Performs end-of-turn processing.
- * @param[in] msg
+ * @param[in] msg The netchannel message
  * @sa CL_EndRoundAnnounce
  */
 void CL_DoEndRound (struct dbuffer *msg)

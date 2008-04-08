@@ -126,7 +126,7 @@ struct dbuffer * new_dbuffer (void)
 
 /**
  * @brief Deallocate a dbuffer
- * @param buf the dbuffer to deallocate
+ * @param[in,out] buf the dbuffer to deallocate
  * Deallocates a dbuffer, and all memory it uses
  */
 void free_dbuffer (struct dbuffer *buf)
@@ -154,6 +154,8 @@ void free_dbuffer (struct dbuffer *buf)
 
 /**
  * @brief This grows the buffer to provide at least enough space for the
+ * @param[in,out] buf the target buffer
+ * @param[in] len number of bytes to add
  * given length, plus one character (see the comments in dbuffer_add()
  * for the explanation of that extra character).
  */
@@ -171,9 +173,9 @@ static void dbuffer_grow (struct dbuffer *buf, size_t len)
 
 /**
  * @brief Append data to a dbuffer
- * @param buf the target buffer
- * @param data pointer to the start of the bytes to add
- * @param len number of bytes to add
+ * @param[in,out] buf the target buffer
+ * @param[in] data pointer to the start of the bytes to add
+ * @param[in] len number of bytes to add
  * Adds the given sequence of bytes to the end of the buffer.
  */
 void dbuffer_add (struct dbuffer *buf, const char *data, size_t len)
@@ -209,9 +211,9 @@ void dbuffer_add (struct dbuffer *buf, const char *data, size_t len)
 
 /**
  * @brief Read data from a dbuffer
- * @param buf the source buffer
- * @param data pointer to where the data should be copied
- * @param len maximum number of bytes to copy
+ * @param[in] buf the source buffer
+ * @param[out] data pointer to where the data should be copied
+ * @param[in] len maximum number of bytes to copy
  * @return number of bytes copied
  *
  * @par
@@ -248,10 +250,10 @@ size_t dbuffer_get (const struct dbuffer *buf, char *data, size_t len)
 
 /**
  * @brief Read data from a dbuffer
- * @param buf the source buffer
- * @param offset the offset in the source buffer where data should be copied from
- * @param data pointer to where the data should be copied
- * @param len maximum number of bytes to copy
+ * @param[in] buf the source buffer
+ * @param[in] offset the offset in the source buffer where data should be copied from
+ * @param[out] data pointer to where the data should be copied
+ * @param[in] len maximum number of bytes to copy
  * @return number of bytes copied
  *
  * @par
@@ -300,7 +302,7 @@ size_t dbuffer_get_at (const struct dbuffer *buf, size_t offset, char *data, siz
 
 /**
  * @brief Allocate a dbuffer
- * @param old the source buffer
+ * @param[in] old the source buffer
  * @return the newly allocated buffer
  * Allocates a new dbuffer and initialises it to contain a copy of the
  * data in old
@@ -325,8 +327,8 @@ struct dbuffer *dbuffer_dup (struct dbuffer *old)
 
 /**
  * @brief Deletes data from a dbuffer
- * @param buf the target buffer
- * @param len number of bytes to delete
+ * @param[in,out] buf the target buffer
+ * @param[in] len number of bytes to delete
  * Deletes the given number of bytes from the start of the dbuffer
  */
 size_t dbuffer_remove (struct dbuffer *buf, size_t len)
@@ -363,9 +365,9 @@ size_t dbuffer_remove (struct dbuffer *buf, size_t len)
 
 /**
  * @brief Read and delete data from a dbuffer
- * @param buf the source buffer
- * @param data pointer to where the data should be copied
- * @param len maximum number of bytes to copy
+ * @param[in,out] buf the source buffer
+ * @param[out] data pointer to where the data should be copied
+ * @param[in] len maximum number of bytes to copy
  * @return number of bytes copied
  *
  * @par
@@ -413,9 +415,8 @@ size_t dbuffer_extract (struct dbuffer *buf, char *data, size_t len)
 
 /**
  * @brief Locate the first occurance of a character in a dbuffer
- * @param buf dbuffer to search
- * @param c character to search for
- *
+ * @param[in] buf dbuffer to search
+ * @param[in] c character to search for
  * @return the offset of the first occurance of the character from the
  * start of the buffer, or -1 if the character does not occur in the
  * buffer
@@ -429,7 +430,7 @@ ssize_t dbuffer_find_char (const struct dbuffer *buf, int c)
 		return -1;
 
 	e = buf->head;
-	while(e) {
+	while (e) {
 		const char *p, *start;
 		if (e == buf->head)
 			start = buf->start;
