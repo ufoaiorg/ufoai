@@ -159,6 +159,7 @@ void FS_FCloseFile (qFILE * f)
 		unzCloseCurrentFile(f->z);
 		fs_openedFiles--;
 	}
+	assert(fs_openedFiles >= 0);
 
 	f->f = f->z = NULL;
 }
@@ -332,6 +333,8 @@ void FS_FOpenFileWrite (const char *filename, qFILE *f)
 	f->f = fopen(filename, "wb");
 	if (!f->f)
 		Com_DPrintf(DEBUG_ENGINE, "Could not open %s for writing\n", filename);
+	else
+		fs_openedFiles++;
 }
 
 
@@ -1311,8 +1314,10 @@ int fs_numInstalledMaps = -1;
 static qboolean fs_mapsInstalledInit = qfalse;
 
 /**
+ * @brief File the fs_maps array with valid maps
  * @param[in] reset If true the directory is scanned everytime for new maps (useful for dedicated servers).
  * If false we only use the maps array (for clients e.g.)
+ * @todo Add ump file support
  */
 void FS_GetMaps (qboolean reset)
 {
@@ -1568,6 +1573,7 @@ void FS_RestartFilesystem (void)
 
 /**
  * @brief Copy a fully specified file from one place to another
+ * @todo: Allow copy of pk3 file content
  */
 void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 {
@@ -1577,7 +1583,6 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 
 	Com_Printf("FS_CopyFile: copy %s to %s\n", fromOSPath, toOSPath);
 
-	/* @todo: Allow copy of pk3 file content */
 	f = fopen(fromOSPath, "rb");
 	if (!f)
 		return;
@@ -1594,8 +1599,10 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	FS_CreatePath(toOSPath);
 
 	f = fopen(toOSPath, "wb");
-	if (!f)
+	if (!f) {
+		Mem_Free(buf);
 		return;
+	}
 
 	if (fwrite(buf, 1, len, f) != len)
 		Com_Error(ERR_FATAL, "Short write in FS_CopyFile()");
