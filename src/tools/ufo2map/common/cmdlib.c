@@ -28,12 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/types.h>
 #include <sys/stat.h>
 
+/** @todo merge with files.c */
 typedef struct {
 	char name[MAX_QPATH];
 	unsigned long filepos;
 	unsigned long filelen;
 } packfile_t;
 
+/** @todo merge with files.c */
 typedef struct pack_s {
 	char filename[MAX_OSPATH];
 	qFILE handle;

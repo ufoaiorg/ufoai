@@ -1,13 +1,11 @@
 /**
  * @file files.c
- * @brief All of Quake's data access is through a hierchal file system, but the contents of the file system can be transparently merged from several sources.
- * The "base directory" is the path to the directory holding the quake.exe and all game directories.
- * The sys_* files pass this to host_init in quakeparms_t->basedir.
- * This can be overridden with the "-basedir" command line parm to allow code debugging in a different directory.
+ * @brief All of UFO's data access is through a hierarchical file system, but the
+ * contents of the file system can be transparently merged from several sources.
+ * The "base directory" is the path to the directory holding the ufo.exe and the game directory (base).
  * The base directory is only used during filesystem initialization.
- * The "game directory" is the first tree on the search path and directory that all generated files (savegames, screenshots, config files) will be saved to.
- * The game directory can never be changed while quake is executing.
- * This is a precacution against having a malicious server instruct clients to write files over areas they shouldn't.
+ * The "game directory" is the first tree on the search path and directory that all generated
+ * files (savegames, screenshots, config files) will be saved to.
  */
 
 /*
@@ -36,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static cvar_t *fs_basedir;
 
+/** @brief Links one file onto another - like a symlink */
 typedef struct filelink_s {
 	struct filelink_s *next;
 	char *from;
@@ -43,14 +42,34 @@ typedef struct filelink_s {
 	char *to;
 } filelink_t;
 
-filelink_t *fs_links;
+static filelink_t *fs_links;
 
-searchpath_t *fs_searchpaths;
-searchpath_t *fs_base_searchpaths;	/* without gamedirs */
+typedef struct {
+	char name[MAX_QPATH];
+	unsigned long filepos;
+	unsigned long filelen;
+} packfile_t;
+
+typedef struct pack_s {
+	char filename[MAX_OSPATH];
+	qFILE handle;
+	int numfiles;
+	packfile_t *files;
+} pack_t;
+
+typedef struct searchpath_s {
+	char filename[MAX_OSPATH];
+	pack_t *pack;				/* only one of filename / pack will be used */
+	struct searchpath_s *next;
+} searchpath_t;
+
+static searchpath_t *fs_searchpaths;
+static searchpath_t *fs_base_searchpaths;	/* without gamedirs */
 
 /**
  * @brief Called to find where to write a file (savegames, etc)
  * @note We will use the searchpath that isn't a pack and has highest priority
+ * @sa FS_FOpenFileWrite
  */
 const char *FS_Gamedir (void)
 {
@@ -130,6 +149,7 @@ void FS_CreatePath (const char *path)
  * @brief For some reason, other dll's can't just call fclose()
  * on files returned by FS_FOpenFile...
  * @sa FS_FOpenFileWrite
+ * @sa FS_FOpenFile
  */
 void FS_FCloseFile (qFILE * f)
 {
@@ -214,13 +234,20 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 }
 
 #define PK3_SEEK_BUFFER_SIZE 65536
+/**
+ * @brief Sets the file position of the given file
+ * @param[in] f The opened file handle
+ * @param[in] origin fsOrigin_t
+ * @param[in] offset The offset you want to do the
+ * @sa FS_Read
+ */
 int FS_Seek (qFILE * f, long offset, int origin)
 {
 	int _origin;
 
 	if (f->z) {
-		byte	buffer[PK3_SEEK_BUFFER_SIZE];
-		int		remainder = offset;
+		byte buffer[PK3_SEEK_BUFFER_SIZE];
+		int remainder = offset;
 
 		if (offset < 0 || origin == FS_SEEK_END) {
 			Com_Error(ERR_FATAL, "Negative offsets and FS_SEEK_END not implemented "
@@ -240,13 +267,11 @@ int FS_Seek (qFILE * f, long offset, int origin)
 			}
 			FS_Read(buffer, remainder, f);
 			return offset;
-			break;
 
 		default:
 			Com_Error(ERR_FATAL, "Bad origin in FS_Seek");
-			return -1;
-			break;
 		}
+		return -1;
 	} else if (f->f) {
 		switch (origin) {
 		case FS_SEEK_CUR:
@@ -259,9 +284,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 			_origin = SEEK_SET;
 			break;
 		default:
-			_origin = SEEK_CUR;
 			Sys_Error("Bad origin in FS_Seek\n");
-			break;
 		}
 		return fseek(f->f, offset, _origin);
 	} else
@@ -287,7 +310,15 @@ int FS_FOpenFile (const char *filename, qFILE * file)
 	return result;
 }
 
-void FS_FOpenFileWrite (const char *filename, qFILE * f)
+/**
+ * @brief Opens a given file for writing
+ * @note This should only be called for files in FS_Gamedir()
+ * @param[in] filename The filename to open for writing
+ * @param[out] f The file handle of the opened file
+ * @note No support for zip file writing (intended)
+ * @sa FS_Gamedir()
+ */
+void FS_FOpenFileWrite (const char *filename, qFILE *f)
 {
 	if (f->z)
 		return;
@@ -441,6 +472,8 @@ void FS_FreeFile (void *buffer)
 /**
  * @brief Takes an explicit (not game tree related) path to a pak file.
  * Adding the files at the beginning of the list so they override previous pack files.
+ * @param[in] packfile The pack filename
+ * @note pk3 and zip are valid extensions
  */
 static pack_t *FS_LoadPackFile (const char *packfile)
 {
@@ -613,6 +646,9 @@ static void FS_AddHomeAsGameDirectory (const char *dir)
 	}
 }
 
+/**
+ * @brief Adds the execution of the autoexec.cfg to the command buffer
+ */
 void FS_ExecAutoexec (void)
 {
 	char name[MAX_QPATH];
@@ -648,7 +684,7 @@ static void FS_Link_f (void)
 	filelink_t *l, **prev;
 
 	if (Cmd_Argc() != 3) {
-		Com_Printf("usage: link <from> <to>\n");
+		Com_Printf("Usage: %s <from> <to>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -738,6 +774,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 
 /**
  * @brief Show the filesystem contents - also supports wildcarding
+ * @sa FS_NextPath
  */
 static void FS_Dir_f (void)
 {
@@ -776,29 +813,6 @@ static void FS_Dir_f (void)
 }
 
 /**
- * @brief Prints search paths and file links
- */
-static void FS_Path_f (void)
-{
-	searchpath_t *s;
-	filelink_t *l;
-
-	Com_Printf("Current search path:\n");
-	for (s = fs_searchpaths; s; s = s->next) {
-		if (s == fs_base_searchpaths)
-			Com_Printf("----------\n");
-		if (s->pack)
-			Com_Printf("%s (%i files)\n", s->pack->filename, s->pack->numfiles);
-		else
-			Com_Printf("%s\n", s->filename);
-	}
-
-	Com_Printf("\nLinks:\n");
-	for (l = fs_links; l; l = l->next)
-		Com_Printf("%s : %s\n", l->from, l->to);
-}
-
-/**
  * @brief Allows enumerating all of the directories in the search path
  * @note ignore pk3 here
  */
@@ -828,6 +842,7 @@ const char *FS_NextPath (const char *prevpath)
 static void FS_Info_f (void)
 {
 	searchpath_t *search;
+	filelink_t *l;
 
 	Com_Printf("Filesystem information\n");
 	Com_Printf("...write dir: '%s'\n", FS_Gamedir());
@@ -836,8 +851,11 @@ static void FS_Info_f (void)
 		if (search->pack == NULL)
 			Com_Printf("...path: '%s'\n", search->filename);
 		else
-			Com_Printf("...pakfile: '%s'\n", search->pack->filename);
+			Com_Printf("...pakfile: '%s' (%i files)\n", search->pack->filename, search->pack->numfiles);
 	}
+
+	for (l = fs_links; l; l = l->next)
+		Com_Printf("...link: %s : %s\n", l->from, l->to);
 }
 
 /**
@@ -847,7 +865,6 @@ static void FS_Info_f (void)
  */
 static const cmdList_t fs_commands[] = {
 	{"fs_restart", FS_RestartFilesystem, "Reloads the file subsystem"},
-	{"path", FS_Path_f, "Print search paths and file links"},
 	{"link", FS_Link_f, "Create file links"},
 	{"dir", FS_Dir_f, "Show the filesystem contents - also supports wildcarding"},
 	{"fs_info", FS_Info_f, "Show information about the virtuell filesystem"},
@@ -962,17 +979,15 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
  * @brief Build a filelist
  * @param[in] fileList e.g. ufos\*.ufo to get all ufo files in the gamedir/ufos dir
  */
-void FS_BuildFileList (const char *fileList)
+int FS_BuildFileList (const char *fileList)
 {
 	listBlock_t *block, *tblock;
 	searchpath_t *search;
 	char files[MAX_QPATH];
 	char findname[1024];
-	char **filenames;
-	char *fl, *ext;
-	int nfiles;
-	int i, l;
-	pack_t *pak;
+	char *fl;
+	int i;
+	int numfiles = 0;
 
 	/* bring it into normal form */
 	Q_strncpyz(files, fileList, sizeof(files));
@@ -1011,28 +1026,31 @@ void FS_BuildFileList (const char *fileList)
 
 	/* search for the files */
 	fl = block->files;
-	nfiles = 0;
 
 	/* search through the path, one element at a time */
 	for (search = fs_searchpaths; search; search = search->next) {
 		/* is the element a pak file? */
 		if (search->pack) {
-			ext = strrchr(files, '.');
+			const char *ext = strrchr(files, '.');
+			const pack_t *pak = search->pack;
+			const size_t l = strlen(search->filename);
 			/* *.* is not implemented here - only e.g. *.ufo */
 			if (!ext)
 				break;
-			l = strlen(search->filename);
 			Com_sprintf(findname, sizeof(findname), search->filename);
 			FS_NormPath(findname);
 
 			/* look through all the pak file elements */
-			pak = search->pack;
 			for (i = 0; i < pak->numfiles; i++)
 				/* found it! */
 				if (!Q_strncmp(pak->files[i].name, findname, l) && strstr(pak->files[i].name, ext)) {
 					_AddToListBlock(&fl, block, tblock, pak->files[i].name);
+					numfiles++;
 				}
 		} else {
+			int nfiles = 0;
+			char **filenames;
+
 			Com_sprintf(findname, sizeof(findname), "%s/%s", search->filename, files);
 			FS_NormPath(findname);
 
@@ -1041,6 +1059,7 @@ void FS_BuildFileList (const char *fileList)
 				for (i = 0; i < nfiles - 1; i++) {
 					_AddToListBlock(&fl, block, tblock, filenames[i]);
 					Mem_Free(filenames[i]);
+					numfiles++;
 				}
 				Mem_Free(filenames);
 			}
@@ -1049,6 +1068,7 @@ void FS_BuildFileList (const char *fileList)
 
 	/* terminalize the list */
 	*fl = 0;
+	return numfiles;
 }
 
 const char* FS_NextFileFromFileList (const char *files)
