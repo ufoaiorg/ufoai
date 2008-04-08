@@ -50,7 +50,10 @@
 #		Red border for "logic" techs.
 #	2008-04-07 Hoehrer
 #		Parsing tech chapters in ufopedia
-#		Handling gettext strings (read: simpyl remove the "_")
+#		Handling gettext strings (read: simply remove the "_")
+#	2008-04-08 Hoehrer
+#		Add note to techs that have researchtime==0 (e.g most ammo)
+#		Fixed a bug where no real names where used for the techs.
 #		
 #######################################
 # TODO
@@ -621,10 +624,17 @@ sub printTech ($$) {
 	} else {
 		$name = $tech->{'id'};
 	}
+	
+	# Add note for automatically researched techs such as most ammo.
+	if (exists($tech->{'time'})
+	&& $tech->{'time'} == 0) {
+		$name .= '\n(Auto-researched)';
+	}
+
 	if ($tech->{'type'} eq 'logic') {
-		printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'", color="red"];'."\n";
+		printf $FH "\t\t".$tech->{'id'}.' [label="'.$name.'", color="red"];'."\n";
 	} else {
-		printf $FH "\t\t".$tech->{'id'}.' [label="'.$tech->{'id'}.'"];'."\n";
+		printf $FH "\t\t".$tech->{'id'}.' [label="'.$name.'"];'."\n";
 	}
 }
 
