@@ -337,7 +337,7 @@ aircraft craft_ufo_harvester
 	size		4
 	weight		2
 	building	building_big_ufo_hangar
-	price		3000000
+	price		200000
 	image		air_ufo
 	slot {
 		type		weapon
@@ -381,7 +381,7 @@ aircraft craft_ufo_carrier
 	size		4
 	weight		1
 	building	building_small_ufo_hangar
-	price		3000000
+	price		1000000
 	image		air_ufo
 	nogeoscape	true
 }
@@ -405,7 +405,7 @@ aircraft craft_ufo_supply
 	size		4
 	weight		1
 	building	building_big_ufo_hangar
-	price		3000000
+	price		250000
 	image		air_ufo
 }
 
@@ -428,7 +428,7 @@ aircraft craft_ufo_bomber
 	size		4
 	weight		1
 	building	building_big_ufo_hangar
-	price		3000000
+	price		250000
 	image		air_ufo
 	slot {
 		type		weapon
@@ -458,7 +458,7 @@ aircraft craft_ufo_corrupter
 	size		4
 	weight		1
 	building	building_big_ufo_hangar
-	price		3000000
+	price		230000
 	image		air_ufo
 	slot {
 		type		weapon
@@ -487,7 +487,7 @@ aircraft craft_ufo_scout
 	size		4
 	weight		1
 	building	building_small_ufo_hangar
-	price		3000000
+	price		150000
 	image		air_ufo
 }
 
@@ -510,7 +510,7 @@ aircraft craft_ufo_fighter
 	weight		1
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
-	price		4000000
+	price		180000
 	image		air_ufo
 	slot {
 		type		weapon

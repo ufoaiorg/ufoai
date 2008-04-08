@@ -6723,8 +6723,11 @@ static void CP_UFORecoveredSell_f (void)
 		/* @todo only nations with proper alien infiltration values */
 		nations++;
 		/* Calculate price offered by nation only if this is first popup opening. */
-		if (Cvar_VariableInteger("mission_recoverynation") == -1)
-			UFOprices[i] = ufocraft->price + (int)(frand() * 100000);
+		if (Cvar_VariableInteger("mission_recoverynation") == -1) {
+			UFOprices[i] = (int) (ufocraft->price * (.85f + frand() * .3f));
+			/* Nation will pay less if corrupted */
+			UFOprices[i] = (int) (UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
+		}
 		Q_strcat(recoveryNationSelectPopup, _(nation->name), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, va("%i", UFOprices[i]), sizeof(recoveryNationSelectPopup));
