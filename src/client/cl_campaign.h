@@ -296,7 +296,7 @@ typedef struct nationInfo_s {
 	int xviInfection;	/**< Increase by one each time a XVI spread is done in this nation. */
 	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0.00 - 1.00)
 				 * @todo Check if this is still needed after XVI factors are in.
-				 * Pro: People can be alien-frienldy without being affected after all.
+				 * Pro: People can be alien-friendly without being affected after all.
 				 * Con: ?
 				 */
 } nationInfo_t;
@@ -321,11 +321,6 @@ typedef struct nation_s {
 	int maxFunding;		/**< How many (monthly) credits. */
 	int maxSoldiers;	/**< How many (monthly) soldiers. */
 	int maxScientists;	/**< How many (monthly) scientists. */
-	int maxWorkers;		/**< How many (monthly) workers. */
-	int maxMedics;		/**< How many (monthly) medics. */
-	int maxUgvs;		/**< How many (monthly) ugvs (robots).
-				 * @todo this needs to be removed here and added into the buy&produce menues.
-				 */
 } nation_t;
 
 #define MAX_NATIONS 8

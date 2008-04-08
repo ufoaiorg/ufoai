@@ -1693,7 +1693,7 @@ static void UP_IncreaseWeapon_f (void)
 	up_researchedlink_temp = up_researchedlink;
 	up_researchedlink_temp++;
 	/* We only try to change the value of up_researchedlink if this is possible */
-	if (up_researchedlink < od->numWeapons-1) {
+	if (up_researchedlink < od->numWeapons - 1) {
 		/* this is an ammo */
 		while (!RS_IsResearched_ptr(od->weapons[up_researchedlink_temp]->tech)) {
 			up_researchedlink_temp++;
@@ -1705,7 +1705,7 @@ static void UP_IncreaseWeapon_f (void)
 			up_researchedlink = up_researchedlink_temp;
 			UP_ItemDescription(od);
 		}
-	} else if (up_researchedlink < od->numAmmos-1) {
+	} else if (up_researchedlink < od->numAmmos - 1) {
 		/* this is a weapon */
 		while (!RS_IsResearched_ptr(od->ammos[up_researchedlink_temp]->tech)) {
 			up_researchedlink_temp++;
