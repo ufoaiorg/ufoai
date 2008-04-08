@@ -342,8 +342,8 @@ typedef struct ccs_s {
 	int interest[INTERESTCATEGORY_MAX];			/**< interest of aliens: determine which actions aliens will undertake */
 	int lastMissionSpawnedDelay;				/**< How many days since last mission has been spawned */
 
-	vec2_t mapPos;
-	vec2_t mapSize;
+	vec2_t mapPos;		/**< geoscape map position (from the menu node) */
+	vec2_t mapSize;		/**< geoscape map size (from the menu node) */
 
 	qboolean singleplayer;	/**< singleplayer or multiplayer */
 
@@ -359,7 +359,7 @@ typedef struct ccs_s {
 	vec2_t center;
 	float zoom;
 
-	/* governs zero build time for first base if empty base option chosen */
+	/** governs zero build time for first base if empty base option chosen */
 	int instant_build;
 } ccs_t;
 
