@@ -86,7 +86,6 @@ const char *FS_Gamedir (void)
  * @brief Convert operating systems path seperators to ufo virtuell filesystem
  * seperators (/)
  * @sa Sys_NormPath
- * @sa Sys_OSPath
  */
 void FS_NormPath (char *path)
 {
@@ -94,22 +93,14 @@ void FS_NormPath (char *path)
 }
 
 /**
- * @param[in] qpath may have either forward or backwards slashes
+ * @brief Returns the size of a given file
+ * @todo Implement for pk3
  */
-static char *FS_BuildOSPath (const char *base, const char *qpath, char *buffer, size_t size)
-{
-	Com_sprintf(buffer, size, "%s/%s", base, qpath);
-	Sys_OSPath(buffer);
-
-	return buffer;
-}
-
 int FS_FileLength (qFILE * f)
 {
 	int pos;
 	int end;
 
-	/* FIXME: Implement for zips */
 	if (!f->f)
 		return 0;
 
@@ -1624,10 +1615,12 @@ void FS_Remove (const char *osPath)
  * @brief Renames a file
  * @sa FS_Remove
  * @sa FS_CopyFile
+ * @param[in] from The source filename
+ * @param[in] to The filename we want after the rename
+ * @param[in] relative If relative is true we have to add the FS_Gamedir path for writing
  */
 qboolean FS_Rename (const char *from, const char *to, qboolean relative)
 {
-	const char *from_ospath, *to_ospath;
 	char from_buf[MAX_OSPATH];
 	char to_buf[MAX_OSPATH];
 
@@ -1635,14 +1628,13 @@ qboolean FS_Rename (const char *from, const char *to, qboolean relative)
 		Com_Error(ERR_FATAL, "Filesystem call made without initialization");
 
 	if (relative) {
-		from_ospath = FS_BuildOSPath(FS_Gamedir(), from, from_buf, sizeof(from_buf));
-		to_ospath = FS_BuildOSPath(FS_Gamedir(), to, to_buf, sizeof(to_buf));
-	} else {
-		from_ospath = from;
-		to_ospath = to;
+		Com_sprintf(from_buf, sizeof(from_buf), "%s/%s", FS_Gamedir(), from);
+		Com_sprintf(to_buf, sizeof(to_buf), "%s/%s", FS_Gamedir(), to);
+		from = from_buf;
+		to = to_buf;
 	}
 
-	if (rename(from_ospath, to_ospath))
+	if (rename(from, to))
 		return qfalse;
 	return qtrue;
 }

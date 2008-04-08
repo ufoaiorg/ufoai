@@ -217,10 +217,6 @@ void Sys_FindClose (void)
 	fdir = NULL;
 }
 
-void Sys_OSPath (char* path)
-{
-}
-
 void Sys_UnloadGame (void)
 {
 	if (game_library)
