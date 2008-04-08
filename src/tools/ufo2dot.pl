@@ -734,18 +734,23 @@ sub printTechGroup ($$$) {
 		return;
 	}
 
+	
+if (0) {	# subgraphs just do not help anybody here
 	# subgraph techID_C { 
-	printf $FH "\t".'subgraph '.$tech->{'id'}.'_C { ';
+	printf $FH "\t".'subgraph cluster_'.$tech->{'id'}.' { ';
+}
 	if ($hasOR) {
 		# techID_OR -> techID;
-		printf $FH $tech->{'id'}.'_OR -> '.$tech->{'id'}.';';
+		printf $FH "\t".$tech->{'id'}.'_OR -> '.$tech->{'id'}.";\n";
 	}
 
 	if ($hasAND) {
 		# techID_AND -> techID;
-		printf $FH $tech->{'id'}.'_AND -> '.$tech->{'id'}.';';
+		printf $FH "\t".$tech->{'id'}.'_AND -> '.$tech->{'id'}.";\n";
 	}
+if (0) {
 	printf $FH " }\n";
+}
 }
 
 sub printTechLinks ($$$) {
