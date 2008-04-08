@@ -388,7 +388,7 @@ building building_hospital
 	type		hospital
 	starting_employees	10
 	onclick		"building_open"
-	capacity	30
+	capacity	10
 }
 
 building building_amstorage

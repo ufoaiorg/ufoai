@@ -67,7 +67,7 @@ extern linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
 /* How many employees in current list (changes on every category change, too) */
 extern int employeesInCurrentList;
 
-/* Currentlky selected employee. */
+/* Currently selected employee. */
 extern employee_t *selectedEmployee;
 
 void E_ResetEmployees(void);

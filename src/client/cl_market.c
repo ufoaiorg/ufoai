@@ -473,6 +473,7 @@ static void BS_BuyType (void)
 		Cvar_SetValue("mn_sfactor", 1);
 		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].cur,
 			baseCurrent->capacities[CAP_ITEMS].max);
+		Cvar_Set("mn_bs_storage", tmpbuf);
 	}
 
 	/* select first item */
@@ -589,17 +590,22 @@ static void BS_BuyItem_f (void)
 
 		UP_UGVDescription(ugv);
 
-		/** @todo Storage/capacity checks for UGVs. */
 		if ((ccs.credits >= ugv->price) && (E_CountUnhiredRobotsByType(ugv) > 0)) {
 			/* Check if we have a weapon for this ugv in the market and there is enough storage-room for it. */
 			ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 			if (!ugvWeapon)
-				Sys_Error("BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
+				Sys_Error("BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
-			ugvWeaponBuyable = qfalse;
-			if (ccs.eMarket.num[ugvWeapon->idx]
-			 && baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= ugvWeapon->size)
-					ugvWeaponBuyable = qtrue;
+			ugvWeaponBuyable = qtrue;
+			if (!ccs.eMarket.num[ugvWeapon->idx])
+				ugvWeaponBuyable = qfalse;
+
+			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur <
+				UGV_SIZE + ugvWeapon->size) {
+				MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+				ugvWeaponBuyable = qfalse;
+			}
+
 
 			if (ugvWeaponBuyable && E_HireRobot(baseCurrent, ugv)) {
 				/* Move the item into the storage. */
@@ -659,9 +665,7 @@ static void BS_SellItem_f (void)
 
 		UP_UGVDescription(ugv);
 
-		/** @todo Storage/capacity checks for UGVs. */
-
-		/* Check if we have a weapon for this ugv in the market and there is enough storage-room for it. */
+		/* Check if we have a weapon for this ugv in the market to sell it. */
 		ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 		if (!ugvWeapon)
 			Sys_Error("BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);

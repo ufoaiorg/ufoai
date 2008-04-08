@@ -45,6 +45,9 @@ typedef struct components_s {
 	int item_amount2[MAX_COMP];		/**< How many items of this type are in this assembly when it crashed (max-value?). */
 } components_t;
 
+/* Size of UGV in storage */
+extern const int UGV_SIZE;
+
 void INV_ParseComponents(const char *name, const char **text);
 
 void INV_CollectingItems(int won);

@@ -3358,6 +3358,20 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		Sys_Error("Unknown capacity limit for this base: %i \n", cap);
 		break;
 	}
+
+	switch (cap) {
+	case CAP_HOSPSPACE:		/** Maximum capacity of hospital is limited by medic number */
+		{
+			const int num = E_CountHired(base, EMPL_MEDIC);
+			const int SOLDIER_PER_MEDIC = 2;	/**< Maximum number of soldier a medic can heal */
+
+			if (base->capacities[cap].max > num * SOLDIER_PER_MEDIC)
+				base->capacities[cap].max = num * SOLDIER_PER_MEDIC;
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 /**

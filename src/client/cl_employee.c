@@ -565,20 +565,22 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		/* Now uses quarter space. */
 		employee->hired = qtrue;
 		employee->baseHired = base;
-		/* Update capacity. */
-		base->capacities[CAP_EMPLOYEES].cur++;
+		/* Update other capacities */
 		switch (employee->type) {
 		case EMPL_WORKER:
-			if (base->capacities[CAP_WORKSPACE].cur < base->capacities[CAP_WORKSPACE].max)
-				base->capacities[CAP_WORKSPACE].cur++;
+			base->capacities[CAP_EMPLOYEES].cur++;
+			PR_UpdateProductionCap(base);
 			break;
-		/* @todo special cases for robots/ugvs? */
-		case EMPL_ROBOT:
-			break;
-		/* don't handle these types here */
 		case EMPL_MEDIC:
+			base->capacities[CAP_EMPLOYEES].cur++;
+			B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
+			break;
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
+			base->capacities[CAP_EMPLOYEES].cur++;
+			break;
+		case EMPL_ROBOT:
+			base->capacities[CAP_ITEMS].cur += UGV_SIZE;
 			break;
 		/* shut up compiler */
 		case MAX_EMPL:
@@ -654,13 +656,32 @@ qboolean E_UnhireEmployee (employee_t* employee)
 {
 	if (employee && employee->hired && !employee->transfer) {
 		base_t *base = employee->baseHired;
-		/* Update capacity of Living Quarters. */
-		base->capacities[CAP_EMPLOYEES].cur--;
 
 		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
 		employee->baseHired = NULL;
+
+		switch (employee->type) {
+		case EMPL_WORKER:
+			base->capacities[CAP_EMPLOYEES].cur--;
+			PR_UpdateProductionCap(base);
+			break;
+		case EMPL_MEDIC:
+			base->capacities[CAP_EMPLOYEES].cur--;
+			B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
+			break;
+		case EMPL_SCIENTIST:
+		case EMPL_SOLDIER:
+			base->capacities[CAP_EMPLOYEES].cur--;
+			break;
+		case EMPL_ROBOT:
+			base->capacities[CAP_ITEMS].cur -= UGV_SIZE;
+			break;
+		/* shut up compiler */
+		case MAX_EMPL:
+			break;
+		}
 
 		return qtrue;
 	} else

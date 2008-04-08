@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
 static int eTempCredits;		/**< Used to count temporary credits for item selling. */
 
+const int UGV_SIZE = 300;	/**< Size of a UGV in hangar capacity */
+
 /**
  * @brief Count and collect ammo from gun magazine.
  * @param[in] magazine Pointer to invList_t being magazine.
@@ -536,6 +538,9 @@ void INV_UpdateStorageCap (base_t *base)
 
 		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * csi.ods[i].size;
 	}
+
+	/* UGV takes room in storage capacity */
+	base->capacities[CAP_ITEMS].cur += UGV_SIZE * E_CountHired(base, EMPL_ROBOT);
 }
 
 /**
