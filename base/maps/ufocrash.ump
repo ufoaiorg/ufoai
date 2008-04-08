@@ -162,106 +162,6 @@ ac     +a     +a    +a    a     ab    0
 // ---------------------------------
 // carrier
 // ---------------------------------
-// a tile definition for this ufo type is not needed
-// it will never land on earth - there should be a crashed version though
-
-// ---------------------------------
-// corrupter
-// ---------------------------------
-tile +craft_crash_corrupter
-{
-10 8
-
-0      0      0     0     ab    ab    ab    ab    ab    0
-0      0      0     a    +a    +a    +a    +a    +a    ac
-0      ab     ab     a    +a    +a    +a    +a    +a    ac
-ac     +a     +a    +a    +a    +a    +a    +a    +a    ac
-ac     +a     +a    +a    +a    +a    +a    +a    +a    ac
-0      ab     ab     a    +a    +a    +a    +a    +a    ac
-0      0      0     a    +a    +a    +a    +a    +a    ac
-0      0      0     0     ab    ab    ab    ab    ab    0
-}
-
-// ---------------------------------
-// fighter
-// ---------------------------------
-tile +craft_crash_fighter
-{
-7 5
-
-0      0      0     ab    ab    ab    0
-0      ab     a     +a    +a    +a    ac
-ac     +a     +a    +a    +a    +a    ac
-ac     +a     +a    +a    a     ab    0
-0      ab     ab    ab    0     0     0
-}
-
-// ---------------------------------
-// harvester
-// ---------------------------------
-tile +craft_crash_harvester
-{
-8 6
-
-0      0      ab     ab     ab     ab     ab     0
-0      a      +a     +a     +a     +a     +a     z
-ac     +a     +a     +a     +a     +a     +a     z
-0      ab     ab     a      +a     +a     +a     z
-0      0      0      ac     +a     +a     +a     z
-0      0      0      0      ab     ab     ab     0
-}
-
-// ---------------------------------
-// scout
-// ---------------------------------
-tile +craft_crash_scout
-{
-4 5
-
-0      ab     ab     0
-ac     +a     +a     ac
-ac     +a     +a     ac
-ac     +a     +a     ac
-0      ab     ab     0
-}
-
-// ---------------------------------
-// supply
-// ---------------------------------
-tile +craft_crash_supply
-{
-6 7
-
-0      ab     ab     0      0     0
-ac     +a     +a     a      0     0
-ac     +a     +a     +a     ac    0
-ac     +a     +a     +a     a     0
-ac     +a     +a     +a     +a    ac
-ac     +a     +a     +a     a     0
-0      ab     ab     ab     0     0
-}
-
-// *********************************
-// Crashed UFOs
-// *********************************
-
-// ---------------------------------
-// bomber
-// ---------------------------------
-tile +craft_crash_bomber
-{
-7 5
-
-0      0      0     ab    ab    ab    0
-0      ab     a     +a    +a    +a    ac
-ac     +a     +a    +a    +a    +a    ac
-ac     +a     +a    +a    a     ab    0
-0      ab     ab    ab    0     0     0
-}
-
-// ---------------------------------
-// carrier
-// ---------------------------------
 tile +craft_crash_carrier
 {
 7 5
@@ -348,6 +248,7 @@ ac     +a     +a     +a     +a    ac
 ac     +a     +a     +a     a     0
 0      ab     ab     ab     0     0
 }
+
 
 // *********************************
 // Assemblies
