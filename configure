@@ -697,7 +697,6 @@ CLIENT_CFLAGS
 SERVER_LIBS
 GAME_LIBS
 TOOLS_LIBS
-MASTER_LIBS
 LIBOBJS
 LTLIBOBJS'
 ac_subst_files=''
@@ -9718,6 +9717,12 @@ fi
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
+# Wipe the LIBS string
+#---------------------------------------------------------------------------------------------
+
+LIBS=
+
+#---------------------------------------------------------------------------------------------
 # Check for client
 #---------------------------------------------------------------------------------------------
 
@@ -9845,8 +9850,6 @@ SERVER_LIBS="$SERVER_LIBS"
 GAME_LIBS="$GAME_LIBS"
 
 TOOLS_LIBS="$TOOLS_LIBS"
-
-MASTER_LIBS="$MASTER_LIBS"
 
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
@@ -10556,12 +10559,11 @@ CLIENT_CFLAGS!$CLIENT_CFLAGS$ac_delim
 SERVER_LIBS!$SERVER_LIBS$ac_delim
 GAME_LIBS!$GAME_LIBS$ac_delim
 TOOLS_LIBS!$TOOLS_LIBS$ac_delim
-MASTER_LIBS!$MASTER_LIBS$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 87; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 86; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
