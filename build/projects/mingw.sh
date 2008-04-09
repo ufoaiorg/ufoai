@@ -1,4 +1,4 @@
-ff#!/bin/bash
+#!/bin/bash
 
 stop_on_error=1
 init=1
