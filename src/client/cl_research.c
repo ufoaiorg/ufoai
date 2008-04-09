@@ -1652,7 +1652,7 @@ static const char *RS_TechLinkTypeToName (requirementType_t type)
 
 /**
  * @brief List all parsed technologies and their attributes in commandline/console.
- * Command to call this: techlist
+ * @note called with debug_listtech
  */
 static void RS_TechnologyList_f (void)
 {
@@ -1830,8 +1830,8 @@ void RS_ResetResearch (void)
 	Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
 	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("debug_invlist", INV_InventoryList_f, "Print the current inventory to the game console");
-	Cmd_AddCommand("debug_techlist", RS_TechnologyList_f, "Print the current parsed technologies to the game console");
+	Cmd_AddCommand("debug_listinventory", INV_InventoryList_f, "Print the current inventory to the game console");
+	Cmd_AddCommand("debug_listtech", RS_TechnologyList_f, "Print the current parsed technologies to the game console");
 	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll, "Mark all techs are researched");
 	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll, "Mark all techs are researchable");
 #endif

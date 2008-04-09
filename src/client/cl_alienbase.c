@@ -306,6 +306,7 @@ static void AB_AlienBaseDiscovered_f (void)
 
 /**
  * @brief Print Alien Bases information to game console
+ * @note called with debug_listalienbase
  */
 static void AB_AlienBaseList_f (void)
 {
@@ -336,7 +337,7 @@ static void AB_AlienBaseList_f (void)
 void AB_Reset (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_alienbaselist", AB_AlienBaseList_f, "Print Alien Bases information to game console");
+	Cmd_AddCommand("debug_listalienbase", AB_AlienBaseList_f, "Print Alien Bases information to game console");
 	Cmd_AddCommand("debug_alienbasevisible", AB_AlienBaseDiscovered_f, "Set all alien bases to discovered");
 #endif
 }

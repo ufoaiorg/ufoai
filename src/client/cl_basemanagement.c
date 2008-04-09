@@ -2721,8 +2721,8 @@ static void B_AssembleRandomBase_f (void)
 #ifdef DEBUG
 /**
  * @brief Just lists all buildings with their data
- *
- * Just for debugging purposes - not needed in game
+ * @note called with debug_listbuilding
+ * @note Just for debugging purposes - not needed in game
  * @todo To be extended for load/save purposes
  */
 static void B_BuildingList_f (void)
@@ -2760,13 +2760,11 @@ static void B_BuildingList_f (void)
 		}
 	}
 }
-#endif
 
-#ifdef DEBUG
 /**
  * @brief Just lists all bases with their data
- *
- * Just for debugging purposes - not needed in game
+ * @note called with debug_listbase
+ * @note Just for debugging purposes - not needed in game
  * @todo To be extended for load/save purposes
  */
 static void B_BaseList_f (void)
@@ -3046,6 +3044,7 @@ static void B_CheckMaxBases_f (void)
 #ifdef DEBUG
 /**
  * @brief Debug function for printing all capacities in given base.
+ * @note called with debug_listcapacities
  */
 static void B_PrintCapacities_f (void)
 {
@@ -3113,9 +3112,9 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("debug_baselist", B_BaseList_f, "Print base information to the game console");
-	Cmd_AddCommand("debug_buildinglist", B_BuildingList_f, "Print building information to the game console");
-	Cmd_AddCommand("debug_capacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
+	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
+	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");
+	Cmd_AddCommand("debug_listcapacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
 	Cmd_AddCommand("debug_basereset", B_ResetAllStatusAndCapacities_f, "Reset building status and capacities of all bases");
 #endif
 

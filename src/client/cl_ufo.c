@@ -510,6 +510,7 @@ qboolean UFO_CanShoot (const aircraft_t *ufo)
 #ifdef DEBUG
 /**
  * @brief Write the ufo list, for debugging
+ * @note called with debug_listufo
  */
 static void UFO_ListOnGeoscape_f (void)
 {
@@ -889,7 +890,7 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
 void UFO_Reset (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_ufolist", UFO_ListOnGeoscape_f, "Print UFO information to game console");
+	Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
 	Cmd_AddCommand("removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
 	Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
 #endif

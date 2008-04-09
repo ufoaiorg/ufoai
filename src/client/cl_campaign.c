@@ -266,7 +266,7 @@ static int CP_SelectNewMissionType (void)
 #ifdef DEBUG
 /**
  * @brief List alien interest values.
- * @sa function called with debug_interestlist
+ * @sa function called with debug_listinterest
  */
 static void CP_AlienInterestList_f (void)
 {
@@ -2617,7 +2617,7 @@ static void CP_SpawnNewMissions_f (void)
 
 /**
  * @brief List all current mission to console.
- * @note Use with debug_missionlist
+ * @note Use with debug_listmission
  */
 static void CL_DebugMissionList_f (void)
 {
@@ -5297,7 +5297,7 @@ static void CL_DebugAllItems_f (void)
 
 /**
  * @brief Debug function to show items in base storage.
- * @note Command to call this: debug_itemlist
+ * @note Command to call this: debug_listitem
  */
 static void CL_DebugShowItems_f (void)
 {
@@ -5320,8 +5320,8 @@ static void CL_DebugShowItems_f (void)
 	for (i = 0; i < csi.numODs; i++) {
 		tech = csi.ods[i].tech;
 		if (!tech)
-			Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].name);
-		Com_Printf("%i. %s: (%s) %i\n", i, csi.ods[i].name, csi.ods[i].id, base->storage.num[i]);
+			Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].id);
+		Com_Printf("%i. %s: (%s) %i\n", i, csi.ods[i].id, csi.ods[i].id, base->storage.num[i]);
 	}
 }
 
@@ -6080,8 +6080,10 @@ qboolean CL_OnBattlescape (void)
 	return qfalse;
 }
 
+#ifdef DEBUG
 /**
  * @brief Scriptfunction to list all parsed nations with their current values
+ * @note called with debug_listnation
  */
 static void CL_NationList_f (void)
 {
@@ -6098,6 +6100,7 @@ static void CL_NationList_f (void)
 		Com_Printf("...pos x:%.0f y:%.0f\n", gd.nations[i].pos[0], gd.nations[i].pos[1]);
 	}
 }
+#endif
 
 /* ===================================================================== */
 
@@ -6124,7 +6127,6 @@ static const cmdList_t game_commands[] = {
 	{"basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
 	{"stats_update", CL_StatsUpdate_f, NULL},
-	{"nationlist", CL_NationList_f, "List all nations on the game console"},
 	{"nation_stats_click", CP_NationStatsClick_f, NULL},
 	{"nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics."},
 	{"nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it."},
@@ -6142,13 +6144,14 @@ static const cmdList_t game_commands[] = {
 	{"map_scroll", MAP_Scroll_f, ""},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 #ifdef DEBUG
-	{"debug_aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
+	{"debug_listnation", CL_NationList_f, "List all nations on the game console"},
+	{"debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
 	{"debug_newemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
-	{"debug_itemlist", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
-	{"debug_missionlist", CL_DebugMissionList_f, "Debug function to show all missions"},
-	{"debug_interestlist", CP_AlienInterestList_f, "Debug function to show alien interest values"},
+	{"debug_listitem", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
+	{"debug_listmission", CL_DebugMissionList_f, "Debug function to show all missions"},
+	{"debug_listinterest", CP_AlienInterestList_f, "Debug function to show alien interest values"},
 #endif
 	{NULL, NULL, NULL}
 };
@@ -6572,7 +6575,7 @@ void CL_ResetSinglePlayerData (void)
 #ifdef DEBUG
 /**
  * @brief Show campaign stats in console
- * call this function via debug_campaignstats
+ * call this function via debug_listcampaign
  */
 static void CP_CampaignStats_f (void)
 {
@@ -7328,7 +7331,7 @@ void CL_ResetCampaign (void)
 	Cmd_AddCommand("cp_ufocrashed", CP_UFOCrashed_f, "Function to process crashed UFO after a mission.");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
-	Cmd_AddCommand("debug_campaignstats", CP_CampaignStats_f, "Print campaign stats to game console");
+	Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");
 	Cmd_AddCommand("debug_addmission", CP_SpawnNewMissions_f, "Add a new mission");
 	Cmd_AddCommand("debug_delmissions", CP_DeleteMissions_f, "Remove all missions from global array");
 #endif

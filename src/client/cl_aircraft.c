@@ -149,6 +149,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 /**
  * @brief Debug function which lists all aircraft in all bases.
  * @note Use with baseIdx as a parameter to display all aircraft in given base.
+ * @note called with debug_listaircraft
  */
 void AIR_ListAircraft_f (void)
 {

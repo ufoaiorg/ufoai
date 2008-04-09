@@ -619,6 +619,7 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 #ifdef DEBUG
 /**
  * @brief Lists all object definitions.
+ * @note called with debug_listinventory
  */
 void INV_InventoryList_f (void)
 {
