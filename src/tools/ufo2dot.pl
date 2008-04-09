@@ -57,6 +57,7 @@
 #	2008-04-09 Hoehrer
 #		Parsing "description" and "pre_description" an display them if there is more than the default one.
 #		Added support for "tech_not" nodes.
+#		Display number of required items/aliens next to the connecting edge.
 #
 #######################################
 # TODO
@@ -880,13 +881,13 @@ sub printTechLinks ($$$) {
 				printf $FH "\t".$req->{'value1'}.'_NOT -> '.$tech->{'id'}.'_AND'."\n";
 			}
 		} elsif ($req->{'type'} eq "item") {
-			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND [label="'. $req->{'value2'} .'"]'."\n";
 		} elsif ($req->{'type'} eq "alien") {
-			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND [label="'. $req->{'value2'} .'"]'."\n";
 		} elsif ($req->{'type'} eq "alien_dead") {
-			printf $FH "\t".$req->{'value1'}.'_dead -> '.$tech->{'id'}.'_AND'."\n";
+			printf $FH "\t".$req->{'value1'}.'_dead -> '.$tech->{'id'}.'_AND [label="'. $req->{'value2'} .'"]'."\n";
 		} elsif ($req->{'type'} eq "alienglobal") {
-			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_AND'."\n";
+			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_AND [label="'. $req->{'value1'} .'"]'."\n";
 		}
 	}
 	foreach $req (@{$tech->{'OR'}}) {
@@ -900,13 +901,13 @@ sub printTechLinks ($$$) {
 				printf $FH "\t".$req->{'value1'}.'_NOT -> '.$tech->{'id'}.'_OR'."\n";
 			}
 		} elsif ($req->{'type'} eq "item") {
-			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR [label="'. $req->{'value2'} .'"]'."\n";
 		} elsif ($req->{'type'} eq "alien") {
-			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
+			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR [label="'. $req->{'value2'} .'"]'."\n";
 		} elsif ($req->{'type'} eq "alien_dead") {
-			printf $FH "\t".$req->{'value1'}.'_dead -> '.$tech->{'id'}.'_OR'."\n";
+			printf $FH "\t".$req->{'value1'}.'_dead -> '.$tech->{'id'}.'_OR [label="'. $req->{'value2'} .'"]'."\n";
 		} elsif ($req->{'type'} eq "alienglobal") {
-			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_OR'."\n";
+			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_OR [label="'. $req->{'value1'} .'"]'."\n";
 		}
 	}
 	
