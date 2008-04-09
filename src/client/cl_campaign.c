@@ -74,7 +74,6 @@ static qboolean Date_LaterThan (date_t now, date_t compare)
 	return qfalse;
 }
 
-
 /**
  * @brief Add two dates and return the result.
  * @param[in] a First date.
@@ -371,7 +370,7 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 			return qtrue;
 		} else {
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-			Com_Printf("  ufo: %s -- pos: %s\n", ufoCrashed ? UFO_CrashedTypeToShortName(mission->ufo->ufotype) : UFO_TypeToShortName(mission->ufo->ufotype), pos ? va(("(%f, %f)"), pos[0], pos[1]) : "none");
+			Com_Printf("  ufo: %s -- pos: %s\n", mission->ufo ? UFO_TypeToShortName(mission->ufo->ufotype) : "none", pos ? va(("(%.02f, %.02f)"), pos[0], pos[1]) : "none");
 			return qfalse;
 		}
 	}
@@ -620,6 +619,8 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
  */
 static void CP_UFORemoveFromGeoscape (mission_t *mission)
 {
+	assert(mission->ufo);
+
 	mission->ufo->notOnGeoscape = qtrue;
 
 	/* Notications */
@@ -723,42 +724,32 @@ static void CP_SpreadXVIAtPos (const vec2_t pos)
 }
 
 /**
- * @brief Choose UFO type for a given mission category.
- * @param[in] Pointer to the mission where the UFO will be added
- * @todo Parse those values from script files ?
+ * @brief Return the average XVI rate
+ * @note XVI = eXtraterrestial Viral Infection
  */
-static int CP_MissionChooseUFO (const mission_t *mission)
+static int CP_GetAverageXVIRate (void)
 {
-	switch (mission->category) {
-	case INTERESTCATEGORY_TERROR_ATTACK:
-	case INTERESTCATEGORY_INTERCEPT:
-	case INTERESTCATEGORY_BASE_ATTACK:
-		return UFO_FIGHTER;
-	case INTERESTCATEGORY_BUILDING:
-		if (mission->initialIndividualInterest < STARTING_BASEBUILD_INTEREST) {
-			/* This is a subverting government mission */
-			break;
-		}
-	case INTERESTCATEGORY_SUPPLY:
-		return UFO_SUPPLY;
-	case INTERESTCATEGORY_XVI:
-		return UFO_CORRUPTER;
-	case INTERESTCATEGORY_HARVEST:
-		return UFO_HARVESTER;
-	case INTERESTCATEGORY_NONE:
-	case INTERESTCATEGORY_MAX:
-		Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
-		break;
-	case INTERESTCATEGORY_RECON:
-		break;
-	}
+	int XVIRate = 0;
+	int i;
+	nation_t* nation;
 
-	return UFO_SCOUT;
+	assert(gd.numNations);
+
+	/* check for XVI infection rate */
+	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
+		XVIRate += nation->stats[0].xviInfection;
+	}
+	XVIRate /= gd.numNations;
+	return (int) XVIRate;
 }
+
+
+static int CP_MissionChooseUFO(const mission_t *mission);
 
 /**
  * @brief mission begins: UFO arrive on earth.
- * @note Stage 0 -- This function is common to several mission category
+ * @note Stage 0 -- This function is common to several mission category.
+ * @sa CP_MissionChooseUFO
  * @return true if mission was created, false else.
  */
 static qboolean CP_MissionCreate (mission_t *mission)
@@ -767,13 +758,20 @@ static qboolean CP_MissionCreate (mission_t *mission)
 
 	mission->stage = STAGE_COME_FROM_ORBIT;
 
-	CP_MissionDisableTimeLimit(mission);
 	ufoType = CP_MissionChooseUFO(mission);
-	mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
-	if (!mission->ufo) {
-		Com_Printf("CP_MissionCreate: Could not add UFO '%s', remove mission\n", UFO_TypeToShortName(ufoType));
-		CP_MissionRemove(mission);
-		return qfalse;
+	if (ufoType == UFO_MAX) {
+		mission->ufo = NULL;
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	} else {
+		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
+		if (!mission->ufo) {
+			Com_Printf("CP_MissionCreate: Could not add UFO '%s', remove mission\n", UFO_TypeToShortName(ufoType));
+			CP_MissionRemove(mission);
+			return qfalse;
+		}
+		/* Mission will finish when UFO arrives at destination */
+		CP_MissionDisableTimeLimit(mission);
 	}
 
 	return qtrue;
@@ -838,12 +836,16 @@ static void CP_ReconMissionLeave (mission_t *mission)
 {
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
-	CP_MissionDisableTimeLimit(mission);
-	assert(mission->ufo);
-	UFO_SetRandomDest(mission->ufo);
+	if (mission->ufo) {
+		CP_MissionDisableTimeLimit(mission);
+		UFO_SetRandomDest(mission->ufo);
+		/* Display UFO on geoscape if it is visible */
+		mission->ufo->notOnGeoscape = qfalse;
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
 	CP_MissionRemoveFromGeoscape(mission);
-	/* Display UFO on geoscape if it is visible */
-	mission->ufo->notOnGeoscape = qfalse;
 }
 
 /**
@@ -958,7 +960,6 @@ static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
 /**
  * @brief Set recon mission type (aerial or ground).
  * @note Recon mission -- Stage 1
- * @todo implement me
  */
 static void CP_ReconMissionSelect (mission_t *mission)
 {
@@ -977,6 +978,23 @@ static void CP_ReconMissionSelect (mission_t *mission)
 		else
 			CP_ReconMissionLeave(mission);
 	}
+}
+
+/**
+ * @brief Fill an array with available UFOs for recon mission type (aerial or ground).
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note Recon mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+static int CP_ReconMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+
+	ufoTypes[num++] = UFO_SCOUT;
+	ufoTypes[num++] = UFO_FIGHTER;
+
+	return num;
 }
 
 /**
@@ -1050,13 +1068,12 @@ static void CP_TerrorMissionStart (mission_t *mission)
 	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
 
-	assert(mission->ufo);
-
 	mission->stage = STAGE_TERROR_MISSION;
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	CP_UFORemoveFromGeoscape(mission);
+	if (mission->ufo)
+		CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 
@@ -1072,8 +1089,6 @@ static void CP_TerrorMissionStart (mission_t *mission)
 static void CP_TerrorMissionGo (mission_t *mission)
 {
 	const nation_t *nation;
-
-	assert(mission->ufo);
 
 	mission->stage = STAGE_MISSION_GOTO;
 
@@ -1107,7 +1122,30 @@ static void CP_TerrorMissionGo (mission_t *mission)
 		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
 	}
 
-	UFO_SendToDestination(mission->ufo, mission->pos);
+	if (mission->ufo) {
+		CP_MissionDisableTimeLimit(mission);
+		UFO_SendToDestination(mission->ufo, mission->pos);
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
+}
+
+/**
+ * @brief Fill an array with available UFOs for Terror attack mission type.
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note Terror attack mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+static int CP_TerrorMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+
+	ufoTypes[num++] = UFO_SCOUT;
+	ufoTypes[num++] = UFO_FIGHTER;
+
+	return num;
 }
 
 /**
@@ -1197,9 +1235,15 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	gd.mapAction = MA_NONE;
 
 	CP_MissionDisableTimeLimit(mission);
-	UFO_SetRandomDest(mission->ufo);
-	/* Display UFO on geoscape if it is visible */
-	mission->ufo->notOnGeoscape = qfalse;
+	if (mission->ufo) {
+		CP_MissionDisableTimeLimit(mission);
+		UFO_SetRandomDest(mission->ufo);
+		/* Display UFO on geoscape if it is visible */
+		mission->ufo->notOnGeoscape = qfalse;
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
 }
 
 /**
@@ -1214,14 +1258,15 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	base = (base_t *)mission->data;
 
 	assert(base);
-	assert(mission->ufo);
 
 	mission->stage = STAGE_BASE_ATTACK;
 
 	CP_MissionDisableTimeLimit(mission);
 
-	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	CP_UFORemoveFromGeoscape(mission);
+	if (mission->ufo) {
+		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+		CP_UFORemoveFromGeoscape(mission);
+	}
 
 	/* we always need at least one command centre in the base - because the
 	 * phalanx soldiers have their starting positions here
@@ -1300,8 +1345,6 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 {
 	base_t *base;
 
-	assert(mission->ufo);
-
 	mission->stage = STAGE_MISSION_GOTO;
 
 	base = CP_BaseAttackChooseBase(mission);
@@ -1323,7 +1366,32 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 
 	Com_sprintf(mission->location, sizeof(mission->location), base->name);
 
-	UFO_SendToDestination(mission->ufo, mission->pos);
+	if (mission->ufo) {
+		CP_MissionDisableTimeLimit(mission);
+		UFO_SendToDestination(mission->ufo, mission->pos);
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
+}
+
+/**
+ * @brief Fill an array with available UFOs for Base Attack mission type.
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note Base Attack mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+static int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+	const int BOMBER_INTEREST_MIN = 500;	/**< Minimum value interest to have a mission spawned by bomber */
+
+	ufoTypes[num++] = UFO_FIGHTER;
+	if (mission->initialOverallInterest < BOMBER_INTEREST_MIN)
+		ufoTypes[num++] = UFO_BOMBER;
+
+	return num;
 }
 
 /**
@@ -1422,6 +1490,8 @@ static void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
  */
 static void CP_BuildBaseMissionLeave (mission_t *mission)
 {
+	assert(mission->ufo);
+
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
 	CP_MissionDisableTimeLimit(mission);
@@ -1440,6 +1510,8 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 	alienBase_t *base;
 	const date_t minBuildingTime = {5, 0};	/**< Time needed to start a new base construction */
 	const date_t buildingTime = {10, 0};	/**< Time needed to start a new base construction */
+
+	assert(mission->ufo);
 
 	mission->stage = STAGE_BUILD_BASE;
 
@@ -1464,6 +1536,8 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
  */
 static void CP_BuildBaseGoToBase (mission_t *mission)
 {
+	assert(mission->ufo);
+
 	mission->stage = STAGE_MISSION_GOTO;
 
 	AB_SetAlienBasePosition(mission->pos);
@@ -1480,6 +1554,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 	nation_t *nation;
 
 	assert(mission);
+	assert(mission->ufo);
 
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
@@ -1517,7 +1592,7 @@ static void CP_BuildBaseSubvertGovernment (mission_t *mission)
 }
 
 /**
- * @brief Choose if the mission should be an alien infiltration or a base attack mission.
+ * @brief Choose if the mission should be an alien infiltration or a build base mission.
  * @note Build Base mission -- Stage 1
  */
 static void CP_BuildBaseChooseMission (mission_t *mission)
@@ -1526,6 +1601,28 @@ static void CP_BuildBaseChooseMission (mission_t *mission)
 		CP_ReconMissionGroundGo(mission);
 	else
 		CP_BuildBaseGoToBase(mission);
+}
+
+/**
+ * @brief Fill an array with available UFOs for build base mission type.
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note Base Attack mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+static int CP_BuildBaseMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+
+	if (mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST) {
+		/* This is a subverting government mission */
+		ufoTypes[num++] = UFO_SCOUT;
+	} else {
+		/* This is a Building base mission */
+		ufoTypes[num++] = UFO_SUPPLY;
+	}
+
+	return num;
 }
 
 /**
@@ -1608,6 +1705,8 @@ static void CP_SupplyMissionIsFailure (mission_t *mission)
  */
 static void CP_SupplyMissionLeave (mission_t *mission)
 {
+	assert(mission->ufo);
+
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
 	CP_MissionDisableTimeLimit(mission);
@@ -1625,6 +1724,8 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 {
 	const date_t minSupplyTime = {3, 0};
 	const date_t supplyTime = {10, 0};	/**< Max time needed to supply base */
+
+	assert(mission->ufo);
 
 	mission->stage = STAGE_SUPPLY;
 
@@ -1683,14 +1784,34 @@ static void CP_SupplyMissionCreate (mission_t *mission)
 		return;
 	}
 
-	CP_MissionDisableTimeLimit(mission);
 	ufoType = CP_MissionChooseUFO(mission);
-	mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
-	if(!mission->ufo) {
-		Com_Printf("CP_BuildBaseMissionCreate: Could not add UFO for base attack mission, remove mission\n");
+	if (ufoType == UFO_MAX) {
+		Com_DPrintf(DEBUG_CLIENT, "Supply mission can't be spawned without UFO: removing supply mission.\n");
 		CP_MissionRemove(mission);
-		return;
+	} else {
+		CP_MissionDisableTimeLimit(mission);
+		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
+		if (!mission->ufo) {
+			Com_Printf("CP_SupplyMissionCreate: Could not add UFO '%s', remove mission\n", UFO_TypeToShortName(ufoType));
+			CP_MissionRemove(mission);
+		}
 	}
+}
+
+/**
+ * @brief Fill an array with available UFOs for supply mission type.
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note Supply mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+static int CP_SupplyMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+
+	ufoTypes[num++] = UFO_SUPPLY;
+
+	return num;
 }
 
 /**
@@ -1762,15 +1883,36 @@ static void CP_XVIMissionStart (mission_t *mission)
 	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
 
-	assert(mission->ufo);
-
 	mission->stage = STAGE_SPREAD_XVI;
 
-	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
-	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	CP_UFORemoveFromGeoscape(mission);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
+
+	if (mission->ufo) {
+		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
+		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+		CP_UFORemoveFromGeoscape(mission);
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
+}
+
+/**
+ * @brief Fill an array with available UFOs for XVI Spreading mission type.
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note XVI Spreading mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+static int CP_XVIMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+
+	ufoTypes[num++] = UFO_SCOUT;
+	ufoTypes[num++] = UFO_FIGHTER;
+
+	return num;
 }
 
 /**
@@ -1839,10 +1981,11 @@ static void CP_InterceptMissionIsFailure (mission_t *mission)
  */
 static void CP_InterceptMissionLeave (mission_t *mission)
 {
+	assert(mission->ufo);
+
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
 	CP_MissionDisableTimeLimit(mission);
-	assert(mission->ufo);
 	UFO_SetRandomDest(mission->ufo);
 	CP_MissionRemoveFromGeoscape(mission);
 	/* Display UFO on geoscape if it is visible */
@@ -1863,6 +2006,22 @@ static void CP_InterceptMissionSet (mission_t *mission)
 }
 
 /**
+ * @brief Fill an array with available UFOs for Intercept mission type.
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note Intercept mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+static int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+
+	ufoTypes[num++] = UFO_FIGHTER;
+
+	return num;
+}
+
+/**
  * @brief Determine what action should be performed when a Intercept mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
@@ -1878,6 +2037,7 @@ static void CP_InterceptNextStage (mission_t *mission)
 		CP_InterceptMissionSet(mission);
 		break;
 	case STAGE_INTERCEPT:
+		assert(mission->ufo);
 		/* Leave earth */
 		if (AIRFIGHT_ChooseWeapon(mission->ufo->weapons, mission->ufo->maxWeapons, mission->ufo->pos, mission->ufo->pos) !=
 			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT && mission->ufo->status == AIR_UFO) {
@@ -1899,6 +2059,78 @@ static void CP_InterceptNextStage (mission_t *mission)
 }
 
 /*****	General Mission Code *****/
+
+/**
+ * @brief Choose UFO type for a given mission category.
+ * @param[in] Pointer to the mission where the UFO will be added
+ * @sa CP_MissionChooseUFO
+ * @sa CP_SupplyMissionCreate
+ * @return ufoType_t of the UFO spawning the mission, UFO_MAX if the mission is spawned from ground
+ */
+static int CP_MissionChooseUFO (const mission_t *mission)
+{
+	int ufoTypes[UFO_MAX];
+	int numTypes;
+	int idx;
+	qboolean canBeSpawnedFromGround = qfalse;
+	float groundProbability = 0.0f;	/**< Probability to start a mission from earth (without UFO) */
+	float randNumber;
+
+	switch (mission->category) {
+	case INTERESTCATEGORY_RECON:
+		numTypes = CP_ReconMissionAvailableUFOs(mission, ufoTypes);
+		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		numTypes = CP_TerrorMissionAvailableUFOs(mission, ufoTypes);
+		canBeSpawnedFromGround = qtrue;
+		break;
+	case INTERESTCATEGORY_BASE_ATTACK:
+		numTypes = CP_BaseAttackMissionAvailableUFOs(mission, ufoTypes);
+		canBeSpawnedFromGround = qtrue;
+		break;
+	case INTERESTCATEGORY_BUILDING:
+		numTypes = CP_BuildBaseMissionAvailableUFOs(mission, ufoTypes);
+		break;
+	case INTERESTCATEGORY_SUPPLY:
+		numTypes = CP_SupplyMissionAvailableUFOs(mission, ufoTypes);
+		break;
+	case INTERESTCATEGORY_XVI:
+		numTypes = CP_XVIMissionAvailableUFOs(mission, ufoTypes);
+		canBeSpawnedFromGround = qtrue;
+		break;
+	case INTERESTCATEGORY_INTERCEPT:
+		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
+		break;
+	/* @todo: implement harvest category */
+	case INTERESTCATEGORY_HARVEST:
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
+		Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
+		break;
+	}
+	if (numTypes > UFO_MAX)
+		Sys_Error("CP_MissionChooseUFO: Too many values UFOs (%i/%i)\n", numTypes, UFO_MAX);
+
+	/* Roll the random number */
+	randNumber = frand();
+
+	/* Check if the mission is spawned without UFO */
+	if (canBeSpawnedFromGround) {
+		const int XVI_PARAM = 10;		/**< Typical XVI average value for spreading mission from earth */
+		/* The higher the XVI rate, the higher the probability to have a mission spawned from ground */
+		groundProbability = 1.0f - exp(-CP_GetAverageXVIRate() / XVI_PARAM);
+
+		/* Mission spawned from ground */
+		if (randNumber < groundProbability)
+			return UFO_MAX;
+	}
+
+	/* If we reached this point, then mission will be spawned from space: choose UFO */
+	idx = (int) (numTypes * (randNumber - groundProbability) / (1.0f - groundProbability));
+	assert(idx < numTypes);
+
+	return ufoTypes[idx];
+}
 
 /**
  * @brief Determine what action should be performed when a mission stage ends.
@@ -2797,26 +3029,6 @@ static void CP_EndCampaign (qboolean won)
 	else
 		Cvar_Set("mn_afterdrop", "lostgame");
 	Com_Drop();
-}
-
-/**
- * @brief Return the average XVI rate
- * @note XVI = eXtraterrestial Viral Infection
- */
-static int CP_GetAverageXVIRate (void)
-{
-	int XVIRate = 0;
-	int i;
-	nation_t* nation;
-
-	assert(gd.numNations);
-
-	/* check for XVI infection rate */
-	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
-		XVIRate += nation->stats[0].xviInfection;
-	}
-	XVIRate /= gd.numNations;
-	return (int) XVIRate;
 }
 
 /**
