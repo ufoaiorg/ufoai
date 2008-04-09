@@ -1277,6 +1277,13 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
+	/* A mission without aircraft doesn't have soldiers ready to fight: you loose
+	 * @todo Should be removed if/when we can equip soldiers outside an aircraft */
+	if (!base->numAircraftInBase) {
+		CP_BaseAttackMissionLeave(mission);
+		return;
+	}
+
 	base->baseStatus = BASE_UNDER_ATTACK;
 	campaignStats.basesAttacked++;
 
@@ -1328,11 +1335,6 @@ static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
 	/* base is already under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK)
 		return NULL;
-	/* HACK FIXME */
-	if (!base->numAircraftInBase) {
-		Com_Printf("CP_BaseAttackChooseBase: FIXME: This base (%s) can not be set under attack - because there are no crafts in this base\n", base->name);
-		return NULL;
-	}
 
 	return base;
 }
