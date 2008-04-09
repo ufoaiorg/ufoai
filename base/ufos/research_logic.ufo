@@ -56,6 +56,7 @@ tech rs_antimatter_extra
 	{
 		tech rs_craft_ufo_harvester
 	}
+	time 0
 }
 
 tech rs_taman_extra
@@ -67,6 +68,7 @@ tech rs_taman_extra
 		tech rs_alien_shevaar_autopsy
 		tech rs_alien_ortnok_autopsy
 	}
+	time 0
 }
 
 tech rs_shevaar_extra
@@ -78,6 +80,7 @@ tech rs_shevaar_extra
 		tech rs_alien_taman_autopsy
 		tech rs_alien_ortnok_autopsy
 	}
+	time 0
 }
 
 tech rs_ortnok_extra
@@ -89,6 +92,7 @@ tech rs_ortnok_extra
 		tech rs_alien_taman_autopsy
 		tech rs_alien_shevaar_autopsy
 	}
+	time 0
 }
 
 // Triggered in cl_campaign.c

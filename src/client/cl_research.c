@@ -102,6 +102,13 @@ void RS_MarkOneResearchable (technology_t* tech)
 	if (tech->time == 0) /* Don't send mail for automatically completed techs. */
 		tech->mailSent = MAILSENT_FINISHED;
 
+	/** At this point we define what description is used when displayed. (i.e. "usedDescription" is set here).
+	 * That's becuase this is the first the player will see anything from
+	 * the tech and any later changes will make the content of the tech inconsistent.
+	 * @todo maybe we can still define the tech->description->usedDescription just befor the finished research is displayed? Would need _lots_ of new checks though. */
+	RS_GetDescription(&tech->pre_description);
+	RS_GetDescription(&tech->description);
+
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Unknown Technology researchable"), mn.messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
@@ -341,7 +348,6 @@ static qboolean RS_RequirementsResearchable (requirements_t *required_AND, requi
 
 	return (met_AND || met_OR);
 }
-#endif
 
 /**
  * @brief Checks if the technology (tech-id) is researchable.
@@ -365,6 +371,7 @@ static qboolean RS_TechIsResearchable (const technology_t * tech, const base_t *
 
 	return RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base);
 }
+#endif
 
 /**
  * @brief returns the currently used description for a technology.
@@ -395,7 +402,7 @@ const char *RS_GetDescription (descriptions_t *desc)
 		else
 			base = baseCurrent;
 
-		if (RS_TechIsResearchable(tech, base)) {
+		if (RS_IsResearched_ptr(tech)) {
 			desc->usedDescription = i;	/**< Stored used description */
 			return desc->text[i];
 		}
