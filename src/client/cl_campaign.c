@@ -1923,7 +1923,7 @@ static void CP_XVIMissionNextStage (mission_t *mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
-		/* Create Terror attack mission */
+		/* Create XVI Spreading mission */
 		CP_MissionCreate(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
@@ -1931,7 +1931,7 @@ static void CP_XVIMissionNextStage (mission_t *mission)
 		CP_TerrorMissionGo(mission);
 		break;
 	case STAGE_MISSION_GOTO:
-		/* just arrived on a new Terror attack mission: start it */
+		/* just arrived on a new XVI Spreading mission: start it */
 		CP_XVIMissionStart(mission);
 		break;
 	case STAGE_SPREAD_XVI:
@@ -2058,6 +2058,106 @@ static void CP_InterceptNextStage (mission_t *mission)
 	}
 }
 
+/*****	Harvesting Mission *****/
+
+/**
+ * @brief Harvesting mission is over and is a success: change interest values.
+ * @note Harvesting mission
+ */
+static void CP_HarvestMissionIsSuccess (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_HARVEST);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Harvesting mission is over and is a failure: change interest values.
+ * @note Harvesting mission
+ */
+static void CP_HarvestMissionIsFailure (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+
+	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Start Harvesting mission.
+ * @note Harvesting mission -- Stage 2
+ */
+static void CP_HarvestMissionStart (mission_t *mission)
+{
+	const date_t minMissionDelay = {2, 0};
+	const date_t missionDelay = {3, 0};
+
+	mission->stage = STAGE_HARVEST;
+
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission);
+
+	if (mission->ufo) {
+		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
+		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+		CP_UFORemoveFromGeoscape(mission);
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
+}
+
+/**
+ * @brief Fill an array with available UFOs for Harvesting mission type.
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note Harvesting mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+static int CP_HarvestMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+
+	ufoTypes[num++] = UFO_HARVESTER;
+
+	return num;
+}
+
+/**
+ * @brief Determine what action should be performed when a Harvesting mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
+ */
+static void CP_HarvestMissionNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		/* Create Harvesting mission */
+		CP_MissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		/* Go to mission */
+		CP_TerrorMissionGo(mission);
+		break;
+	case STAGE_MISSION_GOTO:
+		/* just arrived on a new Harvesting mission: start it */
+		CP_HarvestMissionStart(mission);
+		break;
+	case STAGE_HARVEST:
+		/* Leave earth */
+		CP_ReconMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_HarvestMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_HarvestMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
+
 /*****	General Mission Code *****/
 
 /**
@@ -2101,8 +2201,9 @@ static int CP_MissionChooseUFO (const mission_t *mission)
 	case INTERESTCATEGORY_INTERCEPT:
 		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
 		break;
-	/* @todo: implement harvest category */
 	case INTERESTCATEGORY_HARVEST:
+		numTypes = CP_HarvestMissionAvailableUFOs(mission, ufoTypes);
+		break;
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
@@ -2162,8 +2263,12 @@ static void CP_MissionStageEnd (mission_t *mission)
 	case INTERESTCATEGORY_INTERCEPT:
 		CP_InterceptNextStage(mission);
 		break;
-	default:
-		Com_Printf("CP_MissionStageEnd: Unknown type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
+	case INTERESTCATEGORY_HARVEST:
+		CP_HarvestMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
+		Com_Printf("CP_MissionStageEnd: Invalid type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
 		CP_MissionRemove(mission);
 	}
 }
@@ -2210,8 +2315,12 @@ static inline void CP_MissionIsOver (mission_t *mission)
 	case INTERESTCATEGORY_INTERCEPT:
 		CP_InterceptMissionIsFailure(mission);
 		break;
-	default:
-		Com_Printf("CP_MissionIsOver: Unknown type of mission (%i), remove mission\n", mission->category);
+	case INTERESTCATEGORY_HARVEST:
+		CP_HarvestMissionIsFailure(mission);
+		break;
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
+		Com_Printf("CP_MissionIsOver: Invalid type of mission (%i), remove mission\n", mission->category);
 		CP_MissionRemove(mission);
 	}
 }
