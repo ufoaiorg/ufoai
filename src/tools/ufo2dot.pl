@@ -56,11 +56,13 @@
 #		Fixed a bug where no real names where used for the techs.
 #	2008-04-09 Hoehrer
 #		Parsing "description" and "pre_description" an display them if there is more than the default one.
+#		Added support for "tech_not" nodes.
 #
 #######################################
 # TODO
 #	* Prettify this even more.
 #	* MAJOR Parse all of the items/crafts/buildings/etc... files.
+#	* Check why the svg export has too dark colors (I believe transparenzy is skipped here).
 #######################################
 
 use strict;
@@ -111,11 +113,12 @@ my $technologySimpleSettings = [
 # The number tells us how many parameters they have.
 my $technologyRequirementSettings = {
 	"tech"		=> 1,
-	"event"		=> 1,
+	"tech_not"	=> 1,
 	"alienglobal"	=> 1,
 	"item"		=> 2,
 	"alien"		=> 2,
-	"alien_dead"	=> 2
+	"alien_dead"	=> 2,
+	"event"		=> 1
 };
 
 
@@ -778,6 +781,11 @@ sub reqMet($$) {
 	}
 }
 
+sub getReqNotStyle () {	
+	my $color = "#ffb14199";	# TODO fix color
+	return 'shape=ellipse, label="NOT", color="'.$color.'", fillcolor="'.$color.'",style=filled, fontcolor=black';
+}
+
 sub printReqStyle ($$) {
 	my ($FH, $label) = @_;
 
@@ -865,6 +873,12 @@ sub printTechLinks ($$$) {
 			if (not skipTech($techs->{$req->{'value1'}})) {
 				printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
 			}
+		} elsif ($req->{'type'} eq "tech_not") {
+			if (not skipTech($techs->{$req->{'value1'}})) {
+				printf $FH "\t".$req->{'value1'}.'_NOT ['. getReqNotStyle(). ']'."\n";
+				printf $FH "\t".$req->{'value1'}.' -> '.$req->{'value1'}.'_NOT'."\n";
+				printf $FH "\t".$req->{'value1'}.'_NOT -> '.$tech->{'id'}.'_AND'."\n";
+			}
 		} elsif ($req->{'type'} eq "item") {
 			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_AND'."\n";
 		} elsif ($req->{'type'} eq "alien") {
@@ -879,6 +893,11 @@ sub printTechLinks ($$$) {
 		if ($req->{'type'} eq "tech") {
 			if (not skipTech($techs->{$req->{'value1'}})) {
 				printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
+			}
+		} elsif ($req->{'type'} eq "tech_not") {
+			if (not skipTech($techs->{$req->{'value1'}})) {
+				printf $FH "\t".$req->{'value1'}.' -> '.$req->{'value1'}.'_NOT node [label="NOT"]'."\n";
+				printf $FH "\t".$req->{'value1'}.'_NOT -> '.$tech->{'id'}.'_OR'."\n";
 			}
 		} elsif ($req->{'type'} eq "item") {
 			printf $FH "\t".$req->{'value1'}.' -> '.$tech->{'id'}.'_OR'."\n";
