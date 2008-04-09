@@ -61,6 +61,11 @@ typedef enum researchType_s {
 
 typedef enum requirementType_s {
 	RS_LINK_TECH,
+	RS_LINK_TECH_NOT,
+#if 0
+	RS_LINK_TECH_BEFORE,	/**< @note I think this would be even more useful than XOR. */
+	RS_LINK_TECH_XOR,
+#endif
 	RS_LINK_ITEM,
 	RS_LINK_EVENT,
 	RS_LINK_ALIEN,
@@ -71,16 +76,32 @@ typedef enum requirementType_s {
 
 typedef struct requirement_s {
 	requirementType_t type;	/**< What type the requ. is: item (in store/quarantine), event, etc... */
-	char *id;	/**< dependency id (text-id) */
+	char *id;	/**< Dependency id (text-id) */
 	void *link;	/**< Dependency pointer (depends on the type)
 				 * RS_LINK_TECH -> technology_t*
+				 * RS_LINK_TECH_NOT -> (planned to be technology_t*)
+				 * RS_LINK_TECH_BEFORE -> (planned to be technology_t*)
+				 * RS_LINK_TECH_XOR -> (planned to be technology_t*)
 				 * RS_LINK_ITEM -> objDef_t*
 				 * RS_LINK_EVENT -> nothing yet
 				 * RS_LINK_ALIEN		-> teamDef_t*
 				 * RS_LINK_ALIEN_DEAD	-> teamDef_t*
 				 * RS_LINK_ALIEN_GLOBAL -> NULL
 				 */
-
+#if 0
+	char *id2;	/**< 2. dependency id (text-id) */
+	void *link2;	/**< 2. dependency pointer (depends on the type)
+				 * RS_LINK_TECH -> NULL
+				 * RS_LINK_TECH_NOT -> NULL
+				 * RS_LINK_TECH_BEFORE -> (planned to be technology_t*)
+				 * RS_LINK_TECH_XOR -> (planned to be technology_t*)
+				 * RS_LINK_ITEM -> NULL
+				 * RS_LINK_EVENT -> nothing yet
+				 * RS_LINK_ALIEN		-> NULL
+				 * RS_LINK_ALIEN_DEAD	-> NULL
+				 * RS_LINK_ALIEN_GLOBAL -> NULL
+				 */
+#endif
 	int amount;	/**< How many items are needed for research ... if any. (fix) */
 	int collected;	/**< How many items have been collected. (varies) */
 } requirement_t;

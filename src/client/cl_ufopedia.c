@@ -238,11 +238,12 @@ static void UP_DisplayTechTree (const technology_t* t)
 		for (i = 0; i < required->numLinks; i++) {
 			req = &required->links[i];
 			if (req->type == RS_LINK_TECH) {
+				/** @todo support for RS_LINK_TECH_BEFORE and RS_LINK_TECH_XOR? */
 				techRequired = req->link;
 				if (!techRequired)
 					Sys_Error("Could not find the tech for '%s'\n", req->id);
 
-				/** Only display tech if it isn't ok to do so.
+				/** Only display tech if it is ok to do so.
 				 * @todo If it is one (a logic tech) we may want to re-iterate from its requirements? */
 				if (UP_TechGetsDisplayed(techRequired)) {
 					Q_strcat(up_techtree, _(techRequired->name), sizeof(up_techtree));
@@ -1360,7 +1361,15 @@ static void UP_TechTreeClick_f (void)
 
 	/* skip every tech which have not been displayed in techtree */
 	for (i = 0; i <= num; i++) {
-		if (required_AND->links[i].type != RS_LINK_TECH)
+#if 1
+		if (required_AND->links[i].type != RS_LINK_TECH
+		&& required_AND->links[i].type != RS_LINK_TECH_NOT)
+#else
+		if (required_AND->links[i].type != RS_LINK_TECH
+		&& required_AND->links[i].type != RS_LINK_TECH_NOT
+		&& required_AND->links[i].type != RS_LINK_TECH_BEFORE
+		&& required_AND->links[i].type != RS_LINK_TECH_XOR)
+#endif
 			num++;
 	}
 

@@ -157,6 +157,36 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 					met_AND = qfalse;
 				}
 				break;
+			case RS_LINK_TECH_NOT:
+				assert(req->link);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech NOT: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
+				if (RS_IsResearched_ptr(req->link)) {
+					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech researched but it  must not be ----> %s \n", req->id);
+					met_AND = qfalse;
+				}
+				break;
+#if 0
+			case RS_LINK_TECH_BEFORE:
+				assert(req->link);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech: BEFORE %s / %i\n", req->id, ((technology_t*)req->link)->idx);
+
+				if (/**@todo I think we can use Date_LaterThan(now,compare) for this */) {
+					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this dependecy not met ----> %s researched before %s \n", req->id, req->id2);
+					met_AND = qfalse;
+				}
+				break;
+				break;
+			case RS_LINK_TECH_XOR:
+				assert(req->link);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech: %s XOR %s / %i\n", req->id, req->id2, ((technology_t*)req->link)->idx);
+
+				if ((!RS_IsResearched_ptr(req->link) && !RS_IsResearched_ptr(req->link2))
+				 || (RS_IsResearched_ptr(req->link) && RS_IsResearched_ptr(req->link2))) {
+					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this dependecy not met ----> %s xor %s \n", req->id, req->id2);
+					met_AND = qfalse;
+				}
+				break;
+#endif
 			case RS_LINK_ITEM:
 				assert(req->link);
 				/* The same code is used in "PR_RequirementsMet" */
@@ -196,6 +226,27 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 				if (RS_IsResearched_ptr(req->link))
 					met_OR = qtrue;
 				break;
+			case RS_LINK_TECH_NOT:
+				assert(req->link);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: NOT %s / %i\n", req->id, ((technology_t*)req->link)->idx);
+				if (!RS_IsResearched_ptr(req->link))
+					met_OR = qtrue;
+				break;
+#if 0
+			case RS_LINK_TECH_BEFORE:
+				assert(req->link);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: %s BEFORE %s / %i\n", req->id, req->id2, ((technology_t*)req->link)->idx);
+				if (/**@todo I think we can use Date_LaterThan(now,compare) for this */)
+					met_OR = qtrue;
+				break;
+			case RS_LINK_TECH_XOR:
+				assert(req->link);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: %s XOR %s / %i\n", req->id, req->id2, ((technology_t*)req->link)->idx);
+				if ((RS_IsResearched_ptr(req->link) && !RS_IsResearched_ptr(req->link2))
+				|| (!RS_IsResearched_ptr(req->link) && RS_IsResearched_ptr(req->link2)))
+					met_OR = qtrue;
+				break;
+#endif
 			case RS_LINK_ITEM:
 				assert(req->link);
 				/* The same code is used in "PR_RequirementsMet" */
@@ -258,6 +309,7 @@ static qboolean RS_RequirementsResearchable (requirements_t *required_AND, requi
 		met_AND = qtrue;
 		for (i = 0; i < required_AND->numLinks; i++) {
 			if (required_AND->type[i] == RS_LINK_TECH) {
+				/** @todo support for RS_LINK_TECH_BEFORE and RS_LINK_TECH_XOR? */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsResearchable: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
 				tech = RS_GetTechByIDX(required_AND->idx[i]);
 
@@ -274,6 +326,7 @@ static qboolean RS_RequirementsResearchable (requirements_t *required_AND, requi
 	if (required_OR->numLinks) {
 		for (i = 0; i < required_OR->numLinks; i++) {
 			if (required_OR->type[i] == RS_LINK_TECH) {
+				/** @todo support for RS_LINK_TECH_BEFORE and RS_LINK_TECH_XOR? */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsResearchable: ORtech: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
 				tech = RS_GetTechByIDX(required_OR->idx[i]);
 				if (RS_TechIsResearchable(tech, base))
@@ -415,10 +468,17 @@ static qboolean RS_CheckCollected (requirements_t *required)
 				something_collected_from_each = qfalse;
 			}
 			break;
+#if 0
+		/** @todo support for RS_LINK_TECH_BEFORE and RS_LINK_TECH_XOR? */
+		case RS_LINK_TECH_BEFORE:
+			break;
+		case RS_LINK_TECH_XOR:
+			break;
+#endif
 		case RS_LINK_TECH:
 			assert(req->link);
 			tech = req->link;
-			/* Check if it is a logic block (RS_LOGIC) and interate into it if so.*/
+			/* Check if it is a logic block (RS_LOGIC) and iterate into it if so.*/
 			if (tech->type == RS_LOGIC) {
 				if (!RS_CheckCollected(&tech->require_AND)) {
 					tech->statusCollected = qfalse;
@@ -549,7 +609,7 @@ void RS_MarkResearchable (qboolean init)
 }
 
 /**
- * @brief Assign required tech/item/etc... IDXs for a single requirements list.
+ * @brief Assign required tech/item/etc... pointers for a single requirements list.
  * @note A function with the same behaviour was formerly also known as RS_InitRequirementList
  */
 static void RS_AssignTechLinks (requirements_t *reqs)
@@ -561,11 +621,25 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 		req = &reqs->links[i];
 		switch (req->type) {
 		case RS_LINK_TECH:
+		case RS_LINK_TECH_NOT:
 			/* Get the index in the techtree. */
 			req->link = RS_GetTechByID(req->id);
 			if (!req->link)
 				Sys_Error("RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
 			break;
+#if 0
+		case RS_LINK_TECH_BEFORE:
+		case RS_LINK_TECH_XOR:
+			/* Get the index in the techtree. */
+			req->link = RS_GetTechByID(req->id);
+			if (!req->link)
+				Sys_Error("RS_AssignTechLinks: Could not get tech XOR/Before definition for '%s'", req->id);
+
+			req->link2 = RS_GetTechByID(req->id2);
+			if (!req->link2)
+				Sys_Error("RS_AssignTechLinks: Could not get tech XOR/Before definition for '%s'", req->id2);
+			break;
+#endif
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
 			req->link = INVSH_GetItemByID(req->id);
@@ -1512,20 +1586,28 @@ static const char *RS_TechTypeToName (researchType_t type)
  	}
 }
 
-static const char *RS_TechLinkToName (requirementType_t type, void *link)
+static const char *RS_TechReqToName (requirement_t *req)
 {
-	assert(link);
-	switch(type) {
+	assert(req->link);
+	switch(req->type) {
 	case RS_LINK_TECH:
-		return ((technology_t*)link)->id;
+		return ((technology_t*)req->link)->id;
+	case RS_LINK_TECH_NOT:
+		return va("not %s",((technology_t*)req->link)->id);
+#if 0
+	case RS_LINK_TECH_BEFORE:
+		return va("%s before %s",((technology_t*)req->link)->id, ((technology_t*)req->link2)->id);
+	case RS_LINK_TECH_XOR:
+		return va("%s xor %s",((technology_t*)req->link)->id, ((technology_t*)req->link2)->id);
+#endif
 	case RS_LINK_ITEM:
-		return ((objDef_t*)link)->id;
+		return ((objDef_t*)req->link)->id;
 	case RS_LINK_EVENT:
 		return "not implemented yet";
 	case RS_LINK_ALIEN:
-		return ((teamDef_t*)link)->id;
+		return ((teamDef_t*)req->link)->id;
 	case RS_LINK_ALIEN_DEAD:
-		return ((teamDef_t*)link)->id;
+		return ((teamDef_t*)req->link)->id;
 	case RS_LINK_ALIEN_GLOBAL:
 		return "global alien count";
 	default:
@@ -1538,6 +1620,14 @@ static const char *RS_TechLinkTypeToName (requirementType_t type)
 	switch(type) {
 	case RS_LINK_TECH:
 		return "tech";
+	case RS_LINK_TECH_NOT:
+		return "tech (not)";
+#if 0
+	case RS_LINK_TECH_BEFORE:
+		return "tech (before)";
+	case RS_LINK_TECH_XOR:
+		return "tech (xor)";
+#endif
 	case RS_LINK_ITEM:
 		return "item";
 	case RS_LINK_EVENT:
@@ -1561,7 +1651,7 @@ static void RS_TechnologyList_f (void)
 {
 	int i, j;
 	technology_t *tech;
-	requirements_t *req;
+	requirements_t *reqs;
 
 	Com_Printf("#techs: %i\n", gd.numTechnologies);
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -1569,15 +1659,15 @@ static void RS_TechnologyList_f (void)
 		Com_Printf("Tech: %s\n", tech->id);
 		Com_Printf("... time      -> %.2f\n", tech->time);
 		Com_Printf("... name      -> %s\n", tech->name);
-		req = &tech->require_AND;
+		reqs = &tech->require_AND;
 		Com_Printf("... requires ALL  ->");
-		for (j = 0; j < req->numLinks; j++)
-			Com_Printf(" %s (%s) %s", req->links[j].id, RS_TechLinkTypeToName(req->links[j].type), RS_TechLinkToName(req->links[j].type, req->links[j].link));
-		req = &tech->require_OR;
+		for (j = 0; j < reqs->numLinks; j++)
+			Com_Printf(" %s (%s) %s", reqs->links[j].id, RS_TechLinkTypeToName(reqs->links[j].type), RS_TechReqToName(&reqs->links[j]));
+		reqs = &tech->require_OR;
 		Com_Printf("\n");
 		Com_Printf("... requires ANY  ->");
-		for (j = 0; j < req->numLinks; j++)
-			Com_Printf(" %s (%s) %s", req->links[j].id, RS_TechLinkTypeToName(req->links[j].type), RS_TechLinkToName(req->links[j].type, req->links[j].link));
+		for (j = 0; j < reqs->numLinks; j++)
+			Com_Printf(" %s (%s) %s", reqs->links[j].id, RS_TechLinkTypeToName(reqs->links[j].type), RS_TechReqToName(&reqs->links[j]));
 		Com_Printf("\n");
 		Com_Printf("... provides  -> %s", tech->provides);
 		Com_Printf("\n");
@@ -1798,8 +1888,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	int tech_old;
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
 	const char *token;
-	requirements_t *required_temp;
-	descriptions_t *desc_temp;
+	requirements_t *requiredTemp;
+	descriptions_t *descTemp;
 	int i;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -1905,9 +1995,9 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
  				/* Link to correct list. */
 				if (!Q_strncmp(token, "pre_description", MAX_VAR)) {
-					desc_temp = &tech->pre_description;
+					descTemp = &tech->pre_description;
 				} else {
-					desc_temp = &tech->description;
+					descTemp = &tech->description;
 				}
 
 				token = COM_EParse(text, errhead, name);
@@ -1925,19 +2015,19 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					if (*token == '}')
 						break;
 
-					if (desc_temp->numDescriptions < MAX_DESCRIPTIONS) {
+					if (descTemp->numDescriptions < MAX_DESCRIPTIONS) {
 						/* Copy tech string into entry. */
-						desc_temp->tech[desc_temp->numDescriptions] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+						descTemp->tech[descTemp->numDescriptions] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 						/* Copy description text into the entry. */
 						token = COM_EParse(text, errhead, name);
 						if (*token == '_')
 							token++;	/**< Remove first char (i.e. "_") */
 						else
-							Sys_Error("RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, desc_temp->tech[desc_temp->numDescriptions]);
+							Sys_Error("RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, descTemp->tech[descTemp->numDescriptions]);
 
-						desc_temp->text[desc_temp->numDescriptions] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-						desc_temp->numDescriptions++;
+						descTemp->text[descTemp->numDescriptions] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+						descTemp->numDescriptions++;
 					}
 				} while (*text);
 
@@ -1946,11 +2036,11 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				|| (!Q_strncmp(token, "require_for_production", MAX_VAR))) {
 				/* Link to correct list. */
 				if (!Q_strncmp(token, "require_AND", MAX_VAR)) {
-					required_temp = &tech->require_AND;
+					requiredTemp = &tech->require_AND;
 				} else if (!Q_strncmp(token, "require_OR", MAX_VAR)) {
-					required_temp = &tech->require_OR;
+					requiredTemp = &tech->require_OR;
 				} else { /* It's "require_for_production" */
-					required_temp = &tech->require_for_production;
+					requiredTemp = &tech->require_for_production;
 				}
 
 				token = COM_EParse(text, errhead, name);
@@ -1968,74 +2058,100 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					if (*token == '}')
 						break;
 
-					if (!Q_strncmp(token, "tech", MAX_VAR)) {
-						if (required_temp->numLinks < MAX_TECHLINKS) {
+
+					if (!Q_strncmp(token, "tech", MAX_VAR) || !Q_strncmp(token, "tech_not", MAX_VAR)) {
+						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							required_temp->links[required_temp->numLinks].type = RS_LINK_TECH;
+							if (!Q_strncmp(token, "tech_not", MAX_VAR))
+								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH_NOT;
+							else
+								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH;
 
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->links[required_temp->numLinks].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
-							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-tech - %s\n", required_temp->links[required_temp->numLinks].id);
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-tech ('tech' or 'tech_not')- %s\n", requiredTemp->links[requiredTemp->numLinks].id);
 
-							required_temp->numLinks++;
+							requiredTemp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
-					} else if (!Q_strncmp(token, "item", MAX_VAR)) {
-						/* Defines what items need to be collected for this item to be researchable. */
-						if (required_temp->numLinks < MAX_TECHLINKS) {
+#if 0
+					} else if (!Q_strncmp(token, "tech_before", MAX_VAR) || !Q_strncmp(token, "tech_xor", MAX_VAR)) {
+						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							required_temp->links[required_temp->numLinks].type = RS_LINK_ITEM;
+							if (!Q_strncmp(token, "tech_before", MAX_VAR))
+								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH_BEFORE;
+							else
+							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH_XOR;
+
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->links[required_temp->numLinks].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+							token = COM_Parse(text);
+							requiredTemp->links[requiredTemp->numLinks].id2 = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-tech ('tech_before' or 'tech_xor')- %s/%s\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].id2);
+
+							requiredTemp->numLinks++;
+						} else {
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
+						}
+#endif
+					} else if (!Q_strncmp(token, "item", MAX_VAR)) {
+						/* Defines what items need to be collected for this item to be researchable. */
+						if (requiredTemp->numLinks < MAX_TECHLINKS) {
+							/* Set requirement-type. */
+							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ITEM;
+							/* Set requirement-name (id). */
+							token = COM_Parse(text);
+							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
-							required_temp->links[required_temp->numLinks].amount = atoi(token);
-							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", required_temp->links[required_temp->numLinks].id, required_temp->links[required_temp->numLinks].amount);
-							required_temp->numLinks++;
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
+							requiredTemp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (!Q_strncmp(token, "event", MAX_VAR)) {
 						token = COM_Parse(text);
 						Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-event - %s\n", token);
-						required_temp->links[required_temp->numLinks].type = RS_LINK_EVENT;
+						requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
 						/* @todo: Implement final event system, so this can work 100% */
 					} else if (!Q_strncmp(token, "alienglobal", MAX_VAR)) {
-						if (required_temp->numLinks < MAX_TECHLINKS) {
+						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							required_temp->links[required_temp->numLinks].type = RS_LINK_ALIEN_GLOBAL;
-							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alienglobal - %i\n", required_temp->links[required_temp->numLinks].amount);
+							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN_GLOBAL;
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alienglobal - %i\n", requiredTemp->links[requiredTemp->numLinks].amount);
 
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
-							required_temp->links[required_temp->numLinks].amount = atoi(token);
-							required_temp->numLinks++;
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							requiredTemp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if ((!Q_strncmp(token, "alien_dead", MAX_VAR)) || (!Q_strncmp(token, "alien", MAX_VAR))) { /* Does this only check the beginning of the string? */
 						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
-						if (required_temp->numLinks < MAX_TECHLINKS) {
+						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
 							if (!Q_strncmp(token, "alien_dead", MAX_VAR)) {
-								required_temp->links[required_temp->numLinks].type = RS_LINK_ALIEN_DEAD;
-								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien dead - %s - %i\n", required_temp->links[required_temp->numLinks].id, required_temp->links[required_temp->numLinks].amount);
+								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN_DEAD;
+								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien dead - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							} else {
-								required_temp->links[required_temp->numLinks].type = RS_LINK_ALIEN;
-								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien alive - %s - %i\n", required_temp->links[required_temp->numLinks].id, required_temp->links[required_temp->numLinks].amount);
+								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ALIEN;
+								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien alive - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
 							}
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->links[required_temp->numLinks].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+							requiredTemp->links[requiredTemp->numLinks].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
-							required_temp->links[required_temp->numLinks].amount = atoi(token);
-							required_temp->numLinks++;
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							requiredTemp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
