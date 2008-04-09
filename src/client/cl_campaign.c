@@ -1388,7 +1388,7 @@ static int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, in
 	const int BOMBER_INTEREST_MIN = 500;	/**< Minimum value interest to have a mission spawned by bomber */
 
 	ufoTypes[num++] = UFO_FIGHTER;
-	if (mission->initialOverallInterest < BOMBER_INTEREST_MIN)
+	if (mission->initialOverallInterest > BOMBER_INTEREST_MIN)
 		ufoTypes[num++] = UFO_BOMBER;
 
 	return num;
@@ -5043,6 +5043,7 @@ static void CL_GameAutoCheck_f (void)
 void CL_GameAutoGo (mission_t *mis)
 {
 	qboolean won;
+	float winProbability;
 	aircraft_t *aircraft;
 	int i, amount = 0;
 	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
@@ -5076,14 +5077,23 @@ void CL_GameAutoGo (mission_t *mis)
 			return;
 		}
 		/* FIXME: This needs work */
-		won = ccs.battleParameters.aliens * difficulty->integer > aircraft->teamSize ? qfalse : qtrue;
-		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i (count as %i) - Soldiers: %i\n", ccs.battleParameters.aliens, ccs.battleParameters.aliens * difficulty->integer, aircraft->teamSize);
+		winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
+		won = frand() < winProbability;
+		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, aircraft->teamSize, winProbability);
 	} else {
+		const int numSoldiers = E_CountHired(baseCurrent, EMPL_SOLDIER);
 		baseCurrent = (base_t*)mis->data;
 		assert(baseCurrent);
 		aircraft = NULL;
-		/* FIXME: This needs work */
-		won = qtrue;
+		if (numSoldiers) {
+			winProbability = exp((0.5 - .15 * difficulty->integer) * numSoldiers - ccs.battleParameters.aliens);
+			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, numSoldiers, winProbability);
+			won = frand() < winProbability;
+		} else {
+			/* No soldier to defend the base */
+			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: 0  -- battle lost\n", ccs.battleParameters.aliens);
+			won = qfalse;
+		}
 	}
 
 	MN_PopMenu(qfalse);
