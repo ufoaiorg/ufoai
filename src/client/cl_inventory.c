@@ -297,6 +297,9 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
 	CL_UpdateCredits(ccs.credits + gained);
+
+	/* ship no longer has cargo aboard */
+	aircraft->itemtypes = 0;
 }
 
 /**
