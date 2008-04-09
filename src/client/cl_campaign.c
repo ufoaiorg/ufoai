@@ -430,7 +430,6 @@ static mission_t* CP_GetLastMissionAdded (void)
 
 /**
  * @brief Return the type of mission.
- * @todo implement me
  */
 const char* CP_MissionToTypeString (const mission_t *mission)
 {
@@ -853,7 +852,6 @@ static void CP_ReconMissionLeave (mission_t *mission)
  * @note Recon mission -- Stage 1
  * @return qtrue if recon mission is aerial, qfalse if this is a ground mission
  * @sa CP_ReconMissionSelect
- * @todo implement me
  */
 static qboolean CP_ReconMissionChoose (mission_t *mission)
 {
@@ -948,9 +946,7 @@ static void CP_ReconMissionGround (mission_t *mission)
  * @brief Choose if a new ground mission should be started.
  * @note Recon mission -- Stage 1
  * @note Already one ground mission has been made
- * @todo implement me (for now, there's only one ground mission possible)
  * @sa CP_ReconMissionSelect
- * @todo implement me
  */
 static qboolean CP_ReconMissionNewGroundMission (mission_t *mission)
 {
@@ -1187,7 +1183,6 @@ static void CP_TerrorMissionNextStage (mission_t *mission)
 /**
  * @brief Base attack mission is over and is a success (from an alien point of view): change interest values.
  * @note Base attack mission
- * @todo implement me
  */
 static void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 {
@@ -1201,7 +1196,6 @@ static void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 /**
  * @brief Base attack mission is over and is a failure (from an alien point of view): change interest values.
  * @note Base attack mission
- * @todo implement me
  */
 static void CP_BaseAttackMissionIsFailure (mission_t *mission)
 {
@@ -1435,7 +1429,6 @@ static void CP_BaseAttackMissionNextStage (mission_t *mission)
 /**
  * @brief Build Base mission is over and is a success (from an alien point of view): change interest values.
  * @note Build Base mission
- * @todo implement me
  */
 static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 {
@@ -1455,7 +1448,6 @@ static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 /**
  * @brief Build Base mission is over and is a failure (from an alien point of view): change interest values.
  * @note Build Base mission
- * @todo implement me
  */
 static void CP_BuildBaseMissionIsFailure (mission_t *mission)
 {
@@ -1674,7 +1666,6 @@ static void CP_BuildBaseMissionNextStage (mission_t *mission)
 /**
  * @brief Supply mission is over and is a success (from an alien point of view): change interest values.
  * @note Supply mission
- * @todo implement me
  */
 static void CP_SupplyMissionIsSuccess (mission_t *mission)
 {
@@ -1692,7 +1683,6 @@ static void CP_SupplyMissionIsSuccess (mission_t *mission)
 /**
  * @brief Supply mission is over and is a failure (from an alien point of view): change interest values.
  * @note Supply mission
- * @todo implement me
  */
 static void CP_SupplyMissionIsFailure (mission_t *mission)
 {
@@ -2580,6 +2570,8 @@ static void CP_SpawnNewMissions_f (void)
 			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
  				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
+			if (category == INTERESTCATEGORY_BUILDING)
+ 				Com_Printf(" <0:Subverse Government, 1:Build Base>");
 			Com_Printf("\n");
 		}
 		return;
@@ -2603,17 +2595,19 @@ static void CP_SpawnNewMissions_f (void)
 		}
 		switch (category) {
 		case INTERESTCATEGORY_RECON:
-			{
-				/* Start ground mission */
-				if (!CP_MissionCreate(mission))
-					return;
-				if (type == 1)
-					/* Aerial mission */
-					CP_ReconMissionAerial(mission);
-				else
-					/* This is a ground mission */
-					CP_ReconMissionGroundGo(mission);
-			}
+			/* Start ground mission */
+			if (!CP_MissionCreate(mission))
+				return;
+			if (type == 1)
+				/* Aerial mission */
+				CP_ReconMissionAerial(mission);
+			else
+				/* This is a ground mission */
+				CP_ReconMissionGroundGo(mission);
+			break;
+		case INTERESTCATEGORY_BUILDING:
+			if (type == 1)
+				mission->initialOverallInterest = STARTING_BASEBUILD_INTEREST + 1;
 			break;
 		default:
 			Com_Printf("Type is not implemented for this category.\n");
@@ -2916,7 +2910,6 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 /**
  * @brief Create alien team.
  * @param[in] mission Pointer to the mission that generates the battle
- * @todo implement me
  */
 static void CP_CreateAlienTeam (mission_t *mission)
 {
