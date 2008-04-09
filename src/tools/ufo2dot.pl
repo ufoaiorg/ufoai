@@ -54,7 +54,9 @@
 #	2008-04-08 Hoehrer
 #		Add note to techs that have researchtime==0 (e.g most ammo)
 #		Fixed a bug where no real names where used for the techs.
-#		
+#	2008-04-09 Hoehrer
+#		Parsing "description" and "pre_description" an display them if there is more than the default one.
+#
 #######################################
 # TODO
 #	* Prettify this even more.
@@ -86,8 +88,6 @@ my $ignoredTechs = [
 
 # Settings inside "tech" we'll just skip for now.
 my $technologySkipSettings = [
-	"description",		# { default "_monoknife_txt" }
-	"pre_description",	# { default "_monoknife_pre_txt" }
 	"mail",			# { from xxx to xxx ...}
 	"mail_pre"		# { from xxx to xxx ...}
 ];
@@ -105,7 +105,6 @@ my $technologySimpleSettings = [
 	"delay",
 	"event",
 	"pushnews"
-
 ];
 
 # Settings of requirements that we want to parse
@@ -211,13 +210,51 @@ sub parseTechChapters ($) {
 	return $chaptersDef;
 }
 
-#~ require_AND
-#~ {
-	#~ tech rs_weapon_kerrblade
-	#~ tech rs_alien_bloodspider_autopsy
-	#~ tech rs_skill_close
-	#~ tech rs_damage_normal
-#~ }
+# Example
+# pre_description {
+#	default "_antimatter_pre_txt"
+#	rs_antimatter_extra "_antimatter_extra_pre_txt"
+# }
+sub parseTechDescription ($$) {
+	my ($d, $techID) = @_;
+	my $text = $$d;
+
+	my $token = parseUfoToken(\$text);
+
+	if ($token ne '{') {
+		die "parseTechDescription: Empty tech description in '", $techID, "' found ('", $token, "').\n";
+	}
+	my $descTemp = [];
+
+	my $count = 0;
+	$token = parseUfoToken(\$text);
+	while ($token ne '}') {
+		my $desc = {};
+		if ($count == 0 && !$token eq 'default') {
+			print "parseTechDescription: Expected description id 'default', got '", $token, "' instead. (tech '", $techID ,"')\n";
+		}
+		$desc->{'id'} = $token;
+
+		$token = parseUfoToken(\$text);
+		$desc->{'desc'} = $token;
+		$count++;
+		push(@{$descTemp}, $desc);
+
+		$token = parseUfoToken(\$text);
+	}
+#print Dumper($descTemp); # DEBUG
+	$$d = $text;
+	return $descTemp;
+}
+
+# Example
+# require_AND
+# {
+#	tech rs_weapon_kerrblade
+#	tech rs_alien_bloodspider_autopsy
+#	tech rs_skill_close
+#	tech rs_damage_normal
+# }
 sub parseTechRequirements ($$) {
 	my ($d, $techID) = @_;
 	my $text = $$d;
@@ -227,7 +264,7 @@ sub parseTechRequirements ($$) {
 	my $token = parseUfoToken(\$text);
 
 	if ($token ne '{') {
-		die "parseTechRequirements: Empty tech requirement in '", $techID, "' found.\n";
+		die "parseTechRequirements: Empty tech requirement in '", $techID, "' found ('", $token, "').\n";
 	}
 
 	$token = parseUfoToken(\$text);
@@ -282,7 +319,7 @@ sub parseTech ($) {
 	$token = parseUfoToken(\$text);
 
 	if ($token ne '{') {
-		die "parseTech: Empty tech '", $techID, "' found.\n";
+		die "parseTech: Empty tech '", $techID, "' found ('", $token, "').\n";
 	}
 
 	$token = parseUfoToken(\$text);
@@ -319,7 +356,17 @@ sub parseTech ($) {
 			next;
 		}
 
-		if ($token eq "require_AND") {
+		if ($token eq "description") {
+			$tech->{'description'} = parseTechDescription(\$text, $techID);
+			$token = parseUfoToken(\$text);
+			#print Dumper($tech->{'description'});	# Debug
+			#exit;
+			print "Parsed 'description' - next token: $token\n";
+		} elsif ($token eq "pre_description") {
+			$tech->{'pre_description'} = parseTechDescription(\$text, $techID);
+			$token = parseUfoToken(\$text);
+			print "Parsed 'pre_description' - next token: $token\n";
+		} elsif ($token eq "require_AND") {
 			$tech->{'AND'} = parseTechRequirements(\$text, $techID);
 			$token = parseUfoToken(\$text);
 			print "Parsed AND - next token: $token\n";
@@ -614,8 +661,8 @@ sub printTechnologyStyle ($$) {
 	
 }
 
-sub printTech ($$) {
-	my ($tech, $FH) = @_;
+sub printTech ($$$) {
+	my ($tech, $FH, $techs) = @_;
 
 	# techID [label="Tech Name"];
 	my $name;
@@ -631,11 +678,67 @@ sub printTech ($$) {
 		$name .= '\n(Auto-researched)';
 	}
 
+	my $additionalOptions = '';
+	
 	if ($tech->{'type'} eq 'logic') {
-		printf $FH "\t\t".$tech->{'id'}.' [label="'.$name.'", color="red"];'."\n";
-	} else {
-		printf $FH "\t\t".$tech->{'id'}.' [label="'.$name.'"];'."\n";
+		$additionalOptions .= ', color="red"';
 	}
+	
+	if ((exists($tech->{'description'}) && descNumber($tech, 'description', $techs) > 1)
+	||  (exists($tech->{'pre_description'}) && descNumber($tech, 'pre_description', $techs) > 1)) {
+		$name = '{ '. $name;
+		$additionalOptions .= ', shape=record';
+		
+		if (descNumber($tech, 'pre_description', $techs) > 1) {
+			$name .= "|Research Proposal";
+#print Dumper($tech->{'pre_description'}); # DEBUG
+			foreach my $desc (@{$tech->{'pre_description'}}) {
+#print Dumper($desc); # DEBUG
+				if ($desc->{'id'} ne 'default'
+				&& exists($techs->{$desc->{'id'}})
+				&& exists($techs->{$desc->{'id'}}->{'name'})) {
+					$name .= "|{". $techs->{$desc->{'id'}}->{'name'}. "|". $desc->{'desc'}. "}";
+				} else {
+					$name .= "|{". $desc->{'id'}. "|". $desc->{'desc'}. "}";
+				}
+			}
+		}
+		if (descNumber($tech, 'description', $techs) > 1) {
+			$name .= "|Research Result";
+			foreach my $desc (@{$tech->{'description'}}) {
+				if ($desc->{'id'} ne 'default'
+				&& exists($techs->{$desc->{'id'}})
+				&& exists($techs->{$desc->{'id'}}->{'name'})) {
+					$name .= "|{". $techs->{$desc->{'id'}}->{'name'}. "|". $desc->{'desc'}. "}";
+				} else {
+					$name .= "|{". $desc->{'id'}. "|". $desc->{'desc'}. "}";
+				}
+			}
+		}
+		$name .= '}'
+	}
+	
+	printf $FH "\t\t".$tech->{'id'}.' [label="'.$name.'"'. $additionalOptions .'];'."\n";
+}
+
+sub descNumber($$$) {
+	my ($tech, $descType, $techs) = @_;
+	
+	if (exists($tech->{$descType})) {
+		my $numDesc = $#{$tech->{$descType}};
+		if ($numDesc >= 0) {
+			foreach my $desc (@{$tech->{$descType}}) {
+				if ($desc->{'id'} ne 'default' && skipTech($techs->{$desc->{'id'}})) {
+					# Reduce number of requirements if there is an unwanted tech inside.
+					$numDesc--;
+				}			
+			}
+		}
+		if ($numDesc >= 0) {
+			return $numDesc + 1;
+		}
+	}
+	return 0;
 }
 
 sub reqExists($$$) {
@@ -821,29 +924,29 @@ sub writeDotFile(%$) {
 	# Draw technology boxes
 	printf $DOT "/* Technology boxes (researchable techs) */\n";
 	printTechnologyStyle($DOT, 'researchable');
-	foreach my $techId (keys %{$techs}) {
-		my $tech = $techs->{$techId};
+	my $techId;
+	my $tech;
+	foreach $techId (keys %{$techs}) {
+		$tech = $techs->{$techId};
 		if (!skipTech($tech)
 		 && reqMet($tech, $techs)
 		 && !techResearched($tech, $techs, $researchedList)) {
-			printTech($tech, $DOT);
+			printTech($tech, $DOT, $techs);
 		}
 	}
 	printf $DOT "\n";
 	
 	printf $DOT "/* Technology boxes (researched techs) */\n";
 	printTechnologyStyle($DOT, 'researched');
-	foreach my $techId (keys %{$techs}) {
-		my $tech = $techs->{$techId};
+	foreach $techId (keys %{$techs}) {
+		$tech = $techs->{$techId};
 		if (!skipTech($tech)
 		 && techResearched($tech, $techs, $researchedList)) {
-			printTech($tech, $DOT);
+			printTech($tech, $DOT, $techs);
 		}
 	}
 	printf $DOT "\n";
 	
-	my $techId;
-	my $tech;
 	printf $DOT "/* Technology boxes (unresearched/open techs) */\n";
 	printTechnologyStyle($DOT, 'open');
 	foreach $techId (keys %{$techs}) {
@@ -851,7 +954,7 @@ sub writeDotFile(%$) {
 		if (!skipTech($tech)
 		 && !techResearched($tech, $techs, $researchedList)
 		 && !reqMet($tech, $techs)) {
-			printTech($tech, $DOT);
+			printTech($tech, $DOT, $techs);
 		}
 	}
 	printf $DOT "\n";
@@ -969,7 +1072,7 @@ my $tree = {
 
 foreach my $filename (@{$filenames}) {
 	$tree = parseUfoTree($tree, $filename);
-#	print Dumper($tree);
+#	print Dumper($tree);# DEBUG
 }
 
 $tree = parseResearchedList($tree, $filenameResearched);
