@@ -50,7 +50,8 @@ missionResults_t missionresults;
 
 static campaign_t campaigns[MAX_CAMPAIGNS];
 static int numCampaigns = 0;
-static technology_t *rs_alien_xvi;
+static technology_t *rsAlienXVI;
+#define XVI_EVENT_NAME "rs_alien_xvi_event"
 static salary_t salaries[MAX_CAMPAIGNS];
 static cvar_t *cl_campaign;
 static const int MAX_POS_LOOP = 10;				/**< Maximum number of loops to choose a mission position (to avoid infinite loops) */
@@ -3091,7 +3092,7 @@ static void CP_UpdateNationHappiness (void)
  */
 technology_t *CP_IsXVIResearched (void)
 {
-	return RS_IsResearched_ptr(rs_alien_xvi) ? rs_alien_xvi : NULL;
+	return RS_IsResearched_ptr(rsAlienXVI) ? rsAlienXVI : NULL;
 }
 
 /**
@@ -3342,7 +3343,7 @@ static void CP_CheckEvents (void)
 	 *		It's at least more script-able if we keep it as-is. Not that that says much ;) */
 	if (ccs.overallInterest > 400) {
 		/* Mark prequesite of "news_new_twist" as met. */
-		RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
+		RS_ResearchFinish(RS_GetTechByID(XVI_EVENT_NAME));
 	}
 }
 
@@ -6222,9 +6223,9 @@ void CL_GameInit (qboolean load)
 	CL_PopupInit();
 	MAP_GameInit();
 
-	rs_alien_xvi = RS_GetTechByID("rs_alien_xvi");
-	if (!rs_alien_xvi)
-		Sys_Error("CL_ResetCampaign: Could not find tech definition for rs_alien_xvi");
+	rsAlienXVI = RS_GetTechByID(XVI_EVENT_NAME);
+	if (!rsAlienXVI)
+		Sys_Error("CL_ResetCampaign: Could not find tech definition for %s", XVI_EVENT_NAME);
 
 	/* now check the parsed values for errors that are not catched at parsing stage */
 	if (!load)
