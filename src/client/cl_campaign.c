@@ -1371,6 +1371,9 @@ static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
 			break;
 	}
 
+	/* Make sure we have a base */
+	assert(randomNumber < 0);
+
 	/* base is already under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK)
 		return NULL;
