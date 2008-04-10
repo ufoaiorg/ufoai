@@ -545,13 +545,17 @@ static qboolean CP_CheckMissionVisibleOnGeoscape (const mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_TERROR_MISSION:
 	case STAGE_BASE_DISCOVERED:
+		return qtrue;
 	/* Crash site mission */
 	case STAGE_COME_FROM_ORBIT:
 	case STAGE_MISSION_GOTO:
 	case STAGE_INTERCEPT:
 	case STAGE_RECON_AIR:
 	case STAGE_RETURN_TO_ORBIT:
-		return qtrue;
+		if (mission->ufo && !mission->ufo->notOnGeoscape)
+			return qfalse;
+		else
+			return qtrue;
 	case STAGE_RECON_GROUND:
 	case STAGE_SUBVERT_GOV:
 	case STAGE_SPREAD_XVI:
