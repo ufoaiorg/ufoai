@@ -2203,7 +2203,7 @@ static void CP_HarvestMissionNextStage (mission_t *mission)
 static int CP_MissionChooseUFO (const mission_t *mission)
 {
 	int ufoTypes[UFO_MAX];
-	int numTypes;
+	int numTypes = 0;
 	int idx;
 	qboolean canBeSpawnedFromGround = qfalse;
 	float groundProbability = 0.0f;	/**< Probability to start a mission from earth (without UFO) */
@@ -2784,8 +2784,6 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 {
 	mission_t *mission;
 
-	mission->stage = STAGE_BASE_DISCOVERED;
-
 	CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qtrue);
 	mission = CP_GetLastMissionAdded();
 	if (!mission) {
@@ -2793,6 +2791,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 		return;
 	}
 
+	mission->stage = STAGE_BASE_DISCOVERED;
 	mission->data = (void *) alienBase;
 
 	mission->mapDef = Com_GetMapDefinitionByID("alienbase");
@@ -2879,7 +2878,7 @@ static qboolean CP_UFOIsCrashed (const mission_t *mission)
 static void CP_SetAlienTeamByInterest (const mission_t *mission)
 {
 	int i, level = 0;
-	int alienTeam;
+	int alienTeam = 0;
 
 	switch (mission->category) {
 	case INTERESTCATEGORY_NONE:
