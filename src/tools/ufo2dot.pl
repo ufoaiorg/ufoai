@@ -58,12 +58,17 @@
 #		Parsing "description" and "pre_description" an display them if there is more than the default one.
 #		Added support for "tech_not" nodes.
 #		Display number of required items/aliens next to the connecting edge.
+#	2008-04-10 Hoehrer
+#		Improved parsing/skipping of multiline comments.
+#		Show research time in techs.
+#		Skip future "2 autopsies" techs.
 #
 #######################################
 # TODO
 #	* Prettify this even more.
 #	* MAJOR Parse all of the items/crafts/buildings/etc... files.
 #	* Check why the svg export has too dark colors (I believe transparenzy is skipped here).
+#	* Check if we can print "real" research times in some way (e.g. for an average of 10 scientists working on it) - not just the value from the .ufo file.
 #######################################
 
 use strict;
@@ -86,7 +91,14 @@ my $ignoredTechs = [
 	'^rs_weapon_shotgun_ammo$',
 	'^rs_power_armour$',	# may get into SP soon
 	'^rs_weapon_chaingun$',
-	'^rs_weapon_chaingun_ammo$'
+	'^rs_weapon_chaingun_ammo$',
+	# This just makes the tree unreadable ... the "Any 2 Autopsies" tech is still in there anyway.
+	'^tech rs_autopsy_O_T$',
+	'^tech rs_autopsy_O_S$',
+	'^tech rs_autopsy_O_Br$',
+	'^tech rs_autopsy_T_S$',
+	'^tech rs_autopsy_T_Br$',
+	'^tech rs_autopsy_S_Br$'
 ];
 
 # Settings inside "tech" we'll just skip for now.
@@ -134,6 +146,21 @@ sub convertGettextString($) {
 	$string =~ s/^_//;
 	return $string;
 }
+
+sub skipMultilineComment ($) {
+	my ($d) = @_;
+	my $text = $$d;
+	
+	while (not ($text =~ m/^\*\//)) {
+		$text =~ s/^.|\n|\r//;	# Dunno why [.\n\r] doesn't work here ?
+		#print substr($text, 0, 10). "\n";	# DEBUG
+	}
+
+	$text =~ s/^\*\///;
+	
+	$$d = $text;
+}
+
 #######################################
 # Parsing (.ufo techtree syntax)
 #######################################
@@ -160,7 +187,8 @@ sub parseUfoToken ($) {
 
 		# Skip multi-line comment.
 		if ($text =~ m/^\/\*/) {
-			$text =~ s/\/\*([^\R]*?)\*\/([.\n?]*)/$2/; # Skip everything until (and including) closing "*/" characters.
+			# $text =~ s/\/\*.*?\*\/([.\n?]*)/$2/; # Skip everything until (and including) closing "*/" characters.
+			skipMultilineComment(\$text);
 			$modified = 1;
 			next;
 		}
@@ -677,9 +705,12 @@ sub printTech ($$$) {
 	}
 	
 	# Add note for automatically researched techs such as most ammo.
-	if (exists($tech->{'time'})
-	&& $tech->{'time'} == 0) {
-		$name .= '\n(Auto-researched)';
+	if (exists($tech->{'time'})) {
+		if ($tech->{'time'} == 0) {
+			$name .= '\n(Auto-researched)';
+		} else {
+			$name .= '\n(Researchtime: '. $tech->{'time'}. ')';
+		}
 	}
 
 	my $additionalOptions = '';
