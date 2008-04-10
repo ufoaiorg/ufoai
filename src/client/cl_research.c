@@ -70,6 +70,10 @@ void RS_ResearchFinish (technology_t* tech)
 	 * and any later changes may make the content inconsistent for the player.
 	 * @sa RS_MarkOneResearchable */
 	RS_GetDescription(&tech->description);
+	if (tech->pre_description.usedDescription < 0) {
+		/* For some reason the research proposal description was not set at this point - we just make sure it _is_ set. */
+		RS_GetDescription(&tech->pre_description);
+	}
 
 	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
 		Cbuf_AddText(va("%s\n", tech->finishedResearchEvent));
