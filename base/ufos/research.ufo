@@ -1566,7 +1566,7 @@ tech rs_weapon_plasblaster
 	{
 		tech rs_skill_explosive
 		tech rs_skill_heavy
-		rs_weapon_plasrifle
+		tech rs_weapon_plasrifle
 		item plasblaster 1
 	}
 	provides	plasblaster
