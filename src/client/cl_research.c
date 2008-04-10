@@ -65,6 +65,12 @@ static void RS_PushNewsWhenResearched (technology_t* tech)
  */
 void RS_ResearchFinish (technology_t* tech)
 {
+	/** At this point we define what research-report description is used when displayed. (i.e. "usedDescription" is set here).
+	 * That's because this is the first the player will see the research result
+	 * and any later changes may make the content inconsistent for the player.
+	 * @sa RS_MarkOneResearchable */
+	RS_GetDescription(&tech->description);
+
 	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
 		Cbuf_AddText(va("%s\n", tech->finishedResearchEvent));
 	tech->statusResearch = RS_FINISH;
@@ -102,12 +108,12 @@ void RS_MarkOneResearchable (technology_t* tech)
 	if (tech->time == 0) /* Don't send mail for automatically completed techs. */
 		tech->mailSent = MAILSENT_FINISHED;
 
-	/** At this point we define what description is used when displayed. (i.e. "usedDescription" is set here).
-	 * That's becuase this is the first the player will see anything from
-	 * the tech and any later changes will make the content of the tech inconsistent.
-	 * @todo maybe we can still define the tech->description->usedDescription just befor the finished research is displayed? Would need _lots_ of new checks though. */
+	/** At this point we define what research proposal description is used when displayed. (i.e. "usedDescription" is set here).
+	 * That's because this is the first the player will see anything from
+	 * the tech and any later changes may make the content (proposal) of the tech inconsistent for the player.
+	 * @sa RS_ResearchFinish */
 	RS_GetDescription(&tech->pre_description);
-	RS_GetDescription(&tech->description);
+	/* tech->description is checked before a research is finished */
 
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("New research proposal: %s\n"), _(tech->name));

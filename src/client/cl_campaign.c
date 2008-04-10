@@ -2450,9 +2450,6 @@ static void CP_StartXVISpreading_f (void)
 
 	for (i = 0; i < numAlienBases; i++)
 		CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qfalse);
-
-	/* Is it still needed ? I don't even know what it's used for... Kracken */
-	RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
 }
 
 #ifdef DEBUG
@@ -3331,11 +3328,21 @@ static void CP_CheckEvents (void)
 	/* Check UFOs events. */
 	UFO_CampaignCheckEvents(qtrue);
 
-	/* humans start to attacking player */
-	if (ccs.overallInterest > 700) {
+	/* Humans start to attacking player. */
+	if (ccs.overallInterest > 450) {
 		ccs.humansAttackActivated = qtrue;
 		/* Mark prequesite of "rs_enemy_on_earth" as met. */
 		RS_ResearchFinish(RS_GetTechByID("rs_enemy_on_earth_event"));
+	}
+
+	/** XVI infection begins.
+	 * This triggers cp_start_xvi_spreading (aka CP_StartXVISpreading_f)
+	 * as well after news_new_twist is marked as researched)
+	 * @todo We could actually call CP_StartXVISpreading_f directly here as well ... dunno if it helps?
+	 *		It's at least more script-able if we keep it as-is. Not that that says much ;) */
+	if (ccs.overallInterest > 400) {
+		/* Mark prequesite of "news_new_twist" as met. */
+		RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
 	}
 }
 

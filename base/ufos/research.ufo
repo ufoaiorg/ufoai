@@ -35,6 +35,7 @@
 //			If all requirements of the tech are met the text will be displayed.
 //			First match in the list (after the default) will be used, so order is important.
 //			The first entry (default/fallback) does not need an existing tech, you can use any string, but "default" is recommended.
+//			The check for this is made before the tech is marked researchable (pre_description) and before it is marked as researched (description).
 //		_gettext_text and _gettext_text2:
 //			A short string that is used by gettext to be translatable (e.g. "default _itemname_txt").
 //			This needs to be a unique string in all descriptions.
@@ -522,45 +523,6 @@ tech rs_alien_ufo_theory
 	}
 
 	time		3000
-}
-
-// FIXME: This should not be researchable at all - this is marked as
-// researchable as soon as the global xvi spread is activated
-tech rs_alien_xvi
-{
-	name		"_eXtraterrestial Viral Infection"
-	type		tech
-	up_chapter	threat
-
-	description {
-		default "_alien_xvi_txt"
-	}
-	pre_description {
-		default "_alien_xvi_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/intelligence
-	}
-
-	mail
-	{
-		from	"_mail_from_col_falkland"
-		to	"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/intelligence
-	}
-
-	require_AND
-	{
-		tech rs_alien_xvi_event
-		tech rs_enemy_on_earth
-	}
-	time		2700
 }
 
 //=================================
@@ -4414,14 +4376,16 @@ tech news_phalanx_mumbai_aftermath
 	time	0
 }
 
-tech news_newtwist
+// http://ufoai.ninex.info/wiki/index.php/Storyline/A_New_Twist
+tech news_new_twist
 {
 	name		"_A New Twist"
 	type		news
 	up_chapter	news
 
 	description {
-		default "_news_newtwist_txt"
+		default "_news_new_twist_txt"			// The Enemy On Earth has NOT been researched.
+		rs_enemy_on_earth "_news_new_twist_alt_txt"	// The Enemy On Earth HAS been researched.
 	}
 
 	mail
@@ -4433,10 +4397,8 @@ tech news_newtwist
 
 	require_AND
 	{
-		tech rs_alien_ortnok_autopsy
-		tech rs_alien_taman_autopsy
-		tech rs_alien_shevaar_autopsy
-		tech rs_alien_oddbehaviour
+		tech rs_any_2_autopsies
+		tech rs_alien_xvi_event
 	}
 
 	event "cp_start_xvi_spreading;"
@@ -4445,14 +4407,16 @@ tech news_newtwist
 	pushnews	true
 }
 
+// http://ufoai.ninex.info/wiki/index.php/Aliens/The_Enemy_On_Earth
 tech rs_enemy_on_earth
 {
 	name		"_The Enemy On Earth"
 	type		tech
-	up_chapter	tech	// FIXME: Isn't this more like "news"?
+	up_chapter	tech	// FIXME: Isn't this more likey to fit into News instead of Research Reports?
 
 	description {
-		default "_enemy_on_earth_txt"
+		default "_enemy_on_earth_alt_txt"		// A New Twist has NOT occurred
+		news_new_twist "_enemy_on_earth_txt"		// A New Twist HAS occurred
 	}
 	pre_description {
 		default "_enemy_on_earth_pre_txt"
@@ -4475,9 +4439,86 @@ tech rs_enemy_on_earth
 	require_AND
 	{
 		tech rs_enemy_on_earth_event
-		tech news_newtwist
 	}
 
 	time		600
 }
 
+// http://ufoai.ninex.info/wiki/index.php/Research/XVI_Census
+// TODO Fix all marked values below
+tech rs_xvi_census
+{
+	name		"_XVI Census"
+	type		tech
+	up_chapter	threat	// FIXME: Isn't this more likey to fit into News instead of Research Reports?
+
+	description {
+		default "_xvi_census_txt"
+	}
+	pre_description {
+		default "_xvi_census_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/intelligence
+	}
+
+	mail
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/intelligence
+	}
+
+	require_AND
+	{
+		tech rs_enemy_on_earth
+	}
+
+	time		600				// Fixme
+}
+
+/*
+// TODO Fix all marked values below
+tech rs_enemy_on_earth_revisited
+{
+	name		"_The Enemy On Earth - Revisited"
+	type		tech
+	up_chapter	tech	// FIXME: Isn't this more likey to fit into News instead of Research Reports?
+
+	description {
+		default "_enemy_on_earth_rev_txt"
+	}
+	pre_description {
+		default "_enemy_on_earth_rev_pre_txt"
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"		// Fixme
+		to	"_mail_to_base_commander"	// Fixme
+		// subject	defined by "name"
+		icon	icons/tech			// Fixme
+	}
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"		// Fixme
+		to	"_mail_to_base_commander"	// Fixme
+		// subject	defined by "name"
+		icon	icons/tech			// Fixme
+	}
+	require_AND
+	{
+		tech	rs_enemy_on_earth
+		tech	news_new_twist
+		//tech	rs_alien_psionics		// Fixme
+	}
+
+	time		600				// Fixme
+}
+*/
