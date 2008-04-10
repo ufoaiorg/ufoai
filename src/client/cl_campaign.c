@@ -2260,6 +2260,7 @@ static int CP_MissionChooseUFO (const mission_t *mission)
 	}
 
 	/* If we reached this point, then mission will be spawned from space: choose UFO */
+	assert(numTypes);
 	idx = (int) (numTypes * (randNumber - groundProbability) / (1.0f - groundProbability));
 	assert(idx < numTypes);
 
@@ -2671,10 +2672,7 @@ static void CL_DebugMissionList_f (void)
 		Com_Printf("...location: '%s'\n", mission->location);
 		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
 			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
-		if (mission->onGeoscape)
-			Com_Printf("...pos (%f, %f) -- on Geoscape\n", mission->pos[0], mission->pos[1]);
-		else
-			Com_Printf("...pos (%f, %f) -- not on Geoscape\n", mission->pos[0], mission->pos[1]);
+		Com_Printf("...pos (%.02f, %.02f) -- %son Geoscape\n", mission->pos[0], mission->pos[1], mission->onGeoscape ? "" : "not ");
 		Com_Printf("...UFO %s\n", mission->ufo ? mission->ufo->id : "No UFO");
 		noMission = qfalse;
 	}
@@ -2878,12 +2876,12 @@ static qboolean CP_UFOIsCrashed (const mission_t *mission)
 static void CP_SetAlienTeamByInterest (const mission_t *mission)
 {
 	int i, level = 0;
-	int alienTeam = 0;
+	int alienTeam = ALIENTEAM_DEFAULT;
 
 	switch (mission->category) {
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
-		Sys_Error("CP_GetAlienByInterest: Try to set alien team for a mission category NONE\n");
+		Sys_Error("CP_GetAlienByInterest: Try to set alien team for invalid mission category '%i'\n", mission->category);
 	case INTERESTCATEGORY_HARVEST:
 		alienTeam = ALIENTEAM_HARVEST;
 		break;
@@ -2893,16 +2891,13 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 	case INTERESTCATEGORY_TERROR_ATTACK:
 	case INTERESTCATEGORY_BASE_ATTACK:
 		level = 1;
-		alienTeam = ALIENTEAM_DEFAULT;
 		break;
 	case INTERESTCATEGORY_RECON:
-		alienTeam = ALIENTEAM_DEFAULT;
 		break;
 	case INTERESTCATEGORY_BUILDING:
 	case INTERESTCATEGORY_SUPPLY:
 	case INTERESTCATEGORY_INTERCEPT:
 		level = -1;
-		alienTeam = ALIENTEAM_DEFAULT;
 		break;
 	}
 
