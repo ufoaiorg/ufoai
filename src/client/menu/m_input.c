@@ -345,15 +345,15 @@ void MN_Click (int x, int y)
 			MN_ExecuteActions(menu, execute_node->click);
 			if (execute_node->repeat) {
 				mouseSpace = MS_LHOLD;
-				if (execute_node->clickDelay)
-					mn.mouseRepeat.clickDelay = execute_node->clickDelay;
-				else
-					mn.mouseRepeat.clickDelay = 300;
 				mn.mouseRepeat.menu = menu;
 				mn.mouseRepeat.action = execute_node->click;
 				/* next "event" after clickdelay msec - low values (>= 100) would result in executing
 				 * repeatable click nodes more than once - only do this for menus you want this behaviour */
-				mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
+				if (mn.mouseRepeat.clickDelay < 300) {
+					mn.mouseRepeat.nexttime = cls.realtime + 300;
+				} else {
+					mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
+				}
 			}
 		}
 
