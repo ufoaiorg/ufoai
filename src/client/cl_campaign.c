@@ -1080,6 +1080,41 @@ static void CP_TerrorMissionStart (mission_t *mission)
 }
 
 /**
+ * @brief Choose nation if needed for given mission.
+ * @param[in] mission Pointer to the mission we are creating.
+ * @param[out] nationList linkedList that will contain the name of the nation where the mission should take place.
+ * @note nationList should be empty if no nation should be favoured.
+ * @return True if nationList has been filled, false else.
+ */
+static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nationList)
+{
+	nation_t *nation;
+	int randomNumber, max = 0;
+	const int OFFSET = 1;	/**< Increase this factor to make probability to select non-infected nation higher
+							 * Used to make sure that non-infected nation can still be attacked */
+
+	if (mission->ufo)
+		return qfalse;
+
+	/* favour mission with higher XVI level */
+	for (nation = gd.nations; nation < gd.nations + gd.numNations; nation++)
+		max += OFFSET + nation->stats[0].xviInfection;
+
+	randomNumber = (int) (frand() * (float) max);
+
+	/* Select the corresponding nation */
+	for (nation = gd.nations; nation < gd.nations + gd.numNations; nation++) {
+		randomNumber -= OFFSET + nation->stats[0].xviInfection;
+		if (randomNumber < 0) {
+			LIST_AddString(nationList, nation->id);
+			return qtrue;
+		}
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Set Terror attack mission, and go to Terror attack mission pos.
  * @note Terror attack mission -- Stage 1
  */
@@ -1092,8 +1127,11 @@ static void CP_TerrorMissionGo (mission_t *mission)
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
 		int counter;
+		linkedList_t *nationList;
+		qboolean nationTest;
+		nationTest = CP_ChooseNation(mission, &nationList);
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
-			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
+			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : NULL))
 				continue;
 			if (CP_PositionCloseToBase(mission->pos))
 				continue;
@@ -1104,6 +1142,8 @@ static void CP_TerrorMissionGo (mission_t *mission)
 			CP_MissionRemove(mission);
 			return;
 		}
+		if (nationTest)
+			LIST_Delete(nationList);
 	} else {
 		Com_Printf("CP_TerrorMissionGo: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
