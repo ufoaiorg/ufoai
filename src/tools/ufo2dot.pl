@@ -93,12 +93,12 @@ my $ignoredTechs = [
 	'^rs_weapon_chaingun$',
 	'^rs_weapon_chaingun_ammo$',
 	# This just makes the tree unreadable ... the "Any 2 Autopsies" tech is still in there anyway.
-	'^tech rs_autopsy_O_T$',
-	'^tech rs_autopsy_O_S$',
-	'^tech rs_autopsy_O_Br$',
-	'^tech rs_autopsy_T_S$',
-	'^tech rs_autopsy_T_Br$',
-	'^tech rs_autopsy_S_Br$'
+	'^rs_autopsy_O_T$',
+	'^rs_autopsy_O_S$',
+	'^rs_autopsy_O_Br$',
+	'^rs_autopsy_T_S$',
+	'^rs_autopsy_T_Br$',
+	'^rs_autopsy_S_Br$'
 ];
 
 # Settings inside "tech" we'll just skip for now.
