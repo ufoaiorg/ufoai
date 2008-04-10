@@ -1272,6 +1272,7 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	CL_BaseRansacked(base);
 	base->baseStatus = BASE_WORKING;
 	gd.mapAction = MA_NONE;
+	mission->data = NULL;
 
 	CP_MissionDisableTimeLimit(mission);
 	if (mission->ufo) {
