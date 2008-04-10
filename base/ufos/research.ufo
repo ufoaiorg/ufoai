@@ -235,7 +235,6 @@ tech rs_alien_live
 
 	require_AND
 	{
-		tech rs_alien_breathing
 		tech rs_contained_organic_alien	// LOGIC tech - see there for more
 	}
 
