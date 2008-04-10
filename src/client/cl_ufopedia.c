@@ -47,7 +47,7 @@ static char	upBuffer[MAX_UPTEXT];
 static int up_firemode;
 
 /* this variable contains the current weapon to display (for an ammo) */
-static int up_researchedlink;
+static int upResearchedLink;
 
 /**
  * don't change the order or you have to change the if statements about mn_updisplay cvar
@@ -322,26 +322,26 @@ void UP_ItemDescription (const objDef_t *od)
 
 		/* Only display weapons if at least one has been researched */
 		if (up_numresearchedlink > 0) {
-			/* We check that up_researchedlink exists for this ammo (in case we switched from an ammo or a weapon with higher value)*/
-			if (up_researchedlink > od->numWeapons - 1) {
-				for (up_researchedlink = 0; up_researchedlink < od->numWeapons; up_researchedlink++) {
-					if (RS_IsResearched_ptr(od->weapons[up_researchedlink]->tech))
+			/* We check that upResearchedLink exists for this ammo (in case we switched from an ammo or a weapon with higher value)*/
+			if (upResearchedLink >= od->numWeapons) {
+				for (upResearchedLink = 0; upResearchedLink < od->numWeapons; upResearchedLink++) {
+					if (RS_IsResearched_ptr(od->weapons[upResearchedLink]->tech))
 						break;
-					up_researchedlink++;
+					upResearchedLink++;
 				}
 			}
 
-			up_weapon_id = up_researchedlink;
+			up_weapon_id = upResearchedLink;
 
 			/* Display the name of the associated weapon */
 			Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
-			Cvar_Set("mn_researchedlinkname", od->weapons[up_researchedlink]->name);
-			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), od->weapons[up_researchedlink]->name));
+			Cvar_Set("mn_researchedlinkname", od->weapons[upResearchedLink]->name);
+			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), od->weapons[upResearchedLink]->name));
 
 			/* Needed for writing stats below */
 			odAmmo = od;
 		} else {
-			up_researchedlink = 0;
+			upResearchedLink = 0;
 			odAmmo = NULL;
 		}
 	} else if (od->weapon && !od->reload) {
@@ -349,7 +349,7 @@ void UP_ItemDescription (const objDef_t *od)
 		upCurrentTech = od->tech;
 
 		/* Security reset */
-		up_researchedlink = 0;
+		upResearchedLink = 0;
 
 		/* ammo and weapon are the same item: must use up_weapon_id 0 */
 		up_weapon_id = 0;
@@ -372,17 +372,17 @@ void UP_ItemDescription (const objDef_t *od)
 
 		/* Only display ammos if at least one has been researched */
 		if (up_numresearchedlink > 0) {
-			/* We check that up_researchedlink exists for this weapon (in case we switched from an ammo or a weapon with higher value)*/
-			if (up_researchedlink > od->numAmmos - 1) {
-				for (up_researchedlink = 0; up_researchedlink < od->numAmmos; up_researchedlink++) {
-					if (RS_IsResearched_ptr(od->ammos[up_researchedlink]->tech))
+			/* We check that upResearchedLink exists for this weapon (in case we switched from an ammo or a weapon with higher value)*/
+			if (upResearchedLink >= od->numAmmos) {
+				for (upResearchedLink = 0; upResearchedLink < od->numAmmos; upResearchedLink++) {
+					if (RS_IsResearched_ptr(od->ammos[upResearchedLink]->tech))
 						break;
-					up_researchedlink++;
+					upResearchedLink++;
 				}
 			}
 
 			/* Everything that follows depends only of the ammunition, so we change od to it */
-			odAmmo = od->ammos[up_researchedlink];
+			odAmmo = od->ammos[upResearchedLink];
 			for (i = 0; i < odAmmo->numWeapons; i++) {
 				if (odAmmo->weapons[i] == od)	/** od->idx == item */
 					up_weapon_id = i;
@@ -392,8 +392,8 @@ void UP_ItemDescription (const objDef_t *od)
 			Cvar_Set("mn_researchedlinkname", odAmmo->name);
 			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), odAmmo->name));
 		} else {
-			/* Reset up_researchedLink to make sure we don't hit an assert while drawing ammo */
-			up_researchedlink = 0;
+			/* Reset upResearchedLink to make sure we don't hit an assert while drawing ammo */
+			upResearchedLink = 0;
 			odAmmo = NULL;
 		}
 	} else
@@ -969,7 +969,7 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (od->numAmmos > 0) {
 		/* We set t_associated to ammo to display */
-		const technology_t *t_associated = od->ammos[up_researchedlink]->tech;
+		const technology_t *t_associated = od->ammos[upResearchedLink]->tech;
 		assert(t_associated);
 		Cvar_Set("mn_upmodel_bottom", t_associated->mdl_top);
 	}
@@ -992,7 +992,7 @@ static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 
 	if (tech) {
 		up_firemode = 0;
-		up_researchedlink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+		upResearchedLink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 
 		if (tech->mdl_top)
 			Cvar_Set("mn_upmodel_top", tech->mdl_top);
@@ -1469,11 +1469,11 @@ static void UP_ResearchedLinkClick_f (void)
 	assert(od);
 
 	if (!Q_strncmp(od->type, "ammo", 4)) {
-		t = od->weapons[up_researchedlink]->tech;
+		t = od->weapons[upResearchedLink]->tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	} else if (od->weapon && od->reload) {
-		t = od->ammos[up_researchedlink]->tech;
+		t = od->ammos[upResearchedLink]->tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	}
@@ -1687,7 +1687,7 @@ static void UP_OpenMail_f (void)
 static void UP_IncreaseWeapon_f (void)
 {
 	technology_t *t;
-	int up_researchedlink_temp;
+	int upResearchedLinkTemp;
 	objDef_t *od;
 
 	if (!upCurrentTech) /* if called from console */
@@ -1699,31 +1699,31 @@ static void UP_IncreaseWeapon_f (void)
 	od = INVSH_GetItemByID(t->provides);
 	assert(od);
 
-	up_researchedlink_temp = up_researchedlink;
-	up_researchedlink_temp++;
-	/* We only try to change the value of up_researchedlink if this is possible */
-	if (up_researchedlink < od->numWeapons - 1) {
+	upResearchedLinkTemp = upResearchedLink;
+	upResearchedLinkTemp++;
+	/* We only try to change the value of upResearchedLink if this is possible */
+	if (upResearchedLink < od->numWeapons - 1) {
 		/* this is an ammo */
-		while (!RS_IsResearched_ptr(od->weapons[up_researchedlink_temp]->tech)) {
-			up_researchedlink_temp++;
-			if (up_researchedlink_temp > od->numWeapons)
+		while (!RS_IsResearched_ptr(od->weapons[upResearchedLinkTemp]->tech)) {
+			upResearchedLinkTemp++;
+			if (upResearchedLinkTemp >= od->numWeapons)
 				break;
 		}
 
-		if (up_researchedlink_temp < od->numWeapons) {
-			up_researchedlink = up_researchedlink_temp;
+		if (upResearchedLinkTemp < od->numWeapons) {
+			upResearchedLink = upResearchedLinkTemp;
 			UP_ItemDescription(od);
 		}
-	} else if (up_researchedlink < od->numAmmos - 1) {
+	} else if (upResearchedLink < od->numAmmos - 1) {
 		/* this is a weapon */
-		while (!RS_IsResearched_ptr(od->ammos[up_researchedlink_temp]->tech)) {
-			up_researchedlink_temp++;
-			if (up_researchedlink_temp > od->numAmmos)
+		while (!RS_IsResearched_ptr(od->ammos[upResearchedLinkTemp]->tech)) {
+			upResearchedLinkTemp++;
+			if (upResearchedLinkTemp >= od->numAmmos)
 				break;
 		}
 
-		if (up_researchedlink_temp < od->numAmmos) {
-			up_researchedlink = up_researchedlink_temp;
+		if (upResearchedLinkTemp < od->numAmmos) {
+			upResearchedLink = upResearchedLinkTemp;
 			UP_DrawAssociatedAmmo(t);
 			UP_ItemDescription(od);
 		}
@@ -1737,7 +1737,7 @@ static void UP_IncreaseWeapon_f (void)
 static void UP_DecreaseWeapon_f (void)
 {
 	technology_t *t;
-	int up_researchedlink_temp;
+	int upResearchedLinkTemp;
 	objDef_t *od;
 
 	if (!upCurrentTech) /* if called from console */
@@ -1749,31 +1749,31 @@ static void UP_DecreaseWeapon_f (void)
 	od = INVSH_GetItemByID(t->provides);
 	assert(od);
 
-	up_researchedlink_temp = up_researchedlink;
-	up_researchedlink_temp--;
-	/* We only try to change the value of up_researchedlink if this is possible */
-	if (up_researchedlink > 0 && od->numWeapons > 0) {
+	upResearchedLinkTemp = upResearchedLink;
+	upResearchedLinkTemp--;
+	/* We only try to change the value of upResearchedLink if this is possible */
+	if (upResearchedLink > 0 && od->numWeapons > 0) {
 		/* this is an ammo */
-		while (!RS_IsResearched_ptr(od->weapons[up_researchedlink_temp]->tech)) {
-			up_researchedlink_temp--;
-			if (up_researchedlink_temp < 0)
+		while (!RS_IsResearched_ptr(od->weapons[upResearchedLinkTemp]->tech)) {
+			upResearchedLinkTemp--;
+			if (upResearchedLinkTemp < 0)
 				break;
 		}
 
-		if (up_researchedlink_temp >= 0) {
-			up_researchedlink = up_researchedlink_temp;
+		if (upResearchedLinkTemp >= 0) {
+			upResearchedLink = upResearchedLinkTemp;
 			UP_ItemDescription(od);
 		}
-	} else if (up_researchedlink > 0 && od->numAmmos > 0) {
+	} else if (upResearchedLink > 0 && od->numAmmos > 0) {
 		/* this is a weapon */
-		while (!RS_IsResearched_ptr(od->ammos[up_researchedlink_temp]->tech)) {
-			up_researchedlink_temp--;
-			if (up_researchedlink_temp < 0)
+		while (!RS_IsResearched_ptr(od->ammos[upResearchedLinkTemp]->tech)) {
+			upResearchedLinkTemp--;
+			if (upResearchedLinkTemp < 0)
 				break;
 		}
 
-		if (up_researchedlink_temp >= 0) {
-			up_researchedlink = up_researchedlink_temp;
+		if (upResearchedLinkTemp >= 0) {
+			upResearchedLink = upResearchedLinkTemp;
 			UP_DrawAssociatedAmmo(t);
 			UP_ItemDescription(od);
 		}
@@ -1853,7 +1853,7 @@ void UP_Reset (void)
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 	up_firemode = 0;
-	up_researchedlink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+	upResearchedLink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 }
 
 /**
