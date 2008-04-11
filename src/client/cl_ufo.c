@@ -517,12 +517,13 @@ static void UFO_ListOnGeoscape_f (void)
 	aircraft_t* ufo;
 	int k;
 
-	Com_Printf("There are %i UFOs on geoscape\n", gd.numUFOs);
-	for (ufo = gd.ufos + gd.numUFOs - 1; ufo >= gd.ufos; ufo--) {
+	Com_Printf("There are %i UFOs in game\n", gd.numUFOs);
+	for (ufo = gd.ufos; ufo < gd.ufos + gd.numUFOs; ufo++) {
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
 		Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
 			ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
 		Com_Printf("...linked to mission '%s'\n", ufo->mission ? ufo->mission->id : "no mission");
+		Com_Printf("... UFO %son geoscape\n", ufo->notOnGeoscape ? "not " : "");
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (k = 0; k < ufo->maxWeapons; k++) {
 			if (ufo->weapons[k].item) {
@@ -603,8 +604,6 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 {
 	int num;
-	base_t* base;
-	aircraft_t* aircraft;
 
 	/* Remove ufo from ufos list */
 	num = ufo - gd.ufos;
@@ -615,14 +614,6 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->name);
 	memcpy(gd.ufos + num, gd.ufos + num + 1, (gd.numUFOs - num - 1) * sizeof(aircraft_t));
 	gd.numUFOs--;
-
-	/* Remove ufo from bases and aircraft radars */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-		RADAR_NotifyUFORemoved(&base->radar, ufo);
-
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
-			RADAR_NotifyUFORemoved(&aircraft->radar, ufo);
-	}
 }
 
 #ifdef DEBUG

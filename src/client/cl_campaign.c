@@ -619,17 +619,34 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
 
 /**
  * @brief Removes (temporarily) a UFO from geoscape: make it non visible and call notify functions
+ * @param[in] Pointer to mission
+ * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed).
  * @note We don't destroy the UFO because we can use later, e.g. if it takes off
  */
-static void CP_UFORemoveFromGeoscape (mission_t *mission)
+static void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 {
+	linkedList_t *list;
+
 	assert(mission->ufo);
 
 	mission->ufo->notOnGeoscape = qtrue;
 
 	/* Notications */
-	AIR_AircraftsNotifyUFORemoved(mission->ufo);
-	MAP_NotifyUFORemoved(mission->ufo);
+	AIR_AircraftsNotifyUFORemoved(mission->ufo, destroyed);
+	MAP_NotifyUFORemoved(mission->ufo, destroyed);
+	RADAR_NotifyUFORemoved(mission->ufo, destroyed);
+
+	if (destroyed) {
+		/* Update UFO idx */
+		list = ccs.missions;
+		for (; list; list = list->next) {
+			mission_t *removedMission = (mission_t *)list->data;
+			if (removedMission->ufo && (removedMission->ufo > mission->ufo))
+				removedMission->ufo--;
+		}
+
+		UFO_RemoveFromGeoscape(mission->ufo);
+	}
 }
 
 /**
@@ -638,21 +655,11 @@ static void CP_UFORemoveFromGeoscape (mission_t *mission)
  */
 static void CP_MissionRemove (mission_t *mission)
 {
-	linkedList_t *list = ccs.missions;
-	mission_t *removedMission;
+	linkedList_t *list;
 
 	/* Destroy UFO */
-	if (mission->ufo) {
-		/* Update UFO idx */
-		for (; list; list = list->next) {
-			removedMission = (mission_t *)list->data;
-			if (removedMission->ufo && (removedMission->ufo > mission->ufo))
-				removedMission->ufo--;
-		}
-
-		CP_UFORemoveFromGeoscape(mission);		/* for the notifications */
-		UFO_RemoveFromGeoscape(mission->ufo);
-	}
+	if (mission->ufo)
+		CP_UFORemoveFromGeoscape(mission, qtrue);		/* for the notifications */
 
 	/* Remove from ccs.battleParameters */
 	if (mission == ccs.battleParameters.mission)
@@ -663,7 +670,7 @@ static void CP_MissionRemove (mission_t *mission)
 
 	list = ccs.missions;
 	for (; list; list = list->next) {
-		removedMission = (mission_t *)list->data;
+		mission_t *removedMission = (mission_t *)list->data;
 		if (removedMission == mission) {
 			LIST_Remove(&ccs.missions, list);
 			Com_DPrintf(DEBUG_CLIENT, "Mission removed from global array: %i missions left\n", CP_CountMission());
@@ -676,7 +683,7 @@ static void CP_MissionRemove (mission_t *mission)
 	Com_Printf("   missions in list are: ");
 	list = ccs.missions;
 	for (; list; list = list->next) {
-		removedMission = (mission_t *)list->data;
+		const mission_t *removedMission = (mission_t *)list->data;
 		Com_Printf("'%s', ", removedMission->id);
 	}
 	Com_Printf("\n");
@@ -942,7 +949,7 @@ static void CP_ReconMissionGround (mission_t *mission)
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	CP_UFORemoveFromGeoscape(mission);
+	CP_UFORemoveFromGeoscape(mission, qfalse);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 }
@@ -1074,7 +1081,7 @@ static void CP_TerrorMissionStart (mission_t *mission)
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	if (mission->ufo)
-		CP_UFORemoveFromGeoscape(mission);
+		CP_UFORemoveFromGeoscape(mission, qfalse);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 
@@ -1305,7 +1312,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 
 	if (mission->ufo) {
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-		CP_UFORemoveFromGeoscape(mission);
+		CP_UFORemoveFromGeoscape(mission, qfalse);
 	}
 
 	/* we always need at least one command centre in the base - because the
@@ -1569,7 +1576,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 	mission->data = (void *) base;
 
 	/* ufo becomes invisible on geoscape */
-	CP_UFORemoveFromGeoscape(mission);
+	CP_UFORemoveFromGeoscape(mission, qfalse);
 }
 
 /**
@@ -1629,7 +1636,7 @@ static void CP_BuildBaseSubvertGovernment (mission_t *mission)
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	CP_UFORemoveFromGeoscape(mission);
+	CP_UFORemoveFromGeoscape(mission, qfalse);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 }
@@ -1782,7 +1789,7 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 	AB_SupplyBase((alienBase_t *) mission->data, mission->ufo->visible);
 
 	/* ufo becomes invisible on geoscape */
-	CP_UFORemoveFromGeoscape(mission);
+	CP_UFORemoveFromGeoscape(mission, qfalse);
 }
 
 /**
@@ -1932,7 +1939,7 @@ static void CP_XVIMissionStart (mission_t *mission)
 	if (mission->ufo) {
 		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-		CP_UFORemoveFromGeoscape(mission);
+		CP_UFORemoveFromGeoscape(mission, qfalse);
 	} else {
 		/* Go to next stage on next frame */
 		mission->finalDate = ccs.date;
@@ -2142,7 +2149,7 @@ static void CP_HarvestMissionStart (mission_t *mission)
 	if (mission->ufo) {
 		mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 		/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-		CP_UFORemoveFromGeoscape(mission);
+		CP_UFORemoveFromGeoscape(mission, qfalse);
 	} else {
 		/* Go to next stage on next frame */
 		mission->finalDate = ccs.date;
@@ -2681,7 +2688,10 @@ static void CL_DebugMissionList_f (void)
 		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
 			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
 		Com_Printf("...pos (%.02f, %.02f) -- %son Geoscape\n", mission->pos[0], mission->pos[1], mission->onGeoscape ? "" : "not ");
-		Com_Printf("...UFO %s\n", mission->ufo ? mission->ufo->id : "No UFO");
+		if (mission->ufo)
+			Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, mission->ufo - gd.ufos, gd.numUFOs - 1);
+		else
+			Com_Printf("...UFO: no UFO\n");
 		noMission = qfalse;
 	}
 	if (noMission)
@@ -2778,7 +2788,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	CP_MissionDisableTimeLimit(mission);
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	CP_UFORemoveFromGeoscape(mission);
+	CP_UFORemoveFromGeoscape(mission, qfalse);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
 }

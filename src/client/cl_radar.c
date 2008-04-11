@@ -132,9 +132,12 @@ static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
 }
 
 /**
- * @brief Notify that the specified ufo has been removed from geoscape
+ * @brief Notify that the specified ufo has been removed from geoscape to one radar.
+ * @param[in] radar Pointer to the radar where ufo should be removed.
+ * @param[in] ufo Pointer to UFO to remove.
+ * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
  **/
-void RADAR_NotifyUFORemoved (radar_t* radar, const aircraft_t* ufo)
+static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t* ufo, qboolean destroyed)
 {
 	int i, numUFO = ufo - gd.ufos;
 
@@ -143,8 +146,26 @@ void RADAR_NotifyUFORemoved (radar_t* radar, const aircraft_t* ufo)
 			radar->numUFOs--;
 			radar->ufos[i] = radar->ufos[radar->numUFOs];
 			i--;	/* Allow the moved value to be checked */
-		} else if (radar->ufos[i] > numUFO)
+		} else if (destroyed && (radar->ufos[i] > numUFO))
 			radar->ufos[i]--;
+}
+
+/**
+ * @brief Notify that the specified ufo has been removed from geoscape
+ * @param[in] ufo Pointer to UFO to remove.
+ * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
+ **/
+void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
+{
+	base_t *base;
+	aircraft_t *aircraft;
+
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+		RADAR_NotifyUFORemovedFromOneRadar(&base->radar, ufo, destroyed);
+
+		for (aircraft = base->aircraft; aircraft < base->aircraft + base->numAircraftInBase; aircraft++)
+			RADAR_NotifyUFORemovedFromOneRadar(&aircraft->radar, ufo, destroyed);
+	}
 }
 
 /**

@@ -1578,6 +1578,9 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 
 	/* Aircraft currently moving to the mission will be redirect to base */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+		if (!base->founded)
+			continue;
+
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--) {
 
@@ -1590,8 +1593,9 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 /**
  * @brief Notify that a UFO has been removed.
  * @param[in] ufo Pointer to UFO that has been removed.
+ * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set unvisible (landed).
  */
-void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo)
+void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destroyed)
 {
 	base_t* base;
 	aircraft_t* aircraft;
@@ -1600,28 +1604,31 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo)
 	assert(ufo);
 
 	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
+		if (!base->founded)
+			continue;
+
 		/* Base currently targeting the specified ufo loose their target */
 		for (i = 0; i < base->numBatteries; i++) {
 			if (base->batteries[i].target == ufo)
 				base->batteries[i].target = NULL;
-			else if (base->batteries[i].target > ufo)
+			else if (destroyed && (base->batteries[i].target > ufo))
 				base->batteries[i].target--;
 		}
 		for (i = 0; i < base->numLasers; i++) {
 			if (base->lasers[i].target == ufo)
 				base->lasers[i].target = NULL;
-			else if (base->lasers[i].target > ufo)
+			else if (destroyed && (base->lasers[i].target > ufo))
 				base->lasers[i].target--;
 		}
-
 		/* Aircraft currently purchasing the specified ufo will be redirect to base */
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
-			aircraft >= base->aircraft; aircraft--)
+		for (aircraft = base->aircraft;
+			aircraft < base->aircraft + base->numAircraftInBase; aircraft++)
 			if (aircraft->status == AIR_UFO) {
 				if (ufo == aircraft->aircraftTarget)
 					AIR_AircraftReturnToBase(aircraft);
-				else if (ufo < aircraft->aircraftTarget)
+				else if (destroyed && (ufo < aircraft->aircraftTarget)) {
 					aircraft->aircraftTarget--;
+				}
 			}
 	}
 }

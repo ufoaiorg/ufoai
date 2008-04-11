@@ -245,7 +245,7 @@ qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t dest
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
 qboolean AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);
-void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo);
+void AIR_AircraftsNotifyUFORemoved(const aircraft_t *const ufo, qboolean destroyed);
 void AIR_AircraftsUFODisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(struct base_s *base);
 qboolean AIR_ScriptSanityCheck(void);

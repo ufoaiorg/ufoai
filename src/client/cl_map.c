@@ -1502,13 +1502,14 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
 
 /**
  * @brief Notify that a UFO has been removed
+ * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
  */
-void MAP_NotifyUFORemoved (const aircraft_t* ufo)
+void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUFO == ufo)
 		MAP_ResetAction();
-	else if (selectedUFO > ufo)
+	else if (destroyed && selectedUFO > ufo)
 		selectedUFO--;
 }
 

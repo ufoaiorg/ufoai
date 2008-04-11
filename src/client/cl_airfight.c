@@ -399,8 +399,6 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * ai
 void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
 {
 	byte *color;
-	int i, j;
-	base_t* base;
 
 	if (phalanxWon) {
 		assert(aircraft);
@@ -409,25 +407,16 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		/* now update the projectile for the destroyed aircraft, too */
 		AIRFIGHT_UpdateProjectileForDestroyedAircraft(aircraft);
 
-		/* let all the other aircraft return to base that also targetted this
-		 * ufo on the geoscape */
-		for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-			if (!base->founded)
-				continue;
-			for (j = 0; j < base->numAircraftInBase; j++) {
-				if (base->aircraft[j].status == AIR_UFO
-				 && base->aircraft[j].aircraftTarget == aircraft) {
-					AIR_AircraftReturnToBase(&base->aircraft[j]);
-				}
-			}
-		}
+		/* don't remove ufo from global array: the mission is not over yet
+		 * UFO are removed from game only at the end of the mission
+		 * (in case we need to know what item to collect e.g.) */
+
 		/* get the color value of the map at the crash position */
 		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
 		/* if this color value is not the value for water ...
 		 * and we hit the probability to spawn a crashsite mission */
 		if (!MapIsWater(color)) {
 			CP_SpawnCrashSiteMission(aircraft);
-			/* don't remove ufo from global array: the mission is not over yet */
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
