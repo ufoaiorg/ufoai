@@ -4415,10 +4415,9 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 				const int baseidx = MSG_ReadByte(sb);
 				base = B_GetBase(baseidx);
 				assert(base);
-				if (base->baseStatus != BASE_UNDER_ATTACK)
+				if (mission.stage == STAGE_BASE_ATTACK && base->baseStatus != BASE_UNDER_ATTACK)
 					Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
-				else
-					mission.data = (void *) base;
+				mission.data = (void *) base;
 			}
 			break;
 		case INTERESTCATEGORY_BUILDING:
