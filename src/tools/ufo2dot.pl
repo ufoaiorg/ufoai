@@ -1131,7 +1131,7 @@ foreach my $filename (@{$filenames}) {
 
 $tree = parseResearchedList($tree, $filenameResearched);
 
-$useProvidesInfo = 1;	# Activate to draw "provides" links
+#$useProvidesInfo = 1;	# Activate to draw "provides" links
 writeDotFile($tree, $filenameDot);
 
 #############
