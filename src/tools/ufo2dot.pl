@@ -81,6 +81,7 @@ my $filenames = [
 my $filenameResearched = '../../base/ufos/researched_list.ufo';
 
 my $filenameDot = "tree.dot";
+my $useProvidesInfo = 0;
 
 # This is regex syntax, so mind you that without the "^" and "$" characters it will not match _exactly_.
 my $ignoredTechs = [
@@ -437,11 +438,11 @@ sub getTechItems ($) {
 		}
 	}
 
-#TODO
-#	if (exists($tech->{'provides'})
-#	&& ($tech->{'type'} eq 'weapon' || $tech->{'type'} eq 'armour')) {
-#		$items->{$tech->{'provides'}} = 1;
-#	}
+	# Store info about provided items.
+	if (exists($tech->{'provides'})
+	&& ($tech->{'type'} eq 'weapon' || $tech->{'type'} eq 'armour')) {
+		$items->{$tech->{'provides'}} = 1;
+	}
 
 	return $items;
 }
@@ -942,11 +943,13 @@ sub printTechLinks ($$$) {
 		}
 	}
 	
-#	# TODO 'provides' info
-#	if (exists($tech->{'provides'})
-#	&& ($tech->{'type'} eq 'weapon' || $tech->{'type'} eq 'armour')) {
-#		printf $FH "\t".$tech->{'id'}.' -> '.$tech->{'provides'}." [constraint=false]; /* Provided */\n";	
-#	}
+	# Back-link to provided items if the otpion was set.
+	if ($useProvidesInfo) {
+		if (exists($tech->{'provides'})
+		&& ($tech->{'type'} eq 'weapon' || $tech->{'type'} eq 'armour')) {
+			printf $FH "\t".$tech->{'id'}.' -> '.$tech->{'provides'}." [constraint=false]; /* Provided */\n";	
+		}
+	}
 }
 
 sub writeDotFile(%$) {
@@ -1128,6 +1131,7 @@ foreach my $filename (@{$filenames}) {
 
 $tree = parseResearchedList($tree, $filenameResearched);
 
+$useProvidesInfo = 1;	# Activate to draw "provides" links
 writeDotFile($tree, $filenameDot);
 
 #############
