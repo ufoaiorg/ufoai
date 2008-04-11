@@ -945,7 +945,7 @@ sub printTechLinks ($$$) {
 #	# TODO 'provides' info
 #	if (exists($tech->{'provides'})
 #	&& ($tech->{'type'} eq 'weapon' || $tech->{'type'} eq 'armour')) {
-#		printf $FH "\t".$tech->{'id'}.' -> '.$tech->{'provides'}." /* Provided */\n";	
+#		printf $FH "\t".$tech->{'id'}.' -> '.$tech->{'provides'}." [constraint=false]; /* Provided */\n";	
 #	}
 }
 
@@ -968,6 +968,7 @@ sub writeDotFile(%$) {
 
 	printf $DOT 'digraph G {'."\n";
 	printf $DOT '	ranksep="1.0 equally";'."\n";
+	printf $DOT '	/* concentrate=true; */'."\n";
 	printf $DOT '	edge [color="#0b75cf"];'."\n";
 	printf $DOT '	label = "Research Tree\nUFO: Alien Invasion";'."\n";
 	printf $DOT "\n";
@@ -1082,7 +1083,6 @@ sub writeDotFile(%$) {
 
 	print $DOT '
 	subgraph clusterLegend {
-		pos="2000,2000";
 		rank="sink";
 		label="Legend";
 		legendItems [label="Captured dead/live aliens,\nitems etc..." shape=box, color="#f7e30099", fillcolor="#f7e30099", style=filled, fontcolor=black];
