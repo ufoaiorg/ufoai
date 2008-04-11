@@ -290,6 +290,15 @@ void AB_SupplyBase (alienBase_t *base, qboolean decreaseStealth)
 		base->stealth -= decreasedStealthValue;
 }
 
+/**
+ * @brief Check number of alien bases.
+ * @return number of alien bases.
+ */
+int AB_GetAlienBaseNumber (void)
+{
+	return numAlienBases;
+}
+
 #ifdef DEBUG
 /**
  * @brief Print Alien Bases information to game console

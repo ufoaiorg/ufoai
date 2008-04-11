@@ -172,8 +172,8 @@ static void CL_ResetAlienInterest (void)
 	 * @todo These values should probably be set in campaign.ufo */
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
 		ccs.interest[i] = 0;
+	ccs.interest[INTERESTCATEGORY_NONE] = 6;
 	ccs.interest[INTERESTCATEGORY_RECON] = 20;
-	ccs.interest[INTERESTCATEGORY_NONE] = 20;
 }
 
 /**
@@ -184,7 +184,7 @@ static void CL_ResetAlienInterest (void)
  */
 static void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
 {
-	const float nonOccurrencePercent = 0.2f;		/**< Non occurence probability */
+	const float nonOccurrencePercent = 0.3f;		/**< Non occurence probability */
 
 	if (category == INTERESTCATEGORY_MAX) {
 		Com_Printf("CL_ChangeIndividualInterest: Unsupported value of category\n");
@@ -263,23 +263,6 @@ static int CP_SelectNewMissionType (void)
 
 	return i - 1;
 }
-
-#ifdef DEBUG
-/**
- * @brief List alien interest values.
- * @sa function called with debug_listinterest
- */
-static void CP_AlienInterestList_f (void)
-{
-	int i;
-
-	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
-	Com_Printf("Individual interest:\n");
-
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
-		Com_Printf("\t%i. -- %i\n", i, ccs.interest[i]);
-}
-#endif
 
 /*****************************************************************************
  *
@@ -818,10 +801,12 @@ base_t* CP_PositionCloseToBase (const vec2_t pos)
  */
 static void CP_ReconMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(0.15f, INTERESTCATEGORY_BUILDING);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
-	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
+	if (AB_GetAlienBaseNumber())
+		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
+	if (ccs.XVISpreadActivated)
+		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);
 }
@@ -832,9 +817,8 @@ static void CP_ReconMissionIsSuccess (mission_t *mission)
  */
 static void CP_ReconMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 
 	CP_MissionRemove(mission);
 }
@@ -1049,7 +1033,7 @@ static void CP_ReconMissionNextStage (mission_t *mission)
 static void CP_TerrorMissionIsSuccess (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_TERROR_ATTACK);
-	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_HARVEST);
 
 	CP_MissionRemove(mission);
 }
@@ -1060,9 +1044,10 @@ static void CP_TerrorMissionIsSuccess (mission_t *mission)
  */
 static void CP_TerrorMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_TERROR_ATTACK);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(0.02f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }
@@ -1235,12 +1220,13 @@ static void CP_TerrorMissionNextStage (mission_t *mission)
 /**
  * @brief Base attack mission is over and is a success (from an alien point of view): change interest values.
  * @note Base attack mission
+ * @sa CP_BaseAttackMissionStart
  */
 static void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(-0.8f, INTERESTCATEGORY_BASE_ATTACK);
-	CL_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_XVI);
+	CL_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_TERROR_ATTACK);
+	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_HARVEST);
 
 	CP_MissionRemove(mission);
 }
@@ -1259,7 +1245,20 @@ static void CP_BaseAttackMissionIsFailure (mission_t *mission)
 		B_BaseResetStatus(base);
 	gd.mapAction = MA_NONE;
 
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	/* Restore some alien interest for base attacks that has been removed when mission has been created */
+	CL_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BASE_ATTACK);
+
 	CP_MissionRemove(mission);
+}
+
+/**
+ * @brief Base attack mission just started: change interest values.
+ * @note This function is intended to avoid attack on several bases at the same time
+ */
+static void CP_BaseAttackMissionStart (mission_t *mission)
+{
+	CL_ChangeIndividualInterest(-0.7f, INTERESTCATEGORY_BASE_ATTACK);
 }
 
 /**
@@ -1488,15 +1487,19 @@ static void CP_BaseAttackMissionNextStage (mission_t *mission)
  */
 static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 {
-	alienBase_t *base;
-
-	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_SUPPLY);
-
-	/* Spread XVI (if this was not a subverting government mission) */
-	base = (alienBase_t *) mission->data;
-	if (base)
+	if (mission->initialOverallInterest < STARTING_BASEBUILD_INTEREST) {
+		/* This is a subverting government mission */
+		CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_TERROR_ATTACK);
+	} else {
+		/* An alien base has been built */
+		const alienBase_t *base = (alienBase_t *) mission->data;
+		assert(base);
 		CP_SpreadXVIAtPos(base->pos);
+
+		CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_XVI);
+		CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_SUPPLY);
+		CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_HARVEST);
+	}
 
 	CP_MissionRemove(mission);
 }
@@ -1507,7 +1510,9 @@ static void CP_BuildBaseMissionIsSuccess (mission_t *mission)
  */
 static void CP_BuildBaseMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(+0.6f, INTERESTCATEGORY_BUILDING);
+	/* Restore some alien interest for build base that has been removed when mission has been created */
+	CL_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }
@@ -1742,7 +1747,9 @@ static void CP_SupplyMissionIsSuccess (mission_t *mission)
  */
 static void CP_SupplyMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(+0.2f, INTERESTCATEGORY_SUPPLY);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
+	CL_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }
@@ -1904,7 +1911,8 @@ static void CP_SupplyMissionNextStage (mission_t *mission)
  */
 static void CP_XVIMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_XVI);
+	CL_ChangeIndividualInterest(-0.1f, INTERESTCATEGORY_XVI);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 
 	CP_MissionRemove(mission);
 }
@@ -1915,9 +1923,10 @@ static void CP_XVIMissionIsSuccess (mission_t *mission)
  */
 static void CP_XVIMissionIsFailure (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_XVI);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(0.01f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }
@@ -2005,9 +2014,10 @@ static void CP_XVIMissionNextStage (mission_t *mission)
  */
 static void CP_InterceptMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 
 	CP_MissionRemove(mission);
 }
@@ -2019,6 +2029,7 @@ static void CP_InterceptMissionIsSuccess (mission_t *mission)
 static void CP_InterceptMissionIsFailure (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }
@@ -2114,7 +2125,9 @@ static void CP_InterceptNextStage (mission_t *mission)
  */
 static void CP_HarvestMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_HARVEST);
+	CL_ChangeIndividualInterest(-0.1f, INTERESTCATEGORY_HARVEST);
+	if (ccs.XVISpreadActivated)
+		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);
 }
@@ -2128,6 +2141,7 @@ static void CP_HarvestMissionIsFailure (mission_t *mission)
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(0.02f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);
 }
@@ -2458,6 +2472,8 @@ static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	/* Lower alien interest in base building if a base building mission is started to avoid several bases at the same time */
 	if (mission.category == INTERESTCATEGORY_BUILDING)
 		CP_BuildBaseMissionStart(&mission);
+	else if (mission.category == INTERESTCATEGORY_BUILDING)
+		CP_BaseAttackMissionStart(&mission);
 
 	/* Add mission to global array */
 	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
@@ -2718,6 +2734,21 @@ static void CP_DeleteMissions_f (void)
 		while (gd.numUFOs)
 			UFO_RemoveFromGeoscape(gd.ufos);
 	}
+}
+
+/**
+ * @brief List alien interest values.
+ * @sa function called with debug_listinterest
+ */
+static void CP_AlienInterestList_f (void)
+{
+	int i;
+
+	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
+	Com_Printf("Individual interest:\n");
+
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+		Com_Printf("...%i. %s -- %i\n", i, CP_MissionCategoryToName(i), ccs.interest[i]);
 }
 #endif
 
