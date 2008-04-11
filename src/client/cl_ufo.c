@@ -320,9 +320,13 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 	/* Every UFO on geoscape should have a mission assigned */
 	assert(ufo->mission);
 
-	/* UFO never try to attack a PHALANX aircraft except if they came on earth for that */
-	if (ufo->mission->stage != STAGE_INTERCEPT)
+	/* UFO never try to attack a PHALANX aircraft except if they came on earth in that aim */
+	if (ufo->mission->stage != STAGE_INTERCEPT) {
+		/* Check if UFO is defending itself */
+		if (ufo->aircraftTarget)
+			UFO_CheckShootBack(ufo, ufo->aircraftTarget);
 		return;
+	}
 
 #ifdef UFO_ATTACK_BASES
 	/* check if the ufo is already attacking a base */
@@ -429,8 +433,10 @@ void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
 		/* check if the target flee in a base */
 		if (ufo->aircraftTarget->status > AIR_HOME)
 			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
-		else
+		else {
 			ufo->aircraftTarget = NULL;
+			CP_UFOProceedMission(ufo);
+		}
 	} else {
 		/* check that aircraft is flying */
 		if (phalanxAircraft->status > AIR_HOME)
@@ -458,7 +464,7 @@ void UFO_CampaignRunUFOs (int dt)
 		UFO_FoundNewBase(ufo, dt);
 #endif
 
-		/* reached target and not following a phalanx aircraft? then we need a new target */
+		/* reached target and not following a phalanx aircraft? then we need a new destination */
 		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO) {
 			float *end;
 			end = ufo->route.point[ufo->route.numPoints - 1];

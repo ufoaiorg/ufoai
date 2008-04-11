@@ -49,6 +49,7 @@ void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectMission(mission_t* mission);
 void MAP_NotifyMissionRemoved(const mission_t* mission);
 void MAP_NotifyUFORemoved(const aircraft_t* ufo, qboolean destroyed);
+void MAP_NotifyAircraftRemoved(const aircraft_t* aircraft, qboolean destroyed);
 void MAP_NotifyUFODisappear(const aircraft_t* ufo);
 void MAP_GameInit(void);
 const char* MAP_GetTerrainType(const byte* color);

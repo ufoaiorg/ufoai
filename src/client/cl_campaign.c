@@ -2399,16 +2399,6 @@ void CP_MissionIsOverByUfo (aircraft_t *ufocraft)
 }
 
 /**
- * @brief Stage of mission is finished.
- * @param[in] ufocraft Pointer to the UFO involved in this mission
- */
-void CP_MissionStageEndByUfo (aircraft_t *ufocraft)
-{
-	assert(ufocraft->mission);
-	CP_MissionStageEnd(ufocraft->mission);
-}
-
-/**
  * @brief Set mission name.
  * @note that mission name must be unique in mission global array
  * @param[out] mission The mission to set the name for
@@ -2773,6 +2763,27 @@ void CP_CheckNextStageDestination (aircraft_t *ufocraft)
 	default:
 		/* Do nothing */
 		break;
+	}
+}
+
+/**
+ * @brief Make UFO proceed with its mission when the is no more target.
+ * @param[in] ufocraft Pointer to the ufo that should proceed a mission.
+ */
+void CP_UFOProceedMission (aircraft_t *ufocraft)
+{
+	/* Every UFO on geoscape should have a mission assigned */
+	assert(ufocraft->mission);
+
+	if (ufocraft->mission->category == INTERESTCATEGORY_INTERCEPT) {
+		/* Interception mission is over */
+		ufocraft->status = AIR_TRANSIT;			/* continue stage */
+		CP_MissionStageEnd(ufocraft->mission);
+	} else if (ufocraft->mission->stage < STAGE_MISSION_GOTO ||
+		ufocraft->mission->stage >= STAGE_RETURN_TO_ORBIT) {
+		UFO_SetRandomDest(ufocraft);
+	} else {
+		UFO_SendToDestination(ufocraft, ufocraft->mission->pos);
 	}
 }
 

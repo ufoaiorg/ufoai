@@ -1506,11 +1506,30 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
  */
 void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
+	if (!selectedUFO)
+		return;
+
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUFO == ufo)
 		MAP_ResetAction();
 	else if (destroyed && selectedUFO > ufo)
 		selectedUFO--;
+}
+
+/**
+ * @brief Notify that an aircraft has been removed from game
+ * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
+ */
+void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
+{
+	if (!selectedAircraft)
+		return;
+
+	/* Unselect the current selected ufo if its the same */
+	if (selectedAircraft == aircraft)
+		MAP_ResetAction();
+	else if (destroyed && (selectedAircraft->homebase == aircraft->homebase) && selectedAircraft > aircraft)
+		selectedAircraft--;
 }
 
 /**

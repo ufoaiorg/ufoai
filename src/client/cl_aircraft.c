@@ -295,6 +295,7 @@ void AIM_AircraftStart_f (void)
 const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 {
 	assert(aircraft);
+	assert(aircraft->homebase);
 
 	/* display special status if base-attack affects aircraft */
 	if (aircraft->homebase->baseStatus == BASE_UNDER_ATTACK &&
@@ -833,6 +834,8 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	}
 
 	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
+
+	MAP_NotifyAircraftRemoved(aircraft, qtrue);
 
 	/* Finally remove the aircraft-struct itself from the base-array and update the order. */
 	/**

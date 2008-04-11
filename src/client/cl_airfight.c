@@ -331,14 +331,9 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		} else
 			AIR_SendAircraftPursuingUFO(shooter, target);
 	} else {
-		/* no ammo left, or no weapon, you should flee ! */
+		/* no ammo left, or no weapon, proceed with mission */
 		if (shooter->type == AIRCRAFT_UFO) {
-			/* Every UFO on geoscape should have a mission assigned */
-			assert (shooter->mission);
-			if (shooter->mission->category == INTERESTCATEGORY_INTERCEPT)
-				CP_MissionStageEndByUfo(shooter);	/* mission is over */
-			else
-				shooter->status = AIR_TRANSIT;		/* continue stage */
+			CP_UFOProceedMission(shooter);
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
 			AIR_AircraftReturnToBase(shooter);
@@ -434,6 +429,9 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		/* Destroy the aircraft and everything onboard - the aircraft pointer
 		 * is no longer valid after this point */
 		AIR_DestroyAircraft(aircraft);
+
+		/* Make UFO proceed with its mission */
+		CP_UFOProceedMission(shooter);
 
 		MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 	}
