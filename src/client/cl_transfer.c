@@ -864,16 +864,22 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
  */
 static void TR_TransferEnd (transfer_t *transfer)
 {
-	base_t* destination;
+	const base_t* destination;
 	char message[256];
 
 	assert(transfer);
 	destination = transfer->destBase;
 	assert(destination);
 
-	TR_EmptyTransferCargo(transfer, qtrue);
-	Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), destination->name);
-	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	if (!destination->founded) {
+		TR_EmptyTransferCargo(transfer, qfalse);
+		MN_AddNewMessage(_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
+		/* @todo: what if source base is lost? we won't be able to unhire transfered personel. */
+	} else {
+		TR_EmptyTransferCargo(transfer, qtrue);
+		Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), destination->name);
+		MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	}
 }
 
 /**
@@ -1461,21 +1467,13 @@ static void TR_CargoListSelect_f (void)
 void TR_TransferCheck (void)
 {
 	int i;
-	base_t *base;
 	transfer_t *transfer;
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer = &gd.alltransfers[i];
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
-			base = transfer->destBase;
-			if (!base->founded) {
-				TR_EmptyTransferCargo(transfer, qfalse);
-				MN_AddNewMessage(_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
-
-				/* @todo: what if source base is lost? we won't be able to unhire transfered personel. */
-			} else {
-				TR_TransferEnd(transfer);
-			}
+			assert(transfer->destbase);
+			TR_TransferEnd(transfer);
 			/* Reset this transfer. */
 			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
 			return;
