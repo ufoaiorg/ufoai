@@ -922,7 +922,7 @@ static void TR_TransferStart_f (void)
 		return;
 
 	/* Initialize transfer. */
-	 /* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
+	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
 	time = MAP_GetDistance(transferBase->pos, baseCurrent->pos) / 90.0f;
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * 3600 * 24;	/* convert remaining time in second */
@@ -933,6 +933,7 @@ static void TR_TransferStart_f (void)
 		transfer->event.day++;
 	}
 	transfer->destBase = transferBase;	/* Destination base index. */
+	assert(transfer->destBase);
 	transfer->srcBase = baseCurrent;	/* Source base index. */
 	transfer->active = qtrue;
 	for (i = 0; i < csi.numODs; i++) {	/* Items. */
