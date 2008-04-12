@@ -1,0 +1,62 @@
+// *********************************
+// Bridge
+// *********************************
+
+base bridge/br_
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: main
+// b: dropship
+
+tile +main
+{
+16 13
+
+0      0      0      0      0      0      0      0      0      0      0      0      0      0      0      0
+0      +a     +a     b      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     b      b      b      +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      0      0      0      0      0      0      0      0      0      0      0      0      0      0      0
+}
+
+tile +drop_firebird
+{
+5 4
+
+0      0      0      0      0
+a      +b     +b     +b     a 
+a      +b     +b     +b     a 
+a      a      a      a      a
+}
+
+tile +drop_herakles
+{
+5 4
+
+0      0      0      0      0
+a      +b     +b     +b     a 
+a      +b     +b     +b     a 
+a      a      a      a      a
+}
+
+// ########################################
+// ########### Maps for the game ###########
+
+assembly default
+{
+size "14 11"
+title "_Bridge"
++main "1 1"
+*rm_drop +drop_firebird "1 1"
+}
+

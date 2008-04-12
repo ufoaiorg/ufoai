@@ -1,0 +1,61 @@
+// *********************************
+// Bomber_city
+// *********************************
+
+base bomber_city/bc_
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: main
+// b: dropship
+
+tile +main
+{
+12 10
+
+0      0      0      0      0      0      0      0      0      0      0      0
+0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      b      b      +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      0      0      0      0      0      0      0      0      0      0      0
+}
+
+tile +drop_firebird
+{
+4 5
+
+0      0      0      0
+0      +b     +b     a 
+0      +b     +b     a 
+0      +b     +b     a 
+0      a      a      a
+}
+
+tile +drop_herakles
+{
+4 5
+
+0      0      0      0
+0      +b     +b     a 
+0      +b     +b     a 
+0      +b     +b     a 
+0      a      a      a
+}
+
+// ########################################
+// ########### Maps for the game ###########
+
+assembly default
+{
+size "10 8"
+title "_Bomber_city"
++main "1 1"
+*rm_drop +drop_firebird "1 1"
+}
+
