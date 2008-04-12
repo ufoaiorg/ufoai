@@ -1654,7 +1654,7 @@ mapdef bridge
 
 mapdef construction
 {
-	map				const
+	map				"+construction"
 	description		"_An office complex under constuction."
 	multiplayer		true
 	teams			2
