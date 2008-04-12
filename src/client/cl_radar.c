@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 
 /* Define radar range */
-const float baseRadarRange = 30.0f;
-const float aircraftRadarRange = 7.0f;
+const float baseRadarRange = 24.0f;
+const float aircraftRadarRange = 10.0f;
 /* outer circle radar is bigger than inner circle radar by 100 * outerCircleRatio percent */
 static const float outerCircleRatio = 0.41f;
 /* this is the multiplier applied to the radar range when the radar levels up */
-static const float radarUpgradeMultiplier = 0.3f;
+static const float radarUpgradeMultiplier = 0.4f;
 
 /**
  * @brief Show Radar coverage
