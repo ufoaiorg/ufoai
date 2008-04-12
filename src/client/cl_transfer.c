@@ -594,7 +594,7 @@ static void TR_TransferListClear_f (void)
  * @note transfer->srcBase may be TR_NO_BASE if transfer comes from a mission (alien body recovery)
  * @sa TR_TransferEnd
  */
-void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
+static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 {
 	int i, j;
 	base_t *destination;
@@ -862,13 +862,14 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
  * @brief Ends the transfer.
  * @param[in] transfer Pointer to transfer in gd.alltransfers
  */
-void TR_TransferEnd (transfer_t *transfer)
+static void TR_TransferEnd (transfer_t *transfer)
 {
 	base_t* destination;
 	char message[256];
 
 	assert(transfer);
 	destination = transfer->destBase;
+	assert(destination);
 
 	TR_EmptyTransferCargo(transfer, qtrue);
 	Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), destination->name);
