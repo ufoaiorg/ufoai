@@ -47,7 +47,7 @@ tile +drop_herakles
 // ########################################
 // ########### Maps for the game ###########
 
-assembly africa
+assembly default
 {
 size "11 4"
 title "_Africa"
