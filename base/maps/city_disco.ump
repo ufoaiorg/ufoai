@@ -1,5 +1,5 @@
 // *********************************
-// city_disco
+// City disco
 // *********************************
 
 base city_disco/cd_
@@ -51,8 +51,7 @@ tile +drop_herakles
 assembly default
 {
 size "5 5"
-title "_Bomber_city"
+title "_City_disco"
 +main "1 1"
 *rm_drop +drop_firebird "1 1"
 }
-
