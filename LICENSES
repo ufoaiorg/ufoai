@@ -61,6 +61,9 @@ base/maps/community_centre/cm_drop_firebird.map | GNU General Public License 2.0
 base/maps/community_centre/cm_drop_herakles.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/community_centre/cm_main.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/const.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/construction/cs_drop_firebird.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/construction/cs_drop_herakles.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/construction/cs_main.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/corrupter_crash.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country.ump | GNU General Public License 2.0
 base/maps/country/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
