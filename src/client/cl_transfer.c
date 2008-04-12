@@ -1472,7 +1472,7 @@ void TR_TransferCheck (void)
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer = &gd.alltransfers[i];
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
-			assert(transfer->destbase);
+			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
 			/* Reset this transfer. */
 			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
