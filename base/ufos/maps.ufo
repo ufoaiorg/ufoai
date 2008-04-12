@@ -1814,7 +1814,7 @@ mapdef resort
 
 mapdef africa
 {
-	map				africa
+	map				"+africa"
 	multiplayer		true
 	teams			2
 	gametypes {
