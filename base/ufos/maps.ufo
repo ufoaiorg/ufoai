@@ -1248,7 +1248,7 @@ mapdef rivertown
 
 mapdef city_disco
 {
-	map				city_disco
+	map				"+city_disco"
 	description		"_A small neighbourhood in a warm urban region."
 	multiplayer		true
 	teams			2
@@ -1612,7 +1612,7 @@ mapdef fighter_crash
 
 mapdef bridge
 {
-	map				bridge
+	map				"+bridge"
 	description		"_A small UFO has crashed in this mining region."
 	multiplayer		true
 	teams			3
@@ -1992,7 +1992,7 @@ mapdef shelter
 
 mapdef bomber_city
 {
-	map				bomber_city
+	map				"+bomber_city"
 	description		"_A Bomber has landed in the middle of a city."
 	multiplayer		true
 	teams			4
@@ -2038,7 +2038,7 @@ mapdef bomber_city
 
 mapdef community_centre
 {
-	map				community_centre
+	map				"+community_centre"
 	description		"_A place where people come to relax and mingle."
 	multiplayer		true
 	teams			3
