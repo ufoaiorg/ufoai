@@ -1535,7 +1535,7 @@ void CL_CheckResearchStatus (void)
 		if (tech->statusResearch == RS_RUNNING) {
 			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
 			if (tech->time > 0 && tech->scientists > 0) {
-				assert(tech->base);	/**< If there are scientitsst there _has_ to be a base. */
+				assert(tech->base);	/**< If there are scientitsts there _has_ to be a base. */
 				base = tech->base;
 				if (B_GetBuildingStatus(base, B_LAB)) {
 					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
@@ -2657,17 +2657,18 @@ void RS_PostLoadInit (void)
 {
 	technology_t *t;
 	int baseIndex;
+	linkedList_t *techBases = loadTechBases;
 
-	while (loadTechBases) {
-		t = (technology_t *) loadTechBases->data;
-		loadTechBases = loadTechBases->next;
-		baseIndex = *(int*)loadTechBases->data;
+	while (techBases) {
+		t = (technology_t *) techBases->data;
+		techBases = techBases->next;
+		baseIndex = *(int*)techBases->data;
 		/* Com_Printf("RS_PostLoadInit: DEBUG %s %i\n", t->id, baseIndex); */
 		if (baseIndex >= 0)
 			t->base = B_GetBase(baseIndex);
 		else
 			t->base = NULL;
-		loadTechBases = loadTechBases->next;
+		techBases = techBases->next;
 	};
 
 	/* Clear linked list. */
