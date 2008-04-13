@@ -329,6 +329,9 @@ qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 		return qfalse;
 	}
 
+#if 0
+/** This code will prevent multiple shots (no matter the available TUs) if STATE_REACTION_ONCE is set.
+ * @todo Remove this if we don't happen to re-introduce it. */
 	if ((ent->state & STATE_REACTION_ONCE)
 	 && (ent->reactionFired > 0)) {
 #ifdef DEBUG_REACTION
@@ -337,6 +340,7 @@ qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 #endif
 		return qfalse;
 	}
+#endif
 
 	/* check in range and visible */
 	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST) {
