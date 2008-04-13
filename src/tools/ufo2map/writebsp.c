@@ -346,16 +346,13 @@ void BeginBSPFile (void)
  */
 void EndBSPFile (const char *filename)
 {
-	char path[1024];
-
 	EmitBrushes();
 	EmitPlanes();
 	UnparseEntities();
 
 	/* write the map */
-	snprintf(path, sizeof(path), "%s.bsp", filename);
-	Com_Printf("Writing %s\n", path);
-	WriteBSPFile(path);
+	Com_Printf("Writing %s\n", filename);
+	WriteBSPFile(filename);
 }
 
 extern int firstmodeledge;
