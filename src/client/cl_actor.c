@@ -938,10 +938,6 @@ static qboolean CL_CheckFiremodeReservation (void)
 	if (!selActor)
 		return qfalse;
 
-	/* Reset the length of the TU-list. */
-	popupNum = 0;
-
-	/* Add list-entry for deactivation of the reservation. */
 	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
 		ammo = NULL;
 		weapon = NULL;
@@ -1032,6 +1028,9 @@ void CL_PopupFiremodeReservation_f (void)
 	LIST_Add(&popupListData, (byte *)&tempZero, sizeof(int));	/* TUs */
 	popupNum++;
 	selectedEntry = 0;
+
+	Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation_f\n");
+
 	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
 		ammo = NULL;
 		weapon = NULL;
@@ -1052,13 +1051,13 @@ void CL_PopupFiremodeReservation_f (void)
 
 					/* Store text for popup */
 					LIST_AddString(&popupListText, text);
+					/* Store Data for popup-callback. */
 					if (hand == 'r')
 						LIST_Add(&popupListData, (byte *)&tempZero, sizeof(int));
 					else
 						LIST_Add(&popupListData, (byte *)&tempOne, sizeof(int));
-					/* Store Data for popup-callback. */
 					LIST_Add(&popupListData, (byte *)&i, sizeof(int));								/* fmIdx */
-					LIST_AddPointer(&popupListData, &ammo->weapons[weapFdsIdx]);					/* wpIdx pointer*/
+					LIST_Add(&popupListData, (byte *)&ammo->weapons[weapFdsIdx]->idx, sizeof(int));					/* wpIdx pointer*/
 					LIST_Add(&popupListData, (byte *)&ammo->fd[weapFdsIdx][i].time, sizeof(int));	/* TUs */
 
 					/* Remember the line that is currently selected (if any). */
@@ -1066,6 +1065,10 @@ void CL_PopupFiremodeReservation_f (void)
 					&& (selChr->reservedTus.shotSettings.fmIdx == i)
 					&& (selChr->reservedTus.shotSettings.wpIdx == ammo->weapons[weapFdsIdx]->idx))
 						selectedEntry = popupNum;
+
+					Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation_f: hand %i, fm %i, wp %i -- hand %i, fm %i, wp %i\n",
+						selChr->reservedTus.shotSettings.hand, selChr->reservedTus.shotSettings.fmIdx, selChr->reservedTus.shotSettings.wpIdx,
+						((hand == 'r') ? 0 : 1), i, ammo->weapons[weapFdsIdx]->idx);
 					popupNum++;
 				}
 			}
@@ -1096,7 +1099,7 @@ void CL_ReserveShot_f (void)
 {
 	linkedList_t* popup = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
 	int selectedPopupIndex;
-	int hand, fmIdx, weapIdx, TUs;
+	int hand, fmIdx, wpIdx, TUs;
 	int i;
 
 	if (Cmd_Argc() < 2) {
@@ -1112,6 +1115,7 @@ void CL_ReserveShot_f (void)
 
 	/* read and range check */
 	selectedPopupIndex = atoi(Cmd_Argv(1));
+	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f (popupNum %i, selectedPopupIndex %i)\n", popupNum, selectedPopupIndex);
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
 		return;
 
@@ -1130,7 +1134,7 @@ void CL_ReserveShot_f (void)
 		popup = popup->next;
 
 		assert(popup);
-		weapIdx = *(int*)popup->data;
+		wpIdx = *(int*)popup->data;
 		popup = popup->next;
 
 		assert(popup);
@@ -1145,18 +1149,22 @@ void CL_ReserveShot_f (void)
 
 	/* Check if we have enough TUs (again) */
 	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: popup-index: %i TUs:%i (%i + %i)\n", selectedPopupIndex, TUs, CL_UsableTUs(selActor), CL_ReservedTUs(selActor, RES_SHOT));
+	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: hand %i, fmIdx %i, weapIdx %i\n", hand,fmIdx,wpIdx);
 	if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT)) >= TUs) {
 		CL_ReserveTUs(selActor, RES_SHOT, TUs);
 		selChr->reservedTus.shotSettings.hand = hand;
 		selChr->reservedTus.shotSettings.fmIdx = fmIdx;
-		selChr->reservedTus.shotSettings.wpIdx = weapIdx;
+		selChr->reservedTus.shotSettings.wpIdx = wpIdx;
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
 		/** @todo
 		MSG_Write_PA(PA_RESERVE_SHOT_FM, selActor->entnum, hand, fmIdx, weapIdx);
 		*/
 		if (popupListNode) {
+			Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: Setting currently selected line (from %i) to %i.\n", popupListNode->textLineSelected, selectedPopupIndex);
 			popupListNode->textLineSelected = selectedPopupIndex;
 		}
+	} else {
+		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: can not select entry %i. It needs %i TUs, we have %i.\n", selectedPopupIndex, TUs, CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT));
 	}
 
 	/* Refresh button and tooltip. */
@@ -3352,6 +3360,9 @@ void CL_ActorToggleCrouchReservation_f (void)
 
 	/* Refresh checkbox and tooltip. */
 	CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
+
+	/** @todo Update shot-reservation popup if it is currently displayed.
+	 * Alternatively just hide it. */
 }
 
 /**
