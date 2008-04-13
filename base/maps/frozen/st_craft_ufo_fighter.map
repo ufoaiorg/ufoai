@@ -371,6 +371,15 @@
 ( 144 512 8 ) ( 8 512 8 ) ( 8 512 0 ) tex_nature/snow002 0 0 0 0.5 0.5 0 128 0
 ( 0 352 8 ) ( 0 256 8 ) ( 0 256 0 ) tex_nature/snow002 0 0 0 0.5 0.5 0 128 0
 }
+// brush 41
+{
+( 260 288 8 ) ( 260 224 8 ) ( 256 288 8 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 260 320 8 ) ( 256 320 8 ) ( 260 320 4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 288 284 8 ) ( 288 284 4 ) ( 288 220 8 ) tex_common/actorclip 4 0 0 1 1 65536 0 0
+( 256 224 4 ) ( 260 224 4 ) ( 256 288 4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 256 224 4 ) ( 256 224 8 ) ( 260 224 4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 220 220 4 ) ( 220 284 4 ) ( 220 220 8 ) tex_common/actorclip 4 0 0 1 1 65536 0 0
+}
 }
 // entity 1
 {
@@ -394,12 +403,12 @@
 // entity 4
 {
 "classname" "info_alien_start"
-"origin" "240 272 28"
+"origin" "240 272 32"
 }
 // entity 5
 {
 "classname" "info_alien_start"
-"origin" "272 272 28"
+"origin" "272 272 32"
 }
 // entity 6
 {
