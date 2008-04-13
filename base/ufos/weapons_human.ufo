@@ -1318,7 +1318,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight blast
-			reaction	true
+			reaction	false
 		}
 
 		firedef
@@ -1345,6 +1345,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight blast
+			reaction	false
 		}
 
 		firedef
@@ -1371,6 +1372,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight blast
+			reaction	false
 		}
 
 		firedef
@@ -1399,6 +1401,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight blast
+			reaction	false
 		}
 
 		firedef
@@ -1427,6 +1430,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight blast
+			reaction	false
 		}
 
 		firedef
@@ -1455,6 +1459,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight blast
+			reaction	false
 		}
 	}
 }
@@ -1499,7 +1504,7 @@ item grenl_incendiary_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight fire_medium
-			reaction	true
+			reaction	false
 		}
 
 
@@ -1527,6 +1532,7 @@ item grenl_incendiary_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight fire_medium
+			reaction	false
 		}
 
 		firedef
@@ -1553,6 +1559,7 @@ item grenl_incendiary_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight fire_medium
+			reaction	false
 		}
 
 		firedef
@@ -1581,6 +1588,7 @@ item grenl_incendiary_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight fire_medium
+			reaction	false
 		}
 
 		firedef
@@ -1609,6 +1617,7 @@ item grenl_incendiary_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight fire_medium
+			reaction	false
 		}
 
 		firedef
@@ -1637,6 +1646,7 @@ item grenl_incendiary_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgweight fire_medium
+			reaction	false
 		}
 	}
 }
