@@ -405,16 +405,6 @@ static void StripTrailing (char *e)
 
 /**
  * @brief
- */
-static inline char *copystring (const char *s)
-{
-	char *b = (char*)malloc(sizeof(char) * (strlen(s) + 1));
-	strcpy(b, s);
-	return b;
-}
-
-/**
- * @brief
  * @sa ParseEntity
  * @sa ParseMapEntity
  */
@@ -427,11 +417,11 @@ epair_t *ParseEpair (void)
 
 	if (strlen(parsedToken) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
-	e->key = copystring(parsedToken);
+	e->key = strdup(parsedToken);
 	GetToken(qfalse);
 	if (strlen(parsedToken) >= MAX_VALUE - 1)
 		Sys_Error("ParseEpar: token too long");
-	e->value = copystring(parsedToken);
+	e->value = strdup(parsedToken);
 
 	/* strip trailing spaces */
 	StripTrailing(e->key);
@@ -535,14 +525,14 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 	for (ep = ent->epairs; ep; ep = ep->next)
 		if (!strcmp (ep->key, key) ) {
 			free(ep->value);
-			ep->value = copystring(value);
+			ep->value = strdup(value);
 			return;
 		}
-	ep = malloc (sizeof(*ep));
+	ep = malloc(sizeof(*ep));
 	ep->next = ent->epairs;
 	ent->epairs = ep;
-	ep->key = copystring(key);
-	ep->value = copystring(value);
+	ep->key = strdup(key);
+	ep->value = strdup(value);
 }
 
 /**

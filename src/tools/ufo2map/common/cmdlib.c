@@ -397,7 +397,7 @@ void Sys_FPrintf (int flag, const char *format, ...)
 		return;
 
 	va_start(argptr, format);
-	vsprintf(out_buffer, format, argptr);
+	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
 	va_end(argptr);
 
 	printf(out_buffer);
@@ -412,7 +412,7 @@ void Com_Printf (const char *format, ...)
 	va_list argptr;
 
 	va_start(argptr, format);
-	vsprintf(out_buffer, format, argptr);
+	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
 	va_end(argptr);
 
 	printf(out_buffer);

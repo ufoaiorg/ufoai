@@ -48,10 +48,10 @@ int FindMiptex (const char *name)
 		}
 	if (nummiptex == MAX_MAP_TEXTURES)
 		Sys_Error("MAX_MAP_TEXTURES");
-	strcpy(textureref[i].name, name);
+	Q_strncpyz(textureref[i].name, name, sizeof(textureref[i].name));
 
 	/* load the miptex to get the flags and values */
-	sprintf(path, "%stextures/%s.tga", gamedir, name);
+	Com_sprintf(path, sizeof(path), "%stextures/%s.tga", gamedir, name);
 	if (TryLoadTGA(path, &mt) != -1) {
 		textureref[i].value = LittleLong(mt->value);
 		textureref[i].surfaceFlags = 0;
@@ -61,7 +61,7 @@ int FindMiptex (const char *name)
 	}
 
 	if (!loaded) {	/* fall back to jpg */
-		sprintf(path, "%stextures/%s.jpg", gamedir, name);
+		Com_sprintf(path, sizeof(path), "%stextures/%s.jpg", gamedir, name);
 		if (TryLoadJPG(path, &mt) != -1) {
 			textureref[i].value = LittleLong(mt->value);
 			textureref[i].surfaceFlags = 0;
@@ -133,7 +133,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 		return 0;
 
 	memset(&tx, 0, sizeof(tx));
-	strcpy(tx.texture, bt->name);
+	Q_strncpyz(tx.texture, bt->name, sizeof(tx.texture));
 
 	TextureAxisFromPlane(plane, vecs[0], vecs[1], isTerrain);
 

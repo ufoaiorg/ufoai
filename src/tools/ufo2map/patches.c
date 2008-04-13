@@ -63,7 +63,7 @@ void CalcTextureReflectivity (void)
 			continue;
 
 		/* load the tga file */
-		sprintf(path, "%stextures/%s.tga", gamedir, texinfo[i].texture);
+		Com_sprintf(path, sizeof(path), "%stextures/%s.tga", gamedir, texinfo[i].texture);
 		if (TryLoadTGA(path, &mt) != -1) {
 			/* load rgba from the tga */
 			texels = mt->width * mt->height;  /* these are already endian-correct */
@@ -82,7 +82,7 @@ void CalcTextureReflectivity (void)
 
 		if (!loaded) {
 			/* try jpeg */
-			sprintf(path, "%stextures/%s.jpg", gamedir, texinfo[i].texture);
+			Com_sprintf(path, sizeof(path), "%stextures/%s.jpg", gamedir, texinfo[i].texture);
 			if (TryLoadJPG(path, &mt) != -1) {
 				/* load rgba from the tga */
 				texels = mt->width * mt->height;  /* these are already endian-correct */
@@ -239,7 +239,7 @@ static entity_t *EntityForModel (int modnum)
 	const char *s;
 	char name[16];
 
-	sprintf(name, "*%i", modnum);
+	Com_sprintf(name, sizeof(name), "*%i", modnum);
 	/* search the entities for one using modnum */
 	for (i = 0; i < num_entities; i++) {
 		s = ValueForKey(&entities[i], "model");

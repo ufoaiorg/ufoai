@@ -248,7 +248,7 @@ void SetModelNumbers (void)
 	int models = 1;
 	for (i = 1; i < num_entities; i++) {
 		if (entities[i].numbrushes) {
-			sprintf(value, "*%i", models);
+			Com_sprintf(value, sizeof(value), "*%i", models);
 			models++;
 			SetKeyValue(&entities[i], "model", value);
 		}
