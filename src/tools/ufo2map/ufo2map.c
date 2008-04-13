@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/resource.h>
 #endif
 
-static char source[MAX_OSPATH];
-static char name[MAX_OSPATH];
 mapConfig_t config;
 
 /**
@@ -320,8 +318,9 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 
 int main (int argc, char **argv)
 {
+	char mapFilename[MAX_OSPATH];
+	char bspFilename[MAX_OSPATH];
 	double begin, start, end;
-	char out[1024];
 
 	memset(&config, 0, sizeof(config));
 	U2M_SetDefaultConfigValues();
@@ -381,61 +380,56 @@ int main (int argc, char **argv)
 	Com_Printf("path: '%s'\n", argv[argc - 1]);
 	FS_Init(argv[argc - 1]);
 
-	if (config.info) {
-		strcpy(name, ExpandArg(argv[argc - 1]));
-		COM_StripExtension(name, source, sizeof(source));
-		COM_DefaultExtension(name, sizeof(name), ".bsp");
+	COM_StripExtension(COM_ExpandRelativePath(argv[argc - 1]), mapFilename, sizeof(mapFilename));
+	strncpy(bspFilename, mapFilename, sizeof(bspFilename) - 1);
+	COM_DefaultExtension(mapFilename, sizeof(mapFilename), ".map");
+	COM_DefaultExtension(bspFilename, sizeof(bspFilename), ".bsp");
 
-		LoadBSPFile(name);
+	if (config.info) {
+		LoadBSPFile(bspFilename);
 		PrintBSPFileSizes();
 		return 0;
 	}
 
-	strcpy(name, ExpandArg(argv[argc - 1]));
-	COM_StripExtension(name, source, sizeof(source));
-	COM_DefaultExtension(name, sizeof(name), ".map");
+	Com_Printf("...map: '%s'\n...bsp: '%s'\n", mapFilename, bspFilename);
 
-	snprintf(out, sizeof(out), "%s.bsp", source);
-
-	Com_Printf("...map: '%s'\n...bsp: '%s'\n", name, out);
-
-	if (config.onlynewer && CheckTimeDiff(name, out)) {
+	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
 		Com_Printf("bsp file is up-to-date\n");
 		return 0;
 	}
 
 	/* if onlyents just grab the entites and resave */
 	if (config.onlyents) {
-		LoadBSPFile(out);
+		LoadBSPFile(bspFilename);
 		num_entities = 0;
 
-		LoadMapFile(name);
+		LoadMapFile(mapFilename);
 		SetModelNumbers();
 
 		UnparseEntities();
 
-		WriteBSPFile(out);
+		WriteBSPFile(bspFilename);
 	} else if (config.performMapCheck) {
 		Com_Printf("Starting map check\n");
-		LoadMapFile(name);
+		LoadMapFile(mapFilename);
 		CheckBrushes();
 		CheckEntities();
 		return 0;
 	} else if (config.fixMap) {
 		Com_Printf("Trying to fix the map\n");
-		LoadMapFile(name);
+		LoadMapFile(mapFilename);
 		FixErrors();
 		return 0;
 	} else {
 		/* start from scratch */
-		LoadMapFile(name);
+		LoadMapFile(mapFilename);
 		SetModelNumbers();
 
-		ProcessModels(source);
+		ProcessModels(bspFilename);
 	}
 
 	end = time(NULL);
-	Com_Printf("%5.0f seconds elapsed\n", end-start);
+	Com_Printf("%5.0f seconds elapsed\n", end - start);
 
 	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
 		Com_Printf("----- Radiosity ----\n");
@@ -461,9 +455,8 @@ int main (int argc, char **argv)
 			Com_Printf("%5.0f seconds elapsed\n", end - start);
 		}
 
-		COM_DefaultExtension(source, sizeof(source), ".bsp");
-		Com_Printf("writing %s\n", source);
-		WriteBSPFile(source);
+		Com_Printf("writing %s\n", bspFilename);
+		WriteBSPFile(bspFilename);
 
 		Com_Printf("sum: %5.0f seconds elapsed\n\n", end - begin);
 	}

@@ -184,7 +184,7 @@ const char* FS_GameDir (void)
 void FS_Init (char *path)
 {
 	char ufoPath[MAX_QPATH];
-	const char *fullPath = ExpandArg(path);
+	const char *fullPath = COM_ExpandRelativePath(path);
 
 	COM_FilePath(fullPath, ufoPath);
 
@@ -198,7 +198,7 @@ void FS_Init (char *path)
 /**
  * @brief
  */
-char *ExpandArg (const char *path)
+char *COM_ExpandRelativePath (const char *path)
 {
 	static char full[1024];
 
