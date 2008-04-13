@@ -725,7 +725,7 @@ menu althud
 	pic bt_shot_reservation
 	{
 		tooltip	"*cvar mn_shot_reservation_tt"
-		key "*binding sel_shotreservation"
+		// key "*binding sel_shotreservation"
 		image hud/button_reserve_shot	// fixme
 		pos	"965 497"
 		texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
