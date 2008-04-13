@@ -4,4 +4,5 @@ all:
 
 clean:
 	-rm chapters/*.aux
-	-rm *.aux *.log *.out *.toc *.pdf
+	-rm *.aux *.log *.out *.toc *.pdf *.pdfsync
+	
