@@ -74,7 +74,7 @@ void COM_StripExtension (const char *in, char *out, size_t size)
  */
 void COM_DefaultExtension (char *path, size_t len, const char *extension)
 {
-	char oldPath[MAX_QPATH];
+	char oldPath[MAX_OSPATH];
 	const char *src;
 
 	/* if path doesn't have a .EXT, append extension
