@@ -120,6 +120,8 @@ tech rs_alien_xvi_event
 	require_AND
 	{
 		// Not marked "researchable" in a normal way
+		// We self-link here to not make this researchable at all.
+		tech rs_alien_xvi_event
 	}
 }
 
@@ -132,6 +134,8 @@ tech rs_enemy_on_earth_event
 	require_AND
 	{
 		// Not marked "researchable" in a normal way
+		// We self-link here to not make this researchable at all.
+		tech rs_enemy_on_earth_event
 	}
 }
 
