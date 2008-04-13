@@ -1004,7 +1004,7 @@ mapdef stadium
 
 mapdef druglord
 {
-	map				druglord
+	map				"+druglord"
 	description		"_A tropical area where several suspected criminals have made their homes."
 	multiplayer		true
 	teams			2
