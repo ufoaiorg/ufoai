@@ -414,7 +414,6 @@ int main (int argc, char **argv)
 		LoadMapFile(mapFilename);
 		CheckBrushes();
 		CheckEntities();
-		WriteMapFile(mapFilename);
 		return 0;
 	} else if (config.fixMap) {
 		Com_Printf("Trying to fix the map\n");

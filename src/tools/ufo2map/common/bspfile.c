@@ -256,6 +256,7 @@ static int CopyLump (int lump, void *dest, int size)
 
 /**
  * @brief
+ * @sa WriteBSPFile
  */
 void LoadBSPFile (const char *filename)
 {
@@ -314,6 +315,7 @@ static inline void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, v
 
 /**
  * @brief Swaps the bsp file in place, so it should not be referenced again
+ * @sa LoadBSPFile
  */
 void WriteBSPFile (const char *filename)
 {
