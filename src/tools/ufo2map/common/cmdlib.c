@@ -183,7 +183,7 @@ const char* FS_GameDir (void)
  */
 void FS_Init (char *path)
 {
-	char ufoPath[MAX_QPATH];
+	char ufoPath[MAX_OSPATH];
 	const char *fullPath = COM_ExpandRelativePath(path);
 
 	COM_FilePath(fullPath, ufoPath);
@@ -200,7 +200,7 @@ void FS_Init (char *path)
  */
 char *COM_ExpandRelativePath (const char *path)
 {
-	static char full[1024];
+	static char full[MAX_OSPATH];
 
 	if (path[0] != '/' && path[0] != '\\' && path[1] != ':') {
 		FS_getwd(full, sizeof(full));

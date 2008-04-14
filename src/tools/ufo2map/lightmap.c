@@ -55,6 +55,8 @@ void PairEdges (void)
 	dBspFace_t *f;
 	edgeshare_t *e;
 
+	memset(edgeshare, 0, sizeof(edgeshare_t) * MAX_MAP_EDGES);
+
 	f = dfaces;
 	for (i = 0; i < numfaces; i++, f++) {
 		for (j = 0; j < f->numedges; j++) {
@@ -117,9 +119,6 @@ static triangulation_t *AllocTriangulation (dBspPlane_t *plane)
 
 	tr = malloc(sizeof(*tr));
 	memset(tr, 0, sizeof(*tr));
-	tr->numpoints = 0;
-	tr->numedges = 0;
-	tr->numtris = 0;
 	tr->plane = plane;
 
 	return tr;
@@ -157,7 +156,7 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 	e->p0 = p0;
 	e->p1 = p1;
 	e->tri = NULL;
-	VectorCopy(normal, e->normal);
+	VectorNegate(normal, be->normal);
 	e->dist = dist;
 	trian->numedges++;
 	trian->edgematrix[p0][p1] = e;
@@ -205,7 +204,7 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	for (i = 0; i < trian->numpoints; i++) {
 		p = trian->points[i]->origin;
 		/* a 0 dist will form a degenerate triangle */
-		if (DotProduct(p, e->normal) - e->dist < 0)
+		if (DotProduct(p, e->normal) - e->dist <= 0)
 			continue;	/* behind edge */
 		VectorSubtract(p0, p, v1);
 		VectorSubtract(p1, p, v2);
@@ -763,18 +762,18 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 			float *styletable, int offset, int mapsize, float lightscale)
 {
 	directlight_t *l;
-	vec3_t pos2, delta, sun_dir, sun_color;
+	vec3_t dir, delta, sun_dir, sun_color;
 	float dot, dot2, dist;
 	float scale = 0.0f;
 	float *dest;
 	int sun_intensity;
 
 	/* move into the level using the normal and surface center */
-	VectorSubtract(pos, center, pos2);
-	VectorNormalize(pos2);
+	VectorSubtract(pos, center, dir);
+	VectorNormalize(dir);
 
-	CrossProduct(pos2, normal, pos2);
-	VectorMA(pos, 1.5, pos2, pos);
+	VectorMA(pos, 0.5, dir, pos);
+	VectorMA(pos, 0.5, dir, pos);
 
 	for (l = directlights[config.compile_for_day]; l; l = l->next) {
 		VectorSubtract(l->origin, pos, delta);

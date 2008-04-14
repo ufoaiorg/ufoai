@@ -42,6 +42,7 @@ typedef struct plane_s {
 	vec3_t	normal;
 	vec_t	dist;
 	int		type;
+	ipos3_t	planeVector[3];
 	struct plane_s	*hash_chain;
 } plane_t;
 
@@ -173,7 +174,7 @@ int FindFloatPlane(vec3_t normal, vec_t dist);
 /* textures.c */
 
 typedef struct {
-	char	name[MAX_VAR];
+	char	name[MAX_QPATH];
 	int		surfaceFlags;
 	int		value;
 	int		contentFlags;

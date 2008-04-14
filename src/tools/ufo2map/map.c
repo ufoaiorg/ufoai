@@ -706,6 +706,8 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			continue;
 		}
 
+		for (j = 0; j < 3; j++)
+			VectorCopy(planepts[j], mapplanes[planenum].planeVector[j]);
 
 		/* see if the plane has been used already */
 		for (k = 0; k < b->numsides; k++) {
@@ -944,12 +946,11 @@ void WriteMapFile (const char *filename)
 				const side_t *side = &brush->original_sides[k];
 				const brush_texture_t *t = &side_brushtextures[side - brushsides];
 				if (t->name[0]) {
-					winding_t *w = BaseWindingForPlane(mapplanes[side->planenum].normal, mapplanes[side->planenum].dist);
-					fprintf(f, "( %i %i %i ) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
-					fprintf(f, "( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
-					fprintf(f, "( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
+					const plane_t *p = &mapplanes[side->planenum];
+					fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
+					fprintf(f, "( %i %i %i ) ", p->planeVector[1][0], p->planeVector[1][1], p->planeVector[1][2]);
+					fprintf(f, "( %i %i %i ) ", p->planeVector[2][0], p->planeVector[2][1], p->planeVector[2][2]);
 					fprintf(f, "%s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1], t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
-					FreeWinding(w);
 				}
 			}
 			fprintf(f, "}\n");
