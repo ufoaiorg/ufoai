@@ -159,16 +159,14 @@ typedef struct client_static_s {
 	connstate_t state;
 	keydest_t key_dest;
 	keydest_t key_dest_old;
+	qboolean deactivateKeyBindings;
 
 	int realtime;				/**< always increasing, no clamping, etc */
 	float frametime;			/**< seconds since last frame */
-
 	float framerate;
 
-	/* screen rendering information */
-	float disable_screen;		/* showing loading plaque between levels */
-	/* or changing rendering dlls */
-	/* if time gets > 30 seconds ahead, break it */
+	/** showing loading plaque between levels if time gets > 30 seconds ahead, break it */
+	float disable_screen;
 
 	/* connection information */
 	char servername[MAX_OSPATH];	/**< name of server from original connect */

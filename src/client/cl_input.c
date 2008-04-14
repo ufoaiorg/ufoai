@@ -1269,6 +1269,9 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 	int buf = 0;
 	*key = 0;
 
+	if (cls.deactivateKeyBindings)
+		return 0;
+
 	switch (keysym->sym) {
 	case SDLK_KP9:
 		*key = K_KP_PGUP;
@@ -1641,6 +1644,14 @@ void IN_Frame (void)
 }
 
 /**
+ * @brief De-/Activates the executing of key bindings
+ */
+static void CL_InputBindingsToggle_f (void)
+{
+	cls.deactivateKeyBindings ^= 1;
+}
+
+/**
  * @sa CL_InitLocal
  */
 void IN_Init (void)
@@ -1729,6 +1740,8 @@ void IN_Init (void)
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
 
+	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
+	Cmd_AddCommand("bindingstoggle", CL_InputBindingsToggle_f, "Toggle the use of bind keys - useful for some popup menus");
 	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
 
 	mousePosX = mousePosY = 0.0;
