@@ -768,7 +768,7 @@ static int CL_UsableReactionTUs (const le_t * le)
 /**
  * @brief Replace the reserved TUs for a certain type.
  * @param[in] le The actor to change it for.
- * @param[in] type The type to be changed.
+ * @param[in] type The reservation type to be changed (i.e be replaced).
  * @param[in] tus How many TUs to set.
  * @todo Make the "type" into enum
  */
@@ -785,12 +785,12 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 	if (!chr)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Debug: type=%i, TUs=%i\n", type, tus);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Debug: Reservation type=%i, TUs=%i\n", type, tus);
 
 	switch (type) {
 	case RES_ALL:
 	case RES_ALL_ACTIVE:
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: RES_ALL and RES_ALL_ACTIVE are not a valid option\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: RES_ALL and RES_ALL_ACTIVE are not valid options.\n");
 		return;
 	case RES_REACTION:
 		chr->reservedTus.reaction = tus;
@@ -802,10 +802,52 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 		chr->reservedTus.shot = tus;
 		return;
 	default:
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Bad type given: %i\n", type);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Bad reservation type given: %i\n", type);
 		return;
 	}
 }
+#if 0
+/**
+ * @brief Search for the first (reaction) firemode that is also the most expensive.
+ * @param[in] ammo The objDef_t pointer that contains the different firemodes (could also be a weapon with no ammo).
+ * @param[in] TUs The number of TU we have for fireing.
+ */
+static int CL_GetMostExpensiveFiremode (objDef_t *weapon, objDef_t *ammo, int TUs)
+{
+	int i;
+	int foundFmIdx = -1;
+	int foundFmTUs = -1;
+	int weapFdsIdx;
+
+	assert(TUs >= 0);
+
+	if (!ammo || !weapon)
+		return foundFmIdx;
+
+ 	weapFdsIdx = FIRESH_FiredefsIDXForWeapon(ammo, weapon);
+
+	if (weapFdsIdx < 0)
+		return foundFmIdx;
+
+	/* Search for the the (reaction) firemode that is also the most expensive. */
+	for (i = 0; i < ammo->numFiredefs[weapFdsIdx]; i++) {
+		if (ammo->fd[weapFdsIdx][i].reaction) {
+			if (ammo->fd[weapFdsIdx][i].time <= TUs				/**< We can actually use the firemode ... */
+			&& (foundFmIdx < 0									/**< ...AND either no fm-index yet found OR... */
+				|| (foundFmTUs < ammo->fd[weapFdsIdx][i].time	/**< ... the found value is smaller AND the value is not the same as the found one. */
+				&& foundFmTUs != ammo->fd[weapFdsIdx][i].time))) {
+				foundFmIdx = weapFdsIdx;
+				foundFmTUs = ammo->fd[weapFdsIdx][i].time;
+			}
+
+			if (ammo->fd[weapFdsIdx][i].time == TUs)			/**< We can't possibly find a better FM - return this one. */
+				return foundFmIdx;
+		}
+	}
+
+	return foundFmIdx;
+}
+#endif
 
 /**
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
@@ -816,6 +858,7 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, const int fdIdx)
 {
 	character_t *chr;
+	int usableTusForRF = 0;
 
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
 		/* This check is just here (additional to the one in CL_DisplayFiremodes_f) in case a possible situation was missed. */
@@ -828,12 +871,16 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 		return;
 	}
 
+	usableTusForRF = CL_UsableReactionTUs(actor);
+
 	if (handidx < -1 || handidx > 1) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Bad hand index given. Abort.\n");
 		return;
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n",  CL_GetActorNumber(actor), actor->entnum, handidx, fdIdx);
+
+	chr = CL_GetActorChr(actor);
 
 	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
 	if ((objIdx >= 0) && (fdIdx >= 0)) {
@@ -849,13 +896,18 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 
 		/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
 		if (fd) {
-			CL_ReserveTUs(actor, RES_REACTION, fd->time);
+			if (chr->reservedTus.reserveReaction == STATE_REACTION_MANY) {
+				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Reserving %i x %i = %i TUs for RF.\n", usableTusForRF / fd->time, fd->time, fd->time * (usableTusForRF / fd->time));
+				CL_ReserveTUs(actor, RES_REACTION, fd->time * (usableTusForRF / fd->time));
+			} else {
+				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Reserving %i TUs for RF.\n", fd->time);
+				CL_ReserveTUs(actor, RES_REACTION, fd->time);
+			}
 		} else {
-			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: no firedef found! No TUs will be reserved.\n");
+			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: No firedef found! No TUs will be reserved.\n");
 		}
 	}
 
-	chr = CL_GetActorChr(actor);
 	chr->RFmode.hand = handidx;	/* Store the given hand. */
 	chr->RFmode.fmIdx = fdIdx;	/* Store the given firemode for this hand. */
 	chr->RFmode.wpIdx = objIdx;	/* Store the weapon-idx of the object in the hand (for faster access). */
@@ -3200,6 +3252,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		le->speed = 50;
 	else
 		le->speed = 100;
+
 	CL_BlockEvents();
 }
 
@@ -3428,7 +3481,10 @@ void CL_ActorToggleReaction_f (void)
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 		selChr->reservedTus.reserveReaction = state;
-		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, selChr->reservedTus.reserveReaction, selChr->reservedTus.reaction); /* Update server-side settings */
+		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.wpIdx, selChr->RFmode.fmIdx); /**< Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
+		/** @todo remove me
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, selChr->reservedTus.reserveReaction, selChr->reservedTus.reaction); Update server-side settings
+		*/
 	} else {
 		/* No usable RF weapon. */
 		switch (selActorReactionState) {
