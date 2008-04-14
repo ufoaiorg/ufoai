@@ -32,7 +32,7 @@ const char* FS_GameDir(void);
 
 char *COM_ExpandRelativePath(const char *path);	/* from cmd line */
 
-qFILE *SafeOpenWrite(const char *filename, qFILE *f);
+void SafeOpenWrite(const char *filename, qFILE *f);
 void SafeWrite(qFILE *f, void *buffer, int count);
 
 int LoadFile(const char *filename, void **bufferptr);

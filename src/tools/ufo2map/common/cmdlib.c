@@ -239,14 +239,13 @@ static int FS_filelength (qFILE *f)
 /**
  * @brief
  */
-qFILE *SafeOpenWrite (const char *filename, qFILE* f)
+void SafeOpenWrite (const char *filename, qFILE* f)
 {
-	memset(f, 0, sizeof(qFILE));
+	assert(!f->f);
+	assert(!f->z);
 	f->f = fopen(filename, "wb");
 	if (!f->f)
 		Sys_Error("Error opening %s for writing: %s", filename, strerror(errno));
-
-	return f;
 }
 
 /**

@@ -300,6 +300,7 @@ void LoadBSPFile (const char *filename)
 /**
  * @brief
  * @sa WriteBSPFile
+ * @todo Implement this without the ftell stuff - don't write the bsp file twice
  */
 static inline void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, void *data, int len)
 {
