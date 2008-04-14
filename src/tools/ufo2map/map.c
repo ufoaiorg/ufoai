@@ -914,6 +914,21 @@ static qboolean ParseMapEntity (const char *filename)
 }
 
 /**
+ * @brief Recurse down the epair list
+ * @note First writes the last element
+ */
+static inline void WriteMapEntities (FILE *f, epair_t *e)
+{
+	if (!e)
+		return;
+
+	if (e->next)
+		WriteMapEntities(f, e->next);
+
+	fprintf(f, "\"%s\" \"%s\"\n", e->key, e->value);
+}
+
+/**
  * @sa LoadMapFile
  * @sa FixErrors
  */
@@ -923,22 +938,17 @@ void WriteMapFile (const char *filename)
 	entity_t *mapent;
 	epair_t *e;
 	int i, j, k;
-	char buf[256];
 
-	snprintf(buf, sizeof(buf) - 1, "%s.tmp", filename);
-	Com_Printf("writing map: '%s'\n", buf);
+	Com_Printf("writing map: '%s'\n", filename);
 
-	f = fopen(buf, "wb");
+	f = fopen(filename, "wb");
 
 	fprintf(f, "\n");
 	for (i = 0; i < num_entities; i++) {
 		mapent = &entities[i];
 		fprintf(f, "// entity %i\n{\n", i);
 		e = mapent->epairs;
-		while (e) {
-			fprintf(f, "%s \"%s\"\n", e->key, e->value);
-			e = e->next;
-		}
+		WriteMapEntities(f, e);
 		for (j = 0; j < mapent->numbrushes; j++) {
 			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
 			fprintf(f, "// brush %i\n{\n", j);
@@ -955,9 +965,9 @@ void WriteMapFile (const char *filename)
 			}
 			fprintf(f, "}\n");
 		}
+		fprintf(f, "}\n");
 	}
 
-	fprintf(f, "}\n");
 	fclose(f);
 }
 

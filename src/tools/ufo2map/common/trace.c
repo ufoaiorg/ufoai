@@ -57,7 +57,7 @@ static void MakeTnode (int nodenum)
 {
 	tnode_t *t;
 	dBspPlane_t *plane;
-	int i, contentFlags;
+	int i;
 	dBspNode_t *node;
 
 	t = tnode_p++;
@@ -71,7 +71,7 @@ static void MakeTnode (int nodenum)
 
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
-			contentFlags = dleafs[-node->children[i] - 1].contentFlags & ~(1 << 31);
+			const int contentFlags = dleafs[-node->children[i] - 1].contentFlags & ~(1 << 31);
 			if ((contentFlags & neededContents) && !(contentFlags & forbiddenContents))
 				t->children[i] = 1 | (1 << 31); /*-node->children[i] | (1<<31); // leaf+1 */
 			else
