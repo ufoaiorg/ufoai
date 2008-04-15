@@ -261,6 +261,9 @@ void AL_AddAliens (aircraft_t *aircraft)
 			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].teamDef->name, tobase->alienscont[i].amount_dead);
 #endif
 	}
+
+	/* we shouldn't have any more aliens on the aircraft after this */
+	aircraft->alientypes = 0;
 }
 
 /**
