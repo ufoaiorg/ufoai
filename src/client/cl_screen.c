@@ -291,7 +291,7 @@ static void SCR_DrawCursor (void)
 		const vec3_t org = { mousePosX, mousePosY, -50 };
 		const vec3_t scale = { 3.5, 3.5, 3.5 };
 		const vec4_t color = { 1, 1, 1, 1 };
-		MN_DrawItem(org, dragItem, 0, 0, 0, 0, scale, color);
+		MN_DrawItem(org, &dragItem, 0, 0, 0, 0, scale, color);
 	}
 }
 

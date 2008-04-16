@@ -198,12 +198,13 @@ void MN_FindContainer (menuNode_t* const node)
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void MN_DrawItem (const vec3_t org, item_t item, int sx, int sy, int x, int y, const vec3_t scale, const vec4_t color)
+void MN_DrawItem (const vec3_t org, const item_t *item, int sx, int sy, int x, int y, const vec3_t scale, const vec4_t color)
 {
 	objDef_t *od;
 
-	assert(item.t);
-	od = item.t;
+	assert(item);
+	assert(item->t);
+	od = item->t;
 
 	if (od->image[0]) {
 		/* draw the image */
@@ -218,7 +219,7 @@ void MN_DrawItem (const vec3_t org, item_t item, int sx, int sy, int x, int y, c
 		vec3_t size;
 		vec4_t col;
 
-		if (item.rotated)
+		if (item->rotated)
 			angles[0] -= 90;
 
 		/* draw model, if there is no image */
@@ -249,7 +250,7 @@ void MN_DrawItem (const vec3_t org, item_t item, int sx, int sy, int x, int y, c
 
 		Vector4Copy(color, col);
 		/* no ammo in this weapon - highlight this item */
-		if (od->weapon && od->reload && !item.a) {
+		if (od->weapon && od->reload && !item->a) {
 			col[1] *= 0.5;
 			col[2] *= 0.5;
 		}
@@ -400,27 +401,30 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	if (node->mousefx == NONE)
 		return NULL;
 
+	assert(menuInventory);
 	if (csi.ids[node->mousefx].single) {
 		/* single item container (special case for left hand) */
 		if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
 			color[3] = 0.5;
 			if (menuInventory->c[csi.idRight] && menuInventory->c[csi.idRight]->item.t->holdTwoHanded)
-				MN_DrawItem(node->pos, menuInventory->c[csi.idRight]->item, node->size[0] / C_UNIT,
+				MN_DrawItem(node->pos, &menuInventory->c[csi.idRight]->item, node->size[0] / C_UNIT,
 							node->size[1] / C_UNIT, 0, 0, scale, color);
 		} else if (menuInventory->c[node->mousefx]) {
-			if (node->mousefx == csi.idRight &&
-					menuInventory->c[csi.idRight]->item.t->fireTwoHanded &&
-					menuInventory->c[csi.idLeft]) {
-				color[0] = color[1] = color[2] = color[3] = 0.5;
+			const item_t *item = &menuInventory->c[csi.idRight]->item;
+			/* if there is a weapon in the right hand that needs two hands to shoot it
+			 * and there is a weapon in the left, then draw a disabled marker for the
+			 * fireTwoHanded weapon */
+			if (node->mousefx == csi.idRight && item->t->fireTwoHanded
+			 && menuInventory->c[csi.idLeft]) {
+				Vector4Set(color, 0.5, 0.5, 0.5, 0.5);
 				MN_DrawDisabled(node);
 			}
-			MN_DrawItem(node->pos, menuInventory->c[node->mousefx]->item, node->size[0] / C_UNIT,
-						node->size[1] / C_UNIT, 0, 0, scale, color);
+			MN_DrawItem(node->pos, item, node->size[0] / C_UNIT, node->size[1] / C_UNIT, 0, 0, scale, color);
 		}
 	} else {
 		/* standard container */
 		for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
-			MN_DrawItem(node->pos, ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, color);
+			MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, color);
 		}
 	}
 	/* draw free space if dragging - but not for idEquip */
@@ -456,5 +460,5 @@ void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 
 	item.t = &csi.ods[i];
 
-	MN_DrawItem(node->pos, item, 0, 0, 0, 0, node->scale, color);
+	MN_DrawItem(node->pos, &item, 0, 0, 0, 0, node->scale, color);
 }
