@@ -118,7 +118,7 @@ static qboolean PR_ConditionsDisassembly (const base_t *base, const components_t
  * @sa PR_ProductionInfo
  * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 hour
  */
-static float PR_CalculateProductionPercentDone (const base_t *base, technology_t *tech, components_t *comp, qboolean disassembly)
+static float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const components_t *comp, qboolean disassembly)
 {
 	signed int allworkers = 0, maxworkers = 0;
 	signed int timeDefault = 0;
@@ -147,7 +147,7 @@ static float PR_CalculateProductionPercentDone (const base_t *base, technology_t
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
 		fraction = 1.0f / timeDefault;
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone()... workers: %i, tech: %s, percent: %f\n",
-		maxworkers, tech->id, fraction);
+			maxworkers, tech->id, fraction);
 		return fraction;
 	} else {
 		/* Calculate the fraction of item produced for our amount of workers. */
@@ -156,7 +156,7 @@ static float PR_CalculateProductionPercentDone (const base_t *base, technology_t
 		fraction = (float) maxworkers / (PRODUCE_WORKERS * timeDefault);
 		fraction = fraction * maxworkers / PRODUCE_WORKERS;
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone()... workers: %i, tech: %s, percent: %f\n",
-		maxworkers, tech->id, fraction);
+			maxworkers, tech->id, fraction);
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
 		if (fraction > 1.0f)
 			return 1;
@@ -304,6 +304,7 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 	prod->amount = amount;
 	if (disassembling) {	/* Disassembling. */
 		prod->production = qfalse;
+
 		/* We have to remove amount of items being disassembled from base storage. */
 		base->storage.num[item->idx] -= amount;
 		/* Now find related components definition. */
@@ -640,10 +641,21 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 			Cvar_Set("mn_item", "");
 		}
 	} else {	/* Disassembling. */
-		components_t *comp = selectedDisassembly;
-		assert(comp);
+		const components_t *comp;
 
-		od = comp->asItem;
+		if (selectedQueueItem) {
+			assert(selectedProduction);
+			od = selectedProduction->item;
+			assert(od);
+			comp = INV_GetComponentsByItem(od);
+			assert(comp);
+		} else if (selectedDisassembly) {
+			comp = selectedDisassembly;
+			od = comp->asItem;
+			assert (comp->asItem);
+		} else {
+			od = NULL;
+		}
 
 		if (od) {
 			assert(od->tech);
@@ -918,10 +930,8 @@ static void PR_UpdateProductionList (base_t* base)
 	static char productionList[1024];
 	static char productionQueued[256];
 	static char productionAmount[256];
-	objDef_t *od;
 	const production_queue_t *queue;
-	const production_t *prod;
-	aircraft_t *aircraftSample, *aircraftBase;
+	aircraft_t *aircraftSample;
 
 	assert(base);
 
@@ -932,9 +942,9 @@ static void PR_UpdateProductionList (base_t* base)
 
 	/* First add all the queue items ... */
 	for (i = 0; i < queue->numItems; i++) {
-		prod = &queue->items[i];
+		const production_t *prod = &queue->items[i];
 		if (!prod->aircraft) {
-			od = prod->item;
+			const objDef_t *od = prod->item;
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", base->storage.num[prod->item->idx]), sizeof(productionAmount));
 			Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
@@ -942,10 +952,9 @@ static void PR_UpdateProductionList (base_t* base)
 			aircraftSample = prod->aircraft;
 			Q_strcat(productionList, va("%s\n", _(aircraftSample->name)), sizeof(productionList));
 			for (j = 0, counter = 0; j < gd.numAircraft; j++) {
-				aircraftBase = AIR_AircraftGetFromIdx(j);
+				const aircraft_t *aircraftBase = AIR_AircraftGetFromIdx(j);
 				assert(aircraftBase);
-				if (aircraftBase->homebase == base
-				 && aircraftBase->tpl == aircraftSample)
+				if (aircraftBase->homebase == base && aircraftBase->tpl == aircraftSample)
 					counter++;
 			}
 			Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
@@ -966,16 +975,16 @@ static void PR_UpdateProductionList (base_t* base)
 
 	/* Then go through all object definitions ... */
 	if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircraft. */
+		objDef_t *od;
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			assert(od->tech);
 			/* We will not show items with producetime = -1 - these are not producible.
 			 * We can produce what was researched before. */
 			if (BUYTYPE_MATCH(od->buytype, produceCategory)
-			 && RS_IsResearched_ptr(od->tech)
-			 && *od->name
+			 && RS_IsResearched_ptr(od->tech) && od->name[0] != '\0'
 			 && od->tech->produceTime > 0) {
-			 	LIST_AddPointer(&productionItemList.list, od);
-			 	productionItemList.num++;
+				LIST_AddPointer(&productionItemList.list, od);
+				productionItemList.num++;
 
 				Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 				Q_strcat(productionAmount, va("%i\n", base->storage.num[i]), sizeof(productionAmount));
@@ -999,7 +1008,7 @@ static void PR_UpdateProductionList (base_t* base)
 
 				Q_strcat(productionList, va("%s\n", _(aircraftSample->name)), sizeof(productionList));
 				for (j = 0, counter = 0; j < gd.numAircraft; j++) {
-					aircraftBase = AIR_AircraftGetFromIdx(j);
+					const aircraft_t *aircraftBase = AIR_AircraftGetFromIdx(j);
 					assert(aircraftBase);
 					if (aircraftBase->homebase == base
 					 && aircraftBase->tpl == aircraftSample)
@@ -1032,11 +1041,7 @@ static void PR_UpdateDisassemblingList_f (void)
 	static char productionList[1024];
 	static char productionQueued[256];
 	static char productionAmount[256];
-	const objDef_t *od;
-	objDef_t *asOd;
 	const production_queue_t *queue;
-	const production_t *prod;
-	const components_t *comp;
 	const base_t* base;
 
 	if (!baseCurrent)
@@ -1050,8 +1055,8 @@ static void PR_UpdateDisassemblingList_f (void)
 
 	/* first add all the queue items */
 	for (i = 0; i < queue->numItems; i++) {
-		prod = &queue->items[i];
-		od = prod->item;
+		const production_t *prod = &queue->items[i];
+		const objDef_t *od = prod->item;
 
 		Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 		Q_strcat(productionAmount, va("%i\n", base->storage.num[od->idx]), sizeof(productionAmount));
@@ -1070,12 +1075,12 @@ static void PR_UpdateDisassemblingList_f (void)
 	productionItemList.num = 0;
 
 	for (i = 0; i < gd.numComponents; i++) {
-		asOd = gd.components[i].asItem;
+		const objDef_t *asOd = gd.components[i].asItem;
+		components_t *comp = &gd.components[i];
 		if (!asOd)
 			continue;
-		comp = &gd.components[i];
 		if (PR_ConditionsDisassembly(base, comp)) {
-			LIST_AddPointer(&productionItemList.list, asOd);
+			LIST_AddPointer(&productionItemList.list, comp);
 			productionItemList.num++;
 
 			Q_strcat(productionList, va("%s\n", asOd->name), sizeof(productionList));
@@ -1139,7 +1144,6 @@ static void PR_ProductionSelect_f (void)
 			selectedItem = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, 0);
 		else
 			selectedAircraft = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, 0);
-
 	}
 
 	/* Update displayed info about selected entry (if any). */
@@ -1308,7 +1312,7 @@ static void PR_ProductionIncrease_f (void)
 			} else {
 				prod->amount += amount;
 			}
-		} else {			/* Disassembling. */
+		} else {	/* Disassembling. */
 			/* We can disassembly only as many items as we have in base storage. */
 			if (base->storage.num[prod->item->idx] > amount)
 				amountTemp = amount;
@@ -1350,8 +1354,6 @@ static void PR_ProductionIncrease_f (void)
 			if (amountTemp > MAX_PRODUCTION_AMOUNT) {
 				/* Add as many items as possible. */
 				amountTemp = MAX_PRODUCTION_AMOUNT;
-			} else {
-					return;
 			}
 
 			prod = PR_QueueNew(base, queue, selectedDisassembly->asItem, NULL, amountTemp, qtrue);	/* Disassembling. */
