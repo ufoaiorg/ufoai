@@ -405,25 +405,34 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	if (csi.ids[node->mousefx].single) {
 		/* single item container (special case for left hand) */
 		if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
+			const int sx = node->size[0] / C_UNIT;
+			const int sy = node->size[1] / C_UNIT;
+			const item_t *item = &menuInventory->c[csi.idRight]->item;
 			color[3] = 0.5;
-			if (menuInventory->c[csi.idRight] && menuInventory->c[csi.idRight]->item.t->holdTwoHanded)
-				MN_DrawItem(node->pos, &menuInventory->c[csi.idRight]->item, node->size[0] / C_UNIT,
-							node->size[1] / C_UNIT, 0, 0, scale, color);
+			assert(item);
+			assert(item->t);
+			if (menuInventory->c[csi.idRight] && item->t->holdTwoHanded)
+				MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
 		} else if (menuInventory->c[node->mousefx]) {
+			const int sx = node->size[0] / C_UNIT;
+			const int sy = node->size[1] / C_UNIT;
 			const item_t *item = &menuInventory->c[csi.idRight]->item;
 			/* if there is a weapon in the right hand that needs two hands to shoot it
 			 * and there is a weapon in the left, then draw a disabled marker for the
 			 * fireTwoHanded weapon */
+			assert(item);
+			assert(item->t);
 			if (node->mousefx == csi.idRight && item->t->fireTwoHanded
 			 && menuInventory->c[csi.idLeft]) {
 				Vector4Set(color, 0.5, 0.5, 0.5, 0.5);
 				MN_DrawDisabled(node);
 			}
-			MN_DrawItem(node->pos, item, node->size[0] / C_UNIT, node->size[1] / C_UNIT, 0, 0, scale, color);
+			MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
 		}
 	} else {
 		/* standard container */
 		for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
+			assert(ic->item.t);
 			MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, color);
 		}
 	}
