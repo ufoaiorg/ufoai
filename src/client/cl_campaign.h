@@ -206,13 +206,13 @@ extern stats_t campaignStats;
 /** campaign definition */
 typedef struct campaign_s {
 	int idx;					/**< own index in global campaign array */
-	char id[MAX_VAR];
-	char name[MAX_VAR];
-	char team[MAX_VAR];
-	char researched[MAX_VAR];
-	char equipment[MAX_VAR];
-	char market[MAX_VAR];
-	equipDef_t *marketDef;
+	char id[MAX_VAR];			/**< id of the campaign */
+	char name[MAX_VAR];			/**< name of the campaign */
+	char team[MAX_VAR];			/**< what team can play this campaign */
+	char researched[MAX_VAR];	/**< name of the researched tech list to use on campaign start */
+	char equipment[MAX_VAR];	/**< name of the equipment list to use on campaign start */
+	char market[MAX_VAR];		/**< name of the market list to use with this campaign */
+	equipDef_t *marketDef;		/**< market definition for this campaign (how many items on the market) */
 	char text[MAX_VAR];			/**< placeholder for gettext stuff */
 	char map[MAX_VAR];			/**< geoscape map */
 	int soldiers;				/**< start with x soldiers */
