@@ -475,15 +475,16 @@ void INV_ParseComponents (const char *name, const char **text)
 components_t *INV_GetComponentsByItem (const objDef_t *item)
 {
 	int i;
-	components_t *comp = NULL;
 
 	for (i = 0; i < gd.numComponents; i++) {
-		comp = &gd.components[i];
-		if (comp->asItem == item)
-			break;
+		components_t *comp = &gd.components[i];
+		if (comp->asItem == item) {
+			Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItem()... found components id: %s\n", comp->asId);
+			return comp;
+		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItem()... found components id: %s\n", comp->asId);
-	return comp;
+	Sys_Error("INV_GetComponentsByItem()... could not find components id for: %s", item->id);
+	return NULL;
 }
 
 /**
