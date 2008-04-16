@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-03-29 12:29+0100\n"
-"PO-Revision-Date: 2008-03-14 15:41+0100\n"
+"POT-Creation-Date: 2008-04-16 14:55+0200\n"
+"PO-Revision-Date: 2008-04-16 14:51+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1143,13 +1143,9 @@ msgstr "Recrutez votre équipe d'abord"
 msgid "Aircraft absent from base"
 msgstr "Appareil absent de la base"
 
-#: ../base/ufos/menu_aircraft.ufo:87
+#: ../base/ufos/menu_aircraft.ufo:87 ../base/ufos/menu_aircraft.ufo:97
 msgid "Assign Soldiers"
 msgstr "Affecter des soldats"
-
-#: ../base/ufos/menu_aircraft.ufo:97
-msgid "NA"
-msgstr "NC"
 
 #: ../base/ufos/menu_aircraft.ufo:106
 msgid "Aircraft away"
@@ -3359,7 +3355,7 @@ msgstr "HUD alternatif"
 msgid "Confirm Actions:"
 msgstr "Confirmer les actions :"
 
-#: ../base/ufos/menu_options.ufo:968 client/cl_aliencont.c:968
+#: ../base/ufos/menu_options.ufo:968 client/cl_aliencont.c:971
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Oui"
@@ -16194,7 +16190,7 @@ msgstr ""
 #: client/cl_campaign.c:2965 client/cl_campaign.c:3024
 #: client/cl_campaign.c:3041 client/cl_campaign.c:3043
 #: client/cl_campaign.c:3377 client/cl_inventory.c:292
-#: client/cl_inventory.c:297 client/cl_inventory.c:543 client/cl_main.c:1043
+#: client/cl_inventory.c:297 client/cl_inventory.c:546 client/cl_main.c:1043
 #: client/cl_main.c:1278 client/cl_map.c:313 client/cl_mapfightequip.c:824
 #: client/cl_mapfightequip.c:826 client/cl_market.c:673 client/cl_market.c:677
 #: client/cl_parse.c:1599 client/cl_popup.c:386 client/cl_produce.c:419
@@ -16367,7 +16363,7 @@ msgstr ""
 msgid "You've captured new aliens."
 msgstr "Vous avez capturé de nouveaux aliens."
 
-#: client/cl_aliencont.c:968
+#: client/cl_aliencont.c:971
 msgid "Needs autopsy!"
 msgstr "Nécessite une autopsie !"
 
@@ -16977,7 +16973,7 @@ msgid "Human"
 msgstr "Humain"
 
 #: client/cl_campaign.c:4542
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "\n"
@@ -16989,6 +16985,8 @@ msgid ""
 "Max. allowed debts: %ic\n"
 "%s\n"
 msgstr ""
+"%s\n"
+"\n"
 "Race : %s\n"
 "Recrues : %i %s, %i %s, %i %s, %i %s\n"
 "Crédits : %ic\n"
@@ -17266,7 +17264,7 @@ msgid_plural "%i items were sold."
 msgstr[0] "%i objet a été vendu"
 msgstr[1] "%i objets ont été vendus"
 
-#: client/cl_inventory.c:541
+#: client/cl_inventory.c:544
 #, c-format
 msgid ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter "
@@ -19242,6 +19240,9 @@ msgstr "La base est attaquée."
 #: po/OTHER_STRINGS:14
 msgid "Crashed Alien Ship. Secure the area."
 msgstr "Vaisseau alien écrasé. Sécurisez la zone."
+
+#~ msgid "NA"
+#~ msgstr "NC"
 
 #~ msgid "Build more radars in the same base to increase the radar range."
 #~ msgstr ""
