@@ -406,12 +406,14 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
 			const int sx = node->size[0] / C_UNIT;
 			const int sy = node->size[1] / C_UNIT;
-			const item_t *item = &menuInventory->c[csi.idRight]->item;
 			color[3] = 0.5;
-			assert(item);
-			assert(item->t);
-			if (menuInventory->c[csi.idRight] && item->t->holdTwoHanded)
-				MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
+			if (menuInventory->c[csi.idRight]) {
+				const item_t *item = &menuInventory->c[csi.idRight]->item;
+				assert(item);
+				assert(item->t);
+				if (item->t->holdTwoHanded)
+					MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
+			}
 		} else if (menuInventory->c[node->mousefx]) {
 			const int sx = node->size[0] / C_UNIT;
 			const int sy = node->size[1] / C_UNIT;
