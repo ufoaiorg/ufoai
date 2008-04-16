@@ -394,7 +394,6 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 {
 	const vec3_t scale = {3.5, 3.5, 3.5};
 	vec4_t color = {1, 1, 1, 1};
-	invList_t *ic;
 
 	if (node->mousefx == C_UNDEFINED)
 		MN_FindContainer(node);
@@ -430,6 +429,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
 		}
 	} else {
+		const invList_t *ic;
 		/* standard container */
 		for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
 			assert(ic->item.t);
