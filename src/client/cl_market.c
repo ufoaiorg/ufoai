@@ -936,7 +936,7 @@ static void BS_SellAircraft_f (void)
 					teamNote = qtrue;
 					continue;
 				}
-				if (aircraft->status >= AIR_IDLE) {
+				if (!AIR_IsAircraftInBase(aircraft)) {
 					/* aircraft is not in base */
 					aircraftOutNote = qtrue;
 					continue;

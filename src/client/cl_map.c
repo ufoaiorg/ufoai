@@ -295,7 +295,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		/* Get selected aircraft wich belong to the base */
 		aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
 		for (; aircraft >= gd.bases[i].aircraft; aircraft--)
-			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
+			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), _(aircraft->name));
 	}
 
@@ -306,7 +306,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		|| Cvar_VariableInteger("debug_showufos")
 #endif
 		)
-			if (aircraft->status > AIR_HOME && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
+			if (AIR_IsAircraftOnGeoscape(aircraft) && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO"), _(aircraft->name));
 
 	if (multiSelect.nbSelect == 1) {
@@ -321,7 +321,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		/* Nothing selected */
 		if (!selectedAircraft)
 			MAP_ResetAction();
-		else if (selectedAircraft->status > AIR_HOME && AIR_AircraftHasEnoughFuel(selectedAircraft, pos)) {
+		else if (AIR_IsAircraftOnGeoscape(selectedAircraft) && AIR_AircraftHasEnoughFuel(selectedAircraft, pos)) {
 			/* Move the selected aircraft to the position clicked */
 			MAP_MapCalcLine(selectedAircraft->pos, pos, &selectedAircraft->route);
 			selectedAircraft->status = AIR_TRANSIT;
@@ -887,7 +887,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	maxEventIdx = numMissions + gd.numBases - 1;
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			if (aircraft->status > AIR_HOME)
+			if (AIR_IsAircraftOnGeoscape(aircraft))
 				maxEventIdx++;
 		}
 	}
@@ -947,7 +947,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	/* Cycle through aircraft (only those present on geoscape) */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			if (aircraft->status > AIR_HOME) {
+			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				if (centerOnEventIdx == counter) {
 					if (cl_3dmap->integer)
 						VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
@@ -1256,7 +1256,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		/* draw all aircraft of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
-			if (aircraft->status > AIR_HOME) {
+			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 
 				/* Draw aircraft radar */
 				RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);

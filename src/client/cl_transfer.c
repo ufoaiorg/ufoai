@@ -363,7 +363,7 @@ static qboolean TR_AircraftListSelect (int i)
 		return qfalse;
 
 	aircraft = AIR_AircraftGetFromIdx(i);
-	if (aircraft->status >= AIR_IDLE)	/* Aircraft is not in base. */
+	if (!AIR_IsAircraftInBase(aircraft))	/* Aircraft is not in base. */
 		return qfalse;
 
 	return qtrue;

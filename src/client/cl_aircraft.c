@@ -268,7 +268,7 @@ void AIM_AircraftStart_f (void)
 	}
 
 	aircraft = baseCurrent->aircraftCurrent;
-	if (aircraft->status < AIR_IDLE) {
+	if (AIR_IsAircraftInBase(aircraft)) {
 		aircraft->pos[0] = baseCurrent->pos[0] + 2;
 		aircraft->pos[1] = baseCurrent->pos[1] + 2;
 		/* remove soldier aboard from hospital */
@@ -342,6 +342,35 @@ qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
 {
 	if (aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL)
 		return qtrue;
+	return qfalse;
+}
+
+/**
+ * @brief Checks whether given aircraft is on geoscape.
+ * @param[in] aircraft Pointer to an aircraft.
+ * @note aircraft may be neither on geoscape, nor in base (like when it's transferred)
+ * @return qtrue if given aircraft is on geoscape.
+ * @return qfalse if given aircraft is not on geoscape.
+ */
+qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
+{
+	switch (aircraft->status) {
+	case AIR_IDLE:
+	case AIR_TRANSIT:
+	case AIR_MISSION:
+	case AIR_UFO:
+	case AIR_DROP:
+	case AIR_INTERCEPT:
+	case AIR_RETURNING:
+		return qtrue;
+	case AIR_NONE:
+	case AIR_REFUEL:
+	case AIR_HOME:
+	case AIR_TRANSFER:
+		return qfalse;
+	}
+
+	assert(0);
 	return qfalse;
 }
 
@@ -570,7 +599,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 {
 	base_t *base;
 
-	if (aircraft && aircraft->status != AIR_HOME) {
+	if (aircraft && AIR_IsAircraftOnGeoscape(aircraft)) {
 		base = aircraft->homebase;
 		assert(base);
 		Com_DPrintf(DEBUG_CLIENT, "return '%s' (%i) to base ('%s').\n", aircraft->name, aircraft->idx, base->name);
@@ -964,7 +993,10 @@ void CL_CampaignRunAircraft (int dt)
 		/* Run each aircraft */
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->homebase) {
-				if (aircraft->status > AIR_IDLE) {
+				if (aircraft->status == AIR_IDLE) {
+					/* Aircraft idle out of base */
+					aircraft->fuel -= dt;
+				} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
 					/* Aircraft is moving */
 					if (AIR_AircraftMakeMove(dt, aircraft)) {
 						/* aircraft reach its destination */
@@ -1002,9 +1034,6 @@ void CL_CampaignRunAircraft (int dt)
 						}
 					}
 					AB_UpdateStealthForAllBase(aircraft, dt);
-				} else if (aircraft->status == AIR_IDLE) {
-					/* Aircraft idle out of base */
-					aircraft->fuel -= dt;
 				} else if (aircraft->status == AIR_REFUEL) {
 					/* Aircraft is refueling at base */
 					aircraft->fuel += dt;
@@ -1015,7 +1044,7 @@ void CL_CampaignRunAircraft (int dt)
 				}
 
 				/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
-				if ((aircraft->status != AIR_RETURNING) && (aircraft->status >= AIR_IDLE) &&
+				if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
 					!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 					/* @todo: check if aircraft can go to a closer base with free space */
 					MN_AddNewMessage(_("Notice"), va(_("Your %s is low on fuel and returns to base"), aircraft->name), qfalse, MSG_STANDARD, NULL);
@@ -1029,7 +1058,7 @@ void CL_CampaignRunAircraft (int dt)
 				}
 
 				/* Update delay to launch next projectile */
-				if (aircraft->status >= AIR_IDLE) {
+				if (AIR_IsAircraftOnGeoscape(aircraft)) {
 					for (k = 0; k < aircraft->maxWeapons; k++) {
 						if (aircraft->weapons[k].delayNextShot > 0)
 							aircraft->weapons[k].delayNextShot -= dt;
@@ -1120,7 +1149,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	}
 
 	/* if aircraft was in base */
-	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME) {
+	if (AIR_IsAircraftInBase(aircraft)) {
 		/* remove soldier aboard from hospital */
 		HOS_RemoveEmployeesInHospital(aircraft);
 		/* reload its ammunition */
@@ -1667,7 +1696,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 		return qfalse;
 
 	/* if aircraft was in base */
-	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME) {
+	if (AIR_IsAircraftInBase(aircraft)) {
 		/* remove soldier aboard from hospital */
 		HOS_RemoveEmployeesInHospital(aircraft);
 		/* reload its ammunition */

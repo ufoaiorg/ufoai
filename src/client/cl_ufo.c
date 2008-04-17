@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_popup.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
+#include "cl_aircraft.h"
 
 static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at phalanx aircraft */
 
@@ -337,7 +338,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 	/* check if the ufo is already attacking an aircraft */
 	if (ufo->aircraftTarget) {
 		/* check if the target disappeared from geoscape (fled in a base) */
-		if (ufo->aircraftTarget->status > AIR_HOME)
+		if (AIR_IsAircraftOnGeoscape(ufo->aircraftTarget))
 			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
 		else
 			ufo->aircraftTarget = NULL;
@@ -351,7 +352,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 		 * reverse order - because aircraft can be destroyed in here */
 		for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
 			/* check that aircraft is flying */
-			if (phalanxAircraft->status > AIR_HOME) {
+			if (AIR_IsAircraftOnGeoscape(phalanxAircraft)) {
 				/* get the distance from ufo to aircraft */
 				dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
 				/* check out of reach */
@@ -431,7 +432,7 @@ void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
 	/* check if the ufo is already attacking an aircraft */
 	} else if (ufo->aircraftTarget) {
 		/* check if the target flee in a base */
-		if (ufo->aircraftTarget->status > AIR_HOME)
+		if (AIR_IsAircraftOnGeoscape(ufo->aircraftTarget))
 			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
 		else {
 			ufo->aircraftTarget = NULL;
@@ -439,7 +440,7 @@ void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
 		}
 	} else {
 		/* check that aircraft is flying */
-		if (phalanxAircraft->status > AIR_HOME)
+		if (AIR_IsAircraftOnGeoscape(phalanxAircraft))
 			UFO_SendPursuingAircraft(ufo, phalanxAircraft);
 	}
 }

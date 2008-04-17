@@ -1447,7 +1447,7 @@ qboolean CL_SoldierAwayFromBase (employee_t *employee)
 		const aircraft_t *aircraft = &base->aircraft[i];
 		assert(aircraft);
 
-		if (aircraft->status > AIR_HOME && AIR_IsInAircraftTeam(aircraft, employee))
+		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsInAircraftTeam(aircraft, employee))
 			return qtrue;
 	}
 
