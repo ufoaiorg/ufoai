@@ -223,10 +223,15 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 	int i, hangarStorage, numAircraftTransfer = 0;
 	assert(aircraft && srcbase && destbase);
 
-	/* Count weight and number of all aircraft already on the transfer. */
+	/* Count weight and number of all aircraft already on the transfer list that goes
+		into the same hangar type than aircraft. */
 	for (i = 0; i < MAX_AIRCRAFT; i++)
-		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)
-			numAircraftTransfer++;
+		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
+			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIdx(i);
+			assert(aircraftTemp);
+			if (aircraftTemp->weight == aircraft->weight)
+				numAircraftTransfer++;
+		}
 
 	/* Hangars in destbase functional? */
 	if (!B_GetBuildingStatus(destbase, B_POWER)) {
