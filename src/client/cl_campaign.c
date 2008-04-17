@@ -5319,7 +5319,8 @@ static void CL_UpdateCharacterStats (int won)
 	/** @todo What about UGVs/Tanks? */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], gd.interceptAircraft) ) {
-			assert(gd.employees[EMPL_SOLDIER][i].hired && gd.employees[EMPL_SOLDIER][i].baseHired == gd.interceptAircraft->homebase);
+			assert(gd.employees[EMPL_SOLDIER][i].hired);
+			assert(gd.employees[EMPL_SOLDIER][i].baseHired == gd.interceptAircraft->homebase);
 
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
 			chr = &gd.employees[EMPL_SOLDIER][i].chr;
