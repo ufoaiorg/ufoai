@@ -755,7 +755,6 @@ void AIR_NewAircraft (base_t *base, const char *name)
  * @note The assigned soldiers (if any) are removed/unassinged from the aircraft - not fired.
  * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
  * @todo Return status of deletion for better error handling.
- * @todo also remove the assigned items in the slots - like weapons, armours and so on
  */
 void AIR_DeleteAircraft (aircraft_t *aircraft)
 {
@@ -770,13 +769,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		return;
 	}
 
-	/* Check if this aircraft is currently transferred. */
-	if (aircraft->status == AIR_TRANSIT) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_DeleteAircraft: this aircraft is currently transferred. We can not remove it.\n");
-		/* @todo: Return deletion status here. */
-		return;
-	}
-
 	base = aircraft->homebase;
 
 	if (!base) {
@@ -784,6 +776,8 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		/* @todo: Return deletion status here. */
 		return;
 	}
+
+	TR_NotifyAircraftRemoved(aircraft);
 
 	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
 	if (aircraft->teamSize > 0)
@@ -2277,13 +2271,18 @@ int AIR_CalculateHangarStorage (int aircraftID, base_t *base, int used)
 
 	if (aircraftSize < 1) {
 #ifdef DEBUG
-		Com_Printf("AIR_CalculateHangarStorage()... aircraft weight is wrong!\n");
+		Com_Printf("AIR_CalculateHangarStorage: aircraft weight is wrong!\n");
 #endif
 		return -1;
 	}
 	if (!base) {
 #ifdef DEBUG
-		Com_Printf("AIR_CalculateHangarStorage()... base does not exist!\n");
+		Com_Printf("AIR_CalculateHangarStorage: base does not exist!\n");
+#endif
+		return -1;
+	} else if (!base->founded) {
+#ifdef DEBUG
+		Com_Printf("AIR_CalculateHangarStorage: base is not founded!\n");
 #endif
 		return -1;
 	}

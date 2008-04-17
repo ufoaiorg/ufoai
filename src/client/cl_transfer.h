@@ -83,6 +83,7 @@ void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferEnd(transfer_t *transfer);
 void TR_EmptyTransferCargo(transfer_t *transfer, qboolean success);
 void TR_TransferCheck(void);
+void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
 void TR_Reset(void);
 

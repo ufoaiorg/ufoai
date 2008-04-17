@@ -629,8 +629,9 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		}
 	}
 
-	if (transfer->hasAircraft && success) {	/* Aircraft. */
-		for (i = 0; i < MAX_AIRCRAFT; i++) {
+	if (transfer->hasAircraft && success && transfer->srcBase != TR_NO_BASE) {	/* Aircraft. Cannot come from mission */
+		/* reverse loop: aircraft are deleted in the loop: idx change */
+		for (i = MAX_AIRCRAFT - 1; i >= 0; i--) {
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft = AIR_AircraftGetFromIdx(i);
 				assert(aircraft);
@@ -1371,6 +1372,30 @@ static void TR_CargoListSelect_f (void)
 	}
 
 	Cbuf_AddText(va("trans_select %i\n", transferType));
+}
+
+/**
+ * @brief Notify that an aircraft has been removed.
+ * @sa AIR_DeleteAircraft
+ */
+void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
+{
+	int i;
+
+	assert((aircraft->idx >= 0) && (aircraft->idx < MAX_AIRCRAFT));
+
+	for (i = 0; i < MAX_TRANSFERS; i++) {
+		transfer_t *transfer = &gd.alltransfers[i];
+
+		/* skip non active transfer */
+		if (!transfer->active)
+			continue;
+
+		memmove(&transfer->aircraftArray[aircraft->idx], &transfer->aircraftArray[aircraft->idx + 1],
+			(MAX_AIRCRAFT - 1 - aircraft->idx) * sizeof(transfer->aircraftArray[aircraft->idx]));
+		/* wipe the now vacant last slot */
+		memset(&transfer->aircraftArray[MAX_AIRCRAFT], 0, sizeof(transfer->aircraftArray[MAX_AIRCRAFT]));
+	}
 }
 
 /**
