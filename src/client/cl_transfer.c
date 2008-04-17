@@ -223,7 +223,7 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 	int i, hangarStorage, numAircraftTransfer = 0;
 	assert(aircraft && srcbase && destbase);
 
-	/* Count weight and number of all aircraft already on the transfer list. */
+	/* Count weight and number of all aircraft already on the transfer. */
 	for (i = 0; i < MAX_AIRCRAFT; i++)
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)
 			numAircraftTransfer++;
@@ -591,7 +591,7 @@ static void TR_TransferListClear_f (void)
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
  * @param[in] transfer Pointer to transfer in gd.alltransfers.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
- * @note transfer->srcBase may be TR_NO_BASE if transfer comes from a mission (alien body recovery)
+ * @note transfer->srcBase may be NULL if transfer comes from a mission (alien body recovery)
  * @sa TR_TransferEnd
  */
 static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
@@ -687,16 +687,21 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		}
 	}
 
-	if (transfer->hasAircraft && success) {	/* Aircraft. */
-		for (i = 0; i < MAX_AIRCRAFT; i++) {
+	/** @todo If source base is destroyed during transfer, aircraft doesn't exist anymore.
+	 * aircraftArray should contain pointers to aircraftTemplates to avoid this problem, and be removed from
+	 * source base as soon as transfer starts */
+	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
+		/* reverse loop: aircraft are deleted in the loop: idx change */
+		for (i = MAX_AIRCRAFT - 1; i >= 0; i--) {
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft = AIR_AircraftGetFromIdx(i);
 				assert(aircraft);
+
 				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
 					/* Aircraft relocated to new base, just add new one. */
 					AIR_NewAircraft(destination, aircraft->id);
 					/* Remove aircraft from old base. */
-					AIR_DeleteAircraft(baseCurrent, aircraft);
+					AIR_DeleteAircraft(transfer->srcBase, aircraft);
 				} else {
 					/* No space, aircraft will be lost. */
 					Com_sprintf(message, sizeof(message), _("Base %s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
@@ -1458,6 +1463,30 @@ static void TR_CargoListSelect_f (void)
 	}
 
 	Cbuf_AddText(va("trans_select %i\n", transferType));
+}
+
+/**
+ * @brief Notify that an aircraft has been removed.
+ * @sa AIR_DeleteAircraft
+ */
+void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
+{
+	int i;
+
+	assert((aircraft->idx >= 0) && (aircraft->idx < MAX_AIRCRAFT));
+
+	for (i = 0; i < MAX_TRANSFERS; i++) {
+		transfer_t *transfer = &gd.alltransfers[i];
+
+		/* skip non active transfer */
+		if (!transfer->active)
+			continue;
+
+		memmove(&transfer->aircraftArray[aircraft->idx], &transfer->aircraftArray[aircraft->idx + 1],
+			(MAX_AIRCRAFT - 1 - aircraft->idx) * sizeof(transfer->aircraftArray[aircraft->idx]));
+		/* wipe the now vacant last slot */
+		memset(&transfer->aircraftArray[MAX_AIRCRAFT], 0, sizeof(transfer->aircraftArray[MAX_AIRCRAFT]));
+	}
 }
 
 /**
