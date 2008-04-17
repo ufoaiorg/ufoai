@@ -42,7 +42,7 @@ void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t
 ugv_t *CL_GetUgvByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 
-qboolean CL_SoldierInAircraft(const employee_t *employee, aircraft_t* aircraft);
+qboolean CL_SoldierInAircraft(const employee_t *employee, const aircraft_t* aircraft);
 void CL_RemoveSoldierFromAircraft(employee_t *employee, aircraft_t* aircraft);
 void CL_RemoveSoldiersFromAircraft(aircraft_t* aircraft);
 
@@ -54,7 +54,5 @@ void CL_ParseResults(struct dbuffer *msg);
 void CL_SendCurTeamInfo(struct dbuffer * buf, chrList_t *team);
 void CL_AddCarriedToEq(struct aircraft_s *aircraft, equipDef_t * equip);
 void CL_ParseCharacterData(struct dbuffer *msg);
-
-void CL_UpdateCharacterSkills(character_t *chr);
 
 #endif

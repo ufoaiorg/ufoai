@@ -5297,7 +5297,6 @@ static void CL_GameAbort_f (void)
  * @brief Update employeer stats after mission.
  * @param[in] won Determines whether we won the mission or not.
  * @note Soldier promotion is being done here.
- * @note Soldier skill upgrade is being done here.
  * @sa CL_GameResults_f
  *
  * FIXME: See @todo and FIXME included
@@ -5311,16 +5310,16 @@ static void CL_UpdateCharacterStats (int won)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
-	/** aircraft = &baseCurrent->aircraft[gd.interceptAircraft]; remove this @todo check if baseCurrent has the currect aircraftCurrent.  */
 	aircraft = gd.interceptAircraft;
+	assert(aircraft);
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
 
 	/** @todo What about UGVs/Tanks? */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], gd.interceptAircraft) ) {
+		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft) ) {
 			assert(gd.employees[EMPL_SOLDIER][i].hired);
-			assert(gd.employees[EMPL_SOLDIER][i].baseHired == gd.interceptAircraft->homebase);
+			assert(gd.employees[EMPL_SOLDIER][i].baseHired == aircraft->homebase);
 
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
 			chr = &gd.employees[EMPL_SOLDIER][i].chr;
@@ -5329,7 +5328,7 @@ static void CL_UpdateCharacterStats (int won)
 			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;
 
-			/** CL_UpdateCharacterSkills(chr);
+			/** G_UpdateCharacterSkills(chr);
 			 * This is now done in g_client.c:G_UpdateCharacterSkills
 			 * @todo I think we can remove this later on. I've left it here just FYI for now. */
 

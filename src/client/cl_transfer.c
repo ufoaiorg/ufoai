@@ -598,7 +598,6 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 {
 	int i, j;
 	base_t *destination;
-	employee_t *employee;
 	aircraft_t *aircraft;
 	char message[256];
 
@@ -650,7 +649,7 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < gd.numEmployees[i]; j++) {
 					if (transfer->trEmployees[i][j]) {
-						employee = transfer->trEmployees[i][j];
+						employee_t *employee = transfer->trEmployees[i][j];
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 						employee->transfer = qfalse;
 						E_UnhireEmployee(employee);
@@ -661,7 +660,7 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < gd.numEmployees[i]; j++) {
 					if (transfer->trEmployees[i][j]) {
-						employee = transfer->trEmployees[i][j];
+						employee_t *employee = transfer->trEmployees[i][j];
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 						employee->transfer = qfalse;
 						E_UnhireEmployee(employee);

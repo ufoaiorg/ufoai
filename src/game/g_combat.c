@@ -167,7 +167,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
  * @param[in] attacker Pointer to attacker.
  * @param[in] fd Pointer to fireDef_t used in shoot.
  * @param[in] target Pointer to target.
- * @sa CL_UpdateCharacterSkills
+ * @sa G_UpdateCharacterSkills
  * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
  */
 static void G_UpdateCharacterBodycount (edict_t *attacker, fireDef_t *fd, edict_t *target)

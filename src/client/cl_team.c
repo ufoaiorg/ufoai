@@ -1392,9 +1392,8 @@ static void CL_ToggleTeamList_f (void)
  * @param[in] employee The soldier to search for.
  * @param[in] aircraft The aircraft to search the soldier in. Use NULL to check if the soldier is in _any_ aircraft.
  * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
- * @todo params should be employee_t* and aircraft_t*
  */
-qboolean CL_SoldierInAircraft (const employee_t *employee, aircraft_t* aircraft)
+qboolean CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* aircraft)
 {
 	int i;
 
