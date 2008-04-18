@@ -86,7 +86,6 @@ static int oldMousePosX, oldMousePosY;
 float *rotateAngles;
 static qboolean wasCrouched = qfalse, doCrouch = qfalse;
 float crouchHt = 0;
-int speedToggle = 0;
 
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
@@ -1214,14 +1213,14 @@ static void IN_Parse (void)
 		if (cls.realtime - mn.mouseRepeat.lastclicked < mn.mouseRepeat.clickDelay) {
 			mn.mouseRepeat.numClick = 1;
 			/* next "event" after clickdelay msec - low values (>= 100) would result in executing
-			* repeatable click nodes more than once - only do this for menus you want this behaviour */
+			 * repeatable click nodes more than once - only do this for menus you want this behaviour */
 			mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
 		} else if (cls.realtime >= mn.mouseRepeat.nexttime) {
 			mn.mouseRepeat.numClick++;
 			MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
 
 			/* next "event" after clickdelay msec - low values (>= 100) would result in executing
-			* repeatable click nodes more than once - only do this for menus you want this behaviour */
+			 * repeatable click nodes more than once - only do this for menus you want this behaviour */
 			mn.mouseRepeat.nexttime = cls.realtime + (mn.mouseRepeat.clickDelay / 3);
 		}
 		return;
