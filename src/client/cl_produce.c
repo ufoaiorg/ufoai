@@ -275,9 +275,10 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 
 	/* Initialize */
 	prod = &queue->items[queue->numItems];
+	memset(prod, 0, sizeof(production_t));
+
 	prod->idx = queue->numItems;	/**< Initialize self-reference. */
 
-	memset(prod, 0, sizeof(production_t));
 	if (produceCategory != BUY_AIRCRAFT)
 		tech = item->tech;
 	else
