@@ -534,26 +534,44 @@ static void BS_BuyType_f (void)
 }
 
 /**
- * @brief
+ * @brief Buy items.
+ * @param[in] base Pointer to the base where items are bought.
+ * @param[in] item Pointer to the item to buy.
+ * @param[in] number Number of items to buy.
  */
-static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item)
+static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 {
+	int numItems;
+
 	assert(base);
 	assert(item);
 
-	if (ccs.credits >= ccs.eMarket.ask[item->idx] && ccs.eMarket.num[item->idx]) {
-		if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur >= item->size) {
-			B_UpdateStorageAndCapacity(base, item, 1, qfalse, qfalse);
-			ccs.eMarket.num[item->idx]--;
-			/* reinit the menu */
-			BS_BuyType();
-			CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item->idx]);
-			return qtrue;
-		} else {
-			MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
-		}
+	/* @todo if there is not enough credits or not enough room in storage to buy number,
+		we should should buy the maximum number of items */
+
+	/* you can't buy more items than there are on market */
+	numItems = min(number, ccs.eMarket.num[item->idx]);
+
+	/* you can't buy more items than you have credits for */
+	numItems = min(numItems, ccs.credits / ccs.eMarket.ask[item->idx]);
+	if (numItems <= 0)
+		return qfalse;
+
+	/* you can't buy more items than you have room for */
+	numItems = min(numItems, (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur) / item->size);
+	/* make sure that numItems is > 0 (can be negative because capacities.cur may be greater than
+		capacities.max if storage is disabled or if alien items have been collected on mission */
+	if (numItems <= 0) {
+		MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+		return qfalse;
 	}
-	return qfalse;
+
+	B_UpdateStorageAndCapacity(base, item, numItems, qfalse, qfalse);
+	ccs.eMarket.num[item->idx] -= numItems;
+	/* reinit the menu */
+	BS_BuyType();
+	CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item->idx] * numItems);
+	return qtrue;
 }
 
 /**
@@ -564,7 +582,7 @@ static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item)
  */
 static void BS_BuyItem_f (void)
 {
-	int num, i;
+	int num;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -606,7 +624,6 @@ static void BS_BuyItem_f (void)
 				ugvWeaponBuyable = qfalse;
 			}
 
-
 			if (ugvWeaponBuyable && E_HireRobot(baseCurrent, ugv)) {
 				/* Move the item into the storage. */
 				B_UpdateStorageAndCapacity(baseCurrent, ugvWeapon, 1, qfalse, qfalse);
@@ -626,9 +643,7 @@ static void BS_BuyItem_f (void)
 		currentSelectedMenuEntry = item;
 		UP_ItemDescription(item);
 		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %s\n", item->id);
-		for (i = 0; i < baseCurrent->buyfactor; i++)
-			if (!BS_CheckAndDoBuyItem(baseCurrent, item))
-				break;
+		BS_CheckAndDoBuyItem(baseCurrent, item, baseCurrent->buyfactor);
 	}
 }
 
@@ -640,7 +655,7 @@ static void BS_BuyItem_f (void)
  */
 static void BS_SellItem_f (void)
 {
-	int num, i;
+	int num;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -685,21 +700,21 @@ static void BS_SellItem_f (void)
 		}
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
+		/* don't sell more items than we have */
+		const int numItems = min(baseCurrent->storage.num[item->idx], baseCurrent->sellfactor);
 		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
 		assert(item);
 		currentSelectedMenuEntry = item;
 		UP_ItemDescription(item);
-		for (i = 0; i < baseCurrent->sellfactor; i++) {
-			if (baseCurrent->storage.num[item->idx]) {
-				/* reinit the menu */
-				B_UpdateStorageAndCapacity(baseCurrent, item, -1, qfalse, qfalse);
-				ccs.eMarket.num[item->idx]++;
 
-				BS_BuyType();
-				CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item->idx]);
-			} else {
-				break;
-			}
+		/* don't sell more items than we have */
+		if (numItems) {
+			/* reinit the menu */
+			B_UpdateStorageAndCapacity(baseCurrent, item, -numItems, qfalse, qfalse);
+			ccs.eMarket.num[item->idx] += numItems;
+
+			BS_BuyType();
+			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item->idx] * numItems);
 		}
 	}
 }
@@ -878,7 +893,8 @@ static void BS_BuyAircraft_f (void)
 			MN_Popup(_("Note"), _("No storage in this base."));
 		} else {
 			const objDef_t *craftitem = BS_GetObjectDefition(&buyList.l[num]);
-			BS_CheckAndDoBuyItem(baseCurrent, craftitem);
+			/** @todo Use buy factor for aircraft items */
+			BS_CheckAndDoBuyItem(baseCurrent, craftitem, 1);
 		}
 	}
 }
@@ -983,6 +999,7 @@ static void BS_SellAircraft_f (void)
 		}
 	} else {
 		const objDef_t *craftitem = BS_GetObjectDefition(&buyList.l[num]);
+		/** @todo Use sellfactor */
 		if (base->storage.num[craftitem->idx]) {
 			B_UpdateStorageAndCapacity(base, craftitem, -1, qfalse, qfalse);
 			BS_ProcessCraftItemSale(base, craftitem);
