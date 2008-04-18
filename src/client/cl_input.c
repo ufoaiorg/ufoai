@@ -85,7 +85,7 @@ static int oldMousePosX, oldMousePosY;
  */
 float *rotateAngles;
 static qboolean wasCrouched = qfalse, doCrouch = qfalse;
-float crouchHt = 0;
+static float crouchHt = 0.;
 
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
