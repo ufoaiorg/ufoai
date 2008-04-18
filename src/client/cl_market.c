@@ -57,7 +57,7 @@ static int buyCategory = -1;			/**< Category of items in the menu. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;
 
 /** @brief Max values for Buy/Sell factors (base->buyfactor, base->sellfactor). */
-static const int MAX_BS_FACTORS = 10;
+static const int MAX_BS_FACTORS = 500;
 
 static inline const objDef_t *BS_GetObjectDefition (buyListEntry_t *entry)
 {
@@ -71,6 +71,19 @@ static inline const objDef_t *BS_GetObjectDefition (buyListEntry_t *entry)
 
 	Sys_Error("You should not check an empty buy list entry");
 	return NULL;
+}
+
+/**
+ * @brief Set the number of item to buy or sell.
+ */
+static int BS_GetBuySellFactor (void)
+{
+	int numItems;
+	const float NUM_CLICK_PARAMETER = 13.0f;		/**< The higher this value, the slowest buy/sell factor will change */
+
+	numItems = exp(mn.mouseRepeat.numClick / NUM_CLICK_PARAMETER);
+	numItems = min(MAX_BS_FACTORS, numItems);
+	return numItems;
 }
 
 /**
@@ -460,17 +473,11 @@ static void BS_BuyType (void)
 
 	/* Update some menu cvars. */
 	if ((buyCategory < BUY_AIRCRAFT) || (buyCategory == BUY_DUMMY)) {
-		/* Set up Buy/Sell factors. */
-		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
-		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
 		/* Set up base capacities. */
 		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].cur,
 			baseCurrent->capacities[CAP_ITEMS].max);
 		Cvar_Set("mn_bs_storage", tmpbuf);
 	} else if (buyCategory == BUY_HEAVY) {
-		/** @todo better way to do this? */
-		Cvar_SetValue("mn_bfactor", 1);
-		Cvar_SetValue("mn_sfactor", 1);
 		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].cur,
 			baseCurrent->capacities[CAP_ITEMS].max);
 		Cvar_Set("mn_bs_storage", tmpbuf);
@@ -643,7 +650,7 @@ static void BS_BuyItem_f (void)
 		currentSelectedMenuEntry = item;
 		UP_ItemDescription(item);
 		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %s\n", item->id);
-		BS_CheckAndDoBuyItem(baseCurrent, item, baseCurrent->buyfactor);
+		BS_CheckAndDoBuyItem(baseCurrent, item, BS_GetBuySellFactor());
 	}
 }
 
@@ -701,7 +708,7 @@ static void BS_SellItem_f (void)
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
 		/* don't sell more items than we have */
-		const int numItems = min(baseCurrent->storage.num[item->idx], baseCurrent->sellfactor);
+		const int numItems = min(baseCurrent->storage.num[item->idx], BS_GetBuySellFactor());
 		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
 		assert(item);
 		currentSelectedMenuEntry = item;

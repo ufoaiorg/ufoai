@@ -239,9 +239,6 @@ typedef struct base_s {
 
 	character_t *curChr;	/**< needn't be saved */
 
-	int buyfactor;	/**< Factor for buying items in Buy/Sell menu for this base. */
-	int sellfactor;	/**< Factor for selling items in Buy/Sell menu for this base. */
-
 	int hospitalList[MAX_EMPL][MAX_EMPLOYEES];	/**< Hospital list of employees currently being healed. */
 	int hospitalListCount[MAX_EMPL];				/**< Counter for hospitalList. */
 	int hospitalMissionList[MAX_EMPLOYEES];		/**< Hospital list of soldiers being healed but moved to the mission. */

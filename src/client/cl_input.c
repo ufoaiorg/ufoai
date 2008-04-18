@@ -1220,16 +1220,7 @@ static void IN_Parse (void)
 			mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
 		}
 		else if (cls.realtime >= mn.mouseRepeat.nexttime) {
-			if (repeats > 29) {
-				baseCurrent->buyfactor = 1000;
-				baseCurrent->sellfactor = 1000;
-			} else if (repeats > 19) {
-				baseCurrent->buyfactor = 100;
-				baseCurrent->sellfactor = 100;
-			} else if (repeats > 9) {
-				baseCurrent->buyfactor = 10;
-				baseCurrent->sellfactor = 10;
-			}
+			mn.mouseRepeat.numClick++;
 			MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
 
 			/* next "event" after clickdelay msec - low values (>= 100) would result in executing

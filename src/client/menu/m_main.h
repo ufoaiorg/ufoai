@@ -41,6 +41,7 @@ typedef struct {
 	unsigned nexttime;			/**< when (milliseconds) - calculated from cls.realtime + delay */
 	int lastclicked;			/**< when was the last recorded click? */
 	short clickDelay;			/**< milliseconds for the delay */
+	int numClick;				/**< number of click made since the begining of this click */
 } mouseRepeat_t;
 
 typedef struct menuGlobal_s {

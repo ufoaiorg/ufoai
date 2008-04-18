@@ -40,8 +40,7 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 	/* When executing a node, check if the mouse is being held down, or if this is a "new" click.
 	* On a new click, reset all automatically adjusted parameters. */
 	if (cls.realtime - mn.mouseRepeat.lastclicked < mn.mouseRepeat.clickDelay) {
-		baseCurrent->buyfactor = 1;
-		baseCurrent->sellfactor = 1;
+		mn.mouseRepeat.numClick = 0;
 	}
 
 	for (action = first; action; action = action->next)

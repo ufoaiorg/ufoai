@@ -1101,10 +1101,6 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	if (gd.numBases == 1 && !buildings)
 		ccs.instant_build = 1;
 
-	/* Set up default buy/sell factors for this base. */
-	base->sellfactor = 5;
-	base->buyfactor = 1;
-
 	/* Create random blocked fields in the base.
 	 * The first base never has blocked fields so we skip it. */
 	if (base->idx > 0) {
@@ -3593,10 +3589,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteLong(sb, b->capacities[k].max);
 		}
 
-		/* Buy/Sell factors. */
-		MSG_WriteByte(sb, b->buyfactor);
-		MSG_WriteByte(sb, b->sellfactor);
-
 		/* Hospital stuff. */
 		for (k = 0; k < presaveArray[PRE_EMPTYP]; k++) {
 			MSG_WriteShort(sb, b->hospitalListCount[k]);
@@ -3909,10 +3901,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			b->capacities[k].cur = MSG_ReadLong(sb);
 			b->capacities[k].max = MSG_ReadLong(sb);
 		}
-
-		/* Buy/Sell factors. */
-		b->buyfactor = MSG_ReadByte(sb);
-		b->sellfactor = MSG_ReadByte(sb);
 
 		/* Hospital stuff. */
 		for (k = 0; k < presaveArray[PRE_EMPTYP]; k++) {
