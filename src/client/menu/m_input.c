@@ -342,7 +342,7 @@ void MN_Click (int x, int y)
 		 * e.g. the firemode checkboxes.
 		 */
 		if (execute_node) {
-			MN_ExecuteActions(menu, execute_node->click);
+			mn.mouseRepeat.lastclicked = cls.realtime;
 			if (execute_node->repeat) {
 				mouseSpace = MS_LHOLD;
 				if (execute_node->clickDelay)
@@ -351,10 +351,8 @@ void MN_Click (int x, int y)
 					mn.mouseRepeat.clickDelay = 300;
 				mn.mouseRepeat.menu = menu;
 				mn.mouseRepeat.action = execute_node->click;
-				/* next "event" after clickdelay msec - low values (>= 100) would result in executing
-				 * repeatable click nodes more than once - only do this for menus you want this behaviour */
-				mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
 			}
+			MN_ExecuteActions(menu, execute_node->click);
 		}
 
 		/* @todo: maybe we should also check sp == mn.menuStackPos here */

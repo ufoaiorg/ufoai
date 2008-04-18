@@ -760,80 +760,6 @@ static void BS_Autosell_f (void)
 }
 
 /**
- * @brief Increase the Buy/Sell factor.
- * @note Command to call this: buy_factor_inc.
- * @note call with 0 for buy, 1 for sell.
- */
-static void BS_IncreaseFactor_f (void)
-{
-	int num;
-
-	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign)
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-
-	if (num == 0) {
-		if (baseCurrent->buyfactor >= MAX_BS_FACTORS)
-			return;
-		else
-			baseCurrent->buyfactor++;
-		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
-	} else {
-		if (baseCurrent->sellfactor >= MAX_BS_FACTORS)
-			return;
-		else
-			baseCurrent->sellfactor++;
-		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
-	}
-	/* Reinit the menu. */
-	BS_BuyType();
-}
-
-/**
- * @brief Decrease the Buy/Sell factor.
- * @note Command to call this: buy_factor_dec.
- * @note call with 0 for buy, 1 for sell.
- */
-static void BS_DecreaseFactor_f (void)
-{
-	int num;
-
-	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign)
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-
-	if (num == 0) {
-		if (baseCurrent->buyfactor <= 1)
-			return;
-		else
-			baseCurrent->buyfactor--;
-		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
-	} else {
-		if (baseCurrent->sellfactor <= 1)
-			return;
-		else
-			baseCurrent->sellfactor--;
-		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
-	}
-	/* Reinit the menu. */
-	BS_BuyType();
-}
-
-/**
  * @brief Buys aircraft or craftitem.
  * @sa BS_SellAircraft_f
  */
@@ -1020,8 +946,6 @@ void BS_ResetMarket (void)
 	Cmd_AddCommand("mn_buy_aircraft", BS_BuyAircraft_f, "Buy aircraft or craftitem");
 	Cmd_AddCommand("mn_sell_aircraft", BS_SellAircraft_f, "Sell aircraft or craftitem");
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
-	Cmd_AddCommand("buy_factor_inc", BS_IncreaseFactor_f, "Increase Buy/Sell factor for current base.");
-	Cmd_AddCommand("buy_factor_dec", BS_DecreaseFactor_f, "Decrease Buy/Sell factor for current base.");
 
 	memset(&buyList, 0, sizeof(buyList));
 	buyList.length = -1;

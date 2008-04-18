@@ -39,6 +39,7 @@ typedef struct {
 	menu_t *menu;				/**< where - the menu is it executed in (context) */
 	menuAction_t *action;		/**< what - the action node to be executed (the clicknode e.g.) */
 	unsigned nexttime;			/**< when (milliseconds) - calculated from cls.realtime + delay */
+	int lastclicked;			/**< when was the last recorded click? */
 	short clickDelay;			/**< milliseconds for the delay */
 } mouseRepeat_t;
 
