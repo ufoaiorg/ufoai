@@ -184,6 +184,52 @@ static void R_DrawBox (const entity_t * e)
 }
 
 /**
+ * @brief Draws a marker on the ground to indicate pathing CL_AddTargeting
+ * @sa CL_AddPathing
+ * @sa RF_BOX
+ */
+static void R_DrawFloor (const entity_t * e)
+{
+	vec3_t upper, lower;
+	float dx;
+	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
+
+	qglDisable(GL_TEXTURE_2D);
+	/*
+	if (!r_wire->integer)
+		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	*/
+	qglEnable(GL_LINE_SMOOTH);
+
+	R_Color(color);
+
+	VectorCopy(e->origin, lower);
+	VectorCopy(e->origin, upper);
+
+	dx = PLAYER_WIDTH * 2;
+	upper[1] += PLAYER_WIDTH * 2;
+
+	qglBegin(GL_QUAD_STRIP);
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[0] += dx;
+	upper[0] += dx;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	qglEnd();
+
+	qglDisable(GL_LINE_SMOOTH);
+	/*
+	if (!r_wire->integer)
+		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	*/
+
+	qglEnable(GL_TEXTURE_2D);
+
+	R_Color(NULL);
+}
+
+/**
  * @brief Draws shadow and highlight effects for the entities (actors)
  * @note The origins are already transformed
  */
@@ -302,6 +348,8 @@ static void R_DrawMeshEntities (entity_t *ents)
 	while (e) {
 		if (e->flags & RF_BOX) {
 			R_DrawBox(e);
+		} else if (e->flags & RF_PATH) {
+			R_DrawFloor(e);
 		} else {
 			switch (e->model->type) {
 			case mod_alias_dpm:
@@ -505,7 +553,7 @@ void R_DrawEntities (void)
 		R_CalcTransform(e);
 
 		if (!e->model) {
-			if (e->flags & RF_BOX)
+			if (e->flags & RF_BOX || e->flags & RF_PATH)
 				chain = &r_alpha_mesh_entities;
 			else
 				chain = &r_null_entities;

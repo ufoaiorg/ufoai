@@ -94,6 +94,11 @@ typedef int SOCKET;
 #define AI_ADDRCONFIG 0
 #endif
 
+/**
+ * @brief use an admin local address per default so that
+ * network admins can decide on how to handle traffic.
+ */
+#define NET_MULTICAST_IP6 "ff04::696f:7175:616b:6533"
 
 static cvar_t* net_ipv4;
 

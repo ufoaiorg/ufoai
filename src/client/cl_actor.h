@@ -132,6 +132,7 @@ qboolean CL_AddActor(le_t * le, entity_t * ent);
 qboolean CL_AddUGV(le_t * le, entity_t * ent);
 
 void CL_AddTargeting(void);
+void CL_AddPathing(void);
 void CL_ActorTargetAlign_f(void);
 void CL_ActorInventoryOpen_f(void);
 

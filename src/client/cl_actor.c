@@ -5066,6 +5066,63 @@ void CL_AddTargeting (void)
 	}
 }
 
+static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - 1 };
+
+/**
+ * @brief create a targeting box at the given position
+ * @sa CL_ParseClientinfo
+ */
+static void CL_AddPathingBox (pos3_t pos)
+{
+	entity_t ent;
+
+	memset(&ent, 0, sizeof(entity_t));
+	ent.flags = RF_PATH;
+
+	Grid_PosToVec(&clMap, pos, ent.origin);
+	VectorSubtract(ent.origin, boxShift, ent.origin);
+
+	/**
+	 * Paint the box green if it is reachable,
+	 * yellow if it can be entered but is too far,
+	 * or red if it cannot be entered ever.
+	 */
+	if (Grid_Fall(&clMap, pos, 1) < pos[2] - 1) {
+		VectorSet(ent.angles, 0, 0, 0); /* Can't enter - black */
+	} else {
+		/**
+		 * Can reach - green
+		 * Passable but unreachable - yellow
+		 * Not passable - red
+		*/
+		const int TUs = Grid_MoveLength(&clMap, pos, qfalse);
+		VectorSet(ent.angles, (TUs > CL_UsableTUs(selActor)), (TUs != ROUTING_NOT_REACHABLE), 0);
+	}
+
+	ent.alpha = 0.25;
+
+	/* add it */
+	R_AddEntity(&ent);
+}
+
+/**
+ * @brief Adds a pathing marker to the current floor when we render the world.
+ * @sa V_RenderView
+ * Draws the tracer (red, yellow, green box) on the grid
+ */
+void CL_AddPathing (void)
+{
+	pos3_t pos, mins, maxs;
+
+	VecToPos(map_min, mins);
+	VecToPos(map_max, maxs);
+
+	pos[2] = cl_worldlevel->integer;
+	for (pos[1] = max(mousePos[1] - 8, 0); pos[1] <= min(mousePos[1] + 8, PATHFINDING_WIDTH - 1); pos[1]++)
+		for (pos[0] = max(mousePos[0] - 8, 0); pos[0] <= min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++)
+			CL_AddPathingBox(pos);
+}
+
 /**
  * @brief Plays various sounds on actor action.
  * @param[in] category

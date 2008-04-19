@@ -224,4 +224,6 @@ COLLISION DETECTION
 
 #define MAX_TOKEN_CHARS     256 /* max length of an individual token */
 
+#define	DIST_EPSILON	(0.03125)
+
 #endif

@@ -283,6 +283,8 @@ typedef struct {
 /** entity->flags (render flags) */
 #define RF_TRANSLUCENT      0x00000001
 #define RF_BOX              0x00000002	/**< actor selection box */
+#define RF_PATH             0x01000000	/**< pathing marker, debugging only */
+
 /** the following ent flags also draw entity effects */
 #define RF_SHADOW           0x00000004	/**< shadow (when living) for this entity */
 #define RF_BLOOD            0x00000008	/**< blood (when dead) for this entity */

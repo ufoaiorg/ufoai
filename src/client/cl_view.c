@@ -332,6 +332,7 @@ void V_UpdateRefDef (void)
 	refdef.worldlevel = cl_worldlevel->integer;
 }
 
+
 /**
  * @sa SCR_UpdateScreen
  */
@@ -368,6 +369,9 @@ void V_RenderView (void)
 		LM_AddToScene();
 		/* add local entities to the renderer chain */
 		LE_AddToScene();
+		/* adds pathing data */
+		if (developer->integer & DEBUG_CLIENT)
+			CL_AddPathing();
 		/* adds target cursor */
 		CL_AddTargeting();
 		break;
