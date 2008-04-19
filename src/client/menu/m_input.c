@@ -345,10 +345,14 @@ void MN_Click (int x, int y)
 			mn.mouseRepeat.lastclicked = cls.realtime;
 			if (execute_node->repeat) {
 				mouseSpace = MS_LHOLD;
+				/* Reset number of click */
+				mn.mouseRepeat.numClick = 1;
 				if (execute_node->clickDelay)
 					mn.mouseRepeat.clickDelay = execute_node->clickDelay;
 				else
 					mn.mouseRepeat.clickDelay = 300;
+				/** Delay between the 2 first actions is longer than the delay between other actions (see IN_Parse()) */
+				mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
 				mn.mouseRepeat.menu = menu;
 				mn.mouseRepeat.action = execute_node->click;
 			}
