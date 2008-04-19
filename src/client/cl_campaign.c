@@ -579,6 +579,10 @@ static inline void CP_MissionAddToGeoscape (mission_t *mission)
 	if (!CP_CheckMissionVisibleOnGeoscape(mission))
 		return;
 
+	/* Notify the player */
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Alien activity has been detected in %s."), mission->location);
+	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+
 	mission->onGeoscape = qtrue;
 	CL_GameTimeStop();
 }
@@ -1069,10 +1073,6 @@ static void CP_TerrorMissionStart (mission_t *mission)
 		CP_UFORemoveFromGeoscape(mission, qfalse);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission);
-
-	/* Notify the player */
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Alien activity has been detected in %s."), mission->location);
-	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 }
 
 /**
