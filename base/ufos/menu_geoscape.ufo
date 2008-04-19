@@ -84,7 +84,7 @@ menu map
 
 	pic bt_timestop
 	{
-		tooltip	"_Reset time to 5 seconds"
+		tooltip	"_Stop time"
 		image	menu/buttons_time
 		pos		"865 100"
 		texl	"0 0"
