@@ -147,7 +147,7 @@ void CheckBrushes (void)
 			if (!Q_strcmp(tex->texture, "NULL")) {
 				Com_Printf("Brush %i: replaced NULL with nodraw texture\n", brush->brushnum);
 				Q_strncpyz(tex->texture, "tex_common/nodraw", sizeof(tex->texture));
-				side->surfaceFlags &= SURF_NODRAW;
+				side->surfaceFlags |= SURF_NODRAW;
 			}
 			if (side->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->texture, "tex_common/nodraw")) {
 				Com_Printf("Brush %i: set nodraw texture for SURF_NODRAW\n", brush->brushnum);

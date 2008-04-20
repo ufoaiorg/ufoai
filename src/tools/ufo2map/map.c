@@ -917,7 +917,7 @@ static qboolean ParseMapEntity (const char *filename)
  * @brief Recurse down the epair list
  * @note First writes the last element
  */
-static inline void WriteMapEntities (FILE *f, epair_t *e)
+static inline void WriteMapEntities (FILE *f, const epair_t *e)
 {
 	if (!e)
 		return;
@@ -935,8 +935,8 @@ static inline void WriteMapEntities (FILE *f, epair_t *e)
 void WriteMapFile (const char *filename)
 {
 	FILE *f;
-	entity_t *mapent;
-	epair_t *e;
+	const entity_t *mapent;
+	const epair_t *e;
 	int i, j, k;
 
 	Com_Printf("writing map: '%s'\n", filename);
@@ -960,7 +960,8 @@ void WriteMapFile (const char *filename)
 					fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
 					fprintf(f, "( %i %i %i ) ", p->planeVector[1][0], p->planeVector[1][1], p->planeVector[1][2]);
 					fprintf(f, "( %i %i %i ) ", p->planeVector[2][0], p->planeVector[2][1], p->planeVector[2][2]);
-					fprintf(f, "%s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1], t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
+					fprintf(f, "%s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1],
+						t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
 				}
 			}
 			fprintf(f, "}\n");
