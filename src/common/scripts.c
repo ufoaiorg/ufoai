@@ -2457,41 +2457,34 @@ void Com_PrecacheCharacterModels (void)
 qboolean Com_ItemsSanityCheck (void)
 {
 	int i;
-
-	objDef_t item;
-
 	qboolean result = qtrue;
 
-	/* Com_Printf("Starting sanity check of all items...\n"); */
-
 	for (i = 0; i < csi.numODs; i++) {
-		item = csi.ods[i];
+		const objDef_t *item = &csi.ods[i];
 
 		/* warn if item has no size set */
-		if (item.size == 0) {
+		if (item->size == 0) {
 			result = qfalse;
-			Com_Printf("Sanity: Item '%s' (%s) has zero size set.\n", item.name, item.id);
+			Com_Printf("Com_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
 		}
 
 		/* warn if no price is set */
-		if (item.price == 0 && item.notOnMarket == qfalse) {
+		if (item->price == 0 && item->notOnMarket == qfalse) {
 			result = qfalse;
-			Com_Printf("Sanity: Item '%s' (%s) has zero price set.\n", item.name, item.id);
+			Com_Printf("Com_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
 		}
 
-		if (item.price > 0 && item.notOnMarket == qtrue) {
+		if (item->price > 0 && item->notOnMarket == qtrue) {
 			result = qfalse;
-			Com_Printf("Sanity: Item '%s' (%s) has a price set though it is not available on the market.\n", item.name, item.id);
+			Com_Printf("Com_ItemsSanityCheck: Item %s has a price set though it is not available on the market.\n", item->id);
 		}
 
 		/* extension and headgear are mutual exclusive */
-		if (item.extension && item.headgear) {
+		if (item->extension && item->headgear) {
 			result = qfalse;
-			Com_Printf("Sanity: Item '%s'(%s) has both extension and headgear set.\n",  item.name, item.id);
+			Com_Printf("Com_ItemsSanityCheck: Item %s has both extension and headgear set.\n",  item->id);
 		}
 	}
-
-	/* Com_Printf("All items checked.\n"); */
 
 	return result;
 }
