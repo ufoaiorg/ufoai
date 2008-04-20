@@ -159,6 +159,29 @@ void CheckBrushes (void)
 				Com_Printf("Brush %i (entity %i): set hint texture for SURF_HINT\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/hint", sizeof(tex->name));
 			}
+
+			if (side->contentFlags & CONTENTS_ACTORCLIP && side->contentFlags & CONTENTS_STEPON) {
+				if (!Q_strcmp(tex->name, "tex_common/actorclip")) {
+					Com_Printf("Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
+					side->contentFlags &= ~CONTENTS_STEPON;
+				} else {
+					Com_Printf("Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
+					side->contentFlags &= ~CONTENTS_ACTORCLIP;
+				}
+			}
+
+			if (side->contentFlags & CONTENTS_WEAPONCLIP && Q_strcmp(tex->name, "tex_common/weaponclip")) {
+				Com_Printf("Brush %i (entity %i): set weaponclip texture for CONTENTS_WEAPONCLIP\n", brush->brushnum, brush->entitynum);
+				Q_strncpyz(tex->name, "tex_common/weaponclip", sizeof(tex->name));
+			}
+			if (side->contentFlags & CONTENTS_ACTORCLIP && Q_strcmp(tex->name, "tex_common/actorclip")) {
+				Com_Printf("Brush %i (entity %i): set actorclip texture for CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
+				Q_strncpyz(tex->name, "tex_common/actorclip", sizeof(tex->name));
+			}
+			if (side->contentFlags & CONTENTS_STEPON && Q_strcmp(tex->name, "tex_common/stepon")) {
+				Com_Printf("Brush %i (entity %i): set stepon texture for CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
+				Q_strncpyz(tex->name, "tex_common/stepon", sizeof(tex->name));
+			}
 		}
 	}
 }
