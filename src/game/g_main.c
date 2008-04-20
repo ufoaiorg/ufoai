@@ -591,7 +591,7 @@ void G_EndGame (int team)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 			 && ent->team == TEAM_PHALANX)
 			j++;
-
+	
 	Com_DPrintf(DEBUG_GAME, "Sending results with %i actors.\n", j);
 
 	/* number of soldiers */
@@ -607,6 +607,9 @@ void G_EndGame (int team)
 	}
 
 	gi.EndEvents();
+
+	/* now we cleanup the AI */
+	AI_Cleanup();
 }
 
 

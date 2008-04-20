@@ -345,6 +345,7 @@ extern edict_t *ai_waypointList;
 void G_AddToWayPointList(edict_t *ent);
 void AI_Run(void);
 void AI_ActorThink(player_t * player, edict_t * ent);
+void AI_Cleanup(void);
 player_t *AI_CreatePlayer(int team);
 
 /* g_svcmds.c */
