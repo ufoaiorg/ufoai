@@ -552,6 +552,7 @@ static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int nu
 
 	assert(base);
 	assert(item);
+	assert(item->size>0);
 
 	/* @todo if there is not enough credits or not enough room in storage to buy number,
 		we should should buy the maximum number of items */
