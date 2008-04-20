@@ -134,6 +134,7 @@ void CheckBrushes (void)
 		mapbrush_t *brush = &mapbrushes[i];
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
+			dBspTexinfo_t *tex = &texinfo[side->texinfo];
 			if (brush->contentFlags != side->contentFlags)
 				Com_Printf("Brush %i: mixed face contents (f: %i, %i)\n", brush->brushnum, brush->contentFlags, side->contentFlags);
 			if (!(side->contentFlags & (CONTENTS_WEAPONCLIP | CONTENTS_ORIGIN | CONTENTS_ACTORCLIP | CONTENTS_STEPON))) {
@@ -143,6 +144,10 @@ void CheckBrushes (void)
 					side->contentFlags |= CONTENTS_LEVEL_ALL;
 				}
 			}
+			if (!Q_strcmp(tex->texture, "NULL"))
+				Q_strncpyz(tex->texture, "tex_common/nodraw", sizeof(tex->texture));
+			if (side->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->texture, "tex_common/nodraw"))
+				Q_strncpyz(tex->texture, "tex_common/nodraw", sizeof(tex->texture));
 		}
 	}
 }
