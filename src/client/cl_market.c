@@ -552,7 +552,6 @@ static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int nu
 
 	assert(base);
 	assert(item);
-	assert(item->size>0);
 
 	/* @todo if there is not enough credits or not enough room in storage to buy number,
 		we should should buy the maximum number of items */
@@ -561,12 +560,16 @@ static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int nu
 	numItems = min(number, ccs.eMarket.num[item->idx]);
 
 	/* you can't buy more items than you have credits for */
-	numItems = min(numItems, ccs.credits / ccs.eMarket.ask[item->idx]);
+	/** @todo Handle items with price 0 better */
+	if (ccs.eMarket.ask[item->idx])
+		numItems = min(numItems, ccs.credits / ccs.eMarket.ask[item->idx]);
 	if (numItems <= 0)
 		return qfalse;
 
 	/* you can't buy more items than you have room for */
-	numItems = min(numItems, (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur) / item->size);
+	/** @todo Handle items with size 0 better */
+	if (item->size)
+		numItems = min(numItems, (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur) / item->size);
 	/* make sure that numItems is > 0 (can be negative because capacities.cur may be greater than
 		capacities.max if storage is disabled or if alien items have been collected on mission */
 	if (numItems <= 0) {
