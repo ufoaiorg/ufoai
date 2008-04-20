@@ -549,6 +549,7 @@ craftitem craft_ammo_shiva_API
 	wrange		3
 	wspeed		500
 	delay		10
+	size	10	// light
 }
 
 craftitem craft_ammo_shiva_HEI
@@ -565,6 +566,7 @@ craftitem craft_ammo_shiva_HEI
 	wrange		3
 	wspeed		500
 	delay		10
+	size	10	// light
 }
 
 craftitem craft_el_raven
@@ -628,6 +630,7 @@ craftitem craft_ammo_tr20
 
 //	ammo		152
 // The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
+	size	10	// light
 	ammo		12
 	wdamage		18
 	accuracy	0.4
@@ -658,6 +661,7 @@ craftitem craft_el_targeting
 	installationTime	1
 	price		25600
 	buytype		craftitem
+	size	20	// light
 
 	accuracy	1.25
 }
@@ -669,6 +673,7 @@ craftitem craft_el_fuelpod
 	installationTime	2
 	price		4000
 	buytype		craftitem
+	size	20	// light
 
 	fuelsize	+7000
 	speed		0.9
@@ -682,6 +687,7 @@ craftitem craft_shield_polymer
 	installationTime	24
 	price		33600
 	buytype		craftitem
+	size	40	// light
 
 	shield		+5
 	speed		0.9
@@ -695,6 +701,7 @@ craftitem craft_shield_plating
 	installationTime	36
 	price		50000
 	buytype		craftitem
+	size	50	// light
 
 	shield		+10
 	speed		0.8
@@ -708,6 +715,7 @@ craftitem craft_alien_astrogation
 	installationTime	-1
 	price		32000
 	buytype		craftitem
+	size	20	// light
 }
 
 craftitem craft_alien_propulsion
@@ -717,6 +725,7 @@ craftitem craft_alien_propulsion
 	installationTime	-1
 	price		40000
 	buytype		craftitem
+	size	50	// light
 }
 
 craftitem craft_alien_detection
@@ -726,6 +735,7 @@ craftitem craft_alien_detection
 	installationTime	-1
 	price		32000
 	buytype		craftitem
+	size	20	// light
 }
 
 // *********************************
@@ -760,6 +770,7 @@ craftitem base_ammo_AA51
 	wrange		7
 	wspeed		200
 	delay		500
+	size	10	// light
 }
 
 
