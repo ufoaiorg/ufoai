@@ -182,6 +182,14 @@ void CheckBrushes (void)
 				Com_Printf("Brush %i (entity %i): set stepon texture for CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/stepon", sizeof(tex->name));
 			}
+			if (side->contentFlags & CONTENTS_ORIGIN && Q_strcmp(tex->name, "tex_common/origin")) {
+				Com_Printf("Brush %i (entity %i): set origin texture for CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
+				Q_strncpyz(tex->name, "tex_common/origin", sizeof(tex->name));
+			}
+			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
+				Com_Printf("Brush %i (entity %i): origin brush inside worldspawn - removed CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
+				side->contentFlags &= ~CONTENTS_ORIGIN;
+			}
 		}
 	}
 }
