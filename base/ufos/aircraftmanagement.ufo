@@ -571,6 +571,7 @@ craftitem craft_el_raven
 {
 	name		"_Raven ECM Unit"
 	crafttype	electronics
+	size	20	// light
 	installationTime	1
 	price		20000
 	buytype		craftitem
