@@ -162,6 +162,7 @@ extern mapbrush_t mapbrushes[MAX_MAP_BRUSHES];
 
 extern int nummapbrushsides;
 extern side_t brushsides[MAX_MAP_SIDES];
+extern brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 extern int brush_start, brush_end;
 

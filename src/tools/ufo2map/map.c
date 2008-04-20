@@ -32,7 +32,7 @@ mapbrush_t	mapbrushes[MAX_MAP_BRUSHES];
 
 int			nummapbrushsides;
 side_t		brushsides[MAX_MAP_SIDES];
-static brush_texture_t side_brushtextures[MAX_MAP_SIDES];
+brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 int			nummapplanes;
 plane_t		mapplanes[MAX_MAP_PLANES];
