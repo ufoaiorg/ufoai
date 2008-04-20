@@ -137,22 +137,22 @@ void CheckBrushes (void)
 			side_t *side = &brush->original_sides[j];
 			brush_texture_t *tex = &side_brushtextures[side - brushsides];
 			if (contentFlags != side->contentFlags) {
-				Com_Printf("Brush %i: mixed face contents (f: %i, %i)\n", brush->brushnum, brush->contentFlags, side->contentFlags);
+				Com_Printf("Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->entitynum, brush->brushnum, brush->contentFlags, side->contentFlags);
 			}
 			if (!(side->contentFlags & (CONTENTS_WEAPONCLIP | CONTENTS_ORIGIN | CONTENTS_ACTORCLIP | CONTENTS_STEPON))) {
 				/* check level 1 - level 8 */
 				if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
-					Com_Printf("Brush %i: no levelflags\n", brush->brushnum);
+					Com_Printf("Brush %i (entity %i): no levelflags\n", brush->entitynum, brush->brushnum);
 					side->contentFlags |= CONTENTS_LEVEL_ALL;
 				}
 			}
 			if (!Q_strcmp(tex->name, "NULL")) {
-				Com_Printf("Brush %i: replaced NULL with nodraw texture\n", brush->brushnum);
+				Com_Printf("Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->entitynum, brush->brushnum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 				side->surfaceFlags |= SURF_NODRAW;
 			}
 			if (side->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->name, "tex_common/nodraw")) {
-				Com_Printf("Brush %i: set nodraw texture for SURF_NODRAW\n", brush->brushnum);
+				Com_Printf("Brush %i (entity %i): set nodraw texture for SURF_NODRAW\n", brush->entitynum, brush->brushnum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 			}
 		}
