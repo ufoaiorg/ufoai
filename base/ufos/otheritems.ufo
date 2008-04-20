@@ -28,6 +28,7 @@ item alienmaterials
 	name		"_Alien Materials"
 	type		dummy
 	buytype		dummy
+	price		3
 	size		1
 	weapon		false
 }
