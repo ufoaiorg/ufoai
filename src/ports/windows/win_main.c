@@ -36,11 +36,9 @@ static NOTIFYICONDATA pNdata;
 
 qboolean s_win95, s_win2k, s_winxp, s_vista;
 
-qboolean Minimized;
-
 #define MAX_NUM_ARGVS 128
-int argc;
-const char *argv[MAX_NUM_ARGVS];
+static int argc;
+static const char *argv[MAX_NUM_ARGVS];
 
 cvar_t* sys_priority;
 cvar_t* sys_affinity;
@@ -389,13 +387,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	Qcommon_Init(argc, argv);
 
 	/* main window message loop */
-	while (1) {
-		/* if at a full screen console, don't update unless needed */
-		if (Minimized)
-			Sys_Sleep(1);
-
+	while (1)
 		Qcommon_Frame();
-	}
 
 	/* never gets here */
 	return FALSE;
