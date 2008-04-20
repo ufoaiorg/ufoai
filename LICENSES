@@ -2529,6 +2529,7 @@ base/textures/tex_buildings/yellow_rustb_v1.jpg | GNU General Public License 2.0
 base/textures/tex_buildings/yellow_rustbx128.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_common/actorclip.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_common/caulk.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_common/error.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_common/hint.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_common/nodraw.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_common/origin.tga | GNU General Public License 2.0 | Martin Gerhardy
