@@ -290,9 +290,9 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 		if (num >= 0x10000)
 			Sys_Error("bad planenum");
 		if (num == planenum)
-			return PSIDE_BACK|PSIDE_FACING;
-		if (num == (planenum ^ 1) )
-			return PSIDE_FRONT|PSIDE_FACING;
+			return (PSIDE_BACK | PSIDE_FACING);
+		if (num == (planenum ^ 1))
+			return (PSIDE_FRONT | PSIDE_FACING);
 	}
 
 	/* box on plane side */
