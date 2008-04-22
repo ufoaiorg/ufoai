@@ -156,7 +156,7 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 	e->p0 = p0;
 	e->p1 = p1;
 	e->tri = NULL;
-	VectorNegate(normal, be->normal);
+	VectorCopy(normal, e->normal);
 	e->dist = dist;
 	trian->numedges++;
 	trian->edgematrix[p0][p1] = e;
@@ -165,7 +165,7 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 	be->p0 = p1;
 	be->p1 = p0;
 	be->tri = NULL;
-	VectorSubtract (vec3_origin, normal, be->normal);
+	VectorNegate(normal, be->normal);
 	be->dist = -dist;
 	trian->numedges++;
 	trian->edgematrix[p1][p0] = be;
