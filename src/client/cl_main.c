@@ -1791,7 +1791,9 @@ static const sanity_functions_t sanity_functions[] = {
 	{RS_ScriptSanityCheck, "tech"},
 	{AIR_ScriptSanityCheck, "aircraft"},
 	{MN_ScriptSanityCheck, "menu"},
+#ifdef DEBUG
 	{Com_ItemsSanityCheck, "items"},
+#endif
 
 	{NULL, NULL}
 };

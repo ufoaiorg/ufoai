@@ -163,11 +163,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 #endif
 {
 	byte *b;
-#ifndef DEDICATED_ONLY
-	char string[MAX_VAR];
-	char string2[MAX_VAR];
-	char condition[MAX_VAR];
-#endif
 	int x, y, w, h;
 	byte num;
 
@@ -368,6 +363,9 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			Mem_PoolStrDupTo(token, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
 			((menuDepends_t *) b)->cond = IF_EXISTS;
 		} else if (strstr(strstr(token, " "), " ")) {
+			char string[MAX_VAR];
+			char string2[MAX_VAR];
+			char condition[MAX_VAR];
 			sscanf(token, "%s %s %s", string, condition, string2);
 
 			Mem_PoolStrDupTo(string, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
@@ -384,9 +382,9 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (fabs(atof(token + 1)) <= 2.0f)
 				Com_Printf("Com_ParseValue: a V_RELABS (absolute) value should always be bigger than +/-2.0\n");
 			if (token[0] == '-')
-				*(float *) b = atof(token+1) * (-1);
+				*(float *) b = atof(token + 1) * (-1);
 			else
-				*(float *) b = atof(token+1);
+				*(float *) b = atof(token + 1);
 		} else {
 			if (fabs(atof(token)) > 2.0f)
 				Com_Printf("Com_ParseValue: a V_RELABS (relative) value should only be between 0.00..1 and 2.0\n");
