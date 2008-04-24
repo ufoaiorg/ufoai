@@ -31,7 +31,7 @@ int entity_num;
 /**
  * @sa ProcessModels
  */
-static void ProcessWorldModel ()
+static void ProcessWorldModel (void)
 {
 	entity_t *e;
 

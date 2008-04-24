@@ -1,0 +1,113 @@
+/**
+ * @file tracing.h
+ * @brief Tracing functions
+ */
+
+/*
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+#ifndef COMMON_TRACING_H
+#define COMMON_TRACING_H
+
+
+#include "../shared/typedefs.h"
+
+/*==============================================================
+GLOBAL TYPES
+==============================================================*/
+#if defined(COMPILE_MAP)
+  #define TR_TILE_TYPE 			dMapTile_t
+  #define TR_PLANE_TYPE 		dBspPlane_t
+  #define TR_PLANE2_TYPE		plane_t
+  #define TR_NODE_TYPE 			dBspNode_t
+  #define TR_LEAF_TYPE 			dBspLeaf_t
+  #define TR_BRUSH_TYPE 		dBspBrush_t
+  #define TR_BRUSHSIDE_TYPE 	dBspBrushSide_t
+
+  #define MAX_MAPTILES	1
+
+#elif defined(COMPILE_UFO)
+  #define TR_TILE_TYPE 			mapTile_t
+  #define TR_PLANE_TYPE 		cBspPlane_t
+  #define TR_PLANE2_TYPE 		cBspPlane_t
+  #define TR_NODE_TYPE 			cBspNode_t
+  #define TR_LEAF_TYPE 			cBspLeaf_t
+  #define TR_BRUSH_TYPE 		cBspBrush_t
+  #define TR_BRUSHSIDE_TYPE 	cBspBrushSide_t
+
+  #define MAX_MAPTILES	256
+
+#else
+  #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
+#endif
+
+/** a trace is returned when a box is swept through the world */
+typedef struct trace_s{
+	qboolean allsolid;			/**< if true, plane is not valid */
+	qboolean startsolid;		/**< if true, the initial point was in a solid area */
+	float fraction;				/**< distance traveled, 1.0 = didn't hit anything, 0.0 Inside of a brush */
+	vec3_t endpos;				/**< final position */
+	TR_PLANE_TYPE plane;		/**< surface normal at impact */
+	cBspSurface_t *surface;	/**< surface hit */
+	int contentFlags;			/**< contents on other side of surface hit */
+	struct le_s *le;			/**< not set by CM_*() functions */
+	struct edict_s *ent;		/**< not set by CM_*() functions */
+} trace_t;
+
+
+
+/*==============================================================
+GLOBAL DIRECTION CONSTANTS
+==============================================================*/
+
+extern const vec3_t dup_vec;
+extern const vec3_t dwn_vec;
+extern const vec3_t testvec[5];
+
+
+/*==============================================================
+BOX AND LINE TRACING
+==============================================================*/
+
+extern int c_traces, c_brush_traces;
+extern TR_TILE_TYPE *curTile;
+extern TR_TILE_TYPE mapTiles[MAX_MAPTILES];
+extern int numTiles;
+extern tnode_t *tnode_p;
+
+
+/* int BoxOnPlaneSide(vec3_t mins, vec3_t maxs, plane_t *plane); */
+int TR_BoxOnPlaneSide(vec3_t mins, vec3_t maxs, TR_PLANE_TYPE *plane);
+int TR_HeadnodeForBox(mapTile_t *tile, const vec3_t mins, const vec3_t maxs);
+
+void TR_BuildTracingNode_r (int node, int level);
+
+trace_t TR_BoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask);
+trace_t TR_TransformedBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles);
+trace_t TR_CompleteBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask);
+
+qboolean TR_TestLine(const vec3_t start, const vec3_t stop, const int levelmask);
+qboolean TR_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
+
+void TR_TraceToLeaf(int leafnum);
+
+#endif /* COMMON_TRACING_H */
