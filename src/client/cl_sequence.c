@@ -156,6 +156,8 @@ static cvar_t *seq_animspeed;
 void CL_SequenceEnd_f (void)
 {
 	CL_SetClientState(ca_disconnected);
+Com_Printf("stop sequence\n");
+
 }
 
 
@@ -376,7 +378,7 @@ void CL_SequenceStart_f (void)
 	const char *name, *menuName;
 	int i;
 	menu_t* menu;
-
+Com_Printf("start sequence\n");
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <name> [<menu>]\n", Cmd_Argv(0));
 		return;
