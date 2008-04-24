@@ -141,10 +141,10 @@ void PruneNodes(node_t *node);
 
 /* routing.c */
 
-void DoRouting();
+void DoRouting(void);
 
 /* bsp.c */
 
-void ProcessModels();
+void ProcessModels(const char *filename);
 
 #endif /* UFO2MAP_BSP_H */
