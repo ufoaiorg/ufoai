@@ -342,13 +342,13 @@ static qboolean G_LineVis (vec3_t from, vec3_t to)
 	tr = gi.trace(from, NULL, NULL, to, NULL, MASK_SOLID);
 	return (tr.fraction < 1.0);
 #elif 0 /* this version is much faster but has no entity test*/
-	return gi.TestLine(from, to);
+	return gi.TestLine(from, to, TL_FLAG_NONE);
 #else /* a compromise- but still checks for entities that may obstruct view */
 	const char *entList[MAX_EDICTS];
 	/* generate entity list */
 	G_GenerateEntList(entList);
 	/* test for visibility */
-	return gi.TestLineWithEnt(from, to, entList);
+	return gi.TestLineWithEnt(from, to, TL_FLAG_NONE, entList);
 #endif
 }
 

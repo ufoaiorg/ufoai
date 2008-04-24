@@ -391,7 +391,7 @@ void SV_InitGameProgs (void)
 	import.UnlinkEdict = SV_UnlinkEdict;
 	import.BoxEdicts = SV_AreaEdicts;
 
-	import.TestLine = CM_TestLine;
+	import.TestLine = TR_TestLine;
 	import.TestLineWithEnt = CM_TestLineWithEnt;
 	import.GrenadeTarget = Com_GrenadeTarget;
 

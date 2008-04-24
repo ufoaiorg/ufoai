@@ -28,6 +28,8 @@
 				<Option object_output=".objs\ufo2map" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="../../base/maps/mine.map" />
+				<Option host_application="../../ufo2map.exe" />
 				<Compiler>
 					<Add option="-pg" />
 					<Add option="-g" />
@@ -71,11 +73,20 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-DCOMPILE_MAP" />
 		</Compiler>
 		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\ioapi.h" />
+		<Unit filename="..\..\src\common\routing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\routing.h" />
+		<Unit filename="..\..\src\common\tracing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\tracing.h" />
 		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -93,6 +104,13 @@
 		</Unit>
 		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\tools\ufo2map\brushbsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\bsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
+		<Unit filename="..\..\src\tools\ufo2map\check.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.c">
@@ -118,9 +136,6 @@
 		<Unit filename="..\..\src\tools\ufo2map\csg.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\check.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\faces.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -139,14 +154,10 @@
 		<Unit filename="..\..\src\tools\ufo2map\portals.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
-		<Unit filename="..\..\src\tools\ufo2map\bsp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\radiosity.h" />
 		<Unit filename="..\..\src\tools\ufo2map\radiosity.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\radiosity.h" />
 		<Unit filename="..\..\src\tools\ufo2map\routing.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -164,6 +175,7 @@
 		</Unit>
 		<Extensions>
 			<code_completion />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

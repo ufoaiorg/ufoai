@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "radiosity.h"
+#include "../../common/tracing.h"
 
 typedef struct {
 	dBspFace_t		*faces[2];
@@ -42,8 +43,8 @@ void LinkPlaneFaces (void)
 	int i;
 	dBspFace_t *f;
 
-	f = dfaces;
-	for (i = 0; i < numfaces; i++, f++) {
+	f = curTile->faces;
+	for (i = 0; i < curTile->numfaces; i++, f++) {
 		facelinks[i] = planelinks[f->side][f->planenum];
 		planelinks[f->side][f->planenum] = i;
 	}
@@ -56,11 +57,10 @@ void PairEdges (void)
 	edgeshare_t *e;
 
 	memset(edgeshare, 0, sizeof(edgeshare_t) * MAX_MAP_EDGES);
-
-	f = dfaces;
-	for (i = 0; i < numfaces; i++, f++) {
+	f = curTile->faces;
+	for (i = 0; i < curTile->numfaces; i++, f++) {
 		for (j = 0; j < f->numedges; j++) {
-			k = dsurfedges[f->firstedge + j];
+			k = curTile->surfedges[f->firstedge + j];
 			if (k < 0) {
 				e = &edgeshare[-k];
 				e->faces[1] = f;
@@ -448,14 +448,14 @@ static void CalcFaceExtents (lightinfo_t *l)
 	Vector2Set(stmins, 999999, 999999);
 	Vector2Set(stmaxs, -999999, -999999);
 
-	tex = &texinfo[s->texinfo];
+	tex = &curTile->texinfo[s->texinfo];
 
 	for (i = 0; i < s->numedges; i++) {
-		e = dsurfedges[s->firstedge+i];
+		e = curTile->surfedges[s->firstedge+i];
 		if (e >= 0)
-			v = dvertexes + dedges[e].v[0];
+			v = curTile->vertexes + curTile->edges[e].v[0];
 		else
-			v = dvertexes + dedges[-e].v[1];
+			v = curTile->vertexes + curTile->edges[-e].v[1];
 		for (j = 0; j < 3; j++) {  /* calculate mins, maxs */
 			if (v->point[j] > maxs[j])
 					maxs[j] = v->point[j];
@@ -499,7 +499,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 	vec3_t texnormal;
 	vec_t distscale, dist, len;
 
-	tex = &texinfo[l->face->texinfo];
+	tex = &curTile->texinfo[l->face->texinfo];
 
 	/* convert from float to double */
 	for (i = 0; i < 2; i++)
@@ -810,7 +810,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 		if (scale <= 0)
 			continue;
 
-		if (TestLine(pos, l->origin))
+		if (TR_TestLine(pos, l->origin, TL_FLAG_NONE))
 			continue;	/* occluded */
 
 		dest = styletable + offset;
@@ -844,7 +844,7 @@ skipadd: ;
 	 * higher value - because the light angle is not fixed at 90 degree */
 	VectorMA(pos, 8192, sun_dir, delta);
 
-	if (TestLine(pos, delta))
+	if (TR_TestLine(pos, delta, TL_FLAG_NONE))
 		return; /* occluded */
 
 	assert(styletable);
@@ -901,19 +901,19 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 	int i, j, k, v;
 
 	k = 0;
-	for (i = 0; i < numfaces; i++) {
-		const dBspFace_t *face = &dfaces[i];
+	for (i = 0; i < curTile->numfaces; i++) {
+		const dBspFace_t *face = &curTile->faces[i];
 
-		if (!(texinfo[face->texinfo].surfaceFlags & SURF_PHONG))
+		if (!(curTile->texinfo[face->texinfo].surfaceFlags & SURF_PHONG))
 			continue;
 
 		for (j = 0; j < face->numedges; j++) {
-			const int e = dsurfedges[face->firstedge + j];
+			const int e = curTile->surfedges[face->firstedge + j];
 
-			v = e >= 0 ? dedges[e].v[0] : dedges[-e].v[1];
+			v = e >= 0 ? curTile->edges[e].v[0] : curTile->edges[-e].v[1];
 
 			/* compare using surfedge reference or point equality */
-			if (v == vert || VectorCompare(dvertexes[v].point, dvertexes[vert].point)) {
+			if (v == vert || VectorCompare(curTile->vertexes[v].point, curTile->vertexes[vert].point)) {
 				faces[k++] = i;
 				break;
 			}
@@ -938,13 +938,13 @@ void BuildVertexNormals (void)
 	vec3_t norm;
 	int i, j;
 
-	for (i = 0; i < numvertexes; i++) {
+	for (i = 0; i < curTile->numvertexes; i++) {
 		VectorSet(vertexnormals[i], 0, 0, 0);
 		FacesWithVert(i, vert_faces, &num_vert_faces);
 
 		for (j = 0; j < num_vert_faces; j++) {
-			face = &dfaces[vert_faces[j]];
-			plane = &dplanes[face->planenum];
+			face = &curTile->faces[vert_faces[j]];
+			plane = &curTile->planes[face->planenum];
 
 			if (face->side)
 				VectorNegate(plane->normal, norm);
@@ -976,13 +976,13 @@ static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
 	nearEdge = farEdge = 0;
 
 	for (i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
-		e = dsurfedges[l->face->firstedge + i];
+		e = curTile->surfedges[l->face->firstedge + i];
 		if (e >= 0)
-			v = dedges[e].v[0];
+			v = curTile->edges[e].v[0];
 		else
-			v = dedges[-e].v[1];
+			v = curTile->edges[-e].v[1];
 
-		VectorSubtract(pos, dvertexes[v].point, temp);
+		VectorSubtract(pos, curTile->vertexes[v].point, temp);
 		dist = VectorLength(temp);
 
 		if (dist < neardist) {
@@ -1031,9 +1031,9 @@ void BuildFacelights (unsigned int facenum)
 		return;
 	}
 
-	f = &dfaces[facenum];
+	f = &curTile->faces[facenum];
 
-	if (texinfo[f->texinfo].surfaceFlags & SURF_WARP)
+	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
 
 	l = malloc(MAX_SAMPLES * sizeof(lightinfo_t));
@@ -1048,8 +1048,8 @@ void BuildFacelights (unsigned int facenum)
 		l[i].surfnum = facenum;
 		l[i].face = f;
 		/* rotate plane */
-		VectorCopy(dplanes[f->planenum].normal, l[i].facenormal);
-		l[i].facedist = dplanes[f->planenum].dist;
+		VectorCopy(curTile->planes[f->planenum].normal, l[i].facenormal);
+		l[i].facedist = curTile->planes[f->planenum].dist;
 		if (f->side) {
 			VectorSubtract(vec3_origin, l[i].facenormal, l[i].facenormal);
 			l[i].facedist = -l[i].facedist;
@@ -1076,7 +1076,7 @@ void BuildFacelights (unsigned int facenum)
 	for (i = 0; i < l[0].numsurfpt; i++) {
 		for (j = 0; j < numsamples; j++) {
 			/* calculate interpolated normal for phong shading */
-			if (texinfo[l[0].face->texinfo].surfaceFlags & SURF_PHONG)
+			if (curTile->texinfo[l[0].face->texinfo].surfaceFlags & SURF_PHONG)
 				SampleNormal(&l[0], l[j].surfpt[i], normal);
 			else /* or just use the plane normal */
 				VectorCopy(l[0].facenormal, normal);
@@ -1127,38 +1127,38 @@ void FinalLightFace (unsigned int facenum)
 	byte *dest;
 	vec3_t facemins, facemaxs, lb;
 
-	f = &dfaces[facenum];
+	f = &curTile->faces[facenum];
 	fl = &facelight[config.compile_for_day][facenum];
 
 	/* none-lit texture */
-	if (texinfo[f->texinfo].surfaceFlags & SURF_WARP)
+	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
 		return;
 
-	f->lightofs[config.compile_for_day] = lightdatasize[config.compile_for_day];
-	lightdatasize[config.compile_for_day] += fl->numsamples * 3;
+	f->lightofs[config.compile_for_day] = curTile->lightdatasize[config.compile_for_day];
+	curTile->lightdatasize[config.compile_for_day] += fl->numsamples * 3;
 
 #if 0
 	/* add green sentinals between lightmaps */
 	lightdatasize[config.compile_for_day] += 256 * 3;
 	for (i = 0; i < 256; i++)
-		dlightdata[config.compile_for_day][lightdatasize[config.compile_for_day] - (i + 1) * 3 + 1] = 255;
+		curTile->lightdata[config.compile_for_day][lightdatasize[config.compile_for_day] - (i + 1) * 3 + 1] = 255;
 #endif
 
-	if (lightdatasize[config.compile_for_day] > MAX_MAP_LIGHTING)
-		Sys_Error("MAX_MAP_LIGHTING (%i)", lightdatasize[config.compile_for_day]);
+	if (curTile->lightdatasize[config.compile_for_day] > MAX_MAP_LIGHTING)
+		Sys_Error("MAX_MAP_LIGHTING (%i)", curTile->lightdatasize[config.compile_for_day]);
 
 	/* set up the triangulation */
 	if (config.numbounce > 0) {
 		ClearBounds(facemins, facemaxs);
 		for (i = 0; i < f->numedges; i++) {
-			const int ednum = dsurfedges[f->firstedge + i];
+			const int ednum = curTile->surfedges[f->firstedge + i];
 			if (ednum >= 0)
-				AddPointToBounds(dvertexes[dedges[ednum].v[0]].point, facemins, facemaxs);
+				AddPointToBounds(curTile->vertexes[curTile->edges[ednum].v[0]].point, facemins, facemaxs);
 			else
-				AddPointToBounds(dvertexes[dedges[-ednum].v[1]].point, facemins, facemaxs);
+				AddPointToBounds(curTile->vertexes[curTile->edges[-ednum].v[1]].point, facemins, facemaxs);
 		}
 
-		trian = AllocTriangulation(&dplanes[f->planenum]);
+		trian = AllocTriangulation(&curTile->planes[f->planenum]);
 
 		/* for all faces on the plane, add the nearby patches
 		 * to the triangulation */
@@ -1182,7 +1182,7 @@ void FinalLightFace (unsigned int facenum)
 
 	/* sample the triangulation */
 
-	dest = &dlightdata[config.compile_for_day][f->lightofs[config.compile_for_day]];
+	dest = &curTile->lightdata[config.compile_for_day][f->lightofs[config.compile_for_day]];
 
 	for (j = 0; j < fl->numsamples; j++) {
 		VectorCopy((fl->samples + j * 3), lb);

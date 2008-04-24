@@ -184,21 +184,17 @@ static void R_DrawBox (const entity_t * e)
 }
 
 /**
- * @brief Draws a marker on the ground to indicate pathing CL_AddTargeting
+ * @brief Draws a marker on the ground to indicate pathing CL_AddPathingBox
  * @sa CL_AddPathing
  * @sa RF_BOX
  */
 static void R_DrawFloor (const entity_t * e)
 {
 	vec3_t upper, lower;
-	float dx;
+	float dx, dy;
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
 	qglDisable(GL_TEXTURE_2D);
-	/*
-	if (!r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	*/
 	qglEnable(GL_LINE_SMOOTH);
 
 	R_Color(color);
@@ -207,7 +203,33 @@ static void R_DrawFloor (const entity_t * e)
 	VectorCopy(e->origin, upper);
 
 	dx = PLAYER_WIDTH * 2;
-	upper[1] += PLAYER_WIDTH * 2;
+	dy = e->oldorigin[2];
+
+	upper[2] += dy;
+
+	qglBegin(GL_QUAD_STRIP);
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[0] += dx;
+	upper[0] += dx;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[1] += dx;
+	upper[1] += dx;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[0] -= dx;
+	upper[0] -= dx;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[1] -= dx;
+	upper[1] -= dx;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	qglEnd();
+
+	lower[2] += dy;
+	upper[1] += dx;
 
 	qglBegin(GL_QUAD_STRIP);
 	qglVertex3fv(lower);
@@ -217,12 +239,7 @@ static void R_DrawFloor (const entity_t * e)
 	qglVertex3fv(lower);
 	qglVertex3fv(upper);
 	qglEnd();
-
 	qglDisable(GL_LINE_SMOOTH);
-	/*
-	if (!r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	*/
 
 	qglEnable(GL_TEXTURE_2D);
 

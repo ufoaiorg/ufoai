@@ -4210,7 +4210,7 @@ void CL_ActorMouseTrace (void)
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
-		CM_TestLineDM(from, stop, end);
+		TR_TestLineDM(from, stop, end, TL_FLAG_ACTORCLIP);
 	}
 
 	VecToPos(end, testPos);
@@ -4225,7 +4225,7 @@ void CL_ActorMouseTrace (void)
 	/* FIXME: Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	CM_TestLineDM(pA, pB, pC);
+	TR_TestLineDM(pA, pB, pC, TL_FLAG_ACTORCLIP);
 	VecToPos(pC, testPos);
 	restingLevel = min(restingLevel, Grid_Fall(&clMap, testPos, fieldSize));
 
@@ -4233,7 +4233,7 @@ void CL_ActorMouseTrace (void)
 	if (restingLevel < intersectionLevel) {
 		VectorCopy(end, from);
 		from[2] -= CURSOR_OFFSET;
-		CM_TestLineDM(from, stop, end);
+		TR_TestLineDM(from, stop, end, TL_FLAG_ACTORCLIP);
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(&clMap, testPos, fieldSize);
 	}
@@ -4582,47 +4582,47 @@ static float CL_TargetingToHit (pos3_t toPos)
 	perpY *= 2;
 	target[2] += 6 * height;
 /*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
-	if (!CM_TestLine(shooter, target))
+	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] += perpX;
 	target[1] += perpY;
 	target[2] -= 6 * height;
 /*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
-	if (!CM_TestLine(shooter, target))
+	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] += perpX;
 	target[1] += perpY;
 	target[2] += 4 * height;
 /*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
-	if (!CM_TestLine(shooter, target))
+	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[2] += 4 * height;
 /*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
-	if (!CM_TestLine(shooter, target))
+	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX * 3;
 	target[1] -= perpY * 3;
 	target[2] -= 12 * height;
 /*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
-	if (!CM_TestLine(shooter, target))
+	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] += 6 * height;
 /*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
-	if (!CM_TestLine(shooter, target))
+	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] -= 4 * height;
 /*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
-	if (!CM_TestLine(shooter, target))
+	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] += 10 * height;
 /*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
-	if (!CM_TestLine(shooter, target))
+	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 
 	return (hitchance * (0.125) * n);
@@ -5066,7 +5066,7 @@ void CL_AddTargeting (void)
 	}
 }
 
-static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - 1 };
+static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - DIST_EPSILON };
 
 /**
  * @brief create a targeting box at the given position
@@ -5075,6 +5075,7 @@ static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - 1
 static void CL_AddPathingBox (pos3_t pos)
 {
 	entity_t ent;
+	int height;
 
 	memset(&ent, 0, sizeof(entity_t));
 	ent.flags = RF_PATH;
@@ -5087,17 +5088,27 @@ static void CL_AddPathingBox (pos3_t pos)
 	 * yellow if it can be entered but is too far,
 	 * or red if it cannot be entered ever.
 	 */
-	if (Grid_Fall(&clMap, pos, 1) < pos[2] - 1) {
-		VectorSet(ent.angles, 0, 0, 0); /* Can't enter - black */
-	} else {
-		/**
-		 * Can reach - green
-		 * Passable but unreachable - yellow
-		 * Not passable - red
-		*/
-		const int TUs = Grid_MoveLength(&clMap, pos, qfalse);
+	if ((Grid_Fall(&clMap, pos, ACTOR_SIZE_NORMAL) < pos[2] - 1)){
+		VectorSet(ent.angles, 0.0, 0.0, 0.0); /* Can't enter - grey */
+	} /* else if (Grid_Filled(&clMap, pos)) {
+		VectorSet(ent.angles, 0, 0, 0); / * Can't enter - black * /
+	} */ else {
+	    /**
+	     * Can reach - green
+	     * Passable but unreachable - yellow
+	     * Not passable - red
+	     */
+	    const int TUs = Grid_MoveLength(&clMap, pos, qfalse);
 		VectorSet(ent.angles, (TUs > CL_UsableTUs(selActor)), (TUs != ROUTING_NOT_REACHABLE), 0);
 	}
+
+	/**
+	 * Set the box height to the STEPON value of the cell.
+	 * Also tint the cell more blue the larger the value.
+	 */
+	height = Grid_StepUp(&clMap, pos);
+	ent.oldorigin[2] = height;
+	ent.angles[2] = (float)height / (UNIT_HEIGHT / 4);
 
 	ent.alpha = 0.25;
 
@@ -5122,6 +5133,8 @@ void CL_AddPathing (void)
 		for (pos[0] = max(mousePos[0] - 8, 0); pos[0] <= min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++)
 			CL_AddPathingBox(pos);
 }
+
+
 
 /**
  * @brief Plays various sounds on actor action.

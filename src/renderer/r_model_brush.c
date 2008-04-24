@@ -644,7 +644,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* set up the submodels, the first 255 submodels
 	 * are the models of the different levels, don't
 	 * care about them */
-	for (i = LEVEL_TRACING - 1; i < loadmodel->bsp.numsubmodels; i++) {
+	for (i = NUM_REGULAR_MODELS; i < loadmodel->bsp.numsubmodels; i++) {
 		const mBspHeader_t *bm;
 		model_t *starmod;
 
@@ -727,13 +727,13 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 		if (pos && pos[0]) {
 			/* get position and add a tile */
-			for (i = 0; i < 2; i++) {
+			for (i = 0; i < 3; i++) {
 				token = COM_Parse(&pos);
 				if (!pos)
 					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
-			R_ModAddMapTile(name, day, sh[0], sh[1], 0);
+			R_ModAddMapTile(name, day, sh[0], sh[1], sh[2]);
 		} else {
 			/* load only a single tile, if no positions are specified */
 			R_ModAddMapTile(name, day, 0, 0, 0);

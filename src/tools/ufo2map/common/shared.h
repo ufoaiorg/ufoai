@@ -41,6 +41,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <assert.h>
 #include <limits.h>
 
+#include "../../../shared/defines.h"
+#include "../../../shared/typedefs.h"
+
+
 #ifndef errno
 extern int errno;
 #endif
@@ -49,21 +53,7 @@ extern int errno;
 The .pak files are just a linear collapse of a directory tree
 ========================================================================*/
 
-#define MAX_QPATH 64
-#define MAX_OSPATH 128
 
-typedef struct qFILE_s {
-	void *z; /**< in case of the file being a zip archive */
-	FILE *f; /**< in case the file being part of a pak or the actual file */
-	char name[MAX_OSPATH];
-	unsigned long filepos;
-	unsigned long size;
-} qFILE;
-
-/* valid -noradiosity parameters */
-#define RADIOSITY_NONE			1
-#define RADIOSITY_DAY_ONLY		2
-#define RADIOSITY_NIGHT_ONLY	3
 
 typedef struct mapConfig_s {
 	float subdivideSize;
@@ -123,7 +113,6 @@ typedef struct mapConfig_s {
 
 	int compile_for_day;	/**< set this to 1 if you want to compile the day version of the lightmap */
 } mapConfig_t;
-
 extern mapConfig_t config;
 
 void U2M_ProgressBar(void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id);

@@ -24,6 +24,7 @@
 				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option host_application="../../ufo.exe" />
 				<Compiler>
 					<Add option="-pg" />
 					<Add option="-g" />
@@ -60,6 +61,9 @@
 				</Linker>
 			</Target>
 		</Build>
+		<Compiler>
+			<Add option="-DCOMPILE_UFO" />
+		</Compiler>
 		<Unit filename="..\..\src\game\g_ai.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -70,9 +74,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_combat.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\game\g_trigger.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_func.c">
@@ -92,6 +93,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_svcmds.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\g_trigger.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\g_utils.c">
@@ -121,6 +125,7 @@
 		</Unit>
 		<Extensions>
 			<code_completion />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -91,7 +91,7 @@ static int GetVertexnum (vec3_t in)
 	h = HashVec(vert);
 
 	for (vnum = hashverts[h]; vnum; vnum = vertexchain[vnum]) {
-		p = dvertexes[vnum].point;
+		p = curTile->vertexes[vnum].point;
 		if (fabs(p[0]-vert[0]) < POINT_EPSILON
 		 && fabs(p[1]-vert[1]) < POINT_EPSILON
 		 && fabs(p[2]-vert[2]) < POINT_EPSILON)
@@ -99,21 +99,21 @@ static int GetVertexnum (vec3_t in)
 	}
 
 	/* emit a vertex */
-	if (numvertexes == MAX_MAP_VERTS)
+	if (curTile->numvertexes == MAX_MAP_VERTS)
 		Sys_Error("numvertexes == MAX_MAP_VERTS");
 
-	dvertexes[numvertexes].point[0] = vert[0];
-	dvertexes[numvertexes].point[1] = vert[1];
-	dvertexes[numvertexes].point[2] = vert[2];
+	curTile->vertexes[curTile->numvertexes].point[0] = vert[0];
+	curTile->vertexes[curTile->numvertexes].point[1] = vert[1];
+	curTile->vertexes[curTile->numvertexes].point[2] = vert[2];
 
-	vertexchain[numvertexes] = hashverts[h];
-	hashverts[h] = numvertexes;
+	vertexchain[curTile->numvertexes] = hashverts[h];
+	hashverts[h] = curTile->numvertexes;
 
 	c_uniqueverts++;
 
-	numvertexes++;
+	curTile->numvertexes++;
 
-	return numvertexes - 1;
+	return curTile->numvertexes - 1;
 }
 
 /**
@@ -173,11 +173,11 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 	for (i = 0; i < w->numpoints; i++) {
 		/* make every point unique */
 		if (config.noweld) {
-			if (numvertexes == MAX_MAP_VERTS)
-				Sys_Error("MAX_MAP_VERTS (%i)", numvertexes);
-			superverts[i] = numvertexes;
-			VectorCopy(w->p[i], dvertexes[numvertexes].point);
-			numvertexes++;
+			if (curTile->numvertexes == MAX_MAP_VERTS)
+				Sys_Error("MAX_MAP_VERTS (%i)", curTile->numvertexes);
+			superverts[i] = curTile->numvertexes;
+			VectorCopy(w->p[i], curTile->vertexes[curTile->numvertexes].point);
+			curTile->numvertexes++;
 			c_uniqueverts++;
 			c_totalverts++;
 		} else
@@ -254,7 +254,7 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 		if (j == p1 || j == p2)
 			continue;
 
-		VectorCopy(dvertexes[j].point, p);
+		VectorCopy(curTile->vertexes[j].point, p);
 
 		VectorSubtract(p, edge_start, delta);
 		dist = DotProduct(delta, edge_dir);
@@ -297,8 +297,8 @@ static void FixFaceEdges (node_t *node, face_t *f)
 		p1 = f->vertexnums[i];
 		p2 = f->vertexnums[(i + 1) % f->numpoints];
 
-		VectorCopy(dvertexes[p1].point, edge_start);
-		VectorCopy(dvertexes[p2].point, e2);
+		VectorCopy(curTile->vertexes[p1].point, edge_start);
+		VectorCopy(curTile->vertexes[p2].point, e2);
 
 		FindEdgeVerts(edge_start, e2);
 
@@ -419,7 +419,7 @@ void FreeFace (face_t *f)
 }
 
 /**
- * @note Called by writebsp.
+ * @sa EmitFace.
  * @note Don't allow four way edges
  */
 int GetEdge (int v1, int v2, face_t *f)
@@ -430,8 +430,8 @@ int GetEdge (int v1, int v2, face_t *f)
 	c_tryedges++;
 
 	if (!config.noshare) {
-		for (i = firstmodeledge; i < numedges; i++) {
-			edge = &dedges[i];
+		for (i = firstmodeledge; i < curTile->numedges; i++) {
+			edge = &curTile->edges[i];
 			if (v1 == edge->v[1] && v2 == edge->v[0]
 				&& edgefaces[i][0]->contentFlags == f->contentFlags) {
 				if (edgefaces[i][1])
@@ -443,15 +443,15 @@ int GetEdge (int v1, int v2, face_t *f)
 	}
 
 	/* emit an edge */
-	if (numedges >= MAX_MAP_EDGES)
-		Sys_Error("numedges >= MAX_MAP_EDGES (%i)", numedges);
-	edge = &dedges[numedges];
+	if (curTile->numedges >= MAX_MAP_EDGES)
+		Sys_Error("numedges >= MAX_MAP_EDGES (%i)", curTile->numedges);
+	edge = &curTile->edges[curTile->numedges];
 	edge->v[0] = v1;
 	edge->v[1] = v2;
-	edgefaces[numedges][0] = f;
-	numedges++;
+	edgefaces[curTile->numedges][0] = f;
+	curTile->numedges++;
 
-	return numedges - 1;
+	return curTile->numedges - 1;
 }
 
 /*
@@ -640,7 +640,7 @@ static void SubdivideFace (node_t *node, face_t *f)
 		return;
 
 	/* special (non-surface cached) faces don't need subdivision */
-	tex = &texinfo[f->texinfo];
+	tex = &curTile->texinfo[f->texinfo];
 
 	if (tex->surfaceFlags & SURF_WARP)
 		return;
@@ -732,12 +732,12 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9)
 		/* this face is not visible from birds view - optimize away
 		 * but only if it's not light emitting surface */
-		if (!(texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
+		if (!(curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
 			side->surfaceFlags |= SURF_NODRAW;
 			return NULL;
 		}
 
-	if (texinfo[f->texinfo].surfaceFlags & SURF_NODRAW)
+	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_NODRAW)
 		return NULL;
 
 	if (pside) {

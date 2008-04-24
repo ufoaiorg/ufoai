@@ -31,7 +31,7 @@ int entity_num;
 /**
  * @sa ProcessModels
  */
-static void ProcessWorldModel (void)
+static void ProcessWorldModel ()
 {
 	entity_t *e;
 
@@ -41,10 +41,12 @@ static void ProcessWorldModel (void)
 	brush_end = brush_start + e->numbrushes;
 
 	ClearBounds(worldMins, worldMaxs);
-	nummodels = NUMMODELS;
+
+	/* This is set so the Emit* functions in writebsp.c work correctly. */
+	curTile->nummodels = NUM_REGULAR_MODELS;
 
 	/* process levels */
-	U2M_ProgressBar(ProcessLevel, NUMMODELS, qtrue, "LEVEL");
+	U2M_ProgressBar(ProcessLevel, NUM_REGULAR_MODELS, qtrue, "LEVEL");
 
 	/* calculate routing */
 	DoRouting();
@@ -65,6 +67,9 @@ static void ProcessSubModel (int entityNum)
 	BeginModel(entityNum);
 
 	e = &entities[entityNum];
+#if 0
+	Com_Printf("Processing entity: %i into model %i (%s:%s)\n", entityNum, curTile->nummodels, e->epairs->key, e->epairs->value);
+#endif
 
 	start = e->firstbrush;
 	end = start + e->numbrushes;
@@ -81,7 +86,7 @@ static void ProcessSubModel (int entityNum)
 	MarkVisibleSides(tree, start, end);
 	MakeFaces(tree->headnode);
 	FixTjuncs(tree->headnode);
-	WriteBSP(tree->headnode);
+	curTile->models[curTile->nummodels].headnode = WriteBSP(tree->headnode);
 	FreeTree(tree);
 
 	EndModel();
@@ -100,7 +105,7 @@ void ProcessModels (const char *filename)
 		if (!entities[entity_num].numbrushes)
 			continue;
 
-		Sys_FPrintf(SYS_VRB, "############### model %i ###############\n", nummodels);
+		Sys_FPrintf(SYS_VRB, "############### model %i ###############\n", curTile->nummodels);
 		if (entity_num == 0)
 			ProcessWorldModel();
 		else

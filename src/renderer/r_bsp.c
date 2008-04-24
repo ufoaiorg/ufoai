@@ -291,7 +291,7 @@ void R_GetLevelSurfaceLists (void)
 	mask = 1 << refdef.worldlevel;
 
 	for (tile = 0; tile < r_numMapTiles; tile++) {
-		/* don't draw weapon-, actorclip and stepon */
+		/* don't draw weaponclip, actorclip and stepon */
 		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
 			/* check the worldlevel flags */
 			if (i && !(i & mask))

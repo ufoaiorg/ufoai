@@ -2,6 +2,8 @@
 # ufo2map
 ########################################################################################################
 
+UFO2MAP_CFLAGS+=-DCOMPILE_MAP -ffloat-store
+
 UFO2MAP_SRCS = \
 	tools/ufo2map/ufo2map.c \
 	tools/ufo2map/radiosity.c \
@@ -29,6 +31,8 @@ UFO2MAP_SRCS = \
 	shared/byte.c \
 	shared/shared.c \
 	common/unzip.c \
+	common/tracing.c \
+	common/routing.c \
 	common/ioapi.c
 
 UFO2MAP_OBJS=$(UFO2MAP_SRCS:%.c=$(BUILDDIR)/tools/ufo2map/%.o)
@@ -49,4 +53,4 @@ $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
 # store the float values in buffers, not in cpu registers, maybe slower
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [MAP] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) -ffloat-store -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(UFO2MAP_CFLAGS) -o $@ -c $< -MD -MT $@ -MP

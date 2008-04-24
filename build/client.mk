@@ -1,4 +1,4 @@
-CLIENT_CFLAGS+=
+CLIENT_CFLAGS+=-DCOMPILE_UFO
 
 CLIENT_SRCS = \
 	client/cl_actor.c \
@@ -83,6 +83,8 @@ CLIENT_SRCS = \
 	common/dbuffer.c \
 	common/pqueue.c \
 	common/scripts.c \
+	common/tracing.c \
+	common/routing.c \
 	\
 	server/sv_ccmds.c \
 	server/sv_game.c \

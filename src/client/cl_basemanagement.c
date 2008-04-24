@@ -2661,7 +2661,7 @@ FIXME
 				 * 512 / UNIT_SIZE = 16
 				 * 512 is the size in the mapeditor and the worldplane for a
 				 * single base map tile */
-				Q_strcat(coords, va("%i %i ", col * 16, (BASE_SIZE - row - 1) * 16), sizeof(coords));
+				Q_strcat(coords, va("%i %i %i ", col * 16, (BASE_SIZE - row - 1) * 16, 0), sizeof(coords));
 			}
 		}
 	/* set maxlevel for base attacks to 5 */

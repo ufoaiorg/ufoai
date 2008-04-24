@@ -24,6 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "radiosity.h"
+#include "bsp.h"
+#include "../../common/tracing.h"
 
 patch_t		*face_patches[MAX_MAP_FACES];
 entity_t	*face_entity[MAX_MAP_FACES];
@@ -36,8 +38,6 @@ vec3_t		illumination[MAX_PATCHES];	/* light arriving at a patch */
 vec3_t		face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
 dBspPlane_t	backplanes[MAX_MAP_PLANES];
 
-int TestLine(const vec3_t start, const vec3_t stop);
-
 /*
 ===================================================================
 MISC
@@ -49,9 +49,9 @@ static void MakeBackplanes (void)
 {
 	int i;
 
-	for (i = 0; i < numplanes; i++) {
-		backplanes[i].dist = -dplanes[i].dist;
-		VectorSubtract(vec3_origin, dplanes[i].normal, backplanes[i].normal);
+	for (i = 0; i < curTile->numplanes; i++) {
+		backplanes[i].dist = -curTile->planes[i].dist;
+		VectorSubtract(vec3_origin, curTile->planes[i].normal, backplanes[i].normal);
 	}
 }
 
@@ -70,8 +70,8 @@ static int PointInLeafnum (vec3_t point)
 
 	nodenum = 0;
 	while (nodenum >= 0) {
-		node = &dnodes[nodenum];
-		plane = &dplanes[node->planenum];
+		node = &curTile->nodes[nodenum];
+		plane = &curTile->planes[node->planenum];
 		dist = DotProduct (point, plane->normal) - plane->dist;
 		if (dist > 0)
 			nodenum = node->children[0];
@@ -88,7 +88,7 @@ dBspLeaf_t *Rad_PointInLeaf (vec3_t point)
 	int num;
 
 	num = PointInLeafnum(point);
-	return &dleafs[num];
+	return &curTile->leafs[num];
 }
 
 
@@ -143,7 +143,7 @@ static void MakeTransfers (unsigned int i)
 			continue;
 
 		/* check exact transfer */
-		if (TestLine(patch->origin, patch2->origin))
+		if (TR_TestLine(patch->origin, patch2->origin, TL_FLAG_NONE))
 			continue;
 
 #if 0
@@ -294,16 +294,16 @@ static void CheckPatches (void)
 
 void RadWorld (void)
 {
-	if (numnodes == 0 || numfaces == 0)
+	if (curTile->numnodes == 0 || curTile->numfaces == 0)
 		Sys_Error("Empty map");
 
 	/* initialize light data */
-	dlightdata[config.compile_for_day][0] = config.lightquant;
-	lightdatasize[config.compile_for_day] = 1;
+	curTile->lightdata[config.compile_for_day][0] = config.lightquant;
+	curTile->lightdatasize[config.compile_for_day] = 1;
 
 	MakeBackplanes();
 
-	MakeTnodes(LEVEL_WEAPONCLIP);
+	MakeTracingNodes(LEVEL_LASTVISIBLE + 1);
 
 	/* turn each face into a single patch */
 	MakePatches();
@@ -318,7 +318,7 @@ void RadWorld (void)
 	BuildVertexNormals();
 
 	/* build initial facelights */
-	U2M_ProgressBar(BuildFacelights, numfaces, qtrue, "FACELIGHTS");
+	U2M_ProgressBar(BuildFacelights, curTile->numfaces, qtrue, "FACELIGHTS");
 
 	if (config.numbounce > 0) {
 		/* build transfer lists */
@@ -338,6 +338,6 @@ void RadWorld (void)
 	PairEdges();
 	LinkPlaneFaces();
 
-	U2M_ProgressBar(FinalLightFace, numfaces, qtrue, "FINALLIGHT");
-/*	CloseTnodes();*/
+	U2M_ProgressBar(FinalLightFace, curTile->numfaces, qtrue, "FINALLIGHT");
+	CloseTracingNodes();
 }

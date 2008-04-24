@@ -1,4 +1,5 @@
 #FIXME: check for -ldl (mingw doesn't have this)
+DEDICATED_CFLAGS+=-DCOMPILE_UFO -DDEDICATED_ONLY
 
 SERVER_SRCS += \
 	common/cmd.c \
@@ -18,6 +19,8 @@ SERVER_SRCS += \
 	common/netpack.c \
 	common/pqueue.c \
 	common/scripts.c \
+	common/tracing.c \
+	common/routing.c \
 	\
 	server/sv_ccmds.c \
 	server/sv_game.c \
@@ -79,8 +82,6 @@ ifeq ($(BUILD_DEDICATED),1)
 	ALL_OBJS+=$(SERVER_OBJS)
 	TARGETS+=$(SERVER_TARGET)
 endif
-
-DEDICATED_CFLAGS=-DDEDICATED_ONLY
 
 # Say how to link the exe
 $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_particle.h"
 #include "cl_actor.h"
 #include "../renderer/r_mesh_anim.h"
+#include "../common/tracing.h"
 
 localModel_t LMs[MAX_LOCALMODELS];
 int numLMs;
@@ -68,17 +69,29 @@ void CL_CompleteRecalcRouting (void)
 	LE_GenerateInlineModelList();
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		/*
+		We ALWAYS check against a model, even if it isn't in use.
+		An unused model is NOT included in the inline list, so it doesn't get
+		traced against.
 		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
+		*/
+		if (le->model1 && le->inlineModelName[0] == '*')
 			Grid_RecalcRouting(&clMap, le->inlineModelName, leInlineModelList);
 }
 
 /**
- * @sa G_CompleteRecalcRouting
+ * @sa LE_Explode
  */
 void CL_RecalcRouting (const le_t* le)
 {
 	LE_GenerateInlineModelList();
-	if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
+		/*
+		We ALWAYS check against a model, even if it isn't in use.
+		An unused model is NOT included in the inline list, so it doesn't get
+		traced against.
+		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
+		*/
+	if (le->model1 && le->inlineModelName[0] == '*')
 		Grid_RecalcRouting(&clMap, le->inlineModelName, leInlineModelList);
 }
 
@@ -154,10 +167,10 @@ static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 	}
 
 	if (openDoor) {
-		/* FIXME */
+		/* FIXME - YAW should be the orientation of the door */
 		le->angles[YAW] += DOOR_ROTATION_ANGLE;
 	} else {
-		/* FIXME */
+		/* FIXME - YAW should be the orientation of the door */
 		le->angles[YAW] -= DOOR_ROTATION_ANGLE;
 	}
 
@@ -694,7 +707,7 @@ void LET_ProjectileAutoHide (le_t *le)
 		if (actors->type == ET_ACTOR || actors->type == ET_ACTOR2x2) {
 			/* at least one of our actors can see this */
 			if (FrustomVis(actors->origin, actors->dir, le->origin)) {
-				if (CM_TestLine(actors->origin, le->origin)) {
+				if (TR_TestLine(actors->origin, le->origin, TL_FLAG_NONE)) {
 					if (!le->ptl)
 						le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);
 					return;
@@ -1186,7 +1199,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 	le_t *le;
 	trace_t trace;
 	int headnode;
-	cBspModel_t *cmodel;
+	cBspModel_t *model;
 	const float *angles;
 	vec3_t origin;
 
@@ -1203,13 +1216,13 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		if (le->contents & CONTENTS_SOLID) {
 			/* special value for bmodel */
 			assert(le->modelnum1 < MAX_MODELS);
-			cmodel = cl.model_clip[le->modelnum1];
-			if (!cmodel) {
+			model = cl.model_clip[le->modelnum1];
+			if (!model) {
 				Com_Printf("CL_ClipMoveToLEs: Error - le with no NULL bmodel (%i)\n", le->type);
 				continue;
 			}
-			headnode = cmodel->headnode;
-			tile = cmodel->tile;
+			headnode = model->headnode;
+			tile = model->tile;
 			angles = le->angles;
 		} else {
 			/* might intersect, so do an exact clip */
@@ -1288,7 +1301,7 @@ trace_t CL_Trace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs
 	moveclip_t clip;
 
 	/* clip to world */
-	clip.trace = CM_CompleteBoxTrace(start, end, mins, maxs, (1 << (cl_worldlevel->integer + 1)) - 1, contentmask);
+	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, (1 << (cl_worldlevel->integer + 1)) - 1, contentmask);
 	clip.trace.le = NULL;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */

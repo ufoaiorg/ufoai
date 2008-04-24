@@ -143,7 +143,6 @@ typedef struct mPlaced_s {
 static mTile_t mTile[MAX_TILETYPES];					 /**< @todo A list of parsed map-tiles. */
 static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< @todo A list of parsed assembly definitions. */
 
-static int numTiles;		 /**< @todo The number of tiles in mTile. */
 static int numAssemblies;	 /**< @todo The number of assemblies in mAssembly. */
 
 static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo Holds all tiles that have been placed ont he current map. */
@@ -1019,7 +1018,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 			SV_DumpPlaced(pl);
 
 		Q_strcat(asmMap, va(" %s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		Q_strcat(asmPos, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		Q_strcat(asmPos, va(" %i %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8, 0), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
 
 	Com_DPrintf(DEBUG_SERVER, "tiles: %s\n", *map);

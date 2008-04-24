@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "radiosity.h"
+#include "../../common/tracing.h"
 
 static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
 
@@ -51,10 +52,10 @@ void CalcTextureReflectivity (void)
 	texture_reflectivity[0][1] = 0.5;
 	texture_reflectivity[0][2] = 0.5;
 
-	for (i = 0; i < numtexinfo; i++) {
+	for (i = 0; i < curTile->numtexinfo; i++) {
 		/* see if an earlier texinfo already got the value */
 		for (j = 0; j < i; j++) {
-			if (!strcmp(texinfo[i].texture, texinfo[j].texture)) {
+			if (!strcmp(curTile->texinfo[i].texture, curTile->texinfo[j].texture)) {
 				VectorCopy(texture_reflectivity[j], texture_reflectivity[i]);
 				break;
 			}
@@ -63,7 +64,7 @@ void CalcTextureReflectivity (void)
 			continue;
 
 		/* load the tga file */
-		Com_sprintf(path, sizeof(path), "%stextures/%s.tga", gamedir, texinfo[i].texture);
+		Com_sprintf(path, sizeof(path), "%stextures/%s.tga", gamedir, curTile->texinfo[i].texture);
 		if (TryLoadTGA(path, &mt) != -1) {
 			/* load rgba from the tga */
 			texels = mt->width * mt->height;  /* these are already endian-correct */
@@ -82,7 +83,7 @@ void CalcTextureReflectivity (void)
 
 		if (!loaded) {
 			/* try jpeg */
-			Com_sprintf(path, sizeof(path), "%stextures/%s.jpg", gamedir, texinfo[i].texture);
+			Com_sprintf(path, sizeof(path), "%stextures/%s.jpg", gamedir, curTile->texinfo[i].texture);
 			if (TryLoadJPG(path, &mt) != -1) {
 				/* load rgba from the tga */
 				texels = mt->width * mt->height;  /* these are already endian-correct */
@@ -129,13 +130,13 @@ static winding_t *WindingFromFace (dBspFace_t *f)
 	w->numpoints = f->numedges;
 
 	for (i = 0; i < f->numedges; i++) {
-		se = dsurfedges[f->firstedge + i];
+		se = curTile->surfedges[f->firstedge + i];
 		if (se < 0)
-			v = dedges[-se].v[1];
+			v = curTile->edges[-se].v[1];
 		else
-			v = dedges[se].v[0];
+			v = curTile->edges[se].v[0];
 
-		dv = &dvertexes[v];
+		dv = &curTile->vertexes[v];
 		VectorCopy(dv->point, w->p[i]);
 	}
 
@@ -154,7 +155,7 @@ static void BaseLightForFace (dBspFace_t *f, vec3_t color)
 	dBspTexinfo_t *tx;
 
 	/* check for light emited by texture */
-	tx = &texinfo[f->texinfo];
+	tx = &curTile->texinfo[f->texinfo];
 	if (!(tx->surfaceFlags & SURF_LIGHT) || tx->value == 0) {
 		if (tx->surfaceFlags & SURF_LIGHT)
 			Com_Printf("Surface light has 0 intensity (%s).\n", tx->texture);
@@ -177,7 +178,7 @@ static void MakePatchForFace (int facenum, winding_t *w)
 	vec3_t color;
 	dBspLeaf_t *leaf;
 
-	f = &dfaces[facenum];
+	f = &curTile->faces[facenum];
 
 	area = WindingArea(w);
 	totalarea += area;
@@ -193,13 +194,13 @@ static void MakePatchForFace (int facenum, winding_t *w)
 	if (f->side)
 		patch->plane = &backplanes[f->planenum];
 	else
-		patch->plane = &dplanes[f->planenum];
+		patch->plane = &curTile->planes[f->planenum];
 
 	/* origin offset faces must create new planes */
 	if (VectorNotEmpty(face_offset[facenum])) {
-		if (numplanes + fakeplanes >= MAX_MAP_PLANES)
+		if (curTile->numplanes + fakeplanes >= MAX_MAP_PLANES)
 			Sys_Error("numplanes + fakeplanes >= MAX_MAP_PLANES");
-		pl = &dplanes[numplanes + fakeplanes];
+		pl = &curTile->planes[curTile->numplanes + fakeplanes];
 		fakeplanes++;
 		*pl = *(patch->plane);
 		pl->dist += DotProduct(face_offset[facenum], pl->normal);
@@ -220,7 +221,7 @@ static void MakePatchForFace (int facenum, winding_t *w)
 	VectorClear(patch->totallight);
 
 	/* non-bmodel patches can emit light */
-	if (facenum < dmodels[0].numfaces || (texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
+	if (facenum < curTile->models[0].numfaces || (curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
 		BaseLightForFace(f, patch->baselight);
 
 		ColorNormalize(patch->reflectivity, color);
@@ -259,10 +260,10 @@ void MakePatches (void)
 	vec3_t origin;
 	entity_t *ent;
 
-	Sys_FPrintf(SYS_VRB, "%i faces\n", numfaces);
+	Sys_FPrintf(SYS_VRB, "%i faces\n", curTile->numfaces);
 
-	for (i = 0; i < nummodels; i++) {
-		mod = &dmodels[i];
+	for (i = 0; i < curTile->nummodels; i++) {
+		mod = &curTile->models[i];
 		ent = EntityForModel(i);
 		/* bmodels with origin brushes need to be offset into their
 		 * in-use position */
@@ -271,7 +272,7 @@ void MakePatches (void)
 		for (j = 0; j < mod->numfaces; j++) {
 			const int facenum = mod->firstface + j;
 			VectorCopy(origin, face_offset[facenum]);
-			f = &dfaces[facenum];
+			f = &curTile->faces[facenum];
 			w = WindingFromFace(f);
 			for (k = 0; k < w->numpoints; k++)
 				VectorAdd(w->p[k], origin, w->p[k]);

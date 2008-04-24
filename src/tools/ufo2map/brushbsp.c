@@ -23,13 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "bsp.h"
+#include "../../common/tracing.h"
 
 int c_nodes;
 static int c_nonvis;
 static int c_active_brushes;
 
-/* if a brush just barely pokes onto the other side, let it slide by without chopping */
-#define	PLANESIDE_EPSILON	0.001
 
 /**
  * @brief Sets the mins/maxs based on the windings
@@ -229,53 +228,13 @@ bspbrush_t *CopyBrush (bspbrush_t *brush)
 	return newbrush;
 }
 
-/**
- * @brief Returns PSIDE_FRONT, PSIDE_BACK, or PSIDE_BOTH
- */
-static int MAP_BoxOnPlaneSide (vec3_t mins, vec3_t maxs, plane_t *plane)
-{
-	int side, i;
-	vec3_t corners[2];
-	vec_t dist1, dist2;
-
-	/* axial planes are easy */
-	if (plane->type < 3) {
-		side = 0;
-		if (maxs[plane->type] > plane->dist + PLANESIDE_EPSILON)
-			side |= PSIDE_FRONT;
-		if (mins[plane->type] < plane->dist - PLANESIDE_EPSILON)
-			side |= PSIDE_BACK;
-		return side;
-	}
-
-	/* create the proper leading and trailing verts for the box */
-
-	for (i = 0; i < 3; i++) {
-		if (plane->normal[i] < 0) {
-			corners[0][i] = mins[i];
-			corners[1][i] = maxs[i];
-		} else {
-			corners[1][i] = mins[i];
-			corners[0][i] = maxs[i];
-		}
-	}
-
-	dist1 = DotProduct(plane->normal, corners[0]) - plane->dist;
-	dist2 = DotProduct(plane->normal, corners[1]) - plane->dist;
-	side = 0;
-	if (dist1 >= PLANESIDE_EPSILON)
-		side = PSIDE_FRONT;
-	if (dist2 < PLANESIDE_EPSILON)
-		side |= PSIDE_BACK;
-
-	return side;
-}
 
 static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 			int *numsplits, qboolean *hintsplit, int *epsilonbrush)
 {
 	int i, j, num, s;
 	plane_t *plane;
+	dBspPlane_t plane2;
 	winding_t *w;
 	vec_t d, d_front, d_back;
 	int front, back;
@@ -297,7 +256,13 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 
 	/* box on plane side */
 	plane = &mapplanes[planenum];
-	s = MAP_BoxOnPlaneSide(brush->mins, brush->maxs, plane);
+	/* s = MAP_BoxOnPlaneSide(brush->mins, brush->maxs, plane);*/
+
+	/* Convert to cBspPlane */
+	VectorCopy(plane->normal, plane2.normal);
+	plane2.dist = plane->dist;
+	plane2.type = plane->type;
+	s = TR_BoxOnPlaneSide(brush->mins, brush->maxs, &plane2);
 
 	if (s != PSIDE_BOTH)
 		return s;
@@ -811,7 +776,7 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	if (!bestside) {
 		/* leaf node */
 		node->side = NULL;
-		node->planenum = -1;
+		node->planenum = PLANENUM_LEAF;
 		LeafNode(node, brushes);
 		return node;
 	}

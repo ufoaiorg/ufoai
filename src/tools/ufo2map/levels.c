@@ -30,32 +30,34 @@ int brush_start, brush_end;
 
 vec3_t worldMins, worldMaxs;
 
-static int oldleafs, oldleafbrushes, oldplanes, oldvertexes, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
+static int oldmodels, oldleafs, oldleafbrushes, oldplanes, oldvertexes, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
 
 void PushInfo (void)
 {
-	oldleafs = numleafs;
-	oldleafbrushes = numleafbrushes;
-	oldplanes = numplanes;
-	oldvertexes = numvertexes;
-	oldnodes = numnodes;
-	oldtexinfo = numtexinfo;
-	oldfaces = numfaces;
-	oldedges = numedges;
-	oldsurfedges = numsurfedges;
+	oldmodels = curTile->nummodels;
+	oldleafs = curTile->numleafs;
+	oldleafbrushes = curTile->numleafbrushes;
+	oldplanes = curTile->numplanes;
+	oldvertexes = curTile->numvertexes;
+	oldnodes = curTile->numnodes;
+	oldtexinfo = curTile->numtexinfo;
+	oldfaces = curTile->numfaces;
+	oldedges = curTile->numedges;
+	oldsurfedges = curTile->numsurfedges;
 }
 
 void PopInfo (void)
 {
-	numleafs = oldleafs;
-	numleafbrushes = oldleafbrushes;
-	numplanes = oldplanes;
-	numvertexes = oldvertexes;
-	numnodes = oldnodes;
-	numtexinfo = oldtexinfo;
-	numfaces = oldfaces;
-	numedges = oldedges;
-	numsurfedges = oldsurfedges;
+	curTile->nummodels = oldmodels;
+	curTile->numleafs = oldleafs;
+	curTile->numleafbrushes = oldleafbrushes;
+	curTile->numplanes = oldplanes;
+	curTile->numvertexes = oldvertexes;
+	curTile->numnodes = oldnodes;
+	curTile->numtexinfo = oldtexinfo;
+	curTile->numfaces = oldfaces;
+	curTile->numedges = oldedges;
+	curTile->numsurfedges = oldsurfedges;
 }
 
 
@@ -75,14 +77,14 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 			node = n[i];
 
 			ClearBounds(newmins, newmaxs);
-			VectorCopy(dnodes[node].mins, addvec);
+			VectorCopy(curTile->nodes[node].mins, addvec);
 			AddPointToBounds(addvec, newmins, newmaxs);
-			VectorCopy(dnodes[node].maxs, addvec);
+			VectorCopy(curTile->nodes[node].maxs, addvec);
 			AddPointToBounds(addvec, newmins, newmaxs);
 		} else {
 			/* add a new "special" dnode and store it */
-			newnode = &dnodes[numnodes];
-			numnodes++;
+			newnode = &curTile->nodes[curTile->numnodes];
+			curTile->numnodes++;
 
 			newnode->planenum = PLANENUM_LEAF;
 			newnode->children[0] = node;
@@ -91,18 +93,18 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 			newnode->numfaces = 0;
 
 			ClearBounds(newmins, newmaxs);
-			VectorCopy(dnodes[node].mins, addvec);
+			VectorCopy(curTile->nodes[node].mins, addvec);
 			AddPointToBounds(addvec, newmins, newmaxs);
-			VectorCopy(dnodes[node].maxs, addvec);
+			VectorCopy(curTile->nodes[node].maxs, addvec);
 			AddPointToBounds(addvec, newmins, newmaxs);
-			VectorCopy(dnodes[n[i]].mins, addvec);
+			VectorCopy(curTile->nodes[n[i]].mins, addvec);
 			AddPointToBounds(addvec, newmins, newmaxs);
-			VectorCopy(dnodes[n[i]].maxs, addvec);
+			VectorCopy(curTile->nodes[n[i]].maxs, addvec);
 			AddPointToBounds(addvec, newmins, newmaxs);
 			VectorCopy(newmins, newnode->mins);
 			VectorCopy(newmaxs, newnode->maxs);
 
-			node = numnodes - 1;
+			node = curTile->numnodes - 1;
 		}
 
 		AddPointToBounds(newmins, worldMins, worldMaxs);
@@ -118,7 +120,7 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 /**
  * @sa ProcessLevel
  */
-static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
+static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const vec3_t cmaxs)
 {
 	bspbrush_t *list;
 	tree_t *tree;
@@ -129,9 +131,6 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 	/* calculate bounds, stop if no brushes are available */
 	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
 		return -1;
-
-/*	VectorCopy(cmins, bmins); */
-/*	VectorCopy(cmaxs, bmaxs); */
 
 	VectorSubtract(bmaxs, bmins, diff);
 
@@ -167,11 +166,12 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 		nn[1] = -1;
 	}
 
-	BeginModel(entity_num);
-
 	/* add v_epsilon to avoid clipping errors */
 	VectorSubtract(bmins, v_epsilon, bmins);
 	VectorAdd(bmaxs, v_epsilon, bmaxs);
+
+	/* Call BeginModel only to initialize brush pointers */
+	BeginModel(entity_num);
 
 	list = MakeBspBrushList(brush_start, brush_end, levelnum, bmins, bmaxs);
 	if (!list) {
@@ -198,14 +198,10 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 	VectorSubtract(bmaxs, v_epsilon, node->maxs);
 
 	/* finish model */
-	WriteBSP(tree->headnode);
+	nn[2] = WriteBSP(tree->headnode);
 	FreeTree(tree);
 
-/*	EndModel(); */
-
-/*	Com_Printf("  headnode: %i\n", dmodels[nummodels].headnode); */
-
-	nn[2] = dmodels[nummodels].headnode;
+	/* Store created nodes */
 	return BuildNodeChildren(bmins, bmaxs, nn);
 }
 
@@ -236,19 +232,21 @@ void ProcessLevel (unsigned int levelnum)
 	maxs[1] = (config.block_yh + 1.0) * 512.0 - 1.0f;
 	maxs[2] = 4096.0 - 1.0;
 
-	Sys_FPrintf(SYS_VRB, "Process levelnum %i (nummodels: %i)\n", levelnum, nummodels);
+	Sys_FPrintf(SYS_VRB, "Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels);
+	/* Com_Printf("Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels); */
 
-	dm = &dmodels[levelnum];
+	dm = &curTile->models[levelnum];
 	memset(dm, 0, sizeof(*dm));
 
 	/* back copy backup brush sides structure */
 	/* to reset all the changed values (especialy "finished") */
 	memcpy(mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t) * nummapbrushes);
 
-	/* store face number for later use */
-	dm->firstface = numfaces;
+	/* Store face number for later use */
+	dm->firstface = curTile->numfaces;
 	dm->headnode = ConstructLevelNodes_r(levelnum, mins, maxs);
-	dm->numfaces = numfaces - dm->firstface;
+	/* This here replaces the calls to EndModel */
+	dm->numfaces = curTile->numfaces - dm->firstface;
 
 /*	if (!dm->numfaces)
 		Com_Printf("level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces);

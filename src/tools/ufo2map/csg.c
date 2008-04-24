@@ -148,8 +148,6 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 static qboolean IsInLevel (int contents, int level)
 {
 	/* special levels */
-
-	/* weaponclip */
 	switch (level) {
 	case LEVEL_WEAPONCLIP:
 		if (contents & CONTENTS_WEAPONCLIP)
@@ -168,6 +166,7 @@ static qboolean IsInLevel (int contents, int level)
 			return qfalse;
 	}
 
+	/* If the brush is any kind of clip, we are not looking for it after here. */
 	if (contents & MASK_CLIP)
 		return qfalse;
 
@@ -188,7 +187,18 @@ static qboolean IsInLevel (int contents, int level)
 }
 
 
-int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
+/**
+ * @brief sets mins and maxs to the smallest sizes that can contain all brushes from startbrush
+ * to endbrush that are in a given level.
+ * @param[in] startbrush the index of the first brush to check.
+ * @param[in] endbrush the index after the last brush to check.
+ * @param[in] level the level that we are searching for brushes in.
+ * @param[in] clipmins the absolute lowest boundary to allow for brushes.
+ * @param[in] clipmaxs the absolute highest boundary to allow for brushes.
+ * @param[out] mins the lowest boundary for all accepted brushes within the clipped bounds.
+ * @param[out] maxs the highest boundary for all accepted brushes within the clipped bounds.
+ */
+int MapBrushesBounds (const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
 {
 	mapbrush_t *b;
 	int i, j, num;

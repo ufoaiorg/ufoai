@@ -82,11 +82,20 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DDEDICATED_ONLY" />
+			<Add option="-DCOMPILE_UFO" />
 		</Compiler>
 		<Linker>
 			<Add library="curl" />
 			<Add library="z" />
 		</Linker>
+		<Unit filename="..\..\src\common\routing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\routing.h" />
+		<Unit filename="..\..\src\common\tracing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\tracing.h" />
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -26,232 +26,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 #include "pqueue.h"
+#include "tracing.h"
+#include "routing.h"
 
-#define	ON_EPSILON	0.1
-#define GRENADE_ALPHAFAC	0.7
-#define GRENADE_MINALPHA	M_PI/6
-#define GRENADE_MAXALPHA	M_PI*7/16
-
-/* 1/32 epsilon to keep floating point happy */
-#define	DIST_EPSILON	(0.03125)
-
-typedef struct {
-	cBspPlane_t *plane;
-	vec3_t mins, maxs;
-	int children[2];			/**< negative numbers are leafs */
-} cBspNode_t;
-
-typedef struct {
-	cBspPlane_t *plane;
-	cBspSurface_t *surface;
-} cBspBrushSide_t;
-
-typedef struct {
-	int contentFlags;
-	unsigned short firstleafbrush;
-	unsigned short numleafbrushes;
-} cBspLeaf_t;
-
-typedef struct {
-	int contentFlags;			/**< the CONTENTS_* mask */
-	int numsides;				/**< number of sides for this models - start to count from firstbrushside */
-	int firstbrushside;			/**< first brush in the list of this model */
-	int checkcount;				/**< to avoid repeated testings */
-} cBspBrush_t;
-
-/**
- * @brief Data for line tracing (?)
- */
-typedef struct tnode_s {
-	int type;
-	vec3_t normal;
-	float dist;
-	int children[2];
-	int pad;
-} tnode_t;
-
-typedef struct chead_s {
-	int cnode;
-	int level;
-} cBspHead_t;
-
-/**
- * @brief Stores the data of a map tile
- */
-typedef struct {
-	char name[MAX_QPATH];
-
-	int numbrushsides;
-	cBspBrushSide_t *brushsides;
-
-	int numtexinfo;
-	cBspSurface_t *surfaces;
-
-	int numplanes;
-	cBspPlane_t *planes; /* numplanes + 12 for box hull */
-
-	int numnodes;
-	cBspNode_t *nodes; /* numnodes + 6 for box hull */
-
-	int numleafs;
-	cBspLeaf_t *leafs;
-	int emptyleaf;
-
-	int numleafbrushes;
-	unsigned short *leafbrushes;
-
-	int numcmodels;
-	cBspModel_t *cmodels;
-
-	int numbrushes;
-	cBspBrush_t *brushes;
-
-	/* tracing box */
-	cBspPlane_t *box_planes;
-	int box_headnode;
-	cBspBrush_t *box_brush;
-	cBspLeaf_t *box_leaf;
-
-	/* line tracing */
-	tnode_t *tnodes;
-	int numtheads;
-	int thead[LEVEL_MAX];
-
-	int numcheads;
-	cBspHead_t cheads[MAX_MAP_NODES];
-} mapTile_t;
-
-/**
- * @brief Pathfinding routing structure and tile layout
- * @note Comments strongly WIP!
- *
- * ROUTE
- * 	Information stored in "route"
- *
- * 	connections (see Grid_MoveCheck)
- * 	mask				description
- * 	0x10	0001 0000	connection to +x	(height ignored?)
- * 	0x20	0010 0000	connection to -x	(height ignored?)
- * 	0x40	0100 0000	connection to +y	(height ignored?)
- * 	0x80	1000 0000	connection to -y	(height ignored?)
- *
- * 	See "h = map->route[z][y][x] & 0x0F;" and "if (map->route[az][ay][ax] & 0x0F) > h)" in CM_UpdateConnection
- * 	0x0F	0000 1111	some height info?
- *
- * FALL
- * 	Information about how much you'll fall down from x,y position?
- *	I THINK as long as a bit is set you will fall down ...
- *	See "while (map->fall[ny][nx] & (1 << z)) z--;" in Grid_MoveMark
- *
- * STEP
- *
- *	0000 0000
- *	Access with "step[y][x] & (1 << z)"
- *	Guess:
- *		Each bit if set to 0 if a unit can step on it (e.g. ground or chair) or it's 1 if there is a wall or similar (i.e. it's blocked).
- * 		GERD THINKS it shows stairs and step-on stuff
- *		Search for "sh = (map->step[y][x] & (1 << z)) ? sh_big : sh_low;" and similar.
- *		"sh" seems to mean "step height"
- *
- * AREA
- *	The needed TUs to walk to a given position. (See Grid_MoveLength)
- *
- * AREASTORED
- * 	The stored mask (the cached move) of the routing data. (See Grid_MoveLength)
- *
- * TILE LAYOUT AND PATHING
- *  Maps are comprised of tiles.  Each tile has a number of levels corresponding to entities in game.
- *  All static entities in the tile are located in levels 0-255, with the main world located in 0.
- *  Levels 256-258 are reserved, see LEVEL_* constants in src/shared/shared.h.  Non-static entities
- *  (ET_BREAKABLE and ET_ROTATING, ET_DOOR, etc.) are contained in levels 259 and above. These entities'
- *  models are named *##, beginning from 1, and each corresponds to level LEVEL_STEPON + ##.
- *
- *  The code that handles the pathing has separate checks for the static and non-static levels in a tile.
- *  The static levels have their bounds precalculated by CM_MakeTracingNodes and stored in tile->theads.
- *  The other levels are checked in the fly when Grid_CheckUnit is called.
- *
- */
-typedef struct routing_s {
-	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte fall[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte step[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	byte area[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte areaStored[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	/* forbidden list */
-	pos_t **fblist;	/**< pointer to forbidden list (entities are standing here) */
-	int fblength;	/**< length of forbidden list (amount of entries) */
-} routing_t;
-
-/**
- * @brief Some macros to access routing_t values as described above.
- * @note P/N = positive/negative; X/Y =direction
- */
-/* route */
-#define R_CONN_PX(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x10)
-#define R_CONN_NX(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x20)
-#define R_CONN_PY(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x40)
-#define R_CONN_NY(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x80)
-#define R_HEIGHT(map,x,y,z)  ((map)->route[(z)][(y)][(x)] & 0x0F)
-
-/* step */
-#define R_STEP(map,x,y,z) ((map)->step[(y)][(x)] & (1 << (z)))
-
-/* fall */
-#define R_FALL(map,x,y,z) ((map)->fall[(y)][(x)] & (1 << (z)))
-
-/* area */
-#define R_AREA(map,x,y,z) ((map)->area[(z)][(y)][(x)])
-#define R_SAREA(map,x,y,z) ((map)->areaStored[(z)][(y)][(x)])
-
-/* statistics */
-static int c_traces, c_brush_traces;
-/* extern */
+/** @note holds all entity data as a single parsable string */
 char map_entitystring[MAX_MAP_ENTSTRING];
+
+/** @note holds the smallest bounding box that will contain the map
+ *  @sa CL_ClampCamToMap (cl_input.c)
+ *  @sa CL_OutsideMap (cl_le.c)
+ *  @sa CMod_GetMapSize (cmodel.c)
+ *  @sa SV_ClearWorld (sv_world.c)
+ */
 vec3_t map_min, map_max;
 
 /** @brief server and client routing table */
-struct routing_s svMap, clMap;
+routing_t svMap, clMap;
 
-/* static */
-static cBspSurface_t nullsurface;
-static mapTile_t mapTiles[MAX_MAPTILES];	/**< loaded map tiles with this assembly */
-static int numTiles = 0;	/**< number of loaded map tiles (map assembly) */
-static mapTile_t *curTile;
-static int checkcount;
+/** @note holds the number of inline entities, e.g. ET_DOOR */
 static int numInline;
-static byte sh_low;
-static byte sh_big;
-static const char **inlineList; /**< a list with all local models (like func_breakable) */
-static vec3_t tr_end;
+
+/** @note The old value for the normal step up (will become obselete) */
+byte sh_low;
+
+/** @note The old value for the STEPON flagged step up (will become obselete) */
+byte sh_big;
+
+/** @note a list with all inline models (like func_breakable) */
+static const char **inlineList;
+
+/** @note (???) a pointer to the part of the lump that defines inline model data */
 static byte *cmod_base;
-static byte filled[256][256];
 
-static const vec3_t v_dup = { 0, 0, PLAYER_HEIGHT - UNIT_HEIGHT / 2 };
-static const vec3_t v_dwn = { 0, 0, -UNIT_HEIGHT / 2 };
-static const vec3_t testvec[5] = { {-UNIT_SIZE / 2 + 5, -UNIT_SIZE / 2 + 5, 0}, {UNIT_SIZE / 2 - 5, UNIT_SIZE / 2 - 5, 0}, {-UNIT_SIZE / 2 + 5, UNIT_SIZE / 2 - 5, 0}, {UNIT_SIZE / 2 - 5, -UNIT_SIZE / 2 + 5, 0}, {0, 0, 0} };
-
-static int leaf_count, leaf_maxcount;
-static int *leaf_list;
-static float *leaf_mins, *leaf_maxs;
-static int leaf_topnode;
-
-static vec3_t trace_start, trace_end;
-static vec3_t trace_mins, trace_maxs;
-static vec3_t trace_extents;
-
-static trace_t trace_trace;
-static int trace_contents;
-static qboolean trace_ispoint;			/* optimized case */
-static tnode_t *tnode_p;
-
+/** @note this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
 static pos3_t exclude_from_forbiddenlist;
 
+/** @note this is a zeroed surface structure */
+static cBspSurface_t nullsurface;
 
 static void CM_MakeTracingNodes(void);
 static void CM_InitBoxHull(void);
-
 
 /*
 ===============================================================================
@@ -289,11 +103,11 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "Map has too many models: %i", count);
 
 	out = Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
-	curTile->cmodels = out;
-	curTile->numcmodels = count;
+	curTile->models = out;
+	curTile->nummodels = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		out = &curTile->cmodels[i];
+		out = &curTile->models[i];
 
 		/* spread the mins / maxs by a pixel */
 		for (j = 0; j < 3; j++) {
@@ -422,7 +236,7 @@ static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
 	curTile->brushes = out;
 
 	for (i = 0; i < count; i++, out++, in++) {
-		out->firstbrushside = LittleLong(in->firstside);
+		out->firstbrushside = LittleLong(in->firstbrushside);
 		out->numsides = LittleLong(in->numsides);
 		out->contentFlags = LittleLong(in->contentFlags);
 	}
@@ -683,25 +497,69 @@ int CheckBSPFile (const char *filename)
 	return 0;
 }
 
+/*
+===============================================================================
+TRACING NODES
+===============================================================================
+*/
+
+/**
+ * @brief Use the bsp node structure to reconstruct efficient tracing structures
+ * that are used for fast visibility and pathfinding checks
+ * @note curTile->tnodes is expected to have enough memory malloc'ed for the function to work.
+ * @sa BuildTracingNode_r
+ */
+static void CM_MakeTracingNodes (void)
+{
+	int i;
+
+	curTile->tnodes = Mem_PoolAlloc((curTile->numnodes + 6) * sizeof(tnode_t), com_cmodelSysPool, 0);
+	tnode_p = curTile->tnodes;
+
+	curTile->numtheads = 0;
+	curTile->numcheads = 0;
+
+	for (i = 0; i < curTile->nummodels; i++) {
+		if (curTile->models[i].headnode == -1 || curTile->models[i].headnode >= curTile->numnodes + 6)
+			continue;
+
+		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
+		curTile->numtheads++;
+		assert(curTile->numtheads < LEVEL_MAX);
+
+		/* If this level (i) is the last visible level or earlier, then trace it.
+		 * Otherwise don't; we have separate checks for entities. */
+		if (i < NUM_REGULAR_MODELS)
+			TR_BuildTracingNode_r(curTile->models[i].headnode, i);
+	}
+}
+
+
+/*
+===============================================================================
+GAME RELATED TRACING USING ENTITIES
+===============================================================================
+*/
+
 
 /**
  * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
- * @sa CM_TestLine
+ * @sa TR_TestLine
  * @sa CM_InlineModel
- * @sa CM_TransformedBoxTrace
+ * @sa TR_TransformedBoxTrace
  * @return qtrue - hit something
  * @return qfalse - hit nothing
  */
-static qboolean CM_EntTestLine (vec3_t start, vec3_t stop)
+qboolean CM_EntTestLine (vec3_t start, vec3_t stop, const int levelmask)
 {
 	trace_t trace;
 	cBspModel_t *model;
 	const char **name;
 
 	/* trace against world first */
-	if (CM_TestLine(start, stop))
+	if (TR_TestLine(start, stop, levelmask))
 		/* We hit the world, so we didn't make it anyway... */
 		return qtrue;
 
@@ -737,14 +595,14 @@ static qboolean CM_EntTestLine (vec3_t start, vec3_t stop)
  * @return qtrue - hit something
  * @return qfalse - hit nothing
  */
-qboolean CM_TestLineWithEnt (vec3_t start, vec3_t stop, const char **entlist)
+qboolean CM_TestLineWithEnt (vec3_t start, vec3_t stop, const int levelmask, const char **entlist)
 {
 	qboolean hit;
 
 	/* set the list of entities to check */
 	inlineList = entlist;
 	/* do the line test */
-	hit = CM_EntTestLine(start, stop);
+	hit = CM_EntTestLine(start, stop, levelmask);
 	/* zero the list */
 	inlineList = NULL;
 
@@ -757,10 +615,10 @@ qboolean CM_TestLineWithEnt (vec3_t start, vec3_t stop, const char **entlist)
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[out] end The position where the line hits a object or the stop position if nothing is in the line
- * @sa CM_TestLineDM
- * @sa CM_TransformedBoxTrace
+ * @sa TR_TestLineDM
+ * @sa TR_TransformedBoxTrace
  */
-static qboolean CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
+qboolean CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end, const int levelmask)
 {
 	trace_t trace;
 	cBspModel_t *model;
@@ -768,7 +626,7 @@ static qboolean CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 	int blocked;
 
 	/* trace against world first */
-	blocked = CM_TestLineDM(start, stop, end);
+	blocked = TR_TestLineDM(start, stop, end, levelmask);
 	if (!inlineList)
 		return blocked;
 
@@ -798,198 +656,21 @@ static qboolean CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 
 
 /**
- * @brief Routing Function to update the connection between two fields
- * @param[in] map Routing field of the current loaded map
- * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
- * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
- * @param[in] z The z position in the routing arrays (0 - PATHFINDING_HEIGHT-1)
- * @param[in] dir Direction to check the connection into (0 - BASE_DIRECTIONS-1)
- * @sa dvecs
- * @param[in] fill
+ * @brief Wrapper for TR_TransformedBoxTrace that accepts a tile number,
+ * @sa TR_TransformedBoxTrace
  */
-static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned int dir, qboolean fill)
+inline trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
 {
-	vec3_t start, end;
-	pos3_t pos;
-	int h, sh, ax, ay;
-	byte az;
-	/* Falling deeper than one level or falling through the map is forbidden. This array */
-	/* includes the critical bit mask for every level: the bit for the current level and */
-	/* the level below, for the lowest level falling is completely forbidden */
-	const byte deep_fall[] = {0x01, 0x03, 0x06, 0x0c, 0x18, 0x30, 0x60, 0xc0};
-
-	assert(map);
-	assert((x >= 0) && (x < PATHFINDING_WIDTH));
-	assert((y >= 0) && (y < PATHFINDING_WIDTH));
-	assert(z < PATHFINDING_HEIGHT);
-	assert(dir < BASE_DIRECTIONS);
-
-	/* assume no connection */
-	map->route[z][y][x] &= ~((0x10 << dir) & UCHAR_MAX);
-
-	/* test if the unit is blocked by a loaded model */
-	if (fill && (filled[y][x] & (1 << z)))
-		return;
-
-	/* no ground under the position */
-	if ((map->fall[y][x] & deep_fall[z]) == deep_fall[z])
-		return;
-
-	/* get step height and trace vectors */
-	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
-	h = R_HEIGHT(map, x, y, z);
-
-	/* Setup the points used to check for walls and such */
-	VectorSet(pos, x, y, z);
-	PosToVec(pos, start);
-	/* Adjust height to the actual floor height. */
-	start[2] += h * QUANT;
-	/* Set the end point to the edge of the field unit in the direction traveling */
-	/** @todo: should this check into the center of the adjacent field unit insead of just to the edge? */
-	VectorSet(end, start[0] + (UNIT_HEIGHT / 2) * dvecs[dir][0], start[1] + (UNIT_HEIGHT / 2) * dvecs[dir][1], start[2]);
-
-	ax = x + dvecs[dir][0];
-	assert((ax >= 0) && (ax < PATHFINDING_WIDTH));
-	ay = y + dvecs[dir][1];
-	assert((ay >= 0) && (ay < PATHFINDING_WIDTH));
-	az = z + (h + sh) / 0x10;
-	if (az >= PATHFINDING_HEIGHT) {
-		Com_Printf("CM_UpdateConnection: The max has more than %i levels - skipping the higher levels.\n", PATHFINDING_HEIGHT);
-		return;
-	}
-	h = (h + sh) % 0x10;
-
-	/* test filled */
-	if (fill && (filled[ay][ax] & (1 << az)))
-		return;
-
-	/* test ground under the neighbor position */
-	if (((map->fall[ay][ax] & deep_fall[az]) == deep_fall[az]))
-		return;
-
-	/* test if the neighbor field is to high to step on */
-	if (R_HEIGHT(map, ax, ay, az) > h)
-		return;
-
-	/** @todo: Do we need to use a bounding box to check for things in the way of this move? */
-	/* center check */
-	if (CM_EntTestLine(start, end))
-		return;
-
-	/* lower check */
-	start[2] = end[2] -= UNIT_HEIGHT / 2 - sh * QUANT - 2;
-	if (CM_EntTestLine(start, end))
-		return;
-
-	/* allow connection to neighbor field */
-	map->route[z][y][x] |= (0x10 << dir) & UCHAR_MAX;
+	return TR_TransformedBoxTrace(start, end, mins, maxs, &mapTiles[tile], headnode, brushmask, origin, angles);
 }
 
 
-/**
- * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
- * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
- * @param[in] z The z position in the routing arrays (0 - PATHFINDING_HEIGHT-1)
- * @sa Grid_RecalcRouting
- */
-static void CM_CheckUnit (routing_t * map, int x, int y, pos_t z)
-{
-	vec3_t start, end;
-	vec3_t tend, tvs, tve;
-	pos3_t pos;
-	float height;
-	int i;
+/*
+===============================================================================
+GAME RELATED TRACING
+===============================================================================
+*/
 
-	/* we need the local models here */
-	assert(inlineList);
-
-	assert(map);
-	assert((x >= 0) && (x < PATHFINDING_WIDTH));
-	assert((y >= 0) && (y < PATHFINDING_WIDTH));
-	assert(z < PATHFINDING_HEIGHT);
-
-	/* reset flags */
-	filled[y][x] &= ~(1 << z);
-	map->fall[y][x] &= ~(1 << z);
-
-	/* prepare fall down check */
-	VectorSet(pos, x, y, z);
-	PosToVec(pos, end);
-	VectorCopy(end, start);
-	start[2] -= UNIT_HEIGHT / 2 - QUANT;
-	end[2] -= UNIT_HEIGHT / 2 + QUANT;
-
-	/* test for fall down */
-	if (CM_EntTestLine(start, end)) {
-		PosToVec(pos, end);
-		VectorAdd(end, v_dup, start);
-		VectorAdd(end, v_dwn, end);
-		height = 0;
-
-		/* test for ground with a "middled" height */
-		for (i = 0; i < 5; i++) {
-			VectorAdd(start, testvec[i], tvs);
-			VectorAdd(end, testvec[i], tve);
-			CM_EntTestLineDM(tvs, tve, tend);
-			height += tend[2];
-
-			/* stop if it's totally blocked somewhere */
-			/* and try a higher starting point */
-			if (VectorCompare(tvs, tend))
-				break;
-		}
-
-		/* tend[0] & [1] are correct (testvec[4]) */
-		height += tend[2];
-		tend[2] = height / 6.0;
-
-		if (i == 5 && !VectorCompare(start, tend)) {
-			/* found a possibly valid ground */
-			height = PLAYER_HEIGHT - (start[2] - tend[2]);
-			end[2] = start[2] + height;
-
-			if (!CM_EntTestLineDM(start, end, tend))
-				map->route[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
-			else
-				filled[y][x] |= 1 << z;	/* don't enter */
-		} else {
-			/* elevated a lot */
-			end[2] = start[2];
-			start[2] += UNIT_HEIGHT - PLAYER_HEIGHT;
-			height = 0;
-
-			/* test for ground with a "middled" height */
-			for (i = 0; i < 5; i++) {
-				VectorAdd(start, testvec[i], tvs);
-				VectorAdd(end, testvec[i], tve);
-				CM_EntTestLineDM(tvs, tve, tend);
-				height += tend[2];
-			}
-			/* tend[0] & [1] are correct (testvec[4]) */
-			height += tend[2];
-			tend[2] = height / 6.0;
-
-			if (VectorCompare(start, tend)) {
-				filled[y][x] |= 1 << z;	/* don't enter */
-			} else {
-				/* found a possibly valid elevated ground */
-				end[2] = start[2] + PLAYER_HEIGHT - (start[2] - tend[2]);
-				height = UNIT_HEIGHT - (start[2] - tend[2]);
-
-/*				Com_DPrintf(DEBUG_ENGINE, "%i %i\n", (int)height, (int)(start[2] - tend[2])); */
-
-				if (!CM_EntTestLineDM(start, end, tend))
-					map->route[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
-				else
-					filled[y][x] |= 1 << z;	/* don't enter */
-			}
-		}
-	} else {
-		/* fall down */
-		map->route[z][y][x] = 0;
-		map->fall[y][x] |= 1 << z;
-	}
-}
 
 /**
  * @brief Calculate the map size via routing data and store grid size
@@ -1040,6 +721,7 @@ static void CMod_GetMapSize (routing_t * map)
  * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 - PATHFINDING_HEIGHT are allowed
  * @sa CM_AddMapTile
+ * @todo Fix z-level routing
  */
 static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 {
@@ -1162,8 +844,8 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 
 						/* reroute */
 						for (z = 0; z < PATHFINDING_HEIGHT; z++) {
-							CM_UpdateConnection(&clMap, x + sX, y + sY, z, i, qfalse);
-							CM_UpdateConnection(&clMap, ax + sX, ay + sY, z, i ^ 1, qfalse);
+							RT_UpdateConnection(&clMap, x + sX, y + sY, z, qfalse);
+							RT_UpdateConnection(&clMap, ax + sX, ay + sY, z, qfalse);
 						}
 					}
 				}
@@ -1277,7 +959,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	/* use for random map assembly for shifting origins and so on */
 	vec3_t shift = {0.0f, 0.0f, 0.0f};
 
-	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i\n", name, sX, sY);
+	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i,%i\n", name, sX, sY, sZ);
 	assert(name);
 	assert(name[0]);
 	assert((sX > -(PATHFINDING_WIDTH / 2)) && (sX < (PATHFINDING_WIDTH / 2)));
@@ -1332,7 +1014,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 
 	/* CMod_LoadRouting plays with curTile and numTiles, so lets set */
 	/* these to the right values now */
-	numInline += curTile->numcmodels - LEVEL_STEPON;
+	numInline += curTile->nummodels - NUM_REGULAR_MODELS;
 
 	/* now increase the amount of loaded tiles */
 	numTiles++;
@@ -1397,13 +1079,13 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 
 		if (pos && pos[0]) {
 			/* get position and add a tile */
-			for (i = 0; i < 2; i++) {
+			for (i = 0; i < 3; i++) {
 				token = COM_Parse(&pos);
 				if (!pos)
 					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions");
 				sh[i] = atoi(token);
 			}
-			*mapchecksum += CM_AddMapTile(name, sh[0], sh[1], 0);
+			*mapchecksum += CM_AddMapTile(name, sh[0], sh[1], sh[2]);
 		} else {
 			/* load only a single tile, if no positions are specified */
 			*mapchecksum = CM_AddMapTile(name, 0, 0, 0);
@@ -1430,13 +1112,13 @@ cBspModel_t *CM_InlineModel (const char *name)
 		Com_Error(ERR_DROP, "CM_InlineModel: bad number %i - max inline models are %i", num, MAX_MODELS);
 
 	for (i = 0; i < numTiles; i++) {
-		models = mapTiles[i].numcmodels - LEVEL_STEPON;
+		models = mapTiles[i].nummodels - NUM_REGULAR_MODELS;
 		assert(models >= 0);
 
 		if (num >= models)
 			num -= models;
 		else
-			return &mapTiles[i].cmodels[LEVEL_STEPON + num];
+			return &mapTiles[i].models[NUM_REGULAR_MODELS + num];
 	}
 
 	Com_Error(ERR_DROP, "CM_InlineModel: Error cannot find model '%s'\n", name);
@@ -1483,6 +1165,7 @@ char *CM_EntityString (void)
 BOX TRACING
 ===============================================================================
 */
+
 
 /**
  * @brief Set up the planes and nodes so that the six floats of a bounding
@@ -1559,934 +1242,9 @@ static void CM_InitBoxHull (void)
 int CM_HeadnodeForBox (int tile, const vec3_t mins, const vec3_t maxs)
 {
 	assert((tile < numTiles) && (tile >= 0));
-	/* FIXME: is it ok to set the global var curTile here? */
-	curTile = &mapTiles[tile];
-
-	curTile->box_planes[0].dist = maxs[0];
-	curTile->box_planes[1].dist = -maxs[0];
-	curTile->box_planes[2].dist = mins[0];
-	curTile->box_planes[3].dist = -mins[0];
-	curTile->box_planes[4].dist = maxs[1];
-	curTile->box_planes[5].dist = -maxs[1];
-	curTile->box_planes[6].dist = mins[1];
-	curTile->box_planes[7].dist = -mins[1];
-	curTile->box_planes[8].dist = maxs[2];
-	curTile->box_planes[9].dist = -maxs[2];
-	curTile->box_planes[10].dist = mins[2];
-	curTile->box_planes[11].dist = -mins[2];
-
-	assert(curTile->box_headnode < MAX_MAP_NODES);
-	return curTile->box_headnode;
+	return TR_HeadnodeForBox(&mapTiles[tile], mins, maxs);
 }
 
-/**
- * @brief Fills in a list of all the leafs touched
- * call with topnode set to the headnode, returns with topnode
- * set to the first node that splits the box
- */
-static void CM_BoxLeafnums_r (int nodenum)
-{
-	cBspPlane_t *plane;
-	cBspNode_t *node;
-	int s;
-
-	while (1) {
-		if (nodenum < 0) {
-			if (leaf_count >= leaf_maxcount) {
-/*				Com_Printf("CM_BoxLeafnums_r: overflow\n"); */
-				return;
-			}
-			leaf_list[leaf_count++] = -1 - nodenum;
-			return;
-		}
-
-		assert(nodenum < curTile->numnodes + 6); /* +6 => bbox */
-		node = &curTile->nodes[nodenum];
-		plane = node->plane;
-		s = BoxOnPlaneSide(leaf_mins, leaf_maxs, plane);
-		if (s == PSIDE_FRONT)
-			nodenum = node->children[0];
-		else if (s == PSIDE_BACK)
-			nodenum = node->children[1];
-		else {					/* go down both */
-			if (leaf_topnode == -1)
-				leaf_topnode = nodenum;
-			CM_BoxLeafnums_r(node->children[0]);
-			nodenum = node->children[1];
-		}
-	}
-}
-
-/**
- * @param[in] headnode if < 0 we are in a leaf node
- */
-static int CM_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
-{
-	leaf_list = list;
-	leaf_count = 0;
-	leaf_maxcount = listsize;
-	leaf_mins = mins;
-	leaf_maxs = maxs;
-
-	leaf_topnode = -1;
-
-	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
-	CM_BoxLeafnums_r(headnode);
-
-	if (topnode)
-		*topnode = leaf_topnode;
-
-	return leaf_count;
-}
-
-
-/**
- * @param[in] p1 Startpoint
- * @param[in] p1 Endpoint
- */
-static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cBspBrush_t * brush)
-{
-	int i, j;
-	cBspPlane_t *plane, *clipplane;
-	float dist;
-	float enterfrac, leavefrac;
-	vec3_t ofs;
-	float d1, d2;
-	qboolean getout, startout;
-	float f;
-	cBspBrushSide_t *side, *leadside;
-
-	enterfrac = -1;
-	leavefrac = 1;
-	clipplane = NULL;
-
-	if (!brush || !brush->numsides)
-		return;
-
-	c_brush_traces++;
-
-	getout = qfalse;
-	startout = qfalse;
-	leadside = NULL;
-
-	for (i = 0; i < brush->numsides; i++) {
-		side = &curTile->brushsides[brush->firstbrushside + i];
-		plane = side->plane;
-
-		/* FIXME: special case for axial */
-		if (!trace_ispoint) {	/* general box case */
-			/* push the plane out appropriately for mins/maxs */
-			/* FIXME: use signbits into 8 way lookup for each mins/maxs */
-			for (j = 0; j < 3; j++) {
-				if (plane->normal[j] < 0)
-					ofs[j] = maxs[j];
-				else
-					ofs[j] = mins[j];
-			}
-			dist = DotProduct(ofs, plane->normal);
-			dist = plane->dist - dist;
-		} else {				/* special point case */
-			dist = plane->dist;
-		}
-
-		d1 = DotProduct(p1, plane->normal) - dist;
-		d2 = DotProduct(p2, plane->normal) - dist;
-
-		if (d2 > 0)
-			getout = qtrue;		/* endpoint is not in solid */
-		if (d1 > 0)
-			startout = qtrue;	/* startpoint is not in solid */
-
-		/* if completely in front of face, no intersection */
-		if (d1 > 0 && d2 >= d1)
-			return;
-
-		if (d1 <= 0 && d2 <= 0)
-			continue;
-
-		/* crosses face */
-		if (d1 > d2) {			/* enter */
-			f = (d1 - DIST_EPSILON) / (d1 - d2);
-			if (f > enterfrac) {
-				enterfrac = f;
-				clipplane = plane;
-				leadside = side;
-			}
-		} else {				/* leave */
-			f = (d1 + DIST_EPSILON) / (d1 - d2);
-			if (f < leavefrac)
-				leavefrac = f;
-		}
-	}
-
-	if (!trace)
-		return;
-
-	if (!startout) {			/* original point was inside brush */
-		trace->startsolid = qtrue;
-		if (!getout)
-			trace->allsolid = qtrue;
-		return;
-	}
-	if (enterfrac < leavefrac) {
-		if (enterfrac > -1 && enterfrac < trace->fraction) {
-			if (enterfrac < 0)
-				enterfrac = 0;
-			trace->fraction = enterfrac;
-			trace->plane = *clipplane;
-			trace->surface = leadside->surface;
-			trace->contentFlags = brush->contentFlags;
-		}
-	}
-}
-
-/**
- * @sa CM_TraceToLeaf
- */
-static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cBspBrush_t * brush)
-{
-	int i, j;
-	cBspPlane_t *plane;
-	float dist;
-	vec3_t ofs;
-	float d1;
-	cBspBrushSide_t *side;
-
-	if (!brush || !brush->numsides)
-		return;
-
-	for (i = 0; i < brush->numsides; i++) {
-		side = &curTile->brushsides[brush->firstbrushside + i];
-		plane = side->plane;
-
-		/* FIXME: special case for axial */
-		/* general box case */
-		/* push the plane out appropriately for mins/maxs */
-		/* FIXME: use signbits into 8 way lookup for each mins/maxs */
-		for (j = 0; j < 3; j++) {
-			if (plane->normal[j] < 0)
-				ofs[j] = maxs[j];
-			else
-				ofs[j] = mins[j];
-		}
-		dist = DotProduct(ofs, plane->normal);
-		dist = plane->dist - dist;
-
-		d1 = DotProduct(p1, plane->normal) - dist;
-
-		/* if completely in front of face, no intersection */
-		if (d1 > 0)
-			return;
-
-	}
-
-	if (!trace)
-		return;
-
-	/* inside this brush */
-	trace->startsolid = trace->allsolid = qtrue;
-	trace->fraction = 0;
-	trace->contentFlags = brush->contentFlags;
-}
-
-
-/**
- * @sa CM_ClipBoxToBrush
- * @sa CM_TestBoxInBrush
- * @sa CM_RecursiveHullCheck
- */
-static void CM_TraceToLeaf (int leafnum)
-{
-	int k;
-	int brushnum;
-	cBspLeaf_t *leaf;
-	cBspBrush_t *b;
-
-	assert(leafnum > LEAFNODE);
-	assert(leafnum <= curTile->numleafs);
-
-	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_contents))
-		return;
-
-	/* trace line against all brushes in the leaf */
-	for (k = 0; k < leaf->numleafbrushes; k++) {
-		brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
-		b = &curTile->brushes[brushnum];
-		if (b->checkcount == checkcount)
-			continue;			/* already checked this brush in another leaf */
-		b->checkcount = checkcount;
-
-		if (!(b->contentFlags & trace_contents))
-			continue;
-
-		CM_ClipBoxToBrush(trace_mins, trace_maxs, trace_start, trace_end, &trace_trace, b);
-		if (!trace_trace.fraction)
-			return;
-	}
-
-}
-
-
-/**
- * @sa CM_TestBoxInBrush
- */
-static void CM_TestInLeaf (int leafnum)
-{
-	int k;
-	int brushnum;
-	cBspLeaf_t *leaf;
-	cBspBrush_t *b;
-
-	assert(leafnum > LEAFNODE);
-	assert(leafnum <= curTile->numleafs);
-
-	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_contents))
-		return;
-
-	/* trace line against all brushes in the leaf */
-	for (k = 0; k < leaf->numleafbrushes; k++) {
-		brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
-		b = &curTile->brushes[brushnum];
-		if (b->checkcount == checkcount)
-			continue;			/* already checked this brush in another leaf */
-		b->checkcount = checkcount;
-
-		if (!(b->contentFlags & trace_contents))
-			continue;
-		CM_TestBoxInBrush(trace_mins, trace_maxs, trace_start, &trace_trace, b);
-		if (!trace_trace.fraction)
-			return;
-	}
-}
-
-
-/**
- * @param[in] p1 start vector
- * @param[in] p2 end vector
- * @sa CM_BoxTrace
- * @sa CM_TraceToLeaf
- */
-static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
-{
-	cBspNode_t *node;
-	cBspPlane_t *plane;
-	float t1, t2, offset;
-	float frac, frac2;
-	float idist;
-	int i;
-	vec3_t mid;
-	int side;
-	float midf;
-
-	if (trace_trace.fraction <= p1f)
-		return;					/* already hit something nearer */
-
-	/* if < 0, we are in a leaf node */
-	if (num <= LEAFNODE) {
-		CM_TraceToLeaf(LEAFNODE - num);
-		return;
-	}
-
-	/* find the point distances to the seperating plane
-	 * and the offset for the size of the box */
-	node = curTile->nodes + num;
-	plane = node->plane;
-
-	if (plane->type < 3) {
-		t1 = p1[plane->type] - plane->dist;
-		t2 = p2[plane->type] - plane->dist;
-		offset = trace_extents[plane->type];
-	} else {
-		t1 = DotProduct(plane->normal, p1) - plane->dist;
-		t2 = DotProduct(plane->normal, p2) - plane->dist;
-		if (trace_ispoint)
-			offset = 0;
-		else
-			offset = fabs(trace_extents[0] * plane->normal[0]) + fabs(trace_extents[1] * plane->normal[1]) + fabs(trace_extents[2] * plane->normal[2]);
-	}
-
-	/* see which sides we need to consider */
-	if (t1 >= offset && t2 >= offset) {
-		CM_RecursiveHullCheck(node->children[0], p1f, p2f, p1, p2);
-		return;
-	}
-	if (t1 < -offset && t2 < -offset) {
-		CM_RecursiveHullCheck(node->children[1], p1f, p2f, p1, p2);
-		return;
-	}
-
-	/* put the crosspoint DIST_EPSILON pixels on the near side */
-	if (t1 < t2) {
-		idist = 1.0 / (t1 - t2);
-		side = 1;
-		frac2 = (t1 + offset + DIST_EPSILON) * idist;
-		frac = (t1 - offset + DIST_EPSILON) * idist;
-	} else if (t1 > t2) {
-		idist = 1.0 / (t1 - t2);
-		side = 0;
-		frac2 = (t1 - offset - DIST_EPSILON) * idist;
-		frac = (t1 + offset + DIST_EPSILON) * idist;
-	} else {
-		side = 0;
-		frac = 1;
-		frac2 = 0;
-	}
-
-	/* move up to the node */
-	if (frac < 0)
-		frac = 0;
-	if (frac > 1)
-		frac = 1;
-
-	midf = p1f + (p2f - p1f) * frac;
-	for (i = 0; i < 3; i++)
-		mid[i] = p1[i] + frac * (p2[i] - p1[i]);
-
-	CM_RecursiveHullCheck(node->children[side], p1f, midf, p1, mid);
-
-	/* go past the node */
-	if (frac2 < 0)
-		frac2 = 0;
-	if (frac2 > 1)
-		frac2 = 1;
-
-	midf = p1f + (p2f - p1f) * frac2;
-	for (i = 0; i < 3; i++)
-		mid[i] = p1[i] + frac2 * (p2[i] - p1[i]);
-
-	CM_RecursiveHullCheck(node->children[side ^ 1], midf, p2f, mid, p2);
-}
-
-
-
-/*====================================================================== */
-
-#define MAX_LEAFS 1024
-/**
- * @param[in] start trace start vector
- * @param[in] end trace end vector
- * @param[in] mins box mins
- * @param[in] max box maxs
- * @param[in] tile Tile to check (normally 0 - except in assembled maps)
- * @param[in] headnode if < 0 we are in a leaf node
- * @param[in] brushmask brushes the trace should stop at (see MASK_*)
- * @sa CM_TransformedBoxTrace
- * @sa CM_CompleteBoxTrace
- * @sa CM_RecursiveHullCheck
- * @sa CM_BoxLeafnums_headnode
- */
-static trace_t CM_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask)
-{
-	int i;
-
-	checkcount++;	/* for multi-check avoidance */
-	c_traces++;		/* for statistics, may be zeroed */
-
-	/* init */
-	assert(tile < numTiles);
-	curTile = &mapTiles[tile];
-
-	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
-
-	/* fill in a default trace */
-	memset(&trace_trace, 0, sizeof(trace_trace));
-	trace_trace.fraction = 1;
-	trace_trace.surface = &(nullsurface);
-
-	if (!curTile->numnodes)		/* map not loaded */
-		return trace_trace;
-
-	trace_contents = brushmask;
-	VectorCopy(start, trace_start);
-	VectorCopy(end, trace_end);
-	VectorCopy(mins, trace_mins);
-	VectorCopy(maxs, trace_maxs);
-
-	/* check for position test special case */
-	if (VectorCompare(start, end)) {
-		int leafs[MAX_LEAFS];
-		int numleafs;
-		vec3_t c1, c2;
-		int topnode;
-
-		VectorAdd(start, mins, c1);
-		VectorAdd(start, maxs, c2);
-		for (i = 0; i < 3; i++) {
-			/* expand the box by 1 */
-			c1[i] -= 1;
-			c2[i] += 1;
-		}
-
-		numleafs = CM_BoxLeafnums_headnode(c1, c2, leafs, MAX_LEAFS, headnode, &topnode);
-		for (i = 0; i < numleafs; i++) {
-			CM_TestInLeaf(leafs[i]);
-			if (trace_trace.allsolid)
-				break;
-		}
-		VectorCopy(start, trace_trace.endpos);
-		return trace_trace;
-	}
-
-	/* check for point special case */
-	if (VectorCompare(mins, vec3_origin) && VectorCompare(maxs, vec3_origin)) {
-		trace_ispoint = qtrue;
-		VectorClear(trace_extents);
-	} else {
-		trace_ispoint = qfalse;
-		trace_extents[0] = -mins[0] > maxs[0] ? -mins[0] : maxs[0];
-		trace_extents[1] = -mins[1] > maxs[1] ? -mins[1] : maxs[1];
-		trace_extents[2] = -mins[2] > maxs[2] ? -mins[2] : maxs[2];
-	}
-
-	/* general sweeping through world */
-	CM_RecursiveHullCheck(headnode, 0, 1, start, end);
-
-	if (trace_trace.fraction == 1.0) {
-		VectorCopy(end, trace_trace.endpos);
-	} else {
-		for (i = 0; i < 3; i++)
-			trace_trace.endpos[i] = start[i] + trace_trace.fraction * (end[i] - start[i]);
-	}
-	return trace_trace;
-}
-
-/**
- * @brief Handles offseting and rotation of the end points for moving and rotating entities
- * @sa CM_BoxTrace
- */
-trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
-{
-	trace_t trace;
-	vec3_t start_l, end_l;
-	vec3_t a;
-	vec3_t forward, right, up;
-	vec3_t temp;
-	qboolean rotated;
-
-	if (tile >= MAX_MAPTILES) {
-		Com_Printf("CM_TransformedBoxTrace: too many tiles loaded\n");
-		tile = 0;
-	}
-
-	/* init */
-	curTile = &mapTiles[tile];
-
-	/* subtract origin offset */
-	VectorSubtract(start, origin, start_l);
-	VectorSubtract(end, origin, end_l);
-
-	/* rotate start and end into the models frame of reference */
-	if (headnode != curTile->box_headnode && VectorNotEmpty(angles)) {
-		rotated = qtrue;
-	} else {
-		rotated = qfalse;
-	}
-
-	if (rotated) {
-		AngleVectors(angles, forward, right, up);
-
-		VectorCopy(start_l, temp);
-		start_l[0] = DotProduct(temp, forward);
-		start_l[1] = -DotProduct(temp, right);
-		start_l[2] = DotProduct(temp, up);
-
-		VectorCopy(end_l, temp);
-		end_l[0] = DotProduct(temp, forward);
-		end_l[1] = -DotProduct(temp, right);
-		end_l[2] = DotProduct(temp, up);
-	}
-
-	if (headnode >= curTile->numnodes + 6) {/* +6 => bbox */
-		Com_Printf("CM_TransformedBoxTrace: tile: %i, headnode: %i, curTile->numnodes: %i\n", tile, headnode, curTile->numnodes + 6);
-		headnode = 0;
-	}
-
-	/* sweep the box through the model */
-	trace = CM_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask);
-
-	if (rotated && trace.fraction != 1.0) {
-		/* FIXME: figure out how to do this with existing angles */
-		VectorNegate(angles, a);
-		AngleVectors(a, forward, right, up);
-
-		VectorCopy(trace.plane.normal, temp);
-		trace.plane.normal[0] = DotProduct(temp, forward);
-		trace.plane.normal[1] = -DotProduct(temp, right);
-		trace.plane.normal[2] = DotProduct(temp, up);
-	}
-
-	trace.endpos[0] = start[0] + trace.fraction * (end[0] - start[0]);
-	trace.endpos[1] = start[1] + trace.fraction * (end[1] - start[1]);
-	trace.endpos[2] = start[2] + trace.fraction * (end[2] - start[2]);
-
-	return trace;
-}
-
-/**
- * @brief Handles all 255 level specific submodels too
- */
-trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask)
-{
-	trace_t newtr, tr;
-	int tile, i;
-	cBspHead_t *h;
-
-	memset(&tr, 0, sizeof(trace_t));
-	tr.fraction = 2.0f;
-
-	/* trace against all loaded map tiles */
-	for (tile = 0; tile < numTiles; tile++) {
-		curTile = &mapTiles[tile];
-		for (i = 0, h = curTile->cheads; i < curTile->numcheads; i++, h++) {
-			if (h->level && levelmask && !(h->level & levelmask))
-				continue;
-
-			assert(h->cnode < curTile->numnodes + 6); /* +6 => bbox */
-			newtr = CM_BoxTrace(start, end, mins, maxs, tile, h->cnode, brushmask);
-
-			/* memorize the trace with the minimal fraction */
-			if (newtr.fraction == 0.0)
-				return newtr;
-			if (newtr.fraction < tr.fraction)
-				tr = newtr;
-		}
-	}
-	return tr;
-}
-
-
-
-/* ===================================================================== */
-
-/**
- * @brief Converts the disk node structure into the efficient tracing structure
- */
-static void MakeTracingNode (int nodenum)
-{
-	tnode_t *t;
-	cBspPlane_t *plane;
-	int i;
-	cBspNode_t *node;
-
-	t = tnode_p++;
-
-	node = curTile->nodes + nodenum;
-	plane = node->plane;
-
-	t->type = plane->type;
-	VectorCopy(plane->normal, t->normal);
-	t->dist = plane->dist;
-
-	for (i = 0; i < 2; i++) {
-		if (node->children[i] < 0) {
-			const cBspLeaf_t *leaf = &curTile->leafs[-(node->children[i]) - 1];
-			if ((leaf->contentFlags & CONTENTS_SOLID) && !(leaf->contentFlags & CONTENTS_PASSABLE))
-				t->children[i] = 1 | (1 << 31);
-			else
-				t->children[i] = (1 << 31);
-		} else {
-			t->children[i] = tnode_p - curTile->tnodes;
-			MakeTracingNode(node->children[i]);
-		}
-	}
-}
-
-
-static void BuildTracingNode_r (int node, int level)
-{
-	assert(node < curTile->numnodes + 6); /* +6 => bbox */
-
-	/* FIXME should this be a == -1 check? */
-	if (!curTile->nodes[node].plane) {
-		cBspNode_t *n;
-		tnode_t *t;
-		vec3_t c0maxs, c1mins;
-		int i;
-
-		n = &curTile->nodes[node];
-
-		/* alloc new node */
-		t = tnode_p++;
-
-		/* no leafs here */
-		if (n->children[0] < 0 || n->children[1] < 0)
-			Com_Error(ERR_DROP, "Unexpected leaf");
-
-		VectorCopy(curTile->nodes[n->children[0]].maxs, c0maxs);
-		VectorCopy(curTile->nodes[n->children[1]].mins, c1mins);
-
-		Com_DPrintf(DEBUG_ENGINE, "(%i %i : %i %i) (%i %i : %i %i)\n",
-			(int)curTile->nodes[n->children[0]].mins[0], (int)curTile->nodes[n->children[0]].mins[1],
-			(int)curTile->nodes[n->children[0]].maxs[0], (int)curTile->nodes[n->children[0]].maxs[1],
-			(int)curTile->nodes[n->children[1]].mins[0], (int)curTile->nodes[n->children[1]].mins[1],
-			(int)curTile->nodes[n->children[1]].maxs[0], (int)curTile->nodes[n->children[1]].maxs[1]);
-
-		for (i = 0; i < 2; i++)
-			if (c0maxs[i] <= c1mins[i]) {
-				/* create a separation plane */
-				t->type = i;
-				VectorSet(t->normal, i, (i ^ 1), 0);
-				t->dist = (c0maxs[i] + c1mins[i]) / 2;
-
-				t->children[1] = tnode_p - curTile->tnodes;
-				BuildTracingNode_r(n->children[0], level);
-				t->children[0] = tnode_p - curTile->tnodes;
-				BuildTracingNode_r(n->children[1], level);
-				return;
-			}
-
-		/* can't construct such a separation plane */
-		t->type = PLANE_NONE;
-
-		for (i = 0; i < 2; i++) {
-			t->children[i] = tnode_p - curTile->tnodes;
-			BuildTracingNode_r(n->children[i], level);
-		}
-	} else {
-		/* don't include weapon clip in standard tracing */
-		/* FIXME: What about visibility checks - should LEVEL_ACTORCLIP
-		 * be removed here, too? Problem is, the tnode functions are used
-		 * for pathfinding, too */
-		if (level <= LEVEL_LASTVISIBLE || level == LEVEL_ACTORCLIP) {
-			curTile->cheads[curTile->numcheads].cnode = node;
-			curTile->cheads[curTile->numcheads].level = level;
-			curTile->numcheads++;
-			assert(curTile->numcheads <= MAX_MAP_NODES);
-		}
-
-		MakeTracingNode(node);
-	}
-}
-
-
-/**
- * @brief Use the bsp node structure to reconstruct efficient tracing structures
- * that are used for fast visibility and pathfinding checks
- * @sa BuildTracingNode_r
- */
-static void CM_MakeTracingNodes (void)
-{
-	int i;
-
-	curTile->tnodes = Mem_PoolAlloc((curTile->numnodes + 6) * sizeof(tnode_t), com_cmodelSysPool, 0);
-	tnode_p = curTile->tnodes;
-
-	curTile->numtheads = 0;
-	curTile->numcheads = 0;
-
-	for (i = 0; i < curTile->numcmodels; i++) {
-		if (curTile->cmodels[i].headnode == -1 || curTile->cmodels[i].headnode >= curTile->numnodes + 6)
-			continue;
-
-		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
-		curTile->numtheads++;
-		assert(curTile->numtheads < LEVEL_MAX);
-
-		/* If this level (i) is the last visible level or earlier, then trace it.
-		 * Otherwise don't; we have separate checks for entities. */
-		if (i <= LEVEL_LASTVISIBLE)
-			BuildTracingNode_r(curTile->cmodels[i].headnode, i);
-	}
-}
-
-
-/*========================================================== */
-
-/**
- * @param[in] node Node index
- * @sa TestLineDist_r
- * @sa CM_TestLine
- */
-static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
-{
-	tnode_t *tnode;
-	float front, back;
-	vec3_t mid;
-	float frac;
-	int side;
-	int r;
-
-	/* leaf node */
-	if (node & (1 << 31))
-		return node & ~(1 << 31);
-
-	tnode = &curTile->tnodes[node];
-	assert(tnode);
-	switch (tnode->type) {
-	case PLANE_X:
-	case PLANE_Y:
-	case PLANE_Z:
-		front = start[tnode->type] - tnode->dist;
-		back = stop[tnode->type] - tnode->dist;
-		break;
-	case PLANE_NONE:
-		r = TestLine_r(tnode->children[0], start, stop);
-		if (r)
-			return r;
-		return TestLine_r(tnode->children[1], start, stop);
-	default:
-		front = (start[0] * tnode->normal[0] + start[1] * tnode->normal[1] + start[2] * tnode->normal[2]) - tnode->dist;
-		back = (stop[0] * tnode->normal[0] + stop[1] * tnode->normal[1] + stop[2] * tnode->normal[2]) - tnode->dist;
-		break;
-	}
-
-	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TestLine_r(tnode->children[0], start, stop);
-
-	if (front < ON_EPSILON && back < ON_EPSILON)
-		return TestLine_r(tnode->children[1], start, stop);
-
-	side = front < 0;
-
-	frac = front / (front - back);
-
-	mid[0] = start[0] + (stop[0] - start[0]) * frac;
-	mid[1] = start[1] + (stop[1] - start[1]) * frac;
-	mid[2] = start[2] + (stop[2] - start[2]) * frac;
-
-	r = TestLine_r(tnode->children[side], start, mid);
-	if (r)
-		return r;
-	return TestLine_r(tnode->children[!side], mid, stop);
-}
-
-/**
- * @param[in] node Node index
- * @sa TestLine_r
- * @sa CM_TestLineDM
- */
-static int TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
-{
-	tnode_t *tnode;
-	float front, back;
-	vec3_t mid;
-	float frac;
-	int side;
-	int r;
-
-	if (node & (1 << 31)) {
-		r = node & ~(1 << 31);
-		if (r)
-			VectorCopy(start, tr_end);
-		return r;				/* leaf node */
-	}
-
-	tnode = &curTile->tnodes[node];
-	assert(tnode);
-	switch (tnode->type) {
-	case PLANE_X:
-		front = start[0] - tnode->dist;
-		back = stop[0] - tnode->dist;
-		break;
-	case PLANE_Y:
-		front = start[1] - tnode->dist;
-		back = stop[1] - tnode->dist;
-		break;
-	case PLANE_Z:
-		front = start[2] - tnode->dist;
-		back = stop[2] - tnode->dist;
-		break;
-	case PLANE_NONE:
-		r = TestLineDist_r(tnode->children[0], start, stop);
-		if (r)
-			VectorCopy(tr_end, mid);
-		side = TestLineDist_r(tnode->children[1], start, stop);
-		if (side && r) {
-			if (VectorNearer(mid, tr_end, start)) {
-				VectorCopy(mid, tr_end);
-				return r;
-			} else {
-				return side;
-			}
-		}
-
-		if (r) {
-			VectorCopy(mid, tr_end);
-			return r;
-		}
-
-		return side;
-
-		break;
-	default:
-		front = (start[0] * tnode->normal[0] + start[1] * tnode->normal[1] + start[2] * tnode->normal[2]) - tnode->dist;
-		back = (stop[0] * tnode->normal[0] + stop[1] * tnode->normal[1] + stop[2] * tnode->normal[2]) - tnode->dist;
-		break;
-	}
-
-	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TestLineDist_r(tnode->children[0], start, stop);
-
-	if (front < ON_EPSILON && back < ON_EPSILON)
-		return TestLineDist_r(tnode->children[1], start, stop);
-
-	side = front < 0;
-
-	frac = front / (front - back);
-
-	mid[0] = start[0] + (stop[0] - start[0]) * frac;
-	mid[1] = start[1] + (stop[1] - start[1]) * frac;
-	mid[2] = start[2] + (stop[2] - start[2]) * frac;
-
-	r = TestLineDist_r(tnode->children[side], start, mid);
-	if (r)
-		return r;
-	return TestLineDist_r(tnode->children[!side], mid, stop);
-}
-
-/**
- * @brief Checks traces against the world
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @sa TestLine_r
- * @sa CL_TargetingToHit
- * @return qfalse if not blocked
- */
-qboolean CM_TestLine (const vec3_t start, const vec3_t stop)
-{
-	int tile, i;
-
-	for (tile = 0; tile < numTiles; tile++) {
-		curTile = &mapTiles[tile];
-		for (i = 0; i < curTile->numtheads; i++) {
-			if (TestLine_r(curTile->thead[i], start, stop))
-				return qtrue;
-		}
-	}
-	return qfalse;
-}
-
-/**
- * @brief Checks traces against the world, gives hit position back
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @param[out] end The position where the trace hits a object or the stop position if nothing is in the line.
- * @sa CM_TestLine
- * @sa CL_ActorMouseTrace
- * @return qfalse if no connection between start and stop - 1 otherwise
- */
-qboolean CM_TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end)
-{
-	int tile, i;
-
-	VectorCopy(stop, end);
-
-	for (tile = 0; tile < numTiles; tile++) {
-		curTile = &mapTiles[tile];
-		for (i = 0; i < curTile->numtheads; i++) {
-			if (TestLineDist_r(curTile->thead[i], start, end))
-				if (VectorNearer(tr_end, end, start))
-					VectorCopy(tr_end, end);
-		}
-	}
-
-	if (VectorCompare(end, stop))
-		return qfalse;
-	else
-		return qtrue;
-}
 
 /*
 ==========================================================
@@ -2494,103 +1252,26 @@ qboolean CM_TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end)
 ==========================================================
 */
 
-/**
- * @brief  Dumps contents of a map to console for inspection.
- * @sa Grid_RecalcRouting
- * @param[in] map The routing map (either server or client map)
- * @param[in] lx  The low end of the x range updated
- * @param[in] ly  The low end of the y range updated
- * @param[in] lz  The low end of the z range updated
- * @param[in] hx  The high end of the x range updated
- * @param[in] hy  The high end of the y range updated
- * @param[in] hz  The high end of the z range updated
- */
-static void Grid_DumpMap (struct routing_s *map, int lx, int ly, int lz, int hx, int hy, int hz)
-{
-	int x, y, z;
-
-	Com_Printf("\nGrid_DumpMap (%i %i %i) (%i %i %i)\n", lx, ly, lz, hx, hy, hz);
-	for (z = hz; z >= lz; --z) {
-		Com_Printf("\nLayer %i:\n   ", z);
-		for (x = lx; x <= hx; ++x) {
-			Com_Printf("%9i", x);
-		}
-		Com_Printf("\n");
-		for (y = hy; y >= ly; --y) {
-			Com_Printf("%3i ", y);
-			for (x = lx; x <= hx; ++x) {
-				Com_Printf("%s%s%s%s%s%s%2i "
-					, R_CONN_NX(map, x, y, z) ? "w" : " "
-					, R_CONN_PY(map, x, y, z) ? "n" : " "
-					, R_CONN_NY(map, x, y, z) ? "s" : " "
-					, R_CONN_PX(map, x, y, z) ? "e" : " "
-					, R_STEP(map, x, y, z) ? "S" : " "
-					, R_FALL(map, x, y, z) ? "F" : " "
-					, R_HEIGHT(map, x, y, z));
-			}
-			Com_Printf("\n");
-		}
-	}
-}
 
 /**
  * @brief  Dumps contents of the entire client map to console for inspection.
  * @sa CL_InitLocal
  */
-void Grid_DumpWholeMap (void)
+void Grid_DumpWholeClientMap (void)
 {
-	vec3_t mins, maxs, normal, origin;
-	pos3_t start, end, test;
-	trace_t trace;
-	int i;
-
-	/* Initialize start, end, and normal */
-	VectorSet(start, 0, 0, 0);
-	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
-	VectorSet(normal, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
-	VectorCopy(vec3_origin, origin);
-
-	for (i = 0; i < 3; i++) {
-		/* Lower positive boundary */
-		while (end[i]>start[i]) {
-			/* Adjust ceiling */
-			VectorCopy(start, test);
-			test[i] = end[i] - 1; /* test is now one floor lower than end */
-			/* Prep boundary box */
-			PosToVec(test, mins);
-			VectorSubtract(mins, normal, mins);
-			PosToVec(end, maxs);
-			VectorAdd(maxs, normal, maxs);
-			/* Test for stuff in a small box, if there is something then exit while */
-			trace = CM_CompleteBoxTrace(origin, origin, mins, maxs, 0x1FF, MASK_ALL);
-			if (trace.fraction < 1.0)
-				break;
-			/* There is nothing, lower the boundary. */
-			end[i]--;
-		}
-
-		/* Raise negative boundary */
-		while (end[i]>start[i]) {
-			/* Adjust ceiling */
-			VectorCopy(end, test);
-			test[i] = start[i] + 1; /* test is now one floor lower than end */
-			/* Prep boundary box */
-			PosToVec(start, mins);
-			VectorSubtract(mins, normal, mins);
-			PosToVec(test, maxs);
-			VectorAdd(maxs, normal, maxs);
-			/* Test for stuff in a small box, if there is something then exit while */
-			trace = CM_CompleteBoxTrace(origin, origin, mins, maxs, 0x1FF, MASK_ALL);
-			if (trace.fraction < 1.0)
-				break;
-			/* There is nothing, raise the boundary. */
-			start[i]++;
-		}
-	}
-
-	/* Dump the client map */
-	Grid_DumpMap(&clMap, start[0], start[1], start[2], end[0], end[1], end[2]);
+	Grid_DumpWholeMap(&clMap);
 }
+
+
+/**
+ * @brief  Dumps contents of the entire client map to console for inspection.
+ * @sa CL_InitLocal
+ */
+void Grid_DumpWholeServerMap (void)
+{
+	Grid_DumpWholeMap(&svMap);
+}
+
 
 /**
 * @brief Checks one field (square) on the grid of the given routing data (i.e. the map).
@@ -3090,6 +1771,12 @@ pos_t Grid_MoveNext (struct routing_s *map, pos3_t from)
 }
 
 
+/**
+ * @brief Returns the height of the floor in a cell.
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] pos Position in the map to check the height
+ * @return The actual model height of the cell's floor.
+ */
 pos_t Grid_Height (struct routing_s *map, pos3_t pos)
 {
 	/* max 8 levels */
@@ -3098,6 +1785,40 @@ pos_t Grid_Height (struct routing_s *map, pos3_t pos)
 		pos[2] &= 7;
 	}
 	return R_HEIGHT(map, pos[0], pos[1], pos[2]) * QUANT;
+}
+
+
+/**
+ * @brief Returns the maximum height of an obstruction that an actor can travel over.
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] pos Position in the map to check the height
+ * @return The actual model height increse allowed to move into an adjacent cell.
+ */
+pos_t Grid_StepUp (struct routing_s *map, pos3_t pos)
+{
+	/* max 8 levels */
+	if (pos[2] >= PATHFINDING_HEIGHT) {
+		Com_Printf("Grid_StepUp: Warning: z level is bigger than 7: %i\n", pos[2]);
+		pos[2] &= 7;
+	}
+	return R_STEP(map, pos[0], pos[1], pos[2]) ? sh_big : sh_low;
+}
+
+
+/**
+ * @brief Returns non-zero if the cell is filled (solid) and cannot be entered.
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] pos Position in the map to check for filling
+ * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
+ */
+int Grid_Filled (struct routing_s *map, pos3_t pos)
+{
+	/* max 8 levels */
+	if (pos[2] >= PATHFINDING_HEIGHT) {
+		Com_Printf("Grid_Filled: Warning: z level is bigger than 7: %i\n", pos[2]);
+		pos[2] &= 7;
+	}
+	return R_FILLED(map, pos[0], pos[1], pos[2]);
 }
 
 
@@ -3175,6 +1896,7 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  * @param[in] angles Rotation of the inline model
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
+
 void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **list)
 {
 	cBspModel_t *model;
@@ -3229,7 +1951,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 		VecToPos(temp, max);
 	}
 
-	memset(filled, 0, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
+	memset(map->filled, 0, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
 
 	/* fit min/max into the world size */
 	max[0] = min(max[0] + 2, PATHFINDING_WIDTH - 1);
@@ -3245,6 +1967,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 #endif
 
 #if 0
+	Com_Printf("Before:\n");
 	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
 #endif
 
@@ -3252,7 +1975,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	for (z = min[2]; z < max[2]; z++)
 		for (y = min[1]; y < max[1]; y++)
 			for (x = min[0]; x < max[0]; x++)
-				CM_CheckUnit(map, x, y, z);
+				RT_CheckUnit(map, x, y, z);
 
 #if 0
 	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
@@ -3262,11 +1985,10 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	for (z = min[2]; z < max[2]; z++)
 		for (y = min[1]; y < max[1]; y++)
 			for (x = min[0]; x < max[0]; x++)
-				/* check all directions */
-				for (i = 0; i < BASE_DIRECTIONS; i++)
-					CM_UpdateConnection(map, x, y, z, i, qtrue);
+				RT_UpdateConnection(map, x, y, z, qtrue);
 
 #if 0
+	Com_Printf("After:\n");
 	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
 #endif
 

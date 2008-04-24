@@ -29,38 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "common.h"
+#include "../shared/defines.h"
+#include "../shared/typedefs.h"
 
 static cvar_t *fs_basedir;
 static int fs_openedFiles;
 
-/** @brief Links one file onto another - like a symlink */
-typedef struct filelink_s {
-	struct filelink_s *next;
-	char *from;
-	int fromlength;
-	char *to;
-} filelink_t;
-
 static filelink_t *fs_links;
-
-typedef struct {
-	char name[MAX_QPATH];
-	unsigned long filepos;
-	unsigned long filelen;
-} packfile_t;
-
-typedef struct pack_s {
-	char filename[MAX_OSPATH];
-	qFILE handle;
-	int numfiles;
-	packfile_t *files;
-} pack_t;
-
-typedef struct searchpath_s {
-	char filename[MAX_OSPATH];
-	pack_t *pack;				/* only one of filename / pack will be used */
-	struct searchpath_s *next;
-} searchpath_t;
 
 static searchpath_t *fs_searchpaths;
 static searchpath_t *fs_base_searchpaths;	/* without gamedirs */
@@ -541,7 +516,6 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		return NULL;
 	}
 }
-
 
 #define MAX_PACKFILES 1024
 /**

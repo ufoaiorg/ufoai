@@ -195,8 +195,8 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 	tx.value = bt->value;
 
 	/* find the texinfo */
-	tc = texinfo;
-	for (i = 0; i < numtexinfo; i++, tc++) {
+	tc = curTile->texinfo;
+	for (i = 0; i < curTile->numtexinfo; i++, tc++) {
 		if (tc->surfaceFlags != tx.surfaceFlags)
 			continue;
 		if (tc->value != tx.value)
@@ -213,7 +213,7 @@ int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t or
 skip:;
 	}
 	*tc = tx;
-	numtexinfo++;
+	curTile->numtexinfo++;
 
 	return i;
 }

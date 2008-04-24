@@ -29,34 +29,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef QCOMMON_FILESYS_H
 #define QCOMMON_FILESYS_H
 
+#include "../shared/defines.h"
+#include "../shared/typedefs.h"
+
+
 /*
 ==============================================================
 FILESYSTEM
 ==============================================================
 */
-#define MAX_MAPS 400
 extern char *fs_maps[MAX_MAPS];
 extern int fs_numInstalledMaps;
-
-typedef struct qFILE_s {
-	void *z; /* in case of the file being a zip archive */
-	FILE *f; /* in case the file being part of a pak or the actual file */
-	char name[MAX_OSPATH];
-	unsigned long filepos;
-} qFILE;
-
-typedef enum {
-	FS_READ,
-	FS_WRITE,
-	FS_APPEND,
-	FS_APPEND_SYNC
-} fsMode_t;
-
-typedef enum {
-	FS_SEEK_CUR,
-	FS_SEEK_END,
-	FS_SEEK_SET
-} fsOrigin_t;
 
 int FS_FileLength(qFILE * f);
 void FS_FOpenFileWrite(const char *filename, qFILE * f);

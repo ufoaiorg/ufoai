@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef QFILES_H
 #define QFILES_H
 
+#include "../shared/defines.h"
 #include "unzip.h"
 
 /*========================================================================
@@ -377,61 +378,12 @@ typedef struct miptex_s {
 /** little-endian "IBSP" */
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
 
-#define BSPVERSION	73
-
-
-/** upper design bounds
- * leafbrushes, planes, and verts are still bounded by
- * 16 bit short limits
- */
-#define MAX_MAP_MODELS		1024
-#define MAX_MAP_BRUSHES		8192
-#define MAX_MAP_ENTITIES	2048
-#define MAX_MAP_ENTSTRING	0x40000
-#define MAX_MAP_TEXINFO		8192
-
-#define MAX_MAP_PLANES		65536
-#define MAX_MAP_NODES		65536
-#define MAX_MAP_BRUSHSIDES	65536
-#define MAX_MAP_LEAFS		65536
-#define MAX_MAP_VERTS		65536
-#define MAX_MAP_FACES		65536
-#define MAX_MAP_LEAFBRUSHES 65536
-#define MAX_MAP_PORTALS		65536
-#define MAX_MAP_EDGES		128000
-#define MAX_MAP_SURFEDGES	256000
-#define MAX_MAP_LIGHTING	0x1000000
-/* WIDTH * WIDTH * 4 */
-#define MAX_MAP_ROUTING		0x40000
-
-#define MAX_MAP_LIGHTS	1024
-
-/** key / value pair sizes */
-
-#define MAX_KEY		32
-#define MAX_VALUE	1024
+#define BSPVERSION	74
 
 typedef struct {
 	int fileofs, filelen;
 } lump_t;
 
-#define LUMP_ENTITIES		0
-#define LUMP_PLANES			1
-#define LUMP_VERTEXES		2
-#define LUMP_ROUTING		3
-#define LUMP_NODES			4
-#define LUMP_TEXINFO		5
-#define LUMP_FACES			6
-#define LUMP_LIGHTING_NIGHT	7
-#define LUMP_LIGHTING_DAY	8
-#define LUMP_LEAFS			9
-#define LUMP_LEAFBRUSHES	10
-#define LUMP_EDGES			11
-#define LUMP_SURFEDGES		12
-#define LUMP_MODELS			13
-#define LUMP_BRUSHES		14
-#define LUMP_BRUSHSIDES		15
-#define HEADER_LUMPS		16
 
 typedef struct {
 	int ident;
@@ -439,102 +391,5 @@ typedef struct {
 	lump_t lumps[HEADER_LUMPS];
 } dBspHeader_t;
 
-typedef struct {
-	float mins[3], maxs[3];
-	float origin[3];			/**< for sounds or lights */
-	int headnode;
-	int firstface, numfaces;	/**< submodels just draw faces without walking the bsp tree */
-} dBspModel_t;
-
-typedef struct {
-	float point[3];
-} dBspVertex_t;
-
-#define	SIDE_FRONT		0
-#define	SIDE_ON			2
-#define	SIDE_BACK		1
-
-/** 0-2 are axial planes */
-#define PLANE_X			0
-#define PLANE_Y			1
-#define PLANE_Z			2
-
-/** 3-5 are non-axial planes snapped to the nearest */
-#define PLANE_ANYX		3
-#define PLANE_ANYY		4
-#define PLANE_ANYZ		5
-#define PLANE_NONE		6
-
-/** planes (x&~1) and (x&~1)+1 are always opposites */
-
-typedef struct {
-	float normal[3];
-	float dist;
-	int type;		/**< PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
-} dBspPlane_t;
-
-typedef struct {
-	int planenum;
-	int children[2];			/**< negative numbers are -(leafs+1), not nodes */
-	short mins[3];				/**< for frustum culling */
-	short maxs[3];
-	unsigned short firstface;
-	unsigned short numfaces;	/**< counting both sides */
-} dBspNode_t;
-
-
-typedef struct texinfo_s {
-	float vecs[2][4];				/**< [s/t][xyz offset] */
-	int surfaceFlags;			/**< miptex flags + overrides */
-	int value;					/**< light emission, etc */
-	char texture[32];			/**< texture name */
-} dBspTexinfo_t;
-
-
-/**
- * @note note that edge 0 is never used, because negative edge nums are used for
- * counterclockwise use of the edge in a face
- */
-typedef struct {
-	unsigned short v[2];		/**< vertex numbers */
-} dBspEdge_t;
-
-typedef struct {
-	unsigned short planenum;
-	short side;
-
-	int firstedge;				/**< we must support > 64k edges */
-	short numedges;
-	short texinfo;
-
-	/** lighting info */
-	int lightofs[LIGHTMAP_MAX];				/**< start of [surfsize] samples */
-} dBspFace_t;
-
-typedef struct {
-	int contentFlags;				/**< OR of all brushes */
-
-	short area;
-
-	short mins[3];				/**< for frustum culling */
-	short maxs[3];
-
-	unsigned short firstleafbrush;
-	unsigned short numleafbrushes;
-} dBspLeaf_t;
-
-typedef struct {
-	unsigned short planenum;	/**< facing out of the leaf */
-	short texinfo;
-} dBspBrushSide_t;
-
-typedef struct {
-	int firstside;
-	int numsides;
-	int contentFlags;				/**< OR of all brushes */
-} dBspBrush_t;
-
-#define ANGLE_UP	-1
-#define ANGLE_DOWN	-2
 
 #endif /* QFILES_H */

@@ -82,14 +82,12 @@ static int PlaneTypeForNormal (vec3_t normal)
 	return PLANE_ANYZ;
 }
 
-#define	NORMAL_EPSILON	0.00001
-#define	DIST_EPSILON	0.01
 static qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
 {
 	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
 	 && fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
 	 && fabs(p->normal[2] - normal[2]) < NORMAL_EPSILON
-	 && fabs(p->dist - dist) < DIST_EPSILON)
+	 && fabs(p->dist - dist) < MAP_DIST_EPSILON)
 		return qtrue;
 	return qfalse;
 }
@@ -222,10 +220,10 @@ static int BrushContents (mapbrush_t *b)
 
 	s = &b->original_sides[0];
 	contentFlags = s->contentFlags;
-	trans = texinfo[s->texinfo].surfaceFlags;
+	trans = curTile->texinfo[s->texinfo].surfaceFlags;
 	for (i = 1; i < b->numsides; i++, s++) {
 		s = &b->original_sides[i];
-		trans |= texinfo[s->texinfo].surfaceFlags;
+		trans |= curTile->texinfo[s->texinfo].surfaceFlags;
 		if (s->contentFlags != contentFlags) {
 			Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
 				, b->entitynum, b->brushnum, s->contentFlags, contentFlags);
@@ -986,6 +984,10 @@ void LoadMapFile (const char *filename)
 
 	nummapbrushsides = 0;
 	num_entities = 0;
+	/* Create this shortcut to mapTiles[0] */
+	curTile = &mapTiles[0];
+	/* Set the number of tiles to 1. */
+	numTiles = 1;
 
 	while (ParseMapEntity(filename));
 

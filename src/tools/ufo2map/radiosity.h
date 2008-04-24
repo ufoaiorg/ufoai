@@ -97,9 +97,6 @@ extern unsigned num_patches;
 void LinkPlaneFaces(void);
 void BuildFacelights(unsigned int facenum);
 void FinalLightFace(unsigned int facenum);
-void MakeTnodes(int levels);
-void CloseTnodes(void);
-int TestLine(const vec3_t start, const vec3_t stop);
 void CreateDirectLights(void);
 
 dBspLeaf_t *Rad_PointInLeaf(vec3_t point);

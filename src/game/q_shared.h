@@ -63,79 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define logf(x) ((float)log((double)(x)))
 #endif
 
-#define UFO_EPSILON 0.00001f
-
-#define DEFAULT_TEAMNUM 1
-
-/** @sa Com_DeveloperSet_f */
-#define DEBUG_ALL		(1<<0)
-#define DEBUG_SHARED	(1<<1)
-#define DEBUG_ENGINE	(1<<2)
-#define DEBUG_SYSTEM	(1<<3)
-#define DEBUG_COMMANDS	(1<<4)
-#define DEBUG_CLIENT	(1<<5)
-#define DEBUG_SERVER	(1<<6)
-#define DEBUG_GAME		(1<<7)
-#define DEBUG_RENDERER	(1<<8)
-#define DEBUG_SOUND		(1<<9)
-
-#define NONE		-1
-#define NONE_AMMO	0
-
-/* Used for saving/transfering (byte) indices */
-#define BYTES_NONE	0xFF
-
-/* Move/Routing values */
-#define MAX_ROUTE       31
-#define MAX_MOVELENGTH  60
-
-/* Timeunits for the various actions. */
-#define TU_CROUCH	3	/**< Time units for crouching and standing up */
-#define TU_TURN		1	/**< Time units for turning (no matter how far). */
-#define TU_MOVE_STRAIGHT 2	/**< Time units used to move straight to the next field/square. */
-#define TU_MOVE_DIAGONAL 3	/**< Time units used to move to a diagonal field/square. */
-#define TU_DOOR_ACTION 1	/**< Time units used to interact with doors */
-#define TU_CROUCH_WALKING_FACTOR 1.5	/**< The factor the normal movement is multiplied with in crouching mode */
-
-/* door states */
-#define STATE_OPENED		0
-#define STATE_CLOSED		1
-
-#define MAX_STRING_CHARS    1024    /* max length of a string passed to Cmd_TokenizeString */
-#define MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */
-
-#define MAX_QPATH           64  /* max length of a quake game pathname */
-/* windows + linux 256, macosx 32 */
-#define MAX_OSPATH          256 /* max length of a filesystem pathname */
-#define MAX_FILES           512 /* max files in a directory */
-
-/* per-level limits */
-/* 25 - bases are 5*5 - see BASE_SIZE*/
-#define MAX_TILESTRINGS     25
-#define MAX_TEAMS           8
-#define MAX_CLIENTS         256 /* absolute limit */
-#define MAX_EDICTS          1024    /* must change protocol to increase more */
-#define MAX_MODELS          256 /* these are sent over the net as bytes */
-#define MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
-
-/* not really max hp - but an initial value */
-#define MAX_HP 100
-
-/* game print flags */
-#define PRINT_NONE          -1  /* suppress printing */
-#define PRINT_CHAT          0   /* chat messages */
-#define PRINT_HUD           1   /* translated hud strings */
-#define PRINT_CONSOLE       2   /* critical messages goes to the game console */
-
-#define QUIET   (qtrue)
-#define NOISY   (qfalse)
-
-#define ERR_FATAL           0   /* exit the entire game with a popup window */
-#define ERR_DROP            1   /* print to console and disconnect from game */
-#define ERR_DISCONNECT      2   /* don't kill server */
-
-/* substract this from the ent->pos[z] to get the ground position */
-#define GROUND_DELTA        28
+#include "../shared/defines.h"
 
 /* LINKED LIST STUFF */
 
@@ -155,7 +83,6 @@ void LIST_Remove(linkedList_t **list, linkedList_t *entry);
 /*============================================= */
 
 struct cBspPlane_s;
-int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cBspPlane_s *plane);
 
 /*
 ==========================================================
@@ -243,42 +170,6 @@ extern cvar_t* sys_os;
 #define AREA_SOLID			1
 #define AREA_TRIGGERS		2
 
-/**
- * @brief plane_t structure
- */
-typedef struct cBspPlane_s {
-	vec3_t normal;
-	float dist;
-	byte type;					/**< for fast side tests */
-	byte signbits;				/**< signx + (signy<<1) + (signz<<1) */
-	byte pad[2];
-} cBspPlane_t;
-
-typedef struct cBspModel_s {
-	vec3_t mins, maxs;
-	vec3_t origin, angles;		/**< used to orient doors and rotating entities */
-	int tile;					/**< which tile in assembly */
-	int headnode;
-} cBspModel_t;
-
-typedef struct cBspSurface_s {
-	char name[MAX_QPATH];	/**< not used except in loading CMod_LoadSurfaces */
-	int flags;	/**< not used except in loading CMod_LoadSurfaces */
-	int value;	/**< not used except in loading CMod_LoadSurfaces */
-} cBspSurface_t;
-
-/** a trace is returned when a box is swept through the world */
-typedef struct {
-	qboolean allsolid;		/**< if true, plane is not valid */
-	qboolean startsolid;	/**< if true, the initial point was in a solid area */
-	float fraction;			/**< time completed, 1.0 = didn't hit anything, 0.0 Inside of a brush */
-	vec3_t endpos;			/**< final position */
-	cBspPlane_t plane;			/**< surface normal at impact */
-	cBspSurface_t *surface;	/**< surface hit */
-	int contentFlags;		/**< contents on other side of surface hit */
-	struct le_s *le;		/**< not set by CM_*() functions */
-	struct edict_s *ent;	/**< not set by CM_*() functions */
-} trace_t;
 
 /** entity->flags (render flags) */
 #define RF_TRANSLUCENT      0x00000001

@@ -3,6 +3,8 @@
  */
 
 /*
+All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -24,36 +26,39 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "bsp.h"
+#include "../../common/tracing.h"
+#include "../../common/routing.h"
+
 
 #define SH_BIG	9
 #define SH_LOW	2
+/** @note @todo The old value for the normal step up (will become obsolete) */
+byte sh_low = SH_LOW;
 
-static const vec3_t dup_vec = {0, 0, PLAYER_HEIGHT-UNIT_HEIGHT/2};
-static const vec3_t dwn_vec = {0, 0, -UNIT_HEIGHT/2};
+/** @note @todo The old value for the STEPON flagged step up (will become obsolete) */
+byte sh_big = SH_BIG;
 
-static const vec3_t move_vec[4] = { {UNIT_SIZE, 0, 0}, {-UNIT_SIZE, 0, 0}, {0, UNIT_SIZE, 0}, {0, -UNIT_SIZE, 0} };
-static const vec3_t testvec[5] = { {-UNIT_SIZE/2+5,-UNIT_SIZE/2+5,0}, {UNIT_SIZE/2-5,UNIT_SIZE/2-5,0}, {-UNIT_SIZE/2+5,UNIT_SIZE/2-5,0}, {UNIT_SIZE/2-5,-UNIT_SIZE/2+5,0}, {0,0,0} };
+static const vec3_t move_vec[4] = {
+	{ UNIT_SIZE,          0, 0},
+	{-UNIT_SIZE,          0, 0},
+	{         0,  UNIT_SIZE, 0},
+	{         0, -UNIT_SIZE, 0} };
 
 /** routing data structures */
-static byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-static byte fall[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-static byte step[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-static byte filled[PATHFINDING_WIDTH][PATHFINDING_WIDTH];	/**< totally blocked units */
+static routing_t map;
 
 /** @brief world min and max values converted from vec to pos */
 static ipos3_t wpMins, wpMaxs;
+
 
 /**
  * @sa DoRouting
  */
 static void CheckUnit (unsigned int unitnum)
 {
-	int i, x, y, z;
+	int  x, y, z;
 	pos3_t pos;
-	vec3_t start, end;
-	vec3_t tr_end;
-	vec3_t tvs, tve;
-	float height;
+	vec3_t end;
 
 	/* get coordinates of that unit */
 	z = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
@@ -64,7 +69,7 @@ static void CheckUnit (unsigned int unitnum)
 	if (x > wpMaxs[0] || y > wpMaxs[1] || z > wpMaxs[2]
 			|| x < wpMins[0] || y < wpMins[1] || z < wpMins[2]) {
 		/* don't enter - outside world */
-		fall[y][x] |= 1 << z;
+		map.fall[y][x] |= 1 << z;
 		return;
 	}
 
@@ -72,87 +77,12 @@ static void CheckUnit (unsigned int unitnum)
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, end);
 
-	/* step height check */
+	/* step height check (the default function does not) */
 	if (TestContents(end))
-		step[y][x] |= 1 << z;
+		map.step[y][x] |= 1 << z;
 
-	/* prepare fall down check */
-	VectorCopy(end, start);
-	start[2] -= UNIT_HEIGHT / 2 - QUANT;
-	end[2]   -= UNIT_HEIGHT / 2 + QUANT;
-
-	/* FIXME: Don't allow falling over more than 1 level (z-direction) */
-	/* test for fall down */
-	if (TestLineMask(start, end, 2)) {
-		PosToVec(pos, end);
-		VectorAdd(end, dup_vec, start);
-		VectorAdd(end, dwn_vec, end);
-		height = 0;
-
-		/* test for ground with a "middled" height */
-		for (i = 0; i < 5; i++) {
-			VectorAdd(start, testvec[i], tvs);
-			VectorAdd(end, testvec[i], tve);
-			TestLineDM(tvs, tve, tr_end, 2);
-			height += tr_end[2];
-
-			/* stop if it's totally blocked somewhere */
-			/* and try a higher starting point */
-			if (VectorCompareEps(tvs, tr_end, EQUAL_EPSILON))
-				break;
-		}
-
-		/* tr_end[0] & [1] are correct (testvec[4]) */
-		height += tr_end[2];
-		tr_end[2] = height / 6.0;
-
-		if (i == 5 && !VectorCompareEps(start, tr_end, EQUAL_EPSILON)) {
-			/* found a possibly valid ground */
-			height = PLAYER_HEIGHT - (start[2] - tr_end[2]);
-			end[2] = start[2] + height;
-
-			if (!TestLineDM(start, end, tr_end, 2))
-				route[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
-			else
-				filled[y][x] |= 1 << z; /* don't enter */
-		} else {
-/*			Com_Printf("."); */
-			/* elevated a lot */
-			end[2] = start[2];
-			start[2] += UNIT_HEIGHT - PLAYER_HEIGHT;
-			height = 0;
-
-			/* test for ground with a "middled" height */
-			for (i = 0; i < 5; i++) {
-				VectorAdd(start, testvec[i], tvs);
-				VectorAdd(end, testvec[i], tve);
-				TestLineDM(tvs, tve, tr_end, 2);
-				height += tr_end[2];
-			}
-			/* tr_end[0] & [1] are correct (testvec[4]) */
-			height += tr_end[2];
-			tr_end[2] = height / 6.0;
-
-			if (VectorCompareEps(start, tr_end, EQUAL_EPSILON)) {
-				filled[y][x] |= 1 << z; /* don't enter */
-			} else {
-				/* found a possibly valid elevated ground */
-				end[2] = start[2] + PLAYER_HEIGHT - (start[2]-tr_end[2]);
-				height = UNIT_HEIGHT - (start[2]-tr_end[2]);
-
-/*				Com_Printf("%i %i\n", (int)height, (int)(start[2]-tr_end[2])); */
-
-				if (!TestLineDM(start, end, tr_end, 2))
-					route[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
-				else
-					filled[y][x] |= 1 << z; /* don't enter */
-			}
-		}
-	} else {
-		/* fall down */
-		route[z][y][x] = 0;
-		fall[y][x] |= 1 << z;
-	}
+	/* Call the common CheckUnit function */
+	RT_CheckUnit(&map, x, y, z);
 }
 
 
@@ -161,95 +91,14 @@ static void CheckUnit (unsigned int unitnum)
  */
 static void CheckConnections (unsigned int unitnum)
 {
-	int x, y, z, sz, ax, ay;
-	int i, h, sh;
-	pos3_t pos;
-	vec3_t start, ts, te;
-	/* Falling deeper than one level or falling through the map is forbidden. This array */
-	/* includes the critical bit mask for every level: the bit for the current level and */
-	/* the level below, for the lowest level falling is completely forbidden */
-	const byte deep_fall[] = {0x01, 0x03, 0x06, 0x0c, 0x18, 0x30, 0x60, 0xc0};
+	int x, y, z;
 
 	/* get coordinates of that unit */
 	z = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
 	y = (unitnum / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
 	x = unitnum % PATHFINDING_WIDTH;
 
-	assert(z < PATHFINDING_HEIGHT);
-	assert(y < PATHFINDING_WIDTH);
-	assert(x < PATHFINDING_WIDTH);
-
-	/* totally blocked unit */
-	if (filled[y][x] & (1 << z))
-		return;
-
-	h = (route[z][y][x] & 0xF);
-
-	/* prepare trace */
-	VectorSet(pos, x, y, z);
-	PosToVec(pos, start);
-	/* Adjust height to actual floor height. */
-	start[2] += h * QUANT;
-	VectorCopy(start, ts);
-
-	sh = (step[y][x] & (1 << z)) ? SH_BIG : SH_LOW;
-	sz = z + (h + sh) / 0x10;
-	h = (h + sh) % 0x10;
-
-	/* range check */
-	if (sz >= PATHFINDING_HEIGHT) {
-		sz = PATHFINDING_HEIGHT - 1;
-		h = 0x0F;
-	}
-
-	/* test connections in all 4 directions */
-	for (i = 0; i < 4; i++) {
-		/* target coordinates */
-		switch (i) {
-		case 0:
-			ax = x + 1;
-			ay = y;
-			break;
-		case 1:
-			ax = x - 1;
-			ay = y;
-			break;
-		case 2:
-			ax = x;
-			ay = y + 1;
-			break;
-		case 3:
-			ax = x;
-			ay = y - 1;
-			break;
-		}
-		/* range check- ensure that ax and ay are on the map*/
-		if (ax < 0 || ax >= PATHFINDING_WIDTH || ay < 0 || ay >= PATHFINDING_WIDTH)
-			continue;
-		/* height check */
-		if ((route[sz][ay][ax] & 0x0F) > h)
-			continue;
-		/* filled check */
-		if (filled[ay][ax] & (1 << sz))
-			continue;
-		/* deep fall check */
-		if ((fall[ay][ax] & deep_fall[sz]) == deep_fall[sz])
-			continue;
-
-		/* Create the end point of the line to test. */
-		VectorAdd(start, move_vec[i], te);
-
-		/* center check */
-		if (TestLineMask(start, te, 2))
-			continue;
-
-		/* lower check */
-		ts[2] = te[2] -= UNIT_HEIGHT / 2 - sh * QUANT - 2;
-		if (TestLineMask(ts, te, 2))
-			continue;
-
-		route[z][y][x] |= 1 << (i + 4);
-	}
+	RT_UpdateConnection(&map, x, y, z, qtrue);
 }
 
 
@@ -259,30 +108,29 @@ static void CheckConnections (unsigned int unitnum)
  * @sa CheckConnections
  * @sa ProcessWorldModel
  */
-void DoRouting (void)
+void DoRouting ()
 {
 	int i;
 	byte *data;
 
+	/* Record the current mapTiles[0] state so we can remove STEPON when done looking for steps */
 	PushInfo();
-	nummodels += 1;
 
-	/* process actorclip-level */
-	/*ProcessLevel(LEVEL_ACTORCLIP);*/
-	/* process stepon-level */
+	/* Set the model count to LEVEL_STEPON. */
+	curTile->nummodels = LEVEL_MAX; /* must be one more than the last index */
+
+	/* process stepon level */
 	ProcessLevel(LEVEL_STEPON);
 
 	/* build tracing structure */
-/*	EmitBrushes(); */
+	EmitBrushes();
 	EmitPlanes();
-	MakeTnodes(LEVEL_TRACING);
-
-	PopInfo();
-	nummodels -= 1;
+	/** @note LEVEL_TRACING is not an actual level- LEVEL_MAX comes after LEVEL_STEPON */
+	MakeTracingNodes(LEVEL_MAX);
 
 	/* reset */
-	memset(fall, 0, sizeof(fall));
-	memset(filled, 0, sizeof(filled));
+	memset(map.fall, 0, sizeof(map.fall));
+	memset(map.filled, 0, sizeof(map.filled));
 
 	/* get world bounds for optimizing */
 	VecToPos(worldMins, wpMins);
@@ -298,7 +146,7 @@ void DoRouting (void)
 			wpMaxs[i] = ROUTING_NOT_REACHABLE;
 	}
 
-/*	Com_Printf("(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
+	/*	Com_Printf("(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
 
 	/* scan area heights */
 	U2M_ProgressBar(CheckUnit, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, qtrue, "UNITCHECK");
@@ -307,14 +155,15 @@ void DoRouting (void)
 	U2M_ProgressBar(CheckConnections, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, qtrue, "CONNCHECK");
 
 	/* store the data */
-	data = droutedata;
+	data = curTile->routedata;
 	*data++ = SH_LOW;
 	*data++ = SH_BIG;
-	data = CompressRouting(&(route[0][0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT);
-	data = CompressRouting(&(fall[0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
-	data = CompressRouting(&(step[0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
+	data = CompressRouting(&(map.route[0][0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT);
+	data = CompressRouting(&(map.fall[0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
+	data = CompressRouting(&(map.step[0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
 
-	routedatasize = data - droutedata;
+	curTile->routedatasize = data - curTile->routedata;
 
-/*	CloseTnodes();*/
+	/* reset our bsp info to remove the LEVEL_STEPON data */
+	PopInfo();
 }

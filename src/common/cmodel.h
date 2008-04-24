@@ -28,8 +28,6 @@ CMODEL
 ==============================================================*/
 #include "../common/qfiles.h"
 
-#define MAX_MAPTILES	256
-
 extern vec3_t map_min, map_max;
 
 void CM_LoadMap(const char *tiles, const char *pos, unsigned *checksum);
@@ -41,19 +39,19 @@ int CM_NumClusters(void);
 int CM_NumInlineModels(void);
 char *CM_EntityString(void);
 
+
+
 /*==============================================================
 CMODEL BOX TRACING
 ==============================================================*/
 
 /** creates a clipping hull for an arbitrary box */
 int CM_HeadnodeForBox(int tile, const vec3_t mins, const vec3_t maxs);
-
+trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles);
 trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles);
-trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask);
-
-qboolean CM_TestLine(const vec3_t start, const vec3_t stop);
-qboolean CM_TestLineWithEnt(vec3_t start, vec3_t stop, const char **entlist);
-qboolean CM_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end);
+qboolean CM_TestLineWithEnt(vec3_t start, vec3_t stop, const int levelmask, const char **entlist);
+qboolean CM_EntTestLine(vec3_t start, vec3_t stop, const int levelmask);
+qboolean CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end, const int levelmask);
 
 /*==========================================================
 GRID ORIENTED MOVEMENT AND SCANNING
@@ -61,13 +59,16 @@ GRID ORIENTED MOVEMENT AND SCANNING
 
 extern struct routing_s svMap, clMap;
 
-void Grid_DumpWholeMap(void);
+void Grid_DumpWholeServerMap(void);
+void Grid_DumpWholeClientMap(void);
 void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
 void Grid_MoveCalc(struct routing_s *map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(struct routing_s *map);
 pos_t Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored);
 pos_t Grid_MoveNext(struct routing_s *map, pos3_t from);
 pos_t Grid_Height(struct routing_s *map, pos3_t pos);
+pos_t Grid_StepUp(struct routing_s *map, pos3_t pos);
+int Grid_Filled(struct routing_s *map, pos3_t pos);
 pos_t Grid_Fall(struct routing_s *map, pos3_t pos, int actor_size);
 void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec);
 

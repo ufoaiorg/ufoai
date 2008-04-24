@@ -1,3 +1,5 @@
+GAME_CFLAGS+=-DCOMPILE_UFO
+
 GAME_SRCS=\
 	game/q_shared.c \
 	game/g_ai.c \
@@ -32,4 +34,4 @@ $(GAME_TARGET) : $(GAME_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/game/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [GAM] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -DNO_GETTEXT -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) $(GAME_CFLAGS) -o $@ -c $< -MD -MT $@ -MP

@@ -27,51 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cmdlib.h"
 #include "bspfile.h"
 #include "scriplib.h"
+#include "../../../common/tracing.h"
 
-int nummodels;
-dBspModel_t dmodels[MAX_MAP_MODELS];
-
-int routedatasize;
-byte droutedata[MAX_MAP_ROUTING];
-
-int lightdatasize[2];
-byte dlightdata[2][MAX_MAP_LIGHTING];
-
-static int entdatasize;
-static char dentdata[MAX_MAP_ENTSTRING];
-
-int numleafs;
-dBspLeaf_t dleafs[MAX_MAP_LEAFS];
-
-int numplanes;
-dBspPlane_t dplanes[MAX_MAP_PLANES];
-
-int numvertexes;
-dBspVertex_t dvertexes[MAX_MAP_VERTS];
-
-int numnodes;
-dBspNode_t dnodes[MAX_MAP_NODES];
-
-int numtexinfo;
-dBspTexinfo_t texinfo[MAX_MAP_TEXINFO];
-
-int numfaces;
-dBspFace_t dfaces[MAX_MAP_FACES];
-
-int numedges;
-dBspEdge_t dedges[MAX_MAP_EDGES];
-
-int numleafbrushes;
-unsigned short dleafbrushes[MAX_MAP_LEAFBRUSHES];
-
-int numsurfedges;
-int dsurfedges[MAX_MAP_SURFEDGES];
-
-int numbrushes;
-dBspBrush_t dbrushes[MAX_MAP_BRUSHES];
-
-int numbrushsides;
-dBspBrushSide_t dbrushsides[MAX_MAP_BRUSHSIDES];
 
 /**
  * @brief Compress the routing data of a map
@@ -130,8 +87,8 @@ static void SwapBSPFile (void)
 	dBspModel_t *d;
 
 	/* models	 */
-	for (i = 0; i < nummodels; i++) {
-		d = &dmodels[i];
+	for (i = 0; i < curTile->nummodels; i++) {
+		d = &curTile->models[i];
 
 		d->firstface = LittleLong(d->firstface);
 		d->numfaces = LittleLong(d->numfaces);
@@ -145,89 +102,89 @@ static void SwapBSPFile (void)
 	}
 
 	/* vertexes */
-	for (i = 0; i < numvertexes; i++) {
+	for (i = 0; i < curTile->numvertexes; i++) {
 		for (j = 0; j < 3; j++)
-			dvertexes[i].point[j] = LittleFloat(dvertexes[i].point[j]);
+			curTile->vertexes[i].point[j] = LittleFloat(curTile->vertexes[i].point[j]);
 	}
 
 	/* planes */
-	for (i = 0; i < numplanes; i++) {
+	for (i = 0; i < curTile->numplanes; i++) {
 		for (j = 0; j < 3; j++)
-			dplanes[i].normal[j] = LittleFloat(dplanes[i].normal[j]);
-		dplanes[i].dist = LittleFloat(dplanes[i].dist);
-		dplanes[i].type = LittleLong(dplanes[i].type);
+			curTile->planes[i].normal[j] = LittleFloat(curTile->planes[i].normal[j]);
+		curTile->planes[i].dist = LittleFloat(curTile->planes[i].dist);
+		curTile->planes[i].type = LittleLong(curTile->planes[i].type);
 	}
 
 	/* texinfos */
-	for (i = 0; i < numtexinfo; i++) {
+	for (i = 0; i < curTile->numtexinfo; i++) {
 		for (j = 0; j < 8; j++)
-			texinfo[i].vecs[0][j] = LittleFloat(texinfo[i].vecs[0][j]);
-		texinfo[i].surfaceFlags = LittleLong(texinfo[i].surfaceFlags);
-		texinfo[i].value = LittleLong(texinfo[i].value);
+			curTile->texinfo[i].vecs[0][j] = LittleFloat(curTile->texinfo[i].vecs[0][j]);
+		curTile->texinfo[i].surfaceFlags = LittleLong(curTile->texinfo[i].surfaceFlags);
+		curTile->texinfo[i].value = LittleLong(curTile->texinfo[i].value);
 	}
 
 	/* faces */
-	for (i = 0; i < numfaces; i++) {
-		dfaces[i].texinfo = LittleShort(dfaces[i].texinfo);
-		dfaces[i].planenum = LittleShort(dfaces[i].planenum);
-		dfaces[i].side = LittleShort(dfaces[i].side);
+	for (i = 0; i < curTile->numfaces; i++) {
+		curTile->faces[i].texinfo = LittleShort(curTile->faces[i].texinfo);
+		curTile->faces[i].planenum = LittleShort(curTile->faces[i].planenum);
+		curTile->faces[i].side = LittleShort(curTile->faces[i].side);
 		for (j = 0; j < LIGHTMAP_MAX; j++)
-			dfaces[i].lightofs[j] = LittleLong(dfaces[i].lightofs[j]);
-		dfaces[i].firstedge = LittleLong(dfaces[i].firstedge);
-		dfaces[i].numedges = LittleShort(dfaces[i].numedges);
+			curTile->faces[i].lightofs[j] = LittleLong(curTile->faces[i].lightofs[j]);
+		curTile->faces[i].firstedge = LittleLong(curTile->faces[i].firstedge);
+		curTile->faces[i].numedges = LittleShort(curTile->faces[i].numedges);
 	}
 
 	/* nodes */
-	for (i = 0; i < numnodes; i++) {
-		dnodes[i].planenum = LittleLong(dnodes[i].planenum);
+	for (i = 0; i < curTile->numnodes; i++) {
+		curTile->nodes[i].planenum = LittleLong(curTile->nodes[i].planenum);
 		for (j = 0; j < 3; j++) {
-			dnodes[i].mins[j] = LittleShort(dnodes[i].mins[j]);
-			dnodes[i].maxs[j] = LittleShort(dnodes[i].maxs[j]);
+			curTile->nodes[i].mins[j] = LittleShort(curTile->nodes[i].mins[j]);
+			curTile->nodes[i].maxs[j] = LittleShort(curTile->nodes[i].maxs[j]);
 		}
-		dnodes[i].children[0] = LittleLong(dnodes[i].children[0]);
-		dnodes[i].children[1] = LittleLong(dnodes[i].children[1]);
-		dnodes[i].firstface = LittleShort(dnodes[i].firstface);
-		dnodes[i].numfaces = LittleShort(dnodes[i].numfaces);
+		curTile->nodes[i].children[0] = LittleLong(curTile->nodes[i].children[0]);
+		curTile->nodes[i].children[1] = LittleLong(curTile->nodes[i].children[1]);
+		curTile->nodes[i].firstface = LittleShort(curTile->nodes[i].firstface);
+		curTile->nodes[i].numfaces = LittleShort(curTile->nodes[i].numfaces);
 	}
 
 	/* leafs */
-	for (i = 0; i < numleafs; i++) {
-		dleafs[i].contentFlags = LittleLong(dleafs[i].contentFlags);
-		dleafs[i].area = LittleShort(dleafs[i].area);
+	for (i = 0; i < curTile->numleafs; i++) {
+		curTile->leafs[i].contentFlags = LittleLong(curTile->leafs[i].contentFlags);
+		curTile->leafs[i].area = LittleShort(curTile->leafs[i].area);
 		for (j = 0; j < 3; j++) {
-			dleafs[i].mins[j] = LittleShort(dleafs[i].mins[j]);
-			dleafs[i].maxs[j] = LittleShort(dleafs[i].maxs[j]);
+			curTile->leafs[i].mins[j] = LittleShort(curTile->leafs[i].mins[j]);
+			curTile->leafs[i].maxs[j] = LittleShort(curTile->leafs[i].maxs[j]);
 		}
 
-		dleafs[i].firstleafbrush = LittleShort(dleafs[i].firstleafbrush);
-		dleafs[i].numleafbrushes = LittleShort(dleafs[i].numleafbrushes);
+		curTile->leafs[i].firstleafbrush = LittleShort(curTile->leafs[i].firstleafbrush);
+		curTile->leafs[i].numleafbrushes = LittleShort(curTile->leafs[i].numleafbrushes);
 	}
 
 	/* leafbrushes */
-	for (i = 0; i < numleafbrushes; i++)
-		dleafbrushes[i] = LittleShort(dleafbrushes[i]);
+	for (i = 0; i < curTile->numleafbrushes; i++)
+		curTile->leafbrushes[i] = LittleShort(curTile->leafbrushes[i]);
 
 	/* surfedges */
-	for (i = 0; i < numsurfedges; i++)
-		dsurfedges[i] = LittleLong(dsurfedges[i]);
+	for (i = 0; i < curTile->numsurfedges; i++)
+		curTile->surfedges[i] = LittleLong(curTile->surfedges[i]);
 
 	/* edges */
-	for (i = 0; i < numedges; i++) {
-		dedges[i].v[0] = LittleShort(dedges[i].v[0]);
-		dedges[i].v[1] = LittleShort(dedges[i].v[1]);
+	for (i = 0; i < curTile->numedges; i++) {
+		curTile->edges[i].v[0] = LittleShort(curTile->edges[i].v[0]);
+		curTile->edges[i].v[1] = LittleShort(curTile->edges[i].v[1]);
 	}
 
 	/* brushes */
-	for (i = 0; i < numbrushes; i++) {
-		dbrushes[i].firstside = LittleLong(dbrushes[i].firstside);
-		dbrushes[i].numsides = LittleLong(dbrushes[i].numsides);
-		dbrushes[i].contentFlags = LittleLong(dbrushes[i].contentFlags);
+	for (i = 0; i < curTile->numbrushes; i++) {
+		curTile->brushes[i].firstbrushside = LittleLong(curTile->brushes[i].firstbrushside);
+		curTile->brushes[i].numsides = LittleLong(curTile->brushes[i].numsides);
+		curTile->brushes[i].contentFlags = LittleLong(curTile->brushes[i].contentFlags);
 	}
 
 	/* brushsides */
-	for (i = 0; i < numbrushsides; i++) {
-		dbrushsides[i].planenum = LittleShort(dbrushsides[i].planenum);
-		dbrushsides[i].texinfo = LittleShort(dbrushsides[i].texinfo);
+	for (i = 0; i < curTile->numbrushsides; i++) {
+		curTile->brushsides[i].planenum = LittleShort(curTile->brushsides[i].planenum);
+		curTile->brushsides[i].texinfo = LittleShort(curTile->brushsides[i].texinfo);
 	}
 }
 
@@ -262,6 +219,11 @@ void LoadBSPFile (const char *filename)
 {
 	int i;
 
+	/* Create this shortcut to mapTiles[0] */
+	curTile = &mapTiles[0];
+	/* Set the number of tiles to 1. */
+	numTiles = 1;
+
 	/* load the file header */
 	LoadFile(filename, (void **)&header);
 
@@ -274,24 +236,34 @@ void LoadBSPFile (const char *filename)
 	if (header->version != BSPVERSION)
 		Sys_Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
 
-	nummodels = CopyLump(LUMP_MODELS, dmodels, sizeof(dBspModel_t));
-	numvertexes = CopyLump(LUMP_VERTEXES, dvertexes, sizeof(dBspVertex_t));
-	numplanes = CopyLump(LUMP_PLANES, dplanes, sizeof(dBspPlane_t));
-	numleafs = CopyLump(LUMP_LEAFS, dleafs, sizeof(dBspLeaf_t));
-	numnodes = CopyLump(LUMP_NODES, dnodes, sizeof(dBspNode_t));
-	numtexinfo = CopyLump(LUMP_TEXINFO, texinfo, sizeof(dBspTexinfo_t));
-	numfaces = CopyLump(LUMP_FACES, dfaces, sizeof(dBspFace_t));
-	numleafbrushes = CopyLump(LUMP_LEAFBRUSHES, dleafbrushes, sizeof(dleafbrushes[0]));
-	numsurfedges = CopyLump(LUMP_SURFEDGES, dsurfedges, sizeof(dsurfedges[0]));
-	numedges = CopyLump(LUMP_EDGES, dedges, sizeof(dBspEdge_t));
-	numbrushes = CopyLump(LUMP_BRUSHES, dbrushes, sizeof(dBspBrush_t));
-	numbrushsides = CopyLump(LUMP_BRUSHSIDES, dbrushsides, sizeof(dBspBrushSide_t));
-	routedatasize = CopyLump(LUMP_ROUTING, droutedata, 1);
-	lightdatasize[LIGHTMAP_NIGHT] = CopyLump(LUMP_LIGHTING_NIGHT, dlightdata[LIGHTMAP_NIGHT], 1);
-	lightdatasize[LIGHTMAP_DAY] = CopyLump(LUMP_LIGHTING_DAY, dlightdata[LIGHTMAP_DAY], 1);
-	entdatasize = CopyLump(LUMP_ENTITIES, dentdata, 1);
+	curTile->nummodels = CopyLump(LUMP_MODELS, curTile->models, sizeof(dBspModel_t));
+	curTile->numvertexes = CopyLump(LUMP_VERTEXES, curTile->vertexes, sizeof(dBspVertex_t));
+	curTile->numplanes = CopyLump(LUMP_PLANES, curTile->planes, sizeof(dBspPlane_t));
+	curTile->numleafs = CopyLump(LUMP_LEAFS, curTile->leafs, sizeof(dBspLeaf_t));
+	curTile->numnodes = CopyLump(LUMP_NODES, curTile->nodes, sizeof(dBspNode_t));
+	curTile->numtexinfo = CopyLump(LUMP_TEXINFO, curTile->texinfo, sizeof(dBspTexinfo_t));
+	curTile->numfaces = CopyLump(LUMP_FACES, curTile->faces, sizeof(dBspFace_t));
+	curTile->numleafbrushes = CopyLump(LUMP_LEAFBRUSHES, curTile->leafbrushes, sizeof(curTile->leafbrushes[0]));
+	curTile->numsurfedges = CopyLump(LUMP_SURFEDGES, curTile->surfedges, sizeof(curTile->surfedges[0]));
+	curTile->numedges = CopyLump(LUMP_EDGES, curTile->edges, sizeof(dBspEdge_t));
+	curTile->numbrushes = CopyLump(LUMP_BRUSHES, curTile->dbrushes, sizeof(dBspBrush_t));
+	curTile->numbrushsides = CopyLump(LUMP_BRUSHSIDES, curTile->brushsides, sizeof(dBspBrushSide_t));
+	curTile->routedatasize = CopyLump(LUMP_ROUTING, curTile->routedata, 1);
+	curTile->lightdatasize[LIGHTMAP_NIGHT] = CopyLump(LUMP_LIGHTING_NIGHT, curTile->lightdata[LIGHTMAP_NIGHT], 1);
+	curTile->lightdatasize[LIGHTMAP_DAY] = CopyLump(LUMP_LIGHTING_DAY, curTile->lightdata[LIGHTMAP_DAY], 1);
+	curTile->entdatasize = CopyLump(LUMP_ENTITIES, curTile->entdata, 1);
 
-	FreeFile(header);		/* everything has been copied out */
+	/* Because the tracing functions use cBspBrush_t and not dBspBrush_t,
+	 * copy data from curTile->dbrushes into curTile->cbrushes */
+	memset(curTile->brushes, 0, MAX_MAP_BRUSHES * sizeof(cBspBrush_t));
+	for (i = 0; i < curTile->numbrushes; i++) {
+		curTile->brushes[i].firstbrushside = curTile->dbrushes[i].firstbrushside;
+		curTile->brushes[i].numsides = curTile->dbrushes[i].numsides;
+		curTile->brushes[i].contentFlags = curTile->dbrushes[i].contentFlags;
+	}
+
+	/* everything has been copied out */
+	FreeFile(header);
 
 	/* swap everything */
 	SwapBSPFile();
@@ -334,22 +306,22 @@ void WriteBSPFile (const char *filename)
 	SafeOpenWrite(filename, &bspfile);
 	SafeWrite(&bspfile, &outheader, sizeof(dBspHeader_t));	/* overwritten later */
 
-	AddLump(&bspfile, &outheader, LUMP_PLANES, dplanes, numplanes * sizeof(dBspPlane_t));
-	AddLump(&bspfile, &outheader, LUMP_LEAFS, dleafs, numleafs * sizeof(dBspLeaf_t));
-	AddLump(&bspfile, &outheader, LUMP_VERTEXES, dvertexes, numvertexes * sizeof(dBspVertex_t));
-	AddLump(&bspfile, &outheader, LUMP_NODES, dnodes, numnodes * sizeof(dBspNode_t));
-	AddLump(&bspfile, &outheader, LUMP_TEXINFO, texinfo, numtexinfo * sizeof(dBspTexinfo_t));
-	AddLump(&bspfile, &outheader, LUMP_FACES, dfaces, numfaces * sizeof(dBspFace_t));
-	AddLump(&bspfile, &outheader, LUMP_BRUSHES, dbrushes, numbrushes * sizeof(dBspBrush_t));
-	AddLump(&bspfile, &outheader, LUMP_BRUSHSIDES, dbrushsides, numbrushsides * sizeof(dBspBrushSide_t));
-	AddLump(&bspfile, &outheader, LUMP_LEAFBRUSHES, dleafbrushes, numleafbrushes * sizeof(dleafbrushes[0]));
-	AddLump(&bspfile, &outheader, LUMP_SURFEDGES, dsurfedges, numsurfedges * sizeof(dsurfedges[0]));
-	AddLump(&bspfile, &outheader, LUMP_EDGES, dedges, numedges * sizeof(dBspEdge_t));
-	AddLump(&bspfile, &outheader, LUMP_MODELS, dmodels, nummodels * sizeof(dBspModel_t));
-	AddLump(&bspfile, &outheader, LUMP_LIGHTING_NIGHT, dlightdata[0], lightdatasize[0]);
-	AddLump(&bspfile, &outheader, LUMP_LIGHTING_DAY, dlightdata[1], lightdatasize[1]);
-	AddLump(&bspfile, &outheader, LUMP_ROUTING, droutedata, routedatasize);
-	AddLump(&bspfile, &outheader, LUMP_ENTITIES, dentdata, entdatasize);
+	AddLump(&bspfile, &outheader, LUMP_PLANES, curTile->planes, curTile->numplanes * sizeof(dBspPlane_t));
+	AddLump(&bspfile, &outheader, LUMP_LEAFS, curTile->leafs, curTile->numleafs * sizeof(dBspLeaf_t));
+	AddLump(&bspfile, &outheader, LUMP_VERTEXES, curTile->vertexes, curTile->numvertexes * sizeof(dBspVertex_t));
+	AddLump(&bspfile, &outheader, LUMP_NODES, curTile->nodes, curTile->numnodes * sizeof(dBspNode_t));
+	AddLump(&bspfile, &outheader, LUMP_TEXINFO, curTile->texinfo, curTile->numtexinfo * sizeof(dBspTexinfo_t));
+	AddLump(&bspfile, &outheader, LUMP_FACES, curTile->faces, curTile->numfaces * sizeof(dBspFace_t));
+	AddLump(&bspfile, &outheader, LUMP_BRUSHES, curTile->dbrushes, curTile->numbrushes * sizeof(dBspBrush_t));
+	AddLump(&bspfile, &outheader, LUMP_BRUSHSIDES, curTile->brushsides, curTile->numbrushsides * sizeof(dBspBrushSide_t));
+	AddLump(&bspfile, &outheader, LUMP_LEAFBRUSHES, curTile->leafbrushes, curTile->numleafbrushes * sizeof(curTile->leafbrushes[0]));
+	AddLump(&bspfile, &outheader, LUMP_SURFEDGES, curTile->surfedges, curTile->numsurfedges * sizeof(curTile->surfedges[0]));
+	AddLump(&bspfile, &outheader, LUMP_EDGES, curTile->edges, curTile->numedges * sizeof(dBspEdge_t));
+	AddLump(&bspfile, &outheader, LUMP_MODELS, curTile->models, curTile->nummodels * sizeof(dBspModel_t));
+	AddLump(&bspfile, &outheader, LUMP_LIGHTING_NIGHT, curTile->lightdata[0], curTile->lightdatasize[0]);
+	AddLump(&bspfile, &outheader, LUMP_LIGHTING_DAY, curTile->lightdata[1], curTile->lightdatasize[1]);
+	AddLump(&bspfile, &outheader, LUMP_ROUTING, curTile->routedata, curTile->routedatasize);
+	AddLump(&bspfile, &outheader, LUMP_ENTITIES, curTile->entdata, curTile->entdatasize);
 
 	fseek(bspfile.f, 0, SEEK_SET);
 	SafeWrite(&bspfile, &outheader, sizeof(outheader));
@@ -367,25 +339,25 @@ void PrintBSPFileSizes (void)
 
 	Com_Printf("amout type         size in bytes\n");
 	Com_Printf("================================\n");
-	Com_Printf("%5i models            %7i\n", nummodels, (int)(nummodels * sizeof(dBspModel_t)));
-	Com_Printf("%5i brushes           %7i\n", numbrushes, (int)(numbrushes * sizeof(dBspBrush_t)));
-	Com_Printf("%5i brushsides        %7i\n", numbrushsides, (int)(numbrushsides * sizeof(dBspBrushSide_t)));
-	Com_Printf("%5i planes            %7i\n", numplanes, (int)(numplanes * sizeof(dBspPlane_t)));
-	Com_Printf("%5i texinfo           %7i\n", numtexinfo, (int)(numtexinfo * sizeof(dBspTexinfo_t)));
-	Com_Printf("%5i entdata           %7i\n", num_entities, entdatasize);
+	Com_Printf("%5i models            %7i\n", curTile->nummodels, (int)(curTile->nummodels * sizeof(cBspModel_t)));
+	Com_Printf("%5i brushes           %7i\n", curTile->numbrushes, (int)(curTile->numbrushes * sizeof(dBspBrush_t)));
+	Com_Printf("%5i brushsides        %7i\n", curTile->numbrushsides, (int)(curTile->numbrushsides * sizeof(dBspBrushSide_t)));
+	Com_Printf("%5i planes            %7i\n", curTile->numplanes, (int)(curTile->numplanes * sizeof(dBspPlane_t)));
+	Com_Printf("%5i texinfo           %7i\n", curTile->numtexinfo, (int)(curTile->numtexinfo * sizeof(dBspTexinfo_t)));
+	Com_Printf("%5i entdata           %7i\n", num_entities, curTile->entdatasize);
 
 	Com_Printf("\n");
 
-	Com_Printf("%5i vertexes          %7i\n", numvertexes, (int)(numvertexes * sizeof(dBspVertex_t)));
-	Com_Printf("%5i nodes             %7i\n", numnodes, (int)(numnodes * sizeof(dBspNode_t)));
-	Com_Printf("%5i faces             %7i\n", numfaces, (int)(numfaces * sizeof(dBspFace_t)));
-	Com_Printf("%5i leafs             %7i\n", numleafs, (int)(numleafs * sizeof(dBspLeaf_t)));
-	Com_Printf("%5i leafbrushes       %7i\n", numleafbrushes, (int)(numleafbrushes * sizeof(dleafbrushes[0])));
-	Com_Printf("%5i surfedges         %7i\n", numsurfedges, (int)(numsurfedges * sizeof(dsurfedges[0])));
-	Com_Printf("%5i edges             %7i\n", numedges, (int)(numedges * sizeof(dBspEdge_t)));
-	Com_Printf("night lightdata         %7i\n", lightdatasize[0]);
-	Com_Printf("  day lightdata         %7i\n", lightdatasize[1]);
-	Com_Printf("      routedata         %7i\n", routedatasize);
+	Com_Printf("%5i vertexes          %7i\n", curTile->numvertexes, (int)(curTile->numvertexes * sizeof(dBspVertex_t)));
+	Com_Printf("%5i nodes             %7i\n", curTile->numnodes, (int)(curTile->numnodes * sizeof(dBspNode_t)));
+	Com_Printf("%5i faces             %7i\n", curTile->numfaces, (int)(curTile->numfaces * sizeof(dBspFace_t)));
+	Com_Printf("%5i leafs             %7i\n", curTile->numleafs, (int)(curTile->numleafs * sizeof(dBspLeaf_t)));
+	Com_Printf("%5i leafbrushes       %7i\n", curTile->numleafbrushes, (int)(curTile->numleafbrushes * sizeof(curTile->leafbrushes[0])));
+	Com_Printf("%5i surfedges         %7i\n", curTile->numsurfedges, (int)(curTile->numsurfedges * sizeof(curTile->surfedges[0])));
+	Com_Printf("%5i edges             %7i\n", curTile->numedges, (int)(curTile->numedges * sizeof(dBspEdge_t)));
+	Com_Printf("night lightdata         %7i\n", curTile->lightdatasize[0]);
+	Com_Printf("  day lightdata         %7i\n", curTile->lightdatasize[1]);
+	Com_Printf("      routedata         %7i\n", curTile->routedatasize);
 }
 
 
@@ -469,14 +441,14 @@ static qboolean ParseEntity (void)
 }
 
 /**
- * @brief Parses the dentdata string into entities
+ * @brief Parses the curTile->entdata string into entities
  * @sa UnparseEntities
  * @sa ParseEntity
  */
 void ParseEntities (void)
 {
 	num_entities = 0;
-	ParseFromMemory(dentdata, entdatasize);
+	ParseFromMemory(curTile->entdata, curTile->entdatasize);
 
 	while (ParseEntity()) {
 	}
@@ -484,7 +456,7 @@ void ParseEntities (void)
 
 
 /**
- * @brief Generates the dentdata string from all the entities
+ * @brief Generates the curTile->entdata string from all the entities
  * @sa ParseEntities
  */
 const char *UnparseEntities (void)
@@ -493,14 +465,14 @@ const char *UnparseEntities (void)
 	char line[2048], key[1024], value[1024];
 	int i;
 
-	dentdata[0] = '\0';
+	curTile->entdata[0] = '\0';
 
 	for (i = 0; i < num_entities; i++) {
 		ep = entities[i].epairs;
 		if (!ep)
 			continue;	/* ent got removed */
 
-		Q_strcat(dentdata, "{\n", sizeof(dentdata));
+		Q_strcat(curTile->entdata, "{\n", sizeof(curTile->entdata));
 
 		for (ep = entities[i].epairs; ep; ep = ep->next) {
 			Q_strncpyz(key, ep->key, sizeof(key));
@@ -509,13 +481,13 @@ const char *UnparseEntities (void)
 			StripTrailing(value);
 
 			snprintf(line, sizeof(line) - 1, "\"%s\" \"%s\"\n", key, value);
-			Q_strcat(dentdata, line, sizeof(dentdata));
+			Q_strcat(curTile->entdata, line, sizeof(curTile->entdata));
 		}
-		Q_strcat(dentdata, "}\n", sizeof(dentdata));
+		Q_strcat(curTile->entdata, "}\n", sizeof(curTile->entdata));
 	}
-	entdatasize = strlen(dentdata);
+	curTile->entdatasize = strlen(curTile->entdata);
 
-	return dentdata;
+	return curTile->entdata;
 }
 
 /**

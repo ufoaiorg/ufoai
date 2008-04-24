@@ -22,6 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef UFO2MAP_BSP_H
+#define UFO2MAP_BSP_H
+
 #include <assert.h>
 
 #include "common/shared.h"
@@ -31,124 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/bspfile.h"
 #include "common/imagelib.h"
 
-#define	CLIP_EPSILON	0.1
+#include "../../common/tracing.h"
 
-#define	TEXINFO_NODE		-1		/* side is already on a node */
-
-typedef int ipos_t;
-typedef ipos_t ipos3_t[3];
-
-typedef struct plane_s {
-	vec3_t	normal;
-	vec_t	dist;
-	int		type;
-	ipos3_t	planeVector[3];
-	struct plane_s	*hash_chain;
-} plane_t;
-
-typedef struct {
-	vec2_t	shift;
-	vec_t	rotate;
-	vec2_t	scale;
-	char	name[32];
-	int		surfaceFlags;
-	int		value;
-} brush_texture_t;
-
-typedef struct side_s {
-	int			planenum;
-	int			texinfo;
-	winding_t	*winding;
-	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
-	int			contentFlags;	/**< from miptex */
-	int			surfaceFlags;	/**< from miptex */
-	qboolean	visible;		/**< choose visible planes first */
-	qboolean	tested;			/**< this plane already checked as a split */
-	qboolean	bevel;			/**< don't ever use for bsp splitting */
-} side_t;
-
-typedef struct brush_s {
-	int		entitynum;
-	int		brushnum;
-
-	int		contentFlags;
-
-	vec3_t	mins, maxs;
-
-	int		numsides;
-	side_t	*original_sides;
-
-	qboolean finished;
-	qboolean isTerrain;
-	qboolean isGenSurf;
-} mapbrush_t;
-
-#define	MAXEDGES		20
-
-typedef struct face_s {
-	struct face_s	*next;		/**< on node */
-
-	/** the chain of faces off of a node can be merged or split,
-	 * but each face_t along the way will remain in the chain
-	 * until the entire tree is freed */
-	struct face_s	*merged;	/**< if set, this face isn't valid anymore */
-	struct face_s	*split[2];	/**< if set, this face isn't valid anymore */
-
-	struct portal_s	*portal;
-	int				texinfo;
-	int				planenum;
-	int				contentFlags;	/**< faces in different contents can't merge */
-	winding_t		*w;
-	int				numpoints;
-	int				vertexnums[MAXEDGES];
-} face_t;
-
-typedef struct bspbrush_s {
-	struct bspbrush_s	*next;
-	vec3_t	mins, maxs;
-	int		side, testside;		/**< side of node during construction */
-	mapbrush_t	*original;
-	int		numsides;
-	side_t	sides[6];			/**< variably sized */
-} bspbrush_t;
-
-#define	MAX_NODE_BRUSHES	8
-typedef struct node_s {
-	/** both leafs and nodes */
-	int				planenum;	/**< -1 = leaf node */
-	struct node_s	*parent;
-	vec3_t			mins, maxs;	/**< valid after portalization */
-	bspbrush_t		*volume;	/**< one for each leaf/node */
-
-	/** nodes only */
-	side_t			*side;		/**< the side that created the node */
-	struct node_s	*children[2];
-	face_t			*faces;
-
-	/** leafs only */
-	bspbrush_t		*brushlist;	/**< fragments of all brushes in this leaf */
-	int				contentFlags;	/**< OR of all brush contents */
-	int				area;		/**< for areaportals */
-	struct portal_s	*portals;	/**< also on nodes during construction */
-} node_t;
-
-typedef struct portal_s {
-	plane_t		plane;
-	node_t		*onnode;		/**< NULL = outside box */
-	node_t		*nodes[2];		/**< [0] = front side of plane */
-	struct portal_s	*next[2];
-	winding_t	*winding;
-
-	qboolean	sidefound;		/**< false if ->side hasn't been checked */
-	side_t		*side;			/**< NULL = non-visible */
-	face_t		*face[2];		/**< output face in bsp file */
-} portal_t;
-
-typedef struct {
-	node_t		*headnode;
-	node_t		outside_node;
-	vec3_t		mins, maxs;
-} tree_t;
 
 extern int entity_num;
 
@@ -157,8 +44,6 @@ extern int nummapplanes;
 
 extern int nummapbrushes;
 extern mapbrush_t mapbrushes[MAX_MAP_BRUSHES];
-
-#define	MAX_MAP_SIDES (MAX_MAP_BRUSHES*6)
 
 extern int nummapbrushsides;
 extern side_t brushsides[MAX_MAP_SIDES];
@@ -183,7 +68,6 @@ typedef struct {
 	qboolean	materialMarked; /**< only print it once to the material file */
 } textureref_t;
 
-#define	MAX_MAP_TEXTURES	1024
 
 extern	textureref_t	textureref[MAX_MAP_TEXTURES];
 int	FindMiptex(const char *name);
@@ -191,7 +75,7 @@ int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, const vec3_t ori
 
 /* csg */
 
-int MapBrushesBounds(int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs);
+int MapBrushesBounds(const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs);
 bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs);
 bspbrush_t *ChopBrushes(bspbrush_t *head);
 
@@ -221,11 +105,11 @@ void RemovePortalFromNode(portal_t *portal, node_t *l);
 void SetModelNumbers(void);
 
 void BeginBSPFile(void);
-void WriteBSP(node_t *headnode);
+int WriteBSP(node_t *headnode);
 void EndBSPFile(const char *filename);
 void BeginModel(int entityNum);
 void EndModel(void);
-/*void EmitBrushes(void);*/
+void EmitBrushes(void);
 void EmitPlanes(void);
 
 /* faces.c */
@@ -241,19 +125,14 @@ void FreeTree(tree_t *tree);
 
 /* trace.c */
 
-void MakeTnodes(int levels);
-void CloseTnodes(void);
-int TestLine(const vec3_t start, const vec3_t stop);
-int TestLineMask(const vec3_t start, const vec3_t stop, int levels);
-int TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, int levels);
+void MakeTracingNodes(int levels);
+void CloseTracingNodes(void);
 qboolean TestContents(const vec3_t pos);
 
 /* levels.c */
 
 extern const vec3_t v_epsilon;
 extern vec3_t worldMins, worldMaxs;
-
-#define NUMMODELS 258
 
 void PushInfo(void);
 void PopInfo(void);
@@ -262,8 +141,10 @@ void PruneNodes(node_t *node);
 
 /* routing.c */
 
-void DoRouting(void);
+void DoRouting();
 
 /* bsp.c */
 
-void ProcessModels(const char *filename);
+void ProcessModels();
+
+#endif /* UFO2MAP_BSP_H */

@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "server.h"
+#include "../common/tracing.h"
 
 /*
 ===============================================================================
@@ -431,7 +432,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
  * @note Useful to determine whether an actor is e.g. inside of a water brush
  * @sa CM_TestInLeaf
  * @sa CM_TestBoxInBrush
- * @sa CM_CompleteBoxTrace
+ * @sa TR_CompleteBoxTrace
  */
 int SV_PointContents (vec3_t p)
 {
@@ -440,7 +441,7 @@ int SV_PointContents (vec3_t p)
 	memset(&trace, 0, sizeof(trace_t));
 
 	/* clip to world - 0x1FF = all levels */
-	trace = CM_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL);
+	trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL);
 	trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
@@ -499,7 +500,7 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 	memset(&clip, 0, sizeof(moveclip_t));
 
 	/* clip to world - 0x1FF = all levels */
-	clip.trace = CM_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask);
+	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask);
 	/* FIXME: There is more than one world in case of a map assembly */
 	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (clip.trace.fraction == 0)

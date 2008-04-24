@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_main.h"
 #include "r_error.h"
+#include "../common/tracing.h"
 
 refdef_t refdef;
 
@@ -112,7 +113,7 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 		return qfalse;
 
 	for (i = 0; i < 4; i++)
-		if (BoxOnPlaneSide(mins, maxs, &frustum[i]) == PSIDE_BACK)
+		if (TR_BoxOnPlaneSide(mins, maxs, &frustum[i]) == PSIDE_BACK)
 			return qtrue;
 	return qfalse;
 }
