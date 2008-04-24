@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-03-29 12:29+0100\n"
-"PO-Revision-Date: 2008-03-29 12:35+0100\n"
+"PO-Revision-Date: 2008-04-24 10:45+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3154,7 +3154,7 @@ msgstr "Spieler"
 
 #: ../base/ufos/menu_irc.ufo:246
 msgid "You are not connected to the lobby. Do you want to connect?"
-msgstr ""
+msgstr "Du bist nicht zur Lobby verbunden. Soll die Verbindung aufgebaut werden?"
 
 #: ../base/ufos/menu_irc.ufo:251
 msgid "Connect to the lobby"
@@ -3475,7 +3475,7 @@ msgstr "Tagesversion:"
 
 #: ../base/ufos/menu_multiplayer.ufo:948
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
-msgstr ""
+msgstr "Stelle sicher, dass der TCP Port 27910 in der Firewall geöffnet ist."
 
 #: ../base/ufos/menu_multiplayer.ufo:960
 msgid "Make this server public:"
@@ -12989,7 +12989,7 @@ msgstr "Kein Team zugewiesen"
 
 #: client/cl_menu.c:885
 msgid "Please choose and equip your team first"
-msgstr ""
+msgstr "Bitte wählen zuerst ein Team aus."
 
 #: client/cl_menu.c:891
 msgid "Set soldiers per player lower than soldiers per team"
@@ -13560,7 +13560,7 @@ msgstr "%i von %i"
 
 #: client/cl_team.c:1197
 msgid "A new team has been created for you."
-msgstr ""
+msgstr "Ein neues Team wurde angelegt."
 
 #: client/cl_team.c:1197
 msgid "New team created"
