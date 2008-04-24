@@ -219,6 +219,21 @@ void SV_LinkEdict (edict_t * ent)
 		InsertLinkBefore(&ent->area, &node->trigger_edicts);
 	else
 		InsertLinkBefore(&ent->area, &node->solid_edicts);
+
+	/* If this ent has a child, link it back in, too */
+	if (ent->child) {
+		VectorCopy(ent->absmin, ent->child->mins);
+		VectorCopy(ent->absmax, ent->child->maxs);
+
+		/* expand the trigger box */
+		ent->child->mins[0] -= (UNIT_SIZE / 2);
+		ent->child->mins[1] -= (UNIT_SIZE / 2);
+		ent->child->maxs[0] += (UNIT_SIZE / 2);
+		ent->child->maxs[1] += (UNIT_SIZE / 2);
+
+		/* link child back into the world */
+		SV_LinkEdict(ent->child);
+	}
 }
 
 
