@@ -69,12 +69,11 @@ void CL_CompleteRecalcRouting (void)
 	LE_GenerateInlineModelList();
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		/*
-		We ALWAYS check against a model, even if it isn't in use.
-		An unused model is NOT included in the inline list, so it doesn't get
-		traced against.
-		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
-		*/
+		/**
+		 * We ALWAYS check against a model, even if it isn't in use.
+		 * An unused model is NOT included in the inline list, so it doesn't get
+		 * traced against.
+		 */
 		if (le->model1 && le->inlineModelName[0] == '*')
 			Grid_RecalcRouting(&clMap, le->inlineModelName, leInlineModelList);
 }
@@ -85,12 +84,11 @@ void CL_CompleteRecalcRouting (void)
 void CL_RecalcRouting (const le_t* le)
 {
 	LE_GenerateInlineModelList();
-		/*
-		We ALWAYS check against a model, even if it isn't in use.
-		An unused model is NOT included in the inline list, so it doesn't get
-		traced against.
-		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
-		*/
+	/**
+	 * We ALWAYS check against a model, even if it isn't in use.
+	 * An unused model is NOT included in the inline list, so it doesn't get
+	 * traced against.
+	 */
 	if (le->model1 && le->inlineModelName[0] == '*')
 		Grid_RecalcRouting(&clMap, le->inlineModelName, leInlineModelList);
 }

@@ -256,7 +256,6 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 
 	/* box on plane side */
 	plane = &mapplanes[planenum];
-	/* s = MAP_BoxOnPlaneSide(brush->mins, brush->maxs, plane);*/
 
 	/* Convert to cBspPlane */
 	VectorCopy(plane->normal, plane2.normal);

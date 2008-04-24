@@ -5090,15 +5090,13 @@ static void CL_AddPathingBox (pos3_t pos)
 	 */
 	if ((Grid_Fall(&clMap, pos, ACTOR_SIZE_NORMAL) < pos[2] - 1)){
 		VectorSet(ent.angles, 0.0, 0.0, 0.0); /* Can't enter - grey */
-	} /* else if (Grid_Filled(&clMap, pos)) {
-		VectorSet(ent.angles, 0, 0, 0); / * Can't enter - black * /
-	} */ else {
-	    /**
-	     * Can reach - green
-	     * Passable but unreachable - yellow
-	     * Not passable - red
-	     */
-	    const int TUs = Grid_MoveLength(&clMap, pos, qfalse);
+	} else {
+		/**
+		 * Can reach - green
+		 * Passable but unreachable - yellow
+		 * Not passable - red
+		 */
+		const int TUs = Grid_MoveLength(&clMap, pos, qfalse);
 		VectorSet(ent.angles, (TUs > CL_UsableTUs(selActor)), (TUs != ROUTING_NOT_REACHABLE), 0);
 	}
 
@@ -5133,8 +5131,6 @@ void CL_AddPathing (void)
 		for (pos[0] = max(mousePos[0] - 8, 0); pos[0] <= min(mousePos[0] + 8, PATHFINDING_WIDTH - 1); pos[0]++)
 			CL_AddPathingBox(pos);
 }
-
-
 
 /**
  * @brief Plays various sounds on actor action.
