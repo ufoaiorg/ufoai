@@ -222,7 +222,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		 * @sa http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=15657
 		 * @sa http://sourceforge.net/tracker/index.php?func=detail&aid=1909374&group_id=157793&atid=805242
 		 * @sa http://sourceforge.net/tracker/index.php?func=detail&aid=1900423&group_id=157793&atid=805242
-		 * /
+		 */
 	} else {
 		const char *max_s, *max_spp;
 		max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
