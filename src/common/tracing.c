@@ -31,42 +31,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "tracing.h"
 
 /** @note used for statistics
- *  @sa CM_LoadMap (cmodel.c) */
+ * @sa CM_LoadMap (cmodel.c) */
 int c_traces, c_brush_traces;
 
 /* static */
 static cBspSurface_t nullsurface;
 
-/** @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
- *  @sa TR_MakeTracingNode (tracing.c)
- *  @sa TR_MakeTracingNodes (tracing.c)
- *  @sa TR_BuildTracingNode_r (tracing.c)
- *  @sa TR_TestLine_r (tracing.c)
- *  @sa TR_TestLineDist_r (tracing.c)
- *  @sa TR_TestLineMask (tracing.c)
- *  @sa TR_InitBoxHull (tracing.c)
- *  @sa TR_TestLineDM (tracing.c)
- *  @sa TR_BoxLeafnums_r (tracing.c)
- *  @sa TR_BoxLeafnums_headnode (tracing.c)
- *  @sa TR_TestBoxInBrush (tracing.c)
- *  @sa TR_TraceToLeaf (tracing.c)
- *  @sa TR_TestInLeaf (tracing.c)
- *  @sa TR_RecursiveHullCheck (tracing.c)
- *  @sa TR_BoxTrace (tracing.c)
- *  @sa TR_TransformedBoxTrace (tracing.c)
- *  @sa CMod_LoadSubmodels (cmodel.c)
- *  @sa CMod_LoadSurfaces (cmodel.c)
- *  @sa CMod_LoadNodes (cmodel.c)
- *  @sa CMod_LoadBrushes (cmodel.c)
- *  @sa CMod_LoadLeafs (cmodel.c)
- *  @sa CMod_LoadPlanes (cmodel.c)
- *  @sa CMod_LoadLeafBrushes (cmodel.c)
- *  @sa CMod_LoadBrushSides (cmodel.c)
- *  @sa CM_MakeTracingNodes (cmodel.c)
- *  @sa CM_InitBoxHull (cmodel.c)
- *  @sa CM_CompleteBoxTrace (cmodel.c)
- *  @sa CMod_LoadRouting (cmodel.c)
- *  @sa CM_AddMapTile (cmodel.c)
+/**
+ * @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
+ * @sa TR_MakeTracingNode (tracing.c)
+ * @sa TR_MakeTracingNodes (tracing.c)
+ * @sa TR_BuildTracingNode_r (tracing.c)
+ * @sa TR_TestLine_r (tracing.c)
+ * @sa TR_TestLineDist_r (tracing.c)
+ * @sa TR_TestLineMask (tracing.c)
+ * @sa TR_InitBoxHull (tracing.c)
+ * @sa TR_TestLineDM (tracing.c)
+ * @sa TR_BoxLeafnums_r (tracing.c)
+ * @sa TR_BoxLeafnums_headnode (tracing.c)
+ * @sa TR_TestBoxInBrush (tracing.c)
+ * @sa TR_TraceToLeaf (tracing.c)
+ * @sa TR_TestInLeaf (tracing.c)
+ * @sa TR_RecursiveHullCheck (tracing.c)
+ * @sa TR_BoxTrace (tracing.c)
+ * @sa TR_TransformedBoxTrace (tracing.c)
+ * @sa CMod_LoadSubmodels (cmodel.c)
+ * @sa CMod_LoadSurfaces (cmodel.c)
+ * @sa CMod_LoadNodes (cmodel.c)
+ * @sa CMod_LoadBrushes (cmodel.c)
+ * @sa CMod_LoadLeafs (cmodel.c)
+ * @sa CMod_LoadPlanes (cmodel.c)
+ * @sa CMod_LoadLeafBrushes (cmodel.c)
+ * @sa CMod_LoadBrushSides (cmodel.c)
+ * @sa CM_MakeTracingNodes (cmodel.c)
+ * @sa CM_InitBoxHull (cmodel.c)
+ * @sa CM_CompleteBoxTrace (cmodel.c)
+ * @sa CMod_LoadRouting (cmodel.c)
+ * @sa CM_AddMapTile (cmodel.c)
  */
 TR_TILE_TYPE *curTile;
 
@@ -75,7 +76,6 @@ TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 
 /** @note number of loaded map tiles (map assembly) */
 int numTiles = 0;
-
 
 /** @note Used in CM_BoxTrace, but does nothing. */
 static int checkcount;
@@ -98,12 +98,11 @@ static qboolean trace_ispoint;			/* optimized case */
 
 tnode_t *tnode_p;
 
-
-/* static pos3_t exclude_from_forbiddenlist; */
-
-/*==============================================================
+/*
+==============================================================
 GLOBAL DIRECTION CONSTANTS
-==============================================================*/
+==============================================================
+*/
 
 const vec3_t dup_vec = { 0, 0, PLAYER_HEIGHT - UNIT_HEIGHT / 2 };
 const vec3_t dwn_vec = { 0, 0, -UNIT_HEIGHT / 2 };
@@ -157,7 +156,6 @@ static void TR_MakeTracingNode (int nodenum)
 	}
 }
 
-
 void TR_BuildTracingNode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
@@ -186,17 +184,16 @@ void TR_BuildTracingNode_r (int node, int level)
 			Sys_Error("Unexpected leaf");
 #endif
 
-
 		VectorCopy(curTile->nodes[n->children[0]].maxs, c0maxs);
 		VectorCopy(curTile->nodes[n->children[1]].mins, c1mins);
 
-		/*
+#if 0
 		Com_Printf("(%i %i : %i %i) (%i %i : %i %i)\n",
 			(int)curTile->nodes[n->children[0]].mins[0], (int)curTile->nodes[n->children[0]].mins[1],
 			(int)curTile->nodes[n->children[0]].maxs[0], (int)curTile->nodes[n->children[0]].maxs[1],
 			(int)curTile->nodes[n->children[1]].mins[0], (int)curTile->nodes[n->children[1]].mins[1],
 			(int)curTile->nodes[n->children[1]].maxs[0], (int)curTile->nodes[n->children[1]].maxs[1]);
-		*/
+#endif
 
 		for (i = 0; i < 2; i++)
 			if (c0maxs[i] <= c1mins[i]) {
