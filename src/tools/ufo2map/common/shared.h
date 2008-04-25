@@ -110,7 +110,6 @@ extern qboolean verbose;
 /* the dec offsetof macro doesnt work very well... */
 #define myoffsetof(type,identifier) ((size_t)&((type *)0)->identifier)
 
-extern char qdir[1024];
 extern char gamedir[1024];
 
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));

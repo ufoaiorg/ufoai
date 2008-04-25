@@ -126,7 +126,7 @@ static qboolean FileExists (const char *filename)
  * gamedir will hold qdir + the game directory (id1, id2, etc)
  */
 
-char qdir[1024];
+static char qdir[1024];
 char gamedir[1024];
 
 /**
