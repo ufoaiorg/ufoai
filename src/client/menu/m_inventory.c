@@ -417,17 +417,24 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		} else if (menuInventory->c[node->mousefx]) {
 			const int sx = node->size[0] / C_UNIT;
 			const int sy = node->size[1] / C_UNIT;
-			const item_t *item = &menuInventory->c[csi.idRight]->item;
-			/* if there is a weapon in the right hand that needs two hands to shoot it
-			 * and there is a weapon in the left, then draw a disabled marker for the
-			 * fireTwoHanded weapon */
+			const item_t *item;
+
+			if (menuInventory->c[csi.idRight]) {
+				item = &menuInventory->c[csi.idRight]->item;
+				/* if there is a weapon in the right hand that needs two hands to shoot it
+			 	 * and there is a weapon in the left, then draw a disabled marker for the
+			 	 * fireTwoHanded weapon */
+				assert(item);
+				assert(item->t);
+				if (node->mousefx == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
+					Vector4Set(color, 0.5, 0.5, 0.5, 0.5);
+					MN_DrawDisabled(node);
+				}
+			}
+
+			item = &menuInventory->c[node->mousefx]->item;
 			assert(item);
 			assert(item->t);
-			if (node->mousefx == csi.idRight && item->t->fireTwoHanded
-			 && menuInventory->c[csi.idLeft]) {
-				Vector4Set(color, 0.5, 0.5, 0.5, 0.5);
-				MN_DrawDisabled(node);
-			}
 			MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
 		}
 	} else {
