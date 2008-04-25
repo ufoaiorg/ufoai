@@ -36,7 +36,6 @@ int Q_filelength(qFILE *f);
 
 void SetQdirFromPath(char *path);
 char *ExpandArg(const char *path);	/* from cmd line */
-char *ExpandPath(const char *path);	/* from scripts */
 
 double I_FloatTime(void);
 

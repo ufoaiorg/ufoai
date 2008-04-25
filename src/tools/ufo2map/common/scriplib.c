@@ -58,7 +58,7 @@ static void AddScriptToStack (const char *filename)
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
 		Sys_Error("script file exceeded MAX_INCLUDES");
-	strncpy(script->filename, ExpandPath(filename), sizeof(script->filename));
+	strncpy(script->filename, filename, sizeof(script->filename));
 
 	size = LoadFile(script->filename, (void **)&script->buffer);
 

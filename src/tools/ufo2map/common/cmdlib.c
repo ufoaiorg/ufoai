@@ -120,13 +120,8 @@ static qboolean FileExists (const char *filename)
 }
 
 /**
- * qdir will hold the path up to the quake directory, including the slash
- * f:\quake\
- * /raid/quake/
- * gamedir will hold qdir + the game directory (id1, id2, etc)
+ * @brief gamedir will hold the game directory (base, id1, id2, etc)
  */
-
-static char qdir[1024];
 char gamedir[1024];
 
 /**
@@ -180,22 +175,6 @@ char *ExpandArg (const char *path)
 	} else
 		strncpy(full, path, sizeof(full));
 
-	return full;
-}
-
-/**
- * @brief
- */
-char *ExpandPath (const char *path)
-{
-	static char full[1024];
-	if (qdir[0] == '\0')
-		Sys_Error("ExpandPath called without qdir set");
-	if (path[0] == '/' || path[0] == '\\' || path[1] == ':') {
-		strncpy(full, path, sizeof(full));
-		return full;
-	}
-	snprintf(full, sizeof(full), "%s%s", qdir, path);
 	return full;
 }
 
