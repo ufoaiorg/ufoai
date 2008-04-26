@@ -9,7 +9,7 @@ lang:
 	  echo $$po; \
 	  dir=`echo $$po | sed -e 's,\.po,,'`; \
 	  mkdir -p base/i18n/$$dir/LC_MESSAGES; \
-	  msgfmt -v -o base/i18n/$$dir/LC_MESSAGES/ufoai.mo src/po/$$po;
+	  msgfmt -v -o base/i18n/$$dir/LC_MESSAGES/ufoai.mo src/po/$$po; \
 	done
 
 update-po:
