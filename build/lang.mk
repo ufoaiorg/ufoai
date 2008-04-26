@@ -9,8 +9,7 @@ lang:
 	  echo $$po; \
 	  dir=`echo $$po | sed -e 's,\.po,,'`; \
 	  mkdir -p base/i18n/$$dir/LC_MESSAGES; \
-	  msgfmt -v -o base/i18n/$$dir/LC_MESSAGES/ufoai.mo src/po/$$po; \
-      echo "base/i18n/$$dir/LC_MESSAGES/ufoai.mo /usr/share/locale/$$dir/LC_MESSAGES" > debian/ufoai-i18n-$$dir.install; \
+	  msgfmt -v -o base/i18n/$$dir/LC_MESSAGES/ufoai.mo src/po/$$po;
 	done
 
 update-po:
