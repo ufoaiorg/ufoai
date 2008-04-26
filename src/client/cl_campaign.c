@@ -4449,9 +4449,6 @@ static void CL_GameNew_f (void)
 	B_NewBases();
 	PR_ProductionInit();
 
-	/* ensure ccs.singleplayer is set to true */
-	CL_StartSingleplayer(qtrue);
-
 	/* get day */
 	while (ccs.date.sec > 3600 * 24) {
 		ccs.date.sec -= 3600 * 24;
@@ -4466,11 +4463,6 @@ static void CL_GameNew_f (void)
 
 	/* stage setup */
 	CL_CampaignActivateStage(curCampaign->firststage, qtrue);
-
-	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "singleplayerInGame");
-	Cvar_Set("mn_active", "map");
-	MN_PushMenu("map");
 
 	/* create a base as first step */
 	Cmd_ExecuteString("mn_select_base -1");

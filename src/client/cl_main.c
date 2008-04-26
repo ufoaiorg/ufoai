@@ -216,13 +216,12 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		sv_maxclients->modified = qtrue;
 
 		/* set the menus up */
+		MN_PopMenu(qtrue);
+		Cbuf_Execute();
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
-		/**
-		 * @sa http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=15657
-		 * @sa http://sourceforge.net/tracker/index.php?func=detail&aid=1909374&group_id=157793&atid=805242
-		 * @sa http://sourceforge.net/tracker/index.php?func=detail&aid=1900423&group_id=157793&atid=805242
-		 */
+		MN_PushMenu(Cvar_VariableString("mn_main"));
+		MN_PushMenu(Cvar_VariableString("mn_active"));
 	} else {
 		const char *max_s, *max_spp;
 		max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
@@ -2364,7 +2363,7 @@ void CL_Frame (int now, void *data)
 	if (sv_maxclients->modified) {
 		if (sv_maxclients->integer > 1 && ccs.singleplayer) {
 			CL_StartSingleplayer(qfalse);
-		} else if (sv_maxclients->integer == 1) {
+		} else if (sv_maxclients->integer == 1 && ( ! ccs.singleplayer ) ) {
 			CL_StartSingleplayer(qtrue);
 		}
 		sv_maxclients->modified = qfalse;
