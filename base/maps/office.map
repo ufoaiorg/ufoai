@@ -13974,7 +13974,6 @@
 "_color" "1 1 1"
 "light" "180"
 "origin" "823 460 24"
-"spawnflags" "1"
 }
 // entity 160
 {
@@ -14064,7 +14063,6 @@
 "origin" "823 116 24"
 "light" "180"
 "_color" "1 1 1"
-"spawnflags" "1"
 }
 // entity 164
 {
@@ -17825,7 +17823,6 @@
 "origin" "223 564 86"
 "light" "180"
 "_color" "1 1 1"
-"spawnflags" "1"
 }
 // entity 301
 {
@@ -17915,7 +17912,6 @@
 "_color" "1 1 1"
 "light" "180"
 "origin" "223 336 86"
-"spawnflags" "1"
 }
 // entity 305
 {
@@ -18011,7 +18007,6 @@
 "origin" "180 -229 86"
 "light" "180"
 "_color" "1 1 1"
-"spawnflags" "1"
 }
 // entity 310
 {
@@ -18265,7 +18260,7 @@
 {
 "classname" "misc_particle"
 "origin" "180 -262 175"
-"spawnflags" "12"
+"spawnflags" "268"
 "particle" "corona"
 }
 // entity 347
