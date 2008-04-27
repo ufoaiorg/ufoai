@@ -895,6 +895,7 @@
 "light" "150"
 "origin" "-824 -156 26"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 34
 {
@@ -902,6 +903,7 @@
 "origin" "-1152 -156 26"
 "light" "150"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 35
 {
@@ -909,6 +911,7 @@
 "light" "150"
 "origin" "-1456 -148 26"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 36
 {
@@ -916,6 +919,7 @@
 "light" "150"
 "origin" "72 236 50"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 37
 {
@@ -923,6 +927,7 @@
 "origin" "40 -12 50"
 "light" "150"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 38
 {
@@ -930,6 +935,7 @@
 "origin" "56 -268 50"
 "light" "150"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 39
 {
@@ -937,12 +943,14 @@
 "light" "150"
 "origin" "336 -252 26"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 40
 {
 "classname" "light"
 "origin" "808 -180 26"
 "light" "150"
+"spawnflags" "1"
 }
 // entity 41
 {
@@ -950,6 +958,7 @@
 "origin" "728 -44 98"
 "light" "150"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 42
 {
@@ -957,6 +966,7 @@
 "light" "150"
 "origin" "688 -236 98"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 43
 {
@@ -964,6 +974,7 @@
 "origin" "104 236 106"
 "light" "200"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 44
 {
@@ -971,6 +982,7 @@
 "light" "150"
 "origin" "120 -92 106"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 45
 {
@@ -978,6 +990,7 @@
 "light" "150"
 "origin" "64 -396 50"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 46
 {
@@ -985,18 +998,21 @@
 "light" "150"
 "origin" "160 -116 50"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 47
 {
 "classname" "light"
 "origin" "432 -220 26"
 "light" "150"
+"spawnflags" "1"
 }
 // entity 48
 {
 "classname" "light"
 "light" "150"
 "origin" "808 -260 26"
+"spawnflags" "1"
 }
 // entity 49
 {
@@ -1004,6 +1020,7 @@
 "light" "150"
 "origin" "680 -92 98"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 50
 {
@@ -1011,6 +1028,7 @@
 "light" "200"
 "origin" "128 92 106"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 51
 {
@@ -1018,6 +1036,7 @@
 "origin" "128 -148 106"
 "light" "200"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 52
 {
@@ -1025,6 +1044,7 @@
 "light" "200"
 "origin" "116 -356 106"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 53
 {
@@ -1032,6 +1052,7 @@
 "light" "150"
 "origin" "856 -100 98"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 54
 {
@@ -1039,6 +1060,7 @@
 "light" "150"
 "origin" "752 -228 98"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 55
 {
