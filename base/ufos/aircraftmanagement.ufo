@@ -88,7 +88,7 @@ aircraft craft_drop_firebird
 	model		"drop_firebird"
 	price		140000
 	building	building_hangar
-	size		8
+	numteam		8
 	weight		2
 	image		air_dropship
 	slot {
@@ -125,7 +125,7 @@ aircraft craft_drop_herakles
 	model		"drop_herakles"
 	price		180000
 	building	building_hangar
-	size		8
+	numteam		8
 	weight		2
 	image		air_dropship
 	slot {
@@ -162,7 +162,7 @@ aircraft craft_inter_stiletto
 	shortname	"_Stiletto I"
 	type		interceptor
 	model		"inter_stiletto"
-	size		1
+	numteam		1
 	weight		1
 	price		40000
 	building	building_intercept
@@ -207,7 +207,7 @@ aircraft craft_inter_saracen
 	shortname	"_Saracen I"
 	type		interceptor
 	model		"inter_saracen"
-	size		1
+	numteam		1
 	weight		2
 	price		100000
 	building	building_intercept
@@ -247,7 +247,7 @@ aircraft craft_inter_dragon
 	shortname	"_Dragon"
 	type		interceptor
 	model		"inter_dragon"
-	size		1
+	numteam		1
 	weight		1
 	price		100000
 	building	building_intercept
@@ -287,7 +287,7 @@ aircraft craft_inter_stingray
 	shortname	"_Stingray"
 	type		interceptor
 	model		"inter_stingray"
-	size		1
+	numteam		1
 	weight		1
 	price		200000
 	building	building_intercept
@@ -334,7 +334,6 @@ aircraft craft_ufo_harvester
 	shortname	"_Harvester U"
 	type		ufo
 	model		"ufo_harvester"
-	size		4
 	weight		2
 	building	building_big_ufo_hangar
 	price		200000
@@ -378,7 +377,6 @@ aircraft craft_ufo_carrier
 	shortname	"Carrier U"
 	type		ufo
 	model		"ufo_carrier"
-	size		4
 	weight		1
 	building	building_small_ufo_hangar
 	price		1000000
@@ -402,7 +400,6 @@ aircraft craft_ufo_supply
 	shortname	"_Supply U"
 	type		ufo
 	model		"ufo_supply"
-	size		4
 	weight		1
 	building	building_big_ufo_hangar
 	price		250000
@@ -425,7 +422,6 @@ aircraft craft_ufo_bomber
 	shortname	"_Bomber U"
 	type		ufo
 	model		"ufo_bomber"
-	size		4
 	weight		1
 	building	building_big_ufo_hangar
 	price		250000
@@ -455,7 +451,6 @@ aircraft craft_ufo_corrupter
 	shortname	"_Corrupter U"
 	type		ufo
 	model		"ufo_corrupter"
-	size		4
 	weight		1
 	building	building_big_ufo_hangar
 	price		230000
@@ -484,7 +479,6 @@ aircraft craft_ufo_scout
 	shortname	"_Scout U"
 	type		ufo
 	model		"ufo_scout"
-	size		4
 	weight		1
 	building	building_small_ufo_hangar
 	price		150000
@@ -506,7 +500,6 @@ aircraft craft_ufo_fighter
 	shortname	"_Fighter U"
 	type		ufo
 	model		"ufo_fighter"
-	size		8
 	weight		1
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar

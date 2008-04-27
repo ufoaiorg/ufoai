@@ -1225,7 +1225,7 @@ static const value_t aircraft_param_vals[] = {
 static const value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, name), 0},
 	{"shortname", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, shortname), 0},
-	{"size", V_INT, offsetof(aircraft_t, maxTeamSize), MEMBER_SIZEOF(aircraft_t, maxTeamSize)},
+	{"numteam", V_INT, offsetof(aircraft_t, maxTeamSize), MEMBER_SIZEOF(aircraft_t, maxTeamSize)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 
