@@ -135,7 +135,7 @@ binary-arch: install-arch
 	dh_buildinfo
 	dh_installexamples
 	dh_installmenu
-	dh_installman debian/ufo.6
+	dh_installman debian/ufo.6 debian/ufoded.6
 	dh_link
 	dh_strip
 	dh_compress -X.pdf
