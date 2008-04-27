@@ -43,6 +43,11 @@ static int checkFuncRotating (entity_t *e, int entnum)
 		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
+
+	if (!e->numbrushes) {
+		Com_Printf("ERROR: func_door with no brushes given - entnum: %i\n", entnum);
+		return 1;
+	}
 	return 0;
 }
 
@@ -54,6 +59,11 @@ static int checkFuncDoor (entity_t *e, int entnum)
 		Com_Printf("func_door with no levelflags given - entnum: %i\n", entnum);
 		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
+	}
+
+	if (!e->numbrushes) {
+		Com_Printf("ERROR: func_door with no brushes given - entnum: %i\n", entnum);
+		return 1;
 	}
 	return 0;
 }
@@ -67,6 +77,11 @@ static int checkFuncBreakable (entity_t *e, int entnum)
 		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
+
+	if (!e->numbrushes) {
+		Com_Printf("ERROR: func_breakable with no brushes given - entnum: %i\n", entnum);
+		return 1;
+	}
 	return 0;
 }
 
@@ -79,6 +94,31 @@ static int checkMiscModel (entity_t *e, int entnum)
 		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
+	val = ValueForKey(e, "model");
+	if (!*val) {
+		Com_Printf("ERROR: misc_model with no model given - entnum: %i\n", entnum);
+		return 1;
+	}
+
+	return 0;
+}
+
+static int checkMiscParticle (entity_t *e, int entnum)
+{
+	const char *val = ValueForKey(e, "spawnflags");
+	if (!*val) {
+		char buf[16];
+		Com_Printf("misc_particle with no levelflags given - entnum: %i\n", entnum);
+		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
+		SetKeyValue(e, "spawnflags", buf);
+	}
+
+	val = ValueForKey(e, "particle");
+	if (!*val) {
+		Com_Printf("ERROR: misc_particle with no particle given - entnum: %i\n", entnum);
+		return 1;
+	}
+
 	return 0;
 }
 
@@ -91,8 +131,9 @@ static int checkInfoPlayerStart (entity_t *e, int entnum)
 }
 
 typedef struct entityCheck_s {
-	const char *name;
-	int (*checkCallback)(entity_t* e, int entnum);
+	const char *name;	/**< The entity name */
+	int (*checkCallback)(entity_t* e, int entnum);		/**< @return 0 if successfully fixed it
+						 * everything else in case of an error that can't be fixed automatically */
 } entityCheck_t;
 
 static const entityCheck_t checkArray[] = {
@@ -101,6 +142,7 @@ static const entityCheck_t checkArray[] = {
 	{"func_door", checkFuncDoor},
 	{"func_rotating", checkFuncRotating},
 	{"misc_model", checkMiscModel},
+	{"misc_particle", checkMiscParticle},
 	{"info_player_start", checkInfoPlayerStart},
 
 	{NULL, NULL}
@@ -120,7 +162,9 @@ void CheckEntities (void)
 		const char *name = ValueForKey(e, "classname");
 		for (v = checkArray; v->name; v++)
 			if (!strncmp(name, v->name, strlen(v->name))) {
-				v->checkCallback(e, i);
+				if (v->checkCallback(e, i) != 0) {
+					/* @todo Remove the entity in case of an error */
+				}
 				break;
 			}
 	}
