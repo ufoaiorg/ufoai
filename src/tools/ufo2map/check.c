@@ -122,6 +122,15 @@ static int checkMiscParticle (entity_t *e, int entnum)
 	return 0;
 }
 
+static int checkFuncGroup (entity_t *e, int entnum)
+{
+	if (!e->numbrushes) {
+		Com_Printf("ERROR: func_group with no brushes given - entnum: %i\n", entnum);
+		return 1;
+	}
+	return 0;
+}
+
 static int checkInfoPlayerStart (entity_t *e, int entnum)
 {
 	const char *val = ValueForKey(e, "team");
@@ -141,6 +150,7 @@ static const entityCheck_t checkArray[] = {
 	{"func_breakable", checkFuncBreakable},
 	{"func_door", checkFuncDoor},
 	{"func_rotating", checkFuncRotating},
+	{"func_group", checkFuncGroup},
 	{"misc_model", checkMiscModel},
 	{"misc_particle", checkMiscParticle},
 	{"info_player_start", checkInfoPlayerStart},
