@@ -208,7 +208,7 @@ void CL_LoadMedia (void)
 	if (!cls.missionaircraft) {
 		cls.missionaircraft = AIR_AircraftGetFromIdx(0);
 		if (cls.missionaircraft)
-			cls.missionaircraft->homebase = B_GetBase(0);
+			cls.missionaircraft->homebase = B_GetBaseByIDX(0);
 		else
 			Com_Printf("Could not set mission aircraft\n");
 	}

@@ -4465,7 +4465,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
 				/* Load IDX of base under attack */
 				const int baseidx = MSG_ReadByte(sb);
-				base = B_GetBase(baseidx);
+				base = B_GetBaseByIDX(baseidx);
 				assert(base);
 				if (mission.stage == STAGE_BASE_ATTACK && base->baseStatus != BASE_UNDER_ATTACK)
 					Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
@@ -5381,7 +5381,7 @@ static void CL_DebugAllItems_f (void)
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
-	base = B_GetBase(i);
+	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (!csi.ods[i].weapon && !csi.ods[i].numWeapons)
@@ -5416,7 +5416,7 @@ static void CL_DebugShowItems_f (void)
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
-	base = B_GetBase(i);
+	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
 		tech = csi.ods[i].tech;
@@ -6388,7 +6388,7 @@ static void CL_GameSkirmish_f (void)
 	/* create employees and clear bases */
 	B_NewBases();
 
-	base = B_GetBase(0);
+	base = B_GetBaseByIDX(0);
 	baseCurrent = base;
 	gd.numAircraft = 0;
 
@@ -6847,7 +6847,7 @@ static void CP_UFORecovered_f (void)
 	base = NULL;
 	/* Now we have to check whether we can store the UFO in any base. */
 	for (i = 0; i < gd.numBases; i++) {
-		base = B_GetBase(i);
+		base = B_GetBaseByIDX(i);
 		if (!base->founded)
 			continue;
 		if (UFO_ConditionsForStoring(base, ufocraft)) {
@@ -6919,7 +6919,7 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 	if (num < 0 || num >= MAX_BASES || UFObases[num] == -1)
 		return;
 
-	base = B_GetBase(UFObases[num]);
+	base = B_GetBaseByIDX(UFObases[num]);
 
 	assert(base);
 
@@ -6948,7 +6948,7 @@ static void CP_UFORecoveredStart_f (void)
 	if (i < 0 || i >= MAX_BASES)
 		return;
 
-	base = B_GetBase(i);
+	base = B_GetBaseByIDX(i);
 	assert(base);
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
@@ -6999,7 +6999,7 @@ static void CP_UFORecoveredStore_f (void)
 	recoveryBaseSelectPopup[0] = '\0';
 	/* Check how many bases can store this UFO. */
 	for (i = 0; i < gd.numBases; i++) {
-		const base_t *base = B_GetBase(i);
+		const base_t *base = B_GetBaseByIDX(i);
 		if (!base->founded)
 			continue;
 		if (UFO_ConditionsForStoring(base, ufocraft)) {

@@ -437,7 +437,7 @@ void BDEF_AddBattery_f (void)
 		return;
 	}
 
-	BDEF_AddBattery(basedefType, B_GetBase(baseIdx));
+	BDEF_AddBattery(basedefType, B_GetBaseByIDX(baseIdx));
 }
 
 /**
@@ -503,7 +503,7 @@ void BDEF_RemoveBattery_f (void)
 		return;
 	}
 
-	base = B_GetBase(baseIdx);
+	base = B_GetBaseByIDX(baseIdx);
 
 	if (basedefType == BASEDEF_RANDOM) {
 		/* Type of base defense to destroy is randomly selected */

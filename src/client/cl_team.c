@@ -53,7 +53,7 @@ chrList_t chrDisplayList;
  */
 static void CL_MultiplayerEnvironment_f (void)
 {
-	base_t *base = B_GetBase(0);
+	base_t *base = B_GetBaseByIDX(0);
 
 	/* multiplayer is not ready yet */
 	if (!gd.numBases)
@@ -1834,7 +1834,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	/* load the teamname */
 	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
 
-	base = B_GetBase(0);
+	base = B_GetBaseByIDX(0);
 
 	/* load the team */
 	/* reset data */
@@ -1964,9 +1964,9 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 	assert(baseID < gd.numBases);
 
 	/* clean temp inventory */
-	CL_CleanTempInventory(B_GetBase(baseID));
+	CL_CleanTempInventory(B_GetBaseByIDX(baseID));
 
-	E_GetHiredEmployees(B_GetBase(baseID), EMPL_SOLDIER, &hiredEmployees);
+	E_GetHiredEmployees(B_GetBaseByIDX(baseID), EMPL_SOLDIER, &hiredEmployees);
 	hiredEmployeesTemp = hiredEmployees;
 
 	/* header */

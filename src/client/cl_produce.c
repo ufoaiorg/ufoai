@@ -443,7 +443,7 @@ void PR_ProductionRun (void)
 	 * wheter an item is produced. Then add to base storage. */
 
 	for (i = 0; i < MAX_BASES; i++) {
-		base = B_GetBase(i);
+		base = B_GetBaseByIDX(i);
 		if (!base->founded)
 			continue;
 

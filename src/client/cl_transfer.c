@@ -1243,7 +1243,7 @@ static void TR_NextBase_f (void)
 		counter = transferBase->idx;
 
 	for (i = counter + 1; i < gd.numBases; i++) {
-		base = B_GetBase(i);
+		base = B_GetBaseByIDX(i);
 		if (!base->founded)
 			continue;
 		if (base == baseCurrent)
@@ -1253,7 +1253,7 @@ static void TR_NextBase_f (void)
 	}
 	/* At this point we are at "last" base, so we will select first. */
 	for (i = 0; i < gd.numBases; i++) {
-		base = B_GetBase(i);
+		base = B_GetBaseByIDX(i);
 		if (!base->founded)
 			continue;
 		if (base == baseCurrent)
@@ -1281,7 +1281,7 @@ static void TR_PrevBase_f (void)
 		counter = transferBase->idx;
 
 	for (i = counter - 1; i >= 0; i--) {
-		base = B_GetBase(i);
+		base = B_GetBaseByIDX(i);
 		if (!base->founded)
 			continue;
 		if (base == baseCurrent)
@@ -1291,7 +1291,7 @@ static void TR_PrevBase_f (void)
 	}
 	/* At this point we are at "first" base, so we will select last. */
 	for (i = gd.numBases - 1; i >= 0; i--) {
-		base = B_GetBase(i);
+		base = B_GetBaseByIDX(i);
 		if (!base->founded)
 			continue;
 		if (base == baseCurrent)
@@ -1633,9 +1633,9 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 			transfer->aircraftArray[j] = MSG_ReadShort(sb);
 		assert(gd.numBases);
 		destBase = MSG_ReadByte(sb);
-		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBase(destBase) : NULL);
+		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
 		srcBase = MSG_ReadByte(sb);
-		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBase(srcBase) : NULL);
+		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
 		transfer->active = MSG_ReadByte(sb);
 		transfer->hasItems = MSG_ReadByte(sb);
 		transfer->hasEmployees = MSG_ReadByte(sb);

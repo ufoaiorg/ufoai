@@ -276,7 +276,8 @@ extern vec3_t newBasePos;
 
 int B_GetFoundedBaseCount(void);
 void B_SetUpBase(base_t* base, qboolean hire, qboolean buildings);
-base_t* B_GetBase(int id);
+base_t* B_GetBaseByIDX(int baseIdx);
+base_t* B_GetFoundedBaseByIDX(int baseIdx);
 
 void B_SetBuildingByClick(int row, int col);
 void B_ResetBaseManagement(void);

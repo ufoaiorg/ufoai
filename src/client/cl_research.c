@@ -1318,7 +1318,7 @@ void RS_UpdateData (base_t* base)
 	Cmd_ExecuteString("research_clear");
 
 	for (i = 0; i < gd.numBases; i++) {
-		available[i] = E_CountUnassigned(B_GetBase(i), EMPL_SCIENTIST);
+		available[i] = E_CountUnassigned(B_GetBaseByIDX(i), EMPL_SCIENTIST);
 	}
 	RS_CheckAllCollected();
 	RS_MarkResearchable(qfalse);
@@ -2665,7 +2665,7 @@ void RS_PostLoadInit (void)
 		baseIndex = *(int*)techBases->data;
 		/* Com_Printf("RS_PostLoadInit: DEBUG %s %i\n", t->id, baseIndex); */
 		if (baseIndex >= 0)
-			t->base = B_GetBase(baseIndex);
+			t->base = B_GetBaseByIDX(baseIndex);
 		else
 			t->base = NULL;
 		techBases = techBases->next;

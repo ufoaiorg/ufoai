@@ -69,12 +69,27 @@ int B_GetEmployeeCount (const base_t* const base)
 
 /**
  * @brief Array bound check for the base index.
+ * @return Pointer to the base corresponding to baseIdx.
  */
-base_t* B_GetBase (int baseIdx)
+base_t* B_GetBaseByIDX (int baseIdx)
 {
 	assert(baseIdx < MAX_BASES);
 	assert(baseIdx >= 0);
 	return &gd.bases[baseIdx];
+}
+
+/**
+ * @brief Array bound check for the base index.
+ * @return Pointer to the base corresponding to baseIdx if base is founded, NULL else.
+ */
+base_t* B_GetFoundedBaseByIDX (int baseIdx)
+{
+	const base_t *base = B_GetBaseByIDX(baseIdx);
+
+	if (base->founded)
+		return base;
+
+	return NULL;
 }
 
 /**
@@ -324,7 +339,7 @@ static void B_BaseInit_f (void)
 		return;
 	}
 
-	baseCurrent = B_GetBase(mn_base_id->integer);
+	baseCurrent = B_GetBaseByIDX(mn_base_id->integer);
 
 	CL_UpdateCredits(ccs.credits);
 
@@ -634,7 +649,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
 	base_t *base;
 
 	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++){
-		base = B_GetBase(baseIdx);
+		base = B_GetBaseByIDX(baseIdx);
 		if (base->founded) {
 			/* set buildingStatus[] and capacities.max values */
 			B_ResetAllStatusAndCapacities(base, qfalse);
@@ -1920,7 +1935,7 @@ void B_ParseBases (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		base = B_GetBase(gd.numBaseNames);
+		base = B_GetBaseByIDX(gd.numBaseNames);
 		memset(base, 0, sizeof(base_t));
 		base->idx = gd.numBaseNames;
 		base->buildingToBuild = NULL;
@@ -1965,7 +1980,7 @@ void MN_BaseMapLayout (const menuNode_t * node)
 	size[1] += (BASE_SIZE + 1) * node->padding;
 	R_DrawFill(node->pos[0], node->pos[1], size[0], size[1], node->align, node->bgcolor);
 
-	base = B_GetBase(node->num);
+	base = B_GetBaseByIDX(node->num);
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
@@ -2202,19 +2217,19 @@ static void B_SelectBase_f (void)
 		baseID = gd.numBases;
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
-			baseCurrent = B_GetBase(baseID);
+			baseCurrent = B_GetBaseByIDX(baseID);
 			baseCurrent->idx = baseID;
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			Cmd_ExecuteString("set_base_to_normal");
 		} else {
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
-			baseCurrent = B_GetBase(0);
+			baseCurrent = B_GetBaseByIDX(0);
 			gd.mapAction = MA_NONE;
 		}
 	} else if (baseID < MAX_BASES) {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", baseID);
-		base = B_GetBase(baseID);
+		base = B_GetBaseByIDX(baseID);
 		if (base->founded) {
 			baseCurrent = base;
 			gd.mapAction = MA_NONE;
@@ -2597,7 +2612,7 @@ static void B_AssembleMap_f (void)
 			Com_DPrintf(DEBUG_CLIENT, "Invalid baseID: %i\n", baseID);
 			return;
 		}
-		base = B_GetBase(baseID);
+		base = B_GetBaseByIDX(baseID);
 	}
 
 	if (!base) {
@@ -2685,7 +2700,7 @@ void B_NewBases (void)
 	base_t *base;
 
 	for (i = 0; i < MAX_BASES; i++) {
-		base = B_GetBase(i);
+		base = B_GetBaseByIDX(i);
 		Q_strncpyz(title, base->name, sizeof(title));
 		B_ClearBase(base);
 		Q_strncpyz(base->name, title, sizeof(title));
@@ -3058,7 +3073,7 @@ static void B_PrintCapacities_f (void)
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
-	base = B_GetBase(i);
+	base = B_GetBaseByIDX(i);
 	for (i = 0; i < MAX_CAP; i++) {
 		buildingType = B_GetBuildingTypeByCapacity(i);
 		if (buildingType >= MAX_BUILDING_TYPE)
@@ -3155,7 +3170,7 @@ void B_UpdateBaseData (void)
 			b = &gd.buildings[i][j];
 			if (!b)
 				continue;
-			new = B_CheckBuildingConstruction(b, B_GetBase(i));
+			new = B_CheckBuildingConstruction(b, B_GetBaseByIDX(i));
 			newBuilding += new;
 			if (new) {
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[i].name);
@@ -3444,7 +3459,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 	MSG_WriteShort(sb, gd.numAircraft);
 	MSG_WriteByte(sb, gd.numBases);
 	for (i = 0; i < gd.numBases; i++) {
-		b = B_GetBase(i);
+		b = B_GetBaseByIDX(i);
 		MSG_WriteString(sb, b->name);
 		MSG_WritePos(sb, b->pos);
 		MSG_WriteByte(sb, b->founded);
@@ -3685,7 +3700,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
 	for (i = 0; i < bases; i++) {
-		base_t *const b = B_GetBase(i);
+		base_t *const b = B_GetBaseByIDX(i);
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
 		if (b->founded) {

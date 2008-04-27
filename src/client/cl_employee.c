@@ -1407,7 +1407,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->idx = MSG_ReadShort(sb);
 			assert(gd.numBases);	/**< Just in case the order is ever changed. */
 			base = MSG_ReadShort(sb);
-			e->baseHired = (base >= 0) ? B_GetBase(base) : NULL;
+			e->baseHired = (base >= 0) ? B_GetBaseByIDX(base) : NULL;
 			building = MSG_ReadShort(sb);
 			e->building = (e->baseHired && building >= 0) ? &gd.buildings[e->baseHired->idx][building] : NULL;
 

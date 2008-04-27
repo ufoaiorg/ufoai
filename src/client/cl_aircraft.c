@@ -415,7 +415,7 @@ void AIR_NewAircraft_f (void)
 			return;
 
 		if (gd.bases[i].founded)
-			b = B_GetBase(i);
+			b = B_GetBaseByIDX(i);
 	} else
 		b = baseCurrent;
 
@@ -2051,7 +2051,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int == -1)
 				ufo->baseTarget = NULL;
 			else
-				ufo->baseTarget = B_GetBase(tmp_int);
+				ufo->baseTarget = B_GetBaseByIDX(tmp_int);
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int == -1)
 				ufo->aircraftTarget = NULL;
@@ -2129,7 +2129,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int >= 0)
-				gd.projectiles[i].aimedBase = B_GetBase(tmp_int);
+				gd.projectiles[i].aimedBase = B_GetBaseByIDX(tmp_int);
 			else
 				gd.projectiles[i].aimedBase = NULL;
 			tmp_int = MSG_ReadByte(sb);
@@ -2153,7 +2153,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		byte base, ufotype;
 		gd.recoveries[i].active = MSG_ReadByte(sb);
 		base = MSG_ReadByte(sb);
-		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBase((byte)base ) : NULL;
+		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base ) : NULL;
 		assert(numAircraftTemplates);
 		ufotype = MSG_ReadByte(sb);
 		gd.recoveries[i].ufotype = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;

@@ -193,7 +193,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	popupIntercept.numAircraft = 0;
 	memset(aircraftListText, 0, sizeof(aircraftListText));
 	for (j = 0; j < gd.numBases; j++) {
-		base = B_GetBase(j);
+		base = B_GetBaseByIDX(j);
 		assert(base);
 
 		if (!base->founded)
@@ -268,7 +268,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 		/* Create the list of base, and write the text to display in popup
 		 * don't use the same loop than above, to avoid leaving the loop if popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT */
 		for (j = 0; j < gd.numBases; j++) {
-			base = B_GetBase(j);
+			base = B_GetBaseByIDX(j);
 			assert(base);
 
 			if (!base->founded)
@@ -390,7 +390,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	base = NULL;
 	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
-		base = B_GetBase(baseIdx);
+		base = B_GetBaseByIDX(baseIdx);
 		assert(base);
 
 		if (!base->founded)
