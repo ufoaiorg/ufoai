@@ -41,12 +41,6 @@ plane_t		mapplanes[MAX_MAP_PLANES];
 static plane_t *planehash[PLANE_HASHES];
 
 static vec3_t map_mins, map_maxs;
-
-/* undefine to make plane finding use linear sort */
-#define	USE_HASHING
-
-void TestExpandBrushes(void);
-
 static int c_boxbevels = 0;
 static int c_edgebevels = 0;
 
@@ -59,7 +53,7 @@ PLANE FINDING
 /**
  * @brief Set the type of the plane according to it's normal vector
  */
-static int PlaneTypeForNormal (vec3_t normal)
+static inline int PlaneTypeForNormal (vec3_t normal)
 {
 	vec_t ax, ay, az;
 
@@ -82,7 +76,7 @@ static int PlaneTypeForNormal (vec3_t normal)
 	return PLANE_ANYZ;
 }
 
-static qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
+static inline qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
 {
 	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
 	 && fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
@@ -92,7 +86,7 @@ static qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
 	return qfalse;
 }
 
-static void AddPlaneToHash (plane_t *p)
+static inline void AddPlaneToHash (plane_t *p)
 {
 	int hash;
 
@@ -103,12 +97,12 @@ static void AddPlaneToHash (plane_t *p)
 	planehash[hash] = p;
 }
 
-static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
+static inline int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 {
 	plane_t *p, temp;
 
 	if (VectorLength(normal) < 0.5)
-		Sys_Error("FloatPlane: bad normal");
+		Sys_Error("FloatPlane: bad normal (%.3f:%.3f:%.3f)", normal[0], normal[1], normal[2]);
 	/* create a new plane */
 	if (nummapplanes + 2 > MAX_MAP_PLANES)
 		Sys_Error("MAX_MAP_PLANES (%i)", nummapplanes + 2);
@@ -146,7 +140,7 @@ static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
  * @brief Round the vector to int values
  * @note Can be used to save net bandwidth
  */
-static void SnapVector (vec3_t normal)
+static inline void SnapVector (vec3_t normal)
 {
 	int i;
 
@@ -164,7 +158,7 @@ static void SnapVector (vec3_t normal)
 	}
 }
 
-static void SnapPlane (vec3_t normal, vec_t *dist)
+static inline void SnapPlane (vec3_t normal, vec_t *dist)
 {
 	SnapVector(normal);
 
@@ -194,7 +188,12 @@ int FindFloatPlane (vec3_t normal, vec_t dist)
 	return CreateNewFloatPlane(normal, dist);
 }
 
-static int PlaneFromPoints (int *p0, int *p1, int *p2)
+/**
+ * @param[in] p0 A vector with plane coordinates
+ * @param[in] p1 A vector with plane coordinates
+ * @param[in] p2 A vector with plane coordinates
+ */
+static int PlaneFromPoints (const mapbrush_t *b, int *p0, int *p1, int *p2)
 {
 	vec3_t t1, t2, normal;
 	vec_t dist;
@@ -205,6 +204,9 @@ static int PlaneFromPoints (int *p0, int *p1, int *p2)
 	VectorNormalize(normal);
 
 	dist = DotProduct(p0, normal);
+
+	if (!VectorNotEmpty(normal))
+		Sys_Error("PlaneFromPoints: Bad normal (null) for brush %i", b->brushnum);
 
 	return FindFloatPlane(normal, dist);
 }
@@ -698,7 +700,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		GenerateMaterialFile(filename, mt, b, &td, side);
 
 		/* find the plane number */
-		planenum = PlaneFromPoints(planepts[0], planepts[1], planepts[2]);
+		planenum = PlaneFromPoints(b, planepts[0], planepts[1], planepts[2]);
 		if (planenum == PLANENUM_LEAF) {
 			Com_Printf("Entity %i, Brush %i: plane with no normal at line %i\n", b->entitynum, b->brushnum, GetScriptLine());
 			continue;
