@@ -134,8 +134,46 @@ static int checkFuncGroup (entity_t *e, int entnum)
 static int checkInfoPlayerStart (entity_t *e, int entnum)
 {
 	const char *val = ValueForKey(e, "team");
+	if (!*val) {
+		Com_Printf("ERROR: info_player_start with no team given - entnum: %i\n", entnum);
+		return 1;
+	}
+	return 0;
+}
+
+static int checkInfoNull (entity_t *e, int entnum)
+{
+	const char *val = ValueForKey(e, "targetname");
+	if (!*val) {
+		Com_Printf("ERROR: info_null with no targetname given - entnum: %i\n", entnum);
+		return 1;
+	}
+	return 0;
+}
+
+static int checkInfoCivilianTarget (entity_t *e, int entnum)
+{
+	const char *val = ValueForKey(e, "count");
 	if (!*val)
-		Com_Printf("info_player_start with no team given - entnum: %i\n", entnum);
+		Com_Printf("info_civilian_target with no count value given - entnum: %i\n", entnum);
+	return 0;
+}
+
+static int checkMiscSound (entity_t *e, int entnum)
+{
+	const char *val = ValueForKey(e, "noise");
+	if (!*val) {
+		Com_Printf("ERROR: misc_sound with no noise given - entnum: %i\n", entnum);
+		return 1;
+	}
+	return 0;
+}
+
+static int checkTriggerHurt (entity_t *e, int entnum)
+{
+	const char *val = ValueForKey(e, "dmg");
+	if (!*val)
+		Com_Printf("trigger_hurt with no dmg value given - entnum: %i\n", entnum);
 	return 0;
 }
 
@@ -153,7 +191,11 @@ static const entityCheck_t checkArray[] = {
 	{"func_group", checkFuncGroup},
 	{"misc_model", checkMiscModel},
 	{"misc_particle", checkMiscParticle},
+	{"misc_sound", checkMiscSound},
 	{"info_player_start", checkInfoPlayerStart},
+	{"info_null", checkInfoNull},
+	{"info_civilian_target", checkInfoCivilianTarget},
+	{"trigger_hurt", checkTriggerHurt},
 
 	{NULL, NULL}
 };
