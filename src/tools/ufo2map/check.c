@@ -40,7 +40,7 @@ static int checkFuncRotating (entity_t *e, int entnum)
 	if (!*val) {
 		char buf[16];
 		Com_Printf("func_rotating with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", CONTENTS_LEVEL_ALL);
+		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
 	return 0;
@@ -52,7 +52,7 @@ static int checkFuncDoor (entity_t *e, int entnum)
 	if (!*val) {
 		char buf[16];
 		Com_Printf("func_door with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", CONTENTS_LEVEL_ALL);
+		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
 	return 0;
@@ -64,7 +64,7 @@ static int checkFuncBreakable (entity_t *e, int entnum)
 	if (!*val) {
 		char buf[16];
 		Com_Printf("func_breakable with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", CONTENTS_LEVEL_ALL);
+		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
 	return 0;
@@ -76,7 +76,7 @@ static int checkMiscModel (entity_t *e, int entnum)
 	if (!*val) {
 		char buf[16];
 		Com_Printf("misc_model with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", CONTENTS_LEVEL_ALL);
+		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
 	return 0;
