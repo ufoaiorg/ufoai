@@ -6,7 +6,6 @@
 FONTDIR=debian/ufoai-data/usr/share/games/ufoai/media
 export LC_ALL=C
 export DH_OPTIONS
-export QUILT_PATCHES=debian/patches
 
 CFLAGS = -Wall -g
 
@@ -39,33 +38,13 @@ DEBTGZ  = ufoai_$(MAINVER)~svn$(SVNREV).debian.tar.gz
 
 get-orig-source: ../$(ORIGTGZ)
 
-genpatches:
-	dh_testdir
-	-rm -rf debian/patches
-	mkdir -p debian/patches
-	git-genpatches -s -p debian/patches -x '*/contrib/*' -x '*/debian/*' \
-	-b upstream -i debian 'patches/*'
-
-debtar: clean genpatches
+debtar: clean
 	dh_testdir
 	tar -zcf ../$(DEBTGZ) debian/
 
-patch: stamps/patch
-stamps/patch:
+config.status:
 	dh_testdir
-	# Don't patch when in git tree
-	[ -d .git ] || quilt push -a
-	mkdir -p stamps
-	touch $@
-
-unpatch:
-	dh_testdir
-	-[ -d .git ] || quilt pop -a
-	-rm stamps/patch
-
-config.status: patch
-	dh_testdir
-	./configure --without-curses
+	./configure --without-curses --prefix=/usr
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status
@@ -102,7 +81,7 @@ really_clean:
 	-rm -rf base/i18n
 	dh_clean
 
-clean: patch really_clean unpatch
+clean: really_clean
 
 install-arch: stamps/build-arch
 	dh_testdir
