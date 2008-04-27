@@ -31,17 +31,23 @@ void LoadBSPFile(const char *filename);
 void WriteBSPFile(const char *filename);
 void PrintBSPFileSizes(void);
 
+/**
+ * @sa entity_t
+ */
 typedef struct epair_s {
-	struct epair_s	*next;
-	char	*key;
-	char	*value;
+	struct epair_s	*next;	/**< the next entry in the key, value list */
+	char	*key;			/**< the name of the parameter */
+	char	*value;			/**< the value of the parameter */
 } epair_t;
 
+/**
+ * @sa epair_t
+ */
 typedef struct {
-	vec3_t		origin;
-	int			firstbrush;
-	int			numbrushes;
-	epair_t		*epairs;
+	vec3_t		origin;			/**< the origin vector of the entity */
+	int			firstbrush;		/**< the first brush in the brush list in case of a bmodel */
+	int			numbrushes;		/**< the number of brushes in case of a bmodel */
+	epair_t		*epairs;		/**< the entity parameters (key, value) */
 } entity_t;
 
 extern int num_entities;
