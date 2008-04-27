@@ -73,7 +73,7 @@ Description: Music for UFO: Alien Invasion
 Package: ufoai-tools
 Architecture: any
 Depends: ${shlibs:Depends}
-Suggests: blender gtkradiant
+Suggests: blender, gtkradiant
 Description: UFO: Alien Invasion - data-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
