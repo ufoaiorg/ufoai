@@ -84,7 +84,7 @@ base_t* B_GetBaseByIDX (int baseIdx)
  */
 base_t* B_GetFoundedBaseByIDX (int baseIdx)
 {
-	const base_t *base = B_GetBaseByIDX(baseIdx);
+	base_t *base = B_GetBaseByIDX(baseIdx);
 
 	if (base->founded)
 		return base;
