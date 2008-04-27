@@ -761,7 +761,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	 * the rotation origin for the rest of the brushes (like func_door)
 	 * in the entity. After the entire entity is parsed, the planenums
 	 * and texinfos will be adjusted for the origin brush */
-	if (b->contentFlags & CONTENTS_ORIGIN) {
+	if (!config.fixMap && b->contentFlags & CONTENTS_ORIGIN) {
 		char string[32];
 		vec3_t origin;
 
