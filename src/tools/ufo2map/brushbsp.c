@@ -566,7 +566,7 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 	int i, j;
 	winding_t *w, *cw[2], *midwinding;
 	plane_t *plane, *plane2;
-	side_t *s, *cs;
+	side_t *cs;
 	float d, d_front, d_back;
 
 	*front = *back = NULL;
@@ -627,7 +627,7 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 
 	/* split all the current windings */
 	for (i = 0; i < brush->numsides; i++) {
-		s = &brush->sides[i];
+		const side_t *s = &brush->sides[i];
 		w = s->winding;
 		if (!w)
 			continue;

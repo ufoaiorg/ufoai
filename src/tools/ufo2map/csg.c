@@ -208,8 +208,11 @@ static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
 
 /**
  * @brief Builds a new list that doesn't hold the given brush
+ * @param[in] list The brush list to copy
+ * @param[in] skip The brush to skip
+ * @return a @c bspbrush_t that is the old list without the skip entry
  */
-static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
+static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip)
 {
 	bspbrush_t *newlist;
 	bspbrush_t *next;
@@ -218,7 +221,7 @@ static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
 
 	for (; list; list = next) {
 		next = list->next;
-		if (list == skip1) {
+		if (list == skip) {
 			FreeBrush(list);
 			continue;
 		}
@@ -257,14 +260,13 @@ static inline qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
  */
 int MapBrushesBounds (const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
 {
-	mapbrush_t *b;
 	int i, j, num;
 
 	ClearBounds(mins, maxs);
 	num = 0;
 
 	for (i = startbrush; i < endbrush; i++) {
-		b = &mapbrushes[i];
+		const mapbrush_t *b = &mapbrushes[i];
 
 		/* don't use finished brushes again */
 		if (b->finished)
@@ -291,15 +293,13 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 
 bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs)
 {
-	mapbrush_t *mb;
 	bspbrush_t *brushlist, *newbrush;
 	int i, j, vis;
 	int c_faces, c_brushes, numsides;
-	vec3_t normal;
-	float dist;
 
 	for (i = 0; i < 2; i++) {
-		VectorClear(normal);
+		float dist;
+		vec3_t normal = {0, 0, 0};
 		normal[i] = 1;
 		dist = clipmaxs[i];
 		maxplanenums[i] = FindFloatPlane(normal, dist);
@@ -312,7 +312,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 	c_brushes = 0;
 
 	for (i = startbrush; i < endbrush; i++) {
-		mb = &mapbrushes[i];
+		mapbrush_t *mb = &mapbrushes[i];
 
 		if (!IsInLevel(mb->contentFlags, level))
 			continue;
