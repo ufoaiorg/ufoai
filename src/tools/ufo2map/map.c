@@ -682,8 +682,9 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			side->contentFlags |= CONTENTS_DETAIL;
 		if (config.fulldetail)
 			side->contentFlags &= ~CONTENTS_DETAIL;
-		if (!(side->contentFlags & (LAST_VISIBLE_CONTENTS - 1)))
-			side->contentFlags |= CONTENTS_SOLID;
+		if (!config.performMapCheck && !config.fixMap)
+			if (!(side->contentFlags & (LAST_VISIBLE_CONTENTS - 1)))
+				side->contentFlags |= CONTENTS_SOLID;
 
 		/* hints and skips are never detail, and have no content */
 		if (side->surfaceFlags & (SURF_HINT | SURF_SKIP)) {
