@@ -1,5 +1,5 @@
 /*QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
-Starting point for a player.
+Starting point for a player. Only for multiplayer teams.
 "team"	the number of the team for this player starting point. 0 is reserved for civilians and critters (use info_civilian_start instead)
 */
 
