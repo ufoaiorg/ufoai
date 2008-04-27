@@ -145,7 +145,11 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 	return brush;
 }
 
-
+/**
+ * @brief
+ * @param[in] level -1 for skipping the levelflag check
+ * @return boolean value
+ */
 static qboolean IsInLevel (int contents, int level)
 {
 	/* special levels */
@@ -243,11 +247,13 @@ static inline qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
  * to endbrush that are in a given level.
  * @param[in] startbrush the index of the first brush to check.
  * @param[in] endbrush the index after the last brush to check.
- * @param[in] level the level that we are searching for brushes in.
+ * @param[in] level the level that we are searching for brushes in. -1 for skipping the levelflag check.
  * @param[in] clipmins the absolute lowest boundary to allow for brushes.
  * @param[in] clipmaxs the absolute highest boundary to allow for brushes.
  * @param[out] mins the lowest boundary for all accepted brushes within the clipped bounds.
  * @param[out] maxs the highest boundary for all accepted brushes within the clipped bounds.
+ * @sa ProcessSubModel
+ * @sa IsInLevel
  */
 int MapBrushesBounds (const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
 {

@@ -75,6 +75,7 @@ static void ProcessSubModel (int entityNum)
 
 	mins[0] = mins[1] = mins[2] = -4096;
 	maxs[0] = maxs[1] = maxs[2] = 4096;
+	/* every level (-1) */
 	list = MakeBspBrushList(start, end, -1, mins, maxs);
 	if (!config.nocsg)
 		list = ChopBrushes(list);
