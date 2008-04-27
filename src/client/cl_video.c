@@ -113,8 +113,8 @@ void VID_Init (void)
 	vid_mode = Cvar_Get("vid_mode", "6", CVAR_ARCHIVE, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
 	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, "Grab the mouse in the game window - open the console to switch back to your desktop via Alt+Tab");
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
-	vid_height = Cvar_Get("vid_height", "768", CVAR_ARCHIVE, "Custom video height - set r_mode to -1 to use this");
-	vid_width = Cvar_Get("vid_width", "1024", CVAR_ARCHIVE, "Custom video width - set r_mode to -1 to use this");
+	vid_height = Cvar_Get("vid_height", "768", CVAR_ARCHIVE, "Custom video height - set vid_mode to -1 to use this");
+	vid_width = Cvar_Get("vid_width", "1024", CVAR_ARCHIVE, "Custom video width - set vid_mode to -1 to use this");
 
 	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the renderer - or change the resolution");
 
