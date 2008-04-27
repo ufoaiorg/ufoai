@@ -1,5 +1,6 @@
 /**
  * @file csg.c
+ * @brief Constructive Solids Geometry
  * @note tag all brushes with original contents
  * brushes may contain multiple contents
  * there will be no brush overlap after csg phase
@@ -186,6 +187,56 @@ static qboolean IsInLevel (int contents, int level)
 	}
 }
 
+static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
+{
+	bspbrush_t *walk, *next;
+
+	/* add to end of list */
+	for (walk = list; walk; walk = next) {
+		next = walk->next;
+		walk->next = NULL;
+		tail->next = walk;
+		tail = walk;
+	}
+
+	return tail;
+}
+
+/**
+ * @brief Builds a new list that doesn't hold the given brush
+ */
+static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
+{
+	bspbrush_t *newlist;
+	bspbrush_t *next;
+
+	newlist = NULL;
+
+	for (; list; list = next) {
+		next = list->next;
+		if (list == skip1) {
+			FreeBrush(list);
+			continue;
+		}
+		list->next = newlist;
+		newlist = list;
+	}
+	return newlist;
+}
+
+/**
+ * @brief Returns true if b1 is allowed to bite b2
+ */
+static inline qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
+{
+	/* detail brushes never bite structural brushes */
+	if ((b1->original->contentFlags & CONTENTS_DETAIL)
+		&& !(b2->original->contentFlags & CONTENTS_DETAIL))
+		return qfalse;
+	if (b1->original->contentFlags & CONTENTS_SOLID)
+		return qtrue;
+	return qfalse;
+}
 
 /**
  * @brief sets mins and maxs to the smallest sizes that can contain all brushes from startbrush
@@ -231,7 +282,6 @@ int MapBrushesBounds (const int startbrush, const int endbrush, const int level,
 
 	return num;
 }
-
 
 bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs)
 {
@@ -310,57 +360,6 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 	}
 
 	return brushlist;
-}
-
-static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
-{
-	bspbrush_t *walk, *next;
-
-	/* add to end of list */
-	for (walk = list; walk; walk = next) {
-		next = walk->next;
-		walk->next = NULL;
-		tail->next = walk;
-		tail = walk;
-	}
-
-	return tail;
-}
-
-/**
- * @brief Builds a new list that doesn't hold the given brush
- */
-static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
-{
-	bspbrush_t *newlist;
-	bspbrush_t *next;
-
-	newlist = NULL;
-
-	for (; list; list = next) {
-		next = list->next;
-		if (list == skip1) {
-			FreeBrush(list);
-			continue;
-		}
-		list->next = newlist;
-		newlist = list;
-	}
-	return newlist;
-}
-
-/**
- * @brief Returns true if b1 is allowed to bite b2
- */
-static qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
-{
-	/* detail brushes never bite structural brushes */
-	if ((b1->original->contentFlags & CONTENTS_DETAIL)
-		&& !(b2->original->contentFlags & CONTENTS_DETAIL))
-		return qfalse;
-	if (b1->original->contentFlags & CONTENTS_SOLID)
-		return qtrue;
-	return qfalse;
 }
 
 /**
@@ -446,7 +445,8 @@ newlist:
 			}
 		}
 
-		if (!b2) {	/* b1 is no longer intersecting anything, so keep it */
+		/* b1 is no longer intersecting anything, so keep it */
+		if (!b2) {
 			b1->next = keep;
 			keep = b1;
 		}

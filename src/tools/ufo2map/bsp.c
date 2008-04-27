@@ -79,6 +79,8 @@ static void ProcessSubModel (int entityNum)
 	if (!config.nocsg)
 		list = ChopBrushes(list);
 	tree = BrushBSP(list, mins, maxs);
+	assert(tree);
+	assert(tree->headnode);
 	if (tree->headnode->planenum == PLANENUM_LEAF)
 		Sys_Error("No head node bmodel of %s (%i)\n", ValueForKey(e, "classname"), entityNum);
 	MakeTreePortals(tree);

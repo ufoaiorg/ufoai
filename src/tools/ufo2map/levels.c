@@ -60,19 +60,23 @@ void PopInfo (void)
 	curTile->numsurfedges = oldsurfedges;
 }
 
-
+/**
+ * @param[in] mins
+ * @param[in] maxs
+ * @param[in] n The node nums
+ */
 static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 {
-	int node = -1, i;
+	int node = LEAFNODE, i;
 
 	for (i = 0; i < 3; i++) {
 		dBspNode_t	 *newnode;
 		vec3_t newmins, newmaxs, addvec;
 
-		if (n[i] == -1)
+		if (n[i] == LEAFNODE)
 			continue;
 
-		if (node == -1) {
+		if (node == LEAFNODE) {
 			/* store the valid node */
 			node = n[i];
 
@@ -119,6 +123,7 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 
 /**
  * @sa ProcessLevel
+ * @return The node num
  */
 static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const vec3_t cmaxs)
 {
@@ -130,7 +135,7 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
 
 	/* calculate bounds, stop if no brushes are available */
 	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
-		return -1;
+		return LEAFNODE;
 
 	VectorSubtract(bmaxs, bmins, diff);
 
@@ -162,8 +167,8 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
 		nn[1] = ConstructLevelNodes_r(levelnum, nmins, nmaxs);
 	} else {
 		/* no children */
-		nn[0] = -1;
-		nn[1] = -1;
+		nn[0] = LEAFNODE;
+		nn[1] = LEAFNODE;
 	}
 
 	/* add v_epsilon to avoid clipping errors */
@@ -175,7 +180,7 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
 
 	list = MakeBspBrushList(brush_start, brush_end, levelnum, bmins, bmaxs);
 	if (!list) {
-		nn[2] = -1;
+		nn[2] = LEAFNODE;
 		return BuildNodeChildren(bmins, bmaxs, nn);
 	}
 
