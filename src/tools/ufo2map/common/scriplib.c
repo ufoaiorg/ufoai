@@ -172,6 +172,7 @@ skipspace:
 		while (*script->script_p++ != '\n')
 			if (script->script_p >= script->end_p)
 				return EndOfScript(crossline);
+		script->line++;
 		goto skipspace;
 	}
 
