@@ -232,7 +232,7 @@ void CheckBrushes (void)
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
 			brush_texture_t *tex = &side_brushtextures[side - brushsides];
-			if (contentFlags != side->contentFlags) {
+			if (config.performMapCheck && contentFlags != side->contentFlags) {
 				Com_Printf("Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
 			}
 			if (!(side->contentFlags & (CONTENTS_WEAPONCLIP | CONTENTS_ORIGIN | CONTENTS_ACTORCLIP | CONTENTS_STEPON))) {
