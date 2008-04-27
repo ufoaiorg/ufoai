@@ -57,6 +57,7 @@ item ugv_chaingun
 	ammo		500
 	reload		20
 	price		0	// @todo maybe we still need this somewhere?
+	size		120
 	notonmarket	true
 	buytype	heavy_equipment
 }
@@ -72,6 +73,7 @@ item ugv_chaingun_belt
 	scale		1.6
 	price		2500
 	buytype	heavy_equipment
+	size		40
 	dmgtype normal
 
 	weapon_mod ugv_chaingun

@@ -117,6 +117,7 @@ item bloodspider_weapon
 	scale	1.0
 	size	6
 	buytype dummy
+	notonmarket	true
 	firetwohanded   true
 	dmgtype		normal
 

@@ -597,6 +597,7 @@ craftitem craft_ammo_sparrowhawk
 	crafttype	ammo
 	craftweapon		craft_weapon_sparrowhawk
 	price		1000
+	size	90	// medium
 	buytype		craftitem
 
 	ammo		7
@@ -758,7 +759,7 @@ craftitem base_ammo_AA51
 	name		"_AA51 Cicada SAM"
 	crafttype		base_ammo_missile
 	craftweapon		base_AA51_launcher
-	price		20000	// no used (not on market)
+//	price		20000	// no used (not on market)
 	buytype		dummy
 	notonmarket	true
 

@@ -140,6 +140,8 @@ item chaingun
 	reload		20
 	price		4600
 	buytype	weap_pri
+	notonmarket	true
+	size		1
 }
 
 item chaingun_ammo
@@ -154,6 +156,8 @@ item chaingun_ammo
 	price		150
 	buytype	weap_pri
 	dmgtype normal
+	notonmarket	true
+	size		1
 
 	weapon_mod chaingun
 	{
