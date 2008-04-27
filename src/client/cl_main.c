@@ -2302,7 +2302,7 @@ static void CL_CvarCheck (void)
 			Cvar_SetValue("mn_inputlength", MAX_CVAR_EDITING_LENGTH);
 	}
 
-	/* r_mode and fullscreen */
+	/* vid_mode and fullscreen */
 	v = Cvar_VariableInteger("mn_vidmode");
 	if (v < -1 || v >= VID_GetModeNums()) {
 		Com_Printf("Max vid_mode value is %i (%i)\n", VID_GetModeNums(), v);
