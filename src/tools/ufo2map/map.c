@@ -933,8 +933,6 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 void WriteMapFile (const char *filename)
 {
 	FILE *f;
-	const entity_t *mapent;
-	const epair_t *e;
 	int i, j, k;
 
 	Com_Printf("writing map: '%s'\n", filename);
@@ -943,9 +941,9 @@ void WriteMapFile (const char *filename)
 
 	fprintf(f, "\n");
 	for (i = 0; i < num_entities; i++) {
-		mapent = &entities[i];
+		const entity_t *mapent = &entities[i];
+		const epair_t *e = mapent->epairs;
 		fprintf(f, "// entity %i\n{\n", i);
-		e = mapent->epairs;
 		WriteMapEntities(f, e);
 		for (j = 0; j < mapent->numbrushes; j++) {
 			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
