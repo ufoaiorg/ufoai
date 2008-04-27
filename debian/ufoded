@@ -1,14 +1,12 @@
 #!/bin/sh
 
-# This is a wrapper script to launch the real ufoai binary, suitable
+# This is a wrapper script to launch the real ufoded binary, suitable
 # for a site-wide install on a UNIX-like OS.
 #
-# It assumes the game was installed in $INSTDIR, and
-# $INSTDIR/save/ does not exist (reasonable assumption for a
-# site-wide install).
+# It assumes the server was installed in $INSTDIR.
 #
 # It creates a ~/.ufoai/ dir, suitable as a current-directory
-# to launch the game in, such that ufo can write player's data.
+# to launch the game and server in, such that ufo can write player's data.
 # The user is allowed to some extent to replace the symlinks to system
 # data with copies, maybe modified.
 
@@ -26,4 +24,4 @@ BASEDIR=/usr/share/games/ufoai
 
 cd $BASEDIR
 
-${BINDIR}/ufo "$@"
+${BINDIR}/ufoded "$@"

@@ -1,2 +1,3 @@
-ufo2map /usr/lib/games/ufoai
-src/tools/blender/md2tag_export.py /usr/lib/blender/scripts
+ufo2map /usr/games/
+.gamedir /usr/share/games/ufoai/
+src/tools/blender/md2tag_export.py /usr/share/blender/scripts/blender/

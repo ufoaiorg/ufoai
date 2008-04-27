@@ -1,8 +1,6 @@
-base/0media.pk3 /usr/lib/games/ufoai/base/
-base/0base.pk3 /usr/lib/games/ufoai/base/
-base/0models.pk3 /usr/lib/games/ufoai/base/
-base/0pics.pk3 /usr/lib/games/ufoai/base/
-base/0ufos.pk3 /usr/lib/games/ufoai/base/
-base/0snd.pk3 /usr/lib/games/ufoai/base/
-base/0maps.pk3 /usr/lib/games/ufoai/base/
-debian/copyright /usr/share/doc/ufoai-data/
+base/0media.pk3 /usr/share/games/ufoai/
+base/0models.pk3 /usr/share/games/ufoai/
+base/0pics.pk3 /usr/share/games/ufoai/
+base/0snd.pk3 /usr/share/games/ufoai/
+base/i18n/* /usr/share/games/ufoai/i18n/
+src/docs/tex/ufo-manual_EN.pdf /usr/share/doc/ufoai-data/

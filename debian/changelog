@@ -1,4 +1,4 @@
-ufoai (2.3~~svn14428) unstable; urgency=low
+ufoai (2.2.1~svn15680-0) unstable; urgency=low
 
   [ Martin Gerhardy ]
   * Removed snd_* (SDL sound is merged into the ufo binary)
@@ -7,11 +7,43 @@ ufoai (2.3~~svn14428) unstable; urgency=low
   [ Florian Ludwig ]
   * Fix versioning of dependencies on ufo-data
   * Use libcurl4-dev not 3
-  * Dump version to 2.3~~svn
   * Disable curses console for the server
   * Fix copyright files
 
- -- Florian Ludwig <dino@phidev.org>  Sun, 03 Feb 2008 20:49:10 +0100
+  [ Teemu Ikonen ]
+  * Change Debian version to 2.2.1~svn15680-0
+  * Upgrade standards-version to 3.7.3
+  * Upgrade debhelper compat to 6
+  * Rename ufoai-data-music to ufoai-music, install just ogg-files
+    instead of packing into pk3
+  * Split maps, scripts and config files from ufoai-data to
+    ufoai-server-data
+  * Allow installing of game.so elsewhere than the game data
+  * Add ufoai-common package containing game.so
+  * ufoai-data: include translations, install to /usr/share/games/ufoai/
+  * Add dh_installdocs to binary-indep target, remove debian/copyright
+    files from .install files
+  * Add icons to client and dedicated server
+  * Add a .desktop file to the client from package at getdeb.net
+  * Add launcher script, .desktop and .menu files to ufoai-server
+  * Add dependency to ttf-thai-tlwg to ufoai-data
+  * Build and install the pdf manual, add build-dep to
+    texlive-latex-recommended
+  * Add ufoai-data.doc-base for the manual
+  * Set BASEDIR to empty string
+  * ufoai-tools: Install ufo2map to /usr/games/, install blender
+    script to a correct directory in Debian
+  * Add build-dep to quilt
+  * rules: 
+      + add get-orig-source target to fetch source from upstream svn
+      + add genpatches target to generate patch stack from git branches
+      + add debtar target to pack the debian-dir to a wig and pen
+        style debian.tar.gz
+      + add patch and unpatch targets calling quilt
+  * copyright: add copyright years, correct FSF address,
+    add author and licensing info on packaging
+
+ -- Teemu Ikonen <tpikonen@gmail.com>  Wed, 19 Mar 2008 01:34:46 +0100
 
 ufoai (2.2~~svn11864) unstable; urgency=low
 

@@ -1,0 +1,2 @@
+?package(ufoai-server):needs="text" section="Games/Strategy" \
+  title="UFO: Alien Invasion Dedicated Server" command="/usr/games/ufoded"

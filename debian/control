@@ -2,13 +2,16 @@ Source: ufoai
 Section: contrib/games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
-Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libpng-dev, libjpeg-dev, libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev, libcurl4-dev
-Standards-Version: 3.6.1
+Build-Depends: debhelper (>= 6.0.0), dh-buildinfo, libpng-dev, libjpeg-dev, 
+ libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev, libcurl4-dev,
+ texlive-latex-recommended, quilt
+Standards-Version: 3.7.3
 
 Package: ufoai
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (= ${source:Version}), libsdl-ttf2.0-0, libsdl-mixer1.2, libcurl3
-Suggests: ufoai-data-music
+Depends: ${shlibs:Depends}, ufoai-data (= ${source:Version}), 
+ ufoai-common (= ${source:Version})
+Recommends: ufoai-music
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
@@ -19,37 +22,59 @@ Description: UFO: Alien Invasion - build your team and stop the aliens
  The tactical part of the game uses OpenGL, and is based on the Quake2
  engine. A multiplayer mode is also available.
 
-Package: ufoai-tools
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: blender
-Description: UFO: Alien Invasion - data-building tool
- "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
- .
- This package includes the map-building tool.
-
 Package: ufoai-server
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: ufoai-data (= ${source:Version})
+Depends: ${shlibs:Depends}, ufoai-common (= ${source:Version})
+Recommends: ufoai-server-data
+Suggests: ufoai
 Description: UFO: Alien Invasion - standalone game server
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
  This package includes the standalone game server.
  It is only needed if you want to setup a permanent game server.
+ 
+Package: ufoai-common
+Architecture: any
+Depends: ${shlibs:Depends}
+Recommends: ufoai, ufoai-server
+Description: UFO: Alien Invasion common game library
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package contains the common library code needed by ufoai 
+ client and server.
+
+Package: ufoai-server-data
+Architecture: all
+Depends:
+Recommends: ufoai-server
+Description: Server data for UFO: Alien Invasion
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package contains parts of the UFO:AI game data (maps, scripts 
+ and config files) which are needed for running game servers.
 
 Package: ufoai-data
 Architecture: all
-Depends: ${misc:Depends}, ttf-freefont, ttf-dejavu
+Depends: ufoai-server-data (= ${source:Version}), ttf-freefont, ttf-dejavu, ttf-thai-tlwg
 Recommends: ufoai
 Description: Data for UFO: Alien Invasion
- This package contains all the non-optional game data for UFO:AI:
- maps, models, units, sound effects, etc.
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package contains rest of the non-optional game data for UFO:AI:
+ models, units, sound effects, etc.
 
-Package: ufoai-data-music
+Package: ufoai-music
 Architecture: all
-Depends: ${misc:Depends}
-Recommends: ufoai
-Description: Data for UFO: Alien Invasion
+Suggests: ufoai
+Description: Music for UFO: Alien Invasion
  This package contains the music for UFO:AI.  It is recommended to
  fully experience the game, but not required.
+
+Package: ufoai-tools
+Architecture: any
+Depends: ${shlibs:Depends}
+Suggests: blender
+Description: UFO: Alien Invasion - data-building tool
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package includes the map-building tool.

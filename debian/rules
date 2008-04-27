@@ -3,41 +3,69 @@
 # Copyright 2004, 2006 Yann Dirson.
 # Based on debhelper sample by Joey Hess.
 
+FONTDIR=debian/ufoai-data/usr/share/games/ufoai/media
 export LC_ALL=C
-vercmd=dpkg-parsechangelog | grep ^Version: | cut -c 10- | sed s/\\./\\./g
-
-FONTDIR=debian/ufoai-data/usr/lib/games/ufoai/base/media
-
 export DH_OPTIONS
+export QUILT_PATCHES=debian/patches
 
 CFLAGS = -Wall -g
 
 # let's do debugging
-export DEB_BUILD_OPTIONS=nostrip
+#export DEB_BUILD_OPTIONS=nostrip
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
 else
 	CFLAGS += -O4
 endif
-ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-	INSTALL_PROGRAM += -s
-endif
 
-versionconfig:
- # setup package version for SVN builds
-	set -e; if [ -d .svn ]; then \
-	  SRCVER=$(shell $(vercmd)) ;\
-	  CURVER=`svn info|grep ^Revision:| cut -c11-` ;\
-	  if [ -n "$$CURVER" ] ; then \
-	    sed 1s/$$SRCVER/$${SRCVER%svn*}svn$$CURVER/ < debian/changelog > debian/cl2;\
-	    mv debian/cl2 debian/changelog ;\
-	  fi ;\
-	fi
+MAINVER := $(shell dpkg-parsechangelog | sed -ne 's/^Version: *\([^~-]*\).*/\1/p' )
+SVNREV := $(shell dpkg-parsechangelog | sed -ne 's/^Version: .*~svn\([^-]*\).*/\1/p' )
+SVNBRANCH = branches/ufoai_2.2
+TMPDIR = /tmp/
+ORIGDIR = ufoai_$(MAINVER)~svn$(SVNREV).orig
+ORIGTGZ = ufoai_$(MAINVER)~svn$(SVNREV).orig.tar.gz
+DEBTGZ  = ufoai_$(MAINVER)~svn$(SVNREV).debian.tar.gz
 
-config.status:
+../$(ORIGTGZ):
+	svn export -r $(SVNREV) \
+	https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/$(SVNBRANCH) \
+	$(TMPDIR)/$(ORIGDIR)
+	-rm -rf $(TMPDIR)/$(ORIGDIR)/contrib
+	-rm -rf $(TMPDIR)/$(ORIGDIR)/debian
+	cd $(TMPDIR) ; tar -zcf $(ORIGTGZ) $(ORIGDIR) ; cd $(CURDIR)
+	rm -rf $(TMPDIR)/$(ORIGDIR)
+	mv $(TMPDIR)/$(ORIGTGZ) $(CURDIR)/..
+
+get-orig-source: ../$(ORIGTGZ)
+
+genpatches:
 	dh_testdir
-	./configure
+	-rm -rf debian/patches
+	mkdir -p debian/patches
+	git-genpatches -s -p debian/patches -x '*/contrib/*' -x '*/debian/*' \
+	-b upstream -i debian 'patches/*'
+
+debtar: clean genpatches
+	dh_testdir
+	tar -zcf ../$(DEBTGZ) debian/
+
+patch: stamps/patch
+stamps/patch:
+	dh_testdir
+	# Don't patch when in git tree
+	[ -d .git ] || quilt push -a
+	mkdir -p stamps
+	touch $@
+
+unpatch:
+	dh_testdir
+	-[ -d .git ] || quilt pop -a
+	-rm stamps/patch
+
+config.status: patch
+	dh_testdir
+	./configure --without-curses
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status
@@ -54,56 +82,63 @@ stamps/build-indep: config.status
 
 	$(MAKE) BUILDDIR=$(CURDIR)/BUILD lang maps
 	cd base && ./archives.sh
+	$(MAKE) -C src/docs/tex
 
 	mkdir -p stamps
 	touch $@
 
-clean:
+really_clean:
 	dh_testdir
 	dh_testroot
 	rm -rf stamps
 
 	[ ! -f Makefile ] || $(MAKE) BUILDDIR=$(CURDIR)/BUILD clean
-	find maps -name '*.bsp' | xargs --no-run-if-empty rm
+	$(MAKE) -C src/docs/tex clean	
+	find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
+	-rm base/*.pk3
 
-	set -e; if [ -d .svn ]; then \
-	  SRCVER=$(shell $(vercmd)) ;\
-	  sed 1s/$$SRCVER/$${SRCVER%svn*}svn/ < debian/changelog > debian/cl2;\
-	  mv debian/cl2 debian/changelog ;\
-	fi
-
+	-rm debian/ufoai-i18n-*.install
+	-rm Makefile config.h config.log config.status
+	-rm -rf base/i18n
 	dh_clean
+
+clean: patch really_clean unpatch
 
 install-arch: stamps/build-arch
 	dh_testdir
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-
 	dh_install
- # FIXME: dh_fixperms should handle that
-	chmod +x debian/ufoai/usr/games/ufo
 
 install-indep: stamps/build-indep
 	dh_testdir
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-
 	dh_install
 
   # add links to fonts
 	mkdir -p $(FONTDIR)
+	#From ttf-freefont
 	ln -s /usr/share/fonts/truetype/freefont/FreeSans.ttf $(FONTDIR)
+	#From ttf-dejavu-core
 	ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf $(FONTDIR)
+	#From ttf-thai-tlwg
+	ln -s /usr/share/fonts/truetype/thai/Loma.ttf $(FONTDIR)
+	ln -s /usr/share/fonts/truetype/thai/Norasi.ttf $(FONTDIR)
+	# This is not in Debian yet, see ITP #461757 for ttf-ume
+	cp base/media/ume-pgo4.ttf $(FONTDIR)
 
 # No architecture-independent files here.
 binary-indep: DH_OPTIONS=-i
-binary-indep: versionconfig install-indep
+binary-indep: install-indep
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs
-	dh_compress
+	dh_installdocs
+	dh_link
+	dh_compress -X.pdf
 	dh_fixperms
 	dh_installdeb
 	dh_gencontrol
@@ -112,7 +147,7 @@ binary-indep: versionconfig install-indep
 
 # Build architecture-dependent files here.
 binary-arch: DH_OPTIONS=-a
-binary-arch: versionconfig install-arch
+binary-arch: install-arch
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs
@@ -120,14 +155,12 @@ binary-arch: versionconfig install-arch
 	ln -s ../ufoai-data debian/ufoai/usr/share/doc/ufoai/docs
 	dh_buildinfo
 	dh_installexamples
-#	dh_install
 	dh_installmenu
-#	dh_installdebconf
 	dh_installman debian/ufo.6
+	dh_link
 	dh_strip
-	dh_compress
+	dh_compress -X.pdf
 	dh_fixperms
-#	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol

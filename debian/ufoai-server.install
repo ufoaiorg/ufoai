@@ -1,1 +1,4 @@
-ufoded /usr/lib/games/ufoai
+ufoded                /usr/lib/games/ufoai/
+debian/ufoded         /usr/games/
+debian/ufoded.xpm     /usr/share/pixmaps/
+debian/ufoded.desktop /usr/share/applications

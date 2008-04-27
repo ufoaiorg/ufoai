@@ -1,3 +1,4 @@
-base/game.so /usr/lib/games/ufoai/base/
-ufo /usr/lib/games/ufoai/
-debian/ufo /usr/games/
+ufo                  /usr/lib/games/ufoai/
+debian/ufo           /usr/games/
+debian/ufoai.xpm     /usr/share/pixmaps
+debian/ufoai.desktop /usr/share/applications
