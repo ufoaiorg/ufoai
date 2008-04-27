@@ -419,7 +419,7 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 
 	for (i = 0; i < 3; i++) {
 		if (ob->mins[0] < -4096 || ob->maxs[0] > 4096)
-			Com_Printf("entity %i, brush %i: bounds out of range\n", ob->entitynum, ob->brushnum);
+			Com_Printf("entity %i, brush %i: bounds out of world range\n", ob->entitynum, ob->brushnum);
 		if (ob->mins[0] > 4096 || ob->maxs[0] < -4096)
 			Com_Printf("entity %i, brush %i: no visible sides on brush\n", ob->entitynum, ob->brushnum);
 	}
@@ -954,7 +954,7 @@ void WriteMapFile (const char *filename)
 			for (k = 0; k < brush->numsides; k++) {
 				const side_t *side = &brush->original_sides[k];
 				const brush_texture_t *t = &side_brushtextures[side - brushsides];
-				if (t->name[0]) {
+				if (side->visible) {
 					const plane_t *p = &mapplanes[side->planenum];
 					fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
 					fprintf(f, "( %i %i %i ) ", p->planeVector[1][0], p->planeVector[1][1], p->planeVector[1][2]);

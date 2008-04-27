@@ -278,8 +278,8 @@ typedef struct side_s {
 } side_t;
 
 typedef struct brush_s {
-	int		entitynum;
-	int		brushnum;
+	int		entitynum;		/**< the entity number in the map - 0 is the world - everything else is a bmodel */
+	int		brushnum;		/**< the brush number in the map */
 
 	int		contentFlags;
 

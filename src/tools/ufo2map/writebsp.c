@@ -269,10 +269,6 @@ void SetModelNumbers (void)
 void EmitBrushes (void)
 {
 	int i, j, bnum, s, x;
-	cBspBrush_t *cb;
-	dBspBrush_t *db;
-	mapbrush_t *b;
-	dBspBrushSide_t *cp;
 	vec3_t normal;
 	vec_t dist;
 	int planenum;
@@ -283,9 +279,9 @@ void EmitBrushes (void)
 	memset(curTile->brushes, 0, MAX_MAP_BRUSHES * sizeof(cBspBrush_t));
 
 	for (bnum = 0; bnum < nummapbrushes; bnum++) {
-		b = &mapbrushes[bnum];
-		db = &curTile->dbrushes[bnum];
-		cb = &curTile->brushes[bnum];
+		mapbrush_t *b = &mapbrushes[bnum];
+		dBspBrush_t *db = &curTile->dbrushes[bnum];
+		cBspBrush_t *cb = &curTile->brushes[bnum];
 
 		db->contentFlags = b->contentFlags;
 		db->firstbrushside = curTile->numbrushsides;
@@ -295,12 +291,14 @@ void EmitBrushes (void)
 		cb->numsides = b->numsides;
 		cb->checkcount = 0;
 		for (j = 0; j < b->numsides; j++) {
-			if (curTile->numbrushsides == MAX_MAP_BRUSHSIDES)
+			if (curTile->numbrushsides == MAX_MAP_BRUSHSIDES) {
 				Sys_Error("MAX_MAP_BRUSHSIDES (%i)", curTile->numbrushsides);
-			cp = &curTile->brushsides[curTile->numbrushsides];
-			curTile->numbrushsides++;
-			cp->planenum = b->original_sides[j].planenum;
-			cp->texinfo = b->original_sides[j].texinfo;
+			} else {
+				dBspBrushSide_t *cp = &curTile->brushsides[curTile->numbrushsides];
+				curTile->numbrushsides++;
+				cp->planenum = b->original_sides[j].planenum;
+				cp->texinfo = b->original_sides[j].texinfo;
+			}
 		}
 
 		/* add any axis planes not contained in the brush to bevel off corners */
