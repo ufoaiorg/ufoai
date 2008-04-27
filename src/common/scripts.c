@@ -2461,18 +2461,18 @@ qboolean Com_ItemsSanityCheck (void)
 		const objDef_t *item = &csi.ods[i];
 
 		/* warn if item has no size set */
-		if (item->size == 0) {
+		if (item->size <= 0 && !(item->buytype == BUY_DUMMY && item->notOnMarket)) {
 			result = qfalse;
 			Com_Printf("Com_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
 		}
 
 		/* warn if no price is set */
-		if (item->price == 0 && item->notOnMarket == qfalse) {
+		if (item->price <= 0 && !item->notOnMarket) {
 			result = qfalse;
 			Com_Printf("Com_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
 		}
 
-		if (item->price > 0 && item->notOnMarket == qtrue) {
+		if (item->price > 0 && item->notOnMarket) {
 			result = qfalse;
 			Com_Printf("Com_ItemsSanityCheck: Item %s has a price set though it is not available on the market.\n", item->id);
 		}

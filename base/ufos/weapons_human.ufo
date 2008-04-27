@@ -138,7 +138,6 @@ item chaingun
 	scale		1.25
 	ammo		200
 	reload		20
-	price		4600
 	buytype	weap_pri
 	notonmarket	true
 	size		1
@@ -153,7 +152,6 @@ item chaingun_ammo
 	shape		"0 0 4 2"
 	center		"-3 -6 0"
 	scale		1.6
-	price		150
 	buytype	weap_pri
 	dmgtype normal
 	notonmarket	true
