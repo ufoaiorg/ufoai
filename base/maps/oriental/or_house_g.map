@@ -342,6 +342,7 @@
 "_color" "1 1 1"
 "origin" "184 128 60"
 "light" "180"
+"spawnflags" "1"
 }
 // entity 4
 {
@@ -349,6 +350,7 @@
 "light" "140"
 "origin" "76 128 60"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 5
 {

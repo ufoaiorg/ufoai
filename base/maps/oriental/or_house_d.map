@@ -564,6 +564,7 @@
 "light" "180"
 "origin" "184 128 60"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 3
 {
@@ -804,4 +805,5 @@
 "_color" "1 1 1"
 "origin" "76 128 60"
 "light" "140"
+"spawnflags" "1"
 }
