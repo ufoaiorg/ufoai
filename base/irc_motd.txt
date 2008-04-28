@@ -7,7 +7,7 @@ Do NOT:
 - Spam.
 - Use strong language.
 - Use any language other than English.
-- Be impatient. It make take several minutes for someone to reply.
+- Be impatient. It may take several minutes for someone to reply.
 
 You can close this window and return to it always by pressing F10, even in a singleplayer mission.
 You can also send messages to players directly into the game when you add the name of the player at the start of your message.
