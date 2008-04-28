@@ -542,7 +542,8 @@ character_t *CL_GetActorChr (const le_t * le)
 		}
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: no character info found!\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: No character info found!\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: aircraft: %i, actorIdx: %i, p: %i\n", aircraft->idx, actorIdx, p);
 	return NULL;
 }
 
@@ -609,12 +610,12 @@ static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapo
  */
 void CL_ListReactionAndReservations_f (void)
 {
-	int actor_idx;
+	int actorIdx;
 	character_t *chr;
 
-	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-		if (cl.teamList[actor_idx]) {
-			chr = CL_GetActorChr(cl.teamList[actor_idx]);
+	for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
+		if (cl.teamList[actorIdx]) {
+			chr = CL_GetActorChr(cl.teamList[actorIdx]);
 			Com_Printf("%s\n", chr->name);
 			Com_Printf(" - hand: %i | fm: %i | wpidx: %i\n", chr->RFmode.hand, chr->RFmode.fmIdx,chr->RFmode.wpIdx);
 			Com_Printf(" - res... reaction: %i | crouch: %i\n", chr->reservedTus.reaction, chr->reservedTus.crouch);
@@ -1440,7 +1441,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 
 /**
  * @brief Sets the reaction-firemode of an actor/soldier to it's default value on client- and server-side.
- * @param[in] actor_idx Index of the actor to set the firemode for.
+ * @param[in] actorIdx Index of the actor to set the firemode for.
  * @param[in] hand Which weapon(-hand) to try first for reaction-firemode (r|l).
  */
 void CL_SetDefaultReactionFiremode (le_t * actor, const char hand)
@@ -1487,7 +1488,7 @@ void CL_SetDefaultReactionFiremode (le_t * actor, const char hand)
  */
 void CL_DisplayFiremodes_f (void)
 {
-	int actor_idx;
+	int actorIdx;
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	int weapFdsIdx = -1;
@@ -1552,9 +1553,9 @@ void CL_DisplayFiremodes_f (void)
 	}
 	firemodes_change_display = qtrue;
 
-	actor_idx = CL_GetActorNumber(selActor);
-	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: actor index: %i\n", actor_idx);
-	if (actor_idx == -1)
+	actorIdx = CL_GetActorNumber(selActor);
+	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: actor index: %i\n", actorIdx);
+	if (actorIdx == -1)
 		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
 	selChr = CL_GetActorChr(selActor);
@@ -2511,8 +2512,8 @@ void CL_RemoveActorFromTeamList (const le_t * le)
  */
 qboolean CL_ActorSelect (le_t * le)
 {
-	int actor_idx;
-	qboolean same_actor = qfalse;
+	int actorIdx;
+	qboolean sameActor = qfalse;
 
 	/* test team */
 	if (!le || le->team != cls.team ||
@@ -2531,23 +2532,24 @@ qboolean CL_ActorSelect (le_t * le)
 	if (selActor != le)
 		mousePosTargettingAlign = 0;
 	else
-		same_actor = qtrue;
+		sameActor = qtrue;
 
 	selActor = le;
 	menuInventory = &selActor->i;
 	selActorReactionState = CL_GetReactionState(selActor);
 
-	actor_idx = CL_GetActorNumber(le);
-	if (actor_idx < 0)
+	actorIdx = CL_GetActorNumber(le);
+	if (actorIdx < 0)
 		return qfalse;
 
 	/* console commands, update cvars */
-	Cvar_ForceSet("cl_selected", va("%i", actor_idx));
+	Cvar_ForceSet("cl_selected", va("%i", actorIdx));
 
 	selChr = CL_GetActorChr(le);
 	assert(selChr);
 
 	if (selChr->inv) {
+		/* Right now we can only update this if the selChr is already set. */
 		switch (le->fieldSize) {
 		case ACTOR_SIZE_NORMAL:
 			CL_CharacterCvars(selChr);
@@ -2560,7 +2562,7 @@ qboolean CL_ActorSelect (le_t * le)
 		}
 	}
 
-	/* Forcing the hud-display to refresh it's displayed stuff */
+	/* Forcing the hud-display to refresh its displayed stuff. */
 	Cvar_SetValue("hud_refresh", 1);
 	CL_ActorUpdateCVars();
 
@@ -2572,7 +2574,7 @@ qboolean CL_ActorSelect (le_t * le)
 
 	/* Change to move-mode and hide firemodes.
 	 * Only if it's a different actor - if it's the same we keep the current mode etc... */
-	if (!same_actor) {
+	if (!sameActor) {
 		HideFiremodes();
 		cl.cmode = M_MOVE;
 	}
@@ -3152,7 +3154,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 {
 	int entnum;
 	le_t *le;
-	int actor_idx = -1;
+	int actorIdx = -1;
 	int hand = -1;		/**< 0=right, 1=left -1=undef*/
 
 	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
@@ -3166,8 +3168,8 @@ void CL_InvCheckHands (struct dbuffer *msg)
 		return;
 	}
 
-	actor_idx = CL_GetActorNumber(le);
-	if (actor_idx == -1) {
+	actorIdx = CL_GetActorNumber(le);
+	if (actorIdx == -1) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
 		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
 		return;
@@ -4068,7 +4070,7 @@ void CL_NextRound_f (void)
  */
 void CL_DoEndRound (struct dbuffer *msg)
 {
-	int actor_idx;
+	int actorIdx;
 
 	/* hud changes */
 	if (cls.team == cl.actTeam)
@@ -4090,17 +4092,17 @@ void CL_DoEndRound (struct dbuffer *msg)
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
-		for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-			if (cl.teamList[actor_idx]) {
+		for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
+			if (cl.teamList[actorIdx]) {
 				/* Check for unusable RF setting - just in case. */
-				if (!CL_WorkingFiremode(cl.teamList[actor_idx], qtrue)) {
-					Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actor_idx);
+				if (!CL_WorkingFiremode(cl.teamList[actorIdx], qtrue)) {
+					Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actorIdx);
 					/* At this point the rest of the code forgot to update RF-settings somewhere. */
-					CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
+					CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], 'r');
 				}
 
 				/** @todo Reset reservations for shots?
-				CL_ReserveTUs(cl.teamList[actor_idx], RES_SHOT, 0);
+				CL_ReserveTUs(cl.teamList[actorIdx], RES_SHOT, 0);
 				MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); * Update server-side settings *
 				*/
 			}
