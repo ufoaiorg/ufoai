@@ -87,7 +87,7 @@ menu irc
 		align	uc
 		font	f_small
 	}
-	text users_data
+	text irc_userlist
 	{
 		pos		"750 100"
 		size	"240 594"
@@ -96,15 +96,18 @@ menu irc
 		num		"1"
 		height	"27"
 		wheel
+		mousefx		true
 		scrollbar	true
+		click
+		rclick
 	}
 
 	text irc_data
 	{
-		pos		"30 80"
-		size	"695 620"
+		pos		"30 168"
+		size	"695 528"
 //		bgcolor	"0.5 0.5 0.5 0.2"
-		height	"28"
+		height	"24"
 		format  "22 0"
 		num		"0"
 		wheel
@@ -121,7 +124,9 @@ menu irc
 	string irc_server_topic
 	{
 		string	"*cvar irc_topic"
-		pos		"256 60"
+		align	uc
+		size	"512 40"
+		pos		"340 80"
 		font	f_verysmall
 	}
 
