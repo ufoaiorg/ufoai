@@ -32,5 +32,5 @@ find ufos -type f -print | egrep -v '(\/\.svn\/)' | awk '/\.ufo$/ {print}' | xar
 echo "base..."
 #don't add the user settings
 rm -f config.cfg
-zip -u9 0base.${EXT} *.cfg
+zip -u9 0base.${EXT} *.cfg irc_motd.txt
 echo "...finished"
