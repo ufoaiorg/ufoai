@@ -3235,6 +3235,7 @@
 "origin" "320 372 216"
 "light" "220"
 "_color" "0.8 0.92 1"
+"spawnflags" "1"
 }
 // entity 21
 {
@@ -3242,6 +3243,7 @@
 "_color" "1 0.9 0.6"
 "light" "160"
 "origin" "136 356 120"
+"spawnflags" "1"
 }
 // entity 22
 {
@@ -3249,6 +3251,7 @@
 "origin" "104 100 120"
 "light" "160"
 "_color" "1 0.9 0.6"
+"spawnflags" "1"
 }
 // entity 23
 {
@@ -3256,6 +3259,7 @@
 "origin" "256 224 120"
 "light" "160"
 "_color" "1 0.9 0.6"
+"spawnflags" "1"
 }
 // entity 24
 {
@@ -3263,6 +3267,7 @@
 "origin" "400 100 120"
 "light" "160"
 "_color" "1 0.9 0.6"
+"spawnflags" "1"
 }
 // entity 25
 {
@@ -3270,6 +3275,7 @@
 "origin" "396 352 120"
 "light" "160"
 "_color" "1 0.9 0.6"
+"spawnflags" "1"
 }
 // entity 26
 {
@@ -3277,6 +3283,7 @@
 "origin" "360 468 120"
 "light" "160"
 "_color" "1 0.9 0.6"
+"spawnflags" "1"
 }
 // entity 27
 {
@@ -3284,6 +3291,7 @@
 "_color" "0.8 0.92 1"
 "light" "220"
 "origin" "384 184 232"
+"spawnflags" "1"
 }
 // entity 28
 {
@@ -3291,6 +3299,7 @@
 "_color" "0.8 0.92 1"
 "light" "220"
 "origin" "104 188 232"
+"spawnflags" "1"
 }
 // entity 29
 {
@@ -3298,4 +3307,5 @@
 "_color" "0.8 0.92 1"
 "light" "140"
 "origin" "252 452 176"
+"spawnflags" "1"
 }

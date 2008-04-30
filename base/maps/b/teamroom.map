@@ -2139,10 +2139,6 @@
 // entity 23
 {
 "classname" "func_group"
-}
-// entity 24
-{
-"classname" "func_group"
 // brush 0
 {
 ( 103 352 88 ) ( 61 352 88 ) ( 61 351 88 ) tex_base/vent002 102 0 0 -0.265625 0.03125 512 0 0
@@ -2243,101 +2239,115 @@
 ( 60 380 86 ) ( 60 366 86 ) ( 60 366 68 ) tex_material/c_gray050 24 8 0 0.5 0.5 512 0 0
 }
 }
-// entity 25
+// entity 24
 {
 "classname" "light"
 "origin" "145 351 124"
 "light" "150"
 "_color" "0.5 1 0.5"
+"spawnflags" "1"
 }
-// entity 26
+// entity 25
 {
 "classname" "light"
 "origin" "257 391 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 27
+// entity 26
 {
 "classname" "light"
 "origin" "173 121 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 28
+// entity 27
 {
 "classname" "light"
 "origin" "385 431 124"
 "light" "100"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 29
+// entity 28
 {
 "classname" "light"
 "origin" "324 366 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 30
+// entity 29
 {
 "classname" "light"
 "origin" "404 327 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 31
+// entity 30
 {
 "classname" "light"
 "origin" "78 352 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 32
+// entity 31
 {
 "classname" "light"
 "origin" "70 174 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 33
+// entity 32
 {
 "classname" "light"
 "origin" "121 121 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 34
+// entity 33
 {
 "classname" "light"
 "origin" "160 255 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 35
+// entity 34
 {
 "classname" "light"
 "origin" "380 255 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 36
+// entity 35
 {
 "classname" "light"
 "origin" "253 254 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 37
+// entity 36
 {
 "classname" "light"
 "origin" "256 127 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
-// entity 38
+// entity 37
 {
 "classname" "light"
 "origin" "348 171 124"
 "light" "150"
 "_color" "1 1 0.95"
+"spawnflags" "1"
 }
