@@ -33,6 +33,9 @@ sub check
 	my $align = 0; # check alignment of spawns
 	my $brushcount = 0;
 	my $ent_end = 0;
+	my $spawnflags = 0;
+	my $lightsday = 0;
+	my $lightsnight = 0;
 	foreach ( readDir( $dir ) ) {
 		next if $_ =~ /^\.|(CVS)/;
 		if ( -d "$dir/$_" && $recursive ) {
@@ -45,7 +48,7 @@ sub check
 		print "==============================================\n";
 		print "map: $dir/$_\n";
 		open ( MAP, "<$dir/$_" ) || die "Could not open $dir/$_\n";
-		$team = $line = 0;
+		$team = $line = $spawnflags = $lightsday = $lightsnight = 0;
 		%count = ();
 		%teamcount = ();
 		foreach ( <MAP> ) {
@@ -54,12 +57,28 @@ sub check
 				m/^\"classname\"\s+\"(\w+)\"/ig;
 				if ( !$1 ) {
 					m/^\"team\"\s+\"(\d+)\"/ig;
-					next unless $1;
-					$teamcount{$1}++;
-					$teamfound = 1;
+					if ( $1 ) {
+						$teamcount{$1}++;
+						$teamfound = 1;
+					}
+					m/^\"spawnflags\"\s+\"(\d+)\"/ig;
+					if ( $1 ) {
+						$spawnflags = $1;
+						if ( $entity =~ /light/ ) {
+							# FIXME: Check the bitmask here
+							if ( $spawnflags eq 1 ) {
+								$lightsday++;
+							}
+						}
+					}
 					next;
 				}
+				# new entity - reset spawnflags
+				$spawnflags = 0;
 				$entity = $1;
+				if ( $entity =~ /light/ ) {
+					$lightsnight++;
+				}
 			} else {
 				if ($team) {
 					if ( m/^\}\n$/ ) {
@@ -129,6 +148,10 @@ sub check
 				}
 			}
 		}
+		if ( $lightsnight ) {
+			print "... night lights => $lightsnight\n";
+			print "... day lights => $lightsday\n";
+		}
 		print "==============================================\n";
 		print "\n";
 		close ( MAP );
@@ -152,6 +175,6 @@ if ( $file eq "--recursion" || $file eq "-r" ) {
 	$file = "";
 	$rec = 1;
 }
-check(".", $file, $rec);
+check("../../base/maps", $file, $rec);
 
 print "...finished\n"
