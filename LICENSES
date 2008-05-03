@@ -180,7 +180,7 @@ base/maps/ice/ice_r02.map | GNU General Public License 2.0
 base/maps/ice/ice_r03.map | GNU General Public License 2.0
 base/maps/industrial.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/italy.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/japan.map | GNU General Public License 2.0
+base/maps/japan/ja_main.map | GNU General Public License 2.0
 base/maps/lake_ice.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/lake_ice_big.map | GNU General Public License 2.0 | 'SparX' Beyeler, Martin Gerhardy
 base/maps/mart.map | GNU General Public License 2.0 | Drew Babkirk (Druterium)
