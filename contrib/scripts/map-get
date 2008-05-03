@@ -1,0 +1,203 @@
+#!/usr/bin/env python
+import sys, os
+from md5 import md5
+from shutil import copy
+import urllib2
+from gzip import GzipFile
+from tempfile import mkstemp
+import logging # TODO: use me
+import optparse
+
+URI = 'http://ufo.ludwigf.org/maps'
+__version__ = '0.0.1'
+
+def md5sum(path):
+    # to be used carefully with big files
+    return md5(open(path).read()).hexdigest()
+
+
+import time
+def download(uri):
+    request = urllib2.Request(uri)
+    import platform
+    p = ' '.join([platform.platform()] + list(platform.dist()))
+    request.add_header('User-Agent', 'ufoai_map-get/%s (%s)' % (__version__, p))
+    f = urllib2.build_opener().open(request)
+    
+    re = ''
+    t = 1
+    data = f.read(10240)
+    while data:
+        re+= data
+        if sys.stdout.isatty:
+            out = '\r%s %9ikb' % (uri, len(re) / 1024)
+            sys.stdout.write(out)
+            sys.stdout.flush()
+        t = time.time()
+        data = f.read(10240)
+        t = time.time() - t
+    f.close()
+    sys.stdout.write('\r%s\r' % (' '*len(out)))
+    return re
+
+
+def ufo2map_hash():
+    h = md5()
+    files = []
+    for i in os.walk('src/tools/ufo2map'):
+        if '/.' in i[0]:
+            continue
+        files+= [os.path.join(i[0], j) for j in i[2]]
+    files.sort()
+    for fname in files:
+        h.update(open(fname).read())
+    return [md5(open('ufo2map').read()).hexdigest(), h.hexdigest()]
+
+
+def usage(arg):
+    # TODO port to optparse
+    print 'Usage map-get command\n'
+    print 'Commands:'
+    print ' upgrade - Make sure all maps are up to date'
+    print ' generate - Generate or update Repository dir (probably you don\'t want that)'
+
+
+def upgrade(arg):
+    """Download the list of maps."""
+    maps = {}
+    print 'getting list of available maps'
+    for i in download(URI + '/Maps').split('\n'):
+        i = i.split(' ')
+        try:
+            maps[i[0]] = (i[1], i[2])
+        except:
+            pass
+
+    # check ufo2map's _source_ md5
+    if maps['ufo2map'][1] == ufo2map_hash()[1]:
+        print 'ufo2map version ok'
+    else:
+        print 'ufo2map version mismatch, aborting'
+        os.exit(5)
+    del maps['ufo2map']
+
+    for i in maps:
+        map_name = i[:-4] + ".map"
+        if not os.path.exists(map_name):
+            print '%s not found' % map_name
+            continue
+        
+        
+        if md5sum(map_name) != maps[i][1]:
+            print '%s version mismatch' % i
+            continue
+        
+        if not os.path.exists(i) or md5sum(i) != maps[i][0]:
+            fd, name = mkstemp()
+            os.write(fd, download('%s/%s.gz' %(URI, i)))
+            os.close(fd)
+            data = GzipFile(name, 'r').read()
+            os.unlink(name)
+            open(i, 'w').write(data)
+            print '%s - updated' % i
+        else:
+            print '%s - allready up to date' % i
+
+
+def gen(arg):
+    if len(arg) < 1:
+        print "You must specify a directory."
+        sys.exit(1)
+    
+    if not os.path.exists(arg[0]):
+        print "The path '%s' does not exist." % arg[0]
+        sys.exit(2)
+    dst = arg[0]
+    
+    if not os.access(arg[0], os.R_OK | os.W_OK):
+        print 'Permission denied. "%s"' % arg[0]
+
+    # run make maps etc.
+    # call seperatly otherwise linking happens last -> building maps fails
+    os.system('make clean')
+    os.system('make ufo2map')
+    os.system('make maps -j 2')
+    print
+    
+    # read old md5 list
+    old = {}
+    if os.path.exists(os.path.join(dst, 'Maps')):
+        for i in open(os.path.join(dst, 'Maps')):
+            i = i.split(' ')
+            old[i[0]] = i[1]
+
+    # create md5 sums of .map files
+    maps = open(os.path.join(dst, 'Maps'), 'w')
+
+    maps.write(' '.join(['ufo2map']+ufo2map_hash()) + '\n')
+
+    for dirname, dnames, fnames in os.walk('base/maps'):
+        if '/.' in dirname:
+            # this dir is a / within a hidden one
+            continue
+        
+        for i in fnames:
+            if not i.endswith('.map'):
+                continue
+            
+            mfile = os.path.join(dirname, i)
+            bfile = mfile[:-4] + '.bsp'
+            if not os.path.exists(bfile):
+                print "Warning: Cant find .bsp for %s" % mfile
+                continue
+            
+            mmd5 = md5sum(mfile)
+            bmd5 = md5sum(bfile)
+            
+            if not bfile in old or bmd5 != old[bfile]:
+                print '%s - updating' % bfile
+                if os.path.exists(os.path.join(dst, bfile)):
+                    os.unlink(os.path.join(dst, bfile))
+                
+                # make sure destination directory exists
+                dst_dir = os.path.split(os.path.join(dst, bfile))[0]
+                if not os.path.exists(dst_dir):
+                    os.makedirs(dst_dir)
+                
+                data = open(bfile).read()
+                GzipFile(os.path.join(dst, bfile) + '.gz', 'w').write(data)
+            else:
+                print '%s - allready up to date' % bfile
+            
+            maps.write(' '.join((bfile, bmd5, mmd5)) + '\n')
+
+
+def main(argv=None):
+    commands = {'upgrade': upgrade,
+                'generate': gen}
+
+    parser = optparse.OptionParser()
+    parser.add_option('-v', '--verbose', action='store_true', dest='verbose')
+    (options, args) = parser.parse_args()
+    # add comment about 'actions'
+    
+    print options, args
+
+    logging.basicConfig(level=options.verbose and logging.DEBUG or logging.INFO,
+                        format='[%(levelname)]%s: (message)s')
+
+    if not len(args):
+        parser.print_help()
+        sys.exit(1)
+
+    if not os.path.exists('base/maps/'):
+        print 'You must execute map-get within the root of ufo directory tree.'
+        exit(3)
+
+    commands[args[0]](args[1:])
+
+
+if __name__ == '__main__':
+    main()
+
+
