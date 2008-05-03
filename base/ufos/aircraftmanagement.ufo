@@ -578,7 +578,7 @@ craftitem craft_weapon_sparrowhawk
 {
 	name		"_Sparrowhawk AA Missile Rack"
 	crafttype	weapon
-	size	40	// light
+	size	90	// medium
 	installationTime	3
 	price		27000
 	buytype		craftitem
@@ -590,7 +590,7 @@ craftitem craft_ammo_sparrowhawk
 	crafttype	ammo
 	craftweapon		craft_weapon_sparrowhawk
 	price		1000
-	size	90	// medium
+	size	40	// light
 	buytype		craftitem
 
 	ammo		7
@@ -766,5 +766,6 @@ craftitem base_ammo_AA51
 	delay		500
 	size	10	// light
 }
+
 
 
