@@ -648,47 +648,48 @@ static void B_ResetAllStatusAndCapacities_f (void)
 	int baseIdx, i;
 	base_t *base;
 
-	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++){
-		base = B_GetBaseByIDX(baseIdx);
-		if (base->founded) {
-			/* set buildingStatus[] and capacities.max values */
-			B_ResetAllStatusAndCapacities(base, qfalse);
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
 
-			/* calculate capacities.cur for every capacity */
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
-				base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
+		/* set buildingStatus[] and capacities.max values */
+		B_ResetAllStatusAndCapacities(base, qfalse);
 
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)) ||
-				B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)))
-				AIR_UpdateHangarCapForAll(base);
+		/* calculate capacities.cur for every capacity */
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
+			base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
 
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
-				base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)) ||
+			B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)))
+			AIR_UpdateHangarCapForAll(base);
 
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
-				INV_UpdateStorageCap(base);
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
+			base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
 
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
-				base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
+			INV_UpdateStorageCap(base);
 
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
-				PR_UpdateProductionCap(base);
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
+			base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
 
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)))
-				HOS_UpdateHospitalCapForAll(base);
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
+			PR_UpdateProductionCap(base);
 
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)) ||
-				B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)))
-				UFO_UpdateUFOHangarCapForAll(base);
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)))
+			HOS_UpdateHospitalCapForAll(base);
 
-			if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)))
-				INV_UpdateAntimatterCap(base);
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)) ||
+			B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)))
+			UFO_UpdateUFOHangarCapForAll(base);
 
-			/* Check that current capacity is possible -- if we changed values in *.ufo */
-			for (i = 0; i < MAX_CAP; i++)
-				if (base->capacities[i].cur > base->capacities[i].max)
-					Com_Printf("B_ResetAllStatusAndCapacities_f: Warning, capacity of %i is bigger than maximum capacity\n", i);
-		}
+		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)))
+			INV_UpdateAntimatterCap(base);
+
+		/* Check that current capacity is possible -- if we changed values in *.ufo */
+		for (i = 0; i < MAX_CAP; i++)
+			if (base->capacities[i].cur > base->capacities[i].max)
+				Com_Printf("B_ResetAllStatusAndCapacities_f: Warning, capacity of %i is bigger than maximum capacity\n", i);
 	}
 }
 #endif
