@@ -1767,6 +1767,29 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		slot->installationTime = 0;
 	}
 
+	tech = RS_GetTechByID("rs_craft_weapon_shiva");
+
+	if (!tech)
+		Sys_Error("Could not get tech rs_craft_weapon_shiva");
+
+	item = AII_GetAircraftItemByID(tech->provides);
+
+	if (!item)
+		return;
+
+	for (i = 0; i < aircraft->maxWeapons; i++) {
+		slot = &aircraft->weapons[i];
+		if (slot->size < AII_GetItemWeightBySize(item))
+			continue;
+		if (aircraft->homebase->storage.num[item->idx] <= 0)
+			continue;
+		if (slot->item)
+			continue;
+		AII_AddItemToSlot(aircraft->homebase, tech, slot);
+		AIM_AutoAddAmmo(aircraft->homebase, aircraft, slot);
+		slot->installationTime = 0;
+	}
+
 	AII_UpdateAircraftStats(aircraft);
 }
 
