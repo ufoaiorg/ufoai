@@ -442,3 +442,29 @@
 "origin" "240 624 28"
 "angle" "45"
 }
+// entity 38
+{
+"classname" "info_player_start"
+"origin" "464 80 28"
+"team" "2"
+}
+// entity 39
+{
+"classname" "info_player_start"
+"angle" "135"
+"team" "2"
+"origin" "400 16 28"
+}
+// entity 40
+{
+"classname" "info_player_start"
+"origin" "464 144 28"
+"team" "2"
+"angle" "-135"
+}
+// entity 41
+{
+"classname" "info_player_start"
+"team" "2"
+"origin" "432 48 28"
+}
