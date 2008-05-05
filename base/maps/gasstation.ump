@@ -1,0 +1,46 @@
+// *********************************
+// Gasstation
+// *********************************
+
+base gasstation/gas_
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: main
+// b: dropship
+
+tile +main
+{
+11 8
+
+0      0      0      0      0      0      0      0      0       0      0      
+0     +a     +a     +a     +a     +a     +a     +a      +a     +a      0
+0     +a     +a     +a     +a     +a     +a     +a      +a     +a      0
+0     +a     +a     +a     +a     +a     +a     +a      +a     +a      0
+0     +a     +a     +a     +a     +a     +a     +a      +a     +a      0
+0      b      b      b     +a     +a     +a     +a      +a     +a      0
+0      b      b      b     +a     +a     +a     +a      +a     +a      0
+0      0      0      0      0      0      0      0      0       0      0      
+}
+
+tile +drop_firebird
+{
+5 4
+
+0      a      a      a      a
+0     +b     +b     +b      a
+0     +b     +b     +b      a
+0      0      0      0      0
+}
+
+// ########################################
+// ########### Maps for the game ##########
+
+assembly default
+{
+size "9 6"
+title "_Gasstation"
++main "1 1"
+*rm_drop +drop_firebird "1 1"
+}

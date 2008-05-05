@@ -1288,7 +1288,7 @@ mapdef city_disco
 
 mapdef gasstation
 {
-	map				gasstation
+	map				+gasstation
 	description		"_A place where citizens come to replenish their vehicles' fuel supply."
 	multiplayer		true
 	teams			2
