@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: blondandy
+Main-Class: net.ufoai.sf.maputils.MapUtils
+Class-Path: 
