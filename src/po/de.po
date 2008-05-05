@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-04-26 22:59+0200\n"
-"PO-Revision-Date: 2008-04-26 23:05+0100\n"
+"PO-Revision-Date: 2008-05-05 19:32+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr "Konstruktion"
 
 #: ../base/maps/druglord.ump:57
 msgid "Druglord"
-msgstr ""
+msgstr "Drogenkartell"
 
 #: ../base/maps/frozen.ump:211
 msgid "Snow"
@@ -360,9 +360,8 @@ msgid "Combat Armour"
 msgstr "Gefechtsrüstung"
 
 #: ../base/ufos/armour.ufo:129
-#, fuzzy
 msgid "Advanced Combat Armour"
-msgstr "Gefechtsrüstung"
+msgstr "Verbesserte Gefechtsrüstung"
 
 #: ../base/ufos/armour.ufo:190
 msgid "Nanocomposite Armour"
@@ -1346,7 +1345,7 @@ msgstr "Ein von Äckern und Scheunen umgebenes Bauernhaus. Ein UFO ist auf einem
 
 #: ../base/ufos/maps.ufo:1166
 msgid "An industrial compound."
-msgstr ""
+msgstr "Ein Industriekomplex."
 
 #: ../base/ufos/maps.ufo:1208
 msgid "A rather old-fashioned suburban district."
@@ -1400,7 +1399,7 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:1778
 msgid "A luxurious vacation resort."
-msgstr ""
+msgstr "Eine luxuriöse Urlaubsanlage."
 
 #: ../base/ufos/maps.ufo:1829
 msgid "An african suburb that has received a visit from a Harvester."
@@ -1427,9 +1426,8 @@ msgid "A place where people come to relax and mingle."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:2120
-#, fuzzy
 msgid "UFO Crashsite."
-msgstr "UFO Absturzstelle"
+msgstr "UFO Absturzstelle."
 
 #: ../base/ufos/maps.ufo:2133
 msgid "An alien base."
@@ -4102,9 +4100,8 @@ msgid "Joystick settings:"
 msgstr "Joystick Einstellungen:"
 
 #: ../base/ufos/menu_options.ufo:1161
-#, fuzzy
 msgid "Threshold:"
-msgstr "Joystick Schwellwert:"
+msgstr "Schwellwert:"
 
 #: ../base/ufos/menu_options.ufo:1226
 msgid "Keys"
@@ -10850,7 +10847,7 @@ msgstr "Gesichtete Gegner: Während man sich in einem Bodeneinsatz befindet, kan
 
 #: ../base/ufos/tips.ufo:47
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base equipment, not in the tactical missions where such an action would cost TUs."
-msgstr ""
+msgstr "Die rechte Maustaste kann in der Ausrüstungsubersicht benutzt werden um Waffen, Munition und Rüstung mit einem Klick zuzuweisen. Das funktioniert allerdings nur im Basis Menü, nicht im Einsatz wo die Zuweisung ZE kösten würde."
 
 #: ../base/ufos/tips.ufo:48
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -11267,9 +11264,8 @@ msgid "Rifle Particle Accelerator"
 msgstr "Partikelbeschleuniger - Gewehr"
 
 #: ../base/ufos/weapons_particle.ufo:159
-#, fuzzy
 msgid "Repeat Fire"
-msgstr "Feuerschwall"
+msgstr ""
 
 #: ../base/ufos/weapons_particle.ufo:186
 msgid "Particle Beam Cannon"
@@ -11413,7 +11409,7 @@ msgstr "[%i ZE] %s - %s"
 
 #: client/cl_actor.c:1139
 msgid "Reserve TUs for firing/using."
-msgstr ""
+msgstr "Reserviere ZE zum Schießen/Benutzen."
 
 #: client/cl_actor.c:1139
 msgid "Shot Reservation"
@@ -11427,9 +11423,8 @@ msgid ""
 msgstr "Nicht genug Zeiteinheiten\n"
 
 #: client/cl_actor.c:1799
-#, fuzzy
 msgid "Not enough TUs for standing up."
-msgstr "Nicht genügend Lagerkapazität"
+msgstr "Nicht genügend ZE um aufzustehen."
 
 #: client/cl_actor.c:1802
 #, c-format
@@ -11437,9 +11432,8 @@ msgid "Stand up (%i TU)"
 msgstr "Aufstehen (%i ZE)"
 
 #: client/cl_actor.c:1808
-#, fuzzy
 msgid "Not enough TUs for crouching."
-msgstr "Zeitreservierung für Krauchen umschalten."
+msgstr "Nicht genügend ZE zum Ducken."
 
 #: client/cl_actor.c:1811
 #, c-format
@@ -11447,21 +11441,22 @@ msgid "Crouch (%i TU)"
 msgstr "Hinknien (%i ZE)"
 
 #: client/cl_actor.c:1819
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
-msgstr "Reserviere ZE zum Ducken/Aufstehen"
+msgstr ""
+"%i ZE zum Ducken/Aufstehen reserviert,\n"
+"Klicken zum löschen."
 
 #: client/cl_actor.c:1822
-#, fuzzy, c-format
+#, c-format
 msgid "Reserve %i TUs for crouching/standing up."
-msgstr "Reserviere ZE zum Ducken/Aufstehen"
+msgstr "Reserviere %i ZE zum Ducken/Aufstehen."
 
 #: client/cl_actor.c:1825
-#, fuzzy
 msgid "Not enough TUs left to reserve for crouching/standing up."
-msgstr "Reserviere ZE zum Ducken/Aufstehen"
+msgstr "Nicht genug ZE übrig um zum Ducken/Aufstehen zu reservieren."
 
 #: client/cl_actor.c:1831
 #, c-format
@@ -11470,15 +11465,17 @@ msgid ""
 "Click to change.\n"
 "Right-Click to clear."
 msgstr ""
+"%i ZE für schießen reserviert.\n"
+"Klick zum Ändern\n"
+"Rechtsklick zum Löschen."
 
 #: client/cl_actor.c:1834
-#, fuzzy
 msgid "Reserve TUs for shooting."
-msgstr "Reserviere ZE zum Ducken/Aufstehen"
+msgstr "Reserviere ZE zum Schießen."
 
 #: client/cl_actor.c:1837
 msgid "Reserving TUs for shooting not possible."
-msgstr ""
+msgstr "ZE Reservierung zum Schießen nicht möglich."
 
 #: client/cl_actor.c:1909
 msgid "No reload possible for right hand."
@@ -11536,6 +11533,10 @@ msgid ""
 "- Reserved:  %i\n"
 "- Remaining: %i\n"
 msgstr ""
+"Zeiteinheiten\n"
+"- Verfügbar: %i (von %i)\n"
+"- Reserviert: %i\n"
+"- Verbleibend: %i\n"
 
 #: client/cl_actor.c:2240
 #, c-format
@@ -12065,9 +12066,9 @@ msgstr "Stellen Sie sicher, dass alle Abhängigkeiten für das Gebäude %s (%s) 
 #: client/cl_basemanagement.c:2929
 #: client/cl_basemanagement.c:2934
 #: client/cl_basemanagement.c:2939
-#, fuzzy, c-format
+#, c-format
 msgid "You need to recruit %s to use building %s."
-msgstr "Sie brauchen das Gebäude %s um das Gebäude %s einsatzbereit zu machen."
+msgstr "Sie brauchen %s um das Gebäude %s zu betreiben."
 
 #: client/cl_basemanagement.c:2945
 #, c-format
@@ -12165,18 +12166,17 @@ msgid "Alien base"
 msgstr "Außerirdische Basis"
 
 #: client/cl_campaign.c:431
-#, fuzzy
 msgid "Harvesting mission"
-msgstr "Mission starten"
+msgstr "Erntemission"
 
 #: client/cl_campaign.c:435
 msgid "Crashed UFO"
 msgstr "Abgestürztes UFO"
 
 #: client/cl_campaign.c:583
-#, fuzzy, c-format
+#, c-format
 msgid "Alien activity has been detected in %s."
-msgstr "Alien Aktivitäten wurden gemeldet: '%s'"
+msgstr "Alien Aktivitäten wurden gemeldet in: '%s'."
 
 #: client/cl_campaign.c:919
 #: client/cl_campaign.c:1155
@@ -12197,7 +12197,6 @@ msgid "You have failed in your charter to protect Earth. Our home and our people
 msgstr "Sie haben in Ihrer Charta, die Erde zu beschützen, versagt. Unsere Heimat und unser Volk sind der außerirdischen Infektion zum Opfer gefallen. Nur eine Handvoll Menschen auf der Erde bleibt menschlich, und die wenigen Übrigen  haben keine Chance mehr, die Flut aufzuhalten. Ihr Kommando existiert nicht mehr; PHALANX kann nicht mehr als Einheit fungieren. Nicht steht mehr zwischen den Außerirdischen und dem totalen Sieg."
 
 #: client/cl_campaign.c:3271
-#, fuzzy
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Unter Ihrem Kommando haben PHALANX-Einheiten ständig dabei versagt, unschuldige Zivilisten zu retten. Dutzende haben durch Ihre Unfähigkeit, der außerirdischen Bedrohung beizukommen, ihr Leben verloren. Die UN hat Sie, in höchstem Maße unzufrieden mit ihrer Leistung, von Ihrem Posten entbunden und daraufhin PHALANX als effektive Eingreiftruppe aufgelöst. Keine weiteren Anstrengungen zur globalen Kooperation werden unternommen. Die Nationen der Erde versuchen, jede für sich gegen die Außerirdischen zu kämpfen, und werden eine nach der Anderen vernichtet."
 
@@ -12665,9 +12664,9 @@ msgid "Send a message to allied team members"
 msgstr "Sende eine Nachricht an alle Teammitglieder"
 
 #: client/cl_employee.c:173
-#, fuzzy, c-format
+#, c-format
 msgid "%s [Transferred]"
-msgstr "Transfer"
+msgstr "%s [Transferiert]"
 
 #: client/cl_employee.c:241
 msgid "Soldier"
@@ -12793,7 +12792,7 @@ msgstr "Gegenfeuer umschalten"
 
 #: client/cl_input.c:1725
 msgid "Toggle reservation for crouching."
-msgstr "Zeitreservierung für Krauchen umschalten."
+msgstr "Zeitreservierung für Ducken umschalten."
 
 #: client/cl_input.c:1726
 msgid "Toggle the headgear"
@@ -13866,9 +13865,8 @@ msgid "Select a soldier from list"
 msgstr "Soldaten per Mausklick auswählen"
 
 #: client/cl_team.c:1936
-#, fuzzy
 msgid "Reselect the current soldier"
-msgstr "Der ausgewählte Soldat"
+msgstr "Den ausgewählten Soldaten zentrieren"
 
 #: client/cl_team.c:1937
 msgid "Toggle to next soldier"
@@ -14428,7 +14426,7 @@ msgstr ""
 
 #: client/cl_ufopedia.c:192
 msgid "Maximum speed"
-msgstr ""
+msgstr "Maximale Geschwindigkeit"
 
 #: client/cl_ufopedia.c:198
 msgid "ECM"
