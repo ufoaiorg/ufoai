@@ -38,6 +38,7 @@ copybinaries: bundle_dirs
 
 copydata: bundle_dirs
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
+	@mkdir -p UFOAI.app/base/i18n
 	@cp -r $(ROOTDIR)base/i18n/[^.]* UFOAI.app/base/i18n
 
 copynotes: package_dir
@@ -61,7 +62,7 @@ bundle: copybinaries copydata copylibs copynotes
 bundle-nodata: copybinaries copylibs copynotes
 
 create-dmg: bundle updateversion copy_package_bundle strip_dev_files
-	@rm $(PACKAGE_NAME).dmg
+	@rm -f $(PACKAGE_NAME).dmg
 	@hdiutil create -srcfolder $(PACKAGE_NAME) $(PACKAGE_NAME).dmg
 
 build_dmg: copybinaries copylibs
