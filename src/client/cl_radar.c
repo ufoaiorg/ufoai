@@ -80,7 +80,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 	pts[0].x = x;
 	pts[0].y = y;
 	for (i = radar->numUFOs - 1; i >= 0; i--)
-		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z > 0) {
+		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z < 0) {
 			pts[1].x = x;
 			pts[1].y = y;
 			R_DrawLineStrip(2, (int*)pts); /* FIXME */
