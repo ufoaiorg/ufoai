@@ -25,22 +25,21 @@ public class Entity {
 	static Pattern spawnPointPattern = Pattern.compile ("info_.+?_start");
 	public static final int
 	CLASS_WORLDSPAWN = 0,
-					   CLASS_FUNC_GROUP = 1,
-										  CLASS_FUNC_BREAKABLE = 2,
-																 CLASS_MISC_MODEL = 3,
-																					CLASS_MISC_PARTICLE = 4,
-																										  CLASS_FUNC_DOOR = 5,
-																															CLASS_FUNC_ROTATING = 6,
-																																				  CLASS_TRIGGER_HURT = 7,
-																																									   CLASS_INFO_ALIEN_START = 8,
-																																																CLASS_INFO_CIVILIAN_START = 9,
-																																																							CLASS_INFO_HUMAN_START = 10,
-																																																													 CLASS_INFO_PLAYER_START = 11,
-																																																																			   CLASS_UGV_ALIEN_START = 12,
-																																																																									   CLASS_LIGHT = 13,
-																																																																													 CLASS_MISC_SOUND = 14,
-																																																																																		CLASS_MISC_MISSION = 15,
-																																																																																							 CLASS_MISC_MISSION_ALIEN = 16;
+	CLASS_FUNC_GROUP = 1,
+	CLASS_FUNC_BREAKABLE = 2,
+	CLASS_MISC_MODEL = 3,
+	CLASS_MISC_PARTICLE = 4,
+	CLASS_FUNC_DOOR = 5,
+	CLASS_FUNC_ROTATING = 6,
+	CLASS_TRIGGER_HURT = 7,
+	CLASS_INFO_ALIEN_START = 8,																																																CLASS_INFO_CIVILIAN_START = 9,
+	CLASS_INFO_HUMAN_START = 10,
+	CLASS_INFO_PLAYER_START = 11,
+	CLASS_UGV_ALIEN_START = 12,
+	CLASS_LIGHT = 13,
+	CLASS_MISC_SOUND = 14,
+	CLASS_MISC_MISSION = 15,
+	CLASS_MISC_MISSION_ALIEN = 16;
 
 	/**  */
 	public Entity (Map from, int startIndex, int endIndex) throws ParseException {
@@ -99,7 +98,8 @@ public class Entity {
 			brushes.add (new Brush (map, this, region[0], region[1]) );
 		}
 	}
-
+	
+	/** @return the class, eg worldspawn. */
 	public int getClassType() {
 		return classtype;
 	}
@@ -212,6 +212,11 @@ public class Entity {
 	public void calculateLevelFlags() {
 		//@TODO check for model's levelflags and check func_breakable brushes
 		//for(KeyValuePair kvp:keyValuePairs) kvp.writeReformedText(to);
-		for (Brush b: brushes) b.setLevelFlagsBasedOnVertexCoordinates();
+		int numberOfBrushesWithLevelFlagsChanged=0;
+		for (Brush b: brushes) {
+		    b.setLevelFlagsBasedOnVertexCoordinates();
+		    numberOfBrushesWithLevelFlagsChanged+= b.haveLevelFlagsBeenChanged () ? 1 : 0 ;
+		}
+		MapUtils.printf ("Entity %d (%s) had %d Brushes which had levelflags changed%n",entNumber,this.getClassType (),numberOfBrushesWithLevelFlagsChanged);
 	}
 }

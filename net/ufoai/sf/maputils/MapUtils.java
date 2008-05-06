@@ -155,7 +155,7 @@ public class MapUtils {
 		out.println ("            if foo.map.original_0 exists then saves foo.map.original_1, etc");
 		out.println ("  -lvlflags Calculate levelflags based on brush vertex coordinates.");
 		out.println();
-		out.println ("will probably need to set extra memory. to allow java ~1Meg.");
+		out.println ("will probably need to set extra memory. to allow java around 1 Gig.");
 		out.println ("java -Xmx1000M -jar maputils.jar [options] <map>");
 		out.println();
 

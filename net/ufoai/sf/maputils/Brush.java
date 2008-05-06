@@ -193,8 +193,12 @@ public class Brush {
 		int level = calculateLevelBasedOnVertexCoordinates();
 		for (Face f: faces) f.setLevelFlags (level);
 		if (numberOfFacesWithLevelFlagsChanged != 0) {
-			MapUtils.printf ("Brush had level flags changed. calculated to be on level %d. %s%n", level, lastLevelFlagChangeNote);
+			//MapUtils.printf ("Brush had level flags changed. calculated to be on level %d. %s%n", level, lastLevelFlagChangeNote);
 		}
+	}
+	
+	public boolean haveLevelFlagsBeenChanged(){
+	    return numberOfFacesWithLevelFlagsChanged!=0;
 	}
 
 	/** assumes that the contentflags are listed the same on each face.
