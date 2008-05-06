@@ -1532,7 +1532,7 @@ mapdef village
 
 mapdef military_convoy
 {
-	map				military_convoy
+	map				"+military_convoy"
 	description		"_A military convoy has caught the eye of the aliens."
 	multiplayer		true
 	teams			2
