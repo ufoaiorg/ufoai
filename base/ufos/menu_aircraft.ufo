@@ -315,6 +315,8 @@ menu aircraft
 		texl	"0 0"
 		texh	"16 16"
 		click	{ cmd "mn_prev_aircraft;" }
+		whup	{ cmd "mn_next_aircraft;" }
+		whdown	{ cmd "mn_prev_aircraft;" }
 	}
 
 	pic next_aircraft
@@ -326,6 +328,8 @@ menu aircraft
 		texl	"16 0"
 		texh	"32 16"
 		click	{ cmd "mn_next_aircraft;" }
+		whup	{ cmd "mn_next_aircraft;" }
+		whdown	{ cmd "mn_prev_aircraft;" }
 	}
 
 	pic aircraft_return
@@ -475,6 +479,14 @@ menu aircraft_equip
 			cmd "mn_prev_aircraft;"
 			airequip_zone1
 		}
+		whup	{
+			cmd "mn_next_aircraft;"
+			airequip_zone1
+		}
+		whdown	{
+			cmd "mn_prev_aircraft;"
+			airequip_zone1
+		}
 	}
 
 	pic bt_next
@@ -487,6 +499,14 @@ menu aircraft_equip
 		mousefx true
 		click	{
 			cmd "mn_next_aircraft;"
+			airequip_zone1
+		}
+		whup	{
+			cmd "mn_next_aircraft;"
+			airequip_zone1
+		}
+		whdown	{
+			cmd "mn_prev_aircraft;"
 			airequip_zone1
 		}
 	}
