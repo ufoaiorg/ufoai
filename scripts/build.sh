@@ -28,7 +28,7 @@ for FILE in *.java; do
 	# classpath is the directory containing the net directory
 	echo "_______________________________"
 	echo "compiling $FILE"
-#	$JAVAC -classpath ../../../.. $FILE
+	$JAVAC -classpath ../../../.. $FILE
 done
 
 # change to the directory containing the net directory
