@@ -153,6 +153,11 @@ public class Brush {
 	}
 
 	private void findBoundingBox() {
+		if(vertices.size ()==0) {/* hack to ignore result of poor vertex finding */
+		    MapUtils.printf ("Brush %d from Entity %d (%s) has no vertices%n",brushNumber, parentEntity.getNumber (),parentEntity.getValue ("classname"));
+		    xmax=xmin=ymax=ymin=zmax=zmin=-4096;
+		    return;
+		}
 		xmax = xmin = vertices.get (0).x;
 		ymax = ymin = vertices.get (0).y;
 		zmax = zmin = vertices.get (0).z;

@@ -39,7 +39,8 @@ public class Entity {
 	CLASS_LIGHT = 13,
 	CLASS_MISC_SOUND = 14,
 	CLASS_MISC_MISSION = 15,
-	CLASS_MISC_MISSION_ALIEN = 16;
+	CLASS_MISC_MISSION_ALIEN = 16,
+	CLASS_LIGHT_SPOT = 17;
 
 	/**  */
 	public Entity (Map from, int startIndex, int endIndex) throws ParseException {
@@ -89,7 +90,8 @@ public class Entity {
 		if (classname.equalsIgnoreCase ("MISC_SOUND") ) return CLASS_MISC_SOUND;
 		if (classname.equalsIgnoreCase ("MISC_MISSION") ) return CLASS_MISC_MISSION;
 		if (classname.equalsIgnoreCase ("MISC_MISSION_ALIEN") ) return CLASS_MISC_MISSION_ALIEN;
-		throw new RuntimeException ("classname not recognised");
+		if (classname.equalsIgnoreCase ("LIGHT_SPOT") ) return CLASS_LIGHT_SPOT;
+		throw new RuntimeException ("classname not recognised:"+classname);
 	}
 
 	public void findBrushes() throws ParseException {
