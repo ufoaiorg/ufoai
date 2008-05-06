@@ -250,11 +250,11 @@ item machinegun_ammo
 	model		weapons/machinegun/machinegun_clip
 	type		ammo
 	animationindex	0
-	shape		"0 0 1 2"
+	shape		"0 0 2 2"
 	center		"0 0 0"
-	scale		1.25
+	scale		1.9
 	price		65
-	size		3
+	size		6
 	buytype	weap_pri
 	dmgtype normal
 
