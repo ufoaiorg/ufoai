@@ -62,7 +62,7 @@ bundle: copybinaries copydata copylibs copynotes
 bundle-nodata: copybinaries copylibs copynotes
 
 create-dmg: bundle updateversion copy_package_bundle strip_dev_files
-	@rm $(PACKAGE_NAME).dmg
+	@rm -f $(PACKAGE_NAME).dmg
 	@hdiutil create -srcfolder $(PACKAGE_NAME) $(PACKAGE_NAME).dmg
 
 
