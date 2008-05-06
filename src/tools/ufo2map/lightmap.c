@@ -715,8 +715,8 @@ void CreateDirectLights (void)
 			if (target[0]) {	/* point towards target */
 				e2 = FindTargetEntity(target);
 				if (!e2)
-					Com_Printf("WARNING: light at (%i %i %i) has missing target\n",
-						(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2]);
+					Com_Printf("WARNING: light at (%i %i %i) has missing target '%s' - e.g. create an info_null that has a 'targetname' set to '%s'\n",
+						(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2], target, target);
 				else {
 					GetVectorForKey(e2, "origin", dest);
 					VectorSubtract(dest, dl->origin, dl->normal);
