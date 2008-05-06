@@ -406,7 +406,6 @@ void MN_RightClick (int x, int y)
 				MN_BaseMapRightClick(node, x, y);
 				break;
 			case MN_MAP:
-				MAP_ResetAction();
 				if (!cl_3dmap->integer)
 					mouseSpace = MS_SHIFTMAP;
 				else
