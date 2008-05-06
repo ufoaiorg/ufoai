@@ -303,6 +303,7 @@ void UP_ItemDescription (const objDef_t *od)
 	if (!od->tech && ccs.singleplayer) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
 		mn.menuText[TEXT_STANDARD] = itemText;
+		odAmmo = NULL;
 	} else
 #endif
 
