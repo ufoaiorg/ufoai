@@ -1,6 +1,7 @@
 #!/bin/bash
 # example script to build the maputil.
 # you are probably better off using netbeans (the sun IDE)
+# javac and jar are included in java sdk
 
 fail() {
     echo -e "\n$1"
