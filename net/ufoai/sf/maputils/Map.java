@@ -215,16 +215,18 @@ public class Map {
 				Vector<Face> bFaces = b.getFaces();
 				Vector<Face> piFaces = pib.getFaces();
 				for (Face bf: bFaces) {
-					for (Face pif: piFaces) {
-						//System.out.printf("Brush.findUnexposedFaces: testing if Face %d from Brush %d interacts with Face %d from Brush %d%n", bf.getNumber(),b.getBrushNumber(),pif.getNumber(),pib.getBrushNumber() );
-						if (bf.isFacingAndCoincidentTo (pif) ) {
-							//System.out.printf("Brush.findUnexposedFaces: passed facing and coincident planes test");
-							Vector<Vector3D> vertsOfFaceBf = b.getVertices (bf);
-							if (pib.areInside (vertsOfFaceBf) ) {
-								Entity parent = b.getParentEntity();
-								//MapUtils.printf("set nodraw: face %d of brush %d of entity %d (%s)%n", bf.getNumber(),b.getBrushNumber(),parent.getNumber(),parent.getValue("classname"));
-								nodrawSetCount++;
-								bf.setNodraw();
+					if(!bf.isNodraw ()){//do not waste time testing if the face is already a nodraw.
+						for (Face pif: piFaces) {
+							//System.out.printf("Brush.findUnexposedFaces: testing if Face %d from Brush %d interacts with Face %d from Brush %d%n", bf.getNumber(),b.getBrushNumber(),pif.getNumber(),pib.getBrushNumber() );
+							if (bf.isFacingAndCoincidentTo (pif) ) {
+								//System.out.printf("Brush.findUnexposedFaces: passed facing and coincident planes test");
+								Vector<Vector3D> vertsOfFaceBf = b.getVertices (bf);
+								if (pib.areInside (vertsOfFaceBf) ) {
+									//Entity parent = b.getParentEntity();
+									//MapUtils.printf("set nodraw: face %d of brush %d of entity %d (%s)%n", bf.getNumber(),b.getBrushNumber(),parent.getNumber(),parent.getValue("classname"));
+									nodrawSetCount++;
+									bf.setNodraw();
+								}
 							}
 						}
 					}

@@ -191,6 +191,13 @@ public class Face {
 		return contentFlags.isActorclipWeaponClipOrStepon();
 	}
 
+	public boolean isNodraw(){
+	    return surfFlags.isNodraw ();
+	}
+	
+	/** sets the nodraw flag and texture. Note: does not test if the 
+	  * face is already a nodraw, this should be done previously, by the 
+	  * calling method.*/
 	void setNodraw() {
 		surfFlags.setNodraw();
 		setPart (PART_INDEX_SURFACE_FLAGS, "" + surfFlags);
