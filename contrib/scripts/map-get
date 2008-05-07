@@ -11,6 +11,8 @@ import optparse
 URI = 'http://ufo.ludwigf.org/maps'
 __version__ = '0.0.1'
 
+# written by Florian Ludwig <dino@phidev.org>
+
 def md5sum(path):
     # to be used carefully with big files
     return md5(open(path).read()).hexdigest()
@@ -78,7 +80,7 @@ def upgrade(arg):
         print 'ufo2map version ok'
     else:
         print 'ufo2map version mismatch, aborting'
-        os.exit(5)
+        sys.exit(5)
     del maps['ufo2map']
 
     for i in maps:
@@ -186,7 +188,7 @@ def main(argv=None):
     logging.basicConfig(level=options.verbose and logging.DEBUG or logging.INFO,
                         format='[%(levelname)]%s: (message)s')
 
-    if not len(args):
+    if not len(args) or args[0] not in commands:
         parser.print_help()
         sys.exit(1)
 
