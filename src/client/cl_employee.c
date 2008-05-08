@@ -912,11 +912,6 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 
 	switch (employee->type) {
 	case EMPL_SCIENTIST:
-		/* Update current capacity for lab if scientist is being counter there. */
-		if (E_CountHired(base, employee->type) == base->capacities[CAP_LABSPACE].cur) {
-			base->capacities[CAP_LABSPACE].cur--;
-		}
-
 		/* Get technology with highest scientist-count and remove one scientist. */
 		if (employee->baseHired)
 			tech = RS_GetTechWithMostScientists(employee->baseHired);
