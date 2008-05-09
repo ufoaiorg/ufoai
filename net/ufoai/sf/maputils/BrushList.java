@@ -48,7 +48,7 @@ public class BrushList {
 				}
 			}
 		}
-		TimeCounter.report ("finished making Brush potential interaction list.");
+		TimeCounter.reportf ("finished making Brush potential interaction list. %d immutable brushes found%n",brushes.size ());
 	}
 
 	public static Vector<Brush> getImmutableOpaqueBrushes() {
