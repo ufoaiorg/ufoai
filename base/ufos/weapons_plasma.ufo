@@ -76,26 +76,6 @@ item plaspistol_ammo
 			dmgweight plasma_light
 			reaction	true
 		}
-//		firedef
-//		{
-//			name	"_Spray"
-//			skill 	close
-//			projtl	plasmaContinuous
-//			impact	plasmaImpact
-//			hitbody	plasmaImpact
-//			firesnd	weapons/plasma_c
-//			sndonce true
-//			speed	0
-//			spread	"1 5"
-//			crouch	1.0
-//			range	10
-//			shots	30
-//			ammo	6
-//			delaybetweenshots		32
-//			time	16
-//			damage	"45 7"
-//			dmgweight plasma_light
-//		}
 	}
 }
 
@@ -198,27 +178,6 @@ item plasrifle_ammo
 			dmgweight plasma_medium
 			reaction	true
 		}
-//		firedef
-//		{
-//			name	"_Spray"
-//			skill 	heavy
-//			projtl	plasmaContinuous
-//			impact	plasmaImpact
-//			hitbody	plasmaImpact
-//			firesnd	weapons/plasma_big
-//			sndonce true
-//			speed	0
-//			spread	"1 4"
-//			crouch	1.0
-//			range	18
-//			shots	30
-//			ammo	3
-//			delaybetweenshots		21
-//			time	22
-//			damage	"60 8"
-//			dmgweight plasma_medium
-//			reaction	true
-//		}
 	}
 }
 
@@ -325,27 +284,6 @@ item plasblaster_ammo
 			dmgweight plasma_heavy
 			reaction	true
 		}
-//		firedef
-//		{
-//			name	"_Spray"
-//			skill 	heavy
-//			projtl	plasmaContinuous
-//			impact	plasmaImpact
-//			hitbody	plasmaImpact
-//			firesnd	weapons/plasma_big
-//			sndonce true
-//			speed	0
-//			spread	"4 15"
-//			crouch	1.0
-//			range	30
-//			shots	10
-//			ammo	10
-//			delaybetweenshots		38
-//			time	30
-//			damage	"80 15"
-//			dmgweight plasma_heavy
-//			reaction	true
-//		}
 	}
 }
 
