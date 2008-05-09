@@ -98,6 +98,11 @@ public class Map {
 				}
 				if (origTxt.charAt (i) == closeBrace && !isInComment (i) ) {
 					braceLevel--;
+					
+					/* do not go outside the scope from which findBracedRegion() was called. */
+					if (braceLevel < 0) return new int[] {-1,-1};
+					
+					/*brace is closed, brace region complete. */
 					if (braceLevel == 0) {
 						return new int[] {startRegion + 1, i};//trims defining braces
 					}
