@@ -29,12 +29,12 @@ JAVA=$(which java 2> /dev/null)
 
 # change to directory with java source
 cd ../net/ufoai/sf/maputils
-for FILE in *.java; do
+while read FILE; do
     # classpath is the directory containing the net directory
     echo $SEPARATOR
-    CLASSSECONDS=$(ls -l --time-style="+%s" ${FILE%\.java}.class 2>/dev/null | $AWK '{print $6}')
+    CLASSSECONDS=$(ls -l --time-style="+%s" "${FILE%\.java}.class" 2>/dev/null | $AWK '{print $6}')
     [[ $CLASSSECONDS ]] && {
-	JAVASECONDS=$(ls -l --time-style="+%s" $FILE 2>/dev/null | awk '{print $6}')
+	JAVASECONDS=$(ls -l --time-style="+%s" "$FILE" 2>/dev/null | awk '{print $6}')
 	if [ "$JAVASECONDS" -lt "$CLASSSECONDS" ]; then
 	    echo "skipping $FILE, classfile more recent"
 	    continue
@@ -42,8 +42,8 @@ for FILE in *.java; do
     }
     echo "compiling $FILE"
     COMPILED=yes
-    $JAVAC -classpath ../../../.. $FILE
-done
+    $JAVAC -classpath ../../../.. "$FILE"
+done < <(find ./ -type f -name '*.java')
 
 # change to the directory containing the net directory
 cd ../../../..
