@@ -831,7 +831,7 @@ static void BS_BuyAircraft_f (void)
 		} else {
 			const objDef_t *craftitem = BS_GetObjectDefition(&buyList.l[num]);
 			/** @todo Use buy factor for aircraft items */
-			BS_CheckAndDoBuyItem(baseCurrent, craftitem, 1);
+			BS_CheckAndDoBuyItem(baseCurrent, craftitem, BS_GetBuySellFactor());
 		}
 	}
 }
@@ -840,14 +840,14 @@ static void BS_BuyAircraft_f (void)
  * @brief Update storage, the market, and the player's credits
  * @todo Storage? Where is it updated?
  */
-static void BS_ProcessCraftItemSale (base_t *base, const objDef_t *craftitem)
+static void BS_ProcessCraftItemSale (base_t *base, const objDef_t *craftitem, const int numItems)
 {
 	if (craftitem) {
-		ccs.eMarket.num[craftitem->idx]++;
+		ccs.eMarket.num[craftitem->idx] += numItems;
 		/* reinit the menu */
 		BS_BuyType();
-		/*B_UpdateStorageAndCapacity(base, craftitem, -1, qfalse, qfalse);*/
-		CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[craftitem->idx]);
+		/*B_UpdateStorageAndCapacity(base, craftitem, -numItems, qfalse, qfalse);*/
+		CL_UpdateCredits(ccs.credits + (ccs.eMarket.bid[craftitem->idx] * numItems));
 	}
 }
 
@@ -903,18 +903,18 @@ static void BS_SellAircraft_f (void)
 		if (found) {
 			/* sell off any items which are mounted on it */
 			for (j = 0; j < aircraft->maxWeapons; j++) {
-				BS_ProcessCraftItemSale(base, aircraft->weapons[j].item);
-				BS_ProcessCraftItemSale(base, aircraft->weapons[j].ammo);
+				BS_ProcessCraftItemSale(base, aircraft->weapons[j].item, 1);
+				BS_ProcessCraftItemSale(base, aircraft->weapons[j].ammo, 1);
 			}
 
-			BS_ProcessCraftItemSale(base, aircraft->shield.item);
+			BS_ProcessCraftItemSale(base, aircraft->shield.item, 1);
 			/* there should be no ammo here, but checking can't hurt */
-			BS_ProcessCraftItemSale(base, aircraft->shield.ammo);
+			BS_ProcessCraftItemSale(base, aircraft->shield.ammo, 1);
 
 			for (j = 0; j < aircraft->maxElectronics; j++) {
-				BS_ProcessCraftItemSale(base, aircraft->electronics[j].item);
+				BS_ProcessCraftItemSale(base, aircraft->electronics[j].item, 1);
 				/* there should be no ammo here, but checking can't hurt */
-				BS_ProcessCraftItemSale(base, aircraft->electronics[j].ammo);
+				BS_ProcessCraftItemSale(base, aircraft->electronics[j].ammo, 1);
 			}
 
 			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
@@ -938,8 +938,9 @@ static void BS_SellAircraft_f (void)
 		const objDef_t *craftitem = BS_GetObjectDefition(&buyList.l[num]);
 		/** @todo Use sellfactor */
 		if (base->storage.num[craftitem->idx]) {
-			B_UpdateStorageAndCapacity(base, craftitem, -1, qfalse, qfalse);
-			BS_ProcessCraftItemSale(base, craftitem);
+			const int numItems = min(base->storage.num[craftitem->idx], BS_GetBuySellFactor());
+			B_UpdateStorageAndCapacity(base, craftitem, -numItems, qfalse, qfalse);
+			BS_ProcessCraftItemSale(base, craftitem, numItems);
 		}
 	}
 }

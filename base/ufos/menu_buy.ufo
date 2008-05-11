@@ -1945,6 +1945,7 @@ menu buyaircraft
 		pos		"376 40"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 0;" }
+		repeat	true
 	}
 	pic bt_sell0
 	{
@@ -1952,6 +1953,7 @@ menu buyaircraft
 		pos		"392 40"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 0;" }
+		repeat	true
 	}
 	zone wz_buysell1
 	{
@@ -1966,6 +1968,7 @@ menu buyaircraft
 		pos		"376 65"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 1;" }
+		repeat	true
 	}
 	pic bt_sell1
 	{
@@ -1973,6 +1976,7 @@ menu buyaircraft
 		pos		"392 65"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 1;" }
+		repeat	true
 	}
 	zone wz_buysell2
 	{
@@ -1987,6 +1991,7 @@ menu buyaircraft
 		pos		"376 90"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 2;" }
+		repeat	true
 	}
 	pic bt_sell2
 	{
@@ -1994,6 +1999,7 @@ menu buyaircraft
 		pos		"392 90"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 2;" }
+		repeat	true
 	}
 	zone wz_buysell3
 	{
@@ -2008,6 +2014,7 @@ menu buyaircraft
 		pos		"376 115"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 3;" }
+		repeat	true
 	}
 	pic bt_sell3
 	{
@@ -2015,6 +2022,7 @@ menu buyaircraft
 		pos		"392 115"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 3;" }
+		repeat	true
 	}
 	zone wz_buysell4
 	{
@@ -2029,6 +2037,7 @@ menu buyaircraft
 		pos		"376 140"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 4;" }
+		repeat	true
 	}
 	pic bt_sell4
 	{
@@ -2036,6 +2045,7 @@ menu buyaircraft
 		pos		"392 140"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 4;" }
+		repeat	true
 	}
 	zone wz_buysell5
 	{
@@ -2050,6 +2060,7 @@ menu buyaircraft
 		pos		"376 165"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 5;" }
+		repeat	true
 	}
 	pic bt_sell5
 	{
@@ -2057,6 +2068,7 @@ menu buyaircraft
 		pos		"392 165"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 5;" }
+		repeat	true
 	}
 	zone wz_buysell6
 	{
@@ -2064,6 +2076,7 @@ menu buyaircraft
 		size	"120 24"
 		whup	{ cmd "mn_buy_aircraft 6;" }
 		whdown	{ cmd "mn_sell_aircraft 6;" }
+		repeat	true
 	}
 	pic bt_buy6
 	{
@@ -2071,6 +2084,7 @@ menu buyaircraft
 		pos		"376 190"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 6;" }
+		repeat	true
 	}
 	pic bt_sell6
 	{
@@ -2078,6 +2092,7 @@ menu buyaircraft
 		pos		"392 190"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 6;" }
+		repeat	true
 	}
 	zone wz_buysell7
 	{
@@ -2092,6 +2107,7 @@ menu buyaircraft
 		pos		"376 215"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 7;" }
+		repeat	true
 	}
 	pic bt_sell7
 	{
@@ -2099,6 +2115,7 @@ menu buyaircraft
 		pos		"392 215"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 7;" }
+		repeat	true
 	}
 	zone wz_buysell8
 	{
@@ -2113,6 +2130,7 @@ menu buyaircraft
 		pos		"376 240"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 8;" }
+		repeat	true
 	}
 	pic bt_sell8
 	{
@@ -2120,6 +2138,7 @@ menu buyaircraft
 		pos		"392 240"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 8;" }
+		repeat	true
 	}
 	zone wz_buysell9
 	{
@@ -2134,6 +2153,7 @@ menu buyaircraft
 		pos		"376 265"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 9;" }
+		repeat	true
 	}
 	pic bt_sell9
 	{
@@ -2141,6 +2161,7 @@ menu buyaircraft
 		pos		"392 265"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 9;" }
+		repeat	true
 	}
 	zone wz_buysell10
 	{
@@ -2155,6 +2176,7 @@ menu buyaircraft
 		pos		"376 290"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 10;" }
+		repeat	true
 	}
 	pic bt_sell10
 	{
@@ -2162,6 +2184,7 @@ menu buyaircraft
 		pos		"392 290"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 10;" }
+		repeat	true
 	}
 	zone wz_buysell11
 	{
@@ -2176,6 +2199,7 @@ menu buyaircraft
 		pos		"376 315"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 11;" }
+		repeat	true
 	}
 	pic bt_sell11
 	{
@@ -2183,6 +2207,7 @@ menu buyaircraft
 		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 11;" }
+		repeat	true
 	}
 	zone wz_buysell12
 	{
@@ -2197,6 +2222,7 @@ menu buyaircraft
 		pos		"376 340"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 12;" }
+		repeat	true
 	}
 	pic bt_sell12
 	{
@@ -2204,6 +2230,7 @@ menu buyaircraft
 		pos		"392 340"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 12;" }
+		repeat	true
 	}
 	zone wz_buysell13
 	{
@@ -2218,6 +2245,7 @@ menu buyaircraft
 		pos		"376 365"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 13;" }
+		repeat	true
 	}
 	pic bt_sell13
 	{
@@ -2225,6 +2253,7 @@ menu buyaircraft
 		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 13;" }
+		repeat	true
 	}
 	zone wz_buysell14
 	{
@@ -2239,6 +2268,7 @@ menu buyaircraft
 		pos		"376 390"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 14;" }
+		repeat	true
 	}
 	pic bt_sell14
 	{
@@ -2246,6 +2276,7 @@ menu buyaircraft
 		pos		"392 390"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 14;" }
+		repeat	true
 	}
 	zone wz_buysell15
 	{
@@ -2260,6 +2291,7 @@ menu buyaircraft
 		pos		"376 415"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 15;" }
+		repeat	true
 	}
 	pic bt_sell15
 	{
@@ -2267,6 +2299,7 @@ menu buyaircraft
 		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 15;" }
+		repeat	true
 	}
 	zone wz_buysell16
 	{
@@ -2281,6 +2314,7 @@ menu buyaircraft
 		pos		"376 440"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 16;" }
+		repeat	true
 	}
 	pic bt_sell16
 	{
@@ -2288,6 +2322,7 @@ menu buyaircraft
 		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 16;" }
+		repeat	true
 	}
 	zone wz_buysell17
 	{
@@ -2302,6 +2337,7 @@ menu buyaircraft
 		pos		"376 465"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 17;" }
+		repeat	true
 	}
 	pic bt_sell17
 	{
@@ -2309,6 +2345,7 @@ menu buyaircraft
 		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 17;" }
+		repeat	true
 	}
 	zone wz_buysell18
 	{
@@ -2323,6 +2360,7 @@ menu buyaircraft
 		pos		"376 490"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 18;" }
+		repeat	true
 	}
 	pic bt_sell18
 	{
@@ -2330,6 +2368,7 @@ menu buyaircraft
 		pos		"392 490"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 18;" }
+		repeat	true
 	}
 
 
