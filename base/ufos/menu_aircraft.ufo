@@ -277,6 +277,14 @@ menu aircraft
 		origin	"690 240 0"
 	}
 
+	zone wz_aircraft
+	{
+		pos	"470 74"
+		size	"536 364"
+		whup	{ cmd "mn_next_aircraft;" }
+		whdown	{ cmd "mn_prev_aircraft;" }
+	}
+
 	string aircraft_name
 	{
 		string	"*cvar mn_aircraftname"
@@ -315,8 +323,6 @@ menu aircraft
 		texl	"0 0"
 		texh	"16 16"
 		click	{ cmd "mn_prev_aircraft;" }
-		whup	{ cmd "mn_next_aircraft;" }
-		whdown	{ cmd "mn_prev_aircraft;" }
 	}
 
 	pic next_aircraft
@@ -328,8 +334,6 @@ menu aircraft
 		texl	"16 0"
 		texh	"32 16"
 		click	{ cmd "mn_next_aircraft;" }
-		whup	{ cmd "mn_next_aircraft;" }
-		whdown	{ cmd "mn_prev_aircraft;" }
 	}
 
 	pic aircraft_return
@@ -465,6 +469,20 @@ menu aircraft_equip
 		pos	"20 20"
 		size	"415 728"
 //		bgcolor	"1 1 1 0.5"
+	}
+
+	zone wz_aircraftequip
+	{
+		pos	"18 18"
+		size	"420 631"
+		whup	{
+			cmd "mn_next_aircraft;"
+			airequip_zone1
+		}
+		whdown	{
+			cmd "mn_prev_aircraft;"
+			airequip_zone1
+		}
 	}
 
 	pic bt_prev

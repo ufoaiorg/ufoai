@@ -89,6 +89,7 @@ menu buy
 		size	"80 700"
 		format	"25 0"
 		pos		"542 40"
+		wheel	{ cmd "market_scroll" }
 	}
 
 	// =========================
@@ -326,6 +327,13 @@ menu buy
 	confunc buy_show27 { *bt_autosell27 invis false	*bt_buy27 invis false	*bt_sell27 invis false  }
 
 
+	zone wz_buysell0
+	{
+		pos	"332 40"
+		size	"120 24"
+		whup	{ cmd "mn_buy 0;" }
+		whdown	{ cmd "mn_sell 0;" }
+	}
 	pic bt_buy0
 	{
 		tooltip	"_Buy item"
@@ -334,8 +342,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 0;" }
 		repeat	true
-		whup	{ cmd "mn_buy 0;" }
-		whdown	{ cmd "mn_sell 0;" }
 	}
 	pic bt_sell0
 	{
@@ -345,8 +351,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 0;" }
 		repeat	true
-		whup	{ cmd "mn_buy 0;" }
-		whdown	{ cmd "mn_sell 0;" }
 	}
 	pic bt_autosell0
 	{
@@ -356,6 +360,13 @@ menu buy
 		mousefx true
 		click { cmd "buy_autosell 0;" }
 	}
+	zone wz_buysell1
+	{
+		pos	"332 65"
+		size	"120 24"
+		whup	{ cmd "mn_buy 1;" }
+		whdown	{ cmd "mn_sell 1;" }
+	}
 	pic bt_buy1
 	{
 		tooltip	"_Buy item"
@@ -364,8 +375,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 1;" }
 		repeat	true
-		whup	{ cmd "mn_buy 1;" }
-		whdown	{ cmd "mn_sell 1;" }
 	}
 	pic bt_sell1
 	{
@@ -375,8 +384,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 1;" }
 		repeat	true
-		whup	{ cmd "mn_buy 1;" }
-		whdown	{ cmd "mn_sell 1;" }
 	}
 	pic bt_autosell1
 	{
@@ -386,6 +393,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 1;" }
 	}
+	zone wz_buysell2
+	{
+		pos	"332 90"
+		size	"120 24"
+		whup	{ cmd "mn_buy 2;" }
+		whdown	{ cmd "mn_sell 2;" }
+	}
 	pic bt_buy2
 	{
 		tooltip	"_Buy item"
@@ -394,8 +408,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 2;" }
 		repeat	true
-		whup	{ cmd "mn_buy 2;" }
-		whdown	{ cmd "mn_sell 2;" }
 	}
 	pic bt_sell2
 	{
@@ -405,8 +417,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 2;" }
 		repeat	true
-		whup	{ cmd "mn_buy 2;" }
-		whdown	{ cmd "mn_sell 2;" }
 	}
 	pic bt_autosell2
 	{
@@ -416,6 +426,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 2;" }
 	}
+	zone wz_buysell3
+	{
+		pos	"332 115"
+		size	"120 24"
+		whup	{ cmd "mn_buy 3;" }
+		whdown	{ cmd "mn_sell 3;" }
+	}
 	pic bt_buy3
 	{
 		tooltip	"_Buy item"
@@ -424,8 +441,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 3;" }
 		repeat	true
-		whup	{ cmd "mn_buy 3;" }
-		whdown	{ cmd "mn_sell 3;" }
 	}
 	pic bt_sell3
 	{
@@ -435,8 +450,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 3;" }
 		repeat	true
-		whup	{ cmd "mn_buy 3;" }
-		whdown	{ cmd "mn_sell 3;" }
 	}
 	pic bt_autosell3
 	{
@@ -446,6 +459,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 3;" }
 	}
+	zone wz_buysell4
+	{
+		pos	"332 140"
+		size	"120 24"
+		whup	{ cmd "mn_buy 4;" }
+		whdown	{ cmd "mn_sell 4;" }
+	}
 	pic bt_buy4
 	{
 		tooltip	"_Buy item"
@@ -454,8 +474,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 4;" }
 		repeat	true
-		whup	{ cmd "mn_buy 4;" }
-		whdown	{ cmd "mn_sell 4;" }
 	}
 	pic bt_sell4
 	{
@@ -465,8 +483,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 4;" }
 		repeat	true
-		whup	{ cmd "mn_buy 4;" }
-		whdown	{ cmd "mn_sell 4;" }
 	}
 	pic bt_autosell4
 	{
@@ -476,6 +492,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 4;" }
 	}
+	zone wz_buysell5
+	{
+		pos	"332 165"
+		size	"120 24"
+		whup	{ cmd "mn_buy 5;" }
+		whdown	{ cmd "mn_sell 5;" }
+	}
 	pic bt_buy5
 	{
 		tooltip	"_Buy item"
@@ -484,8 +507,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 5;" }
 		repeat	true
-		whup	{ cmd "mn_buy 5;" }
-		whdown	{ cmd "mn_sell 5;" }
 	}
 	pic bt_sell5
 	{
@@ -495,8 +516,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 5;" }
 		repeat	true
-		whup	{ cmd "mn_buy 5;" }
-		whdown	{ cmd "mn_sell 5;" }
 	}
 	pic bt_autosell5
 	{
@@ -506,6 +525,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 5;" }
 	}
+	zone wz_buysell6
+	{
+		pos	"332 190"
+		size	"120 24"
+		whup	{ cmd "mn_buy 6;" }
+		whdown	{ cmd "mn_sell 6;" }
+	}
 	pic bt_buy6
 	{
 		tooltip	"_Buy item"
@@ -514,8 +540,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 6;" }
 		repeat	true
-		whup	{ cmd "mn_buy 6;" }
-		whdown	{ cmd "mn_sell 6;" }
 	}
 	pic bt_sell6
 	{
@@ -525,8 +549,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 6;" }
 		repeat	true
-		whup	{ cmd "mn_buy 6;" }
-		whdown	{ cmd "mn_sell 6;" }
 	}
 	pic bt_autosell6
 	{
@@ -536,6 +558,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 6;" }
 	}
+	zone wz_buysell7
+	{
+		pos	"332 215"
+		size	"120 24"
+		whup	{ cmd "mn_buy 7;" }
+		whdown	{ cmd "mn_sell 7;" }
+	}
 	pic bt_buy7
 	{
 		tooltip	"_Buy item"
@@ -544,8 +573,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 7;" }
 		repeat	true
-		whup	{ cmd "mn_buy 7;" }
-		whdown	{ cmd "mn_sell 7;" }
 	}
 	pic bt_sell7
 	{
@@ -555,8 +582,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 7;" }
 		repeat	true
-		whup	{ cmd "mn_buy 7;" }
-		whdown	{ cmd "mn_sell 7;" }
 	}
 	pic bt_autosell7
 	{
@@ -566,6 +591,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 7;" }
 	}
+	zone wz_buysell8
+	{
+		pos	"332 240"
+		size	"120 24"
+		whup	{ cmd "mn_buy 8;" }
+		whdown	{ cmd "mn_sell 8;" }
+	}
 	pic bt_buy8
 	{
 		tooltip	"_Buy item"
@@ -574,8 +606,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 8;" }
 		repeat	true
-		whup	{ cmd "mn_buy 8;" }
-		whdown	{ cmd "mn_sell 8;" }
 	}
 	pic bt_sell8
 	{
@@ -585,8 +615,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 8;" }
 		repeat	true
-		whup	{ cmd "mn_buy 8;" }
-		whdown	{ cmd "mn_sell 8;" }
 	}
 	pic bt_autosell8
 	{
@@ -596,6 +624,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 8;" }
 	}
+	zone wz_buysell9
+	{
+		pos	"332 265"
+		size	"120 24"
+		whup	{ cmd "mn_buy 9;" }
+		whdown	{ cmd "mn_sell 9;" }
+	}
 	pic bt_buy9
 	{
 		tooltip	"_Buy item"
@@ -604,8 +639,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 9;" }
 		repeat	true
-		whup	{ cmd "mn_buy 9;" }
-		whdown	{ cmd "mn_sell 9;" }
 	}
 	pic bt_sell9
 	{
@@ -615,8 +648,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 9;" }
 		repeat	true
-		whup	{ cmd "mn_buy 9;" }
-		whdown	{ cmd "mn_sell 9;" }
 	}
 	pic bt_autosell9
 	{
@@ -626,6 +657,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 9;" }
 	}
+	zone wz_buysell10
+	{
+		pos	"332 290"
+		size	"120 24"
+		whup	{ cmd "mn_buy 10;" }
+		whdown	{ cmd "mn_sell 10;" }
+	}
 	pic bt_buy10
 	{
 		tooltip	"_Buy item"
@@ -634,8 +672,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 10;" }
 		repeat	true
-		whup	{ cmd "mn_buy 10;" }
-		whdown	{ cmd "mn_sell 10;" }
 	}
 	pic bt_sell10
 	{
@@ -645,8 +681,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 10;" }
 		repeat	true
-		whup	{ cmd "mn_buy 10;" }
-		whdown	{ cmd "mn_sell 10;" }
 	}
 	pic bt_autosell10
 	{
@@ -656,6 +690,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 10;" }
 	}
+	zone wz_buysell11
+	{
+		pos	"332 315"
+		size	"120 24"
+		whup	{ cmd "mn_buy 11;" }
+		whdown	{ cmd "mn_sell 11;" }
+	}
 	pic bt_buy11
 	{
 		tooltip	"_Buy item"
@@ -664,8 +705,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 11;" }
 		repeat	true
-		whup	{ cmd "mn_buy 11;" }
-		whdown	{ cmd "mn_sell 11;" }
 	}
 	pic bt_sell11
 	{
@@ -675,8 +714,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 11;" }
 		repeat	true
-		whup	{ cmd "mn_buy 11;" }
-		whdown	{ cmd "mn_sell 11;" }
 	}
 	pic bt_autosell11
 	{
@@ -686,6 +723,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 11;" }
 	}
+	zone wz_buysell12
+	{
+		pos	"332 340"
+		size	"120 24"
+		whup	{ cmd "mn_buy 12;" }
+		whdown	{ cmd "mn_sell 12;" }
+	}
 	pic bt_buy12
 	{
 		tooltip	"_Buy item"
@@ -694,8 +738,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 12;" }
 		repeat	true
-		whup	{ cmd "mn_buy 12;" }
-		whdown	{ cmd "mn_sell 12;" }
 	}
 	pic bt_sell12
 	{
@@ -705,8 +747,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 12;" }
 		repeat	true
-		whup	{ cmd "mn_buy 12" }
-		whdown	{ cmd "mn_sell 12" }
 	}
 	pic bt_autosell12
 	{
@@ -716,6 +756,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 12;" }
 	}
+	zone wz_buysell13
+	{
+		pos	"332 365"
+		size	"120 24"
+		whup	{ cmd "mn_buy 13;" }
+		whdown	{ cmd "mn_sell 13;" }
+	}
 	pic bt_buy13
 	{
 		tooltip	"_Buy item"
@@ -724,8 +771,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 13;" }
 		repeat	true
-		whup	{ cmd "mn_buy 13;" }
-		whdown	{ cmd "mn_sell 13;" }
 	}
 	pic bt_sell13
 	{
@@ -735,8 +780,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 13;" }
 		repeat	true
-		whup	{ cmd "mn_buy 13;" }
-		whdown	{ cmd "mn_sell 13;" }
 	}
 	pic bt_autosell13
 	{
@@ -746,6 +789,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 13;" }
 	}
+	zone wz_buysell14
+	{
+		pos	"332 390"
+		size	"120 24"
+		whup	{ cmd "mn_buy 14;" }
+		whdown	{ cmd "mn_sell 14;" }
+	}
 	pic bt_buy14
 	{
 		tooltip	"_Buy item"
@@ -754,8 +804,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 14;" }
 		repeat	true
-		whup	{ cmd "mn_buy 14;" }
-		whdown	{ cmd "mn_sell 14;" }
 	}
 	pic bt_sell14
 	{
@@ -765,8 +813,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 14;" }
 		repeat	true
-		whup	{ cmd "mn_buy 14;" }
-		whdown	{ cmd "mn_sell 14;" }
 	}
 	pic bt_autosell14
 	{
@@ -776,6 +822,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 14;" }
 	}
+	zone wz_buysell15
+	{
+		pos	"332 415"
+		size	"120 24"
+		whup	{ cmd "mn_buy 15;" }
+		whdown	{ cmd "mn_sell 15;" }
+	}
 	pic bt_buy15
 	{
 		tooltip	"_Buy item"
@@ -784,8 +837,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 15;" }
 		repeat	true
-		whup	{ cmd "mn_buy 15;" }
-		whdown	{ cmd "mn_sell 15;" }
 	}
 	pic bt_sell15
 	{
@@ -795,8 +846,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 15;" }
 		repeat	true
-		whup	{ cmd "mn_buy 15;" }
-		whdown	{ cmd "mn_sell 15;" }
 	}
 	pic bt_autosell15
 	{
@@ -806,6 +855,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 15;" }
 	}
+	zone wz_buysell16
+	{
+		pos	"332 440"
+		size	"120 24"
+		whup	{ cmd "mn_buy 16;" }
+		whdown	{ cmd "mn_sell 16;" }
+	}
 	pic bt_buy16
 	{
 		tooltip	"_Buy item"
@@ -814,8 +870,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 16;" }
 		repeat	true
-		whup	{ cmd "mn_buy 16;" }
-		whdown	{ cmd "mn_sell 16;" }
 	}
 	pic bt_sell16
 	{
@@ -825,8 +879,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 16;" }
 		repeat	true
-		whup	{ cmd "mn_buy 16;" }
-		whdown	{ cmd "mn_sell 16;" }
 	}
 	pic bt_autosell16
 	{
@@ -836,6 +888,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 16;" }
 	}
+	zone wz_buysell17
+	{
+		pos	"332 465"
+		size	"120 24"
+		whup	{ cmd "mn_buy 17;" }
+		whdown	{ cmd "mn_sell 17;" }
+	}
 	pic bt_buy17
 	{
 		tooltip	"_Buy item"
@@ -844,8 +903,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 17;" }
 		repeat	true
-		whup	{ cmd "mn_buy 17;" }
-		whdown	{ cmd "mn_sell 17;" }
 	}
 	pic bt_sell17
 	{
@@ -855,8 +912,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 17;" }
 		repeat	true
-		whup	{ cmd "mn_buy 17;" }
-		whdown	{ cmd "mn_sell 17;" }
 	}
 	pic bt_autosell17
 	{
@@ -866,6 +921,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 17;" }
 	}
+	zone wz_buysell18
+	{
+		pos	"332 490"
+		size	"120 24"
+		whup	{ cmd "mn_buy 18;" }
+		whdown	{ cmd "mn_sell 18;" }
+	}
 	pic bt_buy18
 	{
 		tooltip	"_Buy item"
@@ -874,8 +936,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 18;" }
 		repeat	true
-		whup	{ cmd "mn_buy 18;" }
-		whdown	{ cmd "mn_sell 18;" }
 	}
 	pic bt_sell18
 	{
@@ -885,8 +945,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 18;" }
 		repeat	true
-		whup	{ cmd "mn_buy 18;" }
-		whdown	{ cmd "mn_sell 18;" }
 	}
 	pic bt_autosell18
 	{
@@ -896,6 +954,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 18;" }
 	}
+	zone wz_buysell19
+	{
+		pos	"332 515"
+		size	"120 24"
+		whup	{ cmd "mn_buy 19;" }
+		whdown	{ cmd "mn_sell 19;" }
+	}
 	pic bt_buy19
 	{
 		tooltip	"_Buy item"
@@ -904,8 +969,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 19;" }
 		repeat	true
-		whup	{ cmd "mn_buy 19;" }
-		whdown	{ cmd "mn_sell 19;" }
 	}
 	pic bt_sell19
 	{
@@ -915,8 +978,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 19;" }
 		repeat	true
-		whup	{ cmd "mn_buy 19;" }
-		whdown	{ cmd "mn_sell 19;" }
 	}
 	pic bt_autosell19
 	{
@@ -926,6 +987,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 19;" }
 	}
+	zone wz_buysell20
+	{
+		pos	"332 540"
+		size	"120 24"
+		whup	{ cmd "mn_buy 20;" }
+		whdown	{ cmd "mn_sell 20;" }
+	}
 	pic bt_buy20
 	{
 		tooltip	"_Buy item"
@@ -934,8 +1002,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 20;" }
 		repeat	true
-		whup	{ cmd "mn_buy 20;" }
-		whdown	{ cmd "mn_sell 20;" }
 	}
 	pic bt_sell20
 	{
@@ -945,8 +1011,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 20;" }
 		repeat	true
-		whup	{ cmd "mn_buy 20;" }
-		whdown	{ cmd "mn_sell 20;" }
 	}
 	pic bt_autosell20
 	{
@@ -956,6 +1020,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 20;" }
 	}
+	zone wz_buysell21
+	{
+		pos	"332 565"
+		size	"120 24"
+		whup	{ cmd "mn_buy 21;" }
+		whdown	{ cmd "mn_sell 21;" }
+	}
 	pic bt_buy21
 	{
 		tooltip	"_Buy item"
@@ -964,8 +1035,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 21;" }
 		repeat	true
-		whup	{ cmd "mn_buy 21;" }
-		whdown	{ cmd "mn_sell 21;" }
 	}
 	pic bt_sell21
 	{
@@ -975,8 +1044,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 21;" }
 		repeat	true
-		whup	{ cmd "mn_buy 21;" }
-		whdown	{ cmd "mn_sell 21;" }
 	}
 	pic bt_autosell21
 	{
@@ -986,6 +1053,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 21;" }
 	}
+	zone wz_buysell22
+	{
+		pos	"332 590"
+		size	"120 24"
+		whup	{ cmd "mn_buy 22;" }
+		whdown	{ cmd "mn_sell 22;" }
+	}
 	pic bt_buy22
 	{
 		tooltip	"_Buy item"
@@ -994,8 +1068,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 22;" }
 		repeat	true
-		whup	{ cmd "mn_buy 22;" }
-		whdown	{ cmd "mn_sell 22;" }
 	}
 	pic bt_sell22
 	{
@@ -1005,8 +1077,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 22;" }
 		repeat	true
-		whup	{ cmd "mn_buy 22;" }
-		whdown	{ cmd "mn_sell 22;" }
 	}
 	pic bt_autosell22
 	{
@@ -1016,6 +1086,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 22;" }
 	}
+	zone wz_buysell23
+	{
+		pos	"332 615"
+		size	"120 24"
+		whup	{ cmd "mn_buy 23;" }
+		whdown	{ cmd "mn_sell 23;" }
+	}
 	pic bt_buy23
 	{
 		tooltip	"_Buy item"
@@ -1024,8 +1101,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 23;" }
 		repeat	true
-		whup	{ cmd "mn_buy 23;" }
-		whdown	{ cmd "mn_sell 23;" }
 	}
 	pic bt_sell23
 	{
@@ -1035,8 +1110,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 23;" }
 		repeat	true
-		whup	{ cmd "mn_buy 23;" }
-		whdown	{ cmd "mn_sell 23;" }
 	}
 	pic bt_autosell23
 	{
@@ -1046,6 +1119,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 23;" }
 	}
+	zone wz_buysell24
+	{
+		pos	"332 640"
+		size	"120 24"
+		whup	{ cmd "mn_buy 24;" }
+		whdown	{ cmd "mn_sell 24;" }
+	}
 	pic bt_buy24
 	{
 		tooltip	"_Buy item"
@@ -1054,8 +1134,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 24;" }
 		repeat	true
-		whup	{ cmd "mn_buy 24;" }
-		whdown	{ cmd "mn_sell 24;" }
 	}
 	pic bt_sell24
 	{
@@ -1065,8 +1143,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 24;" }
 		repeat	true
-		whup	{ cmd "mn_buy 24;" }
-		whdown	{ cmd "mn_sell 24;" }
 	}
 	pic bt_autosell24
 	{
@@ -1076,6 +1152,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 24;" }
 	}
+	zone wz_buysell25
+	{
+		pos	"332 665"
+		size	"120 24"
+		whup	{ cmd "mn_buy 25;" }
+		whdown	{ cmd "mn_sell 25;" }
+	}
 	pic bt_buy25
 	{
 		tooltip	"_Buy item"
@@ -1084,8 +1167,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 25;" }
 		repeat	true
-		whup	{ cmd "mn_buy 25;" }
-		whdown	{ cmd "mn_sell 25;" }
 	}
 	pic bt_sell25
 	{
@@ -1095,8 +1176,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 25;" }
 		repeat	true
-		whup	{ cmd "mn_buy 25;" }
-		whdown	{ cmd "mn_sell 25;" }
 	}
 	pic bt_autosell25
 	{
@@ -1106,6 +1185,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 25;" }
 	}
+	zone wz_buysell26
+	{
+		pos	"332 690"
+		size	"120 24"
+		whup	{ cmd "mn_buy 26;" }
+		whdown	{ cmd "mn_sell 26;" }
+	}
 	pic bt_buy26
 	{
 		tooltip	"_Buy item"
@@ -1114,8 +1200,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 26;" }
 		repeat	true
-		whup	{ cmd "mn_buy 26;" }
-		whdown	{ cmd "mn_sell 26;" }
 	}
 	pic bt_sell26
 	{
@@ -1125,8 +1209,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 26;" }
 		repeat	true
-		whup	{ cmd "mn_buy 26;" }
-		whdown	{ cmd "mn_sell 26;" }
 	}
 	pic bt_autosell26
 	{
@@ -1136,6 +1218,13 @@ menu buy
 		mousefx		true
 		click		{ cmd "buy_autosell 26;" }
 	}
+	zone wz_buysell27
+	{
+		pos	"332 715"
+		size	"120 24"
+		whup	{ cmd "mn_buy 27;" }
+		whdown	{ cmd "mn_sell 27;" }
+	}
 	pic bt_buy27
 	{
 		tooltip	"_Buy item"
@@ -1144,8 +1233,6 @@ menu buy
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 27;" }
 		repeat	true
-		whup	{ cmd "mn_buy 27;" }
-		whdown	{ cmd "mn_sell 27;" }
 	}
 	pic bt_sell27
 	{
@@ -1155,8 +1242,6 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 27;" }
 		repeat	true
-		whup	{ cmd "mn_buy 27;" }
-		whdown	{ cmd "mn_sell 27;" }
 	}
 	pic bt_autosell27
 	{
@@ -1385,6 +1470,15 @@ menu buy
 		font	"f_verysmall"
 	}
 
+	zone weapon_wz
+	{
+		pos	"745 468"
+		size	"226 16"
+		whup	{ cmd mn_increaseweapon }
+		whdown	{ cmd mn_decreaseweapon }
+	}
+
+
 	pic weapon_dec
 	{
 		if "mn_changeweapon == 1"
@@ -1395,14 +1489,6 @@ menu buy
 		texh	"16 16"
 		mousefx	true
 		click
-		{
-			cmd mn_decreaseweapon
-		}
-		whup
-		{
-			cmd mn_increaseweapon
-		}
-		whdown
 		{
 			cmd mn_decreaseweapon
 		}
@@ -1418,14 +1504,6 @@ menu buy
 		texh	"16 16"
 		mousefx	true
 		click
-		{
-			cmd mn_decreaseweapon
-		}
-		whup
-		{
-			cmd mn_increaseweapon
-		}
-		whdown
 		{
 			cmd mn_decreaseweapon
 		}
@@ -1445,14 +1523,6 @@ menu buy
 		{
 			cmd mn_increaseweapon
 		}
-		whup
-		{
-			cmd mn_increaseweapon
-		}
-		whdown
-		{
-			cmd mn_decreaseweapon
-		}
 	}
 
 	pic ammo_inc
@@ -1467,14 +1537,6 @@ menu buy
 		click
 		{
 			cmd mn_increaseweapon
-		}
-		whup
-		{
-			cmd mn_increaseweapon
-		}
-		whdown
-		{
-			cmd mn_decreaseweapon
 		}
 	}
 
@@ -1505,6 +1567,14 @@ menu buy
 		font	f_verysmall
 	}
 
+	zone firemode_wz
+	{
+		pos	"745 486"
+		size	"226 16"
+		whup	{ cmd mn_increasefiremode }
+		whdown	{ cmd mn_decreasefiremode }
+	}
+
 	pic firemode_dec
 	{
 		if "mn_changefiremode == 1"
@@ -1515,14 +1585,6 @@ menu buy
 		texh	"16 16"
 		mousefx	true
 		click
-		{
-			cmd mn_decreasefiremode
-		}
-		whup
-		{
-			cmd mn_increasefiremode
-		}
-		whdown
 		{
 			cmd mn_decreasefiremode
 		}
@@ -1540,14 +1602,6 @@ menu buy
 		click
 		{
 			cmd mn_increasefiremode
-		}
-		whup
-		{
-			cmd mn_increasefiremode
-		}
-		whdown
-		{
-			cmd mn_decreasefiremode
 		}
 	}
 
@@ -1670,6 +1724,7 @@ menu buyaircraft
 		size	"80 700"
 		format	"25 0"
 		pos		"542 40"
+		wheel	{ cmd "market_scroll" }
 	}
 
 	// =========================
@@ -1877,14 +1932,19 @@ menu buyaircraft
 	// buy/sell buttons
 	// ==================
 
+	zone wz_buysell0
+	{
+		pos	"332 40"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 0;" }
+		whdown	{ cmd "mn_sell_aircraft 0;" }
+	}
 	pic bt_buy0
 	{
 		image	menu/buttons_small
 		pos		"376 40"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 0;" }
-		whup	{ cmd "mn_buy_aircraft 0;" }
-		whdown	{ cmd "mn_sell_aircraft 0;" }
 	}
 	pic bt_sell0
 	{
@@ -1892,8 +1952,13 @@ menu buyaircraft
 		pos		"392 40"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 0;" }
-		whup	{ cmd "mn_buy_aircraft 0;" }
-		whdown	{ cmd "mn_sell_aircraft 0;" }
+	}
+	zone wz_buysell1
+	{
+		pos	"332 65"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 1;" }
+		whdown	{ cmd "mn_sell_aircraft 1;" }
 	}
 	pic bt_buy1
 	{
@@ -1901,8 +1966,6 @@ menu buyaircraft
 		pos		"376 65"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 1;" }
-		whup	{ cmd "mn_buy_aircraft 1;" }
-		whdown	{ cmd "mn_sell_aircraft 1;" }
 	}
 	pic bt_sell1
 	{
@@ -1910,8 +1973,13 @@ menu buyaircraft
 		pos		"392 65"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 1;" }
-		whup	{ cmd "mn_buy_aircraft 1;" }
-		whdown	{ cmd "mn_sell_aircraft 1;" }
+	}
+	zone wz_buysell2
+	{
+		pos	"332 90"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 2;" }
+		whdown	{ cmd "mn_sell_aircraft 2;" }
 	}
 	pic bt_buy2
 	{
@@ -1919,8 +1987,6 @@ menu buyaircraft
 		pos		"376 90"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 2;" }
-		whup	{ cmd "mn_buy_aircraft 2;" }
-		whdown	{ cmd "mn_sell_aircraft 2;" }
 	}
 	pic bt_sell2
 	{
@@ -1928,8 +1994,13 @@ menu buyaircraft
 		pos		"392 90"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 2;" }
-		whup	{ cmd "mn_buy_aircraft 2;" }
-		whdown	{ cmd "mn_sell_aircraft 2;" }
+	}
+	zone wz_buysell3
+	{
+		pos	"332 115"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 3;" }
+		whdown	{ cmd "mn_sell_aircraft 3;" }
 	}
 	pic bt_buy3
 	{
@@ -1937,8 +2008,6 @@ menu buyaircraft
 		pos		"376 115"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 3;" }
-		whup	{ cmd "mn_buy_aircraft 3;" }
-		whdown	{ cmd "mn_sell_aircraft 3;" }
 	}
 	pic bt_sell3
 	{
@@ -1946,8 +2015,13 @@ menu buyaircraft
 		pos		"392 115"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 3;" }
-		whup	{ cmd "mn_buy_aircraft 3;" }
-		whdown	{ cmd "mn_sell_aircraft 3;" }
+	}
+	zone wz_buysell4
+	{
+		pos	"332 140"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 4;" }
+		whdown	{ cmd "mn_sell_aircraft 4;" }
 	}
 	pic bt_buy4
 	{
@@ -1955,8 +2029,6 @@ menu buyaircraft
 		pos		"376 140"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 4;" }
-		whup	{ cmd "mn_buy_aircraft 4;" }
-		whdown	{ cmd "mn_sell_aircraft 4;" }
 	}
 	pic bt_sell4
 	{
@@ -1964,8 +2036,13 @@ menu buyaircraft
 		pos		"392 140"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 4;" }
-		whup	{ cmd "mn_buy_aircraft 4;" }
-		whdown	{ cmd "mn_sell_aircraft 4;" }
+	}
+	zone wz_buysell5
+	{
+		pos	"332 165"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 5;" }
+		whdown	{ cmd "mn_sell_aircraft 5;" }
 	}
 	pic bt_buy5
 	{
@@ -1973,8 +2050,6 @@ menu buyaircraft
 		pos		"376 165"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 5;" }
-		whup	{ cmd "mn_buy_aircraft 5;" }
-		whdown	{ cmd "mn_sell_aircraft 5;" }
 	}
 	pic bt_sell5
 	{
@@ -1982,8 +2057,13 @@ menu buyaircraft
 		pos		"392 165"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 5;" }
-		whup	{ cmd "mn_buy_aircraft 5;" }
-		whdown	{ cmd "mn_sell_aircraft 5;" }
+	}
+	zone wz_buysell6
+	{
+		pos	"332 190"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 6;" }
+		whdown	{ cmd "mn_sell_aircraft 6;" }
 	}
 	pic bt_buy6
 	{
@@ -1991,8 +2071,6 @@ menu buyaircraft
 		pos		"376 190"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 6;" }
-		whup	{ cmd "mn_buy_aircraft 6;" }
-		whdown	{ cmd "mn_sell_aircraft 6;" }
 	}
 	pic bt_sell6
 	{
@@ -2000,8 +2078,13 @@ menu buyaircraft
 		pos		"392 190"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 6;" }
-		whup	{ cmd "mn_buy_aircraft 6;" }
-		whdown	{ cmd "mn_sell_aircraft 6;" }
+	}
+	zone wz_buysell7
+	{
+		pos	"332 215"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 7;" }
+		whdown	{ cmd "mn_sell_aircraft 7;" }
 	}
 	pic bt_buy7
 	{
@@ -2009,8 +2092,6 @@ menu buyaircraft
 		pos		"376 215"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 7;" }
-		whup	{ cmd "mn_buy_aircraft 7;" }
-		whdown	{ cmd "mn_sell_aircraft 7;" }
 	}
 	pic bt_sell7
 	{
@@ -2018,8 +2099,13 @@ menu buyaircraft
 		pos		"392 215"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 7;" }
-		whup	{ cmd "mn_buy_aircraft 7;" }
-		whdown	{ cmd "mn_sell_aircraft 7;" }
+	}
+	zone wz_buysell8
+	{
+		pos	"332 240"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 8;" }
+		whdown	{ cmd "mn_sell_aircraft 8;" }
 	}
 	pic bt_buy8
 	{
@@ -2027,8 +2113,6 @@ menu buyaircraft
 		pos		"376 240"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 8;" }
-		whup	{ cmd "mn_buy_aircraft 8;" }
-		whdown	{ cmd "mn_sell_aircraft 8;" }
 	}
 	pic bt_sell8
 	{
@@ -2036,8 +2120,13 @@ menu buyaircraft
 		pos		"392 240"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 8;" }
-		whup	{ cmd "mn_buy_aircraft 8;" }
-		whdown	{ cmd "mn_sell_aircraft 8;" }
+	}
+	zone wz_buysell9
+	{
+		pos	"332 265"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 9;" }
+		whdown	{ cmd "mn_sell_aircraft 9;" }
 	}
 	pic bt_buy9
 	{
@@ -2045,8 +2134,6 @@ menu buyaircraft
 		pos		"376 265"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 9;" }
-		whup	{ cmd "mn_buy_aircraft 9;" }
-		whdown	{ cmd "mn_sell_aircraft 9;" }
 	}
 	pic bt_sell9
 	{
@@ -2054,8 +2141,13 @@ menu buyaircraft
 		pos		"392 265"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 9;" }
-		whup	{ cmd "mn_buy_aircraft 9;" }
-		whdown	{ cmd "mn_sell_aircraft 9;" }
+	}
+	zone wz_buysell10
+	{
+		pos	"332 290"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 10;" }
+		whdown	{ cmd "mn_sell_aircraft 10;" }
 	}
 	pic bt_buy10
 	{
@@ -2063,8 +2155,6 @@ menu buyaircraft
 		pos		"376 290"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 10;" }
-		whup	{ cmd "mn_buy_aircraft 10;" }
-		whdown	{ cmd "mn_sell_aircraft 10;" }
 	}
 	pic bt_sell10
 	{
@@ -2072,8 +2162,13 @@ menu buyaircraft
 		pos		"392 290"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 10;" }
-		whup	{ cmd "mn_buy_aircraft 10;" }
-		whdown	{ cmd "mn_sell_aircraft 10;" }
+	}
+	zone wz_buysell11
+	{
+		pos	"332 315"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 11;" }
+		whdown	{ cmd "mn_sell_aircraft 11;" }
 	}
 	pic bt_buy11
 	{
@@ -2081,8 +2176,6 @@ menu buyaircraft
 		pos		"376 315"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 11;" }
-		whup	{ cmd "mn_buy_aircraft 11;" }
-		whdown	{ cmd "mn_sell_aircraft 11;" }
 	}
 	pic bt_sell11
 	{
@@ -2090,8 +2183,13 @@ menu buyaircraft
 		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 11;" }
-		whup	{ cmd "mn_buy_aircraft 11;" }
-		whdown	{ cmd "mn_sell_aircraft 11;" }
+	}
+	zone wz_buysell12
+	{
+		pos	"332 340"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 12;" }
+		whdown	{ cmd "mn_sell_aircraft 12;" }
 	}
 	pic bt_buy12
 	{
@@ -2099,8 +2197,6 @@ menu buyaircraft
 		pos		"376 340"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 12;" }
-		whup	{ cmd "mn_buy_aircraft 12;" }
-		whdown	{ cmd "mn_sell_aircraft 12;" }
 	}
 	pic bt_sell12
 	{
@@ -2108,8 +2204,13 @@ menu buyaircraft
 		pos		"392 340"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 12;" }
-		whup	{ cmd "mn_buy_aircraft 12;" }
-		whdown	{ cmd "mn_sell_aircraft 12;" }
+	}
+	zone wz_buysell13
+	{
+		pos	"332 365"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 13;" }
+		whdown	{ cmd "mn_sell_aircraft 13;" }
 	}
 	pic bt_buy13
 	{
@@ -2117,8 +2218,6 @@ menu buyaircraft
 		pos		"376 365"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 13;" }
-		whup	{ cmd "mn_buy_aircraft 13;" }
-		whdown	{ cmd "mn_sell_aircraft 13;" }
 	}
 	pic bt_sell13
 	{
@@ -2126,8 +2225,13 @@ menu buyaircraft
 		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 13;" }
-		whup	{ cmd "mn_buy_aircraft 13;" }
-		whdown	{ cmd "mn_sell_aircraft 13;" }
+	}
+	zone wz_buysell14
+	{
+		pos	"332 390"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 14;" }
+		whdown	{ cmd "mn_sell_aircraft 14;" }
 	}
 	pic bt_buy14
 	{
@@ -2135,8 +2239,6 @@ menu buyaircraft
 		pos		"376 390"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 14;" }
-		whup	{ cmd "mn_buy_aircraft 14;" }
-		whdown	{ cmd "mn_sell_aircraft 14;" }
 	}
 	pic bt_sell14
 	{
@@ -2144,8 +2246,13 @@ menu buyaircraft
 		pos		"392 390"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 14;" }
-		whup	{ cmd "mn_buy_aircraft 14;" }
-		whdown	{ cmd "mn_sell_aircraft 14;" }
+	}
+	zone wz_buysell15
+	{
+		pos	"332 415"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 15;" }
+		whdown	{ cmd "mn_sell_aircraft 15;" }
 	}
 	pic bt_buy15
 	{
@@ -2153,8 +2260,6 @@ menu buyaircraft
 		pos		"376 415"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 15;" }
-		whup	{ cmd "mn_buy_aircraft 15;" }
-		whdown	{ cmd "mn_sell_aircraft 15;" }
 	}
 	pic bt_sell15
 	{
@@ -2162,8 +2267,13 @@ menu buyaircraft
 		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 15;" }
-		whup	{ cmd "mn_buy_aircraft 15;" }
-		whdown	{ cmd "mn_sell_aircraft 15;" }
+	}
+	zone wz_buysell16
+	{
+		pos	"332 440"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 16;" }
+		whdown	{ cmd "mn_sell_aircraft 16;" }
 	}
 	pic bt_buy16
 	{
@@ -2171,8 +2281,6 @@ menu buyaircraft
 		pos		"376 440"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 16;" }
-		whup	{ cmd "mn_buy_aircraft 16;" }
-		whdown	{ cmd "mn_sell_aircraft 16;" }
 	}
 	pic bt_sell16
 	{
@@ -2180,8 +2288,13 @@ menu buyaircraft
 		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 16;" }
-		whup	{ cmd "mn_buy_aircraft 16;" }
-		whdown	{ cmd "mn_sell_aircraft 16;" }
+	}
+	zone wz_buysell17
+	{
+		pos	"332 465"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 17;" }
+		whdown	{ cmd "mn_sell_aircraft 17;" }
 	}
 	pic bt_buy17
 	{
@@ -2189,8 +2302,6 @@ menu buyaircraft
 		pos		"376 465"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 17;" }
-		whup	{ cmd "mn_buy_aircraft 17;" }
-		whdown	{ cmd "mn_sell_aircraft 17;" }
 	}
 	pic bt_sell17
 	{
@@ -2198,8 +2309,13 @@ menu buyaircraft
 		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 17;" }
-		whup	{ cmd "mn_buy_aircraft 17;" }
-		whdown	{ cmd "mn_sell_aircraft 17;" }
+	}
+	zone wz_buysell18
+	{
+		pos	"332 490"
+		size	"120 24"
+		whup	{ cmd "mn_buy_aircraft 18;" }
+		whdown	{ cmd "mn_sell_aircraft 18;" }
 	}
 	pic bt_buy18
 	{
@@ -2207,8 +2323,6 @@ menu buyaircraft
 		pos		"376 490"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 18;" }
-		whup	{ cmd "mn_buy_aircraft 18;" }
-		whdown	{ cmd "mn_sell_aircraft 18;" }
 	}
 	pic bt_sell18
 	{
@@ -2216,8 +2330,6 @@ menu buyaircraft
 		pos		"392 490"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 18;" }
-		whup	{ cmd "mn_buy_aircraft 18;" }
-		whdown	{ cmd "mn_sell_aircraft 18;" }
 	}
 
 

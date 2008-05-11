@@ -58,6 +58,14 @@ menu aliencont
 	// aliencont actions
 	// ==================
 
+	zone wz_alc_base
+	{
+		pos	"10 669"
+		size	"915 88"
+		whup	{ cmd "aliencont_nextbase;" }
+		whdown	{ cmd "aliencont_prevbase;" }
+	}
+
 	pic bt_alc_prevbase
 	{
 		tooltip	"_Previous alien containment"

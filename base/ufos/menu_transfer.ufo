@@ -40,6 +40,14 @@ menu transfer
 		pos		"512 512"
 	}
 
+	zone wz_base
+	{
+		pos	"576 12"
+		size	"434 81"
+		whup	{ cmd "trans_nextbase;" }
+		whdown	{ cmd "trans_prevbase;" }
+	}
+
 	pic prev_base
 	{
 		tooltip	"_Select previous base for transfer"
