@@ -105,7 +105,6 @@ extern dBspPlane_t backplanes[MAX_MAP_PLANES];
 
 void MakePatches(void);
 void SubdividePatches(void);
-void PairEdges(void);
 void CalcTextureReflectivity(void);
 void RadWorld(void);
 void BuildVertexNormals(void);

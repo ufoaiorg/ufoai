@@ -200,7 +200,7 @@ ac +a  ac
 assembly test
 {
 size "5 5"
-title "_Test"
+title "_Small cemetery"
 
 +p01 "0 8"
 +p02 "0 8"

@@ -278,6 +278,7 @@ static void MN_MapInfo (int step)
 {
 	int i = 0;
 	mapDef_t *md;
+	const char *mapname;
 
 	if (!csi.numMDs)
 		return;
@@ -303,21 +304,26 @@ static void MN_MapInfo (int step)
 
 	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
 
+	mapname = md->map;
+	/* skip random map char */
+	if (mapname[0] == '+')
+		mapname++;
+
 	Cvar_Set("mn_svmapname", md->map);
-	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", md->map)) != -1)
-		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", md->map));
+	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", mapname)) != -1)
+		Cvar_Set("mn_mappic", va("maps/shots/%s", mapname));
 	else
-		Cvar_Set("mn_mappic", va("maps/shots/na.jpg"));
+		Cvar_Set("mn_mappic", va("maps/shots/default"));
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", md->map)) != -1)
-		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", md->map));
+	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", mapname)) != -1)
+		Cvar_Set("mn_mappic2", va("maps/shots/%s_2", mapname));
 	else
-		Cvar_Set("mn_mappic2", va("maps/shots/na.jpg"));
+		Cvar_Set("mn_mappic2", va("maps/shots/default"));
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", md->map)) != -1)
-		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", md->map));
+	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", mapname)) != -1)
+		Cvar_Set("mn_mappic3", va("maps/shots/%s_3", mapname));
 	else
-		Cvar_Set("mn_mappic3", va("maps/shots/na.jpg"));
+		Cvar_Set("mn_mappic3", va("maps/shots/default"));
 
 	if (!ccs.singleplayer) {
 		if (md->gameTypes) {

@@ -225,7 +225,7 @@ winding_t *BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 /**
  * @brief
  */
-winding_t *CopyWinding (winding_t *w)
+winding_t *CopyWinding (const winding_t *w)
 {
 	ptrdiff_t	size;
 	winding_t	*c;
@@ -255,15 +255,15 @@ winding_t *ReverseWinding (winding_t *w)
 /**
  * @brief
  */
-void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
-		vec_t epsilon, winding_t **front, winding_t **back)
+void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t dist,
+		const vec_t epsilon, winding_t **front, winding_t **back)
 {
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
 	static vec_t dot;		/* VC 4.2 optimizer bug if not static */
 	int i, j;
-	vec_t *p1, *p2;
+	const vec_t *p1, *p2;
 	vec3_t mid;
 	winding_t *f, *b;
 	int maxpts;

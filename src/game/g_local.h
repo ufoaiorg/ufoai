@@ -143,7 +143,7 @@ extern game_export_t globals;
 
 extern edict_t *g_edicts;
 
-#define random()	((rand () & 0x7fff) / ((float)0x7fff))
+#define random()	((rand() & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))
 
 extern cvar_t *sv_maxentities;

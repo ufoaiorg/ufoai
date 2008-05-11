@@ -7,7 +7,7 @@
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/
-Copyright (C) 1997-2001 Id SoftwaR_ Inc.
+Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -489,7 +489,7 @@ static void CL_EventReset (void)
 	for (event = events; event; event = next) {
 		next = event->next;
 		free_dbuffer(event->msg);
-		free(event);
+		Mem_Free(event);
 	}
 	events = NULL;
 }
@@ -824,9 +824,7 @@ static void CL_AddEdict (struct dbuffer * msg)
 	le->addFunc = CL_AddEdictFunc;
 	le->type = type;
 
-	Com_Printf("CL_AddEdict: entnum: %i - type: %i\n", entnum, type);
-	Print3Vector(mins);
-	Print3Vector(maxs);
+	Com_DPrintf(DEBUG_CLIENT, "CL_AddEdict: entnum: %i - type: %i\n", entnum, type);
 }
 
 /**
@@ -1451,7 +1449,7 @@ static void CL_ExecuteEvent (int now, void *data)
 		ev_func[event->eType](event->msg);
 
 		free_dbuffer(event->msg);
-		free(event);
+		Mem_Free(event);
 	}
 }
 
@@ -1643,7 +1641,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			break;
 		}
 
-		cur = malloc(sizeof(*cur));
+		cur = Mem_PoolAlloc(sizeof(*cur), cl_genericPool, CL_TAG_NONE);
 		cur->when = event_time;
 		cur->eType = eType;
 		cur->msg = event_msg;

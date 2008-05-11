@@ -98,7 +98,7 @@ typedef struct client_s {
 typedef struct {
 	qboolean initialized;		/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
-	struct datagram_socket *datagram_socket;
+	struct datagram_socket *netDatagramSocket;
 	int spawncount;				/**< incremented each server start - used to check late spawns */
 	client_t *clients;			/**< [sv_maxclients->value]; */
 	int last_heartbeat;

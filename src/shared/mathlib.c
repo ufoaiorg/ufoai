@@ -28,9 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const vec3_t vec3_origin = { 0, 0, 0 };
 const vec4_t vec4_origin = { 0, 0, 0, 0 };
 
-#define RT2	0.707107
+/** @brief cos 45 degree */
+#define RT2 0.707107
 
-/* DIRECTIONS
+/**
+ * @note DIRECTIONS
  *  straight
  * 0 = x+1, y
  * 1 = x-1, y
@@ -44,7 +46,7 @@ const vec4_t vec4_origin = { 0, 0, 0, 0 };
  */
 const int dvecs[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1} };
 const float dvecsn[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
-/* if you change dangle[DIRECTIONS], you must also change function AngleToDV */
+/** @note if you change dangle[DIRECTIONS], you must also change function AngleToDV */
 const float dangle[DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
 
 const byte dvright[DIRECTIONS] = { 7, 6, 4, 5, 0, 1, 2, 3 };
@@ -95,10 +97,11 @@ int AngleToDV (int angle)
 }
 
 /**
- * @brief
+ * @brief Round to nearest integer
  */
 vec_t Q_rint (const vec_t in)
 {
+	/* round x down to the nearest integer */
 	return floor(in + 0.5);
 }
 
@@ -125,6 +128,13 @@ vec_t ColorNormalize (const vec3_t in, vec3_t out)
 	return max;
 }
 
+/**
+ * @brief Checks whether the given vector @c v1 is closer to @c comp as the vector @c v2
+ * @param[in] v1 Vector to check whether it's closer to @c comp as @c v2
+ * @param[in] v2 Vector to check against
+ * @param[in] comp The vector to check the distance from
+ * @return Returns true if @c v1 is closer to @c comp as @c v2
+ */
 qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 {
 	vec3_t d1, d2;
@@ -436,7 +446,7 @@ qboolean FrustomVis (vec3_t origin, int dir, vec3_t point)
 	delta[1] = point[1] - origin[1];
 	delta[2] = 0;
 	VectorNormalize(delta);
-	dv = dir & (DIRECTIONS-1);
+	dv = dir & (DIRECTIONS - 1);
 
 	/* test 120 frustum (cos 60 = 0.5) */
 	if ((delta[0] * dvecsn[dv][0] + delta[1] * dvecsn[dv][1]) < 0.5)
@@ -484,13 +494,13 @@ static inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const ve
  */
 vec_t VectorNormalize (vec3_t v)
 {
-	float length, ilength;
+	float length;
 
 	length = DotProduct(v, v);
 	length = sqrt(length);		/* FIXME */
 
 	if (length) {
-		ilength = 1 / length;
+		const float ilength = 1 / length;
 		v[0] *= ilength;
 		v[1] *= ilength;
 		v[2] *= ilength;
@@ -577,7 +587,7 @@ static inline void R_ConcatRotations (float in1[3][3], float in2[3][3], float ou
  * @param[in] point The point to be rotated
  * @param[in] degrees How many degrees to rotate the point by
  * @param[out] dst The point after rotation
- * @note Warning: dst must be different from point (otherwise the result has no meaning)
+ * @note Warning: @c dst must be different from @c point (otherwise the result has no meaning)
  * @pre @c dir must be normalized
  */
 void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, float degrees)
@@ -661,10 +671,8 @@ void Print2Vector (const vec2_t v)
  */
 void PolarToVec (const vec2_t a, vec3_t v)
 {
-	float p, t;
-
-	p = a[0] * torad;	/* long */
-	t = a[1] * torad;	/* lat */
+	const float p = a[0] * torad;	/* long */
+	const float t = a[1] * torad;	/* lat */
 	/* v[0] = z, v[1] = x, v[2] = y - wtf? */
 	VectorSet(v, cos(p) * cos(t), sin(p) * cos(t), sin(t));
 }
@@ -764,6 +772,12 @@ float AngleNormalize180 (float angle)
 	return angle;
 }
 
+/**
+ * @brief Calculates the center of a bounding box
+ * @param[in] mins The lower end of the bounding box
+ * @param[in] maxs The upper end of the bounding box
+ * @param[out] center The target center vector calculated from @c mins and @c maxs
+ */
 void VectorCenterFromMinsMaxs (const vec3_t mins, const vec3_t maxs, vec3_t center)
 {
 	VectorAdd(mins, maxs, center);

@@ -27,16 +27,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bsp.h"
 #include "../../common/tracing.h"
 
-patch_t		*face_patches[MAX_MAP_FACES];
-entity_t	*face_entity[MAX_MAP_FACES];
-patch_t		patches[MAX_PATCHES];
-unsigned	num_patches;
+patch_t *face_patches[MAX_MAP_FACES];
+entity_t *face_entity[MAX_MAP_FACES];
+patch_t patches[MAX_PATCHES];
+unsigned num_patches;
 
-vec3_t		radiosity[MAX_PATCHES];		/* light leaving a patch */
-vec3_t		illumination[MAX_PATCHES];	/* light arriving at a patch */
+static vec3_t radiosity[MAX_PATCHES];		/**< light leaving a patch */
+static vec3_t illumination[MAX_PATCHES];	/**< light arriving at a patch */
 
-vec3_t		face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
-dBspPlane_t	backplanes[MAX_MAP_PLANES];
+vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
+dBspPlane_t backplanes[MAX_MAP_PLANES];
 
 /*
 ===================================================================
@@ -44,7 +44,9 @@ MISC
 ===================================================================
 */
 
-
+/**
+ * @sa MakePatchForFace
+ */
 static void MakeBackplanes (void)
 {
 	int i;
@@ -335,7 +337,6 @@ void RadWorld (void)
 	}
 
 	/* blend bounced light into direct light and save */
-	PairEdges();
 	LinkPlaneFaces();
 
 	U2M_ProgressBar(FinalLightFace, curTile->numfaces, qtrue, "FINALLIGHT");

@@ -59,6 +59,7 @@ struct memPool_s *com_cmodelSysPool;
 struct memPool_s *com_cvarSysPool;
 struct memPool_s *com_fileSysPool;
 struct memPool_s *com_genericPool;
+struct memPool_s *com_networkPool;
 
 struct event {
 	int when;
@@ -777,6 +778,7 @@ void Qcommon_Init (int argc, const char **argv)
 	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");
 	com_fileSysPool = Mem_CreatePool("Common: File system");
 	com_genericPool = Mem_CreatePool("Generic");
+	com_networkPool = Mem_CreatePool("Network");
 
 	if (setjmp(abortframe))
 		Sys_Error("Error during initialization");
@@ -975,7 +977,7 @@ static void tick_timer (int now, void *data)
 
 void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
 {
-	struct timer *timer = malloc(sizeof(*timer));
+	struct timer *timer = Mem_PoolAlloc(sizeof(*timer), com_genericPool, 0);
 	int i;
 	timer->min_freq = freq;
 	timer->interval = 1000 / freq->integer;
@@ -994,7 +996,7 @@ void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
 
 void Schedule_Event (int when, event_func *func, void *data)
 {
-	struct event *event = malloc(sizeof(*event));
+	struct event *event = Mem_PoolAlloc(sizeof(*event), com_genericPool, 0);
 	event->when = when;
 	event->func = func;
 	event->data = data;
@@ -1041,7 +1043,7 @@ void Qcommon_Frame (void)
 		event_queue = event->next;
 
 		if (setjmp(abortframe)) {
-			free(event);
+			Mem_Free(event);
 			return;
 		}
 
@@ -1051,7 +1053,7 @@ void Qcommon_Frame (void)
 		if (setjmp(abortframe))
 			return;
 
-		free(event);
+		Mem_Free(event);
 	}
 
 	/* Now we spend time_to_next milliseconds working on whatever
@@ -1178,7 +1180,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 
 	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
 	list->next = newEntry;
-	newEntry->data = (byte*)Mem_PoolStrDup(data, com_genericPool, 0);
+	newEntry->data = (byte*)Mem_StrDup(data);
 	newEntry->next = NULL; /* not really needed - but for better readability */
 }
 

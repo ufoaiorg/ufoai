@@ -279,6 +279,9 @@ static int CP_SelectNewMissionType (void)
  */
 static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
 {
+	assert(mapIdx >= 0);
+	assert(mapIdx < csi.numMDs);
+
 	if (csi.mds[mapIdx].storyRelated)
 		return qfalse;
 
@@ -354,12 +357,21 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 			return qtrue;
 		} else {
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
-			Com_Printf("  ufo: %s -- pos: %s\n", mission->ufo ? UFO_TypeToShortName(mission->ufo->ufotype) : "none", pos ? va(("(%.02f, %.02f)"), pos[0], pos[1]) : "none");
+			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? UFO_TypeToShortName(mission->ufo->ufotype) : "none");
+			if (pos)
+				Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
+			else
+				Com_Printf("none\n");
 			return qfalse;
 		}
 	}
 
-	randomNum = rand() % hits;
+	/* FIXME: This might be hit with current code */
+	assert(hits);
+
+	/* randomnum might not be 0 - otherwise i would be 0 in the next
+	 * loop and i - 1 will access invalid memory */
+	randomNum = max(1, rand() % hits);
 
 	for (i = 0; randomNum >= 0; i++) {
 		/* Check if mission fulfill conditions */
@@ -369,6 +381,8 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 		if (csi.mds[i].timesAlreadyUsed == minMissionAppearance)
 			randomNum--;
 	}
+
+	assert(i > 0);
 
 	mission->mapDef = &csi.mds[i - 1];
 	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
@@ -4449,7 +4463,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		memset(&mission, 0, sizeof(mission));
 
 		name = MSG_ReadString(sb);
-		if (*name) {
+		if (name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
 			mission.mapDef->timesAlreadyUsed = MSG_ReadLong(sb);
 		} else
@@ -6360,6 +6374,9 @@ static void CL_GameSkirmish_f (void)
 
 	if (!ccs.singleplayer)
 		return;
+
+	assert(cls.multiplayerMapDefinitionIndex >= 0);
+	assert(cls.multiplayerMapDefinitionIndex < MAX_MAPDEFS);
 
 	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
 	if (!md)

@@ -87,7 +87,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */
 #define MAX_TOKEN_CHARS     256 /* max length of an individual token */
 
-#define MAX_QPATH           64  /* max length of a quake game pathname */
+#define MAX_QPATH           64  /* max length of the ufo virtual filesystem */
 /* windows + linux 256, macosx 32 */
 #define MAX_OSPATH          256 /* max length of a filesystem pathname */
 #define MAX_FILES           512 /* max files in a directory */

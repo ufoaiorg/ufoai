@@ -82,7 +82,7 @@ COMMAND BUFFER
 =============================================================================
 */
 
-#define CMD_BUFFER_SIZE 8192 /*16384*/
+#define CMD_BUFFER_SIZE 8192
 static sizebuf_t cmd_text;
 static byte cmd_text_buf[CMD_BUFFER_SIZE];
 static char defer_text_buf[CMD_BUFFER_SIZE];

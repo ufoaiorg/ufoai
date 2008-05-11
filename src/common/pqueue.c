@@ -16,6 +16,7 @@ originated:
 	http://www.geocities.com/jheyesjones/astar.html
 */
 
+#include "common.h"
 #include "pqueue.h"
 
 /* given an index to any element in a binary tree stored in a linear array with the root at 1 and
@@ -31,35 +32,35 @@ originated:
 #define PGetRating(elem) ((elem).rating)
 
 
-/* initialise the priority queue with a maximum size of maxelements. */
-
-void PQueueInitialise (PQUEUE *pq, uint32_t MaxElements)
+/**
+ * @brief initialise the priority queue with a maximum size of maxelements.
+ */
+void PQueueInitialise (priorityQueue_t *pq, uint32_t maxElements)
 {
-	pq->MaxSize = MaxElements;
-	pq->CurrentSize = 0;
+	pq->maxSize = maxElements;
+	pq->currentSize = 0;
 
-	pq->Elements = (pq_element_t*) malloc(sizeof(pq_element_t) * (MaxElements + 1));
+	pq->elements = (priorityQueueElement_t*) malloc(sizeof(priorityQueueElement_t) * (maxElements + 1));
 
-	if (pq->Elements == NULL)
-		printf("Memory alloc failed!\n");
+	if (pq->elements == NULL)
+		Sys_Error("PQueueInitialise: Memory alloc failed!");
 }
 
-void PQueuePush (PQUEUE *pq, pos3_t item, pq_rating_t r)
+void PQueuePush (priorityQueue_t *pq, pos3_t item, priorityQueueRating_t r)
 {
 	uint32_t i, j;
-	pq_element_t * Elements = pq->Elements;
-	uint32_t CurrentSize = pq->CurrentSize;
+	priorityQueueElement_t * elements = pq->elements;
+	uint32_t currentSize = pq->currentSize;
 
-	if (CurrentSize == pq->MaxSize) {
+	if (currentSize == pq->maxSize) {
 		int new_size;
-		new_size = pq->MaxSize * 2;
-		pq->Elements = Elements = (pq_element_t *)realloc(Elements, sizeof(pq_element_t) * (new_size + 1));
-		pq->MaxSize = new_size;
+		new_size = pq->maxSize * 2;
+		pq->elements = elements = (priorityQueueElement_t *)realloc(elements, sizeof(priorityQueueElement_t) * (new_size + 1));
+		pq->maxSize = new_size;
 	}
 
 	/* set i to the first unused element and increment CurrentSize */
-
-	i = (++CurrentSize);
+	i = (++currentSize);
 
 	/* while the parent of the space we're putting the new node into is worse than
 	 * our new node, swap the space with the worse node. We keep doing that until we
@@ -67,61 +68,63 @@ void PQueuePush (PQUEUE *pq, pos3_t item, pq_rating_t r)
 	 * note that we also can sort so that the minimum elements bubble up so we need to loops
 	 * with the comparison operator flipped... */
 
-	while (i > PQ_FIRST_ENTRY && (Elements[PQ_PARENT_INDEX(i)].rating > r)) {
-		Elements[i] = Elements[PQ_PARENT_INDEX(i)];
+	while (i > PQ_FIRST_ENTRY && (elements[PQ_PARENT_INDEX(i)].rating > r)) {
+		elements[i] = elements[PQ_PARENT_INDEX(i)];
 		i = PQ_PARENT_INDEX(i);
 	}
 
 	/* then add the element at the space we created. */
 	for (j = 0; j < 3; j++)
-		Elements[i].item[j] = item[j];
+		elements[i].item[j] = item[j];
 
-	Elements[i].rating = r;
+	elements[i].rating = r;
 
-	pq->CurrentSize = CurrentSize;
+	pq->currentSize = currentSize;
 }
 
-/* free up memory for pqueue */
-void PQueueFree (PQUEUE *pq)
+/**
+ * @brief free up memory for pqueue
+ */
+void PQueueFree (priorityQueue_t *pq)
 {
-	free(pq->Elements);
+	free(pq->elements);
 }
 
-/* remove the first node from the pqueue and provide a pointer to it */
-
-void PQueuePop (PQUEUE *pq, pos3_t item)
+/**
+ * @brief remove the first node from the pqueue and provide a pointer to it
+ */
+void PQueuePop (priorityQueue_t *pq, pos3_t item)
 {
 	uint32_t i, j;
 	uint32_t child;
-	pq_element_t * Elements = pq->Elements;
-	uint32_t CurrentSize = pq->CurrentSize;
-
-	pq_element_t pMaxElement;
-	pq_element_t pLastElement;
+	priorityQueueElement_t * elements = pq->elements;
+	uint32_t currentSize = pq->currentSize;
+	priorityQueueElement_t pMaxElement;
+	priorityQueueElement_t pLastElement;
 
 	if (PQueueIsEmpty(pq))
 		return; /* XXX */
 
-	pMaxElement = Elements[PQ_FIRST_ENTRY];
+	pMaxElement = elements[PQ_FIRST_ENTRY];
 
 	/* get pointer to last element in tree */
-	pLastElement = Elements[CurrentSize--];
+	pLastElement = elements[currentSize--];
 
 	for (j = 0; j < 3; j++)
 		item[j] = pMaxElement.item[j];
 
-	for (i = PQ_FIRST_ENTRY; (child = PQ_LEFT_CHILD_INDEX(i)) <= CurrentSize; i = child) {
+	for (i = PQ_FIRST_ENTRY; (child = PQ_LEFT_CHILD_INDEX(i)) <= currentSize; i = child) {
 		/* set child to the smaller of the two children... */
 
-		if ((child != CurrentSize) && (Elements[child + 1].rating < Elements[child].rating))
+		if ((child != currentSize) && (elements[child + 1].rating < elements[child].rating))
 			child ++;
 
-		if (pLastElement.rating > Elements[ child ].rating)
-			Elements[i] = Elements[child];
+		if (pLastElement.rating > elements[ child ].rating)
+			elements[i] = elements[child];
 		else
 			break;
 	}
 
-	Elements[i] = pLastElement;
-	pq->CurrentSize = CurrentSize;
+	elements[i] = pLastElement;
+	pq->currentSize = currentSize;
 }

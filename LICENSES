@@ -1787,6 +1787,7 @@ base/pics/maps/shots/corrupter_crash_3.jpg | GNU General Public License 2.0 | Ma
 base/pics/maps/shots/dam.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/dam_2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/dam_3.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/pics/maps/shots/default.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/druglord.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/druglord_2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/druglord_3.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -1835,7 +1836,6 @@ base/pics/maps/shots/military_convoy.jpg | GNU General Public License 2.0 | Mart
 base/pics/maps/shots/mine.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/mine_2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/mine_3.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/pics/maps/shots/na.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/office.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/office_2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/office_3.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2029,6 +2029,10 @@ base/pics/menu/save_slota.tga | GNU General Public License 2.0 |  | Based on ori
 base/pics/menu/scroll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/selectbox.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/selectbox_green.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/skirmish_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/skirmish_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/skirmish_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/skirmish_ur.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/stats_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/stats_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/stats_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
@@ -2772,6 +2776,8 @@ base/textures/tex_mattn/door048.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/door049.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door050.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door051.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door52.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door53.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/drawer.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/dung.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/dung2.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2824,6 +2830,7 @@ base/textures/tex_mattn/roof004.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/roof005.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/roof006.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/roof007.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/roof008.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rust.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rust2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/sand001.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2910,6 +2917,8 @@ base/textures/tex_mattn/wall067.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/wall068.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall069.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall070.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall071.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall072.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall_bricks001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall_grates.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/warning.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2922,6 +2931,7 @@ base/textures/tex_mattn/window006.jpg | GNU General Public License 2.0 | Martin 
 base/textures/tex_mattn/window007.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/window008.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/window009.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/window10.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood002.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood003.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -3103,6 +3113,7 @@ base/textures/tex_pics/cow3.jpg | GNU General Public License 2.0 | Tobias Gerhar
 base/textures/tex_pics/dragon001.jpg | Public Domain | 19th century Chinese wood engraving.
 base/textures/tex_pics/dragon002.jpg | Public Domain | 19th century Chinese wood engraving.
 base/textures/tex_pics/dragon003.jpg | Public Domain | 19th century Chinese wood engraving.
+base/textures/tex_pics/graffiti.jpg | GNU General Public License 2.0 | Martin Gerhardy | Goettingen
 base/textures/tex_pics/landsc001.jpg | GNU General Public License 2.0
 base/textures/tex_pics/landsc002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/landsc003.jpg | GNU General Public License 2.0

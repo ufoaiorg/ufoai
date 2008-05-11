@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef QCOMMON_DEFINED
-#define QCOMMON_DEFINED
+#ifndef _COMMON_DEFINED
+#define _COMMON_DEFINED
 
 #include "../game/q_shared.h"
 #include "../game/inv_shared.h"
@@ -401,4 +401,4 @@ void COM_InitArgv(int argc, const char **argv);
 void Key_Init(void);
 void SCR_EndLoadingPlaque(void);
 
-#endif							/* QCOMMON_DEFINED */
+#endif

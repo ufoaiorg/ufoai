@@ -62,20 +62,24 @@ int actorMoveLength;
 invList_t invList[MAX_INVLIST];
 static qboolean visible_firemode_list_left = qfalse;
 static qboolean visible_firemode_list_right = qfalse;
-static qboolean firemodes_change_display = qtrue; /* If this set to qfalse CL_DisplayFiremodes_f will not attempt to hide the list */
+/** If this is set to qfalse CL_DisplayFiremodes_f will not attempt to hide the list */
+static qboolean firemodes_change_display = qtrue;
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
-pos3_t mousePendPos; /* for double-click movement and confirmations ... */
-static reactionmode_t selActorReactionState; /* keep track of reaction toggle */
-static reactionmode_t selActorOldReactionState = R_FIRE_OFF; /* and another to help set buttons! */
+/** for double-click movement and confirmations ... */
+pos3_t mousePendPos;
+/** keep track of reaction toggle */
+static reactionmode_t selActorReactionState;
+/** and another to help set buttons! */
+static reactionmode_t selActorOldReactionState = R_FIRE_OFF;
 
-/* to optimise painting of HUD in move-mode, keep track of some globals: */
-static le_t *lastHUDActor; /* keeps track of selActor */
-static int lastMoveLength; /* keeps track of actorMoveLength */
-static int lastTU; /* keeps track of selActor->TU */
+/** to optimise painting of HUD in move-mode, keep track of some globals: */
+static le_t *lastHUDActor; /**< keeps track of selActor */
+static int lastMoveLength; /**< keeps track of actorMoveLength */
+static int lastTU; /**< keeps track of selActor->TU */
 
-/* a cbuf string for each button_types_t */
+/** @brief a cbuf string for each button_types_t */
 static const char *shoot_type_strings[BT_NUM_TYPES] = {
 	"pr\n",
 	"reaction\n",
@@ -87,8 +91,8 @@ static const char *shoot_type_strings[BT_NUM_TYPES] = {
 	"headgear\n"
 };
 
-/* Reservation-popup info */
-static int popupNum;	/* Number of entries in the popup list */
+/** Reservation-popup info */
+static int popupNum;	/**< Number of entries in the popup list */
 
 /**
  * @brief Defines the various states of a button.
@@ -96,10 +100,10 @@ static int popupNum;	/* Number of entries in the popup list */
  * @todo What does -1 mean here? it is used quite a bit
  */
 typedef enum {
-	BT_STATE_DISABLE,		/* 'Disabled' display (grey) */
-	BT_STATE_DESELECT,	/* Normal display (blue) */
-	BT_STATE_HIGHLIGHT,	/* Normal + highlight (blue + glow)*/
-	BT_STATE_UNUSABLE	/* Normal + red (activated but unusable aka "impossible") */
+	BT_STATE_DISABLE,		/**< 'Disabled' display (grey) */
+	BT_STATE_DESELECT,		/**< Normal display (blue) */
+	BT_STATE_HIGHLIGHT,		/**< Normal + highlight (blue + glow)*/
+	BT_STATE_UNUSABLE		/**< Normal + red (activated but unusable aka "impossible") */
 } weaponButtonState_t;
 
 static weaponButtonState_t weaponButtonState[BT_NUM_TYPES];
@@ -116,7 +120,7 @@ void MSG_Write_PA (player_action_t player_action, int num, ...)
 	NET_WriteFormat(msg, "bbs", clc_action, player_action, num);
 	NET_V_WriteFormat(msg, pa_format[player_action], ap);
 	va_end(ap);
-	NET_WriteMsg(cls.stream, msg);
+	NET_WriteMsg(cls.netStream, msg);
 }
 
 /*
@@ -132,12 +136,13 @@ ACTOR MENU UPDATING
  */
 static const char *CL_GetSkillString (const int skill)
 {
+	const int skillLevel = skill * 10 / MAX_SKILL;
 #ifdef DEBUG
 	if (skill > MAX_SKILL) {
 		Com_Printf("CL_GetSkillString: Skill is bigger than max allowed skill value (%i/%i)\n", skill, MAX_SKILL);
 	}
 #endif
-	switch (skill*10/MAX_SKILL) {
+	switch (skillLevel) {
 	case 0:
 		return _("Poor");
 	case 1:
@@ -160,7 +165,7 @@ static const char *CL_GetSkillString (const int skill)
 	case 10:
 		return _("Superhuman");
 	default:
-		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skill*10/MAX_SKILL);
+		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skillLevel);
 		return "";
 	}
 }
@@ -625,6 +630,30 @@ void CL_ListReactionAndReservations_f (void)
 #endif
 
 /**
+ * @param[in] hand Store the given hand.
+ * @param[in] fireModeIndex Store the given firemode for this hand.
+ * @param[in] weaponIndex Store the weapon-idx of the object in the hand (for faster access).
+ */
+void CL_CharacterSetRFMode (character_t *chr, int hand, int fireModeIndex, int weaponIndex)
+{
+	chr->RFmode.hand = hand;
+	chr->RFmode.fmIdx = fireModeIndex;
+	chr->RFmode.wpIdx = weaponIndex;
+}
+
+/**
+ * @param[in] hand Store the given hand.
+ * @param[in] fireModeIndex Store the given firemode for this hand.
+ * @param[in] weaponIndex Store the weapon-idx of the object in the hand (for faster access).
+ */
+void CL_CharacterSetShotSettings (character_t *chr, int hand, int fireModeIndex, int weaponIndex)
+{
+	chr->reservedTus.shotSettings.hand = hand;
+	chr->reservedTus.shotSettings.fmIdx = fireModeIndex;
+	chr->reservedTus.shotSettings.wpIdx = weaponIndex;
+}
+
+/**
  * @brief Checks if the currently selected firemode is useable with the defined weapon.
  * @param[in] actor The actor to check the firemode for.
  * @param[in] reaction Use qtrue to check chr->RFmode or qfalse to check chr->reservedTus->shotSettings
@@ -669,9 +698,9 @@ qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 	}
 
 	if (ammo->weapons[weapFdsIdx]->idx == fmSettings->wpIdx
-	&&  fmSettings->fmIdx >= 0
-	&&  fmSettings->fmIdx < ammo->numFiredefs[weapFdsIdx]) {
-		/* Stored firemode settings up to date - nothin has to be changed */
+	 && fmSettings->fmIdx >= 0
+	 && fmSettings->fmIdx < ammo->numFiredefs[weapFdsIdx]) {
+		/* Stored firemode settings up to date - nothing has to be changed */
 		return qtrue;
 	}
 
@@ -909,9 +938,7 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 		}
 	}
 
-	chr->RFmode.hand = handidx;	/* Store the given hand. */
-	chr->RFmode.fmIdx = fdIdx;	/* Store the given firemode for this hand. */
-	chr->RFmode.wpIdx = objIdx;	/* Store the weapon-idx of the object in the hand (for faster access). */
+	CL_CharacterSetRFMode(chr, handidx, fdIdx, objIdx);
 	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fdIdx, objIdx); /* Send RFmode[] to server-side storage as well. See g_local.h for more. */
 	MSG_Write_PA(PA_RESERVE_STATE, actor->entnum, RES_REACTION, chr->reservedTus.reserveReaction, chr->reservedTus.reaction); /* Update server-side settings */
 }
@@ -1052,9 +1079,7 @@ void CL_PopupFiremodeReservation_f (void)
 		/* A second parameter (the value itself will be ignored) was given.
 		 * This is used to reset the shot-reservation.*/
 		CL_ReserveTUs(selActor, RES_SHOT, 0);
-		selChr->reservedTus.shotSettings.hand = -1;
-		selChr->reservedTus.shotSettings.fmIdx = -1;
-		selChr->reservedTus.shotSettings.wpIdx = -1;
+		CL_CharacterSetShotSettings(selChr, -1, -1, -1);
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
 
 		/* Refresh button and tooltip. */
@@ -1115,8 +1140,8 @@ void CL_PopupFiremodeReservation_f (void)
 
 					/* Remember the line that is currently selected (if any). */
 					if ((selChr->reservedTus.shotSettings.hand == ((hand == 'r') ? 0 : 1))
-					&& (selChr->reservedTus.shotSettings.fmIdx == i)
-					&& (selChr->reservedTus.shotSettings.wpIdx == ammo->weapons[weapFdsIdx]->idx))
+					 && (selChr->reservedTus.shotSettings.fmIdx == i)
+					 && (selChr->reservedTus.shotSettings.wpIdx == ammo->weapons[weapFdsIdx]->idx))
 						selectedEntry = popupNum;
 
 					Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation_f: hand %i, fm %i, wp %i -- hand %i, fm %i, wp %i\n",
@@ -1205,9 +1230,7 @@ void CL_ReserveShot_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: hand %i, fmIdx %i, weapIdx %i\n", hand,fmIdx,wpIdx);
 	if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT)) >= TUs) {
 		CL_ReserveTUs(selActor, RES_SHOT, TUs);
-		selChr->reservedTus.shotSettings.hand = hand;
-		selChr->reservedTus.shotSettings.fmIdx = fmIdx;
-		selChr->reservedTus.shotSettings.wpIdx = wpIdx;
+		CL_CharacterSetShotSettings(selChr, hand, fmIdx, wpIdx);
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
 		/** @todo
 		MSG_Write_PA(PA_RESERVE_SHOT_FM, selActor->entnum, hand, fmIdx, weapIdx);
@@ -1563,6 +1586,7 @@ void CL_DisplayFiremodes_f (void)
 
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!CL_WorkingFiremode(selActor, qtrue)) {	/* No usable firemode selected. */
+		/* FIXME: TYPOS IN COMMENTS - I don't even understand what they are trying to explain here */
 		/* Make sure we use the same hand if it's defined */
 		if (selChr->RFmode.hand != 1) { /* No the left hand defined */
 			/* Set default firemode (try right hand first, then left hand). */
@@ -4056,7 +4080,7 @@ void CL_NextRound_f (void)
 	/* send endround */
 	msg = new_dbuffer();
 	NET_WriteByte(msg, clc_endround);
-	NET_WriteMsg(cls.stream, msg);
+	NET_WriteMsg(cls.netStream, msg);
 
 	/* change back to remote view */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)

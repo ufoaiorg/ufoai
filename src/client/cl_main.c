@@ -152,7 +152,7 @@ void Cmd_ForwardToServer (void)
 		dbuffer_add(msg, Cmd_Args(), strlen(Cmd_Args()));
 	}
 	dbuffer_add(msg, "", 1);
-	NET_WriteMsg(cls.stream, msg);
+	NET_WriteMsg(cls.netStream, msg);
 }
 
 /**
@@ -189,7 +189,7 @@ static void CL_ForwardToServer_f (void)
 		msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
 		dbuffer_add(msg, Cmd_Args(), strlen(Cmd_Args()) + 1);
-		NET_WriteMsg(cls.stream, msg);
+		NET_WriteMsg(cls.netStream, msg);
 	}
 }
 
@@ -319,7 +319,7 @@ void CL_Drop (void)
 }
 
 /**
- * @note Only call CL_Connect if there is no connection yet (cls.stream is NULL)
+ * @note Only call CL_Connect if there is no connection yet (cls.netStream is NULL)
  * @sa CL_Disconnect
  * @sa CL_SendChangedUserinfos
  */
@@ -327,18 +327,18 @@ static void CL_Connect (void)
 {
 	userinfo_modified = qfalse;
 
-	close_datagram_socket(cls.datagram_socket);
-	cls.datagram_socket = NULL;
+	NET_DatagramSocketClose(cls.netDatagramSocket);
+	cls.netDatagramSocket = NULL;
 
-	assert(!cls.stream);
+	assert(!cls.netStream);
 
 	if (cls.servername[0]) {
 		assert(cls.serverport[0]);
-		cls.stream = NET_Connect(cls.servername, cls.serverport);
+		cls.netStream = NET_Connect(cls.servername, cls.serverport);
 	} else
-		cls.stream = NET_ConnectToLoopBack();
-	if (cls.stream) {
-		NET_OOB_Printf(cls.stream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
+		cls.netStream = NET_ConnectToLoopBack();
+	if (cls.netStream) {
+		NET_OOB_Printf(cls.netStream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
 		cls.connectTime = cls.realtime;
 	} else {
 		if (cls.servername[0]) {
@@ -427,7 +427,7 @@ static void CL_Rcon_f (void)
 		Q_strcat(message, " ", sizeof(message));
 	}
 
-	NET_OOB_Printf(cls.stream, message);
+	NET_OOB_Printf(cls.netStream, message);
 }
 
 /**
@@ -470,13 +470,13 @@ void CL_Disconnect (void)
 		msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "disconnect");
-		NET_WriteMsg(cls.stream, msg);
+		NET_WriteMsg(cls.netStream, msg);
 		/* make sure, that this is send */
 		NET_Wait(0);
 	}
 
-	stream_finished(cls.stream);
-	cls.stream = NULL;
+	NET_StreamFinished(cls.netStream);
+	cls.netStream = NULL;
 
 	CL_ClearState();
 
@@ -612,7 +612,7 @@ typedef enum {
 static void CL_PingServerCallback (struct net_stream *s)
 {
 	struct dbuffer *buf = NET_ReadMsg(s);
-	serverList_t *server = stream_data(s);
+	serverList_t *server = NET_StreamGetData(s);
 	int cmd = NET_ReadByte(buf);
 	char *str = NET_ReadStringLine(buf);
 	char string[MAX_INFO_STRING];
@@ -639,7 +639,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 		cls.serverListPos++;
 		Q_strcat(serverText, string, sizeof(serverText));
 	}
-	free_stream(s);
+	NET_StreamFree(s);
 }
 
 /**
@@ -654,8 +654,8 @@ static void CL_PingServer (serverList_t *server)
 	if (s) {
 		Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
 		NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
-		set_stream_data(s, server);
-		stream_callback(s, &CL_PingServerCallback);
+		NET_StreamSetData(s, server);
+		NET_StreamSetCallback(s, &CL_PingServerCallback);
 	} else {
 		Com_Printf("pinging failed [%s]:%s...\n", server->node, server->service);
 	}
@@ -841,24 +841,25 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 			return;
 		}
 
-		Cvar_Set("mn_mappic", "maps/shots/na.jpg");
+		Cvar_Set("mn_mappic", "maps/shots/default.jpg");
 		Cvar_Set("mn_server_need_password", "0"); /* string */
 
-		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), stream_peer_name(stream, buf, sizeof(buf), qtrue));
+		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue));
 		value = Info_ValueForKey(s, "sv_mapname");
 		assert(value);
 		Cvar_Set("mn_svmapname", value);
 		Q_strncpyz(buf, value, sizeof(buf));
+		token = buf;
+		/* skip random map char */
+		if (token[0] == '+')
+			token++;
 
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
-		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", buf)) != -1)
-			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", buf));
-		else {
+		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", token)) != -1) {
 			char filename[MAX_QPATH];
-			Q_strncpyz(filename, "pics/maps/shots/", sizeof(filename));
-			Q_strcat(filename, buf, sizeof(filename));
-			if (FS_CheckFile(filename) != -1)
-				Cvar_Set("mn_mappic", filename);
+			Com_sprintf(filename, sizeof(filename), "pics/maps/shots/%s.jpg", token);
+			/* store it relative to pics/ dir - not relative to game dir */
+			Cvar_Set("mn_mappic", va("maps/shots/%s", token));
 		}
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(s, "sv_hostname"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), Info_ValueForKey(s, "sv_enablemorale"));
@@ -888,7 +889,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
 		mn.menuText[TEXT_LIST] = userInfoText;
-		Cvar_Set("mn_server_ip", stream_peer_name(stream, buf, sizeof(buf), qtrue));
+		Cvar_Set("mn_server_ip", NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue));
 		MN_PushMenu("serverinfo");
 	} else
 		Com_Printf("%c%s", COLORED_GREEN, s);
@@ -915,7 +916,7 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 				CL_ParseServerInfoMessage(s, str);
 		}
 	}
-	free_stream(s);
+	NET_StreamFree(s);
 }
 
 /**
@@ -978,7 +979,7 @@ static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const cha
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
 		char node[MAX_VAR];
 		char service[MAX_VAR];
-		sockaddr_to_strings(s, from, node, sizeof(node), service, sizeof(service));
+		NET_SockaddrToStrings(s, from, node, sizeof(node), service, sizeof(service));
 		CL_AddServerToList(node, service);
 	}
 }
@@ -1079,7 +1080,7 @@ static void CL_ServerInfo_f (void)
 	s = NET_Connect(host, port);
 	if (s) {
 		NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
-		stream_callback(s, &CL_ServerInfoCallback);
+		NET_StreamSetCallback(s, &CL_ServerInfoCallback);
 	} else
 		Com_Printf("Could not connect to %s %s\n", host, port);
 }
@@ -1118,7 +1119,7 @@ static void CL_SelectTeam_Init_f (void)
 	/* reset menu text */
 	MN_MenuTextReset(TEXT_STANDARD);
 
-	NET_OOB_Printf(cls.stream, "teaminfo %i", PROTOCOL_VERSION);
+	NET_OOB_Printf(cls.netStream, "teaminfo %i", PROTOCOL_VERSION);
 	mn.menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
 }
 
@@ -1158,13 +1159,13 @@ static void CL_PingServers_f (void)
 		return;
 	}
 
-	if (!cls.datagram_socket)
-		cls.datagram_socket = new_datagram_socket(NULL, va("%d", PORT_CLIENT), &CL_ServerListDiscoveryCallback);
+	if (!cls.netDatagramSocket)
+		cls.netDatagramSocket = NET_DatagramSocketNew(NULL, va("%d", PORT_CLIENT), &CL_ServerListDiscoveryCallback);
 
 	/* broadcast search for all the servers int the local network */
-	if (cls.datagram_socket) {
+	if (cls.netDatagramSocket) {
 		char buf[] = "discover";
-		broadcast_datagram(cls.datagram_socket, buf, sizeof(buf), PORT_SERVER);
+		NET_DatagramBroadcast(cls.netDatagramSocket, buf, sizeof(buf), PORT_SERVER);
 	}
 
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
@@ -1242,14 +1243,14 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "new");
-		NET_WriteMsg(cls.stream, msg);
+		NET_WriteMsg(cls.netStream, msg);
 		CL_SetClientState(ca_connected);
 		return;
 	}
 
 	/* remote command from gui front end */
 	if (!Q_strncmp(c, "cmd", 3)) {
-		if (!stream_is_loopback(cls.stream)) {
+		if (!NET_StreamIsLoopback(cls.netStream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
 		}
@@ -1267,13 +1268,13 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	/* ping from server */
 	if (!Q_strncmp(c, "ping", 4)) {
-		NET_OOB_Printf(cls.stream, "ack");
+		NET_OOB_Printf(cls.netStream, "ack");
 		return;
 	}
 
 	/* echo request from server */
 	if (!Q_strncmp(c, "echo", 4)) {
-		NET_OOB_Printf(cls.stream, "%s", Cmd_Argv(1));
+		NET_OOB_Printf(cls.netStream, "%s", Cmd_Argv(1));
 		return;
 	}
 
@@ -1297,7 +1298,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 static void CL_ReadPackets (void)
 {
 	struct dbuffer *msg;
-	while ((msg = NET_ReadMsg(cls.stream))) {
+	while ((msg = NET_ReadMsg(cls.netStream))) {
 		int cmd = NET_ReadByte(msg);
 		if (cmd == clc_oob)
 			CL_ConnectionlessPacket(msg);
@@ -1434,7 +1435,7 @@ static void CL_SpawnSoldiers_f (void)
 			/* send team info */
 			struct dbuffer *msg = new_dbuffer();
 			CL_SendCurTeamInfo(msg, &chrListTemp);
-			NET_WriteMsg(cls.stream, msg);
+			NET_WriteMsg(cls.netStream, msg);
 		}
 	} else
 		Com_Printf("Don't spawn soldiers - no homebase of mission aircraft\n");
@@ -1443,7 +1444,7 @@ static void CL_SpawnSoldiers_f (void)
 		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, va("spawn %i\n", spawnCountFromServer));
-		NET_WriteMsg(cls.stream, msg);
+		NET_WriteMsg(cls.netStream, msg);
 	}
 
 	soldiersSpawned = qtrue;
@@ -1540,7 +1541,7 @@ void CL_RequestNextDownload (void)
 		NET_WriteByte(msg, clc_stringcmd);
 		/* see CL_StartGame */
 		NET_WriteString(msg, va("begin %i\n", spawnCountFromServer));
-		NET_WriteMsg(cls.stream, msg);
+		NET_WriteMsg(cls.netStream, msg);
 	}
 
 	/* for singleplayer the soldiers get spawned here */
@@ -2182,7 +2183,7 @@ static void CL_SendChangedUserinfos (void)
 			struct dbuffer *msg = new_dbuffer();
 			NET_WriteByte(msg, clc_userinfo);
 			NET_WriteString(msg, Cvar_Userinfo());
-			NET_WriteMsg(cls.stream, msg);
+			NET_WriteMsg(cls.netStream, msg);
 			userinfo_modified = qfalse;
 		}
 	}

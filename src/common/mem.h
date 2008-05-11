@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _QCOMMON_MEM_H
-#define _QCOMMON_MEM_H
+#ifndef _COMMON_MEM_H
+#define _COMMON_MEM_H
 
 /* constants */
 #define Mem_CreatePool(name)							_Mem_CreatePool((name),__FILE__,__LINE__)
@@ -75,4 +75,4 @@ void _Mem_TouchGlobal(const char *fileName, const int fileLine);
 void Mem_Init(void);
 void Mem_Shutdown(void);
 
-#endif /* _QCOMMON_MEM_H */
+#endif

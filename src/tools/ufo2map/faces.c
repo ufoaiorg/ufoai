@@ -31,25 +31,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	POINT_EPSILON		0.5
 #define	OFF_EPSILON			0.5
 
-static int c_merge, c_subdivide, c_totalverts, c_uniqueverts, c_degenerate, c_tjunctions, c_faceoverflows, c_facecollapse, c_badstartverts;
+static int c_merge, c_subdivide, c_totalverts, c_uniqueverts, c_degenerate, c_tjunctions, c_faceoverflows, c_facecollapse, c_badstartverts, c_faces;
 
 #define	MAX_SUPERVERTS	512
 static int superverts[MAX_SUPERVERTS];
 static int numsuperverts;
 
-face_t *edgefaces[MAX_MAP_EDGES][2];
+static const face_t *edgefaces[MAX_MAP_EDGES][2];
 int firstmodeledge = 1;
-int firstmodelface;
-
-static int	c_tryedges;
 
 static vec3_t edge_dir;
 static vec3_t edge_start;
 
 static int num_edge_verts;
 static int edge_verts[MAX_MAP_VERTS];
-
-static face_t *NewFaceFromFace(face_t *f);
 
 #define	HASH_SIZE	64
 
@@ -114,6 +109,37 @@ static int GetVertexnum (vec3_t in)
 	curTile->numvertexes++;
 
 	return curTile->numvertexes - 1;
+}
+
+static face_t *AllocFace (void)
+{
+	face_t *f;
+
+	f = malloc(sizeof(*f));
+	memset(f, 0, sizeof(*f));
+	c_faces++;
+
+	return f;
+}
+
+static face_t *NewFaceFromFace (face_t *f)
+{
+	face_t	*newf;
+
+	newf = AllocFace();
+	*newf = *f;
+	newf->merged = NULL;
+	newf->split[0] = newf->split[1] = NULL;
+	newf->w = NULL;
+	return newf;
+}
+
+void FreeFace (face_t *f)
+{
+	if (f->w)
+		FreeWinding(f->w);
+	free(f);
+	c_faces--;
 }
 
 /**
@@ -369,7 +395,6 @@ void FixTjuncs (node_t *headnode)
 
 	/* break edges on tjunctions */
 	Sys_FPrintf(SYS_VRB, "---- tjunc ----\n");
-	c_tryedges = 0;
 	c_degenerate = 0;
 	c_facecollapse = 0;
 	c_tjunctions = 0;
@@ -382,52 +407,14 @@ void FixTjuncs (node_t *headnode)
 	Sys_FPrintf(SYS_VRB, "%5i bad start verts\n", c_badstartverts);
 }
 
-
-/*======================================================== */
-
-static int c_faces;
-
-static face_t *AllocFace (void)
-{
-	face_t *f;
-
-	f = malloc(sizeof(*f));
-	memset(f, 0, sizeof(*f));
-	c_faces++;
-
-	return f;
-}
-
-static face_t *NewFaceFromFace (face_t *f)
-{
-	face_t	*newf;
-
-	newf = AllocFace();
-	*newf = *f;
-	newf->merged = NULL;
-	newf->split[0] = newf->split[1] = NULL;
-	newf->w = NULL;
-	return newf;
-}
-
-void FreeFace (face_t *f)
-{
-	if (f->w)
-		FreeWinding(f->w);
-	free(f);
-	c_faces--;
-}
-
 /**
  * @sa EmitFace.
  * @note Don't allow four way edges
  */
-int GetEdge (int v1, int v2, face_t *f)
+int GetEdge (int v1, int v2, const face_t *f)
 {
 	dBspEdge_t *edge;
 	int i;
-
-	c_tryedges++;
 
 	if (!config.noshare) {
 		for (i = firstmodeledge; i < curTile->numedges; i++) {
@@ -460,7 +447,7 @@ FACE MERGING
 ===========================================================================
 */
 
-#define	CONTINUOUS_EPSILON	0.001
+#define CONTINUOUS_EPSILON 0.001
 
 /**
  * @brief If two polygons share a common edge and the edges that meet at the
@@ -469,7 +456,7 @@ FACE MERGING
  * @return NULL if the faces couldn't be merged, or the new face.
  * @note The originals will NOT be freed.
  */
-static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
+static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t planenormal)
 {
 	vec_t *p1, *p2, *p3, *p4, *back;
 	winding_t *newf;
@@ -563,7 +550,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
  * @return NULL if the faces couldn't be merged, or the new face.
  * @note The originals will NOT be freed.
  */
-static face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
+static face_t *TryMerge (face_t *f1, face_t *f2, const vec3_t planenormal)
 {
 	face_t *newf;
 	winding_t *nw;
@@ -595,9 +582,8 @@ static void MergeNodeFaces (node_t *node)
 {
 	face_t *f1, *f2, *end;
 	face_t *merged;
-	plane_t *plane;
+	const plane_t *plane = &mapplanes[node->planenum];
 
-	plane = &mapplanes[node->planenum];
 	merged = NULL;
 
 	for (f1 = node->faces; f1; f1 = f1->next) {
@@ -631,22 +617,23 @@ static void SubdivideFace (node_t *node, face_t *f)
 	float mins, maxs;
 	vec_t v;
 	int axis, i;
-	dBspTexinfo_t *tex;
+	const dBspTexinfo_t *tex;
 	vec3_t temp;
 	vec_t dist;
-	winding_t *w, *frontw, *backw;
 
 	if (f->merged)
 		return;
 
 	/* special (non-surface cached) faces don't need subdivision */
 	tex = &curTile->texinfo[f->texinfo];
-
 	if (tex->surfaceFlags & SURF_WARP)
 		return;
 
 	for (axis = 0; axis < 2; axis++) {
 		while (1) {
+			const winding_t *w;
+			winding_t *frontw, *backw;
+
 			mins = 999999;
 			maxs = -999999;
 

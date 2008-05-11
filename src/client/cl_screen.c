@@ -116,7 +116,6 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 	char loadingPic[MAX_QPATH];
 	char tmpPicName[MAX_VAR];
 	const char *mapname;
-	size_t len;
 
 	if (!mapString || Com_ServerState())
 		mapname = Cvar_VariableString("sv_mapname");
@@ -127,18 +126,20 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 
 	if (!*mapname)
 		return NULL;
-	else if (*mapname != '+') {
-		Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
-		len = strlen(tmpPicName);
-		if (FS_CheckFile(va("pics/maps/loading/%s.jpg", tmpPicName)) > 0)
-			Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s.jpg", tmpPicName);
-		else
-			Q_strncpyz(loadingPic, "maps/loading/default", sizeof(loadingPic));
-		Cvar_Set("mn_mappicbig", loadingPic);
-	} else {
+
+	/* we will try to load the random map shots by just removing the + from the beginning */
+	if (mapname[0] == '+')
+		mapname++;
+	Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
+	if (FS_CheckFile(va("pics/maps/loading/%s.jpg", tmpPicName)) > 0)
+		/* store it relative to pics/ dir - not relative to game dir */
+		Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s", tmpPicName);
+	else
+		/* store it relative to pics/ dir - not relative to game dir */
 		Q_strncpyz(loadingPic, "maps/loading/default", sizeof(loadingPic));
-		Cvar_Set("mn_mappicbig", loadingPic);
-	}
+
+	Cvar_Set("mn_mappicbig", loadingPic);
+
 	return Cvar_VariableString("mn_mappicbig");
 }
 

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-04-26 22:59+0200\n"
-"PO-Revision-Date: 2008-05-05 19:32+0100\n"
+"PO-Revision-Date: 2008-05-10 19:49+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:123
 msgid "Herakles D"
-msgstr ""
+msgstr "Herakles D"
 
 #: ../base/ufos/aircraftmanagement.ufo:161
 msgid "Stiletto-class Interceptor"
@@ -222,7 +222,7 @@ msgstr "UFO-Bomb."
 
 #: ../base/ufos/aircraftmanagement.ufo:455
 msgid "Corrupter U"
-msgstr ""
+msgstr "Corrupter U"
 
 #: ../base/ufos/aircraftmanagement.ufo:484
 msgid "Scout U"
@@ -1321,7 +1321,7 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:849
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr ""
+msgstr "Ein hydroelektrischer Damm, der durch außerirdische Eindringlinge bedroht ist."
 
 #: ../base/ufos/maps.ufo:888
 msgid "A classic eastern suburban area."
@@ -2123,7 +2123,6 @@ msgstr "Zur linkshändigen Waffe wechseln"
 #: ../base/ufos/menu_hud.ufo:1414
 #: ../base/ufos/menu_hud.ufo:1427
 #: ../base/ufos/menu_hud.ufo:1440
-#, fuzzy
 msgid "Check to use this firemode for reaction fire"
 msgstr "Aktiviere diesen Feuermodus für das Reaktionsfeuer"
 
@@ -3920,9 +3919,8 @@ msgid "Vertex buffers:"
 msgstr "Vertex buffer:"
 
 #: ../base/ufos/menu_options.ufo:370
-#, fuzzy
 msgid "Multisample buffers:"
-msgstr "Mehrfachpuls"
+msgstr "Multisampling Buffer:"
 
 #: ../base/ufos/menu_options.ufo:400
 msgid "Gamma:"
@@ -4081,15 +4079,15 @@ msgstr "Eingabeeinstellungen"
 
 #: ../base/ufos/menu_options.ufo:1069
 msgid "Camera"
-msgstr "Kamera"
+msgstr "Kamerageschwindigkeiten"
 
 #: ../base/ufos/menu_options.ufo:1074
 msgid "Scroll Speed:"
-msgstr "Scrollgeschwindigkeit:"
+msgstr "Scrollen:"
 
 #: ../base/ufos/menu_options.ufo:1100
 msgid "Rotation Speed:"
-msgstr "Rotationsgeschwindigkeit:"
+msgstr "Rotation:"
 
 #: ../base/ufos/menu_options.ufo:1126
 msgid "Move Acceleration:"
@@ -4109,9 +4107,8 @@ msgstr "Tasten"
 
 #: ../base/ufos/menu_options.ufo:1238
 #: client/cl_actor.c:181
-#, fuzzy
 msgid "Autostand"
-msgstr "Außerordentlich"
+msgstr "Automatisches Aufstehen"
 
 #: ../base/ufos/menu_options.ufo:1249
 #: ../base/ufos/menu_options.ufo:1276
@@ -5626,9 +5623,8 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/research.ufo:750
-#, fuzzy
 msgid "chaingun_txt"
-msgstr "Das SG-260 wird seit einiger Zeit mit großen Erfolg eingesetzt. Verglichen mit anderen Schrotflinten bietet das SG-260 eine bessere Bündelung der Kugeln die durch das Schrot verschossen werden. Dadurch wird die effektive Reichweite der Waffe erhöht - sie ist also nicht nur für Nahkämpfe, sondern auch für mittlere Entfernungen gut geeingnet. Das SG-260 ist ein gute Wahl für Stadtkämpfe - speziell um Gebäude zu \"reinigen\". Der Vorteil gegenüber dem SMG-68 ist, dass das SG_260 mehr Durchschlagskraft hat. Deshalb ist diese Waffe besonders bei gepanzerten Einheiten effektiver."
+msgstr "Ein Anwesen das wohlhabenden und einflussreichen Leute gehört."
 
 #: ../base/ufos/research.ufo:753
 msgid "chaingun_pre_txt"

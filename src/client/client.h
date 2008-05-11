@@ -178,8 +178,8 @@ typedef struct client_static_s {
 	serverList_t serverList[MAX_SERVERLIST];
 	serverList_t *selectedServer;
 
-	struct datagram_socket *datagram_socket;
-	struct net_stream *stream;
+	struct datagram_socket *netDatagramSocket;
+	struct net_stream *netStream;
 
 	int challenge;				/**< from the server to use for connecting */
 

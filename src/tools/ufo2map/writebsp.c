@@ -63,8 +63,6 @@ ONLY SAVE OUT PLANES THAT ARE ACTUALLY USED AS NODES
 =========================================================
 */
 
-static int planeused[MAX_MAP_PLANES];
-
 /**
  * @brief There is no oportunity to discard planes, because all of the original
  * brushes will be saved in the map.
@@ -73,13 +71,10 @@ void EmitPlanes (void)
 {
 	int i;
 	dBspPlane_t *dp;
-	plane_t *mp;
-	int planetranslate[MAX_MAP_PLANES];
+	const plane_t *mp = mapplanes;
 
-	mp = mapplanes;
 	for (i = 0; i < nummapplanes; i++, mp++) {
 		dp = &curTile->planes[curTile->numplanes];
-		planetranslate[i] = curTile->numplanes;
 		VectorCopy(mp->normal, dp->normal);
 		dp->dist = mp->dist;
 		dp->type = mp->type;
@@ -87,11 +82,11 @@ void EmitPlanes (void)
 	}
 }
 
-static void EmitLeaf (node_t *node)
+static void EmitLeaf (const node_t *node)
 {
 	dBspLeaf_t *leaf_p;
 	int i, brushnum;
-	bspbrush_t *b;
+	const bspbrush_t *b;
 
 	/* emit a leaf */
 	if (curTile->numleafs >= MAX_MAP_LEAFS)
@@ -130,7 +125,7 @@ static void EmitLeaf (node_t *node)
  * @sa EmitDrawNode_r
  * @note Called for every node face
  */
-static void EmitFace (face_t *f)
+static void EmitFace (const face_t *f)
 {
 	dBspFace_t *df;
 	int i, e;
@@ -186,9 +181,6 @@ static int EmitDrawNode_r (node_t *node)
 
 	VectorCopy((short)node->mins, n->mins);
 	VectorCopy((short)node->maxs, n->maxs);
-
-	planeused[node->planenum]++;
-	planeused[node->planenum ^ 1]++;
 
 	if (node->planenum & 1)
 		Sys_Error("EmitDrawNode_r: odd planenum");
@@ -376,7 +368,6 @@ void EndBSPFile (const char *filename)
 }
 
 extern int firstmodeledge;
-extern int firstmodelface;
 
 /**
  * @sa EndModel
@@ -397,7 +388,6 @@ void BeginModel (int entityNum)
 	mod->firstface = curTile->numfaces;
 
 	firstmodeledge = curTile->numedges;
-	firstmodelface = curTile->numfaces;
 
 	/* bound the brushes */
 	e = &entities[entityNum];

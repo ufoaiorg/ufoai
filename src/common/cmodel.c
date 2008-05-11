@@ -1099,18 +1099,22 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 /**
  * @brief Searches all inline models and return the cBspModel_t pointer for the
  * given modelnumber or -name
- * @param[in] name The modelnumber (e.g. "*2") or the modelname
+ * @param[in] name The modelnumber (e.g. "*2") for inline brush models [bmodels]
+ * @note Inline bmodels are e.g. the brushes that are assoziated with a func_breakable or func_door
  */
 cBspModel_t *CM_InlineModel (const char *name)
 {
 	int i, num, models;
 
+	/* we only want inline models here */
 	if (!name || name[0] != '*')
 		Com_Error(ERR_DROP, "CM_InlineModel: bad name: '%s'", name ? name : "");
+	/* skip the '*' character and get the inline model number */
 	num = atoi(name + 1) - 1;
 	if (num < 0 || num >= MAX_MODELS)
 		Com_Error(ERR_DROP, "CM_InlineModel: bad number %i - max inline models are %i", num, MAX_MODELS);
 
+	/* search all the loaded tiles for the given inline model */
 	for (i = 0; i < numTiles; i++) {
 		models = mapTiles[i].nummodels - NUM_REGULAR_MODELS;
 		assert(models >= 0);
@@ -1335,11 +1339,11 @@ static int poslistNew[4][2];
  * @param[in] pos Current location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
- * @param[in|out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
+ * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  * @todo Add height/fall checks for actor size (2x2).
  */
-static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor_size, PQUEUE *pqueue)
+static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor_size, priorityQueue_t *pqueue)
 {
 	byte x, y, z;
 	int h;
@@ -1581,7 +1585,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 {
 	int dir;
 	int count;
-	PQUEUE pqueue;
+	priorityQueue_t pqueue;
 	pos3_t pos;
 	/* reset move data */
 	/* ROUTING_NOT_REACHABLE means, not reachable */

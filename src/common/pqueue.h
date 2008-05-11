@@ -20,26 +20,24 @@ originated:
 
 #include "../game/q_shared.h"
 
-typedef int pq_rating_t;
+typedef int priorityQueueRating_t;
 
-typedef struct struct_pq_element_t
-{
+typedef struct priorityQueueElement_s {
 	pos3_t item;
-	pq_rating_t rating;
-} pq_element_t;
+	priorityQueueRating_t rating;
+} priorityQueueElement_t;
 
-typedef struct _PQUEUE
-{
-	uint32_t MaxSize;
-	uint32_t CurrentSize;
-	pq_element_t * Elements;
-} PQUEUE;
+typedef struct priorityQueue_s {
+	uint32_t maxSize;
+	uint32_t currentSize;
+	priorityQueueElement_t *elements;
+} priorityQueue_t;
 
-void PQueueInitialise(PQUEUE *pq, uint32_t MaxElements);
-void PQueueFree(PQUEUE *pq);
+void PQueueInitialise(priorityQueue_t *pq, uint32_t maxElements);
+void PQueueFree(priorityQueue_t *pq);
 
-#define PQueueIsEmpty(pq) ((pq)->CurrentSize == 0)
-void PQueuePush(PQUEUE *pq, pos3_t item, pq_rating_t rating);
-void PQueuePop(PQUEUE *pq, pos3_t item);
+#define PQueueIsEmpty(pq) ((pq)->currentSize == 0)
+void PQueuePush(priorityQueue_t *pq, pos3_t item, priorityQueueRating_t rating);
+void PQueuePop(priorityQueue_t *pq, pos3_t item);
 
 #endif /* #ifdef __PQUEUE_H */

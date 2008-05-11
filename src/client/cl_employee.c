@@ -1283,7 +1283,7 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			e = &gd.employees[j][i];
 			MSG_WriteByte(sb, e->type);
 			MSG_WriteByte(sb, e->hired);
-			/** @note e->transfer is not saved here because it'll be restored via cl_transfer.c:TR_Load. */
+			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
 			MSG_WriteShort(sb, e->idx);
 			MSG_WriteShort(sb, e->baseHired ? e->baseHired->idx : -1);
 			MSG_WriteShort(sb, e->building ? e->building->idx : -1);
@@ -1330,29 +1330,6 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, e->chr.reservedTus.shotSettings.hand);
 			MSG_WriteShort(sb, e->chr.reservedTus.shotSettings.fmIdx);
 			MSG_WriteShort(sb, e->chr.reservedTus.shotSettings.wpIdx);
-
-#if 0 /** old way (pre 2.3) */
-			MSG_WriteShort(sb, e->chr.assigned_missions);
-
-			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
-				MSG_WriteShort(sb, e->chr.kills[k]);
-			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
-				MSG_WriteShort(sb, e->chr.skills[k]);
-
-			MSG_WriteByte(sb, e->chr.chrscore.alienskilled);
-			MSG_WriteByte(sb, e->chr.chrscore.aliensstunned);
-			MSG_WriteByte(sb, e->chr.chrscore.civilianskilled);
-			MSG_WriteByte(sb, e->chr.chrscore.civiliansstunned);
-			MSG_WriteByte(sb, e->chr.chrscore.teamkilled);
-			MSG_WriteByte(sb, e->chr.chrscore.teamstunned);
-			MSG_WriteByte(sb, e->chr.chrscore.closekills);
-			MSG_WriteByte(sb, e->chr.chrscore.heavykills);
-			MSG_WriteByte(sb, e->chr.chrscore.assaultkills);
-			MSG_WriteByte(sb, e->chr.chrscore.sniperkills);
-			MSG_WriteByte(sb, e->chr.chrscore.explosivekills);
-			MSG_WriteByte(sb, e->chr.chrscore.accuracystat);
-			MSG_WriteByte(sb, e->chr.chrscore.powerstat);
-#endif
 
 			/** Store character stats/score @sa inv_shared.h:chrScoreGlobal_t */
 			for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
@@ -1406,15 +1383,13 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			building = MSG_ReadShort(sb);
 			e->building = (e->baseHired && building >= 0) ? &gd.buildings[e->baseHired->idx][building] : NULL;
 
-			if (((saveFileHeader_t *)data)->version >= 3) { /* (2.3+) */
-				/* Read the nations identifier string, get the matching nation_t pointer.
-				 * We can do this because nations are already parsed .. will break if the parse-order is changed.
-				 * Same for the ugv string below.
-				 * We would need a Post-Load init funtion in that case. See cl_save.c:SAV_GameActionsAfterLoad */
-				e->nation = CL_GetNationByID(MSG_ReadString(sb));
-				/* Read the UGV-Type identifier and get the matching ugv_t pointer.  */
-				e->ugv = CL_GetUgvByID(MSG_ReadString(sb));
-			}
+			/** Read the nations identifier string, get the matching nation_t pointer.
+			 * We can do this because nations are already parsed .. will break if the parse-order is changed.
+			 * Same for the ugv string below.
+			 * We would need a Post-Load init funtion in that case. @sa SAV_GameActionsAfterLoad */
+			e->nation = CL_GetNationByID(MSG_ReadString(sb));
+			/* Read the UGV-Type identifier and get the matching ugv_t pointer. */
+			e->ugv = CL_GetUgvByID(MSG_ReadString(sb));
 
 			/* Load the character data */
 			Q_strncpyz(e->chr.name, MSG_ReadStringRaw(sb), sizeof(e->chr.name));
@@ -1430,6 +1405,8 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			td = MSG_ReadByte(sb);
 			if (td != NONE) {
 				assert(csi.numTeamDefs);
+				if (td >= csi.numTeamDefs)
+					return qfalse;
 				e->chr.teamDef = &csi.teamDef[td];
 			}
 			e->chr.gender = MSG_ReadByte(sb);
@@ -1438,79 +1415,36 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.HP = MSG_ReadShort(sb);
 			e->chr.STUN = MSG_ReadByte(sb);
 			e->chr.morale = MSG_ReadByte(sb);
-
-			if (((saveFileHeader_t *)data)->version < 3) {
-				/** This was moved into chr->score for 2.3 and up */
-				e->chr.score.rank = MSG_ReadByte(sb);
-			}
-
 			e->chr.fieldSize = MSG_ReadByte(sb);
 
-			if (((saveFileHeader_t *)data)->version >= 3) {
-				/* Load reaction-firemode */
-				e->chr.RFmode.hand = MSG_ReadShort(sb);
-				e->chr.RFmode.fmIdx = MSG_ReadShort(sb);
-				e->chr.RFmode.wpIdx = MSG_ReadShort(sb);
+			/* Load reaction-firemode */
+			CL_CharacterSetRFMode(&e->chr, MSG_ReadShort(sb), MSG_ReadShort(sb), MSG_ReadShort(sb));
 
-				/* Read reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
-				e->chr.reservedTus.reserveReaction = MSG_ReadShort(sb);
-				e->chr.reservedTus.reaction = MSG_ReadShort(sb);
-				e->chr.reservedTus.reserveCrouch = MSG_ReadShort(sb);
-				e->chr.reservedTus.crouch = MSG_ReadShort(sb);
-				e->chr.reservedTus.shot = MSG_ReadShort(sb);
+			/* Read reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
+			e->chr.reservedTus.reserveReaction = MSG_ReadShort(sb);
+			e->chr.reservedTus.reaction = MSG_ReadShort(sb);
+			e->chr.reservedTus.reserveCrouch = MSG_ReadShort(sb);
+			e->chr.reservedTus.crouch = MSG_ReadShort(sb);
+			e->chr.reservedTus.shot = MSG_ReadShort(sb);
 
-				if (e->chr.reservedTus.shot == -1)	/** @todo Check for dummy value. I think it's save to remove this later on (e.g. before 2.3 release). */
-					e->chr.reservedTus.shot = 0;
-				e->chr.reservedTus.shotSettings.hand = MSG_ReadShort(sb);
-				e->chr.reservedTus.shotSettings.fmIdx = MSG_ReadShort(sb);
-				e->chr.reservedTus.shotSettings.wpIdx = MSG_ReadShort(sb);
-			}
+			if (e->chr.reservedTus.shot == -1)	/** @todo Check for dummy value. I think it's save to remove this later on (e.g. before 2.3 release). */
+				e->chr.reservedTus.shot = 0;
+			CL_CharacterSetShotSettings(&e->chr, MSG_ReadShort(sb), MSG_ReadShort(sb), MSG_ReadShort(sb));
 
-			if (((saveFileHeader_t *)data)->version < 3) {
-				/* Load character stats/score (before 2.3) */
-				e->chr.score.assignedMissions = MSG_ReadShort(sb);
-
-				/* "experience[]" didn't exist in 2.2. This'll set them to the maximum expected values for 50 missions. */
-				for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
-					e->chr.score.experience[k] = CHRSH_CharGetMaxExperiencePerMission(k) * 50;
-
-				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
-					e->chr.score.kills[k] = MSG_ReadShort(sb);
-				for (k = 0; k < presaveArray[PRE_SKILTP]; k++) {
-					e->chr.score.skills[k] = MSG_ReadShort(sb);
-					e->chr.score.initialSkills[k] = e->chr.score.skills[k];	/**< This didn't exist in 2.2 but is now used for calc of "skills[]". */
-				}
-
-				e->chr.score.kills[KILLED_ALIENS] = MSG_ReadByte(sb);
-				e->chr.score.stuns[KILLED_ALIENS] = MSG_ReadByte(sb);
-				e->chr.score.kills[KILLED_CIVILIANS] = MSG_ReadByte(sb);
-				e->chr.score.stuns[KILLED_CIVILIANS] = MSG_ReadByte(sb);
-				e->chr.score.kills[KILLED_TEAM] = MSG_ReadByte(sb);
- 				e->chr.score.stuns[KILLED_TEAM] = MSG_ReadByte(sb);
-				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_CLOSE] = ... skillKills is now in scoremission and not saved. */
-				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_HEAVY] =  */
-				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_ASSAULT] = */
-				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_SNIPER] = */
-				MSG_ReadByte(sb);	/* e->chr.score.skillKills[SKILL_EXPLOSIVE] = */
-				MSG_ReadByte(sb);	/* accuracystat ... doesn't exist any more.*/
-				MSG_ReadByte(sb);	/* powerstat ... doesn't exist any more. */
-			} else {
-				/** Load character stats/score (starting with 2.3 and up)
-				 * @sa inv_shared.h:chrScoreGlobal_t */
-
-				for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
-					e->chr.score.experience[k] = MSG_ReadLong(sb);
-				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
-					e->chr.score.skills[k] = MSG_ReadByte(sb);
-				for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
-					e->chr.score.initialSkills[k] = MSG_ReadByte(sb);
-				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
-					e->chr.score.kills[k] = MSG_ReadShort(sb);
-				for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
-					e->chr.score.stuns[k] = MSG_ReadShort(sb);
-				e->chr.score.assignedMissions = MSG_ReadShort(sb);
-				e->chr.score.rank = MSG_ReadByte(sb);
-			}
+			/** Load character stats/score
+			 * @sa chrScoreGlobal_t */
+			for (k = 0; k < presaveArray[PRE_SKILTP] + 1; k++)
+				e->chr.score.experience[k] = MSG_ReadLong(sb);
+			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
+				e->chr.score.skills[k] = MSG_ReadByte(sb);
+			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
+				e->chr.score.initialSkills[k] = MSG_ReadByte(sb);
+			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
+				e->chr.score.kills[k] = MSG_ReadShort(sb);
+			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
+				e->chr.score.stuns[k] = MSG_ReadShort(sb);
+			e->chr.score.assignedMissions = MSG_ReadShort(sb);
+			e->chr.score.rank = MSG_ReadByte(sb);
 
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));

@@ -1,4 +1,11 @@
-/************************************************************************
+/**
+ * @file dbuffer.c
+ * @brief A dbuffer is a dynamically sized buffer that stores arbitrary bytes
+ * in a queue. It does not provide random access; characters may be
+ * inserted only at the end and removed only from the beginning.
+ */
+
+/*
  *   Copyright (C) Andrew Suffield <asuffield@debian.org>
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -16,17 +23,7 @@
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-/** @file dbuffer.c
- * A dbuffer is a dynamically sized buffer that stores arbitrary bytes
- * in a queue. It does not provide random access; characters may be
- * inserted only at the end and removed only from the beginning.
- */
-#include "dbuffer.h"
-
-#include <string.h>
-#include <sys/types.h>
-#include <assert.h>
-#include <stdlib.h>
+#include "common.h"
 
 /* This should fit neatly in one page */
 #define DBUFFER_ELEMENT_SIZE 4000
@@ -59,7 +56,7 @@ static struct dbuffer_element * allocate_element (void)
 	struct dbuffer_element *e;
 
 	if (free_elements == 0) {
-		struct dbuffer_element *new = malloc(sizeof(struct dbuffer_element));
+		struct dbuffer_element *new = Mem_PoolAlloc(sizeof(struct dbuffer_element), com_genericPool, 0);
 		new->next = free_element_list;
 		free_element_list = new;
 		free_elements++;
@@ -88,7 +85,7 @@ static void free_element (struct dbuffer_element *e)
 	while (free_elements > DBUFFER_ELEMENTS_FREE_THRESHOLD) {
 		e = free_element_list;
 		free_element_list = e->next;
-		free(e);
+		Mem_Free(e);
 		free_elements--;
 		allocated_elements--;
 	}
@@ -103,7 +100,7 @@ struct dbuffer * new_dbuffer (void)
 {
 	struct dbuffer *buf;
 	if (free_dbuffers == 0) {
-		struct dbuffer *new = malloc(sizeof(struct dbuffer));
+		struct dbuffer *new = Mem_PoolAlloc(sizeof(struct dbuffer), com_genericPool, 0);
 		new->next_free = free_dbuffer_list;
 		free_dbuffer_list = new;
 		free_dbuffers++;
@@ -146,7 +143,7 @@ void free_dbuffer (struct dbuffer *buf)
 	while (free_dbuffers > DBUFFER_FREE_THRESHOLD) {
 		buf = free_dbuffer_list;
 		free_dbuffer_list = buf->next_free;
-		free(buf);
+		Mem_Free(buf);
 		free_dbuffers--;
 		allocated_dbuffers--;
 	}

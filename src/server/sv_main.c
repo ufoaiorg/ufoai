@@ -79,7 +79,7 @@ void SV_DropClient (client_t * drop, const char *message)
 		ge->ClientDisconnect(drop->player);
 	}
 
-	stream_finished(drop->stream);
+	NET_StreamFinished(drop->stream);
 	drop->stream = NULL;
 
 	drop->player->inuse = qfalse;
@@ -229,9 +229,9 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	int playernum;
 	int version;
 	char buf[256];
-	const char *peername = stream_peer_name(stream, buf, sizeof(buf), qtrue);
+	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue);
 
-	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect ()\n");
+	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
 	version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
@@ -272,12 +272,12 @@ static void SVC_DirectConnect (struct net_stream *stream)
 		if (cl->state == cs_free)
 			continue;
 		if (strcmp(peername, cl->peername) == 0) {
-			if (!stream_is_loopback(stream) && (svs.realtime - cl->lastconnect) < (sv_reconnect_limit->integer * 1000)) {
+			if (!NET_StreamIsLoopback(stream) && (svs.realtime - cl->lastconnect) < (sv_reconnect_limit->integer * 1000)) {
 				Com_Printf("%s:reconnect rejected : too soon\n", peername);
 				return;
 			}
 			Com_Printf("%s:reconnect\n", peername);
-			free_stream(cl->stream);
+			NET_StreamFree(cl->stream);
 			newcl = cl;
 			goto gotnewcl;
 		}
@@ -340,7 +340,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	newcl->lastconnect = svs.realtime;
 	Q_strncpyz(newcl->peername, peername, sizeof(newcl->peername));
 	newcl->stream = stream;
-	set_stream_data(stream, newcl);
+	NET_StreamSetData(stream, newcl);
 }
 
 /**
@@ -367,7 +367,7 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 	qboolean valid;
 	char remaining[1024];
 	char buf[256];
-	const char *peername = stream_peer_name(stream, buf, sizeof(buf), qtrue);
+	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue);
 
 	valid = Rcon_Validate();
 
@@ -416,7 +416,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 	else if (!strcmp(c, "rcon"))
 		SVC_RemoteCommand(stream);
 	else
-		Com_Printf("bad connectionless packet from %s:\n%s\n", stream_peer_name(stream, buf, sizeof(buf), qfalse), s);
+		Com_Printf("Bad connectionless packet from %s:\n%s\n", NET_StreamPeerToName(stream, buf, sizeof(buf), qfalse), s);
 }
 
 /**
@@ -426,7 +426,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
  */
 void SV_ReadPacket (struct net_stream *s)
 {
-	client_t *cl = stream_data(s);
+	client_t *cl = NET_StreamGetData(s);
 	struct dbuffer *msg;
 
 	while ((msg = NET_ReadMsg(s))) {
@@ -437,7 +437,7 @@ void SV_ReadPacket (struct net_stream *s)
 		else if (cl) {
 			SV_ExecuteClientMessage(cl, cmd, msg);
 		} else
-			free_stream(s);
+			NET_StreamFree(s);
 
 		free_dbuffer(msg);
 	}
@@ -838,7 +838,7 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl->state >= cs_connected) {
 			NET_WriteConstMsg(cl->stream, msg);
-			stream_finished(cl->stream);
+			NET_StreamFinished(cl->stream);
 			cl->stream = NULL;
 		}
 
@@ -869,8 +869,8 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	Master_Shutdown();
 	SV_ShutdownGameProgs();
 
-	close_datagram_socket(svs.datagram_socket);
-	svs.datagram_socket = NULL;
+	NET_DatagramSocketClose(svs.netDatagramSocket);
+	svs.netDatagramSocket = NULL;
 	SV_Stop();
 
 	/* free current level */

@@ -270,7 +270,7 @@ static void CL_GiveName_f (void)
 			Com_Printf("No first name in team '%s'\n", Cmd_Argv(2));
 			return;
 		}
-		Com_Printf(name);
+		Com_Printf("%s", name);
 
 		/* get last name */
 		name = Com_GiveName(i + LASTNAME, Cmd_Argv(2));
@@ -320,8 +320,8 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 {
 	character_t *chr;
 	char teamDefName[MAX_VAR];
-	int teamValue = TEAM_CIVILIAN;
-	qboolean multiplayer = (sv_maxclients->integer >= 2);
+	int teamValue;
+	const qboolean multiplayer = (sv_maxclients->integer >= 2);
 
 	if (!employee)
 		return;
@@ -347,15 +347,14 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		teamValue = TEAM_PHALANX;
 	else if (strstr(team, "alien"))
 		teamValue = TEAM_ALIEN;
+	else
+		teamValue = TEAM_CIVILIAN;
 
 	/** Set default reaction-mode for all character-types to "once".
 	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa g_ai.c:G_SpawnAIPlayer */
 	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
-	/* Set this to an undefined value just in case. */
-	chr->reservedTus.shotSettings.hand = -1;
-	chr->reservedTus.shotSettings.fmIdx = -1;
-	chr->reservedTus.shotSettings.wpIdx = -1;
+	CL_CharacterSetShotSettings(chr, -1, -1, -1);
 
 	/* Generate character stats, models & names. */
 	switch (employeeType) {

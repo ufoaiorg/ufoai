@@ -44,7 +44,7 @@ typedef enum {
 #define FOV				75.0
 #define FOV_FPS			90.0
 #define CAMERA_START_DIST   600
-#define CAMERA_START_HEIGHT UNIT_HEIGHT*1.5
+#define CAMERA_START_HEIGHT UNIT_HEIGHT * 1.5
 #define CAMERA_LEVEL_HEIGHT UNIT_HEIGHT
 
 typedef struct {

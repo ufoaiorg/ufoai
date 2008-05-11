@@ -83,7 +83,7 @@ byte *CompressRouting (byte *dataStart, byte *destStart, int l)
  */
 static void SwapBSPFile (void)
 {
-	int i, j;
+	int i, j, k;
 	dBspModel_t *d;
 
 	/* models	 */
@@ -117,8 +117,9 @@ static void SwapBSPFile (void)
 
 	/* texinfos */
 	for (i = 0; i < curTile->numtexinfo; i++) {
-		for (j = 0; j < 8; j++)
-			curTile->texinfo[i].vecs[0][j] = LittleFloat(curTile->texinfo[i].vecs[0][j]);
+		for (j = 0; j < 2; j++)
+			for (k = 0; k < 4; k++)
+				curTile->texinfo[i].vecs[j][k] = LittleFloat(curTile->texinfo[i].vecs[j][k]);
 		curTile->texinfo[i].surfaceFlags = LittleLong(curTile->texinfo[i].surfaceFlags);
 		curTile->texinfo[i].value = LittleLong(curTile->texinfo[i].value);
 	}
@@ -365,21 +366,25 @@ int num_entities;
 entity_t entities[MAX_MAP_ENTITIES];
 
 /**
- * @brief
+ * @brief Removes trailing whitespaces from the given string
+ * @param[in,out] str The string to clean up
+ * @note Whitespaces are converted to \0
  */
-static void StripTrailing (char *e)
+static void StripTrailingWhitespaces (char *str)
 {
 	char *s;
 
-	s = e + strlen(e)-1;
-	while (s >= e && *s <= 32) {
-		*s = 0;
+	s = str + strlen(str) - 1;
+	while (s >= str && *s <= ' ') {
+		*s = '\0';
 		s--;
 	}
 }
 
 /**
- * @brief
+ * @brief Parses one key and value for an entity from the current tokens
+ * @sa parsedToken
+ * @sa GetToken
  * @sa ParseEntity
  * @sa ParseMapEntity
  */
@@ -399,8 +404,8 @@ epair_t *ParseEpair (void)
 	e->value = strdup(parsedToken);
 
 	/* strip trailing spaces */
-	StripTrailing(e->key);
-	StripTrailing(e->value);
+	StripTrailingWhitespaces(e->key);
+	StripTrailingWhitespaces(e->value);
 
 	return e;
 }
@@ -432,7 +437,7 @@ static qboolean ParseEntity (void)
 			Sys_Error("ParseEntity: EOF without closing brace");
 		if (!strcmp(parsedToken, "}") )
 			break;
-		e = ParseEpair ();
+		e = ParseEpair();
 		e->next = mapent->epairs;
 		mapent->epairs = e;
 	} while (1);
@@ -476,9 +481,9 @@ const char *UnparseEntities (void)
 
 		for (ep = entities[i].epairs; ep; ep = ep->next) {
 			Q_strncpyz(key, ep->key, sizeof(key));
-			StripTrailing(key);
+			StripTrailingWhitespaces(key);
 			Q_strncpyz(value, ep->value, sizeof(value));
-			StripTrailing(value);
+			StripTrailingWhitespaces(value);
 
 			snprintf(line, sizeof(line) - 1, "\"%s\" \"%s\"\n", key, value);
 			Q_strcat(curTile->entdata, line, sizeof(curTile->entdata));
@@ -526,7 +531,7 @@ const char *ValueForKey (const entity_t *ent, const char *key)
 /**
  * @brief
  */
-vec_t FloatForKey (entity_t *ent, const char *key)
+vec_t FloatForKey (const entity_t *ent, const char *key)
 {
 	const char *k;
 
@@ -537,7 +542,7 @@ vec_t FloatForKey (entity_t *ent, const char *key)
 /**
  * @brief
  */
-void GetVectorForKey (entity_t *ent, const char *key, vec3_t vec)
+void GetVectorForKey (const entity_t *ent, const char *key, vec3_t vec)
 {
 	const char *k;
 	double v1, v2, v3;

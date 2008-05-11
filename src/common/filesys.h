@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#ifndef QCOMMON_FILESYS_H
-#define QCOMMON_FILESYS_H
+#ifndef _COMMON_FILESYS_H
+#define _COMMON_FILESYS_H
 
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
@@ -99,4 +99,4 @@ const char *FS_GetFileData(const char *files);
  */
 void FS_Shutdown(void);
 
-#endif /* QCOMMON_FILESYS_H */
+#endif

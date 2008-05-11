@@ -26,12 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "radiosity.h"
 #include "../../common/tracing.h"
 
-typedef struct {
-	dBspFace_t		*faces[2];
-	qboolean	coplanar;
-} edgeshare_t;
-
-static edgeshare_t	edgeshare[MAX_MAP_EDGES];
 static int facelinks[MAX_MAP_FACES];
 static int planelinks[2][MAX_MAP_PLANES];
 
@@ -47,34 +41,6 @@ void LinkPlaneFaces (void)
 	for (i = 0; i < curTile->numfaces; i++, f++) {
 		facelinks[i] = planelinks[f->side][f->planenum];
 		planelinks[f->side][f->planenum] = i;
-	}
-}
-
-void PairEdges (void)
-{
-	int i, j, k;
-	dBspFace_t *f;
-	edgeshare_t *e;
-
-	memset(edgeshare, 0, sizeof(edgeshare_t) * MAX_MAP_EDGES);
-	f = curTile->faces;
-	for (i = 0; i < curTile->numfaces; i++, f++) {
-		for (j = 0; j < f->numedges; j++) {
-			k = curTile->surfedges[f->firstedge + j];
-			if (k < 0) {
-				e = &edgeshare[-k];
-				e->faces[1] = f;
-			} else {
-				e = &edgeshare[k];
-				e->faces[0] = f;
-			}
-
-			if (e->faces[0] && e->faces[1]) {
-				/* determine if coplanar */
-				if (e->faces[0]->planenum == e->faces[1]->planenum)
-					e->coplanar = qtrue;
-			}
-		}
 	}
 }
 
@@ -1125,7 +1091,7 @@ void FinalLightFace (unsigned int facenum)
 	facelight_t	*fl;
 	float max, newmax;
 	byte *dest;
-	vec3_t facemins, facemaxs, lb;
+	vec3_t facemins, facemaxs;
 
 	f = &curTile->faces[facenum];
 	fl = &facelight[config.compile_for_day][facenum];
@@ -1136,13 +1102,6 @@ void FinalLightFace (unsigned int facenum)
 
 	f->lightofs[config.compile_for_day] = curTile->lightdatasize[config.compile_for_day];
 	curTile->lightdatasize[config.compile_for_day] += fl->numsamples * 3;
-
-#if 0
-	/* add green sentinals between lightmaps */
-	lightdatasize[config.compile_for_day] += 256 * 3;
-	for (i = 0; i < 256; i++)
-		curTile->lightdata[config.compile_for_day][lightdatasize[config.compile_for_day] - (i + 1) * 3 + 1] = 255;
-#endif
 
 	if (curTile->lightdatasize[config.compile_for_day] > MAX_MAP_LIGHTING)
 		Sys_Error("MAX_MAP_LIGHTING (%i)", curTile->lightdatasize[config.compile_for_day]);
@@ -1185,6 +1144,8 @@ void FinalLightFace (unsigned int facenum)
 	dest = &curTile->lightdata[config.compile_for_day][f->lightofs[config.compile_for_day]];
 
 	for (j = 0; j < fl->numsamples; j++) {
+		vec3_t lb;
+
 		VectorCopy((fl->samples + j * 3), lb);
 		if (config.numbounce > 0) {
 			vec3_t add;

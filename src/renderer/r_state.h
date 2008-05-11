@@ -6,7 +6,6 @@
 /*
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-Original file from Quake 2 v3.21: quake2-2.31/ref_gl/gl_local.h
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or

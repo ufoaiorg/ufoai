@@ -3,9 +3,8 @@
  * @brief Command text buffering and command execution header
  * @note Any number of commands can be added in a frame, from several different sources.
  * Most commands come from either keybindings or console line input, but remote
- * servers can also send across commands and entire text files can be execed.
+ * servers can also send across commands and entire text files can be executed.
  * @note The + command line options are also added to the command buffer.
- * @note The game starts with a Cbuf_AddText ("exec quake.rc\n"); Cbuf_Execute ();
  * @note Command execution takes a null terminated string, breaks it into tokens,
  * then searches for a command or variable that matches the first token.
  */
@@ -116,7 +115,7 @@ int Cmd_CompleteCommand(const char *partial, const char **match);
 
 /**
  * @brief The functions that execute commands get their parameters with these
- * functions. Cmd_Argv () will return an empty string, not a NULL
+ * functions. Cmd_Argv() will return an empty string, not a NULL
  * if arg > argc, so string operations are always safe.
  */
 int Cmd_Argc(void);

@@ -228,10 +228,12 @@ terrain tex_furniture/textil001 {
 
 // linoleum floor
 terrain tex_buildings/floor015 {
+	footstepsound "footsteps/linoleum"
 }
 
 // linoleum floor
 terrain tex_buildings/floor019 {
+	footstepsound "footsteps/linoleum"
 }
 
 // PCV-type floor

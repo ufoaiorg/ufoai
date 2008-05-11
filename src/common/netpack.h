@@ -1,25 +1,36 @@
-#ifndef QCOMMON_NETPACK_H
-#define QCOMMON_NETPACK_H
+/**
+ * @file netpack.h
+ */
+
+/*
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
+Original file from Quake 2 v3.21: quake2-2.31/client/
+Copyright (C) 1997-2001 Id SoftwaR_ Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+#ifndef _COMMON_NETPACK_H
+#define _COMMON_NETPACK_H
 
 #include "dbuffer.h"
 
-/***
- ____ _____ ___  ____
-/ ___|_   _/ _ \|  _ \
-\___ \ | || | | | |_) |
- ___) || || |_| |  __/
-|____/ |_| \___/|_|
-
-This is a temporary hack until the network protocol can be
-rewritten. It will go away. Do not expect it to be here next time you
-look.
-
-This is not the right way to do things. Do not emulate it.
-
-***/
-
 void NET_WriteChar(struct dbuffer *buf, char c);
-
 void NET_WriteByte(struct dbuffer *buf, unsigned char c);
 void NET_WriteShort(struct dbuffer *buf, int c);
 void NET_WriteLong(struct dbuffer *buf, int c);

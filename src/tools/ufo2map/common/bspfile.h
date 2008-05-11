@@ -60,8 +60,8 @@ void SetKeyValue(entity_t *ent, const char *key, const char *value);
 /* will return "" if not present */
 const char *ValueForKey(const entity_t *ent, const char *key);
 
-vec_t FloatForKey(entity_t *ent, const char *key);
-void GetVectorForKey(entity_t *ent, const char *key, vec3_t vec);
+vec_t FloatForKey(const entity_t *ent, const char *key);
+void GetVectorForKey(const entity_t *ent, const char *key, vec3_t vec);
 epair_t *ParseEpair(void);
 byte *CompressRouting(byte *dataStart, byte *destStart, int l);
 

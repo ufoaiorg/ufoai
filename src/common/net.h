@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef QCOMMON_NET_H
-#define QCOMMON_NET_H
+#ifndef _COMMON_NET_H
+#define _COMMON_NET_H
 
 struct net_stream;
 struct datagram_socket;
@@ -34,38 +34,28 @@ typedef void datagram_callback_func(struct datagram_socket *s, const char *buf, 
 qboolean SV_Start(const char *node, const char *service, stream_callback_func *func);
 void SV_Stop(void);
 
-struct datagram_socket *new_datagram_socket(const char *node, const char *service, datagram_callback_func *datagram_func);
-void send_datagram(struct datagram_socket *s, const char *buf, int len, struct sockaddr *to);
-void broadcast_datagram(struct datagram_socket *s, const char *buf, int len, int port);
-void close_datagram_socket(struct datagram_socket *s);
-void sockaddr_to_strings(struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen);
+struct datagram_socket *NET_DatagramSocketNew(const char *node, const char *service, datagram_callback_func *datagram_func);
+void NET_DatagramSend(struct datagram_socket *s, const char *buf, int len, struct sockaddr *to);
+void NET_DatagramBroadcast(struct datagram_socket *s, const char *buf, int len, int port);
+void NET_DatagramSocketClose(struct datagram_socket *s);
+void NET_SockaddrToStrings(struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen);
 
 void NET_Init(void);
 void NET_Shutdown(void);
 void NET_Wait(int timeout);
 struct net_stream *NET_Connect(const char *node, const char *service);
 struct net_stream *NET_ConnectToLoopBack(void);
-void stream_enqueue(struct net_stream *s, const char *data, int len);
-qboolean stream_closed(struct net_stream *s);
-int stream_length(struct net_stream *s);
-int stream_peek(struct net_stream *s, char *data, int len);
-int stream_dequeue(struct net_stream *s, char *data, int len);
-void *stream_data(struct net_stream *s);
-void set_stream_data(struct net_stream *s, void *data);
-const char *stream_peer_name(struct net_stream *s, char *dst, int len, qboolean ip_hack);
-qboolean stream_is_loopback(struct net_stream *s);
-
-/* Call free_stream to dump the whole thing right now */
-void free_stream(struct net_stream *s);
-
-/* Call stream_finished to mark the stream as uninteresting, but to
-   finish sending any data in the buffer. The stream will appear
-   closed after this call, and at some unspecified point in the future
-   s will become an invalid pointer, so it should not be further
-   referenced.
- */
-void stream_finished(struct net_stream *s);
-
-void stream_callback(struct net_stream *s, stream_callback_func *func);
+void NET_StreamEnqueue(struct net_stream *s, const char *data, int len);
+qboolean NET_StreamIsClosed(struct net_stream *s);
+int NET_StreamGetLength(struct net_stream *s);
+int NET_StreamPeek(struct net_stream *s, char *data, int len);
+int NET_StreamDequeue(struct net_stream *s, char *data, int len);
+void *NET_StreamGetData(struct net_stream *s);
+void NET_StreamSetData(struct net_stream *s, void *data);
+const char *NET_StreamPeerToName(struct net_stream *s, char *dst, int len, qboolean ip_hack);
+qboolean NET_StreamIsLoopback(struct net_stream *s);
+void NET_StreamFree(struct net_stream *s);
+void NET_StreamFinished(struct net_stream *s);
+void NET_StreamSetCallback(struct net_stream *s, stream_callback_func *func);
 
 #endif

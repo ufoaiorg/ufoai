@@ -252,7 +252,7 @@ static void SV_Status_f (void)
 		for (j = 0; j < l; j++)
 			Com_Printf(" ");
 
-		s = stream_peer_name(cl->stream, buf, sizeof(buf), qfalse);
+		s = NET_StreamPeerToName(cl->stream, buf, sizeof(buf), qfalse);
 		Com_Printf("%s", s);
 		l = 22 - strlen(s);
 		for (j = 0; j < l; j++)

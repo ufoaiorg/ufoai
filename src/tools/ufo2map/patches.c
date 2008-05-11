@@ -196,7 +196,7 @@ static void MakePatchForFace (int facenum, winding_t *w)
 	else
 		patch->plane = &curTile->planes[f->planenum];
 
-	/* origin offset faces must create new planes */
+	/* origin offset faces must create new planes (moving bmodels - e.g. func_door) */
 	if (VectorNotEmpty(face_offset[facenum])) {
 		if (curTile->numplanes + fakeplanes >= MAX_MAP_PLANES)
 			Sys_Error("numplanes + fakeplanes >= MAX_MAP_PLANES");
@@ -237,43 +237,42 @@ static void MakePatchForFace (int facenum, winding_t *w)
 static entity_t *EntityForModel (int modnum)
 {
 	int i;
-	const char *s;
 	char name[16];
 
 	Com_sprintf(name, sizeof(name), "*%i", modnum);
 	/* search the entities for one using modnum */
 	for (i = 0; i < num_entities; i++) {
-		s = ValueForKey(&entities[i], "model");
+		const char *s = ValueForKey(&entities[i], "model");
 		if (!strcmp(s, name))
 			return &entities[i];
 	}
 
+	/* return the world */
 	return &entities[0];
 }
 
 void MakePatches (void)
 {
 	int i, j, k;
-	dBspFace_t *f;
-	winding_t *w;
-	dBspModel_t *mod;
 	vec3_t origin;
-	entity_t *ent;
 
 	Sys_FPrintf(SYS_VRB, "%i faces\n", curTile->numfaces);
 
 	for (i = 0; i < curTile->nummodels; i++) {
-		mod = &curTile->models[i];
-		ent = EntityForModel(i);
+		const dBspModel_t *mod = &curTile->models[i];
+		const entity_t *ent = EntityForModel(i);
 		/* bmodels with origin brushes need to be offset into their
 		 * in-use position */
 		GetVectorForKey(ent, "origin", origin);
 
 		for (j = 0; j < mod->numfaces; j++) {
 			const int facenum = mod->firstface + j;
+			dBspFace_t *f = &curTile->faces[facenum];
+			winding_t *w = WindingFromFace(f);
+
+			/* store the origin in case of moving bmodels (e.g. func_door) */
 			VectorCopy(origin, face_offset[facenum]);
-			f = &curTile->faces[facenum];
-			w = WindingFromFace(f);
+
 			for (k = 0; k < w->numpoints; k++)
 				VectorAdd(w->p[k], origin, w->p[k]);
 			MakePatchForFace(facenum, w);
@@ -291,8 +290,6 @@ SUBDIVIDE
 
 static void FinishSplit (patch_t *patch, patch_t *newp)
 {
-	dBspLeaf_t *leaf;
-
 	VectorCopy(patch->baselight, newp->baselight);
 	VectorCopy(patch->totallight, newp->totallight);
 	VectorCopy(patch->reflectivity, newp->reflectivity);
@@ -308,11 +305,11 @@ static void FinishSplit (patch_t *patch, patch_t *newp)
 
 	WindingCenter(patch->winding, patch->origin);
 	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
-	leaf = Rad_PointInLeaf(patch->origin);
+	Rad_PointInLeaf(patch->origin);
 
 	WindingCenter(newp->winding, newp->origin);
 	VectorAdd(newp->origin, newp->plane->normal, newp->origin);
-	leaf = Rad_PointInLeaf(newp->origin);
+	Rad_PointInLeaf(newp->origin);
 }
 
 /**
@@ -363,13 +360,13 @@ static void DicePatch (patch_t *patch)
 
 void SubdividePatches (void)
 {
-	int i, num;
+	int i;
+	/* because the list will grow in DicePatch */
+	const int num = num_patches;
 
 	if (config.subdiv < 1)
 		return;
 
-	/* because the list will grow */
-	num = num_patches;
 	for (i = 0; i < num; i++)
 		DicePatch(&patches[i]);
 	Sys_FPrintf(SYS_VRB, "%i patches after subdivision\n", num_patches);

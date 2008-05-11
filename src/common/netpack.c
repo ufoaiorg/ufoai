@@ -509,9 +509,9 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 	string[sizeof(string)-1] = 0;
 
 	len = LittleLong(strlen(string) + 1);
-	stream_enqueue(s, (char *)&len, 4);
-	stream_enqueue(s, &cmd, 1);
-	stream_enqueue(s, string, strlen(string));
+	NET_StreamEnqueue(s, (char *)&len, 4);
+	NET_StreamEnqueue(s, &cmd, 1);
+	NET_StreamEnqueue(s, string, strlen(string));
 }
 
 /**
@@ -523,11 +523,11 @@ void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
 {
 	char tmp[4096];
 	int len = LittleLong(dbuffer_len(buf));
-	stream_enqueue(s, (char *)&len, 4);
+	NET_StreamEnqueue(s, (char *)&len, 4);
 
 	while (dbuffer_len(buf)) {
 		len = dbuffer_extract(buf, tmp, sizeof(tmp));
-		stream_enqueue(s, tmp, len);
+		NET_StreamEnqueue(s, tmp, len);
 	}
 
 	/* and now free the buffer */
@@ -546,11 +546,11 @@ void NET_WriteConstMsg (struct net_stream *s, const struct dbuffer *buf)
 	char tmp[4096];
 	int len = LittleLong(dbuffer_len(buf));
 	int pos = 0;
-	stream_enqueue(s, (char *)&len, 4);
+	NET_StreamEnqueue(s, (char *)&len, 4);
 
 	while (pos < dbuffer_len(buf)) {
 		int x = dbuffer_get_at(buf, pos, tmp, sizeof(tmp));
-		stream_enqueue(s, tmp, x);
+		NET_StreamEnqueue(s, tmp, x);
 		pos += x;
 	}
 }
@@ -559,7 +559,7 @@ void NET_WriteConstMsg (struct net_stream *s, const struct dbuffer *buf)
  * @brief Reads messages from the network channel and adds them to the dbuffer
  * where you can use the NET_Read* functions to get the values in the correct
  * order
- * @sa stream_dequeue
+ * @sa NET_StreamDequeue
  * @sa dbuffer_add
  */
 struct dbuffer *NET_ReadMsg (struct net_stream *s)
@@ -568,18 +568,18 @@ struct dbuffer *NET_ReadMsg (struct net_stream *s)
 	unsigned int len;
 	struct dbuffer *buf;
 	char tmp[4096];
-	if (stream_peek(s, (char *)&v, 4) < 4)
+	if (NET_StreamPeek(s, (char *)&v, 4) < 4)
 		return NULL;
 
 	len = LittleLong(v);
-	if (stream_length(s) < (4 + len))
+	if (NET_StreamGetLength(s) < (4 + len))
 		return NULL;
 
-	stream_dequeue(s, tmp, 4);
+	NET_StreamDequeue(s, tmp, 4);
 
 	buf = new_dbuffer();
 	while (len > 0) {
-		int x = stream_dequeue(s, tmp, min(len, 4096));
+		int x = NET_StreamDequeue(s, tmp, min(len, 4096));
 		dbuffer_add(buf, tmp, x);
 		len -= x;
 	}

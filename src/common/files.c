@@ -874,7 +874,7 @@ void FS_InitFilesystem (void)
 	/* start up with base by default */
 	FS_AddGameDirectory(va("%s/" BASEDIRNAME, fs_basedir->string));
 
-	/* then add a '.ufoai/base' directory in home directory by default */
+	/* then add a '.ufoai/VERSION/base' directory in home directory by default */
 	if (fs_usehomedir->integer)
 		FS_AddHomeAsGameDirectory(BASEDIRNAME);
 

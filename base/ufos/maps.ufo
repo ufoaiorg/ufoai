@@ -1328,7 +1328,7 @@ mapdef gasstation
 	}
 }
 
-mapdef oriental05
+mapdef oriental
 {
 	map				oriental
 	description		"_An urban district in an oriental region."
@@ -1367,7 +1367,7 @@ mapdef oriental05
 	}
 }
 
-mapdef oriental06
+mapdef oriental_mosque
 {
 	map				oriental_mosque
 	description		"_An urban district in an oriental region."
@@ -2040,6 +2040,47 @@ mapdef community_centre
 {
 	map				"+community_centre"
 	description		"_A place where people come to relax and mingle."
+	multiplayer		true
+	teams			3
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		cold
+		grass
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+mapdef laboratory
+{
+	map				laboratory
+	description		"_A laboratory where they examined found UFO wreck tiles."
 	multiplayer		true
 	teams			3
 	gametypes {

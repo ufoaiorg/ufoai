@@ -116,7 +116,7 @@ void EmitPlanes(void);
 
 void MakeFaces(node_t *headnode);
 void FixTjuncs(node_t *headnode);
-int GetEdge(int v1, int v2,  face_t *f);
+int GetEdge(int v1, int v2, const face_t *f);
 void FreeFace(face_t *f);
 
 /* tree.c */
