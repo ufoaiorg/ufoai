@@ -9,6 +9,7 @@ SHARED_CFLAGS=-fPIC
 JPEG_CFLAGS=
 CFLAGS+=
 LDFLAGS+=
+CFLAGS_M_OPTS=-MD -MT $@ -MP
 
 # MinGW32
 ifeq ($(TARGET_OS),mingw32)
@@ -45,6 +46,10 @@ ifeq ($(TARGET_OS),darwin)
 	SHARED_LDFLAGS=-dynamiclib
 	CFLAGS+= -D_BSD_SOURCE -D_XOPEN_SOURCE
 	SERVER_LIBS+=
+
+	ifeq ($(TARGET_CPU),universal)
+		CFLAGS_M_OPTS=
+	endif
 endif
 
 # Solaris

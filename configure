@@ -1289,6 +1289,8 @@ Optional Features:
                           [default=disabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
   --enable-profiling      build with profiling for gprof [default=disabled]
+  --disable-universal     build universal binaries on Mac OS X
+                          [default=enabled]
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -2013,6 +2015,14 @@ else
 fi
 
 
+# Check whether --enable-universal was given.
+if test "${enable_universal+set}" = set; then
+  enableval=$enable_universal;
+else
+  enable_universal=yes
+fi
+
+
 #---------------------------------------------------------------------------------------------
 # CHECK SED
 #---------------------------------------------------------------------------------------------
@@ -2177,6 +2187,13 @@ echo "$as_me: error: Could not find SDL_ttf Framework at /Library/Frameworks." >
 		CFLAGS="$CFLAGS -I/opt/local/include"
 		LDFLAGS="$LDFLAGS -L/opt/local/lib"
 	fi
+
+	### Check for universal binaries
+	if test "$enable_universal" = "yes"
+	then
+		CFLAGS="$CFLAGS -arch i386 -arch ppc"
+		LDFLAGS="$LDFLAGS -arch i386 -arch ppc"
+	fi
 else
 	{ { echo "$as_me:$LINENO: error: The target operating system '$target_os' is unknown, please contact the developers" >&5
 echo "$as_me: error: The target operating system '$target_os' is unknown, please contact the developers" >&2;}
@@ -2217,6 +2234,15 @@ echo "$as_me: WARNING: The target CPU '$target_cpu' is unknown, default options 
 echo "$as_me: WARNING: Please contact the developers for assistance" >&2;}
 	TARGET_CPU=unknown
 
+fi
+
+if test $TARGET_OS = "darwin"
+then
+	if test "$enable_universal" = yes
+	then
+		TARGET_CPU=universal
+
+	fi
 fi
 { echo "$as_me:$LINENO: result: $TARGET_CPU" >&5
 echo "${ECHO_T}$TARGET_CPU" >&6; }

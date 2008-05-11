@@ -1,5 +1,7 @@
 #!/usr/bin/perl -W
 use strict;
+use File::stat;
+use Fcntl ':mode';
 
 my @explicit_libs = ('libcurl');
 
@@ -87,6 +89,8 @@ sub installlib {
 	my $libname;
 	my $newpath;
 	my $fworlib;
+	my $writable = 1;
+	my $oldperms;
 
 	if($lib =~ /.*\/([^\/]+)$/) {
 		$libname = $1;
@@ -94,13 +98,22 @@ sub installlib {
 		die "wtf?\n";
 	}
 
-	print "Installing $lib...";
+	print "Installing $libdir/$libname...";
 	my $nlib = fixframeworkpath $lib;
 
 	if($lib =~ /\.dylib$/) {
 		# && instead of || because error is reported as 'true'
-		`cp $lib $libdir/` && die "failed\n";
+		my $fs = stat( $lib );
+		$oldperms = $fs->mode;
+		$writable = ($oldperms & S_IWUSR) >> 7;
+
+		`cp -f $lib $libdir/` && die "failed\n";
+
 		$newpath = "$libdir/$libname";
+		if ( !$writable ) {
+			my $newperms = (S_IWUSR | $oldperms);
+			chmod $newperms, $newpath;
+		}
 		$fworlib = "Libraries";
 
 		# change my id
@@ -139,6 +152,10 @@ sub installlib {
 
 		#print "install_name_tool -change $i \@executable_path/../$fworlib2/$libname2 $newpath\n";
 		`install_name_tool -change $ni \@executable_path/../$fworlib2/$libname2 $newpath\n` && die "failed\n";
+	}
+
+	if ( !$writable ) {
+		chmod $oldperms, $newpath;
 	}
 
 	print "done\n";

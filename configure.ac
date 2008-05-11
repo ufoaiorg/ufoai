@@ -76,6 +76,10 @@ AC_ARG_ENABLE(profiling,
 	[AS_HELP_STRING([--enable-profiling], [build with profiling for gprof @<:@default=disabled@:>@])],
 	[], [enable_profiling=no])
 
+AC_ARG_ENABLE(universal,
+	[AS_HELP_STRING([--enable-universal], [build universal binaries on Mac OS X @<:@default=enabled@:>@])],
+	[], [enable_universal=yes])
+
 #---------------------------------------------------------------------------------------------
 # CHECK SED
 #---------------------------------------------------------------------------------------------
@@ -151,6 +155,13 @@ then
 		CFLAGS="$CFLAGS -I/opt/local/include"
 		LDFLAGS="$LDFLAGS -L/opt/local/lib"
 	fi
+
+	### Check for universal binaries
+	if test "$enable_universal" = "yes"
+	then
+		CFLAGS="$CFLAGS -arch i386 -arch ppc"
+		LDFLAGS="$LDFLAGS -arch i386 -arch ppc"
+	fi
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -180,6 +191,14 @@ else
 	AC_MSG_WARN([The target CPU '$target_cpu' is unknown, default options will be applied])
 	AC_MSG_WARN([Please contact the developers for assistance])
 	AC_SUBST([TARGET_CPU],[unknown])
+fi
+
+if test $TARGET_OS = "darwin"
+then
+	if test "$enable_universal" = yes
+	then
+		AC_SUBST([TARGET_CPU],[universal])
+	fi
 fi
 AC_MSG_RESULT($TARGET_CPU)
 
