@@ -212,14 +212,14 @@ public class Map {
 
 	public void findUnexposedFaces() {
 		Vector<Brush> brushes = BrushList.getImmutableOpaqueBrushes();
-		int nodrawSetCount = 0;
+		int nodrawsObsBySingleFace = 0, nodrawsObsByComposite=0;
 		for (Brush b: brushes) {//for each immutable brush, b
-			Vector<Brush> possibleInteractionBrushes = b.getInteractionList();
+			Vector<Brush> possibleInteractionBrushes = b.getBrushInteractionList();
 			for (Brush pib: possibleInteractionBrushes) {//loop through the list of brushes which are near it
 				//System.out.printf("Brush.findUnexposedFaces: testing if Brush %d interacts with %d%n",b.getBrushNumber(),pib.getBrushNumber() );
-				Vector<Face> bFaces = b.getFaces();
-				Vector<Face> piFaces = pib.getFaces();
-				for (Face bf: bFaces) {
+				Vector<Face> bFaces = b.getFaces();//faces of the brush being considered as nodraws
+				Vector<Face> piFaces = pib.getFaces();//faces of nearby brushes, which might obscure faces of brush, b
+				for (Face bf: bFaces) {//loop through the faces of the brush
 					if(!bf.isNodraw ()){//do not waste time testing if the face is already a nodraw.
 						for (Face pif: piFaces) {
 							//System.out.printf("Brush.findUnexposedFaces: testing if Face %d from Brush %d interacts with Face %d from Brush %d%n", bf.getNumber(),b.getBrushNumber(),pif.getNumber(),pib.getBrushNumber() );
@@ -229,7 +229,7 @@ public class Map {
 								if (pib.areInside (vertsOfFaceBf) ) {
 									//Entity parent = b.getParentEntity();
 									//MapUtils.printf("set nodraw: face %d of brush %d of entity %d (%s)%n", bf.getNumber(),b.getBrushNumber(),parent.getNumber(),parent.getValue("classname"));
-									nodrawSetCount++;
+									nodrawsObsBySingleFace++;
 									bf.setNodraw();
 								}
 							}
@@ -237,8 +237,23 @@ public class Map {
 					}
 				}
 			}
+			Vector<CompositeFace> possibleInteractionComposites=b.getCompositeFaceInteractionList();
+			Vector<Face> bFaces = b.getFaces();//faces of the brush being considered as nodraws
+			for (Face bf: bFaces) {//loop through the faces of the brush
+			    for(CompositeFace cf:possibleInteractionComposites){
+				if(cf.isFacingAndCoincidentTo(bf)){
+				    Vector<Vector3D> vertsOfFaceBf=bf.getVertices();
+				    if(cf.areInsideParentBrushes(vertsOfFaceBf)){
+					nodrawsObsByComposite++;
+					bf.setNodraw();
+					MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
+					break;//once the face has been set, skip the rest.
+				    }
+				}
+			    }
+			}
 		}
-		TimeCounter.reportf ("finished unexposed face search. %d nodraws set", nodrawSetCount);
+		TimeCounter.reportf ("%d nodraws from faces obscured by single face. %d obscured by composites", nodrawsObsBySingleFace, nodrawsObsByComposite);
 	}
 
 }

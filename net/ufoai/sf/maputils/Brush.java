@@ -23,6 +23,8 @@ public class Brush {
 	/** list of immutable (not breakable or mobile) brushes that this brush's bounding box intersects.
 	 *  brushes listed may be in func_group entities or worldspawn. */
 	Vector<Brush> interactionList = new Vector<Brush> (6, 6);
+	/** list of {@CompositeFace}s which contain faces from this brush. TODO sync this with: the truth and, the getter method */
+	Vector<CompositeFace> compositeFaceInterationList = new Vector<CompositeFace> (4,4);
 	String lastLevelFlagChangeNote = "";
 	private static int brushCount = 0;
 	private int brushNumber;
@@ -46,10 +48,14 @@ public class Brush {
 		}
 
 		//System.out.println("Brush: >"+map.toString(s,e)+"<");
-		Vector3D point = new Vector3D (1.0f, 1.0f, 1.0f);
+		///Vector3D point = new Vector3D (1.0f, 1.0f, 1.0f);
 		//System.out.println("inside("+point+"): "+inside(point)) ;
 		calculateVertices();
+		//System.out.println("Brush.init: num vertices "+vertices.size());
 		findBoundingBox();
+		for(Face f:faces){
+		    f.calculateVerticesAndEdges();
+		}
 	}
 
 	public static void resetBrushCount() {
@@ -75,6 +81,7 @@ public class Brush {
 	/** @return the vertices of this Brush which are on the plane of the
 	 *          supplied Face. */
 	public Vector<Vector3D> getVertices (Face f) {
+		//System.out.println("Brush.getVertices(Face): total num vertices"+vertices.size());
 		Vector<Vector3D> ans = new Vector<Vector3D> (4, 4);
 		HessianNormalPlane h = f.getHessian();
 		for (Vector3D v: vertices) {
@@ -278,12 +285,23 @@ public class Brush {
 		return map.toString (s, e);
 	}
 
-	public void addToInteractionList (Brush b) {
+	public void addToBrushInteractionList (Brush b) {
 		interactionList.add (b);
 	}
+	
+	public void addToCompositeFaceInterationList(CompositeFace c){
+	    compositeFaceInterationList.add (c);
+	}
 
-	public Vector<Brush> getInteractionList() {
+	/** @return a Vector of Brushes whose bounding boxes intersect with this Brush's. */
+	public Vector<Brush> getBrushInteractionList() {
 		return interactionList;
+	}
+	
+	/** @return {@link CompositeFace}s featuring  faces from brushes whose 
+	 *           bounding boxes intersect with this Brush's. */
+	public Vector<CompositeFace> getCompositeFaceInteractionList(){
+	    return compositeFaceInterationList;
 	}
 
 	void detailedInvestigation() {
@@ -320,5 +338,17 @@ public class Brush {
 		opf.setVisible (true);
 
 	}
+	
+	/** @return true if this Brush and o represent the same Brush parsed from the map file */
+	public boolean equals(Object o){
+	    try{
+		Brush bo=(Brush)o;
+		return bo.brushNumber== this.brushNumber && bo.parentEntity.getNumber() == this.parentEntity.getNumber();
+	    } catch (Exception e){
+		return false;
+	    }
+	}
+
+	
 
 }

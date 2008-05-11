@@ -14,34 +14,36 @@ public class Face {
 
 	int s, e;
 	Map map;
-	Brush brush;
+	Brush parentBrush;
 	private int number;
 	Vector<String> parts = new Vector<String> (16, 3);
 	HessianNormalPlane hessian;
 	SurfaceFlags surfFlags;
 	ContentFlags contentFlags;
+	Vector<Vector3D> vertices=null;
+	Vector<Edge> edges=new Vector<Edge>(4,4);
 
 	private static int count = 0;
 	public static final String nodrawTexture = "tex_common/nodraw";
 	private static Pattern partPattern = Pattern.compile ("[\\s]([^\\s\\(\\)]+)");
 	public static final int PART_INDEX_P1X = 0,
 			PART_INDEX_P1Y = 1,
-							 PART_INDEX_P1Z = 2,
-											  PART_INDEX_P2X = 3,
-															   PART_INDEX_P2Y = 4,
-																				PART_INDEX_P2Z = 5,
-																								 PART_INDEX_P3X = 6,
-																												  PART_INDEX_P3Y = 7,
-																																   PART_INDEX_P3Z = 8,
-																																					PART_INDEX_TEX = 9,
-																																									 PART_INDEX_X_OFF = 10,
-																																														PART_INDEX_Y_OFF = 11,
-																																																		   PART_INDEX_ROT_ANGLE = 12,
-																																																								  PART_INDEX_X_SCALE = 13,
-																																																													   PART_INDEX_Y_SCALE = 14,
-																																																																			PART_INDEX_CONTENT_FLAGS = 15,
-																																																																									   PART_INDEX_SURFACE_FLAGS = 16,
-																																																																																  PART_INDEX_UNKNOWN2 = 17;
+			PART_INDEX_P1Z = 2,
+			PART_INDEX_P2X = 3,
+			PART_INDEX_P2Y = 4,
+			PART_INDEX_P2Z = 5,
+			PART_INDEX_P3X = 6,
+			PART_INDEX_P3Y = 7,
+			PART_INDEX_P3Z = 8,
+			PART_INDEX_TEX = 9,
+			PART_INDEX_X_OFF = 10,
+			PART_INDEX_Y_OFF = 11,
+			PART_INDEX_ROT_ANGLE = 12,
+			PART_INDEX_X_SCALE = 13,
+			PART_INDEX_Y_SCALE = 14,
+			PART_INDEX_CONTENT_FLAGS = 15,
+			PART_INDEX_SURFACE_FLAGS = 16,
+			PART_INDEX_UNKNOWN2 = 17;
 
 	/**  */
 	public Face (Map from, Brush brushFrom, int startIndex, int endIndex) {
@@ -49,25 +51,42 @@ public class Face {
 		s = startIndex;
 		e = endIndex;
 		map = from;
-		brush = brushFrom;
-		//System.out.println("");
-		//System.out.println("Face: >"+getOriginalText()+"<");
+		parentBrush = brushFrom;
 		Matcher partMatcher = partPattern.matcher (getOriginalText() );
 		while (partMatcher.find() ) {
-			//System.out.print("  >"+partMatcher.group(1)+"<");
 			parts.add (partMatcher.group (1) );
 		}
 		while (parts.size() < 18) parts.add ("0");//every face should have all of them, even if only to have levelflags set
-		//System.out.println("orig>"+getOriginalText()+"<");
-		//System.out.println("refo>"+getReformedText()+"<");
-		//Vector3D origin=new Vector3D(0.0f,0.0f,0.0f);
 		hessian = new HessianNormalPlane (getPoint (0), getPoint (1), getPoint (2) );
-		//System.out.println(""+getOriginalText()+" > "+hessian);
-		//System.out.println("distance to origin: "+hessian.distance(origin));
 		surfFlags = new SurfaceFlags (getPartInt (PART_INDEX_SURFACE_FLAGS) );
 		contentFlags = ContentFlags.flags (getPartInt (PART_INDEX_CONTENT_FLAGS) );
+		
+		//System.out.println("Face.init: Edge "+number+" has "+edges.size()+" edges");
+		//System.out.println("Face.init: Edge "+number+" has "+vertices.size()+" vertices");
+	}
+	
+	/** this must be done at the end of the parent Brush constructor, 
+	 *  otherwise the Brush does not have any vertices yet, 
+	 *  because it has not calculted the intersection of the planes of the 
+	 *  Faces yet, because it does not have any Face objects... */
+	public void calculateVerticesAndEdges(){
+	    if(vertices!=null) return;//already done
+	    vertices=parentBrush.getVertices (this);
+	    for(int i=0;i<vertices.size ();i++){
+		int v2ind=i+1;
+		v2ind= (v2ind==vertices.size()) ? 0 : v2ind ;//join up last vertex with first
+		edges.add (new Edge(vertices.get (i),vertices.get (v2ind)));
+	    }
 	}
 
+	public Vector<Vector3D> getVertices(){
+	    return vertices;
+	}
+	
+	public Brush getParent(){
+	    return parentBrush;
+	}
+	
 	public static void resetCount() {
 		count = 0;
 	}
@@ -139,7 +158,8 @@ public class Face {
 		return hessian;
 	}
 
-	/** @return true if <b>this</b> is parallel to <code>a</code>. within Epsilon.angle */
+	/** @return true if <b>this</b> is parallel to <code>a</code>. within Epsilon.angle.
+	 *               uses unit normal vectors. Will return false if the normals are antiparallel.*/
 	public boolean isParallelTo (Face a) {
 		return this.getHessian().cosTo (a.getHessian() ) >= Epsilon.cos ;
 	}
@@ -162,8 +182,28 @@ public class Face {
 		//System.out.printf("Face.isFacingAndCoincidentTo: distance between planes %5.1f%n",distance);
 		return distance < Epsilon.distance && this.isAntiparallelTo (a);
 	}
+	
+	
+	/** returns true if the plane's unit normals are parallel and the planes
+	 *  are within Epsilon.distance of each other. */
+	public boolean isParallelAndCoincident(Face a){
+		float distance = this.getHessian().absDistance (a.getHessian().getClosestApproach() );
+		//System.out.printf("Face.isFacingAndCoincidentTo: distance between planes %5.1f%n",distance);
+		return distance < Epsilon.distance && this.isParallelTo (a);
+	}
+	
+	/** @return true if at least one edge of <code>a</code> is abutted to 
+	 *          an edge of <code>this</code> brush. */
+	public boolean isAbutted(Face a){
+	    for (Edge ei:this.edges){
+		for (Edge ej:a.edges){
+		    if(ei.isAbutted(ej)) return true;
+		}
+	    }
+	    return false;
+	}
 
-	/** @return true if the point is on the plain of this face*/
+	/** @return true if the point is on the plane of this face*/
 	public boolean contains (Vector3D point) {
 		return Math.abs (this.getHessian().distance (point) ) < Epsilon.distance;
 	}
@@ -176,7 +216,7 @@ public class Face {
 		ContentFlags newFlags = ContentFlags.level (level);
 		if (!oldFlags.equals (newFlags) ) {
 			//MapUtils.printf("changed level flags");
-			brush.notifyLevelFlagChange (oldFlags.getDescription() + " to " + newFlags.getDescription() );
+			parentBrush.notifyLevelFlagChange (oldFlags.getDescription() + " to " + newFlags.getDescription() );
 			oldFlags.mergeNewFlags (newFlags);
 			parts.set (PART_INDEX_CONTENT_FLAGS, oldFlags.toString() );
 		}
@@ -207,6 +247,16 @@ public class Face {
 
 	public boolean isTransparent() {
 		return surfFlags.isTransparent();
+	}
+	
+	/** @return true if they represent the same faces parsed from the map file */
+	public boolean equals(Object o){
+	    try{
+		Face fo=(Face)o;
+		return fo.parentBrush.equals(this.parentBrush) && fo.number == this.number;
+	    } catch (Exception e){
+		return false;
+	    }
 	}
 
 
