@@ -372,6 +372,7 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	/* randomnum might not be 0 - otherwise i would be 0 in the next
 	 * loop and i - 1 will access invalid memory */
 	randomNum = max(1, rand() % hits);
+	assert(randomNum < csi.numMDs);
 
 	for (i = 0; randomNum >= 0; i++) {
 		/* Check if mission fulfill conditions */
