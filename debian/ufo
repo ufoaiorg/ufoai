@@ -4,7 +4,7 @@
 # for a site-wide install on a UNIX-like OS.
 #
 # It assumes the game was installed in $INSTDIR, and
-# $INSTDIR/save/ does not exist (reasonable assumption for a
+# $INSTDIR/base/save/ does not exist (reasonable assumption for a
 # site-wide install).
 #
 # It creates a ~/.ufoai/ dir, suitable as a current-directory
@@ -21,9 +21,8 @@
 
 set -e
 
-BINDIR=/usr/lib/games/ufoai
-BASEDIR=/usr/share/games/ufoai
+INSTDIR=/usr/lib/games/ufoai
 
-cd $BASEDIR
+cd $INSTDIR
 
-${BINDIR}/ufo "$@"
+${INSTDIR}/ufo "$@"

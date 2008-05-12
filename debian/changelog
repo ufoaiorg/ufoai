@@ -1,4 +1,4 @@
-ufoai (2.2.1~svn15680-0) unstable; urgency=low
+ufoai (2.3~~svn14428) unstable; urgency=low
 
   [ Martin Gerhardy ]
   * Removed snd_* (SDL sound is merged into the ufo binary)
@@ -7,11 +7,11 @@ ufoai (2.2.1~svn15680-0) unstable; urgency=low
   [ Florian Ludwig ]
   * Fix versioning of dependencies on ufo-data
   * Use libcurl4-dev not 3
+  * Dump version to 2.3~~svn
   * Disable curses console for the server
   * Fix copyright files
 
   [ Teemu Ikonen ]
-  * Change Debian version to 2.2.1~svn15680-0
   * Upgrade standards-version to 3.7.3
   * Upgrade debhelper compat to 6
   * Rename ufoai-data-music to ufoai-music, install just ogg-files
@@ -30,7 +30,6 @@ ufoai (2.2.1~svn15680-0) unstable; urgency=low
   * Build and install the pdf manual, add build-dep to
     texlive-latex-recommended
   * Add ufoai-data.doc-base for the manual
-  * Set BASEDIR to empty string
   * ufoai-tools: Install ufo2map to /usr/games/, install blender
     script to a correct directory in Debian
   * Add build-dep to quilt
@@ -43,7 +42,7 @@ ufoai (2.2.1~svn15680-0) unstable; urgency=low
   * copyright: add copyright years, correct FSF address,
     add author and licensing info on packaging
 
- -- Teemu Ikonen <tpikonen@gmail.com>  Wed, 19 Mar 2008 01:34:46 +0100
+ -- Florian Ludwig <dino@phidev.org>  Sun, 03 Feb 2008 20:49:10 +0100
 
 ufoai (2.2~~svn11864) unstable; urgency=low
 

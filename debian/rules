@@ -20,7 +20,7 @@ endif
 
 MAINVER := $(shell dpkg-parsechangelog | sed -ne 's/^Version: *\([^~-]*\).*/\1/p' )
 SVNREV := $(shell dpkg-parsechangelog | sed -ne 's/^Version: .*~svn\([^-]*\).*/\1/p' )
-SVNBRANCH = branches/ufoai_2.2
+SVNBRANCH = trunk
 TMPDIR = /tmp/
 ORIGDIR = ufoai_$(MAINVER)~svn$(SVNREV).orig
 ORIGTGZ = ufoai_$(MAINVER)~svn$(SVNREV).orig.tar.gz
@@ -72,8 +72,9 @@ really_clean:
 	rm -rf stamps
 
 	[ ! -f Makefile ] || $(MAKE) BUILDDIR=$(CURDIR)/BUILD clean
-	$(MAKE) -C src/docs/tex clean	
-	find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
+	$(MAKE) -C src/docs/tex clean
+	# WARNING: building maps takes ages
+	# find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
 	-rm base/*.pk3
 
 	-rm debian/ufoai-i18n-*.install
