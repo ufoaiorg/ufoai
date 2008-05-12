@@ -320,13 +320,14 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, 
 static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashed)
 {
 	int i;
-	int maxHits = 1;
-	int hits = 0;
+	int maxHits = 1;	/**< Total number of maps fulfilling mission conditions. */
+	int hits = 0;		/**< Number of maps fulfilling mission conditions and that appeared less often during game. */
 	int minMissionAppearance = 9999;
 	int randomNum;
 
 	mission->mapDef = NULL;
 
+	/* Set maxHits and hits. */
 	while (maxHits) {
 		maxHits = 0;
 		for (i = 0; i < csi.numMDs; i++) {
@@ -337,6 +338,9 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 
 			maxHits++;
 			if (csi.mds[i].timesAlreadyUsed < minMissionAppearance) {
+				/* at least one fulfilling mission as been used less time than minMissionAppearance:
+				 * restart the loop with this number of time.
+				 * note: this implies that hits must be > 0 after the loop */
 				hits = 0;
 				minMissionAppearance = csi.mds[i].timesAlreadyUsed;
 				break;
@@ -344,11 +348,14 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 				hits++;
 		}
 
-		if (i >= csi.numMDs)
+		if (i >= csi.numMDs) {
+			/* We scanned all maps in memory without finding a map used less than minMissionAppearance: exit while loop */
 			break;
+		}
 	}
 
 	if (!maxHits) {
+		/* no map fulfill the conditions */
 		if (ufoCrashed) {
 			/* default map for crashsite mission is the crashsite random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
@@ -366,26 +373,35 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 		}
 	}
 
-	/* FIXME: This might be hit with current code */
+	/* If we reached this point, that means that at least 1 map fulfills the conditions of the mission */
 	assert(hits);
+	assert(hits < csi.numMDs);
 
-	/* randomnum might not be 0 - otherwise i would be 0 in the next
-	 * loop and i - 1 will access invalid memory */
-	randomNum = max(1, rand() % hits);
-	assert(randomNum < csi.numMDs);
+	/* set number of mission to select randomly between 0 and hits - 1 */
+	randomNum = rand() % hits;
 
-	for (i = 0; randomNum >= 0; i++) {
+	/* Select mission mission number 'randomnumber' that fulfills the conditions */
+	for (i = 0; i < csi.numMDs; i++) {
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
 			continue;
 
-		if (csi.mds[i].timesAlreadyUsed == minMissionAppearance)
+		if (csi.mds[i].timesAlreadyUsed > minMissionAppearance)
+			continue;
+
+		/* There shouldn't be mission fulfilling conditions used less time than minMissionAppearance */
+		assert(csi.mds[i].timesAlreadyUsed == minMissionAppearance);
+
+		if (!randomNum)
+			break;
+		else
 			randomNum--;
 	}
 
-	assert(i > 0);
+	/* A mission must have been selected */
+	assert(i < csi.numMDs);
 
-	mission->mapDef = &csi.mds[i - 1];
+	mission->mapDef = &csi.mds[i];
 	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 
 	/* @todo Use me */
