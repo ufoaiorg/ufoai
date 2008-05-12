@@ -1289,7 +1289,7 @@ Optional Features:
                           [default=disabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
   --enable-profiling      build with profiling for gprof [default=disabled]
-  --disable-universal     build universal binaries on Mac OS X
+  --enable-universal      build universal binaries on Mac OS X
                           [default=enabled]
 
 Optional Packages:
