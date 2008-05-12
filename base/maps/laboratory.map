@@ -8679,7 +8679,7 @@
 // entity 26
 {
 "classname" "light"
-"origin" "813 -88 68"
+"origin" "733 -104 68"
 "light" "175"
 "_color" "1"
 "spawnflags" "1"
@@ -11706,7 +11706,7 @@
 // entity 124
 {
 "classname" "light"
-"origin" "941 162 195"
+"origin" "733 -118 195"
 "light" "175"
 "_color" "1"
 "spawnflags" "1"
@@ -14464,4 +14464,44 @@
 "origin" "512 336 110"
 "particle" "corona"
 "spawnflags" "510"
+}
+// entity 256
+{
+"classname" "light"
+"origin" "941 162 195"
+"light" "175"
+"_color" "1"
+"spawnflags" "1"
+}
+// entity 257
+{
+"classname" "light"
+"origin" "885 -22 195"
+"light" "175"
+"_color" "1"
+"spawnflags" "1"
+}
+// entity 258
+{
+"classname" "light"
+"origin" "733 74 195"
+"light" "175"
+"_color" "1"
+"spawnflags" "1"
+}
+// entity 259
+{
+"classname" "light"
+"origin" "813 -88 68"
+"light" "175"
+"_color" "1"
+"spawnflags" "1"
+}
+// entity 260
+{
+"classname" "light"
+"origin" "1021 24 68"
+"light" "175"
+"_color" "1"
+"spawnflags" "1"
 }
