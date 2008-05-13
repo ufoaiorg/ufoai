@@ -167,7 +167,6 @@ SectionGroup /e "Mapping" SECGROUP02
   Section "Mapping Tools" SEC02
     SetOutPath "$INSTDIR\base\maps"
     File "..\..\..\base\maps\*.map"
-    File "..\..\..\base\maps\Makefile"
     File "..\..\..\base\maps\Makefile.win"
     File "..\..\..\base\maps\compile.p*"
     SetOutPath "$INSTDIR\base\maps\b"
