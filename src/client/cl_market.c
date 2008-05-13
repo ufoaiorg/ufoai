@@ -553,9 +553,6 @@ static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int nu
 	assert(base);
 	assert(item);
 
-	/* @todo if there is not enough credits or not enough room in storage to buy number,
-		we should should buy the maximum number of items */
-
 	/* you can't buy more items than there are on market */
 	numItems = min(number, ccs.eMarket.num[item->idx]);
 
@@ -830,7 +827,6 @@ static void BS_BuyAircraft_f (void)
 			MN_Popup(_("Note"), _("No storage in this base."));
 		} else {
 			const objDef_t *craftitem = BS_GetObjectDefition(&buyList.l[num]);
-			/** @todo Use buy factor for aircraft items */
 			BS_CheckAndDoBuyItem(baseCurrent, craftitem, BS_GetBuySellFactor());
 		}
 	}
@@ -838,7 +834,7 @@ static void BS_BuyAircraft_f (void)
 
 /**
  * @brief Update storage, the market, and the player's credits
- * @todo Storage? Where is it updated?
+ * @note Don't update capacity here because we can sell items directly from aircraft (already removed from storage).
  */
 static void BS_ProcessCraftItemSale (base_t *base, const objDef_t *craftitem, const int numItems)
 {
@@ -846,7 +842,6 @@ static void BS_ProcessCraftItemSale (base_t *base, const objDef_t *craftitem, co
 		ccs.eMarket.num[craftitem->idx] += numItems;
 		/* reinit the menu */
 		BS_BuyType();
-		/*B_UpdateStorageAndCapacity(base, craftitem, -numItems, qfalse, qfalse);*/
 		CL_UpdateCredits(ccs.credits + (ccs.eMarket.bid[craftitem->idx] * numItems));
 	}
 }
@@ -936,7 +931,6 @@ static void BS_SellAircraft_f (void)
 		}
 	} else {
 		const objDef_t *craftitem = BS_GetObjectDefition(&buyList.l[num]);
-		/** @todo Use sellfactor */
 		if (base->storage.num[craftitem->idx]) {
 			const int numItems = min(base->storage.num[craftitem->idx], BS_GetBuySellFactor());
 			B_UpdateStorageAndCapacity(base, craftitem, -numItems, qfalse, qfalse);
