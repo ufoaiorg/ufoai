@@ -87,6 +87,9 @@ static qboolean Irc_IsChannel (const char *target)
 	return (*target == '#' || *target == '&');
 }
 
+/**
+ * @todo This buffer is not safe - missing size check
+ */
 static void Irc_ParseName (const char *mask, char *nick, irc_nick_prefix_t *prefix)
 {
 	const char *emph;
