@@ -255,7 +255,7 @@ typedef struct {
 	vec2_t	shift;
 	vec_t	rotate;
 	vec2_t	scale;
-	char	name[32];
+	char	name[32];		/**< texture name - relative to base/textures */
 	int		surfaceFlags;
 	int		value;
 } brush_texture_t;

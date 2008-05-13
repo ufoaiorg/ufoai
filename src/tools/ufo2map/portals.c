@@ -396,12 +396,9 @@ static void FindPortalSide (portal_t *p)
 {
 	int viscontents;
 	bspbrush_t *bb;
-	mapbrush_t *brush;
-	node_t *n;
-	int i,j, planenum;
-	side_t *side, *bestside;
-	float dot, bestdot;
-	plane_t *p1, *p2;
+	int i, j, planenum;
+	side_t *bestside;
+	float bestdot;
 
 	/* decide which content change is strongest */
 	/* solid > lava > water, etc */
@@ -414,15 +411,18 @@ static void FindPortalSide (portal_t *p)
 	bestdot = 0;
 
 	for (j = 0; j < 2; j++) {
-		n = p->nodes[j];
-		p1 = &mapplanes[p->onnode->planenum];
+		const node_t *n = p->nodes[j];
+		const plane_t *p1 = &mapplanes[p->onnode->planenum];
 		for (bb = n->brushlist; bb; bb = bb->next) {
-			brush = bb->original;
+			const mapbrush_t *brush = bb->original;
 
 			if (!(brush->contentFlags & viscontents))
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
-				side = &brush->original_sides[i];
+				side_t *side = &brush->original_sides[i];
+				float dot;
+				plane_t *p2;
+
 				if (side->bevel)
 					continue;
 				if (side->texinfo == TEXINFO_NODE)
@@ -432,7 +432,7 @@ static void FindPortalSide (portal_t *p)
 					goto gotit;
 				}
 				/* see how close the match is */
-				p2 = &mapplanes[side->planenum&~1];
+				p2 = &mapplanes[side->planenum &~ 1];
 				dot = DotProduct(p1->normal, p2->normal);
 				if (dot > bestdot) {
 					bestdot = dot;
@@ -480,15 +480,16 @@ static void MarkVisibleSides_r (node_t *node)
 
 void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 {
-	int i, j, numsides;
-	mapbrush_t *mb;
+	int i;
 
 	Sys_FPrintf(SYS_VRB, "--- MarkVisibleSides ---\n");
 
 	/* clear all the visible flags */
 	for (i = startbrush; i < endbrush; i++) {
-		mb = &mapbrushes[i];
-		numsides = mb->numsides;
+		mapbrush_t *mb = &mapbrushes[i];
+		const int numsides = mb->numsides;
+		int j;
+
 		for (j = 0; j < numsides; j++)
 			mb->original_sides[j].visible = qfalse;
 	}

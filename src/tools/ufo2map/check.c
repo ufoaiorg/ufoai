@@ -256,7 +256,16 @@ void CheckBrushes (void)
 		const int contentFlags = brush->original_sides[0].contentFlags;
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
-			brush_texture_t *tex = &side_brushtextures[side - brushsides];
+			const ptrdiff_t index = side - brushsides;
+			brush_texture_t *tex = &side_brushtextures[index];
+
+			assert(side);
+			assert(tex);
+
+			if (tex->name[0] == '\0') {
+				Com_Printf("  Brush %i (entity %i): no texture assigned\n", brush->brushnum, brush->entitynum);
+			}
+
 			if (config.performMapCheck && contentFlags != side->contentFlags) {
 				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
 			}

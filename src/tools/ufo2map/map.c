@@ -256,15 +256,9 @@ static int BrushContents (mapbrush_t *b)
 static void AddBrushBevels (mapbrush_t *b)
 {
 	int axis, dir;
-	int i, j, k, l, order;
-	side_t sidetemp;
-	brush_texture_t tdtemp;
+	int i, j, l, order;
 	side_t *s, *s2;
 	vec3_t normal;
-	float dist;
-	winding_t *w, *w2;
-	vec3_t vec, vec2;
-	float d;
 
 	/* add the axial planes */
 	order = 0;
@@ -277,6 +271,7 @@ static void AddBrushBevels (mapbrush_t *b)
 			}
 
 			if (i == b->numsides) {	/* add a new side */
+				float dist;
 				if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
 					Sys_Error("MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
 				nummapbrushsides++;
@@ -296,14 +291,15 @@ static void AddBrushBevels (mapbrush_t *b)
 
 			/* if the plane is not in it canonical order, swap it */
 			if (i != order) {
-				sidetemp = b->original_sides[order];
+				const ptrdiff_t index = b->original_sides - brushsides;
+				side_t sidetemp = b->original_sides[order];
+				brush_texture_t tdtemp = side_brushtextures[index + order];
+
 				b->original_sides[order] = b->original_sides[i];
 				b->original_sides[i] = sidetemp;
 
-				j = b->original_sides - brushsides;
-				tdtemp = side_brushtextures[j + order];
-				side_brushtextures[j + order] = side_brushtextures[j + i];
-				side_brushtextures[j + i] = tdtemp;
+				side_brushtextures[index + order] = side_brushtextures[index + i];
+				side_brushtextures[index + i] = tdtemp;
 			}
 		}
 	}
@@ -314,16 +310,23 @@ static void AddBrushBevels (mapbrush_t *b)
 
 	/* test the non-axial plane edges */
 	for (i = 6; i < b->numsides; i++) {
+		winding_t *w;
+
 		s = b->original_sides + i;
 		w = s->winding;
 		if (!w)
 			continue;
+
 		for (j = 0; j < w->numpoints; j++) {
-			k = (j+1) % w->numpoints;
+			int k = (j + 1) % w->numpoints;
+			vec3_t vec;
+
 			VectorSubtract(w->p[j], w->p[k], vec);
 			if (VectorNormalize(vec) < 0.5)
 				continue;
+
 			SnapVector(vec);
+
 			for (k = 0; k < 3; k++)
 				if (vec[k] == -1 || vec[k] == 1)
 					break;	/* axial */
@@ -334,7 +337,9 @@ static void AddBrushBevels (mapbrush_t *b)
 			for (axis = 0; axis < 3; axis++) {
 				for (dir = -1; dir <= 1; dir += 2) {
 					/* construct a plane */
-					VectorClear(vec2);
+					vec3_t vec2 = {0, 0, 0};
+					float dist;
+
 					vec2[axis] = dir;
 					CrossProduct(vec, vec2, normal);
 					if (VectorNormalize(normal) < 0.5)
@@ -344,19 +349,20 @@ static void AddBrushBevels (mapbrush_t *b)
 					/* if all the points on all the sides are */
 					/* behind this plane, it is a proper edge bevel */
 					for (k = 0; k < b->numsides; k++) {
+						winding_t *w2;
+
 						/* @note: This leads to different results on different archs
 						 * due to float rounding/precision errors - use the -ffloat-store
 						 * feature of gcc to 'fix' this */
 						/* if this plane has already been used, skip it */
-						if (PlaneEqual(&mapplanes[b->original_sides[k].planenum]
-							, normal, dist))
+						if (PlaneEqual(&mapplanes[b->original_sides[k].planenum], normal, dist))
 							break;
 
 						w2 = b->original_sides[k].winding;
 						if (!w2)
 							continue;
 						for (l = 0; l < w2->numpoints; l++) {
-							d = DotProduct(w2->p[l], normal) - dist;
+							const float d = DotProduct(w2->p[l], normal) - dist;
 							if (d > 0.1)
 								break;	/* point in front */
 						}
@@ -874,20 +880,18 @@ static qboolean ParseMapEntity (const char *filename)
 
 	/* if there was an origin brush, offset all of the planes and texinfo - e.g. func_door or func_rotating */
 	if (VectorNotEmpty(mapent->origin)) {
-		vec_t newdist;
 		int i, j;
-		side_t *s;
-		mapbrush_t *b;
 
 		for (i = 0; i < mapent->numbrushes; i++) {
-			b = &mapbrushes[mapent->firstbrush + i];
+			mapbrush_t *b = &mapbrushes[mapent->firstbrush + i];
 			for (j = 0; j < b->numsides; j++) {
-				s = &b->original_sides[j];
-				newdist = mapplanes[s->planenum].dist -
+				side_t *s = &b->original_sides[j];
+				const ptrdiff_t index = s - brushsides;
+				const vec_t newdist = mapplanes[s->planenum].dist -
 					DotProduct(mapplanes[s->planenum].normal, mapent->origin);
 				s->planenum = FindFloatPlane(mapplanes[s->planenum].normal, newdist);
 				s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
-					&side_brushtextures[s-brushsides], mapent->origin, qfalse);
+					&side_brushtextures[index], mapent->origin, qfalse);
 			}
 			/* create windings for sides and bounds for brush */
 			MakeBrushWindings(b);
@@ -953,7 +957,8 @@ void WriteMapFile (const char *filename)
 			fprintf(f, "// brush %i\n{\n", j);
 			for (k = 0; k < brush->numsides; k++) {
 				const side_t *side = &brush->original_sides[k];
-				const brush_texture_t *t = &side_brushtextures[side - brushsides];
+				const ptrdiff_t index = side - brushsides;
+				const brush_texture_t *t = &side_brushtextures[index];
 				if (side->visible) {
 					const plane_t *p = &mapplanes[side->planenum];
 					fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
