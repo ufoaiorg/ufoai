@@ -276,7 +276,7 @@ void CheckBrushes (void)
 			if (!(side->contentFlags & (CONTENTS_WEAPONCLIP | CONTENTS_ORIGIN | CONTENTS_ACTORCLIP | CONTENTS_STEPON))) {
 				/* check level 1 - level 8 */
 				if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
-					Com_Printf("* Brush %i (entity %i): no levelflags\n", brush->entitynum, brush->brushnum);
+					Com_Printf("* Brush %i (entity %i): no levelflags\n", brush->brushnum, brush->entitynum);
 					side->contentFlags |= CONTENTS_LEVEL_ALL;
 				}
 			}
