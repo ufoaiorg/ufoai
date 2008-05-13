@@ -12,6 +12,10 @@
 				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DWINVER=0x501" />
+					<Add option="-DNODEBUG" />
+				</Compiler>
 				<Linker>
 					<Add option="--export-all-symbols" />
 					<Add library="kernel32" />
@@ -28,6 +32,7 @@
 				<Compiler>
 					<Add option="-pg" />
 					<Add option="-g" />
+					<Add option="-DWINVER=0x501" />
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>

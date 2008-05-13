@@ -20,6 +20,8 @@ ifeq ($(TARGET_OS),mingw32)
 	SHARED_CFLAGS=-shared
 	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32
 	CFLAGS+=-DGETTEXT_STATIC
+	# Windows XP is the minimum we need
+	CFLAGS+=-DWINVER=0x501
 #	GAME_LIBS+=
 #	TOOLS_LIBS=
 endif

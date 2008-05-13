@@ -7,6 +7,7 @@
  * This file includes partial implementation of freeaddrinfo, getaddrinfo and
  * getnameinfo for windows 2k
  * @todo Remove this windows ipv6 mess - MinGW should support this in recent versions
+ * http://msdn.microsoft.com/en-us/library/aa383745.aspx
  */
 
 /*
@@ -31,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "common.h"
+#include <errno.h>
+#include <string.h>
+#include <fcntl.h>
 
 #define MAX_STREAMS 56
 #define MAX_DATAGRAM_SOCKETS 7
@@ -38,15 +42,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct memPool_s *com_networkPool;
 
 #ifdef _WIN32
-# ifdef __MINGW32__
-#  undef _WIN32_WINNT
-#  define _WIN32_WINNT 0x0501
-# endif
-# ifndef FD_SETSIZE
-#  define FD_SETSIZE (MAX_STREAMS + 1)
-# endif
 # include <winsock2.h>
 # include <ws2tcpip.h>
+/*# if WINVER < 0x501
+#  include <wspiapi.h>
+# else
+#  include <ws2spi.h>
+# endif
+*/
+
 # define netError WSAGetLastError()
 # define netStringError netStringErrorWin
 # define netCloseSocket closesocket
@@ -81,9 +85,6 @@ typedef int SOCKET;
 # define netStringError strerror
 # define netCloseSocket close
 #endif /* WIN32 */
-#include <errno.h>
-#include <string.h>
-#include <fcntl.h>
 
 /**
  * AI_ADDRCONFIG, AI_ALL, and AI_V4MAPPED are available since glibc 2.3.3.
