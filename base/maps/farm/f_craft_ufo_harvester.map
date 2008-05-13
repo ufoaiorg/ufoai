@@ -2936,6 +2936,7 @@
 "origin" "856 564 112"
 "_color" "0.7 0.8 1"
 "light" "140"
+"spawnflags" "1"
 }
 // entity 3
 {
@@ -2943,6 +2944,7 @@
 "origin" "768 632 108"
 "_color" "0 1 0.2"
 "light" "120"
+"spawnflags" "1"
 }
 // entity 4
 {
@@ -2950,6 +2952,7 @@
 "light" "120"
 "_color" "0 1 0.2"
 "origin" "768 392 108"
+"spawnflags" "1"
 }
 // entity 5
 {
@@ -2957,6 +2960,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "484 552 108"
+"spawnflags" "1"
 }
 // entity 6
 {
@@ -2964,6 +2968,7 @@
 "origin" "480 472 108"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 7
 {
@@ -2971,6 +2976,7 @@
 "light" "140"
 "_color" "0.7 0.8 1"
 "origin" "856 460 112"
+"spawnflags" "1"
 }
 // entity 8
 {
@@ -2978,6 +2984,7 @@
 "origin" "704 512 112"
 "_color" "0.7 0.8 1"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 9
 {
@@ -2985,6 +2992,7 @@
 "origin" "960 464 112"
 "_color" "0.7 0.8 1"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 10
 {
@@ -2992,6 +3000,7 @@
 "light" "100"
 "_color" "1 0.3 0"
 "origin" "564 512 104"
+"spawnflags" "1"
 }
 // entity 11
 {
@@ -2999,6 +3008,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "880 564 160"
+"spawnflags" "1"
 }
 // entity 12
 {
@@ -3006,6 +3016,7 @@
 "origin" "760 564 160"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 13
 {
@@ -3013,6 +3024,7 @@
 "origin" "968 864 88"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 14
 {
@@ -3020,6 +3032,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "888 864 88"
+"spawnflags" "1"
 }
 // entity 15
 {
@@ -3027,6 +3040,7 @@
 "origin" "984 156 88"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 16
 {
@@ -3034,6 +3048,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "904 156 88"
+"spawnflags" "1"
 }
 // entity 17
 {
@@ -3041,6 +3056,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "976 288 88"
+"spawnflags" "1"
 }
 // entity 18
 {
@@ -3048,6 +3064,7 @@
 "origin" "896 288 88"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 19
 {
@@ -3055,6 +3072,7 @@
 "origin" "324 564 136"
 "_color" "0 1 0.2"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 20
 {
@@ -3062,6 +3080,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "324 464 136"
+"spawnflags" "1"
 }
 // entity 21
 {
@@ -3069,6 +3088,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "176 564 68"
+"spawnflags" "1"
 }
 // entity 22
 {
@@ -3076,6 +3096,7 @@
 "origin" "176 464 68"
 "_color" "0 1 0.2"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 23
 {
@@ -3083,6 +3104,7 @@
 "origin" "880 460 160"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 24
 {
@@ -3090,6 +3112,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "760 460 160"
+"spawnflags" "1"
 }
 // entity 25
 {
@@ -3097,6 +3120,7 @@
 "origin" "604 368 40"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 26
 {
@@ -3104,6 +3128,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "508 576 172"
+"spawnflags" "1"
 }
 // entity 27
 {
@@ -3111,6 +3136,7 @@
 "origin" "508 448 172"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 28
 {
@@ -3118,6 +3144,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "604 656 40"
+"spawnflags" "1"
 }
 // entity 29
 {
@@ -3125,6 +3152,7 @@
 "light" "160"
 "_color" "0.7 0.8 1"
 "origin" "704 512 54"
+"spawnflags" "1"
 }
 // entity 30
 {
@@ -3132,6 +3160,7 @@
 "origin" "520 456 54"
 "_color" "0.7 0.8 1"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 31
 {
@@ -3139,6 +3168,7 @@
 "origin" "832 576 54"
 "_color" "0.7 0.8 1"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 32
 {
@@ -3146,6 +3176,7 @@
 "origin" "832 448 54"
 "_color" "0.7 0.8 1"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 33
 {
@@ -3153,6 +3184,7 @@
 "light" "80"
 "_color" "1 0.3 0"
 "origin" "916 464 54"
+"spawnflags" "1"
 }
 // entity 34
 {
@@ -3160,6 +3192,7 @@
 "origin" "916 560 54"
 "_color" "1 0.3 0"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 35
 {
@@ -3167,6 +3200,7 @@
 "light" "160"
 "_color" "0.7 0.8 1"
 "origin" "960 416 54"
+"spawnflags" "1"
 }
 // entity 36
 {
@@ -3174,6 +3208,7 @@
 "light" "160"
 "_color" "0.7 0.8 1"
 "origin" "960 608 54"
+"spawnflags" "1"
 }
 // entity 37
 {
@@ -3181,6 +3216,7 @@
 "origin" "620 464 54"
 "_color" "1 0.3 0"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 38
 {
@@ -3188,6 +3224,7 @@
 "light" "80"
 "_color" "1 0.3 0"
 "origin" "620 560 54"
+"spawnflags" "1"
 }
 // entity 39
 {
@@ -3195,6 +3232,7 @@
 "origin" "1036 512 38"
 "_color" "0.3 1 0.4"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 40
 {
@@ -3202,6 +3240,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "968 728 92"
+"spawnflags" "1"
 }
 // entity 41
 {
@@ -3209,6 +3248,7 @@
 "origin" "888 728 92"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 42
 {
@@ -3216,6 +3256,7 @@
 "origin" "1072 564 152"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 43
 {
@@ -3223,6 +3264,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1072 460 152"
+"spawnflags" "1"
 }
 // entity 44
 {
@@ -3293,6 +3335,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "988 316 196"
+"spawnflags" "1"
 }
 // entity 54
 {
@@ -3300,6 +3343,7 @@
 "origin" "988 316 196"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 55
 {
@@ -3307,6 +3351,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "1052 552 112"
+"spawnflags" "1"
 }
 // entity 56
 {
@@ -3314,6 +3359,7 @@
 "origin" "1048 464 112"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 57
 {
@@ -3393,6 +3439,7 @@
 "origin" "816 512 36"
 "_color" "0 1 0.2"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 61
 {
@@ -3400,6 +3447,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "816 592 36"
+"spawnflags" "1"
 }
 // entity 62
 {
@@ -3407,6 +3455,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "816 432 36"
+"spawnflags" "1"
 }
 // entity 63
 {
@@ -3414,6 +3463,7 @@
 "origin" "504 588 46"
 "_color" "0 1 0.2"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 64
 {
@@ -3421,6 +3471,7 @@
 "light" "100"
 "_color" "0 1 0.2"
 "origin" "504 546 46"
+"spawnflags" "1"
 }
 // entity 65
 {
@@ -3551,6 +3602,7 @@
 "origin" "976 548 112"
 "_color" "0 1 0.2"
 "light" "80"
+"spawnflags" "1"
 }
 // entity 69
 {
@@ -3558,6 +3610,7 @@
 "light" "80"
 "_color" "0 1 0.2"
 "origin" "976 480 112"
+"spawnflags" "1"
 }
 // entity 70
 {
