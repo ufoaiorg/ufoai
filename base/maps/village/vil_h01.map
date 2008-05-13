@@ -2996,18 +2996,18 @@
 {
 "classname" "info_civilian_start"
 "angle" "135"
-"origin" "112 276 92"
+"origin" "112 272 92"
 }
 // entity 2
 {
 "classname" "info_alien_start"
 "angle" "45"
-"origin" "272 180 28"
+"origin" "272 176 28"
 }
 // entity 3
 {
 "classname" "info_civilian_start"
-"origin" "240 404 28"
+"origin" "240 400 28"
 }
 // entity 4
 {
@@ -3127,6 +3127,7 @@
 "origin" "148 192 56"
 "_color" "1 0.95 0.85"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 6
 {
@@ -3134,6 +3135,7 @@
 "light" "160"
 "_color" "1 0.95 0.85"
 "origin" "260 192 56"
+"spawnflags" "1"
 }
 // entity 7
 {
@@ -3141,6 +3143,7 @@
 "origin" "228 288 56"
 "_color" "1 0.95 0.85"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 8
 {
@@ -3148,6 +3151,7 @@
 "origin" "128 260 56"
 "_color" "1 0.95 0.85"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 9
 {
@@ -3155,6 +3159,7 @@
 "origin" "132 368 56"
 "_color" "1 0.95 0.85"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 10
 {
@@ -3162,6 +3167,7 @@
 "light" "160"
 "_color" "1 0.95 0.85"
 "origin" "324 392 56"
+"spawnflags" "1"
 }
 // entity 11
 {
@@ -3169,6 +3175,7 @@
 "origin" "324 300 56"
 "_color" "1 0.95 0.85"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 12
 {
@@ -4360,6 +4367,7 @@
 "_color" "1 1 1"
 "light" "40"
 "origin" "172 426 108"
+"spawnflags" "1"
 }
 // entity 30
 {
@@ -4505,6 +4513,7 @@
 "light" "160"
 "_color" "1 0.95 0.85"
 "origin" "132 404 112"
+"spawnflags" "1"
 }
 // entity 33
 {
@@ -4512,6 +4521,7 @@
 "origin" "128 296 112"
 "_color" "1 0.95 0.85"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 34
 {
@@ -4519,6 +4529,7 @@
 "light" "160"
 "_color" "1 0.95 0.85"
 "origin" "128 204 112"
+"spawnflags" "1"
 }
 // entity 35
 {
@@ -4526,6 +4537,7 @@
 "origin" "260 164 112"
 "_color" "1 0.95 0.85"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 36
 {
@@ -4533,6 +4545,7 @@
 "light" "160"
 "_color" "1 0.95 0.85"
 "origin" "324 300 112"
+"spawnflags" "1"
 }
 // entity 37
 {
@@ -4540,6 +4553,7 @@
 "origin" "324 392 112"
 "_color" "1 0.95 0.85"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 38
 {
@@ -4547,6 +4561,7 @@
 "light" "160"
 "_color" "1 0.95 0.85"
 "origin" "228 288 112"
+"spawnflags" "1"
 }
 // entity 39
 {
@@ -4883,18 +4898,18 @@
 // entity 44
 {
 "classname" "info_civilian_start"
-"origin" "144 276 28"
-"angle" "315"
+"origin" "144 272 28"
+"angle" "-45"
 }
 // entity 45
 {
 "classname" "info_alien_start"
-"origin" "80 84 28"
+"origin" "80 80 28"
 "angle" "180"
 }
 // entity 46
 {
 "classname" "info_alien_start"
 "angle" "45"
-"origin" "304 308 92"
+"origin" "304 304 92"
 }
