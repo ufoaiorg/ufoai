@@ -266,6 +266,10 @@ void CheckBrushes (void)
 				Com_Printf("  Brush %i (entity %i): no texture assigned\n", brush->brushnum, brush->entitynum);
 			}
 
+			if (!Q_strcmp(tex->name, "tex_common/error")) {
+				Com_Printf("  Brush %i (entity %i): error texture assigned - check this brush\n", brush->brushnum, brush->entitynum);
+			}
+
 			if (config.performMapCheck && contentFlags != side->contentFlags) {
 				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
 			}
