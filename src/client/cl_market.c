@@ -56,7 +56,7 @@ static int buyCategory = -1;			/**< Category of items in the menu. */
 /** @brief Max amount of aircraft type calculated for the market. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;
 
-/** @brief Max values for Buy/Sell factors (base->buyfactor, base->sellfactor). */
+/** @brief Max values for Buy/Sell factors. */
 static const int MAX_BS_FACTORS = 500;
 
 static inline const objDef_t *BS_GetObjectDefition (buyListEntry_t *entry)

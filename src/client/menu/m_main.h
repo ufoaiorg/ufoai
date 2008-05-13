@@ -42,6 +42,8 @@ typedef struct {
 	int lastclicked;			/**< when was the last recorded click? */
 	short clickDelay;			/**< milliseconds for the delay */
 	int numClick;				/**< number of click made since the begining of this click */
+	menuNode_t *node;			/**< node where action is repeated */
+	int textLine;				/**< line clicked for a text node */
 } mouseRepeat_t;
 
 typedef struct menuGlobal_s {

@@ -1225,7 +1225,11 @@ static void IN_Parse (void)
 
 			for (i = 0; i < numClickSinceLastCall; i++) {
 				mn.mouseRepeat.numClick++;
-				MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
+				if (mn.mouseRepeat.node->type != MN_TEXT) {
+					/* we didn't click on a text node (button,...) */
+					MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
+				} else
+					MN_TextClick(mn.mouseRepeat.node, mn.mouseRepeat.textLine);
 			}
 
 			/* next "event" after clickdelay msec - low values (>= 100) would result in executing

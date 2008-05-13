@@ -56,14 +56,18 @@ static employee_t *trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
 /** @brief Current aircraft for transfer. */
 static int trAircraftsTmp[MAX_AIRCRAFT];
 
+/** @brief Max values for transfer factors. */
+static const int MAX_TR_FACTORS = 500;
+
 /**
  * @brief Checks condition for item transfer.
  * @param[in] od Pointer to object definition.
  * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
- * @return qtrue if transfer of this item is possible.
+ * @param[in] amount Number of items to transfer.
+ * @return Number of items that can be transfered.
  */
-static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
+static int TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase, int amount)
 {
 	int i, intransfer = 0, amtransfer = 0;
 	int smallufotransfer = 0, bigufotransfer = 0;
@@ -95,44 +99,55 @@ static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 			MN_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
 			return qfalse;
 		} else if (!B_GetBuildingStatus(destbase, B_ANTIMATTER)) {	/* Return if the target base doesn't have antimatter storage or power. */
-			return qfalse;
+			return 0;
 		}
-		if (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer < ANTIMATTER_SIZE) {
+		amount = min(amount, destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer / ANTIMATTER_SIZE);
+		if (amount <= 0) {
 			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
-			return qfalse;
-		}
+			return 0;
+		} else {
+			/* amount to transfer can't be bigger than what we have */
+			amount = min(amount, (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer) / ANTIMATTER_SIZE);
+		} 
 	} if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 		ufocraft = AIR_GetAircraft(od->tech->provides);
 		assert(ufocraft);
 		if (ufocraft->weight == AIRCRAFT_LARGE) {
 			if (!B_GetBuildingStatus(destbase, B_UFO_HANGAR)) {
 				MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have functional Large UFO Hangar.\n"));
-				return qfalse;
-			} else if (destbase->capacities[CAP_UFOHANGARS_LARGE].max - destbase->capacities[CAP_UFOHANGARS_LARGE].cur <= bigufotransfer) {
-				MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have enough Large UFO Hangar.\n"));
-				return qfalse;
+				return 0;
+			} else {
+				amount = min(amount, destbase->capacities[CAP_UFOHANGARS_LARGE].max - destbase->capacities[CAP_UFOHANGARS_LARGE].cur - bigufotransfer);
+				if (amount <= 0) {
+					MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have enough Large UFO Hangar.\n"));
+					return 0;
+				}
 			}
 		} else if (ufocraft->weight == AIRCRAFT_SMALL) {
 			if (!B_GetBuildingStatus(destbase, B_UFO_SMALL_HANGAR)) {
 				MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have functional Small UFO Hangar.\n"));
 				return qfalse;
-			} else if (destbase->capacities[CAP_UFOHANGARS_SMALL].max - destbase->capacities[CAP_UFOHANGARS_SMALL].cur <= smallufotransfer) {
-				MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have enough Small UFO Hangar.\n"));
-				return qfalse;
+			} else {
+				amount = min(amount, destbase->capacities[CAP_UFOHANGARS_SMALL].max - destbase->capacities[CAP_UFOHANGARS_SMALL].cur - smallufotransfer);
+				if (amount <= 0) {
+					MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have enough Small UFO Hangar.\n"));
+					return 0;
+				}
 			}
 		}
 	} else {	/*This is not antimatter*/
 		if (!B_GetBuildingStatus(transferBase, B_STORAGE))	/* Return if the target base doesn't have storage or power. */
-			return qfalse;
+			return 0;
+
+		/* Does the destination base has enough space in storage? */
+		amount = min(amount, destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur - intransfer / od->size);
+		if (amount <= 0) {
+			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
+			return 0;
+		}
 	}
 
-	/* Does the destination base has enough space in storage? */
-	if ((destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur - intransfer < od->size) && Q_strncmp(od->id, "antimatter", 10)) {
-		MN_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
-		return qfalse;
-	}
-
-	return qtrue;
+	return amount;
 }
 
 /**
@@ -1002,6 +1017,19 @@ static void TR_TransferStart_f (void)
 }
 
 /**
+ * @brief Set the number of item to transfer.
+ */
+static int TR_GetTransferFactor (void)
+{
+	int numItems;
+	const float NUM_CLICK_PARAMETER = 13.0f;		/**< The higher this value, the slowest transfer factor will change */
+
+	numItems = exp(mn.mouseRepeat.numClick / NUM_CLICK_PARAMETER);
+	numItems = min(MAX_TR_FACTORS, numItems);
+	return numItems;
+}
+
+/**
  * @brief Adds a thing to transfercargo by left mouseclick.
  * @sa TR_TransferSelect_f
  * @sa TR_TransferInit_f
@@ -1014,6 +1042,7 @@ static void TR_TransferListSelect_f (void)
 	employee_t* employee;
 	aircraft_t *aircraft;
 	qboolean added = qfalse;
+	int numempl[MAX_EMPL];
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -1037,22 +1066,28 @@ static void TR_TransferListSelect_f (void)
 		for (i = 0; i < csi.numODs; i++) {
 			if (baseCurrent->storage.num[i]) {
 				if (cnt == num) {
+					int amount;
+					amount = TR_GetTransferFactor();
 					od = &csi.ods[i];
-					if (TR_CheckItem(od, baseCurrent, transferBase)) {
-						trItemsTmp[i]++;
+					/* you can't transfer more item than you have */
+					amount = min(amount, baseCurrent->storage.num[i]);
+					/* you can only transfer items that destination base can accept */
+					amount = TR_CheckItem(od, baseCurrent, transferBase, amount);
+					if (amount) {
+						trItemsTmp[i] += amount;
 						if (!Q_strncmp(od->id, "antimatter", 10))
-							INV_ManageAntimatter(baseCurrent, 1, qfalse);
+							INV_ManageAntimatter(baseCurrent, amount, qfalse);
 						else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 							const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 							assert(ufocraft);
 							/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-							baseCurrent->storage.num[i]--;
+							baseCurrent->storage.num[i] -= amount;
 							if (ufocraft->weight == AIRCRAFT_LARGE)
-								baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur--;
+								baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur -= amount;
 							else
-								baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur--;
+								baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur -= amount;
 						} else
-							B_UpdateStorageAndCapacity(baseCurrent, od, -1, qfalse, qfalse);
+							B_UpdateStorageAndCapacity(baseCurrent, od, -amount, qfalse, qfalse);
 						break;
 					} else
 						return;
@@ -1078,23 +1113,39 @@ static void TR_TransferListSelect_f (void)
 			}
 			cnt++;
 		}
+
 		if (added) /* We already added a soldier, so break. */
 			break;
+
+		/* Reset and fill temp employees arrays. */
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+			numempl[emplType] = E_CountHired(baseCurrent, emplType);
+			for (i = 0; i < MAX_EMPLOYEES; i++) {
+				if (trEmployeesTmp[emplType][i])
+					numempl[emplType]--;
+			}
+		}
+
+		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+			int amount;
 			if (emplType == EMPL_SOLDIER)
 				continue;
-			if (E_CountHired(baseCurrent, emplType) < 1)
+			/* no employee in base or all employees already in the transfer list */
+			if (numempl[emplType] < 1)
 				continue;
 			if (cnt == num) {
+				amount = min(E_CountHired(baseCurrent, emplType), TR_GetTransferFactor());
 				for (i = 0; i < gd.numEmployees[emplType]; i++) {
 					employee = &gd.employees[emplType][i];
 					if (!E_IsInBase(employee, baseCurrent))
-							continue;
+						continue;
 					if (trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
 					if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
 						trEmployeesTmp[emplType][employee->idx] = employee;
-						break;
+						amount--;
+						if (amount == 0)
+							break;
 					} else
 						return;
 				}
@@ -1302,12 +1353,14 @@ static void TR_PrevBase_f (void)
 }
 
 /**
- * @brief Removes single item from cargolist by click.
+ * @brief Removes items from cargolist by click.
  */
 static void TR_CargoListSelect_f (void)
 {
 	int num, cnt = 0, entries = 0, i, j;
 	qboolean removed = qfalse;
+	int numempl[MAX_EMPL];
+	employeeType_t emplType;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -1324,20 +1377,24 @@ static void TR_CargoListSelect_f (void)
 		for (i = 0; i < csi.numODs; i++) {
 			if (trItemsTmp[i] > 0) {
 				if (cnt == num) {
-					trItemsTmp[i]--;
+					int amount;
+					amount = TR_GetTransferFactor();
+					/* you can't transfer more item than there are in current tranfer */
+					amount = min(amount, trItemsTmp[i]);
+					trItemsTmp[i] -= amount;
 					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
-						INV_ManageAntimatter(baseCurrent, 1, qfalse);
+						INV_ManageAntimatter(baseCurrent, amount, qfalse);
 					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 						assert(ufocraft);
 						/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-						baseCurrent->storage.num[i]++;
+						baseCurrent->storage.num[i] += amount;
 						if (ufocraft->weight == AIRCRAFT_LARGE)
-							baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur++;
+							baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur += amount;
 						else
-							baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
+							baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur += amount;
 					} else
-						B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], 1, qfalse, qfalse);
+						B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], amount, qfalse, qfalse);
 					break;
 				}
 				cnt++;
@@ -1371,15 +1428,29 @@ static void TR_CargoListSelect_f (void)
 
 		Com_DPrintf(DEBUG_CLIENT, "TR_CargoListSelect_f: cnt: %i, num: %i\n", cnt, num);
 
-		for (i = 0; i < MAX_EMPL; i++) {
-			if ((E_CountHired(baseCurrent, i) < 1) || (i == EMPL_SOLDIER))
+		/* Reset and fill temp employees arrays. */
+		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+			numempl[emplType] = 0;
+			for (i = 0; i < MAX_EMPLOYEES; i++) {
+				if (trEmployeesTmp[emplType][i])
+					numempl[emplType]++;
+			}
+		}
+
+		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+			if ((numempl[emplType] < 1) || (emplType == EMPL_SOLDIER))
 				continue;
 			if (cnt == num) {
-				for (j = 0; j < gd.numEmployees[i]; j++) {
-					if (trEmployeesTmp[i][j]) {
-						trEmployeesTmp[i][j] = NULL;
+				int amount;
+				amount = TR_GetTransferFactor();
+				amount = min(amount, E_CountHired(baseCurrent, emplType));
+				for (j = 0; j < gd.numEmployees[emplType]; j++) {
+					if (trEmployeesTmp[emplType][j]) {
+						trEmployeesTmp[emplType][j] = NULL;
+						amount--;
 						removed = qtrue;
-						break;
+						if (amount == 0)
+							break;
 					} else
 						continue;
 				}

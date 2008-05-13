@@ -211,7 +211,7 @@ static void MN_ModelClick (menuNode_t * node)
  * @todo Check for scrollbars and when one would click them scroll according to
  * mouse movement, maybe implement a new mousespace (MS_* - @sa cl_input.c)
  */
-static void MN_TextClick (menuNode_t * node, int mouseOver)
+void MN_TextClick (menuNode_t * node, int mouseOver)
 {
 	char cmd[MAX_VAR];
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
@@ -328,6 +328,8 @@ void MN_Click (int x, int y)
 				break;
 			case MN_TEXT:
 				MN_TextClick(node, mouseOver);
+				execute_node = node;
+				mn.mouseRepeat.textLine = mouseOver;
 				break;
 			default:
 				/* Save the action for later execution. */
@@ -342,6 +344,7 @@ void MN_Click (int x, int y)
 		 * e.g. the firemode checkboxes.
 		 */
 		if (execute_node) {
+			mn.mouseRepeat.node = execute_node;
 			mn.mouseRepeat.lastclicked = cls.realtime;
 			if (execute_node->repeat) {
 				mouseSpace = MS_LHOLD;
@@ -356,7 +359,8 @@ void MN_Click (int x, int y)
 				mn.mouseRepeat.menu = menu;
 				mn.mouseRepeat.action = execute_node->click;
 			}
-			MN_ExecuteActions(menu, execute_node->click);
+			if (execute_node->type != MN_TEXT)
+				MN_ExecuteActions(menu, execute_node->click);
 		}
 
 		/* @todo: maybe we should also check sp == mn.menuStackPos here */

@@ -127,6 +127,7 @@ menu transfer
 		wheel
 		height	"18"
 //		bgcolor	"1 1 1 0.5"
+		repeat	true
 	}
 
 	pic button_scrollup
@@ -177,6 +178,7 @@ menu transfer
 		wheel
 		height	"20"
 //		bgcolor	"1 1 1 0.5"
+		repeat	true
 	}
 
 	// ==================
