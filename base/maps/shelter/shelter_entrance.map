@@ -1107,7 +1107,7 @@
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "672 48 176"
+"origin" "656 48 176"
 "angle" "180"
 }
 // entity 4
@@ -1184,7 +1184,7 @@
 // entity 15
 {
 "classname" "info_player_start"
-"origin" "672 16 176"
+"origin" "656 16 176"
 "team" "1"
 "angle" "180"
 }
@@ -1201,6 +1201,7 @@
 "origin" "560 544 160"
 "light" "180"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 18
 {
@@ -1208,6 +1209,7 @@
 "origin" "464 544 160"
 "light" "180"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 19
 {
@@ -1215,6 +1217,7 @@
 "origin" "560 544 224"
 "light" "180"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 20
 {
@@ -1222,6 +1225,7 @@
 "origin" "464 544 224"
 "light" "180"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 21
 {
