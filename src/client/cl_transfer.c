@@ -302,6 +302,10 @@ static void TR_CargoList (void)
 			cargo[cnt].type = CARGO_TYPE_ITEM;
 			cargo[cnt].itemidx = i;
 			cnt++;
+			if (cnt >= MAX_CARGO) {
+				Com_Printf("TR_CargoList: Cargo is full\n");
+				break;
+			}
 		}
 	}
 
@@ -316,6 +320,10 @@ static void TR_CargoList (void)
 					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 					cargo[cnt].itemidx = employee->idx;
 					cnt++;
+					if (cnt >= MAX_CARGO) {
+						Com_Printf("TR_CargoList: Cargo is full\n");
+						break;
+					}
 				}
 				trempl[emplType]++;
 			}
@@ -329,6 +337,10 @@ static void TR_CargoList (void)
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 			cnt++;
+			if (cnt >= MAX_CARGO) {
+				Com_Printf("TR_CargoList: Cargo is full\n");
+				break;
+			}
 		}
 	}
 
@@ -341,6 +353,10 @@ static void TR_CargoList (void)
 			cargo[cnt].type = CARGO_TYPE_ALIEN_DEAD;
 			cargo[cnt].itemidx = i;
 			cnt++;
+			if (cnt >= MAX_CARGO) {
+				Com_Printf("TR_CargoList: Cargo is full\n");
+				break;
+			}
 		}
 	}
 	for (i = 0; i < gd.numAliensTD; i++) {
@@ -351,6 +367,10 @@ static void TR_CargoList (void)
 			cargo[cnt].type = CARGO_TYPE_ALIEN_ALIVE;
 			cargo[cnt].itemidx = i;
 			cnt++;
+			if (cnt >= MAX_CARGO) {
+				Com_Printf("TR_CargoList: Cargo is full\n");
+				break;
+			}
 		}
 	}
 
@@ -364,6 +384,10 @@ static void TR_CargoList (void)
 			cargo[cnt].type = CARGO_TYPE_AIRCRAFT;
 			cargo[cnt].itemidx = i;
 			cnt++;
+			if (cnt >= MAX_CARGO) {
+				Com_Printf("TR_CargoList: Cargo is full\n");
+				break;
+			}
 		}
 	}
 
