@@ -466,6 +466,7 @@
 "origin" "152 136 48"
 "_color" "1 1 0.7"
 "light" "130"
+"spawnflags" "1"
 }
 // entity 2
 {

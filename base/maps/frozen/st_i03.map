@@ -579,47 +579,49 @@
 "origin" "104 136 48"
 "_color" "1 0.9 0.7"
 "light" "150"
+"spawnflags" "1"
 }
 // entity 2
-{
-"classname" "func_group"
-}
-// entity 3
 {
 "classname" "light"
 "light" "150"
 "_color" "1 0.9 0.7"
 "origin" "248 108 48"
+"spawnflags" "1"
 }
-// entity 4
+// entity 3
 {
 "classname" "light"
 "origin" "344 192 48"
 "_color" "1 0.9 0.7"
 "light" "150"
+"spawnflags" "1"
 }
-// entity 5
+// entity 4
 {
 "classname" "light"
 "origin" "440 112 48"
 "_color" "1 0.9 0.7"
 "light" "150"
+"spawnflags" "1"
 }
-// entity 6
+// entity 5
 {
 "classname" "light"
 "light" "150"
 "_color" "1 0.6 0.2"
 "origin" "324 324 48"
+"spawnflags" "1"
 }
-// entity 7
+// entity 6
 {
 "classname" "light"
 "origin" "444 320 48"
 "_color" "1 0.6 0.2"
 "light" "150"
+"spawnflags" "1"
 }
-// entity 8
+// entity 7
 {
 "classname" "func_group"
 // brush 0
@@ -761,7 +763,7 @@
 ( 328 432 28 ) ( 328 348 28 ) ( 328 348 20 ) tex_material/metall005 0 32 0 0.25 0.25 256 1024 0
 }
 }
-// entity 9
+// entity 8
 {
 "classname" "func_group"
 // brush 0
@@ -945,7 +947,7 @@
 ( 296 396 64 ) ( 296 386 64 ) ( 296 386 4 ) tex_buildings/concrete004 64 16 0 0.5 0.5 256 0 0
 }
 }
-// entity 10
+// entity 9
 {
 "classname" "func_group"
 // brush 0
@@ -1087,7 +1089,7 @@
 ( 400 348 12 ) ( 400 432 12 ) ( 392 432 20 ) tex_material/metall005 0 32 0 0.25 0.25 256 1024 0
 }
 }
-// entity 11
+// entity 10
 {
 "classname" "func_group"
 // brush 0
@@ -1131,7 +1133,7 @@
 ( 316 274 4 ) ( 416 274 4 ) ( 416 280 12 ) tex_base/tank001 -24 -128 -180 0.5 -0.5 256 1024 0
 }
 }
-// entity 12
+// entity 11
 {
 "classname" "func_group"
 // brush 0

@@ -1020,6 +1020,7 @@
 "_color" "1 0.95 0.75"
 "light" "100"
 "origin" "384 384 52"
+"spawnflags" "1"
 }
 // entity 6
 {
@@ -1027,6 +1028,7 @@
 "origin" "512 384 52"
 "light" "100"
 "_color" "1 0.95 0.75"
+"spawnflags" "1"
 }
 // entity 7
 {
@@ -1034,6 +1036,7 @@
 "origin" "384 304 52"
 "light" "100"
 "_color" "1 0.95 0.75"
+"spawnflags" "1"
 }
 // entity 8
 {
@@ -1041,6 +1044,7 @@
 "_color" "1 0.95 0.75"
 "light" "100"
 "origin" "512 304 52"
+"spawnflags" "1"
 }
 // entity 9
 {
