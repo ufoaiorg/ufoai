@@ -195,8 +195,7 @@ SectionGroup /e "Mapping" SECGROUP02
     File "..\..\..\base\maps\ufocrash\*.map"
     SetOutPath "$INSTDIR\tools"
     File "..\..\tools\*.ms"
-    File "..\..\tools\*.qe4"
-    File "..\..\tools\*.def"
+    File "..\..\tools\*.pl"
     ; EULA
     File "..\..\..\contrib\*.doc"
     File "..\..\..\contrib\*.exe"
