@@ -46,7 +46,7 @@ public class BrushList {
 			Brush bi = brushes.get (i); 
 			for (int j = 0;j < brushes.size();j++) {//j needs a ref to i and i needs a ref to j
 				Brush bj = brushes.get (j);
-				if (i != j && bi.boundingBoxIntersects (bj) && bi.getLevelFlags() == bj.getLevelFlags() ) {
+				if (i != j && bi.boundingBoxIntersects (bj) && bi.getLevelForOptimisation() == bj.getLevelForOptimisation() ) {
 					bi.addToBrushInteractionList (bj);
 				}
 			}
@@ -67,7 +67,7 @@ public class BrushList {
 			    /* clones the Vector's internal array of pointers, but does not 
 			     *  clone the Brushes they point to. do the clone, because
 			     *  the Vector will be changed*/
-			    Vector<Brush> bvToCheck=(Vector<Brush>)b.getBrushInteractionList().clone();
+			    Vector<Brush> bvToCheck=(Vector<Brush>)b.getBrushInteractionListClone();
 			    Vector<Brush> bvDone=new Vector<Brush>(6,6);
 			    bvDone.add(b);//this brush's brush interaction list is already in bvToCheck.
 			    //kind of like a region grow algorithm, searching through brushes connected by their interaction lists

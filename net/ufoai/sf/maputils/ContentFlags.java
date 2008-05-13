@@ -41,8 +41,8 @@ public class ContentFlags {
 	}
 
 	/** @return the levelflags part masked out of this contentflags arg. */
-	public static int mask (int contentFlags) {
-		return contentFlags & levelFlagMask;
+	public int mask () {
+		return thisFlags & levelFlagMask;
 	}
 
 	public static ContentFlags level (int level) {
@@ -106,6 +106,16 @@ public class ContentFlags {
 	 *  MIN_LEVEL is returned. if the argument is greater than MAX_LEVEL then MAX_LEVEL is returned.*/
 	public static int clipLevel (int level) {
 		return level < MIN_LEVEL ? MIN_LEVEL : (level > MAX_LEVEL ? MAX_LEVEL : level) ;
+	}
+	
+	/** examines the levelflags and returns the level that the face should be considered
+	 *  to be on. The level below the least significant levelflag bit. */
+	public int getLevelForOptimisation(){
+	    for(int i=0;i<levelFlags.length;i++){
+		if((thisFlags & levelFlags[i]) > 0) return i-1;
+	    }
+	    //no flags set
+	    return 1;
 	}
 
 }

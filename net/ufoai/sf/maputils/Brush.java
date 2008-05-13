@@ -213,12 +213,18 @@ public class Brush {
 	    return numberOfFacesWithLevelFlagsChanged!=0;
 	}
 
-	/** assumes that the contentflags are listed the same on each face.
-	 * @return the Brush's levelflags masked out from the content flags.  */
-	public int getLevelFlags() {
-		return faces.get (0).getLevelFlags();
+	/** returns the level that the brush should be considered to be on for
+	 *  optimisation purposes. see {@link Face#getLevelForOptimisation()} and
+	 *  {@link ContentFlags#getLevelForOptimisation()}. */
+	public int getLevelForOptimisation() {
+	    int lowest=9;
+	    for(Face f:faces) {
+		int faceOpLev=f.getLevelForOptimisation();
+		lowest=lowest<faceOpLev ? faceOpLev : lowest ;
+	    }
+	    return lowest;
 	}
-
+	
 	void notifyLevelFlagChange (String note) {
 		if (lastLevelFlagChangeNote.length() != 0 && !note.equals (lastLevelFlagChangeNote) ) {
 			MapUtils.printf ("Brush had faces with different levelflags set%n");
@@ -296,6 +302,13 @@ public class Brush {
 	/** @return a Vector of Brushes whose bounding boxes intersect with this Brush's. */
 	public Vector<Brush> getBrushInteractionList() {
 		return interactionList;
+	}
+	
+	/** @return a Vector of Brushes whose bounding boxes intersect with this Brush's. */
+	public Vector<Brush> getBrushInteractionListClone() {
+	    Vector<Brush> clone=new Vector<Brush>(interactionList.size(),10);
+	    for(Brush b:interactionList) clone.add(b);
+	    return clone;
 	}
 	
 	/** @return {@link CompositeFace}s featuring  faces from brushes whose 

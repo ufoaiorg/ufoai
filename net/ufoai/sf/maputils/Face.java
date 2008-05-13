@@ -212,19 +212,18 @@ public class Face {
 	 *                3 then send 3 as the arg, and this method will set the flag for
 	 *                4,5, ...., 8. */
 	public void setLevelFlags (int level) {
-		ContentFlags oldFlags = ContentFlags.flags (Integer.parseInt (parts.get (PART_INDEX_CONTENT_FLAGS) ) ) ;
 		ContentFlags newFlags = ContentFlags.level (level);
-		if (!oldFlags.equals (newFlags) ) {
+		if (!contentFlags.equals (newFlags) ) {
 			//MapUtils.printf("changed level flags");
-			parentBrush.notifyLevelFlagChange (oldFlags.getDescription() + " to " + newFlags.getDescription() );
-			oldFlags.mergeNewFlags (newFlags);
-			parts.set (PART_INDEX_CONTENT_FLAGS, oldFlags.toString() );
+			parentBrush.notifyLevelFlagChange (contentFlags.getDescription() + " to " + newFlags.getDescription() );
+			contentFlags.mergeNewFlags (newFlags);
+			parts.set (PART_INDEX_CONTENT_FLAGS, contentFlags.toString() );
 		}
 	}
 
 	/** @return the levelflags masked out of the contentflags. */
 	public int getLevelFlags() {
-		return ContentFlags.mask (Integer.parseInt (parts.get (PART_INDEX_CONTENT_FLAGS) ) ) ;
+		return contentFlags.mask ( )  ;
 	}
 
 	public boolean isActorclipWeaponClipOrStepon() {
@@ -259,5 +258,7 @@ public class Face {
 	    }
 	}
 
-
+	public int getLevelForOptimisation(){
+	    return contentFlags.getLevelForOptimisation();
+	}
 }
