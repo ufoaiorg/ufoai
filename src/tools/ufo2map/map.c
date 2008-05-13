@@ -276,7 +276,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					Sys_Error("MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
 				nummapbrushsides++;
 				b->numsides++;
-				VectorClear (normal);
+				VectorClear(normal);
 				normal[axis] = dir;
 				if (dir == 1)
 					dist = b->maxs[axis];
@@ -791,7 +791,8 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		return;
 	}
 
-	AddBrushBevels(b);
+	if (!config.performMapCheck && !config.fixMap)
+		AddBrushBevels(b);
 
 	nummapbrushes++;
 	mapent->numbrushes++;
@@ -968,7 +969,7 @@ void WriteMapFile (const char *filename)
 				const side_t *side = &brush->original_sides[k];
 				const ptrdiff_t index = side - brushsides;
 				const brush_texture_t *t = &side_brushtextures[index];
-				if (side->visible) {
+				if (1 || side->visible) { /* FIXME AddBrushBevels is no longer called - check this! */
 					const plane_t *p = &mapplanes[side->planenum];
 					fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
 					fprintf(f, "( %i %i %i ) ", p->planeVector[1][0], p->planeVector[1][1], p->planeVector[1][2]);
