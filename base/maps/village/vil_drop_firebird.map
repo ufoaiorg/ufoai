@@ -1039,16 +1039,18 @@
 // entity 4
 {
 "classname" "light"
-"origin" "328 112 72"
+"origin" "328 172 72"
 "light" "150"
 "_color" "0.8 0.8 1"
+"spawnflags" "1"
 }
 // entity 5
 {
 "classname" "light"
 "light" "100"
 "_color" "1 0.3 0"
-"origin" "408 360 48"
+"origin" "408 420 48"
+"spawnflags" "1"
 }
 // entity 6
 {
@@ -1143,23 +1145,26 @@
 // entity 21
 {
 "classname" "light"
-"origin" "416 88 48"
+"origin" "416 148 48"
 "_color" "1 0.3 0"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 22
 {
 "classname" "light"
 "_color" "0.8 0.8 1"
 "light" "150"
-"origin" "328 352 72"
+"origin" "328 412 72"
+"spawnflags" "1"
 }
 // entity 23
 {
 "classname" "light"
-"origin" "368 224 72"
+"origin" "368 284 72"
 "light" "50"
 "_color" "0.8 0.8 1"
+"spawnflags" "1"
 }
 // entity 24
 {

@@ -1318,6 +1318,7 @@
 "_color" "1 1 1"
 "light" "220"
 "origin" "544 248 56"
+"spawnflags" "1"
 }
 // entity 9
 {
@@ -1624,57 +1625,35 @@
 }
 // entity 12
 {
-"classname" "func_group"
-}
-// entity 13
-{
-"classname" "func_group"
-}
-// entity 14
-{
 "classname" "light"
 "light" "160"
 "_color" "0.9 0.95 1"
 "origin" "132 400 40"
 }
-// entity 15
-{
-"classname" "func_group"
-}
-// entity 16
-{
-"classname" "func_group"
-}
-// entity 17
+// entity 13
 {
 "classname" "light"
 "origin" "132 624 40"
 "_color" "0.9 0.95 1"
 "light" "160"
 }
-// entity 18
-{
-"classname" "func_group"
-}
-// entity 19
-{
-"classname" "func_group"
-}
-// entity 20
+// entity 14
 {
 "classname" "light"
 "_color" "1 1 1"
 "light" "220"
 "origin" "336 552 56"
+"spawnflags" "1"
 }
-// entity 21
+// entity 15
 {
 "classname" "light"
 "_color" "1 1 0.8"
 "light" "120"
 "origin" "336 668 56"
+"spawnflags" "1"
 }
-// entity 22
+// entity 16
 {
 "classname" "func_group"
 // brush 0
@@ -1750,7 +1729,7 @@
 ( 152 334 6 ) ( 104 334 6 ) ( 104 349 6 ) tex_material/metall002 56 28 -180 0.5 0.5 134217984 0 0
 }
 }
-// entity 23
+// entity 17
 {
 "classname" "func_group"
 // brush 0
@@ -1781,7 +1760,7 @@
 ( 438 588 30 ) ( 438 596 28 ) ( 426 596 28 ) tex_misc/phone001 -29 33 180 -0.21875 0.125 134217984 0 0
 }
 }
-// entity 24
+// entity 18
 {
 "classname" "func_group"
 // brush 0
@@ -1822,39 +1801,7 @@
 ( 148 212 32 ) ( 84 212 32 ) ( 84 308 32 ) tex_shop/cashreg_c 24 4 -180 0.5 0.5 134217984 0 0
 }
 }
-// entity 25
-{
-"classname" "func_group"
-}
-// entity 26
-{
-"classname" "func_group"
-}
-// entity 27
-{
-"classname" "func_group"
-}
-// entity 28
-{
-"classname" "func_group"
-}
-// entity 29
-{
-"classname" "func_group"
-}
-// entity 30
-{
-"classname" "func_group"
-}
-// entity 31
-{
-"classname" "func_group"
-}
-// entity 32
-{
-"classname" "func_group"
-}
-// entity 33
+// entity 19
 {
 "classname" "func_group"
 // brush 0
@@ -1918,7 +1865,7 @@
 ( 352 696 12 ) ( 352 696 20 ) ( 350 694 20 ) tex_material/c_gray255 8 0 0 0.5 0.5 134283008 0 0
 }
 }
-// entity 34
+// entity 20
 {
 "classname" "func_group"
 // brush 0
@@ -1971,7 +1918,7 @@
 ( 374 671 20 ) ( 374 673 20 ) ( 372 673 24 ) tex_material/metall002 -54 -7 -180 0.4567260146 -0.5 134283008 0 0
 }
 }
-// entity 35
+// entity 21
 {
 "classname" "func_group"
 // brush 0
@@ -2083,19 +2030,19 @@
 ( 342 646 30 ) ( 344 646 30 ) ( 344 640 30 ) tex_material/metall002 -54 0 -90 0.4567869902 -0.5 134283008 0 0
 }
 }
-// entity 36
+// entity 22
 {
 "classname" "info_alien_start"
 "angle" "45"
 "origin" "464 656 28"
 }
-// entity 37
+// entity 23
 {
 "classname" "info_alien_start"
 "origin" "368 592 28"
 "angle" "315"
 }
-// entity 38
+// entity 24
 {
 "classname" "func_group"
 // brush 0
@@ -2216,28 +2163,28 @@
 ( 152 343 1 ) ( 104 343 1 ) ( 104 338 0 ) tex_material/c_black 20 -14 -90 0.5 0.5 65280 1024 0
 }
 }
-// entity 39
+// entity 25
 {
 "classname" "misc_particle"
 "origin" "63 626 118"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 40
+// entity 26
 {
 "classname" "misc_particle"
 "origin" "63 176 118"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 41
+// entity 27
 {
 "classname" "misc_particle"
 "origin" "63 400 118"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 42
+// entity 28
 {
 "classname" "func_group"
 // brush 0
@@ -2292,7 +2239,7 @@
 ( 42 172 116 ) ( 42 172 122 ) ( 44 170 122 ) tex_material/metall002 36 15 -180 0.5 -0.5 134282752 0 0
 }
 }
-// entity 43
+// entity 29
 {
 "classname" "func_group"
 // brush 0
@@ -2347,7 +2294,7 @@
 ( 72 618 120 ) ( 72 630 120 ) ( 56 630 116 ) tex_lights/neon003 23 40 0 -0.3333329856 0.25 134282752 0 0
 }
 }
-// entity 44
+// entity 30
 {
 "classname" "func_group"
 // brush 0
@@ -2402,7 +2349,7 @@
 ( 72 618 120 ) ( 72 630 120 ) ( 56 630 116 ) tex_lights/neon003 22 24 0 -0.3333329856 0.25 134282752 0 0
 }
 }
-// entity 45
+// entity 31
 {
 "classname" "func_group"
 // brush 0
@@ -2514,7 +2461,7 @@
 ( 292 576 31 ) ( 292 640 31 ) ( 300 640 31 ) tex_material/c_gray050 0 4 -90 0.5 0.5 134217984 0 0
 }
 }
-// entity 46
+// entity 32
 {
 "classname" "func_group"
 // brush 0
@@ -2590,7 +2537,7 @@
 ( 384 656 19 ) ( 384 720 19 ) ( 392 720 19 ) tex_material/c_gray050 16 -5 0 0.5 0.5 134217984 0 0
 }
 }
-// entity 47
+// entity 33
 {
 "classname" "func_group"
 // brush 0

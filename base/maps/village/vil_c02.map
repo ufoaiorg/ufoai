@@ -1177,6 +1177,7 @@
 "origin" "544 248 56"
 "light" "220"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 7
 {
@@ -1483,57 +1484,35 @@
 }
 // entity 10
 {
-"classname" "func_group"
-}
-// entity 11
-{
-"classname" "func_group"
-}
-// entity 12
-{
 "classname" "light"
 "origin" "132 400 24"
 "_color" "0.9 0.95 1"
 "light" "180"
 }
-// entity 13
-{
-"classname" "func_group"
-}
-// entity 14
-{
-"classname" "func_group"
-}
-// entity 15
+// entity 11
 {
 "classname" "light"
 "light" "180"
 "_color" "0.9 0.95 1"
 "origin" "132 624 24"
 }
-// entity 16
-{
-"classname" "func_group"
-}
-// entity 17
-{
-"classname" "func_group"
-}
-// entity 18
+// entity 12
 {
 "classname" "light"
 "origin" "336 552 56"
 "light" "220"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
-// entity 19
+// entity 13
 {
 "classname" "light"
 "origin" "336 668 56"
 "light" "120"
 "_color" "1 1 0.8"
+"spawnflags" "1"
 }
-// entity 20
+// entity 14
 {
 "classname" "func_group"
 // brush 0
@@ -1609,7 +1588,7 @@
 ( 384 644 6 ) ( 384 708 6 ) ( 392 708 6 ) tex_material/metall002 56 28 -180 0.5 0.5 134217984 0 0
 }
 }
-// entity 21
+// entity 15
 {
 "classname" "func_group"
 // brush 0
@@ -1640,7 +1619,7 @@
 ( 438 588 30 ) ( 438 596 28 ) ( 426 596 28 ) tex_misc/phone001 -29 33 180 -0.21875 0.125 134217984 0 0
 }
 }
-// entity 22
+// entity 16
 {
 "classname" "func_group"
 // brush 0
@@ -1681,39 +1660,7 @@
 ( 388 598 30 ) ( 406 598 30 ) ( 406 588 32 ) tex_shop/cashreg_a 35 -7 0 -0.28125 0.3125 134217984 0 0
 }
 }
-// entity 23
-{
-"classname" "func_group"
-}
-// entity 24
-{
-"classname" "func_group"
-}
-// entity 25
-{
-"classname" "func_group"
-}
-// entity 26
-{
-"classname" "func_group"
-}
-// entity 27
-{
-"classname" "func_group"
-}
-// entity 28
-{
-"classname" "func_group"
-}
-// entity 29
-{
-"classname" "func_group"
-}
-// entity 30
-{
-"classname" "func_group"
-}
-// entity 31
+// entity 17
 {
 "classname" "func_group"
 // brush 0
@@ -1777,7 +1724,7 @@
 ( 352 696 12 ) ( 352 696 20 ) ( 350 694 20 ) tex_material/c_gray255 8 0 0 0.5 0.5 134283008 0 0
 }
 }
-// entity 32
+// entity 18
 {
 "classname" "func_group"
 // brush 0
@@ -1830,7 +1777,7 @@
 ( 374 671 20 ) ( 374 673 20 ) ( 372 673 24 ) tex_material/metall002 -54 -7 -180 0.4567260146 -0.5 134283008 0 0
 }
 }
-// entity 33
+// entity 19
 {
 "classname" "func_group"
 // brush 0
@@ -1942,19 +1889,19 @@
 ( 342 646 30 ) ( 344 646 30 ) ( 344 640 30 ) tex_material/metall002 -54 0 -90 0.4567869902 -0.5 134283008 0 0
 }
 }
-// entity 34
+// entity 20
 {
 "classname" "info_alien_start"
 "origin" "464 656 28"
 "angle" "45"
 }
-// entity 35
+// entity 21
 {
 "classname" "info_alien_start"
 "angle" "315"
 "origin" "368 592 28"
 }
-// entity 36
+// entity 22
 {
 "classname" "misc_model"
 "model" "models/objects/cars/golf/car1t.md2"
@@ -1962,7 +1909,7 @@
 "spawnflags" "255"
 "angles" "0 90 0"
 }
-// entity 37
+// entity 23
 {
 "classname" "misc_model"
 "model" "models/objects/cars/golf/car1.md2"
@@ -1971,7 +1918,7 @@
 "origin" "340 424 19"
 "angles" "0 90 0"
 }
-// entity 38
+// entity 24
 {
 "classname" "misc_model"
 "model" "models/objects/cars/van/van1t.md2"
@@ -1979,7 +1926,7 @@
 "angles" "0 90 0"
 "spawnflags" "255"
 }
-// entity 39
+// entity 25
 {
 "classname" "misc_model"
 "origin" "520 290 36"
@@ -1988,28 +1935,28 @@
 "angles" "0 90 0"
 "spawnflags" "255"
 }
-// entity 40
+// entity 26
 {
 "classname" "misc_particle"
 "origin" "63 176 118"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 41
+// entity 27
 {
 "classname" "misc_particle"
 "origin" "63 400 118"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 42
+// entity 28
 {
 "classname" "misc_particle"
 "origin" "63 622 118"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 43
+// entity 29
 {
 "classname" "func_group"
 // brush 0
@@ -2064,7 +2011,7 @@
 ( 42 172 116 ) ( 42 172 122 ) ( 44 170 122 ) tex_material/metall002 36 15 -180 0.5 -0.5 134282752 0 0
 }
 }
-// entity 44
+// entity 30
 {
 "classname" "func_group"
 // brush 0
@@ -2119,7 +2066,7 @@
 ( 72 618 120 ) ( 72 630 120 ) ( 56 630 116 ) tex_lights/neon003 23 40 0 -0.3333329856 0.25 134282752 0 0
 }
 }
-// entity 45
+// entity 31
 {
 "classname" "func_group"
 // brush 0
@@ -2174,7 +2121,7 @@
 ( 46 620 116 ) ( 46 620 122 ) ( 48 618 122 ) tex_material/metall002 36 15 -180 0.5 -0.5 134282752 0 0
 }
 }
-// entity 46
+// entity 32
 {
 "classname" "func_group"
 // brush 0
@@ -2286,7 +2233,7 @@
 ( 386 652 17 ) ( 384 652 17 ) ( 384 654 17 ) tex_material/c_gray050 -4 23 -90 0.5 0.5 134217984 0 0
 }
 }
-// entity 47
+// entity 33
 {
 "classname" "func_group"
 // brush 0
@@ -2362,7 +2309,7 @@
 ( 342 646 30 ) ( 344 646 30 ) ( 344 640 30 ) tex_material/c_gray050 12 -15 0 0.5 0.5 134217984 0 0
 }
 }
-// entity 48
+// entity 34
 {
 "classname" "func_group"
 // brush 0

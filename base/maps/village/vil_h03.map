@@ -449,7 +449,7 @@
 ( 448 288 4 ) ( 448 480 4 ) ( 448 480 0 ) tex_buildings/floor021 0 0 0 0.5 0.5 65280 0 0
 ( 288 128 4 ) ( 448 128 4 ) ( 448 128 0 ) tex_buildings/floor021 0 0 0 0.5 0.5 65280 0 0
 ( 384 288 20 ) ( 324 288 20 ) ( 324 288 12 ) tex_buildings/floor021 0 0 0 0.5 0.5 65280 0 0
-( 352 504 0 ) ( 0 504 0 ) ( 0 256 0 ) tex_buildings/floor021 0 0 0 0.5 0.5 65280 0 0
+( 352 504 0 ) ( 0 504 0 ) ( 0 256 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
 ( 0 256 4 ) ( 0 504 4 ) ( 352 504 4 ) tex_buildings/floor021 0 0 0 0.25 0.25 65280 0 0
 }
 // brush 50
@@ -758,6 +758,7 @@
 "origin" "112 336 48"
 "_color" "1 1 0.8"
 "light" "160"
+"spawnflags" "1"
 }
 // entity 4
 {
@@ -1413,6 +1414,7 @@
 "light" "160"
 "_color" "1 1 0.8"
 "origin" "112 424 48"
+"spawnflags" "1"
 }
 // entity 13
 {
@@ -1420,6 +1422,7 @@
 "light" "160"
 "_color" "1 1 0.8"
 "origin" "240 424 48"
+"spawnflags" "1"
 }
 // entity 14
 {
@@ -1427,6 +1430,7 @@
 "light" "160"
 "_color" "1 1 0.8"
 "origin" "224 336 48"
+"spawnflags" "1"
 }
 // entity 15
 {
@@ -1434,6 +1438,7 @@
 "light" "160"
 "_color" "1 1 0.8"
 "origin" "368 432 48"
+"spawnflags" "1"
 }
 // entity 16
 {
@@ -1441,6 +1446,7 @@
 "light" "160"
 "_color" "1 1 0.8"
 "origin" "376 320 48"
+"spawnflags" "1"
 }
 // entity 17
 {
@@ -1448,6 +1454,7 @@
 "light" "160"
 "_color" "1 1 0.8"
 "origin" "392 168 48"
+"spawnflags" "1"
 }
 // entity 18
 {
