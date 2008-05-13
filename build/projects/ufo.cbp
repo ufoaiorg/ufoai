@@ -15,16 +15,16 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
 				</Compiler>
 				<Linker>
+					<Add option="-s" />
 					<Add library="intl" />
 					<Add library="winmm" />
-					<Add library="wsock32" />
-					<Add library="kernel32" />
-					<Add library="user32" />
+					<Add library="ws2_32" />
 					<Add library="gdi32" />
 				</Linker>
 				<ExtraCommands>
@@ -40,6 +40,7 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-DWINVER=0x501" />
@@ -50,11 +51,7 @@
 					<Add option="-pg -lgmon" />
 					<Add library="intl" />
 					<Add library="winmm" />
-					<Add library="wsock32" />
-					<Add library="kernel32" />
-					<Add library="user32" />
-					<Add library="gdi32" />
-					<Add library="gmon" />
+					<Add library="ws2_32" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="..\..\contrib\scripts\compile_po.bat c:\MinGW\bin\msgfmt.exe" />
@@ -669,6 +666,7 @@
 		<Extensions>
 			<code_completion />
 			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

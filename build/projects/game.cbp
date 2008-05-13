@@ -8,28 +8,28 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="..\..\base\game.dll" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\base\game" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
 				</Compiler>
 				<Linker>
+					<Add option="-s" />
 					<Add option="--export-all-symbols" />
-					<Add library="kernel32" />
-					<Add library="user32" />
-					<Add library="winmm" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
-				<Option output="..\..\base\game.dll" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\base\game" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option host_application="../../ufo.exe" />
+				<Option host_application="..\..\ufo.exe" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-DWINVER=0x501" />
@@ -38,14 +38,11 @@
 				<Linker>
 					<Add option="-pg -lgmon" />
 					<Add option="--export-all-symbols" />
-					<Add library="kernel32" />
-					<Add library="user32" />
-					<Add library="winmm" />
 				</Linker>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="game.dll" prefix_auto="1" extension_auto="1" />
+				<Option output="game" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -53,7 +50,7 @@
 				<Option createStaticLib="1" />
 			</Target>
 			<Target title="macosx">
-				<Option output="..\..\base\game.dll" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\base\game" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -131,6 +128,7 @@
 		<Extensions>
 			<code_completion />
 			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

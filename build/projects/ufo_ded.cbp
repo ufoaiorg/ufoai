@@ -8,33 +8,32 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo_ded" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\.." />
 				<Option object_output=".objs\ufo_ded" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
 				</Compiler>
 				<Linker>
+					<Add option="-s" />
 					<Add library="winmm" />
-					<Add library="wsock32" />
-					<Add library="kernel32" />
-					<Add library="user32" />
-					<Add library="gdi32" />
-					<Add library="gmon" />
+					<Add library="ws2_32" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo_ded" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\.." />
 				<Option object_output=".objs\ufo_ded" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-D__GNUWIN32__" />
@@ -44,16 +43,12 @@
 				<Linker>
 					<Add option="-pg -lgmon" />
 					<Add library="winmm" />
-					<Add library="wsock32" />
-					<Add library="kernel32" />
-					<Add library="user32" />
-					<Add library="gdi32" />
-					<Add library="gmon" />
+					<Add library="ws2_32" />
 				</Linker>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo_ded" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -63,7 +58,7 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\ufo_ded" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -89,14 +84,6 @@
 			<Add library="curl" />
 			<Add library="z" />
 		</Linker>
-		<Unit filename="..\..\src\common\routing.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\common\routing.h" />
-		<Unit filename="..\..\src\common\tracing.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\common\tracing.h" />
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -105,9 +92,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmodel.h" />
-		<Unit filename="..\..\src\common\pqueue.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\common\common.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -123,6 +107,10 @@
 		<Unit filename="..\..\src\common\files.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\common\http.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\http.h" />
 		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -136,10 +124,6 @@
 		<Unit filename="..\..\src\common\msg.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\http.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\common\http.h" />
 		<Unit filename="..\..\src\common\net.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -148,9 +132,20 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\netpack.h" />
+		<Unit filename="..\..\src\common\pqueue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\routing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\routing.h" />
 		<Unit filename="..\..\src\common\scripts.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\common\tracing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\tracing.h" />
 		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -171,14 +166,14 @@
 			<Option link="1" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\unix_curses.c">
-			<Option compilerVar="CC" />
-			<Option target="linux" />
-		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_console.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_curses.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
 		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_glob.c">
 			<Option compilerVar="CC" />
@@ -247,14 +242,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\byte.h" />
-		<Unit filename="..\..\src\shared\mathlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\infostring.h" />
+		<Unit filename="..\..\src\shared\mathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\mathlib.h" />
 		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -262,6 +257,8 @@
 		<Unit filename="..\..\src\shared\ufotypes.h" />
 		<Extensions>
 			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
