@@ -29,6 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check.h"
 #include "bsp.h"
 
+static int checkWorld (entity_t *e, int entnum)
+{
+	return 0;
+}
+
 static int checkLight (entity_t *e, int entnum)
 {
 	return 0;
@@ -197,6 +202,7 @@ typedef struct entityCheck_s {
 } entityCheck_t;
 
 static const entityCheck_t checkArray[] = {
+	{"worldspawn", checkWorld},
 	{"light", checkLight},
 	{"func_breakable", checkFuncBreakable},
 	{"func_door", checkFuncDoor},
@@ -235,6 +241,9 @@ void CheckEntities (void)
 				}
 				break;
 			}
+		if (!v->name) {
+			Com_Printf("No check for '%s' implemented\n", name);
+		}
 	}
 }
 
