@@ -1595,6 +1595,7 @@
 "_color" "1 1 1"
 "origin" "184 128 60"
 "light" "180"
+"spawnflags" "1"
 }
 // entity 5
 {
@@ -1660,6 +1661,7 @@
 "light" "140"
 "origin" "76 128 60"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 7
 {
@@ -2439,6 +2441,7 @@
 "_color" "1 0.8 0.6"
 "origin" "364 160 60"
 "light" "140"
+"spawnflags" "1"
 }
 // entity 17
 {
@@ -2446,6 +2449,7 @@
 "light" "140"
 "origin" "364 80 60"
 "_color" "1 0.8 0.6"
+"spawnflags" "1"
 }
 // entity 18
 {
@@ -2453,6 +2457,7 @@
 "light" "140"
 "origin" "436 240 60"
 "_color" "1 0.8 0.6"
+"spawnflags" "1"
 }
 // entity 19
 {
@@ -2460,6 +2465,7 @@
 "light" "140"
 "origin" "372 328 60"
 "_color" "1 0.8 0.6"
+"spawnflags" "1"
 }
 // entity 20
 {
@@ -2467,6 +2473,7 @@
 "light" "140"
 "origin" "300 288 60"
 "_color" "1 0.8 0.6"
+"spawnflags" "1"
 }
 // entity 21
 {
@@ -2477,8 +2484,8 @@
 // entity 22
 {
 "classname" "info_civilian_start"
-"origin" "84 428 28"
-"angle" "270"
+"origin" "80 432 28"
+"angle" "-90"
 }
 // entity 23
 {
