@@ -303,7 +303,7 @@ static void TR_CargoList (void)
 			cargo[cnt].itemidx = i;
 			cnt++;
 			if (cnt >= MAX_CARGO) {
-				Com_Printf("TR_CargoList: Cargo is full\n");
+				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
 		}
@@ -321,7 +321,7 @@ static void TR_CargoList (void)
 					cargo[cnt].itemidx = employee->idx;
 					cnt++;
 					if (cnt >= MAX_CARGO) {
-						Com_Printf("TR_CargoList: Cargo is full\n");
+						Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 						break;
 					}
 				}
@@ -338,7 +338,7 @@ static void TR_CargoList (void)
 			cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 			cnt++;
 			if (cnt >= MAX_CARGO) {
-				Com_Printf("TR_CargoList: Cargo is full\n");
+				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
 		}
@@ -354,7 +354,7 @@ static void TR_CargoList (void)
 			cargo[cnt].itemidx = i;
 			cnt++;
 			if (cnt >= MAX_CARGO) {
-				Com_Printf("TR_CargoList: Cargo is full\n");
+				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
 		}
@@ -368,7 +368,7 @@ static void TR_CargoList (void)
 			cargo[cnt].itemidx = i;
 			cnt++;
 			if (cnt >= MAX_CARGO) {
-				Com_Printf("TR_CargoList: Cargo is full\n");
+				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
 		}
@@ -385,7 +385,7 @@ static void TR_CargoList (void)
 			cargo[cnt].itemidx = i;
 			cnt++;
 			if (cnt >= MAX_CARGO) {
-				Com_Printf("TR_CargoList: Cargo is full\n");
+				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
 		}
