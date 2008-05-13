@@ -436,6 +436,7 @@
 "origin" "414 320 38"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 8
 {
@@ -443,6 +444,7 @@
 "origin" "297 314 38"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 9
 {

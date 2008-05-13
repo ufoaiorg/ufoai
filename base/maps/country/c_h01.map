@@ -420,6 +420,7 @@
 "_color" "1 1 1"
 "origin" "332 128 60"
 "light" "140"
+"spawnflags" "1"
 }
 // entity 3
 {

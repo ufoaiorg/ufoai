@@ -1090,7 +1090,7 @@
 // entity 5
 {
 "classname" "info_civilian_start"
-"origin" "368 366 34"
+"origin" "368 368 34"
 "angle" "180"
 }
 // entity 6
@@ -1099,6 +1099,7 @@
 "light" "200"
 "_color" "1 1 0.75"
 "origin" "351 255 38"
+"spawnflags" "1"
 }
 // entity 7
 {
@@ -1463,6 +1464,7 @@
 "origin" "308 374 38"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 11
 {
