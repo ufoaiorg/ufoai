@@ -56,6 +56,7 @@
 "origin" "420 544 12"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 2
 {
@@ -63,6 +64,7 @@
 "origin" "348 544 12"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 3
 {
@@ -70,6 +72,7 @@
 "origin" "420 544 52"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 4
 {
@@ -77,6 +80,7 @@
 "origin" "348 544 52"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 5
 {
@@ -84,6 +88,7 @@
 "origin" "420 544 140"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 6
 {
@@ -91,6 +96,7 @@
 "origin" "348 544 140"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 7
 {
@@ -98,6 +104,7 @@
 "origin" "420 544 180"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 8
 {
@@ -105,6 +112,7 @@
 "origin" "348 544 180"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 9
 {
@@ -112,6 +120,7 @@
 "origin" "164 544 12"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 10
 {
@@ -119,6 +128,7 @@
 "origin" "92 544 12"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 11
 {
@@ -126,6 +136,7 @@
 "origin" "164 544 52"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 12
 {
@@ -133,6 +144,7 @@
 "origin" "92 544 52"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 13
 {
@@ -140,6 +152,7 @@
 "origin" "164 544 140"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 14
 {
@@ -147,6 +160,7 @@
 "origin" "92 544 140"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 15
 {
@@ -154,6 +168,7 @@
 "origin" "164 544 180"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 16
 {
@@ -161,4 +176,5 @@
 "origin" "92 544 180"
 "light" "100"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
