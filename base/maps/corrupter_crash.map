@@ -15517,7 +15517,7 @@
 // entity 122
 {
 "classname" "info_human_start"
-"origin" "-688 -736 32"
+"origin" "-688 -752 32"
 "angle" "90"
 }
 // entity 123
