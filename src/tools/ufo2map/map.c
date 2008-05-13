@@ -941,17 +941,26 @@ void WriteMapFile (const char *filename)
 {
 	FILE *f;
 	int i, j, k;
+	int removed;
 
 	Com_Printf("writing map: '%s'\n", filename);
 
 	f = fopen(filename, "wb");
 
+	removed = 0;
 	fprintf(f, "\n");
 	for (i = 0; i < num_entities; i++) {
 		const entity_t *mapent = &entities[i];
 		const epair_t *e = mapent->epairs;
-		fprintf(f, "// entity %i\n{\n", i);
+
+		/* maybe we don't want to write it back into the file */
+		if (mapent->skip) {
+			removed++;
+			continue;
+		}
+		fprintf(f, "// entity %i\n{\n", i - removed);
 		WriteMapEntities(f, e);
+
 		for (j = 0; j < mapent->numbrushes; j++) {
 			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
 			fprintf(f, "// brush %i\n{\n", j);
@@ -973,6 +982,8 @@ void WriteMapFile (const char *filename)
 		fprintf(f, "}\n");
 	}
 
+	if (removed)
+		Com_Printf("removed %i entities\n", removed);
 	fclose(f);
 }
 

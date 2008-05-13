@@ -237,7 +237,7 @@ void CheckEntities (void)
 		for (v = checkArray; v->name; v++)
 			if (!strncmp(name, v->name, strlen(v->name))) {
 				if (v->checkCallback(e, i) != 0) {
-					/* @todo Remove the entity in case of an error */
+					e->skip = qtrue;
 				}
 				break;
 			}
