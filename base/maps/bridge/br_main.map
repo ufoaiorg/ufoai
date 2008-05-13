@@ -11463,6 +11463,7 @@
 "origin" "1448 1100 76"
 "_color" "0 0.7 0"
 "light" "100"
+"spawnflags" "1"
 }
 // entity 4
 {
@@ -11499,6 +11500,7 @@
 "light" "100"
 "_color" "0 0.7 0"
 "origin" "2084 1236 76"
+"spawnflags" "1"
 }
 // entity 9
 {
@@ -11506,6 +11508,7 @@
 "light" "200"
 "_color" "1 0.3 0"
 "origin" "1440 1212 52"
+"spawnflags" "1"
 }
 // entity 10
 {
@@ -11513,6 +11516,7 @@
 "origin" "1616 1124 52"
 "_color" "1 0.5 0"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 11
 {
@@ -11520,6 +11524,7 @@
 "origin" "1912 980 52"
 "_color" "1 0.5 0"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 12
 {
@@ -11527,6 +11532,7 @@
 "light" "200"
 "_color" "1 0.3 0"
 "origin" "1688 1196 52"
+"spawnflags" "1"
 }
 // entity 13
 {
@@ -11534,6 +11540,7 @@
 "origin" "2068 1312 52"
 "_color" "1 0.5 0"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 14
 {
@@ -11607,6 +11614,7 @@
 "origin" "1904 1284 52"
 "_color" "1 0.5 0"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 26
 {
@@ -12947,6 +12955,7 @@
 "light" "200"
 "_color" "1 1 0.75"
 "origin" "2879 1121 36"
+"spawnflags" "1"
 }
 // entity 121
 {
@@ -13932,6 +13941,7 @@
 "origin" "2836 1240 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 125
 {
@@ -14442,6 +14452,7 @@
 "origin" "1790 2274 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 128
 {
@@ -14449,6 +14460,7 @@
 "origin" "1673 2268 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 129
 {
@@ -14462,6 +14474,7 @@
 "origin" "2046 1758 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 131
 {
@@ -14469,6 +14482,7 @@
 "origin" "2052 1641 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 132
 {
@@ -14635,6 +14649,7 @@
 "light" "200"
 "_color" "1 1 0.75"
 "origin" "1727 959 36"
+"spawnflags" "1"
 }
 // entity 147
 {
@@ -14642,6 +14657,7 @@
 "origin" "1608 916 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 148
 {
@@ -14649,6 +14665,7 @@
 "origin" "2206 2462 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 149
 {
@@ -14656,6 +14673,7 @@
 "origin" "2212 2345 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 150
 {
@@ -14675,6 +14693,7 @@
 "light" "200"
 "_color" "1 1 0.75"
 "origin" "1537 2655 36"
+"spawnflags" "1"
 }
 // entity 153
 {
@@ -14682,6 +14701,7 @@
 "origin" "1580 2536 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 154
 {
@@ -14689,6 +14709,7 @@
 "light" "200"
 "_color" "1 1 0.75"
 "origin" "1089 991 36"
+"spawnflags" "1"
 }
 // entity 155
 {
@@ -14696,6 +14717,7 @@
 "origin" "1132 872 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 156
 {
@@ -14709,6 +14731,7 @@
 "origin" "1922 2718 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 158
 {
@@ -14716,6 +14739,7 @@
 "origin" "2039 2724 36"
 "_color" "1 1 0.75"
 "light" "200"
+"spawnflags" "1"
 }
 // entity 159
 {
@@ -15079,6 +15103,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1282 1138 36"
+"spawnflags" "1"
 }
 // entity 161
 {
@@ -15086,6 +15111,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1282 1134 76"
+"spawnflags" "1"
 }
 // entity 162
 {
@@ -15093,6 +15119,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1450 1210 36"
+"spawnflags" "1"
 }
 // entity 163
 {
@@ -15100,6 +15127,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1450 1206 76"
+"spawnflags" "1"
 }
 // entity 164
 {
@@ -15107,6 +15135,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1570 1234 36"
+"spawnflags" "1"
 }
 // entity 165
 {
@@ -15114,6 +15143,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1570 1230 76"
+"spawnflags" "1"
 }
 // entity 166
 {
@@ -15121,6 +15151,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1474 1130 36"
+"spawnflags" "1"
 }
 // entity 167
 {
@@ -15128,6 +15159,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1474 1126 76"
+"spawnflags" "1"
 }
 // entity 168
 {
@@ -15135,6 +15167,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1650 1122 36"
+"spawnflags" "1"
 }
 // entity 169
 {
@@ -15142,6 +15175,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1650 1118 76"
+"spawnflags" "1"
 }
 // entity 170
 {
@@ -15149,6 +15183,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1666 1170 36"
+"spawnflags" "1"
 }
 // entity 171
 {
@@ -15156,6 +15191,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1666 1166 76"
+"spawnflags" "1"
 }
 // entity 172
 {
@@ -15163,6 +15199,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1810 1266 36"
+"spawnflags" "1"
 }
 // entity 173
 {
@@ -15170,6 +15207,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1810 1262 76"
+"spawnflags" "1"
 }
 // entity 174
 {
@@ -15177,6 +15215,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1746 1234 36"
+"spawnflags" "1"
 }
 // entity 175
 {
@@ -15184,6 +15223,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1746 1230 76"
+"spawnflags" "1"
 }
 // entity 176
 {
@@ -15191,6 +15231,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1898 1290 36"
+"spawnflags" "1"
 }
 // entity 177
 {
@@ -15198,6 +15239,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1898 1286 76"
+"spawnflags" "1"
 }
 // entity 178
 {
@@ -15205,6 +15247,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1970 1330 36"
+"spawnflags" "1"
 }
 // entity 179
 {
@@ -15212,6 +15255,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1970 1326 76"
+"spawnflags" "1"
 }
 // entity 180
 {
@@ -15219,6 +15263,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "2138 1282 36"
+"spawnflags" "1"
 }
 // entity 181
 {
@@ -15226,6 +15271,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "2138 1278 76"
+"spawnflags" "1"
 }
 // entity 182
 {
@@ -15233,6 +15279,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "2178 1194 36"
+"spawnflags" "1"
 }
 // entity 183
 {
@@ -15240,6 +15287,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "2178 1190 76"
+"spawnflags" "1"
 }
 // entity 184
 {
@@ -15247,6 +15295,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1930 1042 36"
+"spawnflags" "1"
 }
 // entity 185
 {
@@ -15254,6 +15303,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1930 1038 76"
+"spawnflags" "1"
 }
 // entity 186
 {
@@ -15261,6 +15311,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1882 962 36"
+"spawnflags" "1"
 }
 // entity 187
 {
@@ -15268,6 +15319,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1882 958 76"
+"spawnflags" "1"
 }
 // entity 188
 {
@@ -15275,6 +15327,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1802 1010 36"
+"spawnflags" "1"
 }
 // entity 189
 {
@@ -15282,6 +15335,7 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1802 1006 76"
+"spawnflags" "1"
 }
 // entity 190
 {
@@ -15289,6 +15343,7 @@
 "_color" "1 0.8 0"
 "light" "120"
 "origin" "1234 1178 36"
+"spawnflags" "1"
 }
 // entity 191
 {
@@ -15296,16 +15351,9 @@
 "_color" "1 0.4 0"
 "light" "160"
 "origin" "1234 1174 76"
+"spawnflags" "1"
 }
 // entity 192
-{
-"classname" "func_group"
-}
-// entity 193
-{
-"classname" "func_group"
-}
-// entity 194
 {
 "classname" "func_group"
 // brush 0
@@ -15652,7 +15700,7 @@
 ( 1248.3279876709 609.5359954834 156.9850158691 ) ( 1248.3279876709 609.5359954834 163.1290130615 ) ( 1248.3279876709 606.4640045166 163.1290130615 ) tex_material/metall001 24 12 0 0.25 0.25 64512 0 0
 }
 }
-// entity 195
+// entity 193
 {
 "classname" "func_group"
 // brush 0
@@ -15755,7 +15803,7 @@
 ( 2020 1656 6 ) ( 2020 1648 6 ) ( 2096 1648 6 ) tex_material/s_wood003 0 224 -90 0.25 0.25 65280 0 0
 }
 }
-// entity 196
+// entity 194
 {
 "classname" "func_group"
 // brush 0
