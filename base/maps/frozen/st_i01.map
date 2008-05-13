@@ -2254,12 +2254,9 @@
 "_light" "150"
 "_color" "1 1 0.7"
 "origin" "226 292 52"
+"spawnflags" "1"
 }
 // entity 4
-{
-"classname" "func_group"
-}
-// entity 5
 {
 "classname" "func_group"
 // brush 0
@@ -2334,7 +2331,7 @@
 ( 516 256 64 ) ( 516 192 64 ) ( 516 192 60 ) tex_material/metall008 0 0 0 0.5 0.5 1792 0 0
 }
 }
-// entity 6
+// entity 5
 {
 "classname" "func_group"
 // brush 0
@@ -2409,11 +2406,7 @@
 ( 580 384 64 ) ( 580 320 64 ) ( 580 320 60 ) tex_material/metall008 0 0 0 0.5 0.5 1792 0 0
 }
 }
-// entity 7
-{
-"classname" "func_group"
-}
-// entity 8
+// entity 6
 {
 "classname" "func_group"
 // brush 0
@@ -2491,7 +2484,7 @@
 ( 73 288 40 ) ( 73 224 40 ) ( 72 224 38 ) tex_misc/pipes002 80 54 0 -0.400000006 0.21875 134283008 0 0
 }
 }
-// entity 9
+// entity 7
 {
 "classname" "func_group"
 // brush 0
@@ -2666,7 +2659,7 @@
 ( 144 92 26 ) ( 144 60 26 ) ( 144 60 22 ) tex_material/wood002 16 -56 90 0.5 0.5 134217728 0 0
 }
 }
-// entity 10
+// entity 8
 {
 "classname" "func_group"
 // brush 0
@@ -2841,7 +2834,7 @@
 ( 256 92 26 ) ( 256 60 26 ) ( 256 60 22 ) tex_material/wood002 16 -56 90 0.5 0.5 134217728 0 0
 }
 }
-// entity 11
+// entity 9
 {
 "classname" "func_group"
 // brush 0
@@ -2919,7 +2912,7 @@
 ( 37 290 40 ) ( 37 226 40 ) ( 36 226 38 ) tex_misc/pipes002 85 54 0 -0.400000006 0.21875 134283008 0 0
 }
 }
-// entity 12
+// entity 10
 {
 "classname" "func_group"
 // brush 0
@@ -2997,7 +2990,7 @@
 ( 71 384 40 ) ( 71 320 40 ) ( 70 320 38 ) tex_misc/pipes002 0 54 0 -0.400000006 0.21875 134283008 0 0
 }
 }
-// entity 13
+// entity 11
 {
 "classname" "func_group"
 // brush 0
@@ -3075,7 +3068,7 @@
 ( 969 224 40 ) ( 969 160 40 ) ( 968 160 38 ) tex_misc/pipes002 -80 54 0 -0.400000006 0.21875 134217728 0 0
 }
 }
-// entity 14
+// entity 12
 {
 "classname" "func_group"
 // brush 0
@@ -3153,135 +3146,149 @@
 ( 931 256 40 ) ( 931 192 40 ) ( 930 192 38 ) tex_misc/pipes002 0 54 0 -0.400000006 0.21875 134217728 0 0
 }
 }
-// entity 15
+// entity 13
 {
 "classname" "light"
 "origin" "174 142 52"
 "_color" "1 1 0.7"
 "_light" "150"
+"spawnflags" "1"
 }
-// entity 16
+// entity 14
 {
 "classname" "light"
 "origin" "324 126 52"
 "_color" "1 1 0.7"
 "_light" "150"
+"spawnflags" "1"
 }
-// entity 17
+// entity 15
 {
 "classname" "light"
 "origin" "448 346 52"
 "_color" "1 1 0.7"
 "_light" "150"
+"spawnflags" "1"
 }
-// entity 18
+// entity 16
 {
 "classname" "light"
 "origin" "434 162 52"
 "_color" "1 1 0.7"
 "_light" "150"
+"spawnflags" "1"
 }
-// entity 19
+// entity 17
 {
 "classname" "light"
 "_light" "150"
 "_color" "0.9 1 0.8"
 "origin" "610 402 166"
+"spawnflags" "1"
 }
-// entity 20
+// entity 18
 {
 "classname" "light"
 "origin" "514 286 166"
 "_color" "0.9 1 0.8"
 "_light" "150"
+"spawnflags" "1"
 }
-// entity 21
+// entity 19
 {
 "classname" "light"
 "origin" "616 258 70"
 "_color" "0.9 1 0.8"
 "_light" "150"
+"spawnflags" "1"
 }
-// entity 22
+// entity 20
 {
 "classname" "light"
 "origin" "702 128 166"
 "_color" "0.9 1 0.8"
 "_light" "150"
+"spawnflags" "1"
 }
-// entity 23
+// entity 21
 {
 "classname" "light"
 "origin" "544 106 166"
 "_color" "0.9 1 0.8"
 "_light" "150"
+"spawnflags" "1"
 }
-// entity 24
+// entity 22
 {
 "classname" "info_alien_start"
 "origin" "848 272 28"
 "angle" "315"
 }
-// entity 25
+// entity 23
 {
 "classname" "info_alien_start"
 "angle" "135"
 "origin" "752 176 156"
 }
-// entity 26
+// entity 24
 {
 "classname" "info_alien_start"
 "origin" "208 208 28"
 "angle" "270"
 }
-// entity 27
+// entity 25
 {
 "classname" "info_alien_start"
 "origin" "432 208 92"
 "angle" "180"
 }
-// entity 28
+// entity 26
 {
 "classname" "info_alien_start"
 "angle" "45"
 "origin" "848 240 156"
 }
-// entity 29
+// entity 27
 {
 "classname" "light"
 "_light" "120"
 "_color" "1 0.9 0.8"
 "origin" "760 402 70"
+"spawnflags" "1"
 }
-// entity 30
+// entity 28
 {
 "classname" "light"
 "origin" "736 130 46"
 "_color" "1 0.5 0.2"
 "_light" "120"
+"spawnflags" "1"
 }
-// entity 31
+// entity 29
 {
 "classname" "light"
 "_light" "120"
 "_color" "1 0.5 0.2"
 "origin" "608 130 46"
+"spawnflags" "1"
 }
-// entity 32
+// entity 30
 {
 "classname" "light"
 "origin" "808 282 70"
 "_color" "1 0.9 0.8"
 "_light" "120"
+"spawnflags" "1"
 }
-// entity 33
+// entity 31
 {
 "classname" "light"
 "_light" "120"
 "_color" "1 0.9 0.8"
 "origin" "656 210 70"
+"spawnflags" "1"
 }
-// entity 34
+// entity 32
 {
 "classname" "func_group"
 // brush 0
@@ -3339,7 +3346,7 @@
 ( 548 136 212 ) ( 548 128 212 ) ( 548 128 200 ) tex_buildings/concrete004 8 0 0 0.5 0.5 63488 0 0
 }
 }
-// entity 35
+// entity 33
 {
 "classname" "func_group"
 // brush 0
@@ -3397,29 +3404,26 @@
 ( 420 136 212 ) ( 420 128 212 ) ( 420 128 200 ) tex_buildings/concrete004 8 0 0 0.5 0.5 63488 0 0
 }
 }
-// entity 36
+// entity 34
 {
 "classname" "info_alien_start"
 "origin" "528 336 216"
 "angle" "-135"
 }
-// entity 37
+// entity 35
 {
 "classname" "light"
 "_light" "150"
 "_color" "0.9 1 0.8"
 "origin" "854 96 38"
+"spawnflags" "1"
 }
-// entity 38
+// entity 36
 {
 "classname" "info_civilian_start"
 "origin" "80 432 32"
 }
-// entity 39
-{
-"classname" "func_group"
-}
-// entity 40
+// entity 37
 {
 "classname" "func_group"
 // brush 0
@@ -3817,7 +3821,7 @@
 ( 832 386 34 ) ( 704 386 34 ) ( 704 384 26 ) tex_material/metall008 0 20 0 0.5 0.5 1792 1024 0
 }
 }
-// entity 41
+// entity 38
 {
 "classname" "func_group"
 // brush 0
@@ -3893,7 +3897,7 @@
 ( 576 156 32 ) ( 576 100 32 ) ( 576 100 16 ) tex_material/metall008 0 0 0 0.5 0.5 1792 0 0
 }
 }
-// entity 42
+// entity 39
 {
 "classname" "func_group"
 // brush 0
@@ -3969,7 +3973,7 @@
 ( 704 156 32 ) ( 704 100 32 ) ( 704 100 16 ) tex_material/metall008 0 0 0 0.5 0.5 1792 0 0
 }
 }
-// entity 43
+// entity 40
 {
 "classname" "func_group"
 // brush 0
@@ -4027,7 +4031,7 @@
 ( 648 296 168 ) ( 648 316 168 ) ( 644 316 180 ) tex_vehicles/gabstap_a -96 0 0 0.5 0.5 64512 0 0
 }
 }
-// entity 44
+// entity 41
 {
 "classname" "func_group"
 // brush 0
