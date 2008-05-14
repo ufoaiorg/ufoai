@@ -1136,7 +1136,7 @@ cBspModel_t *CM_InlineModel (const char *name)
  * @param[in] angles The new facing angles for the model
  * @note This is used whenever a model's orientation changes, eg doors and rotating models
  * @sa LE_DoorAction
- * @sa G_ClientUseDoor
+ * @sa G_ClientUseEdict
  */
 void CM_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)
 {

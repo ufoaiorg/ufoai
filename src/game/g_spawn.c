@@ -143,19 +143,22 @@ static void ED_CallSpawn (edict_t * ent)
 	ent->inuse = qfalse;
 }
 
+/**
+ * @brief Allocated memory for the given string in the level context (TAG_LEVEL)
+ * @note This memory is automatically freed when we close or change the level
+ * @param[in] string The string to copy
+ */
 static char *ED_NewString (const char *string)
 {
 	char *newb, *new_p;
 	int i;
-	size_t l;
-
-	l = strlen(string) + 1;
+	const size_t l = strlen(string) + 1;
 
 	newb = gi.TagMalloc(l, TAG_LEVEL);
-
 	new_p = newb;
 
 	for (i = 0; i < l; i++) {
+		/* check for special chars and convert them */
 		if (string[i] == '\\' && i < l - 1) {
 			i++;
 			if (string[i] == 'n')
@@ -245,8 +248,8 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 
 		init = qtrue;
 
-		/* keynames with a leading underscore are used for utility comments, */
-		/* and are immediately discarded by ufo */
+		/* keynames with a leading underscore are used for utility comments,
+		 * and are immediately discarded by ufo */
 		if (keyname[0] == '_')
 			continue;
 

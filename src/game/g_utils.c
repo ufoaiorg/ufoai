@@ -44,6 +44,37 @@ void G_FreeEdict (edict_t *ent)
 }
 
 /**
+ * @brief Call the 'use' function for the given edict and all its group members
+ * @param[in] ent The edict to call the use function for
+ * @sa G_ClientUseEdict
+ */
+qboolean G_UseEdict (edict_t *ent)
+{
+	if (!ent) {
+		Com_DPrintf(DEBUG_GAME, "G_UseEdict: No edict given\n");
+		return qfalse;
+	}
+
+	/* no use function assigned */
+	if (!ent->use)
+		return qfalse;
+
+	if (!ent->use(ent))
+		return qfalse;
+
+	/* only the master edict is calling the opening for the other group parts */
+	if (!(ent->flags & FL_GROUPSLAVE)) {
+		edict_t* chain = ent->groupChain;
+		while (chain) {
+			G_UseEdict(chain);
+			chain = chain->groupChain;
+		}
+	}
+
+	return qtrue;
+}
+
+/**
  * @brief Searches for the obj that has the given firedef
  */
 static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)

@@ -244,6 +244,7 @@ void G_PrintStats(const char *buffer);
 int G_TouchTriggers(edict_t *ent);
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
+qboolean G_UseEdict(edict_t *ent);
 
 /* g_reaction.c */
 qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason);
@@ -277,7 +278,7 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 #define MAX_DVTAB 32
 
 void G_FlushSteps(void);
-qboolean G_ClientUseDoor(player_t *player, edict_t *actor, edict_t *door);
+qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door, int type);
 qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet);
 void G_SendStats(edict_t * ent);
 edict_t *G_SpawnFloor(pos3_t pos);
@@ -443,6 +444,10 @@ struct player_s {
  * @note e.g. misc_mission, func_breakable, func_door
  */
 #define FL_DESTROYABLE	0x00000004
+/**
+ * @brief Trigger the edict at spawn.
+ */
+#define FL_TRIGGERED	0x00000100
 
 struct edict_s {
 	qboolean inuse;
@@ -490,7 +495,7 @@ struct edict_s {
 	pos3_t pos;
 	byte dir;					/**< direction the player looks at */
 
-	int TU;						/**< remaining timeunits */
+	int TU;						/**< remaining timeunits for actors or timeunits needed to 'use' this entity */
 	int HP;						/**< remaining healthpoints */
 	int STUN;					/**< The stun damage received in a mission.
 							 * @sa g_combat.c:G_Damage
@@ -560,6 +565,9 @@ struct edict_s {
 	qboolean (*touch)(edict_t * self, edict_t * activator);
 	float nextthink;
 	void (*think)(edict_t *self);
+	/** general use function that is called when the triggered client action is executed
+	 * or when the server has to 'use' the entity */
+	qboolean (*use)(edict_t *self);
 
 	/** e.g. doors */
 	moveinfo_t		moveinfo;

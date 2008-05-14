@@ -149,7 +149,7 @@ static inline localModel_t *LM_Find (int entnum)
 /**
  * @sa EV_DOOR_CLOSE
  * @sa EV_DOOR_OPEN
- * @sa G_ClientUseDoor
+ * @sa G_ClientUseEdict
  */
 static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 {

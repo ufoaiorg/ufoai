@@ -107,7 +107,7 @@ Defines the alien mission target
 "health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
 */
 
-/*QUAKED func_door (0 .5 .8) ? level1 level2 level3 level4 level5 level6 level7 level8
+/*QUAKED func_door (0 .5 .8) ? level1 level2 level3 level4 level5 level6 level7 level8 opened
 "angle"		determines the opening direction
 "health"	if set, door must be shot open
 "group"		multipart doors can be grouped to open together

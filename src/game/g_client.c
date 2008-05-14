@@ -755,9 +755,13 @@ int G_GetActiveTeam (void)
  * the action with
  * @todo: Integrate into hud - don't use cprintf
  */
-qboolean G_ActionCheck (player_t * player, edict_t * ent, int TU, qboolean quiet)
+qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 {
 	int msglevel;
+
+	/* don't check for a player - but maybe a server action */
+	if (!player)
+		return qtrue;
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
@@ -2198,74 +2202,35 @@ void G_ListMissionScore_f (void)
 #endif
 
 /**
- * @brief This function opens the door when the player wants it to open
+ * @brief This function 'uses' the edict. E.g. it opens the door when the player wants it to open
  * @sa PA_USE_DOOR
- * @param[in] entnum The entity number of the door
+ * @param[in] entnum The entity number of the edict
+ * @param[in] player The player is trying to activate the door
+ * @param[in] actor The actor the player is using to activate the door
  * @todo: Do we have to change the trigger position here, too? I don't think this is really needed.
+ * @sa CL_ActorUseDoor
+ * @sa G_UseEdict
  */
-qboolean G_ClientUseDoor (player_t *player, edict_t *actor, edict_t *door)
+qboolean G_ClientUseEdict (player_t *player, edict_t *actor, edict_t *edict, int type)
 {
-	if (!door) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientUseDoor: No door set for actor: %i\n", actor->number);
-		return qfalse;
-	}
-
 	/* there may be other edicts in this chain, too */
-	if (door->type != ET_DOOR) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientUseDoor: Edict is not a door, but: %i\n", door->type);
+	if (edict->type != type) {
+		Com_DPrintf(DEBUG_GAME, "G_ClientUseEdict: Edict is not of the same type as required (%i), but: %i\n", type, edict->type);
 		return qfalse;
 	}
 
-	if (!G_ActionCheck(player, actor, TU_DOOR_ACTION, qfalse))
+	/* check whether the actor has sufficient TUs to 'use' this edicts */
+	if (!G_ActionCheck(player, actor, edict->TU, qfalse))
 		return qfalse;
 
-	if (door->moveinfo.state == STATE_CLOSED) {
-		door->moveinfo.state = STATE_OPENED;
+	G_UseEdict(edict);
 
-		/* FIXME Check if the door can be opened - there should not be anything in the way (e.g. an actor) */
-		/* change rotation and relink */
-		door->angles[YAW] += DOOR_ROTATION_ANGLE;
-		gi.LinkEdict(door);
-
-		/* let everybody know, that the door opens */
-		gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
-		gi.WriteShort(door->number);
-	} else if (door->moveinfo.state == STATE_OPENED) {
-		door->moveinfo.state = STATE_CLOSED;
-
-		/* FIXME Check if the door can be opened - there should not be anything in the way (e.g. an actor) */
-		/* change rotation and relink */
-		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
-		gi.LinkEdict(door);
-
-		/* let everybody know, that the door closes */
-		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
-		gi.WriteShort(door->number);
-	} else
-		return qfalse;
-
-	if (!(door->flags & FL_GROUPSLAVE)) {
-		actor->TU -= TU_DOOR_ACTION;
-		/* send the new TUs */
-		G_SendStats(actor);
-	}
+	/* using a group of edicts only costs TUs once (for the master) */
+	actor->TU -= edict->TU;
+	/* send the new TUs */
+	G_SendStats(actor);
 
 	gi.EndEvents();
-
-	/* Update model orientation */
-	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
-	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
-	/* Update path finding table */
-	G_RecalcRouting(door);
-
-	/* only the master door is calling the opening for the other door parts */
-	if (!(door->flags & FL_GROUPSLAVE)) {
-		edict_t* chain = door->groupChain;
-		while (chain) {
-			G_ClientUseDoor(player, actor, chain);
-			chain = chain->groupChain;
-		}
-	}
 
 	return qtrue;
 }
@@ -2336,9 +2301,9 @@ int G_ClientAction (player_t * player)
 				if (door->flags & FL_GROUPSLAVE)
 					door = door->groupMaster;
 
-				G_ClientUseDoor(player, actor, door);
+				G_ClientUseEdict(player, actor, door, door->type);
 			} else
-				Com_DPrintf(DEBUG_GAME, "client_action and door ent differ: %i - %i\n",
+				Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n",
 					actor->client_action->number, door->number);
 		}
 		break;

@@ -3091,6 +3091,7 @@ void CL_ActorReload (int hand)
  * @brief Opens a door.
  * @param[in] le Who is opening
  * @sa CL_ActorDoorAction
+ * @sa G_ClientUseEdict
  */
 void CL_ActorUseDoor (void)
 {
@@ -3107,6 +3108,7 @@ void CL_ActorUseDoor (void)
  * @brief Reads the door entity number for client interaction
  * @sa EV_DOOR_ACTION
  * @sa Touch_DoorTrigger
+ * @sa CL_ActorUseDoor
  */
 void CL_ActorDoorAction (struct dbuffer *msg)
 {

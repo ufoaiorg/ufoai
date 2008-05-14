@@ -75,6 +75,49 @@ DOOR FUNCTIONS
 =============================================================================
 */
 
+static qboolean Door_Open (edict_t *door)
+{
+	if (door->moveinfo.state == STATE_CLOSED) {
+		door->moveinfo.state = STATE_OPENED;
+
+		/* FIXME Check if the door can be opened - there should not be anything in the way (e.g. an actor) */
+		/* change rotation and relink */
+		door->angles[YAW] += DOOR_ROTATION_ANGLE;
+		gi.LinkEdict(door);
+
+		/* maybe the server called this because the door starts opened */
+		if (level.activeTeam != -1) {
+			/* let everybody know, that the door opens */
+			gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
+			gi.WriteShort(door->number);
+		}
+	} else if (door->moveinfo.state == STATE_OPENED) {
+		door->moveinfo.state = STATE_CLOSED;
+
+		/* FIXME Check if the door can be opened - there should not be anything in the way (e.g. an actor) */
+		/* change rotation and relink */
+		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
+		gi.LinkEdict(door);
+
+		/* maybe the server called this because the door starts opened */
+		if (level.activeTeam != -1) {
+			/* let everybody know, that the door closes */
+			gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
+			gi.WriteShort(door->number);
+		}
+	} else
+		return qfalse;
+
+	/* Update model orientation */
+	gi.SetInlineModelOrientation(door->model, door->origin, door->angles);
+	Com_DPrintf(DEBUG_GAME, "Server processed door movement.\n");
+
+	/* Update path finding table */
+	G_RecalcRouting(door);
+
+	return qtrue;
+}
+
 /**
  * @brief Trigger to open the door we are standing in front of it
  * @sa LE_DoorOpen
@@ -92,7 +135,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		/* let the ai interact with the door */
 		if (self->flags & FL_GROUPSLAVE)
 			self = self->groupMaster;
-		return G_ClientUseDoor(game.players + activator->pnum, activator, self);
+		return G_ClientUseEdict(game.players + activator->pnum, activator, self, self->type);
 	} else {
 		if (activator->client_action != self->owner) {
 			/* prepare for client action */
@@ -137,7 +180,13 @@ void SP_func_door (edict_t *ent)
 	other = G_TriggerSpawn(ent);
 	other->touch = Touch_DoorTrigger;
 
+	ent->TU = TU_DOOR_ACTION;
+	ent->use = Door_Open;
 	ent->child = other;
+
+	/* the door should start opened */
+	if (ent->flags & FL_TRIGGERED)
+		G_UseEdict(ent);
 
 	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
 			ent->model, ent->mapNum, ent->solid,
