@@ -131,6 +131,11 @@ static int checkMiscParticle (entity_t *e, int entnum)
 	return 0;
 }
 
+static int checkMiscMission (entity_t *e, int entnum)
+{
+	return 0;
+}
+
 static int checkFuncGroup (entity_t *e, int entnum)
 {
 	if (!e->numbrushes) {
@@ -211,9 +216,12 @@ static const entityCheck_t checkArray[] = {
 	{"misc_model", checkMiscModel},
 	{"misc_particle", checkMiscParticle},
 	{"misc_sound", checkMiscSound},
+	{"misc_mission", checkMiscMission},
+	{"misc_mission_aliens", checkMiscMission},
 	{"info_player_start", checkInfoPlayerStart},
 	{"info_human_start", checkStartPosition},
 	{"info_alien_start", checkStartPosition},
+	{"info_2x2_start", checkStartPosition},
 	{"info_civilian_start", checkStartPosition},
 	{"info_null", checkInfoNull},
 	{"info_civilian_target", checkInfoCivilianTarget},
@@ -253,7 +261,9 @@ void CheckBrushes (void)
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
-		const int contentFlags = brush->original_sides[0].contentFlags;
+		const int contentFlags = (brush->original_sides[0].contentFlags & CONTENTS_LEVEL_ALL)
+			? brush->original_sides[0].contentFlags
+			: (brush->original_sides[0].contentFlags | CONTENTS_LEVEL_ALL);
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
 			const ptrdiff_t index = side - brushsides;
@@ -270,9 +280,6 @@ void CheckBrushes (void)
 				Com_Printf("  Brush %i (entity %i): error texture assigned - check this brush\n", brush->brushnum, brush->entitynum);
 			}
 
-			if (config.performMapCheck && contentFlags != side->contentFlags) {
-				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
-			}
 			if (!(side->contentFlags & (CONTENTS_WEAPONCLIP | CONTENTS_ORIGIN | CONTENTS_ACTORCLIP | CONTENTS_STEPON))) {
 				/* check level 1 - level 8 */
 				if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
@@ -280,6 +287,11 @@ void CheckBrushes (void)
 					side->contentFlags |= CONTENTS_LEVEL_ALL;
 				}
 			}
+
+			if (config.performMapCheck && contentFlags != side->contentFlags) {
+				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
+			}
+
 			if (!Q_strcmp(tex->name, "NULL")) {
 				Com_Printf("* Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
