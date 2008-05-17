@@ -531,6 +531,7 @@ static void UFO_ListOnGeoscape_f (void)
 			ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
 		Com_Printf("...linked to mission '%s'\n", ufo->mission ? ufo->mission->id : "no mission");
 		Com_Printf("... UFO %son geoscape\n", ufo->notOnGeoscape ? "not " : "");
+		Com_Printf("... damage: %i\n", ufo->damage);
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (k = 0; k < ufo->maxWeapons; k++) {
 			if (ufo->weapons[k].item) {
@@ -590,6 +591,8 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	memcpy(ufo, aircraftTemplates + newUFONum, sizeof(aircraft_t));
 	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (gd.numUFOs: %i, newUFONum: %i)\n", ufo->id, gd.numUFOs, newUFONum);
 	gd.numUFOs++;
+	/* Give it HP */
+	ufo->damage = ufo->stats[AIR_STATS_DAMAGE];
 
 	/* Initialise ufo data */
 	UFO_SetRandomPos(ufo);

@@ -218,6 +218,7 @@ void AIR_ListAircraft_f (void)
 				else
 					Com_Printf("...electronics slot %i is empty\n", k);
 			}
+			Com_Printf("...damage: %i\n", aircraft->damage);
 			Com_Printf("...stats: ");
 			for (k = 0; k < AIR_STATS_MAX; k++)
 				Com_Printf("%i ", aircraft->stats[k]);
@@ -784,6 +785,8 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		AII_UpdateAircraftStats(aircraft);
 		/* give him some fuel */
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
+		/* Set HP to maximum */
+		aircraft->damage =aircraft->stats[AIR_STATS_DAMAGE];
 
 		/* set initial direction of the aircraft */
 		VectorSet(aircraft->direction, 1, 0, 0);

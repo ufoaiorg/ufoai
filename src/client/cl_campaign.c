@@ -3867,6 +3867,7 @@ void CL_CampaignRun (void)
 			CL_CampaignRunMarket();
 			UFO_Recovery();
 			AII_UpdateInstallationDelay();
+			AII_RepairAircraft();
 			TR_TransferCheck();
 			CP_IncreaseAlienInterest();
 		}

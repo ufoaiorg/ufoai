@@ -1842,6 +1842,30 @@ static qboolean AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int st
 }
 
 /**
+ * @brief Repair aircraft.
+ * @note Hourly called.
+ */
+void AII_RepairAircraft (void)
+{
+	int baseIDX, aircraftIDX;
+	const int REPAIR_PER_HOUR = 1;	/**< Number of damage points repaired per hour */
+
+	for (baseIDX = 0; baseIDX < MAX_BASES; baseIDX++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIDX);
+		if (!base)
+			continue;
+
+		for (aircraftIDX = 0; aircraftIDX < base->numAircraftInBase; aircraftIDX++) {
+			aircraft_t *aircraft = &base->aircraft[aircraftIDX];
+
+			if (!AIR_IsAircraftInBase(aircraft))
+				continue;
+			aircraft->damage = min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);
+		}
+	}
+}
+
+/**
  * @brief Update the value of stats array of an aircraft.
  * @param[in] aircraft Pointer to the aircraft
  * @note This should be called when an item starts to be added/removed and when addition/removal is over.
@@ -1904,9 +1928,13 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			aircraft->stats[AIR_STATS_WRANGE] = item->craftitem.stats[AIR_STATS_WRANGE];
 	}
 
-	/* check that iracraft hasn't too much fuel (caused by removal of fuel pod) */
+	/* check that aircraft hasn't too much fuel (caused by removal of fuel pod) */
 	if (aircraft->fuel > aircraft->stats[AIR_STATS_FUELSIZE])
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
+
+	/* check that aircraft hasn't too much HP (caused by removal of armour) */
+	if (aircraft->damage > aircraft->stats[AIR_STATS_DAMAGE])
+		aircraft->damage = aircraft->stats[AIR_STATS_DAMAGE];
 
 	/* check that speed of the aircraft is positive */
 	if (aircraft->stats[AIR_STATS_SPEED] < 1)

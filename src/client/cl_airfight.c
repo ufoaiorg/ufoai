@@ -511,7 +511,7 @@ static int AIRFIGHT_GetDamage (const objDef_t *od, const aircraft_t* target)
 	assert(od);
 
 	/* already destroyed - do nothing */
-	if (target->stats[AIR_STATS_DAMAGE] <= 0)
+	if (target->damage <= 0)
 		return 0;
 
 	/* base damage is given by the ammo */
@@ -547,9 +547,9 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	 * already be destroyed, and we don't want to execute the actions after airfight
 	 * for every projectile */
 	if (damage > 0) {
-		assert(target->stats[AIR_STATS_DAMAGE] > 0);
-		target->stats[AIR_STATS_DAMAGE] -= damage;
-		if (target->stats[AIR_STATS_DAMAGE] <= 0)
+		assert(target->damage > 0);
+		target->damage -= damage;
+		if (target->damage <= 0)
 			/* Target is destroyed */
 			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
 	}

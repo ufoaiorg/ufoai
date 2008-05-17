@@ -3259,8 +3259,6 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
  */
 void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
-	AII_UpdateAircraftStats(aircraft);		/**< Recalculate aircraft stats (restore HP of the aircraft) */
-
 	AII_ReloadWeapon(aircraft);				/**< Reload weapons */
 
 	HOS_ReaddEmployeesInHospital(aircraft);		/**< Try to readd soldiers to hospital. */
@@ -3502,6 +3500,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->idx);
 			MSG_WriteByte(sb, aircraft->status);
 			MSG_WriteLong(sb, aircraft->fuel);
+			MSG_WriteLong(sb, aircraft->damage);
 			MSG_WritePos(sb, aircraft->pos);
 			MSG_WriteLong(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
@@ -3776,6 +3775,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			/* this is the aircraft array id in current base */
 			aircraft->status = MSG_ReadByte(sb);
 			aircraft->fuel = MSG_ReadLong(sb);
+			aircraft->damage = MSG_ReadLong(sb);
 			MSG_ReadPos(sb, aircraft->pos);
 			aircraft->time = MSG_ReadLong(sb);
 			aircraft->point = MSG_ReadShort(sb);
