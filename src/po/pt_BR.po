@@ -4,8 +4,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-04-26 22:59+0200\n"
 "PO-Revision-Date: 2008-04-25 00:04-0300\n"
-"Last-Translator: Dumper <at yahoo.com.br, daniel_a_miranda>\n"
-"Language-Team: \n"
+"Last-Translator: Tureba (Arthur Nascimento) <tureba at gmail.com>\n"
+"Language-Team: Dumper <at yahoo.com.br, daniel_a_miranda>\nHwoarang <at gmail.com, yoshimit>\nTureba (Arthur Nascimento) <tureba at gmail.com>"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,22 +14,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../base/maps/africa.ump:53
-#, fuzzy
 msgid "Africa"
-msgstr "Nova África"
+msgstr "África"
 
 #: ../base/maps/alienbase.ump:82
 msgid "Alienbase"
-msgstr ""
+msgstr "Base Alienígena"
 
 #: ../base/maps/bomber_city.ump:57
 #, fuzzy
 msgid "Bomber_city"
-msgstr "Bombardeiro U"
+msgstr "Cidade bombardeira"
 
 #: ../base/maps/bridge.ump:58
 msgid "Bridge"
-msgstr ""
+msgstr "Ponte"
 
 #: ../base/maps/cemetery.ump:203
 msgid "Test"
@@ -40,9 +39,8 @@ msgid "City_disco"
 msgstr ""
 
 #: ../base/maps/community_centre.ump:53
-#, fuzzy
 msgid "Community_centre"
-msgstr "Centro de Comando"
+msgstr "Centro Comunitário"
 
 #: ../base/maps/construction.ump:53
 msgid "Construction"
@@ -2200,7 +2198,7 @@ msgstr "Batalha Rápida"
 
 #: ../base/ufos/menu_campaign.ufo:96
 msgid "Start campaign"
-msgstr "Começar campanha"
+msgstr "Campanha"
 
 #: ../base/ufos/menu_campaign.ufo:116 ../base/ufos/menu_multiplayer.ufo:123
 #: ../base/ufos/menu_options.ufo:165 ../base/ufos/menu_singleplayer.ufo:178
@@ -2215,9 +2213,8 @@ msgid "CREDITS"
 msgstr "CRÉDITOS"
 
 #: ../base/ufos/menu_geoscape.ufo:87
-#, fuzzy
 msgid "Stop time"
-msgstr "Pare-os"
+msgstr "Parar o tempo"
 
 #: ../base/ufos/menu_geoscape.ufo:101
 msgid "Slow down time"
@@ -2403,7 +2400,7 @@ msgstr "Descrição:"
 #: ../base/ufos/menu_hire.ufo:324 ../base/ufos/menu_hire.ufo:336
 #: ../base/ufos/menu_hire.ufo:348
 msgid "Hire/Unhire - Right click to remove"
-msgstr "Contratar/Demitir - Clique com o botão da direita para remover"
+msgstr "Contratar/Demitir - Clique com o botão direito para remover"
 
 #: ../base/ufos/menu_hire.ufo:422
 msgid "Rename your employee"
@@ -2695,7 +2692,7 @@ msgstr "Extensão"
 
 #: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:1072
 msgid "Headgear"
-msgstr "Equipamento para a cabeça"
+msgstr "Cabeça"
 
 #: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:1081
 msgid "Holster"
@@ -3234,7 +3231,7 @@ msgstr "Compressão de texturas:"
 
 #: ../base/ufos/menu_options.ufo:284
 msgid "Show FPS:"
-msgstr "Mostrar quadros por segundo (FPS):"
+msgstr "Mostrar FPS:"
 
 #: ../base/ufos/menu_options.ufo:296
 msgid "Texture Lod:"
@@ -3423,16 +3420,16 @@ msgstr "Câmera"
 
 #: ../base/ufos/menu_options.ufo:1074
 msgid "Scroll Speed:"
-msgstr "Velocidade de rolagem:"
+msgstr "Rolagem:"
 
 #: ../base/ufos/menu_options.ufo:1100
 msgid "Rotation Speed:"
-msgstr "Velocidade de rotação:"
+msgstr "Rotação:"
 
 # checar.
 #: ../base/ufos/menu_options.ufo:1126
 msgid "Move Acceleration:"
-msgstr "Aceleração de movimento:"
+msgstr "Aceleração:"
 
 #: ../base/ufos/menu_options.ufo:1152
 msgid "Joystick settings:"
@@ -5083,9 +5080,8 @@ msgid "xvi_census_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:4458
-#, fuzzy
 msgid "xvi_census_pre_txt"
-msgstr "plasma"
+msgstr ""
 
 #: ../base/ufos/research.ufo:4489
 #, fuzzy
@@ -5097,9 +5093,8 @@ msgid "enemy_on_earth_rev_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:4497
-#, fuzzy
 msgid "enemy_on_earth_rev_pre_txt"
-msgstr "plasma"
+msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:131 ../base/ufos/seq_credits.ufo:154
 msgid "Project leader"
@@ -5466,7 +5461,7 @@ msgstr "Use a tecla [Shift] para alinhar a altura da mira - útil para atirar o 
 
 #: ../base/ufos/tips.ufo:6
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
-msgstr "Monte e salve equipes diferentes mara jogos multijogador - equipes de 4 jogadores, de 8 jogadores e assim por diante. Assim você pode rapidamente escolher um para uma partida rápida."
+msgstr "Monte e salve equipes diferentes para jogos multijogador - equipes de 4 jogadores, de 8 jogadores e assim por diante. Assim você pode rapidamente escolher um para uma partida rápida."
 
 #: ../base/ufos/tips.ufo:7
 msgid "With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
@@ -5510,7 +5505,7 @@ msgstr "Tente contratar tantos cientistas quantos puder. O quanto antes você co
 
 #: ../base/ufos/tips.ufo:17
 msgid "Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
-msgstr "Tente contratar tantos engenheiros quantos puder. Quão mais rápidas as suas linhas de produção, mais cedo você terá acesso a melhores equipamentos e suprimentos."
+msgstr "Tente contratar tantos engenheiros quantos puder. Quanto mais rápidas as suas linhas de produção, mais cedo você terá acesso a melhores equipamentos e suprimentos."
 
 #: ../base/ufos/tips.ufo:18
 msgid "Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
@@ -5614,7 +5609,7 @@ msgstr "Lembre-se de equipar o seu interceptador com armas antes de lançá-lo."
 
 #: ../base/ufos/tips.ufo:43
 msgid "Remember that items will slow an aircraft. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
-msgstr "Lembre-se de que item retardam as aeronaves. Para interceptar OVNIs rápidos você pode prefirir enviar várias aeronaves levemente equipadas."
+msgstr "Lembre-se de que equipamentos pesados retardam as aeronaves. Para interceptar OVNIs rápidos você pode prefirir enviar várias aeronaves levemente equipadas."
 
 #: ../base/ufos/tips.ufo:44
 msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
@@ -5954,7 +5949,7 @@ msgstr "Cartucho D-F"
 #: ../base/ufos/weapons_laser.ufo:87 ../base/ufos/weapons_laser.ufo:130
 #: ../base/ufos/weapons_laser.ufo:174
 msgid "Wave Fire"
-msgstr "Tiros contínuo"
+msgstr "Tiro contínuo"
 
 #: ../base/ufos/weapons_laser.ufo:106 ../base/ufos/weapons_laser.ufo:150
 #: ../base/ufos/weapons_laser.ufo:193
@@ -7693,11 +7688,11 @@ msgstr "A versão local do jogo (%s) é diferente daquela dos servidores (%s)"
 
 #: client/cl_main.c:2101
 msgid "Target your shot to the ground"
-msgstr "ire o seu tiro para o chão"
+msgstr "Mire o seu tiro para o chão"
 
 #: client/cl_main.c:2102
 msgid "Open the actors inventory while we are in tactical mission"
-msgstr "Abra o inventário dos atores enquanto estamos em uma missão tática"
+msgstr "Abrir o inventário durante a missão tática"
 
 #: client/cl_main.c:2231 client/cl_view.c:285
 msgid "Awaiting game start"
@@ -8493,7 +8488,7 @@ msgstr "Erro ao salvar a equipe. Confira o espaço livre em disco!"
 
 #: client/cl_team.c:1935
 msgid "Select a soldier from list"
-msgstr "Selecione um soldado da lista"
+msgstr "Selecionar um soldado da lista"
 
 #: client/cl_team.c:1936
 msgid "Reselect the current soldier"
