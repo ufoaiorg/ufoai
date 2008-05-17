@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "cl_ufo.h"
 #include "cl_aircraft.h"
+#include "cl_mapfightequip.h"
 
 static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at phalanx aircraft */
 
@@ -591,6 +592,9 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	memcpy(ufo, aircraftTemplates + newUFONum, sizeof(aircraft_t));
 	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (gd.numUFOs: %i, newUFONum: %i)\n", ufo->id, gd.numUFOs, newUFONum);
 	gd.numUFOs++;
+
+	/* Update Stats of UFO */
+	AII_UpdateAircraftStats(ufo);
 	/* Give it HP */
 	ufo->damage = ufo->stats[AIR_STATS_DAMAGE];
 
