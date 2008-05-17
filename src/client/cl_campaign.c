@@ -6562,6 +6562,9 @@ static void CL_GameNew_f (void)
 	Cmd_ExecuteString("addeventmail prolog");
 
 	CL_CampaignRunMarket();
+
+	/* Intro sentences */
+	Cbuf_AddText("seq_start intro;\n");
 }
 
 #define MAXCAMPAIGNTEXT 4096
