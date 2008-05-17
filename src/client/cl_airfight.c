@@ -144,6 +144,33 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t 
 	return qtrue;
 }
 
+#ifdef DEBUG
+/**
+ * @brief List all projectiles on map to console.
+ * @note called with debug_listprojectile
+ */
+static void AIRFIGHT_ProjectileList_f (void)
+{
+	int i;
+
+	for (i = 0; i < gd.numProjectiles; i++) {
+		Com_Printf("%i. (idx: %i)\n", i, gd.projectiles[i].idx);
+		Com_Printf("... type '%s'\n", gd.projectiles[i].aircraftItem->id);
+		if (gd.projectiles[i].attackingAircraft)
+			Com_Printf("... shooting aircraft '%s'\n", gd.projectiles[i].attackingAircraft->id);
+		else
+			Com_Printf("... base is shooting, or shooting aircraft is destroyed\n");
+		if (gd.projectiles[i].aimedAircraft)
+			Com_Printf("... aiming aircraft '%s'\n", gd.projectiles[i].aimedAircraft->id);
+		else if (gd.projectiles[i].aimedBase)
+			Com_Printf("... aiming base '%s'\n", gd.projectiles[i].aimedBase->name);
+		else
+			Com_Printf("... aiming iddle target at (%.02f, %.02f)\n",
+				gd.projectiles[i].idleTarget[0], gd.projectiles[i].idleTarget[1]);
+	}
+}
+#endif
+
 /**
  * @brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] idx idx of the projectile to update in gd.projectiles[].
@@ -430,8 +457,9 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		 * is no longer valid after this point */
 		AIR_DestroyAircraft(aircraft);
 
-		/* Make UFO proceed with its mission */
-		CP_UFOProceedMission(shooter);
+		/* Make UFO proceed with its mission, if it has not been already destroyed */
+		if (shooter)
+			CP_UFOProceedMission(shooter);
 
 		MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 	}
@@ -751,4 +779,14 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 				AIRFIGHT_BaseShoot(base, base->lasers, base->numLasers);
 		}
 	}
+}
+
+/**
+ * @sa MN_ResetMenus
+ */
+void AIRFIGHT_Reset (void)
+{
+#ifdef DEBUG
+	Cmd_AddCommand("debug_listprojectile", AIRFIGHT_ProjectileList_f, "Print Projectiles information to game console");
+#endif
 }

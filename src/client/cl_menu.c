@@ -399,5 +399,6 @@ void MN_ResetMenus (void)
 	UFO_Reset();
 	TR_Reset();
 	AB_Reset();
+	AIRFIGHT_Reset();
 	BaseSummary_Reset();
 }

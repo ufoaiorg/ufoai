@@ -49,7 +49,7 @@ typedef struct aircraftProjectile_s {
 	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
-	aircraft_t *attackingAircraft;	/**< Aircraft which shooted the projectile */
+	aircraft_t *attackingAircraft;	/**< Aircraft which shooted the projectile. NULL if aircraft is destroyed or base is shooting */
 
 	struct base_s* aimedBase;		/**< aimed base - NULL if the target is an aircraft */
 	aircraft_t *aimedAircraft;	/**< target of the projectile/
@@ -67,5 +67,6 @@ void AIRFIGHT_CampaignRunProjectiles(int dt);
 void AIRFIGHT_CampaignRunBaseDefense(int dt);
 int AIRFIGHT_ChooseWeapon(aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos);
 qboolean AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);
+void AIRFIGHT_Reset(void);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */
