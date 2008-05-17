@@ -1496,7 +1496,7 @@ void MAP_SelectMission (mission_t* mission)
 void MAP_NotifyMissionRemoved (const mission_t* mission)
 {
 	/* Unselect the current selected mission if it's the same */
-	if (selectedMission == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
+	if (selectedMission == mission)
 		MAP_ResetAction();
 }
 

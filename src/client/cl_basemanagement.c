@@ -3259,7 +3259,12 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
  */
 void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
+	AII_UpdateAircraftStats(aircraft);		/**< Recalculate aircraft stats (restore HP of the aircraft) */
+
+	AII_ReloadWeapon(aircraft);				/**< Reload weapons */
+
 	HOS_ReaddEmployeesInHospital(aircraft);		/**< Try to readd soldiers to hospital. */
+
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
@@ -3277,8 +3282,6 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
 	aircraft->alientypes = 0;
-
-	AII_ReloadWeapon(aircraft);
 }
 
 /**

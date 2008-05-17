@@ -1014,8 +1014,6 @@ void CL_CampaignRunAircraft (int dt)
 						case AIR_RETURNING:
 							/* aircraft entered in homebase */
 							CL_AircraftReturnedToHomeBase(aircraft);
-							/* Reload ammo so that aircraft can be listed in intercept popup */
-							AII_ReloadWeapon(aircraft);
 							aircraft->status = AIR_REFUEL;
 							break;
 						case AIR_TRANSFER:
