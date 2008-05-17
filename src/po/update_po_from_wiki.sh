@@ -55,6 +55,13 @@ then
 		printf "Sorry, but this program needs a version of gnu sed and gnu awk to run (named sed or gsed and awk or gawk).\nPlease install gsed and gawk(this is different from sed and awk for other Unixes than Linux).\n"
 		exit
 	fi
+
+	test=`printf "rnt\n" | $sed_soft 's/\r//g;s/\n//g;s/\t//g'`
+	if [ "$test" != "rnt" ]
+	then
+		printf "Sorry, but your gnu sed and gnu awk does not act properly: exiting.\n"
+		exit
+	fi
 fi
 
 find_line()
