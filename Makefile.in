@@ -126,7 +126,6 @@ install: install_exec
 # Target to install only the game data.
 #
 install_data:
-	@$(MAKE) maps
 # Create all pk3 files
 	@cd base && ./archives.sh
 	$(INSTALL) -d $(DATADIR)/base
