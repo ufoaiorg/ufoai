@@ -678,7 +678,7 @@ mapdef italy
 
 mapdef mart
 {
-	map			mart
+	map			+mart
 	description		"_A kind of communal gathering centre annex foraging facility, known as a supermarket."
 	multiplayer		true
 	teams			2
