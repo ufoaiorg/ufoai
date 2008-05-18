@@ -5468,6 +5468,7 @@ static void CL_DebugFullCredits_f (void)
 
 /**
  * @brief Debug function to add 5 new unhired employees of each type
+ * @note called with debug_addemployees
  */
 static void CL_DebugNewEmployees_f (void)
 {
@@ -6280,7 +6281,7 @@ static const cmdList_t game_commands[] = {
 	{"debug_listnation", CL_NationList_f, "List all nations on the game console"},
 	{"debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
-	{"debug_newemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
+	{"debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
 	{"debug_listitem", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
 	{"debug_listmission", CL_DebugMissionList_f, "Debug function to show all missions"},
