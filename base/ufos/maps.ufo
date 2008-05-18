@@ -637,7 +637,7 @@ mapdef estate
 
 mapdef italy
 {
-	map				italy
+	map				+italy
 	description		"_A small office in a mountainous region."
 	teams			2
 	multiplayer		true

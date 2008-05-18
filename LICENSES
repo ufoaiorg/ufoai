@@ -179,7 +179,7 @@ base/maps/ice/ice_r01.map | GNU General Public License 2.0
 base/maps/ice/ice_r02.map | GNU General Public License 2.0
 base/maps/ice/ice_r03.map | GNU General Public License 2.0
 base/maps/industrial.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/italy.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/italy/it_main.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/japan/ja_main.map | GNU General Public License 2.0
 base/maps/laboratory/lab_main.map | GPL version 2
 base/maps/lake_ice.map | GNU General Public License 2.0 | 'SparX' Beyeler
