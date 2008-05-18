@@ -2739,8 +2739,7 @@ static void B_AssembleRandomBase_f (void)
  */
 static void B_BuildingList_f (void)
 {
-	int i, j, k;
-	base_t *base;
+	int baseIdx, j, k;
 	building_t *building;
 
 	/*maybe someone call this command before the buildings are parsed?? */
@@ -2749,15 +2748,16 @@ static void B_BuildingList_f (void)
 		return;
 	}
 
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == qfalse)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 
-		building = &gd.buildings[base->idx][i];
-		Com_Printf("\nBase id %i: %s\n", i, base->name);
-		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
-			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByTemplate(baseCurrent, building->tpl),
-				building->idx);
+		building = &gd.buildings[base->idx][baseIdx];
+		Com_Printf("\nBase id %i: %s\n", baseIdx, base->name);
+		for (j = 0; j < gd.numBuildings[baseIdx]; j++) {
+			Com_Printf("...Building: %s #%i - id: %i\n", building->id,
+				B_GetNumberOfBuildingsInBaseByTemplate(baseCurrent, building->tpl), baseIdx);
 			Com_Printf("...image: %s\n", building->image);
 			Com_Printf(".....Status:\n");
 			for (k = 0; k < BASE_SIZE * BASE_SIZE; k++) {
@@ -3161,34 +3161,36 @@ int B_GetFoundedBaseCount (void)
 void B_UpdateBaseData (void)
 {
 	building_t *b;
-	int i, j;
+	int baseIdx, j;
 	int newBuilding = 0, new;
 
-	for (i = 0; i < MAX_BASES; i++) {
-		if (!gd.bases[i].founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
-		for (j = 0; j < gd.numBuildings[i]; j++) {
-			b = &gd.buildings[i][j];
+
+		for (j = 0; j < gd.numBuildings[baseIdx]; j++) {
+			b = &gd.buildings[baseIdx][j];
 			if (!b)
 				continue;
-			new = B_CheckBuildingConstruction(b, B_GetBaseByIDX(i));
+			new = B_CheckBuildingConstruction(b, base);
 			newBuilding += new;
 			if (new) {
-				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[i].name);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[baseIdx].name);
 				MN_AddNewMessage(_("Building finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
 
 		/* Repair base buildings */
-		if (gd.bases[i].batteryDamage <= MAX_BATTERY_DAMAGE) {
-			gd.bases[i].batteryDamage += 20;
-			if (gd.bases[i].batteryDamage > MAX_BATTERY_DAMAGE)
-				gd.bases[i].batteryDamage = MAX_BATTERY_DAMAGE;
+		if (gd.bases[baseIdx].batteryDamage <= MAX_BATTERY_DAMAGE) {
+			gd.bases[baseIdx].batteryDamage += 20;
+			if (gd.bases[baseIdx].batteryDamage > MAX_BATTERY_DAMAGE)
+				gd.bases[baseIdx].batteryDamage = MAX_BATTERY_DAMAGE;
 		}
-		if (gd.bases[i].baseDamage <= MAX_BASE_DAMAGE) {
-			gd.bases[i].baseDamage += 20;
-			if (gd.bases[i].baseDamage > MAX_BASE_DAMAGE)
-				gd.bases[i].baseDamage = MAX_BASE_DAMAGE;
+		if (gd.bases[baseIdx].baseDamage <= MAX_BASE_DAMAGE) {
+			gd.bases[baseIdx].baseDamage += 20;
+			if (gd.bases[baseIdx].baseDamage > MAX_BASE_DAMAGE)
+				gd.bases[baseIdx].baseDamage = MAX_BASE_DAMAGE;
 		}
 	}
 }
@@ -3459,12 +3461,13 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 	building_t *building;
 
 	MSG_WriteShort(sb, gd.numAircraft);
-	MSG_WriteByte(sb, gd.numBases);
-	for (i = 0; i < gd.numBases; i++) {
+	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
 		b = B_GetBaseByIDX(i);
+		MSG_WriteByte(sb, b->founded);
+		if (!b->founded)
+			continue;
 		MSG_WriteString(sb, b->name);
 		MSG_WritePos(sb, b->pos);
-		MSG_WriteByte(sb, b->founded);
 		for (k = 0; k < presaveArray[PRE_MBUITY]; k++)
 			MSG_WriteByte(sb, B_GetBuildingStatus(b, k));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
@@ -3694,23 +3697,20 @@ static void B_LoadBaseSlots (base_t* base, baseWeapon_t* weapons, int numWeapons
  */
 qboolean B_Load (sizebuf_t* sb, void* data)
 {
-	int i, bases, k, l, amount, ufoIdx;
+	int i, k, l, amount, ufoIdx;
 	int aircraftIdxInBase;
 	int teamIdxs[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee indices. */
 	int teamTypes[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee-types. */
 	int buildingIdx;
 
 	gd.numAircraft = MSG_ReadShort(sb);
-	bases = MSG_ReadByte(sb);
-	for (i = 0; i < bases; i++) {
+	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
 		base_t *const b = B_GetBaseByIDX(i);
+		b->founded = MSG_ReadByte(sb);
+		if (!b->founded)
+			continue;
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
-		if (b->founded) {
-			const byte *const color = MAP_GetColor(b->pos, MAPTYPE_TERRAIN);
-			b->mapZone = MAP_GetTerrainType(color);
-		}
-		b->founded = MSG_ReadByte(sb);
 		for (k = 0; k < presaveArray[PRE_MBUITY]; k++) {
 			if (k != B_MISC)
 				B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
@@ -3939,7 +3939,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = b;
 	}
-	gd.numBases = bases;
+	gd.numBases = B_GetFoundedBaseCount();
 	Cvar_Set("mn_base_count", va("%i", gd.numBases));
 
 	return qtrue;

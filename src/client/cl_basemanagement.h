@@ -211,9 +211,6 @@ typedef struct base_s {
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
 
-	/** mapZone indicated which map to load (grass, desert, arctic,...) */
-	const char *mapZone;
-
 	/** All aircraft in this base
 	  @todo make me a linked list (see cl_market.c aircraft selling) */
 	aircraft_t aircraft[MAX_AIRCRAFT];

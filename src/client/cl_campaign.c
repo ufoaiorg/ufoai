@@ -132,8 +132,7 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		return qfalse;
 	} else {
-		base->mapZone = MAP_GetTerrainType(colorTerrain);
-		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: zoneType: '%s'\n", base->mapZone);
+		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: zoneType: '%s'\n", MAP_GetTerrainType(colorTerrain));
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for base terrain: R:%i G:%i B:%i\n", colorTerrain[0], colorTerrain[1], colorTerrain[2]);
