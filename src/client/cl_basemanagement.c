@@ -2196,6 +2196,23 @@ static void B_PrevBase_f (void)
 }
 
 /**
+ * @brief Get the lower IDX of unfounded base.
+ * @return baseIdx of first Base Unfounded, or MAX_BASES is maximum base number is reached.
+ */
+static int B_GetFirstUnfoundedBase (void)
+{
+	int baseIdx;
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			return baseIdx;
+	}
+
+	return MAX_BASES;
+}
+
+/**
  * @brief Called when a base is opened or a new base is created on geoscape.
  *
  * For a new base the baseID is -1.
@@ -2215,7 +2232,7 @@ static void B_SelectBase_f (void)
 	/* called from *.ufo with -1 */
 	if (baseID < 0) {
 		gd.mapAction = MA_NEWBASE;
-		baseID = gd.numBases;
+		baseID = B_GetFirstUnfoundedBase();
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
 			baseCurrent = B_GetBaseByIDX(baseID);
