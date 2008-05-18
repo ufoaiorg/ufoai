@@ -202,6 +202,7 @@ building building_hangar
 	type		hangar
 	needs		building_hangar2
 	onconstruct 	""
+	ondestroy	"hangar_destroy 1"
 	starting_employees	8	//Number of soldiers in dropship when first base is build
 	onclick		"building_open"
 	capacity	1
@@ -230,7 +231,7 @@ building building_intercept
 	pos			"1 3"
 	more_than_one	true
 	onconstruct	""
-//	ondestroy	???
+	ondestroy	"hangar_destroy 0"
 	capacity	1
 	type		smallhangar
 	onclick		"building_open"

@@ -60,7 +60,7 @@ int numAircraftTemplates = 0;
  */
 static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftSample, base_t *base)
 {
-	int aircraftSize = 0, freespace = 0;
+	int aircraftSize, freespace = 0;
 
 	assert(aircraftSample);
 	assert(aircraftSample == aircraftSample->tpl);

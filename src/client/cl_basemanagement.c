@@ -695,6 +695,99 @@ static void B_ResetAllStatusAndCapacities_f (void)
 #endif
 
 /**
+ * @brief Actions to perform when destroying one hangar.
+ * @param[in] base Pointer to the base where hangar is destroyed.
+ * @param[in] hangarType Type of hangar: B_SMALL_HANGAR for small hangar, B_HANGAR for large hangar
+ * @param[in] building Pointer to the building to destroy.
+ * @note called when player destroy its building or hangar is destroyed during base attack.
+ * @note These actions will be performed before we actually remove the building.
+ * @pre we checked before calling this function that all parameters are valid.
+ * @sa B_BuildingDestroy_f
+ * @todo If player choose to destroy the building, a popup should ask him if he wants to sell aircraft in it.
+ */
+static void B_HangarOnDestroy (base_t* base, buildingType_t hangarType, building_t *building)
+{
+	baseCapacities_t capacity;
+	int aircraftIdx;
+
+	/* do nothing if building is under construction */
+	if (building->buildingStatus != B_STATUS_WORKING)
+		return;
+
+	/* destroy aircraft only if there's not enough hangar (hangars are destroyed one by one) */
+	capacity = B_GetCapacityFromBuildingType(building->buildingType);
+	if (base->capacities[capacity].cur < base->capacities[capacity].max)
+		return;
+
+	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
+	for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
+		int aircraftSize = base->aircraft[aircraftIdx].weight;
+		switch (aircraftSize) {
+		case AIRCRAFT_SMALL:
+			if (building->buildingType != B_SMALL_HANGAR)
+				continue;
+			break;
+		case AIRCRAFT_LARGE:
+			if (building->buildingType != B_HANGAR)
+				continue;
+			break;
+		case AIRCRAFT_HANGAR_ERROR:
+			Sys_Error("B_HangarOnDestroy: Unkown type of aircraft '%i'\n", aircraftSize);
+		}
+		/* Remove aircraft and aircraft items, but do not fire employees */
+		AIR_DeleteAircraft(base, &base->aircraft[aircraftIdx]);
+		return;
+	}
+}
+
+/**
+ * @brief On destroy function for small hangar.
+ * @note called with hangar_destroy
+ * @sa B_BuildingDestroy_f
+ */
+static void B_HangarOnDestroy_f (void)
+{
+	int baseIdx, hangarType, buildingIdx = -1;
+	base_t *base;
+
+	if (Cmd_Argc() < 4) {
+		Com_Printf("Usage: %s <hangarType> <baseIdx> <buildingIdx>\n", Cmd_Argv(0));
+		return;
+	}
+
+	switch (atoi(Cmd_Argv(1))) {
+	case 0:
+		hangarType = B_SMALL_HANGAR;
+		break;
+	case 1:
+		hangarType = B_HANGAR;
+		break;
+	default:
+		Com_Printf("B_SmallHangarOnDestroy_f: hangarType is 0 (small hangar) or 1 (large hangar)\n");
+		return;
+	}
+
+	buildingIdx = atoi(Cmd_Argv(3));
+	if (buildingIdx < 0 || buildingIdx >= MAX_BUILDINGS) {
+		Com_Printf("B_SmallHangarOnDestroy_f: buildingIdx '%i' above maximum value (%i)\n", buildingIdx, MAX_BUILDINGS);
+		return;
+	}
+
+	baseIdx = atoi(Cmd_Argv(2));
+
+	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
+		Com_Printf("B_SmallHangarOnDestroy_f: %i is outside bounds\n", baseIdx);
+		return;
+	}
+
+	base = B_GetFoundedBaseByIDX(baseIdx);
+	if (base)
+		B_HangarOnDestroy(base, hangarType, &gd.buildings[base->idx][buildingIdx]);
+	else
+		Com_Printf("B_SmallHangarOnDestroy_f: base %i is not founded\n", baseIdx);
+}
+
+/**
  * @brief Removes a building from the given base
  * @param[in] base Base to remove the building in
  * @param[in] building The building to remove
@@ -718,6 +811,12 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	|| base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
 		assert(0);
 		return qfalse;
+	}
+
+	/* call ondestroy trigger */
+	if (*onDestroy) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n", onDestroy, base->idx, building->idx);
+		Cmd_ExecuteString(va("%s %i %i;", onDestroy, base->idx, building->idx));
 	}
 
 	/* Remove the building from the base map */
@@ -814,12 +913,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		cap = B_GetCapacityFromBuildingType(buildingType);
 		if (cap != MAX_CAP)
 			B_UpdateBaseCapacities(cap, base);
-	}
-
-	/* call ondestroy trigger */
-	if (*onDestroy) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i;\n", onDestroy, base->idx);
-		Cbuf_AddText(va("%s %i;", onDestroy, base->idx));
 	}
 
 	B_BaseInit_f();
@@ -3140,6 +3233,7 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
+	Cmd_AddCommand("hangar_destroy", B_HangarOnDestroy_f, "Destroy a hangar");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
 	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");

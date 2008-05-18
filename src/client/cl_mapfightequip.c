@@ -503,7 +503,11 @@ void BDEF_RemoveBattery_f (void)
 		return;
 	}
 
-	base = B_GetBaseByIDX(baseIdx);
+	base = B_GetFoundedBaseByIDX(baseIdx);
+	if (!base) {
+		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i is not founded.\n", baseIdx);
+		return;
+	}
 
 	if (basedefType == BASEDEF_RANDOM) {
 		/* Type of base defense to destroy is randomly selected */
