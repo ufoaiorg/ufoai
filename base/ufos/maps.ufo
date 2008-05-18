@@ -2079,7 +2079,7 @@ mapdef community_centre
 
 mapdef laboratory
 {
-	map				laboratory
+	map				+laboratory
 	description		"_A laboratory where they examined found UFO wreck tiles."
 	multiplayer		true
 	teams			3
