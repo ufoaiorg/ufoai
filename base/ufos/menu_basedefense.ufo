@@ -101,7 +101,7 @@ menu basedefense
 
 	pic basedef_selected_slot
 	{
-		tooltip	"_Your are changing this defense system"
+		tooltip	"_Your are changing this defence system"
 		mousefx	true
 		pos		"25 30"
 		image	menu/buttons_small
@@ -210,7 +210,7 @@ menu basedefense
 
 	pic basedef_button_add1
 	{
-		tooltip	"_Install selected defense system"
+		tooltip	"_Install selected defence system"
 		mousefx	true
 		pos		"467 40"
 		image	menu/button_aircraft_menu
@@ -221,7 +221,7 @@ menu basedefense
 
 	pic basedef_button_remove1
 	{
-		tooltip	"_Remove this defense system"
+		tooltip	"_Remove this defence system"
 		mousefx	true
 		pos		"467 75"
 		image	menu/button_aircraft_menu
@@ -232,7 +232,7 @@ menu basedefense
 
 	pic basedef_button_add2
 	{
-		tooltip	"_Install selected defense system"
+		tooltip	"_Install selected defence system"
 		mousefx	true
 		pos		"467 174"
 		image	menu/button_aircraft_menu
@@ -243,7 +243,7 @@ menu basedefense
 
 	pic basedef_button_remove2
 	{
-		tooltip	"_Remove this defense system"
+		tooltip	"_Remove this defence system"
 		mousefx	true
 		pos		"467 209"
 		image	menu/button_aircraft_menu
@@ -254,7 +254,7 @@ menu basedefense
 
 	pic basedef_button_add3
 	{
-		tooltip	"_Equip this defense system with selected ammo"
+		tooltip	"_Equip this defence system with selected ammo"
 		mousefx	true
 		pos		"467 308"
 		image	menu/button_aircraft_menu
@@ -265,7 +265,7 @@ menu basedefense
 
 	pic basedef_button_remove3
 	{
-		tooltip	"_Remove ammo from this defense system"
+		tooltip	"_Remove ammo from this defence system"
 		mousefx	true
 		pos		"467 343"
 		image	menu/button_aircraft_menu
@@ -277,7 +277,7 @@ menu basedefense
 	pic airequip_zone_select1
 	{
 		invis false
-		tooltip	"_Choose defense system to build"
+		tooltip	"_Choose defence system to build"
 		mousefx	true
 		pos		"534 30"
 		image	menu/button_big_menu
@@ -299,7 +299,7 @@ menu basedefense
 	pic airequip_zone_select2
 	{
 		invis false
-		tooltip	"_Choose defense system to build after removing current one"
+		tooltip	"_Choose defence system to build after removing current one"
 		mousefx	true
 		pos		"534 164"
 		image	menu/button_big_menu
@@ -321,7 +321,7 @@ menu basedefense
 	pic airequip_zone_select3
 	{
 		invis false
-		tooltip	"_Change ammo in the defense system"
+		tooltip	"_Change ammo in the defence system"
 		mousefx	true
 		pos		"534 300"
 		image	menu/button_big_menu
@@ -342,7 +342,7 @@ menu basedefense
 
 	string basedef_header1
 	{
-		string	"_Current defense system"
+		string	"_Current defence system"
 		pos		"545 50"
 		font	f_small
 		color	"0 .78 0 1"
