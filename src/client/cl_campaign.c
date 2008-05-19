@@ -816,13 +816,17 @@ static const float MIN_DIST_BASE = 4.0f;
  */
 base_t* CP_PositionCloseToBase (const vec2_t pos)
 {
-	base_t *base;
-	int i;
+	int baseIdx;
 
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
 		if (MAP_GetDistance(pos, base->pos) < MIN_DIST_BASE) {
 			return base;
 		}
+	}
 
 	return NULL;
 }
@@ -1389,19 +1393,22 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
 {
 	float randomNumber, sum = 0.0f;
-	base_t *base;
+	int baseIdx;
+	base_t *base = NULL;
 
 	assert(mission);
 
 	/* Choose randomly a base depending on alienIterest values for those bases */
-	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 		sum += base->alienInterest;
 	}
 	randomNumber = frand() * sum;
-	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 		randomNumber -= base->alienInterest;
 		if (randomNumber < 0)
@@ -1409,7 +1416,7 @@ static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
 	}
 
 	/* Make sure we have a base */
-	assert(randomNumber < 0);
+	assert(base && (randomNumber < 0));
 
 	/* base is already under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK)
@@ -3704,9 +3711,12 @@ static void CL_HandleBudget (void)
 	}
 
 	cost = 0;
-	for (i = 0; i < gd.numBases; i++) {
-		for (j = 0; j < gd.bases[i].numAircraftInBase; j++) {
-			cost += gd.bases[i].aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
+	for (i = 0; i < MAX_BASES; i++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
+		for (j = 0; j < base->numAircraftInBase; j++) {
+			cost += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 		}
 	}
 
@@ -3716,13 +3726,16 @@ static void CL_HandleBudget (void)
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 	}
 
-	for (i = 0; i < gd.numBases; i++) {
+	for (i = 0; i < MAX_BASES; i++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
 		cost = SALARY_BASE_UPKEEP;	/* base cost */
 		for (j = 0; j < gd.numBuildings[i]; j++) {
 			cost += gd.buildings[i][j].varCosts;
 		}
 
-		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of base %s"), cost, gd.bases[i].name);
+		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of base %s"), cost, base->name);
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 		CL_UpdateCredits(ccs.credits - cost);
 	}
@@ -4120,20 +4133,27 @@ static void CL_StatsUpdate_f (void)
 	sum += costs;
 
 	costs = 0;
-	for (i = 0; i < gd.numBases; i++) {
-		for (j = 0; j < gd.bases[i].numAircraftInBase; j++) {
-			costs += gd.bases[i].aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
+	for (i = 0; i < MAX_BASES; i++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
+
+		for (j = 0; j < base->numAircraftInBase; j++) {
+			costs += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 		}
 	}
 	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
-	for (i = 0; i < gd.numBases; i++) {
+	for (i = 0; i < MAX_BASES; i++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
 		costs = SALARY_BASE_UPKEEP;	/* base cost */
 		for (j = 0; j < gd.numBuildings[i]; j++) {
 			costs += gd.buildings[i][j].varCosts;
 		}
-		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), gd.bases[i].name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 		sum += costs;
 	}
 
@@ -4576,7 +4596,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	 * this is needed because the base load function which loads the aircraft
 	 * doesn't know anything (at that stage) about the new missions that were
 	 * add in this load function */
-	for (base = gd.bases, i = 0; i < gd.numBases; i++, base++) {
+	for (i = 0; i < MAX_BASES; i++) {
+		base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
+
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			if (base->aircraft[j].status == AIR_MISSION) {
 				assert(base->aircraft[j].missionID);
@@ -6884,9 +6908,9 @@ static void CP_UFORecovered_f (void)
 
 	base = NULL;
 	/* Now we have to check whether we can store the UFO in any base. */
-	for (i = 0; i < gd.numBases; i++) {
-		base = B_GetBaseByIDX(i);
-		if (!base->founded)
+	for (i = 0; i < MAX_BASES; i++) {
+		base = B_GetFoundedBaseByIDX(i);
+		if (!base)
 			continue;
 		if (UFO_ConditionsForStoring(base, ufocraft)) {
 			store = qtrue;
@@ -7036,9 +7060,9 @@ static void CP_UFORecoveredStore_f (void)
 
 	recoveryBaseSelectPopup[0] = '\0';
 	/* Check how many bases can store this UFO. */
-	for (i = 0; i < gd.numBases; i++) {
-		const base_t *base = B_GetBaseByIDX(i);
-		if (!base->founded)
+	for (i = 0; i < MAX_BASES; i++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
 			continue;
 		if (UFO_ConditionsForStoring(base, ufocraft)) {
 			Q_strcat(recoveryBaseSelectPopup, base->name, sizeof(recoveryBaseSelectPopup));

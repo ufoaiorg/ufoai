@@ -2859,7 +2859,7 @@ static void B_BuildingList_f (void)
 	}
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
