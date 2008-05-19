@@ -1,0 +1,47 @@
+// *********************************
+// Mart
+// *********************************
+
+base mart/ma_
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: main
+// b: dropship
+
+tile +main
+{
+7 9
+
+0      0      0      0      0      0      0
+0     +a     +a     +a      +a     +a     0
+0     +a     +a     +a      +a     +a     0
+0     +a     +a     +a      +a     +a     0
+0     +a     +a     +a      +a     +a     0
+0     +a     +a     +a      +a     +a     0
+0     +a     +a      b       b      b     0
+0     +a     +a      b       b      b     0
+0      0      0      0       0      0     0
+}
+
+tile +drop_firebird
+{
+5 4
+
+a      a      a      a      0
+a     +b     +b     +b      0
+a     +b     +b     +b      0
+0      0      0      0      0
+}
+
+// ########################################
+// ########### Maps for the game ##########
+
+assembly default
+{
+size "5 7"
+title "_Mart"
++main "1 1"
+*rm_drop +drop_firebird "1 1"
+}
