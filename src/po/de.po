@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-04-26 22:59+0200\n"
-"PO-Revision-Date: 2008-05-10 19:49+0100\n"
+"PO-Revision-Date: 2008-05-17 11:58+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3912,7 +3912,7 @@ msgstr "Wettereffekte:"
 
 #: ../base/ufos/menu_options.ufo:346
 msgid "Swap control:"
-msgstr "Steuerung tauschen:"
+msgstr "Swap Intervall:"
 
 #: ../base/ufos/menu_options.ufo:358
 msgid "Vertex buffers:"
