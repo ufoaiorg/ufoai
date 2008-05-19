@@ -638,25 +638,6 @@ item smg_ammo
 
 	weapon_mod smg
 	{
-//		firedef
-//		{
-//			name	"_Snap Shot"
-//			skill	close
-//			projtl	bullet
-//			impact	bulletImpact
-//			hitbody null
-//			firesnd	weapons/smg2
-//			speed	0
-//			spread	"1.5 1.5"
-//			crouch	0.7
-//			range	45
-//			shots	1
-//			ammo	1
-//			time	4
-//			damage	"20 3"
-//			dmgweight normal_spray
-//			reaction	true
-//		}
 		firedef
 		{
 			name	"_5-Round Burst"
@@ -782,27 +763,6 @@ item shotgun2_slug_ammo
 			reaction	true
 		}
 
-//		firedef
-//		{
-//			name	"_Full-Auto"
-//			skill	close
-//			projtl	bullet
-//			impact	bulletImpact
-//			hitbody null
-//			firesnd	weapons/riotshotgun
-//			sndonce false
-//			speed	0
-//			spread	"3 3"
-//			crouch	1.0
-//			range	15
-//			shots	7
-//			ammo	7
-//			delaybetweenshots		7
-//			time	20
-//			damage	"50 10"
-//			dmgweight normal_heavy
-//			reaction	true
-//		}
 	}
 }
 

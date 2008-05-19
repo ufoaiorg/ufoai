@@ -94,22 +94,6 @@ item knifemono
 			dmgweight normal_monomolecularblade
 			reaction	true
 		}
-//		firedef
-//		{
-//			name	"_Slash"
-//			skill	close
-//			projtl	null
-//			impact	null
-//			hitbody blood
-//			firesnd	weapons/kerrblade_swip
-//			speed	0
-//			range	1.5
-//			shots	1
-//			time	12
-//			damage	"140 35"
-//			dmgweight normal_monomolecularblade
-//			reaction	true
-//		}
 		firedef
 		{
 			name	"_Throw"

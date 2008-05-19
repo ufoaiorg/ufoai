@@ -228,25 +228,4 @@ campaign aliencampaign
 	date		"2084 79 6"
 }
 
-campaign test
-{
-	name		"Testing and Tweaking Campaign --- Please Ignore"
-	text		"_txt_standard_campaign"
-	team		human
-	soldiers	11
-	scientists	11
-	workers		11
-	medics		11
-	difficulty	0
-	minhappiness	0.2
-	maxdebts	300000
-	researched	rslist_human
-	equipment	testing_and_tweaking
-	market		testing_and_tweaking
-	credits		100000000
-	map		    map_earth
-	visible		false
-
-	date		"2084 0 7"
-}
 */
