@@ -1,3 +1,6 @@
-/*.bak
 /*.bsp
-/*.autosave*
+/*.bak
+/*autosave*
+/*.tmp
+/*.footsteps
+/*.map.original*
