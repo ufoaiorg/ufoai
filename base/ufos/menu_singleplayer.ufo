@@ -54,7 +54,7 @@ menu singleplayer
 	pic button_new
 	{
 		pos	"640 170"
-		click	{ cmd "mn_push campaigns;" }
+		click	{ cmd "game_exit; mn_push campaigns;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
