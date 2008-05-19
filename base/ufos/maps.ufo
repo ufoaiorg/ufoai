@@ -1043,7 +1043,7 @@ mapdef druglord
 
 mapdef eaglenest
 {
-	map				eaglenest
+	map				+eaglenest
 	multiplayer		true
 	teams			2
 	gametypes {
