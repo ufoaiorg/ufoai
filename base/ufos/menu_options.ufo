@@ -341,9 +341,10 @@ menu options_video
 		align	ur
 	}
 
+	// FIXME: should be a bar with values from 0-2
 	string swapcontrol_str
 	{
-		string	"_Swap control:"
+		string	"_Swap interval:"
 		pos		"500 415"
 	}
 	checkbox swapcontrol
