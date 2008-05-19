@@ -1062,7 +1062,7 @@ particle flashgren
 {
 	init
 	{
-		model  weapons/flashgren/flashgren
+		model  weapons/flashbang/flashbang
 		color  ".5 .5 .5 1"
 	}
 }
