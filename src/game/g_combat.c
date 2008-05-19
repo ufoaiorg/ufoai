@@ -848,9 +848,11 @@ static void DumpAllEntities (void)
  * @param[in] weapon The weapon the actor is shooting with
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] z_align This value may change the target z height
+ * @param[in] i The ith shot
+ * @param[in] type The firemode (ST_NUM_SHOOT_TYPES)
  */
 static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at,
-	int mask, item_t * weapon, shot_mock_t *mock, int z_align, int i)
+	int mask, item_t * weapon, shot_mock_t *mock, int z_align, int i, int type)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? @todo The random dir-modifier ?? */
@@ -869,6 +871,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? @todo */
 	int throughWall; /* shoot through x walls */
+	int clientType;	/* shoot type for ai controlled actors */
 
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
 	if (ent->state & STATE_DEAD) {
@@ -973,12 +976,22 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			mask |= 1 << tr.ent->team;
 
 		if (!mock) {
+			if (IS_SHOT_RIGHT(type))
+				clientType = M_FIRE_R;
+			if (IS_SHOT_LEFT(type))
+				clientType = M_FIRE_L;
+			else if (IS_SHOT_HEADGEAR(type))
+				clientType = M_FIRE_HEADGEAR;
+			else
+				clientType = 0xFF; /* human controlled player */
+
 			/* send shot */
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(fd->obj->idx);
 			gi.WriteByte(fd->weapFdsIdx);
 			gi.WriteByte(fd->fdIdx);
+			gi.WriteByte(clientType);
 			gi.WriteByte(flags);
 			gi.WriteByte(tr.contentFlags);
 			gi.WritePos(tracefrom);
@@ -1147,6 +1160,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 			weaponFdIdx = FIRESH_FiredefsIDXForWeapon((*weapon)->t, (*weapon)->t);
 			Com_DPrintf(DEBUG_GAME, "weaponFdIdx: %i (%s), firemode: %i\n", weaponFdIdx, (*weapon)->t->name, firemode);
 			assert(weaponFdIdx >= 0);
+			assert(firemode >= 0);
 			/* fd = od[weaponFdIdx][firemodeidx] */
 			*fd = &(*weapon)->t->fd[weaponFdIdx][firemode];
 		} else {
@@ -1157,6 +1171,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 		/* Get firedef from the ammo entry. */
 		weaponFdIdx = FIRESH_FiredefsIDXForWeapon((*weapon)->m, (*weapon)->t);
 		assert(weaponFdIdx >= 0);
+		assert(firemode >= 0);
 		/* fd = od[weaponFdIdx][firemodeidx] */
 		*fd = &(*weapon)->m->fd[weaponFdIdx][firemode];
 	}
@@ -1179,17 +1194,21 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
-	fireDef_t *fd = NULL;
+	fireDef_t *fd;
 	edict_t *ent;
-	item_t *weapon = NULL;
+	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
-	int i, ammo, prev_dir = 0, reaction_leftover, shots;
-	int container = 0, mask;
+	int i, ammo, prev_dir, reaction_leftover, shots;
+	int container, mask;
 	qboolean quiet;
+	int clientType;
 
 	ent = g_edicts + num;
 	quiet = (mock != NULL);
 
+	weapon = NULL;
+	fd = NULL;
+	container = 0;
 	if (!G_GetShotFromType(ent, type, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
 			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - object not activateable!\n"));
@@ -1279,6 +1298,9 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	/* rotate the player */
 	if (mock)
 		prev_dir = ent->dir;
+	else
+		prev_dir = 0;
+
 	VectorSubtract(at, ent->pos, dir);
 	ent->dir = AngleToDV((int) (atan2(dir[1], dir[0]) * todeg));
 
@@ -1308,12 +1330,22 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 				return qfalse;
 		}
 
+		if (IS_SHOT_RIGHT(type))
+			clientType = M_FIRE_R;
+		if (IS_SHOT_LEFT(type))
+			clientType = M_FIRE_L;
+		else if (IS_SHOT_HEADGEAR(type))
+			clientType = M_FIRE_HEADGEAR;
+		else
+			clientType = 0xFF; /* human controlled player */
+
 		/* start shoot */
 		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
 		gi.WriteShort(ent->number);
 		gi.WriteShort(fd->obj->idx);
 		gi.WriteByte(fd->weapFdsIdx);
 		gi.WriteByte(fd->fdIdx);
+		gi.WriteByte(clientType);
 		gi.WriteGPos(ent->pos);
 		gi.WriteGPos(at);
 
@@ -1368,7 +1400,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		if (fd->gravity)
 			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align);
 		else
-			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i);
+			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i, type);
 
 	if (!mock) {
 		/* send TUs if ent still alive */

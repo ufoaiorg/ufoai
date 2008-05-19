@@ -1997,14 +1997,14 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, employee->chr.morale);
 
 		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-		MSG_WriteByte(buf, SKILL_NUM_TYPES+1);
-		for (j = 0; j < SKILL_NUM_TYPES+1; j++)
+		MSG_WriteByte(buf, SKILL_NUM_TYPES + 1);
+		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 			MSG_WriteLong(buf, employee->chr.score.experience[j]);
 		MSG_WriteByte(buf, SKILL_NUM_TYPES);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)	/* even new attributes */
 			MSG_WriteByte(buf, employee->chr.score.skills[j]);
 		MSG_WriteByte(buf, SKILL_NUM_TYPES + 1);
-		for (j = 0; j < SKILL_NUM_TYPES+1; j++)
+		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 			MSG_WriteByte(buf, employee->chr.score.initialSkills[j]);
 		MSG_WriteByte(buf, KILLED_NUM_TYPES);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)

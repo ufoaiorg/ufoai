@@ -28,34 +28,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
 
-int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactionFire() is abusing it. */
+/** Stores level.activeTeam while G_CanReactionFire() is abusing it. */
+int turnTeam;
 
-/* if actors appear or perish we have to handle the movement of the current actor
- * a little bit different */
+/** if actors appear or perish we have to handle the movement of the current
+ * actor a little bit different */
 static qboolean sentAppearPerishEvent;
 
 static chrScoreMission_t scoreMission[MAX_EDICTS];
 static int scoreMissionNum = 0;
 
-qboolean G_IsLivingActor (edict_t *ent)
+/**
+ * @brief Checks whether the given edict is a living actor
+ * @param[in] ent The edict to perform the check for
+ */
+qboolean G_IsLivingActor (const edict_t *ent)
 {
 	assert(ent);
-	return ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD));
+	return ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
+		&& !(ent->state & STATE_DEAD));
 }
 
 /**
- * @brief Generates the player mask
+ * @brief Generates the player bit mask for a given team
+ * @param[in] team The team to create the player bit mask for
+ * @note E.g. multiplayer team play can have more than one human player on the
+ * same team.
  */
 int G_TeamToPM (int team)
 {
-	player_t *player;
+	const player_t *p;
 	int player_mask, i;
 
 	player_mask = 0;
 
 	/* don't handle the ai players, here */
-	for (i = 0, player = game.players; i < game.sv_maxplayersperteam; i++, player++)
-		if (player->inuse && team == player->pers.team)
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
+		if (p->inuse && team == p->pers.team)
 			player_mask |= (1 << i);
 
 	return player_mask;
@@ -67,14 +76,14 @@ int G_TeamToPM (int team)
  */
 int G_VisToPM (int vis_mask)
 {
-	player_t *player;
+	const player_t *p;
 	int player_mask, i;
 
 	player_mask = 0;
 
 	/* don't handle the ai players, here */
-	for (i = 0, player = game.players; i < game.sv_maxplayersperteam; i++, player++)
-		if (player->inuse && (vis_mask & (1 << player->pers.team)))
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
+		if (p->inuse && (vis_mask & (1 << p->pers.team)))
 			player_mask |= (1 << i);
 
 	return player_mask;
@@ -110,7 +119,8 @@ void G_SendStats (edict_t * ent)
 static void G_WriteItem (item_t item, int container, int x, int y)
 {
 	assert(item.t);
-	gi.WriteFormat("sbsbbbb", item.t->idx, item.a, item.m ? item.m->idx : NONE, container, x, y, item.rotated);
+	gi.WriteFormat("sbsbbbb", item.t->idx, item.a, item.m ? item.m->idx : NONE,
+		container, x, y, item.rotated);
 }
 
 /**
@@ -142,14 +152,17 @@ static void G_SendPlayerStats (player_t * player)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == player->pers.team)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
+		 && ent->team == player->pers.team)
 			G_SendStats(ent);
 }
 
 /**
  * @brief Regenerate the "STUN" value of each (partly) stunned team member.
- * @note The values are _not_ sent via network. This is done in G_GiveTimeUnits -  it _has_ to be called afterwards.
- * Fully stunned team members are not considered here (yet) - they remain fully stunned (i.e. on the floor).
+ * @note The values are @b not sent via network. This is done in
+ * @c G_GiveTimeUnits. It @b has to be called afterwards.
+ * Fully stunned team members are not considered here (yet) - they remain
+ * fully stunned (i.e. on the floor).
  * @param[in] team The index of the team to update the values for.
  * @sa G_GiveTimeUnits
  * @todo Use dynamic value for regeneration. See comment below.
@@ -158,9 +171,9 @@ static void G_UpdateStunState (int team)
 {
 	edict_t *ent;
 	int i;
-	const int regen = 1;	/**< @todo Make this depend on the character-attributes.
-							 * See http://lists.cifrid.net/pipermail/ufoai/2008-February/000346.html
-							 */
+	/** @todo Make this depend on the character-attributes.
+	 * @see http://lists.cifrid.net/pipermail/ufoai/2008-February/000346.html */
+	const int regen = 1;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && G_IsLivingActor(ent) && ent->team == team) {
@@ -247,7 +260,8 @@ void G_SendInventory (int player_mask, edict_t * ent)
  * @param[in] playermask These are the affected players or clients
  * In case of e.g. teamplay there can be more than one client affected - thus
  * this is a player mask
- * @param[in] appear Is this event about an appearing actor (or an perishing one)?
+ * @param[in] appear Is this event about an appearing actor (or
+ * a perishing one)?
  * @param[in] check The edict we are talking about
  * @sa CL_ActorAppear
  */
@@ -486,10 +500,10 @@ static float G_Vis (int team, edict_t * from, edict_t * check, int flags)
  * @param[in] check the edict we are talking about - which may become visible
  * or perish
  * @param[in] flags if you wanna check whether the edict may also perish from
- * other players view, you should use the VT_PERISH bits
- * @note If the edict (check) is already visible and flags doesn't contain the
- * bits of VT_PERISH, no further checks are performed - only the VIS_YES bits
- * are returned
+ * other players view, you should use the @c VT_PERISH bits
+ * @note If the edict is already visible and flags doesn't contain the
+ * bits of @c VT_PERISH, no further checks are performed - only the
+ * @c VIS_YES bits are returned
  */
 int G_TestVis (int team, edict_t * check, int flags)
 {
@@ -518,8 +532,10 @@ int G_TestVis (int team, edict_t * check, int flags)
 /**
  * @brief This function sends all the actors to the client that are not visible
  * initially - this is needed because an actor can e.g. produce sounds that are
- * send over the net
- * @note Call this for the first G_CheckVis call for every new actor or player
+ * send over the net. And the client can only handle them if he knows the
+ * @c le_t (local entity) already
+ * @note Call this for the first @c G_CheckVis call for every new
+ * actor or player
  * @sa G_CheckVis
  * @sa CL_ActorAdd
  */
@@ -627,14 +643,16 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 			/* check if he's visible */
 			vis = G_TestVis(team, check, perish);
 
+			/* visiblity has changed ... */
 			if (vis & VIS_CHANGE) {
+				/* swap the vis mask for the given team */
 				check->visflags ^= (1 << team);
 				G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check);
 
+				/* ... to visible - if this is no civilian, stop the movement */
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
-					if ((check->type == ET_ACTOR || check->type == ET_ACTOR2x2)
-					 && !(check->state & STATE_DEAD) && check->team != TEAM_CIVILIAN)
+					if (G_IsLivingActor(check) && check->team != TEAM_CIVILIAN)
 						status |= VIS_STOP;
 				} else
 					status |= VIS_PERISH;
@@ -699,10 +717,10 @@ int G_DoTurn (edict_t * ent, byte toDV)
 
 	assert(ent->dir < DIRECTIONS);
 
-	toDV &= (DIRECTIONS-1);
+	toDV &= (DIRECTIONS - 1);
 
 	/* return if no rotation needs to be done */
-	if ((ent->dir) == (toDV))
+	if (ent->dir == toDV)
 		return 0;
 
 	/* calculate angle difference */
@@ -715,7 +733,7 @@ int G_DoTurn (edict_t * ent, byte toDV)
 	/* prepare rotation */
 	if (angleDiv > 0) {
 		rot = dvleft;
-		num = (+angleDiv + 22.5) / 45.0;
+		num = (angleDiv + 22.5) / 45.0;
 	} else {
 		rot = dvright;
 		num = (-angleDiv + 22.5) / 45.0;
@@ -963,23 +981,27 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n")); /* @todo: "or not researched" */
+		/** @todo: "or not researched" */
+		gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:
 		/* Continue below. */
 		break;
 	}
 
-	/* FIXME: This is impossible - if not we should check MAX_INVDEFS*/
+	/* FIXME: This is impossible - if not we should check MAX_INVDEFS */
 	assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
 
 	/* successful inventory change; remove the item in clients */
 	if (from == gi.csi->idFloor) {
-		/* We removed an item from a floor - check how the client needs to be updated. */
+		/* We removed an item from the floor - check how the client
+		 * needs to be updated. */
 		assert(!newFloor);
 		if (FLOOR(ent)) {
 			/* There is still something on the floor. */
-			FLOOR(floor) = FLOOR(ent); /* @todo: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			/** @todo: @b why do we do this here exactly? Shouldn't they be the
+			 * same already at this point? */
+			FLOOR(floor) = FLOOR(ent);
 			/* Tell the client to remove the item from the container */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
 			gi.WriteShort(floor->number);
@@ -987,7 +1009,8 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 			gi.WriteByte(fx);
 			gi.WriteByte(fy);
 		} else {
-			/* Floor is empty, remove the edict (from server+client) if we are not moving to it. */
+			/* Floor is empty, remove the edict (from server + client) if we are
+			 * not moving to it. */
 			if (to != gi.csi->idFloor) {
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
 				gi.WriteShort(floor->number);
@@ -1052,12 +1075,16 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		if (newFloor) {
 			/* A new container was created for the floor. */
 			assert(FLOOR(ent));
-			FLOOR(floor) = FLOOR(ent); /* @todo: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			/** @todo: @b why do we do this here exactly? Shouldn't they be the
+			 * same already at this point? */
+			FLOOR(floor) = FLOOR(ent);
 			/* Send item info to the clients */
 			G_CheckVis(floor, qtrue);
 		} else {
 			/* Add the item; update floor, because we add at beginning */
-			FLOOR(floor) = FLOOR(ent); /* @todo: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			/** @todo: @b why do we do this here exactly? Shouldn't they be the
+			 * same already at this point? */
+			FLOOR(floor) = FLOOR(ent);
 			/* Tell the client to add the item to the container. */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
 			gi.WriteShort(floor->number);
@@ -1074,15 +1101,15 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 	/* Update reaction firemode when something is moved from/to a hand. */
 	if ((from == gi.csi->idRight) || (to == gi.csi->idRight)) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove: Something moved in/out of Right hand.\n");
+		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove: Something moved in/out of right hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
-		gi.WriteShort(0);	/**< hand=right */
+		gi.WriteShort(0);	/**< hand = right */
 	} else if ((from == gi.csi->idLeft) || (to == gi.csi->idLeft)) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove:  Something moved in/out of Left hand.\n");
+		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove:  Something moved in/out of left hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
-		gi.WriteShort(1);	/**< hand=left */
+		gi.WriteShort(1);	/**< hand = left */
 	}
 
 	/* Other players receive weapon info only. */
@@ -1105,8 +1132,10 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	gi.EndEvents();
 }
 
-
+/** @brief Move items to adjacent locations if the containers on the current
+ * floor edict are full */
 /*#define ADJACENT*/
+
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
  * @param[in] ent Pointer to an edict_t being an actor.
@@ -1175,7 +1204,7 @@ static void G_InventoryToFloor (edict_t * ent)
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
 				for (i = 0; i < DIRECTIONS; i++) {
-					/* @todo: Check whether movement is possible here - otherwise don't use this field */
+					/** @todo: Check whether movement is possible here - otherwise don't use this field */
 					/* extend pos with the direction vectors */
 					Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
 					/* now try to get a floor entity for that new location */
@@ -1310,7 +1339,6 @@ void G_MoveCalc (int team, pos3_t from, int size, int distance)
  * @param[in] from starting point to walk from
  * @return qtrue if there is something blocking this direction.
  * @return qfalse if moving into this direction is ok.
- *
  * @todo Add support for 2x2 units. See Grid_CheckForbidden for an example on how to do that.
  * @todo But maybe this check isn't even needed anymore? Shouldn't Grid_CheckForbidden have prevented this?
  */
@@ -1537,13 +1565,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					if (G_ReactToMove(ent, qfalse))
 						status |= VIS_STOP;
 					autoCrouchRequired = qfalse;
-					/* @todo Let the camera center on the attacker if he's visible
+					/** @todo Let the camera center on the attacker if he's visible
 					 * if he's invisible let the target turn in the shooting direction
-					 * of the attacker (G_Turn) - also let all team members now
+					 * of the attacker (@see G_Turn) - also let all team members now
 					 * about the situation. Otherwise they may move (e.g. in a
 					 * coop game) and trigger the reaction fire which may kill
-					 * the targetted actor
-					 */
+					 * the targetted actor */
 					steps = 0;
 					sentAppearPerishEvent = qfalse;
 				}
@@ -1553,7 +1580,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* check for death */
 				if (oldState != ent->state && !(ent->state & STATE_DAZED)) {
-					/* @todo Handle dazed via trigger_hurt */
+					/** @todo Handle dazed via trigger_hurt */
 					/* maybe this was due to rf - then the G_ActorDie was already called */
 					if (ent->maxs[2] != PLAYER_DEAD)
 						G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN, NULL);
@@ -2211,19 +2238,14 @@ void G_ListMissionScore_f (void)
  * @sa CL_ActorUseDoor
  * @sa G_UseEdict
  */
-qboolean G_ClientUseEdict (player_t *player, edict_t *actor, edict_t *edict, int type)
+qboolean G_ClientUseEdict (player_t *player, edict_t *actor, edict_t *edict)
 {
-	/* there may be other edicts in this chain, too */
-	if (edict->type != type) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientUseEdict: Edict is not of the same type as required (%i), but: %i\n", type, edict->type);
-		return qfalse;
-	}
-
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
 	if (!G_ActionCheck(player, actor, edict->TU, qfalse))
 		return qfalse;
 
-	G_UseEdict(edict);
+	if (!G_UseEdict(edict))
+		return qfalse;
 
 	/* using a group of edicts only costs TUs once (for the master) */
 	actor->TU -= edict->TU;
@@ -2301,7 +2323,7 @@ int G_ClientAction (player_t * player)
 				if (door->flags & FL_GROUPSLAVE)
 					door = door->groupMaster;
 
-				G_ClientUseEdict(player, actor, door, door->type);
+				G_ClientUseEdict(player, actor, door);
 			} else
 				Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n",
 					actor->client_action->number, door->number);
@@ -3006,6 +3028,7 @@ static void G_SendEdictsAndBrushModels (int team)
 				gi.WriteShort(ent->type);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(ent->modelindex);
+				/* strip the higher bits - only send levelflags */
 				gi.WriteByte(ent->spawnflags & 0xFF);
 				gi.WritePos(ent->origin);
 				gi.WritePos(ent->angles);
@@ -3193,6 +3216,9 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 
 /**
  * @sa G_ClientDisconnect
+ * @sa CL_ConnectionlessPacket
+ * @todo: Check if the teamnum preference has already reached maxsoldiers
+ * and reject connection if so
  */
 qboolean G_ClientConnect (player_t * player, char *userinfo)
 {
@@ -3201,14 +3227,14 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	/* check to see if they are on the banned IP list */
 	value = Info_ValueForKey(userinfo, "ip");
 	if (SV_FilterPacket(value)) {
-		Info_SetValueForKey(userinfo, "rejmsg", "Banned.");
+		Info_SetValueForKey(userinfo, "rejmsg", REJ_BANNED);
 		return qfalse;
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
 	if (*password->string && Q_strcmp(password->string, "none")
 	 && Q_strcmp(password->string, value)) {
-		Info_SetValueForKey(userinfo, "rejmsg", "Password required or incorrect.");
+		Info_SetValueForKey(userinfo, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
 		return qfalse;
 	}
 

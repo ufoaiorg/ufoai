@@ -649,7 +649,7 @@ int SEQ_2Dobj (const char *name, char *data)
 	while (*data) {
 		for (vp = seq2D_vals; vp->string; vp++)
 			if (!Q_strcmp(data, vp->string)) {
-				data += strlen(data) + 1; /* FIXME: COM_Parse */
+				data += strlen(data) + 1;
 				switch (vp->type) {
 				case V_TRANSLATION_MANUAL_STRING:
 					data++;

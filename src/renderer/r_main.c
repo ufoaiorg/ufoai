@@ -94,11 +94,11 @@ cvar_t *r_geoscape_overlay;
  */
 static void R_Strings_f (void)
 {
-	Com_Printf("GL_VENDOR: %s\n", r_config.vendor_string);
-	Com_Printf("GL_RENDERER: %s\n", r_config.renderer_string);
-	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
+	Com_Printf("GL_VENDOR: %s\n", r_config.vendorString);
+	Com_Printf("GL_RENDERER: %s\n", r_config.rendererString);
+	Com_Printf("GL_VERSION: %s\n", r_config.versionString);
 	Com_Printf("MODE: %i, %d x %d FULLSCREEN: %i\n", vid_mode->integer, viddef.width, viddef.height, vid_fullscreen->integer);
-	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
+	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensionsString);
 	Com_Printf("GL_MAX_TEXTURE_SIZE: %d\n", r_config.maxTextureSize);
 }
 
@@ -191,7 +191,7 @@ static inline void R_Clear (void)
 	qglDepthFunc(GL_LEQUAL);
 	R_CheckError();
 
-	qglDepthRange(0, 1);
+	qglDepthRange(0.0f, 1.0f);
 	R_CheckError();
 }
 
@@ -488,10 +488,10 @@ static void R_InitExtension (void)
 {
 	GLenum err;
 
-	if (strstr(r_config.extensions_string, "GL_ARB_texture_compression")) {
+	if (strstr(r_config.extensionsString, "GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
 			Com_Printf("using GL_ARB_texture_compression\n");
-			if (r_ext_s3tc_compression->integer && strstr(r_config.extensions_string, "GL_EXT_texture_compression_s3tc")) {
+			if (r_ext_s3tc_compression->integer && strstr(r_config.extensionsString, "GL_EXT_texture_compression_s3tc")) {
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 			} else {
@@ -513,7 +513,7 @@ static void R_InitExtension (void)
 	r_state.anisotropic = qfalse;
 	r_state.maxAnisotropic = 0;
 
-	if (strstr(r_config.extensions_string, "GL_EXT_texture_filter_anisotropic")) {
+	if (strstr(r_config.extensionsString, "GL_EXT_texture_filter_anisotropic")) {
 		if (r_anisotropic->integer) {
 			qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &r_state.maxAnisotropic);
 			R_CheckError();
@@ -532,7 +532,7 @@ static void R_InitExtension (void)
 		Cvar_Set("r_anisotropic", "0");
 	}
 
-	if (strstr(r_config.extensions_string, "GL_EXT_texture_lod_bias")) {
+	if (strstr(r_config.extensionsString, "GL_EXT_texture_lod_bias")) {
 		Com_Printf("using GL_EXT_texture_lod_bias\n");
 		r_state.lod_bias = qtrue;
 	} else {
@@ -542,7 +542,7 @@ static void R_InitExtension (void)
 
 	r_state.glsl_program = qfalse;
 	r_state.arb_fragment_program = qfalse;
-	if (strstr(r_config.extensions_string, "GL_ARB_fragment_program")) {
+	if (strstr(r_config.extensionsString, "GL_ARB_fragment_program")) {
 		Com_Printf("using GL_ARB_fragment_program\n");
 		r_state.arb_fragment_program = qtrue;
 
@@ -571,7 +571,7 @@ static void R_InitExtension (void)
 	}
 
 	/* FIXME: Is this the right extension to check for? */
-	if (strstr(r_config.extensions_string, "GL_ARB_shading_language_100")) {
+	if (strstr(r_config.extensionsString, "GL_ARB_shading_language_100")) {
 		Com_Printf("using GL_ARB_shading_language_100\n");
 		qglCreateShader  = SDL_GL_GetProcAddress("glCreateShaderObjectARB");
 		qglShaderSource  = SDL_GL_GetProcAddress("glShaderSourceARB");
@@ -591,7 +591,7 @@ static void R_InitExtension (void)
 	}
 
 	/* vertex buffer objects */
-	if (strstr(r_config.extensions_string, "GL_ARB_vertex_buffer_object")){
+	if (strstr(r_config.extensionsString, "GL_ARB_vertex_buffer_object")){
 		if (r_vertexbuffers->integer) {
 			qglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
 			qglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
@@ -653,25 +653,25 @@ static inline void R_EnforceVersion (void)
 {
 	int maj, min, rel;
 
-	sscanf(r_config.version_string, "%d.%d.%d ", &maj, &min, &rel);
+	sscanf(r_config.versionString, "%d.%d.%d ", &maj, &min, &rel);
 
 	if (maj > 1)
 		return;
 
 	if (maj < 1)
-		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.version_string);
+		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.versionString);
 
 	if (min > 2)
 		return;
 
 	if (min < 2)
-		Com_Error(ERR_FATAL, "OpenGL Version %s is less than 1.2.1", r_config.version_string);
+		Com_Error(ERR_FATAL, "OpenGL Version %s is less than 1.2.1", r_config.versionString);
 
 	if (rel > 1)
 		return;
 
 	if (rel < 1)
-		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.version_string);
+		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.versionString);
 }
 
 /**
@@ -681,9 +681,10 @@ static inline void R_VerifyDriver (void)
 {
 #ifdef _WIN32
 	if (!Q_stricmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
-		Com_Error(ERR_FATAL, "No hardware acceleration detected");
+		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
+			"Update your graphic card drivers.");
 #endif
-	if (r_intel_hack->integer && strstr(r_config.vendor_string, "Intel")) {
+	if (r_intel_hack->integer && strstr(r_config.vendorString, "Intel")) {
 		/* HACK: */
 		Com_Printf("Activate texture compression for Intel chips\n");
 		Cvar_Set("r_ext_texture_compression", "1");
@@ -708,15 +709,16 @@ qboolean R_Init (void)
 	QR_Link();
 
 	/* get our various GL strings */
-	r_config.vendor_string = (const char *)qglGetString(GL_VENDOR);
-	Com_Printf("GL_VENDOR: %s\n", r_config.vendor_string);
-	r_config.renderer_string = (const char *)qglGetString(GL_RENDERER);
-	Com_Printf("GL_RENDERER: %s\n", r_config.renderer_string);
-	r_config.version_string = (const char *)qglGetString(GL_VERSION);
-	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
-	r_config.extensions_string = (const char *)qglGetString(GL_EXTENSIONS);
-	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
+	r_config.vendorString = (const char *)qglGetString(GL_VENDOR);
+	Com_Printf("GL_VENDOR: %s\n", r_config.vendorString);
+	r_config.rendererString = (const char *)qglGetString(GL_RENDERER);
+	Com_Printf("GL_RENDERER: %s\n", r_config.rendererString);
+	r_config.versionString = (const char *)qglGetString(GL_VERSION);
+	Com_Printf("GL_VERSION: %s\n", r_config.versionString);
+	r_config.extensionsString = (const char *)qglGetString(GL_EXTENSIONS);
+	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensionsString);
 
+	/* sanity checks and card specific hacks */
 	R_VerifyDriver();
 	R_EnforceVersion();
 
@@ -745,7 +747,6 @@ void R_Shutdown (void)
 
 	R_ShutdownModels();
 	R_ShutdownImages();
-	R_ShutdownDraw();
 
 	R_ShutdownShaders();
 	R_SphereShutdown();

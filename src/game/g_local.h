@@ -278,13 +278,13 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 #define MAX_DVTAB 32
 
 void G_FlushSteps(void);
-qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door, int type);
+qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet);
 void G_SendStats(edict_t * ent);
 edict_t *G_SpawnFloor(pos3_t pos);
 int G_CheckVisTeam(int team, edict_t * check, qboolean perish);
 
-qboolean G_IsLivingActor(edict_t *ent);
+qboolean G_IsLivingActor(const edict_t *ent);
 void G_ForceEndRound(void);
 void G_ActorDie(edict_t * ent, int state, edict_t *attacker);
 int G_ClientAction(player_t * player);

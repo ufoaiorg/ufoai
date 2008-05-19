@@ -255,9 +255,6 @@ void SetModelNumbers (void)
 	}
 }
 
-/**
- * @note routing.c - commented out
- */
 void EmitBrushes (void)
 {
 	int i, j, bnum, s, x;
@@ -271,7 +268,7 @@ void EmitBrushes (void)
 	memset(curTile->brushes, 0, MAX_MAP_BRUSHES * sizeof(cBspBrush_t));
 
 	for (bnum = 0; bnum < nummapbrushes; bnum++) {
-		mapbrush_t *b = &mapbrushes[bnum];
+		const mapbrush_t *b = &mapbrushes[bnum];
 		dBspBrush_t *db = &curTile->dbrushes[bnum];
 		cBspBrush_t *cb = &curTile->brushes[bnum];
 
@@ -376,7 +373,6 @@ void BeginModel (int entityNum)
 {
 	dBspModel_t *mod;
 	int start, end;
-	mapbrush_t *b;
 	int j;
 	entity_t *e;
 	vec3_t mins, maxs;
@@ -397,7 +393,7 @@ void BeginModel (int entityNum)
 	ClearBounds(mins, maxs);
 
 	for (j = start; j < end; j++) {
-		b = &mapbrushes[j];
+		mapbrush_t *b = &mapbrushes[j];
 		/* not a real brush (origin brush) - e.g. func_door */
 		if (!b->numsides)
 			continue;

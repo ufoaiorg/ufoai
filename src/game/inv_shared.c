@@ -1889,7 +1889,7 @@ uint32_t Com_ShapeRotate (uint32_t shape)
 	uint32_t shape_new = 0;
 	int max_width = -1;
 
-	for (w = SHAPE_SMALL_MAX_WIDTH -1; w >= 0; w--) {
+	for (w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
 		for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
 			if (Com_CheckShapeSmall(shape, w, h)) {
 				if (w >= SHAPE_SMALL_MAX_HEIGHT) {

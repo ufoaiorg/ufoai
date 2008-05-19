@@ -186,7 +186,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define PLANE_ANYZ		5
 #define PLANE_NONE		6
 
-/** planes (x&~1) and (x&~1)+1 are always opposites */
+/** planes (x & ~1) and (x & ~1) + 1 are always opposites */
 
 #define ANGLE_UP	-1
 #define ANGLE_DOWN	-2

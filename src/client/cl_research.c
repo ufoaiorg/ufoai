@@ -426,6 +426,7 @@ const char *RS_GetDescription (descriptions_t *desc)
  * @sa CP_AddItemAsCollected
  * @sa MN_AddNewMessage
  * @sa RS_MarkOneResearchable
+ * @param[in] tech The technology pointer to mark collected
  */
 void RS_MarkCollected (technology_t* tech)
 {
@@ -451,119 +452,6 @@ void RS_MarkCollected (technology_t* tech)
 	tech->statusCollected = qtrue;
 }
 
-#if 0
-/**
- * @brief Checks if anything has been collected (in the current base) and correct the value for each requirement.
- * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet. tech->statusCollected is just needed so the item is at least displayed somewhere.
- * @return Returns qtrue if there are is ANYTHING collected for each entry otherwise qfalse.
- * @todo Get rid (or improve) this statusCollected stuff.
- */
-static qboolean RS_CheckCollected (requirements_t *required)
-{
-	int i;
-	int amount;
-	qboolean something_collected_from_each = qtrue;
-	technology_t *tech;
-	requirement_t *req;
-
-	if (!required)
-		return qfalse;
-
-	if (!baseCurrent)
-		return qfalse;
-
-	for (i = 0; i < required->numLinks; i++) {
-		req = &required->links[i];
-		switch (req->type) {
-		case RS_LINK_ITEM:
-			assert(req->link);
-			amount = B_ItemInBase(req->link, baseCurrent);
-			if (amount > 0) {
-				req->collected = amount;
-			} else {
-				req->collected = 0;
-				something_collected_from_each = qfalse;
-			}
-			break;
-#if 0
-		/** @todo support for RS_LINK_TECH_BEFORE and RS_LINK_TECH_XOR? */
-		case RS_LINK_TECH_BEFORE:
-			break;
-		case RS_LINK_TECH_XOR:
-			break;
-#endif
-		case RS_LINK_TECH:
-			assert(req->link);
-			tech = req->link;
-			/* Check if it is a logic block (RS_LOGIC) and iterate into it if so.*/
-			if (tech->type == RS_LOGIC) {
-				if (!RS_CheckCollected(&tech->require_AND)) {
-					tech->statusCollected = qfalse;
-					something_collected_from_each = qfalse;
-				} else {
-					RS_MarkCollected(tech);
-				}
-			}
-			break;
-		case RS_LINK_ALIEN:
-		case RS_LINK_ALIEN_DEAD:
-			assert(req->link);
-			/* Use alien=index and RS_LINK_ALIEN (or RS_LINK_ALIEN_DEAD) to get correct amount.*/
-			amount = AL_GetAlienAmount(req->link, req->type, baseCurrent);
-			if (amount > 0) {
-				req->collected = amount;
-			} else {
-				req->collected = 0;
-				something_collected_from_each = qfalse;
-			}
-			break;
-		case RS_LINK_ALIEN_GLOBAL:
-			amount = AL_CountAll();
-			if (amount > 0) {
-				req->collected = amount;
-			} else {
-				req->collected = 0;
-				something_collected_from_each = qfalse;
-			}
-			break;
-		case RS_LINK_EVENT:
-			break;
-		default:
-			break;
-		}
-	}
-	return something_collected_from_each;
-}
-#endif
-
-/**
- * @brief Checks if any items have been collected in the current base and correct the values for each requirement.
- * @todo Add support for items in the require_OR list.
- */
-void RS_CheckAllCollected (void)
-{
-#if 0
-	int i;
-	technology_t *tech;
-	requirements_t *required;
-
-	/* FIXME */
-	if (!required)
-		return;
-
-	if (!baseCurrent)
-		return;
-
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
-
-		if (RS_CheckCollected(&tech->require_AND) || RS_CheckCollected(&tech->require_OR)) {
-			RS_MarkCollected(tech);
-		}
-	}
-#endif
-}
-
 /**
  * @brief Marks all the techs that can be researched.
  * Automatically researches 'free' techs such as ammo for a weapon. Not "researchable"-related.
@@ -582,16 +470,12 @@ void RS_MarkResearchable (qboolean init)
 		tech->statusResearchable = qfalse;
 	}
 
-	/* Update the "amount" and statusCollected values in the requirement-trees. */
-	RS_CheckAllCollected();
-
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
 		tech = RS_GetTechByIDX(i);
 		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
 			/* Check for collected items/aliens/etc... */
-
 			if (tech->statusResearch != RS_FINISH) {
-				base_t* base;
+				const base_t* base;
 				Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
@@ -690,10 +574,9 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 void RS_RequiredLinksAssign (void)
 {
 	int i;
-	technology_t *tech;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
+		technology_t *tech = RS_GetTechByIDX(i);
 		if (&tech->require_AND.numLinks)
 			RS_AssignTechLinks(&tech->require_AND);
 		if (&tech->require_OR.numLinks)
@@ -716,9 +599,6 @@ void RS_InitTree (qboolean load)
 {
 	int i, j;
 	technology_t *tech;
-	objDef_t *item;
-	building_t *building;
-	aircraft_t *air_samp;
 	byte found;
 
 	for (i = 0, tech = gd.technologies; i < gd.numTechnologies; i++, tech++) {
@@ -752,7 +632,7 @@ void RS_InitTree (qboolean load)
 		case RS_ARMOUR:
 			found = qfalse;
 			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
-				item = &csi.ods[j];
+				objDef_t *item = &csi.ods[j];
 
 				/* This item has been 'provided' -> get the correct data. */
 				if (!Q_strncmp(tech->provides, item->id, MAX_VAR)) {
@@ -776,7 +656,7 @@ void RS_InitTree (qboolean load)
 		case RS_BUILDING:
 			found = qfalse;
 			for (j = 0; j < gd.numBuildingTemplates; j++) {
-				building = &gd.buildingTemplates[j];
+				building_t *building = &gd.buildingTemplates[j];
 				/* This building has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, building->id, MAX_VAR)) {
 					found = qtrue;
@@ -797,7 +677,7 @@ void RS_InitTree (qboolean load)
 		case RS_CRAFT:
 			found = qfalse;
 			for (j = 0; j < numAircraftTemplates; j++) {
-				air_samp = &aircraftTemplates[j];
+				aircraft_t *air_samp = &aircraftTemplates[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, air_samp->id, MAX_VAR)) {
 					found = qtrue;
@@ -851,29 +731,6 @@ void RS_InitTree (qboolean load)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
-
-#if 0
-/**
- * @brief Return "name" if present, otherwise enter the correct .ufo file and get it from the definition there.
- * @param[in] id unique id of a technology_t
- */
-const char *RS_GetName (const char *id)
-{
-	technology_t *tech;
-
-	tech = RS_GetTechByID(id);
-	if (!tech) {
-		/* set the name to the id. */
-		return id;
-	}
-
-	if (tech->name) {
-		return _(tech->name);
-	} else {
-		return _(id);
-	}
-}
-#endif
 
 /**
  * @brief Displays the informations of the current selected technology in the description-area.
@@ -995,7 +852,6 @@ static void CL_ResearchSelect_f (void)
  */
 void RS_AssignScientist (technology_t* tech)
 {
-	building_t *building;
 	employee_t *employee;
 	base_t *base;
 
@@ -1019,7 +875,7 @@ void RS_AssignScientist (technology_t* tech)
 
 	if (tech->statusResearchable) {
 		/* Get a free lab from the base. */
-		building = B_GetBuildingInBaseByType(base, B_LAB, qtrue);
+		building_t *building = B_GetBuildingInBaseByType(base, B_LAB, qtrue);
 		if (building) {
 			/* Check the capacity. */
 			if (base->capacities[CAP_LABSPACE].max > base->capacities[CAP_LABSPACE].cur) {
@@ -1124,7 +980,7 @@ void RS_RemoveScientist (technology_t* tech)
  */
 static void RS_MaxOutResearch (const base_t *base, technology_t* tech)
 {
-	employee_t *employee;
+	const employee_t *employee;
 
 	if (!base || !tech)
 		return;
@@ -1293,7 +1149,6 @@ static void RS_ShowPedia_f (void)
 		return;
 
 	/* get the currently selected research-item */
-
 	tech = researchList[researchListPos];
 	if (tech->pre_description.numDescriptions > 0) {
 		UP_OpenCopyWith(tech->id);
@@ -1320,8 +1175,9 @@ void RS_UpdateData (base_t* base)
 	for (i = 0; i < gd.numBases; i++) {
 		available[i] = E_CountUnassigned(B_GetBaseByIDX(i), EMPL_SCIENTIST);
 	}
-	RS_CheckAllCollected();
+
 	RS_MarkResearchable(qfalse);
+
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = RS_GetTechByIDX(i);
 

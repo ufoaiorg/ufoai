@@ -314,8 +314,6 @@ static void BS_BuyType (void)
 	if (!baseCurrent || buyCategory == -1)
 		return;
 
-	RS_CheckAllCollected(); /** @todo: needed? */
-
 	CL_UpdateCredits(ccs.credits);
 
 	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';

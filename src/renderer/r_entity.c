@@ -308,6 +308,12 @@ static void R_DrawEntityEffects (void)
 
 			R_Color(color);
 
+#if 0
+			qglLineWidth(10.0f);
+			qglLineStipple(2, 0x00FF);
+			qglEnable(GL_LINE_STIPPLE);
+#endif
+
 			/* circle points */
 			qglBegin(GL_LINE_STRIP);
 			qglVertex3f(10.0, 0.0, -27.0);
@@ -322,6 +328,10 @@ static void R_DrawEntityEffects (void)
 			qglEnd();
 			R_CheckError();
 
+#if 0
+			qglLineWidth(1.0f);
+			qglDisable(GL_LINE_STIPPLE);
+#endif
 			qglDisable(GL_LINE_SMOOTH);
 			qglEnable(GL_TEXTURE_2D);
 			qglEnable(GL_DEPTH_TEST);

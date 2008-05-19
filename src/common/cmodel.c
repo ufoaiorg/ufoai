@@ -1476,8 +1476,8 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 				if (
 				!( R_CONN_PY(map, poslist[3][0], poslist[3][1], poslist[3][2])
 				&& R_CONN_PX(map, poslist[3][0], poslist[3][1], poslist[3][2])
-				&& R_CONN_PY(map, poslist[3][0]+1, poslist[3][1], poslist[3][2])
-				&& R_CONN_PX(map, poslist[3][0], poslist[3][1]+1, poslist[3][2])))
+				&& R_CONN_PY(map, poslist[3][0] + 1, poslist[3][1], poslist[3][2])
+				&& R_CONN_PX(map, poslist[3][0], poslist[3][1] + 1, poslist[3][2])))
 					return;
 			}
 			if (dx > 0 && dy < 0) {
@@ -1485,8 +1485,8 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 				if (
 				!( R_CONN_NY(map, poslist[1][0], poslist[1][1], poslist[1][2])
 				&& R_CONN_PX(map, poslist[1][0], poslist[1][1], poslist[1][2])
-				&& R_CONN_NY(map, poslist[1][0]+1, poslist[1][1], poslist[1][2])
-				&& R_CONN_PX(map, poslist[1][0], poslist[1][1]-1, poslist[1][2])))
+				&& R_CONN_NY(map, poslist[1][0] + 1, poslist[1][1], poslist[1][2])
+				&& R_CONN_PX(map, poslist[1][0], poslist[1][1] - 1, poslist[1][2])))
 					return;
 			}
 			if (dx < 0 && dy < 0) {
@@ -1494,8 +1494,8 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 				if (
 				!( R_CONN_NY(map, poslist[0][0], poslist[0][1], poslist[0][2])
 				&& R_CONN_NX(map, poslist[0][0], poslist[0][1], poslist[0][2])
-				&& R_CONN_NY(map, poslist[0][0]-1, poslist[0][1], poslist[0][2])
-				&& R_CONN_NX(map, poslist[0][0], poslist[0][1]-1, poslist[0][2])))
+				&& R_CONN_NY(map, poslist[0][0] - 1, poslist[0][1], poslist[0][2])
+				&& R_CONN_NX(map, poslist[0][0], poslist[0][1] - 1, poslist[0][2])))
 					return;
 			}
 			if (dx < 0 && dy > 0) {
@@ -1503,8 +1503,8 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 				if (
 				!( R_CONN_PY(map, poslist[2][0], poslist[2][1], poslist[2][2])
 				&& R_CONN_NX(map, poslist[2][0], poslist[2][1], poslist[2][2])
-				&& R_CONN_PY(map, poslist[2][0]-1, poslist[2][1], poslist[2][2])
-				&& R_CONN_NX(map, poslist[2][0], poslist[2][1]+1, poslist[2][2])))
+				&& R_CONN_PY(map, poslist[2][0] - 1, poslist[2][1], poslist[2][2])
+				&& R_CONN_NX(map, poslist[2][0], poslist[2][1] + 1, poslist[2][2])))
 					return;
 			}
 			/* No checkforbidden tests needed here because all 3 affected fields
@@ -1863,9 +1863,9 @@ pos_t Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 	case ACTOR_SIZE_2x2:
 		while (z > 0
 			&& R_FALL(map, pos[0], pos[1], z)
-			&& R_FALL(map, pos[0]+1, pos[1], z)
-			&& R_FALL(map, pos[0], pos[1]+1, z)
-			&& R_FALL(map, pos[0]+1, pos[1]+1, z)) {
+			&& R_FALL(map, pos[0] + 1, pos[1], z)
+			&& R_FALL(map, pos[0], pos[1] + 1, z)
+			&& R_FALL(map, pos[0] + 1, pos[1] + 1, z)) {
 			z--;
 		}
 		break;

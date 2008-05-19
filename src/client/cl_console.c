@@ -228,10 +228,9 @@ static void Con_MessageModeMenu_f (void)
  */
 void Con_CheckResize (void)
 {
-	int i, j, width, oldwidth, oldtotallines, numlines, numchars;
+	int i, j, oldwidth, oldtotallines, numlines, numchars;
 	char tbuf[CON_TEXTSIZE];
-
-	width = (viddef.width >> con_fontShift);
+	const int width = (viddef.width >> con_fontShift);
 
 	if (width == con.lineWidth)
 		return;
@@ -571,10 +570,10 @@ void Con_DrawNotify (void)
  */
 void Con_DrawConsole (float frac)
 {
-	int i, x, y, len;
+	int i, x, y;
 	int rows, row, lines;
 	char *text;
-	char version[MAX_VAR];
+	char consoleMessage[128];
 
 	lines = viddef.height * frac;
 	if (lines <= 0)
@@ -586,10 +585,14 @@ void Con_DrawConsole (float frac)
 	/* draw the background */
 	R_DrawNormPic(0, lines - (int) viddef.height, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
 
-	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
-	len = strlen(version);
-	for (x = 0; x < len; x++)
-		R_DrawChar(viddef.width - (len * con_fontWidth) + x * con_fontWidth - CONSOLE_CHAR_ALIGN, lines - (con_fontHeight + CONSOLE_CHAR_ALIGN), version[x] | COLORED_TEXT_MASK);
+	Com_sprintf(consoleMessage, sizeof(consoleMessage), "Hit esc to close - v%s", UFO_VERSION);
+	{
+		const int len = strlen(consoleMessage);
+		const int versionX = viddef.width - (len * con_fontWidth) - CONSOLE_CHAR_ALIGN;
+		const int versionY = lines - (con_fontHeight + CONSOLE_CHAR_ALIGN);
+		for (x = 0; x < len; x++)
+			R_DrawChar(versionX + x * con_fontWidth, versionY, consoleMessage[x] | COLORED_TEXT_MASK);
+	}
 
 	/* draw the text */
 	con.visLines = lines;

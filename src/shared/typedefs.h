@@ -260,9 +260,10 @@ typedef struct {
 	int		value;
 } brush_texture_t;
 
+/** @brief Polygon orientations */
 typedef struct {
 	int		numpoints;
-	vec3_t	p[4];		/* variable sized - @todo - but why 4? */
+	vec3_t	p[4];		/**< variable sized - @todo - but why 4? */
 } winding_t;
 
 typedef struct side_s {
@@ -376,7 +377,7 @@ typedef struct {
 
 typedef struct {
 	int planenum;
-	int children[2];			/**< negative numbers are -(leafs+1), not nodes */
+	int children[2];			/**< negative numbers are -(leafs + 1), not nodes */
 	short mins[3];				/**< for frustum culling */
 	short maxs[3];
 	unsigned short firstface;

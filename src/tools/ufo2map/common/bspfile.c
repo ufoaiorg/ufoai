@@ -84,11 +84,10 @@ byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 static void SwapBSPFile (void)
 {
 	int i, j, k;
-	dBspModel_t *d;
 
 	/* models	 */
 	for (i = 0; i < curTile->nummodels; i++) {
-		d = &curTile->models[i];
+		dBspModel_t *d = &curTile->models[i];
 
 		d->firstface = LittleLong(d->firstface);
 		d->numfaces = LittleLong(d->numfaces);
@@ -197,10 +196,8 @@ static dBspHeader_t *header;
  */
 static int CopyLump (int lump, void *dest, int size)
 {
-	int length, ofs;
-
-	length = header->lumps[lump].filelen;
-	ofs = header->lumps[lump].fileofs;
+	const int length = header->lumps[lump].filelen;
+	const int ofs = header->lumps[lump].fileofs;
 
 	if (length == 0)
 		return 0;
@@ -291,10 +288,11 @@ static inline void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, v
  * @brief Swaps the bsp file in place, so it should not be referenced again
  * @sa LoadBSPFile
  */
-void WriteBSPFile (const char *filename)
+size_t WriteBSPFile (const char *filename)
 {
 	qFILE bspfile;
 	dBspHeader_t outheader;
+	size_t size;
 
 	memset(&outheader, 0, sizeof(outheader));
 	memset(&bspfile, 0, sizeof(bspfile));
@@ -326,8 +324,10 @@ void WriteBSPFile (const char *filename)
 
 	fseek(bspfile.f, 0, SEEK_SET);
 	SafeWrite(&bspfile, &outheader, sizeof(outheader));
+	size = ftell(bspfile.f);
 	CloseFile(&bspfile);
 	SwapBSPFile();
+	return size;
 }
 
 /**
@@ -392,8 +392,8 @@ epair_t *ParseEpair (void)
 {
 	epair_t	*e;
 
-	e = malloc(sizeof(epair_t));
-	memset(e, 0, sizeof(epair_t));
+	e = malloc(sizeof(*e));
+	memset(e, 0, sizeof(*e));
 
 	if (strlen(parsedToken) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
@@ -415,15 +415,14 @@ epair_t *ParseEpair (void)
  * @brief
  * @sa ParseEntities
  */
-static qboolean ParseEntity (void)
+static entity_t* ParseEntity (void)
 {
-	epair_t	 *e;
 	entity_t *mapent;
 
 	if (!GetToken(qtrue))
-		return qfalse;
+		return NULL;
 
-	if (strcmp(parsedToken, "{"))
+	if (parsedToken[0] != '{')
 		Sys_Error("ParseEntity: { not found");
 
 	if (num_entities >= MAX_MAP_ENTITIES)
@@ -435,14 +434,16 @@ static qboolean ParseEntity (void)
 	do {
 		if (!GetToken(qtrue))
 			Sys_Error("ParseEntity: EOF without closing brace");
-		if (!strcmp(parsedToken, "}") )
+		if (*parsedToken == '}') {
 			break;
-		e = ParseEpair();
-		e->next = mapent->epairs;
-		mapent->epairs = e;
+		} else {
+			epair_t *e = ParseEpair();
+			e->next = mapent->epairs;
+			mapent->epairs = e;
+		}
 	} while (1);
 
-	return qtrue;
+	return mapent;
 }
 
 /**
@@ -452,10 +453,12 @@ static qboolean ParseEntity (void)
  */
 void ParseEntities (void)
 {
+	entity_t *ent;
+
 	num_entities = 0;
 	ParseFromMemory(curTile->entdata, curTile->entdatasize);
 
-	while (ParseEntity()) {
+	while ((ent = ParseEntity()) != NULL) {
 	}
 }
 
@@ -485,7 +488,7 @@ const char *UnparseEntities (void)
 			Q_strncpyz(value, ep->value, sizeof(value));
 			StripTrailingWhitespaces(value);
 
-			snprintf(line, sizeof(line) - 1, "\"%s\" \"%s\"\n", key, value);
+			Com_sprintf(line, sizeof(line), "\"%s\" \"%s\"\n", key, value);
 			Q_strcat(curTile->entdata, line, sizeof(curTile->entdata));
 		}
 		Q_strcat(curTile->entdata, "}\n", sizeof(curTile->entdata));
@@ -503,7 +506,7 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 	epair_t *ep;
 
 	for (ep = ent->epairs; ep; ep = ep->next)
-		if (!strcmp (ep->key, key) ) {
+		if (!strcmp(ep->key, key)) {
 			free(ep->value);
 			ep->value = strdup(value);
 			return;

@@ -135,7 +135,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		/* let the ai interact with the door */
 		if (self->flags & FL_GROUPSLAVE)
 			self = self->groupMaster;
-		return G_ClientUseEdict(game.players + activator->pnum, activator, self, self->type);
+		return G_ClientUseEdict(game.players + activator->pnum, activator, self);
 	} else {
 		if (activator->client_action != self->owner) {
 			/* prepare for client action */
@@ -185,7 +185,7 @@ void SP_func_door (edict_t *ent)
 	ent->child = other;
 
 	/* the door should start opened */
-	if (ent->flags & FL_TRIGGERED)
+	if (ent->spawnflags & FL_TRIGGERED)
 		G_UseEdict(ent);
 
 	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",

@@ -1055,7 +1055,7 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 					++params;
 					++c;
 				}
-				if (c + 1 < end && *c == ' ' && *(c+1) != ':') {
+				if (c + 1 < end && *c == ' ' && *(c + 1) != ':') {
 					/* more params */
 					*params = ' ';
 					++params;
@@ -1260,7 +1260,8 @@ void Irc_Logic_Frame (void)
 			/* FIXME: do this without disconnect, connect */
 			Irc_Logic_Disconnect("Switched to another channel");
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
-			Cbuf_AddText(va("irc_join %s\n", irc_channel->string));
+			if (irc_connected)
+				Cbuf_AddText(va("irc_join %s\n", irc_channel->string));
 		}
 		Irc_Logic_SendMessages();
 		Irc_Logic_ReadMessages();
@@ -1381,17 +1382,18 @@ static void Irc_Connect_f (void)
 				Cvar_Set("irc_port", Cmd_Argv(2));
 			Com_Printf("Connect to %s:%s\n", irc_server->string, irc_port->string);
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
-			if (argc >= 4)
+			if (irc_connected && argc >= 4)
 				Cbuf_AddText(va("irc_join %s\n", Cmd_Argv(3)));
 		} else
 			Com_Printf("Already connected.\n");
+
 	} else if (*irc_server->string && irc_port->value) {
 		if (!irc_connected)
 			Cbuf_AddText(va("irc_connect %s %s %s\n", irc_server->string, irc_port->string, irc_channel->string));
 		else
 			Com_Printf("Already connected.\n");
 	} else
-			Com_Printf("Usage: %s [<server>] [<port>] [<channel>]\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s [<server>] [<port>] [<channel>]\n", Cmd_Argv(0));
 }
 
 static void Irc_Disconnect_f (void)
@@ -1404,9 +1406,8 @@ static void Irc_Client_Join_f (void)
 	const int argc = Cmd_Argc();
 	if (argc >= 2 && argc <= 3) {
 		const char * const channel = Cmd_Argv(1);
-		const char * const channel_pass = argc == 3	/* password is optional */
-			? Cmd_Argv(2)
-			: NULL;
+		/* password is optional */
+		const char * const channel_pass = (argc == 3) ? Cmd_Argv(2) : NULL;
 		if (!Irc_IsChannel(channel)) {
 			Com_Printf("No valid channel name\n");
 			return;

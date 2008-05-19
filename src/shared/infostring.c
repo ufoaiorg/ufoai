@@ -73,6 +73,14 @@ const char *Info_ValueForKey (const char *s, const char *key)
 	}
 }
 
+const char *Info_BoolForKey (const char *s, const char *key)
+{
+	const char *bool = Info_ValueForKey(s, key);
+	if (bool[0] == '0' || bool[0] == '\0' || !strcmp(bool, "No"))
+		return "No";
+	return "Yes";
+}
+
 /**
  * @brief Searches through s for key and remove is
  * @param[in] s String to search key in

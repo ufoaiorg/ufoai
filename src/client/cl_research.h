@@ -175,7 +175,7 @@ typedef struct technology_s {
 	requirements_t require_OR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
 	qboolean statusCollected;	/**< Did we loot any items of this tech?
 					 * This is updated from the info stored in the require_OR and require_AND lists.
-					 * See RS_CheckCollected and RS_CheckAllCollected. */
+					 * @see RS_CheckCollected. */
 
 	char *provides;		/**< The item that this technology enables. */
 	float overalltime, time;	/**< The time that is needed to research this tech. (in days).
@@ -230,7 +230,6 @@ qboolean RS_ItemIsResearched(const char *id_provided);
 qboolean RS_IsResearched_idx(int techIdx);
 qboolean RS_IsResearched_ptr(const technology_t *tech);
 int RS_Collected_(const technology_t * tech);
-void RS_CheckAllCollected(void);
 
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);

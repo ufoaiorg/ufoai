@@ -104,7 +104,7 @@ void ParseFromMemory (char *buffer, int size)
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
 		Sys_Error("script file exceeded MAX_INCLUDES");
-	strncpy(script->filename, "memory buffer", sizeof(script->filename));
+	Q_strncpyz(script->filename, "memory buffer", sizeof(script->filename));
 
 	script->buffer = buffer;
 	script->line = 1;

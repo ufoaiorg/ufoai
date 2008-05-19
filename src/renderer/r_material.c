@@ -272,6 +272,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_Color(NULL);
 
+	/* polygon offset parameters */
+	qglPolygonOffset(1, 1);
 	qglDisable(GL_POLYGON_OFFSET_FILL);
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

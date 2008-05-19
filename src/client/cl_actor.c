@@ -3601,10 +3601,10 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	int flags, normal, number;
 	int objIdx;
 	const objDef_t *obj;
-	int weapFdsIdx, fdIdx, surfaceFlags;
+	int weapFdsIdx, fdIdx, surfaceFlags, clientType;
 
 	/* read data */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &flags, &surfaceFlags, &muzzle, &impact, &normal);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &clientType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
 	/* get le */
 	le = LE_Get(number);
@@ -3640,11 +3640,14 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		return;
 	}
 
+	/* no animations for hidden actors */
+	if (le->type == ET_ACTORHIDDEN)
+		return;
+
 	/** Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead :)
 	 * Don't do it if it's a stun-attack though.
 	 * @todo Special particles for stun attack (mind you that there is electrical and gas/chemical stunning)? */
-	if ((flags & SF_BODY)
-	 && fd->obj->dmgtype != csi.damStunGas) {	/**< @todo && !(flags & SF_BOUNCED) ? */
+	if ((flags & SF_BODY) && fd->obj->dmgtype != csi.damStunGas) {	/**< @todo && !(flags & SF_BOUNCED) ? */
 		CL_ActorHit(le, impact, normal);
 	}
 
@@ -3653,26 +3656,26 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		return;
 	}
 
-	/* if actor on our team, set this le as the last moving */
-	if (le->team == cls.team)
+	if (le->team == cls.team) {
+		/* if actor on our team, set this le as the last moving */
 		CL_SetLastMoving(le);
 
-	/* no animations for hidden actors */
-	if (le->type == ET_ACTORHIDDEN)
-		return;
+		if (clientType != 0xFF)
+			Com_Printf("CL_ActorDoShoot: left/right info out of sync somehow (le: %i, server: %i, client: %i).\n", number, clientType, cl.cmode);
+		clientType = cl.cmode;
+	}
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	/** @todo FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
-	if (HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
+	if (HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(clientType)) {
 		/* No animation for this */
-	} else if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
+	} else if (RIGHT(le) && IS_MODE_FIRE_RIGHT(clientType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
+	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(clientType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow (entnum: %i).\n", number);
 		/* We use the default (right) animation now. */
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
@@ -3759,9 +3762,9 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	int number;
 	int objIdx;
 	objDef_t *obj;
-	int weapFdsIdx, fdIdx;
+	int weapFdsIdx, fdIdx, clientType;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &from, &target);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &clientType, &from, &target);
 
 	obj = &csi.ods[objIdx];
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
@@ -3802,14 +3805,23 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 			ccs.eMission.num[type]--;
 	} */
 
+	/* ET_ACTORHIDDEN actors don't have a model yet */
+	if (le->type == ET_ACTORHIDDEN)
+		return;
+
+	if (le->team == cls.team) {
+		if (clientType != 0xFF)
+			Com_Printf("CL_ActorStartShoot: left/right info out of sync somehow (le: %i, server: %i, client: %i).\n", number, clientType, cl.cmode);
+		clientType = cl.cmode;
+	}
+
 	/* Animate - we have to check if it is right or left weapon usage. */
-	/** @todo FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
-	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
+	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(clientType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
-	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
+	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(clientType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorStartShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
+	/** no animation change for headgear - @see CL_ActorDoShoot */
+	} else if (!(HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(clientType))) {
 		/* We use the default (right) animation now. */
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	}
@@ -4285,9 +4297,9 @@ void CL_ActorMouseTrace (void)
 				}
 				break;
 			case ACTOR_SIZE_2x2:
-				VectorSet(actor2x2[0], le->pos[0]+1, le->pos[1], le->pos[2]);
-				VectorSet(actor2x2[1], le->pos[0], le->pos[1]+1, le->pos[2]);
-				VectorSet(actor2x2[2], le->pos[0]+1, le->pos[1]+1, le->pos[2]);
+				VectorSet(actor2x2[0], le->pos[0] + 1, le->pos[1],     le->pos[2]);
+				VectorSet(actor2x2[1], le->pos[0],     le->pos[1] + 1, le->pos[2]);
+				VectorSet(actor2x2[2], le->pos[0] + 1, le->pos[1] + 1, le->pos[2]);
 				if (VectorCompare(le->pos, mousePos)
 				|| VectorCompare(actor2x2[0], mousePos)
 				|| VectorCompare(actor2x2[1], mousePos)
@@ -4720,7 +4732,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = map_maxlevel-1;
+	cl_worldlevel->integer = map_maxlevel - 1;
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -4811,7 +4823,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = map_maxlevel-1;
+	cl_worldlevel->integer = map_maxlevel - 1;
 
 	/* paint */
 	vz = v0[2];

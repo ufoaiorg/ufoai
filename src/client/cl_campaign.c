@@ -3815,7 +3815,7 @@ static void CL_CampaignRunMarket (void)
 
 	assert(curCampaign->marketDef);
 
-	/* @todo: Find out why there is a 2 days discrepancy in reasearched_date*/
+	/** @todo: Find out why there is a 2 days discrepancy in reasearched_date */
 	for (i = 0; i < csi.numODs; i++) {
 		if (RS_ItemIsResearched(csi.ods[i].id)) {
 			/* supply balance */
@@ -3827,7 +3827,7 @@ static void CL_CampaignRunMarket (void)
 			if (reasearched_date <= curCampaign->date.sec / 86400 + curCampaign->date.day)
 				reasearched_date -= 100;
 			research_factor = mrs1 * sqrt(ccs.date.day - reasearched_date);
-			price_factor = mpr1 / sqrt(csi.ods[i].price+1);
+			price_factor = mpr1 / sqrt(csi.ods[i].price + 1);
 			curr_supp_diff = floor(research_factor*price_factor - ccs.eMarket.num[i]);
 			if (curr_supp_diff != 0)
 				ccs.eMarket.cumm_supp_diff[i] += curr_supp_diff;
@@ -3840,7 +3840,10 @@ static void CL_CampaignRunMarket (void)
 
 			/* set item price based on supply imbalance */
 			if (research_factor*price_factor >= 1)
-				ccs.eMarket.ask[i] = floor(csi.ods[i].price * (1 - (1 - BID_FACTOR) / 2 * (1 / (1 + exp(curr_supp_diff / (research_factor * price_factor))) * 2 - 1)) );
+				ccs.eMarket.ask[i] = floor(csi.ods[i].price
+					* (1 - (1 - BID_FACTOR) / 2
+					* (1 / (1 + exp(curr_supp_diff / (research_factor * price_factor)))
+					* 2 - 1)));
 			else
 				ccs.eMarket.ask[i] = csi.ods[i].price;
 			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
@@ -6404,7 +6407,7 @@ campaign_t* CL_GetCampaign (const char* name)
 
 /**
  * @brief Starts a new skirmish game
- * @todo Check the stuff in this function - maybe not every functioncall
+ * @todo Check the stuff in this function - maybe not every function call
  * is needed here or maybe some are missing
  */
 static void CL_GameSkirmish_f (void)
@@ -6487,7 +6490,9 @@ static void CL_GameSkirmish_f (void)
 
 	INV_InitialEquipment(base, curCampaign, qtrue);
 
-	Cvar_Set("mn_main", "multiplayerInGame");
+	/* prepare */
+	MN_PopMenu(qtrue);
+	Cvar_Set("mn_main_afterdrop", "singleplayermission");
 
 	/* make sure, that we are not trying to switch to singleplayer a second time */
 	sv_maxclients->modified = qfalse;

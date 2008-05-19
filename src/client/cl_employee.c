@@ -1332,7 +1332,7 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, e->chr.reservedTus.shotSettings.wpIdx);
 
 			/** Store character stats/score @sa inv_shared.h:chrScoreGlobal_t */
-			for (k = 0; k < presaveArray[PRE_SKILTP]+1; k++)
+			for (k = 0; k < presaveArray[PRE_SKILTP] + 1; k++)
 				MSG_WriteLong(sb, e->chr.score.experience[k]);
 			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 				MSG_WriteByte(sb, e->chr.score.skills[k]);

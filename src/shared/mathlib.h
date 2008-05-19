@@ -63,8 +63,8 @@ qboolean Q_IsPowerOfTwo(int i);
 #define todeg (180.0f/M_PI)
 
 /* angle indexes */
-#define PITCH  0   /* up / down */
-#define YAW    1   /* left / right */
+#define PITCH  0   /* up / down (-90 up to 90 degree) */
+#define YAW    1   /* left / right (0 up to 360 degree) */
 #define ROLL   2   /* fall over */
 
 /* earth map data */

@@ -26,9 +26,9 @@ Starting point for a civilian.
 
 
 /*QUAKED misc_model (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8 server_solid glow
-Displays a md2 model.
+Displays a model.
 Set the level flags correctly!
-Use angles [pitch yaw roll] to rotate the model. pitch (up/down), yaw (left/right) and roll (fall over)
+Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360]) and roll (fall over)
 "model"		arbitrary .md2 file to display
 "angles"	direction of the model [pitch yaw roll]
 "angle"		direction of the model [yaw]
@@ -70,8 +70,17 @@ Non-displayed light. All lights are for the night version. If you want them to s
 
 /*QUAKED worldspawn (0 0 0) ?
 Only used for the world.
+pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360])
 "maxteams"	max. teams for multiplayer
-"maxlevel"	highest selectable level
+"maxlevel"	highest selectable level [1-8]
+"light_night"	light intensity [e.g. 10 or 100]
+"angles_night"	light angle [pitch yaw 0]
+"color_night"	light color (RGB) [0.0-1.0]
+"ambient_night"	ambient color (RGB) [0.0-1.0]
+"light_day"		light intensity [e.g. 10 or 100]
+"angles_day"	light angle [pitch yaw 0]
+"color_day"		light color (RGB) [0.0-1.0]
+"ambient_day"	ambient color (RGB) [0.0-1.0]
 */
 
 /*QUAKED info_null (0 0.5 0) (-4 -4 -4) (4 4 4)

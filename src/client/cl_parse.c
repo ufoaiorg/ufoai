@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note don't change the array size - a NET_ReadByte can
  * return values between 0 and UCHAR_MAX (-1 is not handled here)
  */
-static const char *svc_strings[UCHAR_MAX+1] =
+static const char *svc_strings[UCHAR_MAX + 1] =
 {
 	"svc_bad",
 
@@ -97,8 +97,8 @@ const char *ev_format[] =
 	"sb",				/* EV_ACTOR_TURN */
 	"!sbbs",			/* EV_ACTOR_MOVE: Don't use this format string - see CL_ActorDoMove for more info */
 
-	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
-	"ssbbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
+	"ssbbbgg",			/* EV_ACTOR_START_SHOOT */
+	"ssbbbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
 	"bsbb"	,			/* EV_ACTOR_SHOOT_HIDDEN */
 	"ssbbbpp",			/* EV_ACTOR_THROW */
 
@@ -1288,6 +1288,8 @@ static void CL_InvAdd (struct dbuffer *msg)
 			le->left = item.t->idx;
 		else if (container == csi.idExtension)
 			le->extension = item.t->idx;
+		else if (container == csi.idHeadgear)
+			le->headgear = item.t->idx;
 	}
 
 	switch (le->type) {
@@ -1327,6 +1329,8 @@ static void CL_InvDel (struct dbuffer *msg)
 		le->left = NONE;
 	else if (container == csi.idExtension)
 		le->extension = NONE;
+	else if (container == csi.idHeadgear)
+		le->headgear = NONE;
 
 	switch (le->type) {
 	case ET_ACTOR:
@@ -1394,11 +1398,9 @@ static void CL_InvReload (struct dbuffer *msg)
 	if (!ic)
 		return;
 
-	/* if the displaced clip had any remaining bullets */
-	/* store them as loose, unless the removed clip was full */
-	if (curCampaign
-		 && ic->item.a > 0
-		 && ic->item.a != ic->item.t->ammo) {
+	/* if the displaced clip had any remaining bullets
+	 * store them as loose, unless the removed clip was full */
+	if (curCampaign && ic->item.a > 0 && ic->item.a != ic->item.t->ammo) {
 		assert(ammo == ic->item.t->ammo);
 		ccs.eMission.numLoose[ic->item.m->idx] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
@@ -1599,11 +1601,11 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				int flags, dummy;
 				int objIdx, surfaceFlags;
 				objDef_t *obj;
-				int weap_fds_idx, fd_idx;
+				int weap_fds_idx, fd_idx, clientType;
 				vec3_t muzzle, impact;
 
 				/* read data */
-				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &objIdx, &weap_fds_idx, &fd_idx, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
+				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &objIdx, &weap_fds_idx, &fd_idx, &clientType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
 				obj = &csi.ods[objIdx];
 				fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
@@ -1709,7 +1711,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 			S_StartLocalSound("misc/talk");
 			MN_AddChatMessage(s);
 			/* skip format strings */
-			if (*s == '^')
+			if (s[0] == '^')
 				s += 2;
 			/* also print to console */
 			break;
@@ -1718,12 +1720,10 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 			 * untranslated with bprintf or cprintf */
 			/* see src/po/OTHER_STRINGS */
 			SCR_DisplayHudMessage(_(s), 2000);
-			/* this is utf-8 - so no console print please */
-			return;
 		default:
 			break;
 		}
-		Com_DPrintf(DEBUG_CLIENT, "svc_print(%d): %s\n", i, s);
+		Com_DPrintf(DEBUG_CLIENT, "svc_print(%d): %s", i, s);
 		Com_Printf("%s", s);
 		break;
 

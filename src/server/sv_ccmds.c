@@ -122,7 +122,7 @@ static qboolean SV_CheckMap (const char *map, const char *assembly)
 
 	/* base attacks starts with . and random maps with + */
 	if (map[0] == '+') {
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map+1);
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map + 1);
 
 		/* check for ump file */
 		if (FS_CheckFile(expanded) < 0) {
@@ -334,7 +334,7 @@ static void SV_KillServer_f (void)
 {
 	if (!svs.initialized)
 		return;
-	SV_Shutdown("Server was killed.\n", qfalse);
+	SV_Shutdown("Server was killed.", qfalse);
 }
 
 /**

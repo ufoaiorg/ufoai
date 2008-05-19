@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL.h>
 
 #define EARTH_RADIUS 8192.0f
-#define MOON_RADIUS 1024.0f /* FIXME */
+#define MOON_RADIUS 1024.0f
 
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
@@ -123,6 +123,7 @@ typedef struct ptl_s {
 	vec3_t lightColor;
 	float lightIntensity;
 	int levelFlags;
+	short stipplePattern;	/**< the GL_LINE_STIPPLE pattern */
 
 	int skin;		/**< model skin to use for this particle */
 

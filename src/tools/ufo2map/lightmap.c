@@ -600,14 +600,6 @@ void CreateDirectLights (void)
 	patch_t *p;
 	directlight_t *dl;
 	dBspLeaf_t *leaf;
-	entity_t *e, *e2;
-	const char *name;
-	const char *target;
-	float angle;
-	vec3_t dest;
-	const char *_color;
-	float intensity;
-	int spawnflags;
 
 	/* surfaces */
 	for (i = 0, p = patches; i < num_patches; i++, p++) {
@@ -633,17 +625,20 @@ void CreateDirectLights (void)
 		VectorClear(p->totallight);	/* all sent now */
 	}
 
-	/* entities */
-	for (i = 0; i < num_entities; i++) {
-		e = &entities[i];
-		name = ValueForKey(e, "classname");
+	/* entities (without world) */
+	for (i = 1; i < num_entities; i++) {
+		float intensity;
+		const char *color;
+		const char *target;
+		const entity_t *e = &entities[i];
+		const char *name = ValueForKey(e, "classname");
 		if (strncmp(name, "light", 5))
 			continue;
 
 		/* remove those lights that are only for the night version */
 		if (config.compile_for_day) {
-			spawnflags = atoi(ValueForKey(e, "spawnflags"));
-			if (!(spawnflags & 1))
+			const int spawnflags = atoi(ValueForKey(e, "spawnflags"));
+			if (!(spawnflags & 1))	/* day */
 				continue;
 		}
 
@@ -659,12 +654,10 @@ void CreateDirectLights (void)
 
 		intensity = FloatForKey(e, "light");
 		if (!intensity)
-			intensity = FloatForKey(e, "_light");
-		if (!intensity)
-			intensity = 300;
-		_color = ValueForKey(e, "_color");
-		if (_color[1]) {
-			sscanf(_color, "%f %f %f", &dl->color[0], &dl->color[1], &dl->color[2]);
+			intensity = 100;
+		color = ValueForKey(e, "_color");
+		if (color[1]) {
+			sscanf(color, "%f %f %f", &dl->color[0], &dl->color[1], &dl->color[2]);
 			ColorNormalize(dl->color, dl->color);
 		} else
 			dl->color[0] = dl->color[1] = dl->color[2] = 1.0;
@@ -679,17 +672,18 @@ void CreateDirectLights (void)
 				dl->stopdot = 10;
 			dl->stopdot = cos(dl->stopdot / 180.0f * M_PI);
 			if (target[0]) {	/* point towards target */
-				e2 = FindTargetEntity(target);
+				entity_t *e2 = FindTargetEntity(target);
 				if (!e2)
 					Com_Printf("WARNING: light at (%i %i %i) has missing target '%s' - e.g. create an info_null that has a 'targetname' set to '%s'\n",
 						(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2], target, target);
 				else {
+					vec3_t dest;
 					GetVectorForKey(e2, "origin", dest);
 					VectorSubtract(dest, dl->origin, dl->normal);
 					VectorNormalize(dl->normal);
 				}
 			} else {	/* point down angle */
-				angle = FloatForKey(e, "angle");
+				float angle = FloatForKey(e, "angle");
 				if (angle == ANGLE_UP) {
 					dl->normal[0] = dl->normal[1] = 0;
 					dl->normal[2] = 1;
@@ -701,6 +695,74 @@ void CreateDirectLights (void)
 					dl->normal[0] = cos(angle / 180.0f * M_PI);
 					dl->normal[1] = sin(angle / 180.0f * M_PI);
 				}
+			}
+		}
+	}
+
+	/* handle worldspawn light settings */
+	{
+		const entity_t *e = &entities[0];
+		if (config.compile_for_day) {
+			const char *ambient = ValueForKey(e, "ambient_day");
+			const char *light = ValueForKey(e, "light_day");
+			const char *angles = ValueForKey(e, "angles_day");
+			const char *color = ValueForKey(e, "color_day");
+			vec3_t vector;
+
+			if (light[0] != '\0')
+				config.day_sun_intensity = atoi(light);
+
+			if (angles[0] != '\0') {
+				GetVectorForKey(e, "angles_day", vector);
+				config.day_sun_pitch = vector[PITCH] * torad;
+				config.day_sun_yaw = vector[YAW] * torad;
+				VectorSet(config.day_sun_dir,
+					cos(config.day_sun_yaw) * sin(config.day_sun_pitch),
+					sin(config.day_sun_yaw) * sin(config.day_sun_pitch),
+					cos(config.day_sun_pitch));
+			}
+
+			if (color[0] != '\0') {
+				GetVectorForKey(e, "color_day", vector);
+				VectorCopy(vector, config.day_sun_color);
+			}
+
+			if (ambient[0] != '\0') {
+				GetVectorForKey(e, "ambient_day", vector);
+				config.day_ambient_red = vector[0];
+				config.day_ambient_green = vector[1];
+				config.day_ambient_blue = vector[2];
+			}
+		} else {
+			const char *ambient = ValueForKey(e, "ambient_night");
+			const char *light = ValueForKey(e, "light_night");
+			const char *angles = ValueForKey(e, "angles_night");
+			const char *color = ValueForKey(e, "color_night");
+			vec3_t vector;
+
+			if (light[0] != '\0')
+				config.night_sun_intensity = atoi(light);
+
+			if (angles[0] != '\0') {
+				GetVectorForKey(e, "angles_night", vector);
+				config.night_sun_pitch = vector[PITCH] * torad;
+				config.night_sun_yaw = vector[YAW] * torad;
+				VectorSet(config.night_sun_dir,
+					cos(config.night_sun_yaw) * sin(config.night_sun_pitch),
+					sin(config.night_sun_yaw) * sin(config.night_sun_pitch),
+					cos(config.night_sun_pitch));
+			}
+
+			if (color[0] != '\0') {
+				GetVectorForKey(e, "color_night", vector);
+				VectorCopy(vector, config.night_sun_color);
+			}
+
+			if (ambient[0] != '\0') {
+				GetVectorForKey(e, "ambient_night", vector);
+				config.night_ambient_red = vector[0];
+				config.night_ambient_green = vector[1];
+				config.night_ambient_blue = vector[2];
 			}
 		}
 	}
@@ -897,8 +959,6 @@ static vec3_t vertexnormals[MAX_MAP_VERTS];
  */
 void BuildVertexNormals (void)
 {
-	dBspFace_t *face;
-	dBspPlane_t *plane;
 	int vert_faces[256];
 	int num_vert_faces;
 	vec3_t norm;
@@ -909,8 +969,8 @@ void BuildVertexNormals (void)
 		FacesWithVert(i, vert_faces, &num_vert_faces);
 
 		for (j = 0; j < num_vert_faces; j++) {
-			face = &curTile->faces[vert_faces[j]];
-			plane = &curTile->planes[face->planenum];
+			const dBspFace_t *face = &curTile->faces[vert_faces[j]];
+			const dBspPlane_t *plane = &curTile->planes[face->planenum];
 
 			if (face->side)
 				VectorNegate(plane->normal, norm);

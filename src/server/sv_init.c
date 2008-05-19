@@ -1173,7 +1173,7 @@ static void SV_InitGame (void)
 {
 	if (svs.initialized)
 		/* cause any connected clients to reconnect */
-		SV_Shutdown("Server restarted\n", qtrue);
+		SV_Shutdown("Server restarted.", qtrue);
 
 	/* allow next change after map change or restart */
 	sv_maxclients->flags |= CVAR_LATCH;

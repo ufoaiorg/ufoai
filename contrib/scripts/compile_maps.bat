@@ -14,6 +14,7 @@ for /D %%i in (base\maps\*) DO (
 	for %%j in (%%i\*.map) DO (
 		ufo2map.exe %ufo2mapparameters% %%j
 rem CHECK ERRORLEVEL AND REMOVE MAP IF != 0
+rem		if errorlevel 1 echo "TODO"
 	)
 	echo "...dir %%i finished";
 )

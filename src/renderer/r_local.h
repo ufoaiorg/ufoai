@@ -127,15 +127,12 @@ void R_DrawInitLocal(void);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_DrawParticles(void);
 
-void R_ShutdownDraw(void);
-/*
-** GL config stuff
-*/
+/** @brief GL config stuff */
 typedef struct {
-	const char *renderer_string;
-	const char *vendor_string;
-	const char *version_string;
-	const char *extensions_string;
+	const char *rendererString;
+	const char *vendorString;
+	const char *versionString;
+	const char *extensionsString;
 	int maxTextureSize;
 	int maxTextureUnits;
 

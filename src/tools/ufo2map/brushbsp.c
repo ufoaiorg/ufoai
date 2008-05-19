@@ -175,9 +175,8 @@ static node_t *AllocNode (void)
 bspbrush_t *AllocBrush (int numsides)
 {
 	bspbrush_t *bb;
-	size_t c;
+	size_t c = offsetof(bspbrush_t, sides[numsides]);
 
-	c = myoffsetof(bspbrush_t, sides[numsides]);
 	bb = malloc(c);
 	memset(bb, 0, c);
 	c_active_brushes++;
@@ -212,10 +211,8 @@ void FreeBrushList (bspbrush_t *brushes)
 bspbrush_t *CopyBrush (bspbrush_t *brush)
 {
 	bspbrush_t *newbrush;
-	ptrdiff_t size;
 	int i;
-
-	size = myoffsetof(bspbrush_t, sides[brush->numsides]);
+	size_t size = offsetof(bspbrush_t, sides[brush->numsides]);
 
 	newbrush = AllocBrush(brush->numsides);
 	memcpy(newbrush, brush, size);

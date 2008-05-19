@@ -330,6 +330,20 @@ typedef enum {
 #define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT || (x) == ST_RIGHT_REACTION)
 #define IS_SHOT_HEADGEAR(x)    ((x) == ST_HEADGEAR)
 
+typedef enum {
+	M_MOVE,		/**< We are currently in move-mode (destination selection). */
+	M_FIRE_R,	/**< We are currently in fire-mode for the right weapon (target selection). */
+	M_FIRE_L,	/**< We are currently in fire-mode for the left weapon (target selection). */
+	M_FIRE_HEADGEAR, /**< We'll fire headgear item shortly. */
+	M_PEND_MOVE,	/**< A move target has been selected, we are waiting for player-confirmation. */
+	M_PEND_FIRE_R,	/**< A fire target (right weapon) has been selected, we are waiting for player-confirmation. */
+	M_PEND_FIRE_L	/**< A fire target (left weapon) has been selected, we are waiting for player-confirmation. */
+} cmodes_t;
+
+#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
+#define IS_MODE_FIRE_LEFT(x)		((x) == M_FIRE_L || (x) == M_PEND_FIRE_L)
+#define IS_MODE_FIRE_HEADGEAR(x)		((x) == M_FIRE_HEADGEAR)
+
 /* shoot flags */
 #define SF_IMPACT	1
 #define SF_BODY		2
@@ -474,5 +488,9 @@ typedef struct teamDef_s {
 								* @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
 								* @todo "hitbody" will not spawn blood in the future. */
 } teamDef_t;
+
+/** @brief Reject messages that are send to the client from the game module */
+#define REJ_PASSWORD_REQUIRED_OR_INCORRECT "Password required or incorrect."
+#define REJ_BANNED "Banned."
 
 #endif /* GAME_Q_SHARED_H */

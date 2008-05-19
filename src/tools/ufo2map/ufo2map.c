@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define VERSION "1.2.1"
+#define VERSION "1.2.2"
 
 #include "radiosity.h"
 #include "bsp.h"
@@ -87,13 +87,13 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			config.nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
 #ifdef HAVE_SETPRIORITY
-			config.nice = atoi(argv[i+1]);
+			config.nice = atoi(argv[i + 1]);
 			Com_Printf("nice = %i\n", config.nice);
 			if (setpriority(PRIO_PROCESS, 0, config.nice))
 				Com_Printf("failed to set nice level of %i\n", config.nice);
 #elif defined _WIN32
 			HANDLE proc = GetCurrentProcess();
-			config.nice = atoi(argv[i+1]);
+			config.nice = atoi(argv[i + 1]);
 			Com_Printf("nice = %i\n", config.nice);
 			switch (config.nice) {
 			case 0:
@@ -325,7 +325,7 @@ int main (int argc, char **argv)
 	memset(&config, 0, sizeof(config));
 	U2M_SetDefaultConfigValues();
 
-	Com_Printf("---- ufo2map %s ----\n", VERSION);
+	Com_Printf("---- ufo2map "VERSION" ----\n");
 
 	U2M_BSP_Parameter(argc, argv);
 	U2M_RAD_Parameter(argc, argv);
@@ -432,6 +432,8 @@ int main (int argc, char **argv)
 	Com_Printf("%5.0f seconds elapsed\n", end - start);
 
 	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
+		size_t size;
+
 		Com_Printf("----- Radiosity ----\n");
 
 		begin = start;
@@ -456,9 +458,9 @@ int main (int argc, char **argv)
 		}
 
 		Com_Printf("writing %s\n", bspFilename);
-		WriteBSPFile(bspFilename);
+		size = WriteBSPFile(bspFilename);
 
-		Com_Printf("sum: %5.0f seconds elapsed\n\n", end - begin);
+		Com_Printf("sum: %5.0f seconds elapsed - %.1f MB (%d bytes)\n\n", end - begin, (float) size / (1024 * 1024), size);
 	}
 
 	return 0;

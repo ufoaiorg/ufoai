@@ -60,20 +60,6 @@ typedef struct {
 	char cinfo[MAX_QPATH];
 } clientinfo_t;
 
-typedef enum {
-	M_MOVE,		/**< We are currently in move-mode (destination selection). */
-	M_FIRE_R,	/**< We are currently in fire-mode for the right weapon (target selection). */
-	M_FIRE_L,	/**< We are currently in fire-mode for the left weapon (target selection). */
-	M_FIRE_HEADGEAR, /**< We'll fire headgear item shortly. */
-	M_PEND_MOVE,	/**< A move target has been selected, we are waiting for player-confirmation. */
-	M_PEND_FIRE_R,	/**< A fire target (right weapon) has been selected, we are waiting for player-confirmation. */
-	M_PEND_FIRE_L	/**< A fire target (left weapon) has been selected, we are waiting for player-confirmation. */
-} cmodes_t;
-
-#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
-#define IS_MODE_FIRE_LEFT(x)		((x) == M_FIRE_L || (x) == M_PEND_FIRE_L)
-#define IS_MODE_FIRE_HEADGEAR(x)		((x) == M_FIRE_HEADGEAR)
-
 /**
  * @brief the client_state_t structure is wiped completely at every server map change
  * @note the client_static_t structure is persistant through an arbitrary

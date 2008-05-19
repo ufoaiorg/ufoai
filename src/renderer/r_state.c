@@ -478,6 +478,9 @@ void R_SetDefaultState (void)
 		qglLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0001);
 	}
 
+	/* polygon offset parameters */
+	qglPolygonOffset(1, 1);
+
 	/* alpha blend parameters */
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

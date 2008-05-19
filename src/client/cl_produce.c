@@ -388,13 +388,13 @@ static void PR_QueueMove (production_queue_t *queue, int index, int dir)
 
 	/* copy up */
 	for (i = index; i < newIndex; i++) {
-		queue->items[i] = queue->items[i+1];
+		queue->items[i] = queue->items[i + 1];
 		queue->items[i].idx = i;
 	}
 
 	/* copy down */
 	for (i = index; i > newIndex; i--) {
-		queue->items[i] = queue->items[i-1];
+		queue->items[i] = queue->items[i - 1];
 		queue->items[i].idx = i;
 	}
 
@@ -829,14 +829,6 @@ static void PR_ProductionListClick_f (void)
 	base = baseCurrent;
 	queue = &gd.productions[base->idx];
 
-#if 0 /* FIXME: not a concern any more ... */
-	/* there is already a running production - stop it first */
-	if (queue->amount > 0) {
-		PR_ProductionInfo(base, qfalse);
-		return;
-	}
-#endif
-
 	/* Break if there are not enough parameters. */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1026,11 +1018,6 @@ static void PR_UpdateProductionList (base_t* base)
 	mn.menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
 	/* bind the amount of queued items */
 	mn.menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
-
-#if 0 /* FIXME: needed now? */
-	/* now print the information about the current item in production */
-	PR_ProductionInfo(base, qfalse);
-#endif
 }
 
 /**

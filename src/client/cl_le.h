@@ -94,7 +94,7 @@ typedef struct le_s {
 	ptl_t *ptl;				/**< particle pointer to display */
 	const char *ref1, *ref2;
 	inventory_t i;
-	int left, right, extension;
+	int left, right, extension, headgear;
 	int fieldSize;				/**< ACTOR_SIZE_* */
 	teamDef_t* teamDef;
 	int gender;

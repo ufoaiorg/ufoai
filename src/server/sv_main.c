@@ -229,7 +229,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	int playernum;
 	int version;
 	char buf[256];
-	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue);
+	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qfalse);
 
 	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect()\n");
 
@@ -265,7 +265,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	Info_SetValueForKey(userinfo, "ip", peername);
 
 	newcl = &temp;
-	memset(newcl, 0, sizeof(client_t));
+	memset(newcl, 0, sizeof(*newcl));
 
 	/* if there is already a slot for this ip, reuse it */
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
@@ -297,9 +297,6 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 		return;
 	}
-
-	/* @todo: Check if the teamnum preference has already reached maxsoldiers */
-	/* and reject connection if so */
 
 	gotnewcl:
 	/* build a new connection */
@@ -347,12 +344,14 @@ static void SVC_DirectConnect (struct net_stream *stream)
  * @brief Checks whether the remote connection is allowed (rcon_password must be
  * set on the server) - and verify the user given password with the cvar value.
  */
-static qboolean Rcon_Validate (void)
+static inline qboolean Rcon_Validate (const char *password)
 {
+	/* no rcon access */
 	if (!strlen(rcon_password->string))
 		return qfalse;
 
-	if (strcmp(Cmd_Argv(1), rcon_password->string))
+	/* password not valid */
+	if (strcmp(password, rcon_password->string))
 		return qfalse;
 
 	return qtrue;
@@ -363,13 +362,9 @@ static qboolean Rcon_Validate (void)
  */
 static void SVC_RemoteCommand (struct net_stream *stream)
 {
-	int i;
-	qboolean valid;
-	char remaining[1024];
 	char buf[256];
-	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue);
-
-	valid = Rcon_Validate();
+	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qfalse);
+	qboolean valid = Rcon_Validate(Cmd_Argv(1));
 
 	if (!valid)
 		Com_Printf("Bad rcon from %s:\n%s\n", peername, Cmd_Argv(1));
@@ -380,9 +375,10 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 		/* inform the client */
 		Com_Printf("Bad rcon_password.\n");
 	else {
-		/* execute the rcon commands */
-		remaining[0] = 0;
+		char remaining[1024] = "";
+		int i;
 
+		/* execute the rcon commands */
 		for (i = 2; i < Cmd_Argc(); i++) {
 			Q_strcat(remaining, Cmd_Argv(i), sizeof(remaining));
 			Q_strcat(remaining, " ", sizeof(remaining));
@@ -416,7 +412,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 	else if (!strcmp(c, "rcon"))
 		SVC_RemoteCommand(stream);
 	else
-		Com_Printf("Bad connectionless packet from %s:\n%s\n", NET_StreamPeerToName(stream, buf, sizeof(buf), qfalse), s);
+		Com_Printf("Bad connectionless packet from %s:\n%s\n", NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue), s);
 }
 
 /**
@@ -430,7 +426,7 @@ void SV_ReadPacket (struct net_stream *s)
 	struct dbuffer *msg;
 
 	while ((msg = NET_ReadMsg(s))) {
-		int cmd = NET_ReadByte(msg);
+		const int cmd = NET_ReadByte(msg);
 
 		if (cmd == clc_oob)
 			SV_ConnectionlessPacket(s, msg);
@@ -695,7 +691,7 @@ void SV_Frame (int now, void *data)
 	if (abandon && killserver) {
 		abandon = qfalse;
 		killserver = qfalse;
-		SV_Shutdown("Server disconnected\n", qfalse);
+		SV_Shutdown("Server disconnected.", qfalse);
 	}
 }
 

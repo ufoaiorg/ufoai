@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/qfiles.h"
 
 void LoadBSPFile(const char *filename);
-void WriteBSPFile(const char *filename);
+size_t WriteBSPFile(const char *filename);
 void PrintBSPFileSizes(void);
 
 /**

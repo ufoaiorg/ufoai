@@ -142,14 +142,13 @@ static void TR_MakeTracingNode (int nodenum)
 		if (node->children[i] < 0) {
 			contentFlags = curTile->leafs[-(node->children[i]) - 1].contentFlags & ~(1 << 31);
 			if ((contentFlags & MASK_VERY_SOLID) && !(contentFlags & CONTENTS_PASSABLE))
-				t->children[i] = -node->children[i] | (1<<31); /* leaf+1 */ /* 1 | (1 << 31); */
+				t->children[i] = -node->children[i] | (1 << 31);
 			else
 				t->children[i] = (1 << 31);
 		} else {
 			t->children[i] = tnode_p - curTile->tnodes;
 			if (t->children[i] > curTile->numnodes) {
 				Com_Printf("Exceeded alloted memory for tracing structure.\n");
-				assert(1);
 			}
 			TR_MakeTracingNode(node->children[i]);
 		}

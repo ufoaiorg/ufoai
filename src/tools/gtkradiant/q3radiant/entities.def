@@ -1,29 +1,6 @@
-/*QUAKED item_***** ( 0 0 0 ) (-16 -16 -16) (16 16 16) suspended
-DO NOT USE THIS CLASS, IT JUST HOLDS GENERAL INFORMATION.
-The suspended flag will allow items to hang in the air, otherwise they are dropped to the next surface.
-
-If an item is the target of another entity, it will not spawn in until fired.
-
-An item fires all of its targets when it is picked up.  If the toucher can't carry it, the targets won't be fired.
-
-"notfree" if set to 1, don't spawn in free for all games
-"notteam" if set to 1, don't spawn in team games
-"notsingle" if set to 1, don't spawn in single player games
-"wait"	override the default wait before respawning.  -1 = never respawn automatically, which can be used with targeted spawning.
-"random" random number of plus or minus seconds varied from the respawn time
-"count" override quantity or duration on most items.
-*/
-
-
 /*QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
-Starting point for a player.
-"team"	the number of the team for this player starting point
-"0" is reserved for civilians and critters (use info_civilian_start instead)
-*/
-
-
-/*QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
-Starting point for a single player human.
+Starting point for a player. Only for multiplayer teams.
+"team"	the number of the team for this player starting point. 0 is reserved for civilians and critters (use info_civilian_start instead)
 */
 
 
@@ -37,55 +14,138 @@ Starting point for a single player alien.
 */
 
 
+/*QUAKED info_2x2_start (1 1 0) (-32 -32 -24) (32 32 32)
+Starting point for a ugv 2x2 units.
+"team"	the number of the team for this player starting point. Only for multiplayer teams.
+*/
+
+
 /*QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
 Starting point for a civilian.
 */
 
 
-/*QUAKED misc_model (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
-Displays a md2 model.
+/*QUAKED misc_model (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8 server_solid glow
+Displays a model.
 Set the level flags correctly!
-"angles"		[pitch yaw roll] rotate the model. 
+Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360]) and roll (fall over)
 "model"		arbitrary .md2 file to display
+"angles"	direction of the model [pitch yaw roll]
+"angle"		direction of the model [yaw]
+"skin"		skin number (default 0)
+"frame"		frame number (default 0) - use frame or anim - but not both
+"anim"		is this an animated model (default empty otherwise fill the animname)
 */
 
 
-/*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
-Creates a particle. Particle properties can be set here with a preceding '-' or '+'. 
-Set the level flags correctly!
+/*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8 noday
+Creates a particle. Particle properties can be set here with a preceding '-' or '+'.
 '-' property is set before calling the particle init function
 '+' do it afterwards
+noday means that the particle is not shown at the day version of the map. E.g. useful for flare particles around streetlight.
 Wait times are of the format "a b". It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start.
 "particle"	name of the particle definition
 "wait"		wait time
 */
 
 
-/*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) linear
-Non-displayed light.
+/*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) day
+Non-displayed light. All lights are for the night version. If you want them to show up in the day version, too - mark the day flag
+"_color"	Color for the light RGB
+"light"		intensity 0-255
+"target"	entity target name (info_null)
+"_cone"
+"origin"
+"angle"		Special values: UP -1; DOWN -2;
 */
 
-
-/*QUAKED func_breakable (0.3 0.3 0.3) ? level1 level2 level3 level4 level5 level6 level7 level8
-Used for breakable objects.
-"particle"		spawn a particle on break
-"health"		health of this entity
+/*QUAKED light_spot (0 1 0) (-8 -8 -8) (8 8 8) day
+Non-displayed light. All lights are for the night version. If you want them to show up in the day version, too - mark the day flag
+"_color"	Color for the light RGB
+"light"		intensity 0-255
+"_cone"
+"origin"
+"angle"		Special values: UP -1; DOWN -2;
 */
-
-
-/*QUAKED func_group (0 0 0) ?
-Only for editor convenience.
-*/
-
 
 /*QUAKED worldspawn (0 0 0) ?
 Only used for the world.
+pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360])
+"maxteams"	max. teams for multiplayer
+"maxlevel"	highest selectable level [1-8]
+"light_night"	light intensity [e.g. 10 or 100]
+"angles_night"	light angle [pitch yaw 0]
+"color_night"	light color (RGB) [0.0-1.0]
+"ambient_night"	ambient color (RGB) [0.0-1.0]
+"light_day"		light intensity [e.g. 10 or 100]
+"angles_day"	light angle [pitch yaw 0]
+"color_day"		light color (RGB) [0.0-1.0]
+"ambient_day"	ambient color (RGB) [0.0-1.0]
+*/
 
-"light"		intensity of the sun light
-"_color"	color of the sun light (normalized)
-"angles"	direction of the sun light [pitch yaw roll]
-"ambient"	ambient light (NOT normalized)
-"maxlevel"	highest selectable level
-"fog"		activate fog
-"fogcolor"	fogcolor (rgb)
+/*QUAKED info_null (0 0.5 0) (-4 -4 -4) (4 4 4)
+Used as a positional target for spotlights, etc.
+"targetname"	target name
+*/
+
+/*QUAKED info_civilian_target (0.5 0.8 0.1) (-16 -16 -24) (16 16 32)
+Used as a target where civilians try to get in a mission
+"count"	The priority of this waypoint - the lower the number, the nearer the end-target
+*/
+
+/*QUAKED misc_sound (0.5 1 0.5) (-8 -8 -8) (8 8 8) level1 level2 level3 level4 level5 level6 level7 level8
+Used to play ambient sounds (looped sounds)
+"noise"		sound file name relative to sound/ambience
+"volume"	0 - 128
+*/
+
+/*QUAKED misc_mission (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
+Defines a mission target
+"particle"	display a particle
+"time"	if set the entity has to be occupied x rounds to win the mission
+"radius"	if the entity has to be occupied this defines the radius that is needed
+"health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
+"group"		allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match
+*/
+
+/*QUAKED misc_mission_alien (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
+Defines the alien mission target
+"particle"	display a particle
+"time"	if set the entity has to be occupied x rounds to win the mission
+"radius"	if the entity has to be occupied this defines the radius that is needed
+"health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
+*/
+
+/*QUAKED func_door (0 .5 .8) ? level1 level2 level3 level4 level5 level6 level7 level8 opened
+"angle"		determines the opening direction
+"health"	if set, door must be shot open
+"group"		multipart doors can be grouped to open together
+"speed"		movement speed (100 default)
+"wait"		wait before returning (3 default, -1 = never return)
+"lip"		lip remaining at end of move (8 default)
+*/
+
+/*QUAKED func_group (0 0 0) ?
+Only for editor and terrain convenience.
+"terrain"
+"gensurf"
+"phongshading"
+*/
+
+/*QUAKED func_breakable (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
+"health"	damage until destroyed
+"particle"	particle id
+"material"	material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3
+*/
+
+/*QUAKED func_rotating (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
+"health"	damage until destroyed
+"particle"	particle id
+"speed"		rotation speed
+"angle"		rotate around this angle - pitch = 0, yaw = 1, roll = 2
+*/
+
+/*QUAKED trigger_hurt (0 0 0) ? KILL STUN DAZE
+Any entity that touches this will be hurt. It does dmg points of damage each server frame
+"dmg"		default 5 (whole numbers only)
 */

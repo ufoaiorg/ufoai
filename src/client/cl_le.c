@@ -1146,10 +1146,10 @@ void LE_List_f (void)
 	int i;
 	le_t *le;
 
-	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state\n");
+	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state | model\n");
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i | %3i | %5i\n",
-			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team, le->fieldSize, le->HP, le->state);
+		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i | %3i | %5i | %s\n",
+			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team, le->fieldSize, le->HP, le->state, le->model1 ? (char*)le->model1 : "none");
 	}
 }
 

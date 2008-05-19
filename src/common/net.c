@@ -266,7 +266,7 @@ static void NET_ShowStreams_f (void)
 
 	for (i = 0; i < MAX_STREAMS; i++) {
 		if (streams[i] != NULL) {
-			Com_Printf("Steam %i is opened: %s\n", i, NET_StreamPeerToName(streams[i], buf, sizeof(buf), qfalse));
+			Com_Printf("Steam %i is opened: %s\n", i, NET_StreamPeerToName(streams[i], buf, sizeof(buf), qtrue));
 			cnt++;
 		}
 	}
@@ -480,7 +480,7 @@ void NET_Wait (int timeout)
 				continue;
 			}
 
-			Com_DPrintf(DEBUG_SERVER, "wrote %d bytes to stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), qfalse));
+			Com_DPrintf(DEBUG_SERVER, "wrote %d bytes to stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), qtrue));
 
 			dbuffer_remove(s->outbound, len);
 		}
@@ -497,7 +497,7 @@ void NET_Wait (int timeout)
 				if (s->inbound) {
 					dbuffer_add(s->inbound, buf, len);
 
-					Com_DPrintf(DEBUG_SERVER, "read %d bytes from stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), qfalse));
+					Com_DPrintf(DEBUG_SERVER, "read %d bytes from stream %d (%s)\n", len, i, NET_StreamPeerToName(s, buf, sizeof(buf), qtrue));
 
 					/* Note that s is potentially invalid after the callback returns */
 					if (s->func)
@@ -598,6 +598,14 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
 	return s;
 }
 
+/**
+ * @brief Try to connect to a given host on a given port
+ * @param[in] node The host to connect to
+ * @param[in] service The port to connect to
+ * @sa NET_DoConnect
+ * @sa NET_ConnectToLoopBack
+ * @todo What about a timeout
+ */
 struct net_stream *NET_Connect (const char *node, const char *service)
 {
 	struct addrinfo *res;
@@ -614,7 +622,6 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 		hints.ai_family = AF_INET;
 
 	rc = getaddrinfo(node, service, &hints, &res);
-
 	if (rc != 0) {
 		Com_Printf("Failed to resolve host %s:%s: %s\n", node, service, gai_strerror(rc));
 		return NULL;
@@ -623,6 +630,7 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 	index = NET_StreamGetFree();
 	if (index == -1) {
 		Com_Printf("Failed to connect to host %s:%s, too many streams open\n", node, service);
+		freeaddrinfo(res);
 		return NULL;
 	}
 
@@ -632,6 +640,9 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 	return s;
 }
 
+/**
+ * @sa NET_Connect
+ */
 struct net_stream *NET_ConnectToLoopBack (void)
 {
 	struct net_stream *client, *server;
@@ -782,12 +793,12 @@ void NET_StreamFinished (struct net_stream *s)
 }
 
 /**
- * @note Any code which calls this function with ip_hack set to true is
- * considered broken - it should not make assumptions about the format
- * of the result, and this function is only really intended for
- * displaying data to the user
+ * @param[in] s The network stream to get the name for
+ * @param[out] dst The target buffer to store the ip and port in
+ * @param[in] len The length of the target buffer
+ * @param[in] appendPort Also append the port number to the target buffer
  */
-const char *NET_StreamPeerToName (struct net_stream *s, char *dst, int len, qboolean ip_hack)
+const char *NET_StreamPeerToName (struct net_stream *s, char *dst, int len, qboolean appendPort)
 {
 	if (!s)
 		return "(null)";
@@ -808,12 +819,12 @@ const char *NET_StreamPeerToName (struct net_stream *s, char *dst, int len, qboo
 			Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
 			return "(error)";
 		}
-		if (ip_hack)
-			Com_sprintf(dst, len, "%s", node);
+		if (!appendPort)
+			Q_strncpyz(dst, node, len);
 		else {
 			node[sizeof(node) - 1] = '\0';
 			service[sizeof(service) - 1] = '\0';
-			Com_sprintf(dst, len, "[%s]:%s", node, service);
+			Com_sprintf(dst, len, "%s %s", node, service);
 		}
 		return dst;
 	}
@@ -876,6 +887,15 @@ static int NET_DoStartServer (const struct addrinfo *addr)
 	return sock;
 }
 
+/**
+ * @sa NET_DoStartServer
+ * @param[in] node The node to start the server with
+ * @param[in] service If this is NULL we are in single player mode
+ * @param[in] func The server callback function to read the packets
+ * @sa SV_ReadPacket
+ * @sa server_func
+ * @sa SV_Stop
+ */
 qboolean SV_Start (const char *node, const char *service, stream_callback_func *func)
 {
 	if (!func)
@@ -922,6 +942,9 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 	return server_running;
 }
 
+/**
+ * @sa SV_Start
+ */
 void SV_Stop (void)
 {
 	server_running = qfalse;

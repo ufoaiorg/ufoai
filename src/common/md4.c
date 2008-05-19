@@ -143,14 +143,14 @@ static void mdfour_tail (const unsigned char *in, int n)
 	buf[n] = 0x80;
 
 	if (n <= 55) {
-		copy4(buf+56, b);
+		copy4(buf + 56, b);
 		copy64(M, buf);
 		mdfour64(M);
 	} else {
-		copy4(buf+120, b);
+		copy4(buf + 120, b);
 		copy64(M, buf);
 		mdfour64(M);
-		copy64(M, buf+64);
+		copy64(M, buf + 64);
 		mdfour64(M);
 	}
 }

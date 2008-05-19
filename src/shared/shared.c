@@ -144,7 +144,7 @@ skipwhite:
 	if (c == '/' && data[1] == '*') {
 		int clen = 0;
 		data += 2;
-		while (!((data[clen] && data[clen] == '*') && (data[clen+1] && data[clen+1] == '/'))) {
+		while (!((data[clen] && data[clen] == '*') && (data[clen + 1] && data[clen + 1] == '/'))) {
 			clen++;
 		}
 		data += clen + 2; /* skip end of multiline comment */
@@ -276,7 +276,7 @@ char *va (const char *format, ...)
 	Q_vsnprintf(buf, VA_BUFSIZE, format, argptr);
 	va_end(argptr);
 
-	buf[VA_BUFSIZE-1] = 0;
+	buf[VA_BUFSIZE - 1] = 0;
 
 	return buf;
 }
@@ -455,7 +455,7 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 	len = Q_vsnprintf(bigbuffer, sizeof(bigbuffer), fmt, argptr);
 	va_end(argptr);
 
-	bigbuffer[sizeof(bigbuffer)-1] = 0;
+	bigbuffer[sizeof(bigbuffer) - 1] = 0;
 
 	Q_strncpyz(dest, bigbuffer, size);
 

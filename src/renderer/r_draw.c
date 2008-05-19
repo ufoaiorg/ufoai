@@ -707,9 +707,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float a, sqrta, p, q;
 	/* earth radius is about 3000.0f * zoom, so 300 with the base zoom of 0.1
-	   Note that moon dist should be 18 000 then, but if we use that we don't see the moon
-	   and the movement of the moon is made by step: this is not nice. I prefered to use
-	   a lower but nicer value. */
+	 * Note that moon dist should be 18 000 then, but if we use that we don't see the moon
+	 * and the movement of the moon is made by step: this is not nice. I prefered to use
+	 * a lower but nicer value. */
 	const float moonDist = 2000.0f;
 	const float moonSize = 0.025f;
 
@@ -790,9 +790,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	/* center earth */
 	VectorSet(earthPos, centerx, centery, 0);
 
-	/* calculate position of the moon
-	 (it rotates around earth with a period of about 24.9 h, and we must take day into account
-	 to avoid moon to "jump" every time the day is changing) */
+	/* calculate position of the moon (it rotates around earth with a period of
+	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
+	 * every time the day is changing) */
 	p = (float) ((day % 249) + second / (24.9f * 3600.0f)) * 2 * M_PI;
 	VectorSet(moonPos, cos(p) * sqrta, - sin(p) * sqrta, a);
 	VectorSet(v, moonPos[1], moonPos[0], moonPos[2]);
@@ -846,9 +846,4 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	qglMatrixMode(GL_TEXTURE);
 	qglLoadIdentity();
 	qglMatrixMode(GL_MODELVIEW);
-}
-
-void R_ShutdownDraw (void)
-{
-	/* TODO clear ogl lists of the spheres */
 }

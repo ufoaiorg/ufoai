@@ -238,13 +238,13 @@ void Com_Error (int code, const char *fmt, ...)
 		break;
 	case ERR_DROP:
 		Com_Printf("********************\nERROR: %s\n********************\n", msg);
-		SV_Shutdown("Server crashed\n", qfalse);
+		SV_Shutdown("Server crashed.", qfalse);
 		CL_Drop();
 		recursive = qfalse;
 		longjmp(abortframe, -1);
 		break;
 	default:
-		SV_Shutdown("Server fatal crashed: %s\n", qfalse);
+		SV_Shutdown("Server fatal crashed: %s", qfalse);
 		CL_Shutdown();
 	}
 
@@ -261,7 +261,7 @@ void Com_Error (int code, const char *fmt, ...)
 
 void Com_Drop (void)
 {
-	SV_Shutdown("Server disconnected\n", qfalse);
+	SV_Shutdown("Server disconnected.", qfalse);
 	CL_Drop();
 	longjmp(abortframe, -1);
 }
@@ -278,7 +278,7 @@ void Com_Quit (void)
 	Com_WriteConfigToFile("config.cfg");
 #endif
 
-	SV_Shutdown("Server quit\n", qfalse);
+	SV_Shutdown("Server quit.", qfalse);
 	SV_Clear();
 	CL_Shutdown();
 

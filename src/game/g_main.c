@@ -313,7 +313,7 @@ void Sys_Error (const char *error, ...)
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
-	text[sizeof(text)-1] = 0;
+	text[sizeof(text) - 1] = 0;
 
 	gi.error("%s", text);
 }
@@ -327,7 +327,7 @@ void Com_Printf (const char *msg, ...)
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
 
-	text[sizeof(text)-1] = 0;
+	text[sizeof(text) - 1] = 0;
 
 	gi.dprintf("%s", text);
 }
@@ -348,7 +348,7 @@ void Com_DPrintf (int level, const char *msg, ...)
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
 
-	text[sizeof(text)-1] = 0;
+	text[sizeof(text) - 1] = 0;
 
 	gi.dprintf("%s", text);
 }
@@ -358,21 +358,18 @@ void Com_DPrintf (int level, const char *msg, ...)
 
 
 /**
- * @brief If password or has changed, update sv_needpass as needed
+ * @brief If password has changed, update sv_needpass cvar as needed
  */
 static void CheckNeedPass (void)
 {
-	int need;
-
 	if (password->modified) {
+		char *need = "0";
 		password->modified = qfalse;
 
-		need = 0;
-
 		if (*password->string && Q_stricmp(password->string, "none"))
-			need = 1;
+			need = "1";
 
-		gi.Cvar_Set("sv_needpass", va("%d", need));
+		gi.Cvar_Set("sv_needpass", need);
 	}
 }
 
@@ -426,7 +423,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 
 	switch (skill) {
 	case ABILITY_POWER:
-		exp =  46; /** @todo Make a formula for this once strength is used in combat. */
+		exp = 46; /** @todo Make a formula for this once strength is used in combat. */
 		break;
 	case ABILITY_SPEED:
 		exp = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched + (chr->scoreMission->firedTUs[skill] + chr->scoreMission->firedSplashTUs[skill]) / 10;
@@ -532,8 +529,7 @@ void G_EndGame (int team)
 	 * @note In theory we do not have to check for ET_ACTOR2x2 actors (since phalanx has only robots that are 2x2),
 	 * but we never know, maybe we have Hulk int hge future ;). */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-		&& !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX) {
+		if (ent->inuse && G_IsLivingActor(ent) && ent->team == TEAM_PHALANX) {
 			G_UpdateCharacterSkills(&ent->chr);
 		}
 	}
@@ -542,8 +538,7 @@ void G_EndGame (int team)
 	if (team == TEAM_ALIEN) {
 		level.num_alive[TEAM_PHALANX] = 0;
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX) {
+			if (ent->inuse && G_IsLivingActor(ent) && ent->team == TEAM_PHALANX) {
 				ent->state = STATE_DEAD;
 				ent->HP = 0;
 				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);

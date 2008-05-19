@@ -36,6 +36,7 @@ cvar_t *mn_show_tooltips;
 
 static void MN_DrawBorder (const menuNode_t *node)
 {
+	/* FIXME: use GL_LINE_LOOP + array here */
 	/* left */
 	R_DrawFill(node->pos[0] - node->padding - node->border, node->pos[1] - node->padding - node->border,
 		node->border, node->size[1] + (node->padding*2) + (node->border*2), node->align, node->bordercolor);
@@ -142,7 +143,6 @@ void MN_DrawMenus (void)
 							node->size[0] + (node->padding * 2), node->size[1] + (node->padding * 2), 0, node->bgcolor);
 				}
 
-				/* FIXME: use GL_LINE_LOOP + array here */
 				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
 					MN_DrawBorder(node);
 

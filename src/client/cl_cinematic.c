@@ -2,7 +2,7 @@
  * @file cl_cinematic.c
  * @brief Single player employee stuff.
  * @note Employee related functions prefix: E_
- * @note This code based on the OverDose amd KMQuakeII source code
+ * @note This code based on the OverDose and KMQuakeII source code
  */
 
 /*
@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ROQ_CHUNK_HEADER_SIZE		8			/* Size of a RoQ chunk header */
 
 #define ROQ_MAX_CHUNK_SIZE			65536		/* Max size of a RoQ chunk */
+
+#define ROQ_SOUND_RATE				22050
 
 typedef struct {
 	unsigned short	id;
@@ -375,7 +377,7 @@ static void CIN_DecodeVideo (const byte *data)
 
 						if (!vqFlagPos) {
 							vqFlagPos = 7;
-							vqFlag = data[index+0] | (data[index+1] << 8);
+							vqFlag = data[index + 0] | (data[index + 1] << 8);
 							vqFlag = LittleShort(vqFlag);
 
 							index += 2;
@@ -445,7 +447,7 @@ static void CIN_DecodeSoundMono (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	S_PlaySoundFromMem(samples, cin.chunk.size, 22050, 1, 1000 / cin.frameRate);
+	S_PlaySoundFromMem(samples, cin.chunk.size, ROQ_SOUND_RATE, 1, 1000 / cin.frameRate);
 }
 
 /**
@@ -469,7 +471,7 @@ static void CIN_DecodeSoundStereo (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	S_PlaySoundFromMem(samples, cin.chunk.size, 22050, 2, 1000 / cin.frameRate);
+	S_PlaySoundFromMem(samples, cin.chunk.size, ROQ_SOUND_RATE, 2, 1000 / cin.frameRate);
 }
 
 /**
@@ -618,6 +620,7 @@ void CIN_PlayCinematic (const char *name)
 	/* Parse the header */
 	FS_Read(header, sizeof(header), &cin.file);
 
+	/* first 8 bytes are the header */
 	chunk.id = LittleShort(*(short *)&header[0]);
 	chunk.size = LittleLong(*(int *)&header[2]);
 	chunk.flags = LittleShort(*(short *)&header[6]);
@@ -694,9 +697,7 @@ static void CIN_Cinematic_f (void)
 	}
 
 	Com_sprintf(name, sizeof(name), "videos/%s", Cmd_Argv(1));
-	if (name[strlen(name) - 4] == '.')
-		name[strlen(name) - 4] = '\0';
-	Q_strcat(name, ".roq", sizeof(name));
+	COM_DefaultExtension(name, sizeof(name), ".roq");
 
 	/* If running a local server, kill it */
 	SV_Shutdown("Server quit", qfalse);
