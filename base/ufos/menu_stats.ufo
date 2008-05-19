@@ -218,7 +218,7 @@ menu nations
 		pos		"950 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop; }
+		click	{ cmd "mn_pop;" }
 	}
 
 	string title
@@ -262,14 +262,14 @@ menu nations
 		pos "40  90"
 		size "400 16"
 	}
-	string nation0 { string	"*cvar mn_nat_name0" pos "40 115"	size "400 16"	invis false	click { cmd "nation_select 0" } }
-	string nation1 { string	"*cvar mn_nat_name1"	pos "40 140"	size "400 16"	invis false	click { cmd "nation_select 1" } }
-	string nation2 { string	"*cvar mn_nat_name2"	pos "40 165"	size "400 16"	invis false	click { cmd "nation_select 2" } }
-	string nation3 { string	"*cvar mn_nat_name3"	pos "40 190"	size "400 16"	invis false	click { cmd "nation_select 3" } }
-	string nation4 { string	"*cvar mn_nat_name4"	pos "40 215"	size "400 16"	invis false	click { cmd "nation_select 4" } }
-	string nation5 { string	"*cvar mn_nat_name5"	pos "40 240"	size "400 16"	invis false	click { cmd "nation_select 5" } }
-	string nation6 { string	"*cvar mn_nat_name6"	pos "40 265"	size "400 16"	invis false	click { cmd "nation_select 6" } }
-	string nation7 { string	"*cvar mn_nat_name7"	pos "40 290"	size "400 16"	invis false	click { cmd "nation_select 7" } }
+	string nation0 { string	"*cvar mn_nat_name0" pos "40 115"	size "400 16"	invis false	click { cmd "nation_select 0;" } }
+	string nation1 { string	"*cvar mn_nat_name1"	pos "40 140"	size "400 16"	invis false	click { cmd "nation_select 1;" } }
+	string nation2 { string	"*cvar mn_nat_name2"	pos "40 165"	size "400 16"	invis false	click { cmd "nation_select 2;" } }
+	string nation3 { string	"*cvar mn_nat_name3"	pos "40 190"	size "400 16"	invis false	click { cmd "nation_select 3;" } }
+	string nation4 { string	"*cvar mn_nat_name4"	pos "40 215"	size "400 16"	invis false	click { cmd "nation_select 4;" } }
+	string nation5 { string	"*cvar mn_nat_name5"	pos "40 240"	size "400 16"	invis false	click { cmd "nation_select 5;" } }
+	string nation6 { string	"*cvar mn_nat_name6"	pos "40 265"	size "400 16"	invis false	click { cmd "nation_select 6;" } }
+	string nation7 { string	"*cvar mn_nat_name7"	pos "40 290"	size "400 16"	invis false	click { cmd "nation_select 7;" } }
 
 	string nat_fund {
 		string	"_Current Funding"
@@ -293,79 +293,79 @@ menu nations
 
 	linestrip nation_graph_funding
 	{
-		pos	"500 300"
+		pos	"600 300"
 		size	"300 200"
 	}
 
 	string graph_time {
 		string "_Month (Relative to current)"
-		pos "650 330"
+		pos "750 330"
 		align uc
 		font f_small
 	}
 	// todo better display of real month-text (year+month?)
 	string graph_month0	{
 		string "0"
-		pos "500 300"	align ul	font f_small
+		pos "600 300"	align ul	font f_small
 	}
 	string graph_month1	{
 		string "-1"
-		pos "525 300"	align ul	font f_small
+		pos "625 300"	align ul	font f_small
 	}
 	string graph_month2	{
 		string "-2"
-		pos "550 300"	align ul	font f_small
+		pos "650 300"	align ul	font f_small
 	}
 	string graph_month3	{
 		string "-3"
-		pos "575 300"	align ul	font f_small
+		pos "675 300"	align ul	font f_small
 	}
 	string graph_month4	{
 		string "-4"
-		pos "600 300"	align ul	font f_small
+		pos "700 300"	align ul	font f_small
 	}
 	string graph_month5	{
 		string "-5"
-		pos "625 300"	align ul	font f_small
+		pos "725 300"	align ul	font f_small
 	}
 	string graph_month6	{
 		string "-6"
-		pos "650 300"	align ul	font f_small
+		pos "750 300"	align ul	font f_small
 	}
 	string graph_month7	{
 		string "-7"
-		pos "675 300"	align ul	font f_small
+		pos "775 300"	align ul	font f_small
 	}
 	string graph_month8	{
 		string "-8"
-		pos "700 300"	align ul	font f_small
+		pos "800 300"	align ul	font f_small
 	}
 	string graph_month9	{
 		string "-9"
-		pos "725 300"	align ul	font f_small
+		pos "825 300"	align ul	font f_small
 	}
 	string graph_month10	{
 		string "-10"
-		pos "750 300"	align ul	font f_small
+		pos "850 300"	align ul	font f_small
 	}
 	string graph_month11	{
 		string "-11"
-		pos "775 300"	align ul	font f_small
+		pos "875 300"	align ul	font f_small
 	}
 
 	string graph_funding {
 		string "_Funding"
-		pos "490 200"
+		pos "590 200"
 		align ur
 		font f_small
 	}
 	string graph_funding_zero {
 		string "0"
-		pos "490 290"	align ur	font f_small
+		pos "590 290"	align ur	font f_small
 	}	//todo *cvar mn_nat_fund_zero
 	string graph_funding_max {
 		string "_max"
-		pos "490 100"
+		pos "590 100"
 		align lr
 		font f_small
 	}	//todo *cvar mn_nat_fund_max
