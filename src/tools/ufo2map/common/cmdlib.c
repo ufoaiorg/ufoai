@@ -54,12 +54,9 @@ void Sys_Error (const char *error, ...)
 	va_start(argptr, error);
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
-#ifdef _WIN32
-	MessageBox(NULL, va("%s\n\nGetLastError() = %i", text, (int)GetLastError()), "Error", MB_OK|MB_ICONINFORMATION);
-#else
+	/* removed #ifdef _WIN32 which showed modal dialog. console output is much preferred. blondandy. */
 	Com_Printf("\n************ ERROR ************\n");
 	Com_Printf("%s\n", text);
-#endif
 
 	exit(1);
 }

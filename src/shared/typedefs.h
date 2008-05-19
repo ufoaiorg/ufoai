@@ -276,6 +276,9 @@ typedef struct side_s {
 	qboolean	visible;		/**< choose visible planes first */
 	qboolean	tested;			/**< this plane already checked as a split */
 	qboolean	bevel;			/**< don't ever use for bsp splitting */
+
+	vec3_t		hessianNormal;
+	float		hessianP;
 } side_t;
 
 typedef struct brush_s {

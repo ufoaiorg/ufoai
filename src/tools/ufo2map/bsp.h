@@ -51,6 +51,7 @@ extern brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 extern int brush_start, brush_end;
 
+byte GetLevelFlagsFromBrush(const mapbrush_t *brush);
 void LoadMapFile(const char *filename);
 void WriteMapFile(const char *filename);
 int FindFloatPlane(vec3_t normal, vec_t dist);

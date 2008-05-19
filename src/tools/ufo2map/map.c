@@ -246,6 +246,11 @@ static int BrushContents (mapbrush_t *b)
 	return contentFlags;
 }
 
+byte GetLevelFlagsFromBrush (const mapbrush_t *brush)
+{
+	const byte levelflags = (brush->contentFlags >> 8) & 0xFF;
+	return levelflags;
+}
 
 /*============================================================================ */
 

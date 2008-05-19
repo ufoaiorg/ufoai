@@ -58,7 +58,7 @@ static void CreateBrushWindings (bspbrush_t *brush)
 	for (i = 0; i < brush->numsides; i++) {
 		side = &brush->sides[i];
 		plane = &mapplanes[side->planenum];
-		w = BaseWindingForPlane(plane->normal, plane->dist);
+		w = BaseWindingForPlane(plane->normal, plane->dist);/*evidence that winding_t represents a hessian normal plane*/
 		for (j = 0; j < brush->numsides && w; j++) {
 			if (i == j)
 				continue;

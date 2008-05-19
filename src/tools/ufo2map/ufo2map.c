@@ -332,6 +332,9 @@ int main (int argc, char **argv)
 
 	if (argc < 2)
 		Sys_Error("Usage: ufo2map <parameter> [map]\n"
+#ifdef _WIN32
+		"Even on Windows, use / slashes in the path\n"
+#endif
 		" -bounce <num>            : light bounces\n"
 		" -block num num           : \n"
 		" -blocks num num num num  : \n"

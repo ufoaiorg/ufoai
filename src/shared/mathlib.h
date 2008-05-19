@@ -120,6 +120,7 @@ extern const byte dvleft[DIRECTIONS];
 #define VectorAdd(a,b,c)        (c[0]=a[0]+b[0],c[1]=a[1]+b[1],c[2]=a[2]+b[2])
 #define VectorMul(scalar,b,c)       (c[0]=scalar*b[0],c[1]=scalar*b[1],c[2]=scalar*b[2])
 #define Vector2Mul(scalar,b,c)      (c[0]=scalar*b[0],c[1]=scalar*b[1])
+#define VectorDiv(in,scalar,out)    VectorScale(in,(1.0f/(scalar)),out)
 #define VectorCopy(a,b)         (b[0]=a[0],b[1]=a[1],b[2]=a[2])
 #define Vector2Copy(a,b)            (b[0]=a[0],b[1]=a[1])
 #define Vector4Copy(a,b)        (b[0]=a[0],b[1]=a[1],b[2]=a[2],b[3]=a[3])
@@ -187,5 +188,9 @@ void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev
 
 vec_t Q_rint(const vec_t in);
 vec_t ColorNormalize(const vec3_t in, vec3_t out);
+
+float HessianDistance(const vec3_t point, const vec3_t normal, const float p);
+float HessianNormalPlane(const vec3_t p1, const vec3_t p2, const vec3_t p3, vec3_t normal);
+
 
 #endif
