@@ -1,0 +1,32 @@
+#!/bin/bash
+
+MAPDIRS="../../base/maps ../../../data_source/maps"
+PROPFILE=/tmp/map.properties
+
+cd "$(dirname $0)"
+SCRIPTDIR="$PWD"
+. scripts_common
+
+SVN="$(which svn)"
+[ -x "$SVN" ] || fail "can't find svn executable"
+
+[ -f "$PROPFILE" ] && fail "file '$PROPFILE' already exists, refusing to overwrite"
+
+echo "*.bsp
+*.bak
+*autosave*
+*.tmp
+*.footsteps
+*.map.original*" > $PROPFILE || fail "failed to write $PROPFILE"
+
+for MAPDIR in $MAPDIRS; do
+    [ -d "$MAPDIR" ] || fail "can't access map directory '$MAPDIR'"
+    echo -e "\nsetting svn:ignore property for $MAPDIR to :\n-----"
+    cat "$PROPFILE"
+    echo "-----"
+    while read DIRECTORY; do
+	$SVN ps svn:ignore --file "$PROPFILE" "$DIRECTORY" || fail "failed to set property on $DIRECTORY"
+    done < <(find "$MAPDIR" -type d ! -wholename '*/.svn*')
+done
+
+rm "$PROPFILE"
