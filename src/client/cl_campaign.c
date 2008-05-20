@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ufo.h"
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
+#include "menu/m_inventory.h"
 
 extern void R_IncreaseXVILevel(const vec2_t pos);
 extern void R_InitializeXVIOverlay(byte *data, int width, int height);
@@ -6344,6 +6345,9 @@ void CL_GameExit (void)
 		E_ResetEmployees();
 	}
 	curCampaign = NULL;
+
+	/* maybe this is not the best place - but it is needed */
+	menuInventory = NULL;
 }
 
 /**
