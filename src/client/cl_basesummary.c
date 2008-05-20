@@ -127,9 +127,12 @@ static void BaseSummary_Init_f (void)
 			for (i = 0; i < queue->numItems; i++) {
 				const production_t *production = &queue->items[i];
 				const objDef_t *objDef = production->item;
+				const aircraft_t *aircraft = production->aircraft;
+				const char *name = (objDef) ? objDef->name : _(aircraft->name);
+				assert(name);
 
 				/* FIXME: use the same method as we do in PR_ProductionInfo */
-				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), objDef->name,
+				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), name,
 					production->amount, production->percentDone * 100), sizeof(textStatsBuffer));
 			}
 		} else {
