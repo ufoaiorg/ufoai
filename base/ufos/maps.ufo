@@ -765,7 +765,7 @@ mapdef mine
 
 mapdef transport
 {
-	map				transport
+	map				+transport
 	description		"_An industial area, used for loading and unloading goods."
 	multiplayer		true
 	teams			2

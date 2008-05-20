@@ -246,7 +246,7 @@ base/maps/spedition.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/stadium.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/subway.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/tower.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/transport.map | GNU General Public License 2.0
+base/maps/transport/tra_main.map | GNU General Public License 2.0
 base/maps/tropic.ump | GNU General Public License 2.0
 base/maps/tropic/tr_drop_firebird.map | GNU General Public License 2.0
 base/maps/tropic/tr_f01.map | GNU General Public License 2.0
