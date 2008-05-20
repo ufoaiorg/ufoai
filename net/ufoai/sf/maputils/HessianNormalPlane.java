@@ -29,6 +29,7 @@ public class HessianNormalPlane {
 		//System.out.println("");
 		//System.out.println("inPlane1"+inPlane1+"  inPlane2"+inPlane2+"  normal"+normal+"  unit"+n);
 		p = -n.dot (p1);
+		//System.out.println(""+this);
 	}
 
 	/** @return a point on the plane. Specifically the plane's point of closest

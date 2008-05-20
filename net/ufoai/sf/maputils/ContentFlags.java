@@ -80,6 +80,7 @@ public class ContentFlags {
 		thisFlags = (thisFlags & ~levelFlagMask) | newFlags.thisFlags;
 	}
 
+	/** test code */
 	public static void main (String[] args) {
 		ContentFlags lf1 = ContentFlags.flags (64512);
 		ContentFlags lf2 = ContentFlags.flags (64512 + 2);
@@ -108,14 +109,15 @@ public class ContentFlags {
 		return level < MIN_LEVEL ? MIN_LEVEL : (level > MAX_LEVEL ? MAX_LEVEL : level) ;
 	}
 	
-	/** examines the levelflags and returns the level that the face should be considered
-	 *  to be on. The level below the least significant levelflag bit. */
+	/** examines the levelflags and returns the level for nodraw (and possibly
+	 *  other optimisation purposes) */
 	public int getLevelForOptimisation(){
 	    for(int i=0;i<levelFlags.length;i++){
-		if((thisFlags & levelFlags[i]) > 0) return i-1;
+		if((thisFlags & levelFlags[i]) > 0) return i;
 	    }
-	    //no flags set
-	    return 1;
+	    /* no flags set. -1 defualt is safe as other brushes will be considered to 
+	     * be on proper levels and no nodraws will be set */
+	    return -1;
 	}
 
 }
