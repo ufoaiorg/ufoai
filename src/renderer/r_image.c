@@ -1576,16 +1576,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (palette)
 		Mem_Free(palette);
 
-	if (type == it_world) { /* resolve normalmaps */
-		pic = NULL;
-		*ename = 0;
-		R_LoadImage(va("%s_normal", lname), &pic, &width, &height);
-		if (pic) {
-			image->normalmap = R_LoadPic(lname, pic, width, height, it_material);
-			Mem_Free(pic);
-		}
-	}
-
 	return image;
 }
 
