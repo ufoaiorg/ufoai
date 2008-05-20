@@ -1286,6 +1286,46 @@ mapdef city_disco
 	}
 }
 
+mapdef city_train
+{
+	map				"city_train"
+	description		"_A small neighbourhood in a warm urban region."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		6
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+		desert
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
 mapdef gasstation
 {
 	map				+gasstation
