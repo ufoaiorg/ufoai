@@ -147,8 +147,14 @@ static int checkFuncGroup (entity_t *e, int entnum)
 
 static int checkStartPosition (entity_t *e, int entnum)
 {
-	if (((int)e->origin[0] % 32) - 16 || ((int)e->origin[1] % 32) - 16) {
-		Com_Printf("  ERROR: found misaligned starting position - entnum: %i\n", entnum);
+	int align = 16;
+	const char *val = ValueForKey(e, "classname");
+
+	if (!strcmp(val, "info_2x2_start"))
+		align = 32;
+
+	if (((int)e->origin[0] - align) % UNIT_SIZE || ((int)e->origin[1] - align) % UNIT_SIZE) {
+		Com_Printf("  ERROR: found misaligned starting position - entnum: %i (%i: %i)\n", entnum, (int)e->origin[0], (int)e->origin[1]);
 		return 1;
 	}
 	return 0;
@@ -361,8 +367,6 @@ static qboolean BrushSidesAreInside (const mapbrush_t *brush1, const mapbrush_t 
 	vec3_t vectorList[4096];
 	const int n = CalculateVerticesForBrush(brush2, vectorList, epsilon);
 
-	printf("n: %i\n", n);
-
 	for (i = 0; i < brush2->numsides; i++) {
 		const side_t *side = &brush2->original_sides[i];
 		int j;
@@ -439,7 +443,6 @@ static void CheckInteractionList (const entity_t *entity)
 						side_t *sideJ = &list[j]->original_sides[l];
 						if (FacingAndCoincidentTo(sideI, sideJ, 0.001)) {
 							if (BrushSidesAreInside(list[j], list[i])) {
-printf("test2\n");
 								if (!(sideI->surfaceFlags & SURF_NODRAW)) {
 									brush_texture_t *tex = &side_brushtextures[sideI - brushsides];
 									Com_Printf("Brush %i (entity %i): set nodraw texture\n", list[i]->brushnum, list[i]->entitynum);
@@ -464,12 +467,13 @@ printf("test2\n");
 void CheckEntities (void)
 {
 	int i;
-	const entityCheck_t *v;
 
 	/* 0 is the world - start at 1 */
 	for (i = 0; i < num_entities; i++) {
 		entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
+		const entityCheck_t *v;
+
 		for (v = checkArray; v->name; v++)
 			if (!strncmp(name, v->name, strlen(v->name))) {
 				if (v->checkCallback(e, i) != 0) {

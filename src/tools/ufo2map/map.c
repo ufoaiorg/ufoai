@@ -974,14 +974,12 @@ void WriteMapFile (const char *filename)
 				const side_t *side = &brush->original_sides[k];
 				const ptrdiff_t index = side - brushsides;
 				const brush_texture_t *t = &side_brushtextures[index];
-				if (1 || side->visible) { /* FIXME AddBrushBevels is no longer called - check this! */
-					const plane_t *p = &mapplanes[side->planenum];
-					fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
-					fprintf(f, "( %i %i %i ) ", p->planeVector[1][0], p->planeVector[1][1], p->planeVector[1][2]);
-					fprintf(f, "( %i %i %i ) ", p->planeVector[2][0], p->planeVector[2][1], p->planeVector[2][2]);
-					fprintf(f, "%s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1],
-						t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
-				}
+				const plane_t *p = &mapplanes[side->planenum];
+				fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
+				fprintf(f, "( %i %i %i ) ", p->planeVector[1][0], p->planeVector[1][1], p->planeVector[1][2]);
+				fprintf(f, "( %i %i %i ) ", p->planeVector[2][0], p->planeVector[2][1], p->planeVector[2][2]);
+				fprintf(f, "%s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1],
+					t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
 			}
 			fprintf(f, "}\n");
 		}
