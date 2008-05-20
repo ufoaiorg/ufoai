@@ -404,7 +404,7 @@ int main (int argc, char **argv)
 	/* if onlyents just grab the entites and resave */
 	if (config.onlyents) {
 		LoadBSPFile(bspFilename);
-		num_entities = 0;
+		num_entities = 0; /* use the map source entities */
 
 		LoadMapFile(mapFilename);
 		SetModelNumbers();

@@ -469,14 +469,13 @@ void ParseEntities (void)
  */
 const char *UnparseEntities (void)
 {
-	epair_t *ep;
 	char line[2048], key[1024], value[1024];
 	int i;
 
 	curTile->entdata[0] = '\0';
 
 	for (i = 0; i < num_entities; i++) {
-		ep = entities[i].epairs;
+		const epair_t *ep = entities[i].epairs;
 		if (!ep)
 			continue;	/* ent got removed */
 
