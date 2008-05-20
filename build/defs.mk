@@ -32,8 +32,8 @@ else
 endif
 
 ifeq ($(PROFILING),1)
-    CFLAGS+=-pg -DPROFILING -fprofile-arcs -ftest-coverage
-    LNKFLAGS+=-pg -lgcov
+    CFLAGS+=-pg
+    LNKFLAGS+=-pg
 endif
 
 ifeq ($(PARANOID),1)
