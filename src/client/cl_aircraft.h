@@ -244,6 +244,7 @@ qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
 void AII_ReloadWeapon(aircraft_t *aircraft);
 qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
+qboolean AIR_AircraftHasEnoughFuelOneWay(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct mission_s* mission);
 qboolean AIR_SendAircraftPursuingUFO(aircraft_t* aircraft, aircraft_t* ufo);

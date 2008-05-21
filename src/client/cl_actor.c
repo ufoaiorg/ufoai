@@ -1170,7 +1170,8 @@ void CL_PopupFiremodeReservation_f (void)
 }
 
 /**
- * @brief Creates a (text) list of all firemodes of the currently selected actor.
+ * @brief Get selected firemode in the list of the currently selected actor.
+ * @sa CL_PopupFiremodeReservation_f
  * @note console command: cl_input.c:reserve_shot
  */
 void CL_ReserveShot_f (void)

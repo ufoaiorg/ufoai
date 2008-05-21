@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
+#include "cl_popup.h"
 #include "../renderer/r_draw.h"
 #include "menu/m_nodes.h"
 #include "menu/m_popup.h"
@@ -705,38 +706,57 @@ static void B_ResetAllStatusAndCapacities_f (void)
  * @sa B_BuildingDestroy_f
  * @todo If player choose to destroy the building, a popup should ask him if he wants to sell aircraft in it.
  */
-static void B_HangarOnDestroy (base_t* base, buildingType_t hangarType, building_t *building)
+static void B_HangarOnDestroy (base_t* base, buildingType_t hangarType, buildingType_t buildingType)
 {
 	baseCapacities_t capacity;
 	int aircraftIdx;
+	aircraft_t *awayAircraft[MAX_AIRCRAFT];
+	int numawayAircraft, randomNum;
 
-	/* do nothing if building is under construction */
-	if (building->buildingStatus != B_STATUS_WORKING)
-		return;
+	memset(&awayAircraft[MAX_AIRCRAFT], 0, sizeof(awayAircraft[MAX_AIRCRAFT]));
+
+
 
 	/* destroy aircraft only if there's not enough hangar (hangars are destroyed one by one) */
-	capacity = B_GetCapacityFromBuildingType(building->buildingType);
+	capacity = B_GetCapacityFromBuildingType(buildingType);
 	if (base->capacities[capacity].cur < base->capacities[capacity].max)
 		return;
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
-	for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
+	for (aircraftIdx = 0, numawayAircraft = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
 		int aircraftSize = base->aircraft[aircraftIdx].weight;
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
-			if (building->buildingType != B_SMALL_HANGAR)
+			if (buildingType != B_SMALL_HANGAR)
 				continue;
 			break;
 		case AIRCRAFT_LARGE:
-			if (building->buildingType != B_HANGAR)
+			if (buildingType != B_HANGAR)
 				continue;
 			break;
 		case AIRCRAFT_HANGAR_ERROR:
 			Sys_Error("B_HangarOnDestroy: Unkown type of aircraft '%i'\n", aircraftSize);
 		}
+
+		/* Only aircraft in hangar will be destroyed by hangar destruction */
+		if (!AIR_IsAircraftInBase(&base->aircraft[aircraftIdx])) {
+			if (AIR_IsAircraftOnGeoscape(&base->aircraft[aircraftIdx]))
+				awayAircraft[numawayAircraft++] = &base->aircraft[aircraftIdx];
+			continue;
+		}
+
 		/* Remove aircraft and aircraft items, but do not fire employees */
 		AIR_DeleteAircraft(base, &base->aircraft[aircraftIdx]);
+		awayAircraft[numawayAircraft++] = NULL;
 		return;
+	}
+
+	/* All aircraft are away from base, pick up one and change it's homebase */
+	randomNum = rand() % numawayAircraft;
+	if (!CL_DisplayHomebasePopup(awayAircraft[randomNum], qfalse)) {
+		/* No base can hold this aircraft
+		 @todo fixme Better solution ? */
+		AIR_DeleteAircraft(awayAircraft[randomNum]->homebase, awayAircraft[randomNum]);
 	}
 }
 
@@ -747,7 +767,7 @@ static void B_HangarOnDestroy (base_t* base, buildingType_t hangarType, building
  */
 static void B_HangarOnDestroy_f (void)
 {
-	int baseIdx, hangarType, buildingIdx = -1;
+	int baseIdx, hangarType, buildingType;
 	base_t *base;
 
 	if (Cmd_Argc() < 4) {
@@ -767,9 +787,9 @@ static void B_HangarOnDestroy_f (void)
 		return;
 	}
 
-	buildingIdx = atoi(Cmd_Argv(3));
-	if (buildingIdx < 0 || buildingIdx >= MAX_BUILDINGS) {
-		Com_Printf("B_SmallHangarOnDestroy_f: buildingIdx '%i' above maximum value (%i)\n", buildingIdx, MAX_BUILDINGS);
+	buildingType = atoi(Cmd_Argv(3));
+	if (buildingType < 0 || buildingType >= MAX_BUILDING_TYPE) {
+		Com_Printf("B_SmallHangarOnDestroy_f: buildingType '%i' above maximum value (%i)\n", buildingType, MAX_BUILDING_TYPE);
 		return;
 	}
 
@@ -782,7 +802,7 @@ static void B_HangarOnDestroy_f (void)
 
 	base = B_GetFoundedBaseByIDX(baseIdx);
 	if (base)
-		B_HangarOnDestroy(base, hangarType, &gd.buildings[base->idx][buildingIdx]);
+		B_HangarOnDestroy(base, hangarType, buildingType);
 	else
 		Com_Printf("B_SmallHangarOnDestroy_f: base %i is not founded\n", baseIdx);
 }
@@ -813,10 +833,10 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		return qfalse;
 	}
 
-	/* call ondestroy trigger */
-	if (*onDestroy) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n", onDestroy, base->idx, building->idx);
-		Cmd_ExecuteString(va("%s %i %i;", onDestroy, base->idx, building->idx));
+	/* call ondestroy trigger only if building is not under construction*/
+	if (*onDestroy && building->buildingStatus == B_STATUS_WORKING) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n", onDestroy, base->idx, building->buildingType);
+		Cbuf_AddText(va("%s %i %i;", onDestroy, base->idx, building->buildingType));
 	}
 
 	/* Remove the building from the base map */

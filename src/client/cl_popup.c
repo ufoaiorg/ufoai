@@ -42,6 +42,7 @@ typedef enum {
 	POPUP_AIRCRAFT_ACTION_BACKTOBASE = 1,	/**< Aircraft back to base */
 	POPUP_AIRCRAFT_ACTION_STOP = 2,			/**< Aircraft stops */
 	POPUP_AIRCRAFT_ACTION_MOVETOMISSION = 3,/**< Aircraft move to a mission */
+	POPUP_AIRCRAFT_CHANGE_HOMEBASE = 4,		/**< Change aircraft homebase */
 	POPUP_AIRCRAFT_ACTION_NONE,				/**< Do nothing */
 
 	POPUP_AIRCRAFT_ACTION_MAX
@@ -74,6 +75,212 @@ typedef struct popup_intercept_s {
 
 static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 
+/** Reservation-popup info */
+static int popupNum;							/**< Number of entries in the popup list */
+static linkedList_t* popupListText = NULL;		/**< Text to display in the popup list */
+static linkedList_t* popupListData = NULL;		/**< Further datas needed when popup is clicked */
+static menuNode_t* popupListNode = NULL;		/**< Node used for popup */
+
+static int INVALID_BASE = -1;
+
+/*========================================
+POPUP_HOMEBASE
+========================================*/
+
+/**
+ * @brief Display the popup_homebase
+ * @parap[in] aircraft Pointer to aircraft we want to change homebase.
+ * @param[in] alwaysDisplay False if popup should be displayed only if at least one base is available.
+ * @return true if popup is displayed.
+ */
+qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
+{
+	int baseIdx, homebase, numAvailableBase = 0;
+	baseCapacities_t capacity;
+	static char text[MAX_VAR];
+
+	assert(aircraft);
+
+	switch (aircraft->weight) {
+	case AIRCRAFT_SMALL:
+		capacity = CAP_AIRCRAFTS_SMALL;
+		break;
+	case AIRCRAFT_LARGE:
+		capacity = CAP_AIRCRAFTS_BIG;
+		break;
+	}
+
+	LIST_Delete(popupListText);
+	/* also reset mn.menuTextLinkedList here - otherwise the
+	 * pointer is no longer valid (because the list was freed) */
+	mn.menuTextLinkedList[TEXT_LIST] = popupListText = NULL;
+
+	LIST_Delete(popupListData);
+	popupListData = NULL;
+
+	popupNum = 0;
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
+		Com_sprintf(text, sizeof(text), base->name);
+		Q_strcat(text, "\t", sizeof(text));
+
+		if (base == aircraft->homebase) {
+			Q_strcat(text, _("current homebase of aircraft"), sizeof(text));
+			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
+			homebase = popupNum;
+		} else if (base->capacities[capacity].cur >= base->capacities[capacity].max) {
+			Q_strcat(text, _("no more available hangar"), sizeof(text));
+			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
+		} else if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos)) {
+			Q_strcat(text, _("base is too far"), sizeof(text));
+			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
+		} else if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max) {
+			Q_strcat(text, _("no more quarter for employees aboard"), sizeof(text));
+			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
+		} else if (aircraft->maxTeamSize &&
+			(base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)) {
+			Q_strcat(text, _("no more room in storage"), sizeof(text));
+			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
+		} else {
+			Q_strcat(text, _("base can hold aircraft"), sizeof(text));
+			LIST_Add(&popupListData, (byte *)&baseIdx, sizeof(int));
+			numAvailableBase++;
+		}
+
+		LIST_AddString(&popupListText, text);
+		popupNum++;
+	}
+
+	if (alwaysDisplay || numAvailableBase > 0) {
+		popupListNode = MN_PopupList(_("Change homebase of aircraft"), _("Base\tStatus"), popupListText, "change_homebase");
+		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
+		popupListNode->selectedColor[3] = 1.0;
+		popupListNode->textLineSelected = homebase;
+		selectedAircraft = aircraft;
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief User select a base in the popup_homebase
+ * change homebase to selected base.
+ */
+static void CL_PopupChangeHomebase_f (void)
+{
+	linkedList_t* popup = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
+	int selectedPopupIndex;
+	int i;
+	base_t *base, *oldBase;
+	baseCapacities_t capacity;
+
+	/* If popup is opened, that means an aircraft is selected */
+	if (!selectedAircraft) {
+		Com_Printf("CL_PopupChangeHomebase_f: An aircraft must be selected\n");
+		return;
+	}
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <popupIndex>\tpopupIndex=num in base list\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* read and range check */
+	selectedPopupIndex = atoi(Cmd_Argv(1));
+	Com_DPrintf(DEBUG_CLIENT, "CL_PopupHomebaseClick_f (popupNum %i, selectedPopupIndex %i)\n", popupNum, selectedPopupIndex);
+	if (selectedPopupIndex < 0 || selectedPopupIndex >= popupNum)
+		return;
+
+	if (!popup || !popup->next)
+		return;
+
+	/* Get data from popup-list index */
+	for (i = 0; popup; popup = popup->next, i++) {
+		int baseIdx;
+		assert(popup);
+		baseIdx = *(int*)popup->data;
+
+		/* did we click on an invalid base ? */
+		if (baseIdx == INVALID_BASE) {
+			if (i == selectedPopupIndex)
+				return;
+			else
+				continue;
+		}
+
+		base = B_GetFoundedBaseByIDX(baseIdx);
+
+		if (i == selectedPopupIndex)
+			break;
+	}
+
+	if (popupListNode) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_PopupChangeHomebase_f: Setting currently selected line (from %i) to %i.\n", popupListNode->textLineSelected, selectedPopupIndex);
+		popupListNode->textLineSelected = selectedPopupIndex;
+	}
+
+	/* Base should be founded */
+	assert(base);
+	oldBase = selectedAircraft->homebase;
+	assert(oldBase);
+
+	Com_DPrintf(DEBUG_CLIENT, "CL_PopupChangeHomebase_f: Change homebase of '%s' to '%s'\n", selectedAircraft->id, base->name);
+
+	switch (selectedAircraft->weight) {
+	case AIRCRAFT_SMALL:
+		capacity = CAP_AIRCRAFTS_SMALL;
+		break;
+	case AIRCRAFT_LARGE:
+		capacity = CAP_AIRCRAFTS_BIG;
+		break;
+	}
+
+	/* Transfer employees */
+	for (i = 0; i < selectedAircraft->maxTeamSize; i++) {
+		if (selectedAircraft->acTeam[i]) {
+			employee_t *employee = selectedAircraft->acTeam[i];
+			assert(employee);
+			employee->baseHired = base;
+			base->capacities[CAP_EMPLOYEES].cur++;
+			oldBase->capacities[CAP_EMPLOYEES].cur--;
+			INV_TransferItemCarriedByChr(employee, oldBase, base);
+		}
+ 	}
+
+	/* @todo Transfer items carried by soldiers from oldBase to base */
+
+	/* Move aircraft to new base */
+	base->aircraft[base->numAircraftInBase] = *selectedAircraft;
+	base->capacities[capacity].cur++;
+	base->numAircraftInBase++;
+
+	/* Remove aircraft from old base */
+	oldBase->numAircraftInBase--;
+	oldBase->capacities[capacity].cur--;
+	i = AIR_GetAircraftIdxInBase(selectedAircraft);
+	/* move other aircraft if the deleted aircraft was not the last one of the base */
+	if (i != AIRCRAFT_INBASE_INVALID)
+		memmove(selectedAircraft, selectedAircraft + 1, (oldBase->numAircraftInBase - i) * sizeof(*selectedAircraft));
+	/* wipe the now vacant last slot */
+	memset(&oldBase->aircraft[oldBase->numAircraftInBase], 0, sizeof(oldBase->aircraft[oldBase->numAircraftInBase]));
+
+	/* Reset selectedAircraft */
+	selectedAircraft = &base->aircraft[base->numAircraftInBase - 1];
+
+	/* Change homebase of aircraft */
+	selectedAircraft->homebase = base;
+
+	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
+
+	MN_PopMenu(qfalse);
+	CL_DisplayHomebasePopup(selectedAircraft, qtrue);
+}
+
 /*========================================
 POPUP_AIRCRAFT
 ========================================*/
@@ -99,6 +306,8 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	Q_strcat(popupAircraft.text_popup, va(_("Back to base\t%s\n"), aircraft->homebase->name), POPUP_AIRCRAFT_MAX_TEXT);
 	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_STOP;
 	Q_strcat(popupAircraft.text_popup, _("Stop\n"), POPUP_AIRCRAFT_MAX_TEXT);
+	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_CHANGE_HOMEBASE;
+	Q_strcat(popupAircraft.text_popup, _("Change homebase\n"), POPUP_AIRCRAFT_MAX_TEXT);
 
 	/* Set missions in popup_aircraft */
 	if (aircraft->teamSize > 0) {
@@ -152,6 +361,9 @@ static void CL_PopupAircraftClick_f (void)
 		break;
 	case POPUP_AIRCRAFT_ACTION_STOP:		/* Aircraft stop */
 		aircraft->status = AIR_IDLE;
+		break;
+	case POPUP_AIRCRAFT_CHANGE_HOMEBASE:		/* Change Aircraft homebase */
+		CL_DisplayHomebasePopup(aircraft, qtrue);
 		break;
 	case POPUP_AIRCRAFT_ACTION_MOVETOMISSION:	/* Aircraft move to mission */
 		mission = MAP_GetMissionByIdx(popupAircraft.itemsId[num]);
@@ -436,6 +648,9 @@ void CL_PopupInit (void)
 	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
 	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
 	Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f, NULL);
+
+	/* popup_homebase commands */
+	Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f, NULL);
 
 	memset(&popupIntercept, 0, sizeof(popup_intercept_t));
 	memset(&popupAircraft, 0, sizeof(popup_aircraft_t));

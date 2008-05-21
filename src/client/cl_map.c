@@ -77,7 +77,7 @@ static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 
 /* static variables */
-static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
+aircraft_t *selectedAircraft;		/**< Currently selected aircraft */
 aircraft_t *selectedUFO;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */

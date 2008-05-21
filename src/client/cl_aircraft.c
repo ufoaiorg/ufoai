@@ -592,6 +592,32 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 }
 
 /**
+ * @brief check if aircraft has enough fuel to go to destination
+ * @param[in] aircraft Pointer to the aircraft
+ * @param[in] position Pointer to the position the aircraft should go to
+ * @sa MAP_MapCalcLine
+ * @return qtrue if the aircraft can go to the position, qfalse else
+ */
+qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t const *aircraft, const vec2_t destination)
+{
+	base_t *base;
+	float distance = 0;
+
+	assert(aircraft);
+	base = (base_t *) aircraft->homebase;
+	assert(base);
+
+	/* Calculate the line that the aircraft should follow to go to destination */
+	distance = MAP_GetDistance(aircraft->pos, destination);
+
+	/* Check if the aircraft has enough fuel to go to destination and then go back home */
+	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f)
+		return qtrue;
+
+	return qfalse;
+}
+
+/**
  * @brief Calculates the way back to homebase for given aircraft and returns it.
  * @param[in] aircraft Pointer to aircraft, which should return to base.
  * @note Command to call this: "aircraft_return".
@@ -779,7 +805,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		base->aircraft[base->numAircraftInBase] = *aircraftSample;
 		/* now lets use the aircraft array for the base to set some parameters */
 		aircraft = &base->aircraft[base->numAircraftInBase];
-		aircraft->idx = gd.numAircraft;	/**< Overwrite index in template list with global aircraft index. */
+		aircraft->idx = gd.numAircraft;	/**< set a unique index to this aircraft. */
 		aircraft->homebase = base;
 		/* Update the values of its stats */
 		AII_UpdateAircraftStats(aircraft);

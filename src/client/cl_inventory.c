@@ -112,6 +112,61 @@ static void INV_CarriedItems (const le_t *soldier)
 }
 
 /**
+ * @brief Transfer items carried by a soldier from one base to another.
+ * @param[in] employee Pointer to employee.
+ * @param[in] sourceBase Base where employee comes from.
+ * @param[in] destBase Base where employee is going.
+ */
+void INV_TransferItemCarriedByChr (employee_t *employee, base_t *sourceBase, base_t* destBase)
+{
+	invList_t *ic;
+	int container;
+
+	for (container = 0; container < csi.numIDs; container++) {
+		for (ic = employee->chr.inv->c[container]; ic; ic = ic->next) {
+			objDef_t *obj = ic->item.t;
+			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
+
+			obj = ic->item.m;
+			if (obj) {
+				B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
+			}
+		}
+	}
+}
+
+/**
+ * @brief Calculate storage room corresponding to items in an aircraft.
+ * @param[in] aircraft Pointer to the aircraft.
+ */
+int INV_GetStorageRoom (aircraft_t *aircraft)
+{
+	invList_t *ic;
+	int i, container;
+	int size = 0;
+
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		if (aircraft->acTeam[i]) {
+			const employee_t const *employee = aircraft->acTeam[i];
+			for (container = 0; container < csi.numIDs; container++) {
+				for (ic = employee->chr.inv->c[container]; ic; ic = ic->next) {
+					objDef_t *obj = ic->item.t;
+					size += obj->size;
+
+					obj = ic->item.m;
+					if (obj)
+						size += obj->size;
+				}
+			}
+		}
+	}
+
+	return size;
+}
+
+/**
  * @brief Collect items from the battlefield.
  * @note The way we are collecting items:
  * @note 1. Grab everything from the floor and add it to the aircraft cargo here.
