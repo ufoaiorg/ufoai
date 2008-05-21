@@ -168,6 +168,9 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 		} else if (!strcmp(argv[i], "-nobackclip")) {
 			Com_Printf("nobackclip = true\n");
 			config.nobackclip = qtrue;
+		} else if (i<(argc-1)){
+			/* Last param is the map path, every other param should have been caught by now. */
+			Com_Printf("*** parameter not understood: %s\n",argv[i]);
 		}
 	}
 }
