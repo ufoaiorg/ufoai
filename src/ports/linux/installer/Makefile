@@ -36,9 +36,11 @@ packdata:
 	@tar -cvjp -f $(DATADIR)/ufo-x86.tar.bz2 $(BINARIES)
 	@tar -cvjp -f $(DATADIR)/ufo-x86_64.tar.bz2 $(BINARIES_64)
 	@cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
+# FIXME Use find -name "*.bsp" and exclude invalid files like autosaves and so on
 	cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/mapsource.tar.bz2 base/maps/ --exclude .svn --exclude *.bsp --exclude *.autosave* --exclude *.bak
 	@cp -u $(ROOTDIR)base/*.$(EXT) $(TEMPDIR)/base
 	@cd $(TEMPDIR); tar -cvp -f ../$(DATADIR)/data.tar base
+# FIXME: Get the 64bit binary, too
 	@cd $(DATADIR); wget -nc $(GTKRADIANT_URL)
 
 update_installer_data:

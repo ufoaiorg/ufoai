@@ -13,29 +13,43 @@ wininstaller:
 	cd base; ./archives.sh
 	makensis src/ports/windows/installer.nsi
 	md5sum src/ports/windows/ufoai-$(VERSION)-win32.exe > src/ports/windows/ufoai-$(VERSION)-win32.md5
-	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
-	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 mirror:~/public_html
 
-linuxarchive:
-	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ./
+dataarchive:
+	tar -cvp -f ufoai-$(VERSION)-data.tar base/*.pk3
 
 linuxinstaller:
 	$(MAKE) lang
 	$(MAKE) maps
 	cd base; ./archives.sh
 	cd src/ports/linux/installer; $(MAKE) packdata; $(MAKE)
-	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
-	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html
 
 macinstaller:
 	$(MAKE) lang
 	# Replacing existing compiled maps with downloaded precompiled maps,
 	# otherwise multiplayer won't work due to mismatching checksums
+	# FIXME: Use the maps from the current release at sourceforge.net
 	cd base; ./archives.sh
 	cd base; wget -N http://mattn.ninex.info/download/0maps.pk3
 	cd src/ports/macosx/installer; $(MAKE) TARGET_CPU=$(TARGET_CPU)
+
+USER=tlh2000
+upload-sf:
+	rsync -avP -e ssh ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
+	rsync -avP -e ssh ufoai-$(VERSION)-source.tar.bz2 $(USER)@frs.sourceforge.net:uploads/
+	rsync -avP -e ssh ufoai-$(VERSION)-linux.run $(USER)@frs.sourceforge.net:uploads/
+	rsync -avP -e ssh ufoai-$(VERSION)-win32.exe $(USER)@frs.sourceforge.net:uploads/
+	rsync -avP -e ssh ufoai-$(VERSION)-data.tar $(USER)@frs.sourceforge.net:uploads/
+
+upload-mirror:
 	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
+	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
+	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
 	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
+	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html
+	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 mirror:~/public_html
+
+create-release: dataarchive wininstaller linuxinstaller macinstaller sourcearchive upload-sf
+create-dev: dataarchive wininstaller linuxinstaller macinstaller sourcearchive upload-mirror
 
 #
 # Generate a tar archive of the sources.
