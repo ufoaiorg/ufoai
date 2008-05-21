@@ -203,7 +203,14 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 
 	assert(chr);
 	if (chr->HP < chr->maxHP) {
-		chr->HP = min(chr->HP + healing, chr->maxHP);
+		/* if the character has less that 100 hitpoints, he will be disadvantaged by using the percentage
+		 * method of allocating hitpoints.  So just give the character "healing" as Hitpoints, otherwise 
+		 * allocate "healing" as a percentage of the characters total hitpoints. */
+		if (chr->maxHP < 100)
+			chr->HP = min(chr->HP + healing, chr->maxHP);
+		else
+			chr->HP = min(chr->HP + ((healing/100) * chr->HP), chr->maxHP);
+
 		if (chr->HP == chr->maxHP)
 			return qfalse;
 		return qtrue;
