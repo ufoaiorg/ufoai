@@ -344,17 +344,8 @@ void R_RenderFrame (void)
 void R_EndFrame (void)
 {
 	if (vid_gamma->modified) {
-		float g = vid_gamma->value;
-
-		if (g < 0.1)
-			g = 0.1;
-		if (g > 3.0)
-			g = 3.0;
-
+		const float g = vid_gamma->value;
 		SDL_SetGamma(g, g, g);
-
-		Cvar_SetValue("vid_gamma", g);
-		vid_gamma->modified = qfalse;
 	}
 	SDL_GL_SwapBuffers();
 }
@@ -430,8 +421,8 @@ static void R_Register (void)
 	Cvar_SetCheckFunction("r_maxlightmap", R_CvarCheckMaxLightmap);
 
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
-	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_CONTEXT, NULL);
-	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_CONTEXT, NULL);
+	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Values between 0 and 2");
+	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Values between 0 and 4");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);

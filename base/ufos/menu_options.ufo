@@ -341,17 +341,26 @@ menu options_video
 		align	ur
 	}
 
-	// FIXME: should be a bar with values from 0-2
 	string swapcontrol_str
 	{
 		string	"_Swap interval:"
 		pos		"500 415"
 	}
-	checkbox swapcontrol
+	pic swapcontrol_rahmen
 	{
-		cvar	"*cvar r_swapinterval"
-		pos		"840 415"
-		align	ur
+		image	menu/bar_rahmen
+		pos		"659 420"
+	}
+	bar swapcontrol_bar
+	{
+		pos		"668 425"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar r_swapinterval"
+		max		2
+		align	ul
+		mousefx	true
+		click	{ }
 	}
 
 	string vbo_str
@@ -412,7 +421,7 @@ menu options_video
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar vid_gamma"
-		max		2.0
+		max		3.0
 		align	ul
 		mousefx	true
 		click	{ }
