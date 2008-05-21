@@ -112,8 +112,8 @@ public class ContentFlags {
 	/** examines the levelflags and returns the level for nodraw (and possibly
 	 *  other optimisation purposes) */
 	public int getLevelForOptimisation(){
-	    for(int i=0;i<levelFlags.length;i++){
-		if((thisFlags & levelFlags[i]) > 0) return i;
+	    for (int i = 1;i < levelFlags.length;i++) {
+		if( (thisFlags & levelFlags[i]) != 0 ) return i;
 	    }
 	    /* no flags set. -1 defualt is safe as other brushes will be considered to 
 	     * be on proper levels and no nodraws will be set */

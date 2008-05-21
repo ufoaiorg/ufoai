@@ -220,7 +220,7 @@ public class Brush {
 	    int lowest=9;
 	    for(Face f:faces) {
 		int faceOpLev=f.getLevelForOptimisation();
-		lowest=lowest<faceOpLev ? faceOpLev : lowest ;
+		lowest=lowest>faceOpLev ? faceOpLev : lowest ;
 	    }
 	    return lowest;
 	}

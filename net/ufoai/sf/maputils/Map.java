@@ -228,7 +228,7 @@ public class Map {
 								Vector<Vector3D> vertsOfFaceBf = b.getVertices (bf);
 								if (pib.areInside (vertsOfFaceBf) ) {
 									//Entity parent = b.getParentEntity();
-									//MapUtils.printf("set nodraw: face %d of brush %d of entity %d (%s)%n", bf.getNumber(),b.getBrushNumber(),parent.getNumber(),parent.getValue("classname"));
+									//MapUtils.printf("set nodraw: face %d of brush %d (level %d) of entity %d (%s) hidden by brush on level %d%n", bf.getNumber(),b.getBrushNumber(), b.getLevelForOptimisation(),parent.getNumber(),parent.getValue("classname"),pib.getLevelForOptimisation());
 									nodrawsObsBySingleFace++;
 									bf.setNodraw();
 								}
