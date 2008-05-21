@@ -923,7 +923,7 @@ mapdef japan
 
 mapdef spedition
 {
-	map				spedition
+	map				+spedition
 	description		"_A small industrial area."
 	multiplayer		true
 	teams			2
