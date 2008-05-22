@@ -246,7 +246,7 @@ typedef struct base_s {
 	baseWeapon_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
 	int numLasers;
 
-	int batteryDamage;			/**< Hit points of defense system */
+	int batteryDamage;			/**< Hit points of defence system */
 	int baseDamage;			/**< Hit points of base */
 
 	building_t *buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTemplates) */

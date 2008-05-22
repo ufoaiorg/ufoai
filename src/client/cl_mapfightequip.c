@@ -1,7 +1,7 @@
 /**
  * @file cl_mapfightequip.c
  * @brief contains everything related to equiping slots of aircraft or base
- * @note Base defense functions prefix: BDEF_
+ * @note Base defence functions prefix: BDEF_
  * @note Aircraft items slots functions prefix: AIM_
  */
 
@@ -88,7 +88,7 @@ static technology_t **AII_GetCraftitemTechsByType (int type, base_t* base)
 
 /**
  * @brief Check airequipID value and set the correct values for aircraft items
- * and base defense items
+ * and base defence items
  */
 static void AIM_CheckAirequipID (void)
 {
@@ -197,7 +197,7 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
  * @brief Returns a pointer to the selected slot.
  * @param[in] base Pointer to the aircraft
  * @return Pointer to the slot corresponding to airequipID
- * @note There is always at least one slot, otherwise you can't enter base defense menu screen.
+ * @note There is always at least one slot, otherwise you can't enter base defence menu screen.
  * @sa BDEF_ListClick_f
  */
 static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
@@ -211,7 +211,7 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 		assert(base->numBatteries > 0);
 		if (airequipSelectedSlot >= base->numBatteries) {
 			airequipSelectedSlot = 0;
-			/* update position of the arrow in front of the selected base defense */
+			/* update position of the arrow in front of the selected base defence */
 			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
 		}
@@ -222,7 +222,7 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 		assert(base->numLasers > 0);
 		if (airequipSelectedSlot >= base->numLasers) {
 			airequipSelectedSlot = 0;
-			/* update position of the arrow in front of the selected base defense */
+			/* update position of the arrow in front of the selected base defence */
 			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
 		}
@@ -363,11 +363,11 @@ static void AIM_DrawSelectedZone (void)
 }
 
 /**
- * @brief Adds a defense system to base.
- * @param[in] basedefType Base defense type (see basedefenseType_t)
+ * @brief Adds a defence system to base.
+ * @param[in] basedefType Base defence type (see basedefenceType_t)
  * @param[in] base Pointer to the base in which the battery will be added
  */
-static void BDEF_AddBattery (basedefenseType_t basedefType, base_t* base)
+static void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 {
 	switch (basedefType) {
 	case BASEDEF_MISSILE:
@@ -390,7 +390,7 @@ static void BDEF_AddBattery (basedefenseType_t basedefType, base_t* base)
 		base->numLasers++;
 		break;
 	default:
-		Com_Printf("BDEF_AddBattery: unknown type of base defense system.\n");
+		Com_Printf("BDEF_AddBattery: unknown type of base defence system.\n");
 	}
 }
 
@@ -412,7 +412,7 @@ void BDEF_ReloadBattery (void)
 }
 
 /**
- * @brief Adds a defense system to base.
+ * @brief Adds a defence system to base.
  */
 void BDEF_AddBattery_f (void)
 {
@@ -433,7 +433,7 @@ void BDEF_AddBattery_f (void)
 
 	/* Check that the basedefType exists */
 	if (basedefType != BASEDEF_MISSILE && basedefType != BASEDEF_LASER) {
-		Com_Printf("BDEF_AddBattery_f: base defense type %i doesn't exists.\n", basedefType);
+		Com_Printf("BDEF_AddBattery_f: base defence type %i doesn't exists.\n", basedefType);
 		return;
 	}
 
@@ -441,15 +441,15 @@ void BDEF_AddBattery_f (void)
 }
 
 /**
- * @brief Remove a base defense sytem from base.
- * @param[in] basedefType (see basedefenseType_t)
+ * @brief Remove a base defence sytem from base.
+ * @param[in] basedefType (see basedefenceType_t)
  * @param[in] idx idx of the battery to destroy (-1 if this is random)
  */
-void BDEF_RemoveBattery (base_t *base, basedefenseType_t basedefType, int idx)
+void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 {
 	assert(base);
 
-	/* Select the type of base defense system to destroy */
+	/* Select the type of base defence system to destroy */
 	switch (basedefType) {
 	case BASEDEF_MISSILE: /* this is a missile battery */
 		/* we must have at least one missile battery to remove it */
@@ -474,13 +474,13 @@ void BDEF_RemoveBattery (base_t *base, basedefenseType_t basedefType, int idx)
 		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, NULL, base, AC_ITEM_BASE_LASER);
 		break;
 	default:
-		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defense system.\n");
+		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defence system.\n");
 	}
 }
 
 /**
- * @brief Remove a defense system from base.
- * @note 1st argument is the basedefense system type to destroy (sa basedefenseType_t).
+ * @brief Remove a defence system from base.
+ * @note 1st argument is the basedefence system type to destroy (sa basedefenceType_t).
  * @note 2nd argument is the idx of the base in which you want the battery to be destroyed.
  * @note if the first argument is BASEDEF_RANDOM, the type of the battery to destroy is randomly selected
  * @note the building must already be removed from gd.buildings[baseIdx][]
@@ -510,9 +510,9 @@ void BDEF_RemoveBattery_f (void)
 	}
 
 	if (basedefType == BASEDEF_RANDOM) {
-		/* Type of base defense to destroy is randomly selected */
+		/* Type of base defence to destroy is randomly selected */
 		if (base->numBatteries <= 0 && base->numLasers <= 0) {
-			Com_Printf("No base defense to destroy\n");
+			Com_Printf("No base defence to destroy\n");
 			return;
 		} else if (base->numBatteries <= 0) {
 			/* only laser battery is possible */
@@ -539,7 +539,7 @@ void BDEF_RemoveBattery_f (void)
 			max = base->numLasers;
 			break;
 		default:
-			Com_Printf("BDEF_RemoveBattery_f: base defense type %i doesn't exists.\n", basedefType);
+			Com_Printf("BDEF_RemoveBattery_f: base defence type %i doesn't exists.\n", basedefType);
 			return;
 		}
 
@@ -565,7 +565,7 @@ void BDEF_RemoveBattery_f (void)
 }
 
 /**
- * @brief Initialise all values of base slot defense.
+ * @brief Initialise all values of base slot defence.
  * @param[in] base Pointer to the base which needs initalisation of its slots.
  */
 void BDEF_InitialiseBaseSlots (base_t *base)
@@ -581,7 +581,7 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 }
 
 /**
- * @brief Script command to init the base defense menu.
+ * @brief Script command to init the base defence menu.
  * @note this function is only called when the menu launches
  * @sa BDEF_BaseDefenseMenuUpdate_f
  */
@@ -601,14 +601,14 @@ void BDEF_MenuInit_f (void)
 
 	/* initialize selected slot */
 	airequipSelectedSlot = 0;
-	/* update position of the arrow in front of the selected base defense */
+	/* update position of the arrow in front of the selected base defence */
 	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
 	Vector2Set(node->pos, 25, 30);
 }
 
 /**
  * @brief Fills the battery list, descriptions, and weapons in slots
- * of the basedefense equip menu
+ * of the basedefence equip menu
  * @sa BDEF_MenuInit_f
  */
 void BDEF_BaseDefenseMenuUpdate_f (void)
@@ -635,7 +635,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	/* Check that the base has at least 1 battery */
 	if (baseCurrent->numBatteries + baseCurrent->numLasers < 1) {
-		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defense battery in this base: you shouldn't be in this function.\n");
+		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
 		return;
 	}
 
@@ -694,9 +694,9 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	defBuffer[0] = '\0';
 
 	if (airequipID == AC_ITEM_BASE_MISSILE || airequipID == AC_ITEM_AMMO_MISSILE) {
-		/* we are in the base defense menu for missile */
+		/* we are in the base defence menu for missile */
 		if (baseCurrent->numBatteries == 0)
-			Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
+			Q_strcat(defBuffer, _("No defence of this type in this base\n"), sizeof(defBuffer));
 		else {
 			for (i = 0; i < baseCurrent->numBatteries; i++) {
 				if (!baseCurrent->batteries[i].slot.item)
@@ -708,9 +708,9 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			}
 		}
 	} else if (airequipID == AC_ITEM_BASE_LASER || airequipID == AC_ITEM_AMMO_LASER) {
-		/* we are in the base defense menu for laser */
+		/* we are in the base defence menu for laser */
 		if (baseCurrent->numLasers == 0)
-			Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
+			Q_strcat(defBuffer, _("No defence of this type in this base\n"), sizeof(defBuffer));
 		else {
 			for (i = 0; i < baseCurrent->numLasers; i++) {
 				if (!baseCurrent->lasers[i].slot.item)
@@ -730,29 +730,29 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
 	if (!slot->item) {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No defense system assigned.\n"));
-		/* Weight are not used for base defense atm
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No defence system assigned.\n"));
+		/* Weight are not used for base defence atm
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1)); */
 	} else {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(slot->item->tech->name));
 		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
 		if (!slot->installationTime)
-			Q_strcat(smallbuffer1, _("This defense system is functional.\n"), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, _("This defence system is functional.\n"), sizeof(smallbuffer1));
 		else if (slot->installationTime > 0)
-			Q_strcat(smallbuffer1, va(_("This defense system will be installed in %i hours.\n"), slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This defence system will be installed in %i hours.\n"), slot->installationTime), sizeof(smallbuffer1));
 		else
-			Q_strcat(smallbuffer1, va(_("This defense system will be removed in %i hours.\n"), -slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This defence system will be removed in %i hours.\n"), -slot->installationTime), sizeof(smallbuffer1));
 	}
 	mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
 	/* Second slot: next item to install when the first one will be removed */
 	if (slot->item && slot->installationTime < 0) {
 		if (!slot->nextItem)
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No defense system assigned."));
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No defence system assigned."));
 		else {
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(slot->nextItem->tech->name));
 			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This defense system will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
+			Q_strcat(smallbuffer2, va(_("This defence system will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
 		}
 	} else {
 		*smallbuffer2 = '\0';
@@ -762,7 +762,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	/* Third slot: ammo slot (only used for weapons) */
 	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->item) {
 		if (!slot->ammo)
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defense system."));
+			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defence system."));
 		else
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(slot->ammo->tech->name));
 		/* show remaining missile in battery for missiles */
@@ -780,7 +780,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 }
 
 /**
- * @brief Click function for base defense menu list.
+ * @brief Click function for base defence menu list.
  * @sa AIM_AircraftEquipMenuUpdate_f
  */
 void BDEF_ListClick_f (void)
@@ -798,7 +798,7 @@ void BDEF_ListClick_f (void)
 	if (num < baseCurrent->numBatteries)
 		airequipSelectedSlot = num;
 
-	/* draw an arrow in front of the selected base defense */
+	/* draw an arrow in front of the selected base defence */
 	node = MN_GetNodeFromCurrentMenu("basedef_slot_list");
 	height = node->texh[0];
 	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
@@ -832,7 +832,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 				AII_UpdateAircraftStats(aircraft);
 				MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			} else {
-				MN_AddNewMessage(_("Notice"), _("Base defense item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Base defence item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			}
 		}
 	} else if (slot->installationTime < 0) {
@@ -852,7 +852,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 					CL_GameTimeStop();
 				}
 			} else if (!slot->item) {
-				MN_AddNewMessage(_("Notice"), _("Base defense item was successfully removed."), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Base defence item was successfully removed."), qfalse, MSG_STANDARD, NULL);
 				CL_GameTimeStop();
 			}
 		}
@@ -1289,7 +1289,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 /**
  * @brief Auto add ammo corresponding to weapon in main zone, if there is enough in storage.
  * @param[in] base Pointer to the base where you want to add/remove ammo
- * @param[in] aircraft Pointer to the aircraft (NULL if we are changing base defense system)
+ * @param[in] aircraft Pointer to the aircraft (NULL if we are changing base defence system)
  * @param[in] slot Pointer to the slot where you want to add ammo
  * @sa AIM_AircraftEquipAddItem_f
  * @sa AII_RemoveItemFromSlot
@@ -1323,10 +1323,10 @@ static void AIM_AutoAddAmmo (base_t *base, aircraft_t *aircraft, aircraftSlot_t 
 			ammo_tech = ammo->tech;
 			if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {
 				AII_AddAmmoToSlot(ammo->notOnMarket ? NULL : base, ammo_tech, slot);
-				/* base missile are free, you have 20 when you build a new base defense */
+				/* base missile are free, you have 20 when you build a new base defence */
 				if (item->craftitem.type == AC_ITEM_BASE_MISSILE && (slot->ammoLeft < 0)) {
 					/* we use < 0 here, and not <= 0, because we give missiles only on first build
-					 * (not when player removes base defense and re-add it)
+					 * (not when player removes base defence and re-add it)
 					 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
 					slot->ammoLeft = 20;
 				} else if (aircraft)
@@ -1413,7 +1413,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	}
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO
-	 * and base ammo defense are not stored in storage */
+	 * and base ammo defence are not stored in storage */
 	if (base && ammo->craftitem.type <= AC_ITEM_AMMO) {
 		if (base->storage.num[ammo->idx] <= 0) {
 			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", ammo->id);
@@ -1492,7 +1492,7 @@ qboolean AII_AddItemToSlot (base_t* base, const technology_t *tech, aircraftSlot
 
 /**
  * @brief Add selected item to current zone.
- * @note May be called from airequip menu or basedefense menu
+ * @note May be called from airequip menu or basedefence menu
  * @sa aircraftItemType_t
  */
 void AIM_AircraftEquipAddItem_f (void)
@@ -1551,7 +1551,7 @@ void AIM_AircraftEquipAddItem_f (void)
 
 	switch (zone) {
 	case ZONE_MAIN:
-		/* we add the weapon, shield, item, or base defense if slot is free or the installation of
+		/* we add the weapon, shield, item, or base defence if slot is free or the installation of
 			current item just began */
 		if (!slot->item || slot->installationTime == slot->item->craftitem.installationTime) {
 			AII_RemoveItemFromSlot(base, slot, qfalse);
@@ -1571,13 +1571,13 @@ void AIM_AircraftEquipAddItem_f (void)
 			/* more below (don't use break) */
 			}
 	case ZONE_NEXT:
-		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
+		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 		 * of the one in the slot atm */
 		slot->nextItem = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 		/* do not remove item from storage now, this will be done in AII_RemoveItemFromSlot */
 		break;
 	case ZONE_AMMO:
-		/* we can change ammo only if the selected item is an ammo (for weapon or base defense system) */
+		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
 		if (airequipID >= AC_ITEM_AMMO) {
 			AII_AddAmmoToSlot(base, airequipSelectedTechnology, slot);
 			/* reload its ammunition */
@@ -1644,7 +1644,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 
 	switch (zone) {
 	case ZONE_MAIN:
-		/* we change the weapon, shield, item, or base defense that is already in the slot */
+		/* we change the weapon, shield, item, or base defence that is already in the slot */
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 		if (slot->installationTime < slot->item->craftitem.installationTime) {
 			slot->installationTime = -slot->item->craftitem.installationTime;
@@ -1655,12 +1655,12 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		/* aircraft stats are updated below */
 		break;
 	case ZONE_NEXT:
-		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
+		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 		 * of the one in the slot atm */
 		slot->nextItem = NULL;
 		break;
 	case ZONE_AMMO:
-		/* we can change ammo only if the selected item is an ammo (for weapon or base defense system) */
+		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
 		if (airequipID >= AC_ITEM_AMMO)
 			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
 		break;
@@ -1709,7 +1709,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 			return;
 		aircraft = baseCurrent->aircraftCurrent;
 		base = NULL;
-	} else if (!Q_strncmp(activeMenu->name, "basedefense", 11)) {
+	} else if (!Q_strncmp(activeMenu->name, "basedefence", 11)) {
 		base = baseCurrent;
 		aircraft = NULL;
 	} else
@@ -1802,7 +1802,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 }
 
 /**
- * @brief Initialise values of one slot of an aircraft or basedefense common to all types of items.
+ * @brief Initialise values of one slot of an aircraft or basedefence common to all types of items.
  * @param[in] slot Pointer to the slot to initialize
  * @param[in] aircraft	Pointer to aircraft.
  * @param[in] base	Pointer to base.

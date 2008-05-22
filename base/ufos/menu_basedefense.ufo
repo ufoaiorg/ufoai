@@ -1,7 +1,7 @@
 // ==================
 // BASE DEFENSE MENU
 // ==================
-menu basedefense
+menu basedefence
 {
 	// ==================
 	// don't render
@@ -111,7 +111,7 @@ menu basedefense
 
 	string basedef_available
 	{
-		string	"_Available defense:"
+		string	"_Available defence:"
 		pos		"594 441"
 		font	f_big
 		align	uc
@@ -146,7 +146,7 @@ menu basedefense
 
 	string basedef_description
 	{
-		string	"_Selected defense:"
+		string	"_Selected defence:"
 		pos		"880 441"
 		font	f_big
 		align	uc

@@ -575,13 +575,13 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 	/* base damage is given by the ammo */
 	damage = projectile->aircraftItem->craftitem.weaponDamage;
 
-	/* damages are divided between defense system and base. */
+	/* damages are divided between defence system and base. */
 	damage = frand() * damage;
 	base->batteryDamage -= damage;
 	base->baseDamage -= projectile->aircraftItem->craftitem.weaponDamage - damage;
 
 	if (base->batteryDamage <= 0) {
-		/* projectile destroyed a base defense system */
+		/* projectile destroyed a base defence system */
 		base->batteryDamage = MAX_BATTERY_DAMAGE;
 		rnd = rand() % 2;
 		if (base->numBatteries + base->numLasers <= 0)
@@ -597,7 +597,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_MISSILE) {
 					/* FIXME: Destroy a random one - otherwise the player might 'cheat' with this
-					 * e.g. just building an empty defense station (a lot cheaper) */
+					 * e.g. just building an empty defence station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
 					baseAttack = qtrue;
 					break;
@@ -609,7 +609,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_LASER) {
 					/* FIXME: Destroy a random one - otherwise the player might 'cheat' with this
-					 * e.g. just building an empty defense station (a lot cheaper) */
+					 * e.g. just building an empty defence station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
 					baseAttack = qtrue;
 					break;
@@ -697,7 +697,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
  * @param[in] base Pointer to the firing base.
  * @param[in] slot Pointer to the first weapon slot of the base to use.
  * @param[in] maxSlot number of slot of this type in base.
- * @param[in] targetIdx Pointer to the array of target idx of this defense system.
+ * @param[in] targetIdx Pointer to the array of target idx of this defence system.
  */
 static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int maxWeapons)
 {
@@ -749,7 +749,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 }
 
 /**
- * @brief Run base defenses.
+ * @brief Run base defences.
  * @param[in] dt Time elapsed since last call of this function.
  */
 void AIRFIGHT_CampaignRunBaseDefense (int dt)

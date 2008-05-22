@@ -432,7 +432,7 @@ void UP_ItemDescription (const objDef_t *od)
 			/* more will be written below */
 		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
 			/* This is a weapon for base, can be displayed in equip menu */
-			Com_sprintf(itemText, sizeof(itemText), _("Weapon for base defense system\n"));
+			Com_sprintf(itemText, sizeof(itemText), _("Weapon for base defence system\n"));
 		} else if (od->craftitem.type != AIR_STATS_MAX) {
 			/* This is an item for aircraft or ammos for bases -- do nothing */
 		} else {
@@ -552,7 +552,7 @@ static void UP_BuildingDescription (const technology_t* t)
  * @param idx Index in object definition array ods for the item
  * @sa UP_DrawEntry
  * Not only called from UFOpaedia but also from other places to display
- * @todo Don't display things like speed for base defense items - a missile
+ * @todo Don't display things like speed for base defence items - a missile
  * facility isn't getting slower or faster due a special weapon or ammunition
  */
 void UP_AircraftItemDescription (const objDef_t *item)

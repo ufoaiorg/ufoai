@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_MAPFIGHTEQUIP_H
 
 /**
- * @brief Zone number in airequip menu or base defense menu.
+ * @brief Zone number in airequip menu or base defence menu.
  * @note A zone is the rectangular box in the upper right of the screen.
  * @note A zone is different from a slot or the type of an item.
  */
@@ -43,20 +43,20 @@ typedef enum {
 } zoneaircraftParams_t;
 
 /**
- * @brief The different possible types of base defense systems.
+ * @brief The different possible types of base defence systems.
  * @sa BDEF_RemoveBattery_f: BASEDEF_LASER must be just after BASEDEF_MISSILE
  */
 typedef enum {
-	BASEDEF_RANDOM,		/**< The base defense system should be randomly selected. */
-	BASEDEF_MISSILE,	/**< The base defense system is a missile battery. */
-	BASEDEF_LASER,		/**< The base defense system is a laser battery. */
+	BASEDEF_RANDOM,		/**< The base defence system should be randomly selected. */
+	BASEDEF_MISSILE,	/**< The base defence system is a missile battery. */
+	BASEDEF_LASER,		/**< The base defence system is a laser battery. */
 
 	BASEDEF_MAX
-} basedefenseType_t;
+} basedefenceType_t;
 
-/** Base defense functions. */
+/** Base defence functions. */
 void BDEF_AddBattery_f(void);
-void BDEF_RemoveBattery(base_t *base, basedefenseType_t basedefType, int idx);
+void BDEF_RemoveBattery(base_t *base, basedefenceType_t basedefType, int idx);
 void BDEF_RemoveBattery_f(void);
 void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_MenuInit_f(void);

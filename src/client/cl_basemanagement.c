@@ -3136,7 +3136,7 @@ static void B_BuildingOpen_f (void)
 				break;
 			case B_DEFENSE_LASER:
 			case B_DEFENSE_MISSILE:
-				MN_PushMenu("basedefense");
+				MN_PushMenu("basedefence");
 				break;
 			case B_HANGAR:
 			case B_SMALL_HANGAR:
