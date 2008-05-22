@@ -855,11 +855,12 @@ static void TR_TransferBaseListClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	/* skip base not displayed (see TR_TransferAircraftMenu) */
-	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
-		if (!gd.bases[baseIdx].founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 
-		if (!gd.bases[baseIdx].hasBuilding[B_ALIEN_CONTAINMENT])
+		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 
 		num--;
@@ -867,7 +868,7 @@ static void TR_TransferBaseListClick_f (void)
 			break;
 	}
 
-	if (baseIdx < 0 || baseIdx >= gd.numBases) {
+	if (baseIdx >= MAX_BASES) {
 		Com_Printf("TR_TransferBaseListClick_f()... baseIdx %i doesn't exist.\n", baseIdx);
 		return;
 	}
@@ -891,15 +892,16 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 	transferStartAircraft = aircraft;
 
 	/* make sure that all tests here are the same than in TR_TransferBaseListClick_f */
-	for (i = 0; i < gd.numBases; i++) {
-		if (!gd.bases[i].founded)
+	for (i = 0; i < MAX_BASES; i++) {
+		base_t *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
 			continue;
 		/* don't display bases without Alien Containment */
-		if (!gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
+		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 
-		num = (gd.bases[i].capacities[CAP_ALIENS].max - gd.bases[i].capacities[CAP_ALIENS].cur);
-		Q_strcat(transferBaseSelectPopup, va("  %s ", gd.bases[i].name), sizeof(transferBaseSelectPopup));
+		num = (base->capacities[CAP_ALIENS].max - base->capacities[CAP_ALIENS].cur);
+		Q_strcat(transferBaseSelectPopup, va("  %s ", base->name), sizeof(transferBaseSelectPopup));
 		Q_strcat(transferBaseSelectPopup, va(ngettext("(can host %i alive alien)\n", "(can host %i alive aliens)\n", num), num), sizeof(transferBaseSelectPopup));
 	}
 	mn.menuText[TEXT_LIST] = transferBaseSelectPopup;
@@ -1307,7 +1309,7 @@ static void TR_TransferBaseSelect (base_t *base)
  */
 static void TR_NextBase_f (void)
 {
-	int i, counter;
+	int baseIdx, counter;
 	base_t *base;
 
 	if (!baseCurrent)
@@ -1317,9 +1319,9 @@ static void TR_NextBase_f (void)
 	else
 		counter = transferBase->idx;
 
-	for (i = counter + 1; i < gd.numBases; i++) {
-		base = B_GetBaseByIDX(i);
-		if (!base->founded)
+	for (baseIdx = counter + 1; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 		if (base == baseCurrent)
 			continue;
@@ -1327,9 +1329,9 @@ static void TR_NextBase_f (void)
 		return;
 	}
 	/* At this point we are at "last" base, so we will select first. */
-	for (i = 0; i < gd.numBases; i++) {
-		base = B_GetBaseByIDX(i);
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 		if (base == baseCurrent)
 			continue;
@@ -1345,7 +1347,7 @@ static void TR_NextBase_f (void)
  */
 static void TR_PrevBase_f (void)
 {
-	int i, counter;
+	int baseIdx, counter;
 	base_t *base;
 
 	if (!baseCurrent)
@@ -1355,9 +1357,9 @@ static void TR_PrevBase_f (void)
 	else
 		counter = transferBase->idx;
 
-	for (i = counter - 1; i >= 0; i--) {
-		base = B_GetBaseByIDX(i);
-		if (!base->founded)
+	for (baseIdx = counter - 1; baseIdx >= 0; baseIdx--) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 		if (base == baseCurrent)
 			continue;
@@ -1365,9 +1367,9 @@ static void TR_PrevBase_f (void)
 		return;
 	}
 	/* At this point we are at "first" base, so we will select last. */
-	for (i = gd.numBases - 1; i >= 0; i--) {
-		base = B_GetBaseByIDX(i);
-		if (!base->founded)
+	for (baseIdx = MAX_BASES - 1; baseIdx >= 0; baseIdx--) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 		if (base == baseCurrent)
 			continue;

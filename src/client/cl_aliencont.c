@@ -547,10 +547,10 @@ int AL_CountAll (void)
 {
 	int i, j;
 	int amount = 0;
-	base_t *base;
 
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (!base->founded)
+	for (i = 0; i < MAX_BASES; i++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
 			continue;
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
@@ -572,10 +572,10 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 {
 	int i;
 	int amount = 0;
-	base_t *base;
 
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (!base->founded)
+	for (i = 0; i < MAX_BASES; i++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
 			continue;
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;

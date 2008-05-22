@@ -111,37 +111,40 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 
 	RS_PostLoadInit();
 
-	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
-		if (!gd.bases[baseIdx].founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
+
 		for (cap = 0; cap < MAX_CAP; cap++) {
 			oldcapacities[baseIdx][cap].max = gd.bases[baseIdx].capacities[cap].max;
 			oldcapacities[baseIdx][cap].cur = gd.bases[baseIdx].capacities[cap].cur;
 		}
 		for (buildingType = 0; buildingType < MAX_BUILDING_TYPE; buildingType++) {
-			oldhasBuilding[baseIdx][buildingType] = gd.bases[baseIdx].hasBuilding[buildingType];
+			oldhasBuilding[baseIdx][buildingType] = base->hasBuilding[buildingType];
 		}
 	}
 
 	Cmd_ExecuteString("debug_basereset");
 
-	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
-		if (!gd.bases[baseIdx].founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 		for (cap = 0; cap < MAX_CAP; cap++) {
-			if (gd.bases[baseIdx].capacities[cap].max != oldcapacities[baseIdx][cap].max) {
-				Com_Printf("......warning: base %i has a wrong capacities[%i].max (%i instead of %i)\n", baseIdx, cap, oldcapacities[baseIdx][cap].max, gd.bases[baseIdx].capacities[cap].max);
-				gd.bases[baseIdx].capacities[cap].max = oldcapacities[baseIdx][cap].max;
+			if (base->capacities[cap].max != oldcapacities[baseIdx][cap].max) {
+				Com_Printf("......warning: base %i has a wrong capacities[%i].max (%i instead of %i)\n", baseIdx, cap, oldcapacities[baseIdx][cap].max, base->capacities[cap].max);
+				base->capacities[cap].max = oldcapacities[baseIdx][cap].max;
 			}
-			if (gd.bases[baseIdx].capacities[cap].cur != oldcapacities[baseIdx][cap].cur) {
-				Com_Printf("......warning: base %i has a wrong capacities[%i].cur (%i instead of %i)\n", baseIdx, cap, oldcapacities[baseIdx][cap].cur, gd.bases[baseIdx].capacities[cap].cur);
-				gd.bases[baseIdx].capacities[cap].cur = oldcapacities[baseIdx][cap].cur;
+			if (base->capacities[cap].cur != oldcapacities[baseIdx][cap].cur) {
+				Com_Printf("......warning: base %i has a wrong capacities[%i].cur (%i instead of %i)\n", baseIdx, cap, oldcapacities[baseIdx][cap].cur, base->capacities[cap].cur);
+				base->capacities[cap].cur = oldcapacities[baseIdx][cap].cur;
 			}
 		}
 		for (buildingType = 0; buildingType < MAX_BUILDING_TYPE; buildingType++) {
-			if (gd.bases[baseIdx].hasBuilding[buildingType] != oldhasBuilding[baseIdx][buildingType]) {
-				Com_Printf("......warning: base %i has a wrong hasBuilding[%i] (%i instead of %i)\n", baseIdx, buildingType, oldhasBuilding[baseIdx][buildingType], gd.bases[baseIdx].hasBuilding[buildingType]);
-				gd.bases[baseIdx].hasBuilding[buildingType] = oldhasBuilding[baseIdx][buildingType];
+			if (base->hasBuilding[buildingType] != oldhasBuilding[baseIdx][buildingType]) {
+				Com_Printf("......warning: base %i has a wrong hasBuilding[%i] (%i instead of %i)\n", baseIdx, buildingType, oldhasBuilding[baseIdx][buildingType], base->hasBuilding[buildingType]);
+				base->hasBuilding[buildingType] = oldhasBuilding[baseIdx][buildingType];
 			}
 		}
 	}

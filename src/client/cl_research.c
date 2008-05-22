@@ -1172,8 +1172,11 @@ void RS_UpdateData (base_t* base)
 	/* Make everything the same (predefined in the ufo-file) color. */
 	Cmd_ExecuteString("research_clear");
 
-	for (i = 0; i < gd.numBases; i++) {
-		available[i] = E_CountUnassigned(B_GetBaseByIDX(i), EMPL_SCIENTIST);
+	for (i = 0; i < MAX_BASES; i++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
+		available[i] = E_CountUnassigned(base, EMPL_SCIENTIST);
 	}
 
 	RS_MarkResearchable(qfalse);

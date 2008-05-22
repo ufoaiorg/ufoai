@@ -227,11 +227,11 @@ void HOS_HospitalRun (void)
 {
 	int type, i, j, k;
 	employee_t *employee;
-	base_t *base;
 	qboolean test = qfalse;
 
-	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
-		if (base->founded == qfalse)
+	for (j = 0; j < MAX_BASES; j++) {
+		base_t *base = B_GetFoundedBaseByIDX(j);
+		if (!base)
 			continue;
 
 		assert(base);

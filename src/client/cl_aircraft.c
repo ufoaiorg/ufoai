@@ -162,8 +162,9 @@ void AIR_ListAircraft_f (void)
 	if (Cmd_Argc() == 2)
 		baseIdx = atoi(Cmd_Argv(1));
 
-	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
-		if (!base->founded)
+	for (j = 0; j < MAX_BASES; j++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 
 		if (baseIdx != -1 && baseIdx != base->idx)
@@ -1000,10 +1001,10 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 void CL_CampaignRunAircraft (int dt)
 {
 	aircraft_t *aircraft;
-	base_t *base;
 	int i, j, k;
 
-	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
+	for (j = 0; j < MAX_BASES; j++) {
+		base_t *base = B_GetBaseByIDX(j);
 		if (!base->founded) {
 			if (base->numAircraftInBase) {
 				/* @todo if a base was destroyed, but there are still
@@ -1126,7 +1127,7 @@ objDef_t *AII_GetAircraftItemByID (const char *id)
  */
 aircraft_t* AIR_AircraftGetFromIdx (int idx)
 {
-	base_t* base;
+	int baseIdx;
 	aircraft_t* aircraft;
 
 	if (idx == AIRCRAFT_INVALID || idx >= gd.numAircraft) {
@@ -1140,7 +1141,10 @@ aircraft_t* AIR_AircraftGetFromIdx (int idx)
 	}
 #endif
 
-	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
 		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
 			if (aircraft->idx == idx) {
 				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
@@ -1625,12 +1629,13 @@ Aircraft functions related to UFOs or missions.
  */
 void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 {
-	base_t* base;
+	int baseIdx;
 	aircraft_t* aircraft;
 
 	/* Aircraft currently moving to the mission will be redirect to base */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
@@ -1649,14 +1654,15 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
  */
 void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destroyed)
 {
-	base_t* base;
+	int baseIdx;
 	aircraft_t* aircraft;
 	int i;
 
 	assert(ufo);
 
-	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 
 		/* Base currently targeting the specified ufo loose their target */
@@ -1691,16 +1697,19 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destro
  */
 void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
 {
-	base_t* base;
+	int baseIdx;
 	aircraft_t* aircraft;
 
 	/* Aircraft currently pursuing the specified UFO will be redirected to base */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetBaseByIDX(baseIdx);
+
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO)
 				if (ufo == aircraft->aircraftTarget)
 					AIR_AircraftReturnToBase(aircraft);
+	}
 }
 
 /**
