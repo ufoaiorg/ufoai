@@ -557,7 +557,7 @@ then
 	english="news_phalanx_and_mumbai_aftermath_txt"
 	update_news "3" "3" "1"
 
-	english="news_newtwist_txt"
+	english="news_new_twist_txt"
 	download_description
 	test=$?
 	if [[ "$test" -eq 0 ]]
