@@ -1626,7 +1626,8 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	activeMenu = MN_GetActiveMenu();
 	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
-	/* check in which menu we are */
+	/* check in which menu we are
+	 * and select the slot we are changing */
 	if (aircraftMenu) {
 		aircraft = baseCurrent->aircraftCurrent;
 		slot = AII_SelectAircraftSlot(aircraft);
@@ -1635,7 +1636,10 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		aircraft = NULL;
 	}
 
-	/* select the slot we are changing */
+	/* no item in slot: nothing to remove */
+	if (!slot->item)
+		return;
+
 	/* update the new item to slot */
 
 	switch (zone) {
