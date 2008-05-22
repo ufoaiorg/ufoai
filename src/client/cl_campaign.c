@@ -5306,7 +5306,7 @@ void CL_GameAutoGo (mission_t *mis)
 		const base_t *base = (base_t*)selectedMission->data;
 		assert(base);
 		if (won) {
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defense of base: %s successful!"), base->name);
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(selectedMission);
 			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
@@ -5656,7 +5656,7 @@ static void CL_GameResults_f (void)
 		base = (base_t*)selectedMission->data;
 		assert(base);
 		if (won) {
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defense of base: %s successful!"), base->name);
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(selectedMission);
 			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
