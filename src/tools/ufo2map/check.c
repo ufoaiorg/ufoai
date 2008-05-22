@@ -429,7 +429,7 @@ static void CheckInteractionList (const entity_t *entity)
 		}
 	}
 
-	Sys_FPrintf(SYS_VRB, "Added %i brushes to interact with entity: %ld\n", n, entity - entities);
+	Sys_FPrintf(SYS_VRB, "Added %i brushes to interact with entity: %d\n", n, (int) (entity - entities));
 
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {

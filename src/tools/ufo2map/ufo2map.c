@@ -466,7 +466,7 @@ int main (int argc, char **argv)
 		Com_Printf("writing %s\n", bspFilename);
 		size = WriteBSPFile(bspFilename);
 
-		Com_Printf("sum: %5.0f seconds elapsed - %.1f MB (%ld bytes)\n\n", end - begin, (float) size / (1024 * 1024), size);
+		Com_Printf("sum: %5.0f seconds elapsed - %.1f MB (%d bytes)\n\n", end - begin, (float) size / (1024 * 1024), (int) size);
 	}
 
 	return 0;
