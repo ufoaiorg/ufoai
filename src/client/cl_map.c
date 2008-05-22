@@ -918,7 +918,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		mission_t *mission = NULL;
 		for (;list && (centerOnEventIdx != counter - 1); list = list->next) {
 			mission = (mission_t *)list->data;
-			if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER) {
+			if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape) {
 				counter++;
 			}
 		}
