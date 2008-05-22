@@ -667,7 +667,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 				airequipID = AC_ITEM_AMMO_LASER;
 			break;
 		default:
-			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: Unvalid type %i.\n", type);
+			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: Invalid type %i.\n", type);
 			return;
 		}
 	}
