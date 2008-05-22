@@ -2733,7 +2733,7 @@ static void CL_DebugMissionList_f (void)
 			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
 		Com_Printf("...pos (%.02f, %.02f) -- %son Geoscape\n", mission->pos[0], mission->pos[1], mission->onGeoscape ? "" : "not ");
 		if (mission->ufo)
-			Com_Printf("...UFO: %s (%i/%d)\n", mission->ufo->id, mission->ufo - gd.ufos, gd.numUFOs - 1);
+			Com_Printf("...UFO: %s (%ld/%i)\n", mission->ufo->id, mission->ufo - gd.ufos, gd.numUFOs - 1);
 		else
 			Com_Printf("...UFO: no UFO\n");
 		noMission = qfalse;
