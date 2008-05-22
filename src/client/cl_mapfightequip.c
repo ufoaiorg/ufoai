@@ -403,10 +403,13 @@ void BDEF_ReloadBattery (void)
 	int i, j;
 
 	/* Reload all ammos of aircraft */
-	for (i = 0; i < gd.numBases; i++) {
-		for (j = 0; j < gd.bases[i].numBatteries; j++) {
-			if (gd.bases[i].batteries[j].slot.ammoLeft >= 0 && gd.bases[i].batteries[j].slot.ammoLeft < 20)
-				gd.bases[i].batteries[j].slot.ammoLeft++;
+	for (i = 0; i < MAX_BASES; i++) {
+		base_t *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
+		for (j = 0; j < base->numBatteries; j++) {
+			if (base->batteries[j].slot.ammoLeft >= 0 && base->batteries[j].slot.ammoLeft < 20)
+				base->batteries[j].slot.ammoLeft++;
 		}
 	}
 }
@@ -869,11 +872,11 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 void AII_UpdateInstallationDelay (void)
 {
 	int i, j, k;
-	base_t *base;
 	aircraft_t *aircraft;
 
-	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
-		if (!base->founded)
+	for (j = 0; j < MAX_BASES; j++) {
+		base_t *base = B_GetFoundedBaseByIDX(j);
+		if (!base)
 			continue;
 
 		/* Update base */

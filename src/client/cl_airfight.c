@@ -754,12 +754,14 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
  */
 void AIRFIGHT_CampaignRunBaseDefense (int dt)
 {
-	base_t* base;
+	int baseIdx;
 	int idx;
 
-	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
+
 		if (base->baseStatus == BASE_UNDER_ATTACK)
 			continue;
 		for (idx = 0; idx < base->numBatteries; idx++) {
