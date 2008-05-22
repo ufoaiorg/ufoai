@@ -390,8 +390,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	static char aircraftListText[1024];
 	static char baseListText[1024];
 	char *s;
-	int i, j;
-	base_t *base;
+	int i, baseIdx;
 	aircraft_t *air;
 	qboolean somethingWritten, notEnoughFuel;
 
@@ -404,11 +403,9 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	/* Create the list of aircraft, and write the text to display in popup */
 	popupIntercept.numAircraft = 0;
 	memset(aircraftListText, 0, sizeof(aircraftListText));
-	for (j = 0; j < gd.numBases; j++) {
-		base = B_GetBaseByIDX(j);
-		assert(base);
-
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 
 		for (i = 0; i < base->numAircraftInBase; i++) {
@@ -479,11 +476,9 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 		memset(baseListText, 0, sizeof(baseListText));
 		/* Create the list of base, and write the text to display in popup
 		 * don't use the same loop than above, to avoid leaving the loop if popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT */
-		for (j = 0; j < gd.numBases; j++) {
-			base = B_GetBaseByIDX(j);
-			assert(base);
-
-			if (!base->founded)
+		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+			const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
+			if (!base)
 				continue;
 
 			/* Check if the base should be displayed in base list
@@ -600,12 +595,9 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	num = atoi(Cmd_Argv(1));
 
-	base = NULL;
-	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
-		base = B_GetBaseByIDX(baseIdx);
-		assert(base);
-
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 
 		/* Check if the base should be displayed in base list */

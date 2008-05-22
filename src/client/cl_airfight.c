@@ -238,7 +238,7 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
  * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if no weapon to use at all.
  * @sa AIRFIGHT_CheckWeapon
  */
-int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
+int AIRFIGHT_ChooseWeapon (const aircraftSlot_t const *slot, int maxSlot, const vec3_t pos, const vec3_t targetPos)
 {
 	int slotIdx = AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 	int i, weapon_status;

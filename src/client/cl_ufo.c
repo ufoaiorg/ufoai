@@ -189,8 +189,8 @@ static qboolean UFO_SendAttackBase (aircraft_t* ufo, base_t* base)
  */
 static void UFO_SearchBaseTarget (aircraft_t *ufo)
 {
-	base_t* base;
 	float distance = 999999., dist;
+	int baseIdx;
 
 	/* check if the ufo is already attacking an aircraft */
 	if (ufo->aircraftTarget)
@@ -204,8 +204,10 @@ static void UFO_SearchBaseTarget (aircraft_t *ufo)
 
 	/* No target, try to find a new base to attack */
 	ufo->status = AIR_TRANSIT;
-	/* reverse order - because bases can be destroyed in here */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
 		/* check if the ufo can attack a base (if it's not too far) */
 		if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < MAX_DETECTING_RANGE)) {
 			if (UFO_SendAttackBase(ufo, base))
@@ -301,11 +303,14 @@ static void UFO_UpdateAlienInterestForOneBase (aircraft_t *ufo, int dt, base_t *
  */
 static void UFO_UpdateAlienInterestForAllBases (aircraft_t *ufo, int dt)
 {
-	base_t* base;
+	int baseIdx;
 
 	assert(ufo);
 
-	for (base = gd.bases; base < gd.bases + gd.numBases; base++) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
 		UFO_UpdateAlienInterestForOneBase(ufo, dt, base);
 	}
 }
@@ -315,7 +320,7 @@ static void UFO_UpdateAlienInterestForAllBases (aircraft_t *ufo, int dt)
  */
 static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 {
-	base_t* base;
+	int baseIdx;
 	aircraft_t* phalanxAircraft;
 	float distance = 999999., dist;
 
@@ -347,8 +352,10 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 	}
 
 	ufo->status = AIR_TRANSIT;
-	/* reverse order - because bases can be destroyed in here */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
 		/* check if the ufo can attack an aircraft
 		 * reverse order - because aircraft can be destroyed in here */
 		for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
@@ -648,8 +655,8 @@ static void UFO_RemoveFromGeoscape_f (void)
 void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 {
 	qboolean visible;
+	int baseIdx;
 	aircraft_t *ufo, *aircraft;
-	base_t* base;
 
 	/* For each ufo in geoscape */
 	for (ufo = gd.ufos + gd.numUFOs - 1; ufo >= gd.ufos; ufo--) {
@@ -660,20 +667,27 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 		visible = ufo->visible;
 		ufo->visible = qfalse;
 
-		/* Check for ufo detection by bases */
-		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-			if (!base->founded || !B_GetBuildingStatus(base, B_POWER))
+		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+			if (!base)
 				continue;
+			if (!B_GetBuildingStatus(base, B_POWER))
+				continue;
+
 			/* maybe the ufo is already visible, don't reset it */
 			ufo->visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
 		}
 
 		/* Check for ufo tracking by aircraft */
 		if (visible || ufo->visible)
-			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+			for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+				base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+				if (!base)
+					continue;
 				for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 					/* maybe the ufo is already visible, don't reset it */
 					ufo->visible |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, qtrue);
+			}
 
 		/* Check if ufo appears or disappears on radar */
 		if (checkStatusChanged && visible != ufo->visible) {

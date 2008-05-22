@@ -65,7 +65,7 @@ void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
 void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
 void AIRFIGHT_CampaignRunProjectiles(int dt);
 void AIRFIGHT_CampaignRunBaseDefense(int dt);
-int AIRFIGHT_ChooseWeapon(aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos);
+int AIRFIGHT_ChooseWeapon(const aircraftSlot_t const *slot, int maxSlot, const vec3_t pos, const vec3_t targetPos);
 qboolean AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);
 void AIRFIGHT_Reset(void);
 
