@@ -6932,10 +6932,6 @@ static void CP_UFORecovered_f (void)
 	missionresults.crashsite = qfalse;
 	missionresults.ufotype = ufocraft->ufotype;
 
-	/* Do nothing without any base. */
-	if (!base)
-		return;
-
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
