@@ -157,10 +157,14 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
  **/
 void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
-	base_t *base;
+	int baseIdx;
 	aircraft_t *aircraft;
 
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
 		RADAR_NotifyUFORemovedFromOneRadar(&base->radar, ufo, destroyed);
 
 		for (aircraft = base->aircraft; aircraft < base->aircraft + base->numAircraftInBase; aircraft++)

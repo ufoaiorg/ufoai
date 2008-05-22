@@ -227,8 +227,9 @@ static int AIR_GetStorageSupply (base_t *base, const char *airCharId, qboolean i
 			storage++;
 	}
 	/* Get supply amount (global). */
-	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
-		if (!base->founded)
+	for (j = 0; j < MAX_BASES; j++) {
+		base = B_GetFoundedBaseByIDX(j);
+		if (!base)
 			continue;
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))

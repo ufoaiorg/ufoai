@@ -288,13 +288,16 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 	}
 
 	/* Get selected bases */
-	for (i = 0; i < gd.numBases && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
+	for (i = 0; i < MAX_BASES && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
+		base_t *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
 		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y))
-			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), gd.bases[i].name);
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), base->name);
 
 		/* Get selected aircraft wich belong to the base */
-		aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
-		for (; aircraft >= gd.bases[i].aircraft; aircraft--)
+		aircraft = gd.bases[i].aircraft + base->numAircraftInBase - 1;
+		for (; aircraft >= base->aircraft; aircraft--)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), _(aircraft->name));
 	}
@@ -876,7 +879,7 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
  */
 static void MAP_GetGeoscapeAngle (float *vector)
 {
-	int i;
+	int i, baseIdx;
 	int counter = 0;
 	int maxEventIdx;
 	const int numMissions = CP_CountMissionOnGeoscape();
@@ -885,7 +888,10 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
 	maxEventIdx = numMissions + gd.numBases - 1;
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				maxEventIdx++;
@@ -936,16 +942,29 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* Cycle through bases */
 	if (centerOnEventIdx < gd.numBases + counter) {
-		if (cl_3dmap->integer)
-			VectorSet(vector, gd.bases[centerOnEventIdx - counter].pos[0], -gd.bases[centerOnEventIdx - counter].pos[1], 0);
-		else
-			Vector2Set(vector, gd.bases[centerOnEventIdx - counter].pos[0], gd.bases[centerOnEventIdx - counter].pos[1]);
-		return;
+		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+			base = B_GetFoundedBaseByIDX(baseIdx);
+			if (!base)
+				continue;
+
+			if (counter == centerOnEventIdx) {
+				if (cl_3dmap->integer)
+					VectorSet(vector, gd.bases[baseIdx].pos[0], -gd.bases[baseIdx].pos[1], 0);
+				else
+					Vector2Set(vector, gd.bases[baseIdx].pos[0], gd.bases[baseIdx].pos[1]);
+				return;
+			}
+			counter++;
+		}
 	}
 	counter += gd.numBases;
 
 	/* Cycle through aircraft (only those present on geoscape) */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				if (centerOnEventIdx == counter) {
@@ -1155,7 +1174,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	aircraft_t *aircraft;
 	const linkedList_t *list = ccs.missions;
 	aircraftProjectile_t *projectile;
-	int x, y, i;
+	int x, y, i, baseIdx;
 	base_t* base;
 	const char* font;
 	const vec2_t northPole = {0.0f, 90.0f};
@@ -1220,8 +1239,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	}
 
 	/* draw bases */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-		if (!base->founded)
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
 			continue;
 
 		/* Draw weapon range if at least one UFO is visible */
@@ -1355,7 +1375,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 void MAP_DrawMap (const menuNode_t* node)
 {
 	float q = 0.0f;
-	base_t* base;
+	int baseIdx;
 	float distance;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
@@ -1381,9 +1401,13 @@ void MAP_DrawMap (const menuNode_t* node)
 	MN_MenuTextReset(TEXT_STANDARD);
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
-		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+			if (!base)
+				continue;
 			/* Draw base radar info */
 			RADAR_DrawCoverage(node, &base->radar,base->pos);
+		}
 
 		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
 		return;
