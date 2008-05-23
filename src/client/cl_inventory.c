@@ -574,6 +574,68 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 }
 
 /**
+ * @brief Remove items until everything fits in storage.
+ * @note items will be randomly selected for removal.
+ * @param[in] base Pointer to the base
+ */
+void INV_RemoveAllItemExceedingCapacity (base_t *base)
+{
+	int i;
+	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
+	int numObj;
+
+	INV_UpdateStorageCap(base);
+
+	for (i = 0, numObj = 0; i < csi.numODs; i++) {
+		/* don't count antimatter */
+		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+			continue;
+
+		/* Don't count aircraft */
+		assert(csi.ods[i].tech);
+		if (csi.ods[i].tech->type == RS_CRAFT) {
+			continue;
+		}
+
+		/* Don't count item that we don't have in base */
+		if (!base->storage.num[i])
+			continue;
+
+		objIdx[numObj++] = i;
+	}
+
+	/* UGV takes room in storage capacity: we store them with a value MAX_OBJDEFS that can't be used by objIdx */
+	for (i = 0; i < E_CountHired(base, EMPL_ROBOT); i++) {
+		objIdx[numObj++] = MAX_OBJDEFS;
+	}
+
+	while (base->capacities[CAP_ITEMS].cur > base->capacities[CAP_ITEMS].max) {
+		/* Select the item to remove */
+		const int randNumber = rand() % numObj;
+		if (objIdx[randNumber] >= MAX_OBJDEFS) {
+			/* A UGV is destroyed: get first one */
+			employee_t* employee = E_GetHiredRobot(base, 0);
+			/* There should be at least a UGV */
+			assert(employee);
+			E_DeleteEmployee(employee, EMPL_ROBOT);
+		} else {
+			/* items are destroyed. We guess that all items of a given type are stored in the same location
+			 *	=> destroy all items of this type */
+			int idx = objIdx[randNumber];
+			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
+		}
+		numObj--;
+		memmove(&objIdx[randNumber], &objIdx[randNumber + 1], (numObj - randNumber) * sizeof(objIdx[randNumber]));
+
+		/* Make sure that we don't have an infinite loop */
+		if (numObj <= 0)
+			break;
+	}
+	Com_DPrintf(DEBUG_CLIENT, "INV_RemoveAllItemExceedingCapacity: Remains %i in storage for a maxium of %i\n",
+		base->capacities[CAP_ITEMS].cur, base->capacities[CAP_ITEMS].max);
+}
+
+/**
  * @brief Update Storage Capacity.
  * @param[in] base Pointer to the base
  * @sa B_ResetAllStatusAndCapacities_f
