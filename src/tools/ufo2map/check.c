@@ -493,6 +493,42 @@ void CheckEntities (void)
 	}
 }
 
+
+/**
+ * @returns false if the brush has a mirrored set of planes,
+ * meaning it encloses no volume.
+ * also checks for planes without any normal
+ */
+static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
+{
+	int i, j;
+	const side_t *sides = b->original_sides;
+
+	for (i = 1; i < b->numsides; i++) {
+		/* check for a degenerate plane */
+		if (sides[i].planenum == -1) {
+			Com_Printf("  Brush %i (entity %i): degenerated plane\n", b->brushnum, b->entitynum);
+			continue;
+		}
+
+		/* check for duplication and mirroring */
+		for (j = 0; j < i; j++) {
+			if (sides[i].planenum == sides[j].planenum) {
+				/* remove the second duplicate */
+				Com_Printf("  Brush %i (entity %i): mirrored or duplicated\n", b->brushnum, b->entitynum);
+				break;
+			}
+
+			if (sides[i].planenum == (sides[j].planenum ^ 1)) {
+				Com_Printf("  Brush %i (entity %i): mirror plane - brush is invalid\n", b->brushnum, b->entitynum);
+				return qfalse;
+			}
+		}
+	}
+	return qtrue;
+}
+
+
 void CheckBrushes (void)
 {
 	int i, j;
@@ -502,6 +538,9 @@ void CheckBrushes (void)
 		const int contentFlags = (brush->original_sides[0].contentFlags & CONTENTS_LEVEL_ALL)
 			? brush->original_sides[0].contentFlags
 			: (brush->original_sides[0].contentFlags | CONTENTS_LEVEL_ALL);
+
+		Check_DuplicateBrushPlanes(brush);
+
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
 			const ptrdiff_t index = side - brushsides;
