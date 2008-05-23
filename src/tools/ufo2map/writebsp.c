@@ -64,17 +64,17 @@ ONLY SAVE OUT PLANES THAT ARE ACTUALLY USED AS NODES
 */
 
 /**
- * @brief There is no oportunity to discard planes, because all of the original
+ * @brief Emits planes to the bsp file
+ * @note There is no oportunity to discard planes, because all of the original
  * brushes will be saved in the map.
  */
 void EmitPlanes (void)
 {
 	int i;
-	dBspPlane_t *dp;
 	const plane_t *mp = mapplanes;
 
 	for (i = 0; i < nummapplanes; i++, mp++) {
-		dp = &curTile->planes[curTile->numplanes];
+		dBspPlane_t *dp = &curTile->planes[curTile->numplanes];
 		VectorCopy(mp->normal, dp->normal);
 		dp->dist = mp->dist;
 		dp->type = mp->type;
@@ -82,6 +82,9 @@ void EmitPlanes (void)
 	}
 }
 
+/**
+ * @brief Emits a leafnode to the bsp file
+ */
 static void EmitLeaf (const node_t *node)
 {
 	dBspLeaf_t *leaf_p;
@@ -128,7 +131,7 @@ static void EmitLeaf (const node_t *node)
 static void EmitFace (const face_t *f)
 {
 	dBspFace_t *df;
-	int i, e;
+	int i;
 
 	if (f->numpoints < 3) {
 		return;		/* degenerated */
@@ -150,7 +153,7 @@ static void EmitFace (const face_t *f)
 	df->numedges = f->numpoints;
 	df->texinfo = f->texinfo;
 	for (i = 0; i < f->numpoints; i++) {
-		e = GetEdge(f->vertexnums[i], f->vertexnums[(i + 1) % f->numpoints], f);
+		const int e = GetEdge(f->vertexnums[i], f->vertexnums[(i + 1) % f->numpoints], f);
 		if (curTile->numsurfedges >= MAX_MAP_SURFEDGES)
 			Sys_Error("numsurfedges >= MAX_MAP_SURFEDGES (%i)", curTile->numsurfedges);
 		curTile->surfedges[curTile->numsurfedges] = e;
@@ -255,6 +258,9 @@ void SetModelNumbers (void)
 	}
 }
 
+/**
+ * @brief Writes the brush list to the bsp
+ */
 void EmitBrushes (void)
 {
 	int i, j, bnum, s, x;
@@ -319,6 +325,7 @@ void EmitBrushes (void)
 }
 
 /**
+ * @brief Starts a new bsp file
  * @sa EndBSPFile
  */
 void BeginBSPFile (void)
@@ -351,6 +358,7 @@ void BeginBSPFile (void)
 
 
 /**
+ * @brief Finishes a new bsp and writes to disk
  * @sa BeginBSPFile
  */
 void EndBSPFile (const char *filename)
@@ -367,6 +375,7 @@ void EndBSPFile (const char *filename)
 extern int firstmodeledge;
 
 /**
+ * @brief Sets up a new brush model
  * @sa EndModel
  */
 void BeginModel (int entityNum)
@@ -407,14 +416,17 @@ void BeginModel (int entityNum)
 
 
 /**
+ * @brief Finish a model's processing
  * @sa BeginModel
  */
 void EndModel (void)
 {
 	dBspModel_t *mod;
 
+	/* set surfaces and brushes */
 	mod = &curTile->models[curTile->nummodels];
 	mod->numfaces = curTile->numfaces - mod->firstface;
 
+	/* increment model count */
 	curTile->nummodels++;
 }
