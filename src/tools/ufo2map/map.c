@@ -351,10 +351,11 @@ static void AddBrushBevels (mapbrush_t *b)
 						continue;
 					dist = DotProduct(w->p[j], normal);
 
-					/* if all the points on all the sides are */
-					/* behind this plane, it is a proper edge bevel */
+					/* if all the points on all the sides are
+					 * behind this plane, it is a proper edge bevel */
 					for (k = 0; k < b->numsides; k++) {
 						winding_t *w2;
+						float minBack;
 
 						/* @note: This leads to different results on different archs
 						 * due to float rounding/precision errors - use the -ffloat-store
@@ -366,12 +367,19 @@ static void AddBrushBevels (mapbrush_t *b)
 						w2 = b->original_sides[k].winding;
 						if (!w2)
 							continue;
+						minBack = 0.0f;
 						for (l = 0; l < w2->numpoints; l++) {
 							const float d = DotProduct(w2->p[l], normal) - dist;
 							if (d > 0.1)
 								break;	/* point in front */
+							if (d < minBack)
+								minBack = d;
 						}
+						/* if some point was at the front */
 						if (l != w2->numpoints)
+							break;
+						/* if no points at the back then the winding is on the bevel plane */
+						if (minBack > -0.1f)
 							break;
 					}
 
