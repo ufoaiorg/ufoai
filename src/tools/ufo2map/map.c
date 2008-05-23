@@ -402,45 +402,45 @@ static void AddBrushBevels (mapbrush_t *b)
 	}
 }
 
-
 /**
  * @brief makes basewindigs for sides and mins / maxs for the brush
  */
-static qboolean MakeBrushWindings (mapbrush_t *ob)
+static qboolean MakeBrushWindings (mapbrush_t *brush)
 {
 	int i, j;
-	winding_t *w;
 	side_t *side;
-	plane_t *plane;
 
-	ClearBounds(ob->mins, ob->maxs);
+	ClearBounds(brush->mins, brush->maxs);
 
-	for (i = 0; i < ob->numsides; i++) {
-		plane = &mapplanes[ob->original_sides[i].planenum];
-		w = BaseWindingForPlane(plane->normal, plane->dist);
-		for (j = 0; j < ob->numsides && w; j++) {
+	for (i = 0; i < brush->numsides; i++) {
+		const plane_t *plane = &mapplanes[brush->original_sides[i].planenum];
+		winding_t *w = BaseWindingForPlane(plane->normal, plane->dist);
+		for (j = 0; j < brush->numsides && w; j++) {
 			if (i == j)
 				continue;
-			if (ob->original_sides[j].bevel)
+			/* back side clipaway */
+			if (brush->original_sides[j].planenum == (brush->original_sides[j].planenum ^ 1))
 				continue;
-			plane = &mapplanes[ob->original_sides[j].planenum ^ 1];
+			if (brush->original_sides[j].bevel)
+				continue;
+			plane = &mapplanes[brush->original_sides[j].planenum ^ 1];
 			ChopWindingInPlace(&w, plane->normal, plane->dist, 0); /*CLIP_EPSILON); */
 		}
 
-		side = &ob->original_sides[i];
+		side = &brush->original_sides[i];
 		side->winding = w;
 		if (w) {
 			side->visible = qtrue;
 			for (j = 0; j < w->numpoints; j++)
-				AddPointToBounds(w->p[j], ob->mins, ob->maxs);
+				AddPointToBounds(w->p[j], brush->mins, brush->maxs);
 		}
 	}
 
 	for (i = 0; i < 3; i++) {
-		if (ob->mins[0] < -4096 || ob->maxs[0] > 4096)
-			Com_Printf("entity %i, brush %i: bounds out of world range\n", ob->entitynum, ob->brushnum);
-		if (ob->mins[0] > 4096 || ob->maxs[0] < -4096)
-			Com_Printf("entity %i, brush %i: no visible sides on brush\n", ob->entitynum, ob->brushnum);
+		if (brush->mins[0] < -4096 || brush->maxs[0] > 4096)
+			Com_Printf("entity %i, brush %i: bounds out of world range\n", brush->entitynum, brush->brushnum);
+		if (brush->mins[0] > 4096 || brush->maxs[0] < -4096)
+			Com_Printf("entity %i, brush %i: no visible sides on brush\n", brush->entitynum, brush->brushnum);
 	}
 
 	return qtrue;
@@ -846,6 +846,39 @@ static void MoveBrushesToWorld (entity_t *mapent)
 	mapent->numbrushes = 0;
 }
 
+static void AdjustBrushesForOrigin (const entity_t *ent)
+{
+	int i, j;
+
+	for (i = 0; i < ent->numbrushes; i++) {
+		mapbrush_t *b = &mapbrushes[ent->firstbrush + i];
+		for (j = 0; j < b->numsides; j++) {
+			side_t *s = &b->original_sides[j];
+			const ptrdiff_t index = s - brushsides;
+			const vec_t newdist = mapplanes[s->planenum].dist -
+				DotProduct(mapplanes[s->planenum].normal, ent->origin);
+			s->planenum = FindFloatPlane(mapplanes[s->planenum].normal, newdist);
+			s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
+				&side_brushtextures[index], ent->origin, qfalse);
+		}
+		/* create windings for sides and bounds for brush */
+		MakeBrushWindings(b);
+	}
+}
+
+/**
+ * @brief Checks whether this entity is an inline model that should have brushes
+ * @param[in] entName
+ * @returns true if the name of the entity implies, that this is an inline model
+ */
+static inline qboolean IsInlineModelEntity (const char *entName)
+{
+	qboolean inlineModelEntity = (!strcmp("func_breakable", entName)
+			|| !strcmp("func_door", entName)
+			|| !strcmp("func_rotating", entName));
+	return inlineModelEntity;
+}
+
 /**
  * @brief Parsed map entites and brushes
  * @sa ParseBrush
@@ -893,24 +926,8 @@ static qboolean ParseMapEntity (const char *filename)
 	GetVectorForKey(mapent, "origin", mapent->origin);
 
 	/* if there was an origin brush, offset all of the planes and texinfo - e.g. func_door or func_rotating */
-	if (VectorNotEmpty(mapent->origin)) {
-		int i, j;
-
-		for (i = 0; i < mapent->numbrushes; i++) {
-			mapbrush_t *b = &mapbrushes[mapent->firstbrush + i];
-			for (j = 0; j < b->numsides; j++) {
-				side_t *s = &b->original_sides[j];
-				const ptrdiff_t index = s - brushsides;
-				const vec_t newdist = mapplanes[s->planenum].dist -
-					DotProduct(mapplanes[s->planenum].normal, mapent->origin);
-				s->planenum = FindFloatPlane(mapplanes[s->planenum].normal, newdist);
-				s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
-					&side_brushtextures[index], mapent->origin, qfalse);
-			}
-			/* create windings for sides and bounds for brush */
-			MakeBrushWindings(b);
-		}
-	}
+	if (VectorNotEmpty(mapent->origin))
+		AdjustBrushesForOrigin(mapent);
 
 	/* group entities are just for editor convenience
 	 * toss all brushes into the world entity */
@@ -919,7 +936,7 @@ static qboolean ParseMapEntity (const char *filename)
 		MoveBrushesToWorld(mapent);
 		mapent->numbrushes = 0;
 		num_entities--;
-	} else if (!strcmp("func_breakable", entName) || !strcmp("func_door", entName) || !strcmp("func_rotating", entName)) {
+	} else if (IsInlineModelEntity(entName)) {
 		if (mapent->numbrushes == 0) {
 			num_entities--;
 			Com_Printf("Warning: %s has no brushes assigned\n", entName);

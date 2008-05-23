@@ -161,6 +161,9 @@ static void CreateBrushWindings (bspbrush_t *brush)
 		for (j = 0; j < brush->numsides && w; j++) {
 			if (i == j)
 				continue;
+			/* back side clipaway */
+			if (brush->sides[j].planenum == (brush->sides[i].planenum ^ 1))
+				continue;
 			if (brush->sides[j].bevel)
 				continue;
 			plane = &mapplanes[brush->sides[j].planenum ^ 1];
