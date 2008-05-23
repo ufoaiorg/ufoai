@@ -357,7 +357,7 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 /**
  * @brief
  */
-void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t epsilon)
+void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dist, const vec_t epsilon)
 {
 	winding_t *in;
 	/* @todo: Why + 4? */
