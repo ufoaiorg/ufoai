@@ -145,7 +145,7 @@ static void EmitFace (const face_t *f)
 	df = &curTile->faces[curTile->numfaces];
 	curTile->numfaces++;
 
-	/* planenum is used by qlight, but not quake */
+	/* planenum is used in radiosity stage, but not ufo */
 	df->planenum = f->planenum & (~1);
 	df->side = f->planenum & 1;
 

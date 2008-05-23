@@ -6340,9 +6340,7 @@ void CL_GameExit (void)
 			Cmd_RemoveCommand(commands->name);
 		}
 
-		/* @todo: make sure all of gd is empty */
-		gd.numBases = 0;
-		E_ResetEmployees();
+		CL_ResetSinglePlayerData();
 	}
 	curCampaign = NULL;
 

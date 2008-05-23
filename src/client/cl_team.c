@@ -1405,7 +1405,8 @@ qboolean CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* air
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
 		for (i = 0; i < gd.numAircraft; i++) {
-			if (CL_SoldierInAircraft(employee, AIR_AircraftGetFromIdx(i)))
+			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIdx(i);
+			if (aircraftByIDX && CL_SoldierInAircraft(employee, aircraftByIDX))
 				return qtrue;
 		}
 		return qfalse;
