@@ -32,6 +32,7 @@ static int c_active_brushes;
 
 /**
  * @brief Sets the mins/maxs based on the windings
+ * @returns false if the brush doesn't enclose a valid volume
  */
 static void BoundBrush (bspbrush_t *brush)
 {
@@ -48,17 +49,115 @@ static void BoundBrush (bspbrush_t *brush)
 	}
 }
 
+#define SNAP_EPSILON	0.01
+
+/**
+ * @brief welds two vec3_t's into a third, taking into account nearest-to-integer
+ * instead of averaging
+ */
+static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
+{
+	int i;
+	vec_t outi;
+
+	/* dummy check */
+	if (a == NULL || b == NULL || out == NULL)
+		return;
+
+	/* do each element */
+	for (i = 0; i < 3; i++) {
+		/* round to integer */
+		const double ai = rint(a[i]);
+		const double bi = rint(a[i]);
+
+		/* prefer exact integer */
+		if (ai == a[i])
+			out[i] = a[i];
+		else if (bi == b[i])
+			out[i] = b[i];
+
+		/* use nearest */
+		else if (fabs(ai - a[i]) < fabs(bi < b[i]))
+			out[i] = a[i];
+		else
+			out[i] = b[i];
+
+		/* snap */
+		outi = rint(out[i]);
+		if (fabs(outi - out[i]) <= SNAP_EPSILON)
+			out[i] = outi;
+	}
+}
+
+#define DEGENERATE_EPSILON	0.1
+
+/**
+ * @brief removes degenerate edges from a winding
+ * @returns qtrue if the winding is valid
+ */
+static qboolean FixWinding (winding_t *w)
+{
+	qboolean valid;
+	int i, k;
+
+	/* dummy check */
+	if (!w)
+		return qfalse;
+
+	valid = qtrue;
+
+	/* check all verts */
+	for (i = 0; i < w->numpoints; i++) {
+		/* get second point index */
+		const int j = (i + 1) % w->numpoints;
+		vec3_t vec;
+		float dist;
+
+		/* don't remove points if winding is a triangle */
+		if (w->numpoints == 3)
+			return valid;
+
+		/* degenerate edge? */
+		VectorSubtract(w->p[i], w->p[j], vec);
+		dist = VectorLength(vec);
+		if (dist < DEGENERATE_EPSILON) {
+			valid = qfalse;
+
+			/* create an average point (ydnar 2002-01-26: using nearest-integer weld preference) */
+			SnapWeldVector(w->p[i], w->p[j], vec);
+			VectorCopy(vec, w->p[i]);
+
+			/* move the remaining verts */
+			for (k = i + 2; k < w->numpoints; k++)
+				VectorCopy(w->p[k], w->p[k - 1]);
+
+			w->numpoints--;
+		}
+	}
+
+	/* one last check and return */
+	if (w->numpoints < 3)
+		valid = qfalse;
+	return valid;
+}
+
+
+/**
+ * @brief makes basewindigs for sides and mins/maxs for the brush
+ * @returns false if the brush doesn't enclose a valid volume
+ */
 static void CreateBrushWindings (bspbrush_t *brush)
 {
-	int i, j;
-	winding_t *w;
-	side_t *side;
-	plane_t *plane;
+	int i;
 
 	for (i = 0; i < brush->numsides; i++) {
-		side = &brush->sides[i];
-		plane = &mapplanes[side->planenum];
-		w = BaseWindingForPlane(plane->normal, plane->dist);/*evidence that winding_t represents a hessian normal plane*/
+		side_t *side = &brush->sides[i];
+		const plane_t *plane = &mapplanes[side->planenum];
+		int j;
+
+		/* evidence that winding_t represents a hessian normal plane */
+		winding_t *w = BaseWindingForPlane(plane->normal, plane->dist);
+
 		for (j = 0; j < brush->numsides && w; j++) {
 			if (i == j)
 				continue;
@@ -66,6 +165,10 @@ static void CreateBrushWindings (bspbrush_t *brush)
 				continue;
 			plane = &mapplanes[brush->sides[j].planenum ^ 1];
 			ChopWindingInPlace(&w, plane->normal, plane->dist, 0); /*CLIP_EPSILON); */
+
+			/* fix broken windings that would generate trifans */
+			if (!FixWinding(w))
+				Sys_FPrintf(SYS_VRB, "removed degenerated edge(s) from winding\n");
 		}
 
 		side->winding = w;
@@ -208,7 +311,7 @@ void FreeBrushList (bspbrush_t *brushes)
 /**
  * @brief Duplicates the brush, the sides, and the windings
  */
-bspbrush_t *CopyBrush (bspbrush_t *brush)
+bspbrush_t *CopyBrush (const bspbrush_t *brush)
 {
 	bspbrush_t *newbrush;
 	int i;
@@ -864,4 +967,45 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	Sys_FPrintf(SYS_VRB, "%5i nonvis nodes\n", c_nonvis);
 	Sys_FPrintf(SYS_VRB, "%5i leafs\n", (c_nodes + 1) / 2);
 	return tree;
+}
+
+
+/**
+ * @brief writes a map with the split bsp brushes
+ */
+void WriteBSPBrushMap (const char *name, const bspbrush_t *list)
+{
+	FILE *f;
+
+	/* note it */
+	Com_Printf("Writing %s\n", name);
+
+	/* open the map file */
+	f = fopen(name, "wb");
+	if (f == NULL)
+		Sys_Error("Can't write %s\b", name);
+
+	fprintf(f, "{\n\"classname\" \"worldspawn\"\n");
+
+	for (; list; list = list->next) {
+		const side_t *s;
+		int i;
+
+		fprintf(f, "{\n");
+		for (i = 0, s = list->sides; i < list->numsides; i++, s++) {
+			winding_t *w = BaseWindingForPlane(mapplanes[s->planenum].normal, mapplanes[s->planenum].dist);
+			const dBspTexinfo_t *t = &curTile->texinfo[s->texinfo];
+
+			fprintf(f, "( %i %i %i ) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
+			fprintf(f, "( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
+			fprintf(f, "( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
+
+			fprintf(f, "%s 0 0 0 1 1 0 %i %i\n", t->texture, t->surfaceFlags, t->value);
+			FreeWinding(w);
+		}
+		fprintf(f, "}\n");
+	}
+	fprintf(f, "}\n");
+
+	fclose (f);
 }
