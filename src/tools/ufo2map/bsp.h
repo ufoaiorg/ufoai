@@ -74,15 +74,15 @@ extern	textureref_t	textureref[MAX_MAP_TEXTURES];
 int	FindMiptex(const char *name);
 int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, const vec3_t origin, qboolean isTerrain);
 
-/* csg */
+/* csg.c */
 
 int MapBrushesBounds(const int startbrush, const int endbrush, const int level, const vec3_t clipmins, const vec3_t clipmaxs, vec3_t mins, vec3_t maxs);
 bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs);
 bspbrush_t *ChopBrushes(bspbrush_t *head);
 
-/* brushbsp */
+/* brushbsp.c */
 
-bspbrush_t *CopyBrush(bspbrush_t *brush);
+bspbrush_t *CopyBrush(const bspbrush_t *brush);
 void SplitBrush(bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
 bspbrush_t *AllocBrush(int numsides);
 int	CountBrushList(bspbrush_t *brushes);
@@ -90,6 +90,7 @@ void FreeBrush(bspbrush_t *brushes);
 void FreeBrushList(bspbrush_t *brushes);
 qboolean WindingIsTiny(winding_t *w);
 tree_t *BrushBSP(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
+void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
 
 /* portals.c */
 
