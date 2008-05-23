@@ -176,7 +176,7 @@ void FS_Init (char *path)
 
 	pak = FS_LoadPackFile(va("%s0pics.pk3", gamedir));
 	if (!pak)
-		Com_Printf("Could not load image pk3\n");
+		Com_Printf("Could not load image pk3, searching in directories for images instead\n");
 }
 
 /**
