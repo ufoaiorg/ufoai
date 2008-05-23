@@ -346,9 +346,9 @@ static void R_DrawEntityEffects (void)
  * @sa R_DrawEntities
  * @sa R_DrawBrushModel
  */
-static void R_DrawBspEntities (entity_t *ents)
+static void R_DrawBspEntities (const entity_t *ents)
 {
-	entity_t *e;
+	const entity_t *e;
 
 	if (!ents)
 		return;
@@ -366,9 +366,9 @@ static void R_DrawBspEntities (entity_t *ents)
 /**
  * @sa R_DrawEntities
  */
-static void R_DrawMeshEntities (entity_t *ents)
+static void R_DrawMeshEntities (const entity_t *ents)
 {
-	entity_t *e;
+	const entity_t *e;
 
 	e = ents;
 
@@ -500,19 +500,14 @@ static float *R_CalcTransform (entity_t * e)
 
 		/* tag transformation */
 		if (e->tagent->model && e->tagent->model->alias.tagdata) {
-			dMD2tag_t *taghdr;
-			const char *name;
-			float *tag;
-			float interpolated[16];
-
-			taghdr = (dMD2tag_t *) e->tagent->model->alias.tagdata;
-
+			dMD2tag_t *taghdr = (dMD2tag_t *) e->tagent->model->alias.tagdata;
 			/* find the right tag */
-			name = (char *) taghdr + taghdr->ofs_names;
+			const char *name = (char *) taghdr + taghdr->ofs_names;
 			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
 				if (!strcmp(name, e->tagname)) {
+					float interpolated[16];
 					/* found the tag (matrix) */
-					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);
+					const float *tag = (const float *) ((const byte *) taghdr + taghdr->ofs_tags);
 					tag += i * 16 * taghdr->num_frames;
 
 					/* do interpolation */

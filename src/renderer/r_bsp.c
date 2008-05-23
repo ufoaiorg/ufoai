@@ -41,7 +41,7 @@ BRUSH MODELS
 /**
  * @brief
  */
-static void R_DrawInlineBrushModel (entity_t *e, vec3_t modelorg)
+static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 {
 	int i;
 	float dot;
@@ -111,7 +111,7 @@ static void R_DrawInlineBrushModel (entity_t *e, vec3_t modelorg)
  * @brief Draws a brush model
  * @note E.g. a func_breakable or func_door
  */
-void R_DrawBrushModel (entity_t * e)
+void R_DrawBrushModel (const entity_t * e)
 {
 	/* relative to viewpoint */
 	vec3_t modelorg;

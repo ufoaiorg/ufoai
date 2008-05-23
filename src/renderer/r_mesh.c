@@ -76,7 +76,6 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 {
 	int i;
 	image_t *skin;
-	mAliasMesh_t *mesh;
 
 	/* register the model */
 	mi->model = R_RegisterModelShort(mi->name);
@@ -93,7 +92,6 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		return;
 	}
 
-	/* draw all the triangles */
 	qglPushMatrix();
 	qglScalef(viddef.rx, viddef.ry, (viddef.rx + viddef.ry) / 2);
 
@@ -109,20 +107,16 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 		/* tag trafo */
 		if (tagname && pmi->model && pmi->model->alias.tagdata) {
-			animState_t as;
-			dMD2tag_t *taghdr;
-			char *name;
-			float *tag;
-			float interpolated[16];
-
-			taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
-
+			dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
 			/* find the right tag */
-			name = (char *) taghdr + taghdr->ofs_names;
+			const char *name = (const char *) taghdr + taghdr->ofs_names;
+
 			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
 				if (!Q_strcmp(name, tagname)) {
+					float interpolated[16];
+					animState_t as;
 					/* found the tag (matrix) */
-					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);
+					const float *tag = (const float *) ((const byte *) taghdr + taghdr->ofs_tags);
 					tag += i * 16 * taghdr->num_frames;
 
 					/* do interpolation */
@@ -154,7 +148,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* draw the model */
 	for (i = 0; i < mi->model->alias.num_meshes; i++) {
-		mesh = &mi->model->alias.meshes[i];
+		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
 		refdef.alias_count += mesh->num_tris;
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 	}
@@ -176,7 +170,6 @@ void R_DrawModelParticle (modelInfo_t * mi)
 {
 	int i;
 	image_t *skin;
-	mAliasMesh_t *mesh;
 
 	/* check if the model exists */
 	if (!mi->model)
@@ -203,7 +196,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	/* draw the model */
 	for (i = 0; i < mi->model->alias.num_meshes; i++) {
-		mesh = &mi->model->alias.meshes[i];
+		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
 		refdef.alias_count += mesh->num_tris;
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 	}
@@ -313,7 +306,7 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
  * @note this is only called in ca_active or ca_sequence mode
  * @sa R_DrawEntities
  */
-void R_DrawAliasModel (entity_t *e)
+void R_DrawAliasModel (const entity_t *e)
 {
 	mAliasModel_t *mod;
 	int i;

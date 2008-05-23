@@ -64,8 +64,9 @@ typedef struct mBspSurface_s {
 	int flags;
 	int tile;				/**< index in r_mapTiles (loaded bsp map index) this surface belongs, to */
 
-	int firstedge;				/**< look up in model->surfedges[], negative numbers */
-	int numedges;				/**< are backwards edges */
+	/** look up in model->surfedges[], negative numbers are backwards edges */
+	int firstedge;
+	int numedges;
 
 	short stmins[2];		/**< st min coordinates */
 	short stmaxs[2];			/**< st max coordinates */

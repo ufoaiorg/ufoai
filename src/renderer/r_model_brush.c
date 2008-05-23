@@ -188,8 +188,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
 	int bmins[2], bmaxs[2];
-	float val;
-	int i, j, e;
+	int i, j;
 	mBspVertex_t *v;
 	mBspTexInfo_t *tex;
 
@@ -202,7 +201,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 	tex = surf->texinfo;
 
 	for (i = 0; i < surf->numedges; i++) {
-		e = mod->bsp.surfedges[surf->firstedge + i];
+		const int e = mod->bsp.surfedges[surf->firstedge + i];
 		if (e >= 0)
 			v = &mod->bsp.vertexes[mod->bsp.edges[e].v[0]];
 		else
@@ -216,7 +215,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 		}
 
 		for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
-			val = DotProduct(v->position, tex->vecs[j]) + tex->vecs[j][3];
+			const float val = DotProduct(v->position, tex->vecs[j]) + tex->vecs[j][3];
 			if (val < stmins[j])
 				stmins[j] = val;
 			if (val > stmaxs[j])
@@ -417,7 +416,6 @@ static void R_ModLoadPlanes (lump_t * l)
 	cBspPlane_t *out;
 	dBspPlane_t *in;
 	int count;
-	int bits;
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -430,7 +428,7 @@ static void R_ModLoadPlanes (lump_t * l)
 	loadmodel->bsp.numplanes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		bits = 0;
+		int bits = 0;
 		for (j = 0; j < 3; j++) {
 			out->normal[j] = LittleFloat(in->normal[j]);
 			if (out->normal[j] < 0)
@@ -641,9 +639,8 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
 
-	/* set up the submodels, the first 255 submodels
-	 * are the models of the different levels, don't
-	 * care about them */
+	/* set up the submodels, the first 255 submodels are the models of the
+	 * different levels, don't care about them */
 	for (i = NUM_REGULAR_MODELS; i < loadmodel->bsp.numsubmodels; i++) {
 		const mBspHeader_t *bm;
 		model_t *starmod;

@@ -29,6 +29,6 @@ void R_AnimAppend(animState_t * as, struct model_s *mod, const char *name);
 void R_AnimChange(animState_t * as, struct model_s *mod, const char *name);
 void R_AnimRun(animState_t * as, struct model_s *mod, int msec);
 const char *R_AnimGetName(animState_t * as, struct model_s *mod);
-void R_InterpolateTransform(animState_t *as, int numframes, float *tag, float *interpolated);
+void R_InterpolateTransform(animState_t *as, int numframes, const float *tag, float *interpolated);
 
 #endif

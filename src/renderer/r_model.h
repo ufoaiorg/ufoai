@@ -73,7 +73,7 @@ void R_ModDrawNullModel(entity_t *e);
 image_t* R_AliasModelState(const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin);
 image_t* R_AliasModelGetSkin(const model_t* mod, const char *skin);
 void R_DrawAliasFrameLerp(const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum);
-void R_DrawAliasModel(entity_t *e);
+void R_DrawAliasModel(const entity_t *e);
 void R_ShutdownModels(void);
 
 extern model_t *r_mapTiles[MAX_MAPTILES];

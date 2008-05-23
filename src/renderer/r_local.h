@@ -119,7 +119,7 @@ extern int registration_sequence;
 
 void R_ScreenShot_f(void);
 void R_DrawModelParticle(modelInfo_t *mi);
-void R_DrawBrushModel(entity_t *e);
+void R_DrawBrushModel(const entity_t *e);
 void R_GetLevelSurfaceLists(void);
 void R_InitMiscTexture(void);
 void R_DrawEntities(void);

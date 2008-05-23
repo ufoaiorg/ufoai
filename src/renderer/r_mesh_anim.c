@@ -230,9 +230,9 @@ const char *R_AnimGetName (animState_t * as, model_t * mod)
  * @brief
  * @param[out] interpolated This is an array of 16 floats
  */
-void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float *interpolated)
+void R_InterpolateTransform (animState_t * as, int numframes, const float *tag, float *interpolated)
 {
-	float *current, *old;
+	const float *current, *old;
 	float bl, fl;
 	int i;
 
