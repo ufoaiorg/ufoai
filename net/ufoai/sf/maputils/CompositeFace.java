@@ -53,19 +53,22 @@ public class CompositeFace {
 	return s;
     }
 
-    /*
+    
+	/** this will fail where one of the composite faces doing the hiding does not
+	 *  have a vertex of the face being hidden stuck on it. (and the levelflags are
+	 *  different. */
 	boolean coversConsideringLevelFlags(Face bf) {
-		Vector3D 
+		Vector<Vector3D> vertsOfFaceBf=bf.getVertices();
 		for(Vector3D p:vertsOfFaceBf){
-		    boolean isInsideAtLeastOne=false;
 		    for(Face f:members){
-			if(f.getParent().inside(p)) isInsideAtLeastOne=true;
+			if(f.getParent().inside(p)) {//every relevant face in the composite must cover wrt lvlflags
+			    if(!f.coversConsideringLevelFlags(bf)) return false;
+			}
 		    }
-		    if(!isInsideAtLeastOne) return false;
 		}
 		return true;
 	}
-     **/
+     
     
     
 }

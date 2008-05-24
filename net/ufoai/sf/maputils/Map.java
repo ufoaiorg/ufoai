@@ -228,7 +228,7 @@ public class Map {
 						    if (pib.areInside (vertsOfFaceBf) ) {
 							nodrawsObsBySingleFace++;
 							bf.setNodraw();
-							System.out.printf("nodraw set, brush number:%d. this %s covers that %s%n",b.getBrushNumber(),pif.contentFlags.getDescriptionOfLevelFlags(),bf.contentFlags.getDescriptionOfLevelFlags());
+							//System.out.printf("nodraw set, brush number:%d. this %s covers that %s%n",b.getBrushNumber(),pif.contentFlags.getDescriptionOfLevelFlags(),bf.contentFlags.getDescriptionOfLevelFlags());
 						    }
 						}
 					    }
@@ -243,10 +243,12 @@ public class Map {
 				if(cf.isFacingAndCoincidentTo(bf)){
 				    Vector<Vector3D> vertsOfFaceBf=bf.getVertices();
 				    if(cf.areInsideParentBrushes(vertsOfFaceBf)){
-					nodrawsObsByComposite++;
-					bf.setNodraw();
-					MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
-					break;//once the face has been set, skip the rest.
+					if(cf.coversConsideringLevelFlags(bf)){
+					    nodrawsObsByComposite++;
+					    bf.setNodraw();
+					    MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
+					    break;//once the face has been set, skip the rest.
+					}
 				    }
 				}
 			    }
