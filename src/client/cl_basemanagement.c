@@ -786,9 +786,9 @@ static void B_HangarOnDestroy (base_t* base, buildingType_t buildingType)
 
 	memset(&awayAircraft[MAX_AIRCRAFT], 0, sizeof(awayAircraft[MAX_AIRCRAFT]));
 
-	/* destroy aircraft only if there's not enough hangar (hangars are destroyed one by one) */
+	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
 	capacity = B_GetCapacityFromBuildingType(buildingType);
-	if (base->capacities[capacity].cur < base->capacities[capacity].max)
+	if (base->capacities[capacity].cur <= base->capacities[capacity].max)
 		return;
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
@@ -1048,12 +1048,47 @@ static void B_BuildingDestroy_f (void)
  */
 void B_MarkBuildingDestroy (base_t* base, building_t* building)
 {
+	int cap = B_GetCapacityFromBuildingType(building->buildingType);
 	assert(base);
 	assert(building);
 
 	base->buildingCurrent = building;
 
-	MN_PushMenu("building_destroy");
+	if (building->buildingStatus == B_STATUS_WORKING) {
+		switch (building->buildingType) {
+		case B_HANGAR:
+		case B_SMALL_HANGAR:
+			if (base->capacities[cap].cur >= base->capacities[cap].max) {
+				MN_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
+					"mn_pop;building_open;", _("Go to hangar"), _("Go to hangar without destroying building"),
+					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"));
+				return;
+			}
+			break;
+		case B_QUARTERS:
+			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
+				MN_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarter, every employees inside will be killed.\nAre you sure you want to destroy this building?"),
+					"mn_pop;building_open;", _("Dismiss"), _("Go to hiring menu without destroying building"),
+					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"));
+				return;
+			}
+			break;
+		case B_STORAGE:
+			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
+				MN_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
+					"mn_pop;building_open;", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
+					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"));
+				return;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	MN_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
+		NULL, NULL, NULL,
+		"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"));
 }
 
 /**

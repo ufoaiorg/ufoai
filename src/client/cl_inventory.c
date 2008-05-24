@@ -584,7 +584,8 @@ void INV_RemoveAllItemExceedingCapacity (base_t *base)
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
 	int numObj;
 
-	INV_UpdateStorageCap(base);
+	if (base->capacities[CAP_ITEMS].cur <= base->capacities[CAP_ITEMS].max)
+		return;
 
 	for (i = 0, numObj = 0; i < csi.numODs; i++) {
 		/* don't count antimatter */

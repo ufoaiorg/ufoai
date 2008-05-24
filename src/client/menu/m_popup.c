@@ -141,7 +141,7 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
 /**
  * @brief Generates a popup that contains up to 2 buttons.
  * @param[in] title Title of the popup.
- * @param[in] text Text to display in the popup.
+ * @param[in] text Text to display in the popup (use popupText if text is NULL).
  * @param[in] clickAction1 Action to perform when one clicked on the first button.
  * @param[in] clickText1 String that will be written in first button.
  * @param[in] tooltip1 Tooltip of first button.
@@ -157,7 +157,10 @@ void MN_PopupButton (const char *title, const char *text,
 	menu_t* popupButtonMenu;
 
 	mn.menuText[TEXT_POPUP] = title;
-	mn.menuText[TEXT_POPUP_INFO] = text;
+	if (text)
+		mn.menuText[TEXT_POPUP_INFO] = text;
+	else
+		mn.menuText[TEXT_POPUP_INFO] = popupText;
 	
 	if (ccs.singleplayer)
 		CL_GameTimeStop();
