@@ -833,10 +833,10 @@ void E_DeleteAllEmployees (base_t* base)
 	Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: starting ...\n");
 	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
 		Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: Removing empl-type %i | num %i\n", type, gd.numEmployees[type]);
-		/* Attention:
+		/* Warning:
 		 * gd.numEmployees[type] is changed in E_DeleteAllEmployees! (it's decreased by 1 per call)
 		 * For this reason we start this loop from the back of the empl-list. toward 0. */
-		for (i = gd.numEmployees[type]-1; i >= 0; i--) {
+		for (i = gd.numEmployees[type] - 1; i >= 0; i--) {
 			Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: %i\n", i);
 			employee = &gd.employees[type][i];
 			if (employee->baseHired == base) {
@@ -848,6 +848,44 @@ void E_DeleteAllEmployees (base_t* base)
 		}
 	}
 	Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: ... finished\n");
+}
+
+
+/**
+ * @brief Removes employee until all employees fit in quarters capacity.
+ * @param[in] base Pointer to the base where the number of employees should be updated.
+ * @note employees are killed, and not just unhired (if base is destroyed, you can't recruit the same employees elsewhere)
+ *	if you want to unhire employees, you should do it before calling this function.
+ * @note employees are not randomly chosen. Reason is that all Quarter will be destroyed at the same time,
+ *	so all employees are going to be killed anyway.
+ */
+void E_DeleteEmployeesExceedingCapacity (base_t *base)
+{
+	employeeType_t type;
+	int i;
+
+	/* Check if there are too many employees */
+	if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)
+		return;
+
+	/* do a reverse loop in order to finish by soldiers (the most important employees) */
+	for (type = MAX_EMPL - 1; type >= 0; type--) {
+		/* UGV are not stored in Quarters */
+		if (type == EMPL_ROBOT)
+			continue;
+
+		/* Warning:
+		 * gd.numEmployees[type] is changed in E_DeleteAllEmployees! (it's decreased by 1 per call)
+		 * For this reason we start this loop from the back of the empl-list. toward 0. */
+		for (i = gd.numEmployees[type] - 1; gd.numEmployees[type] >= 0; i--) {
+			employee_t *employee = &gd.employees[type][i];
+			E_DeleteEmployee(employee, type);
+			if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)
+				return;
+		}
+	}
+
+	Com_Printf("E_DeleteEmployeesExceedingCapacity: Warning, removed all employees from base '%s', but capacity is still > 0\n", base->name);
 }
 
 #if 0

@@ -102,6 +102,7 @@ int E_CountUnassigned(const base_t* const base, employeeType_t type);
 inline employee_t* E_GetEmployeeByMenuIndex(int num);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
+void E_DeleteEmployeesExceedingCapacity(base_t *base);
 qboolean E_IsInBase(employee_t* empl, const base_t* const base);
 void E_Init(void);
 

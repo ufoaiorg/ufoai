@@ -696,6 +696,41 @@ static void B_ResetAllStatusAndCapacities_f (void)
 #endif
 
 /**
+ * @brief On destroy function for quarter.
+ * @note called with quarter_destroy
+ * @sa B_BuildingDestroy_f
+ */
+static void B_QuarterOnDestroy_f (void)
+{
+	int baseIdx, buildingType;
+	base_t *base;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", Cmd_Argv(0));
+		return;
+	}
+
+	buildingType = atoi(Cmd_Argv(2));
+	if (buildingType != B_QUARTERS) {
+		Com_Printf("B_QuarterOnDestroy_f: buildingType '%i' is not a quarter\n", buildingType);
+		return;
+	}
+
+	baseIdx = atoi(Cmd_Argv(1));
+
+	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
+		Com_Printf("B_QuarterOnDestroy_f: %i is outside bounds\n", baseIdx);
+		return;
+	}
+
+	base = B_GetFoundedBaseByIDX(baseIdx);
+	if (base)
+		E_DeleteEmployeesExceedingCapacity(base);
+	else
+		Com_Printf("B_QuarterOnDestroy_f: base %i is not founded\n", baseIdx);
+}
+
+/**
  * @brief On destroy function for storage.
  * @note called with storage_destroy
  * @sa B_BuildingDestroy_f
@@ -712,7 +747,7 @@ static void B_StorageOnDestroy_f (void)
 
 	buildingType = atoi(Cmd_Argv(2));
 	if (buildingType != B_STORAGE) {
-		Com_Printf("B_StorageOnDestroy_f: buildingType '%i' above maximum value (%i)\n", buildingType, MAX_BUILDING_TYPE);
+		Com_Printf("B_StorageOnDestroy_f: buildingType '%i' is not a storage\n", buildingType);
 		return;
 	}
 
@@ -3277,6 +3312,7 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
 	Cmd_AddCommand("hangar_destroy", B_HangarOnDestroy_f, "Destroy a hangar");
 	Cmd_AddCommand("storage_destroy", B_StorageOnDestroy_f, "Destroy a storage");
+	Cmd_AddCommand("quarter_destroy", B_QuarterOnDestroy_f, "Destroy a quarter");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
 	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");

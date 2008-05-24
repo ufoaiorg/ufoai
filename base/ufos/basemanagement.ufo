@@ -184,6 +184,7 @@ building building_quarters
 	more_than_one	true
 	type		quarters
 	onclick		"building_open"
+	ondestroy	"quarter_destroy"
 	capacity	20
 }
 
