@@ -139,12 +139,16 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
 }
 
 /**
- * @brief Generates a popup that contains up to 3 buttons.
+ * @brief Generates a popup that contains up to 2 buttons.
  * @param[in] title Title of the popup.
  * @param[in] text Text to display in the popup.
  * @param[in] clickAction1 Action to perform when one clicked on the first button.
+ * @param[in] clickText1 String that will be written in first button.
+ * @param[in] tooltip1 Tooltip of first button.
  * @param[in] clickAction2 Action to perform when one clicked on the second button.
- * @note clickAction may be NULL if button is not needed.
+ * @param[in] clickText2 String that will be written in second button.
+ * @param[in] tooltip2 Tooltip of second button.
+ * @note clickAction may be NULL if button should be invisible.
  */
 void MN_PopupButton (const char *title, const char *text,
 	const char *clickAction1, const char *clickText1, const char *tooltip1,
