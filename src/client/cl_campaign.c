@@ -636,25 +636,6 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
 }
 
 /**
- * @brief Notify that a base has been removed.
- */
-static void CP_MissionNotifyBaseDestroyed (base_t *base)
-{
-	linkedList_t *list = ccs.missions;
-
-	for (; list; list = list->next) {
-		mission_t *mission = (mission_t *)list->data;
-		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->data) {
-			base_t *missionBase = (base_t *) mission->data;
-			if (base == missionBase) {
-				/* Aimed base has been destroyed, abort mission */
-				CP_MissionRemove(mission);
-			}
-		}
-	}
-}
-
-/**
  * @brief Removes (temporarily) a UFO from geoscape: make it non visible and call notify functions
  * @param[in] Pointer to mission
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed).
@@ -725,6 +706,25 @@ static void CP_MissionRemove (mission_t *mission)
 	}
 	Com_Printf("\n");
 #endif
+}
+
+/**
+ * @brief Notify that a base has been removed.
+ */
+void CP_MissionNotifyBaseDestroyed (base_t *base)
+{
+	linkedList_t *list = ccs.missions;
+
+	for (; list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->data) {
+			base_t *missionBase = (base_t *) mission->data;
+			if (base == missionBase) {
+				/* Aimed base has been destroyed, abort mission */
+				CP_MissionRemove(mission);
+			}
+		}
+	}
 }
 
 /**
