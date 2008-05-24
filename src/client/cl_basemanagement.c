@@ -1009,7 +1009,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 /**
  * @brief Destroy a base.
- * @param[in] base base_t base to be destroyed.
+ * @param[in] base Pointer to base to be destroyed.
  * @note If you want to sell items or unhire employees, you should do it before calling this function
  *	they are going to be killed / destroyed.
  */
@@ -1018,6 +1018,8 @@ void CL_BaseDestroy (base_t *base)
 	int buildingIdx;
 
 	assert(base);
+
+	CP_MissionNotifyBaseDestroyed(base);
 
 	/* do a reverse loop as buildings are going to be destroyed */
 	for (buildingIdx = gd.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
