@@ -467,6 +467,104 @@ menu popup_list
 	}
 }
 
+// ==================
+// POPUP BUTTON
+// ==================
+
+menu popup_button
+{
+	zone popup
+	{
+		invis true
+	}
+
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+
+	pic bt_close
+	{
+		image	hud/close
+		pos		"722 284"
+		click	{ cmd "bindingstoggle;mn_pop;" }	// Toggle key-bindings on again and close the popup.
+	}
+
+	text title
+	{
+		pos		"440 280"
+		align	uc
+		size	"446 20"
+		height	"1"
+		num		7
+	}
+
+	text popup_text
+	{
+		pos		"290 320"
+		num		8
+		format	"16 100"
+		size	"446 128"
+//		bgcolor	"1 1 1 0.5"
+		height	8
+		scrollbar	true
+		wheel
+	}
+
+	pic popup_button_1
+	{
+		visible false
+		tooltip	"*cvar mn_popup_button_tooltip1"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 32"
+		pos		"290 454"
+		out		{ *popup_button_string_1 color "0 0.5 0 1" *popup_button_1 image menu/multi_buttons3 }
+		in		{ *popup_button_string_1 color "1 1 1 1" *popup_button_1 image menu/multi_buttons3a }
+	}
+
+	string popup_button_string_1
+	{
+		visible false
+		string	"*cvar mn_popup_button_text1"
+		font	f_menu
+		color	"0 0.5 0 1"
+		pos		"378 470"
+		align	cc
+	}
+
+	pic popup_button_2
+	{
+		visible false
+		tooltip	"*cvar mn_popup_button_tooltip2"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 32"
+		pos		"560 454"
+		out		{ *popup_button_string_2 color "0 0.5 0 1" *popup_button_2 image menu/multi_buttons3 }
+		in		{ *popup_button_string_2 color "1 1 1 1" *popup_button_2 image menu/multi_buttons3a }
+	}
+
+	string popup_button_string_2
+	{
+		visible false
+		string	"*cvar mn_popup_button_text2"
+		font	f_menu
+		color	"0 0.5 0 1"
+		pos		"648 470"
+		align	cc
+	}
+
+	func init
+	{
+	}
+
+	func leave
+	{
+		cmd		"mn_pop;"
+	}
+}
 
 // ==================
 // POPUP INTERCEPT READY

@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define POPUPLIST_MENU_NAME "popup_list"
 #define POPUPLIST_NODE_NAME "popup_list"
+#define POPUPBUTTON_MENU_NAME "popup_button"
+#define POPUPBUTTON_NODE_NAME "popup_button_"
+#define POPUPBUTTON_NODE_STRING_NAME "popup_button_string_"
 #define POPUP_MENU_NAME "popup"
 
 char popupText[MAX_SMALLMENUTEXTLEN];
@@ -46,6 +49,13 @@ void MN_Popup (const char *title, const char *text)
 	MN_PushMenu(POPUP_MENU_NAME);
 }
 
+/**
+ * @brief Generates a popup that contains a list of selectable choices.
+ * @param[in] title Title of the popup.
+ * @param[in] headline First line of text written in the popup.
+ * @param[in] entries List of the selectables choices.
+ * @param[in] clickAction Action to perform when one clicked on the popup.
+ */
 menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
 {
 	menu_t* popupListMenu;
@@ -84,5 +94,84 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 	}
 
 	MN_PushMenu(popupListMenu->name);
-	return listNode;	
+	return listNode;
+}
+
+/**
+ * @brief Set string and action button.
+ * @param[in] menu menu where buttons are modified.
+ * @param[in] button Name of the node of the button.
+ * @param[in] clickAction Action to perform when button is clicked.
+ * @param[in] buttonText Name of the node of the string.
+ * @note clickAction may be NULL if button is not needed.
+ */
+static void MN_SetOneButton (menu_t* menu, const char *button, const char *clickAction, const char *buttonText)
+{
+	menuNode_t* buttonNode;
+	menuNode_t* buttonTextNode;
+
+	buttonNode = MN_GetNode(menu, button);
+	if (!buttonNode)
+		Sys_Error("Could not get %s node in %s menu", button, menu->name);
+	buttonTextNode = MN_GetNode(menu, buttonText);
+	if (!buttonTextNode)
+		Sys_Error("Could not get %s node in %s menu", buttonText, menu->name);
+
+	/* free previous actions */
+	if (buttonNode->click) {
+		assert(buttonNode->click->data);
+		Mem_Free(buttonNode->click->data);
+		Mem_Free(buttonNode->click);
+		buttonNode->click = NULL;
+	}
+
+	if (clickAction) {
+		buttonNode->mousefx = qtrue;
+		buttonNode->click = MN_SetMenuAction(&buttonNode->click, EA_CMD, clickAction);
+		buttonNode->invis = qfalse;
+		buttonTextNode->invis = qfalse;
+	} else {
+		buttonNode->mousefx = qfalse;
+		buttonNode->click = NULL;
+		buttonNode->invis = qtrue;
+		buttonTextNode->invis = qtrue;
+	}
+}
+
+/**
+ * @brief Generates a popup that contains up to 3 buttons.
+ * @param[in] title Title of the popup.
+ * @param[in] text Text to display in the popup.
+ * @param[in] clickAction1 Action to perform when one clicked on the first button.
+ * @param[in] clickAction2 Action to perform when one clicked on the second button.
+ * @note clickAction may be NULL if button is not needed.
+ */
+void MN_PopupButton (const char *title, const char *text,
+	const char *clickAction1, const char *clickText1, const char *tooltip1,
+	const char *clickAction2, const char *clickText2, const char *tooltip2)
+{
+	menu_t* popupButtonMenu;
+
+	mn.menuText[TEXT_POPUP] = title;
+	mn.menuText[TEXT_POPUP_INFO] = text;
+	
+	if (ccs.singleplayer)
+		CL_GameTimeStop();
+
+	popupButtonMenu = MN_GetMenu(POPUPBUTTON_MENU_NAME);
+	if (!popupButtonMenu)
+		Sys_Error("Could not get "POPUPBUTTON_MENU_NAME" menu");
+
+	Cvar_Set("mn_popup_button_text1", clickText1);
+	Cvar_Set("mn_popup_button_tooltip1", tooltip1);
+	MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME), clickAction1,
+		va("%s1", POPUPBUTTON_NODE_STRING_NAME));
+
+	Cvar_Set("mn_popup_button_text2", clickText2);
+	Cvar_Set("mn_popup_button_tooltip2", tooltip2);
+	MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME), clickAction2,
+		va("%s2", POPUPBUTTON_NODE_STRING_NAME));
+
+	MN_PushMenu(popupButtonMenu->name);
+	return;
 }

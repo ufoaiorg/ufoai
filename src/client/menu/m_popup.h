@@ -29,5 +29,8 @@ extern char popupText[MAX_SMALLMENUTEXTLEN];
 
 void MN_Popup(const char *title, const char *text);
 menuNode_t *MN_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+void MN_PopupButton(const char *title, const char *text,
+	const char *clickAction1, const char *clickText1, const char *tooltip1,
+	const char *clickAction2, const char *clickText2, const char *tooltip2);
 
 #endif
