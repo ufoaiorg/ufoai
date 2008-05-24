@@ -3224,11 +3224,13 @@ static void CP_UpdateNationHappiness (void)
 		switch (mission->stage) {
 		case STAGE_TERROR_MISSION:
 		case STAGE_SUBVERT_GOV:
-			happinessFactor = 0.99;
+			happinessFactor = (4.0f - difficulty->integer) / 40.0f;
+			break;
 		case STAGE_RECON_GROUND:
 		case STAGE_SPREAD_XVI:
 		case STAGE_HARVEST:
-			happinessFactor = 0.996;
+			happinessFactor = (4.0f - difficulty->integer) / 80.0f;
+			break;
 		default:
 			/* mission is not active on earth, skip this mission */
 			continue;
@@ -3236,8 +3238,12 @@ static void CP_UpdateNationHappiness (void)
 
 		nation = MAP_GetNation(mission->pos);
 		/* Some non-water location have no nation */
-		if (nation)
-			nation->stats[0].happiness *= happinessFactor;
+		if (nation) {
+			nation->stats[0].happiness -= happinessFactor;
+			if (nation->stats[0].happiness < 0)
+				nation->stats[0].happiness = 0;
+			Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, nation->stats[0].happiness);
+		}
 	}
 }
 
