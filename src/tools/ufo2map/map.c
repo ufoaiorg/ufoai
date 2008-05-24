@@ -333,7 +333,8 @@ static void AddBrushBevels (mapbrush_t *b)
 			SnapVector(vec);
 
 			for (k = 0; k < 3; k++)
-				if (vec[k] == -1 || vec[k] == 1)
+				if (vec[k] == -1 || vec[k] == 1
+				 || (vec[k] == 0.0f && vec[(k + 1) % 3] == 0.0f))
 					break;	/* axial */
 			if (k != 3)
 				continue;	/* only test non-axial edges */
@@ -378,9 +379,11 @@ static void AddBrushBevels (mapbrush_t *b)
 						/* if some point was at the front */
 						if (l != w2->numpoints)
 							break;
+#if 0
 						/* if no points at the back then the winding is on the bevel plane */
 						if (minBack > -0.1f)
 							break;
+#endif
 					}
 
 					if (k != b->numsides)
