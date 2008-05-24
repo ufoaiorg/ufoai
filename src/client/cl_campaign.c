@@ -1310,7 +1310,11 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	base = (base_t *)mission->data;
 	assert(base);
 	/* Base attack is over, alien won */
-	CL_BaseRansacked(base);
+	CL_BaseDestroy(base);
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
+	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	CL_GameTimeStop();
+
 	base->baseStatus = BASE_WORKING;
 	gd.mapAction = MA_NONE;
 	mission->data = NULL;
@@ -3408,40 +3412,6 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->id, ccs.battleParameters.nation ? ccs.battleParameters.nation->id : "no nation");
 	else if (is_on_Earth > 1)
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->id, ccs.battleParameters.nation->id);
-}
-
-/**
- * @brief Deletes employees from a base along with all base equipment.
- * Called when invading forces overrun a base after a base-attack mission
- * @param[in] base base_t base to be ransacked
- */
-void CL_BaseRansacked (base_t *base)
-{
-	int item, ac;
-
-	if (!base)
-		return;
-
-	/* Delete all employees from the base & the global list. */
-	E_DeleteAllEmployees(base);
-
-	/* Destroy all items in storage */
-	for (item = 0; item < csi.numODs; item++)
-		/* reset storage and capacity */
-		B_UpdateStorageAndCapacity(base, &csi.ods[item], 0, qtrue, qfalse);
-
-	/* Remove all aircraft from the base. */
-	for (ac = base->numAircraftInBase - 1; ac >= 0; ac--)
-		AIR_DeleteAircraft(base, &base->aircraft[ac]);
-
-	/* @todo: Maybe reset research in progress. ... needs playbalance
-	 * need another value in technology_t to remember researched
-	 * time from other bases?
-	 * @todo: Destroy (or better: just damage) some random buildings. */
-
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Your base: %s has been ransacked! All employees killed and all equipment destroyed."), base->name);
-	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-	CL_GameTimeStop();
 }
 
 /**

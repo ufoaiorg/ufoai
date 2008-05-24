@@ -418,7 +418,6 @@ void CL_ParseAlienTeam(const char *name, const char **text);
 void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
-void CL_BaseRansacked(base_t *base);
 const char* CL_SecondConvert(int second);
 
 nation_t *CL_GetNationByID(const char *nationID);
