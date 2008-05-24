@@ -220,21 +220,20 @@ public class Map {
 				Vector<Face> bFaces = b.getFaces();//faces of the brush being considered as nodraws
 				Vector<Face> piFaces = pib.getFaces();//faces of nearby brushes, which might obscure faces of brush, b
 				for (Face bf: bFaces) {//loop through the faces of the brush
-					if(!bf.isNodraw ()){//do not waste time testing if the face is already a nodraw.
-						for (Face pif: piFaces) {
-							//System.out.printf("Brush.findUnexposedFaces: testing if Face %d from Brush %d interacts with Face %d from Brush %d%n", bf.getNumber(),b.getBrushNumber(),pif.getNumber(),pib.getBrushNumber() );
-							if (bf.isFacingAndCoincidentTo (pif) ) {
-								//System.out.printf("Brush.findUnexposedFaces: passed facing and coincident planes test");
-								Vector<Vector3D> vertsOfFaceBf = b.getVertices (bf);
-								if (pib.areInside (vertsOfFaceBf) ) {
-									//Entity parent = b.getParentEntity();
-									//MapUtils.printf("set nodraw: face %d of brush %d (level %d) of entity %d (%s) hidden by brush on level %d%n", bf.getNumber(),b.getBrushNumber(), b.getLevelForOptimisation(),parent.getNumber(),parent.getValue("classname"),pib.getLevelForOptimisation());
-									nodrawsObsBySingleFace++;
-									bf.setNodraw();
-								}
-							}
+				    if(!bf.isNodraw ()){//do not waste time testing if the face is already a nodraw.
+					for (Face pif: piFaces) {
+					    if(pif.coversConsideringLevelFlags(bf)){
+						if (bf.isFacingAndCoincidentTo (pif) ) {
+						    Vector<Vector3D> vertsOfFaceBf = b.getVertices (bf);
+						    if (pib.areInside (vertsOfFaceBf) ) {
+							nodrawsObsBySingleFace++;
+							bf.setNodraw();
+							System.out.printf("nodraw set, brush number:%d. this %s covers that %s%n",b.getBrushNumber(),pif.contentFlags.getDescriptionOfLevelFlags(),bf.contentFlags.getDescriptionOfLevelFlags());
+						    }
 						}
+					    }
 					}
+				    }
 				}
 			}
 			Vector<CompositeFace> possibleInteractionComposites=b.getCompositeFaceInteractionList();

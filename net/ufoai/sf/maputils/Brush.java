@@ -213,18 +213,6 @@ public class Brush {
 	    return numberOfFacesWithLevelFlagsChanged!=0;
 	}
 
-	/** returns the level that the brush should be considered to be on for
-	 *  optimisation purposes. see {@link Face#getLevelForOptimisation()} and
-	 *  {@link ContentFlags#getLevelForOptimisation()}. */
-	public int getLevelForOptimisation() {
-	    int lowest=9;
-	    for(Face f:faces) {
-		int faceOpLev=f.getLevelForOptimisation();
-		lowest=lowest>faceOpLev ? faceOpLev : lowest ;
-	    }
-	    return lowest;
-	}
-	
 	void notifyLevelFlagChange (String note) {
 		if (lastLevelFlagChangeNote.length() != 0 && !note.equals (lastLevelFlagChangeNote) ) {
 			MapUtils.printf ("Brush had faces with different levelflags set%n");

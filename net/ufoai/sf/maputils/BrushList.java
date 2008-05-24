@@ -46,7 +46,7 @@ public class BrushList {
 			Brush bi = brushes.get (i); 
 			for (int j = 0;j < brushes.size();j++) {//j needs a ref to i and i needs a ref to j
 				Brush bj = brushes.get (j);
-				if (i != j && bi.boundingBoxIntersects (bj) && bi.getLevelForOptimisation() == bj.getLevelForOptimisation() ) {
+				if (i != j && bi.boundingBoxIntersects (bj) ) {
 					bi.addToBrushInteractionList (bj);
 				}
 			}

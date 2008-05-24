@@ -52,6 +52,20 @@ public class CompositeFace {
 	}
 	return s;
     }
+
+    /*
+	boolean coversConsideringLevelFlags(Face bf) {
+		Vector3D 
+		for(Vector3D p:vertsOfFaceBf){
+		    boolean isInsideAtLeastOne=false;
+		    for(Face f:members){
+			if(f.getParent().inside(p)) isInsideAtLeastOne=true;
+		    }
+		    if(!isInsideAtLeastOne) return false;
+		}
+		return true;
+	}
+     **/
     
     
 }

@@ -215,7 +215,7 @@ public class Face {
 		ContentFlags newFlags = ContentFlags.level (level);
 		if (!contentFlags.equals (newFlags) ) {
 			//MapUtils.printf("changed level flags");
-			parentBrush.notifyLevelFlagChange (contentFlags.getDescription() + " to " + newFlags.getDescription() );
+			parentBrush.notifyLevelFlagChange (contentFlags.getDescriptionOfLevelFlags() + " to " + newFlags.getDescriptionOfLevelFlags() );
 			contentFlags.mergeNewFlags (newFlags);
 			parts.set (PART_INDEX_CONTENT_FLAGS, contentFlags.toString() );
 		}
@@ -223,7 +223,7 @@ public class Face {
 
 	/** @return the levelflags masked out of the contentflags. */
 	public int getLevelFlags() {
-		return contentFlags.mask ( )  ;
+		return contentFlags.maskedToLevelFlags ( )  ;
 	}
 
 	public boolean isActorclipWeaponClipOrStepon() {
@@ -257,8 +257,11 @@ public class Face {
 		return false;
 	    }
 	}
-
-	public int getLevelForOptimisation(){
-	    return contentFlags.getLevelForOptimisation();
+	
+	/** returns true if this face can cover face f with respect to
+	  * levellflags changing visibility*/
+	public boolean coversConsideringLevelFlags(Face f ){
+	    return (~this.getLevelFlags() & f.getLevelFlags()) == 0 ;
 	}
+	
 }

@@ -40,8 +40,8 @@ public class ContentFlags {
 		}
 	}
 
-	/** @return the levelflags part masked out of this contentflags arg. */
-	public int mask () {
+	/** @return the levelflags part masked out of this contentflags object. */
+	public int maskedToLevelFlags () {
 		return thisFlags & levelFlagMask;
 	}
 
@@ -53,14 +53,18 @@ public class ContentFlags {
 		return new ContentFlags (flags, FROM_FLAGS);
 	}
 
-	public String getDescription() {
-		String desc = "" + thisFlags + "(";
+	public static String getDescriptionOfLevelFlags(int contentFlags){
+		String desc = "(";
 		for (int i = 1;i < levelFlags.length;i++) {
-			boolean flagSetAtLeveli = (thisFlags & levelFlags[i]) != 0 ;
-			desc += "" + i + ":" + (flagSetAtLeveli ? "1" : "0") + "," ;
+			boolean flagSetAtLeveli = (contentFlags & levelFlags[i]) != 0 ;
+			desc += ""+(flagSetAtLeveli ? "1" : "0")  ;
 		}
-		desc = desc.substring (0, desc.length() - 1) + ")";
+		desc +=  ")";
 		return desc;
+	}
+	
+	public String getDescriptionOfLevelFlags() {
+		return getDescriptionOfLevelFlags(thisFlags);
 	}
 
 	public String toString() {
@@ -84,15 +88,15 @@ public class ContentFlags {
 	public static void main (String[] args) {
 		ContentFlags lf1 = ContentFlags.flags (64512);
 		ContentFlags lf2 = ContentFlags.flags (64512 + 2);
-		System.out.println (lf1.getDescription() );
-		System.out.println (lf2.getDescription() );
+		System.out.println (lf1.getDescriptionOfLevelFlags() );
+		System.out.println (lf2.getDescriptionOfLevelFlags() );
 		System.out.println ("equal?:" + lf1.equals (lf2) );
 		System.out.println ("");
 		ContentFlags lf3 = ContentFlags.flags (4 + 0x800);
-		System.out.println (lf3.getDescription() );
+		System.out.println (lf3.getDescriptionOfLevelFlags() );
 		System.out.println ("lf3 extra flag (non-level) " + ( (lf3.thisFlags & 4) != 0) );
 		lf3.mergeNewFlags (lf2);
-		System.out.println (lf3.getDescription() );
+		System.out.println (lf3.getDescriptionOfLevelFlags() );
 		System.out.println ("lf3 extra flag (non-level) " + ( (lf3.thisFlags & 4) != 0) );
 		System.out.println ("lf2 extra flag (non-level) " + ( (lf2.thisFlags & 4) != 0) );
 	}
@@ -109,15 +113,4 @@ public class ContentFlags {
 		return level < MIN_LEVEL ? MIN_LEVEL : (level > MAX_LEVEL ? MAX_LEVEL : level) ;
 	}
 	
-	/** examines the levelflags and returns the level for nodraw (and possibly
-	 *  other optimisation purposes) */
-	public int getLevelForOptimisation(){
-	    for (int i = 1;i < levelFlags.length;i++) {
-		if( (thisFlags & levelFlags[i]) != 0 ) return i;
-	    }
-	    /* no flags set. -1 defualt is safe as other brushes will be considered to 
-	     * be on proper levels and no nodraws will be set */
-	    return -1;
-	}
-
 }
