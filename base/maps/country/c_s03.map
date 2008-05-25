@@ -1,4 +1,5 @@
-
+//Entities:1
+//  000: worldspawn: 4 brushes
 // entity 0
 {
 "classname" "worldspawn"
