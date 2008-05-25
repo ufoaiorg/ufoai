@@ -33,7 +33,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define POPUPBUTTON_NODE_STRING_NAME "popup_button_string_"
 #define POPUP_MENU_NAME "popup"
 
+/** @brief strings to be used for popup when text is not static */
 char popupText[MAX_SMALLMENUTEXTLEN];
+char popupAction1[MAX_SMALLMENUTEXTLEN];
+char popupAction2[MAX_SMALLMENUTEXTLEN];
+char popupAction3[MAX_SMALLMENUTEXTLEN];
 
 /**
  * @brief Popup in geoscape
@@ -139,7 +143,7 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
 }
 
 /**
- * @brief Generates a popup that contains up to 2 buttons.
+ * @brief Generates a popup that contains up to 3 buttons.
  * @param[in] title Title of the popup.
  * @param[in] text Text to display in the popup (use popupText if text is NULL).
  * @param[in] clickAction1 Action to perform when one clicked on the first button.
@@ -148,11 +152,15 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
  * @param[in] clickAction2 Action to perform when one clicked on the second button.
  * @param[in] clickText2 String that will be written in second button.
  * @param[in] tooltip2 Tooltip of second button.
- * @note clickAction may be NULL if button should be invisible.
+ * @param[in] clickAction3 Action to perform when one clicked on the second button.
+ * @param[in] clickText3 String that will be written in second button.
+ * @param[in] tooltip3 Tooltip of second button.
+ * @note clickAction AND clickText must be NULL if button should be invisible.
  */
 void MN_PopupButton (const char *title, const char *text,
 	const char *clickAction1, const char *clickText1, const char *tooltip1,
-	const char *clickAction2, const char *clickText2, const char *tooltip2)
+	const char *clickAction2, const char *clickText2, const char *tooltip2,
+	const char *clickAction3, const char *clickText3, const char *tooltip3)
 {
 	menu_t* popupButtonMenu;
 
@@ -171,13 +179,33 @@ void MN_PopupButton (const char *title, const char *text,
 
 	Cvar_Set("mn_popup_button_text1", clickText1);
 	Cvar_Set("mn_popup_button_tooltip1", tooltip1);
-	MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME), clickAction1,
-		va("%s1", POPUPBUTTON_NODE_STRING_NAME));
+	if (!clickAction1 && !clickText1) {
+		MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
+			NULL, va("%s1", POPUPBUTTON_NODE_STRING_NAME));
+	} else {
+		MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
+			clickAction1 ? clickAction1 : popupAction1, va("%s1", POPUPBUTTON_NODE_STRING_NAME));
+	}
 
 	Cvar_Set("mn_popup_button_text2", clickText2);
 	Cvar_Set("mn_popup_button_tooltip2", tooltip2);
-	MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME), clickAction2,
-		va("%s2", POPUPBUTTON_NODE_STRING_NAME));
+	if (!clickAction2 && !clickText2) {
+		MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME),
+			NULL, va("%s2", POPUPBUTTON_NODE_STRING_NAME));
+	} else {
+		MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME),
+			clickAction2 ? clickAction2 : popupAction2, va("%s2", POPUPBUTTON_NODE_STRING_NAME));
+	}
+
+	Cvar_Set("mn_popup_button_text3", clickText3);
+	Cvar_Set("mn_popup_button_tooltip3", tooltip3);
+	if (!clickAction3 && !clickText3) {
+		MN_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME),
+			NULL, va("%s3", POPUPBUTTON_NODE_STRING_NAME));
+	} else {
+		MN_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME),
+			clickAction3 ? clickAction3 : popupAction3, va("%s3", POPUPBUTTON_NODE_STRING_NAME));
+	}
 
 	MN_PushMenu(popupButtonMenu->name);
 	return;

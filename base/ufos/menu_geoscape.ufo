@@ -558,6 +558,28 @@ menu popup_button
 		align	cc
 	}
 
+	pic popup_button_3
+	{
+		visible false
+		tooltip	"*cvar mn_popup_button_tooltip3"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 32"
+		pos		"560 418"
+		out		{ *popup_button_string_3 color "0 0.5 0 1" *popup_button_3 image menu/multi_buttons3 }
+		in		{ *popup_button_string_3 color "1 1 1 1" *popup_button_3 image menu/multi_buttons3a }
+	}
+
+	string popup_button_string_3
+	{
+		visible false
+		string	"*cvar mn_popup_button_text3"
+		font	f_menu
+		color	"0 0.5 0 1"
+		pos		"648 434"
+		align	cc
+	}
+
 	func init
 	{
 	}

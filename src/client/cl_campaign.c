@@ -1404,8 +1404,24 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	assert(cls.missionaircraft);
 	assert(cls.missionaircraft->homebase == base);
 
-	CL_GameTimeStop();
-	MN_PushMenu("popup_base_attack");
+	popupText[0] = '\0';
+	if (base->capacities[CAP_ALIENS].cur) {
+		Q_strcat(popupText,
+			_("Base is under attack - you can enter base to change soldiers equipment. What to do ?"),
+			sizeof(popupText));
+	} else {
+		Q_strcat(popupText,
+			_("Base is under attack - you can enter base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"),
+			sizeof(popupText));
+	}
+
+	popupAction1[0] = '\0';
+	Q_strcat(popupAction1, va("mn_select_base %i;mn_push bases", base->idx), sizeof(popupAction1));
+
+	MN_PopupButton(_("Base is under attack"), popupText,
+		popupAction1, _("Enter base"), _("Enter base before the battle"),
+		"mn_pop;game_go;", _("Enter"), _("Start base defence"),
+		"game_auto_go;", _("Auto mission"), _("Automatically resolve mission"));
 }
 
 /**
