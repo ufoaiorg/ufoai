@@ -204,7 +204,7 @@ menu bases
 
 	pic transfer
 	{
-		if "mn_numbases > 1"
+		if "mn_base_transfer_allowed == 1"
 		tooltip	"_Transfer equipment or personnel"
 		image	menu/button
 		pos	"755 308"
@@ -220,8 +220,8 @@ menu bases
 	}
 	pic transfer_na
 	{
-		if "mn_numbases == 1"
-		tooltip	"_Can't transfer - only one base"
+		if "mn_base_transfer_allowed != 1"
+		tooltip	"_Can't transfer (click for more info)"
 		image	menu/button
 		pos	"755 308"
 		texl	"0 72"

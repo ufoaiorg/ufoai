@@ -360,8 +360,10 @@ static void B_BaseInit_f (void)
 		Cmd_ExecuteString("set_buysell_disabled");
 	}
 	if (gd.numBases > 1 && baseCurrent->baseStatus != BASE_UNDER_ATTACK) {
+		Cvar_SetValue("mn_base_transfer_allowed", qtrue);
 		Cmd_ExecuteString("set_transfer_enabled");
 	} else {
+		Cvar_SetValue("mn_base_transfer_allowed", qfalse);
 		Cmd_ExecuteString("set_transfer_disabled");
 	}
 	if (RS_ResearchAllowed(baseCurrent)) {
@@ -2387,6 +2389,13 @@ static void B_NextBase_f (void)
 
 	baseID = mn_base_id->integer;
 
+	if (!gd.bases[baseID].founded)
+		return;
+
+	/* you can't change base if base is under attack */
+	if (gd.bases[baseID].baseStatus == BASE_UNDER_ATTACK)
+		return;
+
 	Com_DPrintf(DEBUG_CLIENT, "cur-base=%i num-base=%i\n", baseID, gd.numBases);
 	if (baseID < gd.numBases - 1)
 		baseID++;
@@ -2412,6 +2421,13 @@ static void B_PrevBase_f (void)
 		return;
 
 	baseID = mn_base_id->integer;
+
+	if (!gd.bases[baseID].founded)
+		return;
+
+	/* you can't change base if base is under attack */
+	if (gd.bases[baseID].baseStatus == BASE_UNDER_ATTACK)
+		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "cur-base=%i num-base=%i\n", baseID, gd.numBases);
 	if (baseID > 0)

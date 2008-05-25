@@ -1097,10 +1097,11 @@ qboolean AC_Load (sizebuf_t* sb, void* data)
 /**
  * @brief Returns true if the current base is able to handle captured aliens
  * @sa B_BaseInit_f
+ * @note Alien cont. must be accessible during base attack to kill aliens.
  */
 qboolean AC_ContainmentAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
+	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		return qtrue;
 	} else {
 		return qfalse;

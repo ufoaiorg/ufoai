@@ -2211,12 +2211,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 /**
  * @brief Returns true if the current base is able to handle aircraft
  * @sa B_BaseInit_f
- * @todo if base is under attack, if there is no command center, if there is no power ?
+ * @note Hangar must be accessible during base attack to make aircraft lift off and to equip soldiers.
  */
 qboolean AIR_AircraftAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && (B_GetBuildingStatus(base, B_HANGAR) || B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
+	if ((B_GetBuildingStatus(base, B_HANGAR) || B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
 		return qtrue;
 	} else {
 		return qfalse;
