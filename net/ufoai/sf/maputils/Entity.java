@@ -221,4 +221,12 @@ public class Entity {
 		}
 		MapUtils.printf ("Entity %d (%s) had %d Brushes which had levelflags changed%n",entNumber,this.getClassType (),numberOfBrushesWithLevelFlagsChanged);
 	}
+	
+	public String verboseInfo(){
+	    String ans=String.format("%s%n",toString());
+	    for(Brush b:brushes){
+		ans+=String.format("  %s%n",b.verboseInfo());
+	    }
+	    return ans;
+	}
 }

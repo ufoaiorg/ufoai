@@ -351,5 +351,8 @@ public class Brush {
 	}
 
 	
+	public String verboseInfo(){
+	    return String.format("brush(%d) faces:%d vertices:%d",this.getBrushNumber(), faces.size(), vertices.size());
+	}
 
 }

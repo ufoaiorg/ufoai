@@ -98,6 +98,9 @@ public class MapUtils {
 					BrushList.go (map);
 					map.findUnexposedFaces();
 				}
+				if(args[i].equalsIgnoreCase("-vinfo")){
+					MapUtils.printf(map.verboseInfo());
+				}
 			}
 			if (fix) {//save orig with different name and save changes
 				String safetySaveFilename = map.getFilenameWith (".original_0");
@@ -153,6 +156,7 @@ public class MapUtils {
 		out.println ("  -fix      Make changes to the map. save overwrites foo.map");
 		out.println ("            also writes safety foo.map.original_0");
 		out.println ("            if foo.map.original_0 exists then saves foo.map.original_1, etc");
+		out.println ("  -vinfo    print verbose info about each brush");
 		out.println ("  -lvlflags Calculate levelflags based on brush vertex coordinates.");
 		out.println();
 		out.println ("will probably need to set extra memory. to allow java around 1 Gig.");

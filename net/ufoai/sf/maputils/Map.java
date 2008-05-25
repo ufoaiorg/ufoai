@@ -170,6 +170,14 @@ public class Map {
 			to.printf ("%s  %03d: %s%n", prefix, i, ent.toString() );
 		}
 	}
+	
+	public String verboseInfo(){
+	    String ans="";
+	    for(Entity e:entities){
+		ans+=e.verboseInfo();
+	    }
+	    return ans;
+	}
 
 	public void printParsed() {
 		printParsed (System.out, "");
