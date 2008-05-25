@@ -1419,6 +1419,123 @@ qboolean R_XVIMapCopy (byte *out, int size)
 	return qtrue;
 }
 
+image_t *r_radarTexture;					/**< radar texture */
+static byte *r_radarPic;					/**< radar picture (base and aircraft radar) */
+static byte *r_radarSourcePic;				/**< radar picture (only base radar) */
+
+/**
+ * @brief Create radar overlay on geoscape.
+ */
+void R_CreateRadarOverlay (void)
+{
+	const int radarWidth = 512;
+	const int radarHeight = 256;
+	const int bpp = 4;
+
+	/* create new texture only once per game */
+	if (r_radarTexture) {
+		memset(r_radarSourcePic, 0, bpp * radarHeight * radarWidth);
+		memset(r_radarPic, 0, bpp * radarHeight * radarWidth);
+		R_SmoothRadarCoverage();
+		return;
+	}
+
+	r_radarPic = Mem_PoolAlloc(radarHeight * radarWidth * bpp, vid_imagePool, 0);
+	r_radarSourcePic = Mem_PoolAlloc(radarHeight * radarWidth * bpp, vid_imagePool, 0);
+
+	memset(r_radarSourcePic, 0, bpp * radarHeight * radarWidth);
+	memset(r_radarPic, 0, bpp * radarHeight * radarWidth);
+
+	/* Set an image */
+	r_radarTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay.tga", r_radarPic, radarWidth, radarHeight, it_wrappic);
+}
+
+/**
+ * @brief Initialize radar overlay on geoscape.
+ * @param[in] source Initialize the source texture if qtrue.
+ */
+void R_InitializeRadarOverlay (qboolean source)
+{
+	int x, y;
+	const byte unexploredColor[4] = {180, 180, 180, 100}; 	/**< Color of the overlay outside radar range */
+
+	/* Initialize Radar */
+	if (source) {
+		for (y = 0; y < r_radarTexture->height; y++) {
+			for (x = 0; x < r_radarTexture->width; x++) {
+				memcpy(&r_radarSourcePic[4 * (y * r_radarTexture->width + x)], unexploredColor, 4);
+			}
+		}
+	} else
+		memcpy(r_radarPic, r_radarSourcePic, 4 * r_radarTexture->height * r_radarTexture->width);
+}
+
+/**
+ * @brief Add a radar coverage to radar overlay
+ * @param[in] pos Position of the center of radar
+ * @param[in] innerRadius Radius of the radar coverage
+ * @param[in] outerRadius Radius of the outer radar coverage
+ * @param[in] source True if we must update the source of the radar coverage, false if the copy must be updated.
+ */
+void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius, qboolean source)
+{
+	const int bpp = 4;							/**< byte per pixel */
+	const int radarWidth = r_radarTexture->width;
+	const int radarHeight = r_radarTexture->height;
+	vec2_t currentPos;							/**< current position (in latitude / longitude) */
+	int x, y;									/**< current position (in pixel) */
+	const byte innerAlpha = 0;					/**< Alpha of the inner radar range */
+	const byte outerAlpha = 60;					/**< Alpha of the outer radar range */
+	int yMax, yMin;					/**< Bounding box of the zone that should be drawn */
+
+	if (pos[1] + outerRadius > 90) {
+		yMax = bpp * radarHeight;
+		yMin = bpp * round((90 - max(360.0f - pos[1] - outerRadius, pos[1] - outerRadius)) * radarHeight / 180.0f);
+	} else if (pos[1] - outerRadius < -90) {
+		yMax = bpp * round((90 - min(-360.0f - pos[1] + outerRadius, pos[1] + outerRadius)) * radarHeight / 180.0f);
+		yMin = 0;
+	} else {
+		yMin = bpp * round((90 - pos[1] - outerRadius) * radarHeight / 180.0f);
+		yMax = bpp * round((90 - pos[1] + outerRadius) * radarHeight / 180.0f);
+	}
+
+	for (y = yMin; y < yMax; y += bpp) {
+		for (x = 0; x < bpp * radarWidth; x += bpp) {
+			float distance;
+			Vector2Set(currentPos,
+				180.0f - 360.0f * x / ((float) radarWidth * bpp),
+				90.0f - 180.0f * y / ((float) radarHeight * bpp));
+			distance = MAP_GetDistance(pos, currentPos);
+			if (distance <= outerRadius) {
+				byte *dest;
+				dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+				if (distance > innerRadius) {
+					if (dest[3] > outerAlpha) {
+						dest[3] = outerAlpha;
+					}
+				} else {
+					dest[3] = innerAlpha;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * @brief Smooth radar coverage
+ */
+void R_SmoothRadarCoverage (void)
+{
+	const int bpp = 4;
+	int i;
+
+	for (i = 0; i < bpp; i++)
+		R_SoftenTexture(r_radarPic + i, r_radarTexture->width, r_radarTexture->height, bpp);
+
+	R_BindTexture(r_radarTexture->texnum);
+	R_UploadTexture((unsigned *) r_radarPic, r_radarTexture->upload_width, r_radarTexture->upload_height, r_radarTexture);
+}
+
 /**
  * @brief This is also used as an entry point for the generated r_notexture
  */

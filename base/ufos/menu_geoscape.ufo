@@ -328,6 +328,33 @@ menu map
 		in		{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
 	}
 
+	pic bt_show_radar
+	{
+		tooltip	"_Show radar range"
+		image	menu/geo_nations_highlight
+		pos		"808 350"
+		texl	"0 0"
+		texh	"32 32"
+		mousefx	false
+		click	{ cmd "map_overlay radar;" }
+		out		{ *bt_show_overlay texl "0 0" *bt_show_overlay texh "32 32" }
+		in		{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
+	}
+
+	pic bt_show_xvi
+	{
+		if "mn_xvimap == 1"
+		tooltip	"_Show XVI map"
+		image	menu/geo_nations_highlight
+		pos		"950 350"
+		texl	"0 0"
+		texh	"32 32"
+		mousefx	false
+		click	{ cmd "map_overlay xvi;" }
+		out		{ *bt_show_overlay texl "0 0" *bt_show_overlay texh "32 32" }
+		in		{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
+	}
+
 	pic bt_messagesystem
 	{
 		tooltip	"_Open up messages"

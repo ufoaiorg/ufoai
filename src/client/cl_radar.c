@@ -28,6 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "../renderer/r_draw.h"
 
+extern void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
+extern void R_InitializeRadarOverlay(qboolean source);
+#ifndef DRAW_AIRCRAFT_RADAR_RANGE
+extern void R_SmoothRadarCoverage(void);
+#endif
+
 /* Define radar range */
 const float baseRadarRange = 24.0f;
 const float aircraftRadarRange = 10.0f;
@@ -37,14 +43,54 @@ static const float outerCircleRatio = 0.41f;
 static const float radarUpgradeMultiplier = 0.4f;
 
 /**
+ * @brief Update base map radar coverage.
+ * @note This is only called when radar range of bases change.
+ */
+void RADAR_UpdateBaseRadarCoverage (void)
+{
+	float rangeTracking;
+	int baseIdx;
+
+	/* Initialise radar range (will be filled below) */
+	R_InitializeRadarOverlay(qtrue);
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+		rangeTracking = (1.0f + outerCircleRatio) * base->radar.range;
+		R_AddRadarCoverage(base->pos, base->radar.range, rangeTracking, qtrue);
+	}
+
+#ifndef DRAW_AIRCRAFT_RADAR_RANGE
+	R_InitializeRadarOverlay(qfalse);
+	R_SmoothRadarCoverage();
+#endif
+}
+
+#ifdef DRAW_AIRCRAFT_RADAR_RANGE
+/**
+ * @brief Update map radar coverage with moving radar
+ * @note this is called on every frame
+ */
+static void RADAR_DrawCoverage (const radar_t* radar, vec2_t pos)
+{
+	float rangeTracking;
+ 
+	rangeTracking = (1.0f + outerCircleRatio) * radar->range;
+	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
+}
+#endif
+
+/**
  * @brief Show Radar coverage
  * @sa MAP_MapDrawEquidistantPoints
  */
-void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos)
+static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 {
 	float rangeTracking;
 
-	const vec4_t color = {0, 1, 0, 1};
+	const vec4_t color = {.5, .5, .5, .5};
 	/* Set color */
 	R_Color(color);
 
@@ -63,14 +109,14 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 {
 	int x, y, z;
 	int i;
-	const vec4_t color = {0, 1, 0, 1};
+	const vec4_t color = {.5, .5, .5, .5};
 	screenPoint_t pts[2];
 
-	if (radar->numUFOs == 0)
-		return;
-
 	/* Show radar range zones */
-	RADAR_DrawCoverage(node, radar, pos);
+	RADAR_DrawLineCoverage(node, radar, pos);
+#ifdef DRAW_AIRCRAFT_RADAR_RANGE
+	RADAR_DrawCoverage(radar,pos);
+#endif
 
 	/* Set color */
 	R_Color(color);
@@ -99,7 +145,34 @@ static qboolean RADAR_AddUFO (radar_t* radar, int numUFO)
 
 	radar->ufos[radar->numUFOs] = numUFO;
 	radar->numUFOs++;
+
 	return qtrue;
+}
+
+/**
+ * @brief Deactivate Radar overlay if there is no more UFO on geoscape
+ */
+void RADAR_DeactivateRadarOverlay (void)
+{
+	int baseIdx;
+	aircraft_t *aircraft;
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
+		if (base->radar.numUFOs)
+			return;
+
+		for (aircraft = base->aircraft; aircraft < base->aircraft + base->numAircraftInBase; aircraft++) {
+			if (aircraft->radar.numUFOs)
+				return;
+		}
+	}
+
+	if ((r_geoscape_overlay->integer & OVERLAY_RADAR))
+		Cmd_ExecuteString("map_overlay radar");
 }
 
 /**
@@ -129,6 +202,8 @@ static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
 			radar->ufos[i] = radar->ufos[radar->numUFOs];
 			return;
 		}
+
+	RADAR_DeactivateRadarOverlay();
 }
 
 /**
@@ -148,6 +223,8 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
 			i--;	/* Allow the moved value to be checked */
 		} else if (destroyed && (radar->ufos[i] > numUFO))
 			radar->ufos[i]--;
+
+	RADAR_DeactivateRadarOverlay();
 }
 
 /**
@@ -175,14 +252,21 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 /**
  * @brief Initialise radar
  */
-void RADAR_Initialise (radar_t* radar, float range, float level)
+void RADAR_Initialise (radar_t* radar, float range, float level, qboolean updateSourceRadarMap)
 {
+	const int oldrange = radar->range;
+
 	if (!level)
 		radar->range = 0.0f;
 	else
 		radar->range = range * (1 + (level - 1) * radarUpgradeMultiplier);
 	if (!radar->numUFOs)
 		radar->numUFOs = 0;
+
+	if (updateSourceRadarMap && (radar->range - oldrange > UFO_EPSILON))
+		RADAR_UpdateBaseRadarCoverage();
+
+	RADAR_DeactivateRadarOverlay();
 }
 
 /**

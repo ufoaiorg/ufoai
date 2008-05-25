@@ -480,8 +480,26 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		assert(r_xviTexture);
 
 		R_EnableBlend(qtrue);
-		/* draw day image */
+		/* draw XVI image */
 		R_BindTexture(r_xviTexture->texnum);
+		qglBegin(GL_QUADS);
+		qglTexCoord2f(cx - iz, cy - iz);
+		qglVertex2f(nx, ny);
+		qglTexCoord2f(cx + iz, cy - iz);
+		qglVertex2f(nx + nw, ny);
+		qglTexCoord2f(cx + iz, cy + iz);
+		qglVertex2f(nx + nw, ny + nh);
+		qglTexCoord2f(cx - iz, cy + iz);
+		qglVertex2f(nx, ny + nh);
+		qglEnd();
+		R_EnableBlend(qfalse);
+	}
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
+		assert(r_radarTexture);
+
+		R_EnableBlend(qtrue);
+		/* draw radar image */
+		R_BindTexture(r_radarTexture->texnum);
 		qglBegin(GL_QUADS);
 		qglTexCoord2f(cx - iz, cy - iz);
 		qglVertex2f(nx, ny);
@@ -826,6 +844,14 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
 		assert(r_xviTexture);
 		r_globeEarth.overlay = r_xviTexture;
+		R_EnableBlend(qtrue);
+		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
+		R_EnableBlend(qfalse);
+		r_globeEarth.overlay = NULL;
+	}
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
+		assert(r_radarTexture);
+		r_globeEarth.overlay = r_radarTexture;
 		R_EnableBlend(qtrue);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 		R_EnableBlend(qfalse);

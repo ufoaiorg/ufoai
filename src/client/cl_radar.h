@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_nodes.h"
 
 #define MAX_UFOONGEOSCAPE	8
+/*#define DRAW_AIRCRAFT_RADAR_RANGE*/
+
 extern const float baseRadarRange;
 extern const float aircraftRadarRange;
 
@@ -37,10 +39,11 @@ typedef struct radar_s {
 	int numUFOs;					/**< Num UFOs sensored by radar */
 } radar_t;
 
-void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
+void RADAR_UpdateBaseRadarCoverage(void);
 void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
+void RADAR_DeactivateRadarOverlay(void);
 void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, qboolean destroyed);
-void RADAR_Initialise(radar_t* radar, float range, float level);
+void RADAR_Initialise(radar_t* radar, float range, float level, qboolean updateSourceRadarMap);
 qboolean RADAR_CheckRadarSensored(const vec2_t pos);
 qboolean RADAR_CheckUFOSensored(radar_t* radar, vec2_t posRadar,
 	const struct aircraft_s* ufo, qboolean wasUFOSensored);

@@ -824,7 +824,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
-		RADAR_Initialise(&aircraft->radar, aircraftRadarRange, 1.0f);
+		RADAR_Initialise(&aircraft->radar, aircraftRadarRange, 1.0f, qfalse);
 
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */

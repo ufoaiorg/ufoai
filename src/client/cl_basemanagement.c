@@ -472,7 +472,7 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 	switch (type) {
 	case B_RADAR:
 		level = B_GetMaxBuildingLevel(base, B_RADAR);
-		RADAR_Initialise(&base->radar, baseRadarRange, level);
+		RADAR_Initialise(&base->radar, baseRadarRange, level, qtrue);
 		CP_UpdateMissionVisibleOnGeoscape();
 		break;
 	case B_WORKSHOP:
@@ -505,7 +505,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		break;
 	case B_RADAR:
 		level = B_GetMaxBuildingLevel(base, B_RADAR);
-		RADAR_Initialise(&base->radar, baseRadarRange, level);
+		RADAR_Initialise(&base->radar, baseRadarRange, level, qtrue);
 		CP_UpdateMissionVisibleOnGeoscape();
 		break;
 	default:
@@ -527,7 +527,7 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		AC_KillAll(base);
 		break;
 	case B_RADAR:
-		RADAR_Initialise(&base->radar, 0.0f, 0.0f);
+		RADAR_Initialise(&base->radar, 0.0f, 0.0f, qtrue);
 		CP_UpdateMissionVisibleOnGeoscape();
 		break;
 	default:
@@ -1399,6 +1399,9 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	base->batteryDamage = MAX_BATTERY_DAMAGE;
 	base->baseDamage = MAX_BASE_DAMAGE;
 	BDEF_InitialiseBaseSlots(base);
+
+	/* Reset Radar range */
+	RADAR_Initialise(&(baseCurrent->radar), 0.0f, 1.0f, qtrue);
 }
 
 /**
@@ -2806,7 +2809,6 @@ static void B_BuildBase_f (void)
 			else
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 			MN_AddNewMessage(_("Base built"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-			RADAR_Initialise(&(baseCurrent->radar), 0.0f, 1.0f);
 			B_ResetAllStatusAndCapacities(baseCurrent, qtrue);
 			AL_FillInContainment(baseCurrent);
 			PR_UpdateProductionCap(baseCurrent);

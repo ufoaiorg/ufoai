@@ -94,6 +94,10 @@ void R_TextureSolidMode(const char *string);
 void R_IncreaseXVILevel(const vec2_t pos);
 void R_InitializeXVIOverlay(byte *data, int width, int height);
 qboolean R_XVIMapCopy(byte *out, int size);
+void R_CreateRadarOverlay(void);
+void R_InitializeRadarOverlay(qboolean source);
+void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
+void R_SmoothRadarCoverage(void);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG
@@ -112,5 +116,6 @@ extern image_t *r_notexture;
 extern image_t *r_warptexture;
 extern image_t *r_dayandnighttexture;
 extern image_t *r_xviTexture;
+extern image_t *r_radarTexture;
 
 #endif

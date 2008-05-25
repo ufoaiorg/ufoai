@@ -44,5 +44,6 @@ extern cvar_t *r_geoscape_overlay;
 
 #define OVERLAY_NATION		(1<<0)
 #define OVERLAY_XVI			(1<<1)
+#define OVERLAY_RADAR		(1<<2)
 
 #endif

@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern void R_IncreaseXVILevel(const vec2_t pos);
 extern void R_InitializeXVIOverlay(byte *data, int width, int height);
 extern qboolean R_XVIMapCopy(byte *out, int size);
+extern void R_CreateRadarOverlay(void);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -2578,6 +2579,10 @@ static void CP_StartXVISpreading_f (void)
 	int i, numAlienBases;
 
 	ccs.XVISpreadActivated = qtrue;
+	/* @todo: mn_xvimap should not be enabled at the same time than ccs.XVISpreadActivated:
+	mn_xvimap means that PHALANX has a map of XVI, whereas ccs.XVISpreadActivated means that aliens started spreading XVI
+	 @todo: mn_xvimap should probably be saved, and restored when a game is loaded */
+	Cvar_Set("mn_xvimap", "1");
 
 	/* Spawn a few alien bases depending on difficulty level */
 	if (difficulty->integer > 0)
@@ -6585,8 +6590,12 @@ static void CL_GameNew_f (void)
 	/* Initialize alien interest */
 	CL_ResetAlienInterest();
 
+	/* Initialize Radar coverage */
+	R_CreateRadarOverlay();
+
 	/* Initialize XVI overlay */
 	R_InitializeXVIOverlay(NULL, 0, 0);
+	Cvar_Set("mn_xvimap", "0");
 
 	/* Reset alien bases */
 	AB_ResetAlienBases();

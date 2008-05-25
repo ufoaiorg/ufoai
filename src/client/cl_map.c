@@ -32,6 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
 
+#ifdef DRAW_AIRCRAFT_RADAR_RANGE
+extern void R_SmoothRadarCoverage(void);
+extern void R_InitializeRadarOverlay(qboolean source);
+#endif
+
 /*
 ==============================================================
 MULTI SELECTION DEFINITION
@@ -763,7 +768,8 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 	int numPoints = 0;
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
-	/* Set color */
+	/* Set color
+	 * @todo FIXME for some reason, the alpha value is useless */
 	R_Color(color);
 
 	/* Set centerPos corresponding to cartesian coordinates of the center point */
@@ -1238,6 +1244,12 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile");
 	}
 
+#ifdef DRAW_AIRCRAFT_RADAR_RANGE
+	/* Initialise radar range (will be filled below) */
+		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+			R_InitializeRadarOverlay(qfalse);
+#endif
+
 	/* draw bases */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base = B_GetFoundedBaseByIDX(baseIdx);
@@ -1257,7 +1269,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 
 		/* Draw base radar info */
-		RADAR_DrawInMap(node, &base->radar, base->pos);
+		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+			RADAR_DrawInMap(node, &base->radar, base->pos);
 
 		/* Draw base */
 		if (cl_3dmap->integer) {
@@ -1279,7 +1292,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 
 				/* Draw aircraft radar */
-				RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
+				if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+					RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
 
 				/* Draw weapon range if at least one UFO is visible */
 				if (oneUFOVisible && aircraft->stats[AIR_STATS_WRANGE] > 0)
@@ -1365,6 +1379,12 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		mn.menuText[TEXT_XVI] = buffer;
 	else
 		MN_MenuTextReset(TEXT_XVI);
+
+#ifdef DRAW_AIRCRAFT_RADAR_RANGE
+	/* Smooth Radar Coverage */
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		R_SmoothRadarCoverage();
+#endif
 }
 
 /**
@@ -1375,7 +1395,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 void MAP_DrawMap (const menuNode_t* node)
 {
 	float q = 0.0f;
-	int baseIdx;
 	float distance;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
@@ -1401,12 +1420,8 @@ void MAP_DrawMap (const menuNode_t* node)
 	MN_MenuTextReset(TEXT_STANDARD);
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
-		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-			if (!base)
-				continue;
-			/* Draw base radar info */
-			RADAR_DrawCoverage(node, &base->radar,base->pos);
+		if (r_geoscape_overlay->integer != OVERLAY_RADAR) {
+			Cmd_ExecuteString("map_overlay radar");
 		}
 
 		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
@@ -2070,6 +2085,11 @@ static void MAP_SetOverlay_f (void)
 	}
 
 	arg = Cmd_Argv(1);
+
+	/* do nothing while the first base is not build */
+	if (gd.numBases == 0)
+		return;
+
 	if (!Q_strcmp(arg, "nations")) {
 		if (r_geoscape_overlay->integer & OVERLAY_NATION)
 			r_geoscape_overlay->integer ^= OVERLAY_NATION;
@@ -2080,7 +2100,16 @@ static void MAP_SetOverlay_f (void)
 			r_geoscape_overlay->integer ^= OVERLAY_XVI;
 		else
 			r_geoscape_overlay->integer |= OVERLAY_XVI;
-	}
+	} else if (!Q_strcmp(arg, "radar")) {
+		if (gd.mapAction == MA_NEWBASE) {
+			/* Player don't want to build a base anymore */
+			MAP_ResetAction();
+		}
+		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
+		else
+			r_geoscape_overlay->integer |= OVERLAY_RADAR;
+ 	}
 }
 
 /**
