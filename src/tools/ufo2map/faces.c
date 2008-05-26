@@ -452,29 +452,28 @@ FACE MERGING
 /**
  * @brief If two polygons share a common edge and the edges that meet at the
  * common points are both inside the other polygons, merge them
- *
- * @return NULL if the faces couldn't be merged, or the new face.
+ * @return NULL if the faces couldn't be merged, or the new winding.
  * @note The originals will NOT be freed.
  */
 static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, const vec3_t planenormal)
 {
-	vec_t *p1, *p2, *p3, *p4, *back;
+	vec_t *p1, *p2, *back;
 	winding_t *newf;
 	int i, j, k, l;
 	vec3_t normal, delta;
 	vec_t dot;
 	qboolean keep1, keep2;
 
-	/* find a common edge */
-	p1 = p2 = NULL;	/* stop compiler warning */
+	p1 = p2 = NULL;
 	j = 0;
 
+	/* find a common edge */
 	for (i = 0; i < f1->numpoints; i++) {
 		p1 = f1->p[i];
 		p2 = f1->p[(i + 1) % f1->numpoints];
 		for (j = 0; j < f2->numpoints; j++) {
-			p3 = f2->p[j];
-			p4 = f2->p[(j + 1) % f2->numpoints];
+			const vec_t *p3 = f2->p[j];
+			const vec_t *p4 = f2->p[(j + 1) % f2->numpoints];
 			for (k = 0; k < 3; k++) {
 				if (fabs(p1[k] - p4[k]) > EQUAL_EPSILON)
 					break;
@@ -584,8 +583,6 @@ static void MergeNodeFaces (node_t *node)
 	face_t *merged;
 	const plane_t *plane = &mapplanes[node->planenum];
 
-	merged = NULL;
-
 	for (f1 = node->faces; f1; f1 = f1->next) {
 		if (f1->merged || f1->split[0] || f1->split[1])
 			continue;
@@ -596,8 +593,8 @@ static void MergeNodeFaces (node_t *node)
 			if (!merged)
 				continue;
 
-			/* add merged to the end of the node face list */
-			/* so it will be checked against all the faces again */
+			/* add merged to the end of the node face list
+			 * so it will be checked against all the faces again */
 			for (end = node->faces; end->next; end = end->next);
 
 			merged->next = NULL;

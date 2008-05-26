@@ -34,7 +34,8 @@ static int c_peak_windings;
 #define	BOGUS_RANGE	8192
 
 /**
- * @brief
+ * @brief Allocate a new winding (polygon)
+ * @param[in] points Amount of points for this winding
  * @sa FreeWinding
  */
 winding_t *AllocWinding (int points)
@@ -122,15 +123,14 @@ vec_t WindingArea (winding_t *w)
  */
 void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 {
-	vec_t v;
-	int i,j;
+	int i, j;
 
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
 
 	for (i = 0; i < w->numpoints; i++) {
 		for (j = 0; j < 3; j++) {
-			v = w->p[i][j];
+			vec_t v = w->p[i][j];
 			if (v < mins[j])
 				mins[j] = v;
 			if (v > maxs[j])
@@ -179,6 +179,7 @@ winding_t *BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 		Sys_Error("BaseWindingForPlane: no axis found");
 
 	VectorCopy(vec3_origin, vup);
+	/* axis */
 	switch (x) {
 	case 0:
 	case 1:
@@ -223,15 +224,14 @@ winding_t *BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 }
 
 /**
- * @brief
+ * @brief Copy a winding with all its points allocated
+ * @param[in] w The winding to copy
+ * @returns the new winding
  */
 winding_t *CopyWinding (const winding_t *w)
 {
-	ptrdiff_t	size;
-	winding_t	*c;
-
-	c = AllocWinding(w->numpoints);
-	size = (ptrdiff_t)((winding_t *)0)->p[w->numpoints];
+	winding_t *c = AllocWinding(w->numpoints);
+	const ptrdiff_t size = (ptrdiff_t)((winding_t *)0)->p[w->numpoints];
 	memcpy(c, w, size);
 	return c;
 }
@@ -239,12 +239,11 @@ winding_t *CopyWinding (const winding_t *w)
 /**
  * @brief
  */
-winding_t *ReverseWinding (winding_t *w)
+winding_t *ReverseWinding (const winding_t *w)
 {
-	int			i;
-	winding_t	*c;
+	int i;
+	winding_t *c = AllocWinding(w->numpoints);
 
-	c = AllocWinding(w->numpoints);
 	for (i = 0; i < w->numpoints; i++) {
 		VectorCopy(w->p[w->numpoints - 1 - i], c->p[i]);
 	}
@@ -261,10 +260,8 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
-	static vec_t dot;		/* VC 4.2 optimizer bug if not static */
+	vec_t dot;
 	int i, j;
-	const vec_t *p1, *p2;
-	vec3_t mid;
 	winding_t *f, *b;
 	int maxpts;
 
@@ -287,25 +284,27 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 	sides[i] = sides[0];
 	dists[i] = dists[0];
 
-	*front = *back = NULL;
-
 	if (!counts[0]) {
 		*back = CopyWinding(in);
+		*front = NULL;
 		return;
 	}
 	if (!counts[1]) {
 		*front = CopyWinding(in);
+		*back = NULL;
 		return;
 	}
 
-	maxpts = in->numpoints + 4;	/* cant use counts[0]+2 because */
-								/* of fp grouping errors */
+	/* can't use counts[0] + 2 because of floating point grouping errors */
+	maxpts = in->numpoints + 4;
 
 	*front = f = AllocWinding(maxpts);
 	*back = b = AllocWinding(maxpts);
 
 	for (i = 0; i < in->numpoints; i++) {
-		p1 = in->p[i];
+		const vec_t *p1 = in->p[i];
+		const vec_t *p2;
+		vec3_t mid;
 
 		if (sides[i] == SIDE_ON) {
 			VectorCopy(p1, f->p[f->numpoints]);
@@ -366,16 +365,16 @@ void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dis
 	int counts[3];
 	vec_t dot;
 	int i, j;
-	vec_t *p1, *p2;
 	vec3_t mid;
 	winding_t *f;
 	int maxpts;
 
 	in = *inout;
-	counts[0] = counts[1] = counts[2] = 0;
 
 	if (!in)
 		return;
+
+	VectorClear(counts);
 
 	/* determine sides for each point */
 	for (i = 0; i < in->numpoints; i++) {
@@ -408,7 +407,8 @@ void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dis
 	f = AllocWinding(maxpts);
 
 	for (i = 0; i < in->numpoints; i++) {
-		p1 = in->p[i];
+		const vec_t *p1 = in->p[i];
+		const vec_t *p2;
 
 		if (sides[i] == SIDE_ON) {
 			VectorCopy(p1, f->p[f->numpoints]);

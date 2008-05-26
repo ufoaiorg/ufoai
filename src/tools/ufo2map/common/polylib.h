@@ -39,7 +39,7 @@ void ClipWindingEpsilon(const winding_t *in, const vec3_t normal, const vec_t di
 	const vec_t epsilon, winding_t **front, winding_t **back);
 winding_t *ChopWinding(winding_t *in, vec3_t normal, vec_t dist);
 winding_t *CopyWinding(const winding_t *w);
-winding_t *ReverseWinding(winding_t *w);
+winding_t *ReverseWinding(const winding_t *w);
 winding_t *BaseWindingForPlane(const vec3_t normal, const vec_t dist);
 void RemoveColinearPoints(winding_t *w);
 void FreeWinding(winding_t *w);

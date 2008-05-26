@@ -546,14 +546,16 @@ vec_t FloatForKey (const entity_t *ent, const char *key)
  */
 void GetVectorForKey (const entity_t *ent, const char *key, vec3_t vec)
 {
-	const char *k;
-	double v1, v2, v3;
+	const char *k = ValueForKey(ent, key);
+	if (k[0] != '\0') {
+		double v1, v2, v3;
 
-	k = ValueForKey(ent, key);
-	/* scanf into doubles, then assign, so it is vec_t size independent */
-	v1 = v2 = v3 = 0;
-	sscanf(k, "%lf %lf %lf", &v1, &v2, &v3);
-	vec[0] = v1;
-	vec[1] = v2;
-	vec[2] = v3;
+		/* scanf into doubles, then assign, so it is vec_t size independent */
+		v1 = v2 = v3 = 0;
+		sscanf(k, "%lf %lf %lf", &v1, &v2, &v3);
+		vec[0] = v1;
+		vec[1] = v2;
+		vec[2] = v3;
+	} else
+		VectorClear(vec);
 }
