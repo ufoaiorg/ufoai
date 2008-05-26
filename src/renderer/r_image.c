@@ -1436,7 +1436,8 @@ void R_CreateRadarOverlay (void)
 	if (r_radarTexture) {
 		memset(r_radarSourcePic, 0, bpp * radarHeight * radarWidth);
 		memset(r_radarPic, 0, bpp * radarHeight * radarWidth);
-		R_SmoothRadarCoverage();
+		/* mattn: Not needed!? */
+		/*R_UploadRadarCoverage(qfalse);*/
 		return;
 	}
 
@@ -1447,7 +1448,9 @@ void R_CreateRadarOverlay (void)
 	memset(r_radarPic, 0, bpp * radarHeight * radarWidth);
 
 	/* Set an image */
-	r_radarTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay.tga", r_radarPic, radarWidth, radarHeight, it_wrappic);
+	r_radarTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay", r_radarPic, radarWidth, radarHeight, it_wrappic);
+	if (r_radarTexture == r_notexture)
+		Sys_Error("Could not load pics/geoscape/map_earth_xvi_overlay");
 }
 
 /**
@@ -1524,13 +1527,11 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 /**
  * @brief Smooth radar coverage
  */
-void R_SmoothRadarCoverage (void)
+void R_UploadRadarCoverage (qboolean smooth)
 {
-	const int bpp = 4;
-	int i;
-
-	for (i = 0; i < bpp; i++)
-		R_SoftenTexture(r_radarPic + i, r_radarTexture->width, r_radarTexture->height, bpp);
+	/* FIXME: This is no realtime function */
+	if (smooth)
+		R_SoftenTexture(r_radarPic, r_radarTexture->width, r_radarTexture->height, 4);
 
 	R_BindTexture(r_radarTexture->texnum);
 	R_UploadTexture((unsigned *) r_radarPic, r_radarTexture->upload_width, r_radarTexture->upload_height, r_radarTexture);

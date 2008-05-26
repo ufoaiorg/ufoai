@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "../renderer/r_draw.h"
 
-extern void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
-extern void R_InitializeRadarOverlay(qboolean source);
+void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
+void R_InitializeRadarOverlay(qboolean source);
 #ifndef DRAW_AIRCRAFT_RADAR_RANGE
-extern void R_SmoothRadarCoverage(void);
+void R_UploadRadarCoverage(qboolean smooth);
 #endif
 
 /* Define radar range */
@@ -64,7 +64,7 @@ void RADAR_UpdateBaseRadarCoverage (void)
 
 #ifndef DRAW_AIRCRAFT_RADAR_RANGE
 	R_InitializeRadarOverlay(qfalse);
-	R_SmoothRadarCoverage();
+	R_UploadRadarCoverage(qtrue);
 #endif
 }
 
@@ -76,7 +76,7 @@ void RADAR_UpdateBaseRadarCoverage (void)
 static void RADAR_DrawCoverage (const radar_t* radar, vec2_t pos)
 {
 	float rangeTracking;
- 
+
 	rangeTracking = (1.0f + outerCircleRatio) * radar->range;
 	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
 }

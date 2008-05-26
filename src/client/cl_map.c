@@ -33,8 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_font.h"
 
 #ifdef DRAW_AIRCRAFT_RADAR_RANGE
-extern void R_SmoothRadarCoverage(void);
-extern void R_InitializeRadarOverlay(qboolean source);
+void R_UploadRadarCoverage(qboolean smooth);
+void R_InitializeRadarOverlay(qboolean source);
 #endif
 
 /*
@@ -1246,8 +1246,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 #ifdef DRAW_AIRCRAFT_RADAR_RANGE
 	/* Initialise radar range (will be filled below) */
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-			R_InitializeRadarOverlay(qfalse);
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		R_InitializeRadarOverlay(qfalse);
 #endif
 
 	/* draw bases */
@@ -1258,7 +1258,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		/* Draw weapon range if at least one UFO is visible */
 		if (oneUFOVisible && AII_BaseCanShoot(base)) {
-			/* @todo When there will be different possible base weapon, range should change */
+			/** @todo When there will be different possible base weapon, range should change */
 			for (i = 0; i < base->numBatteries; i++) {
 				if (base->batteries[i].slot.item && base->batteries[i].slot.ammoLeft > 0
 					&& base->batteries[i].slot.installationTime == 0) {
@@ -1383,7 +1383,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 #ifdef DRAW_AIRCRAFT_RADAR_RANGE
 	/* Smooth Radar Coverage */
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-		R_SmoothRadarCoverage();
+		R_UploadRadarCoverage(qfalse);
 #endif
 }
 

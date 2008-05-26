@@ -25,11 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_ENTITY_H
 #define R_ENTITY_H
 
-/** @brief entity transform */
+/**
+ * @brief entity transform matrix
+ */
 typedef struct {
-	qboolean done;
-	qboolean processing;
-	float matrix[16];
+	qboolean done;			/**< already calculated */
+	qboolean processing;	/**< currently doing the calculation */
+	float matrix[16];		/**< the matrix that holds the result */
 } transform_t;
 
 typedef struct entity_s {
