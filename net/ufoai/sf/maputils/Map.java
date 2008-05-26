@@ -252,10 +252,12 @@ public class Map {
 				    Vector<Vector3D> vertsOfFaceBf=bf.getVertices();
 				    if(cf.areInsideParentBrushes(vertsOfFaceBf)){
 					if(cf.coversConsideringLevelFlags(bf)){
-					    nodrawsObsByComposite++;
-					    bf.setNodraw();
-					    MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
-					    break;//once the face has been set, skip the rest.
+					    if(cf.compositeFaceVerticesAreOutside(bf)){
+						nodrawsObsByComposite++;
+						bf.setNodraw();
+						MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
+						break;//once the face has been set, skip the rest.
+					    }
 					}
 				    }
 				}

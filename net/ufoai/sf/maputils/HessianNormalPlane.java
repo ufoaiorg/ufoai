@@ -8,7 +8,7 @@ package net.ufoai.sf.maputils;
  *
  * @author andy buckle
  */
-public class HessianNormalPlane {
+public class HessianNormalPlane implements Cloneable {
 
 	/** a unit Vector normal to the plane */
 	Vector3D n;
@@ -30,6 +30,26 @@ public class HessianNormalPlane {
 		//System.out.println("inPlane1"+inPlane1+"  inPlane2"+inPlane2+"  normal"+normal+"  unit"+n);
 		p = -n.dot (p1);
 		//System.out.println(""+this);
+	}
+	
+	private HessianNormalPlane(){
+	    ;
+	}
+	
+	public HessianNormalPlane clone(){
+	    HessianNormalPlane clone=new HessianNormalPlane();
+	    clone.p=this.p;
+	    clone.n=this.n.clone();
+	    return clone;
+	}
+	
+	/** makes a clone of this plane and shifts it by dist in the direction
+	 *  of the unit normal 
+	 *  @return the shifted clone*/
+	public HessianNormalPlane getTranslated(float dist){
+	    HessianNormalPlane clone=this.clone();
+	    clone.p-=dist;
+	    return clone;
 	}
 
 	/** @return a point on the plane. Specifically the plane's point of closest

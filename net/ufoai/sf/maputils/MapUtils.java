@@ -105,6 +105,7 @@ public class MapUtils {
 					map.findBrokenBrushes();
 				}
 				if (args[i].equalsIgnoreCase ("-nodraws") ) {
+					argUseds[i]=true;
 					BrushList.go (map);
 					map.findUnexposedFaces();
 				}

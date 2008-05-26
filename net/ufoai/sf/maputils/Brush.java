@@ -18,6 +18,8 @@ public class Brush {
 	int s, e;
 	Map map;
 	private static Pattern linePattern = Pattern.compile ("^.+?$", Pattern.MULTILINE);// a line with at least one char
+	private static final int DEFAULT_INCLUSIVE=0, DEFAULT_EXCLUSIVE=1;
+	
 	Vector<Face> faces = new Vector<Face> (6, 2);
 	Vector<Vector3D> vertices = new Vector<Vector3D> (8, 8);
 	/** list of immutable (not breakable or mobile) brushes that this brush's bounding box intersects.
@@ -81,7 +83,6 @@ public class Brush {
 	/** @return the vertices of this Brush which are on the plane of the
 	 *          supplied Face. */
 	public Vector<Vector3D> getVertices (Face f) {
-		//System.out.println("Brush.getVertices(Face): total num vertices"+vertices.size());
 		Vector<Vector3D> ans = new Vector<Vector3D> (4, 4);
 		HessianNormalPlane h = f.getHessian();
 		for (Vector3D v: vertices) {
@@ -98,8 +99,46 @@ public class Brush {
 		comments += String.format ("// %s%n", comment);
 	}
 
-
-	/** order n cubed code. aaaargh */
+	/** this method is slow, it should be rewritten if it is to be used 
+	 *  frequently. calculates the coordinates of the vertices of the face.
+	 *  the face is moved away from the brush (only within the scope of this
+	 *  method) by a distance dist. dist is specified: will probably be an
+	 *  epsilon. */
+	public Vector<Vector3D> calculateVerticesOfFacePushedOut(Face f, float dist){
+	    Vector<HessianNormalPlane> hessians=new Vector<HessianNormalPlane>(6,6);
+	    int pIndex=-1;
+	    for(int i=0;i<faces.size();i++) {
+		if(faces.get(i)==f) {
+		    hessians.add(f.getHessian().getTranslated(dist));
+		    //System.out.println("H after shift:"+hessians.lastElement());
+		    pIndex=i;
+		} else {
+		    hessians.add(faces.get(i).getHessian());
+		}
+	    }
+	    Vector<Vector3D> tmpvertices=new Vector<Vector3D>(6,6);
+	    for (int i = 1;i < faces.size();i++) {
+			for (int j = 0;j < i;j++) {
+				for (int k = j + 1;k < faces.size();k++) {
+					if(i==pIndex || j==pIndex || k==pIndex ){
+					    Vector3D candidate = HessianNormalPlane.getIntersection (hessians.get(i), hessians.get(j),hessians.get(k) );
+					    if (candidate != null) {//if 3 faces do not intersect at point
+						//System.out.println("candidate "+candidate);
+						if (insideInclusive (candidate, dist+Epsilon.distance) ) {//in case 3 planes of faces intersect away from brush
+							tmpvertices.add (candidate);
+						}
+					    }
+					}
+				}
+			}
+	    }
+	    if (tmpvertices.size()==0) System.out.println("Brush.calculateVerticesOfFacePushedOut: face has no vertices");
+	    return tmpvertices;
+	}
+	
+	/** order n cubed code. aaaargh. 
+	 *  TODO see if this function is the source of the (occasional) 
+	 *  vertex that is not found.*/
 	private void calculateVertices() {
 		for (int i = 1;i < faces.size();i++) {
 			for (int j = 0;j < i;j++) {
@@ -233,9 +272,13 @@ public class Brush {
 	 *  this will only work for convex polyhedra.
 	 *  @return true if the supplied point is inside the brush */
 	public boolean insideInclusive (Vector3D point) {
+		return insideInclusive(point, Epsilon.distance);
+	}
+	
+	public boolean insideInclusive (Vector3D point, float epsilonMargin) {
 		//if the point is on the wrong side of any face, then it is outside
 		for (int i = 0;i < faces.size();i++) {
-			if (faces.get (i).getHessian().distance (point) > Epsilon.distance) {
+			if (faces.get (i).getHessian().distance (point) > epsilonMargin) {
 				return false;
 			}
 		}
@@ -255,7 +298,7 @@ public class Brush {
 		}
 		return true;
 	}
-
+	
 	/** tests if all of the points in teh supplied vector are inside() this Brush */
 	public boolean areInside (Vector<Vector3D> points) {
 		for (Vector3D p: points) if (!this.insideInclusive (p) ) return false;

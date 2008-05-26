@@ -45,6 +45,25 @@ public class CompositeFace {
 	return true;
     }
     
+    /** calculates if each vertex of each face in this composite is outside
+     *  the supplied face. it excludes points on the edge edge of face f. 
+     *  this condition must be met if the arg Face f is
+     *  to be considered covered for nodraw setting purposes.
+     *  @return true if none of the vertices of the members of the composite 
+     *          face are in the middle of (edges excluded) the face f. */
+    boolean compositeFaceVerticesAreOutside(Face f){
+	Vector<Vector3D> inclusiveFaces=new Vector<Vector3D>(1,1);
+	for (Face mf:members ) {
+	    //System.out.println("checking composite member face from brush "+mf.getParent().getBrushNumber());
+	    Vector<Vector3D> verts = mf.getParent().calculateVerticesOfFacePushedOut(mf,2/*2*Epsilon.distance*/);
+	    for(Vector3D v:verts) {
+		//System.out.println("brush which may have nodraw "+f.getParent().getBrushNumber()+" vert protruding in"+v);
+		if(f.getParent().insideExclusive(v)) return false;
+	    }
+	}
+	return true;
+    }
+    
     public String toString(){
 	String s="";
 	for(Face f:members){
