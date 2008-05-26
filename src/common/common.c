@@ -37,7 +37,6 @@ static const char *com_argv[MAX_NUM_ARGVS + 1];
 
 jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
 
-cvar_t *s_sleep;
 cvar_t *s_language;
 cvar_t *developer;
 cvar_t *http_proxy;
@@ -826,7 +825,6 @@ void Qcommon_Init (int argc, const char **argv)
 #endif
 	Cmd_AddCommand("setdeveloper", Com_DeveloperSet_f, "Set the developer cvar to only get the debug output you want");
 
-	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to reduce cpu usage");
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
 	sv_gametype = Cvar_Get("sv_gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
