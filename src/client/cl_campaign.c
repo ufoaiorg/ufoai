@@ -37,10 +37,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "menu/m_inventory.h"
 
-extern void R_IncreaseXVILevel(const vec2_t pos);
-extern void R_InitializeXVIOverlay(byte *data, int width, int height);
-extern qboolean R_XVIMapCopy(byte *out, int size);
-extern void R_CreateRadarOverlay(void);
+void R_IncreaseXVILevel(const vec2_t pos);
+void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
+qboolean R_XVIMapCopy(byte *out, int size);
+void R_CreateRadarOverlay(void);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -4891,7 +4891,7 @@ qboolean XVI_Load (sizebuf_t *sb, void *data)
 		}
 	}
 
-	R_InitializeXVIOverlay(out, width, height);
+	R_InitializeXVIOverlay(curCampaign->map, out, width, height);
 
 	Mem_Free(out);
 
@@ -6594,7 +6594,7 @@ static void CL_GameNew_f (void)
 	R_CreateRadarOverlay();
 
 	/* Initialize XVI overlay */
-	R_InitializeXVIOverlay(NULL, 0, 0);
+	R_InitializeXVIOverlay(curCampaign->map, NULL, 0, 0);
 	Cvar_Set("mn_xvimap", "0");
 
 	/* Reset alien bases */

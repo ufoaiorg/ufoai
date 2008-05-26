@@ -92,14 +92,14 @@ void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
 void R_IncreaseXVILevel(const vec2_t pos);
-void R_InitializeXVIOverlay(byte *data, int width, int height);
+void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
 qboolean R_XVIMapCopy(byte *out, int size);
 void R_CreateRadarOverlay(void);
 void R_InitializeRadarOverlay(qboolean source);
 void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
 void R_UploadRadarCoverage(qboolean smooth);
 
-image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type);
+image_t *R_LoadImageData(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG
 image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file, int line);
 #define R_FindImage(pname,type) R_FindImageDebug(pname, type, __FILE__, __LINE__ )

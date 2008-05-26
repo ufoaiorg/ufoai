@@ -1368,7 +1368,7 @@ void R_IncreaseXVILevel (const vec2_t pos)
  * @param[in] height Height of data (used only if data is not NULL)
  * @note xvi rate is null when alpha = 0, max when alpha = maxAlpha
  */
-void R_InitializeXVIOverlay (byte *data, int width, int height)
+void R_InitializeXVIOverlay (const char *mapname, byte *data, int width, int height)
 {
 	int xviWidth, xviHeight;
 	int x, y;
@@ -1379,10 +1379,13 @@ void R_InitializeXVIOverlay (byte *data, int width, int height)
 	if (r_xviTexture)
 		return;
 
-	/* Load the XVI texture */
-	R_LoadImage("pics/geoscape/map_earth_xvi_overlay", &r_xviPic, &xviWidth, &xviHeight);
+	/* we should always have a campaign loaded here */
+	assert(mapname);
 
-	assert(r_xviPic);
+	/* Load the XVI texture */
+	R_LoadImage(va("pics/geoscape/%s_xvi_overlay", mapname), &r_xviPic, &xviWidth, &xviHeight);
+	if (!r_xviPic || !xviWidth || !xviHeight)
+		Sys_Error("Couldn't load map mask %s_xvi_overlay in pics/geoscape", mapname);
 
 	if (data && (width == xviWidth) && (height == xviHeight))
 		setToZero = qfalse;
@@ -1395,7 +1398,7 @@ void R_InitializeXVIOverlay (byte *data, int width, int height)
 		}
 
 	/* Set an image */
-	r_xviTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay.tga", r_xviPic, xviWidth, xviHeight, it_wrappic);
+	r_xviTexture = R_LoadImageData(va("pics/geoscape/%s_xvi_overlay", mapname), r_xviPic, xviWidth, xviHeight, it_wrappic);
 }
 
 /**
@@ -1444,13 +1447,8 @@ void R_CreateRadarOverlay (void)
 	r_radarPic = Mem_PoolAlloc(radarHeight * radarWidth * bpp, vid_imagePool, 0);
 	r_radarSourcePic = Mem_PoolAlloc(radarHeight * radarWidth * bpp, vid_imagePool, 0);
 
-	memset(r_radarSourcePic, 0, bpp * radarHeight * radarWidth);
-	memset(r_radarPic, 0, bpp * radarHeight * radarWidth);
-
 	/* Set an image */
-	r_radarTexture = R_LoadPic("pics/geoscape/map_earth_xvi_overlay", r_radarPic, radarWidth, radarHeight, it_wrappic);
-	if (r_radarTexture == r_notexture)
-		Sys_Error("Could not load pics/geoscape/map_earth_xvi_overlay");
+	r_radarTexture = R_LoadImageData("pics/geoscape/map_earth_xvi_overlay", r_radarPic, radarWidth, radarHeight, it_wrappic);
 }
 
 /**
@@ -1538,9 +1536,16 @@ void R_UploadRadarCoverage (qboolean smooth)
 }
 
 /**
- * @brief This is also used as an entry point for the generated r_notexture
+ * @brief Creates a new image from RGBA data. Stores it in the gltextures array
+ * and also uploads it.
+ * @note This is also used as an entry point for the generated r_notexture
+ * @param[in] name The name of the newly created image
+ * @param[in] pic The RGBA data of the image
+ * @param[in] width The width of the image (power of two, please)
+ * @param[in] height The height of the image (power of two, please)
+ * @param[in] type The image type @sa imagetype_t
  */
-image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagetype_t type)
+image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, imagetype_t type)
 {
 	image_t *image;
 	int i;
@@ -1553,7 +1558,7 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 
 	if (i == numgltextures) {
 		if (numgltextures >= MAX_GLTEXTURES)
-			Com_Error(ERR_DROP, "R_LoadPic: MAX_GLTEXTURES hit");
+			Com_Error(ERR_DROP, "R_LoadImageData: MAX_GLTEXTURES hit");
 		numgltextures++;
 	}
 	image = &gltextures[i];
@@ -1563,7 +1568,7 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 
 	len = strlen(name);
 	if (len >= sizeof(image->name))
-		Com_Error(ERR_DROP, "Draw_LoadPic: \"%s\" is too long", name);
+		Com_Error(ERR_DROP, "R_LoadImageData: \"%s\" is too long", name);
 	Q_strncpyz(image->name, name, MAX_QPATH);
 	image->registration_sequence = registration_sequence;
 	/* drop extension */
@@ -1647,7 +1652,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (FS_CheckFile(lname) != -1) {
 		R_LoadTGA(lname, &pic, &width, &height);
 		if (pic) {
-			image = R_LoadPic(lname, pic, width, height, type);
+			image = R_LoadImageData(lname, pic, width, height, type);
 			goto end;
 		}
 	}
@@ -1656,7 +1661,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (FS_CheckFile(lname) != -1) {
 		R_LoadPNG(lname, &pic, &width, &height);
 		if (pic) {
-			image = R_LoadPic(lname, pic, width, height, type);
+			image = R_LoadImageData(lname, pic, width, height, type);
 			goto end;
 		}
 	}
@@ -1665,7 +1670,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (FS_CheckFile(lname) != -1) {
 		R_LoadJPG(lname, &pic, &width, &height);
 		if (pic) {
-			image = R_LoadPic(lname, pic, width, height, type);
+			image = R_LoadImageData(lname, pic, width, height, type);
 			goto end;
 		}
 	}
