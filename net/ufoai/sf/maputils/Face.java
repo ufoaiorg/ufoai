@@ -24,7 +24,8 @@ public class Face {
 	Vector<Edge> edges=new Vector<Edge>(4,4);
 
 	private static int count = 0;
-	public static final String nodrawTexture = "tex_common/nodraw";
+	public static final String nodrawTexture = "tex_common/nodraw",
+				   errorTexture = "tex_common/error";
 	private static Pattern partPattern = Pattern.compile ("[\\s]([^\\s\\(\\)]+)");
 	public static final int PART_INDEX_P1X = 0,
 			PART_INDEX_P1Y = 1,
@@ -241,7 +242,11 @@ public class Face {
 		surfFlags.setNodraw();
 		setPart (PART_INDEX_SURFACE_FLAGS, "" + surfFlags);
 		setPart (PART_INDEX_TEX, "" + nodrawTexture);
-
+	}
+	
+	/** sets the error texture */
+	void setError(){
+		setPart (PART_INDEX_TEX, "" + errorTexture);
 	}
 
 	public boolean isTransparent() {

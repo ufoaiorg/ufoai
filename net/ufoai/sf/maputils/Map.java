@@ -51,7 +51,7 @@ public class Map {
 		TimeCounter.report ("finding entities");
 		findEntities();
 		//printParsed();
-		TimeCounter.report ("Map constructor finished");
+		TimeCounter.reportf ("Map constructor finished. \"%s\" loaded.",filename);
 	}
 
 	public Vector<Entity> getEntities() {
@@ -263,6 +263,27 @@ public class Map {
 			}
 		}
 		TimeCounter.reportf ("%d nodraws from faces obscured by single face. %d obscured by composites", nodrawsObsBySingleFace, nodrawsObsByComposite);
+	}
+	
+	public void findIntersectingBrushes(){
+	    TimeCounter.reportf ("searching for intersecting brushes (vertices of one brush inside another brush)");
+	    int numVertsInsideOtherBrushes=0;
+	    Vector<Brush> brushes = BrushList.getImmutableOpaqueBrushes();
+	    for(Brush b:brushes){
+		Vector<Brush> possibleInteractionBrushes = b.getBrushInteractionList();
+		for (Brush pib: possibleInteractionBrushes) {
+		    Vector<Vector3D> vertsOfPib=pib.getVertices();
+		    for(Vector3D vert:vertsOfPib){
+			if(b.insideExclusive(vert)){
+			    MapUtils.printf("brush %d of entity %d intersects brush %d of entity %d. both set to error texture. %n",pib.getBrushNumber(),pib.getParentEntity().getNumber(),b.getBrushNumber(),b.getParentEntity().getNumber());
+			    b.setError();
+			    pib.setError();
+			    numVertsInsideOtherBrushes++;
+			}
+		    }
+		}
+	    }
+	    TimeCounter.reportf("%d vertices are inside other brushes", numVertsInsideOtherBrushes);
 	}
 
 }

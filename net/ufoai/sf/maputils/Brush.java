@@ -106,7 +106,7 @@ public class Brush {
 				for (int k = j + 1;k < faces.size();k++) {
 					Vector3D candidate = HessianNormalPlane.getIntersection (faces.get (i).getHessian(), faces.get (j).getHessian(), faces.get (k).getHessian() );
 					if (candidate != null) {//if 3 faces do not intersect at point
-						if (inside (candidate) ) {//in case 3 planes of faces intersect away from brush
+						if (insideInclusive (candidate) ) {//in case 3 planes of faces intersect away from brush
 							vertices.add (candidate);
 						}
 					}
@@ -228,9 +228,11 @@ public class Brush {
 		to.println ("}");
 	}
 
-	/** uses the epsilon tolerance. this will only work for convex polyhedra.
+	/** grows the brush by an epsilon distance, so points on the surface
+	 *  will be included. 
+	 *  this will only work for convex polyhedra.
 	 *  @return true if the supplied point is inside the brush */
-	public boolean inside (Vector3D point) {
+	public boolean insideInclusive (Vector3D point) {
 		//if the point is on the wrong side of any face, then it is outside
 		for (int i = 0;i < faces.size();i++) {
 			if (faces.get (i).getHessian().distance (point) > Epsilon.distance) {
@@ -239,10 +241,24 @@ public class Brush {
 		}
 		return true;
 	}
+	
+	/** shrinks the brush by an epsilon distance, so points on the surface
+	 *  will be excluded. 
+	 *  this will only work for convex polyhedra.
+	 *  @return true if the supplied point is inside the brush */
+	public boolean insideExclusive (Vector3D point) {
+		//if the point is on the wrong side of any face, then it is outside
+		for (int i = 0;i < faces.size();i++) {
+			if (faces.get (i).getHessian().distance (point) > -Epsilon.distance) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/** tests if all of the points in teh supplied vector are inside() this Brush */
 	public boolean areInside (Vector<Vector3D> points) {
-		for (Vector3D p: points) if (!this.inside (p) ) return false;
+		for (Vector3D p: points) if (!this.insideInclusive (p) ) return false;
 		return true;
 	}
 
@@ -353,6 +369,11 @@ public class Brush {
 	
 	public String verboseInfo(){
 	    return String.format("brush(%d) faces:%d vertices:%d",this.getBrushNumber(), faces.size(), vertices.size());
+	}
+	
+	/** sets the error texture on all faces */
+	public void setError(){
+	    for (Face f:faces) f.setError();
 	}
 
 }

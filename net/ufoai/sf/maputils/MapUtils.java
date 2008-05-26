@@ -67,10 +67,17 @@ public class MapUtils {
 			} catch (Exception e) {
 				out.printf ("***%s:%s%n***%s%n", e.getClass(), e.getMessage(), "while reading svn info from jar: svn_info.txt may be missing from jar.");
 			}
-
+			boolean[] argUseds=new boolean[args.length];
+			for(int i=0;i<argUseds.length;i++) argUseds[i]=false;
 			for (int i = 0;i < args.length;i++) {//parse mode-setting args first
-				if (args[i].equalsIgnoreCase ("-fix") ) fix = true;
-				if (args[i].equalsIgnoreCase ("-quiet") ) verbose = false;
+				if (args[i].equalsIgnoreCase ("-fix") ) {
+				    argUseds[i]=true;
+				    fix = true;
+				}
+				if (args[i].equalsIgnoreCase ("-quiet") ) {
+				    argUseds[i]=true;
+				    verbose = false;
+				}
 				if (args[i].equalsIgnoreCase ("-h") || args[i].equalsIgnoreCase ("-help") ) {
 					usage();
 					System.exit (0);
@@ -78,6 +85,7 @@ public class MapUtils {
 			}
 			if (args.length == 0) noMapSpecified();
 			String mapfilename = args[args.length-1];
+			argUseds[args.length-1]=true;
 			String extension = mapfilename.substring (mapfilename.lastIndexOf (".") );
 			if (!extension.equalsIgnoreCase (".map") ) noMapSpecified();
 			File mapfile = new File (mapfilename);
@@ -89,9 +97,11 @@ public class MapUtils {
 			for (int i = 0;i < args.length;i++) {//take actions
 				//levelflags must be done first or BrushList.go() will not work
 				if (args[i].equalsIgnoreCase ("-lvlflags") ) {
+					argUseds[i]=true;
 					map.calculateLevelFlags();
 				}
 				if (args[i].equalsIgnoreCase ("-broken") ) {
+					argUseds[i]=true;
 					map.findBrokenBrushes();
 				}
 				if (args[i].equalsIgnoreCase ("-nodraws") ) {
@@ -99,8 +109,19 @@ public class MapUtils {
 					map.findUnexposedFaces();
 				}
 				if(args[i].equalsIgnoreCase("-vinfo")){
+					argUseds[i]=true;
 					MapUtils.printf(map.verboseInfo());
 				}
+				if(args[i].equalsIgnoreCase("-intersect")){
+					BrushList.go (map);
+					argUseds[i]=true;
+					map.findIntersectingBrushes();
+				}
+			}
+			for(int i=0;i<argUseds.length;i++){
+			    if(!argUseds[i]){
+				System.out.printf("*** arg %s not understood%n",args[i]);
+			    }
 			}
 			if (fix) {//save orig with different name and save changes
 				String safetySaveFilename = map.getFilenameWith (".original_0");
@@ -149,15 +170,16 @@ public class MapUtils {
 		out.println ("usage: [options] <map>");
 		out.println ("  map       A UFO:AI .map file");
 		out.println ("options");
-		out.println ("  -help, -h Print (this) advice and exit.");
-		out.println ("  -quiet    Do not write notes to standard out. Default is verbose.");
-		out.println ("  -nodraws  Set nodraw flags and textures to faces which are always");
-		out.println ("            hidden by being abbutted to another face");
-		out.println ("  -fix      Make changes to the map. save overwrites foo.map");
-		out.println ("            also writes safety foo.map.original_0");
-		out.println ("            if foo.map.original_0 exists then saves foo.map.original_1, etc");
-		out.println ("  -vinfo    print verbose info about each brush");
-		out.println ("  -lvlflags Calculate levelflags based on brush vertex coordinates.");
+		out.println ("  -help, -h  Print (this) advice and exit.");
+		out.println ("  -quiet     Do not write notes to standard out. Default is verbose.");
+		out.println ("  -nodraws   Set nodraw flags and textures to faces which are always");
+		out.println ("             hidden by being abbutted to another face");
+		out.println ("  -fix       Make changes to the map. save overwrites foo.map");
+		out.println ("             also writes safety foo.map.original_0");
+		out.println ("             if foo.map.original_0 exists then saves foo.map.original_1, etc");
+		out.println ("  -vinfo     Print verbose info about each brush");
+		out.println ("  -lvlflags  Calculate levelflags based on brush vertex coordinates.");
+		out.println ("  -intersect Find intersects between opaque immutable brushes.");
 		out.println();
 		out.println ("will probably need to set extra memory. to allow java around 1 Gig.");
 		out.println ("java -Xmx1000M -jar maputils.jar [options] <map>");

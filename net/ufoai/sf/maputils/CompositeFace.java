@@ -38,7 +38,7 @@ public class CompositeFace {
 	for(Vector3D p:vertsOfFaceBf){
 	    boolean isInsideAtLeastOne=false;
 	    for(Face f:members){
-		if(f.getParent().inside(p)) isInsideAtLeastOne=true;
+		if(f.getParent().insideInclusive(p)) isInsideAtLeastOne=true;
 	    }
 	    if(!isInsideAtLeastOne) return false;
 	}
@@ -61,7 +61,7 @@ public class CompositeFace {
 		Vector<Vector3D> vertsOfFaceBf=bf.getVertices();
 		for(Vector3D p:vertsOfFaceBf){
 		    for(Face f:members){
-			if(f.getParent().inside(p)) {//every relevant face in the composite must cover wrt lvlflags
+			if(f.getParent().insideInclusive(p)) {//every relevant face in the composite must cover wrt lvlflags
 			    if(!f.coversConsideringLevelFlags(bf)) return false;
 			}
 		    }
