@@ -200,7 +200,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
  */
 void R_SphereInit (void)
 {
-	r_sphereDetails = Cvar_Get("r_sphereDetails", "1", CVAR_ARCHIVE, "Sets the amount of ");
+	r_sphereDetails = Cvar_Get("r_sphereDetails", "1.0", CVAR_ARCHIVE, "Factor to increase or decrease the sphere tris");
 	if (r_sphereDetails->integer <= 0)
 		Cvar_SetValue("r_sphereDetails", 1.0);
 
