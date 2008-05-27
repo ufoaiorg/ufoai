@@ -464,19 +464,21 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
  * @brief Actions to perform when a type of buildings may have changed its status.
  * @param[in] type Type of building that has been modified
  * @param[in] base Pointer to base with given building.
+ * @sa B_UpdateOneBaseBuildingStatusOnEnable
+ * @sa B_UpdateOneBaseBuildingStatusOnDisable
  */
 static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 {
-	float level;
-
 	switch (type) {
 	case B_RADAR:
-		level = B_GetMaxBuildingLevel(base, B_RADAR);
-		RADAR_Initialise(&base->radar, baseRadarRange, level, qtrue);
-		CP_UpdateMissionVisibleOnGeoscape();
+		{
+			const float level = B_GetMaxBuildingLevel(base, B_RADAR);
+			RADAR_Initialise(&base->radar, RADAR_BASERANGE, level, qtrue);
+			CP_UpdateMissionVisibleOnGeoscape();
+		}
 		break;
 	case B_WORKSHOP:
-		PR_UpdateProductionCap(baseCurrent);
+		PR_UpdateProductionCap(base);
 		break;
 	default:
 		break;
@@ -490,11 +492,10 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
  * @param[in] type Type of building that has been modified from qfalse to qtrue
  * @param[in] base Pointer to base with given building.
  * @sa B_UpdateOneBaseBuildingStatusOnDisable
+ * @sa B_UpdateOneBaseBuildingStatus
  */
 static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
 {
-	float level;
-
 	switch (type) {
 	case B_HOSPITAL:
 		/* Reset all arrays . */
@@ -504,9 +505,11 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		base->hospitalMissionListCount = 0;
 		break;
 	case B_RADAR:
-		level = B_GetMaxBuildingLevel(base, B_RADAR);
-		RADAR_Initialise(&base->radar, baseRadarRange, level, qtrue);
-		CP_UpdateMissionVisibleOnGeoscape();
+		{
+			const float level = B_GetMaxBuildingLevel(base, B_RADAR);
+			RADAR_Initialise(&base->radar, RADAR_BASERANGE, level, qtrue);
+			CP_UpdateMissionVisibleOnGeoscape();
+		}
 		break;
 	default:
 		break;
@@ -518,18 +521,21 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
  * @param[in] type Type of building which hasBuilding value has been modified from qtrue to qfalse
  * @param[in] base Pointer to base with given building.
  * @sa B_UpdateOneBaseBuildingStatusOnEnable
+ * @sa B_UpdateOneBaseBuildingStatus
  */
 static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t* base)
 {
 	switch (type) {
 	case B_ALIEN_CONTAINMENT:
-		/* if an alien containment is not functional, aliens dies... */
+		/* if an alien containment is not functional, aliens die... */
 		AC_KillAll(base);
 		break;
 	case B_RADAR:
 		RADAR_Initialise(&base->radar, 0.0f, 0.0f, qtrue);
 		CP_UpdateMissionVisibleOnGeoscape();
 		break;
+	case B_POWER:
+		/** @todo */
 	default:
 		break;
 	}
@@ -549,14 +555,12 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 	qboolean test = qfalse;
 	qboolean returnValue = qfalse;
 	int i;
-	building_t *dependsBuilding;
 
 	/* Construction / destruction may have changed the status of other building
 	 * We check that, but only for buildings which needed building */
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		dependsBuilding = gd.buildings[base->idx][i].dependsBuilding;
-		if (dependsBuilding
-		 && buildingType == dependsBuilding->buildingType) {
+		building_t *dependsBuilding = gd.buildings[base->idx][i].dependsBuilding;
+		if (dependsBuilding && buildingType == dependsBuilding->buildingType) {
 			/* gd.buildings[base->idx][i] needs built/removed building */
 			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
 				/* we can only activate a non operationnal building */
@@ -1109,17 +1113,10 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
  */
 void B_BuildingStatus (base_t* base, building_t* building)
 {
-	/* int daysLeft; */
 	int numberOfBuildings = 0;
 
 	assert(building);
 	assert(base);
-
-	/**
-	 * @todo Was this planned to be used anywhere (e.g. for B_STATUS_UNDER_CONSTRUCTION text)
-	 * or was it removed intentionally?
-	 * daysLeft = building->timeStart + building->buildTime - ccs.date.day;
-	*/
 
 	Cvar_Set("mn_building_status", _("Not set"));
 
@@ -1130,7 +1127,12 @@ void B_BuildingStatus (base_t* base, building_t* building)
 			Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
 	case B_STATUS_UNDER_CONSTRUCTION:
-		Cvar_Set("mn_building_status", "");
+		{
+			/** @todo Was this planned to be used anywhere (e.g. for B_STATUS_UNDER_CONSTRUCTION text)
+			 * or was it removed intentionally?
+			 * const int daysLeft = building->timeStart + building->buildTime - ccs.date.day; */
+			Cvar_Set("mn_building_status", "");
+		}
 		break;
 	case B_STATUS_CONSTRUCTION_FINISHED:
 		Cvar_Set("mn_building_status", _("Construction finished"));
@@ -1212,7 +1214,7 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
  * @param[in] base Pointer to base with given building.
  * @param[in] status Enum of buildingStatus_t which is status of given building.
  * @note This function checks whether a building has B_STATUS_WORKING status, and
- * @note then updates base status for particular buildings and base capacities.
+ * then updates base status for particular buildings and base capacities.
  */
 static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
@@ -1401,7 +1403,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	BDEF_InitialiseBaseSlots(base);
 
 	/* Reset Radar range */
-	RADAR_Initialise(&(baseCurrent->radar), 0.0f, 1.0f, qtrue);
+	RADAR_Initialise(&(base->radar), 0.0f, 1.0f, qtrue);
 }
 
 /**
@@ -3753,6 +3755,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, building->buildingStatus);
 			MSG_WriteLong(sb, building->timeStart);
 			MSG_WriteLong(sb, building->buildTime);
+			MSG_WriteByte(sb, building->level);
 			MSG_Write2Pos(sb, building->pos);
 		}
 		MSG_WriteShort(sb, gd.numBuildings[i]);
@@ -4010,6 +4013,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			building->buildingStatus = MSG_ReadByte(sb);
 			building->timeStart = MSG_ReadLong(sb);
 			building->buildTime = MSG_ReadLong(sb);
+/*			building->level = MSG_ReadByte(sb);*/
 			MSG_Read2Pos(sb, building->pos);
 		}
 		gd.numBuildings[i] = MSG_ReadShort(sb);
@@ -4167,7 +4171,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 		}
 
-		b->radar.range = MSG_ReadShort(sb);
+		RADAR_Initialise(&b->radar, MSG_ReadShort(sb), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
 
 		/* Alien Containment. */
 		AL_FillInContainment(b);	/* Fill Alien Containment with default values. */

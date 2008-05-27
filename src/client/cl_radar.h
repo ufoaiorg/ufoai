@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_UFOONGEOSCAPE	8
 /*#define DRAW_AIRCRAFT_RADAR_RANGE*/
 
-extern const float baseRadarRange;
-extern const float aircraftRadarRange;
+extern const float RADAR_BASERANGE;
+extern const float RADAR_AIRCRAFTRANGE;
 
 typedef struct radar_s {
 	int range;						/**< Range of radar */

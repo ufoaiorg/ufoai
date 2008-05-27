@@ -1187,7 +1187,7 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 	/* soften into a copy of the original image, as in-place would be incorrect */
 	out = (byte *)Mem_PoolAlloc(width * height * bpp, vid_imagePool, 0);
 	if (!out)
-		Sys_Error("TagMalloc: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
+		Sys_Error("Mem_PoolAlloc: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
 
 	memcpy(out, in, width * height * bpp);
 
@@ -1435,12 +1435,12 @@ void R_CreateRadarOverlay (void)
 	const int radarHeight = 256;
 	const int bpp = 4;
 
-	/* create new texture only once per game */
+	/* create new texture only once per life time, but reset it for every
+	 * new game (campaign start or game load) */
 	if (r_radarTexture) {
 		memset(r_radarSourcePic, 0, bpp * radarHeight * radarWidth);
 		memset(r_radarPic, 0, bpp * radarHeight * radarWidth);
-		/* mattn: Not needed!? */
-		/*R_UploadRadarCoverage(qfalse);*/
+		R_UploadRadarCoverage(qfalse);
 		return;
 	}
 
@@ -1508,15 +1508,11 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 				90.0f - 180.0f * y / ((float) radarHeight * bpp));
 			distance = MAP_GetDistance(pos, currentPos);
 			if (distance <= outerRadius) {
-				byte *dest;
-				dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
-				if (distance > innerRadius) {
-					if (dest[3] > outerAlpha) {
-						dest[3] = outerAlpha;
-					}
-				} else {
+				byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+				if (distance > innerRadius)
+					dest[3] = outerAlpha;
+				else
 					dest[3] = innerAlpha;
-				}
 			}
 		}
 	}
@@ -1562,8 +1558,8 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 		numgltextures++;
 	}
 	image = &gltextures[i];
+	image->has_alpha = qfalse;
 	image->index = i;
-
 	image->type = type;
 
 	len = strlen(name);

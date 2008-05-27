@@ -35,12 +35,12 @@ void R_UploadRadarCoverage(qboolean smooth);
 #endif
 
 /* Define radar range */
-const float baseRadarRange = 24.0f;
-const float aircraftRadarRange = 10.0f;
-/* outer circle radar is bigger than inner circle radar by 100 * outerCircleRatio percent */
-static const float outerCircleRatio = 0.41f;
-/* this is the multiplier applied to the radar range when the radar levels up */
-static const float radarUpgradeMultiplier = 0.4f;
+const float RADAR_BASERANGE = 24.0f;
+const float RADAR_AIRCRAFTRANGE = 10.0f;
+/** @brief outer circle radar is bigger than inner circle radar by 100 * RADAR_OUTER_CIRCLE_RATIO percent */
+static const float RADAR_OUTER_CIRCLE_RATIO = 0.41f;
+/** @brief this is the multiplier applied to the radar range when the radar levels up */
+static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
 
 /**
  * @brief Update base map radar coverage.
@@ -58,7 +58,7 @@ void RADAR_UpdateBaseRadarCoverage (void)
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
-		rangeTracking = (1.0f + outerCircleRatio) * base->radar.range;
+		rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * base->radar.range;
 		R_AddRadarCoverage(base->pos, base->radar.range, rangeTracking, qtrue);
 	}
 
@@ -77,7 +77,7 @@ static void RADAR_DrawCoverage (const radar_t* radar, vec2_t pos)
 {
 	float rangeTracking;
 
-	rangeTracking = (1.0f + outerCircleRatio) * radar->range;
+	rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
 	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
 }
 #endif
@@ -94,7 +94,7 @@ static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar
 	/* Set color */
 	R_Color(color);
 
-	rangeTracking = (1.0f + outerCircleRatio) * radar->range;
+	rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
 
 	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
 	MAP_MapDrawEquidistantPoints(node, pos, rangeTracking, color);
@@ -251,6 +251,10 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 
 /**
  * @brief Initialise radar
+ * @param[in] radar The radar to update/initialize
+ * @param[in] range New range of the radar
+ * @param[in] level The tech level of the radar
+ * @param[in] updateSourceRadarMap
  */
 void RADAR_Initialise (radar_t* radar, float range, float level, qboolean updateSourceRadarMap)
 {
@@ -259,9 +263,9 @@ void RADAR_Initialise (radar_t* radar, float range, float level, qboolean update
 	if (!level)
 		radar->range = 0.0f;
 	else
-		radar->range = range * (1 + (level - 1) * radarUpgradeMultiplier);
-	if (!radar->numUFOs)
-		radar->numUFOs = 0;
+		radar->range = range * (1 + (level - 1) * RADAR_UPGRADE_MULTIPLIER);
+
+	assert(radar->numUFOs >= 0);
 
 	if (updateSourceRadarMap && (radar->range - oldrange > UFO_EPSILON))
 		RADAR_UpdateBaseRadarCoverage();
@@ -307,7 +311,7 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 	numAircraftSensored = RADAR_IsUFOSensored(radar, num);	/* indice of ufo in radar list */
 	dist = MAP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (!ufo->notOnGeoscape && (radar->range + (wasUFOSensored ? radar->range * outerCircleRatio : 0) > dist)) {
+	if (!ufo->notOnGeoscape && (radar->range + (wasUFOSensored ? radar->range * RADAR_OUTER_CIRCLE_RATIO : 0) > dist)) {
 		/* UFO is inside the radar range */
 		if (numAircraftSensored < 0) {
 			/* UFO was not sensored by the radar */

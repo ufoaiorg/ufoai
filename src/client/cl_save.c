@@ -101,7 +101,7 @@ static qboolean SAV_PresaveArrayLoad (sizebuf_t* sb, void* data)
  * @brief Perform actions after loading a game for single player campaign
  * @sa SAV_GameLoad
  * @todo ATM, this function is only used to check that calculation of base capacity is OK. In near future (after 2.2.1 release ?), we should remove capacities from save/load, and calculate them here so that we don't break savegames if we change values in *.ufo of the way capacity code is handled (weight of items, number of aircraft per hangar, ...)
-	hasBuilding should also be removed from savegame (if we change dependencies of building in *.ufo hangar)
+ * hasBuilding should also be removed from savegame (if we change dependencies of building in *.ufo hangar)
  * @todo For now, this function always return qtrue. When this will be used to actually calculate capacities (see above), it should return qfalse if capacity.cur > capacity.max (see debug_basereset)
  * @todo Suggestion: Use seperate functions of the differnet sub-systems and use them here (see RS_PostLoadInit as an example).
  */
@@ -111,7 +111,7 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 	capacities_t oldcapacities[MAX_BASES][MAX_CAP];
 	qboolean oldhasBuilding[MAX_BASES][MAX_BUILDING_TYPE];
 
-	/* Set radar coverage */
+	/* Reset radar coverage */
 	R_CreateRadarOverlay();
 
 	RS_PostLoadInit();
