@@ -43,6 +43,85 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 mapConfig_t config;
 
 /**
+ * @brief print usage information.
+ */
+static void Usage(void){
+	Com_Printf("Usage: ufo2map <param1 <subparam1> <subparam2> <...>> <param2> <...> [map]\n"
+#ifdef _WIN32
+		"Even on Windows, use / slashes in the path\n"
+#endif
+		" -bounce <num>            : light bounces\n"
+		" -block num num           : \n"
+		" -blocks num num num num  : \n"
+		" -check                   : check (source) map, only print information.\n"
+		"                            no bsp is made.\n"
+		" subparamters for -check and -fix \n"
+		"     brushes              : \n"
+		"     entites              : \n"
+		" -fix                     : same subparameters as -check, changes the (source) map.\n"
+		"                            no bsp is made.\n"
+		" -chop                    : \n"
+		" -direct                  : \n"
+		" -draw                    : \n"
+		" -dump                    : \n"
+		" -extra                   : extra light samples\n"
+		" -entity                  : \n"
+		" -fulldetail              : don't treat details (and trans surfaces) as details\n"
+		" -h --help                : print (this) help and exit\n"
+		" -info                    : print bsp file info\n"
+		" -maxlight                : \n"
+		" -micro <float>           : \n"
+#ifndef _WIN32
+		" -nice <prio>             : priority level [normal unix nice level - e.g. 19 = IDLE]\n"
+#else
+		" -nice <prio>             : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
+#endif
+		" -nobackclip              : remove brushes that are not visible from birds view\n"
+		" -nocsg                   : \n"
+		" -nodetail                : \n"
+		" -nofill                  : \n"
+		" -nomerge                 : \n"
+		" -noprune                 : \n"
+		" -nosubdiv                : \n"
+		" -noshare                 : \n"
+		" -nofootstep              : don't generate a footstep file\n"
+		" -material                : generate a material file\n"
+		" -notjunc                 : \n"
+		" -nowater                 : \n"
+		" -noweld                  : \n"
+		" -noradiosity             : don't perform the radiosity calculations (day, night, all)\n"
+		" -onlyents                : only update entities\n"
+		" -quant                   : lightquant\n"
+		" -radchop                 : \n"
+		" -scale                   : lightscale\n"
+		" -v                       : verbose output\n"
+		" -verboseentities         : also be verbose about submodels (entities)\n"
+	);
+}
+
+/**
+ * @brief check for subparameters for -check and -fix options.
+ * @return the arg index before the one from which to continue checking for parameters.
+ */
+static int U2M_CheckFix_Subparameter(int argc, int i, char **argv){
+	/* terminate loop before last arg (path) or when we hit a param
+	 * (as opposed to a subparam). full parameters are prefixed with "-". */
+	while(++i < (argc - 1) && strstr(argv[i], "-") == NULL){
+		if (!strcmp(argv[i], "entities")) {
+			Com_Printf("  %s entities\n", config.fixMap ? "fixing" : "checking");
+			config.chkEntities = qtrue;
+		} else if (!strcmp(argv[i], "brushes")) {
+			Com_Printf("  %s brushes\n", config.fixMap ? "fixing" : "checking");
+			config.chkBrushes = qtrue;
+		} else {
+			Com_Printf("  WARNING: %s subparameter not understood:%s\n", config.fixMap ? "fix" : "check", argv[i]);
+		}
+
+	}
+	return --i;
+}
+
+/**
  * @brief Check for bsping command line parameters
  * @note Some are also used for radiosity
  */
@@ -61,13 +140,14 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 		} else if (!strcmp(argv[i], "-check")) {
 			Com_Printf("check = true\n");
 			config.performMapCheck = qtrue;
-			config.generateFootstepFile = qfalse;
-			config.generateMaterialFile = qfalse;
+			i = U2M_CheckFix_Subparameter(argc, i, argv);
 		} else if (!strcmp(argv[i], "-fix")) {
 			Com_Printf("fix = true\n");
 			config.fixMap = qtrue;
-			config.generateFootstepFile = qfalse;
-			config.generateMaterialFile = qfalse;
+			i = U2M_CheckFix_Subparameter(argc, i, argv);
+		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+			Usage();
+			exit(0);
 		} else if (!strcmp(argv[i], "-info")) {
 			config.info = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
@@ -172,6 +252,16 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			/* Last param is the map path, every other param should have been caught by now. */
 			Com_Printf("*** parameter not understood: %s\n",argv[i]);
 		}
+	}
+
+	if (config.fixMap && config.performMapCheck) {
+		Sys_Error("do not specify both -fix and -check\n");
+	}
+
+	/* if any -chk* option is active then skip these */
+	if (config.performMapCheck || config.fixMap) {
+		config.generateFootstepFile = qfalse;
+		config.generateMaterialFile = qfalse;
 	}
 }
 
@@ -333,51 +423,10 @@ int main (int argc, char **argv)
 	U2M_BSP_Parameter(argc, argv);
 	U2M_RAD_Parameter(argc, argv);
 
-	if (argc < 2)
-		Sys_Error("Usage: ufo2map <parameter> [map]\n"
-#ifdef _WIN32
-		"Even on Windows, use / slashes in the path\n"
-#endif
-		" -bounce <num>            : light bounces\n"
-		" -block num num           : \n"
-		" -blocks num num num num  : \n"
-		" -check                   : Performs a mapfile (source) check\n"
-		" -chop                    : \n"
-		" -direct                  : \n"
-		" -draw                    : \n"
-		" -dump                    : \n"
-		" -extra                   : extra light samples\n"
-		" -entity                  : \n"
-		" -fulldetail              : don't treat details (and trans surfaces) as details\n"
-		" -info                    : print bsp file info\n"
-		" -maxlight                : \n"
-		" -micro <float>           : \n"
-#ifndef _WIN32
-		" -nice <prio>             : priority level [normal unix nice level - e.g. 19 = IDLE]\n"
-#else
-		" -nice <prio>             : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
-#endif
-		" -nobackclip              : remove brushes that are not visible from birds view\n"
-		" -nocsg                   : \n"
-		" -nodetail                : \n"
-		" -nofill                  : \n"
-		" -nomerge                 : \n"
-		" -noprune                 : \n"
-		" -nosubdiv                : \n"
-		" -noshare                 : \n"
-		" -nofootstep              : don't generate a footstep file\n"
-		" -material                : generate a material file\n"
-		" -notjunc                 : \n"
-		" -nowater                 : \n"
-		" -noweld                  : \n"
-		" -noradiosity             : don't perform the radiosity calculations (day, night, all)\n"
-		" -onlyents                : only update entities\n"
-		" -quant                   : lightquant\n"
-		" -radchop                 : \n"
-		" -scale                   : lightscale\n"
-		" -v                       : verbose output\n"
-		" -verboseentities         : also be verbose about submodels (entities)\n"
-	);
+	if (argc < 2) {
+		Usage();
+		Sys_Error("At least provide 1 argument: the map filename.");
+	}
 
 	Swap_Init();
 
@@ -415,16 +464,15 @@ int main (int argc, char **argv)
 		UnparseEntities();
 
 		WriteBSPFile(bspFilename);
-	} else if (config.performMapCheck) {
-		Com_Printf("Starting map check\n");
+	} else if (config.performMapCheck || config.fixMap) {
+		Com_Printf("Starting map %ss\n", config.fixMap ? "fixe" : "checks");
 		LoadMapFile(mapFilename);
-		CheckBrushes();
-		CheckEntities();
-		return 0;
-	} else if (config.fixMap) {
-		Com_Printf("Trying to fix the map\n");
-		LoadMapFile(mapFilename);
-		FixErrors();
+		if (config.chkBrushes) CheckBrushes();
+		if (config.chkEntities) CheckEntities();
+		if (config.fixMap) {
+				UnparseEntities();	/* update dentdata */
+				WriteMapFile(GetScriptFile()); /* this function does its' own printf */
+		}
 		return 0;
 	} else {
 		/* start from scratch */

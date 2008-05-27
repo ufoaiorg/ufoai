@@ -617,13 +617,4 @@ void CheckBrushes (void)
 	}
 }
 
-void FixErrors (void)
-{
-	CheckBrushes();
-	CheckEntities();
 
-	/* update dentdata */
-	UnparseEntities();
-
-	WriteMapFile(GetScriptFile());
-}
