@@ -4013,7 +4013,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			building->buildingStatus = MSG_ReadByte(sb);
 			building->timeStart = MSG_ReadLong(sb);
 			building->buildTime = MSG_ReadLong(sb);
-/*			building->level = MSG_ReadByte(sb);*/
+			building->level = MSG_ReadByte(sb);
 			MSG_Read2Pos(sb, building->pos);
 		}
 		gd.numBuildings[i] = MSG_ReadShort(sb);
