@@ -44,12 +44,14 @@ public class BrushList {
 		//for each brush, make a list of brushes that might touch it, and store it in the brush
 		for (int i = 0;i < brushes.size();i++) {
 			Brush bi = brushes.get (i); 
+			//System.out.printf("brush %d has box %s%n",i,bi.boundingBoxToString());
 			for (int j = 0;j < brushes.size();j++) {//j needs a ref to i and i needs a ref to j
 				Brush bj = brushes.get (j);
 				if (i != j && bi.boundingBoxIntersects (bj) ) {
 					bi.addToBrushInteractionList (bj);
 				}
 			}
+			//System.out.printf("BrushList.go: brush %d has %d brushes in its' interaction list%n",i,bi.interactionList.size());
 		}
 		
 		TimeCounter.reportf ("%d immutable brushes found",brushes.size ());

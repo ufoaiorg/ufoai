@@ -219,11 +219,11 @@ public class Brush {
 	}
 
 	/** @return true if <b>this</b> Brush has a bounding box that intersects
-	 *  with that of the supplied bounding box. */
+	 *  with that of the supplied bounding box. Uses Epsilon.distance */
 	public boolean boundingBoxIntersects (Brush a) {
-		boolean zNoOverlap = this.zmax < a.zmin || this.zmin > a.zmax ;
-		boolean yNoOverlap = this.ymax < a.ymin || this.ymin > a.ymax ;
-		boolean xNoOverlap = this.xmax < a.xmin || this.xmin > a.xmax ;
+		boolean zNoOverlap = this.zmax < a.zmin-Epsilon.distance || this.zmin-Epsilon.distance > a.zmax ;
+		boolean yNoOverlap = this.ymax < a.ymin-Epsilon.distance || this.ymin-Epsilon.distance > a.ymax ;
+		boolean xNoOverlap = this.xmax < a.xmin-Epsilon.distance || this.xmin-Epsilon.distance > a.xmax ;
 		return !zNoOverlap && !yNoOverlap && !xNoOverlap;
 	}
 
