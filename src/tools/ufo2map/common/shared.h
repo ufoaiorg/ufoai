@@ -85,6 +85,7 @@ typedef struct mapConfig_s {
 	qboolean performMapCheck;
 	qboolean chkEntities;
 	qboolean chkBrushes;
+	qboolean chkAll;
 	qboolean fixMap;
 
 	float day_ambient_red;

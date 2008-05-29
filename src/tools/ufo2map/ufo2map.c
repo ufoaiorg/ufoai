@@ -55,9 +55,10 @@ static void Usage(void){
 		" -blocks num num num num  : \n"
 		" -check                   : check (source) map, only print information.\n"
 		"                            no bsp is made.\n"
-		" subparamters for -check and -fix \n"
-		"     brushes              : \n"
-		"     entites              : \n"
+		" subparameters for -check and -fix \n"
+		"     brushes bru          : \n"
+		"     entities ent         : \n"
+		"     all                  : synonym for brushes entities\n"
 		" -fix                     : same subparameters as -check, changes the (source) map.\n"
 		"                            no bsp is made.\n"
 		" -chop                    : \n"
@@ -106,15 +107,18 @@ static void Usage(void){
 static int U2M_CheckFix_Subparameter(int argc, int i, char **argv){
 	/* terminate loop before last arg (path) or when we hit a param
 	 * (as opposed to a subparam). full parameters are prefixed with "-". */
-	while(++i < (argc - 1) && strstr(argv[i], "-") == NULL){
-		if (!strcmp(argv[i], "entities")) {
+	while(++i < (argc - 1) && argv[i][0] != '-') {//strstr(argv[i], "-") == NULL
+		if (!strcmp(argv[i], "entities") || !strcmp(argv[i], "ent")) {
 			Com_Printf("  %s entities\n", config.fixMap ? "fixing" : "checking");
 			config.chkEntities = qtrue;
-		} else if (!strcmp(argv[i], "brushes")) {
+		} else if (!strcmp(argv[i], "brushes") || !strcmp(argv[i], "bru")) {
 			Com_Printf("  %s brushes\n", config.fixMap ? "fixing" : "checking");
 			config.chkBrushes = qtrue;
+		} else if (!strcmp(argv[i], "all")) {
+			Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
+			config.chkAll = qtrue;
 		} else {
-			Com_Printf("  WARNING: %s subparameter not understood:%s\n", config.fixMap ? "fix" : "check", argv[i]);
+			Com_Printf("  WARNING: %s subparameter not understood:%s  try --help for more info\n", config.fixMap ? "fix" : "check", argv[i]);
 		}
 
 	}
@@ -250,7 +254,7 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			config.nobackclip = qtrue;
 		} else if (i<(argc-1)){
 			/* Last param is the map path, every other param should have been caught by now. */
-			Com_Printf("*** parameter not understood: %s\n",argv[i]);
+			Com_Printf("*** parameter not understood: %s try --help for more info\n",argv[i]);
 		}
 	}
 
@@ -465,10 +469,10 @@ int main (int argc, char **argv)
 
 		WriteBSPFile(bspFilename);
 	} else if (config.performMapCheck || config.fixMap) {
-		Com_Printf("Starting map %ss\n", config.fixMap ? "fixe" : "checks");
+		Com_Printf("Starting map %s\n", config.fixMap ? "fixes" : "checks");
 		LoadMapFile(mapFilename);
-		if (config.chkBrushes) CheckBrushes();
-		if (config.chkEntities) CheckEntities();
+		if (config.chkBrushes || config.chkAll) CheckBrushes();
+		if (config.chkEntities || config.chkAll) CheckEntities();
 		if (config.fixMap) {
 				UnparseEntities();	/* update dentdata */
 				WriteMapFile(GetScriptFile()); /* this function does its' own printf */
