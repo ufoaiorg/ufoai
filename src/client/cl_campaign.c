@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void R_IncreaseXVILevel(const vec2_t pos);
 void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
 qboolean R_XVIMapCopy(byte *out, int size);
+void R_CreateRadarOverlay(void);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -1177,9 +1178,8 @@ static void CP_TerrorMissionGo (mission_t *mission)
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
 		int counter;
-		linkedList_t *nationList;
-		qboolean nationTest;
-		nationTest = CP_ChooseNation(mission, &nationList);
+		linkedList_t *nationList = NULL;
+		const qboolean nationTest = CP_ChooseNation(mission, &nationList);
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : NULL))
 				continue;
@@ -6644,6 +6644,7 @@ static void CL_GameNew_f (void)
 
 	B_NewBases();
 	PR_ProductionInit();
+	R_CreateRadarOverlay();
 
 	/* ensure ccs.singleplayer is set to true */
 	CL_StartSingleplayer(qtrue);

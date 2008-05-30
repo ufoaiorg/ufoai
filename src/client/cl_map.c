@@ -32,10 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
 
-#ifdef DRAW_AIRCRAFT_RADAR_RANGE
 void R_UploadRadarCoverage(qboolean smooth);
 void R_InitializeRadarOverlay(qboolean source);
-#endif
 
 /*
 ==============================================================
@@ -1246,11 +1244,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile");
 	}
 
-#ifdef DRAW_AIRCRAFT_RADAR_RANGE
 	/* Initialise radar range (will be filled below) */
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 		R_InitializeRadarOverlay(qfalse);
-#endif
 
 	/* draw bases */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
@@ -1382,11 +1378,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	else
 		MN_MenuTextReset(TEXT_XVI);
 
-#ifdef DRAW_AIRCRAFT_RADAR_RANGE
 	/* Smooth Radar Coverage */
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 		R_UploadRadarCoverage(qfalse);
-#endif
 }
 
 /**

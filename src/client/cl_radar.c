@@ -30,9 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
 void R_InitializeRadarOverlay(qboolean source);
-#ifndef DRAW_AIRCRAFT_RADAR_RANGE
 void R_UploadRadarCoverage(qboolean smooth);
-#endif
 
 /* Define radar range */
 const float RADAR_BASERANGE = 24.0f;
@@ -62,13 +60,10 @@ void RADAR_UpdateBaseRadarCoverage (void)
 		R_AddRadarCoverage(base->pos, base->radar.range, rangeTracking, qtrue);
 	}
 
-#ifndef DRAW_AIRCRAFT_RADAR_RANGE
 	R_InitializeRadarOverlay(qfalse);
 	R_UploadRadarCoverage(qtrue);
-#endif
 }
 
-#ifdef DRAW_AIRCRAFT_RADAR_RANGE
 /**
  * @brief Update map radar coverage with moving radar
  * @note this is called on every frame
@@ -80,7 +75,6 @@ static void RADAR_DrawCoverage (const radar_t* radar, vec2_t pos)
 	rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
 	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
 }
-#endif
 
 /**
  * @brief Show Radar coverage
@@ -114,9 +108,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 
 	/* Show radar range zones */
 	RADAR_DrawLineCoverage(node, radar, pos);
-#ifdef DRAW_AIRCRAFT_RADAR_RANGE
 	RADAR_DrawCoverage(radar,pos);
-#endif
 
 	/* Set color */
 	R_Color(color);

@@ -379,11 +379,9 @@ static void AddBrushBevels (mapbrush_t *b)
 						/* if some point was at the front */
 						if (l != w2->numpoints)
 							break;
-#if 0
 						/* if no points at the back then the winding is on the bevel plane */
 						if (minBack > -0.1f)
 							break;
-#endif
 					}
 
 					if (k != b->numsides)

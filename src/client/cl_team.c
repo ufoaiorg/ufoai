@@ -412,7 +412,7 @@ void CL_ResetCharacters (base_t* const base)
 {
 	int i;
 	employee_t *employee;
-	linkedList_t *hiredEmployees;
+	linkedList_t *hiredEmployees = NULL;
 	linkedList_t *hiredEmployeesTemp;
 
 	/* Reset inventory data of all hired employees that can be sent into combat (i.e. characters with inventories).
@@ -1157,7 +1157,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
 	int p;
 	employee_t *employee;
-	linkedList_t *employeesInBase;
+	linkedList_t *employeesInBase = NULL;
 	linkedList_t *employeesInBaseTemp;
 	base_t *base;
 
@@ -1954,7 +1954,7 @@ void CL_ResetTeams (void)
 static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
 	employee_t *employee;
-	linkedList_t *hiredEmployees;
+	linkedList_t *hiredEmployees = NULL;
 	linkedList_t *hiredEmployeesTemp;
 	int j;
 

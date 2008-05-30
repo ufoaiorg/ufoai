@@ -1260,13 +1260,15 @@ void LIST_Remove (linkedList_t **list, linkedList_t *entry)
  */
 void LIST_Delete (linkedList_t **list)
 {
-	linkedList_t **l = list;
+	linkedList_t *next;
+	linkedList_t *l = *list;
 
-	while (*l) {
-		*list = (*l)->next;
-		if (!(*l)->ptr)
-			Mem_Free((*l)->data);
-		Mem_Free(*l);
-		*l = *list;
+	while (l) {
+		next = l->next;
+		if (!l->ptr)
+			Mem_Free(l->data);
+		Mem_Free(l);
+		l = next;
 	}
+	*list = NULL;
 }

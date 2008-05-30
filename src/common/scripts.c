@@ -912,7 +912,7 @@ const char *air_slot_type_strings[] = {
 CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
 
 
-static linkedList_t *parseItemWeapons;	/**< Temporary list of weapon ids as parsed from the ufo file "weapon_mod <id>"
+static linkedList_t *parseItemWeapons = NULL;	/**< Temporary list of weapon ids as parsed from the ufo file "weapon_mod <id>"
 										 * in Com_ParseItem and used in Com_AddObjectLinks. */
 
 /**
