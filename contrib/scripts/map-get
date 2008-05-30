@@ -9,7 +9,7 @@ from logging import debug, error, info
 import optparse
 
 URI = 'http://ufo.ludwigf.org/maps'
-__version__ = '0.0.2~rc3'
+__version__ = '0.0.2'
 
 """
 written by Florian Ludwig <dino@phidev.org>
@@ -22,6 +22,7 @@ Changelog
  * allow upgrade even if ufo2map version differs
  * search root of ufo tree
  * display summary
+ * generation: guess if ufo2map changed and maps need to be rebuild
 """
 
 
@@ -129,8 +130,6 @@ def upgrade(arg):
     print '%d upgraded, %d version mismatched' % (updated, missmatch)
 
 
-    dst = args[0]
-    changed_maps = args[1:]
 def gen(args):
     from random import choice
     if len(args) < 1:
@@ -160,11 +159,26 @@ def gen(args):
     os.system('make ufo2map')
     
     # try to guess if rebuild of all maps is needed.
+    old_maps = old.keys()
+    if 'ufo2map' in old_maps:
+        old_maps.remove('ufo2map')
     try:
-        test_map = choice(list(set(old.keys()) - set(changed_maps)))
+        test_map = choice(list(set(old_maps) - set(changed_maps)))
     except IndexError:
         # all maps changed? wow.
         test_map = False
+
+    if test_map:
+        old_md5 = old[test_map]
+        os.unlink(test_map)
+        
+        # taken from build/maps.mk
+        UFO2MAPFLAGS = '-nice 19 -extra'
+        os.system('./ufo2map %s %s' % UFO2MAPFLAGS, test.map[:-3] + '.map')
+        if md5sum(test_map) != old_md5:
+            print 'Compiler must have changed significant! Compiling all maps again.'
+            for i in old_maps:
+                os.unlink(i)
 
     os.system('make maps -j 2')
     print
