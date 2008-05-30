@@ -196,7 +196,7 @@ static qboolean HOS_AddToInMissionEmployeeList (const employee_t* employee, base
  */
 qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 {
-	int healing = 1;
+	float healing = 1.0f;
 
 	if (hospital)
 		healing = GET_HP_HEALING(chr->score.skills[ABILITY_POWER]);
@@ -204,12 +204,12 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 	assert(chr);
 	if (chr->HP < chr->maxHP) {
 		/* if the character has less that 100 hitpoints, he will be disadvantaged by using the percentage
-		 * method of allocating hitpoints.  So just give the character "healing" as Hitpoints, otherwise 
+		 * method of allocating hitpoints.  So just give the character "healing" as Hitpoints, otherwise
 		 * allocate "healing" as a percentage of the characters total hitpoints. */
 		if (chr->maxHP < 100)
 			chr->HP = min(chr->HP + healing, chr->maxHP);
 		else
-			chr->HP = min(chr->HP + ((healing/100) * chr->HP), chr->maxHP);
+			chr->HP = min(chr->HP + ((healing / 100.0f) * chr->maxHP), chr->maxHP);
 
 		if (chr->HP == chr->maxHP)
 			return qfalse;
