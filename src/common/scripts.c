@@ -2193,8 +2193,7 @@ void Com_AddObjectLinks (void)
 	}
 
 	/* Clear the temporary list. */
-	LIST_Delete(parseItemWeapons);
-	parseItemWeapons = NULL;
+	LIST_Delete(&parseItemWeapons);
 
 	/* Add links to ammos */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {

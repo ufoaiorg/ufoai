@@ -141,9 +141,7 @@ static void E_EmployeeList_f (void)
 	/* reset the employee count */
 	employeesInCurrentList = 0;
 
-	LIST_Delete(employeeList);
-	employeeList = NULL;
-
+	LIST_Delete(&employeeList);
 
 	if (hiredEmployeeIdx < 0) {
 		/* Reset scrolling when no specific entry was given. */
@@ -423,28 +421,26 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 {
 	int i;	/* Index in the gd.employee[type][i] array. */
 	int j;	/* The number/index of found hired employees. */
-	employee_t *employee;
 
 	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetHiredEmployees: Unknown EmployeeType: %i\n", type);
+		*hiredEmployees = NULL;
 		return -1;
 	}
 
-	if (hiredEmployees)
-		LIST_Delete(*hiredEmployees);
-	*hiredEmployees = NULL;
-	j = 0;
-
+	LIST_Delete(hiredEmployees);
 
 	for (i = 0, j = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
+		employee_t *employee = &gd.employees[type][i];
 		if (employee->hired
-		 && (employee->baseHired == base || !base)
-		 && !employee->transfer) {
+		 && (employee->baseHired == base || !base) && !employee->transfer) {
 			LIST_AddPointer(hiredEmployees, employee);
 			j++;
 		}
 	}
+
+	if (!j)
+		*hiredEmployees = NULL;
 
 	return j;
 }
@@ -458,7 +454,7 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
  */
 employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 {
-	linkedList_t *hiredEmployees = NULL;
+	linkedList_t *hiredEmployees;
 	linkedList_t *hiredEmployeesTemp;
 	employee_t *employee;
 
@@ -478,8 +474,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 		hiredEmployeesTemp = hiredEmployeesTemp->next;
 	}
 
-	LIST_Delete(hiredEmployees);
-	hiredEmployees = NULL;
+	LIST_Delete(&hiredEmployees);
 
 	if (!employee)
 		Com_Printf("Could not get unhired ugv/robot.\n");
@@ -1401,14 +1396,13 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 	int i, k;
 	employeeType_t j;
 	int td;	/**< Team-definition index */
-	employee_t* e;
 	int base, building;
 
 	/* load inventories */
 	for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 		gd.numEmployees[j] = MSG_ReadShort(sb);
 		for (i = 0; i < gd.numEmployees[j]; i++) {
-			e = &gd.employees[j][i];
+			employee_t *e = &gd.employees[j][i];
 			e->type = MSG_ReadByte(sb);
 			if (e->type != j)
 				Com_Printf("......error in loading employee - type values doesn't match\n");

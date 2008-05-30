@@ -1258,15 +1258,15 @@ void LIST_Remove (linkedList_t **list, linkedList_t *entry)
  * @sa LIST_Add
  * @sa LIST_Remove
  */
-void LIST_Delete (linkedList_t *list)
+void LIST_Delete (linkedList_t **list)
 {
-	linkedList_t *l = list;
+	linkedList_t **l = list;
 
-	while (l) {
-		list = l->next;
-		if (!l->ptr)
-			Mem_Free(l->data);
-		Mem_Free(l);
-		l = list;
+	while (*l) {
+		*list = (*l)->next;
+		if (!(*l)->ptr)
+			Mem_Free((*l)->data);
+		Mem_Free(*l);
+		*l = *list;
 	}
 }

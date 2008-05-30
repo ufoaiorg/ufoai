@@ -77,7 +77,7 @@ void LIST_AddString(linkedList_t** list, const char* data);
 void LIST_AddPointer(linkedList_t** listDest, void* data);
 linkedList_t* LIST_Add(linkedList_t** list, const byte* data, size_t length);
 const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* string);
-void LIST_Delete(linkedList_t *list);
+void LIST_Delete(linkedList_t **list);
 void LIST_Remove(linkedList_t **list, linkedList_t *entry);
 
 /*============================================= */

@@ -274,21 +274,21 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 
 	/* draw scrollbars */
 	if (node->scrollbar && node->height && node->textLines > node->height) {
-		const int sbx = node->pos[0] + (node->scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
-		const float sbh = node->size[1] * node->height / node->textLines * MN_SCROLLBAR_HEIGHT;
+		const int scrollbarX = node->pos[0] + (node->scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
+		const float scrollbarY = node->size[1] * node->height / node->textLines * MN_SCROLLBAR_HEIGHT;
 
-		R_DrawFill(sbx, 
-			node->pos[1], 
-			MN_SCROLLBAR_WIDTH, 
-			node->size[1], 
-			ALIGN_UL, 
+		R_DrawFill(scrollbarX,
+			node->pos[1],
+			MN_SCROLLBAR_WIDTH,
+			node->size[1],
+			ALIGN_UL,
 			scrollbarBackground);
 
-		R_DrawFill(sbx, 
-			node->pos[1] + (node->size[1] - sbh) * node->textScroll / (node->textLines - node->height),
-			MN_SCROLLBAR_WIDTH, 
-			sbh, 
-			ALIGN_UL, 
+		R_DrawFill(scrollbarX,
+			node->pos[1] + (node->size[1] - scrollbarY) * node->textScroll / (node->textLines - node->height),
+			MN_SCROLLBAR_WIDTH,
+			scrollbarY,
+			ALIGN_UL,
 			scrollbarColor);
 	}
 }
@@ -302,11 +302,7 @@ void MN_MenuTextReset (int menuTextID)
 	assert(menuTextID >= 0);
 
 	mn.menuText[menuTextID] = NULL;
-
-	if (mn.menuTextLinkedList[menuTextID]) {
-		LIST_Delete(mn.menuTextLinkedList[menuTextID]);
-		mn.menuTextLinkedList[menuTextID] = NULL;
-	}
+	LIST_Delete(&mn.menuTextLinkedList[menuTextID]);
 }
 
 

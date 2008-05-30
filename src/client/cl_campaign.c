@@ -40,7 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void R_IncreaseXVILevel(const vec2_t pos);
 void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
 qboolean R_XVIMapCopy(byte *out, int size);
-void R_CreateRadarOverlay(void);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -1193,8 +1192,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 			CP_MissionRemove(mission);
 			return;
 		}
-		if (nationTest)
-			LIST_Delete(nationList);
+		LIST_Delete(&nationList);
 	} else {
 		Com_Printf("CP_TerrorMissionGo: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
@@ -4936,6 +4934,9 @@ static void CP_SetMissionVars (void)
  * @brief Select the mission type and start the map from mission definition
  * @param[in] mission Mission definition to start the map from
  * @sa CL_GameGo
+ * @note Also sets the terrain textures
+ * @sa Mod_LoadTexinfo
+ * @sa B_AssembleMap_f
  */
 static void CP_StartMissionMap (mission_t* mission)
 {
@@ -4997,8 +4998,8 @@ static void CP_StartMissionMap (mission_t* mission)
 
 /**
  * @brief Starts a selected mission
- *
- * @note Checks whether a dropship is near the landing zone and whether it has a team on board
+ * @note Checks whether a dropship is near the landing zone and whether
+ * it has a team on board
  * @sa CP_SetMissionVars
  */
 static void CL_GameGo (void)
@@ -5073,10 +5074,9 @@ static void CL_GameGo (void)
  * @sa CP_MissionTriggerFunctions
  * @sa CP_ExecuteMissionTrigger
  */
-static void CP_AddItemAsCollected (void)
+static void CP_AddItemAsCollected_f (void)
 {
 	int i, baseID;
-	objDef_t *item;
 	const char* id;
 
 	/* baseid is appened in mission trigger function */
@@ -5090,12 +5090,12 @@ static void CP_AddItemAsCollected (void)
 
 	/* i = item index */
 	for (i = 0; i < csi.numODs; i++) {
-		item = &csi.ods[i];
+		objDef_t *item = &csi.ods[i];
 		if (!Q_strncmp(id, item->id, MAX_VAR)) {
 			gd.bases[baseID].storage.num[i]++;
 			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
 			assert(item->tech);
-			RS_MarkCollected((technology_t*)(item->tech));
+			RS_MarkCollected(item->tech);
 		}
 	}
 }
@@ -5130,7 +5130,7 @@ static void CP_ChangeNationHappiness_f (void)
 
 /** @brief mission trigger functions */
 static const cmdList_t cp_commands[] = {
-	{"cp_add_item", CP_AddItemAsCollected, "Add an item as collected"},
+	{"cp_add_item", CP_AddItemAsCollected_f, "Add an item as collected"},
 	{"cp_changehappiness", CP_ChangeNationHappiness_f, "Function to raise or lower nation hapiness."},
 
 	{NULL, NULL, NULL}
@@ -5178,10 +5178,9 @@ void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
 
 /**
  * @brief Checks whether you have to play this mission
- *
  * You can mark a mission as story related.
- * If a mission is story related the cvar game_autogo is set to 0
- * If this cvar is 1 - the mission dialog will have a auto mission button
+ * If a mission is story related the cvar @c game_autogo is set to @c 0
+ * If this cvar is @c 1 - the mission dialog will have a auto mission button
  * @sa CL_GameAutoGo_f
  */
 static void CL_GameAutoCheck_f (void)
@@ -5204,8 +5203,87 @@ static void CL_GameAutoCheck_f (void)
 }
 
 /**
- * @brief Handles the auto mission for none storyrelated missions or missions that
- * failed to assembly
+ * @brief Calculates the win probability for an auto mission
+ * @todo This needs work - also take mis->initialIndividualInterest into account?
+ * @returns a float value that is between 0 and 1
+ * @param[in] mis The mission we are calculating the probability for
+ * @param[in] base The base we are trying to defend in case of a base attack mission
+ * @param[in] aircraft Your aircraft that has reached the mission location in case
+ * this is no base attack mission
+ */
+static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, const aircraft_t *aircraft)
+{
+	float winProbability;
+
+	if (mis->stage != STAGE_BASE_ATTACK) {
+		assert(aircraft);
+		switch (mis->category) {
+		case INTERESTCATEGORY_TERROR_ATTACK:
+			/* very hard to win this */
+			/* @todo change the formular here to reflect the above comment */
+			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
+			break;
+		case INTERESTCATEGORY_XVI:
+			/* not that hard to win this, they want to spread xvi - no real terror mission */
+			/* @todo change the formular here to reflect the above comment */
+			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
+			break;
+		default:
+			/* @todo change the formular here to reflect the above comments */
+			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
+			break;
+		}
+		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, aircraft->teamSize, winProbability);
+
+		return winProbability;
+	} else {
+		linkedList_t *hiredSoldiers, *listPos;
+		/* @todo Take EMPL_ROBOT into account, too */
+		const int numSoldiers = E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiers);
+
+		assert(base);
+
+		/* a base defence mission can only be won if there are soldiers that
+		 * defend the attacked base */
+		if (numSoldiers) {
+			float increaseWinProbability = 0.0f;
+			listPos = hiredSoldiers;
+			while (listPos) {
+				const employee_t *employee = (employee_t *)listPos->data;
+				/* don't use an employee that is currently being transfered */
+				if (!employee->transfer) {
+					const character_t *chr = &employee->chr;
+					const chrScoreGlobal_t *score = &chr->score;
+					/* if the soldier was ever on a mission */
+					if (score->assignedMissions) {
+						/*const rank_t *rank = &gd.ranks[score->rank];*/
+						/* @todo We need some factor in the rank - otherwise this
+						 * is just an image that we can't use for anything else */
+						/* @sa CHRSH_CharGetMaxExperiencePerMission */
+						if (score->experience[SKILL_CLOSE] > 70) { /* @todo fix this value */
+							increaseWinProbability += 0.1; /* @todo we need a formular here */
+						}
+					}
+				}
+				listPos = listPos->next;
+			}
+
+			winProbability = exp((0.5 - .15 * difficulty->integer) * numSoldiers - ccs.battleParameters.aliens);
+			winProbability += increaseWinProbability;
+
+			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, numSoldiers, winProbability);
+			return winProbability;
+		} else {
+			/* No soldier to defend the base */
+			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: 0  -- battle lost\n", ccs.battleParameters.aliens);
+			return 0.0f;
+		}
+	}
+}
+
+/**
+ * @brief Handles the auto mission for none storyrelated missions or missions
+ * that failed to assembly
  * @sa CL_GameAutoGo_f
  * @sa CL_Drop
  * @sa AL_CollectingAliens
@@ -5214,10 +5292,10 @@ void CL_GameAutoGo (mission_t *mis)
 {
 	qboolean won;
 	float winProbability;
-	aircraft_t *aircraft;
-	int i, amount = 0;
-	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
-	aliensTmp_t *cargo;
+	/* maybe gd.interceptAircraft is changed in some functions we call here
+	 * so store a local pointer to guarantee that we access the right aircraft */
+	aircraft_t *aircraft = gd.interceptAircraft;
+	int i;
 
 	assert(mis);
 
@@ -5231,12 +5309,6 @@ void CL_GameAutoGo (mission_t *mis)
 			return;
 		}
 
-		aircraft = gd.interceptAircraft;
-		assert(aircraft);
-		baseCurrent = aircraft->homebase;
-		assert(baseCurrent);
-		baseCurrent->aircraftCurrent = aircraft;	/* Might not be needed, but it's used later on in AIR_AircraftReturnToBase_f */
-
 		if (!mis->active) {
 			MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 			return;
@@ -5246,30 +5318,26 @@ void CL_GameAutoGo (mission_t *mis)
 			Cvar_Set("game_autogo", "0");
 			return;
 		}
-		/* FIXME: This needs work */
-		winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
-		won = frand() < winProbability;
-		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, aircraft->teamSize, winProbability);
+
+		/* FIXME: Check whether we really have to change baseCurrent here - I honestly don't think so */
+		assert(aircraft);
+		baseCurrent = aircraft->homebase;
+		baseCurrent->aircraftCurrent = aircraft;	/* Might not be needed, but it's used later on in AIR_AircraftReturnToBase_f */
+
+		winProbability = CP_GetWinProbabilty(mis, NULL, aircraft);
 	} else {
-		const int numSoldiers = E_CountHired(baseCurrent, EMPL_SOLDIER);
+		/* FIXME: Check whether we really have to change baseCurrent here - I honestly don't think so */
 		baseCurrent = (base_t*)mis->data;
-		assert(baseCurrent);
-		aircraft = NULL;
-		if (numSoldiers) {
-			winProbability = exp((0.5 - .15 * difficulty->integer) * numSoldiers - ccs.battleParameters.aliens);
-			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, numSoldiers, winProbability);
-			won = frand() < winProbability;
-		} else {
-			/* No soldier to defend the base */
-			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: 0  -- battle lost\n", ccs.battleParameters.aliens);
-			won = qfalse;
-		}
+		winProbability = CP_GetWinProbabilty(mis, (base_t*)mis->data, NULL);
 	}
 
 	MN_PopMenu(qfalse);
 
+	won = frand() < winProbability;
+
 	/* update nation opinions */
 	if (won) {
+		int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
 		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, selectedMission);
 		CP_CheckLostCondition(!won, mis, civiliansKilled);
 	} else {
@@ -5278,6 +5346,9 @@ void CL_GameAutoGo (mission_t *mis)
 	}
 
 	if (mis->stage != STAGE_BASE_ATTACK) {
+		int amount;
+		aliensTmp_t *cargo;
+
 		assert(aircraft);
 
 		/* collect all aliens as dead ones */
@@ -5287,11 +5358,12 @@ void CL_GameAutoGo (mission_t *mis)
 		memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
 
 		/* @todo: Check whether there are already aliens
-		* @sa AL_CollectingAliens */
+		 * @sa AL_CollectingAliens */
 		/*if (aircraft->alientypes) {
 		}*/
 
 		aircraft->alientypes = ccs.battleParameters.numAlienTeams;
+		amount = 0;
 		for (i = 0; i < aircraft->alientypes; i++) {
 			cargo[i].teamDef = ccs.battleParameters.alienTeams[i];
 			/* FIXME: This could lead to more aliens in their sum */
@@ -6590,9 +6662,6 @@ static void CL_GameNew_f (void)
 	/* Initialize alien interest */
 	CL_ResetAlienInterest();
 
-	/* Initialize Radar coverage */
-	R_CreateRadarOverlay();
-
 	/* Initialize XVI overlay */
 	R_InitializeXVIOverlay(curCampaign->map, NULL, 0, 0);
 	Cvar_Set("mn_xvimap", "0");
@@ -6740,7 +6809,7 @@ void CL_ResetSinglePlayerData (void)
 	memset(&gd, 0, sizeof(gd));
 	memset(&campaignStats, 0, sizeof(campaignStats));
 
-	LIST_Delete(ccs.missions);
+	LIST_Delete(&ccs.missions);
 	memset(&invList, 0, sizeof(invList));
 	mn.messageStack = NULL;
 

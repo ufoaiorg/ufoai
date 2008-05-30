@@ -412,7 +412,7 @@ void CL_ResetCharacters (base_t* const base)
 {
 	int i;
 	employee_t *employee;
-	linkedList_t *hiredEmployees = NULL;
+	linkedList_t *hiredEmployees;
 	linkedList_t *hiredEmployeesTemp;
 
 	/* Reset inventory data of all hired employees that can be sent into combat (i.e. characters with inventories).
@@ -435,9 +435,7 @@ void CL_ResetCharacters (base_t* const base)
 		hiredEmployeesTemp = hiredEmployeesTemp->next;
 	}
 
-	LIST_Delete(hiredEmployees);
-	hiredEmployees = NULL;
-
+	LIST_Delete(&hiredEmployees);
 
 	/* Reset hire info. */
 	Cvar_ForceSet("cl_selected", "0");
@@ -1159,7 +1157,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
 	int p;
 	employee_t *employee;
-	linkedList_t *employeesInBase = NULL;
+	linkedList_t *employeesInBase;
 	linkedList_t *employeesInBaseTemp;
 	base_t *base;
 
@@ -1192,8 +1190,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 		employeesInBaseTemp = employeesInBaseTemp->next;
 	}
 
-	LIST_Delete(employeesInBase);
-	employeesInBase = NULL;
+	LIST_Delete(&employeesInBase);
 
 	for (p = chrDisplayList.num; p < MAX_ACTIVETEAM; p++)
 		chrDisplayList.chr[p] = NULL;	/* Just in case */
@@ -1957,7 +1954,7 @@ void CL_ResetTeams (void)
 static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
 	employee_t *employee;
-	linkedList_t *hiredEmployees = NULL;
+	linkedList_t *hiredEmployees;
 	linkedList_t *hiredEmployeesTemp;
 	int j;
 
@@ -2025,8 +2022,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		hiredEmployeesTemp = hiredEmployeesTemp->next;
 	}
 
-	LIST_Delete(hiredEmployees);
-	hiredEmployees = NULL;
+	LIST_Delete(&hiredEmployees);
 }
 
 /**

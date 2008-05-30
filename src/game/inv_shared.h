@@ -557,7 +557,7 @@ typedef struct chrScoreMission_s {
  * Additionally you have to check the size of the network-transfer in g_main.c:G_SendCharacterData and cl_team.c:CL_ParseCharacterData (updateCharacter_t)
  */
 typedef struct chrScoreGlobal_s {
-	int experience[SKILL_NUM_TYPES + 1]; /**< Array of experience values for all skills, and health. */
+	int experience[SKILL_NUM_TYPES + 1]; /**< Array of experience values for all skills, and health. @todo What are the mins and maxs for these values */
 
 	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. This is the total value. */
 	int initialSkills[SKILL_NUM_TYPES + 1];		/**< Array of initial skills and abilities. This is the value generated at character generation time. */

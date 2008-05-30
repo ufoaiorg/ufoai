@@ -110,13 +110,12 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 		break;
 	}
 
-	LIST_Delete(popupListText);
+	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
 	mn.menuTextLinkedList[TEXT_LIST] = popupListText = NULL;
 
-	LIST_Delete(popupListData);
-	popupListData = NULL;
+	LIST_Delete(&popupListData);
 
 	popupNum = 0;
 

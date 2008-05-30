@@ -962,8 +962,7 @@ static void PR_UpdateProductionList (base_t* base)
 		Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 	}
 
-	LIST_Delete(productionItemList.list);
-	productionItemList.list = NULL;
+	LIST_Delete(&productionItemList.list);
 	productionItemList.num = 0;
 
 	/* Then go through all object definitions ... */
@@ -1058,8 +1057,7 @@ static void PR_UpdateDisassemblingList_f (void)
 		Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 	}
 
-	LIST_Delete(productionItemList.list);
-	productionItemList.list = NULL;
+	LIST_Delete(&productionItemList.list);
 	productionItemList.num = 0;
 
 	for (i = 0; i < gd.numComponents; i++) {

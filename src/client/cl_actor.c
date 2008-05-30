@@ -1087,13 +1087,13 @@ void CL_PopupFiremodeReservation_f (void)
 		return;
 	}
 
-	LIST_Delete(popupListText);
+	/* FIXME: Why not using the MN_MenuTextReset function here? */
+	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
-	mn.menuTextLinkedList[TEXT_LIST] = popupListText = NULL;
+	mn.menuTextLinkedList[TEXT_LIST] = NULL;
 
-	LIST_Delete(popupListData);
-	popupListData = NULL;
+	LIST_Delete(&popupListData);
 
 	/* Reset the length of the TU-list. */
 	popupNum = 0;

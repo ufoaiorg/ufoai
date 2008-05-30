@@ -94,8 +94,7 @@ void CL_FreeDynamicEventMail (void)
 {
 	/* the pointers are not freed, this is done with the
 	 * pool clear in CL_ResetSinglePlayerData */
-	LIST_Delete(eventMails);
-	eventMails = NULL;
+	LIST_Delete(&eventMails);
 }
 
 /**

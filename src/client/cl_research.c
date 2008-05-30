@@ -423,7 +423,7 @@ const char *RS_GetDescription (descriptions_t *desc)
 
 /**
  * @brief Marks a give technology as collected
- * @sa CP_AddItemAsCollected
+ * @sa CP_AddItemAsCollected_f
  * @sa MN_AddNewMessage
  * @sa RS_MarkOneResearchable
  * @param[in] tech The technology pointer to mark collected
@@ -2450,8 +2450,7 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 	int tempBaseIdx;
 
 	/* Clear linked list. */
-	LIST_Delete(loadTechBases);
-	loadTechBases = NULL;
+	LIST_Delete(&loadTechBases);
 
 	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
 		const char *techString = MSG_ReadString(sb);
@@ -2531,8 +2530,7 @@ void RS_PostLoadInit (void)
 	};
 
 	/* Clear linked list. */
-	LIST_Delete(loadTechBases);
-	loadTechBases = NULL;
+	LIST_Delete(&loadTechBases);
 }
 
 /**

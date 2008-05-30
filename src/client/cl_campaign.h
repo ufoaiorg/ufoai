@@ -138,7 +138,7 @@ typedef struct mission_s {
 	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be NULL) */
 	qboolean onGeoscape;			/**< Should the mission be displayed on geoscape */
 
-	/* I'm not sure this is really needed still -- Kracken */
+	/** @todo I'm not sure this is really needed still -- Kracken */
 	/** @note Don't end with ; - the trigger commands get the base index as
 	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
 	 * in your trigger command, you can seperate more commands with ; of course */
