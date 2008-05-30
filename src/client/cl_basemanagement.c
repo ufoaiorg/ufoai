@@ -792,7 +792,7 @@ static void B_HangarOnDestroy (base_t* base, buildingType_t buildingType)
 	aircraft_t *awayAircraft[MAX_AIRCRAFT];
 	int numawayAircraft, randomNum;
 
-	memset(&awayAircraft[MAX_AIRCRAFT], 0, sizeof(awayAircraft[MAX_AIRCRAFT]));
+	memset(awayAircraft, 0, sizeof(awayAircraft));
 
 	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
 	capacity = B_GetCapacityFromBuildingType(buildingType);
@@ -801,7 +801,7 @@ static void B_HangarOnDestroy (base_t* base, buildingType_t buildingType)
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
 	for (aircraftIdx = 0, numawayAircraft = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-		int aircraftSize = base->aircraft[aircraftIdx].weight;
+		const int aircraftSize = base->aircraft[aircraftIdx].weight;
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
 			if (buildingType != B_SMALL_HANGAR)
