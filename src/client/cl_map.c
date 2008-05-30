@@ -267,6 +267,8 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 			return;
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
+			if (r_geoscape_overlay->integer == OVERLAY_RADAR)
+				MAP_SetOverlay("radar");
 		}
 		break;
 	case MA_UFORADAR:
@@ -2082,16 +2084,18 @@ void MAP_Scroll_f (void)
 
 void MAP_SetOverlay (const char *overlayID)
 {
-	/* do nothing while the first base is not build */
-	if (gd.numBases == 0)
-		return;
-
 	if (!Q_strcmp(overlayID, "nations")) {
 		if (r_geoscape_overlay->integer & OVERLAY_NATION)
 			r_geoscape_overlay->integer ^= OVERLAY_NATION;
 		else
 			r_geoscape_overlay->integer |= OVERLAY_NATION;
-	} else if (!Q_strcmp(overlayID, "xvi")) {
+	}
+
+	/* do nothing while the first base is not build */
+	if (gd.numBases == 0)
+		return;
+
+	if (!Q_strcmp(overlayID, "xvi")) {
 		if (r_geoscape_overlay->integer & OVERLAY_XVI)
 			r_geoscape_overlay->integer ^= OVERLAY_XVI;
 		else

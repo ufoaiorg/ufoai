@@ -2838,8 +2838,14 @@ static void B_BuildBase_f (void)
 			return;
 		}
 	} else {
+		if (r_geoscape_overlay->integer == OVERLAY_RADAR)
+			MAP_SetOverlay("radar");
+		if (gd.mapAction == MA_NEWBASE)
+			gd.mapAction = MA_NONE;
+
 		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new base."));
 		MN_Popup(_("Notice"), popupText);
+
 	}
 }
 
