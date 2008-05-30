@@ -9,7 +9,7 @@ from logging import debug, error, info
 import optparse
 
 URI = 'http://ufo.ludwigf.org/maps'
-__version__ = '0.0.2~rc2'
+__version__ = '0.0.2~rc3'
 
 """
 written by Florian Ludwig <dino@phidev.org>
@@ -17,6 +17,7 @@ written by Florian Ludwig <dino@phidev.org>
 Changelog
 
 0.0.2
+ * handle corrupted mirror files
  * use optparse
  * allow upgrade even if ufo2map version differs
  * search root of ufo tree
@@ -42,7 +43,7 @@ def download(uri):
         error('%s: %s' % (e.message, e.reason[1]))
         sys.exit(6) # TODO
     
-    re = ''
+    re = out = ''
     t = 1
     data = f.read(10240)
     while data:
@@ -89,8 +90,11 @@ def upgrade(arg):
             pass
 
     # check ufo2map's _source_ md5
-    if maps['ufo2map'][1] == ufo2map_hash()[1]:
+    if 'ufo2map' in maps and maps['ufo2map'][1] == ufo2map_hash()[1]:
         print 'ufo2map version ok'
+    elif 'ufo2map' not in maps:
+        print 'Mirror corrupted, please try later. If problem persists contact admin.'
+        sys.exit(1)
     else:
         print 'WARNING ufo2map version mismatch'
         if not raw_input('Continue? [Y|n]').lower() in ('y', ''):
@@ -157,7 +161,7 @@ def gen(args):
     
     # try to guess if rebuild of all maps is needed.
     try:
-        test_map = choice(set(old.keys()) - set(changed_maps))
+        test_map = choice(list(set(old.keys()) - set(changed_maps)))
     except IndexError:
         # all maps changed? wow.
         test_map = False
