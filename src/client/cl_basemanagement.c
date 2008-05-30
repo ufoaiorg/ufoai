@@ -2818,7 +2818,7 @@ static void B_BuildBase_f (void)
 			PR_UpdateProductionCap(baseCurrent);
 
 			/* initial base equipment */
-			if (gd.numBases == 1) {
+			if (gd.numBases == 1 && cl_start_buildings->integer == qtrue ) {
 				int i;
 
 				INV_InitialEquipment(baseCurrent, curCampaign, cl_start_employees->integer);

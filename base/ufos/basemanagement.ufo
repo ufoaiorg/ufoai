@@ -89,7 +89,7 @@ building building_entrance
 {
 	name		"_Entrance"
 	image		base/entrance
-	fixcosts	10000
+	fixcosts	0
 	type		entrance
 	build_time	1
 	varcosts	0
