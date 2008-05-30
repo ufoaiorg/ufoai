@@ -528,6 +528,31 @@ static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
 	return qtrue;
 }
 
+/** sets all levelflags, if none are set.
+ */
+void CheckLevelFlags (void)
+{
+	int i, j;
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *brush = &mapbrushes[i];
+
+		for (j = 0; j < brush->numsides; j++) {
+			side_t *side = &brush->original_sides[j];
+
+			assert(side);
+
+			if (!(side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP))) {
+				/* check level 1 - level 8 */
+				if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
+					Com_Printf("* Brush %i (entity %i): no levelflags\n", brush->brushnum, brush->entitynum);
+					side->contentFlags |= CONTENTS_LEVEL_ALL;
+				}
+			}
+		}
+
+	}
+}
 
 void CheckBrushes (void)
 {
@@ -555,14 +580,6 @@ void CheckBrushes (void)
 
 			if (!Q_strcmp(tex->name, "tex_common/error")) {
 				Com_Printf("  Brush %i (entity %i): error texture assigned - check this brush\n", brush->brushnum, brush->entitynum);
-			}
-
-			if (!(side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP))) {
-				/* check level 1 - level 8 */
-				if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
-					Com_Printf("* Brush %i (entity %i): no levelflags\n", brush->brushnum, brush->entitynum);
-					side->contentFlags |= CONTENTS_LEVEL_ALL;
-				}
 			}
 
 			if (config.performMapCheck && contentFlags != side->contentFlags) {

@@ -56,9 +56,10 @@ static void Usage(void){
 		" -check                   : check (source) map, only print information.\n"
 		"                            no bsp is made.\n"
 		" subparameters for -check and -fix \n"
-		"     brushes bru          : \n"
+		"     levelflags lvl       : if no levelflags are set, it sets them all\n"
+		"     brushes bru          : includes levelflags\n"
 		"     entities ent         : \n"
-		"     all                  : synonym for brushes entities\n"
+		"     all                  : includes brushes entities\n"
 		" -fix                     : same subparameters as -check, changes the (source) map.\n"
 		"                            no bsp is made.\n"
 		" -chop                    : \n"
@@ -114,6 +115,9 @@ static int U2M_CheckFix_Subparameter(int argc, int i, char **argv){
 		} else if (!strcmp(argv[i], "brushes") || !strcmp(argv[i], "bru")) {
 			Com_Printf("  %s brushes\n", config.fixMap ? "fixing" : "checking");
 			config.chkBrushes = qtrue;
+		} else if (!strcmp(argv[i], "levelflags") || !strcmp(argv[i], "lvl")) {
+			Com_Printf("  %s levelflags\n", config.fixMap ? "fixing" : "checking");
+			config.chkLevelFlags = qtrue;
 		} else if (!strcmp(argv[i], "all")) {
 			Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
 			config.chkAll = qtrue;
@@ -126,7 +130,7 @@ static int U2M_CheckFix_Subparameter(int argc, int i, char **argv){
 }
 
 /**
- * @brief Check for bsping command line parameters
+ * @brief Check for bsping and checking/fixing command line parameters
  * @note Some are also used for radiosity
  */
 static void U2M_BSP_Parameter (int argc, char **argv)
@@ -471,6 +475,7 @@ int main (int argc, char **argv)
 	} else if (config.performMapCheck || config.fixMap) {
 		Com_Printf("Starting map %s\n", config.fixMap ? "fixes" : "checks");
 		LoadMapFile(mapFilename);
+		if (config.chkLevelFlags || config.chkBrushes || config.chkAll) CheckLevelFlags();
 		if (config.chkBrushes || config.chkAll) CheckBrushes();
 		if (config.chkEntities || config.chkAll) CheckEntities();
 		if (config.fixMap) {
