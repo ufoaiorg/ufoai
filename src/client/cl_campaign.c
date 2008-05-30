@@ -7030,9 +7030,11 @@ static void CP_UFORecovered_f (void)
 		/* Block store option if storing not possible. */
 		Cmd_ExecuteString("disufostore");
 		Cvar_SetValue("mission_noufohangar", 1);
-	} else
+	} else {
 		Cvar_SetValue("mission_noufohangar", 0);
-	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecovered_f()...: base: %s, UFO: %i\n", base->name, UFOtype);
+		Com_DPrintf(DEBUG_CLIENT, "CP_UFORecovered_f()...: base: %s, UFO: %i\n", base->name, UFOtype);
+	}
+
 }
 
 /**
