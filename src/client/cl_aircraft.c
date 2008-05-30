@@ -376,22 +376,24 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
 	return qfalse;
 }
 
+#define SOLIDER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
+#define SOLIDER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE 2
+#define SOLIDER_EQUIP_MENU_BUTTON_OK 3
 /**
  * @brief Determines the state of the equip soldier menu button:
- * @returns 1 if no aircraft in base else 2 if no soldiers
- * available otherwise 3
- * @todo use defined constants - no magic numbers
- * @todo Use aircraft->homebase - not baseCurrent, @sa todo in AIR_AircraftSelect
+ * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE if no aircraft in base
+ * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE if no soldiers available
+ * @returns SOLIDER_EQUIP_MENU_BUTTON_OK if none of the above is true
  */
 static int CL_EquipSoldierState (const aircraft_t * aircraft)
 {
 	if (!AIR_IsAircraftInBase(aircraft)) {
-		return 1;
+		return SOLIDER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE;
 	} else {
-		if (E_CountHired(baseCurrent, EMPL_SOLDIER) <= 0)
-			return 2;
+		if (E_CountHired(aircraft->homebase, EMPL_SOLDIER) <= 0)
+			return SOLIDER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE;
 		else
-			return 3;
+			return SOLIDER_EQUIP_MENU_BUTTON_OK;
 	}
 }
 
@@ -435,7 +437,6 @@ void AIM_ResetAircraftCvars_f (void)
 		return;
 
 	/* Maybe we sold displayed aircraft ? */
-
 	if (baseCurrent->numAircraftInBase == 0) {
 		/* no more aircraft in base */
 		Cbuf_AddText("mn_pop\n");
@@ -471,6 +472,9 @@ void AIM_NextAircraft_f (void)
 		return;
 	}
 
+	/* otherwise pointer arithmetic will access wrong memory */
+	assert(menuAircraft->homebase == baseCurrent);
+
 	if (menuAircraft == &baseCurrent->aircraft[baseCurrent->numAircraftInBase - 1])
 		menuAircraft = &baseCurrent->aircraft[0];
 	else
@@ -497,6 +501,9 @@ void AIM_PrevAircraft_f (void)
 		AIR_AircraftSelect(NULL);
 		return;
 	}
+
+	/* otherwise pointer arithmetic will access wrong memory */
+	assert(menuAircraft->homebase == baseCurrent);
 
 	if (menuAircraft == &baseCurrent->aircraft[0])
 		menuAircraft = &baseCurrent->aircraft[baseCurrent->numAircraftInBase - 1];
@@ -679,21 +686,21 @@ int AIR_GetAircraftIdxInBase (const aircraft_t* aircraft)
 }
 
 /**
- * @brief Sets aircraftCurrent and updates related cvars.
- * @param[in] aircraft Pointer to given aircraft.
- * @note If param[in] is NULL, it uses menuAircraft pointer to determine aircraft.
- * If either pointer is NULL or no aircraft is set in menuAircraft, it takes
- * first aircraft in base (if there is any).
- * @todo If the assert about homebase and baseCurrent isn't hit, we should not
- * use baseCurrent but aircraft->homebase
+ * @brief Sets aircraftCurrent and updates related cvars and menutexts.
+ * @param[in] aircraft Pointer to given aircraft that should be selected
+ * in the menu.
+ * @note If @c aircraft is @c NULL, it uses the @c menuAircraft pointer to
+ * determine the aircraft.
+ * If either the pointer is @c NULL or no aircraft is set in @c menuAircraft, it
+ * takes the first aircraft in base (if there is any).
  */
 void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	menuNode_t *node = NULL;
 	static char aircraftInfo[256];
+	base_t *base = aircraft ? aircraft->homebase : baseCurrent;
 
-	/* calling from console? with no baseCurrent? */
-	if (!baseCurrent || !baseCurrent->numAircraftInBase) {
+	if (!base || !base->numAircraftInBase) {
 		MN_MenuTextReset(TEXT_AIRCRAFT_INFO);
 		return;
 	}
@@ -701,12 +708,11 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	if (!aircraft) {
 		/**
 		 * Selecting the first aircraft in base (every base has at least one
-		 * aircraft at this point because baseCurrent->numAircraftInBase was zero)
+		 * aircraft at this point because base->numAircraftInBase was not zero)
 		 * if a non-sane idx was found.
 		 */
-		if (!menuAircraft || menuAircraft->homebase != baseCurrent) {
+		if (!menuAircraft || menuAircraft->homebase != base)
 			menuAircraft = &baseCurrent->aircraft[0];
-		}
 		aircraft = menuAircraft;
 	} else {
 		menuAircraft = aircraft;
@@ -715,16 +721,16 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	/* We were not in the aircraft menu yet. */
-	baseCurrent->aircraftCurrent = aircraft;
+	base->aircraftCurrent = aircraft;
 
 	assert(aircraft);
-	assert(aircraft->homebase == baseCurrent);
+	assert(aircraft->homebase == base);
 	CL_UpdateHireVar(aircraft, EMPL_SOLDIER);
 
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
-	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", _(aircraft->name), AIR_GetAircraftIdxInBase(aircraft) + 1, baseCurrent->numAircraftInBase));	/**< @todo Comment on the "+1" part here. */
+	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", _(aircraft->name), AIR_GetAircraftIdxInBase(aircraft) + 1, base->numAircraftInBase));	/**< @todo Comment on the "+1" part here. */
 	Cvar_Set("mn_aircraft_model", aircraft->model);
 
 	/* generate aircraft info text */
@@ -746,16 +752,18 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
  */
 void AIR_AircraftSelect_f (void)
 {
+	base_t *base = baseCurrent;
+
 	/* calling from console? with no baseCurrent? */
-	if (!baseCurrent || !baseCurrent->numAircraftInBase
-	 || (!B_GetBuildingStatus(baseCurrent, B_HANGAR) && !B_GetBuildingStatus(baseCurrent, B_SMALL_HANGAR))) {
+	if (!base || !base->numAircraftInBase
+	 || (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
 		MN_PopMenu(qfalse);
 		return;
 	}
 
-	baseCurrent->aircraftCurrent = NULL;
+	base->aircraftCurrent = NULL;
 	AIR_AircraftSelect(NULL);
-	if (!baseCurrent->aircraftCurrent)
+	if (!base->aircraftCurrent)
 		MN_PopMenu(qfalse);
 }
 
