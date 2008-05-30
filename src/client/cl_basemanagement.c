@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_nodes.h"
 #include "menu/m_popup.h"
 
+void R_CreateRadarOverlay(void);
+
 vec3_t newBasePos;
 static cvar_t *mn_base_title;
 static cvar_t *mn_base_count;
@@ -3975,6 +3977,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	int teamIdxs[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee indices. */
 	int teamTypes[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee-types. */
 	int buildingIdx;
+
+	/* Initialize Radar coverage and create textures if not yet done
+	 * This is needed if no other game was played before and we try to load
+	 * a game as first action */
+	R_CreateRadarOverlay();
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {

@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
-extern void R_CreateRadarOverlay(void);
-
 saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 int saveSubsystemsAmount;
 static cvar_t* save_compressed;
@@ -110,9 +108,6 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 	int cap, baseIdx, buildingType;
 	capacities_t oldcapacities[MAX_BASES][MAX_CAP];
 	qboolean oldhasBuilding[MAX_BASES][MAX_BUILDING_TYPE];
-
-	/* Reset radar coverage */
-	R_CreateRadarOverlay();
 
 	RS_PostLoadInit();
 
