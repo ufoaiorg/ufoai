@@ -1719,13 +1719,11 @@ static inline const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
  */
 float MAP_GetDistance (const vec2_t pos1, const vec2_t pos2)
 {
-	float distance;
-	float latitude1, latitude2, deltaLongitude;
-
 	/* convert into rad */
-	latitude1 = pos1[1] * torad;
-	latitude2 = pos2[1] * torad;
-	deltaLongitude = (pos1[0] - pos2[0]) * torad;
+	const float latitude1 = pos1[1] * torad;
+	const float latitude2 = pos2[1] * torad;
+	const float deltaLongitude = (pos1[0] - pos2[0]) * torad;
+	float distance;
 
 	distance = cos(latitude1) * cos(latitude2) * cos(deltaLongitude) + sin(latitude1) * sin(latitude2);
 	distance = acos(distance) * todeg;
@@ -1753,21 +1751,28 @@ qboolean MAP_IsNight (vec2_t pos)
 	return (x > 0);
 }
 
-
+/**
+ * @brief Searches the terrain mask for a given color
+ * @param[in] color The color to search the terrain picture for
+ * @param[out] polar The polar coordinates we found the color at
+ * @todo There should only be one loop to search the color and decide
+ * whether to use this location
+ * @note Function is unused
+ */
 qboolean MAP_MaskFind (byte * color, vec2_t polar)
 {
 	byte *c;
 	int res, i, num;
 
 	/* check color */
-	if (!color[0] && !color[1] && !color[2])
+	if (!VectorNotEmpty(color))
 		return qfalse;
 
-	/* find possible positions */
+	/* find possible positions in the terrain pic pixel mask */
 	res = terrainWidth * terrainHeight;
 	num = 0;
 	for (i = 0, c = terrainPic; i < res; i++, c += 4)
-		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
+		if (VectorCompare(c, color))
 			num++;
 
 	/* nothing found? */
@@ -1777,7 +1782,7 @@ qboolean MAP_MaskFind (byte * color, vec2_t polar)
 	/* get position */
 	num = rand() % num;
 	for (i = 0, c = terrainPic; i < num; c += 4)
-		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
+		if (VectorCompare(c, color))
 			i++;
 
 	/* transform to polar coords */
