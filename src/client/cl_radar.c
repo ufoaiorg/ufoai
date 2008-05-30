@@ -172,7 +172,7 @@ void RADAR_DeactivateRadarOverlay (void)
 	}
 
 	if ((r_geoscape_overlay->integer & OVERLAY_RADAR))
-		Cmd_ExecuteString("map_overlay radar");
+		MAP_SetOverlay("radar");
 }
 
 /**

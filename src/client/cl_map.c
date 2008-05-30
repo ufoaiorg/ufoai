@@ -1421,7 +1421,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
 		if (r_geoscape_overlay->integer != OVERLAY_RADAR) {
-			Cmd_ExecuteString("map_overlay radar");
+			MAP_SetOverlay("radar");
 		}
 
 		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
@@ -2080,33 +2080,24 @@ void MAP_Scroll_f (void)
 	}
 }
 
-static void MAP_SetOverlay_f (void)
+void MAP_SetOverlay (const char *overlayID)
 {
-	const char *arg;
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: %s <nations>\n", Cmd_Argv(0));
-		return;
-	}
-
-	arg = Cmd_Argv(1);
-
 	/* do nothing while the first base is not build */
 	if (gd.numBases == 0)
 		return;
 
-	if (!Q_strcmp(arg, "nations")) {
+	if (!Q_strcmp(overlayID, "nations")) {
 		if (r_geoscape_overlay->integer & OVERLAY_NATION)
 			r_geoscape_overlay->integer ^= OVERLAY_NATION;
 		else
 			r_geoscape_overlay->integer |= OVERLAY_NATION;
-	} else if (!Q_strcmp(arg, "xvi")) {
+	} else if (!Q_strcmp(overlayID, "xvi")) {
 		if (r_geoscape_overlay->integer & OVERLAY_XVI)
 			r_geoscape_overlay->integer ^= OVERLAY_XVI;
 		else
 			r_geoscape_overlay->integer |= OVERLAY_XVI;
-	} else if (!Q_strcmp(arg, "radar")) {
-		if (gd.mapAction == MA_NEWBASE) {
+	} else if (!Q_strcmp(overlayID, "radar")) {
+		if (gd.mapAction != MA_NEWBASE) {
 			/* Player don't want to build a base anymore */
 			MAP_ResetAction();
 		}
@@ -2115,6 +2106,19 @@ static void MAP_SetOverlay_f (void)
 		else
 			r_geoscape_overlay->integer |= OVERLAY_RADAR;
  	}
+}
+
+static void MAP_SetOverlay_f (void)
+{
+	const char *arg;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <nations>\n", Cmd_Argv(0));
+		return;
+	}
+
+	arg = Cmd_Argv(1);
+	MAP_SetOverlay(arg);
 }
 
 /**

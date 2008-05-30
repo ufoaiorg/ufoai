@@ -60,5 +60,6 @@ qboolean MAP_MaskFind(byte * color, vec2_t polar);
 byte *MAP_GetColor(const vec2_t pos, mapType_t type);
 void MAP_Init(void);
 qboolean MAP_PositionFitsTCPNTypes(vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
+void MAP_SetOverlay(const char *overlayID);
 
 #endif /* CLIENT_CL_MAP_H */
