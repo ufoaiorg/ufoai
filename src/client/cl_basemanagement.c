@@ -811,7 +811,7 @@ static void B_HangarOnDestroy (base_t* base, buildingType_t buildingType)
 			if (buildingType != B_HANGAR)
 				continue;
 			break;
-		case AIRCRAFT_HANGAR_ERROR:
+		default:
 			Sys_Error("B_HangarOnDestroy: Unkown type of aircraft '%i'\n", aircraftSize);
 		}
 

@@ -108,19 +108,22 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	case AIRCRAFT_LARGE:
 		capacity = CAP_AIRCRAFTS_BIG;
 		break;
+	default:
+		Sys_Error("CL_DisplayHomebasePopup: Unkown type of aircraft '%i'\n", aircraft->weight);
 	}
 
 	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
-	mn.menuTextLinkedList[TEXT_LIST] = popupListText = NULL;
+	mn.menuTextLinkedList[TEXT_LIST] = NULL;
 
 	LIST_Delete(&popupListData);
 
 	popupNum = 0;
+	homebase = 0;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
@@ -198,11 +201,10 @@ static void CL_PopupChangeHomebase_f (void)
 	if (!popup || !popup->next)
 		return;
 
+	base = NULL;
 	/* Get data from popup-list index */
 	for (i = 0; popup; popup = popup->next, i++) {
-		int baseIdx;
-		assert(popup);
-		baseIdx = *(int*)popup->data;
+		const int baseIdx = *(int*)popup->data;
 
 		/* did we click on an invalid base ? */
 		if (baseIdx == INVALID_BASE) {
@@ -237,6 +239,8 @@ static void CL_PopupChangeHomebase_f (void)
 	case AIRCRAFT_LARGE:
 		capacity = CAP_AIRCRAFTS_BIG;
 		break;
+	default:
+		Sys_Error("CL_PopupChangeHomebase_f: Unkown type of aircraft '%i'\n", selectedAircraft->weight);
 	}
 
 	/* Transfer employees */
