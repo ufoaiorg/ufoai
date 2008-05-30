@@ -67,6 +67,7 @@ campaign veryhard
 	visible		true
 
 	date		"2084 79 6"
+	basecost	100000
 }
 
 campaign hard
@@ -93,6 +94,7 @@ campaign hard
 	visible		true
 
 	date		"2084 79 6"
+	basecost	100000
 }
 
 campaign main
@@ -138,6 +140,7 @@ campaign main
 	visible		true
 
 	date		"2084 79 6"
+	basecost	100000
 }
 
 campaign easy
@@ -164,6 +167,7 @@ campaign easy
 	visible		true
 
 	date		"2084 79 6"
+	basecost	100000
 }
 
 campaign veryeasy
@@ -205,6 +209,7 @@ campaign veryeasy
 	visible		true
 
 	date		"2084 79 6"
+	basecost	100000
 }
 
 /*
@@ -226,6 +231,7 @@ campaign aliencampaign
 	visible		true
 
 	date		"2084 79 6"
+	basecost	100000
 }
 
 */

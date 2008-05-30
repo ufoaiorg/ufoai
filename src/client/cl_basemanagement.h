@@ -30,10 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BUILDINGS		256
 #define MAX_BASES		8
 
-/* FIXME: This value is in menu_geoscape, too */
-/*              make this variable?? */
-#define BASE_COSTS		100000
-
 #define MAX_BATTERY_DAMAGE	50
 #define MAX_BASE_DAMAGE		100
 #define MAX_BASE_SLOT		4

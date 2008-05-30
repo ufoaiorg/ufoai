@@ -3328,7 +3328,7 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 		endCampaign = qtrue;
 	}
 
-	if (!gd.numBases && ccs.credits < BASE_COSTS - curCampaign->negativeCreditsUntilLost) {
+	if (!gd.numBases && ccs.credits < curCampaign->basecost - curCampaign->negativeCreditsUntilLost) {
 		mn.menuText[TEXT_STANDARD] = _("You've lost your bases and don't have enough money to build new ones.");
 		endCampaign = qtrue;
 	}
@@ -6118,6 +6118,7 @@ static const value_t campaign_vals[] = {
 	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(campaign_t, text), 0}, /* just a gettext placeholder */
 	{"name", V_TRANSLATION_STRING, offsetof(campaign_t, name), 0},
 	{"date", V_DATE, offsetof(campaign_t, date), 0},
+	{"basecost", V_INT, offsetof(campaign_t, basecost), MEMBER_SIZEOF(campaign_t, basecost)},
 	{NULL, 0, 0, 0}
 };
 

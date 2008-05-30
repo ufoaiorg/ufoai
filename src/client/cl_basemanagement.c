@@ -2492,6 +2492,7 @@ static void B_SelectBase_f (void)
 		if (baseID < MAX_BASES) {
 			baseCurrent = B_GetBaseByIDX(baseID);
 			baseCurrent->idx = baseID;
+			Cvar_Set("mn_base_newbasecost", va(_("%i c"), curCampaign->basecost));
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			Cmd_ExecuteString("set_base_to_normal");
 		} else {
@@ -2796,8 +2797,9 @@ static void B_BuildBase_f (void)
 
 	assert(!baseCurrent->founded);
 	assert(ccs.singleplayer);
+	assert(curCampaign);
 
-	if (ccs.credits - BASE_COSTS > 0) {
+	if (ccs.credits - curCampaign->basecost > 0) {
 		if (CL_NewBase(baseCurrent, newBasePos)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
@@ -2805,7 +2807,7 @@ static void B_BuildBase_f (void)
 			baseCurrent->baseStatus = BASE_WORKING;
 			campaignStats.basesBuild++;
 			gd.mapAction = MA_NONE;
-			CL_UpdateCredits(ccs.credits - BASE_COSTS);
+			CL_UpdateCredits(ccs.credits - curCampaign->basecost);
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
 			nation = MAP_GetNation(baseCurrent->pos);
 			if (nation)

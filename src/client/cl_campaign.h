@@ -228,6 +228,7 @@ typedef struct campaign_s {
 	int maxAllowedXVIRateUntilLost;	/**< 0 - 100 - the average rate of XVI over all nations before you've lost the game */
 	qboolean visible;			/**< visible in campaign menu? */
 	date_t date;				/**< starting date for this campaign */
+	int basecost;				/**< base building cost for empty base */
 	qboolean finished;
 } campaign_t;
 

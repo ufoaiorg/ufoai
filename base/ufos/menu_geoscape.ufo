@@ -896,7 +896,7 @@ menu popup_newbase
 	}
 	string cost
 	{
-		string	"_100000 c"
+		string	"*cvar mn_base_newbasecost"
 		pos		"290 390"
 		font	f_big
 	}
