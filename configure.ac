@@ -77,8 +77,8 @@ AC_ARG_ENABLE(profiling,
 	[], [enable_profiling=no])
 
 AC_ARG_ENABLE(universal,
-	[AS_HELP_STRING([--enable-universal], [build universal binaries on Mac OS X @<:@default=enabled@:>@])],
-	[], [enable_universal=yes])
+	[AS_HELP_STRING([--enable-universal], [build universal binaries on Mac OS X @<:@default=disabled@:>@])],
+	[], [enable_universal=no])
 
 #---------------------------------------------------------------------------------------------
 # CHECK SED
