@@ -6552,6 +6552,9 @@ static void CL_GameSkirmish_f (void)
 	/* even in skirmish mode we need a little money to build the base */
 	CL_UpdateCredits(MAX_CREDITS);
 
+	/* only needed for base dummy creation */
+	R_CreateRadarOverlay();
+
 	/* build our pseudo base */
 	B_SetUpBase(base, qtrue, qtrue);
 
