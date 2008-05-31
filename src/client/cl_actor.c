@@ -3140,7 +3140,7 @@ void CL_ActorDoorAction_f (void)
 
 	/* no client action */
 	if (selActor->client_action == 0) {
-		Com_Printf("CL_ActorDoorAction_f: No client_action set for actor with entnum %i\n", selActor->entnum);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction_f: No client_action set for actor with entnum %i\n", selActor->entnum);
 		return;
 	}
 
