@@ -159,7 +159,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 						continue;
 					actorVis = G_ActorVis(check->origin, ent, qtrue);
 					/* there is a visible enemy, don't use that door */
-					if (actorVis >= ACTOR_VIS_0)
+					if (actorVis > ACTOR_VIS_0)
 						return qfalse;
 				}
 			}
