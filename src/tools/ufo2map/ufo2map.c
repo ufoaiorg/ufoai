@@ -475,12 +475,16 @@ int main (int argc, char **argv)
 	} else if (config.performMapCheck || config.fixMap) {
 		Com_Printf("Starting map %s\n", config.fixMap ? "fixes" : "checks");
 		LoadMapFile(mapFilename);
-		if (config.chkLevelFlags || config.chkBrushes || config.chkAll) CheckLevelFlags();
-		if (config.chkBrushes || config.chkAll) CheckBrushes();
-		if (config.chkEntities || config.chkAll) CheckEntities();
+		if (config.chkLevelFlags || config.chkBrushes || config.chkAll)
+			CheckLevelFlags();
+		if (config.chkBrushes || config.chkAll)
+			CheckBrushes();
+		if (config.chkEntities || config.chkAll)
+			CheckEntities();
 		if (config.fixMap) {
-				UnparseEntities();	/* update dentdata */
-				WriteMapFile(GetScriptFile()); /* this function does its' own printf */
+			/* update dentdata */
+			UnparseEntities();
+			WriteMapFile(GetScriptFile());
 		}
 		return 0;
 	} else {
