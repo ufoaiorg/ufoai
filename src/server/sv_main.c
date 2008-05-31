@@ -218,6 +218,7 @@ static void SVC_Info (struct net_stream *s)
 
 /**
  * @brief A connection request that did not come from the master
+ * @sa CL_ConnectionlessPacket
  */
 static void SVC_DirectConnect (struct net_stream *stream)
 {

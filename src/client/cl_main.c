@@ -1182,6 +1182,7 @@ static void CL_PingServers_f (void)
  * @brief Responses to broadcasts, etc
  * @sa CL_ReadPackets
  * @sa CL_Frame
+ * @sa SVC_DirectConnect
  */
 static void CL_ConnectionlessPacket (struct dbuffer *msg)
 {

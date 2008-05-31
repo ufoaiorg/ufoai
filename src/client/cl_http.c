@@ -1,3 +1,16 @@
+/**
+ * @file cl_http.c
+ * @author R1CH
+ * @brief HTTP downloading is used if the server provides a content server URL in the
+ * connect message. Any missing content the client needs will then use the
+ * HTTP server. CURL is used to enable multiple files to be downloaded in parallel
+ * to improve performance on high latency links when small files such as textures
+ * are needed. Since CURL natively supports gzip content encoding, any files
+ * on the HTTP server should ideally be gzipped to conserve bandwidth.
+ * @sa CL_ConnectionlessPacket
+ * @sa SVC_DirectConnect
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -59,21 +72,6 @@ static qboolean isvalidchar (int c)
 		return qfalse;
 	return qtrue;
 }
-
-/*
-===============================
-R1Q2 HTTP Downloading Functions
-===============================
-HTTP downloading is used if the server provides a content
-server URL in the connect message. Any missing content the
-client needs will then use the HTTP server instead of auto
-downloading via UDP. CURL is used to enable multiple files
-to be downloaded in parallel to improve performance on high
-latency links when small files such as textures are needed.
-Since CURL natively supports gzip content encoding, any files
-on the HTTP server should ideally be gzipped to conserve
-bandwidth.
-*/
 
 /**
  * @brief libcurl callback to update progress info. Mainly just used as
