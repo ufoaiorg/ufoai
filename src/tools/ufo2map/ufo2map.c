@@ -105,10 +105,11 @@ static void Usage(void){
  * @brief check for subparameters for -check and -fix options.
  * @return the arg index before the one from which to continue checking for parameters.
  */
-static int U2M_CheckFix_Subparameter(int argc, int i, char **argv){
+static int U2M_CheckFix_Subparameter (int argc, int i, char **argv)
+{
 	/* terminate loop before last arg (path) or when we hit a param
 	 * (as opposed to a subparam). full parameters are prefixed with "-". */
-	while(++i < (argc - 1) && argv[i][0] != '-') { /* strstr(argv[i], "-") == NULL */
+	while (++i < (argc - 1) && argv[i][0] != '-') { /* strstr(argv[i], "-") == NULL */
 		if (!strcmp(argv[i], "entities") || !strcmp(argv[i], "ent")) {
 			Com_Printf("  %s entities\n", config.fixMap ? "fixing" : "checking");
 			config.chkEntities = qtrue;
