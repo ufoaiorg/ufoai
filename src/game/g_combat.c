@@ -522,6 +522,26 @@ void G_StunTeam (void)
 #endif
 
 /**
+ * @returns True if the surface has the fireaffected flag set and the firedef
+ * might produce fire (e.g. flamer)
+ * @param[in] surface The collision surface to check the surface flag for
+ * @param[in] fd The firedef to check the @c dmgtype for
+ */
+static inline qboolean G_FireAffectedSurface (const cBspSurface_t *surface, const fireDef_t *fd)
+{
+	if (!surface)
+		return qfalse;
+
+	if (!(surface->surfaceFlags & SURF_BURN))
+		return qfalse;
+
+	if (fd->obj->dmgtype == gi.csi->damFire || fd->obj->dmgtype == gi.csi->damBlast)
+		return qtrue;
+
+	return qfalse;
+}
+
+/**
  * @brief Deals splash damage to a target and its surroundings.
  * @param[in] ent The shooting actor
  * @param[in] fd The fire definition that defines what type of damage is dealt and how big the splash radius is.
@@ -592,9 +612,8 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 			mock->allow_self = qfalse;
 	}
 
-	/* FIXME: splash might also hit other surfaces */
-	if (tr && tr->surface && tr->surface->surfaceFlags & SURF_BURN
-	 && (fd->obj->dmgtype == gi.csi->damFire || fd->obj->dmgtype == gi.csi->damBlast)) {
+	/* FIXME: splash might also hit other surfaces and the trace doesn't handle that */
+	if (tr && G_FireAffectedSurface(tr->surface, fd)) {
 		/* sent particle to all players */
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(tr->contentFlags >> 8);
