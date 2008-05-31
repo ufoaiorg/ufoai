@@ -132,6 +132,11 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
  */
 qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 {
+	/* if the alien is trying to hide and the door is
+	 * still opened, close it */
+	if (ent->hiding && door->moveinfo.state == STATE_OPENED)
+		return qtrue;
+
 	/* aliens and civilians need different handling */
 	switch (ent->team) {
 	case TEAM_ALIEN: {
@@ -795,6 +800,8 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 					return;
 			}
 		}
+		ent->hiding = qtrue;
+
 		/* now hide */
 		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
 		/* no shots left, but possible targets left - maybe they shoot back
@@ -810,6 +817,8 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		/* @todo: If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
+
+		ent->hiding = qfalse;
 	}
 }
 
