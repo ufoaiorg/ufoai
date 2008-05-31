@@ -2109,8 +2109,9 @@ TARGETING FUNCTIONS
  *        \/  \/ h  + d   - h
  *
  * as the minimum launch velocity for that angle.
+ * @param[out] v0 The velocity vector
  */
-float Com_GrenadeTarget (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
+float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
 {
 	const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
 	vec3_t delta;

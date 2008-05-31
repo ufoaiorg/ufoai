@@ -77,4 +77,4 @@ void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec);
 MISC WORLD RELATED
 ==========================================================*/
 
-float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
+float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
