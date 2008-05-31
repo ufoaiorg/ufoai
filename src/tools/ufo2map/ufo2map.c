@@ -105,7 +105,7 @@ static void Usage(void){
  * @brief check for subparameters for -check and -fix options.
  * @return the arg index before the one from which to continue checking for parameters.
  */
-static int U2M_CheckFix_Subparameter (int argc, int i, char **argv)
+static int U2M_CheckFix_Subparameter (int argc, int i, const char **argv)
 {
 	/* terminate loop before last arg (path) or when we hit a param
 	 * (as opposed to a subparam). full parameters are prefixed with "-". */
@@ -134,7 +134,7 @@ static int U2M_CheckFix_Subparameter (int argc, int i, char **argv)
  * @brief Check for bsping and checking/fixing command line parameters
  * @note Some are also used for radiosity
  */
-static void U2M_BSP_Parameter (int argc, char **argv)
+static void U2M_BSP_Parameter (int argc, const char **argv)
 {
 	int i;
 
@@ -277,7 +277,7 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 /**
  * @brief Check for radiosity command line parameters
  */
-static void U2M_RAD_Parameter (int argc, char** argv)
+static void U2M_RAD_Parameter (int argc, const char** argv)
 {
 	int i;
 	for (i = 1; i < argc; i++) {
@@ -418,7 +418,7 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 	return 0;
 }
 
-int main (int argc, char **argv)
+int main (int argc, const char **argv)
 {
 	char mapFilename[MAX_OSPATH];
 	char bspFilename[MAX_OSPATH];

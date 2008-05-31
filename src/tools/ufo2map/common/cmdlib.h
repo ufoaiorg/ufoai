@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../shared/byte.h"
 
-void FS_Init(char *path);
+void FS_Init(const char *path);
 const char* FS_GameDir(void);
 
 char *COM_ExpandRelativePath(const char *path);	/* from cmd line */

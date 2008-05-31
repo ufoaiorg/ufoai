@@ -165,7 +165,7 @@ const char* FS_GameDir (void)
  * @brief
  * @param[in] path The path to the map filename - relative or absolute
  */
-void FS_Init (char *path)
+void FS_Init (const char *path)
 {
 	char ufoPath[MAX_OSPATH];
 	const char *fullPath = COM_ExpandRelativePath(path);
