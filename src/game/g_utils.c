@@ -318,7 +318,7 @@ void G_CompleteRecalcRouting (void)
 int G_TouchTriggers (edict_t *ent)
 {
 	int i, num, usedNum = 0;
-	edict_t *touch[MAX_EDICTS], *hit;
+	edict_t *touch[MAX_EDICTS];
 
 	if (ent->type != ET_ACTOR || (ent->state & STATE_DEAD))
 		return 0;
@@ -326,10 +326,10 @@ int G_TouchTriggers (edict_t *ent)
 	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);
 
 	/* be careful, it is possible to have an entity in this
-	* list removed before we get to it(killtriggered) */
+	 * list removed before we get to it (killtriggered) */
 	Com_DPrintf(DEBUG_GAME, "G_TouchTriggers: Found %i possible triggers.\n", num);
 	for (i = 0; i < num; i++) {
-		hit = touch[i];
+		edict_t *hit = touch[i];
 		if (!hit->inuse)
 			continue;
 		if (!hit->touch)
