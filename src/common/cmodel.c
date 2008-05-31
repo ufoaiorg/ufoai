@@ -2098,7 +2098,7 @@ TARGETING FUNCTIONS
  *
  * alpha = 1/2 * atan2(d, -h)
  *
- * and if we subsitute back into our equation for v and we get
+ * and if we substitute back into our equation for v and we get
  *
  *               _______________
  *              /        2

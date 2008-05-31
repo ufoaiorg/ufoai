@@ -132,6 +132,23 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
  */
 qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 {
+	/* aliens and civilians need different handling */
+	switch (ent->team) {
+	case TEAM_ALIEN: {
+			/* only use the door when there is no civilian or phalanx to kill -
+			 * to search for them */
+		}
+		break;
+	case TEAM_CIVILIAN: {
+			/* don't use any door if no alien is inside the viewing angle  - but
+			 * try to hide behind the door when there is an alien */
+		}
+		break;
+	default:
+		Com_Printf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
+			ent->team, ent->type);
+		break;
+	}
 	return qtrue;
 }
 
