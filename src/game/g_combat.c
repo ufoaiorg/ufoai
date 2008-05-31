@@ -557,7 +557,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 	int damage;
 	int i;
 
-	qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
+	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 
 	assert(fd->splrad);
 
@@ -618,6 +618,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(tr->contentFlags >> 8);
 		gi.WriteByte(0);
+		/* move a little away from the impact vector */
 		VectorMA(impact, 1, tr->plane.normal, impact);
 		gi.WritePos(impact);
 		gi.WriteString("burning");

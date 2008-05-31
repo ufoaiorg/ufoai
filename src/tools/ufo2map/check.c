@@ -586,7 +586,7 @@ void CheckBrushes (void)
 			if (side->contentFlags & 0x0008) {
 				side->contentFlags &= ~0x0008;
 				Com_Printf("  Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
-				side->surfaceFlags |= SURF_FOOTSTEP;
+				side->surfaceFlags |= SURF_BURN;
 				tex->surfaceFlags |= SURF_BURN;
 			}
 #endif
