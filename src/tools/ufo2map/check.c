@@ -448,6 +448,7 @@ static void CheckInteractionList (const entity_t *entity)
 									Com_Printf("Brush %i (entity %i): set nodraw texture\n", list[i]->brushnum, list[i]->entitynum);
 									Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 									sideI->surfaceFlags |= SURF_NODRAW;
+									tex->surfaceFlags |= SURF_NODRAW;
 								}
 							}
 						}
@@ -572,6 +573,24 @@ void CheckBrushes (void)
 			assert(side);
 			assert(tex);
 
+#if 1
+			/* @todo remove this once every map is run with ./ufo2map -fix brushes <map> */
+			/* the old footstep value */
+			if (side->contentFlags & 0x00040000) {
+				side->contentFlags &= ~0x00040000;
+				Com_Printf("  Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
+				side->surfaceFlags |= SURF_FOOTSTEP;
+				tex->surfaceFlags |= SURF_FOOTSTEP;
+			}
+			/* the old fireaffected value */
+			if (side->contentFlags & 0x0008) {
+				side->contentFlags &= ~0x0008;
+				Com_Printf("  Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
+				side->surfaceFlags |= SURF_FOOTSTEP;
+				tex->surfaceFlags |= SURF_BURN;
+			}
+#endif
+
 			if (tex->name[0] == '\0') {
 				Com_Printf("  Brush %i (entity %i): no texture assigned\n", brush->brushnum, brush->entitynum);
 			}
@@ -588,6 +607,7 @@ void CheckBrushes (void)
 				Com_Printf("* Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 				side->surfaceFlags |= SURF_NODRAW;
+				tex->surfaceFlags |= SURF_NODRAW;
 			}
 			if (side->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->name, "tex_common/nodraw")) {
 				Com_Printf("* Brush %i (entity %i): set nodraw texture for SURF_NODRAW\n", brush->brushnum, brush->entitynum);
