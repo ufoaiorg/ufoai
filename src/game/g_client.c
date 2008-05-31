@@ -368,6 +368,8 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 
 /**
  * @brief calculate how much check is "visible" from from
+ * @returns a value between 0 and 1 which reflects the visibility from 0
+ * to 100 percent
  */
 float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 {

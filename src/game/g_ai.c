@@ -135,8 +135,34 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 	/* aliens and civilians need different handling */
 	switch (ent->team) {
 	case TEAM_ALIEN: {
-			/* only use the door when there is no civilian or phalanx to kill -
-			 * to search for them */
+			/* only use the door when there is no civilian or phalanx to kill */
+			int i;
+			const edict_t *check;
+
+			/* see if there are enemies */
+			for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+				if (!check->inuse)
+					continue;
+				/* don't check for aliens */
+				if (check->team == ent->team)
+					continue;
+				/* if it's an actor and he's still living */
+				if (G_IsLivingActor(check)) {
+					/* check whether the origin of the enemy is inside the
+					 * AI actors view frustom */
+					float actorVis;
+					qboolean frustum = G_FrustumVis(check, ent->origin);
+					if (!frustum)
+						continue;
+					/* check whether the enemy is close enough to change the state */
+					if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+						continue;
+					actorVis = G_ActorVis(check->origin, ent, qtrue);
+					/* there is a visible enemy, don't use that door */
+					if (actorVis >= ACTOR_VIS_0)
+						return qfalse;
+				}
+			}
 		}
 		break;
 	case TEAM_CIVILIAN: {
@@ -169,18 +195,19 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 		/* don't check for civilians or aliens */
 		if (check->team == ent->team || check->team == TEAM_CIVILIAN)
 			continue;
-		/* it's the actor is still living and no AI (team check above) */
+		/* if it's an actor and he's still living */
 		if (G_IsLivingActor(check)) {
 			/* check whether the origin of the enemy is inside the
 			 * AI actors view frustom */
+			float actorVis;
 			qboolean frustum = G_FrustumVis(check, ent->origin);
-			const float actorVis = G_ActorVis(check->origin, ent, qtrue);
 			if (!frustum)
 				continue;
-			if (actorVis < 0.6)
-				continue;
 			/* check whether the enemy is close enough to change the state */
-			if (VectorDist(check->origin, ent->origin) < MAX_SPOT_DIST)
+			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+				continue;
+			actorVis = G_ActorVis(check->origin, ent, qtrue);
+			if (actorVis >= 0.6)
 				return qtrue;
 		}
 	}
