@@ -539,7 +539,6 @@ void CheckLevelFlags (void)
 
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
-
 			assert(side);
 
 			if (!(side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP))) {
@@ -550,7 +549,6 @@ void CheckLevelFlags (void)
 				}
 			}
 		}
-
 	}
 }
 

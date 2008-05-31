@@ -170,7 +170,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
  * @sa G_UpdateCharacterSkills
  * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
  */
-static void G_UpdateCharacterBodycount (edict_t *attacker, fireDef_t *fd, edict_t *target)
+static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, const edict_t *target)
 {
 	if (!attacker || !fd || !target)
 		return;
@@ -298,7 +298,7 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  * @sa G_SplashDamage
  * @sa G_PrintActorStats
  */
-static void G_Damage (edict_t *target, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
+static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock)
 {
 	qboolean stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
@@ -529,7 +529,7 @@ void G_StunTeam (void)
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] tr The trace where the grenade hits something (or not)
  */
-static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock, trace_t* tr)
+static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, trace_t* tr)
 {
 	edict_t *check;
 	vec3_t center;
@@ -593,7 +593,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 	}
 
 	/* FIXME: splash might also hit other surfaces */
-	if (tr && tr->contentFlags & CONTENTS_BURN
+	if (tr && tr->surface && tr->surface->surfaceFlags & SURF_BURN
 	 && (fd->obj->dmgtype == gi.csi->damFire || fd->obj->dmgtype == gi.csi->damBlast)) {
 		/* sent particle to all players */
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
@@ -1006,7 +1006,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteByte(fd->fdIdx);
 
 			if (i == 0 && (fd->obj->dmgtype == gi.csi->damFire
-			 || fd->obj->dmgtype == gi.csi->damBlast) && tr.contentFlags & CONTENTS_BURN) {
+			 || fd->obj->dmgtype == gi.csi->damBlast)
+			 && tr.surface && tr.surface->surfaceFlags & SURF_BURN) {
 				vec3_t origin;
 
 				/* sent particle to all players */

@@ -234,16 +234,16 @@ void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
 
 /* g_utils.c */
-edict_t *G_Find(edict_t * from, int fieldofs, char *match);
-edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type);
+edict_t *G_Find(edict_t *from, int fieldofs, char *match);
+edict_t *G_FindRadius(edict_t *from, vec3_t org, float rad, entity_type_t type);
 const char* G_GetPlayerName(int pnum);
 int G_GetActiveTeam(void);
-const char* G_GetWeaponNameForFiredef(fireDef_t* fd);
-void G_PrintActorStats(edict_t* victim, edict_t* attacker, fireDef_t* fd);
+const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
+void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fireDef_t *fd);
 void G_PrintStats(const char *buffer);
 int G_TouchTriggers(edict_t *ent);
 edict_t *G_Spawn(void);
-void G_FreeEdict(edict_t * e);
+void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent);
 
 /* g_reaction.c */

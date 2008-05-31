@@ -716,7 +716,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		CheckFlags(side, b);
 
 		/* generate a list of textures that should have footsteps when walking on them */
-		if (mt > 0 && side->contentFlags & CONTENTS_FOOTSTEP)
+		if (mt > 0 && side->surfaceFlags & SURF_FOOTSTEP)
 			GenerateFootstepList(filename, mt);
 		GenerateMaterialFile(filename, mt, b, &td, side);
 

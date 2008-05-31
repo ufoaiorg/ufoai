@@ -206,7 +206,6 @@ COLLISION DETECTION
 /** lower bits are stronger, and will eat weaker brushes completely */
 #define CONTENTS_SOLID  0x0001 /**< an eye is never valid in a solid */
 #define CONTENTS_WINDOW 0x0002 /**< translucent, but not watery */
-#define CONTENTS_BURN   0x0008 /**< will keep burning when flamed */
 #define CONTENTS_WATER  0x0020
 /** max 16 bit please - otherwise change EV_ACTOR_MOVE to send a long and not a short */
 
@@ -225,7 +224,6 @@ COLLISION DETECTION
 /** remaining contents are non-visible, and don't eat brushes */
 #define CONTENTS_ACTORCLIP   0x00010000
 #define CONTENTS_PASSABLE    0x00020000
-#define CONTENTS_FOOTSTEP    0x00040000 /**< only for grabbing footsteps textures */
 #define CONTENTS_ACTOR       0x00800000 /**< should never be on a brush, only in game */
 #define CONTENTS_ORIGIN      0x01000000 /**< removed before bsping an entity */
 #define CONTENTS_WEAPONCLIP  0x02000000 /**< stop bullets */
@@ -244,6 +242,8 @@ COLLISION DETECTION
 #define SURF_HINT      0x00000100 /**< make a primary bsp splitter */
 #define SURF_SKIP      0x00000200 /**< completely ignored, allowing non-closed brushes */
 #define SURF_PHONG     0x00000400 /**< phong interpolated lighting at compile time */
+#define SURF_BURN      0x00000800 /**< will keep burning when flamed */
+#define SURF_FOOTSTEP  0x00001000 /**< only for grabbing footsteps textures */
 #define SURF_ALPHATEST 0x02000000 /**< alpha test for transparent textures */
 
 /* content masks */

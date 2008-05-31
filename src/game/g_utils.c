@@ -106,7 +106,7 @@ static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)
  * @brief Return the corresponding weapon name for a give firedef
  * @sa G_GetObjectForFiredef
  */
-const char* G_GetWeaponNameForFiredef (fireDef_t* fd)
+const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
 {
 	const objDef_t* obj = G_GetObjectForFiredef(fd);
 	if (!obj)
@@ -150,7 +150,7 @@ void G_PrintStats (const char *buffer)
  * @sa G_Damage
  * @sa G_PrintStats
  */
-void G_PrintActorStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
+void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fireDef_t *fd)
 {
 	const char *victimName, *attackerName;
 	char buffer[512];

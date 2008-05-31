@@ -657,17 +657,16 @@ static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
  *  the perpendicular bounding box from mins to maxs originating from the line. It also check to see if the line
  *  originates from inside the brush, terminates inside the brush, or is completely contained within the brush.
  */
-static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cBspBrush_t * brush)
+static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *trace, cBspBrush_t *brush)
 {
 	int i, j;
-	TR_PLANE_TYPE *plane, *clipplane;
+	TR_PLANE_TYPE *clipplane;
 	float dist;
 	float enterfrac, leavefrac;
 	vec3_t ofs;
 	float d1, d2;
 	qboolean getout, startout;
-	float f;
-	TR_BRUSHSIDE_TYPE *side, *leadside;
+	TR_BRUSHSIDE_TYPE *leadside;
 
 	enterfrac = -1;
 	leavefrac = 1;
@@ -683,11 +682,11 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 	leadside = NULL;
 
 	for (i = 0; i < brush->numsides; i++) {
-		side = &curTile->brushsides[brush->firstbrushside + i];
+		TR_BRUSHSIDE_TYPE *side = &curTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
-		plane = side->plane;
+		TR_PLANE_TYPE *plane = side->plane;
 #else
-		plane = curTile->planes + side->planenum;
+		TR_PLANE_TYPE *plane = curTile->planes + side->planenum;
 #endif
 
 		/* FIXME: special case for axial */
@@ -723,14 +722,14 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 
 		/* crosses face */
 		if (d1 > d2) {			/* enter */
-			f = (d1 - DIST_EPSILON) / (d1 - d2);
+			const float f = (d1 - DIST_EPSILON) / (d1 - d2);
 			if (f > enterfrac) {
 				enterfrac = f;
 				clipplane = plane;
 				leadside = side;
 			}
 		} else {				/* leave */
-			f = (d1 + DIST_EPSILON) / (d1 - d2);
+			const float f = (d1 + DIST_EPSILON) / (d1 - d2);
 			if (f < leavefrac)
 				leavefrac = f;
 		}

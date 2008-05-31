@@ -86,10 +86,11 @@ typedef struct cBspModel_s {
 	int firstface, numfaces;	/**< submodels just draw faces without walking the bsp tree */
 } cBspModel_t;
 
+/** @sa dBspTexinfo_t */
 typedef struct cBspSurface_s {
-	char name[MAX_QPATH];	/**< not used except in loading CMod_LoadSurfaces */
-	int flags;	/**< not used except in loading CMod_LoadSurfaces */
-	int value;	/**< not used except in loading CMod_LoadSurfaces */
+	char name[MAX_QPATH];	/**< the texture name */
+	int surfaceFlags;		/**< surface flags SURF_* */
+	int value;				/**< currently not used except in loading CMod_LoadSurfaces */
 } cBspSurface_t;
 
 typedef struct {
@@ -387,6 +388,7 @@ typedef struct {
 	unsigned short numfaces;	/**< counting both sides */
 } dBspNode_t;
 
+/** @sa cBspSurface_t */
 typedef struct texinfo_s {
 	float vecs[2][4];				/**< [s/t][xyz offset] */
 	int surfaceFlags;			/**< miptex flags + overrides */

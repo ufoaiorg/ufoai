@@ -34,8 +34,8 @@ Note : Default project settings are for single player... this can be changed thr
   <key name="surf9" value="hint" />
   <key name="surf10" value="skip" />
   <key name="surf11" value="phong" />
-  <key name="surf12" value="" />
-  <key name="surf13" value="" />
+  <key name="surf12" value="fireaffected" />
+  <key name="surf13" value="footstep" />
   <key name="surf14" value="" />
   <key name="surf15" value="" />
   <key name="surf16" value="" />
@@ -58,7 +58,7 @@ Note : Default project settings are for single player... this can be changed thr
   <key name="cont1" value="solid" />
   <key name="cont2" value="window" />
   <key name="cont3" value="" />
-  <key name="cont4" value="fireaffected" />
+  <key name="cont4" value="" />
   <key name="cont5" value="" />
   <key name="cont6" value="water" />
   <key name="cont7" value="" />
@@ -73,7 +73,7 @@ Note : Default project settings are for single player... this can be changed thr
   <key name="cont16" value="level8" />
   <key name="cont17" value="actorclip" />
   <key name="cont18" value="passable" />
-  <key name="cont19" value="footstep" />
+  <key name="cont19" value="" />
   <key name="cont20" value="" />
   <key name="cont21" value="" />
   <key name="cont22" value="" />
