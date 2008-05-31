@@ -337,7 +337,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
  * @brief Checks whether a point is "visible" from the edicts position
  * @sa FrustomVis
  */
-qboolean G_FrustumVis (edict_t * from, vec3_t point)
+qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
 {
 	return FrustomVis(from->origin, from->dir, point);
 }
@@ -349,7 +349,7 @@ qboolean G_FrustumVis (edict_t * from, vec3_t point)
  * @param[to] to    The point to check visibility to
  * @return true if the points are visible from each other, false otherwise.
  */
-static qboolean G_LineVis (vec3_t from, vec3_t to)
+static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 {
 #if 0 /* this version is more accurate and includes entity tests */
 	trace_t tr;
@@ -369,7 +369,7 @@ static qboolean G_LineVis (vec3_t from, vec3_t to)
 /**
  * @brief calculate how much check is "visible" from from
  */
-float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
+float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 {
 	vec3_t test, dir;
 	float delta;
@@ -1544,7 +1544,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				client_action = ent->client_action;
 				oldState = ent->state;
-				/* check triggers at new position */
+				/* check triggers at new position but only if no actor appeared */
 				if (G_TouchTriggers(ent)) {
 					triggers = qtrue;
 					Com_DPrintf(DEBUG_GAME, "G_ClientMove: Touching trigger\n");

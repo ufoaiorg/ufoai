@@ -905,7 +905,7 @@ static void TR_TestInLeaf (int leafnum)
  *  using trace_extents.  Tracce_extents is specifically how far from the line a bsp node needs
  *  to be in order to be included or excluded in the search.
  */
-static void TR_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
+static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
 {
 	TR_NODE_TYPE *node;
 	TR_PLANE_TYPE *plane;
@@ -1020,7 +1020,7 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
  *  the bounding box is returned.
  *  There is another special case when mins and maxs are both origin vectors (0, 0, 0).  In this case, the
  */
-trace_t TR_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask)
+trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask)
 {
 	int i;
 
@@ -1098,7 +1098,7 @@ trace_t TR_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t m
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t TR_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
+trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
@@ -1164,7 +1164,7 @@ trace_t TR_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, con
 /**
  * @brief Handles all 255 level specific submodels too
  */
-trace_t TR_CompleteBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask)
+trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask)
 {
 	trace_t newtr, tr;
 	int tile, i;

@@ -552,7 +552,7 @@ GAME RELATED TRACING USING ENTITIES
  * @return qtrue - hit something
  * @return qfalse - hit nothing
  */
-qboolean CM_EntTestLine (vec3_t start, vec3_t stop, const int levelmask)
+qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelmask)
 {
 	trace_t trace;
 	cBspModel_t *model;
@@ -595,7 +595,7 @@ qboolean CM_EntTestLine (vec3_t start, vec3_t stop, const int levelmask)
  * @return qtrue - hit something
  * @return qfalse - hit nothing
  */
-qboolean CM_TestLineWithEnt (vec3_t start, vec3_t stop, const int levelmask, const char **entlist)
+qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
 {
 	qboolean hit;
 
@@ -618,7 +618,7 @@ qboolean CM_TestLineWithEnt (vec3_t start, vec3_t stop, const int levelmask, con
  * @sa TR_TestLineDM
  * @sa TR_TransformedBoxTrace
  */
-qboolean CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end, const int levelmask)
+qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
 {
 	trace_t trace;
 	cBspModel_t *model;
@@ -659,7 +659,7 @@ qboolean CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end, const int leve
  * @brief Wrapper for TR_TransformedBoxTrace that accepts a tile number,
  * @sa TR_TransformedBoxTrace
  */
-inline trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
+inline trace_t CM_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
 {
 	return TR_TransformedBoxTrace(start, end, mins, maxs, &mapTiles[tile], headnode, brushmask, origin, angles);
 }

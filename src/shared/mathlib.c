@@ -436,7 +436,7 @@ void AngleVectors (const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
  * @param[in] dir Direction to test into
  * @param[in] point This is the point we want to check the visibility for
  */
-qboolean FrustomVis (vec3_t origin, int dir, vec3_t point)
+qboolean FrustomVis (const vec3_t origin, int dir, const vec3_t point)
 {
 	/* view frustum check */
 	vec3_t delta;

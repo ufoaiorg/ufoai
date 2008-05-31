@@ -41,7 +41,7 @@ typedef struct {
  * @param[in] target Shoot to this location
  * @param[in] spread
  */
-static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
+static qboolean AI_CheckFF (const edict_t *ent, const vec3_t target, float spread)
 {
 	edict_t *check;
 	vec3_t dtarget, dcheck, back;
@@ -119,6 +119,55 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 		return qfalse;
 
 	return qtrue;
+}
+
+/**
+ * @brief Checks whether the AI controlled actor wants to use a door
+ * @param[in] ent The AI controlled actor
+ * @param[in] door The door edict
+ * @returns true if the AI wants to use (open/close) that door, false otherwise
+ * @note Don't start any new events in here, don't change the actor state
+ * @sa Touch_DoorTrigger
+ * @todo Implement me
+ */
+qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
+{
+	return qtrue;
+}
+
+/**
+ * @brief Checks whether it would be smart to change the state to STATE_CROUCHED
+ * @param[in] ent The AI controlled actor to chech the state change for
+ * @returns true if the actor should go into STATE_CROUCHED, false otherwise
+ */
+static qboolean AI_CheckCrouch (const edict_t *ent)
+{
+	int i;
+	const edict_t *check;
+
+	/* see if we are very well visible by an enemy */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		if (!check->inuse)
+			continue;
+		/* don't check for civilians or aliens */
+		if (check->team == ent->team || check->team == TEAM_CIVILIAN)
+			continue;
+		/* it's the actor is still living and no AI (team check above) */
+		if (G_IsLivingActor(check)) {
+			/* check whether the origin of the enemy is inside the
+			 * AI actors view frustom */
+			qboolean frustum = G_FrustumVis(check, ent->origin);
+			const float actorVis = G_ActorVis(check->origin, ent, qtrue);
+			if (!frustum)
+				continue;
+			if (actorVis < 0.6)
+				continue;
+			/* check whether the enemy is close enough to change the state */
+			if (VectorDist(check->origin, ent->origin) < MAX_SPOT_DIST)
+				return qtrue;
+		}
+	}
+	return qfalse;
 }
 
 /**
@@ -214,7 +263,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		 * maybe this is only a maptest and thus no scripts parsed */
 		if (weapFdsIdx == -1)
 			continue;
-		/* @todo: timed firedefs that bounce around should not be thrown/shooten about the hole distance */
+		/* @todo: timed firedefs that bounce around should not be thrown/shooten about the whole distance */
 		for (fdIdx = 0; fdIdx < od->numFiredefs[weapFdsIdx]; fdIdx++) {
 			fd = &od->fd[weapFdsIdx][fdIdx];
 
@@ -395,7 +444,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
+static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t *aia)
 {
 	edict_t *check;
 	int i, move, tu;
@@ -707,8 +756,8 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
-		/* @todo: Add some calculation to decide whether the actor maybe wants to go crouched */
-		if (1)
+		/* decide whether the actor maybe wants to go crouched */
+		if (AI_CheckCrouch(ent))
 			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 
 		/* actor is still alive - try to turn into the appropriate direction to see the target

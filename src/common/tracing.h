@@ -101,9 +101,9 @@ int TR_HeadnodeForBox(mapTile_t *tile, const vec3_t mins, const vec3_t maxs);
 
 void TR_BuildTracingNode_r (int node, int level);
 
-trace_t TR_BoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask);
-trace_t TR_TransformedBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles);
-trace_t TR_CompleteBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask);
+trace_t TR_BoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask);
+trace_t TR_TransformedBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles);
+trace_t TR_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask);
 
 qboolean TR_TestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean TR_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);

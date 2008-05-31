@@ -311,11 +311,11 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
 int G_DoTurn(edict_t * ent, byte toDV);
 
-qboolean G_FrustumVis(edict_t * from, vec3_t point);
-float G_ActorVis(vec3_t from, edict_t * check, qboolean full);
+qboolean G_FrustumVis(const edict_t *from, const vec3_t point);
+float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
 void G_ClearVisFlags(int team);
-int G_CheckVis(edict_t * check, qboolean perish);
-void G_SendInvisible(player_t* player);
+int G_CheckVis(edict_t *check, qboolean perish);
+void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(int player_mask, int appear, edict_t * check);
@@ -336,7 +336,7 @@ void G_ListMissionScore_f(void);
 extern int turnTeam;
 
 /* g_combat.c */
-qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
+qboolean G_ClientShoot(player_t *player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 void G_ResetReactionFire(int team);
 qboolean G_ReactToMove(edict_t *target, qboolean mock);
 void G_ReactToEndTurn(void);
@@ -345,8 +345,9 @@ void G_ReactToEndTurn(void);
 extern edict_t *ai_waypointList;
 void G_AddToWayPointList(edict_t *ent);
 void AI_Run(void);
-void AI_ActorThink(player_t * player, edict_t * ent);
+void AI_ActorThink(player_t *player, edict_t *ent);
 player_t *AI_CreatePlayer(int team);
+qboolean AI_CheckUsingDoor(const edict_t *ent, const edict_t *door);
 
 /* g_svcmds.c */
 void ServerCommand(void);

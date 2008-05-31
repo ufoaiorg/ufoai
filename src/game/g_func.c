@@ -123,6 +123,7 @@ static qboolean Door_Open (edict_t *door)
  * @sa LE_DoorOpen
  * @sa LE_CloseOpen
  * @sa CL_ActorDoorAction
+ * @sa AI_CheckUsingDoor
  */
 static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 {
@@ -135,7 +136,8 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		/* let the ai interact with the door */
 		if (self->flags & FL_GROUPSLAVE)
 			self = self->groupMaster;
-		G_ClientUseEdict(game.players + activator->pnum, activator, self->owner);
+		if (AI_CheckUsingDoor(activator, self->owner))
+			G_ClientUseEdict(game.players + activator->pnum, activator, self->owner);
 		/* we don't want the client action stuff to be send for ai actors */
 		return qfalse;
 	} else {
