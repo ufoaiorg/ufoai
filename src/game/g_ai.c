@@ -132,6 +132,12 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
  */
 qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 {
+	if (frand() < 0.3)
+		return qfalse;
+
+	if (!G_FrustumVis(door, ent->origin))
+		return qfalse;
+
 	/* if the alien is trying to hide and the door is
 	 * still opened, close it */
 	if (ent->hiding && door->moveinfo.state == STATE_OPENED)

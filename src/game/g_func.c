@@ -75,7 +75,7 @@ DOOR FUNCTIONS
 =============================================================================
 */
 
-static qboolean Door_Open (edict_t *door)
+static qboolean Door_Use (edict_t *door)
 {
 	if (door->moveinfo.state == STATE_CLOSED) {
 		door->moveinfo.state = STATE_OPENED;
@@ -99,12 +99,12 @@ static qboolean Door_Open (edict_t *door)
 		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
 		gi.LinkEdict(door);
 
-		/* maybe the server called this because the door starts opened */
-		if (level.activeTeam != -1) {
-			/* let everybody know, that the door closes */
-			gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
-			gi.WriteShort(door->number);
-		}
+		/* closed is the standard, opened is handled above - we need an active
+		 * team here already, otherwise this is a bug */
+		assert(level.activeTeam != -1);
+		/* let everybody know, that the door closes */
+		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
+		gi.WriteShort(door->number);
 	} else
 		return qfalse;
 
@@ -185,7 +185,7 @@ void SP_func_door (edict_t *ent)
 	other->touch = Touch_DoorTrigger;
 
 	ent->TU = TU_DOOR_ACTION;
-	ent->use = Door_Open;
+	ent->use = Door_Use;
 	ent->child = other;
 
 	/* the door should start opened */
