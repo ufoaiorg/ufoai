@@ -633,9 +633,13 @@ void CheckBrushes (void)
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
+
+		/* Disabled unused variable to prevent compiler warning. */
+		#if 0
 		const int contentFlags = (brush->original_sides[0].contentFlags & CONTENTS_LEVEL_ALL)
 			? brush->original_sides[0].contentFlags
 			: (brush->original_sides[0].contentFlags | CONTENTS_LEVEL_ALL);
+		#endif
 
 		Check_DuplicateBrushPlanes(brush);
 
@@ -665,7 +669,7 @@ void CheckBrushes (void)
 			}
 #endif
 
-			if (config.performMapCheck && contentFlags != side->contentFlags) {
+			if (config.performMapCheck && brush->contentFlags != side->contentFlags) {
 				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
 			}
 
