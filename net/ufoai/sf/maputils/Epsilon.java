@@ -14,7 +14,7 @@ public class Epsilon {
 
 	/** used for deciding is a point is close enough to being in (or on the surface of)
 	 *  the brush. */
-	public static final float distance = 0.0001f;
+	public static final float distance = 0.001f;
 
 	/** used or deciding if things are close enough to being parallel. in radians */
 	public static final float angle = 0.001f;

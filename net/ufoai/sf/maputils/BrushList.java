@@ -82,7 +82,7 @@ public class BrushList {
 				for(Face fToCheck:fvToCheck){
 				    //System.out.printf("p&c:"+f.isParallelAndCoincident(fToCheck)+" ");
 				    //System.out.printf("abt:"+tf(f.isAbutted(fToCheck))+" ");
-				    if(f.isParallelAndCoincident(fToCheck) && f.isAbutted(fToCheck)){
+				    if(f.isParallelAndCoincident(fToCheck) && /*f.isAbutted(fToCheck)*/ f.getParent().insideInclusive(fToCheck)){
 					composite.addFace(fToCheck);
 					//so we do not find the same composite again. not sure the if(contains()) is necessary
 					if(!facesInComposites.contains(fToCheck)) facesInComposites.add(fToCheck);
@@ -100,7 +100,7 @@ public class BrushList {
 			    //System.out.printf("composite has %d faces%n",composite.members.size());
 			    if(composite.hasMultipleMembers()){//if there is more than one face in this composite
 				compositeFaces.add(composite);
-				
+				// for(Face compMemb:composite.members) compMemb.setError();//debug line, remove me!
 				for(Brush bDone:bvDone){//the done list is a list of brushes nearby
 				    bDone.addToCompositeFaceInterationList(composite);
 				}

@@ -21,7 +21,6 @@ public class Face {
 	SurfaceFlags surfFlags;
 	ContentFlags contentFlags;
 	Vector<Vector3D> vertices=null;
-	Vector<Edge> edges=new Vector<Edge>(4,4);
 
 	private static int count = 0;
 	public static final String nodrawTexture = "tex_common/nodraw",
@@ -68,16 +67,36 @@ public class Face {
 	
 	/** this must be done at the end of the parent Brush constructor, 
 	 *  otherwise the Brush does not have any vertices yet, 
-	 *  because it has not calculted the intersection of the planes of the 
-	 *  Faces yet, because it does not have any Face objects... */
+	 *  because it has not calculated the intersection of the planes of the 
+	 *  Faces yet, because it does not have any Face objects...
+	 *  note: edges removed, this function should probably be renamed. */
 	public void calculateVerticesAndEdges(){
 	    if(vertices!=null) return;//already done
 	    vertices=parentBrush.getVertices (this);
 	    for(int i=0;i<vertices.size ();i++){
 		int v2ind=i+1;
 		v2ind= (v2ind==vertices.size()) ? 0 : v2ind ;//join up last vertex with first
-		edges.add (new Edge(vertices.get (i),vertices.get (v2ind)));
 	    }
+	}
+	
+	/** returns true if p is within Epsilon.distance of one of the edges
+	 *  of this face. */
+	public boolean isOnEdge(Vector3D p){
+	    //System.out.println("Face.isOnEdge checking if "+p+" is on an edge of "+this);
+	    Brush parent=getParent();
+	    //must be within epsilon of this plane
+	    if(this.hessian.absDistance(p)>Epsilon.distance) return false;
+	    //System.out.println("Face.isOnEdge passed dist to this plane test");
+	    //must be within epsilon of the brush
+	    if(!parent.insideInclusive(p)) return false;
+	    //System.out.println("Face.isOnEdge passed within epsilon of brush test");
+	    //must be within epsilon of at least one other face's plane
+	    for(Face f:parent.getFaces()){
+		if(f!=this){
+		    if(f.getHessian().absDistance(p)<Epsilon.distance) return true;
+		}
+	    }
+	    return false;
 	}
 
 	public Vector<Vector3D> getVertices(){
@@ -94,6 +113,10 @@ public class Face {
 
 	public int getNumber() {
 		return number;
+	}
+	
+	public String toString(){
+	    return String.format("Face %d (%s) from Brush %d from Entity %d ", this.getNumber(),this.getPart(PART_INDEX_TEX),this.getParent().getBrushNumber(),this.getParent().getParentEntity().getNumber());
 	}
 
 	public void writeReformedText (PrintStream to) {
@@ -193,17 +216,6 @@ public class Face {
 		return distance < Epsilon.distance && this.isParallelTo (a);
 	}
 	
-	/** @return true if at least one edge of <code>a</code> is abutted to 
-	 *          an edge of <code>this</code> brush. */
-	public boolean isAbutted(Face a){
-	    for (Edge ei:this.edges){
-		for (Edge ej:a.edges){
-		    if(ei.isAbutted(ej)) return true;
-		}
-	    }
-	    return false;
-	}
-
 	/** @return true if the point is on the plane of this face*/
 	public boolean contains (Vector3D point) {
 		return Math.abs (this.getHessian().distance (point) ) < Epsilon.distance;

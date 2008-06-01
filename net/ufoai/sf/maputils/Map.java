@@ -228,7 +228,7 @@ public class Map {
 				Vector<Face> bFaces = b.getFaces();//faces of the brush being considered as nodraws
 				Vector<Face> piFaces = pib.getFaces();//faces of nearby brushes, which might obscure faces of brush, b
 				for (Face bf: bFaces) {//loop through the faces of the brush
-				    if(!bf.isNodraw ()){//do not waste time testing if the face is already a nodraw.
+				    //if(!bf.isNodraw ()){//do not waste time testing if the face is already a nodraw.
 					for (Face pif: piFaces) {
 					    if(pif.coversConsideringLevelFlags(bf)){
 						if (bf.isFacingAndCoincidentTo (pif) ) {
@@ -241,7 +241,7 @@ public class Map {
 						}
 					    }
 					}
-				    }
+				    //}
 				}
 			}
 			Vector<CompositeFace> possibleInteractionComposites=b.getCompositeFaceInteractionList();
@@ -253,6 +253,7 @@ public class Map {
 				    if(cf.areInsideParentBrushes(vertsOfFaceBf)){
 					if(cf.coversConsideringLevelFlags(bf)){
 					    if(cf.compositeFaceVerticesAreOutside(bf)){
+						System.out.println("cf "+cf+" considered obscuring "+bf);
 						nodrawsObsByComposite++;
 						bf.setNodraw();
 						MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());

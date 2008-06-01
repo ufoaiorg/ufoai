@@ -105,32 +105,10 @@ public class Brush {
 	 *  method) by a distance dist. dist is specified: will probably be an
 	 *  epsilon. */
 	public Vector<Vector3D> calculateVerticesOfFacePushedOut(Face f, float dist){
-	    Vector<HessianNormalPlane> hessians=new Vector<HessianNormalPlane>(6,6);
-	    int pIndex=-1;
-	    for(int i=0;i<faces.size();i++) {
-		if(faces.get(i)==f) {
-		    hessians.add(f.getHessian().getTranslated(dist));
-		    //System.out.println("H after shift:"+hessians.lastElement());
-		    pIndex=i;
-		} else {
-		    hessians.add(faces.get(i).getHessian());
-		}
-	    }
+	    Vector<Vector3D> trueVerts=f.getVertices();
 	    Vector<Vector3D> tmpvertices=new Vector<Vector3D>(6,6);
-	    for (int i = 1;i < faces.size();i++) {
-			for (int j = 0;j < i;j++) {
-				for (int k = j + 1;k < faces.size();k++) {
-					if(i==pIndex || j==pIndex || k==pIndex ){
-					    Vector3D candidate = HessianNormalPlane.getIntersection (hessians.get(i), hessians.get(j),hessians.get(k) );
-					    if (candidate != null) {//if 3 faces do not intersect at point
-						//System.out.println("candidate "+candidate);
-						if (insideInclusive (candidate, dist+Epsilon.distance) ) {//in case 3 planes of faces intersect away from brush
-							tmpvertices.add (candidate);
-						}
-					    }
-					}
-				}
-			}
+	    for(Vector3D v:trueVerts){
+		tmpvertices.add(v.add(f.hessian.n.multiply(dist)));//move verts out in direction of unit normal
 	    }
 	    if (tmpvertices.size()==0) System.out.println("Brush.calculateVerticesOfFacePushedOut: face has no vertices");
 	    return tmpvertices;
@@ -152,29 +130,6 @@ public class Brush {
 				}
 			}
 		}
-	}
-
-
-	/** not efficient code */
-	public Vector<Edge> getEdges() {
-		Vector<Edge> ans = new Vector<Edge> (6, 6);
-		for (int i = 0;i < vertices.size();i++) {
-			for (int j = i + 1;j < vertices.size();j++) {//loop through all pairs of vertices
-				for (int k = 0;k < faces.size();k++) {
-					Face facek = faces.get (k);
-					Vector3D verti = vertices.get (i), vertj = vertices.get (j);
-					if (facek.contains (verti) && facek.contains (vertj) ) {//if both points are common to one face
-						for (int l = k + 1;l < faces.size();l++) {
-							Face facel = faces.get (l);
-							if (facel.contains (verti) && facel.contains (vertj) ) {//and are also common to a different face
-								ans.add (new Edge (verti, vertj) );//then they must be the edge at the intersection of those faces
-							}
-						}
-					}
-				}
-			}
-		}
-		return ans;
 	}
 
 	public Vector<Face> getFaces() {
@@ -278,7 +233,8 @@ public class Brush {
 	public boolean insideInclusive (Vector3D point, float epsilonMargin) {
 		//if the point is on the wrong side of any face, then it is outside
 		for (int i = 0;i < faces.size();i++) {
-			if (faces.get (i).getHessian().distance (point) > epsilonMargin) {
+			if (faces.get(i).getHessian().distance (point) > epsilonMargin) {
+				//System.out.println("Brush.insideInclusive: "+point+" is outside "+faces.get(i));
 				return false;
 			}
 		}
@@ -297,6 +253,14 @@ public class Brush {
 			}
 		}
 		return true;
+	}
+	
+	/** returns true if any of the vertices of face f are inside or within 
+	 *  Epsilon of the surface if this brush*/
+	public boolean insideInclusive(Face f){
+	    Vector<Vector3D> verts=f.getVertices();
+	    for(Vector3D p:verts) if(this.insideInclusive(p)) return true;
+	    return false;
 	}
 	
 	/** tests if all of the points in teh supplied vector are inside() this Brush */
@@ -383,18 +347,12 @@ public class Brush {
 			HessianNormalPlane h = f.getHessian();
 			System.out.printf ("%d unit normal:%s distance to origin:%5.1f%n", i, "" + h.n, h.p);
 		}
-		//edges
-		System.out.println ("edges");
-		Vector<Edge> edges = this.getEdges();
-		for (Edge e: edges) {
-			System.out.println ("" + e);
-		}
+		
 		//display
 		OrthographicProjectionFrame opf = new OrthographicProjectionFrame();
 		for (Vector3D intersection: intersections) {
 			opf.addPoint (intersection, Color.gray, 1);
 		}
-		for (Edge e: edges) opf.addLine (e.point1, e.point2, Color.gray);
 		opf.setVisible (true);
 
 	}
@@ -411,7 +369,7 @@ public class Brush {
 
 	
 	public String verboseInfo(){
-	    return String.format("brush(%d) faces:%d vertices:%d",this.getBrushNumber(), faces.size(), vertices.size());
+	    return String.format("brush(%d) faces:%d vertices:%d ",this.getBrushNumber(), faces.size(), vertices.size());
 	}
 	
 	/** sets the error texture on all faces */

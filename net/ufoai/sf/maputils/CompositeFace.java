@@ -10,7 +10,6 @@ import java.util.Vector;
 public class CompositeFace {
     
     Vector<Face> members=new Vector<Face>(3,3);
-    boolean sorted=false;
     
     /**  */
     public CompositeFace (Face f) {
@@ -23,7 +22,6 @@ public class CompositeFace {
     
     public void addFace(Face f){
 	members.add(f);
-	boolean sorted=false;
     }
 
     /** as {@link Face#isFacingAndCoincidentTo(Face)} */
@@ -52,18 +50,17 @@ public class CompositeFace {
      *  @return true if none of the vertices of the members of the composite 
      *          face are in the middle of (edges excluded) the face f. */
     boolean compositeFaceVerticesAreOutside(Face f){
-	Vector<Vector3D> inclusiveFaces=new Vector<Vector3D>(1,1);
 	for (Face mf:members ) {
 	    //System.out.println("checking composite member face from brush "+mf.getParent().getBrushNumber());
-	    Vector<Vector3D> verts = mf.getParent().calculateVerticesOfFacePushedOut(mf,2/*2*Epsilon.distance*/);
+	    Vector<Vector3D> verts = mf.getParent().getVertices();
 	    for(Vector3D v:verts) {
-		//System.out.println("brush which may have nodraw "+f.getParent().getBrushNumber()+" vert protruding in"+v);
-		if(f.getParent().insideExclusive(v)) return false;
+		//if(f.getParent().insideInclusive(v) && !f.isOnEdge(v)) System.out.println("vert "+v+" vs "+f+" inside brush:"+f.getParent().insideInclusive(v) +"  onEdge: "+ f.isOnEdge(v));
+		if(f.getParent().insideInclusive(v) && !f.isOnEdge(v)) return false;
 	    }
 	}
 	return true;
     }
-    
+        
     public String toString(){
 	String s="";
 	for(Face f:members){
