@@ -113,7 +113,7 @@ void G_PhysicsRun (void)
 	edict_t *ent;
 
 	/* not all teams are spawned */
-	if (level.activeTeam == -1)
+	if (!G_GameRunning())
 		return;
 
 #if 0 /* taken out - otherwise footstep sounds are too slow */

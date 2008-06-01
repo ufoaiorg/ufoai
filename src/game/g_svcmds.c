@@ -313,7 +313,7 @@ static void SVCmd_StartGame_f (void)
 	char buffer[MAX_VAR] = "";
 
 	/* return with no action if activeTeam already assigned or if in single-player mode */
-	if (level.activeTeam != -1 || sv_maxclients->integer == 1)
+	if (G_GameRunning() || sv_maxclients->integer == 1)
 		return;
 
 	/* count number of currently connected unique teams and players (only human controlled players) */

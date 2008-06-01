@@ -135,6 +135,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 	if (frand() < 0.3)
 		return qfalse;
 
+	Com_Printf("%f: %f: %f\n", ent->origin[0], ent->origin[1], ent->origin[2]);
 	if (!G_FrustumVis(door, ent->origin))
 		return qfalse;
 

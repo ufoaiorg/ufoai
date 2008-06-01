@@ -337,7 +337,7 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 	G_ResetClientData();
 
 	ent = NULL;
-	level.activeTeam = -1;
+	level.activeTeam = NO_ACTIVE_TEAM;
 	ai_waypointList = NULL;
 
 	/* parse ents */

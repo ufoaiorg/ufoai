@@ -2531,7 +2531,7 @@ static void G_ClientTeamAssign (const player_t * player)
 	knownTeams[0] = player->pers.team;
 
 	/* return with no action if activeTeam already assigned or if in single-player mode */
-	if (level.activeTeam != -1 || sv_maxclients->integer == 1)
+	if (G_GameRunning() || sv_maxclients->integer == 1)
 		return;
 
 	/* count number of currently connected unique teams and players (human controlled players only) */
@@ -2671,7 +2671,7 @@ void G_ClientTeamInfo (player_t * player)
 		 */
 		if (player->pers.team != -1
 		 && (sv_maxclients->integer == 1
-			|| (level.activeTeam == -1 && i < sv_maxsoldiersperplayer->integer
+			|| (!G_GameRunning() && i < sv_maxsoldiersperplayer->integer
 			 && level.num_spawned[player->pers.team] < sv_maxsoldiersperteam->integer))) {
 			/* Here the client tells the server the information for the spawned actor(s). */
 
@@ -2914,11 +2914,11 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	G_CheckVisTeam(level.activeTeam, NULL, qtrue);
 
 	lastTeam = player->pers.team;
-	level.activeTeam = -1;
+	level.activeTeam = NO_ACTIVE_TEAM;
 
 	/* Get the next active team. */
 	p = NULL;
-	while (level.activeTeam == -1) {
+	while (level.activeTeam == NO_ACTIVE_TEAM) {
 		/* search next team */
 		nextTeam = -1;
 
@@ -2955,7 +2955,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 				break;
 			}
 
-		if (level.activeTeam == -1 && sv_ai->integer && ai_autojoin->integer) {
+		if (level.activeTeam == NO_ACTIVE_TEAM && sv_ai->integer && ai_autojoin->integer) {
 			/* no corresponding player found - create ai player */
 			p = AI_CreatePlayer(nextTeam);
 			if (p)
@@ -2965,6 +2965,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		lastTeam = nextTeam;
 	}
 	turnTeam = level.activeTeam;
+	assert(level.activeTeam != NO_ACTIVE_TEAM);
 
 	/* communicate next player in row to clients */
 	gi.AddEvent(PM_ALL, EV_ENDROUND);
@@ -3128,7 +3129,7 @@ qboolean G_ClientSpawn (player_t * player)
 	}
 
 	/* @todo: Check player->pers.team here */
-	if (level.activeTeam == -1) {
+	if (!G_GameRunning()) {
 		/* activate round if in single-player */
 		if (sv_maxclients->integer == 1) {
 			level.activeTeam = player->pers.team;

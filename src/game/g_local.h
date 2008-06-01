@@ -53,6 +53,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define P_MASK(p)		((p)->num < game.sv_maxplayersperteam ? 1<<((p)->num) : 0)
 #define PM_ALL			0xFFFFFFFF
 
+#define NO_ACTIVE_TEAM -1
+
 /* server is running at 10 fps */
 #define	SERVER_FRAME_SECONDS		0.1
 
@@ -354,6 +356,7 @@ void ServerCommand(void);
 qboolean SV_FilterPacket(const char *from);
 
 /* g_main.c */
+qboolean G_GameRunning(void);
 void G_EndGame(int team);
 void G_CheckEndGame(void);
 

@@ -661,6 +661,15 @@ void G_CheckEndGame (void)
 }
 
 /**
+ * @brief Checks whether the game is running (active team)
+ * @returns true if there is an active team for the current round
+ */
+qboolean G_GameRunning (void)
+{
+	return (level.activeTeam != NO_ACTIVE_TEAM);
+}
+
+/**
  * @sa SV_RunGameFrame
  * @sa G_EndGame
  * @sa AI_Run
@@ -674,7 +683,7 @@ qboolean G_RunFrame (void)
 /*	Com_Printf("frame: %i   time: %f\n", level.framenum, level.time); */
 
 	/* still waiting for other players */
-	if (level.activeTeam == -1) {
+	if (!G_GameRunning()) {
 		if (sv_maxteams->modified) {
 			/* inform the client */
 			gi.ConfigString(CS_MAXTEAMS, va("%i", sv_maxteams->integer));

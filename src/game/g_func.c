@@ -75,18 +75,23 @@ DOOR FUNCTIONS
 =============================================================================
 */
 
+/**
+ * @brief Opens/closes a door
+ * @note Use function for func_door
+ * @todo Check if the door can be opened or closed - there should not be
+ * anything in the way (e.g. an actor)
+ */
 static qboolean Door_Use (edict_t *door)
 {
 	if (door->moveinfo.state == STATE_CLOSED) {
 		door->moveinfo.state = STATE_OPENED;
 
-		/* FIXME Check if the door can be opened - there should not be anything in the way (e.g. an actor) */
 		/* change rotation and relink */
 		door->angles[YAW] += DOOR_ROTATION_ANGLE;
 		gi.LinkEdict(door);
 
 		/* maybe the server called this because the door starts opened */
-		if (level.activeTeam != -1) {
+		if (G_GameRunning()) {
 			/* let everybody know, that the door opens */
 			gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
 			gi.WriteShort(door->number);
@@ -94,14 +99,13 @@ static qboolean Door_Use (edict_t *door)
 	} else if (door->moveinfo.state == STATE_OPENED) {
 		door->moveinfo.state = STATE_CLOSED;
 
-		/* FIXME Check if the door can be opened - there should not be anything in the way (e.g. an actor) */
 		/* change rotation and relink */
 		door->angles[YAW] -= DOOR_ROTATION_ANGLE;
 		gi.LinkEdict(door);
 
 		/* closed is the standard, opened is handled above - we need an active
 		 * team here already, otherwise this is a bug */
-		assert(level.activeTeam != -1);
+		assert(G_GameRunning());
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 		gi.WriteShort(door->number);
