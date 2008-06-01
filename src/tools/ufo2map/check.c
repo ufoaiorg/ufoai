@@ -529,7 +529,8 @@ static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
 	return qtrue;
 }
 
-/** sets all levelflags, if none are set.
+/**
+ * @brief sets all levelflags, if none are set.
  */
 void CheckLevelFlags (void)
 {
@@ -553,17 +554,16 @@ void CheckLevelFlags (void)
 	}
 }
 
-void CheckBrushes (void)
+/**
+ * @brief check that sides have textures and that where content/surface flags are set the texture
+ * is correct.
+ */
+void CheckTextures (void)
 {
 	int i, j;
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
-		const int contentFlags = (brush->original_sides[0].contentFlags & CONTENTS_LEVEL_ALL)
-			? brush->original_sides[0].contentFlags
-			: (brush->original_sides[0].contentFlags | CONTENTS_LEVEL_ALL);
-
-		Check_DuplicateBrushPlanes(brush);
 
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
@@ -573,34 +573,12 @@ void CheckBrushes (void)
 			assert(side);
 			assert(tex);
 
-#if 1
-			/* @todo remove this once every map is run with ./ufo2map -fix brushes <map> */
-			/* the old footstep value */
-			if (side->contentFlags & 0x00040000) {
-				side->contentFlags &= ~0x00040000;
-				Com_Printf("  Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
-				side->surfaceFlags |= SURF_FOOTSTEP;
-				tex->surfaceFlags |= SURF_FOOTSTEP;
-			}
-			/* the old fireaffected value */
-			if (side->contentFlags & 0x0008) {
-				side->contentFlags &= ~0x0008;
-				Com_Printf("  Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
-				side->surfaceFlags |= SURF_BURN;
-				tex->surfaceFlags |= SURF_BURN;
-			}
-#endif
-
 			if (tex->name[0] == '\0') {
 				Com_Printf("  Brush %i (entity %i): no texture assigned\n", brush->brushnum, brush->entitynum);
 			}
 
 			if (!Q_strcmp(tex->name, "tex_common/error")) {
 				Com_Printf("  Brush %i (entity %i): error texture assigned - check this brush\n", brush->brushnum, brush->entitynum);
-			}
-
-			if (config.performMapCheck && contentFlags != side->contentFlags) {
-				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
 			}
 
 			if (!Q_strcmp(tex->name, "NULL")) {
@@ -644,6 +622,53 @@ void CheckBrushes (void)
 				Com_Printf("* Brush %i (entity %i): set origin texture for CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/origin", sizeof(tex->name));
 			}
+
+		}
+	}
+}
+
+void CheckBrushes (void)
+{
+	int i, j;
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *brush = &mapbrushes[i];
+		const int contentFlags = (brush->original_sides[0].contentFlags & CONTENTS_LEVEL_ALL)
+			? brush->original_sides[0].contentFlags
+			: (brush->original_sides[0].contentFlags | CONTENTS_LEVEL_ALL);
+
+		Check_DuplicateBrushPlanes(brush);
+
+		for (j = 0; j < brush->numsides; j++) {
+			side_t *side = &brush->original_sides[j];
+			const ptrdiff_t index = side - brushsides;
+			brush_texture_t *tex = &side_brushtextures[index];
+
+			assert(side);
+			assert(tex);
+
+#if 1
+			/* @todo remove this once every map is run with ./ufo2map -fix brushes <map> */
+			/* the old footstep value */
+			if (side->contentFlags & 0x00040000) {
+				side->contentFlags &= ~0x00040000;
+				Com_Printf("  Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
+				side->surfaceFlags |= SURF_FOOTSTEP;
+				tex->surfaceFlags |= SURF_FOOTSTEP;
+			}
+			/* the old fireaffected value */
+			if (side->contentFlags & 0x0008) {
+				side->contentFlags &= ~0x0008;
+				Com_Printf("  Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
+				side->surfaceFlags |= SURF_BURN;
+				tex->surfaceFlags |= SURF_BURN;
+			}
+#endif
+
+			if (config.performMapCheck && contentFlags != side->contentFlags) {
+				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
+			}
+
 			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
 				Com_Printf("* Brush %i (entity %i): origin brush inside worldspawn - removed CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
 				side->contentFlags &= ~CONTENTS_ORIGIN;
