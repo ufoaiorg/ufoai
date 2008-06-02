@@ -101,7 +101,7 @@ static void Usage(void){
 		"     ent    entities      : performs all checks and fixes associated with entities.\n"
 		"     lvl    levelflags    : if no levelflags for a brush or entity are set, all of them are set\n"
 		"     tex    textures      : warns when no texture or error texture is assigned.\n"
-		"                            textures and content/surface flags consistency.\n"
+		"                            ensures special textures and content/surface flags are consistent.\n"
 	);
 }
 
@@ -111,6 +111,7 @@ static void Usage(void){
  */
 static int U2M_CheckFix_Subparameter (int argc, int i, const char **argv)
 {
+	int initialI=i;
 	/* terminate loop before last arg (path) or when we hit a param
 	 * (as opposed to a subparam). full parameters are prefixed with "-". */
 	while (++i < (argc - 1) && argv[i][0] != '-') {
@@ -132,7 +133,11 @@ static int U2M_CheckFix_Subparameter (int argc, int i, const char **argv)
 		} else {
 			Com_Printf("  WARNING: %s subparameter not understood:%s  try --help for more info\n", config.fixMap ? "fix" : "check", argv[i]);
 		}
-
+	}
+	/* if no subparams set, assume all */
+	if(i==initialI+1){
+		Com_Printf("  no %s subparameters set, assuming all\n", config.fixMap ? "fix" : "check");
+		config.chkAll = qtrue;
 	}
 	return --i;
 }
