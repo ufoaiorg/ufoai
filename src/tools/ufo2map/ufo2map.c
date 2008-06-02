@@ -96,7 +96,7 @@ static void Usage(void){
 		" \n -check                   : check source map, only print information.\n"
 		" -fix                     : same subparameters as -check, changes the source map file.\n"
 		" \n subparameters for -check and -fix\n"
-		"     all                  : includes 'brushes entities'. Performs all checks and fixes.\n"
+		"     all                  : includes 'brushes entities'. Performs all checks and fixes. This is the default.\n"
 		"     bru    brushes       : includes 'levelflags textures'. Performs all checks and fixes associated with brushes.\n"
 		"     ent    entities      : performs all checks and fixes associated with entities.\n"
 		"     lvl    levelflags    : if no levelflags for a brush or entity are set, all of them are set\n"
