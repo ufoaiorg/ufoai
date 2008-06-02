@@ -50,20 +50,10 @@ static void Usage(void){
 #ifdef _WIN32
 		"Even on Windows, use / slashes in the path\n"
 #endif
+		"\nCompilation options:\n"
 		" -bounce <num>            : light bounces\n"
 		" -block num num           : \n"
 		" -blocks num num num num  : \n"
-		" -check                   : check (source) map, only print information.\n"
-		"                            no bsp is made.\n"
-		" subparameters for -check and -fix \n"
-		"     levelflags lvl       : if no levelflags are set, it sets them all\n"
-		"     textures tex         : warns when no texture or error texture is assigned.\n"
-		"                            textures and content/surface flags consistency.\n"
-		"     brushes bru          : includes levelflags textures\n"
-		"     entities ent         : \n"
-		"     all                  : includes brushes entities\n"
-		" -fix                     : same subparameters as -check, changes the (source) map.\n"
-		"                            no bsp is made.\n"
 		" -chop                    : \n"
 		" -direct                  : \n"
 		" -draw                    : \n"
@@ -76,7 +66,7 @@ static void Usage(void){
 		" -maxlight                : \n"
 		" -micro <float>           : \n"
 #ifndef _WIN32
-		" -nice <prio>             : priority level [normal unix nice level - e.g. 19 = IDLE]\n"
+		" -nice <prio>             : priority level [unix nice level from -20 to 19 where 19 is the lowest priority]\n"
 #else
 		" -nice <prio>             : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
 #endif
@@ -93,13 +83,25 @@ static void Usage(void){
 		" -notjunc                 : \n"
 		" -nowater                 : \n"
 		" -noweld                  : \n"
-		" -noradiosity             : don't perform the radiosity calculations (day, night, all)\n"
+		" -noradiosity TYPE        : don't perform the radiosity calculations, where TYPE is one of day, night, all)\n"
 		" -onlyents                : only update entities\n"
 		" -quant                   : lightquant\n"
 		" -radchop                 : \n"
 		" -scale                   : lightscale\n"
 		" -v                       : verbose output\n"
 		" -verboseentities         : also be verbose about submodels (entities)\n"
+		"\nMapping options:\n"
+		" These options operate on map file only. No bsp file is created.\n"
+		" Output prepended by an asterisk (*) indicates operations that would change the map file.\n"
+		" -check                   : check source map, only print information.\n"
+		" -fix                     : same subparameters as -check, changes the source map file.\n"
+		" \nsubparameters for -check and -fix\n"
+		"     all                  : same as 'brushes entities'. Performs all checks and fixes.\n"
+		"     bru    brushes       : same as 'levelflags textures'. Performs all checks and fixes associated with brushes.\n"
+		"     ent    entities      : performs all checks and fixes associated with entities.\n"
+		"     lvl    levelflags    : if no levelflags for a brush or entity are set, all of them are set\n"
+		"     tex    textures      : warns when no texture or error texture is assigned.\n"
+		"                            textures and content/surface flags consistency.\n"
 	);
 }
 
