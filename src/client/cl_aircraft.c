@@ -794,19 +794,18 @@ aircraft_t *AIR_GetAircraft (const char *name)
  */
 aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 {
-	aircraft_t *aircraftSample;
 	aircraft_t *aircraft;
+	const aircraft_t *aircraftSample = AIR_GetAircraft(name);
+
+	if (!aircraftSample) {
+		Com_Printf("Could not find aircraft with id: '%s'\n", name);
+		return NULL;
+	}
 
 	assert(base);
 
 	/* First aircraft in base is default aircraft. */
 	base->aircraftCurrent = 0;
-
-	aircraftSample = AIR_GetAircraft(name);
-	if (!aircraftSample) {
-		Com_Printf("Could not find aircraft with id: '%s'\n", name);
-		return NULL;
-	}
 
 	if (base->numAircraftInBase < MAX_AIRCRAFT) {
 		/* copy generic aircraft description to individal aircraft in base */

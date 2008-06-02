@@ -201,6 +201,7 @@ static void CL_Quit_f (void)
 
 /**
  * @brief Disconnects a multiplayer game if singleplayer is true and set ccs.singleplayer to true
+ * @param[in] singleplayer If this is true, we init singleplayer, otherwise multiplayer
  */
 void CL_StartSingleplayer (qboolean singleplayer)
 {
@@ -230,9 +231,8 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		 * the right thing while we are on geoscape */
 		sv_maxclients->modified = qtrue;
 	} else {
-		const char *max_s, *max_spp;
-		max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
-		max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
+		const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
+		const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
 
 		/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 		 * cvars if values were previously set */
