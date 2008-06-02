@@ -1149,7 +1149,8 @@ aircraft_t* AIR_AircraftGetFromIdx (int idx)
 #endif
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		/* also get none founded bases for multiplayer here */
+		base_t *base = B_GetBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
