@@ -227,6 +227,7 @@ static void G_Init (void)
 	globals.edicts = g_edicts;
 	globals.max_edicts = game.sv_maxentities;
 	globals.num_edicts = game.sv_maxplayersperteam;
+	globals.edict_lock = gi.CreateMutex(); /* entity lock */
 
 	/* initialize all players for this game */
 	/* game.sv_maxplayersperteam for human controlled players
@@ -262,6 +263,7 @@ static void G_Shutdown (void)
 
 	gi.FreeTags(TAG_LEVEL);
 	gi.FreeTags(TAG_GAME);
+	gi.DestroyMutex(globals.edict_lock);
 }
 
 

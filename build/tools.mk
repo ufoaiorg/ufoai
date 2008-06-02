@@ -49,4 +49,4 @@ $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
 # store the float values in buffers, not in cpu registers, maybe slower
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [MAP] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) -ffloat-store -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(SDL_CFLAGS) -ffloat-store -o $@ -c $< -MD -MT $@ -MP

@@ -28,6 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 
+SDL_mutex *SDL_CreateMutex(void);
+void SDL_DestroyMutex(SDL_mutex * mutex);
+int SDL_mutexV(SDL_mutex * mutex);
+int SDL_mutexP(SDL_mutex * mutex);
+
 game_export_t *ge;
 static qboolean pfe_pending = qfalse;
 static int pfe_mask = 0;
@@ -462,6 +467,11 @@ void SV_InitGameProgs (void)
 
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;
+
+	import.CreateMutex = &SDL_CreateMutex;
+	import.DestroyMutex = &SDL_DestroyMutex;
+	import.MutexP = &SDL_mutexP;
+	import.MutexV = &SDL_mutexV;
 
 	/* import the server routing table */
 	import.routingMap = (void *) &svMap;
