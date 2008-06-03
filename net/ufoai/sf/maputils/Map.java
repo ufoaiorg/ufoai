@@ -253,10 +253,10 @@ public class Map {
 				    if(cf.areInsideParentBrushes(vertsOfFaceBf)){
 					if(cf.coversConsideringLevelFlags(bf)){
 					    if(cf.compositeFaceVerticesAreOutside(bf)){
-						System.out.println("cf "+cf+" considered obscuring "+bf);
+						//System.out.println("cf "+cf+" considered obscuring "+bf);
 						nodrawsObsByComposite++;
 						bf.setNodraw();
-						MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
+						//MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
 						break;//once the face has been set, skip the rest.
 					    }
 					}
