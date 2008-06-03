@@ -75,6 +75,9 @@ typedef struct globalData_s
 	int numBaseNames;
 	/* Total number of built bases (how many are enabled). */
 	int numBases;
+	/* a list of all templates for building bases */
+	baseTemplate_t baseTemplates[MAX_BASETEMPLATES];
+	int numBaseTemplates;
 
 	/* == buildings in bases == */
 	/* A list of all possible unique buldings. */

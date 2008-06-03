@@ -69,7 +69,6 @@ building building_aliencontainment
 	map_name	"aliencont"
 	pedia		rs_building_aliencontainment
 	needs		building_aliencontainment2
-	firstbase	true
 	pos		"0 1"
 	more_than_one	true
 	onclick		"building_open"
@@ -95,7 +94,6 @@ building building_entrance
 	varcosts	0
 	map_name	"entrance"
 	pedia		rs_building_entrance
-	firstbase	true
 	pos			"2 4"
 	autobuild	true
 	type		entrance
@@ -130,7 +128,6 @@ building building_storage
 	varcosts	1000
 	map_name	"storage"
 	pedia		rs_building_storage
-	firstbase	true
 	pos			"3 4"
 	capacity	10000
 	ondestroy	"storage_destroy"
@@ -149,7 +146,6 @@ building building_powerplant
 	varcosts	5000
 	map_name	"powerplant"
 	pedia		rs_building_powerplant
-	firstbase	true
 	pos			"4 4"
 	more_than_one	false // are we sure? this is boring now...
 }
@@ -166,7 +162,6 @@ building building_command
 	varcosts	2000
 	map_name	"commando"
 	pedia		rs_building_command
-	firstbase	true
 	pos			"4 2"
 }
 
@@ -179,7 +174,6 @@ building building_quarters
 	varcosts	1000
 	map_name	"quarters"
 	pedia		rs_building_quarters
-	firstbase	true
 	pos			"4 3"
 	more_than_one	true
 	type		quarters
@@ -198,7 +192,6 @@ building building_hangar
 	varcosts	5500
 	map_name	"drop"
 	pedia		rs_building_large_hangar
-	firstbase	true
 	pos			"0 3"
 	more_than_one	true
 	type		hangar
@@ -229,7 +222,6 @@ building building_intercept
 	varcosts	5200
 	map_name	"intercept"
 	pedia		rs_building_small_hangar
-	firstbase	true
 	pos			"1 3"
 	more_than_one	true
 	onconstruct	""
@@ -304,7 +296,6 @@ building building_workshop
 	varcosts	8200
 	map_name	"workshop"
 	pedia		rs_building_workshop
-	firstbase	true
 	pos			"4 0"
 	more_than_one	true
 	type	workshop
@@ -333,7 +324,6 @@ building building_radar
 	varcosts	4000
 	map_name	"radar"
 	pedia		rs_building_radar
-	firstbase	true
 	pos	"1 4"
 	more_than_one	true
 	type		radar
@@ -350,7 +340,6 @@ building building_radar_adv
 	varcosts	7100
 	map_name	"radar_adv"
 	pedia		rs_building_radar_adv
-	firstbase	false
 	more_than_one	true
 	type		radar
 	level		2.0
@@ -366,7 +355,6 @@ building building_lab
 	varcosts	8300
 	map_name	"lab"
 	pedia		rs_building_lab
-	firstbase	true
 	pos		"3 2"
 	more_than_one	true
 	type		lab
@@ -385,8 +373,7 @@ building building_hospital
 	varcosts	5200
 	map_name	"hospital"
 	pedia		rs_building_hospital
-//	firstbase	true //the luxury of your veterans back in combat costs extra
-//	pos			"3 3"
+	pos			"3 3"
 	more_than_one	true
 	type		hospital
 	starting_employees	10
@@ -409,7 +396,7 @@ building building_amstorage
 	ondestroy	""
 }
 
-base main
+basenames main
 {
 	base1		"_Home"
 	base2		"_Base #2"
@@ -421,3 +408,18 @@ base main
 	base8		"_Base #8"
 }
 
+basetemplate balanced {
+	building_entrance		"2 4"
+	building_quarters		"4 3"
+	building_quarters		"3 3"
+	building_aliencontainment	"0 1"
+	building_storage		"3 4"
+	building_powerplant		"4 4"
+	building_command		"4 2"
+	building_hangar			"0 3"
+	building_intercept		"1 3"
+	building_workshop		"4 0"
+	building_radar			"1 4"
+	building_lab			"3 2"
+//	building_hospital		"3 3"
+}

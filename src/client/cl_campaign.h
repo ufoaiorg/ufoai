@@ -229,6 +229,7 @@ typedef struct campaign_s {
 	qboolean visible;			/**< visible in campaign menu? */
 	date_t date;				/**< starting date for this campaign */
 	int basecost;				/**< base building cost for empty base */
+	char firstBaseTemplate[MAX_VAR];	/**< template to use for setting up the first base */
 	qboolean finished;
 } campaign_t;
 

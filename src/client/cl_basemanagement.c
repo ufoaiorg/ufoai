@@ -321,7 +321,6 @@ static const value_t valid_building_vars[] = {
 	{"onclick", V_STRING, offsetof(building_t, onClick), 0}, /**< Event handler. */
 	{"pos", V_POS, offsetof(building_t, pos), MEMBER_SIZEOF(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
 	{"autobuild", V_BOOL, offsetof(building_t, autobuild), MEMBER_SIZEOF(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
-	{"firstbase", V_BOOL, offsetof(building_t, firstbase), MEMBER_SIZEOF(building_t, firstbase)}, /**< Automatically construct this building for the first base you build. Must also set the pos-flag. */
 	{NULL, 0, 0, 0}
 };
 
@@ -1256,7 +1255,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 /**
  * @brief Build starting building in the first base, and hire employees.
  */
-static void B_AddBuildingToBase (building_t *building, base_t *base, building_t *template, qboolean hire)
+static void B_AddBuildingToBasePos (building_t *building, base_t *base, const building_t *template, qboolean hire, vec2_t pos)
 {
 	*building = *template;
 	/* self-link to building-list in base */
@@ -1266,30 +1265,9 @@ static void B_AddBuildingToBase (building_t *building, base_t *base, building_t 
 	building->base = base;
 	base->buildingCurrent = building;
 	/* fake a click to basemap */
-	B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
+	B_SetBuildingByClick((int)pos[0], (int)pos[1]);
 	B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, building->id, building->pos[0], building->pos[1]);
-
-	/* A few more things for first base.
-	 * @todo: this shouldn't be hard coded, but in *.ufo files */
-	if (gd.numBases == 1) {
-		/* build a second quarter */
-		if (building->buildingType == B_QUARTERS) {
-			building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-			*building = *template;
-			/* self-link to building-list in base */
-			building->idx = gd.numBuildings[base->idx];
-			gd.numBuildings[base->idx]++;
-			/* Link to the base. */
-			building->base = base;
-			/* Build second quarter just above first one */
-			Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, building->id, building->pos[0] - 1, building->pos[1]);
-			base->buildingCurrent = building;
-			/* fake a click to basemap */
-			B_SetBuildingByClick((int) building->pos[0] - 1, (int) building->pos[1]);
-			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-		}
-	}
 
 	/* now call the onconstruct trigger */
 	if (*building->onConstruct) {
@@ -1306,13 +1284,79 @@ static void B_AddBuildingToBase (building_t *building, base_t *base, building_t 
 }
 
 /**
+ * @brief Build starting building in the first base, and hire employees (calls B_AddBuildingToBasePos).
+ * @sa B_AddBuildingToBasePos
+ */
+static void B_AddBuildingToBase (building_t *building, base_t *base, building_t *template, qboolean hire)
+{
+	B_AddBuildingToBasePos(building, base, template, hire, template->pos);
+}
+
+/**
+ * @brief Setup buildings and equipment for first base
+ * @sa B_SetUpBase
+ */
+static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
+{
+	assert(curCampaign);
+	assert(curCampaign->firstBaseTemplate[0]);
+
+	if (buildings) {
+		int i;
+		/* get template for base */
+		const baseTemplate_t *template = B_GetBaseTemplate(curCampaign->firstBaseTemplate);
+
+		/* find each building in the template */
+		for (i = 0; i < template->numBuildings; ++i) {
+			vec2_t pos;
+			building_t *building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+			Vector2Set(pos, template->buildings[i].posX, template->buildings[i].posY);
+			B_AddBuildingToBasePos(building, base, template->buildings[i].building, hire, pos);
+		}
+
+		/* Add aircraft to the first base */
+		/* @todo move aircraft to .ufo */
+		/* buy two first aircraft */
+		if (B_GetBuildingStatus(base, B_HANGAR)) {
+			const aircraft_t *aircraft = AIR_GetAircraft("craft_drop_firebird");
+			if (!aircraft)
+				Sys_Error("Could not find craft_drop_firebird definition");
+			AIR_NewAircraft(base, "craft_drop_firebird");
+			CL_UpdateCredits(ccs.credits - aircraft->price);
+		}
+		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+			const aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
+			if (!aircraft)
+				Sys_Error("Could not find craft_inter_stiletto definition");
+			AIR_NewAircraft(base, "craft_inter_stiletto");
+			CL_UpdateCredits(ccs.credits - aircraft->price);
+		}
+
+		/* initial base equipment */
+		INV_InitialEquipment(base, curCampaign, hire);
+
+		/* Auto equip interceptors with weapons and ammos */
+		for (i = 0; i < base->numAircraftInBase; i++) {
+			aircraft_t *aircraft = &base->aircraft[i];
+			assert(aircraft);
+			if (aircraft->type == AIRCRAFT_INTERCEPTOR)
+				AIM_AutoEquipAircraft(aircraft);
+		}
+		CL_GameTimeFast();
+		CL_GameTimeFast();
+	} else {
+		/* if no autobuild, set up zero build time for the first base */
+		ccs.instant_build = 1;
+	}
+}
+
+/**
  * @brief Setup new base
  * @sa CL_NewBase
  */
 void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 {
 	int i;
-	building_t *building;
 	const int newBaseAlienInterest = 1.0f;
 
 	assert(base);
@@ -1330,30 +1374,24 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	/* this cvar is needed by B_SetBuildingByClick below*/
 	Cvar_SetValue("mn_base_id", base->idx);
 
-	if (buildings) {
+	base->numAircraftInBase = 0;
+
+	/* setup for first base */
+	/* @todo this will propably also be called if all player bases are destroyed (mimics old behaviour), do we want this? */
+	if (gd.numBases == 1) {
+		B_SetUpFirstBase(base, hire, buildings);
+	}
+
+	/* add auto build buildings if it's not the first base */
+	if (gd.numBases > 1 && buildings) {
 		for (i = 0; i < gd.numBuildingTemplates; i++) {
-			if (gd.buildingTemplates[i].autobuild
-			 || (gd.numBases == 1 && gd.buildingTemplates[i].firstbase)) {
+			if (gd.buildingTemplates[i].autobuild) {
 				/* @todo: implement check for moreThanOne */
-				building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+				building_t *building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
 				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i], hire);
-			}
-		}
-	} else {
-		/* set up at least one entrance */
-		for (i = 0; i < gd.numBuildingTemplates; i++) {
-			building = &gd.buildingTemplates[i];
-			if (building->buildingType == B_ENTRANCE) {
-				building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i], hire);
-				break;
 			}
 		}
 	}
-
-	/* if no autobuild, set up zero build time for the first base */
-	if (gd.numBases == 1 && !buildings)
-		ccs.instant_build = 1;
 
 	/* Create random blocked fields in the base.
 	 * The first base never has blocked fields so we skip it. */
@@ -1372,28 +1410,8 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 		B_SetBuildingStatus(base, B_ENTRANCE, qtrue);
 	} else {
 		/* base can't start without an entrance, because this is where the aliens will arrive during base attack */
+		/* autobuild and base templates should contain a base entrance */
 		Sys_Error("B_SetUpBase()... A new base should have an entrance.");
-	}
-
-	/* Add aircraft to the first base */
-	base->numAircraftInBase = 0;
-	if (gd.numBases == 1) {
-		const aircraft_t *aircraft;
-		/* buy two first aircraft */
-		if (B_GetBuildingStatus(base, B_HANGAR)) {
-			aircraft = AIR_GetAircraft("craft_drop_firebird");
-			if (!aircraft)
-				Sys_Error("Could not find craft_drop_firebird definition");
-			AIR_NewAircraft(base, "craft_drop_firebird");
-			CL_UpdateCredits(ccs.credits - aircraft->price);
-		}
-		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			aircraft = AIR_GetAircraft("craft_inter_stiletto");
-			if (!aircraft)
-				Sys_Error("Could not find craft_inter_stiletto definition");
-			AIR_NewAircraft(base, "craft_inter_stiletto");
-			CL_UpdateCredits(ccs.credits - aircraft->price);
-		}
 	}
 
 	/* a new base is not discovered (yet) */
@@ -1423,6 +1441,24 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
 			return &gd.buildingTemplates[i];
 
 	Com_Printf("Building %s not found\n", buildingName);
+	return NULL;
+}
+
+/**
+ * @brief Returns the baseTemplate in the global baseTemplate list that has the unique name baseTemplateID.
+ * @param[in] baseTemplateName The unique id of the building (baseTemplate_t->name).
+ * @return baseTemplate_t If a Template was found it is returned, otherwise->NULL.
+ */
+const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateName)
+{
+	int i = 0;
+
+	assert(baseTemplateName);
+	for (i = 0; i < gd.numBaseTemplates; i++)
+		if (!Q_strcasecmp(gd.baseTemplates[i].name, baseTemplateName))
+			return &gd.baseTemplates[i];
+
+	Com_Printf("Base Template %s not found\n", baseTemplateName);
 	return NULL;
 }
 
@@ -2148,9 +2184,9 @@ void B_ClearBase (base_t *const base)
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void B_ParseBases (const char *name, const char **text)
+void B_ParseBaseNames (const char *name, const char **text)
 {
-	const char *errhead = "B_ParseBases: unexpected end of file (names ";
+	const char *errhead = "B_ParseBaseNames: unexpected end of file (names ";
 	const char *token;
 	base_t *base;
 
@@ -2160,13 +2196,13 @@ void B_ParseBases (const char *name, const char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBases: base \"%s\" without body ignored\n", name);
+		Com_Printf("B_ParseBaseNames: base \"%s\" without body ignored\n", name);
 		return;
 	}
 	do {
 		/* add base */
 		if (gd.numBaseNames > MAX_BASES) {
-			Com_Printf("B_ParseBases: too many bases\n");
+			Com_Printf("B_ParseBaseNames: too many bases\n");
 			return;
 		}
 
@@ -2198,6 +2234,103 @@ void B_ParseBases (const char *name, const char **text)
 	} while (*text);
 
 	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
+}
+
+/**
+ * @brief Reads a base layout template
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
+ */
+void B_ParseBaseTemplate (const char *name, const char **text)
+{
+	const char *errhead = "B_ParseBaseTemplate: unexpected end of file (names ";
+	const char *token;
+	qboolean hasEntrance = qfalse;
+	baseTemplate_t* template;
+	baseBuildingTile_t* tile;
+	vec2_t pos;
+	qboolean map[BASE_SIZE][BASE_SIZE];
+	byte buildingnums[MAX_BUILDINGS];
+	int i;
+
+	/* get token */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("B_ParseBaseTemplate: Template \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	if (gd.numBaseTemplates >= MAX_BASETEMPLATES) {
+		Com_Printf("B_ParseBaseTemplate: too many base templates\n");
+		gd.numBuildingTemplates = MAX_BASETEMPLATES;	/* just in case it's bigger. */
+		return;
+	}
+
+	/* create new Template */
+	template = &gd.baseTemplates[gd.numBaseTemplates];
+	template->name = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+
+	/* clear map for checking duplicate positions and buildingnums for checking moreThanOne constraint */
+	memset(&map, qfalse, sizeof(map));
+	memset(&buildingnums, 0, sizeof(buildingnums));
+
+	gd.numBaseTemplates++;
+
+	Com_DPrintf(DEBUG_CLIENT, "Found Base Template %s\n", name);
+	do {
+		/* get the building */
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		if (template->numBuildings >= MAX_BASEBUILDINGS) {
+			Com_Printf("B_ParseBaseTemplate: too many buildings\n");
+			gd.numBuildingTemplates = MAX_BASEBUILDINGS;	/* just in case it's bigger. */
+			return;
+		}
+
+		/* check if building type is known */
+		tile = &template->buildings[template->numBuildings];
+		template->numBuildings++;
+
+		for (i = 0; i < gd.numBuildingTemplates; i++)
+			if (!Q_strcasecmp(gd.buildingTemplates[i].id, token)) {
+				tile->building = &gd.buildingTemplates[i];
+				if (!tile->building->moreThanOne && buildingnums[i]++ > 0)
+					Sys_Error("B_ParseBaseTemplate: Found more %s than allowed in template %s\n", token, name);
+			}
+
+		if (!tile->building)
+			Sys_Error("B_ParseBaseTemplate: Could not find building with id %s\n", name);
+
+		if (tile->building->buildingType == B_ENTRANCE)
+			hasEntrance = qtrue;
+
+		Com_DPrintf(DEBUG_CLIENT, "...found Building %s ", token);
+
+		/* get the position */
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		Com_DPrintf(DEBUG_CLIENT, "on position %s\n", token);
+
+		Com_ParseValue(pos, token, V_POS, 0, sizeof(vec2_t));
+		tile->posX = pos[0];
+		tile->posY = pos[1];
+
+		/* check for buildings on same position */
+		assert(map[tile->posX][tile->posY] == qfalse);
+		map[tile->posX][tile->posY] = qtrue;
+	} while (*text);
+
+	/* templates without Entrance can't be used */
+	if (!hasEntrance)
+		Sys_Error("Every base template needs one entrace! '%s' has none.", template->name);
 }
 
 /**
@@ -2819,21 +2952,6 @@ static void B_BuildBase_f (void)
 			AL_FillInContainment(baseCurrent);
 			PR_UpdateProductionCap(baseCurrent);
 
-			/* initial base equipment */
-			if (gd.numBases == 1 && cl_start_buildings->integer == qtrue ) {
-				int i;
-
-				INV_InitialEquipment(baseCurrent, curCampaign, cl_start_employees->integer);
-				/* Auto equip interceptors with weapons and ammos */
-				for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
-					aircraft_t *aircraft = &baseCurrent->aircraft[i];
-					assert(aircraft);
-					if (aircraft->type == AIRCRAFT_INTERCEPTOR)
-						AIM_AutoEquipAircraft(aircraft);
-				}
-				CL_GameTimeFast();
-				CL_GameTimeFast();
-			}
 			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
 			return;
 		}

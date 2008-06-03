@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_LIST_CHAR		1024
 #define MAX_BUILDINGS		256
 #define MAX_BASES		8
+#define MAX_BASETEMPLATES	5
 
 #define MAX_BATTERY_DAMAGE	50
 #define MAX_BASE_DAMAGE		100
@@ -40,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* see MAX_TILESTRINGS */
 #define BASE_SIZE		5
+#define MAX_BASEBUILDINGS	BASE_SIZE * BASE_SIZE
 
 #define MAX_EMPLOYEES_IN_BUILDING 64
 
@@ -162,7 +164,6 @@ typedef struct building_s {
 
 	vec2_t pos;			/**< Position of autobuild. */
 	qboolean autobuild;	/**< Autobuild when base is set up. */
-	qboolean firstbase;	/**< Autobuild when first base is set up. */
 
 	/** How many employees to hire on construction in the first base */
 	int maxEmployees;
@@ -250,6 +251,13 @@ typedef struct base_s {
 	building_t *buildingCurrent; /**< needn't be saved */
 } base_t;
 
+/** @brief template for creating a base */
+typedef struct baseTemplate_s {
+	char* name;			/**< Name of the Base template */
+	baseBuildingTile_t buildings[MAX_BASEBUILDINGS]; /**< the buildings to be built for this template. */
+	int numBuildings;		/**< Number of buildings in this template. */
+} baseTemplate_t;
+
 /** Currently displayed/accessed base. */
 extern base_t *baseCurrent;
 
@@ -257,11 +265,13 @@ void B_UpdateBaseData(void);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);
 int B_GetNumOnTeam(const aircraft_t *aircraft);
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
-void B_ParseBases(const char *name, const char **text);
+void B_ParseBaseNames(const char *name, const char **text);
+void B_ParseBaseTemplate(const char *name, const char **text);
 void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus(base_t* const base);
 building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, qboolean onlyWorking);
 building_t *B_GetBuildingTemplate(const char *buildingName);
+const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 
 /** Coordinates to place the new base at (long, lat) */

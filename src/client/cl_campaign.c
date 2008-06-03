@@ -6119,6 +6119,7 @@ static const value_t campaign_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(campaign_t, name), 0},
 	{"date", V_DATE, offsetof(campaign_t, date), 0},
 	{"basecost", V_INT, offsetof(campaign_t, basecost), MEMBER_SIZEOF(campaign_t, basecost)},
+	{"firstbase", V_STRING, offsetof(campaign_t, firstBaseTemplate), 0},
 	{NULL, 0, 0, 0}
 };
 

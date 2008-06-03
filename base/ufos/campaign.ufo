@@ -59,6 +59,7 @@ campaign veryhard
 	minhappiness	0.42
 	maxdebts	50000
 	xvirate		30
+	firstbase	balanced
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
@@ -86,6 +87,7 @@ campaign hard
 	salary {
 		soldier_base 4000
 	}
+	firstbase	balanced
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
@@ -131,6 +133,7 @@ campaign main
 		admin_robot 150;
 		debt_interest 0.005;
 	}
+	firstbase	balanced
 	researched rslist_human
 	ugvs	2
 	equipment	campaign_player
@@ -159,6 +162,7 @@ campaign easy
 	salary {
 		soldier_base 3000
 	}
+	firstbase	balanced
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
@@ -201,6 +205,7 @@ campaign veryeasy
 		admin_medic 50;
 		admin_robot 50;
 	}
+	firstbase	balanced
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
