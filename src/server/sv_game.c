@@ -463,10 +463,10 @@ void SV_InitGameProgs (void)
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;
 
-	import.CreateMutex = &SDL_CreateMutex;
-	import.DestroyMutex = &SDL_DestroyMutex;
-	import.MutexP = &SDL_mutexP;
-	import.MutexV = &SDL_mutexV;
+	import.CreateMutex = SDL_CreateMutex;
+	import.DestroyMutex = SDL_DestroyMutex;
+	import.MutexP = SDL_mutexP;
+	import.MutexV = SDL_mutexV;
 
 	/* import the server routing table */
 	import.routingMap = (void *) &svMap;
