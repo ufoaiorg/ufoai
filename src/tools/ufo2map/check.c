@@ -535,19 +535,52 @@ static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
 void CheckLevelFlags (void)
 {
 	int i, j;
+	qboolean allNodraw, setFlags;
+	int allLevelFlagsForBrush;
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
 
+		/* test if all faces are nodraw */
+		allNodraw=qtrue;
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
 			assert(side);
+			if(!(side->surfaceFlags & SURF_NODRAW)){
+				allNodraw = qfalse;
+				break;
+			}
+		}
 
-			if (!(side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP)) && !(side->surfaceFlags & SURF_NODRAW)) {
-				/* check level 1 - level 8 */
-				if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
-					Com_Printf("* Brush %i (entity %i): no levelflags\n", brush->brushnum, brush->entitynum);
-					side->contentFlags |= CONTENTS_LEVEL_ALL;
+		/* proceed if some or all faces are not nodraw */
+		if(!allNodraw){
+			allLevelFlagsForBrush = 0;
+			setFlags = qfalse;
+			/* test if some faces do not have levelflags and remember
+			 * all levelflags which are set. */
+			for (j = 0; j < brush->numsides; j++) {
+				side_t *side = &brush->original_sides[j];
+
+				allLevelFlagsForBrush |= side->contentFlags & CONTENTS_LEVEL_ALL;
+
+				if (!(side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP))) {
+					/* check level 1 - level 8 */
+					if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
+						setFlags = qtrue;
+					}
+				}
+			}
+
+			/* set the same flags for each face */
+			if (setFlags) {
+				Com_Printf("* Brush %i (entity %i): at least one face has no levelflags, setting %i on all faces\n", brush->brushnum, brush->entitynum, allLevelFlagsForBrush ? allLevelFlagsForBrush : CONTENTS_LEVEL_ALL);
+				for (j = 0; j < brush->numsides; j++) {
+					side_t *side = &brush->original_sides[j];
+					if (allLevelFlagsForBrush){
+						side->contentFlags |= allLevelFlagsForBrush;
+					} else {
+						side->contentFlags |= CONTENTS_LEVEL_ALL;
+					}
 				}
 			}
 		}
