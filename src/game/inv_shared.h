@@ -283,10 +283,15 @@ typedef struct objDef_s {
 	craftitem_t craftitem;
 } objDef_t;
 
+/**
+ * @brief Return values for Com_CheckToInventory.
+ * @sa Com_CheckToInventory
+ */
 enum {
-	INV_DOES_NOT_FIT,
-	INV_FITS,
-	INV_FITS_ONLY_ROTATED
+	INV_DOES_NOT_FIT		= 0,	/**< Item does not fit. */
+	INV_FITS 				= 1,	/**< The item fits without rotation (only) */
+	INV_FITS_ONLY_ROTATED	= 2,	/**< The item fits only when rotated (90! to theleft) */
+	INV_FITS_BOTH			= 3		/**< The item fits either rotated or not. */
 };
 
 #define MAX_INVDEFS	16
@@ -686,7 +691,7 @@ char *CHRSH_CharGetHead(character_t* const chr) __attribute__((nonnull));
 
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
 void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
-int Com_CheckToInventory(const inventory_t* const i, const int item, const int container, int x, int y);
+int Com_CheckToInventory(const inventory_t* const i, objDef_t *ob, const int container, int x, int y);
 invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y, int amount) __attribute__((nonnull(1)));
 qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));

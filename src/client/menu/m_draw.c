@@ -83,6 +83,11 @@ void MN_DrawMenus (void)
 	if (pp < sp)
 		pp = sp;
 
+#ifdef ITEM_PREVIEW
+	/* Reset info for preview rendering of dragged items. */
+	dragInfo.toNode = NULL;
+#endif
+
 	while (sp < mn.menuStackPos) {
 		menu = mn.menuStack[sp++];
 		/* event node */
@@ -305,6 +310,15 @@ void MN_DrawMenus (void)
 						const invList_t *itemHover_temp = MN_DrawContainerNode(node);
 						if (itemHover_temp)
 							itemHover = itemHover_temp;
+#ifdef ITEM_PREVIEW
+						/* Store information for preview drawing of dragged items. */
+						if (MN_CheckNodeZone(node, mousePosX, mousePosY)) {
+							dragInfo.toNode = node;
+							dragInfo.to = node->mousefx;
+							dragInfo.toX = (mousePosX - node->pos[0]) / C_UNIT;
+							dragInfo.toY = (mousePosY - node->pos[1]) / C_UNIT;
+						}
+#endif
 					}
 					break;
 

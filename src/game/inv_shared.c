@@ -127,8 +127,13 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const int co
 
 		/* add other items to mask */
 		for (ic = i->c[container]; ic; ic = ic->next)
-			for (j = 0; j < SHAPE_SMALL_MAX_HEIGHT && ic->y + j < SHAPE_BIG_MAX_HEIGHT; j++)
-				mask[ic->y + j] |= ((ic->item.t->shape >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << ic->x;
+			for (j = 0; j < SHAPE_SMALL_MAX_HEIGHT && ic->y + j < SHAPE_BIG_MAX_HEIGHT; j++) {
+				/* Check if item is rotated and add its (rotated/straight) mask to the generated mask. */
+				if (ic->item.rotated)
+					mask[ic->y + j] |= ((Com_ShapeRotate(ic->item.t->shape) >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << ic->x;
+				else
+					mask[ic->y + j] |= ((ic->item.t->shape >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << ic->x;
+			}
 	}
 
 	/* test for collisions with newly generated mask */
@@ -141,31 +146,37 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const int co
 }
 
 /**
+ * @param[in] i The inventory to check the item in.
+ * @param[in] od The item to check in the inventory.
+ * @param[in] container The index of the container in the inventory to theck the item in.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @sa Com_CheckToInventory_mask
- * @return 0 If the item does not fit, 1 if it fits and 2 if it fits rotated.
+ * @return INV_DOES_NOT_FIT if the item does not fit
+ * @return INV_FITS if it fits and
+ * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90° (to the left).
  */
-int Com_CheckToInventory (const inventory_t * const i, const int item, const int container, int x, int y)
+int Com_CheckToInventory (const inventory_t * const i, objDef_t *od, const int container, int x, int y)
 {
 	assert(i);
 	assert((container >= 0) && (container < CSI->numIDs));
+	assert(od);
 
 	/* armour vs item */
-	if (!Q_strncmp(CSI->ods[item].type, "armour", MAX_VAR)) {
+	if (!Q_strncmp(od->type, "armour", MAX_VAR)) {
 		if (!CSI->ids[container].armour && !CSI->ids[container].all) {
 			return INV_DOES_NOT_FIT;
 		}
-	} else if (!CSI->ods[item].extension && CSI->ids[container].extension) {
+	} else if (!od->extension && CSI->ids[container].extension) {
 		return INV_DOES_NOT_FIT;
-	} else if (!CSI->ods[item].headgear && CSI->ids[container].headgear) {
+	} else if (!od->headgear && CSI->ids[container].headgear) {
 		return INV_DOES_NOT_FIT;
 	} else if (CSI->ids[container].armour) {
 		return INV_DOES_NOT_FIT;
 	}
 
 	/* twohanded item */
-	if (CSI->ods[item].holdTwoHanded) {
+	if (od->holdTwoHanded) {
 		if ((container == CSI->idRight && i->c[CSI->idLeft])
 			 || container == CSI->idLeft)
 			return INV_DOES_NOT_FIT;
@@ -177,7 +188,7 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
-		if (CSI->ods[item].fireTwoHanded)
+		if (od->fireTwoHanded)
 			return INV_DOES_NOT_FIT;
 	}
 
@@ -187,19 +198,33 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 			/* There is already an item. */
 			return INV_DOES_NOT_FIT;
 		} else {
-			if (Com_CheckToInventory_shape(i, container,CSI->ods[item].shape, x, y)) {
+			if (Com_CheckToInventory_shape(i, container, od->shape, x, y)) {
 				/* Looks good. */
-				return INV_FITS;
-			} else if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(CSI->ods[item].shape), x, y)) {
-				return INV_FITS_ONLY_ROTATED;	/* Return status "fits, but only rotated". */
+				if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y))
+					return INV_FITS_BOTH;	/**< The item can be placed either rotated or not. */
+				else
+					return INV_FITS;		/**< The item can be placed only non-rotated. */
+			} else if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y)) {
+				return INV_FITS_ONLY_ROTATED;	/**< Return status "fits, but only rotated". */
 			}
 
 			Com_DPrintf(DEBUG_SHARED, "Com_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
-			return INV_FITS; /* We are returning with status qtrue (1) if the item does not fit at all - unlikely but not impossible. */
+			return INV_FITS; /**< We are returning with status qtrue (1) if the item does not fit at all - unlikely but not impossible. */
 		}
 	}
 
-	return Com_CheckToInventory_shape(i, container,CSI->ods[item].shape, x, y);
+	/* Check 'grid' containers. */
+	if (Com_CheckToInventory_shape(i, container, od->shape, x, y))
+		if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y))
+			return INV_FITS_BOTH;	/**< The item can be placed either rotated or not. */
+		else
+			return INV_FITS;		/**< The item can be placed only non-rotated. */
+	else if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y)
+			&& container != CSI->idEquip
+			&& container != CSI->idFloor)
+		return INV_FITS_ONLY_ROTATED;	/**< The item needs to be rotated in order to fit. */
+	else
+		return INV_DOES_NOT_FIT;
 }
 
 /**
@@ -236,10 +261,17 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int
 
 	/* more than one item - search for a suitable place in this container */
 	for (ic = i->c[container]; ic; ic = ic->next)
-		if (x >= ic->x && y >= ic->y
-		&& x < ic->x + SHAPE_SMALL_MAX_WIDTH && y < ic->y + SHAPE_SMALL_MAX_HEIGHT
-		&& ((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
-			return ic;
+		if (x >= ic->x
+		&& y >= ic->y
+		&& x < ic->x + SHAPE_SMALL_MAX_WIDTH
+		&& y < ic->y + SHAPE_SMALL_MAX_HEIGHT) {
+			if (ic->item.rotated) {
+				if (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+					return ic;
+			} else if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1) {
+				return ic;
+			}
+		}
 
 	/* found nothing */
 	return NULL;
@@ -514,8 +546,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		for (; ic; ic = ic->next) {
 			if (ic->x == fx && ic->y == fy) {
 				if (ic->item.amount > 1) {
-					checkedTo = Com_CheckToInventory(i, ic->item.t->idx, to, tx, ty);
-					if (checkedTo == INV_FITS) {
+					checkedTo = Com_CheckToInventory(i, ic->item.t, to, tx, ty);
+					if (checkedTo & INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
 						return IA_MOVE;
@@ -560,9 +592,9 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 
 	/* check if the target is a blocked inv-armour and source!=dest */
 	if (CSI->ids[to].single)
-		checkedTo = Com_CheckToInventory(i, cacheItem.t->idx, to, 0, 0);
+		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, 0, 0);
 	else
-		checkedTo = Com_CheckToInventory(i, cacheItem.t->idx, to, tx, ty);
+		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, tx, ty);
 
 	if (CSI->ids[to].armour && from != to && !checkedTo) {
 		item_t cacheItem2;
@@ -768,7 +800,7 @@ void Com_FindSpace (const inventory_t* const inv, item_t *item, const int contai
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			checkedTo = Com_CheckToInventory(inv, item->t->idx, container, x, y);
+			checkedTo = Com_CheckToInventory(inv, item->t, container, x, y);
 			if (checkedTo) {
 				if (checkedTo == INV_FITS_ONLY_ROTATED) {
 					/* Set rotated tag */

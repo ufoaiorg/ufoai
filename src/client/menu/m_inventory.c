@@ -29,8 +29,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 inventory_t *menuInventory = NULL;
 
-int dragFrom, dragFromX, dragFromY;
-item_t dragItem = {NONE_AMMO, NULL, NULL, 1, 0}; /* to crash as soon as possible */
+dragInfo_t dragInfo = {
+	{NONE_AMMO, NULL, NULL, 1, 0},
+	-1,
+	-1,
+	-1,
+#ifdef ITEM_PREVIEW
+	NULL,
+	-1,
+	-1,
+	-1
+#endif
+}; /**< To crash as soon as possible. */
 
 /**
  * @note: node->mousefx is the container id
@@ -63,11 +73,11 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 			if (!rightClick) {
 				/* found item to drag */
 				mouseSpace = MS_DRAG;
-				dragItem = ic->item;
+				dragInfo.item = ic->item;
 				/* mousefx is the container (see hover code) */
-				dragFrom = node->mousefx;
-				dragFromX = ic->x;
-				dragFromY = ic->y;
+				dragInfo.from = node->mousefx;
+				dragInfo.fromX = ic->x;
+				dragInfo.fromY = ic->y;
 			} else {
 				if (node->mousefx != csi.idEquip) {
 					/* back to idEquip (ground, floor) container */
@@ -124,22 +134,22 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 				}
 			}
 			UP_ItemDescription(ic->item.t);
-/*			MN_DrawTooltip("f_verysmall", csi.ods[dragItem.t].name, px, py, 0);*/
+/*			MN_DrawTooltip("f_verysmall", csi.ods[dragInfo.item.t].name, px, py, 0);*/
 		}
 	} else {
 		/* end drag */
 		mouseSpace = MS_NULL;
-		px = (int) ((x - node->pos[0] - C_UNIT * ((dragItem.t->sx - 1) / 2.0)) / C_UNIT);
-		py = (int) ((y - node->pos[1] - C_UNIT * ((dragItem.t->sy - 1) / 2.0)) / C_UNIT);
+		px = (int) ((x - node->pos[0] - C_UNIT * ((dragInfo.item.t->sx - 1) / 2.0)) / C_UNIT);
+		py = (int) ((y - node->pos[1] - C_UNIT * ((dragInfo.item.t->sy - 1) / 2.0)) / C_UNIT);
 
 		/* tactical mission */
 		if (selActor) {
-			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py);
+			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragInfo.from, dragInfo.fromX, dragInfo.fromY, node->mousefx, px, py);
 			return;
 		/* menu */
 		}
 
-		INV_MoveItem(baseCurrent, menuInventory, node->mousefx, px, py, dragFrom, dragFromX, dragFromY);
+		INV_MoveItem(baseCurrent, menuInventory, node->mousefx, px, py, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
 	}
 
 	/* We are in the base or multiplayer inventory */
@@ -222,7 +232,7 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int sx, int sy, int x, i
 		if (item->rotated)
 			angles[0] -= 90;
 
-		/* draw model, if there is no image */
+		/* Draw model, if there is no image. */
 		mi.name = od->model;
 		mi.origin = origin;
 		mi.angles = angles;
@@ -237,8 +247,14 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int sx, int sy, int x, i
 
 		VectorCopy(org, origin);
 		if (x || y || sx || sy) {
-			origin[0] += C_UNIT / 2.0 * sx;
-			origin[1] += C_UNIT / 2.0 * sy;
+			/* Calculate origin (depending on rotated/non-rotated setting). */
+			if (item->rotated) {
+				origin[0] += C_UNIT / 2.0 * sy;
+				origin[1] += C_UNIT / 2.0 * sx;
+			} else {
+				origin[0] += C_UNIT / 2.0 * sx;
+				origin[1] += C_UNIT / 2.0 * sy;
+			}
 			origin[0] += C_UNIT * x;
 			origin[1] += C_UNIT * y;
 		}
@@ -296,7 +312,7 @@ void MN_DrawFree (int container, const menuNode_t *node, int posx, int posy, int
  */
 void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 {
-	objDef_t *od = dragItem.t;	/**< Get the 'type' of the dragged item. */
+	objDef_t *od = dragInfo.item.t;	/**< Get the 'type' of the dragged item. */
 	int container = node->mousefx;
 
 	qboolean showTUs = qtrue;
@@ -304,6 +320,7 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	/* The shape of the free positions. */
 	uint32_t free[SHAPE_BIG_MAX_HEIGHT];
 	int x, y;
+	int checkedTo;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
 	assert(mouseSpace == MS_DRAG);
@@ -312,18 +329,22 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	/* if single container (hands, extension, headgear) */
 	if (csi.ids[container].single) {
 		/* if container is free or the dragged-item is in it */
-		if (node->mousefx == dragFrom || Com_CheckToInventory(inv, od->idx, container, 0, 0))
+		if (node->mousefx == dragInfo.from || Com_CheckToInventory(inv, od, container, 0, 0))
 			MN_DrawFree(container, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
 	} else {
 		memset(free, 0, sizeof(free));
 		for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 			for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-				/* Check if the current position is usable (topleft of the item) */
-				if (Com_CheckToInventory(inv, od->idx, container, x, y)) {
-					/* add '1's to each position the item is 'blocking' */
+				/* Check if the current position is usable (topleft of the item). */
+
+				/* Add '1's to each position the item is 'blocking'. */
+				checkedTo = Com_CheckToInventory(inv, od, container, x, y);
+				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
 					Com_MergeShapes(free, (uint32_t)od->shape, x, y);
-				}
-				/* Only draw on existing positions */
+				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */
+					Com_MergeShapes(free, Com_ShapeRotate((uint32_t)od->shape), x, y);
+
+				/* Only draw on existing positions. */
 				if (Com_CheckShape(csi.ids[container].shape, x, y)) {
 					if (Com_CheckShape(free, x, y)) {
 						MN_DrawFree(container, node, node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
@@ -401,6 +422,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		return NULL;
 
 	assert(menuInventory);
+
 	if (csi.ids[node->mousefx].single) {
 		/* single item container (special case for left hand) */
 		if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
@@ -454,6 +476,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		/* Find out where the mouse is */
 		return Com_SearchInInventory(menuInventory,
 			node->mousefx, (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);
+
 	return NULL;
 }
 

@@ -289,10 +289,30 @@ static void SCR_DrawCursor (void)
 			}
 		}
 	} else {
-		const vec3_t org = { mousePosX, mousePosY, -50 };
+		vec3_t org = { mousePosX, mousePosY, -50 };
 		const vec3_t scale = { 3.5, 3.5, 3.5 };
-		const vec4_t color = { 1, 1, 1, 1 };
-		MN_DrawItem(org, &dragItem, 0, 0, 0, 0, scale, color);
+		vec4_t color = { 1, 1, 1, 1 };
+		MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);
+#ifdef ITEM_PREVIEW
+		/* Draw "preview" of placed (&rotated) item. */
+		if (dragInfo.toNode) {
+			const int checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY);
+			const int oldRotated = dragInfo.item.rotated;
+
+			if (checkedTo & INV_FITS)
+				dragInfo.item.rotated = qfalse;
+			else if (checkedTo == INV_FITS_ONLY_ROTATED)
+				dragInfo.item.rotated = qtrue;
+
+			if (checkedTo) {
+				VectorSet(org, dragInfo.toX * C_UNIT + dragInfo.toNode->pos[0], dragInfo.toY * C_UNIT + dragInfo.toNode->pos[1], -40);
+				color[3] = 0.5;
+				MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);	/**< draw preview */
+			}
+
+			dragInfo.item.rotated = oldRotated ;
+		}
+#endif
 	}
 }
 

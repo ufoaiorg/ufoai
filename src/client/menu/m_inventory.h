@@ -32,8 +32,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define C_UNDEFINED			0xFE
 
 extern inventory_t *menuInventory;
-extern int dragFrom, dragFromX, dragFromY;
-extern item_t dragItem;
+
+typedef struct dragInfo_s {
+	item_t item;	/**< The item that is currently dragged. */
+	int from;		/**< The container the items is dragged out of (i.e. from). */
+	int fromX;		/**< The X position in the container the item was/is located. */
+	int fromY;		/**< The Y position in the container the item was/is located. */
+#ifdef ITEM_PREVIEW
+	/* The "to" variables are only used in cl_screen.c to draw the preview. */
+	menuNode_t *toNode;
+	int to;
+	int toX;
+	int toY;
+#endif
+} dragInfo_t;
+
+extern dragInfo_t dragInfo;
 
 void MN_FindContainer(menuNode_t* const node);
 void MN_Drag(const menuNode_t* const node, int x, int y, qboolean rightClick);
