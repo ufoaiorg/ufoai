@@ -543,7 +543,7 @@ void CheckLevelFlags (void)
 			side_t *side = &brush->original_sides[j];
 			assert(side);
 
-			if (!(side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP))) {
+			if (!(side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP)) && !(side->surfaceFlags & SURF_NODRAW)) {
 				/* check level 1 - level 8 */
 				if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
 					Com_Printf("* Brush %i (entity %i): no levelflags\n", brush->brushnum, brush->entitynum);
