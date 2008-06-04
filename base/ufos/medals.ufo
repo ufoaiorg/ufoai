@@ -1,13 +1,13 @@
 medal cross
 {
-	name "_Cross"
-	image ""
+	name		"_Cross"
+	image		""
 }
 
 medal coin
 {
-	name "_Coin"
-	image ""
+	name		"_Coin"
+	image		""
 }
 
 //=======================
@@ -27,30 +27,34 @@ medal coin
 
 rank scientist
 {
-	name "_Scientist"
-	image "ranks/rank_scientist"
-	type EMPL_SCIENTIST
+	name		"_Scientist"
+	image		"ranks/rank_scientist"
+	type		EMPL_SCIENTIST
+	factor		0.2
 }
 
 rank medic
 {
-	name "_Medic"
-	image "ranks/rank_medic"
-	type EMPL_MEDIC
+	name		"_Medic"
+	image		"ranks/rank_medic"
+	type		EMPL_MEDIC
+	factor		0.2
 }
 
 rank ugv
 {
-	name "_UGV"
-	image "ranks/ugv"
-	type EMPL_ROBOT
+	name		"_UGV"
+	image		"ranks/ugv"
+	type		EMPL_ROBOT
+	factor		0.6
 }
 
 rank worker
 {
-	name "_Worker"
-	image "ranks/rank_worker"
-	type EMPL_WORKER
+	name		"_Worker"
+	image		"ranks/rank_worker"
+	type		EMPL_WORKER
+	factor		0.2
 }
 
 rank rifleman
@@ -59,6 +63,7 @@ rank rifleman
 	shortname	"_Rfn"
 	image		"ranks/rank_01"
 	type		EMPL_SOLDIER
+	factor		0.4
 }
 
 rank lancecorp
@@ -70,6 +75,7 @@ rank lancecorp
 	killed_enemies	3
 	killed_others	3
 	type		EMPL_SOLDIER
+	factor		0.4
 }
 
 rank corporal
@@ -81,6 +87,7 @@ rank corporal
 	killed_enemies	5
 	killed_others	5
 	type		EMPL_SOLDIER
+	factor		0.5
 }
 
 rank sergeant
@@ -92,6 +99,7 @@ rank sergeant
 	killed_enemies	10
 	killed_others	7
 	type		EMPL_SOLDIER
+	factor		0.5
 }
 
 rank warrant
@@ -103,6 +111,7 @@ rank warrant
 	killed_enemies	18
 	killed_others	7
 	type		EMPL_SOLDIER
+	factor		0.5
 }
 
 rank senwarrant
@@ -113,6 +122,7 @@ rank senwarrant
 	mind		70
 	killed_enemies	25
 	type		EMPL_SOLDIER
+	factor		0.6
 }
 
 rank seclieut
@@ -123,6 +133,7 @@ rank seclieut
 	mind		75
 	killed_enemies	32
 	type		EMPL_SOLDIER
+	factor		0.6
 }
 
 rank lieut
@@ -133,6 +144,7 @@ rank lieut
 	mind		80
 	killed_enemies	38
 	type		EMPL_SOLDIER
+	factor		0.6
 }
 
 rank captain
@@ -143,6 +155,7 @@ rank captain
 	mind		85
 	killed_enemies	45
 	type		EMPL_SOLDIER
+	factor		0.7
 }
 
 rank major
@@ -153,6 +166,7 @@ rank major
 	mind		90
 	killed_enemies	55
 	type		EMPL_SOLDIER
+	factor		0.7
 }
 
 rank ltcol
@@ -163,6 +177,7 @@ rank ltcol
 	mind		95
 	killed_enemies	60
 	type		EMPL_SOLDIER
+	factor		0.8
 }
 
 rank col
@@ -173,5 +188,6 @@ rank col
 	mind		100
 	killed_enemies	70
 	type		EMPL_SOLDIER
+	factor		0.9
 }
 

@@ -39,8 +39,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void R_IncreaseXVILevel(const vec2_t pos);
 void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
-qboolean R_XVIMapCopy(byte *out, int size);
+byte* R_XVIMapCopy(int *width, int *height);
 void R_CreateRadarOverlay(void);
+static void CP_UFORecoveredStore_f(void);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -3346,7 +3347,7 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 			/* check for nation happiness */
 			int j, nationBelowLimit = 0;
 			for (j = 0; j < gd.numNations; j++) {
-				nation_t *nation = &gd.nations[j];
+				const nation_t *nation = &gd.nations[j];
 				if (nation->stats[0].happiness < curCampaign->minhappiness) {
 					nationBelowLimit++;
 				}
@@ -3403,11 +3404,11 @@ nation_t *CL_GetNationByID (const char *nationID)
 static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis)
 {
 	int i, is_on_Earth = 0;
-	int civilianSum = civiliansKilled + civiliansSurvived;
-	float civilianRatio = civilianSum ? (float)civiliansSurvived / (float)civilianSum : 0.;
-	int alienSum = aliensKilled + aliensSurvived;
-	float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
-	float performance = civilianRatio * 0.5 + alienRatio * 0.5;
+	const int civilianSum = civiliansKilled + civiliansSurvived;
+	const float civilianRatio = civilianSum ? (float)civiliansSurvived / (float)civilianSum : 0.;
+	const int alienSum = aliensKilled + aliensSurvived;
+	const float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
+	const float performance = civilianRatio * 0.5 + alienRatio * 0.5;
 	float delta_happiness;
 
 	if (lost) {
@@ -3418,7 +3419,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
-		float alienHostile = 1.0f - nation->stats[0].alienFriendly;
+		const float alienHostile = 1.0f - nation->stats[0].alienFriendly;
 		delta_happiness = 0.0f;
 
 		if (lost) {
@@ -4841,16 +4842,19 @@ qboolean NA_Load (sizebuf_t* sb, void* data)
 /**
  * @brief XVI map saving callback
  * @note Only save transparency
+ * @sa Savegame callback
+ * @sa SAV_Init
+ * @sa XVI_Load
  */
 qboolean XVI_Save (sizebuf_t *sb, void *data)
 {
-	byte out[512 * 256];
+	byte *out;
 	int x, y;
-	int width = 512;
-	int height = 256;
+	int width;
+	int height;
 
-	if (!R_XVIMapCopy(out, sizeof(out))) {
-		/* Size of out is not the same than XVI map */
+	out = R_XVIMapCopy(&width, &height);
+	if (!out) {
 		MSG_WriteShort(sb, 0);
 		MSG_WriteShort(sb, 0);
 		return qtrue;
@@ -4863,12 +4867,15 @@ qboolean XVI_Save (sizebuf_t *sb, void *data)
 		for (x = 0; x < width; x++)
 			MSG_WriteByte(sb, out[y * width + x]);
 	}
-
+	Mem_Free(out);
 	return qtrue;
 }
 
 /**
- * @brief XVI map loading callback
+ * @brief Load the XVI map from the savegame.
+ * @sa Savegame callback
+ * @sa SAV_Init
+ * @sa XVI_Save
  */
 qboolean XVI_Load (sizebuf_t *sb, void *data)
 {
@@ -4901,13 +4908,10 @@ qboolean XVI_Load (sizebuf_t *sb, void *data)
  * @param[in] mission mission definition pointer with the needed data to set the cvars to
  * @sa CL_GameGo
  */
-static void CP_SetMissionVars (void)
+static void CP_SetMissionVars (const mission_t *mission)
 {
 	int i;
-	const mission_t *mission;
 
-	assert(ccs.battleParameters.mission);
-	mission = ccs.battleParameters.mission;
 	assert(mission->mapDef);
 
 	/* start the map */
@@ -5026,7 +5030,8 @@ static void CL_GameGo (void)
 
 	mis = selectedMission;
 	map_maxlevel_base = 0;
-	assert(mis && aircraft);
+	assert(mis);
+	assert(aircraft);
 
 	/* Before we start, we should clear the missionresults array. */
 	memset(&missionresults, 0, sizeof(missionresults));
@@ -5053,7 +5058,7 @@ static void CL_GameGo (void)
 	CP_CreateAlienTeam(mis);
 	CP_CreateCivilianTeam(mis);
 	CP_CreateBattleParameters(mis);
-	CP_SetMissionVars();
+	CP_SetMissionVars(mis);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_uforecovered", 0);
 
@@ -5237,16 +5242,18 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 
 		return winProbability;
 	} else {
-		linkedList_t *hiredSoldiers, *listPos;
-		/* @todo Take EMPL_ROBOT into account, too */
+		linkedList_t *hiredSoldiers;
+		linkedList_t *ugvs;
+		linkedList_t *listPos;
 		const int numSoldiers = E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiers);
+		const int numUGVs = E_GetHiredEmployees(base, EMPL_ROBOT, &ugvs);
 
 		assert(base);
 
 		/* a base defence mission can only be won if there are soldiers that
 		 * defend the attacked base */
-		if (numSoldiers) {
-			float increaseWinProbability = 0.0f;
+		if (numSoldiers || numUGVs) {
+			float increaseWinProbability = 1.0f;
 			listPos = hiredSoldiers;
 			while (listPos) {
 				const employee_t *employee = (employee_t *)listPos->data;
@@ -5256,13 +5263,27 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					const chrScoreGlobal_t *score = &chr->score;
 					/* if the soldier was ever on a mission */
 					if (score->assignedMissions) {
-						/*const rank_t *rank = &gd.ranks[score->rank];*/
-						/* @todo We need some factor in the rank - otherwise this
-						 * is just an image that we can't use for anything else */
+						const rank_t *rank = &gd.ranks[score->rank];
 						/* @sa CHRSH_CharGetMaxExperiencePerMission */
-						if (score->experience[SKILL_CLOSE] > 70) { /* @todo fix this value */
-							increaseWinProbability += 0.1; /* @todo we need a formular here */
+						if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
+							increaseWinProbability *= rank->factor;
 						}
+					}
+				}
+				listPos = listPos->next;
+			}
+			/* now handle the ugvs */
+			listPos = ugvs;
+			while (listPos) {
+				const employee_t *employee = (employee_t *)listPos->data;
+				/* don't use an employee that is currently being transfered */
+				if (!employee->transfer) {
+					const character_t *chr = &employee->chr;
+					const chrScoreGlobal_t *score = &chr->score;
+					const rank_t *rank = &gd.ranks[score->rank];
+					/* @sa CHRSH_CharGetMaxExperiencePerMission */
+					if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
+						increaseWinProbability *= rank->factor;
 					}
 				}
 				listPos = listPos->next;
@@ -5271,7 +5292,8 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 			winProbability = exp((0.5 - .15 * difficulty->integer) * numSoldiers - ccs.battleParameters.aliens);
 			winProbability += increaseWinProbability;
 
-			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, numSoldiers, winProbability);
+			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i - UGVs: %i -- probability to win: %.02f\n",
+				ccs.battleParameters.aliens, numSoldiers, numUGVs, winProbability);
 			return winProbability;
 		} else {
 			/* No soldier to defend the base */
@@ -5319,15 +5341,9 @@ void CL_GameAutoGo (mission_t *mis)
 			return;
 		}
 
-		/* FIXME: Check whether we really have to change baseCurrent here - I honestly don't think so */
 		assert(aircraft);
-		baseCurrent = aircraft->homebase;
-		baseCurrent->aircraftCurrent = aircraft;	/* Might not be needed, but it's used later on in AIR_AircraftReturnToBase_f */
-
 		winProbability = CP_GetWinProbabilty(mis, NULL, aircraft);
 	} else {
-		/* FIXME: Check whether we really have to change baseCurrent here - I honestly don't think so */
-		baseCurrent = (base_t*)mis->data;
 		winProbability = CP_GetWinProbabilty(mis, (base_t*)mis->data, NULL);
 	}
 
@@ -5347,31 +5363,61 @@ void CL_GameAutoGo (mission_t *mis)
 
 	if (mis->stage != STAGE_BASE_ATTACK) {
 		int amount;
+		int aliensLeft = ccs.battleParameters.aliens;
 		aliensTmp_t *cargo;
+		aliensTmp_t aliencargoTemp[MAX_CARGO];
+		int aliencargoTypes = 0;
 
 		assert(aircraft);
 
 		/* collect all aliens as dead ones */
 		cargo = aircraft->aliencargo;
 
+		/* check whether there are already dead aliens on board */
+		if (aircraft->alientypes) {
+			memcpy(aliencargoTemp, aircraft->aliencargo, sizeof(aircraft->aliencargo));
+			aliencargoTypes = aircraft->alientypes;
+		}
+
 		/* Make sure dropship aliencargo is empty. */
 		memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
 
-		/* @todo: Check whether there are already aliens
-		 * @sa AL_CollectingAliens */
-		/*if (aircraft->alientypes) {
-		}*/
-
 		aircraft->alientypes = ccs.battleParameters.numAlienTeams;
 		amount = 0;
-		for (i = 0; i < aircraft->alientypes; i++) {
-			cargo[i].teamDef = ccs.battleParameters.alienTeams[i];
-			/* FIXME: This could lead to more aliens in their sum */
-			cargo[i].amount_dead = rand() % ccs.battleParameters.aliens;
-			amount += cargo[i].amount_dead;
+		while (aliensLeft > 0) {
+			for (i = 0; i < aircraft->alientypes; i++) {
+				assert(i < MAX_CARGO);
+				cargo[i].teamDef = ccs.battleParameters.alienTeams[i];
+				cargo[i].amount_dead += rand() % aliensLeft;
+				aliensLeft -= cargo[i].amount_dead;
+				amount += cargo[i].amount_dead;
+				if (!aliensLeft)
+					break;
+			}
 		}
 		if (amount)
 			MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
+
+		/* put the old aliens back into the cargo */
+		for (i = 0; i < aliencargoTypes; i++) {
+			int j;
+			for (j = 0; j < aircraft->alientypes; j++) {
+				if (aliencargoTemp[i].teamDef == cargo[j].teamDef)
+					break;
+			}
+			if (j < aircraft->alientypes) {
+				/* 'old' race was collected during this mission, too */
+				cargo[j].amount_dead += aliencargoTemp[i].amount_dead;
+			} else if (j < MAX_CARGO) {
+				/* add the 'old' race as a 'new' race to the cargo
+				 * it wasn't collected during this mission */
+				cargo[j].amount_dead += aliencargoTemp[i].amount_dead;
+				cargo[j].teamDef = aliencargoTemp[i].teamDef;
+				aircraft->alientypes++;
+			} else {
+				Com_DPrintf(DEBUG_CLIENT, "Could not readd the 'old' alien race to the cargo\n");
+			}
+		}
 
 		if (aircraft->alientypes && !B_GetBuildingStatus(aircraft->homebase, B_ALIEN_CONTAINMENT)) {
 			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
@@ -5386,7 +5432,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && missionresults.recovery)
-		Cmd_ExecuteString("cp_uforecoverystore");
+		CP_UFORecoveredStore_f();
 
 	/* handle base attack mission */
 	if (selectedMission->stage == STAGE_BASE_ATTACK) {
@@ -5447,23 +5493,23 @@ static void CL_GameAbort_f (void)
  *
  * FIXME: See @todo and FIXME included
  */
-static void CL_UpdateCharacterStats (int won)
+static void CL_UpdateCharacterStats (const base_t *base, int won)
 {
 	character_t *chr;
-	rank_t *rank;
 	aircraft_t *aircraft;
 	int i, j;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
+	/** @todo What about base attack missions? Do they have this variable set, too? */
 	aircraft = gd.interceptAircraft;
 	assert(aircraft);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
+	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: base: %s\n", base->name);
 
 	/** @todo What about UGVs/Tanks? */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft) ) {
+		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft)) {
 			assert(gd.employees[EMPL_SOLDIER][i].hired);
 			assert(gd.employees[EMPL_SOLDIER][i].baseHired == aircraft->homebase);
 
@@ -5487,7 +5533,7 @@ static void CL_UpdateCharacterStats (int won)
 			/** @todo: use param[in] in some way. */
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > chr->score.rank; j--) {
-					rank = &gd.ranks[j];
+					const rank_t *rank = &gd.ranks[j];
 					/* FIXME: (Zenerka 20080301) extend ranks and change calculations here. */
 					if (rank->type == EMPL_SOLDIER && (chr->score.skills[ABILITY_MIND] >= rank->mind)
 						&& (chr->score.kills[KILLED_ALIENS] >= rank->killed_enemies)
@@ -5619,22 +5665,24 @@ static void CL_DebugNewEmployees_f (void)
 static void CL_DebugChangeCharacterStats_f (void)
 {
 	int i, j;
-	employee_t *employee;
 	character_t *chr;
 
+	if (!baseCurrent)
+		return;
+
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		employee = &gd.employees[EMPL_SOLDIER][i];
+		employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
 
 		if (!employee->hired && employee->baseHired != baseCurrent)
 			continue;
 
 		chr = &(employee->chr);
-		assert (chr);
+		assert(chr);
 
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			chr->score.kills[j]++;
 	}
-	CL_UpdateCharacterStats(1);
+	CL_UpdateCharacterStats(baseCurrent, 1);
 }
 #endif
 
@@ -5657,7 +5705,7 @@ static void CL_GameResults_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
 
 	/* multiplayer? */
-	if (!curCampaign || !selectedMission || !baseCurrent)
+	if (!curCampaign || !selectedMission)
 		return;
 
 	/* check for replay */
@@ -5674,7 +5722,7 @@ static void CL_GameResults_f (void)
 	won = atoi(Cmd_Argv(1));
 
 	if (selectedMission->stage == STAGE_BASE_ATTACK) {
-		baseCurrent = (base_t*)selectedMission->data;
+		baseCurrent = (base_t *)selectedMission->data;
 	} else {
 		assert(gd.interceptAircraft);
 		baseCurrent = gd.interceptAircraft->homebase;
@@ -5696,7 +5744,7 @@ static void CL_GameResults_f (void)
 	CL_ParseCharacterData(NULL);
 
 	/* update stats */
-	CL_UpdateCharacterStats(won);
+	CL_UpdateCharacterStats(baseCurrent, won);
 
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
@@ -7088,7 +7136,7 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 	Cvar_SetValue("mission_recoverybase", base->idx);
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n", base->name);
 	MN_PopMenu(qfalse);
-	Cmd_ExecuteString("cp_uforecoverystore");
+	CP_UFORecoveredStore_f();
 
 	/* Highlight currently selected entry */
 	baseList = MN_GetNodeFromCurrentMenu("cp_uforecovery_baselist");

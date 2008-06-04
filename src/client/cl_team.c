@@ -1417,10 +1417,10 @@ qboolean CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* air
  * @param[in] employee Pointer to the employee.
  * @return qboolean qtrue if the employee is away in mission, qfalse if he is not or he is unhired.
  */
-qboolean CL_SoldierAwayFromBase (employee_t *employee)
+qboolean CL_SoldierAwayFromBase (const employee_t *employee)
 {
 	int i;
-	base_t *base;
+	const base_t *base;
 
 	assert(employee);
 
@@ -1459,16 +1459,14 @@ qboolean CL_SoldierAwayFromBase (employee_t *employee)
  */
 void CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
 {
-	int i;
-	aircraft_t *acTemp;
-
 	if (!employee)
 		return;
 
 	/* If no aircraft is given we search if he is in _any_ aircraft and set the aircraft pointer to it. */
 	if (!aircraft) {
+		int i;
 		for (i = 0; i < gd.numAircraft; i++) {
-			acTemp = AIR_AircraftGetFromIdx(i);
+			aircraft_t *acTemp = AIR_AircraftGetFromIdx(i);
 			if (CL_SoldierInAircraft(employee, acTemp)) {
 				aircraft = acTemp;
 				break;
@@ -2119,11 +2117,10 @@ void CL_ParseCharacterData (struct dbuffer *msg)
 	static int num = 0;
 	int i, j;
 	character_t* chr;
-	employee_t* employee;
 
 	if (!msg) {
 		for (i = 0; i < num; i++) {
-			employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
+			employee_t *employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
 			if (!employee) {
 				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
 				continue;
@@ -2415,6 +2412,7 @@ static const value_t rankValues[] = {
 	{"mind", V_INT, offsetof(rank_t, mind), MEMBER_SIZEOF(rank_t, mind)},
 	{"killed_enemies", V_INT, offsetof(rank_t, killed_enemies), MEMBER_SIZEOF(rank_t, killed_enemies)},
 	{"killed_others", V_INT, offsetof(rank_t, killed_others), MEMBER_SIZEOF(rank_t, killed_others)},
+	{"factor", V_FLOAT, offsetof(rank_t, factor), MEMBER_SIZEOF(rank_t, factor)},
 	{NULL, 0, 0, 0}
 };
 

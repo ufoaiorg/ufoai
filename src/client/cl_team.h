@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NUM_TEAMSKINS	6
 #define NUM_TEAMSKINS_SINGLEPLAYER 4
 
-qboolean CL_SoldierAwayFromBase(employee_t *soldier);
+qboolean CL_SoldierAwayFromBase(const employee_t *soldier);
 void CL_UpdateHireVar(aircraft_t *aircraft, employeeType_t employeeType);
 void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
 void CL_CleanTempInventory(base_t* base);

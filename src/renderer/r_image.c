@@ -1405,21 +1405,19 @@ void R_InitializeXVIOverlay (const char *mapname, byte *data, int width, int hei
  * @brief Copy XVI transparency map for saving purpose
  * @sa CP_XVIMapSave
  */
-qboolean R_XVIMapCopy (byte *out, int size)
+byte* R_XVIMapCopy (int *width, int *height)
 {
 	int x, y;
 	const int bpp = 4;
+	byte *buf = Mem_PoolAlloc(r_xviTexture->height * r_xviTexture->width * bpp, vid_imagePool, 0);
 
-	if (size != r_xviTexture->width * r_xviTexture->height) {
-		Com_Printf("XVI_Save: Size of array doesn't match XVI map overlay size. Please change.\n");
-		return qfalse;
-	}
-
+	*width = r_xviTexture->width;
+	*height = r_xviTexture->height;
 	for (y = 0; y < r_xviTexture->height; y++) {
 		for (x = 0; x < r_xviTexture->width; x++)
-			out[y * r_xviTexture->width + x] = r_xviPic[3 + (y * r_xviTexture->width + x) * bpp];
+			buf[y * r_xviTexture->width + x] = r_xviPic[3 + (y * r_xviTexture->width + x) * bpp];
 	}
-	return qtrue;
+	return buf;
 }
 
 image_t *r_radarTexture;					/**< radar texture */

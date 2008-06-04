@@ -498,6 +498,8 @@ typedef struct rank_s {
 	int mind;			/**< character mind attribute needed */
 	int killed_enemies;		/**< needed amount of enemies killed */
 	int killed_others;		/**< needed amount of other actors killed */
+	float factor;		/**< a factor that is used to e.g. increase the win
+						 * probability for auto missions */
 } rank_t;
 
 extern rank_t ranks[MAX_RANKS];	/**< Global list of all ranks defined in medals.ufo. */

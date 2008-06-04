@@ -684,6 +684,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
  * @brief Bind a keynum to script command
  * @param[in] keynum Converted from string to keynum
  * @param[in] binding The script command to bind keynum to
+ * @param[in] space The key space to bind the key for (menu or game)
  * @sa Key_Bind_f
  * @sa Key_StringToKeynum
  */
@@ -691,7 +692,6 @@ static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t spac
 {
 	char *new;
 	char **keySpace = NULL;
-	size_t l;
 
 	if (keynum == -1 || keynum >= K_KEY_SIZE)
 		return;
@@ -718,9 +718,7 @@ static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t spac
 	}
 
 	/* allocate memory for new binding */
-	l = strlen(binding);
-	new = Mem_Alloc(l + 1);
-	Q_strncpyz(new, binding, l + 1);
+	new = Mem_PoolStrDup(binding, com_genericPool, CL_TAG_NONE);
 	*keySpace = new;
 }
 

@@ -93,7 +93,7 @@ void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
 void R_IncreaseXVILevel(const vec2_t pos);
 void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
-qboolean R_XVIMapCopy(byte *out, int size);
+byte* R_XVIMapCopy(int *width, int *height);
 void R_CreateRadarOverlay(void);
 void R_InitializeRadarOverlay(qboolean source);
 void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);

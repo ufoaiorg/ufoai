@@ -301,14 +301,13 @@ static void HOS_UpdateMenu (void)
 	char rank[128];
 	int i, j, k, type;
 	int entry;
-	employee_t* employee;
 
 	/* Reset list. */
 	Cbuf_AddText("hospital_clear\n");
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
 		for (i = 0; i < gd.numEmployees[type]; i++) {
-			employee = &gd.employees[type][i];
+			employee_t *employee = &gd.employees[type][i];
 			/* Only show those employees, that are in the current base. */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
@@ -471,7 +470,6 @@ static void HOS_ListDown_f (void)
 static void HOS_ListClick_f (void)
 {
 	int num, type, i;
-	employee_t* employee;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -488,7 +486,7 @@ static void HOS_ListClick_f (void)
 
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
-			employee = &gd.employees[type][i];
+			employee_t *employee = &gd.employees[type][i];
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, baseCurrent) || employee->chr.HP >= employee->chr.maxHP)
 				continue;
