@@ -592,7 +592,7 @@ void CheckLevelFlags (void)
 
 			/* set the same flags for each face */
 			if (setFlags) {
-				int flagsToSet = allLevelFlagsForBrush ? allLevelFlagsForBrush : CONTENTS_LEVEL_ALL;
+				const int flagsToSet = allLevelFlagsForBrush ? allLevelFlagsForBrush : CONTENTS_LEVEL_ALL;
 				Com_Printf("* Brush %i (entity %i): at least one face has no levelflags, setting %i on all faces\n", brush->brushnum, brush->entitynum, flagsToSet);
 				for (j = 0; j < brush->numsides; j++) {
 					side_t *side = &brush->original_sides[j];

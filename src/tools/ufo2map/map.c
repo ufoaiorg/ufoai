@@ -614,6 +614,8 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	int planenum;
 	brush_texture_t td;
 	int planepts[3][3];
+	const int checkOrFix = config.performMapCheck || config.fixMap ;
+
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
 		Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
@@ -689,7 +691,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			GetToken(qfalse);
 			td.value = atoi(parsedToken);
 		} else {
-			side->contentFlags = CONTENTS_SOLID;
+			side->contentFlags = checkOrFix ? 0 : CONTENTS_SOLID;
 			side->surfaceFlags = 0;
 			td.value = 0;
 		}
@@ -702,7 +704,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			side->contentFlags |= CONTENTS_DETAIL;
 		if (config.fulldetail)
 			side->contentFlags &= ~CONTENTS_DETAIL;
-		if (!config.performMapCheck && !config.fixMap)
+		if (!checkOrFix)
 			if (!(side->contentFlags & (LAST_VISIBLE_CONTENTS - 1)))
 				side->contentFlags |= CONTENTS_SOLID;
 
@@ -805,7 +807,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		return;
 	}
 
-	if (!config.performMapCheck && !config.fixMap)
+	if (!checkOrFix)
 		AddBrushBevels(b);
 
 	nummapbrushes++;
