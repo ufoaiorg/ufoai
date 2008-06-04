@@ -529,6 +529,19 @@ static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
 	return qtrue;
 }
 
+#ifdef DEBUG
+void DisplayContentFlags (int flags)
+{
+	Com_Printf("SOLID:%i WINDOW:%i WATER:%i 1:%i 2:%i 3:%i 4:%i 5:%i 6:%i 7:%i 8:%i ACTORCLIP:%i PASSABLE:%i ACTOR:%i ORIGIN:%i WEAPONCLIP:%i DEADACTOR:%i DETAIL:%i TRANSLUCENT:%i STEPON:%i\n",
+	            flags & CONTENTS_SOLID ? 1 : 0, flags & CONTENTS_WINDOW ? 1 : 0, flags & CONTENTS_WATER ? 1 : 0,
+	            flags & CONTENTS_LEVEL_1 ? 1 : 0, flags & CONTENTS_LEVEL_2 ? 1 : 0, flags & CONTENTS_LEVEL_3 ? 1 : 0, flags & CONTENTS_LEVEL_4 ? 1 : 0,
+	            flags & CONTENTS_LEVEL_5 ? 1 : 0, flags & CONTENTS_LEVEL_6 ? 1 : 0, flags & CONTENTS_LEVEL_7 ? 1 : 0, flags & CONTENTS_LEVEL_8 ? 1 : 0,
+	            flags & CONTENTS_ACTORCLIP ? 1 : 0, flags & CONTENTS_PASSABLE ? 1 : 0, flags & CONTENTS_ACTOR ? 1 : 0, flags & CONTENTS_ORIGIN ? 1 : 0,
+	            flags & CONTENTS_WEAPONCLIP ? 1 : 0, flags & CONTENTS_DEADACTOR ? 1 : 0, flags & CONTENTS_DETAIL ? 1 : 0, flags & CONTENTS_TRANSLUCENT ? 1 : 0,
+	            flags & CONTENTS_STEPON ? 1 : 0);
+}
+#endif
+
 /**
  * @brief sets all levelflags, if none are set.
  */
@@ -546,6 +559,11 @@ void CheckLevelFlags (void)
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
 			assert(side);
+
+			#ifdef DEBUG
+			Com_Printf("CheckLevelFlags: contentflags before changes %i\n", side->contentFlags);
+			#endif
+
 			if(!(side->surfaceFlags & SURF_NODRAW)){
 				allNodraw = qfalse;
 				break;
@@ -555,13 +573,14 @@ void CheckLevelFlags (void)
 		/* proceed if some or all faces are not nodraw */
 		if(!allNodraw){
 			allLevelFlagsForBrush = 0;
+
 			setFlags = qfalse;
 			/* test if some faces do not have levelflags and remember
 			 * all levelflags which are set. */
 			for (j = 0; j < brush->numsides; j++) {
 				side_t *side = &brush->original_sides[j];
 
-				allLevelFlagsForBrush |= side->contentFlags & CONTENTS_LEVEL_ALL;
+				allLevelFlagsForBrush |= (side->contentFlags & CONTENTS_LEVEL_ALL);
 
 				if (!(side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP))) {
 					/* check level 1 - level 8 */
@@ -573,14 +592,11 @@ void CheckLevelFlags (void)
 
 			/* set the same flags for each face */
 			if (setFlags) {
-				Com_Printf("* Brush %i (entity %i): at least one face has no levelflags, setting %i on all faces\n", brush->brushnum, brush->entitynum, allLevelFlagsForBrush ? allLevelFlagsForBrush : CONTENTS_LEVEL_ALL);
+				int flagsToSet = allLevelFlagsForBrush ? allLevelFlagsForBrush : CONTENTS_LEVEL_ALL;
+				Com_Printf("* Brush %i (entity %i): at least one face has no levelflags, setting %i on all faces\n", brush->brushnum, brush->entitynum, flagsToSet);
 				for (j = 0; j < brush->numsides; j++) {
 					side_t *side = &brush->original_sides[j];
-					if (allLevelFlagsForBrush){
-						side->contentFlags |= allLevelFlagsForBrush;
-					} else {
-						side->contentFlags |= CONTENTS_LEVEL_ALL;
-					}
+					side->contentFlags |= flagsToSet;
 				}
 			}
 		}
