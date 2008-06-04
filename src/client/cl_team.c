@@ -142,7 +142,7 @@ static void CL_LoadItem (sizebuf_t *buf, item_t *item, int *container, int *x, i
 	const char *itemID;
 
 	/* reset */
-	item->t = item->m = NULL;
+	memset(item, 0, sizeof(*item));
 	item->a = NONE_AMMO;
 
 	MSG_ReadFormat(buf, "bbbbbl", &item->a, container, x, y, &item->rotated, &item->amount);
@@ -169,7 +169,8 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 	assert(nr < MAX_INVLIST);
 	for (; nr-- > 0;) {
 		CL_LoadItem(buf, &item, &container, &x, &y);
-		Com_AddToInventory(i, item, container, x, y, 1);
+		if (!Com_AddToInventory(i, item, container, x, y, 1))
+			Com_Printf("Could not add item '%s' to inventory\n", item.t->id);
 	}
 }
 
@@ -1698,7 +1699,6 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 
 	/* write data */
 	res = FS_WriteFile(buf, sb.cursize, filename);
-
 	if (res == sb.cursize && res > 0) {
 		Com_Printf("Team '%s' saved. Size written: %i\n", filename, res);
 		return qtrue;
@@ -1713,17 +1713,16 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
  */
 static void CL_SaveTeamMultiplayerSlot_f (void)
 {
-	char filename[MAX_OSPATH];
-
-	if (!baseCurrent || !E_CountHired(baseCurrent, EMPL_SOLDIER)) {
+	if (!E_CountHired(baseCurrent, EMPL_SOLDIER)) {
 		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
+	} else {
+		char filename[MAX_OSPATH];
+		/* save */
+		Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
+		if (!CL_SaveTeamMultiplayer(filename))
+			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
-
-	/* save */
-	Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
-	if (!CL_SaveTeamMultiplayer(filename))
-		MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 }
 
 /**
@@ -1753,7 +1752,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->maxHP = MSG_ReadShort(sb);
 	chr->teamDef = NULL;
 	td = MSG_ReadByte(sb);
-	if (td != NONE)
+	if (td != BYTES_NONE)
 		chr->teamDef = &csi.teamDef[td];
 	chr->gender = MSG_ReadByte(sb);
 	chr->STUN = MSG_ReadByte(sb);
@@ -1798,13 +1797,9 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
 	int version;
-	employee_t *employee;
 	aircraft_t *aircraft;
-	int i, p, num;
+	int i, num;
 	base_t *base;
-	objDef_t *od;
-	int emplIdx;
-	employeeType_t emplType;
 
 	/* open file */
 	f = fopen(filename, "rb");
@@ -1841,7 +1836,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	E_ResetEmployees();
 	for (i = 0; i < num; i++) {
 		/* New employee */
-		employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 		employee->hired = qtrue;
 		employee->baseHired = base;
 		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);
@@ -1858,8 +1853,8 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	aircraft->maxTeamSize = MSG_ReadByte(&sb);
 	chrDisplayList.num = 0;
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		emplIdx = MSG_ReadShort(&sb);
-		emplType = MSG_ReadShort(&sb);
+		const int emplIdx = MSG_ReadShort(&sb);
+		const employeeType_t emplType = MSG_ReadShort(&sb);
 		aircraft->acTeam[i] = NULL;
 		if (emplIdx >= 0) {
 			aircraft->acTeam[i] = &gd.employees[emplType][emplIdx];
@@ -1869,15 +1864,15 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	}
 
 	/* read equipment */
-	p = MSG_ReadShort(&sb);
-	for (i = 0; i < p; i++) {
-		od = INVSH_GetItemByID(MSG_ReadString(&sb));
-		if (num == -1) {
+	num = MSG_ReadShort(&sb);
+	for (i = 0; i < num; i++) {
+		const objDef_t *od = INVSH_GetItemByID(MSG_ReadString(&sb));
+		if (!od) {
 			MSG_ReadLong(&sb);
 			MSG_ReadByte(&sb);
 		} else {
-			base->storage.num[num] = MSG_ReadLong(&sb);
-			base->storage.numLoose[num] = MSG_ReadByte(&sb);
+			base->storage.num[od->idx] = MSG_ReadLong(&sb);
+			base->storage.numLoose[od->idx] = MSG_ReadByte(&sb);
 		}
 	}
 }
@@ -1951,12 +1946,12 @@ void CL_ResetTeams (void)
  */
 static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
-	employee_t *employee;
 	linkedList_t *hiredEmployees = NULL;
 	linkedList_t *hiredEmployeesTemp;
 	int j;
 
 	assert(baseID < gd.numBases);
+	assert(baseID >= 0);
 
 	/* clean temp inventory */
 	CL_CleanTempInventory(B_GetBaseByIDX(baseID));
@@ -1967,7 +1962,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 	/* header */
 	MSG_WriteByte(buf, num);
 	while (hiredEmployeesTemp) {
-		employee = (employee_t*)hiredEmployeesTemp->data;
+		employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
 		assert(employee);
 
 		/* send the fieldSize ACTOR_SIZE_* */
@@ -1987,7 +1982,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 
 		MSG_WriteShort(buf, employee->chr.HP);
 		MSG_WriteShort(buf, employee->chr.maxHP);
-		MSG_WriteByte(buf, employee->chr.teamDef ? employee->chr.teamDef->idx : NONE);
+		MSG_WriteByte(buf, employee->chr.teamDef ? employee->chr.teamDef->idx : BYTES_NONE);
 		MSG_WriteByte(buf, employee->chr.gender);
 		MSG_WriteByte(buf, employee->chr.STUN);
 		MSG_WriteByte(buf, employee->chr.morale);

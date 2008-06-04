@@ -999,13 +999,13 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 int E_CountHired (const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee;
 
+	/* if no base is given, we can't count and return 0 here */
 	if (!base)
 		return 0;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
+		const employee_t *employee = &gd.employees[type][i];
 		if (employee->hired && employee->baseHired == base)
 			count++;
 	}
@@ -1021,13 +1021,10 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 {
 	int count = 0, i;
-	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		employee = &gd.employees[EMPL_ROBOT][i];
-		if (employee->hired
-		&&  employee->baseHired == base
-		&& employee->ugv == ugvType)
+		const employee_t *employee = &gd.employees[EMPL_ROBOT][i];
+		if (employee->hired && employee->baseHired == base && employee->ugv == ugvType)
 			count++;
 	}
 	return count;
@@ -1044,11 +1041,12 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 int E_CountAllHired (const base_t* const base)
 {
 	employeeType_t type;
-	int count = 0;
+	int count;
 
 	if (!base)
 		return 0;
 
+	count = 0;
 	for (type = 0; type < MAX_EMPL; type++)
 		count += E_CountHired(base, type);
 
@@ -1065,10 +1063,9 @@ int E_CountAllHired (const base_t* const base)
 int E_CountUnhired (employeeType_t type)
 {
 	int count = 0, i;
-	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
+		const employee_t *employee = &gd.employees[type][i];
 		if (!employee->hired)
 			count++;
 	}
@@ -1082,10 +1079,9 @@ int E_CountUnhired (employeeType_t type)
 int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 {
 	int count = 0, i;
-	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		employee = &gd.employees[EMPL_ROBOT][i];
+		const employee_t *employee = &gd.employees[EMPL_ROBOT][i];
 		if (!employee->hired && employee->ugv == ugvType)
 			count++;
 	}
@@ -1099,14 +1095,14 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
  */
 int E_CountUnassigned (const base_t* const base, employeeType_t type)
 {
-	int count = 0, i;
-	employee_t *employee;
+	int count, i;
 
 	if (!base)
 		return 0;
 
+	count = 0;
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
+		const employee_t *employee = &gd.employees[type][i];
 		if (!employee->building && employee->baseHired == base)
 			count++;
 	}
@@ -1120,7 +1116,6 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 inline employee_t* E_GetEmployeeByMenuIndex (int num)
 {
 	int i;
-	employee_t* employee;
 	linkedList_t *emplList = employeeList;
 
 	if (num >= employeesInCurrentList || num < 0)
@@ -1128,7 +1123,7 @@ inline employee_t* E_GetEmployeeByMenuIndex (int num)
 
 	i = 0;
 	while (emplList) {
-		employee = (employee_t*)emplList->data;
+		employee_t* employee = (employee_t*)emplList->data;
 		if (i == num)
 			return employee;
 		i++;
@@ -1218,14 +1213,14 @@ static void E_EmployeeHire_f (void)
 
 	if (employee->hired) {
 		if (!E_UnhireEmployee(employee)) {
-			/* @todo: message - Couldn't fire employee. */
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
+			MN_DisplayNotice(_("Could not fire employee"), 2000);
 		} else
 			Cbuf_AddText(va("employeedel%i\n", button));
 	} else {
 		if (!E_HireEmployee(baseCurrent, employee)) {
-			/* @todo: message - Couldn't hire employee. */
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
+			MN_DisplayNotice(_("Could not hire employee"), 2000);
 		} else
 			Cbuf_AddText(va("employeeadd%i\n", button));
 	}

@@ -62,8 +62,6 @@ typedef struct {
 
 /**
  * @brief the client_state_t structure is wiped completely at every server map change
- * @note the client_static_t structure is persistant through an arbitrary
- * number of server connections
  * @sa client_static_t
  */
 typedef struct client_state_s {
@@ -75,22 +73,22 @@ typedef struct client_state_s {
 
 	camera_t cam;
 
-	cmodes_t cmode;
+	cmodes_t cmode;		/**< current selected action for the selected actor */
 	int cfiremode;
 	cmodes_t oldcmode;
 	int oldstate;
 
-	int msgTime;
-	char msgText[256];
+	int msgTime;	/**< @sa MN_DisplayNotice @sa SCR_DisplayHudMessage */
+	char msgText[256];	/**< @sa MN_DisplayNotice @sa SCR_DisplayHudMessage */
 
 	struct le_s *teamList[MAX_TEAMLIST];
 	int numTeamList;
 	int numAliensSpotted;
 
 	/** server state information */
-	int servercount;			/**< server identification for prespawns */
-	int pnum;
-	int actTeam;
+	int servercount;	/**< server identification for prespawns */
+	int pnum;			/**< player num you have on the server */
+	int actTeam;		/**< the currently active team (in this round) */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
@@ -138,7 +136,10 @@ typedef struct serverList_s {
 #define MAX_SERVERLIST 128
 
 /**
- * @brief Not cleared on levelchange (static data)
+ * @brief Not cleared on a map change (static data)
+ * @note Only some data is set to new values on a map change
+ * @note the @c client_static_t structure is persistant through an arbitrary
+ * number of server connections
  * @sa client_state_t
  */
 typedef struct client_static_s {
@@ -170,7 +171,7 @@ typedef struct client_static_s {
 	int challenge;				/**< from the server to use for connecting */
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
-	int team;
+	int team;			/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */
 	struct aircraft_s *missionaircraft;	/**< aircraft pointer for mission handling */
 
 	float loadingPercent;

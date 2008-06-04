@@ -330,6 +330,7 @@ typedef enum {
 #define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT || (x) == ST_RIGHT_REACTION)
 #define IS_SHOT_HEADGEAR(x)    ((x) == ST_HEADGEAR)
 
+/** @brief Actor actions (character modes) */
 typedef enum {
 	M_MOVE,		/**< We are currently in move-mode (destination selection). */
 	M_FIRE_R,	/**< We are currently in fire-mode for the right weapon (target selection). */
