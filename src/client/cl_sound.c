@@ -1,5 +1,5 @@
 /**
- * @file snd_main.c
+ * @file cl_sound.c
  * @brief Main control for any streaming sound output device.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file console.c
+ * @file cl_console.c
  * @brief Console related code.
  */
 

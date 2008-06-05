@@ -1,5 +1,5 @@
 /**
- * @file irc.h
+ * @file cl_irc.h
  * @brief IRC client header for UFO:AI
  */
 

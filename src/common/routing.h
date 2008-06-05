@@ -1,5 +1,5 @@
 /**
- * @file grid.h
+ * @file routing.h
  * @brief grid pathfinding and routing
  */
 

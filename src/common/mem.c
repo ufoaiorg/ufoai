@@ -1,5 +1,5 @@
 /**
- * @file memory.c
+ * @file mem.c
  * @brief Memory handling with sentinel checking and pools with tags for grouped free'ing
  */
 

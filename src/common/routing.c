@@ -1,5 +1,5 @@
 /**
- * @file grid.c
+ * @file routing.c
  * @brief grid pathfinding and routing
  */
 
@@ -150,8 +150,6 @@ void RT_CheckUnit (routing_t * map, int x, int y, pos_t z)
  * @param[in] x The x position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] y The y position in the routing arrays (0 - PATHFINDING_WIDTH-1)
  * @param[in] z The z position in the routing arrays (0 - PATHFINDING_HEIGHT-1)
- * @param[in] dir Direction to check the connection into (0 - BASE_DIRECTIONS-1)
- * @sa dvecs
  * @param[in] fill
  */
 void RT_UpdateConnection (routing_t * map, int x, int y, byte z, qboolean fill)

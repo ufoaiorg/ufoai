@@ -1,5 +1,5 @@
 /**
- * @file cl_vid.c
+ * @file cl_video.c
  * @brief Shared client functions for windowed and fullscreen graphics interface module.
  */
 
