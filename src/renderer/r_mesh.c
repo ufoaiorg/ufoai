@@ -1,7 +1,6 @@
 /**
- * @file r_mesh_md3.c
- * @brief MD3 Model drawing code
- * @note Currently only for static none-animated models
+ * @file r_mesh.c
+ * @brief Mesh Model drawing code
  */
 
 /*

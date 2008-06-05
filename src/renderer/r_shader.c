@@ -1,5 +1,5 @@
 /**
- * @file r_arb_shader.c
+ * @file r_shader.c
  * @brief Shader and image filter stuff
  */
 

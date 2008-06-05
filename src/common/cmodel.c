@@ -1338,7 +1338,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 static int poslistNew[4][2];
 
 /**
- * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in,out] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] pos Current location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
@@ -1573,7 +1573,7 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 }
 
 /**
- * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in,out] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
  * @param[in] actor_size The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the upper-left (towards the lower coordinates) corner of the 2x2 square.

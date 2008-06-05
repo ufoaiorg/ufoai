@@ -1,5 +1,5 @@
 /**
- * @file r_anim.c
+ * @file r_mesh_anim.c
  * @brief animation parsing and playing
  */
 

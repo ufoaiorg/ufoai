@@ -277,6 +277,7 @@ static int CP_SelectNewMissionType (void)
  * @param[in] mission Pointer to the mission where mapDef should be added
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
  * @param[in] mapIdx idx of the map in csi.mds[]
+ * @param[in] ufoCrashed Search the mission definition for crash ufo id if true
  * @return qfalse if map is not selectable
  */
 static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
@@ -1633,7 +1634,7 @@ static void CP_BuildBaseMissionLeave (mission_t *mission)
 
 /**
  * @brief UFO arrived on new base destination: build base.
- * @param[in|out] mission Pointer to the mission
+ * @param[in,out] mission Pointer to the mission
  * @note Build Base mission -- Stage 2
  */
 static void CP_BuildBaseSetUpBase (mission_t *mission)
@@ -1662,7 +1663,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 
 /**
  * @brief Go to new base position.
- * @param[in|out] mission Pointer to the mission
+ * @param[in,out] mission Pointer to the mission
  * @note Build Base mission -- Stage 1
  */
 static void CP_BuildBaseGoToBase (mission_t *mission)
@@ -1848,7 +1849,7 @@ static void CP_SupplyMissionLeave (mission_t *mission)
 
 /**
  * @brief UFO arrived on new base destination: Supply base.
- * @param[in|out] mission Pointer to the mission
+ * @param[in,out] mission Pointer to the mission
  * @note Supply mission -- Stage 2
  */
 static void CP_SupplySetStayAtBase (mission_t *mission)
@@ -1877,7 +1878,7 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 
 /**
  * @brief Go to base position.
- * @param[in|out] mission Pointer to the mission
+ * @param[in,out] mission Pointer to the mission
  * @note Supply mission -- Stage 1
  */
 static void CP_SupplyGoToBase (mission_t *mission)
@@ -2300,7 +2301,7 @@ static void CP_HarvestMissionNextStage (mission_t *mission)
 
 /**
  * @brief Choose UFO type for a given mission category.
- * @param[in] Pointer to the mission where the UFO will be added
+ * @param[in] mission Pointer to the mission where the UFO will be added
  * @sa CP_MissionChooseUFO
  * @sa CP_SupplyMissionCreate
  * @return ufoType_t of the UFO spawning the mission, UFO_MAX if the mission is spawned from ground

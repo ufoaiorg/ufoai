@@ -931,7 +931,7 @@ static void CL_GenerateEquipment_f (void)
  * @brief Moves all  items marked with "buytype multi_ammo" to the currently used equipment-container (pri or sec)
  * @note This is a WORKAROUND, it is by no means efficient or sane, but currently the only way to display these items in the (multiple) correct categories.
  * Should be executed on a change of the equipemnt-category to either PRI or SEC items .. and only there.
- * @param[in|out] inv This is always the used equipByBuyType in the base.
+ * @param[in,out] inv This is always the used equipByBuyType in the base.
  * @param[in] buytype_container The container we just switched to (where all the items should be moved to).
  * @sa CL_GenerateEquipment_f
  * @sa Com_MoveInInventoryIgnore

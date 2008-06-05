@@ -219,7 +219,7 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 
 /**
  * @brief Increases the 'hit' score by one for all affected teams/skills by one (except splash damage, read below).
- * @param[in|out] attacker The soldier to update (he/she dealt the damage)
+ * @param[in,out] attacker The soldier to update (he/she dealt the damage)
  * @param[in] target The hit target.
  * @param[in] fd the used fire definition.
  * @param[in] splashDamage Do we count it as splashdamage? If this value is not zero the stats well be counted as splashdamage and the value will be added to the overall splash-damage count.

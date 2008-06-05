@@ -202,8 +202,8 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 
 /**
  * @brief Get the status associated to a building
+ * @param[in] base The base to search for the given building type
  * @param[in] buildingType value of building->buildingType
- * @param[in] building
  * @return true if the building is functional
  * @sa B_SetBuildingStatus
  */
@@ -1960,10 +1960,10 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 
 /**
  * @brief Copies an entry from the building description file into the list of building types.
- *
- * Parses one "building" entry in the basemanagement.ufo file and writes it into the next free entry in bmBuildings[0], which is the list of buildings in the first base (building_t).
- *
- * @param[in] id Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
+ * @note Parses one "building" entry in the basemanagement.ufo file and writes
+ * it into the next free entry in bmBuildings[0], which is the list of buildings
+ * in the first base (building_t).
+ * @param[in] name Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
  * @param[in] text @todo: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  * @sa CL_ParseScriptFirst (link is false here)
@@ -3654,7 +3654,6 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
 /**
  * @brief Do anything when dropship returns to base
  * @param[in] aircraft Returning aircraft.
- * @param[in] base Base, where aircraft lands.
  * @note Place here any stuff, which should be called
  * @note when Drophip returns to base.
  * @sa CL_CampaignRunAircraft
@@ -3686,10 +3685,9 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 
 /**
  * @brief Check if the item has been collected (i.e it is in the storage) in the given base.
- * @param[in] item_idx The index of the item in the item-list.
+ * @param[in] item The item to check
  * @param[in] base The base to search in.
  * @return amount Number of available items in base
- * @note Formerly known as RS_ItemInBase.
  */
 int B_ItemInBase (const objDef_t *item, const base_t *base)
 {

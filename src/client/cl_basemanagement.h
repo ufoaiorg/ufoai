@@ -300,8 +300,8 @@ void B_ReviveSoldiersInBase(base_t* base); /* @todo */
 int B_GetEmployeeCount(const base_t* const base);
 
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
-qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type);
-void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newStatus);
+qboolean B_GetBuildingStatus(const base_t* const base, buildingType_t type);
+void B_SetBuildingStatus(base_t* const base, buildingType_t type, qboolean newStatus);
 qboolean B_CheckBuildingDependencesStatus(const base_t* const base, building_t* building);
 
 void B_MarkBuildingDestroy(base_t* base, building_t* building);

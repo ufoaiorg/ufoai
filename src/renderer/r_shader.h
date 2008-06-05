@@ -1,3 +1,8 @@
+/**
+ * @file r_shader.h
+ * @brief Shader and image filter stuff
+ */
+
 /*
 
 This program is free software; you can redistribute it and/or

@@ -1,5 +1,5 @@
 /**
- * @file r_rmisc.c
+ * @file r_misc.c
  */
 
 /*

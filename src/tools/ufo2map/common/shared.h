@@ -1,5 +1,4 @@
 /**
- * @brief
  * @file shared.h
  */
 
