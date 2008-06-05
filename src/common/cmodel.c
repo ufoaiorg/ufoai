@@ -1033,7 +1033,10 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 
 /**
  * @brief Loads in the map and all submodels
+ * @note This function loads the collision data from the bsp file. For
+ * rendering @c R_ModBeginLoading is used.
  * @sa CM_AddMapTile
+ * @sa R_ModBeginLoading
  * @note Make sure that mapchecksum was set to 0 before you call this function
  */
 void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)

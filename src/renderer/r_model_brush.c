@@ -580,6 +580,7 @@ static void R_LoadBspVertexArrays (void)
 
 /**
  * @sa CM_AddMapTile
+ * @sa R_ModBeginLoading
  */
 static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int sZ)
 {
@@ -671,7 +672,21 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 /**
  * @brief Specifies the model that will be used as the world
+ * @param[in] tiles The tiles string can be only one map or a list of space
+ * seperated map tiles for random assembly. In case of random assembly we also
+ * need the @c pos string. Every tile needs an entry in the @c pos string, too.
+ * @param[in] pos In case of a random map assembly this is the string that holds
+ * the world grid positions of the tiles. The positions are x, y and z values.
+ * They are just written one after another for every tile in the @c tiles string
+ * and every of the three components must exists for every tile.
+ * @param[in] mapName The mapname that the get from the server (used to identify
+ * the correct name for the materials in case of a random assembly).
  * @sa R_ModEndLoading
+ * @sa R_ModAddMapTile
+ * @sa CM_LoadMap
+ * @note This function is called for listen servers, too. This loads the bsp
+ * struct for rendering it. The @c CM_LoadMap code only loads the collision
+ * and pathfinding stuff.
  */
 void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const char *mapName)
 {
@@ -722,7 +737,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 			Q_strncpyz(name, token, sizeof(name));
 
 		if (pos && pos[0]) {
-			/* get position and add a tile */
+			/* get grid position and add a tile */
 			for (i = 0; i < 3; i++) {
 				token = COM_Parse(&pos);
 				if (!pos)
