@@ -423,7 +423,8 @@ int AL_GetAlienGlobalIdx (int idx)
 
 /**
  * @brief Get amount of live aliens or alien bodies stored in Containment.
- * @param[in] idx Index of alien.
+ * @param[in] alienType The alien type to check for
+ * @param[in] base The base to count in
  * @param[in] reqtype Requirement type (RS_LINK_ALIEN/RS_LINK_ALIEN_DEAD).
  * @return Amount of desired alien/body.
  * @sa RS_RequirementsMet
@@ -564,7 +565,7 @@ int AL_CountAll (void)
 
 /**
  * @brief Counts killed or captured aliens of given type in all bases.
- * @param[in] alientype
+ * @param[in] alienidx
  * @param[in] alive boolean whether the alien is alive or already dead
  * @return amount of killed aliens of given type
  */
@@ -572,6 +573,9 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 {
 	int i;
 	int amount = 0;
+
+	assert(alienidx >= 0);
+	assert(alienidx < MAX_ALIENCONT_CAP);
 
 	for (i = 0; i < MAX_BASES; i++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(i);

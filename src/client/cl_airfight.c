@@ -53,13 +53,13 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
 
 /**
  * @brief Remove a projectile from gd.projectiles
- * @param[in] idx of the projectile to remove in array gd.projectiles[]
+ * @param[in] projectile The projectile to remove
  * @sa AIRFIGHT_AddProjectile
  */
 static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
 	int i;
-	int idx = projectile->idx;
+	const int idx = projectile->idx;
 
 	gd.numProjectiles--;
 	assert(gd.numProjectiles >= idx);
@@ -173,7 +173,8 @@ static void AIRFIGHT_ProjectileList_f (void)
 
 /**
  * @brief Change destination of projectile to an idle point of the map, close to its former target.
- * @param[in] idx idx of the projectile to update in gd.projectiles[].
+ * @param[in] projectile The projectile to update
+ * @param[in] returnToBase
  */
 static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean returnToBase)
 {
@@ -232,7 +233,7 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
  * @param[in] slot Pointer to the first weapon slot of attacking base or aircraft.
  * @param[in] maxSlot maximum number of weapon slots in attacking base or aircraft.
  * @param[in] pos position of attacking base or aircraft.
- * @param[in] targetpos Pointer to the aimed aircraft.
+ * @param[in] targetPos Pointer to the aimed aircraft.
  * @return indice of the slot to use (in array weapons[]),
  * -1 AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT no weapon to use atm,
  * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if no weapon to use at all.
@@ -411,7 +412,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * ai
  * @brief Actions to execute when a fight is done.
  * @param[in] shooter Pointer to the aircraft that fired the projectile.
  * @param[in] aircraft Pointer to the aircraft which was destroyed (alien or phalanx).
- * @param[in] battleStatus qtrue if PHALANX won, qfalse if UFO won.
+ * @param[in] phalanxWon qtrue if PHALANX won, qfalse if UFO won.
  * @note Some of these mission values are redone (and not reloaded) in CP_Load
  * @note shooter may be NULL
  * @sa UFO_DestroyAllUFOsOnGeoscape_f
@@ -695,9 +696,8 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 /**
  * @brief Check if one type of battery (missile or laser) can shoot now.
  * @param[in] base Pointer to the firing base.
- * @param[in] slot Pointer to the first weapon slot of the base to use.
- * @param[in] maxSlot number of slot of this type in base.
- * @param[in] targetIdx Pointer to the array of target idx of this defence system.
+ * @param[in] weapons The base weapon to check and fire.
+ * @param[in] maxWeapons
  */
 static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int maxWeapons)
 {

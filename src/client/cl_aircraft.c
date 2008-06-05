@@ -573,7 +573,7 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
 /**
  * @brief check if aircraft has enough fuel to go to destination, and then come back home
  * @param[in] aircraft Pointer to the aircraft
- * @param[in] position Pointer to the position the aircraft should go to
+ * @param[in] destination Pointer to the position the aircraft should go to
  * @sa MAP_MapCalcLine
  * @return qtrue if the aircraft can go to the position, qfalse else
  */
@@ -602,7 +602,7 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 /**
  * @brief check if aircraft has enough fuel to go to destination
  * @param[in] aircraft Pointer to the aircraft
- * @param[in] position Pointer to the position the aircraft should go to
+ * @param[in] destination Pointer to the position the aircraft should go to
  * @sa MAP_MapCalcLine
  * @return qtrue if the aircraft can go to the position, qfalse else
  */

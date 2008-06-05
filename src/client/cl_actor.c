@@ -1465,10 +1465,10 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 
 /**
  * @brief Sets the reaction-firemode of an actor/soldier to it's default value on client- and server-side.
- * @param[in] actorIdx Index of the actor to set the firemode for.
+ * @param[in] le The actor to set the firemode for.
  * @param[in] hand Which weapon(-hand) to try first for reaction-firemode (r|l).
  */
-void CL_SetDefaultReactionFiremode (le_t * actor, const char hand)
+void CL_SetDefaultReactionFiremode (le_t *actor, const char hand)
 {
 	if (!actor) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_SetDefaultReactionFiremode: No actor given! Abort.\n");
@@ -3090,7 +3090,6 @@ void CL_ActorReload (int hand)
 
 /**
  * @brief Opens a door.
- * @param[in] le Who is opening
  * @sa CL_ActorDoorAction
  * @sa G_ClientUseEdict
  */
@@ -4536,7 +4535,7 @@ static const float lookupdiff[30]= {
  * uses lookup table and linear interpolation
  * approximation good to around 0.001.
  * easily good enough for the job.
- * @param[in] the number to calculate the erf of.
+ * @param[in] z the number to calculate the erf of.
  * @return for posotive arg, returns approximate erf. for -ve arg returns 0.0f.
  */
 static float lookup_erf (float z)
@@ -5175,8 +5174,7 @@ void CL_AddPathing (void)
 
 /**
  * @brief Plays various sounds on actor action.
- * @param[in] category
- * @param[in] gender
+ * @param[in] le The actor
  * @param[in] soundType Type of action (among actorSound_t) for which we need a sound.
  */
 void CL_PlayActorSound (const le_t * le, actorSound_t soundType)

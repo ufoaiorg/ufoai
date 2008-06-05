@@ -43,7 +43,7 @@ void AB_ResetAlienBases (void)
 
 /**
  * @brief Set new base position
- * @param[out] pos Position of the new base.
+ * @param[out] position Position of the new base.
  * @note This function generates @c maxLoopPosition random positions, and select among those the one that
  * is the farthest from every other alien bases. This is intended to get a rather uniform distribution
  * of alien bases, while still keeping a random base localisation.
@@ -207,7 +207,6 @@ static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, int dt, alie
  * @brief Update stealth value of every base after aircraft moved
  * @param[in] aircraft Pointer to the aircraft_t
  * @param[in] dt Elapsed time since last check
- * @param[in] base Pointer to the base
  * @sa UFO_UpdateAlienInterestForOneBase
  */
 void AB_UpdateStealthForAllBase (const aircraft_t *aircraft, int dt)
