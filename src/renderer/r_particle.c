@@ -162,9 +162,7 @@ static void R_DrawPtlModel (ptl_t * p)
 
 /**
  * @brief Draws a circle out of lines
- * @param[in] mid Center of the circle
- * @param[in] radius Radius of the circle
- * @param[in] color The color of the circle lines
+ * @param[in] p The particle definition with origin, radius and color
  * @sa Draw_Circle
  */
 static void R_DrawPtlCircle (const ptl_t* p)

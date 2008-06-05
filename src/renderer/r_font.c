@@ -424,7 +424,7 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 /**
  * @brief draw cached opengl texture
  * FIXME: Make scrolling possible
- * @param[in] s SDL surface pointer which holds the image/text
+ * @param[in] cache
  * @param[in] x x coordinate on screen to draw the text to
  * @param[in] y y coordinate on screen to draw the text to
  * @param[in] absY This is the absolute y coodinate (e.g. of a node)
@@ -535,7 +535,6 @@ int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int
  * @param[in] absX Absolute x value for this string
  * @param[in] absY Absolute y value for this string
  * @param[in] maxWidth Max width - relative from absX
- * @param[in] maxHeight Max height - relative from absY
  * @param[in] lineHeight The lineheight of that node
  * @param[in] c The string to draw
  * @param[in] scroll_pos Starting line in this node (due to scrolling)
@@ -723,7 +722,7 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 /**
  * @brief Render all the entries in a list of caches (e.g. generated in R_FontDrawString)
  * @param[in] cacheList A List of fontCache_t pointers that will be drawn.
- * @param[in] Absolute y value for the string(s).
+ * @param[in] absY Absolute y value for the string(s).
  * @param[in] maxWidth Max width - relative from absX (as used in R_FontGenerateCacheList)
  * @param[in] maxHeight Max height - relative from absY
  * @param[in] dx Modifier to displace strings by a relative x value.

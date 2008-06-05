@@ -448,7 +448,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # and error messages should be written. If left blank the output is written
 # to stderr.
 
-WARN_LOGFILE           =
+WARN_LOGFILE           = doxygen.warnings
 
 #---------------------------------------------------------------------------
 # configuration options related to the input files
@@ -480,7 +480,7 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = .svn
+EXCLUDE                = */.svn/*
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
 # directories that are symbolic links (a Unix filesystem feature) are excluded

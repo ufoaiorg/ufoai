@@ -141,7 +141,6 @@ qboolean Rimp_Init (void)
 
 /**
  * @brief Init the SDL window
- * @param fullscreen Start in fullscreen or not (bool value)
  */
 qboolean R_InitGraphics (void)
 {

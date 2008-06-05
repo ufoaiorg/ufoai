@@ -708,8 +708,6 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
  * @param[in] y menu node y position
  * @param[in] w menu node widht
  * @param[in] h menu node height
- * @param[in] p
- * @param[in] q
  * @param[in] rotate the rotate angle of the globe
  * @param[in] zoom the current globe zoon
  * @param[in] map the prefix of the map to use (image must be at base/pics/menu/<map>_[day|night])

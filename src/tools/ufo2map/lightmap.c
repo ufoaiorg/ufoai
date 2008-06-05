@@ -922,7 +922,9 @@ nextpatch:;
 
 /**
  * @brief Populate faces with indexes of all dBspFace_t's referencing the specified edge.
- * @param[out] The number of dBspFace_t's referencing edge is returned in nfaces.
+ * @param[out] nfaces The number of dBspFace_t's referencing edge
+ * @param[out] faces
+ * @param[in] vert
  */
 static void FacesWithVert (int vert, int *faces, int *nfaces)
 {

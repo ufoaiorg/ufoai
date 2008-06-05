@@ -368,13 +368,14 @@ float crand (void)
 
 /**
  * @brief generate two gaussian distributed random numbers with median at 0 and stdev of 1
- * @param pointers to two floats that need to be set. both have to be provided.
+ * @param[out] gauss1 First gaussian distributed random number
+ * @param[out] gauss2 Second gaussian distributed random number
  * @sa crand
  * @sa frand
  */
 void gaussrand (float *gauss1, float *gauss2)
 {
-	float x1,x2,w,tmp;
+	float x1, x2, w, tmp;
 
 	do {
 		x1 = crand();

@@ -227,7 +227,7 @@ int SH_LoadProgram_ARB_VP (const char *path)
 
 /**
  * @brief Loads vertex program shader
- * @param[in] path The shader file path (relative to game-dir)
+ * @param[in] s The shader to load
  * @return vpid - id of shader
  */
 int SH_LoadProgram_GLSL (shader_t* s)

@@ -565,8 +565,9 @@ static int footstepsCnt = 0;
 
 /**
  * @brief Generate a list of textures that should have footsteps when walking on them
- * @param[in] textureName Add this texture to the list of
+ * @param[in] filename Add this texture to the list of
  * textures where we should have footstep sounds for
+ * @param[in] mipTexIndex The index in the textures array
  * @sa SV_GetFootstepSound
  * @sa Com_GetTerrainType
  */

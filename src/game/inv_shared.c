@@ -154,7 +154,7 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const int co
  * @sa Com_CheckToInventory_mask
  * @return INV_DOES_NOT_FIT if the item does not fit
  * @return INV_FITS if it fits and
- * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90° (to the left).
+ * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  */
 int Com_CheckToInventory (const inventory_t * const i, objDef_t *od, const int container, int x, int y)
 {
@@ -783,11 +783,11 @@ void INVSH_DestroyInventory (inventory_t* const i)
 
 /**
  * @brief Finds space for item in inv at container
- * @param[in] inv
- * @param[in] time
- * @param[in] container
- * @param[in] px
- * @param[in] py
+ * @param[in] inv The inventory to search space in
+ * @param[in] item The item to check the space for
+ * @param[in] container The container to search in
+ * @param[out] px The x position in the container
+ * @param[out] py The y position in the container
  * @sa Com_CheckToInventory
  */
 void Com_FindSpace (const inventory_t* const inv, item_t *item, const int container, int* const px, int* const py)
@@ -1662,9 +1662,9 @@ char *CHRSH_CharGetHead (character_t * const chr)
 
 /**
  * @brief Prints a description of an object
- * @param[in] object to display the info for
+ * @param[in] od object to display the info for
  */
-void INVSH_PrintItemDescription (objDef_t *od)
+void INVSH_PrintItemDescription (const objDef_t *od)
 {
 	int i;
 

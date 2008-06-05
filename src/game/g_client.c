@@ -906,7 +906,7 @@ static void G_PrintFloorToConsole (pos3_t pos)
 
 /**
  * @brief Moves an item inside an inventory. Floors are handled special.
- * @input[in] player The player the edict/soldier belongs to.
+ * @param[in] player The player the edict/soldier belongs to.
  * @param[in] num The edict number of the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
  * @param[in] fx x position of the item you want to move in the source container
@@ -1911,7 +1911,6 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 
 /**
  * @brief Reload weapon with actor.
- * @param[in] hand
  * @sa AI_ActorThink
  */
 void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean quiet)
@@ -2233,9 +2232,9 @@ void G_ListMissionScore_f (void)
 /**
  * @brief This function 'uses' the edict. E.g. it opens the door when the player wants it to open
  * @sa PA_USE_DOOR
- * @param[in] entnum The entity number of the edict
  * @param[in] player The player is trying to activate the door
- * @param[in] actor The actor the player is using to activate the door
+ * @param[in,out] actor The actor the player is using to activate the entity
+ * @param[in,out] edict The entity that is to be used
  * @todo: Do we have to change the trigger position here, too? I don't think this is really needed.
  * @sa CL_ActorUseDoor
  * @sa G_UseEdict

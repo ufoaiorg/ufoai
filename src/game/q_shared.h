@@ -381,14 +381,14 @@ typedef enum {
 #define PLAYER_MIN			-24
 #define PLAYER_WIDTH		9
 
-/**
+#if 0
 #define EYE2x2_STAND		15
 #define EYE2x2_CROUCH		3
 #define PLAYER2x2_STAND		20
 #define PLAYER2x2_CROUCH	5
-#define PLAYER2x2_DEAD		-12		<--  @todo  This may be the only one needed next to PLAYER2x2_WIDTH.
+#define PLAYER2x2_DEAD		-12		/**< @todo  This may be the only one needed next to PLAYER2x2_WIDTH. */
 #define PLAYER2x2_MIN		-24
-*/
+#endif
 #define PLAYER2x2_WIDTH		18	/**< Width of a 2x2 unit. @todo may need some tweaks. */
 
 /* field marker box */

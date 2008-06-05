@@ -821,7 +821,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 /**
  * @brief Displays the results of a trace. Used to see if a bullet hit something.
  * @param[in] start The starting loaction of the trace.
- * @param[in] trace The trace data.
+ * @param[in] tr The trace data.
  */
 static void DumpTrace (vec3_t start, trace_t tr)
 {

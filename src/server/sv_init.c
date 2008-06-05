@@ -476,7 +476,6 @@ static void SV_ClearMap (void)
 
 /**
  * @brief Checks if a given map-tile fits into the empty space (in a given location) of a map.
- * @param[in] map The map to check agains the tile.
  * @param[in] tile The tile definition that should be fitted into the map.
  * @param[in] x The x position in the map where the tile is supposed to be placed/checked.
  * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
