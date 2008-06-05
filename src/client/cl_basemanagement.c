@@ -407,7 +407,7 @@ static void B_BaseInit_f (void)
 /**
  * @brief Get the maximum level of a building type in a base.
  * @param[in] base Pointer to base.
- * @param[in] Building type to get the maximum level for.
+ * @param[in] type Building type to get the maximum level for.
  * @note This function checks base status for particular buildings.
  * @return 0.0f if there is no (operational) building of the requested type in the base, otherwise the maximum level.
  */
@@ -775,8 +775,7 @@ static void B_StorageOnDestroy_f (void)
 /**
  * @brief Actions to perform when destroying one hangar.
  * @param[in] base Pointer to the base where hangar is destroyed.
- * @param[in] hangarType Type of hangar: B_SMALL_HANGAR for small hangar, B_HANGAR for large hangar
- * @param[in] building Pointer to the building to destroy.
+ * @param[in] buildingType Type of hangar: B_SMALL_HANGAR for small hangar, B_HANGAR for large hangar
  * @note called when player destroy its building or hangar is destroyed during base attack.
  * @note These actions will be performed after we actually remove the building.
  * @pre we checked before calling this function that all parameters are valid.

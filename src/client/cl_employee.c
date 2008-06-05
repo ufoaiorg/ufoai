@@ -388,7 +388,6 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 /**
  * @brief Return a "not hired" ugv-employee pointer of a given ugv-type.
  * @param[in] ugvType What type of robot we want.
- * @param[in] hired Do we want a hire or unhired robot?
  * @return employee_t pointer on success or NULL on error.
  * @sa E_GetHiredRobot
  */
@@ -591,7 +590,6 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
  * @brief Hires the first free employee of that type.
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
- * @param[in] idx Which employee id (in global employee array) See E_GetUnhiredEmployee for usage.
  * @sa E_HireEmployee
  * @sa E_UnhireEmployee
  */

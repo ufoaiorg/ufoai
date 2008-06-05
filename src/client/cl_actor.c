@@ -1465,7 +1465,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 
 /**
  * @brief Sets the reaction-firemode of an actor/soldier to it's default value on client- and server-side.
- * @param[in] le The actor to set the firemode for.
+ * @param[in] actor The actor to set the firemode for.
  * @param[in] hand Which weapon(-hand) to try first for reaction-firemode (r|l).
  */
 void CL_SetDefaultReactionFiremode (le_t *actor, const char hand)
@@ -2905,7 +2905,7 @@ static qboolean CL_TraceMove (pos3_t to)
  * @brief Return the last position we can walk to with a defined amount of TUs.
  * @param[in] to The location we want to reach.
  * @param[in] tus How many timeunits we have to move.
- * @param[out pos The location we can reach with the given amount of TUs.
+ * @param[out] pos The location we can reach with the given amount of TUs.
  * @sa CL_TraceMove (similar algo.)
  */
 static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)

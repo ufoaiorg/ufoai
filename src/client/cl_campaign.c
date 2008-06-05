@@ -640,7 +640,7 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
 
 /**
  * @brief Removes (temporarily) a UFO from geoscape: make it non visible and call notify functions
- * @param[in] Pointer to mission
+ * @param[in] mission Pointer to mission
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed).
  * @note We don't destroy the UFO because we can use later, e.g. if it takes off
  */
