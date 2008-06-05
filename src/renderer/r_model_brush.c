@@ -481,7 +481,6 @@ static void R_LoadBspVertexArrays (void)
 	int i, j, index;
 	int vertind, coordind;
 	float *vec, *vecShifted, s, t;
-	mBspEdge_t *edge;
 	mBspSurface_t *surf;
 
 	vertind = coordind = 0;
@@ -498,10 +497,10 @@ static void R_LoadBspVertexArrays (void)
 
 			/* vertex */
 			if (index > 0) {  /* negative indices to differentiate which end of the edge */
-				edge = &loadmodel->bsp.edges[index];
+				const mBspEdge_t *edge = &loadmodel->bsp.edges[index];
 				vec = loadmodel->bsp.vertexes[edge->v[0]].position;
 			} else {
-				edge = &loadmodel->bsp.edges[-index];
+				const mBspEdge_t *edge = &loadmodel->bsp.edges[-index];
 				vec = loadmodel->bsp.vertexes[edge->v[1]].position;
 			}
 
