@@ -1750,7 +1750,7 @@ static const value_t valid_techmail_vars[] = {
 
 /**
  * @brief Parses one "tech" entry in the research.ufo file and writes it into the next free entry in technologies (technology_t).
- * @param[in] id Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
+ * @param[in] name Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
  * @param[in] text the whole following text that is part of the "tech" item definition in research.ufo.
  * @sa CL_ParseScriptFirst
  * @sa CL_StartSingleplayer

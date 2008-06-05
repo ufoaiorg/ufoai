@@ -477,7 +477,6 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
  * @param[in] pos Longitude and latitude of the marker to draw.
  * @param[in] theta Angle (degree) of the model to the horizontal.
  * @param[in] model The name of the model of the marker.
- * @param[in] globe qtrue if the 3D marker is to be drawn on 3D geoscape, qfalse else.
  */
 qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model)
 {
@@ -1597,7 +1596,7 @@ nation_t* MAP_GetNation (const vec2_t pos)
 /**
  * @brief Translate color value to terrain type
  * @sa MAP_GetColor
- * @param[in] byte the color value from the terrain mask
+ * @param[in] color the color value from the terrain mask
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
@@ -1625,7 +1624,7 @@ const char* MAP_GetTerrainType (const byte* const color)
 /**
  * @brief Translate color value to culture type
  * @sa MAP_GetColor
- * @param[in] byte the color value from the culture mask
+ * @param[in] color the color value from the culture mask
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
@@ -1648,7 +1647,7 @@ static const char* MAP_GetCultureType (const byte* color)
 /**
  * @brief Translate color value to population type
  * @sa MAP_GetColor
- * @param[in] byte the color value from the population mask
+ * @param[in] color the color value from the population mask
  * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */

@@ -508,7 +508,6 @@ void UFO_CampaignRunUFOs (int dt)
 /**
  * @brief Check if a UFO has weapons and ammo to shoot
  * @param[in] ufo Pointer to the UFO
- * @param[in] base Pointer to the base shooting at the UFO
  */
 qboolean UFO_CanShoot (const aircraft_t *ufo)
 {
@@ -561,7 +560,7 @@ static void UFO_ListOnGeoscape_f (void)
 /**
  * @brief Add a UFO to geoscape
  * @param[in] ufotype The type of ufo (fighter, scout, ...).
- * @param[in] pos Position where the ufo should go. NULL is randomly chosen
+ * @param[in] destination Position where the ufo should go. NULL is randomly chosen
  * @param[in] mission Pointer to the mission the UFO is involved in
  * @todo: UFOs are not assigned unique idx fields. Could be handy...
  * @sa UFO_RemoveFromGeoscape
@@ -713,7 +712,7 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 
 /**
  * @brief Updates current capacities for UFO hangars in given base.
- * @param[in] base_idx Index of base in global array.
+ * @param[in] base The base where you want the update to be done
  */
 void UFO_UpdateUFOHangarCapForAll (base_t *base)
 {

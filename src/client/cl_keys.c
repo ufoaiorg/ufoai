@@ -810,7 +810,7 @@ static void Key_Bind_f (void)
 
 /**
  * @brief Writes lines containing "bind key value"
- * @param[in] path path to print the keybinding too
+ * @param[in] filename Path to print the keybinding too
  * @sa Com_WriteConfigToFile
  */
 void Key_WriteBindings (const char* filename)

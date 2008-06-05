@@ -158,7 +158,7 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 
 /**
  * @brief Loads a savegame from file
- * @param[in] filename Savegame to load (relative to writepath/save)
+ * @param[in] file Savegame to load (relative to writepath/save)
  * @sa SAV_GameLoad_f
  * @sa SAV_GameSave
  * @sa CL_GameInit

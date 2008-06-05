@@ -108,7 +108,7 @@ static int TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase, int am
 		} else {
 			/* amount to transfer can't be bigger than what we have */
 			amount = min(amount, (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer) / ANTIMATTER_SIZE);
-		} 
+		}
 	} if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 		ufocraft = AIR_GetAircraft(od->tech->provides);
 		assert(ufocraft);
@@ -759,7 +759,7 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 
 /**
  * @brief Starts alien bodies transfer between mission and base.
- * @param[in] transferBase Pointer to the base to send the alien bodies.
+ * @param[in] base Pointer to the base to send the alien bodies.
  * @sa TR_TransferBaseListClick_f
  * @sa TR_TransferStart_f
  */

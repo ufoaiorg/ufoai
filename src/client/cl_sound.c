@@ -367,7 +367,7 @@ void S_SetVolume (sfx_t *sfx, int volume)
 /**
  * @brief Validates the parms and ques the sound up
  * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
- * @param[in] name The soundfile to play
+ * @param[in] sfx The soundfile to play
  * @param[in] relVolume - 0 - 1
  * @sa S_StartLocalSound
  */

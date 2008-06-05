@@ -1488,7 +1488,6 @@ void CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
 /**
  * @brief Removes all soldiers from an aircraft.
  * @param[in] aircraft The aircraft to remove the soldiers from.
- * @param[in] base Pointer to the homebase of the aircraft.
  */
 void CL_RemoveSoldiersFromAircraft (aircraft_t *aircraft)
 {

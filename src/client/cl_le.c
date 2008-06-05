@@ -530,7 +530,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 
 /**
  * @brief Searches the closest actor to the given world vector
- * @param[in] World position to get the closest actor to
+ * @param[in] origin World position to get the closest actor to
  * @note Only your own team is searched
  */
 le_t* LE_GetClosestActor (const vec3_t origin)

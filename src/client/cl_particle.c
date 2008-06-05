@@ -926,7 +926,7 @@ void CL_ParticleFree (ptl_t *p)
 
 /**
  * @brief Spawn a particle given by EV_SPAWN_PARTICLE event
- * @param[in] sb sizebuf that holds the network transfer
+ * @param[in] msg sizebuf that holds the network transfer
  * @sa CL_ParticleSpawn
  * @sa EV_SPAWN_PARTICLE
  */

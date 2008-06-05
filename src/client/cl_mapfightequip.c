@@ -867,7 +867,6 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
  * @note hourly called
  * @sa CL_CampaignRun
  * @sa AII_UpdateOneInstallationDelay
- * @param[in] aircraft Pointer to the aircraft
  */
 void AII_UpdateInstallationDelay (void)
 {

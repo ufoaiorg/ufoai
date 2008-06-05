@@ -89,7 +89,7 @@ POPUP_HOMEBASE
 
 /**
  * @brief Display the popup_homebase
- * @parap[in] aircraft Pointer to aircraft we want to change homebase.
+ * @param[in] aircraft Pointer to aircraft we want to change homebase.
  * @param[in] alwaysDisplay False if popup should be displayed only if at least one base is available.
  * @return true if popup is displayed.
  */

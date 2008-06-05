@@ -342,9 +342,12 @@ MISC FUNCTIONS
 
 /**
  * @brief Saves a string to client hunk
- * @param[in] string String to store on hunk
- * @param[in] dst The offset or char pointer that points to the hunk space that
- * was used to store the string
+ * @param[in] int String to store in the given pool
+ * @param[out] out The location where you want the pool pointer to be stored
+ * @param[in] pool The pool to allocate the memory in
+ * @param[in] tagNum
+ * @param[in] fileName The filename where this function was called from
+ * @param[in] fileLine The line where this function was called from
  */
 char *_Mem_PoolStrDupTo (const char *in, char **out, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
 {
@@ -356,6 +359,11 @@ char *_Mem_PoolStrDupTo (const char *in, char **out, struct memPool_s *pool, con
 
 /**
  * @brief No need to null terminate the extra spot because Mem_Alloc returns zero-filled memory
+ * @param[in] int String to store in the given pool
+ * @param[in] pool The pool to allocate the memory in
+ * @param[in] tagNum
+ * @param[in] fileName The filename where this function was called from
+ * @param[in] fileLine The line where this function was called from
  */
 char *_Mem_PoolStrDup (const char *in, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
 {
@@ -367,7 +375,9 @@ char *_Mem_PoolStrDup (const char *in, struct memPool_s *pool, const int tagNum,
 	return out;
 }
 
-
+/**
+ * @param[in] pool The pool to get the size from
+ */
 uint32_t _Mem_PoolSize (struct memPool_s *pool)
 {
 	if (!pool)

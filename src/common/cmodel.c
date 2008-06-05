@@ -546,6 +546,7 @@ GAME RELATED TRACING USING ENTITIES
  * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
+ * @param[in] levelmask
  * @sa TR_TestLine
  * @sa CM_InlineModel
  * @sa TR_TransformedBoxTrace
@@ -590,7 +591,8 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
  * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
- * @param[in] list of entities that might be on this line
+ * @param[in] levelmask
+ * @param[in] entlist of entities that might be on this line
  * @sa CM_EntTestLine
  * @return qtrue - hit something
  * @return qfalse - hit nothing
@@ -615,6 +617,7 @@ qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int le
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[out] end The position where the line hits a object or the stop position if nothing is in the line
+ * @param[in] levelmask
  * @sa TR_TestLineDM
  * @sa TR_TransformedBoxTrace
  */
@@ -1877,7 +1880,11 @@ pos_t Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 }
 
 /**
+ * @brief Converts a grid position to world coordinates
  * @sa Grid_Height
+ * @param[in] map The routing map
+ * @param[in] pos The grid position
+ * @param[out] vec The world vector
  */
 void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
 {
@@ -1896,8 +1903,6 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  * @sa CMod_LoadSubmodels
  * @param[in] map The routing map (either server or client map)
  * @param[in] name Name of the inline model to compute the mins/maxs for
- * @param[in] origin Offset of the inline model (used by ET_DOOR and ET_ROTATING)
- * @param[in] angles Rotation of the inline model
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
 
