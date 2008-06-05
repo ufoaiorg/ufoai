@@ -445,7 +445,7 @@ static void CheckInteractionList (const entity_t *entity)
 							if (BrushSidesAreInside(list[j], list[i])) {
 								if (!(sideI->surfaceFlags & SURF_NODRAW)) {
 									brush_texture_t *tex = &side_brushtextures[sideI - brushsides];
-									Com_Printf("Brush %i (entity %i): set nodraw texture\n", list[i]->brushnum, list[i]->entitynum);
+									Com_Printf("* Brush %i (entity %i): set nodraw flag and texture (face is abutted and entirely covered by another face).\n", list[i]->brushnum, list[i]->entitynum);
 									Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 									sideI->surfaceFlags |= SURF_NODRAW;
 									tex->surfaceFlags |= SURF_NODRAW;
