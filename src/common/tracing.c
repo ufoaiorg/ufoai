@@ -1004,7 +1004,7 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
  * @param[in] start trace start vector
  * @param[in] end trace end vector
  * @param[in] mins box mins
- * @param[in] max box maxs
+ * @param[in] maxs box maxs
  * @param[in] tile Tile to check (normally 0 - except in assembled maps)
  * @param[in] headnode if < 0 we are in a leaf node
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)

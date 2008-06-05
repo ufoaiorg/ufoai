@@ -1362,7 +1362,7 @@ const char *Com_GiveName (int gender, const char *team)
 /**
  * @param[in] type MODEL_PATH, MODEL_BODY, MODEL_HEAD, MODEL_SKIN (path, body, head, skin - see team_*.ufo)
  * @param[in] gender 1 (female) or 2 (male)
- * @param[in] category country strings like: spanish_italian, german, russian and so on
+ * @param[in] teamID The team definition id
  * @sa Com_GetCharacterValues
  */
 const char *Com_GiveModel (int type, int gender, const char *teamID)
@@ -1402,9 +1402,9 @@ const char *Com_GiveModel (int type, int gender, const char *teamID)
 
 /**
  * @brief Returns the actor sounds for a given category
- * @param[in] teamID Index in teamDef array
+ * @param[in] td teamDef pointer
  * @param[in] gender The gender of the actor
- * @param[in] sound Which sound category (actorSound_t)
+ * @param[in] soundType Which sound category (actorSound_t)
  */
 const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
 {
@@ -1438,6 +1438,7 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
 /**
  * @brief Returns the teamDef pointer for the searched team id - or NULL if not
  * found in the teamDef array
+ * @param[in] team The team id (given in ufo-script files)
  */
 teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 {

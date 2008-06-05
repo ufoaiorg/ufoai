@@ -342,7 +342,7 @@ MISC FUNCTIONS
 
 /**
  * @brief Saves a string to client hunk
- * @param[in] int String to store in the given pool
+ * @param[in] in String to store in the given pool
  * @param[out] out The location where you want the pool pointer to be stored
  * @param[in] pool The pool to allocate the memory in
  * @param[in] tagNum
@@ -359,7 +359,7 @@ char *_Mem_PoolStrDupTo (const char *in, char **out, struct memPool_s *pool, con
 
 /**
  * @brief No need to null terminate the extra spot because Mem_Alloc returns zero-filled memory
- * @param[in] int String to store in the given pool
+ * @param[in] in String to store in the given pool
  * @param[in] pool The pool to allocate the memory in
  * @param[in] tagNum
  * @param[in] fileName The filename where this function was called from
