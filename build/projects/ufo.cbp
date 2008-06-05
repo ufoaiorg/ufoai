@@ -15,6 +15,7 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
+					<Add option="-O2" />
 					<Add option="-Wall" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
