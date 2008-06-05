@@ -3138,8 +3138,10 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	assert(mission->pos);
 
 	/* Reset parameters */
-	if (ccs.battleParameters.param)
+	if (ccs.battleParameters.param) {
 		Mem_Free(ccs.battleParameters.param);
+		ccs.battleParameters.param = NULL;
+	}
 
 	ccs.battleParameters.mission = mission;
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
