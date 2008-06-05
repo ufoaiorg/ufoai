@@ -298,7 +298,7 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
  * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
- * @param[in] levels don't check levels higher than LEVEL_LASTVISIBLE + levels
+ * @param[in] levelmask
  * @sa CL_TargetingToHit
  * @note levels:
  * 256: weaponclip-level
@@ -651,7 +651,7 @@ static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
  * @param[in] maxs max vector of bounding box around the line from p1 to p2
  * @param[in] p1 start vector
  * @param[in] p2 end vector
- * @param[inout] trace the location of the last hit on the line, adjusted if this hit is closer.
+ * @param[in,out] trace the location of the last hit on the line, adjusted if this hit is closer.
  * @param[in] brush the brush that is being examined
  * @brief This function checks to see if any sides of a brush intersect the line from p1 to p2 or are located within
  *  the perpendicular bounding box from mins to maxs originating from the line. It also check to see if the line

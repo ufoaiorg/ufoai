@@ -257,7 +257,7 @@ void G_SendInventory (int player_mask, edict_t * ent)
 
 /**
  * @brief Send the appear or perish event the the affected clients
- * @param[in] playermask These are the affected players or clients
+ * @param[in] player_mask These are the affected players or clients
  * In case of e.g. teamplay there can be more than one client affected - thus
  * this is a player mask
  * @param[in] appear Is this event about an appearing actor (or
@@ -265,7 +265,7 @@ void G_SendInventory (int player_mask, edict_t * ent)
  * @param[in] check The edict we are talking about
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
+void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 {
 	int maxMorale;
 
@@ -345,8 +345,8 @@ qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
 
 /**
  * @brief tests the visibility between two points
- * @param[in] from  The point to check visibility from
- * @param[to] to    The point to check visibility to
+ * @param[in] from The point to check visibility from
+ * @param[in] to The point to check visibility to
  * @return true if the points are visible from each other, false otherwise.
  */
 static qboolean G_LineVis (const vec3_t from, const vec3_t to)
@@ -1972,7 +1972,6 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 
 /**
  * @brief Returns true if actor can reload weapon
- * @param[in] hand
  * @sa AI_ActorThink
  */
 qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
@@ -2575,7 +2574,7 @@ static void G_ClientTeamAssign (const player_t * player)
  * @brief Find valid actor spawn fields for this player.
  * @note Already used spawn-point are not found because ent->type is changed in G_ClientTeamInfo.
  * @param[in] player The player to spawn the actors for.
- * @param[in] type The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
+ * @param[in] spawnType The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
  * @return A pointer to a found spawn point or NULL if nothing was found or on error.
  */
 static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnType)
