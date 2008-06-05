@@ -159,10 +159,10 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const int co
  */
 int Com_CheckToInventory (const inventory_t * const i, objDef_t *od, const int container, int x, int y)
 {
+	int fits;
 	assert(i);
 	assert((container >= 0) && (container < CSI->numIDs));
 	assert(od);
-	int fits;
 
 	/* armour vs item */
 	if (!Q_strncmp(od->type, "armour", MAX_VAR)) {
