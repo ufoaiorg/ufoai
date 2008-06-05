@@ -30,16 +30,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 inventory_t *menuInventory = NULL;
 
 dragInfo_t dragInfo = {
-	{NONE_AMMO, NULL, NULL, 1, 0},
-	-1,
-	-1,
-	-1,
-#ifdef ITEM_PREVIEW
-	NULL,
-	-1,
-	-1,
-	-1
-#endif
+	{NONE_AMMO, NULL, NULL, 1, 0},	/* item */
+	-1,		/* from */
+	-1,		/* fromX */
+	-1,		/* fromY */
+
+	NULL,	/* toNode */
+	-1,		/* to */
+	-1,		/* toX */
+	-1		/* toY */
+
 }; /**< To crash as soon as possible. */
 
 /**

@@ -292,27 +292,39 @@ static void SCR_DrawCursor (void)
 		vec3_t org = { mousePosX, mousePosY, -50 };
 		const vec3_t scale = { 3.5, 3.5, 3.5 };
 		vec4_t color = { 1, 1, 1, 1 };
+
+		/** Revert the rotation info for the cursor-item in case it
+		 * has been changed (can happen in rare conditions).
+		 * @todo Maybe we can later change this to reflect "manual" rotation?
+		 * @todo Check if this causes problems when letting the item snap back to its original location. */
+		dragInfo.item.rotated = qfalse;
+
 		MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);
-#ifdef ITEM_PREVIEW
+
 		/* Draw "preview" of placed (&rotated) item. */
 		if (dragInfo.toNode) {
 			const int checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY);
 			const int oldRotated = dragInfo.item.rotated;
 
-			if (checkedTo & INV_FITS)
-				dragInfo.item.rotated = qfalse;
-			else if (checkedTo == INV_FITS_ONLY_ROTATED)
+			if (checkedTo == INV_FITS_ONLY_ROTATED)
 				dragInfo.item.rotated = qtrue;
 
 			if (checkedTo) {
-				VectorSet(org, dragInfo.toX * C_UNIT + dragInfo.toNode->pos[0], dragInfo.toY * C_UNIT + dragInfo.toNode->pos[1], -40);
+				if (csi.ids[dragInfo.to].single) { /* Get center of single container for placement of preview item */
+					VectorSet(org, dragInfo.toNode->pos[0] + dragInfo.toNode->size[0] / 2.0, dragInfo.toNode->pos[1] + dragInfo.toNode->size[1] / 2.0, -40);
+				} else {
+					/* This is a "grid" container - we need to calculate the item-position (on the screen) from stored placement int h4e container and the calculated rotation info. */
+					if (dragInfo.item.rotated)
+						VectorSet(org, dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sy / 2.0) * C_UNIT, dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sx / 2.0) * C_UNIT, -40);
+					else
+						VectorSet(org, dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT, dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT, -40);
+				}
 				color[3] = 0.5;
-				MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);	/**< draw preview */
+				MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);	/**< Draw preview item. */
 			}
 
 			dragInfo.item.rotated = oldRotated ;
 		}
-#endif
 	}
 }
 

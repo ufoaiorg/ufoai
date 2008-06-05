@@ -38,13 +38,12 @@ typedef struct dragInfo_s {
 	int from;		/**< The container the items is dragged out of (i.e. from). */
 	int fromX;		/**< The X position in the container the item was/is located. */
 	int fromY;		/**< The Y position in the container the item was/is located. */
-#ifdef ITEM_PREVIEW
+
 	/* The "to" variables are only used in cl_screen.c to draw the preview. */
 	menuNode_t *toNode;
 	int to;
 	int toX;
 	int toY;
-#endif
 } dragInfo_t;
 
 extern dragInfo_t dragInfo;

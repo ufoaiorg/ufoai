@@ -83,10 +83,8 @@ void MN_DrawMenus (void)
 	if (pp < sp)
 		pp = sp;
 
-#ifdef ITEM_PREVIEW
 	/* Reset info for preview rendering of dragged items. */
 	dragInfo.toNode = NULL;
-#endif
 
 	while (sp < mn.menuStackPos) {
 		menu = mn.menuStack[sp++];
@@ -310,15 +308,31 @@ void MN_DrawMenus (void)
 						const invList_t *itemHover_temp = MN_DrawContainerNode(node);
 						if (itemHover_temp)
 							itemHover = itemHover_temp;
-#ifdef ITEM_PREVIEW
+
 						/* Store information for preview drawing of dragged items. */
 						if (MN_CheckNodeZone(node, mousePosX, mousePosY)) {
 							dragInfo.toNode = node;
 							dragInfo.to = node->mousefx;
+
 							dragInfo.toX = (mousePosX - node->pos[0]) / C_UNIT;
 							dragInfo.toY = (mousePosY - node->pos[1]) / C_UNIT;
+							/* We calculate the position of the top-left corner of the dragged
+							 * item in oder to compensate for the centered-drawn cursor-item. */
+							if (dragInfo.item.t) {
+								dragInfo.toX -= dragInfo.item.t->sx / 2;
+								dragInfo.toY -= dragInfo.item.t->sy / 2;
+							}
+
+							/** Search for a suitable position to render the item at if
+							 * the container is "single" or the calculated values are out of bounds.
+							 * @todo I hope this is the same behaviour that is used in MN_Drag - a special function
+							 *		to simply calculate the final x/y values would be a good idea here. */
+							if (dragInfo.item.t && (csi.ids[dragInfo.to].single
+							 || dragInfo.toX  < 0 || dragInfo.toY < 0
+							 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
+								Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY);
+							}
 						}
-#endif
 					}
 					break;
 
