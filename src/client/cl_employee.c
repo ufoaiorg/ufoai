@@ -1056,9 +1056,7 @@ int E_CountAllHired (const base_t* const base)
 
 /**
  * @brief Counts unhired employees of a given type in a given base
- *
  * @param[in] type The type of employee to search.
- * @param[in] base The base where we count
  * @return count of hired employees of a given type in a given base
  */
 int E_CountUnhired (employeeType_t type)
