@@ -690,8 +690,10 @@ int SEQ_Remove (const char *name, char *data)
 	if (s2d) {
 		s2d->inuse = qfalse;
 
-		if (s2d->text)
+		if (s2d->text) {
 			Mem_Free(s2d->text);
+			s2d->text = NULL;
+		}
 	}
 
 	if (!se && !s2d)

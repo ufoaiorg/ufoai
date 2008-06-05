@@ -4631,9 +4631,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 				if (!base->aircraft[j].mission) {
 					Com_Printf("Could not link mission '%s' in aircraft\n", base->aircraft[j].missionID);
 					Mem_Free(base->aircraft[j].missionID);
+					base->aircraft[j].missionID = NULL;
 					return qfalse;
 				}
 				Mem_Free(base->aircraft[j].missionID);
+				base->aircraft[j].missionID = NULL;
 			}
 		}
 	}

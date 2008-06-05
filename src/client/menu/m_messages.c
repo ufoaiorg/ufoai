@@ -126,7 +126,7 @@ void MN_TimestampedText (char *text, message_t *message, size_t textsize)
 	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), message->y, CL_DateGetMonthName(message->m), message->d, message->h, message->min);
 }
 
-void MN_RemoveMessage (char *title)
+void MN_RemoveMessage (const char *title)
 {
 	message_t *m = mn.messageStack;
 	message_t *prev = NULL;

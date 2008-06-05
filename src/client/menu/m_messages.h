@@ -69,7 +69,7 @@ typedef struct chatMessage_s {
 } chatMessage_t;
 
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
-void MN_RemoveMessage(char *title);
+void MN_RemoveMessage(const char *title);
 void MN_AddChatMessage(const char *text);
 void MN_TimestampedText(char *text, message_t *message, size_t textsize);
 
