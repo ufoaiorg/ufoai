@@ -155,12 +155,14 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const int co
  * @return INV_DOES_NOT_FIT if the item does not fit
  * @return INV_FITS if it fits and
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
+ * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
 int Com_CheckToInventory (const inventory_t * const i, objDef_t *od, const int container, int x, int y)
 {
 	assert(i);
 	assert((container >= 0) && (container < CSI->numIDs));
 	assert(od);
+	int fits;
 
 	/* armour vs item */
 	if (!Q_strncmp(od->type, "armour", MAX_VAR)) {
@@ -198,15 +200,15 @@ int Com_CheckToInventory (const inventory_t * const i, objDef_t *od, const int c
 			/* There is already an item. */
 			return INV_DOES_NOT_FIT;
 		} else {
-			if (Com_CheckToInventory_shape(i, container, od->shape, x, y)) {
-				/* Looks good. */
-				if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y))
-					return INV_FITS_BOTH;	/**< The item can be placed either rotated or not. */
-				else
-					return INV_FITS;		/**< The item can be placed only non-rotated. */
-			} else if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y)) {
-				return INV_FITS_ONLY_ROTATED;	/**< Return status "fits, but only rotated". */
-			}
+			fits = INV_DOES_NOT_FIT; /* equals 0 */
+
+			if (Com_CheckToInventory_shape(i, container, od->shape, x, y))
+				fits |= INV_FITS;
+			if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y))
+				fits |= INV_FITS_ONLY_ROTATED;
+
+			if (fits != INV_DOES_NOT_FIT)
+				return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
 
 			Com_DPrintf(DEBUG_SHARED, "Com_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
 			return INV_FITS; /**< We are returning with status qtrue (1) if the item does not fit at all - unlikely but not impossible. */
@@ -214,17 +216,15 @@ int Com_CheckToInventory (const inventory_t * const i, objDef_t *od, const int c
 	}
 
 	/* Check 'grid' containers. */
+	fits = INV_DOES_NOT_FIT; /* equals 0 */
 	if (Com_CheckToInventory_shape(i, container, od->shape, x, y))
-		if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y))
-			return INV_FITS_BOTH;	/**< The item can be placed either rotated or not. */
-		else
-			return INV_FITS;		/**< The item can be placed only non-rotated. */
-	else if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y)
-			&& container != CSI->idEquip
-			&& container != CSI->idFloor)
-		return INV_FITS_ONLY_ROTATED;	/**< The item needs to be rotated in order to fit. */
-	else
-		return INV_DOES_NOT_FIT;
+		fits |= INV_FITS;
+	if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y)
+		&& container != CSI->idEquip
+		&& container != CSI->idFloor)
+		fits |= INV_FITS_ONLY_ROTATED;
+
+	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
 }
 
 /**
