@@ -802,9 +802,8 @@ static void CL_CamSetAngles_f (void)
 }
 
 /**
- * @brief Makes a mapshop - called by basemapshot script command
- *
- * Execute basemapshot in console and load a basemap
+ * @brief Makes a mapshot - called by basemapshot script command
+ * @note Execute basemapshot in console and load a basemap
  * after this all you have to do is hit the screenshot button (F12)
  * to make a new screenshot of the basetile
  */
@@ -823,8 +822,7 @@ static void CL_MakeBaseMapShot_f (void)
 	MN_PushMenu("nohud");
 	/* hide any active console */
 	Key_SetDest(key_game);
-	Cvar_Set("r_screenshot", "tga");
-	Cmd_ExecuteString("screenshot");
+	Cmd_ExecuteString("screenshot tga");
 }
 
 #define STATE_FORWARD	1
@@ -1217,7 +1215,7 @@ static void IN_Parse (void)
 
 			const int repeatDelay = mn.mouseRepeat.clickDelay / DELAY_FACTOR;	/**< delay between 2 actions
 				when mouse button is kept pushed */
-			
+
 			/** number of actions to perform since we last reached this part of the code
 			 * (we don't use cls.realtime to make number of actions independant of FPS) */
 			const int numClickSinceLastCall = 1 + (cls.realtime - mn.mouseRepeat.nexttime) / repeatDelay;
