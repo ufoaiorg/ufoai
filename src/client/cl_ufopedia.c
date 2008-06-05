@@ -265,7 +265,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 
 /**
  * @brief Prints the (UFOpaedia and other) description for items (weapons, armour, ...)
- * @param item Index in object definition array ods for the item
+ * @param[in] od The object definition of the item
  * @sa UP_DrawEntry
  * @sa BS_BuySelect_f
  * @sa BS_BuyType_f
@@ -549,7 +549,7 @@ static void UP_BuildingDescription (const technology_t* t)
 
 /**
  * @brief Prints the (UFOpaedia and other) description for aircraft items
- * @param idx Index in object definition array ods for the item
+ * @param item The object definition of the item
  * @sa UP_DrawEntry
  * Not only called from UFOpaedia but also from other places to display
  * @todo Don't display things like speed for base defence items - a missile
@@ -1862,8 +1862,8 @@ void UP_Reset (void)
 
 /**
  * @brief Parse the UFOpaedia chapters from UFO-scriptfiles
- * @param id Chapter ID
- * @param text Text for chapter ID
+ * @param[in] name Chapter ID
+ * @param[in] text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
 void UP_ParseChapters (const char *name, const char **text)

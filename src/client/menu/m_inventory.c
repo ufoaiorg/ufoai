@@ -360,7 +360,7 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
  * @brief Generate tooltip text for an item.
  * @param[in] item The item we want to generate the tooltip text for.
  * @param[in,out] tooltiptext Pointer to a string the information should be written into.
- * @param[in] Max. string size of tooltiptext.
+ * @param[in] string_maxlength Max. string size of tooltiptext.
  * @return Number of lines
  */
 void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)

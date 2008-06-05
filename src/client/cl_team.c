@@ -1456,7 +1456,6 @@ qboolean CL_SoldierAwayFromBase (const employee_t *employee)
  * @brief Removes a soldier from an aircraft.
  * @param[in] employee The soldier to be removed from the aircraft.
  * @param[in] aircraft The aircraft to remove the soldier from. Use NULL to remove the soldier from any aircraft.
- * @param[in] base Pointer to the base where employee is hired.
  */
 void CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
 {

@@ -137,8 +137,8 @@ void RS_MarkOneResearchable (technology_t* tech)
 /**
  * @brief Checks if all requirements of a tech have been met so that it becomes researchable.
  * @note If there are NO requirements defined at all it will always return true.
- * @param[in] require_AND Pointer to a list of AND-related requirements.
- * @param[in] require_OR Pointer to a list of OR-related requirements.
+ * @param[in] required_AND Pointer to a list of AND-related requirements.
+ * @param[in] required_OR Pointer to a list of OR-related requirements.
  * @param[in] base In what base to check the "collected" items etc..
  * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
  * @todo Add support for the "delay" value.

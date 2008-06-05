@@ -220,7 +220,7 @@ static void UFO_SearchBaseTarget (aircraft_t *ufo)
 
 /**
  * @brief Check if a UFO is the target of a base
- * @param[in] ufoIdx idx of the ufo in gd.ufos[]
+ * @param[in] ufo The UFO to check
  * @param[in] base Pointer to the base
  * @return 0 if ufo is not a target, 1 if target of a missile, 2 if target of a laser
  */
@@ -559,7 +559,7 @@ static void UFO_ListOnGeoscape_f (void)
 
 /**
  * @brief Add a UFO to geoscape
- * @param[in] ufotype The type of ufo (fighter, scout, ...).
+ * @param[in] ufoType The type of ufo (fighter, scout, ...).
  * @param[in] destination Position where the ufo should go. NULL is randomly chosen
  * @param[in] mission Pointer to the mission the UFO is involved in
  * @todo: UFOs are not assigned unique idx fields. Could be handy...

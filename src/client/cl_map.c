@@ -755,7 +755,6 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
  * @param[in] center The latitude and longitude of center point
  * @param[in] angle The angle defining the distance of the equidistant points to center
  * @param[in] color The color for drawing
- * @param[in] globe qtrue is this is 3D geoscape, qfalse if this is 2D geoscape
  * @sa RADAR_DrawCoverage
  */
 void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color)
@@ -878,7 +877,7 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 
 /**
  * @brief Returns position of the model corresponding to centerOnEventIdx.
- * @param[out] Vector Latitude and longitude of the model (finalAngle[2] is always 0).
+ * @param[out] vector Latitude and longitude of the model (finalAngle[2] is always 0).
  * @note Vector is a vec3_t if cl_3dmap is true, and a vec2_t if cl_3dmap is false.
  * @sa MAP_CenterOnPoint
  */

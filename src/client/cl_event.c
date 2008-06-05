@@ -106,7 +106,7 @@ void CL_FreeDynamicEventMail (void)
  * @param[in] id eventmail id of the source mail parsed from events.ufo
  * @param[in] newID the new id for the dynamic mail (needed to seperate the new mail
  * from the source mail to let CL_GetEventMail be able to find it afterwards)
- * @param[in] The body of the new mail - this may also be NULL if you need the original body of
+ * @param[in] body The body of the new mail - this may also be NULL if you need the original body of
  * the source mail that was parsed from events.ufo
  */
 eventMail_t* CL_NewEventMail (const char *id, const char *newID, const char *body)

@@ -840,7 +840,6 @@ static void TR_TransferAlienAfterMissionStart (base_t *base)
 /**
  * @brief Action to realize when clicking on Transfer Menu.
  * @note This menu is used when a dropship ending a mission collected alien bodies, but there's no alien cont. in home base
- * @param[in] transferBase Pointer to the base to send the alien bodies.
  * @sa TR_TransferAircraftMenu
  */
 static void TR_TransferBaseListClick_f (void)

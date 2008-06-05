@@ -168,7 +168,7 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
 /**
  * @brief Checks if the production requirements are met for a defined amount.
  * @param[in] amount How many items are planned to be produced.
- * @param[in] req The production requirements of the item that is to be produced.
+ * @param[in] reqs The production requirements of the item that is to be produced.
  * @param[in] base Pointer to base.
  * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
  */
@@ -203,7 +203,7 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
  * @brief Remove or add the required items from/to the a base.
  * @param[in] base Pointer to base.
  * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
- * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
+ * @param[in] reqs The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
  * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
  */
 static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs)
@@ -244,7 +244,7 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requi
  * @param[in] base Pointer to base, where the queue is.
  * @param[in] queue Pointer to the queue.
  * @param[in] item Item to add.
- * @param[in] aircraft aircraft to add.
+ * @param[in] aircraftSample aircraft to add.
  * @param[in] amount Desired amount to produce.
  * @param[in] disassembling True if this is disassembling, false if production.
  * @return
@@ -689,14 +689,11 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 
 /**
  * @brief Prints information about the selected aircraft in production.
- * @param[in] base Pointer to the base where informations should be printed.
+ * @param[in] aircraftSample The aircraft to print the information for
  */
-static void PR_AircraftInfo (void)
+static void PR_AircraftInfo (const aircraft_t * aircraftSample)
 {
-	const aircraft_t *aircraftSample;
 	static char productionInfo[512];
-
-	aircraftSample = selectedAircraft;
 
 	if (aircraftSample) {
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftSample->name));
@@ -845,7 +842,7 @@ static void PR_ProductionListClick_f (void)
 		selectedProduction = prod;
 		if (prod->production) {
 			if (prod->aircraft)
-				PR_AircraftInfo();
+				PR_AircraftInfo(selectedAircraft);
 			else
 				PR_ProductionInfo(base, qfalse);
 		} else
@@ -892,7 +889,7 @@ static void PR_ProductionListClick_f (void)
 					PR_ClearSelected();
 					selectedAircraft = aircraftTemplate;
 
-					PR_AircraftInfo();
+					PR_AircraftInfo(selectedAircraft);
 					return;
 				}
 			}
@@ -1136,7 +1133,7 @@ static void PR_ProductionSelect_f (void)
 	if (produceCategory != BUY_AIRCRAFT)
 		PR_ProductionInfo(baseCurrent, qfalse);
 	else
-		PR_AircraftInfo();
+		PR_AircraftInfo(selectedAircraft);
 }
 
 /**
@@ -1411,7 +1408,7 @@ static void PR_ProductionIncrease_f (void)
 		if (produceCategory != BUY_AIRCRAFT)
 			PR_ProductionInfo(base, qfalse);
 		else
-			PR_AircraftInfo();
+			PR_AircraftInfo(selectedAircraft);
 		PR_UpdateProductionList(base);
 	} else {							/* Disassembling. */
 		PR_ProductionInfo(base, qtrue);
