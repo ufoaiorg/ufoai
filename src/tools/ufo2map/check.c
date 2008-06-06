@@ -529,16 +529,16 @@ static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
 	return qtrue;
 }
 
-#ifdef DEBUG
-void DisplayContentFlags (int flags)
+#if 0
+static void DisplayContentFlags (const int flags)
 {
 	Com_Printf("SOLID:%i WINDOW:%i WATER:%i 1:%i 2:%i 3:%i 4:%i 5:%i 6:%i 7:%i 8:%i ACTORCLIP:%i PASSABLE:%i ACTOR:%i ORIGIN:%i WEAPONCLIP:%i DEADACTOR:%i DETAIL:%i TRANSLUCENT:%i STEPON:%i\n",
-	            flags & CONTENTS_SOLID ? 1 : 0, flags & CONTENTS_WINDOW ? 1 : 0, flags & CONTENTS_WATER ? 1 : 0,
-	            flags & CONTENTS_LEVEL_1 ? 1 : 0, flags & CONTENTS_LEVEL_2 ? 1 : 0, flags & CONTENTS_LEVEL_3 ? 1 : 0, flags & CONTENTS_LEVEL_4 ? 1 : 0,
-	            flags & CONTENTS_LEVEL_5 ? 1 : 0, flags & CONTENTS_LEVEL_6 ? 1 : 0, flags & CONTENTS_LEVEL_7 ? 1 : 0, flags & CONTENTS_LEVEL_8 ? 1 : 0,
-	            flags & CONTENTS_ACTORCLIP ? 1 : 0, flags & CONTENTS_PASSABLE ? 1 : 0, flags & CONTENTS_ACTOR ? 1 : 0, flags & CONTENTS_ORIGIN ? 1 : 0,
-	            flags & CONTENTS_WEAPONCLIP ? 1 : 0, flags & CONTENTS_DEADACTOR ? 1 : 0, flags & CONTENTS_DETAIL ? 1 : 0, flags & CONTENTS_TRANSLUCENT ? 1 : 0,
-	            flags & CONTENTS_STEPON ? 1 : 0);
+		flags & CONTENTS_SOLID ? 1 : 0, flags & CONTENTS_WINDOW ? 1 : 0, flags & CONTENTS_WATER ? 1 : 0,
+		flags & CONTENTS_LEVEL_1 ? 1 : 0, flags & CONTENTS_LEVEL_2 ? 1 : 0, flags & CONTENTS_LEVEL_3 ? 1 : 0, flags & CONTENTS_LEVEL_4 ? 1 : 0,
+		flags & CONTENTS_LEVEL_5 ? 1 : 0, flags & CONTENTS_LEVEL_6 ? 1 : 0, flags & CONTENTS_LEVEL_7 ? 1 : 0, flags & CONTENTS_LEVEL_8 ? 1 : 0,
+		flags & CONTENTS_ACTORCLIP ? 1 : 0, flags & CONTENTS_PASSABLE ? 1 : 0, flags & CONTENTS_ACTOR ? 1 : 0, flags & CONTENTS_ORIGIN ? 1 : 0,
+		flags & CONTENTS_WEAPONCLIP ? 1 : 0, flags & CONTENTS_DEADACTOR ? 1 : 0, flags & CONTENTS_DETAIL ? 1 : 0, flags & CONTENTS_TRANSLUCENT ? 1 : 0,
+		flags & CONTENTS_STEPON ? 1 : 0);
 }
 #endif
 
