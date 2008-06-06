@@ -190,6 +190,8 @@ image_t *R_RegisterPic (const char *name)
 		Q_strncpyz(fullname, name, MAX_QPATH);
 
 	gl = R_FindImage(fullname, it_pic);
+	if (gl == r_notexture)
+		return NULL;
 	return gl;
 }
 
