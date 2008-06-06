@@ -298,16 +298,17 @@ enum {
 
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {
-	char name[MAX_VAR];	/**< id from script files */
-	/** type of this container or inventory */
-	qboolean single;	/**< just a single item can be stored in this container */
-	qboolean armour;	/**< only armour can be stored in this container */
-	qboolean extension;	/**< only extension items can be stored in this container */
-	qboolean headgear;	/**< only headgear items can be stored in this container */
-	qboolean all;	/**< every item type can be stored in this container */
-	qboolean temp;	/**< this is only a pointer to another inventory definitions */
-	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< the inventory form/shape */
-	int in, out;	/**< TU costs */
+	char name[MAX_VAR];	/**< id from script files. */
+	int id;				/**< Special container id. See csi_t for the values to compare it with. */
+	/** Type of this container or inventory. */
+	qboolean single;	/**< Just a single item can be stored in this container. */
+	qboolean armour;	/**< Only armour can be stored in this container. */
+	qboolean extension;	/**< Only extension items can be stored in this container. */
+	qboolean headgear;	/**< Only headgear items can be stored in this container. */
+	qboolean all;		/**< Every item type can be stored in this container. */
+	qboolean temp;		/**< This is only a pointer to another inventory definitions. */
+	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
+	int in, out;	/**< TU costs for moving items in and out. */
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS
@@ -324,7 +325,7 @@ typedef struct item_s {
 	objDef_t *m;	/**< Pointer to ammo type. */
 	objDef_t *t;	/**< Pointer to weapon. */
 	int amount;		/**< The amount of items of this type on the same x and y location in the container */
-	int rotated;	/**< If the item is currently displayed rotated (1) or not (0) */
+	qboolean rotated;	/**< If the item is currently displayed rotated (qtrue) or not (qfalse) */
 } item_t;
 
 /** @brief container/inventory list (linked list) with items */
@@ -693,18 +694,18 @@ char *CHRSH_CharGetHead(character_t* const chr) __attribute__((nonnull));
 
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
 void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
-int Com_CheckToInventory(const inventory_t* const i, objDef_t *ob, const int container, int x, int y);
-invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
-invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y, int amount) __attribute__((nonnull(1)));
-qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
-qboolean Com_RemoveFromInventoryIgnore(inventory_t* const i, int container, int x, int y, qboolean ignore_type) __attribute__((nonnull(1)));
-int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
-int Com_MoveInInventoryIgnore(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type) __attribute__((nonnull(1)));
-void INVSH_EmptyContainer(inventory_t* const i, const int container) __attribute__((nonnull(1)));
+int Com_CheckToInventory(const inventory_t* const i, objDef_t *ob, const invDef_t * container, int x, int y);
+invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));
+invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));
+qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));
+qboolean Com_RemoveFromInventoryIgnore(inventory_t* const i, const invDef_t * container, int x, int y, qboolean ignore_type) __attribute__((nonnull(1)));
+int Com_MoveInInventory(inventory_t* const i, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
+int Com_MoveInInventoryIgnore(inventory_t* const i, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type) __attribute__((nonnull(1)));
+void INVSH_EmptyContainer(inventory_t* const i, const invDef_t * container) __attribute__((nonnull(1)));
 void INVSH_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
-void Com_FindSpace(const inventory_t* const inv, item_t *item, const int container, int * const px, int * const py) __attribute__((nonnull(1)));
-int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
-int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container, int amount) __attribute__((nonnull(1)));
+void Com_FindSpace(const inventory_t* const inv, item_t *item, const invDef_t * container, int * const px, int * const py) __attribute__((nonnull(1)));
+int Com_TryAddToInventory(inventory_t* const inv, item_t item, const invDef_t * container) __attribute__((nonnull(1)));
+int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int buytypeContainer, int amount) __attribute__((nonnull(1)));
 void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* weapon) __attribute__((nonnull(1)));
 void INVSH_EquipActor(inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr) __attribute__((nonnull(1)));

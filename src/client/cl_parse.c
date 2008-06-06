@@ -690,7 +690,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 
 	switch (le->type) {
 	case ET_ITEM:
-		INVSH_EmptyContainer(&le->i, csi.idFloor);
+		INVSH_EmptyContainer(&le->i, &csi.ids[csi.idFloor]);
 
 		/* search owners (there can be many, some of them dead) */
 		for (i = 0, actor = LEs; i < numLEs; i++, actor++)
@@ -1280,7 +1280,7 @@ static void CL_InvAdd (struct dbuffer *msg)
 
 	for (; nr-- > 0;) {
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);
-		Com_AddToInventory(&le->i, item, container, x, y, 1);
+		Com_AddToInventory(&le->i, item, &csi.ids[container], x, y, 1);
 
 		if (container == csi.idRight)
 			le->right = item.t->idx;
@@ -1322,7 +1322,7 @@ static void CL_InvDel (struct dbuffer *msg)
 		return;
 	}
 
-	Com_RemoveFromInventory(&le->i, container, x, y);
+	Com_RemoveFromInventory(&le->i, &csi.ids[container], x, y);
 	if (container == csi.idRight)
 		le->right = NONE;
 	else if (container == csi.idLeft)
@@ -1363,7 +1363,7 @@ static void CL_InvAmmo (struct dbuffer *msg)
 	if (le->team != cls.team)
 		return;
 
-	ic = Com_SearchInInventory(&le->i, container, x, y);
+	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
 	if (!ic)
 		return;
 
@@ -1394,7 +1394,7 @@ static void CL_InvReload (struct dbuffer *msg)
 	if (le->team != cls.team)
 		return;
 
-	ic = Com_SearchInInventory(&le->i, container, x, y);
+	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
 	if (!ic)
 		return;
 

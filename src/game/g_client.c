@@ -116,11 +116,11 @@ void G_SendStats (edict_t * ent)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-static void G_WriteItem (item_t item, int container, int x, int y)
+static void G_WriteItem (item_t item, const invDef_t * container, int x, int y)
 {
 	assert(item.t);
 	gi.WriteFormat("sbsbbbb", item.t->idx, item.a, item.m ? item.m->idx : NONE,
-		container, x, y, item.rotated);
+		container->id, x, y, item.rotated);
 }
 
 /**
@@ -128,10 +128,11 @@ static void G_WriteItem (item_t item, int container, int x, int y)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-static void G_ReadItem (item_t * item, int * container, int * x, int * y)
+static void G_ReadItem (item_t * item, invDef_t ** container, int * x, int * y)
 {
 	int t, m;
-	gi.ReadFormat("sbsbbbb", &t, &item->a, &m, container, x, y, &item->rotated);
+	int containerID;
+	gi.ReadFormat("sbsbbbb", &t, &item->a, &m, containerID, x, y, &item->rotated);
 
 	assert(t != NONE);
 	item->t = &gi.csi->ods[t];
@@ -139,6 +140,9 @@ static void G_ReadItem (item_t * item, int * container, int * x, int * y)
 	item->m = NULL;
 	if (m != NONE)
 		item->m = &gi.csi->ods[m];
+
+	if (containerID >= 0 && containerID < gi.csi->numIDs)
+		*container = &gi.csi->ids[containerID];
 }
 
 
@@ -250,7 +254,7 @@ void G_SendInventory (int player_mask, edict_t * ent)
 	for (j = 0; j < gi.csi->numIDs; j++)
 		for (ic = ent->i.c[j]; ic; ic = ic->next) {
 			/* send a single item */
-			G_WriteItem(ic->item, j, ic->x, ic->y);
+			G_WriteItem(ic->item, &gi.csi->ids[j], ic->x, ic->y);
 		}
 }
 
@@ -919,7 +923,7 @@ static void G_PrintFloorToConsole (pos3_t pos)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet)
+void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet)
 {
 	edict_t *ent, *floor;
 	invList_t *ic;
@@ -943,11 +947,11 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 	/* "get floor ready" - searching for existing floor-edict*/
 	floor = G_GetFloorItems(ent); /* Also sets FLOOR(ent) to correct value. */
-	if (to == gi.csi->idFloor && !floor) {
+	if (to->id == gi.csi->idFloor && !floor) {
 		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(ent->pos);
 		newFloor = qtrue;
-	} else if (from == gi.csi->idFloor && !floor) {
+	} else if (from->id == gi.csi->idFloor && !floor) {
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> thi should never be the case. */
 		Com_Printf("G_ClientInvMove: No source-floor found.\n");
 		return;
@@ -995,7 +999,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
 
 	/* successful inventory change; remove the item in clients */
-	if (from == gi.csi->idFloor) {
+	if (from->id == gi.csi->idFloor) {
 		/* We removed an item from the floor - check how the client
 		 * needs to be updated. */
 		assert(!newFloor);
@@ -1007,13 +1011,13 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 			/* Tell the client to remove the item from the container */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
 			gi.WriteShort(floor->number);
-			gi.WriteByte(from);
+			gi.WriteByte(from->id);
 			gi.WriteByte(fx);
 			gi.WriteByte(fy);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
-			if (to != gi.csi->idFloor) {
+			if (to->id != gi.csi->idFloor) {
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
 				gi.WriteShort(floor->number);
 				G_FreeEdict(floor);
@@ -1023,7 +1027,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		/* Tell the client to remove the item from the container */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_DEL);
 		gi.WriteShort(num);
-		gi.WriteByte(from);
+		gi.WriteByte(from->id);
 		gi.WriteByte(fx);
 		gi.WriteByte(fy);
 	}
@@ -1035,7 +1039,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
-		if (to == gi.csi->idFloor) {
+		if (to->id == gi.csi->idFloor) {
 			assert(!newFloor);
 			assert(FLOOR(floor) == FLOOR(ent));
 			mask = G_VisToPM(floor->visflags);
@@ -1048,10 +1052,10 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		/* is this condition below needed? or is 'num' enough?
 		 * probably needed so that red rifle on the floor changes color,
 		 * but this needs testing. */
-		gi.WriteShort(to == gi.csi->idFloor ? floor->number : num);
+		gi.WriteShort(to->id == gi.csi->idFloor ? floor->number : num);
 		gi.WriteByte(item.t->ammo);
 		gi.WriteByte(item.m->idx);
-		gi.WriteByte(to);
+		gi.WriteByte(to->id);
 		gi.WriteByte(ic->x);
 		gi.WriteByte(ic->y);
 
@@ -1072,7 +1076,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	}
 
 	/* add it */
-	if (to == gi.csi->idFloor) {
+	if (to->id == gi.csi->idFloor) {
 		/* We moved an item to the floor - check how the client needs to be updated. */
 		if (newFloor) {
 			/* A new container was created for the floor. */
@@ -1102,12 +1106,12 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	}
 
 	/* Update reaction firemode when something is moved from/to a hand. */
-	if ((from == gi.csi->idRight) || (to == gi.csi->idRight)) {
+	if ((from->id == gi.csi->idRight) || (to->id == gi.csi->idRight)) {
 		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove: Something moved in/out of right hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
 		gi.WriteShort(0);	/**< hand = right */
-	} else if ((from == gi.csi->idLeft) || (to == gi.csi->idLeft)) {
+	} else if ((from->id == gi.csi->idLeft) || (to->id == gi.csi->idLeft)) {
 		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove:  Something moved in/out of left hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
@@ -1117,14 +1121,14 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 	if (mask) {
-		if (from == gi.csi->idRight || from == gi.csi->idLeft) {
+		if (from->id == gi.csi->idRight || from->id == gi.csi->idLeft) {
 			gi.AddEvent(mask, EV_INV_DEL);
 			gi.WriteShort(num);
-			gi.WriteByte(from);
+			gi.WriteByte(from->id);
 			gi.WriteByte(fx);
 			gi.WriteByte(fy);
 		}
-		if (to == gi.csi->idRight || to == gi.csi->idLeft) {
+		if (to->id == gi.csi->idRight || to->id == gi.csi->idLeft) {
 			gi.AddEvent(mask, EV_INV_ADD);
 			gi.WriteShort(num);
 			gi.WriteShort(INV_INVENTORY_BYTES);
@@ -1197,7 +1201,7 @@ static void G_InventoryToFloor (edict_t * ent)
 			 * unless you want an endless loop. ;) */
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
-			Com_FindSpace(&floor->i, &ic->item, gi.csi->idFloor, &x, &y);
+			Com_FindSpace(&floor->i, &ic->item, &gi.csi->ids[gi.csi->idFloor], &x, &y);
 			if (x == NONE) {
 				assert(y == NONE);
 				/* Run out of space on the floor or the item is armour
@@ -1240,7 +1244,7 @@ static void G_InventoryToFloor (edict_t * ent)
 #endif
 				if (Q_strncmp(ic->item.t->type, "armour", MAX_VAR))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n", ic->item.t->id);
-				if (!Com_RemoveFromInventory(&ent->i, k, ic->x, ic->y))
+				if (!Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic->x, ic->y))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", ic->item.t->id);
 			} else {
 				ic->x = x;
@@ -1761,9 +1765,9 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	/* drop items in hands */
 	if (!sanity && ent->chr.weapons) {
 		if (RIGHT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, quiet);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], 0, 0, &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, quiet);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], 0, 0, &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 	}
 
 	/* get up */
@@ -1917,10 +1921,11 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 {
 	edict_t *ent;
 	invList_t *ic;
-	int hand;
+	invDef_t * hand;
 	objDef_t *weapon;
 	int x, y, tu;
-	int container, bestContainer;
+	int containerID;
+	invDef_t * bestContainer;
 
 	ent = g_edicts + entnum;
 
@@ -1928,16 +1933,15 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	x = 0;
 	y = 0;
 	tu = 100;
-	bestContainer = NONE;
-	hand = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
+	hand = st == ST_RIGHT_RELOAD ? &gi.csi->ids[gi.csi->idRight] : &gi.csi->ids[gi.csi->idLeft];
 
-	if (ent->i.c[hand]) {
-		weapon = ent->i.c[hand]->item.t;
-	} else if (hand == gi.csi->idLeft
+	if (ent->i.c[hand->id]) {
+		weapon = ent->i.c[hand->id]->item.t;
+	} else if (hand->id == gi.csi->idLeft
 			&& ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
-		hand = gi.csi->idRight;
-		weapon = ent->i.c[hand]->item.t;
+		hand = &gi.csi->ids[gi.csi->idRight];
+		weapon = ent->i.c[hand->id]->item.t;
 	}
 	else
 		return;
@@ -1948,25 +1952,25 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	 * cheat issue as in singleplayer there is no way to inject fake client commands in the virtual
 	 * network buffer, and in multiplayer everything is researched */
 
-	for (container = 0; container < gi.csi->numIDs; container++) {
-		if (gi.csi->ids[container].out < tu) {
+	for (containerID = 0; containerID < gi.csi->numIDs; containerID++) {
+		if (gi.csi->ids[containerID].out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = ent->i.c[container]; ic; ic = ic->next)
+			for (ic = ent->i.c[containerID]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
 					x = ic->x;
 					y = ic->y;
-					tu = gi.csi->ids[container].out;
-					bestContainer = container;
+					tu = gi.csi->ids[containerID].out;
+					bestContainer = &gi.csi->ids[containerID];
 					break;
 				}
 		}
 	}
 
 	/* send request */
-	if (bestContainer != NONE)
+	if (bestContainer)
 		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue, quiet);
 }
 
@@ -2016,9 +2020,10 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 {
 	edict_t *ent;
 	invList_t *ic;
-	int hand;
+	invDef_t * hand;
 	int x, y, tu;
-	int container, bestContainer;
+	int container;
+	invDef_t * bestContainer;
 
 	ent = g_edicts + entnum;
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
@@ -2029,8 +2034,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 	x = 0;
 	y = 0;
 	tu = 100;
-	bestContainer = NONE;
-	hand = gi.csi->idRight;
+	hand = &gi.csi->ids[gi.csi->idRight];
 
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (gi.csi->ids[container].out < tu) {
@@ -2044,7 +2048,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 					x = ic->x;
 					y = ic->y;
 					tu = gi.csi->ids[container].out;
-					bestContainer = container;
+					bestContainer = &gi.csi->ids[container];
 					break;
 				}
 			}
@@ -2052,7 +2056,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 	}
 
 	/* send request */
-	if (bestContainer != NONE)
+	if (bestContainer)
 		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue, quiet);
 }
 
@@ -2269,6 +2273,8 @@ int G_ClientAction (player_t * player)
 	int i;
 	int firemode;
 	int from, fx, fy, to, tx, ty;
+	invDef_t *fromPtr;
+	invDef_t *toPtr;
 	int hand, fdIdx, objIdx;
 	int resType, resState, resValue;
 	edict_t *ent;
@@ -2304,7 +2310,15 @@ int G_ClientAction (player_t * player)
 
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
-		G_ClientInvMove(player, num, from, fx, fy, to, tx, ty, qtrue, NOISY);
+
+		if (from >= 0 && from < gi.csi->numIDs)
+			fromPtr = &gi.csi->ids[from];
+		if (to >= 0 && to < gi.csi->numIDs)
+			toPtr = &gi.csi->ids[to];
+		if (!fromPtr || !toPtr)
+			Com_DPrintf(DEBUG_GAME, "G_ClientAction: PA_INVMOVE Container index out of range.\n");
+
+		G_ClientInvMove(player, num, fromPtr, fx, fy, toPtr, tx, ty, qtrue, NOISY);
 		break;
 
 	case PA_USE_DOOR:
@@ -2648,7 +2662,8 @@ void G_ClientTeamInfo (player_t * player)
 {
 	edict_t *ent;
 	int i, k, length;
-	int container, x, y;
+	invDef_t *container;
+	int x, y;
 	item_t item;
 	int dummyFieldSize = 0;
 	int td;		/**< teamDef_t index */
@@ -2768,7 +2783,7 @@ void G_ClientTeamInfo (player_t * player)
 					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx : NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
 
 					Com_AddToInventory(&ent->i, item, container, x, y, 1);
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n", container, gi.csi->idArmour, ent->i.c[container]->item.t->id);
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n", container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
 				}
 			}
 

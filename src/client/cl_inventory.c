@@ -368,11 +368,14 @@ void INV_EnableAutosell (const technology_t *tech)
 {
 	int i = 0, j;
 	technology_t *ammotech;
+	objDef_t *obj;
+	objDef_t *ammo;
 
 	/* If the tech leads to weapon or armour, find related item and enable autosell. */
 	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOUR)) {
 		for (i = 0; i < csi.numODs; i++) {
-			if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
+			obj = &csi.ods[i];
+			if (!Q_strncmp(tech->provides, obj->id, MAX_VAR)) {
 				gd.autosell[i] = qtrue;
 				break;
 			}
@@ -382,16 +385,13 @@ void INV_EnableAutosell (const technology_t *tech)
 	}
 
 	/* If the weapon has ammo, enable autosell for proper ammo as well. */
-	if ((tech->type == RS_WEAPON) && (csi.ods[i].reload)) {
-		for (j = 0; j < csi.numODs; j++) {
-			/* Find all suitable ammos for this weapon. */
-			if (INVSH_LoadableInWeapon(&csi.ods[j], &csi.ods[i])) {
-				ammotech = RS_GetTechByProvided(csi.ods[j].id);
-				/* If the ammo is not producible, don't enable autosell. */
-				if (ammotech && (ammotech->produceTime < 0))
-					continue;
-				gd.autosell[j] = qtrue;
-			}
+	if ((tech->type == RS_WEAPON) && (obj->reload)) {
+		for (j = 0; j < obj->numAmmos; j++) {
+			ammo = obj->ammos[j];
+			ammotech = RS_GetTechByProvided(ammo->id);
+			if (ammotech && (ammotech->produceTime < 0))
+						continue;
+			gd.autosell[ammo->idx] = qtrue;
 		}
 	}
 }
@@ -583,18 +583,20 @@ void INV_RemoveAllItemExceedingCapacity (base_t *base)
 	int i;
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
 	int numObj;
+	objDef_t *obj;
 
 	if (base->capacities[CAP_ITEMS].cur <= base->capacities[CAP_ITEMS].max)
 		return;
 
 	for (i = 0, numObj = 0; i < csi.numODs; i++) {
+		obj = &csi.ods[i];
 		/* don't count antimatter */
-		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+		if (!Q_strncmp(obj->id, "antimatter", 10))
 			continue;
 
 		/* Don't count aircraft */
-		assert(csi.ods[i].tech);
-		if (csi.ods[i].tech->type == RS_CRAFT) {
+		assert(obj->tech);
+		if (obj->tech->type == RS_CRAFT) {
 			continue;
 		}
 
@@ -644,21 +646,24 @@ void INV_RemoveAllItemExceedingCapacity (base_t *base)
 void INV_UpdateStorageCap (base_t *base)
 {
 	int i;
+	objDef_t *obj;
 
 	base->capacities[CAP_ITEMS].cur = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
+		obj = &csi.ods[i];
+
 		/* don't count antimatter */
-		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+		if (!Q_strncmp(obj->id, "antimatter", 10))
 			continue;
 
 		/* Don't count aircraft */
-		assert(csi.ods[i].tech);
-		if (csi.ods[i].tech->type == RS_CRAFT) {
+		assert(obj->tech);
+		if (obj->tech->type == RS_CRAFT) {
 			continue;
 		}
 
-		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * csi.ods[i].size;
+		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * obj->size;
 	}
 
 	/* UGV takes room in storage capacity */
@@ -762,8 +767,8 @@ void INV_InventoryList_f (void)
  * spot in the targetContainer
  * @return qtrue if the move was successful
  */
-qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, int py,
-	int fromContainer, int fromX, int fromY)
+qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContainer, int px, int py,
+	const invDef_t * fromContainer, int fromX, int fromY)
 {
 	invList_t *i = NULL;
 	int et = -1;
@@ -779,7 +784,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 	if ((px == -1 || py == -1) && toContainer == fromContainer)
 		return qtrue;
 
-	if (toContainer == csi.idEquip) {
+	if (toContainer->id == csi.idEquip) {
 		/* a hack to add the equipment correctly into buy categories;
 		 * it is valid only due to the following property: */
 		assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
@@ -796,7 +801,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 			/* If the 'to'-container is not the one that is currently shown or auto-placement is wanted ...*/
 			if (!BUYTYPE_MATCH(et, base->equipType) || px == -1 || py == -1) {
 				inv->c[csi.idEquip] = base->equipByBuyType.c[et];
-				Com_FindSpace(inv, &i->item, csi.idEquip, &px, &py);
+				Com_FindSpace(inv, &i->item, &csi.ids[csi.idEquip], &px, &py);
 				if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
 					inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
 					return qfalse;
@@ -815,7 +820,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 		 * Currently it assumes that there is only ONE item of this type (since weapons can only use one ammo which is swapped out).
 		 * @sa Com_MoveInInventoryIgnore (return IA_RELOAD_SWAP)
 		 */
-		if (fromContainer == csi.idEquip) {
+		if (fromContainer->id == csi.idEquip) {
 			/* Check buytype of first (last added) item */
 			if (!BUYTYPE_MATCH(et, base->equipType)) {
 				item_t item_temp = {NONE_AMMO, NULL, inv->c[csi.idEquip]->item.t, 0, 0};

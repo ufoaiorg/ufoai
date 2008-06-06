@@ -169,7 +169,7 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 	assert(nr < MAX_INVLIST);
 	for (; nr-- > 0;) {
 		CL_LoadItem(buf, &item, &container, &x, &y);
-		if (!Com_AddToInventory(i, item, container, x, y, 1))
+		if (!Com_AddToInventory(i, item, &csi.ids[container], x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t->id);
 	}
 }
@@ -784,7 +784,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 						ic->item = CL_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */
-						Com_RemoveFromInventory(chr->inv, container, ic->x, ic->y);
+						Com_RemoveFromInventory(chr->inv, &csi.ids[container], ic->x, ic->y);
 					}
 				}
 			}
@@ -932,16 +932,16 @@ static void CL_GenerateEquipment_f (void)
  * @note This is a WORKAROUND, it is by no means efficient or sane, but currently the only way to display these items in the (multiple) correct categories.
  * Should be executed on a change of the equipemnt-category to either PRI or SEC items .. and only there.
  * @param[in,out] inv This is always the used equipByBuyType in the base.
- * @param[in] buytype_container The container we just switched to (where all the items should be moved to).
+ * @param[in] buytypeContainer The container we just switched to (where all the items should be moved to).
  * @sa CL_GenerateEquipment_f
  * @sa Com_MoveInInventoryIgnore
  * @note Some ic->next and ic will be modified by Com_MoveInInventoryIgnore.
  * @note HACKHACK
  */
-static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container)
+static void CL_MoveMultiEquipment (inventory_t* const inv, int buytypeContainer)
 {
 	/* Set source container to the one that is not the destination container. */
-	const int container = (buytype_container == BUY_WEAP_PRI)
+	const int container = (buytypeContainer == BUY_WEAP_PRI)
 			? BUY_WEAP_SEC : BUY_WEAP_PRI;
 	invList_t *ic;
 	invList_t *ic_temp;
@@ -950,18 +950,18 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 		return;
 
 	/* Do nothing if no pri/sec category is shown. */
-	if ((buytype_container != BUY_WEAP_PRI) && (buytype_container != BUY_WEAP_SEC))
+	if ((buytypeContainer != BUY_WEAP_PRI) && (buytypeContainer != BUY_WEAP_SEC))
 		return;
 
 	/* This is a container that might hold some of the affected items.
-	 * Move'em to the target (buytype_container) container (if there are any) */
-	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: buytype_container:%i\n", buytype_container);
+	 * Move'em to the target (buytypeContainer) container (if there are any) */
+	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: buytypeContainer:%i\n", buytypeContainer);
 	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: container:%i\n", container);
 	ic = inv->c[container];
 	while (ic) {
 		if (ic->item.t->buytype == BUY_MULTI_AMMO) {
 			ic_temp = ic->next;
-			Com_MoveInInventoryIgnore(inv, container, ic->x, ic->y, buytype_container, NONE, NONE, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
+			Com_MoveInInventoryIgnore(inv, &csi.ids[container], ic->x, ic->y, &csi.ids[buytypeContainer], NONE, NONE, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
 			ic = ic_temp;
 		} else {
 			ic = ic->next;

@@ -31,12 +31,12 @@ inventory_t *menuInventory = NULL;
 
 dragInfo_t dragInfo = {
 	{NONE_AMMO, NULL, NULL, 1, 0},	/* item */
-	-1,		/* from */
+	NULL,	/* from */
 	-1,		/* fromX */
 	-1,		/* fromY */
 
 	NULL,	/* toNode */
-	-1,		/* to */
+	NULL,	/* to */
 	-1,		/* toX */
 	-1		/* toY */
 
@@ -68,63 +68,63 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 		py = (int) (y - node->pos[1]) / C_UNIT;
 
 		/* start drag (mousefx represents container number) */
-		ic = Com_SearchInInventory(menuInventory, node->mousefx, px, py);
+		ic = Com_SearchInInventory(menuInventory, &csi.ids[node->mousefx], px, py);	/**< @todo Add sanity check for node->mousefx here */
 		if (ic) {
 			if (!rightClick) {
 				/* found item to drag */
 				mouseSpace = MS_DRAG;
 				dragInfo.item = ic->item;
 				/* mousefx is the container (see hover code) */
-				dragInfo.from = node->mousefx;
+				dragInfo.from = &csi.ids[node->mousefx];
 				dragInfo.fromX = ic->x;
 				dragInfo.fromY = ic->y;
 			} else {
 				if (node->mousefx != csi.idEquip) {
 					/* back to idEquip (ground, floor) container */
-					INV_MoveItem(baseCurrent, menuInventory, csi.idEquip, -1, -1, node->mousefx, ic->x, ic->y);
+					INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idEquip], -1, -1, &csi.ids[node->mousefx], ic->x, ic->y);
 				} else {
 					qboolean packed = qfalse;
 
 					assert(ic->item.t);
 					/* armour can only have one target */
 					if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
-						packed = INV_MoveItem(baseCurrent, menuInventory, csi.idArmour, 0, 0, node->mousefx, ic->x, ic->y);
+						packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idArmour], 0, 0, &csi.ids[node->mousefx], ic->x, ic->y);
 					/* ammo or item */
 					} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
-						Com_FindSpace(menuInventory, &ic->item, csi.idBelt, &px, &py);
-						packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBelt, px, py, node->mousefx, ic->x, ic->y);
+						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py);
+						packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idBelt], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, csi.idHolster, &px, &py);
-							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idHolster, px, py, node->mousefx, ic->x, ic->y);
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py);
+							packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idHolster], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 						}
 						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, csi.idBackpack, &px, &py);
-							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBackpack, px, py, node->mousefx, ic->x, ic->y);
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py);
+							packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idBackpack], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 						}
 					} else {
 						if (ic->item.t->headgear) {
-							Com_FindSpace(menuInventory, &ic->item, csi.idHeadgear, &px, &py);
-							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idHeadgear, px, py, node->mousefx, ic->x, ic->y);
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHeadgear], &px, &py);
+							packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idHeadgear], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 						} else {
 							/* left and right are single containers, but this might change - it's cleaner to check
 							 * for available space here, too */
-							Com_FindSpace(menuInventory, &ic->item, csi.idRight, &px, &py);
-							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idRight, px, py, node->mousefx, ic->x, ic->y);
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py);
+							packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idRight], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 							if (!packed) {
-								Com_FindSpace(menuInventory, &ic->item, csi.idLeft, &px, &py);
-								packed = INV_MoveItem(baseCurrent, menuInventory, csi.idLeft, px, py, node->mousefx, ic->x, ic->y);
+								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py);
+								packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idLeft], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 							}
 							if (!packed) {
-								Com_FindSpace(menuInventory, &ic->item, csi.idHolster, &px, &py);
-								packed = INV_MoveItem(baseCurrent, menuInventory, csi.idHolster, px, py, node->mousefx, ic->x, ic->y);
+								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py);
+								packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idHolster], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 							}
 							if (!packed) {
-								Com_FindSpace(menuInventory, &ic->item, csi.idBelt, &px, &py);
-								packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBelt, px, py, node->mousefx, ic->x, ic->y);
+								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py);
+								packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idBelt], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 							}
 							if (!packed) {
-								Com_FindSpace(menuInventory, &ic->item, csi.idBackpack, &px, &py);
-								packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBackpack, px, py, node->mousefx, ic->x, ic->y);
+								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py);
+								packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idBackpack], px, py, &csi.ids[node->mousefx], ic->x, ic->y);
 							}
 						}
 					}
@@ -149,7 +149,7 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 		/* menu */
 		}
 
-		INV_MoveItem(baseCurrent, menuInventory, node->mousefx, px, py, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
+		INV_MoveItem(baseCurrent, menuInventory, &csi.ids[node->mousefx], px, py, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
 	}
 
 	/* We are in the base or multiplayer inventory */
@@ -329,7 +329,7 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	/* if single container (hands, extension, headgear) */
 	if (csi.ids[container].single) {
 		/* if container is free or the dragged-item is in it */
-		if (node->mousefx == dragInfo.from || Com_CheckToInventory(inv, od, container, 0, 0))
+		if (node->mousefx == dragInfo.from->id || Com_CheckToInventory(inv, od, &csi.ids[container], 0, 0))
 			MN_DrawFree(container, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
 	} else {
 		memset(free, 0, sizeof(free));
@@ -338,7 +338,7 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 				/* Check if the current position is usable (topleft of the item). */
 
 				/* Add '1's to each position the item is 'blocking'. */
-				checkedTo = Com_CheckToInventory(inv, od, container, x, y);
+				checkedTo = Com_CheckToInventory(inv, od, &csi.ids[container], x, y);
 				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
 					Com_MergeShapes(free, (uint32_t)od->shape, x, y);
 				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */
@@ -475,7 +475,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	if (mouseSpace != MS_DRAG && node->state && mn_show_tooltips->integer)
 		/* Find out where the mouse is */
 		return Com_SearchInInventory(menuInventory,
-			node->mousefx, (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);
+			&csi.ids[node->mousefx], (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);		/**< @todo Add sanity check for node->mousefx here */
 
 	return NULL;
 }

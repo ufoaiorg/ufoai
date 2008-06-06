@@ -1123,7 +1123,7 @@ void LE_Cleanup (void)
 			INVSH_DestroyInventory(&inv);
 			break;
 		case ET_ITEM:
-			INVSH_EmptyContainer(&le->i, csi.idFloor);
+			INVSH_EmptyContainer(&le->i, &csi.ids[csi.idFloor]);
 			break;
 		case ET_PARTICLE:
 			if (le->ptl) {

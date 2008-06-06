@@ -312,7 +312,7 @@ void MN_DrawMenus (void)
 						/* Store information for preview drawing of dragged items. */
 						if (MN_CheckNodeZone(node, mousePosX, mousePosY)) {
 							dragInfo.toNode = node;
-							dragInfo.to = node->mousefx;
+							dragInfo.to = &csi.ids[node->mousefx];
 
 							dragInfo.toX = (mousePosX - node->pos[0]) / C_UNIT;
 							dragInfo.toY = (mousePosY - node->pos[1]) / C_UNIT;
@@ -327,7 +327,7 @@ void MN_DrawMenus (void)
 							 * the container is "single" or the calculated values are out of bounds.
 							 * @todo I hope this is the same behaviour that is used in MN_Drag - a special function
 							 *		to simply calculate the final x/y values would be a good idea here. */
-							if (dragInfo.item.t && (csi.ids[dragInfo.to].single
+							if (dragInfo.item.t && (dragInfo.to->single
 							 || dragInfo.toX  < 0 || dragInfo.toY < 0
 							 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
 								Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY);

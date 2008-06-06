@@ -778,7 +778,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 							gi.WriteShort(floor->number);
 							floor->visflags = 0;
 						}
-						Com_TryAddToInventory(&floor->i, *weapon, gi.csi->idFloor);
+						Com_TryAddToInventory(&floor->i, *weapon, &gi.csi->ids[gi.csi->idFloor]);
 
 						/* send item info to the clients */
 						G_CheckVis(floor, qtrue);
@@ -1118,7 +1118,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 				gi.WriteShort(floor->number);
 				floor->visflags = 0;
 			}
-			Com_TryAddToInventory(&floor->i, *weapon, gi.csi->idFloor);
+			Com_TryAddToInventory(&floor->i, *weapon, &gi.csi->ids[gi.csi->idFloor]);
 
 			/* send item info to the clients */
 			G_CheckVis(floor, qtrue);
@@ -1394,7 +1394,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 				gi.WriteShort(num);
 				gi.WriteByte(container);
 				assert(gi.csi->ids[container].single);
-				INVSH_EmptyContainer(&ent->i, container);
+				INVSH_EmptyContainer(&ent->i, &gi.csi->ids[container]);
 			}
 			/* x and y value */
 			gi.WriteByte(0);
@@ -1407,7 +1407,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 			gi.WriteShort(num);
 			gi.WriteByte(container);
 			assert(gi.csi->ids[container].single);
-			INVSH_EmptyContainer(&ent->i, container);
+			INVSH_EmptyContainer(&ent->i, &gi.csi->ids[container]);
 			/* x and y value */
 			gi.WriteByte(0);
 			gi.WriteByte(0);

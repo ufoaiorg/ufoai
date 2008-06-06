@@ -1176,27 +1176,38 @@ static void Com_ParseInventory (const char *name, const char **text)
 		return;
 	}
 
-	/* special IDs */
-	if (!Q_strncmp(name, "right", 5))
+	/* Special IDs for container. These are also used elsewhere, so be careful. */
+	if (!Q_strncmp(name, "right", 5)) {
 		csi.idRight = id - csi.ids;
-	else if (!Q_strncmp(name, "left", 4))
+		id->id = csi.idRight;
+	} else if (!Q_strncmp(name, "left", 4)) {
 		csi.idLeft = id - csi.ids;
-	else if (!Q_strncmp(name, "extension", 4))
+		id->id = csi.idLeft;
+	} else if (!Q_strncmp(name, "extension", 4)) {
 		csi.idExtension = id - csi.ids;
-	else if (!Q_strncmp(name, "belt", 4))
+		id->id = csi.idExtension;
+	} else if (!Q_strncmp(name, "belt", 4)) {
 		csi.idBelt = id - csi.ids;
-	else if (!Q_strncmp(name, "holster", 7))
+		id->id = csi.idBelt;
+	} else if (!Q_strncmp(name, "holster", 7)) {
 		csi.idHolster = id - csi.ids;
-	else if (!Q_strncmp(name, "backpack", 8))
+		id->id = csi.idHolster;
+	} else if (!Q_strncmp(name, "backpack", 8)) {
 		csi.idBackpack = id - csi.ids;
-	else if (!Q_strncmp(name, "armour", 5))
+		id->id = csi.idBackpack;
+	} else if (!Q_strncmp(name, "armour", 5)) {
 		csi.idArmour = id - csi.ids;
-	else if (!Q_strncmp(name, "floor", 5))
+		id->id = csi.idArmour;
+	} else if (!Q_strncmp(name, "floor", 5)) {
 		csi.idFloor = id - csi.ids;
-	else if (!Q_strncmp(name, "equip", 5))
+		id->id = csi.idFloor;
+	} else if (!Q_strncmp(name, "equip", 5)) {
 		csi.idEquip = id - csi.ids;
-	else if (!Q_strncmp(name, "headgear", 8))
+		id->id = csi.idEquip;
+	} else if (!Q_strncmp(name, "headgear", 8)) {
 		csi.idHeadgear = id - csi.ids;
+		id->id = csi.idHeadgear;
+	}
 
 	do {
 		token = COM_EParse(text, errhead, name);

@@ -5567,6 +5567,7 @@ static void CL_DebugAllItems_f (void)
 	int i;
 	base_t *base;
 	technology_t *tech;
+	objDef_t *obj;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -5581,13 +5582,14 @@ static void CL_DebugAllItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (!csi.ods[i].weapon && !csi.ods[i].numWeapons)
+		obj = &csi.ods[i];
+		if (!obj->weapon && !obj->numWeapons)
 			continue;
-		B_UpdateStorageAndCapacity(base, &csi.ods[i], 1, qfalse, qtrue);
+		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);
 		if (base->storage.num[i] > 0) {
-			tech = csi.ods[i].tech;
+			tech = obj->tech;
 			if (!tech)
-				Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].name);
+				Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", obj->id, obj->name);
 			RS_MarkCollected(tech);
 		}
 	}
@@ -5601,7 +5603,7 @@ static void CL_DebugShowItems_f (void)
 {
 	int i;
 	base_t *base;
-	technology_t *tech;
+	objDef_t *obj;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -5616,10 +5618,10 @@ static void CL_DebugShowItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		tech = csi.ods[i].tech;
-		if (!tech)
-			Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].id);
-		Com_Printf("%i. %s: (%s) %i\n", i, csi.ods[i].id, csi.ods[i].id, base->storage.num[i]);
+		obj = &csi.ods[i];
+		if (!obj->tech)
+			Sys_Error("CL_DebugAllItems_f: No tech for %s\n", obj->id);
+		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.num[i]);
 	}
 }
 

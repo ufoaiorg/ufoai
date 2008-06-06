@@ -310,7 +310,7 @@ static void SCR_DrawCursor (void)
 				dragInfo.item.rotated = qtrue;
 
 			if (checkedTo) {
-				if (csi.ids[dragInfo.to].single) { /* Get center of single container for placement of preview item */
+				if (dragInfo.to->single) { /* Get center of single container for placement of preview item */
 					VectorSet(org, dragInfo.toNode->pos[0] + dragInfo.toNode->size[0] / 2.0, dragInfo.toNode->pos[1] + dragInfo.toNode->size[1] / 2.0, -40);
 				} else {
 					/* This is a "grid" container - we need to calculate the item-position (on the screen) from stored placement int h4e container and the calculated rotation info. */
