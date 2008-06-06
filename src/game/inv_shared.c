@@ -739,11 +739,11 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 void INVSH_EmptyContainer (inventory_t* const i, const invDef_t * container)
 {
 	invList_t *ic, *old;
+#ifdef DEBUG
+	int cnt = 0;
 
 	assert(container);
 
-#ifdef DEBUG
-	int cnt = 0;
 	if (container->temp)
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EmptyContainer: Emptying temp container %s.\n", container->name);
 #endif
