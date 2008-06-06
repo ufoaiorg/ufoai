@@ -306,5 +306,6 @@ From tools/ufo2map/map.c
 #define	MAX_MAP_SIDES (MAX_MAP_BRUSHES*6)
 #define	MAX_MAP_TEXTURES	1024
 
+#define MAP_SIZE_OFFSET 100
 
 #endif /* SHARED_DEFINES_H */

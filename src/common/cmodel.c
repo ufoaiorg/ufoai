@@ -684,7 +684,7 @@ GAME RELATED TRACING
  */
 static void CMod_GetMapSize (routing_t * map)
 {
-	const vec3_t offset = {100, 100, 100};
+	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 	pos3_t min, max;
 	int x, y;
 
