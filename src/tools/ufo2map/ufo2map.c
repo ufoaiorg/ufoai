@@ -58,6 +58,7 @@ static void Usage(void){
 		" -nice <prio>             : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
 #endif
 		" -nofootstep              : don't generate a footstep file\n"
+		" -onlynewer               : only proceed when the map is newer than the bsp\n"
 		" -v                       : verbose output\n"
 		"\nRadiosity options:\n"
 		" -bounce <num>            : light bounces\n"
@@ -77,8 +78,9 @@ static void Usage(void){
 		" -entity                  : \n"
 		" -fulldetail              : don't treat details (and trans surfaces) as details\n"
 		" -info                    : print bsp file info\n"
-		" -micro <float>           : \n"
-		" -nobackclip              : remove brushes that are not visible from birds view\n"
+		" -material                : generate a material file\n"
+		" -micro <float>           : warn if a brush has a volume lower than the specified float.\n"
+		" -nobackclip              : remove brushes that are not visible from birds-eye view\n"
 		" -nocsg                   : \n"
 		" -nodetail                : \n"
 		" -nofill                  : \n"
@@ -86,7 +88,6 @@ static void Usage(void){
 		" -noprune                 : \n"
 		" -nosubdiv                : \n"
 		" -noshare                 : \n"
-		" -material                : generate a material file\n"
 		" -notjunc                 : \n"
 		" -nowater                 : \n"
 		" -noweld                  : \n"
@@ -108,47 +109,9 @@ static void Usage(void){
 }
 
 /**
- * @brief check for subparameters for -check and -fix options.
- * @return the arg index before the one from which to continue checking for parameters.
+ * @brief Check for bsping, radiosity and checking/fixing command line parameters
  */
-static int U2M_CheckFix_Subparameter (int argc, int i, const char **argv)
-{
-	int initialI=i;
-	/* terminate loop before last arg (path) or when we hit a param
-	 * (as opposed to a subparam). full parameters are prefixed with "-". */
-	while (++i < (argc - 1) && argv[i][0] != '-') {
-		if (!strcmp(argv[i], "entities") || !strcmp(argv[i], "ent")) {
-			Com_Printf("  %s entities\n", config.fixMap ? "fixing" : "checking");
-			config.chkEntities = qtrue;
-		} else if (!strcmp(argv[i], "brushes") || !strcmp(argv[i], "bru")) {
-			Com_Printf("  %s brushes\n", config.fixMap ? "fixing" : "checking");
-			config.chkBrushes = qtrue;
-		} else if (!strcmp(argv[i], "levelflags") || !strcmp(argv[i], "lvl")) {
-			Com_Printf("  %s levelflags\n", config.fixMap ? "fixing" : "checking");
-			config.chkLevelFlags = qtrue;
-		} else if (!strcmp(argv[i], "textures") || !strcmp(argv[i], "tex")) {
-			Com_Printf("  %s textures\n", config.fixMap ? "fixing" : "checking");
-			config.chkTextures = qtrue;
-		} else if (!strcmp(argv[i], "all")) {
-			Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
-			config.chkAll = qtrue;
-		} else {
-			Com_Printf("  WARNING: %s subparameter not understood:%s  try --help for more info\n", config.fixMap ? "fix" : "check", argv[i]);
-		}
-	}
-	/* if no subparams set, assume all */
-	if(i==initialI+1){
-		Com_Printf("  no %s subparameters set, assuming all\n", config.fixMap ? "fix" : "check");
-		config.chkAll = qtrue;
-	}
-	return --i;
-}
-
-/**
- * @brief Check for bsping and checking/fixing command line parameters
- * @note Some are also used for radiosity
- */
-static void U2M_BSP_Parameter (int argc, const char **argv)
+static void U2M_Parameter (int argc, const char **argv)
 {
 	int i;
 
@@ -160,14 +123,45 @@ static void U2M_BSP_Parameter (int argc, const char **argv)
 			/* make every point unique */
 			Com_Printf("noweld = true\n");
 			config.noweld = qtrue;
-		} else if (!strcmp(argv[i], "-check")) {
-			Com_Printf("check = true\n");
-			config.performMapCheck = qtrue;
-			i = U2M_CheckFix_Subparameter(argc, i, argv);
-		} else if (!strcmp(argv[i], "-fix")) {
-			Com_Printf("fix = true\n");
-			config.fixMap = qtrue;
-			i = U2M_CheckFix_Subparameter(argc, i, argv);
+		} else if (!strcmp(argv[i], "-check") || !strcmp(argv[i], "-fix")) {
+			if (!strcmp(argv[i], "-check")) {
+				Com_Printf("check = true\n");
+				config.performMapCheck = qtrue;
+			}
+			if (!strcmp(argv[i], "-fix")) {
+				Com_Printf("fix = true\n");
+				config.fixMap = qtrue;
+			}
+			/* check for subparameters terminate loop before last arg (path) or
+			 * when we hit a param (as opposed to a subparam).
+			 * full parameters are prefixed with "-". */
+			int iInitial=i;
+			while (++i < (argc - 1) && argv[i][0] != '-') {
+				if (!strcmp(argv[i], "entities") || !strcmp(argv[i], "ent")) {
+					Com_Printf("  %s entities\n", config.fixMap ? "fixing" : "checking");
+					config.chkEntities = qtrue;
+				} else if (!strcmp(argv[i], "brushes") || !strcmp(argv[i], "bru")) {
+					Com_Printf("  %s brushes\n", config.fixMap ? "fixing" : "checking");
+					config.chkBrushes = qtrue;
+				} else if (!strcmp(argv[i], "levelflags") || !strcmp(argv[i], "lvl")) {
+					Com_Printf("  %s levelflags\n", config.fixMap ? "fixing" : "checking");
+					config.chkLevelFlags = qtrue;
+				} else if (!strcmp(argv[i], "textures") || !strcmp(argv[i], "tex")) {
+					Com_Printf("  %s textures\n", config.fixMap ? "fixing" : "checking");
+					config.chkTextures = qtrue;
+				} else if (!strcmp(argv[i], "all")) {
+					Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
+					config.chkAll = qtrue;
+				} else {
+					Com_Printf("  WARNING: %s subparameter not understood:%s  try --help for more info\n", config.fixMap ? "fix" : "check", argv[i]);
+				}
+			}
+			i--;
+			/* if no subparams set, assume all */
+			if(i==iInitial){
+				Com_Printf("  no %s subparameters set, assuming all\n", config.fixMap ? "fix" : "check");
+				config.chkAll = qtrue;
+			}
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			Usage();
 			exit(0);
@@ -271,31 +265,7 @@ static void U2M_BSP_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-nobackclip")) {
 			Com_Printf("nobackclip = true\n");
 			config.nobackclip = qtrue;
-		} else if (i<(argc-1)){
-			/* Last param is the map path, every other param should have been caught by now. */
-			Com_Printf("*** parameter not understood: %s try --help for more info\n",argv[i]);
-		}
-	}
-
-	if (config.fixMap && config.performMapCheck) {
-		Sys_Error("do not specify both -fix and -check\n");
-	}
-
-	/* if any -chk* option is active then skip these */
-	if (config.performMapCheck || config.fixMap) {
-		config.generateFootstepFile = qfalse;
-		config.generateMaterialFile = qfalse;
-	}
-}
-
-/**
- * @brief Check for radiosity command line parameters
- */
-static void U2M_RAD_Parameter (int argc, const char** argv)
-{
-	int i;
-	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i],"-bounce")) {
+		} else if (!strcmp(argv[i],"-bounce")) {
 			config.numbounce = atoi(argv[i + 1]);
 			Com_Printf("light bounces = %i\n", config.numbounce);
 			i++;
@@ -344,7 +314,20 @@ static void U2M_RAD_Parameter (int argc, const char** argv)
 			} else {
 				Sys_Error("invalid parameter count\n");
 			}
+		} else if (i<(argc-1)){
+			/* Last param is the map path, every other param should have been caught by now. */
+			Com_Printf("*** parameter not understood: %s try --help for more info\n",argv[i]);
 		}
+	}
+
+	if (config.fixMap && config.performMapCheck) {
+		Sys_Error("do not specify both -fix and -check\n");
+	}
+
+	/* if any check or fix option is active then skip footsteps and materials */
+	if (config.performMapCheck || config.fixMap) {
+		config.generateFootstepFile = qfalse;
+		config.generateMaterialFile = qfalse;
 	}
 }
 
@@ -443,8 +426,7 @@ int main (int argc, const char **argv)
 
 	Com_Printf("---- ufo2map "VERSION" ----\n");
 
-	U2M_BSP_Parameter(argc, argv);
-	U2M_RAD_Parameter(argc, argv);
+	U2M_Parameter(argc, argv);
 
 	if (argc < 2) {
 		Usage();
