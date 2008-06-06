@@ -415,6 +415,8 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 {
 	const vec3_t scale = {3.5, 3.5, 3.5};
 	vec4_t color = {1, 1, 1, 1};
+	vec4_t colorLoadable = {1, 0.5, 0.5, 1};
+	qboolean drawLoadable = qfalse;
 
 	if (node->mousefx == C_UNDEFINED)
 		MN_FindContainer(node);
@@ -423,18 +425,27 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 	assert(menuInventory);
 
+	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
+	if (mouseSpace == MS_DRAG && dragInfo.item.t)	/**@todo "&& dragInfo.item.t->ammo)" <-- Why didn't this work? do we not set ->ammo anymore? */
+		drawLoadable = qtrue;
+
 	if (csi.ids[node->mousefx].single) {
 		/* single item container (special case for left hand) */
 		if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
 			const int sx = node->size[0] / C_UNIT;
 			const int sy = node->size[1] / C_UNIT;
 			color[3] = 0.5;
+			colorLoadable[3] = 0.5;
 			if (menuInventory->c[csi.idRight]) {
 				const item_t *item = &menuInventory->c[csi.idRight]->item;
 				assert(item);
 				assert(item->t);
-				if (item->t->holdTwoHanded)
-					MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
+				if (item->t->holdTwoHanded) {
+					if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
+						MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, colorLoadable);
+					else
+						MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
+				}
 			}
 		} else if (menuInventory->c[node->mousefx]) {
 			const int sx = node->size[0] / C_UNIT;
@@ -450,6 +461,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 				assert(item->t);
 				if (node->mousefx == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
 					Vector4Set(color, 0.5, 0.5, 0.5, 0.5);
+					Vector4Set(colorLoadable, 0.5, 0.25, 0.25, 0.5);
 					MN_DrawDisabled(node);
 				}
 			}
@@ -457,20 +469,27 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			item = &menuInventory->c[node->mousefx]->item;
 			assert(item);
 			assert(item->t);
-			MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
+			if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
+				MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, colorLoadable);
+			else
+				MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
 		}
 	} else {
 		const invList_t *ic;
 		/* standard container */
 		for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
 			assert(ic->item.t);
-			MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, color);
+			if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, ic->item.t))
+				MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, colorLoadable);
+			else
+				MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, color);
 		}
 	}
 	/* draw free space if dragging - but not for idEquip */
 	if (mouseSpace == MS_DRAG && node->mousefx != csi.idEquip)
 		MN_InvDrawFree(menuInventory, node);
 
+	/**@todo Draw tooltips for dragged ammo (and info about weapon it can be loaded in when hovering over it). */
 	/* Draw tooltip for weapon or ammo */
 	if (mouseSpace != MS_DRAG && node->state && mn_show_tooltips->integer)
 		/* Find out where the mouse is */
