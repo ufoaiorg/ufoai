@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static char glerrortex[MAX_GLERRORTEX];
 static char *glerrortexend;
 static image_t gltextures[MAX_GLTEXTURES];
-static int numgltextures;
+int numgltextures;
 
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];

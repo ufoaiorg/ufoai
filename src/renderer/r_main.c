@@ -285,6 +285,8 @@ void R_RenderFrame (void)
 	/* draw brushes on current worldlevel */
 	R_GetLevelSurfaceLists();
 
+	R_SortSurfaces();
+
 	R_AddLights();
 
 	R_CheckError();
@@ -688,6 +690,7 @@ qboolean R_Init (void)
 	R_Register();
 
 	memset(&r_state, 0, sizeof(r_state));
+	memset(&r_sorted_surfaces, 0, sizeof(r_sorted_surfaces));
 
 	/* set our "safe" modes */
 	viddef.prev_mode = 6;

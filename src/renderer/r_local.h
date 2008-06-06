@@ -54,6 +54,10 @@ extern mBspSurfaces_t r_alpha_surfaces;
 extern mBspSurfaces_t r_alpha_warp_surfaces;
 extern mBspSurfaces_t r_material_surfaces;
 
+/* temporary space used to group surfaces by texture */
+extern mBspSurfaces_t r_sorted_surfaces[MAX_GLTEXTURES];
+extern int numgltextures;
+
 /*==================================================== */
 
 extern cBspPlane_t frustum[4];
@@ -121,6 +125,7 @@ void R_ScreenShot_f(void);
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(const entity_t *e);
 void R_GetLevelSurfaceLists(void);
+void R_SortSurfaces(void);
 void R_InitMiscTexture(void);
 void R_DrawEntities(void);
 void R_DrawInitLocal(void);

@@ -30,11 +30,55 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_SurfaceToSurfaces(surfs, surf)\
 	(surfs)->surfaces[(surfs)->count++] = surf
 
+/* temporary space used to group surfaces by texture */
+mBspSurfaces_t r_sorted_surfaces[MAX_GLTEXTURES];
+
 /*
 =============================================================
 BRUSH MODELS
 =============================================================
 */
+
+/**
+ * @sa R_SortSurfaces
+ */
+static void R_SortSurfaces_ (mBspSurfaces_t *surfs)
+{
+	int i, j;
+
+	/* sort them by texture */
+	for (i = 0; i < surfs->count; i++) {
+		const int index = surfs->surfaces[i]->texinfo->image->index;
+		assert(index < MAX_GLTEXTURES);
+		R_SurfaceToSurfaces(&r_sorted_surfaces[index], surfs->surfaces[i]);
+	}
+
+	surfs->count = 0;
+
+	/* and now add the ordered surfaces again */
+	for (i = 0; i < numgltextures; i++) {
+		for (j = 0; j < r_sorted_surfaces[i].count; j++)
+			R_SurfaceToSurfaces(surfs, r_sorted_surfaces[i].surfaces[j]);
+		r_sorted_surfaces[i].count = 0;
+	}
+}
+
+/**
+ * @brief Sort bsp surfaces by textures to reduce the amount of GL_BindTexture
+ * call. This should increase the rendering speed a lot
+ * @sa R_SortSurfaces_
+ */
+void R_SortSurfaces (void)
+{
+	if (r_opaque_surfaces.count)
+		R_SortSurfaces_(&r_opaque_surfaces);
+
+	if (r_alpha_surfaces.count)
+		R_SortSurfaces_(&r_alpha_surfaces);
+
+	if (r_material_surfaces.count)
+		R_SortSurfaces_(&r_material_surfaces);
+}
 
 #define BACKFACE_EPSILON 0.01
 
