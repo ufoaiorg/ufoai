@@ -289,9 +289,10 @@ static void SCR_DrawCursor (void)
 			}
 		}
 	} else {
-		vec3_t org = { mousePosX, mousePosY, -50 };
 		const vec3_t scale = { 3.5, 3.5, 3.5 };
+		vec3_t org;
 		vec4_t color = { 1, 1, 1, 1 };
+		int checkedTo = INV_DOES_NOT_FIT;
 
 		/** Revert the rotation info for the cursor-item in case it
 		 * has been changed (can happen in rare conditions).
@@ -299,12 +300,11 @@ static void SCR_DrawCursor (void)
 		 * @todo Check if this causes problems when letting the item snap back to its original location. */
 		dragInfo.item.rotated = qfalse;
 
-		MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);
-
 		/* Draw "preview" of placed (&rotated) item. */
 		if (dragInfo.toNode) {
-			const int checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY);
 			const int oldRotated = dragInfo.item.rotated;
+
+			checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY);
 
 			if (checkedTo == INV_FITS_ONLY_ROTATED)
 				dragInfo.item.rotated = qtrue;
@@ -319,12 +319,18 @@ static void SCR_DrawCursor (void)
 					else
 						VectorSet(org, dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT, dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT, -40);
 				}
-				color[3] = 0.5;
+				Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */
 				MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);	/**< Draw preview item. */
 			}
 
 			dragInfo.item.rotated = oldRotated ;
 		}
+
+		/* Draw the (2.) item at the cursor. */
+		VectorSet(org, mousePosX, mousePosY, -50);
+		if (dragInfo.toNode && checkedTo)
+			Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
+		MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);
 	}
 }
 
