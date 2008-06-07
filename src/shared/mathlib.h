@@ -134,6 +134,7 @@ extern const byte dvleft[DIRECTIONS];
 #define Vector2Compare(a,b)     (a[0]==b[0]?a[1]==b[1]?1:0:0)
 #define VectorDistSqr(a,b)      ((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2]))
 #define VectorDist(a,b)         (sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2])))
+#define Vector2Dist(a,b)         (sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])))
 #define VectorLengthSqr(a)      (a[0]*a[0]+a[1]*a[1]+a[2]*a[2])
 #define VectorNotEmpty(a)           (a[0]||a[1]||a[2])
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
