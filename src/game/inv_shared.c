@@ -956,18 +956,17 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			item.m = weapon;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, name);
 		} else {
-			objDef_t *ammoTemp;
 			maxPrice = 0;
 			ammo = NULL;
 			/* find some suitable ammo for the weapon */
-			for (i = CSI->numODs - 1; i >= 0; i--)
-				ammoTemp = &CSI->ods[i];
-				if (equip[i]
-				&& INVSH_LoadableInWeapon(ammoTemp, weapon)
-				&& (ammoTemp->price > maxPrice) ) {
+			for (i = CSI->numODs - 1; i >= 0; i--) {
+				objDef_t *ammoTemp = &CSI->ods[i];
+				if (equip[i] && INVSH_LoadableInWeapon(ammoTemp, weapon)
+				 && (ammoTemp->price > maxPrice)) {
 					ammo = ammoTemp;
 					maxPrice = ammoTemp->price;
 				}
+			}
 
 			if (!ammo) {
 				Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, name);
