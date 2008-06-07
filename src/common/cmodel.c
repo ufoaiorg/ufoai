@@ -996,7 +996,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 
 	/* pathfinding and the like must be shifted on the worldplane when we
 	 * are assembling a map */
-	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
+	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
 
 	/* load into heap */
 	CMod_LoadSurfaces(&header.lumps[LUMP_TEXINFO], shift);
