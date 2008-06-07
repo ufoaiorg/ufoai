@@ -124,6 +124,11 @@ static void U2M_Parameter (int argc, const char **argv)
 			Com_Printf("noweld = true\n");
 			config.noweld = qtrue;
 		} else if (!strcmp(argv[i], "-check") || !strcmp(argv[i], "-fix")) {
+			/* check for subparameters terminate loop before last arg (path) or
+			 * when we hit a param (as opposed to a subparam).
+			 * full parameters are prefixed with "-". */
+			const int iInitial = i;
+
 			if (!strcmp(argv[i], "-check")) {
 				Com_Printf("check = true\n");
 				config.performMapCheck = qtrue;
@@ -132,10 +137,6 @@ static void U2M_Parameter (int argc, const char **argv)
 				Com_Printf("fix = true\n");
 				config.fixMap = qtrue;
 			}
-			/* check for subparameters terminate loop before last arg (path) or
-			 * when we hit a param (as opposed to a subparam).
-			 * full parameters are prefixed with "-". */
-			int iInitial=i;
 			while (++i < (argc - 1) && argv[i][0] != '-') {
 				if (!strcmp(argv[i], "entities") || !strcmp(argv[i], "ent")) {
 					Com_Printf("  %s entities\n", config.fixMap ? "fixing" : "checking");
