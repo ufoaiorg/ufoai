@@ -116,7 +116,7 @@ void G_SendStats (edict_t * ent)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-static void G_WriteItem (item_t item, const invDef_t * container, int x, int y)
+static void G_WriteItem (item_t item, const invDef_t *container, int x, int y)
 {
 	assert(item.t);
 	gi.WriteFormat("sbsbbbb", item.t->idx, item.a, item.m ? item.m->idx : NONE,
@@ -128,11 +128,12 @@ static void G_WriteItem (item_t item, const invDef_t * container, int x, int y)
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
-static void G_ReadItem (item_t * item, invDef_t ** container, int * x, int * y)
+static void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 {
 	int t, m;
 	int containerID;
-	gi.ReadFormat("sbsbbbb", &t, &item->a, &m, containerID, x, y, &item->rotated);
+
+	gi.ReadFormat("sbsbbbb", &t, &item->a, &m, &containerID, x, y, &item->rotated);
 
 	assert(t != NONE);
 	item->t = &gi.csi->ods[t];
@@ -143,6 +144,8 @@ static void G_ReadItem (item_t * item, invDef_t ** container, int * x, int * y)
 
 	if (containerID >= 0 && containerID < gi.csi->numIDs)
 		*container = &gi.csi->ids[containerID];
+	else
+		*container = NULL;
 }
 
 
@@ -1925,7 +1928,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	objDef_t *weapon;
 	int x, y, tu;
 	int containerID;
-	invDef_t * bestContainer;
+	invDef_t *bestContainer;
 
 	ent = g_edicts + entnum;
 
@@ -1934,6 +1937,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	y = 0;
 	tu = 100;
 	hand = st == ST_RIGHT_RELOAD ? &gi.csi->ids[gi.csi->idRight] : &gi.csi->ids[gi.csi->idLeft];
+	bestContainer = NULL;
 
 	if (ent->i.c[hand->id]) {
 		weapon = ent->i.c[hand->id]->item.t;
@@ -2023,7 +2027,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 	invDef_t * hand;
 	int x, y, tu;
 	int container;
-	invDef_t * bestContainer;
+	invDef_t *bestContainer;
 
 	ent = g_edicts + entnum;
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
@@ -2035,6 +2039,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 	y = 0;
 	tu = 100;
 	hand = &gi.csi->ids[gi.csi->idRight];
+	bestContainer = NULL;
 
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (gi.csi->ids[container].out < tu) {
@@ -2313,8 +2318,12 @@ int G_ClientAction (player_t * player)
 
 		if (from >= 0 && from < gi.csi->numIDs)
 			fromPtr = &gi.csi->ids[from];
+		else
+			fromPtr = NULL;
 		if (to >= 0 && to < gi.csi->numIDs)
 			toPtr = &gi.csi->ids[to];
+		else
+			toPtr = NULL;
 		if (!fromPtr || !toPtr)
 			Com_DPrintf(DEBUG_GAME, "G_ClientAction: PA_INVMOVE Container index out of range.\n");
 
@@ -2662,7 +2671,6 @@ void G_ClientTeamInfo (player_t * player)
 {
 	edict_t *ent;
 	int i, k, length;
-	invDef_t *container;
 	int x, y;
 	item_t item;
 	int dummyFieldSize = 0;
@@ -2779,11 +2787,14 @@ void G_ClientTeamInfo (player_t * player)
 				int nr = gi.ReadShort() / INV_INVENTORY_BYTES;
 
 				for (; nr-- > 0;) {
+					invDef_t *container;
 					G_ReadItem(&item, &container, &x, &y);
 					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx : NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
 
-					Com_AddToInventory(&ent->i, item, container, x, y, 1);
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n", container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
+					if (container) {
+						Com_AddToInventory(&ent->i, item, container, x, y, 1);
+						Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n", container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
+					}
 				}
 			}
 
