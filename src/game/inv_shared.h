@@ -325,7 +325,9 @@ typedef struct item_s {
 	objDef_t *m;	/**< Pointer to ammo type. */
 	objDef_t *t;	/**< Pointer to weapon. */
 	int amount;		/**< The amount of items of this type on the same x and y location in the container */
-	int rotated;	/**< If the item is currently displayed rotated (qtrue or 1) or not (qfalse or 0) */
+	int rotated;	/**< If the item is currently displayed rotated (qtrue or 1) or not (qfalse or 0)
+					 * @note don't change this to anything smaller than 4 bytes - the network
+					 * parsing functions are expecting this to be at least 4 bytes */
 } item_t;
 
 /** @brief container/inventory list (linked list) with items */
