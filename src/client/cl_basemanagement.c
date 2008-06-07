@@ -1392,6 +1392,23 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 		}
 	}
 
+	if (!buildings) {
+		/* we need to set up the entrance in case autobuild is off */
+		for (i = 0; i < gd.numBuildingTemplates; ++i) {
+			building_t* entrance = &gd.buildingTemplates[i];
+			if (entrance->buildingType == B_ENTRANCE) {
+				/* set up entrance to base */
+				building_t *building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+				vec2_t pos;
+				Vector2Set(pos, rand() % BASE_SIZE, rand() % BASE_SIZE);
+				B_AddBuildingToBasePos(building, base, entrance, hire, pos);
+
+				/* we are done here */
+				i = gd.numBuildingTemplates;
+			}
+		}
+	}
+
 	/* Create random blocked fields in the base.
 	 * The first base never has blocked fields so we skip it. */
 	if (base->idx > 0) {
