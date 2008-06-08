@@ -1677,6 +1677,10 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 
 		MSG_WriteByte(sb, (transfer->destBase ? transfer->destBase->idx : BYTES_NONE));
 		MSG_WriteByte(sb, (transfer->srcBase ? transfer->srcBase->idx : BYTES_NONE));
+		if (transfer->active && !transfer->destBase) {
+			Com_Printf("Could not save transfer, active is true, but no destBase is set\n");
+			return qfalse;
+		}
 		MSG_WriteByte(sb, transfer->active);
 		MSG_WriteByte(sb, transfer->hasItems);
 		MSG_WriteByte(sb, transfer->hasEmployees);
