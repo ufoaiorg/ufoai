@@ -712,7 +712,9 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 		if (!Q_strncmp(od->id, "antimatter", 10))
 			break;
 	}
-	assert(od);
+
+	if (i == csi.numODs)
+		Sys_Error("Could not find antimatter object definition");
 
 	if (add) {	/* Adding. */
 		if (base->capacities[CAP_ANTIMATTER].cur + (amount * ANTIMATTER_SIZE) <= base->capacities[CAP_ANTIMATTER].max) {
