@@ -642,7 +642,6 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 {
 	int i, j;
 	base_t *destination;
-	aircraft_t *aircraft;
 	char message[256];
 
 	assert(transfer);
@@ -670,7 +669,7 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 						for (j = 0; j < transfer->itemAmount[i]; j++) {
 							if (UFO_ConditionsForStoring(destination, ufocraft)) {
 								/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-								baseCurrent->storage.num[i]++;
+								baseCurrent->storage.num[i]++; /* FIXME: Why aren't we using 'destination' here? */
 								if (ufocraft->weight == AIRCRAFT_LARGE)
 									destination->capacities[CAP_UFOHANGARS_LARGE].cur++;
 								else
@@ -685,7 +684,7 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 	}
 
 	if (transfer->hasEmployees && transfer->srcBase) {	/* Employees. (cannot come from a mission) */
-		if (!B_GetBuildingStatus(destination, B_QUARTERS) || !success) {	/* Employees will be unhired. */
+		if (!success || !B_GetBuildingStatus(destination, B_QUARTERS)) {	/* Employees will be unhired. */
 			if (success) {
 				Com_sprintf(message, sizeof(message), _("Base %s does not have Living Quarters, employees got unhired!"), destination->name);
 				MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -695,6 +694,9 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 					if (transfer->trEmployees[i][j]) {
 						employee_t *employee = transfer->trEmployees[i][j];
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
+						/* every employee that we have transfered should have a
+						 * base he is hire in - otherwise we couldn't have transfered him */
+						assert(employee->baseHired);
 						employee->transfer = qfalse;
 						E_UnhireEmployee(employee);
 					}
@@ -706,6 +708,9 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 					if (transfer->trEmployees[i][j]) {
 						employee_t *employee = transfer->trEmployees[i][j];
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
+						/* every employee that we have transfered should have a
+						 * base he is hire in - otherwise we couldn't have transfered him */
+						assert(employee->baseHired);
 						employee->transfer = qfalse;
 						E_UnhireEmployee(employee);
 						E_HireEmployee(destination, employee);
@@ -738,7 +743,7 @@ static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		/* reverse loop: aircraft are deleted in the loop: idx change */
 		for (i = MAX_AIRCRAFT - 1; i >= 0; i--) {
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
-				aircraft = AIR_AircraftGetFromIdx(i);
+				aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
 				assert(aircraft);
 
 				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
@@ -1597,10 +1602,9 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 void TR_TransferCheck (void)
 {
 	int i;
-	transfer_t *transfer;
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
-		transfer = &gd.alltransfers[i];
+		transfer_t *transfer = &gd.alltransfers[i];
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
