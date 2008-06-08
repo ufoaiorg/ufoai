@@ -478,7 +478,7 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
  * @param[in] theta Angle (degree) of the model to the horizontal.
  * @param[in] model The name of the model of the marker.
  */
-qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model)
+qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
 	int x, y, z;
 	vec3_t screenPos, angles, v;
@@ -512,7 +512,7 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 		zoom = 0.4f;
 
 		/* Draw */
-		R_Draw3DMapMarkers(angles, zoom, screenPos, model);
+		R_Draw3DMapMarkers(angles, zoom, screenPos, model, skin);
 		return qtrue;
 	}
 	return qfalse;
@@ -1226,7 +1226,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
 			if (cl_3dmap->integer) {
 				angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
-				MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms));
+				MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
 			} else
 				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
 
@@ -1239,7 +1239,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (projectile->bullets)
 			MAP_DrawBullets(node, projectile);
 		else
-			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile");
+			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", 0);
 	}
 
 	/* Initialise radar range (will be filled below) */
@@ -1271,7 +1271,11 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		/* Draw base */
 		if (cl_3dmap->integer) {
 			angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
-			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base");
+			if (base->baseStatus == BASE_UNDER_ATTACK)
+				/* two skins - second skin is for baseattack */
+				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", 1);
+			else
+				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", 0);
 		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 			if (base->baseStatus == BASE_UNDER_ATTACK)
 				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
@@ -1331,7 +1335,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				}
 
 				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
+				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 			}
 	}
 
@@ -1358,7 +1362,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 		}
 		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
-		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
+		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 	}
 
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;

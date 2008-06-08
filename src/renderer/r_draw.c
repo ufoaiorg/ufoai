@@ -676,7 +676,7 @@ void R_DrawPolygon (int points, int *verts)
  * @brief Draw a 3D Marker on the 3D geoscape
  * @sa MAP_Draw3DMarkerIfVisible
  */
-void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model)
+void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model, int skin)
 {
 	modelInfo_t mi;
 	char path[MAX_QPATH] = "";
@@ -695,6 +695,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 	mi.origin = position;
 	mi.angles = angles;
 	mi.scale = NULL;
+	mi.skin = skin;
 
 	model_center[0] = MARKER_SIZE * zoom;
 	model_center[1] = MARKER_SIZE * zoom;
