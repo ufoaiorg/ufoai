@@ -265,7 +265,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 			return;
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
-			if (r_geoscape_overlay->integer == OVERLAY_RADAR)
+			if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 				MAP_SetOverlay("radar");
 		}
 		break;
@@ -1179,10 +1179,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	const linkedList_t *list = ccs.missions;
 	aircraftProjectile_t *projectile;
 	int x, y, i, baseIdx;
-	base_t* base;
 	const char* font;
 	const vec2_t northPole = {0.0f, 90.0f};
-	float angle = 0.0f;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.5f};
 	const vec4_t white = {.9f, .9f, .9f, 0.5f};
@@ -1225,7 +1223,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
 			if (cl_3dmap->integer) {
-				angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
+				const float angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
 				MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
 			} else
 				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
@@ -1248,7 +1246,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* draw bases */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
@@ -1270,7 +1268,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		/* Draw base */
 		if (cl_3dmap->integer) {
-			angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
+			const float angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
 			if (base->baseStatus == BASE_UNDER_ATTACK)
 				/* two skins - second skin is for baseattack */
 				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", 1);
@@ -1290,6 +1288,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		/* draw all aircraft of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
+				float angle;
 
 				/* Draw aircraft radar */
 				if (r_geoscape_overlay->integer & OVERLAY_RADAR)
@@ -1353,16 +1352,18 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 #endif
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL) || aircraft->notOnGeoscape)
 			continue;
-		if (cl_3dmap->integer)
-			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
-		if (aircraft == selectedUFO) {
+		else {
+			const float angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 			if (cl_3dmap->integer)
-				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-			else
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
+				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
+			if (aircraft == selectedUFO) {
+				if (cl_3dmap->integer)
+					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
+				else
+					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
+			}
+			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 		}
-		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
-		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 	}
 
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
@@ -1418,7 +1419,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	MN_MenuTextReset(TEXT_STANDARD);
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
-		if (r_geoscape_overlay->integer != OVERLAY_RADAR) {
+		if (r_geoscape_overlay->integer & ~OVERLAY_RADAR) {
 			MAP_SetOverlay("radar");
 		}
 

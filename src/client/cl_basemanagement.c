@@ -2971,7 +2971,7 @@ static void B_BuildBase_f (void)
 			return;
 		}
 	} else {
-		if (r_geoscape_overlay->integer == OVERLAY_RADAR)
+		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");
 		if (gd.mapAction == MA_NEWBASE)
 			gd.mapAction = MA_NONE;

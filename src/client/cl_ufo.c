@@ -693,7 +693,7 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 			if (ufo->visible) {
 				MN_AddNewMessage(_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_STANDARD, NULL);
 				/* If this is the first UFO on geoscape, activate radar */
-				if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+				if (r_geoscape_overlay->integer & ~OVERLAY_RADAR)
 					MAP_SetOverlay("radar");
 				CL_GameTimeStop();
 			} else {

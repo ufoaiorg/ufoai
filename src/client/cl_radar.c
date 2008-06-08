@@ -70,9 +70,7 @@ void RADAR_UpdateBaseRadarCoverage (void)
  */
 static void RADAR_DrawCoverage (const radar_t* radar, vec2_t pos)
 {
-	float rangeTracking;
-
-	rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
+	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
 	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
 }
 
@@ -82,13 +80,11 @@ static void RADAR_DrawCoverage (const radar_t* radar, vec2_t pos)
  */
 static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 {
-	float rangeTracking;
-
 	const vec4_t color = {.5, .5, .5, .5};
+	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
+
 	/* Set color */
 	R_Color(color);
-
-	rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
 
 	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
 	MAP_MapDrawEquidistantPoints(node, pos, rangeTracking, color);
@@ -163,7 +159,7 @@ void RADAR_DeactivateRadarOverlay (void)
 		}
 	}
 
-	if ((r_geoscape_overlay->integer & OVERLAY_RADAR))
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 		MAP_SetOverlay("radar");
 }
 
