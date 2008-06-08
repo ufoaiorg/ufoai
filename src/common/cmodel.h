@@ -70,7 +70,7 @@ pos_t Grid_Height(struct routing_s *map, pos3_t pos);
 pos_t Grid_StepUp(struct routing_s *map, pos3_t pos);
 int Grid_Filled(struct routing_s *map, pos3_t pos);
 pos_t Grid_Fall(struct routing_s *map, pos3_t pos, int actor_size);
-void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec);
+void Grid_PosToVec(struct routing_s *map, const pos3_t pos, vec3_t vec);
 
 
 /*==========================================================

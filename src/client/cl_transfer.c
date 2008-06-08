@@ -1734,6 +1734,8 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		assert(gd.numBases);
 		destBase = MSG_ReadByte(sb);
 		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
+		/* @todo: Can (or should) destBase be NULL? If not, check against a null pointer
+		 * for transfer->destbase and return qfalse here */
 		srcBase = MSG_ReadByte(sb);
 		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
 		transfer->active = MSG_ReadByte(sb);

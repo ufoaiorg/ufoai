@@ -617,7 +617,6 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	int planepts[3][3];
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
 
-
 	if (nummapbrushes == MAX_MAP_BRUSHES)
 		Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
 

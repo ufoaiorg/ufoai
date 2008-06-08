@@ -546,7 +546,7 @@ static inline qboolean G_FireAffectedSurface (const cBspSurface_t *surface, cons
  * @param[in] ent The shooting actor
  * @param[in] fd The fire definition that defines what type of damage is dealt and how big the splash radius is.
  * @param[in] impact The impact vector where the grenade is exploding
- * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in,out] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] tr The trace where the grenade hits something (or not)
  */
 static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, trace_t* tr)
@@ -641,8 +641,8 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] z_align This value may change the target z height
  */
-static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
-	vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock, int z_align)
+static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
+	vec3_t from, pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -871,8 +871,8 @@ static void DumpAllEntities (void)
  * @param[in] i The ith shot
  * @param[in] type The firemode (ST_NUM_SHOOT_TYPES)
  */
-static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at,
-	int mask, item_t * weapon, shot_mock_t *mock, int z_align, int i, int type)
+static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
+	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, int type)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? @todo The random dir-modifier ?? */

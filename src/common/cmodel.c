@@ -1889,7 +1889,7 @@ pos_t Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
-void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
+void Grid_PosToVec (struct routing_s *map, const pos3_t pos, vec3_t vec)
 {
 	PosToVec(pos, vec);
 #ifdef PARANOID
