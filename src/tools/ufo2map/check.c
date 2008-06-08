@@ -560,7 +560,7 @@ void CheckLevelFlags (void)
 			side_t *side = &brush->original_sides[j];
 			assert(side);
 
-#ifdef DEBUG
+#if 0
 			Com_Printf("CheckLevelFlags: contentflags before changes %i\n", side->contentFlags);
 #endif
 
