@@ -66,11 +66,16 @@ void RADAR_UpdateBaseRadarCoverage (void)
 /**
  * @brief Update map radar coverage with moving radar
  * @note this is called on every frame
+ * @sa R_AddRadarCoverage
+ * @note Called every second
  */
-static void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
+static inline void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
 {
-	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
-	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
+	/* @todo Only call this when we need an update */
+	if (!(cl.time % 1000)) {
+		const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
+		R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
+	}
 }
 
 /**
@@ -94,7 +99,7 @@ static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar
 /**
  * @brief Display radar in geoscape
  */
-void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
+void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, vec2_t pos)
 {
 	int x, y, z;
 	int i;
@@ -103,7 +108,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 
 	/* Show radar range zones */
 	RADAR_DrawLineCoverage(node, radar, pos);
-	RADAR_DrawCoverage(radar,pos);
+	RADAR_DrawCoverage(radar, pos);
 
 	/* Set color */
 	R_Color(color);
