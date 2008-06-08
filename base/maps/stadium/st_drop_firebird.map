@@ -1,0 +1,289 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxlevel" "4"
+// brush 0
+{
+( 300 104 92 ) ( 300 56 92 ) ( 300 56 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 340 56 92 ) ( 340 104 92 ) ( 340 104 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 300 56 92 ) ( 340 56 92 ) ( 340 56 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 340 104 92 ) ( 300 104 92 ) ( 300 104 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 924 964 60 ) ( 860 964 60 ) ( 860 960 60 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 1248 504 92 ) ( 1264 504 92 ) ( 1264 408 92 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+}
+// brush 1
+{
+( 340 56 92 ) ( 340 56 88 ) ( 340 104 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 412 52 92 ) ( 412 52 88 ) ( 412 20 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 888 786 88 ) ( 904 786 88 ) ( 904 802 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 1248 504 92 ) ( 1264 504 92 ) ( 1264 408 92 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 340 56 88 ) ( 340 56 92 ) ( 412 20 92 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 412 52 88 ) ( 412 52 92 ) ( 340 104 92 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+}
+// brush 2
+{
+( 224 958 48 ) ( 224 962 48 ) ( 224 958 52 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 300 60 88 ) ( 300 60 92 ) ( 300 104 92 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 888 786 88 ) ( 904 786 88 ) ( 904 802 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 1248 504 92 ) ( 1264 504 92 ) ( 1264 408 92 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 224 20 88 ) ( 224 20 92 ) ( 300 60 92 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 224 52 92 ) ( 224 52 88 ) ( 300 104 88 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+}
+// brush 3
+{
+( 368 424 68 ) ( 368 340 68 ) ( 368 340 64 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 444 364 68 ) ( 444 364 64 ) ( 444 340 64 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 196 340 4 ) ( 264 340 4 ) ( 264 340 0 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 640 992 64 ) ( 864 992 64 ) ( 640 1024 64 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 898 832 68 ) ( 898 828 68 ) ( 894 828 68 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 444 364 64 ) ( 444 364 68 ) ( 368 424 68 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+}
+// brush 4
+{
+( 196 364 64 ) ( 196 364 68 ) ( 196 340 68 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 272 340 4 ) ( 272 368 4 ) ( 272 368 0 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 196 340 4 ) ( 264 340 4 ) ( 264 340 0 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 640 992 64 ) ( 864 992 64 ) ( 640 1024 64 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 898 832 68 ) ( 898 828 68 ) ( 894 828 68 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+( 196 364 68 ) ( 196 364 64 ) ( 272 424 64 ) tex_common/nodraw 4 8 0 0.5 0.5 65280 128 0
+}
+// brush 5
+{
+( 256 1088 8 ) ( 256 832 8 ) ( 256 832 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 296 448 112 ) ( 296 480 112 ) ( 296 480 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 642 448 82 ) ( 644 448 82 ) ( 644 448 68 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1148 480 16 ) ( 1148 480 32 ) ( 1144 480 32 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 6
+{
+( 344 480 112 ) ( 344 448 112 ) ( 344 448 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 384 384 0 ) ( 384 692 0 ) ( 384 692 -4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 642 448 82 ) ( 644 448 82 ) ( 644 448 68 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1148 480 16 ) ( 1148 480 32 ) ( 1144 480 32 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 7
+{
+( 224 958 48 ) ( 224 962 48 ) ( 224 958 52 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 256 576 0 ) ( 256 692 0 ) ( 256 692 -4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 512 160 0 ) ( 512 160 64 ) ( 544 160 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 544 192 64 ) ( 512 192 64 ) ( 544 192 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 8
+{
+( 384 448 0 ) ( 384 384 0 ) ( 384 384 -4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 416 832 8 ) ( 416 1088 8 ) ( 416 1088 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 512 160 0 ) ( 512 160 64 ) ( 544 160 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 544 192 64 ) ( 512 192 64 ) ( 544 192 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 9
+{
+( 256 1088 8 ) ( 256 832 8 ) ( 256 832 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 384 384 0 ) ( 384 692 0 ) ( 384 692 -4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 768 64 -4 ) ( 768 64 4 ) ( 1024 64 4 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 544 192 64 ) ( 512 192 64 ) ( 544 192 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 10
+{
+( 224 958 48 ) ( 224 962 48 ) ( 224 958 52 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 416 832 8 ) ( 416 1088 8 ) ( 416 1088 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 704 192 2 ) ( 896 192 2 ) ( 896 192 -4 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1148 224 16 ) ( 1148 224 32 ) ( 1144 224 32 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 11
+{
+( 316 608 112 ) ( 316 576 112 ) ( 316 576 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 324 576 112 ) ( 324 608 112 ) ( 324 608 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 448 576 116 ) ( 450 576 116 ) ( 450 576 68 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 704 608 60 ) ( 640 608 60 ) ( 640 608 -4 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 12
+{
+( 296 576 112 ) ( 296 472 112 ) ( 296 472 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 344 472 112 ) ( 344 576 112 ) ( 344 576 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 416 472 28 ) ( 480 472 28 ) ( 480 472 24 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 624 576 180 ) ( 556 576 180 ) ( 556 576 172 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 13
+{
+( 360 384 112 ) ( 360 304 112 ) ( 360 304 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 400 304 112 ) ( 400 384 112 ) ( 400 384 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 256 304 112 ) ( 280 304 112 ) ( 280 304 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1148 448 16 ) ( 1148 448 32 ) ( 1144 448 32 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 14
+{
+( 280 512 112 ) ( 280 384 112 ) ( 280 384 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 360 384 112 ) ( 360 512 112 ) ( 360 512 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 702 384 10 ) ( 704 384 10 ) ( 704 384 2 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1236 472 80 ) ( 1236 472 96 ) ( 1232 472 96 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 15
+{
+( 240 964 8 ) ( 240 956 8 ) ( 240 956 4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 280 304 112 ) ( 280 384 112 ) ( 280 384 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 256 304 112 ) ( 280 304 112 ) ( 280 304 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1148 448 16 ) ( 1148 448 32 ) ( 1144 448 32 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1248 924 0 ) ( 1276 924 0 ) ( 1248 932 0 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+( 1256 504 112 ) ( 1268 504 112 ) ( 1268 408 112 ) tex_common/actorclip -0 0 0 1 1 65536 0 0
+}
+// brush 16
+{
+( 0 1140 0 ) ( 0 852 0 ) ( 0 852 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 384 576 0 ) ( 384 692 0 ) ( 384 692 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 544 384 2 ) ( 736 384 2 ) ( 736 384 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 792 1024 -4 ) ( 0 1024 -4 ) ( 0 992 -4 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 640 0 0 ) ( 640 64 0 ) ( 840 64 0 ) tex_nature/grass001 128 0 0 0.5 0.5 65280 0 0
+( -256 768 -64 ) ( 512 768 -64 ) ( -256 768 64 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
+}
+// brush 17
+{
+( 384 1140 0 ) ( 384 852 0 ) ( 384 852 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 512 384 0 ) ( 512 692 0 ) ( 512 692 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 830 384 10 ) ( 832 384 10 ) ( 832 384 2 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 1372 768 16 ) ( 1372 768 32 ) ( 1368 768 32 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 792 1024 -4 ) ( 0 1024 -4 ) ( 0 992 -4 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 640 0 0 ) ( 640 64 0 ) ( 840 64 0 ) tex_nature/grass001 128 128 0 0.5 0.5 65280 0 0
+}
+// brush 18
+{
+( 0 1140 0 ) ( 0 852 0 ) ( 0 852 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 640 0 128 ) ( 840 0 128 ) ( 840 0 84 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 988 384 16 ) ( 988 384 32 ) ( 984 384 32 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 792 1024 -4 ) ( 0 1024 -4 ) ( 0 992 -4 ) tex_common/nodraw -0 0 0 0.5 0.5 65280 128 0
+( 640 0 0 ) ( 640 64 0 ) ( 840 64 0 ) tex_nature/grass001 128 128 0 0.5 0.5 65280 0 0
+( 512 768 -64 ) ( 512 0 -64 ) ( 512 768 64 ) tex_common/nodraw 0 0 0 1 1 65280 128 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "320 318 32"
+"model" "models/aircraft/drop_firebird/firebird.md2"
+"spawnflags" "255"
+"angles" "0 270 0"
+}
+// entity 2
+{
+"classname" "info_player_start"
+"origin" "432 304 24"
+"team" "1"
+}
+// entity 3
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 336 28"
+}
+// entity 4
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "304 336 28"
+}
+// entity 5
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "336 272 28"
+}
+// entity 6
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "432 208 24"
+}
+// entity 7
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "208 272 24"
+}
+// entity 8
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "464 400 26"
+}
+// entity 9
+{
+"classname" "info_player_start"
+"team" "1"
+"origin" "400 496 26"
+}
+// entity 10
+{
+"classname" "misc_model"
+"origin" "324 318 32"
+"model" "models/aircraft/drop_firebird/firebird_top.md2"
+"spawnflags" "254"
+"angles" "0 270 0"
+}
+// entity 11
+{
+"classname" "misc_model"
+"origin" "320 318 32"
+"model" "models/aircraft/drop_firebird/firebird_glass.md2"
+"spawnflags" "255"
+"angles" "0 270 0"
+}
+// entity 12
+{
+"classname" "info_human_start"
+"origin" "208 144 24"
+}
+// entity 13
+{
+"classname" "info_human_start"
+"origin" "208 496 24"
+}
+// entity 14
+{
+"classname" "info_human_start"
+"origin" "240 560 24"
+}
+// entity 15
+{
+"classname" "info_human_start"
+"origin" "400 496 26"
+}
+// entity 16
+{
+"classname" "info_human_start"
+"origin" "432 304 24"
+}
+// entity 17
+{
+"classname" "info_human_start"
+"origin" "208 272 24"
+}
+// entity 18
+{
+"classname" "info_human_start"
+"origin" "432 112 24"
+}
+// entity 19
+{
+"classname" "info_human_start"
+"origin" "432 240 24"
+}

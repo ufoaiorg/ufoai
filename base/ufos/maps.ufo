@@ -962,7 +962,7 @@ mapdef spedition
 
 mapdef stadium
 {
-	map				stadium
+	map				+stadium
 	description		"_A stadium used for various recreational events."
 	multiplayer		true
 	teams			2
