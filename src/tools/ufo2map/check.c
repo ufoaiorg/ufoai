@@ -671,7 +671,6 @@ void CheckTextures (void)
 				Com_Printf("* Brush %i (entity %i): set origin texture for CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/origin", sizeof(tex->name));
 			}
-
 		}
 	}
 }
@@ -685,11 +684,11 @@ void CheckBrushes (void)
 		side_t *side0 = &brush->original_sides[0];
 
 		/* Disabled unused variable to prevent compiler warning. */
-		#if 0
+#if 0
 		const int contentFlags = (brush->original_sides[0].contentFlags & CONTENTS_LEVEL_ALL)
 			? brush->original_sides[0].contentFlags
 			: (brush->original_sides[0].contentFlags | CONTENTS_LEVEL_ALL);
-		#endif
+#endif
 
 		Check_DuplicateBrushPlanes(brush);
 
