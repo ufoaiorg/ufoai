@@ -682,6 +682,7 @@ void CheckBrushes (void)
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
+		side_t *side0 = &brush->original_sides[0];
 
 		/* Disabled unused variable to prevent compiler warning. */
 		#if 0
@@ -718,7 +719,7 @@ void CheckBrushes (void)
 			}
 #endif
 
-			if (config.performMapCheck && brush->contentFlags != side->contentFlags) {
+			if (config.performMapCheck && side0->contentFlags != side->contentFlags) {
 				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
 			}
 
