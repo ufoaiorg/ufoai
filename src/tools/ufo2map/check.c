@@ -555,23 +555,23 @@ void CheckLevelFlags (void)
 		mapbrush_t *brush = &mapbrushes[i];
 
 		/* test if all faces are nodraw */
-		allNodraw=qtrue;
+		allNodraw = qtrue;
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
 			assert(side);
 
-			#ifdef DEBUG
+#ifdef DEBUG
 			Com_Printf("CheckLevelFlags: contentflags before changes %i\n", side->contentFlags);
-			#endif
+#endif
 
-			if(!(side->surfaceFlags & SURF_NODRAW)){
+			if (!(side->surfaceFlags & SURF_NODRAW)) {
 				allNodraw = qfalse;
 				break;
 			}
 		}
 
 		/* proceed if some or all faces are not nodraw */
-		if(!allNodraw){
+		if (!allNodraw) {
 			allLevelFlagsForBrush = 0;
 
 			setFlags = qfalse;
