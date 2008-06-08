@@ -64,13 +64,13 @@ typedef struct transfer_s {
 	employee_t *trEmployees[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personel transfering. */
 
 	int aircraftArray[MAX_AIRCRAFT];		/**< Aircraft being transferred. */
-	base_t *destBase;				/**< Pointer to destination base. */
-	base_t *srcBase;				/**< Pointer to source base. */
+	base_t *destBase;				/**< Pointer to destination base. May not be NULL if active is true. */
+	base_t *srcBase;				/**< Pointer to source base. May be NULL if transfer comes from a mission (alien body recovery). */
 	date_t event;					/**< When the transfer finish process should start. */
 	qboolean active;				/**< True if this transfer is under processing. */
 	qboolean hasItems;				/**< Transfer of items. */
 	qboolean hasEmployees;			/**< Transfer of employees. */
-	qboolean hasAliens;				/**< Transfer of Aliens. */
+	qboolean hasAliens;				/**< Transfer of aliens. */
 	qboolean hasAircraft;			/**< Transfer of aircraft. */
 } transfer_t;
 

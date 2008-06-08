@@ -637,7 +637,6 @@ static void TR_TransferListClear_f (void)
  * is already destroyed
  * @param[in] transfer Pointer to transfer in gd.alltransfers.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
- * @note transfer->srcBase may be NULL if transfer comes from a mission (alien body recovery)
  * @sa TR_TransferEnd
  */
 static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qboolean success)
@@ -765,7 +764,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 static void TR_TransferAlienAfterMissionStart (base_t *base)
 {
 	int i, j;
-	transfer_t *transfer = NULL;
+	transfer_t *transfer;
 	float time;
 	char message[256];
 
@@ -774,13 +773,10 @@ static void TR_TransferAlienAfterMissionStart (base_t *base)
 		return;
 	}
 
+	transfer = NULL;
 	/* Find free transfer slot. */
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		if (!gd.alltransfers[i].active) {
-			/* Make sure it is empty here. */
-			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
-			memset(gd.alltransfers[i].trEmployees, 0, sizeof(gd.alltransfers[i].trEmployees));
-			memset(gd.alltransfers[i].aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].aircraftArray));
 			transfer = &gd.alltransfers[i];
 			break;
 		}
@@ -925,6 +921,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 		Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), destination->name);
 		MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	}
+	transfer->active = qfalse;
 }
 
 /**
@@ -935,9 +932,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 static void TR_TransferStart_f (void)
 {
 	int i, j;
-	employee_t *employee;
-	aircraft_t *aircraft;
-	transfer_t *transfer = NULL;
+	transfer_t *transfer;
 	float time;
 	char message[256];
 
@@ -951,13 +946,10 @@ static void TR_TransferStart_f (void)
 		return;
 	}
 
+	transfer = NULL;
 	/* Find free transfer slot. */
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		if (!gd.alltransfers[i].active) {
-			/* Make sure it is empty here. */
-			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
-			memset(gd.alltransfers[i].trEmployees, 0, sizeof(gd.alltransfers[i].trEmployees));
-			memset(gd.alltransfers[i].aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].aircraftArray));
 			transfer = &gd.alltransfers[i];
 			break;
 		}
@@ -992,8 +984,8 @@ static void TR_TransferStart_f (void)
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		for (j = 0; j < gd.numEmployees[i]; j++) {
 			if (trEmployeesTmp[i][j]) {
+				employee_t *employee = trEmployeesTmp[i][j];
 				transfer->hasEmployees = qtrue;
-				employee = trEmployeesTmp[i][j];
 
 				assert(employee->baseHired == baseCurrent);
 
@@ -1018,7 +1010,7 @@ static void TR_TransferStart_f (void)
 	}
 	for (i = 0; i < MAX_AIRCRAFT; i++) {	/* Aircrafts. */
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			aircraft = AIR_AircraftGetFromIdx(i);
+			aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
 			aircraft->status = AIR_TRANSFER;
 			CL_RemoveSoldiersFromAircraft(aircraft);
 			transfer->hasAircraft = qtrue;
@@ -1596,11 +1588,14 @@ void TR_TransferCheck (void)
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer_t *transfer = &gd.alltransfers[i];
+		if (!transfer->active)
+			continue;
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
 			/* Reset this transfer. */
-			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
+			memset(transfer, 0, sizeof(*transfer));
+			memset(transfer->aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(transfer->aircraftArray));
 			return;
 		}
 	}
@@ -1701,11 +1696,10 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 qboolean TR_Load (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
-	transfer_t *transfer;
 	byte destBase, srcBase;
 
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		transfer = &gd.alltransfers[i];
+		transfer_t *transfer = &gd.alltransfers[i];
 		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
 			transfer->itemAmount[j] = MSG_ReadByte(sb);
 		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {

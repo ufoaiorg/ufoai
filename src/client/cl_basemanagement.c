@@ -644,6 +644,41 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 
 	/* Update all capacities of base */
 	B_UpdateBaseCapacities(MAX_CAP, base);
+
+	/* calculate capacities.cur for every capacity */
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
+		base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
+
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)) ||
+		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)))
+		AIR_UpdateHangarCapForAll(base);
+
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
+		base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
+
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
+		INV_UpdateStorageCap(base);
+
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
+		base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
+
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
+		PR_UpdateProductionCap(base);
+
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)))
+		HOS_UpdateHospitalCapForAll(base);
+
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)) ||
+		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)))
+		UFO_UpdateUFOHangarCapForAll(base);
+
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)))
+		INV_UpdateAntimatterCap(base);
+
+	/* Check that current capacity is possible -- if we changed values in *.ufo */
+	for (i = 0; i < MAX_CAP; i++)
+		if (base->capacities[i].cur > base->capacities[i].max)
+			Com_Printf("B_ResetAllStatusAndCapacities_f: Warning, capacity of %i is bigger than maximum capacity\n", i);
 }
 
 #ifdef DEBUG
@@ -653,51 +688,15 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
  */
 static void B_ResetAllStatusAndCapacities_f (void)
 {
-	int baseIdx, i;
-	base_t *base;
+	int baseIdx;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
 		/* set buildingStatus[] and capacities.max values */
 		B_ResetAllStatusAndCapacities(base, qfalse);
-
-		/* calculate capacities.cur for every capacity */
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
-			base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
-
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)) ||
-			B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)))
-			AIR_UpdateHangarCapForAll(base);
-
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
-			base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
-
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
-			INV_UpdateStorageCap(base);
-
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
-			base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
-
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
-			PR_UpdateProductionCap(base);
-
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)))
-			HOS_UpdateHospitalCapForAll(base);
-
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)) ||
-			B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)))
-			UFO_UpdateUFOHangarCapForAll(base);
-
-		if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)))
-			INV_UpdateAntimatterCap(base);
-
-		/* Check that current capacity is possible -- if we changed values in *.ufo */
-		for (i = 0; i < MAX_CAP; i++)
-			if (base->capacities[i].cur > base->capacities[i].max)
-				Com_Printf("B_ResetAllStatusAndCapacities_f: Warning, capacity of %i is bigger than maximum capacity\n", i);
 	}
 }
 #endif
@@ -3882,8 +3881,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			continue;
 		MSG_WriteString(sb, b->name);
 		MSG_WritePos(sb, b->pos);
-		for (k = 0; k < presaveArray[PRE_MBUITY]; k++)
-			MSG_WriteByte(sb, B_GetBuildingStatus(b, k));
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				MSG_WriteByte(sb, b->map[k][l].building ? b->map[k][l].building->idx : BYTES_NONE);
@@ -4019,12 +4016,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
 		}
 
-		/* Base capacities. */
-		for (k = 0; k < presaveArray[PRE_MAXCAP]; k++) {
-			MSG_WriteLong(sb, b->capacities[k].cur);
-			MSG_WriteLong(sb, b->capacities[k].max);
-		}
-
 		/* Hospital stuff. */
 		for (k = 0; k < presaveArray[PRE_EMPTYP]; k++) {
 			MSG_WriteShort(sb, b->hospitalListCount[k]);
@@ -4103,6 +4094,23 @@ static void B_LoadBaseSlots (base_t* base, baseWeapon_t* weapons, int numWeapons
 	}
 }
 
+/**
+ * @brief Set the capacity stuff for all the bases after loading a savegame
+ * @sa SAV_GameActionsAfterLoad
+ */
+void B_PostLoadInit (void)
+{
+	int baseIdx;
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
+		B_ResetAllStatusAndCapacities(base, qtrue);
+	}
+}
+
 #define MAX_TEAMLIST_SIZE_FOR_LOADING 32
 /**
  * @brief Load callback for savegames
@@ -4131,12 +4139,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			continue;
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
+#if 0
 		for (k = 0; k < presaveArray[PRE_MBUITY]; k++) {
 			if (k != B_MISC)
 				B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
 			else
 				MSG_ReadByte(sb);
 		}
+#endif
 
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
@@ -4336,11 +4346,13 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			/** @todo What about the "tech" pointer? */
 		}
 
+#if 1
 		/* Base capacities. */
 		for (k = 0; k < presaveArray[PRE_MAXCAP]; k++) {
 			b->capacities[k].cur = MSG_ReadLong(sb);
 			b->capacities[k].max = MSG_ReadLong(sb);
 		}
+#endif
 
 		/* Hospital stuff. */
 		for (k = 0; k < presaveArray[PRE_EMPTYP]; k++) {
@@ -4362,6 +4374,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	}
 	gd.numBases = B_GetFoundedBaseCount();
 	Cvar_Set("mn_base_count", va("%i", gd.numBases));
+	Cvar_SetValue("mn_base_id", 0);
 
 	return qtrue;
 }

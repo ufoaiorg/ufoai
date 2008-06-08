@@ -557,7 +557,8 @@ void BDEF_RemoveBattery_f (void)
 			return;
 		} else if ((workingNum != max - 1)) {
 			/* Should never happen, we only remove building one by one */
-			Com_Printf("BDEF_RemoveBattery_f: Error while checking number of batteries (%i instead of %i).\n", workingNum, max);
+			Com_Printf("BDEF_RemoveBattery_f: Error while checking number of batteries (%i instead of %i) in base '%s'.\n",
+				workingNum, max, base->name);
 			return;
 		}
 
