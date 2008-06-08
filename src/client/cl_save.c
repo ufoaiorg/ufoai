@@ -94,11 +94,10 @@ static qboolean SAV_PresaveArrayLoad (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
-#ifdef DEBUG
 /**
  * @brief Perform actions after loading a game for single player campaign
  * @sa SAV_GameLoad
- * @todo ATM, this function is only used to check that calculation of base capacity is OK. In near future (after 2.2.1 release ?), we should remove capacities from save/load, and calculate them here so that we don't break savegames if we change values in *.ufo of the way capacity code is handled (weight of items, number of aircraft per hangar, ...)
+ * @todo ATM, this function is only used to check that calculation of base capacity is OK. In near future, we should remove capacities from save/load, and calculate them here so that we don't break savegames if we change values in *.ufo of the way capacity code is handled (weight of items, number of aircraft per hangar, ...)
  * hasBuilding should also be removed from savegame (if we change dependencies of building in *.ufo hangar)
  * @todo For now, this function always return qtrue. When this will be used to actually calculate capacities (see above), it should return qfalse if capacity.cur > capacity.max (see debug_basereset)
  * @todo Suggestion: Use seperate functions of the differnet sub-systems and use them here (see RS_PostLoadInit as an example).
@@ -154,7 +153,6 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 
 	return qtrue;
 }
-#endif
 
 /**
  * @brief Loads a savegame from file
@@ -261,15 +259,11 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		}
 	}
 
-#ifdef DEBUG
-	/* don't check for 2.2 branch: capacity code is really messed up */
-	if (header.version >= 3)
-		SAV_GameActionsAfterLoad(error);
-#endif
+	SAV_GameActionsAfterLoad(error);
 
 	/* Udate research so that it can start (otherwise research does not go on until you entered Laboratory)
-		@todo: FIXME this is only a workaround : RS_UpdateData set a lot of cvars that we don't need here
-		it should be splitted in 2 functions: one that sets the cvars, and one that updates the research status (and that we could use here) */
+	 * @todo: FIXME this is only a workaround : RS_UpdateData set a lot of cvars that we don't need here
+	 * it should be splitted in 2 functions: one that sets the cvars, and one that updates the research status (and that we could use here) */
 	for (i = 0; i < MAX_BASES; i++) {
 		if (gd.bases[i].founded)
 			RS_UpdateData(&gd.bases[i]);
