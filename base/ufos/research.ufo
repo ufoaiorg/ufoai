@@ -741,6 +741,40 @@ tech rs_weapon_rpg_incendiary_ammo
 	producetime	30
 }
 
+tech rs_weapon_xaw95
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_xaw95_txt"
+	}
+	pre_description {
+		default "_xaw95_pre_txt"
+	}
+
+	provides	xaw95
+	time	0
+	producetime	-1
+}
+
+tech rs_weapon_xaw95_ammo
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_xaw95_ammo_txt"
+	}
+	pre_description {
+		default "_xaw95_ammo_pre_txt"
+	}
+
+	provides	xaw95_ammo
+	time	0
+	producetime	-1
+}
+
 tech rs_weapon_chaingun
 {
 	// Note: Multiplayer only
@@ -773,12 +807,6 @@ tech rs_weapon_chaingun_ammo
 	}
 	pre_description {
 		default "_chaingun_ammo_pre_txt"
-	}
-
-	require_AND
-	{
-		tech rs_damage_normal
-		tech rs_weapon_chaingun
 	}
 
 	provides	chaingun_ammo
@@ -1733,6 +1761,80 @@ tech rs_weapon_plasrifle_ammo
 	provides	plasrifle_ammo
 	time	0
 	producetime	40
+}
+
+tech rs_weapon_coilgun
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_coilgun_txt"
+	}
+	pre_description {
+		default "_coilgun_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Coilgun"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Coilgun"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		tech rs_skill_sniper
+		tech rs_weapon_bolterrifle
+	}
+	provides	coilgun
+	time	600
+	producetime	120
+}
+
+tech rs_weapon_coilgun_ammo
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_coilgun_txt"
+	}
+	pre_description {
+		default "_coilgun_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Coilgun Ammo"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Coilgun Ammo"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_coilgun
+	}
+	provides	coilgun_ammo
+	time	0
+	producetime	24
 }
 
 tech rs_weapon_shotgun2
@@ -3637,7 +3739,7 @@ tech rs_alien_taman_autopsy
 	name	"_Alien Autopsy - Taman"
 	type	alien
 	up_chapter	aliens
-	
+
 	description {
 		default "_taman_autopsy_txt"
 		rs_taman_extra "_taman_autopsy_extra_txt"
@@ -3953,7 +4055,7 @@ tech rs_craft_alien_astrogation
 	name		"_Alien Astrogation"
 	type		craftitem
 	up_chapter	crafts
-	
+
 	pre_description {
 		default	"_craft_alien_astrogation_pre_txt"
 	}
