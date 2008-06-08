@@ -4139,14 +4139,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			continue;
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
-#if 1
-		for (k = 0; k < presaveArray[PRE_MBUITY]; k++) {
-			if (k != B_MISC)
-				B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
-			else
-				MSG_ReadByte(sb);
-		}
-#endif
 
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
@@ -4345,14 +4337,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 			/** @todo What about the "tech" pointer? */
 		}
-
-#if 1
-		/* Base capacities. */
-		for (k = 0; k < presaveArray[PRE_MAXCAP]; k++) {
-			b->capacities[k].cur = MSG_ReadLong(sb);
-			b->capacities[k].max = MSG_ReadLong(sb);
-		}
-#endif
 
 		/* Hospital stuff. */
 		for (k = 0; k < presaveArray[PRE_EMPTYP]; k++) {
