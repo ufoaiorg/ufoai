@@ -46,7 +46,6 @@ static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
  */
 void RADAR_UpdateBaseRadarCoverage (void)
 {
-	float rangeTracking;
 	int baseIdx;
 
 	/* Initialise radar range (will be filled below) */
@@ -54,10 +53,10 @@ void RADAR_UpdateBaseRadarCoverage (void)
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-		rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * base->radar.range;
-		R_AddRadarCoverage(base->pos, base->radar.range, rangeTracking, qtrue);
+		if (base) {
+			const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * base->radar.range;
+			R_AddRadarCoverage(base->pos, base->radar.range, rangeTracking, qtrue);
+		}
 	}
 
 	R_InitializeRadarOverlay(qfalse);
