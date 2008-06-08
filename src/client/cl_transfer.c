@@ -71,9 +71,10 @@ static int TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase, int am
 {
 	int i, intransfer = 0, amtransfer = 0;
 	int smallufotransfer = 0, bigufotransfer = 0;
-	aircraft_t *ufocraft;
 
-	assert(od && srcbase && destbase);
+	assert(od);
+	assert(srcbase);
+	assert(destbase);
 
 	/* Count size of all items already on the transfer list. */
 	for (i = 0; i < csi.numODs; i++) {
@@ -81,7 +82,7 @@ static int TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase, int am
 			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
 				amtransfer = ANTIMATTER_SIZE * trItemsTmp[i];
 			if (od->tech->type == RS_CRAFT) {
-				ufocraft = AIR_GetAircraft(od->tech->provides);
+				aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
 				assert(ufocraft);
 				if (ufocraft->weight == AIRCRAFT_LARGE)
 					bigufotransfer++;
@@ -109,8 +110,8 @@ static int TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase, int am
 			/* amount to transfer can't be bigger than what we have */
 			amount = min(amount, (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer) / ANTIMATTER_SIZE);
 		}
-	} if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
-		ufocraft = AIR_GetAircraft(od->tech->provides);
+	} else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
+		aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
 		assert(ufocraft);
 		if (ufocraft->weight == AIRCRAFT_LARGE) {
 			if (!B_GetBuildingStatus(destbase, B_UFO_HANGAR)) {
@@ -279,8 +280,6 @@ static void TR_CargoList (void)
 	int i, cnt = 0;
 	employeeType_t emplType;
 	int trempl[MAX_EMPL];
-	employee_t *employee;
-	aircraft_t *aircraft;
 	static char cargoList[1024];
 	char str[128];
 
@@ -297,7 +296,7 @@ static void TR_CargoList (void)
 	for (i = 0; i < csi.numODs; i++) {
 		if (trItemsTmp[i] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
-			csi.ods[i].name, trItemsTmp[i]);
+				csi.ods[i].name, trItemsTmp[i]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = CARGO_TYPE_ITEM;
 			cargo[cnt].itemidx = i;
@@ -314,7 +313,7 @@ static void TR_CargoList (void)
 		for (i = 0; i < gd.numEmployees[emplType]; i++) {
 			if (trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER) {
-					employee = trEmployeesTmp[emplType][i];
+					employee_t *employee = trEmployeesTmp[emplType][i];
 					Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 					Q_strcat(cargoList, str, sizeof(cargoList));
 					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
@@ -333,7 +332,8 @@ static void TR_CargoList (void)
 		if (emplType == EMPL_SOLDIER)
 			continue;
 		if (trempl[emplType] > 0) {
-			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"), E_GetEmployeeString(emplType), trempl[emplType]);
+			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
+				E_GetEmployeeString(emplType), trempl[emplType]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 			cnt++;
@@ -348,7 +348,7 @@ static void TR_CargoList (void)
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)\n"),
-			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
+				_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = CARGO_TYPE_ALIEN_DEAD;
 			cargo[cnt].itemidx = i;
@@ -362,7 +362,7 @@ static void TR_CargoList (void)
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
-			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
+				_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = CARGO_TYPE_ALIEN_ALIVE;
 			cargo[cnt].itemidx = i;
@@ -377,7 +377,7 @@ static void TR_CargoList (void)
 	/* Show all aircraft. */
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			aircraft = AIR_AircraftGetFromIdx(trAircraftsTmp[i]);
+			aircraft_t *aircraft = AIR_AircraftGetFromIdx(trAircraftsTmp[i]);
 			assert(aircraft);
 			Com_sprintf(str, sizeof(str), _("Aircraft %s\n"), _(aircraft->name));
 			Q_strcat(cargoList, str, sizeof(cargoList));
