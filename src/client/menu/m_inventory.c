@@ -371,9 +371,9 @@ void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 	assert(item.t);
 
 	if (item.amount > 1)
-		Q_strncpyz(tooltiptext, va("%i x %s\n", item.amount, item.t->name), string_maxlength);
+		Com_sprintf(tooltiptext, string_maxlength, "%i x %s\n", item.amount, item.t->name);
 	else
-		Q_strncpyz(tooltiptext, va("%s\n", item.t->name), string_maxlength);
+		Com_sprintf(tooltiptext, string_maxlength, "%s\n", item.t->name);
 
 	/* Only display further info if item.t is researched */
 	if (RS_ItemIsResearched(item.t->id)) {

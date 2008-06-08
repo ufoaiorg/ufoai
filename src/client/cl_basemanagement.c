@@ -3077,7 +3077,7 @@ FIXME
 				}
 
 				if (entry->mapPart)
-					Q_strncpyz(baseMapPart, va("b/%s", entry->mapPart), sizeof(baseMapPart));
+					Com_sprintf(baseMapPart, sizeof(baseMapPart), "b/%s", entry->mapPart);
 				else
 					Com_Printf("B_AssembleMap_f: Error - map has no mapPart set. Building '%s'\n'", entry->id);
 			} else
