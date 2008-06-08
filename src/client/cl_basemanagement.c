@@ -3319,8 +3319,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 					&& minDay > gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart))
 					minDay = gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart);
 			}
-			Com_sprintf(popupText, sizeof(popupText), va(ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
-				minDay), minDay));
+			Com_sprintf(popupText, sizeof(popupText), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
+				minDay), minDay);
 			MN_Popup(_("Notice"), popupText);
 			return;
 		}
@@ -3330,7 +3330,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			assert(building->dependsBuilding);
 			if (B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
-				Com_sprintf(popupText, sizeof(popupText), va(_("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name)));
+				Com_sprintf(popupText, sizeof(popupText), _("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name));
 				MN_Popup(_("Notice"), popupText);
 				return;
 			} else {
@@ -3340,38 +3340,38 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
 					if (gd.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
 					 && gd.buildings[baseIdx][i].buildTime > (ccs.date.day - gd.buildings[baseIdx][i].timeStart)) {
-						Com_sprintf(popupText, sizeof(popupText), va(_("Building %s is not finished yet, and is needed to use building %s."),
-							_(dependenceBuilding->name), _(building->name)));
+						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
+							_(dependenceBuilding->name), _(building->name));
 						MN_Popup(_("Notice"), popupText);
 						return;
 					}
 				}
 				/* the dependence is built but doesn't work - must be because of their dependendes */
-				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
-					_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name)));
+				Com_sprintf(popupText, sizeof(popupText), _("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
+					_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name));
 				MN_Popup(_("Notice"), popupText);
 				return;
 			}
 		}
 		/* all buildings are OK: employees must be missing */
 		if ((building->buildingType == B_WORKSHOP) && (E_CountHired(baseCurrent, EMPL_WORKER) <= 0)) {
-			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_WORKER), _(building->name)));
+			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
+				E_GetEmployeeString(EMPL_WORKER), _(building->name));
 			MN_Popup(_("Notice"), popupText);
 			return;
 		} else if ((building->buildingType == B_HOSPITAL) && (E_CountHired(baseCurrent, EMPL_MEDIC) <= 0)) {
-			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_MEDIC), _(building->name)));
+			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
+				E_GetEmployeeString(EMPL_MEDIC), _(building->name));
 			MN_Popup(_("Notice"), popupText);
 			return;
 		} else if ((building->buildingType == B_LAB) && (E_CountHired(baseCurrent, EMPL_SCIENTIST) <= 0)) {
-			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name)));
+			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
+				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name));
 			MN_Popup(_("Notice"), popupText);
 			return;
 		}
 	} else {
-		Com_sprintf(popupText, sizeof(popupText), va(_("Build a %s first."), _(building->name)));
+		Com_sprintf(popupText, sizeof(popupText), _("Build a %s first."), _(building->name));
 		MN_Popup(_("Notice"), popupText);
 		return;
 	}

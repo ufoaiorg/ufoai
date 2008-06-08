@@ -285,7 +285,7 @@ void IN_JoystickInitMenu (void)
 		if (!selectBoxOption)
 			break;
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), SDL_JoystickName(i));
-		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), va("%i", i));
+		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "%i", i);
 	}
 
 	if (!total) {
