@@ -4139,7 +4139,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			continue;
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
-#if 0
+#if 1
 		for (k = 0; k < presaveArray[PRE_MBUITY]; k++) {
 			if (k != B_MISC)
 				B_SetBuildingStatus(b, k, MSG_ReadByte(sb));
