@@ -67,7 +67,7 @@ void RADAR_UpdateBaseRadarCoverage (void)
  * @brief Update map radar coverage with moving radar
  * @note this is called on every frame
  */
-static void RADAR_DrawCoverage (const radar_t* radar, vec2_t pos)
+static void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
 {
 	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
 	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
@@ -77,7 +77,7 @@ static void RADAR_DrawCoverage (const radar_t* radar, vec2_t pos)
  * @brief Show Radar coverage
  * @sa MAP_MapDrawEquidistantPoints
  */
-static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos)
+static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, const vec2_t pos)
 {
 	const vec4_t color = {.5, .5, .5, .5};
 	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
