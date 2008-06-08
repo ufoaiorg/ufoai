@@ -148,7 +148,6 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 	int i;
 	qboolean met_AND = qfalse;
 	qboolean met_OR = qfalse;
-	const requirement_t *req;
 
 	if (!required_AND && !required_OR) {
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
@@ -164,7 +163,7 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 	if (required_AND->numLinks) {
 		met_AND = qtrue;
 		for (i = 0; i < required_AND->numLinks; i++) {
-			req = &required_AND->links[i];
+			const requirement_t *req = &required_AND->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
 				assert(req->link);
@@ -235,7 +234,7 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 
 	if (required_OR->numLinks)
 		for (i = 0; i < required_OR->numLinks; i++) {
-			req = &required_OR->links[i];
+			const requirement_t *req = &required_OR->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
 				assert(req->link);
@@ -462,16 +461,15 @@ void RS_MarkCollected (technology_t* tech)
 void RS_MarkResearchable (qboolean init)
 {
 	int i;
-	technology_t *tech;
 
 	/* Set all entries to initial value. */
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
+		technology_t *tech = RS_GetTechByIDX(i);
 		tech->statusResearchable = qfalse;
 	}
 
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
-		tech = RS_GetTechByIDX(i);
+		technology_t *tech = RS_GetTechByIDX(i);
 		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
 			/* Check for collected items/aliens/etc... */
 			if (tech->statusResearch != RS_FINISH) {
@@ -1380,9 +1378,7 @@ static void RS_MarkResearched (technology_t *tech)
 void CL_CheckResearchStatus (void)
 {
 	int i, newResearch = 0;
-	technology_t *tech;
 	base_t* checkBases[MAX_BASES];
-	base_t *base;
 
 	if (!researchListLength)
 		return;
@@ -1390,12 +1386,12 @@ void CL_CheckResearchStatus (void)
 	memset(checkBases, 0, sizeof(checkBases));
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
+		technology_t *tech = RS_GetTechByIDX(i);
 		if (tech->statusResearch == RS_RUNNING) {
 			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
 			if (tech->time > 0 && tech->scientists > 0) {
+				base_t *base = tech->base;
 				assert(tech->base);	/**< If there are scientitsts there _has_ to be a base. */
-				base = tech->base;
 				if (B_GetBuildingStatus(base, B_LAB)) {
 					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
 					Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
@@ -2509,25 +2505,29 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
  * @brief Called after savegame-load (all subsystems) is complete. Restores the base-pointers for each tech.
  * The base-pointer is searched with the base-index that was parsed in RS_Load.
  * @sa RS_Load
- * @sa cl_save.c:SAV_GameActionsAfterLoad
+ * @sa SAV_GameActionsAfterLoad
  */
 void RS_PostLoadInit (void)
 {
-	technology_t *t;
-	int baseIndex;
+	/* this list has an entry for the tech and for the base index */
 	linkedList_t *techBases = loadTechBases;
 
 	while (techBases) {
-		t = (technology_t *) techBases->data;
-		techBases = techBases->next;
-		baseIndex = *(int*)techBases->data;
+		technology_t *t = (technology_t *) techBases->data;
+		const int baseIndex = *(int *)techBases->next->data;
 		/* Com_Printf("RS_PostLoadInit: DEBUG %s %i\n", t->id, baseIndex); */
 		if (baseIndex >= 0)
 			t->base = B_GetBaseByIDX(baseIndex);
 		else
 			t->base = NULL;
-		techBases = techBases->next;
-	};
+#ifdef DEBUG
+		if (t->statusResearch == RS_RUNNING && t->scientists > 0) {
+			if (!t->base)
+				Sys_Error("No base but research is running and scientists are assigned");
+		}
+#endif
+		techBases = techBases->next->next;
+	}
 
 	/* Clear linked list. */
 	LIST_Delete(&loadTechBases);
