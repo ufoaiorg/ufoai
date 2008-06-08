@@ -1,0 +1,197 @@
+//========================
+// COILGUN
+//========================
+item coilgun
+{
+	name		"_Coilgun"
+	model		weapons/coilgun/coilgun
+	weapon		true
+	type		rifle
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded 	true
+	shape		"0 0 5 2"
+	center		"9 0 3"
+	scale		1.05
+	ammo		2
+	reload		10
+	price		9000
+	size		30
+	buytype	weap_pri
+}
+
+item coilgun_ammo
+{
+	name            "_Coilgun Clip"
+	model           weapons/coilgun/coilgun_ammo
+	type		ammo
+	animationindex	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.15
+	price		85
+	size		10
+	buytype	weap_pri
+	dmgtype normal
+
+	weapon_mod coilgun
+	{
+		firedef
+		{
+			name	"_Snap Shot"
+			skill	sniper
+			projtl  bolter
+			impact  bolterImpact
+			hitbody null
+			firesnd weapons/bolter2
+			speed	0
+			spread	"0.9 0.9"
+			crouch	0.3
+			range	250
+			shots	1
+			ammo	1
+			time	12
+			damage	"180 0"
+			dmgweight normal_heavy
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Aimed Shot"
+			skill	sniper
+			projtl  bolter
+			impact  bolterImpact
+			hitbody null
+			firesnd weapons/bolter2
+			speed	0
+			spread	"0.5 0.5"
+			crouch	0.3
+			range	250
+			shots	1
+			ammo	1
+			time	18
+			damage	"180 0"
+			dmgweight normal_heavy
+		}
+		firedef
+		{
+			name	"_Headshot"
+			skill	sniper
+			projtl  bolter
+			impact  bolterImpact
+			hitbody null
+			firesnd weapons/bolter2
+			speed	0
+			spread	"0.8 0.8"
+			crouch	0.3
+			range	250
+			shots	1
+			ammo	1
+			time	24
+			damage	"250 0"
+			dmgweight normal_heavy
+		}
+	}
+}
+
+
+// =======================
+// XAW95 VINDICATOR
+// =======================
+item xaw95
+{
+	name		"_XAW95"
+	model		weapons/xaw95/xaw95
+	weapon		true
+	type		biggun
+	animationindex	1
+	holdtwohanded	true
+	firetwohanded	true
+	shape		"0 0 5 2"
+	center		"9 0 2"
+	scale		1.0
+	ammo		200
+	reload		25
+	price		50000
+	size		40
+	buytype	weap_pri
+}
+
+item xaw95_ammo
+{
+	name		"_XAW95 Magazine"
+	model		weapons/xaw95/xaw95_ammo
+	type		ammo
+	animationindex	0
+	shape		"0 0 4 2"
+	center		"-3 -6 0"
+	scale		1.6
+	price		7500
+	size		10
+	buytype	weap_pri
+	dmgtype normal
+
+	weapon_mod xaw95
+	{
+		firedef
+		{
+			name	"_10-Round Burst"
+			skill	heavy
+			projtl	bullet
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/chaingun
+			speed	0
+			spread	"0.5 2"
+			crouch	1.3
+			range	80
+			shots	10
+			ammo	10
+			delaybetweenshots		10
+			time	15
+			damage	"25 3"
+			dmgweight normal_spray
+			reaction 	true
+		}
+		firedef
+		{
+			name	"_Full-Auto"
+			skill	heavy
+			projtl	bullet
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/chaingun
+			speed	0
+			spread	"1.5 3"
+			crouch	1.3
+			range	80
+			shots	50
+			ammo	50
+			delaybetweenshots		20
+			time	30
+			damage	"25 3"
+			dmgweight normal_spray
+			reaction 	true
+		}
+		firedef
+		{
+			name	"_Full-Auto Sweep"
+			skill	heavy
+			projtl	bullet
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/chaingun
+			speed	0
+			spread	"1.5 7.5"
+			crouch	1.3
+			range	80
+			shots	50
+			ammo	50
+			delaybetweenshots		20
+			time	30
+			damage	"25 3"
+			dmgweight normal_spray
+			reaction 	true
+		}
+	}
+}
