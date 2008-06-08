@@ -800,8 +800,8 @@ static void TR_TransferAlienAfterMissionStart (base_t *base)
 		transfer->event.sec -= 3600 * 24;
 		transfer->event.day++;
 	}
-	transfer->destBase = base;	/* Destination base index. */
-	transfer->srcBase = NULL;	/* Source base index. */
+	transfer->destBase = base;	/* Destination base. */
+	transfer->srcBase = NULL;	/* Source base. */
 	transfer->active = qtrue;
 
 	for (i = 0; i < transferStartAircraft->alientypes; i++) {		/* Aliens. */
@@ -977,9 +977,9 @@ static void TR_TransferStart_f (void)
 		transfer->event.sec -= 3600 * 24;
 		transfer->event.day++;
 	}
-	transfer->destBase = transferBase;	/* Destination base index. */
+	transfer->destBase = transferBase;	/* Destination base. */
 	assert(transfer->destBase);
-	transfer->srcBase = baseCurrent;	/* Source base index. */
+	transfer->srcBase = baseCurrent;	/* Source base. */
 	transfer->active = qtrue;
 	for (i = 0; i < csi.numODs; i++) {	/* Items. */
 		if (trItemsTmp[i] > 0) {
