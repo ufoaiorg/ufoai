@@ -633,25 +633,19 @@ static void TR_TransferListClear_f (void)
 
 /**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
+ * @param[in,out] destination The destination base - might be NULL in case the base
+ * is already destroyed
  * @param[in] transfer Pointer to transfer in gd.alltransfers.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
  * @note transfer->srcBase may be NULL if transfer comes from a mission (alien body recovery)
  * @sa TR_TransferEnd
  */
-static void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
+static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qboolean success)
 {
 	int i, j;
-	base_t *destination;
 	char message[256];
 
 	assert(transfer);
-
-	if (success) {
-		assert(transfer->destBase);
-		destination = transfer->destBase;
-	} else {
-		destination = NULL;
-	}
 
 	if (transfer->hasItems && success) {	/* Items. */
 		if (!B_GetBuildingStatus(destination, B_STORAGE)) {
@@ -918,19 +912,16 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
  */
 static void TR_TransferEnd (transfer_t *transfer)
 {
-	const base_t* destination;
-	char message[256];
-
-	assert(transfer);
-	destination = transfer->destBase;
+	base_t* destination = transfer->destBase;
 	assert(destination);
 
 	if (!destination->founded) {
-		TR_EmptyTransferCargo(transfer, qfalse);
+		TR_EmptyTransferCargo(NULL, transfer, qfalse);
 		MN_AddNewMessage(_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
 		/* @todo: what if source base is lost? we won't be able to unhire transfered personel. */
 	} else {
-		TR_EmptyTransferCargo(transfer, qtrue);
+		char message[256];
+		TR_EmptyTransferCargo(destination, transfer, qtrue);
 		Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), destination->name);
 		MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	}
