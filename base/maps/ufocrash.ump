@@ -415,4 +415,3 @@ size "7 5"
 +craft_crash_supply "1 1"
 *rm_drop +drop_firebird "1 1"
 }
-

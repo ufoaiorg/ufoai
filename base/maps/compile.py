@@ -91,5 +91,3 @@ if not os.path.isdir(mapdir):
 print "Found %d maps, %d compiled" % compile(mapdir)
 
 print "Done."
-
- 	  	 
