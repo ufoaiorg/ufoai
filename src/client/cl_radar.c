@@ -59,27 +59,59 @@ void RADAR_UpdateBaseRadarCoverage (void)
 		}
 	}
 
+	/* Smooth and bind radar overlay without aircraft (in case no aircraft is on geoscape:
+	 * RADAR_UpdateWholeRadarOverlay won't be called) */
 	R_InitializeRadarOverlay(qfalse);
 	R_UploadRadarCoverage(qtrue);
 }
 
 /**
  * @brief Update map radar coverage with moving radar
- * @note this is called on every frame
- * @sa R_AddRadarCoverage
- * @note Called every second
+ * @sa RADAR_UpdateWholeRadarOverlay
  */
 static inline void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
 {
-	/* @todo Only call this when we need an update */
-	if (!(cl.time % 1000)) {
-		const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
-		R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
-	}
+	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
+
+	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
 }
 
 /**
- * @brief Show Radar coverage
+ * @brief Update radar overlay of both radar and aircraft range.
+ * @param[in] node The menu node where radar coverage will be drawn.
+ * @param[in] radar Pointer to the radar that will be drawn.
+ * @param[in] pos Position of the radar.
+ * @param[in] updateOverlay True if only radar "wire" coverage should be drawn (for bases).
+ * False if both overlay and wire coverage should be drawn (for aircraft).
+ */
+void RADAR_UpdateWholeRadarOverlay (void)
+{
+	int baseIdx;
+
+	/* Copy Base radar overlay*/
+	R_InitializeRadarOverlay(qfalse);
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
+		int aircraftIdx;
+		if (!base)
+			continue;
+ 
+		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
+			if (AIR_IsAircraftOnGeoscape(&base->aircraft[aircraftIdx]))
+				RADAR_DrawCoverage(&base->aircraft[aircraftIdx].radar, base->aircraft[aircraftIdx].pos);
+		}
+	}
+
+	/* Smooth Radar Coverage and bind it */
+	R_UploadRadarCoverage(qtrue);
+}
+
+/**
+ * @brief Draw only the "wire" Radar coverage.
+ * @param[in] node The menu node where radar coverage will be drawn.
+ * @param[in] radar Pointer to the radar that will be drawn.
+ * @param[in] pos Position of the radar.
  * @sa MAP_MapDrawEquidistantPoints
  */
 static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, const vec2_t pos)
@@ -97,7 +129,10 @@ static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar
 }
 
 /**
- * @brief Display radar in geoscape
+ * @brief Draw only the "wire" part of the radar coverage in geoscape
+ * @param[in] node The menu node where radar coverage will be drawn.
+ * @param[in] radar Pointer to the radar that will be drawn.
+ * @param[in] pos Position of the radar.
  */
 void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, vec2_t pos)
 {
@@ -108,7 +143,6 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, vec2_t pos)
 
 	/* Show radar range zones */
 	RADAR_DrawLineCoverage(node, radar, pos);
-	RADAR_DrawCoverage(radar, pos);
 
 	/* Set color */
 	R_Color(color);

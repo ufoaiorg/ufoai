@@ -1009,6 +1009,7 @@ void CL_CampaignRunAircraft (int dt)
 {
 	aircraft_t *aircraft;
 	int i, j, k;
+	qboolean radarOverlayReset = qfalse; /**< true if at least one aircraft moved: radar overlay must be updated */
 
 	for (j = 0; j < MAX_BASES; j++) {
 		base_t *base = B_GetBaseByIDX(j);
@@ -1062,6 +1063,8 @@ void CL_CampaignRunAircraft (int dt)
 						}
 					}
 					AB_UpdateStealthForAllBase(aircraft, dt);
+					/* radar overlay should be updated */
+					radarOverlayReset = qtrue;
 				} else if (aircraft->status == AIR_REFUEL) {
 					/* Aircraft is refueling at base */
 					aircraft->fuel += dt;
@@ -1096,6 +1099,11 @@ void CL_CampaignRunAircraft (int dt)
 				/* FIXME: Maybe even Sys_Error? */
 				Com_Printf("CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')\n", j, aircraft->id);
 			}
+	}
+
+	if (radarOverlayReset && (r_geoscape_overlay->integer & OVERLAY_RADAR)) {
+		RADAR_UpdateWholeRadarOverlay();
+		radarOverlayReset = qfalse;
 	}
 }
 

@@ -1240,10 +1240,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", 0);
 	}
 
-	/* Initialise radar range (will be filled below) */
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-		R_InitializeRadarOverlay(qfalse);
-
 	/* draw bases */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
@@ -1262,7 +1258,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			}
 		}
 
-		/* Draw base radar info */
+		/* Draw base radar (only the "wire" style part) */
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			RADAR_DrawInMap(node, &base->radar, base->pos);
 
@@ -1290,7 +1286,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				float angle;
 
-				/* Draw aircraft radar */
+				/* Draw aircraft radar (only the "wire" style part) */
 				if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 					RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
 
@@ -1380,10 +1376,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		mn.menuText[TEXT_XVI] = buffer;
 	else
 		MN_MenuTextReset(TEXT_XVI);
-
-	/* Smooth Radar Coverage */
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-		R_UploadRadarCoverage(qfalse);
 }
 
 /**
@@ -2103,8 +2095,10 @@ void MAP_SetOverlay (const char *overlayID)
 		}
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
-		else
+		else {
 			r_geoscape_overlay->integer |= OVERLAY_RADAR;
+			RADAR_UpdateWholeRadarOverlay();
+		}
  	}
 }
 

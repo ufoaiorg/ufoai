@@ -1420,12 +1420,24 @@ byte* R_XVIMapCopy (int *width, int *height)
 	return buf;
 }
 
+/**
+ * @brief Radar overlay code description
+ * The radar overlay is handled in 2 times : bases radar range and aircraft radar range.
+ * Bases radar range needs to be updated only when a radar facilities is built or destroyed.
+ * The base radar overlay is stored in r_radarSourcePic.
+ * Aircraft radar overlay needs to be updated every time an aircraft moves, because the position of the radar moves.
+ * this overlay is created by duplicating r_radarSourcePic, and then adding any aircraft radar coverage. It is stored in r_radarTexture
+ * @sa RADAR_UpdateWholeRadarOverlay
+ */
+
 image_t *r_radarTexture;					/**< radar texture */
 static byte *r_radarPic;					/**< radar picture (base and aircraft radar) */
 static byte *r_radarSourcePic;				/**< radar picture (only base radar) */
 
 /**
  * @brief Create radar overlay on geoscape.
+ * @note This function allocate memory for radar images and texture.
+ * It should be called only once per game.
  */
 void R_CreateRadarOverlay (void)
 {
@@ -1451,7 +1463,8 @@ void R_CreateRadarOverlay (void)
 
 /**
  * @brief Initialize radar overlay on geoscape.
- * @param[in] source Initialize the source texture if qtrue.
+ * @param[in] source Initialize the source texture if qtrue: if you are updating base radar overlay.
+ * false if you are updating aircraft radar overlay (base radar overlay will be copied to aircraft radar overlay)
  */
 void R_InitializeRadarOverlay (qboolean source)
 {
@@ -1470,7 +1483,7 @@ void R_InitializeRadarOverlay (qboolean source)
 }
 
 /**
- * @brief Add a radar coverage to radar overlay
+ * @brief Add a radar coverage (base or aircraft) to radar overlay
  * @param[in] pos Position of the center of radar
  * @param[in] innerRadius Radius of the radar coverage
  * @param[in] outerRadius Radius of the outer radar coverage
@@ -1518,6 +1531,8 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 
 /**
  * @brief Smooth radar coverage
+ * @param[in] smooth Smoothes the picture if set to True (should be used only when all radars have been added)
+ * @note allows to make texture pixels less visible.
  */
 void R_UploadRadarCoverage (qboolean smooth)
 {
