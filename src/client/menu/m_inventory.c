@@ -433,7 +433,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	assert(menuInventory);
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
-	if (mouseSpace == MS_DRAG && dragInfo.item.t)	/**@todo "&& dragInfo.item.t->ammo)" <-- Why didn't this work? do we not set ->ammo anymore? */
+	if (mouseSpace == MS_DRAG && dragInfo.item.t)
 		drawLoadable = qtrue;
 
 	if (csi.ids[node->mousefx].single) {
