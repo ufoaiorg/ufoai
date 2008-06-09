@@ -52,14 +52,14 @@ static int vertexchain[MAX_MAP_VERTS];		/* the next vertex in a hash chain */
 static int hashverts[HASH_SIZE * HASH_SIZE];	/* a vertex number, or 0 for no verts */
 
 
-static unsigned HashVec (vec3_t vec)
+static unsigned HashVec (const vec3_t vec)
 {
 	int x, y;
 
 	x = (4096 + (int)(vec[0] + 0.5)) >> 7;
 	y = (4096 + (int)(vec[1] + 0.5)) >> 7;
 
-	if ( x < 0 || x >= HASH_SIZE || y < 0 || y >= HASH_SIZE )
+	if (x < 0 || x >= HASH_SIZE || y < 0 || y >= HASH_SIZE)
 		Sys_Error("HashVec: point outside valid range");
 
 	return y * HASH_SIZE + x;
@@ -234,7 +234,7 @@ static void EmitVertexes_r (node_t *node)
 /**
  * @brief Uses the hash tables to cut down to a small number
  */
-static void FindEdgeVerts (vec3_t v1, vec3_t v2)
+static void FindEdgeVerts (const vec3_t v1, const vec3_t v2)
 {
 	int x1, x2, y1, y2, t;
 	int x, y, vnum;

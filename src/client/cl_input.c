@@ -565,6 +565,33 @@ static void CL_TurnUp_f (void)
 	cl.cmode = M_MOVE;
 }
 
+static void CL_HudRadarDown_f (void)
+{
+	const menu_t* menu = MN_GetMenu(mn_hud->string);
+	menuNode_t *hudRadarNode;
+
+	if (!menu)
+		return;
+
+	hudRadarNode = MN_GetNode(menu, "hudradar");
+	if (hudRadarNode)
+		MN_UnHideNode(hudRadarNode);
+	else
+		Com_Printf("Could not get a hudradar node from menu: '%s'\n", menu->name);
+}
+
+static void CL_HudRadarUp_f (void)
+{
+	const menu_t* menu = MN_GetMenu(mn_hud->string);
+	menuNode_t *hudRadarNode;
+
+	if (!menu)
+		return;
+
+	hudRadarNode = MN_GetNode(menu, "hudradar");
+	if (hudRadarNode)
+		MN_HideNode(hudRadarNode);
+}
 
 /**
  * @brief Right mouse button is hit in menu
@@ -1722,6 +1749,9 @@ void IN_Init (void)
 	Cmd_AddCommand("-action", CL_ActionUp_f, NULL);
 	Cmd_AddCommand("+turn", CL_TurnDown_f, _("Turn soldier toward mouse pointer"));
 	Cmd_AddCommand("-turn", CL_TurnUp_f, NULL);
+	Cmd_AddCommand("+hudradar", CL_HudRadarDown_f, _("Toggles the hud radar mode"));
+	Cmd_AddCommand("-hudradar", CL_HudRadarUp_f, NULL);
+
 	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
 	Cmd_AddCommand("togglecrouchreserve", CL_ActorToggleCrouchReservation_f, _("Toggle reservation for crouching."));

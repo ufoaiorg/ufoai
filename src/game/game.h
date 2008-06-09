@@ -167,7 +167,7 @@ typedef struct {
 	pos_t (IMPORT *MoveNext) (struct routing_s * map, pos3_t from);
 	pos_t (IMPORT *GridHeight) (struct routing_s * map, pos3_t pos);
 	pos_t (IMPORT *GridFall) (struct routing_s * map, pos3_t pos, int actor_size);
-	void (IMPORT *GridPosToVec) (struct routing_s * map, const pos3_t pos, vec3_t vec);
+	void (IMPORT *GridPosToVec) (struct routing_s * map, pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
 
 	/* filesystem functions */

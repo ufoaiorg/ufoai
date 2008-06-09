@@ -73,8 +73,8 @@ static void ProcessSubModel (int entityNum)
 	start = e->firstbrush;
 	end = start + e->numbrushes;
 
-	mins[0] = mins[1] = mins[2] = -4096;
-	maxs[0] = maxs[1] = maxs[2] = 4096;
+	mins[0] = mins[1] = mins[2] = -MAX_WORLD_WIDTH;
+	maxs[0] = maxs[1] = maxs[2] = MAX_WORLD_WIDTH;
 	/* every level (-1) */
 	list = MakeBspBrushList(start, end, -1, mins, maxs);
 	if (!config.nocsg)

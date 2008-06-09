@@ -1765,4 +1765,12 @@ menu althud
 		mousefx	true
 		click { cmd "list_firemodes l;" }
 	}
+
+	radar hudradar
+	{
+		pos	"100 100"
+		bgcolor	"0.3 0.3 0.3 0.8"
+		blend	yes
+		invis	true
+	}
 }

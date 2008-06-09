@@ -316,7 +316,7 @@ void R_SetupGL3D (void)
 	/* set up projection matrix */
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity();
-	MYgluPerspective(4.0, 4096.0);
+	MYgluPerspective(4.0, MAX_WORLD_WIDTH);
 
 	qglMatrixMode(GL_MODELVIEW);
 	qglLoadIdentity();

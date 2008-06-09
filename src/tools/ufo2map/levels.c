@@ -231,11 +231,11 @@ void ProcessLevel (unsigned int levelnum)
 	/* get maxs */
 	mins[0] = (config.block_xl) * 512.0 + 1.0;
 	mins[1] = (config.block_yl) * 512.0 + 1.0;
-	mins[2] = -4096.0 + 1.0;
+	mins[2] = -MAX_WORLD_WIDTH + 1.0;
 
 	maxs[0] = (config.block_xh + 1.0) * 512.0 - 1.0;
 	maxs[1] = (config.block_yh + 1.0) * 512.0 - 1.0f;
-	maxs[2] = 4096.0 - 1.0;
+	maxs[2] = MAX_WORLD_WIDTH - 1.0;
 
 	Sys_FPrintf(SYS_VRB, "Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels);
 	/* Com_Printf("Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels); */

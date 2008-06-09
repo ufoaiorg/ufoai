@@ -1498,4 +1498,12 @@ menu hud
 	string right_fm_shot5 { string "*cvar mn_r_fm_shot5"	pos "270 294"	invis true }
 	string right_fm_shot6 { string "*cvar mn_r_fm_shot6"	pos "270 230"	invis true }
 	string right_fm_shot7 { string "*cvar mn_r_fm_shot7"	pos "270 166"	invis true }
+
+	radar hudradar
+	{
+		pos	"100 100"
+		bgcolor	"0.3 0.3 0.3 0.8"
+		blend	yes
+		invis	true
+	}
 }

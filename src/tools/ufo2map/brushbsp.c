@@ -753,7 +753,7 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 	for (i = 0; i < 2; i++) {
 		BoundBrush(b[i]);
 		for (j = 0; j < 3; j++) {
-			if (b[i]->mins[j] < -4096 || b[i]->maxs[j] > 4096) {
+			if (b[i]->mins[j] < -MAX_WORLD_WIDTH || b[i]->maxs[j] > MAX_WORLD_WIDTH) {
 				Sys_FPrintf(SYS_VRB, "bogus brush after clip\n");
 				break;
 			}

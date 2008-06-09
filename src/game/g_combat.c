@@ -871,7 +871,7 @@ static void DumpAllEntities (void)
  * @param[in] i The ith shot
  * @param[in] type The firemode (ST_NUM_SHOOT_TYPES)
  */
-static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
+static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, pos3_t at,
 	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, int type)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */

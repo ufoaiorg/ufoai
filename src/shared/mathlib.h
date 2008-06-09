@@ -97,21 +97,22 @@ extern const float dangle[DIRECTIONS];
 extern const byte dvright[DIRECTIONS];
 extern const byte dvleft[DIRECTIONS];
 
-/** @brief Map boundary is +/- 4096 - to get into the positive area we add the
+/** @brief Map boundary is +/- MAX_WORLD_WIDTH - to get into the positive area we add the
  * possible max negative value and divide by the size of a grid unit field */
 #define VecToPos(v, p) (                  \
-	p[0] = ((int)v[0] + 4096) / UNIT_SIZE,  \
-	p[1] = ((int)v[1] + 4096) / UNIT_SIZE,  \
-	p[2] =  (int)v[2]         / UNIT_HEIGHT \
+	p[0] = ((int)v[0] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
+	p[1] = ((int)v[1] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
+	p[2] =  (int)v[2]                    / UNIT_HEIGHT \
 )
 /** @brief Pos boundary size is +/- 128 - to get into the positive area we add
  * the possible max negative value and multiply with the grid unit size to get
  * back the the vector coordinates - now go into the middle of the grid field
- * by adding the half of the grid unit size to this value */
+ * by adding the half of the grid unit size to this value
+ * @sa PATHFINDING_WIDTH */
 #define PosToVec(p, v) ( \
-	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + UNIT_SIZE   / 2, \
-	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + UNIT_SIZE   / 2, \
-	v[2] =  (int)p[2]        * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
+	v[0] = ((int)p[0] - GRID_WIDTH) * UNIT_SIZE   + UNIT_SIZE   / 2, \
+	v[1] = ((int)p[1] - GRID_WIDTH) * UNIT_SIZE   + UNIT_SIZE   / 2, \
+	v[2] =  (int)p[2]               * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
 )
 
 /** @brief Returns the distance between two 3-dimensional vectors */

@@ -32,11 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @note holds all entity data as a single parsable string */
 char map_entitystring[MAX_MAP_ENTSTRING];
 
-/** @note holds the smallest bounding box that will contain the map
- *  @sa CL_ClampCamToMap (cl_input.c)
- *  @sa CL_OutsideMap (cl_le.c)
- *  @sa CMod_GetMapSize (cmodel.c)
- *  @sa SV_ClearWorld (sv_world.c)
+/**
+ * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative
+ * @note holds the smallest bounding box that will contain the map
+ * @sa CL_ClampCamToMap
+ * @sa CL_OutsideMap
+ * @sa CMod_GetMapSize
+ * @sa SV_ClearWorld
  */
 vec3_t map_min, map_max;
 
@@ -944,8 +946,8 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
  * @param[in] sX The x position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
  * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH / 2) up to PATHFINDING_WIDTH / 2 are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 up to PATHFINDING_HEIGHT are allowed
- * @note The sX and sY values are grid positions - max. grid size is 256 - unit size is
- * 32 => ends up at 8192 (the worldplace size - or [-4096, 4096])
+ * @note The sX and sY values are grid positions - max. grid size is PATHFINDING_WIDTH - unit size is
+ * UNIT_SIZE => ends up at 2*MAX_WORLD_WIDTH (the worldplace size - or [-MAX_WORLD_WIDTH, MAX_WORLD_WIDTH])
  * @return The checksum of the maptile
  * @return 0 on error
  * @sa CM_LoadMap
@@ -1791,8 +1793,9 @@ pos_t Grid_Height (struct routing_s *map, pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Height: Warning: z level is bigger than 7: %i\n", pos[2]);
-		pos[2] &= 7;
+		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
+			(PATHFINDING_HEIGHT - 1), pos[2]);
+		pos[2] &= (PATHFINDING_HEIGHT - 1);
 	}
 	return R_HEIGHT(map, pos[0], pos[1], pos[2]) * QUANT;
 }
@@ -1859,7 +1862,7 @@ pos_t Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 	if (z == 0)
 		return 0;
 
-	/* Reduce z if we can fall down - depending on actor size we also check the atatched squares. */
+	/* Reduce z if we can fall down - depending on actor size we also check the attached squares. */
 	switch (actor_size) {
 	case ACTOR_SIZE_NORMAL:
 		while (z > 0 && R_FALL(map, pos[0], pos[1], z)) {
@@ -1889,7 +1892,7 @@ pos_t Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
-void Grid_PosToVec (struct routing_s *map, const pos3_t pos, vec3_t vec)
+void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
 {
 	PosToVec(pos, vec);
 #ifdef PARANOID

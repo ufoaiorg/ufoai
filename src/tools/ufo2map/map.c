@@ -438,9 +438,9 @@ static qboolean MakeBrushWindings (mapbrush_t *brush)
 	}
 
 	for (i = 0; i < 3; i++) {
-		if (brush->mins[0] < -4096 || brush->maxs[0] > 4096)
+		if (brush->mins[0] < -MAX_WORLD_WIDTH || brush->maxs[0] > MAX_WORLD_WIDTH)
 			Com_Printf("entity %i, brush %i: bounds out of world range\n", brush->entitynum, brush->brushnum);
-		if (brush->mins[0] > 4096 || brush->maxs[0] < -4096)
+		if (brush->mins[0] > MAX_WORLD_WIDTH || brush->maxs[0] < -MAX_WORLD_WIDTH)
 			Com_Printf("entity %i, brush %i: no visible sides on brush\n", brush->entitynum, brush->brushnum);
 	}
 
@@ -1047,7 +1047,7 @@ void LoadMapFile (const char *filename)
 
 	ClearBounds(map_mins, map_maxs);
 	for (i = 0; i < entities[0].numbrushes; i++) {
-		if (mapbrushes[i].mins[0] > 4096)
+		if (mapbrushes[i].mins[0] > MAX_WORLD_WIDTH)
 			continue;	/* no valid points */
 		AddPointToBounds(mapbrushes[i].mins, map_mins, map_maxs);
 		AddPointToBounds(mapbrushes[i].maxs, map_mins, map_maxs);

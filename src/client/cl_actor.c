@@ -5161,10 +5161,7 @@ static void CL_AddPathingBox (pos3_t pos)
  */
 void CL_AddPathing (void)
 {
-	pos3_t pos, mins, maxs;
-
-	VecToPos(map_min, mins);
-	VecToPos(map_max, maxs);
+	pos3_t pos;
 
 	pos[2] = cl_worldlevel->integer;
 	for (pos[1] = max(mousePos[1] - 8, 0); pos[1] <= min(mousePos[1] + 8, PATHFINDING_WIDTH - 1); pos[1]++)

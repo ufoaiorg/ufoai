@@ -63,7 +63,7 @@ static const char *svc_strings[UCHAR_MAX + 1] =
  * b	| byte		| 1
  * s	| short		| 2
  * l	| long		| 4
- * p	| pos		| 6 (map boudaries - (-8192) - (8192))
+ * p	| pos		| 6 (map boudaries - (-MAX_WORLD_WIDTH) - (MAX_WORLD_WIDTH))
  * g	| gpos		| 3
  * d	| dir		| 1
  * a	| angle		| 1
