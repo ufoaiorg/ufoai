@@ -47,7 +47,7 @@ dragInfo_t dragInfo = {
  */
 void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 {
-	int px, py, sel;
+	int sel;
 
 	if (!menuInventory)
 		return;
@@ -64,11 +64,15 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 		invList_t *ic;
 
 		/* normalize it */
-		px = (int) (x - node->pos[0]) / C_UNIT;
-		py = (int) (y - node->pos[1]) / C_UNIT;
+		int px = (int) (x - node->pos[0]) / C_UNIT;
+		int py = (int) (y - node->pos[1]) / C_UNIT;
+
+		/**< @todo Add sanity check for node->mousefx here - no assert */
+		assert(node->mousefx >= 0);
+		assert(node->mousefx < MAX_INVDEFS);
 
 		/* start drag (mousefx represents container number) */
-		ic = Com_SearchInInventory(menuInventory, &csi.ids[node->mousefx], px, py);	/**< @todo Add sanity check for node->mousefx here */
+		ic = Com_SearchInInventory(menuInventory, &csi.ids[node->mousefx], px, py);
 		if (ic) {
 			if (!rightClick) {
 				/* found item to drag */
@@ -137,14 +141,17 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 /*			MN_DrawTooltip("f_verysmall", csi.ods[dragInfo.item.t].name, px, py, 0);*/
 		}
 	} else {
+		const int px = (int) ((x - node->pos[0] - C_UNIT * ((dragInfo.item.t->sx - 1) / 2.0)) / C_UNIT);
+		const int py = (int) ((y - node->pos[1] - C_UNIT * ((dragInfo.item.t->sy - 1) / 2.0)) / C_UNIT);
 		/* end drag */
 		mouseSpace = MS_NULL;
-		px = (int) ((x - node->pos[0] - C_UNIT * ((dragInfo.item.t->sx - 1) / 2.0)) / C_UNIT);
-		py = (int) ((y - node->pos[1] - C_UNIT * ((dragInfo.item.t->sy - 1) / 2.0)) / C_UNIT);
 
 		/* tactical mission */
 		if (selActor) {
-			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragInfo.from, dragInfo.fromX, dragInfo.fromY, node->mousefx, px, py);
+			assert(node->mousefx >= 0);
+			assert(node->mousefx < MAX_INVDEFS);
+			assert(dragInfo.from);
+			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragInfo.from->id, dragInfo.fromX, dragInfo.fromY, node->mousefx, px, py);
 			return;
 		/* menu */
 		}
@@ -491,10 +498,13 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 	/**@todo Draw tooltips for dragged ammo (and info about weapon it can be loaded in when hovering over it). */
 	/* Draw tooltip for weapon or ammo */
-	if (mouseSpace != MS_DRAG && node->state && mn_show_tooltips->integer)
+	if (mouseSpace != MS_DRAG && node->state && mn_show_tooltips->integer) {
+		assert(node->mousefx >= 0);
+		assert(node->mousefx < MAX_INVDEFS);
 		/* Find out where the mouse is */
 		return Com_SearchInInventory(menuInventory,
 			&csi.ids[node->mousefx], (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);		/**< @todo Add sanity check for node->mousefx here */
+	}
 
 	return NULL;
 }

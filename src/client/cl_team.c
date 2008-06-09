@@ -955,8 +955,12 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytypeContainer)
 
 	/* This is a container that might hold some of the affected items.
 	 * Move'em to the target (buytypeContainer) container (if there are any) */
-	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: buytypeContainer:%i\n", buytypeContainer);
-	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: container:%i\n", container);
+	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: buytypeContainer:%i container: %i\n",
+		buytypeContainer, container);
+
+	assert(container >= 0);
+	assert(container < MAX_INVDEFS);
+
 	ic = inv->c[container];
 	while (ic) {
 		if (ic->item.t->buytype == BUY_MULTI_AMMO) {

@@ -1363,6 +1363,8 @@ static void CL_InvAmmo (struct dbuffer *msg)
 	if (le->team != cls.team)
 		return;
 
+	assert(container >= 0);
+	assert(container < MAX_INVDEFS);
 	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
 	if (!ic)
 		return;
@@ -1394,6 +1396,8 @@ static void CL_InvReload (struct dbuffer *msg)
 	if (le->team != cls.team)
 		return;
 
+	assert(container >= 0);
+	assert(container < MAX_INVDEFS);
 	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
 	if (!ic)
 		return;

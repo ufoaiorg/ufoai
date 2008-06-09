@@ -2325,9 +2325,9 @@ int G_ClientAction (player_t * player)
 		else
 			toPtr = NULL;
 		if (!fromPtr || !toPtr)
-			Com_DPrintf(DEBUG_GAME, "G_ClientAction: PA_INVMOVE Container index out of range.\n");
-
-		G_ClientInvMove(player, num, fromPtr, fx, fy, toPtr, tx, ty, qtrue, NOISY);
+			Com_Printf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
+		else
+			G_ClientInvMove(player, num, fromPtr, fx, fy, toPtr, tx, ty, qtrue, NOISY);
 		break;
 
 	case PA_USE_DOOR:

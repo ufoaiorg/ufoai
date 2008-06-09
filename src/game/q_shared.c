@@ -28,7 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 
-/** @brief Player action format strings for netchannel transfer */
+/** @brief Player action format strings for netchannel transfer
+ * @note They all have a prefix
+ * @sa MSG_Write_PA */
 const char *pa_format[] =
 {
 	"",					/**< PA_NULL */
@@ -37,7 +39,7 @@ const char *pa_format[] =
 	"s",				/**< PA_STATE - don't use a bitmask here - only one value
 						 * @sa G_ClientStateChange */
 	"gbbl",				/**< PA_SHOOT */
-	"s",					/**< PA_USE_DOOR */
+	"s",				/**< PA_USE_DOOR */
 	"bbbbbb",			/**< PA_INVMOVE */
 	"sss",				/**< PA_REACT_SELECT */
 	"sss"				/**< PA_RESERVE_STATE */
