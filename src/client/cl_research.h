@@ -210,9 +210,9 @@ typedef struct technology_s {
 	markResearched_t markResearched;	/**< Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
 	/* Pedia info */
-	int up_chapter;			/**< UFOpaedia chapter as stored in research.ufo. */
-	int prev;			/**< Previous tech in pedia. */
-	int next;			/**< Next tech in pedia. */
+	pediaChapter_t *upChapter;					/**< UFOpaedia chapter as stored in research.ufo. */
+	struct technology_s *upPrev;	/**< Previous tech in pedia. */
+	struct technology_s *upNext;	/**< Next tech in pedia. */
 
 	techMail_t mail[TECHMAIL_MAX];	/**< UFOpaedia mails. See techMailType_t for the different array-entries. */
 	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equalt to TECHMAIL_MAX both mailtypes are available. */

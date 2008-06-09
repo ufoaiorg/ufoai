@@ -1757,7 +1757,6 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	const value_t *vp;
 	technology_t *tech;
 	unsigned hash;
-	int tech_old;
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
 	const char *token;
 	requirements_t *requiredTemp;
@@ -1819,10 +1818,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech->time = 0;
 	tech->overalltime = 0;
 	tech->scientists = 0;
-	tech->prev = TECH_INVALID;
-	tech->next = TECH_INVALID;
+	tech->upPrev = NULL;
+	tech->upNext = NULL;
 	tech->base = NULL;
-	tech->up_chapter = -1;
+	tech->upChapter = NULL;
 
 	do {
 		/* get the name type */
@@ -2042,19 +2041,19 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					for (i = 0; i < gd.numChapters; i++) {
 						if (!Q_strncmp(token, gd.upChapters[i].id, MAX_VAR)) {
 							/* add entry to chapter */
-							tech->up_chapter = i;
+							tech->upChapter = &gd.upChapters[i];
 							if (!gd.upChapters[i].first) {
-								gd.upChapters[i].first = tech->idx;
-								gd.upChapters[i].last = tech->idx;
-								tech->prev = TECH_INVALID;
-								tech->next = TECH_INVALID;
+								gd.upChapters[i].first = tech;
+								gd.upChapters[i].last = tech;
+								tech->upPrev = NULL;
+								tech->upNext = NULL;
 							} else {
 								/* get "last entry" in chapter */
-								tech_old = gd.upChapters[i].last;
-								gd.upChapters[i].last = tech->idx;
-								gd.technologies[tech_old].next = tech->idx;
-								gd.technologies[gd.upChapters[i].last].prev = tech_old;
-								gd.technologies[gd.upChapters[i].last].next = TECH_INVALID;
+								technology_t *techOld = gd.upChapters[i].last;
+								gd.upChapters[i].last = tech;
+								techOld->upNext = tech;
+								gd.upChapters[i].last->upPrev = techOld;
+								gd.upChapters[i].last->upNext = NULL;
 							}
 							break;
 						}
