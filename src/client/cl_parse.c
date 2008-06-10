@@ -399,7 +399,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 	switch (i) {
 	case CS_TILES:
 	case CS_POSITIONS:
-		Q_strncpyz(cl.configstrings[i], s, MAX_TOKEN_CHARS*MAX_TILESTRINGS);
+		Q_strncpyz(cl.configstrings[i], s, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		break;
 	default:
 		Q_strncpyz(cl.configstrings[i], s, MAX_TOKEN_CHARS);

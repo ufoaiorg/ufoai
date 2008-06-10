@@ -1002,7 +1002,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	/* prepare map and pos strings */
 	if (basePath[0]) {
 		asmMap[0] = '-';
-		Q_strncpyz(&asmMap[1], basePath, MAX_QPATH-1);
+		Q_strncpyz(&asmMap[1], basePath, MAX_QPATH - 1);
 		*map = asmMap;
 	} else {
 		asmMap[0] = 0;
