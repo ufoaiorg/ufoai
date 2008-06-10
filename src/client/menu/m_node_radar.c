@@ -101,7 +101,6 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 
 /**
  * @sa CMod_GetMapSize
- * @todo Show le->dir for actors
  * @todo Show frustom view area for actors
  * @note we only need to handle the 2d plane and can ignore the z level
  * @note To create radar images, you should type @code camsetangles 90 90 @endcode
