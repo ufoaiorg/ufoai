@@ -28,15 +28,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_font.h"
 
-/**
- * @brief Holds the list of images for the hud radar (more than one in case of
- * random map assembly) and the list of offsets (also only in case of rma)
- * @note Entries:
- * mapname (string)
- * x coord (float)
- * y coord (float)
- */
-static linkedList_t *imageList;
+typedef struct hudRadar_s {
+	/** The dimension of the icons on the radar map */
+	float gridHeight, gridWidth;
+	char base[MAX_QPATH];
+	/** Holds the list of images for the hud radar (more than one in case of
+	 * random map assembly) and the list of offsets (also only in case of rma)
+	 * @note Entries: mapname (string) x coord (float) y coord (float) maxlevel (int) */
+	linkedList_t *imageList;
+} hudRadar_t;
+
+static hudRadar_t radar;
 
 /**
  * @brief Reads the tiles and position config strings and convert them into a
@@ -49,9 +51,9 @@ static linkedList_t *imageList;
 static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 {
 	char name[MAX_VAR];
-	char base[MAX_QPATH];
 
-	LIST_Delete(&imageList);
+	LIST_Delete(&radar.imageList);
+	memset(&radar, 0, sizeof(radar));
 
 	/* load tiles */
 	while (tiles) {
@@ -64,16 +66,15 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 
 		/* get base path */
 		if (token[0] == '-') {
-			Q_strncpyz(base, token + 1, sizeof(base));
+			Q_strncpyz(radar.base, token + 1, sizeof(radar.base));
 			continue;
 		}
 
 		/* get tile name */
 		if (token[0] == '+')
-			Com_sprintf(name, MAX_VAR, "%s%s", base, token + 1);
-		else
-			Q_strncpyz(name, token, sizeof(name));
-		LIST_AddString(&imageList, name);
+			token++;
+		Com_sprintf(name, sizeof(name), "%s%s", radar.base, token);
+		LIST_AddString(&radar.imageList, name);
 
 		if (pos && pos[0]) {
 			int i;
@@ -85,15 +86,15 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
-			LIST_Add(&imageList, (byte *)&sh[0], sizeof(float)); /* x */
-			LIST_Add(&imageList, (byte *)&sh[1], sizeof(float)); /* y */
-			LIST_Add(&imageList, (const byte *)&map_maxlevel, sizeof(int));
+			LIST_Add(&radar.imageList, (byte *)&sh[0], sizeof(float)); /* x */
+			LIST_Add(&radar.imageList, (byte *)&sh[1], sizeof(float)); /* y */
+			LIST_Add(&radar.imageList, (const byte *)&map_maxlevel, sizeof(int));
 		} else {
 			/* load only a single tile, if no positions are specified */
 			const float coord = 0.0f;
-			LIST_Add(&imageList, (const byte *)&coord, sizeof(float)); /* x */
-			LIST_Add(&imageList, (const byte *)&coord, sizeof(float)); /* y */
-			LIST_Add(&imageList, (const byte *)&map_maxlevel, sizeof(int));
+			LIST_Add(&radar.imageList, (const byte *)&coord, sizeof(float)); /* x */
+			LIST_Add(&radar.imageList, (const byte *)&coord, sizeof(float)); /* y */
+			LIST_Add(&radar.imageList, (const byte *)&map_maxlevel, sizeof(int));
 			return;
 		}
 	}
@@ -107,7 +108,7 @@ static void MN_InitRadar (void)
 	/* only check once per map whether all the needed images exist */
 	for (i = 1; i < map_maxlevel + 1; i++) {
 		/* map_mins, map_maxs */
-		linkedList_t *list = imageList;
+		linkedList_t *list = radar.imageList;
 		while (list) {
 			const char *mapname = (const char *)list->data;
 			char imageName[MAX_QPATH];
@@ -146,8 +147,6 @@ static void MN_InitRadar (void)
 void MN_DrawRadar (menuNode_t *node)
 {
 	const le_t *le;
-	/** The dimension of the icons on the radar map */
-	float gridHeight, gridWidth;
 	/** radar image dimensions */
 	int w, h;
 	int i;
@@ -167,7 +166,7 @@ void MN_DrawRadar (menuNode_t *node)
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
 
 	w = h = 0;
-	list = imageList;
+	list = radar.imageList;
 	while (list) {
 		float x, y;
 		int picWidth, picHeight;
@@ -226,8 +225,8 @@ void MN_DrawRadar (menuNode_t *node)
 	VectorSet(b, c[0], a[1], 0);
 
 	/* get the dimensions for one grid field on the radar map */
-	gridWidth = w / (Vector2Dist(a, b) / UNIT_SIZE);
-	gridHeight = h / (Vector2Dist(b, c) / UNIT_SIZE);
+	radar.gridWidth = w / (Vector2Dist(a, b) / UNIT_SIZE);
+	radar.gridHeight = h / (Vector2Dist(b, c) / UNIT_SIZE);
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
@@ -249,8 +248,8 @@ void MN_DrawRadar (menuNode_t *node)
 			float actorDirection = 0.0f;
 			int verts[4];
 			/* relative to screen */
-			const int x = (screenPos[0] + pos[0] * gridWidth + gridWidth / 2) * viddef.rx;
-			const int y = (screenPos[1] + (h - pos[1] * gridHeight) + gridWidth / 2) * viddef.ry;
+			const int x = (screenPos[0] + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
+			const int y = (screenPos[1] + (h - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
 
 			/* use different alpha values for different levels */
 			if (actorLevel < cl_worldlevel->integer)
@@ -275,24 +274,24 @@ void MN_DrawRadar (menuNode_t *node)
 			actorDirection = dangle[le->dir] * torad;
 			verts[0] = x;
 			verts[1] = y;
-			verts[2] = x + (gridWidth * cos(actorDirection));
-			verts[3] = y - (gridWidth * sin(actorDirection));
+			verts[2] = x + (radar.gridWidth * cos(actorDirection));
+			verts[3] = y - (radar.gridWidth * sin(actorDirection));
 			R_DrawLine(verts, 5);
 
 			/* draw player circles */
-			R_DrawCircle2D(x, y, gridWidth / 2, qtrue, color, 1);
+			R_DrawCircle2D(x, y, radar.gridWidth / 2, qtrue, color, 1);
 			Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
 			/* outline */
-			R_DrawCircle2D(x, y, gridWidth / 2, qfalse, color, 2);
+			R_DrawCircle2D(x, y, radar.gridWidth / 2, qfalse, color, 2);
 			break;
 		}
 		case ET_ITEM:
 		{
 			const vec4_t color = {0, 1, 0, 1};
 			/* relative to screen */
-			const int x = (screenPos[0] + pos[0] * gridWidth) * viddef.rx;
-			const int y = (screenPos[1] + (h - pos[1] * gridHeight)) * viddef.ry;
-			R_DrawFill(x, y, gridWidth, gridHeight, ALIGN_UL, color);
+			const int x = (screenPos[0] + pos[0] * radar.gridWidth) * viddef.rx;
+			const int y = (screenPos[1] + (h - pos[1] * radar.gridHeight)) * viddef.ry;
+			R_DrawFill(x, y, radar.gridWidth, radar.gridHeight, ALIGN_UL, color);
 			break;
 		}
 		}
