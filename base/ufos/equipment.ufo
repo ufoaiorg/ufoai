@@ -193,8 +193,8 @@ equipment multiplayer_alien
 	xaw95_ammo			5
 	coilgun				2
 	coilgun_ammo		5
-	needler				2
-	needler_ammo		5
+	needlergun			2
+	needlergun_ammo		5
 	flamer				2
 	flamer_ammo			3
 	rpg					2
@@ -277,8 +277,8 @@ equipment multiplayer
 	xaw95_ammo			5
 	coilgun				2
 	coilgun_ammo		5
-	needler				2
-	needler_ammo		5
+	needlergun			2
+	needlergun_ammo		5
 	bolterrifle			2
 	bolterrifle_ammo	3
 	laserpistol			2
@@ -356,8 +356,8 @@ equipment multiplayer_initial
 //	xaw95_ammo			5
 //	coilgun				2
 //	coilgun_ammo		5
-//	needler				2
-//	needler_ammo		5
+//	needlergun			2
+//	needlergun_ammo		5
 	plaspistol			10
 	plaspistol_ammo		25
 	plasrifle			6
