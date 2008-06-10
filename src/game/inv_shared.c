@@ -811,12 +811,6 @@ void Com_FindSpace (const inventory_t* const inv, item_t *item, const invDef_t *
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 			checkedTo = Com_CheckToInventory(inv, item->t, container, x, y);
 			if (checkedTo) {
-				if (checkedTo == INV_FITS_ONLY_ROTATED) {
-					/* Set rotated tag */
-					/** @todo remove this again when moving out of a container. */
-					Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: setting rotate tag (%s: %s in %s)\n", item->t->type, item->t->id, container->name);
-					item->rotated = qtrue;
-				}
 				cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
 				*py = y;
