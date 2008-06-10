@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Each maptile must have an entry in the images array */
 typedef struct hudRadarImage_s {
 	char *name;		/**< the mapname */
-	char *path;		/**< the path to the image (including name) */
+	char *path[PATHFINDING_HEIGHT];		/**< the path to the image (including name) */
 	int w, h;		/**< the width and height of the image */
 	int x, y;		/**< random map assembly x and y positions, @sa UNIT_SIZE */
 	int screenX, screenY;
@@ -55,11 +55,12 @@ static hudRadar_t radar;
 
 static void MN_FreeRadarImages (void)
 {
-	int i;
+	int i, j;
 
 	for (i = 0; i < radar.numImages; i++) {
 		Mem_Free(radar.images[i].name);
-		Mem_Free(radar.images[i].path);
+		for (j = 0; j < radar.images[i].maxlevel; j++)
+			Mem_Free(radar.images[i].path[j]);
 	}
 	memset(&radar, 0, sizeof(radar));
 }
@@ -111,101 +112,58 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 			}
 			image->x = sh[0];
 			image->y = sh[1];
-			image->maxlevel = map_maxlevel;
 		} else {
 			/* load only a single tile, if no positions are specified */
 			image->x = 0;
 			image->y = 0;
-			image->maxlevel = map_maxlevel;
 			return;
 		}
 	}
 }
 
+/**
+ * @brief Calculate some radar values that won't change during a mission
+ * @note Called for every new map (client_state_t is wiped with every
+ * level change)
+ */
 static void MN_InitRadar (const menuNode_t *node)
 {
-	int i;
+	int i, j;
+	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 
 	MN_FreeRadarImages();
 	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+
+	radar.x = node->pos[0];
+	radar.y = node->pos[1];
+
 	/* only check once per map whether all the needed images exist */
-	for (i = 1; i < map_maxlevel + 1; i++) {
+	for (i = 0; i < PATHFINDING_HEIGHT; i++) {
 		/* map_mins, map_maxs */
-		int j;
 		for (j = 0; j < radar.numImages; j++) {
 			hudRadarImage_t *image = &radar.images[j];
-			const char *mapname = image->name;
 			char imageName[MAX_QPATH];
 
-			Com_sprintf(imageName, sizeof(imageName), "pics/radars/%s_%i.tga", mapname, i);
+			Com_sprintf(imageName, sizeof(imageName), "pics/radars/%s_%i.tga", image->name, i + 1);
 			if (FS_CheckFile(imageName) <= 0) {
-				if (i == 1) {
+				if (i == 0) {
 					/* there should be at least one level */
-					Com_Printf("No radar images for map: '%s' (%s)\n", mapname, imageName);
+					Com_Printf("No radar images for map: '%s' (%s)\n", image->name, imageName);
 					cl.skipRadarNodes = qtrue;
-					return;
-				} else {
-					/* update the max map level entry */
-					image->maxlevel = i - 1;
 				}
+			} else {
+				Com_sprintf(imageName, sizeof(imageName), "radars/%s_%i", image->name, i + 1);
+				image->path[i] = Mem_PoolStrDup(imageName, cl_localPool, CL_TAG_NONE);
+
+				image->maxlevel++;
+
+				R_DrawGetPicSize(&image->w, &image->h, image->path[i]);
+				if (image->w > VID_NORM_WIDTH || image->h > VID_NORM_HEIGHT)
+					Com_Printf("Image '%s' is too big\n", image->path[i]);
 			}
 		}
 	}
 
-	cl.radarInited = qtrue;
-}
-
-/**
- * @sa CMod_GetMapSize
- * @todo Show frustom view area for actors
- * @note we only need to handle the 2d plane and can ignore the z level
- * @param[in] node The radar menu node (located in the hud menu definitions)
- */
-void MN_DrawRadar (menuNode_t *node)
-{
-	const le_t *le;
-	int i;
-	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
-	char imageName[MAX_QPATH];
-	vec3_t pos;
-
-	/* the cl struct is wiped with every new map */
-	if (!cl.radarInited)
-		MN_InitRadar(node);
-
-	if (VectorNotEmpty(node->bgcolor))
-		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
-
-	radar.w = radar.h = 0;
-	for (i = 0; i < radar.numImages; i++) {
-		hudRadarImage_t *image = &radar.images[i];
-		float x, y;
-		int picWidth, picHeight;
-		int maxlevel = cl_worldlevel->integer + 1;
-		const char *mapname = image->name;
-		/* FIXME for RMA the coordinates are not yet done - they have to
-		 * be converted (most likely) */
-		x = image->x;
-		y = image->y;
-
-		/* check the max level value for this map tile */
-		if (maxlevel > image->maxlevel)
-			maxlevel = image->maxlevel;
-
-		Com_sprintf(imageName, sizeof(imageName), "radars/%s_%i", mapname, maxlevel);
-
-		R_DrawGetPicSize(&picWidth, &picHeight, imageName);
-		if (picWidth > VID_NORM_WIDTH || picHeight > VID_NORM_HEIGHT) {
-			Com_Printf("Image '%s' is too big\n", imageName);
-		} else {
-			radar.w = max(radar.w, x + picWidth);
-			radar.h = max(radar.h, y + picHeight);
-			R_DrawNormPic(node->pos[0] + x, node->pos[1] + y, 0, 0, 0, 0, 0, 0, node->align, node->blend, imageName);
-		}
-	}
-
-	radar.x = node->pos[0];
-	radar.y = node->pos[1];
 	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch (node->align % 3) {
 		/* center */
@@ -227,6 +185,16 @@ void MN_DrawRadar (menuNode_t *node)
 		}
 	}
 
+	for (j = 0; j < radar.numImages; j++) {
+		hudRadarImage_t *image = &radar.images[j];
+		/* FIXME: image->x and image->y are wrong here */
+		image->screenX = radar.x + image->x;
+		image->screenY = radar.y + image->y;
+
+		radar.w = max(radar.w, image->screenX + image->w);
+		radar.h = max(radar.h, image->screenY + image->h);
+	}
+
 	/* get the three points of the triangle */
 	VectorSubtract(map_min, offset, radar.a);
 	VectorAdd(map_max, offset, radar.c);
@@ -235,6 +203,38 @@ void MN_DrawRadar (menuNode_t *node)
 	/* get the dimensions for one grid field on the radar map */
 	radar.gridWidth = radar.w / (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
 	radar.gridHeight = radar.h / (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
+
+	cl.radarInited = qtrue;
+}
+
+/**
+ * @sa CMod_GetMapSize
+ * @todo Show frustom view area for actors
+ * @note we only need to handle the 2d plane and can ignore the z level
+ * @param[in] node The radar menu node (located in the hud menu definitions)
+ */
+void MN_DrawRadar (menuNode_t *node)
+{
+	const le_t *le;
+	int i;
+	vec3_t pos;
+
+	/* the cl struct is wiped with every new map */
+	if (!cl.radarInited)
+		MN_InitRadar(node);
+
+	if (VectorNotEmpty(node->bgcolor))
+		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
+
+	for (i = 0; i < radar.numImages; i++) {
+		hudRadarImage_t *image = &radar.images[i];
+		int maxlevel = cl_worldlevel->integer;
+		/* check the max level value for this map tile */
+		if (maxlevel >= image->maxlevel)
+			maxlevel = image->maxlevel - 1;
+		assert(image->path[maxlevel]);
+		R_DrawNormPic(image->screenX, image->screenY, 0, 0, 0, 0, 0, 0, node->align, node->blend, image->path[maxlevel]);
+	}
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
