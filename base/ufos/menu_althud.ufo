@@ -1768,9 +1768,10 @@ menu althud
 
 	radar hudradar
 	{
-		pos	"100 100"
+		pos	"512 384"
 		bgcolor	"0.3 0.3 0.3 0.8"
 		blend	yes
 		invis	true
+		align	cc
 	}
 }
