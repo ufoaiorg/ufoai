@@ -309,7 +309,7 @@ static void SCR_DrawCursor (void)
 			if (checkedTo == INV_FITS_ONLY_ROTATED)
 				dragInfo.item.rotated = qtrue;
 
-			if (checkedTo) {
+			if (checkedTo && Q_strncmp(dragInfo.item.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
 				if (dragInfo.to->single) { /* Get center of single container for placement of preview item */
 					VectorSet(org, dragInfo.toNode->pos[0] + dragInfo.toNode->size[0] / 2.0, dragInfo.toNode->pos[1] + dragInfo.toNode->size[1] / 2.0, -40);
 				} else {

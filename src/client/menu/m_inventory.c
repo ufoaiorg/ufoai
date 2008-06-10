@@ -422,7 +422,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 {
 	const vec3_t scale = {3.5, 3.5, 3.5};
 	vec4_t color = {1, 1, 1, 1};
-	vec4_t colorLoadable = {1, 0.5, 0.5, 1};
+	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 	qboolean drawLoadable = qfalse;
 
 	if (node->mousefx == C_UNDEFINED)
