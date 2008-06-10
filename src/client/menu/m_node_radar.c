@@ -103,10 +103,6 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
  * @sa CMod_GetMapSize
  * @todo Show frustom view area for actors
  * @note we only need to handle the 2d plane and can ignore the z level
- * @note To create radar images, you should type @code camsetangles 90 90 @endcode
- * and make sreenshots for every level of the map. The images should be cut and
- * they should all have the same dimensions. The images should not be bigger than
- * VID_NORM_WIDTH and VID_NORM_HEIGHT
  * @param[in] node The radar menu node (located in the hud menu definitions)
  */
 void MN_DrawRadar (menuNode_t *node)
