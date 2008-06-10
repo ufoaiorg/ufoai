@@ -99,6 +99,44 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 	}
 }
 
+static void MN_InitRadar (void)
+{
+	int i;
+
+	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+	/* only check once per map whether all the needed images exist */
+	for (i = 1; i < map_maxlevel + 1; i++) {
+		/* map_mins, map_maxs */
+		linkedList_t *list = imageList;
+		while (list) {
+			const char *mapname = (const char *)list->data;
+			char imageName[MAX_QPATH];
+
+			/* skip x and y and get the map max level */
+			list = list->next; /* x */
+			list = list->next; /* y */
+			list = list->next; /* map level */
+
+			Com_sprintf(imageName, sizeof(imageName), "pics/radars/%s_%i.tga", mapname, i);
+			if (FS_CheckFile(imageName) <= 0) {
+				if (i == 1) {
+					/* there should be at least one level */
+					Com_Printf("No radar images for map: '%s' (%s)\n", mapname, imageName);
+					cl.skipRadarNodes = qtrue;
+					return;
+				} else {
+					int tmpLevel = i - 1;
+					/* update the max map level entry */
+					memcpy(list->data, &tmpLevel, sizeof(int));
+				}
+			}
+			list = list->next;
+		}
+	}
+
+	cl.radarInited = qtrue;
+}
+
 /**
  * @sa CMod_GetMapSize
  * @todo Show frustom view area for actors
@@ -122,39 +160,8 @@ void MN_DrawRadar (menuNode_t *node)
 	linkedList_t *list;
 
 	/* the cl struct is wiped with every new map */
-	if (!cl.radarInited) {
-		MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
-		/* only check once per map whether all the needed images exist */
-		for (i = 1; i < map_maxlevel + 1; i++) {
-			/* map_mins, map_maxs */
-			list = imageList;
-			while (list) {
-				const char *mapname = (const char *)list->data;
-
-				/* skip x and y and get the map max level */
-				list = list->next; /* x */
-				list = list->next; /* y */
-				list = list->next; /* map level */
-
-				Com_sprintf(imageName, sizeof(imageName), "pics/radars/%s_%i.tga", mapname, i);
-				if (FS_CheckFile(imageName) <= 0) {
-					if (i == 1) {
-						/* there should be at least one level */
-						Com_Printf("No radar images for map: '%s' (%s)\n", mapname, imageName);
-						cl.skipRadarNodes = qtrue;
-						return;
-					} else {
-						int tmpLevel = i - 1;
-						/* update the max map level entry */
-						memcpy(list->data, &tmpLevel, sizeof(int));
-					}
-				}
-				list = list->next;
-			}
-		}
-
-		cl.radarInited = qtrue;
-	}
+	if (!cl.radarInited)
+		MN_InitRadar();
 
 	if (VectorNotEmpty(node->bgcolor))
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
