@@ -41,6 +41,7 @@ typedef struct hudRadarImage_s {
 typedef struct hudRadar_s {
 	/** The dimension of the icons on the radar map */
 	float gridHeight, gridWidth;
+	vec2_t gridMin, gridMax;	/**< from position string */
 	char base[MAX_QPATH];
 	int numImages;	/**< amount of images in the images array */
 	hudRadarImage_t images[MAX_MAPTILES];
@@ -112,10 +113,12 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 			}
 			image->x = sh[0];
 			image->y = sh[1];
+			if (radar.gridMin[0] >= sh[0] && radar.gridMin[1] >= sh[1])
+				Vector2Copy(sh, radar.gridMin);
+			if (radar.gridMax[0] <= sh[0] && radar.gridMax[1] <= sh[1])
+				Vector2Copy(sh, radar.gridMax);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			image->x = 0;
-			image->y = 0;
 			return;
 		}
 	}
@@ -130,6 +133,7 @@ static void MN_InitRadar (const menuNode_t *node)
 {
 	int i, j;
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
+	float distAB, distBC;
 
 	MN_FreeRadarImages();
 	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
@@ -164,6 +168,36 @@ static void MN_InitRadar (const menuNode_t *node)
 		}
 	}
 
+	/* get the three points of the triangle */
+	VectorSubtract(map_min, offset, radar.a);
+	VectorAdd(map_max, offset, radar.c);
+	VectorSet(radar.b, radar.c[0], radar.a[1], 0);
+
+	distAB = (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
+	distBC = (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
+	/* get the dimensions for one grid field on the radar map */
+	radar.gridWidth = radar.w / distAB;
+	radar.gridHeight = radar.h / distBC;
+
+	for (j = 0; j < radar.numImages; j++) {
+		hudRadarImage_t *image = &radar.images[j];
+
+		/* FIXME: This needs more work */
+		radar.w = max(radar.w, image->screenX + image->w);
+		radar.h = max(radar.h, image->screenY + image->h);
+	}
+
+	for (j = 0; j < radar.numImages; j++) {
+		hudRadarImage_t *image = &radar.images[j];
+
+		/* FIXME This needs more work */
+		image->screenX = (image->x * UNIT_SIZE) * (distAB / radar.w);
+		image->screenY = (image->y * UNIT_SIZE) * (distBC / radar.h);
+	}
+
+	assert(radar.w);
+	assert(radar.h);
+
 	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch (node->align % 3) {
 		/* center */
@@ -184,25 +218,6 @@ static void MN_InitRadar (const menuNode_t *node)
 			break;
 		}
 	}
-
-	for (j = 0; j < radar.numImages; j++) {
-		hudRadarImage_t *image = &radar.images[j];
-		/* FIXME: image->x and image->y are wrong here */
-		image->screenX = radar.x + image->x;
-		image->screenY = radar.y + image->y;
-
-		radar.w = max(radar.w, image->screenX + image->w);
-		radar.h = max(radar.h, image->screenY + image->h);
-	}
-
-	/* get the three points of the triangle */
-	VectorSubtract(map_min, offset, radar.a);
-	VectorAdd(map_max, offset, radar.c);
-	VectorSet(radar.b, radar.c[0], radar.a[1], 0);
-
-	/* get the dimensions for one grid field on the radar map */
-	radar.gridWidth = radar.w / (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
-	radar.gridHeight = radar.h / (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
 
 	cl.radarInited = qtrue;
 }
@@ -233,7 +248,7 @@ void MN_DrawRadar (menuNode_t *node)
 		if (maxlevel >= image->maxlevel)
 			maxlevel = image->maxlevel - 1;
 		assert(image->path[maxlevel]);
-		R_DrawNormPic(image->screenX, image->screenY, 0, 0, 0, 0, 0, 0, node->align, node->blend, image->path[maxlevel]);
+		R_DrawNormPic(radar.x + image->screenX, radar.y + image->screenY, 0, 0, 0, 0, 0, 0, ALIGN_UL, node->blend, image->path[maxlevel]);
 	}
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
