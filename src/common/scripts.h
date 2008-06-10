@@ -103,7 +103,7 @@ typedef enum {
 
 extern const char *vt_names[];
 
-/** possible alien values - see also align_names */
+/** possible align values - see also align_names */
 typedef enum {
 	ALIGN_UL,
 	ALIGN_UC,

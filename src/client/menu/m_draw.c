@@ -292,7 +292,8 @@ void MN_DrawMenus (void)
 							shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
 						} else
 							shx = node->texh[0];
-						R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],	shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
+						R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+							shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
 					}
 					break;
 
