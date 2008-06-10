@@ -837,6 +837,7 @@ static void CL_CamSetZoom_f (void)
 		return;
 	}
 
+	Com_Printf("old zoom value: %.2f\n", cl.cam.zoom);
 	cl.cam.zoom = atof(Cmd_Argv(1));
 	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
