@@ -42,10 +42,6 @@ typedef struct hudRadar_s {
 	/** The dimension of the icons on the radar map */
 	float gridHeight, gridWidth;
 	char base[MAX_QPATH];
-	/** Holds the list of images for the hud radar (more than one in case of
-	 * random map assembly) and the list of offsets (also only in case of rma)
-	 * @note Entries: mapname (string) x coord (float) y coord (float) maxlevel (int) */
-	linkedList_t *imageList;
 	int numImages;	/**< amount of images in the images array */
 	hudRadarImage_t images[MAX_MAPTILES];
 	/** three vectors of the triangle, lower left (a), lower right (b), upper right (c) */
@@ -78,11 +74,11 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 {
 	char name[MAX_VAR];
 
-	LIST_Delete(&radar.imageList);
 	MN_FreeRadarImages();
 
 	/* load tiles */
 	while (tiles) {
+		hudRadarImage_t *image;
 		/* get tile name */
 		const char *token = COM_Parse(&tiles);
 		if (!tiles) {
@@ -100,7 +96,9 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 		if (token[0] == '+')
 			token++;
 		Com_sprintf(name, sizeof(name), "%s%s", radar.base, token);
-		LIST_AddString(&radar.imageList, name);
+
+		image = &radar.images[radar.numImages++];
+		image->name = Mem_PoolStrDup(name, cl_localPool, CL_TAG_NONE);
 
 		if (pos && pos[0]) {
 			int i;
@@ -112,15 +110,14 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
-			LIST_Add(&radar.imageList, (byte *)&sh[0], sizeof(float)); /* x */
-			LIST_Add(&radar.imageList, (byte *)&sh[1], sizeof(float)); /* y */
-			LIST_Add(&radar.imageList, (const byte *)&map_maxlevel, sizeof(int));
+			image->x = sh[0];
+			image->y = sh[1];
+			image->maxlevel = map_maxlevel;
 		} else {
 			/* load only a single tile, if no positions are specified */
-			const float coord = 0.0f;
-			LIST_Add(&radar.imageList, (const byte *)&coord, sizeof(float)); /* x */
-			LIST_Add(&radar.imageList, (const byte *)&coord, sizeof(float)); /* y */
-			LIST_Add(&radar.imageList, (const byte *)&map_maxlevel, sizeof(int));
+			image->x = 0;
+			image->y = 0;
+			image->maxlevel = map_maxlevel;
 			return;
 		}
 	}
@@ -134,15 +131,11 @@ static void MN_InitRadar (const menuNode_t *node)
 	/* only check once per map whether all the needed images exist */
 	for (i = 1; i < map_maxlevel + 1; i++) {
 		/* map_mins, map_maxs */
-		linkedList_t *list = radar.imageList;
-		while (list) {
-			const char *mapname = (const char *)list->data;
+		int j;
+		for (j = 0; j < radar.numImages; j++) {
+			hudRadarImage_t *image = &radar.images[j];
+			const char *mapname = image->name;
 			char imageName[MAX_QPATH];
-
-			/* skip x and y and get the map max level */
-			list = list->next; /* x */
-			list = list->next; /* y */
-			list = list->next; /* map level */
 
 			Com_sprintf(imageName, sizeof(imageName), "pics/radars/%s_%i.tga", mapname, i);
 			if (FS_CheckFile(imageName) <= 0) {
@@ -152,12 +145,10 @@ static void MN_InitRadar (const menuNode_t *node)
 					cl.skipRadarNodes = qtrue;
 					return;
 				} else {
-					int tmpLevel = i - 1;
 					/* update the max map level entry */
-					memcpy(list->data, &tmpLevel, sizeof(int));
+					image->maxlevel = i - 1;
 				}
 			}
-			list = list->next;
 		}
 	}
 
@@ -179,7 +170,6 @@ void MN_DrawRadar (menuNode_t *node)
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 	char imageName[MAX_QPATH];
 	vec3_t pos;
-	linkedList_t *list;
 
 	/* the cl struct is wiped with every new map */
 	if (!cl.radarInited)
@@ -189,23 +179,20 @@ void MN_DrawRadar (menuNode_t *node)
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
 
 	w = h = 0;
-	list = radar.imageList;
-	while (list) {
+	for (i = 0; i < radar.numImages; i++) {
+		hudRadarImage_t *image = &radar.images[i];
 		float x, y;
 		int picWidth, picHeight;
 		int maxlevel = cl_worldlevel->integer + 1;
-		const char *mapname = (const char *)list->data;
-		list = list->next;
+		const char *mapname = image->name;
 		/* FIXME for RMA the coordinates are not yet done - they have to
 		 * be converted (most likely) */
-		x = *(float *)list->data;
-		list = list->next;
-		y = *(float *)list->data;
-		list = list->next;
+		x = image->x;
+		y = image->y;
 
 		/* check the max level value for this map tile */
-		if (maxlevel >= *(int *)list->data)
-			maxlevel = *(int *)list->data;
+		if (maxlevel > image->maxlevel)
+			maxlevel = image->maxlevel;
 
 		Com_sprintf(imageName, sizeof(imageName), "radars/%s_%i", mapname, maxlevel);
 
@@ -217,7 +204,6 @@ void MN_DrawRadar (menuNode_t *node)
 			h = max(h, y + picHeight);
 			R_DrawNormPic(node->pos[0] + x, node->pos[1] + y, 0, 0, 0, 0, 0, 0, node->align, node->blend, imageName);
 		}
-		list = list->next;
 	}
 
 	VectorCopy(node->pos, radar.screenPos);
