@@ -240,12 +240,10 @@ void MN_DrawRadar (menuNode_t *node)
 			vec4_t color = {0, 1, 0, 1};
 			const int actorLevel = le->pos[2];
 			float actorDirection = 0.0f;
-			int x, y;
 			int verts[4];
-
 			/* relative to screen */
-			x = (screenPos[0] + pos[0] * gridWidth) * viddef.rx;
-			y = (screenPos[1] + (h - pos[1] * gridHeight)) * viddef.ry;
+			const int x = (screenPos[0] + pos[0] * gridWidth + gridWidth / 2) * viddef.rx;
+			const int y = (screenPos[1] + (h - pos[1] * gridHeight) + gridWidth / 2) * viddef.ry;
 
 			/* use different alpha values for different levels */
 			if (actorLevel < cl_worldlevel->integer)
@@ -265,10 +263,6 @@ void MN_DrawRadar (menuNode_t *node)
 			if (le->state & STATE_DEAD) {
 				Vector4Set(color, 0, 0, 0, 1);
 			}
-
-			/* center the circle */
-			x += gridWidth / 2;
-			y += gridWidth / 2;
 
 			/* draw direction line */
 			actorDirection = dangle[le->dir] * torad;

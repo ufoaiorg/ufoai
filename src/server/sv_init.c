@@ -89,7 +89,7 @@ static uLong curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 /** @brief Stores the map rating for the assembled map */
 static char curRating[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 
-/** @brief Stores the parsed data fo a map tile. (See *.ump files) */
+/** @brief Stores the parsed data for a map tile. (See *.ump files) */
 typedef struct mTile_s {
 	char id[MAX_VAR];	/**< The id (string) of the tile as defined in the ump file (next to "tile"). */
 	uLong spec[MAX_TILESIZE][MAX_TILESIZE];	/**< connection/alternatives info for the tile  */
