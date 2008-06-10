@@ -28,6 +28,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_font.h"
 
+/** @brief Each maptile must have an entry in the images array */
+typedef struct hudRadarImage_s {
+	char *name;		/**< the mapname */
+	char *path;		/**< the path to the image (including name) */
+	int w, h;		/**< the width and height of the image */
+	int x, y;		/**< random map assembly x and y positions, @sa UNIT_SIZE */
+	int screenX, screenY;
+	int maxlevel;	/**< the maxlevel for this image */
+} hudRadarImage_t;
+
 typedef struct hudRadar_s {
 	/** The dimension of the icons on the radar map */
 	float gridHeight, gridWidth;
@@ -36,9 +46,25 @@ typedef struct hudRadar_s {
 	 * random map assembly) and the list of offsets (also only in case of rma)
 	 * @note Entries: mapname (string) x coord (float) y coord (float) maxlevel (int) */
 	linkedList_t *imageList;
+	int numImages;	/**< amount of images in the images array */
+	hudRadarImage_t images[MAX_MAPTILES];
+	/** three vectors of the triangle, lower left (a), lower right (b), upper right (c) */
+	vec3_t a, b, c;
+	vec2_t screenPos; /**< upper left side of the whole radar image(s) */
 } hudRadar_t;
 
 static hudRadar_t radar;
+
+static void MN_FreeRadarImages (void)
+{
+	int i;
+
+	for (i = 0; i < radar.numImages; i++) {
+		Mem_Free(radar.images[i].name);
+		Mem_Free(radar.images[i].path);
+	}
+	memset(&radar, 0, sizeof(radar));
+}
 
 /**
  * @brief Reads the tiles and position config strings and convert them into a
@@ -53,7 +79,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 	char name[MAX_VAR];
 
 	LIST_Delete(&radar.imageList);
-	memset(&radar, 0, sizeof(radar));
+	MN_FreeRadarImages();
 
 	/* load tiles */
 	while (tiles) {
@@ -100,7 +126,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 	}
 }
 
-static void MN_InitRadar (void)
+static void MN_InitRadar (const menuNode_t *node)
 {
 	int i;
 
@@ -150,17 +176,14 @@ void MN_DrawRadar (menuNode_t *node)
 	/** radar image dimensions */
 	int w, h;
 	int i;
-	/** three vectors of the triangle, lower left (a), lower right (b), upper right (c) */
-	vec3_t a, b, c;
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 	char imageName[MAX_QPATH];
 	vec3_t pos;
-	vec2_t screenPos;
 	linkedList_t *list;
 
 	/* the cl struct is wiped with every new map */
 	if (!cl.radarInited)
-		MN_InitRadar();
+		MN_InitRadar(node);
 
 	if (VectorNotEmpty(node->bgcolor))
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
@@ -197,36 +220,36 @@ void MN_DrawRadar (menuNode_t *node)
 		list = list->next;
 	}
 
-	VectorCopy(node->pos, screenPos);
+	VectorCopy(node->pos, radar.screenPos);
 	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch (node->align % 3) {
 		/* center */
 		case 1:
-			screenPos[0] -= (w / 2);
+			radar.screenPos[0] -= (w / 2);
 			break;
 		/* right */
 		case 2:
-			screenPos[0] -= w;
+			radar.screenPos[0] -= w;
 			break;
 		}
 		switch (node->align / 3) {
 		case 1:
-			screenPos[1] -= (h / 2);
+			radar.screenPos[1] -= (h / 2);
 			break;
 		case 2:
-			screenPos[1] -= h;
+			radar.screenPos[1] -= h;
 			break;
 		}
 	}
 
 	/* get the three points of the triangle */
-	VectorSubtract(map_min, offset, a);
-	VectorAdd(map_max, offset, c);
-	VectorSet(b, c[0], a[1], 0);
+	VectorSubtract(map_min, offset, radar.a);
+	VectorAdd(map_max, offset, radar.c);
+	VectorSet(radar.b, radar.c[0], radar.a[1], 0);
 
 	/* get the dimensions for one grid field on the radar map */
-	radar.gridWidth = w / (Vector2Dist(a, b) / UNIT_SIZE);
-	radar.gridHeight = h / (Vector2Dist(b, c) / UNIT_SIZE);
+	radar.gridWidth = w / (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
+	radar.gridHeight = h / (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
@@ -235,9 +258,9 @@ void MN_DrawRadar (menuNode_t *node)
 		VectorCopy(le->pos, pos);
 
 		/* convert to radar area coordinates */
-		pos[0] -= GRID_WIDTH + (a[0] / UNIT_SIZE);
+		pos[0] -= GRID_WIDTH + (radar.a[0] / UNIT_SIZE);
 		/* FIXME: Why do we need the -UNIT_SIZE for the y coordinates? */
-		pos[1] -= GRID_WIDTH + ((a[1] - UNIT_SIZE) / UNIT_SIZE);
+		pos[1] -= GRID_WIDTH + ((radar.a[1] - UNIT_SIZE) / UNIT_SIZE);
 
 		switch (le->type) {
 		case ET_ACTOR:
@@ -248,8 +271,8 @@ void MN_DrawRadar (menuNode_t *node)
 			float actorDirection = 0.0f;
 			int verts[4];
 			/* relative to screen */
-			const int x = (screenPos[0] + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
-			const int y = (screenPos[1] + (h - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
+			const int x = (radar.screenPos[0] + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
+			const int y = (radar.screenPos[1] + (h - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
 
 			/* use different alpha values for different levels */
 			if (actorLevel < cl_worldlevel->integer)
@@ -289,8 +312,8 @@ void MN_DrawRadar (menuNode_t *node)
 		{
 			const vec4_t color = {0, 1, 0, 1};
 			/* relative to screen */
-			const int x = (screenPos[0] + pos[0] * radar.gridWidth) * viddef.rx;
-			const int y = (screenPos[1] + (h - pos[1] * radar.gridHeight)) * viddef.ry;
+			const int x = (radar.screenPos[0] + pos[0] * radar.gridWidth) * viddef.rx;
+			const int y = (radar.screenPos[1] + (h - pos[1] * radar.gridHeight)) * viddef.ry;
 			R_DrawFill(x, y, radar.gridWidth, radar.gridHeight, ALIGN_UL, color);
 			break;
 		}
