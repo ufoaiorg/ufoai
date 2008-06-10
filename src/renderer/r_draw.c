@@ -617,6 +617,61 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	qglEnable(GL_TEXTURE_2D);
 }
 
+#define CIRCLE_LINE_COUNT	40
+
+/**
+ * @brief Draws a circle out of lines
+ * @param[in] x X screen coordinate
+ * @param[in] y Y screen coordinate
+ * @param[in] radius Radius of the circle
+ * @param[in] color The color of the circle lines
+ * @param[in] fill Fill the circle with the given color
+ * @param[in] thickness The thickness of the lines
+ * @sa R_DrawPtlCircle
+ * @sa R_DrawLineStrip
+ */
+void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t color, int thickness)
+{
+	int i;
+
+	qglPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	qglDisable(GL_TEXTURE_2D);
+	R_EnableBlend(qtrue);
+	R_Color(color);
+
+	if (thickness > 0.0)
+		qglLineWidth(thickness);
+
+	if (fill)
+		qglBegin(GL_TRIANGLE_STRIP);
+	else
+		qglBegin(GL_LINE_LOOP);
+
+	/* Create a vertex at the exact position specified by the start angle. */
+	qglVertex2f(x + radius, y);
+
+	/* @todo Use lookup table for sin/cos? */
+	for (i = 0; i < CIRCLE_LINE_COUNT; i++) {
+		const float angle = (i * 2 * M_PI) / CIRCLE_LINE_COUNT;
+		qglVertex2f(x + radius * cos(angle), y - radius * sin(angle));
+
+		/* When filling we're drawing triangles so we need to
+		 * create a vertex in the middle of the vertex to fill
+		 * the entire pie slice/circle. */
+		if (fill)
+			qglVertex2f(x, y);
+	}
+
+	qglVertex2f(x + radius * cos(2 * M_PI), y - radius * sin(2 * M_PI));
+	qglEnd();
+	qglEnable(GL_TEXTURE_2D);
+	R_EnableBlend(qfalse);
+	R_Color(NULL);
+
+	qglPopAttrib();
+}
+
 #define MAX_LINEVERTS 256
 
 static void inline R_Draw2DArray (int points, int *verts, GLenum mode)

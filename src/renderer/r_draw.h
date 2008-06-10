@@ -37,7 +37,8 @@ void R_DrawGetPicSize(int *w, int *h, const char *name);
 void R_DrawFlatGeoscape(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
 void R_DrawLineStrip(int points, int *verts);
 void R_DrawLineLoop(int points, int *verts);
-void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness);
+void R_DrawCircle(vec3_t mid, float radius, const vec4_t color, int thickness);
+void R_DrawCircle2D(int x, int y, float radius, qboolean fill, const vec4_t color, int thickness);
 void R_DrawPolygon(int points, int *verts);
 
 extern cvar_t *r_geoscape_overlay;
