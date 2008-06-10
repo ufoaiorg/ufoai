@@ -46,7 +46,9 @@ typedef struct hudRadar_s {
 	hudRadarImage_t images[MAX_MAPTILES];
 	/** three vectors of the triangle, lower left (a), lower right (b), upper right (c) */
 	vec3_t a, b, c;
-	vec2_t screenPos; /**< upper left side of the whole radar image(s) */
+	/** radar dimensions */
+	int x, y;
+	int w, h;
 } hudRadar_t;
 
 static hudRadar_t radar;
@@ -72,12 +74,9 @@ static void MN_FreeRadarImages (void)
  */
 static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 {
-	char name[MAX_VAR];
-
-	MN_FreeRadarImages();
-
 	/* load tiles */
 	while (tiles) {
+		char name[MAX_VAR];
 		hudRadarImage_t *image;
 		/* get tile name */
 		const char *token = COM_Parse(&tiles);
@@ -127,6 +126,7 @@ static void MN_InitRadar (const menuNode_t *node)
 {
 	int i;
 
+	MN_FreeRadarImages();
 	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 	/* only check once per map whether all the needed images exist */
 	for (i = 1; i < map_maxlevel + 1; i++) {
@@ -164,8 +164,6 @@ static void MN_InitRadar (const menuNode_t *node)
 void MN_DrawRadar (menuNode_t *node)
 {
 	const le_t *le;
-	/** radar image dimensions */
-	int w, h;
 	int i;
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 	char imageName[MAX_QPATH];
@@ -178,7 +176,7 @@ void MN_DrawRadar (menuNode_t *node)
 	if (VectorNotEmpty(node->bgcolor))
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
 
-	w = h = 0;
+	radar.w = radar.h = 0;
 	for (i = 0; i < radar.numImages; i++) {
 		hudRadarImage_t *image = &radar.images[i];
 		float x, y;
@@ -200,30 +198,31 @@ void MN_DrawRadar (menuNode_t *node)
 		if (picWidth > VID_NORM_WIDTH || picHeight > VID_NORM_HEIGHT) {
 			Com_Printf("Image '%s' is too big\n", imageName);
 		} else {
-			w = max(w, x + picWidth);
-			h = max(h, y + picHeight);
+			radar.w = max(radar.w, x + picWidth);
+			radar.h = max(radar.h, y + picHeight);
 			R_DrawNormPic(node->pos[0] + x, node->pos[1] + y, 0, 0, 0, 0, 0, 0, node->align, node->blend, imageName);
 		}
 	}
 
-	VectorCopy(node->pos, radar.screenPos);
+	radar.x = node->pos[0];
+	radar.y = node->pos[1];
 	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch (node->align % 3) {
 		/* center */
 		case 1:
-			radar.screenPos[0] -= (w / 2);
+			radar.x -= (radar.w / 2);
 			break;
 		/* right */
 		case 2:
-			radar.screenPos[0] -= w;
+			radar.x -= radar.w;
 			break;
 		}
 		switch (node->align / 3) {
 		case 1:
-			radar.screenPos[1] -= (h / 2);
+			radar.y -= (radar.h / 2);
 			break;
 		case 2:
-			radar.screenPos[1] -= h;
+			radar.y -= radar.h;
 			break;
 		}
 	}
@@ -234,8 +233,8 @@ void MN_DrawRadar (menuNode_t *node)
 	VectorSet(radar.b, radar.c[0], radar.a[1], 0);
 
 	/* get the dimensions for one grid field on the radar map */
-	radar.gridWidth = w / (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
-	radar.gridHeight = h / (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
+	radar.gridWidth = radar.w / (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
+	radar.gridHeight = radar.h / (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
@@ -257,8 +256,8 @@ void MN_DrawRadar (menuNode_t *node)
 			float actorDirection = 0.0f;
 			int verts[4];
 			/* relative to screen */
-			const int x = (radar.screenPos[0] + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
-			const int y = (radar.screenPos[1] + (h - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
+			const int x = (radar.x + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
+			const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
 
 			/* use different alpha values for different levels */
 			if (actorLevel < cl_worldlevel->integer)
@@ -298,8 +297,8 @@ void MN_DrawRadar (menuNode_t *node)
 		{
 			const vec4_t color = {0, 1, 0, 1};
 			/* relative to screen */
-			const int x = (radar.screenPos[0] + pos[0] * radar.gridWidth) * viddef.rx;
-			const int y = (radar.screenPos[1] + (h - pos[1] * radar.gridHeight)) * viddef.ry;
+			const int x = (radar.x + pos[0] * radar.gridWidth) * viddef.rx;
+			const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight)) * viddef.ry;
 			R_DrawFill(x, y, radar.gridWidth, radar.gridHeight, ALIGN_UL, color);
 			break;
 		}
