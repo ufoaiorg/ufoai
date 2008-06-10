@@ -280,6 +280,8 @@ typedef struct side_s {
 
 	vec3_t		hessianNormal;
 	float		hessianP;
+
+	struct brush_s *brush;		/**< backlink to the brush ths side belongs, to */
 } side_t;
 
 typedef struct brush_s {

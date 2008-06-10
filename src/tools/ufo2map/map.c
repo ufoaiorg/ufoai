@@ -611,7 +611,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 {
 	mapbrush_t *b;
 	int i, j, k, mt;
-	side_t *side, *s2;
+	side_t *side;
 	int planenum;
 	brush_texture_t td;
 	int planepts[3][3];
@@ -734,7 +734,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 		/* see if the plane has been used already */
 		for (k = 0; k < b->numsides; k++) {
-			s2 = b->original_sides + k;
+			const side_t *s2 = b->original_sides + k;
 			if (s2->planenum == planenum) {
 				Com_Printf("Entity %i, Brush %i: duplicate plane at line %i\n", b->entitynum, b->brushnum, GetScriptLine());
 				break;
@@ -752,6 +752,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		side->planenum = planenum;
 		side->texinfo = TexinfoForBrushTexture(&mapplanes[planenum],
 			&td, vec3_origin, b->isTerrain);
+		side->brush = b;
 
 		/* save the td off in case there is an origin brush and we
 		 * have to recalculate the texinfo */
@@ -863,6 +864,7 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
 			s->planenum = FindFloatPlane(mapplanes[s->planenum].normal, newdist);
 			s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
 				&side_brushtextures[index], ent->origin, qfalse);
+			s->brush = b;
 		}
 		/* create windings for sides and bounds for brush */
 		MakeBrushWindings(b);

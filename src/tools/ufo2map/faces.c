@@ -713,13 +713,17 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 		return NULL;	/* don't show insides of windows */
 
 	/* do back-clipping */
-	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9)
+	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9) {
 		/* this face is not visible from birds view - optimize away
 		 * but only if it's not light emitting surface */
-		if (!(curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
-			side->surfaceFlags |= SURF_NODRAW;
-			return NULL;
+		entity_t *e = &entities[side->brush->entitynum];
+		if (strcmp(ValueForKey(e, "classname"), "func_rotating")) {
+			if (!(curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
+				side->surfaceFlags |= SURF_NODRAW;
+				return NULL;
+			}
 		}
+	}
 
 	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_NODRAW)
 		return NULL;
