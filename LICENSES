@@ -1489,6 +1489,9 @@ base/models/weapons/machinegun/machinegun.md2 | Creative Commons Attribution-Sha
 base/models/weapons/machinegun/machinegun_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/medikit/medikit.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/medikit/medikit.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/needlergun/needler.jpg | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
+base/models/weapons/needlergun/needler.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
+base/models/weapons/needlergun/needler_ammo.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/pbeamcannon/pbeamcannon.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamcannon/pbeamcannon.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamcannon/pbeamcannon_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
