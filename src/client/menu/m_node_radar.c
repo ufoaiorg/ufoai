@@ -276,6 +276,7 @@ void MN_DrawRadar (menuNode_t *node)
 			y += gridWidth / 2;
 
 			/* draw direction line */
+			actorDirection = dangle[le->dir] * torad;
 			verts[0] = x;
 			verts[1] = y;
 			verts[2] = x + (gridWidth * cos(actorDirection));
@@ -287,7 +288,6 @@ void MN_DrawRadar (menuNode_t *node)
 			Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
 			/* outline */
 			R_DrawCircle2D(x, y, gridWidth / 2, qfalse, color, 2);
-			actorDirection = dangle[le->dir] * torad;
 			break;
 		}
 		case ET_ITEM:
