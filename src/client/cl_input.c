@@ -418,7 +418,7 @@ static void CL_ZoomInQuant_f (void)
 		/* change zoom */
 		cl.cam.zoom *= quant;
 
-		/* ensure zoom doesnt exceed either MAX_ZOOM or cl_camzoommax */
+		/* ensure zoom doesn't exceed either MAX_ZOOM or cl_camzoommax */
 		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 		V_CalcFovX();
 	}
@@ -826,6 +826,20 @@ static void CL_CamSetAngles_f (void)
 	cl.cam.angles[PITCH] = atof(Cmd_Argv(1));
 	cl.cam.angles[YAW] = atof(Cmd_Argv(2));
 	cl.cam.angles[ROLL] = 0.0f;
+}
+
+static void CL_CamSetZoom_f (void)
+{
+	int c = Cmd_Argc();
+
+	if (c < 2) {
+		Com_Printf("Usage %s <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cl.cam.zoom = atof(Cmd_Argv(1));
+	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 }
 
 /**
@@ -1784,6 +1798,7 @@ void IN_Init (void)
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
 #endif /* DEBUG */
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
+	Cmd_AddCommand("camsetzoom", CL_CamSetZoom_f, "Set camera zoom level");
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
 
 	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
