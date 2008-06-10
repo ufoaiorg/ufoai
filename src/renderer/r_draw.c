@@ -630,7 +630,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
  * @sa R_DrawPtlCircle
  * @sa R_DrawLineStrip
  */
-void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t color, int thickness)
+void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t color, float thickness)
 {
 	int i;
 
@@ -715,6 +715,21 @@ void R_DrawLineLoop (int points, int *verts)
 	R_Draw2DArray(points, verts, GL_LINE_LOOP);
 }
 
+/**
+ * @brief Draws one line with only one start and one end point
+ * @sa R_DrawCircle
+ * @sa R_DrawLineStrip
+ */
+void R_DrawLine (int *verts, float thickness)
+{
+	if (thickness > 0.0)
+		qglLineWidth(thickness);
+
+	R_Draw2DArray(2, verts, GL_LINES);
+
+	if (thickness > 0.0)
+		qglLineWidth(1.0);
+}
 
 /**
  * @sa R_DrawCircle

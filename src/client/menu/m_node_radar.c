@@ -243,17 +243,19 @@ void MN_DrawRadar (menuNode_t *node)
 		case ET_ACTOR2x2:
 		{
 			vec4_t color = {0, 1, 0, 1};
-			const int actorlevel = le->pos[2];
+			const int actorLevel = le->pos[2];
+			float actorDirection = 0.0f;
 			int x, y;
+			int verts[4];
 
 			/* relative to screen */
 			x = (screenPos[0] + pos[0] * gridWidth) * viddef.rx;
 			y = (screenPos[1] + (h - pos[1] * gridHeight)) * viddef.ry;
 
 			/* use different alpha values for different levels */
-			if (actorlevel < cl_worldlevel->integer)
+			if (actorLevel < cl_worldlevel->integer)
 				color[3] = 0.5;
-			else if (actorlevel > cl_worldlevel->integer)
+			else if (actorLevel > cl_worldlevel->integer)
 				color[3] = 0.3;
 
 			/* use different colors for different teams */
@@ -272,9 +274,20 @@ void MN_DrawRadar (menuNode_t *node)
 			/* center the circle */
 			x += gridWidth / 2;
 			y += gridWidth / 2;
+
+			/* draw direction line */
+			verts[0] = x;
+			verts[1] = y;
+			verts[2] = x + (gridWidth * cos(actorDirection));
+			verts[3] = y - (gridWidth * sin(actorDirection));
+			R_DrawLine(verts, 5);
+
+			/* draw player circles */
 			R_DrawCircle2D(x, y, gridWidth / 2, qtrue, color, 1);
 			Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
+			/* outline */
 			R_DrawCircle2D(x, y, gridWidth / 2, qfalse, color, 2);
+			actorDirection = dangle[le->dir] * torad;
 			break;
 		}
 		case ET_ITEM:
