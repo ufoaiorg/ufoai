@@ -1763,6 +1763,84 @@ tech rs_weapon_plasrifle_ammo
 	producetime	40
 }
 
+tech rs_weapon_needlergun
+{
+	name	"_Needler Gun"
+	type	weapon
+	up_chapter	equipment
+
+	description {
+		default "_needlergun_txt"
+	}
+	pre_description {
+		default "_needlergun_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		tech rs_skill_sniper
+		tech rs_skill_assault
+	}
+	provides	needlergun
+	time	500
+	producetime	120
+}
+
+tech rs_weapon_needlergun_ammo
+{
+	name	"_Needler Gun"
+	type	weapon
+	up_chapter	equipment
+
+	description {
+		default "_needlergun_txt"
+	}
+	pre_description {
+		default "_needlergun_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_needlergun
+	}
+	provides	needlergun_ammo
+	time	0
+	producetime	24
+}
+
 tech rs_weapon_coilgun
 {
 	type	weapon
