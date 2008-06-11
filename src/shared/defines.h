@@ -311,7 +311,6 @@ From tools/ufo2map/map.c
 
 #define	MAX_MAP_SIDES (MAX_MAP_BRUSHES*6)
 #define	MAX_MAP_TEXTURES	1024
-#define MAX_TEX_PATH_STRLEN 40 /* max length of texture filenames relative to base/textures */
 
 #define MAP_SIZE_OFFSET 100
 

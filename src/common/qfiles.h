@@ -363,7 +363,7 @@ texture file format
 
 #define	MIPLEVELS	4
 typedef struct miptex_s {
-	char name[MAX_TEX_PATH_STRLEN];	/**< texture name - relative to base/textures */
+	char name[MAX_QPATH];	/**< texture name - relative to base/textures */
 	unsigned width, height;
 	unsigned offsets[MIPLEVELS];	/**< four mip maps stored */
 	int surfaceFlagsFromFile;
