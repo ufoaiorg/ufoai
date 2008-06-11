@@ -181,6 +181,7 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 		slot = &aircraft->shield;
 		break;
 	case AC_ITEM_PILOT:
+		slot = NULL;
 		break;
 	case AC_ITEM_ELECTRONICS:
 		slot = aircraft->electronics + airequipSelectedSlot;
