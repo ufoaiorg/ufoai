@@ -33,8 +33,8 @@ typedef struct hudRadarImage_s {
 	char *name;		/**< the mapname */
 	char *path[PATHFINDING_HEIGHT];		/**< the path to the image (including name) */
 	int w, h;		/**< the width and height of the image */
-	int x, y;		/**< random map assembly x and y positions, @sa UNIT_SIZE */
-	int screenX, screenY;
+	int x, y;		/**< screen coordinates for the image */
+	int gridX, gridY;	/**< random map assembly x and y positions, @sa UNIT_SIZE */
 	int maxlevel;	/**< the maxlevel for this image */
 } hudRadarImage_t;
 
@@ -111,12 +111,18 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
-			image->x = sh[0];
-			image->y = sh[1];
-			if (radar.gridMin[0] >= sh[0] && radar.gridMin[1] >= sh[1])
-				Vector2Copy(sh, radar.gridMin);
-			if (radar.gridMax[0] <= sh[0] && radar.gridMax[1] <= sh[1])
-				Vector2Copy(sh, radar.gridMax);
+			image->gridX = sh[0];
+			image->gridY = sh[1];
+
+			if (radar.gridMin[0] > sh[0])
+				radar.gridMin[0] = sh[0];
+			if (radar.gridMin[1] > sh[1])
+				radar.gridMin[1] = sh[1];
+
+			if (radar.gridMax[0] < sh[0])
+				radar.gridMax[0] = sh[0];
+			if (radar.gridMax[1] < sh[1])
+				radar.gridMax[1] = sh[1];
 		} else {
 			/* load only a single tile, if no positions are specified */
 			return;
@@ -180,23 +186,42 @@ static void MN_InitRadar (const menuNode_t *node)
 	radar.gridHeight = radar.h / distBC;
 
 	for (j = 0; j < radar.numImages; j++) {
-		hudRadarImage_t *image = &radar.images[j];
+		const hudRadarImage_t *image = &radar.images[j];
 
-		/* FIXME: This needs more work */
-		radar.w = max(radar.w, image->screenX + image->w);
-		radar.h = max(radar.h, image->screenY + image->h);
+		assert(image->gridX >= radar.gridMin[0]);
+		assert(image->gridY >= radar.gridMin[1]);
+
+		/* we can assume this because every random map tile has it's origin in
+		 * (0, 0) and therefore there are no intersections possible on the min
+		 * x and the min y axis. We just have to add the image->w and image->h
+		 * values of those images that are placed on the gridMin values.
+		 * This also works for static maps, because they have a gridX and gridY
+		 * value of zero */
+		if (image->gridX == radar.gridMin[0])
+			radar.w += image->w;
+		if (image->gridY == radar.gridMin[1])
+			radar.h += image->h;
 	}
+	/* we need this filled */
+	assert(radar.w);
+	assert(radar.h);
 
 	for (j = 0; j < radar.numImages; j++) {
 		hudRadarImage_t *image = &radar.images[j];
-
-		/* FIXME This needs more work */
-		image->screenX = (image->x * UNIT_SIZE) * (distAB / radar.w);
-		image->screenY = (image->y * UNIT_SIZE) * (distBC / radar.h);
+		const float radarLength = max(1, abs(radar.gridMax[0] - radar.gridMin[0]));
+		const float radarHeight = max(1, abs(radar.gridMax[1] - radar.gridMin[1]));
+		/* image grid relations */
+		const float gridFactorX = radar.w / radarLength;
+		const float gridFactorY = radar.h / radarHeight;
+		/* the grids of the map tiles that is shown in the image */
+		const int imageGridWidth = image->w / gridFactorX;
+		const int imageGridHeight = image->h / gridFactorY;
+		/* shift the x and y values according to their grid width/height and
+		 * their gridX and gridY position */
+		/* FIXME: broken */
+		image->x = image->gridX * gridFactorX;
+		image->y = radar.h - (image->gridY * gridFactorY);
 	}
-
-	assert(radar.w);
-	assert(radar.h);
 
 	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch (node->align % 3) {
@@ -248,7 +273,7 @@ void MN_DrawRadar (menuNode_t *node)
 		if (maxlevel >= image->maxlevel)
 			maxlevel = image->maxlevel - 1;
 		assert(image->path[maxlevel]);
-		R_DrawNormPic(radar.x + image->screenX, radar.y + image->screenY, 0, 0, 0, 0, 0, 0, ALIGN_UL, node->blend, image->path[maxlevel]);
+		R_DrawNormPic(radar.x + image->x, radar.y + image->y, 0, 0, 0, 0, 0, 0, ALIGN_UL, node->blend, image->path[maxlevel]);
 	}
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
