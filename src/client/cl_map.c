@@ -2026,7 +2026,7 @@ void MAP_Scroll_f (void)
 			smoothFinalGlobeAngle[YAW] -= 360.0;
 			ccs.angles[YAW] -= 360.0;
 		}
-		while (smoothFinalGlobeAngle[YAW] < -180.0){
+		while (smoothFinalGlobeAngle[YAW] < -180.0) {
 			smoothFinalGlobeAngle[YAW] += 360.0;
 			ccs.angles[YAW] += 360.0;
 		}

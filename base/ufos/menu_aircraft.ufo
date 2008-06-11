@@ -427,6 +427,7 @@ menu aircraft_equip
 		*airequip_button_weapons_str		color "1 1 1 0.6"
 		*airequip_button_shields_str		color "1 1 1 0.6"
 		*airequip_button_items_str			color "1 1 1 0.6"
+		*airequip_button_pilot_str			color "1 1 1 0.6"
 		*airequip_header3					invis true
 	}
 	func airequip_weapons
@@ -447,6 +448,12 @@ menu aircraft_equip
 		cmd "airequip_updatemenu 2;"
 		airequip_reset
 		*airequip_button_items_str color "1 1 1 1"
+	}
+	func airequip_pilot
+	{
+		cmd "airequip_updatemenu 4;"
+		airequip_reset
+		*airequip_button_pilot_str color "1 1 1 1"
 	}
 
 	func airequip_zone1
@@ -548,11 +555,24 @@ menu aircraft_equip
 
 	model mdl_top
 	{
+		if "mn_equip_pilot != 1"
 		md2		"*cvar mn_upmodel_top"
 		angles	"0 0 120"
 		origin	"886 545 0"
 		pos		"786 500"
 		size	"200 200"
+		mousefx	true
+		click
+	}
+
+	model mdl_top_pilot
+	{
+		if "mn_equip_pilot == 1"
+		md2		"*cvar mn_upmodel_top"
+		angles	"15 60 100"
+		origin	"886 555 0"
+		pos		"786 500"
+		size	"100 100"
 		mousefx	true
 		click
 	}
@@ -577,15 +597,15 @@ menu aircraft_equip
 		tooltip	"_Weapons"
 		mousefx	true
 		pos		"10 710"
-		image	menu/button_blue
+		image	menu/button_blue_equip
 		texl	"0 0"
-		texh	"128 52"
+		texh	"91 52"
 		click	{ airequip_weapons }
 	}
 	string airequip_button_weapons_str
 	{
 		string "_Weapons"
-		pos		"74 736"
+		pos		"55 736"
 		align	cc
 	}
 
@@ -593,16 +613,16 @@ menu aircraft_equip
 	{
 		tooltip	"_Armour"
 		mousefx	true
-		pos		"164 710"
-		image	menu/button_blue
+		pos		"121 710"
+		image	menu/button_blue_equip
 		texl	"0 0"
-		texh	"128 52"
+		texh	"91 52"
 		click	{ airequip_shields }
 	}
 	string airequip_button_shields_str
 	{
 		string "_Armour"
-		pos		"228 736"
+		pos		"171 736"
 		align	cc
 	}
 
@@ -610,18 +630,36 @@ menu aircraft_equip
 	{
 		tooltip	"_Items"
 		mousefx	true
-		pos		"318 710"
-		image	menu/button_blue
+		pos		"232 710"
+		image	menu/button_blue_equip
 		texl	"0 0"
-		texh	"128 52"
+		texh	"91 52"
 		click	{ airequip_items }
 	}
 	string airequip_button_items_str
 	{
 		string "_Items"
-		pos		"382 736"
+		pos		"282 736"
 		align	cc
 	}
+
+	pic airequip_button_pilot
+	{
+		tooltip	"_Pilot"
+		mousefx	true
+		pos		"343 710"
+		image	menu/button_blue_equip
+		texl	"0 0"
+		texh	"91 52"
+		click	{ airequip_pilot }
+	}
+	string airequip_button_pilot_str
+	{
+		string "_Pilot"
+		pos		"393 736"
+		align	cc
+	}
+
 
 	text airequip_list
 	{

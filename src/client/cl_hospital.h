@@ -23,15 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-qboolean HOS_RemoveFromList(const employee_t *employee, base_t *base);
 void HOS_Reset(void);
 qboolean HOS_HealCharacter(character_t* chr, qboolean hospital);
 qboolean HOS_HealEmployee(employee_t* employee);
 void HOS_HealAll(const base_t* const base);
 void HOS_HospitalRun(void);
-void HOS_RemoveEmployeesInHospital(const aircraft_t *aircraft);
-void HOS_ReaddEmployeesInHospital(const aircraft_t *aircraft);
-void HOS_RemoveDeadEmployeeFromLists (employee_t *employee);
-void HOS_UpdateHospitalCapForAll (base_t *base);
 qboolean HOS_Save(sizebuf_t *sb, void* data);
 qboolean HOS_Load(sizebuf_t *sb, void* data);

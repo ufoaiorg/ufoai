@@ -140,6 +140,9 @@ typedef enum {
 	AC_ITEM_SHIELD,			/**< aircraft shield */
 	AC_ITEM_ELECTRONICS,	/**< aircraft electronics */
 
+	/* Crew */
+	AC_ITEM_PILOT,
+
 	/* ammos */
 	AC_ITEM_AMMO,			/**< aircraft ammos */
 	AC_ITEM_AMMO_MISSILE,	/**< base ammos */
@@ -634,7 +637,7 @@ typedef enum {
 	EMPL_SOLDIER,
 	EMPL_SCIENTIST,
 	EMPL_WORKER,
-	EMPL_MEDIC,
+	EMPL_PILOT,
 	EMPL_ROBOT,
 	MAX_EMPL		/**< For counting over all available enums. */
 } employeeType_t;

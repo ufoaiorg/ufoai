@@ -1910,8 +1910,6 @@ static void CL_GlobalDataSizes_f (void)
 		"alienscont         %10Zu bytes\n"
 		"capacities         %10Zu bytes\n"
 		"equipByBuyType     %10Zu bytes\n"
-		"hospitalList       %10Zu bytes\n"
-		"hospitalMissionLst %10Zu bytes\n"
 		"aircraft           %10Zu bytes\n"
 		"aircraft (single)  %10Zu bytes\n"
 		"allBuildingsList   %10Zu bytes\n"
@@ -1920,8 +1918,6 @@ static void CL_GlobalDataSizes_f (void)
 		sizeof(gd.bases[0].alienscont),
 		sizeof(gd.bases[0].capacities),
 		sizeof(gd.bases[0].equipByBuyType),
-		sizeof(gd.bases[0].hospitalList),
-		sizeof(gd.bases[0].hospitalMissionList),
 		sizeof(gd.bases[0].aircraft),
 		sizeof(aircraft_t),
 		sizeof(gd.bases[0].allBuildingsList),

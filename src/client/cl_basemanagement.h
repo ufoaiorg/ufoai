@@ -108,7 +108,6 @@ typedef enum {
 	CAP_ITEMS,		/**< Items in base. */
 	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
 	CAP_WORKSPACE,		/**< Space for workers in workshop. */
-	CAP_HOSPSPACE,		/**< Space for hurted people in hospital. */
 	CAP_UFOHANGARS_SMALL,	/**< Space for small recovered UFOs. */
 	CAP_UFOHANGARS_LARGE,	/**< Space for small and large recovered UFOs. */
 	CAP_ANTIMATTER,		/**< Space for Antimatter Storage. */
@@ -232,11 +231,6 @@ typedef struct base_s {
 	int equipType;	/**< the current selected category in equip menu */
 
 	character_t *curChr;	/**< needn't be saved */
-
-	int hospitalList[MAX_EMPL][MAX_EMPLOYEES];	/**< Hospital list of employees currently being healed. */
-	int hospitalListCount[MAX_EMPL];				/**< Counter for hospitalList. */
-	int hospitalMissionList[MAX_EMPLOYEES];		/**< Hospital list of soldiers being healed but moved to the mission. */
-	int hospitalMissionListCount;			/**< Counter for hospitalMissionList. */
 
 	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
 	int numBatteries;

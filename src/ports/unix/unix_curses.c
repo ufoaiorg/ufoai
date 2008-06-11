@@ -184,7 +184,7 @@ char *Curses_Input (void)
 			break;
 
 		case KEY_NPAGE:
-			if (curses_scroll > 0){
+			if (curses_scroll > 0) {
 				/* scroll down */
 				curses_scroll -= CURSES_SCROLL;
 				if (curses_scroll < 0)
@@ -201,7 +201,7 @@ char *Curses_Input (void)
 			break;
 
 		case KEY_HOME:
-			if (inputpos > 0){
+			if (inputpos > 0) {
 				inputpos = 0;
 				curses_redraw |= 1;
 			}
@@ -385,7 +385,7 @@ static void Curses_DrawConsole (void)
 	}
 
 	/* draw a scroll indicator */
-	if (curses_lastline > 0){
+	if (curses_lastline > 0) {
 		Curses_SetColor(COLOR_ALT);
 		mvaddnstr(1 + ((curses_lastline - curses_scroll) * (h - 2) / curses_lastline), w, "O", 1);
 	}

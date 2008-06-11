@@ -266,7 +266,7 @@ static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 	case WM_CHAR:
 		if (hWnd == sys_console.hWndInput) {
 			if (wParam == VK_RETURN) {
-				if (GetWindowText(sys_console.hWndInput, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer))){
+				if (GetWindowText(sys_console.hWndInput, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer))) {
 					SetWindowText(sys_console.hWndInput, "");
 					Com_Printf("]%s\n", sys_console.cmdBuffer);
 				}

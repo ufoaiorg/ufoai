@@ -33,11 +33,11 @@ rank scientist
 	factor		0.2
 }
 
-rank medic
+rank pilot
 {
-	name		"_Medic"
-	image		"ranks/rank_medic"
-	type		EMPL_MEDIC
+	name		"_Pilot"
+	image		"ranks/rank_01"
+	type		EMPL_PILOT
 	factor		0.2
 }
 

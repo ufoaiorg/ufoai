@@ -374,11 +374,10 @@ building building_hospital
 	map_name	"hospital"
 	pedia		rs_building_hospital
 	pos			"3 3"
-	more_than_one	true
+	more_than_one	false
 	type		hospital
 	starting_employees	10
 	onclick		"building_open"
-	capacity	10
 }
 
 building building_amstorage

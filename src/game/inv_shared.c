@@ -1558,7 +1558,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 			else
 				soldierTemplate = commonSoldier;
 			break;
-		case EMPL_MEDIC:
+		case EMPL_PILOT:
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
 			soldierTemplate = civilSoldier;

@@ -3633,14 +3633,14 @@ static void CL_HandleBudget (void)
 	int cost;
 	nation_t *nation;
 	int initial_credits = ccs.credits;
-	int new_scientists, new_medics, new_soldiers, new_workers;
+	int new_scientists, new_pilots, new_soldiers, new_workers;
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
 		funding = CL_GetNationFunding(nation, 0);
 		CL_UpdateCredits(ccs.credits + funding);
 
-		new_scientists = new_medics = new_soldiers = new_workers = 0;
+		new_scientists = new_pilots = new_soldiers = new_workers = 0;
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
@@ -3648,16 +3648,15 @@ static void CL_HandleBudget (void)
 			new_scientists++;
 		}
 
-		for (j = 0; 0.25 + j * 3 < (float) nation->maxScientists * nation->stats[0].happiness; j++) {
-			/* Create a medic. */
-			E_CreateEmployee(EMPL_MEDIC, nation, NULL);
-			new_medics++;
-		}
-
-		for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
-			/* Create a soldier. */
-			E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
-			new_soldiers++;
+		/* @todo: The pilot global list needs to be refreshed.  Pilots who are already hired should be left, but all other 
+		 *        pilots need to be replaced.  The new pilots should be evenly distributed between the nations that are happy (happiness > 0). */
+		
+		if (nation->stats[0].happiness > 0) {
+			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
+				/* Create a soldier. */
+				E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
+				new_soldiers++;
+			}
 		}
 
 		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * nation->stats[0].happiness; j++) {
@@ -3669,7 +3668,7 @@ static void CL_HandleBudget (void)
 		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
 					funding, ngettext("credit", "credits", funding),
 					new_scientists, ngettext("scientist", "scientists", new_scientists),
-					new_medics, ngettext("medic", "medics", new_medics),
+					new_pilots, ngettext("pilot", "pilots", new_pilots),
 					new_soldiers, ngettext("soldier", "soldiers", new_soldiers),
 					new_workers, ngettext("worker", "workers", new_workers),
 					_(nation->name), CL_GetNationHappinessString(nation));
@@ -3707,12 +3706,12 @@ static void CL_HandleBudget (void)
 	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 
 	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
-		if (gd.employees[EMPL_MEDIC][i].hired)
-			cost += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.score.rank * SALARY_MEDIC_RANKBONUS;
+	for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
+		if (gd.employees[EMPL_PILOT][i].hired)
+			cost += SALARY_PILOT_BASE + gd.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
 	}
 
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to medics"), cost);
+	Com_sprintf(message, sizeof(message), _("Paid %i credits to pilots"), cost);
 	CL_UpdateCredits(ccs.credits - cost);
 	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 
@@ -3758,7 +3757,7 @@ static void CL_HandleBudget (void)
 		CL_UpdateCredits(ccs.credits - cost);
 	}
 
-	cost = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_MEDIC] * SALARY_ADMIN_MEDIC + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	cost = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	CL_UpdateCredits(ccs.credits - cost);
 	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
@@ -4127,10 +4126,10 @@ static void CL_StatsUpdate_f (void)
 			hired[EMPL_WORKER]++;
 		}
 	}
-	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
-		if (gd.employees[EMPL_MEDIC][i].hired) {
-			costs += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.score.rank * SALARY_MEDIC_RANKBONUS;
-			hired[EMPL_MEDIC]++;
+	for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
+		if (gd.employees[EMPL_PILOT][i].hired) {
+			costs += SALARY_PILOT_BASE + gd.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
+			hired[EMPL_PILOT]++;
 		}
 	}
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
@@ -4178,7 +4177,7 @@ static void CL_StatsUpdate_f (void)
 		sum += costs;
 	}
 
-	costs = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_MEDIC] * SALARY_ADMIN_MEDIC + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	costs = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Q_strcat(pos, va(_("Administrative costs:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -5646,8 +5645,8 @@ static void CL_DebugNewEmployees_f (void)
 		E_CreateEmployee(EMPL_SCIENTIST, NULL, NULL);
 
 	for (j = 0; j < 5; j++)
-		/* Create a medic. */
-		E_CreateEmployee(EMPL_MEDIC, NULL, NULL);
+		/* Create a pilot. */
+		E_CreateEmployee(EMPL_PILOT, NULL, NULL);
 
 	for (j = 0; j < 5; j++)
 		/* Create a soldier. */
@@ -6081,8 +6080,8 @@ static const value_t salary_vals[] = {
 	{"worker_rankbonus", V_INT, offsetof(salary_t, worker_rankbonus), MEMBER_SIZEOF(salary_t, worker_rankbonus)},
 	{"scientist_base", V_INT, offsetof(salary_t, scientist_base), MEMBER_SIZEOF(salary_t, scientist_base)},
 	{"scientist_rankbonus", V_INT, offsetof(salary_t, scientist_rankbonus), MEMBER_SIZEOF(salary_t, scientist_rankbonus)},
-	{"medic_base", V_INT, offsetof(salary_t, medic_base), MEMBER_SIZEOF(salary_t, medic_base)},
-	{"medic_rankbonus", V_INT, offsetof(salary_t, medic_rankbonus), MEMBER_SIZEOF(salary_t, medic_rankbonus)},
+	{"pilot_base", V_INT, offsetof(salary_t, pilot_base), MEMBER_SIZEOF(salary_t, pilot_base)},
+	{"pilot_rankbonus", V_INT, offsetof(salary_t, pilot_rankbonus), MEMBER_SIZEOF(salary_t, pilot_rankbonus)},
 	{"robot_base", V_INT, offsetof(salary_t, robot_base), MEMBER_SIZEOF(salary_t, robot_base)},
 	{"robot_rankbonus", V_INT, offsetof(salary_t, robot_rankbonus), MEMBER_SIZEOF(salary_t, robot_rankbonus)},
 	{"aircraft_factor", V_INT, offsetof(salary_t, aircraft_factor), MEMBER_SIZEOF(salary_t, aircraft_factor)},
@@ -6092,7 +6091,7 @@ static const value_t salary_vals[] = {
 	{"admin_soldier", V_INT, offsetof(salary_t, admin_soldier), MEMBER_SIZEOF(salary_t, admin_soldier)},
 	{"admin_worker", V_INT, offsetof(salary_t, admin_worker), MEMBER_SIZEOF(salary_t, admin_worker)},
 	{"admin_scientist", V_INT, offsetof(salary_t, admin_scientist), MEMBER_SIZEOF(salary_t, admin_scientist)},
-	{"admin_medic", V_INT, offsetof(salary_t, admin_medic), MEMBER_SIZEOF(salary_t, admin_medic)},
+	{"admin_pilot", V_INT, offsetof(salary_t, admin_pilot), MEMBER_SIZEOF(salary_t, admin_pilot)},
 	{"admin_robot", V_INT, offsetof(salary_t, admin_robot), MEMBER_SIZEOF(salary_t, admin_robot)},
 	{"debt_interest", V_FLOAT, offsetof(salary_t, debt_interest), MEMBER_SIZEOF(salary_t, debt_interest)},
 	{NULL, 0, 0, 0}
@@ -6157,7 +6156,7 @@ static const value_t campaign_vals[] = {
 	{"team", V_STRING, offsetof(campaign_t, team), 0},
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers), MEMBER_SIZEOF(campaign_t, soldiers)},
 	{"workers", V_INT, offsetof(campaign_t, workers), MEMBER_SIZEOF(campaign_t, workers)},
-	{"medics", V_INT, offsetof(campaign_t, medics), MEMBER_SIZEOF(campaign_t, medics)},
+	{"pilots", V_INT, offsetof(campaign_t, pilots), MEMBER_SIZEOF(campaign_t, pilots)},
 	{"xvirate", V_INT, offsetof(campaign_t, maxAllowedXVIRateUntilLost), MEMBER_SIZEOF(campaign_t, maxAllowedXVIRateUntilLost)},
 	{"maxdebts", V_INT, offsetof(campaign_t, negativeCreditsUntilLost), MEMBER_SIZEOF(campaign_t, negativeCreditsUntilLost)},
 	{"minhappiness", V_FLOAT, offsetof(campaign_t, minhappiness), MEMBER_SIZEOF(campaign_t, minhappiness)},
@@ -6234,8 +6233,8 @@ void CL_ParseCampaign (const char *name, const char **text)
 	s->worker_rankbonus = 500;
 	s->scientist_base = 3000;
 	s->scientist_rankbonus = 500;
-	s->medic_base = 3000;
-	s->medic_rankbonus = 500;
+	s->pilot_base = 3000;
+	s->pilot_rankbonus = 500;
 	s->robot_base = 7500;
 	s->robot_rankbonus = 1500;
 	s->aircraft_factor = 1;
@@ -6245,7 +6244,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 	s->admin_soldier = 75;
 	s->admin_worker = 75;
 	s->admin_scientist = 75;
-	s->admin_medic = 75;
+	s->admin_pilot = 75;
 	s->admin_robot = 150;
 	s->debt_interest = 0.005;
 
@@ -6847,7 +6846,7 @@ static void CP_CampaignsClick_f (void)
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
 			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
-			campaigns[num].medics, ngettext("medic", "medics", campaigns[num].medics),
+			campaigns[num].pilots, ngettext("pilot", "pilots", campaigns[num].pilots),
 			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty),
 			(int)(round(campaigns[num].minhappiness * 100.0f)), campaigns[num].negativeCreditsUntilLost,
 			_(campaigns[num].text));
@@ -6916,8 +6915,8 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("...worker_rankbonus: %i\n", SALARY_WORKER_RANKBONUS);
 	Com_Printf("...scientist_base: %i\n", SALARY_SCIENTIST_BASE);
 	Com_Printf("...scientist_rankbonus: %i\n", SALARY_SCIENTIST_RANKBONUS);
-	Com_Printf("...medic_base: %i\n", SALARY_MEDIC_BASE);
-	Com_Printf("...medic_rankbonus: %i\n", SALARY_MEDIC_RANKBONUS);
+	Com_Printf("...pilot_base: %i\n", SALARY_PILOT_BASE);
+	Com_Printf("...pilot_rankbonus: %i\n", SALARY_PILOT_RANKBONUS);
 	Com_Printf("...robot_base: %i\n", SALARY_ROBOT_BASE);
 	Com_Printf("...robot_rankbonus: %i\n", SALARY_ROBOT_RANKBONUS);
 	Com_Printf("...aircraft_factor: %i\n", SALARY_AIRCRAFT_FACTOR);
@@ -6927,7 +6926,7 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("...admin_soldier: %i\n", SALARY_ADMIN_SOLDIER);
 	Com_Printf("...admin_worker: %i\n", SALARY_ADMIN_WORKER);
 	Com_Printf("...admin_scientist: %i\n", SALARY_ADMIN_SCIENTIST);
-	Com_Printf("...admin_medic: %i\n", SALARY_ADMIN_MEDIC);
+	Com_Printf("...admin_pilot: %i\n", SALARY_ADMIN_PILOT);
 	Com_Printf("...admin_robot: %i\n", SALARY_ADMIN_ROBOT);
 	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
 }

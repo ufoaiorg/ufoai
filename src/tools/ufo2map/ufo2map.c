@@ -45,7 +45,7 @@ mapConfig_t config;
 /**
  * @brief print usage information.
  */
-static void Usage(void){
+static void Usage (void) {
 	Com_Printf("Usage: ufo2map <param1 <subparam1> <subparam2> <...>> <param2> <...> [map]\n"
 #ifdef _WIN32
 		"Even on Windows, use / slashes in the path\n"
@@ -161,7 +161,7 @@ static void U2M_Parameter (int argc, const char **argv)
 			}
 			i--;
 			/* if no subparams set, assume all */
-			if(i==iInitial){
+			if (i == iInitial) {
 				Com_Printf("  no %s subparameters set, assuming all\n", config.fixMap ? "fix" : "check");
 				config.chkAll = qtrue;
 			}
@@ -317,9 +317,9 @@ static void U2M_Parameter (int argc, const char **argv)
 			} else {
 				Sys_Error("invalid parameter count\n");
 			}
-		} else if (i<(argc-1)){
+		} else if (i < (argc - 1)) {
 			/* Last param is the map path, every other param should have been caught by now. */
-			Com_Printf("*** parameter not understood: %s try --help for more info\n",argv[i]);
+			Com_Printf("*** parameter not understood: %s try --help for more info\n", argv[i]);
 		}
 	}
 

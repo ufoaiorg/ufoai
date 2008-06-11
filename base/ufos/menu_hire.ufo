@@ -724,7 +724,7 @@ menu employees
 		*s_scientists	color "1 1 1 0.6"
 		*s_soldiers		color "1 1 1 0.6"
 		*s_workers		color "1 1 1 0.6"
-		*s_medics		color "1 1 1 0.6"
+		*s_pilots		color "1 1 1 0.6"
 	}
 	func empl_soldiers
 	{
@@ -744,11 +744,11 @@ menu employees
 		empl_reset
 		*s_workers		color "1 1 1 1"
 	}
-	func empl_medics
+	func empl_pilots
 	{
 		cmd "employee_init 3;"
 		empl_reset
-		*s_medics		color "1 1 1 1"
+		*s_pilots		color "1 1 1 1"
 	}
 
 	pic bt_soldier
@@ -811,24 +811,24 @@ menu employees
 		string	"_Workers"
 	}
 
-	pic bt_medics
+	pic bt_pilots
 	{
-		tooltip	"_Hire medics"
+		tooltip	"_Hire pilots"
 		image	menu/button_blue
 		mousefx	true
 		pos		"765 655"
 		texl	"0 0"
 		texh	"128 52"
-		click	{ empl_medics }
+		click	{ empl_pilots }
 	}
 
-	string s_medics
+	string s_pilots
 	{
 		pos	"829 681"
 		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
-		string	"_Medics"
+		string	"_Pilots"
 	}
 
 	pic bt_continue

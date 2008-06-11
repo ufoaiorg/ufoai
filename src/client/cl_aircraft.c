@@ -273,8 +273,6 @@ void AIM_AircraftStart_f (void)
 	if (AIR_IsAircraftInBase(aircraft)) {
 		aircraft->pos[0] = baseCurrent->pos[0] + 2;
 		aircraft->pos[1] = baseCurrent->pos[1] + 2;
-		/* remove soldier aboard from hospital */
-		HOS_RemoveEmployeesInHospital(aircraft);
 		/* reload its ammunition */
 		AII_ReloadWeapon(aircraft);
 	}
@@ -1190,8 +1188,6 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 
 	/* if aircraft was in base */
 	if (AIR_IsAircraftInBase(aircraft)) {
-		/* remove soldier aboard from hospital */
-		HOS_RemoveEmployeesInHospital(aircraft);
 		/* reload its ammunition */
 		AII_ReloadWeapon(aircraft);
 	}
@@ -1742,8 +1738,6 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 
 	/* if aircraft was in base */
 	if (AIR_IsAircraftInBase(aircraft)) {
-		/* remove soldier aboard from hospital */
-		HOS_RemoveEmployeesInHospital(aircraft);
 		/* reload its ammunition */
 		AII_ReloadWeapon(aircraft);
 	}
@@ -1882,6 +1876,45 @@ qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *emp
 	Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam:not found idx '%d' \n", employee->idx);
 	return qfalse;
 }
+
+/**
+ * @brief Adds the pilot to the first available aircraft at the specified base.
+ * @param[in] base Which base has aircraft to add the pilot to.
+ * @param[in] type Which pilot to search add.
+ */
+void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
+{
+	int i;
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		aircraft_t *aircraft = &base->aircraft[i];
+		if (!aircraft->pilot) {
+			aircraft->pilot = pilot;
+			break;
+		}
+	}
+
+}
+
+/**
+ * @brief Checks to see if the pilot is in any aircraft at this base.  If he is then he is removed from that aircraft.
+ * @param[in] base Which base has the aircraft to search for the employee in.
+ * @param[in] type Which employee to search for.
+ */
+void AIR_RemovePilotFromAssignedAircraft (base_t* base, const employee_t* pilot)
+{
+	int i;
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		aircraft_t *aircraft = &base->aircraft[i];
+		if (aircraft->pilot == pilot) {
+			aircraft->pilot = NULL;
+			break;
+		}
+	}
+
+}
+
 
 /**
  * @brief Save callback for savegames

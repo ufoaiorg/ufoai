@@ -34,158 +34,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief This is the current selected employee for the hospital_employee menu. */
 static employee_t* currentEmployeeInHospital = NULL;
 
-/** @brief Hospital employee list in Hospital menu. */
-static employee_t *hospitalList[MAX_EMPLOYEES];
-
 /** @brief First line in Hospital menu. */
 static int hospitalFirstEntry;
 
 /** @brief Number of all entries in Hospital menu. */
 static int hospitalNumEntries;
-
-/**
- * @brief Remove an employee from a hospitalList.
- * @param[in] employee Pointer to the employee to remove.
- * @param[in] base Pointer to the base where the employee is hired.
- * @return qtrue if the removal is OK, qfalse if it is not
- */
-qboolean HOS_RemoveFromList (const employee_t *employee, base_t *base)
-{
-	int i = 0, j = 0;
-	qboolean test = qfalse;
-
-	assert(base);
-
-	for (; j < base->hospitalListCount[employee->type]; i++, j++) {
-		if (base->hospitalList[employee->type][i] == employee->idx) {
-			j++;
-			test = qtrue;
-		}
-		base->hospitalList[employee->type][i] = base->hospitalList[employee->type][j];
-	}
-	if (test) {
-		base->hospitalList[employee->type][j] = -1;
-		base->hospitalListCount[employee->type]--;
-		base->capacities[CAP_HOSPSPACE].cur--;
-		return qtrue;
-	} else
-		return qfalse;
-}
-
-/**
- * @brief Remove an employee from a hospitalMissionList.
- * @param[in] employee Pointer to the employee to remove.
- * @param[in] base Pointer to the base where the employee is hired.
- */
-static qboolean HOS_RemoveFromMissionList (const employee_t *employee, base_t *base)
-{
-	int i = 0, j = 0;
-	qboolean test = qfalse;
-
-	assert(base);
-
-	for (; j < base->hospitalMissionListCount; i++, j++) {
-		if (base->hospitalMissionList[i] == employee->idx) {
-			j++;
-			test = qtrue;
-		}
-		base->hospitalMissionList[i] = base->hospitalMissionList[j];
-	}
-	if (test) {
-		base->hospitalMissionList[j] = -1;
-		base->hospitalMissionListCount--;
-		return qtrue;
-	} else
-		return qfalse;
-}
-
-/**
- * @brief Checks whether an employee should be removed from Hospital healing list.
- * @param[in] employee Pointer to the employee to check.
- */
-static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
-{
-	base_t *base;
-
-	assert(employee);
-	base = employee->baseHired;
-	assert(base);
-
-	if (base->hospitalListCount[employee->type] <= 0)
-		return;
-	if (!B_GetBuildingStatus(base, B_HOSPITAL))
-		return;
-
-	if (employee->chr.HP >= employee->chr.maxHP) {
-		employee->chr.HP = employee->chr.maxHP;
-		if (HOS_RemoveFromList(employee, base)) {
-			/* @todo: better text handling - "0 current healings" sounds silly. */
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), ngettext("Healing of %s completed - %i active healing left\n", "Healing of %s completed - %i active healings left\n", base->capacities[CAP_HOSPSPACE].cur), employee->chr.name, base->capacities[CAP_HOSPSPACE].cur);
-			MN_AddNewMessage(_("Healing complete"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-		} else {
-			Com_Printf("HOS_CheckRemovalFromEmployeeList()... Didn't find employee %s in Hospital healing list\n",employee->chr.name);
-		}
-#ifdef DEBUG
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "character with %i hp\n", employee->chr.HP);
-#endif
-	}
-}
-
-/**
- * @brief Adds an employee to the Hospital Healing list.
- * @param[in] base Pointer to the base with hospital, where the given employee will be healed.
- * @param[in] employee Pointer to the employee being added to hospital.
- */
-static qboolean HOS_AddToEmployeeList (const employee_t* employee, base_t *base)
-{
-	int i;
-	/* Already in our list? */
-	for (i = 0; i < base->hospitalListCount[employee->type]; i++) {
-		if (base->hospitalList[employee->type][i] == employee->idx)
-			return qfalse;
-	}
-	if (base->capacities[CAP_HOSPSPACE].cur < base->capacities[CAP_HOSPSPACE].max) {
-		base->hospitalList[employee->type][base->hospitalListCount[employee->type]] = employee->idx;
-		base->hospitalListCount[employee->type]++;
-		base->capacities[CAP_HOSPSPACE].cur++;
-		return qtrue;
-	} else {
-		/* @todo popup here - for the case of readding soldiers returning from a mission */
-		Com_Printf("HOS_AddToEmployeeList(), couldn't add employee to hospital, max capacity reached.\n");
-		return qfalse;
-	}
-}
-
-/**
- * @brief Adds an employee to the base->hospitalMissionList.
- * @param[in] employee Pointer to the employee to add.
- * @param[in] base Pointer to the base where we will add given employee.
- */
-static qboolean HOS_AddToInMissionEmployeeList (const employee_t* employee, base_t *base)
-{
-	int i;
-
-	assert(base);
-	/* Do nothing if the base does not have hospital. */
-	if (!B_GetBuildingStatus(base, B_HOSPITAL))
-		return qfalse;
-
-	/* Already in our list? */
-	for (i = 0; i < base->hospitalMissionListCount; i++) {
-		if (base->hospitalMissionList[i] == employee->idx)
-			return qfalse;
-	}
-
-	/* Add an employee. */
-	if (base->hospitalMissionListCount < MAX_EMPLOYEES) {
-		base->hospitalMissionList[base->hospitalMissionListCount] = employee->idx;
-		base->hospitalMissionListCount++;
-		return qtrue;
-	} else {
-		return qfalse;
-	}
-}
 
 /**
  * @brief Heals character.
@@ -225,34 +78,20 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
  */
 void HOS_HospitalRun (void)
 {
-	int type, i, j, k;
-	employee_t *employee;
-	qboolean test = qfalse;
+	int type, i;
 
-	for (j = 0; j < MAX_BASES; j++) {
-		base_t *base = B_GetFoundedBaseByIDX(j);
-		if (!base)
-			continue;
-
-		assert(base);
 		for (type = 0; type < MAX_EMPL; type++) {
 			for (i = 0; i < gd.numEmployees[type]; i++) {
-				employee = &gd.employees[type][i];
-				/* Don't try to do anything if employee is not on the list. */
-				for (k = 0; k < base->hospitalListCount[type]; k++) {
-					if (base->hospitalList[type][k] == employee->idx) {
-						if (!HOS_HealCharacter(&(employee->chr), qtrue)) {
-							HOS_CheckRemovalFromEmployeeList(employee);
-							test = qtrue;
-						}
-					}
-				}
-				/* If we did not just remove employee from the list, try to heal. */
-				if (!test)
-					HOS_HealCharacter(&(gd.employees[type][i].chr), qfalse);
+				employee_t *employee = &gd.employees[type][i];
+				if (!employee->baseHired || !employee->hired)
+					continue;
+					
+				if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
+					HOS_HealCharacter(&(employee->chr), qtrue);
+				else
+					HOS_HealCharacter(&(employee->chr), qfalse);
 			}
 		}
-	}
 }
 
 /**
@@ -299,7 +138,7 @@ static void HOS_UpdateMenu (void)
 {
 	char name[128];
 	char rank[128];
-	int i, j, k, type;
+	int i, j, type;
 	int entry;
 
 	/* Reset list. */
@@ -335,13 +174,7 @@ static void HOS_UpdateMenu (void)
 					Cbuf_AddText(va("hospitalmedium%i\n", entry));
 				else
 					Cbuf_AddText(va("hospitallight%i\n", entry));
-				/* If the employee is currently being healed, make him blue. */
-				for (k = 0; k < baseCurrent->hospitalListCount[type]; k++) {
-					if (baseCurrent->hospitalList[type][k] == employee->idx) {
-						Cbuf_AddText(va("hospitalheal%i\n", entry));
-						break;
-					}
-				}
+
 				/* Display name in the correct list-entry. */
 				Cvar_Set(va("mn_hos_item%i", entry), name);
 				/* Display rank in the correct list-entry. */
@@ -353,8 +186,6 @@ static void HOS_UpdateMenu (void)
 				entry++;
 			}
 
-			/* Assign the employee to proper position on the list. */
-			hospitalList[j] = &gd.employees[type][i];
 			j++;
 		}
 	}
@@ -388,9 +219,6 @@ static void HOS_Init_f (void)
 
 	HOS_UpdateMenu();
 
-	Cvar_SetValue("mn_hosp_medics", E_CountHired(baseCurrent, EMPL_MEDIC));
-	Cvar_SetValue("mn_hosp_heal_limit", baseCurrent->capacities[CAP_HOSPSPACE].max);
-	Cvar_SetValue("mn_hosp_healing", baseCurrent->capacities[CAP_HOSPSPACE].cur);
 }
 
 #ifdef DEBUG
@@ -535,180 +363,6 @@ static void HOS_EmployeeInit_f (void)
 }
 
 /**
- * @brief Starts the healing process via hospital menu button.
- */
-static void HOS_StartHealing_f (void)
-{
-	if (!baseCurrent || !currentEmployeeInHospital)
-		return;
-
-	assert(baseCurrent);
-
-	/* Add to the hospital if there is a room for the employee. */
-	if (baseCurrent->capacities[CAP_HOSPSPACE].cur < baseCurrent->capacities[CAP_HOSPSPACE].max) {
-		HOS_AddToEmployeeList(currentEmployeeInHospital, baseCurrent);
-		Cbuf_AddText("hosp_init;mn_pop\n");
-	} else {
-		memset(popupText, 0, sizeof(popupText));
-		/* No room for employee - prepare a popup. */
-		if (currentEmployeeInHospital->type == EMPL_SOLDIER) {
-			Q_strcat(popupText, va("%s %s",
-			_(gd.ranks[currentEmployeeInHospital->chr.score.rank].shortname),
-			currentEmployeeInHospital->chr.name),
-			sizeof(popupText));
-		} else {
-			Q_strcat(popupText, va("%s %s",
-			E_GetEmployeeString(currentEmployeeInHospital->type),
-			currentEmployeeInHospital->chr.name),
-			sizeof(popupText));
-		}
-		Q_strcat(popupText, _(" needs to be placed in hospital,\nbut there is not enough room!\n\nBuild more hospitals.\n"),
-		sizeof(popupText));
-
-		MN_Popup(_("Not enough hospital space"), popupText);
-		return;
-	}
-}
-
-/**
- * @brief Moves soldiers leaving base between hospital arrays in base_t.
- * @param[in] aircraft Pointer to an aircraft with team onboard.
- * @sa AIM_AircraftStart_f
- * @sa AIR_SendAircraftToMission
- * @todo Soldiers should also be removed from base->hospitalList during transfers
- */
-void HOS_RemoveEmployeesInHospital (const aircraft_t *aircraft)
-{
-	int i;
-	int j;
-	employee_t *employee;
-	base_t *base;
-
-	assert(aircraft);
-	base = aircraft->homebase;
-	assert(base);
-
-	/* Do nothing if the base does not have hospital. */
-	if (!B_GetBuildingStatus(base, B_HOSPITAL))
-		return;
-	/* First of all, make sure that relevant array is empty. */
-/*	memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
-	base->hospitalMissionListCount = 0;
-*/
-	/* select all soldiers from aircraft who are healing in an hospital */
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			/* Check whether any team member is in base->hospitalList. */
-			employee = aircraft->acTeam[i];
-			assert(employee);
-			for (j = 0; j < base->hospitalListCount[EMPL_SOLDIER]; j++) {
-				/* If the soldier is in base->hospitalList, remove him ... */
-				if (base->hospitalList[EMPL_SOLDIER][j] == employee->idx) {
-					HOS_RemoveFromList(employee, base);
-					/* ...and put him to base->hospitalMissionList. */
-					HOS_AddToInMissionEmployeeList(employee, base);
-				}
-			}
-		}
-	}
-}
-
-/**
- * @brief Moves soldiers returning from a mission between hospital arrays in base_t.
- * @sa CL_AircraftReturnedToHomeBase
- */
-void HOS_ReaddEmployeesInHospital (const aircraft_t *aircraft)
-{
-	int i;
-	int j;
-	employee_t* employee;
-	base_t *base;
-
-	assert(aircraft);
-	base = aircraft->homebase;
-	assert(base);
-
-	/* Do nothing if the base does not have hospital. */
-	if (!B_GetBuildingStatus(base, B_HOSPITAL))
-		return;
-
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			for (j = 0; j < base->hospitalMissionListCount; j++) {
-				/** @note hospitalMissionList only stores EMPL_SOLDIER. */
-				employee = (base->hospitalMissionList[j] > -1) ? &gd.employees[EMPL_SOLDIER][base->hospitalMissionList[j]] : NULL;
-				if (aircraft->acTeam[i] && aircraft->acTeam[i] == employee) {
-					assert(employee);
-					/* If the soldier is in base->hospitalMissionList, remove him ... */
-					HOS_RemoveFromMissionList(employee, base);
-					/* Soldier goes back to hospital only if he hasn't recover all his HP during mission (medikit). */
-					if (employee->chr.HP < employee->chr.maxHP) {
-						HOS_AddToEmployeeList(employee, base);
-					}
-				}
-			}
-		}
-	}
-}
-
-/**
- * @brief Update hospital lists when an employee dies.
- * @param[in] employee Pointer to the employee who died
- * @sa E_DeleteEmployee
- */
-void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
-{
-	int i;
-	base_t *base;
-
-	assert(employee);
-
-	base = employee->baseHired;
-	assert(base);
-
-	/* Do nothing if the base does not have hospital. */
-	if (!B_GetBuildingStatus(base, B_HOSPITAL))
-		return;
-
-	/* update hospitalList. */
-	for (i = 0; i < base->hospitalListCount[employee->type]; i++) {
-		/* remove dead employee from hospitalList. */
-		if (base->hospitalList[employee->type][i] == employee->idx)
-			HOS_RemoveFromList(employee, base);
-		/* decrease idx of all employees who have a higher idx than the dead one (see E_DeleteEmployee). */
-		if (base->hospitalList[employee->type][i] > employee->idx)
-			base->hospitalList[employee->type][i]--;
-	}
-
-	/* because the idx of soldiers changes when one dies, we must also update hospitalMissionList */
-	if (employee->type == EMPL_SOLDIER) {
-		for (i = 0; i < base->hospitalMissionListCount; i++) {
-			/* remove dead employee from hospitalMissionList. */
-			if (base->hospitalMissionList[i] == employee->idx)
-				HOS_RemoveFromMissionList(employee, base);
-			/* decrease idx of all employees who have a higher idx than the dead one (see E_DeleteEmployee). */
-			if (base->hospitalMissionList[i] > employee->idx)
-				base->hospitalMissionList[i]--;
-		}
-	}
-}
-
-/**
- * @brief Update Hospital capacity.
- * @param[in] base Pointer to the base
- * @sa B_ResetAllStatusAndCapacities_f
- */
-void HOS_UpdateHospitalCapForAll (base_t *base)
-{
-	employeeType_t type;
-
-	base->capacities[CAP_HOSPSPACE].cur = 0;
-
-	for (type = 0; type < MAX_EMPL; type++)
-		base->capacities[CAP_HOSPSPACE].cur += base->hospitalListCount[type];
-}
-
-/**
  * @brief Initial stuff for hospitals
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
@@ -718,7 +372,6 @@ void HOS_Reset (void)
 	/* add commands */
 	Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
 	Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
-	Cmd_AddCommand("hosp_start_healing", HOS_StartHealing_f, "Start the healing process for the current selected soldier");
 	Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
 	Cmd_AddCommand("hosp_list_up", HOS_ListUp_f, "Scroll up function for hospital employee list");
 	Cmd_AddCommand("hosp_list_down", HOS_ListDown_f, "Scroll down function for hospital employee list");
@@ -755,10 +408,9 @@ qboolean HOS_Load (sizebuf_t *sb, void* data)
  */
 qboolean HOS_HospitalAllowed (const base_t* base)
 {
-	int hiredMedicCount = E_CountHired(base, EMPL_MEDIC);
 
 	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetBuildingStatus(base, B_HOSPITAL) && hiredMedicCount > 0) {
+	 && B_GetBuildingStatus(base, B_HOSPITAL)) {
 		return qtrue;
 	} else {
 		return qfalse;

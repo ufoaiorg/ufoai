@@ -218,7 +218,7 @@ typedef struct campaign_s {
 	int soldiers;				/**< start with x soldiers */
 	int scientists;				/**< start with x scientists */
 	int workers;				/**< start with x workers */
-	int medics;					/**< start with x medics */
+	int pilots;					/**< start with x pilots */
 	int ugvs;					/**< start with x ugvs (robots) */
 	int credits;				/**< start with x credits */
 	int num;
@@ -241,8 +241,8 @@ typedef struct salary_s {
 	int worker_rankbonus;
 	int scientist_base;
 	int scientist_rankbonus;
-	int medic_base;
-	int medic_rankbonus;
+	int pilot_base;
+	int pilot_rankbonus;
 	int robot_base;
 	int robot_rankbonus;
 	int aircraft_factor;
@@ -252,7 +252,7 @@ typedef struct salary_s {
 	int admin_soldier;
 	int admin_worker;
 	int admin_scientist;
-	int admin_medic;
+	int admin_pilot;
 	int admin_robot;
 	float debt_interest;
 } salary_t;
@@ -263,8 +263,8 @@ typedef struct salary_s {
 #define SALARY_WORKER_RANKBONUS salaries[curCampaign->idx].worker_rankbonus
 #define SALARY_SCIENTIST_BASE salaries[curCampaign->idx].scientist_base
 #define SALARY_SCIENTIST_RANKBONUS salaries[curCampaign->idx].scientist_rankbonus
-#define SALARY_MEDIC_BASE salaries[curCampaign->idx].medic_base
-#define SALARY_MEDIC_RANKBONUS salaries[curCampaign->idx].medic_rankbonus
+#define SALARY_PILOT_BASE salaries[curCampaign->idx].pilot_base
+#define SALARY_PILOT_RANKBONUS salaries[curCampaign->idx].pilot_rankbonus
 #define SALARY_ROBOT_BASE salaries[curCampaign->idx].robot_base
 #define SALARY_ROBOT_RANKBONUS salaries[curCampaign->idx].robot_rankbonus
 #define SALARY_AIRCRAFT_FACTOR salaries[curCampaign->idx].aircraft_factor
@@ -274,7 +274,7 @@ typedef struct salary_s {
 #define SALARY_ADMIN_SOLDIER salaries[curCampaign->idx].admin_soldier
 #define SALARY_ADMIN_WORKER salaries[curCampaign->idx].admin_worker
 #define SALARY_ADMIN_SCIENTIST salaries[curCampaign->idx].admin_scientist
-#define SALARY_ADMIN_MEDIC salaries[curCampaign->idx].admin_medic
+#define SALARY_ADMIN_PILOT salaries[curCampaign->idx].admin_pilot
 #define SALARY_ADMIN_ROBOT salaries[curCampaign->idx].admin_robot
 #define SALARY_DEBT_INTEREST salaries[curCampaign->idx].debt_interest
 

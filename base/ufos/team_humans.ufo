@@ -876,10 +876,10 @@ team human_scientist
 }
 
 // ======================
-// MEDICS
+// PILOTS
 // ======================
 
-team human_medic
+team human_pilot
 {
 	size 1
 	hit_particle blood
@@ -1204,11 +1204,12 @@ team human_medic
 
 	models {
 		male {
-			civilians/male scientist01 sci_head01 0
-			civilians/male scientist01 sci_head02a 0
-			civilians/male scientist01 sci_head02b 0
-			civilians/male scientist01 sci_head03a 0
-			civilians/male scientist01 sci_head03b 0
+			soldiers/male body head01a 0
+			soldiers/male body head01b 0
+			soldiers/male body head02a 0
+			soldiers/male body head02b 0
+			soldiers/male body head03a 0
+			soldiers/male body head03b 0
 		}
 	}
 }

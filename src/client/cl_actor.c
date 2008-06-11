@@ -5128,7 +5128,7 @@ static void CL_AddPathingBox (pos3_t pos)
 	 * yellow if it can be entered but is too far,
 	 * or red if it cannot be entered ever.
 	 */
-	if ((Grid_Fall(&clMap, pos, ACTOR_SIZE_NORMAL) < pos[2] - 1)){
+	if ((Grid_Fall(&clMap, pos, ACTOR_SIZE_NORMAL) < pos[2] - 1)) {
 		VectorSet(ent.angles, 0.0, 0.0, 0.0); /* Can't enter - grey */
 	} else {
 		/**

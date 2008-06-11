@@ -584,7 +584,7 @@ static void R_InitExtension (void)
 	}
 
 	/* vertex buffer objects */
-	if (strstr(r_config.extensionsString, "GL_ARB_vertex_buffer_object")){
+	if (strstr(r_config.extensionsString, "GL_ARB_vertex_buffer_object")) {
 		if (r_vertexbuffers->integer) {
 			qglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
 			qglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");

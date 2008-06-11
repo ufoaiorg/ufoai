@@ -102,7 +102,7 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 
 	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
 		/* find which side of the surf we are on  */
-		switch(surf->plane->type){
+		switch (surf->plane->type) {
 		case PLANE_X:
 		case PLANE_Y:
 		case PLANE_Z:

@@ -429,65 +429,6 @@ menu hospital
 		in		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
 	}
 
-	// ==================
-	// healing limit
-	// ==================
-
-	string txt_hosp_heal_caption
-	{
-		string	"_Capacity"
-		pos	"40 730"
-		font	f_small
-		align	ul
-	}
-
-	string txt_hosp_heal_limit
-	{
-		font	f_small
-		string	"*cvar mn_hosp_heal_limit"
-		pos		"240 730"
-		align	ur
-	}
-
-	// ==================
-	// healing limit
-	// ==================
-
-	string txt_hosp_healing_caption
-	{
-		string	"_Currently healing"
-		pos	"360 730"
-		font	f_small
-		align	ul
-	}
-
-	string txt_hosp_healing_value
-	{
-		font	f_small
-		string	"*cvar mn_hosp_healing"
-		pos		"560 730"
-		align	ur
-	}
-
-	// ==================
-	// medics
-	// ==================
-
-	string txt_hosp_medics_caption
-	{
-		string	"_Medics"
-		pos	"680 730"
-		font	f_small
-		align	ul
-	}
-
-	string txt_hosp_medics
-	{
-		font	f_small
-		string	"*cvar mn_hosp_medics"
-		pos		"880 730"
-		align	ur
-	}
 
 	// ==================
 	// additional stuff
@@ -642,30 +583,6 @@ menu hospital_employee
 	// action buttons
 	// ==================
 
-	pic button_hosp_heal_start
-	{
-		tooltip	"_Heal this soldier"
-		image   menu/button
-		pos	"45 100"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
-		click
-		{
-			cmd "hosp_start_healing;"
-		}
-		out		{ *txt_hosp_heal_start color "0 0.8 0 1" *button_hosp_heal_start texl "0 0" *button_hosp_heal_start texh "230 64" }
-		in		{ *txt_hosp_heal_start color "1 1 1 1" *button_hosp_heal_start texl "230 0" *button_hosp_heal_start texh "460 64" }
-	}
-
-	string txt_hosp_heal_start
-	{
-		string	"_Heal"
-		color	"0 0.8 0 1"
-		pos	"164 133"
-		font	f_menu
-		align	cc
-	}
 
 	pic button_hosp_bionic_start
 	{

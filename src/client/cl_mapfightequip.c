@@ -34,6 +34,7 @@ static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipMenuUpdate_f 
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
+static employee_t *airequipSelectedPilot = NULL;		/**< Selected pilot in equip menu */
 
 /**
  * @brief Returns craftitem weight based on size.
@@ -105,6 +106,7 @@ static void AIM_CheckAirequipID (void)
 		case AC_ITEM_WEAPON:
 		case AC_ITEM_SHIELD:
 		case AC_ITEM_ELECTRONICS:
+		case AC_ITEM_PILOT:
 			return;
 		default:
 			airequipID = AC_ITEM_WEAPON;
@@ -177,6 +179,8 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 	switch (airequipID) {
 	case AC_ITEM_SHIELD:
 		slot = &aircraft->shield;
+		break;
+	case AC_ITEM_PILOT:
 		break;
 	case AC_ITEM_ELECTRONICS:
 		slot = aircraft->electronics + airequipSelectedSlot;
@@ -292,6 +296,29 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 }
 
 /**
+ * @brief Checks to see if the pilot is in any aircraft at this base.
+ * @param[in] base Which base has the aircraft to search for the employee in.
+ * @param[in] type Which employee to search for.
+ * @return qtrue or qfalse depending on if the employee was found on the base aircraft.
+ */
+qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
+{
+	int i;
+	qboolean found = qfalse;
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		const aircraft_t *aircraft = &base->aircraft[i];
+		if (aircraft->pilot == pilot) {
+			found = qtrue;
+			break;
+		}
+	}
+
+	return found;
+}
+
+
+/**
  * @brief Update the list of item you can choose
  */
 static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
@@ -310,17 +337,34 @@ static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 		return;
 	}
 
-	/* Add all items corresponding to airequipID to list */
-	list = AII_GetCraftitemTechsByType(airequipID, base ? base : baseCurrent);
-
-	/* Copy only those which are researched to buffer */
-	i = 0;
-	while (*list) {
-		if (AIM_SelectableAircraftItem(base, aircraft, *list)) {
-			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
-			i++;
+	if (airequipID == AC_ITEM_PILOT) {
+		linkedList_t *hiredEmployees = NULL;
+		E_GetHiredEmployees(aircraft->homebase, EMPL_PILOT, &hiredEmployees);
+		i = 0;
+		while (hiredEmployees) {
+			employee_t *employee;
+			employee = (employee_t*)hiredEmployees->data;
+			if (employee && !AIM_PilotAssignedAircraft(aircraft->homebase, employee)) {
+				Q_strcat(buffer, va("%s\n", employee->chr.name), sizeof(buffer));
+				i++;
+			}
+			hiredEmployees = hiredEmployees->next;
 		}
-		list++;
+	}
+	else {
+
+		/* Add all items corresponding to airequipID to list */
+		list = AII_GetCraftitemTechsByType(airequipID, base ? base : baseCurrent);
+
+		/* Copy only those which are researched to buffer */
+		i = 0;
+		while (*list) {
+			if (AIM_SelectableAircraftItem(base, aircraft, *list)) {
+				Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
+				i++;
+			}
+			list++;
+		}
 	}
 
 	/* copy buffer to mn.menuText to display it on screen */
@@ -1045,6 +1089,9 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		}
 		AIM_CheckAirequipID();
 	} else {
+		/* mn_equip_pilot" = "0" means the standard model will be used in the descripion box */
+		Cvar_Set("mn_equip_pilot", "0");
+
 		type = atoi(Cmd_Argv(1));
 		switch (type) {
 		case 1:
@@ -1060,6 +1107,14 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			if (airequipID == AC_ITEM_WEAPON)
 				airequipID = AC_ITEM_AMMO;
 			break;
+		case 4:
+			/* crew */
+			airequipID = AC_ITEM_PILOT;
+			/*  mn_equip_pilot" = "1" means the pilot model (model has different dimensions for a pilots portrait)
+			 *  will be used in the descripion box */
+			Cvar_Set("mn_equip_pilot", "1");
+			break;
+
 		default:
 			airequipID = AC_ITEM_WEAPON;
 			break;
@@ -1094,49 +1149,62 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList(NULL, aircraft);
 
-	/* Fill the texts of each zone */
-	/* First slot: item currently assigned */
-	if (!slot->item) {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
-		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1));
-	} else {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(slot->item->tech->name));
-		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
-		if (!slot->installationTime)
-			Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
-		else if (slot->installationTime > 0)
-			Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),slot->installationTime), sizeof(smallbuffer1));
-		else
-			Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),-slot->installationTime), sizeof(smallbuffer1));
-	}
-	mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
-
-	/* Second slot: next item to install when the first one will be removed */
-	if (slot->item && slot->installationTime < 0) {
-		if (!slot->nextItem)
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No item assigned."));
-		else {
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(slot->nextItem->tech->name));
-			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
-		}
-	} else
-		*smallbuffer2 = '\0';
-	mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
-
-	/* Third slot: ammo slot (only used for weapons) */
-	if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->item) {
-		if (!slot->ammo) {
-			AIM_EmphazeAmmoSlotText();
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon."));
+	/* Fill the texts of each zone, if we are dealing with a pilot, we need to  */
+	if (airequipID == AC_ITEM_PILOT) {
+		if (aircraft->pilot) {
+			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(aircraft->pilot->chr.name));
 		} else {
-			AIM_NoEmphazeAmmoSlotText();
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(slot->ammo->tech->name));
+			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No pilot assigned."));
 		}
-	} else {
+		*smallbuffer2 = '\0';
 		*smallbuffer3 = '\0';
+		mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
+		mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
+		mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
+	} else {
+		/* First slot: item currently assigned */
+		if (!slot->item) {
+			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
+			Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1));
+		} else {
+			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(slot->item->tech->name));
+			Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
+			if (!slot->installationTime)
+				Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
+			else if (slot->installationTime > 0)
+				Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),slot->installationTime), sizeof(smallbuffer1));
+			else
+				Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),-slot->installationTime), sizeof(smallbuffer1));
+		}
+		mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
+
+		/* Second slot: next item to install when the first one will be removed */
+		if (slot->item && slot->installationTime < 0) {
+			if (!slot->nextItem)
+				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No item assigned."));
+			else {
+				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(slot->nextItem->tech->name));
+				Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
+				Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
+			}
+		} else
+			*smallbuffer2 = '\0';
+		mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
+
+		/* Third slot: ammo slot (only used for weapons) */
+		if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->item) {
+			if (!slot->ammo) {
+				AIM_EmphazeAmmoSlotText();
+				Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon."));
+			} else {
+				AIM_NoEmphazeAmmoSlotText();
+				Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(slot->ammo->tech->name));
+			}
+		} else {
+			*smallbuffer3 = '\0';
+		}
+		mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
 	}
-	mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
 
 	/* Draw existing slots for this aircraft */
 	AIM_DrawAircraftSlots(aircraft);
@@ -1537,6 +1605,19 @@ void AIM_AircraftEquipAddItem_f (void)
 		aircraft = NULL;
 	}
 
+	if (airequipID == AC_ITEM_PILOT) {
+
+		aircraft->pilot = airequipSelectedPilot;
+
+		/* Update the values of aircraft stats */
+		AII_UpdateAircraftStats(aircraft);
+
+		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
+		AIM_AircraftEquipMenuUpdate_f();
+
+		return;
+	}
+
 	/* the clicked button doesn't correspond to the selected zone */
 	if (zone != airequipSelectedZone)
 		return;
@@ -1639,6 +1720,20 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		aircraft = NULL;
 	}
 
+	if (airequipID == AC_ITEM_PILOT) {
+
+		aircraft->pilot = NULL;
+
+		/* Update the values of aircraft stats */
+		AII_UpdateAircraftStats(aircraft);
+
+		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
+		AIM_AircraftEquipMenuUpdate_f();
+
+		return;
+	}
+
+
 	/* no item in slot: nothing to remove */
 	if (!slot->item)
 		return;
@@ -1684,6 +1779,22 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	}
 }
 
+void AIM_ResetEquipAircraftMenu (void)
+{
+	/* Reset all used menu variables/nodes. */
+	Cvar_Set("mn_itemname", "");
+	Cvar_Set("mn_item", "");
+	Cvar_Set("mn_upmodel_top", "");
+	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
+
+	mn.menuText[TEXT_STANDARD] = "";
+}
+
+
+
 /**
  * @brief Set airequipSelectedTechnology to the technology of current selected aircraft item.
  * @sa AIM_AircraftEquipMenuUpdate_f
@@ -1721,25 +1832,49 @@ void AIM_AircraftEquipMenuClick_f (void)
 	/* Which entry in the list? */
 	num = atoi(Cmd_Argv(1));
 
-	/* make sure that airequipSelectedTechnology is NULL if no tech is found */
-	airequipSelectedTechnology = NULL;
+	if (airequipID == AC_ITEM_PILOT) {
+		linkedList_t *hiredEmployees = NULL;
+		E_GetHiredEmployees(baseCurrent, EMPL_PILOT, &hiredEmployees);
 
-	/* build the list of all aircraft items of type airequipID - null terminated */
-	list = AII_GetCraftitemTechsByType(airequipID, base ? base : baseCurrent);
-	/* to prevent overflows we go through the list instead of address it directly */
-	while (*list) {
-		if (AIM_SelectableAircraftItem(base, aircraft, *list)) {
-			/* found it */
-			if (num <= 0) {
-				airequipSelectedTechnology = *list;
-				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
-				break;
+		AIM_ResetEquipAircraftMenu();
+		while (hiredEmployees) {
+			employee_t *employee;
+			employee = (employee_t*)hiredEmployees->data;
+			if (employee && !AIM_PilotAssignedAircraft(baseCurrent, employee)) {
+				if (num <= 0) {
+					Cvar_Set("mn_itemname", employee->chr.name);
+					Cvar_Set("mn_upmodel_top", CHRSH_CharGetHead(&employee->chr));
+					airequipSelectedPilot = employee;
+					break;
+				}
+				num--;
 			}
-			num--;
+			hiredEmployees = hiredEmployees->next;
 		}
-		/* next item in the tech pointer list */
-		list++;
+	} else {
+		/* make sure that airequipSelectedTechnology is NULL if no tech is found */
+		airequipSelectedTechnology = NULL;
+
+		/* build the list of all aircraft items of type airequipID - null terminated */
+		list = AII_GetCraftitemTechsByType(airequipID, base ? base : baseCurrent);
+		/* to prevent overflows we go through the list instead of address it directly */
+		while (*list) {
+			if (AIM_SelectableAircraftItem(base, aircraft, *list)) {
+				/* found it */
+				if (num <= 0) {
+					airequipSelectedTechnology = *list;
+					UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
+					break;
+				}
+				num--;
+			}
+			/* next item in the tech pointer list */
+			list++;
+		}
+
 	}
+
+
 }
 
 /**

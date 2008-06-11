@@ -71,6 +71,8 @@ void AIM_AircraftEquipZoneSelect_f(void);
 qboolean AII_AddItemToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot);
 qboolean AII_AddAmmoToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot);
 void AII_RemoveItemFromSlot(base_t* base, aircraftSlot_t *slot, qboolean ammo);
+qboolean AIM_PilotAssignedAircraft(const base_t* base, const employee_t* pilot);
+void AIM_ResetEquipAircraftMenu(void);
 void AIM_AircraftEquipAddItem_f(void);
 void AIM_AircraftEquipDeleteItem_f(void);
 void AIM_AircraftEquipMenuClick_f(void);

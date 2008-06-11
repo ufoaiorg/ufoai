@@ -144,8 +144,6 @@ baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
 		return CAP_ITEMS;
 	case B_WORKSHOP:
 		return CAP_WORKSPACE;
-	case B_HOSPITAL:
-		return CAP_HOSPSPACE;
 	case B_HANGAR:
 		return CAP_AIRCRAFTS_BIG;
 	case B_ALIEN_CONTAINMENT:
@@ -187,8 +185,6 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 		return B_LAB;
 	case CAP_WORKSPACE:
 		return B_WORKSHOP;
-	case CAP_HOSPSPACE:
-		return B_HOSPITAL;
 	case CAP_UFOHANGARS_SMALL:
 		return B_UFO_SMALL_HANGAR;
 	case CAP_UFOHANGARS_LARGE:
@@ -498,13 +494,6 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
 {
 	switch (type) {
-	case B_HOSPITAL:
-		/* Reset all arrays . */
-		memset(base->hospitalList, -1, sizeof(base->hospitalList));
-		memset(base->hospitalListCount, 0, sizeof(base->hospitalListCount));
-		memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
-		base->hospitalMissionListCount = 0;
-		break;
 	case B_RADAR:
 		{
 			const float level = B_GetMaxBuildingLevel(base, B_RADAR);
@@ -664,9 +653,6 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
 		PR_UpdateProductionCap(base);
-
-	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_HOSPSPACE)))
-		HOS_UpdateHospitalCapForAll(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_SMALL)) ||
 		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_UFOHANGARS_LARGE)))
@@ -1184,7 +1170,6 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 			employeeType = EMPL_SCIENTIST;
 			break;
 		case B_HOSPITAL:
-			employeeType = EMPL_MEDIC;
 			break;
 		case B_HANGAR: /* the Dropship Hangar */
 			employeeType = EMPL_SOLDIER;
@@ -2157,6 +2142,7 @@ static inline nation_t *B_RandomNation (void)
 void B_ClearBase (base_t *const base)
 {
 	int i;
+	int j = 0;
 
 	CL_ResetCharacters(base);
 
@@ -2186,9 +2172,19 @@ void B_ClearBase (base_t *const base)
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", curCampaign->workers);
 		for (i = 0; i < curCampaign->workers; i++)
 			E_CreateEmployee(EMPL_WORKER, B_RandomNation(), NULL);
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i medics\n", curCampaign->medics);
-		for (i = 0; i < curCampaign->medics; i++)
-			E_CreateEmployee(EMPL_MEDIC, B_RandomNation(), NULL);
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i pilots\n", curCampaign->pilots);
+		
+		/* Fill the global data employee list with pilots, evenly distributed between nations */
+		for (i = 0; i < MAX_EMPLOYEES; i++) {
+			if (j < gd.numNations) 
+				j++;
+			else
+				j = 0;
+		
+			nation_t *nation = &gd.nations[j];
+			if (!E_CreateEmployee(EMPL_PILOT, nation, NULL))
+				break;
+		}
 	}
 
 	memset(base->map, 0, sizeof(base->map));
@@ -3368,11 +3364,6 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				E_GetEmployeeString(EMPL_WORKER), _(building->name));
 			MN_Popup(_("Notice"), popupText);
 			return;
-		} else if ((building->buildingType == B_HOSPITAL) && (E_CountHired(baseCurrent, EMPL_MEDIC) <= 0)) {
-			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_MEDIC), _(building->name));
-			MN_Popup(_("Notice"), popupText);
-			return;
 		} else if ((building->buildingType == B_LAB) && (E_CountHired(baseCurrent, EMPL_SCIENTIST) <= 0)) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name));
@@ -3687,8 +3678,6 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
 	AII_ReloadWeapon(aircraft);				/**< Reload weapons */
 
-	HOS_ReaddEmployeesInHospital(aircraft);		/**< Try to readd soldiers to hospital. */
-
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
@@ -3755,7 +3744,6 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_EMPLOYEES:		/**< Update employees capacity in base. */
 	case CAP_LABSPACE:		/**< Update laboratory space capacity in base. */
 	case CAP_WORKSPACE:		/**< Update workshop space capacity in base. */
-	case CAP_HOSPSPACE:		/**< Update hospital space capacity in base. */
 	case CAP_ITEMS:			/**< Update items capacity in base. */
 	case CAP_AIRCRAFTS_SMALL:	/**< Update aircraft capacity in base. */
 	case CAP_AIRCRAFTS_BIG:		/**< Update aircraft capacity in base. */
@@ -3796,19 +3784,6 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		break;
 	}
 
-	switch (cap) {
-	case CAP_HOSPSPACE:		/** Maximum capacity of hospital is limited by medic number */
-		{
-			const int num = E_CountHired(base, EMPL_MEDIC);
-			const int SOLDIER_PER_MEDIC = 2;	/**< Maximum number of soldier a medic can heal */
-
-			if (base->capacities[cap].max > num * SOLDIER_PER_MEDIC)
-				base->capacities[cap].max = num * SOLDIER_PER_MEDIC;
-		}
-		break;
-	default:
-		break;
-	}
 }
 
 /**
@@ -3969,6 +3944,8 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				MSG_WriteShort(sb, (aircraft->acTeam[l] ? aircraft->acTeam[l]->type : MAX_EMPL));
 
+			MSG_WriteByte(sb, (aircraft->pilot ? aircraft->pilot->idx : BYTES_NONE));
+
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
 			MSG_WriteShort(sb, aircraft->route.numPoints);
@@ -4026,17 +4003,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
 		}
 
-		/* Hospital stuff. */
-		for (k = 0; k < presaveArray[PRE_EMPTYP]; k++) {
-			MSG_WriteShort(sb, b->hospitalListCount[k]);
-			for (l = 0; l < presaveArray[PRE_MAXEMP]; l++) {
-				MSG_WriteShort(sb, b->hospitalList[k][l]);
-			}
-		}
-		MSG_WriteShort(sb, b->hospitalMissionListCount);
-		for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
-			MSG_WriteShort(sb, b->hospitalMissionList[k]);
-		}
 	}
 	return qtrue;
 }
@@ -4135,7 +4101,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	int teamIdxs[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee indices. */
 	int teamTypes[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee-types. */
 	int buildingIdx;
-
+	int pilotIdx;
+	
 	/* Initialize Radar coverage and create textures if not yet done
 	 * This is needed if no other game was played before and we try to load
 	 * a game as first action */
@@ -4275,6 +4242,12 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				}
 			}
 
+			pilotIdx = MSG_ReadByte(sb);
+			if (pilotIdx != BYTES_NONE)
+				aircraft->pilot = &gd.employees[EMPL_PILOT][pilotIdx];
+			else
+				aircraft->pilot = NULL;
+			
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
 			aircraft->route.numPoints = MSG_ReadShort(sb);
@@ -4348,17 +4321,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			/** @todo What about the "tech" pointer? */
 		}
 
-		/* Hospital stuff. */
-		for (k = 0; k < presaveArray[PRE_EMPTYP]; k++) {
-			b->hospitalListCount[k] = MSG_ReadShort(sb);
-			for (l = 0; l < presaveArray[PRE_MAXEMP]; l++) {
-				b->hospitalList[k][l] = MSG_ReadShort(sb);
-			}
-		}
-		b->hospitalMissionListCount = MSG_ReadShort(sb);
-		for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
-			b->hospitalMissionList[k] = MSG_ReadShort(sb);
-		}
 
 		/* clear the mess of stray loaded pointers */
 		memset(&b->equipByBuyType, 0, sizeof(inventory_t));

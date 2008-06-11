@@ -54,7 +54,7 @@ campaign veryhard
 	soldiers	6
 	scientists	2
 	workers		1
-	medics		0
+	pilots		0
 	difficulty	4
 	minhappiness	0.42
 	maxdebts	50000
@@ -79,7 +79,7 @@ campaign hard
 	soldiers	7
 	scientists	3
 	workers		2
-	medics		1
+	pilots		1
 	difficulty	2
 	minhappiness	0.35
 	maxdebts	100000
@@ -107,7 +107,7 @@ campaign main
 	soldiers	9
 	scientists	6
 	workers		14
-	medics		2
+	pilots		2
 	difficulty	0
 	minhappiness	0.30
 	maxdebts	200000
@@ -118,8 +118,8 @@ campaign main
 		worker_rankbonus 500;
 		scientist_base 3000;
 		scientist_rankbonus 500;
-		medic_base 3000;
-		medic_rankbonus 500;
+		pilot_base 3000;
+		pilot_rankbonus 500;
 		robot_base 7500;
 		robot_rankbonus 1500;
 		aircraft_factor 1;
@@ -129,7 +129,7 @@ campaign main
 		admin_soldier 75;
 		admin_worker 75;
 		admin_scientist 75;
-		admin_medic 75;
+		admin_pilot 75;
 		admin_robot 150;
 		debt_interest 0.005;
 	}
@@ -154,7 +154,7 @@ campaign easy
 	soldiers	25
 	scientists	16
 	workers		10
-	medics		10
+	pilots		10
 	difficulty	-2
 	minhappiness	0.2
 	maxdebts	350000
@@ -182,7 +182,7 @@ campaign veryeasy
 	soldiers	35
 	scientists	26
 	workers		20
-	medics		20
+	pilots		20
 	difficulty	-4
 	minhappiness	0.1
 	maxdebts	500000
@@ -193,8 +193,8 @@ campaign veryeasy
 		worker_rankbonus 1500;
 		scientist_base 1000;
 		scientist_rankbonus 1500;
-		medic_base 1000;
-		medic_rankbonus 1500;
+		pilot_base 1000;
+		pilot_rankbonus 1500;
 		robot_base 3500;
 		robot_rankbonus 2500;
 		base_upkeep 15000;
@@ -202,7 +202,7 @@ campaign veryeasy
 		admin_soldier 50;
 		admin_worker 50;
 		admin_scientist 50;
-		admin_medic 50;
+		admin_pilot 50;
 		admin_robot 50;
 	}
 	firstbase	balanced
@@ -226,7 +226,7 @@ campaign aliencampaign
 	soldiers	15
 	scientists	12
 	workers		9
-	medics		4
+	pilots		4
 	difficulty	-4
 	researched	rslist_alien
 	equipment	campaign_player_aliens

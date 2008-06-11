@@ -510,7 +510,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 			s->terrain.height = s->terrain.ceil - s->terrain.floor;
 
-			if (s->terrain.height == 0){
+			if (s->terrain.height == 0) {
 				Com_Printf("R_ParseStage: Zero height terrain specified for %s\n",
 					(s->image ? s->image->name : NULL));
 				return -1;
@@ -609,7 +609,7 @@ void R_LoadMaterials (const char *map)
 	/* load the materials file for parsing */
 	Com_sprintf(path, sizeof(path), "materials/%s.mat", COM_SkipPath(map));
 
-	if ((i = FS_LoadFile(path, &fileBuffer)) < 1){
+	if ((i = FS_LoadFile(path, &fileBuffer)) < 1) {
 		Com_DPrintf(DEBUG_RENDERER, "Couldn't load %s\n", path);
 		return;
 	} else {
@@ -637,7 +637,7 @@ void R_LoadMaterials (const char *map)
 			c = COM_Parse(&buffer);
 			image = R_FindImage(va("textures/%s", c), it_world);
 
-			if (image == r_notexture){
+			if (image == r_notexture) {
 				Com_Printf("R_LoadMaterials: Failed to resolve texture: %s\n", c);
 				image = NULL;
 			}

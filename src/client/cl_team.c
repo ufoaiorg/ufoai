@@ -371,11 +371,11 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
 		break;
-	case EMPL_MEDIC:
-		chr->score.rank = CL_GetRank("medic");
+	case EMPL_PILOT:
+		chr->score.rank = CL_GetRank("pilot");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_medic", team);
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", team);
 		break;
 	case EMPL_WORKER:
 		chr->score.rank = CL_GetRank("worker");
@@ -1100,7 +1100,7 @@ static void CL_Select_f (void)
 	if (mode == SELECT_MODE_SOLDIER) {
 		const menu_t *activeMenu = MN_GetActiveMenu();
 		if (!Q_strncmp(activeMenu->name, "employees", 9)) {
-			/* this is hire menu: we can select soldiers, worker, medics, or researcher */
+			/* this is hire menu: we can select soldiers, worker, pilots, or researcher */
 			if (num < employeesInCurrentList) {
 				Cmd_ExecuteString(va("employee_list_click %i", num));
 				Cmd_ExecuteString(va("employee_select +%i", num));

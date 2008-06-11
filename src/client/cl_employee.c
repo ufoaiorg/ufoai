@@ -181,16 +181,16 @@ static void E_EmployeeList_f (void)
 		employeesInCurrentList++;
 	}
 
-	/* If the list is empty OR we are in medics/scientists/workers-mode: don't show the model&stats. */
+	/* If the list is empty OR we are in pilots/scientists/workers-mode: don't show the model&stats. */
 	/** @note
 	 * 0 == nothing is displayed
 	 * 1 == all is displayed
-	 * 2 == only stuff wanted for scientists/workers/medics are displayed
+	 * 2 == only stuff wanted for scientists/workers/pilots are displayed
 	 */
 	if (employeesInCurrentList == 0) {
 		Cvar_Set("mn_show_employee", "0");
 	} else {
-		if ((employeeCategory == EMPL_MEDIC)
+		if ((employeeCategory == EMPL_PILOT)
 		 || (employeeCategory == EMPL_SCIENTIST)
 		 || (employeeCategory == EMPL_WORKER)) {
 			Cvar_Set("mn_show_employee", "2");
@@ -242,8 +242,8 @@ const char* E_GetEmployeeString (employeeType_t type)
 		return _("Scientist");
 	case EMPL_WORKER:
 		return _("Worker");
-	case EMPL_MEDIC:
-		return _("Medic");
+	case EMPL_PILOT:
+		return _("Pilot");
 	case EMPL_ROBOT:
 		return _("UGV");
 	default:
@@ -266,8 +266,8 @@ employeeType_t E_GetEmployeeType (const char* type)
 		return EMPL_SOLDIER;
 	else if (!Q_strncmp(type, "EMPL_WORKER", 11))
 		return EMPL_WORKER;
-	else if (!Q_strncmp(type, "EMPL_MEDIC", 10))
-		return EMPL_MEDIC;
+	else if (!Q_strncmp(type, "EMPL_PILOT", 10))
+		return EMPL_PILOT;
 	else if (!Q_strncmp(type, "EMPL_ROBOT", 10))
 		return EMPL_ROBOT;
 	else {
@@ -566,10 +566,8 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 			base->capacities[CAP_EMPLOYEES].cur++;
 			PR_UpdateProductionCap(base);
 			break;
-		case EMPL_MEDIC:
-			base->capacities[CAP_EMPLOYEES].cur++;
-			B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
-			break;
+		case EMPL_PILOT:
+			AIR_AutoAddPilotToAircraft(base, employee);
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
 			base->capacities[CAP_EMPLOYEES].cur++;
@@ -632,8 +630,6 @@ void E_ResetEmployee (employee_t *employee)
 	E_RemoveEmployeeFromBuilding(employee);
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
 	INVSH_DestroyInventory(&employee->inv);
-	/* Remove employee from hospital if needed */
-	HOS_RemoveFromList(employee, base);
 }
 
 /**
@@ -661,10 +657,8 @@ qboolean E_UnhireEmployee (employee_t* employee)
 			base->capacities[CAP_EMPLOYEES].cur--;
 			PR_UpdateProductionCap(base);
 			break;
-		case EMPL_MEDIC:
-			base->capacities[CAP_EMPLOYEES].cur--;
-			B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
-			break;
+		case EMPL_PILOT:
+			AIR_RemovePilotFromAssignedAircraft(base, employee);
 		case EMPL_SCIENTIST:
 		case EMPL_SOLDIER:
 			base->capacities[CAP_EMPLOYEES].cur--;
@@ -740,7 +734,7 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
 		CL_GenerateCharacter(employee, cl_team->string, type, NULL);
 		break;
 	case EMPL_SCIENTIST:
-	case EMPL_MEDIC:
+	case EMPL_PILOT:
 	case EMPL_WORKER:
 		CL_GenerateCharacter(employee, cl_team->string, type, NULL);
 		employee->speed = 100;
@@ -781,7 +775,6 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 	 * 2) remove his inventory */
 
 	if (employee->baseHired) {
-		HOS_RemoveDeadEmployeeFromLists(employee);
 		E_UnhireEmployee(employee);
 	}
 
@@ -966,8 +959,8 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 		}
 		break;
 
-	case EMPL_MEDIC:
-		/* @todo: Check if they are linked to anywhere and remove them there. */
+	case EMPL_PILOT:
+		AIR_RemovePilotFromAssignedAircraft(base, employee);
 		break;
 
 	case EMPL_WORKER:

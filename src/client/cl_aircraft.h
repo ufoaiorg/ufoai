@@ -167,6 +167,8 @@ typedef struct aircraft_s {
 	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team). */
 	struct employee_s *acTeam[MAX_ACTIVETEAM];			/**< List of employees. i.e. current team for this aircraft. @todo Make this a linked list? */
 
+	struct employee_s *pilot;			/**< Current Pilot assigned to the aircraft. */
+	
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft (empty or not) */
 	aircraftSlot_t shield;			/**< Armour assigned to aircraft (1 maximum) */
@@ -256,5 +258,7 @@ int AIR_CalculateHangarStorage(const aircraft_t *aircraft, struct base_s *base, 
 int CL_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 const char *AIR_GetAircraftString(aircraftType_t aircraftType);
+void AIR_AutoAddPilotToAircraft(struct base_s* base, struct employee_s* pilot);
+void AIR_RemovePilotFromAssignedAircraft(struct base_s* base, const struct employee_s* pilot);
 
 #endif

@@ -905,6 +905,7 @@ const char *air_slot_type_strings[] = {
 	"weapon",
 	"shield",
 	"electronics",
+	"pilot",
 	"ammo",
 	"base_ammo_missile",
 	"base_ammo_laser"
