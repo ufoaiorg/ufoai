@@ -219,8 +219,8 @@ static void MN_InitRadar (const menuNode_t *node)
 		/* shift the x and y values according to their grid width/height and
 		 * their gridX and gridY position */
 		/* FIXME: broken */
-		image->x = image->gridX * gridFactorX;
-		image->y = radar.h - (image->gridY * gridFactorY);
+		image->x = image->gridX * imageGridWidth;
+		image->y = radar.h - (image->gridY * imageGridHeight);
 	}
 
 	if (node->align > 0 && node->align < ALIGN_LAST) {
