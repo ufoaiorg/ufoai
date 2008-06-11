@@ -154,8 +154,8 @@ static int checkStartPosition (entity_t *e, int entnum)
 		align = 32;
 
 	if (((int)e->origin[0] - align) % UNIT_SIZE || ((int)e->origin[1] - align) % UNIT_SIZE) {
-		Com_Printf("  ERROR: found misaligned starting position - entnum: %i (%i: %i)\n", entnum, (int)e->origin[0], (int)e->origin[1]);
-		return 1;
+		Com_Printf("* ERROR: misaligned starting position - entnum: %i (%i: %i). The %s will be deleted\n", entnum, (int)e->origin[0], (int)e->origin[1], val);
+		return 1; /* @todo: auto-align entity and check for intersection with brush */
 	}
 	return 0;
 }
@@ -478,7 +478,7 @@ void CheckEntities (void)
 		for (v = checkArray; v->name; v++)
 			if (!strncmp(name, v->name, strlen(v->name))) {
 				if (v->checkCallback(e, i) != 0) {
-					e->skip = qtrue;
+					e->skip = qtrue; /* skip: the entity will not be saved back on -fix */
 				}
 				break;
 			}
