@@ -1411,10 +1411,6 @@ void MAP_DrawMap (const menuNode_t* node)
 	MN_MenuTextReset(TEXT_STANDARD);
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
-		if (r_geoscape_overlay->integer & ~OVERLAY_RADAR) {
-			MAP_SetOverlay("radar");
-		}
-
 		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
 		return;
 	case MA_BASEATTACK:
@@ -2070,6 +2066,10 @@ void MAP_Scroll_f (void)
 	}
 }
 
+/**
+ * @brief Switch overlay (turn on / off)
+ * @param[in] overlayID Name of the overlay you want to switch.
+ */
 void MAP_SetOverlay (const char *overlayID)
 {
 	if (!Q_strcmp(overlayID, "nations")) {
@@ -2089,10 +2089,6 @@ void MAP_SetOverlay (const char *overlayID)
 		else
 			r_geoscape_overlay->integer |= OVERLAY_XVI;
 	} else if (!Q_strcmp(overlayID, "radar")) {
-		if (gd.mapAction != MA_NEWBASE) {
-			/* Player don't want to build a base anymore */
-			MAP_ResetAction();
-		}
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
 		else {
@@ -2102,17 +2098,66 @@ void MAP_SetOverlay (const char *overlayID)
  	}
 }
 
+/**
+ * @brief Console command to call MAP_SetOverlay.
+ */
 static void MAP_SetOverlay_f (void)
 {
 	const char *arg;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <nations>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <nations|xvi|radar>\n", Cmd_Argv(0));
 		return;
 	}
 
 	arg = Cmd_Argv(1);
 	MAP_SetOverlay(arg);
+}
+
+/**
+ * @brief Remove overlay.
+ * @param[in] overlayID Name of the overlay you want to turn off.
+ */
+void MAP_DeactivateOverlay (const char *overlayID)
+{
+	if (!Q_strcmp(overlayID, "nations")) {
+		if (r_geoscape_overlay->integer & OVERLAY_NATION)
+			r_geoscape_overlay->integer ^= OVERLAY_NATION;
+		else
+			return;
+	}
+
+	/* do nothing while the first base is not build */
+	if (gd.numBases == 0)
+		return;
+
+	if (!Q_strcmp(overlayID, "xvi")) {
+		if (r_geoscape_overlay->integer & OVERLAY_XVI)
+			r_geoscape_overlay->integer ^= OVERLAY_XVI;
+		else
+			return;
+	} else if (!Q_strcmp(overlayID, "radar")) {
+		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
+		else
+			return;
+ 	}
+}
+
+/**
+ * @brief Console command to call MAP_DeactivateOverlay.
+ */
+static void MAP_DeactivateOverlay_f (void)
+{
+	const char *arg;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <nations|xvi|radar>\n", Cmd_Argv(0));
+		return;
+	}
+
+	arg = Cmd_Argv(1);
+	MAP_DeactivateOverlay(arg);
 }
 
 /**
@@ -2122,4 +2167,5 @@ void MAP_GameInit (void)
 {
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
+	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
 }

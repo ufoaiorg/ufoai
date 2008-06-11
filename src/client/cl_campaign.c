@@ -1438,7 +1438,7 @@ static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
 
 	assert(mission);
 
-	/* Choose randomly a base depending on alienIterest values for those bases */
+	/* Choose randomly a base depending on alienInterest values for those bases */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
