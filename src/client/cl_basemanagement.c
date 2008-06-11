@@ -1154,22 +1154,17 @@ static void B_BuildingStatus_f (void)
  */
 static void B_HireForBuilding (base_t* base, building_t * building, int num)
 {
-	employeeType_t employeeType;
-
-	assert(base);
-
 	if (num < 0)
 		num = building->maxEmployees;
 
 	if (num) {
+		employeeType_t employeeType;
 		switch (building->buildingType) {
 		case B_WORKSHOP:
 			employeeType = EMPL_WORKER;
 			break;
 		case B_LAB:
 			employeeType = EMPL_SCIENTIST;
-			break;
-		case B_HOSPITAL:
 			break;
 		case B_HANGAR: /* the Dropship Hangar */
 			employeeType = EMPL_SOLDIER;
@@ -1184,11 +1179,13 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 		/* don't try to hire more that available - see E_CreateEmployee */
 		if (num > gd.numEmployees[employeeType])
 			num = gd.numEmployees[employeeType];
-		for (;num--;)
+		for (;num--;) {
+			assert(base);
 			if (!E_HireEmployeeByType(base, employeeType)) {
 				Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
 				return;
 			}
+		}
 	}
 }
 
