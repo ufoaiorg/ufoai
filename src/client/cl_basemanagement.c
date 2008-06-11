@@ -2173,15 +2173,10 @@ void B_ClearBase (base_t *const base)
 		for (i = 0; i < curCampaign->workers; i++)
 			E_CreateEmployee(EMPL_WORKER, B_RandomNation(), NULL);
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i pilots\n", curCampaign->pilots);
-		
+
 		/* Fill the global data employee list with pilots, evenly distributed between nations */
 		for (i = 0; i < MAX_EMPLOYEES; i++) {
-			if (j < gd.numNations) 
-				j++;
-			else
-				j = 0;
-		
-			nation_t *nation = &gd.nations[j];
+			nation_t *nation = &gd.nations[++j % gd.numNations];
 			if (!E_CreateEmployee(EMPL_PILOT, nation, NULL))
 				break;
 		}
@@ -4102,7 +4097,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	int teamTypes[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee-types. */
 	int buildingIdx;
 	int pilotIdx;
-	
+
 	/* Initialize Radar coverage and create textures if not yet done
 	 * This is needed if no other game was played before and we try to load
 	 * a game as first action */
@@ -4247,7 +4242,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				aircraft->pilot = &gd.employees[EMPL_PILOT][pilotIdx];
 			else
 				aircraft->pilot = NULL;
-			
+
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
 			aircraft->route.numPoints = MSG_ReadShort(sb);
