@@ -197,6 +197,7 @@ static void MN_InitRadar (const menuNode_t *node)
 		 * values of those images that are placed on the gridMin values.
 		 * This also works for static maps, because they have a gridX and gridY
 		 * value of zero */
+		/* FIXME: That doesn't work for e.g. T-like map tiles */
 		if (image->gridX == radar.gridMin[0])
 			radar.w += image->w;
 		if (image->gridY == radar.gridMin[1])
@@ -280,6 +281,8 @@ void MN_DrawRadar (menuNode_t *node)
 		if (!le->inuse || le->invis)
 			continue;
 
+		/* FIXME: Use the origin, not the grid position - for interpolating the
+		 * movement on the radar plane */
 		VectorCopy(le->pos, pos);
 
 		/* convert to radar area coordinates */
