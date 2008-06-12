@@ -292,7 +292,6 @@ void MN_DrawRadar (menuNode_t *node)
 
 		/* convert to radar area coordinates */
 		pos[0] -= GRID_WIDTH + (radar.a[0] / UNIT_SIZE);
-		/* FIXME: Why do we need the -UNIT_SIZE for the y coordinates? */
 		pos[1] -= GRID_WIDTH + ((radar.a[1] - UNIT_SIZE) / UNIT_SIZE);
 
 		switch (le->type) {
