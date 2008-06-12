@@ -125,11 +125,6 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 				radar.gridMin[0] = sh[0];
 			if (radar.gridMin[1] > sh[1])
 				radar.gridMin[1] = sh[1];
-
-			if (radar.gridMax[0] < sh[0])
-				radar.gridMax[0] = sh[0];
-			if (radar.gridMax[1] < sh[1])
-				radar.gridMax[1] = sh[1];
 		} else {
 			/* load only a single tile, if no positions are specified */
 			return;
@@ -147,6 +142,9 @@ static void MN_InitRadar (const menuNode_t *node)
 	int i, j;
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 	float distAB, distBC;
+	int lastTileWidth = 0;	/**< Width of last tile in first line  (in screen units) */
+	int lastTileHeight = 0;	/**< Height of last tile in first column (in screen units) */
+	vec2_t gridSize;		/**< Size of the whole grid (in tiles units) */
 
 	MN_FreeRadarImages();
 	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
@@ -190,6 +188,9 @@ static void MN_InitRadar (const menuNode_t *node)
 	distAB = (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
 	distBC = (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
 
+	/* Set radar.gridMax */
+	radar.gridMax[0] = radar.gridMin[0];
+	radar.gridMax[1] = radar.gridMin[1];
 	for (j = 0; j < radar.numImages; j++) {
 		const hudRadarImage_t *image = &radar.images[j];
 
@@ -203,34 +204,51 @@ static void MN_InitRadar (const menuNode_t *node)
 		 * This also works for static maps, because they have a gridX and gridY
 		 * value of zero */
 		/* FIXME: That doesn't work for e.g. T-like map tiles */
-		if (image->gridX == radar.gridMin[0])
-			radar.w += image->w;
-		if (image->gridY == radar.gridMin[1])
+
+		if (image->gridX == radar.gridMin[0]) {
 			radar.h += image->h;
+			/* radar.gridMax[1] is the maximum for FIRST column (maximum depends on column) */
+			if (image->gridY > radar.gridMax[1]) {
+				lastTileHeight = image->h;
+				radar.gridMax[1] = image->gridY;
+			}
+		}
+		if (image->gridY == radar.gridMin[1]) {
+			radar.w += image->w;
+			/* radar.gridMax[1] is the maximum for FIRST line (maximum depends on line) */
+			if (image->gridX > radar.gridMax[0]) {
+				lastTileWidth = image->w;
+				radar.gridMax[0] = image->gridX;
+			}
+		}
 	}
 	/* we need this filled */
 	assert(radar.w);
 	assert(radar.h);
 
+	/* @todo FIXME the value of gridsize is not proper for L shape tiles */
+	Vector2Set(gridSize,
+		(radar.gridMax[0] - radar.gridMin[0]) * (1 + ((float) lastTileWidth) / ((float) radar.w - lastTileWidth)),
+		(radar.gridMax[1] - radar.gridMin[1]) * (1 + ((float) lastTileHeight) / ((float) radar.h - lastTileHeight)));
+
 	/* get the dimensions for one grid field on the radar map */
 	radar.gridWidth = radar.w / distAB;
 	radar.gridHeight = radar.h / distBC;
 
-	for (j = 0; j < radar.numImages; j++) {
-		hudRadarImage_t *image = &radar.images[j];
-		const float radarLength = max(1, abs(radar.gridMax[0] - radar.gridMin[0]));
-		const float radarHeight = max(1, abs(radar.gridMax[1] - radar.gridMin[1]));
+	/* shift the x and y values according to their grid width/height and
+	 * their gridX and gridY position */
+	{
+		const float radarLength = max(1, abs(gridSize[0]));
+		const float radarHeight = max(1, abs(gridSize[1]));
 		/* image grid relations */
 		const float gridFactorX = radar.w / radarLength;
 		const float gridFactorY = radar.h / radarHeight;
-		/* the grids of the map tiles that is shown in the image */
-		const int imageGridWidth = image->w / gridFactorX;
-		const int imageGridHeight = image->h / gridFactorY;
-		/* shift the x and y values according to their grid width/height and
-		 * their gridX and gridY position */
-		/* FIXME: broken */
-		image->x = image->gridX * imageGridWidth;
-		image->y = radar.h - (image->gridY * imageGridHeight);
+		for (j = 0; j < radar.numImages; j++) {
+			hudRadarImage_t *image = &radar.images[j];
+	
+			image->x = (image->gridX - radar.gridMin[0]) * gridFactorX;
+			image->y = (image->gridY - radar.gridMin[1]) * gridFactorY;
+		}
 	}
 
 	/* now align the screen coordinates like it's given by the menu node */
@@ -256,7 +274,6 @@ static void MN_InitRadar (const menuNode_t *node)
 			break;
 		}
 	}
-
 	cl.radarInited = qtrue;
 }
 
