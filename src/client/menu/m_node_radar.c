@@ -296,8 +296,6 @@ void MN_DrawRadar (menuNode_t *node)
 		if (!le->inuse || le->invis)
 			continue;
 
-		/* FIXME: Use the origin, not the grid position - for interpolating the
-		 * movement on the radar plane */
 		VectorCopy(le->pos, pos);
 
 		/* convert to radar area coordinates */
@@ -312,9 +310,13 @@ void MN_DrawRadar (menuNode_t *node)
 			const int actorLevel = le->pos[2];
 			float actorDirection = 0.0f;
 			int verts[4];
+			/* used to interpolate movement on the radar */
+			/* FIXME: handle direction - needed */
+			const int interpolateX = le->origin[0] / UNIT_SIZE;
+			const int interpolateY = le->origin[1] / UNIT_SIZE;
 			/* relative to screen */
-			const int x = (radar.x + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
-			const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
+			const int x = (radar.x + interpolateX + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
+			const int y = (radar.y + (radar.h - interpolateY - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
 
 			/* use different alpha values for different levels */
 			if (actorLevel < cl_worldlevel->integer)
