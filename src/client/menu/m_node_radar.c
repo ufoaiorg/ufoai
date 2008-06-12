@@ -42,13 +42,20 @@ typedef struct hudRadar_s {
 	/** The dimension of the icons on the radar map */
 	float gridHeight, gridWidth;
 	vec2_t gridMin, gridMax;	/**< from position string */
-	char base[MAX_QPATH];
+	char base[MAX_QPATH];		/**< the base path in case of a random map assembly */
 	int numImages;	/**< amount of images in the images array */
 	hudRadarImage_t images[MAX_MAPTILES];
-	/** three vectors of the triangle, lower left (a), lower right (b), upper right (c) */
+	/** three vectors of the triangle, lower left (a), lower right (b), upper right (c)
+	 * the triangle is something like:
+	 *     - c
+	 *    --
+	 * a --- b
+	 * and describes the three vertices of the rectangle (the radar plane)
+	 * dividing triangle */
 	vec3_t a, b, c;
-	/** radar dimensions */
+	/** radar plane screen (pixel) coordinates */
 	int x, y;
+	/** radar screen (pixel) dimensions */
 	int w, h;
 } hudRadar_t;
 
@@ -226,7 +233,9 @@ static void MN_InitRadar (const menuNode_t *node)
 		image->y = radar.h - (image->gridY * imageGridHeight);
 	}
 
+	/* now align the screen coordinates like it's given by the menu node */
 	if (node->align > 0 && node->align < ALIGN_LAST) {
+		/* x position */
 		switch (node->align % 3) {
 		/* center */
 		case 1:
@@ -237,6 +246,7 @@ static void MN_InitRadar (const menuNode_t *node)
 			radar.x -= radar.w;
 			break;
 		}
+		/* y position */
 		switch (node->align / 3) {
 		case 1:
 			radar.y -= (radar.h / 2);
