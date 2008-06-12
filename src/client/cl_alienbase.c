@@ -222,7 +222,7 @@ void AB_UpdateStealthForAllBase (const aircraft_t *aircraft, int dt)
 
 /**
  * @brief Nations help in searching alien base.
- * @note called once per day, but will update stealth only every @c dayPerWeek day
+ * @note called once per day, but will update stealth only every @c daysPerWeek day
  * @sa CL_CampaignRun
  */
 void AB_BaseSearchedByNations (void)
