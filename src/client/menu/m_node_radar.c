@@ -80,6 +80,7 @@ static void MN_FreeRadarImages (void)
  * @param[in] tiles The configstring with the tiles (map tiles)
  * @param[in] pos The position string, only used in case of random map assembly
  * @sa MN_DrawRadar
+ * @sa R_ModBeginLoading
  */
 static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 {
@@ -115,7 +116,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 			for (i = 0; i < 3; i++) {
 				token = COM_Parse(&pos);
 				if (!pos)
-					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
+					Com_Error(ERR_DROP, "MN_BuildRadarImageList: invalid positions\n");
 				sh[i] = atoi(token);
 			}
 			image->gridX = sh[0];
