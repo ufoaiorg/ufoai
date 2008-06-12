@@ -247,7 +247,7 @@ static void MN_InitRadar (const menuNode_t *node)
 			hudRadarImage_t *image = &radar.images[j];
 	
 			image->x = (image->gridX - radar.gridMin[0]) * gridFactorX;
-			image->y = (image->gridY - radar.gridMin[1]) * gridFactorY;
+			image->y = radar.h - (image->gridY - radar.gridMin[1]) * gridFactorY - image->h;
 		}
 	}
 
