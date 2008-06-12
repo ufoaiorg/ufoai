@@ -2443,7 +2443,6 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;
 	int tempBaseIdx;
-	dateLong_t tempDate;
 
 	/* Clear linked list. */
 	LIST_Delete(&loadTechBases);
@@ -2484,33 +2483,12 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 
 		t->scientists = MSG_ReadByte(sb);
 		t->statusResearchable = MSG_ReadByte(sb);
-#if 1
-		tempDate.day = MSG_ReadShort(sb);
-		tempDate.month = MSG_ReadShort(sb);
-		tempDate.year = MSG_ReadShort(sb);
-		t->preResearchedDate.day = CL_DateCreateDay(tempDate.year, tempDate.month, tempDate.day);
 
-		tempDate.day = MSG_ReadShort(sb);
-		tempDate.month = MSG_ReadShort(sb);
-		tempDate.year = MSG_ReadShort(sb);
-		t->researchedDate.day = CL_DateCreateDay(tempDate.year, tempDate.month, tempDate.day);
-
-/*
-		t->preResearchedDateDay = MSG_ReadShort(sb);
-		t->preResearchedDateMonth = MSG_ReadShort(sb);
-		t->preResearchedDateYear = MSG_ReadShort(sb);
-		t->researchedDateDay = MSG_ReadShort(sb);
-		t->researchedDateMonth = MSG_ReadShort(sb);
-		t->researchedDateYear = MSG_ReadShort(sb);
-*/
-
-#else
-/**@todo activate me */
 		t->preResearchedDate.day = MSG_ReadLong(sb);
 		t->preResearchedDate.sec = MSG_ReadLong(sb);
 		t->researchedDate.day = MSG_ReadLong(sb);
 		t->researchedDate.sec = MSG_ReadLong(sb);
-#endif
+
 		t->mailSent = MSG_ReadByte(sb);
 		for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
 			const techMailType_t mailType = MSG_ReadByte(sb);
