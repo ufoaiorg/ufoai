@@ -182,9 +182,6 @@ static void MN_InitRadar (const menuNode_t *node)
 
 	distAB = (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
 	distBC = (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
-	/* get the dimensions for one grid field on the radar map */
-	radar.gridWidth = radar.w / distAB;
-	radar.gridHeight = radar.h / distBC;
 
 	for (j = 0; j < radar.numImages; j++) {
 		const hudRadarImage_t *image = &radar.images[j];
@@ -207,6 +204,10 @@ static void MN_InitRadar (const menuNode_t *node)
 	/* we need this filled */
 	assert(radar.w);
 	assert(radar.h);
+
+	/* get the dimensions for one grid field on the radar map */
+	radar.gridWidth = radar.w / distAB;
+	radar.gridHeight = radar.h / distBC;
 
 	for (j = 0; j < radar.numImages; j++) {
 		hudRadarImage_t *image = &radar.images[j];
