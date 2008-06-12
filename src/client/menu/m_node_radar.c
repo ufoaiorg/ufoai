@@ -245,7 +245,7 @@ static void MN_InitRadar (const menuNode_t *node)
 		const float gridFactorY = radar.h / radarHeight;
 		for (j = 0; j < radar.numImages; j++) {
 			hudRadarImage_t *image = &radar.images[j];
-	
+
 			image->x = (image->gridX - radar.gridMin[0]) * gridFactorX;
 			image->y = radar.h - (image->gridY - radar.gridMin[1]) * gridFactorY - image->h;
 		}
@@ -279,7 +279,7 @@ static void MN_InitRadar (const menuNode_t *node)
 
 /**
  * @sa CMod_GetMapSize
- * @todo Show frustom view area for actors
+ * @todo Show frustom view area for actors (@sa FrustomVis)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node The radar menu node (located in the hud menu definitions)
  */
