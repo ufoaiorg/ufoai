@@ -297,6 +297,10 @@ void MN_DrawRadar (menuNode_t *node)
 	if (!cl.radarInited)
 		return;
 
+	if (node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
+		R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0,
+			ALIGN_UL, node->blend, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+
 	if (VectorNotEmpty(node->bgcolor))
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
 
@@ -327,7 +331,6 @@ void MN_DrawRadar (menuNode_t *node)
 			vec4_t color = {0, 1, 0, 1};
 			const int actorLevel = le->pos[2];
 			/* used to interpolate movement on the radar */
-			/* FIXME: handle direction - needed */
 			const int interpolateX = le->origin[0] / UNIT_SIZE;
 			const int interpolateY = le->origin[1] / UNIT_SIZE;
 			/* relative to screen */
