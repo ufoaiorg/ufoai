@@ -1023,7 +1023,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 					}
 					if (slot->item) {
 						assert(slot->item->tech);
-						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), slot->item->tech->mdl_top);
+						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), slot->item->tech->mdl);
 					} else
 						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 				}

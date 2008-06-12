@@ -191,8 +191,10 @@ typedef struct technology_s {
 	struct base_s	*base;	/**< The base this tech is researched in. */
 	int scientists;			/**< How many scientists (from "base") are researching this tech. */
 
-	char *image_top;
-	char *mdl_top;
+	char *image;			/**< Image to display in the Ufopedia and other menues for this tech.
+							 * If not set in the .ufo file this is auto-set in RS_InitTree.
+							 * @sa cl_research.c: RS_InitTree */
+	char *mdl;				/**< Same as "image" but it's a 3d model.. */
 
 	int statusResearchable;		/**< Is this item researchable? */
 
@@ -217,8 +219,8 @@ typedef struct technology_s {
 	techMail_t mail[TECHMAIL_MAX];	/**< UFOpaedia mails. See techMailType_t for the different array-entries. */
 	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equalt to TECHMAIL_MAX both mailtypes are available. */
 
-	struct technology_s *hash_next;
-	struct technology_s *hash_provided_next;
+	struct technology_s *hashNext;
+	struct technology_s *hashProvidedNext;
 } technology_t;
 
 void RS_ResetResearch(void);
@@ -245,7 +247,7 @@ void RS_MarkResearchedAll(void);
 void RS_AssignScientist(technology_t* tech);
 void RS_RemoveScientist(technology_t* tech);
 technology_t *RS_GetTechByID(const char *id);
-technology_t *RS_GetTechByProvided(const char *id_provided);
+technology_t *RS_GetTechByProvided(const char *idProvided);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(const struct base_s *base);
 int RS_GetTechIdxByName(const char *name);

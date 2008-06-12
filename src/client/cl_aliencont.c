@@ -918,7 +918,7 @@ static void AC_AlienClick_f (void)
 
 	aliencontCurrent = &baseCurrent->alienscont[num];
 	tech = aliencontCurrent->tech;
-	Cvar_Set("mn_al_alienimage", tech->image_top);
+	Cvar_Set("mn_al_alienimage", tech->image);
 	assert(aliencontCurrent->teamDef);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
 	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue));

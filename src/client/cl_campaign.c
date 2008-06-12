@@ -3862,8 +3862,8 @@ static void CL_CampaignInitMarket (qboolean load)
  */
 static void CL_CampaignRunMarket (void)
 {
-	int i, market_action;
-	double research_factor, price_factor, curr_supp_diff;
+	int i, marketAction;
+	double researchFactor, priceFactor, currSuppDiff;
 	/* supply and demand */
 	const double mrs1 = 0.1, mpr1 = 400, mrg1 = 0.002, mrg2 = 0.03;
 
@@ -3888,24 +3888,24 @@ static void CL_CampaignRunMarket (void)
 			reasearched_date = tempDate.day + tempDate.month * 30 +  tempDate.year * DAYS_PER_YEAR - 2;
 			if (reasearched_date <= curCampaign->date.sec / SECONDS_PER_DAY + curCampaign->date.day)
 				reasearched_date -= 100;
-			research_factor = mrs1 * sqrt(ccs.date.day - reasearched_date);
+			researchFactor = mrs1 * sqrt(ccs.date.day - reasearched_date);
 
-			price_factor = mpr1 / sqrt(csi.ods[i].price + 1);
-			curr_supp_diff = floor(research_factor * price_factor - ccs.eMarket.num[i]);
-			if (curr_supp_diff != 0)
-				ccs.eMarket.cumm_supp_diff[i] += curr_supp_diff;
+			priceFactor = mpr1 / sqrt(csi.ods[i].price + 1);
+			currSuppDiff = floor(researchFactor * priceFactor - ccs.eMarket.num[i]);
+			if (currSuppDiff != 0)
+				ccs.eMarket.cummSuppDiff[i] += currSuppDiff;
 			else
-				ccs.eMarket.cumm_supp_diff[i] *= 0.9;
-			market_action = floor(mrg1 * ccs.eMarket.cumm_supp_diff[i] + mrg2 * curr_supp_diff);
-			ccs.eMarket.num[i] += market_action;
+				ccs.eMarket.cummSuppDiff[i] *= 0.9;
+			marketAction = floor(mrg1 * ccs.eMarket.cummSuppDiff[i] + mrg2 * currSuppDiff);
+			ccs.eMarket.num[i] += marketAction;
 			if (ccs.eMarket.num[i] < 0)
 				ccs.eMarket.num[i] = 0;
 
 			/* set item price based on supply imbalance */
-			if (research_factor * price_factor >= 1)
+			if (researchFactor * priceFactor >= 1)
 				ccs.eMarket.ask[i] = floor(csi.ods[i].price
 					* (1 - (1 - BID_FACTOR) / 2
-					* (1 / (1 + exp(curr_supp_diff / (research_factor * price_factor)))
+					* (1 / (1 + exp(currSuppDiff / (researchFactor * priceFactor)))
 					* 2 - 1)) );
 			else
 				ccs.eMarket.ask[i] = csi.ods[i].price;

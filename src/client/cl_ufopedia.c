@@ -504,7 +504,7 @@ static void UP_ArmourDescription (const technology_t* t)
 	{
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upimage_top", t->image_top);
+		Cvar_Set("mn_upimage_top", t->image);
 		upBuffer[0] = '\0';
 		Q_strcat(upBuffer, va(_("Size:\t%i\n"),od->size), sizeof(upBuffer));
 		Q_strcat(upBuffer, "\n", sizeof(upBuffer));
@@ -581,7 +581,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	assert(item->tech);
 	Cvar_Set("mn_itemname", _(item->tech->name));
 	Cvar_Set("mn_item", item->id);
-	Cvar_Set("mn_upmodel_top", item->tech->mdl_top);
+	Cvar_Set("mn_upmodel_top", item->tech->mdl);
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
@@ -975,7 +975,7 @@ static void UP_DrawAssociatedAmmo (const technology_t* tech)
 		/* We set t_associated to ammo to display */
 		const technology_t *t_associated = od->ammos[upResearchedLink]->tech;
 		assert(t_associated);
-		Cvar_Set("mn_upmodel_bottom", t_associated->mdl_top);
+		Cvar_Set("mn_upmodel_bottom", t_associated->mdl);
 	}
 }
 
@@ -996,14 +996,14 @@ static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 
 	if (tech) {
 		upFireMode = 0;
-		upResearchedLink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+		upResearchedLink = 0;	/* @todo: if the first weapon of the firemode of an ammo is unresearched, its dammages,... will still be displayed */
 
-		if (tech->mdl_top)
-			Cvar_Set("mn_upmodel_top", tech->mdl_top);
+		if (tech->mdl)
+			Cvar_Set("mn_upmodel_top", tech->mdl);
 		if (tech->type == RS_WEAPON)
 			UP_DrawAssociatedAmmo(tech);
-		if (!tech->mdl_top && tech->image_top)
-			Cvar_Set("mn_upimage_top", tech->image_top);
+		if (!tech->mdl && tech->image)
+			Cvar_Set("mn_upimage_top", tech->image);
 
 		currentChapter = tech->upChapter;
 	} else if (!mail)

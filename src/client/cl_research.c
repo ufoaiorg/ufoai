@@ -34,8 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 
 #define TECH_HASH_SIZE 64
-static technology_t *tech_hash[TECH_HASH_SIZE];
-static technology_t *tech_hash_provided[TECH_HASH_SIZE];
+static technology_t *techHash[TECH_HASH_SIZE];
+static technology_t *techHashProvided[TECH_HASH_SIZE];
 
 /* A (local) list of displayed technology-entries (the research list in the base) */
 static technology_t *researchList[MAX_RESEARCHLIST];
@@ -633,10 +633,10 @@ void RS_InitTree (qboolean load)
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(item->name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-					if (!tech->mdl_top)
-						tech->mdl_top = Mem_PoolStrDup(item->model, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-					if (!tech->image_top)
-						tech->image_top = Mem_PoolStrDup(item->image, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					if (!tech->mdl)
+						tech->mdl = Mem_PoolStrDup(item->model, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					if (!tech->image)
+						tech->image = Mem_PoolStrDup(item->image, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
@@ -656,8 +656,8 @@ void RS_InitTree (qboolean load)
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(building->name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-					if (!tech->image_top)
-						tech->image_top = Mem_PoolStrDup(building->image, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					if (!tech->image)
+						tech->image = Mem_PoolStrDup(building->image, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 					/* Should return to CASE RS_xxx. */
 					break;
@@ -677,8 +677,8 @@ void RS_InitTree (qboolean load)
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(air_samp->name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-					if (!tech->mdl_top) {	/* DEBUG testing */
-						tech->mdl_top = Mem_PoolStrDup(air_samp->model, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					if (!tech->mdl) {	/* DEBUG testing */
+						tech->mdl = Mem_PoolStrDup(air_samp->model, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 						Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
 					}
 					air_samp->tech = tech;
@@ -803,9 +803,9 @@ static void RS_ResearchDisplayInfo (const base_t* base)
 		break;
 	}
 
-	/* Set image_top cvar. */
-	if (tech->image_top)
-		Cvar_Set("mn_research_imagetop", tech->image_top);
+	/* Set image cvar. */
+	if (tech->image)
+		Cvar_Set("mn_research_imagetop", tech->image);
 }
 
 /**
@@ -1706,8 +1706,8 @@ void RS_ResetResearch (void)
 void RS_ResetHash (void)
 {
 	/* they are static - but i'm paranoid - this is called before the techs were parsed */
-	memset(tech_hash, 0, sizeof(tech_hash));
-	memset(tech_hash_provided, 0, sizeof(tech_hash_provided));
+	memset(techHash, 0, sizeof(techHash));
+	memset(techHashProvided, 0, sizeof(techHashProvided));
 }
 
 /**
@@ -1723,8 +1723,8 @@ static const value_t valid_tech_vars[] = {
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
 	{"pushnews", V_BOOL, offsetof(technology_t, pushnews), MEMBER_SIZEOF(technology_t, pushnews)},
-	{"image_top", V_CLIENT_HUNK_STRING, offsetof(technology_t, image_top), 0},
-	{"mdl_top", V_CLIENT_HUNK_STRING, offsetof(technology_t, mdl_top), 0},
+	{"image", V_CLIENT_HUNK_STRING, offsetof(technology_t, image), 0},
+	{"mdl", V_CLIENT_HUNK_STRING, offsetof(technology_t, mdl), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1802,13 +1802,13 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 	/* link the variable in */
 	/* tech_hash should be null on the first run */
-	tech->hash_next = tech_hash[hash];
-	/* set the tech_hash pointer to the current tech */
-	/* if there were already others in tech_hash at position hash, they are now
+	tech->hashNext = techHash[hash];
+	/* set the techHash pointer to the current tech */
+	/* if there were already others in techHash at position hash, they are now
 	 * accessable via tech->next - loop until tech->next is null (the first tech
 	 * at that position)
 	 */
-	tech_hash[hash] = tech;
+	techHash[hash] = tech;
 
 	tech->type = RS_TECH;
 	tech->statusResearch = RS_NONE;
@@ -2143,14 +2143,14 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	if (tech->provides) {
 		hash = Com_HashKey(tech->provides, TECH_HASH_SIZE);
 		/* link the variable in */
-		/* tech_hash_provided should be null on the first run */
-		tech->hash_provided_next = tech_hash_provided[hash];
-		/* set the tech_hash_provided pointer to the current tech */
-		/* if there were already others in tech_hash_provided at position hash, they are now
+		/* techHashProvided should be null on the first run */
+		tech->hashProvidedNext = techHashProvided[hash];
+		/* set the techHashProvided pointer to the current tech */
+		/* if there were already others in techHashProvided at position hash, they are now
 		* accessable via tech->next - loop until tech->next is null (the first tech
 		* at that position)
 		*/
-		tech_hash_provided[hash] = tech;
+		techHashProvided[hash] = tech;
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "tech '%s' doesn't have a provides string\n", tech->id);
 	}
@@ -2267,7 +2267,7 @@ technology_t *RS_GetTechByID (const char *id)
 		return NULL;
 
 	hash = Com_HashKey(id, TECH_HASH_SIZE);
-	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)
+	for (tech = techHash[hash]; tech; tech = tech->hashNext)
 		if (!Q_stricmp(id, tech->id))
 			return tech;
 
@@ -2277,25 +2277,25 @@ technology_t *RS_GetTechByID (const char *id)
 
 /**
  * @brief returns a pointer to the item tech (as listed in "provides")
- * @param[in] id_provided Unique identifier of the object the tech is providing
+ * @param[in] idProvided Unique identifier of the object the tech is providing
  * @return The tech for the given object id or NULL if not found
  */
-technology_t *RS_GetTechByProvided (const char *id_provided)
+technology_t *RS_GetTechByProvided (const char *idProvided)
 {
 	unsigned hash;
 	technology_t *tech;
 
-	assert(id_provided);
+	assert(idProvided);
 	/* catch empty strings */
-	if (!*id_provided)
+	if (!*idProvided)
 		return NULL;
 
-	hash = Com_HashKey(id_provided, TECH_HASH_SIZE);
-	for (tech = tech_hash_provided[hash]; tech; tech = tech->hash_provided_next)
-		if (!Q_stricmp(id_provided, tech->provides))
+	hash = Com_HashKey(idProvided, TECH_HASH_SIZE);
+	for (tech = techHashProvided[hash]; tech; tech = tech->hashProvidedNext)
+		if (!Q_stricmp(idProvided, tech->provides))
 			return tech;
 
-	Com_DPrintf(DEBUG_CLIENT, "RS_GetTechByProvided: %s\n", id_provided);
+	Com_DPrintf(DEBUG_CLIENT, "RS_GetTechByProvided: %s\n", idProvided);
 	/* if a building, probably needs another building */
 	/* if not a building, catch NULL where function is called! */
 	return NULL;
@@ -2374,7 +2374,7 @@ int RS_GetTechIdxByName (const char *name)
 	unsigned hash;
 
 	hash = Com_HashKey(name, TECH_HASH_SIZE);
-	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)
+	for (tech = techHash[hash]; tech; tech = tech->hashNext)
 		if (!Q_stricmp(name, tech->id))
 			return tech->idx;
 

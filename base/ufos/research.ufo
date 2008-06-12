@@ -86,9 +86,9 @@
 //		Time the production of one item takes. This value is similar to time, incuding the "it is not 'real time'" argument (see there for more!)
 //		0 [Default] The items are produced in (nearly) no time.
 //		-1 Will prevent the item to be produced. (Only needed if the thing 'provides' something and this thing is not meant for production.)
-//	image_top
+//	image
 //		Path to the image that should be displayed on the top (big) in the ufopedia.
-//	mdl_top
+//	mdl
 //		Same as the image but for 3d-models.
 //		It overrides the image-definitions if it is provided.
 //==========================================
@@ -144,7 +144,7 @@ tech rs_laser
 	}
 
 	time	1500
-	image_top	techs/laser
+	image	techs/laser
 }
 
 tech rs_antimatter
@@ -184,7 +184,7 @@ tech rs_antimatter
 	}
 
 	time 2800
-	image_top	techs/antimatter
+	image	techs/antimatter
 }
 
 tech rs_item_antimatter
@@ -239,7 +239,7 @@ tech rs_alien_live
 	}
 
 	time	1500
-	image_top	techs/taman
+	image	techs/taman
 }
 
 tech rs_alien_breathing
@@ -280,7 +280,7 @@ tech rs_alien_breathing
 	}
 
 	time		1500
-	image_top	techs/alien_breathing
+	image	techs/alien_breathing
 }
 
 // TODO check if we _really_ need the rs_item_brapparatus tech ... rs_alien_breathing seems to fulfill all the same function (except for the "provide" entry).
@@ -572,7 +572,7 @@ tech rs_weapon_pistol2
 {
 	type	weapon
 	up_chapter	equipment
-	mdl_top	weap_machine_pistol	// Overrides the one from weapons*.ufo
+	mdl	weap_machine_pistol	// Overrides the one from weapons*.ufo
 	description {
 		default "_pistol2_txt"
 	}
@@ -1250,7 +1250,7 @@ tech rs_weapon_heavylaser
 	type	weapon
 	up_chapter	equipment
 
-	mdl_top weap_heavy_laser
+	mdl weap_heavy_laser
 
 	description {
 		default "_heavylaser_txt"
@@ -1289,7 +1289,7 @@ tech rs_weapon_heavylaser
 tech rs_irgoggles
 {
 	type	weapon
-	mdl_top weap_irgoggles
+	mdl weap_irgoggles
 
 	up_chapter	equipment
 	description {
@@ -1958,7 +1958,7 @@ tech rs_weapon_shotgun2_slug_ammo
 tech rs_weapon_shotgun_micro
 {
 	type	weapon
-	mdl_top	weap_micro_shotgun
+	mdl	weap_micro_shotgun
 
 	up_chapter	equipment
 	description {
@@ -2188,7 +2188,7 @@ tech rs_weapon_stunrod
 	type		weapon
 	up_chapter	equipment
 
-	mdl_top	weap_stunrod
+	mdl	weap_stunrod
 
 	description {
 		default "_stunrod_txt"
@@ -2705,7 +2705,7 @@ tech rs_damage_blast
 	}
 
 	time	0
-//	image_top	techs/blast_damage
+//	image	techs/blast_damage
 }
 
 tech rs_damage_fire
@@ -2718,7 +2718,7 @@ tech rs_damage_fire
 	}
 
 	time	0
-//	image_top	techs/fire_damage
+//	image	techs/fire_damage
 }
 
 tech rs_damage_laser
@@ -2736,7 +2736,7 @@ tech rs_damage_laser
 	}
 
 	time	0
-//	image_top	techs/laser_damage
+//	image	techs/laser_damage
 }
 
 tech rs_damage_normal
@@ -2749,7 +2749,7 @@ tech rs_damage_normal
 	}
 
 	time	0
-//	image_top	techs/normal_damage
+//	image	techs/normal_damage
 }
 
 tech rs_damage_shock
@@ -2762,7 +2762,7 @@ tech rs_damage_shock
 	}
 
 	time	0
-//	image_top	techs/shock_damage
+//	image	techs/shock_damage
 }
 
 tech rs_damage_plasma
@@ -2783,7 +2783,7 @@ tech rs_damage_plasma
 	}
 
 	time	0
-//	image_top	techs/plasma_damage
+//	image	techs/plasma_damage
 }
 
 tech rs_damage_stun
@@ -2796,7 +2796,7 @@ tech rs_damage_stun
 	}
 
 	time	0
-//	image_top	techs/stun_damage
+//	image	techs/stun_damage
 }
 
 tech rs_damage_pbeam
@@ -2810,7 +2810,7 @@ tech rs_damage_pbeam
 
 
 	time	0
-//	image_top	techs/pbeam_damage
+//	image	techs/pbeam_damage
 }
 
 //========================
@@ -2827,7 +2827,7 @@ tech rs_skill_accuracy
 	}
 
 	time	0
-//	image_top	techs/accuracy_skill
+//	image	techs/accuracy_skill
 }
 
 tech rs_skill_assault
@@ -2840,7 +2840,7 @@ tech rs_skill_assault
 	}
 
 	time	0
-//	image_top	techs/assault_skill
+//	image	techs/assault_skill
 }
 
 tech rs_skill_close
@@ -2853,7 +2853,7 @@ tech rs_skill_close
 	}
 
 	time	0
-//	image_top	techs/close_skill
+//	image	techs/close_skill
 }
 
 tech rs_skill_explosive
@@ -2866,7 +2866,7 @@ tech rs_skill_explosive
 	}
 
 	time	0
-//	image_top	techs/explosive_skill
+//	image	techs/explosive_skill
 }
 
 tech rs_skill_heavy
@@ -2879,7 +2879,7 @@ tech rs_skill_heavy
 	}
 
 	time	0
-//	image_top	techs/heavy_skill
+//	image	techs/heavy_skill
 }
 
 tech rs_skill_mind
@@ -2892,7 +2892,7 @@ tech rs_skill_mind
 	}
 
 	time	0
-//	image_top	techs/mind_skill
+//	image	techs/mind_skill
 }
 
 tech rs_skill_power
@@ -2905,7 +2905,7 @@ tech rs_skill_power
 	}
 
 	time	0
-//	image_top	techs/power_skill
+//	image	techs/power_skill
 }
 
 tech rs_skill_sniper
@@ -2918,7 +2918,7 @@ tech rs_skill_sniper
 	}
 
 	time	0
-//	image_top	techs/sniper_skill
+//	image	techs/sniper_skill
 }
 
 tech rs_skill_speed
@@ -2931,7 +2931,7 @@ tech rs_skill_speed
 	}
 
 	time	0
-//	image_top	techs/speed_skill
+//	image	techs/speed_skill
 }
 
 //========================
@@ -3278,7 +3278,7 @@ tech rs_craft_drop_firebird
 	time	0
 	producetime	336 //Two weeks.
 
-	mdl_top		drop_firebird
+	mdl		drop_firebird
 }
 
 tech rs_craft_drop_herakles
@@ -3300,7 +3300,7 @@ tech rs_craft_drop_herakles
 	time	3000
 	producetime	336 //Two weeks.
 
-	mdl_top		drop_herakles
+	mdl		drop_herakles
 }
 
 tech rs_craft_inter_stiletto
@@ -3316,7 +3316,7 @@ tech rs_craft_inter_stiletto
 	time	0
 	producetime	336
 
-	mdl_top		inter_stiletto
+	mdl		inter_stiletto
 }
 
 tech rs_craft_inter_saracen
@@ -3332,7 +3332,7 @@ tech rs_craft_inter_saracen
 	time	0
 	producetime	400
 
-	mdl_top		inter_saracen
+	mdl		inter_saracen
 }
 
 tech rs_craft_inter_dragon
@@ -3354,7 +3354,7 @@ tech rs_craft_inter_dragon
 	time	3000
 	producetime	600
 
-	mdl_top		inter_dragon
+	mdl		inter_dragon
 }
 
 tech rs_craft_inter_stingray
@@ -3376,7 +3376,7 @@ tech rs_craft_inter_stingray
 	time	3000
 	producetime	800
 
-	mdl_top		inter_stingray
+	mdl		inter_stingray
 }
 
 //========================
@@ -3422,7 +3422,7 @@ tech rs_craft_ufo_scout
 	time	2500
 	producetime -1
 
-	mdl_top		ufo_scout
+	mdl		ufo_scout
 }
 
 tech rs_craft_ufo_fighter
@@ -3465,7 +3465,7 @@ tech rs_craft_ufo_fighter
 	time	2500
 	producetime -1
 
-	mdl_top		ufo_fighter
+	mdl		ufo_fighter
 }
 
 tech rs_craft_ufo_supply
@@ -3508,7 +3508,7 @@ tech rs_craft_ufo_supply
 	time	2500
 	producetime -1
 
-	mdl_top		ufo_supply
+	mdl		ufo_supply
 }
 
 tech rs_craft_ufo_carrier
@@ -3551,7 +3551,7 @@ tech rs_craft_ufo_carrier
 	time	2500
 	producetime -1
 
-	mdl_top		ufo_carrier
+	mdl		ufo_carrier
 }
 
 tech rs_craft_ufo_bomber
@@ -3594,7 +3594,7 @@ tech rs_craft_ufo_bomber
 	time	2500
 	producetime -1
 
-	mdl_top		ufo_bomber
+	mdl		ufo_bomber
 }
 
 tech rs_craft_ufo_corrupter
@@ -3637,7 +3637,7 @@ tech rs_craft_ufo_corrupter
 	time	2500
 	producetime -1
 
-	mdl_top		ufo_corrupter
+	mdl		ufo_corrupter
 }
 
 tech rs_craft_ufo_harvester
@@ -3680,7 +3680,7 @@ tech rs_craft_ufo_harvester
 	time	2500
 	producetime -1
 
-	mdl_top		ufo_harvester
+	mdl		ufo_harvester
 }
 
 //========================
@@ -3707,7 +3707,7 @@ tech rs_alien_bloodspider_live
 	}
 	time	0
 
-	mdl_top	"aliens/bloodspider/bloodspider"
+	mdl	"aliens/bloodspider/bloodspider"
 }
 */
 
@@ -3746,7 +3746,7 @@ tech rs_alien_bloodspider_autopsy
 	}
 	time	1500
 
-	mdl_top	"aliens/bloodspider/bloodspider"
+	mdl	"aliens/bloodspider/bloodspider"
 
 	//TODO: autopsy image
 }
@@ -3805,9 +3805,9 @@ tech rs_alien_ortnok_autopsy
 	}
 	time	1500
 
-	image_top	techs/ortnok_autopsy
+	image	techs/ortnok_autopsy
 	// menuModel - see models.ufo
-	//mdl_top	alien_ortnok
+	//mdl	alien_ortnok
 }
 
 // TAMAN
@@ -3849,9 +3849,9 @@ tech rs_alien_taman_autopsy
 	}
 	time	1500
 
-	image_top	techs/taman_autopsy
+	image	techs/taman_autopsy
 	// menuModel - see models.ufo
-	//mdl_top		alien_taman
+	//mdl		alien_taman
 }
 
 // SHEVAAR
@@ -3893,9 +3893,9 @@ tech rs_alien_shevaar_autopsy
 	}
 	time	1500
 
-	image_top	techs/shevaar_autopsy
+	image	techs/shevaar_autopsy
 	// menuModel - see models.ufo
-	//mdl_top	alien_shevaar
+	//mdl	alien_shevaar
 }
 
 // HOVERNET
@@ -3913,7 +3913,7 @@ tech rs_alien_shevaar_autopsy
 //require_AND { tech TODO }
 //	time	2000
 //// menuModel - see models.ufo
-//	mdl_top	alien_hovernet
+//	mdl	alien_hovernet
 //}
 //tech rs_alien_stinger_autopsy
 //{
@@ -3927,7 +3927,7 @@ tech rs_alien_shevaar_autopsy
 //	time	1500
 //
 //	// menuModel - see models.ufo
-//	mdl_top	alien_hovernet
+//	mdl	alien_hovernet
 //}
 
 // CYBORG ORTNOK
@@ -3946,7 +3946,7 @@ tech rs_alien_shevaar_autopsy
 //	}
 //	time	1500
 //
-//	mdl_top	alien_cyborg_ortnok
+//	mdl	alien_cyborg_ortnok
 //}
 
 //========================
@@ -3956,7 +3956,7 @@ tech rs_alien_shevaar_autopsy
 tech rs_ugv_phoenix
 {
 	type	ugv
-	mdl_top	ugv_phoenix
+	mdl	ugv_phoenix
 
 	up_chapter	equipment
 	name	"_Phoenix UGV"
@@ -3975,7 +3975,7 @@ tech rs_ugv_phoenix
 tech rs_ugv_ares_w
 {
 	type	ugv
-	mdl_top	ugv_ares_w
+	mdl	ugv_ares_w
 
 	up_chapter	equipment
 	name	"_Ares W (UGV)"
@@ -3994,7 +3994,7 @@ tech rs_ugv_ares_w
 tech rs_ugv_chaingun
 {
 	type	weapon
-	mdl_top	ugv_phoenix	// @todo fixme
+	mdl	ugv_phoenix	// @todo fixme
 
 	up_chapter	equipment
 /* @todo use-me
@@ -4013,7 +4013,7 @@ tech rs_ugv_chaingun
 tech rs_ugv_chaingun_belt
 {
 	type	weapon
-	mdl_top	ugv_phoenix	// @todo fixme
+	mdl	ugv_phoenix	// @todo fixme
 
 	up_chapter	equipment
 /* @todo use-me
@@ -4047,7 +4047,7 @@ tech rs_base_AA51_launcher
 	time		0
 	producetime	200
 
-	image_top	"techs/base_AA51_launcher"
+	image	"techs/base_AA51_launcher"
 }
 
 tech rs_base_ammo_AA51
@@ -4065,7 +4065,7 @@ tech rs_base_ammo_AA51
 	time		0
 	producetime	12
 
-	image_top	"techs/base_ammo_AA51"
+	image	"techs/base_ammo_AA51"
 }
 
 //========================
@@ -4086,7 +4086,7 @@ tech rs_craft_el_raven
 	time		0
 	producetime	100
 
-	mdl_top	"craft_item_raven_ecm"
+	mdl	"craft_item_raven_ecm"
 }
 
 tech rs_craft_shield_polymer
@@ -4103,7 +4103,7 @@ tech rs_craft_shield_polymer
 	time		0
 	producetime	140
 
-	mdl_top	"craft_armour_polymer"
+	mdl	"craft_armour_polymer"
 }
 
 tech rs_craft_shield_plating
@@ -4125,7 +4125,7 @@ tech rs_craft_shield_plating
 	time		620
 	producetime	240
 
-	mdl_top	"craft_armour_plating"
+	mdl	"craft_armour_plating"
 }
 
 tech rs_craft_alien_astrogation
@@ -4163,7 +4163,7 @@ tech rs_craft_alien_astrogation
 	time		600
 	producetime	-1
 
-	mdl_top		craft_item_astrogation
+	mdl		craft_item_astrogation
 }
 
 tech rs_craft_alien_propulsion
@@ -4200,7 +4200,7 @@ tech rs_craft_alien_propulsion
 	time		600
 	producetime	-1
 
-	mdl_top		craft_item_propulsion
+	mdl		craft_item_propulsion
 }
 
 tech rs_craft_alien_detection
@@ -4237,7 +4237,7 @@ tech rs_craft_alien_detection
 	time		600
 	producetime	-1
 
-	mdl_top		"craft_item_detector"
+	mdl		"craft_item_detector"
 }
 
 tech rs_craft_weapon_shiva
@@ -4254,7 +4254,7 @@ tech rs_craft_weapon_shiva
 	time		0
 	producetime	100
 
-	mdl_top		"aircraft/craft_weapon_shiva/shiva"
+	mdl		"aircraft/craft_weapon_shiva/shiva"
 }
 
 tech rs_craft_ammo_shiva_1
@@ -4275,7 +4275,7 @@ tech rs_craft_ammo_shiva_1
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	image_top	"techs/craft_ammo_shiva_1"
+	image	"techs/craft_ammo_shiva_1"
 }
 
 tech rs_craft_ammo_shiva_2
@@ -4296,7 +4296,7 @@ tech rs_craft_ammo_shiva_2
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	image_top	"techs/craft_ammo_shiva_2"
+	image	"techs/craft_ammo_shiva_2"
 }
 
 tech rs_craft_weapon_sparrowhawk
@@ -4313,7 +4313,7 @@ tech rs_craft_weapon_sparrowhawk
 	time		0
 	producetime	100
 
-	mdl_top		"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
+	mdl		"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
 }
 
 tech rs_craft_ammo_sparrowhawk
@@ -4334,7 +4334,7 @@ tech rs_craft_ammo_sparrowhawk
 	time		0
 	producetime	80 //10 per missile.
 
-	mdl_top		"aircraft/craft_weapon_sparrow/sparrowhawk"
+	mdl		"aircraft/craft_weapon_sparrow/sparrowhawk"
 }
 
 tech rs_craft_weapon_tr20
@@ -4351,7 +4351,7 @@ tech rs_craft_weapon_tr20
 	time		0
 	producetime	100
 
-	mdl_top		"aircraft/craft_weapon_tr20/tr20"
+	mdl		"aircraft/craft_weapon_tr20/tr20"
 }
 
 tech rs_craft_ammo_tr20
@@ -4372,7 +4372,7 @@ tech rs_craft_ammo_tr20
 	time		0
 	producetime	24 //Assuming a full 128-rocket batch! // TODO: 152 pcs?
 
-	mdl_top		"aircraft/craft_weapon_tr20/tr20_rocket"
+	mdl		"aircraft/craft_weapon_tr20/tr20_rocket"
 }
 
 tech rs_craft_weapon_particle
@@ -4417,8 +4417,8 @@ tech rs_craft_weapon_particle
 	time		100
 	producetime	150
 
-	mdl_top		"aircraft/craft_weapon_particle/pbw"
-	image_top	"techs/craft_weapon_particle"
+	mdl		"aircraft/craft_weapon_particle/pbw"
+	image	"techs/craft_weapon_particle"
 }
 
 tech rs_craft_el_targeting
@@ -4435,7 +4435,7 @@ tech rs_craft_el_targeting
 	time		0
 	producetime	571
 
-	mdl_top		craft_item_target
+	mdl		craft_item_target
 }
 
 tech rs_craft_el_fuelpod
@@ -4452,8 +4452,8 @@ tech rs_craft_el_fuelpod
 	time		0
 	producetime	80
 
-	mdl_top		"aircraft/craft_item_fuel/fuel"
-	//image_top	"techs/craft_electronics_fuelpod"
+	mdl		"aircraft/craft_item_fuel/fuel"
+	//image	"techs/craft_electronics_fuelpod"
 }
 
 //========================
@@ -4495,7 +4495,7 @@ tech rs_alien_materials
 	}
 
 	time		6000
-//	image_top	"techs/alien_materials"
+//	image	"techs/alien_materials"
 }
 
 tech rs_item_alienmaterials

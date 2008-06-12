@@ -278,7 +278,7 @@ typedef struct market_s {
 	int num[MAX_OBJDEFS];
 	int bid[MAX_OBJDEFS];
 	int ask[MAX_OBJDEFS];
-	double cumm_supp_diff[MAX_OBJDEFS];
+	double cummSuppDiff[MAX_OBJDEFS];
 } market_t;
 
 /**
