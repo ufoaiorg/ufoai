@@ -160,6 +160,7 @@ static void MN_InitRadar (const menuNode_t *node)
 					/* there should be at least one level */
 					Com_Printf("No radar images for map: '%s' (%s)\n", image->name, imageName);
 					cl.skipRadarNodes = qtrue;
+					return;
 				}
 			} else {
 				Com_sprintf(imageName, sizeof(imageName), "radars/%s_%i", image->name, i + 1);
@@ -263,6 +264,9 @@ void MN_DrawRadar (menuNode_t *node)
 	/* the cl struct is wiped with every new map */
 	if (!cl.radarInited)
 		MN_InitRadar(node);
+
+	if (!cl.radarInited)
+		return;
 
 	if (VectorNotEmpty(node->bgcolor))
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
