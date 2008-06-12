@@ -29,7 +29,10 @@ macinstaller:
 	# otherwise multiplayer won't work due to mismatching checksums
 	# FIXME: Use the maps from the current release at sourceforge.net
 	cd base; ./archives.sh
-	cd base; wget -N http://mattn.ninex.info/download/0maps.pk3
+	# The mapfile in the address below is not recent enough to be useful in trunk.  
+	# Removed for trunk builds but should be added for branch builds with the 
+	# correct 0maps.pk3 linked.
+	# cd base; wget -N http://mattn.ninex.info/download/0maps.pk3
 	cd src/ports/macosx/installer; $(MAKE) TARGET_CPU=$(TARGET_CPU)
 
 USER=tlh2000
