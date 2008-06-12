@@ -308,8 +308,6 @@ void MN_DrawRadar (menuNode_t *node)
 		{
 			vec4_t color = {0, 1, 0, 1};
 			const int actorLevel = le->pos[2];
-			float actorDirection = 0.0f;
-			int verts[4];
 			/* used to interpolate movement on the radar */
 			/* FIXME: handle direction - needed */
 			const int interpolateX = le->origin[0] / UNIT_SIZE;
@@ -335,15 +333,16 @@ void MN_DrawRadar (menuNode_t *node)
 			/* show dead actors in full black */
 			if (le->state & STATE_DEAD) {
 				Vector4Set(color, 0, 0, 0, 1);
+			} else {
+				/* draw direction line only for living actors */
+				int verts[4];
+				const float actorDirection = dangle[le->dir] * torad;
+				verts[0] = x;
+				verts[1] = y;
+				verts[2] = x + (radar.gridWidth * cos(actorDirection));
+				verts[3] = y - (radar.gridWidth * sin(actorDirection));
+				R_DrawLine(verts, 5);
 			}
-
-			/* draw direction line */
-			actorDirection = dangle[le->dir] * torad;
-			verts[0] = x;
-			verts[1] = y;
-			verts[2] = x + (radar.gridWidth * cos(actorDirection));
-			verts[3] = y - (radar.gridWidth * sin(actorDirection));
-			R_DrawLine(verts, 5);
 
 			/* draw player circles */
 			R_DrawCircle2D(x, y, radar.gridWidth / 2, qtrue, color, 1);
