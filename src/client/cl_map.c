@@ -766,9 +766,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 	int numPoints = 0;
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
-	/* Set color
-	 * @todo FIXME for some reason, the alpha value is useless */
-	R_Color(color);
+	R_ColorBlend(color);
 
 	/* Set centerPos corresponding to cartesian coordinates of the center point */
 	PolarToVec(center, centerPos);
@@ -806,7 +804,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 
 	/* Draw the last path */
 	R_DrawLineStrip(numPoints, (int*)(&pts));
-	R_Color(NULL);
+	R_ColorBlend(NULL);
 }
 
 /**
@@ -1182,8 +1180,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	const char* font;
 	const vec2_t northPole = {0.0f, 90.0f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
-	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.5f};
-	const vec4_t white = {.9f, .9f, .9f, 0.5f};
+	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
+	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
 	qboolean oneUFOVisible = qfalse;
 	static char buffer[512] = "";

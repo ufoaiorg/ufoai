@@ -116,7 +116,7 @@ void RADAR_UpdateWholeRadarOverlay (void)
  */
 static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, const vec2_t pos)
 {
-	const vec4_t color = {.5, .5, .5, .5};
+	const vec4_t color = {1., 1., 1., .4};
 	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
 
 	/* Set color */
@@ -138,14 +138,14 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, vec2_t pos)
 {
 	int x, y, z;
 	int i;
-	const vec4_t color = {.5, .5, .5, .5};
+	const vec4_t color = {1., 1., 1., .3};
 	screenPoint_t pts[2];
 
 	/* Show radar range zones */
 	RADAR_DrawLineCoverage(node, radar, pos);
 
 	/* Set color */
-	R_Color(color);
+	R_ColorBlend(color);
 
 	/* Draw lines from radar to ufos sensored */
 	MAP_AllMapToScreen(node, pos, &x, &y, &z);
@@ -158,7 +158,7 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, vec2_t pos)
 			R_DrawLineStrip(2, (int*)pts); /* FIXME */
 		}
 
-	R_Color(NULL);
+	R_ColorBlend(NULL);
 }
 
 /**
