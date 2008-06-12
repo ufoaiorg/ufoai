@@ -1399,8 +1399,8 @@ void MAP_DrawMap (const menuNode_t* node)
 	} else {
 		if (smoothRotation)
 			MAP_SmoothTranslate();
-		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
-		R_DrawFlatGeoscape(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
+		q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
+		R_DrawFlatGeoscape(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
 	}
 	MAP_DrawMapMarkers(node);
@@ -1448,7 +1448,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
 				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert(3600.0f * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
 		default:
@@ -1460,7 +1460,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			if (selectedAircraft->status != AIR_IDLE) {
 				distance = MAP_GetDistance(selectedAircraft->pos,
 					selectedAircraft->route.point[selectedAircraft->route.numPoints - 1]);
-				Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert(3600.0f * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
+				Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
 			}
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
@@ -1725,7 +1725,7 @@ qboolean MAP_IsNight (vec2_t pos)
 	float p, q, a, root, x;
 
 	/* set p to hours (we don't use ccs.day here because we need a float value) */
-	p = (float) ccs.date.sec / (3600 * 24);
+	p = (float) ccs.date.sec / SECONDS_PER_DAY;
 	/* convert current day to angle (-pi on 1st january, pi on 31 december) */
 	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
 	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;

@@ -788,6 +788,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	char dateBuf[MAX_VAR] = "";
 	const char *subjectType = "";
 	const char *from, *to, *subject;
+	dateLong_t date;
 
 	if (mail) {
 		from = mail->from;
@@ -810,16 +811,18 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		} else {
 			switch (type) {
 			case TECHMAIL_PRE:
+				CL_DateConvertLong (&tech->preResearchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
-					tech->preResearchedDateYear,
-					CL_DateGetMonthName(tech->preResearchedDateMonth),
-					tech->preResearchedDateDay);
+					date.year,
+					CL_DateGetMonthName(date.month - 1),
+					date.day);
 				break;
 			case TECHMAIL_RESEARCHED:
+				CL_DateConvertLong (&tech->researchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
-					tech->researchedDateYear,
-					CL_DateGetMonthName(tech->researchedDateMonth),
-					tech->researchedDateDay);
+					date.year,
+					CL_DateGetMonthName(date.month - 1),
+					date.day);
 					break;
 			default:
 				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
@@ -1577,6 +1580,8 @@ static void UP_OpenMail_f (void)
 	char tempBuf[MAIL_LENGTH] = "";
 	const message_t *m = mn.messageStack;
 	const menu_t* menu = MN_GetMenu("ufopedia_mail");
+	dateLong_t date;
+
 	if (!menu)
 		Sys_Error("Could not find the ufopedia_mail menu\n");
 
@@ -1591,68 +1596,72 @@ static void UP_OpenMail_f (void)
 		case MSG_RESEARCH_PROPOSAL:
 			if (!m->pedia->mail[TECHMAIL_PRE].from)
 				break;
+			CL_DateConvertLong(&m->pedia->preResearchedDate, &date);
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_PRE].subject),
-					m->pedia->preResearchedDateYear,
-					CL_DateGetMonthName(m->pedia->preResearchedDateMonth),
-					m->pedia->preResearchedDateDay);
+					date.year,
+					CL_DateGetMonthName(date.month - 1),
+					date.day);
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_PRE].subject),
-					m->pedia->preResearchedDateYear,
-					CL_DateGetMonthName(m->pedia->preResearchedDateMonth),
-					m->pedia->preResearchedDateDay);
+					date.year,
+					CL_DateGetMonthName(date.month - 1),
+					date.day);
 			CHECK_MAIL_EOL
 			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
 		case MSG_RESEARCH_FINISHED:
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
 				break;
+			CL_DateConvertLong(&m->pedia->researchedDate, &date);
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-					m->pedia->researchedDateYear,
-					CL_DateGetMonthName(m->pedia->researchedDateMonth),
-					m->pedia->researchedDateDay);
+					date.year,
+					CL_DateGetMonthName(date.month - 1),
+					date.day);
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-					m->pedia->researchedDateYear,
-					CL_DateGetMonthName(m->pedia->researchedDateMonth),
-					m->pedia->researchedDateDay);
+					date.year,
+					CL_DateGetMonthName(date.month - 1),
+					date.day);
 			CHECK_MAIL_EOL
 			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from) {
+				CL_DateConvertLong(&m->pedia->preResearchedDate, &date);
 				if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_PRE].subject),
-						m->pedia->preResearchedDateYear,
-						CL_DateGetMonthName(m->pedia->preResearchedDateMonth),
-						m->pedia->preResearchedDateDay);
+						date.year,
+						CL_DateGetMonthName(date.month - 1),
+						date.day);
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_PRE].subject),
-						m->pedia->preResearchedDateYear,
-						CL_DateGetMonthName(m->pedia->preResearchedDateMonth),
-						m->pedia->preResearchedDateDay);
+						date.year,
+						CL_DateGetMonthName(date.month - 1),
+						date.day);
 				CHECK_MAIL_EOL
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
+				CL_DateConvertLong(&m->pedia->researchedDate, &date);
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-						m->pedia->researchedDateYear,
-						CL_DateGetMonthName(m->pedia->researchedDateMonth),
-						m->pedia->researchedDateDay);
+						date.year,
+						CL_DateGetMonthName(date.month - 1),
+						date.day);
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-						m->pedia->researchedDateYear,
-						CL_DateGetMonthName(m->pedia->researchedDateMonth),
-						m->pedia->researchedDateDay);
+						date.year,
+						CL_DateGetMonthName(date.month - 1),
+						date.day);
 				CHECK_MAIL_EOL
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			}

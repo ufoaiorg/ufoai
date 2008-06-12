@@ -1367,7 +1367,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	/* "ammo" is definitly set here - otherwise the check above
 	 * would have left this function already. */
 	assert(ammo);
-	if (!RS_ItemIsResearched(ammo->weapons[weapFdsIdx]->id)) {
+	if (!RS_IsResearched_ptr(ammo->weapons[weapFdsIdx]->tech)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", ammo->weapons[weapFdsIdx]->id);
 		return;
 	}
@@ -2297,7 +2297,7 @@ void CL_ActorUpdateCVars (void)
 			MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 			/* in multiplayer RS_ItemIsResearched always returns true,
 			 * so we are able to use the aliens weapons */
-			if (selWeapon && !RS_ItemIsResearched(selWeapon->item.t->id)) {
+			if (selWeapon && !RS_IsResearched_ptr(selWeapon->item.t->tech)) {
 				SCR_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {
@@ -3058,7 +3058,7 @@ void CL_ActorReload (int hand)
 	if (!weapon->reload)
 		return;
 
-	if (!RS_ItemIsResearched(weapon->id)) {
+	if (!RS_IsResearched_ptr(weapon->tech)) {
 		SCR_DisplayHudMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
 		return;
 	}
@@ -3071,7 +3071,7 @@ void CL_ActorReload (int hand)
 			 * we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)
-				 && RS_ItemIsResearched(ic->item.t->id)) {
+				 && RS_IsResearched_ptr(ic->item.t->tech)) {
 					x = ic->x;
 					y = ic->y;
 					tu = csi.ids[container].out;

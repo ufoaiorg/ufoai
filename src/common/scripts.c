@@ -352,8 +352,8 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		if (strstr(strstr(token, " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
 		sscanf(token, "%i %i %i", &x, &y, &w);
-		((date_t *) b)->day = 365 * x + y;
-		((date_t *) b)->sec = 3600 * w;
+		((date_t *) b)->day = DAYS_PER_YEAR * x + y;
+		((date_t *) b)->sec = SECONDS_PER_HOUR * w;
 		return ALIGN(sizeof(date_t));
 
 	case V_IF:
@@ -634,7 +634,7 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		return csi.dts[*(int *)b].id;
 
 	case V_DATE:
-		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((date_t *) b)->day / 365, ((date_t *) b)->day % 365, ((date_t *) b)->sec);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((date_t *) b)->day / DAYS_PER_YEAR, ((date_t *) b)->day % DAYS_PER_YEAR, ((date_t *) b)->sec);
 		return valuestr;
 
 	case V_IF:

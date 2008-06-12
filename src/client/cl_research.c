@@ -78,12 +78,10 @@ void RS_ResearchFinish (technology_t* tech)
 	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
 		Cbuf_AddText(va("%s\n", tech->finishedResearchEvent));
 	tech->statusResearch = RS_FINISH;
-	CL_DateConvert(&ccs.date, &tech->researchedDateDay, &tech->researchedDateMonth);
-	tech->researchedDateYear = ccs.date.day / 365;
+	tech->researchedDate = ccs.date;
 	if (!tech->statusResearchable) {
 		tech->statusResearchable = qtrue;
-		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
-		tech->preResearchedDateYear = ccs.date.day / 365;
+		tech->preResearchedDate = ccs.date;
 	}
 	if (tech->pushnews)
 		RS_PushNewsWhenResearched(tech);
@@ -128,9 +126,8 @@ void RS_MarkOneResearchable (technology_t* tech)
 	tech->statusResearchable = qtrue;
 
 	/* only change the date if it wasn't set before */
-	if (tech->preResearchedDateYear == 0) {
-		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
-		tech->preResearchedDateYear = ccs.date.day / 365;
+	if (tech->preResearchedDate.day == 0) {
+		tech->preResearchedDate = ccs.date;
 	}
 }
 
@@ -443,9 +440,8 @@ void RS_MarkCollected (technology_t* tech)
 	}
 
 	/* only change the date if it wasn't set before */
-	if (tech->preResearchedDateYear == 0) {
-		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
-		tech->preResearchedDateYear = ccs.date.day / 365;
+	if (tech->preResearchedDate.day == 0) {
+		tech->preResearchedDate = ccs.date;
 	}
 
 	tech->statusCollected = qtrue;
@@ -1524,6 +1520,7 @@ static void RS_TechnologyList_f (void)
 	int i, j;
 	technology_t *tech;
 	requirements_t *reqs;
+	dateLong_t date;
 
 	Com_Printf("#techs: %i\n", gd.numTechnologies);
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -1548,9 +1545,10 @@ static void RS_TechnologyList_f (void)
 		Com_Printf("%s\n", RS_TechTypeToName(tech->type));
 
 		Com_Printf("... researchable -> %i\n", tech->statusResearchable);
+
 		if (tech->statusResearchable) {
-			Com_Printf("... researchable date: %02i %02i %i\n", tech->preResearchedDateDay, tech->preResearchedDateMonth,
-				tech->preResearchedDateYear);
+			CL_DateConvertLong(&tech->preResearchedDate, &date);
+			Com_Printf("... researchable date: %02i %02i %i\n", date.day, date.month, date.year);
 		}
 
 		Com_Printf("... research  -> ");
@@ -1566,8 +1564,8 @@ static void RS_TechnologyList_f (void)
 			break;
 		case RS_FINISH:
 			Com_Printf("done\n");
-			Com_Printf("... research date: %02i %02i %i\n", tech->researchedDateDay, tech->researchedDateMonth,
-				tech->researchedDateYear);
+			CL_DateConvertLong(&tech->researchedDate, &date);
+			Com_Printf("... research date: %02i %02i %i\n", date.day, date.month, date.year);
 			break;
 		default:
 			Com_Printf("unknown\n");
@@ -2197,13 +2195,16 @@ qboolean RS_IsResearched_ptr (const technology_t * tech)
 	return qfalse;
 }
 
+#if 0
+/* Currently not used, but may be useful later on. */
 /**
- * @brief Checks if the item (as listed in "provides") has been researched
- * @param[in] id_provided Unique id of an item/building/etc.. that is provided by a technology_t
+ * @brief Checks if the item (as listed in "provides") has been researched.
+ * @note This is mostly of use if the linked provided struct does not yet have a technology_t backlink. i.e. objDef_t can use RS_IsResearched_ptr(objDef_t->tech) directly.
+ * @param[in] idProvided Unique id of an item/building/etc.. that is provided by a technology_t entry.
  * @return qboolean
  * @sa RS_IsResearched_ptr
  */
-qboolean RS_ItemIsResearched (const char *id_provided)
+qboolean RS_ItemIsResearched (const char *idProvided)
 {
 	technology_t *tech;
 
@@ -2211,12 +2212,13 @@ qboolean RS_ItemIsResearched (const char *id_provided)
 	if (!ccs.singleplayer)
 		return qtrue;
 
-	tech = RS_GetTechByProvided(id_provided);
+	tech = RS_GetTechByProvided(idProvided);
 	if (!tech)
 		return qtrue;
 
 	return RS_IsResearched_ptr(tech);
 }
+#endif
 
 /**
  * @sa RS_ItemCollected
@@ -2420,12 +2422,10 @@ qboolean RS_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, -1);
 		MSG_WriteByte(sb, t->scientists);
 		MSG_WriteByte(sb, t->statusResearchable);
-		MSG_WriteShort(sb, t->preResearchedDateDay);
-		MSG_WriteShort(sb, t->preResearchedDateMonth);
-		MSG_WriteShort(sb, t->preResearchedDateYear);
-		MSG_WriteShort(sb, t->researchedDateDay);
-		MSG_WriteShort(sb, t->researchedDateMonth);
-		MSG_WriteShort(sb, t->researchedDateYear);
+		MSG_WriteLong(sb, t->preResearchedDate.day);
+		MSG_WriteLong(sb, t->preResearchedDate.sec);
+		MSG_WriteLong(sb, t->researchedDate.day);
+		MSG_WriteLong(sb, t->researchedDate.sec);
 		MSG_WriteByte(sb, t->mailSent);
 		for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
 			/* only save the already read mails */
@@ -2443,6 +2443,7 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;
 	int tempBaseIdx;
+	dateLong_t tempDate;
 
 	/* Clear linked list. */
 	LIST_Delete(&loadTechBases);
@@ -2483,12 +2484,33 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 
 		t->scientists = MSG_ReadByte(sb);
 		t->statusResearchable = MSG_ReadByte(sb);
+#if 1
+		tempDate.day = MSG_ReadShort(sb);
+		tempDate.month = MSG_ReadShort(sb);
+		tempDate.year = MSG_ReadShort(sb);
+		t->preResearchedDate.day = CL_DateCreateDay(tempDate.year, tempDate.month, tempDate.day);
+
+		tempDate.day = MSG_ReadShort(sb);
+		tempDate.month = MSG_ReadShort(sb);
+		tempDate.year = MSG_ReadShort(sb);
+		t->researchedDate.day = CL_DateCreateDay(tempDate.year, tempDate.month, tempDate.day);
+
+/*
 		t->preResearchedDateDay = MSG_ReadShort(sb);
 		t->preResearchedDateMonth = MSG_ReadShort(sb);
 		t->preResearchedDateYear = MSG_ReadShort(sb);
 		t->researchedDateDay = MSG_ReadShort(sb);
 		t->researchedDateMonth = MSG_ReadShort(sb);
 		t->researchedDateYear = MSG_ReadShort(sb);
+*/
+
+#else
+/**@todo activate me */
+		t->preResearchedDate.day = MSG_ReadLong(sb);
+		t->preResearchedDate.sec = MSG_ReadLong(sb);
+		t->researchedDate.day = MSG_ReadLong(sb);
+		t->researchedDate.sec = MSG_ReadLong(sb);
+#endif
 		t->mailSent = MSG_ReadByte(sb);
 		for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
 			const techMailType_t mailType = MSG_ReadByte(sb);

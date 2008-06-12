@@ -59,7 +59,7 @@ typedef struct message_s {
 	struct technology_s *pedia;		/**< link to UFOpaedia if a research has finished. */
 	struct eventMail_s *eventMail;
 	struct message_s *next;
-	int d, m, y, h, min, s;
+	date_t date;
 } message_t;
 
 /** @brief Stores all chat messages from a multiplayer game */

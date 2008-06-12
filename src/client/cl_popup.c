@@ -453,7 +453,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 				s = va("%s (%i/%i)\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), base->name);
 			else {
 				const float distance = MAP_GetDistance(air->pos, mission->pos);
-				s = va("%s (%i/%i)\t%s\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), base->name, CL_SecondConvert(3600.0f * distance / air->stats[AIR_STATS_SPEED]));
+				s = va("%s (%i/%i)\t%s\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), base->name, CL_SecondConvert((float)SECONDS_PER_HOUR * distance / air->stats[AIR_STATS_SPEED]));
 			}
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			assert(air->homebase == base);

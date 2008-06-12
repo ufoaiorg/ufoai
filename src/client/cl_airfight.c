@@ -491,7 +491,7 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *pr
 	}
 
 	/* check if the projectile went farther than it's range */
-	distance = (float) projectile->time * projectile->aircraftItem->craftitem.weaponSpeed / 3600.0f;
+	distance = (float) projectile->time * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 	if (distance > projectile->aircraftItem->craftitem.stats[AIR_STATS_WRANGE]) {
 		return qtrue;
 	}
@@ -663,7 +663,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 	for (idx = gd.numProjectiles - 1; idx >= 0; idx--) {
 		projectile = &gd.projectiles[idx];
 		projectile->time += dt;
-		movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / 3600.0f;
+		movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 		/* Check if the projectile reached its destination (aircraft or idle point) */
 		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
 			/* check if it got the ennemy */

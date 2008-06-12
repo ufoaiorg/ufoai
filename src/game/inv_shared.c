@@ -619,8 +619,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 			 * can be loaded in it (implicitly weapon). */
 
 			/** @todo (or do this in two places in cl_menu.c):
-			if (!RS_ItemIsResearched(ic->item.t->id)
-				 || !RS_ItemIsResearched(cacheItem.t->id)) {
+			if (!RS_IsResearched_ptr(ic->item.t->tech)
+				 || !RS_IsResearched_ptr(cacheItem.t->tech)) {
 				return IA_NORELOAD;
 			} */
 			if (ic->item.a >= ic->item.t->ammo

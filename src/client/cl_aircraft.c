@@ -562,7 +562,7 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
 		return value / 1000;
 	case AIR_STATS_OP_RANGE:
 		/* the 2.0f factor is for going to destination and then come back */
-		return 100 * (int) (111.2 * value / (2.0f * 3600.0f * 100.0f));
+		return 100 * (int) (111.2 * value / (2.0f * (float)SECONDS_PER_HOUR * 100.0f));
 	default:
 		return value;
 	}
@@ -591,7 +591,7 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 	distance += MAP_GetDistance(destination, base->pos);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
-	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f)
+	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR)
 		return qtrue;
 
 	return qfalse;
@@ -971,7 +971,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	aircraft->time += dt;
 	aircraft->fuel -= dt;
 
-	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
+	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / (float)SECONDS_PER_HOUR;
 
 	/* Check if destination reached */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1)) {

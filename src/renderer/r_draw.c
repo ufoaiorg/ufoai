@@ -836,8 +836,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	}
 
 	/* add the light */
-	q = (day % 365 + (float) (second / (3600.0f * 24.0f))) * 2 * M_PI / 365;
-	p = (float) (second / (24 * 3600.0f)) * 2 * M_PI - 0.5f * M_PI;
+	q = (day % DAYS_PER_YEAR + (float) (second / (float)SECONDS_PER_DAY)) * 2 * M_PI / DAYS_PER_YEAR;
+	p = (float) (second / (float)SECONDS_PER_DAY) * 2 * M_PI - 0.5f * M_PI;
 	a = cos(q) * SIN_ALPHA;
 	sqrta = sqrt(0.5f * (1 - a * a));
 	Vector4Set(lightPos, cos(p) * sqrta, -sin(p) * sqrta, a, 0);
@@ -882,7 +882,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	/* calculate position of the moon (it rotates around earth with a period of
 	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
 	 * every time the day is changing) */
-	p = (float) ((day % 249) + second / (24.9f * 3600.0f)) * 2 * M_PI;
+	p = (float) ((day % 249) + second / (24.9f * (float)SECONDS_PER_HOUR)) * 2 * M_PI;
 	VectorSet(moonPos, cos(p) * sqrta, - sin(p) * sqrta, a);
 	VectorSet(v, moonPos[1], moonPos[0], moonPos[2]);
 	VectorSet(rotationAxis, 0, 0, 1);

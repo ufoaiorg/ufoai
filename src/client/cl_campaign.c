@@ -87,8 +87,8 @@ static qboolean Date_LaterThan (date_t now, date_t compare)
 static date_t Date_Add (date_t a, date_t b)
 {
 	a.sec += b.sec;
-	a.day += (a.sec / (3600 * 24)) + b.day;
-	a.sec %= 3600 * 24;
+	a.day += (a.sec / SECONDS_PER_DAY) + b.day;
+	a.sec %= SECONDS_PER_DAY;
 	return a;
 }
 
@@ -100,11 +100,11 @@ static date_t Date_Add (date_t a, date_t b)
  */
 static date_t Date_Random (date_t minFrame, date_t maxFrame)
 {
-	maxFrame.sec = max(minFrame.day * 3600 * 24 + minFrame.sec,
-		(maxFrame.day * 3600 * 24 + maxFrame.sec) * frand());
+	maxFrame.sec = max(minFrame.day * SECONDS_PER_DAY + minFrame.sec,
+		(maxFrame.day * SECONDS_PER_DAY + maxFrame.sec) * frand());
 
-	maxFrame.day = maxFrame.sec / (3600 * 24);
-	maxFrame.sec = maxFrame.sec % (3600 * 24);
+	maxFrame.day = maxFrame.sec / SECONDS_PER_DAY;
+	maxFrame.sec = maxFrame.sec % SECONDS_PER_DAY;
 	return maxFrame;
 }
 
@@ -3504,8 +3504,8 @@ const char* CL_SecondConvert (int second)
 {
 	int hour, min;
 
-	hour = second / 3600;
-	min = (second - hour * 3600) / 60;
+	hour = second / SECONDS_PER_HOUR;
+	min = (second - hour * SECONDS_PER_HOUR) / 60;
 	return va("%i:%02i", hour, min);
 }
 
@@ -3516,12 +3516,12 @@ static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31
  * @note The seconds from "date" are ignored here.
  * @note The function always starts calculation from Jan. and also catches new years.
  * @param[in] date Contains the number of days to be converted.
- * @param[out] month The month.
  * @param[out] day The day in the month above.
+ * @param[out] month The month.
  */
-void CL_DateConvert (const date_t * date, int *day, int *month)
+void CL_DateConvert (const date_t * date, byte *day, byte *month)
 {
-	int i, d;
+	byte i, d;
 
 	/* Get the day in the year. Other years are ignored. */
 	d = date->day % DAYS_PER_YEAR;
@@ -3533,6 +3533,43 @@ void CL_DateConvert (const date_t * date, int *day, int *month)
 	/* Prepare return values. */
 	*day = d + 1;
 	*month = i;
+}
+
+/**
+ * @brief Converts a number of years+months+days into an "day" integer as used in date_t.
+ * @param[in] years The number of years to sum up.
+ * @param[in] months The number of months to sum up.
+ * @param[in] days The number of days to sum up.
+ * @return The total number of days.
+ */
+int CL_DateCreateDay (const short years, const byte months, const byte days)
+{
+	int i;
+	int day;
+
+	/* Add days of years */
+	day = DAYS_PER_YEAR * years;
+
+	/* Add days until no full month is left. */
+	for (i = 0; i <= months; i++)
+		day += monthLength[i];
+
+	day += days;
+
+	return day;
+}
+
+/**
+ * @brief Converts a date from the engine in a (longer) human-readable format.
+ * @param[in] date Contains the date to be converted.
+ * @param[out] dateLong The converted date.
+  */
+void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
+{
+	CL_DateConvert(date, &dateLong->day, &dateLong->month);
+	dateLong->hour = date->sec / SECONDS_PER_HOUR;
+	dateLong->min = (date->sec - dateLong->hour * SECONDS_PER_HOUR) / 60;
+	dateLong->sec = date->sec - dateLong->hour * SECONDS_PER_HOUR - dateLong->min * 60;
 }
 
 /**
@@ -3648,9 +3685,9 @@ static void CL_HandleBudget (void)
 			new_scientists++;
 		}
 
-		/* @todo: The pilot global list needs to be refreshed.  Pilots who are already hired should be left, but all other 
+		/* @todo: The pilot global list needs to be refreshed.  Pilots who are already hired should be left, but all other
 		 *        pilots need to be replaced.  The new pilots should be evenly distributed between the nations that are happy (happiness > 0). */
-		
+
 		if (nation->stats[0].happiness > 0) {
 			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 				/* Create a soldier. */
@@ -3810,7 +3847,7 @@ static void CL_CampaignInitMarket (qboolean load)
 		if (!ed->num[i])
 			continue;
 
-		if (!RS_ItemIsResearched(csi.ods[i].id))
+		if (!RS_IsResearched_ptr(csi.ods[i].tech))
 			Com_Printf("CL_CampaignInitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n", csi.ods[i].id, curCampaign->id);
 		else
 			/* the other relevant values were already set in CL_CampaignInitMarket */
@@ -3832,20 +3869,29 @@ static void CL_CampaignRunMarket (void)
 
 	assert(curCampaign->marketDef);
 
-	/** @todo: Find out why there is a 2 days discrepancy in reasearched_date */
+	/** @todo: Find out why there is a 2 days discrepancy in reasearched_date @note comment was in an older revision of the code. */
 	for (i = 0; i < csi.numODs; i++) {
-		if (RS_ItemIsResearched(csi.ods[i].id)) {
-			/* supply balance */
-			technology_t *tech = RS_GetTechByProvided(csi.ods[i].id);
+ 		technology_t *tech = csi.ods[i].tech;
+ 		if (!tech)
+ 				Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
+
+ 		if (RS_IsResearched_ptr(tech)) {
+ 			/* supply balance */
+			dateLong_t tempDate;
 			int reasearched_date;
-			if (!tech)
-				Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
-			reasearched_date = tech->researchedDateDay + tech->researchedDateMonth * 30 +  tech->researchedDateYear * DAYS_PER_YEAR - 2;
-			if (reasearched_date <= curCampaign->date.sec / 86400 + curCampaign->date.day)
+
+			CL_DateConvertLong(&tech->researchedDate, &tempDate);
+
+			/** @todo Please elaborate what exactly is done here. (Used algorithm etc...)
+			 * Also why is a constant of 30 days per month used? - why is the year 2 days shorter? I guess they are releated to each other. */
+			/** @todo I'm pretty sure this can be changed to more readable code. (i.e. use tech->researchedDate.day directly) */
+			reasearched_date = tempDate.day + tempDate.month * 30 +  tempDate.year * DAYS_PER_YEAR - 2;
+			if (reasearched_date <= curCampaign->date.sec / SECONDS_PER_DAY + curCampaign->date.day)
 				reasearched_date -= 100;
 			research_factor = mrs1 * sqrt(ccs.date.day - reasearched_date);
+
 			price_factor = mpr1 / sqrt(csi.ods[i].price + 1);
-			curr_supp_diff = floor(research_factor*price_factor - ccs.eMarket.num[i]);
+			curr_supp_diff = floor(research_factor * price_factor - ccs.eMarket.num[i]);
 			if (curr_supp_diff != 0)
 				ccs.eMarket.cumm_supp_diff[i] += curr_supp_diff;
 			else
@@ -3856,11 +3902,11 @@ static void CL_CampaignRunMarket (void)
 				ccs.eMarket.num[i] = 0;
 
 			/* set item price based on supply imbalance */
-			if (research_factor*price_factor >= 1)
+			if (research_factor * price_factor >= 1)
 				ccs.eMarket.ask[i] = floor(csi.ods[i].price
 					* (1 - (1 - BID_FACTOR) / 2
 					* (1 / (1 + exp(curr_supp_diff / (research_factor * price_factor)))
-					* 2 - 1)));
+					* 2 - 1)) );
 			else
 				ccs.eMarket.ask[i] = csi.ods[i].price;
 			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
@@ -3883,16 +3929,17 @@ void CL_CampaignRun (void)
 	ccs.timer += cls.frametime * gd.gameTimeScale;
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
-		int dt, day, month, currenthour;
+		int dt, currenthour;
+		dateLong_t date;
 
 		dt = (int)floor(ccs.timer);
-		currenthour = (int)floor(ccs.date.sec / 3600);
+		currenthour = (int)floor(ccs.date.sec / SECONDS_PER_HOUR);
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
 
 		/* compute hourly events  */
 		/* (this may run multiple times if the time stepping is > 1 hour at a time) */
-		while (currenthour < (int)floor(ccs.date.sec / 3600)) {
+		while (currenthour < (int)floor(ccs.date.sec / SECONDS_PER_HOUR)) {
 			currenthour++;
 			CL_CheckResearchStatus();
 			PR_ProductionRun();
@@ -3905,8 +3952,8 @@ void CL_CampaignRun (void)
 		}
 
 		/* daily events */
-		while (ccs.date.sec > 3600 * 24) {
-			ccs.date.sec -= 3600 * 24;
+		while (ccs.date.sec > SECONDS_PER_DAY) {
+			ccs.date.sec -= SECONDS_PER_DAY;
 			ccs.date.day++;
 			/* every day */
 			B_UpdateBaseData();
@@ -3927,19 +3974,19 @@ void CL_CampaignRun (void)
 		AIRFIGHT_CampaignRunProjectiles(dt);
 
 		/* set time cvars */
-		CL_DateConvert(&ccs.date, &day, &month);
+		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
-		if (day == 1 && gd.fund != qfalse && gd.numBases) {
+		if (date.day == 1 && gd.fund != qfalse && gd.numBases) {
 			CL_BackupMonthlyData();	/* Back up monthly data. */
 			CL_HandleBudget();
 			gd.fund = qfalse;
-		} else if (day > 1)
+		} else if (date.day > 1)
 			gd.fund = qtrue;
 
 		UP_GetUnreadMails();
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%i %s %02i"), ccs.date.day / DAYS_PER_YEAR, CL_DateGetMonthName(month), day);
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%i %s %02i"), date.year, CL_DateGetMonthName(date.month - 1), date.day);
 		Cvar_Set("mn_mapdate", mn.messageBuffer);
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%02i:%02i"), ccs.date.sec / 3600, ((ccs.date.sec % 3600) / 60));
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%02i:%02i"), date.hour, date.min);
 		Cvar_Set("mn_maptime", mn.messageBuffer);
 	}
 }
@@ -3959,10 +4006,10 @@ static const gameLapse_t lapse[NUM_TIMELAPSE] = {
 	{N_("stopped"), 0},
 	{N_("5 sec"), 5},
 	{N_("5 mins"), 5 * 60},
-	{N_("1 hour"), 60 * 60},
-	{N_("12 hour"), 12 * 3600},
-	{N_("1 day"), 24 * 3600},
-	{N_("5 days"), 5 * 24 * 3600}
+	{N_("1 hour"), SECONDS_PER_HOUR},
+	{N_("12 hour"), 12 * SECONDS_PER_HOUR},
+	{N_("1 day"), 24 * SECONDS_PER_HOUR},
+	{N_("5 days"), 5 * SECONDS_PER_DAY}
 };
 
 static int gameLapse;
@@ -6709,8 +6756,8 @@ static void CL_GameNew_f (void)
 	CL_StartSingleplayer(qtrue);
 
 	/* get day */
-	while (ccs.date.sec > 3600 * 24) {
-		ccs.date.sec -= 3600 * 24;
+	while (ccs.date.sec > SECONDS_PER_DAY) {
+		ccs.date.sec -= SECONDS_PER_DAY;
 		ccs.date.day++;
 	}
 

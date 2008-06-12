@@ -242,10 +242,10 @@ void CL_EventAddMail_f (void)
 	}
 
 	if (!eventMail->date) {
-		int day, month;
-		CL_DateConvert(&ccs.date, &day, &month);
+		dateLong_t date;
+		CL_DateConvertLong(&ccs.date, &date);
 		Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
-			ccs.date.day / DAYS_PER_YEAR, CL_DateGetMonthName(month), day);
+			date.year, CL_DateGetMonthName(date.month - 1), date.day);
 		eventMail->date = Mem_PoolStrDup(dateBuf, cl_localPool, 0);
 	}
 

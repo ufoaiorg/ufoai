@@ -254,7 +254,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	char savegame[MAX_OSPATH];
 	byte *buf, *fbuf;
 	uLongf bufLen;
-	int day, month;
+	dateLong_t date;
 	saveFileHeader_t header;
 
 	if (!curCampaign) {
@@ -305,9 +305,9 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	header.version = LittleLong(SAVE_FILE_VERSION);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
-	CL_DateConvert(&ccs.date, &day, &month);
+	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
-		ccs.date.day / 365, CL_DateGetMonthName(month), day);
+		date.year, CL_DateGetMonthName(date.month - 1), date.day);
 	/* @todo fill real date string */
 	memcpy(fbuf, &header, sizeof(saveFileHeader_t));
 

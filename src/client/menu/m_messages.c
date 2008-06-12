@@ -69,11 +69,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	mess->type = type;
 	mess->pedia = pedia;		/* pointer to UFOpaedia entry */
 
-	CL_DateConvert(&ccs.date, &mess->d, &mess->m);
-	mess->y = ccs.date.day / 365;
-	mess->h = ccs.date.sec / 3600;
-	mess->min = ((ccs.date.sec % 3600) / 60);
-	mess->s = (ccs.date.sec % 3600) / 60 / 60;
+	mess->date = ccs.date;
 
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
 	mess->text = Mem_PoolStrDup(text, cl_localPool, CL_TAG_NONE);
@@ -123,7 +119,9 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
  */
 void MN_TimestampedText (char *text, message_t *message, size_t textsize)
 {
-	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), message->y, CL_DateGetMonthName(message->m), message->d, message->h, message->min);
+	dateLong_t date;
+	CL_DateConvertLong(&message->date, &date);
+	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), date.year, CL_DateGetMonthName(date.month - 1), date.day, date.hour, date.min);
 }
 
 void MN_RemoveMessage (const char *title)
@@ -237,12 +235,8 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 		MSG_WriteByte(sb, message->eventMail->read);
 	}
 	MSG_WriteLong(sb, idx);
-	MSG_WriteLong(sb, message->d);
-	MSG_WriteLong(sb, message->m);
-	MSG_WriteLong(sb, message->y);
-	MSG_WriteLong(sb, message->h);
-	MSG_WriteLong(sb, message->min);
-	MSG_WriteLong(sb, message->s);
+	MSG_WriteLong(sb, message->date.day);
+	MSG_WriteLong(sb, message->date.sec);
 }
 
 /**
@@ -305,12 +299,8 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 		} else {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
 			mess->eventMail = mail;
-			mess->d = MSG_ReadLong(sb);
-			mess->m = MSG_ReadLong(sb);
-			mess->y = MSG_ReadLong(sb);
-			mess->h = MSG_ReadLong(sb);
-			mess->min = MSG_ReadLong(sb);
-			mess->s = MSG_ReadLong(sb);
+			mess->date.day = MSG_ReadLong(sb);
+			mess->date.sec = MSG_ReadLong(sb);
 		}
 	}
 	return qtrue;

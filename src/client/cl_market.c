@@ -100,7 +100,7 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftSample)
 	if (!aircraftSample || aircraftSample != aircraftSample->tpl)
 		return;
 
-	tech = RS_GetTechByProvided(aircraftSample->id);
+	tech = aircraftSample->tech;
 	assert(tech);
 	UP_AircraftDescription(tech);
 	Cvar_Set("mn_aircraftname", _(aircraftSample->name));
@@ -333,7 +333,7 @@ static void BS_BuyType (void)
 		for (i = 0, j = 0, air_samp = aircraftTemplates; i < numAircraftTemplates; i++, air_samp++) {
 			if (air_samp->type == AIRCRAFT_UFO || air_samp->price == -1)
 				continue;
-			tech = RS_GetTechByProvided(air_samp->id);
+			tech = air_samp->tech;
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {

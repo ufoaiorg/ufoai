@@ -383,7 +383,7 @@ void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 		Com_sprintf(tooltiptext, string_maxlength, "%s\n", item.t->name);
 
 	/* Only display further info if item.t is researched */
-	if (RS_ItemIsResearched(item.t->id)) {
+	if (RS_IsResearched_ptr(item.t->tech)) {
 		if (item.t->weapon) {
 			/* Get info about used ammo (if there is any) */
 			if (item.t == item.m) {
@@ -403,7 +403,7 @@ void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 				Q_strcat(tooltiptext, _("Usable in:\n"), string_maxlength);
 				for (i = 0; i < item.t->numWeapons; i++) {
 					weapon = item.t->weapons[i];
-					if (RS_ItemIsResearched(weapon->id)) {
+					if (RS_IsResearched_ptr(weapon->tech)) {
 						Q_strcat(tooltiptext, va("* %s\n", weapon->name), string_maxlength);
 					}
 				}

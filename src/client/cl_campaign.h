@@ -26,11 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CAMPAIGN_H
 #define CLIENT_CL_CAMPAIGN_H
 
-/* Time Constants */
-#define DAYS_PER_YEAR 365
-#define DAYS_PER_YEAR_AVG 365.25
-#define MONTHS_PER_YEAR 12
-
 #define BID_FACTOR 0.9
 
 /* check for water */
@@ -400,7 +395,9 @@ void CP_CheckNextStageDestination(aircraft_t *ufo);
 
 void CL_ResetCampaign(void);
 void CL_ResetSinglePlayerData(void);
-void CL_DateConvert(const date_t * date, int *day, int *month);
+void CL_DateConvert(const date_t * date, byte *day, byte *month);
+void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);
+int CL_DateCreateDay(const short years, const byte months, const byte days);
 const char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
 void CL_GameTimeStop(void);

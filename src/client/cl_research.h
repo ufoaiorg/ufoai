@@ -204,8 +204,8 @@ typedef struct technology_s {
 						 * All requirements need to be fulfilled in order for _one_ item to be produced.
 						 * This check is done for each item.*/
 
-	int preResearchedDateDay, preResearchedDateMonth, preResearchedDateYear; /**< Date for UFOpaedia. */
-	int researchedDateDay, researchedDateMonth, researchedDateYear; /**< Date for UFOpaedia. */
+	date_t preResearchedDate;	/**< Date for UFOpaedia. Research proposal. */
+	date_t researchedDate;		/**< Date for UFOpaedia. Finished research. */
 
 	markResearched_t markResearched;	/**< Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
@@ -226,7 +226,9 @@ void RS_ResetHash(void);
 void CL_CheckResearchStatus(void);
 void RS_UpdateData(struct base_s *base);
 void RS_ParseTechnologies(const char *name, const char **text);
-qboolean RS_ItemIsResearched(const char *id_provided);
+#if 0
+qboolean RS_ItemIsResearched(const char *idProvided);
+#endif
 qboolean RS_IsResearched_idx(int techIdx);
 qboolean RS_IsResearched_ptr(const technology_t *tech);
 int RS_Collected_(const technology_t * tech);
