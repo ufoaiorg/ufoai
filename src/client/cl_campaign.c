@@ -2547,6 +2547,8 @@ static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
 }
 
+static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;		/* Number of days between events are spawned */
+
 /**
  * @brief Spawn new missions.
  * @sa CL_CampaignRun
@@ -2554,12 +2556,12 @@ static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
  */
 static void CP_SpawnNewMissions (void)
 {
-	const int delayBetweenIncrease = 3;		/* Number of days between events are spawned */
+
 	int i;
 
 	ccs.lastMissionSpawnedDelay++;
 
-	if (ccs.lastMissionSpawnedDelay > delayBetweenIncrease) {
+	if (ccs.lastMissionSpawnedDelay > DELAY_BETWEEN_MISSION_SPAWNING) {
 		/* How many missions will be spawned until next cycle ? */
 		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
 		for (i = 0; i < newMissionNum; i++) {
@@ -2567,8 +2569,20 @@ static void CP_SpawnNewMissions (void)
 			CP_CreateNewMission(type, qfalse);
 		}
 
-		ccs.lastMissionSpawnedDelay -= delayBetweenIncrease;
+		ccs.lastMissionSpawnedDelay -= DELAY_BETWEEN_MISSION_SPAWNING;
 	}
+}
+
+/**
+ * @brief Initialize spawning delay.
+ * @sa CP_SpawnNewMissions
+ * @note only called when new game is started, in order to spawn new event on the beginning of the game.
+ */
+static void CP_InitializeSpawningDelay (void)
+{
+	ccs.lastMissionSpawnedDelay = DELAY_BETWEEN_MISSION_SPAWNING;
+
+	CP_SpawnNewMissions();
 }
 
 /**
@@ -6810,6 +6824,9 @@ static void CL_GameNew_f (void)
 	Cmd_ExecuteString("addeventmail prolog");
 
 	CL_CampaignRunMarket();
+
+	/* Spawn first missions of the game */
+	CP_InitializeSpawningDelay();
 
 	/* Intro sentences */
 	Cbuf_AddText("seq_start intro;\n");
