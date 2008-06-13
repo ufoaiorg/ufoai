@@ -116,6 +116,11 @@ void MSG_Write_PA (player_action_t player_action, int num, ...)
 {
 	va_list ap;
 	struct dbuffer *msg = new_dbuffer();
+
+	if (blockEvents)
+		Com_Printf("still some pending events but starting %i (%s)\n",
+			player_action, pa_format[player_action]);
+
 	va_start(ap, num);
 	NET_WriteFormat(msg, "bbs", clc_action, player_action, num);
 	NET_V_WriteFormat(msg, pa_format[player_action], ap);
@@ -220,7 +225,7 @@ static int CL_MoveMode (int length)
  * @sa CL_UGVCvars
  * @sa CL_ActorSelect
  */
-void CL_CharacterCvars (character_t * chr)
+void CL_CharacterCvars (const character_t * chr)
 {
 	assert(chr);
 	assert(chr->inv);	/** needed for CHRSH_CharGetBody and CHRSH_CharGetHead */
@@ -237,7 +242,7 @@ void CL_CharacterCvars (character_t * chr)
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 	/* These two will be needed in Hire menu. */
 	if (chr->emplType >= 0 && chr->emplType < MAX_EMPL
-	 && chr->emplIdx >= 0 && chr->emplIdx < MAX_EMPLOYEES )
+	 && chr->emplIdx >= 0 && chr->emplIdx < MAX_EMPLOYEES)
 		selectedEmployee = &gd.employees[chr->emplType][chr->emplIdx];
 
 	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
@@ -283,7 +288,7 @@ void CL_CharacterCvars (character_t * chr)
  * @sa CL_CharacterCvars
  * @sa CL_ActorSelect
  */
-void CL_UGVCvars (character_t *chr)
+void CL_UGVCvars (const character_t *chr)
 {
 	assert(chr);
 	assert(chr->inv);	/** needed for CHRSH_CharGetBody and CHRSH_CharGetHead */
@@ -328,29 +333,28 @@ void CL_UGVCvars (character_t *chr)
  */
 static void CL_ActorGlobalCVars (void)
 {
-	le_t *le;
-	char str[MAX_VAR];
 	int i;
 
 	Cvar_SetValue("mn_numaliensspotted", cl.numAliensSpotted);
 	for (i = 0; i < MAX_TEAMLIST; i++) {
-		le = cl.teamList[i];
+		const le_t *le = cl.teamList[i];
 		if (le && !(le->state & STATE_DEAD)) {
+			char str[MAX_VAR];
 			/* the model name is the first entry in model_t */
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
-			Com_sprintf(str, MAX_VAR, "%i", le->HP);
+			Com_sprintf(str, sizeof(str), "%i", le->HP);
 			Cvar_Set(va("mn_hp%i", i), str);
-			Com_sprintf(str, MAX_VAR, "%i", le->maxHP);
+			Com_sprintf(str, sizeof(str), "%i", le->maxHP);
 			Cvar_Set(va("mn_hpmax%i", i), str);
-			Com_sprintf(str, MAX_VAR, "%i", le->TU);
+			Com_sprintf(str, sizeof(str), "%i", le->TU);
 			Cvar_Set(va("mn_tu%i", i), str);
-			Com_sprintf(str, MAX_VAR, "%i", le->maxTU);
+			Com_sprintf(str, sizeof(str), "%i", le->maxTU);
 			Cvar_Set(va("mn_tumax%i", i), str);
-			Com_sprintf(str, MAX_VAR, "%i", le->morale);
+			Com_sprintf(str, sizeof(str), "%i", le->morale);
 			Cvar_Set(va("mn_morale%i",i), str);
-			Com_sprintf(str, MAX_VAR, "%i", le->maxMorale);
+			Com_sprintf(str, sizeof(str), "%i", le->maxMorale);
 			Cvar_Set(va("mn_moralemax%i",i), str);
-			Com_sprintf(str, MAX_VAR, "%i", le->STUN);
+			Com_sprintf(str, sizeof(str), "%i", le->STUN);
 			Cvar_Set(va("mn_stun%i", i), str);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
@@ -395,9 +399,8 @@ static int CL_GetReactionState (const le_t * le)
  * @sa CL_RefreshWeaponButtons
  * @sa CL_CheckMenuAction
  */
-static int CL_CalcReloadTime (objDef_t *weapon)
+static int CL_CalcReloadTime (const objDef_t *weapon)
 {
-	invList_t *ic;
 	int container;
 	int tu = 999;
 
@@ -409,6 +412,7 @@ static int CL_CalcReloadTime (objDef_t *weapon)
 
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].out < tu) {
+			const invList_t *ic;
 			for (ic = selActor->i.c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
 					tu = csi.ids[container].out;
@@ -578,7 +582,7 @@ static void HideFiremodes (void)
  */
 static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weapFdsIdx)
 {
-	invList_t *invlistWeapon;
+	const invList_t *invlistWeapon;
 	objDef_t *item, *itemAmmo;
 
 	assert(weapFdsIdx);
@@ -616,11 +620,10 @@ static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapo
 void CL_ListReactionAndReservations_f (void)
 {
 	int actorIdx;
-	character_t *chr;
 
 	for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
 		if (cl.teamList[actorIdx]) {
-			chr = CL_GetActorChr(cl.teamList[actorIdx]);
+			const character_t *chr = CL_GetActorChr(cl.teamList[actorIdx]);
 			Com_Printf("%s\n", chr->name);
 			Com_Printf(" - hand: %i | fm: %i | wpidx: %i\n", chr->RFmode.hand, chr->RFmode.fmIdx,chr->RFmode.wpIdx);
 			Com_Printf(" - res... reaction: %i | crouch: %i\n", chr->reservedTus.reaction, chr->reservedTus.crouch);
@@ -662,9 +665,9 @@ void CL_CharacterSetShotSettings (character_t *chr, int hand, int fireModeIndex,
  */
 qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 {
-	character_t *chr;
+	const character_t *chr;
+	const chrFiremodeSettings_t *fmSettings;
 	objDef_t *ammo;
-	chrFiremodeSettings_t *fmSettings;
 	int weapFdsIdx = -1;
 
 	if (!actor) {
@@ -734,7 +737,7 @@ int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 	switch (type) {
 	case RES_ALL:
 		/* A summary of ALL TUs that are reserved. */
-		return	  max(0,chr->reservedTus.reaction)
+		return max(0,chr->reservedTus.reaction)
 			+ max(0, chr->reservedTus.crouch)
 			+ max(0, chr->reservedTus.shot);
 	case RES_ALL_ACTIVE:
@@ -915,7 +918,7 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
 	if ((objIdx >= 0) && (fdIdx >= 0)) {
 		objDef_t *ammo = NULL;
-		fireDef_t *fd = NULL;
+		const fireDef_t *fd;
 		int weapFdsIdx = -1;
 
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
@@ -1009,24 +1012,21 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
  */
 static qboolean CL_CheckFiremodeReservation (void)
 {
-	objDef_t *ammo;
-	objDef_t *weapon;
-	int weapFdsIdx = -1;
 	char hand = 'r';
-	int i;
 
 	if (!selActor)
 		return qfalse;
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
-		ammo = NULL;
-		weapon = NULL;
-		weapFdsIdx = -1;
+		objDef_t *ammo = NULL;
+		objDef_t *weapon = NULL;
+		int weapFdsIdx = -1;
 
 		/* Get weapon (and its ammo) from the hand. */
 		CL_GetWeaponAndAmmo(selActor, hand, &weapon, &ammo, &weapFdsIdx);
 
 		if (weapon && ammo) {
+			int i;
 			for (i = 0; i < ammo->numFiredefs[weapFdsIdx]; i++) {
 				/* Check if at least one firemode is available for reservation. */
 				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weapFdsIdx][i].time)
@@ -1058,12 +1058,9 @@ static menuNode_t* popupListNode = NULL;
  */
 void CL_PopupFiremodeReservation_f (void)
 {
-	objDef_t *ammo;
-	objDef_t *weapon;
 	int tempInvalid = -1;
 	int tempZero = 0;
 	int tempOne = 1;
-	int weapFdsIdx = -1;
 	char hand = 'r';
 	int i;
 	static char text[MAX_VAR];
@@ -1110,9 +1107,9 @@ void CL_PopupFiremodeReservation_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation_f\n");
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
-		ammo = NULL;
-		weapon = NULL;
-		weapFdsIdx = -1;
+		objDef_t *ammo = NULL;
+		objDef_t *weapon = NULL;
+		int weapFdsIdx = -1;
 
 		/* Get weapon (and its ammo) from the hand. */
 		CL_GetWeaponAndAmmo(selActor, hand, &weapon, &ammo, &weapFdsIdx);
@@ -1664,14 +1661,14 @@ void CL_SelectReactionFiremode_f (void)
 	int firemode;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
-		Com_Printf("Usage: sel_reactmode [l|r] <num>   num=firemode number\n");
+		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
 	}
 
 	hand = Cmd_Argv(1);
 
 	if (hand[0] != 'r' && hand[0] != 'l') {
-		Com_Printf("Usage: sel_reactmode [l|r] <num>   num=firemode number\n");
+		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -2646,14 +2643,13 @@ qboolean CL_ActorSelectList (int num)
  */
 qboolean CL_ActorSelectNext (void)
 {
-	const le_t *le;
 	int selIndex = -1;
 	int num = cl.numTeamList;
 	int i;
 
 	/* find index of currently selected actor */
 	for (i = 0; i < num; i++) {
-		le = cl.teamList[i];
+		const le_t *le = cl.teamList[i];
 		if (le && le->selected && le->inuse && !(le->state & STATE_DEAD)) {
 			selIndex = i;
 			break;

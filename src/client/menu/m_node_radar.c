@@ -278,6 +278,65 @@ static void MN_InitRadar (const menuNode_t *node)
 	cl.radarInited = qtrue;
 }
 
+/*=========================================
+ DRAW FUNCTIONS
+=========================================*/
+
+static void MN_DrawActor (const le_t *le, const vec3_t pos)
+{
+	vec4_t color = {0, 1, 0, 1};
+	const int actorLevel = le->pos[2];
+	/* used to interpolate movement on the radar */
+	const int interpolateX = (int)le->origin[0] % (UNIT_SIZE / 2);
+	const int interpolateY = (int)le->origin[1] % (UNIT_SIZE / 2);
+	/* relative to screen */
+	const int x = (radar.x + interpolateX + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
+	const int y = (radar.y + (radar.h - interpolateY - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
+
+	/* use different alpha values for different levels */
+	if (actorLevel < cl_worldlevel->integer)
+		color[3] = 0.5;
+	else if (actorLevel > cl_worldlevel->integer)
+		color[3] = 0.3;
+
+	/* use different colors for different teams */
+	if (le->team == TEAM_CIVILIAN) {
+		color[0] = 1;
+	} else if (le->team != cls.team) {
+		color[1] = 0;
+		color[0] = 1;
+	}
+
+	/* show dead actors in full black */
+	if (le->state & STATE_DEAD) {
+		Vector4Set(color, 0, 0, 0, 1);
+	} else {
+		/* draw direction line only for living actors */
+		int verts[4];
+		const float actorDirection = dangle[le->dir] * torad;
+		verts[0] = x;
+		verts[1] = y;
+		verts[2] = x + (radar.gridWidth * cos(actorDirection));
+		verts[3] = y - (radar.gridWidth * sin(actorDirection));
+		R_DrawLine(verts, 5);
+	}
+
+	/* draw player circles */
+	R_DrawCircle2D(x, y, radar.gridWidth / 2, qtrue, color, 1);
+	Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
+	/* outline */
+	R_DrawCircle2D(x, y, radar.gridWidth / 2, qfalse, color, 2);
+}
+
+static void MN_DrawItem (const le_t *le, const vec3_t pos)
+{
+	const vec4_t color = {0, 1, 0, 1};
+	/* relative to screen */
+	const int x = (radar.x + pos[0] * radar.gridWidth) * viddef.rx;
+	const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight)) * viddef.ry;
+	R_DrawFill(x, y, radar.gridWidth, radar.gridHeight, ALIGN_UL, color);
+}
+
 /**
  * @sa CMod_GetMapSize
  * @todo Show frustom view area for actors (@sa FrustomVis)
@@ -327,60 +386,11 @@ void MN_DrawRadar (menuNode_t *node)
 		switch (le->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
-		{
-			vec4_t color = {0, 1, 0, 1};
-			const int actorLevel = le->pos[2];
-			/* used to interpolate movement on the radar */
-			const int interpolateX = le->origin[0] / UNIT_SIZE;
-			const int interpolateY = le->origin[1] / UNIT_SIZE;
-			/* relative to screen */
-			const int x = (radar.x + interpolateX + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
-			const int y = (radar.y + (radar.h - interpolateY - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
-
-			/* use different alpha values for different levels */
-			if (actorLevel < cl_worldlevel->integer)
-				color[3] = 0.5;
-			else if (actorLevel > cl_worldlevel->integer)
-				color[3] = 0.3;
-
-			/* use different colors for different teams */
-			if (le->team == TEAM_CIVILIAN) {
-				color[0] = 1;
-			} else if (le->team != cls.team) {
-				color[1] = 0;
-				color[0] = 1;
-			}
-
-			/* show dead actors in full black */
-			if (le->state & STATE_DEAD) {
-				Vector4Set(color, 0, 0, 0, 1);
-			} else {
-				/* draw direction line only for living actors */
-				int verts[4];
-				const float actorDirection = dangle[le->dir] * torad;
-				verts[0] = x;
-				verts[1] = y;
-				verts[2] = x + (radar.gridWidth * cos(actorDirection));
-				verts[3] = y - (radar.gridWidth * sin(actorDirection));
-				R_DrawLine(verts, 5);
-			}
-
-			/* draw player circles */
-			R_DrawCircle2D(x, y, radar.gridWidth / 2, qtrue, color, 1);
-			Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
-			/* outline */
-			R_DrawCircle2D(x, y, radar.gridWidth / 2, qfalse, color, 2);
+			MN_DrawActor(le, pos);
 			break;
-		}
 		case ET_ITEM:
-		{
-			const vec4_t color = {0, 1, 0, 1};
-			/* relative to screen */
-			const int x = (radar.x + pos[0] * radar.gridWidth) * viddef.rx;
-			const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight)) * viddef.ry;
-			R_DrawFill(x, y, radar.gridWidth, radar.gridHeight, ALIGN_UL, color);
+			MN_DrawItem(le, pos);
 			break;
-		}
 		}
 	}
 }

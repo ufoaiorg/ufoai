@@ -1609,7 +1609,7 @@ static char CHRSH_returnModel[MAX_VAR];
  * @param chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  */
-char *CHRSH_CharGetBody (character_t * const chr)
+char *CHRSH_CharGetBody (const character_t * const chr)
 {
 	char id[MAX_VAR];
 	char *underline;
@@ -1639,7 +1639,7 @@ char *CHRSH_CharGetBody (character_t * const chr)
  * @param chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  */
-char *CHRSH_CharGetHead (character_t * const chr)
+char *CHRSH_CharGetHead (const character_t * const chr)
 {
 	char id[MAX_VAR];
 	char *underline;
