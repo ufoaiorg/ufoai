@@ -1402,6 +1402,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	gd.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selectedMission->id, selectedMission->pos[0], selectedMission->pos[1]);
 	cls.missionaircraft = &base->aircraft[0]; /* @todo FIXME */
+	gd.interceptAircraft = &base->aircraft[0]; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 	assert(cls.missionaircraft);
 	assert(cls.missionaircraft->homebase == base);
 
@@ -5552,7 +5553,6 @@ static void CL_UpdateCharacterStats (const base_t *base, int won)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
-	/** @todo What about base attack missions? Do they have this variable set, too? */
 	aircraft = gd.interceptAircraft;
 	assert(aircraft);
 
