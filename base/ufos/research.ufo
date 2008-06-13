@@ -1796,6 +1796,7 @@ tech rs_weapon_needlergun
 	{
 		tech rs_skill_sniper
 		tech rs_skill_assault
+		item needlergun 1
 	}
 	provides	needlergun
 	time	500
@@ -1835,6 +1836,7 @@ tech rs_weapon_needlergun_ammo
 	{
 		tech rs_damage_normal
 		tech rs_weapon_needlergun
+		item needlergun_ammo 1
 	}
 	provides	needlergun_ammo
 	time	0
