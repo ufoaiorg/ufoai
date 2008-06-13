@@ -213,7 +213,6 @@ typedef struct campaign_s {
 	int soldiers;				/**< start with x soldiers */
 	int scientists;				/**< start with x scientists */
 	int workers;				/**< start with x workers */
-	int pilots;					/**< start with x pilots */
 	int ugvs;					/**< start with x ugvs (robots) */
 	int credits;				/**< start with x credits */
 	int num;

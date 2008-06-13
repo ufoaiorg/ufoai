@@ -2176,7 +2176,6 @@ void B_ClearBase (base_t *const base)
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", curCampaign->workers);
 		for (i = 0; i < curCampaign->workers; i++)
 			E_CreateEmployee(EMPL_WORKER, B_RandomNation(), NULL);
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i pilots\n", curCampaign->pilots);
 
 		/* Fill the global data employee list with pilots, evenly distributed between nations */
 		for (i = 0; i < MAX_EMPLOYEES; i++) {

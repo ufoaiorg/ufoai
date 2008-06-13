@@ -54,7 +54,6 @@ campaign veryhard
 	soldiers	6
 	scientists	2
 	workers		1
-	pilots		0
 	difficulty	4
 	minhappiness	0.42
 	maxdebts	50000
@@ -79,7 +78,6 @@ campaign hard
 	soldiers	7
 	scientists	3
 	workers		2
-	pilots		1
 	difficulty	2
 	minhappiness	0.35
 	maxdebts	100000
@@ -107,7 +105,6 @@ campaign main
 	soldiers	9
 	scientists	6
 	workers		14
-	pilots		2
 	difficulty	0
 	minhappiness	0.30
 	maxdebts	200000
@@ -154,7 +151,6 @@ campaign easy
 	soldiers	25
 	scientists	16
 	workers		10
-	pilots		10
 	difficulty	-2
 	minhappiness	0.2
 	maxdebts	350000
@@ -182,7 +178,6 @@ campaign veryeasy
 	soldiers	35
 	scientists	26
 	workers		20
-	pilots		20
 	difficulty	-4
 	minhappiness	0.1
 	maxdebts	500000
@@ -226,7 +221,6 @@ campaign aliencampaign
 	soldiers	15
 	scientists	12
 	workers		9
-	pilots		4
 	difficulty	-4
 	researched	rslist_alien
 	equipment	campaign_player_aliens
