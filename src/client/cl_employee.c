@@ -359,7 +359,6 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 {
 	int i;
 	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
-	employee_t *employee;
 
 	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type);
@@ -367,7 +366,7 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 	}
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
+		employee_t *employee = &gd.employees[type][i];
 
 		if (i == idx) {
 			if (employee->hired) {
@@ -394,10 +393,9 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
 	int i;
-	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		employee = &gd.employees[EMPL_ROBOT][i];
+		employee_t *employee = &gd.employees[EMPL_ROBOT][i];
 
 		/* If no type was given we return the first ugv we find. */
 		if (!ugvType)

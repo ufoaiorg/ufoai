@@ -1775,10 +1775,9 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  * @brief Adds given employee to given aircraft.
  * @param[in] aircraft Pointer to an aircraft, to which we will add employee.
  * @param[in] employee The employee to add to the aircraft.
- * @todo FIXME: is this responsible for adding soldiers to a team in dropship?
- * 	ANSWER: yes it seems to be.
+ * @note this is responsible for adding soldiers to a team in dropship
  */
-void AIR_AddToAircraftTeam (aircraft_t *aircraft, struct employee_s* employee)
+void AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 {
 	int i;
 
