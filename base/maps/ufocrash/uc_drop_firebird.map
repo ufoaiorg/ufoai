@@ -355,61 +355,60 @@
 // entity 1
 {
 "classname" "info_human_start"
-"origin" "336 144 0"
-"angle" "225"
+"origin" "336 144 32"
+"angle" "-135"
 }
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "336 368 0"
+"origin" "336 368 32"
 "angle" "135"
 }
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "432 144 0"
-"angle" "315"
+"origin" "432 144 32"
+"angle" "-45"
 }
 // entity 4
 {
 "classname" "info_human_start"
-"origin" "432 368 0"
+"origin" "432 368 32"
 "angle" "45"
 }
 // entity 5
 {
 "classname" "info_human_start"
-"origin" "368 176 0"
+"origin" "368 176 32"
 "angle" "-90"
 }
 // entity 6
 {
 "classname" "info_human_start"
-"origin" "400 336 0"
+"origin" "400 336 32"
 "angle" "90"
 }
 // entity 7
 {
 "classname" "info_human_start"
-"origin" "400 208 0"
+"origin" "400 208 32"
 "angle" "-90"
 }
 // entity 8
 {
 "classname" "info_human_start"
-"origin" "368 272 0"
+"origin" "368 272 32"
 "angle" "90"
 }
 // entity 9
 {
 "classname" "info_2x2_start"
-"origin" "608 256 0"
-"angle" "0"
+"origin" "608 256 32"
 }
 // entity 10
 {
 "classname" "info_2x2_start"
-"origin" "64 256 0"
+"origin" "64 256 32"
 "angle" "180"
 }
 // entity 11
