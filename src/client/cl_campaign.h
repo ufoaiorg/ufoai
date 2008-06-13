@@ -394,7 +394,7 @@ void CP_CheckNextStageDestination(aircraft_t *ufo);
 
 void CL_ResetCampaign(void);
 void CL_ResetSinglePlayerData(void);
-void CL_DateConvert(const date_t * date, byte *day, byte *month);
+void CL_DateConvert(const date_t * date, byte *day, byte *month, short *year);
 void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);
 int CL_DateCreateDay(const short years, const byte months, const byte days);
 const char *CL_DateGetMonthName(int month);
@@ -451,5 +451,4 @@ void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
 void CP_UFOSendMail(const aircraft_t *ufocraft, const base_t *base);
 
 technology_t *CP_IsXVIResearched(void);
-
 #endif /* CLIENT_CL_CAMPAIGN_H */

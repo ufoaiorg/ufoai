@@ -3500,6 +3500,7 @@ static void CP_CheckEvents (void)
 /**
  * @brief Converts a number of second into a char to display.
  * @param[in] second Number of second.
+ * @todo Abstract the code into an extra fucntion (DateConvertSeconds?) see also CL_DateConvertLong
  */
 const char* CL_SecondConvert (int second)
 {
@@ -3518,18 +3519,25 @@ static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31
  * @note The function always starts calculation from Jan. and also catches new years.
  * @param[in] date Contains the number of days to be converted.
  * @param[out] day The day in the month above.
- * @param[out] month The month.
+ * @param[out] month The month. [1-12]
  */
-void CL_DateConvert (const date_t * date, byte *day, byte *month)
+void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
 {
-	byte i, d;
+	byte i;
+	int d;
 
-	/* Get the day in the year. Other years are ignored. */
+	/* Get the year */
+	*year = date->day / DAYS_PER_YEAR;
+
+	/* Get the days in the year. */
 	d = date->day % DAYS_PER_YEAR;
 
 	/* Subtract days until no full month is left. */
-	for (i = 0; d >= monthLength[i]; i++)
+	for (i = 0; d >= monthLength[i]; i++) {
+		if (i >= MONTHS_PER_YEAR)
+			Sys_Error("CL_DateConvert: More days left in year that it is long!\n");
 		d -= monthLength[i];
+	}
 
 	/* Prepare return values. */
 	*day = d + 1;
@@ -3539,7 +3547,7 @@ void CL_DateConvert (const date_t * date, byte *day, byte *month)
 /**
  * @brief Converts a number of years+months+days into an "day" integer as used in date_t.
  * @param[in] years The number of years to sum up.
- * @param[in] months The number of months to sum up.
+ * @param[in] months The number of months to sum up [1-12]
  * @param[in] days The number of days to sum up.
  * @return The total number of days.
  */
@@ -3552,12 +3560,35 @@ int CL_DateCreateDay (const short years, const byte months, const byte days)
 	day = DAYS_PER_YEAR * years;
 
 	/* Add days until no full month is left. */
-	for (i = 0; i <= months; i++)
+	for (i = 0; i < months; i++)
 		day += monthLength[i];
 
-	day += days;
+	day += days - 1;
 
 	return day;
+}
+
+/**
+ * @brief Converts a number of hours+minutes+seconds into an "sec" integer as used in date_t.
+ * @param[in] hours The number of hours to sum up.
+ * @param[in] minutes The number of minutes to sum up.
+ * @param[in] seconds The number of seconds to sum up.
+ * @return The total number of seconds.
+ */
+int CL_DateCreateSeconds (byte hours, byte minutes, byte seconds)
+{
+	int sec;
+
+	/* Add seconds of the hours */
+	sec = SECONDS_PER_HOUR * hours;
+
+	/* Add seconds of the minutes. */
+	sec += 60 * minutes;
+
+	/* Add the rest of the seconds */
+	sec += seconds;
+
+	return sec;
 }
 
 /**
@@ -3567,7 +3598,8 @@ int CL_DateCreateDay (const short years, const byte months, const byte days)
   */
 void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 {
-	CL_DateConvert(date, &dateLong->day, &dateLong->month);
+	CL_DateConvert(date, &dateLong->day, &dateLong->month, &dateLong->year);
+	/**@todo Make this conversion a function as well (DateConvertSeconds?) See also CL_SecondConvert */
 	dateLong->hour = date->sec / SECONDS_PER_HOUR;
 	dateLong->min = (date->sec - dateLong->hour * SECONDS_PER_HOUR) / 60;
 	dateLong->sec = date->sec - dateLong->hour * SECONDS_PER_HOUR - dateLong->min * 60;
@@ -3870,26 +3902,16 @@ static void CL_CampaignRunMarket (void)
 
 	assert(curCampaign->marketDef);
 
-	/** @todo: Find out why there is a 2 days discrepancy in reasearched_date @note comment was in an older revision of the code. */
 	for (i = 0; i < csi.numODs; i++) {
  		technology_t *tech = csi.ods[i].tech;
  		if (!tech)
  				Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
 
  		if (RS_IsResearched_ptr(tech)) {
- 			/* supply balance */
-			dateLong_t tempDate;
-			int reasearched_date;
-
-			CL_DateConvertLong(&tech->researchedDate, &tempDate);
-
-			/** @todo Please elaborate what exactly is done here. (Used algorithm etc...)
-			 * Also why is a constant of 30 days per month used? - why is the year 2 days shorter? I guess they are releated to each other. */
-			/** @todo I'm pretty sure this can be changed to more readable code. (i.e. use tech->researchedDate.day directly) */
-			reasearched_date = tempDate.day + tempDate.month * 30 +  tempDate.year * DAYS_PER_YEAR - 2;
-			if (reasearched_date <= curCampaign->date.sec / SECONDS_PER_DAY + curCampaign->date.day)
-				reasearched_date -= 100;
-			researchFactor = mrs1 * sqrt(ccs.date.day - reasearched_date);
+ 			/* Supply balance */
+			/** @todo Please elaborate what exactly is supposed to happen here.
+			 * Can we change/remove this part? */
+			researchFactor = mrs1 * sqrt(ccs.date.day - tech->researchedDate.day);
 
 			priceFactor = mpr1 / sqrt(csi.ods[i].price + 1);
 			currSuppDiff = floor(researchFactor * priceFactor - ccs.eMarket.num[i]);
