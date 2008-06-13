@@ -3680,7 +3680,6 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
 	AL_AddAliens(aircraft);			/**< Add aliens to Alien Containment. */
-	AL_CountAll();				/**< Count all alive aliens. */
 	INV_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
 	RS_MarkResearchable(qfalse);		/**< Mark new technologies researchable. */
 

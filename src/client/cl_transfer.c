@@ -827,6 +827,10 @@ static void TR_TransferAlienAfterMissionStart (base_t *base)
 		}
 	}
 
+	/* Make sure that we don't use transferStartAircraft after this point
+	 * (Could be a fake aircraft in case of base attack) */
+	transferStartAircraft = NULL;
+
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	Cbuf_AddText("mn_pop\n");
@@ -871,7 +875,7 @@ static void TR_TransferBaseListClick_f (void)
 }
 
 /**
- * @brief Shows available bases in transfer menu.
+ * @brief Shows available bases to collect dead aliens after a mission is finished.
  * @param[in] aircraft Pointer to aircraft used in transfer.
  * @sa TR_TransferBaseListClick_f
  */

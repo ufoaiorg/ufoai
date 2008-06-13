@@ -37,6 +37,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "menu/m_inventory.h"
 
+/**
+ * @brief This fake aircraft is used to assign soldiers for a base attack mission
+ * @sa CP_BaseAttackStartMission
+ * @sa AIR_AddToAircraftTeam
+ */
+static aircraft_t baseAttackFakeAircraft;
+
 void R_IncreaseXVILevel(const vec2_t pos);
 void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
 byte* R_XVIMapCopy(int *width, int *height);
@@ -1300,9 +1307,16 @@ static void CP_BaseAttackMissionIsFailure (mission_t *mission)
 		B_BaseResetStatus(base);
 	gd.mapAction = MA_NONE;
 
+	/* we really don't want to use the fake aircraft anywhere */
+	cls.missionaircraft = NULL;
+	gd.interceptAircraft = NULL;
+
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 	/* Restore some alien interest for base attacks that has been removed when mission has been created */
 	CL_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BASE_ATTACK);
+
+	/* reset selectedMission */
+	MAP_NotifyMissionRemoved(mission);
 
 	CP_MissionRemove(mission);
 }
@@ -1334,6 +1348,10 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_GameTimeStop();
 
+	/* we really don't want to use the fake aircraft anywhere */
+	cls.missionaircraft = NULL;
+	gd.interceptAircraft = NULL;
+
 	base->baseStatus = BASE_WORKING;
 	gd.mapAction = MA_NONE;
 	mission->data = NULL;
@@ -1358,8 +1376,9 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
  */
 static void CP_BaseAttackStartMission (mission_t *mission)
 {
-	base_t *base;
-	base = (base_t *)mission->data;
+	int i;
+	base_t *base = (base_t *)mission->data;
+	linkedList_t *hiredSoldiersInBase = NULL, *pos;
 
 	assert(base);
 
@@ -1381,13 +1400,6 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
-	/* A mission without aircraft doesn't have soldiers ready to fight: you loose
-	 * @todo Should be removed if/when we can equip soldiers outside an aircraft */
-	if (!base->numAircraftInBase) {
-		CP_BaseAttackMissionLeave(mission);
-		return;
-	}
-
 	base->baseStatus = BASE_UNDER_ATTACK;
 	campaignStats.basesAttacked++;
 
@@ -1401,10 +1413,20 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	selectedMission->active = qtrue;
 	gd.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selectedMission->id, selectedMission->pos[0], selectedMission->pos[1]);
-	cls.missionaircraft = &base->aircraft[0]; /* @todo FIXME */
-	gd.interceptAircraft = &base->aircraft[0]; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
-	assert(cls.missionaircraft);
-	assert(cls.missionaircraft->homebase == base);
+
+	/* Fill the fake aircraft */
+	memset(&baseAttackFakeAircraft, 0, sizeof(baseAttackFakeAircraft));
+	baseAttackFakeAircraft.homebase = base;
+	VectorCopy(base->pos, baseAttackFakeAircraft.pos);				/* needed for transfer of alien corpses */
+	/* @todo EMPL_ROBOT */
+	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;			/* needed to spawn soldiers on map */
+	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
+	for (i = 0, pos = hiredSoldiersInBase; i < MAX_ACTIVETEAM && pos; i++, pos = pos->next)
+		baseAttackFakeAircraft.acTeam[baseAttackFakeAircraft.teamSize++] = (employee_t *)pos->data;
+
+	LIST_Delete(&hiredSoldiersInBase);
+	cls.missionaircraft = &baseAttackFakeAircraft;
+	gd.interceptAircraft = &baseAttackFakeAircraft; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 
 	popupText[0] = '\0';
 	if (base->capacities[CAP_ALIENS].cur) {
@@ -5330,8 +5352,8 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 
 		return winProbability;
 	} else {
-		linkedList_t *hiredSoldiers;
-		linkedList_t *ugvs;
+		linkedList_t *hiredSoldiers = NULL;
+		linkedList_t *ugvs = NULL;
 		linkedList_t *listPos;
 		const int numSoldiers = E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiers);
 		const int numUGVs = E_GetHiredEmployees(base, EMPL_ROBOT, &ugvs);
@@ -5403,7 +5425,8 @@ void CL_GameAutoGo (mission_t *mis)
 	qboolean won;
 	float winProbability;
 	/* maybe gd.interceptAircraft is changed in some functions we call here
-	 * so store a local pointer to guarantee that we access the right aircraft */
+	 * so store a local pointer to guarantee that we access the right aircraft
+	 * note that gd.interceptAircraft is a fake aircraft for base attack missions */
 	aircraft_t *aircraft = gd.interceptAircraft;
 	int i;
 
@@ -5413,12 +5436,12 @@ void CL_GameAutoGo (mission_t *mis)
 	CP_CreateCivilianTeam(mis);
 	CP_CreateBattleParameters(mis);
 
-	if (mis->stage != STAGE_BASE_ATTACK) {
-		if (!gd.interceptAircraft) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
-			return;
-		}
+	if (!gd.interceptAircraft) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
+		return;
+	}
 
+	if (mis->stage != STAGE_BASE_ATTACK) {
 		if (!mis->active) {
 			MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 			return;
@@ -5429,7 +5452,6 @@ void CL_GameAutoGo (mission_t *mis)
 			return;
 		}
 
-		assert(aircraft);
 		winProbability = CP_GetWinProbabilty(mis, NULL, aircraft);
 	} else {
 		winProbability = CP_GetWinProbabilty(mis, (base_t*)mis->data, NULL);
@@ -5449,7 +5471,8 @@ void CL_GameAutoGo (mission_t *mis)
 		CP_CheckLostCondition(!won, mis, ccs.battleParameters.civilians);
 	}
 
-	if (mis->stage != STAGE_BASE_ATTACK) {
+	/* Collect alien bodies */
+	{
 		int amount;
 		int aliensLeft = ccs.battleParameters.aliens;
 		aliensTmp_t *cargo;
@@ -5507,12 +5530,12 @@ void CL_GameAutoGo (mission_t *mis)
 			}
 		}
 
+		/* Check for alien containment in aircraft homebase. */
 		if (aircraft->alientypes && !B_GetBuildingStatus(aircraft->homebase, B_ALIEN_CONTAINMENT)) {
-			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
+		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
+		 * Popup aircraft transer dialog to choose a better base. */
 			TR_TransferAircraftMenu(aircraft);
 		}
-
-		AIR_AircraftReturnToBase(aircraft);
 	}
 
 	/* onwin and onlose triggers */
@@ -5526,15 +5549,22 @@ void CL_GameAutoGo (mission_t *mis)
 	if (selectedMission->stage == STAGE_BASE_ATTACK) {
 		const base_t *base = (base_t*)selectedMission->data;
 		assert(base);
+
 		if (won) {
+			/* fake an aircraft return to collect goods and aliens */
+			CL_AircraftReturnedToHomeBase(gd.interceptAircraft);
+
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(selectedMission);
 			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CP_BaseAttackMissionLeave(selectedMission);
-	} else if (won)
-		CP_MissionIsOver(mis);
+	} else {
+		AIR_AircraftReturnToBase(gd.interceptAircraft);
+		if (won)
+			CP_MissionIsOver(selectedMission);
+	}
 
 	if (won)
 		MN_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
@@ -5810,13 +5840,9 @@ static void CL_GameResults_f (void)
 	}
 	won = atoi(Cmd_Argv(1));
 
-	if (selectedMission->stage == STAGE_BASE_ATTACK) {
-		baseCurrent = (base_t *)selectedMission->data;
-	} else {
-		assert(gd.interceptAircraft);
-		baseCurrent = gd.interceptAircraft->homebase;
-		baseCurrent->aircraftCurrent = gd.interceptAircraft;
-	}
+	/* note that gd.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
+	assert(gd.interceptAircraft);
+	baseCurrent = gd.interceptAircraft->homebase;
 
 	/* add the looted goods to base storage and market */
 	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
@@ -5860,19 +5886,13 @@ static void CL_GameResults_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
 
-	/* no transfer or campaign effects for base attack missions */
-	if (selectedMission->stage != STAGE_BASE_ATTACK) {
-		/* Check for alien containment in aircraft homebase. */
-		if (baseCurrent->aircraftCurrent->alientypes && !B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
-			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
-			TR_TransferAircraftMenu(baseCurrent->aircraftCurrent);
-		} else {
-			/* The aircraft can be savely sent to its homebase without losing aliens */
-
-			/* @todo: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
-			baseCurrent->aircraftCurrent->homebase = baseCurrent;
-		}
-		AIR_AircraftReturnToBase_f();
+	/* Check for alien containment in aircraft homebase. */
+	if (gd.interceptAircraft->alientypes && !B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
+		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
+		 * Popup aircraft transer dialog to choose a better base. */
+		TR_TransferAircraftMenu(gd.interceptAircraft);
+	} else {
+		/* The aircraft can be savely sent to its homebase without losing aliens */
 	}
 
 	/* handle base attack mission */
@@ -5880,14 +5900,20 @@ static void CL_GameResults_f (void)
 		base = (base_t*)selectedMission->data;
 		assert(base);
 		if (won) {
+			/* fake an aircraft return to collect goods and aliens */
+			CL_AircraftReturnedToHomeBase(gd.interceptAircraft);
+
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(selectedMission);
 			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CP_BaseAttackMissionLeave(selectedMission);
-	} else if (won)
-		CP_MissionIsOver(selectedMission);
+	} else {
+		AIR_AircraftReturnToBase(gd.interceptAircraft);
+		if (won)
+			CP_MissionIsOver(selectedMission);
+	}
 }
 
 /* =========================================================== */
