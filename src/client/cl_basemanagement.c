@@ -1045,6 +1045,13 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 
 	base->buildingCurrent = building;
 
+	/* you can't destroy buildings if base is under attack */
+	if (base->baseStatus == BASE_UNDER_ATTACK) {
+		Com_sprintf(popupText, sizeof(popupText), _("Base is under attack, you can't destroy buildings !"));
+		MN_Popup(_("Notice"), popupText);
+		return;
+	}
+
 	if (building->buildingStatus == B_STATUS_WORKING) {
 		switch (building->buildingType) {
 		case B_HANGAR:
