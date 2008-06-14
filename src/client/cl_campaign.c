@@ -1309,7 +1309,6 @@ static void CP_BaseAttackMissionIsFailure (mission_t *mission)
 
 	/* we really don't want to use the fake aircraft anywhere */
 	cls.missionaircraft = NULL;
-	gd.interceptAircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 	/* Restore some alien interest for base attacks that has been removed when mission has been created */
@@ -1350,7 +1349,6 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 
 	/* we really don't want to use the fake aircraft anywhere */
 	cls.missionaircraft = NULL;
-	gd.interceptAircraft = NULL;
 
 	base->baseStatus = BASE_WORKING;
 	gd.mapAction = MA_NONE;
@@ -1422,7 +1420,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;			/* needed to spawn soldiers on map */
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
 	for (i = 0, pos = hiredSoldiersInBase; i < MAX_ACTIVETEAM && pos; i++, pos = pos->next)
-		baseAttackFakeAircraft.acTeam[baseAttackFakeAircraft.teamSize++] = (employee_t *)pos->data;
+		AIR_AddToAircraftTeam(&baseAttackFakeAircraft, (employee_t *)pos->data);
 
 	LIST_Delete(&hiredSoldiersInBase);
 	cls.missionaircraft = &baseAttackFakeAircraft;
@@ -5454,7 +5452,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 		winProbability = CP_GetWinProbabilty(mis, NULL, aircraft);
 	} else {
-		winProbability = CP_GetWinProbabilty(mis, (base_t*)mis->data, NULL);
+		winProbability = CP_GetWinProbabilty(mis, (base_t *)mis->data, NULL);
 	}
 
 	MN_PopMenu(qfalse);
@@ -5611,18 +5609,15 @@ static void CL_GameAbort_f (void)
  *
  * FIXME: See @todo and FIXME included
  */
-static void CL_UpdateCharacterStats (const base_t *base, int won)
+static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
 {
 	character_t *chr;
-	aircraft_t *aircraft;
 	int i, j;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
+	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: base: '%s' numTeamList: %i\n",
+		base->name, cl.numTeamList);
 
-	aircraft = gd.interceptAircraft;
 	assert(aircraft);
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: base: %s\n", base->name);
 
 	/** @todo What about UGVs/Tanks? */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
@@ -5801,7 +5796,8 @@ static void CL_DebugChangeCharacterStats_f (void)
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			chr->score.kills[j]++;
 	}
-	CL_UpdateCharacterStats(baseCurrent, 1);
+	if (baseCurrent->aircraftCurrent)
+		CL_UpdateCharacterStats(baseCurrent, 1, baseCurrent->aircraftCurrent);
 }
 #endif
 
@@ -5817,9 +5813,9 @@ static void CL_GameResults_f (void)
 	int aliens_killed;
 	int i;
 	base_t *base;
+	aircraft_t *aircraft;
 	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
-	character_t *chr;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
 
@@ -5840,12 +5836,20 @@ static void CL_GameResults_f (void)
 	}
 	won = atoi(Cmd_Argv(1));
 
-	/* note that gd.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
-	assert(gd.interceptAircraft);
-	baseCurrent = gd.interceptAircraft->homebase;
+	if (selectedMission->stage == STAGE_BASE_ATTACK) {
+		base = (base_t *)selectedMission->data;
+		aircraft = &baseAttackFakeAircraft;
+		assert(base);
+	} else {
+		/* note that gd.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
+		assert(gd.interceptAircraft);
+		aircraft = gd.interceptAircraft;
+		base = aircraft->homebase;
+		assert(base);
+	}
 
 	/* add the looted goods to base storage and market */
-	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
+	base->storage = ccs.eMission; /* copied, including the arrays! */
 
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
@@ -5859,21 +5863,21 @@ static void CL_GameResults_f (void)
 	CL_ParseCharacterData(NULL);
 
 	/* update stats */
-	CL_UpdateCharacterStats(baseCurrent, won);
+	CL_UpdateCharacterStats(base, won, aircraft);
 
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
 		/* if employee is marked as dead */
-		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], gd.interceptAircraft))	/* DEBUG? */
+		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft))	/* DEBUG? */
 			numberofsoldiers++;
 
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
 		employee = &gd.employees[EMPL_SOLDIER][i];
 
-		if (employee->hired && employee->baseHired == baseCurrent) {
-			chr = &(employee->chr);
+		if (employee->hired && employee->baseHired == base) {
+			character_t *chr = &(employee->chr);
 			assert(chr);
-			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n",chr->ucn, chr->HP);
+			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
 			if (chr->HP <= 0) { /* @todo: <= -50, etc. */
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
@@ -5887,21 +5891,19 @@ static void CL_GameResults_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
 
 	/* Check for alien containment in aircraft homebase. */
-	if (gd.interceptAircraft->alientypes && !B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
+	if (aircraft->alientypes && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
 		 * Popup aircraft transer dialog to choose a better base. */
-		TR_TransferAircraftMenu(gd.interceptAircraft);
+		TR_TransferAircraftMenu(aircraft);
 	} else {
 		/* The aircraft can be savely sent to its homebase without losing aliens */
 	}
 
 	/* handle base attack mission */
 	if (selectedMission->stage == STAGE_BASE_ATTACK) {
-		base = (base_t*)selectedMission->data;
-		assert(base);
 		if (won) {
 			/* fake an aircraft return to collect goods and aliens */
-			CL_AircraftReturnedToHomeBase(gd.interceptAircraft);
+			CL_AircraftReturnedToHomeBase(aircraft);
 
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -5910,7 +5912,7 @@ static void CL_GameResults_f (void)
 		} else
 			CP_BaseAttackMissionLeave(selectedMission);
 	} else {
-		AIR_AircraftReturnToBase(gd.interceptAircraft);
+		AIR_AircraftReturnToBase(aircraft);
 		if (won)
 			CP_MissionIsOver(selectedMission);
 	}
@@ -6722,9 +6724,6 @@ static void CL_GameSkirmish_f (void)
 	/* build our pseudo base */
 	B_SetUpBase(base, qtrue, qtrue);
 
-	/* execute the pending commands - e.g. aircraft are added via commandbuffer */
-	Cbuf_Execute();
-
 	if (!base->numAircraftInBase) {
 		Com_Printf("CL_GameSkirmish_f: Error - there is no dropship in base\n");
 		return;
@@ -6744,8 +6743,6 @@ static void CL_GameSkirmish_f (void)
 		Com_Printf("CL_GameSkirmish_f: Error - could not set the mission aircraft: %i\n", base->numAircraftInBase);
 		return;
 	}
-
-	INV_InitialEquipment(base, curCampaign, qtrue);
 
 	/* prepare */
 	MN_PopMenu(qtrue);

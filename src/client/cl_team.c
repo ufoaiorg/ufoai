@@ -1209,29 +1209,29 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
  * @note Available via script command team_reset.
  * @note Called when initializing the multiplayer menu (for init node and new team button).
  */
-void CL_ResetMultiplayerTeamInBase (void)
+void CL_ResetMultiplayerTeamInBase (base_t *base)
 {
 	employee_t* employee;
 
 	if (ccs.singleplayer)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "Reset of baseCurrent team flags.\n");
-	if (!baseCurrent) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: No baseCurrent\n");
+	Com_DPrintf(DEBUG_CLIENT, "Reset of base team flags.\n");
+	if (!base) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: No base given\n");
 		return;
 	}
 
-	CL_CleanTempInventory(baseCurrent);
+	CL_CleanTempInventory(base);
 
-	AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
+	AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, 0));
 
 	E_ResetEmployees();
 	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->integer) {
 		employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 		employee->hired = qtrue;
-		employee->baseHired = baseCurrent;
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
+		employee->baseHired = base;
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, base->idx);
 	}
 
 	/* reset the multiplayer inventory; stored in baseCurrent->storage */
@@ -1250,8 +1250,13 @@ void CL_ResetMultiplayerTeamInBase (void)
 			Com_Printf("Equipment '%s' not found!\n", name);
 			return;
 		}
-		baseCurrent->storage = *ed; /* copied, including the arrays inside! */
+		base->storage = *ed; /* copied, including the arrays inside! */
 	}
+}
+
+static void CL_ResetMultiplayerTeamInBase_f (void)
+{
+	CL_ResetMultiplayerTeamInBase(baseCurrent);
 }
 
 /**
@@ -1259,16 +1264,16 @@ void CL_ResetMultiplayerTeamInBase (void)
  * @note Depends ondisplayHeavyEquipmentList and baseCurrent to be set correctly.
  * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
  */
-void CL_GenTeamList (void)
+void CL_GenTeamList (base_t *base)
 {
 	const employeeType_t employeeType =
 		displayHeavyEquipmentList
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
 
-	assert(baseCurrent);
+	assert(base);
 
-	employeesInCurrentList = E_GetHiredEmployees(baseCurrent, employeeType, &employeeList);
+	employeesInCurrentList = E_GetHiredEmployees(base, employeeType, &employeeList);
 }
 
 /**
@@ -1311,7 +1316,7 @@ static void CL_MarkTeam_f (void)
 	aircraft = baseCurrent->aircraftCurrent;
 	CL_UpdateHireVar(aircraft, employeeType);
 
-	CL_GenTeamList();	/* Populate employeeList */
+	CL_GenTeamList(baseCurrent);	/* Populate employeeList */
  	emplList = employeeList;
 	while (emplList) {
 		employee = (employee_t*)emplList->data;
@@ -1582,11 +1587,52 @@ static void CL_TeamListDebug_f (void)
  * @brief Adds or removes a soldier to/from an aircraft.
  * @sa E_EmployeeHire_f
  */
-static void CL_AssignSoldier_f (void)
+void CL_AssignSoldierToCurrentSelectedAircraft (base_t *base, const int num)
 {
-	int num = -1;
 	employee_t *employee;
 	aircraft_t *aircraft;
+
+	if (!base->numAircraftInBase) {
+		Com_Printf("CL_AssignSoldierToCurrentSelectedAircraft: No aircraft in base\n");
+		return;
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToCurrentSelectedAircraft: Trying to get employee with hired-idx %i.\n", num);
+
+	/* If this fails it's very likely that employeeList is not filled. */
+	employee = E_GetEmployeeByMenuIndex(num);
+	if (!employee)
+		Sys_Error("CL_AssignSoldierToCurrentSelectedAircraft: Could not get employee %i\n", num);
+
+	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToCurrentSelectedAircraft: employee with idx %i selected\n", employee->idx);
+
+	assert(base->aircraftCurrent);
+	aircraft = base->aircraftCurrent;
+
+	if (CL_SoldierInAircraft(employee, aircraft)) {
+		/* Remove soldier from aircraft/team. */
+		Cbuf_AddText(va("listdel%i\n", num));
+		/* use the global aircraft index here */
+		CL_RemoveSoldierFromAircraft(employee, aircraft);
+		Cbuf_AddText(va("listholdsnoequip%i\n", num));
+	} else {
+		/* Assign soldier to aircraft/team if aircraft is not full */
+		if (CL_AssignSoldierToAircraft(employee, aircraft))
+			Cbuf_AddText(va("listadd%i\n", num));
+	}
+	/* Select the desired one anyways. */
+	CL_UpdateHireVar(aircraft, employee->type);
+	Cbuf_AddText(va("team_select %i\n", num));
+}
+
+/**
+ * @brief Adds or removes a soldier to/from an aircraft.
+ * @sa E_EmployeeHire_f
+ */
+static void CL_AssignSoldier_f (void)
+{
+	base_t *base = baseCurrent;
+	int num;
 	const employeeType_t employeeType =
 		displayHeavyEquipmentList
 			? EMPL_ROBOT
@@ -1600,51 +1646,18 @@ static void CL_AssignSoldier_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	/* baseCurrent is checked here */
-	if (num >= E_CountHired(baseCurrent, employeeType) || num >= cl_numnames->integer) {
+	if (num >= E_CountHired(base, employeeType) || num >= cl_numnames->integer) {
 		/*Com_Printf("num: %i, max: %i\n", num, E_CountHired(baseCurrent, employeeType));*/
 		return;
 	}
 
-	if (!baseCurrent->numAircraftInBase) {
-		Com_Printf("CL_AssignSoldier_f: No aircraft in base\n");
-		return;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: Trying to get employee with hired-idx %i.\n", num);
-
 	/* In case we didn't populate the list before we do it now. */
 	if (!employeeList) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: We should actually call CL_GenTeamList _before_ calling CL_AssignSoldier_f ... this needs to be fixed.\n");	/** @todo <----- */
-		CL_GenTeamList();
+		Com_Printf("CL_AssignSoldier_f: We should actually call CL_GenTeamList _before_ calling CL_AssignSoldier_f ... this needs to be fixed.\n");
+		CL_GenTeamList(base);
 	}
 
-
-	employee = E_GetEmployeeByMenuIndex(num);	/**< If this fails it's very likely CL_MarkTeam_f was never run (so employeeList is filled). */
-
-	if (!employee)
-		Sys_Error("CL_AssignSoldier_f: Could not get employee %i\n", num);
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: employee with idx %i selected\n", employee->idx);
-	aircraft = baseCurrent->aircraftCurrent;
-	assert(aircraft);
-	Com_DPrintf(DEBUG_CLIENT, "aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, AIR_GetAircraftIdxInBase(aircraft));
-
-	if (CL_SoldierInAircraft(employee, aircraft)) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: removing\n");
-		/* Remove soldier from aircraft/team. */
-		Cbuf_AddText(va("listdel%i\n", num));
-		/* use the global aircraft index here */
-		CL_RemoveSoldierFromAircraft(employee, aircraft);
-		Cbuf_AddText(va("listholdsnoequip%i\n", num));
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: assigning\n");
-		/* Assign soldier to aircraft/team if aircraft is not full */
-		if (CL_AssignSoldierToAircraft(employee, aircraft))
-			Cbuf_AddText(va("listadd%i\n", num));
-	}
-	/* Select the desired one anyways. */
-	CL_UpdateHireVar(aircraft, employee->type);
-	Cbuf_AddText(va("team_select %i\n", num));
+	CL_AssignSoldierToCurrentSelectedAircraft(base, num);
 }
 
 /**
@@ -1903,7 +1916,7 @@ static void CL_LoadTeamMultiplayerSlot_f (void)
  */
 static void CL_GenerateNewTeam_f (void)
 {
-	CL_ResetMultiplayerTeamInBase();
+	CL_ResetMultiplayerTeamInBase(baseCurrent);
 	Cvar_Set("mn_teamname", _("NewTeam"));
 	CL_GameExit();
 	MN_PushMenu("team");
@@ -1913,7 +1926,7 @@ void CL_ResetTeams (void)
 {
 	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, "Generates a new empty team");
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
-	Cmd_AddCommand("team_reset", CL_ResetMultiplayerTeamInBase, NULL);
+	Cmd_AddCommand("team_reset", CL_ResetMultiplayerTeamInBase_f, NULL);
 	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
 	Cmd_AddCommand("equip_type", CL_EquipType_f, NULL);
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);

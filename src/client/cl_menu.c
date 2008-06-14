@@ -139,7 +139,7 @@ static void MN_StartServer_f (void)
 
 	if (!sv_dedicated->integer && !B_GetNumOnTeam(aircraft)) {
 		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
-		Cmd_ExecuteString("assign_initial");
+		B_AssignInitial(NULL);
 		MN_Popup(_("No team assigned"), _("Please choose and equip your team first"));
 		return;
 	}

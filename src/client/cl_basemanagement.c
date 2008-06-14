@@ -2840,55 +2840,14 @@ static void CL_SwapSkills (chrList_t *team)
 }
 
 /**
- * @brief Assigns initial team of soldiers with equipment to aircraft
- * @note If assign_initial is called with one parameter (e.g. a 1), this is for
- * multiplayer - assign_initial with no parameters is for singleplayer	aircraft_t *aircraft = NULL;
+ * @brief Assigns initial soldier equipment for the first base
+ * @sa B_AssignInitial
  */
-static void B_AssignInitial_f (void)
+static void B_PackInitialEquipment (base_t *base)
 {
 	int i;
-	aircraft_t *aircraft;
-
-	if (!baseCurrent) {
-		if (ccs.singleplayer)
-			return;
-		aircraft = AIR_AircraftGetFromIdx(0);
-		assert(aircraft);
-		baseCurrent = aircraft->homebase;
-	}
-	assert(baseCurrent);
-
-	if (!ccs.singleplayer) {
-		CL_ResetMultiplayerTeamInBase();
-		CL_GenTeamList();	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be polulated. */
-		Cvar_Set("mn_teamname", _("NewTeam"));
-	}
-
-	for (i = MAX_TEAMLIST; --i >= 0;)
-		Cbuf_AddText(va("team_hire %i;", i));
-
-	Cbuf_AddText("pack_initial;");
-	if (!ccs.singleplayer)
-		MN_PushMenu("team");
-}
-
-/**
- * @brief Assigns initial soldier equipment for the first base
- */
-static void B_PackInitialEquipment_f (void)
-{
-	int i, p, container, price = 0;
 	equipDef_t *ed;
-	base_t *base = baseCurrent;
-	aircraft_t *aircraft;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("cl_equip");
-	chrList_t chrListTemp;
-
-	/* check syntax */
-	if (Cmd_Argc() > 1) {
-		Com_Printf("Usage: %s\n", Cmd_Argv(0));
-		return;
-	}
 
 	if (!base)
 		return;
@@ -2898,17 +2857,19 @@ static void B_PackInitialEquipment_f (void)
 			break;
 
 	if (i == csi.numEDs) {
-		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
+		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Initial Phalanx equipment %s not found.\n", name);
 	} else if (base->aircraftCurrent) {
-		aircraft = base->aircraftCurrent;
+		int container, price = 0;
+		chrList_t chrListTemp;
+		aircraft_t *aircraft = base->aircraftCurrent;
 		chrListTemp.num = 0;
 		for (i = 0; i < aircraft->maxTeamSize; i++) {
 			if (aircraft->acTeam[i]) {
 				character_t *chr = &aircraft->acTeam[i]->chr;
 				/* pack equipment */
-				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
+				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
 				INVSH_EquipActor(chr->inv, ed->num, MAX_OBJDEFS, name, chr);
-				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: armour: %i, weapons: %i\n", chr->armour, chr->weapons);
+				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: armour: %i, weapons: %i\n", chr->armour, chr->weapons);
 				chrListTemp.chr[chrListTemp.num] = chr;
 				chrListTemp.num++;
 			}
@@ -2920,6 +2881,7 @@ static void B_PackInitialEquipment_f (void)
 
 		/* pay for the initial equipment */
 		for (container = 0; container < csi.numIDs; container++) {
+			int p;
 			for (p = 0; p < aircraft->maxTeamSize; p++) {
 				if (aircraft->acTeam[p]) {
 					const invList_t *ic;
@@ -2934,6 +2896,66 @@ static void B_PackInitialEquipment_f (void)
 		}
 		CL_UpdateCredits(ccs.credits - price);
 	}
+}
+
+/**
+ * @brief Assigns initial team of soldiers with equipment to aircraft
+ * @note If assign_initial is called with one parameter (e.g. a 1), this is for
+ * multiplayer - assign_initial with no parameters is for singleplayer
+ * @sa B_PackInitialEquipment
+ */
+void B_AssignInitial (base_t *base)
+{
+	int i;
+
+	if (!base) {
+		aircraft_t *aircraft;
+
+		if (ccs.singleplayer)
+			return;
+		/* in case of multiplayer, we just take the first aircraft in the fake
+		 * base to assign the soldiers and the equipment */
+		aircraft = AIR_AircraftGetFromIdx(0);
+		assert(aircraft);
+		base = aircraft->homebase;
+		base->aircraftCurrent = aircraft;
+	}
+	assert(base);
+	if (!base->aircraftCurrent) {
+		Com_Printf("B_AssignInitial: No aircraftCurrent given\n");
+		base->aircraftCurrent = AIR_AircraftGetFromIdx(0);
+	}
+
+	if (!ccs.singleplayer) {
+		CL_ResetMultiplayerTeamInBase(base);
+		CL_GenTeamList(base);	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be polulated. */
+		Cvar_Set("mn_teamname", _("NewTeam"));
+	}
+
+	CL_GenTeamList(base);
+	for (i = MAX_TEAMLIST; --i >= 0;)
+		CL_AssignSoldierToCurrentSelectedAircraft(base, i);
+
+	B_PackInitialEquipment(base);
+	if (!ccs.singleplayer)
+		MN_PushMenu("team");
+}
+
+static void B_AssignInitial_f (void)
+{
+	if (baseCurrent->aircraftCurrent)
+		B_AssignInitial(baseCurrent);
+}
+
+static void B_PackInitialEquipment_f (void)
+{
+	/* check syntax */
+	if (Cmd_Argc() > 1) {
+		Com_Printf("Usage: %s\n", Cmd_Argv(0));
+		return;
+	}
+
+	B_PackInitialEquipment(baseCurrent);
 }
 
 /**

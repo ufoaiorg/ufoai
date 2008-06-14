@@ -255,6 +255,8 @@ typedef struct baseTemplate_s {
 /** Currently displayed/accessed base. */
 extern base_t *baseCurrent;
 
+void B_AssignInitial(base_t *base);
+
 void B_UpdateBaseData(void);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);
 int B_GetNumOnTeam(const aircraft_t *aircraft);

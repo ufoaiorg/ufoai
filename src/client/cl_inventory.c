@@ -422,7 +422,7 @@ void INV_InitialEquipment (base_t *base, const campaign_t* campaign, qboolean as
 
 	/* Initial soldiers and their equipment. */
 	if (assignInitial) {
-		Cbuf_AddText("assign_initial;");
+		B_AssignInitial(base);
 	} else {
 		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
 			if (!Q_strncmp(eqname, ed->name, MAX_VAR))
