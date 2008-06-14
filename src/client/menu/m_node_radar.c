@@ -147,6 +147,9 @@ static void MN_GetRadarWidth (const menuNode_t *node, vec2_t gridSize)
 	int secondTileGridX;	/**< Contains the grid X position of 2nd tiles in first line */
 	int secondTileGridY;	/**< Contains the grid Y position of 2nd tiles in first column */
 	float ratioConversion;	/**< ratio conversion between screen coordinates and grid coordinates */
+	const int ROUNDING_PIXEL = 1;	/**< Number of pixel to remove to avoid rounding errors (and lines between tiles)
+									 * We remove pixel because this is much nicer if tiles overlap a little bit rather than
+									 * if they are too distant one from the other */
 
 	/* Set radar.gridMax */
 	radar.gridMax[0] = radar.gridMin[0];
@@ -206,8 +209,8 @@ static void MN_GetRadarWidth (const menuNode_t *node, vec2_t gridSize)
 	 * The problem is that some tiles may have L or T shape.
 	 * But we now that the tile in the lower left follows for sure the side of the map on it's whole length
 	 * at least either on its height or on its width.*/
-	ratioConversion = max((secondTileGridX - radar.gridMin[0]) / tileWidth[0],
-		(secondTileGridY - radar.gridMin[1]) / tileHeight[0]);
+	ratioConversion = max((secondTileGridX - radar.gridMin[0]) / (tileWidth[0] - ROUNDING_PIXEL),
+		(secondTileGridY - radar.gridMin[1]) / (tileHeight[0] - ROUNDING_PIXEL));
 
 	/* And now we fill radar.w and radar.h */
 	radar.w = floor((radar.gridMax[0] - radar.gridMin[0]) / ratioConversion) + tileWidth[1];
