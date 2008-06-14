@@ -165,6 +165,11 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
  *****************************************************************************/
 
 /**
+ * @brief Typical value of the overall alien interest at the end of the game.
+ */
+static const int FINAL_OVERALL_INTEREST = 1000;
+
+/**
  * @brief Initialize alien interest values and mission cycle
  * @note Should be used when a new single player campaign starts
  * @sa CL_GameNew_f
@@ -226,12 +231,12 @@ static void CL_ChangeIndividualInterest (float percentage, interestCategory_t ca
 	}
 
 	/* Set new non-occurence value. The aim is to have roughly a steady number of none occurrence during the
-	game, in order to include some randomness. If overall alien interest becomes higher than 1000, then the
+	game, in order to include some randomness. If overall alien interest becomes higher than FINAL_OVERALL_INTEREST, then the
 	none occurence goes to zero, to make more pressure on the player. */
-	if (ccs.overallInterest < 1000)
+	if (ccs.overallInterest < FINAL_OVERALL_INTEREST)
 		ccs.interest[INTERESTCATEGORY_NONE] = (int) (nonOccurrencePercent * ccs.overallInterest);
 	else
-		ccs.interest[INTERESTCATEGORY_NONE] = (int) (nonOccurrencePercent * 1000 * exp((ccs.overallInterest - 1000) / 30));
+		ccs.interest[INTERESTCATEGORY_NONE] = (int) (nonOccurrencePercent * FINAL_OVERALL_INTEREST * exp((ccs.overallInterest - FINAL_OVERALL_INTEREST) / 30));
 }
 
 /**
@@ -3080,8 +3085,8 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 	/* Choose the level of the alien team:
 	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien team should not change depending on
 	 * when you encounter it
-	 * Use the last level only if player goes over 1000 overall interest or if category mission increases the level */
-	level += mission->initialOverallInterest / 1000 * (gd.numAlienTeams[alienTeam] - 2);
+	 * Use the last level only if player goes over FINAL_OVERALL_INTEREST overall interest or if category mission increases the level */
+	level += mission->initialOverallInterest / FINAL_OVERALL_INTEREST * (gd.numAlienTeams[alienTeam] - 2);
 
 	/* Check level boundary */
 	if (level < 0)
