@@ -134,6 +134,89 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 }
 
 /**
+ * @brief Get the width of radar.
+ * @param[in] node Menu node of the radar
+ * @param[in] gridSize size of the radar picture, in grid units.
+ * @sa MN_InitRadar
+ */
+static void MN_GetRadarWidth (const menuNode_t *node, vec2_t gridSize)
+{
+	int j;
+	int tileWidth[2];		/**< Contains the width of the first and the last tile of the first line (in screen unit) */
+	int tileHeight[2];		/**< Contains the height of the first and the last tile of the first column  (in screen unit)*/
+	int secondTileGridX;	/**< Contains the grid X position of 2nd tiles in first line */
+	int secondTileGridY;	/**< Contains the grid Y position of 2nd tiles in first column */
+	float ratioConversion;	/**< ratio conversion between screen coordinates and grid coordinates */
+
+	/* Set radar.gridMax */
+	radar.gridMax[0] = radar.gridMin[0];
+	radar.gridMax[1] = radar.gridMin[1];
+
+	/* Initialize secondTileGridX to value higher that real value */
+	secondTileGridX = radar.gridMin[0] + 1000;
+	secondTileGridY = radar.gridMin[1] + 1000;
+
+	/* Initialize screen size of last tile (will be used only if there is 1 tile in a line or in a row) */
+	tileWidth[1] = 0;
+	tileHeight[1] = 0;
+
+	for (j = 0; j < radar.numImages; j++) {
+		const hudRadarImage_t *image = &radar.images[j];
+
+		assert(image->gridX >= radar.gridMin[0]);
+		assert(image->gridY >= radar.gridMin[1]);
+
+		/* we can assume this because every random map tile has it's origin in
+		 * (0, 0) and therefore there are no intersections possible on the min
+		 * x and the min y axis. We just have to add the image->w and image->h
+		 * values of those images that are placed on the gridMin values.
+		 * This also works for static maps, because they have a gridX and gridY
+		 * value of zero */
+
+		if (image->gridX == radar.gridMin[0]) {
+			/* radar.gridMax[1] is the maximum for FIRST column (maximum depends on column) */
+			if (image->gridY > radar.gridMax[1]) {
+				tileHeight[1] = image->h;
+				radar.gridMax[1] = image->gridY;
+			}
+			if (image->gridY == radar.gridMin[1]) {
+				/* This is the tile of the map in the lower left: */
+				tileHeight[0] = image->h;
+				tileWidth[0] = image->w;
+			} else if (image->gridY < secondTileGridY)
+				secondTileGridY = image->gridY;
+		}
+		if (image->gridY == radar.gridMin[1]) {
+			/* radar.gridMax[1] is the maximum for FIRST line (maximum depends on line) */
+			if (image->gridX > radar.gridMax[0]) {
+				tileWidth[1] = image->w;
+				radar.gridMax[0] = image->gridX;
+			} else if (image->gridX < secondTileGridX)
+				secondTileGridX = image->gridX;
+		}
+	}
+
+	/* Maybe there was only one tile in a line or in a column? */
+	if (!tileHeight[1])
+		tileHeight[1] = tileHeight[0];
+	if (!tileWidth[1])
+		tileWidth[1] = tileWidth[0];
+
+	/* Now we get the ratio conversion between screen coordinates and grid coordinates.
+	 * The problem is that some tiles may have L or T shape.
+	 * But we now that the tile in the lower left follows for sure the side of the map on it's whole length
+	 * at least either on its height or on its width.*/
+	ratioConversion = max((secondTileGridX - radar.gridMin[0]) / tileWidth[0],
+		(secondTileGridY - radar.gridMin[1]) / tileHeight[0]);
+
+	/* And now we fill radar.w and radar.h */
+	radar.w = floor((radar.gridMax[0] - radar.gridMin[0]) / ratioConversion) + tileWidth[1];
+	radar.h = floor((radar.gridMax[1] - radar.gridMin[1]) / ratioConversion) + tileHeight[1];
+
+	Vector2Set(gridSize, round(radar.w * ratioConversion), round(radar.h * ratioConversion));
+}
+
+/**
  * @brief Calculate some radar values that won't change during a mission
  * @note Called for every new map (client_state_t is wiped with every
  * level change)
@@ -143,8 +226,6 @@ static void MN_InitRadar (const menuNode_t *node)
 	int i, j;
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 	float distAB, distBC;
-	int lastTileWidth = 0;	/**< Width of last tile in first line  (in screen units) */
-	int lastTileHeight = 0;	/**< Height of last tile in first column (in screen units) */
 	vec2_t gridSize;		/**< Size of the whole grid (in tiles units) */
 
 	MN_FreeRadarImages();
@@ -189,48 +270,7 @@ static void MN_InitRadar (const menuNode_t *node)
 	distAB = (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
 	distBC = (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
 
-	/* Set radar.gridMax */
-	radar.gridMax[0] = radar.gridMin[0];
-	radar.gridMax[1] = radar.gridMin[1];
-	for (j = 0; j < radar.numImages; j++) {
-		const hudRadarImage_t *image = &radar.images[j];
-
-		assert(image->gridX >= radar.gridMin[0]);
-		assert(image->gridY >= radar.gridMin[1]);
-
-		/* we can assume this because every random map tile has it's origin in
-		 * (0, 0) and therefore there are no intersections possible on the min
-		 * x and the min y axis. We just have to add the image->w and image->h
-		 * values of those images that are placed on the gridMin values.
-		 * This also works for static maps, because they have a gridX and gridY
-		 * value of zero */
-		/* FIXME: That doesn't work for e.g. T-like map tiles */
-
-		if (image->gridX == radar.gridMin[0]) {
-			radar.h += image->h;
-			/* radar.gridMax[1] is the maximum for FIRST column (maximum depends on column) */
-			if (image->gridY > radar.gridMax[1]) {
-				lastTileHeight = image->h;
-				radar.gridMax[1] = image->gridY;
-			}
-		}
-		if (image->gridY == radar.gridMin[1]) {
-			radar.w += image->w;
-			/* radar.gridMax[1] is the maximum for FIRST line (maximum depends on line) */
-			if (image->gridX > radar.gridMax[0]) {
-				lastTileWidth = image->w;
-				radar.gridMax[0] = image->gridX;
-			}
-		}
-	}
-	/* we need this filled */
-	assert(radar.w);
-	assert(radar.h);
-
-	/* @todo FIXME the value of gridsize is not proper for L shape tiles */
-	Vector2Set(gridSize,
-		(radar.gridMax[0] - radar.gridMin[0]) * (1 + ((float) lastTileWidth) / ((float) radar.w - lastTileWidth)),
-		(radar.gridMax[1] - radar.gridMin[1]) * (1 + ((float) lastTileHeight) / ((float) radar.h - lastTileHeight)));
+	MN_GetRadarWidth(node, gridSize);
 
 	/* get the dimensions for one grid field on the radar map */
 	radar.gridWidth = radar.w / distAB;
