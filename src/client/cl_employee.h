@@ -72,11 +72,13 @@ extern employee_t *selectedEmployee;
 
 void E_ResetEmployees(void);
 employee_t* E_CreateEmployee(employeeType_t type, nation_t *nation, ugv_t *ugvType);
+employee_t* E_CreateEmployeeAtIndex(employeeType_t type, nation_t *nation, ugv_t *ugvType, const int employeeIdx);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);
 qboolean E_HireRobot(base_t* base, const ugv_t *ugvType);
 qboolean E_UnhireEmployee(employee_t* employee);
+void E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const qboolean excludeUnhappyNations);
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
 void E_ResetEmployee(employee_t *employee);
 

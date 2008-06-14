@@ -3724,6 +3724,7 @@ static int CL_GetNationFunding (const nation_t* const nation, int month)
 	return nation->maxFunding * nation->stats[month].happiness;
 }
 
+
 /**
  * @brief Update the nation data from all parsed nation each month
  * @note give us nation support by:
@@ -3742,14 +3743,18 @@ static void CL_HandleBudget (void)
 	int cost;
 	nation_t *nation;
 	int initial_credits = ccs.credits;
-	int new_scientists, new_pilots, new_soldiers, new_workers;
+	int new_scientists, new_soldiers, new_workers;
+
+	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
+	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
+	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qtrue);
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
 		funding = CL_GetNationFunding(nation, 0);
 		CL_UpdateCredits(ccs.credits + funding);
 
-		new_scientists = new_pilots = new_soldiers = new_workers = 0;
+		new_scientists = new_soldiers = new_workers = 0;
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
@@ -3757,9 +3762,7 @@ static void CL_HandleBudget (void)
 			new_scientists++;
 		}
 
-		/* @todo: The pilot global list needs to be refreshed.  Pilots who are already hired should be left, but all other
-		 *        pilots need to be replaced.  The new pilots should be evenly distributed between the nations that are happy (happiness > 0). */
-
+		
 		if (nation->stats[0].happiness > 0) {
 			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 				/* Create a soldier. */
@@ -3774,10 +3777,9 @@ static void CL_HandleBudget (void)
 			new_workers++;
 		}
 
-		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
+		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
 					funding, ngettext("credit", "credits", funding),
 					new_scientists, ngettext("scientist", "scientists", new_scientists),
-					new_pilots, ngettext("pilot", "pilots", new_pilots),
 					new_soldiers, ngettext("soldier", "soldiers", new_soldiers),
 					new_workers, ngettext("worker", "workers", new_workers),
 					_(nation->name), CL_GetNationHappinessString(nation));
