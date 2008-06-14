@@ -1,5 +1,5 @@
-* Only tga images please
-* The filename must be <mapname><level>.tga
+* Only tga, jpg and png images please
+* The filename must be <mapname>_<level>.<extension>
 * The dimensions must be the same for every level image
 * In case of a random map assembly every map tile needs a radar image.
 * Make screenshots by executing "camsetangles 90 90" and hide the hud
