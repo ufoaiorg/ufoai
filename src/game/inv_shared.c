@@ -692,7 +692,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 	}
 #ifdef PARANOID
 	else if (cacheItem.t->fireTwoHanded)
-		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: move fireTwoHanded item to container: %s\n", CSI->ids[to].name);
+		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: move fireTwoHanded item to container: %s\n", to->name);
 #endif
 
 	/* successful */
@@ -823,7 +823,7 @@ void Com_FindSpace (const inventory_t* const inv, item_t *item, const invDef_t *
 	cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 
 #ifdef PARANOID
-	Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item->t].type, CSI->ods[item->t].id, container->name);
+	Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: no space for %s: %s in %s\n", item->t->type, item->t->id, container->name);
 #endif
 	*px = *py = NONE;
 }
@@ -930,8 +930,8 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 	int ammoMult = 1;
 
 #ifdef PARANOID
-	if (weapon < 0) {
-		Com_Printf("Error in INVSH_PackAmmoAndWeapon - weapon is %i\n", weapon);
+	if (weapon == NULL) {
+		Com_Printf("Error in INVSH_PackAmmoAndWeapon - weapon is invalid\n");
 	}
 #endif
 
