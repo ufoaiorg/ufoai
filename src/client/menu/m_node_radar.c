@@ -219,6 +219,26 @@ static void MN_GetRadarWidth (const menuNode_t *node, vec2_t gridSize)
 	Vector2Set(gridSize, round(radar.w * ratioConversion), round(radar.h * ratioConversion));
 }
 
+static const char *imageExtensions[] = {
+	"tga", "jpg", "png", NULL
+};
+
+static qboolean MN_CheckRadarImage (const char *imageName, const int level)
+{
+	char imagePath[MAX_QPATH];
+	const char **ext = imageExtensions;
+
+	while (*ext) {
+		Com_sprintf(imagePath, sizeof(imagePath), "pics/radars/%s_%i.%s", imageName, level, *ext);
+
+		if (FS_CheckFile(imagePath) > 0)
+			return qtrue;
+		ext++;
+	}
+	/* none found */
+	return qfalse;
+}
+
 /**
  * @brief Calculate some radar values that won't change during a mission
  * @note Called for every new map (client_state_t is wiped with every
@@ -242,19 +262,17 @@ static void MN_InitRadar (const menuNode_t *node)
 		/* map_mins, map_maxs */
 		for (j = 0; j < radar.numImages; j++) {
 			hudRadarImage_t *image = &radar.images[j];
-			char imageName[MAX_QPATH];
-
-			Com_sprintf(imageName, sizeof(imageName), "pics/radars/%s_%i.tga", image->name, i + 1);
-			if (FS_CheckFile(imageName) <= 0) {
+			if (!MN_CheckRadarImage(image->name, i + 1)) {
 				if (i == 0) {
 					/* there should be at least one level */
-					Com_Printf("No radar images for map: '%s' (%s)\n", image->name, imageName);
+					Com_Printf("No radar images for map: '%s'\n", image->name);
 					cl.skipRadarNodes = qtrue;
 					return;
 				}
 			} else {
-				Com_sprintf(imageName, sizeof(imageName), "radars/%s_%i", image->name, i + 1);
-				image->path[i] = Mem_PoolStrDup(imageName, cl_localPool, CL_TAG_NONE);
+				char imagePath[MAX_QPATH];
+				Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", image->name, i + 1);
+				image->path[i] = Mem_PoolStrDup(imagePath, cl_localPool, CL_TAG_NONE);
 
 				image->maxlevel++;
 
