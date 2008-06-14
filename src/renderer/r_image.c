@@ -1502,14 +1502,17 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 
 	if (pos[1] + outerRadius > 90) {
 		yMax = bpp * radarHeight;
-		yMin = bpp * round((90 - max(360.0f - pos[1] - outerRadius, pos[1] - outerRadius)) * radarHeight / 180.0f);
+		yMin = bpp * round((90 - max(180.0f - pos[1] - outerRadius, pos[1] - outerRadius)) * radarHeight / 180.0f);
 	} else if (pos[1] - outerRadius < -90) {
-		yMax = bpp * round((90 - min(-360.0f - pos[1] + outerRadius, pos[1] + outerRadius)) * radarHeight / 180.0f);
+		yMax = bpp * round((90 - min(-180.0f - pos[1] + outerRadius, pos[1] + outerRadius)) * radarHeight / 180.0f);
 		yMin = 0;
 	} else {
 		yMin = bpp * round((90 - pos[1] - outerRadius) * radarHeight / 180.0f);
 		yMax = bpp * round((90 - pos[1] + outerRadius) * radarHeight / 180.0f);
 	}
+
+	assert(yMin >= 0);
+	assert(yMin < bpp * radarHeight);
 
 	for (y = yMin; y < yMax; y += bpp) {
 		for (x = 0; x < bpp * radarWidth; x += bpp) {
