@@ -830,7 +830,9 @@ static void CL_GenerateEquipment_f (void)
 	aircraft_t *aircraft;
 	int team;
 
-	assert(baseCurrent);
+	if (!baseCurrent)
+		return;
+
 	assert(baseCurrent->aircraftCurrent);
 	aircraft = baseCurrent->aircraftCurrent;
 
@@ -985,6 +987,9 @@ static void CL_EquipType_f (void)
 		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
 		return;
 	}
+
+	if (!baseCurrent)
+		return;
 
 	/* read and range check */
 	num = atoi(Cmd_Argv(1));

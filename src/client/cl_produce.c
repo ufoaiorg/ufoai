@@ -1090,7 +1090,7 @@ static void PR_ProductionSelect_f (void)
 	int cat;
 
 	/* Can be called from everywhere without a started game. */
-	if (!baseCurrent ||!curCampaign)
+	if (!baseCurrent || !curCampaign)
 		return;
 
 	if (Cmd_Argc() < 2) {
