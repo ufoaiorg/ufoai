@@ -1,6 +1,6 @@
 echo off
 
-set ufo2mapparameters=-extra -onlynewer -nomaterial
+set ufo2mapparameters=-extra -onlynewer
 
 cd ..\..
 
