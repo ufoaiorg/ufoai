@@ -269,14 +269,16 @@ void AIM_AircraftStart_f (void)
 		return;
 	}
 
+	aircraft = baseCurrent->aircraftCurrent;
+
 	/* Aircraft cannot start without a pilot. */
-	if (!baseCurrent->aircraftCurrent->pilot) {
+	if (!aircraft->pilot) {
 		MN_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
 		return;
 	}
-	
-	aircraft = baseCurrent->aircraftCurrent;
+
 	if (AIR_IsAircraftInBase(aircraft)) {
+		/* little offset to be able to select the aircraft without a multi-popup */
 		aircraft->pos[0] = baseCurrent->pos[0] + 2;
 		aircraft->pos[1] = baseCurrent->pos[1] + 2;
 		/* reload its ammunition */

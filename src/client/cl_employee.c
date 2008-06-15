@@ -699,20 +699,6 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 }
 
 /**
- * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
- * @param[in] type Tell the function what type of employee to create.
- * @param[in] type Tell the function what nation the employee (mainly used for soldiers in singleplayer) comes from.
- * @param[in] type Tell the function what type of ugv this employee is.
- * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
- * @sa E_DeleteEmployee
- */
-employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvType)
-{
-	/* Runs the create employee function with a -1 index parameter, which means at to end of list. */
-	return E_CreateEmployeeAtIndex (type, nation, ugvType, -1);
-}
-
-/**
  * @brief Creates an entry of a new employee at the passed index location in the global list and assignes it to no building/base.
  * @param[in] type Tell the function what type of employee to create.
  * @param[in] type Tell the function what nation the employee (mainly used for soldiers in singleplayer) comes from.
@@ -721,11 +707,11 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int employeeIdx)
+static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int employeeIdx)
 {
 	employee_t* employee;
 	int curEmployeeIdx;
-	
+
 	if (type >= MAX_EMPL)
 		return NULL;
 
@@ -734,7 +720,7 @@ employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_
 	} else {
 		curEmployeeIdx = gd.numEmployees[type];
 	}
-	
+
 	if (curEmployeeIdx >= MAX_EMPLOYEES) {
 		Com_DPrintf(DEBUG_CLIENT, "E_CreateEmployee: MAX_EMPLOYEES exceeded for type %i\n", type);
 		return NULL;
@@ -773,6 +759,20 @@ employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_
 	}
 	gd.numEmployees[type]++;
 	return employee;
+}
+
+/**
+ * @brief Creates an entry of a new employee in the global list and assignes it to no building/base.
+ * @param[in] type Tell the function what type of employee to create.
+ * @param[in] type Tell the function what nation the employee (mainly used for soldiers in singleplayer) comes from.
+ * @param[in] type Tell the function what type of ugv this employee is.
+ * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
+ * @sa E_DeleteEmployee
+ */
+employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvType)
+{
+	/* Runs the create employee function with a -1 index parameter, which means at to end of list. */
+	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1);
 }
 
 /**
@@ -953,7 +953,6 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 
 	/* Fill the global data employee list with pilots, evenly distributed between nations in the happyNations list */
 	for (idx = 0; idx < MAX_EMPLOYEES; idx++) {
-
 		employee_t *employee = &gd.employees[type][idx];
 
 		/* we dont want to overwrite employees that have already been hired */

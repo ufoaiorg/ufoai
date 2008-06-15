@@ -72,7 +72,6 @@ extern employee_t *selectedEmployee;
 
 void E_ResetEmployees(void);
 employee_t* E_CreateEmployee(employeeType_t type, nation_t *nation, ugv_t *ugvType);
-employee_t* E_CreateEmployeeAtIndex(employeeType_t type, nation_t *nation, ugv_t *ugvType, const int employeeIdx);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);
