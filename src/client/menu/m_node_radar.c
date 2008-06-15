@@ -347,12 +347,14 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 {
 	vec4_t color = {0, 1, 0, 1};
 	const int actorLevel = le->pos[2];
+#if 0
 	/* used to interpolate movement on the radar */
 	const int interpolateX = (int)le->origin[0] % (UNIT_SIZE / 2);
 	const int interpolateY = (int)le->origin[1] % (UNIT_SIZE / 2);
+#endif
 	/* relative to screen */
-	const int x = (radar.x + interpolateX + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
-	const int y = (radar.y + (radar.h - interpolateY - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
+	const int x = (radar.x + pos[0] * radar.gridWidth + radar.gridWidth / 2) * viddef.rx;
+	const int y = (radar.y + (radar.h - pos[1] * radar.gridHeight) + radar.gridWidth / 2) * viddef.ry;
 
 	/* use different alpha values for different levels */
 	if (actorLevel < cl_worldlevel->integer)
@@ -370,7 +372,8 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 
 	/* show dead actors in full black */
 	if (le->state & STATE_DEAD) {
-		Vector4Set(color, 0, 0, 0, 1);
+		/* low alpha because we want to see items on the floor, too */
+		Vector4Set(color, 0, 0, 0, 0.3);
 	} else {
 		/* draw direction line only for living actors */
 		int verts[4];
@@ -379,12 +382,24 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 		verts[1] = y;
 		verts[2] = x + (radar.gridWidth * cos(actorDirection));
 		verts[3] = y - (radar.gridWidth * sin(actorDirection));
-		R_DrawLine(verts, 5);
+		R_DrawLine(verts, 3);
+
+		/* 120 degree frustom view - see FrustomVis */
+		verts[2] = x + (radar.gridWidth * cos((dangle[le->dir] + 60) * torad)) * 5;
+		verts[3] = y - (radar.gridWidth * sin((dangle[le->dir] + 60) * torad)) * 5;
+		R_DrawLine(verts, 0.1);
+
+		verts[2] = x + (radar.gridWidth * cos((dangle[le->dir] - 60) * torad)) * 5;
+		verts[3] = y - (radar.gridWidth * sin((dangle[le->dir] - 60) * torad)) * 5;
+		R_DrawLine(verts, 0.1);
 	}
 
 	/* draw player circles */
 	R_DrawCircle2D(x, y, radar.gridWidth / 2, qtrue, color, 1);
-	Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
+	if (le == selActor)
+		Vector4Set(color, 1.0, 1.0, 1.0, 1.0);
+	else
+		Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
 	/* outline */
 	R_DrawCircle2D(x, y, radar.gridWidth / 2, qfalse, color, 2);
 }
