@@ -933,27 +933,30 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 
 /**
  * @brief Recreates all the employees for a particular employee type in the global list.  But it does not overwrite any employees already hired.
- * @param[in] type   the type of the employee list to process.
- * @param[in] excludeUnhappyNations  qtrue = if a nation is unhappy then they wont send any pilots, qfalse = happyness of nations in not considered.
+ * @param[in] type The type of the employee list to process.
+ * @param[in] excludeUnhappyNations True if a nation is unhappy then they wont
+ * send any pilots, false if happiness of nations in not considered.
  * @sa CL_HandleBudget
  */
 void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolean excludeUnhappyNations)
 {
-	nation_t *happyNations[gd.numNations];
-	int numHappyNations=0;
+	nation_t *happyNations[MAX_NATIONS];
+	int numHappyNations = 0;
 	int idx, nationIdx;
 
-	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude unhappy nations (unhappy nation: happiness <= 0) from the list */
+	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude
+	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
 	for (idx = 0; idx < gd.numNations; idx++) {
-		if (gd.nations[idx].stats[0].happiness > 0 || excludeUnhappyNations == qfalse) {
+		if (gd.nations[idx].stats[0].happiness > 0 || !excludeUnhappyNations) {
 			happyNations[numHappyNations] = &gd.nations[idx];
 			numHappyNations++;
 		}
 	}
 
-	/* Fill the global data employee list with pilots, evenly distributed between nations in the happyNations list */
+	/* Fill the global data employee list with pilots, evenly distributed
+	 * between nations in the happyNations list */
 	for (idx = 0; idx < MAX_EMPLOYEES; idx++) {
-		employee_t *employee = &gd.employees[type][idx];
+		const employee_t *employee = &gd.employees[type][idx];
 
 		/* we dont want to overwrite employees that have already been hired */
 		if (!employee->hired) {
