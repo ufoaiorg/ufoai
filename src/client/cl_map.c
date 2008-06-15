@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_mapfightequip.h"
 #include "cl_popup.h"
 #include "cl_map.h"
+#include "cl_ufo.h"
 #include "../renderer/r_draw.h"
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
@@ -1466,7 +1467,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			break;
 		}
 	} else if (selectedUFO) {
-		Com_sprintf(text_standard, sizeof(text_standard), "%s\n", _(selectedUFO->name));
+		Com_sprintf(text_standard, sizeof(text_standard), "%s\n", UFO_AircraftToIDOnGeoscape(selectedUFO));
 		Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 		mn.menuText[TEXT_STANDARD] = text_standard;
 	}

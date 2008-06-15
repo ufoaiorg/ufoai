@@ -127,6 +127,21 @@ const char* UFO_TypeToName (ufoType_t type)
 	Sys_Error("UFO_TypeToName(): Unknown UFO type %i - no tech for '%s'\n", type, id);
 	return NULL; /* never reached */
 }
+/**
+ * @brief Returns names of the UFO is UFO has been reseached.
+ * @param[in] ufocraft Pointer to the UFO.
+ */
+const char* UFO_AircraftToIDOnGeoscape (aircraft_t *ufocraft)
+{
+	const technology_t *tech = ufocraft->tech;
+
+	assert(tech);
+
+	if (RS_IsResearched_ptr(tech))
+		return _(ufocraft->name);
+
+	return _("UFO");
+}
 
 /**
  * @brief Give a random destination to the given UFO, and make him to move there.
