@@ -104,6 +104,9 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 
 	B_PostLoadInit();
 
+	/* Make sure the date&time is displayed when loading. */
+	CL_UpdateTime();
+
 	/* Update visible status of UFO and detected UFO on radar */
 	UFO_CampaignCheckEvents(qtrue);
 

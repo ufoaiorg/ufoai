@@ -3536,6 +3536,8 @@ static void CP_CheckEvents (void)
 	}
 }
 
+/* =========================================================== */
+
 /**
  * @brief Converts a number of second into a char to display.
  * @param[in] second Number of second.
@@ -3681,6 +3683,126 @@ const char *CL_DateGetMonthName (int month)
 	}
 }
 
+typedef struct gameLapse_s {
+	const char *name;
+	int scale;
+} gameLapse_t;
+
+#define NUM_TIMELAPSE 7
+
+/** @brief The possible geoscape time intervalls */
+static const gameLapse_t lapse[NUM_TIMELAPSE] = {
+	{N_("stopped"), 0},
+	{N_("5 sec"), 5},
+	{N_("5 mins"), 5 * 60},
+	{N_("1 hour"), SECONDS_PER_HOUR},
+	{N_("12 hour"), 12 * SECONDS_PER_HOUR},
+	{N_("1 day"), 24 * SECONDS_PER_HOUR},
+	{N_("5 days"), 5 * SECONDS_PER_DAY}
+};
+
+static int gameLapse;
+
+/**
+ * @brief Updates date/time and timescale (=timelapse) on the geoscape menu
+ * @sa SAV_GameLoad
+ * @sa CL_CampaignRun
+ */
+void CL_UpdateTime (void)
+{
+	dateLong_t date;
+	CL_DateConvertLong(&ccs.date, &date);
+
+	/* Update the timelapse text */
+	if (gameLapse >= 0 && gameLapse < NUM_TIMELAPSE) {
+		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
+		gd.gameTimeScale = lapse[gameLapse].scale;
+	}
+
+	/* Update the date */
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%i %s %02i"), date.year, CL_DateGetMonthName(date.month - 1), date.day);
+	Cvar_Set("mn_mapdate", mn.messageBuffer);
+
+	/* Update the time. */
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%02i:%02i"), date.hour, date.min);
+	Cvar_Set("mn_maptime", mn.messageBuffer);
+}
+
+/**
+ * @brief Stop game time speed
+ */
+void CL_GameTimeStop (void)
+{
+	const menu_t *menu = MN_GetActiveMenu();
+
+	/* don't allow time scale in tactical mode - only on the geoscape */
+	if (menu && !Q_strcmp(menu->name, "map")) {
+		gameLapse = 0;
+	}
+
+	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
+	CL_UpdateTime();
+}
+
+
+/**
+ * @brief Decrease game time speed
+ *
+ * Decrease game time speed - only works when there is already a base available
+ */
+void CL_GameTimeSlow (void)
+{
+	const menu_t *menu = MN_GetActiveMenu();
+
+	/* check the stats value - already build bases might have been destroyed
+	 * so the gd.numBases values is pointless here */
+	if (!campaignStats.basesBuild)
+		return;
+
+	if (gameLapse == 0)
+		return;
+
+	assert(gameLapse >= 0);
+
+	/* don't allow time scale in tactical mode - only on the geoscape */
+	if (menu && !Q_strcmp(menu->name, "map")) {
+		gameLapse--;
+	}
+
+	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
+	CL_UpdateTime();
+}
+
+/**
+ * @brief Increase game time speed
+ *
+ * Increase game time speed - only works when there is already a base available
+ */
+void CL_GameTimeFast (void)
+{
+	const menu_t *menu = MN_GetActiveMenu();
+
+	/* check the stats value - already build bases might have been destroyed
+	 * so the gd.numBases values is pointless here */
+	if (!campaignStats.basesBuild)
+		return;
+
+	if (gameLapse == NUM_TIMELAPSE - 1)
+		return;
+
+	assert(gameLapse < NUM_TIMELAPSE);
+
+	/* don't allow time scale in tactical mode - only on the geoscape */
+	if (menu && !Q_strcmp(menu->name, "map")) {
+		gameLapse++;
+	}
+
+	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
+	CL_UpdateTime();
+}
+
+/* =========================================================== */
+
 /**
  * @brief Translates the nation happiness float value to a string
  * @param[in] nation
@@ -3762,7 +3884,7 @@ static void CL_HandleBudget (void)
 			new_scientists++;
 		}
 
-		
+
 		if (nation->stats[0].happiness > 0) {
 			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 				/* Create a soldier. */
@@ -4048,105 +4170,13 @@ void CL_CampaignRun (void)
 			gd.fund = qtrue;
 
 		UP_GetUnreadMails();
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%i %s %02i"), date.year, CL_DateGetMonthName(date.month - 1), date.day);
-		Cvar_Set("mn_mapdate", mn.messageBuffer);
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%02i:%02i"), date.hour, date.min);
-		Cvar_Set("mn_maptime", mn.messageBuffer);
+		CL_UpdateTime();
 	}
 }
 
 
 /* =========================================================== */
 
-typedef struct gameLapse_s {
-	const char *name;
-	int scale;
-} gameLapse_t;
-
-#define NUM_TIMELAPSE 7
-
-/** @brief The possible geoscape time intervalls */
-static const gameLapse_t lapse[NUM_TIMELAPSE] = {
-	{N_("stopped"), 0},
-	{N_("5 sec"), 5},
-	{N_("5 mins"), 5 * 60},
-	{N_("1 hour"), SECONDS_PER_HOUR},
-	{N_("12 hour"), 12 * SECONDS_PER_HOUR},
-	{N_("1 day"), 24 * SECONDS_PER_HOUR},
-	{N_("5 days"), 5 * SECONDS_PER_DAY}
-};
-
-static int gameLapse;
-
-/**
- * @brief Stop game time speed
- */
-void CL_GameTimeStop (void)
-{
-	const menu_t *menu = MN_GetActiveMenu();
-
-	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strcmp(menu->name, "map")) {
-		gameLapse = 0;
-		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		gd.gameTimeScale = lapse[gameLapse].scale;
-	}
-}
-
-
-/**
- * @brief Decrease game time speed
- *
- * Decrease game time speed - only works when there is already a base available
- */
-void CL_GameTimeSlow (void)
-{
-	const menu_t *menu = MN_GetActiveMenu();
-
-	/* check the stats value - already build bases might have been destroyed
-	 * so the gd.numBases values is pointless here */
-	if (!campaignStats.basesBuild)
-		return;
-
-	if (gameLapse == 0)
-		return;
-
-	assert(gameLapse >= 0);
-
-	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strcmp(menu->name, "map")) {
-		gameLapse--;
-		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		gd.gameTimeScale = lapse[gameLapse].scale;
-	}
-}
-
-/**
- * @brief Increase game time speed
- *
- * Increase game time speed - only works when there is already a base available
- */
-void CL_GameTimeFast (void)
-{
-	const menu_t *menu = MN_GetActiveMenu();
-
-	/* check the stats value - already build bases might have been destroyed
-	 * so the gd.numBases values is pointless here */
-	if (!campaignStats.basesBuild)
-		return;
-
-	if (gameLapse == NUM_TIMELAPSE - 1)
-		return;
-
-	assert(gameLapse < NUM_TIMELAPSE);
-
-	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strcmp(menu->name, "map")) {
-		gameLapse++;
-		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		gd.gameTimeScale = lapse[gameLapse].scale;
-	}
-}
 
 #define MAX_CREDITS 10000000
 /**
