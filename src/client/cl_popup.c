@@ -429,6 +429,10 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 				Com_Printf("CL_DisplayPopupIntercept: Unknown weight of aircraft '%s': %i\n", air->id, air->weight);
 			}
 
+			/* don't show aircraft that have no pilot */
+			if (!air->pilot)
+				continue;
+			
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (mission && (air->teamSize <= 0))
 				continue;
