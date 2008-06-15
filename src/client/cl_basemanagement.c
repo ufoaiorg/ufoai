@@ -1303,13 +1303,19 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 
 		/* Add aircraft to the first base */
 		/* @todo move aircraft to .ufo */
-		/* buy two first aircraft */
+		/* buy two first aircraft and hire pilots for them. */
 		if (B_GetBuildingStatus(base, B_HANGAR)) {
 			const aircraft_t *aircraft = AIR_GetAircraft("craft_drop_firebird");
 			if (!aircraft)
 				Sys_Error("Could not find craft_drop_firebird definition");
 			AIR_NewAircraft(base, "craft_drop_firebird");
 			CL_UpdateCredits(ccs.credits - aircraft->price);
+			if (hire) {
+				if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
+					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
+				}
+			}
+
 		}
 		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			const aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
@@ -1317,6 +1323,11 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 				Sys_Error("Could not find craft_inter_stiletto definition");
 			AIR_NewAircraft(base, "craft_inter_stiletto");
 			CL_UpdateCredits(ccs.credits - aircraft->price);
+			if (hire) {
+				if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
+					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
+				}
+			}
 		}
 
 		/* initial base equipment */
