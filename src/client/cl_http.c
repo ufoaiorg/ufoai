@@ -187,7 +187,6 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 
 	curl_easy_setopt(dl->curl, CURLOPT_ENCODING, "");
 #if 0
-	curl_easy_setopt(dl->curl, CURLOPT_DEBUGFUNCTION, CL_CURL_Debug);
 	curl_easy_setopt(dl->curl, CURLOPT_VERBOSE, 1);
 #endif
 	curl_easy_setopt(dl->curl, CURLOPT_NOPROGRESS, 0);

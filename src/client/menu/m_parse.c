@@ -427,10 +427,17 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 /* 							Com_Printf("%i %s\n", val->ofs, *token); */
 							node->data[-((int)val->ofs)] = mn.curadata;
 							/* references are parsed as string */
-							if (**token == '*')
+							if (**token == '*') {
+								/* sanity check */
+								if (strlen(*token) > MAX_VAR - 1)
+									Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
 								mn.curadata += Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0);
-							else
+							} else {
+								/* sanity check */
+								if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
+									Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
 								mn.curadata += Com_ParseValue(mn.curadata, *token, val->type, 0, val->size);
+							}
 						}
 					}
 
