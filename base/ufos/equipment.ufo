@@ -113,8 +113,6 @@ equipment campaign_asymptotic_market
 	coilgun_ammo					20
 	xaw95							2
 	xaw95_ammo						20
-	needlergun						3
-	needlergun_ammo					20
 	machinegun						3
 	machinegun_ammo					12
 	rpg_incendiary_ammo				10
