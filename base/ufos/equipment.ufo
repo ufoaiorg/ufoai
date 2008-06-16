@@ -3,7 +3,7 @@
 //	campaign_player: List of items used to determine what soldiers start with when a new single player game begins.
 //	campaign_initial_market: List of items used to determine how many items are on market when a new single player game begins.
 //	campaign_asymptotic_market: List of items used to determine how many items will be on market in a new single player game
-//		when all technologies will be researched.
+//		when all technologies will be researched (if item is not in this list, campaign_initial_market is used).
 //	campaign_player_aliens: same than 'campaign_player' for alien campaign.
 //	campaign_market_aliens: same than 'campaign_asymptotic_market' for alien campaign.
 
