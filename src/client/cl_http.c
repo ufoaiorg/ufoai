@@ -292,11 +292,10 @@ void CL_CancelHTTPDownloads (qboolean permKill)
  */
 static dlhandle_t *CL_GetFreeDLHandle (void)
 {
-	dlhandle_t	*dl;
-	int			i;
+	int i;
 
 	for (i = 0; i < 4; i++) {
-		dl = &cls.HTTPHandles[i];
+		dlhandle_t *dl = &cls.HTTPHandles[i];
 		if (!dl->queueEntry || dl->queueEntry->state == DLQ_STATE_DONE)
 			return dl;
 	}
@@ -310,8 +309,8 @@ static dlhandle_t *CL_GetFreeDLHandle (void)
  */
 qboolean CL_QueueHTTPDownload (const char *ufoPath)
 {
-	size_t		len;
-	dlqueue_t	*q;
+	size_t len;
+	dlqueue_t *q;
 
 	/* no http server (or we got booted) */
 	if (!cls.downloadServer[0] || abortDownloads || !cl_http_downloads->integer)
@@ -402,7 +401,6 @@ static void CL_CheckAndQueueDownload (char *path)
 		return;
 
 	ext = strrchr(path, '.');
-
 	if (!ext)
 		return;
 
@@ -491,8 +489,7 @@ static void CL_CheckAndQueueDownload (char *path)
  */
 static void CL_ParseFileList (dlhandle_t *dl)
 {
-	char	 *list;
-	char	*p;
+	char *list;
 
 	if (!cl_http_filelists->integer)
 		return;
@@ -500,7 +497,7 @@ static void CL_ParseFileList (dlhandle_t *dl)
 	list = dl->tempBuffer;
 
 	for (;;) {
-		p = strchr (list, '\n');
+		char *p = strchr(list, '\n');
 		if (p) {
 			p[0] = 0;
 			if (list[0])
@@ -523,9 +520,7 @@ static void CL_ParseFileList (dlhandle_t *dl)
  */
 static void CL_ReVerifyHTTPQueue (void)
 {
-	dlqueue_t	*q;
-
-	q = &cls.downloadQueue;
+	dlqueue_t *q = &cls.downloadQueue;
 
 	pendingCount = 0;
 
@@ -545,11 +540,10 @@ static void CL_ReVerifyHTTPQueue (void)
  */
 void CL_HTTP_Cleanup (void)
 {
-	dlhandle_t *dl;
 	int i;
 
 	for (i = 0; i < 4; i++) {
-		dl = &cls.HTTPHandles[i];
+		dlhandle_t *dl = &cls.HTTPHandles[i];
 
 		if (dl->file) {
 			fclose(dl->file);
@@ -584,7 +578,6 @@ static void CL_FinishHTTPDownload (void)
 {
 	size_t		i;
 	int			msgs_in_queue;
-	CURLMsg		*msg;
 	CURLcode	result;
 	dlhandle_t	*dl;
 	CURL		*curl;
@@ -595,7 +588,7 @@ static void CL_FinishHTTPDownload (void)
 	qboolean	isFile;
 
 	do {
-		msg = curl_multi_info_read(multi, &msgs_in_queue);
+		CURLMsg *msg = curl_multi_info_read(multi, &msgs_in_queue);
 
 		if (!msg) {
 			Com_Printf("CL_FinishHTTPDownload: Odd, no message for us...\n");
@@ -747,19 +740,13 @@ static void CL_FinishHTTPDownload (void)
  */
 static void CL_StartNextHTTPDownload (void)
 {
-	dlqueue_t	*q;
-
-	q = &cls.downloadQueue;
+	dlqueue_t *q = &cls.downloadQueue;
 
 	while (q->next) {
 		q = q->next;
 		if (q->state == DLQ_STATE_NOT_STARTED) {
 			size_t len;
-
-			dlhandle_t *dl;
-
-			dl = CL_GetFreeDLHandle();
-
+			dlhandle_t *dl = CL_GetFreeDLHandle();
 			if (!dl)
 				return;
 
@@ -783,8 +770,7 @@ static void CL_StartNextHTTPDownload (void)
  */
 void CL_RunHTTPDownloads (void)
 {
-	int			newHandleCount;
-	CURLMcode	ret;
+	CURLMcode ret;
 
 	if (!cls.downloadServer[0])
 		return;
@@ -797,6 +783,7 @@ void CL_RunHTTPDownloads (void)
 		CL_StartNextHTTPDownload();
 
 	do {
+		int newHandleCount;
 		ret = curl_multi_perform(multi, &newHandleCount);
 		if (newHandleCount < handleCount) {
 			/* Com_Printf("runnd dl: hc = %d, nc = %d\n", handleCount, newHandleCount); */
