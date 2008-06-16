@@ -83,7 +83,7 @@ typedef enum {
 	V_STRING = 10,
 	V_TRANSLATION_STRING,	/**< translate via gettext and store already translated in target buffer */
 	V_TRANSLATION_MANUAL_STRING,	/**< remove _ but don't translate */
-	V_LONGSTRING,
+	V_LONGSTRING,			/**< not buffer safe - use this only for menu node data array values! */
 	V_ALIGN,
 	V_BLEND = 15,
 	V_STYLE,

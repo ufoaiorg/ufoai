@@ -80,7 +80,7 @@ static const value_t nps[] = {
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 	{"key", V_STRING, offsetof(menuNode_t, key), 0},
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-	{"tooltip", V_STRING, -5, 0},	/* translated in MN_Tooltip */
+	{"tooltip", V_LONGSTRING, -5, 0},	/* translated in MN_Tooltip */
 	{"image", V_STRING, 0, 0},
 	{"roq", V_STRING, 0, 0},
 	{"md2", V_STRING, 0, 0},	/* FIXME: Rename into model */
@@ -209,7 +209,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 						if (mn.numActions >= MAX_MENUACTIONS)
 							Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 						action = &mn.menuActions[mn.numActions++];
-						memset(action, 0, sizeof(menuAction_t));
+						memset(action, 0, sizeof(*action));
 						lastAction->next = action;
 					}
 					action->type = i;
@@ -249,7 +249,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 					if (mn.numActions >= MAX_MENUACTIONS)
 						Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 					action = &mn.menuActions[mn.numActions++];
-					memset(action, 0, sizeof(menuAction_t));
+					memset(action, 0, sizeof(*action));
 					lastAction->next = action;
 				}
 				action->type = EA_NODE;
@@ -316,7 +316,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 						if (mn.numActions >= MAX_MENUACTIONS)
 							Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 						action = &mn.menuActions[mn.numActions++];
-						memset(action, 0, sizeof(menuAction_t));
+						memset(action, 0, sizeof(*action));
 						lastAction->next = action;
 					}
 					action->type = EA_CALL;
@@ -380,7 +380,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		if (mn.numActions >= MAX_MENUACTIONS)
 			Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 		*action = &mn.menuActions[mn.numActions++];
-		memset(*action, 0, sizeof(menuAction_t));
+		memset(*action, 0, sizeof(**action));
 
 		if (node->type == MN_CONFUNC) {
 			/* don't add a callback twice */
@@ -465,7 +465,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 					if (mn.numActions >= MAX_MENUACTIONS)
 						Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 					*action = &mn.menuActions[mn.numActions++];
-					memset(*action, 0, sizeof(menuAction_t));
+					memset(*action, 0, sizeof(**action));
 
 					/* get the action body */
 					*token = COM_EParse(text, errhead, node->name);
@@ -526,6 +526,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
+			/* FIXME: mem corruption in case of too many select box options */
 			Q_strncpyz(mn.menuSelectBoxes[mn.numSelectBoxes].id, *token, sizeof(mn.menuSelectBoxes[mn.numSelectBoxes].id));
 			Com_DPrintf(DEBUG_CLIENT, "...found selectbox: '%s'\n", *token);
 
@@ -691,7 +692,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						if (mn.numNodes >= MAX_MENUNODES)
 							Sys_Error("MAX_MENUNODES exceeded\n");
 						node = &mn.menuNodes[mn.numNodes++];
-						memset(node, 0, sizeof(menuNode_t));
+						memset(node, 0, sizeof(*node));
 						node->menu = menu;
 						Q_strncpyz(node->name, token, sizeof(node->name));
 
@@ -825,7 +826,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 
 	/* initialize the menu */
 	menuModel = &mn.menuModels[mn.numMenuModels];
-	memset(menuModel, 0, sizeof(menuModel_t));
+	memset(menuModel, 0, sizeof(*menuModel));
 
 	Vector4Set(menuModel->color, 1, 1, 1, 1);
 
@@ -970,7 +971,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	/* initialize the menu */
 	menu = &mn.menus[mn.numMenus++];
-	memset(menu, 0, sizeof(menu_t));
+	memset(menu, 0, sizeof(*menu));
 
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
 
@@ -985,7 +986,7 @@ void MN_ParseMenu (const char *name, const char **text)
 		superMenu = MN_GetMenu(token);
 		if (!superMenu)
 			Sys_Error("MN_ParseMenu: menu '%s' can't inherit from menu '%s' - because '%s' was not found\n", name, token, token);
-		memcpy(menu, superMenu, sizeof(menu_t));
+		memcpy(menu, superMenu, sizeof(*menu));
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
 		token = COM_Parse(text);
 	}
@@ -1031,7 +1032,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 		token = COM_Parse(&text);
 		if (!text)
 			return NULL;
-		Q_strncpyz(ident, token, MAX_VAR);
+		Q_strncpyz(ident, token, sizeof(ident));
 		token = COM_Parse(&text);
 		if (!text)
 			return NULL;
@@ -1040,9 +1041,9 @@ const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 			/* get the cvar value */
 			if (*text && *text <= ' ') {
 				/* check command and param */
-				Q_strncpyz(command, token, MAX_VAR);
+				Q_strncpyz(command, token, sizeof(command));
 				token = COM_Parse(&text);
-				Q_strncpyz(param, token, MAX_VAR);
+				Q_strncpyz(param, token, sizeof(param));
 				/*Com_sprintf(token, MAX_VAR, "%s %s", command, param);*/
 			}
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
@@ -1092,7 +1093,7 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 		token = COM_Parse(&text);
 		if (!text)
 			return 0.0;
-		Q_strncpyz(ident, token, MAX_VAR);
+		Q_strncpyz(ident, token, sizeof(ident));
 		token = COM_Parse(&text);
 		if (!text)
 			return 0.0;
