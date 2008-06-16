@@ -1591,7 +1591,8 @@ void AIM_AircraftEquipAddItem_f (void)
 	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
 	/* proceed only if an item has been selected */
-	if (!airequipSelectedTechnology)
+	if ((!airequipSelectedTechnology && airequipID != AC_ITEM_PILOT) || 
+	    (!airequipSelectedPilot && airequipID == AC_ITEM_PILOT))
 		return;
 
 	/* check in which menu we are */
