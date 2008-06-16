@@ -4019,16 +4019,23 @@ static void CL_CampaignInitMarket (qboolean load)
 
 	assert(curCampaign);
 
-	/* find the relevant market */
+	/* find the relevant markets */
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
 		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR)) {
 			curCampaign->marketDef = ed;
 			break;
 		}
-
 	if (!curCampaign->marketDef)
 		Sys_Error("CL_CampaignInitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 			curCampaign->id, curCampaign->market);
+	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+		if (!Q_strncmp(curCampaign->asymptoticMarket, ed->name, MAX_VAR)) {
+			curCampaign->asymptoticMarketDef = ed;
+			break;
+		}
+	if (!curCampaign->asymptoticMarketDef)
+		Sys_Error("CL_CampaignInitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+			curCampaign->id, curCampaign->asymptoticMarket);
 
 	/* the savegame loading process will get the following values from savefile */
 	if (load)
@@ -4040,63 +4047,62 @@ static void CL_CampaignInitMarket (qboolean load)
 			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
 		}
 
-		if (!ed->num[i])
+		if (!curCampaign->marketDef->num[i])
 			continue;
 
-		if (!RS_IsResearched_ptr(csi.ods[i].tech))
+		if (!RS_IsResearched_ptr(csi.ods[i].tech) && curCampaign->marketDef->num[i] > 0)
 			Com_Printf("CL_CampaignInitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n", csi.ods[i].id, curCampaign->id);
 		else
 			/* the other relevant values were already set in CL_CampaignInitMarket */
-			ccs.eMarket.num[i] = ed->num[i];
+			ccs.eMarket.num[i] = curCampaign->marketDef->num[i];
 	}
 }
 
 /**
- * @brief simulates one hour of supply and demand on the market (adds items and sets prices)
+ * @brief make number of items change every day.
  * @sa CL_CampaignRun
- * @sa CL_GameNew_f
+ * @sa daily called
+ * @note This function makes items number on market slowly reach the asymptotic number of items defined in equipment.ufo
+ * If an item has just been researched, it's available on market until RESEARCH_LIMIT_DELAY days is reached.
  */
 static void CL_CampaignRunMarket (void)
 {
-	int i, marketAction;
-	double researchFactor, priceFactor, currSuppDiff;
-	/* supply and demand */
-	const double mrs1 = 0.1, mpr1 = 400, mrg1 = 0.002, mrg2 = 0.03;
+	int i;
 
 	assert(curCampaign->marketDef);
+	assert(curCampaign->asymptoticMarketDef);
 
 	for (i = 0; i < csi.numODs; i++) {
  		technology_t *tech = csi.ods[i].tech;
- 		if (!tech)
- 				Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
+		const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */
+		const int RESEARCH_LIMIT_DELAY = 30;		/**< Numbers of days after end of research to wait in order to have
+													 * items added on market */
+		int asymptoticNumber;
 
- 		if (RS_IsResearched_ptr(tech)) {
- 			/* Supply balance */
-			/** @todo Please elaborate what exactly is supposed to happen here.
-			 * Can we change/remove this part? */
-			researchFactor = mrs1 * sqrt(ccs.date.day - tech->researchedDate.day);
+		if (!tech)
+			Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
 
-			priceFactor = mpr1 / sqrt(csi.ods[i].price + 1);
-			currSuppDiff = floor(researchFactor * priceFactor - ccs.eMarket.num[i]);
-			if (currSuppDiff != 0)
-				ccs.eMarket.cummSuppDiff[i] += currSuppDiff;
-			else
-				ccs.eMarket.cummSuppDiff[i] *= 0.9;
-			marketAction = floor(mrg1 * ccs.eMarket.cummSuppDiff[i] + mrg2 * currSuppDiff);
-			ccs.eMarket.num[i] += marketAction;
-			if (ccs.eMarket.num[i] < 0)
-				ccs.eMarket.num[i] = 0;
-
-			/* set item price based on supply imbalance */
-			if (researchFactor * priceFactor >= 1)
-				ccs.eMarket.ask[i] = floor(csi.ods[i].price
-					* (1 - (1 - BID_FACTOR) / 2
-					* (1 / (1 + exp(currSuppDiff / (researchFactor * priceFactor)))
-					* 2 - 1)) );
-			else
-				ccs.eMarket.ask[i] = csi.ods[i].price;
-			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
+		if (RS_IsResearched_ptr(tech) && (curCampaign->marketDef->num[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
+			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
+			 * there number tend to the value defined in equipment.ufo.
+			 * This value is the asymptotic value if it is not 0, or initial value else */
+			asymptoticNumber = curCampaign->asymptoticMarketDef->num[i] ? curCampaign->asymptoticMarketDef->num[i] : curCampaign->marketDef->num[i];
+		} else {
+			/* items that have just been researched don't appear on market, but they can disappear */
+			asymptoticNumber = 0;
 		}
+
+		/* Store the evolution of the market in currentEvolution */
+		ccs.eMarket.currentEvolution[i] += (asymptoticNumber - ccs.eMarket.num[i]) / TYPICAL_TIME;
+
+		/* Check if new items appeared or disappeared on market */
+		if (fabs(ccs.eMarket.currentEvolution[i]) >= 1.0f) {
+			const int num = (int)(ccs.eMarket.currentEvolution[i]);
+			ccs.eMarket.num[i] += num;
+			ccs.eMarket.currentEvolution[i] -= num;
+		}
+		if (ccs.eMarket.num[i] < 0)
+			ccs.eMarket.num[i] = 0;
 	}
 }
 
@@ -4129,7 +4135,6 @@ void CL_CampaignRun (void)
 			currenthour++;
 			CL_CheckResearchStatus();
 			PR_ProductionRun();
-			CL_CampaignRunMarket();
 			UFO_Recovery();
 			AII_UpdateInstallationDelay();
 			AII_RepairAircraft();
@@ -4149,6 +4154,7 @@ void CL_CampaignRun (void)
 			CP_SpreadXVI();
 			CP_UpdateNationHappiness();
 			AB_BaseSearchedByNations();
+			CL_CampaignRunMarket();
 		}
 
 		/* check for campaign events */
@@ -6311,6 +6317,7 @@ static const value_t campaign_vals[] = {
 	{"ugvs", V_INT, offsetof(campaign_t, ugvs), MEMBER_SIZEOF(campaign_t, ugvs)},
 	{"equipment", V_STRING, offsetof(campaign_t, equipment), 0},
 	{"market", V_STRING, offsetof(campaign_t, market), 0},
+	{"asymptotic_market", V_STRING, offsetof(campaign_t, asymptoticMarket), 0},
 	{"researched", V_STRING, offsetof(campaign_t, researched), 0},
 	{"difficulty", V_INT, offsetof(campaign_t, difficulty), MEMBER_SIZEOF(campaign_t, difficulty)},
 	{"map", V_STRING, offsetof(campaign_t, map), 0},
@@ -6882,8 +6889,6 @@ static void CL_GameNew_f (void)
 
 	CL_GameInit(qfalse);
 	Cmd_ExecuteString("addeventmail prolog");
-
-	CL_CampaignRunMarket();
 
 	/* Spawn first missions of the game */
 	CP_InitializeSpawningDelay();

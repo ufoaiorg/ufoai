@@ -971,7 +971,7 @@ qboolean BS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteLong(sb, ccs.eMarket.num[i]);
 		MSG_WriteLong(sb, ccs.eMarket.bid[i]);
 		MSG_WriteLong(sb, ccs.eMarket.ask[i]);
-		MSG_WriteFloat(sb, ccs.eMarket.cummSuppDiff[i]);
+		MSG_WriteFloat(sb, ccs.eMarket.currentEvolution[i]);
 		MSG_WriteByte(sb, gd.autosell[i]);
 	}
 
@@ -1002,7 +1002,7 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
 			ccs.eMarket.num[od->idx] = MSG_ReadLong(sb);
 			ccs.eMarket.bid[od->idx] = MSG_ReadLong(sb);
 			ccs.eMarket.ask[od->idx] = MSG_ReadLong(sb);
-			ccs.eMarket.cummSuppDiff[od->idx] = MSG_ReadFloat(sb);
+			ccs.eMarket.currentEvolution[od->idx] = MSG_ReadFloat(sb);
 			gd.autosell[od->idx] = MSG_ReadByte(sb);
 		}
 	}

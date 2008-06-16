@@ -206,8 +206,10 @@ typedef struct campaign_s {
 	char team[MAX_VAR];			/**< what team can play this campaign */
 	char researched[MAX_VAR];	/**< name of the researched tech list to use on campaign start */
 	char equipment[MAX_VAR];	/**< name of the equipment list to use on campaign start */
-	char market[MAX_VAR];		/**< name of the market list to use with this campaign */
-	equipDef_t *marketDef;		/**< market definition for this campaign (how many items on the market) */
+	char market[MAX_VAR];		/**< name of the market list containing initial items on market */
+	char asymptoticMarket[MAX_VAR];		/**< name of the market list containing items on market at the end of the game */
+	equipDef_t *marketDef;		/**< market definition for this campaign (how many items on the market) containing initial items */
+	equipDef_t *asymptoticMarketDef;	/**< market definition for this campaign (how many items on the market) containing finale items */
 	char text[MAX_VAR];			/**< placeholder for gettext stuff */
 	char map[MAX_VAR];			/**< geoscape map */
 	int soldiers;				/**< start with x soldiers */
@@ -274,10 +276,10 @@ typedef struct salary_s {
 
 /** market structure */
 typedef struct market_s {
-	int num[MAX_OBJDEFS];
-	int bid[MAX_OBJDEFS];
-	int ask[MAX_OBJDEFS];
-	double cummSuppDiff[MAX_OBJDEFS];
+	int num[MAX_OBJDEFS];					/**< number of items on the market */
+	int bid[MAX_OBJDEFS];					/**< price of item for selling */
+	int ask[MAX_OBJDEFS];					/**< price of item for buying */
+	double currentEvolution[MAX_OBJDEFS];	/**< evolution of the market */
 } market_t;
 
 /**
@@ -327,7 +329,7 @@ typedef struct nation_s {
  */
 typedef struct ccs_s {
 	equipDef_t eMission;
-	market_t eMarket;
+	market_t eMarket;						/**< Prices, evolution and number of items on market */
 
 	linkedList_t *missions;					/**< Missions spawned (visible on geoscape or not) */
 
