@@ -34,10 +34,10 @@ size_t HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
 	if (bytes <= 16)
 		return bytes;
 
-	if (bytes < sizeof(headerBuff) - 1)
-		len = bytes;
+	if (bytes < sizeof(headerBuff))
+		len = bytes + 1;
 	else
-		len = sizeof(headerBuff) - 1;
+		len = sizeof(headerBuff);
 
 	Q_strncpyz(headerBuff, ptr, len);
 
