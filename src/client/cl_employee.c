@@ -953,6 +953,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 		}
 	}
 
+	nationIdx = 0;
 	/* Fill the global data employee list with pilots, evenly distributed
 	 * between nations in the happyNations list */
 	for (idx = 0; idx < MAX_EMPLOYEES; idx++) {
@@ -965,7 +966,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 			else
 				nationIdx = 0;
 
-			E_CreateEmployeeAtIndex(EMPL_PILOT, happyNations[nationIdx], NULL,idx);
+			E_CreateEmployeeAtIndex(EMPL_PILOT, happyNations[nationIdx], NULL, idx);
 		}
 	}
 }
@@ -1353,26 +1354,29 @@ employee_t* E_GetEmployeeFromChrUCN (int ucn)
  */
 qboolean E_Save (sizebuf_t* sb, void* data)
 {
-	int i, j, k;
-	employee_t* e;
+	int j;
 
 	for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
+		int i;
 		MSG_WriteShort(sb, gd.numEmployees[j]);
 		for (i = 0; i < gd.numEmployees[j]; i++) {
-			e = &gd.employees[j][i];
+			const employee_t *e = &gd.employees[j][i];
+			int k;
 			MSG_WriteByte(sb, e->type);
 			MSG_WriteByte(sb, e->hired);
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
 			MSG_WriteShort(sb, e->idx);
+			/* FIXME: Use BYTES_NONE here and use MSG_WriteByte */
 			MSG_WriteShort(sb, e->baseHired ? e->baseHired->idx : -1);
 			MSG_WriteShort(sb, e->building ? e->building->idx : -1);
-			/* 2.3++ Store the nations identifier string. */
-			if (e->nation)
+			/* Store the nations identifier string. */
+			if (e->nation) {
+				assert(e->nation->id);
 				MSG_WriteString(sb, e->nation->id);
-			else
+			} else
 				MSG_WriteString(sb, "NULL");
 
-			/* 2.3++ Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
+			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
 			if (e->ugv)
 				MSG_WriteString(sb, e->ugv->id);
 			else
@@ -1446,9 +1450,11 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 
 	/* load inventories */
 	for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
+		const char *string;
 		gd.numEmployees[j] = MSG_ReadShort(sb);
 		for (i = 0; i < gd.numEmployees[j]; i++) {
 			employee_t *e = &gd.employees[j][i];
+			memset(e, 0, sizeof(*e));
 			e->type = MSG_ReadByte(sb);
 			if (e->type != j)
 				Com_Printf("......error in loading employee - type values doesn't match\n");
@@ -1465,9 +1471,14 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			 * We can do this because nations are already parsed .. will break if the parse-order is changed.
 			 * Same for the ugv string below.
 			 * We would need a Post-Load init funtion in that case. @sa SAV_GameActionsAfterLoad */
-			e->nation = CL_GetNationByID(MSG_ReadString(sb));
+			string = MSG_ReadString(sb);
+			if (Q_strcmp(string, "NULL"))
+				e->nation = CL_GetNationByID(string);
+
 			/* Read the UGV-Type identifier and get the matching ugv_t pointer. */
-			e->ugv = CL_GetUgvByID(MSG_ReadString(sb));
+			string = MSG_ReadString(sb);
+			if (Q_strcmp(string, "NULL"))
+				e->ugv = CL_GetUgvByID(string);
 
 			/* Load the character data */
 			Q_strncpyz(e->chr.name, MSG_ReadStringRaw(sb), sizeof(e->chr.name));

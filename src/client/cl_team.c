@@ -118,7 +118,7 @@ static void CL_SaveItem (sizebuf_t *buf, item_t item, int container, int x, int 
  * @sa CL_SaveItem
  * @sa CL_LoadInventory
  */
-void CL_SaveInventory (sizebuf_t *buf, inventory_t *i)
+void CL_SaveInventory (sizebuf_t *buf, const inventory_t *i)
 {
 	int j, nr = 0;
 	invList_t *ic;
@@ -300,9 +300,8 @@ ugv_t *CL_GetUgvByID (const char *ugvID)
 			return &gd.ugvs[i];
 		}
 	}
-#if 0
+
 	Com_Printf("CL_GetUgvByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, gd.numUGV);
-#endif
 	return NULL;
 }
 

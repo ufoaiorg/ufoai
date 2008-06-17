@@ -47,7 +47,7 @@ void CL_RemoveSoldierFromAircraft(employee_t *employee, aircraft_t* aircraft);
 void CL_RemoveSoldiersFromAircraft(aircraft_t* aircraft);
 void CL_AssignSoldierToCurrentSelectedAircraft(base_t *base, const int num);
 
-void CL_SaveInventory(sizebuf_t * buf, inventory_t * i);
+void CL_SaveInventory(sizebuf_t * buf, const inventory_t * i);
 void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
 void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
 void CL_ResetTeams(void);

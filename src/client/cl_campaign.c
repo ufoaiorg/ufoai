@@ -3422,13 +3422,14 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 nation_t *CL_GetNationByID (const char *nationID)
 {
 	int i;
-	nation_t *nation;
 
 	for (i = 0; i < gd.numNations; i++) {
-		nation = &gd.nations[i];
+		nation_t *nation = &gd.nations[i];
 		if (!Q_strcmp(nation->id, nationID))
 			return nation;
 	}
+
+	Com_Printf("CL_GetNationByID: Could not find nation '%s'\n", nationID);
 
 	/* No matching nation found - ERROR */
 	return NULL;
