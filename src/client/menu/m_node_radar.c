@@ -160,8 +160,8 @@ static void MN_GetRadarWidth (const menuNode_t *node, vec2_t gridSize)
 	secondTileGridY = radar.gridMin[1] + 1000;
 
 	/* Initialize screen size of last tile (will be used only if there is 1 tile in a line or in a row) */
-	tileWidth[1] = 0;
-	tileHeight[1] = 0;
+	Vector2Set(tileWidth, 0, 0);
+	Vector2Set(tileHeight, 0, 0);
 
 	for (j = 0; j < radar.numImages; j++) {
 		const hudRadarImage_t *image = &radar.images[j];
