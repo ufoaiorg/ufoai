@@ -734,6 +734,8 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	employee->baseHired = NULL;
 	employee->building = NULL;
 	employee->type = type;
+	assert(nation >= gd.nations);
+	assert(nation <= &gd.nations[MAX_NATIONS]);
 	employee->nation = nation;
 
 	switch (type) {
@@ -944,6 +946,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	int numHappyNations = 0;
 	int idx, nationIdx;
 
+	happyNations[0] = NULL;
 	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude
 	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
 	for (idx = 0; idx < gd.numNations; idx++) {
@@ -961,10 +964,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 
 		/* we dont want to overwrite employees that have already been hired */
 		if (!employee->hired) {
-			if (nationIdx < numHappyNations)
-				nationIdx++;
-			else
-				nationIdx = 0;
+			nationIdx = (nationIdx + 1) % MAX_NATIONS;
 
 			E_CreateEmployeeAtIndex(EMPL_PILOT, happyNations[nationIdx], NULL, idx);
 		}
@@ -1390,7 +1390,7 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.skin);
 			MSG_WriteByte(sb, e->chr.armour);
 			MSG_WriteByte(sb, e->chr.weapons);
-			MSG_WriteByte(sb, e->chr.teamDef ? e->chr.teamDef->idx : NONE);
+			MSG_WriteByte(sb, e->chr.teamDef ? e->chr.teamDef->idx : BYTES_NONE);
 			MSG_WriteByte(sb, e->chr.gender);
 			MSG_WriteShort(sb, e->chr.ucn);
 			MSG_WriteShort(sb, e->chr.maxHP);
@@ -1492,7 +1492,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.weapons = MSG_ReadByte(sb);
 			e->chr.teamDef = NULL;
 			td = MSG_ReadByte(sb);
-			if (td != NONE) {
+			if (td != BYTES_NONE) {
 				assert(csi.numTeamDefs);
 				if (td >= csi.numTeamDefs)
 					return qfalse;

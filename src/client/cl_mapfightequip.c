@@ -286,7 +286,7 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 		if (aircraft->homebase->storage.num[item->idx] <= 0)
 			return qfalse;
 	} else if (base->storage.num[item->idx] <= 0 && !item->notOnMarket)
-			return qfalse;
+		return qfalse;
 
 	/* you can't install an item that does not have an installation time (alien item)
 	 * except for ammo which does not have installation time */
@@ -1591,7 +1591,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
 	/* proceed only if an item has been selected */
-	if ((!airequipSelectedTechnology && airequipID != AC_ITEM_PILOT) || 
+	if ((!airequipSelectedTechnology && airequipID != AC_ITEM_PILOT) ||
 	    (!airequipSelectedPilot && airequipID == AC_ITEM_PILOT))
 		return;
 
