@@ -488,7 +488,7 @@ void Curses_Init (void)
 	}
 
 	/* fill up the version string */
-	snprintf(versionstring, sizeof(versionstring), " UFO:AI %s %s %s %s ", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
+	snprintf(versionstring, sizeof(versionstring), " "GAME_TITLE" %s %s %s %s ", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 
 	/* clear the input box */
 	inputpos = 0;

@@ -611,7 +611,7 @@ static void R_InitExtension (void)
 	qglGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);
 	Com_Printf("max texture units: %i\n", r_config.maxTextureUnits);
 	if (r_config.maxTextureUnits < 2)
-		Sys_Error("You need at least 2 texture units to run UFO:AI");
+		Sys_Error("You need at least 2 texture units to run "GAME_TITLE);
 
 	/* reset gl error state */
 	R_CheckError();

@@ -1058,7 +1058,7 @@ void Qcommon_Frame (void)
 	 * IO is ready (but always try at least once, to make sure IO
 	 * doesn't stall) */
 	do {
-		char *s;
+		const char *s;
 
 		/* XXX: This shouldn't exist */
 		do {

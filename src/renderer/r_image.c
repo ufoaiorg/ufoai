@@ -953,7 +953,7 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_set_defaults(&cinfo);
 	jpeg_set_quality(&cinfo, quality, TRUE);
 	jpeg_start_compress(&cinfo, qtrue);	/* start compression */
-	jpeg_write_marker(&cinfo, JPEG_COM, (const byte *) "UFO:AI", (uint32_t) strlen("UFO:AI"));
+	jpeg_write_marker(&cinfo, JPEG_COM, (const byte *) GAME_TITLE, (uint32_t) strlen(GAME_TITLE));
 
 	/* Feed scanline data */
 	w3 = cinfo.image_width * 3;

@@ -28,22 +28,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "win_local.h"
 
 #define CONSOLE_WINDOW_STYLE		(WS_OVERLAPPED|WS_BORDER|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN|WS_GROUP)
-#define CONSOLE_WINDOW_CLASS_NAME	"UFO:AI Console"
+#define CONSOLE_WINDOW_CLASS_NAME	GAME_TITLE" Console"
 
 #ifdef DEDICATED_ONLY
-#define CONSOLE_WINDOW_NAME			"UFO:AI Dedicated Server Console"
+#define CONSOLE_WINDOW_NAME			GAME_TITLE" Dedicated Server Console"
 #else
-#define CONSOLE_WINDOW_NAME			"UFO:AI Console"
+#define CONSOLE_WINDOW_NAME			CONSOLE_WINDOW_CLASS_NAME
 #endif
 
 #define MAX_OUTPUT					32768
 #define	MAX_PRINTMSG				8192
 
 typedef struct {
-	int			outLen;					/* To keep track of output buffer len */
-	char		cmdBuffer[MAXCMDLINE];	/* Buffered input from dedicated console */
-	qboolean	timerActive;			/* Timer is active (for fatal errors) */
-	qboolean	flashColor;				/* If true, flash error message to red */
+	int			outLen;					/**< To keep track of output buffer len */
+	char		cmdBuffer[MAXCMDLINE];	/**< Buffered input from dedicated console */
+	qboolean	timerActive;			/**< Timer is active (for fatal errors) */
+	qboolean	flashColor;				/**< If true, flash error message to red */
 
 	/* Window stuff */
 	HWND		hWnd;
