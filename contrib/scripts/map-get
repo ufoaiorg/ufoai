@@ -13,7 +13,7 @@ if os.name == 'nt':
     UFO2MAP+= '.exe'
 
 URI = 'http://ufo.ludwigf.org/maps'
-__version__ = '0.0.2~rc1'
+__version__ = '0.0.2~rc2'
 
 """
 written by Florian Ludwig <dino@phidev.org>
@@ -23,6 +23,7 @@ Changelog
 0.0.3 windows work
  * check if ufo2map exists
  * use ufo2map.exe on windows systems
+ * on windows allways upgrade, generating is not supported anyway
 
 0.0.2
  * handle corrupted mirror files
@@ -32,6 +33,8 @@ Changelog
  * display summary
  * generation: guess if ufo2map changed and maps need to be rebuild
 """
+
+# TODO: use os.path.join
 
 
 def md5sum(path):
@@ -146,10 +149,6 @@ def gen(args):
         print "You must specify a directory."
         sys.exit(2)
 
-    if os.name == 'nt':
-        print "Generating is not supported on windows platforms."
-        sys.exit(666)
-
     dst = args[0]
     changed_maps = args[1:]
 
@@ -241,7 +240,7 @@ def main(argv=None):
     commands = {'upgrade': upgrade,
                 'generate': gen}
 
-    parser = optparse.OptionParser()
+    parser = optparse.OptionParser(argv)
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose')
 
     parser.usage = '%prog [options] command\n\n' \
@@ -254,6 +253,10 @@ def main(argv=None):
 
     logging.basicConfig(level=options.verbose and logging.DEBUG or logging.INFO,
                         format='%(message)s')
+
+    # on windows allways just upgrade
+    if os.name == 'nt':
+        args[0] = 'upgrade'
 
     if not len(args) or args[0] not in commands:
         parser.print_help()
