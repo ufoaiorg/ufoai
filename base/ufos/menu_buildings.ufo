@@ -141,6 +141,20 @@ menu buildings
 		click	{ }
 		rclick	{ cmd "buildinginfo_click;" }
 	}
+	
+	pic ufopedia_link
+	{
+		image		menu/buttons_small
+		tooltip 	"_UFOpaedia"
+		pos		"320 720"
+		texl		"32 0"
+		texh		"47 16"
+		mousefx		true
+		click
+		{
+			cmd "buildinginfo_click;"		
+		}
+	}
 
 	text buildinginfo
 	{
