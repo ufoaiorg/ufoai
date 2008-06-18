@@ -759,7 +759,10 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	default:
 		break;
 	}
-	gd.numEmployees[type]++;
+	
+	if (employeeIdx < 0)
+		gd.numEmployees[type]++;
+	
 	return employee;
 }
 
@@ -957,16 +960,17 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	}
 
 	nationIdx = 0;
-	/* Fill the global data employee list with pilots, evenly distributed
+	/* Fill the global data employee list with employees, evenly distributed
 	 * between nations in the happyNations list */
 	for (idx = 0; idx < MAX_EMPLOYEES; idx++) {
 		const employee_t *employee = &gd.employees[type][idx];
 
 		/* we dont want to overwrite employees that have already been hired */
 		if (!employee->hired) {
-			nationIdx = (nationIdx + 1) % numHappyNations;
 
-			E_CreateEmployeeAtIndex(EMPL_PILOT, happyNations[nationIdx], NULL, idx);
+			E_CreateEmployeeAtIndex(type, happyNations[nationIdx], NULL, idx);
+
+			nationIdx = (nationIdx + 1) % numHappyNations;
 		}
 	}
 }
