@@ -71,6 +71,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 
 	mess->date = ccs.date;
 
+	/* FIXME: Handle translated text - don't use single byte string copy here */
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
 	mess->text = Mem_PoolStrDup(text, cl_localPool, CL_TAG_NONE);
 

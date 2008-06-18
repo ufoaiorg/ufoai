@@ -4273,6 +4273,9 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 
 			pilotIdx = MSG_ReadByte(sb);
+			/* the employee subsystem is loaded after the base subsystem
+			 * this means, that the pilot pointer is not (really) valid until
+			 * E_Load was called, too */
 			if (pilotIdx != BYTES_NONE)
 				aircraft->pilot = &gd.employees[EMPL_PILOT][pilotIdx];
 			else
