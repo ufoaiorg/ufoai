@@ -638,6 +638,7 @@ void E_ResetEmployee (employee_t *employee)
  * @sa E_HireEmployeeByType
  * @sa CL_RemoveSoldierFromAircraft
  * @sa E_ResetEmployee
+ * @sa E_RemoveEmployeeFromBuilding
  * @todo handle EMPL_ROBOT capacities here?
  */
 qboolean E_UnhireEmployee (employee_t* employee)
@@ -658,6 +659,7 @@ qboolean E_UnhireEmployee (employee_t* employee)
 		case EMPL_PILOT:
 			AIR_RemovePilotFromAssignedAircraft(base, employee);
 		case EMPL_SCIENTIST:
+			/* lab capacity is calculated by the reset employee call */
 		case EMPL_SOLDIER:
 			base->capacities[CAP_EMPLOYEES].cur--;
 			break;
@@ -759,10 +761,10 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	default:
 		break;
 	}
-	
+
 	if (employeeIdx < 0)
 		gd.numEmployees[type]++;
-	
+
 	return employee;
 }
 
