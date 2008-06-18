@@ -964,7 +964,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 
 		/* we dont want to overwrite employees that have already been hired */
 		if (!employee->hired) {
-			nationIdx = (nationIdx + 1) % MAX_NATIONS;
+			nationIdx = (nationIdx + 1) % numHappyNations;
 
 			E_CreateEmployeeAtIndex(EMPL_PILOT, happyNations[nationIdx], NULL, idx);
 		}
