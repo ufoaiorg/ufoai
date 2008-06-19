@@ -293,10 +293,6 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 		if ((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1)) {
 			MSG_ReadLong(sb);
 			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
 		} else {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
 			mess->eventMail = mail;
