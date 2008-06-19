@@ -2452,6 +2452,24 @@ int RS_CountInBase (const base_t *base)
 	return counter;
 }
 
+/**
+ * @brief Remove all exceeding scientist.
+ * @param[in] base Pointer to base where a scientist should be removed.
+ * @note function called 
+ */
+void RS_RemoveExceedingScientist (base_t *base)
+{
+	assert(base);
+
+	/* Make sure base->capacities[CAP_LABSPACE].cur is set to proper value */
+	base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
+
+	while (base->capacities[CAP_LABSPACE].cur > base->capacities[CAP_LABSPACE].max) {
+		technology_t *tech = RS_GetTechWithMostScientists(base);
+		RS_RemoveScientist(tech, NULL);
+	}
+}
+
 qboolean RS_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;

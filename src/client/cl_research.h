@@ -253,6 +253,7 @@ technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(const struct base_s *base);
 int RS_GetTechIdxByName(const char *name);
 int RS_CountInBase(const struct base_s *base);
+void RS_RemoveExceedingScientist(struct base_s *base);
 qboolean RS_ScriptSanityCheck(void);
 
 /* UFOpaedia function - but needs technology_t */

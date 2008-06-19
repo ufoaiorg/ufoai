@@ -477,6 +477,9 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 	case B_WORKSHOP:
 		PR_UpdateProductionCap(base);
 		break;
+	case B_LAB:
+		RS_RemoveExceedingScientist(base);
+		break;
 	default:
 		break;
 	}
@@ -523,6 +526,9 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 	case B_RADAR:
 		RADAR_Initialise(&base->radar, 0.0f, 0.0f, qtrue);
 		CP_UpdateMissionVisibleOnGeoscape();
+		break;
+	case B_LAB:
+		RS_RemoveExceedingScientist(base);
 		break;
 	case B_POWER:
 		/** @todo */
@@ -951,16 +957,22 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
 			B_SetBuildingStatus(base, buildingType, qfalse);
 			test = qtrue;
+		} else {
+			cap = B_GetCapacityFromBuildingType(buildingType);
+			if (cap != MAX_CAP)
+				B_UpdateBaseCapacities(cap, base);
 		}
 		B_UpdateOneBaseBuildingStatus(buildingType, base);
 		break;
 	case B_ANTIMATTER:
-		cap = CAP_ANTIMATTER;
 		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
 			B_SetBuildingStatus(base, buildingType, qfalse);
 			/* Remove antimatter. */
 			INV_ManageAntimatter(base, 0, qfalse);
 			test = qtrue;
+		} else {
+			cap = CAP_ANTIMATTER;
+			/* @todo what happens of exceeding antimatter? */
 		}
 		break;
 	case B_MISC:
@@ -975,12 +987,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		B_UpdateStatusBuilding(base, buildingType, qfalse);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
-	} else {
-		/* no other status than status of destroyed building has been modified
-		 * update only status of destroyed building */
-		cap = B_GetCapacityFromBuildingType(buildingType);
-		if (cap != MAX_CAP)
-			B_UpdateBaseCapacities(cap, base);
 	}
 
 	B_BaseInit_f();
