@@ -382,18 +382,13 @@ extern struct memPool_s *com_genericPool;
 
 /*============================================================================ */
 
-struct usercmd_s;
-struct entity_state_s;
-
-/*============================================================================ */
-
 int COM_Argc(void);
 const char *COM_Argv(int arg);		/* range and null checked */
 void COM_ClearArgv(int arg);
 unsigned int Com_HashKey(const char *name, int hashsize);
 int COM_CheckParm(const char *parm);
 void COM_AddParm(const char *parm);
-const char* COM_MacroExpandString (const char *text);
+const char* COM_MacroExpandString(const char *text);
 
 void COM_Init(void);
 void COM_InitArgv(int argc, const char **argv);
