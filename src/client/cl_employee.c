@@ -701,9 +701,9 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 /**
  * @brief Creates an entry of a new employee at the passed index location in the global list and assignes it to no building/base.
  * @param[in] type Tell the function what type of employee to create.
- * @param[in] type Tell the function what nation the employee (mainly used for soldiers in singleplayer) comes from.
- * @param[in] type Tell the function what type of ugv this employee is.
- * @param[in] the index of the employee to create. -1 will use the next available index, >=0 will be used as the index of the employee.
+ * @param[in] nation Tell the function what nation the employee (mainly used for soldiers in singleplayer) comes from.
+ * @param[in] ugvType Tell the function what type of ugv this employee is.
+ * @param[in] employeeIdx the index of the employee to create. -1 will use the next available index, >=0 will be used as the index of the employee.
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */

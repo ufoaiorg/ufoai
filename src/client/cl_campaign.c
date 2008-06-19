@@ -5791,30 +5791,31 @@ static void CL_DebugFullCredits_f (void)
 static void CL_DebugNewEmployees_f (void)
 {
 	int j;
+	nation_t *nation = &gd.nations[0];	/**< This is just a debuging function, nation does not matter */
 
 	for (j = 0; j < 5; j++)
 		/* Create a scientist */
-		E_CreateEmployee(EMPL_SCIENTIST, NULL, NULL);
+		E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
 
 	for (j = 0; j < 5; j++)
 		/* Create a pilot. */
-		E_CreateEmployee(EMPL_PILOT, NULL, NULL);
+		E_CreateEmployee(EMPL_PILOT, nation, NULL);
 
 	for (j = 0; j < 5; j++)
 		/* Create a soldier. */
-		E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+		E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
 
 	for (j = 0; j < 5; j++)
 		/* Create a worker. */
-		E_CreateEmployee(EMPL_WORKER, NULL, NULL);
+		E_CreateEmployee(EMPL_WORKER, nation, NULL);
 
 	for (j = 0; j < 5; j++)
 		/* Create a ares  ugv. */
-		E_CreateEmployee(EMPL_ROBOT, NULL, CL_GetUgvByID("ugv_ares_w"));
+		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUgvByID("ugv_ares_w"));
 
 	for (j = 0; j < 5; j++)
 		/* Create a phoenix  ugv. */
-		E_CreateEmployee(EMPL_ROBOT, NULL, CL_GetUgvByID("ugv_phoenix"));
+		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUgvByID("ugv_phoenix"));
 }
 
 /**
