@@ -656,11 +656,8 @@ qboolean E_UnhireEmployee (employee_t* employee)
 		/* Remove employee from corresponding capacity */
 		switch (employee->type) {
 		case EMPL_PILOT:
-			/* @todo Is it intended that pilots are not removed from quarter? -- Kracken */
-			break;
 		case EMPL_WORKER:
 		case EMPL_SCIENTIST:
-			/* lab capacity is calculated by the reset employee call */
 		case EMPL_SOLDIER:
 			base->capacities[CAP_EMPLOYEES].cur--;
 			break;
