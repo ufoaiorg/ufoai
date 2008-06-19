@@ -3542,15 +3542,15 @@ static void CP_CheckEvents (void)
 /**
  * @brief Converts a number of second into a char to display.
  * @param[in] second Number of second.
- * @todo Abstract the code into an extra fucntion (DateConvertSeconds?) see also CL_DateConvertLong
+ * @todo Abstract the code into an extra function (DateConvertSeconds?) see also CL_DateConvertLong
  */
 const char* CL_SecondConvert (int second)
 {
-	int hour, min;
-
-	hour = second / SECONDS_PER_HOUR;
-	min = (second - hour * SECONDS_PER_HOUR) / 60;
-	return va("%i:%02i", hour, min);
+	static char buffer[6];
+	const int hour = second / SECONDS_PER_HOUR;
+	const int min = (second - hour * SECONDS_PER_HOUR) / 60;
+	Com_sprintf(buffer, sizeof(buffer), "%2i:%02i", hour, min);
+	return buffer;
 }
 
 static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
