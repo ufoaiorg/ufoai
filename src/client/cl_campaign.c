@@ -7306,7 +7306,7 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
  */
 static void CP_UFORecoveredStart_f (void)
 {
-	const base_t *base;
+	base_t *base;
 	const int i = Cvar_VariableInteger("mission_recoverybase");
 	if (i < 0 || i >= MAX_BASES)
 		return;
