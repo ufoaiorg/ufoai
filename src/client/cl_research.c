@@ -2457,7 +2457,7 @@ int RS_CountInBase (const base_t *base)
  * @param[in] base Pointer to base where a scientist should be removed.
  * @note function called 
  */
-void RS_RemoveExceedingScientist (base_t *base)
+void RS_RemoveScientistsExceedingCapacity (base_t *base)
 {
 	assert(base);
 

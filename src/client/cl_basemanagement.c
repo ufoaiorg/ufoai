@@ -485,6 +485,8 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
  * @brief Actions to perform when a type of buildings goes from functional to non-functional.
  * @param[in] type Type of building which hasBuilding value has been modified from qtrue to qfalse
  * @param[in] base Pointer to base with given building.
+ * @note That does not mean that a building of this type has been destroyed: maybe one of its dependencies
+ * has been destroyed: don't use onDestroy trigger.
  * @sa B_UpdateOneBaseBuildingStatusOnEnable
  * @sa onDestroy trigger
  */
@@ -666,7 +668,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
  * @sa B_BuildingDestroy_f
  * @todo If player choose to destroy the building, a popup should ask him if he wants to sell aircraft in it.
  */
-static void B_HangarOnDestroy (base_t* base, buildingType_t buildingType)
+static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingType)
 {
 	baseCapacities_t capacity;
 	int aircraftIdx;
@@ -693,7 +695,7 @@ static void B_HangarOnDestroy (base_t* base, buildingType_t buildingType)
 				continue;
 			break;
 		default:
-			Sys_Error("B_HangarOnDestroy: Unkown type of aircraft '%i'\n", aircraftSize);
+			Sys_Error("B_RemoveAircraftExceedingCapacity: Unkown type of aircraft '%i'\n", aircraftSize);
 		}
 
 		/* Only aircraft in hangar will be destroyed by hangar destruction */
@@ -736,7 +738,7 @@ static void B_BuildingOnDestroy_f (void)
 
 	buildingType = atoi(Cmd_Argv(2));
 	if (buildingType < 0 || buildingType >= MAX_BUILDING_TYPE) {
-		Com_Printf("B_HangarOnDestroy_f: buildingType '%i' outside limits\n", buildingType);
+		Com_Printf("B_BuildingOnDestroy_f: buildingType '%i' outside limits\n", buildingType);
 		return;
 	}
 
@@ -754,17 +756,17 @@ static void B_BuildingOnDestroy_f (void)
 			PR_UpdateProductionCap(base);
 			break;
 		case B_STORAGE:
-			INV_RemoveAllItemExceedingCapacity(base);
+			INV_RemoveItemsExceedingCapacity(base);
 			break;
 		case B_ALIEN_CONTAINMENT:
 			/* @todo: implement me */
 			break;
 		case B_LAB:
-			RS_RemoveExceedingScientist(base);
+			RS_RemoveScientistsExceedingCapacity(base);
 			break;
 		case B_HANGAR: /* the Dropship Hangar */
 		case B_SMALL_HANGAR:
-			B_HangarOnDestroy(base, buildingType);
+			B_RemoveAircraftExceedingCapacity(base, buildingType);
 			break;
 		case B_UFO_HANGAR:
 		case B_UFO_SMALL_HANGAR:

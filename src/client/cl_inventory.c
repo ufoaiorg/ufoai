@@ -576,7 +576,7 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
  * @note items will be randomly selected for removal.
  * @param[in] base Pointer to the base
  */
-void INV_RemoveAllItemExceedingCapacity (base_t *base)
+void INV_RemoveItemsExceedingCapacity (base_t *base)
 {
 	int i;
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
@@ -632,7 +632,7 @@ void INV_RemoveAllItemExceedingCapacity (base_t *base)
 		if (numObj <= 0)
 			break;
 	}
-	Com_DPrintf(DEBUG_CLIENT, "INV_RemoveAllItemExceedingCapacity: Remains %i in storage for a maxium of %i\n",
+	Com_DPrintf(DEBUG_CLIENT, "INV_RemoveItemsExceedingCapacity: Remains %i in storage for a maxium of %i\n",
 		base->capacities[CAP_ITEMS].cur, base->capacities[CAP_ITEMS].max);
 }
 
