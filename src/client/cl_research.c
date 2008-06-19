@@ -1207,7 +1207,6 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 		if (!base)
 			continue;
 		available[i] = E_CountUnassigned(base, EMPL_SCIENTIST);
-Com_Printf("available: %i\n", available[0]);
 	}
 
 	RS_MarkResearchable(qfalse);
