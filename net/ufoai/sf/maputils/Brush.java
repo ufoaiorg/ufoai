@@ -56,7 +56,7 @@ public class Brush {
 		//System.out.println("Brush.init: num vertices "+vertices.size());
 		findBoundingBox();
 		for(Face f:faces){
-		    f.calculateVerticesAndEdges();
+		    f.calculateVertices();
 		}
 	}
 

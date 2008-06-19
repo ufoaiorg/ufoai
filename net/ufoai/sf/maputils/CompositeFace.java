@@ -9,6 +9,10 @@ import java.util.Vector;
  */
 public class CompositeFace {
     
+    public static final int CROSS_EXTERNAL=0;
+    public static final int CROSS_NONE=1;
+    public static final int CROSS_INTERNAL=2;
+    
     Vector<Face> members=new Vector<Face>(3,3);
     
     /**  */
@@ -59,6 +63,42 @@ public class CompositeFace {
 	    }
 	}
 	return true;
+    }
+    
+    /** @return CROSS_EXTERNAL if any of the edges of the supplied face cross the 
+     *          boundary of the composite face. CROSS_INTERNAL if CROSS_EXTERNAL does not
+     *          apply and any of the edges of the supplied face cross internal boundaries
+     *          between members of the composite face. CROSS_NONE is returned if there
+     *          are no crossings and so the supplied face is covered by a single
+     *          face only*/
+    public int crossesEdge(Face f){
+	Vector<Edge> fEdges=f.calculateEdges();
+	int internalCrosses=0;
+	for(Edge e:fEdges){
+	    Vector<Vector3D> crossPoints=new Vector<Vector3D>(2,2);
+	    for(Face member:members){
+		Vector<Edge> mEdges=member.calculateEdges();
+		for(Edge mEdge: mEdges){
+		    try{
+			Vector3D intersection=mEdge.intersection(e);
+			if(crossPoints.contains(intersection)){
+			    //if present remove it
+			    //pairs of intersections are only internal, therefore OK.
+			    crossPoints.remove(intersection);
+			    internalCrosses++;
+			} else {
+			    crossPoints.add(intersection);
+			}
+		    } catch (NotInLineWithEdgeException eNILWE){;}//no intersection carry on
+		}
+	    }
+	    if(crossPoints.size()>0) return CROSS_EXTERNAL;//if any edge of the supplied face has an unpaired crossing
+	}
+	if(internalCrosses==0) {
+	    return CROSS_NONE;
+	} else {
+	    return CROSS_INTERNAL;
+	}
     }
         
     public String toString(){

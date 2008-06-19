@@ -21,6 +21,7 @@ public class Face {
 	SurfaceFlags surfFlags;
 	ContentFlags contentFlags;
 	Vector<Vector3D> vertices=null;
+	Vector<Edge> edges=null;
 
 	private static int count = 0;
 	public static final String nodrawTexture = "tex_common/nodraw",
@@ -68,15 +69,34 @@ public class Face {
 	/** this must be done at the end of the parent Brush constructor, 
 	 *  otherwise the Brush does not have any vertices yet, 
 	 *  because it has not calculated the intersection of the planes of the 
-	 *  Faces yet, because it does not have any Face objects...
-	 *  note: edges removed, this function should probably be renamed. */
-	public void calculateVerticesAndEdges(){
+	 *  Faces yet, because it does not have any Face objects... */
+	public void calculateVertices(){
 	    if(vertices!=null) return;//already done
 	    vertices=parentBrush.getVertices (this);
-	    for(int i=0;i<vertices.size ();i++){
-		int v2ind=i+1;
-		v2ind= (v2ind==vertices.size()) ? 0 : v2ind ;//join up last vertex with first
+	}
+	
+	/** not very efficient code. hopefully used infrequently */
+	public Vector<Edge> calculateEdges(){
+	    if(edges!=null) return edges;//done already
+	    calculateVertices();
+	    Brush parent=getParent();
+	    edges=new Vector<Edge>(6,6);
+	    //check each pair of vertices on the face, to see if they are
+	    //an edge. (the line joining the pair might be a diagonal)
+	    for(int i=0;i<vertices.size();i++){
+		for(int j=i+1;j<vertices.size();j++){
+		    //both must be within epsilon of one other face's plane
+		    for(Face f:parent.getFaces()){
+			Vector3D pi=vertices.get(i), pj=vertices.get(j);
+			if(f!=this){
+			    if(f.getHessian().absDistance(pi)<Epsilon.distance && f.getHessian().absDistance(pj)<Epsilon.distance) {
+				edges.add(new Edge(pi,pj));
+			    }
+			}
+		    }
+		}
 	    }
+	    return edges;
 	}
 	
 	/** returns true if p is within Epsilon.distance of one of the edges

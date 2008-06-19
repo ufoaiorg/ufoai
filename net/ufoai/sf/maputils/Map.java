@@ -247,21 +247,27 @@ public class Map {
 			Vector<CompositeFace> possibleInteractionComposites=b.getCompositeFaceInteractionList();
 			Vector<Face> bFaces = b.getFaces();//faces of the brush being considered as nodraws
 			for (Face bf: bFaces) {//loop through the faces of the brush
-			    for(CompositeFace cf:possibleInteractionComposites){
-				if(cf.isFacingAndCoincidentTo(bf)){
-				    Vector<Vector3D> vertsOfFaceBf=bf.getVertices();
-				    if(cf.areInsideParentBrushes(vertsOfFaceBf)){
-					if(cf.coversConsideringLevelFlags(bf)){
-					    if(cf.compositeFaceVerticesAreOutside(bf)){
-						//System.out.println("cf "+cf+" considered obscuring "+bf);
-						nodrawsObsByComposite++;
-						bf.setNodraw();
-						//MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
-						break;//once the face has been set, skip the rest.
+			    consider_next_face: {
+				for(CompositeFace cf:possibleInteractionComposites){
+				    if(cf.isFacingAndCoincidentTo(bf)){
+					Vector<Vector3D> vertsOfFaceBf=bf.getVertices();
+					if(cf.areInsideParentBrushes(vertsOfFaceBf)){
+					    if(cf.coversConsideringLevelFlags(bf)){
+						if(cf.compositeFaceVerticesAreOutside(bf)){
+						    switch (cf.crossesEdge(bf)){
+							case CompositeFace.CROSS_EXTERNAL: break;//face not covered
+							case CompositeFace.CROSS_NONE: break;//face covered by single face - composite not really used
+							case CompositeFace.CROSS_INTERNAL: 
+							    nodrawsObsByComposite++;
+							    bf.setNodraw();
+							    //MapUtils.printf("face %d from brush %d from entity %d obscured by composite face.%n",bf.getNumber() ,b.getBrushNumber(),b.getParentEntity().getNumber());
+							    break consider_next_face;
+						    }
+						}
 					    }
 					}
 				    }
-				}
+				}//the break takes you to the other side of this brace, ie to the next face
 			    }
 			}
 		}

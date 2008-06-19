@@ -28,6 +28,16 @@ public class Vector3D implements Cloneable {
 	public float dot (Vector3D a) {
 		return a.x*x + a.y*y + a.z*z;
 	}
+	
+	public float cosTo(Vector3D a){
+	    return this.unit().dot(a.unit());
+	}
+	
+	/** @return true if <b>this</b> is parallel to <code>a</code>. within Epsilon.angle.
+	 *               */
+	public boolean isParallelOrAntiparallelTo (Vector3D a) {
+		return Math.abs(this.cosTo(a)) >= Epsilon.cos ;
+	}
 
 	public Vector3D add (Vector3D v) {
 		return new Vector3D (this.x + v.x, this.y + v.y, this.z + v.z);
@@ -61,4 +71,13 @@ public class Vector3D implements Cloneable {
 		return String.format ("(%05.1f,%05.1f,%05.1f)", x, y, z);
 	}
 
+	public boolean equals(Object o){
+	    try{
+		Vector3D v=(Vector3D)o;
+		return this.subtract(v).magnitude() <= Epsilon.distance;
+	    }catch (Exception e){
+		return false;
+	    }
+	}
+	
 }
