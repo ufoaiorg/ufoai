@@ -729,7 +729,7 @@ menu save
 					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
 					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
 					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
-					*txt_slot7 color "7 .78 0 1" *txt_slot7 mousefx false }
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
 	}
 	pic slot1
 	{
@@ -745,7 +745,7 @@ menu save
 					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
 					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
 					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
-					*txt_slot7 color "7 .78 0 1" *txt_slot7 mousefx false }
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
 	}
 	pic slot2
 	{
@@ -761,7 +761,7 @@ menu save
 					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
 					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
 					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
-					*txt_slot7 color "7 .78 0 1" *txt_slot7 mousefx false }
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
 	}
 	pic slot3
 	{
@@ -777,7 +777,7 @@ menu save
 					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
 					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
 					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
-					*txt_slot7 color "7 .78 0 1" *txt_slot7 mousefx false }
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
 	}
 	pic slot4
 	{
@@ -793,7 +793,7 @@ menu save
 					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
 					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
 					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
-					*txt_slot7 color "7 .78 0 1" *txt_slot7 mousefx false }
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
 	}
 	pic slot5
 	{
@@ -809,7 +809,7 @@ menu save
 					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
 					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
 					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
-					*txt_slot7 color "7 .78 0 1" *txt_slot7 mousefx false }
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
 	}
 	pic slot6
 	{
@@ -825,7 +825,7 @@ menu save
 					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
 					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
 					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
-					*txt_slot7 color "7 .78 0 1" *txt_slot7 mousefx false }
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
 	}
 	pic slot7
 	{
@@ -841,7 +841,7 @@ menu save
 					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
 					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
 					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
-					*txt_slot6 color "7 .78 0 1" *txt_slot6 mousefx false }
+					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false }
 	}
 
 	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "650 210" color "0 .78 0 1" }
