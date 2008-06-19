@@ -458,41 +458,13 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
 }
 
 /**
- * @brief Actions to perform when a type of buildings may have changed its status.
- * @param[in] type Type of building that has been modified
- * @param[in] base Pointer to base with given building.
- * @sa B_UpdateOneBaseBuildingStatusOnEnable
- * @sa B_UpdateOneBaseBuildingStatusOnDisable
- */
-static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
-{
-	switch (type) {
-	case B_RADAR:
-		{
-			const float level = B_GetMaxBuildingLevel(base, B_RADAR);
-			RADAR_Initialise(&base->radar, RADAR_BASERANGE, level, qtrue);
-			CP_UpdateMissionVisibleOnGeoscape();
-		}
-		break;
-	case B_WORKSHOP:
-		PR_UpdateProductionCap(base);
-		break;
-	case B_LAB:
-		RS_RemoveExceedingScientist(base);
-		break;
-	default:
-		break;
-	}
-}
-
-/**
  * @brief Actions to perform when a type of buildings goes from qfalse to qtrue.
  * @note This function is not only called when a building is enabled for the first time in base
  * @note but also when one of its dependencies is destroyed and then rebuilt
  * @param[in] type Type of building that has been modified from qfalse to qtrue
  * @param[in] base Pointer to base with given building.
  * @sa B_UpdateOneBaseBuildingStatusOnDisable
- * @sa B_UpdateOneBaseBuildingStatus
+ * @sa onConstruct trigger
  */
 static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
 {
@@ -514,7 +486,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
  * @param[in] type Type of building which hasBuilding value has been modified from qtrue to qfalse
  * @param[in] base Pointer to base with given building.
  * @sa B_UpdateOneBaseBuildingStatusOnEnable
- * @sa B_UpdateOneBaseBuildingStatus
+ * @sa onDestroy trigger
  */
 static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t* base)
 {
@@ -527,11 +499,6 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		RADAR_Initialise(&base->radar, 0.0f, 0.0f, qtrue);
 		CP_UpdateMissionVisibleOnGeoscape();
 		break;
-	case B_LAB:
-		RS_RemoveExceedingScientist(base);
-		break;
-	case B_POWER:
-		/** @todo */
 	default:
 		break;
 	}
@@ -564,16 +531,14 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
-				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
 					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
-				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+				}
 			}
 		}
 	}
@@ -587,15 +552,13 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
 					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
-				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
 				/* we can only deactivate an operationnal building */
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
 					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
-				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+				}
 			}
 		}
 	}
@@ -632,8 +595,7 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 				if (firstEnable)
 					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
 				test = qtrue;
-			} else
-				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][buildingIdx].buildingType, base);
+			}
 		}
 	}
 
@@ -692,76 +654,6 @@ static void B_ResetAllStatusAndCapacities_f (void)
 	}
 }
 #endif
-
-/**
- * @brief On destroy function for quarter.
- * @note called with quarter_destroy
- * @sa B_BuildingDestroy_f
- */
-static void B_QuarterOnDestroy_f (void)
-{
-	int baseIdx, buildingType;
-	base_t *base;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", Cmd_Argv(0));
-		return;
-	}
-
-	buildingType = atoi(Cmd_Argv(2));
-	if (buildingType != B_QUARTERS) {
-		Com_Printf("B_QuarterOnDestroy_f: buildingType '%i' is not a quarter\n", buildingType);
-		return;
-	}
-
-	baseIdx = atoi(Cmd_Argv(1));
-
-	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("B_QuarterOnDestroy_f: %i is outside bounds\n", baseIdx);
-		return;
-	}
-
-	base = B_GetFoundedBaseByIDX(baseIdx);
-	if (base)
-		E_DeleteEmployeesExceedingCapacity(base);
-	else
-		Com_Printf("B_QuarterOnDestroy_f: base %i is not founded\n", baseIdx);
-}
-
-/**
- * @brief On destroy function for storage.
- * @note called with storage_destroy
- * @sa B_BuildingDestroy_f
- */
-static void B_StorageOnDestroy_f (void)
-{
-	int baseIdx, buildingType;
-	base_t *base;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", Cmd_Argv(0));
-		return;
-	}
-
-	buildingType = atoi(Cmd_Argv(2));
-	if (buildingType != B_STORAGE) {
-		Com_Printf("B_StorageOnDestroy_f: buildingType '%i' is not a storage\n", buildingType);
-		return;
-	}
-
-	baseIdx = atoi(Cmd_Argv(1));
-
-	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("B_StorageOnDestroy_f: %i is outside bounds\n", baseIdx);
-		return;
-	}
-
-	base = B_GetFoundedBaseByIDX(baseIdx);
-	if (base)
-		INV_RemoveAllItemExceedingCapacity(base);
-	else
-		Com_Printf("B_StorageOnDestroy_f: base %i is not founded\n", baseIdx);
-}
 
 /**
  * @brief Actions to perform when destroying one hangar.
@@ -827,11 +719,12 @@ static void B_HangarOnDestroy (base_t* base, buildingType_t buildingType)
 }
 
 /**
- * @brief On destroy function for hangar.
- * @note called with hangar_destroy
+ * @brief On destroy function for several building type.
+ * @note this function is only used for sanity checks, and send to related function depending on building type.
+ * @pre Functions below will be called BEFORE the building is actually destroyed.
  * @sa B_BuildingDestroy_f
  */
-static void B_HangarOnDestroy_f (void)
+static void B_BuildingOnDestroy_f (void)
 {
 	int baseIdx, buildingType;
 	base_t *base;
@@ -843,22 +736,53 @@ static void B_HangarOnDestroy_f (void)
 
 	buildingType = atoi(Cmd_Argv(2));
 	if (buildingType < 0 || buildingType >= MAX_BUILDING_TYPE) {
-		Com_Printf("B_HangarOnDestroy_f: buildingType '%i' above maximum value (%i)\n", buildingType, MAX_BUILDING_TYPE);
+		Com_Printf("B_HangarOnDestroy_f: buildingType '%i' outside limits\n", buildingType);
 		return;
 	}
 
 	baseIdx = atoi(Cmd_Argv(1));
 
 	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("B_HangarOnDestroy_f: %i is outside bounds\n", baseIdx);
+		Com_Printf("B_BuildingOnDestroy_f: %i is outside bounds\n", baseIdx);
 		return;
 	}
 
 	base = B_GetFoundedBaseByIDX(baseIdx);
-	if (base)
-		B_HangarOnDestroy(base, buildingType);
-	else
-		Com_Printf("B_HangarOnDestroy_f: base %i is not founded\n", baseIdx);
+	if (base) {
+		switch (buildingType) {
+		case B_WORKSHOP:
+			PR_UpdateProductionCap(base);
+			break;
+		case B_STORAGE:
+			INV_RemoveAllItemExceedingCapacity(base);
+			break;
+		case B_ALIEN_CONTAINMENT:
+			/* @todo: implement me */
+			break;
+		case B_LAB:
+			RS_RemoveExceedingScientist(base);
+			break;
+		case B_HANGAR: /* the Dropship Hangar */
+		case B_SMALL_HANGAR:
+			B_HangarOnDestroy(base, buildingType);
+			break;
+		case B_UFO_HANGAR:
+		case B_UFO_SMALL_HANGAR:
+			/* @todo: implement me */
+			break;
+		case B_QUARTERS:
+			E_DeleteEmployeesExceedingCapacity(base);
+			break;
+		case B_ANTIMATTER:
+			/* @todo: implement me */
+			break;
+		default:
+			/* handled in a seperate function, or number of buildings have no impact
+			 * on how the building works */
+			break;
+		}
+	} else
+		Com_Printf("B_BuildingOnDestroy_f: base %i is not founded\n", baseIdx);
 }
 
 /**
@@ -934,7 +858,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	test = qfalse;
 
 	switch (buildingType) {
-	/* building has a capacity */
 	case B_WORKSHOP:
 	case B_STORAGE:
 	case B_ALIEN_CONTAINMENT:
@@ -945,9 +868,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	case B_COMMAND:
 	case B_UFO_HANGAR:
 	case B_UFO_SMALL_HANGAR:
-		cap = B_GetCapacityFromBuildingType(buildingType);
-		/* no break, we want to update status below */
-	/* building has no capacity */
 	case B_POWER:
 	case B_TEAMROOM:
 	case B_QUARTERS:
@@ -957,12 +877,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
 			B_SetBuildingStatus(base, buildingType, qfalse);
 			test = qtrue;
-		} else {
-			cap = B_GetCapacityFromBuildingType(buildingType);
-			if (cap != MAX_CAP)
-				B_UpdateBaseCapacities(cap, base);
 		}
-		B_UpdateOneBaseBuildingStatus(buildingType, base);
 		break;
 	case B_ANTIMATTER:
 		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
@@ -971,7 +886,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 			INV_ManageAntimatter(base, 0, qfalse);
 			test = qtrue;
 		} else {
-			cap = CAP_ANTIMATTER;
 			/* @todo what happens of exceeding antimatter? */
 		}
 		break;
@@ -984,9 +898,15 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	/* now, the destruction of this building may have changed the status of other building. */
 	if (test) {
+		/* there is no more building of this type: check if this has an impact on other buildings */
 		B_UpdateStatusBuilding(base, buildingType, qfalse);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
+	} else {
+		/* there is at least one other building of the same type: just update capacity */
+		cap = B_GetCapacityFromBuildingType(buildingType);
+		if (cap != MAX_CAP)
+			B_UpdateBaseCapacities(cap, base);
 	}
 
 	B_BaseInit_f();
@@ -1224,8 +1144,6 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	test = B_CheckUpdateBuilding(building, base);
 	if (test)
 		B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
-	else
-		B_UpdateOneBaseBuildingStatus(building->buildingType, base);
 
 	/* now, the status of this building may have changed the status of other building.
 	 * We check that, but only for buildings which needed building 1 */
@@ -3576,9 +3494,7 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
-	Cmd_AddCommand("hangar_destroy", B_HangarOnDestroy_f, "Destroy a hangar");
-	Cmd_AddCommand("storage_destroy", B_StorageOnDestroy_f, "Destroy a storage");
-	Cmd_AddCommand("quarter_destroy", B_QuarterOnDestroy_f, "Destroy a quarter");
+	Cmd_AddCommand("building_ondestroy", B_BuildingOnDestroy_f, "Destroy a building");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
 	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");

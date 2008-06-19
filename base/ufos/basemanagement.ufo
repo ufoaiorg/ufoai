@@ -130,7 +130,7 @@ building building_storage
 	pedia		rs_building_storage
 	pos			"3 4"
 	capacity	10000
-	ondestroy	"storage_destroy"
+	ondestroy	"building_ondestroy"
 	more_than_one	true
 	onclick		"building_open"
 }
@@ -178,7 +178,7 @@ building building_quarters
 	more_than_one	true
 	type		quarters
 	onclick		"building_open"
-	ondestroy	"quarter_destroy"
+	ondestroy	"building_ondestroy"
 	capacity	20
 }
 
@@ -197,7 +197,7 @@ building building_hangar
 	type		hangar
 	needs		building_hangar2
 	onconstruct 	""
-	ondestroy	"hangar_destroy"
+	ondestroy	"building_ondestroy"
 	starting_employees	8	//Number of soldiers in dropship when first base is build
 	onclick		"building_open"
 	capacity	1
@@ -225,7 +225,7 @@ building building_intercept
 	pos			"1 3"
 	more_than_one	true
 	onconstruct	""
-	ondestroy	"hangar_destroy"
+	ondestroy	"building_ondestroy"
 	capacity	1
 	type		smallhangar
 	onclick		"building_open"
@@ -302,6 +302,7 @@ building building_workshop
 	starting_employees	10
 	needs		building_workshop2
 	onclick		"building_open"
+	ondestroy	"building_ondestroy"
 	capacity	10
 }
 
@@ -360,6 +361,7 @@ building building_lab
 	type		lab
 	starting_employees	10
 	onclick		"building_open"
+	ondestroy	"building_ondestroy"
 	capacity	10
 }
 
