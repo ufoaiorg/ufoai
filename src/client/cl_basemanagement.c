@@ -2649,7 +2649,8 @@ static void B_SelectBase_f (void)
 		 * that means that player wants to quit this mode */
 		if (gd.mapAction == MA_NEWBASE) {
 			MAP_ResetAction();
-			MAP_DeactivateOverlay("radar");
+			if (!radarOverlayWasSet)
+				MAP_DeactivateOverlay("radar");
 			return;
 		}
 		gd.mapAction = MA_NEWBASE;
@@ -2661,8 +2662,10 @@ static void B_SelectBase_f (void)
 			Cvar_Set("mn_base_newbasecost", va(_("%i c"), curCampaign->basecost));
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			Cmd_ExecuteString("set_base_to_normal");
+			/* Store configuration of radar overlay to be able to set it back */
+			radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
 			/* show radar overlay (if not already displayed) */
-			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+			if (!radarOverlayWasSet)
 				MAP_SetOverlay("radar");
 		} else {
 			Com_Printf("MaxBases reached\n");

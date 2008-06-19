@@ -707,8 +707,10 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 		if (checkStatusChanged && visible != ufo->visible) {
 			if (ufo->visible) {
 				MN_AddNewMessage(_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_STANDARD, NULL);
+				/* Store configuration of radar overlay to be able to set it back */
+				radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
 				/* If this is the first UFO on geoscape, activate radar */
-				if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+				if (!radarOverlayWasSet)
 					MAP_SetOverlay("radar");
 				CL_GameTimeStop();
 			} else {
@@ -718,8 +720,9 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 				AIR_AircraftsUFODisappear(ufo);
 				MAP_NotifyUFODisappear(ufo);
 
-				/* Deactivate Radar overlay if needed */
-				RADAR_DeactivateRadarOverlay();
+				/* Deactivate Radar overlay if it was previously not set */
+				if (!radarOverlayWasSet)
+					RADAR_DeactivateRadarOverlay();
 			}
 		}
 	}

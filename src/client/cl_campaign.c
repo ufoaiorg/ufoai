@@ -667,7 +667,8 @@ static void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	/* Notications */
 	AIR_AircraftsNotifyUFORemoved(mission->ufo, destroyed);
 	MAP_NotifyUFORemoved(mission->ufo, destroyed);
-	RADAR_NotifyUFORemoved(mission->ufo, destroyed);
+	if (mission->ufo->visible)
+		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
 
 	if (destroyed) {
 		/* Update UFO idx */

@@ -32,6 +32,9 @@ void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, 
 void R_InitializeRadarOverlay(qboolean source);
 void R_UploadRadarCoverage(qboolean smooth);
 
+qboolean radarOverlayWasSet;	/**< used to store the previous configuration of overlay before radar
+								 * is automatically turned on (e.g when creating base or when UFO appears) */
+
 /* Define radar range */
 const float RADAR_BASERANGE = 24.0f;
 const float RADAR_AIRCRAFTRANGE = 10.0f;
