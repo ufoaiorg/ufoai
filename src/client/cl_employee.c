@@ -646,18 +646,19 @@ qboolean E_UnhireEmployee (employee_t* employee)
 	if (employee && employee->hired && !employee->transfer) {
 		base_t *base = employee->baseHired;
 
+		/* Any effect of removing an employee (e.g. removing a scientist from a research project)
+		 * should take place in E_RemoveEmployeeFromBuilding() */
 		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
 		employee->baseHired = NULL;
 
+		/* Remove employee from corresponding capacity */
 		switch (employee->type) {
-		case EMPL_WORKER:
-			base->capacities[CAP_EMPLOYEES].cur--;
-			PR_UpdateProductionCap(base);
-			break;
 		case EMPL_PILOT:
-			AIR_RemovePilotFromAssignedAircraft(base, employee);
+			/* @todo Is it intended that pilots are not removed from quarter? -- Kracken */
+			break;
+		case EMPL_WORKER:
 		case EMPL_SCIENTIST:
 			/* lab capacity is calculated by the reset employee call */
 		case EMPL_SOLDIER:
@@ -987,14 +988,13 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
  */
 qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 {
-	technology_t *tech;
 	base_t *base;
 
 	assert(employee);
 
 	/* not assigned to any building */
-	/* FIXME: are soldiers assigned to a building, too? quarters? */
-	if (!employee->building && employee->type != EMPL_SOLDIER)
+	/* FIXME: are soldiers and pilots assigned to a building, too? quarters? */
+	if (!employee->building && employee->type != EMPL_SOLDIER && employee->type != EMPL_PILOT)
 		return qfalse;
 
 	/* we can assume this because otherwise there should be no buildingID */
@@ -1005,19 +1005,7 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 
 	switch (employee->type) {
 	case EMPL_SCIENTIST:
-		/* Get technology with highest scientist-count and remove one scientist. */
-		if (employee->baseHired)
-			tech = RS_GetTechWithMostScientists(employee->baseHired);
-		else
-			tech = NULL;
-
-		if (tech) {
-			/* Try to assign replacement scientist */
-			RS_AssignScientist(tech);
-			RS_RemoveScientist(tech);
-		} else {
-			assert(employee->building);
-		}
+		RS_RemoveFiredScientist(base, employee);
 		break;
 
 	case EMPL_SOLDIER:
@@ -1033,9 +1021,7 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 
 	case EMPL_WORKER:
 		/* Update current capacity and production times if worker is being counted there. */
-		if (E_CountHired(base, employee->type) == base->capacities[CAP_WORKSPACE].cur) {
-			base->capacities[CAP_WORKSPACE].cur--;
-		}
+		PR_UpdateProductionCap(base);
 		break;
 
 	case EMPL_ROBOT:

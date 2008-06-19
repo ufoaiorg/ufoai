@@ -220,14 +220,6 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	SAV_GameActionsAfterLoad(error);
 
-	/* Udate research so that it can start (otherwise research does not go on until you entered Laboratory)
-	 * @todo: FIXME this is only a workaround : RS_UpdateData set a lot of cvars that we don't need here
-	 * it should be splitted in 2 functions: one that sets the cvars, and one that updates the research status (and that we could use here) */
-	for (i = 0; i < MAX_BASES; i++) {
-		if (gd.bases[i].founded)
-			RS_UpdateData(&gd.bases[i]);
-	}
-
 	assert(ccs.singleplayer);
 
 	CL_Drop();

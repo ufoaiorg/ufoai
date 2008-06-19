@@ -226,7 +226,7 @@ typedef struct technology_s {
 void RS_ResetResearch(void);
 void RS_ResetHash(void);
 void CL_CheckResearchStatus(void);
-void RS_UpdateData(struct base_s *base);
+void RS_UpdateData(struct base_s *base, qboolean updateMenu);
 void RS_ParseTechnologies(const char *name, const char **text);
 #if 0
 qboolean RS_ItemIsResearched(const char *idProvided);
@@ -245,7 +245,8 @@ void RS_ResearchFinish(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 void RS_MarkResearchedAll(void);
 void RS_AssignScientist(technology_t* tech);
-void RS_RemoveScientist(technology_t* tech);
+void RS_RemoveScientist(technology_t* tech, struct employee_s *employee);
+void RS_RemoveFiredScientist(struct base_s *base, struct employee_s *employee);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *idProvided);
 technology_t* RS_GetTechByIDX(int tech_idx);

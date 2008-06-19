@@ -834,7 +834,8 @@ static void CL_ResearchSelect_f (void)
 	researchListPos = num;
 	Cbuf_AddText(va("researchselect%i\n", researchListPos));
 
-	RS_UpdateData(baseCurrent);
+	/* need to set previous selected tech to proper color */
+	RS_UpdateData(baseCurrent, qtrue);
 }
 
 /**
@@ -891,7 +892,7 @@ void RS_AssignScientist (technology_t* tech)
 		tech->statusResearch = RS_RUNNING;
 
 		/* Update display-list and display-info. */
-		RS_UpdateData(base);
+		RS_UpdateData(base, qtrue);
 	}
 }
 
@@ -921,19 +922,19 @@ static void RS_AssignScientist_f (void)
 /**
  * @brief Remove a scientist from a technology.
  * @param[in] tech The technology you want to remove the scientist from.
+ * @param[in] employee Employee you want to remove (NULL if you don't care which one should be removed).
  * @sa RS_RemoveScientist_f
  * @sa RS_AssignScientist
  * @sa E_RemoveEmployeeFromBuilding
  */
-void RS_RemoveScientist (technology_t* tech)
+void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 {
-	employee_t *employee;
-
 	assert(tech);
 
 	if (tech->scientists > 0) {
 		assert(tech->base);
-		employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
+		if (!employee)
+			employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
 		if (employee) {
 			/* Remove the sci from the tech. */
 			tech->scientists--;
@@ -961,7 +962,7 @@ void RS_RemoveScientist (technology_t* tech)
 	/* We only need an update if the employee pointer is set and the tech still is still assigned to a base. */
 	if (employee && tech->base) {
 		/* Update display-list and display-info. */
-		RS_UpdateData(tech->base);
+		RS_UpdateData(tech->base, qtrue);
 	}
 }
 
@@ -1012,7 +1013,39 @@ static void RS_RemoveScientist_f (void)
 	if (num < 0 || num >= researchListLength)
 		return;
 
-	RS_RemoveScientist(researchList[num]);
+	RS_RemoveScientist(researchList[num], NULL);
+}
+
+/**
+ * @brief Remove one scientist from research project if needed.
+ * @param[in] base Pointer to base where a scientist should be removed.
+ * @param[in] employee Pointer to the employee that is fired.
+ * @note used when a scientist is fired.
+ * @sa E_RemoveEmployeeFromBuilding
+ * @note This function is called before the employee is actually fired.
+ */
+void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
+{
+	technology_t *tech;
+
+	assert(base);
+	assert(employee);
+
+	/* Get a tech where there is at least one scientist working on (unless no scientist working in this base) */
+	tech = RS_GetTechWithMostScientists(base);
+
+	/* if there is at least one scientist not working on a project, make this one replace removed employee */
+	if (E_CountUnassigned(base, EMPL_SCIENTIST)) {
+		if (employee->building) {
+			RS_AssignScientist(tech);
+			RS_RemoveScientist(tech, employee);
+		}
+		return;
+	}
+
+	/* tech should never be NULL, as there is at least 1 scientist working in base */
+	assert(tech);
+	RS_RemoveScientist(tech, employee);
 }
 
 /**
@@ -1081,7 +1114,7 @@ static void RS_ResearchStart_f (void)
 	} else
 		MN_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
 
-	RS_UpdateData(baseCurrent);
+	RS_UpdateData(baseCurrent, qtrue);
 }
 
 /**
@@ -1109,7 +1142,7 @@ static void RS_ResearchStop_f (void)
 	case RS_RUNNING:
 		/* Remove all scis from it and set the status to paused (i.e. it's differnet from a RS_NONE since it may have a little bit of progress already). */
 		while (tech->scientists > 0)
-			RS_RemoveScientist(tech);
+			RS_RemoveScientist(tech, NULL);
 		assert(tech->statusResearch == RS_PAUSED);
 		break;
 	case RS_PAUSED:
@@ -1125,7 +1158,7 @@ static void RS_ResearchStop_f (void)
 	default:
 		break;
 	}
-	RS_UpdateData(baseCurrent);
+	RS_UpdateData(baseCurrent, qtrue);
 }
 
 /**
@@ -1153,10 +1186,12 @@ static void RS_ShowPedia_f (void)
 
 /**
  * @brief Loops trough the research-list and updates the displayed text+color of each research-item according to it's status.
+ * @param[in] base Pointer to the base where item list is updated
+ * @param[in] updateMenu True if menu should be update, false if only research status of base is needed.
  * @note See menu_research.ufo for the layout/called functions.
  * @todo Display free space in all labs in the current base for each item.
  */
-void RS_UpdateData (base_t* base)
+void RS_UpdateData (base_t* base, qboolean updateMenu)
 {
 	char name[MAX_VAR];
 	int i, j;
@@ -1164,13 +1199,15 @@ void RS_UpdateData (base_t* base)
 	technology_t *tech;
 
 	/* Make everything the same (predefined in the ufo-file) color. */
-	Cmd_ExecuteString("research_clear");
+	if (updateMenu)
+		Cmd_ExecuteString("research_clear");
 
 	for (i = 0; i < MAX_BASES; i++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
 		available[i] = E_CountUnassigned(base, EMPL_SCIENTIST);
+Com_Printf("available: %i\n", available[0]);
 	}
 
 	RS_MarkResearchable(qfalse);
@@ -1182,24 +1219,28 @@ void RS_UpdateData (base_t* base)
 		if (tech->time == 0)
 			continue;
 
-		Com_sprintf(name, sizeof(name), tech->name);
+		if (updateMenu) {
+			Com_sprintf(name, sizeof(name), tech->name);
 
-		/* @todo: add check for collected items */
+			/* @todo: add check for collected items */
 
-		/* Make icons visible for this entry */
-		Cmd_ExecuteString(va("research_show%i", j));
+			/* Make icons visible for this entry */
+			Cmd_ExecuteString(va("research_show%i", j));
+		}
 
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* Item is collected but not yet researchable. */
 
-			/* Color the item 'unresearchable' */
-			Cmd_ExecuteString(va("researchunresearchable%i", j));
-			/* Display the concated text in the correct list-entry. */
-			Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
+			if (updateMenu) {
+				/* Color the item 'unresearchable' */
+				Cmd_ExecuteString(va("researchunresearchable%i", j));
+				/* Display the concated text in the correct list-entry. */
+				Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
 
-			Cvar_Set(va("mn_researchassigned%i", j), "--");
-			Cvar_Set(va("mn_researchavailable%i", j), "--");
-			Cvar_Set(va("mn_researchmax%i", j), "--");
+				Cvar_Set(va("mn_researchassigned%i", j), "--");
+				Cvar_Set(va("mn_researchavailable%i", j), "--");
+				Cvar_Set(va("mn_researchmax%i", j), "--");
+			}
 
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
 			researchList[j] = tech;
@@ -1208,42 +1249,45 @@ void RS_UpdateData (base_t* base)
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
 			/* An item that can be researched. */
 
-			/* How many scis are assigned to this tech. */
-			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
-			if (tech->base == base || !tech->base) {
-				/* Maximal available scientists in the base the tech is researched. */
-				Cvar_SetValue(va("mn_researchavailable%i", j), available[base->idx]);
-			} else {
-				/* Display available scientists of other base here. */
-				Cvar_SetValue(va("mn_researchavailable%i", j), available[tech->base->idx]);
-			}
-			/* @todo: Free space in all labs in this base. */
-			/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
-			Cvar_Set(va("mn_researchmax%i", j), _("mx."));
-			/* Set the text of the research items and mark them if they are currently researched. */
-			switch (tech->statusResearch) {
-			case RS_RUNNING:
-				/* Color the item with 'research running'-color. */
-				Cmd_ExecuteString(va("researchrunning%i", j));
-				break;
-			case RS_PAUSED:
-				/* Color the item with 'research paused'-color. */
-				Cmd_ExecuteString(va("researchpaused%i", j));
-				break;
-			case RS_NONE:
-				/* The color is defined in menu research.ufo by  "confunc research_clear". See also above. */
-				break;
-			case RS_FINISH:
-			default:
-				break;
+			if (updateMenu) {
+				/* How many scis are assigned to this tech. */
+				Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
+				if (tech->base == base || !tech->base) {
+					/* Maximal available scientists in the base the tech is researched. */
+					Cvar_SetValue(va("mn_researchavailable%i", j), available[base->idx]);
+				} else {
+					/* Display available scientists of other base here. */
+					Cvar_SetValue(va("mn_researchavailable%i", j), available[tech->base->idx]);
+				}
+				/* @todo: Free space in all labs in this base. */
+				/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
+				Cvar_Set(va("mn_researchmax%i", j), _("mx."));
+				/* Set the text of the research items and mark them if they are currently researched. */
+				switch (tech->statusResearch) {
+				case RS_RUNNING:
+					/* Color the item with 'research running'-color. */
+					Cmd_ExecuteString(va("researchrunning%i", j));
+					break;
+				case RS_PAUSED:
+					/* Color the item with 'research paused'-color. */
+					Cmd_ExecuteString(va("researchpaused%i", j));
+					break;
+				case RS_NONE:
+					/* The color is defined in menu research.ufo by  "confunc research_clear". See also above. */
+					break;
+				case RS_FINISH:
+				default:
+					break;
+				}
+
+				/* Display the concated text in the correct list-entry.
+				 * But embed it in brackets if it isn't researched in the current base. */
+				if ((tech->scientists > 0) && tech->base != base) {
+					Com_sprintf(name, sizeof(name), "(%s)", _(tech->name));
+				}
+				Cvar_Set(va("mn_researchitem%i", j), _(name));
 			}
 
-			/* Display the concated text in the correct list-entry.
-			 * But embed it in brackets if it isn't researched in the current base. */
-			if ((tech->scientists > 0) && tech->base != base) {
-				Com_sprintf(name, sizeof(name), "(%s)", _(tech->name));
-			}
-			Cvar_Set(va("mn_researchitem%i", j), _(name));
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
 			researchList[j] = tech;
 			/* counting the numbers of display-list entries. */
@@ -1252,6 +1296,9 @@ void RS_UpdateData (base_t* base)
 	}
 
 	researchListLength = j;
+
+	if (!updateMenu)
+		return;
 
 	/* Set rest of the list-entries to have no text at all. */
 	for (; j < MAX_RESEARCHDISPLAY; j++) {
@@ -1296,7 +1343,7 @@ static void RS_UpdateData_f (void)
 {
 	if (!baseCurrent)
 		return;
-	RS_UpdateData(baseCurrent);
+	RS_UpdateData(baseCurrent, qtrue);
 }
 
 /**
@@ -1312,7 +1359,7 @@ static void CL_ResearchType_f (void)
 		return;
 
 	/* Update and display the list. */
-	RS_UpdateData(baseCurrent);
+	RS_UpdateData(baseCurrent, qtrue);
 
 	/* Nothing to research here. */
 	if (!researchListLength || !gd.numBases) {
@@ -1399,7 +1446,7 @@ void CL_CheckResearchStatus (void)
 					if (tech->time <= 0) {
 						/* Remove all scientists from the technology. */
 						while (tech->scientists > 0)
-							RS_RemoveScientist(tech);
+							RS_RemoveScientist(tech, NULL);
 
 						RS_MarkResearched(tech);
 						researchListLength = 0;
@@ -1415,10 +1462,10 @@ void CL_CheckResearchStatus (void)
 		}
 	}
 
-	/* now update the data in all affected bases */
+	/* now update the data in all affected bases -- we only need to update tech list and not research menu */
 	for (i = 0; i < MAX_BASES; i++) {
 		if (checkBases[i])
-			RS_UpdateData(checkBases[i]);
+			RS_UpdateData(checkBases[i], qfalse);
 	}
 
 	if (newResearch)
@@ -2508,6 +2555,8 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
  */
 void RS_PostLoadInit (void)
 {
+	int baseIdx;
+
 	/* this list has an entry for the tech and for the base index */
 	linkedList_t *techBases = loadTechBases;
 
@@ -2530,6 +2579,15 @@ void RS_PostLoadInit (void)
 
 	/* Clear linked list. */
 	LIST_Delete(&loadTechBases);
+
+	/* Udate research so that it can start (otherwise research does not go on until you entered Laboratory) */
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
+		RS_UpdateData(base, qfalse);
+	}
 }
 
 /**
