@@ -2020,7 +2020,7 @@ static void CL_InitLocal (void)
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
-	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisble local entites as null models");
+	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entites as null models");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
