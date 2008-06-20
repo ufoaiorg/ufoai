@@ -406,7 +406,7 @@ static void B_BaseInit_f (void)
  * @note This function checks base status for particular buildings.
  * @return 0.0f if there is no (operational) building of the requested type in the base, otherwise the maximum level.
  */
-static float B_GetMaxBuildingLevel (base_t* base, buildingType_t type)
+static float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 {
 	int i;
 	float max = 0.0f;
@@ -449,7 +449,8 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
 		B_SetBuildingStatus(base, building->buildingType, qfalse);
 
 	if (B_GetBuildingStatus(base, building->buildingType) != oldValue) {
-		Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n", building->name, B_GetBuildingStatus(base, building->buildingType));
+		Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n",
+			building->name, B_GetBuildingStatus(base, building->buildingType));
 		return qtrue;
 	}
 
@@ -591,10 +592,11 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	while (test) {
 		test = qfalse;
 		for (buildingIdx = 0; buildingIdx < gd.numBuildings[base->idx]; buildingIdx++) {
-			if (!B_GetBuildingStatus(base, gd.buildings[base->idx][buildingIdx].buildingType)
-			 && B_CheckUpdateBuilding(&gd.buildings[base->idx][buildingIdx], base)) {
+			building_t *building = &gd.buildings[base->idx][buildingIdx];
+			if (!B_GetBuildingStatus(base, building->buildingType)
+			 && B_CheckUpdateBuilding(building, base)) {
 				if (firstEnable)
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
+					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
 				test = qtrue;
 			}
 		}
