@@ -1485,7 +1485,6 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 
 		/* Link to the base. */
 		buildingNew->base = base;
-		base->buildingCurrent = buildingNew;	/**< Set current building to a real one (not a template) again. */
 
 		if (base->map[row][col].blocked) {
 			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't build here\n");
