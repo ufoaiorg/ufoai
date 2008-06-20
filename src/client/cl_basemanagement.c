@@ -319,6 +319,70 @@ static const value_t valid_building_vars[] = {
 	{NULL, 0, 0, 0}
 };
 
+static void B_BaseMenuInit (const base_t *base)
+{
+	/* make sure the credits cvar is up-to-date */
+	CL_UpdateCredits(ccs.credits);
+
+	/* activate or deactivate the aircraft button */
+	if (AIR_AircraftAllowed(base)) {
+		Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
+		Cmd_ExecuteString("set_aircraft_enabled");
+	} else {
+		Cvar_SetValue("mn_base_num_aircraft", -1);
+		Cmd_ExecuteString("set_aircraft_disabled");
+	}
+	if (BS_BuySellAllowed(base)) {
+		Cvar_SetValue("mn_base_buysell_allowed", qtrue);
+		Cmd_ExecuteString("set_buysell_enabled");
+	} else {
+		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
+		Cmd_ExecuteString("set_buysell_disabled");
+	}
+	if (gd.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK) {
+		Cvar_SetValue("mn_base_transfer_allowed", qtrue);
+		Cmd_ExecuteString("set_transfer_enabled");
+	} else {
+		Cvar_SetValue("mn_base_transfer_allowed", qfalse);
+		Cmd_ExecuteString("set_transfer_disabled");
+	}
+	if (RS_ResearchAllowed(base)) {
+		Cvar_SetValue("mn_base_research_allowed", qtrue);
+		Cmd_ExecuteString("set_research_enabled");
+	} else {
+		Cvar_SetValue("mn_base_research_allowed", qfalse);
+		Cmd_ExecuteString("set_research_disabled");
+	}
+	if (PR_ProductionAllowed(base)) {
+		Cvar_SetValue("mn_base_prod_allowed", qtrue);
+		Cmd_ExecuteString("set_prod_enabled");
+	} else {
+		Cvar_SetValue("mn_base_prod_allowed", qfalse);
+		Cmd_ExecuteString("set_prod_disabled");
+	}
+	if (E_HireAllowed(base)) {
+		Cvar_SetValue("mn_base_hire_allowed", qtrue);
+		Cmd_ExecuteString("set_hire_enabled");
+	} else {
+		Cvar_SetValue("mn_base_hire_allowed", qfalse);
+		Cmd_ExecuteString("set_hire_disabled");
+	}
+	if (AC_ContainmentAllowed(base)) {
+		Cvar_SetValue("mn_base_containment_allowed", qtrue);
+		Cmd_ExecuteString("set_containment_enabled");
+	} else {
+		Cvar_SetValue("mn_base_containment_allowed", qfalse);
+		Cmd_ExecuteString("set_containment_disabled");
+	}
+	if (HOS_HospitalAllowed(base)) {
+		Cvar_SetValue("mn_base_hospital_allowed", qtrue);
+		Cmd_ExecuteString("set_hospital_enabled");
+	} else {
+		Cvar_SetValue("mn_base_hospital_allowed", qfalse);
+		Cmd_ExecuteString("set_hospital_disabled");
+	}
+}
+
 /**
  * @brief Initialises base.
  * @note This command is executed in the init node of the base menu.
@@ -336,67 +400,7 @@ static void B_BaseInit_f (void)
 		return;
 	}
 
-	baseCurrent = B_GetBaseByIDX(mn_base_id->integer);
-
-	CL_UpdateCredits(ccs.credits);
-
-	/* activate or deactivate the aircraft button */
-	if (AIR_AircraftAllowed(baseCurrent)) {
-		Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
-		Cmd_ExecuteString("set_aircraft_enabled");
-	} else {
-		Cvar_SetValue("mn_base_num_aircraft", -1);
-		Cmd_ExecuteString("set_aircraft_disabled");
-	}
-	if (BS_BuySellAllowed(baseCurrent)) {
-		Cvar_SetValue("mn_base_buysell_allowed", qtrue);
-		Cmd_ExecuteString("set_buysell_enabled");
-	} else {
-		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
-		Cmd_ExecuteString("set_buysell_disabled");
-	}
-	if (gd.numBases > 1 && baseCurrent->baseStatus != BASE_UNDER_ATTACK) {
-		Cvar_SetValue("mn_base_transfer_allowed", qtrue);
-		Cmd_ExecuteString("set_transfer_enabled");
-	} else {
-		Cvar_SetValue("mn_base_transfer_allowed", qfalse);
-		Cmd_ExecuteString("set_transfer_disabled");
-	}
-	if (RS_ResearchAllowed(baseCurrent)) {
-		Cvar_SetValue("mn_base_research_allowed", qtrue);
-		Cmd_ExecuteString("set_research_enabled");
-	} else {
-		Cvar_SetValue("mn_base_research_allowed", qfalse);
-		Cmd_ExecuteString("set_research_disabled");
-	}
-	if (PR_ProductionAllowed(baseCurrent)) {
-		Cvar_SetValue("mn_base_prod_allowed", qtrue);
-		Cmd_ExecuteString("set_prod_enabled");
-	} else {
-		Cvar_SetValue("mn_base_prod_allowed", qfalse);
-		Cmd_ExecuteString("set_prod_disabled");
-	}
-	if (E_HireAllowed(baseCurrent)) {
-		Cvar_SetValue("mn_base_hire_allowed", qtrue);
-		Cmd_ExecuteString("set_hire_enabled");
-	} else {
-		Cvar_SetValue("mn_base_hire_allowed", qfalse);
-		Cmd_ExecuteString("set_hire_disabled");
-	}
-	if (AC_ContainmentAllowed(baseCurrent)) {
-		Cvar_SetValue("mn_base_containment_allowed", qtrue);
-		Cmd_ExecuteString("set_containment_enabled");
-	} else {
-		Cvar_SetValue("mn_base_containment_allowed", qfalse);
-		Cmd_ExecuteString("set_containment_disabled");
-	}
-	if (HOS_HospitalAllowed(baseCurrent)) {
-		Cvar_SetValue("mn_base_hospital_allowed", qtrue);
-		Cmd_ExecuteString("set_hospital_enabled");
-	} else {
-		Cvar_SetValue("mn_base_hospital_allowed", qfalse);
-		Cmd_ExecuteString("set_hospital_disabled");
-	}
+	B_BaseMenuInit(B_GetBaseByIDX(mn_base_id->integer));
 }
 
 /**
@@ -912,7 +916,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 			B_UpdateBaseCapacities(cap, base);
 	}
 
-	B_BaseInit_f();
+	B_BaseMenuInit(base);
 
 	/* Remove aliens if needed. */
 	if (buildingType == B_ALIEN_CONTAINMENT) {
@@ -968,11 +972,8 @@ static void B_BuildingDestroy_f (void)
  */
 void B_MarkBuildingDestroy (base_t* base, building_t* building)
 {
-	int cap = B_GetCapacityFromBuildingType(building->buildingType);
+	int cap;
 	assert(base);
-	assert(building);
-
-	base->buildingCurrent = building;
 
 	/* you can't destroy buildings if base is under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK) {
@@ -980,6 +981,10 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		MN_Popup(_("Notice"), popupText);
 		return;
 	}
+
+	assert(building);
+	cap = B_GetCapacityFromBuildingType(building->buildingType);
+	base->buildingCurrent = building;
 
 	if (building->buildingStatus == B_STATUS_WORKING) {
 		switch (building->buildingType) {
@@ -1136,7 +1141,6 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
 	qboolean test;
-	int cap;
 
 	assert(base);
 	assert(building);
@@ -1157,7 +1161,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	} else {
 		/* no other status than status of building 1 has been modified
 		 * update only status of building 1 */
-		cap = B_GetCapacityFromBuildingType(building->buildingType);
+		const int cap = B_GetCapacityFromBuildingType(building->buildingType);
 		if (cap != MAX_CAP)
 			B_UpdateBaseCapacities(cap, base);
 	}
@@ -1177,7 +1181,6 @@ static void B_AddBuildingToBasePos (building_t *building, base_t *base, const bu
 	gd.numBuildings[base->idx]++;
 	/* Link to the base. */
 	building->base = base;
-	base->buildingCurrent = building;
 	/* fake a click to basemap */
 	B_SetBuildingByClick(base, building, (int)pos[0], (int)pos[1]);
 	B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
@@ -1433,8 +1436,6 @@ static inline qboolean B_CheckCredits (int costs)
  */
 static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 {
-	building_t *building_to_build = NULL;
-
 	/* maybe someone call this command before the buildings are parsed?? */
 	if (!base || !building)
 		return qfalse;
@@ -1450,13 +1451,12 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 
 	/* second building part */
 	if (base->buildingToBuild) {
-		building_to_build = base->buildingToBuild;
-		building_to_build->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+		base->buildingToBuild->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		base->buildingToBuild = NULL;
 	}
 	if (!ccs.instant_build) {
-		base->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-		base->buildingCurrent->timeStart = ccs.date.day;
+		building->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+		building->timeStart = ccs.date.day;
 	} else {
 		/* call the onconstruct trigger */
 		if (building->onConstruct[0] != '\0') {
@@ -1467,7 +1467,7 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 	}
 
 	CL_UpdateCredits(ccs.credits - building->fixCosts);
-	B_BaseInit_f();
+	B_BaseMenuInit(base);
 	return qtrue;
 }
 
@@ -1557,7 +1557,7 @@ void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 					col--;
 				}
 
-				base->map[row][col + 1].building = base->buildingCurrent;
+				base->map[row][col + 1].building = building;
 				base->buildingToBuild = secondBuildingPart;
 				/* where is this building located in our base? */
 				secondBuildingPart->pos[1] = col + 1;
@@ -1566,13 +1566,13 @@ void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 				base->buildingToBuild = NULL;
 			}
 			/* Credits are updated here, too */
-			B_NewBuilding(base, base->buildingCurrent);
+			B_NewBuilding(base, building);
 
-			base->map[row][col].building = base->buildingCurrent;
+			base->map[row][col].building = building;
 
 			/* where is this building located in our base? */
-			base->buildingCurrent->pos[0] = row;
-			base->buildingCurrent->pos[1] = col;
+			building->pos[0] = row;
+			building->pos[1] = col;
 
 			B_ResetBuildingCurrent(base);
 			B_BuildingInit(base);	/* update the building-list */
@@ -1668,12 +1668,19 @@ static void B_DrawBuilding (base_t* base, building_t* building)
  * This way every base can hold its own building list.
  * The content is updated everytime B_BuildingInit is called (i.e everytime the buildings-list is dispplayed/updated)
  */
-static void B_BuildingAddToList (building_t * building)
+static void B_BuildingAddToList (base_t *base, building_t *building)
 {
-	assert(baseCurrent);
+	char *p; /* position in the list */
+	size_t len;
+
+	assert(base);
+	assert(building);
 	assert(building->name);
 
-	Q_strcat(baseCurrent->allBuildingsList, va("%s\n", _(building->name)), MAX_LIST_CHAR);
+	p = base->allBuildingsList;
+	len = strlen(p);
+
+	Com_sprintf(p + len, sizeof(base->allBuildingsList) - len, "%s\n", _(building->name));
 	buildingConstructionList[numBuildingConstructionList] = building->tpl;
 	numBuildingConstructionList++;
 }
@@ -1687,7 +1694,7 @@ static void B_BuildingAddToList (building_t * building)
  * @return The number of buildings.
  * @return -1 on error (e.g. base index out of range)
  */
-int B_GetNumberOfBuildingsInBaseByTemplate (base_t *base, building_t *tpl)
+int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t *tpl)
 {
 	int i;
 	int NumberOfBuildings = 0;
@@ -1724,7 +1731,7 @@ int B_GetNumberOfBuildingsInBaseByTemplate (base_t *base, building_t *tpl)
  * @return The number of buildings.
  * @return -1 on error (e.g. base index out of range)
  */
-int B_GetNumberOfBuildingsInBaseByBuildingType (base_t *base, buildingType_t buildingType)
+int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildingType_t buildingType)
 {
 	int i;
 	int NumberOfBuildings = 0;
@@ -1754,8 +1761,6 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (base_t *base, buildingType_t bui
 static void B_BuildingInit (base_t* base)
 {
 	int i;
-	int numSameBuildings;
-	building_t *tpl;
 
 	/* maybe someone call this command before the bases are parsed?? */
 	if (!base)
@@ -1770,11 +1775,11 @@ static void B_BuildingInit (base_t* base)
 	numBuildingConstructionList = 0;
 
 	for (i = 0; i < gd.numBuildingTemplates; i++) {
-		tpl = &gd.buildingTemplates[i];
+		building_t *tpl = &gd.buildingTemplates[i];
 		/* make an entry in list for this building */
 
 		if (tpl->visible) {
-			numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
+			const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
 
 			if (tpl->moreThanOne) {
 				/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
@@ -1786,7 +1791,7 @@ static void B_BuildingInit (base_t* base)
 
 			/* if the building is researched add it to the list */
 			if (RS_IsResearched_ptr(tpl->tech)) {
-				B_BuildingAddToList(tpl);
+				B_BuildingAddToList(base, tpl);
 			} else {
 				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n",
 					tpl->id, tpl->tech ? tpl->tech->idx : 0);
