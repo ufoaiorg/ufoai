@@ -500,12 +500,14 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t *aia)
+static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia)
 {
 	edict_t *check;
 	int i, move, tu;
-	float dist, minDist;
+	float minDist, minDistCivilian, minDistFighter;
 	float bestActionPoints;
+	float reaction_trap = 0.0;
+	float delta = 0.0;
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
@@ -531,19 +533,64 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t *ai
 		Com_Printf("AI_FighterCalcBestAction: Error - civilian team with no teamdef\n");
 
 	/* run away */
-	minDist = RUN_AWAY_DIST;
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && check->team == TEAM_ALIEN && !(check->state & STATE_DEAD)) {
-			dist = VectorDist(ent->origin, check->origin);
-			if (dist < minDist)
+	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
+
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++){
+		if (check->inuse && check->team == TEAM_ALIEN && !(check->state & STATE_DEAD) && ent != check) {
+			const float dist = VectorDist(ent->origin, check->origin);
+			if (dist && dist < minDist)
 				minDist = dist;
 		}
-	bestActionPoints += GUETE_RUN_AWAY * minDist / RUN_AWAY_DIST;
+		if (check->inuse && check->team == TEAM_CIVILIAN && !(check->state & STATE_DEAD) && ent != check) {
+			const float dist = VectorDist(ent->origin, check->origin);
+			if (dist && dist < minDistCivilian)
+				minDistCivilian = dist;
+		}
+		if (check->inuse && check->team == TEAM_PHALANX && !(check->state & STATE_DEAD) && ent != check) {
+			const float dist = VectorDist(ent->origin, check->origin);
+			if (dist && dist < minDistFighter)
+				minDistFighter = dist;
+		}
+
+	}
+
+	minDist /= UNIT_SIZE;
+	minDistCivilian /= UNIT_SIZE;
+	minDistFighter /= UNIT_SIZE;
+
+	if (minDist < 8.0) {
+		/* very near an alien: run away fast */
+		delta = 4.0 * minDist;
+	} else if (minDist < 16.0) {
+		/* near an alien: run away */
+		delta = 24.0 + minDist;
+	} else if (minDist < 24.0) {
+		/* near an alien: run away slower */
+		delta = 40.0 + (minDist - 16) / 4;
+	} else {
+		delta = 42.0;
+	}
+	/* near a civilian: join him (1/3) */
+	if (minDistCivilian < 10.0)
+		delta += (10.0 - minDistCivilian) / 3.0;
+	/* near a fighter: join him (1/5) */
+	if (minDistFighter < 15.0)
+		delta += (15.0 - minDistFighter) / 5.0;
+	/* don't go close to a fighter to let him move */
+	if (minDistFighter < 2.0)
+		delta /= 10.0;
+
+	/* try to hide */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+		if (check->inuse && G_IsLivingActor(check) && ent != check
+			 && (check->team == TEAM_ALIEN || ent->state & STATE_INSANE) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
+				reaction_trap += 25.0;
+	delta -= reaction_trap;
+	bestActionPoints += delta;
 
 	/* add laziness */
 	if (ent->TU)
 		bestActionPoints += GUETE_CIV_LAZINESS * tu / ent->TU;
-
 	/* add random effects */
 	bestActionPoints += GUETE_CIV_RANDOM * frand();
 
