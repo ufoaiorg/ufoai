@@ -466,9 +466,10 @@ void BDEF_AddBattery_f (void)
 {
 	int basedefType, baseIdx;
 
-	if (Cmd_Argc() < 3)
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
 		return;
-	else {
+	} else {
 		basedefType = atoi(Cmd_Argv(1));
 		baseIdx = atoi(Cmd_Argv(2));
 	}
@@ -538,9 +539,10 @@ void BDEF_RemoveBattery_f (void)
 	int basedefType, baseIdx;
 	base_t *base;
 
-	if (Cmd_Argc() < 3)
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
 		return;
-	else {
+	} else {
 		basedefType = atoi(Cmd_Argv(1));
 		baseIdx = atoi(Cmd_Argv(2));
 	}
