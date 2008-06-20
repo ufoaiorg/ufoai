@@ -5274,6 +5274,11 @@ static void CP_ChangeNationHappiness_f (void)
 	}
 	multiplier = atof(Cmd_Argv(1));
 
+	if (!selectedMission) {
+		Com_Printf("No mission selected - could not determine nation to use\n");
+		return;
+	}
+
 	/* we can use an assert here - because this script function will only
 	 * be available as trigger command - selectedMission must be set at that stage */
 	assert(selectedMission);
