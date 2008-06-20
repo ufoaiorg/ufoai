@@ -581,10 +581,14 @@ static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia
 		delta /= 10.0;
 
 	/* try to hide */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && G_IsLivingActor(check) && ent != check
-			 && (check->team == TEAM_ALIEN || ent->state & STATE_INSANE) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
-				reaction_trap += 25.0;
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		if (!check->inuse || ent == check)
+			continue;
+		if (!(check->team == TEAM_ALIEN || ent->state & STATE_INSANE))
+			continue;
+		if (G_IsLivingActor(check) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
+			reaction_trap += 25.0;
+	}
 	delta -= reaction_trap;
 	bestActionPoints += delta;
 
