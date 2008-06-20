@@ -235,7 +235,8 @@ item machinegun
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 5 2"
+	shape		"0 0 5 1"
+	shape		"0 1 4 1"
 	center		"5.9 0 2"
 	scale		1.1
 	ammo		60
