@@ -203,7 +203,7 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
  * @return true if the building is functional
  * @sa B_SetBuildingStatus
  */
-qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t buildingType)
+qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t buildingType)
 {
 	assert(base);
 	assert(buildingType >= 0);
@@ -226,7 +226,7 @@ qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t buildingT
  * @param[in] newStatus New value of the status
  * @sa B_GetBuildingStatus
  */
-void B_SetBuildingStatus (base_t* const base, buildingType_t buildingType, qboolean newStatus)
+void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType, qboolean newStatus)
 {
 	assert(base);
 	assert(buildingType >= 0);
@@ -246,7 +246,7 @@ void B_SetBuildingStatus (base_t* const base, buildingType_t buildingType, qbool
  * @param[in] building
  * @return true if base contains needed dependence for entering building
  */
-qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t* building)
+qboolean B_CheckBuildingDependencesStatus (const base_t* const base, const building_t* building)
 {
 	assert(base);
 	assert(building);
@@ -314,7 +314,6 @@ static const value_t valid_building_vars[] = {
 	{"ondestroy", V_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
 	{"onupgrade", V_STRING, offsetof(building_t, onUpgrade), 0}, /**< Event handler. */
 	{"onrepair", V_STRING, offsetof(building_t, onRepair), 0}, /**< Event handler. */
-	{"onclick", V_STRING, offsetof(building_t, onClick), 0}, /**< Event handler. */
 	{"pos", V_POS, offsetof(building_t, pos), MEMBER_SIZEOF(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
 	{"autobuild", V_BOOL, offsetof(building_t, autobuild), MEMBER_SIZEOF(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{NULL, 0, 0, 0}
@@ -1178,7 +1177,7 @@ static void B_AddBuildingToBasePos (building_t *building, base_t *base, const bu
 	building->base = base;
 	base->buildingCurrent = building;
 	/* fake a click to basemap */
-	B_SetBuildingByClick((int)pos[0], (int)pos[1]);
+	B_SetBuildingByClick(base, building, (int)pos[0], (int)pos[1]);
 	B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, building->id, building->pos[0], building->pos[1]);
 
@@ -1430,22 +1429,22 @@ static inline qboolean B_CheckCredits (int costs)
  * Checks whether the player has enough credits to construct the current selected
  * building before starting construction.
  */
-static qboolean B_ConstructBuilding (base_t* base)
+static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 {
 	building_t *building_to_build = NULL;
 
 	/* maybe someone call this command before the buildings are parsed?? */
-	if (!base || !base->buildingCurrent)
+	if (!base || !building)
 		return qfalse;
 
 	/* enough credits to build this? */
-	if (!B_CheckCredits(base->buildingCurrent->fixCosts)) {
-		Com_DPrintf(DEBUG_CLIENT, "B_ConstructBuilding: Not enough credits to build: '%s'\n", base->buildingCurrent->id);
+	if (!B_CheckCredits(building->fixCosts)) {
+		Com_DPrintf(DEBUG_CLIENT, "B_ConstructBuilding: Not enough credits to build: '%s'\n", building->id);
 		B_ResetBuildingCurrent(base);
 		return qfalse;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", base->buildingCurrent->id);
+	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", building->id);
 
 	/* second building part */
 	if (base->buildingToBuild) {
@@ -1458,14 +1457,14 @@ static qboolean B_ConstructBuilding (base_t* base)
 		base->buildingCurrent->timeStart = ccs.date.day;
 	} else {
 		/* call the onconstruct trigger */
-		if (*base->buildingCurrent->onConstruct) {
-			Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", base->buildingCurrent->onConstruct, base->idx);
-			Cbuf_AddText(va("%s %i;", base->buildingCurrent->onConstruct, base->idx));
+		if (building->onConstruct[0] != '\0') {
+			Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
+			Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
 		}
-		B_UpdateAllBaseBuildingStatus(base->buildingCurrent, base, B_STATUS_WORKING);
+		B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 	}
 
-	CL_UpdateCredits(ccs.credits - base->buildingCurrent->fixCosts);
+	CL_UpdateCredits(ccs.credits - building->fixCosts);
 	B_BaseInit_f();
 	return qtrue;
 }
@@ -1475,79 +1474,80 @@ static qboolean B_ConstructBuilding (base_t* base)
  * @sa B_MarkBuildingDestroy
  * @sa B_ConstructBuilding
  */
-static void B_NewBuilding (base_t* base)
+static void B_NewBuilding (base_t* base, building_t *building)
 {
 	/* maybe someone call this command before the buildings are parsed?? */
-	if (!base || !base->buildingCurrent)
+	if (!base || !building)
 		return;
 
-	if (base->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
+	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
 		/* credits are updated in the construct function */
-		if (B_ConstructBuilding(base)) {
-			B_BuildingStatus(base, base->buildingCurrent);
-			Com_DPrintf(DEBUG_CLIENT, "B_NewBuilding: buildingCurrent->buildingStatus = %i\n", base->buildingCurrent->buildingStatus);
+		if (B_ConstructBuilding(base, building)) {
+			B_BuildingStatus(base, building);
+			Com_DPrintf(DEBUG_CLIENT, "B_NewBuilding: building->buildingStatus = %i\n", building->buildingStatus);
 		}
 }
 
 /**
  * @brief Set the currently selected building.
- *
+ * @param[in,out] base The base to place the building in
+ * @param[in] building The building to place at the given location
  * @param[in] row Set building (baseCurrent->buildingCurrent) to row
  * @param[in] col Set building (baseCurrent->buildingCurrent) to col
  */
-void B_SetBuildingByClick (int row, int col)
+void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 {
 #ifdef DEBUG
-	if (!baseCurrent)
+	if (!base)
 		Sys_Error("no current base\n");
-	if (!baseCurrent->buildingCurrent)
+	if (!building)
 		Sys_Error("no current building\n");
 #endif
-	if (!B_CheckCredits(baseCurrent->buildingCurrent->fixCosts)) {
+	if (!B_CheckCredits(building->fixCosts)) {
 		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
 		return;
 	}
 
-	/** @todo This is a bad idea ... baseCurrent->buildingCurrent shouldn't link
+	/** @todo This is a bad idea ... base->buildingCurrent shouldn't link
 	 * to anything in gd.buildingTemplates at all IMO.
 	 * It can easily lead to confusion (if it's used elsewhere for some reason). */
 	/* If the building is in gd.buildingTemplates[] ... */
-	if (!baseCurrent->buildingCurrent->base) {
-		building_t *building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
-		assert(baseCurrent->buildingCurrent == baseCurrent->buildingCurrent->tpl); /**< Templates link to themself -  we make sure this is a template. */
+	if (!building->base) {
+		building_t *buildingNew = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+		assert(building == building->tpl); /**< Templates link to themself -  we make sure this is a template. */
 
 		/* copy building from template list to base-buildings-list */
-		*building = *baseCurrent->buildingCurrent->tpl;
-		assert(building != baseCurrent->buildingCurrent->tpl);
-		assert(building->tpl == baseCurrent->buildingCurrent->tpl);
+		*buildingNew = *building->tpl;
+		assert(buildingNew != base->buildingCurrent->tpl);
+		assert(buildingNew->tpl == base->buildingCurrent->tpl);
 
 		/* self-link to building-list in base */
-		building->idx = gd.numBuildings[baseCurrent->idx];
-		gd.numBuildings[baseCurrent->idx]++;
+		buildingNew->idx = gd.numBuildings[base->idx];
+		gd.numBuildings[base->idx]++;
 
 		/* Link to the base. */
-		building->base = baseCurrent;
-		baseCurrent->buildingCurrent = building;	/**< Set current building to a real one (not a template) again. */
+		buildingNew->base = base;
+		base->buildingCurrent = buildingNew;	/**< Set current building to a real one (not a template) again. */
 	}
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
-		if (baseCurrent->map[row][col].blocked) {
+		if (base->map[row][col].blocked) {
 			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't build here\n");
-		} else if (!baseCurrent->map[row][col].building) {
+		} else if (!base->map[row][col].building) {
 			/* No building in this place */
-			if (baseCurrent->buildingCurrent->needs) {
-				building_t *secondBuildingPart = B_GetBuildingTemplate(baseCurrent->buildingCurrent->needs);	/* template link */
+			if (building->needs) {
+				building_t *secondBuildingPart = B_GetBuildingTemplate(building->needs);	/* template link */
 
 				if (col + 1 == BASE_SIZE) {
-					if (baseCurrent->map[row][col - 1].building
-					 || baseCurrent->map[row][col - 1].blocked) {
+					if (base->map[row][col - 1].building
+					 || base->map[row][col - 1].blocked) {
 						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
 					col--;
-				} else if (baseCurrent->map[row][col + 1].building || baseCurrent->map[row][col + 1].blocked) {
-					if (baseCurrent->map[row][col - 1].building
-					 || baseCurrent->map[row][col - 1].blocked
+				} else if (base->map[row][col + 1].building || base->map[row][col + 1].blocked) {
+					if (base->map[row][col - 1].building
+					 || base->map[row][col - 1].blocked
 					 || !col) {
 						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
@@ -1555,28 +1555,28 @@ void B_SetBuildingByClick (int row, int col)
 					col--;
 				}
 
-				baseCurrent->map[row][col + 1].building = baseCurrent->buildingCurrent;
-				baseCurrent->buildingToBuild = secondBuildingPart;
+				base->map[row][col + 1].building = base->buildingCurrent;
+				base->buildingToBuild = secondBuildingPart;
 				/* where is this building located in our base? */
 				secondBuildingPart->pos[1] = col + 1;
 				secondBuildingPart->pos[0] = row;
 			} else {
-				baseCurrent->buildingToBuild = NULL;
+				base->buildingToBuild = NULL;
 			}
 			/* Credits are updated here, too */
-			B_NewBuilding(baseCurrent);
+			B_NewBuilding(base, base->buildingCurrent);
 
-			baseCurrent->map[row][col].building = baseCurrent->buildingCurrent;
+			base->map[row][col].building = base->buildingCurrent;
 
 			/* where is this building located in our base? */
-			baseCurrent->buildingCurrent->pos[0] = row;
-			baseCurrent->buildingCurrent->pos[1] = col;
+			base->buildingCurrent->pos[0] = row;
+			base->buildingCurrent->pos[1] = col;
 
-			B_ResetBuildingCurrent(baseCurrent);
-			B_BuildingInit(baseCurrent);	/* update the building-list */
+			B_ResetBuildingCurrent(base);
+			B_BuildingInit(base);	/* update the building-list */
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "There is already a building\n");
-			Com_DPrintf(DEBUG_CLIENT, "Building: %s at (row:%i, col:%i)\n", baseCurrent->map[row][col].building->id, row, col);
+			Com_DPrintf(DEBUG_CLIENT, "Building: %s at (row:%i, col:%i)\n", base->map[row][col].building->id, row, col);
 		}
 	} else
 		Com_DPrintf(DEBUG_CLIENT, "Invalid coordinates\n");
@@ -1602,7 +1602,7 @@ static void B_SetBuilding_f (void)
 	col = atoi(Cmd_Argv(2));
 
 	/* emulate the mouseclick with the given coordinates */
-	B_SetBuildingByClick(row, col);
+	B_SetBuildingByClick(baseCurrent, baseCurrent->buildingCurrent, row, col);
 }
 
 /**
@@ -1615,7 +1615,7 @@ static void B_NewBuildingFromList_f (void)
 		return;
 
 	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		B_NewBuilding(baseCurrent);
+		B_NewBuilding(baseCurrent, baseCurrent->buildingCurrent);
 }
 
 /**
@@ -3338,80 +3338,79 @@ static void B_CheckBuildingStatusForMenu_f (void)
 }
 
 /**
- * @brief Checks whether the building menu or the pedia entry should be called when baseCurrent->buildingCurrent is set
+ * @brief Checks whether the building menu or the pedia entry should be called
+ * when you click a building in the baseview
+ * @param[in] base The current active base we are viewing right now
+ * @param[in] building The building we have clicked
  */
-static void B_BuildingOpen_f (void)
+void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 {
-	if (baseCurrent && baseCurrent->buildingCurrent) {
-		if (!B_GetBuildingStatus(baseCurrent, baseCurrent->buildingCurrent->buildingType)) {
-			UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-		} else {
-			switch (baseCurrent->buildingCurrent->buildingType) {
-			case B_LAB:
-				if (RS_ResearchAllowed(baseCurrent))
-					MN_PushMenu("research");
-				else
-					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-				break;
-			case B_HOSPITAL:
-				if (HOS_HospitalAllowed(baseCurrent))
-					MN_PushMenu("hospital");
-				else
-					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-				break;
-			case B_ALIEN_CONTAINMENT:
-				if (AC_ContainmentAllowed(baseCurrent))
-					MN_PushMenu("aliencont");
-				else
-					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-				break;
-			case B_QUARTERS:
-				if (E_HireAllowed(baseCurrent))
-					MN_PushMenu("employees");
-				else
-					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-				break;
-			case B_WORKSHOP:
-				if (PR_ProductionAllowed(baseCurrent))
-					MN_PushMenu("production");
-				else
-					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-				break;
-			case B_DEFENSE_LASER:
-			case B_DEFENSE_MISSILE:
-				MN_PushMenu("basedefence");
-				break;
-			case B_HANGAR:
-			case B_SMALL_HANGAR:
-				if (!AIR_AircraftAllowed(baseCurrent)) {
-					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-					break;
-				}
-				if (baseCurrent->numAircraftInBase)
-					MN_PushMenu("aircraft");
-				else {
-					MN_PushMenu("buyaircraft");
-					/* transfer is only possible when there are at least two bases */
-					if (gd.numBases > 1)
-						MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
-					else
-						MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
-				}
-				break;
-			case B_STORAGE:
-			case B_ANTIMATTER:
-				if (BS_BuySellAllowed(baseCurrent))
-					MN_PushMenu("buy");
-				else
-					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-				break;
-			default:
-				UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-				break;
-			}
-		}
+	assert(base);
+	assert(building);
+	if (!B_GetBuildingStatus(base, building->buildingType)) {
+		UP_OpenWith(building->pedia);
 	} else {
-		Com_Printf("Usage: Only call me from baseview\n");
+		switch (building->buildingType) {
+		case B_LAB:
+			if (RS_ResearchAllowed(base))
+				MN_PushMenu("research");
+			else
+				UP_OpenWith(building->pedia);
+			break;
+		case B_HOSPITAL:
+			if (HOS_HospitalAllowed(base))
+				MN_PushMenu("hospital");
+			else
+				UP_OpenWith(building->pedia);
+			break;
+		case B_ALIEN_CONTAINMENT:
+			if (AC_ContainmentAllowed(base))
+				MN_PushMenu("aliencont");
+			else
+				UP_OpenWith(building->pedia);
+			break;
+		case B_QUARTERS:
+			if (E_HireAllowed(base))
+				MN_PushMenu("employees");
+			else
+				UP_OpenWith(building->pedia);
+			break;
+		case B_WORKSHOP:
+			if (PR_ProductionAllowed(base))
+				MN_PushMenu("production");
+			else
+				UP_OpenWith(building->pedia);
+			break;
+		case B_DEFENSE_LASER:
+		case B_DEFENSE_MISSILE:
+			MN_PushMenu("basedefence");
+			break;
+		case B_HANGAR:
+		case B_SMALL_HANGAR:
+			if (!AIR_AircraftAllowed(base)) {
+				UP_OpenWith(building->pedia);
+			} else if (base->numAircraftInBase) {
+				MN_PushMenu("aircraft");
+			} else {
+				MN_PushMenu("buyaircraft");
+				/* transfer is only possible when there are at least two bases */
+				if (gd.numBases > 1)
+					MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
+				else
+					MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
+			}
+			break;
+		case B_STORAGE:
+		case B_ANTIMATTER:
+			if (BS_BuySellAllowed(base))
+				MN_PushMenu("buy");
+			else
+				UP_OpenWith(building->pedia);
+			break;
+		default:
+			UP_OpenWith(building->pedia);
+			break;
+		}
 	}
 }
 
@@ -3486,7 +3485,6 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
 	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase_f, NULL);
-	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
 	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");

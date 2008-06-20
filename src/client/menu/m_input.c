@@ -312,7 +312,7 @@ void MN_Click (int x, int y)
 				MN_BarClick(menu, node, x);
 				break;
 			case MN_BASEMAP:
-				MN_BaseMapClick(node, x, y);
+				MN_BaseMapClick(node, baseCurrent, x, y);
 				break;
 			case MN_MAP:
 				MAP_MapClick(node, x, y);

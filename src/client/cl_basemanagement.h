@@ -156,7 +156,6 @@ typedef struct building_s {
 	char onDestroy[MAX_VAR];
 	char onUpgrade[MAX_VAR];
 	char onRepair[MAX_VAR];
-	char onClick[MAX_VAR];
 
 	int moreThanOne;	/**< More than one building of the same type allowed? */
 
@@ -278,7 +277,7 @@ void B_SetUpBase(base_t* base, qboolean hire, qboolean buildings);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 
-void B_SetBuildingByClick(int row, int col);
+void B_SetBuildingByClick(base_t *base, building_t *building, int row, int col);
 void B_ResetBaseManagement(void);
 void B_ClearBase(base_t *const base);
 void B_NewBases(void);
@@ -287,7 +286,7 @@ void B_BuildingStatus(base_t* base, building_t* building);
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(base_t *base, building_t *type);
 int B_GetNumberOfBuildingsInBaseByBuildingType(base_t *base, buildingType_t type);
-
+void B_BuildingOpenAfterClick(const base_t *base, const building_t *building);
 int B_ItemInBase(const objDef_t *item, const base_t *base);
 
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
@@ -296,9 +295,9 @@ void B_ReviveSoldiersInBase(base_t* base); /* @todo */
 int B_GetEmployeeCount(const base_t* const base);
 
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
-qboolean B_GetBuildingStatus(const base_t* const base, buildingType_t type);
-void B_SetBuildingStatus(base_t* const base, buildingType_t type, qboolean newStatus);
-qboolean B_CheckBuildingDependencesStatus(const base_t* const base, building_t* building);
+qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
+void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);
+qboolean B_CheckBuildingDependencesStatus(const base_t* const base, const building_t* building);
 
 void B_MarkBuildingDestroy(base_t* base, building_t* building);
 qboolean B_BuildingDestroy(base_t* base, building_t* building);

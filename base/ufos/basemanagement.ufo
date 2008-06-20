@@ -71,7 +71,6 @@ building building_aliencontainment
 	needs		building_aliencontainment2
 	pos		"0 1"
 	more_than_one	true
-	onclick		"building_open"
 	capacity	10
 }
 
@@ -81,7 +80,6 @@ building building_aliencontainment2
 	image		base/aliencont1
 	pedia		rs_building_aliencontainment
 	visible		false // no 'needs' field here!
-	onclick		"building_open"
 }
 
 building building_entrance
@@ -114,7 +112,6 @@ building building_missile
 	more_than_one	true
 	onconstruct	"add_battery 1"
 	ondestroy	"remove_battery 1"
-	onclick		"building_open"
 }
 
 building building_storage
@@ -132,7 +129,6 @@ building building_storage
 	capacity	10000
 	ondestroy	"building_ondestroy"
 	more_than_one	true
-	onclick		"building_open"
 }
 
 building building_powerplant
@@ -177,7 +173,6 @@ building building_quarters
 	pos			"4 3"
 	more_than_one	true
 	type		quarters
-	onclick		"building_open"
 	ondestroy	"building_ondestroy"
 	capacity	20
 }
@@ -199,7 +194,6 @@ building building_hangar
 	onconstruct 	""
 	ondestroy	"building_ondestroy"
 	starting_employees	8	//Number of soldiers in dropship when first base is build
-	onclick		"building_open"
 	capacity	1
 }
 
@@ -209,7 +203,6 @@ building building_hangar2
 	image		base/drop1
 	pedia		rs_building_large_hangar
 	visible		false // no 'needs' field here!
-	onclick		"building_open"
 }
 
 building building_intercept
@@ -228,7 +221,6 @@ building building_intercept
 	ondestroy	"building_ondestroy"
 	capacity	1
 	type		smallhangar
-	onclick		"building_open"
 }
 
 building building_small_ufo_hangar
@@ -244,7 +236,6 @@ building building_small_ufo_hangar
 	more_than_one	true
 	capacity	1
 	type		smallufohangar
-	onclick		"building_open"
 }
 
 building building_large_ufo_hangar
@@ -261,7 +252,6 @@ building building_large_ufo_hangar
 	needs		building_large_ufo_hangar2
 	more_than_one	true
 	type		ufohangar
-	onclick		"building_open"
 }
 
 building building_large_ufo_hangar2
@@ -270,7 +260,6 @@ building building_large_ufo_hangar2
 	image		base/adropl1
 	pedia		rs_building_large_ufo_hangar
 	visible		false // no 'needs' field here!
-	onclick		"building_open"
 }
 
 building building_teamroom
@@ -301,7 +290,6 @@ building building_workshop
 	type	workshop
 	starting_employees	10
 	needs		building_workshop2
-	onclick		"building_open"
 	ondestroy	"building_ondestroy"
 	capacity	10
 }
@@ -312,7 +300,6 @@ building building_workshop2
 	image		base/workshop1
 	pedia		rs_building_workshop
 	visible		false // no 'needs' field here!
-	onclick		"building_open"
 }
 
 building building_radar
@@ -360,7 +347,6 @@ building building_lab
 	more_than_one	true
 	type		lab
 	starting_employees	10
-	onclick		"building_open"
 	ondestroy	"building_ondestroy"
 	capacity	10
 }
@@ -379,7 +365,6 @@ building building_hospital
 	more_than_one	false
 	type		hospital
 	starting_employees	10
-	onclick		"building_open"
 }
 
 building building_amstorage

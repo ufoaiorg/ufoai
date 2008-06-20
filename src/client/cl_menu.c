@@ -197,55 +197,40 @@ void MN_SetViewRect (const menu_t* menu)
 /**
  * @brief Left click on the basemap
  */
-void MN_BaseMapClick (menuNode_t *node, int x, int y)
+void MN_BaseMapClick (menuNode_t *node, base_t *base, int x, int y)
 {
 	int row, col;
-	building_t	*entry;
 
-	assert(baseCurrent);
+	assert(base);
 
-	if (baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus == B_STATUS_NOT_SET) {
+	if (base->buildingCurrent && base->buildingCurrent->buildingStatus == B_STATUS_NOT_SET) {
 		for (row = 0; row < BASE_SIZE; row++)
 			for (col = 0; col < BASE_SIZE; col++)
-				if (!baseCurrent->map[row][col].building
-				 && !baseCurrent->map[row][col].blocked
-				 && x >= baseCurrent->map[row][col].posX
-				 && x < baseCurrent->map[row][col].posX + node->size[0] / BASE_SIZE
-				 && y >= baseCurrent->map[row][col].posY
-				 && y < baseCurrent->map[row][col].posY + node->size[1] / BASE_SIZE) {
+				if (!base->map[row][col].building
+				 && !base->map[row][col].blocked
+				 && x >= base->map[row][col].posX
+				 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE
+				 && y >= base->map[row][col].posY
+				 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
 					/* Set position for a new building */
-					B_SetBuildingByClick(row, col);
+					B_SetBuildingByClick(base, base->buildingCurrent, row, col);
 					return;
 				}
 	}
 
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++)
-			if (baseCurrent->map[row][col].building && x >= baseCurrent->map[row][col].posX
-				&& x < baseCurrent->map[row][col].posX + node->size[0] / BASE_SIZE && y >= baseCurrent->map[row][col].posY
-				&& y < baseCurrent->map[row][col].posY + node->size[1] / BASE_SIZE) {
-				assert(!baseCurrent->map[row][col].blocked);
-				entry = baseCurrent->map[row][col].building;
+			if (base->map[row][col].building && x >= base->map[row][col].posX
+				&& x < base->map[row][col].posX + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY
+				&& y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
+				const building_t *entry = base->map[row][col].building;
 				if (!entry)
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
 
-				if (*entry->onClick) {
-					baseCurrent->buildingCurrent = entry;
-					Cmd_ExecuteString(va("%s %i", entry->onClick, baseCurrent->idx));
-					baseCurrent->buildingCurrent = NULL;
-					gd.baseAction = BA_NONE;
-				}
-#if 0
-				else {
-					/* Click on building : display its properties in the building menu */
-					MN_PushMenu("buildings");
-					baseCurrent->buildingCurrent = entry;
-					B_BuildingStatus(baseCurrent, baseCurrent->buildingCurrent);
-				}
-#else
-				else
-					UP_OpenWith(entry->pedia);
-#endif
+				assert(!base->map[row][col].blocked);
+
+				B_BuildingOpenAfterClick(base, entry);
+				gd.baseAction = BA_NONE;
 				return;
 			}
 }
