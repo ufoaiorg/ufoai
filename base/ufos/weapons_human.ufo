@@ -315,7 +315,8 @@ item sniper
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded 	true
-	shape		"0 0 5 2"
+        shape           "2 0 3 1"
+	shape           "0 1 5 1"
 	center		"9 0 3"
 	scale		1.05
 	ammo		5
