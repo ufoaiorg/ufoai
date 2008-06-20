@@ -315,6 +315,8 @@ building building_radar
 	pos	"1 4"
 	more_than_one	true
 	type		radar
+	onconstruct	"update_base_radar_coverage"
+	ondestroy	"update_base_radar_coverage"
 	level		1.0
 }
 

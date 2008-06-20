@@ -408,7 +408,7 @@ static void B_BaseInit_f (void)
  * @note This function checks base status for particular buildings.
  * @return 0.0f if there is no (operational) building of the requested type in the base, otherwise the maximum level.
  */
-static float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
+float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 {
 	int i;
 	float max = 0.0f;
@@ -472,11 +472,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 {
 	switch (type) {
 	case B_RADAR:
-		{
-			const float level = B_GetMaxBuildingLevel(base, B_RADAR);
-			RADAR_Initialise(&base->radar, RADAR_BASERANGE, level, qtrue);
-			CP_UpdateMissionVisibleOnGeoscape();
-		}
+		Cmd_ExecuteString(va("update_base_radar_coverage %i;", base->idx));
 		break;
 	default:
 		break;
@@ -500,8 +496,7 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		AC_KillAll(base);
 		break;
 	case B_RADAR:
-		RADAR_Initialise(&base->radar, 0.0f, 0.0f, qtrue);
-		CP_UpdateMissionVisibleOnGeoscape();
+		Cmd_ExecuteString(va("update_base_radar_coverage %i;", base->idx));
 		break;
 	default:
 		break;
@@ -726,7 +721,7 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 /**
  * @brief On destroy function for several building type.
  * @note this function is only used for sanity checks, and send to related function depending on building type.
- * @pre Functions below will be called BEFORE the building is actually destroyed.
+ * @pre Functions below will be called AFTER the building is actually destroyed.
  * @sa B_BuildingDestroy_f
  */
 static void B_BuildingOnDestroy_f (void)

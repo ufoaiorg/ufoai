@@ -256,6 +256,7 @@ void B_AssignInitial(base_t *base);
 
 void B_UpdateBaseData(void);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);
+float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
 int B_GetNumOnTeam(const aircraft_t *aircraft);
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
 void B_ParseBaseNames(const char *name, const char **text);

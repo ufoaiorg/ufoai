@@ -6587,6 +6587,7 @@ static const cmdList_t game_commands[] = {
 	{"basedef_updatemenu", BDEF_BaseDefenseMenuUpdate_f, "Inits base defence menu"},
 	{"basedef_slot_list_click", BDEF_ListClick_f, "Inits base defence menu"},
 	{"basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL},
+	{"update_base_radar_coverage", RADAR_UpdateBaseRadarCoverage_f, "Update base radar coverage"},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
 	{"stats_update", CL_StatsUpdate_f, NULL},
 	{"nation_stats_click", CP_NationStatsClick_f, NULL},

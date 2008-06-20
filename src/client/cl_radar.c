@@ -303,6 +303,40 @@ void RADAR_Initialise (radar_t* radar, float range, float level, qboolean update
 }
 
 /**
+ * @brief Update radar coverage when building/destroying new radar
+ * @note This must be called on each radar build/destruction because radar facilities may have different level.
+ * @note This must also be called when radar installation become inactive or active (due to dependencies)
+ * @note called with update_base_radar_coverage
+ */
+void RADAR_UpdateBaseRadarCoverage_f (void)
+{
+	int baseIdx;
+	base_t *base;
+	float level;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", Cmd_Argv(0));
+		return;
+	}
+
+	baseIdx = atoi(Cmd_Argv(1));
+
+	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
+		Com_Printf("RADAR_UpdateBaseRadarCoverage_f: %i is outside bounds\n", baseIdx);
+		return;
+	}
+
+	base = B_GetFoundedBaseByIDX(baseIdx);
+
+	if (!base)
+		return;
+
+	level = B_GetMaxBuildingLevel(base, B_RADAR);
+	RADAR_Initialise(&base->radar, RADAR_BASERANGE, level, qtrue);
+	CP_UpdateMissionVisibleOnGeoscape();
+}
+
+/**
  * @brief Check if the specified position is within base radar range
  * @note aircraft radars are not checked (and this is intended)
  * @return true if the position is inside one of the base radar range
