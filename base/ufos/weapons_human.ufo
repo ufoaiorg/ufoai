@@ -515,7 +515,8 @@ item pistol2
 	animationindex	2
 	holdtwohanded	false
 	firetwohanded 	false
-	shape		"0 0 2 2"
+	shape		"0 0 2 1"
+	shape		"1 1 1 1"
 	center		"-0.1 0 0"
 	scale		2.0
 	ammo		30
