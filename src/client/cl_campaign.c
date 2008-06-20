@@ -7486,6 +7486,10 @@ static void CP_UFOSellStart_f (void)
 	nation = &gd.nations[nationIdx];
 	assert(nation);
 	assert(nation->name);
+	if (UFOprices[nationIdx] )= -1) {
+		Com_Printf("CP_UFOSellStart_f: Error: ufo price of -1 - nationIdx: %i\n", nationIdx);
+		return;
+	}
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
 		UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[nationIdx]);
 	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
