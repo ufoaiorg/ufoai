@@ -1192,7 +1192,11 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *templa
 
 /**
  * @brief Build starting building in the first base, and hire employees (calls B_AddBuildingToBasePos).
+ * @param[in,out] base The base to put the new building into
+ * @param[in] template The building template to create a new building with
+ * @param[in] hire Hire employees for the building we create from the template
  * @sa B_AddBuildingToBasePos
+ * @sa B_SetUpFirstBase
  */
 static inline void B_AddBuildingToBase (base_t *base, const building_t const *template, qboolean hire)
 {
@@ -1201,6 +1205,9 @@ static inline void B_AddBuildingToBase (base_t *base, const building_t const *te
 
 /**
  * @brief Setup buildings and equipment for first base
+ * @param[in,out] base The base to set up
+ * @param[in] hire Hire employees for the building we create from the template
+ * @param[in] buildings Add buildings to the initial base
  * @sa B_SetUpBase
  */
 static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
@@ -1269,7 +1276,11 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 
 /**
  * @brief Setup new base
+ * @param[in,out] base The base to set up
+ * @param[in] hire Hire employees for the building we create from the template
+ * @param[in] buildings Add buildings to the initial base
  * @sa CL_NewBase
+ * @sa B_SetUpFirstBase
  */
 void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 {
@@ -1294,7 +1305,8 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	base->numAircraftInBase = 0;
 
 	/* setup for first base */
-	/* @todo this will propably also be called if all player bases are destroyed (mimics old behaviour), do we want this? */
+	/* @todo this will propably also be called if all player bases are
+	 * destroyed (mimics old behaviour), do we want this? */
 	if (gd.numBases == 1) {
 		B_SetUpFirstBase(base, hire, buildings);
 	}
