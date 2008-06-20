@@ -12,7 +12,7 @@ item assault
 	firetwohanded	true
 	shape		"1 0 4 1"
 	shape		"0 1 5 1"
-	center		"3 0 2"
+	center		"3 -3 1"
 	scale		1.25
 	ammo		30
 	reload		12
@@ -235,9 +235,9 @@ item machinegun
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 5 1"
+	shape		"1 0 4 1"
 	shape		"0 1 4 1"
-	center		"5.9 0 2"
+	center		"5.9 0 2.5"
 	scale		1.1
 	ammo		60
 	reload		12
@@ -432,8 +432,8 @@ item pistol_ammo
 	type		ammo
 	animationindex	0
 	shape		"0 0 1 1"
-	center		"0 0 -0.21"
-	scale		1.57
+	center		"0 0 -0.2"
+	scale		1.5
 	price		20
 	size		1
 	buytype	weap_sec
@@ -1233,8 +1233,9 @@ item grenl
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 5 2"
-	center		"7 0 2"
+	shape		"1 0 4 1"
+	shape		"0 1 5 1"
+	center		"7 0 2.2"
 	scale		1.1
 	ammo		9
 	reload		14
@@ -1871,7 +1872,7 @@ item bolterrifle
 	holdtwohanded   false
 	firetwohanded	true
 	shape           "0 0 5 2"
-	center          "4 0 1.1"
+	center          "4 1 1.1"
 	scale           1.2
 	ammo            12
 	reload          15

@@ -34,7 +34,7 @@ item laserrifle
 	firetwohanded	true
 	shape		"0 0 5 1"
 	shape		"0 1 4 1"
-	center		"4.5 0 1.5"
+	center		"4.5 0 .5"
 	scale		1.26
 	ammo		16
 	reload		12
@@ -56,8 +56,9 @@ item heavylaser
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 5 2"
-	center		"8.5 0 1.5"
+        shape           "1 0 4 1"
+        shape           "0 1 4 1"
+	center		"8.5 4.5 3.5"
 	scale		1.15
 	ammo		6
 	reload		16

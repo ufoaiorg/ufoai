@@ -123,9 +123,9 @@ item xaw95_ammo
 	model		weapons/xaw95/xaw95_ammo
 	type		ammo
 	animationindex	0
-	shape		"0 0 4 2"
-	center		"-3 -6 0"
-	scale		1.6
+	shape		"0 0 2 1"
+	center		"-3 -6 -2.5"
+	scale		.5
 	price		7500
 	size		10
 	buytype	weap_pri
