@@ -3800,6 +3800,7 @@ void CL_GameTimeFast (void)
  * @brief Translates the nation happiness float value to a string
  * @param[in] nation
  * @return Translated happiness string
+ * @note happiness is between 0 and 1.0
  */
 static const char* CL_GetNationHappinessString (const nation_t* nation)
 {
@@ -3821,7 +3822,7 @@ static const char* CL_GetNationHappinessString (const nation_t* nation)
 		return _("Content");
 	else if (nation->stats[0].happiness < 0.70)
 		return _("Pleased");
-	else if (nation->stats[0].happiness < 1.0)
+	else if (nation->stats[0].happiness < 0.95)
 		return _("Happy");
 	else
 		return _("Exuberant");
