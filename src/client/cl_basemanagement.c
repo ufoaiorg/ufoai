@@ -47,9 +47,6 @@ static cvar_t *mn_base_count;
 static cvar_t *mn_base_id;
 static cvar_t *cl_equip;
 
-/** @brief allocate memory for mn.menuText[TEXT_STANDARD] contained the information about a building */
-static char buildingText[MAX_LIST_CHAR];
-
 static building_t *buildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
@@ -1543,11 +1540,15 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 	return NULL;
 }
 
+#define MAX_BUILDING_INFO_TEXT_LENGTH 512
+
 /**
  * @brief Draws a building.
  */
 static void B_DrawBuilding (base_t* base, building_t* building)
 {
+	static char buildingText[MAX_BUILDING_INFO_TEXT_LENGTH];
+
 	/* maybe someone call this command before the buildings are parsed?? */
 	if (!base || !building)
 		return;
@@ -1584,28 +1585,22 @@ static void B_DrawBuilding (base_t* base, building_t* building)
 
 /**
  * @brief Handles the list of constructable buildings.
- *
+ * @param[in] base The base to update the building list for
  * @param[in] building Add this building to the construction list
- * Called everytime a building was constructed and thus maybe other buildings get available.
- * mn.menuText[TEXT_BUILDINGS] is a pointer to baseCurrent->allBuildingsList which will be displayed in the build-screen.
- * This way every base can hold its own building list.
- * The content is updated everytime B_BuildingInit is called (i.e everytime the buildings-list is dispplayed/updated)
+ * @note Called everytime a building was constructed and thus maybe other buildings
+ * get available. The content is updated everytime B_BuildingInit is called
+ * (i.e everytime the buildings-list is displayed/updated)
  */
 static void B_BuildingAddToList (base_t *base, building_t *building)
 {
-	char *p; /* position in the list */
-	size_t len;
-
+	int count;
 	assert(base);
 	assert(building);
 	assert(building->name);
 
-	p = base->allBuildingsList;
-	len = strlen(p);
-
-	Com_sprintf(p + len, sizeof(base->allBuildingsList) - len, "%s\n", _(building->name));
-	buildingConstructionList[numBuildingConstructionList] = building->tpl;
-	numBuildingConstructionList++;
+	count = LIST_Count(base->buildingList);
+	LIST_AddPointer(&base->buildingList, _(building->name));
+	buildingConstructionList[count] = building->tpl;
 }
 
 
@@ -1692,9 +1687,8 @@ static void B_BuildingInit (base_t* base)
 	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", base->name, base->idx);
 	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[base->idx]);
 
-	/* initialising the vars used in B_BuildingAddToList */
-	memset(base->allBuildingsList, 0, sizeof(base->allBuildingsList));
-	mn.menuText[TEXT_BUILDINGS] = base->allBuildingsList;
+	/* delete the whole linked list - it's rebuild in the loop below */
+	LIST_Delete(&base->buildingList);
 	numBuildingConstructionList = 0;
 
 	for (i = 0; i < gd.numBuildingTemplates; i++) {
@@ -1723,6 +1717,8 @@ static void B_BuildingInit (base_t* base)
 	}
 	if (base->buildingCurrent)
 		B_DrawBuilding(base, base->buildingCurrent);
+
+	mn.menuTextLinkedList[TEXT_BUILDINGS] = base->buildingList;
 }
 
 /**
@@ -1752,7 +1748,7 @@ static void B_BuildingInfoClick_f (void)
  */
 static void B_BuildingClick_f (void)
 {
-	int num;
+	int num, count;
 	building_t *building;
 
 	if (Cmd_Argc() < 2 || !baseCurrent) {
@@ -1765,8 +1761,9 @@ static void B_BuildingClick_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx);
 
-	if (num > numBuildingConstructionList || num < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, numBuildingConstructionList);
+	count = LIST_Count(baseCurrent->buildingList);
+	if (num > count || num < 0) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, count);
 		return;
 	}
 

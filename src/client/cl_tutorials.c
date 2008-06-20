@@ -40,13 +40,12 @@ static char tutorialList[MAX_TUTORIALLIST];
 static void TUT_GetTutorials_f (void)
 {
 	int i;
-	tutorial_t *t;
 
 	mn.menuText[TEXT_LIST] = tutorialList;
 	tutorialList[0] = 0;
 	for (i = 0; i < numTutorials; i++) {
-		t = &tutorials[i];
-		Q_strcat(tutorialList, va("%s\n", t->name), sizeof(tutorialList));
+		const tutorial_t *t = &tutorials[i];
+		Q_strcat(tutorialList, va("%s\n", _(t->name)), sizeof(tutorialList));
 	}
 }
 
@@ -92,7 +91,7 @@ void TUT_Init (void)
 
 
 static const value_t tutValues[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name), 0},
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(tutorial_t, name), 0},
 	{"sequence", V_CLIENT_HUNK_STRING, offsetof(tutorial_t, sequence), 0},
 	{NULL, 0, 0, 0}
 };

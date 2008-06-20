@@ -1912,7 +1912,6 @@ static void CL_GlobalDataSizes_f (void)
 		"equipByBuyType     %10Zu bytes\n"
 		"aircraft           %10Zu bytes\n"
 		"aircraft (single)  %10Zu bytes\n"
-		"allBuildingsList   %10Zu bytes\n"
 		"radar              %10Zu bytes\n"
 		,
 		sizeof(gd.bases[0].alienscont),
@@ -1920,7 +1919,6 @@ static void CL_GlobalDataSizes_f (void)
 		sizeof(gd.bases[0].equipByBuyType),
 		sizeof(gd.bases[0].aircraft),
 		sizeof(aircraft_t),
-		sizeof(gd.bases[0].allBuildingsList),
 		sizeof(gd.bases[0].radar)
 	);
 }

@@ -1272,3 +1272,19 @@ void LIST_Delete (linkedList_t **list)
 	}
 	*list = NULL;
 }
+
+/**
+ * @sa LIST_Add
+ * @sa LIST_Remove
+ */
+int LIST_Count (linkedList_t *list)
+{
+	linkedList_t *l = list;
+	int count = 0;
+
+	while (l) {
+		count++;
+		l = l->next;
+	}
+	return count;
+}

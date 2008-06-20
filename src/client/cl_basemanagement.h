@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_BASEMANGEMENT_H
 #define CLIENT_CL_BASEMANGEMENT_H
 
-#define MAX_LIST_CHAR		1024
 #define MAX_BUILDINGS		256
 #define MAX_BASES		8
 #define MAX_BASETEMPLATES	5
@@ -157,7 +156,6 @@ typedef struct building_s {
 
 	int moreThanOne;	/**< More than one building of the same type allowed? */
 
-
 	vec2_t pos;			/**< Position of autobuild. */
 	qboolean autobuild;	/**< Autobuild when base is set up. */
 
@@ -202,7 +200,7 @@ typedef struct base_s {
 	qboolean hasBuilding[MAX_BUILDING_TYPE];
 
 	/** this is here to allocate the needed memory for the buildinglist */
-	char allBuildingsList[MAX_LIST_CHAR];
+	linkedList_t *buildingList;
 
 	/** All aircraft in this base
 	  @todo make me a linked list (see cl_market.c aircraft selling) */
