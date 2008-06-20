@@ -227,8 +227,6 @@ typedef struct base_s {
 
 	int equipType;	/**< the current selected category in equip menu */
 
-	character_t *curChr;	/**< needn't be saved */
-
 	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
 	int numBatteries;
 	baseWeapon_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
