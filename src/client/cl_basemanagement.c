@@ -1418,14 +1418,15 @@ static inline qboolean B_CheckCredits (int costs)
 }
 
 /**
- * @brief Builds new building.
+ * @brief Builds new building. And checks whether the player has enough credits
+ * to construct the current selected building before starting construction.
  * @sa B_MarkBuildingDestroy
  * @sa B_CheckCredits
  * @sa CL_UpdateCredits
  * @return qboolean
  * @sa B_NewBuilding
- * Checks whether the player has enough credits to construct the current selected
- * building before starting construction.
+ * @param[in,out] base The base to construct the building in
+ * @param[in,out] building The building to construct
  */
 static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 {
@@ -1466,6 +1467,8 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 
 /**
  * @brief Build new building.
+ * @param[in,out] base The base to construct the building in
+ * @param[in,out] building The building to construct
  * @sa B_MarkBuildingDestroy
  * @sa B_ConstructBuilding
  */
