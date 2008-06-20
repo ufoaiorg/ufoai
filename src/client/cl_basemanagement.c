@@ -266,10 +266,8 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, const build
  */
 static void B_ResetBuildingCurrent (base_t* base)
 {
-	if (base) {
+	if (base)
 		base->buildingCurrent = NULL;
-		base->buildingToBuild = NULL;
-	}
 	gd.baseAction = BA_NONE;
 }
 
@@ -1026,12 +1024,11 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 
 /**
  * @brief Displays the status of a building for baseview.
- *
- * updates the cvar mn_building_status which is used in some menus to display
- * the building status
+ * @note updates the cvar mn_building_status which is used in the building
+ * construction menu to display the status of the given building
  * @note also script command function binding for 'building_status'
  */
-void B_BuildingStatus (base_t* base, building_t* building)
+void B_BuildingStatus (const base_t* base, const building_t* building)
 {
 	int numberOfBuildings = 0;
 
@@ -1427,8 +1424,9 @@ static inline qboolean B_CheckCredits (int costs)
  * @sa B_NewBuilding
  * @param[in,out] base The base to construct the building in
  * @param[in,out] building The building to construct
+ * @param[in,out] secondBuildingPart The second building part in case of e.g. big hangars
  */
-static qboolean B_ConstructBuilding (base_t* base, building_t *building)
+static qboolean B_ConstructBuilding (base_t* base, building_t *building, building_t *secondBuildingPart)
 {
 	/* maybe someone call this command before the buildings are parsed?? */
 	if (!base || !building)
@@ -1444,10 +1442,9 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", building->id);
 
 	/* second building part */
-	if (base->buildingToBuild) {
-		base->buildingToBuild->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-		base->buildingToBuild = NULL;
-	}
+	if (secondBuildingPart)
+		secondBuildingPart->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+
 	if (!ccs.instant_build) {
 		building->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		building->timeStart = ccs.date.day;
@@ -1469,10 +1466,11 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building)
  * @brief Build new building.
  * @param[in,out] base The base to construct the building in
  * @param[in,out] building The building to construct
+ * @param[in,out] secondBuildingPart The second building part in case of e.g. big hangars
  * @sa B_MarkBuildingDestroy
  * @sa B_ConstructBuilding
  */
-static void B_NewBuilding (base_t* base, building_t *building)
+static void B_NewBuilding (base_t* base, building_t *building, building_t *secondBuildingPart)
 {
 	/* maybe someone call this command before the buildings are parsed?? */
 	if (!base || !building)
@@ -1480,7 +1478,7 @@ static void B_NewBuilding (base_t* base, building_t *building)
 
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
 		/* credits are updated in the construct function */
-		if (B_ConstructBuilding(base, building)) {
+		if (B_ConstructBuilding(base, building, secondBuildingPart)) {
 			B_BuildingStatus(base, building);
 			Com_DPrintf(DEBUG_CLIENT, "B_NewBuilding: building->buildingStatus = %i\n", building->buildingStatus);
 		}
@@ -1532,9 +1530,10 @@ void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 		if (base->map[row][col].blocked) {
 			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't build here\n");
 		} else if (!base->map[row][col].building) {
+			building_t *secondBuildingPart = NULL;
 			/* No building in this place */
 			if (building->needs) {
-				building_t *secondBuildingPart = B_GetBuildingTemplate(building->needs);	/* template link */
+				secondBuildingPart = B_GetBuildingTemplate(building->needs);	/* template link */
 
 				if (col + 1 == BASE_SIZE) {
 					if (base->map[row][col - 1].building
@@ -1554,15 +1553,12 @@ void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 				}
 
 				base->map[row][col + 1].building = building;
-				base->buildingToBuild = secondBuildingPart;
 				/* where is this building located in our base? */
 				secondBuildingPart->pos[1] = col + 1;
 				secondBuildingPart->pos[0] = row;
-			} else {
-				base->buildingToBuild = NULL;
 			}
 			/* Credits are updated here, too */
-			B_NewBuilding(base, building);
+			B_NewBuilding(base, building, secondBuildingPart);
 
 			base->map[row][col].building = building;
 
@@ -1578,42 +1574,6 @@ void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 		}
 	} else
 		Com_DPrintf(DEBUG_CLIENT, "Invalid coordinates\n");
-}
-
-/**
- * @brief Places the current building in the base (x/y give via console).
- */
-static void B_SetBuilding_f (void)
-{
-	int row, col;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* maybe someone call this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
-
-	row = atoi(Cmd_Argv(1));
-	col = atoi(Cmd_Argv(2));
-
-	/* emulate the mouseclick with the given coordinates */
-	B_SetBuildingByClick(baseCurrent, baseCurrent->buildingCurrent, row, col);
-}
-
-/**
- * @brief Build building from the list of those available.
- */
-static void B_NewBuildingFromList_f (void)
-{
-	/* maybe someone call this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
-
-	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		B_NewBuilding(baseCurrent, baseCurrent->buildingCurrent);
 }
 
 /**
@@ -2163,7 +2123,6 @@ void B_ParseBaseNames (const char *name, const char **text)
 		base = B_GetBaseByIDX(gd.numBaseNames);
 		memset(base, 0, sizeof(base_t));
 		base->idx = gd.numBaseNames;
-		base->buildingToBuild = NULL;
 		memset(base->map, 0, sizeof(base->map));
 
 		/* get the title */
@@ -3477,8 +3436,6 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, NULL);
 	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
-	Cmd_AddCommand("new_building", B_NewBuildingFromList_f, NULL);
-	Cmd_AddCommand("set_building", B_SetBuilding_f, NULL);
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle_f, NULL);
 	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f, NULL);
 	Cmd_AddCommand("rename_base", B_RenameBase_f, "Rename the current base");

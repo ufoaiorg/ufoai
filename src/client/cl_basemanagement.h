@@ -237,8 +237,6 @@ typedef struct base_s {
 	int batteryDamage;			/**< Hit points of defence system */
 	int baseDamage;			/**< Hit points of base */
 
-	building_t *buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTemplates) */
-
 	building_t *buildingCurrent; /**< needn't be saved */
 } base_t;
 
@@ -280,7 +278,7 @@ void B_SetBuildingByClick(base_t *base, building_t *building, int row, int col);
 void B_ResetBaseManagement(void);
 void B_ClearBase(base_t *const base);
 void B_NewBases(void);
-void B_BuildingStatus(base_t* base, building_t* building);
+void B_BuildingStatus(const base_t* base, const building_t* building);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(const base_t *base, const building_t *type);
