@@ -191,7 +191,6 @@ building building_hangar
 	more_than_one	true
 	type		hangar
 	needs		building_hangar2
-	onconstruct 	""
 	ondestroy	"building_ondestroy"
 	starting_employees	8	//Number of soldiers in dropship when first base is build
 	capacity	1
@@ -217,7 +216,6 @@ building building_intercept
 	pedia		rs_building_small_hangar
 	pos			"1 3"
 	more_than_one	true
-	onconstruct	""
 	ondestroy	"building_ondestroy"
 	capacity	1
 	type		smallhangar
