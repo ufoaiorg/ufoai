@@ -1164,29 +1164,25 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 /**
  * @brief Build starting building in the first base, and hire employees.
  */
-static void B_AddBuildingToBasePos (building_t *building, base_t *base, const building_t *template, qboolean hire, vec2_t pos)
+static void B_AddBuildingToBasePos (base_t *base, const building_t const *template, qboolean hire, vec2_t pos)
 {
-	*building = *template;
-	/* self-link to building-list in base */
-	building->idx = gd.numBuildings[base->idx];
-	gd.numBuildings[base->idx]++;
-	/* Link to the base. */
-	building->base = base;
+	building_t *buildingNew;		/**< new building in base (not a template) */
+
 	/* fake a click to basemap */
-	B_SetBuildingByClick(base, building, (int)pos[0], (int)pos[1]);
-	B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-	Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, building->id, building->pos[0], building->pos[1]);
+	buildingNew = B_SetBuildingByClick(base, template, (int)pos[0], (int)pos[1]);
+	B_UpdateAllBaseBuildingStatus(buildingNew, base, B_STATUS_WORKING);
+	Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
 
 	/* update the building-list */
 	B_BuildingInit(base);
 
 	if (hire)
-		B_HireForBuilding(base, building, -1);
+		B_HireForBuilding(base, buildingNew, -1);
 
 	/* now call the onconstruct trigger */
-	if (building->onConstruct[0] != '\0') {
-		Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
-		Cmd_ExecuteString(va("%s %i;", building->onConstruct, base->idx));
+	if (buildingNew->onConstruct[0] != '\0') {
+		Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", buildingNew->onConstruct, base->idx);
+		Cmd_ExecuteString(va("%s %i;", buildingNew->onConstruct, base->idx));
 	}
 }
 
@@ -1194,9 +1190,9 @@ static void B_AddBuildingToBasePos (building_t *building, base_t *base, const bu
  * @brief Build starting building in the first base, and hire employees (calls B_AddBuildingToBasePos).
  * @sa B_AddBuildingToBasePos
  */
-static void B_AddBuildingToBase (building_t *building, base_t *base, building_t *template, qboolean hire)
+static void B_AddBuildingToBase (base_t *base, building_t *template, qboolean hire)
 {
-	B_AddBuildingToBasePos(building, base, template, hire, template->pos);
+	B_AddBuildingToBasePos(base, template, hire, template->pos);
 }
 
 /**
@@ -1216,9 +1212,8 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		/* find each building in the template */
 		for (i = 0; i < template->numBuildings; ++i) {
 			vec2_t pos;
-			building_t *building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
 			Vector2Set(pos, template->buildings[i].posX, template->buildings[i].posY);
-			B_AddBuildingToBasePos(building, base, template->buildings[i].building, hire, pos);
+			B_AddBuildingToBasePos(base, template->buildings[i].building, hire, pos);
 		}
 
 		/* Add aircraft to the first base */
@@ -1304,9 +1299,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	if (gd.numBases > 1 && buildings) {
 		for (i = 0; i < gd.numBuildingTemplates; i++) {
 			if (gd.buildingTemplates[i].autobuild) {
-				/* @todo: implement check for moreThanOne */
-				building_t *building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-				B_AddBuildingToBase(building, base, &gd.buildingTemplates[i], hire);
+				B_AddBuildingToBase(base, &gd.buildingTemplates[i], hire);
 			}
 		}
 	}
@@ -1317,10 +1310,9 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 			building_t* entrance = &gd.buildingTemplates[i];
 			if (entrance->buildingType == B_ENTRANCE) {
 				/* set up entrance to base */
-				building_t *building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
 				vec2_t pos;
 				Vector2Set(pos, rand() % BASE_SIZE, rand() % BASE_SIZE);
-				B_AddBuildingToBasePos(building, base, entrance, hire, pos);
+				B_AddBuildingToBasePos(base, entrance, hire, pos);
 
 				/* we are done here */
 				i = gd.numBuildingTemplates;
@@ -1487,35 +1479,34 @@ static void B_NewBuilding (base_t* base, building_t *building, building_t *secon
 /**
  * @brief Set the currently selected building.
  * @param[in,out] base The base to place the building in
- * @param[in] building The building to place at the given location
+ * @param[in] template The template of the building to place at the given location
  * @param[in] row Set building to row
  * @param[in] col Set building to col
+ * @return building created in base (this is not a building template)
  */
-void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
+building_t* B_SetBuildingByClick (base_t *base, const building_t const *template, int row, int col)
 {
+	building_t *buildingNew;	/**< new building in base (not a template) */
+
 #ifdef DEBUG
 	if (!base)
 		Sys_Error("no current base\n");
-	if (!building)
+	if (!template)
 		Sys_Error("no current building\n");
 #endif
-	if (!B_CheckCredits(building->fixCosts)) {
+	if (!B_CheckCredits(template->fixCosts)) {
 		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
-		return;
+		return NULL;
 	}
 
-	/** @todo This is a bad idea ... base->buildingCurrent shouldn't link
-	 * to anything in gd.buildingTemplates at all IMO.
-	 * It can easily lead to confusion (if it's used elsewhere for some reason). */
-	/* If the building is in gd.buildingTemplates[] ... */
-	if (!building->base) {
-		building_t *buildingNew = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-		assert(building == building->tpl); /**< Templates link to themself -  we make sure this is a template. */
+	/* template should really be a template */
+	assert(template == template->tpl);
+
+	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
+		buildingNew = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
 
 		/* copy building from template list to base-buildings-list */
-		*buildingNew = *building->tpl;
-		assert(buildingNew != base->buildingCurrent->tpl);
-		assert(buildingNew->tpl == base->buildingCurrent->tpl);
+		*buildingNew = *template;
 
 		/* self-link to building-list in base */
 		buildingNew->idx = gd.numBuildings[base->idx];
@@ -1524,22 +1515,20 @@ void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 		/* Link to the base. */
 		buildingNew->base = base;
 		base->buildingCurrent = buildingNew;	/**< Set current building to a real one (not a template) again. */
-	}
 
-	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
 		if (base->map[row][col].blocked) {
 			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't build here\n");
 		} else if (!base->map[row][col].building) {
 			building_t *secondBuildingPart = NULL;
 			/* No building in this place */
-			if (building->needs) {
-				secondBuildingPart = B_GetBuildingTemplate(building->needs);	/* template link */
+			if (template->needs) {
+				secondBuildingPart = B_GetBuildingTemplate(template->needs);	/* template link */
 
 				if (col + 1 == BASE_SIZE) {
 					if (base->map[row][col - 1].building
 					 || base->map[row][col - 1].blocked) {
 						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
-						return;
+						return NULL;
 					}
 					col--;
 				} else if (base->map[row][col + 1].building || base->map[row][col + 1].blocked) {
@@ -1547,33 +1536,37 @@ void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 					 || base->map[row][col - 1].blocked
 					 || !col) {
 						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
-						return;
+						return NULL;
 					}
 					col--;
 				}
 
-				base->map[row][col + 1].building = building;
+				base->map[row][col + 1].building = buildingNew;
 				/* where is this building located in our base? */
 				secondBuildingPart->pos[1] = col + 1;
 				secondBuildingPart->pos[0] = row;
 			}
 			/* Credits are updated here, too */
-			B_NewBuilding(base, building, secondBuildingPart);
+			B_NewBuilding(base, buildingNew, secondBuildingPart);
 
-			base->map[row][col].building = building;
+			base->map[row][col].building = buildingNew;
 
 			/* where is this building located in our base? */
-			building->pos[0] = row;
-			building->pos[1] = col;
+			buildingNew->pos[0] = row;
+			buildingNew->pos[1] = col;
 
 			B_ResetBuildingCurrent(base);
 			B_BuildingInit(base);	/* update the building-list */
+
+			return buildingNew;
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "There is already a building\n");
 			Com_DPrintf(DEBUG_CLIENT, "Building: %s at (row:%i, col:%i)\n", base->map[row][col].building->id, row, col);
 		}
 	} else
 		Com_DPrintf(DEBUG_CLIENT, "Invalid coordinates\n");
+
+	return NULL;
 }
 
 /**
@@ -3492,7 +3485,7 @@ void B_UpdateBaseData (void)
 {
 	building_t *b;
 	int baseIdx, j;
-	int newBuilding = 0, new;
+	int new;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
@@ -3504,7 +3497,6 @@ void B_UpdateBaseData (void)
 			if (!b)
 				continue;
 			new = B_CheckBuildingConstruction(b, base);
-			newBuilding += new;
 			if (new) {
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[baseIdx].name);
 				MN_AddNewMessage(_("Building finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);

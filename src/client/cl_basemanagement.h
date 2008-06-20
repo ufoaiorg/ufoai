@@ -274,7 +274,7 @@ void B_SetUpBase(base_t* base, qboolean hire, qboolean buildings);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 
-void B_SetBuildingByClick(base_t *base, building_t *building, int row, int col);
+building_t* B_SetBuildingByClick(base_t *base, const building_t const *template, int row, int col);
 void B_ResetBaseManagement(void);
 void B_ClearBase(base_t *const base);
 void B_NewBases(void);
