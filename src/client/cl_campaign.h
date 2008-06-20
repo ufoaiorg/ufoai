@@ -423,6 +423,7 @@ void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
 const char* CL_SecondConvert(int second);
 
 nation_t *CL_GetNationByID(const char *nationID);
+void CL_NationSetHappiness(nation_t *nation, const float happiness);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
 qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);

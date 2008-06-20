@@ -1723,7 +1723,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 	/* @todo: when the mission is created, we should select a position where nation exists,
 	 * otherwise suverting a government is meaningless */
 	if (nation)
-		nation->stats[0].happiness *= 0.8;
+		CL_NationSetHappiness(nation, nation->stats[0].happiness * 0.8);
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
@@ -3283,30 +3283,26 @@ static void CP_UpdateNationHappiness (void)
 
 	for (;list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
-		nation_t *nation;
-		float happinessFactor;
-
-		switch (mission->stage) {
-		case STAGE_TERROR_MISSION:
-		case STAGE_SUBVERT_GOV:
-			happinessFactor = (4.0f - difficulty->integer) / 40.0f;
-			break;
-		case STAGE_RECON_GROUND:
-		case STAGE_SPREAD_XVI:
-		case STAGE_HARVEST:
-			happinessFactor = (4.0f - difficulty->integer) / 80.0f;
-			break;
-		default:
-			/* mission is not active on earth, skip this mission */
-			continue;
-		}
-
-		nation = MAP_GetNation(mission->pos);
+		nation_t *nation = MAP_GetNation(mission->pos);
 		/* Some non-water location have no nation */
 		if (nation) {
-			nation->stats[0].happiness -= happinessFactor;
-			if (nation->stats[0].happiness < 0)
-				nation->stats[0].happiness = 0;
+			float happinessFactor;
+			switch (mission->stage) {
+			case STAGE_TERROR_MISSION:
+			case STAGE_SUBVERT_GOV:
+				happinessFactor = (4.0f - difficulty->integer) / 40.0f;
+				break;
+			case STAGE_RECON_GROUND:
+			case STAGE_SPREAD_XVI:
+			case STAGE_HARVEST:
+				happinessFactor = (4.0f - difficulty->integer) / 80.0f;
+				break;
+			default:
+				/* mission is not active on earth, skip this mission */
+				continue;
+			}
+
+			CL_NationSetHappiness(nation, nation->stats[0].happiness - happinessFactor);
 			Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, nation->stats[0].happiness);
 		}
 	}
@@ -3455,7 +3451,6 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	const int alienSum = aliensKilled + aliensSurvived;
 	const float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
 	const float performance = civilianRatio * 0.5 + alienRatio * 0.5;
-	float delta_happiness;
 
 	if (lost) {
 		campaignStats.missionsLost++;
@@ -3466,7 +3461,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
 		const float alienHostile = 1.0f - nation->stats[0].alienFriendly;
-		delta_happiness = 0.0f;
+		float delta_happiness = 0.0f;
 
 		if (lost) {
 			if (nation == ccs.battleParameters.nation) {
@@ -3491,12 +3486,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		}
 
 		/* update happiness */
-		nation->stats[0].happiness += delta_happiness;
-		/* Nation happiness is between 0 and 1 */
-		if (nation->stats[0].happiness > 1.0f)
-			nation->stats[0].happiness = 1.0f;
-		else if (nation->stats[0].happiness < 0.0f)
-			nation->stats[0].happiness = 0.0f;
+		CL_NationSetHappiness(nation, nation->stats[0].happiness + delta_happiness);
 	}
 	if (!is_on_Earth)
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->id, ccs.battleParameters.nation ? ccs.battleParameters.nation->id : "no nation");
@@ -3835,6 +3825,31 @@ static const char* CL_GetNationHappinessString (const nation_t* nation)
 		return _("Happy");
 	else
 		return _("Exuberant");
+}
+
+/**
+ * @brief Updates the nation happiness
+ * @param[in] nation The nation to update the happiness for
+ * @param[in] happiness The new happiness value to set for the given nation
+ */
+void CL_NationSetHappiness (nation_t *nation, const float happiness)
+{
+	const char *oldString = CL_GetNationHappinessString(nation);
+	const char *newString;
+
+	nation->stats[0].happiness = happiness;
+
+	if (nation->stats[0].happiness < 0.0f)
+		nation->stats[0].happiness = 0.0f;
+	else if (nation->stats[0].happiness > 1.0f)
+		nation->stats[0].happiness = 1.0f;
+
+	newString = CL_GetNationHappinessString(nation);
+	if (oldString != newString) {
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+			_("Nation %s changed happiness from %s to %s"), _(nation->name), oldString, newString);
+		MN_AddNewMessage(_("Nation changed happiness"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	}
 }
 
 /**
@@ -4393,7 +4408,7 @@ static int CL_NationsMaxFunding (void)
 		nation = &gd.nations[n];
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
-				/** nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
+				/** CL_NationSetHappiness(nation, nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
 				funding = CL_GetNationFunding(nation, m);
 				if (max < funding)
 					max = funding;
@@ -5285,11 +5300,7 @@ static void CP_ChangeNationHappiness_f (void)
 	nation = MAP_GetNation(selectedMission->pos);
 	assert(nation);
 
-	nation->stats[0].happiness = nation->stats[0].happiness * multiplier;
-
-	/* Nation happiness cannot be greater than 1 */
-	if (nation->stats[0].happiness > 1.0f)
-		nation->stats[0].happiness = 1.0f;
+	CL_NationSetHappiness(nation, nation->stats[0].happiness * multiplier);
 }
 
 /** @brief mission trigger functions */
@@ -7482,15 +7493,12 @@ static void CP_UFOSellStart_f (void)
 
 	/* update nation happiness */
 	for (i = 0; i < gd.numNations; i++) {
-		if (gd.nations + i == nation) {
+		if (gd.nations + i == nation)
 			/* nation is happy because it got the UFO */
-			gd.nations[i].stats[0].happiness += 0.3f * (1.0f - gd.nations[i].stats[0].happiness);
-			/* Nation happiness cannot be greater than 1 */
-			if (nation->stats[0].happiness > 1.0f)
-				nation->stats[0].happiness = 1.0f;
-		} else
+			CL_NationSetHappiness(nation, nation->stats[0].happiness + 0.3f * (1.0f - nation->stats[0].happiness));
+		else
 			/* nation is unhappy because it wanted the UFO */
-			gd.nations[i].stats[0].happiness *= .95f;
+			CL_NationSetHappiness(&gd.nations[i], gd.nations[i].stats[0].happiness * .95f);
 	}
 
 	/* UFO recovery process is done, disable buttons. */
