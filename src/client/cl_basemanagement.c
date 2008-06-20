@@ -3238,7 +3238,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 	building_t *building;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: %s buildingID\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s buildingID\n", Cmd_Argv(0));
 		return;
 	}
 	buildingID = Cmd_Argv(1);

@@ -442,7 +442,7 @@ static void SV_MapcycleAdd_f (void)
 		Com_Printf("adding map '%s' with gametype '%s' to mapcycle (to add this permanently edit your mapcycle.txt)\n", map, gametype);
 		SV_MapcycleAdd(map, gametype);
 	} else {
-		Com_Printf("usage: %s <mapname> <gametype>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <mapname> <gametype>\n", Cmd_Argv(0));
 		Com_Printf(" ...to get a list of valid maps type 'maplist'\n"
 			" ...to get a list of valid gametypes 'gametypelist'\n");
 	}

@@ -39,7 +39,7 @@ static void BaseSummary_SelectBase_f (void)
 		return;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: %s <baseid>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <baseid>\n", Cmd_Argv(0));
 		return;
 	}
 

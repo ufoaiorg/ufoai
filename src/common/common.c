@@ -636,7 +636,7 @@ static void Com_DebugError_f (void)
 		else if (!Q_strcmp(errorType, "ERR_DISCONNECT"))
 			Com_Error(ERR_DISCONNECT, "%s", Cmd_Argv(2));
 	}
-	Com_Printf("usage: %s <ERR_FATAL|ERR_DROP|ERR_DISCONNECT> <msg>\n", Cmd_Argv(0));
+	Com_Printf("Usage: %s <ERR_FATAL|ERR_DROP|ERR_DISCONNECT> <msg>\n", Cmd_Argv(0));
 }
 #endif
 
@@ -692,7 +692,7 @@ static void Com_DeveloperSet_f (void)
 			i++;
 		}
 	} else {
-		Com_Printf("usage: %s <debug_level>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <debug_level>\n", Cmd_Argv(0));
 		Com_Printf("  valid debug_levels are:\n");
 		while (debugLevels[i].str) {
 			Com_Printf("  * %s\n", debugLevels[i].str);

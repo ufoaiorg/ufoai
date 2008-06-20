@@ -631,7 +631,7 @@ static void Cvar_SetOld_f (void)
 	cvar_t *v;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: setold <variable>\n");
+		Com_Printf("Usage: %s <variable>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -656,7 +656,7 @@ static void Cvar_Set_f (void)
 
 	c = Cmd_Argc();
 	if (c != 3 && c != 4) {
-		Com_Printf("usage: set <variable> <value> [u / s]\n");
+		Com_Printf("Usage: %s <variable> <value> [u / s]\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -686,7 +686,7 @@ static void Cvar_Copy_f (void)
 
 	c = Cmd_Argc();
 	if (c < 3) {
-		Com_Printf("usage: set <target> <source>\n");
+		Com_Printf("Usage: %s <target> <source>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -829,7 +829,7 @@ static void Cvar_Del_f (void)
 
 	c = Cmd_Argc();
 	if (c != 2) {
-		Com_Printf("usage: del <variable>\n");
+		Com_Printf("Usage: %s <variable>\n", Cmd_Argv(0));
 		return;
 	}
 
