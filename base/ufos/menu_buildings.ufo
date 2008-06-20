@@ -138,10 +138,9 @@ menu buildings
 		mousefx	true
 		num	3
 		height	"20"
-		click	{ }
-		rclick	{ cmd "buildinginfo_click;" }
+		click
 	}
-	
+
 	pic ufopedia_link
 	{
 		image		menu/buttons_small
@@ -149,10 +148,9 @@ menu buildings
 		pos		"320 720"
 		texl		"32 0"
 		texh		"47 16"
-		mousefx		true
 		click
 		{
-			cmd "buildinginfo_click;"		
+			cmd "buildinginfo_click;"
 		}
 	}
 
@@ -164,6 +162,7 @@ menu buildings
 		format	"20 140"
 		num		4
 		height	"7"
+		click
 	}
 
 	func init
