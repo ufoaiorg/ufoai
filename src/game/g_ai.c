@@ -537,7 +537,9 @@ static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia
 
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
 		float dist;
-		if (!check->inuse || check->state & STATE_DEAD || ent == check)
+		if (!check->inuse || ent == check)
+			continue;
+		if (!G_IsLivingActor(check))
 			continue;
 		dist = VectorDist(ent->origin, check->origin);
 		assert(dist);
