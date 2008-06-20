@@ -516,7 +516,7 @@ item pistol2
 	holdtwohanded	false
 	firetwohanded 	false
 	shape		"0 0 2 2"
-	center		"-0.1 0 0.9"
+	center		"-0.1 0 0"
 	scale		2.0
 	ammo		30
 	reload		12

@@ -27,8 +27,8 @@ item coilgun_ammo
 	model           weapons/coilgun/coilgun_ammo
 	type		ammo
 	animationindex	0
-	shape		"0 0 1 2"
-	center		"0 0 0"
+	shape		"0 0 2 2"
+	center		"0 0 1.2"
 	scale		1.15
 	price		85
 	size		10

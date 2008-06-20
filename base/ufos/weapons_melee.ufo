@@ -189,7 +189,8 @@ item kerrblade
 	weapon		true
 	type		melee
 	animationindex	2
-	shape		"0 0 5 2"
+	shape		"2 0 3 1"
+	shape		"0 1 5 1"
 	center		"6.3 0 3"
 	scale		1.0
 	price		840
