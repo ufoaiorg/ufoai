@@ -7461,13 +7461,19 @@ static void CP_UFOSellStart_f (void)
 {
 	nation_t *nation;
 	int i;
+	const int nationIdx = Cvar_VariableInteger("mission_recoverynation");
+	if (nationIdx < 0 || nationIdx >= gd.numNations) {
+		Com_Printf("CP_UFOSellStart_f: Invalid nation index given: %i\n", nationIdx);
+		return;
+	}
 
-	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
+	nation = &gd.nations[nationIdx];
 	assert(nation);
+	assert(nation->name);
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
-		UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
+		UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[nationIdx]);
 	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-	CL_UpdateCredits(ccs.credits + UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
+	CL_UpdateCredits(ccs.credits + UFOprices[nationIdx]);
 
 	/* update nation happiness */
 	for (i = 0; i < gd.numNations; i++) {
@@ -7495,6 +7501,12 @@ static void CP_UFORecoveredSell_f (void)
 	int i, nations = 0;
 	aircraft_t *ufocraft;
 	static char recoveryNationSelectPopup[512];
+	const int nationIdx = Cvar_VariableInteger("mission_recoverynation");
+
+	if (nationIdx < -1 || nationIdx >= gd.numNations) {
+		Com_Printf("CP_UFORecoveredSell_f: Invalid nation index given: %i\n", nationIdx);
+		return;
+	}
 
 	/* Do nothing if recovery process is finished. */
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
@@ -7509,8 +7521,10 @@ static void CP_UFORecoveredSell_f (void)
 		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype"))
 			break;
 	}
+	if (!ufocraft)
+		return;
 
-	if (Cvar_VariableInteger("mission_recoverynation") == -1)
+	if (nationIdx == -1)
 		memset(UFOprices, 0, sizeof(UFOprices));
 
 	recoveryNationSelectPopup[0] = '\0';
@@ -7520,7 +7534,7 @@ static void CP_UFORecoveredSell_f (void)
 		/* @todo only nations with proper alien infiltration values */
 		nations++;
 		/* Calculate price offered by nation only if this is first popup opening. */
-		if (Cvar_VariableInteger("mission_recoverynation") == -1) {
+		if (nationIdx == -1) {
 			UFOprices[i] = (int) (ufocraft->price * (.85f + frand() * .3f));
 			/* Nation will pay less if corrupted */
 			UFOprices[i] = (int) (UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
@@ -7534,13 +7548,9 @@ static void CP_UFORecoveredSell_f (void)
 	}
 
 	Q_strcat(recoveryNationSelectPopup, _("\n\nSelected nation:\t\t\t"), sizeof(recoveryNationSelectPopup));
-	if (Cvar_VariableInteger("mission_recoverynation") != -1) {
-		for (i = 0; i < gd.numNations; i++) {
-			if (i == Cvar_VariableInteger("mission_recoverynation")) {
-				Q_strcat(recoveryNationSelectPopup, _(gd.nations[i].name), sizeof(recoveryNationSelectPopup));
-				break;
-			}
-		}
+	if (nationIdx != -1) {
+		const nation_t *nation = &gd.nations[nationIdx];
+		Q_strcat(recoveryNationSelectPopup, _(nation->name), sizeof(recoveryNationSelectPopup));
 	}
 
 	/* Do nothing without at least one nation. */
@@ -7580,7 +7590,6 @@ static void CP_UFOCrashed_f (void)
 	aircraft_t *aircraft, *ufocraft;
 	qboolean ufofound = qfalse;
 	components_t *comp;
-	objDef_t *compOd;
 	itemsTmp_t *cargo;
 
 	if (!baseCurrent || !gd.interceptAircraft)
@@ -7629,7 +7638,7 @@ static void CP_UFOCrashed_f (void)
 
 	/* Add components of crashed UFO to dropship. */
 	for (i = 0; i < comp->numItemtypes; i++) {
-		compOd = comp->items[i];
+		objDef_t *compOd = comp->items[i];
 		assert(compOd);
 		Com_DPrintf(DEBUG_CLIENT, "CP_UFOCrashed_f: Collected %i of %s\n", comp->item_amount2[i], comp->items[i]->id);
 		/* Add items to cargo, increase itemtypes. */
@@ -7705,7 +7714,6 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	float x, y;
 	int num;
 	int randomNum;
-	float posX, posY;
 
 	/* RASTER might reduce amount of tested locations to get a better performance */
 	/**< Number of points in latitude and longitude that will be tested. Therefore, the total number of position tried
@@ -7722,9 +7730,9 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 
 	/* ITERATION 1 */
 	for (y = 0; y < numPoints; y++) {
-		posY = asin(2.0 * y / numPoints + offsetY) * todeg;	/* Use non-uniform distribution otherwise we favour the poles */
+		const float posY = asin(2.0 * y / numPoints + offsetY) * todeg;	/* Use non-uniform distribution otherwise we favour the poles */
 		for (x = 0; x < numPoints; x++) {
-			posX = x * RASTER - 180.0 + offsetX;
+			const float posX = x * RASTER - 180.0 + offsetX;
 
 			Vector2Set(posT, posX, posY);
 
@@ -7747,9 +7755,9 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 
 	/* ITERATION 2 */
 	for (y = 0; y < numPoints; y++) {
-		posY = asin(2.0 * y / numPoints + offsetY) * todeg;
+		const float posY = asin(2.0 * y / numPoints + offsetY) * todeg;
 		for (x = 0; x < numPoints; x++) {
-			posX = x * RASTER - 180.0 + offsetX;
+			const float posX = x * RASTER - 180.0 + offsetX;
 
 			Vector2Set(posT,posX,posY);
 
