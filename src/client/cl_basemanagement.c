@@ -1163,8 +1163,12 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 
 /**
  * @brief Build starting building in the first base, and hire employees.
+ * @param[in,out] base The base to put the new building into
+ * @param[in] template The building template to create a new building with
+ * @param[in] hire Hire employees for the building we create from the template
+ * @param[in] pos The position on the base grid
  */
-static void B_AddBuildingToBasePos (base_t *base, const building_t const *template, qboolean hire, vec2_t pos)
+static void B_AddBuildingToBasePos (base_t *base, const building_t const *template, qboolean hire, const vec2_t pos)
 {
 	building_t *buildingNew;		/**< new building in base (not a template) */
 
@@ -1190,7 +1194,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *templa
  * @brief Build starting building in the first base, and hire employees (calls B_AddBuildingToBasePos).
  * @sa B_AddBuildingToBasePos
  */
-static void B_AddBuildingToBase (base_t *base, building_t *template, qboolean hire)
+static inline void B_AddBuildingToBase (base_t *base, const building_t const *template, qboolean hire)
 {
 	B_AddBuildingToBasePos(base, template, hire, template->pos);
 }
