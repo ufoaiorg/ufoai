@@ -705,14 +705,14 @@ void CheckBrushes (void)
 			/* the old footstep value */
 			if (side->contentFlags & 0x00040000) {
 				side->contentFlags &= ~0x00040000;
-				Com_Printf("  Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
+				Com_Printf("* Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
 				side->surfaceFlags |= SURF_FOOTSTEP;
 				tex->surfaceFlags |= SURF_FOOTSTEP;
 			}
 			/* the old fireaffected value */
 			if (side->contentFlags & 0x0008) {
 				side->contentFlags &= ~0x0008;
-				Com_Printf("  Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
+				Com_Printf("* Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
 				side->surfaceFlags |= SURF_BURN;
 				tex->surfaceFlags |= SURF_BURN;
 			}
