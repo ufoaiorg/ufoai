@@ -535,23 +535,26 @@ static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia
 	/* run away */
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
 
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++){
-		if (check->inuse && check->team == TEAM_ALIEN && !(check->state & STATE_DEAD) && ent != check) {
-			const float dist = VectorDist(ent->origin, check->origin);
-			if (dist && dist < minDist)
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		float dist;
+		if (!check->inuse || check->state & STATE_DEAD || ent == check)
+			continue;
+		dist = VectorDist(ent->origin, check->origin);
+		assert(dist);
+		switch (check->team) {
+		case TEAM_ALIEN:
+			if (dist < minDist)
 				minDist = dist;
-		}
-		if (check->inuse && check->team == TEAM_CIVILIAN && !(check->state & STATE_DEAD) && ent != check) {
-			const float dist = VectorDist(ent->origin, check->origin);
-			if (dist && dist < minDistCivilian)
+			break;
+		case TEAM_CIVILIAN:
+			if (dist < minDistCivilian)
 				minDistCivilian = dist;
-		}
-		if (check->inuse && check->team == TEAM_PHALANX && !(check->state & STATE_DEAD) && ent != check) {
-			const float dist = VectorDist(ent->origin, check->origin);
-			if (dist && dist < minDistFighter)
+			break;
+		case TEAM_PHALANX:
+			if (dist < minDistFighter)
 				minDistFighter = dist;
+			break;
 		}
-
 	}
 
 	minDist /= UNIT_SIZE;
