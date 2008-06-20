@@ -1409,8 +1409,9 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 
 #if 0
 	/* @todo: implement onattack: add it to basemanagement.ufo and implement functions */
-	if (b->onAttack)
-		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
+	if (base->onAttack[0] != '\0')
+		/* execute next frame */
+		Cbuf_AddText(va("%s %i", base->onAttack, base->id));
 #endif
 
 	MAP_SelectMission(mission);

@@ -154,8 +154,6 @@ typedef struct building_s {
 	char onConstruct[MAX_VAR];
 	char onAttack[MAX_VAR];
 	char onDestroy[MAX_VAR];
-	char onUpgrade[MAX_VAR];
-	char onRepair[MAX_VAR];
 
 	int moreThanOne;	/**< More than one building of the same type allowed? */
 

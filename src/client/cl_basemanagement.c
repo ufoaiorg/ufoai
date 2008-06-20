@@ -312,8 +312,6 @@ static const value_t valid_building_vars[] = {
 	{"onconstruct", V_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
 	{"onattack", V_STRING, offsetof(building_t, onAttack), 0}, /**< Event handler. */
 	{"ondestroy", V_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
-	{"onupgrade", V_STRING, offsetof(building_t, onUpgrade), 0}, /**< Event handler. */
-	{"onrepair", V_STRING, offsetof(building_t, onRepair), 0}, /**< Event handler. */
 	{"pos", V_POS, offsetof(building_t, pos), MEMBER_SIZEOF(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
 	{"autobuild", V_BOOL, offsetof(building_t, autobuild), MEMBER_SIZEOF(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{NULL, 0, 0, 0}
@@ -803,25 +801,23 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
-	char onDestroy[MAX_VAR];
 	qboolean test;
 
 	/* Don't allow to destroy an entrance. */
 	if (buildingType == B_ENTRANCE)
 		return qfalse;
 
-	Q_strncpyz(onDestroy, building->onDestroy, sizeof(onDestroy));
-
 	if (!base->map[(int)building->pos[0]][(int)building->pos[1]].building
-	|| base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
+	 || base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
 		assert(0);
 		return qfalse;
 	}
 
 	/* call ondestroy trigger only if building is not under construction*/
-	if (*onDestroy && building->buildingStatus == B_STATUS_WORKING) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n", onDestroy, base->idx, building->buildingType);
-		Cbuf_AddText(va("%s %i %i;", onDestroy, base->idx, building->buildingType));
+	if (building->onDestroy[0] != '\0' && building->buildingStatus == B_STATUS_WORKING) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",
+			building->onDestroy, base->idx, building->buildingType);
+		Cbuf_AddText(va("%s %i %i;", building->onDestroy, base->idx, building->buildingType));
 	}
 
 	/* Remove the building from the base map */
@@ -859,6 +855,8 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 				if (buildings[i].needs)
 					base->map[(int)buildings[i].pos[0]][(int)buildings[i].pos[1] + 1].building = &buildings[i];
 			}
+
+		building = NULL;
 	}
 	/** @note Don't use the building pointer after this point - it's zeroed or points to a wrong entry now. */
 
@@ -984,6 +982,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 
 	assert(building);
 	cap = B_GetCapacityFromBuildingType(building->buildingType);
+	/* store the pointer to the building you wanna destroy */
 	base->buildingCurrent = building;
 
 	if (building->buildingStatus == B_STATUS_WORKING) {
@@ -1186,18 +1185,17 @@ static void B_AddBuildingToBasePos (building_t *building, base_t *base, const bu
 	B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, building->id, building->pos[0], building->pos[1]);
 
-	/* now call the onconstruct trigger */
-	if (*building->onConstruct) {
-		base->buildingCurrent = building;
-		Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
-		Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
-	}
-
 	/* update the building-list */
 	B_BuildingInit(base);
 
 	if (hire)
 		B_HireForBuilding(base, building, -1);
+
+	/* now call the onconstruct trigger */
+	if (building->onConstruct[0] != '\0') {
+		Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
+		Cmd_ExecuteString(va("%s %i;", building->onConstruct, base->idx));
+	}
 }
 
 /**
@@ -1494,8 +1492,8 @@ static void B_NewBuilding (base_t* base, building_t *building)
  * @brief Set the currently selected building.
  * @param[in,out] base The base to place the building in
  * @param[in] building The building to place at the given location
- * @param[in] row Set building (baseCurrent->buildingCurrent) to row
- * @param[in] col Set building (baseCurrent->buildingCurrent) to col
+ * @param[in] row Set building to row
+ * @param[in] col Set building to col
  */
 void B_SetBuildingByClick (base_t *base, building_t *building, int row, int col)
 {
@@ -1813,15 +1811,13 @@ static void B_BuildingInit_f (void)
 }
 
 /**
- * @brief Opens up the 'pedia if you right click on a building in the list.
- *
- * @todo Really only do this on rightclick.
- * @todo Left click should show building-status.
+ * @brief Opens the UFOpedia for the current selected building.
  */
 static void B_BuildingInfoClick_f (void)
 {
 	if (baseCurrent && baseCurrent->buildingCurrent) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingInfoClick_f: %s - %i\n", baseCurrent->buildingCurrent->id, baseCurrent->buildingCurrent->buildingStatus);
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingInfoClick_f: %s - %i\n",
+			baseCurrent->buildingCurrent->id, baseCurrent->buildingCurrent->buildingStatus);
 		UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 	}
 }
@@ -3497,7 +3493,7 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
 	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, NULL);
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
-	Cmd_AddCommand("buildings_click", B_BuildingClick_f, NULL);
+	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the UFOpedia for the current selected building");
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
