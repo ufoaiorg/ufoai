@@ -530,7 +530,7 @@ static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia
 		if (ent->state & ~STATE_PANIC && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
-		Com_Printf("AI_FighterCalcBestAction: Error - civilian team with no teamdef\n");
+		Com_Printf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
 
 	/* run away */
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
