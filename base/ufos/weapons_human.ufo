@@ -10,7 +10,8 @@ item assault
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
-	shape		"0 0 5 2"
+	shape		"1 0 4 1"
+	shape		"0 1 5 1"
 	center		"3 0 2"
 	scale		1.25
 	ammo		30
