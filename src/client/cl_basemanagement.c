@@ -755,7 +755,8 @@ static void B_BuildingOnDestroy_f (void)
 			INV_RemoveItemsExceedingCapacity(base);
 			break;
 		case B_ALIEN_CONTAINMENT:
-			/* @todo: implement me */
+			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
+				AL_RemoveAliens(base, NULL, (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max), AL_RESEARCH);
 			break;
 		case B_LAB:
 			RS_RemoveScientistsExceedingCapacity(base);
@@ -772,7 +773,7 @@ static void B_BuildingOnDestroy_f (void)
 			E_DeleteEmployeesExceedingCapacity(base);
 			break;
 		case B_ANTIMATTER:
-			/* @todo: implement me */
+			INV_RemoveAntimatterExceedingCapacity(base);
 			break;
 		default:
 			/* handled in a seperate function, or number of buildings have no impact
@@ -793,6 +794,8 @@ static void B_BuildingOnDestroy_f (void)
 qboolean B_BuildingDestroy (base_t* base, building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
+	const building_t const *template = building->tpl;	/**< Template of the removed building */
+	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 	qboolean test;
 
@@ -804,13 +807,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	 || base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
 		assert(0);
 		return qfalse;
-	}
-
-	/* call ondestroy trigger only if building is not under construction*/
-	if (building->onDestroy[0] != '\0' && building->buildingStatus == B_STATUS_WORKING) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",
-			building->onDestroy, base->idx, building->buildingType);
-		Cbuf_AddText(va("%s %i %i;", building->onDestroy, base->idx, building->buildingType));
 	}
 
 	/* Remove the building from the base map */
@@ -851,72 +847,34 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 		building = NULL;
 	}
-	/** @note Don't use the building pointer after this point - it's zeroed or points to a wrong entry now. */
+	/** @note Don't use the building pointer after this point - it's zeroed. */
 
 	test = qfalse;
 
-	switch (buildingType) {
-	case B_WORKSHOP:
-	case B_STORAGE:
-	case B_ALIEN_CONTAINMENT:
-	case B_LAB:
-	case B_HOSPITAL:
-	case B_HANGAR: /* the Dropship Hangar */
-	case B_SMALL_HANGAR:
-	case B_COMMAND:
-	case B_UFO_HANGAR:
-	case B_UFO_SMALL_HANGAR:
-	case B_POWER:
-	case B_TEAMROOM:
-	case B_QUARTERS:
-	case B_DEFENSE_MISSILE:
-	case B_DEFENSE_LASER:
-	case B_RADAR:
+	if (buildingType != B_MISC && buildingType != MAX_BUILDING_TYPE) {
 		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
+			/* there is no more building of this type */
 			B_SetBuildingStatus(base, buildingType, qfalse);
-			test = qtrue;
-		}
-		break;
-	case B_ANTIMATTER:
-		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {
-			B_SetBuildingStatus(base, buildingType, qfalse);
-			/* Remove antimatter. */
-			INV_ManageAntimatter(base, 0, qfalse);
-			test = qtrue;
+			/* check if this has an impact on other buildings */
+			B_UpdateStatusBuilding(base, buildingType, qfalse);
+			/* we may have changed status of several building: update all capacities */
+			B_UpdateBaseCapacities(MAX_CAP, base);
 		} else {
-			/* @todo what happens of exceeding antimatter? */
+			/* there is still at least one other building of the same type in base: just update capacity */
+			cap = B_GetCapacityFromBuildingType(buildingType);
+			if (cap != MAX_CAP)
+				B_UpdateBaseCapacities(cap, base);
 		}
-		break;
-	case B_MISC:
-		break;
-	default:
-		Com_Printf("B_BuildingDestroy: Unknown building type: %i.\n", buildingType);
-		break;
-	}
-
-	/* now, the destruction of this building may have changed the status of other building. */
-	if (test) {
-		/* there is no more building of this type: check if this has an impact on other buildings */
-		B_UpdateStatusBuilding(base, buildingType, qfalse);
-		/* we may have changed status of several building: update all capacities */
-		B_UpdateBaseCapacities(MAX_CAP, base);
-	} else {
-		/* there is at least one other building of the same type: just update capacity */
-		cap = B_GetCapacityFromBuildingType(buildingType);
-		if (cap != MAX_CAP)
-			B_UpdateBaseCapacities(cap, base);
 	}
 
 	B_BaseMenuInit(base);
 
-	/* Remove aliens if needed. */
-	if (buildingType == B_ALIEN_CONTAINMENT) {
-		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {	/* Just clean containment. */
-			AL_FillInContainment(base);
-		} else {	/* Check capacities and remove needed amount. */
-			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
-				AL_RemoveAliens(base, NULL, (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max), AL_RESEARCH);
-		}
+	/* call ondestroy trigger only if building is not under construction
+	 * (we do that after base capacity has been updated) */
+	if (onDestroyCommand) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",
+			template->onDestroy, base->idx, buildingType);
+		Cmd_ExecuteString(va("%s %i %i;", template->onDestroy, base->idx, buildingType));
 	}
 
 	return qtrue;

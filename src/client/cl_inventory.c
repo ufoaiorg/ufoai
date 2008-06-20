@@ -740,6 +740,19 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 	}
 }
 
+/**
+ * @brief Remove exceeding antimatter if an antimatter tank has been destroyed.
+ * @param[in] base Pointer to the base.
+ */
+void INV_RemoveAntimatterExceedingCapacity (base_t *base)
+{
+	const int amount = ceil(((float) (base->capacities[CAP_ANTIMATTER].cur - base->capacities[CAP_ANTIMATTER].max)) / ANTIMATTER_SIZE);
+	if (amount < 0)
+		return;
+
+	INV_ManageAntimatter(base, amount, qfalse);
+}
+
 #ifdef DEBUG
 /**
  * @brief Lists all object definitions.
