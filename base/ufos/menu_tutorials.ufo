@@ -51,7 +51,7 @@ menu tutorials
 	pic button_back
 	{
 		pos	"640 520"
-		click	{ cmd "mn_pop" }
+		click	{ cmd "mn_pop;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -72,9 +72,9 @@ menu tutorials
 	{
 		pos	"640 220"
 		format	"20 0"
-		size	"260 390"
+		size	"260 280"
 		num	1
-		height	"19"
+		height	"14"
 		mousefx true
 		wheel
 		scrollbar true
