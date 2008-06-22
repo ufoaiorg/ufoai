@@ -1830,13 +1830,10 @@ static void UP_DecreaseFiremode_f (void)
 }
 
 /**
- * @sa CL_ResetMenus
+ * @sa MN_ResetMenus
  */
 void UP_Reset (void)
 {
-	/* reset menu structures */
-	gd.numChapters = 0;
-
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the UFOpaedia index for the current chapter");
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
@@ -1865,8 +1862,6 @@ void UP_Reset (void)
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
-	upFireMode = 0;
-	upResearchedLink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 }
 
 /**
