@@ -1838,10 +1838,10 @@ void UP_Reset (void)
 	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the UFOpaedia index for the current chapter");
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
 	Cmd_AddCommand("mn_upback", UP_Back_f, "Goes back from article to index or from index to chapters");
-	Cmd_AddCommand("mn_upprev", UP_Prev_f, NULL);
-	Cmd_AddCommand("mn_upnext", UP_Next_f, NULL);
-	Cmd_AddCommand("mn_upupdate", UP_Update_f, NULL);
-	Cmd_AddCommand("ufopedia", UP_FindEntry_f, NULL);
+	Cmd_AddCommand("mn_upprev", UP_Prev_f, "Goes to the previous entry in the UFOpaedia");
+	Cmd_AddCommand("mn_upnext", UP_Next_f, "Goes to the next entry in the UFOpaedia");
+	Cmd_AddCommand("mn_upupdate", UP_Update_f, "Redraw the current UFOpaedia article");
+	Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
 	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
 	Cmd_AddCommand("ufopedia_rclick", UP_RightClick_f, NULL);
@@ -1854,8 +1854,8 @@ void UP_Reset (void)
 	Cmd_AddCommand("mn_increaseweapon", UP_IncreaseWeapon_f, NULL);
 	Cmd_AddCommand("mn_decreaseweapon", UP_DecreaseWeapon_f, NULL);
 
-	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, NULL);
-	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, NULL);
+	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
+	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
