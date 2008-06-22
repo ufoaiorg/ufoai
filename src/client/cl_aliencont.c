@@ -603,11 +603,11 @@ static void AC_NextAC_f (void)
 	qboolean found = qfalse;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+	if (!baseCurrent || !curCampaign || !aliencontCurrent)
 		return;
 
 	/* Get next base */
-	if (baseCurrent >= gd.bases + MAX_BASES -1)
+	if (baseCurrent >= gd.bases + MAX_BASES - 1)
 		base = &gd.bases[0];
 	else
 		base = baseCurrent + 1;

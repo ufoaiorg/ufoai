@@ -837,6 +837,7 @@ static void TR_TransferAlienAfterMissionStart (base_t *base)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	/** @todo: Why don't we use MN_PopMenu directly here? */
 	Cbuf_AddText("mn_pop\n");
 }
 
@@ -1034,6 +1035,7 @@ static void TR_TransferStart_f (void)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transferBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	/** @todo: Why don't we use MN_PopMenu directly here? */
 	Cbuf_AddText("mn_pop\n");
 }
 
