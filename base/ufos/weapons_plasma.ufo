@@ -15,7 +15,7 @@ item plaspistol
 	scale		1.5
 	ammo		8
 	reload		12
-	price		34000
+	price		3400
 	size		20
 	buytype	weap_sec
 }
@@ -97,7 +97,7 @@ item plasrifle
 	scale		1.25
 	ammo		10
 	reload		14
-	price		40000
+	price		4000
 	size		40
 	buytype	weap_pri
 }
@@ -200,7 +200,7 @@ item plasblaster
 	scale		1.06
 	ammo		50
 	reload		18
-	price		58000
+	price		5800
 	size		80
 	buytype	weap_pri
 }
