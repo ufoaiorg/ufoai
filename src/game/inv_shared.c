@@ -1733,6 +1733,24 @@ qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 	int i;
 	qboolean usable = qfalse;
 
+#ifdef DEBUG
+	if (!od) {
+		Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: No pointer given for 'od'.\n");
+		return qfalse;
+	}
+	if (!weapon) {
+		Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: No weapon pointer given.\n");
+		return qfalse;
+	}
+#endif
+
+	if (od && od->numWeapons == 1
+	 && od->weapons[0]
+	 && od->weapons[0] == od) {
+		/* The weapon is only linked to itself. */
+		return qfalse;
+	}
+
 	for (i = 0; i < od->numWeapons; i++) {
 #ifdef DEBUG
 		if (!od->weapons[i]) {

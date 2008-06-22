@@ -680,6 +680,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	}
 
 	/* Search for any complete clips. */
+	/** @todo We may want to change this to use the type->ammo[] info. */
 	for (i = 0; i < csi.numODs; i++) {
 		if (INVSH_LoadableInWeapon(&csi.ods[i], type)) {
 			if (ed->num[i] > 0) {
@@ -706,6 +707,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	}
 
 	/* See if there's any loose ammo */
+	/** @todo We may want to change this to use the type->ammo[] info. */
 	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
 		if (INVSH_LoadableInWeapon(&csi.ods[i], type)
