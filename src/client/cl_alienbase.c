@@ -340,9 +340,9 @@ static void AB_AlienBaseList_f (void)
 #endif
 
 /**
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
-void AB_Reset (void)
+void AB_InitStartup (void)
 {
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listalienbase", AB_AlienBaseList_f, "Print Alien Bases information to game console");

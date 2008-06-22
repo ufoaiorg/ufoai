@@ -79,10 +79,8 @@ static void TUT_ListClick_f (void)
 	Cmd_ExecuteString(va("seq_start %s", tutorials[num].sequence));
 }
 
-void TUT_Init (void)
+void TUT_InitStartup (void)
 {
-	numTutorials = 0;
-
 	/* tutorial stuff */
 	Cmd_AddCommand("listtutorials", TUT_List_f, "Show all tutorials");
 	Cmd_AddCommand("gettutorials", TUT_GetTutorials_f, NULL);

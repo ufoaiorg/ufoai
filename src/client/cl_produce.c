@@ -1542,9 +1542,9 @@ static void PR_ProductionDown_f (void)
 /**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_ResetMenus resp. CL_InitLocal
+ * Called from MN_InitStartup resp. CL_InitLocal
  */
-void PR_ResetProduction (void)
+void PR_InitStartup (void)
 {
 	/* add commands */
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);

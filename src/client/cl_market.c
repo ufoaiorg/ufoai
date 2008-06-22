@@ -941,7 +941,7 @@ static void BS_SellAircraft_f (void)
 /**
  * @brief Activates commands for Market Menu.
  */
-void BS_ResetMarket (void)
+void BS_InitStartup (void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
 	Cmd_AddCommand("market_click", BS_MarketClick_f, "Click function for buy menu text node");

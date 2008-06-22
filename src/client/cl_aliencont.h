@@ -82,7 +82,7 @@ int AL_CountInBase(const struct base_s *base);
  */
 int AL_CountAll(void);
 
-void AC_Reset(void);
+void AC_InitStartup(void);
 
 void AC_KillAll(struct base_s *base);
 

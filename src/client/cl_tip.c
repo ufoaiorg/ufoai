@@ -117,7 +117,7 @@ void CL_ParseTipsOfTheDay (const char *name, const char **text)
 /**
  * @brief Init function for cvars and console command bindings
  */
-void CL_TipOfTheDayInit (void)
+void TOTD_InitStartup (void)
 {
 	cl_showTipOfTheDay = Cvar_Get("cl_showTipOfTheDay", "1", CVAR_ARCHIVE, "Show the tip of the day for singleplayer campaigns");
 

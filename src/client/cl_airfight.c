@@ -784,9 +784,9 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 }
 
 /**
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
-void AIRFIGHT_Reset (void)
+void AIRFIGHT_InitStartup (void)
 {
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listprojectile", AIRFIGHT_ProjectileList_f, "Print Projectiles information to game console");

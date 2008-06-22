@@ -1742,9 +1742,9 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 
 /**
  * @brief Defines commands and cvars for the Transfer menu(s).
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
-void TR_Reset (void)
+void TR_InitStartup (void)
 {
 	/* add commands */
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");

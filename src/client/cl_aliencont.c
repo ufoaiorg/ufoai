@@ -878,7 +878,7 @@ static void AC_ResearchAlien_f (void)
 
 /**
  * @brief Click function for aliencont menu list.
- * @sa AC_Reset
+ * @sa AC_InitStartup
  */
 static void AC_AlienClick_f (void)
 {
@@ -1055,9 +1055,9 @@ static void AC_ListDown_f (void)
 
 /**
  * @brief Defines commands and cvars for the alien containment menu(s).
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
-void AC_Reset (void)
+void AC_InitStartup (void)
 {
 	/* add commands */
 	Cmd_AddCommand("aliencont_init", AC_Init_f, "Init function for alien containment menu");

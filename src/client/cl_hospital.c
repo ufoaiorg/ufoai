@@ -85,7 +85,7 @@ void HOS_HospitalRun (void)
 				employee_t *employee = &gd.employees[type][i];
 				if (!employee->baseHired || !employee->hired)
 					continue;
-					
+
 				if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
 					HOS_HealCharacter(&(employee->chr), qtrue);
 				else
@@ -365,9 +365,9 @@ static void HOS_EmployeeInit_f (void)
 /**
  * @brief Initial stuff for hospitals
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_ResetMenus resp. CL_InitLocal
+ * Called from MN_InitStartup resp. CL_InitLocal
  */
-void HOS_Reset (void)
+void HOS_InitStartup (void)
 {
 	/* add commands */
 	Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");

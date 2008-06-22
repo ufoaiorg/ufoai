@@ -1830,9 +1830,9 @@ static void UP_DecreaseFiremode_f (void)
 }
 
 /**
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
-void UP_Reset (void)
+void UP_InitStartup (void)
 {
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the UFOpaedia index for the current chapter");

@@ -67,6 +67,6 @@ void AIRFIGHT_CampaignRunProjectiles(int dt);
 void AIRFIGHT_CampaignRunBaseDefense(int dt);
 int AIRFIGHT_ChooseWeapon(const aircraftSlot_t const *slot, int maxSlot, const vec3_t pos, const vec3_t targetPos);
 qboolean AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);
-void AIRFIGHT_Reset(void);
+void AIRFIGHT_InitStartup(void);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */

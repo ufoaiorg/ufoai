@@ -223,7 +223,7 @@ typedef struct technology_s {
 	struct technology_s *hashProvidedNext;
 } technology_t;
 
-void RS_ResetResearch(void);
+void RS_InitStartup(void);
 void RS_ResetHash(void);
 void CL_CheckResearchStatus(void);
 void RS_UpdateData(struct base_s *base, qboolean updateMenu);

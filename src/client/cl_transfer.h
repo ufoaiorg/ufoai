@@ -84,6 +84,6 @@ void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferCheck(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
-void TR_Reset(void);
+void TR_InitStartup(void);
 
 #endif /* CLIENT_CL_TRANSFER_H */

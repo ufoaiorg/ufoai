@@ -157,7 +157,7 @@ static cvar_t *seq_animspeed;
  * @brief Sets the client state to ca_disconnected
  * @sa CL_SequenceStart_f
  */
-void CL_SequenceEnd_f (void)
+static void CL_SequenceEnd_f (void)
 {
 	CL_SetClientState(ca_disconnected);
 }
@@ -298,7 +298,7 @@ void CL_SequenceRender (void)
 
 /**
  * @brief Renders text and images
- * @sa CL_ResetSequences
+ * @sa SEQ_InitStartup
  */
 void CL_Sequence2D (void)
 {
@@ -357,7 +357,7 @@ void CL_Sequence2D (void)
  * @note Script binding for seq_click
  * @sa menu sequence in menu_main.ufo
  */
-void CL_SequenceClick_f (void)
+static void CL_SequenceClick_f (void)
 {
 	if (seqLocked) {
 		seqEndClickLoop = qtrue;
@@ -370,7 +370,7 @@ void CL_SequenceClick_f (void)
  * @brief Start a sequence
  * @sa CL_SequenceEnd_f
  */
-void CL_SequenceStart_f (void)
+static void CL_SequenceStart_f (void)
 {
 	sequence_t *sp;
 	const char *name, *menuName;
@@ -419,15 +419,13 @@ void CL_SequenceStart_f (void)
 }
 
 
-void CL_ResetSequences (void)
+void SEQ_InitStartup (void)
 {
 	/* reset counters */
 	seq_animspeed = Cvar_Get("seq_animspeed", "1000", 0, NULL);
-	numSequences = 0;
-	numSeqCmds = 0;
-	numSeqEnts = 0;
-	numSeq2Ds = 0;
-	seqLocked = qfalse;
+	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
+	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
+	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
 }
 
 

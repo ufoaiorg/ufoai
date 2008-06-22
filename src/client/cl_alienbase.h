@@ -47,6 +47,6 @@ qboolean AB_CheckSupplyMissionPossible(void);
 alienBase_t* AB_ChooseBaseToSupply(vec2_t pos);
 void AB_SupplyBase(alienBase_t *base, qboolean decreaseStealth);
 int AB_GetAlienBaseNumber(void);
-void AB_Reset(void);
+void AB_InitStartup(void);
 
 #endif	/* CLIENT_CL_ALIENBASE_H */

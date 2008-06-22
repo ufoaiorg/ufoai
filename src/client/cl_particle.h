@@ -43,7 +43,7 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg);
 void CL_ParticleFree(ptl_t *p);
 
 void CL_ParticleRegisterArt(void);
-void CL_ResetParticles(void);
+void PTL_InitStartup(void);
 void CL_ParticleRun(void);
 void CL_RunMapParticles(void);
 int CL_ParseParticle(const char *name, const char **text);

@@ -3388,9 +3388,9 @@ static void B_PrintCapacities_f (void)
 
 /**
  * @brief Resets console commands.
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
-void B_ResetBaseManagement (void)
+void B_InitStartup (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Reset basemanagement\n");
 

@@ -6695,11 +6695,10 @@ void CL_GameInit (qboolean load)
 
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
-	MAP_GameInit();
 
 	rsAlienXVI = RS_GetTechByID(XVI_EVENT_NAME);
 	if (!rsAlienXVI)
-		Sys_Error("CL_ResetCampaign: Could not find tech definition for %s", XVI_EVENT_NAME);
+		Sys_Error("CL_GameInit: Could not find tech definition for %s", XVI_EVENT_NAME);
 
 	/* now check the parsed values for errors that are not catched at parsing stage */
 	if (!load)
@@ -7798,7 +7797,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	return qtrue;
 }
 
-void CL_ResetCampaign (void)
+void CP_InitStartup (void)
 {
 	/* reset some vars */
 	curCampaign = NULL;

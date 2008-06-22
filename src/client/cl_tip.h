@@ -22,5 +22,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-void CL_TipOfTheDayInit(void);
+void TOTD_InitStartup(void);
 void CL_ParseTipsOfTheDay(const char *name, const char **text);

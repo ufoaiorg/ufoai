@@ -25,11 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
-#include "cl_basesummary.h"
-#include "cl_hospital.h"
-#include "cl_map.h"
-#include "cl_ufo.h"
-#include "cl_alienbase.h"
 #include "menu/m_main.h"
 #include "menu/m_popup.h"
 
@@ -355,10 +350,10 @@ static void MN_PrevMap_f (void)
  * aliencontainmenu, employee, hospital and a lot more subfunctions
  * @note This function is called once
  * @sa MN_Shutdown
- * @sa B_ResetBaseManagement
+ * @sa B_InitStartup
  * @sa CL_InitLocal
  */
-void MN_ResetMenus (void)
+void MN_InitStartup (void)
 {
 	/* add commands and cvars */
 	Cvar_Set("mn_main", "main");
@@ -375,20 +370,15 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, "Switch to the next multiplayer map");
 	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, "Switch to the previous multiplayer map");
 
-	MN_Init();
+	mn_main = Cvar_Get("mn_main", "main", 0, "Which is the main menu id to return to - also see mn_active");
+	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "Which is the sequence menu node to render the sequence in");
+	mn_active = Cvar_Get("mn_active", "", 0, "The active menu can will return to when hitting esc - also see mn_main");
+	mn_afterdrop = Cvar_Get("mn_afterdrop", "", 0, "The menu that should be pushed after the drop function was called");
+	mn_main_afterdrop = Cvar_Get("mn_main_afterdrop", "", 0, "The main menu that should be returned to after the drop function was called - will be the new mn_main value then");
+	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
+	mn_serverday = Cvar_Get("mn_serverday", "1", CVAR_ARCHIVE, "Decides whether the server starts the day or the night version of the selected map");
+	mn_inputlength = Cvar_Get("mn_inputlength", "32", 0, "Limit the input length for messagemenu input");
+	mn_inputlength->modified = qfalse;
 
-	/* reset UFOpaedia, basemanagement and other subsystems */
-	UP_Reset();
-	B_ResetBaseManagement();
-	RS_ResetResearch();
-	PR_ResetProduction();
-	E_Reset();
-	HOS_Reset();
-	AC_Reset();
-	MAP_ResetAction();
-	UFO_Reset();
-	TR_Reset();
-	AB_Reset();
-	AIRFIGHT_Reset();
-	BaseSummary_Reset();
+	MN_Init();
 }

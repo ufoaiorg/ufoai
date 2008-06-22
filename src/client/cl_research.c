@@ -1722,11 +1722,10 @@ static void RS_DependenciesClick_f (void)
 /**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_ResetMenus resp. CL_InitLocal
+ * Called from MN_InitStartup resp. CL_InitLocal
  */
-void RS_ResetResearch (void)
+void RS_InitStartup (void)
 {
-	researchListLength = 0;
 	/* add commands and cvars */
 	Cmd_AddCommand("research_init", MN_ResearchInit_f, "Research menu init function binding");
 	Cmd_AddCommand("research_select", CL_ResearchSelect_f, "Update current selection with the one that has been clicked");
@@ -2455,7 +2454,7 @@ int RS_CountInBase (const base_t *base)
 /**
  * @brief Remove all exceeding scientist.
  * @param[in] base Pointer to base where a scientist should be removed.
- * @note function called 
+ * @note function called
  */
 void RS_RemoveScientistsExceedingCapacity (base_t *base)
 {

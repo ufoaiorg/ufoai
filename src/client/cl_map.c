@@ -2162,7 +2162,7 @@ static void MAP_DeactivateOverlay_f (void)
 /**
  * @brief Initialise MAP/Geoscape
  */
-void MAP_GameInit (void)
+void MAP_InitStartup (void)
 {
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");

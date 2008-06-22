@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-void HOS_Reset(void);
+void HOS_InitStartup(void);
 qboolean HOS_HealCharacter(character_t* chr, qboolean hospital);
 qboolean HOS_HealEmployee(employee_t* employee);
 void HOS_HealAll(const base_t* const base);

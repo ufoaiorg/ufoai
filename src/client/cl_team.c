@@ -1929,7 +1929,7 @@ static void CL_GenerateNewTeam_f (void)
 	MN_PushMenu("team");
 }
 
-void CL_ResetTeams (void)
+void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, "Generates a new empty team");
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");

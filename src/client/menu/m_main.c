@@ -594,9 +594,9 @@ qboolean MN_CheckCondition (menuNode_t *node)
 /**
  * @brief Reset and free the menu data hunk
  * @note Even called in case of an error when CL_Shutdown was called - maybe even
- * before CL_InitLocal (and thus MN_ResetMenus) was called
+ * before CL_InitLocal (and thus MN_InitStartup) was called
  * @sa CL_Shutdown
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
 void MN_Shutdown (void)
 {

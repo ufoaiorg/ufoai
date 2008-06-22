@@ -394,7 +394,7 @@ void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
 
 void CP_CheckNextStageDestination(aircraft_t *ufo);
 
-void CL_ResetCampaign(void);
+void CP_InitStartup(void);
 void CL_ResetSinglePlayerData(void);
 void CL_DateConvert(const date_t * date, byte *day, byte *month, short *year);
 void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);

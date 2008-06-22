@@ -34,6 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Menu functions
  */
 
-void BaseSummary_Reset(void);
+void BSUM_InitStartup(void);
 
 #endif /* CLIENT_CL_BASESUMMARY_H */

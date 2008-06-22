@@ -35,6 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_language.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
+#include "cl_basesummary.h"
+#include "cl_hospital.h"
+#include "cl_map.h"
+#include "cl_ufo.h"
+#include "cl_alienbase.h"
 #include "cl_sequence.h"
 #include "cl_view.h"
 #include "cl_joystick.h"
@@ -1996,24 +2001,35 @@ static void CL_InitLocal (void)
 
 	INVSH_InitInventory(invList);
 	IN_Init();
-
 	SAV_Init();
-	MN_ResetMenus();
-	TUT_Init();
-	CL_ResetParticles();
-	CL_ResetCampaign();
-	BS_ResetMarket();
-	CL_ResetSequences();
-	CL_ResetTeams();
 
-	CL_TipOfTheDayInit();
-
-	for (i = 0; i < MAX_BOOKMARKS; i++)
-		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
+	/* init menu, UFOpaedia, basemanagement and other subsystems */
+	MN_InitStartup();
+	UP_InitStartup();
+	B_InitStartup();
+	RS_InitStartup();
+	PR_InitStartup();
+	E_InitStartup();
+	HOS_InitStartup();
+	AC_InitStartup();
+	MAP_InitStartup();
+	UFO_InitStartup();
+	TR_InitStartup();
+	AB_InitStartup();
+	AIRFIGHT_InitStartup();
+	BSUM_InitStartup();
+	TUT_InitStartup();
+	PTL_InitStartup();
+	CP_InitStartup();
+	BS_InitStartup();
+	SEQ_InitStartup();
+	TEAM_InitStartup();
+	TOTD_InitStartup();
 
 	/* register our variables */
+	for (i = 0; i < MAX_BOOKMARKS; i++)
+		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", 0, "Show geoscape coords on console (for mission placement) and shows menu coord besides the cursor");
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
@@ -2035,22 +2051,9 @@ static void CL_InitLocal (void)
 	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, "Start with assigned equipment - see cl_start_employees");
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "8000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
-
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
-
-	mn_main = Cvar_Get("mn_main", "main", 0, "Which is the main menu id to return to - also see mn_active");
-	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "Which is the sequence menu node to render the sequence in");
-	mn_active = Cvar_Get("mn_active", "", 0, "The active menu can will return to when hitting esc - also see mn_main");
-	mn_afterdrop = Cvar_Get("mn_afterdrop", "", 0, "The menu that should be pushed after the drop function was called");
-	mn_main_afterdrop = Cvar_Get("mn_main_afterdrop", "", 0, "The main menu that should be returned to after the drop function was called - will be the new mn_main value then");
-	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
-	mn_serverday = Cvar_Get("mn_serverday", "1", CVAR_ARCHIVE, "Decides whether the server starts the day or the night version of the selected map");
-	mn_inputlength = Cvar_Get("mn_inputlength", "32", 0, "Limit the input length for messagemenu input");
-	mn_inputlength->modified = qfalse;
-
 	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 	cl_serverlist = Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
-
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
@@ -2106,10 +2109,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
 	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");
-
-	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
-	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
-	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
 
 	/* forward to server commands
 	 * the only thing this does is allow command completion

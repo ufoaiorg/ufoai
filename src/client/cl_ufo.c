@@ -927,9 +927,9 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
 }
 
 /**
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
-void UFO_Reset (void)
+void UFO_InitStartup (void)
 {
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");

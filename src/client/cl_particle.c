@@ -510,7 +510,7 @@ static void CL_ParticleEditor_f (void)
 /**
  * @sa CL_InitLocal
  */
-void CL_ResetParticles (void)
+void PTL_InitStartup (void)
 {
 	r_numParticles = 0;
 	numPtlCmds = 0;

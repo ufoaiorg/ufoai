@@ -161,9 +161,9 @@ static void BaseSummary_Init_f (void)
 
 /**
  * @brief Defines commands and cvars for the base statistics menu(s).
- * @sa MN_ResetMenus
+ * @sa MN_InitStartup
  */
-void BaseSummary_Reset (void)
+void BSUM_InitStartup (void)
 {
 	/* add commands */
 	Cmd_AddCommand("basesummary_init", BaseSummary_Init_f, "Init function for Base Statistics menu");

@@ -1308,9 +1308,9 @@ static void E_EmployeeSelect_f (void)
 /**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_ResetMenus resp. CL_InitLocal
+ * Called from MN_InitStartup resp. CL_InitLocal
  */
-void E_Reset (void)
+void E_InitStartup (void)
 {
 	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
