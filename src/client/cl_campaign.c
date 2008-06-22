@@ -1436,11 +1436,11 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	popupText[0] = '\0';
 	if (base->capacities[CAP_ALIENS].cur) {
 		Q_strcat(popupText,
-			_("Base is under attack - you can enter base to change soldiers equipment. What to do ?"),
+			va(_("Base '%s' is under attack - you can enter this base to change soldiers equipment. What to do ?"), base->name),
 			sizeof(popupText));
 	} else {
 		Q_strcat(popupText,
-			_("Base is under attack - you can enter base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"),
+			va(_("Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"), base->name),
 			sizeof(popupText));
 	}
 
