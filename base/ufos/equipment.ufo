@@ -57,6 +57,8 @@ equipment campaign_initial_market
 {
 	assault					4
 	assault_ammo			45
+	machinegun				3
+	machinegun_ammo			12 
 	sniper					3
 	sniper_ammo				45
 	pistol					4
@@ -113,8 +115,6 @@ equipment campaign_asymptotic_market
 	coilgun_ammo					20
 	xaw95							2
 	xaw95_ammo						20
-	machinegun						3
-	machinegun_ammo					12
 	rpg_incendiary_ammo				10
 	bolterrifle						3
 	bolterrifle_ammo				30
