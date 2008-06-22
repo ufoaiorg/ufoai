@@ -5942,7 +5942,7 @@ static void CL_GameResults_f (void)
 			character_t *chr = &(employee->chr);
 			assert(chr);
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
-			if (chr->HP <= 0) { /* @todo: <= -50, etc. */
+			if (chr->HP <= 0) { /* @todo: <= -50, etc. (implants) */
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
 				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);

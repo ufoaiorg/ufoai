@@ -804,6 +804,8 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 	 * 2) remove his inventory */
 
 	if (employee->baseHired) {
+		/* make sure that this employee is really unhired */
+		employee->transfer = qfalse;
 		E_UnhireEmployee(employee);
 	}
 
