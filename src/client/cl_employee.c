@@ -973,9 +973,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 
 		/* we dont want to overwrite employees that have already been hired */
 		if (!employee->hired) {
-
 			E_CreateEmployeeAtIndex(type, happyNations[nationIdx], NULL, idx);
-
 			nationIdx = (nationIdx + 1) % numHappyNations;
 		}
 	}
@@ -988,6 +986,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
  * @param[in] employee What employee to remove from its building.
  * @return Returns true if removing was possible/sane otherwise false.
  * @sa E_AssignEmployeeToBuilding
+ * @todo are soldiers and pilots assigned to a building, too? quarters?
  */
 qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 {
@@ -996,8 +995,8 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 	assert(employee);
 
 	/* not assigned to any building */
-	/* FIXME: are soldiers and pilots assigned to a building, too? quarters? */
-	if (!employee->building && employee->type != EMPL_SOLDIER && employee->type != EMPL_PILOT)
+	if (!employee->building && employee->type != EMPL_SOLDIER
+	 && employee->type != EMPL_ROBOT && employee->type != EMPL_PILOT)
 		return qfalse;
 
 	/* we can assume this because otherwise there should be no buildingID */
@@ -1029,6 +1028,12 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 
 	case EMPL_ROBOT:
 		/* @todo: Check if they are linked to anywhere and remove them there. */
+#if 0
+		/* Remove ugv from aircraft/team if it was assigned to one. */
+		if (CL_SoldierInAircraft(employee, NULL)) {
+			CL_RemoveSoldierFromAircraft(employee, NULL);
+		}
+#endif
 		break;
 
 	/* otherwise the compiler would print a warning */
