@@ -2341,7 +2341,7 @@ qboolean AIR_ScriptSanityCheck (void)
  * @return Amount of free space in hangars suitable for given aircraft type.
  * @note Returns -1 in case of error. Returns 0 if no error but no free space.
  */
-int AIR_CalculateHangarStorage (const aircraft_t *aircraftSample, base_t *base, int used)
+int AIR_CalculateHangarStorage (const aircraft_t *aircraftSample, const base_t *base, int used)
 {
 	int aircraftSize = 0, freespace = 0;
 

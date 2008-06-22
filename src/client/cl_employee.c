@@ -224,7 +224,7 @@ EMPLOYEE BACKEND STUFF
 /**
  * @brief Checks whether the given employee is in the given base
  */
-qboolean E_IsInBase (employee_t* empl, const base_t* const base)
+qboolean E_IsInBase (const employee_t* empl, const base_t* const base)
 {
 	if (empl->baseHired == base)
 		return qtrue;

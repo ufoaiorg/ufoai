@@ -67,7 +67,7 @@ static const int MAX_TR_FACTORS = 500;
  * @param[in] amount Number of items to transfer.
  * @return Number of items that can be transfered.
  */
-static int TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase, int amount)
+static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t *destbase, int amount)
 {
 	int i, intransfer = 0, amtransfer = 0;
 	int smallufotransfer = 0, bigufotransfer = 0;
@@ -158,7 +158,7 @@ static int TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase, int am
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of employee is possible.
  */
-static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destbase)
+static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *srcbase, const base_t *destbase)
 {
 	int i, intransfer = 0;
 	employeeType_t emplType;
@@ -234,10 +234,12 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this aircraft is possible.
  */
-static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t *destbase)
+static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *srcbase, const base_t *destbase)
 {
 	int i, hangarStorage, numAircraftTransfer = 0;
-	assert(aircraft && srcbase && destbase);
+	assert(aircraft);
+	assert(srcbase);
+	assert(destbase);
 
 	/* Count weight and number of all aircraft already on the transfer list that goes
 		into the same hangar type than aircraft. */
@@ -1055,9 +1057,6 @@ static void TR_TransferListSelect_f (void)
 {
 	int num, cnt = 0, i;
 	employeeType_t emplType;
-	objDef_t *od;
-	employee_t* employee;
-	aircraft_t *aircraft;
 	qboolean added = qfalse;
 	int numempl[MAX_EMPL];
 
@@ -1083,9 +1082,8 @@ static void TR_TransferListSelect_f (void)
 		for (i = 0; i < csi.numODs; i++) {
 			if (baseCurrent->storage.num[i]) {
 				if (cnt == num) {
-					int amount;
-					amount = TR_GetTransferFactor();
-					od = &csi.ods[i];
+					int amount = TR_GetTransferFactor();
+					const objDef_t *od = &csi.ods[i];
 					/* you can't transfer more item than you have */
 					amount = min(amount, baseCurrent->storage.num[i]);
 					/* you can only transfer items that destination base can accept */
@@ -1115,7 +1113,7 @@ static void TR_TransferListSelect_f (void)
 		break;
 	case TRANS_TYPE_EMPLOYEE:
 		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-			employee = &gd.employees[EMPL_SOLDIER][i];
+			employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
 			if (trEmployeesTmp[EMPL_SOLDIER][i])
@@ -1144,16 +1142,15 @@ static void TR_TransferListSelect_f (void)
 		}
 
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			int amount;
 			if (emplType == EMPL_SOLDIER)
 				continue;
 			/* no employee in base or all employees already in the transfer list */
 			if (numempl[emplType] < 1)
 				continue;
 			if (cnt == num) {
-				amount = min(E_CountHired(baseCurrent, emplType), TR_GetTransferFactor());
+				int amount = min(E_CountHired(baseCurrent, emplType), TR_GetTransferFactor());
 				for (i = 0; i < gd.numEmployees[emplType]; i++) {
-					employee = &gd.employees[emplType][i];
+					employee_t *employee = &gd.employees[emplType][i];
 					if (!E_IsInBase(employee, baseCurrent))
 						continue;
 					if (trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
@@ -1201,7 +1198,7 @@ static void TR_TransferListSelect_f (void)
 		if (!B_GetBuildingStatus(transferBase, B_HANGAR) && !B_GetBuildingStatus(transferBase, B_SMALL_HANGAR))
 			return;
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
-			aircraft = AIR_AircraftGetFromIdx(i);
+			const aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
 			if (!aircraft)
 				return;
 			if ((aircraft->homebase == baseCurrent) && TR_AircraftListSelect(i)) {
@@ -1301,17 +1298,17 @@ static void TR_TransferBaseSelect (base_t *base)
 static void TR_NextBase_f (void)
 {
 	int baseIdx, counter;
-	base_t *base;
 
 	if (!baseCurrent)
 		return;
+
 	if (!transferBase)
 		counter = baseCurrent->idx;
 	else
 		counter = transferBase->idx;
 
 	for (baseIdx = counter + 1; baseIdx < MAX_BASES; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		if (base == baseCurrent)
@@ -1321,7 +1318,7 @@ static void TR_NextBase_f (void)
 	}
 	/* At this point we are at "last" base, so we will select first. */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		if (base == baseCurrent)
@@ -1339,17 +1336,17 @@ static void TR_NextBase_f (void)
 static void TR_PrevBase_f (void)
 {
 	int baseIdx, counter;
-	base_t *base;
 
 	if (!baseCurrent)
 		return;
+
 	if (!transferBase)
 		counter = baseCurrent->idx;
 	else
 		counter = transferBase->idx;
 
 	for (baseIdx = counter - 1; baseIdx >= 0; baseIdx--) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		if (base == baseCurrent)
@@ -1359,7 +1356,7 @@ static void TR_PrevBase_f (void)
 	}
 	/* At this point we are at "first" base, so we will select last. */
 	for (baseIdx = MAX_BASES - 1; baseIdx >= 0; baseIdx--) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		if (base == baseCurrent)
