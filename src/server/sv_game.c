@@ -204,7 +204,7 @@ static void SV_WriteGPos (pos3_t pos)
 	NET_WriteGPos(pfe_msg, pos);
 }
 
-static void SV_WriteDir (vec3_t dir)
+static void SV_WriteDir (const vec3_t dir)
 {
 	NET_WriteDir(pfe_msg, dir);
 }

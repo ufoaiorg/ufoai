@@ -559,8 +559,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	/* center on first actor */
 	cl_worldlevel->modified = qtrue;
 	if (cl.numTeamList) {
-		le_t *le;
-		le = cl.teamList[0];
+		const le_t *le = cl.teamList[0];
 		VectorCopy(le->origin, cl.cam.reforg);
 		Cvar_SetValue("cl_worldlevel", le->pos[2]);
 	}
@@ -584,7 +583,9 @@ static void CL_StartGame (struct dbuffer *msg)
 		MN_PushMenu(mn_hud->string);
 		Cvar_Set("mn_active", mn_hud->string);
 	}
-	SCR_EndLoadingPlaque();	/* get rid of loading plaque */
+
+	/* get rid of loading plaque */
+	SCR_EndLoadingPlaque();
 }
 
 /**

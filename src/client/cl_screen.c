@@ -110,6 +110,9 @@ void SCR_DrawPrecacheScreen (qboolean string)
 
 /**
  * @brief Updates needed cvar for loading screens
+ * @param[in] mapString The mapstring of the map that is currently loaded
+ * @note If @c mapString is NULL the @c sv_mapname cvar is used
+ * @return The loading/background pic path
  */
 const char* SCR_SetLoadingBackground (const char *mapString)
 {
@@ -124,7 +127,7 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 		Cvar_Set("sv_mapname", mapString);
 	}
 
-	if (!*mapname)
+	if (!mapname[0] == '\0')
 		return NULL;
 
 	/* we will try to load the random map shots by just removing the + from the beginning */

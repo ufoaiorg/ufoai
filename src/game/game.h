@@ -184,7 +184,7 @@ typedef struct {
 	void (IMPORT *WriteString) (const char *s);
 	void (IMPORT *WritePos) (vec3_t pos);	/**< some fractional bits */
 	void (IMPORT *WriteGPos) (pos3_t pos);
-	void (IMPORT *WriteDir) (vec3_t pos);	/**< single byte encoded, very coarse */
+	void (IMPORT *WriteDir) (const vec3_t pos);	/**< single byte encoded, very coarse */
 	void (IMPORT *WriteAngle) (float f);
 	void (IMPORT *WriteFormat) (const char *format, ...);
 

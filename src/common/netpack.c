@@ -103,11 +103,11 @@ void NET_WriteAngle16 (struct dbuffer *buf, float f)
 	NET_WriteShort(buf, ANGLE2SHORT(f));
 }
 
-
-void NET_WriteDir (struct dbuffer *buf, vec3_t dir)
+void NET_WriteDir (struct dbuffer *buf, const vec3_t dir)
 {
 	int i, best;
-	float d, bestd;
+	float bestd;
+	size_t bytedirsLength;
 
 	if (!dir) {
 		NET_WriteByte(buf, 0);
@@ -116,8 +116,9 @@ void NET_WriteDir (struct dbuffer *buf, vec3_t dir)
 
 	bestd = 0;
 	best = 0;
-	for (i = 0; i < NUMVERTEXNORMALS; i++) {
-		d = DotProduct(dir, bytedirs[i]);
+	bytedirsLength = lengthof(bytedirs);
+	for (i = 0; i < bytedirsLength; i++) {
+		const float d = DotProduct(dir, bytedirs[i]);
 		if (d > bestd) {
 			bestd = d;
 			best = i;
@@ -128,7 +129,8 @@ void NET_WriteDir (struct dbuffer *buf, vec3_t dir)
 
 
 /**
- * @brief Writes to buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
+ * @brief Writes to buffer according to format; version without syntactic sugar
+ * for variable arguments, to call it from other functions with variable arguments
  */
 void NET_V_WriteFormat (struct dbuffer *buf, const char *format, va_list ap)
 {
