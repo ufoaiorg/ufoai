@@ -39,7 +39,7 @@ linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
 
 static int CL_GetRank(const char* rankID);
-static void CL_SaveTeamInfo(sizebuf_t * buf, int baseID, int num);
+static void CL_SaveTeamMultiplayerInfo(sizebuf_t *buf, base_t *base, const employeeType_t type);
 static void CL_MarkTeam_f(void);
 
 /* List of currently displayed or equipeable characters. extern definition in client.h */
@@ -47,9 +47,9 @@ chrList_t chrDisplayList;
 
 /**
  * @brief Prepares environment for multiplayer.
- * @note Ugly hack which sets proper values of global variables.
- * @note Should be removed as soon as mp won't use base and aircraft
- * @note and mp team handling functions won't use baseCurrent
+ * @todo Ugly hack which sets proper values of global variables.
+ * Should be removed as soon as mp won't use base and aircraft
+ * and mp team handling functions won't use baseCurrent
  */
 static void CL_MultiplayerEnvironment_f (void)
 {
@@ -458,17 +458,16 @@ void CL_ResetCharacters (base_t* const base)
 static void CL_ChangeName_f (void)
 {
 	employee_t *employee = selectedEmployee;
-	const menu_t *activeMenu;
 
 	/* Maybe called without base initialized or active. */
 	if (!baseCurrent)
 		return;
 
 	if (employee) {
+		const menu_t *activeMenu = MN_GetActiveMenu();
 		Q_strncpyz(employee->chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
 
 		/* Now refresh the list. */
-		activeMenu = MN_GetActiveMenu();
 		if (!Q_strncmp(activeMenu->name, "employees", 9)) {
 			/* We are in the hire (aka "employee") screen. */
 			Cbuf_AddText(va("employee_init %i %i;", employee->type, employee->idx));
@@ -797,7 +796,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
  * @brief Clears all containers that are temp containers (see script definition).
  * @sa CL_GenerateEquipment_f
  * @sa CL_ResetMultiplayerTeamInBase
- * @sa CL_SaveTeamInfo
+ * @sa CL_SaveTeamMultiplayerInfo
  * @sa CL_SendCurTeamInfo
  */
 void CL_CleanTempInventory (base_t* base)
@@ -831,10 +830,9 @@ static void CL_GenerateEquipment_f (void)
 	aircraft_t *aircraft;
 	int team;
 
-	if (!baseCurrent)
+	if (!baseCurrent || !baseCurrent->aircraftCurrent)
 		return;
 
-	assert(baseCurrent->aircraftCurrent);
 	aircraft = baseCurrent->aircraftCurrent;
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
@@ -1065,8 +1063,10 @@ static void CL_Select_f (void)
 		/* no soldiers in the current aircraft */
 		if (chrDisplayList.num <= 0) {
 			/* multiplayer - load a team first */
-			if (!ccs.singleplayer)
+			if (!ccs.singleplayer) {
+				/** @todo Why not use the MN_PopMenu and MN_PushMenu functions? */
 				Cbuf_AddText("mn_pop;mn_push mp_team;");
+			}
 			return;
 		/* not that many soldiers from the  aircraft shown. */
 		} else if (num >= chrDisplayList.num)
@@ -1290,7 +1290,6 @@ void CL_GenTeamList (base_t *base)
 static void CL_MarkTeam_f (void)
 {
 	int j, k = 0;
-	employee_t * employee;
 	qboolean alreadyInOtherShip = qfalse;
 	aircraft_t *aircraft;
 	linkedList_t *emplList;
@@ -1325,7 +1324,7 @@ static void CL_MarkTeam_f (void)
 	CL_GenTeamList(baseCurrent);	/* Populate employeeList */
  	emplList = employeeList;
 	while (emplList) {
-		employee = (employee_t*)emplList->data;
+		const employee_t *employee = (employee_t*)emplList->data;
 		assert(employee->hired
 		 &&  !employee->transfer
 		 &&  employee->baseHired == baseCurrent);
@@ -1668,9 +1667,10 @@ static void CL_AssignSoldier_f (void)
 
 /**
  * @brief Saves a team
- * @sa CL_SaveTeamInfo
+ * @sa CL_SaveTeamMultiplayerInfo
+ * @todo Implement EMPL_ROBOT
  */
-static qboolean CL_SaveTeamMultiplayer (const char *filename)
+static qboolean CL_SaveTeamMultiplayer (base_t *base, const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1678,8 +1678,8 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	aircraft_t *aircraft;
 	int i, res;
 
-	assert(baseCurrent);
-	aircraft = baseCurrent->aircraftCurrent;
+	assert(base);
+	aircraft = base->aircraftCurrent;
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
@@ -1692,7 +1692,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	MSG_WriteString(&sb, name);
 
 	/* store team */
-	CL_SaveTeamInfo(&sb, baseCurrent->idx, E_CountHired(baseCurrent, EMPL_SOLDIER));
+	CL_SaveTeamMultiplayerInfo(&sb, base, EMPL_SOLDIER);
 
 	/* store assignment */
 	MSG_WriteByte(&sb, aircraft->teamSize);
@@ -1714,8 +1714,8 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	MSG_WriteShort(&sb, csi.numODs);
 	for (i = 0; i < csi.numODs; i++) {
 		MSG_WriteString(&sb, csi.ods[i].id);
-		MSG_WriteLong(&sb, baseCurrent->storage.num[i]);
-		MSG_WriteByte(&sb, baseCurrent->storage.numLoose[i]);
+		MSG_WriteLong(&sb, base->storage.num[i]);
+		MSG_WriteByte(&sb, base->storage.numLoose[i]);
 	}
 
 	/* write data */
@@ -1734,6 +1734,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
  */
 static void CL_SaveTeamMultiplayerSlot_f (void)
 {
+	/* baseCurrent is checked here */
 	if (!E_CountHired(baseCurrent, EMPL_SOLDIER)) {
 		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
@@ -1741,7 +1742,7 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
 		char filename[MAX_OSPATH];
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
-		if (!CL_SaveTeamMultiplayer(filename))
+		if (!CL_SaveTeamMultiplayer(baseCurrent, filename))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
 }
@@ -1749,7 +1750,7 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
 /**
  * @brief Load a team member for multiplayer
  * @sa CL_LoadTeamMultiplayer
- * @sa CL_SaveTeamInfo
+ * @sa CL_SaveTeamMultiplayerInfo
  */
 static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int version)
 {
@@ -1958,32 +1959,28 @@ void CL_ResetTeams (void)
 
 /**
  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
- *
- * Called by CL_SaveTeamMultiplayer to store the team info
+ * @note Called by CL_SaveTeamMultiplayer to store the team info
  * @sa CL_SendCurTeamInfo
  * @sa CL_LoadTeamMultiplayerMember
- * @todo "num" could be changed to the return value of "E_GetHiredEmployees"
- * @todo What if we want to save other employees than EMPL_SOLDIER?
  */
-static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
+static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf, base_t *base, const employeeType_t type)
 {
 	linkedList_t *hiredEmployees = NULL;
 	linkedList_t *hiredEmployeesTemp;
-	int j;
+	int j, num;
 
-	assert(baseID < gd.numBases);
-	assert(baseID >= 0);
+	assert(base);
 
 	/* clean temp inventory */
-	CL_CleanTempInventory(B_GetBaseByIDX(baseID));
+	CL_CleanTempInventory(base);
 
-	E_GetHiredEmployees(B_GetBaseByIDX(baseID), EMPL_SOLDIER, &hiredEmployees);
+	num = E_GetHiredEmployees(base, type, &hiredEmployees);
 	hiredEmployeesTemp = hiredEmployees;
 
 	/* header */
 	MSG_WriteByte(buf, num);
 	while (hiredEmployeesTemp) {
-		employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
+		const employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
 		assert(employee);
 
 		/* send the fieldSize ACTOR_SIZE_* */
@@ -2042,7 +2039,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 /**
  * @brief Stores a team-list (chr-list) info to buffer (which might be a network buffer, too).
  * @sa G_ClientTeamInfo
- * @sa CL_SaveTeamInfo
+ * @sa CL_SaveTeamMultiplayerInfo
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
 void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)

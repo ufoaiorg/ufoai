@@ -743,10 +743,8 @@ static inline void* PR_GetLISTPointerByIndex (countedLinkedList_t *list, int num
  */
 static void PR_ProductionListRightClick_f (void)
 {
-	int num, idx;
-	objDef_t *od;
+	int num;
 	production_queue_t *queue;
-	const aircraft_t *aircraftSample;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
@@ -764,17 +762,17 @@ static void PR_ProductionListRightClick_f (void)
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
+		const objDef_t *od = queue->items[num].item;
+		assert(od->tech);
 		selectedQueueItem = qtrue;
 		selectedProduction = &queue->items[num];
-		od = selectedProduction->item;
-		assert(od->tech);
 		UP_OpenWith(od->tech->id);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
-		idx = num - queue->numItems - QUEUE_SPACERS;
+		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (produceCategory != BUY_AIRCRAFT) {
-			od = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+			objDef_t *od = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
 #ifdef DEBUG
 			if (!od) {
 				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListRightClick_f: No item found at the list-position %i!\n", idx);
@@ -794,9 +792,11 @@ static void PR_ProductionListRightClick_f (void)
 				return;
 			}
 		} else {
-			aircraftSample = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+#if 0
+			const aircraft_t *aircraftSample = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
 
-			/** @todo aircrafts? */
+			/** @todo aircraft? */
+#endif
 		}
 	}
 #ifdef DEBUG
@@ -811,13 +811,9 @@ static void PR_ProductionListRightClick_f (void)
  */
 static void PR_ProductionListClick_f (void)
 {
-	int num, idx;
-	objDef_t *od;
-	aircraft_t *aircraftTemplate;
+	int num;
 	production_queue_t *queue;
-	production_t *prod;
 	base_t* base;
-	components_t *comp;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !curCampaign)
@@ -837,7 +833,7 @@ static void PR_ProductionListClick_f (void)
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
-		prod = &queue->items[num];
+		production_t *prod = &queue->items[num];
 		selectedQueueItem = qtrue;
 		selectedProduction = prod;
 		if (prod->production) {
@@ -849,11 +845,11 @@ static void PR_ProductionListClick_f (void)
 			PR_ProductionInfo(base, qtrue);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
-		idx = num - queue->numItems - QUEUE_SPACERS;
+		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (!productionDisassembling) {
 			if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircraft. */
-				od = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+				objDef_t *od = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
 
 #ifdef DEBUG
 				if (!od) {
@@ -877,7 +873,7 @@ static void PR_ProductionListClick_f (void)
 					return;
 				 }
 			} else {	/* Aircraft. */
-				aircraftTemplate = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+				aircraft_t *aircraftTemplate = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
 				/* ufo research definition must not have a tech assigned
 				 * only RS_CRAFT types have
 				 * @sa RS_InitTree */
@@ -894,7 +890,7 @@ static void PR_ProductionListClick_f (void)
 				}
 			}
 		} else {	/* Disassembling. */
-			comp = (components_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+			components_t *comp = (components_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
 
 			selectedQueueItem = qfalse;
 			PR_ClearSelected();
@@ -921,7 +917,6 @@ static void PR_UpdateProductionList (base_t* base)
 	static char productionQueued[256];
 	static char productionAmount[256];
 	const production_queue_t *queue;
-	aircraft_t *aircraftSample;
 
 	assert(base);
 
@@ -939,7 +934,7 @@ static void PR_UpdateProductionList (base_t* base)
 			Q_strcat(productionAmount, va("%i\n", base->storage.num[prod->item->idx]), sizeof(productionAmount));
 			Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
 		} else {
-			aircraftSample = prod->aircraft;
+			const aircraft_t *aircraftSample = prod->aircraft;
 			Q_strcat(productionList, va("%s\n", _(aircraftSample->name)), sizeof(productionList));
 			for (j = 0, counter = 0; j < gd.numAircraft; j++) {
 				const aircraft_t *aircraftBase = AIR_AircraftGetFromIdx(j);
@@ -982,7 +977,7 @@ static void PR_UpdateProductionList (base_t* base)
 		}
 	} else {
 		for (i = 0; i < numAircraftTemplates; i++) {
-			aircraftSample = &aircraftTemplates[i];
+			aircraft_t *aircraftSample = &aircraftTemplates[i];
 			/* don't allow producing ufos */
 			if (aircraftSample->ufotype != UFO_MAX)
 				continue;
@@ -1151,7 +1146,7 @@ static void PR_ProductionList_f (void)
 	}
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent ||!curCampaign)
+	if (!baseCurrent || !curCampaign)
 		return;
 
 	if (atoi(Cmd_Argv(1)) == 0)
@@ -1573,10 +1568,9 @@ void PR_ResetProduction (void)
 qboolean PR_Save (sizebuf_t *sb, void *data)
 {
 	int i, j;
-	production_queue_t *pq;
 
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
-		pq = &gd.productions[i];
+		const production_queue_t *pq = &gd.productions[i];
 		MSG_WriteByte(sb, pq->numItems);
 		for (j = 0; j < pq->numItems; j++) {
 			/* FIXME: This will crash */

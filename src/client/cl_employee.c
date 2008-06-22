@@ -77,6 +77,9 @@ static void E_EmployeeListScroll_f (void)
 	int i, j, cnt = 0;
 	employee_t* employee;
 
+	if (!baseCurrent)
+		return;
+
 	j = employeeListNode->textScroll;
 
 	for (i = 0, employee = &(gd.employees[employeeCategory][0]); i < gd.numEmployees[employeeCategory]; i++, employee++) {
