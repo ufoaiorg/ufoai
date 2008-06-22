@@ -266,7 +266,9 @@ static void NET_ShowStreams_f (void)
 
 	for (i = 0; i < MAX_STREAMS; i++) {
 		if (streams[i] != NULL) {
-			Com_Printf("Steam %i is opened: %s\n", i, NET_StreamPeerToName(streams[i], buf, sizeof(buf), qtrue));
+			Com_Printf("Steam %i is opened: %s (%i)\n", i,
+				NET_StreamPeerToName(streams[i], buf, sizeof(buf), qtrue),
+				streams[i]->closed);
 			cnt++;
 		}
 	}
