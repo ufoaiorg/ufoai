@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-10 22:21+0200\n"
-"PO-Revision-Date: 2008-06-10 22:26+0100\n"
+"PO-Revision-Date: 2008-06-22 17:36+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "Brücke"
 
 #: ../base/maps/cemetery.ump:203
 msgid "Small cemetery"
-msgstr ""
+msgstr "Kleiner Friedhof"
 
 #: ../base/maps/city_disco.ump:54
 msgid "City_disco"
@@ -2188,7 +2188,6 @@ msgid "Use Item"
 msgstr "Benutze Gegenstand"
 
 #: ../base/ufos/menu_basedefense.ufo:104
-#, fuzzy
 msgid "Your are changing this defence system"
 msgstr "Sie ändern dieses Verteidigungssystem"
 
@@ -2790,7 +2789,7 @@ msgstr "Zurück"
 
 #: ../base/ufos/menu_geoscape.ufo:68
 msgid "CREDITS"
-msgstr "Danksagung"
+msgstr "CREDITS"
 
 #: ../base/ufos/menu_geoscape.ufo:87
 msgid "Stop time"
@@ -12459,14 +12458,12 @@ msgid "Enter base"
 msgstr "Zur Basis"
 
 #: client/cl_campaign.c:1423
-#, fuzzy
 msgid "Enter base before the battle"
-msgstr "Einsatzgebiet betreten"
+msgstr ""
 
 #: client/cl_campaign.c:1424
-#, fuzzy
 msgid "Start base defence"
-msgstr "Keine Zielbasis ausgewählt"
+msgstr "Basisverteidigung starten"
 
 #: client/cl_campaign.c:1425
 msgid "Automatically resolve mission"
@@ -13652,9 +13649,8 @@ msgid "no more available hangar"
 msgstr ""
 
 #: client/cl_popup.c:141
-#, fuzzy
 msgid "base is too far"
-msgstr "Laserpistolenmunition"
+msgstr "Basis ist zu weit entfernt"
 
 #: client/cl_popup.c:144
 #, fuzzy
@@ -13676,9 +13672,8 @@ msgid "Base\tStatus"
 msgstr "Basis\tStatus"
 
 #: client/cl_popup.c:161
-#, fuzzy
 msgid "Change homebase of aircraft"
-msgstr "Flugzeuge verwalten"
+msgstr "Wechsele Heimatbasis des Flugzeugs"
 
 #: client/cl_popup.c:309
 #, c-format
@@ -13690,9 +13685,8 @@ msgid "Stop\n"
 msgstr "Stop\n"
 
 #: client/cl_popup.c:313
-#, fuzzy
 msgid "Change homebase\n"
-msgstr "In der Heimatbasis"
+msgstr "Wechsele Heimatbasis\n"
 
 #: client/cl_popup.c:325
 #, c-format
@@ -13708,7 +13702,6 @@ msgid "No craft available or no weapon or ammo equipped."
 msgstr "Kein Flugzeug verfügbar oder keine Waffe oder Munition zugewiesen."
 
 #: client/cl_popup.c:497
-#, fuzzy
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "Keine Verteidigungsanlage verfügbar oder keine Waffe oder Munition zugewiesen."
 
