@@ -38,7 +38,7 @@ static qboolean displayHeavyEquipmentList = qfalse; /**< Used in team assignment
 linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
 
-static int CL_GetRank(const char* rankID);
+static int CL_GetRankIdx(const char* rankID);
 static void CL_SaveTeamMultiplayerInfo(sizebuf_t *buf, base_t *base, const employeeType_t type);
 static void CL_MarkTeam_f(void);
 
@@ -359,25 +359,25 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	/* Generate character stats, models & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
-		chr->score.rank = CL_GetRank("rifleman");
+		chr->score.rank = CL_GetRankIdx("rifleman");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Q_strncpyz(teamDefName, team, sizeof(teamDefName));
 		break;
 	case EMPL_SCIENTIST:
-		chr->score.rank = CL_GetRank("scientist");
+		chr->score.rank = CL_GetRankIdx("scientist");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
 		break;
 	case EMPL_PILOT:
-		chr->score.rank = CL_GetRank("pilot");
+		chr->score.rank = CL_GetRankIdx("pilot");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", team);
 		break;
 	case EMPL_WORKER:
-		chr->score.rank = CL_GetRank("worker");
+		chr->score.rank = CL_GetRankIdx("worker");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
@@ -386,7 +386,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		if (!ugvType)
 			Sys_Error("CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.\n");
 
-		chr->score.rank = CL_GetRank("ugv");
+		chr->score.rank = CL_GetRankIdx("ugv");
 
 		/** Create attributes.
 		 * @todo get the min/max values from ugv_t def? */
@@ -2358,7 +2358,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		if (selectedMission && base)
 			CP_ExecuteMissionTrigger(selectedMission, winner == we);
 		else if (curCampaign)
-			Com_Printf("CL_ParseResults: Error - no mission triggers, because selectedMission or baseCurrent are not valid\n");
+			Com_Printf("CL_ParseResults: Error - no mission triggers, because selectedMission or base are not valid\n");
 
 		if (winner == we) {
 			/* We need to update Menu Won with UFO recovery stuff. */
@@ -2398,7 +2398,7 @@ void CL_ParseResults (struct dbuffer *msg)
 /**
  * @brief Get the index number of the given rankID
  */
-static int CL_GetRank (const char* rankID)
+static int CL_GetRankIdx (const char* rankID)
 {
 	int i;
 
