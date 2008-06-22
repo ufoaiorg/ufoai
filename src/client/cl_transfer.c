@@ -291,9 +291,6 @@ static void TR_CargoList (void)
 
 	mn.menuText[TEXT_CARGO_LIST] = cargoList;
 
-	if (!baseCurrent)
-		return;
-
 	/* Show items. */
 	for (i = 0; i < csi.numODs; i++) {
 		if (trItemsTmp[i] > 0) {
@@ -433,31 +430,14 @@ static void TR_ResetScrolling_f (void)
 	}
 }
 
-/**
- * @brief Fills the items-in-base list with stuff available for transfer.
- * @note Filling the transfer list with proper stuff (items/employees/aliens/aircraft) is being done here.
- * @sa TR_TransferStart_f
- * @sa TR_TransferInit_f
- */
-static void TR_TransferSelect_f (void)
+static void TR_TransferSelect (base_t *srcbase, base_t *destbase, int transferType)
 {
 	static char transferList[2048];
-	int type;
-	employeeType_t emplType;
 	int numempl[MAX_EMPL], trempl[MAX_EMPL];
 	int i, j, cnt = 0;
-	employee_t* employee;
-	aircraft_t *aircraft;
 	char str[128];
 
-	if (!transferBase || !baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 2)
-		type = transferType;
-	else
-		type = atoi(Cmd_Argv(1));
-
+	/* reset for every new call */
 	transferList[0] = '\0';
 
 	/* Reset and fill temp employees arrays. */
@@ -469,32 +449,33 @@ static void TR_TransferSelect_f (void)
 		}
 	}
 
-	switch (type) {
+	switch (transferType) {
 	case TRANS_TYPE_ITEM:
-		if (B_GetBuildingStatus(transferBase, B_STORAGE)) {
+		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 			for (i = 0; i < csi.numODs; i++)
-				if (baseCurrent->storage.num[i]) {
+				if (srcbase->storage.num[i]) {
 					if (trItemsTmp[i] > 0)
-						Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)\n"), csi.ods[i].name, trItemsTmp[i], baseCurrent->storage.num[i]);
+						Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)\n"), csi.ods[i].name, trItemsTmp[i], srcbase->storage.num[i]);
 					else
-						Com_sprintf(str, sizeof(str), _("%s (%i available)\n"), csi.ods[i].name, baseCurrent->storage.num[i]);
+						Com_sprintf(str, sizeof(str), _("%s (%i available)\n"), csi.ods[i].name, srcbase->storage.num[i]);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
 			if (!cnt)
 				Q_strncpyz(transferList, _("Storage is empty.\n"), sizeof(transferList));
-		} else if (B_GetBuildingStatus(transferBase, B_POWER)) {
+		} else if (B_GetBuildingStatus(destbase, B_POWER)) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a Storage."), sizeof(transferList));
 		} else {
 			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
 		}
 		break;
 	case TRANS_TYPE_EMPLOYEE:
-		if (B_GetBuildingStatus(transferBase, B_QUARTERS)) {
+		if (B_GetBuildingStatus(destbase, B_QUARTERS)) {
+			employeeType_t emplType;
 			for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 				for (i = 0; i < gd.numEmployees[emplType]; i++) {
-					employee = &gd.employees[emplType][i];
-					if (!E_IsInBase(employee, baseCurrent))
+					const employee_t *employee = &gd.employees[emplType][i];
+					if (!E_IsInBase(employee, srcbase))
 						continue;
 					if (trEmployeesTmp[emplType][i])	/* Already on transfer list. */
 						continue;
@@ -524,45 +505,45 @@ static void TR_TransferSelect_f (void)
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have Living Quarters."), sizeof(transferList));
 		break;
 	case TRANS_TYPE_ALIEN:
-		if (B_GetBuildingStatus(transferBase, B_ALIEN_CONTAINMENT)) {
+		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
 			for (i = 0; i < gd.numAliensTD; i++) {
-				if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_dead > 0) {
+				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)\n"),
 						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD],
-						baseCurrent->alienscont[i].amount_dead);
+						srcbase->alienscont[i].amount_dead);
 					else
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i available)\n"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), baseCurrent->alienscont[i].amount_dead);
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), srcbase->alienscont[i].amount_dead);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
-				if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_alive > 0) {
+				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_alive > 0) {
 					if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)\n"),
 						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE],
-						baseCurrent->alienscont[i].amount_alive);
+						srcbase->alienscont[i].amount_alive);
 					else
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i available)\n"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), baseCurrent->alienscont[i].amount_alive);
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), srcbase->alienscont[i].amount_alive);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
 			}
 			if (!cnt)
 				Q_strncpyz(transferList, _("Alien Containment is empty.\n"), sizeof(transferList));
-		} else if (B_GetBuildingStatus(transferBase, B_POWER)) {
+		} else if (B_GetBuildingStatus(destbase, B_POWER)) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an Alien Containment."), sizeof(transferList));
 		} else {
 			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
 		}
 		break;
 	case TRANS_TYPE_AIRCRAFT:
-		if (B_GetBuildingStatus(transferBase, B_HANGAR) || B_GetBuildingStatus(transferBase, B_SMALL_HANGAR)) {
+		if (B_GetBuildingStatus(destbase, B_HANGAR) || B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
 			for (i = 0; i < MAX_AIRCRAFT; i++) {
-				aircraft = AIR_AircraftGetFromIdx(i);
+				aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
 				if (aircraft) {
-					if ((aircraft->homebase == baseCurrent) && TR_AircraftListSelect(i)) {
+					if ((aircraft->homebase == srcbase) && TR_AircraftListSelect(i)) {
 						Com_sprintf(str, sizeof(str), _("Aircraft %s\n"), _(aircraft->name));
 						Q_strcat(transferList, str, sizeof(transferList));
 						cnt++;
@@ -576,15 +557,36 @@ static void TR_TransferSelect_f (void)
 		}
 		break;
 	default:
-		Com_Printf("TR_TransferSelect_f: Unknown type id %i\n", type);
+		Com_Printf("TR_TransferSelect: Unknown transferType id %i\n", transferType);
 		return;
 	}
 
 	/* Update cargo list. */
 	TR_CargoList();
 
-	transferType = type;
+	transferType = transferType;
 	mn.menuText[TEXT_TRANSFER_LIST] = transferList;
+}
+
+/**
+ * @brief Fills the items-in-base list with stuff available for transfer.
+ * @note Filling the transfer list with proper stuff (items/employees/aliens/aircraft) is being done here.
+ * @sa TR_TransferStart_f
+ * @sa TR_TransferInit_f
+ */
+static void TR_TransferSelect_f (void)
+{
+	int type;
+
+	if (!transferBase || !baseCurrent)
+		return;
+
+	if (Cmd_Argc() < 2)
+		type = transferType;
+	else
+		type = atoi(Cmd_Argv(1));
+
+	TR_TransferSelect(baseCurrent, transferBase, type);
 }
 
 /**
@@ -629,7 +631,7 @@ static void TR_TransferListClear_f (void)
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
- 	TR_TransferSelect_f();
+ 	TR_TransferSelect(baseCurrent, transferBase, transferType);
 	TR_ResetScrolling_f();
 }
 
@@ -1038,7 +1040,7 @@ static void TR_TransferStart_f (void)
 /**
  * @brief Set the number of item to transfer.
  */
-static int TR_GetTransferFactor (void)
+static inline int TR_GetTransferFactor (void)
 {
 	int numItems;
 	const float NUM_CLICK_PARAMETER = 13.0f;		/**< The higher this value, the slowest transfer factor will change */
@@ -1217,11 +1219,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	}
 
-	/* clear the command buffer
-	 * needed to erase all TR_TransferListSelect_f
-	 * paramaters */
-	Cmd_BufClear(); /* @todo: no need? */
-	TR_TransferSelect_f();
+	TR_TransferSelect(baseCurrent, transferBase, transferType);
 }
 
 /**
@@ -1284,7 +1282,7 @@ static void TR_TransferBaseSelect (base_t *base)
 	/* Set global pointer to current selected base. */
 	transferBase = base;
 
-	Cvar_Set("mn_trans_base_name", transferBase->name);
+	Cvar_Set("mn_trans_base_name", base->name);
 
 	/* Update stuff-in-base list. */
 	TR_TransferSelect_f();
