@@ -137,7 +137,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t
 			}
 		}
 	} else {	/*This is not antimatter*/
-		if (!B_GetBuildingStatus(transferBase, B_STORAGE))	/* Return if the target base doesn't have storage or power. */
+		if (!B_GetBuildingStatus(destbase, B_STORAGE))	/* Return if the target base doesn't have storage or power. */
 			return 0;
 
 		/* Does the destination base has enough space in storage? */
@@ -893,7 +893,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 
 	/* make sure that all tests here are the same than in TR_TransferBaseListClick_f */
 	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
+		const base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
 		/* don't display bases without Alien Containment */
