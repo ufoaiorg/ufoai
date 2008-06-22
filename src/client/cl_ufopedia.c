@@ -1849,10 +1849,10 @@ void UP_Reset (void)
 	Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, NULL);
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
 	Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, NULL);
-	Cmd_AddCommand("mn_increasefiremode", UP_IncreaseFiremode_f, NULL);
-	Cmd_AddCommand("mn_decreasefiremode", UP_DecreaseFiremode_f, NULL);
-	Cmd_AddCommand("mn_increaseweapon", UP_IncreaseWeapon_f, NULL);
-	Cmd_AddCommand("mn_decreaseweapon", UP_DecreaseWeapon_f, NULL);
+	Cmd_AddCommand("mn_increasefiremode", UP_IncreaseFiremode_f, "Increases the number of the firemode to display in the UFOpaedia");
+	Cmd_AddCommand("mn_decreasefiremode", UP_DecreaseFiremode_f, "Decreases the number of the firemode to display in the UFOpaedia");
+	Cmd_AddCommand("mn_increaseweapon", UP_IncreaseWeapon_f, "Increases the number of the weapon to display or the ammo to display in the UFOpaedia");
+	Cmd_AddCommand("mn_decreaseweapon", UP_DecreaseWeapon_f, "Decreases the number of the weapon to display or the ammo to display in the UFOpaedia");
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
