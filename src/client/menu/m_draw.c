@@ -313,6 +313,7 @@ void MN_DrawMenus (void)
 				case MN_CONTAINER:
 					if (menuInventory) {
 						const invList_t *itemHover_temp = MN_DrawContainerNode(node);
+						qboolean exists;
 						if (itemHover_temp)
 							itemHover = itemHover_temp;
 
@@ -330,11 +331,27 @@ void MN_DrawMenus (void)
 								dragInfo.toY -= dragInfo.item.t->sy / 2;
 							}
 
+							/** Check if the items already exists in the container. i.e. there is already at least one item.
+							 * @sa Com_AddToInventory
+							 * @todo Make this an extra (common) function. */
+							 exists = qfalse;
+							 if (dragInfo.to && dragInfo.toNode
+							  && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
+							  && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
+							 	invList_t *ic;
+
+								for (ic = menuInventory->c[dragInfo.to->id]; ic; ic = ic->next)
+									if (Com_CompareItem(&ic->item, &dragInfo.item)) {
+										exists = qtrue;
+										break;
+									}
+							 }
+
 							/** Search for a suitable position to render the item at if
 							 * the container is "single" or the calculated values are out of bounds.
 							 * @todo I hope this is the same behaviour that is used in MN_Drag - a special function
 							 *		to simply calculate the final x/y values would be a good idea here. */
-							if (dragInfo.item.t && (dragInfo.to->single
+							if (!exists && dragInfo.item.t && (dragInfo.to->single
 							 || dragInfo.toX  < 0 || dragInfo.toY < 0
 							 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
 								Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY);

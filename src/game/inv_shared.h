@@ -700,6 +700,7 @@ char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
 void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
 int Com_CheckToInventory(const inventory_t* const i, objDef_t *ob, const invDef_t * container, int x, int y);
+qboolean Com_CompareItem(item_t *item1, item_t *item2);
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));
 qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));
@@ -713,7 +714,7 @@ int Com_TryAddToInventory(inventory_t* const inv, item_t item, const invDef_t * 
 int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int buytypeContainer, int amount) __attribute__((nonnull(1)));
 void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* weapon) __attribute__((nonnull(1)));
-void INVSH_EquipActor(inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr) __attribute__((nonnull(1)));
+void INVSH_EquipActor(inventory_t* const inv, const int *equip, int numEquip, const char *name, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_PrintContainerToConsole(inventory_t* const i);
 
 void INVSH_PrintItemDescription(const objDef_t *od);

@@ -235,7 +235,7 @@ int Com_CheckToInventory (const inventory_t * const i, objDef_t *od, const invDe
  * @param[in] item2 Second item to compare.
  * @return qtrue if they are identical or qfalse otherwise.
  */
-static qboolean Com_CompareItem (item_t *item1, item_t *item2)
+qboolean Com_CompareItem (item_t *item1, item_t *item2)
 {
 	if ((item1->t == item2->t)
 	 && (item1->m == item2->m)
@@ -340,6 +340,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	 */
 
 	/* idEquip and idFloor */
+	/** @sa MN_DrawMenus -> MN_CONTAINER */
 	if (container->temp) {
 		for (ic = i->c[container->id]; ic; ic = ic->next)
 			if (Com_CompareItem(&ic->item, &item)) {
@@ -1100,7 +1101,7 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
  * @brief Fully equip one actor
  * @param[in] inv The inventory that will get the weapon
  * @param[in] equip The equipment that shows what is available - a list of obj ids
- * @param[in] anzEquip the number of object ids in the field
+ * @param[in] numEquip the number of object ids in the field
  * @param[in] name The name of the equipment for debug messages
  * @param[in] chr Pointer to character data - to get the weapon and armour bools
  * @note The code below is a complete implementation
@@ -1108,7 +1109,7 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
  * Beware: if two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr)
+void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, const char *name, character_t* chr)
 {
 	int i, maxPrice, prevPrice;
 	int hasWeapon = 0, hasArmour = 0, repeat = 0, missedPrimary = 0;
@@ -1120,7 +1121,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 		/* primary weapons */
 		maxPrice = INT_MAX;
 		do {
-			int lastPos = min(CSI->numODs - 1, anzEquip - 1);
+			int lastPos = min(CSI->numODs - 1, numEquip - 1);
 			/* search for the most expensive primary weapon in the equipment */
 			prevPrice = maxPrice;
 			maxPrice = 0;
