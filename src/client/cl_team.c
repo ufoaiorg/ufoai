@@ -2291,15 +2291,11 @@ void CL_ParseResults (struct dbuffer *msg)
 		if (curCampaign) {
 			Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
 			ccs.aliensKilled += thier_killed;
-		} else {
-			Com_sprintf(resultText, sizeof(resultText), _("Enemies killed\t%i\n"), thier_killed + civilian_killed);
-			ccs.aliensKilled += thier_killed + civilian_killed;
-		}
-
-		if (curCampaign) {
 			Q_strcat(resultText, va(_("Aliens captured\t%i\n\n"), thier_stunned), sizeof(resultText));
 			Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
 		} else {
+			Com_sprintf(resultText, sizeof(resultText), _("Enemies killed\t%i\n"), thier_killed + civilian_killed);
+			ccs.aliensKilled += thier_killed + civilian_killed;
 			Q_strcat(resultText, va(_("Enemies captured\t%i\n\n"), thier_stunned), sizeof(resultText));
 			Q_strcat(resultText, va(_("Enemy survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
 		}

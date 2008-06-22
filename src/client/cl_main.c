@@ -102,6 +102,7 @@ cvar_t *cl_team;
 client_static_t cls;
 client_state_t cl;
 
+/** @brief Are the soldiers for this game already spawned? */
 static qboolean soldiersSpawned = qfalse;
 
 typedef struct teamData_s {
