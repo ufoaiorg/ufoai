@@ -844,19 +844,20 @@ void E_DeleteAllEmployees (base_t* base)
 {
 	int i;
 	employeeType_t type;
-	employee_t *employee;
 
 	if (!base)
 		return;
+
 	Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: starting ...\n");
+
 	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
 		Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: Removing empl-type %i | num %i\n", type, gd.numEmployees[type]);
 		/* Warning:
 		 * gd.numEmployees[type] is changed in E_DeleteAllEmployees! (it's decreased by 1 per call)
 		 * For this reason we start this loop from the back of the empl-list. toward 0. */
 		for (i = gd.numEmployees[type] - 1; i >= 0; i--) {
+			employee_t *employee = &gd.employees[type][i];
 			Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: %i\n", i);
-			employee = &gd.employees[type][i];
 			if (employee->baseHired == base) {
 				E_DeleteEmployee(employee, type);
 				Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees:	 Removing empl.\n");
