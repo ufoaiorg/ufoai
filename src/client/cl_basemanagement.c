@@ -764,7 +764,7 @@ static void B_BuildingOnDestroy_f (void)
 			break;
 		case B_UFO_HANGAR:
 		case B_UFO_SMALL_HANGAR:
-			/* @todo: implement me */
+			/** @todo: implement me */
 			break;
 		case B_QUARTERS:
 			E_DeleteEmployeesExceedingCapacity(base);
@@ -1112,7 +1112,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 			B_UpdateBaseCapacities(cap, base);
 	}
 
-	/* @todo: this should be an user option defined in Game Options. */
+	/** @todo: this should be an user option defined in Game Options. */
 	CL_GameTimeStop();
 }
 
@@ -1183,7 +1183,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		}
 
 		/* Add aircraft to the first base */
-		/* @todo move aircraft to .ufo */
+		/** @todo move aircraft to .ufo */
 		/* buy two first aircraft and hire pilots for them. */
 		if (B_GetBuildingStatus(base, B_HANGAR)) {
 			const aircraft_t *aircraft = AIR_GetAircraft("craft_drop_firebird");
@@ -1260,7 +1260,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	base->numAircraftInBase = 0;
 
 	/* setup for first base */
-	/* @todo this will propably also be called if all player bases are
+	/** @todo this will propably also be called if all player bases are
 	 * destroyed (mimics old behaviour), do we want this? */
 	if (gd.numBases == 1) {
 		B_SetUpFirstBase(base, hire, buildings);
@@ -1940,7 +1940,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			building->tech = tech_link;
 		} else {
 			if (building->visible)
-				/* @todo: are the techs already parsed? */
+				/** @todo: are the techs already parsed? */
 				Com_DPrintf(DEBUG_CLIENT, "B_ParseBuildings: Could not find tech that provides %s\n", name);
 		}
 
@@ -2017,8 +2017,8 @@ void B_ClearBase (base_t *const base)
 	if (!curCampaign)
 		return;
 
-	/* setup team
-	 * FIXME: I think this should be made only once per game, not once per base, no ? -- Kracken 19/12/07 */
+	/* setup team */
+	/** @todo I think this should be made only once per game, not once per base, no ? -- Kracken 19/12/07 */
 	if (!E_CountUnhired(EMPL_SOLDIER)) {
 		/* should be multiplayer (campaignmode @todo) or singleplayer */
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
@@ -2099,7 +2099,7 @@ void B_ParseBaseNames (const char *name, const char **text)
 		Q_strncpyz(base->name, _(token), sizeof(base->name));
 		Com_DPrintf(DEBUG_CLIENT, "Found base %s\n", base->name);
 		B_ResetBuildingCurrent(base);
-		gd.numBaseNames++; /* FIXME: Use this value instead of MAX_BASES in the for loops */
+		gd.numBaseNames++; /** @todo Use this value instead of MAX_BASES in the for loops */
 	} while (*text);
 
 	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
@@ -2286,7 +2286,7 @@ void MN_BaseMapDraw (const menuNode_t * node)
 				if (!building->used) {
 					if (building->needs)
 						building->used = 1;
-					if (building->image) {	/* @todo:DEBUG */
+					if (building->image) {	/** @todo:DEBUG */
 						Q_strncpyz(image, building->image, sizeof(image));
 					} else {
 						/*Com_DPrintf(DEBUG_CLIENT, "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx); */
@@ -2607,7 +2607,7 @@ static void CL_SwapSkills (chrList_t *team)
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
-					/* @todo: Is there a better way to check for this case? */
+					/** @todo: Is there a better way to check for this case? */
 					Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 				} else {
 					no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
@@ -2628,7 +2628,7 @@ static void CL_SwapSkills (chrList_t *team)
 							weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(HOLSTER(cp2)->item.m, HOLSTER(cp2)->item.t);
 
 						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
-							/* @todo: Is there a better way to check for this case? */
+							/** @todo: Is there a better way to check for this case? */
 							Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 						} else {
 							no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
@@ -2738,7 +2738,7 @@ static void B_PackInitialEquipment (base_t *base)
 			}
 		}
 
-		CL_AddCarriedToEq(aircraft, &base->storage);
+		CL_AddCarriedToEquipment(aircraft, &base->storage);
 		INV_UpdateStorageCap(base);
 		CL_SwapSkills(&chrListTemp);
 
@@ -2787,6 +2787,7 @@ void B_AssignInitial (base_t *base)
 	if (!base->aircraftCurrent) {
 		Com_Printf("B_AssignInitial: No aircraftCurrent given\n");
 		base->aircraftCurrent = AIR_AircraftGetFromIdx(0);
+		assert(base->aircraftCurrent);
 	}
 
 	if (!ccs.singleplayer) {
@@ -2797,7 +2798,7 @@ void B_AssignInitial (base_t *base)
 
 	CL_GenTeamList(base);
 	for (i = MAX_TEAMLIST; --i >= 0;)
-		CL_AssignSoldierToCurrentSelectedAircraft(base, i);
+		CL_AssignSoldierFromMenuToAircraft(base, i, base->aircraftCurrent);
 
 	B_PackInitialEquipment(base);
 	if (!ccs.singleplayer)
@@ -2923,7 +2924,7 @@ static void B_AssembleMap_f (void)
 	}
 
 #if 0
-FIXME
+	/** @todo */
 	if (setUnderAttack) {
 		B_BaseAttack(base);
 		Com_DPrintf(DEBUG_CLIENT, "Set base %i under attack\n", base->idx);
@@ -3898,7 +3899,7 @@ static void B_LoadAircraftSlots (base_t* base, aircraftSlot_t* slot, int num, si
 		 * are already loaded in the campaign load function and set to the value
 		 * after the craftitem was already removed from the initial game - thus
 		 * there might not be any of these items in the storage at this point */
-		/* @todo: Check whether storage and capacities needs updating now */
+		/** @todo: Check whether storage and capacities needs updating now */
 		if (tech)
 			AII_AddItemToSlot(NULL, tech, slot + i);
 		slot[i].ammoLeft = MSG_ReadShort(sb);
@@ -3928,7 +3929,7 @@ static void B_LoadBaseSlots (base_t* base, baseWeapon_t* weapons, int numWeapons
 		 * are already loaded in the campaign load function and set to the value
 		 * after the craftitem was already removed from the initial game - thus
 		 * there might not be any of these items in the storage at this point */
-		/* @todo: Check whether storage and capacities needs updating now */
+		/** @todo: Check whether storage and capacities needs updating now */
 		if (tech)
 			AII_AddItemToSlot(NULL, tech, &weapons[i].slot);
 		weapons[i].slot.ammoLeft = MSG_ReadShort(sb);
@@ -4229,7 +4230,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 	assert(obj);
 	if (reset) {
 		base->storage.num[obj->idx] = 0;
-		base->storage.numLoose[obj->idx] = 0; /* FIXME: needed? */
+		base->storage.numLoose[obj->idx] = 0; /** @todo needed? */
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
 		if (!ignorecap && (amount > 0)) {

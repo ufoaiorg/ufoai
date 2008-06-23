@@ -148,7 +148,7 @@ static font_t *R_FontGetFont (const char *name)
 
 /**
  * @param[in] maxWidth is a pixel value
- * FIXME: if maxWidth is too small to display even the first word this has bugs
+ * @todo if maxWidth is too small to display even the first word this has bugs
  */
 static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *width, int *height)
 {
@@ -423,7 +423,7 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 
 /**
  * @brief draw cached opengl texture
- * FIXME: Make scrolling possible
+ * @todo Make scrolling possible
  * @param[in] cache
  * @param[in] x x coordinate on screen to draw the text to
  * @param[in] y y coordinate on screen to draw the text to
@@ -580,7 +580,7 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 	cacheList->width = 0;
 
 	cacheList->cache[cacheList->numCaches] = R_FontGetFromCache(c);
-	if (cacheList->cache[cacheList->numCaches]) { /* @todo: check that cache.font = fontID and that texh0 was the same */
+	if (cacheList->cache[cacheList->numCaches]) { /** @todo: check that cache.font = fontID and that texh0 was the same */
 		if (cur_line) {
 			/* Com_Printf("h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			if (increaseLine)
@@ -638,7 +638,7 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 		fh = h;
 
 		if (texh0 > 0) {
-			/* FIXME: something is broken with that warning, please test */
+			/** @todo something is broken with that warning, please test */
 #if 0
 			if (fh > texh0)
 				Com_DPrintf(DEBUG_RENDERER, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);

@@ -688,10 +688,10 @@ static void CL_DrawSpottedLines_f (void)
 				from[2] += EYE_HT_STAND;
 			/* target height */
 			if (le->state & STATE_CROUCHED)
-				at[2] += EYE_HT_CROUCH; /* FIXME: */
+				at[2] += EYE_HT_CROUCH; /** @todo */
 			else
 				at[2] += UNIT_HEIGHT; /* full unit */
-			/* FIXME: maybe doing more than one trace to different target heights */
+			/** @todo maybe doing more than one trace to different target heights */
 			tr = CL_Trace(from, at, vec3_origin, vec3_origin, watcher, NULL, MASK_SOLID);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0)
@@ -745,10 +745,10 @@ static void CL_NextAlienVisibleFromActor_f (void)
 				from[2] += EYE_HT_STAND;
 			/* target height */
 			if (le->state & STATE_CROUCHED)
-				at[2] += EYE_HT_CROUCH; /* FIXME: */
+				at[2] += EYE_HT_CROUCH; /** @todo */
 			else
 				at[2] += UNIT_HEIGHT; /* full unit */
-			/* FIXME: check the facing of the actor: watcher->dir
+			/** @todo check the facing of the actor: watcher->dir
 			 * maybe doing more than one trace to different target heights */
 			tr = CL_Trace(from, at, vec3_origin, vec3_origin, watcher, NULL, MASK_SOLID);
 			/* trace didn't reach the target - something was hit before */

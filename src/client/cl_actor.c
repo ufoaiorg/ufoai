@@ -1084,7 +1084,7 @@ void CL_PopupFiremodeReservation_f (void)
 		return;
 	}
 
-	/* FIXME: Why not using the MN_MenuTextReset function here? */
+	/** @todo Why not using the MN_MenuTextReset function here? */
 	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
@@ -1584,7 +1584,7 @@ void CL_DisplayFiremodes_f (void)
 
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!CL_WorkingFiremode(selActor, qtrue)) {	/* No usable firemode selected. */
-		/* FIXME: TYPOS IN COMMENTS - I don't even understand what they are trying to explain here */
+		/** @todo TYPOS IN COMMENTS - I don't even understand what they are trying to explain here */
 		/* Make sure we use the same hand if it's defined */
 		if (selChr->RFmode.hand != 1) { /* No the left hand defined */
 			/* Set default firemode (try right hand first, then left hand). */
@@ -3271,7 +3271,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->startTime = cl.time;
 	le->endTime = cl.time;
 
-	/* FIXME: speed should somehow depend on strength of character */
+	/** @todo speed should somehow depend on strength of character */
 	if (le->state & STATE_CROUCHED)
 		le->speed = 50;
 	else
@@ -4258,7 +4258,7 @@ void CL_ActorMouseTrace (void)
 	VectorCopy(pA, pB);
 	pA[2] += UNIT_HEIGHT;
 	pB[2] -= UNIT_HEIGHT;
-	/* FIXME: Shouldn't we check the return value of CM_TestLineDM here - maybe
+	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
 	TR_TestLineDM(pA, pB, pC, TL_FLAG_ACTORCLIP);
@@ -4469,7 +4469,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	add.model = le->model2;
 	add.skinnum = le->skinnum;
 
-	/* FIXME */
+	/** @todo */
 	add.tagent = R_GetFreeEntity() + 1;
 	add.tagname = "tag_head";
 

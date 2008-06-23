@@ -227,7 +227,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		Com_Printf("Changing to Singleplayer\n");
 
 		/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
-		/* FIXME: these should probably default to something bigger */
+		/** @todo these should probably default to something bigger */
 		if (Cvar_VariableInteger("sv_maxsoldiersperteam") != 4)
 			Cvar_SetValue("sv_maxsoldiersperteam", 4);
 		if (Cvar_VariableInteger("sv_maxsoldiersperplayer") != 8)
@@ -1416,7 +1416,7 @@ static void CL_SpawnSoldiers_f (void)
 		} else {
 			/* send team info */
 			struct dbuffer *msg = new_dbuffer();
-			CL_SendCurTeamInfo(msg, &chrListTemp);
+			CL_SendCurTeamInfo(msg, &chrListTemp, base);
 			NET_WriteMsg(cls.netStream, msg);
 		}
 	} else
@@ -2491,7 +2491,7 @@ void CL_Init (void)
 
 /**
  * @brief Saves configuration file and shuts the client systems down
- * FIXME: this is a callback from Sys_Quit and Com_Error.  It would be better
+ * @todo this is a callback from @c Sys_Quit and @c Com_Error. It would be better
  * to run quit through here before the final handoff to the sys code.
  * @sa Sys_Quit
  * @sa CL_Init

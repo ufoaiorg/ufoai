@@ -193,7 +193,7 @@ static qboolean UFO_SendAttackBase (aircraft_t* ufo, base_t* base)
 	MAP_MapCalcLine(ufo->pos, base->pos, &ufo->route);
 	ufo->baseTarget = base;
 	ufo->aircraftTarget = NULL;
-	ufo->status = AIR_UFO; /* FIXME: Might crash in cl_map.c MAP_DrawMapMarkers */
+	ufo->status = AIR_UFO; /** @todo Might crash in cl_map.c MAP_DrawMapMarkers */
 	ufo->time = 0;
 	ufo->point = 0;
 	return qtrue;
@@ -389,7 +389,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 						CL_GameTimeStop();
 						/* Send a message to player to warn him */
 						MN_AddNewMessage(_("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse, MSG_STANDARD, NULL);
-						/* @todo: present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
+						/** @todo: present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
 					}
 				}
 			}
@@ -872,7 +872,7 @@ void UFO_Recovery (void)
 				/* Destination base was destroyed meanwhile. */
 				/* UFO is lost, send proper message to the user.*/
 				recovery->active = qfalse;
-				/* @todo: prepare MN_AddNewMessage() here */
+				/** @todo: prepare MN_AddNewMessage() here */
 				return;
 			}
 			/* Get ufocraft. */

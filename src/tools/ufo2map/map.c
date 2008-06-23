@@ -555,7 +555,7 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 		textureref[mipTexIndex].materialMarked = qtrue;
 		materialsCnt++;
 	}
-	/* @todo Check for rock textures and so on */
+	/** @todo Check for rock textures and so on */
 
 	fclose(file);
 }

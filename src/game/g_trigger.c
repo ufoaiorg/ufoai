@@ -76,7 +76,7 @@ static qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 		if (activator->HP <= activator->STUN)
 			activator->state |= STATE_STUN;
 	} else if (self->spawnflags & 4) {
-		/* @todo Handle dazed via trigger_hurt */
+		/** @todo Handle dazed via trigger_hurt */
 	} else {
 		activator->HP = max(activator->HP - self->dmg, 0);
 		if (activator->HP == 0)

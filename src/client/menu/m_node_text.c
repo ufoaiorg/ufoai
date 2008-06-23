@@ -194,7 +194,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			const char *token;
 			cur += 4;
 			token = COM_Parse((const char **)&cur);
-			/* @todo once font_t from r_font.h is known everywhere we should scale the height here, too
+			/** @todo once font_t from r_font.h is known everywhere we should scale the height here, too
 			 * @todo once image_t is known everywhere we should fix this, too */
 			x1 += R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
 		}
@@ -216,7 +216,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			if (node->mousefx && node->textLines + 1 == node->state) {
 				/* Hightlight line if mousefx is true. */
 				/* node->state is the line number to highlight */
-				/** @todo FIXME: what about multiline text that should be highlighted completely? */
+				/** @todo what about multiline text that should be highlighted completely? */
 				if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
 					R_ColorBlend(colorSelectedHover);
 				} else {

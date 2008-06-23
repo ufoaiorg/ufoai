@@ -99,7 +99,7 @@ void RADAR_UpdateWholeRadarOverlay (void)
 		int aircraftIdx;
 		if (!base)
 			continue;
- 
+
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
 			if (AIR_IsAircraftOnGeoscape(&base->aircraft[aircraftIdx]))
 				RADAR_DrawCoverage(&base->aircraft[aircraftIdx].radar, base->aircraft[aircraftIdx].pos);
@@ -158,7 +158,7 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, vec2_t pos)
 		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z < 0) {
 			pts[1].x = x;
 			pts[1].y = y;
-			R_DrawLineStrip(2, (int*)pts); /* FIXME */
+			R_DrawLineStrip(2, (int*)pts); /** @todo */
 		}
 
 	R_ColorBlend(NULL);

@@ -545,7 +545,7 @@ void SV_NextMapcycle (void)
 	if (gameType && *gameType)
 		Cvar_Set("sv_gametype", gameType);
 
-	/* @todo make day and night configureable, too */
+	/** @todo make day and night configureable, too */
 	Com_sprintf(cmd, sizeof(cmd), "map day %s", map);
 	Cbuf_AddText(cmd);
 	Cbuf_Execute();

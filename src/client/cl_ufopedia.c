@@ -438,7 +438,7 @@ void UP_ItemDescription (const objDef_t *od)
 		} else {
 			/* just an item */
 			/* only primary definition */
-			/* @todo: We use the default firemodes here. We might need some change the "fd[0]" below to FIRESH_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
+			/** @todo: We use the default firemodes here. We might need some change the "fd[0]" below to FIRESH_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
@@ -670,7 +670,7 @@ void UP_AircraftDescription (const technology_t* t)
 			Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
 		}
 	} else if (RS_Collected_(t)) {
-		/* @todo Display crippled info and pre-research text here */
+		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	} else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
@@ -713,7 +713,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), _(tech->name), ugvType->weapon);
 		mn.menuText[TEXT_STANDARD] = itemText;
 	} else if (RS_Collected_(tech)) {
-		/* @todo Display crippled info and pre-research text here */
+		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
 		mn.menuText[TEXT_STANDARD] = itemText;
 	} else {
@@ -996,7 +996,7 @@ static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 
 	if (tech) {
 		upFireMode = 0;
-		upResearchedLink = 0;	/* @todo: if the first weapon of the firemode of an ammo is unresearched, its dammages,... will still be displayed */
+		upResearchedLink = 0;	/** @todo: if the first weapon of the firemode of an ammo is unresearched, its dammages,... will still be displayed */
 
 		if (tech->mdl)
 			Cvar_Set("mn_upmodel_top", tech->mdl);

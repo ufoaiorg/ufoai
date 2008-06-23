@@ -44,7 +44,7 @@ typedef struct shader_s {
 	qboolean vertex;			/**< vertex-shader */
 
 	byte glMode;
-	/* @todo: */
+	/** @todo: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
 	int vpid, fpid, glslpid;

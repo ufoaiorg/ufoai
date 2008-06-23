@@ -131,7 +131,7 @@ static void BaseSummary_Init_f (void)
 				const char *name = (objDef) ? objDef->name : _(aircraft->name);
 				assert(name);
 
-				/* FIXME: use the same method as we do in PR_ProductionInfo */
+				/** @todo use the same method as we do in PR_ProductionInfo */
 				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), name,
 					production->amount, production->percentDone * 100), sizeof(textStatsBuffer));
 			}

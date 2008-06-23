@@ -1298,7 +1298,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					mapline_t path;
 
 					path.numPoints = aircraft->route.numPoints - aircraft->point;
-					/* @todo : check why path.numPoints can be sometime equal to -1 */
+					/** @todo : check why path.numPoints can be sometime equal to -1 */
 					if (path.numPoints > 1) {
 						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
 						memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));

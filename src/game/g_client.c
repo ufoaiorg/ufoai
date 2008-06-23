@@ -998,7 +998,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 		break;
 	}
 
-	/* FIXME: This is impossible - if not we should check MAX_INVDEFS */
+	/** @todo This is impossible - if not we should check MAX_INVDEFS */
 	assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
 
 	/* successful inventory change; remove the item in clients */
@@ -1882,7 +1882,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					/* @todo: Comment-me: Why do we modify reaction stuff (especially TUs) here?
+					/** @todo: Comment-me: Why do we modify reaction stuff (especially TUs) here?
 					 * I've commented this out for now, we could remove it completely or add a special "shaken" TU penalty. */
 					/* ent->TU -= TU_REACTION_SINGLE; */
 					/* shaken is later reset along with reaction fire */
@@ -2294,7 +2294,7 @@ int G_ClientAction (player_t * player)
 
 	case PA_TURN:
 		gi.ReadFormat(pa_format[PA_TURN], &i);
-		/* FIXME: endian safe? */
+		/** @todo endian safe? */
 		G_ClientTurn(player, num, (byte) i);
 		break;
 
@@ -2359,7 +2359,7 @@ int G_ClientAction (player_t * player)
 		objIdx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
 		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fdIdx, objIdx);
-		/* @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
+		/** @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
 		ent = g_edicts + num;
 		if (ent) {
 			ent->chr.RFmode.hand = hand;
@@ -2488,7 +2488,7 @@ static void G_GetTeam (player_t * player)
 			if (level.num_spawnpoints[i]) {
 				teamAvailable = qtrue;
 				/* check if team is in use (only human controlled players) */
-				/* FIXME: If someone left the game and rejoins he should get his "old" team back */
+				/** @todo If someone left the game and rejoins he should get his "old" team back */
 				/*        maybe we could identify such a situation */
 				for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
 					if (p->inuse && p->pers.team == i) {
@@ -2808,10 +2808,10 @@ void G_ClientTeamInfo (player_t * player)
 			ent->HP = ent->chr.HP;
 			ent->morale = ent->chr.morale;
 
-			/* FIXME: for now, heal fully upon entering mission */
+			/** @todo for now, heal fully upon entering mission */
 			ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
 
-			ent->reaction_minhit = 30; /* @todo: allow later changes from GUI */
+			ent->reaction_minhit = 30; /** @todo: allow later changes from GUI */
 		} else {
 			/* just do nothing with the info */
 			gi.ReadByte(); /* fieldSize */
@@ -3071,7 +3071,7 @@ static void G_SendEdictsAndBrushModels (int team)
 
 		case SOLID_BBOX:
 			if (sv_send_edicts->integer) {
-				/* @todo Send actorspawn boxes to show the bboxes client side, too
+				/** @todo Send actorspawn boxes to show the bboxes client side, too
 				 * @note Only needed for displaying them */
 			}
 			break;
@@ -3106,7 +3106,7 @@ void G_ClientBegin (player_t* player)
 		G_CompleteRecalcRouting();
 	}
 
-	/* FIXME: This should be a client side error */
+	/** @todo This should be a client side error */
 	if (!P_MASK(player)) {
 		gi.bprintf(PRINT_CONSOLE, "%s tried to join - but server is full\n", player->pers.netname);
 		return;
@@ -3152,7 +3152,7 @@ qboolean G_ClientSpawn (player_t * player)
 		return qfalse;
 	}
 
-	/* @todo: Check player->pers.team here */
+	/** @todo: Check player->pers.team here */
 	if (!G_GameRunning()) {
 		/* activate round if in single-player */
 		if (sv_maxclients->integer == 1) {

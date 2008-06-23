@@ -78,7 +78,7 @@ struct edict_s {
 	vec3_t origin;
 	vec3_t angles;
 
-	/* FIXME: move these fields to a server private sv_entity_t */
+	/** @todo move these fields to a server private sv_entity_t */
 	link_t area;				/**< linked to a division node or leaf */
 
 	/** tracing info */

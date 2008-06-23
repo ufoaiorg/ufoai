@@ -83,7 +83,7 @@ static const value_t nps[] = {
 	{"tooltip", V_LONGSTRING, -5, 0},	/* translated in MN_Tooltip */
 	{"image", V_STRING, 0, 0},
 	{"roq", V_STRING, 0, 0},
-	{"md2", V_STRING, 0, 0},	/* FIXME: Rename into model */
+	{"md2", V_STRING, 0, 0},	/** @todo Rename into model */
 	{"anim", V_STRING, -1, 0},
 	{"tag", V_STRING, -2, 0},
 	{"cvar", V_STRING, -3, 0},	/* for selectbox */
@@ -526,7 +526,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
-			/* FIXME: mem corruption in case of too many select box options */
+			/** @todo mem corruption in case of too many select box options */
 			Q_strncpyz(mn.menuSelectBoxes[mn.numSelectBoxes].id, *token, sizeof(mn.menuSelectBoxes[mn.numSelectBoxes].id));
 			Com_DPrintf(DEBUG_CLIENT, "...found selectbox: '%s'\n", *token);
 

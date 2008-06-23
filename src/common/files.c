@@ -882,7 +882,7 @@ void FS_InitFilesystem (void)
 	fs_base_searchpaths = fs_searchpaths;
 }
 
-/* FIXME: This block list code is broken in terms of filename order
+/** @todo This block list code is broken in terms of filename order
  * To see the bug reduce the FL_BLOCKSIZE to 1024 and verify the order of the
  * filenames FS_NextScriptHeader gives you - you will see that the last files
  * will be in reversed order
@@ -1316,7 +1316,7 @@ void FS_GetMaps (qboolean reset)
 				/* found it! */
 				baseMapName = strchr(pak->files[i].name, '/');
 				if (baseMapName) {
-					/* FIXME: paths are normalized here? */
+					/** @todo paths are normalized here? */
 					baseMapName = strchr(baseMapName + 1, '/');
 					/* ugly hack - only show the maps in base/maps - not in base/maps/b and so on */
 					if (baseMapName)

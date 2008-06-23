@@ -155,7 +155,7 @@ static int checkStartPosition (entity_t *e, int entnum)
 
 	if (((int)e->origin[0] - align) % UNIT_SIZE || ((int)e->origin[1] - align) % UNIT_SIZE) {
 		Com_Printf("* ERROR: misaligned starting position - entnum: %i (%i: %i). The %s will be deleted\n", entnum, (int)e->origin[0], (int)e->origin[1], val);
-		return 1; /* @todo: auto-align entity and check for intersection with brush */
+		return 1; /** @todo: auto-align entity and check for intersection with brush */
 	}
 	return 0;
 }
@@ -306,7 +306,7 @@ static void GetIntersection (const side_t *side1, const side_t *side2, const sid
 
 	CrossProduct(side2->hessianNormal, side3->hessianNormal, IntersectionDirSide2Side3);
 	/* sin of angle between side 2 and 3 (approx equal to angle: small angle approx) */
-	sinAngle = 1.0; /*FIXME: use this one: IntersectionDirSide2Side3.magnitude();*/
+	sinAngle = 1.0; /** @todo: use this one: IntersectionDirSide2Side3.magnitude();*/
 	/* planes parallel, cannot intersect */
 	if (sinAngle < epsilon)
 		return;
@@ -316,7 +316,7 @@ static void GetIntersection (const side_t *side1, const side_t *side2, const sid
 	atobcintersection = DotProduct(side1->hessianNormal, IntersectionDirSide2Side3);
 	/* this is equal to sin of angle to side 1. if bc intersection line is parallel to side 1, then
 	 * it can not intersect. */
-	if (atobcintersection < 0 /* FIXME: Use this: Epsilon.angle */)
+	if (atobcintersection < 0) /** @todo Use this: Epsilon.angle */
 		return;
 
 	/* see http://geometryalgorithms.com/Archive/algorithm_0104/algorithm_0104B.htm */
@@ -701,7 +701,7 @@ void CheckBrushes (void)
 			assert(tex);
 
 #if 1
-			/* @todo remove this once every map is run with ./ufo2map -fix brushes <map> */
+			/** @todo remove this once every map is run with ./ufo2map -fix brushes <map> */
 			/* the old footstep value */
 			if (side->contentFlags & 0x00040000) {
 				side->contentFlags &= ~0x00040000;

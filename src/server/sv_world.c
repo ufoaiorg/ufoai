@@ -32,13 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 ===============================================================================
 ENTITY AREA CHECKING
-FIXME: this use of "area" is different from the bsp file use
 ===============================================================================
 */
+/** @todo: this use of "area" is different from the bsp file use */
 
-/* (type *)STRUCT_FROM_LINK(link_t *link, type, member) */
-/* ent = STRUCT_FROM_LINK(link,entity_t,order) */
-/* FIXME: remove this mess! */
+/** @todo remove this mess! */
 #define	STRUCT_FROM_LINK(l,t,m) ((t *)((byte *)l - (ptrdiff_t)&(((t *)0)->m)))
 
 #define	EDICT_FROM_AREA(l) STRUCT_FROM_LINK(l,edict_t,area)
@@ -501,7 +499,7 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 
 	/* clip to world - 0x1FF = all levels */
 	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask);
-	/* FIXME: There is more than one world in case of a map assembly */
+	/** @todo: There is more than one world in case of a map assembly */
 	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */

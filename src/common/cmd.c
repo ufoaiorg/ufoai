@@ -125,7 +125,7 @@ void Cbuf_AddText (const char *text)
 /**
  * @brief Adds command text immediately after the current command
  * @note Adds a \n to the text
- * FIXME: actually change the command buffer to do less copying
+ * @todo actually change the command buffer to do less copying
  */
 void Cbuf_InsertText (const char *text)
 {
@@ -842,7 +842,7 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 
 /**
  * @brief A complete command line has been parsed, so try to execute it
- * FIXME: lookupnoadd the token to speed search?
+ * @todo lookupnoadd the token to speed search?
  */
 void Cmd_ExecuteString (const char *text)
 {

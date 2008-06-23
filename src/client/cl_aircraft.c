@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 
-/* FIXME: Is this really needed - we have base_t->aircraftCurrent - isn't that the same? */
+/** @todo Is this really needed - we have base_t->aircraftCurrent - isn't that the same? */
 static aircraft_t *menuAircraft = NULL;
 aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 /**
@@ -870,7 +870,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: no aircraft given (NULL)\n");
-		/* @todo: Return deletion status here. */
+		/** @todo: Return deletion status here. */
 		return;
 	}
 
@@ -878,7 +878,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	if (!base) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: No homebase found for aircraft.\n");
-		/* @todo: Return deletion status here. */
+		/** @todo: Return deletion status here. */
 		return;
 	}
 
@@ -932,7 +932,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	/* also update the base menu buttons */
 	Cmd_ExecuteString("base_init");
 
-	/* @todo: Return successful deletion status here. */
+	/** @todo: Return successful deletion status here. */
 
 	/* update hangar capacities */
 	AIR_UpdateHangarCapForAll(base);
@@ -1021,7 +1021,7 @@ void CL_CampaignRunAircraft (int dt)
 		base_t *base = B_GetBaseByIDX(j);
 		if (!base->founded) {
 			if (base->numAircraftInBase) {
-				/* @todo if a base was destroyed, but there are still
+				/** @todo if a base was destroyed, but there are still
 				 * aircraft on their way... */
 			}
 			continue;
@@ -1083,7 +1083,7 @@ void CL_CampaignRunAircraft (int dt)
 				/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
 				if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
 					!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
-					/* @todo: check if aircraft can go to a closer base with free space */
+					/** @todo: check if aircraft can go to a closer base with free space */
 					MN_AddNewMessage(_("Notice"), va(_("Your %s is low on fuel and returns to base"), aircraft->name), qfalse, MSG_STANDARD, NULL);
 					AIR_AircraftReturnToBase(aircraft);
 				}
@@ -1102,7 +1102,7 @@ void CL_CampaignRunAircraft (int dt)
 					}
 				}
 			} else {
-				/* FIXME: Maybe even Sys_Error? */
+				/** @todo Maybe even Sys_Error? */
 				Com_Printf("CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')\n", j, aircraft->id);
 			}
 	}
@@ -1329,7 +1329,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		memset(aircraftSample, 0, sizeof(aircraft_t));
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
-		/* FIXME: is this needed here? I think not, because the index of available aircraft
+		/** @todo is this needed here? I think not, because the index of available aircraft
 		 * are set when we create these aircraft from the samples - but i might be wrong here
 		 * if i'm not wrong, the gd.numAircraft++ from a few lines below can go into trashbin, too */
 		aircraftSample->idx = numAircraftTemplates;
@@ -1786,33 +1786,34 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  * @note this is responsible for adding soldiers to a team in dropship
  * @sa baseAttackFakeAircraft
  */
-void AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
+qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 {
 	int i;
 
 	if (!employee) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No employee given!\n");
-		return;
+		return qfalse;
 	}
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No aircraft given!\n");
-		return;
+		return qfalse;
 	}
 	if (aircraft->teamSize < aircraft->maxTeamSize) {
-		/* Search for unused place in aircraft and fill it with  employee-data. */
+		/* Search for unused place in aircraft and fill it with employee-data */
 		for (i = 0; i < aircraft->maxTeamSize; i++)
 			if (!aircraft->acTeam[i]) {
 				aircraft->acTeam[i] = employee;
-				Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: added idx '%d'\n", employee->idx);
+				Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: added idx '%d'\n",
+					employee->idx);
 				aircraft->teamSize++;
-				break;
+				return qtrue;
 			}
-		if (i >= aircraft->maxTeamSize)
-			Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: couldnt find space\n");
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: error: no space in aircraft\n");
+		Sys_Error("AIR_AddToAircraftTeam: Couldn't find space");
 	}
+
+	Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No space in aircraft\n");
+	return qfalse;
 }
 
 /**
@@ -1821,27 +1822,32 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
  * @param[in] employee The employee to remove from the team.
  * @note This is responsible for removing soldiers from a team in a dropship.
  */
-void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *employee)
+qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *employee)
 {
 	int i;
 
 	assert(aircraft);
 
 	if (aircraft->teamSize <= 0) {
-		Com_Printf("AIR_RemoveFromAircraftTeam()... aircraft->teamSize is less than or equal to 0, we should not be here!\n");
-		return;
+		Com_Printf("AIR_RemoveFromAircraftTeam: teamSize is %i, we should not be here!\n",
+			aircraft->teamSize);
+		return qfalse;
 	}
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		/* Search for this exact employee in the aircraft and remove him from the team. */
 		if (aircraft->acTeam[i] && aircraft->acTeam[i] == employee)	{
 			aircraft->acTeam[i] = NULL;
-			Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveFromAircraftTeam: removed idx '%d' \n", employee->idx);
+			Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveFromAircraftTeam: removed idx '%d' \n",
+				employee->idx);
 			aircraft->teamSize--;
-			return;
+			return qtrue;
 		}
 	}
-	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n", employee->idx, aircraft->idx, AIR_GetAircraftIdxInBase(aircraft), baseCurrent->idx);
+	assert(baseCurrent);
+	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n",
+		employee->idx, aircraft->idx, AIR_GetAircraftIdxInBase(aircraft), baseCurrent->idx);
+	return qfalse;
 }
 
 /**
@@ -1868,20 +1874,22 @@ qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *emp
 		Sys_Error("AIR_IsInAircraftTeam: aircraft '%s' has no homebase set\n", aircraft->id);
 #ifdef PARANOID
 	else
-		Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n", aircraft->name, aircraft->homebase->name);
+		Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n",
+			aircraft->name, aircraft->homebase->name);
 #endif
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i] == employee) {
 			/** @note This also skips the NULL entries in acTeam[]. */
 #ifdef DEBUG
-			Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee->idx, aircraft->homebase->name, baseCurrent ? baseCurrent->name : "");
+			Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n",
+				employee->idx, aircraft->homebase->name, baseCurrent ? baseCurrent->name : "");
 #endif
 			return qtrue;
 		}
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam:not found idx '%d' \n", employee->idx);
+	Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: not found idx '%d' \n", employee->idx);
 	return qfalse;
 }
 
@@ -1905,7 +1913,8 @@ void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
 }
 
 /**
- * @brief Checks to see if the pilot is in any aircraft at this base.  If he is then he is removed from that aircraft.
+ * @brief Checks to see if the pilot is in any aircraft at this base.
+ * If he is then he is removed from that aircraft.
  * @param[in] base Which base has the aircraft to search for the employee in.
  * @param[in] type Which employee to search for.
  */
@@ -2011,7 +2020,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, 0);
 			}
 		}
-		/* @todo more? */
+		/** @todo more? */
 	}
 
 	/* Save projectiles. */
@@ -2198,7 +2207,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				}
 			}
 		}
-		/* @todo more? */
+		/** @todo more? */
 	}
 
 	/* Load projectiles. */

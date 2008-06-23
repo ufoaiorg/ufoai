@@ -651,7 +651,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	/* Create a vertex at the exact position specified by the start angle. */
 	qglVertex2f(x + radius, y);
 
-	/* @todo Use lookup table for sin/cos? */
+	/** @todo Use lookup table for sin/cos? */
 	for (i = 0; i < CIRCLE_LINE_COUNT; i++) {
 		const float angle = (i * 2 * M_PI) / CIRCLE_LINE_COUNT;
 		qglVertex2f(x + radius * cos(angle), y - radius * sin(angle));
@@ -769,7 +769,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 
 	model_center[0] = MARKER_SIZE * zoom;
 	model_center[1] = MARKER_SIZE * zoom;
-	model_center[2] = MARKER_SIZE * zoom; /* FIXME */
+	model_center[2] = MARKER_SIZE * zoom; /** @todo */
 	mi.center = model_center;
 
 	R_DrawModelDirect(&mi, NULL, NULL);

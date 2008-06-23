@@ -818,7 +818,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	/* some debug output */
 	Com_DPrintf(DEBUG_CLIENT, "pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
 
-	/* @todo: Skip non printable chars here */
+	/** @todo: Skip non printable chars here */
 
 	switch (cmd.type) {
 	case IRC_COMMAND_NUMERIC:
@@ -1103,7 +1103,7 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 	m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
 	n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
-		/* @todo: strip high bits - or unprintable chars */
+		/** @todo: strip high bits - or unprintable chars */
 		m->msg = (char*) Mem_Alloc(msg_len);
 		memcpy(m->msg, msg, msg_len);
 		m->msg_len = msg_len;
@@ -1257,7 +1257,7 @@ void Irc_Logic_Frame (void)
 {
 	if (irc_connected) {
 		if (irc_channel->modified) {
-			/* FIXME: do this without disconnect, connect */
+			/** @todo do this without disconnect, connect */
 			Irc_Logic_Disconnect("Switched to another channel");
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			if (irc_connected)

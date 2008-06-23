@@ -303,7 +303,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
 		date.year, CL_DateGetMonthName(date.month - 1), date.day);
-	/* @todo fill real date string */
+	/** @todo fill real date string */
 	memcpy(fbuf, &header, sizeof(saveFileHeader_t));
 
 	/* step 5 - compress */

@@ -133,7 +133,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 		ent->reactionNoDraw = qfalse;
 		queued = qtrue;
 
-		/* FIXME: generate an 'interrupt'? */
+		/** @todo generate an 'interrupt'? */
 #ifdef DEBUG_REACTION
 		Com_Printf("Entity %s begins reaction fire on %s\n", ent->chr.name, target->chr.name);
 #endif

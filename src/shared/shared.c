@@ -103,7 +103,7 @@ void COM_FilePath (const char *in, char *out)
 	while (s != in && *s != '/')
 		s--;
 
-	/* FIXME: Q_strncpyz */
+	/** @todo Q_strncpyz */
 	strncpy(out, in, s - in);
 	out[s - in] = 0;
 }

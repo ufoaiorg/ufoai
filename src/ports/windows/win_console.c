@@ -272,7 +272,7 @@ static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 				}
 				return 0;	/* Keep it from beeping */
 			}
-			/* @todo add command completion here */
+			/** @todo add command completion here */
 		} else if (hWnd == sys_console.hWndOutput)
 			return 0;	/* Read only */
 		break;

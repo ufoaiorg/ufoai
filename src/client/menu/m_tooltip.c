@@ -36,7 +36,7 @@ static fontCacheList_t cacheList;
 
 /**
  * @brief Generic tooltip function
- * @todo FIXME: R_FontLength can change the string - which very very very bad for reference values and item names.
+ * @todo R_FontLength can change the string - which very very very bad for reference values and item names.
  * @todo Check for max height as well? (multi-line tooltips)
  */
 int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, int maxHeight)
@@ -93,7 +93,7 @@ void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 
 	/* maybe not tooltip but a key entity? */
 	if (node->data[MN_DATA_NODE_TOOLTIP]) {
-		char buf[256]; /* FIXME: see FIXME in MN_DrawTooltip */
+		char buf[256]; /** @todo @sa MN_DrawTooltip */
 		tooltip = MN_GetReferenceString(menu, node->data[MN_DATA_NODE_TOOLTIP]);
 		Q_strncpyz(buf, tooltip, sizeof(buf));
 		width = MN_DrawTooltip("f_small", buf, x, y, width, 0);

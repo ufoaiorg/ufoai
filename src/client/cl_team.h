@@ -43,17 +43,17 @@ ugv_t *CL_GetUgvByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 
 qboolean CL_SoldierInAircraft(const employee_t *employee, const aircraft_t* aircraft);
-void CL_RemoveSoldierFromAircraft(employee_t *employee, aircraft_t* aircraft);
+qboolean CL_RemoveSoldierFromAircraft(employee_t *employee, aircraft_t* aircraft);
 void CL_RemoveSoldiersFromAircraft(aircraft_t* aircraft);
-void CL_AssignSoldierToCurrentSelectedAircraft(base_t *base, const int num);
+void CL_AssignSoldierFromMenuToAircraft(base_t *base, const int num, aircraft_t *aircraft);
 
 void CL_SaveInventory(sizebuf_t * buf, const inventory_t * i);
 void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
 void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
 void TEAM_InitStartup(void);
 void CL_ParseResults(struct dbuffer *msg);
-void CL_SendCurTeamInfo(struct dbuffer * buf, chrList_t *team);
-void CL_AddCarriedToEq(struct aircraft_s *aircraft, equipDef_t * equip);
+void CL_SendCurTeamInfo(struct dbuffer * buf, chrList_t *team, base_t *base);
+void CL_AddCarriedToEquipment(const struct aircraft_s *aircraft, equipDef_t *equip);
 void CL_ParseCharacterData(struct dbuffer *msg);
 
 #endif

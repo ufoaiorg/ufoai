@@ -165,10 +165,10 @@ static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 	}
 
 	if (openDoor) {
-		/* FIXME - YAW should be the orientation of the door */
+		/** @todo YAW should be the orientation of the door */
 		le->angles[YAW] += DOOR_ROTATION_ANGLE;
 	} else {
-		/* FIXME - YAW should be the orientation of the door */
+		/** @todo YAW should be the orientation of the door */
 		le->angles[YAW] -= DOOR_ROTATION_ANGLE;
 	}
 
@@ -514,7 +514,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	/* origin might not be up-to-date here - but pos should be */
 	PosToVec(le->pos, origin);
 
-	/* @todo use the Grid_Fall method (ACTOR_SIZE_NORMAL) to ensure, that the particle is
+	/** @todo use the Grid_Fall method (ACTOR_SIZE_NORMAL) to ensure, that the particle is
 	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
 	if (t->particle) {
 		/* check whether actor is visibile */
@@ -1224,7 +1224,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 			angles = le->angles;
 		} else {
 			/* might intersect, so do an exact clip */
-			/* @todo: make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
+			/** @todo: make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
 			headnode = CM_HeadnodeForBox(0, le->mins, le->maxs);
 			angles = vec3_origin;
 		}

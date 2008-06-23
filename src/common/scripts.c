@@ -1057,7 +1057,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
-				/* @todo: maybe we could add a check for the old numbers as well here */
+				/** @todo: maybe we could add a check for the old numbers as well here */
 				for (j = 0; j < MAX_BUYTYPES; j++) {
 					if (!Q_stricmp(token, buytypeNames[j])) {
 						od->buytype = j;
@@ -2408,7 +2408,7 @@ void Com_ParseScripts (void)
 	Com_Printf("...%3i team definitions parsed\n", csi.numTeamDefs);
 }
 
-/* FIXME: a mess - but i don't want to make the variables non static */
+/** @todo a mess - but i don't want to make the variables non static */
 #ifndef DEDICATED_ONLY
 #include "../client/client.h"
 /**

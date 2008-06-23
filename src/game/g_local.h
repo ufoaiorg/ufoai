@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "inv_shared.h"
 #include "../shared/infostring.h"
 
-/* FIXME: no gettext support for game lib - but we must be able to mark the strings */
+/** @todo no gettext support for game lib - but we must be able to mark the strings */
 # define _(String) String
 # define ngettext(x, y, cnt) x
 
@@ -130,12 +130,12 @@ typedef struct {
 
 /** @brief used in shot probability calculations (pseudo shots) */
 typedef struct {
-	int enemy;				/**< @brief shot would hit that much enemies */
-	int friend;				/**< @brief shot would hit that much friends */
-	int civilian;			/**< @brief shot would hit that much civilians */
-	int self;				/**< FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
-	int damage;				/**< */
-	qboolean allow_self;	/**< */
+	int enemy;				/**< shot would hit that much enemies */
+	int friend;				/**< shot would hit that much friends */
+	int civilian;			/**< shot would hit that much civilians */
+	int self;				/**< @todo incorrect actor facing or shotOrg, or bug in trace code? */
+	int damage;
+	qboolean allow_self;
 } shot_mock_t;
 
 extern game_locals_t game;
@@ -462,7 +462,7 @@ struct edict_s {
 	vec3_t origin;
 	vec3_t angles;
 
-	/* FIXME: move these fields to a server private sv_entity_t */
+	/** @todo move these fields to a server private sv_entity_t */
 	link_t area;				/**< linked to a division node or leaf */
 
 	/* tracing info SOLID_BSP, SOLID_BBOX, ... */

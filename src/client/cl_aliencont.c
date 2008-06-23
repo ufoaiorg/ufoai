@@ -95,7 +95,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 	le_t *le = NULL;
 	aliensTmp_t *cargo;
 
-	/* @todo: Check whether there are already aliens and add the new
+	/** @todo: Check whether there are already aliens and add the new
 	 * ones without removing the old ones*/
 
 	/* Make sure dropship aliencargo is empty. */
@@ -995,7 +995,7 @@ static void AC_UpdateMenu (void)
 			Cvar_SetValue(va("mn_ac_progress%i", j), 0);
 		}
 	}
-	/* @todo Select the containment we (maybe) just clicked again */
+	/** @todo Select the containment we (maybe) just clicked again */
 	Cbuf_AddText("aliencont_click 0\n");
 }
 

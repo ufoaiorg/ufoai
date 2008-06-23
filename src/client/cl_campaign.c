@@ -419,7 +419,7 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	mission->mapDef = &csi.mds[i];
 	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 
-	/* @todo Use me */
+	/** @todo Use me */
 	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
 	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
 	Q_strncpyz(gd.oldMis1, mission->mapDef->id, sizeof(gd.oldMis1));
@@ -1399,7 +1399,8 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	 * phalanx soldiers have their starting positions here
 	 * @note There should also always be an entrance - the aliens start there */
 	if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, B_COMMAND)) {
-		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are no Command Center in this base\n", base->name);
+		/** @todo handle command centre properly */
+		Com_Printf("B_BaseAttack: This base (%s) can not be set under attack - because there are no Command Center in this base\n", base->name);
 		CP_BaseAttackMissionLeave(mission);
 		return;
 	}
@@ -1408,7 +1409,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	campaignStats.basesAttacked++;
 
 #if 0
-	/* @todo: implement onattack: add it to basemanagement.ufo and implement functions */
+	/** @todo: implement onattack: add it to basemanagement.ufo and implement functions */
 	if (base->onAttack[0] != '\0')
 		/* execute next frame */
 		Cbuf_AddText(va("%s %i", base->onAttack, base->id));
@@ -1423,7 +1424,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	memset(&baseAttackFakeAircraft, 0, sizeof(baseAttackFakeAircraft));
 	baseAttackFakeAircraft.homebase = base;
 	VectorCopy(base->pos, baseAttackFakeAircraft.pos);				/* needed for transfer of alien corpses */
-	/* @todo EMPL_ROBOT */
+	/** @todo EMPL_ROBOT */
 	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;			/* needed to spawn soldiers on map */
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
 	for (i = 0, pos = hiredSoldiersInBase; i < MAX_ACTIVETEAM && pos; i++, pos = pos->next)
@@ -1720,7 +1721,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 
 	/* Mission is a success: government is subverted => lower happiness */
 	nation = MAP_GetNation(mission->pos);
-	/* @todo: when the mission is created, we should select a position where nation exists,
+	/** @todo: when the mission is created, we should select a position where nation exists,
 	 * otherwise suverting a government is meaningless */
 	if (nation)
 		CL_NationSetHappiness(nation, nation->stats[0].happiness * 0.8);
@@ -2621,7 +2622,7 @@ static void CP_StartXVISpreading_f (void)
 	int i, numAlienBases;
 
 	ccs.XVISpreadActivated = qtrue;
-	/* @todo: mn_xvimap should not be enabled at the same time than ccs.XVISpreadActivated:
+	/** @todo: mn_xvimap should not be enabled at the same time than ccs.XVISpreadActivated:
 	mn_xvimap means that PHALANX has a map of XVI, whereas ccs.XVISpreadActivated means that aliens started spreading XVI
 	 @todo: mn_xvimap should probably be saved, and restored when a game is loaded */
 	Cvar_Set("mn_xvimap", "1");
@@ -3152,7 +3153,7 @@ static void CP_CreateCivilianTeam (mission_t *mission)
 
 	assert(mission->pos);
 
-	/* @todo I've no idea what civilian number should be, please set it to desired value -- Kracken */
+	/** @todo I've no idea what civilian number should be, please set it to desired value -- Kracken */
 	ccs.battleParameters.civilians = (frand() * 10);
 	ccs.battleParameters.civilians %= 4;
 	ccs.battleParameters.civilians += 1;
@@ -3210,7 +3211,7 @@ static void CP_CreateBattleParameters (mission_t *mission)
 			}
 		}
 	}
-	/* @todo change dropship to any possible aircraft when random assembly tiles will be created */
+	/** @todo change dropship to any possible aircraft when random assembly tiles will be created */
 	/* Set random map aircraft if this is a random map */
 	if (mission->mapDef->map[0] == '+')
 		Cvar_Set("rm_drop", "+drop_firebird");
@@ -3227,19 +3228,19 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	assert(mission->mapDef);
 
 	if (mission->ufo && CP_UFOIsCrashed(mission))
-		/* @todo Should be a special crashed UFO mission model */
+		/** @todo Should be a special crashed UFO mission model */
 		return "mission";
 
 	if (mission->mapDef->storyRelated) {
 		if ((mission->category == INTERESTCATEGORY_BUILDING) && (mission->stage == STAGE_BASE_DISCOVERED))
 			return "alienbase";
 		else
-			/* @todo Should be a special story related mission model */
+			/** @todo Should be a special story related mission model */
 			return "mission";
 	}
 
 	switch (mission->category) {
-	/* @todo each category should have a its own model */
+	/** @todo each category should have a its own model */
 	case INTERESTCATEGORY_RECON:
 	case INTERESTCATEGORY_XVI:
 	case INTERESTCATEGORY_HARVEST:
@@ -5396,16 +5397,16 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 		switch (mis->category) {
 		case INTERESTCATEGORY_TERROR_ATTACK:
 			/* very hard to win this */
-			/* @todo change the formular here to reflect the above comment */
+			/** @todo change the formular here to reflect the above comment */
 			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		case INTERESTCATEGORY_XVI:
 			/* not that hard to win this, they want to spread xvi - no real terror mission */
-			/* @todo change the formular here to reflect the above comment */
+			/** @todo change the formular here to reflect the above comment */
 			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		default:
-			/* @todo change the formular here to reflect the above comments */
+			/** @todo change the formular here to reflect the above comments */
 			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		}
@@ -5524,7 +5525,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 	/* update nation opinions */
 	if (won) {
-		int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
+		int civiliansKilled = 0; /** @todo: fill this for the case you won the game */
 		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, selectedMission);
 		CP_CheckLostCondition(!won, mis, civiliansKilled);
 	} else {
@@ -5618,7 +5619,7 @@ void CL_GameAutoGo (mission_t *mis)
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(selectedMission);
-			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
+			/** @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CP_BaseAttackMissionLeave(selectedMission);
 	} else {
@@ -5669,8 +5670,6 @@ static void CL_GameAbort_f (void)
  * @param[in] won Determines whether we won the mission or not.
  * @note Soldier promotion is being done here.
  * @sa CL_GameResults_f
- *
- * FIXME: See @todo and FIXME included
  */
 static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
 {
@@ -5695,10 +5694,6 @@ static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft
 			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;
 
-			/** G_UpdateCharacterSkills(chr);
-			 * This is now done in g_client.c:G_UpdateCharacterSkills
-			 * @todo I think we can remove this later on. I've left it here just FYI for now. */
-
 			/** @todo: use chrScore_t to determine negative influence on soldier here,
 			 * like killing too many civilians and teammates can lead to unhire and disband
 			 * such soldier, or maybe rank degradation. */
@@ -5709,7 +5704,7 @@ static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > chr->score.rank; j--) {
 					const rank_t *rank = &gd.ranks[j];
-					/* FIXME: (Zenerka 20080301) extend ranks and change calculations here. */
+					/** @todo (Zenerka 20080301) extend ranks and change calculations here. */
 					if (rank->type == EMPL_SOLDIER && (chr->score.skills[ABILITY_MIND] >= rank->mind)
 						&& (chr->score.kills[KILLED_ALIENS] >= rank->killed_enemies)
 						&& ((chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM]) <= rank->killed_others)) {
@@ -5942,7 +5937,7 @@ static void CL_GameResults_f (void)
 			character_t *chr = &(employee->chr);
 			assert(chr);
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
-			if (chr->HP <= 0) { /* @todo: <= -50, etc. (implants) */
+			if (chr->HP <= 0) { /** @todo: <= -50, etc. (implants) */
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
 				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);
@@ -5972,7 +5967,7 @@ static void CL_GameResults_f (void)
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(selectedMission);
-			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
+			/** @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CP_BaseAttackMissionLeave(selectedMission);
 	} else {
@@ -5990,7 +5985,7 @@ static void CL_GameResults_f (void)
  */
 void CL_ParseMission (const char *name, const char **text)
 {
-/* @todo Parse story related missions */
+/** @todo Parse story related missions */
 #if 0
 	const char *errhead = "CL_ParseMission: unexpected end of file (mission ";
 	mission_t *ms;
@@ -7255,7 +7250,7 @@ static void CP_UFORecovered_f (void)
 	Cvar_SetValue("mission_ufotype", UFOtype);
 	Cvar_SetValue("mission_recoverynation", -1);
 	Cvar_SetValue("mission_recoverybase", -1);
-	/* @todo block Sell button if no nation with requirements */
+	/** @todo block Sell button if no nation with requirements */
 	if (!store) {
 		/* Block store option if storing not possible. */
 		Cmd_ExecuteString("disufostore");
@@ -7548,7 +7543,7 @@ static void CP_UFORecoveredSell_f (void)
 
 	for (i = 0; i < gd.numNations; i++) {
 		const nation_t *nation = &gd.nations[i];
-		/* @todo only nations with proper alien infiltration values */
+		/** @todo only nations with proper alien infiltration values */
 		nations++;
 		/* Calculate price offered by nation only if this is first popup opening. */
 		if (nationIdx == -1) {
@@ -7756,7 +7751,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 			if (MAP_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
 				/* the location given in pos belongs to the terrain, culture, population types and nations
 				 * that are acceptable, so count it */
-				/* @todo - cache the counted hits */
+				/** @todo - cache the counted hits */
 				hits++;
 			}
 		}

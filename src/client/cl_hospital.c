@@ -350,7 +350,7 @@ static void HOS_EmployeeInit_f (void)
 		return;
 	}
 
-	/* @todo */
+	/** @todo */
 	mn.menuText[TEXT_STANDARD] = employeeDesc;
 	*employeeDesc = '\0';
 

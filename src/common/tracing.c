@@ -159,7 +159,7 @@ void TR_BuildTracingNode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
 
-	/* FIXME should this be a == -1 check? */
+	/** @todo should this be a == -1 check? */
 #ifdef COMPILE_UFO
 	if (!curTile->nodes[node].plane) {
 #else
@@ -689,10 +689,10 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 		TR_PLANE_TYPE *plane = curTile->planes + side->planenum;
 #endif
 
-		/* FIXME: special case for axial */
+		/** @todo special case for axial */
 		if (!trace_ispoint) {	/* general box case */
 			/* push the plane out appropriately for mins/maxs */
-			/* FIXME: use signbits into 8 way lookup for each mins/maxs */
+			/** @todo use signbits into 8 way lookup for each mins/maxs */
 			for (j = 0; j < 3; j++) {
 				if (plane->normal[j] < 0)
 					ofs[j] = maxs[j];
@@ -781,10 +781,10 @@ static void TR_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 		plane = curTile->planes + side->planenum;
 #endif
 
-		/* FIXME: special case for axial */
+		/** @todo special case for axial */
 		/* general box case */
 		/* push the plane out appropriately for mins/maxs */
-		/* FIXME: use signbits into 8 way lookup for each mins/maxs */
+		/** @todo use signbits into 8 way lookup for each mins/maxs */
 		for (j = 0; j < 3; j++) {
 			if (plane->normal[j] < 0)
 				ofs[j] = maxs[j];
@@ -1144,7 +1144,7 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	trace = TR_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask);
 
 	if (rotated && trace.fraction != 1.0) {
-		/* FIXME: figure out how to do this with existing angles */
+		/** @todo figure out how to do this with existing angles */
 		VectorNegate(angles, a);
 		AngleVectors(a, forward, right, up);
 

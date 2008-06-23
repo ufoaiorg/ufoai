@@ -626,7 +626,7 @@ static int Key_StringToKeynum (const char *str)
  * @brief Convert a given keynum to string
  * @param[in] keynum The keynum to convert to string
  * @return a string (either a single ascii char, or a K_* name) for the given keynum.
- * FIXME: handle quote special (general escape sequence?)
+ * @todo handle quote special (general escape sequence?)
  * @sa Key_StringToKeynum
  */
 const char *Key_KeynumToString (int keynum)

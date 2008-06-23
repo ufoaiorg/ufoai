@@ -158,7 +158,7 @@ vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 	float length, ilength;
 
 	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-	length = sqrt(length);		/* FIXME */
+	length = sqrt(length);		/** @todo */
 
 	if (length) {
 		ilength = 1 / length;
@@ -316,7 +316,7 @@ vec_t VectorLength (const vec3_t v)
 	length = 0;
 	for (i = 0; i < 3; i++)
 		length += v[i] * v[i];
-	length = sqrt(length);		/* FIXME */
+	length = sqrt(length);		/** @todo */
 
 	return length;
 }
@@ -498,7 +498,7 @@ vec_t VectorNormalize (vec3_t v)
 	float length;
 
 	length = DotProduct(v, v);
-	length = sqrt(length);		/* FIXME */
+	length = sqrt(length);		/** @todo */
 
 	if (length) {
 		const float ilength = 1 / length;

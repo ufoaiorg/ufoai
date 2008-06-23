@@ -179,33 +179,32 @@ static void G_Init (void)
 	/* autojoin aliens */
 	ai_autojoin = gi.Cvar_Get("ai_autojoin", "0", 0, "Auto join ai players if no human player was found for a team");
 
-	/* FIXME: Apply CVAR_NOSET after balancing */
-	mob_death = gi.Cvar_Get("mob_death", "10", CVAR_LATCH, NULL);
-	mob_wound = gi.Cvar_Get("mob_wound", "0.1", CVAR_LATCH, NULL);
-	mof_watching = gi.Cvar_Get("mof_watching", "1.7", CVAR_LATCH, NULL);
-	mof_teamkill = gi.Cvar_Get("mof_teamkill", "2.0", CVAR_LATCH, NULL);
-	mof_civilian = gi.Cvar_Get("mof_civilian", "0.3", CVAR_LATCH, NULL);
-	mof_enemy = gi.Cvar_Get("mof_ememy", "0.5", CVAR_LATCH, NULL);
-	mor_pain = gi.Cvar_Get("mof_pain", "3.6", CVAR_LATCH, NULL);
+	mob_death = gi.Cvar_Get("mob_death", "10", CVAR_LATCH|CVAR_NOSET, NULL);
+	mob_wound = gi.Cvar_Get("mob_wound", "0.1", CVAR_LATCH|CVAR_NOSET, NULL);
+	mof_watching = gi.Cvar_Get("mof_watching", "1.7", CVAR_LATCH|CVAR_NOSET, NULL);
+	mof_teamkill = gi.Cvar_Get("mof_teamkill", "2.0", CVAR_LATCH|CVAR_NOSET, NULL);
+	mof_civilian = gi.Cvar_Get("mof_civilian", "0.3", CVAR_LATCH|CVAR_NOSET, NULL);
+	mof_enemy = gi.Cvar_Get("mof_ememy", "0.5", CVAR_LATCH|CVAR_NOSET, NULL);
+	mor_pain = gi.Cvar_Get("mof_pain", "3.6", CVAR_LATCH|CVAR_NOSET, NULL);
 	/*everyone gets this times morale damage */
-	mor_default = gi.Cvar_Get("mor_default", "0.3", CVAR_LATCH, "Everyone gets this times morale damage");
+	mor_default = gi.Cvar_Get("mor_default", "0.3", CVAR_LATCH|CVAR_NOSET, "Everyone gets this times morale damage");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_distance = gi.Cvar_Get("mor_distance", "120", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
+	mor_distance = gi.Cvar_Get("mor_distance", "120", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halfed (exponential scale)");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_victim = gi.Cvar_Get("mor_victim", "0.7", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
+	mor_victim = gi.Cvar_Get("mor_victim", "0.7", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halfed (exponential scale)");
 	/*at this distance the following two get halfed (exponential scale) */
-	mor_attacker = gi.Cvar_Get("mor_attacker", "0.3", CVAR_LATCH, "At this distance the following two get halfed (exponential scale)");
+	mor_attacker = gi.Cvar_Get("mor_attacker", "0.3", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halfed (exponential scale)");
 	/* how much the morale depends on the size of the damaged team */
-	mon_teamfactor = gi.Cvar_Get("mon_teamfactor", "0.6", CVAR_LATCH, "How much the morale depends on the size of the damaged team");
+	mon_teamfactor = gi.Cvar_Get("mon_teamfactor", "0.6", CVAR_LATCH|CVAR_NOSET, "How much the morale depends on the size of the damaged team");
 
-	mor_regeneration = gi.Cvar_Get("mor_regeneration", "15", CVAR_LATCH, NULL);
-	mor_shaken = gi.Cvar_Get("mor_shaken", "50", CVAR_LATCH, NULL);
-	mor_panic = gi.Cvar_Get("mor_panic", "30", CVAR_LATCH, NULL);
+	mor_regeneration = gi.Cvar_Get("mor_regeneration", "15", CVAR_LATCH|CVAR_NOSET, NULL);
+	mor_shaken = gi.Cvar_Get("mor_shaken", "50", CVAR_LATCH|CVAR_NOSET, NULL);
+	mor_panic = gi.Cvar_Get("mor_panic", "30", CVAR_LATCH|CVAR_NOSET, NULL);
 
-	m_sanity = gi.Cvar_Get("m_sanity", "1.0", CVAR_LATCH, NULL);
-	m_rage = gi.Cvar_Get("m_rage", "0.6", CVAR_LATCH, NULL);
-	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH, NULL);
-	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH, NULL);
+	m_sanity = gi.Cvar_Get("m_sanity", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
+	m_rage = gi.Cvar_Get("m_rage", "0.6", CVAR_LATCH|CVAR_NOSET, NULL);
+	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH|CVAR_NOSET, NULL);
+	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
 
 	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER, "All AI actors are visible");
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER, "No damage in developer mode");
@@ -219,7 +218,7 @@ static void G_Init (void)
 	difficulty = gi.Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
 
 	game.sv_maxentities = sv_maxentities->integer;
-	/* FIXME: */
+	/** @todo */
 	game.sv_maxplayersperteam = sv_maxplayersperteam->integer;
 
 	/* initialize all entities for this game */
@@ -615,15 +614,15 @@ void G_EndGame (int team)
  */
 int G_MissionObjective (int activeTeams, int* winningTeam)
 {
-	/* @todo: put objective flag to level */
+	/** @todo: put objective flag to level */
 	switch (level.objective) {
-	/* @todo: enum for objectives */
+	/** @todo: enum for objectives */
 	case OBJ_RESCUE_CIVILIANS:
 		if (!level.num_alive[TEAM_CIVILIAN])
 			return 0;
 		if (!level.num_alive[TEAM_ALIEN])
 			return 1;
-	/* @todo: More objectives */
+	/** @todo: More objectives */
 	default:
 		return -1;
 	}
@@ -642,14 +641,14 @@ void G_CheckEndGame (void)
 	if (level.intermissionTime) /* already decided */
 		return;
 
-	/* FIXME: count from 0 to get the civilians for objectives */
+	/** @todo count from 0 to get the civilians for objectives */
 	for (i = 1, activeTeams = 0, last = 0; i < MAX_TEAMS; i++)
 		if (level.num_alive[i]) {
 			last = i;
 			activeTeams++;
 		}
 
-	/* @todo: < 2 does not work when we count civilians */
+	/** @todo: < 2 does not work when we count civilians */
 	/* prepare for sending results */
 	if (activeTeams < 2 /* || G_MissionObjective(activeTeams, &level.winningTeam) != -1*/ ) {
 		if (activeTeams == 0)

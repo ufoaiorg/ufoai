@@ -88,7 +88,7 @@ static void INV_CarriedItems (const le_t *soldier)
 			/* Fake item. */
 			assert(item->item.t);
 			/* Twohanded weapons and container is left hand container. */
-			/* FIXME: */
+			/** @todo */
 			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdTwoHanded); */
 
 			ccs.eMission.num[item->item.t->idx]++;
@@ -792,7 +792,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContai
 	if (px >= SHAPE_BIG_MAX_WIDTH || py >= SHAPE_BIG_MAX_HEIGHT)
 		return qfalse;
 
-	/* FIXME / @todo: this case should be removed as soon as right clicking in equip container
+	/** @todo: this case should be removed as soon as right clicking in equip container
 	 * will try to put the item in a reasonable container automatically */
 	if ((px == -1 || py == -1) && toContainer == fromContainer)
 		return qtrue;

@@ -270,7 +270,7 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 
 	/* you can choose an ammo only if it fits the weapons installed in this slot */
 	if (airequipID >= AC_ITEM_AMMO) {
-		/* FIXME: This only works for ammo that is useable in exactly one weapon
+		/** @todo This only works for ammo that is useable in exactly one weapon
 		 * check the weap_idx array and not only the first value */
 		if (item->weapons[0] != slot->item)
 			return qfalse;
@@ -429,7 +429,7 @@ static void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 			return;
 		}
 		/* slots has a lot of ammo for now */
-		/* FIXME: it should be unlimited, no ? check that when we'll know how laser battery work */
+		/** @todo it should be unlimited, no ? check that when we'll know how laser battery work */
 		base->lasers[base->numLasers].slot.ammoLeft = 9999;
 
 		base->numLasers++;

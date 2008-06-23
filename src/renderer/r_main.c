@@ -563,7 +563,7 @@ static void R_InitExtension (void)
 		r_state.arb_fragment_program = qfalse;
 	}
 
-	/* FIXME: Is this the right extension to check for? */
+	/** @todo Is this the right extension to check for? */
 	if (strstr(r_config.extensionsString, "GL_ARB_shading_language_100")) {
 		Com_Printf("using GL_ARB_shading_language_100\n");
 		qglCreateShader  = SDL_GL_GetProcAddress("glCreateShaderObjectARB");

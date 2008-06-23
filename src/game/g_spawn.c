@@ -526,7 +526,7 @@ static void SP_player_start (edict_t *ent)
 		return;
 	}
 
-	/* FIXME: Wrong place here */
+	/** @todo Wrong place here */
 	/* maybe there are already the max soldiers allowed per team connected */
 	if (sv_maxsoldiersperteam->integer > level.num_spawnpoints[ent->team]) {
 		ent->STUN = 0;
@@ -723,7 +723,7 @@ static void Think_Mission (edict_t *self)
 	/* mission succeeds */
 	Com_Printf("Mission won for team %i\n", self->team);
 
-	/* @todo implement this */
+	/** @todo implement this */
 }
 
 /**
@@ -801,7 +801,7 @@ static void SP_misc_model (edict_t *ent)
 {
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
 		ent->solid = SOLID_BBOX;
-		/* FIXME: Handling some misc_models serverside
+		/** @todo Handling some misc_models serverside
 		 * would be nice for pathfinding and clipping */
 		G_FreeEdict(ent);
 	} else {

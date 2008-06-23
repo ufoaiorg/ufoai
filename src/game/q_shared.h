@@ -167,7 +167,6 @@ extern cvar_t* sys_priority;
 extern cvar_t* sys_affinity;
 extern cvar_t* sys_os;
 
-/* FIXME: eliminate AREA_ distinction? */
 #define AREA_SOLID			1
 #define AREA_TRIGGERS		2
 

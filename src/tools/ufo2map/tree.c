@@ -107,7 +107,7 @@ static void PruneNodes_r (node_t *node)
 		if (node->children[0]->faces || node->children[1]->faces)
 			Sys_Error("!node->faces with children");
 
-		/* FIXME: free stuff */
+		/** @todo free stuff */
 		node->planenum = PLANENUM_LEAF;
 		node->contentFlags = CONTENTS_SOLID;
 

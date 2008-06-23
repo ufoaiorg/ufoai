@@ -711,7 +711,7 @@ static void CL_FinishHTTPDownload (void)
 		curl_easy_getinfo(curl, CURLINFO_TOTAL_TIME, &timeTaken);
 		curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
 
-		/* FIXME:
+		/** @todo
 		 * technically i shouldn't need to do this as curl will auto reuse the
 		 * existing handle when you change the URL. however, the handleCount goes
 		 * all weird when reusing a download slot in this way. if you can figure

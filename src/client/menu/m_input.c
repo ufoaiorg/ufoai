@@ -363,7 +363,7 @@ void MN_Click (int x, int y)
 				MN_ExecuteActions(menu, execute_node->click);
 		}
 
-		/* @todo: maybe we should also check sp == mn.menuStackPos here */
+		/** @todo: maybe we should also check sp == mn.menuStackPos here */
 		if (!clickedInside && menu->leaveNode)
 			MN_ExecuteActions(menu, menu->leaveNode->click);
 

@@ -1539,7 +1539,7 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
  */
 void R_UploadRadarCoverage (qboolean smooth)
 {
-	/* FIXME: This is no realtime function */
+	/** @todo This is no realtime function */
 	if (smooth)
 		R_SoftenTexture(r_radarPic, r_radarTexture->width, r_radarTexture->height, 4);
 

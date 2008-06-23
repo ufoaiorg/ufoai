@@ -578,21 +578,21 @@ static void CL_MultiplayerTeamSlotComments_f (void)
  * @param[in] aircraft The craft with the team (and thus equipment) onboard.
  * @param[out] ed The equipment definition which will receive all the stuff from the aircraft-team.
  */
-void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
+void CL_AddCarriedToEquipment (const aircraft_t *aircraft, equipDef_t *ed)
 {
 	int p, container;
 
 	if (!aircraft) {
-		Com_Printf("CL_AddCarriedToEq: Warning: Called with no aicraft (and thus no carried equipment to add).\n");
+		Com_Printf("CL_AddCarriedToEquipment: Warning: Called with no aicraft (and thus no carried equipment to add).\n");
 		return;
 	}
 	if (!ed) {
-		Com_Printf("CL_AddCarriedToEq: Warning: Called with no equipment definition at add stuff to.\n");
+		Com_Printf("CL_AddCarriedToEquipment: Warning: Called with no equipment definition at add stuff to.\n");
 		return;
 	}
 
 	if (aircraft->teamSize <= 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_AddCarriedToEq: No team to remove equipment from.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_AddCarriedToEquipment: No team to remove equipment from.\n");
 		return;
 	}
 
@@ -657,7 +657,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		/* The item is a weapon and it was reloaded one time. */
 		if (item.a == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			assert(item.m);	/* @todo: Isn't this redundant here? */
+			assert(item.m);	/** @todo: Isn't this redundant here? */
 			if (ed->num[item.m->idx] > 0) {
 				ed->num[item.m->idx]--;
 				return item;
@@ -689,7 +689,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		}
 	}
 
-	/* @todo: on return from a mission with no clips left
+	/** @todo: on return from a mission with no clips left
 	 * and one weapon half-loaded wielded by soldier
 	 * and one empty in equip, on the first opening of equip,
 	 * the empty weapon will be in soldier hands, the half-full in equip;
@@ -756,7 +756,6 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried()...aircraft idx: %i, team size: %i\n",
 		aircraft->idx, aircraft->teamSize);
-
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 	for (p = 0; p < aircraft->maxTeamSize; p++) {
@@ -858,7 +857,7 @@ static void CL_GenerateEquipment_f (void)
 			continue; /* Skip unused team-slot. */
 
 		if (aircraft->acTeam[i]->type != EMPL_SOLDIER)
-			continue; /* @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
+			continue; /** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
 
 		chrDisplayList.chr[chrDisplayList.num] = &aircraft->acTeam[i]->chr;
 
@@ -1323,9 +1322,9 @@ static void CL_MarkTeam_f (void)
  	emplList = employeeList;
 	while (emplList) {
 		const employee_t *employee = (employee_t*)emplList->data;
-		assert(employee->hired
-		 &&  !employee->transfer
-		 &&  employee->baseHired == baseCurrent);
+		assert(employee->hired);
+		assert(!employee->transfer);
+		assert(employee->baseHired == baseCurrent);
 
 		/* Search all aircraft except the current one. */
 		alreadyInOtherShip = qfalse;
@@ -1349,7 +1348,7 @@ static void CL_MarkTeam_f (void)
 
 		/* Check if the employee has something equipped. */
 		for (j = 0; j < csi.numIDs; j++) {
-			/** @todo FIXME: Wouldn't it be better here to check for temp containers */
+			/** @todo Wouldn't it be better here to check for temp containers */
 			if (j != csi.idFloor && j != csi.idEquip && employee->inv.c[j])
 				break;
 		}
@@ -1446,9 +1445,9 @@ qboolean CL_SoldierAwayFromBase (const employee_t *employee)
 	if (employee->transfer)
 		return qtrue;
 
-	/* for now only soldiers amd ugvs can be assigned to aircraft */
-	/* @todo add pilots */
-	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT)
+	/* for now only soldiers, ugvs and pilots can be assigned to an aircraft */
+	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
+	 && employee->type != EMPL_PILOT)
 		return qfalse;
 
 	base = employee->baseHired;
@@ -1470,13 +1469,15 @@ qboolean CL_SoldierAwayFromBase (const employee_t *employee)
  * @param[in,out] employee The soldier to be removed from the aircraft.
  * @param[in,out] aircraft The aircraft to remove the soldier from.
  * Use @c NULL to remove the soldier from any aircraft.
+ * @sa CL_AssignSoldierToAircraft
  */
-void CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
+qboolean CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
 {
 	if (!employee)
-		return;
+		return qfalse;
 
-	/* If no aircraft is given we search if he is in _any_ aircraft and set the aircraft pointer to it. */
+	/* If no aircraft is given we search if he is in _any_ aircraft and set
+	 * the aircraft pointer to it. */
 	if (!aircraft) {
 		int i;
 		for (i = 0; i < gd.numAircraft; i++) {
@@ -1487,7 +1488,7 @@ void CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
 			}
 		}
 		if (!aircraft)
-			return;
+			return qfalse;
 	}
 
 	assert(aircraft->homebase);
@@ -1496,12 +1497,13 @@ void CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
 		aircraft->homebase->idx, aircraft->idx);
 
 	INVSH_DestroyInventory(&employee->inv);
-	AIR_RemoveFromAircraftTeam(aircraft, employee);
+	return AIR_RemoveFromAircraftTeam(aircraft, employee);
 }
 
 /**
  * @brief Removes all soldiers from an aircraft.
- * @param[in] aircraft The aircraft to remove the soldiers from.
+ * @param[in,out] aircraft The aircraft to remove the soldiers from.
+ * @sa CL_RemoveSoldierFromAircraft
  */
 void CL_RemoveSoldiersFromAircraft (aircraft_t *aircraft)
 {
@@ -1514,16 +1516,18 @@ void CL_RemoveSoldiersFromAircraft (aircraft_t *aircraft)
 	for (i = aircraft->maxTeamSize; i >= 0; i--) {
 		if (aircraft->acTeam[i]) {
 			/* use global aircraft index here */
-			CL_RemoveSoldierFromAircraft(aircraft->acTeam[i], aircraft);
-			/* if the acTeam is not NULL the acTeam list and CL_SoldierInAircraft
-			 * is out of sync */
-			assert(aircraft->acTeam[i] == NULL);
+			if (CL_RemoveSoldierFromAircraft(aircraft->acTeam[i], aircraft)) {
+				/* if the acTeam is not NULL the acTeam list and CL_SoldierInAircraft
+				 * is out of sync */
+				assert(aircraft->acTeam[i] == NULL);
+			} else {
+				Com_Printf("Error: Could not remove soldier from aircraft\n");
+			}
 		}
 	}
 
-	if (aircraft->teamSize > 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_RemoveSoldiersFromAircraft: there went something wrong with soldier-removing (more exactly the counting) from aircraft.\n");
-	}
+	if (aircraft->teamSize > 0)
+		Sys_Error("CL_RemoveSoldiersFromAircraft: there went something wrong with soldier-removing (more exactly the counting) from aircraft.");
 }
 
 /**
@@ -1531,6 +1535,8 @@ void CL_RemoveSoldiersFromAircraft (aircraft_t *aircraft)
  * @param[in] employee The employee to be assigned to the aircraft.
  * @param[in] aircraft What aircraft to assign employee to.
  * @return returns true if a soldier could be assigned to the aircraft.
+ * @sa CL_RemoveSoldierFromAircraft
+ * @sa AIR_AddToAircraftTeam
  */
 static qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *aircraft)
 {
@@ -1542,15 +1548,14 @@ static qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *ai
 
 		/* Check whether the soldier is already on another aircraft */
 		if (CL_SoldierInAircraft(employee, NULL)) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: found idx '%d' \n",employee->idx);
+			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: found idx '%d' \n", employee->idx);
 			return qfalse;
 		}
 
 		/* Assign the soldier to the aircraft. */
 		if (aircraft->teamSize < aircraft->maxTeamSize) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to add idx '%d' \n",employee->idx);
-			AIR_AddToAircraftTeam(aircraft, employee);
-			return qtrue;
+			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to add idx '%d' \n", employee->idx);
+			return AIR_AddToAircraftTeam(aircraft, employee);
 		}
 #ifdef DEBUG
 	} else {
@@ -1565,7 +1570,6 @@ static qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *ai
 static void CL_TeamListDebug_f (void)
 {
 	int i;
-	character_t *chr;
 	base_t *base;
 	aircraft_t *aircraft;
 
@@ -1585,7 +1589,7 @@ static void CL_TeamListDebug_f (void)
 	Com_Printf("%i members in the current team", aircraft->teamSize);
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i]) {
-			chr = &aircraft->acTeam[i]->chr;
+			const character_t *chr = &aircraft->acTeam[i]->chr;
 			Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, aircraft->acTeam[i]->idx);
 		}
 	}
@@ -1596,27 +1600,25 @@ static void CL_TeamListDebug_f (void)
  * @brief Adds or removes a soldier to/from an aircraft.
  * @sa E_EmployeeHire_f
  */
-void CL_AssignSoldierToCurrentSelectedAircraft (base_t *base, const int num)
+void CL_AssignSoldierFromMenuToAircraft (base_t *base, const int num, aircraft_t *aircraft)
 {
 	employee_t *employee;
-	aircraft_t *aircraft;
 
 	if (!base->numAircraftInBase) {
-		Com_Printf("CL_AssignSoldierToCurrentSelectedAircraft: No aircraft in base\n");
+		Com_Printf("CL_AssignSoldierFromMenuToAircraft: No aircraft in base\n");
 		return;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToCurrentSelectedAircraft: Trying to get employee with hired-idx %i.\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierFromMenuToAircraft: Trying to get employee with hired-idx %i.\n", num);
 
 	/* If this fails it's very likely that employeeList is not filled. */
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_AssignSoldierToCurrentSelectedAircraft: Could not get employee %i\n", num);
+		Sys_Error("CL_AssignSoldierFromMenuToAircraft: Could not get employee %i\n", num);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToCurrentSelectedAircraft: employee with idx %i selected\n", employee->idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierFromMenuToAircraft: employee with idx %i selected\n", employee->idx);
 
-	assert(base->aircraftCurrent);
-	aircraft = base->aircraftCurrent;
+	assert(aircraft);
 
 	if (CL_SoldierInAircraft(employee, aircraft)) {
 		/* Remove soldier from aircraft/team. */
@@ -1660,13 +1662,16 @@ static void CL_AssignSoldier_f (void)
 		return;
 	}
 
+	if (!base->aircraftCurrent)
+		return;
+
 	/* In case we didn't populate the list before we do it now. */
 	if (!employeeList) {
 		Com_Printf("CL_AssignSoldier_f: We should actually call CL_GenTeamList _before_ calling CL_AssignSoldier_f ... this needs to be fixed.\n");
 		CL_GenTeamList(base);
 	}
 
-	CL_AssignSoldierToCurrentSelectedAircraft(base, num);
+	CL_AssignSoldierFromMenuToAircraft(base, num, base->aircraftCurrent);
 }
 
 /**
@@ -1674,16 +1679,14 @@ static void CL_AssignSoldier_f (void)
  * @sa CL_SaveTeamMultiplayerInfo
  * @todo Implement EMPL_ROBOT
  */
-static qboolean CL_SaveTeamMultiplayer (base_t *base, const char *filename)
+static qboolean CL_SaveTeamMultiplayer (base_t *base, aircraft_t *aircraft, const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	const char *name;
-	aircraft_t *aircraft;
 	int i, res;
 
 	assert(base);
-	aircraft = base->aircraftCurrent;
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
@@ -1710,6 +1713,7 @@ static qboolean CL_SaveTeamMultiplayer (base_t *base, const char *filename)
 			MSG_WriteShort(&sb, aircraft->acTeam[i]->type);
 		} else {
 			MSG_WriteShort(&sb, -1);
+			/** @todo use the presave value here - same for reading */
 			MSG_WriteShort(&sb, MAX_EMPL);
 		}
 	}
@@ -1742,12 +1746,14 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
 	if (!E_CountHired(baseCurrent, EMPL_SOLDIER)) {
 		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
-	} else {
+	} else if (baseCurrent->aircraftCurrent) {
 		char filename[MAX_OSPATH];
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
-		if (!CL_SaveTeamMultiplayer(baseCurrent, filename))
+		if (!CL_SaveTeamMultiplayer(baseCurrent, baseCurrent->aircraftCurrent, filename))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
+	} else {
+		Com_Printf("Nothing to safe - no team assigned to the aircraft\n");
 	}
 }
 
@@ -1881,12 +1887,13 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		const int emplIdx = MSG_ReadShort(&sb);
 		const employeeType_t emplType = MSG_ReadShort(&sb);
-		aircraft->acTeam[i] = NULL;
 		if (emplIdx >= 0) {
+			/** @todo check array boundaries */
 			aircraft->acTeam[i] = &gd.employees[emplType][emplIdx];
 			chrDisplayList.chr[i] = &aircraft->acTeam[i]->chr;	/** @todo remove this? */
 			chrDisplayList.num++;	/** @todo remove this? */
-		}
+		} else
+			aircraft->acTeam[i] = NULL;
 	}
 
 	/* read equipment */
@@ -2044,17 +2051,17 @@ static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf, base_t *base, const empl
  * @brief Stores a team-list (chr-list) info to buffer (which might be a network buffer, too).
  * @sa G_ClientTeamInfo
  * @sa CL_SaveTeamMultiplayerInfo
- * @note Called in cl_main.c CL_Precache_f to send the team info to server
+ * @note Called in CL_Precache_f to send the team info to server
  */
-void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
+void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team, base_t *base)
 {
 	character_t *chr;
 	int i, j;
 
-	assert(baseCurrent);
+	assert(base);
 
 	/* clean temp inventory */
-	CL_CleanTempInventory(baseCurrent);
+	CL_CleanTempInventory(base);
 
 	/* header */
 	NET_WriteByte(buf, clc_teaminfo);

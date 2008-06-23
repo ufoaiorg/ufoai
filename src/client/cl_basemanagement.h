@@ -283,7 +283,7 @@ void B_BuildingOpenAfterClick(const base_t *base, const building_t *building);
 int B_ItemInBase(const objDef_t *item, const base_t *base);
 
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
-void B_ReviveSoldiersInBase(base_t* base); /* @todo */
+void B_ReviveSoldiersInBase(base_t* base); /** @todo */
 
 int B_GetEmployeeCount(const base_t* const base);
 

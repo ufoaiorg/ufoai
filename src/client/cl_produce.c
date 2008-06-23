@@ -293,7 +293,7 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
 			return NULL;
 		}
-		/* @todo FIXME: we should also count aircraft that are already in the queue list */
+		/** @todo we should also count aircraft that are already in the queue list */
 		if (AIR_CalculateHangarStorage(aircraftSample, base, 0) <= 0) {
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return NULL;
@@ -1338,7 +1338,7 @@ static void PR_ProductionIncrease_f (void)
 		}
 
 		/** prod is NULL when queue limit is reached
-		 * @todo FIXME: this popup hides any previous popup, like popup created in PR_QueueNew */
+		 * @todo this popup hides any previous popup, like popup created in PR_QueueNew */
 		if (!prod) {
 			/* Oops! Too many items! */
 			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
@@ -1360,7 +1360,7 @@ static void PR_ProductionIncrease_f (void)
 				}
 
 				if (producibleAmount < amount) {
-					/* @todo: make the numbers work here. */
+					/** @todo: make the numbers work here. */
 					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount));
 				}
 
@@ -1377,9 +1377,9 @@ static void PR_ProductionIncrease_f (void)
 				PR_ClearSelected();
 				selectedProduction = &queue->items[queue->numItems - 1];
 			} else { /* requirements are not met => producibleAmount <= 0 */
- 				/* @todo: better messages needed */
+ 				/** @todo: better messages needed */
 				MN_Popup(_("Not enough material!"), _("You don't have enough of the needed material to produce this item."));
-				/* @todo:
+				/** @todo:
 				 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
 				 *     This info should also be displayed in the item-info.
 				 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
@@ -1573,7 +1573,7 @@ qboolean PR_Save (sizebuf_t *sb, void *data)
 		const production_queue_t *pq = &gd.productions[i];
 		MSG_WriteByte(sb, pq->numItems);
 		for (j = 0; j < pq->numItems; j++) {
-			/* FIXME: This will crash */
+			/** @todo This will crash */
 			const objDef_t *item = pq->items[j].item;
 			const aircraft_t *aircraft = pq->items[j].aircraft;
 			assert(item || aircraft);

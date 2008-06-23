@@ -312,7 +312,7 @@ void R_DrawAliasModel (const entity_t *e)
 	vec4_t bbox[8];
 
 	/* check if model is out of fov */
-	/* FIXME: fix culling and reactivate check */
+	/** @todo fix culling and reactivate check */
 	/*R_CullAliasModel(bbox, e);*/
 
 	mod = (mAliasModel_t *)&e->model->alias;

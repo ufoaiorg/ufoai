@@ -666,7 +666,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 						for (j = 0; j < transfer->itemAmount[i]; j++) {
 							if (UFO_ConditionsForStoring(destination, ufocraft)) {
 								/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-								baseCurrent->storage.num[i]++; /* FIXME: Why aren't we using 'destination' here? */
+								baseCurrent->storage.num[i]++; /** @todo Why aren't we using 'destination' here? */
 								if (ufocraft->weight == AIRCRAFT_LARGE)
 									destination->capacities[CAP_UFOHANGARS_LARGE].cur++;
 								else
@@ -923,7 +923,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 	if (!destination->founded) {
 		TR_EmptyTransferCargo(NULL, transfer, qfalse);
 		MN_AddNewMessage(_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
-		/* @todo: what if source base is lost? we won't be able to unhire transfered personel. */
+		/** @todo: what if source base is lost? we won't be able to unhire transfered personel. */
 	} else {
 		char message[256];
 		TR_EmptyTransferCargo(destination, transfer, qtrue);
@@ -1725,7 +1725,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		assert(gd.numBases);
 		destBase = MSG_ReadByte(sb);
 		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
-		/* @todo: Can (or should) destBase be NULL? If not, check against a null pointer
+		/** @todo: Can (or should) destBase be NULL? If not, check against a null pointer
 		 * for transfer->destbase and return qfalse here */
 		srcBase = MSG_ReadByte(sb);
 		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);

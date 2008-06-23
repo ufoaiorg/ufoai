@@ -597,7 +597,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_MISSILE) {
-					/* FIXME: Destroy a random one - otherwise the player might 'cheat' with this
+					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
 					 * e.g. just building an empty defence station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
 					baseAttack = qtrue;
@@ -609,7 +609,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a laser battery system."), qfalse, MSG_CRASHSITE, NULL);
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_LASER) {
-					/* FIXME: Destroy a random one - otherwise the player might 'cheat' with this
+					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
 					 * e.g. just building an empty defence station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
 					baseAttack = qtrue;
@@ -638,7 +638,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		if (projectile->attackingAircraft)
 			B_BaseAttack(base);
 
-		/* FIXME: Not the correct place - should be done after you freed your base from the invasion and
+		/** @todo Not the correct place - should be done after you freed your base from the invasion and
 		 * return back to geoscape to prevent another base attack just after you've secured it */
 		for (idx = gd.numProjectiles - 1; idx >= 0; idx--)
 			if (gd.projectiles[idx].aimedBase == base)

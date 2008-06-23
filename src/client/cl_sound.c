@@ -171,12 +171,14 @@ static void S_Music_Start (const char *file)
  */
 static void S_Music_Play_f (void)
 {
-/* @todo the chunk below would make S_Music_Play_f() a wrapper for S_Music_Start()
+	/** @todo the chunk below would make S_Music_Play_f() a wrapper for S_Music_Start() */
+#if 0
 	if (Cmd_Argc() == 2)
 		Cvar_Set("snd_music", Cmd_Argv(1));
 
 	S_Music_Start(Cvar_VariableString("snd_music"));
-*/
+#endif
+
 	if (!sound_started) {
 		Com_Printf("No audio activated\n");
 		return;
@@ -302,7 +304,7 @@ void S_PlaySoundFromMem (short* mem, size_t size, int rate, int channel, int ms)
 	if (Mix_Playing(memChannel))
 		Mix_HaltChannel(memChannel);
 
-	/* FIXME: this is a nasty hack - no real mixing is performed and sound quality is still
+	/** @todo this is a nasty hack - no real mixing is performed and sound quality is still
 	 * very bad with this one */
 	memChannel = Mix_PlayChannelTimed(memChannel, &sample, 1, ms);
 	Mem_Free(sample.abuf);
@@ -391,7 +393,7 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume)
 	}
 #endif
 
-	/* @todo: Make display the RF_HIGHLIGHT effect for all actors that are in hear range */
+	/** @todo: Make display the RF_HIGHLIGHT effect for all actors that are in hear range */
 	if (origin) {
 		le_t* le = LE_GetClosestActor(origin);
 		if (le) {
@@ -705,7 +707,7 @@ void S_Init (void)
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
 	Cmd_AddParamCompleteFunction("music_start", S_CompleteMusic);
-	/* @todo: Complete functions */
+	/** @todo: Complete functions */
 
 	if (!SND_Init()) {
 		Com_Printf("SND_Init failed\n");

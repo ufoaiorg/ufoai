@@ -374,7 +374,7 @@ typedef struct mapDef_s {
 	/* singleplayer */
 	int maxAliens;				/**< Number of spawning points on the map */
 
-	/* @todo: Make use of these values */
+	/** @todo: Make use of these values */
 	linkedList_t *terrains;		/**< terrain strings this map is useable for */
 	linkedList_t *populations;	/**< population strings this map is useable for */
 	linkedList_t *cultures;		/**< culture strings this map is useable for */

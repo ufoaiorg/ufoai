@@ -412,7 +412,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (!isRobot && target->team != attacker->team) {
 				const player_t *player = game.players + target->pnum;
-				/* FIXME: there should be a possible protection, too */
+				/** @todo there should be a possible protection, too */
 				target->TU = 0; /* flashbangs kill TUs */
 				target->state |= STATE_DAZED; /* entity is dazed */
 				gi.cprintf(player, PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
@@ -612,7 +612,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 			mock->allow_self = qfalse;
 	}
 
-	/* FIXME: splash might also hit other surfaces and the trace doesn't handle that */
+	/** @todo splash might also hit other surfaces and the trace doesn't handle that */
 	if (tr && G_FireAffectedSurface(tr->surface, fd)) {
 		/* sent particle to all players */
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
@@ -686,7 +686,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 	acc = GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.score.skills[fd->weaponSkill] : 0);
 
 	VecToAngles(startV, angles);
-	/* @todo Remove the 2.0f and use gaussian random number instead of crand() */
+	/** @todo Remove the 2.0f and use gaussian random number instead of crand() */
 	angles[PITCH] += crand() * 2.0f * (fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
 	angles[YAW] += crand() * 2.0f * (fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
 	AngleVectors(angles, startV, NULL, NULL);
@@ -984,7 +984,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 #if 0
-		/* @todo: please debug, currently it causes double sounds */
+		/** @todo: please debug, currently it causes double sounds */
 		/* calculate additional visibility */
 		for (k = 0; k < MAX_TEAMS; k++)
 			if (G_TeamPointVis(k, impact))

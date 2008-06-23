@@ -56,7 +56,7 @@ static void MN_DeleteMenuFromStack (menu_t * menu)
 
 	for (i = 0; i < mn.menuStackPos; i++)
 		if (mn.menuStack[i] == menu) {
-			/* @todo don't leave the loop even if we found it - there still
+			/** @todo don't leave the loop even if we found it - there still
 			 * may be other copies around in the stack of the same menu
 			 * @sa MN_PushCopyMenu_f */
 			for (mn.menuStackPos--; i < mn.menuStackPos; i++)
@@ -630,7 +630,8 @@ void MN_Init (void)
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 
-	/* 256kb - FIXME: Get rid of adata, curadata and adataize */
+	/* 256kb */
+	/** @todo Get rid of adata, curadata and adataize */
 	mn.adataize = MENU_HUNK_SIZE;
 	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, cl_menuSysPool, CL_TAG_MENU);
 	mn.curadata = mn.adata;

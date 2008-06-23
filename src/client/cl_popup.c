@@ -59,7 +59,7 @@ typedef struct popup_aircraft_s {
 	char text_popup[POPUP_AIRCRAFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
 } popup_aircraft_t;
 
-/** FIXME: Save me */
+/** @todo Save me */
 static popup_aircraft_t popupAircraft; /**< Data about popup_aircraft */
 
 /* popup_intercept display list of aircraft availables to move to a mission or a UFO */
@@ -255,7 +255,7 @@ static void CL_PopupChangeHomebase_f (void)
 		}
  	}
 
-	/* @todo Transfer items carried by soldiers from oldBase to base */
+	/** @todo Transfer items carried by soldiers from oldBase to base */
 
 	/* Move aircraft to new base */
 	base->aircraft[base->numAircraftInBase] = *selectedAircraft;
@@ -432,7 +432,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			/* don't show aircraft that have no pilot */
 			if (!air->pilot)
 				continue;
-			
+
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (mission && (air->teamSize <= 0))
 				continue;

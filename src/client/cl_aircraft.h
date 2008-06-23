@@ -155,7 +155,7 @@ typedef struct aircraft_s {
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
 	int maxTeamSize;	/**< Max amount of soldiers onboard. @todo How do we handle 2x2 units here? */
-	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/* @todo: rename me to size. */
+	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/** @todo: rename me to size. */
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;		/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
 	int point;
@@ -234,8 +234,8 @@ void AIR_DeleteAircraft(struct base_s *base, aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
-void AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
-void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, const struct employee_s* employee);
+qboolean AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
+qboolean AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, const struct employee_s* employee);
 qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
 
 void CL_CampaignRunAircraft(int dt);

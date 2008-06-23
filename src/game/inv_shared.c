@@ -421,7 +421,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, const invDef_t * c
 		return qfalse;
 	}
 
-	/* FIXME: the problem here is, that in case of a move inside the same container
+	/** @todo the problem here is, that in case of a move inside the same container
 	 * the item don't just get updated x and y values but it is tried to remove
 	 * one of the items => crap - maybe we have to change the inv move function
 	 * to check for this case of move and only update the x and y coords instead
@@ -543,7 +543,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 
 	/* break if source item is not removeable */
 
-	/* FIXME imo in tactical missions (idFloor) there should be not packing of items
+	/** @todo imo in tactical missions (idFloor) there should be not packing of items
 	 * they should be available one by one */
 
 	/* special case for moving an item within the same container */
@@ -711,7 +711,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 		cacheItem.rotated = qfalse;
 	}
 
-	/* FIXME: Why is the item removed again? This didn't do any harm
+	/** @todo Why is the item removed again? This didn't do any harm
 	 * because x and y was already empty at this stage - but it will produce
 	 * trouble when we begin to pack the same items together */
 	/*Com_RemoveFromInventory(i, from, fx, fy);*/
@@ -1269,7 +1269,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		/* armour; especially for those without primary weapons */
 		repeat = (float) missedPrimary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	} else {
-		/* @todo: for melee actors we should not be able to get into this function, this can be removed */
+		/** @todo: for melee actors we should not be able to get into this function, this can be removed */
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 		return;
 	}
