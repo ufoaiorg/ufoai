@@ -376,17 +376,17 @@ typedef struct {
 } dBspVertex_t;
 
 typedef struct {
-	vec3_t normal;
-	float dist;
-	int type;		/**< PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
+	vec3_t normal;	/**< normal vector */
+	float dist;		/**< distance from origin */
+	int type;		/**< PLANE_X - PLANE_ANYZ */
 } dBspPlane_t;
 
 typedef struct {
-	int planenum;
+	int planenum;				/**< index into the planes array */
 	int children[2];			/**< negative numbers are -(leafs + 1), not nodes */
 	short mins[3];				/**< for frustum culling */
-	short maxs[3];
-	unsigned short firstface;
+	short maxs[3];				/**< for frustum culling */
+	unsigned short firstface;	/**< index into the faces array */
 	unsigned short numfaces;	/**< counting both sides */
 } dBspNode_t;
 
@@ -403,7 +403,7 @@ typedef struct texinfo_s {
  * counterclockwise use of the edge in a face
  */
 typedef struct {
-	unsigned short v[2];		/**< vertex numbers */
+	unsigned short v[2];		/**< vertex indices */
 } dBspEdge_t;
 
 typedef struct {
@@ -425,14 +425,15 @@ typedef struct {
 	short area;
 
 	short mins[3];				/**< for frustum culling */
-	short maxs[3];
+	short maxs[3];				/**< for frustum culling */
 
 	unsigned short firstleafbrush;
 	unsigned short numleafbrushes;
 } dBspLeaf_t;
 
 typedef struct {
-	unsigned short planenum;	/**< facing out of the leaf */
+	unsigned short planenum;	/**< facing out of the leaf
+								 * index info the planes array for this side */
 	short texinfo;
 } dBspBrushSide_t;
 
@@ -497,6 +498,13 @@ typedef struct {
 	int				numleafbrushes;
 	unsigned short	leafbrushes[MAX_MAP_LEAFBRUSHES];
 
+	/**
+	 * references the edges array
+	 * positive or negative values are possible.
+	 * the absolute value is the index into the edges array
+	 * positive: the edge is defined from the first to the second vertex
+	 * negative: the second to the first vertex
+	 */
 	int				numsurfedges;
 	int				surfedges[MAX_MAP_SURFEDGES];
 
