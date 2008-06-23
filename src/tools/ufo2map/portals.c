@@ -1,5 +1,8 @@
 /**
  * @file portals.c
+ * @brief imagine you have a series of rooms connected by doorways. Each doorway
+ * has a portal in it. If two portals can see eachother, the rooms become linked
+ * in the pvs
  */
 
 /*
@@ -30,20 +33,26 @@ static int c_active_portals = 0;
 static int c_peak_portals = 0;
 static int c_tinyportals = 0;
 
+/**
+ * @sa FreePortal
+ */
 static portal_t *AllocPortal (void)
 {
-	portal_t	*p;
+	portal_t *p;
 
 	c_active_portals++;
 	if (c_active_portals > c_peak_portals)
 		c_peak_portals = c_active_portals;
 
-	p = malloc(sizeof(portal_t));
-	memset(p, 0, sizeof(portal_t));
+	p = malloc(sizeof(*p));
+	memset(p, 0, sizeof(*p));
 
 	return p;
 }
 
+/**
+ * @sa AllocPortal
+ */
 void FreePortal (portal_t *p)
 {
 	if (p->winding)
@@ -66,10 +75,17 @@ int VisibleContents (int contentFlags)
 	return 0;
 }
 
+/**
+ * @brief Links a portal into the given back and front nodes
+ * @param[in,out] p The portal to link into the front and back nodes
+ * @param[in,out] front The front node
+ * @param[in,out] back The back node
+ * @sa RemovePortalFromNode
+ */
 static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 {
 	if (p->nodes[0] || p->nodes[1])
-		Sys_Error("AddPortalToNode: already included");
+		Sys_Error("AddPortalToNodes: already included");
 
 	p->nodes[0] = front;
 	p->next[0] = front->portals;
@@ -80,15 +96,20 @@ static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 	back->portals = p;
 }
 
-
+/**
+ * @brief Removes references to the given portal from the given node
+ * @param[in,out] portal The portal to remove from the node
+ * @param[in,out] l The node to remove the portal from
+ * @sa AddPortalToNodes
+ */
 void RemovePortalFromNode (portal_t *portal, node_t *l)
 {
-	portal_t	**pp, *t;
+	portal_t **pp;
 
 	/* remove reference to the current portal */
 	pp = &l->portals;
 	while (1) {
-		t = *pp;
+		portal_t *t = *pp;
 		if (!t)
 			Sys_Error("RemovePortalFromNode: portal not in leaf");
 
@@ -119,9 +140,9 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 static void MakeHeadnodePortals (tree_t *tree)
 {
 	vec3_t bounds[2];
-	int i, j, n;
-	portal_t *p, *portals[6];
-	plane_t bplanes[6], *pl;
+	int i, j;
+	portal_t *portals[6];
+	plane_t bplanes[6];
 	node_t *node;
 
 	node = tree->headnode;
@@ -139,13 +160,13 @@ static void MakeHeadnodePortals (tree_t *tree)
 
 	for (i = 0; i < 3; i++)
 		for (j = 0; j < 2; j++) {
-			n = j * 3 + i;
+			const int n = j * 3 + i;
+			portal_t *p = AllocPortal();
+			plane_t *pl = &bplanes[n];
 
-			p = AllocPortal();
+			memset(pl, 0, sizeof(*pl));
 			portals[n] = p;
 
-			pl = &bplanes[n];
-			memset(pl, 0, sizeof(*pl));
 			if (j) {
 				pl->normal[i] = -1;
 				pl->dist = -bounds[j][i];
@@ -176,24 +197,22 @@ static void MakeHeadnodePortals (tree_t *tree)
 
 static winding_t *BaseWindingForNode (node_t *node)
 {
-	winding_t *w;
 	node_t *n;
-	plane_t *plane;
-	vec3_t normal;
-	vec_t dist;
+	winding_t *w;
 
 	w = BaseWindingForPlane(mapplanes[node->planenum].normal
 		, mapplanes[node->planenum].dist);
 
 	/* clip by all the parents */
-	for (n = node->parent; n && w; ) {
-		plane = &mapplanes[n->planenum];
+	for (n = node->parent; n && w;) {
+		const plane_t *plane = &mapplanes[n->planenum];
 
 		if (n->children[0] == node) {	/* take front */
 			ChopWindingInPlace(&w, plane->normal, plane->dist, BASE_WINDING_EPSILON);
 		} else {	/* take back */
+			const vec_t dist = -plane->dist;
+			vec3_t normal;
 			VectorSubtract(vec3_origin, plane->normal, normal);
-			dist = -plane->dist;
 			ChopWindingInPlace(&w, normal, dist, BASE_WINDING_EPSILON);
 		}
 		node = n;
@@ -401,7 +420,7 @@ static void FindPortalSide (portal_t *p)
 	float bestdot;
 
 	/* decide which content change is strongest */
-	/* solid > lava > water, etc */
+	/* solid > water, etc */
 	viscontents = VisibleContents(p->nodes[0]->contentFlags ^ p->nodes[1]->contentFlags);
 	if (!viscontents)
 		return;

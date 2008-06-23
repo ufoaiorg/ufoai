@@ -32,9 +32,7 @@ int entity_num;
  */
 static void ProcessWorldModel (void)
 {
-	entity_t *e;
-
-	e = &entities[entity_num];
+	entity_t *e = &entities[0];
 
 	brush_start = e->firstbrush;
 	brush_end = brush_start + e->numbrushes;
@@ -57,7 +55,7 @@ static void ProcessWorldModel (void)
  */
 static void ProcessSubModel (int entityNum)
 {
-	entity_t *e;
+	const entity_t *e;
 	int start, end;
 	tree_t *tree;
 	bspbrush_t *list;
@@ -108,6 +106,7 @@ void ProcessModels (const char *filename)
 			continue;
 
 		Sys_FPrintf(SYS_VRB, "############### model %i ###############\n", curTile->nummodels);
+
 		if (entity_num == 0)
 			ProcessWorldModel();
 		else

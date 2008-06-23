@@ -713,7 +713,7 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9) {
 		/* this face is not visible from birds view - optimize away
 		 * but only if it's not light emitting surface */
-		entity_t *e = &entities[side->brush->entitynum];
+		const entity_t *e = &entities[side->brush->entitynum];
 		if (strcmp(ValueForKey(e, "classname"), "func_rotating")) {
 			if (!(curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
 				/* e.g. water surfaces are removed if we set the surfaceFlags
@@ -745,7 +745,6 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 static void MakeFaces_r (node_t *node)
 {
 	portal_t *p;
-	int s;
 
 	/* recurse down to leafs */
 	if (node->planenum != PLANENUM_LEAF) {
@@ -766,15 +765,16 @@ static void MakeFaces_r (node_t *node)
 		return;
 
 	/* see which portals are valid */
-	for (p = node->portals; p; p = p->next[s]) {
-		s = (p->nodes[1] == node);
+	for (p = node->portals; p;) {
+		const int pside = (p->nodes[1] == node);
 
-		p->face[s] = FaceFromPortal(p, s);
-		if (p->face[s]) {
+		p->face[pside] = FaceFromPortal(p, pside);
+		if (p->face[pside]) {
 			c_nodefaces++;
-			p->face[s]->next = p->onnode->faces;
-			p->onnode->faces = p->face[s];
+			p->face[pside]->next = p->onnode->faces;
+			p->onnode->faces = p->face[pside];
 		}
+		p = p->next[pside];
 	}
 }
 

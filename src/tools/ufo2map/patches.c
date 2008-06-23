@@ -122,7 +122,7 @@ MAKE FACES
 
 static winding_t *WindingFromFace (dBspFace_t *f)
 {
-	int i, se, v;
+	int i, v;
 	dBspVertex_t *dv;
 	winding_t *w;
 
@@ -130,7 +130,7 @@ static winding_t *WindingFromFace (dBspFace_t *f)
 	w->numpoints = f->numedges;
 
 	for (i = 0; i < f->numedges; i++) {
-		se = curTile->surfedges[f->firstedge + i];
+		const int se = curTile->surfedges[f->firstedge + i];
 		if (se < 0)
 			v = curTile->edges[-se].v[1];
 		else
@@ -152,7 +152,7 @@ static winding_t *WindingFromFace (dBspFace_t *f)
  */
 static void BaseLightForFace (dBspFace_t *f, vec3_t color)
 {
-	dBspTexinfo_t *tx;
+	const dBspTexinfo_t *tx;
 
 	/* check for light emited by texture */
 	tx = &curTile->texinfo[f->texinfo];

@@ -29,7 +29,6 @@ extern int c_nodes;
 static void FreeTreePortals_r (node_t *node)
 {
 	portal_t *p, *nextp;
-	int s;
 
 	/* free children */
 	if (node->planenum != PLANENUM_LEAF) {
@@ -39,7 +38,7 @@ static void FreeTreePortals_r (node_t *node)
 
 	/* free portals */
 	for (p = node->portals; p; p = nextp) {
-		s = (p->nodes[1] == node);
+		const int s = (p->nodes[1] == node);
 		nextp = p->next[s];
 
 		RemovePortalFromNode(p, p->nodes[!s]);

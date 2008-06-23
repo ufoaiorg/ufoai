@@ -418,6 +418,7 @@ typedef struct {
 	int lightofs[LIGHTMAP_MAX];				/**< start of [surfsize] samples */
 } dBspFace_t;
 
+/** @brief convex region of space in the BSP tree */
 typedef struct {
 	int contentFlags;				/**< OR of all brushes */
 
