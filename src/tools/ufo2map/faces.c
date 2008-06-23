@@ -716,7 +716,9 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 		entity_t *e = &entities[side->brush->entitynum];
 		if (strcmp(ValueForKey(e, "classname"), "func_rotating")) {
 			if (!(curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
-				side->surfaceFlags |= SURF_NODRAW;
+				/* e.g. water surfaces are removed if we set the surfaceFlags
+				 * to SURF_NODRAW for this side */
+				/*side->surfaceFlags |= SURF_NODRAW;*/
 				return NULL;
 			}
 		}
