@@ -113,8 +113,8 @@ equipment campaign_asymptotic_market
 	power							3
 	coilgun							2
 	coilgun_ammo					20
-	xaw95							2
-	xaw95_ammo						20
+//	xaw95							2
+//	xaw95_ammo						20
 	rpg_incendiary_ammo				10
 	bolterrifle						3
 	bolterrifle_ammo				30
