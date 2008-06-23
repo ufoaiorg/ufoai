@@ -1821,7 +1821,7 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
  * @param[in] employee The employee to remove from the team.
  * @note This is responsible for removing soldiers from a team in a dropship.
  */
-void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, employee_t *employee)
+void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *employee)
 {
 	int i;
 

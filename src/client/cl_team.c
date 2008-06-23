@@ -580,8 +580,6 @@ static void CL_MultiplayerTeamSlotComments_f (void)
  */
 void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 {
-	character_t *chr;
-	invList_t *ic, *next;
 	int p, container;
 
 	if (!aircraft) {
@@ -599,15 +597,15 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p= 0; p < aircraft->maxTeamSize; p++) {
+		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
-				chr = &aircraft->acTeam[p]->chr;
-				ic = chr->inv->c[container];
+				character_t *chr = &aircraft->acTeam[p]->chr;
+				invList_t *ic = chr->inv->c[container];
 				while (ic) {
 					const item_t item = ic->item;
 					const objDef_t *type = item.t;
+					invList_t *next = ic->next;
 
-					next = ic->next;
 					ed->num[type->idx]++;
 					if (item.a) {
 						assert(type->reload);
@@ -860,7 +858,7 @@ static void CL_GenerateEquipment_f (void)
 			continue; /* Skip unused team-slot. */
 
 		if (aircraft->acTeam[i]->type != EMPL_SOLDIER)
-			continue; /* Skip EMPL_ROBOT (i.e. ugvs) for now . */
+			continue; /* @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
 
 		chrDisplayList.chr[chrDisplayList.num] = &aircraft->acTeam[i]->chr;
 
@@ -1401,8 +1399,9 @@ static void CL_ToggleTeamList_f (void)
 /**
  * @brief Tells you if a soldier is assigned to an aircraft.
  * @param[in] employee The soldier to search for.
- * @param[in] aircraft The aircraft to search the soldier in. Use NULL to check if the soldier is in _any_ aircraft.
- * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
+ * @param[in] aircraft The aircraft to search the soldier in. Use @c NULL to
+ * check if the soldier is in @b any aircraft.
+ * @return true if the soldier was found in the aircraft otherwise false.
  */
 qboolean CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* aircraft)
 {
@@ -1468,8 +1467,9 @@ qboolean CL_SoldierAwayFromBase (const employee_t *employee)
 
 /**
  * @brief Removes a soldier from an aircraft.
- * @param[in] employee The soldier to be removed from the aircraft.
- * @param[in] aircraft The aircraft to remove the soldier from. Use NULL to remove the soldier from any aircraft.
+ * @param[in,out] employee The soldier to be removed from the aircraft.
+ * @param[in,out] aircraft The aircraft to remove the soldier from.
+ * Use @c NULL to remove the soldier from any aircraft.
  */
 void CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
 {
@@ -1492,7 +1492,8 @@ void CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
 
 	assert(aircraft->homebase);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_RemoveSoldierFromAircraft: base: %i - aircraft->idx: %i\n", aircraft->homebase->idx, aircraft->idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_RemoveSoldierFromAircraft: base: %i - aircraft->idx: %i\n",
+		aircraft->homebase->idx, aircraft->idx);
 
 	INVSH_DestroyInventory(&employee->inv);
 	AIR_RemoveFromAircraftTeam(aircraft, employee);
@@ -1514,6 +1515,9 @@ void CL_RemoveSoldiersFromAircraft (aircraft_t *aircraft)
 		if (aircraft->acTeam[i]) {
 			/* use global aircraft index here */
 			CL_RemoveSoldierFromAircraft(aircraft->acTeam[i], aircraft);
+			/* if the acTeam is not NULL the acTeam list and CL_SoldierInAircraft
+			 * is out of sync */
+			assert(aircraft->acTeam[i] == NULL);
 		}
 	}
 

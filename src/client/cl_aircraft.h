@@ -235,7 +235,7 @@ void AIR_DestroyAircraft(aircraft_t *aircraft);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
 void AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
-void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
+void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, const struct employee_s* employee);
 qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
 
 void CL_CampaignRunAircraft(int dt);
