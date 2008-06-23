@@ -248,7 +248,7 @@ static qboolean Irc_Proto_Join (const char *channel, const char *password)
 		return qfalse;
 
 	chan = &ircChan;
-	memset(chan, 0, sizeof(irc_channel_t));
+	memset(chan, 0, sizeof(*chan));
 	Q_strncpyz(chan->name, channel, sizeof(chan->name));
 	return Irc_Proto_Enqueue(msg, msg_len);
 }

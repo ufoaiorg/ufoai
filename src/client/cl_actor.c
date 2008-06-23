@@ -4342,7 +4342,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	if (!(le->state & STATE_DEAD)) {
 		/* add left hand weapon */
 		if (le->left != NONE) {
-			memset(&add, 0, sizeof(entity_t));
+			memset(&add, 0, sizeof(add));
 
 			add.model = cls.model_weapons[le->left];
 			assert(add.model);
@@ -4358,7 +4358,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 		/* add right hand weapon */
 		if (le->right != NONE) {
-			memset(&add, 0, sizeof(entity_t));
+			memset(&add, 0, sizeof(add));
 
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
@@ -4374,7 +4374,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	}
 
 	/* add head */
-	memset(&add, 0, sizeof(entity_t));
+	memset(&add, 0, sizeof(add));
 
 	/* the actor is hearing a sound */
 	if (le->hearTime) {
@@ -4438,7 +4438,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	if (!(le->state & STATE_DEAD)) {
 		/* add weapon */
 		if (le->left != NONE) {
-			memset(&add, 0, sizeof(entity_t));
+			memset(&add, 0, sizeof(add));
 
 			add.model = cls.model_weapons[le->left];
 
@@ -4450,7 +4450,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 		/* add weapon */
 		if (le->right != NONE) {
-			memset(&add, 0, sizeof(entity_t));
+			memset(&add, 0, sizeof(add));
 
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
@@ -4463,7 +4463,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	}
 
 	/* add head */
-	memset(&add, 0, sizeof(entity_t));
+	memset(&add, 0, sizeof(add));
 
 	add.alpha = le->alpha;
 	add.model = le->model2;
@@ -4883,7 +4883,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	vec3_t realBoxSize;
 	vec3_t cursorOffset;
 
-	memset(&ent, 0, sizeof(entity_t));
+	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_BOX;
 
 	Grid_PosToVec(&clMap, pos, ent.origin);
@@ -5113,7 +5113,7 @@ static void CL_AddPathingBox (pos3_t pos)
 	entity_t ent;
 	int height;
 
-	memset(&ent, 0, sizeof(entity_t));
+	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_PATH;
 
 	Grid_PosToVec(&clMap, pos, ent.origin);

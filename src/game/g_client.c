@@ -2778,7 +2778,7 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.reservedTus.reserveReaction = gi.ReadShort();
 
 			/* Mission Scores */
-			memset(&scoreMission[scoreMissionNum], 0, sizeof(chrScoreMission_t));
+			memset(&scoreMission[scoreMissionNum], 0, sizeof(scoreMission[scoreMissionNum]));
 			ent->chr.scoreMission = &scoreMission[scoreMissionNum];
 			scoreMissionNum++;
 
@@ -3272,7 +3272,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	}
 
 	/* reset persistant data */
-	memset(&player->pers, 0, sizeof(client_persistant_t));
+	memset(&player->pers, 0, sizeof(player->pers));
 	G_ClientUserinfoChanged(player, userinfo);
 
 	gi.bprintf(PRINT_CHAT, "%s is connecting...\n", player->pers.netname);

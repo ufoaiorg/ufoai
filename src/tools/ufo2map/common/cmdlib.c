@@ -240,7 +240,7 @@ static qFILE *SafeOpenRead (const char *filename, qFILE *f)
 	char path[MAX_OSPATH];
 	size_t len;
 
-	memset(f, 0, sizeof(qFILE));
+	memset(f, 0, sizeof(*f));
 
 	f->f = fopen(filename, "rb");
 	if (!f->f && pak) {

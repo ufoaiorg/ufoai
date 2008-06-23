@@ -651,6 +651,6 @@ void CL_PopupInit (void)
 	/* popup_homebase commands */
 	Cmd_AddCommand("change_homebase", CL_PopupChangeHomebase_f, NULL);
 
-	memset(&popupIntercept, 0, sizeof(popup_intercept_t));
-	memset(&popupAircraft, 0, sizeof(popup_aircraft_t));
+	memset(&popupIntercept, 0, sizeof(popupIntercept));
+	memset(&popupAircraft, 0, sizeof(popupAircraft));
 }

@@ -721,7 +721,7 @@ void RS_InitTree (qboolean load)
 	if (!load)
 		RS_MarkResearchable(qtrue);
 
-	memset(&curRequiredList, 0, sizeof(stringlist_t));
+	memset(&curRequiredList, 0, sizeof(curRequiredList));
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
@@ -1829,7 +1829,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech = &gd.technologies[gd.numTechnologies];
 	gd.numTechnologies++;
 
-	memset(tech, 0, sizeof(technology_t));
+	memset(tech, 0, sizeof(*tech));
 
 	/*
 	 * Set standard values

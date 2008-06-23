@@ -105,7 +105,7 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 
 	/* allocate new font */
 	f = &fonts[numFonts];
-	memset(f, 0, sizeof(f));
+	memset(f, 0, sizeof(*f));
 
 	/* copy fontname */
 	f->name = name;
@@ -423,7 +423,6 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 
 /**
  * @brief draw cached opengl texture
- * @todo Make scrolling possible
  * @param[in] cache
  * @param[in] x x coordinate on screen to draw the text to
  * @param[in] y y coordinate on screen to draw the text to
@@ -431,8 +430,6 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
  * y coordinates will change for each linebreak - whereas the absY will be fix
  * @param[in] width The max width of the text
  * @param[in] height The max height of the text
- * @return -1 for scrolling down (@todo)
- * @return +1 for scrolling up (@todo)
  */
 static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absY, int width, int height)
 {

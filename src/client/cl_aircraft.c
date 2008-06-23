@@ -1326,7 +1326,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 
 		/* initialize the menu */
 		aircraftSample = &aircraftTemplates[numAircraftTemplates];
-		memset(aircraftSample, 0, sizeof(aircraft_t));
+		memset(aircraftSample, 0, sizeof(*aircraftSample));
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		/** @todo is this needed here? I think not, because the index of available aircraft

@@ -112,7 +112,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		r_numModels++;
 	}
 
-	memset(mod, 0, sizeof(model_t));
+	memset(mod, 0, sizeof(*mod));
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
 /*	Com_DPrintf(DEBUG_RENDERER, "name: %s\n", name); */
 

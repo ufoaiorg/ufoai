@@ -404,7 +404,7 @@ static void CL_SequenceStart_f (void)
 	/* init script parsing */
 	numSeqEnts = 0;
 	numSeq2Ds = 0;
-	memset(&seqCamera, 0, sizeof(seqCamera_t));
+	memset(&seqCamera, 0, sizeof(seqCamera));
 	seqTime = cl.time;
 	seqCmd = sp->start;
 	seqEndCmd = sp->start + sp->length;
@@ -579,9 +579,9 @@ int SEQ_Model (const char *name, char *data)
 			se = &seqEnts[numSeqEnts++];
 		}
 		/* allocate */
-		memset(se, 0, sizeof(seqEnt_t));
+		memset(se, 0, sizeof(*se));
 		se->inuse = qtrue;
-		Com_sprintf(se->name, MAX_VAR, name);
+		Com_sprintf(se->name, sizeof(se->name), name);
 	}
 
 	/* get values */
@@ -635,7 +635,7 @@ int SEQ_2Dobj (const char *name, char *data)
 			s2d = &seq2Ds[numSeq2Ds++];
 		}
 		/* allocate */
-		memset(s2d, 0, sizeof(seq2D_t));
+		memset(s2d, 0, sizeof(*s2d));
 		for (i = 0; i < 4; i++)
 			s2d->color[i] = 1.0f;
 		s2d->inuse = qtrue;
@@ -739,7 +739,7 @@ void CL_ParseSequence (const char *name, const char **text)
 		Com_Error(ERR_FATAL, "Too many sequences");
 
 	sp = &sequences[numSequences++];
-	memset(sp, 0, sizeof(sequence_t));
+	memset(sp, 0, sizeof(*sp));
 	Com_sprintf(sp->name, MAX_VAR, name);
 	sp->start = numSeqCmds;
 
@@ -774,12 +774,12 @@ void CL_ParseSequence (const char *name, const char **text)
 
 				/* init seqCmd */
 				sc = &seqCmds[numSeqCmds++];
-				memset(sc, 0, sizeof(seqCmd_t));
+				memset(sc, 0, sizeof(*sc));
 				sc->handler = seqCmdFunc[i];
 				sp->length++;
 
 				/* copy name */
-				Com_sprintf(sc->name, MAX_VAR, token);
+				Com_sprintf(sc->name, sizeof(sc->name), token);
 
 				/* read data */
 				token = COM_EParse(text, errhead, name);

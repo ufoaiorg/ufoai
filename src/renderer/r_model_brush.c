@@ -598,7 +598,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* alloc model and tile */
 	loadmodel = &r_models[r_numModels++];
 	r_mapTiles[r_numMapTiles++] = loadmodel;
-	memset(loadmodel, 0, sizeof(model_t));
+	memset(loadmodel, 0, sizeof(*loadmodel));
 	Com_sprintf(loadmodel->name, sizeof(loadmodel->name), "maps/%s.bsp", name);
 
 	/* load the file */

@@ -1170,7 +1170,7 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 	int tile, i;
 	cBspHead_t *h;
 
-	memset(&tr, 0, sizeof(trace_t));
+	memset(&tr, 0, sizeof(tr));
 	tr.fraction = 2.0f;
 
 	/* trace against all loaded map tiles */

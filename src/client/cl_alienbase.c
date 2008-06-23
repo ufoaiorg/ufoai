@@ -107,7 +107,7 @@ alienBase_t* AB_BuildBase (vec2_t pos)
 	}
 
 	base = &alienBases[numAlienBases];
-	memset(base, 0, sizeof(base));
+	memset(base, 0, sizeof(*base));
 
 	Vector2Copy(pos, base->pos);
 	base->stealth = initialStealthValue;

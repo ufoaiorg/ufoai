@@ -67,7 +67,7 @@ void MN_ParseFont (const char *name, const char **text)
 
 	/* initialize the menu */
 	font = &fonts[numFonts];
-	memset(font, 0, sizeof(font_t));
+	memset(font, 0, sizeof(*font));
 
 	font->name = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_MENU);
 

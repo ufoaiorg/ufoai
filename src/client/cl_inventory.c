@@ -473,7 +473,7 @@ void INV_ParseComponents (const char *name, const char **text)
 	comp = &gd.components[gd.numComponents];
 	gd.numComponents++;
 
-	memset(comp, 0, sizeof(components_t));
+	memset(comp, 0, sizeof(*comp));
 
 	/* set standard values */
 	Q_strncpyz(comp->asId, name, sizeof(comp->asId));

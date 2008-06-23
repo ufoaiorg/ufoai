@@ -1074,7 +1074,7 @@ player_t *AI_CreatePlayer (int team)
 	/* set players to ai players and cycle over all of them */
 	for (i = 0, p = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, p++)
 		if (!p->inuse) {
-			memset(p, 0, sizeof(player_t));
+			memset(p, 0, sizeof(*p));
 			p->inuse = qtrue;
 			p->num = p - game.players;
 			p->pers.team = team;

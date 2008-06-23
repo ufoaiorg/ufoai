@@ -236,7 +236,7 @@ static void SV_ParseMapTile (const char *filename, const char **text)
 		return;
 	}
 	t = &mTile[numTiles];
-	memset(t, 0, sizeof(mTile_t));
+	memset(t, 0, sizeof(*t));
 	Q_strncpyz(t->id, token, sizeof(t->id));
 
 	/* start parsing the block */
@@ -318,7 +318,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 
 	/* init */
 	a = &mAssembly[numAssemblies++];
-	memset(a, 0, sizeof(mAssembly_t));
+	memset(a, 0, sizeof(*a));
 	Q_strncpyz(a->id, token, sizeof(a->id));
 	a->w = 8;
 	a->h = 8;

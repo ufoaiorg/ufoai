@@ -761,7 +761,7 @@ static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		return;
 	}
 
-	memset(&teamData, 0, sizeof(teamData_t));
+	memset(&teamData, 0, sizeof(teamData));
 
 #if 0
 	Com_Printf("CL_ParseTeamInfoMessage: %s\n", s);
@@ -1936,7 +1936,7 @@ static void CL_DumpGlobalDataToFile_f (void)
 {
 	qFILE f;
 
-	memset(&f, 0, sizeof(qFILE));
+	memset(&f, 0, sizeof(f));
 	FS_FOpenFileWrite(va("%s/gd.dump", FS_Gamedir()), &f);
 	if (!f.f) {
 		Com_Printf("CL_DumpGlobalDataToFile_f: Error opening dump file for writing");
@@ -2136,7 +2136,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_listscore", NULL, NULL);
 #endif
 
-	memset(&teamData, 0, sizeof(teamData_t));
+	memset(&teamData, 0, sizeof(teamData));
 	/* Default to single-player mode */
 	ccs.singleplayer = qtrue;
 }

@@ -1866,7 +1866,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 
 		/* new entry */
 		building = &gd.buildingTemplates[gd.numBuildingTemplates];
-		memset(building, 0, sizeof(building_t));
+		memset(building, 0, sizeof(*building));
 		building->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
@@ -2011,7 +2011,7 @@ void B_ClearBase (base_t *const base)
 
 	CL_ResetCharacters(base);
 
-	memset(base, 0, sizeof(base_t));
+	memset(base, 0, sizeof(*base));
 
 	/* only go further if we have a active campaign */
 	if (!curCampaign)
@@ -4202,7 +4202,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 
 		/* clear the mess of stray loaded pointers */
-		memset(&b->equipByBuyType, 0, sizeof(inventory_t));
+		memset(&b->equipByBuyType, 0, sizeof(b->equipByBuyType));
 
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = b;

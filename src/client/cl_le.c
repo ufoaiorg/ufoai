@@ -110,7 +110,7 @@ void LM_AddToScene (void)
 			continue;
 
 		/* set entity values */
-		memset(&ent, 0, sizeof(entity_t));
+		memset(&ent, 0, sizeof(ent));
 		VectorCopy(lm->origin, ent.origin);
 		VectorCopy(lm->origin, ent.oldorigin);
 		VectorCopy(lm->angles, ent.angles);
@@ -255,7 +255,7 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	if (numLMs >= MAX_LOCALMODELS)
 		Sys_Error("Too many local models\n");
 
-	memset(lm, 0, sizeof(localModel_t));
+	memset(lm, 0, sizeof(*lm));
 	Q_strncpyz(lm->name, model, sizeof(lm->name));
 	Q_strncpyz(lm->particle, particle, sizeof(lm->particle));
 	VectorCopy(origin, lm->origin);
@@ -976,7 +976,7 @@ le_t *LE_Add (int entnum)
 	}
 
 	/* initialize the new LE */
-	memset(le, 0, sizeof(le_t));
+	memset(le, 0, sizeof(*le));
 	le->inuse = qtrue;
 	le->entnum = entnum;
 	return le;
@@ -1045,7 +1045,7 @@ void LE_AddToScene (void)
 			} else if ((le->pos[2] > cl_worldlevel->integer))
 				continue;
 
-			memset(&ent, 0, sizeof(entity_t));
+			memset(&ent, 0, sizeof(ent));
 
 			ent.alpha = le->alpha;
 			ent.state = le->state;

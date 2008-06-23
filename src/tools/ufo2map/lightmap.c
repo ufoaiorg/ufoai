@@ -1064,8 +1064,8 @@ void BuildFacelights (unsigned int facenum)
 	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
 
-	l = malloc(MAX_SAMPLES * sizeof(lightinfo_t));
-	memset(l, 0, sizeof(lightinfo_t));
+	l = malloc(MAX_SAMPLES * sizeof(*l));
+	memset(l, 0, MAX_SAMPLES * sizeof(*l));
 
 	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;

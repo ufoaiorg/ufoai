@@ -436,7 +436,7 @@ int SV_PointContents (vec3_t p)
 {
 	trace_t trace;
 
-	memset(&trace, 0, sizeof(trace_t));
+	memset(&trace, 0, sizeof(trace));
 
 	/* clip to world - 0x1FF = all levels */
 	trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL);
@@ -495,7 +495,7 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 	if (!maxs)
 		maxs = vec3_origin;
 
-	memset(&clip, 0, sizeof(moveclip_t));
+	memset(&clip, 0, sizeof(clip));
 
 	/* clip to world - 0x1FF = all levels */
 	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask);

@@ -542,7 +542,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	int team_play = NET_ReadByte(msg);
 
 	/* init camera position and angles */
-	memset(&cl.cam, 0, sizeof(camera_t));
+	memset(&cl.cam, 0, sizeof(cl.cam));
 	VectorSet(cl.cam.angles, 60.0, 60.0, 0.0);
 	VectorSet(cl.cam.omega, 0.0, 0.0, 0.0);
 	cl.cam.zoom = 1.25;

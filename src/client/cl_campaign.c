@@ -4641,7 +4641,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* init the map images and reset the map actions */
 	MAP_Init();
 
-	memset(&ccs, 0, sizeof(ccs_t));
+	memset(&ccs, 0, sizeof(ccs));
 	ccs.singleplayer = qtrue;
 
 	gd.fund = MSG_ReadByte(sb);
@@ -6376,7 +6376,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 
 	/* initialize the campaign */
 	cp = &campaigns[numCampaigns++];
-	memset(cp, 0, sizeof(campaign_t));
+	memset(cp, 0, sizeof(*cp));
 
 	cp->idx = numCampaigns - 1;
 	Q_strncpyz(cp->id, name, sizeof(cp->id));
@@ -6396,7 +6396,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 
 	/* some default values */
 	s = &salaries[cp->idx];
-	memset(s, 0, sizeof(salary_t));
+	memset(s, 0, sizeof(*s));
 	s->soldier_base = 3000;
 	s->soldier_rankbonus = 500;
 	s->worker_base = 3000;
@@ -6482,7 +6482,7 @@ void CL_ParseNations (const char *name, const char **text)
 
 	/* initialize the nation */
 	nation = &gd.nations[gd.numNations++];
-	memset(nation, 0, sizeof(nation_t));
+	memset(nation, 0, sizeof(*nation));
 
 	Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
 	nation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -6759,7 +6759,7 @@ static void CL_GameSkirmish_f (void)
 
 	Cvar_Set("cl_team", curCampaign->team);
 
-	memset(&ccs, 0, sizeof(ccs_t));
+	memset(&ccs, 0, sizeof(ccs));
 	CL_StartSingleplayer(qtrue);
 	CL_ReadSinglePlayerData();
 
@@ -6838,7 +6838,7 @@ static void CL_GameNew_f (void)
 	/* reset, set time */
 	selectedMission = NULL;
 
-	memset(&ccs, 0, sizeof(ccs_t));
+	memset(&ccs, 0, sizeof(ccs));
 	CL_StartSingleplayer(qtrue);
 
 	/* initialise view angle for 3D geoscape so that europe is seen */

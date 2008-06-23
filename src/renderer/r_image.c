@@ -71,7 +71,7 @@ void R_ImageClearMaterials (void)
 			s = ss;
 		}
 
-		memset(m, 0, sizeof(material_t));
+		memset(m, 0, sizeof(*m));
 	}
 }
 

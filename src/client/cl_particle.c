@@ -860,7 +860,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 
 	/* allocate particle */
 	p = &r_particles[i];
-	memset(p, 0, sizeof(ptl_t));
+	memset(p, 0, sizeof(*p));
 
 	/* set basic values */
 	p->inuse = qtrue;
@@ -1258,7 +1258,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 		if (numPtlCmds >= MAX_PTLCMDS)
 			Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
 		pc = &ptlCmd[numPtlCmds++];
-		memset(pc, 0, sizeof(ptlCmd_t));
+		memset(pc, 0, sizeof(*pc));
 		return;
 	}
 
@@ -1275,7 +1275,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				if (numPtlCmds >= MAX_PTLCMDS)
 					Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
 				pc = &ptlCmd[numPtlCmds++];
-				memset(pc, 0, sizeof(ptlCmd_t));
+				memset(pc, 0, sizeof(*pc));
 
 				pc->cmd = i;
 
@@ -1428,7 +1428,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 	if (numPtlCmds >= MAX_PTLCMDS)
 		Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
 	pc = &ptlCmd[numPtlCmds++];
-	memset(pc, 0, sizeof(ptlCmd_t));
+	memset(pc, 0, sizeof(*pc));
 }
 
 #if 0
@@ -1488,9 +1488,9 @@ int CL_ParseParticle (const char *name, const char **text)
 			return -1;
 		}
 	}
-	memset(pd, 0, sizeof(ptlDef_t));
+	memset(pd, 0, sizeof(*pd));
 
-	Q_strncpyz(pd->name, name, MAX_VAR);
+	Q_strncpyz(pd->name, name, sizeof(pd->name));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -1546,6 +1546,6 @@ void CL_InitParticles (void)
 	ptlDef_t *pd;
 
 	pd = &ptlDef[numPtlDefs++];
-	memset(pd, 0, sizeof(ptlDef_t));
-	Q_strncpyz(pd->name, "*circle", MAX_VAR);
+	memset(pd, 0, sizeof(*pd));
+	Q_strncpyz(pd->name, "*circle", sizeof(pd->name));
 }

@@ -327,7 +327,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		return;
 
 	chr = &employee->chr;
-	memset(chr, 0, sizeof(character_t));
+	memset(chr, 0, sizeof(*chr));
 
 	/* link inventory */
 	chr->inv = &employee->inv;
@@ -2472,7 +2472,7 @@ void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank
 		}
 
 		rank = &gd.ranks[gd.numRanks++];
-		memset(rank, 0, sizeof(rank_t));
+		memset(rank, 0, sizeof(*rank));
 		rank->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 		do {
@@ -2560,7 +2560,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 	}
 
 	ugv = &gd.ugvs[gd.numUGV++];
-	memset(ugv, 0, sizeof(ugv_t));
+	memset(ugv, 0, sizeof(*ugv));
 	ugv->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 	do {

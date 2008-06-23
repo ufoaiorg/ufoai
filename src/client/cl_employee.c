@@ -730,7 +730,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	}
 
 	employee = &gd.employees[type][curEmployeeIdx];
-	memset(employee, 0, sizeof(employee_t));
+	memset(employee, 0, sizeof(*employee));
 
 	employee->idx = curEmployeeIdx;
 	employee->hired = qfalse;

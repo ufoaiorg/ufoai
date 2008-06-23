@@ -946,7 +946,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 
 	/* initialize the object definition */
 	od = &csi.ods[csi.numODs++];
-	memset(od, 0, sizeof(objDef_t));
+	memset(od, 0, sizeof(*od));
 
 	od->craftitem.type = MAX_ACITEMS; /**< default is no craftitem */
 
@@ -1164,7 +1164,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 
 	/* initialize the inventory definition */
 	id = &csi.ids[csi.numIDs++];
-	memset(id, 0, sizeof(invDef_t));
+	memset(id, 0, sizeof(*id));
 
 	Q_strncpyz(id->name, name, sizeof(id->name));
 
@@ -1281,7 +1281,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 	/* initialize the equipment definition */
 	ed = &csi.eds[csi.numEDs++];
-	memset(ed, 0, sizeof(equipDef_t));
+	memset(ed, 0, sizeof(*ed));
 
 	Q_strncpyz(ed->name, name, sizeof(ed->name));
 
@@ -1802,7 +1802,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 	/* reset new category */
 	if (i == csi.numTeamDefs) {
 		if (csi.numTeamDefs < MAX_TEAMDEFS) {
-			memset(td, 0, sizeof(teamDef_t));
+			memset(td, 0, sizeof(*td));
 			/* index backlink */
 			td->idx = csi.numTeamDefs;
 			csi.numTeamDefs++;
@@ -2013,7 +2013,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 		if (i >= MAX_GAMETYPES)
 			Sys_Error("Com_ParseGameTypes: MAX_GAMETYPES exceeded\n");
 		gt = &gts[numGTs++];
-		memset(gt, 0, sizeof(gametype_t));
+		memset(gt, 0, sizeof(*gt));
 		Q_strncpyz(gt->id, name, sizeof(gt->id));
 		if (numGTs >= MAX_GAMETYPES)
 			Sys_Error("Com_ParseGameTypes: Too many gametypes.\n");

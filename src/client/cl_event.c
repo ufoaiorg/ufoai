@@ -161,7 +161,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 
 	/* initialize the eventMail */
 	eventMail = &gd.eventMails[gd.numEventMails++];
-	memset(eventMail, 0, sizeof(eventMail_t));
+	memset(eventMail, 0, sizeof(*eventMail));
 
 	Com_DPrintf(DEBUG_CLIENT, "...found eventMail %s\n", name);
 	eventMail->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

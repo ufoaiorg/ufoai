@@ -1896,7 +1896,7 @@ void UP_ParseChapters (const char *name, const char **text)
 			Com_Printf("UP_ParseChapters: too many chapter defs\n");
 			return;
 		}
-		memset(&gd.upChapters[gd.numChapters], 0, sizeof(pediaChapter_t));
+		memset(&gd.upChapters[gd.numChapters], 0, sizeof(gd.upChapters[gd.numChapters]));
 		gd.upChapters[gd.numChapters].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 		gd.upChapters[gd.numChapters].idx = gd.numChapters;	/* set self-link */
 

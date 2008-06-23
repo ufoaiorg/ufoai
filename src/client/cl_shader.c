@@ -85,7 +85,7 @@ void CL_ParseShaders (const char *name, const char **text)
 
 	/* new entry */
 	entry = &r_shaders[r_numShaders++];
-	memset(entry, 0, sizeof(shader_t));
+	memset(entry, 0, sizeof(*entry));
 
 	/* default value */
 	entry->glMode = BLEND_FILTER;

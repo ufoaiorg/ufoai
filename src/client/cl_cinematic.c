@@ -684,7 +684,7 @@ void CIN_StopCinematic (void)
 		Mem_Free(cin.frameBuffer[0]);
 		Mem_Free(cin.frameBuffer[1]);
 	}
-	memset(&cin, 0, sizeof(cinematic_t));
+	memset(&cin, 0, sizeof(cin));
 }
 
 static void CIN_Cinematic_f (void)
@@ -761,7 +761,7 @@ void CIN_Init (void)
 	short s;
 	int i;
 
-	memset(&cin, 0, sizeof(cinematic_t));
+	memset(&cin, 0, sizeof(cin));
 
 	/* Register our commands */
 	Cmd_AddCommand("cinematic", CIN_Cinematic_f, "Plays a cinematic");

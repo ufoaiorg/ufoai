@@ -291,11 +291,9 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	/* compress data using zlib before writing */
 	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
 	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(saveFileHeader_t), cl_genericPool, CL_TAG_NONE);
-	/* write an uncompressed header */
-	memset(fbuf, 0, sizeof(saveFileHeader_t));
 
-	/* step 4 - write the header */
-	memset(&header, 0, sizeof(saveFileHeader_t));
+	/* step 4 - write the uncompressed header */
+	memset(&header, 0, sizeof(header));
 	header.compressed = LittleLong(save_compressed->integer);
 	header.version = LittleLong(SAVE_FILE_VERSION);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
