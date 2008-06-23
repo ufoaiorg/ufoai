@@ -633,20 +633,19 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 }
 
 
-static int BrushMostlyOnSide (bspbrush_t *brush, plane_t *plane)
+static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 {
 	int i, j, side;
-	winding_t *w;
-	vec_t d, max;
+	vec_t max;
 
 	max = 0;
 	side = PSIDE_FRONT;
 	for (i = 0; i < brush->numsides; i++) {
-		w = brush->sides[i].winding;
+		const winding_t *w = brush->sides[i].winding;
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++) {
-			d = DotProduct(w->p[j], plane->normal) - plane->dist;
+			const vec_t d = DotProduct(w->p[j], plane->normal) - plane->dist;
 			if (d > max) {
 				max = d;
 				side = PSIDE_FRONT;

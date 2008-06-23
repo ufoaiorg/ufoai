@@ -643,11 +643,8 @@ static void SubdivideFace (node_t *node, face_t *f)
 				if (v > maxs)
 					maxs = v;
 			}
-			/* allow double high walls */
-			if (axis == 2) {
-				if (maxs - mins <= config.subdivideSize)
-					break;
-			} else if (maxs - mins <= config.subdivideSize)
+
+			if (maxs - mins <= config.subdivideSize)
 				break;
 
 			/* split it */
@@ -724,9 +721,6 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 			}
 		}
 	}
-
-	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_NODRAW)
-		return NULL;
 
 	if (pside) {
 		f->w = ReverseWinding(p->winding);
