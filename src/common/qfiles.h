@@ -380,15 +380,17 @@ typedef struct miptex_s {
 
 #define BSPVERSION	74
 
+/** @brief Directory of the different data blocks */
 typedef struct {
-	int fileofs, filelen;
+	int fileofs;	/**< the offset of the data block (from the start of the file) */
+	int filelen;	/**< the length of the data block */
 } lump_t;
 
-
+/** @brief The BSP header definition with the data block directory */
 typedef struct {
-	int ident;
-	int version;
-	lump_t lumps[HEADER_LUMPS];
+	int ident;		/**< the magic number of the BSP file @sa IDBSPHEADER */
+	int version;	/**< the version of the BSP file @sa BSPVERSION */
+	lump_t lumps[HEADER_LUMPS];	/**< the data directories */
 } dBspHeader_t;
 
 
