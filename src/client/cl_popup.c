@@ -474,9 +474,9 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	if (popupIntercept.numAircraft)
 		mn.menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 	else if (mission)
-		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no tactical teams assigned to available craft.");
+		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no pilot assigned, or no tactical teams assigned to available craft.");
 	else if (ufo)
-		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available or no weapon or ammo equipped.");
+		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no pilot assigned, or no weapon or ammo equipped.");
 
 	if (ufo) {
 		somethingWritten = qfalse;
