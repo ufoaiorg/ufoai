@@ -2607,10 +2607,10 @@ tech rs_power_armour
 //		icon	icons/tech
 //	}
 
-//	require_AND	// todo:fixme
-//	{
-//		tech rs_nano_armour
-//	}
+	require_AND	// todo:fixme
+	{
+		tech rs_nano_armour
+	}
 	provides	power
 
 //	time	3000

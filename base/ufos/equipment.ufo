@@ -108,7 +108,7 @@ equipment campaign_initial_market
 
 equipment campaign_asymptotic_market
 {
-	lightadv						3
+//	lightadv						3
 	medium							3
 	power							3
 	coilgun							2
