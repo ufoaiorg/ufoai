@@ -375,6 +375,38 @@ const float STANDARD_3D_ZOOM = 40.0f;
 #define GLOBE_RADIUS EARTH_RADIUS * (ccs.zoom / STANDARD_3D_ZOOM)
 
 /**
+ * @brief Return needed zoom to show a given distance on screen, for 3D geoscape.
+ * @param[in] node Pointer to the node where 3D geoscape is displayed.
+ * @param[in] distance Half distance that we want to display on the full height of the screen.
+ * @return zoom that should be applied to see given distance, if within boundaries.
+ */
+static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
+{
+	float zoom;
+	const float MAX_AUTO_ZOOM = 35.0f;			/**< maximum zoom reachable with automatic zoom
+												 * we can zoom closer than manually, so don't use cl_mapzoomax */
+
+	distance = atoi(Cmd_Argv(1));
+
+	if (distance >= 90.0f) {
+		/* We want to see the whole world */
+		distance = EARTH_RADIUS;
+	} else {
+		distance = sin(torad * distance) * EARTH_RADIUS;
+	}
+
+	/* smaller size is height of the screen */
+	zoom = (node->size[1] / 2.0f) * STANDARD_3D_ZOOM / distance;
+
+	if (zoom > MAX_AUTO_ZOOM)
+		zoom = MAX_AUTO_ZOOM;
+	else if (zoom < cl_mapzoommin->value)
+		zoom = cl_mapzoommin->value;
+
+	return zoom;
+}
+
+/**
  * @brief Transform a 2D position on the map to screen coordinates.
  * @param[in] pos vector that holds longitude and latitude
  * @param[out] x normalized (rotated and scaled) x value of mouseclick
