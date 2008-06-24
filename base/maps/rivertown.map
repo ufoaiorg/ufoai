@@ -15991,7 +15991,7 @@
 {
 "classname" "misc_particle"
 "origin" "-669.879 -28.879 105"
-"spawnflags" "254"
+"spawnflags" "510"
 "particle" "corona"
 "angle" "-135"
 }
