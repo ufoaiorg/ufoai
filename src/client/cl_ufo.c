@@ -538,6 +538,18 @@ qboolean UFO_CanShoot (const aircraft_t *ufo)
 
 #ifdef DEBUG
 /**
+ * @brief Debug function to destroy all the UFOs that are currently on the geoscape
+ */
+static void UFO_DestroyUFOs_f (void)
+{
+	aircraft_t* ufo;
+
+	for (ufo = gd.ufos; ufo < gd.ufos + gd.numUFOs; ufo++) {
+		AIRFIGHT_ActionsAfterAirfight(NULL, ufo, qtrue);
+	}
+}
+
+/**
  * @brief Write the ufo list, for debugging
  * @note called with debug_listufo
  */
@@ -932,6 +944,7 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
 void UFO_InitStartup (void)
 {
 #ifdef DEBUG
+	Cmd_AddCommand("debug_destroyufos", UFO_DestroyUFOs_f, "Destroys all UFOs on the geoscape");
 	Cmd_AddCommand("debug_listufo", UFO_ListOnGeoscape_f, "Print UFO information to game console");
 	Cmd_AddCommand("removeufo", UFO_RemoveFromGeoscape_f, "Remove a UFO from geoscape");
 	Cvar_Get("debug_showufos", "0", CVAR_DEVELOPER, "Show all UFOs on geoscape");
