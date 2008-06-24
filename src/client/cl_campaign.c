@@ -5677,7 +5677,6 @@ static void CL_GameAbort_f (void)
  */
 static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
 {
-	character_t *chr;
 	int i, j;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: base: '%s' numTeamList: %i\n",
@@ -5688,12 +5687,15 @@ static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft
 	/** @todo What about UGVs/Tanks? */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft)) {
-			assert(gd.employees[EMPL_SOLDIER][i].hired);
+			character_t *chr = &gd.employees[EMPL_SOLDIER][i].chr;
+			assert(chr);
+			if (!gd.employees[EMPL_SOLDIER][i].hired) {
+				Sys_Error("Employee %s is reported as being on the aircraft (%s), but he is not hired (%i/%i)",
+					chr->name, aircraft->id, i, gd.numEmployees[EMPL_SOLDIER]);
+			}
 			assert(gd.employees[EMPL_SOLDIER][i].baseHired == aircraft->homebase);
 
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
-			chr = &gd.employees[EMPL_SOLDIER][i].chr;
-			assert(chr);
 
 			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;
