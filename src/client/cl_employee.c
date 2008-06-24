@@ -628,7 +628,7 @@ void E_ResetEmployee (employee_t *employee)
 	base = employee->baseHired;
 
 	/* Remove employee from building (and tech/production). */
-	E_RemoveEmployeeFromBuilding(employee);
+	E_RemoveEmployeeFromBuildingOrAircraft(employee);
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
 	INVSH_DestroyInventory(&employee->inv);
 }
@@ -641,7 +641,7 @@ void E_ResetEmployee (employee_t *employee)
  * @sa E_HireEmployeeByType
  * @sa CL_RemoveSoldierFromAircraft
  * @sa E_ResetEmployee
- * @sa E_RemoveEmployeeFromBuilding
+ * @sa E_RemoveEmployeeFromBuildingOrAircraft
  * @todo handle EMPL_ROBOT capacities here?
  */
 qboolean E_UnhireEmployee (employee_t* employee)
@@ -650,7 +650,7 @@ qboolean E_UnhireEmployee (employee_t* employee)
 		base_t *base = employee->baseHired;
 
 		/* Any effect of removing an employee (e.g. removing a scientist from a research project)
-		 * should take place in E_RemoveEmployeeFromBuilding() */
+		 * should take place in E_RemoveEmployeeFromBuildingOrAircraft */
 		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
@@ -916,7 +916,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
  *
  * @param[in] building The building the employee is assigned to.
  * @param[in] employee_type	What type of employee to assign to the building.
- * @sa E_RemoveEmployeeFromBuilding
+ * @sa E_RemoveEmployeeFromBuildingOrAircraft
  * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
  */
 qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
@@ -988,20 +988,24 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
  * @sa E_AssignEmployeeToBuilding
  * @todo are soldiers and pilots assigned to a building, too? quarters?
  */
-qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
+qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 {
 	base_t *base;
 
 	assert(employee);
 
-	/* not assigned to any building */
-	if (!employee->building && employee->type != EMPL_SOLDIER
-	 && employee->type != EMPL_ROBOT && employee->type != EMPL_PILOT)
-		return qfalse;
+	/* not assigned to any building... */
+	if (!employee->building) {
+		/* ... and no aircraft handling needed? */
+		if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
+		 && employee->type != EMPL_PILOT)
+			return qfalse;
+	}
 
-	/* we can assume this because otherwise there should be no buildingID */
-	assert(employee->baseHired);
+	/* get the base where the employee is hired in */
 	base = employee->baseHired;
+	if (!base)
+		Sys_Error("Employee (type: %i) is not hired", employee->type);
 
 	assert(employee->type == employee->chr.emplType);
 

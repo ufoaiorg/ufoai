@@ -925,7 +925,7 @@ static void RS_AssignScientist_f (void)
  * @param[in] employee Employee you want to remove (NULL if you don't care which one should be removed).
  * @sa RS_RemoveScientist_f
  * @sa RS_AssignScientist
- * @sa E_RemoveEmployeeFromBuilding
+ * @sa E_RemoveEmployeeFromBuildingOrAircraft
  */
 void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 {
@@ -941,7 +941,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 			/* Update capacity. */
 			tech->base->capacities[CAP_LABSPACE].cur--;
 			/* Remove the scientist from the lab and set number of used lab-space. */
-			employee->building = NULL; /* See also E_RemoveEmployeeFromBuilding */
+			employee->building = NULL; /* See also E_RemoveEmployeeFromBuildingOrAircraft */
 		} else {
 			/* No assigned scientists found - serious inconsistency. */
 			/** @todo add proper handling of this case. */
@@ -1021,7 +1021,7 @@ static void RS_RemoveScientist_f (void)
  * @param[in] base Pointer to base where a scientist should be removed.
  * @param[in] employee Pointer to the employee that is fired.
  * @note used when a scientist is fired.
- * @sa E_RemoveEmployeeFromBuilding
+ * @sa E_RemoveEmployeeFromBuildingOrAircraft
  * @note This function is called before the employee is actually fired.
  */
 void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
@@ -2379,7 +2379,7 @@ technology_t **RS_GetTechsByType (researchType_t type)
 /**
  * @brief Searches for the technology that has the most scientists assigned in a given base.
  * @param[in] base In what base the tech should be researched.
- * @sa E_RemoveEmployeeFromBuilding
+ * @sa E_RemoveEmployeeFromBuildingOrAircraft
  */
 technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 {

@@ -78,7 +78,7 @@ qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);
 qboolean E_HireRobot(base_t* base, const ugv_t *ugvType);
 qboolean E_UnhireEmployee(employee_t* employee);
 void E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const qboolean excludeUnhappyNations);
-qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
+qboolean E_RemoveEmployeeFromBuildingOrAircraft(employee_t *employee);
 void E_ResetEmployee(employee_t *employee);
 
 employeeType_t E_GetEmployeeType(const char* type);
