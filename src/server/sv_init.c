@@ -107,10 +107,10 @@ typedef struct mAssembly_s {
 	char title[MAX_VAR];		/**< The full title fo this assembly. */
 	byte min[MAX_TILETYPES];	/**< Minimum tile number for each used tile-type. */
 	byte max[MAX_TILETYPES];	/**< Maximum tile number for each used tile-type. */
-	byte fT[MAX_FIXEDTILES];	/** Index of used (fix) tile in mTile[] array */
-	byte fX[MAX_FIXEDTILES];	/** x position of the used  (fix) tile in fT */
-	byte fY[MAX_FIXEDTILES];	/** y position of the used  (fix) tile in fT */
-	int numFixed;	/** Number of fixed tiles. Counts entries of fX, fY and fT */
+	byte fT[MAX_FIXEDTILES];	/**< Index of used (fix) tile in mTile[] array */
+	byte fX[MAX_FIXEDTILES];	/**< x position of the used  (fix) tile in fT */
+	byte fY[MAX_FIXEDTILES];	/**< y position of the used  (fix) tile in fT */
+	int numFixed;	/**< Number of fixed tiles. Counts entries of fX, fY and fT */
 	int w, h;	/**< The width and height of the assembly. (size "<w> <h>") */
 	int dx, dy;	/**< The grid steps of the assembly. (grid "<dx> <dx>") */
 } mAssembly_t;
@@ -140,13 +140,13 @@ typedef struct mPlaced_s {
 	int idx, pos;	/**< Stores the state of the placement algorithm */
 } mPlaced_t;
 
-static mTile_t mTile[MAX_TILETYPES];					 /**< @todo A list of parsed map-tiles. */
-static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< @todo A list of parsed assembly definitions. */
+static mTile_t mTile[MAX_TILETYPES];					 /**< A list of parsed map-tiles. */
+static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< A list of parsed assembly definitions. */
 
-static int numAssemblies;	 /**< @todo The number of assemblies in mAssembly. */
+static int numAssemblies;	 /**< The number of assemblies in mAssembly. */
 
-static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo Holds all tiles that have been placed ont he current map. */
-static int numPlaced;				/**< @todo The number of tiles in mPlaced. */
+static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo Holds all tiles that have been placed on the current map. */
+static int numPlaced;				/**< The number of tiles in mPlaced. */
 
 static short prList[32 * 32];			/**< used to shuffle the map positions for assembly */
 

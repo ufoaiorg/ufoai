@@ -818,7 +818,6 @@ void SV_Init (void)
  * @brief Used by SV_Shutdown to send a final message to all
  * connected clients before the server goes down.
  * @sa SV_Shutdown
- * @todo Find out why this isn't send
  */
 static void SV_FinalMessage (const char *message, qboolean reconnect)
 {
@@ -838,6 +837,9 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 			NET_StreamFinished(cl->stream);
 			cl->stream = NULL;
 		}
+
+	/* make sure, that this is send */
+	NET_Wait(0);
 
 	free_dbuffer(msg);
 }
