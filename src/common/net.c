@@ -95,7 +95,7 @@ struct net_stream {
 	qboolean loopback;
 	qboolean ready;
 	qboolean closed;
-	qboolean finished;
+	qboolean finished;		/**< finished but maybe not yet closed */
 	int socket;
 	int index;
 	int family;
@@ -266,9 +266,10 @@ static void NET_ShowStreams_f (void)
 
 	for (i = 0; i < MAX_STREAMS; i++) {
 		if (streams[i] != NULL) {
-			Com_Printf("Steam %i is opened: %s (%i)\n", i,
+			Com_Printf("Steam %i is opened: %s (closed: %i, finished: %i, outbound: %i, inbound: %i)\n", i,
 				NET_StreamPeerToName(streams[i], buf, sizeof(buf), qtrue),
-				streams[i]->closed);
+				streams[i]->closed, streams[i]->finished,
+				dbuffer_len(streams[i]->outbound), dbuffer_len(streams[i]->inbound));
 			cnt++;
 		}
 	}
@@ -360,7 +361,7 @@ static void NET_StreamClose (struct net_stream *s)
 	s->outbound = NULL;
 	s->socket = INVALID_SOCKET;
 
-	/* Note that s is potentially invalid after the callback returns */
+	/* Note that this is potentially invalid after the callback returns */
 	if (s->finished) {
 		free_dbuffer(s->inbound);
 		Mem_Free(s);
