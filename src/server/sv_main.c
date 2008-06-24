@@ -447,6 +447,7 @@ void SV_NextMapcycle (void)
 {
 	int i;
 	const char *map = NULL, *gameType = NULL;
+	qboolean day = qtrue;
 	char *base;
 	char assembly[MAX_QPATH];
 	char expanded[MAX_QPATH];
@@ -454,27 +455,29 @@ void SV_NextMapcycle (void)
 	mapcycle_t *mapcycle;
 
 	mapcycle = mapcycleList;
-	if (*sv.name) {
+	if (sv.name[0]) {
 		Com_Printf("current map: %s\n", sv.name);
 		for (i = 0; i < mapcycleCount; i++) {
 			/* random maps may have a theme - but that's not stored in sv.name
 			* but in sv.assembly */
-			if (*mapcycle->map == '+') {
+			if (mapcycle->map[0] == '+') {
 				Q_strncpyz(expanded, mapcycle->map, sizeof(expanded));
 				base = strstr(expanded, " ");
 				if (base) {
-					*base = '\0'; /* split the strings */
+					base[0] = '\0'; /* split the strings */
 					Q_strncpyz(assembly, base + 1, sizeof(assembly));
 					/* get current position */
 					if (!Q_strcmp(sv.name, expanded) && !Q_strcmp(sv.assembly, assembly)) {
 						/* next map in cycle */
 						if (mapcycle->next) {
 							map = mapcycle->next->map;
+							day = mapcycle->next->day;
 							gameType = mapcycle->next->type;
 							Com_DPrintf(DEBUG_SERVER, "SV_NextMapcycle: next one: '%s' (gametype: %s)\n", map, gameType);
 						/* switch back to first list on cycle - if there is one */
 						} else {
 							map = mapcycleList->map;
+							day = mapcycleList->day;
 							gameType = mapcycleList->type;
 							Com_DPrintf(DEBUG_SERVER, "SV_NextMapcycle: first one: '%s' (gametype: %s)\n", map, gameType);
 						}
@@ -490,11 +493,13 @@ void SV_NextMapcycle (void)
 					/* next map in cycle */
 					if (mapcycle->next) {
 						map = mapcycle->next->map;
+						day = mapcycle->next->day;
 						gameType = mapcycle->next->type;
 						Com_DPrintf(DEBUG_SERVER, "SV_NextMapcycle: next one: '%s' (gametype: %s)\n", map, gameType);
 					/* switch back to first list on cycle - if there is one */
 					} else {
 						map = mapcycleList->map;
+						day = mapcycleList->day;
 						gameType = mapcycleList->type;
 						Com_DPrintf(DEBUG_SERVER, "SV_NextMapcycle: first one: '%s' (gametype: %s)\n", map, gameType);
 					}
@@ -517,8 +522,9 @@ void SV_NextMapcycle (void)
 	if (!map) {
 		if (mapcycleCount > 0) {
 			map = mapcycleList->map;
+			day = mapcycleList->day;
 			gameType = mapcycleList->type;
-			if (*map != '+') {
+			if (map[0] != '+') {
 				Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 
 				/* check for bsp file */
@@ -528,7 +534,7 @@ void SV_NextMapcycle (void)
 					return;
 				}
 			}
-		} else if (*sv.name) {
+		} else if (sv.name[0]) {
 			Com_Printf("No mapcycle - restart the current map (%s)\n", sv.name);
 			map = sv.name;
 			gameType = NULL;
@@ -542,11 +548,13 @@ void SV_NextMapcycle (void)
 	}
 
 	/* check whether we want to change the gametype, too */
-	if (gameType && *gameType)
+	if (gameType && gameType[0] != '\0')
 		Cvar_Set("sv_gametype", gameType);
 
-	/** @todo make day and night configureable, too */
-	Com_sprintf(cmd, sizeof(cmd), "map day %s", map);
+	if (day)
+		Com_sprintf(cmd, sizeof(cmd), "map day %s", map);
+	else
+		Com_sprintf(cmd, sizeof(cmd), "map night %s", map);
 	Cbuf_AddText(cmd);
 	Cbuf_Execute();
 }
@@ -577,7 +585,7 @@ void SV_MapcycleClear (void)
  * @todo check for maps and valid gametypes here
  * @sa SV_MapcycleClear
  */
-void SV_MapcycleAdd (const char* mapName, const char* gameType)
+void SV_MapcycleAdd (const char* mapName, qboolean day, const char* gameType)
 {
 	mapcycle_t *mapcycle;
 
@@ -593,6 +601,7 @@ void SV_MapcycleAdd (const char* mapName, const char* gameType)
 		mapcycle = mapcycle->next;
 	}
 	mapcycle->map = Mem_PoolStrDup(mapName, sv_genericPool, 0);
+	mapcycle->day = day;
 	mapcycle->type = Mem_PoolStrDup(gameType, sv_genericPool, 0);
 	Com_DPrintf(DEBUG_SERVER, "mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
 	mapcycle->next = NULL;
@@ -622,15 +631,28 @@ static void SV_ParseMapcycle (void)
 	if (length != -1) {
 		buf = (const char*)buffer;
 		do {
+			qboolean day = qfalse;
+			/* parse map name */
 			token = COM_Parse(&buf);
 			if (!buf)
 				break;
 			Q_strncpyz(map, token, sizeof(map));
+			/* parse day or night */
+			token = COM_Parse(&buf);
+			if (!buf)
+				break;
+			if (!strcmp(token, "day"))
+				day = qtrue;
+			else if (strcmp(token, "night")) {
+				Com_Printf("Skip mapcycle parsing, expected day or night.");
+				break;
+			}
+			/* parse gametype */
 			token = COM_Parse(&buf);
 			if (!buf)
 				break;
 			Q_strncpyz(gameType, token, sizeof(gameType));
-			SV_MapcycleAdd(map, gameType);
+			SV_MapcycleAdd(map, day, gameType);
 		} while (buf);
 
 		Com_Printf("added %i maps to the mapcycle\n", mapcycleCount);

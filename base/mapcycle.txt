@@ -2,14 +2,14 @@
  * mapcycle for UFO:AI server
  * format:
  * ---------------
- * [mapname] [gametype]
+ * [mapname] [day|night] [gametype]
  */
 
 //"+frozend multiplayercoop" coop2
-industrial 1on1
-+italy 1on1
-farm 1on1
-+africa 1on1
-estate 1on1
-+japan 1on1
-tower 1on1
+industrial day 1on1
++italy day 1on1
+farm day 1on1
++africa day 1on1
+estate day 1on1
++japan day 1on1
+tower day 1on1

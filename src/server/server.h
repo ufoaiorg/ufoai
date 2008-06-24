@@ -110,6 +110,7 @@ typedef struct {
 typedef struct mapcycle_s {
 	char *map;			/**< map name */
 	char *type;			/**< gametype to play on this map */
+	qboolean day;		/**< load the day version */
 	struct mapcycle_s* next;	/**< pointer to the next map in cycle */
 } mapcycle_t;
 
@@ -145,7 +146,7 @@ void Master_Heartbeat(void);
 
 void SV_NextMapcycle(void);
 void SV_MapcycleClear(void);
-void SV_MapcycleAdd(const char* mapName, const char* gameType);
+void SV_MapcycleAdd(const char* mapName, qboolean day, const char* gameType);
 
 void SV_ReadPacket(struct net_stream *s);
 

@@ -429,20 +429,21 @@ static void SV_MapcycleList_f (void)
 
 static void SV_MapcycleAdd_f (void)
 {
-	const char *map;
-	const char *gametype;
-
-	if (Cmd_Argc() == 3) {
-		map = Cmd_Argv(1);
-		gametype = Cmd_Argv(2);
+	if (Cmd_Argc() == 4) {
+		const char *map = Cmd_Argv(1);
+		const char *day = Cmd_Argv(2);
+		const char *gametype = Cmd_Argv(3);
 		if (!SV_CheckMap(map, NULL)) {
 			Com_Printf("map '%s' isn't a valid map\n", map);
 			return;
 		}
 		Com_Printf("adding map '%s' with gametype '%s' to mapcycle (to add this permanently edit your mapcycle.txt)\n", map, gametype);
-		SV_MapcycleAdd(map, gametype);
+		if (!strcmp(day, "day"))
+			SV_MapcycleAdd(map, qtrue, gametype);
+		else
+			SV_MapcycleAdd(map, qfalse, gametype);
 	} else {
-		Com_Printf("Usage: %s <mapname> <gametype>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <mapname> <day|night> <gametype>\n", Cmd_Argv(0));
 		Com_Printf(" ...to get a list of valid maps type 'maplist'\n"
 			" ...to get a list of valid gametypes 'gametypelist'\n");
 	}
