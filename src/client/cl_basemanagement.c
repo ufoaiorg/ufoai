@@ -4112,6 +4112,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->teamSize = 0;
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++) {
 				if (teamIdxs[l] != BYTES_NONE) {
+					assert(teamTypes[l] != MAX_EMPL);
 					/** assert(gd.numEmployees[teamTypes[l]] > 0); @todo We currently seem to link to not yet parsed employees. */
 					aircraft->acTeam[l] = &gd.employees[teamTypes[l]][teamIdxs[l]];
 					aircraft->teamSize++;

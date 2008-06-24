@@ -4658,6 +4658,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.angles[1] = MSG_ReadFloat(sb);
 	ccs.zoom = MSG_ReadFloat(sb);
 
+#if 0
+	/* restore the overlay */
+	Cvar_SetValue("r_geoscape_overlay", MSG_ReadShort(sb));
+#endif
+
 	Q_strncpyz(gd.oldMis1, MSG_ReadString(sb), sizeof(gd.oldMis1));
 	Q_strncpyz(gd.oldMis2, MSG_ReadString(sb), sizeof(gd.oldMis2));
 	Q_strncpyz(gd.oldMis3, MSG_ReadString(sb), sizeof(gd.oldMis3));
@@ -4835,6 +4840,9 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteFloat(sb, ccs.angles[0]);
 	MSG_WriteFloat(sb, ccs.angles[1]);
 	MSG_WriteFloat(sb, ccs.zoom);
+
+	/* save the overlay state */
+	MSG_WriteShort(sb, r_geoscape_overlay->integer);
 
 	MSG_WriteString(sb, gd.oldMis1);
 	MSG_WriteString(sb, gd.oldMis2);
