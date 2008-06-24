@@ -4618,7 +4618,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	int i, j, num;
 	const char *name, *missionId;
 	char val[32];
-	base_t *base;
 
 	/* read campaign name */
 	name = MSG_ReadString(sb);
@@ -4706,7 +4705,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
 				/* Load IDX of base under attack */
 				const int baseidx = MSG_ReadByte(sb);
-				base = B_GetBaseByIDX(baseidx);
+				base_t *base = B_GetBaseByIDX(baseidx);
 				assert(base);
 				if (mission.stage == STAGE_BASE_ATTACK && base->baseStatus != BASE_UNDER_ATTACK)
 					Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
@@ -4716,11 +4715,10 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			if (mission.stage >= STAGE_MISSION_GOTO) {
-				alienBase_t *alienBase;
 				const int baseidx = MSG_ReadByte(sb);
 				if (baseidx != BYTES_NONE) {
 					/* don't check baseidx value here: alien bases are not loaded yet */
-					alienBase = AB_GetBase(baseidx, 0);
+					alienBase_t *alienBase = AB_GetBase(baseidx, 0);
 					if (alienBase)
 						mission.data = (void *) alienBase;
 					else
@@ -4754,13 +4752,13 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* read ccs.battleParameters */
 	memset(&ccs.battleParameters, 0, sizeof(ccs.battleParameters));
 	missionId = MSG_ReadString(sb);
-	if (*missionId) {
+	if (missionId[0] != '\0') {
 		ccs.battleParameters.mission = CP_GetMissionById(missionId);
 		ccs.battleParameters.numAlienTeams = MSG_ReadShort(sb);
 		for (i = 0; i < ccs.battleParameters.numAlienTeams; i++)
 			ccs.battleParameters.alienTeams[i] = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
 		name = MSG_ReadString(sb);
-		if (*name)
+		if (name[0] != '\0')
 			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_localPool, 0);
 		else
 			ccs.battleParameters.param = NULL;
@@ -4777,7 +4775,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	/* stores the select mission on geoscape */
 	missionId = MSG_ReadString(sb);
-	if (*missionId)
+	if (missionId[9] != '\0')
 		selectedMission = CP_GetMissionById(missionId);
 	else
 		selectedMission = NULL;
@@ -4787,7 +4785,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	 * doesn't know anything (at that stage) about the new missions that were
 	 * add in this load function */
 	for (i = 0; i < MAX_BASES; i++) {
-		base = B_GetFoundedBaseByIDX(i);
+		base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
 
