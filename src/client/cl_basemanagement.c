@@ -4206,6 +4206,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		memset(&b->equipByBuyType, 0, sizeof(b->equipByBuyType));
 
 		/* some functions needs the baseCurrent pointer set */
+		/** @todo Is this still the case - the baseCurrent usage was heavily
+		 * cleaned up */
 		baseCurrent = b;
 	}
 	gd.numBases = B_GetFoundedBaseCount();
