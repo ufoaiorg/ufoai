@@ -459,7 +459,7 @@ void SV_NextMapcycle (void)
 		Com_Printf("current map: %s\n", sv.name);
 		for (i = 0; i < mapcycleCount; i++) {
 			/* random maps may have a theme - but that's not stored in sv.name
-			* but in sv.assembly */
+			 * but in sv.assembly */
 			if (mapcycle->map[0] == '+') {
 				Q_strncpyz(expanded, mapcycle->map, sizeof(expanded));
 				base = strstr(expanded, " ");
@@ -506,7 +506,7 @@ void SV_NextMapcycle (void)
 					Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 
 					/* check for bsp file */
-					if (FS_CheckFile(expanded) < 0) {
+					if (map[0] != '+' && FS_CheckFile(expanded) < 0) {
 						Com_Printf("SV_NextMapcycle: Can't find '%s' - mapcycle error\n"
 							"Use the 'maplist' command to get a list of valid maps\n", expanded);
 						map = NULL;
