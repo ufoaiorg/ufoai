@@ -150,7 +150,7 @@ static font_t *R_FontGetFont (const char *name)
  * @param[in] maxWidth is a pixel value
  * @todo if maxWidth is too small to display even the first word this has bugs
  */
-static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *width, int *height)
+static char *R_FontGetLineWrap (const font_t * f, char *buffer, int maxWidth, int *width, int *height)
 {
 	char *space;
 	char *newlineTest;
@@ -246,13 +246,12 @@ void R_FontListCache_f (void)
 {
 	int i = 0;
 	int collCount = 0, collSum = 0;
-	fontCache_t *f;
 
 	Com_Printf("Font cache info\n========================\n");
 	Com_Printf("...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache);
 
 	for (; i < numInCache; i++) {
-		f = &fontCache[i];
+		const fontCache_t *f = &fontCache[i];
 		if (!f) {
 			Com_Printf("...hashtable inconsistency at %i\n", i);
 			continue;
@@ -367,7 +366,7 @@ static fontCache_t* R_FontAddToCache (const char *s, SDL_Surface *pixel, int w, 
  * @sa SDL_LowerBlit
  * @sa SDL_FreeSurface
  */
-static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, font_t * f, int maxWidth)
+static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, const font_t *f, int maxWidth)
 {
 	int w, h;
 	SDL_Surface *textSurface;
@@ -388,7 +387,6 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 #endif
 
 	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
-
 	if (!textSurface) {
 		Com_Printf("%s (%s)\n", TTF_GetError(), fontString);
 		return NULL;
@@ -431,7 +429,7 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
  * @param[in] width The max width of the text
  * @param[in] height The max height of the text
  */
-static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absY, int width, int height)
+static int R_FontGenerateGLSurface (const fontCache_t *cache, int x, int y, int absY, int width, int height)
 {
 	float nx = x * viddef.rx;
 	float ny = y * viddef.ry;
@@ -515,10 +513,9 @@ static fontCacheList_t cacheList;
 int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
 {
-	int returnHeight;
-
-	returnHeight = R_FontGenerateCacheList(fontID, align, x, y, absX, absY, maxWidth,
-					lineHeight, c, box_height, scroll_pos, cur_line, increaseLine, &cacheList);
+	const int returnHeight = R_FontGenerateCacheList(fontID, align, x, y,
+		absX, absY, maxWidth, lineHeight, c, box_height, scroll_pos, cur_line,
+		increaseLine, &cacheList);
 
 	R_FontRenderCacheList(&cacheList, absY, maxWidth, maxHeight, 0, 0);
 
@@ -548,14 +545,13 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 {
 	int w = 0, h = 0, locX;
 	float returnHeight = 0; /* Rounding errors break mouse-text correlation. */
-	font_t *f;
+	const font_t *f;
 	char *buffer = buf;
 	char *pos;
 	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];
 	int max = 0;				/* calculated maxWidth */
 	int line = 0;
 	float texh0, fh, fy; /* Rounding errors break mouse-text correlation. */
-	qboolean skipline = qfalse;
 
 	fy = y;
 	texh0 = lineHeight;
@@ -608,7 +604,7 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 	locX = x;
 
 	do {
-		skipline = qfalse;
+		qboolean skipline = qfalse;
 		if (cur_line) {
 			/* Com_Printf("h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			if (increaseLine)
@@ -725,7 +721,7 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
  * @param[in] dx Modifier to displace strings by a relative x value.
  * @param[in] dy Modifier to displace strings by a relative y value.
  */
-void R_FontRenderCacheList (fontCacheList_t *cacheList, int absY, int maxWidth, int maxHeight, int dx, int dy)
+void R_FontRenderCacheList (const fontCacheList_t *cacheList, int absY, int maxWidth, int maxHeight, int dx, int dy)
 {
 	int i;
 
@@ -777,7 +773,7 @@ void R_FontRegister (const char *name, int size, const char *path, const char *s
 	int renderstyle = 0;		/* NORMAL is standard */
 	int i;
 
-	if (style && *style)
+	if (style && style[0] != '\0')
 		for (i = 0; i < NUM_FONT_STYLES; i++)
 			if (!Q_stricmp(fontStyle[i].name, style)) {
 				renderstyle = fontStyle[i].renderStyle;

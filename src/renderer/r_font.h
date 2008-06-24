@@ -83,6 +83,6 @@ void R_FontListCache_f(void);
 
 int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
 int R_FontGenerateCacheList(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, fontCacheList_t *cacheList);
-void R_FontRenderCacheList(fontCacheList_t *cacheList, int absY, int maxWidth, int maxHeight, int dx, int dy);
+void R_FontRenderCacheList(const fontCacheList_t *cacheList, int absY, int maxWidth, int maxHeight, int dx, int dy);
 
 #endif
