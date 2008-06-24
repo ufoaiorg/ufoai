@@ -365,7 +365,15 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, const vec2_t 
 	return qfalse;
 }
 
-#define GLOBE_RADIUS EARTH_RADIUS * (ccs.zoom / 4.0f) * 0.1
+/**
+ * @brief Typical zoom to use in 3D geoscape to use same zoom values for both 2D and 3D geoscape
+ * @note Used to convert openGL coordinates of the sphere into screen coordinates
+ * @sa GLOBE_RADIUS */
+const float STANDARD_3D_ZOOM = 40.0f;
+
+/** @brief radius of the globe in screen coordinates */
+#define GLOBE_RADIUS EARTH_RADIUS * (ccs.zoom / STANDARD_3D_ZOOM)
+
 /**
  * @brief Transform a 2D position on the map to screen coordinates.
  * @param[in] pos vector that holds longitude and latitude

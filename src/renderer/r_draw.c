@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_draw.h"
 #include "r_mesh.h"
 
+extern const float STANDARD_3D_ZOOM;
+
 image_t *shadow;
 image_t *blood[MAX_DEATH];
 
@@ -789,7 +791,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rotate, float zoom, const char *map)
 {
 	/* globe scaling */
-	const float fullscale = zoom / 40.0f;
+	const float fullscale = zoom / STANDARD_3D_ZOOM;
 	vec4_t lightPos;
 	const vec4_t diffuseLightColor = {1.0f, 1.0f, 1.0f, 1.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
