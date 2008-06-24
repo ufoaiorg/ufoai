@@ -1239,6 +1239,7 @@ static void CL_PlaceItem (le_t *le)
 	if (FLOOR(le)) {
 		const objDef_t *biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cls.model_weapons[biggest->idx];
+		assert(le->model1);
 		Grid_PosToVec(&clMap, le->pos, le->origin);
 		VectorSubtract(le->origin, biggest->center, le->origin);
 		le->angles[ROLL] = 90;
