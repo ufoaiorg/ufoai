@@ -1233,6 +1233,9 @@ static void CL_PlaceItem (le_t *le)
 				FLOOR(actor) = FLOOR(le);
 		}
 
+	/* the le is an ET_ITEM entity, this entity is there to render dropped items
+	 * if there are no items in the floor container, this entity can be
+	 * deactivated */
 	if (FLOOR(le)) {
 		const objDef_t *biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cls.model_weapons[biggest->idx];
