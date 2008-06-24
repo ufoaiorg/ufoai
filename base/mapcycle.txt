@@ -7,9 +7,9 @@
 
 //"+frozend multiplayercoop" coop2
 industrial 1on1
-italy 1on1
++italy 1on1
 farm 1on1
-africa 1on1
++africa 1on1
 estate 1on1
-japan 1on1
++japan 1on1
 tower 1on1
