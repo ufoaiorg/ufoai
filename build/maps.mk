@@ -13,10 +13,10 @@ ENTS_UFO2MAPFLAGS = -nice $(NICE) -onlyents
 maps: $(UFO2MAP_TARGET) $(BSPS)
 
 maps-fast:
-	$(MAKE) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
+	$(MAKE) maps UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
 
 maps-ents:
-	$(MAKE) all UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
+	$(MAKE) maps UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
 maps-clean:
 	find $(MAPSDIR) -name '*.bsp' | xargs rm
