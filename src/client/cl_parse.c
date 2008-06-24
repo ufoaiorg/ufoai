@@ -1212,18 +1212,20 @@ static objDef_t *CL_BiggestItem (invList_t *ic)
 
 /**
  * @sa CL_BiggestItem
+ * @param[in] le The local entity (ET_ITEM) with the floor container
  */
 static void CL_PlaceItem (le_t *le)
 {
 	le_t *actor;
-	objDef_t *biggest;
 	int i;
+
+	assert(le->type == ET_ITEM);
 
 	/* search owners (there can be many, some of them dead) */
 	for (i = 0, actor = LEs; i < numLEs; i++, actor++)
 		if (actor->inuse
 		 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
-		 && VectorCompare(actor->pos, le->pos) ) {
+		 && VectorCompare(actor->pos, le->pos)) {
 #if PARANOID
 			Com_DPrintf(DEBUG_CLIENT, "CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
 #endif
@@ -1232,7 +1234,7 @@ static void CL_PlaceItem (le_t *le)
 		}
 
 	if (FLOOR(le)) {
-		biggest = CL_BiggestItem(FLOOR(le));
+		const objDef_t *biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cls.model_weapons[biggest->idx];
 		Grid_PosToVec(&clMap, le->pos, le->origin);
 		VectorSubtract(le->origin, biggest->center, le->origin);
@@ -1240,12 +1242,14 @@ static void CL_PlaceItem (le_t *le)
 		/*le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
 		le->origin[2] -= GROUND_DELTA;
 	} else {
-		/* If no items in floor inventory, don't draw this le */
-		/* DEBUG
-		 * This is disabled for now because it'll prevent LE_Add to get a floor-edict when in mid-move.
-		 * See g_client.c:G_ClientInvMove
-		 */
-		/* le->inuse = qfalse; */
+		/* If no items in floor inventory, don't draw this le - the container is
+		 * maybe empty because an actor picked up the last items here */
+		/** @todo This might prevent LE_Add to get a floor-edict when in
+		 * mid-move. @sa g_client.c:G_ClientInvMove.
+		 * mattn: But why do we want to get an empty container? If we don't set
+		 * this to qfalse we get the null model rendered, because the le->model
+		 * is @c NULL, too */
+		le->inuse = qfalse;
 	}
 }
 
