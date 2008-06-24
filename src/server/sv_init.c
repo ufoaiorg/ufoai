@@ -1088,7 +1088,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	for (i = 0; i < sv_maxclients->integer; i++) {
 		/* needs to reconnect */
 		if (svs.clients[i].state > cs_connected)
-			svs.clients[i].state = cs_connected;
+			SV_SetClientState(&svs.clients[i], cs_connected);
 		svs.clients[i].lastframe = -1;
 	}
 
