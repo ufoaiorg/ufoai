@@ -198,7 +198,8 @@ void MN_BaseMapClick (menuNode_t *node, base_t *base, int x, int y)
 
 	assert(base);
 
-	if (base->buildingCurrent && gd.baseAction == BA_NEWBUILDING) {
+	if (gd.baseAction == BA_NEWBUILDING) {
+		assert(base->buildingCurrent);
 		for (row = 0; row < BASE_SIZE; row++)
 			for (col = 0; col < BASE_SIZE; col++) {
 				if (x >= base->map[row][col].posX
@@ -206,10 +207,10 @@ void MN_BaseMapClick (menuNode_t *node, base_t *base, int x, int y)
 				 && y >= base->map[row][col].posY
 				 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
 					/* we're on the tile the player clicked */
-					if (!base->map[row][col].building
-					 && !base->map[row][col].blocked
-					 && base->buildingCurrent->needs ? !base->map[row][col + 1].building : 1
-					 && base->buildingCurrent->needs ? !base->map[row][col + 1].blocked : 1) {
+					if (!base->map[row][col].building && !base->map[row][col].blocked) {
+						if (!base->buildingCurrent->needs
+						 || (col < BASE_SIZE - 1 && !base->map[row][col + 1].building && !base->map[row][col + 1].blocked)
+						 || (col > 0 && !base->map[row][col - 1].building && !base->map[row][col - 1].blocked))
 						/* Set position for a new building */
 						B_SetBuildingByClick(base, base->buildingCurrent, row, col);
 					}

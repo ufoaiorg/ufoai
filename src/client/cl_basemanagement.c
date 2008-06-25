@@ -1446,8 +1446,6 @@ static void B_NewBuilding (base_t* base, building_t *building, building_t *secon
  */
 building_t* B_SetBuildingByClick (base_t *base, const building_t const *template, int row, int col)
 {
-	building_t *buildingNew;	/**< new building in base (not a template) */
-
 #ifdef DEBUG
 	if (!base)
 		Sys_Error("no current base\n");
@@ -1463,7 +1461,8 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 	assert(template == template->tpl);
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
-		buildingNew = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+		/* new building in base (not a template) */
+		building_t *buildingNew = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
 
 		/* copy building from template list to base-buildings-list */
 		*buildingNew = *template;
