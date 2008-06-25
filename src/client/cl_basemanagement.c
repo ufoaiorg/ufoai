@@ -2236,7 +2236,7 @@ void MN_BaseMapLayout (const menuNode_t * node)
  */
 void MN_BaseMapDraw (const menuNode_t * node)
 {
-	int x, y, xHover = -1, yHover = -1, widthHover = 1;
+	int xHover = -1, yHover = -1, widthHover = 1;
 	int width, height, row, col, time, colSecond;
 	const vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
 	char image[MAX_QPATH];
@@ -2253,8 +2253,8 @@ void MN_BaseMapDraw (const menuNode_t * node)
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
 			/* 20 is the height of the part where the images overlap */
-			x = node->pos[0] + col * width;
-			y = node->pos[1] + row * height - row * 20;
+			const int x = node->pos[0] + col * width;
+			const int y = node->pos[1] + row * height - row * 20;
 
 			baseCurrent->map[row][col].posX = x;
 			baseCurrent->map[row][col].posY = y;
@@ -2270,7 +2270,7 @@ void MN_BaseMapDraw (const menuNode_t * node)
 				secondBuilding = NULL;
 
 				if (!building)
-					Sys_Error("Error in DrawBase - no building.\n");
+					Sys_Error("Error in MN_BaseMapDraw - no building at %i:%i", row, col);
 
 				if (!building->used) {
 					if (building->needs)
