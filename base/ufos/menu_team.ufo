@@ -1162,7 +1162,7 @@ menu equipment
 		texl	"0 0"
 		texh	"28 36"
 		mousefx true
-		click { cmd "equip_select 0" }
+		click { cmd "equip_select 0;" }
 	}
 	pic bt_actor1
 	{
@@ -1171,7 +1171,7 @@ menu equipment
 		texl	"32 0"
 		texh	"60 36"
 		mousefx true
-		click { cmd "equip_select 1" }
+		click { cmd "equip_select 1;" }
 	}
 	pic bt_actor2
 	{
@@ -1180,7 +1180,7 @@ menu equipment
 		texl	"64 0"
 		texh	"92 36"
 		mousefx true
-		click { cmd "equip_select 2" }
+		click { cmd "equip_select 2;" }
 	}
 	pic bt_actor3
 	{
@@ -1189,7 +1189,7 @@ menu equipment
 		texl	"96 0"
 		texh	"124 36"
 		mousefx true
-		click { cmd "equip_select 3" }
+		click { cmd "equip_select 3;" }
 	}
 	pic bt_actor4
 	{
@@ -1198,7 +1198,7 @@ menu equipment
 		texl	"0 38"
 		texh	"28 74"
 		mousefx true
-		click { cmd "equip_select 4" }
+		click { cmd "equip_select 4;" }
 	}
 	pic bt_actor5
 	{
@@ -1207,7 +1207,7 @@ menu equipment
 		texl	"32 38"
 		texh	"60 74"
 		mousefx true
-		click { cmd "equip_select 5" }
+		click { cmd "equip_select 5;" }
 	}
 	pic bt_actor6
 	{
@@ -1216,7 +1216,7 @@ menu equipment
 		texl	"64 38"
 		texh	"92 74"
 		mousefx true
-		click { cmd "equip_select 6" }
+		click { cmd "equip_select 6;" }
 	}
 	pic bt_actor7
 	{
@@ -1225,7 +1225,7 @@ menu equipment
 		texl	"96 38"
 		texh	"124 74"
 		mousefx true
-		click { cmd "equip_select 7" }
+		click { cmd "equip_select 7;" }
 	}
 
 	string txt_actor0
@@ -1233,56 +1233,56 @@ menu equipment
 		string	"*cvar mn_name0"
 		pos		"60 23"
 		size	"270 16"
-		click { cmd "equip_select 0" }
+		click { cmd "equip_select 0;" }
 	}
 	string txt_actor1
 	{
 		string	"*cvar mn_name1"
 		pos		"60 64"
 		size	"270 16"
-		click { cmd "equip_select 1" }
+		click { cmd "equip_select 1;" }
 	}
 	string txt_actor2
 	{
 		string	"*cvar mn_name2"
 		pos		"60 105"
 		size	"270 16"
-		click { cmd "equip_select 2" }
+		click { cmd "equip_select 2;" }
 	}
 	string txt_actor3
 	{
 		string	"*cvar mn_name3"
 		pos		"60 146"
 		size	"270 16"
-		click { cmd "equip_select 3" }
+		click { cmd "equip_select 3;" }
 	}
 	string txt_actor4
 	{
 		string	"*cvar mn_name4"
 		pos		"60 187"
 		size	"270 16"
-		click { cmd "equip_select 4" }
+		click { cmd "equip_select 4;" }
 	}
 	string txt_actor5
 	{
 		string	"*cvar mn_name5"
 		pos		"60 228"
 		size	"270 16"
-		click { cmd "equip_select 5" }
+		click { cmd "equip_select 5;" }
 	}
 	string txt_actor6
 	{
 		string	"*cvar mn_name6"
 		pos		"60 269"
 		size	"270 16"
-		click { cmd "equip_select 6" }
+		click { cmd "equip_select 6;" }
 	}
 	string txt_actor7
 	{
 		string	"*cvar mn_name7"
 		pos		"60 310"
 		size	"270 16"
-		click { cmd "equip_select 7" }
+		click { cmd "equip_select 7;" }
 	}
 
 	// ==================
@@ -1719,7 +1719,7 @@ menu equipment
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "team_changeskinteam" }
+		click	{ cmd "team_changeskinteam;" }
 	}
 
 	string changeskin
@@ -1758,13 +1758,13 @@ menu equipment
 		pos		"940 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "mn_pop" }
+		click	{ cmd "mn_pop;" }
 	}
 
 	func init
 	{
 		names_clear
 		actor_stats
-		cmd "genequip;equip_primary;equip_select 0"
+		cmd "genequip;equip_primary;equip_select 0;"
 	}
 }
