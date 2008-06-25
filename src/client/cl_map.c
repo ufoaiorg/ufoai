@@ -1091,7 +1091,7 @@ void MAP_CenterOnPoint_f (void)
 
 	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
 	smoothAcceleration = safeAcceleration;
-	
+
 	smoothRotation = qtrue;
 }
 
@@ -1101,7 +1101,7 @@ void MAP_CenterOnPoint_f (void)
  */
 float MAP_GetZoomLevel(float angle) {
 	float zoom = 0;
-	
+
 	if (angle <= 2.5f) {
 	zoom=40.0f;
 	} else if (angle <= 3.0f) {
@@ -1143,9 +1143,9 @@ float MAP_GetZoomLevel(float angle) {
 	} else {
 		zoom=7.0f;
 	}
-	
+
 	Com_Printf("zoom=%f angle=%f", zoom, angle);
-	
+
 	return zoom;
 }
 
@@ -1172,8 +1172,8 @@ void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
 		VectorSet(smoothFinalGlobeAngle, ufoVector[0], -ufoVector[1], 0);
 		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
 		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
-		smoothDeltaLength = VectorLength(diff); 
-		
+		smoothDeltaLength = VectorLength(diff);
+
 	} else {
 		/* case 2D geoscape */
 		vec2_t diff;
@@ -1187,7 +1187,7 @@ void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
 	smoothFinalZoom = zoom;
 	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
 	smoothAcceleration = 0.15f;
-	
+
 	smoothRotation = qtrue;
 }
 
@@ -1197,7 +1197,7 @@ void MAP_TurnCombatZoomOn (void) {
 
 void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo) {
 	gd.combatZoomedUfo = combatZoomedUfo;
-	
+
 	MN_PushMenu("map_battlezoom");
 	MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, AIR_GetMaxAircraftWeaponRange(gd.combatZoomedUfo->weapons, gd.combatZoomedUfo->maxWeapons));
 }
@@ -1210,7 +1210,7 @@ void MAP_CombatZoomExit_f (void) {
 	MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qfalse);
 	gd.combatZoomOn = qfalse;
 	gd.combatZoomedUfo = NULL;
-	
+
 }
 
 
@@ -1477,7 +1477,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 						closestInterceptorDistance = distance;
 					}
 				}
-				
+
 				/* Draw aircraft radar (only the "wire" style part) */
 				if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 					RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
@@ -1526,8 +1526,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			}
 	}
 
-	
-	
+
+
 	/* draws ufos */
 	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
 #ifdef DEBUG
@@ -1570,9 +1570,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					}
 					else {
 						if (closestInterceptorPos) {
-							Com_Printf("closest interceptor distance = %f\n",closestInterceptorDistance);
+							Com_Printf("closest interceptor distance = %f\n", closestInterceptorDistance);
 							vec3_t midpoint = {0,0,0};
-							VectorMidpoint(gd.combatZoomedUfo->pos, closestInterceptorPos, midpoint);
+							VectorMidpoint(gd.combatZoomedUfo->pos, *closestInterceptorPos, midpoint);
 							MAP_CenterOnAlienCraft(midpoint, MAP_GetZoomLevel(closestInterceptorDistance));
 						} else {
 							MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1);
@@ -1580,7 +1580,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					}
 				}
 			}
-			
+
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
 			if (aircraft == selectedUFO) {
@@ -1602,12 +1602,12 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		else
 			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", 0);
 	}
-	
+
 	if (gd.combatZoomOn && !gd.combatZoomedUfo && closestUfo) {
 		MAP_SetCombatZoomedUfo(closestUfo);
 	}
-	
-	
+
+
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
 
 	/* Draw nation names */
@@ -2208,19 +2208,19 @@ void MAP_Zoom_f (void)
 	}
 
 	smoothAcceleration = safeAcceleration;
-	
-	if (gd.combatZoomOn  && gd.combatZoomedUfo && *cmd == 'i') { 
+
+	if (gd.combatZoomOn  && gd.combatZoomedUfo && *cmd == 'i') {
 		return;
 	} else if (gd.combatZoomOn && gd.combatZoomedUfo && *cmd == 'o') {
 		MAP_TurnCombatZoomOff();
 		return;
 	}
-	
+
 	if (smoothFinalZoom < cl_mapzoommin->value)
 		smoothFinalZoom = cl_mapzoommin->value;
 	else if (smoothFinalZoom > cl_mapzoommax->value) {
 		smoothFinalZoom = cl_mapzoommax->value;
-		if (*cmd == 'i') 
+		if (*cmd == 'i')
 			MAP_TurnCombatZoomOn();
 	}
 
