@@ -1186,7 +1186,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		/** @todo move aircraft to .ufo */
 		/* buy two first aircraft and hire pilots for them. */
 		if (B_GetBuildingStatus(base, B_HANGAR)) {
-			const aircraft_t *aircraft = AIR_GetAircraft("craft_drop_firebird");
+			aircraft_t *aircraft = AIR_GetAircraft("craft_drop_firebird");
 			if (!aircraft)
 				Sys_Error("Could not find craft_drop_firebird definition");
 			AIR_NewAircraft(base, "craft_drop_firebird");
@@ -1196,7 +1196,8 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
 				}
 			}
-
+			/* this is the aircraft to assign the initial equipment and soldiers to */
+			base->aircraftCurrent = aircraft;
 		}
 		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			const aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
@@ -2808,7 +2809,7 @@ void B_AssignInitial (base_t *base)
 
 static void B_AssignInitial_f (void)
 {
-	if (baseCurrent->aircraftCurrent)
+	if (baseCurrent && baseCurrent->aircraftCurrent)
 		B_AssignInitial(baseCurrent);
 }
 
@@ -2830,35 +2831,36 @@ static void B_PackInitialEquipment_f (void)
 static void B_BuildBase_f (void)
 {
 	const nation_t *nation;
+	base_t *base = baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	assert(!baseCurrent->founded);
+	assert(!base->founded);
 	assert(ccs.singleplayer);
 	assert(curCampaign);
 
 	if (ccs.credits - curCampaign->basecost > 0) {
-		if (CL_NewBase(baseCurrent, newBasePos)) {
+		if (CL_NewBase(base, newBasePos)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", gd.numBases);
-			baseCurrent->idx = gd.numBases - 1;
-			baseCurrent->founded = qtrue;
-			baseCurrent->baseStatus = BASE_WORKING;
+			base->idx = gd.numBases - 1;
+			base->founded = qtrue;
+			base->baseStatus = BASE_WORKING;
 			campaignStats.basesBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - curCampaign->basecost);
-			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
-			nation = MAP_GetNation(baseCurrent->pos);
+			Q_strncpyz(base->name, mn_base_title->string, sizeof(base->name));
+			nation = MAP_GetNation(base->pos);
 			if (nation)
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
 			else
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 			MN_AddNewMessage(_("Base built"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-			B_ResetAllStatusAndCapacities(baseCurrent, qtrue);
-			AL_FillInContainment(baseCurrent);
-			PR_UpdateProductionCap(baseCurrent);
+			B_ResetAllStatusAndCapacities(base, qtrue);
+			AL_FillInContainment(base);
+			PR_UpdateProductionCap(base);
 
-			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
+			Cbuf_AddText(va("mn_select_base %i;", base->idx));
 			return;
 		}
 	} else {
@@ -2869,7 +2871,6 @@ static void B_BuildBase_f (void)
 
 		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new base."));
 		MN_Popup(_("Notice"), popupText);
-
 	}
 }
 
