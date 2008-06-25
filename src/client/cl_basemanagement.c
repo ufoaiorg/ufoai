@@ -2769,7 +2769,7 @@ static void B_PackInitialEquipment (base_t *base)
  */
 void B_AssignInitial (base_t *base)
 {
-	int i;
+	int i, num;
 
 	if (!base) {
 		aircraft_t *aircraft;
@@ -2796,8 +2796,9 @@ void B_AssignInitial (base_t *base)
 		Cvar_Set("mn_teamname", _("NewTeam"));
 	}
 
-	CL_GenTeamList(base);
-	for (i = MAX_TEAMLIST; --i >= 0;)
+	num = CL_GenTeamList(base);
+	num = min(num, MAX_TEAMLIST);
+	for (i = 0; i < num; i++)
 		CL_AssignSoldierFromMenuToAircraft(base, i, base->aircraftCurrent);
 
 	B_PackInitialEquipment(base);

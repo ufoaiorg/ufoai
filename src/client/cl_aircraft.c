@@ -731,7 +731,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	assert(aircraft);
 	assert(aircraft->homebase == base);
-	CL_UpdateHireVar(aircraft, EMPL_SOLDIER);
+	CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
@@ -956,10 +956,10 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 			employee = aircraft->acTeam[i];
 			assert(employee);
 			E_DeleteEmployee(employee, employee->type);
-			aircraft->acTeam[i] = NULL;
 		}
  	}
 
+	AIR_ResetAircraftTeam(aircraft);
  	aircraft->status = AIR_HOME;
 
 	AIR_DeleteAircraft(aircraft->homebase, aircraft);

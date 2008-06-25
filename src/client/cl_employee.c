@@ -116,7 +116,7 @@ static void E_EmployeeListScroll_f (void)
 
 /**
  * @brief Will fill the list with employees
- * @note this is the init function in employee menu
+ * @note this is the init function in the employee hire menu
  */
 static void E_EmployeeList_f (void)
 {
@@ -149,15 +149,19 @@ static void E_EmployeeList_f (void)
 
 	if (hiredEmployeeIdx < 0) {
 		/* Reset scrolling when no specific entry was given. */
-		/** @todo Is there a case where hiredEmployeeIdx is <0 and the textScroll must be reset? */
+		/** @todo Is there a case where hiredEmployeeIdx is < 0 and the
+		 * textScroll must be reset? */
 		employeeListNode->textScroll = 0;
 	} else {
-		/** @todo If employee is given but outside the current visible list (defined by employeeListNode->textScroll) we need to calculate the new employeeListNode->textScroll */
+		/** @todo If employee is given but outside the current visible list
+		 * (defined by employeeListNode->textScroll) we need to calculate the
+		 * new employeeListNode->textScroll */
 	}
 
 	/* make sure, that we are using the linked list */
 	MN_MenuTextReset(TEXT_LIST);
 
+	/** @todo Use CL_GetTeamList and reduce code duplication */
 	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
 		/* don't show employees of other bases */
 		if (employee->baseHired != baseCurrent && employee->hired)
@@ -166,9 +170,10 @@ static void E_EmployeeList_f (void)
 		LIST_AddPointer(&mn.menuTextLinkedList[TEXT_LIST], employee->chr.name);
 		LIST_AddPointer(&employeeList, employee);
 		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
-		/** @todo Check if the "textScroll % cl_numnames->integer" calculation is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
+		/** @todo Check if the "textScroll % cl_numnames->integer" calculation
+		 * is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
 		if ((employeesInCurrentList >= employeeListNode->textScroll)
-		&& (employeesInCurrentList < (employeeListNode->textScroll + cl_numnames->integer))) {
+		 && (employeesInCurrentList < (employeeListNode->textScroll + cl_numnames->integer))) {
 			if (employee->hired) {
 				if (employee->baseHired == baseCurrent) {
 					if (employee->transfer)
@@ -1172,7 +1177,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
  * @brief Find an hired or free employee by the menu index
  * @param[in] num The index from the hire menu screen (index inemployeeList).
  */
-inline employee_t* E_GetEmployeeByMenuIndex (int num)
+employee_t* E_GetEmployeeByMenuIndex (int num)
 {
 	int i;
 	linkedList_t *emplList = employeeList;
