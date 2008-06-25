@@ -2230,6 +2230,9 @@ void MN_BaseMapLayout (const menuNode_t * node)
 	}
 }
 
+/** 20 is the height of the part where the images overlap */
+#define BASE_IMAGE_OVERLAY 20
+
 /**
  * @brief Draws a base.
  * @sa MN_DrawMenus
@@ -2248,16 +2251,16 @@ void MN_BaseMapDraw (const menuNode_t * node)
 	}
 
 	width = node->size[0] / BASE_SIZE;
-	height = (node->size[1] + BASE_SIZE * 20) / BASE_SIZE;
+	height = (node->size[1] + BASE_SIZE * BASE_IMAGE_OVERLAY) / BASE_SIZE;
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
-			/* 20 is the height of the part where the images overlap */
 			const int x = node->pos[0] + col * width;
-			const int y = node->pos[1] + row * height - row * 20;
+			const int y = node->pos[1] + row * height - row * BASE_IMAGE_OVERLAY;
 
 			baseCurrent->map[row][col].posX = x;
 			baseCurrent->map[row][col].posY = y;
+			image[0] = '\0';
 
 			if (baseCurrent->map[row][col].blocked) {
 				building = NULL;
@@ -2268,18 +2271,13 @@ void MN_BaseMapDraw (const menuNode_t * node)
 			} else {
 				building = baseCurrent->map[row][col].building;
 				secondBuilding = NULL;
-
-				if (!building)
-					Sys_Error("Error in MN_BaseMapDraw - no building at %i:%i", row, col);
+				assert(building);
 
 				if (!building->used) {
 					if (building->needs)
 						building->used = 1;
-					if (building->image) {	/** @todo:DEBUG */
+					if (building->image)
 						Q_strncpyz(image, building->image, sizeof(image));
-					} else {
-						/*Com_DPrintf(DEBUG_CLIENT, "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx); */
-					}
 				} else if (building->needs) {
 					secondBuilding = B_GetBuildingTemplate(building->needs);
 					if (!secondBuilding)
@@ -2289,7 +2287,7 @@ void MN_BaseMapDraw (const menuNode_t * node)
 				}
 			}
 
-			if (*image)
+			if (image[0] != '\0')
 				R_DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
 
 			/* check for hovering building name or outline border */
