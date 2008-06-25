@@ -658,7 +658,6 @@ static void CL_LeftClickDown_f (void)
 static void CL_DrawSpottedLines_f (void)
 {
 	le_t *watcher; /** @todo make this a parameter for use in other functions? */
-	le_t *le;
 	int i;
 	trace_t tr;
 	vec3_t from, at;
@@ -672,7 +671,7 @@ static void CL_DrawSpottedLines_f (void)
 		CL_CameraModeChange(CAMERA_MODE_REMOTE);
 
 	for (i = 0; i < numLEs; i++) {
-		le = &LEs[i];
+		const le_t *le = &LEs[i];
 		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		 && !(le->state & STATE_DEAD) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {

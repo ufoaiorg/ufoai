@@ -894,7 +894,7 @@ static void CL_ActorDoStartMove (struct dbuffer *msg)
 /**
  * @brief draw a simple 'spotted' line from a spotter to the spotted
  */
-void CL_DrawLineOfSight (le_t *watcher, le_t *target)
+void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
 {
 	ptl_t *ptl;
 	vec3_t eyes;

@@ -33,6 +33,6 @@ void CL_UnblockEvents(void);
 void CL_SetLastMoving(le_t *le);
 void CL_ParseServerMessage(int cmd, struct dbuffer *msg);
 qboolean CL_CheckOrDownloadFile(const char *filename);
-void CL_DrawLineOfSight(le_t *watcher, le_t *target);
+void CL_DrawLineOfSight(const le_t *watcher, const le_t *target);
 
 #endif
