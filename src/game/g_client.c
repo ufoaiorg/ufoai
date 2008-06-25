@@ -940,7 +940,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 	ent = g_edicts + num;
 	msglevel = quiet ? PRINT_NONE : PRINT_CONSOLE;
 
-	/* store the location of 'from' BEFORE actually moving items with Com_MoveInInventory */
+	/* Store the location of 'from' BEFORE actually moving items with Com_MoveInInventory. */
 	invList = Com_SearchInInventory(&ent->i, from, fx, fy);
 
 	/* check if action is possible */

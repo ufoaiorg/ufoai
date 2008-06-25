@@ -75,13 +75,14 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 		ic = Com_SearchInInventory(menuInventory, &csi.ids[node->mousefx], px, py);
 		if (ic) {
 			if (!rightClick) {
-				/* found item to drag */
+				/* Found item to drag. Prepare for drag-mode. */
 				mouseSpace = MS_DRAG;
 				dragInfo.item = ic->item;
-				/* mousefx is the container (see hover code) */
-				dragInfo.from = &csi.ids[node->mousefx];
-				dragInfo.fromX = ic->x;
-				dragInfo.fromY = ic->y;
+				dragInfo.from = &csi.ids[node->mousefx];	/**< mousefx is the container (see hover code). */
+
+				/* Store grid-position (in the container) of the mouse. */
+				dragInfo.fromX = px;
+				dragInfo.fromY = py;
 			} else {
 				if (node->mousefx != csi.idEquip) {
 					/* back to idEquip (ground, floor) container */

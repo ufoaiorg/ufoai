@@ -333,11 +333,13 @@ typedef struct item_s {
 					 * parsing functions are expecting this to be at least 4 bytes */
 } item_t;
 
-/** @brief container/inventory list (linked list) with items */
+/** @brief container/inventory list (linked list) with items. */
 typedef struct invList_s {
-	item_t item;	/**< which item */
-	int x, y;		/**< position of the item */
-	struct invList_s *next;		/**< next entry in this list */
+	item_t item;	/**< Which item */
+	int x, y;		/**< Position (aka origin location) of the item in the container/invlist.
+					 * @note ATTENTION Do not use this to get an item by comparing it against a x/y value.
+					 * The shape as defined in the item_t may be empty at this location! */
+	struct invList_s *next;		/**< Next entry in this list. */
 } invList_t;
 
 /** @brief inventory defintion with all its containers */

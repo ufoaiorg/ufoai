@@ -248,8 +248,8 @@ qboolean Com_CompareItem (item_t *item1, item_t *item2)
  * @brief Searches if there is an item at location (x,y) in a container.
  * @param[in] i Pointer to the inventory where we will search.
  * @param[in] container Container index.
- * @param[in] x x position that you want to check
- * @param[in] y y position that you want to check
+ * @param[in] x X position that you want to check.
+ * @param[in] y Y position that you want to check.
  * @return invList_t Pointer to the container in given inventory, where we can place new item.
  */
 invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * container, int x, int y)
@@ -258,11 +258,11 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 
 	assert(container);
 
-	/* only a single item */
+	/* Only a single item. */
 	if (container->single)
 		return i->c[container->id];
 
-	/* more than one item - search for a suitable place in this container */
+	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
 		if (x >= ic->x
 		&& y >= ic->y
@@ -449,7 +449,12 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, const invDef_t * c
 	}
 
 	for (previous = i->c[container->id]; ic; ic = ic->next) {
-		if (ic->x == x && ic->y == y) {
+		if (x >= ic->x
+		 && y >= ic->y
+		 && x < ic->x + SHAPE_SMALL_MAX_WIDTH
+		 && y < ic->y + SHAPE_SMALL_MAX_HEIGHT
+		 && ((ic->item.rotated && (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1))
+		  || (!ic->item.rotated && (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)))) {
 			cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
 			if (!ignore_type && ic->item.amount > 1 && container->temp) {
@@ -668,7 +673,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 
 		/* temp container like idEquip and idFloor */
 		if (ic && to->temp) {
-			/* We are moving to a blocked location container but it's the base-equipment loor of a battlsecape floor
+			/** We are moving to a blocked location container but it's the base-equipment loor of a battlsecape floor
 			 * We add the item anyway but it'll not be displayed (yet)
 			 * @todo change the other code to browse trough these things. */
 			Com_FindSpace(i, &cacheItem, to, &tx, &ty);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
