@@ -737,8 +737,11 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	employee->baseHired = NULL;
 	employee->building = NULL;
 	employee->type = type;
-	assert(nation >= gd.nations);
-	assert(nation <= &gd.nations[MAX_NATIONS]);
+	/* multiplayer doesn't have a nation ppinter */
+	if (nation) {
+		assert(nation >= gd.nations);
+		assert(nation <= &gd.nations[MAX_NATIONS]);
+	}
 	employee->nation = nation;
 
 	switch (type) {
