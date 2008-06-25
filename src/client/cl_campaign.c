@@ -6907,7 +6907,7 @@ static void CL_GameNew_f (void)
 	MN_PushMenu("map");
 
 	/* create a base as first step */
-	Cmd_ExecuteString("mn_select_base -1");
+	B_SelectBase(NULL);
 
 	CL_GameInit(qfalse);
 	Cmd_ExecuteString("addeventmail prolog");

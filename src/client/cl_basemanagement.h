@@ -275,6 +275,7 @@ void B_InitStartup(void);
 void B_ClearBase(base_t *const base);
 void B_NewBases(void);
 void B_BuildingStatus(const base_t* base, const building_t* building);
+void B_SelectBase(base_t *base);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(const base_t *base, const building_t *type);

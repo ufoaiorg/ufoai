@@ -160,8 +160,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		if (id >= gd.numBases)
 			break;
 		MAP_ResetAction();
-		Cmd_ExecuteString(va("mn_select_base %i", id));
-		MN_PushMenu("bases");
+		B_SelectBase(B_GetFoundedBaseByIDX(id));
 		break;
 	case MULTISELECT_TYPE_MISSION: /* Select a mission */
 		if (gd.mapAction == MA_INTERCEPT && selectedMission && selectedMission == MAP_GetMissionByIdx(id)) {

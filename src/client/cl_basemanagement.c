@@ -43,8 +43,6 @@ void R_CreateRadarOverlay(void);
 
 vec3_t newBasePos;
 static cvar_t *mn_base_title;
-static cvar_t *mn_base_count;
-static cvar_t *mn_base_id;
 static cvar_t *cl_equip;
 
 static building_t *buildingConstructionList[MAX_BUILDINGS];
@@ -380,20 +378,12 @@ static void B_BaseMenuInit (const base_t *base)
  * @brief Initialises base.
  * @note This command is executed in the init node of the base menu.
  * It is called everytime the base menu pops up and sets the cvars.
- * The current selected base is determined via cvar mn_base_id.
  */
 static void B_BaseInit_f (void)
 {
-	if (!mn_base_id)
+	if (!baseCurrent)
 		return;
-
-	/* sanity check */
-	if (mn_base_id->integer < 0 || mn_base_id->integer > B_GetFoundedBaseCount()) {
-		Com_Printf("B_BaseInit_f: mn_base_id value is invalid: %i\n", mn_base_id->integer);
-		return;
-	}
-
-	B_BaseMenuInit(B_GetBaseByIDX(mn_base_id->integer));
+	B_BaseMenuInit(baseCurrent);
 }
 
 /**
@@ -1252,11 +1242,9 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	B_BuildingInit(base);
 	Com_DPrintf(DEBUG_CLIENT, "Set up for %i\n", base->idx);
 
-	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
+	/* this cvar is used for disabling the base build button on geoscape
+	 * if MAX_BASES was reached */
 	Cvar_Set("mn_base_count", va("%i", gd.numBases));
-
-	/* this cvar is needed by B_SetBuildingByClick below*/
-	Cvar_SetValue("mn_base_id", base->idx);
 
 	base->numAircraftInBase = 0;
 
@@ -2393,29 +2381,18 @@ static void B_RenameBase_f (void)
 static void B_NextBase_f (void)
 {
 	int baseID;
+	base_t *base = baseCurrent;
 
-	if (!mn_base_id)
-		return;
-
-	baseID = mn_base_id->integer;
-
-	if (!gd.bases[baseID].founded)
+	if (!base)
 		return;
 
 	/* you can't change base if base is under attack */
-	if (gd.bases[baseID].baseStatus == BASE_UNDER_ATTACK)
+	if (base->baseStatus == BASE_UNDER_ATTACK)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "cur-base=%i num-base=%i\n", baseID, gd.numBases);
-	if (baseID < gd.numBases - 1)
-		baseID++;
-	else
-		baseID = 0;
-	Com_DPrintf(DEBUG_CLIENT, "new-base=%i\n", baseID);
-	if (!gd.bases[baseID].founded)
-		return;
-	else
-		Cmd_ExecuteString(va("mn_select_base %i", baseID));
+	baseID = (base->idx + 1) % gd.numBases;
+	base = B_GetFoundedBaseByIDX(baseID);
+	B_SelectBase(base);
 }
 
 /**
@@ -2426,31 +2403,23 @@ static void B_NextBase_f (void)
 static void B_PrevBase_f (void)
 {
 	int baseID;
+	base_t *base = baseCurrent;
 
-	if (!mn_base_id)
-		return;
-
-	baseID = mn_base_id->integer;
-
-	if (!gd.bases[baseID].founded)
+	if (!base)
 		return;
 
 	/* you can't change base if base is under attack */
-	if (gd.bases[baseID].baseStatus == BASE_UNDER_ATTACK)
+	if (base->baseStatus == BASE_UNDER_ATTACK)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "cur-base=%i num-base=%i\n", baseID, gd.numBases);
+	baseID = base->idx;
 	if (baseID > 0)
 		baseID--;
 	else
 		baseID = gd.numBases - 1;
-	Com_DPrintf(DEBUG_CLIENT, "new-base=%i\n", baseID);
 
-	/* this must be false - but i'm paranoid' */
-	if (!gd.bases[baseID].founded)
-		return;
-	else
-		Cmd_ExecuteString(va("mn_select_base %i", baseID));
+	base = B_GetFoundedBaseByIDX(baseID);
+	B_SelectBase(base);
 }
 
 /**
@@ -2471,24 +2440,14 @@ static int B_GetFirstUnfoundedBase (void)
 }
 
 /**
- * @brief Called when a base is opened or a new base is created on geoscape.
- *
- * For a new base the baseID is -1.
+ * @param[in] base If this is @c NULL we want to build a new base
  */
-static void B_SelectBase_f (void)
+void B_SelectBase (base_t *base)
 {
-	int baseID;
-	base_t *base;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
-		return;
-	}
-	baseID = atoi(Cmd_Argv(1));
-
 	/* set up a new base */
-	/* called from *.ufo with -1 */
-	if (baseID < 0) {
+	if (!base) {
+		int baseID;
+
 		/* if player hit the "create base" button while creating base mode is enabled
 		 * that means that player wants to quit this mode */
 		if (gd.mapAction == MA_NEWBASE) {
@@ -2497,6 +2456,7 @@ static void B_SelectBase_f (void)
 				MAP_DeactivateOverlay("radar");
 			return;
 		}
+
 		gd.mapAction = MA_NEWBASE;
 		baseID = B_GetFirstUnfoundedBase();
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
@@ -2517,26 +2477,22 @@ static void B_SelectBase_f (void)
 			baseCurrent = B_GetBaseByIDX(0);
 			gd.mapAction = MA_NONE;
 		}
-	} else if (baseID < MAX_BASES) {
-		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", baseID);
-		base = B_GetBaseByIDX(baseID);
-		if (base->founded) {
-			baseCurrent = base;
-			gd.mapAction = MA_NONE;
-			MN_PushMenu("bases");
-			AIR_AircraftSelect(NULL);
-			switch (baseCurrent->baseStatus) {
-			case BASE_UNDER_ATTACK:
-				Cvar_Set("mn_base_status_name", _("Base is under attack"));
-				Cmd_ExecuteString("set_base_under_attack");
-				break;
-			default:
-				Cmd_ExecuteString("set_base_to_normal");
-				break;
-			}
+	} else {
+		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
+		baseCurrent = base;
+		gd.mapAction = MA_NONE;
+		MN_PushMenu("bases");
+		AIR_AircraftSelect(NULL);
+		switch (baseCurrent->baseStatus) {
+		case BASE_UNDER_ATTACK:
+			Cvar_Set("mn_base_status_name", _("Base is under attack"));
+			Cmd_ExecuteString("set_base_under_attack");
+			break;
+		default:
+			Cmd_ExecuteString("set_base_to_normal");
+			break;
 		}
-	} else
-		return;
+	}
 
 	/**
 	 * this is only needed when we are going to be show up the base
@@ -2544,11 +2500,32 @@ static void B_SelectBase_f (void)
 	 */
 	if (gd.mapAction != MA_NEWBASE) {
 		assert(baseCurrent);
-		Cvar_SetValue("mn_base_id", baseCurrent->idx);
 		Cvar_Set("mn_base_title", baseCurrent->name);
 		Cvar_SetValue("mn_numbases", gd.numBases);
 		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
 	}
+}
+
+/**
+ * @brief Called when a base is opened or a new base is created on geoscape.
+ * For a new base the baseID is -1.
+ */
+static void B_SelectBase_f (void)
+{
+	int baseID;
+	base_t *base;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
+		return;
+	}
+	baseID = atoi(Cmd_Argv(1));
+	if (baseID >= 0 && baseID < gd.numBases)
+		base = B_GetFoundedBaseByIDX(baseID);
+	else
+		/* create a new base */
+		base = NULL;
+	B_SelectBase(base);
 }
 
 #undef RIGHT
@@ -2860,7 +2837,7 @@ static void B_BuildBase_f (void)
 			AL_FillInContainment(base);
 			PR_UpdateProductionCap(base);
 
-			Cbuf_AddText(va("mn_select_base %i;", base->idx));
+			B_SelectBase(base);
 			return;
 		}
 	} else {
@@ -3426,8 +3403,6 @@ void B_InitStartup (void)
 	Cmd_AddCommand("debug_basereset", B_ResetAllStatusAndCapacities_f, "Reset building status and capacities of all bases");
 #endif
 
-	mn_base_count = Cvar_Get("mn_base_count", "0", 0, "Current amount of build bases");
-	mn_base_id = Cvar_Get("mn_base_id", "-1", 0, "Internal id of the current selected base");
 	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 }
 
@@ -4214,7 +4189,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	}
 	gd.numBases = B_GetFoundedBaseCount();
 	Cvar_Set("mn_base_count", va("%i", gd.numBases));
-	Cvar_SetValue("mn_base_id", 0);
 
 	return qtrue;
 }
