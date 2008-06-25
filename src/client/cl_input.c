@@ -905,7 +905,9 @@ static float CL_GetKeyMouseState (int dir)
 	return value;
 }
 
-
+/**
+ * @sa CL_CameraMove
+ */
 static void CL_CameraMoveFirstPerson (void)
 {
 	const float rotation_speed =

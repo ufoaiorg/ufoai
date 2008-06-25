@@ -33,7 +33,7 @@ client_t *sv_client;
 
 /** password for remote server commands */
 static cvar_t *rcon_password;
-static cvar_t *sv_downloadserver;
+static cvar_t *sv_http_downloadserver;
 static cvar_t *sv_enablemorale;
 static cvar_t *sv_maxsoldiersperteam;
 static cvar_t *sv_maxsoldiersperplayer;
@@ -328,8 +328,8 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	SV_UserinfoChanged(newcl);
 
 	/* send the connect packet to the client */
-	if (sv_downloadserver->string[0])
-		NET_OOB_Printf(stream, "client_connect dlserver=%s", sv_downloadserver->string);
+	if (sv_http_downloadserver->string[0])
+		NET_OOB_Printf(stream, "client_connect dlserver=%s", sv_http_downloadserver->string);
 	else
 		NET_OOB_Printf(stream, "client_connect");
 
@@ -818,7 +818,7 @@ void SV_Init (void)
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	sv_hostname = Cvar_Get("sv_hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
-	sv_downloadserver = Cvar_Get("sv_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
+	sv_http_downloadserver = Cvar_Get("sv_http_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
 	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
