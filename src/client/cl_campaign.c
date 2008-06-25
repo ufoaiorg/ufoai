@@ -3730,7 +3730,7 @@ void CL_GameTimeStop (void)
 	const menu_t *menu = MN_GetActiveMenu();
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strcmp(menu->name, "map")) {
+	if (menu && !Q_strncmp(menu->name, "map", 3)) {
 		gameLapse = 0;
 	}
 
@@ -3759,7 +3759,7 @@ void CL_GameTimeSlow (void)
 	assert(gameLapse >= 0);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strcmp(menu->name, "map")) {
+	if (menu && !Q_strncmp(menu->name, "map", 3)) {
 		gameLapse--;
 	}
 
@@ -3787,13 +3787,40 @@ void CL_GameTimeFast (void)
 	assert(gameLapse < NUM_TIMELAPSE);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strcmp(menu->name, "map")) {
+	if (menu && !Q_strncmp(menu->name, "map", 3)) {
 		gameLapse++;
 	}
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
 	CL_UpdateTime();
 }
+
+/**
+ * @brief Set game time speed
+ * @param[in] gameLapseValue The value to set the game time to. 
+ * @note 
+ */
+void CL_SetGameTime (int gameLapseValue)
+{
+	if (gameLapseValue == gameLapse)
+		return;
+	
+	/* check the stats value - already build bases might have been destroyed
+	 * so the gd.numBases values is pointless here */
+	if (!campaignStats.basesBuild)
+		return;
+
+	if (gameLapse == NUM_TIMELAPSE - 1)
+		return;
+
+	assert(gameLapse < NUM_TIMELAPSE);
+
+	gameLapse = gameLapseValue;
+	
+	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
+	CL_UpdateTime();
+}
+
 
 /* =========================================================== */
 
@@ -6611,6 +6638,7 @@ static const cmdList_t game_commands[] = {
 	{"nation_stats_click", CP_NationStatsClick_f, NULL},
 	{"nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics."},
 	{"nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it."},
+	{"combatzoom_exit", MAP_CombatZoomExit_f, "Exit combat zoom mode."},
 	{"game_go", CL_GameGo, NULL},
 	{"game_auto_check", CL_GameAutoCheck_f, "Checks whether this mission can be done automatically"},
 	{"game_auto_go", CL_GameAutoGo_f, "Let the current selection mission be done automatically"},

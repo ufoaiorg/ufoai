@@ -161,6 +161,7 @@ vec_t VectorNormalize(vec3_t v);    /* returns vector length */
 vec_t VectorNormalize2(const vec3_t v, vec3_t out);
 void VectorInverse(vec3_t v);
 void VectorScale(const vec3_t in, const vec_t scale, vec3_t out);
+void VectorMidpoint(const vec3_t point1, const vec3_t point2, vec3_t midpoint);
 int Q_log2(int val);
 
 void VectorCenterFromMinsMaxs(const vec3_t mins, const vec3_t maxs, vec3_t center);

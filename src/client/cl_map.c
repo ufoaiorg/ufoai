@@ -93,7 +93,10 @@ static vec2_t smoothFinal2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.cente
 static float smoothDeltaLength = 0.0f;		/**< angle/position difference that we need to change when smoothing */
 static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
+static float smoothAcceleration = 0.0f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 static qboolean smoothNewClick = qfalse;		/**< New click on control panel to make geoscape rotate */
+
+const float safeAcceleration = 0.06f;
 
 static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
 											zone and water by different color values */
@@ -1087,9 +1090,129 @@ void MAP_CenterOnPoint_f (void)
 	smoothFinalZoom = ZOOM_LIMIT;
 
 	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
-
+	smoothAcceleration = safeAcceleration;
+	
 	smoothRotation = qtrue;
 }
+
+/**
+ * @brief Gets the zoom level for a given distance on the 3D geoscape.
+ * @param[in] The distance to find the zoom level for.
+ */
+float MAP_GetZoomLevel(float angle) {
+	float zoom = 0;
+	
+	if (angle <= 2.5f) {
+	zoom=40.0f;
+	} else if (angle <= 3.0f) {
+	zoom=35.62f;
+	} else if (angle <= 3.5f) {
+	zoom=31.1f;
+	} else if (angle <= 4.0f) {
+	zoom=26.4f;
+	} else if (angle <= 4.5f) {
+	zoom=23.85f;
+	} else if (angle <= 5.0f) {
+	zoom=21.5f;
+	} else if (angle <= 5.5f) {
+	zoom=19.52f;
+	} else if (angle <= 6.0f) {
+	zoom=17.66f;
+	} else if (angle <= 6.5f) {
+	zoom=16.5f;
+	} else if (angle <= 7.0f) {
+	zoom=15.3f;
+	} else if (angle <= 7.5f) {
+	zoom=14.4f;
+	} else if (angle <= 8.0f) {
+	zoom=13.4f;
+	} else if (angle <= 8.5f) {
+	zoom=12.6f;
+	} else if (angle <= 9.0f) {
+	zoom=11.825f;
+	} else if (angle <= 9.5f) {
+	zoom=11.245f;
+	} else if (angle <= 10.0f) {
+	zoom=10.69f;
+	} else if (angle <= 10.5f) {
+	zoom=10.17f;
+	} else if (angle <= 11.0f) {
+	zoom=9.67f;
+	} else if (angle <= 12.5f) {
+	zoom=8.6f;
+	} else {
+		zoom=7.0f;
+	}
+	
+	Com_Printf("zoom=%f angle=%f", zoom, angle);
+	
+	return zoom;
+}
+
+/**
+ * @brief Moves the map center position to the location of a UFO on the geoscape.
+ * @param[in] ufoVector  The position of the ufo to center on.
+ * @param[in] zoom  The level at which to zoom.
+ */
+void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
+{
+	const menu_t *activeMenu;
+
+	/* this function only concerns maps */
+	activeMenu = MN_GetActiveMenu();
+	if (Q_strncmp(activeMenu->name, "map", 3))
+		return;
+
+	centerOnEventIdx++;
+
+	if (cl_3dmap->integer) {
+		/* case 3D geoscape */
+		vec3_t diff;
+
+		VectorSet(smoothFinalGlobeAngle, ufoVector[0], -ufoVector[1], 0);
+		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
+		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
+		smoothDeltaLength = VectorLength(diff); 
+		
+	} else {
+		/* case 2D geoscape */
+		vec2_t diff;
+		Vector2Set(smoothFinal2DGeoscapeCenter, ufoVector[0], ufoVector[1]);
+		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
+		diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
+		diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
+		smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+	}
+
+	smoothFinalZoom = zoom;
+	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
+	smoothAcceleration = 0.15f;
+	
+	smoothRotation = qtrue;
+}
+
+void MAP_TurnCombatZoomOn (void) {
+	gd.combatZoomOn = qtrue;
+}
+
+void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo) {
+	gd.combatZoomedUfo = combatZoomedUfo;
+	
+	MN_PushMenu("map_battlezoom");
+	MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, AIR_GetMaxAircraftWeaponRange(gd.combatZoomedUfo->weapons, gd.combatZoomedUfo->maxWeapons));
+}
+
+void MAP_TurnCombatZoomOff (void) {
+	MN_PopMenu(qfalse);
+}
+
+void MAP_CombatZoomExit_f (void) {
+	MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qfalse);
+	gd.combatZoomOn = qfalse;
+	gd.combatZoomedUfo = NULL;
+	
+}
+
 
 /**
  * @brief smooth rotation of the 3D geoscape
@@ -1101,7 +1224,6 @@ static void MAP3D_SmoothRotate (void)
 {
 	vec3_t diff;
 	float diff_angle, diff_zoom;
-	const float acceleration = 0.06f;
 	const float epsilon = 0.1f;
 	const float epsilonZoom = 0.01f;
 
@@ -1121,17 +1243,17 @@ static void MAP3D_SmoothRotate (void)
 	if (smoothDeltaLength > smoothDeltaZoom) {
 		if (diff_angle > epsilon) {
 			rotationSpeed = smoothDeltaLength * sin(3.05f * diff_angle / smoothDeltaLength) + speedOffset * diff_angle / smoothDeltaLength;
-			VectorScale(diff, acceleration / diff_angle * rotationSpeed, diff);
+			VectorScale(diff, smoothAcceleration / diff_angle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
-			ccs.zoom = ccs.zoom + acceleration * diff_zoom / diff_angle * rotationSpeed;
+			ccs.zoom = ccs.zoom + smoothAcceleration * diff_zoom / diff_angle * rotationSpeed;
 			return;
 		}
 	} else {
 		if (fabs(diff_zoom) > epsilonZoom) {
 			rotationSpeed = smoothDeltaZoom * sin(3.05f * (diff_zoom / smoothDeltaZoom)) + fabs(speedOffset) * diff_zoom / smoothDeltaZoom;
-			VectorScale(diff, acceleration * diff_angle / fabs(diff_zoom) * rotationSpeed, diff);
+			VectorScale(diff, smoothAcceleration * diff_angle / fabs(diff_zoom) * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
-			ccs.zoom = ccs.zoom + acceleration * rotationSpeed;
+			ccs.zoom = ccs.zoom + smoothAcceleration * rotationSpeed;
 			return;
 		}
 	}
@@ -1153,6 +1275,27 @@ void MAP_StopSmoothMovement (void)
 	smoothRotation = qfalse;
 }
 
+void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
+{
+	vec3_t diff;
+
+	smoothRotation = qtrue;
+
+	smoothFinalZoom = finalZoomLevel;
+	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
+	if (useSafeAcceleration)
+		smoothAcceleration = safeAcceleration;
+	else
+		smoothAcceleration = 0.2f;
+
+	smoothDeltaLength = 0.0f;
+
+	VectorSet(smoothFinalGlobeAngle, gd.combatZoomedUfo->pos[0], -gd.combatZoomedUfo->pos[1], 0);
+	smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
+	VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
+}
+
+
 #define SMOOTHING_STEP_2D	0.02f
 /**
  * @brief smooth translation of the 2D geoscape
@@ -1168,13 +1311,13 @@ static void MAP_SmoothTranslate (void)
 
 	diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
 	diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
-	diff_zoom = ZOOM_LIMIT - ccs.zoom;
+	diff_zoom = smoothFinalZoom - ccs.zoom;
 
 	length = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
 	if (length < SMOOTHING_STEP_2D) {
 		ccs.center[0] = smoothFinal2DGeoscapeCenter[0];
 		ccs.center[1] = smoothFinal2DGeoscapeCenter[1];
-		ccs.zoom = ZOOM_LIMIT;
+		ccs.zoom = smoothFinalZoom;
 		smoothRotation = qfalse;
 	} else {
 		ccs.center[0] = ccs.center[0] + SMOOTHING_STEP_2D * diff[0] / length;
@@ -1225,6 +1368,12 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	qboolean showXVI = qfalse;
 	qboolean oneUFOVisible = qfalse;
 	static char buffer[512] = "";
+	float closestUfoDistance = -1.0f;
+	vec3_t *closestInterceptorPos = NULL;
+	float closestInterceptorDistance = -1.0f;
+	float weaponZoomRange = 0;
+	static qboolean aircraftInWeaponsRange = qfalse;
+	aircraft_t *closestUfo = NULL;
 
 	assert(node);
 
@@ -1270,13 +1419,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 	}
 
-	/* draws projectiles */
-	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
-		if (projectile->bullets)
-			MAP_DrawBullets(node, projectile);
-		else
-			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", 0);
-	}
+	closestInterceptorDistance = -1.0f;
 
 	/* draw bases */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
@@ -1324,6 +1467,17 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				float angle;
 
+				if (gd.combatZoomedUfo && aircraft->aircraftTarget == gd.combatZoomedUfo) {
+					float distance = MAP_GetDistance(aircraft->pos, gd.combatZoomedUfo->pos);
+					float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
+					if (distance < maxRange && weaponZoomRange < maxRange)
+						weaponZoomRange = maxRange;
+					if (distance < closestInterceptorDistance || !closestInterceptorPos) {
+						closestInterceptorPos = &aircraft->pos;
+						closestInterceptorDistance = distance;
+					}
+				}
+				
 				/* Draw aircraft radar (only the "wire" style part) */
 				if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 					RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
@@ -1372,6 +1526,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			}
 	}
 
+	
+	
 	/* draws ufos */
 	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
 #ifdef DEBUG
@@ -1387,19 +1543,71 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL) || aircraft->notOnGeoscape)
 			continue;
 		else {
+			if (gd.combatZoomOn && !gd.combatZoomedUfo) {
+				if (closestUfoDistance > MAP_GetDistance(ccs.mapPos, aircraft->pos) || closestUfoDistance == -1.0f) {
+					closestUfoDistance = MAP_GetDistance(ccs.mapPos, aircraft->pos);
+					closestUfo = aircraft;
+				}
+			}
 			const float angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
+
+			if (gd.combatZoomedUfo && gd.combatZoomOn) {
+				if (gd.combatZoomedUfo == aircraft) {
+					float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
+					if (weaponZoomRange != 0) {
+						if (!aircraftInWeaponsRange) {
+							CL_SetGameTime(1);
+							aircraftInWeaponsRange = qtrue;
+						}
+						if (weaponZoomRange < maxRange)
+							weaponZoomRange = maxRange;
+					} else {
+						aircraftInWeaponsRange = qfalse;
+					}
+
+					if (aircraftInWeaponsRange) {
+						MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, MAP_GetZoomFromDistance(node, weaponZoomRange));
+					}
+					else {
+						if (closestInterceptorPos) {
+							Com_Printf("closest interceptor distance = %f\n",closestInterceptorDistance);
+							vec3_t midpoint = {0,0,0};
+							VectorMidpoint(gd.combatZoomedUfo->pos, closestInterceptorPos, midpoint);
+							MAP_CenterOnAlienCraft(midpoint, MAP_GetZoomLevel(closestInterceptorDistance));
+						} else {
+							MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1);
+						}
+					}
+				}
+			}
+			
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
 			if (aircraft == selectedUFO) {
-				if (cl_3dmap->integer)
+				if (cl_3dmap->integer) {
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-				else
+				}
+				else {
 					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
+				}
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 		}
 	}
 
+	/* draws projectiles */
+	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
+		if (projectile->bullets)
+			MAP_DrawBullets(node, projectile);
+		else
+			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", 0);
+	}
+	
+	if (gd.combatZoomOn && !gd.combatZoomedUfo && closestUfo) {
+		MAP_SetCombatZoomedUfo(closestUfo);
+	}
+	
+	
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
 
 	/* Draw nation names */
@@ -1425,6 +1633,7 @@ void MAP_DrawMap (const menuNode_t* node)
 {
 	float q = 0.0f;
 	float distance;
+	qboolean disableSolarRender = qfalse;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
 	Vector2Copy(node->pos, ccs.mapPos);
@@ -1432,10 +1641,12 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {
+		if (gd.combatZoomOn)
+			disableSolarRender = qtrue;
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		R_Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
-			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, curCampaign->map);
+			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, curCampaign->map, disableSolarRender);
 	} else {
 		if (smoothRotation)
 			MAP_SmoothTranslate();
@@ -1996,10 +2207,22 @@ void MAP_Zoom_f (void)
 		return;
 	}
 
+	smoothAcceleration = safeAcceleration;
+	
+	if (gd.combatZoomOn  && gd.combatZoomedUfo && *cmd == 'i') { 
+		return;
+	} else if (gd.combatZoomOn && gd.combatZoomedUfo && *cmd == 'o') {
+		MAP_TurnCombatZoomOff();
+		return;
+	}
+	
 	if (smoothFinalZoom < cl_mapzoommin->value)
 		smoothFinalZoom = cl_mapzoommin->value;
-	else if (smoothFinalZoom > cl_mapzoommax->value)
+	else if (smoothFinalZoom > cl_mapzoommax->value) {
 		smoothFinalZoom = cl_mapzoommax->value;
+		if (*cmd == 'i') 
+			MAP_TurnCombatZoomOn();
+	}
 
 	if (!cl_3dmap->integer) {
 		ccs.zoom = smoothFinalZoom;
@@ -2082,6 +2305,7 @@ void MAP_Scroll_f (void)
 
 		smoothFinalZoom = ccs.zoom;
 		smoothDeltaZoom = 0.0f;
+		smoothAcceleration = safeAcceleration;
 		if (smoothRotation)
 			/* geoscape is already smooth rotating */
 			smoothNewClick = qtrue;

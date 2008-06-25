@@ -335,6 +335,19 @@ void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
 	out[2] = in[2] * scale;
 }
 
+/**
+ * @brief Calculates the midpoint between two vectors.
+ * @param[in] point1 vector of first point.
+ * @param[in] point2 vector of second point.
+ * @param[out] midpoint calculated midpoint vector.
+ */
+void VectorMidpoint (const vec3_t point1, const vec3_t point2, vec3_t midpoint)
+{
+	midpoint[0] = (point1[0]+point2[0])/2;
+	midpoint[1] = (point1[1]+point2[1])/2;
+	midpoint[2] = (point1[2]+point2[2])/2;
+}
+
 
 int Q_log2 (int val)
 {

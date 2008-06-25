@@ -406,6 +406,7 @@ void CL_UpdateTime(void);
 void CL_GameTimeStop(void);
 void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
+void CL_SetGameTime(int gameLapseValue);
 qboolean CL_NewBase(base_t* base, vec2_t pos);
 void CL_ParseMission(const char *name, const char **text);
 mission_t* CL_AddMission(const char *name);

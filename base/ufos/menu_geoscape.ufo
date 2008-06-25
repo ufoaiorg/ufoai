@@ -409,6 +409,153 @@ menu map
 	}
 }
 
+// ==================
+// MAP MENU
+// ==================
+
+menu map_battlezoom
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis	true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	map themap
+	{
+		pos		"0 0"
+		size	"1024 768"
+		click	mclick wheel
+		rclick	{ cmd "mn_mapaction_reset;" }
+		// menu
+		excluderect
+		{
+			pos		"768 0"
+			size	"256 768"
+		}
+	}
+
+	text messagesystem
+	{
+		pos		"0 0"
+		size	"768 22"
+		bgcolor	"0 0 0 .5"
+		format	"20 0"
+		height	1
+		// TEXT_MESSAGESYSTEM
+		num		12
+		wheel
+	}
+
+	pic back
+	{
+		image	menu/geo_menu_mini
+		pos		"768 0"
+		blend	true
+	}
+
+	// ==================
+	// time
+	// ==================
+
+	string date
+	{
+		string	"*cvar mn_mapdate *cvar mn_maptime"
+		pos		"896 30"
+		align	uc
+		color	"1 1 1 1"
+		font	f_small
+	}
+
+	string txt_credits_caption
+	{
+		string	"_CREDITS"
+		pos		"808 54"
+		font	f_small
+		align	ul
+	}
+
+	string txt_credits
+	{
+		tooltip	"_Organisation capital"
+		string	"*cvar mn_credits"
+		size	"256 20"
+		pos		"990 54"
+		font	f_small
+		align	ur
+		in
+	}
+
+	pic bt_timestop
+	{
+		tooltip	"_Stop time"
+		image	menu/buttons_time
+		pos		"865 100"
+		texl	"0 0"
+		texh	"20 20"
+		out		{ *bt_timestop texl "0 0" *bt_timestop texh "20 20" }
+		in		{ *bt_timestop texl "21 0" *bt_timestop texh "41 20" }
+		click	{ cmd "game_timestop;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+	pic bt_timeslow
+	{
+		tooltip	"_Slow down time"
+		image	menu/buttons_time
+		pos		"896 100"
+		texl	"42 0"
+		texh	"52 20"
+		out		{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
+		in		{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
+		click	{ cmd "game_timeslow;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+	pic bt_timefast
+	{
+		tooltip	"_Speed up time"
+		image	menu/buttons_time
+		pos		"916 100"
+		texl	"53 0"
+		texh	"63 20"
+		out		{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
+		in		{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
+		click	{ cmd "game_timefast;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+	string timelapse
+	{
+		string	"*cvar mn_timelapse"
+		pos		"865 122"
+		color	"0 .78 0 1"
+	}
+
+
+
+	func init
+	{
+		cmd		"music_change geoscape;"
+	}
+
+	func close
+	{
+		cmd		"combatzoom_exit;"
+	}
+
+}
+
 
 // ==================
 // POPUP LIST

@@ -41,7 +41,12 @@ float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, ve
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 void MAP_DrawMap(const menuNode_t* node);
 void MAP_CenterOnPoint_f(void);
+void MAP_TurnCombatZoomOn(void);
+void MAP_TurnCombatZoomOff(void);
+void MAP_SetCombatZoomedUfo(aircraft_t *combatZoomedUfo);
+void MAP_CombatZoomExit_f(void);
 void MAP_StopSmoothMovement(void);
+void MAP_SetSmoothZoom(float finalZoomLevel, qboolean useSafeAcceleration);
 void MAP_Scroll_f(void);
 void MAP_Zoom_f(void);
 void MAP_MapClick(const menuNode_t * node, int x, int y);

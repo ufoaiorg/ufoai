@@ -260,5 +260,6 @@ int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 const char *AIR_GetAircraftString(aircraftType_t aircraftType);
 void AIR_AutoAddPilotToAircraft(struct base_s* base, struct employee_s* pilot);
 void AIR_RemovePilotFromAssignedAircraft(struct base_s* base, const struct employee_s* pilot);
+float AIR_GetMaxAircraftWeaponRange(aircraftSlot_t *slot, int maxSlot);
 
 #endif

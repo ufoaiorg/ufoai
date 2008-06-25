@@ -788,7 +788,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rotate, float zoom, const char *map)
+void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
@@ -821,7 +821,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	centery = ny + nh / 2;
 
 	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
-	if (starfield != r_notexture) {
+	if (starfield != r_notexture  && !disableSolarRender) {
 		/* TODO: this should be a box that is rotated, too */
 		R_DrawTexture(starfield->texnum, nx, ny, nw, nh);
 	}
@@ -853,7 +853,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 
 	/* load sun image */
 	sun = R_FindImage("pics/geoscape/map_sun", it_pic);
-	if (sun != r_notexture && (v[2] < 0)) {
+	if (sun != r_notexture && (v[2] < 0) && !disableSolarRender) {
 		const float sunZoom = 1000.0f;
 		qglEnable(GL_BLEND);
 		R_DrawTexture(sun->texnum, centerx - 64 * viddef.rx + sunZoom * v[1] * viddef.rx , centery - 64 * viddef.ry + sunZoom * v[0] * viddef.ry, 128 * viddef.rx, 128 * viddef.ry);
@@ -931,7 +931,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	}
 
 	/* draw the moon */
-	if (r_globeMoon.texture != r_notexture && moonPos[2] > 0)
+	if (r_globeMoon.texture != r_notexture && moonPos[2] > 0 && !disableSolarRender)
 		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
 
 	/* Disable depth */
