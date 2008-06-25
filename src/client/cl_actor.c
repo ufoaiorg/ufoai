@@ -228,7 +228,8 @@ static int CL_MoveMode (int length)
 void CL_CharacterCvars (const character_t * chr)
 {
 	assert(chr);
-	assert(chr->inv);	/** needed for CHRSH_CharGetBody and CHRSH_CharGetHead */
+	/** needed for CHRSH_CharGetBody and CHRSH_CharGetHead */
+	assert(chr->inv);
 
 	Cvar_ForceSet("mn_name", chr->name);
 	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));

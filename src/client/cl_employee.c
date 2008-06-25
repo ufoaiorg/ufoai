@@ -1307,7 +1307,7 @@ static void E_EmployeeSelect_f (void)
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (employee) {
 		/* mn_employee_hired is needed to allow renaming */
-		Cvar_SetValue("mn_employee_hired", employee->hired? 1: 0);
+		Cvar_SetValue("mn_employee_hired", employee->hired ? 1 : 0);
 
 		/* set info cvars */
 		CL_CharacterCvars(&(employee->chr));
