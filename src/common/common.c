@@ -226,10 +226,9 @@ void Com_Error (int code, const char *fmt, ...)
 
 	msg[sizeof(msg)-1] = 0;
 
-	Com_Printf("%s\n", msg);
-
 	switch (code) {
 	case ERR_DISCONNECT:
+		Com_Printf("%s\n", msg);
 		Cvar_Set("mn_afterdrop", "popup");
 		CL_Drop();
 		recursive = qfalse;
@@ -243,6 +242,7 @@ void Com_Error (int code, const char *fmt, ...)
 		longjmp(abortframe, -1);
 		break;
 	default:
+		Com_Printf("%s\n", msg);
 		SV_Shutdown("Server fatal crashed: %s", qfalse);
 		CL_Shutdown();
 	}
