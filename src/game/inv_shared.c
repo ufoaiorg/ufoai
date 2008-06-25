@@ -77,7 +77,6 @@ inline const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFd
  */
 void INVSH_InitInventory (invList_t * invList)
 {
-	invList_t *last;
 	int i;
 
 	assert(invList);
@@ -93,7 +92,7 @@ void INVSH_InitInventory (invList_t * invList)
 	 * ... and so on
 	 */
 	for (i = 0; i < MAX_INVLIST - 1; i++) {
-		last = invUnused++;
+		invList_t *last = invUnused++;
 		invUnused->next = last;
 	}
 }

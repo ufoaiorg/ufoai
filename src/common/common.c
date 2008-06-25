@@ -603,10 +603,6 @@ static void Com_DebugHelp_f (void)
 			" * debug_researchableall\n"
 			"   mark all techs as researchable\n"
 			" * debug_statsupdate\n"
-			" * killteam <teamid>\n"
-			"   kills all living actors in the given team\n"
-			" * sv showall\n"
-			"   make everything visible to everyone\n"
 			"------------------------------\n"
 			"\n"
 			"Network debugging:\n"
@@ -620,6 +616,16 @@ static void Com_DebugHelp_f (void)
 			" * net_showpacketsdata"
 			"   also print the received and sent data packets to console\n"
 			"------------------------------\n"
+			"\n"
+			"Other useful commands:\n"
+			"------------------------------\n"
+			" * cl_configstrings\n"
+			" * cl_userinfo\n"
+			" * devmap\n"
+			" * killteam <teamid>\n"
+			"   kills all living actors in the given team\n"
+			" * sv showall\n"
+			"   make everything visible to everyone\n"
 			);
 }
 

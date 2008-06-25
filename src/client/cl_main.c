@@ -2070,38 +2070,29 @@ static void CL_InitLocal (void)
 	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);
 
 	/* register our commands */
-	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
-	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
-
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
-
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, _("Target your shot to the ground"));
 	Cmd_AddCommand("invopen", CL_ActorInventoryOpen_f, _("Open the actors inventory while we are in tactical mission"));
 
-	/* text id is servers in menu_multiplayer.ufo */
+	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
 	Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
 	Cmd_AddCommand("serverlist", CL_PrintServerList_f, NULL);
+	/* text id is servers in menu_multiplayer.ufo */
 	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
-	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
-
-	Cmd_AddCommand("userinfo", CL_UserInfo_f, "Prints your userinfo string");
-
+	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
+	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
-
-	Cmd_AddCommand("quit", CL_Quit_f, "Quits the game");
-
 	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
 	Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
 	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
-
 	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
 	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
-
+	Cmd_AddCommand("cl_userinfo", CL_UserInfo_f, "Prints your userinfo string");
 #ifdef ACTIVATE_PACKET_COMMAND
 	/* this is dangerous to leave in */
 	Cmd_AddCommand("packet", CL_Packet_f, "Dangerous debug function for network testing");
 #endif
-
+	Cmd_AddCommand("quit", CL_Quit_f, "Quits the game");
 	Cmd_AddCommand("env", CL_Env_f, NULL);
 
 	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
