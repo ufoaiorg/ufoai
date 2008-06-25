@@ -245,6 +245,33 @@ qboolean Com_CompareItem (item_t *item1, item_t *item2)
 }
 
 /**
+ * @brief Check if a position in a conteiner is used by an item (i.e. collides with the shape).
+ * @param[in] ic A point to an invList_t struct. The position is checked against its contained item.
+ * @param[in] x The x location in the container.
+ * @param[in] y The x location in the container.
+ */
+static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const int y)
+{
+	/* Check if the given location is inside the (max) bounds of the items. */
+	if (x >= ic->x
+	 && y >= ic->y
+	 && x < ic->x + SHAPE_SMALL_MAX_WIDTH
+	 && y < ic->y + SHAPE_SMALL_MAX_HEIGHT) {
+	 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
+		if (ic->item.rotated) {
+	 		if (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+	 			return qtrue;
+		} else {
+	 		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+	 			return qtrue;
+	 	}
+	}
+
+	/* Position is out of bounds or position not inside item-shape. */
+	return qfalse;
+}
+
+/**
  * @brief Searches if there is an item at location (x,y) in a container.
  * @param[in] i Pointer to the inventory where we will search.
  * @param[in] container Container index.
@@ -264,19 +291,10 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
-		if (x >= ic->x
-		&& y >= ic->y
-		&& x < ic->x + SHAPE_SMALL_MAX_WIDTH
-		&& y < ic->y + SHAPE_SMALL_MAX_HEIGHT) {
-			if (ic->item.rotated) {
-				if (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
-					return ic;
-			} else if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1) {
-				return ic;
-			}
-		}
+		if (Com_ShapeCheckPosition(ic, x ,y))
+			return ic;
 
-	/* found nothing */
+	/* Found nothing */
 	return NULL;
 }
 
@@ -449,12 +467,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, const invDef_t * c
 	}
 
 	for (previous = i->c[container->id]; ic; ic = ic->next) {
-		if (x >= ic->x
-		 && y >= ic->y
-		 && x < ic->x + SHAPE_SMALL_MAX_WIDTH
-		 && y < ic->y + SHAPE_SMALL_MAX_HEIGHT
-		 && ((ic->item.rotated && (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1))
-		  || (!ic->item.rotated && (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)))) {
+		if (Com_ShapeCheckPosition(ic, x ,y)) {
 			cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
 			if (!ignore_type && ic->item.amount > 1 && container->temp) {
