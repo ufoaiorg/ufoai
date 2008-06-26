@@ -622,8 +622,11 @@ static void Com_DebugHelp_f (void)
 			" * cl_configstrings\n"
 			" * cl_userinfo\n"
 			" * devmap\n"
+			" * stunteam\n"
 			" * killteam <teamid>\n"
 			"   kills all living actors in the given team\n"
+			" * actorinvlist\n"
+			" * debug_listscore\n"
 			" * sv showall\n"
 			"   make everything visible to everyone\n"
 			);
