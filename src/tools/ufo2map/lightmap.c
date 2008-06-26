@@ -576,10 +576,9 @@ static int numdlights[2];
 static entity_t *FindTargetEntity (const char *target)
 {
 	int i;
-	const char *n;
 
 	for (i = 0; i < num_entities; i++) {
-		n = ValueForKey(&entities[i], "targetname");
+		const char *n = ValueForKey(&entities[i], "targetname");
 		if (!strcmp(n, target))
 			return &entities[i];
 	}
