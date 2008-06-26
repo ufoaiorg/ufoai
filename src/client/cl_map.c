@@ -382,6 +382,7 @@ const float STANDARD_3D_ZOOM = 40.0f;
  * @param[in] distance Half distance that we want to display on the full height of the screen.
  * @return zoom that should be applied to see given distance, if within boundaries.
  */
+#if 0 
 static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 {
 	float zoom;
@@ -407,7 +408,7 @@ static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 
 	return zoom;
 }
-
+#endif
 /**
  * @brief Transform a 2D position on the map to screen coordinates.
  * @param[in] pos vector that holds longitude and latitude
@@ -1167,10 +1168,15 @@ void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float 
 		/* case 3D geoscape */
 		vec3_t diff;
 
+		if (pointOnGeoscape == ccs.angles) {
+			VectorCopy(pointOnGeoscape, smoothFinalGlobeAngle);
+			smoothDeltaLength = 0.0f;
+		} else {
 		VectorSet(smoothFinalGlobeAngle, pointOnGeoscape[0], -pointOnGeoscape[1], 0);
 		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
 		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
 		smoothDeltaLength = VectorLength(diff);
+		}
 	} else {
 		/* case 2D geoscape */
 		vec2_t diff;
@@ -1209,9 +1215,7 @@ void MAP_TurnCombatZoomOn (void)
 void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
 {
 	gd.combatZoomedUfo = combatZoomedUfo;
-
 	MN_PushMenu("map_battlezoom");
-	MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1, 0.15);
 }
 
 /**
@@ -1227,7 +1231,7 @@ void MAP_TurnCombatZoomOff (void)
  */
 void MAP_CombatZoomExit_f (void)
 {
-	MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qfalse);
+	MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qtrue);
 	gd.combatZoomOn = qfalse;
 	gd.combatZoomedUfo = NULL;
 }
@@ -1303,9 +1307,9 @@ void MAP_StopSmoothMovement (void)
 void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
 {
 	if (useSafeAcceleration)
-		MAP_SmoothlyMoveToGeoscapePoint (gd.combatZoomedUfo->pos, finalZoomLevel, safeAcceleration);
+		MAP_SmoothlyMoveToGeoscapePoint (ccs.angles, finalZoomLevel, safeAcceleration);
 	else
-		MAP_SmoothlyMoveToGeoscapePoint (gd.combatZoomedUfo->pos, finalZoomLevel, 0.2f);
+		MAP_SmoothlyMoveToGeoscapePoint (ccs.angles, finalZoomLevel, 0.2f);
 
 }
 
