@@ -512,7 +512,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_MAP:
-				if (gd.combatZoomOn  && gd.combatZoomedUfo && !down) { 
+				if (gd.combatZoomOn  && gd.combatZoomedUfo && !down) {
 					return;
 				} else if (gd.combatZoomOn && gd.combatZoomedUfo && down) {
 					MAP_TurnCombatZoomOff();
@@ -521,12 +521,12 @@ void MN_MouseWheel (qboolean down, int x, int y)
 				ccs.zoom *= pow(0.995, (down ? 10: -10));
 				if (ccs.zoom < cl_mapzoommin->value)
 					ccs.zoom = cl_mapzoommin->value;
-				else if (ccs.zoom > cl_mapzoommax->value){
+				else if (ccs.zoom > cl_mapzoommax->value) {
 					ccs.zoom = cl_mapzoommax->value;
 					if (!down) {
 						MAP_TurnCombatZoomOn();
-					} 
-				} 
+					}
+				}
 
 				if (!cl_3dmap->integer) {
 					if (ccs.center[1] < 0.5 / ccs.zoom)

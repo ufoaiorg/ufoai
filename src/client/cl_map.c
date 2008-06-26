@@ -1099,49 +1099,50 @@ void MAP_CenterOnPoint_f (void)
  * @brief Gets the zoom level for a given distance on the 3D geoscape.
  * @param[in] The distance to find the zoom level for.
  */
-float MAP_GetZoomLevel(float angle) {
+static float MAP_GetZoomLevel (float angle)
+{
 	float zoom = 0;
 
 	if (angle <= 2.5f) {
-	zoom=40.0f;
+		zoom = 40.0f;
 	} else if (angle <= 3.0f) {
-	zoom=35.62f;
+		zoom = 35.62f;
 	} else if (angle <= 3.5f) {
-	zoom=31.1f;
+		zoom = 31.1f;
 	} else if (angle <= 4.0f) {
-	zoom=26.4f;
+		zoom = 26.4f;
 	} else if (angle <= 4.5f) {
-	zoom=23.85f;
+		zoom = 23.85f;
 	} else if (angle <= 5.0f) {
-	zoom=21.5f;
+		zoom = 21.5f;
 	} else if (angle <= 5.5f) {
-	zoom=19.52f;
+		zoom = 19.52f;
 	} else if (angle <= 6.0f) {
-	zoom=17.66f;
+		zoom=17.66f;
 	} else if (angle <= 6.5f) {
-	zoom=16.5f;
+		zoom = 16.5f;
 	} else if (angle <= 7.0f) {
-	zoom=15.3f;
+		zoom = 15.3f;
 	} else if (angle <= 7.5f) {
-	zoom=14.4f;
+		zoom = 14.4f;
 	} else if (angle <= 8.0f) {
-	zoom=13.4f;
+		zoom = 13.4f;
 	} else if (angle <= 8.5f) {
-	zoom=12.6f;
+		zoom = 12.6f;
 	} else if (angle <= 9.0f) {
-	zoom=11.825f;
+		zoom = 11.825f;
 	} else if (angle <= 9.5f) {
-	zoom=11.245f;
+		zoom = 11.245f;
 	} else if (angle <= 10.0f) {
-	zoom=10.69f;
+		zoom = 10.69f;
 	} else if (angle <= 10.5f) {
-	zoom=10.17f;
+		zoom = 10.17f;
 	} else if (angle <= 11.0f) {
-	zoom=9.67f;
+		zoom = 9.67f;
 	} else if (angle <= 12.5f) {
-	zoom=8.6f;
+		zoom = 8.6f;
 	} else {
-		zoom=7.0f;
+		zoom = 7.0f;
 	}
 
 	return zoom;
@@ -1152,7 +1153,7 @@ float MAP_GetZoomLevel(float angle) {
  * @param[in] ufoVector  The position of the ufo to center on.
  * @param[in] zoom  The level at which to zoom.
  */
-void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
+static void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
 {
 	const menu_t *activeMenu;
 
@@ -1192,7 +1193,8 @@ void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
 /**
  * @brief Activates the "combat zoom" interception framework.
  */
-void MAP_TurnCombatZoomOn (void) {
+void MAP_TurnCombatZoomOn (void)
+{
 	gd.combatZoomOn = qtrue;
 }
 
@@ -1200,7 +1202,8 @@ void MAP_TurnCombatZoomOn (void) {
  * @brief Sets the Ufo that "combat zoom" should focus on.
  * @param[in] combatZoomedUfo  A pointer to the ufo for "combat zoom" should focus on.
  */
-void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo) {
+void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
+{
 	gd.combatZoomedUfo = combatZoomedUfo;
 
 	MN_PushMenu("map_battlezoom");
@@ -1210,18 +1213,19 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo) {
 /**
  * @brief Deactivates the "combat zoom" interception framework.
  */
-void MAP_TurnCombatZoomOff (void) {
+void MAP_TurnCombatZoomOff (void)
+{
 	MN_PopMenu(qfalse);
 }
 
 /**
  * @brief Performs the steps necesary to exit the "combat zoom" interception framework once it has been deactivated.
  */
-void MAP_CombatZoomExit_f (void) {
+void MAP_CombatZoomExit_f (void)
+{
 	MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qfalse);
 	gd.combatZoomOn = qfalse;
 	gd.combatZoomedUfo = NULL;
-
 }
 
 
@@ -1560,13 +1564,14 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL) || aircraft->notOnGeoscape)
 			continue;
 		else {
+			const float angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
+
 			if (gd.combatZoomOn && !gd.combatZoomedUfo) {
 				if (closestUfoDistance > MAP_GetDistance(ccs.mapPos, aircraft->pos) || closestUfoDistance == -1.0f) {
 					closestUfoDistance = MAP_GetDistance(ccs.mapPos, aircraft->pos);
 					closestUfo = aircraft;
 				}
 			}
-			const float angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 
 			if (gd.combatZoomedUfo && gd.combatZoomOn) {
 				if (gd.combatZoomedUfo == aircraft) {
@@ -2211,7 +2216,7 @@ void MAP_Zoom_f (void)
 	}
 
 	cmd = Cmd_Argv(1);
-	switch (*cmd) {
+	switch (cmd[0]) {
 	case 'i':
 		smoothFinalZoom = ccs.zoom * pow(0.995, -zoomAmount);
 		break;
@@ -2225,9 +2230,9 @@ void MAP_Zoom_f (void)
 
 	smoothAcceleration = safeAcceleration;
 
-	if (gd.combatZoomOn  && gd.combatZoomedUfo && *cmd == 'i') {
+	if (gd.combatZoomOn  && gd.combatZoomedUfo && cmd[0] == 'i') {
 		return;
-	} else if (gd.combatZoomOn && gd.combatZoomedUfo && *cmd == 'o') {
+	} else if (gd.combatZoomOn && gd.combatZoomedUfo && cmd[0] == 'o') {
 		MAP_TurnCombatZoomOff();
 		return;
 	}
@@ -2236,7 +2241,7 @@ void MAP_Zoom_f (void)
 		smoothFinalZoom = cl_mapzoommin->value;
 	else if (smoothFinalZoom > cl_mapzoommax->value) {
 		smoothFinalZoom = cl_mapzoommax->value;
-		if (*cmd == 'i')
+		if (cmd[0] == 'i')
 			MAP_TurnCombatZoomOn();
 	}
 
@@ -2272,7 +2277,7 @@ void MAP_Scroll_f (void)
 	}
 
 	cmd = Cmd_Argv(1);
-	switch (*cmd) {
+	switch (cmd[0]) {
 	case 'l':
 		scrollX = scrollAmount;
 		break;

@@ -343,9 +343,8 @@ void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
  */
 void VectorMidpoint (const vec3_t point1, const vec3_t point2, vec3_t midpoint)
 {
-	midpoint[0] = (point1[0]+point2[0])/2;
-	midpoint[1] = (point1[1]+point2[1])/2;
-	midpoint[2] = (point1[2]+point2[2])/2;
+	VectorAdd(point1, point2, midpoint);
+	VectorScale(midpoint, 0.5f, midpoint);
 }
 
 
