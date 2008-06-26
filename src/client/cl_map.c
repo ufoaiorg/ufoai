@@ -1144,8 +1144,6 @@ float MAP_GetZoomLevel(float angle) {
 		zoom=7.0f;
 	}
 
-	Com_Printf("zoom=%f angle=%f", zoom, angle);
-
 	return zoom;
 }
 
@@ -1570,7 +1568,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					}
 					else {
 						if (closestInterceptorPos) {
-							Com_Printf("closest interceptor distance = %f\n", closestInterceptorDistance);
 							vec3_t midpoint = {0,0,0};
 							VectorMidpoint(gd.combatZoomedUfo->pos, *closestInterceptorPos, midpoint);
 							MAP_CenterOnAlienCraft(midpoint, MAP_GetZoomLevel(closestInterceptorDistance));
