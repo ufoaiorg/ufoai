@@ -20,7 +20,6 @@
 	enginepath="/home/mattn/dev/ufoai/trunk/"
 	default_scale="1.0"
 	no_maps_in_home="1"
-	quake2=""
 	engine="ufo"
 	basegame="base"
 	prefix=".ufoai"

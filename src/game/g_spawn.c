@@ -68,6 +68,7 @@ static const spawn_t spawns[] = {
 	{"func_door", SP_func_door},
 	{"func_rotating", SP_func_rotating},
 	{"trigger_hurt", SP_trigger_hurt},
+	{"trigger_touch", SP_trigger_touch},
 
 	{NULL, NULL}
 };
@@ -652,7 +653,6 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 	if (!self->owner)
 		return qfalse;
 
-	Com_Printf("Touched\n");
 	switch (self->owner->team) {
 	case TEAM_ALIEN:
 		if (activator->team == TEAM_ALIEN) {
@@ -679,6 +679,26 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 		}
 	}
 	return qfalse;
+}
+
+/**
+ * @brief Mission trigger use function
+ */
+static qboolean Use_Mission (edict_t *self)
+{
+	edict_t *target = G_FindTargetEntity(self->target);
+	if (!target) {
+		Com_Printf("Target '%s' wasn't found for misc_mission\n", self->target);
+		G_FreeEdict(self);
+		return qfalse;
+	}
+
+	if (target->destroy)
+		target->destroy(target);
+	else if (target->use)
+		target->use(target);
+
+	return qtrue;
 }
 
 /**
@@ -761,6 +781,8 @@ static void SP_misc_mission (edict_t *ent)
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
 	other->touch = Touch_Mission;
+	if (ent->target)
+		ent->use = Use_Mission;
 	ent->child = other;
 
 	gi.LinkEdict(ent);

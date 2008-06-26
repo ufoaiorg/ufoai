@@ -108,3 +108,56 @@ void SP_trigger_hurt (edict_t *ent)
 	gi.LinkEdict(ent);
 }
 
+/**
+ * @brief Touch trigger
+ * @sa SP_trigger_touch
+ * @note No new event in the trigger functions!!!! They are called while moving
+ */
+static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
+{
+	/* these actors should really not be able to trigger this - they don't move anymore */
+	assert(!(activator->state & STATE_DEAD));
+	assert(!(activator->state & STATE_STUN));
+
+	self->owner = G_FindTargetEntity(self->target);
+	if (!self->owner) {
+		Com_Printf("Target '%s' wasn't found for trigger_touch\n", self->target);
+		G_FreeEdict(self);
+		return qfalse;
+	}
+
+	if (!self->owner->use) {
+		Com_Printf("Owner of trigger_touch doesn't have a use function\n");
+		G_FreeEdict(self);
+		return qfalse;
+	}
+
+	self->owner->use(self->owner);
+
+	return qtrue;
+}
+
+/**
+ * @brief Touch trigger to call the use function of the attached target
+ * @note Called once for every step
+ * @sa Touch_TouchTrigger
+ */
+void SP_trigger_touch (edict_t *ent)
+{
+	ent->classname = "trigger_touch";
+	ent->type = ET_TRIGGER_TOUCH;
+
+	if (!ent->target) {
+		Com_Printf("No target given for trigger_touch\n");
+		G_FreeEdict(ent);
+		return;
+	}
+
+	ent->solid = SOLID_TRIGGER;
+	gi.SetModel(ent, ent->model);
+
+	ent->touch = Touch_TouchTrigger;
+	ent->child = NULL;
+
+	gi.LinkEdict(ent);
+}

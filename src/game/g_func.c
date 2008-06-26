@@ -29,6 +29,48 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+static qboolean Destroy_Breakable (edict_t *self)
+{
+	vec3_t origin;
+	VectorCenterFromMinsMaxs(self->absmin, self->absmax, origin);
+
+	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
+	gi.WriteShort(self->number);
+	if (self->particle && Q_strcmp(self->particle, "null")) {
+		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+		gi.WriteShort(self->spawnflags);
+		gi.WriteByte(1);
+		gi.WritePos(origin);
+		gi.WriteString(self->particle);
+		gi.EndEvents();
+	}
+	switch (self->material) {
+	case MAT_GLASS:
+		gi.PositionedSound(PM_ALL, origin, self, "misc/breakglass", CHAN_AUTO, 1);
+		break;
+	case MAT_METAL:
+		gi.PositionedSound(PM_ALL, origin, self, "misc/breakmetal", CHAN_AUTO, 1);
+		break;
+	case MAT_ELECTRICAL:
+		gi.PositionedSound(PM_ALL, origin, self, "misc/breakelectric", CHAN_AUTO, 1);
+		break;
+	case MAT_WOOD:
+		gi.PositionedSound(PM_ALL, origin, self, "misc/breakwood", CHAN_AUTO, 1);
+		break;
+	case MAT_MAX:
+		break;
+	}
+	/* unlink to update the routing */
+	gi.UnlinkEdict(self);
+	self->inuse = qfalse;
+	self->HP = 0;
+	G_RecalcRouting(self);
+	/* now we can destroy the edict completely */
+	G_FreeEdict(self);
+
+	return qtrue;
+}
+
 /**
  * @brief QUAKED func_breakable (0.3 0.3 0.3) ?
  * Used for breakable objects.
@@ -67,6 +109,8 @@ void SP_func_breakable (edict_t *ent)
 			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
 			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
+
+	ent->destroy = Destroy_Breakable;
 }
 
 /*
@@ -203,6 +247,8 @@ void SP_func_door (edict_t *ent)
 			(int)ent->absmin[0], (int)ent->absmin[1], (int)ent->absmin[2],
 			(int)ent->absmax[0], (int)ent->absmax[1], (int)ent->absmax[2],
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
+
+	ent->destroy = Destroy_Breakable;
 }
 
 /**

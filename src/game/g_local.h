@@ -238,6 +238,7 @@ void G_PhysicsStep(edict_t *ent);
 /* g_utils.c */
 edict_t *G_Find(edict_t *from, int fieldofs, char *match);
 edict_t *G_FindRadius(edict_t *from, vec3_t org, float rad, entity_type_t type);
+edict_t *G_FindTargetEntity(const char *target);
 const char* G_GetPlayerName(int pnum);
 int G_GetActiveTeam(void);
 const char* G_GetWeaponNameForFiredef(const fireDef_t *fd);
@@ -363,6 +364,7 @@ void G_CheckEndGame(void);
 /* g_trigger.c */
 edict_t* G_TriggerSpawn(edict_t *owner);
 void SP_trigger_hurt(edict_t *ent);
+void SP_trigger_touch(edict_t *ent);
 
 /* g_func.c */
 void SP_func_rotating(edict_t *ent);
@@ -573,6 +575,7 @@ struct edict_s {
 	/** general use function that is called when the triggered client action is executed
 	 * or when the server has to 'use' the entity */
 	qboolean (*use)(edict_t *self);
+	qboolean (*destroy)(edict_t *self);
 
 	/** e.g. doors */
 	moveinfo_t		moveinfo;

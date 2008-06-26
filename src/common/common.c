@@ -627,6 +627,8 @@ static void Com_DebugHelp_f (void)
 			"   kills all living actors in the given team\n"
 			" * actorinvlist\n"
 			" * debug_listscore\n"
+			" * debug_edicttouch\n"
+			" * debug_edictuse\n"
 			" * sv showall\n"
 			"   make everything visible to everyone\n"
 			);

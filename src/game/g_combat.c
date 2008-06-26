@@ -318,43 +318,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
  			return;
 
 		if (damage >= target->HP) {
-			vec3_t origin;
-
-			VectorCenterFromMinsMaxs(target->absmin, target->absmax, origin);
-
-			gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
-			gi.WriteShort(target->number);
-			if (target->particle && Q_strcmp(target->particle, "null")) {
-				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-				gi.WriteShort(target->spawnflags);
-				gi.WriteByte(1);
-				gi.WritePos(origin);
-				gi.WriteString(target->particle);
-				gi.EndEvents();
-			}
-			switch (target->material) {
-			case MAT_GLASS:
-				gi.PositionedSound(PM_ALL, origin, target, "misc/breakglass", CHAN_AUTO, 1);
-				break;
-			case MAT_METAL:
-				gi.PositionedSound(PM_ALL, origin, target, "misc/breakmetal", CHAN_AUTO, 1);
-				break;
-			case MAT_ELECTRICAL:
-				gi.PositionedSound(PM_ALL, origin, target, "misc/breakelectric", CHAN_AUTO, 1);
-				break;
-			case MAT_WOOD:
-				gi.PositionedSound(PM_ALL, origin, target, "misc/breakwood", CHAN_AUTO, 1);
-				break;
-			case MAT_MAX:
-				break;
-			}
-			/* unlink to update the routing */
-			gi.UnlinkEdict(target);
-			target->inuse = qfalse;
-			target->HP = 0;
-			G_RecalcRouting(target);
-			/* now we can destroy the edict completely */
-			G_FreeEdict(target);
+			assert(target->destroy);
+			target->destroy(target);
 		} else {
 			target->HP = max(target->HP - damage, 0);
 		}

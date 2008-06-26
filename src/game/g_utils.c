@@ -233,6 +233,18 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 	return NULL;
 }
 
+edict_t *G_FindTargetEntity (const char *target)
+{
+	int i;
+
+	for (i = 0; i < globals.num_edicts; i++) {
+		const char *n = g_edicts[i].targetname;
+		if (n && !strcmp(n, target))
+			return &g_edicts[i];
+	}
+
+	return NULL;
+}
 
 /**
  * @brief Returns entities that have origins within a spherical area

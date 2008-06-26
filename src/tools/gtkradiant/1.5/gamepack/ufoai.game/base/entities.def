@@ -151,3 +151,8 @@ Only for editor and terrain convenience.
 Any entity that touches this will be hurt. It does dmg points of damage each server frame
 "dmg"		default 5 (whole numbers only)
 */
+
+/*QUAKED trigger_touch (0 0 0) ?
+Any entity that touches this will trigger the use function of the target entity.
+"target"		target entity (must have its targetname set to the value given here)
+*/

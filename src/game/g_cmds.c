@@ -174,6 +174,61 @@ void Cmd_InvList (player_t *player)
 			INVSH_PrintContainerToConsole(&ent->i);
 		}
 }
+
+static void G_TouchEdict_f (void)
+{
+	edict_t *e;
+	int i, j;
+
+	if (gi.Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
+		return;
+	}
+
+	i = atoi(gi.Cmd_Argv(1));
+	if (i < 0 || i >= globals.num_edicts)
+		return;
+
+	e = &g_edicts[i];
+	if (!e->touch) {
+		Com_Printf("No touch function for entity %s\n", e->classname);
+		return;
+	}
+
+	for (j = 0; j < globals.num_edicts; j++)
+		if (G_IsLivingActor(&g_edicts[j]))
+			break;
+	if (j == globals.num_edicts)
+		return;
+
+	Com_Printf("Call touch function for %s\n", e->classname);
+	e->touch(e, &g_edicts[j]);
+}
+
+static void G_UseEdict_f (void)
+{
+	edict_t *e;
+	int i;
+
+	if (gi.Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
+		return;
+	}
+
+	i = atoi(gi.Cmd_Argv(1));
+	if (i < 0 || i >= globals.num_edicts)
+		return;
+
+	e = &g_edicts[i];
+	if (!e->use) {
+		Com_Printf("No use function for entity %s\n", e->classname);
+		return;
+	}
+
+	Com_Printf("Call use function for %s\n", e->classname);
+	e->use(e);
+}
+
 #endif
 
 void G_ClientCommand (player_t * player)
@@ -202,6 +257,10 @@ void G_ClientCommand (player_t * player)
 		G_StunTeam();
 	else if (Q_stricmp(cmd, "debug_listscore") == 0)
 		G_ListMissionScore_f();
+	else if (Q_stricmp(cmd, "debug_edicttouch") == 0)
+		G_TouchEdict_f();
+	else if (Q_stricmp(cmd, "debug_edictuse") == 0)
+		G_UseEdict_f();
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
