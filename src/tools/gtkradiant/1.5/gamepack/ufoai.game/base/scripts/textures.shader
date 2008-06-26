@@ -13,6 +13,16 @@ textures/tex_mattn/grate2
 	qer_alphafunc gequal 0.5
 }
 
+textures/tex_mattn/grate3
+{
+	qer_alphafunc gequal 0.5
+}
+
+textures/tex_mattn/grate4
+{
+	qer_alphafunc gequal 0.5
+}
+
 textures/tex_mattn/gully
 {
 	qer_alphafunc gequal 0.5
