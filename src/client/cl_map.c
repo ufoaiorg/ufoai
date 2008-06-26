@@ -1149,11 +1149,12 @@ static float MAP_GetZoomLevel (float angle)
 }
 
 /**
- * @brief Moves the map center position to the location of a UFO on the geoscape.
- * @param[in] ufoVector  The position of the ufo to center on.
+ * @brief Smoothly moves the map center position to the secified location on the geoscape.
+ * @param[in] pointOnGeoscape  The position to center on.
  * @param[in] zoom  The level at which to zoom.
+ * @param[in] acceleration  How fast the smooth movement should go.
  */
-static void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
+void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float zoomLevel, float acceleration)
 {
 	const menu_t *activeMenu;
 
@@ -1162,33 +1163,36 @@ static void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
 	if (Q_strncmp(activeMenu->name, "map", 3))
 		return;
 
-	centerOnEventIdx++;
-
 	if (cl_3dmap->integer) {
 		/* case 3D geoscape */
 		vec3_t diff;
 
-		VectorSet(smoothFinalGlobeAngle, ufoVector[0], -ufoVector[1], 0);
+		VectorSet(smoothFinalGlobeAngle, pointOnGeoscape[0], -pointOnGeoscape[1], 0);
 		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
 		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
 		smoothDeltaLength = VectorLength(diff);
-
 	} else {
 		/* case 2D geoscape */
 		vec2_t diff;
-		Vector2Set(smoothFinal2DGeoscapeCenter, ufoVector[0], ufoVector[1]);
+
+		Vector2Set(smoothFinal2DGeoscapeCenter, pointOnGeoscape[0], pointOnGeoscape[1]);
 		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
+/*		if (smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
+			smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
+		if (smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
+			smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT; */
 		diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
 		diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
 		smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
 	}
 
-	smoothFinalZoom = zoom;
+	smoothFinalZoom = zoomLevel;
 	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
-	smoothAcceleration = 0.15f;
+	smoothAcceleration = acceleration;
 
 	smoothRotation = qtrue;
 }
+
 
 /**
  * @brief Activates the "combat zoom" interception framework.
@@ -1207,7 +1211,7 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
 	gd.combatZoomedUfo = combatZoomedUfo;
 
 	MN_PushMenu("map_battlezoom");
-	MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, AIR_GetMaxAircraftWeaponRange(gd.combatZoomedUfo->weapons, gd.combatZoomedUfo->maxWeapons));
+	MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1, 0.15);
 }
 
 /**
@@ -1298,22 +1302,11 @@ void MAP_StopSmoothMovement (void)
  */
 void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
 {
-	vec3_t diff;
-
-	smoothRotation = qtrue;
-
-	smoothFinalZoom = finalZoomLevel;
-	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
 	if (useSafeAcceleration)
-		smoothAcceleration = safeAcceleration;
+		MAP_SmoothlyMoveToGeoscapePoint (gd.combatZoomedUfo->pos, finalZoomLevel, safeAcceleration);
 	else
-		smoothAcceleration = 0.2f;
+		MAP_SmoothlyMoveToGeoscapePoint (gd.combatZoomedUfo->pos, finalZoomLevel, 0.2f);
 
-	smoothDeltaLength = 0.0f;
-
-	VectorSet(smoothFinalGlobeAngle, gd.combatZoomedUfo->pos[0], -gd.combatZoomedUfo->pos[1], 0);
-	smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
-	VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
 }
 
 
@@ -1588,15 +1581,15 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					}
 
 					if (aircraftInWeaponsRange) {
-						MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, MAP_GetZoomFromDistance(node, weaponZoomRange));
+						MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, MAP_GetZoomLevel(weaponZoomRange), 0.15);
 					}
 					else {
 						if (closestInterceptorPos) {
 							vec3_t midpoint = {0,0,0};
 							VectorMidpoint(gd.combatZoomedUfo->pos, *closestInterceptorPos, midpoint);
-							MAP_CenterOnAlienCraft(midpoint, MAP_GetZoomLevel(closestInterceptorDistance));
+							MAP_SmoothlyMoveToGeoscapePoint(midpoint, MAP_GetZoomLevel(closestInterceptorDistance), 0.15);
 						} else {
-							MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1);
+							MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1, 0.15);
 						}
 					}
 				}
