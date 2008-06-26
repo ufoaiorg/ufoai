@@ -1189,10 +1189,17 @@ void MAP_CenterOnAlienCraft (const vec3_t ufoVector, const float zoom)
 	smoothRotation = qtrue;
 }
 
+/**
+ * @brief Activates the "combat zoom" interception framework.
+ */
 void MAP_TurnCombatZoomOn (void) {
 	gd.combatZoomOn = qtrue;
 }
 
+/**
+ * @brief Sets the Ufo that "combat zoom" should focus on.
+ * @param[in] combatZoomedUfo  A pointer to the ufo for "combat zoom" should focus on.
+ */
 void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo) {
 	gd.combatZoomedUfo = combatZoomedUfo;
 
@@ -1200,10 +1207,16 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo) {
 	MAP_CenterOnAlienCraft(gd.combatZoomedUfo->pos, AIR_GetMaxAircraftWeaponRange(gd.combatZoomedUfo->weapons, gd.combatZoomedUfo->maxWeapons));
 }
 
+/**
+ * @brief Deactivates the "combat zoom" interception framework.
+ */
 void MAP_TurnCombatZoomOff (void) {
 	MN_PopMenu(qfalse);
 }
 
+/**
+ * @brief Performs the steps necesary to exit the "combat zoom" interception framework once it has been deactivated.
+ */
 void MAP_CombatZoomExit_f (void) {
 	MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qfalse);
 	gd.combatZoomOn = qfalse;
@@ -1273,6 +1286,12 @@ void MAP_StopSmoothMovement (void)
 	smoothRotation = qfalse;
 }
 
+/**
+ * @brief Sets up the variables required to do a smooth zoom.
+ * @param[in] finalZoomLevel  The final zoom level once smooth zooming has completed.
+ * @param[in] useSafeAcceleration  Boolean flag indicating if safe acceleration should be used.
+ * There are some general bugs with using very fast acceleration.  This is the level at which it generally works.
+ */
 void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
 {
 	vec3_t diff;
