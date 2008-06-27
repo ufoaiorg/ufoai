@@ -1757,6 +1757,7 @@ base/pics/maps/loading/estate.jpg | GNU General Public License 2.0 | Martin Gerh
 base/pics/maps/loading/excavation.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/loading/farm.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/loading/fighter_crash.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/pics/maps/loading/fueldump.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/loading/gasstation.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/loading/harbor.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/loading/harvester_crash.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -1820,6 +1821,9 @@ base/pics/maps/shots/farm_3.jpg | GNU General Public License 2.0 | Martin Gerhar
 base/pics/maps/shots/fighter_crash.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/fighter_crash_2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/fighter_crash_3.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/pics/maps/shots/fueldump.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/pics/maps/shots/fueldump_2.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/pics/maps/shots/fueldump_3.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/gasstation.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/gasstation_2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/maps/shots/gasstation_3.jpg | GNU General Public License 2.0 | Martin Gerhardy
