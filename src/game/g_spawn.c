@@ -95,6 +95,7 @@ static const field_t fields[] = {
 	{"speed", offsetof(edict_t, speed), F_INT, 0},
 	{"target", offsetof(edict_t, target), F_LSTRING, 0},
 	{"targetname", offsetof(edict_t, targetname), F_LSTRING, 0},
+	{"item", offsetof(edict_t, item), F_LSTRING, 0},
 	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
 	{"team", offsetof(edict_t, team), F_INT, 0},
 	{"group", offsetof(edict_t, group), F_LSTRING, 0},
@@ -339,6 +340,7 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 
 	ent = NULL;
 	level.activeTeam = NO_ACTIVE_TEAM;
+	level.actualRound = 1;
 	ai_waypointList = NULL;
 
 	/* parse ents */
@@ -646,7 +648,8 @@ static void SP_civilian_target (edict_t *ent)
  * @brief Mission trigger
  * @todo use level.nextmap to spawn another map when every living actor has touched the mission trigger
  * @todo use level.actualRound to determine the 'King of the Hill' time
- * @todo Implement trigger->owner health (to destroy the target)
+ * @note Don't set a client action here - otherwise the movement event might
+ * be corrupted
  */
 static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 {
@@ -668,9 +671,31 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 	/* general case that also works for multiplayer teams */
 	default:
 		if (activator->team == self->owner->team) {
-			if (!self->count) {
-				self->count = level.actualRound;
-				gi.bprintf(PRINT_HUD, _("Target zone is occupied\n"));
+			if (!self->owner->count) {
+				self->owner->count = level.actualRound;
+				if (self->owner->item) {
+					/* search the item in the activator's inventory */
+					int j;
+					invList_t *ic;
+
+					for (j = 0; j < gi.csi->numIDs; j++)
+						for (ic = activator->i.c[j]; ic; ic = ic->next) {
+							objDef_t *od = ic->item.t;
+							/* check whether we found the searched item in the
+							 * actor's inventory */
+							if (!strcmp(od->id, self->owner->item)) {
+								/* drop the weapon - even if out of TUs */
+								G_ClientInvMove(game.players + activator->pnum, activator->number,
+									&gi.csi->ids[j], ic->x, ic->y, &gi.csi->ids[gi.csi->idFloor],
+									NONE, NONE, qfalse, QUIET);
+								gi.bprintf(PRINT_HUD, _("Item was placed\n"));
+								self->owner->count = level.actualRound;
+								return qtrue;
+							}
+						}
+				} else {
+					gi.bprintf(PRINT_HUD, _("Target zone is occupied\n"));
+				}
 			}
 			return qtrue;
 		} else {
@@ -727,11 +752,36 @@ static void Think_Mission (edict_t *self)
 		chain = self;
 	while (chain) {
 		if (chain->type == ET_MISSION) {
+			if (chain->item) {
+				const invList_t *ic;
+				G_GetFloorItems(chain);
+				ic = FLOOR(chain);
+				if (!ic) {
+					/* reset the counter if there is no item */
+					chain->count = 0;
+					return;
+				}
+				for (; ic; ic = ic->next) {
+					const objDef_t *od = ic->item.t;
+					assert(od);
+					/* not the item we are looking for */
+					if (!strcmp(od->id, chain->item))
+						break;
+				}
+				if (!ic) {
+					/* reset the counter if it's not the searched item */
+					chain->count = 0;
+					return;
+				}
+			}
 			if (chain->time) {
 				/* not every edict in the group chain has
 				 * been occupied long enough */
-				if (!chain->count || level.actualRound - chain->count < chain->time)
+				if (!chain->count || level.actualRound - chain->count < chain->time) {
+					Com_DPrintf(DEBUG_GAME, "time: %i, %i, %i\n", chain->count,
+						level.actualRound, chain->time);
 					return;
+				}
 			}
 			/* not destroyed yet */
 			if ((chain->flags & FL_DESTROYABLE) && chain->HP)
@@ -743,7 +793,11 @@ static void Think_Mission (edict_t *self)
 	/* mission succeeds */
 	Com_Printf("Mission won for team %i\n", self->team);
 
-	/** @todo implement this */
+	if (self->use)
+		self->use(self);
+
+	level.winningTeam = self->team;
+	level.intermissionTime = level.time + 20;
 }
 
 /**

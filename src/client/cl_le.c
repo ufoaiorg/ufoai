@@ -706,8 +706,9 @@ void LET_ProjectileAutoHide (le_t *le)
 			/* at least one of our actors can see this */
 			if (FrustomVis(actors->origin, actors->dir, le->origin)) {
 				if (TR_TestLine(actors->origin, le->origin, TL_FLAG_NONE)) {
-					if (!le->ptl)
+					if (!le->ptl) {
 						le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);
+					}
 					return;
 				}
 			}
@@ -1146,10 +1147,20 @@ void LE_List_f (void)
 	int i;
 	le_t *le;
 
-	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state | model\n");
+	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state | level | model/ptl\n");
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i | %3i | %5i | %s\n",
-			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team, le->fieldSize, le->HP, le->state, le->model1 ? (char*)le->model1 : "none");
+		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i | %3i | %5i | %5i | ",
+			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team,
+			le->fieldSize, le->HP, le->state, le->levelflags);
+		if (le->type == ET_PARTICLE) {
+			if (le->ptl)
+				Com_Printf("%s\n", le->ptl->ctrl->name);
+			else
+				Com_Printf("no ptl\n");
+		} else if (le->model1)
+			Com_Printf("%s\n", (char*)le->model1);
+		else
+			Com_Printf("no mdl\n");
 	}
 }
 

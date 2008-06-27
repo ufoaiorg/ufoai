@@ -282,14 +282,15 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
 void G_FlushSteps(void);
 qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
-qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet);
-void G_SendStats(edict_t * ent);
+qboolean G_ActionCheck(player_t *player, edict_t *ent, int TU, qboolean quiet);
+void G_SendStats(edict_t *ent);
 edict_t *G_SpawnFloor(pos3_t pos);
-int G_CheckVisTeam(int team, edict_t * check, qboolean perish);
+int G_CheckVisTeam(int team, edict_t *check, qboolean perish);
+edict_t *G_GetFloorItems(edict_t *ent);
 
 qboolean G_IsLivingActor(const edict_t *ent);
 void G_ForceEndRound(void);
-void G_ActorDie(edict_t * ent, int state, edict_t *attacker);
+void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
 void G_ClientTeamInfo(player_t * player);
@@ -554,6 +555,7 @@ struct edict_s {
 	const char *target;	/**< name of the entity to trigger or move towards */
 	const char *targetname;	/**< name pointed to by target */
 	const char *message;	/**< message when entity is activated - set via mapeditor */
+	const char *item;	/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
 	float wait;		/**< time to wait before platform moves to the next point on its path */
 	float delay;	/**< time between triggering switch and effect activating */

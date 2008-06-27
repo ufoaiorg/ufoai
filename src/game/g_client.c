@@ -880,7 +880,7 @@ static edict_t *G_GetFloorItemsFromPos (pos3_t pos)
  * @return pointer to edict_t being a floor (with items).
  * @note This function is somehow broken - it returns NULL in some cases of items on the floor.
  */
-static edict_t *G_GetFloorItems (edict_t * ent)
+edict_t *G_GetFloorItems (edict_t * ent)
 {
 	edict_t *floor = G_GetFloorItemsFromPos(ent->pos);
 	/* found items */
@@ -2990,6 +2990,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	}
 	turnTeam = level.activeTeam;
 	assert(level.activeTeam != NO_ACTIVE_TEAM);
+	level.actualRound++;
 
 	/* communicate next player in row to clients */
 	gi.AddEvent(PM_ALL, EV_ENDROUND);

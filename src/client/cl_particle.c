@@ -941,7 +941,7 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &levelflags, &autohide, &origin, &particle);
 	Com_Printf("Spawn particle '%s'\n", particle);
 
-	if (particle && *particle && Q_strcmp(particle, "null")) {
+	if (Q_strcmp(particle, "null")) {
 		le = LE_Add(0);
 		if (!le) {
 			Com_Printf("CL_ParticleSpawnFromSizeBuf: Could not add le\n");
@@ -957,7 +957,8 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 		if (le->autohide) {
 			le->think = LET_ProjectileAutoHide;
 			le->think(le);
-		}
+		} else
+			le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);
 	} else
 		Com_DPrintf(DEBUG_CLIENT, "CL_ParticleSpawnFromSizeBuf: Could not get a particle name in EV_SPAWN_PARTICLE event\n");
 }
