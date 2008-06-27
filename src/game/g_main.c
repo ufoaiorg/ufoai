@@ -525,8 +525,9 @@ void G_EndGame (int team)
 	G_PrintStats(va("End of game - Team %i is the winner", team));
 
 	/** Calculate new scores/skills for the soldiers.
-	 * @note In theory we do not have to check for ET_ACTOR2x2 actors (since phalanx has only robots that are 2x2),
-	 * but we never know, maybe we have Hulk int hge future ;). */
+	 * @note In theory we do not have to check for ET_ACTOR2x2 actors
+	 * (since phalanx has only robots that are 2x2),
+	 * but we never know, maybe we have Hulk in the future ;). */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (ent->inuse && G_IsLivingActor(ent) && ent->team == TEAM_PHALANX) {
 			G_UpdateCharacterSkills(&ent->chr);
@@ -603,32 +604,6 @@ void G_EndGame (int team)
 	gi.EndEvents();
 }
 
-
-#if 0
-/**
- * @brief checks for a mission objective
- * @param[in] activeTeams The number of teams with living actors
- * @return 1 if objective successful
- * @return 0 if objective unsuccessful
- * @return -1 if objective state unclear
- */
-int G_MissionObjective (int activeTeams, int* winningTeam)
-{
-	/** @todo: put objective flag to level */
-	switch (level.objective) {
-	/** @todo: enum for objectives */
-	case OBJ_RESCUE_CIVILIANS:
-		if (!level.num_alive[TEAM_CIVILIAN])
-			return 0;
-		if (!level.num_alive[TEAM_ALIEN])
-			return 1;
-	/** @todo: More objectives */
-	default:
-		return -1;
-	}
-}
-#endif
-
 /**
  * @brief Checks whether there are still actors to fight with left
  * @sa G_EndGame
@@ -650,7 +625,7 @@ void G_CheckEndGame (void)
 
 	/** @todo: < 2 does not work when we count civilians */
 	/* prepare for sending results */
-	if (activeTeams < 2 /* || G_MissionObjective(activeTeams, &level.winningTeam) != -1*/ ) {
+	if (activeTeams < 2) {
 		if (activeTeams == 0)
 			level.winningTeam = 0;
 		else if (activeTeams == 1)

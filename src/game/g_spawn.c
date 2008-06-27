@@ -718,9 +718,12 @@ static qboolean Use_Mission (edict_t *self)
 		return qfalse;
 	}
 
-	if (target->destroy)
+	if (target->destroy) {
 		target->destroy(target);
-	else if (target->use)
+		/* freed when the level changes */
+		self->target = NULL;
+		self->use = NULL;
+	} else if (target->use)
 		target->use(target);
 
 	return qtrue;
@@ -733,6 +736,9 @@ static qboolean Use_Mission (edict_t *self)
 static void Think_Mission (edict_t *self)
 {
 	edict_t *chain = self->groupMaster;
+
+	if (level.intermissionTime)
+		return;
 
 	/* when every player has joined the match - spawn the mission target
 	 * particle (if given) to mark the trigger */
@@ -791,7 +797,7 @@ static void Think_Mission (edict_t *self)
 	}
 
 	/* mission succeeds */
-	Com_Printf("Mission won for team %i\n", self->team);
+	gi.bprintf(PRINT_HUD, _("Mission won for team %i\n"), self->team);
 
 	if (self->use)
 		self->use(self);
