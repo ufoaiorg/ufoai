@@ -736,6 +736,8 @@ static qboolean Use_Mission (edict_t *self)
 static void Think_Mission (edict_t *self)
 {
 	edict_t *chain = self->groupMaster;
+	edict_t *ent;
+	int i, team;
 
 	if (level.intermissionTime)
 		return;
@@ -796,14 +798,36 @@ static void Think_Mission (edict_t *self)
 		chain = chain->groupChain;
 	}
 
-	/* mission succeeds */
-	gi.bprintf(PRINT_HUD, _("Mission won for team %i\n"), self->team);
-
 	if (self->use)
 		self->use(self);
 
+	team = self->team;
+	chain = self->groupMaster;
+	if (!chain)
+		chain = self;
+	while (chain) {
+		/** @todo also remove the item on the floor - if any */
+		/*const invList_t *ic = FLOOR(chain);*/
+		ent = chain->groupChain;
+		/* free the trigger */
+		if (chain->child)
+			G_FreeEdict(chain->child);
+		/* free the group chain */
+		G_FreeEdict(chain);
+		chain = ent;
+	}
+
+	/* still active mission edicts left */
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && (ent->type == ET_MISSION) && ent->team == team) {
+			return;
+		}
+
+	/* mission succeeds */
+	gi.bprintf(PRINT_HUD, _("Mission won for team %i\n"), team);
+
 	level.winningTeam = self->team;
-	level.intermissionTime = level.time + 20;
+	level.intermissionTime = level.time + 10;
 }
 
 /**
