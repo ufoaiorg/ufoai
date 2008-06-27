@@ -41,6 +41,7 @@ static void SP_worldspawn(edict_t *ent);
 static void SP_2x2_start(edict_t *ent);
 static void SP_civilian_target(edict_t *ent);
 static void SP_misc_model(edict_t *ent);
+static void SP_misc_item(edict_t *ent);
 static void SP_misc_mission(edict_t *ent);
 static void SP_misc_mission_aliens(edict_t *ent);
 
@@ -52,6 +53,7 @@ typedef struct {
 static const spawn_t spawns[] = {
 	{"worldspawn", SP_worldspawn},
 	{"light", SP_light},
+	{"misc_item", SP_misc_item},
 	{"misc_sound", SP_dummy},
 	{"misc_model", SP_misc_model},
 	{"misc_particle", SP_dummy},
@@ -914,6 +916,41 @@ static void SP_misc_model (edict_t *ent)
 		/* handled client side */
 		G_FreeEdict(ent);
 	}
+}
+
+/**
+ * @brief Spawns an item to the ground container
+ */
+static void SP_misc_item (edict_t *ent)
+{
+	edict_t *floor;
+	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
+	objDef_t *od;
+
+	if (!ent->item) {
+		Com_Printf("No item defined in misc_item\n");
+		G_FreeEdict(ent);
+		return;
+	}
+
+	od = INVSH_GetItemByID(ent->item);
+	if (!od) {
+		Com_Printf("Could not find item '%s' for misc_item\n", ent->item);
+		G_FreeEdict(ent);
+		return;
+	}
+
+	/* Also sets FLOOR(ent) to correct value. */
+	floor = G_GetFloorItems(ent);
+	/* nothing on the ground yet? */
+	if (!floor)
+		floor = G_SpawnFloor(ent->pos);
+
+	item.t = od;
+	Com_TryAddToInventory(&floor->i, item, &gi.csi->ids[gi.csi->idFloor]);
+
+	/* now we can free the original edict */
+	G_FreeEdict(ent);
 }
 
 /**
