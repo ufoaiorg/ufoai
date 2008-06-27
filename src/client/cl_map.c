@@ -1215,6 +1215,7 @@ void MAP_TurnCombatZoomOn (void)
 void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
 {
 	gd.combatZoomedUfo = combatZoomedUfo;
+	gd.combatZoomLevel = COMBAT_ZOOM_FULL;
 	MN_PushMenu("map_battlezoom");
 }
 
@@ -1234,6 +1235,19 @@ void MAP_CombatZoomExit_f (void)
 	MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qtrue);
 	gd.combatZoomOn = qfalse;
 	gd.combatZoomedUfo = NULL;
+}
+
+/**
+ * @brief Toggles the level of "combat zoom" in the interception framework.  This will cause the zoom to 
+ * move between close up combat (if in combat range) and a half zoom.
+ */
+void MAP_ToggleCombatZoomLevel_f (void)
+{
+	if (gd.combatZoomLevel == COMBAT_ZOOM_FULL)
+		gd.combatZoomLevel = COMBAT_ZOOM_HALF;
+	else
+		gd.combatZoomLevel = COMBAT_ZOOM_FULL;
+		
 }
 
 
@@ -1490,7 +1504,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
 					if (distance < maxRange && weaponZoomRange < maxRange)
 						weaponZoomRange = maxRange;
-					if (distance < closestInterceptorDistance || !closestInterceptorPos) {
+					if ((distance < closestInterceptorDistance || !closestInterceptorPos) && distance > maxRange) {
 						closestInterceptorPos = &aircraft->pos;
 						closestInterceptorDistance = distance;
 					}
@@ -1584,11 +1598,11 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 						aircraftInWeaponsRange = qfalse;
 					}
 
-					if (aircraftInWeaponsRange) {
+					if (aircraftInWeaponsRange && gd.combatZoomLevel == COMBAT_ZOOM_FULL) {
 						MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, MAP_GetZoomLevel(weaponZoomRange), 0.15);
 					}
 					else {
-						if (closestInterceptorPos) {
+						if (closestInterceptorPos && (gd.combatZoomLevel == COMBAT_ZOOM_FULL || (gd.combatZoomLevel == COMBAT_ZOOM_HALF && closestInterceptorDistance >= weaponZoomRange + 2))) {
 							vec3_t midpoint = {0,0,0};
 							VectorMidpoint(gd.combatZoomedUfo->pos, *closestInterceptorPos, midpoint);
 							MAP_SmoothlyMoveToGeoscapePoint(midpoint, MAP_GetZoomLevel(closestInterceptorDistance), 0.15);
