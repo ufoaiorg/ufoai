@@ -5065,3 +5065,9 @@
 "origin" "816 432 28"
 "angle" "180"
 }
+// entity 144
+{
+"classname" "misc_item"
+"origin" "232 624 16"
+"item" "knife"
+}
