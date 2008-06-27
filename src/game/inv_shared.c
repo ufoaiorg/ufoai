@@ -106,14 +106,37 @@ static int cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
  * @param[in] itemShape
  * @param[in] x
  * @param[in] y
- * @todo FIX BUG where we get bad results if x=31 and y=15 (mainly holster vs. assault/sniper/etc...)
  */
 static qboolean Com_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
 	int i;
-	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT; i++)
-		if ((((itemShape >> (i * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << x) & shape[y + i])
+
+	/* Negative positions not allowed (all items are supposed to have at least one bit set in the first row and column) */
+	if (x < 0 || y < 0) {
+		Com_DPrintf(DEBUG_SHARED, "Com_CheckShapeCollision: x or y value negative: x=%i y=%i!\n", x, y);
+		return qtrue;
+	}
+
+	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT; i++) {
+		const int itemRow = (itemShape >> (i * SHAPE_SMALL_MAX_WIDTH)) & 0xFF; /**< 0xFF is the length of one row in a "small shape" i.e. SHAPE_SMALL_MAX_WIDTH */
+		const uint32_t itemRowShifted = itemRow << x;	/**< Result has to be limited to 32bit (SHAPE_BIG_MAX_WIDTH) */
+
+		/* Check x maximum. */
+		if (itemRowShifted >> x != itemRow)
+			/* Out of bounds (32bit; a few bits of this row in itemShape were truncated) */
 			return qtrue;
+
+		/* Check y maximum. */
+		if (y + i >= SHAPE_BIG_MAX_HEIGHT
+		 && itemRow)
+			/* This row (row "i" in itemShape) is outside of the max. bound and has bits in it. */
+			return qtrue;
+
+
+		/* Check for collisions of the item with the big mask. */
+		if (itemRowShifted & shape[y + i])
+			return qtrue;
+	}
 
 	return qfalse;
 }
