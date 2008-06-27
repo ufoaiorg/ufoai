@@ -69,7 +69,7 @@ static void R_UpdateMaterial (material_t *m)
 	}
 }
 
-static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t in, vec2_t out)
+static void R_StageTexcoord (const materialStage_t *stage, const vec3_t v, const vec2_t in, vec2_t out)
 {
 	vec3_t tmp;
 	float s, t, s0, t0;
@@ -201,7 +201,6 @@ static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const material
 static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 {
 	int i;
-	float *v, *st;
 
 	if (stage->flags & STAGE_TERRAIN)
 		qglEnableClientState(GL_COLOR_ARRAY);
@@ -210,8 +209,8 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 		Com_Error(ERR_DROP, "R_DrawMaterialSurface: Exceeded MAX_GL_ARRAY_LENGTH\n");
 
 	for (i = 0; i < surf->numedges; i++) {
-		v = &r_mapTiles[surf->tile]->bsp.verts[surf->index * 3 + i * 3];
-		st = &r_mapTiles[surf->tile]->bsp.texcoords[surf->index * 2 + i * 2];
+		const float *v = &r_mapTiles[surf->tile]->bsp.verts[surf->index * 3 + i * 3];
+		const float *st = &r_mapTiles[surf->tile]->bsp.texcoords[surf->index * 2 + i * 2];
 
 		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
 
@@ -236,10 +235,7 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 
 void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 {
-	mBspSurface_t *surf;
-	material_t *m;
-	materialStage_t *s;
-	int i, j;
+	int i;
 
 	if (!r_materials->integer || r_wire->integer)
 		return;
@@ -252,12 +248,13 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	qglEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
 
 	for (i = 0; i < surfs->count; i++) {
-		surf = surfs->surfaces[i];
-		m = &surf->texinfo->image->material;
+		materialStage_t *s;
+		mBspSurface_t *surf = surfs->surfaces[i];
+		material_t *m = &surf->texinfo->image->material;
+		int j = -1;
 
 		R_UpdateMaterial(m);
 
-		j = -1;
 		for (s = m->stages; s; s = s->next, j--) {
 			if (!(s->flags & STAGE_RENDER))
 				continue;
