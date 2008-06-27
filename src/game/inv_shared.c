@@ -100,16 +100,35 @@ void INVSH_InitInventory (invList_t * invList)
 static int cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 
 /**
+ * @brief Will check if the item-shape is colliding with something else in the container-shape at position x/y.
+ * @note The function expects an already rotated shape for itemShape. Use Com_ShapeRotate if needed.
+ * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] itemShape
+ * @param[in] x
+ * @param[in] y
+ * @todo FIX BUG where we get bad results if x=31 and y=15 (mainly holster vs. assault/sniper/etc...)
+ */
+static qboolean Com_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
+{
+	int i;
+	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT; i++)
+		if ((((itemShape >> (i * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << x) & shape[y + i])
+			return qtrue;
+
+	return qfalse;
+}
+
+/**
  * @brief Checks if an item-shape can be put into a container at a certain position... ignores any 'special' types.
  * @param[in] i
  * @param[in] container The container (index) to look into.
- * @param[in] itemshape The shape info of an item to fit into the container.
+ * @param[in] itemShape The shape info of an item to fit into the container.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @sa Com_CheckToInventory
- * @return 0 if the item does not fit, 1 if it fits.
+ * @return qfalse if the item does not fit, qtrue if it fits.
  */
-static int Com_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, uint32_t itemshape, int x, int y)
+static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, const uint32_t itemShape, const int x, const int y)
 {
 	int j;
 	invList_t *ic;
@@ -119,31 +138,28 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const invDef
 
 	/* check bounds */
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT)
-		return 0;
+		return qfalse;
 
 	if (!cache_Com_CheckToInventory) {
 		/* extract shape info */
 		for (j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
 			mask[j] = ~container->shape[j];
 
-		/* add other items to mask */
-		for (ic = i->c[container->id]; ic; ic = ic->next)
-			for (j = 0; j < SHAPE_SMALL_MAX_HEIGHT && ic->y + j < SHAPE_BIG_MAX_HEIGHT; j++) {
-				/* Check if item is rotated and add its (rotated/straight) mask to the generated mask. */
-				if (ic->item.rotated)
-					mask[ic->y + j] |= ((Com_ShapeRotate(ic->item.t->shape) >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << ic->x;
-				else
-					mask[ic->y + j] |= ((ic->item.t->shape >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << ic->x;
-			}
+		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
+		for (ic = i->c[container->id]; ic; ic = ic->next) {
+			if (ic->item.rotated)
+				Com_MergeShapes(mask, Com_ShapeRotate(ic->item.t->shape), ic->x, ic->y);
+			else
+				Com_MergeShapes(mask, ic->item.t->shape, ic->x, ic->y);
+		}
 	}
 
-	/* test for collisions with newly generated mask */
-	for (j = 0; j < SHAPE_SMALL_MAX_HEIGHT; j++)
-		if ((((itemshape >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << x) & mask[y + j])
-			return 0;
+	/* Test for collisions with newly generated mask. */
+	if (Com_CheckShapeCollision(mask, itemShape, x, y))
+		return qfalse;
 
-	/* everything ok */
-	return 1;
+	/* Everything ok. */
+	return qtrue;
 }
 
 /**
@@ -158,7 +174,7 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const invDef
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int Com_CheckToInventory (const inventory_t * const i, objDef_t *od, const invDef_t * container, int x, int y)
+int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const invDef_t * container, const int x, const int y)
 {
 	int fits;
 	assert(i);
@@ -246,12 +262,14 @@ qboolean Com_CompareItem (item_t *item1, item_t *item2)
 
 /**
  * @brief Check if a position in a conteiner is used by an item (i.e. collides with the shape).
- * @param[in] ic A point to an invList_t struct. The position is checked against its contained item.
+ * @param[in] ic A pointer to an invList_t struct. The position is checked against its contained item.
  * @param[in] x The x location in the container.
  * @param[in] y The x location in the container.
  */
 static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const int y)
 {
+	assert(ic);
+
 	/* Check if the given location is inside the (max) bounds of the items. */
 	if (x >= ic->x
 	 && y >= ic->y
@@ -270,6 +288,34 @@ static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const i
 	/* Position is out of bounds or position not inside item-shape. */
 	return qfalse;
 }
+
+#if 0
+/**
+ * @brief Calculates the first "true" bit in the shape and returns its position in the container.
+ * @note Use this got get the first "grab-able" grid-location of an item.
+ * @param[in] ic A pointer to an invList_t struct.
+ * @param[in] x The x location in the container.
+ * @param[in] y The x location in the container.
+ * @sa Com_CheckToInventory
+ */
+void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
+{
+	int tempX, tempY;
+	int checkedTo = 0;
+
+	assert(ic);
+
+	for (tempX = 0; tempX < SHAPE_SMALL_MAX_WIDTH; tempY++)
+		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempX++)
+			if (Com_ShapeCheckPosition(ic, tempX, tempY) {
+				*px = tempX;
+				*py = tempY;
+				return;
+			}
+
+	*px = *py = NONE;
+}
+#endif
 
 /**
  * @brief Searches if there is an item at location (x,y) in a container.
@@ -1858,18 +1904,19 @@ int FIRESH_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
 }
 
 /**
- * @brief Will merge the second shape (=itemshape) into the first one (=big container shape) on the position x/y.
+ * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
+ * @note The function expects an already rotated shape for itemShape. Use Com_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
  * @param[in] itemshape
  * @param[in] x
  * @param[in] y
  */
-void Com_MergeShapes (uint32_t *shape, uint32_t itemshape, int x, int y)
+void Com_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
 	int i;
 
 	for (i = 0; (i < SHAPE_SMALL_MAX_HEIGHT) && (y + i < SHAPE_BIG_MAX_HEIGHT); i++)
-		shape[y + i] |= ((itemshape >> i * SHAPE_SMALL_MAX_WIDTH) & 0xFF) << x;
+		shape[y + i] |= ((itemShape >> i * SHAPE_SMALL_MAX_WIDTH) & 0xFF) << x;
 }
 
 /**
@@ -1878,7 +1925,7 @@ void Com_MergeShapes (uint32_t *shape, uint32_t itemshape, int x, int y)
  * @param[in] x
  * @param[in] y
  */
-qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
+qboolean Com_CheckShape (const uint32_t *shape, const int x, const int y)
 {
 	const uint32_t row = shape[y];
 	int position = pow(2, x);
@@ -1900,7 +1947,7 @@ qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
  * @param[in] x
  * @param[in] y
  */
-static qboolean Com_CheckShapeSmall (uint32_t shape, int x, int y)
+static qboolean Com_CheckShapeSmall (const uint32_t shape, const int x, const int y)
 {
 	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0 ) {
 		Com_Printf("Com_CheckShapeSmall: Bad x or y value: (x=%i, y=%i)\n", x,y);
@@ -1916,16 +1963,16 @@ static qboolean Com_CheckShapeSmall (uint32_t shape, int x, int y)
  * @return Number of bits.
  * @note Used to calculate the real field usage in the inventory
  */
-int Com_ShapeUsage (uint32_t shape)
+int Com_ShapeUsage (const uint32_t shape)
 {
- 	int bit_counter = 0;
+ 	int bitCounter = 0;
 	int i;
 
 	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT * SHAPE_SMALL_MAX_WIDTH; i++)
 		if (shape & (1 << i))
-			bit_counter++;
+			bitCounter++;
 
-	return bit_counter;
+	return bitCounter;
 }
 
 /**
@@ -1937,7 +1984,7 @@ int Com_ShapeUsage (uint32_t shape)
  * @param[in] y The y (height) position of the bit to set.
  * @return The new shape.
  */
-static uint32_t Com_ShapeSetBit (uint32_t shape, int x, int y)
+static uint32_t Com_ShapeSetBit (uint32_t shape, const int x, const int y)
 {
 	if (x >= SHAPE_SMALL_MAX_WIDTH || y >= SHAPE_SMALL_MAX_HEIGHT || x < 0 || y < 0) {
 		Com_Printf("Com_ShapeSetBit: Bad x or y value: (x=%i, y=%i)\n", x,y);
@@ -1955,11 +2002,11 @@ static uint32_t Com_ShapeSetBit (uint32_t shape, int x, int y)
  * @param[in] shape The shape to rotate.
  * @return The new shape.
  */
-uint32_t Com_ShapeRotate (uint32_t shape)
+uint32_t Com_ShapeRotate (const uint32_t shape)
 {
 	int h, w;
-	uint32_t shape_new = 0;
-	int max_width = -1;
+	uint32_t shapeNew = 0;
+	int maxWidth = -1;
 
 	for (w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
 		for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
@@ -1969,10 +2016,10 @@ uint32_t Com_ShapeRotate (uint32_t shape)
 					return shape;
 				}
 
-				if (max_width < 0)
-					max_width = w;
+				if (maxWidth < 0)
+					maxWidth = w;
 
-				shape_new = Com_ShapeSetBit(shape_new, h, max_width-w);
+				shapeNew = Com_ShapeSetBit(shapeNew, h, maxWidth - w);
 			}
 		}
 	}
@@ -1982,9 +2029,9 @@ uint32_t Com_ShapeRotate (uint32_t shape)
 	Com_Printf("<normal>\n");
 	Com_ShapePrint(shape);
 	Com_Printf("<rotated>\n");
-	Com_ShapePrint(shape_new);
+	Com_ShapePrint(shapeNew);
 #endif
-	return shape_new;
+	return shapeNew;
 }
 
 #ifdef DEBUG
@@ -1992,7 +2039,7 @@ uint32_t Com_ShapeRotate (uint32_t shape)
  * @brief Prints the shape. (mainly debug)
  * @note Only works for V_SHAPE_SMALL!
  */
-void Com_ShapePrint (uint32_t shape)
+void Com_ShapePrint (const uint32_t shape)
 {
 	int h, w;
 	int row;

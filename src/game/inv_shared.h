@@ -701,7 +701,7 @@ char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
 void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
-int Com_CheckToInventory(const inventory_t* const i, objDef_t *ob, const invDef_t * container, int x, int y);
+int Com_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y);
 qboolean Com_CompareItem(item_t *item1, item_t *item2);
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));
@@ -731,12 +731,12 @@ const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, co
 int FIRESH_FiredefsIDXForWeapon(const objDef_t *od, const objDef_t *weapon);
 int FIRESH_GetDefaultReactionFire(const objDef_t *ammo, int weapFdsIdx);
 
-void Com_MergeShapes(uint32_t *shape, uint32_t itemshape, int x, int y);
-qboolean Com_CheckShape(const uint32_t *shape, int x, int y);
-int Com_ShapeUsage(uint32_t shape);
-uint32_t Com_ShapeRotate(uint32_t shape);
+void Com_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
+qboolean Com_CheckShape(const uint32_t *shape, const int x, const int y);
+int Com_ShapeUsage(const uint32_t shape);
+uint32_t Com_ShapeRotate(const uint32_t shape);
 #ifdef DEBUG
-void Com_ShapePrint(uint32_t shape);
+void Com_ShapePrint(const uint32_t shape);
 #endif
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
