@@ -73,7 +73,9 @@ int FindMiptex (const char *name)
 	}
 
 	if (!loaded) {
-		Com_Printf("Could not find texture '%s'\n", name);
+		if (!(config.performMapCheck || config.fixMap)) {
+			Com_Printf("Could not find texture '%s'\n", name);
+		}
 		i = -1;
 	} else {
 		nummiptex++;
