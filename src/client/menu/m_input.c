@@ -411,7 +411,7 @@ void MN_RightClick (int x, int y)
 				MN_BaseMapRightClick(node, x, y);
 				break;
 			case MN_MAP:
-				if (!gd.combatZoomOn) {
+				if (!gd.combatZoomOn || !gd.combatZoomedUfo) {
 					if (!cl_3dmap->integer)
 						mouseSpace = MS_SHIFTMAP;
 					else
