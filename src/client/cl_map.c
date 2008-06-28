@@ -1273,7 +1273,10 @@ static void MAP3D_SmoothRotate (void)
 	diff_angle = VectorLength(diff);
 
 	if (smoothNewClick) {
-		speedOffset = rotationSpeed;
+		if (gd.combatZoomOn)
+			speedOffset = 0.0f;
+		else
+			speedOffset = rotationSpeed;
 		smoothNewClick = qfalse;
 	}
 
