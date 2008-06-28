@@ -1637,6 +1637,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	if (gd.combatZoomOn && !gd.combatZoomedUfo && closestUfo) {
 		MAP_SetCombatZoomedUfo(closestUfo);
+	} else if (gd.combatZoomOn && !gd.combatZoomedUfo && !closestUfo) {
+		gd.combatZoomOn = qfalse;
 	}
 
 
@@ -2226,6 +2228,10 @@ void MAP_Zoom_f (void)
 		return;
 	}
 
+	if (gd.combatZoomOn  && gd.combatZoomedUfo) {
+		return;
+	}
+
 	cmd = Cmd_Argv(1);
 	switch (cmd[0]) {
 	case 'i':
@@ -2240,13 +2246,6 @@ void MAP_Zoom_f (void)
 	}
 
 	smoothAcceleration = safeAcceleration;
-
-	if (gd.combatZoomOn  && gd.combatZoomedUfo && cmd[0] == 'i') {
-		return;
-	} else if (gd.combatZoomOn && gd.combatZoomedUfo && cmd[0] == 'o') {
-		MAP_TurnCombatZoomOff();
-		return;
-	}
 
 	if (smoothFinalZoom < cl_mapzoommin->value)
 		smoothFinalZoom = cl_mapzoommin->value;
