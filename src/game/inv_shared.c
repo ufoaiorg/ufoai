@@ -588,8 +588,8 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, int fx, in
  * @brief Conditions for moving items between containers.
  * @param[in] i
  * @param[in] from source container
- * @param[in] fx x for source container
- * @param[in] fy y for source container
+ * @param[in] fx x for source container (This is actually the mouse coordinate, not the origin of the item.)
+ * @param[in] fy y for source container (This is actually the mouse coordinate. not the origin of the item.)
  * @param[in] to destination container
  * @param[in] tx x for destination container
  * @param[in] ty y for destination container
@@ -607,6 +607,8 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, int fx, in
 int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type)
 {
 	invList_t *ic;
+	invList_t *icFrom;
+	int cacheFromX, cacheFromY;
 	int time;
 	int checkedTo = INV_DOES_NOT_FIT;
 
@@ -627,7 +629,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 
 	assert(i);
 
-	/* break if source item is not removeable */
+	/* Break if source item is not removeable. */
 
 	/** @todo imo in tactical missions (idFloor) there should be not packing of items
 	 * they should be available one by one */
@@ -650,6 +652,18 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 		}
 	}
 
+	/** Store x/y origin coordinates of removed (source) item. If we need to re-add it we can use this.
+	* We can't use fx/fy in that case, because it's the mouse coordinate, not the item-origin. */
+	icFrom = Com_SearchInInventory(i, from, fx, fy);	/* Get the source-invlist (e.g. a weapon) */
+	if (icFrom) {
+		cacheFromX = icFrom->x;
+		cacheFromY = icFrom->y;
+	} else {
+		cacheFromX = -1;
+		cacheFromY = -1;
+	}
+
+	/* Actually remove the source item from its container. */
 	if (!Com_RemoveFromInventoryIgnore(i, from, fx, fy, ignore_type))
 		return IA_NONE;
 
@@ -665,36 +679,34 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 		return IA_NONE;
 	}
 
-	/* if weapon is twohanded and is moved from hand to hand do nothing. */
-	/* twohanded weapon are only in CSI->idRight */
+	/* If weapon is twohanded and is moved from hand to hand do nothing. */
+	/* Twohanded weapon are only in CSI->idRight. */
 	if (cacheItem.t->fireTwoHanded && to->id == CSI->idLeft && from->id == CSI->idRight) {
-		Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
+		Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
 		return IA_NONE;
 	}
 
-	/* if non-armour moved to an armour slot then
-	 * move item back to source location and break
-	 * same for non extension items when moved to an extension slot */
+	/* If non-armour moved to an armour slot then
+	 * move item back to source location and break.
+	 * Same for non extension items when moved to an extension slot. */
 	if ((to->armour && Q_strcmp(cacheItem.t->type, "armour"))
 	 || (to->extension && !cacheItem.t->extension)
 	 || (to->headgear && !cacheItem.t->headgear)) {
-		Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
+		Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
 		return IA_NONE;
 	}
 
-	/* check if the target is a blocked inv-armour and source!=dest */
+	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
 		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, 0, 0);
 	else
 		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, tx, ty);
 
 	if (to->armour && from != to && !checkedTo) {
-		item_t cacheItem2;
+		const item_t cacheItem2 = cacheItem; /* Save/cache (source) item. */
 
-		/* save/cache (source) item */
-		cacheItem2 = cacheItem;
-		/* move the destination item to the source */
-		Com_MoveInInventory(i, to, tx, ty, from, fx, fy, TU, icp);
+		/* Move the destination item to the source */
+		Com_MoveInInventory(i, to, tx, ty, from, cacheFromX, cacheFromY, TU, icp);
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		cacheItem = cacheItem2;
@@ -714,7 +726,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 				&& ic->item.m == cacheItem.t) {
 				/* Weapon already fully loaded with the same ammunition.
 				 * => back to source location. */
-				Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
+				Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
 				return IA_NORELOAD;
 			}
 			time += ic->item.t->reload;
@@ -749,7 +761,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 				}
 			}
 			/* not enough time - back to source location */
-			Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
+			Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
 			return IA_NOTIME;
 		}
 
@@ -765,7 +777,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 			}
 		} else {
 			/* impossible move - back to source location */
-			Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
+			Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
 			return IA_NONE;
 		}
 	}

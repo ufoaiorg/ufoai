@@ -114,8 +114,6 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 							/* left and right are single containers, but this might change - it's cleaner to check
 							 * for available space here, too */
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py);
-							/** @todo There is a bug in INV_MoveItem somewhere. ic->x and ic->y are modified in it.
-							 * They seem to be changed to fromX/fromY for some reason. -- Hoehrer */
 							packed = INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idRight], px, py, &csi.ids[node->mousefx], fromX, fromY);
 							if (!packed) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py);
