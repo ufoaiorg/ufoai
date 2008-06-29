@@ -884,6 +884,8 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	if (aircraft->teamSize > 0)
 		CL_RemoveSoldiersFromAircraft(aircraft);
 
+	/** @todo Remove the slot items from the inventory */
+
 	for (i = aircraft->idx + 1; i < gd.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
 		aircraft_t *aircraft_temp = AIR_AircraftGetFromIdx(i);
