@@ -43,7 +43,8 @@ void E_InitStartup(void);
 
 /** The definition of an employee */
 typedef struct employee_s {
-	int idx;					/**< self link in global employee-list. */
+	int idx;					/**< self link in global employee-list - this should be references only with the variable name emplIdx
+								 * to let us find references all over the code easier @sa E_DeleteEmployee */
 
 	qboolean hired;				/**< this is true if the employee was already hired - default is false */
 	base_t *baseHired;			/**< Base where the soldier is hired it atm. */
