@@ -61,6 +61,7 @@
 			<Target title="linux">
 				<Option platforms="Unix;" />
 				<Option output="..\..\ufo" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../" />
 				<Option object_output=".objs\client" />
 				<Option type="0" />
 				<Option compiler="gcc" />
