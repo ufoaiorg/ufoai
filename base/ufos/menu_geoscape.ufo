@@ -413,7 +413,7 @@ menu map
 // MAP MENU
 // ==================
 
-menu map_battlezoom
+menu map_combatzoom
 {
 	// ==================
 	// don't render
@@ -546,7 +546,7 @@ menu map_battlezoom
 
 	func init
 	{
-		cmd		"music_change geoscape;"
+		cmd		"music_change aircombat;"
 	}
 
 	func close

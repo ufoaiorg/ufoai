@@ -1216,7 +1216,7 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
 {
 	gd.combatZoomedUfo = combatZoomedUfo;
 	gd.combatZoomLevel = COMBAT_ZOOM_FULL;
-	MN_PushMenu("map_battlezoom");
+	MN_PushMenu("map_combatzoom");
 }
 
 /**

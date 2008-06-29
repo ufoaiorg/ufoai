@@ -612,7 +612,7 @@ static void S_Music_Change_f (void)
 	int category;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <geoscape|battlescape|main>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <geoscape|battlescape|main|aircombat>\n", Cmd_Argv(0));
 		return;
 	}
 	type = Cmd_Argv(1);
@@ -626,6 +626,8 @@ static void S_Music_Change_f (void)
 		category = MUSIC_BATTLESCAPE;
 	} else if (!Q_strcmp(type, "main")) {
 		category = MUSIC_MAIN;
+	} else if (!Q_strcmp(type, "aircombat")) {
+		category = MUSIC_GEOSCAPE;
 	} else {
 		Com_Printf("Invalid parameter given\n");
 		return;
