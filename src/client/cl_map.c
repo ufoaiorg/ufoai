@@ -1836,7 +1836,7 @@ void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
 		return;
 
 	/* Unselect the current selected ufo if its the same */
-	if (selectedAircraft == aircraft)
+	if (selectedAircraft == aircraft || gd.interceptAircraft == aircraft)
 		MAP_ResetAction();
 	else if (destroyed && (selectedAircraft->homebase == aircraft->homebase) && selectedAircraft > aircraft)
 		selectedAircraft--;
