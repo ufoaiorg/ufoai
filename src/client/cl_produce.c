@@ -716,7 +716,6 @@ static void PR_AircraftInfo (const aircraft_t * aircraftSample)
 static inline void* PR_GetLISTPointerByIndex (countedLinkedList_t *list, int num)
 {
 	int i;
-	void *ptr;
 	linkedList_t *tempList = list->list;
 
 	if (!list || !list->list)
@@ -727,7 +726,7 @@ static inline void* PR_GetLISTPointerByIndex (countedLinkedList_t *list, int num
 
 	i = 0;
 	while (tempList) {
-		ptr = (void*)tempList->data;
+		void *ptr = (void*)tempList->data;
 		if (i == num)
 			return ptr;
 		i++;

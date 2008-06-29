@@ -1489,20 +1489,18 @@ void CL_RemoveSoldiersFromAircraft (aircraft_t *aircraft)
 
 	/* Counting backwards because aircraft->acTeam[] is changed in CL_RemoveSoldierFromAircraft */
 	for (i = aircraft->maxTeamSize; i >= 0; i--) {
-		if (aircraft->acTeam[i]) {
-			/* use global aircraft index here */
-			if (CL_RemoveSoldierFromAircraft(aircraft->acTeam[i], aircraft)) {
-				/* if the acTeam is not NULL the acTeam list and CL_SoldierInAircraft
-				 * is out of sync */
-				assert(aircraft->acTeam[i] == NULL);
-			} else {
-				Com_Printf("Error: Could not remove soldier from aircraft\n");
-			}
+		/* use global aircraft index here */
+		if (CL_RemoveSoldierFromAircraft(aircraft->acTeam[i], aircraft)) {
+			/* if the acTeam is not NULL the acTeam list and CL_SoldierInAircraft
+			 * is out of sync */
+			assert(aircraft->acTeam[i] == NULL);
+		} else if (aircraft->acTeam[i]) {
+			Com_Printf("CL_RemoveSoldiersFromAircraft: Error, could not remove soldier from aircraft team at pos: %i\n", i);
 		}
 	}
 
 	if (aircraft->teamSize > 0)
-		Sys_Error("CL_RemoveSoldiersFromAircraft: there went something wrong with soldier-removing (more exactly the counting) from aircraft.");
+		Sys_Error("CL_RemoveSoldiersFromAircraft: Error, there went something wrong with soldier-removing from aircraft.");
 }
 
 /**
