@@ -693,17 +693,17 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
  */
 static void PR_AircraftInfo (const aircraft_t * aircraftSample)
 {
-	static char productionInfo[512];
-
 	if (aircraftSample) {
+		static char productionInfo[512];
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftSample->name));
 		Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraftSample->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 			sizeof(productionInfo));
+		assert(aircraftSample->tech);
 		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraftSample->tech->produceTime), sizeof(productionInfo));
+		mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 	} else {
-		Com_sprintf(productionInfo, sizeof(productionInfo), _("No aircraft selected."));
+		mn.menuText[TEXT_PRODUCTION_INFO] = _("No aircraft selected.");
 	}
-	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
 
 
