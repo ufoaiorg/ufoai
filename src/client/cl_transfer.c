@@ -39,7 +39,7 @@ static aircraft_t *transferStartAircraft = NULL;
 static base_t *transferBase = NULL;
 
 /** @brief Current transfer type (item, employee, alien, aircraft). */
-static int transferType = TRANS_TYPE_INVALID;
+static int currentTransferType = TRANS_TYPE_INVALID;
 
 /** @brief Current cargo onboard. */
 static transferCargo_t cargo[MAX_CARGO];
@@ -564,7 +564,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, int transferTy
 	/* Update cargo list. */
 	TR_CargoList();
 
-	transferType = transferType;
+	currentTransferType = transferType;
 	mn.menuText[TEXT_TRANSFER_LIST] = transferList;
 }
 
@@ -582,7 +582,7 @@ static void TR_TransferSelect_f (void)
 		return;
 
 	if (Cmd_Argc() < 2)
-		type = transferType;
+		type = currentTransferType;
 	else
 		type = atoi(Cmd_Argv(1));
 
@@ -631,7 +631,7 @@ static void TR_TransferListClear_f (void)
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
- 	TR_TransferSelect(baseCurrent, transferBase, transferType);
+ 	TR_TransferSelect(baseCurrent, transferBase, currentTransferType);
 	TR_ResetScrolling_f();
 }
 
@@ -947,8 +947,8 @@ static void TR_TransferStart_f (void)
 	float time;
 	char message[256];
 
-	if (transferType == TRANS_TYPE_INVALID) {
-		Com_Printf("TR_TransferStart_f: transferType is wrong!\n");
+	if (currentTransferType == TRANS_TYPE_INVALID) {
+		Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
  		return;
  	}
 
@@ -1082,7 +1082,7 @@ static void TR_TransferListSelect_f (void)
 	if (num < 0 || num >= csi.numODs)
 		return;
 
-	switch (transferType) {
+	switch (currentTransferType) {
 	case TRANS_TYPE_INVALID:	/**< No list was inited before you call this. */
 		return;
 	case TRANS_TYPE_ITEM:
@@ -1224,7 +1224,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	}
 
-	TR_TransferSelect(baseCurrent, transferBase, transferType);
+	TR_TransferSelect(baseCurrent, transferBase, currentTransferType);
 }
 
 /**
@@ -1555,7 +1555,7 @@ static void TR_CargoListSelect_f (void)
 		return;
 	}
 
-	Cbuf_AddText(va("trans_select %i\n", transferType));
+	Cbuf_AddText(va("trans_select %i\n", currentTransferType));
 }
 
 /**

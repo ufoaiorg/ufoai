@@ -251,7 +251,6 @@ static evTimes_t *events = NULL;
 qboolean blockEvents;	/**< block network events - see CL_Events */
 
 /** @brief CL_ParseEvent timers and vars */
-static int nextTime;	/**< time when the next event should be executed */
 static int shootTime;	/**< time when the shoot was fired */
 static int impactTime;	/**< time when the shoot hits the target */
 static qboolean parsedDeath = qfalse;
@@ -507,7 +506,6 @@ static void CL_Reset (struct dbuffer *msg)
 	CL_EventReset();
 	parsedDeath = qfalse;
 	cl.eventTime = 0;
-	nextTime = 0;
 	shootTime = 0;
 	impactTime = 0;
 	blockEvents = qfalse;
@@ -1536,6 +1534,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 	} else {
 		struct dbuffer *event_msg = dbuffer_dup(msg);
 		int event_time;
+		int nextTime = 0;	/**< time when the next event should be executed */
 
 		/* get event time */
 		if (nextTime < cl.eventTime) {
