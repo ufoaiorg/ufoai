@@ -836,14 +836,14 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContai
 		if (fromContainer->id == csi.idEquip) {
 			/* Check buytype of first (last added) item */
 			if (!BUYTYPE_MATCH(et, base->equipType)) {
-				item_t item_temp = {NONE_AMMO, NULL, inv->c[csi.idEquip]->item.t, 0, 0};
+				item_t itemTemp = {NONE_AMMO, NULL, inv->c[csi.idEquip]->item.t, 0, 0};
 				et = inv->c[csi.idEquip]->item.t->buytype;
 				if (BUY_PRI(et)) {
 					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);
-					Com_TryAddToBuyType(&base->equipByBuyType, item_temp, BUY_WEAP_PRI, 1);
+					Com_TryAddToBuyType(&base->equipByBuyType, itemTemp, BUY_WEAP_PRI, 1);
 				} else if (BUY_SEC(et)) {
 					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);
-					Com_TryAddToBuyType(&base->equipByBuyType, item_temp, BUY_WEAP_SEC, 1);
+					Com_TryAddToBuyType(&base->equipByBuyType, itemTemp, BUY_WEAP_SEC, 1);
 				}
 			}
 		}

@@ -71,7 +71,7 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 		assert(node->mousefx >= 0);
 		assert(node->mousefx < MAX_INVDEFS);
 
-		/* start drag (mousefx represents container number) */
+		/* Start drag (mousefx represents container number) */
 		ic = Com_SearchInInventory(menuInventory, &csi.ids[node->mousefx], fromX, fromY);
 		if (ic) {
 			if (!rightClick) {
@@ -85,7 +85,7 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 				dragInfo.fromY = fromY;
 			} else {
 				if (node->mousefx != csi.idEquip) {
-					/* back to idEquip (ground, floor) container */
+					/* Move back to idEquip (ground, floor) container. */
 					INV_MoveItem(baseCurrent, menuInventory, &csi.ids[csi.idEquip], -1, -1, &csi.ids[node->mousefx], fromX, fromY);
 				} else {
 					qboolean packed = qfalse;
