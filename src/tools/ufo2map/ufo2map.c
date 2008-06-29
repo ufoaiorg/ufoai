@@ -454,7 +454,9 @@ int main (int argc, const char **argv)
 		return 0;
 	}
 
-	Com_Printf("...map: '%s'\n...bsp: '%s'\n", mapFilename, bspFilename);
+	Com_Printf("...map: '%s'\n", mapFilename);
+	if(!(config.performMapCheck || config.fixMap))
+		Com_Printf("...bsp: '%s'\n", bspFilename);
 
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
 		Com_Printf("bsp file is up-to-date\n");

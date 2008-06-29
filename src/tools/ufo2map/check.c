@@ -586,6 +586,7 @@ void CheckLevelFlags (void)
 					/* check level 1 - level 8 */
 					if (!(side->contentFlags & CONTENTS_LEVEL_ALL)) {
 						setFlags = qtrue;
+						break;
 					}
 				}
 			}
