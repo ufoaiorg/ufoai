@@ -1773,7 +1773,7 @@ void MAP_ResetAction (void)
 		gd.mapAction = MA_NONE;
 
 	gd.interceptAircraft = NULL;
-
+	gd.combatZoomedUfo = NULL;
 	selectedMission = NULL;
 	selectedAircraft = NULL;
 	selectedUFO = NULL;
@@ -1820,7 +1820,7 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 		return;
 
 	/* Unselect the current selected ufo if its the same */
-	if (selectedUFO == ufo)
+	if (selectedUFO == ufo || gd.combatZoomedUfo == ufo)
 		MAP_ResetAction();
 	else if (destroyed && selectedUFO > ufo)
 		selectedUFO--;

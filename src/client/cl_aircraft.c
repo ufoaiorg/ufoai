@@ -911,7 +911,6 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	 * @todo We need to update _all_ aircraft references here.
 	 * Every single index that points to an aircraft after this one will need to be updated.
 	 * attackingAircraft, aimedAircraft for airfights
-	 * gd.combatZoomedUfo
 	 * mission_t->ufo
 	 * baseWeapon_t->target
 	 * transfer_t->aircraftArray
