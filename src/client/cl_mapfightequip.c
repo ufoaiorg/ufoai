@@ -1950,12 +1950,12 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
  * @param[in] base	Pointer to base.
  * @param[in] type
  */
-void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraft, base_t *base, aircraftItemType_t type)
+void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, base_t *base, aircraftItemType_t type)
 {
-	assert ((!base && aircraft) ||(base && !aircraft));	/* Only one of them is allowed. */
+	assert ((!base && aircraftTemplate) ||(base && !aircraftTemplate));	/* Only one of them is allowed. */
 
 	memset(slot, 0, sizeof(slot)); /* all values to 0 */
-	slot->aircraft = aircraft;
+	slot->aircraftTemplate = aircraftTemplate;
 	slot->base = base;
 	slot->item = NULL;
 	slot->ammo = NULL;

@@ -88,22 +88,22 @@ static int BS_GetBuySellFactor (void)
 
 /**
  * @brief Prints general information about aircraft for Buy/Sell menu.
- * @param[in] aircraftSample Aircraft type.
+ * @param[in] aircraftTemplate Aircraft type.
  * @sa UP_AircraftDescription
  * @sa UP_AircraftItemDescription
  */
-static void BS_MarketAircraftDescription (const aircraft_t *aircraftSample)
+static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 {
 	const technology_t *tech;
 
 	/* Break if no airaft was given or if  it's no sample-aircraft (i.e. template). */
-	if (!aircraftSample || aircraftSample != aircraftSample->tpl)
+	if (!aircraftTemplate || aircraftTemplate != aircraftTemplate->tpl)
 		return;
 
-	tech = aircraftSample->tech;
+	tech = aircraftTemplate->tech;
 	assert(tech);
 	UP_AircraftDescription(tech);
-	Cvar_Set("mn_aircraftname", _(aircraftSample->name));
+	Cvar_Set("mn_aircraftname", _(aircraftTemplate->name));
 }
 
 /**
@@ -773,7 +773,7 @@ static void BS_Autosell_f (void)
 static void BS_BuyAircraft_f (void)
 {
 	int num, freeSpace;
-	const aircraft_t *aircraftSample;
+	const aircraft_t *aircraftTemplate;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -798,8 +798,8 @@ static void BS_BuyAircraft_f (void)
 			MN_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}
-		aircraftSample = buyList.l[num].aircraft;
-		freeSpace = AIR_CalculateHangarStorage(aircraftSample, baseCurrent, 0);
+		aircraftTemplate = buyList.l[num].aircraft;
+		freeSpace = AIR_CalculateHangarStorage(aircraftTemplate, baseCurrent, 0);
 
 		/* Check free space in hangars. */
 		if (freeSpace < 0) {
@@ -811,14 +811,14 @@ static void BS_BuyAircraft_f (void)
 			MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
 			return;
 		} else {
-			assert(aircraftSample);
-			if (ccs.credits < aircraftSample->price) {
+			assert(aircraftTemplate);
+			if (ccs.credits < aircraftTemplate->price) {
 				MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
 				return;
 			} else {
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
-				CL_UpdateCredits(ccs.credits - aircraftSample->price);
-				Cbuf_AddText(va("aircraft_new %s %i;buy_type 5;", aircraftSample->id, baseCurrent->idx));
+				CL_UpdateCredits(ccs.credits - aircraftTemplate->price);
+				Cbuf_AddText(va("aircraft_new %s %i;buy_type 5;", aircraftTemplate->id, baseCurrent->idx));
 			}
 		}
 	} else {
@@ -873,12 +873,12 @@ static void BS_SellAircraft_f (void)
 
 	if (buyCategory == BUY_AIRCRAFT) {
 		aircraft_t *aircraft;
-		const aircraft_t *aircraftSample = buyList.l[num].aircraft;
-		if (!aircraftSample)
+		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
+		if (!aircraftTemplate)
 			return;
 
 		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-			if (!Q_strncmp(aircraft->id, aircraftSample->id, MAX_VAR)) {
+			if (!Q_strncmp(aircraft->id, aircraftTemplate->id, MAX_VAR)) {
 				if (aircraft->teamSize) {
 					teamNote = qtrue;
 					continue;
@@ -915,7 +915,7 @@ static void BS_SellAircraft_f (void)
 			/* the capacities are also updated here */
 			AIR_DeleteAircraft(base, aircraft);
 
-			CL_UpdateCredits(ccs.credits + aircraftSample->price);
+			CL_UpdateCredits(ccs.credits + aircraftTemplate->price);
 			/* reinit the menu */
 			BS_BuyType();
 			return;
