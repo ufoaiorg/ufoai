@@ -63,12 +63,12 @@ echo "Preparing to sort texturelist... this may take a while..."
 for i in `cat $DIR"footstep.files"`; do
 	echo -n "processing file: "
 	echo $i
-	cat $i|sort -f|uniq > $DIR"tmp.txt"
+	< $i sort -f | uniq > $DIR"tmp.txt"
 	touch $DIR"sortednew.txt"
 	for j in `cat $DIR"tmp.txt"`; do
 		if awk '{print $1}' $DIR$SRT | grep $j > /dev/null; then
 			MAPA=`echo $i|awk -F\. '{print $1}' |awk -F\/ '{print $NF}'`
-			cat $DIR$SRT|awk -v a=$j -v b=$MAPA '{if ($0~a) {printf $0" "; print b}}' >> $DIR"sortednew.txt"
+			< $DIR$SRT awk -v a=$j -v b=$MAPA '{if ($0~a) {printf $0" "; print b}}' >> $DIR"sortednew.txt"
 		else
 			echo -n $j" " >> $DIR"sortednew.txt"
 			echo $i|awk -F\. '{print $1}' |awk -F\/ '{print $NF}' >> $DIR"sortednew.txt"

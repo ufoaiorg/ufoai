@@ -299,7 +299,7 @@ if test -f $HEADER; then
 	# Generate a fake header to count its lines
 	SKIP=0
     . $HEADER
-    SKIP=`cat "$tmpfile" |wc -l`
+    SKIP=`< "$tmpfile" wc -l`
 	# Get rid of any spaces
 	SKIP=`expr $SKIP`
 	rm -f "$tmpfile"
@@ -334,7 +334,7 @@ echo Adding files to archive named \"$archname\"...
 (cd "$archdir" && ( tar $TAR_ARGS - . --exclude .svn | eval "$GZIP_CMD" ) >> "$tmpfile") || { echo Aborting: Archive directory not found or temporary file: "$tmpfile" could not be created.; rm -f "$tmpfile"; exit 1; }
 echo >> "$tmpfile" >&- # try to close the archive
 
-fsize=`cat "$tmpfile" | wc -c | tr -d " "`
+fsize=`< "$tmpfile" wc -c | tr -d " "`
 
 # Compute the checksums
 
@@ -344,7 +344,7 @@ crcsum=0000000000
 if test "$NOCRC" = y; then
 	echo "skipping crc at user request"
 else
-	crcsum=`cat "$tmpfile" | CMD_ENV=xpg4 cksum | sed -e 's/ /Z/' -e 's/	/Z/' | cut -dZ -f1`
+	crcsum=`< "$tmpfile" CMD_ENV=xpg4 cksum | sed -e 's/ /Z/' -e 's/	/Z/' | cut -dZ -f1`
 	echo "CRC: $crcsum"
 fi
 
@@ -363,7 +363,7 @@ else
 		MD5_ARG="-a md5"
 	fi
 	if test -x "$MD5_PATH"; then
-		md5sum=`cat "$tmpfile" | eval "$MD5_PATH $MD5_ARG" | cut -b-32`;
+		md5sum=`< "$tmpfile" eval "$MD5_PATH $MD5_ARG" | cut -b-32`;
 		echo "MD5: $md5sum"
 	else
 		echo "MD5: none, MD5 command not found"
