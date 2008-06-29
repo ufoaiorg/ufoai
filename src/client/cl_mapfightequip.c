@@ -1947,14 +1947,15 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 
 /**
  * @brief Initialise values of one slot of an aircraft or basedefence common to all types of items.
- * @param[in] slot Pointer to the slot to initialize
- * @param[in] aircraft	Pointer to aircraft.
+ * @param[in] slot	Pointer to the slot to initialize.
+ * @param[in] aircraftTemplate	Pointer to aircraft template.
  * @param[in] base	Pointer to base.
  * @param[in] type
  */
 void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, base_t *base, aircraftItemType_t type)
 {
 	assert ((!base && aircraftTemplate) ||(base && !aircraftTemplate));	/* Only one of them is allowed. */
+	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
 	memset(slot, 0, sizeof(slot)); /* all values to 0 */
 	slot->aircraftTemplate = aircraftTemplate;

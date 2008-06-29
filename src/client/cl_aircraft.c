@@ -63,7 +63,7 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 	int aircraftSize, freespace = 0;
 
 	assert(aircraftTemplate);
-	assert(aircraftTemplate == aircraftTemplate->tpl);
+	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
 	aircraftSize = aircraftTemplate->weight;
 
@@ -2391,7 +2391,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 	int aircraftSize = 0, freespace = 0;
 
 	assert(aircraftTemplate);
-	assert(aircraftTemplate == aircraftTemplate->tpl);
+	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
 	aircraftSize = aircraftTemplate->weight;
 
