@@ -839,10 +839,26 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 	}
 
 	if (found) {
-		gd.numEmployees[type]--;
+		transfer_t *t;
+		int j, k;
 		/** @todo: Fix all the aircraft->acTeam[] list pointers here - they might be wrong now */
 		/** @todo: Fix all the character_t emplIdx backlinks here - they might be wrong now */
-		/** @todo: Fix all the links in trEmployees */
+		for (i = 0, t = gd.alltransfers; i < MAX_TRANSFERS; i++, t++) {
+			if (!t->active)
+				continue;
+			for (j = 0; j < MAX_EMPL; j++) {
+				for (k = 0; k < MAX_EMPLOYEES; k++) {
+					if (t->trEmployees[j][k] > employee)
+						t->trEmployees[j][k]--;
+					else if (t->trEmployees[j][k] == employee)
+						/** @todo This might not work as expected - maybe we
+						 * have to memmove the array */
+						t->trEmployees[j][k] = NULL;
+				}
+			}
+		}
+
+		gd.numEmployees[type]--;
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "E_DeleteEmployee: Employee wasn't in the global list.\n");
 		return qfalse;

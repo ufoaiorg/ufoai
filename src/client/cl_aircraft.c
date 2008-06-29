@@ -906,6 +906,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	 * gd.combatZoomedUfo
 	 * mission_t->ufo
 	 * baseWeapon_t->target
+	 * transfer_t->aircraftArray
 	 */
 	base->numAircraftInBase--;
 	/* Update index of aircraftCurrent in base if it is affected by the index-change. */
