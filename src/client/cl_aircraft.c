@@ -866,7 +866,6 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 {
 	int i;
-	aircraft_t *aircraft_temp;
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: no aircraft given (NULL)\n");
@@ -891,7 +890,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	for (i = aircraft->idx + 1; i < gd.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
-		aircraft_temp = AIR_AircraftGetFromIdx(i);
+		aircraft_t *aircraft_temp = AIR_AircraftGetFromIdx(i);
 		if (aircraft_temp) {
 			aircraft_temp->idx--;
 		} else {
@@ -917,6 +916,8 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	/* move other aircraft if the deleted aircraft was not the last one of the base */
 	if (i != AIRCRAFT_INBASE_INVALID)
 		memmove(aircraft, aircraft + 1, (base->numAircraftInBase - i) * sizeof(*aircraft));
+	/* don't use the aircraft pointer after this memmove */
+	aircraft = NULL;
 	/* wipe the now vacant last slot */
 	memset(&base->aircraft[base->numAircraftInBase], 0, sizeof(base->aircraft[base->numAircraftInBase]));
 
@@ -947,20 +948,23 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 void AIR_DestroyAircraft (aircraft_t *aircraft)
 {
 	int i;
-	employee_t *employee;
 
 	assert(aircraft);
 
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
+	/* this must be a reverse loop because the employee array is changed for
+	 * removing employees, thus the acTeam will point to another employee after
+	 * E_DeleteEmployee was called */
+	for (i = aircraft->maxTeamSize - 1; i >= 0; i--) {
 		if (aircraft->acTeam[i]) {
-			employee = aircraft->acTeam[i];
-			assert(employee);
+			employee_t *employee = aircraft->acTeam[i];
 			E_DeleteEmployee(employee, employee->type);
+			assert(aircraft->acTeam[i] == NULL);
 		}
- 	}
+	}
+	/* the craft may no longer have any employees assigned */
+	assert(aircraft->teamSize == 0);
 
-	AIR_ResetAircraftTeam(aircraft);
- 	aircraft->status = AIR_HOME;
+	aircraft->status = AIR_HOME;
 
 	AIR_DeleteAircraft(aircraft->homebase, aircraft);
 }
@@ -1844,9 +1848,11 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 			return qtrue;
 		}
 	}
-	assert(baseCurrent);
-	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n",
-		employee->idx, aircraft->idx, AIR_GetAircraftIdxInBase(aircraft), baseCurrent->idx);
+	/* there must be a homebase when there are employees - otherwise this
+	 * functions should not be called */
+	assert(aircraft->homebase);
+	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' (type: %i) not on aircraft %i (base: %i) in base %i\n",
+		employee->idx, employee->type, aircraft->idx, AIR_GetAircraftIdxInBase(aircraft), aircraft->homebase->idx);
 	return qfalse;
 }
 
@@ -1944,14 +1950,14 @@ float AIR_GetMaxAircraftWeaponRange (aircraftSlot_t *slot, int maxSlot)
 	float range = 0.0f;
 
 	assert(slot);
-	
+
 	/* We choose the usable weapon with the smallest range */
 	for (i = 0; i < maxSlot; i++) {
 		aircraftSlot_t *weapon = slot + i;
 		const objDef_t *ammo = weapon->ammo;
 
 		assert(ammo);
-		
+
 		/* select this weapon if this is the one with the longest range */
 		if (ammo->craftitem.stats[AIR_STATS_WRANGE] > range) {
 			range = ammo->craftitem.stats[AIR_STATS_WRANGE];
