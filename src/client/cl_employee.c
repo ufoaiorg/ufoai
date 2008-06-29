@@ -711,11 +711,11 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @param[in] type Tell the function what type of employee to create.
  * @param[in] nation Tell the function what nation the employee (mainly used for soldiers in singleplayer) comes from.
  * @param[in] ugvType Tell the function what type of ugv this employee is.
- * @param[in] employeeIdx the index of the employee to create. -1 will use the next available index, >=0 will be used as the index of the employee.
+ * @param[in] emplIdx the index of the employee to create. -1 will use the next available index, >=0 will be used as the index of the employee.
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int employeeIdx)
+static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int emplIdx)
 {
 	employee_t* employee;
 	int curEmployeeIdx;
@@ -723,8 +723,8 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	if (type >= MAX_EMPL)
 		return NULL;
 
-	if (employeeIdx >= 0){
-		curEmployeeIdx = employeeIdx;
+	if (emplIdx >= 0){
+		curEmployeeIdx = emplIdx;
 	} else {
 		curEmployeeIdx = gd.numEmployees[type];
 	}
@@ -771,7 +771,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 		break;
 	}
 
-	if (employeeIdx < 0)
+	if (emplIdx < 0)
 		gd.numEmployees[type]++;
 
 	return employee;
