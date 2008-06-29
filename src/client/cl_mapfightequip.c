@@ -185,12 +185,12 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 		break;
 	case AC_ITEM_ELECTRONICS:
 		slot = aircraft->electronics + airequipSelectedSlot;
-		assert(airequipSelectedSlot >= aircraft->maxWeapons);
+		assert(airequipSelectedSlot < aircraft->maxWeapons);
 		break;
 	case AC_ITEM_AMMO:
 	case AC_ITEM_WEAPON:
 		slot = aircraft->weapons + airequipSelectedSlot;
-		assert(airequipSelectedSlot >= aircraft->maxElectronics);
+		assert(airequipSelectedSlot < aircraft->maxElectronics);
 		break;
 	default:
 		Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", airequipID);
@@ -1955,7 +1955,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, base_t *base, aircraftItemType_t type)
 {
 	assert ((!base && aircraftTemplate) ||(base && !aircraftTemplate));	/* Only one of them is allowed. */
-	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
+	assert(!aircraftTemplate || aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
 	memset(slot, 0, sizeof(slot)); /* all values to 0 */
 	slot->aircraftTemplate = aircraftTemplate;
