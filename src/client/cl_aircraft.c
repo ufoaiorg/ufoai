@@ -871,7 +871,8 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
  */
 void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 {
-	int i;
+	int i, j;
+	transfer_t *transfer;
 
 	assert(aircraft);
 	base = aircraft->homebase;
@@ -893,6 +894,19 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	}
 	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
 
+	for (i = 0, transfer = gd.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
+		if (!transfer->active)
+			continue;
+		for (j = 0; j < MAX_AIRCRAFT; j++) {
+			if (transfer->aircraftArray[j] > aircraft->idx)
+				transfer->aircraftArray[j]--;
+			else if (transfer->aircraftArray[j] == aircraft->idx)
+				/** @todo This might not work as expected - maybe we
+				 * have to memmove the array @sa E_DeleteEmployee */
+				transfer->aircraftArray[j] = TRANS_LIST_EMPTY_SLOT;
+		}
+	}
+
 	for (i = aircraft->idx + 1; i < gd.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
 		aircraft_t *aircraft_temp = AIR_AircraftGetFromIdx(i);
@@ -913,7 +927,6 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	 * attackingAircraft, aimedAircraft for airfights
 	 * mission_t->ufo
 	 * baseWeapon_t->target
-	 * transfer_t->aircraftArray
 	 */
 	base->numAircraftInBase--;
 	/* Update index of aircraftCurrent in base if it is affected by the index-change. */

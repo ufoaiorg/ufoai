@@ -375,7 +375,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
  * @note This function is called when @c aircraft is destroyed.
  * @sa AIRFIGHT_ActionsAfterAirfight
  */
-static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
+static void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t * aircraft)
 {
 	aircraftProjectile_t *projectile;
 	int idx = 0;
@@ -397,11 +397,10 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
 static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * aircraft)
 {
 	aircraftProjectile_t *projectile;
-	aircraft_t *attacker;
 	int idx;
 
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
-		attacker = projectile->attackingAircraft;
+		const aircraft_t *attacker = projectile->attackingAircraft;
 
 		if (attacker == aircraft)
 			projectile->attackingAircraft = NULL;
@@ -658,7 +657,6 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
  */
 void AIRFIGHT_CampaignRunProjectiles (int dt)
 {
-	aircraftProjectile_t *projectile;
 	int idx;
 	float angle;
 	float movement;
@@ -666,7 +664,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 
 	/* gd.numProjectiles is changed in AIRFIGHT_RemoveProjectile */
 	for (idx = gd.numProjectiles - 1; idx >= 0; idx--) {
-		projectile = &gd.projectiles[idx];
+		aircraftProjectile_t *projectile = &gd.projectiles[idx];
 		projectile->time += dt;
 		movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 		/* Check if the projectile reached its destination (aircraft or idle point) */

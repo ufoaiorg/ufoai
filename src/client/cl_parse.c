@@ -192,7 +192,7 @@ static void CL_InvAmmo(struct dbuffer *msg);
 static void CL_InvReload(struct dbuffer *msg);
 static void CL_EndRoundAnnounce(struct dbuffer * msg);
 
-static void (*ev_func[])( struct dbuffer *msg ) =
+static void (*ev_func[])(struct dbuffer *msg) =
 {
 	NULL,							/* EV_NULL */
 	CL_Reset,						/* EV_RESET */

@@ -1221,6 +1221,7 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
 
 /**
  * @brief Deactivates the "combat zoom" interception framework.
+ * @sa MAP_ResetAction
  */
 void MAP_TurnCombatZoomOff (void)
 {
@@ -1761,6 +1762,7 @@ void MAP_DrawMap (const menuNode_t* node)
 
 /**
  * @brief No more special action in geoscape
+ * @sa MAP_TurnCombatZoomOff
  */
 void MAP_ResetAction (void)
 {
