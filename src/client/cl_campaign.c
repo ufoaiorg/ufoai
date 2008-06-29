@@ -3576,7 +3576,9 @@ void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
 
 	/* Prepare return values. */
 	*day = d + 1;
-	*month = i;
+	*month = i + 1;	/**< Return month in range [1-12] */
+	assert(*month >= 1 && *month <=12 );
+	assert(*day >= 1 && *day <= monthLength[i]);
 }
 
 /**
@@ -3642,7 +3644,7 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 
 /**
  * @brief Returns the monatname to the given month index
- * @param[in] month The month index - starts at 0 - ends at 11
+ * @param[in] month The month index - [0-11]
  * @return month name as char*
  */
 const char *CL_DateGetMonthName (int month)
