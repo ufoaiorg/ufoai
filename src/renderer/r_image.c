@@ -1883,4 +1883,3 @@ void R_TextureSolidMode (const char *string)
 
 	gl_solid_format = gl_solid_modes[i].mode;
 }
-

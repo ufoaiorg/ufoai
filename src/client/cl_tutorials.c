@@ -148,4 +148,3 @@ void TUT_ParseTutorials (const char *name, const char **text)
 			Com_Printf("TUT_ParseTutorials: unknown token \"%s\" ignored (tutorial %s)\n", token, name);
 	} while (*text);
 }
-

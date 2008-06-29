@@ -729,5 +729,3 @@ void CheckBrushes (void)
 		}
 	}
 }
-
-

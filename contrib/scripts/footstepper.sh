@@ -69,11 +69,9 @@ for i in `cat $DIR"footstep.files"`; do
 		if awk '{print $1}' $DIR$SRT | grep $j > /dev/null; then
 			MAPA=`echo $i|awk -F\. '{print $1}' |awk -F\/ '{print $NF}'`
 			cat $DIR$SRT|awk -v a=$j -v b=$MAPA '{if ($0~a) {printf $0" "; print b}}' >> $DIR"sortednew.txt"
-
 		else
 			echo -n $j" " >> $DIR"sortednew.txt"
 			echo $i|awk -F\. '{print $1}' |awk -F\/ '{print $NF}' >> $DIR"sortednew.txt"
-			
 		fi
 	done
 
@@ -113,4 +111,3 @@ echo "Replacing the original terrain.ufo..."
 mv $DIR$OUT $1$TER
 
 rm -rf $DIR
-

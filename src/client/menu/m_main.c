@@ -640,4 +640,3 @@ void MN_Init (void)
 	MN_MessageInit();
 	MN_DrawMenusInit();
 }
-

@@ -157,4 +157,3 @@ void MN_InitFonts (void)
 	for (i = 0; i < numFonts; i++)
 		R_FontRegister(fonts[i].name, fonts[i].size, fonts[i].path, fonts[i].style);
 }
-

@@ -28,5 +28,3 @@ void CheckLevelFlags(void);
 void CheckBrushes(void);
 void CheckEntities(void);
 void FixErrors(void);
-
-

@@ -136,7 +136,7 @@ typedef struct globalData_s
 	aircraft_t *combatZoomedUfo;
 	qboolean combatZoomOn;
 	combatZoomLevel_t combatZoomLevel;
-	
+
 	/* Projectiles on geoscape (during fights) */
 	aircraftProjectile_t projectiles[MAX_PROJECTILESONGEOSCAPE];
 	int numProjectiles;

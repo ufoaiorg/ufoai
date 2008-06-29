@@ -382,7 +382,7 @@ const float STANDARD_3D_ZOOM = 40.0f;
  * @param[in] distance Half distance that we want to display on the full height of the screen.
  * @return zoom that should be applied to see given distance, if within boundaries.
  */
-#if 0 
+#if 0
 static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 {
 	float zoom;
@@ -1238,7 +1238,7 @@ void MAP_CombatZoomExit_f (void)
 }
 
 /**
- * @brief Toggles the level of "combat zoom" in the interception framework.  This will cause the zoom to 
+ * @brief Toggles the level of "combat zoom" in the interception framework.  This will cause the zoom to
  * move between close up combat (if in combat range) and a half zoom.
  */
 void MAP_ToggleCombatZoomLevel_f (void)
@@ -1247,7 +1247,6 @@ void MAP_ToggleCombatZoomLevel_f (void)
 		gd.combatZoomLevel = COMBAT_ZOOM_HALF;
 	else
 		gd.combatZoomLevel = COMBAT_ZOOM_FULL;
-		
 }
 
 

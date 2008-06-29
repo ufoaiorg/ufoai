@@ -276,4 +276,3 @@ void SP_func_rotating (edict_t *ent)
 			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 }
-

@@ -143,4 +143,3 @@ int MN_DrawNotice (int x, int y)
 	R_ColorBlend(NULL);
 	return cacheList.width;
 }
-

@@ -346,5 +346,3 @@ void Grid_DumpWholeMap (routing_t *map)
 	/* Dump the client map */
 	Grid_DumpMap(map, start[0], start[1], start[2], end[0], end[1], end[2]);
 }
-
-
