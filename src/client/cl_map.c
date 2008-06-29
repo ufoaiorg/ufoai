@@ -1161,6 +1161,7 @@ void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float 
 
 	/* this function only concerns maps */
 	activeMenu = MN_GetActiveMenu();
+	assert(activeMenu);
 	if (Q_strncmp(activeMenu->name, "map", 3))
 		return;
 
@@ -1229,13 +1230,16 @@ void MAP_TurnCombatZoomOff (void)
 }
 
 /**
- * @brief Performs the steps necesary to exit the "combat zoom" interception framework once it has been deactivated.
+ * @brief Performs the steps necessary to exit the "combat zoom" interception
+ * framework once it has been deactivated.
  */
 void MAP_CombatZoomExit_f (void)
 {
-	MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qtrue);
-	gd.combatZoomOn = qfalse;
-	gd.combatZoomedUfo = NULL;
+	if (gd.combatZoomOn) {
+		MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qtrue);
+		gd.combatZoomOn = qfalse;
+		gd.combatZoomedUfo = NULL;
+	}
 }
 
 /**
@@ -1324,9 +1328,9 @@ void MAP_StopSmoothMovement (void)
 void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
 {
 	if (useSafeAcceleration)
-		MAP_SmoothlyMoveToGeoscapePoint (ccs.angles, finalZoomLevel, safeAcceleration);
+		MAP_SmoothlyMoveToGeoscapePoint(ccs.angles, finalZoomLevel, safeAcceleration);
 	else
-		MAP_SmoothlyMoveToGeoscapePoint (ccs.angles, finalZoomLevel, 0.2f);
+		MAP_SmoothlyMoveToGeoscapePoint(ccs.angles, finalZoomLevel, 0.2f);
 
 }
 
