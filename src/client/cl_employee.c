@@ -842,6 +842,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 		gd.numEmployees[type]--;
 		/** @todo: Fix all the aircraft->acTeam[] list pointers here - they might be wrong now */
 		/** @todo: Fix all the character_t emplIdx backlinks here - they might be wrong now */
+		/** @todo: Fix all the links in trEmployees */
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "E_DeleteEmployee: Employee wasn't in the global list.\n");
 		return qfalse;
