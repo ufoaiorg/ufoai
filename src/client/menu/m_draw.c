@@ -348,12 +348,15 @@ void MN_DrawMenus (void)
 							 }
 
 							/** Search for a suitable position to render the item at if
-							 * the container is "single" or the calculated values are out of bounds.
-							 * @todo I hope this is the same behaviour that is used in MN_Drag - a special function
-							 *		to simply calculate the final x/y values would be a good idea here. */
-							if (!exists && dragInfo.item.t && (dragInfo.to->single
-							 || dragInfo.toX  < 0 || dragInfo.toY < 0
-							 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
+							 * the container is "single".
+							 * @todo The additional bounds check displayed the items correctly as preview, but hte placement does not work yet.
+							 * I guess a common function to calculate the final x/y values would be a good idea here.
+							 * See among oithers: https://sourceforge.net/tracker/index.php?func=detail&aid=1998356&group_id=157793&atid=805242
+							 *
+							 * if (!exists && dragInfo.item.t && (dragInfo.to->single
+							 * || dragInfo.toX  < 0 || dragInfo.toY < 0
+							 * || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) { */
+							 if (!exists && dragInfo.item.t && dragInfo.to->single) {
 								Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY);
 							}
 						}
