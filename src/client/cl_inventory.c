@@ -783,7 +783,7 @@ void INV_InventoryList_f (void)
 qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContainer, int px, int py,
 	const invDef_t * fromContainer, int fromX, int fromY)
 {
-	invList_t *i = NULL;
+	invList_t *ic = NULL;
 	int et = -1;
 	int moved;
 
@@ -802,9 +802,9 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContai
 		 * it is valid only due to the following property: */
 		assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
 
-		i = Com_SearchInInventory(inv, fromContainer, fromX, fromY);
-		if (i) {
-			et = i->item.t->buytype;
+		ic = Com_SearchInInventory(inv, fromContainer, fromX, fromY);
+		if (ic) {
+			et = ic->item.t->buytype;
 			if (et == BUY_MULTI_AMMO) {
 				et = (base->equipType == BUY_WEAP_SEC)
 					? BUY_WEAP_SEC
@@ -814,7 +814,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContai
 			/* If the 'to'-container is not the one that is currently shown or auto-placement is wanted ...*/
 			if (!BUYTYPE_MATCH(et, base->equipType) || px == -1 || py == -1) {
 				inv->c[csi.idEquip] = base->equipByBuyType.c[et];
-				Com_FindSpace(inv, &i->item, &csi.ids[csi.idEquip], &px, &py);
+				Com_FindSpace(inv, &ic->item, &csi.ids[csi.idEquip], &px, &py);
 				if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
 					inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
 					return qfalse;
@@ -850,7 +850,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContai
 	}
 
 	/* end of hack */
-	if (i && !BUYTYPE_MATCH(et, base->equipType)) {
+	if (ic && !BUYTYPE_MATCH(et, base->equipType)) {
 		base->equipByBuyType.c[et] = inv->c[csi.idEquip];
 		inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
 	} else {
