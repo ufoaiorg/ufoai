@@ -185,10 +185,12 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 		break;
 	case AC_ITEM_ELECTRONICS:
 		slot = aircraft->electronics + airequipSelectedSlot;
+		assert(airequipSelectedSlot >= aircraft->maxWeapons);
 		break;
 	case AC_ITEM_AMMO:
 	case AC_ITEM_WEAPON:
 		slot = aircraft->weapons + airequipSelectedSlot;
+		assert(airequipSelectedSlot >= aircraft->maxElectronics);
 		break;
 	default:
 		Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", airequipID);
