@@ -118,6 +118,11 @@ public class MapUtils {
 					argUseds[i]=true;
 					map.findIntersectingBrushes();
 				}
+				if(args[i].equalsIgnoreCase("-summary")){
+					BrushList.go (map);
+					argUseds[i]=true;
+					map.printParsed(System.out,"");
+				}
 			}
 			for(int i=0;i<argUseds.length;i++){
 			    if(!argUseds[i]){

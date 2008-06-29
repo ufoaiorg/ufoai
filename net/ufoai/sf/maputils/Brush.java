@@ -19,6 +19,7 @@ public class Brush {
 	Map map;
 	private static Pattern linePattern = Pattern.compile ("^.+?$", Pattern.MULTILINE);// a line with at least one char
 	private static final int DEFAULT_INCLUSIVE=0, DEFAULT_EXCLUSIVE=1;
+	protected static int maxInteractionListSize=0;
 	
 	Vector<Face> faces = new Vector<Face> (6, 2);
 	Vector<Vector3D> vertices = new Vector<Vector3D> (8, 8);
@@ -304,6 +305,7 @@ public class Brush {
 
 	public void addToBrushInteractionList (Brush b) {
 		interactionList.add (b);
+		maxInteractionListSize = (maxInteractionListSize < interactionList.size()) ? interactionList.size() : maxInteractionListSize;
 	}
 	
 	public void addToCompositeFaceInterationList(CompositeFace c){

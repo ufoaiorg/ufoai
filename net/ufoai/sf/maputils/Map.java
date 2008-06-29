@@ -169,6 +169,7 @@ public class Map {
 			Entity ent = entities.get (i);
 			to.printf ("%s  %03d: %s%n", prefix, i, ent.toString() );
 		}
+		to.printf ("%sMaximum number of brushes in one brushes interaction list (ie physically close to it) %d  %n", prefix, Brush.maxInteractionListSize  );
 	}
 	
 	public String verboseInfo(){
