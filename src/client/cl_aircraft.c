@@ -860,26 +860,22 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
  * @brief Removes an aircraft from its base and the game.
  * @param[in] aircraft Pointer to aircraft that should be removed.
  * @note The assigned soldiers (if any) are removed/unassinged from the aircraft - not fired.
+ * @sa AIR_DestroyAircraft
  * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
  * @todo Return status of deletion for better error handling.
+ * @note This function has the side effect, that the base aircraft number is
+ * reduced by one, also the gd.employees pointers are
+ * moved to fill the gap of the removed employee. Thus pointers like acTeam in
+ * the aircraft can point to wrong employees now. This has to be taken into
+ * account
  */
 void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 {
 	int i;
 
-	if (!aircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: no aircraft given (NULL)\n");
-		/** @todo: Return deletion status here. */
-		return;
-	}
-
+	assert(aircraft);
 	base = aircraft->homebase;
-
-	if (!base) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: No homebase found for aircraft.\n");
-		/** @todo: Return deletion status here. */
-		return;
-	}
+	assert(base);
 
 	MAP_NotifyAircraftRemoved(aircraft, qtrue);
 	TR_NotifyAircraftRemoved(aircraft);
@@ -932,8 +928,6 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	/* also update the base menu buttons */
 	Cmd_ExecuteString("base_init");
-
-	/** @todo: Return successful deletion status here. */
 
 	/* update hangar capacities */
 	AIR_UpdateHangarCapForAll(base);

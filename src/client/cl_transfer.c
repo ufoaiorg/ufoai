@@ -744,6 +744,8 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				assert(aircraft);
 
 				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
+					/** @todo This doesn't work for assigned weapons and other
+					 * assigned stuff like employees and so on */
 					/* Aircraft relocated to new base, just add new one. */
 					AIR_NewAircraft(destination, aircraft->id);
 					/* Remove aircraft from old base. */
@@ -752,7 +754,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 					/* No space, aircraft will be lost. */
 					Com_sprintf(message, sizeof(message), _("Base %s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
 					MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-					AIR_DeleteAircraft(baseCurrent, aircraft);
+					AIR_DeleteAircraft(transfer->srcBase, aircraft);
 				}
 			}
 		}
