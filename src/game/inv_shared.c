@@ -885,7 +885,7 @@ void INVSH_DestroyInventory (inventory_t* const i)
  * @param[out] py The y position in the container
  * @sa Com_CheckToInventory
  */
-void Com_FindSpace (const inventory_t* const inv, item_t *item, const invDef_t * container, int* const px, int* const py)
+void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invDef_t * container, int* const px, int* const py)
 {
 	int x, y;
 	int checkedTo = 0;

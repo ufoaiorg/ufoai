@@ -783,7 +783,7 @@ void INV_InventoryList_f (void)
 qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContainer, int px, int py,
 	const invDef_t * fromContainer, int fromX, int fromY)
 {
-	invList_t *ic = NULL;
+	const invList_t *ic = NULL;
 	int et = -1;
 	int moved;
 
