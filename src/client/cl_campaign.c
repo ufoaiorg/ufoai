@@ -3797,14 +3797,14 @@ void CL_GameTimeFast (void)
 
 /**
  * @brief Set game time speed
- * @param[in] gameLapseValue The value to set the game time to. 
- * @note 
+ * @param[in] gameLapseValue The value to set the game time to.
+ * @note
  */
 void CL_SetGameTime (int gameLapseValue)
 {
 	if (gameLapseValue == gameLapse)
 		return;
-	
+
 	/* check the stats value - already build bases might have been destroyed
 	 * so the gd.numBases values is pointless here */
 	if (!campaignStats.basesBuild)
@@ -3816,7 +3816,7 @@ void CL_SetGameTime (int gameLapseValue)
 	assert(gameLapse < NUM_TIMELAPSE);
 
 	gameLapse = gameLapseValue;
-	
+
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
 	CL_UpdateTime();
 }
@@ -5906,7 +5906,6 @@ static void CL_GameResults_f (void)
 	int i;
 	base_t *base;
 	aircraft_t *aircraft;
-	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
@@ -5959,21 +5958,22 @@ static void CL_GameResults_f (void)
 
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
-		/* if employee is marked as dead */
-		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft))	/* DEBUG? */
+		employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
+
+		if (CL_SoldierInAircraft(employee, aircraft))
 			numberofsoldiers++;
 
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
-		employee = &gd.employees[EMPL_SOLDIER][i];
 
 		if (employee->hired && employee->baseHired == base) {
 			character_t *chr = &(employee->chr);
 			assert(chr);
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
+			/* if employee is marked as dead */
 			if (chr->HP <= 0) { /** @todo: <= -50, etc. (implants) */
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
-				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);
+				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, chr->name);
 				E_DeleteEmployee(employee, EMPL_SOLDIER);
 			} /* if dead */
 		}

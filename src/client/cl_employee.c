@@ -798,6 +798,11 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
  * @sa E_CreateEmployee
  * @sa E_ResetEmployees
  * @sa E_UnhireEmployee
+ * @note This function has the side effect, that the global employee number for
+ * the given employee type is reduced by one, also the gd.employees pointers are
+ * moved to fill the gap of the removed employee. Thus pointers like acTeam in
+ * the aircraft can point to wrong employees now. This has to be taken into
+ * account
  */
 qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 {
@@ -835,6 +840,8 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 
 	if (found) {
 		gd.numEmployees[type]--;
+		/** @todo: Fix all the aircraft->acTeam[] list pointers here - they might be wrong now */
+		/** @todo: Fix all the character_t emplIdx backlinks here - they might be wrong now */
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "E_DeleteEmployee: Employee wasn't in the global list.\n");
 		return qfalse;

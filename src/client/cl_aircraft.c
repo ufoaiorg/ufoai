@@ -953,7 +953,7 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 
 	/* this must be a reverse loop because the employee array is changed for
 	 * removing employees, thus the acTeam will point to another employee after
-	 * E_DeleteEmployee was called */
+	 * E_DeleteEmployee (sideeffect) was called */
 	for (i = aircraft->maxTeamSize - 1; i >= 0; i--) {
 		if (aircraft->acTeam[i]) {
 			employee_t *employee = aircraft->acTeam[i];
