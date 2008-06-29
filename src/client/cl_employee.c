@@ -839,21 +839,39 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 	}
 
 	if (found) {
-		transfer_t *t;
+		transfer_t *transfer;
 		int j, k;
-		/** @todo: Fix all the aircraft->acTeam[] list pointers here - they might be wrong now */
-		/** @todo: Fix all the character_t emplIdx backlinks here - they might be wrong now */
-		for (i = 0, t = gd.alltransfers; i < MAX_TRANSFERS; i++, t++) {
-			if (!t->active)
+
+		for (j = 0; j < MAX_BASES; j++) {
+			base_t *base = B_GetFoundedBaseByIDX(j);
+			if (!base)
+				continue;
+			for (k = 0; k < base->numAircraftInBase; k++) {
+				aircraft_t *aircraft = &base->aircraft[k];
+				int l;
+				for (l = 0; l < MAX_ACTIVETEAM; l++) {
+					/* no need to check for == here, the employee should
+					 * no longer be in this list, due to the E_UnhireEmployee
+					 * call which will also remove any assignments for the
+					 * aircraft - checking >= because the employee after the
+					 * removed on in gd.employees is now on the same position
+					 * where the removed employee was before */
+					if (aircraft->acTeam[l] >= employee)
+						aircraft->acTeam[l]--;
+				}
+			}
+		}
+		for (i = 0, transfer = gd.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
+			if (!transfer->active)
 				continue;
 			for (j = 0; j < MAX_EMPL; j++) {
 				for (k = 0; k < MAX_EMPLOYEES; k++) {
-					if (t->trEmployees[j][k] > employee)
-						t->trEmployees[j][k]--;
-					else if (t->trEmployees[j][k] == employee)
+					if (transfer->trEmployees[j][k] > employee)
+						transfer->trEmployees[j][k]--;
+					else if (transfer->trEmployees[j][k] == employee)
 						/** @todo This might not work as expected - maybe we
 						 * have to memmove the array */
-						t->trEmployees[j][k] = NULL;
+						transfer->trEmployees[j][k] = NULL;
 				}
 			}
 		}
