@@ -100,8 +100,7 @@ typedef enum {
 
 /** @brief slot of aircraft */
 typedef struct aircraftSlot_s {
-	int idx;					/**< self link - this should be references only with the variable name aircraftIdx
-								 * to let us find references all over the code easier @sa AIR_DeleteAircraft */
+	int idx;					/**< self link */
 	struct base_s *base;		/**< A link to the base. (if defined by aircraftItemType_t) */
 	struct aircraft_s *aircraft;		/**< A link to the aircraft (if defined by aircraftItemType_t). */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
@@ -147,7 +146,9 @@ typedef struct aircraft_s {
 	int idx;			/**< Global index of this aircraft. See also gd.numAircraft and AIRCRAFT_INVALID
 						 * this index is also updated when AIR_DeleteAircraft was called
 						 * for all the other aircraft.
-						 * For aircraftTemplates[] aicrafts this is the index in that array. */
+						 * For aircraftTemplates[] aicrafts this is the index in that array.
+						 * this should be references only with the variable name aircraftIdx
+						 * to let us find references all over the code easier @sa AIR_DeleteAircraft  */
 	struct aircraft_s *tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
 	char *id;			/**< Internal id from script file. */
 	char *name;			/**< Translateable name. */
