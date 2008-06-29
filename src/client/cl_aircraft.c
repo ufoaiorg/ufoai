@@ -884,7 +884,14 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	if (aircraft->teamSize > 0)
 		CL_RemoveSoldiersFromAircraft(aircraft);
 
-	/** @todo Remove the slot items from the inventory */
+	/* base is NULL here because we don't want to readd this to the inventory
+	 * If you want this in the inventory you really have to call these functions
+	 * before you are destroying a craft */
+	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
+		AII_RemoveItemFromSlot(NULL, aircraft->weapons, qfalse);
+		AII_RemoveItemFromSlot(NULL, aircraft->electronics, qfalse);
+	}
+	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
 
 	for (i = aircraft->idx + 1; i < gd.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
