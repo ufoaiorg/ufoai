@@ -1639,18 +1639,18 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		maxInterpolationPoints = floor(1.0f/(cls.frametime * (float)gd.gameTimeScale));
 	else
 		maxInterpolationPoints = 0;
-	
+
 	/* draws projectiles */
 	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
-		vec3_t drawPos = {0,0,0};
-		
+		vec3_t drawPos = {0, 0, 0};
+
 		if (projectile->hasMoved) {
 			projectile->hasMoved = qfalse;
 			VectorCopy(projectile->pos, drawPos);
 		} else {
-			if (maxInterpolationPoints > 2  && projectile->numInterpolationPoints < maxInterpolationPoints) {
+			if (maxInterpolationPoints > 2 && projectile->numInterpolationPoints < maxInterpolationPoints) {
 				/* If a new point hasn't been given and there is at least 3 points need to be filled in then
-				 * use linear interpolation to draw the points until a new projectile point is provided. 
+				 * use linear interpolation to draw the points until a new projectile point is provided.
 				 * The reason you need at least 3 points is that acceptable results can be achieved with 2 or less
 				 * gaps in points so dont add the overhead of interpolation. */
 				const float xInterpolStep = (projectile->projectedPos[0] - projectile->pos[0]) / (float)maxInterpolationPoints;
@@ -1673,7 +1673,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	} else if (gd.combatZoomOn && !gd.combatZoomedUfo && !closestUfo) {
 		gd.combatZoomOn = qfalse;
 	}
-
 
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
 
