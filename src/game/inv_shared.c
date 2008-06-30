@@ -663,6 +663,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 					if (checkedTo & INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
+						if (icp)
+							*icp = ic;
 						return IA_MOVE;
 					}
 					return IA_NONE;
