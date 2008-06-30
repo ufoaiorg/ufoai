@@ -319,17 +319,27 @@ void MN_DrawMenus (void)
 
 						/* Store information for preview drawing of dragged items. */
 						if (MN_CheckNodeZone(node, mousePosX, mousePosY)) {
+							int itemX = 0;
+							int itemY = 0;
+
 							dragInfo.toNode = node;
 							dragInfo.to = &csi.ids[node->mousefx];
 
-							dragInfo.toX = (mousePosX - node->pos[0]) / C_UNIT;
-							dragInfo.toY = (mousePosY - node->pos[1]) / C_UNIT;
 							/* We calculate the position of the top-left corner of the dragged
-							 * item in oder to compensate for the centered-drawn cursor-item. */
+							 * item in oder to compensate for the centered-drawn cursor-item.
+							 * Or to be more exact, we calculate the relative offset from the cursor
+							 * location to the middle of the top-left square of the item. */
 							if (dragInfo.item.t) {
-								dragInfo.toX -= dragInfo.item.t->sx / 2;
-								dragInfo.toY -= dragInfo.item.t->sy / 2;
+								itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
+								itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
+
+								/* Place relative center in the middle of the square. */
+								itemX -= C_UNIT / 2;
+								itemY -= C_UNIT / 2;
 							}
+
+							dragInfo.toX = (mousePosX - node->pos[0] - itemX) / C_UNIT;
+							dragInfo.toY = (mousePosY - node->pos[1] - itemY) / C_UNIT;
 
 							/** Check if the items already exists in the container. i.e. there is already at least one item.
 							 * @sa Com_AddToInventory
