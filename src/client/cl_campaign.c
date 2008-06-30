@@ -7285,7 +7285,6 @@ static void CP_UFORecovered_f (void)
 
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
-	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
 	memset(&ufoRecovery, 0, sizeof(ufoRecovery));
 	ufoRecovery.ufoType = UFOtype;
 
@@ -7307,8 +7306,7 @@ static void CP_UFORecoveryDone (void)
 	/* Disable UFORecovery buttons. */
 	Cbuf_AddText("disallrecovery\n");
 
-	/* Set done cvar for function updating. */
-	Cvar_SetValue("mission_uforecoverydone", 1);
+	ufoRecovery.recoveryDone = qtrue;
 }
 
 /** @brief Array of base indexes where we can store UFO. */
@@ -7378,7 +7376,7 @@ static void CP_UFORecoveredStore_f (void)
 	qboolean ufofound = qfalse;
 
 	/* Do nothing if recovery process is finished. */
-	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
+	if (ufoRecovery.recoveryDone)
 		return;
 
 	/* Find ufo sample of given ufotype. */
@@ -7534,7 +7532,7 @@ static void CP_UFORecoveredSell_f (void)
 	static char recoveryNationSelectPopup[512];
 
 	/* Do nothing if recovery process is finished. */
-	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
+	if (ufoRecovery.recoveryDone)
 		return;
 
 	ufocraft = NULL;
@@ -7591,7 +7589,7 @@ static void CP_UFORecoveredSell_f (void)
 static void CP_UFORecoveredDestroy_f (void)
 {
 	/* Do nothing if recovery process is finished. */
-	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
+	if (ufoRecovery.recoveryDone)
 		return;
 
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Secured %s was destroyed."),

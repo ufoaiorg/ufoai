@@ -328,6 +328,7 @@ typedef struct ufoRecovery_s {
 	base_t *base;
 	ufoType_t ufoType;
 	nation_t *nation;
+	qboolean recoveryDone;
 } ufoRecovery_t;
 
 extern ufoRecovery_t ufoRecovery;
