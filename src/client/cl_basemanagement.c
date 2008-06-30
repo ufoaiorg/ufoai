@@ -2767,7 +2767,7 @@ void B_AssignInitial (base_t *base)
 
 	if (!ccs.singleplayer) {
 		CL_ResetMultiplayerTeamInBase(base);
-		CL_GenTeamList(base);	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be polulated. */
+		CL_GenTeamList(base);	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be populated. */
 		Cvar_Set("mn_teamname", _("NewTeam"));
 	}
 

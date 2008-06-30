@@ -403,8 +403,8 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 
 
 /**
- * @brief Remove all character_t information (and linekd tot hat employees & team info) from the game.
- * @param[in] base The base to Remove all this stuff from.
+ * @brief Remove all character_t information (and linked to that employees & team info) from the game.
+ * @param[in] base The base to remove all this stuff from.
  * @sa CL_GenerateCharacter
  * @sa AIR_ResetAircraftTeam
  */
