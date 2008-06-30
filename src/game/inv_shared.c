@@ -607,7 +607,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, int fx, in
 int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type)
 {
 	invList_t *ic;
-	invList_t *icFrom;
+	const invList_t *icFrom;
 	int cacheFromX, cacheFromY;
 	int time;
 	int checkedTo = INV_DOES_NOT_FIT;
@@ -652,8 +652,9 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 		}
 	}
 
-	/** Store x/y origin coordinates of removed (source) item. If we need to re-add it we can use this.
-	* We can't use fx/fy in that case, because it's the mouse coordinate, not the item-origin. */
+	/** Store x/y origin coordinates of removed (source) item. If we need to
+	 * re-add it we can use this. We can't use fx/fy in that case, because it's
+	 * the mouse coordinate, not the item-origin. */
 	icFrom = Com_SearchInInventory(i, from, fx, fy);	/* Get the source-invlist (e.g. a weapon) */
 	if (icFrom) {
 		cacheFromX = icFrom->x;
