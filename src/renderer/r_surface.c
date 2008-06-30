@@ -29,8 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 mBspSurfaces_t r_opaque_surfaces;
 mBspSurfaces_t r_opaque_warp_surfaces;
-mBspSurfaces_t r_alpha_surfaces;
-mBspSurfaces_t r_alpha_warp_surfaces;
+mBspSurfaces_t r_blend_surfaces;
+mBspSurfaces_t r_blend_warp_surfaces;
+mBspSurfaces_t r_alpha_test_surfaces;
 
 /**
  * @brief this is the currently handled bsp model
@@ -121,12 +122,6 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_Color(color);
 	}
 
-	if (surf->texinfo->flags & SURF_ALPHATEST) {  /* alpha test */
-		R_EnableAlphaTest(qtrue);
-	} else {
-		R_EnableAlphaTest(qfalse);
-	}
-
 	if (bufferMapTile != mod) {
 		bufferMapTile = mod;
 
@@ -178,7 +173,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 
 /**
  * @brief Draw the surface chain with multitexture enabled and light enabled
- * @sa R_DrawAlphaSurfaces
+ * @sa R_DrawBlendSurfaces
  */
 void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 {
@@ -196,7 +191,7 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 
 /**
  * @brief Draw the surfaces via warp shader
- * @sa R_DrawAlphaWarpSurfaces
+ * @sa R_DrawBlendWarpSurfaces
  */
 void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
 {
@@ -208,11 +203,23 @@ void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
 	R_EnableWarp(qfalse);
 }
 
+void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
+{
+	if (!surfs->count)
+		return;
+
+	R_EnableAlphaTest(qtrue);
+	R_EnableLighting(qtrue);
+	R_DrawSurfaces(surfs);
+	R_EnableLighting(qfalse);
+	R_EnableAlphaTest(qfalse);
+}
+
 /**
  * @brief Draw the surface chain with multitexture enabled and blend enabled
  * @sa R_DrawOpaqueSurfaces
  */
-void R_DrawAlphaSurfaces (const mBspSurfaces_t *surfs)
+void R_DrawBlendSurfaces (const mBspSurfaces_t *surfs)
 {
 	if (!surfs->count)
 		return;
@@ -227,7 +234,7 @@ void R_DrawAlphaSurfaces (const mBspSurfaces_t *surfs)
  * @brief Draw the alpha surfaces via warp shader and with blend enabled
  * @sa R_DrawOpaqueWarpSurfaces
  */
-void R_DrawAlphaWarpSurfaces (mBspSurfaces_t *surfs)
+void R_DrawBlendWarpSurfaces (mBspSurfaces_t *surfs)
 {
 	if (!surfs->count)
 		return;

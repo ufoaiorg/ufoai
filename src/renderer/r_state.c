@@ -258,22 +258,6 @@ void R_EnableWarp (qboolean enable)
 	R_SelectTexture(&texunit_diffuse);
 }
 
-void R_DisableEffects (void)
-{
-	R_CheckError();
-
-	if (r_state.alpha_test_enabled)
-		R_EnableAlphaTest(qfalse);
-
-	if (r_state.lighting_enabled)
-		R_EnableLighting(qfalse);
-
-	if (r_state.warp_enabled)
-		R_EnableWarp(qfalse);
-
-	R_CheckError();
-}
-
 /**
  * @sa R_SetupGL3D
  */

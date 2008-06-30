@@ -41,17 +41,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_image.h"
 #include "r_model.h"
 
-void R_DrawAlphaSurfaces(const mBspSurfaces_t *list);
+void R_DrawBlendSurfaces(const mBspSurfaces_t *list);
 void R_DrawOpaqueSurfaces(const mBspSurfaces_t *surfs);
 void R_DrawOpaqueWarpSurfaces(mBspSurfaces_t *surfs);
-void R_DrawAlphaWarpSurfaces(mBspSurfaces_t *surfs);
+void R_DrawBlendWarpSurfaces(mBspSurfaces_t *surfs);
+void R_DrawAlphaTestSurfaces(mBspSurfaces_t *surfs);
 void R_DrawMaterialSurfaces(mBspSurfaces_t *surfs);
 
 /* surface lists */
 extern mBspSurfaces_t r_opaque_surfaces;
 extern mBspSurfaces_t r_opaque_warp_surfaces;
-extern mBspSurfaces_t r_alpha_surfaces;
-extern mBspSurfaces_t r_alpha_warp_surfaces;
+extern mBspSurfaces_t r_blend_surfaces;
+extern mBspSurfaces_t r_blend_warp_surfaces;
+extern mBspSurfaces_t r_alpha_test_surfaces;
 extern mBspSurfaces_t r_material_surfaces;
 
 /* temporary space used to group surfaces by texture */

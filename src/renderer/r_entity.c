@@ -359,8 +359,6 @@ static void R_DrawBspEntities (const entity_t *ents)
 		R_DrawBrushModel(e);
 		e = e->next;
 	}
-
-	R_DisableEffects();
 }
 
 /**
@@ -410,7 +408,7 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 /**
  * @sa R_DrawEntities
  */
-static void R_DrawAlphaMeshEntities (entity_t *ents)
+static void R_DrawBlendMeshEntities (entity_t *ents)
 {
 	if (!ents)
 		return;
@@ -559,24 +557,24 @@ static float *R_CalcTransform (entity_t * e)
 void R_DrawEntities (void)
 {
 	int i;
-	entity_t *e, **chain;
+	entity_t **chain;
 	entity_t *r_bsp_entities, *r_opaque_mesh_entities;
-	entity_t *r_alpha_mesh_entities, *r_null_entities;
+	entity_t *r_blend_mesh_entities, *r_null_entities;
 	image_t *skin;
 
 	if (!r_drawentities->integer)
 		return;
 
 	r_bsp_entities = r_opaque_mesh_entities =
-		r_alpha_mesh_entities = r_null_entities = NULL;
+		r_blend_mesh_entities = r_null_entities = NULL;
 
 	for (i = 0; i < r_numEntities; i++) {
-		e = &r_entities[i];
+		entity_t *e = &r_entities[i];
 		R_CalcTransform(e);
 
 		if (!e->model) {
 			if (e->flags & RF_BOX || e->flags & RF_PATH)
-				chain = &r_alpha_mesh_entities;
+				chain = &r_blend_mesh_entities;
 			else
 				chain = &r_null_entities;
 		} else {
@@ -593,7 +591,7 @@ void R_DrawEntities (void)
 					continue;
 				}
 				if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
-					chain = &r_alpha_mesh_entities;
+					chain = &r_blend_mesh_entities;
 				else
 					chain = &r_opaque_mesh_entities;
 				break;
@@ -608,7 +606,7 @@ void R_DrawEntities (void)
 
 	R_DrawBspEntities(r_bsp_entities);
 	R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
-	R_DrawAlphaMeshEntities(r_alpha_mesh_entities);
+	R_DrawBlendMeshEntities(r_blend_mesh_entities);
 	R_Color(NULL);
 	R_DrawNullEntities(r_null_entities);
 

@@ -73,8 +73,8 @@ void R_SortSurfaces (void)
 	if (r_opaque_surfaces.count)
 		R_SortSurfaces_(&r_opaque_surfaces);
 
-	if (r_alpha_surfaces.count)
-		R_SortSurfaces_(&r_alpha_surfaces);
+	if (r_blend_surfaces.count)
+		R_SortSurfaces_(&r_blend_surfaces);
 
 	if (r_material_surfaces.count)
 		R_SortSurfaces_(&r_material_surfaces);
@@ -91,12 +91,12 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 	float dot;
 	mBspSurface_t *surf;
 	mBspSurfaces_t opaque_surfaces, opaque_warp_surfaces;
-	mBspSurfaces_t alpha_surfaces, alpha_warp_surfaces;
-	mBspSurfaces_t material_surfaces;
+	mBspSurfaces_t blend_surfaces, blend_warp_surfaces;
+	mBspSurfaces_t alpha_test_surfaces, material_surfaces;
 
 	opaque_surfaces.count = opaque_warp_surfaces.count = 0;
-	alpha_surfaces.count = alpha_warp_surfaces.count = 0;
-	material_surfaces.count = 0;
+	blend_surfaces.count = blend_warp_surfaces.count = 0;
+	alpha_test_surfaces.count = material_surfaces.count = 0;
 
 	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
 
@@ -119,12 +119,14 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 			/* add to appropriate surface chain */
 			if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
 				if (surf->texinfo->flags & SURF_WARP)
-					R_SurfaceToSurfaces(&alpha_warp_surfaces, surf);
+					R_SurfaceToSurfaces(&blend_warp_surfaces, surf);
 				else
-					R_SurfaceToSurfaces(&alpha_surfaces, surf);
+					R_SurfaceToSurfaces(&blend_surfaces, surf);
 			} else {
 				if (surf->texinfo->flags & SURF_WARP)
 					R_SurfaceToSurfaces(&opaque_warp_surfaces, surf);
+				else if (surf->texinfo->flags & SURF_ALPHATEST)
+					R_SurfaceToSurfaces(&alpha_test_surfaces, surf);
 				else
 					R_SurfaceToSurfaces(&opaque_surfaces, surf);
 			}
@@ -141,9 +143,12 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 
 	R_EnableBlend(qtrue);
 
-	R_DrawAlphaSurfaces(&alpha_surfaces);
+	/* FIXME */
+	R_DrawBlendSurfaces(&blend_surfaces);
 
-	R_DrawAlphaWarpSurfaces(&alpha_warp_surfaces);
+	R_DrawBlendWarpSurfaces(&blend_warp_surfaces);
+
+	R_DrawAlphaTestSurfaces(&alpha_test_surfaces);
 
 	R_DrawMaterialSurfaces(&material_surfaces);
 
@@ -277,12 +282,14 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 		/* add to appropriate surfaces list */
 		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
 			if (surf->texinfo->flags & SURF_WARP)
-				R_SurfaceToSurfaces(&r_alpha_warp_surfaces, surf);
+				R_SurfaceToSurfaces(&r_blend_warp_surfaces, surf);
 			else
-				R_SurfaceToSurfaces(&r_alpha_surfaces, surf);
+				R_SurfaceToSurfaces(&r_blend_surfaces, surf);
 		} else {
 			if (surf->texinfo->flags & SURF_WARP)
 				R_SurfaceToSurfaces(&r_opaque_warp_surfaces, surf);
+			else if (surf->texinfo->flags & SURF_ALPHATEST)
+				R_SurfaceToSurfaces(&r_alpha_test_surfaces, surf);
 			else
 				R_SurfaceToSurfaces(&r_opaque_surfaces, surf);
 		}
@@ -323,8 +330,8 @@ void R_GetLevelSurfaceLists (void)
 	 * even reset them when RDF_NOWORLDMODEL is set - otherwise
 	 * there still might be some surfaces in none-world-mode */
 	r_opaque_surfaces.count = r_opaque_warp_surfaces.count = 0;
-	r_alpha_surfaces.count = r_alpha_warp_surfaces.count = 0;
-	r_material_surfaces.count = 0;
+	r_blend_surfaces.count = r_blend_warp_surfaces.count = 0;
+	r_alpha_test_surfaces.count = r_material_surfaces.count = 0;
 
 	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;

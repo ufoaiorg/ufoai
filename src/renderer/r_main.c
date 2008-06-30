@@ -293,33 +293,25 @@ void R_RenderFrame (void)
 
 	R_DrawOpaqueSurfaces(&r_opaque_surfaces);
 
-	R_DisableEffects();
-
 	R_DrawOpaqueWarpSurfaces(&r_opaque_warp_surfaces);
 
-	R_DisableEffects();
-
-	R_DrawEntities();
-
-	R_DisableEffects();
+	R_DrawAlphaTestSurfaces(&r_alpha_test_surfaces);
 
 	R_EnableBlend(qtrue);
 
 	R_DrawMaterialSurfaces(&r_material_surfaces);
 
-	R_DisableEffects();
+	R_DrawBlendSurfaces(&r_blend_surfaces);
+
+	R_DrawBlendWarpSurfaces(&r_blend_warp_surfaces);
+
+	R_EnableBlend(qfalse);
+
+	R_DrawEntities();
+
+	R_CheckError();
 
 	R_EnableBlend(qtrue);
-
-	R_CheckError();
-
-	R_DrawAlphaSurfaces(&r_alpha_surfaces);
-
-	R_DisableEffects();
-
-	R_DrawAlphaWarpSurfaces(&r_alpha_warp_surfaces);
-
-	R_CheckError();
 
 	R_DrawParticles();
 
