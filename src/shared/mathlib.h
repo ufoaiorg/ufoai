@@ -139,6 +139,7 @@ extern const byte dvleft[DIRECTIONS];
 #define VectorLengthSqr(a)      (a[0]*a[0]+a[1]*a[1]+a[2]*a[2])
 #define VectorNotEmpty(a)           (a[0]||a[1]||a[2])
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
+#define LinearInterpolation(a, b, x, y)   (y=a[1] + (((x - a[0]) * (b[1] - a[1])) / (b[0] - a[0])))
 
 #define PosAddDV(p,dv)          (p[0]+=dvecs[dv&(DIRECTIONS-1)][0], p[1]+=dvecs[dv&(DIRECTIONS-1)][1], p[2]=(dv>>3)&(DIRECTIONS-1))
 int AngleToDV(int angle);

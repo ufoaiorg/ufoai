@@ -47,6 +47,9 @@ typedef struct aircraftProjectile_s {
 	const objDef_t *aircraftItem;		/**< Corresponding ammo in the array csi.ods[] */
 	int idx;				/**< self link of the idx in gd.projectiles[] */
 	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
+	vec3_t projectedPos;	/**< Projected position of the projectile (latitude and longitude). */
+	qboolean hasMoved;       /**< Has the projectile been moved by the CampaignRunProjectiles function */
+	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
 	aircraft_t *attackingAircraft;	/**< Aircraft which shooted the projectile. NULL if aircraft is destroyed or base is shooting */

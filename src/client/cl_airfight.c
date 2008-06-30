@@ -652,6 +652,40 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 }
 
 /**
+ * @brief Get the next point in the object path based on movement converting the positions from 
+ * polar coordinates to vector for the calculation and back again to be returned.
+ * @param[in] movement       The distance that the object needs to move.
+ * @param[in] originalPoint  The point from which the object is moving.
+ * @param[in] orthogonalVector  The orthogonal vector.
+ * @param[out] finalPoint    The next point from the original point + movement in "angle" direction.
+ */
+static void AIRFIGHT_getNextPointInPathFromVector (const float *movement, const vec2_t originalPoint, const vec3_t orthogonalVector, vec2_t finalPoint)
+{
+	vec3_t startPoint, finalVectorPoint;
+	
+	PolarToVec(originalPoint, startPoint);
+	RotatePointAroundVector(finalVectorPoint, orthogonalVector, startPoint, *movement);
+	VecToPolar(finalVectorPoint, finalPoint);
+}
+
+/**
+ * @brief Get the next point in the object path based on movement.
+ * @param[in] movement    The distance that the object needs to move.
+ * @param[in] originalPoint   The point from which the object is moving.
+ * @param[in] targetPoint The final point to which the object is moving.
+ * @param[in] angle       The direction that the object moving in.
+ * @param[out] finalPoint The next point from the original point + movement in "angle" direction.
+ * @param[out] orthogonalVector  The orthogonal vector.
+ */
+static void AIRFIGHT_getNextPointInPath (const float *movement, const vec2_t originalPoint, const vec2_t targetPoint, float *angle, vec2_t finalPoint, vec3_t orthogonalVector)
+{
+	
+	*angle = MAP_AngleOfPath(originalPoint, targetPoint, NULL, orthogonalVector);
+	AIRFIGHT_getNextPointInPathFromVector (movement, originalPoint, orthogonalVector, finalPoint);
+}
+
+
+/**
  * @brief Update values of projectiles.
  * @param[in] dt Time elapsed since last call of this function.
  */
@@ -660,13 +694,16 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 	int idx;
 	float angle;
 	float movement;
-	vec3_t ortogonalVector, finalPoint, startPoint;
+	vec3_t ortogonalVector, finalPoint, projectedPoint;
 
 	/* gd.numProjectiles is changed in AIRFIGHT_RemoveProjectile */
 	for (idx = gd.numProjectiles - 1; idx >= 0; idx--) {
 		aircraftProjectile_t *projectile = &gd.projectiles[idx];
 		projectile->time += dt;
 		movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
+		projectile->hasMoved = qtrue;
+		projectile->numInterpolationPoints = 0;
+		
 		/* Check if the projectile reached its destination (aircraft or idle point) */
 		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
 			/* check if it got the ennemy */
@@ -679,16 +716,19 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 			AIRFIGHT_RemoveProjectile(projectile);
 		} else {
 			/* missile is moving towards its target */
-			if (projectile->aimedAircraft)
-				angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, ortogonalVector);
-			else
-				angle = MAP_AngleOfPath(projectile->pos, projectile->idleTarget, NULL, ortogonalVector);
+			if (projectile->aimedAircraft) {
+				AIRFIGHT_getNextPointInPath (&movement, projectile->pos, projectile->aimedAircraft->pos, &angle, finalPoint, ortogonalVector);
+				AIRFIGHT_getNextPointInPath (&movement, finalPoint, projectile->aimedAircraft->pos, &angle, projectedPoint, ortogonalVector);
+			} else {
+				AIRFIGHT_getNextPointInPath (&movement, projectile->pos, projectile->idleTarget, &angle, finalPoint, ortogonalVector);
+				AIRFIGHT_getNextPointInPath (&movement, finalPoint, projectile->idleTarget, &angle, projectedPoint, ortogonalVector);
+			}
+
 			/* udpate angle of the projectile */
 			projectile->angle = angle;
-			/* update position of the projectile */
-			PolarToVec(projectile->pos, startPoint);
-			RotatePointAroundVector(finalPoint, ortogonalVector, startPoint, movement);
-			VecToPolar(finalPoint, projectile->pos);
+			VectorCopy(finalPoint, projectile->pos);
+			VectorCopy(projectedPoint, projectile->projectedPos);
+			
 			/* Update position of bullets if needed */
 			if (projectile->bullets)
 				AIRFIGHT_RunBullets(projectile, ortogonalVector, movement);

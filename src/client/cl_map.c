@@ -1235,7 +1235,7 @@ void MAP_TurnCombatZoomOff (void)
  */
 void MAP_CombatZoomExit_f (void)
 {
-	if (gd.combatZoomOn) {
+	if (gd.combatZoomedUfo) {
 		MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qtrue);
 		gd.combatZoomOn = qfalse;
 		gd.combatZoomedUfo = NULL;
@@ -1413,6 +1413,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	float weaponZoomRange = 0;
 	static qboolean aircraftInWeaponsRange = qfalse;
 	aircraft_t *closestUfo = NULL;
+	int maxInterpolationPoints;
 
 	assert(node);
 
@@ -1634,12 +1635,37 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 	}
 
+	if (gd.gameTimeScale > 0)
+		maxInterpolationPoints = floor(1.0f/(cls.frametime * (float)gd.gameTimeScale));
+	else
+		maxInterpolationPoints = 0;
+	
 	/* draws projectiles */
 	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
+		vec3_t drawPos = {0,0,0};
+		
+		if (projectile->hasMoved) {
+			projectile->hasMoved = qfalse;
+			VectorCopy(projectile->pos, drawPos);
+		} else {
+			if (maxInterpolationPoints > 2  && projectile->numInterpolationPoints < maxInterpolationPoints) {
+				/* If a new point hasn't been given and there is at least 3 points need to be filled in then
+				 * use linear interpolation to draw the points until a new projectile point is provided. 
+				 * The reason you need at least 3 points is that acceptable results can be achieved with 2 or less
+				 * gaps in points so dont add the overhead of interpolation. */
+				const float xInterpolStep = (projectile->projectedPos[0] - projectile->pos[0]) / (float)maxInterpolationPoints;
+				projectile->numInterpolationPoints += 1;
+				drawPos[0] = projectile->pos[0] + (xInterpolStep * projectile->numInterpolationPoints);
+				LinearInterpolation(projectile->pos, projectile->projectedPos, drawPos[0], drawPos[1]);
+			} else {
+				VectorCopy(projectile->pos, drawPos);
+			}
+		}
+
 		if (projectile->bullets)
 			MAP_DrawBullets(node, projectile);
 		else
-			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", 0);
+			MAP_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, "missile", 0);
 	}
 
 	if (gd.combatZoomOn && !gd.combatZoomedUfo && closestUfo) {
