@@ -348,19 +348,16 @@ void MN_DrawMenus (void)
 							 }
 
 							/** Search for a suitable position to render the item at if
-							 * the container is "single".
-							 * @todo The additional bounds check displayed the items
-							 * correctly as preview, but the placement does not work yet.
-							 * I guess a common function to calculate the final x/y values
-							 * would be a good idea here.
-							 * See among others: https://sourceforge.net/tracker/index.php?func=detail&aid=1998356&group_id=157793&atid=805242
+							 * the container is "single", the curor is out of bound of the container,
 							 */
-#if 0
 							 if (!exists && dragInfo.item.t && (dragInfo.to->single
 							  || dragInfo.toX  < 0 || dragInfo.toY < 0
 							  || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
+#if 0
+/* ... or there is something in the way. */
+/* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
+							  || (Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY) == INV_DOES_NOT_FIT)) {
 #endif
-							if (!exists && dragInfo.item.t && dragInfo.to->single) {
 								Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY);
 							}
 						}
