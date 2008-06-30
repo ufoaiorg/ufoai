@@ -142,9 +142,7 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 /*			MN_DrawTooltip("f_verysmall", csi.ods[dragInfo.item.t].name, fromX, fromY, 0);*/
 		}
 	} else {
-		const int toX = (int) ((x - node->pos[0] - C_UNIT * ((dragInfo.item.t->sx - 1) / 2.0)) / C_UNIT);
-		const int toY = (int) ((y - node->pos[1] - C_UNIT * ((dragInfo.item.t->sy - 1) / 2.0)) / C_UNIT);
-		/* end drag */
+		/* End drag */
 		mouseSpace = MS_NULL;
 
 		/* tactical mission */
@@ -152,12 +150,12 @@ void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 			assert(node->mousefx >= 0);
 			assert(node->mousefx < MAX_INVDEFS);
 			assert(dragInfo.from);
-			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragInfo.from->id, dragInfo.fromX, dragInfo.fromY, node->mousefx, toX, toY);
+			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragInfo.from->id, dragInfo.fromX, dragInfo.fromY, node->mousefx, dragInfo.toX, dragInfo.toY);
 			return;
 		/* menu */
 		}
 
-		INV_MoveItem(baseCurrent, menuInventory, &csi.ids[node->mousefx], toX, toY, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
+		INV_MoveItem(baseCurrent, menuInventory, &csi.ids[node->mousefx], dragInfo.toX, dragInfo.toY, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
 	}
 
 	/* We are in the base or multiplayer inventory */
