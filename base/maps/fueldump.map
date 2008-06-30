@@ -3452,7 +3452,7 @@
 "particle" "green_smoke"
 "target" "gate"
 "message" "Destroy that gate"
-"item" "knife"
+"item" "bomb1"
 }
 // entity 24
 {
@@ -4745,7 +4745,7 @@
 {
 "classname" "misc_item"
 "origin" "232 624 16"
-"item" "knife"
+"item" "bomb1"
 }
 // entity 144
 {
