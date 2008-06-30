@@ -280,16 +280,15 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
  */
 void MN_Click (int x, int y)
 {
-	menuNode_t *node, *execute_node;
-	menu_t *menu;
+	menuNode_t *node;
 	int sp, mouseOver;
 	qboolean clickedInside = qfalse;
 
 	sp = mn.menuStackPos;
 
 	while (sp > 0) {
-		menu = mn.menuStack[--sp];
-		execute_node = NULL;
+		menu_t *menu = mn.menuStack[--sp];
+		menuNode_t *execute_node = NULL;
 		for (node = menu->firstNode; node; node = node->next) {
 			if (node->type != MN_CONTAINER && node->type != MN_CHECKBOX
 			 && node->type != MN_SELECTBOX && !node->click)
@@ -307,7 +306,7 @@ void MN_Click (int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_CONTAINER:
-				MN_Drag(node, x, y, qfalse);
+				MN_Drag(node, baseCurrent, x, y, qfalse);
 				break;
 			case MN_BAR:
 				MN_BarClick(menu, node, x);
@@ -405,7 +404,7 @@ void MN_RightClick (int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_CONTAINER:
-				MN_Drag(node, x, y, qtrue);
+				MN_Drag(node, baseCurrent, x, y, qtrue);
 				break;
 			case MN_BASEMAP:
 				MN_BaseMapRightClick(node, x, y);
