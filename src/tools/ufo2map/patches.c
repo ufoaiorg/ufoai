@@ -251,6 +251,9 @@ static entity_t *EntityForModel (int modnum)
 	return &entities[0];
 }
 
+/**
+ * @brief turn each face into a single patch
+ */
 void MakePatches (void)
 {
 	int i, j, k;
@@ -357,7 +360,9 @@ static void DicePatch (patch_t *patch)
 	DicePatch(newp);
 }
 
-
+/**
+ * @brief subdivide patches to a maximum dimension
+ */
 void SubdividePatches (void)
 {
 	int i;

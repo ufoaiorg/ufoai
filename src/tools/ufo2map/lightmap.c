@@ -402,8 +402,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 	dBspFace_t *s;
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
-	float val;
-	int i, j, e;
+	int i, j;
 	dBspVertex_t *v;
 	dBspTexinfo_t *tex;
 
@@ -417,20 +416,20 @@ static void CalcFaceExtents (lightinfo_t *l)
 	tex = &curTile->texinfo[s->texinfo];
 
 	for (i = 0; i < s->numedges; i++) {
-		e = curTile->surfedges[s->firstedge+i];
+		const int e = curTile->surfedges[s->firstedge+i];
 		if (e >= 0)
 			v = curTile->vertexes + curTile->edges[e].v[0];
 		else
 			v = curTile->vertexes + curTile->edges[-e].v[1];
 		for (j = 0; j < 3; j++) {  /* calculate mins, maxs */
 			if (v->point[j] > maxs[j])
-					maxs[j] = v->point[j];
+				maxs[j] = v->point[j];
 			if (v->point[j] < mins[j])
 				mins[j] = v->point[j];
 		}
 
 		for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
-			val = DotProduct(v->point, tex->vecs[j]) + tex->vecs[j][3];
+			const float val = DotProduct(v->point, tex->vecs[j]) + tex->vecs[j][3];
 			if (val < stmins[j])
 				stmins[j] = val;
 			if (val > stmaxs[j])
@@ -463,7 +462,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 	dBspTexinfo_t *tex;
 	int i, j, w, h;
 	vec3_t texnormal;
-	vec_t distscale, dist, len;
+	vec_t distscale, dist;
 
 	tex = &curTile->texinfo[l->face->texinfo];
 
@@ -495,10 +494,9 @@ static void CalcFaceVectors (lightinfo_t *l)
 	distscale = 1 / distscale;
 
 	for (i = 0; i < 2; i++) {
-		len = VectorLength(l->worldtotex[i]);
-		dist = DotProduct(l->worldtotex[i], l->facenormal);
-		dist *= distscale;
-		VectorMA(l->worldtotex[i], -dist, texnormal, l->textoworld[i]);
+		const vec_t len = VectorLength(l->worldtotex[i]);
+		const vec_t distance = DotProduct(l->worldtotex[i], l->facenormal) * distscale;
+		VectorMA(l->worldtotex[i], -distance, texnormal, l->textoworld[i]);
 		VectorScale(l->textoworld[i], (1 / len) * (1 / len), l->textoworld[i]);
 	}
 
@@ -527,7 +525,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 {
 	int s, t, j, w, h, step;
-	vec_t starts, startt, us, ut;
+	vec_t starts, startt;
 	vec_t *surf;
 	vec3_t pos;
 	dBspLeaf_t *leaf;
@@ -547,8 +545,8 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 
 	for (t = 0; t < h; t++) {
 		for (s = 0; s < w; s++, surf += 3) {
-			us = starts + (s + sofs) * step;
-			ut = startt + (t + tofs) * step;
+			const vec_t us = starts + (s + sofs) * step;
+			const vec_t ut = startt + (t + tofs) * step;
 
 			/* calculate texture point */
 			for (j = 0; j < 3; j++)
@@ -1034,7 +1032,6 @@ void BuildFacelights (unsigned int facenum)
 	lightinfo_t *l;
 	float *styletable;
 	int i, j, numsamples;
-	float *spot;
 	patch_t *patch;
 	size_t tablesize;
 	facelight_t *fl;
@@ -1050,13 +1047,13 @@ void BuildFacelights (unsigned int facenum)
 	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
 
-	l = malloc(MAX_SAMPLES * sizeof(*l));
-	memset(l, 0, MAX_SAMPLES * sizeof(*l));
-
 	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;
 	else
 		numsamples = 1;
+
+	l = malloc(numsamples * sizeof(*l));
+
 	for (i = 0; i < numsamples; i++) {
 		memset(&l[i], 0, sizeof(l[i]));
 		l[i].surfnum = facenum;
@@ -1116,7 +1113,7 @@ void BuildFacelights (unsigned int facenum)
 		(face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT)) {
-		spot = fl->samples;
+		float *spot = fl->samples;
 		for (i = 0; i < l[0].numsurfpt; i++, spot += 3)
 			VectorAdd(spot, face_patches[facenum]->baselight, spot);
 	}
