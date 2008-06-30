@@ -248,7 +248,7 @@ item plasblade
 	type		melee
 	animationindex	2
 	shape		"0 0 1 2"
-	center		"1 4.5 0"
+	center		"1 4.5 1"
 	scale  		1.5
 	price		3710
 	size		5
