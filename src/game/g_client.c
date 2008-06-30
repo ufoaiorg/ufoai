@@ -995,6 +995,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 		return;
 	default:
 		/* Continue below. */
+		assert(ic);
 		break;
 	}
 

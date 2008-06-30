@@ -589,7 +589,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, const invDef_t * c
  * @param[in] tx x for destination container
  * @param[in] ty y for destination container
  * @param[in] TU amount of TU needed to move an item
- * @param[in] icp
+ * @param[out] icp
  * @return IA_NOTIME when not enough TU
  * @return IA_NONE if no action possible
  * @return IA_NORELOAD if you cannot reload a weapon
@@ -613,7 +613,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, int fx, in
  * @param[in] tx x for destination container
  * @param[in] ty y for destination container
  * @param[in] TU amount of TU needed to move an item
- * @param[in] icp
+ * @param[out] icp
  * @param[in] ignore_type Ignores the type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
  * @return IA_NOTIME when not enough TU
  * @return IA_NONE if no action possible
@@ -828,11 +828,14 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 		cacheItem.rotated = qfalse;
 	}
 
+	assert(cacheItem.t);
 	ic = Com_AddToInventory(i, cacheItem, to, tx, ty, 1);
 
 	/* return data */
-	if (icp)
+	if (icp) {
+		assert(ic);
 		*icp = ic;
+	}
 
 	if (to->id == CSI->idArmour) {
 		assert(!Q_strcmp(cacheItem.t->type, "armour"));
