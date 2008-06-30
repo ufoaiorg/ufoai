@@ -55,6 +55,7 @@ typedef struct {
 extern int num_entities;
 extern entity_t entities[MAX_MAP_ENTITIES];
 
+entity_t *FindTargetEntity(const char *target);
 void ParseEntities(void);
 const char *UnparseEntities(void);
 

@@ -573,19 +573,6 @@ static directlight_t *directlights[2];
 static facelight_t facelight[2][MAX_MAP_FACES];
 static int numdlights[2];
 
-static entity_t *FindTargetEntity (const char *target)
-{
-	int i;
-
-	for (i = 0; i < num_entities; i++) {
-		const char *n = ValueForKey(&entities[i], "targetname");
-		if (!strcmp(n, target))
-			return &entities[i];
-	}
-
-	return NULL;
-}
-
 /*#define	DIRECT_LIGHT	3000 */
 #define	DIRECT_LIGHT	3
 

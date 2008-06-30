@@ -851,7 +851,7 @@ static void SP_misc_mission (edict_t *ent)
 	if (ent->HP)
 		ent->flags |= FL_DESTROYABLE;
 
-	if (!ent->HP && !ent->time) {
+	if (!ent->HP && !ent->time && !ent->target) {
 		G_FreeEdict(ent);
 		Com_Printf("misc_mission given with no objective\n");
 		return;

@@ -889,6 +889,19 @@ static inline qboolean IsInlineModelEntity (const char *entName)
 	return inlineModelEntity;
 }
 
+entity_t *FindTargetEntity (const char *target)
+{
+	int i;
+
+	for (i = 0; i < num_entities; i++) {
+		const char *n = ValueForKey(&entities[i], "targetname");
+		if (!strcmp(n, target))
+			return &entities[i];
+	}
+
+	return NULL;
+}
+
 /**
  * @brief Parsed map entites and brushes
  * @sa ParseBrush

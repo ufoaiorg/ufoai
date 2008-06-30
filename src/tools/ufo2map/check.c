@@ -87,7 +87,17 @@ static int checkFuncBreakable (entity_t *e, int entnum)
 		Com_Printf("  ERROR: func_breakable with no brushes given - entnum: %i\n", entnum);
 		return 1;
 	} else if (e->numbrushes > 1) {
-		Com_Printf("  ERROR: func_breakable with more than one brush given - entnum: %i (might break pathfinding)\n", entnum);
+		Com_Printf("  WARNING: func_breakable with more than one brush given - entnum: %i (might break pathfinding)\n", entnum);
+	}
+
+	return 0;
+}
+
+static int checkMiscItem (entity_t *e, int entnum)
+{
+	const char *val = ValueForKey(e, "item");
+	if (!*val) {
+		Com_Printf("  ERROR: misc_item with no item given - entnum: %i\n", entnum);
 		return 1;
 	}
 
@@ -133,6 +143,16 @@ static int checkMiscParticle (entity_t *e, int entnum)
 
 static int checkMiscMission (entity_t *e, int entnum)
 {
+	const char *val = ValueForKey(e, "health");
+	if (!*val)
+		val = ValueForKey(e, "time");
+	if (!*val) {
+		val = ValueForKey(e, "target");
+		if (*val && !FindTargetEntity(val))
+			Com_Printf("  ERROR: misc_mission could not find specified target: '%s' - entnum: %i\n", val, entnum);
+	}
+	if (!*val)
+		Com_Printf("  ERROR: misc_mission with no objectives given - entnum: %i\n", entnum);
 	return 0;
 }
 
@@ -177,6 +197,7 @@ static int checkInfoNull (entity_t *e, int entnum)
 		Com_Printf("  ERROR: info_null with no targetname given - entnum: %i\n", entnum);
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -206,6 +227,16 @@ static int checkTriggerHurt (entity_t *e, int entnum)
 	return 0;
 }
 
+static int checkTriggerTouch (entity_t *e, int entnum)
+{
+	const char *val = ValueForKey(e, "target");
+	if (!*val)
+		Com_Printf("  ERROR: trigger_touch with no target given - entnum: %i\n", entnum);
+	else if (!FindTargetEntity(val))
+		Com_Printf("  ERROR: trigger_touch could not find specified target: '%s' - entnum: %i\n", val, entnum);
+	return 0;
+}
+
 typedef struct entityCheck_s {
 	const char *name;	/**< The entity name */
 	int (*checkCallback)(entity_t* e, int entnum);		/**< @return 0 if successfully fixed it
@@ -219,6 +250,7 @@ static const entityCheck_t checkArray[] = {
 	{"func_door", checkFuncDoor},
 	{"func_rotating", checkFuncRotating},
 	{"func_group", checkFuncGroup},
+	{"misc_item", checkMiscItem},
 	{"misc_model", checkMiscModel},
 	{"misc_particle", checkMiscParticle},
 	{"misc_sound", checkMiscSound},
@@ -232,6 +264,7 @@ static const entityCheck_t checkArray[] = {
 	{"info_null", checkInfoNull},
 	{"info_civilian_target", checkInfoCivilianTarget},
 	{"trigger_hurt", checkTriggerHurt},
+	{"trigger_touch", checkTriggerTouch},
 
 	{NULL, NULL}
 };
