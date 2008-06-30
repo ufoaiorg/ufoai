@@ -771,21 +771,21 @@ void CreateDirectLights (void)
  * @param[in] lightscale is the normalizer for multisampling
  */
 static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t center,
-			float *styletable, int offset, int mapsize, float lightscale)
+	float *styletable, int offset, int mapsize, float lightscale,
+	const float sun_intensity, const vec3_t sun_color, const vec3_t sun_dir)
 {
 	directlight_t *l;
-	vec3_t dir, delta, sun_dir, sun_color;
+	vec3_t dir, delta;
 	float dot, dot2, dist;
 	float scale = 0.0f;
 	float *dest;
-	int sun_intensity;
 
 	/* move into the level using the normal and surface center */
 	VectorSubtract(pos, center, dir);
 	VectorNormalize(dir);
 
 	VectorMA(pos, 0.5, dir, pos);
-	VectorMA(pos, 0.5, dir, pos);
+	VectorMA(pos, 0.5, normal, pos);
 
 	for (l = directlights[config.compile_for_day]; l; l = l->next) {
 		VectorSubtract(l->origin, pos, delta);
@@ -803,16 +803,15 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 		case emit_surface:
 			dot2 = -DotProduct(delta, l->normal);
 			if (dot2 <= 0.001)
-				goto skipadd;	/* behind light surface */
-			scale = (l->intensity / (dist*dist) ) * dot * dot2;
+				continue;	/* outside light cone */
+			scale = (l->intensity / (dist * dist)) * dot * dot2;
 			break;
 
 		case emit_spotlight:
 			/* linear falloff */
 			dot2 = -DotProduct(delta, l->normal);
-			if (dot2 <= l->stopdot) {
-				goto skipadd;	/* outside light cone */
-			}
+			if (dot2 <= l->stopdot)
+				continue;	/* outside light cone */
 			scale = (l->intensity - dist) * dot;
 			break;
 		default:
@@ -828,27 +827,13 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 		dest = styletable + offset;
 		/* add some light to it */
 		VectorMA(dest, scale * lightscale, l->color, dest);
-
-skipadd: ;
 	}
 
 	/* add sun light */
-	if (config.compile_for_day) {
-		if (!config.day_sun_intensity)
-			return;
-		sun_intensity = config.day_sun_intensity;
-		VectorCopy(config.day_sun_dir, sun_dir);
-		VectorCopy(config.day_sun_color, sun_color);
-	} else {
-		if (!config.night_sun_intensity)
-			return;
-		sun_intensity = config.night_sun_intensity;
-		VectorCopy(config.night_sun_dir, sun_dir);
-		VectorCopy(config.night_sun_color, sun_color);
-	}
+	if (!sun_intensity)
+		return;
 
 	dot = DotProduct(sun_dir, normal);
-
 	if (dot <= 0.001)
 		return; /* wrong direction */
 
@@ -875,14 +860,12 @@ skipadd: ;
  * any part of it. They are counted and averaged, so it
  * doesn't generate extra light.
  */
-static void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
+static inline void AddSampleToPatch (const vec3_t pos, const vec3_t color, const int facenum)
 {
 	patch_t *patch;
 	vec3_t mins, maxs;
 	int i;
 
-	if (config.numbounce == 0)
-		return;
 	if (color[0] + color[1] + color[2] < 3)
 		return;
 
@@ -1030,12 +1013,13 @@ void BuildFacelights (unsigned int facenum)
 {
 	dBspFace_t *f;
 	lightinfo_t *l;
-	float *styletable;
+	float *styletable, lightscale;
 	int i, j, numsamples;
 	patch_t *patch;
 	size_t tablesize;
 	facelight_t *fl;
-	vec3_t normal;
+	vec3_t normal, sun_color, sun_dir;
+	float sun_intensity;
 
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
@@ -1053,6 +1037,7 @@ void BuildFacelights (unsigned int facenum)
 		numsamples = 1;
 
 	l = malloc(numsamples * sizeof(*l));
+	lightscale = 1.0 / numsamples;
 
 	for (i = 0; i < numsamples; i++) {
 		memset(&l[i], 0, sizeof(l[i]));
@@ -1083,6 +1068,21 @@ void BuildFacelights (unsigned int facenum)
 	fl->origins = malloc(tablesize);
 	memcpy(fl->origins, l[0].surfpt, tablesize);
 
+	/* add sun light */
+	if (config.compile_for_day) {
+		if (!config.day_sun_intensity)
+			return;
+		sun_intensity = config.day_sun_intensity;
+		VectorCopy(config.day_sun_dir, sun_dir);
+		VectorCopy(config.day_sun_color, sun_color);
+	} else {
+		if (!config.night_sun_intensity)
+			return;
+		sun_intensity = config.night_sun_intensity;
+		VectorCopy(config.night_sun_dir, sun_dir);
+		VectorCopy(config.night_sun_color, sun_color);
+	}
+
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {
 		for (j = 0; j < numsamples; j++) {
@@ -1093,11 +1093,13 @@ void BuildFacelights (unsigned int facenum)
 				VectorCopy(l[0].facenormal, normal);
 
 			GatherSampleLight(l[j].surfpt[i], normal, l[0].center,
-				styletable, i * 3, tablesize, 1.0 / numsamples);
+				styletable, i * 3, tablesize, lightscale, sun_intensity,
+				sun_color, sun_dir);
 		}
 
 		/* contribute the sample to one or more patches */
-		AddSampleToPatch(l[0].surfpt[i], styletable + i * 3, facenum);
+		if (config.numbounce > 0)
+			AddSampleToPatch(l[0].surfpt[i], styletable + i * 3, facenum);
 	}
 
 	/* average up the direct light on each patch for radiosity */
