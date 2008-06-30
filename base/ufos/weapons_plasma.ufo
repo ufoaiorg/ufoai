@@ -212,7 +212,7 @@ item plasblaster_ammo
 	type		ammo
 	animationindex	0
 	shape		"0 0 1 1"
-	center		"0 0 0"
+	center		"0 0 -0.3"
 	scale		1.4
 	price		4000
 	size		7
