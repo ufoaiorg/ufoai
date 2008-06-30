@@ -415,7 +415,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	assert(i);
 	assert(container);
 
-	if (x < 0 || y < 0) { /** @todo max values? */
+	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
 		/* No (sane) position in container given as parameter - find free space on our own. */
 		Com_FindSpace(i, &item, container, &x, &y);
 	}
@@ -820,7 +820,6 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 
 	if (checkedTo == INV_FITS_ONLY_ROTATED) {
 		/* Set rotated tag */
-		/** @todo remove this again when moving out of a container. */
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventoryIgnore: setting rotate tag.\n");
 		cacheItem.rotated = qtrue;
 	} else if (cacheItem.rotated) {
@@ -829,10 +828,6 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 		cacheItem.rotated = qfalse;
 	}
 
-	/** @todo Why is the item removed again? This didn't do any harm
-	 * because x and y was already empty at this stage - but it will produce
-	 * trouble when we begin to pack the same items together */
-	/*Com_RemoveFromInventory(i, from, fx, fy);*/
 	ic = Com_AddToInventory(i, cacheItem, to, tx, ty, 1);
 
 	/* return data */
@@ -1821,7 +1816,6 @@ void INVSH_PrintItemDescription (const objDef_t *od)
 
 /**
  * @brief Returns the index of this item in the inventory.
- * @todo This function should be located in a inventory-related file.
  * @note id may not be null or empty
  * @note previously known as RS_GetItem
  * @param[in] id the item id in our object definition array (csi.ods)
