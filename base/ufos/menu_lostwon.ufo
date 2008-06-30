@@ -490,7 +490,7 @@ menu popup_recoverynationlist
 	}
 	string selected_nation_val
 	{
-		string	"*cvar mission_recoverynation_name"
+		string	"*cvar mission_recoverynation"
 		pos		"450 400"
 	}
 

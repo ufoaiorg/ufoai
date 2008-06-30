@@ -306,6 +306,7 @@ typedef struct nationInfo_s {
 typedef struct nation_s {
 	char *id;		/**< Unique ID of this nation. */
 	char *name;		/**< Full name of the nation. */
+	int idx;		/**< position in the nations array */
 
 	vec4_t color;		/**< The color this nation uses in the color-coded earth-map */
 	vec2_t pos;		/**< Nation name position on geoscape. */
@@ -322,6 +323,14 @@ typedef struct nation_s {
 } nation_t;
 
 #define MAX_NATIONS 8
+
+typedef struct ufoRecovery_s {
+	base_t *base;
+	ufoType_t ufoType;
+	nation_t *nation;
+} ufoRecovery_t;
+
+extern ufoRecovery_t ufoRecovery;
 
 /**
  * @brief client structure

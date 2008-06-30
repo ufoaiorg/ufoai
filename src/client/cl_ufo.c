@@ -809,7 +809,7 @@ void UFO_PrepareRecovery (base_t *base)
 		ufocraft = &aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
-		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype"))
+		if (ufocraft->ufotype == ufoRecovery.ufoType)
 			break;
 	}
 	assert(ufocraft);
