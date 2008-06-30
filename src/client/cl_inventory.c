@@ -177,7 +177,6 @@ int INV_GetStorageRoom (aircraft_t *aircraft)
  * @sa INV_CollectingAmmo
  * @sa INV_SellorAddAmmo
  * @sa INV_CarriedItems
- * @todo remove baseCurrent from this function - replace with aircraft->homebase
  */
 void INV_CollectingItems (int won)
 {
