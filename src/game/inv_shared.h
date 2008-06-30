@@ -246,7 +246,7 @@ typedef struct objDef_s {
 
 	int price;			/**< Price for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
-	equipmentBuytypes_t buytype;			/**< Category of the item - used in menus (see equipment_buytypes_t). */
+	equipmentBuytypes_t buytype;			/**< Category of the item - used in menus. */
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */

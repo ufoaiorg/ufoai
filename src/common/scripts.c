@@ -681,7 +681,7 @@ enum {
 };
 
 
-/** @sa q_shared.h:equipment_buytypes_t */
+/** @sa q_shared.h:equipmentBuytypes_t */
 static const char *buytypeNames[MAX_BUYTYPES] = {
 	"weap_pri",
 	"weap_sec",
