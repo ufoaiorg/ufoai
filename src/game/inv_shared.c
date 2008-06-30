@@ -341,9 +341,28 @@ void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
 #endif
 
 /**
+ * @brief Searches if there is a specific item already in the inventory&container.
+ * @param[in] inv Pointer to the inventory where we will search.
+ * @param[in] container Container in the inventory.
+ * @param[in] item The item to search for.
+ * @return qtrue if there already is at least one item of this type, otherwise qfalse.
+ */
+qboolean Com_ExistsInInventory (const inventory_t* const inv, const invDef_t * container, item_t item)
+{
+	invList_t *ic;
+
+	for (ic = inv->c[container->id]; ic; ic = ic->next)
+		if (Com_CompareItem(&ic->item, &item)) {
+			return qtrue;
+		}
+
+	return qfalse;
+}
+
+/**
  * @brief Searches if there is an item at location (x,y) in a container.
  * @param[in] i Pointer to the inventory where we will search.
- * @param[in] container Container index.
+ * @param[in] container Container in the inventory.
  * @param[in] x X position that you want to check.
  * @param[in] y Y position that you want to check.
  * @return invList_t Pointer to the container in given inventory, where we can place new item.

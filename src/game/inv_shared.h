@@ -703,6 +703,7 @@ void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
 void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
 int Com_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y);
 qboolean Com_CompareItem(item_t *item1, item_t *item2);
+qboolean Com_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));
 qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));

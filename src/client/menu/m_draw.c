@@ -342,19 +342,13 @@ void MN_DrawMenus (void)
 							dragInfo.toY = (mousePosY - node->pos[1] - itemY) / C_UNIT;
 
 							/** Check if the items already exists in the container. i.e. there is already at least one item.
-							 * @sa Com_AddToInventory
-							 * @todo Make this an extra (common) function. */
-							 exists = qfalse;
-							 if (dragInfo.to && dragInfo.toNode
-							  && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
-							  && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
-							 	invList_t *ic;
-
-								for (ic = menuInventory->c[dragInfo.to->id]; ic; ic = ic->next)
-									if (Com_CompareItem(&ic->item, &dragInfo.item)) {
-										exists = qtrue;
-										break;
-									}
+							 * @sa Com_AddToInventory */
+							exists = qfalse;
+							if (dragInfo.to && dragInfo.toNode
+							 && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
+							 && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)
+							 && Com_ExistsInInventory(menuInventory, dragInfo.to, dragInfo.item)) {
+									exists = qtrue;
 							 }
 
 							/** Search for a suitable position to render the item at if
