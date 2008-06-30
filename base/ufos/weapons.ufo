@@ -636,3 +636,43 @@ item plasmagrenade
 	}
 }
 
+
+// =================================
+// BOMB KIT - only for trigger usage
+// only for in-mission spawning, not produceable or buyable
+// =================================
+item bomb1
+{
+	name		"_Bomb"
+	model		weapons/bombs/bomb1
+	weapon		false
+	type		melee
+	animationindex	2
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.5
+	size		15
+	notonmarket	true
+	thrown		true
+	buytype		misc
+}
+
+// =================================
+// BOMB KIT - only for trigger usage
+// only for in-mission spawning, not produceable or buyable
+// =================================
+item bomb2
+{
+	name		"_Bomb"
+	model		weapons/bombs/bomb2
+	weapon		false
+	type		melee
+	animationindex	2
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.5
+	notonmarket	true
+	size		15
+	thrown		true
+	buytype		misc
+}

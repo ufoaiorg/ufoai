@@ -1,6 +1,6 @@
 // ===========
 // Dummy items
-// We use "type dummy" if we do not want their mdoels to be pre-cached.
+// We use "type dummy" if we do not want their models to be pre-cached.
 // TODO: Are there other checks for type==dummy in the code?
 // ===========
 item antimatter
