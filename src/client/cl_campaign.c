@@ -7595,10 +7595,10 @@ static void CP_UFORecoveredSell_f (void)
 		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
 	}
 
-	Q_strcat(recoveryNationSelectPopup, _("\n\nSelected nation:\t\t\t"), sizeof(recoveryNationSelectPopup));
+
 	if (nationIdx != -1) {
 		const nation_t *nation = &gd.nations[nationIdx];
-		Q_strcat(recoveryNationSelectPopup, _(nation->name), sizeof(recoveryNationSelectPopup));
+		Cvar_Set("mission_recoverynation_name", _(nation->name));
 	}
 
 	/* Do nothing without at least one nation. */

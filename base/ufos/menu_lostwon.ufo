@@ -471,16 +471,27 @@ menu popup_recoverynationlist
 	{
 		num	1
 		pos		"150 266"
-		size	"726 260"
+		size	"726 128"
 		format	"16 100"
 //		bgcolor	"1 1 1 0.6"
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
-		height	"16"
+		height	"8" // max. nations
 		wheel
 		click { }
 		rclick { cmd "mn_pop;" }
 		mousefx true
+	}
+
+	string selected_nation_str
+	{
+		string	"Selected nation:"
+		pos		"150 400"
+	}
+	string selected_nation_val
+	{
+		string	"*cvar mission_recoverynation_name"
+		pos		"450 400"
 	}
 
 	pic bt_cancel
