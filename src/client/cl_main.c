@@ -1569,7 +1569,7 @@ static void CL_PrecacheModels (void)
 		if (csi.ods[i].type[0] == '\0' || !Q_strcmp(csi.ods[i].type, "dummy"))
 			continue;
 
-		if (*csi.ods[i].model) {
+		if (csi.ods[i].model[0] != '\0') {
 			cls.model_weapons[i] = R_RegisterModelShort(csi.ods[i].model);
 			if (!cls.model_weapons[i])
 				Com_Printf("CL_PrecacheModels: Could not register object model: '%s'\n", csi.ods[i].model);

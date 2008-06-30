@@ -644,12 +644,11 @@ void INV_RemoveItemsExceedingCapacity (base_t *base)
 void INV_UpdateStorageCap (base_t *base)
 {
 	int i;
-	objDef_t *obj;
 
 	base->capacities[CAP_ITEMS].cur = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
-		obj = &csi.ods[i];
+		const objDef_t *obj = &csi.ods[i];
 
 		/* don't count antimatter */
 		if (!Q_strncmp(obj->id, "antimatter", 10))
