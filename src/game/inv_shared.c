@@ -369,14 +369,14 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 
 
 /**
- * @brief Add an item to a specified container in a given inventory
- * @note Set x and y to NONE if the item shoudl get added but not displayed.
+ * @brief Add an item to a specified container in a given inventory.
+ * @note Set x and y to NONE if the item should get added but not displayed.
  * @param[in] i Pointer to inventory definition, to which we will add item.
- * @param[in] item Item to add to given container.
+ * @param[in] item Item to add to given container (needs to have "rotated" tag already set/checked, this is NOT checked here!)
  * @param[in] container Container in given inventory definition, where the new item will be stored.
  * @param[in] x The x location in the container.
  * @param[in] y The x location in the container.
- * @param[in] amount How many items of this type should be added.
+ * @param[in] amount How many items of this type should be added. (this will overwrite the amount as defined in "item.amount")
  * @sa Com_RemoveFromInventory
  * @sa Com_RemoveFromInventoryIgnore
  */
@@ -929,24 +929,33 @@ void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invD
 }
 
 /**
- * @brief Tries to add item to inventory inv at container
- * @param[in] inv Inventory pointer to add the item
- * @param[in] item Item to add to inventory
- * @param[in] container Container id
+ * @brief Tries to add an item to a container (in the inventory inv).
+ * @param[in] inv Inventory pointer to add the item.
+ * @param[in] item Item to add to inventory.
+ * @param[in] container Container id.
  * @sa Com_FindSpace
  * @sa Com_AddToInventory
  */
-int Com_TryAddToInventory (inventory_t* const inv, item_t item, const invDef_t * container)
+qboolean Com_TryAddToInventory (inventory_t* const inv, item_t item, const invDef_t * container)
 {
 	int x, y;
 
 	Com_FindSpace(inv, &item, container, &x, &y);
+
 	if (x == NONE) {
 		assert(y == NONE);
-		return 0;
+		return qfalse;
 	} else {
+		const int checkedTo = Com_CheckToInventory(inv, item.t, container, x, y);
+		if (!checkedTo)
+			return qfalse;
+		else if (checkedTo == INV_FITS_ONLY_ROTATED)
+			item.rotated = qtrue;
+		else
+			item.rotated = qfalse;
+
 		Com_AddToInventory(inv, item, container, x, y, 1);
-		return 1;
+		return qtrue;
 	}
 }
 
@@ -1198,14 +1207,14 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
 
 /**
  * @brief Fully equip one actor
- * @param[in] inv The inventory that will get the weapon
- * @param[in] equip The equipment that shows what is available - a list of obj ids
- * @param[in] numEquip the number of object ids in the field
- * @param[in] name The name of the equipment for debug messages
- * @param[in] chr Pointer to character data - to get the weapon and armour bools
+ * @param[in] inv The inventory that will get the weapon.
+ * @param[in] equip The equipment that shows what is available - a list of obj ids.
+ * @param[in] numEquip The number of object ids in the field.
+ * @param[in] name The name of the equipment for debug messages.
+ * @param[in] chr Pointer to character data - to get the weapon and armour bools.
  * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
- * Beware: if two weapons in the same category have the same price,
+ * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
 void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, const char *name, character_t* chr)
@@ -1217,18 +1226,18 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 	objDef_t *weapon;
 
 	if (chr->weapons) {
-		/* primary weapons */
+		/* Primary weapons */
 		maxPrice = INT_MAX;
 		do {
 			int lastPos = min(CSI->numODs - 1, numEquip - 1);
-			/* search for the most expensive primary weapon in the equipment */
+			/* Search for the most expensive primary weapon in the equipment. */
 			prevPrice = maxPrice;
 			maxPrice = 0;
 			weapon = NULL;
 			for (i = lastPos; i >= 0; i--) {
 				obj = &CSI->ods[i];
 				if (equip[i] && obj->weapon && BUY_PRI(obj->buytype) && obj->fireTwoHanded) {
-					if (frand() < 0.15) { /* small chance to pick any weapon */
+					if (frand() < 0.15) { /* Small chance to pick any weapon. */
 						weapon = obj;
 						maxPrice = obj->price;
 						lastPos = i - 1;
@@ -1240,29 +1249,29 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 					}
 				}
 			}
-			/* see if there is any */
+			/* See if there is any. */
 			if (maxPrice) {
-				/* see if the actor picks it */
+				/* See if the actor picks it. */
 				if (equip[weapon->idx] >= (28 - PROB_COMPENSATION) * frand()) {
-					/* not decrementing equip[weapon]
-					* so that we get more possible squads */
+					/* Not decrementing equip[weapon]
+					* so that we get more possible squads. */
 					hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 					if (hasWeapon) {
 						int ammo;
 
-						/* find the first possible ammo to check damage type */
+						/* Find the first possible ammo to check damage type. */
 						for (ammo = 0; ammo < CSI->numODs; ammo++)
 							if (equip[ammo] && INVSH_LoadableInWeapon(&CSI->ods[ammo], weapon))
 								break;
 						if (ammo < CSI->numODs) {
 							primary =
-								/* to avoid two particle weapons */
+								/* To avoid two particle weapons. */
 								!(CSI->ods[ammo].dmgtype == CSI->damParticle)
-								/* to avoid SMG + Assault Rifle */
+								/* To avoid SMG + Assault Rifle */
 								&& !(CSI->ods[ammo].dmgtype == CSI->damNormal);
 								/* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
 						}
-						maxPrice = 0; /* one primary weapon is enough */
+						maxPrice = 0; /* One primary weapon is enough. */
 						missedPrimary = 0;
 					}
 				} else {
@@ -1271,7 +1280,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			}
 		} while (maxPrice);
 
-		/* sidearms (secondary weapons with reload) */
+		/* Sidearms (secondary weapons with reload). */
 		if (!hasWeapon)
 			repeat = WEAPONLESS_BONUS > frand();
 		else
@@ -1281,8 +1290,8 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			do {
 				prevPrice = maxPrice;
 				weapon = NULL;
-				/* if primary is a particle or normal damage weapon,
-				 * we pick cheapest sidearms first */
+				/* If primary is a particle or normal damage weapon,
+				 * we pick cheapest sidearms first. */
 				maxPrice = primary ? 0 : INT_MAX;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
@@ -1300,13 +1309,13 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 					if (equip[weapon->idx] >= 40 * frand()) {
 						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missedPrimary, name);
 						if (hasWeapon) {
-							/* try to get the second akimbo pistol */
+							/* Try to get the second akimbo pistol. */
 							if (primary == 2
 								&& !weapon->fireTwoHanded
 								&& frand() < AKIMBO_CHANCE) {
 								INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 							}
-							/* enough sidearms */
+							/* Enough sidearms */
 							maxPrice = primary ? 0 : INT_MAX;
 						}
 					}
@@ -1314,7 +1323,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			} while (!(maxPrice == (primary ? 0 : INT_MAX)));
 		} while (!hasWeapon && repeat--);
 
-		/* misc items and secondary weapons without reload */
+		/* Misc items and secondary weapons without reload. */
 		if (!hasWeapon)
 			repeat = WEAPONLESS_BONUS > frand();
 		else
@@ -1343,9 +1352,9 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 				}
 			} while (maxPrice);
-		} while (repeat--); /* gives more if no serious weapons */
+		} while (repeat--); /* Gives more if no serious weapons. */
 
-		/* if no weapon at all, bad guys will always find a blade to wield */
+		/* If no weapon at all, bad guys will always find a blade to wield. */
 		if (!hasWeapon) {
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
 			maxPrice = 0;
@@ -1361,14 +1370,14 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			if (maxPrice)
 				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 		}
-		/* if still no weapon, something is broken, or no blades in equip */
+		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
 
-		/* armour; especially for those without primary weapons */
+		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	} else {
-		/** @todo: for melee actors we should not be able to get into this function, this can be removed */
+		/** @todo: For melee actors we should not be able to get into this function, this can be removed. */
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 		return;
 	}
@@ -1399,7 +1408,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 					item.t = weapon;
 					if (Com_TryAddToInventory(inv, item, &CSI->ids[CSI->idArmour])) {
 						hasArmour++;
-						maxPrice = 0; /* one armour is enough */
+						maxPrice = 0; /* One armour is enough. */
 					}
 				}
 			}

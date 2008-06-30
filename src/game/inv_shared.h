@@ -712,7 +712,7 @@ int Com_MoveInInventoryIgnore(inventory_t* const i, const invDef_t * from, int f
 void INVSH_EmptyContainer(inventory_t* const i, const invDef_t * container) __attribute__((nonnull(1)));
 void INVSH_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
 void Com_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py) __attribute__((nonnull(1)));
-int Com_TryAddToInventory(inventory_t* const inv, item_t item, const invDef_t * container) __attribute__((nonnull(1)));
+qboolean Com_TryAddToInventory(inventory_t* const inv, item_t item, const invDef_t * container) __attribute__((nonnull(1)));
 int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int buytypeContainer, int amount) __attribute__((nonnull(1)));
 void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* weapon) __attribute__((nonnull(1)));
