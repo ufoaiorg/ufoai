@@ -1508,10 +1508,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				float angle;
+				float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
 
 				if (gd.combatZoomedUfo && aircraft->aircraftTarget == gd.combatZoomedUfo) {
 					float distance = MAP_GetDistance(aircraft->pos, gd.combatZoomedUfo->pos);
-					float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
 					if (distance < maxRange && weaponZoomRange < maxRange)
 						weaponZoomRange = maxRange;
 					if ((distance < closestInterceptorDistance || !closestInterceptorPos) && distance > maxRange) {
@@ -1526,8 +1526,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
 
 				/* Draw weapon range if at least one UFO is visible */
-				if (oneUFOVisible && aircraft->stats[AIR_STATS_WRANGE] > 0)
-					MAP_MapDrawEquidistantPoints(node, aircraft->pos, aircraft->stats[AIR_STATS_WRANGE], red);
+				if (oneUFOVisible && maxRange > 0)
+					MAP_MapDrawEquidistantPoints(node, aircraft->pos, maxRange, red);
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {
@@ -1538,10 +1538,12 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if (path.numPoints > 1) {
 						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
 						memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
-						if (cl_3dmap->integer)
-							MAP_3DMapDrawLine(node, &path);
-						else
-							MAP_MapDrawLine(node, &path);
+						if (!gd.combatZoomedUfo) {
+							if (cl_3dmap->integer)
+								MAP_3DMapDrawLine(node, &path);
+							else
+								MAP_MapDrawLine(node, &path);
+						}
 					}
 					angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 				} else {
@@ -1549,7 +1551,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				}
 
 				/* Draw a circle around selected aircraft */
-				if (aircraft == selectedAircraft) {
+				if (aircraft == selectedAircraft && !gd.combatZoomedUfo) {
 					if (cl_3dmap->integer)
 						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 					else
@@ -1624,9 +1626,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				}
 			}
 
-			if (cl_3dmap->integer)
+			if (cl_3dmap->integer && !gd.combatZoomedUfo)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
-			if (aircraft == selectedUFO) {
+			if (aircraft == selectedUFO && !gd.combatZoomedUfo) {
 				if (cl_3dmap->integer) {
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 				}
