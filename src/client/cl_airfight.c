@@ -87,7 +87,6 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
 	aircraftProjectile_t *projectile;
-	int i;
 
 	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
 		Com_DPrintf(DEBUG_CLIENT, "Too many projectiles on map\n");
@@ -131,10 +130,15 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t 
 	if (weaponSlot->item->craftitem.bullets) {
 		projectile->bullets = qtrue;
 
+		projectile->bulletPos[0][0] = projectile->pos[0];
+		projectile->bulletPos[0][1] = projectile->pos[1];
+		
+		#if 0
 		for (i = 0; i < BULLETS_PER_SHOT; i++) {
 			projectile->bulletPos[i][0] = projectile->pos[0] + (frand() - 0.5f) * 2;
 			projectile->bulletPos[i][1] = projectile->pos[1] + (frand() - 0.5f) * 2;
 		}
+		#endif
 	}
 
 	weaponSlot->ammoLeft -= 1;
@@ -178,17 +182,38 @@ static void AIRFIGHT_ProjectileList_f (void)
  */
 static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean returnToBase)
 {
-	aircraft_t *oldTarget;
+	vec3_t newTarget;
+	float distance;
+	float offset;
+	
 	assert(projectile);
 
-	oldTarget = projectile->aimedAircraft;
-	if (oldTarget) {
-		VectorSet(projectile->idleTarget, oldTarget->pos[0] + 10 * frand() - 5, oldTarget->pos[1] + 10 * frand() - 5, 0);
+	if (projectile->aimedAircraft) {
+		VectorCopy(projectile->aimedAircraft->pos, newTarget);
 		projectile->aimedAircraft = NULL;
 	} else {
-		VectorSet(projectile->idleTarget, projectile->idleTarget[0] + 10 * frand() - 5, projectile->idleTarget[1] + 10 * frand() - 5, 0);
+		VectorCopy(projectile->idleTarget, newTarget);
 		projectile->aimedBase = NULL;
 	}
+	
+	/* get the distance between the projectile and target */
+	distance = MAP_GetDistance(projectile->pos, newTarget);
+	
+	/* Work out how much the projectile should miss the target by.  We dont want it too close
+	 * or too far from the original target. 
+	 * * 1/3 distance between target and projectile * random (range -0.5 to 0.5)
+	 * * Then make sure the value is at least greater than 0.1 or less than -0.1 so that
+	 *   the projectile doesn't land too close to the target. */
+	offset = (distance / 3) * (frand() - 0.5f);
+	
+	if (abs(offset) < 0.1f)
+		offset = 0.1f;
+	
+	newTarget[0] = newTarget[0] + offset;
+	newTarget[1] = newTarget[1] + offset;
+	
+	VectorCopy(newTarget, projectile->idleTarget);
+
 	if (returnToBase && projectile->attackingAircraft) {
 		if (projectile->attackingAircraft->homebase) {
 			assert(projectile->attackingAircraft->ufotype == UFO_MAX);
