@@ -321,10 +321,11 @@ void MN_DrawMenus (void)
 							itemHover = itemHover_temp;
 
 
-						/* We calculate the position of the top-left corner of the dragged
+						/** We calculate the position of the top-left corner of the dragged
 						 * item in oder to compensate for the centered-drawn cursor-item.
 						 * Or to be more exact, we calculate the relative offset from the cursor
-						 * location to the middle of the top-left square of the item. */
+						 * location to the middle of the top-left square of the item.
+						 * @sa m_input.c:MN_Click */
 						if (dragInfo.item.t) {
 							itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
 							itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */

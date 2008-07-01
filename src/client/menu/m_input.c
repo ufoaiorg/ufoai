@@ -295,7 +295,28 @@ void MN_Click (int x, int y)
 				continue;
 
 			/* check whether mouse is over this node */
-			mouseOver = MN_CheckNodeZone(node, x, y);
+			if (mouseSpace == MS_DRAG && node->type == MN_CONTAINER && dragInfo.item.t) {
+				int itemX = 0;
+				int itemY = 0;
+
+				/** We calculate the position of the top-left corner of the dragged
+				 * item in oder to compensate for the centered-drawn cursor-item.
+				 * Or to be more exact, we calculate the relative offset from the cursor
+				 * location to the middle of the top-left square of the item.
+				 * @sa m_draw.c:MN_DrawMenus:MN_CONTAINER */
+				if (dragInfo.item.t) {
+					itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
+					itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
+
+					/* Place relative center in the middle of the square. */
+					itemX -= C_UNIT / 2;
+					itemY -= C_UNIT / 2;
+				}
+				mouseOver = MN_CheckNodeZone(node, x, y) || MN_CheckNodeZone(node, x - itemX, y - itemY);
+			} else {
+				mouseOver = MN_CheckNodeZone(node, x, y);
+			}
+
 
 			if (!mouseOver)
 				continue;
