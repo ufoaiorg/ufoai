@@ -314,29 +314,31 @@ void MN_DrawMenus (void)
 					if (menuInventory) {
 						const invList_t *itemHover_temp = MN_DrawContainerNode(node);
 						qboolean exists;
+						int itemX = 0;
+						int itemY = 0;
+
 						if (itemHover_temp)
 							itemHover = itemHover_temp;
 
+
+						/* We calculate the position of the top-left corner of the dragged
+						 * item in oder to compensate for the centered-drawn cursor-item.
+						 * Or to be more exact, we calculate the relative offset from the cursor
+						 * location to the middle of the top-left square of the item. */
+						if (dragInfo.item.t) {
+							itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
+							itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
+
+							/* Place relative center in the middle of the square. */
+							itemX -= C_UNIT / 2;
+							itemY -= C_UNIT / 2;
+						}
+
 						/* Store information for preview drawing of dragged items. */
-						if (MN_CheckNodeZone(node, mousePosX, mousePosY)) {
-							int itemX = 0;
-							int itemY = 0;
-
+						if (MN_CheckNodeZone(node, mousePosX, mousePosY)
+						 ||	MN_CheckNodeZone(node, mousePosX - itemX, mousePosY - itemY)) {
 							dragInfo.toNode = node;
-							dragInfo.to = &csi.ids[node->mousefx];
-
-							/* We calculate the position of the top-left corner of the dragged
-							 * item in oder to compensate for the centered-drawn cursor-item.
-							 * Or to be more exact, we calculate the relative offset from the cursor
-							 * location to the middle of the top-left square of the item. */
-							if (dragInfo.item.t) {
-								itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
-								itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
-
-								/* Place relative center in the middle of the square. */
-								itemX -= C_UNIT / 2;
-								itemY -= C_UNIT / 2;
-							}
+							dragInfo.to = node->container;
 
 							dragInfo.toX = (mousePosX - node->pos[0] - itemX) / C_UNIT;
 							dragInfo.toY = (mousePosY - node->pos[1] - itemY) / C_UNIT;

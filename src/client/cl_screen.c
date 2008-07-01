@@ -314,13 +314,24 @@ static void SCR_DrawCursor (void)
 
 			if (checkedTo && Q_strncmp(dragInfo.item.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
 				if (dragInfo.to->single) { /* Get center of single container for placement of preview item */
-					VectorSet(org, dragInfo.toNode->pos[0] + dragInfo.toNode->size[0] / 2.0, dragInfo.toNode->pos[1] + dragInfo.toNode->size[1] / 2.0, -40);
+					VectorSet(org,
+						dragInfo.toNode->pos[0] + dragInfo.toNode->size[0] / 2.0,
+						dragInfo.toNode->pos[1] + dragInfo.toNode->size[1] / 2.0,
+						-40);
 				} else {
-					/* This is a "grid" container - we need to calculate the item-position (on the screen) from stored placement int h4e container and the calculated rotation info. */
+					/* This is a "grid" container - we need to calculate the item-position
+					 * (on the screen) from stored placement int h4e container and the
+					 * calculated rotation info. */
 					if (dragInfo.item.rotated)
-						VectorSet(org, dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sy / 2.0) * C_UNIT, dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sx / 2.0) * C_UNIT, -40);
+						VectorSet(org,
+							dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sy / 2.0) * C_UNIT,
+							dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sx / 2.0) * C_UNIT,
+							-40);
 					else
-						VectorSet(org, dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT, dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT, -40);
+						VectorSet(org,
+							dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT,
+							dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT,
+							-40);
 				}
 				Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */
 				MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);	/**< Draw preview item. */
@@ -334,6 +345,21 @@ static void SCR_DrawCursor (void)
 		if (dragInfo.toNode && checkedTo)
 			Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
 		MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);
+
+#if 0
+/* Debugging only */
+/** @todo Maybe we could make this a feature in some way. i.e. we could draw
+ * a special cursor at this place when dragging as a hint*/
+		/* Draw marker in upper left corner. */
+		Vector4Set(color, 1, 0, 0, 1);
+		if (dragInfo.item.t)
+			VectorSet(org,
+				mousePosX - (C_UNIT * dragInfo.item.t->sx - C_UNIT) / 2,
+				mousePosY - (C_UNIT * dragInfo.item.t->sy - C_UNIT) / 2,
+				-50);
+
+		R_DrawCircle2D(org[0] * viddef.rx, org[1] * viddef.ry, 2.0, qtrue, color, 1.0);
+#endif
 	}
 }
 

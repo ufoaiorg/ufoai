@@ -42,9 +42,6 @@ dragInfo_t dragInfo = {
 
 }; /**< To crash as soon as possible. */
 
-/**
- * @note: node->mousefx is the container id
- */
 void MN_Drag (const menuNode_t* const node, base_t *base, int x, int y, qboolean rightClick)
 {
 	int sel;
@@ -69,69 +66,67 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int x, int y, qboolean
 		const int fromX = (int) (x - node->pos[0]) / C_UNIT;
 		const int fromY = (int) (y - node->pos[1]) / C_UNIT;
 
-		/**< @todo Add sanity check for node->mousefx here - no assert */
-		assert(node->mousefx >= 0);
-		assert(node->mousefx < MAX_INVDEFS);
+		assert(node->container);
 
-		/* Start drag (mousefx represents container number) */
-		ic = Com_SearchInInventory(menuInventory, &csi.ids[node->mousefx], fromX, fromY);
+		/* Start drag  */
+		ic = Com_SearchInInventory(menuInventory, node->container, fromX, fromY);
 		if (ic) {
 			if (!rightClick) {
 				/* Found item to drag. Prepare for drag-mode. */
 				mouseSpace = MS_DRAG;
 				dragInfo.item = ic->item;
-				dragInfo.from = &csi.ids[node->mousefx];	/**< mousefx is the container (see hover code). */
+				dragInfo.from = node->container;
 
 				/* Store grid-position (in the container) of the mouse. */
 				dragInfo.fromX = fromX;
 				dragInfo.fromY = fromY;
 			} else {
-				if (node->mousefx != csi.idEquip) {
+				if (node->container->id != csi.idEquip) {
 					/* Move back to idEquip (ground, floor) container. */
-					INV_MoveItem(base, menuInventory, &csi.ids[csi.idEquip], -1, -1, &csi.ids[node->mousefx], fromX, fromY);
+					INV_MoveItem(base, menuInventory, &csi.ids[csi.idEquip], -1, -1, node->container, fromX, fromY);
 				} else {
 					qboolean packed = qfalse;
 					int px, py;
 					assert(ic->item.t);
 					/* armour can only have one target */
 					if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
-						packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idArmour], 0, 0, &csi.ids[node->mousefx], fromX, fromY);
+						packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idArmour], 0, 0, node->container, fromX, fromY);
 					/* ammo or item */
 					} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
 						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py);
-						packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBelt], px, py, &csi.ids[node->mousefx], fromX, fromY);
+						packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBelt], px, py, node->container, fromX, fromY);
 						if (!packed) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py);
-							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idHolster], px, py, &csi.ids[node->mousefx], fromX, fromY);
+							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idHolster], px, py, node->container, fromX, fromY);
 						}
 						if (!packed) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py);
-							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBackpack], px, py, &csi.ids[node->mousefx], fromX, fromY);
+							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, fromX, fromY);
 						}
 					} else {
 						if (ic->item.t->headgear) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHeadgear], &px, &py);
-							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idHeadgear], px, py, &csi.ids[node->mousefx], fromX, fromY);
+							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idHeadgear], px, py, node->container, fromX, fromY);
 						} else {
 							/* left and right are single containers, but this might change - it's cleaner to check
 							 * for available space here, too */
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py);
-							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idRight], px, py, &csi.ids[node->mousefx], fromX, fromY);
+							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idRight], px, py, node->container, fromX, fromY);
 							if (!packed) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py);
-								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idLeft], px, py, &csi.ids[node->mousefx], fromX, fromY);
+								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idLeft], px, py, node->container, fromX, fromY);
 							}
 							if (!packed) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py);
-								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idHolster], px, py, &csi.ids[node->mousefx], fromX, fromY);
+								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idHolster], px, py, node->container, fromX, fromY);
 							}
 							if (!packed) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py);
-								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBelt], px, py, &csi.ids[node->mousefx], fromX, fromY);
+								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBelt], px, py, node->container, fromX, fromY);
 							}
 							if (!packed) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py);
-								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBackpack], px, py, &csi.ids[node->mousefx], fromX, fromY);
+								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, fromX, fromY);
 							}
 						}
 					}
@@ -149,16 +144,16 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int x, int y, qboolean
 
 		/* tactical mission */
 		if (selActor) {
-			assert(node->mousefx >= 0);
-			assert(node->mousefx < MAX_INVDEFS);
+			assert(node->container);
 			assert(dragInfo.from);
 			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragInfo.from->id,
-				dragInfo.fromX, dragInfo.fromY, node->mousefx, dragInfo.toX, dragInfo.toY);
+				dragInfo.fromX, dragInfo.fromY, node->container->id, dragInfo.toX, dragInfo.toY);
+
 			return;
 		/* menu */
 		}
 
-		INV_MoveItem(base, menuInventory, &csi.ids[node->mousefx],
+		INV_MoveItem(base, menuInventory, node->container,
 			dragInfo.toX, dragInfo.toY, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
 	}
 
@@ -182,9 +177,9 @@ void MN_FindContainer (menuNode_t* const node)
 			break;
 
 	if (i == csi.numIDs)
-		node->mousefx = NONE;
+		node->container = NULL;
 	else
-		node->mousefx = id - csi.ids;
+		node->container = &csi.ids[i];
 
 	/* start on the last bit of the shape mask */
 	for (i = 31; i >= 0; i--) {
@@ -323,7 +318,6 @@ void MN_DrawFree (int container, const menuNode_t *node, int posx, int posy, int
 void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 {
 	objDef_t *od = dragInfo.item.t;	/**< Get the 'type' of the dragged item. */
-	int container = node->mousefx;
 
 	qboolean showTUs = qtrue;
 
@@ -337,10 +331,10 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	assert(inv);
 
 	/* if single container (hands, extension, headgear) */
-	if (csi.ids[container].single) {
+	if (node->container->single) {
 		/* if container is free or the dragged-item is in it */
-		if (node->mousefx == dragInfo.from->id || Com_CheckToInventory(inv, od, &csi.ids[container], 0, 0))
-			MN_DrawFree(container, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
+		if (node->container == dragInfo.from || Com_CheckToInventory(inv, od, node->container, 0, 0))
+			MN_DrawFree(node->container->id, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
 	} else {
 		memset(free, 0, sizeof(free));
 		for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
@@ -348,16 +342,16 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 				/* Check if the current position is usable (topleft of the item). */
 
 				/* Add '1's to each position the item is 'blocking'. */
-				checkedTo = Com_CheckToInventory(inv, od, &csi.ids[container], x, y);
+				checkedTo = Com_CheckToInventory(inv, od, node->container, x, y);
 				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
 					Com_MergeShapes(free, (uint32_t)od->shape, x, y);
 				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */
 					Com_MergeShapes(free, Com_ShapeRotate((uint32_t)od->shape), x, y);
 
 				/* Only draw on existing positions. */
-				if (Com_CheckShape(csi.ids[container].shape, x, y)) {
+				if (Com_CheckShape(node->container->shape, x, y)) {
 					if (Com_CheckShape(free, x, y)) {
-						MN_DrawFree(container, node, node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
+						MN_DrawFree(node->container->id, node, node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
 						showTUs = qfalse;
 					}
 				}
@@ -430,7 +424,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 	if (node->mousefx == C_UNDEFINED)
 		MN_FindContainer(node);
-	if (node->mousefx == NONE)
+	if (!node->container)
 		return NULL;
 
 	assert(menuInventory);
@@ -439,9 +433,9 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	if (mouseSpace == MS_DRAG && dragInfo.item.t)
 		drawLoadable = qtrue;
 
-	if (csi.ids[node->mousefx].single) {
+	if (node->container->single) {
 		/* single item container (special case for left hand) */
-		if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
+		if (node->container->id == csi.idLeft && !menuInventory->c[csi.idLeft]) {
 			const int sx = node->size[0] / C_UNIT;
 			const int sy = node->size[1] / C_UNIT;
 			color[3] = 0.5;
@@ -457,7 +451,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 						MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
 				}
 			}
-		} else if (menuInventory->c[node->mousefx]) {
+		} else if (menuInventory->c[node->container->id]) {
 			const int sx = node->size[0] / C_UNIT;
 			const int sy = node->size[1] / C_UNIT;
 			const item_t *item;
@@ -469,14 +463,14 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			 	 * fireTwoHanded weapon */
 				assert(item);
 				assert(item->t);
-				if (node->mousefx == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
+				if (node->container->id == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
 					Vector4Set(color, 0.5, 0.5, 0.5, 0.5);
 					Vector4Set(colorLoadable, 0.5, 0.25, 0.25, 0.5);
 					MN_DrawDisabled(node);
 				}
 			}
 
-			item = &menuInventory->c[node->mousefx]->item;
+			item = &menuInventory->c[node->container->id]->item;
 			assert(item);
 			assert(item->t);
 			if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
@@ -486,8 +480,8 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		}
 	} else {
 		const invList_t *ic;
-		/* standard container */
-		for (ic = menuInventory->c[node->mousefx]; ic; ic = ic->next) {
+		/* Standard container */
+		for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 			assert(ic->item.t);
 			if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, ic->item.t))
 				MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, colorLoadable);
@@ -495,18 +489,17 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 				MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, color);
 		}
 	}
-	/* draw free space if dragging - but not for idEquip */
-	if (mouseSpace == MS_DRAG && node->mousefx != csi.idEquip)
+	/* Draw free space if dragging - but not for idEquip */
+	if (mouseSpace == MS_DRAG && node->container->id != csi.idEquip)
 		MN_InvDrawFree(menuInventory, node);
 
 	/**@todo Draw tooltips for dragged ammo (and info about weapon it can be loaded in when hovering over it). */
 	/* Draw tooltip for weapon or ammo */
 	if (mouseSpace != MS_DRAG && node->state && mn_show_tooltips->integer) {
-		assert(node->mousefx >= 0);
-		assert(node->mousefx < MAX_INVDEFS);
+		assert(node->container);
 		/* Find out where the mouse is */
 		return Com_SearchInInventory(menuInventory,
-			&csi.ids[node->mousefx], (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);		/**< @todo Add sanity check for node->mousefx here */
+			node->container, (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);		/**< @todo Add sanity check for node->container here */
 	}
 
 	return NULL;
@@ -520,7 +513,7 @@ void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 
 	if (node->mousefx == C_UNDEFINED)
 		MN_FindContainer(node);
-	if (node->mousefx == NONE) {
+	if (!node->container) {
 		Com_Printf("no container for drawing this item (%s)...\n", itemName);
 		return;
 	}

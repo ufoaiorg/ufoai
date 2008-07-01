@@ -134,6 +134,7 @@ typedef struct menuNode_s {
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	qboolean invis, blend;
 	int mousefx;
+	invDef_t *container;		/** The container linked to this node. */
 	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
 	int textScroll;				/**< textfields - current scroll position */
 	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
