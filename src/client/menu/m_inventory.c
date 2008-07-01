@@ -81,6 +81,7 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int x, int y, qboolean
 				dragInfo.fromX = fromX;
 				dragInfo.fromY = fromY;
 			} else {
+				/* Right click: automatic item assignment/removal. */
 				if (node->container->id != csi.idEquip) {
 					/* Move back to idEquip (ground, floor) container. */
 					INV_MoveItem(base, menuInventory, &csi.ids[csi.idEquip], -1, -1, node->container, fromX, fromY);
@@ -102,6 +103,15 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int x, int y, qboolean
 						if (!packed) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py);
 							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, fromX, fromY);
+						}
+						/* Finally try left and right hand. There is no other place to put it now. */
+						if (!packed) {
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py);
+							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idLeft], px, py, node->container, fromX, fromY);
+						}
+						if (!packed) {
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py);
+							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idRight], px, py, node->container, fromX, fromY);
 						}
 					} else {
 						if (ic->item.t->headgear) {
