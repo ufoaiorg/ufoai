@@ -25,7 +25,7 @@ Changelog
 0.0.3 windows work
  * check if ufo2map exists
  * use ufo2map.exe on windows systems
- * on windows allways upgrade, generating is not supported anyway
+ * on windows always upgrade, generating is not supported anyway
 
 0.0.2
  * handle corrupted mirror files
@@ -75,7 +75,7 @@ def download(uri):
 
 
 def ufo2map_hash():
-    """create an md5sum from the source and the bineary of ufo2map."""
+    """create an md5sum from the source and the binary of ufo2map."""
     # TODO fight against / handle svn:eol-style=native
     src = md5()
     files = []
@@ -169,7 +169,7 @@ def gen(args):
             old[i[0]] = i[1]
 
     # run make maps etc.
-    # call seperatly otherwise linking happens last -> building maps fails
+    # call separately otherwise linking happens last -> building maps fails
     os.system('make clean')
     os.system('make ufo2map')
 
@@ -235,7 +235,7 @@ def gen(args):
                 data = open(bfile).read()
                 GzipFile(os.path.join(dst, bfile) + '.gz', 'w').write(data)
             else:
-                print '%s - allready up to date' % bfile
+                print '%s - already up to date' % bfile
             
             maps.write(' '.join((bfile, bmd5, mmd5)) + '\n')
     return maps_compiled
