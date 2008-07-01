@@ -134,16 +134,16 @@ static qboolean CL_LanguageTest (const char *localeID)
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
 		Com_sprintf(languagePath, sizeof(languagePath), "%s/"BASEDIRNAME"/i18n/", FS_GetCwd());
-	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... using mo files from '%s'\n", languagePath);
+	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: using mo files from '%s'\n", languagePath);
 	Q_strcat(languagePath, localeID, sizeof(languagePath));
 	Q_strcat(languagePath, "/LC_MESSAGES/ufoai.mo", sizeof(languagePath));
 
 #ifdef _WIN32
 	if (FS_FileExists(languagePath) && (Q_putenv("LANGUAGE", localeID) == 0)) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... locale '%s' found.\n", localeID);
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' found.\n", localeID);
 		return qtrue;
 	} else {
-		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... locale '%s' not found.\n", localeID);
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' not found.\n", localeID);
 		return qfalse;
 	}
 #else
@@ -169,13 +169,13 @@ static qboolean CL_LanguageTest (const char *localeID)
 	do {
 		/* setlocale() will return NULL if no setting possible. */
 		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... language '%s' with locale '%s' found.\n", localeID, mapping->localeMapping);
+			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: language '%s' with locale '%s' found.\n", localeID, mapping->localeMapping);
 			return qtrue;
 		} else
-			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... language '%s' with locale '%s' not found on your system.\n", localeID, mapping->localeMapping);
+			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: language '%s' with locale '%s' not found on your system.\n", localeID, mapping->localeMapping);
 		mapping = mapping->next;
 	} while (mapping);
-	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... not possible to use language '%s'.\n", localeID);
+	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: not possible to use language '%s'.\n", localeID);
 	return qfalse;
 #endif
 }
@@ -195,7 +195,7 @@ void CL_LanguageInit (void)
 	char deflang[MAX_VAR];
 
 	if (*s_language->string) {
-		Com_Printf("CL_LanguageInit()... language settings are stored in configuration: %s\n", s_language->string);
+		Com_Printf("CL_LanguageInit: language settings are stored in configuration: %s\n", s_language->string);
 		Q_strncpyz(deflang, s_language->string, MAX_VAR);
 	} else {
 #ifdef _WIN32
@@ -213,7 +213,7 @@ void CL_LanguageInit (void)
 #endif
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit()... deflang: %s\n", deflang);
+	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: deflang: %s\n", deflang);
 
 	menu = MN_GetMenu("options_game");
 	if (!menu)

@@ -208,7 +208,7 @@ qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t bui
 	else if (buildingType < MAX_BUILDING_TYPE)
 		return base->hasBuilding[buildingType];
 	else {
-		Com_Printf("B_GetBuildingStatus()... Building-type %i does not exist.\n", buildingType);
+		Com_Printf("B_GetBuildingStatus: Building-type %i does not exist.\n", buildingType);
 		return qfalse;
 	}
 }
@@ -1298,7 +1298,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	} else {
 		/* base can't start without an entrance, because this is where the aliens will arrive during base attack */
 		/* autobuild and base templates should contain a base entrance */
-		Sys_Error("B_SetUpBase()... A new base should have an entrance.");
+		Sys_Error("B_SetUpBase: A new base should have an entrance.");
 	}
 
 	/* a new base is not discovered (yet) */
@@ -2727,7 +2727,7 @@ static void B_PackInitialEquipment (base_t *base)
 					for (ic = chr->inv->c[container]; ic; ic = ic->next) {
 						const item_t item = ic->item;
 						price += item.t->price;
-						Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f()... adding price for %s, price: %i\n", item.t->id, price);
+						Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: adding price for %s, price: %i\n", item.t->id, price);
 					}
 				}
 			}
@@ -3350,7 +3350,7 @@ static void B_PrintCapacities_f (void)
 	for (i = 0; i < MAX_CAP; i++) {
 		buildingType = B_GetBuildingTypeByCapacity(i);
 		if (buildingType >= MAX_BUILDING_TYPE)
-			Com_Printf("B_PrintCapacities_f()... Could not find building associated with capacity %i\n", i);
+			Com_Printf("B_PrintCapacities_f: Could not find building associated with capacity %i\n", i);
 		else {
 			for (j = 0; j < gd.numBuildingTemplates; j++) {
 				if (gd.buildingTemplates[j].buildingType == buildingType)
@@ -3619,11 +3619,11 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			}
 		}
 		if (b_idx != -1)
-			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
+			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
 				gd.buildingTemplates[b_idx].id, base->capacities[cap].max);
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
-		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities()... going to update ALL capacities.\n");
+		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
 		/* Loop through all capacities and update them. */
 		for (i = 0; i < cap; i++) {
 			B_UpdateBaseCapacities(i, base);

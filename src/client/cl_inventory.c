@@ -531,11 +531,11 @@ components_t *INV_GetComponentsByItem (const objDef_t *item)
 	for (i = 0; i < gd.numComponents; i++) {
 		components_t *comp = &gd.components[i];
 		if (comp->asItem == item) {
-			Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItem()... found components id: %s\n", comp->asId);
+			Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItem: found components id: %s\n", comp->asId);
 			return comp;
 		}
 	}
-	Sys_Error("INV_GetComponentsByItem()... could not find components id for: %s", item->id);
+	Sys_Error("INV_GetComponentsByItem: could not find components id for: %s", item->id);
 	return NULL;
 }
 
@@ -564,7 +564,7 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
 				B_UpdateStorageAndCapacity(base, compOd, comp->item_amount[i], qfalse, qfalse);
-			Com_DPrintf(DEBUG_CLIENT, "INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compOd->id);
+			Com_DPrintf(DEBUG_CLIENT, "INV_DisassemblyItem: added %i amounts of %s\n", comp->item_amount[i], compOd->id);
 		}
 	}
 	return size;

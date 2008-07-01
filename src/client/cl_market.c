@@ -40,7 +40,7 @@ typedef struct buyListEntry_s {
 	const objDef_t *item;			/**< Item pointer (see also csi.ods[] and base->storage.num[] etc...) */
 	const ugv_t *ugv;				/**< Used for mixed UGV (characters) and BUY_HEAVY (items) list.
 							 * If not NULL it's a pointer to the correct UGV-struct (duh) otherwise a BUY_HEAVY-item is set in "item". */
-	const aircraft_t *aircraft;	/**< Used for aircraft production */
+	const aircraft_t *aircraft;	/**< Used for aircraft production - aircraft template */
 } buyListEntry_t;
 
 typedef struct buyList_s {
@@ -803,7 +803,7 @@ static void BS_BuyAircraft_f (void)
 
 		/* Check free space in hangars. */
 		if (freeSpace < 0) {
-			Com_Printf("BS_BuyAircraft_f()... something bad happened, AIR_CalculateHangarStorage returned -1!\n");
+			Com_Printf("BS_BuyAircraft_f: something bad happened, AIR_CalculateHangarStorage returned -1!\n");
 			return;
 		}
 

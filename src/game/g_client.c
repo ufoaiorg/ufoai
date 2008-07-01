@@ -1068,7 +1068,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 			return;
 		} else { /* ia == IA_RELOAD_SWAP */
 			if (!invList) {
-				Com_Printf("G_ClientInvMove()... Didn't found invList of the item you're moving\n");
+				Com_Printf("G_ClientInvMove: Didn't found invList of the item you're moving\n");
 				gi.EndEvents();
 				return;
 			}
@@ -1191,7 +1191,7 @@ static void G_InventoryToFloor (edict_t * ent)
 		   not idFloor */
 		if (k == gi.csi->idArmour) {
 			if (ent->i.c[gi.csi->idArmour])
-				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor()... this actor has armour: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
+				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: this actor has armour: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
 			continue;
 		}
 		/* now cycle through all items for the container of the character (or the entity) */
@@ -1268,9 +1268,9 @@ static void G_InventoryToFloor (edict_t * ent)
 	FLOOR(ent) = FLOOR(floor);
 
 	if (ent->i.c[gi.csi->idArmour])
-		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has armour in idArmour container: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
+		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor: this actor has armour in idArmour container: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
 	else
-		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has NOT armour in idArmour container\n");
+		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor: this actor has NOT armour in idArmour container\n");
 
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);

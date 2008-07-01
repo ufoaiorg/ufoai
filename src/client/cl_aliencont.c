@@ -64,7 +64,7 @@ void AL_FillInContainment (base_t *base)
 		if (!containment[counter].tech)
 			Sys_Error("Could not find a valid tech for '%s'\n", containment[i].teamDef->name);
 		counter++;
-		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment()... type: %s tech-index: %i\n", containment[i].teamDef->name, containment[i].tech->idx);
+		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment: type: %s tech-index: %i\n", containment[i].teamDef->name, containment[i].tech->idx);
 	}
 	base->capacities[CAP_ALIENS].cur = 0;
 }
@@ -302,7 +302,7 @@ void AL_RemoveAliens (base_t *base, teamDef_t *alienType, int amount, alienCalcT
 				}
 				if (maxamount == 0) {
 					/* That should never happen. */
-					Com_Printf("AL_RemoveAliens()... unable to find alive aliens\n");
+					Com_Printf("AL_RemoveAliens: unable to find alive aliens\n");
 					return;
 				}
 				if (maxamount == 1) {
@@ -417,7 +417,7 @@ int AL_GetAlienGlobalIdx (int idx)
 			counter++;
 		}
 	}
-	Com_Printf("AL_GetAlienGlobalIdx()... Alien with AC index %i not found!\n", idx);
+	Com_Printf("AL_GetAlienGlobalIdx: Alien with AC index %i not found!\n", idx);
 	return -1;
 }
 

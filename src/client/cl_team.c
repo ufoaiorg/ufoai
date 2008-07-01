@@ -520,7 +520,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 	} else {
 #ifdef DEBUG
 		/* Should never happen. */
-		Com_Printf("CL_ChangeSkinOnBoard_f()... No aircraft selected!\n");
+		Com_Printf("CL_ChangeSkinOnBoard_f: No aircraft selected!\n");
 #endif
 		return;
 	}
@@ -754,7 +754,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	base = aircraft->homebase;
 	assert(base);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried()...aircraft idx: %i, team size: %i\n",
+	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried:aircraft idx: %i, team size: %i\n",
 		aircraft->idx, aircraft->teamSize);
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */

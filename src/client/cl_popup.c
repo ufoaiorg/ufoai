@@ -625,7 +625,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 		 * so 2nd part of the test should be useless in most case */
 		return;
 	} else if (num >= 0) {
-		Com_Printf("CL_PopupInterceptBaseClick_f()... Number given in argument (%i) is bigger than number of base in list.\n", num);
+		Com_Printf("CL_PopupInterceptBaseClick_f: Number given in argument (%i) is bigger than number of base in list.\n", num);
 		return;
 	}
 

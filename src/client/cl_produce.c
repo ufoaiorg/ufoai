@@ -146,7 +146,7 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
 	if (maxworkers == PRODUCE_WORKERS) {
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
 		fraction = 1.0f / timeDefault;
-		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone()... workers: %i, tech: %s, percent: %f\n",
+		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxworkers, tech->id, fraction);
 		return fraction;
 	} else {
@@ -155,7 +155,7 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
 		 * now, production time is divided by 4 each time you double the number of worker */
 		fraction = (float) maxworkers / (PRODUCE_WORKERS * timeDefault);
 		fraction = fraction * maxworkers / PRODUCE_WORKERS;
-		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone()... workers: %i, tech: %s, percent: %f\n",
+		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxworkers, tech->id, fraction);
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
 		if (fraction > 1.0f)
@@ -981,7 +981,7 @@ static void PR_UpdateProductionList (base_t* base)
 			if (aircraftTemplate->ufotype != UFO_MAX)
 				continue;
 			if (!aircraftTemplate->tech) {
-				Com_Printf("PR_UpdateProductionList()... no technology for craft %s!\n", aircraftTemplate->id);
+				Com_Printf("PR_UpdateProductionList: no technology for craft %s!\n", aircraftTemplate->id);
 				continue;
 			}
 			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraftTemplate->id, aircraftTemplate->ufotype, aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
@@ -1295,7 +1295,7 @@ static void PR_ProductionIncrease_f (void)
 				amountTemp = amount;
 			else
 				amountTemp = base->storage.num[prod->item->idx];
-			Com_DPrintf(DEBUG_CLIENT, "PR_ProductionIncrease_f()... amounts: storage: %i, param: %i, temp: %i\n", base->storage.num[prod->item->idx], amount, amountTemp);
+			Com_DPrintf(DEBUG_CLIENT, "PR_ProductionIncrease_f: amounts: storage: %i, param: %i, temp: %i\n", base->storage.num[prod->item->idx], amount, amountTemp);
 
 			/* Now check if we can add more items and
 			 * remove the amount we just added to queue from base storage. */

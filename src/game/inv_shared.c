@@ -1182,7 +1182,7 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 
 	/* Get weapon */
 	obj = chr->teamDef->onlyWeapon;
-	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon: %s\n",
+	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee: team %i: %s, weapon: %s\n",
 	chr->teamDef->idx, chr->teamDef->id, obj->id);
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
@@ -1190,7 +1190,7 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	item.m = item.t;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
-		Sys_Error("INVSH_EquipActorMelee()... melee weapon %s for team %s is not firetwohanded!\n", obj->id, chr->teamDef->id);
+		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded!\n", obj->id, chr->teamDef->id);
 	Com_TryAddToInventory(inv, item, &CSI->ids[CSI->idRight]);
 }
 
@@ -1209,7 +1209,7 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
 	/** assert(!chr->weapons); @todo remove/change? */
 	/** assert(chr->teamDef->onlyWeapon); @todo remove/change? */
 
-	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon %i: %s\n",
+	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee: team %i: %s, weapon %i: %s\n",
 		chr->teamDef->idx, chr->teamDef->id, weapon->idx, weapon->id);
 
 	/* Prepare weapon in item. */
