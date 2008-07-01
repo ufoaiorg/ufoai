@@ -354,7 +354,7 @@ void MN_DrawMenus (void)
 							 }
 
 							/** Search for a suitable position to render the item at if
-							 * the container is "single", the curor is out of bound of the container,
+							 * the container is "single", the cursor is out of bound of the container.
 							 */
 							 if (!exists && dragInfo.item.t && (dragInfo.to->single
 							  || dragInfo.toX  < 0 || dragInfo.toY < 0

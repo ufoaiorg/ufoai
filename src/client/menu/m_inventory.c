@@ -201,19 +201,17 @@ void MN_FindContainer (menuNode_t* const node)
 /**
  * @brief Draws an item to the screen
  *
- * @param[in] org Node position on the screen (pixel)
- * @param[in] item The item to draw
- * @param[in] sx Size in x direction (no pixel but container space)
- * @param[in] sy Size in y direction (no pixel but container space)
- * @param[in] x Position in container
- * @param[in] y Position in container
+ * @param[in] org Node position on the screen (pixel). Single nodes: Use the center of the node.
+ * @param[in] item The item to draw.
+ * @param[in] x Position in container. Set this to -1 if it's drawn in a single container.
+ * @param[in] y Position in container. Set this to -1 if it's drawn in a single container.
  * @param[in] scale
  * @param[in] color
  * @sa SCR_DrawCursor
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void MN_DrawItem (const vec3_t org, const item_t *item, int sx, int sy, int x, int y, const vec3_t scale, const vec4_t color)
+void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
 	objDef_t *od;
 
@@ -222,11 +220,36 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int sx, int sy, int x, i
 	od = item->t;
 
 	if (od->image[0]) {
-		/* draw the image */
-		R_DrawNormPic(
-			org[0] + C_UNIT / 2.0 * sx + C_UNIT * x,
-			org[1] + C_UNIT / 2.0 * sy + C_UNIT * y,
-			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
+		vec3_t imgOrg;
+		int imgWidth = item->t->sx * C_UNIT;
+		int imgHeight = item->t->sy * C_UNIT;
+
+		VectorCopy(org, imgOrg);
+
+		/* Calculate correct location of the image (depends on rotation) */
+		/** @todo Change the rotation of the image as well, right now only the location is changed.
+		 * How is image-rotation handled right now? */
+		if (x >= 0 || y >= 0) {
+			/* Add offset of location in container. */
+			imgOrg[0] += x * C_UNIT;
+			imgOrg[1] += y * C_UNIT;
+
+			/* Add offset for item-center (depends on rotation). */
+			if (item->rotated) {
+				imgOrg[0] += item->t->sy * C_UNIT / 2.0;
+				imgOrg[1] += item->t->sx * C_UNIT / 2.0;
+				/** @todo Image size calculation depends on handling of image-roation.
+				imgWidth = item->t->sy * C_UNIT;
+				imgHeight = item->t->sx * C_UNIT;
+				*/
+			} else {
+				imgOrg[0] += item->t->sx * C_UNIT / 2.0;
+				imgOrg[1] += item->t->sy * C_UNIT / 2.0;
+			}
+		}
+
+		/* Draw the image. */
+		R_DrawNormPic(imgOrg[0], imgOrg[1], imgWidth, imgHeight, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
 	} else if (od->model[0]) {
 		modelInfo_t mi;
 		vec3_t angles = { -10, 160, 70 };
@@ -251,17 +274,20 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int sx, int sy, int x, i
 		}
 
 		VectorCopy(org, origin);
-		if (x || y || sx || sy) {
-			/* Calculate origin (depending on rotated/non-rotated setting). */
-			if (item->rotated) {
-				origin[0] += C_UNIT / 2.0 * sy;
-				origin[1] += C_UNIT / 2.0 * sx;
-			} else {
-				origin[0] += C_UNIT / 2.0 * sx;
-				origin[1] += C_UNIT / 2.0 * sy;
-			}
+		/* Calculate correct location of the model (depends on rotation) */
+		if (x >= 0 || y >= 0) {
+			/* Add offset of location in container. */
 			origin[0] += C_UNIT * x;
 			origin[1] += C_UNIT * y;
+
+			/* Add offset for item-center (depends on rotation). */
+			if (item->rotated) {
+				origin[0] += item->t->sy * C_UNIT / 2.0;
+				origin[1] += item->t->sx * C_UNIT / 2.0;
+			} else {
+				origin[0] += item->t->sx * C_UNIT / 2.0;
+				origin[1] += item->t->sy * C_UNIT / 2.0;
+			}
 		}
 
 		mi.frame = 0;
@@ -434,33 +460,36 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		drawLoadable = qtrue;
 
 	if (node->container->single) {
-		/* single item container (special case for left hand) */
+		/* Single container */
+		vec2_t pos;
+		Vector2Copy(node->pos, pos);
+		pos[0] += node->size[0] / 2.0;
+		pos[1] += node->size[1] / 2.0;
+
+		/* Single item container (special case for left hand). */
 		if (node->container->id == csi.idLeft && !menuInventory->c[csi.idLeft]) {
-			const int sx = node->size[0] / C_UNIT;
-			const int sy = node->size[1] / C_UNIT;
 			color[3] = 0.5;
 			colorLoadable[3] = 0.5;
 			if (menuInventory->c[csi.idRight]) {
 				const item_t *item = &menuInventory->c[csi.idRight]->item;
 				assert(item);
 				assert(item->t);
+
 				if (item->t->holdTwoHanded) {
 					if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
-						MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, colorLoadable);
+						MN_DrawItem(pos, item, -1, -1, scale, colorLoadable);
 					else
-						MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
+						MN_DrawItem(pos, item, -1, -1, scale, color);
 				}
 			}
 		} else if (menuInventory->c[node->container->id]) {
-			const int sx = node->size[0] / C_UNIT;
-			const int sy = node->size[1] / C_UNIT;
 			const item_t *item;
 
 			if (menuInventory->c[csi.idRight]) {
 				item = &menuInventory->c[csi.idRight]->item;
-				/* if there is a weapon in the right hand that needs two hands to shoot it
+				/* If there is a weapon in the right hand that needs two hands to shoot it
 			 	 * and there is a weapon in the left, then draw a disabled marker for the
-			 	 * fireTwoHanded weapon */
+			 	 * fireTwoHanded weapon. */
 				assert(item);
 				assert(item->t);
 				if (node->container->id == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
@@ -474,19 +503,20 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			assert(item);
 			assert(item->t);
 			if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
-				MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, colorLoadable);
+				MN_DrawItem(pos, item, -1, -1, scale, colorLoadable);
 			else
-				MN_DrawItem(node->pos, item, sx, sy, 0, 0, scale, color);
+				MN_DrawItem(pos, item, -1, -1, scale, color);
 		}
 	} else {
+		/* Standard (grid) container */
 		const invList_t *ic;
-		/* Standard container */
+
 		for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 			assert(ic->item.t);
 			if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, ic->item.t))
-				MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, colorLoadable);
+				MN_DrawItem(node->pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 			else
-				MN_DrawItem(node->pos, &ic->item, ic->item.t->sx, ic->item.t->sy, ic->x, ic->y, scale, color);
+				MN_DrawItem(node->pos, &ic->item, ic->x, ic->y, scale, color);
 		}
 	}
 	/* Draw free space if dragging - but not for idEquip */
@@ -526,5 +556,5 @@ void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 
 	item.t = &csi.ods[i];
 
-	MN_DrawItem(node->pos, &item, 0, 0, 0, 0, node->scale, color);
+	MN_DrawItem(node->pos, &item, 0, 0, node->scale, color);
 }

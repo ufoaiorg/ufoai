@@ -334,7 +334,7 @@ static void SCR_DrawCursor (void)
 							-40);
 				}
 				Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */
-				MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);	/**< Draw preview item. */
+				MN_DrawItem(org, &dragInfo.item, -1, -1, scale, color);	/**< Draw preview item. */
 			}
 
 			dragInfo.item.rotated = oldRotated ;
@@ -344,7 +344,7 @@ static void SCR_DrawCursor (void)
 		VectorSet(org, mousePosX, mousePosY, -50);
 		if (dragInfo.toNode && checkedTo)
 			Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
-		MN_DrawItem(org, &dragInfo.item, 0, 0, 0, 0, scale, color);
+		MN_DrawItem(org, &dragInfo.item, -1, -1, scale, color);
 
 #if 0
 /* Debugging only */
