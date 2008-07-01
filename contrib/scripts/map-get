@@ -238,6 +238,7 @@ def gen(args):
                 print '%s - already up to date' % bfile
             
             maps.write(' '.join((bfile, bmd5, mmd5)) + '\n')
+    print ' %s maps compiled' % maps_compiled
     return maps_compiled
 
 
@@ -254,14 +255,14 @@ def main(argv=None):
                    ' generate DST - generate or update repository dir DST\n' \
                    '                (probably not what you want)'
 
-    (options, args) = parser.parse_args()
+    options, args = parser.parse_args()
 
     logging.basicConfig(level=options.verbose and logging.DEBUG or logging.INFO,
                         format='%(message)s')
 
     # on windows always just upgrade
     if os.name == 'nt':
-        gen([])
+        upgrade([])
 
     if not len(args) or args[0] not in commands:
         parser.print_help()
