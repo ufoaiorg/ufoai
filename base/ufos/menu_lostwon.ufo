@@ -373,15 +373,27 @@ menu popup_recoverybaselist
 	{
 		num 1
 		pos	"290 320"
-		size "440 112"
+		size "440 96"
 //		bgcolor "1 1 1 0.5"
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
 		format	"16 100"
-		height 7
+		height 6
+		scrollbar true
 		wheel click
 		rclick { cmd "mn_pop;" }
 		mousefx true
+	}
+
+	string selected_base_str
+	{
+		string	"Selected base:"
+		pos		"290 420"
+	}
+	string selected_base_val
+	{
+		string	"*cvar mission_recoverybase"
+		pos		"390 420"
 	}
 
 	pic bt_cancel

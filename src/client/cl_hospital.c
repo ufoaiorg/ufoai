@@ -346,7 +346,7 @@ static void HOS_EmployeeInit_f (void)
 	character_t* c;
 
 	if (!currentEmployeeInHospital) {
-		Com_Printf("HOS_EmployeeInit_f()... no employee selected.\n");
+		Com_Printf("HOS_EmployeeInit_f: no employee selected.\n");
 		return;
 	}
 

@@ -231,9 +231,10 @@ static void CL_ChangeIndividualInterest (float percentage, interestCategory_t ca
 		}
 	}
 
-	/* Set new non-occurence value. The aim is to have roughly a steady number of none occurrence during the
-	game, in order to include some randomness. If overall alien interest becomes higher than FINAL_OVERALL_INTEREST, then the
-	none occurence goes to zero, to make more pressure on the player. */
+	/* Set new non-occurence value. The aim is to have roughly a steady number
+	 * of none occurrence during the game, in order to include some randomness.
+	 * If overall alien interest becomes higher than FINAL_OVERALL_INTEREST,
+	 * then the none occurence goes to zero, to make more pressure on the player */
 	if (ccs.overallInterest < FINAL_OVERALL_INTEREST)
 		ccs.interest[INTERESTCATEGORY_NONE] = (int) (nonOccurrencePercent * ccs.overallInterest);
 	else
@@ -254,7 +255,7 @@ static void CP_IncreaseAlienInterest (void)
 
 	if (ccs.lastInterestIncreaseDelay > delayBetweenIncrease) {
 		ccs.overallInterest++;
-		ccs.lastInterestIncreaseDelay -= delayBetweenIncrease;
+		ccs.lastInterestIncreaseDelay %= delayBetweenIncrease;
 	}
 }
 
@@ -347,7 +348,6 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	while (maxHits) {
 		maxHits = 0;
 		for (i = 0; i < csi.numMDs; i++) {
-
 			/* Check if mission fulfill conditions */
 			if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
 				continue;
@@ -420,7 +420,6 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	mission->mapDef = &csi.mds[i];
 	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 
-	/** @todo Use me */
 	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
 	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
 	Q_strncpyz(gd.oldMis1, mission->mapDef->id, sizeof(gd.oldMis1));
@@ -7242,11 +7241,11 @@ static void CP_UFORecovered_f (void)
 	if ((atoi(Cmd_Argv(1)) >= 0) && (atoi(Cmd_Argv(1)) < UFO_MAX)) {
 		UFOtype = atoi(Cmd_Argv(1));
 	} else {
-		Com_Printf("CP_UFORecovered()... UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
+		Com_Printf("CP_UFORecovered: UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
 		return;
 	}
 
-	/* At the beginning we enable all UFO recovery options. */
+	/* At the beginning we enable all UFO recovery options. (confunc) */
 	Cmd_ExecuteString("menuwon_update_buttons");
 
 	ufocraft = NULL;
@@ -7262,7 +7261,7 @@ static void CP_UFORecovered_f (void)
 	}
 	/* Do nothing without UFO of this type. */
 	if (!ufofound) {
-		Com_Printf("CP_UFORecovered()... UFOType: %i does not have valid craft definition!\n", atoi(Cmd_Argv(1)));
+		Com_Printf("CP_UFORecovered: UFOType: %i does not have valid craft definition!\n", atoi(Cmd_Argv(1)));
 		return;
 	}
 
@@ -7290,7 +7289,7 @@ static void CP_UFORecovered_f (void)
 
 	/** @todo block Sell button if no nation with requirements */
 	if (!store) {
-		/* Block store option if storing not possible. */
+		/* Block store option if storing not possible. (confunc) */
 		Cmd_ExecuteString("disufostore");
 	}
 }
@@ -7309,9 +7308,6 @@ static void CP_UFORecoveryDone (void)
 	ufoRecovery.recoveryDone = qtrue;
 }
 
-/** @brief Array of base indexes where we can store UFO. */
-static base_t *UFObases[MAX_BASES];
-
 /**
  * @brief Finds the destination base for UFO recovery.
  * @note The base selection is being done here.
@@ -7328,11 +7324,11 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= MAX_BASES || !UFObases[num])
+	if (num < 0 || num >= MAX_BASES || !ufoRecovery.UFObases[num])
 		return;
 
 	/* Pop the menu and launch it again - now with updated value of selected base. */
-	ufoRecovery.base = UFObases[num];
+	ufoRecovery.base = ufoRecovery.UFObases[num];
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n",
 		ufoRecovery.base->name);
 	MN_PopMenu(qfalse);
@@ -7346,6 +7342,7 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 /**
  * @brief Function to start UFO recovery process.
  * @note Command to call this: cp_uforecoverystart.
+ * @note This needs the ufoRecovery base value set
  */
 static void CP_UFORecoveredStart_f (void)
 {
@@ -7370,10 +7367,14 @@ static void CP_UFORecoveredStart_f (void)
  */
 static void CP_UFORecoveredStore_f (void)
 {
-	int i, baseHasUFOHangarCount = 0;
+	int i;
 	aircraft_t *ufocraft;
 	static char recoveryBaseSelectPopup[512];
 	qboolean ufofound = qfalse;
+
+	/* Do nothing without any base. */
+	if (!gd.numBases)
+		return;
 
 	/* Do nothing if recovery process is finished. */
 	if (ufoRecovery.recoveryDone)
@@ -7397,7 +7398,7 @@ static void CP_UFORecoveredStore_f (void)
 	}
 
 	/* Clear UFObases. */
-	memset(UFObases, 0, sizeof(UFObases));
+	memset(ufoRecovery.UFObases, 0, sizeof(ufoRecovery.UFObases));
 
 	recoveryBaseSelectPopup[0] = '\0';
 	/* Check how many bases can store this UFO. */
@@ -7408,45 +7409,31 @@ static void CP_UFORecoveredStore_f (void)
 		if (UFO_ConditionsForStoring(base, ufocraft)) {
 			Q_strcat(recoveryBaseSelectPopup, base->name, sizeof(recoveryBaseSelectPopup));
 			Q_strcat(recoveryBaseSelectPopup, "\n", sizeof(recoveryBaseSelectPopup));
-			UFObases[baseHasUFOHangarCount++] = base;
+			ufoRecovery.UFObases[ufoRecovery.baseHasUFOHangarCount++] = base;
 		}
 	}
 
-	/* Do nothing without any base. */
-	if (!gd.numBases)
-		return;
-
 	/* If only one base with UFO hangars, the recovery will be done in this base. */
-	switch (baseHasUFOHangarCount) {
+	switch (ufoRecovery.baseHasUFOHangarCount) {
 	case 0:
 		/* No UFO base with proper conditions, do nothing. */
 		return;
 	case 1:
 		/* there should only be one entry in UFObases - so use that one. */
-		ufoRecovery.base = UFObases[0];
+		ufoRecovery.base = ufoRecovery.UFObases[0];
 		CP_UFORecoveredStart_f();
 		break;
 	default:
 		if (!ufoRecovery.base)
-			ufoRecovery.base = UFObases[0];
-		Q_strcat(recoveryBaseSelectPopup, _("\n\nSelected base:\t\t\t"), sizeof(recoveryBaseSelectPopup));
-		if (ufoRecovery.base) {
-			for (i = 0; i < baseHasUFOHangarCount; i++) {
-				if (UFObases[i] == ufoRecovery.base) {
-					Q_strcat(recoveryBaseSelectPopup, UFObases[i]->name, sizeof(recoveryBaseSelectPopup));
-					break;
-				}
-			}
-		}
+			ufoRecovery.base = ufoRecovery.UFObases[0];
+		if (ufoRecovery.base)
+			Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
 		/* If more than one - popup with list to select base. */
 		mn.menuText[TEXT_LIST] = recoveryBaseSelectPopup;
 		MN_PushMenu("popup_recoverybaselist");
 		break;
 	}
 }
-
-/** @brief Array of prices proposed by nation. */
-static int UFOprices[MAX_NATIONS];
 
 /**
  * @brief Finds the nation to which recovered UFO will be sold.
@@ -7493,19 +7480,20 @@ static void CP_UFOSellStart_f (void)
 {
 	nation_t *nation;
 	int i;
+
 	if (!ufoRecovery.nation)
 		return;
 
 	nation = ufoRecovery.nation;
 	assert(nation->name);
-	if (UFOprices[nation->idx] == -1) {
+	if (ufoRecovery.UFOprices[nation->idx] == -1) {
 		Com_Printf("CP_UFOSellStart_f: Error: ufo price of -1 - nation: '%s'\n", nation->id);
 		return;
 	}
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
-		UFO_TypeToName(ufoRecovery.ufoType), _(nation->name), UFOprices[nation->idx]);
+		UFO_TypeToName(ufoRecovery.ufoType), _(nation->name), ufoRecovery.UFOprices[nation->idx]);
 	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-	CL_UpdateCredits(ccs.credits + UFOprices[nation->idx]);
+	CL_UpdateCredits(ccs.credits + ufoRecovery.UFOprices[nation->idx]);
 
 	/* update nation happiness */
 	for (i = 0; i < gd.numNations; i++) {
@@ -7548,7 +7536,7 @@ static void CP_UFORecoveredSell_f (void)
 		return;
 
 	if (!ufoRecovery.nation)
-		memset(UFOprices, 0, sizeof(UFOprices));
+		memset(ufoRecovery.UFOprices, -1, sizeof(ufoRecovery.UFOprices));
 
 	recoveryNationSelectPopup[0] = '\0';
 
@@ -7558,16 +7546,13 @@ static void CP_UFORecoveredSell_f (void)
 		nations++;
 		/* Calculate price offered by nation only if this is first popup opening. */
 		if (!ufoRecovery.nation) {
-			UFOprices[i] = (int) (ufocraft->price * (.85f + frand() * .3f));
+			ufoRecovery.UFOprices[i] = (int) (ufocraft->price * (.85f + frand() * .3f));
 			/* Nation will pay less if corrupted */
-			UFOprices[i] = (int) (UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
+			ufoRecovery.UFOprices[i] = (int) (ufoRecovery.UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
 		}
-		Q_strcat(recoveryNationSelectPopup, _(nation->name), sizeof(recoveryNationSelectPopup));
-		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
-		Q_strcat(recoveryNationSelectPopup, va("%i", UFOprices[i]), sizeof(recoveryNationSelectPopup));
-		Q_strcat(recoveryNationSelectPopup, "\t\t", sizeof(recoveryNationSelectPopup));
-		Q_strcat(recoveryNationSelectPopup, CL_GetNationHappinessString(nation), sizeof(recoveryNationSelectPopup));
-		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
+		Com_sprintf(recoveryNationSelectPopup + strlen(recoveryNationSelectPopup),
+			sizeof(recoveryNationSelectPopup), "%s\t\t\t%i\t\t%s\n",
+			_(nation->name), ufoRecovery.UFOprices[i], CL_GetNationHappinessString(nation));
 	}
 
 

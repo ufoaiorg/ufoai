@@ -753,7 +753,7 @@ void UFO_UpdateUFOHangarCapForAll (base_t *base)
 
 	if (!base) {
 #ifdef DEBUG
-		Com_Printf("UFO_UpdateUFOHangarCapForAll()... no base given!\n");
+		Com_Printf("UFO_UpdateUFOHangarCapForAll: no base given!\n");
 #endif
 		return;
 	}
@@ -786,7 +786,7 @@ void UFO_UpdateUFOHangarCapForAll (base_t *base)
 			base->capacities[CAP_UFOHANGARS_SMALL].cur += base->storage.num[i];
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "UFO_UpdateUFOHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_UFOHANGARS_SMALL].cur, base->capacities[CAP_UFOHANGARS_LARGE].cur);
+	Com_DPrintf(DEBUG_CLIENT, "UFO_UpdateUFOHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_UFOHANGARS_SMALL].cur, base->capacities[CAP_UFOHANGARS_LARGE].cur);
 }
 
 /**
@@ -825,7 +825,7 @@ void UFO_PrepareRecovery (base_t *base)
 	}
 
 	if (!recovery) {
-		Com_Printf("UFO_PrepareRecovery()... free recovery slot not found.\n");
+		Com_Printf("UFO_PrepareRecovery: free recovery slot not found.\n");
 		return;
 	}
 	assert(recovery);
@@ -838,7 +838,7 @@ void UFO_PrepareRecovery (base_t *base)
 	/* Prepare recovery. */
 	recovery->active = qtrue;
 	recovery->base = base;
-	recovery->ufotype = ufocraft->tpl;
+	recovery->ufoTemplate = ufocraft->tpl;
 	recovery->event = event;
 
 	/* Update base capacity. */
@@ -858,8 +858,8 @@ void UFO_PrepareRecovery (base_t *base)
 			Com_Printf("UFO_PrepareRecovery: No room in small UFO hangars to store %s\n", ufocraft->name);
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
-		base->name, recovery->ufotype->id, recovery->event.day);
+	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery: the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
+		base->name, recovery->ufoTemplate->id, recovery->event.day);
 
 	/* Send an email */
 	CP_UFOSendMail(ufocraft, base);
@@ -874,14 +874,12 @@ void UFO_Recovery (void)
 {
 	int i;
 	objDef_t *od;
-	base_t *base;
-	aircraft_t *ufocraft;
-	ufoRecoveries_t *recovery;
+	const aircraft_t *ufocraft;
 
 	for (i = 0; i < MAX_RECOVERIES; i++) {
-		recovery = &gd.recoveries[i];
+		ufoRecoveries_t *recovery = &gd.recoveries[i];
 		if (recovery->active && recovery->event.day == ccs.date.day) {
-			base = recovery->base;
+			base_t *base = recovery->base;
 			if (!base->founded) {
 				/* Destination base was destroyed meanwhile. */
 				/* UFO is lost, send proper message to the user.*/
@@ -890,7 +888,7 @@ void UFO_Recovery (void)
 				return;
 			}
 			/* Get ufocraft. */
-			ufocraft = recovery->ufotype;
+			ufocraft = recovery->ufoTemplate;
 			assert(ufocraft);
 			/* Get item. */
 			/* We can do this because aircraft id is the same as dummy item id. */

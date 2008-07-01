@@ -767,7 +767,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
  * @sa TR_TransferBaseListClick_f
  * @sa TR_TransferStart_f
  */
-static void TR_TransferAlienAfterMissionStart (base_t *base)
+static void TR_TransferAlienAfterMissionStart (const base_t *base)
 {
 	int i, j;
 	transfer_t *transfer;
@@ -802,7 +802,7 @@ static void TR_TransferAlienAfterMissionStart (base_t *base)
 		transfer->event.sec -= SECONDS_PER_DAY;
 		transfer->event.day++;
 	}
-	transfer->destBase = base;	/* Destination base. */
+	transfer->destBase = B_GetFoundedBaseByIDX(base->idx);	/* Destination base. */
 	transfer->srcBase = NULL;	/* Source base. */
 	transfer->active = qtrue;
 
@@ -861,24 +861,24 @@ static void TR_TransferBaseListClick_f (void)
 
 	/* skip base not displayed (see TR_TransferAircraftMenu) */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
-		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
+		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
 
 		num--;
-		if (num <= 0)
+		if (num <= 0) {
+			TR_TransferAlienAfterMissionStart(base);
 			break;
+		}
 	}
 
-	if (baseIdx >= MAX_BASES) {
-		Com_Printf("TR_TransferBaseListClick_f()... baseIdx %i doesn't exist.\n", baseIdx);
+	if (baseIdx == MAX_BASES) {
+		Com_Printf("TR_TransferBaseListClick_f: baseIdx %i doesn't exist.\n", num);
 		return;
 	}
-
-	TR_TransferAlienAfterMissionStart(&(gd.bases[baseIdx]));
 }
 
 /**
@@ -1037,8 +1037,7 @@ static void TR_TransferStart_f (void)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transferBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	/** @todo: Why don't we use MN_PopMenu directly here? */
-	Cbuf_AddText("mn_pop\n");
+	MN_PopMenu(qfalse);
 }
 
 /**
@@ -1208,7 +1207,7 @@ static void TR_TransferListSelect_f (void)
 			const aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
 			if (!aircraft)
 				return;
-			if ((aircraft->homebase == baseCurrent) && TR_AircraftListSelect(i)) {
+			if (aircraft->homebase == baseCurrent && TR_AircraftListSelect(i)) {
 				if (cnt == num) {
 					if (TR_CheckAircraft(aircraft, baseCurrent, transferBase)) {
 						trAircraftsTmp[i] = i;
@@ -1229,68 +1228,67 @@ static void TR_TransferListSelect_f (void)
 
 /**
  * @brief Callback for base list click.
- * @param[in] base Pointer to base which will be transferBase.
  * @note transferBase is being set here.
+ * @param[in] srcbase
+ * @param[in] destbase Pointer to base which will be transferBase.
  */
-static void TR_TransferBaseSelect (base_t *base)
+static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 {
 	static char baseInfo[1024];
 	qboolean powercomm = qfalse;
 
-	if (!base)
+	if (!destbase || !srcbase)
 		return;
 
-	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
+	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", destbase->name);
 
-	if (B_GetBuildingStatus(base, B_STORAGE)) {
+	powercomm = B_GetBuildingStatus(destbase, B_POWER);
+
+	/* if there is no power supply facility this check will fail, too */
+	if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 		Q_strcat(baseInfo, _("You can transfer equipment - this base has a Storage.\n"), sizeof(baseInfo));
-	} else if (B_GetBuildingStatus(base, B_POWER)) {
+	} else if (powercomm) {
+		/* if there is a power supply facility we really don't have a storage */
 		Q_strcat(baseInfo, _("No Storage in this base.\n"), sizeof(baseInfo));
-	} else {
-		powercomm = qtrue;
-		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
-	if (B_GetBuildingStatus(base, B_QUARTERS)) {
+
+	if (B_GetBuildingStatus(destbase, B_QUARTERS)) {
 		Q_strcat(baseInfo, _("You can transfer employees - this base has Living Quarters.\n"), sizeof(baseInfo));
 	} else {
 		Q_strcat(baseInfo, _("No Living Quarters in this base.\n"), sizeof(baseInfo));
 	}
-	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
+
+	if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
 		Q_strcat(baseInfo, _("You can transfer Aliens - this base has an Alien Containment.\n"), sizeof(baseInfo));
-	} else if (B_GetBuildingStatus(base, B_POWER)) {
+	} else if (powercomm) {
 		Q_strcat(baseInfo, _("No Alien Containment in this base.\n"), sizeof(baseInfo));
-	} else if (!powercomm) {
-		powercomm = qtrue;
-		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
-	if (B_GetBuildingStatus(base, B_ANTIMATTER)) {
+
+	if (B_GetBuildingStatus(destbase, B_ANTIMATTER)) {
 		Q_strcat(baseInfo, _("You can transfer antimatter - this base has an Antimatter Storage.\n"), sizeof(baseInfo));
-	} else if (B_GetBuildingStatus(base, B_POWER)) {
+	} else if (powercomm) {
 		Q_strcat(baseInfo, _("No Antimatter Storage in this base.\n"), sizeof(baseInfo));
-	} else if (!powercomm) {
-		powercomm = qtrue;
-		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
-	if (B_GetBuildingStatus(base, B_HANGAR) || B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+
+	if (B_GetBuildingStatus(destbase, B_HANGAR) || B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
 		Q_strcat(baseInfo, _("You can transfer aircraft - this base has a Hangar.\n"), sizeof(baseInfo));
-	} else if (!B_GetBuildingStatus(base, B_COMMAND)) {
+	} else if (!B_GetBuildingStatus(destbase, B_COMMAND)) {
 		Q_strcat(baseInfo, _("Aircraft transfer not possible - this base does not have a Command Centre.\n"), sizeof(baseInfo));
-	} else if (B_GetBuildingStatus(base, B_POWER)) {
+	} else if (powercomm) {
 		Q_strcat(baseInfo, _("No Hangar in this base.\n"), sizeof(baseInfo));
-	} else if (!powercomm) {
-		powercomm = qtrue;
-		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
+
+	if (!powercomm)
+		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 
 	mn.menuText[TEXT_BASE_INFO] = baseInfo;
 
 	/* Set global pointer to current selected base. */
-	transferBase = base;
-
-	Cvar_Set("mn_trans_base_name", base->name);
+	transferBase = destbase;
+	Cvar_Set("mn_trans_base_name", destbase->name);
 
 	/* Update stuff-in-base list. */
-	TR_TransferSelect_f();
+	TR_TransferSelect(srcbase, destbase, currentTransferType);
 }
 
 /**
@@ -1316,7 +1314,7 @@ static void TR_NextBase_f (void)
 			continue;
 		if (base == baseCurrent)
 			continue;
-		TR_TransferBaseSelect(base);
+		TR_TransferBaseSelect(baseCurrent, base);
 		return;
 	}
 	/* At this point we are at "last" base, so we will select first. */
@@ -1326,7 +1324,7 @@ static void TR_NextBase_f (void)
 			continue;
 		if (base == baseCurrent)
 			continue;
-		TR_TransferBaseSelect(base);
+		TR_TransferBaseSelect(baseCurrent, base);
 		return;
 	}
 }
@@ -1354,7 +1352,7 @@ static void TR_PrevBase_f (void)
 			continue;
 		if (base == baseCurrent)
 			continue;
-		TR_TransferBaseSelect(base);
+		TR_TransferBaseSelect(baseCurrent, base);
 		return;
 	}
 	/* At this point we are at "first" base, so we will select last. */
@@ -1364,7 +1362,7 @@ static void TR_PrevBase_f (void)
 			continue;
 		if (base == baseCurrent)
 			continue;
-		TR_TransferBaseSelect(base);
+		TR_TransferBaseSelect(baseCurrent, base);
 		return;
 	}
 }
@@ -1626,7 +1624,8 @@ static void TR_Init_f (void)
 	/* Clear aircraft temp array. */
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
-	/* Select first available item. */
+	/* Select first available item - forward the command line parameters to this
+	 * function */
 	TR_TransferSelect_f();
 
 	/* Select first available base. */

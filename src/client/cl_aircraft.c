@@ -69,25 +69,25 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 
 	if (aircraftSize < AIRCRAFT_SMALL) {
 #ifdef DEBUG
-		Com_Printf("AIR_UpdateHangarCapForOne()... aircraft weight is wrong!\n");
+		Com_Printf("AIR_UpdateHangarCapForOne: aircraft weight is wrong!\n");
 #endif
 		return AIRCRAFT_HANGAR_ERROR;
 	}
 	if (!base) {
 #ifdef DEBUG
-		Com_Printf("AIR_UpdateHangarCapForOne()... base does not exist!\n");
+		Com_Printf("AIR_UpdateHangarCapForOne: base does not exist!\n");
 #endif
 		return AIRCRAFT_HANGAR_ERROR;
 	}
 	assert(base);
 	if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-		Com_Printf("AIR_UpdateHangarCapForOne()... base does not have any hangar - error!\n");
+		Com_Printf("AIR_UpdateHangarCapForOne: base does not have any hangar - error!\n");
 		return AIRCRAFT_HANGAR_ERROR;
 	}
 
 	if (aircraftSize >= AIRCRAFT_LARGE) {
 		if (!B_GetBuildingStatus(base, B_HANGAR)) {
-			Com_Printf("AIR_UpdateHangarCapForOne()... base does not have big hangar - error!\n");
+			Com_Printf("AIR_UpdateHangarCapForOne: base does not have big hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
 		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
@@ -96,12 +96,12 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 			return AIRCRAFT_HANGAR_BIG;
 		} else {
 			/* No free space for this aircraft. This should never happen here. */
-			Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
+			Com_Printf("AIR_UpdateHangarCapForOne: no free space!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
 	} else {
 		if (!B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			Com_Printf("AIR_UpdateHangarCapForOne()... base does not have small hangar - error!\n");
+			Com_Printf("AIR_UpdateHangarCapForOne: base does not have small hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
 		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
@@ -110,7 +110,7 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 			return AIRCRAFT_HANGAR_SMALL;
 		} else {
 			/* No free space for this aircraft. This should never happen here. */
-			Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
+			Com_Printf("AIR_UpdateHangarCapForOne: no free space!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
 	}
@@ -128,7 +128,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 
 	if (!base) {
 #ifdef DEBUG
-		Com_Printf("AIR_UpdateHangarCapForAll()... base does not exist!\n");
+		Com_Printf("AIR_UpdateHangarCapForAll: base does not exist!\n");
 #endif
 		return;
 	}
@@ -139,10 +139,10 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		const aircraft_t *aircraft = &base->aircraft[i];
-		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base: %s, aircraft: %s\n", base->name, aircraft->id);
+		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base: %s, aircraft: %s\n", base->name, aircraft->id);
 		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 	}
-	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 }
 
 #ifdef DEBUG
@@ -847,7 +847,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		if (ccs.singleplayer) {
 			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 			if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
-				Com_Printf("AIR_NewAircraft()... ERROR, new aircraft but no free space in hangars!\n");
+				Com_Printf("AIR_NewAircraft: ERROR, new aircraft but no free space in hangars!\n");
 			/* also update the base menu buttons */
 			Cmd_ExecuteString("base_init");
 		}
@@ -2115,7 +2115,8 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
 		MSG_WriteByte(sb, gd.recoveries[i].active);
 		MSG_WriteByte(sb, gd.recoveries[i].base ? gd.recoveries[i].base->idx : BYTES_NONE);
-		MSG_WriteByte(sb, gd.recoveries[i].ufotype ? gd.recoveries[i].ufotype->idx : BYTES_NONE);	/**@todo At some point we really need to save a unique string here. */
+		/** @todo At some point we really need to save a unique string here. */
+		MSG_WriteByte(sb, gd.recoveries[i].ufoTemplate ? gd.recoveries[i].ufoTemplate->idx : BYTES_NONE);
 		MSG_WriteLong(sb, gd.recoveries[i].event.day);
 		MSG_WriteLong(sb, gd.recoveries[i].event.sec);
 	}
@@ -2268,7 +2269,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	/* Load projectiles. */
 	gd.numProjectiles = MSG_ReadByte(sb);
 	if (gd.numProjectiles > MAX_PROJECTILESONGEOSCAPE)
-		Sys_Error("AIR_Load()... Too many projectiles on map (%i)\n", gd.numProjectiles);
+		Sys_Error("AIR_Load: Too many projectiles on map (%i)\n", gd.numProjectiles);
 
 	for (i = 0; i < gd.numProjectiles; i++) {
 		tech = RS_GetTechByProvided(MSG_ReadString(sb));
@@ -2302,7 +2303,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			for (j = 0; j < presaveArray[PRE_MAXBUL]; j++)
 				MSG_Read2Pos(sb, gd.projectiles[i].bulletPos[j]);
 		} else
-			Sys_Error("AIR_Load()... Could not get technology of projectile %i\n", i);
+			Sys_Error("AIR_Load: Could not get technology of projectile %i\n", i);
 	}
 
 	/* Load recoveries. */
@@ -2313,7 +2314,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base ) : NULL;
 		assert(numAircraftTemplates);
 		ufotype = MSG_ReadByte(sb);
-		gd.recoveries[i].ufotype = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
+		gd.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
 		gd.recoveries[i].event.day = MSG_ReadLong(sb);
 		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
 	}
@@ -2436,7 +2437,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 	/* If this is a small aircraft, we will check space in small hangar. */
 	if (aircraftSize == AIRCRAFT_SMALL) {
 		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur - used;
-		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage()... freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage: freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 			base->capacities[CAP_AIRCRAFTS_SMALL].max, base->capacities[CAP_AIRCRAFTS_SMALL].cur);
 		if (freespace > 0) {
 			return freespace;
@@ -2447,7 +2448,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 	} else {
 		/* If this is a large aircraft, we will check space in big hangar. */
 		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur - used;
-		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage()... freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage: freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 			base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 		if (freespace > 0) {
 			return freespace;
