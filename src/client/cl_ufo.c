@@ -726,8 +726,6 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 					MAP_SetOverlay("radar");
 				CL_GameTimeStop();
 			} else {
-				if (gd.combatZoomOn)
-					MAP_TurnCombatZoomOff();
 				MN_AddNewMessage(_("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_STANDARD, NULL);
 
 				/* Notify that ufo disappeared */

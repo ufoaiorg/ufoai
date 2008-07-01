@@ -1226,7 +1226,8 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
  */
 void MAP_TurnCombatZoomOff (void)
 {
-	MN_PopMenu(qfalse);
+	if (gd.combatZoomedUfo)
+		MN_PopMenu(qfalse);
 }
 
 /**
@@ -1409,6 +1410,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	static char buffer[512] = "";
 	float closestUfoDistance = -1.0f;
 	vec3_t *closestInterceptorPos = NULL;
+	int closestInterceptorStatus = -1;
 	float closestInterceptorDistance = -1.0f;
 	float weaponZoomRange = 0;
 	static qboolean aircraftInWeaponsRange = qfalse;
@@ -1515,6 +1517,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if ((distance < closestInterceptorDistance || !closestInterceptorPos) && distance > maxRange) {
 						closestInterceptorPos = &aircraft->pos;
 						closestInterceptorDistance = distance;
+						closestInterceptorStatus = aircraft->status;
 					}
 				}
 
@@ -1610,7 +1613,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 						MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, MAP_GetZoomLevel(weaponZoomRange), 0.15);
 					}
 					else {
-						if (closestInterceptorPos && (gd.combatZoomLevel == COMBAT_ZOOM_FULL || (gd.combatZoomLevel == COMBAT_ZOOM_HALF && closestInterceptorDistance >= weaponZoomRange + 2))) {
+						if (closestInterceptorStatus != AIR_RETURNING && closestInterceptorPos && (gd.combatZoomLevel == COMBAT_ZOOM_FULL || (gd.combatZoomLevel == COMBAT_ZOOM_HALF && closestInterceptorDistance >= weaponZoomRange + 2))) {
 							vec3_t midpoint = {0,0,0};
 							VectorMidpoint(gd.combatZoomedUfo->pos, *closestInterceptorPos, midpoint);
 							MAP_SmoothlyMoveToGeoscapePoint(midpoint, MAP_GetZoomLevel(closestInterceptorDistance), 0.15);
@@ -1644,6 +1647,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
 		vec3_t drawPos = {0, 0, 0};
 
+		if (projectile->attackingAircraft && !gd.combatZoomedUfo)
+			continue;
+		
 		if (projectile->hasMoved) {
 			projectile->hasMoved = qfalse;
 			VectorCopy(projectile->pos, drawPos);
@@ -1804,7 +1810,6 @@ void MAP_ResetAction (void)
 		gd.mapAction = MA_NONE;
 
 	gd.interceptAircraft = NULL;
-	gd.combatZoomedUfo = NULL;
 	selectedMission = NULL;
 	selectedAircraft = NULL;
 	selectedUFO = NULL;
@@ -1850,8 +1855,11 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 	if (!selectedUFO)
 		return;
 
+	if (gd.combatZoomedUfo == ufo)
+		MAP_TurnCombatZoomOff();
+	
 	/* Unselect the current selected ufo if its the same */
-	if (selectedUFO == ufo || gd.combatZoomedUfo == ufo)
+	if (selectedUFO == ufo)
 		MAP_ResetAction();
 	else if (destroyed && selectedUFO > ufo)
 		selectedUFO--;
@@ -2246,6 +2254,9 @@ void MAP_NotifyUFODisappear (const aircraft_t* ufo)
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUFO == ufo)
 		MAP_ResetAction();
+
+	if (gd.combatZoomedUfo == ufo)
+		MAP_TurnCombatZoomOff();
 }
 
 /**

@@ -450,10 +450,6 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 	if (phalanxWon) {
 		assert(aircraft);
 
-		if (gd.combatZoomOn && gd.combatZoomedUfo == aircraft) {
-			MAP_TurnCombatZoomOff();
-		}
-
 		/* change destination of other projectiles aiming aircraft */
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
 		/* now update the projectile for the destroyed aircraft, too */
