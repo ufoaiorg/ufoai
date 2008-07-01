@@ -73,7 +73,7 @@ def download(uri):
 
 
 def ufo2map_hash():
-	"""create an md5sum from the source and the bineary of ufo2map."""
+	"""create an md5sum from the source and the binary of ufo2map."""
 	# TODO fight against / handle svn:eol-style=native
 	src = md5()
 	files = []
