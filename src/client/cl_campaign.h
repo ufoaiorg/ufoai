@@ -418,6 +418,8 @@ int CL_DateCreateSeconds(byte hours, byte minutes, byte seconds);
 const char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
 void CL_UpdateTime(void);
+void CL_EnsureValidGameLapseForCombatZoom(void);
+void CL_EnsureValidGameLapseForGeoscape(void);
 void CL_GameTimeStop(void);
 void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);

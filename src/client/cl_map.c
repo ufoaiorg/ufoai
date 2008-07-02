@@ -1217,6 +1217,7 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
 {
 	gd.combatZoomedUfo = combatZoomedUfo;
 	gd.combatZoomLevel = COMBAT_ZOOM_FULL;
+	CL_EnsureValidGameLapseForCombatZoom();
 	MN_PushMenu("map_combatzoom");
 }
 
@@ -1240,6 +1241,7 @@ void MAP_CombatZoomExit_f (void)
 		MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qtrue);
 		gd.combatZoomOn = qfalse;
 		gd.combatZoomedUfo = NULL;
+		CL_EnsureValidGameLapseForGeoscape();
 	}
 }
 

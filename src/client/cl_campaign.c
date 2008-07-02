@@ -3682,22 +3682,97 @@ const char *CL_DateGetMonthName (int month)
 typedef struct gameLapse_s {
 	const char *name;
 	int scale;
+	int type;
 } gameLapse_t;
 
-#define NUM_TIMELAPSE 7
+#define LAPSETYPE_GEOSCAPE    1       /**< The gameLapse_t type flag for geoscape */
+#define LAPSETYPE_COMBATZOOM  2       /**< The gameLapse_t type flag for combat zoom */
+#define LAPSETYPE_ALL         3       /**< The gameLapse_t type flag for both geoscape and combat zoom */
+
+
+#define NUM_TIMELAPSE 9
 
 /** @brief The possible geoscape time intervalls */
 static const gameLapse_t lapse[NUM_TIMELAPSE] = {
-	{N_("stopped"), 0},
-	{N_("5 sec"), 5},
-	{N_("5 mins"), 5 * 60},
-	{N_("1 hour"), SECONDS_PER_HOUR},
-	{N_("12 hour"), 12 * SECONDS_PER_HOUR},
-	{N_("1 day"), 24 * SECONDS_PER_HOUR},
-	{N_("5 days"), 5 * SECONDS_PER_DAY}
+	{N_("stopped"), 0, 1},
+	{N_("5 sec"), 5, 3},
+	{N_("10 sec"), 10, 2},
+	{N_("1 min"), 60, 2},
+	{N_("5 mins"), 5 * 60, 3},
+	{N_("1 hour"), SECONDS_PER_HOUR, 1},
+	{N_("12 hours"), 12 * SECONDS_PER_HOUR, 1},
+	{N_("1 day"), 24 * SECONDS_PER_HOUR, 1},
+	{N_("5 days"), 5 * SECONDS_PER_DAY, 1}
 };
 
 static int gameLapse;
+
+/**
+ * @brief Gets the maximum game lapse array position that matches the given lapse type.
+ * @param[in] type The game lapse type.
+ * @return The Maximum game lapse array position.
+ */
+static int CL_MaxGameLapseForType (int type)
+{
+	int idx; 
+	
+	for (idx = NUM_TIMELAPSE - 1; idx >= 0; idx--) {
+		if ((lapse[idx].type & type) == type) {
+			break;
+		}
+	}
+	return idx;
+}
+
+/**
+ * @brief Gets the minimum game lapse array position that matches the given lapse type.
+ * @param[in] type The game lapse type.
+ * @return The Minimum game lapse array position.
+ */
+static int CL_MinGameLapseForType (int type)
+{
+	int idx; 
+	
+	for (idx = 0; idx < NUM_TIMELAPSE; idx++) {
+		if ((lapse[idx].type & type) == type) {
+			break;
+		}
+	}
+	return idx;
+}
+
+/**
+ * @brief Ensures that the current gameLapse setting is valid for the specified type.
+ * If it isn't then it sets it to the minimum for that type.
+ * @param[in] type The game lapse type.
+ */
+static void CL_EnsureValidGameLapseForType (int type)
+{
+	
+	if ((lapse[gameLapse].type & type) != type) {
+		gameLapse = CL_MinGameLapseForType(type);
+		CL_UpdateTime();
+	}
+
+}
+
+/**
+ * @brief Ensures that the current gameLapse setting is valid for combat zoom.
+ * If it isn't then it sets it to the minimum for combat zoom.
+ */
+void CL_EnsureValidGameLapseForCombatZoom (void)
+{
+	CL_EnsureValidGameLapseForType(LAPSETYPE_COMBATZOOM);
+}
+
+/**
+ * @brief Ensures that the current gameLapse setting is valid for the geoscape.
+ * If it isn't then it sets it to the minimum for the geoscape.
+ */
+void CL_EnsureValidGameLapseForGeoscape (void)
+{
+	CL_EnsureValidGameLapseForType(LAPSETYPE_GEOSCAPE);
+}
 
 /**
  * @brief Updates date/time and timescale (=timelapse) on the geoscape menu
@@ -3730,6 +3805,10 @@ void CL_UpdateTime (void)
 void CL_GameTimeStop (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
+	const int lapseType = gd.combatZoomedUfo ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+
+	if ((lapse[0].type & lapseType) != lapseType)
+		return;
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
 	if (menu && !Q_strncmp(menu->name, "map", 3)) {
@@ -3749,20 +3828,31 @@ void CL_GameTimeStop (void)
 void CL_GameTimeSlow (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
+	const int lapseType = gd.combatZoomedUfo ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+	const int minGameLapse = CL_MinGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed
 	 * so the gd.numBases values is pointless here */
 	if (!campaignStats.basesBuild)
 		return;
 
-	if (gameLapse == 0)
+	if (gameLapse == minGameLapse)
 		return;
 
-	assert(gameLapse >= 0);
+	assert(gameLapse >= minGameLapse);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
 	if (menu && !Q_strncmp(menu->name, "map", 3)) {
 		gameLapse--;
+		while ((lapse[gameLapse].type & lapseType) != lapseType)
+	   {
+			if (gameLapse <= minGameLapse) {
+				gameLapse = minGameLapse;
+				break;
+			} else {
+				gameLapse--;
+			}
+	   }
 	}
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
@@ -3777,20 +3867,31 @@ void CL_GameTimeSlow (void)
 void CL_GameTimeFast (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
+	const int lapseType = gd.combatZoomedUfo ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+	const int maxGameLapse = CL_MaxGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed
 	 * so the gd.numBases values is pointless here */
 	if (!campaignStats.basesBuild)
 		return;
 
-	if (gameLapse == NUM_TIMELAPSE - 1)
+	if (gameLapse == maxGameLapse)
 		return;
 
-	assert(gameLapse < NUM_TIMELAPSE);
+	assert(gameLapse <= maxGameLapse);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
 	if (menu && !Q_strncmp(menu->name, "map", 3)) {
 		gameLapse++;
+		while ((lapse[gameLapse].type & lapseType) != lapseType)
+	   {
+			if (gameLapse >= maxGameLapse) {
+				gameLapse = maxGameLapse;
+				break;
+			} else {
+				gameLapse++;
+			}
+	   }
 	}
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
