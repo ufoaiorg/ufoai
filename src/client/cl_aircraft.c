@@ -1965,7 +1965,7 @@ void AIR_RemovePilotFromAssignedAircraft (base_t* base, const employee_t* pilot)
  * @param[in] maxSlot maximum number of weapon slots in aircraft.
  * @return Maximum weapon range for this aircaft as an angle.
  */
-float AIR_GetMaxAircraftWeaponRange (aircraftSlot_t *slot, int maxSlot)
+float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
 {
 	int i;
 	float range = 0.0f;
@@ -1974,7 +1974,7 @@ float AIR_GetMaxAircraftWeaponRange (aircraftSlot_t *slot, int maxSlot)
 
 	/* We choose the usable weapon with the smallest range */
 	for (i = 0; i < maxSlot; i++) {
-		aircraftSlot_t *weapon = slot + i;
+		const aircraftSlot_t *weapon = slot + i;
 		const objDef_t *ammo = weapon->ammo;
 
 		assert(ammo);

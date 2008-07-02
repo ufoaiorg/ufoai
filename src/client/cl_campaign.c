@@ -3705,6 +3705,7 @@ static const gameLapse_t lapse[NUM_TIMELAPSE] = {
 	{N_("5 days"), 5 * SECONDS_PER_DAY, LAPSETYPE_GEOSCAPE}
 };
 
+/** @todo move into ccs_t - and also save this? needed? */
 static int gameLapse;
 
 /**
@@ -3714,8 +3715,8 @@ static int gameLapse;
  */
 static int CL_MaxGameLapseForType (int type)
 {
-	int idx; 
-	
+	int idx;
+
 	for (idx = NUM_TIMELAPSE - 1; idx >= 0; idx--) {
 		if ((lapse[idx].type & type) == type) {
 			break;
@@ -3731,8 +3732,8 @@ static int CL_MaxGameLapseForType (int type)
  */
 static int CL_MinGameLapseForType (int type)
 {
-	int idx; 
-	
+	int idx;
+
 	for (idx = 0; idx < NUM_TIMELAPSE; idx++) {
 		if ((lapse[idx].type & type) == type) {
 			break;
@@ -3748,12 +3749,10 @@ static int CL_MinGameLapseForType (int type)
  */
 static void CL_EnsureValidGameLapseForType (int type)
 {
-	
 	if ((lapse[gameLapse].type & type) != type) {
 		gameLapse = CL_MinGameLapseForType(type);
 		CL_UpdateTime();
 	}
-
 }
 
 /**
@@ -3844,8 +3843,7 @@ void CL_GameTimeSlow (void)
 	/* don't allow time scale in tactical mode - only on the geoscape */
 	if (menu && !Q_strncmp(menu->name, "map", 3)) {
 		gameLapse--;
-		while ((lapse[gameLapse].type & lapseType) != lapseType)
-	   {
+		while ((lapse[gameLapse].type & lapseType) != lapseType) {
 			if (gameLapse <= minGameLapse) {
 				gameLapse = minGameLapse;
 				break;
@@ -3883,8 +3881,7 @@ void CL_GameTimeFast (void)
 	/* don't allow time scale in tactical mode - only on the geoscape */
 	if (menu && !Q_strncmp(menu->name, "map", 3)) {
 		gameLapse++;
-		while ((lapse[gameLapse].type & lapseType) != lapseType)
-	   {
+		while ((lapse[gameLapse].type & lapseType) != lapseType) {
 			if (gameLapse >= maxGameLapse) {
 				gameLapse = maxGameLapse;
 				break;
