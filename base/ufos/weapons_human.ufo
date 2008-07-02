@@ -795,69 +795,6 @@ item shotgun
 	buytype	weap_pri
 }
 
-item shotgun_ammo
-{
-	name		"_Flechette Shells"
-	model		weapons/shotgun/shotgun_clip
-	type		ammo
-	animationindex	0
-	shape		"0 0 1 1"
-	center		"0 0 0"
-	scale		1.5
-	price		35
-	size		4
-	buytype	weap_pri
-	dmgtype blast
-
-	weapon_mod shotgun
-	{
-		firedef
-		{
-			name	"_Single Shot"
-			skill	close
-			projtl	null
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/riotshotgun
-			sndonce true
-			speed	0
-			spread	"1.8 1.8"
-			crouch	1.0
-			range	60
-			shots	10
-			ammo	1
-			delaybetweenshots		0
-			time	8
-			damage	"11 0"
-			dmgweight blast
-			reaction true
-		}
-
-		firedef
-		{
-			name	"_Double Shot"
-			skill	close
-			projtl	null
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/riotshotgun
-			sndonce true
-			speed	0
-			spread	"2.8 2.8"
-			crouch	1.0
-			range	60
-			shots	20
-			ammo	2
-			delaybetweenshots		0
-			time	12
-			damage	"11 0"
-			dmgweight blast
-			reaction true
-		}
-	}
-}
-
-
 // =======================
 // SHOTGUN MICRO
 // =======================
@@ -1008,6 +945,53 @@ item shotgun_micro_ammo
 			damage	"15 5"
 			dmgweight blast
 			reaction	true
+		}
+	}
+
+	weapon_mod shotgun
+	{
+		firedef
+		{
+			name	"_Single Shot"
+			skill	close
+			projtl	null
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/riotshotgun
+			sndonce true
+			speed	0
+			spread	"1.8 1.8"
+			crouch	1.0
+			range	60
+			shots	10
+			ammo	1
+			delaybetweenshots		0
+			time	8
+			damage	"11 0"
+			dmgweight blast
+			reaction true
+		}
+
+		firedef
+		{
+			name	"_Double Shot"
+			skill	close
+			projtl	null
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/riotshotgun
+			sndonce true
+			speed	0
+			spread	"2.8 2.8"
+			crouch	1.0
+			range	60
+			shots	20
+			ammo	2
+			delaybetweenshots		0
+			time	12
+			damage	"11 0"
+			dmgweight blast
+			reaction true
 		}
 	}
 }
