@@ -1977,7 +1977,8 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
 		const aircraftSlot_t *weapon = slot + i;
 		const objDef_t *ammo = weapon->ammo;
 
-		assert(ammo);
+		if (!ammo)
+			continue;
 
 		/* select this weapon if this is the one with the longest range */
 		if (ammo->craftitem.stats[AIR_STATS_WRANGE] > range) {
