@@ -456,56 +456,58 @@ static void SetImpliedFlags (side_t *side, const char *tex, const mapbrush_t *br
 {
 	const int initSurf = side->surfaceFlags;
 	const int initCont = side->contentFlags;
-	char flagsDescription[64] = "-";
+	const char *flagsDescription = NULL;
 	qboolean checkOrFix = config.performMapCheck || config.fixMap ;
 
 	if (!strcmp(tex, "tex_common/actorclip")) {
 		side->contentFlags |= CONTENTS_ACTORCLIP;
-		strcpy(flagsDescription, "CONTENTS_ACTORCLIP");
+		flagsDescription = "CONTENTS_ACTORCLIP";
 	} else if (!strcmp(tex, "tex_common/caulk")) {
 		side->surfaceFlags |= SURF_NODRAW;
-		strcpy(flagsDescription, "SURF_NODRAW");
+		flagsDescription = "SURF_NODRAW";
 	} else if (!strcmp(tex, "tex_common/hint")) {
 		side->surfaceFlags |= SURF_HINT;
-		strcpy(flagsDescription, "SURF_HINT");
+		flagsDescription = "SURF_HINT";
 	} else if (!strcmp(tex, "tex_common/nodraw")) {
 		side->surfaceFlags |= SURF_NODRAW;
-		strcpy(flagsDescription, "SURF_NODRAW");
+		flagsDescription = "SURF_NODRAW";
 	} else if (!strcmp(tex, "tex_common/trigger")) {
 		side->surfaceFlags |= SURF_NODRAW;
-		strcpy(flagsDescription, "SURF_NODRAW");
+		flagsDescription = "SURF_NODRAW";
 	} else if (!strcmp(tex, "tex_common/origin")) {
 		side->contentFlags |= CONTENTS_ORIGIN;
-		strcpy(flagsDescription, "CONTENTS_ORIGIN");
+		flagsDescription = "CONTENTS_ORIGIN";
 	} else if (!strcmp(tex, "tex_common/slick")) {
 		side->contentFlags |= SURF_SLICK;
-		strcpy(flagsDescription, "SURF_SLICK");
+		flagsDescription = "SURF_SLICK";
 	} else if (!strcmp(tex, "tex_common/stepon")) {
 		side->contentFlags |= CONTENTS_STEPON;
-		strcpy(flagsDescription, "CONTENTS_STEPON");
+		flagsDescription = "CONTENTS_STEPON";
 	} else if (!strcmp(tex, "tex_common/weaponclip")) {
 		side->contentFlags |= CONTENTS_WEAPONCLIP;
-		strcpy(flagsDescription, "CONTENTS_WEAPONCLIP");
+		flagsDescription = "CONTENTS_WEAPONCLIP";
 	}
 
 	if (strstr(tex, "water")) {
 		side->surfaceFlags |= SURF_WARP;
 		side->contentFlags |= CONTENTS_WATER;
 		side->contentFlags |= CONTENTS_PASSABLE;
-		strcpy(flagsDescription, "SURF_WARP, CONTENTS_WATER and CONTENTS_PASSABLE");
+		flagsDescription = "SURF_WARP, CONTENTS_WATER and CONTENTS_PASSABLE";
 	}
 
 	/* If in check/fix mode and we have made a change, give output. */
 	if (checkOrFix && ((side->contentFlags != initCont) || (side->surfaceFlags != initSurf))) {
-		Com_Printf("* entity %i, brush %i: %s implied by %s texture has been set\n", brush->entitynum, brush->brushnum, flagsDescription, tex);
+		Com_Printf("* entity %i, brush %i: %s implied by %s texture has been set\n",
+			brush->entitynum, brush->brushnum, flagsDescription ? flagsDescription : "-", tex);
 	}
 
 	/*one additional test, which does not directly depend on tex. */
 	if ((side->surfaceFlags & SURF_NODRAW) && (side->surfaceFlags & SURF_PHONG)) {
 		/* nodraw never has phong set */
 		side->surfaceFlags &= ~SURF_PHONG;
-		if(checkOrFix)
-			Com_Printf("* entity %i, brush %i: SURF_PHONG unset, as it has SURF_NODRAW set\n", brush->entitynum, brush->brushnum);
+		if (checkOrFix)
+			Com_Printf("* entity %i, brush %i: SURF_PHONG unset, as it has SURF_NODRAW set\n",
+				brush->entitynum, brush->brushnum);
 	}
 }
 
