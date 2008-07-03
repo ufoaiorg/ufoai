@@ -34,7 +34,13 @@ static qboolean Destroy_Breakable (edict_t *self)
 	vec3_t origin;
 	VectorCenterFromMinsMaxs(self->absmin, self->absmax, origin);
 
-	gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
+	/* the HP value is used to decide whether this was a triggered call or a
+	 * call during a fight - a triggered call will be handled differently in
+	 * terms of timing and the related particle effects in the client code */
+	if (self->HP == 0)
+		gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE_TRIGGERED);
+	else
+		gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 	gi.WriteShort(self->number);
 	if (self->particle && Q_strcmp(self->particle, "null")) {
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);

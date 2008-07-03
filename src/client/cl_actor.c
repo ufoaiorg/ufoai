@@ -4122,7 +4122,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 	if (cls.team == cl.actTeam) {
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
-		Cbuf_AddText("startround\n");
+		Cbuf_AddText("startround\n");  /* confunc */
 		SCR_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);

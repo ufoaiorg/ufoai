@@ -114,6 +114,7 @@ const char *ev_format[] =
 	"sbsbbbb",			/* EV_INV_TRANSFER */
 
 	"s",				/* EV_MODEL_EXPLODE */
+	"s",				/* EV_MODEL_EXPLODE_TRIGGERED */
 	"sbp&",				/* EV_SPAWN_PARTICLE */
 
 	"s",				/* EV_DOOR_OPEN */
@@ -164,6 +165,7 @@ static const char *ev_names[] =
 	"EV_INV_TRANSFER",
 
 	"EV_MODEL_EXPLODE",
+	"EV_MODEL_EXPLODE_TRIGGERED",
 
 	"EV_SPAWN_PARTICLE",
 
@@ -230,6 +232,7 @@ static void (*ev_func[])(struct dbuffer *msg) =
 	NULL,							/* EV_INV_TRANSFER */
 
 	LE_Explode,						/* EV_MODEL_EXPLODE */
+	LE_Explode,						/* EV_MODEL_EXPLODE_TRIGGERED */
 
 	CL_ParticleSpawnFromSizeBuf,	/* EV_SPAWN_PARTICLE */
 
@@ -254,7 +257,7 @@ qboolean blockEvents;	/**< block network events - see CL_Events */
 static int nextTime;	/**< time when the next event should be executed */
 static int shootTime;	/**< time when the shoot was fired */
 static int impactTime;	/**< time when the shoot hits the target */
-static qboolean parsedDeath = qfalse;
+static qboolean parsedDeath = qfalse;	/**< extra delay caused by death - @sa @c impactTime */
 
 /*============================================================================= */
 
@@ -409,14 +412,16 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 	/* do something apropriate */
 	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (cl.refresh_prepped) {
-			cl.model_draw[i-CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
+			cl.model_draw[i - CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
+			/* inline models are marked with * as first char followed by the
+			 * number */
 			if (cl.configstrings[i][0] == '*')
-				cl.model_clip[i-CS_MODELS] = CM_InlineModel(cl.configstrings[i]);
+				cl.model_clip[i - CS_MODELS] = CM_InlineModel(cl.configstrings[i]);
 			else
-				cl.model_clip[i-CS_MODELS] = NULL;
+				cl.model_clip[i - CS_MODELS] = NULL;
 		}
 	} else if (i >= CS_PLAYERNAMES && i < CS_PLAYERNAMES + MAX_CLIENTS) {
-		CL_ParseClientinfo(i-CS_PLAYERNAMES);
+		CL_ParseClientinfo(i - CS_PLAYERNAMES);
 	}
 }
 
@@ -480,18 +485,28 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 
 /**
  * @brief Reset the events
- * @note Also sets etUnused - if you get Timetable overflow messages, etUnused is NULL
+ * @note Pending events that are not yet executed - due to the event timer -
+ * will just be removed without ever being executed.
  */
 static void CL_EventReset (void)
 {
-	evTimes_t *event;
-	evTimes_t *next;
+	evTimes_t *event, *next;
+	int i = 0;
+
 	for (event = events; event; event = next) {
 		next = event->next;
+		Com_DPrintf(DEBUG_EVENT, "event type: %s at %i\n",
+			ev_names[event->eType], event->when);
 		free_dbuffer(event->msg);
 		Mem_Free(event);
+		i++;
 	}
+
 	events = NULL;
+
+	if (i)
+		Com_DPrintf(DEBUG_EVENT, "removed %i pending events (cl.eventTime: %i)\n",
+			i, cl.eventTime);
 }
 
 /**
@@ -502,7 +517,7 @@ static void CL_Reset (struct dbuffer *msg)
 {
 	selActor = NULL;
 	cl.numTeamList = 0;
-	Cbuf_AddText("numonteam1\n");
+	Cbuf_AddText("numonteam1\n"); /* confunc */
 
 	CL_EventReset();
 	parsedDeath = qfalse;
@@ -525,7 +540,7 @@ static void CL_Reset (struct dbuffer *msg)
 		Cvar_Set("mn_main", "multiplayerInGame");
 	}
 	if (cls.team == cl.actTeam)
-		Cbuf_AddText("startround\n");
+		Cbuf_AddText("startround\n"); /* confunc */
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
 }
@@ -1431,7 +1446,7 @@ static void CL_InvReload (struct dbuffer *msg)
 /**
  * @sa CL_Events
  */
-static void CL_LogEvent (int num)
+static inline void CL_LogEvent (const int num)
 {
 	FILE *logfile;
 
@@ -1445,6 +1460,9 @@ static void CL_LogEvent (int num)
 
 static void CL_ScheduleEvent(void);
 
+/**
+ * @sa CL_ScheduleEvent
+ */
 static void CL_ExecuteEvent (int now, void *data)
 {
 	while (events && !blockEvents) {
@@ -1457,7 +1475,7 @@ static void CL_ExecuteEvent (int now, void *data)
 
 		events = event->next;
 
-		Com_DPrintf(DEBUG_CLIENT, "event(dispatching): %s %p\n", ev_names[event->eType], event);
+		Com_DPrintf(DEBUG_EVENT, "event(dispatching): %s %p\n", ev_names[event->eType], event);
 		CL_LogEvent(event->eType);
 		if (!ev_func[event->eType])
 			Sys_Error("Event %i doesn't have a callback", event->eType);
@@ -1472,15 +1490,19 @@ static void CL_ExecuteEvent (int now, void *data)
  * @brief Schedule the first event in the queue
  * @sa Schedule_Event
  * @sa do_event
+ * @todo Run the event timer on the master timer
  */
 static void CL_ScheduleEvent (void)
 {
 	/* We need to schedule the first event in the queue. Unfortunately,
 	 * events don't run on the master timer (yet - this should change),
 	 * so we have to convert from one timescale to the other */
-	int timescale_delta = Sys_Milliseconds() - cl.eventTime;
+	int timescale_delta;
+
 	if (!events)
 		return;
+
+	timescale_delta = cls.realtime - cl.eventTime;
 	Schedule_Event(events->when + timescale_delta, &CL_ExecuteEvent, NULL);
 }
 
@@ -1498,6 +1520,7 @@ void CL_BlockEvents (void)
 void CL_UnblockEvents (void)
 {
 	blockEvents = qfalse;
+	/* schedule the event callback again */
 	CL_ScheduleEvent();
 }
 
@@ -1531,10 +1554,15 @@ static void CL_ParseEvent (struct dbuffer *msg)
 	if (now) {
 		/* log and call function */
 		CL_LogEvent(eType);
-		Com_DPrintf(DEBUG_CLIENT, "event(now): %s\n", ev_names[eType]);
+		Com_DPrintf(DEBUG_EVENT, "event(now): %s\n", ev_names[eType]);
 		ev_func[eType](msg);
 	} else {
 		struct dbuffer *event_msg = dbuffer_dup(msg);
+		/* the time the event should be executed. This value is used to sort the
+		 * event chain to determine which event must be executed at first. This
+		 * value also ensures, that the events are executed in the correct
+		 * order. E.g. @c impactTime is used to delay some events in case the
+		 * projectile needs some time to reach its target. */
 		int event_time;
 
 		/* get event time */
@@ -1584,7 +1612,6 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			break;
 		case EV_ACTOR_SHOOT_HIDDEN:
 			{
-				const fireDef_t *fd;
 				int first;
 				int objIdx;
 				const objDef_t *obj;
@@ -1597,7 +1624,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 					nextTime += 500;
 					impactTime = shootTime = nextTime;
 				} else {
-					fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
+					const fireDef_t *fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
 					/* impact right away - we don't see it at all
 					 * bouncing is not needed here, too (we still don't see it) */
 					impactTime = shootTime;
@@ -1667,13 +1694,14 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			CL_ScheduleEvent();
 		} else {
 			evTimes_t *e = events;
+			/* sort the new event into the pending scheduled events list */
 			while (e->next && e->next->when <= event_time)
 				e = e->next;
 			cur->next = e->next;
 			e->next = cur;
 		}
 
-		Com_DPrintf(DEBUG_CLIENT, "event(at %d): %s %p\n", event_time, ev_names[eType], cur);
+		Com_DPrintf(DEBUG_EVENT, "event(at %d): %s %p\n", event_time, ev_names[eType], cur);
 	}
 }
 

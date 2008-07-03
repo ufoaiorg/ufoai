@@ -291,7 +291,9 @@ typedef enum {
 	EV_INV_HANDS_CHANGED,
 	EV_INV_TRANSFER,
 
-	EV_MODEL_EXPLODE,
+	/* func_breakables */
+	EV_MODEL_EXPLODE,		/**< delay the event exceution by the impact time */
+	EV_MODEL_EXPLODE_TRIGGERED,	/**< don't delay the model explode event */
 
 	EV_SPAWN_PARTICLE,
 

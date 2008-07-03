@@ -318,6 +318,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
  			return;
 
 		if (damage >= target->HP) {
+			/* don't reset the HP value here, this value is used to distinguish
+			 * between triggered destroy and a shoot */
 			assert(target->destroy);
 			target->destroy(target);
 		} else {

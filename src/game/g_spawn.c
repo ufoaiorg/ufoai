@@ -721,6 +721,8 @@ static qboolean Use_Mission (edict_t *self)
 	}
 
 	if (target->destroy) {
+		/* set this to zero to determine that this is a triggered destroy call */
+		target->HP = 0;
 		target->destroy(target);
 		/* freed when the level changes */
 		self->target = NULL;
