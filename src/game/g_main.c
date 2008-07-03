@@ -683,14 +683,6 @@ qboolean G_RunFrame (void)
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
 		G_PrintStats(va("End of game - Team %i is the winner", level.winningTeam));
-#if 0
-		/* It still happens that game results are send twice --- dangerous */
-
-		/* if the message gets lost, the game will not end
-		 * until you kill someone else, so we'll try again later,
-		 * but much later, so that the intermission animations can end */
-		level.intermissionTime = level.time + 10.0;
-#endif
 		level.intermissionTime = 0.0;
 		/* end this game */
 		return qtrue;

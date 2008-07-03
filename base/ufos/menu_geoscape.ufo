@@ -1099,7 +1099,7 @@ menu popup_newbase
 
 	func init
 	{
-		cmd		"mn_setbasetitle;bases_check_max;"
+		cmd		"bases_check_max_set_title;"
 	}
 }
 

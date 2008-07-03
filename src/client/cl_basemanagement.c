@@ -3100,20 +3100,6 @@ static void B_BaseList_f (void)
 #endif
 
 /**
- * @brief Sets the title of the base.
- */
-static void B_SetBaseTitle_f (void)
-{
-	Com_DPrintf(DEBUG_CLIENT, "B_SetBaseTitle_f: #bases: %i\n", gd.numBases);
-	if (gd.numBases < MAX_BASES)
-		Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
-	else {
-		MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
-		MN_PopMenu(qfalse);		/* remove the new base popup */
-	}
-}
-
-/**
  * @brief Creates console command to change the name of a base.
  * Copies the value of the cvar mn_base_title over as the name of the
  * current selected base
@@ -3317,11 +3303,16 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 /**
  * @brief This function checks whether a user build the max allowed amount of bases
  * if yes, the MN_PopMenu will pop the base build menu from the stack
+ * @note Also sets the basename of the base that is going to be build (the default
+ * name from the script files)
  */
-static void B_CheckMaxBases_f (void)
+static void B_CheckMaxBasesAndSetTitle_f (void)
 {
-	if (gd.numBases >= MAX_BASES) {
-		MN_PopMenu(qfalse);
+	if (gd.numBases < MAX_BASES) {
+		Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
+	} else {
+		MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
+		MN_PopMenu(qfalse);		/* remove the new base popup */
 	}
 }
 
@@ -3376,8 +3367,7 @@ void B_InitStartup (void)
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, NULL);
 	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
-	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle_f, NULL);
-	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f, NULL);
+	Cmd_AddCommand("bases_check_max_set_title", B_CheckMaxBasesAndSetTitle_f, NULL);
 	Cmd_AddCommand("rename_base", B_RenameBase_f, "Rename the current base");
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
