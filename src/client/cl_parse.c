@@ -621,7 +621,7 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 		 * in CL_WorkingFiremode */
 		if (CL_WorkingFiremode(cl.teamList[actor_idx], qtrue)) {
 			/* Rewrite/-send selected reaction firemode in case reserved-TUs or server is outdated. */
-			character_t *chr = CL_GetActorChr(cl.teamList[actor_idx]);
+			const character_t *chr = CL_GetActorChr(cl.teamList[actor_idx]);
 			assert(cls.missionaircraft);
 			assert(chr);
 			CL_SetReactionFiremode(cl.teamList[actor_idx], chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
