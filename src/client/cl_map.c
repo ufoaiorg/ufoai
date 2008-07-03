@@ -1362,6 +1362,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	static qboolean aircraftInWeaponsRange = qfalse;
 	aircraft_t *closestUfo = NULL;
 	int maxInterpolationPoints;
+	vec3_t combatZoomAttackingAircraftPos[MAX_AIRCRAFT];
+	int combatZoomNumAttackingAircraft = 0;
+	vec3_t combatZoomAircraftInCombatPos[MAX_AIRCRAFT];
+	int combatZoomNumCombatAircraft = 0;
 
 	assert(node);
 
@@ -1458,6 +1462,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 				if (gd.combatZoomedUfo && aircraft->aircraftTarget == gd.combatZoomedUfo) {
 					float distance = MAP_GetDistance(aircraft->pos, gd.combatZoomedUfo->pos);
+					VectorCopy(aircraft->pos, combatZoomAttackingAircraftPos[combatZoomNumAttackingAircraft]);
+					combatZoomNumAttackingAircraft++;
 					if (distance < maxRange && weaponZoomRange < maxRange)
 						weaponZoomRange = maxRange;
 					if ((distance < closestInterceptorDistance || !closestInterceptorPos) && distance > maxRange) {
@@ -1547,19 +1553,48 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				if (gd.combatZoomedUfo == aircraft) {
 					float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
 					if (weaponZoomRange != 0) {
+						int attAirIdx;
+
 						if (!aircraftInWeaponsRange) {
 							CL_SetGameTime(1);
 							aircraftInWeaponsRange = qtrue;
 						}
+
 						if (weaponZoomRange < maxRange)
 							weaponZoomRange = maxRange;
+
+						for (attAirIdx = 0; attAirIdx < combatZoomNumAttackingAircraft; attAirIdx++) {
+							float distance = MAP_GetDistance(combatZoomAttackingAircraftPos[attAirIdx], gd.combatZoomedUfo->pos);
+							if (distance <= weaponZoomRange) {
+								VectorCopy(combatZoomAttackingAircraftPos[attAirIdx], combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
+								combatZoomNumCombatAircraft++;
+							}
+						}
+
 					} else {
 						aircraftInWeaponsRange = qfalse;
 					}
 
 					if (aircraftInWeaponsRange && gd.combatZoomLevel == COMBAT_ZOOM_FULL) {
-						 MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, MAP_GetZoomFromDistance(node, weaponZoomRange), 0.15);
-					} else {
+						vec3_t centroid = {0,0,0};
+						int combatAirIdx;
+
+						VectorCopy(gd.combatZoomedUfo->pos, combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
+						combatZoomNumCombatAircraft++;
+						
+						/* finds the centroid of all aircraft in combat range who are targeting the zoomed ufo
+						 * and uses this as the point on which to center. */
+						for (combatAirIdx = 0; combatAirIdx < combatZoomNumCombatAircraft; combatAirIdx++) {
+							VectorAdd(combatZoomAircraftInCombatPos[combatAirIdx], centroid, centroid);
+						}
+						if (combatAirIdx > 1) {
+							VectorScale(centroid, 1.0/(float)combatAirIdx, centroid);
+							MAP_SmoothlyMoveToGeoscapePoint(centroid, MAP_GetZoomFromDistance(node, weaponZoomRange * 0.75), 0.15);
+						} else {
+							MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, MAP_GetZoomFromDistance(node, weaponZoomRange * 0.75), 0.15);
+						}
+					}
+					else {
 						if (closestInterceptorStatus != AIR_RETURNING && closestInterceptorPos && (gd.combatZoomLevel == COMBAT_ZOOM_FULL || (gd.combatZoomLevel == COMBAT_ZOOM_HALF && closestInterceptorDistance >= weaponZoomRange + 2))) {
 							vec3_t midpoint = {0,0,0};
 							VectorMidpoint(gd.combatZoomedUfo->pos, *closestInterceptorPos, midpoint);
