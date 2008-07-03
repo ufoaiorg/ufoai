@@ -382,14 +382,11 @@ const float STANDARD_3D_ZOOM = 40.0f;
  * @param[in] distance Half distance that we want to display on the full height of the screen.
  * @return zoom that should be applied to see given distance, if within boundaries.
  */
-#if 0
 static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 {
 	float zoom;
 	const float MAX_AUTO_ZOOM = 35.0f;			/**< maximum zoom reachable with automatic zoom
 												 * we can zoom closer than manually, so don't use cl_mapzoomax */
-
-	distance = atoi(Cmd_Argv(1));
 
 	if (distance >= 90.0f) {
 		/* We want to see the whole world */
@@ -408,7 +405,7 @@ static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 
 	return zoom;
 }
-#endif
+
 /**
  * @brief Transform a 2D position on the map to screen coordinates.
  * @param[in] pos vector that holds longitude and latitude
@@ -1097,59 +1094,6 @@ void MAP_CenterOnPoint_f (void)
 }
 
 /**
- * @brief Gets the zoom level for a given distance on the 3D geoscape.
- * @param[in] The distance to find the zoom level for.
- */
-static float MAP_GetZoomLevel (float angle)
-{
-	float zoom = 0;
-
-	if (angle <= 2.5f) {
-		zoom = 40.0f;
-	} else if (angle <= 3.0f) {
-		zoom = 35.62f;
-	} else if (angle <= 3.5f) {
-		zoom = 31.1f;
-	} else if (angle <= 4.0f) {
-		zoom = 26.4f;
-	} else if (angle <= 4.5f) {
-		zoom = 23.85f;
-	} else if (angle <= 5.0f) {
-		zoom = 21.5f;
-	} else if (angle <= 5.5f) {
-		zoom = 19.52f;
-	} else if (angle <= 6.0f) {
-		zoom=17.66f;
-	} else if (angle <= 6.5f) {
-		zoom = 16.5f;
-	} else if (angle <= 7.0f) {
-		zoom = 15.3f;
-	} else if (angle <= 7.5f) {
-		zoom = 14.4f;
-	} else if (angle <= 8.0f) {
-		zoom = 13.4f;
-	} else if (angle <= 8.5f) {
-		zoom = 12.6f;
-	} else if (angle <= 9.0f) {
-		zoom = 11.825f;
-	} else if (angle <= 9.5f) {
-		zoom = 11.245f;
-	} else if (angle <= 10.0f) {
-		zoom = 10.69f;
-	} else if (angle <= 10.5f) {
-		zoom = 10.17f;
-	} else if (angle <= 11.0f) {
-		zoom = 9.67f;
-	} else if (angle <= 12.5f) {
-		zoom = 8.6f;
-	} else {
-		zoom = 7.0f;
-	}
-
-	return zoom;
-}
-
-/**
  * @brief Smoothly moves the map center position to the secified location on the geoscape.
  * @param[in] pointOnGeoscape  The position to center on.
  * @param[in] zoom  The level at which to zoom.
@@ -1614,13 +1558,12 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					}
 
 					if (aircraftInWeaponsRange && gd.combatZoomLevel == COMBAT_ZOOM_FULL) {
-						MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, MAP_GetZoomLevel(weaponZoomRange), 0.15);
-					}
-					else {
+						 MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, MAP_GetZoomFromDistance(node, weaponZoomRange), 0.15);
+					} else {
 						if (closestInterceptorStatus != AIR_RETURNING && closestInterceptorPos && (gd.combatZoomLevel == COMBAT_ZOOM_FULL || (gd.combatZoomLevel == COMBAT_ZOOM_HALF && closestInterceptorDistance >= weaponZoomRange + 2))) {
 							vec3_t midpoint = {0,0,0};
 							VectorMidpoint(gd.combatZoomedUfo->pos, *closestInterceptorPos, midpoint);
-							MAP_SmoothlyMoveToGeoscapePoint(midpoint, MAP_GetZoomLevel(closestInterceptorDistance), 0.15);
+							MAP_SmoothlyMoveToGeoscapePoint(midpoint, MAP_GetZoomFromDistance(node, closestInterceptorDistance), 0.15);
 						} else {
 							MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1, 0.15);
 						}
