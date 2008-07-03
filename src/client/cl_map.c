@@ -264,7 +264,13 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 			Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
 
 			CL_GameTimeStop();
-			MN_PushMenu("popup_newbase");
+
+			if (gd.numBases < MAX_BASES) {
+				Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
+				MN_PushMenu("popup_newbase");
+			} else {
+				MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
+			}
 			return;
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
@@ -1631,7 +1637,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		if (projectile->attackingAircraft && !gd.combatZoomedUfo)
 			continue;
-		
+
 		if (projectile->hasMoved) {
 			projectile->hasMoved = qfalse;
 			VectorCopy(projectile->pos, drawPos);
@@ -1839,7 +1845,7 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 
 	if (gd.combatZoomedUfo == ufo)
 		MAP_TurnCombatZoomOff();
-	
+
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUFO == ufo)
 		MAP_ResetAction();

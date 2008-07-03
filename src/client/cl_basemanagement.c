@@ -2357,20 +2357,6 @@ void MN_BaseMapDraw (const menuNode_t * node)
 }
 
 /**
- * @brief Renames a base.
- */
-static void B_RenameBase_f (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (baseCurrent)
-		Q_strncpyz(baseCurrent->name, Cmd_Argv(1), sizeof(baseCurrent->name));
-}
-
-/**
  * @brief Cycles to the next base.
  * @sa B_PrevBase
  * @sa B_SelectBase_f
@@ -3300,22 +3286,6 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 	}
 }
 
-/**
- * @brief This function checks whether a user build the max allowed amount of bases
- * if yes, the MN_PopMenu will pop the base build menu from the stack
- * @note Also sets the basename of the base that is going to be build (the default
- * name from the script files)
- */
-static void B_CheckMaxBasesAndSetTitle_f (void)
-{
-	if (gd.numBases < MAX_BASES) {
-		Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
-	} else {
-		MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
-		MN_PopMenu(qfalse);		/* remove the new base popup */
-	}
-}
-
 #ifdef DEBUG
 /**
  * @brief Debug function for printing all capacities in given base.
@@ -3367,8 +3337,6 @@ void B_InitStartup (void)
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, NULL);
 	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
-	Cmd_AddCommand("bases_check_max_set_title", B_CheckMaxBasesAndSetTitle_f, NULL);
-	Cmd_AddCommand("rename_base", B_RenameBase_f, "Rename the current base");
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");

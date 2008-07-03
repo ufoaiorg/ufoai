@@ -1096,11 +1096,6 @@ menu popup_newbase
 		pos		"648 466"
 		align	cc
 	}
-
-	func init
-	{
-		cmd		"bases_check_max_set_title;"
-	}
 }
 
 // ==================
