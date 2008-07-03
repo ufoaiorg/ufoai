@@ -311,6 +311,7 @@ static void SV_AddEvent (int mask, int eType)
 	if (pfe_pending)
 		SV_EndEvents();
 
+	Com_DPrintf(DEBUG_EVENT, "new event '%i' for mask %i\n", eType, mask);
 	/* start the new event */
 	pfe_pending = qtrue;
 	pfe_mask = mask;

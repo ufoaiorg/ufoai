@@ -612,13 +612,18 @@ static void CL_StartGame (struct dbuffer *msg)
 static void CL_StartingGameDone (struct dbuffer *msg)
 {
 	int actor_idx;
-	character_t *chr;
 
 	/* Set default reaction-firemode (or re-set already working one to update TUs) on game-start. */
 	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
+		/** @todo CL_WorkingFiremode also checks for CL_GetActorChr - when this
+		 * function returns true, it's possible that the chr->... stuff will
+		 * segfault here - and true is returned when CL_GetActorChr return NULL
+		 * in CL_WorkingFiremode */
 		if (CL_WorkingFiremode(cl.teamList[actor_idx], qtrue)) {
 			/* Rewrite/-send selected reaction firemode in case reserved-TUs or server is outdated. */
-			chr = CL_GetActorChr(cl.teamList[actor_idx]);
+			character_t *chr = CL_GetActorChr(cl.teamList[actor_idx]);
+			assert(cls.missionaircraft);
+			assert(chr);
 			CL_SetReactionFiremode(cl.teamList[actor_idx], chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
 
 			/* Reserve Tus for crouching/standing up if player selected this previously. */
@@ -1458,10 +1463,11 @@ static inline void CL_LogEvent (const int num)
 	fclose(logfile);
 }
 
-static void CL_ScheduleEvent(void);
+static void CL_ScheduleEvent(evTimes_t *event);
 
 /**
  * @sa CL_ScheduleEvent
+ * @sa CL_EventReset
  */
 static void CL_ExecuteEvent (int now, void *data)
 {
@@ -1469,7 +1475,7 @@ static void CL_ExecuteEvent (int now, void *data)
 		evTimes_t *event = events;
 
 		if (event->when > cl.eventTime) {
-			CL_ScheduleEvent();
+			CL_ScheduleEvent(event);
 			return;
 		}
 
@@ -1489,10 +1495,11 @@ static void CL_ExecuteEvent (int now, void *data)
 /**
  * @brief Schedule the first event in the queue
  * @sa Schedule_Event
+ * @sa CL_EventReset
  * @sa do_event
  * @todo Run the event timer on the master timer
  */
-static void CL_ScheduleEvent (void)
+static void CL_ScheduleEvent (evTimes_t *event)
 {
 	/* We need to schedule the first event in the queue. Unfortunately,
 	 * events don't run on the master timer (yet - this should change),
@@ -1502,8 +1509,8 @@ static void CL_ScheduleEvent (void)
 	if (!events)
 		return;
 
-	timescale_delta = cls.realtime - cl.eventTime;
-	Schedule_Event(events->when + timescale_delta, &CL_ExecuteEvent, NULL);
+	timescale_delta = Sys_Milliseconds() - cl.eventTime;
+	Schedule_Event(event->when + timescale_delta, &CL_ExecuteEvent, NULL);
 }
 
 /**
@@ -1521,7 +1528,7 @@ void CL_UnblockEvents (void)
 {
 	blockEvents = qfalse;
 	/* schedule the event callback again */
-	CL_ScheduleEvent();
+	CL_ScheduleEvent(events);
 }
 
 /**
@@ -1580,6 +1587,8 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			event_time = impactTime;
 		} else if (eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN) {
 			event_time = shootTime;
+		} else if (eType == EV_RESULTS) {
+			event_time = nextTime + 1400;
 		} else {
 			event_time = nextTime;
 		}
@@ -1691,7 +1700,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 		if (!events || (events)->when > event_time) {
 			cur->next = events;
 			events = cur;
-			CL_ScheduleEvent();
+			CL_ScheduleEvent(cur);
 		} else {
 			evTimes_t *e = events;
 			/* sort the new event into the pending scheduled events list */
