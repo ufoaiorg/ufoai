@@ -6752,8 +6752,8 @@ static const cmdList_t game_commands[] = {
 	{"game_timefast", CL_GameTimeFast, NULL},
 	{"mn_mapaction_reset", MAP_ResetAction, NULL},
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
-	{"map_zoom", MAP_Zoom_f, ""},
-	{"map_scroll", MAP_Scroll_f, ""},
+	{"map_zoom", MAP_Zoom_f, NULL},
+	{"map_scroll", MAP_Scroll_f, NULL},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 #ifdef DEBUG
 	{"debug_listnation", CL_NationList_f, "List all nations on the game console"},
@@ -6830,7 +6830,7 @@ void CL_GameInit (qboolean load)
 
 	rsAlienXVI = RS_GetTechByID(XVI_EVENT_NAME);
 	if (!rsAlienXVI)
-		Sys_Error("CL_GameInit: Could not find tech definition for %s", XVI_EVENT_NAME);
+		Sys_Error("CL_GameInit: Could not find tech definition for " XVI_EVENT_NAME);
 
 	/* now check the parsed values for errors that are not catched at parsing stage */
 	if (!load)
