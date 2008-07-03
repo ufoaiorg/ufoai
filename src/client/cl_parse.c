@@ -604,32 +604,32 @@ static void CL_StartGame (struct dbuffer *msg)
 }
 
 /**
- * @brief The server finished sending all init-data to the client.
+ * @brief The server finished sending all init-data to the client. We can now run some client-side initialisation - mostly soldier-related.
  * @sa CL_StartGame
  * @note EV_START_DONE
  * @todo Is there more stuff to initialise when the client is "ready"?
  */
 static void CL_StartingGameDone (struct dbuffer *msg)
 {
-	int actor_idx;
+	int actorIdx;
 
-	/* Set default reaction-firemode (or re-set already working one to update TUs) on game-start. */
-	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
+	/* Set default reaction-firemode (or set already working again one to update TUs) on game-start. */
+	for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
 		/** @todo CL_WorkingFiremode also checks for CL_GetActorChr - when this
 		 * function returns true, it's possible that the chr->... stuff will
 		 * segfault here - and true is returned when CL_GetActorChr return NULL
 		 * in CL_WorkingFiremode */
-		if (CL_WorkingFiremode(cl.teamList[actor_idx], qtrue)) {
+		if (CL_WorkingFiremode(cl.teamList[actorIdx], qtrue)) {
 			/* Rewrite/-send selected reaction firemode in case reserved-TUs or server is outdated. */
-			const character_t *chr = CL_GetActorChr(cl.teamList[actor_idx]);
+			const character_t *chr = CL_GetActorChr(cl.teamList[actorIdx]);
 			assert(cls.missionaircraft);
 			assert(chr);
-			CL_SetReactionFiremode(cl.teamList[actor_idx], chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
+			CL_SetReactionFiremode(cl.teamList[actorIdx], chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
 
 			/* Reserve Tus for crouching/standing up if player selected this previously. */
 			if (chr->reservedTus.reserveCrouch) {
 				/** @sa CL_ActorToggleCrouchReservation_f */
-				/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
+				/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
 				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
 					CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
 					Cbuf_AddText("crouch_checkbox_check\n"); /* confunc */
@@ -638,12 +638,12 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 				}
 			}
 		} else {
-			CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
+			CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], 'r');
 		}
 
 #if 0
 		/** @todo Check for changed settings here. */
-		if (CL_WorkingFiremode(cl.teamList[actor_idx], qfalse)) {
+		if (CL_WorkingFiremode(cl.teamList[actorIdx], qfalse)) {
 		} else {
 		}
 #endif
