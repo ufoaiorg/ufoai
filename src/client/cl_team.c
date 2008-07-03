@@ -1255,9 +1255,21 @@ int CL_GenTeamList (const base_t *base)
 }
 
 /**
+ * @brief Call all the needed functions to generate a new initial team (e.g. for multiplayer)
+ */
+static void CL_GenerateNewTeam_f (void)
+{
+	CL_ResetMultiplayerTeamInBase(baseCurrent);
+	Cvar_Set("mn_teamname", _("NewTeam"));
+	CL_GameExit();
+	MN_PushMenu("team");
+}
+
+/**
  * @brief Init the teamlist checkboxes
  * @sa CL_UpdateActorAircraftVar
- * @todo Make this function use a temporary list with all list-able employees instead of using gd.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
+ * @todo Make this function use a temporary list with all list-able employees
+ * instead of using gd.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
  */
 static void CL_MarkTeam_f (void)
 {
@@ -1286,7 +1298,7 @@ static void CL_MarkTeam_f (void)
 
 	/* create a team if there isn't one already */
 	if (gd.numEmployees[employeeType] < 1) {
-		Cmd_ExecuteString("new_team");
+		CL_GenerateNewTeam_f();
 		MN_Popup(_("New team created"), _("A new team has been created for you."));
 	}
 
@@ -1901,20 +1913,9 @@ static void CL_LoadTeamMultiplayerSlot_f (void)
 	Com_Printf("Team 'team%s' loaded.\n", Cvar_VariableString("mn_slot"));
 }
 
-/**
- * @brief Call all the needed functions to generate a new initial team (e.g. for multiplayer)
- */
-static void CL_GenerateNewTeam_f (void)
-{
-	CL_ResetMultiplayerTeamInBase(baseCurrent);
-	Cvar_Set("mn_teamname", _("NewTeam"));
-	CL_GameExit();
-	MN_PushMenu("team");
-}
-
 void TEAM_InitStartup (void)
 {
-	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, "Generates a new empty team");
+	Cmd_AddCommand("team_new", CL_GenerateNewTeam_f, "Generates a new empty team");
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
 	Cmd_AddCommand("team_reset", CL_ResetMultiplayerTeamInBase_f, NULL);
 	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);

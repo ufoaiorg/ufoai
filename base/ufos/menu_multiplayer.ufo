@@ -317,7 +317,7 @@ menu mp_team
 		in	{ *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "128 128" }
 		click
 		{
-			cmd "new_team;"
+			cmd "team_new;"
 		}
 	}
 	string string_new
