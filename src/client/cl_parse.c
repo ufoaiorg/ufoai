@@ -632,19 +632,21 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 				/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
 				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
 					CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
-					Cbuf_AddText("crouch_checkbox_check\n");
+					Cbuf_AddText("crouch_checkbox_check\n"); /* confunc */
 				} else {
-					Cbuf_AddText("crouch_checkbox_disable\n");
+					Cbuf_AddText("crouch_checkbox_disable\n"); /* confunc */
 				}
 			}
 		} else {
 			CL_SetDefaultReactionFiremode(cl.teamList[actor_idx], 'r');
 		}
 
-		/**@todo Check for changed settings here. */
+#if 0
+		/** @todo Check for changed settings here. */
 		if (CL_WorkingFiremode(cl.teamList[actor_idx], qfalse)) {
 		} else {
 		}
+#endif
 	}
 }
 
