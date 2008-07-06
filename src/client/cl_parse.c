@@ -495,7 +495,7 @@ static void CL_EventReset (void)
 
 	for (event = events; event; event = next) {
 		next = event->next;
-		Com_DPrintf(DEBUG_EVENT, "event type: %s at %i\n",
+		Com_DPrintf(DEBUG_EVENTSYS, "event type: %s at %i\n",
 			ev_names[event->eType], event->when);
 		free_dbuffer(event->msg);
 		Mem_Free(event);
@@ -505,7 +505,7 @@ static void CL_EventReset (void)
 	events = NULL;
 
 	if (i)
-		Com_DPrintf(DEBUG_EVENT, "removed %i pending events (cl.eventTime: %i)\n",
+		Com_DPrintf(DEBUG_EVENTSYS, "removed %i pending events (cl.eventTime: %i)\n",
 			i, cl.eventTime);
 }
 
@@ -1483,7 +1483,7 @@ static void CL_ExecuteEvent (int now, void *data)
 
 		events = event->next;
 
-		Com_DPrintf(DEBUG_EVENT, "event(dispatching): %s %p\n", ev_names[event->eType], event);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching): %s %p\n", ev_names[event->eType], event);
 		CL_LogEvent(event->eType);
 		if (!ev_func[event->eType])
 			Sys_Error("Event %i doesn't have a callback", event->eType);
@@ -1563,7 +1563,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 	if (now) {
 		/* log and call function */
 		CL_LogEvent(eType);
-		Com_DPrintf(DEBUG_EVENT, "event(now): %s\n", ev_names[eType]);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(now): %s\n", ev_names[eType]);
 		ev_func[eType](msg);
 	} else {
 		struct dbuffer *event_msg = dbuffer_dup(msg);
@@ -1712,7 +1712,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			e->next = cur;
 		}
 
-		Com_DPrintf(DEBUG_EVENT, "event(at %d): %s %p\n", event_time, ev_names[eType], cur);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", event_time, ev_names[eType], cur);
 	}
 }
 
