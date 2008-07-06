@@ -701,7 +701,8 @@ void CIN_PlayCinematic (const char *name)
 			cin.soundBufferPos += cin.chunk.size;
 		}
 
-		if (!cin.noSound)
+		/* check whether this roq even has sound data */
+		if (!cin.noSound && cin.soundChannels)
 			/* Send samples to mixer */
 			S_PlaySoundFromMem(cin.soundBuffer, cin.soundBufferPos * sizeof(short), ROQ_SOUND_RATE, cin.soundChannels, -1);
 
