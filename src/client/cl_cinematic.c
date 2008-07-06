@@ -46,6 +46,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define ROQ_SOUND_RATE				22050
 
+#define ROQ_ID_FCC 0x4000
+#define ROQ_ID_SLD 0x8000
+#define ROQ_ID_CCC 0xC000
+
 typedef struct {
 	unsigned short	id;
 	unsigned int	size;
@@ -108,7 +112,7 @@ static cinematic_t	cin;
 /**
  * @brief Clamps integer value into byte
  */
-static byte CIN_ClampByte (int value)
+static inline byte CIN_ClampByte (int value)
 {
 	if (value < 0)
 		return 0;
@@ -124,16 +128,13 @@ static byte CIN_ClampByte (int value)
  */
 static void CIN_ApplyVector2x2 (int x, int y, const byte *indices)
 {
-	unsigned int	*src, *dst;
-	int		xp, yp;
-	int		i;
+	int i;
 
 	for (i = 0; i < 4; i++) {
-		xp = x + cin_quadOffsets2[0][i];
-		yp = y + cin_quadOffsets2[1][i];
-
-		src = (unsigned int *)cin.quadVectors + (indices[i] * 4);
-		dst = (unsigned int *)cin.frameBuffer[0] + (yp * cin.frameWidth + xp);
+		const int xp = x + cin_quadOffsets2[0][i];
+		const int yp = y + cin_quadOffsets2[1][i];
+		const unsigned int *src = (const unsigned int *)cin.quadVectors + (indices[i] * 4);
+		unsigned int *dst = (unsigned int *)cin.frameBuffer[0] + (yp * cin.frameWidth + xp);
 
 		dst[0] = src[0];
 		dst[1] = src[1];
@@ -150,16 +151,13 @@ static void CIN_ApplyVector2x2 (int x, int y, const byte *indices)
  */
 static void CIN_ApplyVector4x4 (int x, int y, const byte *indices)
 {
-	unsigned int	*src, *dst;
-	int		xp, yp;
-	int		i;
+	int i;
 
 	for (i = 0; i < 4; i++) {
-		xp = x + cin_quadOffsets4[0][i];
-		yp = y + cin_quadOffsets4[1][i];
-
-		src = (unsigned int *)cin.quadVectors + (indices[i] * 4);
-		dst = (unsigned int *)cin.frameBuffer[0] + (yp * cin.frameWidth + xp);
+		const int xp = x + cin_quadOffsets4[0][i];
+		const int yp = y + cin_quadOffsets4[1][i];
+		const unsigned int *src = (const unsigned int *)cin.quadVectors + (indices[i] * 4);
+		unsigned int *dst = (unsigned int *)cin.frameBuffer[0] + (yp * cin.frameWidth + xp);
 
 		dst[0] = src[0];
 		dst[1] = src[0];
@@ -194,15 +192,11 @@ static void CIN_ApplyVector4x4 (int x, int y, const byte *indices)
  */
 static void CIN_ApplyMotion4x4 (int x, int y, int mx, int my, int mv)
 {
-	unsigned int	*src, *dst;
-	int		xp, yp;
-	int		i;
-
-	xp = x + 8 - (mv >> 4) - mx;
-	yp = y + 8 - (mv & 15) - my;
-
-	src = (unsigned int *)cin.frameBuffer[1] + (yp * cin.frameWidth + xp);
-	dst = (unsigned int *)cin.frameBuffer[0] + (y * cin.frameWidth + x);
+	int i;
+	const int xp = x + 8 - (mv >> 4) - mx;
+	const int yp = y + 8 - (mv & 15) - my;
+	const unsigned int *src = (const unsigned int *)cin.frameBuffer[1] + (yp * cin.frameWidth + xp);
+	unsigned int *dst = (unsigned int *)cin.frameBuffer[0] + (y * cin.frameWidth + x);
 
 	for (i = 0; i < 4; i++, src += cin.frameWidth, dst += cin.frameWidth) {
 		dst[0] = src[0];
@@ -217,15 +211,11 @@ static void CIN_ApplyMotion4x4 (int x, int y, int mx, int my, int mv)
  */
 static void CIN_ApplyMotion8x8 (int x, int y, int mx, int my, int mv)
 {
-	unsigned int	*src, *dst;
-	int		xp, yp;
-	int		i;
-
-	xp = x + 8 - (mv >> 4) - mx;
-	yp = y + 8 - (mv & 15) - my;
-
-	src = (unsigned int *)cin.frameBuffer[1] + (yp * cin.frameWidth + xp);
-	dst = (unsigned int *)cin.frameBuffer[0] + (y * cin.frameWidth + x);
+	int i;
+	const int xp = x + 8 - (mv >> 4) - mx;
+	const int yp = y + 8 - (mv & 15) - my;
+	const unsigned int *src = (const unsigned int *)cin.frameBuffer[1] + (yp * cin.frameWidth + xp);
+	unsigned int *dst = (unsigned int *)cin.frameBuffer[0] + (y * cin.frameWidth + x);
 
 	for (i = 0; i < 8; i++, src += cin.frameWidth, dst += cin.frameWidth) {
 		dst[0] = src[0];
@@ -267,7 +257,6 @@ static void CIN_DecodeInfo (const byte *data)
 static void CIN_DecodeCodeBook (const byte *data)
 {
 	int		numQuadVectors, numQuadCells;
-	int		r, g, b;
 	int		i;
 
 	if (cin.chunk.flags) {
@@ -283,9 +272,9 @@ static void CIN_DecodeCodeBook (const byte *data)
 
 	/* Decode YUV quad vectors to RGB */
 	for (i = 0; i < numQuadVectors; i++) {
-		r = cin_yuvTable.vr[data[5]];
-		g = cin_yuvTable.ug[data[4]] + cin_yuvTable.vg[data[5]];
-		b = cin_yuvTable.ub[data[4]];
+		const int r = cin_yuvTable.vr[data[5]];
+		const int g = cin_yuvTable.ug[data[4]] + cin_yuvTable.vg[data[5]];
+		const int b = cin_yuvTable.ub[data[4]];
 
 		((byte *)&cin.quadVectors[i].pixel[0])[0] = CIN_ClampByte(data[0] + r);
 		((byte *)&cin.quadVectors[i].pixel[0])[1] = CIN_ClampByte(data[0] - g);
@@ -329,7 +318,7 @@ static void CIN_DecodeVideo (const byte *data)
 	byte	*buffer;
 	int		vqFlag, vqFlagPos, vqCode;
 	int		xPos, yPos, xMot, yMot;
-	int		x, y, xp, yp;
+	int		x, y;
 	int		index;
 	int		i;
 
@@ -358,22 +347,22 @@ static void CIN_DecodeVideo (const byte *data)
 				} else
 					vqFlagPos--;
 
-				vqCode = vqFlag & 0xC000;
+				vqCode = vqFlag & ROQ_ID_CCC;
 				vqFlag <<= 2;
 
 				switch (vqCode) {
-				case 0x4000:
+				case ROQ_ID_FCC:
 					CIN_ApplyMotion8x8(x, y, xMot, yMot, data[index]);
 					index += 1;
 					break;
-				case 0x8000:
+				case ROQ_ID_SLD:
 					CIN_ApplyVector4x4(x, y, cin.quadCells[data[index]].index);
 					index += 1;
 					break;
-				case 0xC000:
+				case ROQ_ID_CCC:
 					for (i = 0; i < 4; i++) {
-						xp = x + cin_quadOffsets4[0][i];
-						yp = y + cin_quadOffsets4[1][i];
+						const int xp = x + cin_quadOffsets4[0][i];
+						const int yp = y + cin_quadOffsets4[1][i];
 
 						if (!vqFlagPos) {
 							vqFlagPos = 7;
@@ -384,19 +373,19 @@ static void CIN_DecodeVideo (const byte *data)
 						} else
 							vqFlagPos--;
 
-						vqCode = vqFlag & 0xC000;
+						vqCode = vqFlag & ROQ_ID_CCC;
 						vqFlag <<= 2;
 
 						switch (vqCode) {
-						case 0x4000:
+						case ROQ_ID_FCC:
 							CIN_ApplyMotion4x4(xp, yp, xMot, yMot, data[index]);
 							index += 1;
 							break;
-						case 0x8000:
+						case ROQ_ID_SLD:
 							CIN_ApplyVector2x2(xp, yp, cin.quadCells[data[index]].index);
 							index += 1;
 							break;
-						case 0xC000:
+						case ROQ_ID_CCC:
 							CIN_ApplyVector2x2(xp, yp, &data[index]);
 							index += 4;
 							break;

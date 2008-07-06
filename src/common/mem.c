@@ -388,6 +388,8 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 
 	/* Fill in the footer */
 	mem->footer->sentinel = MEM_FOOT_SENTINEL;
+
+	return mem->memPointer;
 }
 
 /*==============================================================================
