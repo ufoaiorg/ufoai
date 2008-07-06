@@ -310,6 +310,11 @@ static int R_LoadAnimImages (materialStage_t *s)
 	char name[MAX_QPATH];
 	int i, j;
 
+	if (!s->image) {
+		Com_Printf("R_LoadAnimImages: Texture not defined in anim stage.\n");
+		return -1;
+	}
+
 	strncpy(name, s->image->name, sizeof(name));
 	j = strlen(name);
 
