@@ -1356,6 +1356,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	const vec2_t northPole = {0.0f, 90.0f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
+	const vec4_t darkBrown = {0.3608f, 0.251f, 0.2f, 1.0f};
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
 	qboolean oneUFOVisible = qfalse;
@@ -1465,6 +1466,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				float angle;
 				float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
+				float weaponRanges[aircraft->maxWeapons];
+				int numWeaponRanges = AIR_GetAircraftWeaponRanges(aircraft->weapons, aircraft->maxWeapons, weaponRanges);
 
 				if (gd.combatZoomedUfo && aircraft->aircraftTarget == gd.combatZoomedUfo) {
 					float distance = MAP_GetDistance(aircraft->pos, gd.combatZoomedUfo->pos);
@@ -1483,9 +1486,18 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 					RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
 
-				/* Draw weapon range if at least one UFO is visible */
-				if (oneUFOVisible && maxRange > 0)
-					MAP_MapDrawEquidistantPoints(node, aircraft->pos, maxRange, red);
+
+				/* Draw all weapon ranges for thi aircraft if at least one UFO is visible */
+				if (oneUFOVisible && numWeaponRanges > 0) {
+					if (gd.combatZoomedUfo) {
+						int idxWeaponRanges;
+						for (idxWeaponRanges = 0; idxWeaponRanges < numWeaponRanges; idxWeaponRanges++) {
+							MAP_MapDrawEquidistantPoints(node, aircraft->pos, weaponRanges[idxWeaponRanges], darkBrown);
+						}
+					} else {
+						MAP_MapDrawEquidistantPoints(node, aircraft->pos, weaponRanges[numWeaponRanges - 1], red);
+					}
+				}
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {

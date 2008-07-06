@@ -1988,6 +1988,51 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
 	return range;
 }
 
+/**
+ * @brief Get the all the unique weapon ranges of this aircraft.
+ * @param[in] slot Pointer to the aircrafts weapon slot list.
+ * @param[in] maxSlot maximum number of weapon slots in aircraft.
+ * @param[out] weaponRanges An array containing a unique list of weapons ranges.
+ * @return Number of unique weapons ranges.
+ */
+int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float *weaponRanges)
+{
+	int idxSlot;
+	int idxAllWeap;
+	float allWeaponRanges[maxSlot];
+	int numAllWeaponRanges = 0;
+	int numUniqueWeaponRanges = 0;
+	
+
+	assert(slot);
+
+	/* We choose the usable weapon to add to the weapons array */
+	for (idxSlot = 0; idxSlot < maxSlot; idxSlot++) {
+		const aircraftSlot_t *weapon = slot + idxSlot;
+		const objDef_t *ammo = weapon->ammo;
+
+		if (!ammo)
+			continue;
+
+		allWeaponRanges[numAllWeaponRanges] = ammo->craftitem.stats[AIR_STATS_WRANGE];
+		numAllWeaponRanges++;
+	}
+
+	if (numAllWeaponRanges > 0) {
+		/* sort the list of all weapon ranges and create an array with only the unique ranges */
+		qsort(allWeaponRanges, numAllWeaponRanges, sizeof(allWeaponRanges[0]), Q_FloatSort);
+		
+		for (idxAllWeap = 0; idxAllWeap < numAllWeaponRanges; idxAllWeap++) {
+			if (allWeaponRanges[idxAllWeap] != weaponRanges[numUniqueWeaponRanges - 1] || idxAllWeap == 0) {
+				weaponRanges[numUniqueWeaponRanges] = allWeaponRanges[idxAllWeap];
+				numUniqueWeaponRanges++;
+			}
+		}
+	}
+
+	return numUniqueWeaponRanges;
+}
+
 
 /**
  * @brief Save callback for savegames

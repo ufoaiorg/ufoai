@@ -226,6 +226,19 @@ const char *COM_EParse (const char **text, const char *errhead, const char *erri
 }
 
 /**
+ * @brief Compare two floats
+ * @param[in] float1 The first float
+ * @param[in] float2 The second float
+ * @return An integer less than, equal to, or greater than zero if float1 is
+ * found, respectively, to be less than,  to match, or be greater than float2
+ * @note sort function pointer for qsort
+ */
+int Q_FloatSort (const void *float1, const void *float2)
+{
+    return (*(const float *)float1 - *(const float *)float2);
+}
+
+/**
  * @brief Compare two strings
  * @param[in] string1 The first string
  * @param[in] string2 The second string
