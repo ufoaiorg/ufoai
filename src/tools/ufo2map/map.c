@@ -489,7 +489,7 @@ static void SetImpliedFlags (side_t *side, const char *tex, const mapbrush_t *br
 	}
 
 	if (strstr(tex, "water")) {
-		side->surfaceFlags |= SURF_WARP;
+/*		side->surfaceFlags |= SURF_WARP;*/
 		side->contentFlags |= CONTENTS_WATER;
 		side->contentFlags |= CONTENTS_PASSABLE;
 		flagsDescription = "SURF_WARP, CONTENTS_WATER and CONTENTS_PASSABLE";
