@@ -91,6 +91,11 @@ typedef struct {
 	int				startTime;	/**< cinematic start timestamp */
 	int				currentFrame;
 
+	int				soundChannels;
+	short *			soundBuffer;
+	size_t			soundBufferPos;
+	size_t			soundBufferSize;
+
 	byte			data[ROQ_MAX_CHUNK_SIZE + ROQ_CHUNK_HEADER_SIZE];
 	byte *			header;
 
@@ -422,34 +427,26 @@ static void CIN_DecodeVideo (const byte *data)
  * @sa CIN_DecodeSoundStereo
  * @sa CIN_DecodeChunk
  */
-static void CIN_DecodeSoundMono (const byte *data)
+static void CIN_DecodeSoundMono (const byte *data, short *samples)
 {
-	short	samples[ROQ_MAX_CHUNK_SIZE];
-	int		prev;
-	int		i;
-
-	prev = cin.chunk.flags;
+	int i;
+	int prev = cin.chunk.flags;
 
 	for (i = 0; i < cin.chunk.size; i++) {
 		prev = (short)(prev + cin_sqrTable[data[i]]);
 		samples[i] = (short)prev;
 	}
-
-	/* Send samples to mixer */
-	S_PlaySoundFromMem(samples, cin.chunk.size, ROQ_SOUND_RATE, 1, 1000 / cin.frameRate);
 }
 
 /**
  * @sa CIN_DecodeSoundMono
  * @sa CIN_DecodeChunk
  */
-static void CIN_DecodeSoundStereo (const byte *data)
+static void CIN_DecodeSoundStereo (const byte *data, short *samples)
 {
-	short	samples[ROQ_MAX_CHUNK_SIZE];
-	int		prevL, prevR;
-	int		i;
-	prevL = (cin.chunk.flags & 0xFF00) << 0;
-	prevR = (cin.chunk.flags & 0x00FF) << 8;
+	int i;
+	int prevL = (cin.chunk.flags & 0xFF00) << 0;
+	int prevR = (cin.chunk.flags & 0x00FF) << 8;
 
 	for (i = 0; i < cin.chunk.size; i += 2) {
 		prevL = (short)(prevL + cin_sqrTable[data[i + 0]]);
@@ -458,9 +455,6 @@ static void CIN_DecodeSoundStereo (const byte *data)
 		samples[i + 0] = (short)prevL;
 		samples[i + 1] = (short)prevR;
 	}
-
-	/* Send samples to mixer */
-	S_PlaySoundFromMem(samples, cin.chunk.size, ROQ_SOUND_RATE, 2, 1000 / cin.frameRate);
 }
 
 /**
@@ -485,7 +479,7 @@ static qboolean CIN_DecodeChunk (void)
 		cin.chunk.flags = LittleShort(*(short *)&cin.header[6]);
 
 		if (cin.chunk.id == ROQ_IDENT || cin.chunk.size > ROQ_MAX_CHUNK_SIZE) {
-			Com_Printf("Invalid chunk\n");
+			Com_Printf("Invalid chunk id during decode: %i\n", cin.chunk.id);
 			cin.replay = qfalse;
 			return qfalse;	/* Invalid chunk */
 		}
@@ -507,13 +501,9 @@ static qboolean CIN_DecodeChunk (void)
 		case ROQ_QUAD_VQ:
 			CIN_DecodeVideo(cin.data);
 			break;
+		/* skip sound here - it's precached */
 		case ROQ_SOUND_MONO:
-			if (!cin.noSound)
-				CIN_DecodeSoundMono(cin.data);
-			break;
 		case ROQ_SOUND_STEREO:
-			if (!cin.noSound)
-				CIN_DecodeSoundStereo(cin.data);
 			break;
 		default:
 			Com_Printf("Invalid chunk id: %i\n", cin.chunk.id);
@@ -599,6 +589,8 @@ void CIN_PlayCinematic (const char *name)
 	/* If already playing a cinematic, stop it */
 	CIN_StopCinematic();
 
+	memset(&cin, 0, sizeof(cin));
+
 	/* Open the file */
 	size = FS_FOpenFile(name, &cin.file);
 	if (!cin.file.f && !cin.file.z) {
@@ -652,6 +644,78 @@ void CIN_PlayCinematic (const char *name)
 	/* Force console off in fullscreen mode - not neccessary in menu playback mode */
 	if (cls.playingCinematic == CIN_STATUS_FULLSCREEN)
 		Con_Close();
+
+	if (!cin.noSound) {
+		short samples[ROQ_MAX_CHUNK_SIZE];
+		const size_t initialSize = ROQ_MAX_CHUNK_SIZE * 100;
+
+		cin.soundBuffer = (short *)Mem_PoolAlloc(initialSize, cl_soundSysPool, CL_TAG_NONE);
+		cin.soundBufferSize = Mem_Size(cin.soundBuffer);
+
+		/* buffer the sound chunks */
+		while (cin.offset <= cin.size) {
+			/* first 8 bytes are the header */
+			cin.chunk.id = LittleShort(*(short *)&cin.header[0]);
+			cin.chunk.size = LittleLong(*(int *)&cin.header[2]);
+			cin.chunk.flags = LittleShort(*(short *)&cin.header[6]);
+
+			if (cin.chunk.id == ROQ_IDENT || cin.chunk.size > ROQ_MAX_CHUNK_SIZE) {
+				Com_Printf("Invalid chunk at sound precaching\n");
+				cin.noSound = qtrue;
+				break;	/* Invalid chunk */
+			}
+
+			/* Read the chunk data and the next chunk header */
+			FS_Read(cin.data, cin.chunk.size + ROQ_CHUNK_HEADER_SIZE, &cin.file);
+			cin.offset += cin.chunk.size + ROQ_CHUNK_HEADER_SIZE;
+
+			cin.header = cin.data + cin.chunk.size;
+
+			switch (cin.chunk.id) {
+			case ROQ_SOUND_MONO:
+				if (cin.soundChannels == 2)
+					Sys_Error("Mixed sound channels in roq file\n");
+				cin.soundChannels = 1;
+				CIN_DecodeSoundMono(cin.data, samples);
+				break;
+			case ROQ_SOUND_STEREO:
+				if (cin.soundChannels == 1)
+					Sys_Error("Mixed sound channels in roq file\n");
+				cin.soundChannels = 2;
+				CIN_DecodeSoundStereo(cin.data, samples);
+				break;
+			case ROQ_QUAD_INFO:
+			case ROQ_QUAD_CODEBOOK:
+			case ROQ_QUAD_VQ:
+				continue;
+			default:
+				Com_Printf("Invalid chunk id at sound precaching: %i\n", cin.chunk.id);
+				continue;
+			}
+			if (cin.soundBufferPos + cin.chunk.size >= cin.soundBufferSize) {
+				cin.soundBuffer = Mem_ReAlloc(cin.soundBuffer, cin.soundBufferSize + ROQ_MAX_CHUNK_SIZE * 10);
+				assert(cin.soundBuffer);
+				cin.soundBufferSize = Mem_Size(cin.soundBuffer);
+			}
+			memcpy(&cin.soundBuffer[cin.soundBufferPos], samples, cin.chunk.size * sizeof(short));
+			cin.soundBufferPos += cin.chunk.size;
+		}
+
+		if (!cin.noSound)
+			/* Send samples to mixer */
+			S_PlaySoundFromMem(cin.soundBuffer, cin.soundBufferPos * sizeof(short), ROQ_SOUND_RATE, cin.soundChannels, -1);
+
+		if (cin.soundBuffer)
+			Mem_Free(cin.soundBuffer);
+
+		/* prepare for video parsing */
+		cin.offset = sizeof(header);
+		FS_Seek(&cin.file, cin.offset, FS_SEEK_SET);
+		/* Read the first chunk header */
+		FS_Read(cin.data, ROQ_CHUNK_HEADER_SIZE, &cin.file);
+		cin.offset += ROQ_CHUNK_HEADER_SIZE;
+		cin.header = cin.data;
+	}
 }
 
 /**

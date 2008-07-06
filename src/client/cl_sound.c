@@ -263,16 +263,14 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 	return mix;
 }
 
-#define WAVE_HEADER_SIZE 44
 /**
  * @brief Loads a buffer from memory into the mixer
  * @param[in] mem 16 byte (short) buffer with data
  */
-void S_PlaySoundFromMem (short* mem, size_t size, int rate, int channel, int ms)
+void S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, int ms)
 {
 	SDL_AudioCVT wavecvt;
 	Mix_Chunk sample;
-	static int memChannel = -1;
 	const int samplesize = 2 * channel;
 
 	if (!sound_started)
@@ -301,13 +299,8 @@ void S_PlaySoundFromMem (short* mem, size_t size, int rate, int channel, int ms)
 	sample.alen = wavecvt.len_cvt;
 	sample.volume = MIX_MAX_VOLUME;
 
-	if (Mix_Playing(memChannel))
-		Mix_HaltChannel(memChannel);
-
-	/** @todo this is a nasty hack - no real mixing is performed and sound quality is still
-	 * very bad with this one */
-	memChannel = Mix_PlayChannelTimed(memChannel, &sample, 1, ms);
-	Mem_Free(sample.abuf);
+	Mix_PlayChannelTimed(-1, &sample, 0, ms);
+	/** @todo Free the channel data after the channel ended - memleak */
 }
 
 /**
@@ -477,7 +470,7 @@ static void S_Play_f (void)
 
 
 /**
- * @sa Call before entering a new level, or after snd_restart
+ * @note Called at precache phase - only load these soundfiles once
  * @sa CL_LoadMedia
  * @sa S_Restart_f
  * @sa CL_RequestNextDownload
