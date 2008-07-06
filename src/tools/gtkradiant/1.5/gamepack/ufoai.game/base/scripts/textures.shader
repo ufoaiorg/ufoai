@@ -42,3 +42,8 @@ textures/tex_material/circle_gray
 {
 	qer_alphafunc gequal 0.5
 }
+
+textures/tex_nature/water
+{
+	qer_trans 0.5
+}
