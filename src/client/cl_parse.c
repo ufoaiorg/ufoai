@@ -1,6 +1,6 @@
 /**
  * @file cl_parse.c
- * @brief Parse a message received from the server.
+ * @brief Parse a message (event) received from the server.
  */
 
 /*
@@ -1722,7 +1722,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
  */
 void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 {
-	char *s;
+	const char *s;
 	int i;
 
 	/* parse the message */

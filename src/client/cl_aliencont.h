@@ -49,7 +49,7 @@ typedef enum {
 
 /** structure of Alien Containment being a member of base_t */
 typedef struct aliensCont_s {
-	teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
+	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
 	int amount_alive;		/**< Amount of live captured aliens. */
 	int amount_dead;		/**< Amount of alien corpses. */
 	technology_t *tech;		/**< Related technology. */
@@ -57,7 +57,7 @@ typedef struct aliensCont_s {
 
 /** alien cargo in aircraft_t, carrying aliens and bodies from a mission to base */
 typedef struct aliensTmp_s {
-	teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
+	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
 	int amount_alive;		/**< Amount of live captured aliens. */
 	int amount_dead;		/**< Amount of alien corpses. */
 } aliensTmp_t;
@@ -70,11 +70,11 @@ void AL_FillInContainment(struct base_s *base);
 const char *AL_AlienTypeToName(int teamDescIdx);
 void AL_CollectingAliens(struct aircraft_s *aircraft);
 void AL_AddAliens(struct aircraft_s *aircraft);
-void AL_RemoveAliens(struct base_s *base, teamDef_t *alienType, int amount, alienCalcType_t action);
+void AL_RemoveAliens(struct base_s *base, const teamDef_t *alienType, int amount, const alienCalcType_t action);
 int AL_GetAlienGlobalIdx(int idx);
 int AL_GetAlienAmount(const teamDef_t *alienType, requirementType_t reqtype, const struct base_s *base);
 void AL_ChangeAliveAlienNumber(struct base_s *base, aliensCont_t *containment, int num);
-qboolean AL_CheckAliveFreeSpace(struct base_s *base, aliensCont_t *containment, int num);
+qboolean AL_CheckAliveFreeSpace(const struct base_s *base, const aliensCont_t *containment, const int num);
 int AL_CountInBase(const struct base_s *base);
 
 /**

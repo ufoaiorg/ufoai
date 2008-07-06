@@ -35,6 +35,8 @@ static const aliensCont_t* aliencontCurrent;		/**< Current selected Alien Contai
 /** @brief First line in aliencont menu. */
 static int alienContFirstEntry;
 
+static void AC_UpdateMenu(const base_t *base);
+
 /**
  * Collecting aliens functions
  */
@@ -56,6 +58,8 @@ void AL_FillInContainment (base_t *base)
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (!csi.teamDef[i].alien)
 			continue;
+		if (counter >= MAX_ALIENCONT_CAP)
+			Sys_Error("Overflow in AL_FillInContainment");
 		containment[counter].teamDef = &csi.teamDef[i];	/* Link to global race index. */
 		containment[counter].amount_alive = 0;
 		containment[counter].amount_dead = 0;
@@ -221,7 +225,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							AL_ChangeAliveAlienNumber(tobase, &(tobase->alienscont[j]), 1);
 						} else {
 							/* Every exceeding alien is killed
-								Display a message only when first one is killed */
+							 * Display a message only when first one is killed */
 							if (!limit) {
 								tobase->capacities[CAP_ALIENS].cur = tobase->capacities[CAP_ALIENS].max;
 								MN_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
@@ -268,7 +272,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 
 /**
  * @brief Removes alien(s) from Alien Containment.
- * @param[in] base Pointer to the base where we will perform action (remove, add, ... aliens).
+ * @param[in,out] base Pointer to the base where we will perform action (remove, add, ... aliens).
  * @param[in] alienType Type of the alien (a teamDef_t pointer)
  * @param[in] amount Amount of aliens to be removed.
  * @param[in] action Type of action (see alienCalcType_t).
@@ -277,7 +281,7 @@ void AL_AddAliens (aircraft_t *aircraft)
  * @note Call with NULL name when no matters what type to remove.
  * @todo integrate this with research system
  */
-void AL_RemoveAliens (base_t *base, teamDef_t *alienType, int amount, alienCalcType_t action)
+void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, const alienCalcType_t action)
 {
 	int j, toremove;
 	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
@@ -379,8 +383,9 @@ void AL_RemoveAliens (base_t *base, teamDef_t *alienType, int amount, alienCalcT
 /**
  * @brief Get index of alien.
  * @param[in] alienType Pointer to alien type.
- * @return Index of alien in alien containment (so < gd.numAliensTD)
- * @note It does NOT return the global team index from csi.teamDef array. That would be alienType->idx
+ * @return Index of alien in alien containment (so less than @c gd.numAliensTD)
+ * @note It does NOT return the global team index from @c csi.teamDef array.
+ * That would be @c alienType->idx
  * @sa RS_AssignTechLinks
  * @sa AL_GetAlienGlobalIdx
  */
@@ -507,12 +512,12 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 /**
  * @brief Check if alive aliens can be added/removed to Alien Containment.
  * @param[in] base Pointer to the base where Alien Cont. should be checked.
- * @param[in] containment Pointer to the containment (may be NULL when adding aliens or
- * if you don't care about alien type of alien you're removing)
+ * @param[in] containment Pointer to the containment (may be @c NULL when adding
+ * aliens or if you don't care about alien type of alien you're removing)
  * @param[in] num Number of alien to be added/removed
  * @return qtrue if action may be performed in base
  */
-qboolean AL_CheckAliveFreeSpace (base_t *base, aliensCont_t *containment, int num)
+qboolean AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *containment, const int num)
 {
 	/* you need Alien Containment and it's dependencies to handle aliens */
 	if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
@@ -646,7 +651,7 @@ static void AC_PrevAC_f (void)
 	const base_t *base;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+	if (!baseCurrent || !curCampaign || !aliencontCurrent)
 		return;
 
 	/* Get previous base */
@@ -687,7 +692,7 @@ static void AC_OpenUFOpedia_f (void)
 	const technology_t *tech;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+	if (!baseCurrent || !curCampaign || !aliencontCurrent)
 		return;
 
 	tech = aliencontCurrent->tech;
@@ -729,7 +734,7 @@ void AC_KillAll (base_t *base)
 	AL_RemoveAliens(base, NULL, 0, AL_KILL);
 
 	/* Reinit menu to display proper values. */
-	Cbuf_AddText("aliencont_init\n");
+	AC_UpdateMenu(base);
 }
 
 /**
@@ -751,10 +756,9 @@ static void AC_KillAll_f (void)
 static void AC_KillOne_f (void)
 {
 	int num, i, step;
-	aliensCont_t *containment;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign)
+	if (!baseCurrent || !curCampaign)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -770,7 +774,7 @@ static void AC_KillOne_f (void)
 	}
 
 	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
-		containment = baseCurrent->alienscont;
+		aliensCont_t *containment = baseCurrent->alienscont;
 		for (i = 0, step = 0; i < gd.numAliensTD; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
 				continue;
@@ -780,12 +784,10 @@ static void AC_KillOne_f (void)
 			}
 			step++;
 		}
-	} else
-		return;
-
-	AL_RemoveAliens(baseCurrent, containment[num].teamDef, 1, AL_KILLONE);
-	/* Reinit menu to display proper values. */
-	Cbuf_AddText("aliencont_init\n");
+		AL_RemoveAliens(baseCurrent, containment[num].teamDef, 1, AL_KILLONE);
+		/* Reinit menu to display proper values. */
+		AC_UpdateMenu(baseCurrent);
+	}
 }
 
 #ifdef DEBUG
@@ -853,7 +855,7 @@ static void AC_AddOne_f (void)
 		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDDEAD);
 	}
 	/* Reinit menu to display proper values. */
-	Cbuf_AddText("aliencont_init\n");
+	AC_UpdateMenu(baseCurrent);
 }
 #endif
 
@@ -865,7 +867,7 @@ static void AC_ResearchAlien_f (void)
 	const technology_t *tech;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+	if (!baseCurrent || !curCampaign || !aliencontCurrent)
 		return;
 
 	tech = aliencontCurrent->tech;
@@ -873,35 +875,18 @@ static void AC_ResearchAlien_f (void)
 		Sys_Error("aliencontCurrent without tech pointer");
 
 	if (!RS_IsResearched_ptr(tech))
-		Cbuf_AddText("mn_push research\n");
+		MN_PushMenu("research");
 }
 
-/**
- * @brief Click function for aliencont menu list.
- * @sa AC_InitStartup
- */
-static void AC_AlienClick_f (void)
+static void AC_AlienClick (const base_t *base, int num)
 {
-	int num;
-	const technology_t *tech;
-
-	if (Cmd_Argc() < 2 || !baseCurrent) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* which item from the list? */
-	num = atoi(Cmd_Argv(1));
-
-	Com_DPrintf(DEBUG_CLIENT, "AC_AlienClick_f: listnumber %i\n", num);
-
 	if (num >= numAliensOnList || num < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "AC_AlienClick_f: max exceeded %i/%i\n", num, numAliensOnList);
+		Com_DPrintf(DEBUG_CLIENT, "AC_AlienClick: max exceeded %i/%i\n", num, numAliensOnList);
 		return;
 	}
 
-	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
-		const aliensCont_t *containment = baseCurrent->alienscont;
+	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
+		const aliensCont_t *containment = base->alienscont;
 		int i, step;
 
 		for (i = 0, step = 0; i < gd.numAliensTD; i++) {
@@ -913,16 +898,35 @@ static void AC_AlienClick_f (void)
 			}
 			step++;
 		}
-	} else
-		return;
 
-	aliencontCurrent = &baseCurrent->alienscont[num];
-	tech = aliencontCurrent->tech;
-	Cvar_Set("mn_al_alienimage", tech->image);
-	assert(aliencontCurrent->teamDef);
-	Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
-	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue));
-	Cvar_SetValue("mn_al_dead", AL_CountForMenu(aliencontCurrent->teamDef->idx, qfalse));
+		aliencontCurrent = &base->alienscont[num];
+		assert(aliencontCurrent->tech);
+		Cvar_Set("mn_al_alienimage", aliencontCurrent->tech->image);
+		assert(aliencontCurrent->teamDef);
+		Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
+		Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue));
+		Cvar_SetValue("mn_al_dead", AL_CountForMenu(aliencontCurrent->teamDef->idx, qfalse));
+	}
+}
+
+/**
+ * @brief Click function for aliencont menu list.
+ * @sa AC_InitStartup
+ */
+static void AC_AlienClick_f (void)
+{
+	int num;
+
+	if (Cmd_Argc() < 2 || !baseCurrent) {
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* which item from the list? */
+	num = atoi(Cmd_Argv(1));
+
+	Com_DPrintf(DEBUG_CLIENT, "AC_AlienClick_f: listnumber %i\n", num);
+	AC_AlienClick(baseCurrent, num);
 }
 
 
@@ -938,20 +942,25 @@ static void AC_AlienClick_f (void)
 /**
  * @brief Updates the alienscont menu.
  */
-static void AC_UpdateMenu (void)
+static void AC_UpdateMenu (const base_t *base)
 {
 	int i, j;
 
-	/* Reset list. */
-	Cbuf_AddText("aliencont_clear\n");
+	Cvar_Set("mn_al_alientype", "");
+	Cvar_Set("mn_al_alienimage", "");
+	Cvar_SetValue("mn_al_dead", 0);
+	Cvar_SetValue("mn_al_alive", 0);
+	Cvar_SetValue("mn_al_capacity", base->capacities[CAP_ALIENS].cur);
+	Cvar_SetValue("mn_al_capacity_max", base->capacities[CAP_ALIENS].max);
 
-	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
-		const aliensCont_t *containment = baseCurrent->alienscont;
-		const technology_t* tech;
+	/* Reset list. */
+	Cmd_ExecuteString("aliencont_clear\n"); /* confunc */
+	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
+		const aliensCont_t *containment = base->alienscont;
 		for (i = 0, j = 0; i < gd.numAliensTD; i++) {
 			if ((j >= alienContFirstEntry) && (j < AC_MENU_MAX_ENTRIES)) {
 				if (containment[i].teamDef) {
-					tech = containment[i].tech;
+					const technology_t *tech = containment[i].tech;
 					if (!tech) {
 						Com_Printf("AC_UpdateMenu: Tech entry for containment %i not set!\n", i);
 						/* to let the click function still work */
@@ -967,9 +976,9 @@ static void AC_UpdateMenu (void)
 						} else {
 							Cvar_Set(va("mn_ac_statusstr%i", j), _("Needs autopsy!"));
 							if (!containment[i].amount_dead) {
-								Cbuf_AddText(va("aliencontkill%i\n", j));
+								Cmd_ExecuteString(va("aliencontkill%i\n", j)); /* confunc */
 							} else {
-								Cbuf_AddText(va("aliencontneedautopsy%i\n", j));
+								Cmd_ExecuteString(va("aliencontneedautopsy%i\n", j)); /* confunc */
 							}
 						}
 						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overalltime) * 100);
@@ -995,8 +1004,9 @@ static void AC_UpdateMenu (void)
 			Cvar_SetValue(va("mn_ac_progress%i", j), 0);
 		}
 	}
+
 	/** @todo Select the containment we (maybe) just clicked again */
-	Cbuf_AddText("aliencont_click 0\n");
+	AC_AlienClick(base, 0);
 }
 
 
@@ -1015,14 +1025,7 @@ static void AC_Init_f (void)
 		return;
 	}
 
-	Cvar_Set("mn_al_alientype", "");
-	Cvar_Set("mn_al_alienimage", "");
-	Cvar_SetValue("mn_al_dead", 0);
-	Cvar_SetValue("mn_al_alive", 0);
-	Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].cur);
-	Cvar_SetValue("mn_al_capacity_max", baseCurrent->capacities[CAP_ALIENS].max);
-
-	AC_UpdateMenu();
+	AC_UpdateMenu(baseCurrent);
 }
 
 /**
@@ -1036,7 +1039,7 @@ static void AC_ListUp_f (void)
 	if (alienContFirstEntry >= AC_MENU_LINE_ENTRIES)
 		alienContFirstEntry -= AC_MENU_LINE_ENTRIES;
 
-	AC_UpdateMenu();
+	AC_UpdateMenu(baseCurrent);
 }
 
 /**
@@ -1050,7 +1053,7 @@ static void AC_ListDown_f (void)
 	if (alienContFirstEntry + AC_MENU_MAX_ENTRIES < numAliensOnList)
 		alienContFirstEntry += AC_MENU_LINE_ENTRIES;
 
-	AC_UpdateMenu();
+	AC_UpdateMenu(baseCurrent);
 }
 
 /**

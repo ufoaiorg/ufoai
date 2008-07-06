@@ -29,7 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 
 game_export_t *ge;
+/** this is true when there was an event - and false if the event reached the end */
 static qboolean pfe_pending = qfalse;
+/** player mask of the current event */
 static int pfe_mask = 0;
 static struct dbuffer *pfe_msg = NULL;
 struct dbuffer *sv_msg = NULL;
@@ -136,9 +138,9 @@ static void SV_Configstring (int index, const char *val)
 	if (!val)
 		val = "";
 
-	/* change the string in sv */
-	/* there may be overflows in i==CS_TILES - but thats ok */
-	/* see definition of configstrings and MAX_TILESTRINGS */
+	/* change the string in sv
+	 * there may be overflows in i==CS_TILES - but thats ok
+	 * see definition of configstrings and MAX_TILESTRINGS */
 	switch (index) {
 	case CS_TILES:
 	case CS_POSITIONS:

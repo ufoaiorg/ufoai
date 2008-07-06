@@ -282,7 +282,7 @@ uint32_t _Mem_FreePool (struct memPool_s *pool, const char *fileName, const int 
 /**
  * @brief Optionally returns 0 filled memory allocated in a pool with a tag
  */
-void *_Mem_Alloc (size_t size, qboolean zeroFill, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
+void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
 
@@ -336,9 +336,72 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, struct memPool_s *pool, const 
 	return mem->memPointer;
 }
 
+void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int fileLine)
+{
+	memBlock_t *mem;
+	memPool_t *pool;
+	memBlock_t *search;
+	memBlock_t **prev;
+
+	if (!size)
+		Com_Error(ERR_FATAL, "Use Mem_Free instead");
+
+	if (!ptr)
+		Com_Error(ERR_FATAL, "Use Mem_Alloc instead");
+
+	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
+	mem = realloc(mem, size);
+
+	pool = mem->pool;
+
+	/* De-link it */
+	prev = &pool->blocks;
+	for (;;) {
+		search = *prev;
+		if (!search)
+			break;
+
+		if (search == mem) {
+			*prev = search->next;
+			break;
+		}
+		prev = &search->next;
+	}
+
+	/* Link it in to the appropriate pool */
+	mem->next = pool->blocks;
+	pool->blocks = mem;
+
+	/* Add header and round to cacheline */
+	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
+
+	/* counters */
+	pool->byteCount -= mem->size;
+	pool->byteCount += size;
+
+	mem->size = size;
+	mem->memPointer = (void *)(mem + 1);
+	mem->memSize = size - sizeof(memBlock_t) - sizeof(memBlockFoot_t);
+	mem->allocFile = fileName;
+	mem->allocLine = fileLine;
+	mem->footer = (memBlockFoot_t *)((byte *)mem->memPointer + mem->memSize);
+
+	/* Fill in the footer */
+	mem->footer->sentinel = MEM_FOOT_SENTINEL;
+}
+
 /*==============================================================================
 MISC FUNCTIONS
 ==============================================================================*/
+
+/**
+ * @param[in] ptr The ptr to get the allocated size from
+ */
+size_t Mem_Size (const void *ptr)
+{
+	const memBlock_t *mem = (const memBlock_t *)((const byte *)ptr - sizeof(memBlock_t));
+	return mem->size;
+}
 
 /**
  * @brief Saves a string to client hunk

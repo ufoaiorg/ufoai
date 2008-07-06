@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define Mem_AllocExt(size,zeroFill)						_Mem_Alloc((size),(zeroFill),com_genericPool,0,__FILE__,__LINE__)
 #define Mem_PoolAlloc(size,pool,tagNum)					_Mem_Alloc((size),qtrue,(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_PoolAllocExt(size,zeroFill,pool,tagNum)		_Mem_Alloc((size),(zeroFill),(pool),(tagNum),__FILE__,__LINE__)
+#define Mem_ReAlloc(ptr,size)							_Mem_ReAlloc((ptr),(size),__FILE__,__LINE__)
 
 #define Mem_StrDup(in)									_Mem_PoolStrDup((in),com_genericPool,0,__FILE__,__LINE__)
 #define Mem_PoolStrDupTo(in,out,pool,tagNum)			_Mem_PoolStrDupTo((in),(out),(pool),(tagNum),__FILE__,__LINE__)
@@ -59,7 +60,9 @@ uint32_t _Mem_Free(void *ptr, const char *fileName, const int fileLine);
 uint32_t _Mem_FreeTag(struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
 uint32_t _Mem_FreePool(struct memPool_s *pool, const char *fileName, const int fileLine);
 void* _Mem_Alloc(size_t size, qboolean zeroFill, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
+void* _Mem_ReAlloc(void *ptr, size_t size, const char *fileName, const int fileLine);
 
+size_t Mem_Size(const void *ptr);
 char* _Mem_PoolStrDupTo(const char *in, char **out, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
 char* _Mem_PoolStrDup(const char *in, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
 uint32_t _Mem_PoolSize(struct memPool_s *pool);

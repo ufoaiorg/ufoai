@@ -63,7 +63,7 @@ static void CL_MultiplayerEnvironment_f (void)
 	baseCurrent = base;
 	cls.missionaircraft = AIR_AircraftGetFromIdx(0);
 	if (!cls.missionaircraft) {
-		Sys_Error("Make sure that you've set sv_maxclients to a value higher than 1");
+		Sys_Error("No aircraft for multiplayer - check the sv_maxclients value");
 	}
 	baseCurrent->aircraftCurrent = cls.missionaircraft;
 }
