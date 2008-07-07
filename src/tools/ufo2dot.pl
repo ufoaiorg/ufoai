@@ -20,7 +20,7 @@
 
 #######################################
 # ufo2dot.pl
-#	Scriot to parse (part) of the *.ufo files for UFO:Alien Invasion.
+#	Script to parse (part) of the *.ufo files for UFO:Alien Invasion.
 #	It could also partly be used for similar Quake-bases scripts
 #	The main logic for parsing is in the parseUfoToken function.
 #
@@ -67,7 +67,7 @@
 # TODO
 #	* Prettify this even more.
 #	* MAJOR Parse all of the items/crafts/buildings/etc... files.
-#	* Check why the svg export has too dark colors (I believe transparenzy is skipped here).
+#	* Check why the svg export has too dark colors (I believe transparency is skipped here).
 #	* Check if we can print "real" research times in some way (e.g. for an average of 10 scientists working on it) - not just the value from the .ufo file.
 #######################################
 
