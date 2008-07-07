@@ -170,7 +170,7 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 	for (; nr-- > 0;) {
 		CL_LoadItem(buf, &item, &container, &x, &y);
 		if (!Com_AddToInventory(i, item, &csi.ids[container], x, y, 1))
-			Com_Printf("Could not add item '%s' to inventory\n", item.t->id);
+			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
 }
 
