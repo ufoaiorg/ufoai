@@ -509,6 +509,11 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 			c = COM_Parse(buffer);
 			s->terrain.ceil = atof(c);
+			if (s->terrain.ceil < s->terrain.floor) {
+				Com_Printf("R_ParseStage: Inverted ceiling / floor values for %s\n",
+					(s->image ? s->image->name : ""));
+				return -1;
+			}
 
 			s->terrain.height = s->terrain.ceil - s->terrain.floor;
 
