@@ -7654,7 +7654,6 @@ static void CP_UFORecoveredSell_f (void)
 			_(nation->name), ufoRecovery.UFOprices[i], CL_GetNationHappinessString(nation));
 	}
 
-
 	if (ufoRecovery.nation)
 		Cvar_Set("mission_recoverynation", _(ufoRecovery.nation->name));
 

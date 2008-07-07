@@ -1151,7 +1151,8 @@ void FinalLightFace (unsigned int facenum)
 	curTile->lightdatasize[config.compile_for_day] += fl->numsamples * 3;
 
 	if (curTile->lightdatasize[config.compile_for_day] > MAX_MAP_LIGHTING)
-		Sys_Error("MAX_MAP_LIGHTING (%i)", curTile->lightdatasize[config.compile_for_day]);
+		Sys_Error("MAX_MAP_LIGHTING (%i exceeded %i) - try to reduce the brush size",
+			curTile->lightdatasize[config.compile_for_day], MAX_MAP_LIGHTING);
 
 	/* set up the triangulation */
 	if (config.numbounce > 0) {
