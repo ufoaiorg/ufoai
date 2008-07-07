@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] ortogonalVector vector perpendicular to the movement of the projectile.
  * @param[in] movement how much each bullet should move toward its target.
  */
+#if 0
 static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogonalVector, float movement)
 {
 	int i;
@@ -50,6 +51,7 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
 		VecToPolar(finalPoint, projectile->bulletPos[i]);
 	}
 }
+#endif
 
 /**
  * @brief Remove a projectile from gd.projectiles
@@ -107,11 +109,14 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t 
 	if (!attackingBase) {
 		assert(attacker);
 		projectile->attackingAircraft = attacker;
-		VectorSet(projectile->pos, attacker->pos[0], attacker->pos[1], 0);
+		VectorSet(projectile->pos[0], attacker->pos[0], attacker->pos[1], 0);
 	} else {
 		projectile->attackingAircraft = NULL;
-		VectorSet(projectile->pos, attackingBase->pos[0], attackingBase->pos[1], 0);
+		VectorSet(projectile->pos[0], attackingBase->pos[0], attackingBase->pos[1], 0);
 	}
+
+	projectile->numProjectiles = 1;
+
 	/* if we are not aiming to a base - we are aiming towards an aircraft */
 	if (!aimedBase) {
 		assert(target);
@@ -127,19 +132,8 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t 
 	projectile->angle = 0.0f;
 	projectile->bullets = qfalse;
 
-	if (weaponSlot->item->craftitem.bullets) {
+	if (weaponSlot->item->craftitem.bullets)
 		projectile->bullets = qtrue;
-
-		projectile->bulletPos[0][0] = projectile->pos[0];
-		projectile->bulletPos[0][1] = projectile->pos[1];
-		
-		#if 0
-		for (i = 0; i < BULLETS_PER_SHOT; i++) {
-			projectile->bulletPos[i][0] = projectile->pos[0] + (frand() - 0.5f) * 2;
-			projectile->bulletPos[i][1] = projectile->pos[1] + (frand() - 0.5f) * 2;
-		}
-		#endif
-	}
 
 	weaponSlot->ammoLeft -= 1;
 
@@ -197,7 +191,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
 	}
 	
 	/* get the distance between the projectile and target */
-	distance = MAP_GetDistance(projectile->pos, newTarget);
+	distance = MAP_GetDistance(projectile->pos[0], newTarget);
 	
 	/* Work out how much the projectile should miss the target by.  We dont want it too close
 	 * or too far from the original target. 
@@ -504,10 +498,10 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *pr
 
 	if (!projectile->aimedAircraft)
 		/* the target is idle, its position is in idleTarget*/
-		distance = MAP_GetDistance(projectile->idleTarget, projectile->pos);
+		distance = MAP_GetDistance(projectile->idleTarget, projectile->pos[0]);
 	else {
 		/* the target is moving, pointer to the other aircraft is aimedAircraft */
-		distance = MAP_GetDistance(projectile->aimedAircraft->pos, projectile->pos);
+		distance = MAP_GetDistance(projectile->aimedAircraft->pos, projectile->pos[0]);
 	}
 
 	/* projectile reaches its target */
@@ -737,22 +731,19 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 		} else {
 			/* missile is moving towards its target */
 			if (projectile->aimedAircraft) {
-				AIRFIGHT_GetNextPointInPath(&movement, projectile->pos, projectile->aimedAircraft->pos, &angle, finalPoint, ortogonalVector);
+				AIRFIGHT_GetNextPointInPath(&movement, projectile->pos[0], projectile->aimedAircraft->pos, &angle, finalPoint, ortogonalVector);
 				AIRFIGHT_GetNextPointInPath(&movement, finalPoint, projectile->aimedAircraft->pos, &angle, projectedPoint, ortogonalVector);
 			} else {
-				AIRFIGHT_GetNextPointInPath(&movement, projectile->pos, projectile->idleTarget, &angle, finalPoint, ortogonalVector);
+				AIRFIGHT_GetNextPointInPath(&movement, projectile->pos[0], projectile->idleTarget, &angle, finalPoint, ortogonalVector);
 				AIRFIGHT_GetNextPointInPath(&movement, finalPoint, projectile->idleTarget, &angle, projectedPoint, ortogonalVector);
 			}
 
 			/* udpate angle of the projectile */
 			projectile->angle = angle;
-			VectorCopy(finalPoint, projectile->pos);
-			VectorCopy(projectedPoint, projectile->projectedPos);
-
-			/* Update position of bullets if needed */
-			if (projectile->bullets)
-				AIRFIGHT_RunBullets(projectile, ortogonalVector, movement);
+			VectorCopy(finalPoint, projectile->pos[0]);
+			VectorCopy(projectedPoint, projectile->projectedPos[0]);
 		}
+
 	}
 }
 

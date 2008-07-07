@@ -101,7 +101,7 @@ typedef enum {
 	PRE_MAXREC,	/* #define MAX_RECOVERIES */
 	PRE_MAXTRA, /* #define MAX_TRANSFERS */
 	PRE_MAXOBJ, /* #define MAX_OBJDEFS */
-	PRE_MAXBUL, /* #define BULLETS_PER_SHOT */
+	PRE_MAXMPR, /* #define MAX_MULTIPLE_PROJECTILES */
 	PRE_MBUITY, /* MAX_BUILDING_TYPE in buildingType_t */
 	PRE_MAXALB,	/* #define MAX_ALIEN_BASES */
 	PRE_MAXCAT, /* INTERESTCATEGORY_MAX in interestCategory_t */

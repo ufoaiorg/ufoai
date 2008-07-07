@@ -555,8 +555,13 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 		} else {
 			VectorSet(angles, theta, 180, 0);
 		}
-		/* Set zoom */
-		zoom = 0.4f;
+		/* Set zoomed scale of markers.  @todo: the model for missile_tr20 is too small.
+		 * I have hard coded these values as a quick fix, but a better way to vary
+		 * the zoom scale needs to be worked out. */
+		if (Q_strcmp(model, "missile_tr20") == 0)
+			zoom = 0.8f;
+		else
+			zoom = 0.4f;
 
 		/* Draw */
 		R_Draw3DMapMarkers(angles, zoom, screenPos, model, skin);
@@ -1325,18 +1330,13 @@ static void MAP_SmoothTranslate (void)
  * @param[in] projectile Projectile pointer (make sure that this is a bullet projectile)
  * @sa MAP_DrawMap
  */
-static void MAP_DrawBullets (const menuNode_t* node, const aircraftProjectile_t *projectile)
+static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
 {
-	int k;
 	int x, y;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 
-	assert(projectile->bullets);
-
-	for (k = 0; k < BULLETS_PER_SHOT; k++) {
-		if (MAP_AllMapToScreen(node, projectile->bulletPos[k], &x, &y, NULL))
-			R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
-	}
+	if (MAP_AllMapToScreen(node, pos, &x, &y, NULL))
+		R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
 }
 
 #define SELECT_CIRCLE_RADIUS	1.5f + 3.0f / ccs.zoom
@@ -1652,26 +1652,26 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		if (projectile->hasMoved) {
 			projectile->hasMoved = qfalse;
-			VectorCopy(projectile->pos, drawPos);
+			VectorCopy(projectile->pos[0], drawPos);
 		} else {
 			if (maxInterpolationPoints > 2 && projectile->numInterpolationPoints < maxInterpolationPoints) {
 				/* If a new point hasn't been given and there is at least 3 points need to be filled in then
 				 * use linear interpolation to draw the points until a new projectile point is provided.
 				 * The reason you need at least 3 points is that acceptable results can be achieved with 2 or less
 				 * gaps in points so dont add the overhead of interpolation. */
-				const float xInterpolStep = (projectile->projectedPos[0] - projectile->pos[0]) / (float)maxInterpolationPoints;
+				const float xInterpolStep = (projectile->projectedPos[0][0] - projectile->pos[0][0]) / (float)maxInterpolationPoints;
 				projectile->numInterpolationPoints += 1;
-				drawPos[0] = projectile->pos[0] + (xInterpolStep * projectile->numInterpolationPoints);
-				LinearInterpolation(projectile->pos, projectile->projectedPos, drawPos[0], drawPos[1]);
+				drawPos[0] = projectile->pos[0][0] + (xInterpolStep * projectile->numInterpolationPoints);
+				LinearInterpolation(projectile->pos[0], projectile->projectedPos[0], drawPos[0], drawPos[1]);
 			} else {
-				VectorCopy(projectile->pos, drawPos);
+				VectorCopy(projectile->pos[0], drawPos);
 			}
 		}
 
 		if (projectile->bullets)
-			MAP_DrawBullets(node, projectile);
+			MAP_DrawBullets(node, drawPos);
 		else
-			MAP_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, "missile", 0);
+			MAP_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, projectile->aircraftItem->model, 0);
 	}
 
 	if (gd.combatZoomOn && !gd.combatZoomedUfo && closestUfo) {

@@ -2128,7 +2128,8 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	MSG_WriteByte(sb, gd.numProjectiles);
 	for (i = 0; i < gd.numProjectiles; i++) {
 		MSG_WriteString(sb, gd.projectiles[i].aircraftItem->id);
-		MSG_WritePos(sb, gd.projectiles[i].pos);
+		for (j = 0; j < presaveArray[PRE_MAXMPR]; j++)
+			MSG_Write2Pos(sb, gd.projectiles[i].pos[j]);
 		MSG_WritePos(sb, gd.projectiles[i].idleTarget);
 		if (gd.projectiles[i].attackingAircraft) {
 			MSG_WriteByte(sb, gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
@@ -2153,8 +2154,6 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, gd.projectiles[i].time);
 		MSG_WriteFloat(sb, gd.projectiles[i].angle);
 		MSG_WriteByte(sb, gd.projectiles[i].bullets);
-		for (j = 0; j < presaveArray[PRE_MAXBUL]; j++)
-			MSG_Write2Pos(sb, gd.projectiles[i].bulletPos[j]);
 	}
 
 	/* Save recoveries. */
@@ -2322,7 +2321,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		if (tech) {
 			gd.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
 			gd.projectiles[i].idx = i;
-			MSG_ReadPos(sb, gd.projectiles[i].pos);
+			for (j = 0; j < presaveArray[PRE_MAXMPR]; j++)
+				MSG_Read2Pos(sb, gd.projectiles[i].pos[j]);
 			MSG_ReadPos(sb, gd.projectiles[i].idleTarget);
 			tmp_int = MSG_ReadByte(sb);
 			if (tmp_int == 2)
@@ -2346,8 +2346,6 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			gd.projectiles[i].time = MSG_ReadShort(sb);
 			gd.projectiles[i].angle = MSG_ReadFloat(sb);
 			gd.projectiles[i].bullets = MSG_ReadByte(sb);
-			for (j = 0; j < presaveArray[PRE_MAXBUL]; j++)
-				MSG_Read2Pos(sb, gd.projectiles[i].bulletPos[j]);
 		} else
 			Sys_Error("AIR_Load: Could not get technology of projectile %i\n", i);
 	}

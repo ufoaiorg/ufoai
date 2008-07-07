@@ -67,7 +67,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_MAXREC] = MAX_RECOVERIES;	/* #define MAX_RECOVERIES */
 	presaveArray[PRE_MAXTRA] = MAX_TRANSFERS;	/* #define MAX_TRANSFERS */
 	presaveArray[PRE_MAXOBJ] = MAX_OBJDEFS;		/* #define MAX_OBJDEFS */
-	presaveArray[PRE_MAXBUL] = BULLETS_PER_SHOT;/* #define BULLETS_PER_SHOT */
+	presaveArray[PRE_MAXMPR] = MAX_MULTIPLE_PROJECTILES;/* #define MAX_MULTIPLE_PROJECTILES */
 	presaveArray[PRE_MBUITY] = MAX_BUILDING_TYPE;	/* MAX_BUILDING_TYPE in buildingType_t */
 	presaveArray[PRE_MAXALB] = MAX_ALIEN_BASES;		/* #define MAX_ALIEN_BASES */
 	presaveArray[PRE_MAXCAT] = INTERESTCATEGORY_MAX;	/* INTERESTCATEGORY_MAX in interestCategory_t */

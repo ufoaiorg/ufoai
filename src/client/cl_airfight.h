@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_AIRFIGHT_H
 
 #define BULLETS_PER_SHOT	1
+#define MAX_MULTIPLE_PROJECTILES	10
 
 /* Remove attack of base by ufo for 2.2: doesn't match storyline. */
 /* #define UFO_ATTACK_BASES */
@@ -46,8 +47,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct aircraftProjectile_s {
 	const objDef_t *aircraftItem;		/**< Corresponding ammo in the array csi.ods[] */
 	int idx;				/**< self link of the idx in gd.projectiles[] */
-	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
-	vec3_t projectedPos;	/**< Projected position of the projectile (latitude and longitude). */
+	vec3_t pos[MAX_MULTIPLE_PROJECTILES];	/**< array of positions of the projectile (latitude and longitude) */
+	vec3_t projectedPos[MAX_MULTIPLE_PROJECTILES];	/**< Array if projected positions of the projectile (latitude and longitude). */
+	int numProjectiles;      /**< Number of projectile positions used for this projectile. */
 	qboolean hasMoved;       /**< Has the projectile been moved by the CampaignRunProjectiles function */
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
 	vec3_t idleTarget;		/**< target of the projectile
@@ -61,7 +63,6 @@ typedef struct aircraftProjectile_s {
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
 	qboolean bullets;		/**< projectile has active bullets on geoscape */
-	vec2_t bulletPos[BULLETS_PER_SHOT];	/**< bulletPos array (only used if the weapon fires bullets) */
 } aircraftProjectile_t;
 
 void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
