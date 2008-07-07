@@ -280,7 +280,7 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 	/* Build the audio converter and create conversion buffers */
 	if (SDL_BuildAudioCVT(&wavecvt, AUDIO_S16, channel, rate,
 			audio_format, audio_channels, audio_rate) < 0) {
-		return;
+		return -1;
 	}
 
 	wavecvt.len = size & ~(samplesize - 1);
