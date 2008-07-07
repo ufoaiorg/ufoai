@@ -1939,7 +1939,7 @@ static void CL_DumpGlobalDataToFile_f (void)
 	qFILE f;
 
 	memset(&f, 0, sizeof(f));
-	FS_FOpenFileWrite(va("%s/gd.dump", FS_Gamedir()), &f);
+	FS_OpenFileWrite(va("%s/gd.dump", FS_Gamedir()), &f);
 	if (!f.f) {
 		Com_Printf("CL_DumpGlobalDataToFile_f: Error opening dump file for writing");
 		return;
@@ -1947,7 +1947,7 @@ static void CL_DumpGlobalDataToFile_f (void)
 
 	FS_Write(&gd, sizeof(gd), &f);
 
-	FS_FCloseFile(&f);
+	FS_CloseFile(&f);
 }
 #endif /* DEBUG */
 

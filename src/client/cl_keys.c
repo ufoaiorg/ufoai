@@ -819,7 +819,7 @@ void Key_WriteBindings (const char* filename)
 	qFILE f;
 
 	memset(&f, 0, sizeof(f));
-	FS_FOpenFileWrite(va("%s/%s", FS_Gamedir(), filename), &f);
+	FS_OpenFileWrite(va("%s/%s", FS_Gamedir(), filename), &f);
 	if (!f.f) {
 		Com_Printf("Couldn't write %s.\n", filename);
 		return;
@@ -835,7 +835,7 @@ void Key_WriteBindings (const char* filename)
 	for (i = 0; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
-	FS_FCloseFile(&f);
+	FS_CloseFile(&f);
 	Com_Printf("Wrote %s\n", filename);
 }
 

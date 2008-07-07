@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/typedefs.h"
 
 static cvar_t *fs_basedir;
+/** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;
 
 static filelink_t *fs_links;
@@ -43,7 +44,7 @@ static searchpath_t *fs_base_searchpaths;	/* without gamedirs */
 /**
  * @brief Called to find where to write a file (savegames, etc)
  * @note We will use the searchpath that isn't a pack and has highest priority
- * @sa FS_FOpenFileWrite
+ * @sa FS_OpenFileWrite
  */
 const char *FS_Gamedir (void)
 {
@@ -112,11 +113,11 @@ void FS_CreatePath (const char *path)
 
 /**
  * @brief For some reason, other dll's can't just call fclose()
- * on files returned by FS_FOpenFile...
- * @sa FS_FOpenFileWrite
- * @sa FS_FOpenFile
+ * on files returned by FS_OpenFile...
+ * @sa FS_OpenFileWrite
+ * @sa FS_OpenFile
  */
-void FS_FCloseFile (qFILE * f)
+void FS_CloseFile (qFILE * f)
 {
 	if (f->f) {
 		fclose(f->f);
@@ -132,15 +133,16 @@ void FS_FCloseFile (qFILE * f)
 
 /**
  * @brief Finds the file in the search path.
- * @return filesize and an open qFILE *
+ * @param[in] filename
+ * @param[in,out] file The file pointer
+ * @return the filesize or -1 in case of an error
  * @note Used for streaming data out of either a pak file or a seperate file.
- * @sa FS_FOpenFile
+ * @sa FS_OpenFile
  */
-static int FS_FOpenFileSingle (const char *filename, qFILE * file)
+static int FS_OpenFileSingle (const char *filename, qFILE * file)
 {
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
-	pack_t *pak;
 	int i;
 	filelink_t *link;
 
@@ -158,6 +160,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 				fs_openedFiles++;
 				return FS_FileLength(file);
 			}
+			Com_Printf("linked file could not be opened: %s\n", netpath);
 			return -1;
 		}
 
@@ -166,7 +169,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 		/* is the element a pak file? */
 		if (search->pack) {
 			/* look through all the pak file elements */
-			pak = search->pack;
+			pack_t *pak = search->pack;
 			for (i = 0; i < pak->numfiles; i++)
 				/* found it! */
 				if (!Q_strcasecmp(pak->files[i].name, filename)) {
@@ -266,19 +269,19 @@ int FS_Seek (qFILE * f, long offset, int origin)
 
 /**
  * @returns filesize
- * @sa FS_FOpenFileSingle
+ * @sa FS_OpenFileSingle
  * @sa FS_LoadFile
  */
-int FS_FOpenFile (const char *filename, qFILE * file)
+int FS_OpenFile (const char *filename, qFILE * file)
 {
 	int result;
 
 	/* open file */
-	result = FS_FOpenFileSingle(filename, file);
+	result = FS_OpenFileSingle(filename, file);
 
 	/* nothing corresponding found */
 	if (result == -1)
-		Com_DPrintf(DEBUG_ENGINE, "FS_FOpenFile: can't find %s\n", filename);
+		Com_DPrintf(DEBUG_ENGINE, "FS_OpenFile: can't find %s\n", filename);
 
 	return result;
 }
@@ -291,7 +294,7 @@ int FS_FOpenFile (const char *filename, qFILE * file)
  * @note No support for zip file writing (intended)
  * @sa FS_Gamedir()
  */
-void FS_FOpenFileWrite (const char *filename, qFILE *f)
+void FS_OpenFileWrite (const char *filename, qFILE *f)
 {
 	if (f->z)
 		return;
@@ -313,9 +316,9 @@ int FS_CheckFile (const char *filename)
 	int result;
 	qFILE file;
 
-	result = FS_FOpenFileSingle(filename, &file);
+	result = FS_OpenFileSingle(filename, &file);
 	if (result != -1)
-		FS_FCloseFile(&file);
+		FS_CloseFile(&file);
 
 	return result;
 }
@@ -333,7 +336,7 @@ int FS_CheckFile (const char *filename)
  * returned length matches @c len.
  * @note Reads in blocks of 64k.
  * @sa FS_LoadFile
- * @sa FS_FOpenFile
+ * @sa FS_OpenFile
  */
 #ifdef DEBUG
 int FS_ReadDebug (void *buffer, int len, qFILE * f, const char* file, int line)
@@ -403,7 +406,7 @@ int FS_Read (void *buffer, int len, qFILE * f)
  * @param[in] path
  * @return a -1 length means that the file is not present
  * @sa FS_Read
- * @sa FS_FOpenFile
+ * @sa FS_OpenFile
  */
 int FS_LoadFile (const char *path, byte **buffer)
 {
@@ -412,7 +415,7 @@ int FS_LoadFile (const char *path, byte **buffer)
 	int len;
 
 	/* look for it in the filesystem or pack files */
-	len = FS_FOpenFile(path, &h);
+	len = FS_OpenFile(path, &h);
 	if (!h.f && !h.z) {
 		Com_DPrintf(DEBUG_ENGINE, "FS_LoadFile: Could not open %s\n", path);
 		if (buffer)
@@ -421,7 +424,7 @@ int FS_LoadFile (const char *path, byte **buffer)
 	}
 
 	if (!buffer) {
-		FS_FCloseFile(&h);
+		FS_CloseFile(&h);
 		return len;
 	}
 
@@ -434,7 +437,7 @@ int FS_LoadFile (const char *path, byte **buffer)
 	FS_Read(buf, len, &h);
 	buf[len] = 0;
 
-	FS_FCloseFile(&h);
+	FS_CloseFile(&h);
 
 	return len;
 }

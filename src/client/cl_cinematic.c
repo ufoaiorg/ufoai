@@ -95,6 +95,7 @@ typedef struct {
 	short *			soundBuffer;
 	size_t			soundBufferPos;
 	size_t			soundBufferSize;
+	int				soundChannel;	/**< the mixer channel the sound is played on */
 
 	byte			data[ROQ_MAX_CHUNK_SIZE + ROQ_CHUNK_HEADER_SIZE];
 	byte *			header;
@@ -592,7 +593,7 @@ void CIN_PlayCinematic (const char *name)
 	memset(&cin, 0, sizeof(cin));
 
 	/* Open the file */
-	size = FS_FOpenFile(name, &cin.file);
+	size = FS_OpenFile(name, &cin.file);
 	if (!cin.file.f && !cin.file.z) {
 		Com_Printf("Cinematic %s not found\n", name);
 		return;
@@ -607,7 +608,7 @@ void CIN_PlayCinematic (const char *name)
 	chunk.flags = LittleShort(*(short *)&header[6]);
 
 	if (chunk.id != ROQ_IDENT) {
-		FS_FCloseFile(&cin.file);
+		FS_CloseFile(&cin.file);
 		Com_Error(ERR_DROP, "CIN_PlayCinematic: invalid RoQ header");
 	}
 
@@ -694,7 +695,8 @@ void CIN_PlayCinematic (const char *name)
 			}
 			if (cin.soundBufferPos + cin.chunk.size >= cin.soundBufferSize) {
 				cin.soundBuffer = Mem_ReAlloc(cin.soundBuffer, cin.soundBufferSize + ROQ_MAX_CHUNK_SIZE * 10);
-				assert(cin.soundBuffer);
+				if (!cin.soundBuffer)
+					Com_Error(ERR_DROP, "Could not allocate memory for cinematic sound\n");
 				cin.soundBufferSize = Mem_Size(cin.soundBuffer);
 			}
 			memcpy(&cin.soundBuffer[cin.soundBufferPos], samples, cin.chunk.size * sizeof(short));
@@ -704,10 +706,12 @@ void CIN_PlayCinematic (const char *name)
 		/* check whether this roq even has sound data */
 		if (!cin.noSound && cin.soundChannels)
 			/* Send samples to mixer */
-			S_PlaySoundFromMem(cin.soundBuffer, cin.soundBufferPos * sizeof(short), ROQ_SOUND_RATE, cin.soundChannels, -1);
+			cin.soundChannel = S_PlaySoundFromMem(cin.soundBuffer, cin.soundBufferPos * sizeof(short), ROQ_SOUND_RATE, cin.soundChannels, -1);
 
-		if (cin.soundBuffer)
+		if (cin.soundBuffer) {
 			Mem_Free(cin.soundBuffer);
+			cin.soundBuffer = NULL;
+		}
 
 		/* prepare for video parsing */
 		cin.offset = sizeof(header);
@@ -730,9 +734,15 @@ void CIN_StopCinematic (void)
 	cls.playingCinematic = CIN_STATUS_NONE;
 
 	if (cin.file.f || cin.file.z)
-		FS_FCloseFile(&cin.file);
+		FS_CloseFile(&cin.file);
 	else
 		Com_Printf("CIN_StopCinematic: Warning no opened file\n");
+
+	if (!cin.noSound) {
+		/** @todo only stop the cin.soundChannel channel - but don't call
+		 * @c Mix_HaltChannel directly */
+		S_StopAllSounds();
+	}
 
 	if (cin.frameBuffer[0]) {
 		Mem_Free(cin.frameBuffer[0]);

@@ -266,15 +266,16 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 /**
  * @brief Loads a buffer from memory into the mixer
  * @param[in] mem 16 byte (short) buffer with data
+ * @returns the channel the sound is played on or -1 in case of an error
  */
-void S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, int ms)
+int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, int ms)
 {
 	SDL_AudioCVT wavecvt;
 	Mix_Chunk sample;
 	const int samplesize = 2 * channel;
 
 	if (!sound_started)
-		return;
+		return -1;
 
 	/* Build the audio converter and create conversion buffers */
 	if (SDL_BuildAudioCVT(&wavecvt, AUDIO_S16, channel, rate,
@@ -285,13 +286,13 @@ void S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, i
 	wavecvt.len = size & ~(samplesize - 1);
 	wavecvt.buf = (byte *)Mem_PoolAlloc(wavecvt.len * wavecvt.len_mult, cl_soundSysPool, CL_TAG_NONE);
 	if (wavecvt.buf == NULL)
-		return;
+		return -1;
 	memcpy(wavecvt.buf, mem, size);
 
 	/* Run the audio converter */
 	if (SDL_ConvertAudio(&wavecvt) < 0) {
 		Mem_Free(wavecvt.buf);
-		return;
+		return -1;
 	}
 
 	sample.allocated = 0;
@@ -299,8 +300,8 @@ void S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, i
 	sample.alen = wavecvt.len_cvt;
 	sample.volume = MIX_MAX_VOLUME;
 
-	Mix_PlayChannelTimed(-1, &sample, 0, ms);
 	/** @todo Free the channel data after the channel ended - memleak */
+	return Mix_PlayChannelTimed(-1, &sample, 0, ms);
 }
 
 /**

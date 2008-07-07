@@ -42,7 +42,7 @@ extern char *fs_maps[MAX_MAPS];
 extern int fs_numInstalledMaps;
 
 int FS_FileLength(qFILE * f);
-void FS_FOpenFileWrite(const char *filename, qFILE * f);
+void FS_OpenFileWrite(const char *filename, qFILE * f);
 int FS_Seek(qFILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, size_t len, const char *filename);
 int FS_Write(const void *buffer, int len, qFILE * f);
@@ -58,8 +58,8 @@ void FS_SkipBlock(const char **text);
 
 void FS_GetMaps(qboolean reset);
 
-int FS_FOpenFile(const char *filename, qFILE * file);
-void FS_FCloseFile(qFILE * f);
+int FS_OpenFile(const char *filename, qFILE * file);
+void FS_CloseFile(qFILE * f);
 
 qboolean FS_Rename(const char *from, const char *to, qboolean relative);
 void FS_Remove(const char *osPath);

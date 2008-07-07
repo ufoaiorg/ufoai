@@ -142,7 +142,7 @@ void R_ScreenShot_f (void)
 	memset(&f, 0, sizeof(f));
 
 	/* Open it */
-	FS_FOpenFileWrite(checkName, &f);
+	FS_OpenFileWrite(checkName, &f);
 
 	if (!f.f) {
 		Com_Printf("R_ScreenShot_f: Couldn't create file: %s\n", checkName);
@@ -151,7 +151,7 @@ void R_ScreenShot_f (void)
 
 	if (shotNum == 1000) {
 		Com_Printf("R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
-		FS_FCloseFile(&f);
+		FS_CloseFile(&f);
 		return;
 	}
 
@@ -159,7 +159,7 @@ void R_ScreenShot_f (void)
 	buffer = Mem_PoolAlloc(viddef.width * viddef.height * 3, vid_imagePool, 0);
 	if (!buffer) {
 		Com_Printf("R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", viddef.width * viddef.height * 3);
-		FS_FCloseFile(&f);
+		FS_CloseFile(&f);
 		return;
 	}
 
@@ -187,7 +187,7 @@ void R_ScreenShot_f (void)
 	}
 
 	/* Finish */
-	FS_FCloseFile(&f);
+	FS_CloseFile(&f);
 	Mem_Free(buffer);
 
 	Com_Printf("Wrote %s\n", checkName);

@@ -277,7 +277,7 @@ char *Com_MD5File (const char *fn, int length)
 	int r = 0;
 	int total = 0;
 
-	filelen = FS_FOpenFile(fn, &f);
+	filelen = FS_OpenFile(fn, &f);
 	if (filelen < 1)
 		return final;
 
@@ -297,7 +297,7 @@ char *Com_MD5File (const char *fn, int length)
 		if (r < sizeof(buffer) || total >= length)
 			break;
 	}
-	FS_FCloseFile(&f);
+	FS_CloseFile(&f);
 	MD5Final(&md5, digest);
 
 	final[0] = '\0';
