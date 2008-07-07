@@ -43,7 +43,7 @@ ifeq ($(BUILD_UFO2MAP),1)
 	TARGETS+=$(UFO2MAP_TARGET)
 endif
 
-# Say how to like the exe
+# Say how to link the exe
 $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [MAP] ... linking $(LNKFLAGS) ($(TOOLS_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) $(TOOLS_LIBS) $(LNKFLAGS)
