@@ -440,8 +440,11 @@ static qboolean MakeBrushWindings (mapbrush_t *brush)
 	for (i = 0; i < 3; i++) {
 		if (brush->mins[0] < -MAX_WORLD_WIDTH || brush->maxs[0] > MAX_WORLD_WIDTH)
 			Com_Printf("entity %i, brush %i: bounds out of world range\n", brush->entitynum, brush->brushnum);
-		if (brush->mins[0] > MAX_WORLD_WIDTH || brush->maxs[0] < -MAX_WORLD_WIDTH)
+		if (brush->mins[0] > MAX_WORLD_WIDTH || brush->maxs[0] < -MAX_WORLD_WIDTH) {
 			Com_Printf("entity %i, brush %i: no visible sides on brush\n", brush->entitynum, brush->brushnum);
+			VectorClear(brush->mins);
+			VectorClear(brush->maxs);
+		}
 	}
 
 	return qtrue;
