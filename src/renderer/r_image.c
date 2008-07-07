@@ -1468,11 +1468,11 @@ void R_CreateRadarOverlay (void)
  */
 void R_InitializeRadarOverlay (qboolean source)
 {
-	int x, y;
-	const byte unexploredColor[4] = {180, 180, 180, 100}; 	/**< Color of the overlay outside radar range */
-
 	/* Initialize Radar */
 	if (source) {
+		int x, y;
+		const byte unexploredColor[4] = {180, 180, 180, 100}; 	/**< Color of the overlay outside radar range */
+
 		for (y = 0; y < r_radarTexture->height; y++) {
 			for (x = 0; x < r_radarTexture->width; x++) {
 				memcpy(&r_radarSourcePic[4 * (y * r_radarTexture->width + x)], unexploredColor, 4);
