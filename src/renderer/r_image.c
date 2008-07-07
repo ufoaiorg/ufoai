@@ -55,18 +55,16 @@ int gl_filter_max = GL_LINEAR;
  */
 void R_ImageClearMaterials (void)
 {
-	material_t *m;
-	materialStage_t *s, *ss;
 	image_t *image;
 	int i;
 
 	/* clear previously loaded materials */
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
-		m = &image->material;
-		s = m->stages;
+		material_t *m = &image->material;
+		materialStage_t *s = m->stages;
 
 		while (s) {  /* free the stages chain */
-			ss = s->next;
+			materialStage_t *ss = s->next;
 			Mem_Free(s);
 			s = ss;
 		}
