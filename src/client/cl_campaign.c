@@ -1723,7 +1723,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 	/** @todo: when the mission is created, we should select a position where nation exists,
 	 * otherwise suverting a government is meaningless */
 	if (nation)
-		CL_NationSetHappiness(nation, nation->stats[0].happiness * 0.8);
+		NAT_SetHappiness(nation, nation->stats[0].happiness * 0.8);
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
@@ -3273,42 +3273,6 @@ static void CP_SpreadXVI (void)
 }
 
 /**
- * @brief Lower happiness of nations depending on alien activity.
- * @note Daily called
- * @sa CP_BuildBaseGovernmentLeave
- */
-static void CP_UpdateNationHappiness (void)
-{
-	const linkedList_t *list = ccs.missions;
-
-	for (;list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
-		nation_t *nation = MAP_GetNation(mission->pos);
-		/* Some non-water location have no nation */
-		if (nation) {
-			float happinessFactor;
-			switch (mission->stage) {
-			case STAGE_TERROR_MISSION:
-			case STAGE_SUBVERT_GOV:
-				happinessFactor = (4.0f - difficulty->integer) / 40.0f;
-				break;
-			case STAGE_RECON_GROUND:
-			case STAGE_SPREAD_XVI:
-			case STAGE_HARVEST:
-				happinessFactor = (4.0f - difficulty->integer) / 80.0f;
-				break;
-			default:
-				/* mission is not active on earth, skip this mission */
-				continue;
-			}
-
-			CL_NationSetHappiness(nation, nation->stats[0].happiness - happinessFactor);
-			Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, nation->stats[0].happiness);
-		}
-	}
-}
-
-/**
  * @brief Returns the alien XVI tech if the tech was already researched
  */
 technology_t *CP_IsXVIResearched (void)
@@ -3412,27 +3376,6 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 	}
 }
 
-/**
- * @brief Return a nation-pointer by the nations id (nation_t->id) text.
- * @param[in] nationID nation id as defined in (nation_t->id)
- * @return nation_t pointer or NULL if nothing found (=error).
- */
-nation_t *CL_GetNationByID (const char *nationID)
-{
-	int i;
-
-	for (i = 0; i < gd.numNations; i++) {
-		nation_t *nation = &gd.nations[i];
-		if (!Q_strcmp(nation->id, nationID))
-			return nation;
-	}
-
-	Com_Printf("CL_GetNationByID: Could not find nation '%s'\n", nationID);
-
-	/* No matching nation found - ERROR */
-	return NULL;
-}
-
 /* Initial fraction of the population in the country where a mission has been lost / won */
 #define XVI_LOST_START_PERCENTAGE	0.20f
 #define XVI_WON_START_PERCENTAGE	0.05f
@@ -3486,7 +3429,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		}
 
 		/* update happiness */
-		CL_NationSetHappiness(nation, nation->stats[0].happiness + delta_happiness);
+		NAT_SetHappiness(nation, nation->stats[0].happiness + delta_happiness);
 	}
 	if (!is_on_Earth)
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->id, ccs.battleParameters.nation ? ccs.battleParameters.nation->id : "no nation");
@@ -3921,79 +3864,6 @@ void CL_SetGameTime (int gameLapseValue)
 	CL_UpdateTime();
 }
 
-
-/* =========================================================== */
-
-/**
- * @brief Translates the nation happiness float value to a string
- * @param[in] nation
- * @return Translated happiness string
- * @note happiness is between 0 and 1.0
- */
-const char* CL_GetNationHappinessString (const nation_t* nation)
-{
-	if (nation->stats[0].happiness < 0.015)
-		return _("Giving up");
-	else if (nation->stats[0].happiness < 0.025)
-		return _("Furious");
-	else if (nation->stats[0].happiness < 0.04)
-		return _("Angry");
-	else if (nation->stats[0].happiness < 0.06)
-		return _("Mad");
-	else if (nation->stats[0].happiness < 0.10)
-		return _("Upset");
-	else if (nation->stats[0].happiness < 0.20)
-		return _("Tolerant");
-	else if (nation->stats[0].happiness < 0.30)
-		return _("Neutral");
-	else if (nation->stats[0].happiness < 0.50)
-		return _("Content");
-	else if (nation->stats[0].happiness < 0.70)
-		return _("Pleased");
-	else if (nation->stats[0].happiness < 0.95)
-		return _("Happy");
-	else
-		return _("Exuberant");
-}
-
-/**
- * @brief Updates the nation happiness
- * @param[in] nation The nation to update the happiness for
- * @param[in] happiness The new happiness value to set for the given nation
- */
-void CL_NationSetHappiness (nation_t *nation, const float happiness)
-{
-	const char *oldString = CL_GetNationHappinessString(nation);
-	const char *newString;
-
-	nation->stats[0].happiness = happiness;
-
-	if (nation->stats[0].happiness < 0.0f)
-		nation->stats[0].happiness = 0.0f;
-	else if (nation->stats[0].happiness > 1.0f)
-		nation->stats[0].happiness = 1.0f;
-
-	newString = CL_GetNationHappinessString(nation);
-	if (oldString != newString) {
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
-			_("Nation %s changed happiness from %s to %s"), _(nation->name), oldString, newString);
-		MN_AddNewMessage(_("Nation changed happiness"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-	}
-}
-
-/**
- * @brief Get the actual funding of a nation
- * @param[in] nation Pointer to the nation
- * @param[in] month idx of the month -- 0 for current month (sa nation_t)
- * @return actual funding of a nation
- * @sa CL_NationsMaxFunding
- */
-static int CL_GetNationFunding (const nation_t* const nation, int month)
-{
-	return nation->maxFunding * nation->stats[month].happiness;
-}
-
-
 /**
  * @brief Update the nation data from all parsed nation each month
  * @note give us nation support by:
@@ -4008,9 +3878,7 @@ static void CL_HandleBudget (void)
 {
 	int i, j;
 	char message[1024];
-	int funding;
 	int cost;
-	nation_t *nation;
 	int initial_credits = ccs.credits;
 	int new_scientists, new_soldiers, new_workers;
 
@@ -4019,8 +3887,8 @@ static void CL_HandleBudget (void)
 	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qtrue);
 
 	for (i = 0; i < gd.numNations; i++) {
-		nation = &gd.nations[i];
-		funding = CL_GetNationFunding(nation, 0);
+		nation_t *nation = &gd.nations[i];
+		const int funding = NAT_GetFunding(nation, 0);
 		CL_UpdateCredits(ccs.credits + funding);
 
 		new_scientists = new_soldiers = new_workers = 0;
@@ -4051,7 +3919,7 @@ static void CL_HandleBudget (void)
 					new_scientists, ngettext("scientist", "scientists", new_scientists),
 					new_soldiers, ngettext("soldier", "soldiers", new_soldiers),
 					new_workers, ngettext("worker", "workers", new_workers),
-					_(nation->name), CL_GetNationHappinessString(nation));
+					_(nation->name), NAT_GetHappinessString(nation));
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 	}
 
@@ -4299,7 +4167,7 @@ void CL_CampaignRun (void)
 			BDEF_ReloadBattery();
 			CP_SpawnNewMissions();
 			CP_SpreadXVI();
-			CP_UpdateNationHappiness();
+			NAT_UpdateHappinessForAllNations();
 			AB_BaseSearchedByNations();
 			CL_CampaignRunMarket();
 		}
@@ -4398,7 +4266,7 @@ static void CL_StatsUpdate_f (void)
 	pos += (strlen(pos) + 1);
 	mn.menuText[TEXT_STATS_3] = pos;
 	for (i = 0; i < gd.numNations; i++) {
-		Q_strcat(pos, va(_("%s\t%s\n"), _(gd.nations[i].name), CL_GetNationHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		Q_strcat(pos, va(_("%s\t%s\n"), _(gd.nations[i].name), NAT_GetHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs */
@@ -4524,21 +4392,19 @@ static const vec4_t graphColorSelected = {1, 1, 1, 1};
  * @note nation->maxFunding is _not_ the real funding value.
  * @return The maximum funding value.
  * @todo Extend to other values?
- * @sa CL_GetNationFunding
+ * @sa NAT_GetFunding
  */
 static int CL_NationsMaxFunding (void)
 {
-	nation_t *nation;
 	int m, n;
-	int funding;
 	int max = 0;
 
 	for (n = 0; n < gd.numNations; n++) {
-		nation = &gd.nations[n];
+		nation_t *nation = &gd.nations[n];
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
-				/** CL_NationSetHappiness(nation, nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
-				funding = CL_GetNationFunding(nation, m);
+				/** NAT_SetHappiness(nation, nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
+				const int funding = NAT_GetFunding(nation, m);
 				if (max < funding)
 					max = funding;
 			} else {
@@ -4560,13 +4426,11 @@ static int selectedNation = 0;
  * @param[in] color If this is -1 draw the line for the current selected nation
  * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
  */
-static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFunding, int color)
+static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, int maxFunding, int color)
 {
 	int width, height, x, y, dx;
 	int m;
-
 	int minFunding = 0;
-	int funding;
 	int ptsNumber = 0;
 
 	if (!nation || !node)
@@ -4587,7 +4451,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (m = 0; m < MONTHS_PER_YEAR; m++) {
 		if (nation->stats[m].inuse) {
-			funding = CL_GetNationFunding(nation, m);
+			const int funding = NAT_GetFunding(nation, m);
 			fundingPts[usedFundPtslist][m].x = x + (m * dx);
 			fundingPts[usedFundPtslist][m].y = y - height * (funding - minFunding) / (maxFunding - minFunding);
 			ptsNumber++;
@@ -4644,7 +4508,7 @@ static void CL_NationStatsUpdate_f (void)
 	}
 
 	for (i = 0; i < gd.numNations; i++) {
-		funding = CL_GetNationFunding(&(gd.nations[i]), 0);
+		funding = NAT_GetFunding(&(gd.nations[i]), 0);
 
 		if (selectedNation == i) {
 			Cbuf_AddText(va("nation_marksel%i;",i));
@@ -5433,7 +5297,7 @@ static void CP_ChangeNationHappiness_f (void)
 	nation = MAP_GetNation(selectedMission->pos);
 	assert(nation);
 
-	CL_NationSetHappiness(nation, nation->stats[0].happiness * multiplier);
+	NAT_SetHappiness(nation, nation->stats[0].happiness * multiplier);
 }
 
 /** @brief mission trigger functions */
@@ -6573,97 +6437,6 @@ void CL_ParseCampaign (const char *name, const char **text)
 			CL_ParseSalary(token, text, cp->idx);
 		} else if (!vp->string) {
 			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
-			COM_EParse(text, errhead, name);
-		}
-	} while (*text);
-}
-
-/* =========================================================== */
-
-static const value_t nation_vals[] = {
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(nation_t, name), 0},
-	{"pos", V_POS, offsetof(nation_t, pos), MEMBER_SIZEOF(nation_t, pos)},
-	{"color", V_COLOR, offsetof(nation_t, color), MEMBER_SIZEOF(nation_t, color)},
-	{"funding", V_INT, offsetof(nation_t, maxFunding), MEMBER_SIZEOF(nation_t, maxFunding)},
-	{"happiness", V_FLOAT, offsetof(nation_t, stats[0].happiness), MEMBER_SIZEOF(nation_t, stats[0].happiness)},
-	{"alien_friendly", V_FLOAT, offsetof(nation_t, stats[0].alienFriendly), MEMBER_SIZEOF(nation_t, stats[0].alienFriendly)},
-	{"soldiers", V_INT, offsetof(nation_t, maxSoldiers), MEMBER_SIZEOF(nation_t, maxSoldiers)},
-	{"scientists", V_INT, offsetof(nation_t, maxScientists), MEMBER_SIZEOF(nation_t, maxScientists)},
-
-	{NULL, 0, 0, 0}
-};
-
-/**
- * @brief Parse the nation data from script file
- * @param[in] name Name or ID of the found nation
- * @param[in] text The text of the nation node
- * @sa nation_vals
- * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
- */
-void CL_ParseNations (const char *name, const char **text)
-{
-	const char *errhead = "CL_ParseNations: unexpected end of file (nation ";
-	nation_t *nation;
-	const value_t *vp;
-	const char *token;
-
-	if (gd.numNations >= MAX_NATIONS) {
-		Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
-		return;
-	}
-
-	/* initialize the nation */
-	nation = &gd.nations[gd.numNations];
-	memset(nation, 0, sizeof(*nation));
-	nation->idx = gd.numNations;
-	gd.numNations++;
-
-	Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
-	nation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-
-	nation->stats[0].inuse = qtrue;
-
-	/* get it's body */
-	token = COM_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseNations: nation def \"%s\" without body ignored\n", name);
-		gd.numNations--;
-		return;
-	}
-
-	do {
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		/* check for some standard values */
-		for (vp = nation_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
-				/* found a definition */
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				case V_TRANSLATION_MANUAL_STRING:
-					token++;
-				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-					break;
-				default:
-					if (Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
-						Com_Printf("CL_ParseNations: Wrong size for value %s\n", vp->string);
-					break;
-				}
-				break;
-			}
-
-		if (!vp->string) {
-			Com_Printf("CL_ParseNations: unknown token \"%s\" ignored (nation %s)\n", token, name);
 			COM_EParse(text, errhead, name);
 		}
 	} while (*text);

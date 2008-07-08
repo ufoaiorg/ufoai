@@ -396,10 +396,10 @@ static void CP_UFOSellStart_f (void)
 	for (i = 0; i < gd.numNations; i++) {
 		if (gd.nations + i == nation)
 			/* nation is happy because it got the UFO */
-			CL_NationSetHappiness(nation, nation->stats[0].happiness + 0.3f * (1.0f - nation->stats[0].happiness));
+			NAT_SetHappiness(nation, nation->stats[0].happiness + 0.3f * (1.0f - nation->stats[0].happiness));
 		else
 			/* nation is unhappy because it wanted the UFO */
-			CL_NationSetHappiness(&gd.nations[i], gd.nations[i].stats[0].happiness * .95f);
+			NAT_SetHappiness(&gd.nations[i], gd.nations[i].stats[0].happiness * .95f);
 	}
 
 	/* UFO recovery process is done, disable buttons. */
@@ -449,7 +449,7 @@ static void CP_UFORecoveredSell_f (void)
 		}
 		Com_sprintf(recoveryNationSelectPopup + strlen(recoveryNationSelectPopup),
 			sizeof(recoveryNationSelectPopup), "%s\t\t\t%i\t\t%s\n",
-			_(nation->name), ufoRecovery.UFOprices[i], CL_GetNationHappinessString(nation));
+			_(nation->name), ufoRecovery.UFOprices[i], NAT_GetHappinessString(nation));
 	}
 
 	if (ufoRecovery.nation)

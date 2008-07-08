@@ -59,7 +59,7 @@ typedef struct employee_s {
 	character_t chr;			/**< Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
 	inventory_t inv;			/**< employee inventory */
 	employeeType_t type;		/**< back link to employee type in gd.employees */
-	nation_t *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
+	struct nation_s *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
 	ugv_t *ugv;	/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal emplyoees this is NULL. */
 } employee_t;
 
@@ -72,7 +72,7 @@ extern int employeesInCurrentList;
 extern employee_t *selectedEmployee;
 
 void E_ResetEmployees(void);
-employee_t* E_CreateEmployee(employeeType_t type, nation_t *nation, ugv_t *ugvType);
+employee_t* E_CreateEmployee(employeeType_t type, struct nation_s *nation, ugv_t *ugvType);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);

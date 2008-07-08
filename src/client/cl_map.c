@@ -1599,7 +1599,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 						VectorCopy(gd.combatZoomedUfo->pos, combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
 						combatZoomNumCombatAircraft++;
-						
+
 						/* finds the centroid of all aircraft in combat range who are targeting the zoomed ufo
 						 * and uses this as the point on which to center. */
 						for (combatAirIdx = 0; combatAirIdx < combatZoomNumCombatAircraft; combatAirIdx++) {
@@ -1892,13 +1892,12 @@ void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
 nation_t* MAP_GetNation (const vec2_t pos)
 {
 	int i;
-	nation_t* nation;
 	const byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS);
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
 	for (i = 0; i < gd.numNations; i++) {
-		nation = &gd.nations[i];
+		nation_t *nation = &gd.nations[i];
 		/* compare the first three color values with color value at pos */
 		if (VectorCompare(nation->color, color))
 			return nation;

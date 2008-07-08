@@ -272,47 +272,6 @@ typedef struct market_s {
 } market_t;
 
 /**
- * @brief Detailed information about the nation relationship (currently per month, but could be used elsewhere).
- * @todo Maybe we should also move the "funding" stuff (see nation_t) in here? It is static right now though so i see no reason to do that yet.
- */
-typedef struct nationInfo_s {
-	qboolean	inuse;	/**< Is this entry used? */
-
-	/* Relationship */
-	float happiness;	/**< percentage (0.00 - 1.00) of how the nation appreciates PHALANX. 1.00 is the maximum happiness */
-	int xviInfection;	/**< Increase by one each time a XVI spread is done in this nation. */
-	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0.00 - 1.00)
-				 * @todo Check if this is still needed after XVI factors are in.
-				 * Pro: People can be alien-friendly without being affected after all.
-				 * Con: ?
-				 */
-} nationInfo_t;
-
-/**
- * @brief Nation definition
- */
-typedef struct nation_s {
-	const char *id;		/**< Unique ID of this nation. */
-	const char *name;		/**< Full name of the nation. */
-	int idx;		/**< position in the nations array */
-
-	vec4_t color;		/**< The color this nation uses in the color-coded earth-map */
-	vec2_t pos;		/**< Nation name position on geoscape. */
-
-	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about the history of this nations relationship toward PHALANX and the aliens.
-									 * The first entry [0] is the current month - all following entries are stored older months.
-									 * Combined with the funding info below we can generate an overview over time.
-									 */
-
-	/* Funding */
-	int maxFunding;		/**< How many (monthly) credits. */
-	int maxSoldiers;	/**< How many (monthly) soldiers. */
-	int maxScientists;	/**< How many (monthly) scientists. */
-} nation_t;
-
-#define MAX_NATIONS 8
-
-/**
  * @brief client structure
  * @sa csi_t
  */
@@ -403,7 +362,6 @@ void CL_ParseMission(const char *name, const char **text);
 mission_t* CL_AddMission(const char *name);
 void CP_RemoveLastMission(void);
 void CL_ParseCampaign(const char *name, const char **text);
-void CL_ParseNations(const char *name, const char **text);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameInit(qboolean load);
@@ -413,9 +371,6 @@ void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
 const char* CL_SecondConvert(int second);
-
-nation_t *CL_GetNationByID(const char *nationID);
-void CL_NationSetHappiness(nation_t *nation, const float happiness);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
 qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
@@ -440,7 +395,6 @@ void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 void CP_MissionIsOverByUfo(aircraft_t *ufocraft);
 const char* MAP_GetMissionModel(const mission_t *mission);
 void CP_UFOProceedMission(aircraft_t *ufocraft);
-const char* CL_GetNationHappinessString(const nation_t* nation);
 
 base_t *CP_GetMissionBase(void);
 void CP_SpawnCrashSiteMission(aircraft_t *ufo);

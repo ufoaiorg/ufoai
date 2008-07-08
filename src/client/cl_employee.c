@@ -1527,7 +1527,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			 * We would need a Post-Load init funtion in that case. @sa SAV_GameActionsAfterLoad */
 			string = MSG_ReadString(sb);
 			if (Q_strcmp(string, "NULL"))
-				e->nation = CL_GetNationByID(string);
+				e->nation = NAT_GetNationByID(string);
 
 			/* Read the UGV-Type identifier and get the matching ugv_t pointer. */
 			string = MSG_ReadString(sb);

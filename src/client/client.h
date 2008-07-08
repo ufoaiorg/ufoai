@@ -312,6 +312,7 @@ struct employee_s;
 #include "cl_basemanagement.h"
 #include "cl_employee.h"
 #include "cl_transfer.h"
+#include "cl_nation.h"
 #include "cl_campaign.h"
 #include "cl_inventory.h"
 #include "cl_parse.h"

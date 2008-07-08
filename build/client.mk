@@ -27,6 +27,7 @@ CLIENT_SRCS = \
 	client/cl_market.c \
 	client/cl_map.c \
 	client/cl_mapfightequip.c \
+	client/cl_nation.c \
 	client/cl_popup.c \
 	client/cl_produce.c \
 	client/cl_parse.c \

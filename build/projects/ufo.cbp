@@ -219,6 +219,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_menu.h" />
+		<Unit filename="..\..\src\client\cl_nation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_nation.h" />
 		<Unit filename="..\..\src\client\cl_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
