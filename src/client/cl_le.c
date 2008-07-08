@@ -778,6 +778,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t imp
 
 	VecToAngles(delta, le->ptl->angles);
 	/* direction */
+	/** @todo Why are we not using le->dir here? */
 	le->state = normal;
 	le->fd = fd;
 
@@ -868,7 +869,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, in
 	}
 
 	le->endTime = cl.time + dt;
-	/** @todo What is that - use a constant here! */
+	/** @todo Why are we not using le->dir here? */
 	le->state = 5;				/* direction (0,0,1) */
 	le->fd = fd;
 	assert(fd);
