@@ -664,7 +664,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 						assert(ufocraft);
 						for (j = 0; j < transfer->itemAmount[i]; j++) {
-							if (UFO_ConditionsForStoring(destination, ufocraft)) {
+							if (UR_ConditionsForStoring(destination, ufocraft)) {
 								/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 								baseCurrent->storage.num[i]++; /** @todo Why aren't we using 'destination' here? */
 								if (ufocraft->weight == AIRCRAFT_LARGE)

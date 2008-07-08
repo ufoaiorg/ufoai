@@ -102,7 +102,7 @@ void CL_FreeDynamicEventMail (void)
  * @sa CL_GetEventMail
  * @note The pointers in the original eventmail are not freed - we still need this memory later!!
  * @sa CL_ResetSinglePlayerData
- * @sa CP_UFOSendMail
+ * @sa UR_SendMail
  * @param[in] id eventmail id of the source mail parsed from events.ufo
  * @param[in] newID the new id for the dynamic mail (needed to seperate the new mail
  * from the source mail to let CL_GetEventMail be able to find it afterwards)

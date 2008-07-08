@@ -1,6 +1,7 @@
 /**
  * @file cl_uforecovery.c
  * @brief UFO recovery
+ * @note Functions with UR_*
  */
 
 /*
@@ -51,7 +52,7 @@ Campaign onwin functions
  * @sa CL_EventAddMail_f
  * @sa CL_NewEventMail
  */
-void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
+void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 {
 	int i;
 	components_t *comp;
@@ -66,10 +67,10 @@ void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 		/* take the source mail and create a copy of it */
 		mail = CL_NewEventMail("ufo_crashed_report", va("ufo_crashed_report%i", ccs.date.sec), NULL);
 		if (!mail)
-			Sys_Error("CP_UFOSendMail: ufo_crashed_report wasn't found");
+			Sys_Error("UR_SendMail: ufo_crashed_report wasn't found");
 		/* we need the source mail body here - this may not be NULL */
 		if (!mail->body)
-			Sys_Error("CP_UFOSendMail: ufo_crashed_report has no mail body");
+			Sys_Error("UR_SendMail: ufo_crashed_report has no mail body");
 
 		/* Find components definition. */
 		comp = INV_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
@@ -86,10 +87,10 @@ void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 		/* take the source mail and create a copy of it */
 		mail = CL_NewEventMail("ufo_recovery_report", va("ufo_recovery_report%i", ccs.date.sec), NULL);
 		if (!mail)
-			Sys_Error("CP_UFOSendMail: ufo_recovery_report wasn't found");
+			Sys_Error("UR_SendMail: ufo_recovery_report wasn't found");
 		/* we need the source mail body here - this may not be NULL */
 		if (!mail->body)
-			Sys_Error("CP_UFOSendMail: ufo_recovery_report has no mail body");
+			Sys_Error("UR_SendMail: ufo_recovery_report has no mail body");
 
 		/* Find components definition. */
 		comp = INV_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
@@ -167,7 +168,7 @@ static void CP_UFORecovered_f (void)
 		base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
-		if (UFO_ConditionsForStoring(base, ufocraft)) {
+		if (UR_ConditionsForStoring(base, ufocraft)) {
 			store = qtrue;
 			break;
 		}
@@ -219,7 +220,7 @@ static void CP_UFORecoveredStart_f (void)
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
 		UFO_TypeToName(ufoRecovery.ufoType), base->name);
 	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-	UFO_PrepareRecovery(base);
+	UR_Prepare(base);
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();
@@ -228,7 +229,7 @@ static void CP_UFORecoveredStart_f (void)
 /**
  * @brief Function to store recovered UFO in desired base.
  * @note Command to call this: cp_uforecoverystore.
- * @sa UFO_ConditionsForStoring
+ * @sa UR_ConditionsForStoring
  */
 static void CP_UFORecoveredStore_f (void)
 {
@@ -271,7 +272,7 @@ static void CP_UFORecoveredStore_f (void)
 		base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
-		if (UFO_ConditionsForStoring(base, ufocraft)) {
+		if (UR_ConditionsForStoring(base, ufocraft)) {
 			Q_strcat(recoveryBaseSelectPopup, base->name, sizeof(recoveryBaseSelectPopup));
 			Q_strcat(recoveryBaseSelectPopup, "\n", sizeof(recoveryBaseSelectPopup));
 			ufoRecovery.UFObases[ufoRecovery.baseHasUFOHangarCount++] = base;
@@ -553,7 +554,7 @@ static void CP_UFOCrashed_f (void)
 	missionresults.ufotype = ufocraft->ufotype;
 
 	/* send mail */
-	CP_UFOSendMail(ufocraft, aircraft->homebase);
+	UR_SendMail(ufocraft, aircraft->homebase);
 }
 
 /*==================================
@@ -564,14 +565,14 @@ Backend functions
  * @brief Updates current capacities for UFO hangars in given base.
  * @param[in] base The base where you want the update to be done
  */
-void UFO_UpdateUFOHangarCapForAll (base_t *base)
+void UR_UpdateUFOHangarCapForAll (base_t *base)
 {
 	int i;
 	aircraft_t *ufocraft;
 
 	if (!base) {
 #ifdef DEBUG
-		Com_Printf("UFO_UpdateUFOHangarCapForAll: no base given!\n");
+		Com_Printf("UR_UpdateUFOHangarCapForAll: no base given!\n");
 #endif
 		return;
 	}
@@ -593,7 +594,7 @@ void UFO_UpdateUFOHangarCapForAll (base_t *base)
 		ufocraft = AIR_GetAircraft (csi.ods[i].id);
 
 		if (!ufocraft) {
-			Com_Printf("UFO_UpdateUFOHangarCapForAll: Did not find UFO %s\n", csi.ods[i].id);
+			Com_Printf("UR_UpdateUFOHangarCapForAll: Did not find UFO %s\n", csi.ods[i].id);
 			continue;
 		}
 
@@ -604,16 +605,16 @@ void UFO_UpdateUFOHangarCapForAll (base_t *base)
 			base->capacities[CAP_UFOHANGARS_SMALL].cur += base->storage.num[i];
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "UFO_UpdateUFOHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_UFOHANGARS_SMALL].cur, base->capacities[CAP_UFOHANGARS_LARGE].cur);
+	Com_DPrintf(DEBUG_CLIENT, "UR_UpdateUFOHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_UFOHANGARS_SMALL].cur, base->capacities[CAP_UFOHANGARS_LARGE].cur);
 }
 
 /**
  * @brief Prepares UFO recovery in global recoveries array.
  * @param[in] base Pointer to the base, where the UFO recovery will be made.
- * @sa UFO_Recovery
- * @sa UFO_ConditionsForStoring
+ * @sa UR_ProcessActive
+ * @sa UR_ConditionsForStoring
  */
-void UFO_PrepareRecovery (base_t *base)
+void UR_Prepare (base_t *base)
 {
 	int i;
 	ufoRecoveries_t *recovery = NULL;
@@ -643,7 +644,7 @@ void UFO_PrepareRecovery (base_t *base)
 	}
 
 	if (!recovery) {
-		Com_Printf("UFO_PrepareRecovery: free recovery slot not found.\n");
+		Com_Printf("UR_Prepare: free recovery slot not found.\n");
 		return;
 	}
 	assert(recovery);
@@ -665,38 +666,38 @@ void UFO_PrepareRecovery (base_t *base)
 		if (base->capacities[CAP_UFOHANGARS_LARGE].max > base->capacities[CAP_UFOHANGARS_LARGE].cur)
 			base->capacities[CAP_UFOHANGARS_LARGE].cur++;
 		else
-			/* no more room -- this shouldn't happen as we've used UFO_ConditionsForStoring */
-			Com_Printf("UFO_PrepareRecovery: No room in large UFO hangars to store %s\n", ufocraft->name);
+			/* no more room -- this shouldn't happen as we've used UR_ConditionsForStoring */
+			Com_Printf("UR_Prepare: No room in large UFO hangars to store %s\n", ufocraft->name);
 	} else {
 		/* Small UFOs can only fit in small UFO hangars */
 		if (base->capacities[CAP_UFOHANGARS_SMALL].max > base->capacities[CAP_UFOHANGARS_SMALL].cur)
 			base->capacities[CAP_UFOHANGARS_SMALL].cur++;
 		else
-			/* no more room -- this shouldn't happen as we've used UFO_ConditionsForStoring */
-			Com_Printf("UFO_PrepareRecovery: No room in small UFO hangars to store %s\n", ufocraft->name);
+			/* no more room -- this shouldn't happen as we've used UR_ConditionsForStoring */
+			Com_Printf("UR_Prepare: No room in small UFO hangars to store %s\n", ufocraft->name);
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery: the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
+	Com_DPrintf(DEBUG_CLIENT, "UR_Prepare: the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
 		base->name, recovery->ufoTemplate->id, recovery->event.day);
 
 	/* Send an email */
-	CP_UFOSendMail(ufocraft, base);
+	UR_SendMail(ufocraft, base);
 }
 
 /**
  * @brief Function to process active recoveries.
  * @sa CL_CampaignRun
- * @sa UFO_PrepareRecovery
+ * @sa UR_Prepare
  */
-void UFO_Recovery (void)
+void UR_ProcessActive (void)
 {
 	int i;
-	objDef_t *od;
-	const aircraft_t *ufocraft;
 
 	for (i = 0; i < MAX_RECOVERIES; i++) {
 		ufoRecoveries_t *recovery = &gd.recoveries[i];
 		if (recovery->active && recovery->event.day == ccs.date.day) {
+			objDef_t *od;
+			const aircraft_t *ufocraft;
 			base_t *base = recovery->base;
 			if (!base->founded) {
 				/* Destination base was destroyed meanwhile. */
@@ -729,7 +730,7 @@ void UFO_Recovery (void)
  * @param[in] ufocraft Pointer to ufocraft which we are going to store.
  * @return qtrue if given base can store given ufo.
  */
-qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraft)
+qboolean UR_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraft)
 {
 	assert(base && ufocraft);
 

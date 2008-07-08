@@ -4282,7 +4282,7 @@ void CL_CampaignRun (void)
 			currenthour++;
 			CL_CheckResearchStatus();
 			PR_ProductionRun();
-			UFO_Recovery();
+			UR_ProcessActive();
 			AII_UpdateInstallationDelay();
 			AII_RepairAircraft();
 			TR_TransferCheck();
