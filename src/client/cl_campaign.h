@@ -304,8 +304,8 @@ typedef struct nationInfo_s {
  * @brief Nation definition
  */
 typedef struct nation_s {
-	char *id;		/**< Unique ID of this nation. */
-	char *name;		/**< Full name of the nation. */
+	const char *id;		/**< Unique ID of this nation. */
+	const char *name;		/**< Full name of the nation. */
 	int idx;		/**< position in the nations array */
 
 	vec4_t color;		/**< The color this nation uses in the color-coded earth-map */
