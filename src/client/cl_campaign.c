@@ -4719,41 +4719,6 @@ qboolean STATS_Load (sizebuf_t* sb, void* data)
 }
 
 /**
- * @brief Nation saving callback
- */
-qboolean NA_Save (sizebuf_t* sb, void* data)
-{
-	int i, j;
-	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
-		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			MSG_WriteByte(sb, gd.nations[i].stats[j].inuse);
-			MSG_WriteFloat(sb, gd.nations[i].stats[j].happiness);
-			MSG_WriteLong(sb, gd.nations[i].stats[j].xviInfection);
-			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly);
-		}
-	}
-	return qtrue;
-}
-
-/**
- * @brief Nation loading callback
- */
-qboolean NA_Load (sizebuf_t* sb, void* data)
-{
-	int i, j;
-
-	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
-		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			gd.nations[i].stats[j].inuse = MSG_ReadByte(sb);
-			gd.nations[i].stats[j].happiness = MSG_ReadFloat(sb);
-			gd.nations[i].stats[j].xviInfection = MSG_ReadLong(sb);
-			gd.nations[i].stats[j].alienFriendly = MSG_ReadFloat(sb);
-		}
-	}
-	return qtrue;
-}
-
-/**
  * @brief XVI map saving callback
  * @note Only save transparency
  * @sa Savegame callback
