@@ -548,15 +548,9 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 {
 	int i;
-	item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not reddish; fake item anyway */
+	item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not red-ish; fake item anyway */
 	const vec4_t color = {1, 1, 1, 1};
-
-	if (node->mousefx == C_UNDEFINED)
-		MN_FindContainer(node);
-	if (!node->container) {
-		Com_Printf("no container for drawing this item (%s)...\n", itemName);
-		return;
-	}
+	vec2_t pos;
 
 	for (i = 0; i < csi.numODs; i++)
 		if (!Q_strncmp(itemName, csi.ods[i].id, MAX_VAR))
@@ -566,5 +560,9 @@ void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 
 	item.t = &csi.ods[i];
 
-	MN_DrawItem(node->pos, &item, 0, 0, node->scale, color);
+	/* We position the model of the item ourself (in the middle of the item node). See the "-1, -1" parameter of MN_DrawItem. */
+	Vector2Copy(node->pos, pos);
+	pos[0] += node->size[0] / 2.0;
+	pos[1] += node->size[1] / 2.0;
+	MN_DrawItem(pos, &item, -1, -1, node->scale, color);
 }

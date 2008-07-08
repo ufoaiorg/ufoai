@@ -1214,6 +1214,7 @@ menu research
 		scale	"7 7 7"
 	}
 
+	// @todo do we even use the weaponmodel and ammomodel nodes?
 	item weaponmodel
 	{
 		string	"*cvar mn_researchweapon"

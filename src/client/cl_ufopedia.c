@@ -580,7 +580,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	assert(item->craftitem.type >= 0);
 	assert(item->tech);
 	Cvar_Set("mn_itemname", _(item->tech->name));
-	Cvar_Set("mn_item", item->id);
+	Cvar_Set("mn_item", item->id);		/**< @todo Is this actually _used_ in the ufopedia? */
 	Cvar_Set("mn_upmodel_top", item->tech->mdl);
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
