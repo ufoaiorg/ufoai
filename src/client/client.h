@@ -315,5 +315,6 @@ struct employee_s;
 #include "cl_campaign.h"
 #include "cl_inventory.h"
 #include "cl_parse.h"
+#include "cl_uforecovery.h"
 
 #endif /* CLIENT_CLIENT_H */

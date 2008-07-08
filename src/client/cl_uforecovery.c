@@ -29,7 +29,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_uforecovery.h"
 #include "cl_aircraft.h"
 
-ufoRecovery_t ufoRecovery;
+/** @sa ufoRecoveries_t */
+typedef struct ufoRecovery_s {
+	base_t *base;			/**< selected base for current selected ufo recovery */
+	ufoType_t ufoType;		/**< the ufo type of the current ufo recovery */
+	nation_t *nation;		/**< selected nation to sell to for current ufo recovery */
+	qboolean recoveryDone;	/**< recoveryDone? Then the buttons are disabled */
+	base_t *UFObases[MAX_BASES];	/**< Array of base indexes where we can store UFO. */
+	int baseHasUFOHangarCount;		/**< number of entries in the UFObases array */
+	int UFOprices[MAX_NATIONS];		/**< Array of prices proposed by nation. */
+} ufoRecovery_t;
+
+static ufoRecovery_t ufoRecovery;
 
 /*==================================
 Campaign onwin functions

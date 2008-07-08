@@ -26,9 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_GLOBAL_H
 #define CLIENT_CL_GLOBAL_H
 
-#include "cl_research.h"
-#include "cl_basemanagement.h"
-
 #define MAX_PROJECTILESONGEOSCAPE 32
 
 #define MAX_ALIEN_TEAM_LEVEL	4

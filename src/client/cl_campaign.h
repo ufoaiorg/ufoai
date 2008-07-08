@@ -157,18 +157,6 @@ typedef struct battleParam_s {
 	struct nation_s *nation;		/**< nation where the mission takes place */
 } battleParam_t;
 
-/* UFO Recoveries stuff. */
-#define MAX_RECOVERIES 32
-
-/** @brief Structure of UFO recoveries (all of them).
- * @sa ufoRecovery_t */
-typedef struct ufoRecoveries_s {
-	qboolean active;			/**< True if the recovery is under processing. */
-	base_t *base;				/**< Base where the recovery will be processed. */
-	aircraft_t *ufoTemplate;	/**< Entry of UFO in aircraftTemplates array. */
-	date_t event;				/**< When the process will start (UFO got transported to base). */
-} ufoRecoveries_t;
-
 /** @brief Structure with mission info needed to create results summary at Menu Won. */
 typedef struct missionResults_s {
 	int itemtypes;		/**< Types of items gathered from a mission. */
@@ -323,19 +311,6 @@ typedef struct nation_s {
 } nation_t;
 
 #define MAX_NATIONS 8
-
-/** @sa ufoRecoveries_t */
-typedef struct ufoRecovery_s {
-	base_t *base;			/**< selected base for current selected ufo recovery */
-	ufoType_t ufoType;		/**< the ufo type of the current ufo recovery */
-	nation_t *nation;		/**< selected nation to sell to for current ufo recovery */
-	qboolean recoveryDone;	/**< recoveryDone? Then the buttons are disabled */
-	base_t *UFObases[MAX_BASES];	/**< Array of base indexes where we can store UFO. */
-	int baseHasUFOHangarCount;		/**< number of entries in the UFObases array */
-	int UFOprices[MAX_NATIONS];		/**< Array of prices proposed by nation. */
-} ufoRecovery_t;
-
-extern ufoRecovery_t ufoRecovery;
 
 /**
  * @brief client structure
