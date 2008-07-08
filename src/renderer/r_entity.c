@@ -253,10 +253,9 @@ static void R_DrawFloor (const entity_t * e)
 static void R_DrawEntityEffects (void)
 {
 	int i;
-	entity_t *e;
 
 	for (i = 0; i < r_numEntities; i++) {
-		e = &r_entities[i];
+		const entity_t *e = &r_entities[i];
 
 		if (e->flags <= RF_BOX)
 			continue;

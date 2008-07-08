@@ -566,7 +566,6 @@ le_t* LE_GetClosestActor (const vec3_t origin)
  */
 static void LET_PathMove (le_t * le)
 {
-	byte dv;
 	float frac;
 	int tuCost = 0;
 	vec3_t start, dest, delta;
@@ -583,7 +582,7 @@ static void LET_PathMove (le_t * le)
 
 		if (le->pathPos < le->pathLength) {
 			/* next part */
-			dv = le->path[le->pathPos];
+			const byte dv = le->path[le->pathPos];
 			PosAddDV(le->pos, dv);
 			tuCost = Grid_MoveLength(&clMap, le->pos, qfalse) - Grid_MoveLength(&clMap, le->oldPos, qfalse);
 			if (le->state & STATE_CROUCHED)
@@ -777,13 +776,13 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t imp
 	dist = VectorLength(delta);
 
 	VecToAngles(delta, le->ptl->angles);
+	/* direction */
 	le->state = normal;
 	le->fd = fd;
 
 	if (!fd->speed) {
 		/* infinite speed projectile */
 		ptl_t *ptl;
-		sfx_t *sfx;
 
 		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
@@ -792,14 +791,14 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t imp
 			ptl = NULL;
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
-					sfx = S_RegisterSound(fd->hitBodySound);
+					sfx_t *sfx = S_RegisterSound(fd->hitBodySound);
 					S_StartSound(le->origin, sfx, le->fd->relImpactVolume);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0]) {
-					sfx = S_RegisterSound(fd->impactSound);
+					sfx_t *sfx = S_RegisterSound(fd->impactSound);
 					S_StartSound(le->origin, sfx, le->fd->relImpactVolume);
 				}
 				if (fd->impact[0])
@@ -868,6 +867,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, in
 	}
 
 	le->endTime = cl.time + dt;
+	/** @todo What is that - use a constant here! */
 	le->state = 5;				/* direction (0,0,1) */
 	le->fd = fd;
 	assert(fd);

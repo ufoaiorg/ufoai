@@ -103,6 +103,10 @@ void NET_WriteAngle16 (struct dbuffer *buf, float f)
 	NET_WriteShort(buf, ANGLE2SHORT(f));
 }
 
+/**
+ * @note EV_ACTOR_SHOOT is using WriteDir for writing the normal, but ReadByte
+ * for reading it - keep that in mind when you change something here
+ */
 void NET_WriteDir (struct dbuffer *buf, const vec3_t dir)
 {
 	int i, best;
