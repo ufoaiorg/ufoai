@@ -466,12 +466,13 @@ void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 void CP_MissionIsOverByUfo(aircraft_t *ufocraft);
 const char* MAP_GetMissionModel(const mission_t *mission);
 void CP_UFOProceedMission(aircraft_t *ufocraft);
+const char* CL_GetNationHappinessString(const nation_t* nation);
 
 base_t *CP_GetMissionBase(void);
 void CP_SpawnCrashSiteMission(aircraft_t *ufo);
 struct alienBase_s;
 void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
-void CP_UFOSendMail(const aircraft_t *ufocraft, const base_t *base);
 
 technology_t *CP_IsXVIResearched(void);
+
 #endif /* CLIENT_CL_CAMPAIGN_H */

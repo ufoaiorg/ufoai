@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_tip.h"
 
 typedef struct tipOfTheDay_s {
-	char *tipString;	/**< untranslated tips string from script files */
+	const char *tipString;	/**< untranslated tips string from script files */
 	struct tipOfTheDay_s* next;
 } tipOfTheDay_t;
 

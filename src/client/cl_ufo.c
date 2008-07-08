@@ -647,6 +647,8 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 /**
  * @brief Remove the specified ufo from geoscape
  * @sa CP_MissionRemove
+ * @note Keep in mind that you have to update the ufo pointers after you called
+ * this function
  */
 void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 {
@@ -675,7 +677,7 @@ static void UFO_RemoveFromGeoscape_f (void)
 #endif
 
 /**
- * @brief Check events for ufos : appears or disappears on radars
+ * @brief Check events for UFOs: Appears or disappears on radars
  * @param[in] checkStatusChanged True if you want to check if UFO status changed from visible to non visible (and opposite)
  */
 void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
@@ -738,202 +740,6 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 			}
 		}
 	}
-}
-
-/**
- * @brief Updates current capacities for UFO hangars in given base.
- * @param[in] base The base where you want the update to be done
- */
-void UFO_UpdateUFOHangarCapForAll (base_t *base)
-{
-	int i;
-	aircraft_t *ufocraft;
-
-	if (!base) {
-#ifdef DEBUG
-		Com_Printf("UFO_UpdateUFOHangarCapForAll: no base given!\n");
-#endif
-		return;
-	}
-	assert(base);
-	/* Reset current capacities for UFO hangar. */
-	base->capacities[CAP_UFOHANGARS_LARGE].cur = 0;
-	base->capacities[CAP_UFOHANGARS_SMALL].cur = 0;
-
-	for (i = 0; i < csi.numODs; i++) {
-		/* we are looking for UFO */
-		if (csi.ods[i].tech->type != RS_CRAFT)
-			continue;
-
-		/* do we have UFO of this type ? */
-		if (!base->storage.num[i])
-			continue;
-
-		/* look for corresponding aircraft in global array */
-		ufocraft = AIR_GetAircraft (csi.ods[i].id);
-
-		if (!ufocraft) {
-			Com_Printf("UFO_UpdateUFOHangarCapForAll: Did not find UFO %s\n", csi.ods[i].id);
-			continue;
-		}
-
-		/* Update base capacity. */
-		if (ufocraft->weight == AIRCRAFT_LARGE)
-			base->capacities[CAP_UFOHANGARS_LARGE].cur += base->storage.num[i];
-		else
-			base->capacities[CAP_UFOHANGARS_SMALL].cur += base->storage.num[i];
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "UFO_UpdateUFOHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_UFOHANGARS_SMALL].cur, base->capacities[CAP_UFOHANGARS_LARGE].cur);
-}
-
-/**
- * @brief Prepares UFO recovery in global recoveries array.
- * @param[in] base Pointer to the base, where the UFO recovery will be made.
- * @sa UFO_Recovery
- * @sa UFO_ConditionsForStoring
- */
-void UFO_PrepareRecovery (base_t *base)
-{
-	int i;
-	ufoRecoveries_t *recovery = NULL;
-	aircraft_t *ufocraft = NULL;
-	date_t event;
-
-	assert(base);
-
-	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraftTemplates; i++) {
-		ufocraft = &aircraftTemplates[i];
-		if (ufocraft->type != AIRCRAFT_UFO)
-			continue;
-		if (ufocraft->ufotype == ufoRecovery.ufoType)
-			break;
-	}
-	assert(ufocraft);
-
-	/* Find free uforecovery slot. */
-	for (i = 0; i < MAX_RECOVERIES; i++) {
-		if (!gd.recoveries[i].active) {
-			/* Make sure it is empty here. */
-			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
-			recovery = &gd.recoveries[i];
-			break;
-		}
-	}
-
-	if (!recovery) {
-		Com_Printf("UFO_PrepareRecovery: free recovery slot not found.\n");
-		return;
-	}
-	assert(recovery);
-
-	/* Prepare date of the recovery event - always two days after mission. */
-	event = ccs.date;
-	/* if you change these 2 days to something other you
-	 * have to review all translations, too */
-	event.day += 2;
-	/* Prepare recovery. */
-	recovery->active = qtrue;
-	recovery->base = base;
-	recovery->ufoTemplate = ufocraft->tpl;
-	recovery->event = event;
-
-	/* Update base capacity. */
-	if (ufocraft->weight == AIRCRAFT_LARGE) {
-		/* Large UFOs can only fit in large UFO hangars */
-		if (base->capacities[CAP_UFOHANGARS_LARGE].max > base->capacities[CAP_UFOHANGARS_LARGE].cur)
-			base->capacities[CAP_UFOHANGARS_LARGE].cur++;
-		else
-			/* no more room -- this shouldn't happen as we've used UFO_ConditionsForStoring */
-			Com_Printf("UFO_PrepareRecovery: No room in large UFO hangars to store %s\n", ufocraft->name);
-	} else {
-		/* Small UFOs can only fit in small UFO hangars */
-		if (base->capacities[CAP_UFOHANGARS_SMALL].max > base->capacities[CAP_UFOHANGARS_SMALL].cur)
-			base->capacities[CAP_UFOHANGARS_SMALL].cur++;
-		else
-			/* no more room -- this shouldn't happen as we've used UFO_ConditionsForStoring */
-			Com_Printf("UFO_PrepareRecovery: No room in small UFO hangars to store %s\n", ufocraft->name);
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery: the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
-		base->name, recovery->ufoTemplate->id, recovery->event.day);
-
-	/* Send an email */
-	CP_UFOSendMail(ufocraft, base);
-}
-
-/**
- * @brief Function to process active recoveries.
- * @sa CL_CampaignRun
- * @sa UFO_PrepareRecovery
- */
-void UFO_Recovery (void)
-{
-	int i;
-	objDef_t *od;
-	const aircraft_t *ufocraft;
-
-	for (i = 0; i < MAX_RECOVERIES; i++) {
-		ufoRecoveries_t *recovery = &gd.recoveries[i];
-		if (recovery->active && recovery->event.day == ccs.date.day) {
-			base_t *base = recovery->base;
-			if (!base->founded) {
-				/* Destination base was destroyed meanwhile. */
-				/* UFO is lost, send proper message to the user.*/
-				recovery->active = qfalse;
-				/** @todo: prepare MN_AddNewMessage() here */
-				return;
-			}
-			/* Get ufocraft. */
-			ufocraft = recovery->ufoTemplate;
-			assert(ufocraft);
-			/* Get item. */
-			/* We can do this because aircraft id is the same as dummy item id. */
-			od = INVSH_GetItemByID(ufocraft->id);
-			assert(od);
-
-			/* Process UFO recovery. */
-			/* don't call B_UpdateStorageAndCapacity here - it's a dummy item */
-			base->storage.num[od->idx]++;	/* Add dummy UFO item to enable research topic. */
-			RS_MarkCollected(od->tech);	/* Enable research topic. */
-			/* Reset this recovery. */
-			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
-		}
-	}
-}
-
-/**
- * @brief Checks conditions for storing given ufo in given base.
- * @param[in] base Pointer to the base, where we are going to store UFO.
- * @param[in] ufocraft Pointer to ufocraft which we are going to store.
- * @return qtrue if given base can store given ufo.
- */
-qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraft)
-{
-	assert(base && ufocraft);
-
-	if (ufocraft->weight == AIRCRAFT_LARGE) {
-		/* Large UFOs can only fit large UFO hangars */
-		if (!B_GetBuildingStatus(base, B_UFO_HANGAR))
-			return qfalse;
-
-		/* Check there is still enough room for this UFO */
-		if (base->capacities[CAP_UFOHANGARS_LARGE].max <= base->capacities[CAP_UFOHANGARS_LARGE].cur)
-			return qfalse;
-	} else {
-		/* This is a small UFO, can only fit in small hangar */
-
-		/* There's no small hangar functional */
-		if (!B_GetBuildingStatus(base, B_UFO_SMALL_HANGAR))
-			return qfalse;
-
-		/* Check there is still enough room for this UFO */
-		if (base->capacities[CAP_UFOHANGARS_SMALL].max <= base->capacities[CAP_UFOHANGARS_SMALL].cur)
-			return qfalse;
-	}
-
-	return qtrue;
 }
 
 /**

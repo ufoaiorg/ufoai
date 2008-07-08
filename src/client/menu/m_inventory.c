@@ -560,7 +560,8 @@ void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 
 	item.t = &csi.ods[i];
 
-	/* We position the model of the item ourself (in the middle of the item node). See the "-1, -1" parameter of MN_DrawItem. */
+	/* We position the model of the item ourself (in the middle of the item
+	 * node). See the "-1, -1" parameter of MN_DrawItem. */
 	Vector2Copy(node->pos, pos);
 	pos[0] += node->size[0] / 2.0;
 	pos[1] += node->size[1] / 2.0;

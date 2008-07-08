@@ -284,6 +284,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_ufo.h" />
+		<Unit filename="..\..\src\client\cl_uforecovery.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_uforecovery.h" />
 		<Unit filename="..\..\src\client\cl_ufopedia.c">
 			<Option compilerVar="CC" />
 		</Unit>

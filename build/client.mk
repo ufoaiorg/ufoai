@@ -43,6 +43,7 @@ CLIENT_SRCS = \
 	client/cl_transfer.c \
 	client/cl_tutorials.c \
 	client/cl_ufo.c \
+	client/cl_uforecovery.c \
 	client/cl_ufopedia.c \
 	client/cl_video.c \
 	client/cl_view.c \
