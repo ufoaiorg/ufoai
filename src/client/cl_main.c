@@ -2024,6 +2024,7 @@ static void CL_InitLocal (void)
 	TUT_InitStartup();
 	PTL_InitStartup();
 	CP_InitStartup();
+	UR_InitStartup();
 	BS_InitStartup();
 	SEQ_InitStartup();
 	TEAM_InitStartup();
