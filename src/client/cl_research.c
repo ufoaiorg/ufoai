@@ -737,6 +737,11 @@ static void RS_ResearchDisplayInfo (const base_t* base)
 
 	/* reset cvars */
 	Cvar_Set("mn_research_imagetop", "");
+	Cvar_Set("mn_researchitemname", "");
+	Cvar_Set("mn_researchitem", "");
+	Cvar_Set("mn_researchweapon", "");	/**< @todo Do we even need/use mn_researchweapon and mn_researchammo (now or in the future?) */
+	Cvar_Set("mn_researchammo", "");
+	MN_MenuTextReset(TEXT_STANDARD);
 
 	if (researchListLength <= 0 || researchListPos >= researchListLength)
 		return;
@@ -806,6 +811,18 @@ static void RS_ResearchDisplayInfo (const base_t* base)
 	/* Set image cvar. */
 	if (tech->image)
 		Cvar_Set("mn_research_imagetop", tech->image);
+
+	/** @todo Should we really show the model before it is researched? If not we'd need a pic/model to show a research proposal image.
+	else if (tech->provides)
+		switch (tech->type) {
+			case RS_WEAPON:
+			case RS_ARMOUR:
+				Cvar_Set("mn_researchitem", tech->provides);
+				break;
+			default:
+				break;
+		} * switch *
+	*/
 }
 
 /**
