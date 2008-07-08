@@ -731,6 +731,7 @@ static void LET_Projectile (le_t * le)
 		le->inuse = qfalse;
 		if (le->ref1 && le->ref1[0]) {
 			VectorCopy(le->ptl->s, impact);
+			/** @todo Why are we using le->state here, not le->dir? */
 			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->state], NULL);
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
