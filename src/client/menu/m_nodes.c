@@ -93,7 +93,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	case MN_CONTAINER:
 		if (node->mousefx == C_UNDEFINED)
 			MN_FindContainer(node);
-		if (node->mousefx == NONE)
+		else if (node->mousefx == NONE)
 			return qfalse;
 
 		/* check bounding box */
