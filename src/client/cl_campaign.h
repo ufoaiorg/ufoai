@@ -300,7 +300,6 @@ typedef struct nationInfo_s {
 				 */
 } nationInfo_t;
 
-#define MAX_NATION_BORDERS 64
 /**
  * @brief Nation definition
  */
