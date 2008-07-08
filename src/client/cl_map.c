@@ -391,7 +391,7 @@ const float STANDARD_3D_ZOOM = 40.0f;
 static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 {
 	float zoom;
-	const float MAX_AUTO_ZOOM = 35.0f;			/**< maximum zoom reachable with automatic zoom
+	const float MAX_AUTO_ZOOM = 40.0f;			/**< maximum zoom reachable with automatic zoom
 												 * we can zoom closer than manually, so don't use cl_mapzoomax */
 
 	if (distance >= 90.0f) {
@@ -1616,7 +1616,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 						if (closestInterceptorStatus != AIR_RETURNING && closestInterceptorPos && (gd.combatZoomLevel == COMBAT_ZOOM_FULL || (gd.combatZoomLevel == COMBAT_ZOOM_HALF && closestInterceptorDistance >= weaponZoomRange + 2))) {
 							vec3_t midpoint = {0,0,0};
 							VectorMidpoint(gd.combatZoomedUfo->pos, *closestInterceptorPos, midpoint);
-							MAP_SmoothlyMoveToGeoscapePoint(midpoint, MAP_GetZoomFromDistance(node, closestInterceptorDistance), 0.15);
+							MAP_SmoothlyMoveToGeoscapePoint(midpoint, MAP_GetZoomFromDistance(node, closestInterceptorDistance), 0.4);
 						} else {
 							MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1, 0.15);
 						}
