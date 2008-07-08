@@ -832,8 +832,14 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t imp
 	le->think(le);
 }
 
-
-void LE_AddGrenade (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
+/**
+ * @param[in] fd The grenade fire definition
+ * @param[in] flags bitmask: SF_BODY, SF_IMPACT, SF_BOUNCING, SF_BOUNCED
+ * @param[in] muzzle starting/location vector
+ * @param[in] v0 velocity vector
+ * @param[in] dt delta seconds
+ */
+void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt)
 {
 	le_t *le;
 	vec3_t accel;
@@ -916,7 +922,7 @@ void LET_BrushModel (le_t *le)
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_ParseEntitystring
  */
-void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, int levelflags)
+void LE_AddAmbientSound (const char *sound, const vec3_t origin, float volume, int levelflags)
 {
 	le_t* le;
 	sfx_t* sfx;
