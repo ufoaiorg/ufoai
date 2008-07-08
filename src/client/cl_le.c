@@ -153,12 +153,9 @@ static inline localModel_t *LM_Find (int entnum)
  */
 static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 {
-	le_t *le;
-	int entNum;
-
 	/* get local entity */
-	entNum = NET_ReadShort(msg);
-	le = LE_Get(entNum);
+	const int entNum = NET_ReadShort(msg);
+	le_t *le = LE_Get(entNum);
 	if (!le) {
 		Com_Printf("Can't close the door - le (%p) for entnum %i not found\n", le, entNum);
 		return;
@@ -204,11 +201,8 @@ void LE_DoorOpen (struct dbuffer *msg)
  */
 void LE_Explode (struct dbuffer *msg)
 {
-	int num;
-	le_t *le;
-
-	num = NET_ReadShort(msg);
-	le = LE_Get(num);
+	const int num = NET_ReadShort(msg);
+	le_t *le = LE_Get(num);
 	if (!le)
 		Com_Error(ERR_DROP, "LE_Explode: Could not find le with entnum %i", num);
 
@@ -341,6 +335,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 	qboolean akimbo;
 	char animationIndex;
 	const char *type;
+	size_t length = sizeof(retAnim);
 
 	if (!anim)
 		return "";
@@ -348,8 +343,10 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 	mod = retAnim;
 
 	/* add crouched flag */
-	if (state & STATE_CROUCHED)
+	if (state & STATE_CROUCHED) {
 		*mod++ = 'c';
+		length--;
+	}
 
 	/* determine relevant data */
 	akimbo = qfalse;
@@ -371,17 +368,17 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 	}
 
 	if (!Q_strncmp(anim, "stand", 5) || !Q_strncmp(anim, "walk", 4)) {
-		Q_strncpyz(mod, anim, MAX_VAR);
+		Q_strncpyz(mod, anim, length);
 		mod += strlen(anim);
 		*mod++ = animationIndex;
 		*mod++ = 0;
 	} else {
-		Q_strncpyz(mod, anim, MAX_VAR);
-		Q_strcat(mod, "_", MAX_VAR);
+		Q_strncpyz(mod, anim, length);
+		Q_strcat(mod, "_", length);
 		if (akimbo)
-			Q_strcat(mod, "pistol_d", MAX_VAR);
+			Q_strcat(mod, "pistol_d", length);
 		else
-			Q_strcat(mod, type, MAX_VAR);
+			Q_strcat(mod, type, length);
 	}
 
 	return retAnim;
