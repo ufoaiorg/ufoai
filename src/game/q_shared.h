@@ -44,9 +44,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CURL_STATICLIB
 #include <curl/curl.h>
 
-/* AI is threaded */
-#include <SDL_thread.h>
-
 /* filesystem stuff */
 #ifdef _WIN32
 # include <direct.h>
@@ -313,7 +310,6 @@ typedef struct date_s {
 	int day;	/**< Number of ellapsed days since 1st january of year 0 */
 	int sec;	/**< Number of ellapsed seconds since the begining of current day */
 } date_t;
-
 
 /*
 ==========================================================

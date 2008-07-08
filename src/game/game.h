@@ -225,12 +225,6 @@ typedef struct {
 	/* add commands to the server console as if they were typed in */
 	/* for map changing, etc */
 	void (IMPORT *AddCommandString) (const char *text);
-
-	/* Mutex stuff for threading */
-	SDL_mutex *(IMPORT *CreateMutex) (void);
-	void (IMPORT *DestroyMutex) (SDL_mutex * mutex);
-	int (IMPORT *MutexP) (SDL_mutex * mutex);
-	int (IMPORT *MutexV) (SDL_mutex * mutex);
 } game_import_t;
 
 /** @brief functions exported by the game subsystem */
@@ -280,7 +274,6 @@ typedef struct {
 	int edict_size;
 	int num_edicts;				/**< current number, <= max_edicts */
 	int max_edicts;
-	SDL_mutex *edict_lock; /* Mutex for edicts */
 
 	struct player_s *players;
 	int player_size;
