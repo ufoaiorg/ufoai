@@ -3880,7 +3880,6 @@ static void CL_HandleBudget (void)
 	char message[1024];
 	int cost;
 	int initial_credits = ccs.credits;
-	int new_scientists, new_soldiers, new_workers;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -3889,9 +3888,8 @@ static void CL_HandleBudget (void)
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
 		const int funding = NAT_GetFunding(nation, 0);
+		int new_scientists = 0, new_soldiers = 0, new_workers = 0;
 		CL_UpdateCredits(ccs.credits + funding);
-
-		new_scientists = new_soldiers = new_workers = 0;
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
