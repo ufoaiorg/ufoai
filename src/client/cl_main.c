@@ -2025,6 +2025,7 @@ static void CL_InitLocal (void)
 	PTL_InitStartup();
 	CP_InitStartup();
 	UR_InitStartup();
+	NAT_InitStartup();
 	BS_InitStartup();
 	SEQ_InitStartup();
 	TEAM_InitStartup();

@@ -247,3 +247,266 @@ void CL_ParseNations (const char *name, const char **text)
 		}
 	} while (*text);
 }
+
+/*=====================================
+Menu functions
+=====================================*/
+
+
+static void CP_NationStatsClick_f (void)
+{
+	int num;
+
+	if (!curCampaign)
+		return;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* Which entry in the list? */
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= gd.numNations)
+		return;
+
+	MN_PushMenu("nations");
+	Cbuf_AddText(va("nation_select %i;", num));
+}
+
+static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR]; /* Space for month-lines with 12 points for each nation. */
+static int usedFundPtslist = 0;
+static screenPoint_t colorLinePts[MAX_NATIONS][2]; /* Space for 1 line (2 points) for each nation. */
+static int usedColPtslists = 0;
+
+static screenPoint_t coordAxesPts[3];	/* Space for 2 lines (3 points) */
+
+static const vec4_t graphColors[MAX_NATIONS] = {
+	{1.0, 0.5, 0.5, 1.0},
+	{0.5, 1.0, 0.5, 1.0},
+	{0.5, 0.5, 1.0, 1.0},
+	{1.0, 0.0, 0.0, 1.0},
+	{0.0, 1.0, 0.0, 1.0},
+	{0.0, 0.0, 1.0, 1.0},
+	{1.0, 1.0, 0.0, 1.0},
+	{0.0, 1.0, 1.0, 1.0}
+};
+static const vec4_t graphColorSelected = {1, 1, 1, 1};
+
+/**
+ * @brief Search the maximum (current) funding from all the nations (in all logged months).
+ * @note nation->maxFunding is _not_ the real funding value.
+ * @return The maximum funding value.
+ * @todo Extend to other values?
+ * @sa NAT_GetFunding
+ */
+static int CL_NationsMaxFunding (void)
+{
+	int m, n;
+	int max = 0;
+
+	for (n = 0; n < gd.numNations; n++) {
+		nation_t *nation = &gd.nations[n];
+		for (m = 0; m < MONTHS_PER_YEAR; m++) {
+			if (nation->stats[m].inuse) {
+				/** NAT_SetHappiness(nation, nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
+				const int funding = NAT_GetFunding(nation, m);
+				if (max < funding)
+					max = funding;
+			} else {
+				/* Abort this months-loops */
+				break;
+			}
+		}
+	}
+	return max;
+}
+
+static int selectedNation = 0;
+
+/**
+ * @brief Draws a graph for the funding values over time.
+ * @param[in] nation The nation to draw the graph for.
+ * @param[in] node A pointer to a "linestrip" node that we want to draw in.
+ * @param[in] maxFunding The upper limit of the graph - all values willb e scaled to this one.
+ * @param[in] color If this is -1 draw the line for the current selected nation
+ * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
+ */
+static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, int maxFunding, int color)
+{
+	int width, height, x, y, dx;
+	int m;
+	int minFunding = 0;
+	int ptsNumber = 0;
+
+	if (!nation || !node)
+		return;
+
+	width	= (int)node->size[0];
+	height	= (int)node->size[1];
+	x = node->pos[0];
+	y = node->pos[1];
+	dx = (int)(width / MONTHS_PER_YEAR);
+
+	if (minFunding == maxFunding) {
+		Com_Printf("CL_NationDrawStats: Given maxFunding value is the same as minFunding (min=%i, max=%i) - abort.\n", minFunding, maxFunding);
+		return;
+	}
+
+	/* Generate pointlist. */
+	/** @todo Sort this in reverse? -> Having current month on the right side? */
+	for (m = 0; m < MONTHS_PER_YEAR; m++) {
+		if (nation->stats[m].inuse) {
+			const int funding = NAT_GetFunding(nation, m);
+			fundingPts[usedFundPtslist][m].x = x + (m * dx);
+			fundingPts[usedFundPtslist][m].y = y - height * (funding - minFunding) / (maxFunding - minFunding);
+			ptsNumber++;
+		} else {
+			break;
+		}
+	}
+
+	/* Guarantee displayable data even for only one month */
+	if (ptsNumber == 1) {
+		/* Set the second point haft the distance to the next month to the right - small horiz line. */
+		fundingPts[usedFundPtslist][1].x = fundingPts[usedFundPtslist][0].x + (int)(0.5 * width / MONTHS_PER_YEAR);
+		fundingPts[usedFundPtslist][1].y = fundingPts[usedFundPtslist][0].y;
+		ptsNumber++;
+	}
+
+	/* Break if we reached the max strip number. */
+	if (node->linestrips.numStrips >= MAX_LINESTRIPS - 1)
+		return;
+
+	/* Link graph to node */
+	node->linestrips.pointList[node->linestrips.numStrips] = (int*)fundingPts[usedFundPtslist];
+	node->linestrips.numPoints[node->linestrips.numStrips] = ptsNumber;
+	if (color < 0) {
+		Cvar_Set("mn_nat_symbol", va("nations/%s", gd.nations[selectedNation].id));
+		Vector4Copy(graphColorSelected, node->linestrips.color[node->linestrips.numStrips]);
+	} else {
+		Vector4Copy(graphColors[color], node->linestrips.color[node->linestrips.numStrips]);
+	}
+	node->linestrips.numStrips++;
+
+	usedFundPtslist++;
+}
+
+/**
+ * @brief Shows the current nation list + statistics.
+ * @note See menu_stats.ufo
+ */
+static void CL_NationStatsUpdate_f (void)
+{
+	int i;
+	int funding, maxFunding;
+	menuNode_t *colorNode;
+	menuNode_t *graphNode;
+	const vec4_t colorAxes = {1, 1, 1, 0.5};
+	int dy = 10;
+
+	usedColPtslists = 0;
+
+	colorNode = MN_GetNodeFromCurrentMenu("nation_graph_colors");
+	if (colorNode) {
+		dy = (int)(colorNode->size[1] / MAX_NATIONS);
+		colorNode->linestrips.numStrips = 0;
+	}
+
+	for (i = 0; i < gd.numNations; i++) {
+		funding = NAT_GetFunding(&(gd.nations[i]), 0);
+
+		if (selectedNation == i) {
+			Cbuf_AddText(va("nation_marksel%i;",i));
+		} else {
+			Cbuf_AddText(va("nation_markdesel%i;",i));
+		}
+		Cvar_Set(va("mn_nat_name%i",i), _(gd.nations[i].name));
+		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
+
+		if (colorNode) {
+			colorLinePts[usedColPtslists][0].x = colorNode->pos[0];
+			colorLinePts[usedColPtslists][0].y = colorNode->pos[1] - (int)colorNode->size[1] + dy * i;
+			colorLinePts[usedColPtslists][1].x = colorNode->pos[0] + (int)colorNode->size[0];
+			colorLinePts[usedColPtslists][1].y = colorLinePts[usedColPtslists][0].y;
+
+			colorNode->linestrips.pointList[colorNode->linestrips.numStrips] = (int*)colorLinePts[usedColPtslists];
+			colorNode->linestrips.numPoints[colorNode->linestrips.numStrips] = 2;
+
+			if (i == selectedNation) {
+				Vector4Copy(graphColorSelected, colorNode->linestrips.color[colorNode->linestrips.numStrips]);
+			} else {
+				Vector4Copy(graphColors[i], colorNode->linestrips.color[colorNode->linestrips.numStrips]);
+			}
+
+			usedColPtslists++;
+			colorNode->linestrips.numStrips++;
+		}
+	}
+
+	/* Hide unused nation-entries. */
+	for (i = gd.numNations; i < MAX_NATIONS; i++) {
+		Cbuf_AddText(va("nation_hide%i;",i));
+	}
+
+	/** @todo Display summary of nation info */
+
+	/* Display graph of nations-values so far. */
+	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
+	if (graphNode) {
+		usedFundPtslist = 0;
+		graphNode->linestrips.numStrips = 0;
+
+		/* Generate axes & link to node. */
+		/** @todo Maybe create a margin toward the axes? */
+		coordAxesPts[0].x = graphNode->pos[0];	/* x */
+		coordAxesPts[0].y = graphNode->pos[1] - (int)graphNode->size[1];	/* y - height */
+		coordAxesPts[1].x = graphNode->pos[0];	/* x */
+		coordAxesPts[1].y = graphNode->pos[1];	/* y */
+		coordAxesPts[2].x = graphNode->pos[0] + (int)graphNode->size[0];	/* x + width */
+		coordAxesPts[2].y = graphNode->pos[1];	/* y */
+		graphNode->linestrips.pointList[graphNode->linestrips.numStrips] = (int*)coordAxesPts;
+		graphNode->linestrips.numPoints[graphNode->linestrips.numStrips] = 3;
+		Vector4Copy(colorAxes, graphNode->linestrips.color[graphNode->linestrips.numStrips]);
+		graphNode->linestrips.numStrips++;
+
+		maxFunding = CL_NationsMaxFunding();
+		for (i = 0; i < gd.numNations; i++) {
+			if (i == selectedNation) {
+				CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding, -1);
+			} else {
+				CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding, i);
+			}
+		}
+	}
+}
+
+/**
+ * @brief Select nation and display all relevant information for it.
+ */
+static void CL_NationSelect_f (void)
+{
+	int nat;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <nat_idx>\n", Cmd_Argv(0));
+		return;
+	}
+
+	nat = atoi(Cmd_Argv(1));
+	if (nat < 0 || nat >=  gd.numNations) {
+		Com_Printf("Invalid nation index: %is\n",nat);
+		return;
+	}
+
+	selectedNation = nat;
+	CL_NationStatsUpdate_f();
+}
+
+void NAT_InitStartup (void)
+{
+	Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f, NULL);
+	Cmd_AddCommand("nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics.");
+	Cmd_AddCommand("nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it.");
+
+}

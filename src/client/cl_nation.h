@@ -74,6 +74,8 @@ const char* NAT_GetHappinessString(const nation_t* nation);
 
 void CL_ParseNations(const char *name, const char **text);
 
+void NAT_InitStartup(void);
+
 #define MAX_NATIONS 8
 
 #endif
