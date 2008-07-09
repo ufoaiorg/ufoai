@@ -59,15 +59,15 @@ typedef struct aiActor_s {
  * actor metatable.
  */
 /* Internal functions. */
-static int actorL_register( lua_State *L );
-static int lua_isactor( lua_State *L, int index );
-static aiActor_t* lua_toactor( lua_State *L, int index );
-static aiActor_t* lua_pushactor( lua_State *L, aiActor_t *actor );
+static int actorL_register(lua_State *L);
+static int lua_isactor(lua_State *L, int index);
+static aiActor_t* lua_toactor(lua_State *L, int index);
+static aiActor_t* lua_pushactor(lua_State *L, aiActor_t *actor);
 /* Metatable functions. */
-static int actorL_shoot( lua_State *L );
+static int actorL_shoot(lua_State *L);
 static const luaL_reg actorL_methods[] = {
-	{ "shoot", actorL_shoot },
-	{0,0}
+	{"shoot", actorL_shoot},
+	{0, 0}
 };
 
 
@@ -75,17 +75,17 @@ static const luaL_reg actorL_methods[] = {
  * pos3 metatable.
  */
 /* Internal functions. */
-static int pos3L_register( lua_State *L );
-static int lua_ispos3( lua_State *L, int index );
-static pos3_t* lua_topos3( lua_State *L, int index );
-static pos3_t* lua_pushpos3( lua_State *L, pos3_t *pos );
+static int pos3L_register(lua_State *L);
+static int lua_ispos3(lua_State *L, int index);
+static pos3_t* lua_topos3(lua_State *L, int index);
+static pos3_t* lua_pushpos3(lua_State *L, pos3_t *pos);
 /* Metatable functions. */
-static int pos3L_goto( lua_State *L );
-static int pos3L_face( lua_State *L );
+static int pos3L_goto(lua_State *L);
+static int pos3L_face(lua_State *L);
 static const luaL_reg pos3L_methods[] = {
-	{ "goto", pos3L_goto },
-	{ "face", pos3L_face },
-	{0,0}
+	{"goto", pos3L_goto},
+	{"face", pos3L_face},
+	{0, 0}
 };
 
 
@@ -100,17 +100,17 @@ static const luaL_reg pos3L_methods[] = {
  */
 static int actorL_register( lua_State *L )
 {
-    /* Create the metatable */
-    luaL_newmetatable(L, ACTOR_METATABLE);
+	/* Create the metatable */
+	luaL_newmetatable(L, ACTOR_METATABLE);
 
-    /* Create the access table */
-    lua_pushvalue(L,-1);
-    lua_setfield(L,-2,"__index");
+	/* Create the access table */
+	lua_pushvalue(L, -1);
+	lua_setfield(L, -2, "__index");
 
-    /* Register the values */
-    luaL_register(L, NULL, actorL_methods);
+	/* Register the values */
+	luaL_register(L, NULL, actorL_methods);
 
-    return 0; /* No error */
+	return 0; /* No error */
 }
 
 /**
@@ -119,51 +119,51 @@ static int actorL_register( lua_State *L )
  * @param[in] index Index to check for a actor metatable.
  * @return 1 if index has a actor metatable otherwise returns 0.
  */
-static int lua_isactor( lua_State *L, int index )
+static int lua_isactor (lua_State *L, int index)
 {
-    int ret;
+	int ret;
 
-    if (lua_getmetatable(L,index)==0)
-        return 0;
-    lua_getfield(L, LUA_REGISTRYINDEX, ACTOR_METATABLE);
+	if (lua_getmetatable(L, index) == 0)
+		return 0;
+	lua_getfield(L, LUA_REGISTRYINDEX, ACTOR_METATABLE);
 
-    ret = 0;
-    if (lua_rawequal(L, -1, -2))  /* does it have the correct metatable? */
-        ret = 1;
-    
-    lua_pop(L, 2);  /* remove both metatables */
-    return ret;
+	ret = 0;
+	if (lua_rawequal(L, -1, -2))  /* does it have the correct metatable? */
+		ret = 1;
+
+	lua_pop(L, 2);  /* remove both metatables */
+	return ret;
 }
 
 /**
  * @brief Returns the actor from the metatable at index.
  */
-static aiActor_t* lua_toactor( lua_State *L, int index )
+static aiActor_t* lua_toactor (lua_State *L, int index)
 {
-    if (lua_isactor(L,index)) {
-        return (aiActor_t*) lua_touserdata(L,index);
-    }
-    luaL_typerror(L, index, ACTOR_METATABLE);
-    return NULL;
+	if (lua_isactor(L,index)) {
+		return (aiActor_t*) lua_touserdata(L, index);
+	}
+	luaL_typerror(L, index, ACTOR_METATABLE);
+	return NULL;
 }
 
 /**
  * @brief Pushes a actor as a metatable at the top of the stack.
  */
-static aiActor_t* lua_pushactor( lua_State *L, aiActor_t *actor )
+static aiActor_t* lua_pushactor (lua_State *L, aiActor_t *actor)
 {
-    aiActor_t *a;
-    a = (aiActor_t*) lua_newuserdata(L, sizeof(aiActor_t));
-    memcpy(a, actor, sizeof(aiActor_t));
-    luaL_getmetatable(L, ACTOR_METATABLE);
-    lua_setmetatable(L, -2);
-    return a;
+	aiActor_t *a;
+	a = (aiActor_t*) lua_newuserdata(L, sizeof(*a));
+	memcpy(a, actor, sizeof(*a));
+	luaL_getmetatable(L, ACTOR_METATABLE);
+	lua_setmetatable(L, -2);
+	return a;
 }
 
 /**
  * @brief Shoots the actor.
  */
-static int actorL_shoot( lua_State *L )
+static int actorL_shoot (lua_State *L)
 {
 	return 0;
 }
@@ -178,14 +178,14 @@ static int actorL_shoot( lua_State *L )
  * @param[in] L State to register the metatable in.
  * @return 0 on success.
  */
-static int pos3L_register( lua_State *L )
+static int pos3L_register (lua_State *L)
 {
 	/* Create the metatable */
 	luaL_newmetatable(L, POS3_METATABLE);
 
 	/* Create the access table */
-	lua_pushvalue(L,-1);
-	lua_setfield(L,-2,"__index");
+	lua_pushvalue(L, -1);
+	lua_setfield(L, -2, "__index");
 
 	/* Register the values */
 	luaL_register(L, NULL, pos3L_methods);
@@ -199,11 +199,11 @@ static int pos3L_register( lua_State *L )
  * @param[in] index Index to check for a pos3 metatable.
  * @return 1 if index has a pos3 metatable otherwise returns 0.
  */
-static int lua_ispos3( lua_State *L, int index )
+static int lua_ispos3 (lua_State *L, int index)
 {
 	int ret;
 
-	if (lua_getmetatable(L,index)==0)
+	if (lua_getmetatable(L, index) == 0)
 		return 0;
 	lua_getfield(L, LUA_REGISTRYINDEX, POS3_METATABLE);
 
@@ -219,10 +219,10 @@ static int lua_ispos3( lua_State *L, int index )
 /**
  * @brief Returns the pos3 from the metatable at index.
  */
-static pos3_t* lua_topos3( lua_State *L, int index )
+static pos3_t* lua_topos3 (lua_State *L, int index)
 {
-	if (lua_ispos3(L,index)) {
-		return (pos3_t*) lua_touserdata(L,index);
+	if (lua_ispos3(L, index)) {
+		return (pos3_t*) lua_touserdata(L, index);
 	}
 	luaL_typerror(L, index, POS3_METATABLE);
 	return NULL;
@@ -231,11 +231,11 @@ static pos3_t* lua_topos3( lua_State *L, int index )
 /**
  * @brief Pushes a pos3 as a metatable at the top of the stack.
  */
-static pos3_t* lua_pushpos3( lua_State *L, pos3_t *pos )
+static pos3_t* lua_pushpos3 (lua_State *L, pos3_t *pos)
 {
 	pos3_t *p;
-	p = (pos3_t*) lua_newuserdata(L, sizeof(pos3_t));
-	memcpy(p, pos, sizeof(pos3_t));
+	p = (pos3_t*) lua_newuserdata(L, sizeof(*p));
+	memcpy(p, pos, sizeof(*p));
 	luaL_getmetatable(L, POS3_METATABLE);
 	lua_setmetatable(L, -2);
 	return p;
@@ -244,7 +244,7 @@ static pos3_t* lua_pushpos3( lua_State *L, pos3_t *pos )
 /**
  * @brief Makes the actor head to the position.
  */
-static int pos3L_goto( lua_State *L )
+static int pos3L_goto (lua_State *L)
 {
 	return 0;
 }
@@ -252,7 +252,7 @@ static int pos3L_goto( lua_State *L )
 /**
  * @brief Makes the actor face the position.
  */
-static int pos3L_face( lua_State *L )
+static int pos3L_face (lua_State *L)
 {
 	return 0;
 }
@@ -886,10 +886,10 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	L = ent->chr.AI.L;
 
 	/* Try to run the function. */
-	lua_getglobal( L, "think" );
+	lua_getglobal(L, "think");
 	if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
-		Com_Printf( "Error while running Lua: %s\n",
-				lua_isstring(L,-1) ? lua_tostring(L,-1) : "Unknown Error" );
+		Com_Printf("Error while running Lua: %s\n",
+			lua_isstring(L, -1) ? lua_tostring(L, -1) : "Unknown Error");
 	}
 #if 0
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
@@ -1010,8 +1010,8 @@ static int AI_InitActor (edict_t * ent, char *type, char *subtype)
 
 	/* Prepare the AI */
 	AI = &ent->chr.AI;
-	Q_strncpyz(AI->type, type, MAX_VAR);
-	Q_strncpyz(AI->subtype, subtype, MAX_VAR);
+	Q_strncpyz(AI->type, type, sizeof(AI->type));
+	Q_strncpyz(AI->subtype, subtype, sizeof(AI->type));
 
 	/* Create the new Lua state */
 	AI->L = luaL_newstate();
@@ -1025,7 +1025,7 @@ static int AI_InitActor (edict_t * ent, char *type, char *subtype)
 	pos3L_register(AI->L);
 
 	/* Load the AI */
-	snprintf(path, MAX_VAR, "ai/%s.lua", type);
+	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
 	size = gi.FS_LoadFile(path, (byte **) &fbuf);
 	luaL_dobuffer(AI->L, fbuf, size, path);
 
@@ -1110,7 +1110,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 		if (gi.csi->numAlienTeams) {
 			alienTeam = rand() % gi.csi->numAlienTeams;
 			assert(gi.csi->alienTeams[alienTeam]);
-			ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);    
+			ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
 		} else
 			ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_alien"), &ent->chr);
 	}
@@ -1144,7 +1144,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 		/** Set initial state of reaction fire to previously stored state for this actor.
 		 * @sa g_client.c:G_ClientSpawn */
 		Com_DPrintf(DEBUG_GAME, "G_SpawnAIPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
-		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */  
+		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 		G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
 	}
 
