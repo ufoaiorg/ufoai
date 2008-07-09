@@ -77,10 +77,12 @@ static aiActor_t* lua_pushactor(lua_State *L, aiActor_t *actor);
 static int actorL_tostring(lua_State *L);
 static int actorL_pos(lua_State *L);
 static int actorL_shoot(lua_State *L);
+static int actorL_team(lua_State *L);
 static const luaL_reg actorL_methods[] = {
 	{"__tostring", actorL_tostring},
 	{"pos", actorL_pos},
 	{"shoot", actorL_shoot},
+	{"team", actorL_team},
 	{0, 0}
 };
 
@@ -113,12 +115,18 @@ static int AIL_see(lua_State *L);
 static int AIL_crouch(lua_State *L);
 static int AIL_TU(lua_State *L);
 static int AIL_reactionfire(lua_State *L);
+static int AIL_roundsleft(lua_State *L);
+static int AIL_canreload(lua_State *L);
+static int AIL_reload(lua_State *L);
 static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
 	{"see", AIL_see},
 	{"crouch", AIL_crouch},
 	{"TU", AIL_TU},
 	{"reactionfire", AIL_reactionfire},
+	{"roundsleft", AIL_roundsleft},
+	{"canreload", AIL_canreload},
+	{"reload", AIL_reload},
 	{0, 0}
 };
 
@@ -247,6 +255,20 @@ static int actorL_shoot (lua_State *L)
 	return 0;
 }
 
+/**
+ * @brief Gets the actor's team.
+ */
+static int actorL_team (lua_State *L)
+{
+	aiActor_t *target;
+
+	assert(lua_isactor(L, 1));
+
+	target = lua_toactor(L, 1);
+	lua_pushnumber(L, target->ent->team);
+	return 1;
+}
+
 
 /*
  *   P O S 3 L
@@ -331,7 +353,7 @@ static int pos3L_tostring(lua_State *L)
 	assert(lua_ispos3(L,1));
 
 	p = lua_topos3(L,1);
-	snprintf(buf, MAX_VAR, "Pos3( x=%d, y=%d, z=%d )", (*p)[0], (*p)[1], (*p)[2]);
+	Com_sprintf(buf, sizeof(buf), "Pos3( x=%d, y=%d, z=%d )", (*p)[0], (*p)[1], (*p)[2]);
 
 	lua_pushstring(L, buf);
 	return 1;
@@ -349,7 +371,7 @@ static int pos3L_goto (lua_State *L)
 	pos = lua_topos3(L, 1);
 	G_ClientMove(AIL_player, 0, AIL_ent->number, *pos, qfalse, QUIET);
 
-	return 1;
+	return 0;
 }
 
 /**
@@ -456,7 +478,7 @@ static int AIL_crouch (lua_State *L)
 }
 
 /**
- * Gets the number of TU the actor has left.
+ * @brief Gets the number of TU the actor has left.
  */
 static int AIL_TU (lua_State *L)
 {
@@ -465,10 +487,59 @@ static int AIL_TU (lua_State *L)
 }
 
 /**
- * Sets the actor's reaction fire.
+ * @brief Sets the actor's reaction fire.
  */
 static int AIL_reactionfire (lua_State *L)
 {
+	return 0;
+}
+
+/**
+ * @brief Checks to see how many rounds the actor has left.
+ */
+static int AIL_roundsleft (lua_State *L)
+{
+	/* Right hand */
+	if (RIGHT(AIL_ent) && RIGHT(AIL_ent)->item.t->reload)
+		lua_pushnumber(L, RIGHT(AIL_ent)->item.a);
+	else lua_pushnil(L);
+	/* Left hand */
+	if (LEFT(AIL_ent) && LEFT(AIL_ent)->item.t->reload)
+		lua_pushnumber(L, LEFT(AIL_ent)->item.a);
+	else lua_pushnil(L);
+	return 2;
+}
+
+/**
+ * @brief checks to see if the actor can reload.
+ */
+static int AIL_canreload (lua_State *L)
+{
+	lua_pushboolean(L, G_ClientCanReload(AIL_player, AIL_ent->number, gi.csi->idRight));
+	lua_pushboolean(L, G_ClientCanReload(AIL_player, AIL_ent->number, gi.csi->idLeft));
+	return 2;
+}
+
+/**
+ * @brief Actor reloads his weapons.
+ */
+static int AIL_reload (lua_State *L)
+{
+	shoot_types_t weap;
+	const char *s;
+
+	if (lua_isstring(L,1)) {
+		s = lua_tostring(L,1);
+
+		if (Q_strcmp(s,"right"))
+			weap = gi.csi->idRight;
+		else if (Q_strcmp(s,"left"))
+			weap = gi.csi->idLeft;
+	}
+	else
+		weap = gi.csi->idRight; /* Default to right hand. */
+
+	G_ClientReload(AIL_player, AIL_ent->number, weap, QUIET);
 	return 0;
 }
 
