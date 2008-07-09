@@ -436,15 +436,13 @@ void PR_ProductionRun (void)
 	const aircraft_t *aircraft;
 	production_t *prod;
 	const aircraft_t *ufocraft;
-	base_t *base;
 
 	/* Loop through all founded bases. Then check productions
 	 * in global data array. Then increase prod->percentDone and check
 	 * wheter an item is produced. Then add to base storage. */
-
 	for (i = 0; i < MAX_BASES; i++) {
-		base = B_GetBaseByIDX(i);
-		if (!base->founded)
+		base_t *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
 			continue;
 
 		/* not actually any active productions */
@@ -746,7 +744,7 @@ static void PR_ProductionListRightClick_f (void)
 	production_queue_t *queue;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent ||!curCampaign)
+	if (!baseCurrent || !curCampaign)
 		return;
 	queue = &gd.productions[baseCurrent->idx];
 
