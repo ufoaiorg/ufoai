@@ -789,11 +789,12 @@ static void PR_ProductionListRightClick_f (void)
 				return;
 			}
 		} else {
-#if 0
 			const aircraft_t *aircraftTemplate = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
-
-			/** @todo aircraft? */
-#endif
+			/* ufo research definition must not have a tech assigned
+			 * only RS_CRAFT types have
+			 * @sa RS_InitTree */
+			if (aircraftTemplate->tech)
+				UP_OpenWith(aircraftTemplate->tech->id);
 		}
 	}
 #ifdef DEBUG
@@ -1146,6 +1147,7 @@ static void PR_ProductionList_f (void)
 	if (!baseCurrent || !curCampaign)
 		return;
 
+	/** @todo remove these magic numbers */
 	if (atoi(Cmd_Argv(1)) == 0)
 		Cmd_ExecuteString(va("prod_select %i", BUY_WEAP_PRI));
 	else if (atoi(Cmd_Argv(1)) == 1)
@@ -1155,8 +1157,7 @@ static void PR_ProductionList_f (void)
 
 	PR_ProductionInfo(baseCurrent, qfalse);
 
-	numWorkshops = B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, B_WORKSHOP);
-	numWorkshops = (numWorkshops >= 0) ? numWorkshops : 0;
+	numWorkshops = max(0, B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, B_WORKSHOP));
 
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
 	Cvar_SetValue("mn_production_basecap", baseCurrent->capacities[CAP_WORKSPACE].max);
@@ -1199,6 +1200,10 @@ qboolean PR_ProductionAllowed (const base_t* base)
  */
 static void PR_ProductionListScroll_f (void)
 {
+	assert(node1);
+	assert(node2);
+	assert(prodlist);
+
 	node1->textScroll = node2->textScroll = prodlist->textScroll;
 }
 
