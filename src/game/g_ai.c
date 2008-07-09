@@ -203,17 +203,17 @@ static aiActor_t* lua_pushactor (lua_State *L, aiActor_t *actor)
 /**
  * @brief Pushes the actor as a string.
  */
-static int actorL_tostring(lua_State *L)
+static int actorL_tostring (lua_State *L)
 {
 	aiActor_t *target;
 	char buf[MAX_VAR];
 
-	assert(lua_isactor(L,1));
+	assert(lua_isactor(L, 1));
 
-	target = lua_toactor(L,1);
-	snprintf(buf, MAX_VAR, "Actor( %s )", target->ent->chr.name);
+	target = lua_toactor(L, 1);
+	Com_sprintf(buf, sizeof(buf), "Actor( %s )", target->ent->chr.name);
 
-	lua_pushstring(L,buf);
+	lua_pushstring(L, buf);
 	return 1;
 }
 
