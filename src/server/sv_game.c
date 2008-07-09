@@ -417,6 +417,7 @@ void SV_InitGameProgs (void)
 	import.GetFootstepSound = SV_GetFootstepSound;
 
 	import.FS_Gamedir = FS_Gamedir;
+	import.FS_LoadFile = FS_LoadFile;
 
 	import.WriteChar = SV_WriteChar;
 	import.WriteByte = SV_WriteByte;

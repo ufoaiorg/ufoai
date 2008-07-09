@@ -24,6 +24,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "g_local.h"
+#include "../common/filesys.h"
+
+#include "lua/lauxlib.h"
+
+
+#define		POS3_METATABLE		"pos3"
+#define		ACTOR_METATABLE		"actor"
+
+/*
+ * Provides an api like luaL_dostring for buffers.
+ */
+#define luaL_dobuffer(L, b, n, s) \
+   (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+
 
 typedef struct {
 	pos3_t to;			/**< grid pos to walk to */
@@ -34,6 +48,215 @@ typedef struct {
 	const fireDef_t *fd;/**< the firemode to use for shooting */
 	int z_align;		/**< the z-align for every shoot */
 } aiAction_t;
+
+
+typedef struct aiActor_s {
+	edict_t *target;
+} aiActor_t;
+
+
+/*
+ * actor metatable.
+ */
+/* Internal functions. */
+static int actorL_register( lua_State *L );
+static int lua_isactor( lua_State *L, int index );
+static aiActor_t* lua_toactor( lua_State *L, int index );
+static aiActor_t* lua_pushactor( lua_State *L, aiActor_t *actor );
+/* Metatable functions. */
+static int actorL_shoot( lua_State *L );
+static const luaL_reg actorL_methods[] = {
+	{ "shoot", actorL_shoot },
+	{0,0}
+};
+
+
+/*
+ * pos3 metatable.
+ */
+/* Internal functions. */
+static int pos3L_register( lua_State *L );
+static int lua_ispos3( lua_State *L, int index );
+static pos3_t* lua_topos3( lua_State *L, int index );
+static pos3_t* lua_pushpos3( lua_State *L, pos3_t *pos );
+/* Metatable functions. */
+static int pos3L_goto( lua_State *L );
+static int pos3L_face( lua_State *L );
+static const luaL_reg pos3L_methods[] = {
+	{ "goto", pos3L_goto },
+	{ "face", pos3L_face },
+	{0,0}
+};
+
+
+/*
+ *    A C T O R L
+ */
+
+/**
+ * @brief Registers the actor metatable in the lua_State.
+ * @param[in] L State to register the metatable in.
+ * @return 0 on success.
+ */
+static int actorL_register( lua_State *L )
+{
+    /* Create the metatable */
+    luaL_newmetatable(L, ACTOR_METATABLE);
+
+    /* Create the access table */
+    lua_pushvalue(L,-1);
+    lua_setfield(L,-2,"__index");
+
+    /* Register the values */
+    luaL_register(L, NULL, actorL_methods);
+
+    return 0; /* No error */
+}
+
+/**
+ * @brief Checks to see if there is a actor metatable at index in the lua_State.
+ * @param[in] L Lua state to check.
+ * @param[in] index Index to check for a actor metatable.
+ * @return 1 if index has a actor metatable otherwise returns 0.
+ */
+static int lua_isactor( lua_State *L, int index )
+{
+    int ret;
+
+    if (lua_getmetatable(L,index)==0)
+        return 0;
+    lua_getfield(L, LUA_REGISTRYINDEX, ACTOR_METATABLE);
+
+    ret = 0;
+    if (lua_rawequal(L, -1, -2))  /* does it have the correct metatable? */
+        ret = 1;
+    
+    lua_pop(L, 2);  /* remove both metatables */
+    return ret;
+}
+
+/**
+ * @brief Returns the actor from the metatable at index.
+ */
+static aiActor_t* lua_toactor( lua_State *L, int index )
+{
+    if (lua_isactor(L,index)) {
+        return (aiActor_t*) lua_touserdata(L,index);
+    }
+    luaL_typerror(L, index, ACTOR_METATABLE);
+    return NULL;
+}
+
+/**
+ * @brief Pushes a actor as a metatable at the top of the stack.
+ */
+static aiActor_t* lua_pushactor( lua_State *L, aiActor_t *actor )
+{
+    aiActor_t *a;
+    a = (aiActor_t*) lua_newuserdata(L, sizeof(aiActor_t));
+    memcpy(a, actor, sizeof(aiActor_t));
+    luaL_getmetatable(L, ACTOR_METATABLE);
+    lua_setmetatable(L, -2);
+    return a;
+}
+
+/**
+ * @brief Shoots the actor.
+ */
+static int actorL_shoot( lua_State *L )
+{
+	return 0;
+}
+
+
+/*
+ *   P O S 3 L
+ */
+
+/**
+ * @brief Registers the pos3 metatable in the lua_State.
+ * @param[in] L State to register the metatable in.
+ * @return 0 on success.
+ */
+static int pos3L_register( lua_State *L )
+{
+	/* Create the metatable */
+	luaL_newmetatable(L, POS3_METATABLE);
+
+	/* Create the access table */
+	lua_pushvalue(L,-1);
+	lua_setfield(L,-2,"__index");
+
+	/* Register the values */
+	luaL_register(L, NULL, pos3L_methods);
+
+	return 0; /* No error */
+}
+
+/**
+ * @brief Checks to see if there is a pos3 metatable at index in the lua_State.
+ * @param[in] L Lua state to check.
+ * @param[in] index Index to check for a pos3 metatable.
+ * @return 1 if index has a pos3 metatable otherwise returns 0.
+ */
+static int lua_ispos3( lua_State *L, int index )
+{
+	int ret;
+
+	if (lua_getmetatable(L,index)==0)
+		return 0;
+	lua_getfield(L, LUA_REGISTRYINDEX, POS3_METATABLE);
+
+	ret = 0;
+	if (lua_rawequal(L, -1, -2))  /* does it have the correct metatable? */
+		ret = 1;
+
+	lua_pop(L, 2);  /* remove both metatables */
+	return ret;
+}
+
+
+/**
+ * @brief Returns the pos3 from the metatable at index.
+ */
+static pos3_t* lua_topos3( lua_State *L, int index )
+{
+	if (lua_ispos3(L,index)) {
+		return (pos3_t*) lua_touserdata(L,index);
+	}
+	luaL_typerror(L, index, POS3_METATABLE);
+	return NULL;
+}
+
+/**
+ * @brief Pushes a pos3 as a metatable at the top of the stack.
+ */
+static pos3_t* lua_pushpos3( lua_State *L, pos3_t *pos )
+{
+	pos3_t *p;
+	p = (pos3_t*) lua_newuserdata(L, sizeof(pos3_t));
+	memcpy(p, pos, sizeof(pos3_t));
+	luaL_getmetatable(L, POS3_METATABLE);
+	lua_setmetatable(L, -2);
+	return p;
+}
+
+/**
+ * @brief Makes the actor head to the position.
+ */
+static int pos3L_goto( lua_State *L )
+{
+	return 0;
+}
+
+/**
+ * @brief Makes the actor face the position.
+ */
+static int pos3L_face( lua_State *L )
+{
+	return 0;
+}
+
 
 /**
  * @brief Check whether friendly units are in the line of fire when shooting
@@ -657,8 +880,18 @@ static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
  */
 void AI_ActorThink (player_t * player, edict_t * ent)
 {
-	aiAction_t bestAia;
+	lua_State *L;
 
+	/* The Lua State we will work with. */
+	L = ent->chr.AI.L;
+
+	/* Try to run the function. */
+	lua_getglobal( L, "think" );
+	if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
+		Com_Printf( "Error while running Lua: %s\n",
+				lua_isstring(L,-1) ? lua_tostring(L,-1) : "Unknown Error" );
+	}
+#if 0
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!(ent->state & STATE_PANIC)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
@@ -718,6 +951,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		/* @todo: If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
 	}
+#endif
 }
 
 
@@ -770,11 +1004,30 @@ void AI_Run (void)
 static int AI_InitActor (edict_t * ent, char *type, char *subtype)
 {
 	AI_t *AI;
-	AI = &ent->chr.AI;
+	int size;
+	char path[MAX_VAR];
+	char *fbuf;
 
+	/* Prepare the AI */
+	AI = &ent->chr.AI;
 	Q_strncpyz(AI->type, type, MAX_VAR);
 	Q_strncpyz(AI->subtype, subtype, MAX_VAR);
-	AI->L = NULL; /* @todo load lua file */
+
+	/* Create the new Lua state */
+	AI->L = luaL_newstate();
+	if (AI->L == NULL) {
+		Com_Printf("Unable to create Lua state.\n");
+		return -1;
+	}
+
+	/* Register metatables. */
+	actorL_register(AI->L);
+	pos3L_register(AI->L);
+
+	/* Load the AI */
+	snprintf(path, MAX_VAR, "ai/%s.lua", type);
+	size = gi.FS_LoadFile(path, (byte **) &fbuf);
+	luaL_dobuffer(AI->L, fbuf, size, path);
 
 	return 0;
 }
@@ -896,7 +1149,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 	}
 
 	/* initialize the AI now */
-	AI_InitActor(ent, "None", "None");
+	AI_InitActor(ent, "alien", "test");
 
 	/* link the new actor entity */
 	gi.LinkEdict(ent);
