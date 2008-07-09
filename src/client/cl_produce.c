@@ -28,11 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "menu/m_popup.h"
 
-#define MAX_PRODUCTION_AMOUNT 500	/**< Maximum number of produced/disassembled items. */
+/** Maximum number of produced/disassembled items. */
+#define MAX_PRODUCTION_AMOUNT 500
 
 /**
  * @brief A Linked list with a pointer inside and a counter.
- * @note Each entry _must_ obnly contain one pointer.
+ * @note Each entry _must_ only contain one pointer.
  */
 typedef struct countedLinkedList_s {
 	linkedList_t *list;	/**< The linked list itself. (only one pointer per entry) */

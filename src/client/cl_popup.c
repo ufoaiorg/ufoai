@@ -32,8 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* popup_aircraft display the actions availables for an aircraft */
 
-#define POPUP_AIRCRAFT_MAX_ITEMS	10		/**< Max items displayed in popup_aircraft */
-#define POPUP_AIRCRAFT_MAX_TEXT		2048	/**< Max size of text displayed in popup_aircraft */
+/** Max items displayed in popup_aircraft */
+#define POPUP_AIRCRAFT_MAX_ITEMS	10
+/** Max size of text displayed in popup_aircraft */
+#define POPUP_AIRCRAFT_MAX_TEXT		2048
 
 /**
  * @brief Enumerate type of actions available for popup_aircraft
@@ -59,12 +61,14 @@ typedef struct popup_aircraft_s {
 	char text_popup[POPUP_AIRCRAFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
 } popup_aircraft_t;
 
-/** @todo Save me */
+/** @todo Save me
+ * why? The popup stuff should be regenerated from the campaign data --mattn */
 static popup_aircraft_t popupAircraft; /**< Data about popup_aircraft */
 
 /* popup_intercept display list of aircraft availables to move to a mission or a UFO */
 
-#define POPUP_INTERCEPT_MAX_AIRCRAFT 64	/**< Max aircraft in popup list */
+/** Max aircraft in popup list */
+#define POPUP_INTERCEPT_MAX_AIRCRAFT 64
 
 typedef struct popup_intercept_s {
 	int numAircraft;	/**< Count of aircraft displayed in list */
