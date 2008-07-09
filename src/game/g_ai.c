@@ -74,9 +74,11 @@ static int lua_isactor(lua_State *L, int index);
 static aiActor_t* lua_toactor(lua_State *L, int index);
 static aiActor_t* lua_pushactor(lua_State *L, aiActor_t *actor);
 /* Metatable functions. */
+static int actorL_tostring(lua_State *L);
 static int actorL_pos(lua_State *L);
 static int actorL_shoot(lua_State *L);
 static const luaL_reg actorL_methods[] = {
+	{"__tostring", actorL_tostring},
 	{"pos", actorL_pos},
 	{"shoot", actorL_shoot},
 	{0, 0}
@@ -92,9 +94,11 @@ static int lua_ispos3(lua_State *L, int index);
 static pos3_t* lua_topos3(lua_State *L, int index);
 static pos3_t* lua_pushpos3(lua_State *L, pos3_t *pos);
 /* Metatable functions. */
+static int pos3L_tostring(lua_State *L);
 static int pos3L_goto(lua_State *L);
 static int pos3L_face(lua_State *L);
 static const luaL_reg pos3L_methods[] = {
+	{"__tostring", pos3L_tostring},
 	{"goto", pos3L_goto},
 	{"face", pos3L_face},
 	{0, 0}
@@ -194,6 +198,23 @@ static aiActor_t* lua_pushactor (lua_State *L, aiActor_t *actor)
 	luaL_getmetatable(L, ACTOR_METATABLE);
 	lua_setmetatable(L, -2);
 	return a;
+}
+
+/**
+ * @brief Pushes the actor as a string.
+ */
+static int actorL_tostring(lua_State *L)
+{
+	aiActor_t *target;
+	char buf[MAX_VAR];
+
+	assert(lua_isactor(L,1));
+
+	target = lua_toactor(L,1);
+	snprintf(buf, MAX_VAR, "Actor( %s )", target->ent->chr.name);
+
+	lua_pushstring(L,buf);
+	return 1;
 }
 
 /*
@@ -297,6 +318,23 @@ static pos3_t* lua_pushpos3 (lua_State *L, pos3_t *pos)
 	luaL_getmetatable(L, POS3_METATABLE);
 	lua_setmetatable(L, -2);
 	return p;
+}
+
+/**
+ * @brief Puts the pos3 information in a string.
+ */
+static int pos3L_tostring(lua_State *L)
+{
+	pos3_t *p;
+	char buf[MAX_VAR];
+
+	assert(lua_ispos3(L,1));
+
+	p = lua_topos3(L,1);
+	snprintf(buf, MAX_VAR, "Pos3( x=%d, y=%d, z=%d )", (*p)[0], (*p)[1], (*p)[2]);
+
+	lua_pushstring(L, buf);
+	return 1;
 }
 
 /**
