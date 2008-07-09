@@ -50,13 +50,23 @@ typedef struct {
 } aiAction_t;
 
 
+/*
+ * Wrapper around edict.
+ */
 typedef struct aiActor_s {
-	edict_t *target;
+	edict_t *ent;
 } aiActor_t;
 
 
 /*
- * actor metatable.
+ * Stores the current actor running Lua commands.
+ */
+static edict_t *AIL_ent = NULL;
+static player_t *AIL_player = NULL;
+
+
+/*
+ * Actor metatable.
  */
 /* Internal functions. */
 static int actorL_register(lua_State *L);
@@ -64,8 +74,10 @@ static int lua_isactor(lua_State *L, int index);
 static aiActor_t* lua_toactor(lua_State *L, int index);
 static aiActor_t* lua_pushactor(lua_State *L, aiActor_t *actor);
 /* Metatable functions. */
+static int actorL_pos(lua_State *L);
 static int actorL_shoot(lua_State *L);
 static const luaL_reg actorL_methods[] = {
+	{"pos", actorL_pos},
 	{"shoot", actorL_shoot},
 	{0, 0}
 };
@@ -90,6 +102,30 @@ static const luaL_reg pos3L_methods[] = {
 
 
 /*
+ * General AI bindings.
+ */
+static int AIL_print(lua_State *L);
+static int AIL_see(lua_State *L);
+static int AIL_crouch(lua_State *L);
+static int AIL_TU(lua_State *L);
+static int AIL_reactionfire(lua_State *L);
+static const luaL_reg AIL_methods[] = {
+	{"print", AIL_print},
+	{"see", AIL_see},
+	{"crouch", AIL_crouch},
+	{"TU", AIL_TU},
+	{"reactionfire", AIL_reactionfire},
+	{0, 0}
+};
+
+
+/*
+ * Prototypes.
+ */
+static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos);
+
+
+/*
  *    A C T O R L
  */
 
@@ -98,7 +134,7 @@ static const luaL_reg pos3L_methods[] = {
  * @param[in] L State to register the metatable in.
  * @return 0 on success.
  */
-static int actorL_register( lua_State *L )
+static int actorL_register (lua_State *L)
 {
 	/* Create the metatable */
 	luaL_newmetatable(L, ACTOR_METATABLE);
@@ -160,11 +196,33 @@ static aiActor_t* lua_pushactor (lua_State *L, aiActor_t *actor)
 	return a;
 }
 
+/*
+ * @brief Gets the actors position.
+ */
+static int actorL_pos( lua_State *L )
+{
+	aiActor_t *target;
+
+	assert(lua_isactor(L,1));
+
+	target = lua_toactor(L,1);
+	lua_pushpos3(L, &target->ent->pos);
+	return 1;
+}
+
 /**
  * @brief Shoots the actor.
  */
 static int actorL_shoot (lua_State *L)
 {
+	aiActor_t *target;
+
+	assert(lua_isactor(L,1));
+
+	target = lua_toactor(L,1);
+	G_ClientShoot( AIL_player, AIL_ent->number, target->ent->pos,
+			0, 0, NULL, qtrue, 0);
+
 	return 0;
 }
 
@@ -246,7 +304,14 @@ static pos3_t* lua_pushpos3 (lua_State *L, pos3_t *pos)
  */
 static int pos3L_goto (lua_State *L)
 {
-	return 0;
+	pos3_t *pos;
+
+	assert(lua_ispos3(L,1));
+
+	pos = lua_topos3(L,1);
+	G_ClientMove(AIL_player, 0, AIL_ent->number, *pos, qfalse, QUIET);
+
+	return 1;
 }
 
 /**
@@ -254,9 +319,121 @@ static int pos3L_goto (lua_State *L)
  */
 static int pos3L_face (lua_State *L)
 {
+	pos3_t *pos;
+
+	assert(lua_ispos3(L,1));
+
+	pos = lua_topos3(L,1);
+	AI_TurnIntoDirection( AIL_ent, *pos );
+
 	return 0;
 }
 
+
+/*
+ *    A I L
+ */
+/**
+ * @brief Works more or less like Lua's builtin print.
+ */
+static int AIL_print(lua_State *L)
+{
+	int i, n, meta;
+	const char *s;
+	
+	n = lua_gettop(L);  /* number of arguments */
+	for (i=1; i<=n; i++) {
+		meta = 0;
+
+		lua_pushvalue(L, i);   /* value to print */
+		if (luaL_callmeta(L, 1, "__tostring")) {
+			s = lua_tostring(L, -1);
+			meta = 1;
+		}
+		else {
+			switch (lua_type(L, -1)) {
+				case LUA_TNUMBER:
+				case LUA_TSTRING:
+					s = lua_tostring(L, -1);
+					break;
+				case LUA_TBOOLEAN:
+					s = lua_toboolean(L, -1) ? "true" : "false";
+					break;
+				case LUA_TNIL:
+					s = "nil";
+					break;
+
+				default:
+					s = "unknown lua type";
+					break;
+			}
+		}
+		Com_Printf("%s%s", (i>1) ? "\t" : "", s);
+		lua_pop(L, 1); /* Pop the value */
+		if (meta) /* Meta creates an additional string. */
+			lua_pop(L, 1);
+	}
+
+	Com_Printf("\n");
+	return 0;
+}
+
+/**
+ * @brief Returns what the actor can see.
+ */
+static int AIL_see (lua_State *L)
+{
+	int i, j;
+	edict_t *check;
+	aiActor_t *target;
+
+	lua_newtable(L);
+	j = 1;
+	/* @todo check for what they can see instead of seeing all. */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		if (check->inuse && G_IsLivingActor(check) && (AIL_ent != check)) {
+			lua_pushnumber(L, j++); /* index, starts with 1 */
+			target->ent = check;
+			lua_pushactor(L, target); /* value */
+			lua_rawset(L, -3); /* store the value in the table */
+		}
+	}
+	return 1; /* Returns the table of actors. */
+}
+
+/**
+ * @brief Toggles crouch state with true/false and returns current crouch state.
+ */
+static int AIL_crouch (lua_State *L)
+{
+	int state;
+
+	if (lua_isboolean(L,1)) {
+		state = lua_toboolean(L,1);
+		G_ClientStateChange(AIL_player, AIL_ent->number, STATE_CROUCHED,
+			(state) ? qtrue : qfalse );
+	}
+
+	lua_pushboolean(L, AIL_ent->state & STATE_CROUCHED);
+	return 1;
+}
+
+/**
+ * Gets the number of TU the actor has left.
+ */
+static int AIL_TU (lua_State *L)
+{	
+	lua_pushnumber(L,AIL_ent->TU);
+	return 1;
+}
+
+/**
+ * Sets the actor's reaction fire.
+ */
+static int AIL_reactionfire (lua_State *L)
+{
+	return 0;
+}
 
 /**
  * @brief Check whether friendly units are in the line of fire when shooting
@@ -884,6 +1061,10 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* The Lua State we will work with. */
 	L = ent->chr.AI.L;
+	
+	/* Set the global player and edict */
+	AIL_ent = ent;
+	AIL_player = player;
 
 	/* Try to run the function. */
 	lua_getglobal(L, "think");
@@ -891,6 +1072,11 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		Com_Printf("Error while running Lua: %s\n",
 			lua_isstring(L, -1) ? lua_tostring(L, -1) : "Unknown Error");
 	}
+
+	/* Cleanup */
+	AIL_ent = NULL;
+	AIL_player = NULL;
+
 #if 0
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!(ent->state & STATE_PANIC)) {
@@ -1024,10 +1210,16 @@ static int AI_InitActor (edict_t * ent, char *type, char *subtype)
 	actorL_register(AI->L);
 	pos3L_register(AI->L);
 
+	/* Register libraries. */
+	luaL_register(AI->L, "ai", AIL_methods);
+
 	/* Load the AI */
 	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
 	size = gi.FS_LoadFile(path, (byte **) &fbuf);
-	luaL_dobuffer(AI->L, fbuf, size, path);
+	if (luaL_dobuffer(AI->L, fbuf, size, path) < 0) {
+		Com_Printf("Unable to load Lua file '%s'.\n", path);
+		return -1;
+	}
 
 	return 0;
 }
@@ -1041,6 +1233,7 @@ static void AI_CleanupActor (edict_t * ent)
 	AI_t *AI;
 	AI = &ent->chr.AI;
 
+	/* Cleanup. */
 	if (AI->L != NULL) {
 		lua_close(AI->L);
 		AI->L = NULL;
