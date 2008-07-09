@@ -1,7 +1,7 @@
 
 function think()
 	seen = ai.see()
+	phalanx = ai.see("all","phalanx")
 
-	ai.print("TU: "..ai.TU())
-	ai.print("Seen: "..#seen)
+	phalanx[1]:shoot()
 end

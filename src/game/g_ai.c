@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 #define luaL_dobuffer(L, b, n, s) \
    (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+#define AIL_invalidparameter(n)	\
+   Com_Printf("AIL: Invalid parameter #%d in '%s'.\n",n,__func__)
 
 
 typedef struct {
@@ -265,7 +267,20 @@ static int actorL_team (lua_State *L)
 	assert(lua_isactor(L, 1));
 
 	target = lua_toactor(L, 1);
-	lua_pushnumber(L, target->ent->team);
+	switch (target->ent->team) {
+		case TEAM_PHALANX:
+			lua_pushstring(L, "phalanx");
+			break;
+		case TEAM_CIVILIAN:
+			lua_pushstring(L, "civilian");
+			break;
+		case TEAM_ALIEN:
+			lua_pushstring(L, "alien");
+			break;
+		default:
+			lua_pushstring(L, "unknown");
+			break;
+	}
 	return 1;
 }
 
@@ -369,7 +384,7 @@ static int pos3L_goto (lua_State *L)
 	assert(lua_ispos3(L, 1));
 
 	pos = lua_topos3(L, 1);
-	G_ClientMove(AIL_player, 0, AIL_ent->number, *pos, qfalse, QUIET);
+	G_ClientMove(AIL_player, AIL_ent->team, AIL_ent->number, *pos, qfalse, QUIET);
 
 	return 0;
 }
@@ -442,20 +457,91 @@ static int AIL_print (lua_State *L)
  */
 static int AIL_see (lua_State *L)
 {
-	int i, j;
+	int vision, team;
+	int i, j, k, n, cur;
 	edict_t *check;
-	aiActor_t *target;
+	aiActor_t target;
+	edict_t *sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
+	float dist_lookup[MAX_EDICTS];
+	const char *s;
 
-	lua_newtable(L);
-	j = 1;
-	/* @todo check for what they can see instead of seeing all. */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-		if (check->inuse && G_IsLivingActor(check) && (AIL_ent != check)) {
-			lua_pushnumber(L, j++); /* index, starts with 1 */
-			target->ent = check;
-			lua_pushactor(L, target); /* value */
-			lua_rawset(L, -3); /* store the value in the table */
+	/* Handle parameters. */
+	if ((lua_gettop(L) > 0)) {
+
+		/* Get what to "see" with. */
+		if (lua_isstring(L, 1)) {
+			s = lua_tostring(L, 1);
+			if (Q_strcmp(s, "all")==0) vision = 0;
+			else if (Q_strcmp(s, "sight")==0) vision = 1;
+			else if (Q_strcmp(s, "psionic")==0) vision = 2;
+			else if (Q_strcmp(s, "infrared")==0) vision = 3;
+			else {
+				AIL_invalidparameter(1);
+				vision = 0;
+			}
 		}
+		else AIL_invalidparameter(1);
+
+		/* We now check for different teams. */
+		if ((lua_gettop(L) > 1)) {
+			if (lua_isstring(L, 2)) {
+				s = lua_tostring(L, 2);
+				if (Q_strcmp(s, "all")==0) team = 0;
+				else if (Q_strcmp(s, "alien")==0) team = 1;
+				else if (Q_strcmp(s, "civilian")==0) team = 2;
+				else if (Q_strcmp(s, "phalanx")==0) team = 3;
+				else {
+					AIL_invalidparameter(2);
+					team = 0;
+				}
+			}
+			else AIL_invalidparameter(2);
+		}
+	}
+
+	n = 0;
+	/* Get visible things. */
+	/* @todo check for what they can see instead of seeing all. */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+		if (check->inuse && G_IsLivingActor(check) && (AIL_ent != check) &&
+				((vision == 0)) && /* Vision checks. */
+				((team == 0) || /* Check for team match if needed. */
+					((team == 1) && (check->team == TEAM_ALIEN)) ||
+					((team == 2) && (check->team == TEAM_CIVILIAN)) ||
+					((team == 3) && (check->team == TEAM_PHALANX)))) {
+
+			dist_lookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
+			unsorted[n++] = check;
+		}
+
+	/* Sort by distance */
+	for (i = 0; i < n; i++) { /* Until we fill sorted */
+		cur = -1;
+		for (j = 0; j < n; j++) { /* Check for closest */
+
+			/* Is shorter then current minimum? */
+			if ((cur < 0) || (dist_lookup[j] < dist_lookup[cur])) {
+
+				/* Check if not already in sorted. */
+				for (k = 0; k < i; k++)
+					if (sorted[k] == unsorted[j])
+						break;
+
+				if (k == i)
+					cur = j;
+			}
+		}
+
+		sorted[i] = unsorted[cur];
+	}
+
+	/* Now save it in a Lua table. */
+	lua_newtable(L);
+	for (i = 0; i < n; i++) {
+		lua_pushnumber(L, i+1); /* index, starts with 1 */
+		target.ent = sorted[i];
+		lua_pushactor(L, &target); /* value */
+		lua_rawset(L, -3); /* store the value in the table */
 	}
 	return 1; /* Returns the table of actors. */
 }
@@ -467,10 +553,13 @@ static int AIL_crouch (lua_State *L)
 {
 	int state;
 
-	if (lua_isboolean(L, 1)) {
-		state = lua_toboolean(L, 1);
-		G_ClientStateChange(AIL_player, AIL_ent->number, STATE_CROUCHED,
-			(state) ? qtrue : qfalse);
+	if (lua_gettop(L) > 0) {
+		if (lua_isboolean(L, 1)) {
+			state = lua_toboolean(L, 1);
+			G_ClientStateChange(AIL_player, AIL_ent->number, STATE_CROUCHED,
+				(state) ? qtrue : qfalse);
+		}
+		else AIL_invalidparameter(1);
 	}
 
 	lua_pushboolean(L, AIL_ent->state & STATE_CROUCHED);
@@ -528,13 +617,16 @@ static int AIL_reload (lua_State *L)
 	shoot_types_t weap;
 	const char *s;
 
-	if (lua_isstring(L,1)) {
-		s = lua_tostring(L,1);
+	if (lua_gettop(L) > 0) {
+		if (lua_isstring(L,1)) {
+			s = lua_tostring(L,1);
 
-		if (Q_strcmp(s,"right"))
-			weap = gi.csi->idRight;
-		else if (Q_strcmp(s,"left"))
-			weap = gi.csi->idLeft;
+			if (Q_strcmp(s,"right")==0)
+				weap = gi.csi->idRight;
+			else if (Q_strcmp(s,"left")==0)
+				weap = gi.csi->idLeft;
+		}
+		else AIL_invalidparameter(1);
 	}
 	else
 		weap = gi.csi->idRight; /* Default to right hand. */
