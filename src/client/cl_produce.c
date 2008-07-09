@@ -1204,11 +1204,11 @@ static void PR_ProductionListScroll_f (void)
 
 /**
  * @brief Sets the production array to 0
+ * @sa CL_GameNew_f
  */
 void PR_ProductionInit (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Reset all productions\n");
-	memset(gd.productions, 0, sizeof(gd.productions));
 	mn_production_limit = Cvar_Get("mn_production_limit", "0", 0, NULL);
 	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
 }
@@ -1593,16 +1593,14 @@ qboolean PR_Save (sizebuf_t *sb, void *data)
 qboolean PR_Load (sizebuf_t *sb, void *data)
 {
 	int i, j;
-	const char *s1;
-	const char *s2;
-	production_queue_t *pq;
 
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
-		pq = &gd.productions[i];
+		production_queue_t *pq = &gd.productions[i];
 		pq->numItems = MSG_ReadByte(sb);
 
 		for (j = 0; j < pq->numItems; j++) {
-			s1 = MSG_ReadString(sb);
+			const char *s1 = MSG_ReadString(sb);
+			const char *s2;
 			if (*s1)
 				pq->items[j].item = INVSH_GetItemByID(s1);
 			pq->items[j].amount = MSG_ReadLong(sb);
