@@ -131,8 +131,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 		if (!base)
 			continue;
 
-		Com_sprintf(text, sizeof(text), base->name);
-		Q_strcat(text, "\t", sizeof(text));
+		Com_sprintf(text, sizeof(text), "%s\n", base->name);
 
 		if (base == aircraft->homebase) {
 			Q_strcat(text, _("current homebase of aircraft"), sizeof(text));
