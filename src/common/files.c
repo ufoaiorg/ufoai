@@ -1014,7 +1014,7 @@ int FS_BuildFileList (const char *fileList)
 			/* *.* is not implemented here - only e.g. *.ufo */
 			if (!ext)
 				break;
-			Com_sprintf(findname, sizeof(findname), search->filename);
+			Q_strncpyz(findname, search->filename, sizeof(findname));
 			FS_NormPath(findname);
 
 			/* look through all the pak file elements */
