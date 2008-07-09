@@ -471,10 +471,15 @@ static int AIL_see (lua_State *L)
 		/* Get what to "see" with. */
 		if (lua_isstring(L, 1)) {
 			s = lua_tostring(L, 1);
-			if (Q_strcmp(s, "all")==0) vision = 0;
-			else if (Q_strcmp(s, "sight")==0) vision = 1;
-			else if (Q_strcmp(s, "psionic")==0) vision = 2;
-			else if (Q_strcmp(s, "infrared")==0) vision = 3;
+			/** @todo no magic numbers please - introduce some self-speaking-constants */
+			if (Q_strcmp(s, "all") == 0)
+				vision = 0;
+			else if (Q_strcmp(s, "sight") == 0)
+				vision = 1;
+			else if (Q_strcmp(s, "psionic") == 0)
+				vision = 2;
+			else if (Q_strcmp(s, "infrared") == 0)
+				vision = 3;
 			else {
 				AIL_invalidparameter(1);
 				vision = 0;
@@ -486,10 +491,15 @@ static int AIL_see (lua_State *L)
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
 				s = lua_tostring(L, 2);
-				if (Q_strcmp(s, "all")==0) team = 0;
-				else if (Q_strcmp(s, "alien")==0) team = 1;
-				else if (Q_strcmp(s, "civilian")==0) team = 2;
-				else if (Q_strcmp(s, "phalanx")==0) team = 3;
+				/** @todo Use the TEAM_* macros or some others, but no magic numbers please */
+				if (Q_strcmp(s, "all") == 0)
+					team = 0;
+				else if (Q_strcmp(s, "alien") == 0)
+					team = 1;
+				else if (Q_strcmp(s, "civilian") == 0)
+					team = 2;
+				else if (Q_strcmp(s, "phalanx") == 0)
+					team = 3;
 				else {
 					AIL_invalidparameter(2);
 					team = 0;
@@ -501,7 +511,7 @@ static int AIL_see (lua_State *L)
 
 	n = 0;
 	/* Get visible things. */
-	/* @todo check for what they can see instead of seeing all. */
+	/** @todo check for what they can see instead of seeing all. */
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 		if (check->inuse && G_IsLivingActor(check) && (AIL_ent != check) &&
 				((vision == 0)) && /* Vision checks. */
@@ -538,7 +548,7 @@ static int AIL_see (lua_State *L)
 	/* Now save it in a Lua table. */
 	lua_newtable(L);
 	for (i = 0; i < n; i++) {
-		lua_pushnumber(L, i+1); /* index, starts with 1 */
+		lua_pushnumber(L, i + 1); /* index, starts with 1 */
 		target.ent = sorted[i];
 		lua_pushactor(L, &target); /* value */
 		lua_rawset(L, -3); /* store the value in the table */
