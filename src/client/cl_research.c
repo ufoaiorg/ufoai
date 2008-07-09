@@ -862,19 +862,16 @@ static void CL_ResearchSelect_f (void)
  * @sa RS_AssignScientist_f
  * @sa RS_RemoveScientist
  */
-void RS_AssignScientist (technology_t* tech)
+void RS_AssignScientist (technology_t* tech, base_t *base)
 {
 	employee_t *employee;
-	base_t *base;
 
 	assert(tech);
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
 
-	if (tech->base) {
+	/* if the tech is already assigned to a base, use that one */
+	if (tech->base)
 		base = tech->base;
-	} else {
-		base = baseCurrent;
-	}
 
 	assert(base);
 
@@ -922,6 +919,9 @@ static void RS_AssignScientist_f (void)
 {
 	int num;
 
+	if (!baseCurrent)
+		return;
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
 		return;
@@ -932,7 +932,7 @@ static void RS_AssignScientist_f (void)
 		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist_f: num %i\n", num);
-	RS_AssignScientist(researchList[num]);
+	RS_AssignScientist(researchList[num], baseCurrent);
 }
 
 
@@ -990,10 +990,8 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
  * @param[in] tech The technology you want to max out.
  * @sa RS_AssignScientist
  */
-static void RS_MaxOutResearch (const base_t *base, technology_t* tech)
+static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 {
-	const employee_t *employee;
-
 	if (!base || !tech)
 		return;
 
@@ -1002,14 +1000,15 @@ static void RS_MaxOutResearch (const base_t *base, technology_t* tech)
 	/* Add as many scientists as possible to this tech. */
 	do {
 		if (base->capacities[CAP_LABSPACE].cur < base->capacities[CAP_LABSPACE].max) {
-			employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
-			if (employee)
-				RS_AssignScientist(tech);
+			const employee_t *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+			if (!employee)
+				break;
+			RS_AssignScientist(tech, base);
 		} else {
 			/* No free lab-space left. */
 			break;
 		}
-	} while (employee);
+	} while (qtrue);
 }
 
 /**
@@ -1054,7 +1053,7 @@ void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
 	/* if there is at least one scientist not working on a project, make this one replace removed employee */
 	if (E_CountUnassigned(base, EMPL_SCIENTIST)) {
 		if (employee->building) {
-			RS_AssignScientist(tech);
+			RS_AssignScientist(tech, base);
 			RS_RemoveScientist(tech, employee);
 		}
 		return;
@@ -1089,7 +1088,7 @@ static void RS_ResearchStart_f (void)
 	/** @todo: If there are enough items add them to the tech (i.e. block them from selling or for other research),
 	 * otherwise pop an errormessage telling the palyer what is missing */
 	if (!tech->statusResearchable) {
-		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n",tech->id);
+		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n", tech->id);
 		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
 		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, baseCurrent))
 			RS_MarkOneResearchable(tech);
