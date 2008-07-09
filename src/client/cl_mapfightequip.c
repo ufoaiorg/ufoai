@@ -851,8 +851,12 @@ void BDEF_ListClick_f (void)
 
 	/* draw an arrow in front of the selected base defence */
 	node = MN_GetNodeFromCurrentMenu("basedef_slot_list");
+	if (!node)
+		return;
 	height = node->texh[0];
 	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+	if (!node)
+		return;
 	Vector2Set(node->pos, 25, 30 + height * airequipSelectedSlot);
 
 	noparams = qtrue;
@@ -1036,28 +1040,28 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 }
 
 /**
- * @brief Write in Red the text in zone ammo (zone 3)
+ * @brief Write in red the text in zone ammo (zone 3)
  * @sa AIM_NoEmphazeAmmoSlotText
  * @note This is intended to show the player that there is no ammo in his aircraft
  */
-static void AIM_EmphazeAmmoSlotText (void)
+static inline void AIM_EmphazeAmmoSlotText (void)
 {
-	menuNode_t *node;
-
-	node = MN_GetNodeFromCurrentMenu("airequip_text_zone3");
+	menuNode_t *node = MN_GetNodeFromCurrentMenu("airequip_text_zone3");
+	if (!node)
+		return;
 	VectorSet(node->color, 1.0f, .0f, .0f);
 }
 
 /**
- * @brief Write in White the text in zone ammo (zone 3)
+ * @brief Write in white the text in zone ammo (zone 3)
  * @sa AIM_EmphazeAmmoSlotText
- * @note This is intended to revert effects of AIM_EmphazeAmmoSlotText()
+ * @note This is intended to revert effects of AIM_EmphazeAmmoSlotText
  */
-static void AIM_NoEmphazeAmmoSlotText (void)
+static inline void AIM_NoEmphazeAmmoSlotText (void)
 {
-	menuNode_t *node;
-
-	node = MN_GetNodeFromCurrentMenu("airequip_text_zone3");
+	menuNode_t *node = MN_GetNodeFromCurrentMenu("airequip_text_zone3");
+	if (!node)
+		return;
 	VectorSet(node->color, 1.0f, 1.0f, 1.0f);
 }
 
