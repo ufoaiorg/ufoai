@@ -126,7 +126,7 @@ static const luaL_reg AIL_methods[] = {
 /*
  * Prototypes.
  */
-static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos);
+static void AI_TurnIntoDirection(edict_t *aiActor, pos3_t pos);
 
 
 /*
@@ -220,13 +220,13 @@ static int actorL_tostring(lua_State *L)
 /*
  * @brief Gets the actors position.
  */
-static int actorL_pos( lua_State *L )
+static int actorL_pos (lua_State *L)
 {
 	aiActor_t *target;
 
-	assert(lua_isactor(L,1));
+	assert(lua_isactor(L, 1));
 
-	target = lua_toactor(L,1);
+	target = lua_toactor(L, 1);
 	lua_pushpos3(L, &target->ent->pos);
 	return 1;
 }
@@ -238,11 +238,11 @@ static int actorL_shoot (lua_State *L)
 {
 	aiActor_t *target;
 
-	assert(lua_isactor(L,1));
+	assert(lua_isactor(L, 1));
 
-	target = lua_toactor(L,1);
-	G_ClientShoot( AIL_player, AIL_ent->number, target->ent->pos,
-			0, 0, NULL, qtrue, 0);
+	target = lua_toactor(L, 1);
+	G_ClientShoot(AIL_player, AIL_ent->number, target->ent->pos,
+		0, 0, NULL, qtrue, 0);
 
 	return 0;
 }
@@ -344,9 +344,9 @@ static int pos3L_goto (lua_State *L)
 {
 	pos3_t *pos;
 
-	assert(lua_ispos3(L,1));
+	assert(lua_ispos3(L, 1));
 
-	pos = lua_topos3(L,1);
+	pos = lua_topos3(L, 1);
 	G_ClientMove(AIL_player, 0, AIL_ent->number, *pos, qfalse, QUIET);
 
 	return 1;
@@ -359,10 +359,10 @@ static int pos3L_face (lua_State *L)
 {
 	pos3_t *pos;
 
-	assert(lua_ispos3(L,1));
+	assert(lua_ispos3(L, 1));
 
-	pos = lua_topos3(L,1);
-	AI_TurnIntoDirection( AIL_ent, *pos );
+	pos = lua_topos3(L, 1);
+	AI_TurnIntoDirection(AIL_ent, *pos);
 
 	return 0;
 }
@@ -374,21 +374,20 @@ static int pos3L_face (lua_State *L)
 /**
  * @brief Works more or less like Lua's builtin print.
  */
-static int AIL_print(lua_State *L)
+static int AIL_print (lua_State *L)
 {
-	int i, n, meta;
+	int i;
 	const char *s;
-	
-	n = lua_gettop(L);  /* number of arguments */
-	for (i=1; i<=n; i++) {
-		meta = 0;
+	const int n = lua_gettop(L);  /* number of arguments */
+
+	for (i = 1; i <= n; i++) {
+		int meta = 0;
 
 		lua_pushvalue(L, i);   /* value to print */
 		if (luaL_callmeta(L, 1, "__tostring")) {
 			s = lua_tostring(L, -1);
 			meta = 1;
-		}
-		else {
+		} else {
 			switch (lua_type(L, -1)) {
 				case LUA_TNUMBER:
 				case LUA_TSTRING:
@@ -406,7 +405,7 @@ static int AIL_print(lua_State *L)
 					break;
 			}
 		}
-		Com_Printf("%s%s", (i>1) ? "\t" : "", s);
+		Com_Printf("%s%s", (i > 1) ? "\t" : "", s);
 		lua_pop(L, 1); /* Pop the value */
 		if (meta) /* Meta creates an additional string. */
 			lua_pop(L, 1);
@@ -446,10 +445,10 @@ static int AIL_crouch (lua_State *L)
 {
 	int state;
 
-	if (lua_isboolean(L,1)) {
-		state = lua_toboolean(L,1);
+	if (lua_isboolean(L, 1)) {
+		state = lua_toboolean(L, 1);
 		G_ClientStateChange(AIL_player, AIL_ent->number, STATE_CROUCHED,
-			(state) ? qtrue : qfalse );
+			(state) ? qtrue : qfalse);
 	}
 
 	lua_pushboolean(L, AIL_ent->state & STATE_CROUCHED);
@@ -460,7 +459,7 @@ static int AIL_crouch (lua_State *L)
  * Gets the number of TU the actor has left.
  */
 static int AIL_TU (lua_State *L)
-{	
+{
 	lua_pushnumber(L,AIL_ent->TU);
 	return 1;
 }
@@ -1099,7 +1098,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* The Lua State we will work with. */
 	L = ent->chr.AI.L;
-	
+
 	/* Set the global player and edict */
 	AIL_ent = ent;
 	AIL_player = player;
