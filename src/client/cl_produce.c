@@ -122,7 +122,6 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
 {
 	signed int allworkers = 0, maxworkers = 0;
 	signed int timeDefault = 0;
-	float fraction = 0;
 	assert(base);
 	assert(tech);
 
@@ -145,7 +144,7 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
 
 	if (maxworkers == PRODUCE_WORKERS) {
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
-		fraction = 1.0f / timeDefault;
+		const float fraction = 1.0f / timeDefault;
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxworkers, tech->id, fraction);
 		return fraction;
@@ -153,8 +152,8 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
 		/* Calculate the fraction of item produced for our amount of workers. */
 		/* NOTE: I changed algorithm for a more realistic one, variing like maxworkers^2 -- Kracken 2007/11/18
 		 * now, production time is divided by 4 each time you double the number of worker */
-		fraction = (float) maxworkers / (PRODUCE_WORKERS * timeDefault);
-		fraction = fraction * maxworkers / PRODUCE_WORKERS;
+		const float fraction = (float)(maxworkers / (PRODUCE_WORKERS * timeDefault))
+			* maxworkers / PRODUCE_WORKERS;
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxworkers, tech->id, fraction);
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
@@ -177,12 +176,11 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
 	int a, i;
 	int producibleAmount = 0;
 	qboolean producible = qfalse;
-	requirement_t *req;
 
 	for (a = 0; a < amount; a++) {
 		producible = qtrue;
 		for (i = 0; i < reqs->numLinks; i++) {
-			req = &reqs->links[i];
+			requirement_t *req = &reqs->links[i];
 			if (req->type == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
@@ -210,8 +208,6 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requi
 {
 	int i;
 	equipDef_t *ed;
-	requirement_t *req;
-	objDef_t *item;
 
 	if (!base)
 		return;
@@ -224,10 +220,10 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requi
 		return;
 
 	for (i = 0; i < reqs->numLinks; i++) {
-		req = &reqs->links[i];
+		requirement_t *req = &reqs->links[i];
 		if (req->type == RS_LINK_ITEM) {
+			objDef_t *item = req->link;
 			assert(req->link);
-			item = req->link;
 			if (amount > 0) {
 				/* Add items to the base-storage. */
 				ed->num[item->idx] += (req->amount * amount);
@@ -247,7 +243,6 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requi
  * @param[in] aircraftTemplate aircraft to add.
  * @param[in] amount Desired amount to produce.
  * @param[in] disassembling True if this is disassembling, false if production.
- * @return
  */
 static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, signed int amount, qboolean disassembling)
 {
@@ -597,7 +592,7 @@ void PR_ProductionRun (void)
 static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 {
 	static char productionInfo[512];
-	const objDef_t *od, *compOd;
+	const objDef_t *od;
 	int time, i;
 	float prodPerHour;
 
@@ -671,7 +666,7 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 			Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
 			/* Print components. */
 			for (i = 0; i < comp->numItemtypes; i++) {
-				compOd = comp->items[i];
+				const objDef_t *compOd = comp->items[i];
 				assert(compOd);
 				Q_strcat(productionInfo, va(_("%s (%i) "), compOd->name, comp->item_amount[i]),
 					sizeof(productionInfo));
