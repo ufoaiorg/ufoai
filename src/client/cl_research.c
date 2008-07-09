@@ -1419,7 +1419,7 @@ static qboolean RS_DependsOn (char *id1, char *id2)
 /**
  * @brief Mark technologies as researched. This includes techs that depends on "tech" and have time=0
  * @param[in] tech Pointer to a technology_t struct.
- * @sa CL_CheckResearchStatus
+ * @sa RS_ResearchRun
  */
 static void RS_MarkResearched (technology_t *tech)
 {
@@ -1434,7 +1434,7 @@ static void RS_MarkResearched (technology_t *tech)
  * @todo Needs to check on the exact time that elapsed since the last check of the status.
  * @sa RS_MarkResearched
  */
-void CL_CheckResearchStatus (void)
+void RS_ResearchRun (void)
 {
 	int i, newResearch = 0;
 	base_t* checkBases[MAX_BASES];
@@ -1451,7 +1451,7 @@ void CL_CheckResearchStatus (void)
 			if (tech->time > 0 && tech->scientists > 0) {
 				base_t *base = tech->base;
 				assert(tech->base);	/**< If there are scientitsts there _has_ to be a base. */
-				if (B_GetBuildingStatus(base, B_LAB)) {
+				if (RS_ResearchAllowed(base)) {
 					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
 					Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
 					/** @todo: Just for testing, better formular may be needed. */
@@ -2629,11 +2629,10 @@ void RS_PostLoadInit (void)
  */
 qboolean RS_ResearchAllowed (const base_t* base)
 {
-	int hiredScientistCount = E_CountHired(base, EMPL_SCIENTIST);
-
+	assert(base);
 	if (base->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetBuildingStatus(base, B_LAB)
-	 && hiredScientistCount > 0) {
+	 && E_CountHired(base, EMPL_SCIENTIST) > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

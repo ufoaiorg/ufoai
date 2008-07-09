@@ -2885,14 +2885,6 @@ static void B_AssembleMap_f (void)
 		return;
 	}
 
-#if 0
-	/** @todo */
-	if (setUnderAttack) {
-		B_BaseAttack(base);
-		Com_DPrintf(DEBUG_CLIENT, "Set base %i under attack\n", base->idx);
-	}
-#endif
-
 	/* reset menu text */
 	MN_MenuTextReset(TEXT_STANDARD);
 

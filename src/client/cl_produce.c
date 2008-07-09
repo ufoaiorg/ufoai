@@ -452,7 +452,7 @@ void PR_ProductionRun (void)
 			continue;
 
 		/* Workshop is disabled because their dependences are disabled */
-		if (!B_GetBuildingStatus(base, B_WORKSHOP))
+		if (PR_ProductionAllowed(base))
 			continue;
 
 		prod = &gd.productions[i].items[0];

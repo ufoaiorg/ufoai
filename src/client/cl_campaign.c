@@ -1399,7 +1399,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	 * @note There should also always be an entrance - the aliens start there */
 	if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, B_COMMAND)) {
 		/** @todo handle command centre properly */
-		Com_Printf("B_BaseAttack: This base (%s) can not be set under attack - because there are no Command Center in this base\n", base->name);
+		Com_Printf("CP_BaseAttackStartMission: This base (%s) can not be set under attack - because there are no Command Center in this base\n", base->name);
 		CP_BaseAttackMissionLeave(mission);
 		return;
 	}
@@ -4146,7 +4146,7 @@ void CL_CampaignRun (void)
 		/* (this may run multiple times if the time stepping is > 1 hour at a time) */
 		while (currenthour < (int)floor(ccs.date.sec / SECONDS_PER_HOUR)) {
 			currenthour++;
-			CL_CheckResearchStatus();
+			RS_ResearchRun();
 			PR_ProductionRun();
 			UR_ProcessActive();
 			AII_UpdateInstallationDelay();

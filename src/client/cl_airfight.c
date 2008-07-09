@@ -179,7 +179,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
 	vec3_t newTarget;
 	float distance;
 	float offset;
-	
+
 	assert(projectile);
 
 	if (projectile->aimedAircraft) {
@@ -189,23 +189,23 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
 		VectorCopy(projectile->idleTarget, newTarget);
 		projectile->aimedBase = NULL;
 	}
-	
+
 	/* get the distance between the projectile and target */
 	distance = MAP_GetDistance(projectile->pos[0], newTarget);
-	
+
 	/* Work out how much the projectile should miss the target by.  We dont want it too close
-	 * or too far from the original target. 
+	 * or too far from the original target.
 	 * * 1/3 distance between target and projectile * random (range -0.5 to 0.5)
 	 * * Then make sure the value is at least greater than 0.1 or less than -0.1 so that
 	 *   the projectile doesn't land too close to the target. */
 	offset = (distance / 3) * (frand() - 0.5f);
-	
+
 	if (abs(offset) < 0.1f)
 		offset = 0.1f;
-	
+
 	newTarget[0] = newTarget[0] + offset;
 	newTarget[1] = newTarget[1] + offset;
-	
+
 	VectorCopy(newTarget, projectile->idleTarget);
 
 	if (returnToBase && projectile->attackingAircraft) {
@@ -648,22 +648,6 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		B_BuildingDestroy(base, &gd.buildings[base->idx][rnd]);
 		baseAttack = qtrue;
 	}
-
-#if 0
-	/* set the base under attack */
-	if (baseAttack) {
-		int idx;
-		/* if we shoot the attacking craft down, we won't set the base under attack */
-		if (projectile->attackingAircraft)
-			B_BaseAttack(base);
-
-		/** @todo Not the correct place - should be done after you freed your base from the invasion and
-		 * return back to geoscape to prevent another base attack just after you've secured it */
-		for (idx = gd.numProjectiles - 1; idx >= 0; idx--)
-			if (gd.projectiles[idx].aimedBase == base)
-				AIRFIGHT_RemoveProjectile(&gd.projectiles[idx]);
-	}
-#endif
 }
 
 /**
