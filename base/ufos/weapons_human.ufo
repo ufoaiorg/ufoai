@@ -1240,7 +1240,7 @@ item grenl
 	shape		"0 1 5 1"
 	center		"7 0 2.4"
 	scale		1.1
-	ammo		9
+	ammo		6
 	reload		14
 	price		2450
 	size		60
