@@ -1183,7 +1183,7 @@ static void RS_ResearchStop_f (void)
  */
 static void RS_ShowPedia_f (void)
 {
-	technology_t *tech;
+	const technology_t *tech;
 
 	/* We are not in base view. */
 	if (!baseCurrent)
@@ -1210,14 +1210,12 @@ static void RS_ShowPedia_f (void)
  */
 void RS_UpdateData (base_t* base, qboolean updateMenu)
 {
-	char name[MAX_VAR];
 	int i, j;
 	int available[MAX_BASES];
-	technology_t *tech;
 
 	/* Make everything the same (predefined in the ufo-file) color. */
 	if (updateMenu)
-		Cmd_ExecuteString("research_clear");
+		Cmd_ExecuteString("research_clear"); /* confunc */
 
 	for (i = 0; i < MAX_BASES; i++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(i);
@@ -1229,15 +1227,13 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 	RS_MarkResearchable(qfalse);
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
-		tech = RS_GetTechByIDX(i);
+		technology_t *tech = RS_GetTechByIDX(i);
 
 		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
 		if (tech->time == 0)
 			continue;
 
 		if (updateMenu) {
-			Com_sprintf(name, sizeof(name), tech->name);
-
 			/** @todo: add check for collected items */
 
 			/* Make icons visible for this entry */
@@ -1299,9 +1295,11 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 				/* Display the concated text in the correct list-entry.
 				 * But embed it in brackets if it isn't researched in the current base. */
 				if ((tech->scientists > 0) && tech->base != base) {
+					char name[MAX_VAR];
 					Com_sprintf(name, sizeof(name), "(%s)", _(tech->name));
-				}
-				Cvar_Set(va("mn_researchitem%i", j), _(name));
+					Cvar_Set(va("mn_researchitem%i", j), name);
+				} else
+					Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
 			}
 
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */

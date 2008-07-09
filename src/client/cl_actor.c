@@ -2227,7 +2227,7 @@ void CL_ActorUpdateCVars (void)
 
 		/* display special message */
 		if (cl.time < cl.msgTime)
-			Com_sprintf(infoText, sizeof(infoText), cl.msgText);
+			Q_strncpyz(infoText, cl.msgText, sizeof(infoText));
 
 		/* update HUD stats etc in more or shoot modes */
 		if (displayRemainingTus[0] || displayRemainingTus[1] || displayRemainingTus[2]) {
@@ -2393,7 +2393,7 @@ void CL_ActorUpdateCVars (void)
 			/* this allows us to display messages even with no actor selected */
 			if (cl.time < cl.msgTime) {
 				/* special message */
-				Com_sprintf(infoText, sizeof(infoText), cl.msgText);
+				Q_strncpyz(infoText, cl.msgText, sizeof(infoText));
 			}
 		}
 		mn.menuText[TEXT_STANDARD] = infoText;

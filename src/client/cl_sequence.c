@@ -581,7 +581,7 @@ int SEQ_Model (const char *name, char *data)
 		/* allocate */
 		memset(se, 0, sizeof(*se));
 		se->inuse = qtrue;
-		Com_sprintf(se->name, sizeof(se->name), name);
+		Q_strncpyz(se->name, name, sizeof(se->name));
 	}
 
 	/* get values */
@@ -740,7 +740,7 @@ void CL_ParseSequence (const char *name, const char **text)
 
 	sp = &sequences[numSequences++];
 	memset(sp, 0, sizeof(*sp));
-	Com_sprintf(sp->name, MAX_VAR, name);
+	Q_strncpyz(sp->name, name, sizeof(sp->name));
 	sp->start = numSeqCmds;
 
 	/* get it's body */
@@ -779,7 +779,7 @@ void CL_ParseSequence (const char *name, const char **text)
 				sp->length++;
 
 				/* copy name */
-				Com_sprintf(sc->name, sizeof(sc->name), token);
+				Q_strncpyz(sc->name, token, sizeof(sc->name));
 
 				/* read data */
 				token = COM_EParse(text, errhead, name);
@@ -804,7 +804,7 @@ void CL_ParseSequence (const char *name, const char **text)
 					else if (*token == '}')
 						depth--;
 					if (depth) {
-						Com_sprintf(data, maxLength, token);
+						Q_strncpyz(data, token, maxLength);
 						data += strlen(token) + 1;
 						maxLength -= (strlen(token) + 1);
 					}
