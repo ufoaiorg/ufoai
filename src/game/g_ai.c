@@ -469,9 +469,11 @@ static int AIL_see (lua_State *L)
 	if ((lua_gettop(L) > 0)) {
 
 		/* Get what to "see" with. */
+		vision = 0;
 		if (lua_isstring(L, 1)) {
 			s = lua_tostring(L, 1);
-			/** @todo no magic numbers please - introduce some self-speaking-constants */
+			/** @todo Properly implement at edict level, get rid of magic numbers.
+			 * These are only "placeholders". */
 			if (Q_strcmp(s, "all") == 0)
 				vision = 0;
 			else if (Q_strcmp(s, "sight") == 0)
@@ -480,30 +482,26 @@ static int AIL_see (lua_State *L)
 				vision = 2;
 			else if (Q_strcmp(s, "infrared") == 0)
 				vision = 3;
-			else {
+			else
 				AIL_invalidparameter(1);
-				vision = 0;
-			}
 		}
 		else AIL_invalidparameter(1);
 
 		/* We now check for different teams. */
+		team = TEAM_NONE;
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
 				s = lua_tostring(L, 2);
-				/** @todo Use the TEAM_* macros or some others, but no magic numbers please */
 				if (Q_strcmp(s, "all") == 0)
-					team = 0;
+					team = TEAM_NONE;
 				else if (Q_strcmp(s, "alien") == 0)
-					team = 1;
+					team = TEAM_ALIEN;
 				else if (Q_strcmp(s, "civilian") == 0)
-					team = 2;
+					team = TEAM_CIVILIAN;
 				else if (Q_strcmp(s, "phalanx") == 0)
-					team = 3;
-				else {
+					team = TEAM_PHALANX;
+				else
 					AIL_invalidparameter(2);
-					team = 0;
-				}
 			}
 			else AIL_invalidparameter(2);
 		}
@@ -515,16 +513,14 @@ static int AIL_see (lua_State *L)
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 		if (check->inuse && G_IsLivingActor(check) && (AIL_ent != check) &&
 				((vision == 0)) && /* Vision checks. */
-				((team == 0) || /* Check for team match if needed. */
-					((team == 1) && (check->team == TEAM_ALIEN)) ||
-					((team == 2) && (check->team == TEAM_CIVILIAN)) ||
-					((team == 3) && (check->team == TEAM_PHALANX)))) {
+				((team == TEAM_NONE) || /* Check for team match if needed. */
+					(check->team == team))) {
 
 			dist_lookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
 		}
 
-	/* Sort by distance */
+	/* Sort by distance - nearest first. */
 	for (i = 0; i < n; i++) { /* Until we fill sorted */
 		cur = -1;
 		for (j = 0; j < n; j++) { /* Check for closest */
@@ -537,6 +533,7 @@ static int AIL_see (lua_State *L)
 					if (sorted[k] == unsorted[j])
 						break;
 
+				/* Not already sorted and is new minimum. */
 				if (k == i)
 					cur = j;
 			}

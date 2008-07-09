@@ -317,6 +317,7 @@ ELEMENTS COMMUNICATED ACROSS THE NET
 ==========================================================
 */
 
+#define TEAM_NONE		-1
 #define TEAM_CIVILIAN   0
 #define TEAM_PHALANX    1
 #define TEAM_ALIEN      7
