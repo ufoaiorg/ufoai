@@ -232,8 +232,8 @@ void CL_LanguageInit (void)
 			selectBoxOption = MN_AddSelectboxOption(languageOptions);
 			if (!selectBoxOption)
 				break;
-			Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
-			Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
+			Q_strncpyz(selectBoxOption->label, language->localeString, sizeof(selectBoxOption->label));
+			Q_strncpyz(selectBoxOption->value, language->localeID, sizeof(selectBoxOption->value));
 		}
 	}
 
@@ -254,8 +254,8 @@ void CL_LanguageInit (void)
 			selectBoxOption = MN_AddSelectboxOption(languageOptions);
 			if (!selectBoxOption)
 				break;
-			Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
-			Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
+			Q_strncpyz(selectBoxOption->label, language->localeString, sizeof(selectBoxOption->label));
+			Q_strncpyz(selectBoxOption->value, language->localeID, sizeof(selectBoxOption->value));
 		}
 	}
 	/* Set to the locale remembered previously. */

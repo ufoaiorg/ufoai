@@ -157,14 +157,14 @@ static void HOS_UpdateMenu (void)
 			if (employee->chr.HP >= employee->chr.maxHP)
 				continue;
 
-			if ((j >= hospitalFirstEntry) && (entry < HOS_MENU_MAX_ENTRIES)) {
+			if (j >= hospitalFirstEntry && entry < HOS_MENU_MAX_ENTRIES) {
 				/* Print name. */
-				Com_sprintf(name, sizeof(name), employee->chr.name);
+				Q_strncpyz(name, employee->chr.name, sizeof(name));
 				/* Print rank for soldiers or type for other personel. */
 				if (type == EMPL_SOLDIER)
-					Com_sprintf(rank, sizeof(rank), _(gd.ranks[employee->chr.score.rank].name));
+					Q_strncpyz(rank, _(gd.ranks[employee->chr.score.rank].name), sizeof(rank));
 				else
-					Com_sprintf(rank, sizeof(rank), E_GetEmployeeString(employee->type));
+					Q_strncpyz(rank, E_GetEmployeeString(employee->type), sizeof(rank));
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))

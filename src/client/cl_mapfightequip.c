@@ -787,8 +787,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		/* Weight are not used for base defence atm
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1)); */
 	} else {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(slot->item->tech->name));
-		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", _(slot->item->tech->name));
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, _("This defence system is functional.\n"), sizeof(smallbuffer1));
 		else if (slot->installationTime > 0)
@@ -803,9 +802,8 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		if (!slot->nextItem)
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No defence system assigned."));
 		else {
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(slot->nextItem->tech->name));
-			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This defence system will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("%s\nThis defence system will be operational in %i hours.\n"),
+				_(slot->nextItem->tech->name), slot->nextItem->craftitem.installationTime - slot->installationTime);
 		}
 	} else {
 		*smallbuffer2 = '\0';
@@ -817,7 +815,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		if (!slot->ammo)
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defence system."));
 		else
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(slot->ammo->tech->name));
+			Q_strncpyz(smallbuffer3, _(slot->ammo->tech->name), sizeof(smallbuffer3));
 		/* show remaining missile in battery for missiles */
 		if ((airequipID == AC_ITEM_AMMO_MISSILE) || (airequipID == AC_ITEM_BASE_MISSILE))
 			Q_strcat(smallbuffer3, va(ngettext(" (%i missile left)", " (%i missiles left)", slot->ammoLeft), slot->ammoLeft), sizeof(smallbuffer3));
@@ -1157,9 +1155,9 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	/* Fill the texts of each zone, if we are dealing with a pilot, we need to  */
 	if (airequipID == AC_ITEM_PILOT) {
 		if (aircraft->pilot) {
-			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(aircraft->pilot->chr.name));
+			Q_strncpyz(smallbuffer1, _(aircraft->pilot->chr.name), sizeof(smallbuffer1));
 		} else {
-			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No pilot assigned."));
+			Q_strncpyz(smallbuffer1, _("No pilot assigned."), sizeof(smallbuffer1));
 		}
 		*smallbuffer2 = '\0';
 		*smallbuffer3 = '\0';
@@ -1170,16 +1168,18 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		/* First slot: item currently assigned */
 		if (!slot->item) {
 			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
-			Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."),
+				AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 		} else {
-			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(slot->item->tech->name));
-			Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
+			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", _(slot->item->tech->name));
 			if (!slot->installationTime)
 				Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
 			else if (slot->installationTime > 0)
-				Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),slot->installationTime), sizeof(smallbuffer1));
+				Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),
+					slot->installationTime), sizeof(smallbuffer1));
 			else
-				Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),-slot->installationTime), sizeof(smallbuffer1));
+				Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),
+					-slot->installationTime), sizeof(smallbuffer1));
 		}
 		mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
@@ -1203,7 +1203,8 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 				Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon."));
 			} else {
 				AIM_NoEmphazeAmmoSlotText();
-				Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(slot->ammo->tech->name));
+				assert(slot->ammo->tech);
+				Q_strncpyz(smallbuffer3, _(slot->ammo->tech->name), sizeof(smallbuffer3));
 			}
 		} else {
 			*smallbuffer3 = '\0';

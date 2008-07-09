@@ -270,7 +270,6 @@ void IN_JoystickInitMenu (void)
 	int i, total;
 	menu_t* menu;
 	menuNode_t* joystickOptions;
-	selectBoxOptions_t* selectBoxOption;
 
 	menu = MN_GetMenu("options_input");
 	if (!menu)
@@ -281,18 +280,18 @@ void IN_JoystickInitMenu (void)
 
 	total = SDL_NumJoysticks();
 	for (i = 0; i < total; i++) {
-		selectBoxOption = MN_AddSelectboxOption(joystickOptions);
+		selectBoxOptions_t *selectBoxOption = MN_AddSelectboxOption(joystickOptions);
 		if (!selectBoxOption)
 			break;
-		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), SDL_JoystickName(i));
+		Q_strncpyz(selectBoxOption->label, SDL_JoystickName(i), sizeof(selectBoxOption->label));
 		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "%i", i);
 	}
 
 	if (!total) {
-		selectBoxOption = MN_AddSelectboxOption(joystickOptions);
+		selectBoxOptions_t *selectBoxOption = MN_AddSelectboxOption(joystickOptions);
 		if (selectBoxOption) {
-			Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), "None");
-			Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "0");
+			Q_strncpyz(selectBoxOption->label, "None", sizeof(selectBoxOption->label));
+			Q_strncpyz(selectBoxOption->value, "0", sizeof(selectBoxOption->value));
 		}
 	}
 }
