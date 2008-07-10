@@ -993,7 +993,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded %i", numTiles);
 
 	curTile = &mapTiles[numTiles];
-	memset(curTile, 0, sizeof(mapTile_t));
+	memset(curTile, 0, sizeof(*curTile));
 	Q_strncpyz(curTile->name, name, sizeof(curTile->name));
 
 	/* pathfinding and the like must be shifted on the worldplane when we
@@ -1025,7 +1025,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	numTiles++;
 
 	CMod_LoadRouting(&header.lumps[LUMP_ROUTING], sX, sY, sZ);
-	memcpy(&svMap, &clMap, sizeof(routing_t));
+	memcpy(&svMap, &clMap, sizeof(svMap));
 
 	FS_FreeFile(buf);
 
@@ -1310,7 +1310,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 		}
 
 		forbidden_size = *(p + 1);
-		memcpy(&size, forbidden_size, sizeof(int));
+		memcpy(&size, forbidden_size, sizeof(size));
 		switch (size) {
 		case ACTOR_SIZE_NORMAL:
 			if (x == (*p)[0] && y == (*p)[1] && z == (*p)[2])
@@ -1572,9 +1572,9 @@ static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor
 	}
 
 	/* Store move. */
-	R_AREA(map, nx, ny, z) = l;	/* *< Store TUs for this square. */
+	R_AREA(map, nx, ny, z) = l;	/**< Store TUs for this square. */
 	VectorSet(dummy, nx, ny, z);
-	PQueuePush(pqueue, dummy, l); /* TODO add heuristic for A* algorithm */
+	PQueuePush(pqueue, dummy, l); /** @todo add heuristic for A* algorithm */
 }
 
 /**
@@ -1676,7 +1676,6 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, pos_t sz, byte l)
 {
 	int x, y, sh;
 	byte dir; /**< Direction vector index */
-	int dx, dy;
 	pos_t z;
 	pos3_t dummy;
 
@@ -1689,8 +1688,8 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, pos_t sz, byte l)
 
 	for (dir = 0; dir < DIRECTIONS; dir++) {
 		/** @todo Why do we use the negative values here? */
-		dx = -dvecs[dir][0];
-		dy = -dvecs[dir][1];
+		const int dx = -dvecs[dir][0];
+		const int dy = -dvecs[dir][1];
 
 		/* range check */
 		if (dx > 0 && pos[0] >= PATHFINDING_WIDTH - 1)
