@@ -1379,8 +1379,8 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
  * @param[in] player Player who is moving an actor
  * @param[in] visTeam
  * @param[in] num Edict index to move
- * @param[in] to
- * @param[in] stop
+ * @param[in] to The grid position to walk to
+ * @param[in] stop qfalse means that VIS_STOP is ignored
  * @param[in] quiet Don't print the console message (G_ActionCheck) if quiet is true.
  * @sa CL_ActorStartMove
  * @todo 2x2 units?
@@ -1431,8 +1431,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		/* start move */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
 		gi.WriteShort(ent->number);
+		/* this let the footstep sounds play even over network */
 		ent->think = G_PhysicsStep;
 		ent->nextthink = level.time;
+		/* slower if crouched */
 		ent->speed = (ent->state & STATE_CROUCHED) ? 50 : 100;
 
 		/* assemble dv-encoded move data */
@@ -1455,6 +1457,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			steps = 0;
 			sentAppearPerishEvent = qfalse;
 
+			/* no floor inventory at this point */
 			FLOOR(ent) = NULL;
 
 			/* BEWARE: do not print anything (even with DPrintf)
@@ -1502,7 +1505,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				contentFlags = gi.PointContents(pointTrace);
 
-				/* link it at new position */
+				/* link it at new position - this must be done for every edict
+				 * movement - to let the server know about it. */
 				gi.LinkEdict(ent);
 
 				/** Count move for stats
@@ -1519,11 +1523,21 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				if (!steps) {
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
 					gi.WriteShort(num);
+					/* stepAmount is a pointer to a location in the netchannel
+					 * the value of this pointer depends on how far the actor walks
+					 * and this might be influenced at a later stage inside this
+					 * loop. That's why we can modify the value of this byte
+					 * if e.g. a VIS_STOP occured and no more steps should be made.
+					 * But keep in mind, that no other events might be between
+					 * this event and its successful end - otherwise the
+					 * stepAmount pointer would no longer be valid and you would
+					 * modify data in the new event. */
 					stepAmount = gi.WriteDummyByte(0);
 				}
 
 				assert(stepAmount);
 
+				/* the moveinfo stuff is used inside the G_PhysicsStep think function */
 				if (ent->moveinfo.steps >= MAX_DVTAB) {
 					ent->moveinfo.steps = 0;
 					ent->moveinfo.currentStep = 0;
@@ -1605,6 +1619,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					sentAppearPerishEvent = qfalse;
 				}
 			}
+
+			/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
 
 			/* submit the TUs / round down */
 			if (g_notu != NULL && !g_notu->integer)
