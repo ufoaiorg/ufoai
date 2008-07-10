@@ -850,8 +850,10 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 				char *fbuf;
 				int size;
 				size = FS_LoadFile("irc_motd.txt", (byte **) &fbuf);
-				if (size)
+				if (size) {
 					Irc_AppendToBuffer(fbuf);
+					FS_FreeFile(&fbuf);
+				}
 			}
 			return qtrue;
 
