@@ -101,7 +101,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 {
 	int baseIdx, homebase, numAvailableBase = 0;
 	baseCapacities_t capacity;
-	static char text[MAX_VAR];
+	char text[MAX_VAR];
 
 	assert(aircraft);
 
