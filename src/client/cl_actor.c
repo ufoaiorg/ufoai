@@ -455,8 +455,7 @@ static void HighlightWeaponButton (int button)
 	/* only one button can be highlighted at once, so reset other buttons */
 	ClearHighlights();
 
-	Q_strncpyz(cbufText, "sel", sizeof(cbufText));
-	Q_strcat(cbufText, shoot_type_strings[button], sizeof(cbufText));
+	Com_sprintf(cbufText, sizeof(cbufText), "sel%s", shoot_type_strings[button]);
 	Cbuf_AddText(cbufText);
 	weaponButtonState[button] = BT_STATE_HIGHLIGHT;
 }

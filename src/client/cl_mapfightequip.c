@@ -812,10 +812,10 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	/* Third slot: ammo slot (only used for weapons) */
 	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->item) {
-		if (!slot->ammo)
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defence system."));
-		else
-			Q_strncpyz(smallbuffer3, _(slot->ammo->tech->name), sizeof(smallbuffer3));
+		char const* const ammo = slot->ammo ?
+			_(slot->ammo->tech->name) :
+			_("No ammo assigned to this defence system.");
+		Q_strncpyz(smallbuffer3, ammo, sizeof(smallbuffer3));
 		/* show remaining missile in battery for missiles */
 		if ((airequipID == AC_ITEM_AMMO_MISSILE) || (airequipID == AC_ITEM_BASE_MISSILE))
 			Q_strcat(smallbuffer3, va(ngettext(" (%i missile left)", " (%i missiles left)", slot->ammoLeft), slot->ammoLeft), sizeof(smallbuffer3));

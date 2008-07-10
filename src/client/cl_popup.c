@@ -101,7 +101,6 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 {
 	int baseIdx, homebase, numAvailableBase = 0;
 	baseCapacities_t capacity;
-	char text[MAX_VAR];
 
 	assert(aircraft);
 
@@ -127,35 +126,37 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	homebase = 0;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		char        text[MAX_VAR];
+		char const* msg;
+
 		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
-		Com_sprintf(text, sizeof(text), "%s\t", base->name);
-
 		if (base == aircraft->homebase) {
-			Q_strcat(text, _("current homebase of aircraft"), sizeof(text));
+			msg = _("current homebase of aircraft");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 			homebase = popupNum;
 		} else if (base->capacities[capacity].cur >= base->capacities[capacity].max) {
-			Q_strcat(text, _("no more available hangar"), sizeof(text));
+			msg = _("no more available hangar");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 		} else if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos)) {
-			Q_strcat(text, _("base is too far"), sizeof(text));
+			msg = _("base is too far");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 		} else if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max) {
-			Q_strcat(text, _("no more quarter for employees aboard"), sizeof(text));
+			msg = _("no more quarter for employees aboard");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 		} else if (aircraft->maxTeamSize &&
-			(base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)) {
-			Q_strcat(text, _("no more room in storage"), sizeof(text));
+				base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max) {
+			msg = _("no more room in storage");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 		} else {
-			Q_strcat(text, _("base can hold aircraft"), sizeof(text));
+			msg = _("base can hold aircraft");
 			LIST_Add(&popupListData, (byte *)&baseIdx, sizeof(int));
 			numAvailableBase++;
 		}
 
+		Com_sprintf(text, sizeof(text), "%s\t%s", base->name, msg);
 		LIST_AddString(&popupListText, text);
 		popupNum++;
 	}
