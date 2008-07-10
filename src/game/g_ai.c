@@ -1426,6 +1426,7 @@ static int AI_InitActor (edict_t * ent, char *type, char *subtype)
 		Com_Printf("Unable to load Lua file '%s'.\n", path);
 		return -1;
 	}
+	gi.FS_FreeFile(fbuf);
 
 	return 0;
 }
