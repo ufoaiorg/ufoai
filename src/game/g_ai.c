@@ -622,11 +622,10 @@ static int AIL_canreload (lua_State *L)
 static int AIL_reload (lua_State *L)
 {
 	shoot_types_t weap;
-	const char *s;
 
 	if (lua_gettop(L) > 0) {
 		if (lua_isstring(L,1)) {
-			s = lua_tostring(L,1);
+			const char *s = lua_tostring(L,1);
 
 			if (Q_strcmp(s,"right")==0)
 				weap = gi.csi->idRight;
