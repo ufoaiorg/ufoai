@@ -1454,7 +1454,6 @@ int Com_StringToTeamNum (const char* teamString)
 		return TEAM_CIVILIAN;
 	if (!Q_strncmp(teamString, "TEAM_ALIEN", MAX_VAR))
 		return TEAM_ALIEN;
-	/* there may be other ortnok teams - only check first 6 characters */
 	Com_Printf("Com_StringToTeamNum: Unknown teamString: '%s'\n", teamString);
 	return -1;
 }

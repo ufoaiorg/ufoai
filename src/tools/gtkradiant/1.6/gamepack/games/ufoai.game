@@ -15,9 +15,9 @@
 -->
 
 <game
-	name="UFO:AI"
-	gametools="/home/mattn/dev/ufoai/trunk/src/tools/gtkradiant/1.6/gamepack/ufoai.game"
-	enginepath="/home/mattn/dev/ufoai/trunk/"
+	name="UFO-:AI"
+	gametools_linux="/home/mattn/dev/ufoai/trunk/src/tools/gtkradiant/1.6/gamepack/ufoai.game"
+	enginepath_linux="/home/mattn/dev/ufoai/trunk/"
 	default_scale="1.0"
 	no_maps_in_home="1"
 	quake2="1"
