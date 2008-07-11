@@ -1080,6 +1080,7 @@ void NET_DatagramSend (struct datagram_socket *s, const char *buf, int len, stru
 /**
  * @sa NET_DatagramSend
  * @sa NET_DatagramSocketNew
+ * @todo This is only sending on the first available device, what if we have several devices?
  */
 void NET_DatagramBroadcast (struct datagram_socket *s, const char *buf, int len, int port)
 {
