@@ -164,7 +164,6 @@ static void INS_SelectInstallation_f (void)
 			installationCurrent->idx = installationID;
 /*			Cvar_Set("mn_installation_newcost", va(_("%i c"), curCampaign->installationcost)); @todo setup installation cost for the three types */
 			Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: installationID is valid for installation: %s\n", installationCurrent->name);
-			Cmd_ExecuteString("set_installation_to_normal");
 		} else {
 			Com_Printf("MaxInstallations reached\n");
 			/* select the first installation in list */
@@ -177,12 +176,6 @@ static void INS_SelectInstallation_f (void)
 		if (installation->founded) {
 			installationCurrent = installation;
 			gd.mapAction = MA_NONE;
-			MN_PushMenu("installations");
-			switch (installationCurrent->installationStatus) {
-			default:
-				Cmd_ExecuteString("set_installation_to_normal");
-				break;
-			}
 		}
 	} else
 		return;

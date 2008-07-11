@@ -1214,10 +1214,6 @@ menu popup_newinstallation
 		align	cc
 	}
 
-	func init
-	{
-		cmd		"mn_setinstallationtitle;installation_check_max;"
-	}
 }
 
 // ==================
