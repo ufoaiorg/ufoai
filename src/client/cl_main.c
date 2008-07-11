@@ -1141,7 +1141,7 @@ static void CL_PingServers_f (void)
 
 	/* broadcast search for all the servers int the local network */
 	if (cls.netDatagramSocket) {
-		char buf[] = "discover";
+		const char buf[] = "discover";
 		NET_DatagramBroadcast(cls.netDatagramSocket, buf, sizeof(buf), PORT_SERVER);
 	}
 
