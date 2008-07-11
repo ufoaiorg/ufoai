@@ -235,7 +235,6 @@ SOUND FILES
  */
 static Mix_Chunk *S_LoadSound (const char *sound)
 {
-	char name[MAX_QPATH];
 	size_t len;
 	SDL_RWops *src;
 	byte *sfxBuf;
@@ -245,21 +244,26 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 	if (!sound || *sound == '*')
 		return NULL;
 
-	Q_strncpyz(name, sound, sizeof(name));
-	len = strlen(name);
+	len = strlen(sound);
 	if (len + 4 >= MAX_QPATH) {
-		Com_Printf("S_LoadSound: MAX_QPATH exceeded: "UFO_SIZE_T"\n", len + 4);
+		Com_Printf("S_LoadSound: MAX_QPATH exceeded for: '%s'\n", sound);
 		return NULL;
 	}
 
 	/* load it in */
-	if ((size = FS_LoadFile(va("sound/%s.ogg", name), (byte **)&sfxBuf)) != -1) {
+	if ((size = FS_LoadFile(va("sound/%s.ogg", sound), (byte **)&sfxBuf)) != -1) {
 		src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
-	} else if ((size = FS_LoadFile(va("sound/%s.wav", name), (byte **)&sfxBuf)) != -1) {
+	} else if ((size = FS_LoadFile(va("sound/%s.wav", sound), (byte **)&sfxBuf)) != -1) {
 		src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
+	} else {
+		Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
+		return NULL;
 	}
+
+	if (!mix)
+		Com_Printf("S_LoadSound: '%s' doesn't seam to be a valid ogg or wav file\n", sound);
 	return mix;
 }
 
