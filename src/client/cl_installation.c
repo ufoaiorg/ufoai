@@ -206,12 +206,11 @@ static void INS_BuildInstallation_f (void)
 			installationCurrent->idx = gd.numInstallations - 1;
 			installationCurrent->founded = qtrue;
 			installationCurrent->installationStatus = INSTALLATION_WORKING;
-			Q_strncpyz (installationCurrent->name, "MyInstall", sizeof("MyInstall"));
 			
 			campaignStats.installationsBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - installationcost);
-/*			Q_strncpyz(installationCurrent->name, mn_installation_title->string, sizeof(installationCurrent->name)); */
+			Q_strncpyz(installationCurrent->name, mn_installation_title->string, sizeof(installationCurrent->name));
 			nation = MAP_GetNation(installationCurrent->pos);
 			if (nation)
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new installation has been built: %s (nation: %s)"), mn_installation_title->string, _(nation->name));
