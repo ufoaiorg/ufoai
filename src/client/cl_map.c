@@ -256,7 +256,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			const nation_t* nation = MAP_GetNation(newBasePos);
+			const nation_t* nation = MAP_GetNation(pos);
 			if (nation)
 				Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base in nation '%s'\n", nation->id);
 
@@ -274,6 +274,30 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 			return;
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
+			if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+				MAP_SetOverlay("radar");
+		}
+		break;
+	case MA_NEWINSTALLATION:
+		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
+			const nation_t* nation = MAP_GetNation(pos);
+			if (nation)
+				Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build installation in nation '%s'\n", nation->id);
+
+			Vector2Copy(pos, newInstallationPos);
+			Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build installation at: %.0f:%.0f\n", pos[0], pos[1]);
+
+			CL_GameTimeStop();
+
+			if (gd.numInstallations < MAX_INSTALLATIONS) {
+				Cvar_Set("mn_installation_title", gd.installations[gd.numInstallations].name);
+				MN_PushMenu("popup_newinstallation");
+			} else {
+				MN_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
+			}
+			return;
+		} else {
+			MN_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
 			if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 				MAP_SetOverlay("radar");
 		}
@@ -1351,7 +1375,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	aircraft_t *aircraft;
 	const linkedList_t *list = ccs.missions;
 	aircraftProjectile_t *projectile;
-	int x, y, i, baseIdx;
+	int x, y, i, baseIdx, installationIdx;
 	const char* font;
 	const vec2_t northPole = {0.0f, 90.0f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
@@ -1416,6 +1440,41 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 			R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1],  _(ms->location), 0, 0, NULL, qfalse);
 		}
+	}
+
+	/* draw installations */
+	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		if (!installation)
+			continue;
+
+		/* Draw weapon range if at least one UFO is visible */
+		if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
+			/** @todo When there will be different possible installation weapon, range should change */
+			for (i = 0; i < installation->numBatteries; i++) {
+				if (installation->batteries[i].slot.item && installation->batteries[i].slot.ammoLeft > 0
+					&& installation->batteries[i].slot.installationTime == 0) {
+					MAP_MapDrawEquidistantPoints(node, installation->pos,
+							installation->batteries[i].slot.ammo->craftitem.stats[AIR_STATS_WRANGE], red);
+				}
+			}
+		}
+
+		/* Draw installation radar (only the "wire" style part) */
+		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+			RADAR_DrawInMap(node, &installation->radar, installation->pos);
+
+		/* Draw installation */
+		if (cl_3dmap->integer) {
+			const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
+			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, "base", 0);
+		} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+		}
+
+		/* Draw base names */
+		if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
+			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], installation->name, 0, 0, NULL, qfalse);
 	}
 
 	closestInterceptorDistance = -1.0f;
@@ -1733,6 +1792,9 @@ void MAP_DrawMap (const menuNode_t* node)
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
 		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
+		return;
+	case MA_NEWINSTALLATION:
+		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new installation on the map.\n");
 		return;
 	case MA_BASEATTACK:
 		if (selectedMission)

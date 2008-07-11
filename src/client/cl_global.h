@@ -85,6 +85,14 @@ typedef struct globalData_s
 	/* Total number of buildings per base. */
 	int numBuildings[MAX_BASES];
 
+	/* == installations == */
+	/* A list of _all_ installations ... even unbuilt ones. */
+	installation_t installations[MAX_INSTALLATIONS];
+	/* Total number of parsed installation-names. */
+	int numInstallationNames;
+	/* Total number of built installations (how many are enabled). */
+	int numInstallations;
+
 	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
 	mapAction_t mapAction;

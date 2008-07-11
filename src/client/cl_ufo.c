@@ -683,7 +683,7 @@ static void UFO_RemoveFromGeoscape_f (void)
 void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 {
 	qboolean visible;
-	int baseIdx;
+	int baseIdx, installationIdx;
 	aircraft_t *ufo, *aircraft;
 
 	/* For each ufo in geoscape */
@@ -704,6 +704,15 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 
 			/* maybe the ufo is already visible, don't reset it */
 			ufo->visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
+		}
+
+		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+			installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
+			if (!installation)
+				continue;
+
+			/* maybe the ufo is already visible, don't reset it */
+			ufo->visible |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, visible);
 		}
 
 		/* Check for ufo tracking by aircraft */

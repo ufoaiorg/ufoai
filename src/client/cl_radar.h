@@ -41,12 +41,14 @@ typedef struct radar_s {
 } radar_t;
 
 void RADAR_UpdateBaseRadarCoverage(void);
+void RADAR_UpdateInstallationRadarCoverage(void);
 void RADAR_UpdateWholeRadarOverlay(void);
 void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
 void RADAR_DeactivateRadarOverlay(void);
 void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, qboolean destroyed);
 void RADAR_Initialise(radar_t* radar, float range, float level, qboolean updateSourceRadarMap);
 void RADAR_UpdateBaseRadarCoverage_f(void);
+void RADAR_UpdateInstallationRadarCoverage_f(struct installation_s *installation);
 qboolean RADAR_CheckRadarSensored(const vec2_t pos);
 qboolean RADAR_CheckUFOSensored(radar_t* radar, vec2_t posRadar,
 	const struct aircraft_s* ufo, qboolean wasUFOSensored);

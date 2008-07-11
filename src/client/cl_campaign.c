@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
 #include "menu/m_inventory.h"
+#include "cl_installation.h"
 
 /**
  * @brief This fake aircraft is used to assign soldiers for a base attack mission
@@ -157,6 +158,50 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 
 	return qtrue;
 }
+
+/**
+ * @brief Check conditions for new installation and build it.
+ * @param[in] pos Position on the geoscape.
+ * @return True if the base has been build.
+ * @sa INS_BuildInstallation
+ */
+qboolean CL_NewInstallation (installation_t* installation, vec2_t pos)
+{
+	byte *colorTerrain;
+
+	assert(installation);
+
+	if (installation->founded) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_NewInstallation: installation already founded: %i\n", installation->idx);
+		return qfalse;
+	} else if (gd.numInstallations == MAX_INSTALLATIONS) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_NewInstallation: max installation limit hit\n");
+		return qfalse;
+	}
+
+	colorTerrain = MAP_GetColor(pos, MAPTYPE_TERRAIN);
+
+	if (MapIsWater(colorTerrain)) {
+		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
+		MN_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
+		return qfalse;
+	} else {
+		Com_DPrintf(DEBUG_CLIENT, "CL_NewInstallation: zoneType: '%s'\n", MAP_GetTerrainType(colorTerrain));
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for installation terrain: R:%i G:%i B:%i\n", colorTerrain[0], colorTerrain[1], colorTerrain[2]);
+
+	/* build installation */
+	Vector2Copy(pos, installation->pos);
+
+	gd.numInstallations++;
+
+	/* set up the installation with buildings that have the autobuild flag set */
+	INS_SetUpInstallation(installation); 
+
+	return qtrue;
+}
+
 
 /*****************************************************************************
  *
@@ -6411,6 +6456,7 @@ static void CL_GameNew_f (void)
 	gd.numAircraft = 0;
 
 	B_NewBases();
+	INS_NewInstallations();
 	PR_ProductionInit();
 	R_CreateRadarOverlay();
 

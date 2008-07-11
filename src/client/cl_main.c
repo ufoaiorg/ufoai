@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_particle.h"
 #include "cl_actor.h"
 #include "cl_basesummary.h"
+#include "cl_installation.h"
 #include "cl_hospital.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
@@ -1721,6 +1722,8 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		RS_ParseTechnologies(name, text);
 	else if (!Q_strncmp(type, "basenames", 9))
 		B_ParseBaseNames(name, text);
+	else if (!Q_strncmp(type, "installationnames", 17))
+		INS_ParseInstallationNames(name, text);
 	else if (!Q_strncmp(type, "basetemplate", 10))
 		B_ParseBaseTemplate(name, text);
 	else if (!Q_strncmp(type, "nation", 6))
@@ -2007,6 +2010,7 @@ static void CL_InitLocal (void)
 	MN_InitStartup();
 	UP_InitStartup();
 	B_InitStartup();
+	INS_InitStartup();
 	RS_InitStartup();
 	PR_InitStartup();
 	E_InitStartup();

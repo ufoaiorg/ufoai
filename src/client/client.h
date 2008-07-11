@@ -286,6 +286,7 @@ void CL_ClearState(void);
 #define MAX_ACTIVETEAM	8
 
 struct base_s;
+struct installation_s;
 
 typedef struct chr_list_s {
 	character_t* chr[MAX_ACTIVETEAM];

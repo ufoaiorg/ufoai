@@ -38,6 +38,8 @@ qboolean radarOverlayWasSet;	/**< used to store the previous configuration of ov
 /* Define radar range */
 const float RADAR_BASERANGE = 24.0f;
 const float RADAR_AIRCRAFTRANGE = 10.0f;
+const float RADAR_INSTALLATIONRANGE = 12.0f;
+const float RADAR_INSTALLATIONLEVEL = 1.0f;
 /** @brief outer circle radar is bigger than inner circle radar by 100 * RADAR_OUTER_CIRCLE_RATIO percent */
 static const float RADAR_OUTER_CIRCLE_RATIO = 0.41f;
 /** @brief this is the multiplier applied to the radar range when the radar levels up */
@@ -67,6 +69,32 @@ void RADAR_UpdateBaseRadarCoverage (void)
 	R_InitializeRadarOverlay(qfalse);
 	R_UploadRadarCoverage(qtrue);
 }
+
+/**
+ * @brief Update installation map radar coverage.
+ * @note This is only called when radar range of installations change.
+ */
+void RADAR_UpdateInstallationRadarCoverage (void)
+{
+	int installationIdx;
+
+	/* Initialise radar range (will be filled below) */
+	R_InitializeRadarOverlay(qtrue);
+
+	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		if (installation) {
+			const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * installation->radar.range;
+			R_AddRadarCoverage(installation->pos, installation->radar.range, rangeTracking, qtrue);
+		}
+	}
+
+	/* Smooth and bind radar overlay without aircraft (in case no aircraft is on geoscape:
+	 * RADAR_UpdateWholeRadarOverlay won't be called) */
+	R_InitializeRadarOverlay(qfalse);
+	R_UploadRadarCoverage(qtrue);
+}
+
 
 /**
  * @brief Update map radar coverage with moving radar
@@ -296,8 +324,10 @@ void RADAR_Initialise (radar_t* radar, float range, float level, qboolean update
 
 	assert(radar->numUFOs >= 0);
 
-	if (updateSourceRadarMap && (radar->range - oldrange > UFO_EPSILON))
+	if (updateSourceRadarMap && (radar->range - oldrange > UFO_EPSILON)) {
 		RADAR_UpdateBaseRadarCoverage();
+		RADAR_UpdateInstallationRadarCoverage();
+	}
 
 	RADAR_DeactivateRadarOverlay();
 }
@@ -335,6 +365,15 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 	RADAR_Initialise(&base->radar, RADAR_BASERANGE, level, qtrue);
 	CP_UpdateMissionVisibleOnGeoscape();
 }
+
+/**
+ * @brief Update radar coverage when building/destroying new radar
+ */
+void RADAR_UpdateInstallationRadarCoverage_f (installation_t *installation)
+{
+	RADAR_Initialise(&installation->radar, RADAR_INSTALLATIONRANGE, RADAR_INSTALLATIONLEVEL, qtrue);
+	CP_UpdateMissionVisibleOnGeoscape();
+} 
 
 /**
  * @brief Check if the specified position is within base radar range

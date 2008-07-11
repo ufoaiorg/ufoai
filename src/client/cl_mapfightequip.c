@@ -2163,6 +2163,21 @@ int AII_AircraftCanShoot (const aircraft_t *aircraft)
 	return qfalse;
 }
 
+static qboolean AII_WeaponsCanShoot (const baseWeapon_t *weapons, const int *numWeapons)
+{
+	int i;
+
+	for (i = 0; i < *numWeapons; i++) {
+		const baseWeapon_t *weapon = weapons + i;
+		if (weapon->slot.item
+		 && weapon->slot.ammo && weapon->slot.ammoLeft > 0
+		 && weapon->slot.installationTime == 0)
+			return qtrue;
+	}
+
+	return qfalse;
+}
+
 /**
  * @brief Check if the base has weapon and ammo
  * @param[in] base Pointer to the base you want to check (may not be NULL)
@@ -2171,26 +2186,34 @@ int AII_AircraftCanShoot (const aircraft_t *aircraft)
  */
 int AII_BaseCanShoot (const base_t *base)
 {
-	int i;
-
 	assert(base);
 
 	if (B_GetBuildingStatus(base, B_DEFENSE_MISSILE)) {
 		/* base has missile battery and any needed building */
-		for (i = 0; i < base->numBatteries; i++)
-			if (base->batteries[i].slot.item
-			 && base->batteries[i].slot.ammo && base->batteries[i].slot.ammoLeft > 0
-			 && base->batteries[i].slot.installationTime == 0)
-				return qtrue;
+		return AII_WeaponsCanShoot(base->batteries, &base->numBatteries);
 	}
 
 	if (B_GetBuildingStatus(base, B_DEFENSE_LASER)) {
 		/* base has laser battery and any needed building */
-		for (i = 0; i < base->numLasers; i++)
-			if (base->lasers[i].slot.item
-			 && base->lasers[i].slot.ammo && base->lasers[i].slot.ammoLeft > 0
-			 && base->lasers[i].slot.installationTime == 0)
-				return qtrue;
+		return AII_WeaponsCanShoot(base->lasers, &base->numLasers);
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief Check if the installation has a weapon and ammo
+ * @param[in] installation Pointer to the installation you want to check (may not be NULL)
+ * @return qtrue if the installation can shoot, qflase else
+ * @sa AII_AircraftCanShoot
+ */
+qboolean AII_InstallationCanShoot (const installation_t *installation)
+{
+	assert(installation);
+
+	if (installation->numBatteries > 0) {
+		/* installation has battery */
+		return AII_WeaponsCanShoot(installation->batteries, &installation->numBatteries);
 	}
 
 	return qfalse;

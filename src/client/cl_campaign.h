@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CAMPAIGN_H
 #define CLIENT_CL_CAMPAIGN_H
 
+#include "cl_installation.h"
+
 #define BID_FACTOR 0.9
 
 /* check for water */
@@ -173,6 +175,7 @@ typedef struct stats_s {
 	int missionsLost;
 	int basesBuild;
 	int basesAttacked;
+	int installationsBuild;
 	int interceptions;
 	int soldiersLost;
 	int soldiersNew;			/**< new recruits */
@@ -313,6 +316,7 @@ typedef struct ccs_s {
 typedef enum mapAction_s {
 	MA_NONE,
 	MA_NEWBASE,				/**< build a new base */
+	MA_NEWINSTALLATION,		/**< build a new installation */
 	MA_INTERCEPT,			/**< intercept */
 	MA_BASEATTACK,			/**< base attacking */
 	MA_UFORADAR				/**< ufos are in our radar */
@@ -358,6 +362,7 @@ void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
 void CL_SetGameTime(int gameLapseValue);
 qboolean CL_NewBase(base_t* base, vec2_t pos);
+qboolean CL_NewInstallation(installation_t* installation, vec2_t pos); 
 mission_t* CL_AddMission(const char *name);
 void CP_RemoveLastMission(void);
 void CL_ParseCampaign(const char *name, const char **text);

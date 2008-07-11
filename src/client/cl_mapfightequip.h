@@ -83,6 +83,7 @@ void AII_UpdateAircraftStats(aircraft_t *aircraft);
 int AII_GetSlotItems(aircraftItemType_t type, const aircraft_t *aircraft);
 int AII_AircraftCanShoot(const aircraft_t *aircraft);
 int AII_BaseCanShoot(const base_t *base);
+qboolean AII_InstallationCanShoot(const installation_t *installation);
 
 itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
