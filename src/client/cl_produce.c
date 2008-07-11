@@ -154,7 +154,7 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
 		/* NOTE: I changed algorithm for a more realistic one, variing like maxworkers^2 -- Kracken 2007/11/18
 		 * now, production time is divided by 4 each time you double the number of worker */
 		const float fraction = (float)(maxworkers / (PRODUCE_WORKERS * timeDefault))
-			* maxworkers / PRODUCE_WORKERS;
+			* (maxworkers / (float)PRODUCE_WORKERS);
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxworkers, tech->id, fraction);
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
