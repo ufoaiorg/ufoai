@@ -515,7 +515,7 @@ menu serverinfo
 	pic button_connect
 	{
 		pos	"70 580"
-		click	{ cmd "connect;" }
+		click	{ cmd "connect *mn_server_ip;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
