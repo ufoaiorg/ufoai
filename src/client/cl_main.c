@@ -415,8 +415,7 @@ static void CL_Connect_f (void)
  */
 static void CL_Rcon_f (void)
 {
-	char message[1024];
-	int i;
+	char message[MAX_STRING_CHARS];
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <command>\n", Cmd_Argv(0));
@@ -435,12 +434,8 @@ static void CL_Rcon_f (void)
 		return;
 	}
 
-	Com_sprintf(message, sizeof(message), "rcon %s ", rcon_client_password->string);
-
-	for (i = 1; i < Cmd_Argc(); i++) {
-		Q_strcat(message, Cmd_Argv(i), sizeof(message));
-		Q_strcat(message, " ", sizeof(message));
-	}
+	Com_sprintf(message, sizeof(message), "rcon %s %s",
+		rcon_client_password->string, Cmd_Args());
 
 	NET_OOB_Printf(cls.netStream, message);
 }
@@ -875,8 +870,6 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
 		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", token)) != -1) {
-			char filename[MAX_QPATH];
-			Com_sprintf(filename, sizeof(filename), "pics/maps/shots/%s.jpg", token);
 			/* store it relative to pics/ dir - not relative to game dir */
 			Cvar_Set("mn_mappic", va("maps/shots/%s", token));
 		}
