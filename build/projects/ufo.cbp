@@ -180,6 +180,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_inventory.h" />
+		<Unit filename="..\..\src\client\cl_installation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_installation.h" />
 		<Unit filename="..\..\src\client\cl_irc.c">
 			<Option compilerVar="CC" />
 		</Unit>
