@@ -642,59 +642,60 @@ void CheckLevelFlags (void)
  * @sa ParseBrush
  * @sa CheckFlags
  */
-static void SetImpliedFlags (side_t *side, const char *tex, const mapbrush_t *brush)
+static void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brush)
 {
-	const int initSurf = side->surfaceFlags;
+	const char *texname = tex->name;
+	const int initSurf = tex->surfaceFlags;
 	const int initCont = side->contentFlags;
 	const char *flagsDescription = NULL;
 	qboolean checkOrFix = config.performMapCheck || config.fixMap ;
 
-	if (!strcmp(tex, "tex_common/actorclip")) {
+	if (!strcmp(texname, "tex_common/actorclip")) {
 		side->contentFlags |= CONTENTS_ACTORCLIP;
 		flagsDescription = "CONTENTS_ACTORCLIP";
-	} else if (!strcmp(tex, "tex_common/caulk")) {
-		side->surfaceFlags |= SURF_NODRAW;
+	} else if (!strcmp(texname, "tex_common/caulk")) {
+		tex->surfaceFlags |= SURF_NODRAW;
 		flagsDescription = "SURF_NODRAW";
-	} else if (!strcmp(tex, "tex_common/hint")) {
-		side->surfaceFlags |= SURF_HINT;
+	} else if (!strcmp(texname, "tex_common/hint")) {
+		tex->surfaceFlags |= SURF_HINT;
 		flagsDescription = "SURF_HINT";
-	} else if (!strcmp(tex, "tex_common/nodraw")) {
-		side->surfaceFlags |= SURF_NODRAW;
+	} else if (!strcmp(texname, "tex_common/nodraw")) {
+		tex->surfaceFlags |= SURF_NODRAW;
 		flagsDescription = "SURF_NODRAW";
-	} else if (!strcmp(tex, "tex_common/trigger")) {
-		side->surfaceFlags |= SURF_NODRAW;
+	} else if (!strcmp(texname, "tex_common/trigger")) {
+		tex->surfaceFlags |= SURF_NODRAW;
 		flagsDescription = "SURF_NODRAW";
-	} else if (!strcmp(tex, "tex_common/origin")) {
+	} else if (!strcmp(texname, "tex_common/origin")) {
 		side->contentFlags |= CONTENTS_ORIGIN;
 		flagsDescription = "CONTENTS_ORIGIN";
-	} else if (!strcmp(tex, "tex_common/slick")) {
+	} else if (!strcmp(texname, "tex_common/slick")) {
 		side->contentFlags |= SURF_SLICK;
 		flagsDescription = "SURF_SLICK";
-	} else if (!strcmp(tex, "tex_common/stepon")) {
+	} else if (!strcmp(texname, "tex_common/stepon")) {
 		side->contentFlags |= CONTENTS_STEPON;
 		flagsDescription = "CONTENTS_STEPON";
-	} else if (!strcmp(tex, "tex_common/weaponclip")) {
+	} else if (!strcmp(texname, "tex_common/weaponclip")) {
 		side->contentFlags |= CONTENTS_WEAPONCLIP;
 		flagsDescription = "CONTENTS_WEAPONCLIP";
 	}
 
-	if (strstr(tex, "water")) {
-/*		side->surfaceFlags |= SURF_WARP;*/
+	if (strstr(texname, "water")) {
+/*		tex->surfaceFlags |= SURF_WARP;*/
 		side->contentFlags |= CONTENTS_WATER;
 		side->contentFlags |= CONTENTS_PASSABLE;
 		flagsDescription = "CONTENTS_WATER and CONTENTS_PASSABLE";
 	}
 
 	/* If in check/fix mode and we have made a change, give output. */
-	if (checkOrFix && ((side->contentFlags != initCont) || (side->surfaceFlags != initSurf))) {
+	if (checkOrFix && ((side->contentFlags != initCont) || (tex->surfaceFlags != initSurf))) {
 		Com_Printf("* entity %i, brush %i: %s implied by %s texture has been set\n",
-			brush->entitynum, brush->brushnum, flagsDescription ? flagsDescription : "-", tex);
+			brush->entitynum, brush->brushnum, flagsDescription ? flagsDescription : "-", texname);
 	}
 
 	/*one additional test, which does not directly depend on tex. */
-	if ((side->surfaceFlags & SURF_NODRAW) && (side->surfaceFlags & SURF_PHONG)) {
+	if ((tex->surfaceFlags & SURF_NODRAW) && (tex->surfaceFlags & SURF_PHONG)) {
 		/* nodraw never has phong set */
-		side->surfaceFlags &= ~SURF_PHONG;
+		tex->surfaceFlags &= ~SURF_PHONG;
 		if (checkOrFix)
 			Com_Printf("* entity %i, brush %i: SURF_PHONG unset, as it has SURF_NODRAW set\n",
 				brush->entitynum, brush->brushnum);
@@ -721,7 +722,7 @@ void CheckTextures (void)
 			assert(tex);
 
 			/* set surface and content flags based on texture. */
-			SetImpliedFlags(side, tex->name, brush);
+			SetImpliedFlags(side, tex, brush);
 
 			/* set textures based on flags */
 			if (tex->name[0] == '\0') {
@@ -735,14 +736,14 @@ void CheckTextures (void)
 			if (!Q_strcmp(tex->name, "NULL")) {
 				Com_Printf("* Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
-				side->surfaceFlags |= SURF_NODRAW;
+				tex->surfaceFlags |= SURF_NODRAW;
 				tex->surfaceFlags |= SURF_NODRAW;
 			}
-			if (side->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->name, "tex_common/nodraw")) {
+			if (tex->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->name, "tex_common/nodraw")) {
 				Com_Printf("* Brush %i (entity %i): set nodraw texture for SURF_NODRAW\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 			}
-			if (side->surfaceFlags & SURF_HINT && Q_strcmp(tex->name, "tex_common/hint")) {
+			if (tex->surfaceFlags & SURF_HINT && Q_strcmp(tex->name, "tex_common/hint")) {
 				Com_Printf("* Brush %i (entity %i): set hint texture for SURF_HINT\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/hint", sizeof(tex->name));
 			}
