@@ -1021,6 +1021,9 @@ static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *a
 /**
  * @brief Opens a datagram socket (UDP)
  * @sa NET_DatagramSocketDoNew
+ * @param[in] node The numeric address to resolv (might be NULL)
+ * @param[in] service The port number
+ * @param[in] func Callback function for data handling
  */
 struct datagram_socket *NET_DatagramSocketNew (const char *node, const char *service, datagram_callback_func *func)
 {
