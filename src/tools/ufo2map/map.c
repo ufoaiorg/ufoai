@@ -690,7 +690,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		/* read the texturedef */
 		GetToken(qfalse);
 		if (strlen(parsedToken) >= sizeof(td.name)) {
-			Com_Printf("ParseBrush: texture name too long (limit %i):%s\n", sizeof(td.name), parsedToken);
+			Com_Printf("ParseBrush: texture name too long (limit "UFO_SIZE_T"): %s\n", sizeof(td.name), parsedToken);
 			if (config.fixMap)
 				Sys_Error("Exiting, as -fix is active and saving might corrupt *.map by truncating texture name");
 		}
