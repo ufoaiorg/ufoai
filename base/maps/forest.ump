@@ -2,10 +2,9 @@
 // Forest assembly
 // ****************
 
-
 base forest/forest_
 
-// Tyletypes
+// Tiletypes
 // ------
 // a: normal
 // b: water 
@@ -20,7 +19,6 @@ a      +a     +a     +a	  a
 a      +a     +a     +a	  a
 0      a      a      a	  0
 }
-
 
 tile +f1
 {
@@ -112,8 +110,6 @@ b      +a       a
 0      b        0
 }
 
-
-
 assembly test
 {
 size "6 6"
@@ -129,7 +125,4 @@ title "_little forest"
 +f8 "1 10"
 +w1 "1 2"
 *rm_drop +drop_firebird "1 1"
-
-
 }
-
