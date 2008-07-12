@@ -688,8 +688,8 @@ static void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_
 
 	/* If in check/fix mode and we have made a change, give output. */
 	if (checkOrFix && ((side->contentFlags != initCont) || (tex->surfaceFlags != initSurf))) {
-		Com_Printf("* entity %i, brush %i: %s implied by %s texture has been set\n",
-			brush->entitynum, brush->brushnum, flagsDescription ? flagsDescription : "-", texname);
+		Com_Printf("* Brush %i (entity %i): %s implied by %s texture has been set\n",
+			brush->brushnum, brush->entitynum, flagsDescription ? flagsDescription : "-", texname);
 	}
 
 	/*one additional test, which does not directly depend on tex. */
@@ -697,8 +697,8 @@ static void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_
 		/* nodraw never has phong set */
 		tex->surfaceFlags &= ~SURF_PHONG;
 		if (checkOrFix)
-			Com_Printf("* entity %i, brush %i: SURF_PHONG unset, as it has SURF_NODRAW set\n",
-				brush->entitynum, brush->brushnum);
+			Com_Printf("* Brush %i (entity %i): SURF_PHONG unset, as it has SURF_NODRAW set\n",
+				brush->brushnum, brush->entitynum);
 	}
 }
 
