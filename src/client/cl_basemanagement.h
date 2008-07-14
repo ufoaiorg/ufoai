@@ -44,6 +44,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_EMPLOYEES_IN_BUILDING 64
 
+#define MAX_BLOCKEDFIELDS	2
+#define MIN_BLOCKEDFIELDS	0
+
 /**
  * @brief Possible base states
  * @note: Don't change the order or you have to change the basemenu scriptfiles, too

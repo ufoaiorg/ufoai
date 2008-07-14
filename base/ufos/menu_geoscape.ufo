@@ -19,6 +19,8 @@ menu map
 
 	map themap
 	{
+		// only if messagesystem is turned off
+		if "mn_messagesystem == 0"
 		pos		"0 0"
 		size	"1024 768"
 		click	mclick wheel
@@ -28,6 +30,27 @@ menu map
 		{
 			pos		"768 0"
 			size	"256 768"
+		}
+	}
+
+	map themap_wmessagesystem
+	{
+		// only if messagesystem is turned on
+		if "mn_messagesystem == 1"
+		pos		"0 0"
+		size	"1024 768"
+		click	mclick wheel
+		rclick	{ cmd "mn_mapaction_reset;" }
+		// menu
+		excluderect
+		{
+			pos	"768 0"
+			size	"256 768"
+		}
+		excluderect
+		{
+			pos	"0 0"
+			size	"768 400"
 		}
 	}
 
@@ -41,6 +64,7 @@ menu map
 		// TEXT_MESSAGESYSTEM
 		num		12
 		wheel
+		scrollbar false
 	}
 
 	pic back
@@ -387,6 +411,8 @@ menu map
 
 	pic bt_messagesystem
 	{
+		// only if messagesystem is turned off
+		if "mn_messagesystem == 0"
 		tooltip	"_Open up messages"
 		image	menu/geo_eventlog
 		pos		"850 320"
@@ -405,6 +431,29 @@ menu map
 				*messagesystem size "1024 400"
 				*messagesystem height "25"
 			}
+		click	{
+				*messagesystem size "768 400"
+				*messagesystem scrollbar "true"
+				cmd "set mn_messagesystem 1;" 
+		}
+	}
+
+	pic bt_messagesystem_on
+	{
+		// only if messagesystem is turned on
+		if "mn_messagesystem == 1"
+		tooltip	"_Open up messages"
+		image	menu/geo_eventlog
+		pos		"850 320"
+		texl	"32 0"
+		texh	"64 32"
+		mousefx	false
+		click	{
+				cmd "mn_textscroll messagesystem reset"
+				*messagesystem size "1024 400"
+				*messagesystem scrollbar "false"
+				cmd "set mn_messagesystem 0;" 
+		}
 	}
 
 	pic bt_mapcenter
@@ -471,6 +520,8 @@ menu map_combatzoom
 			size	"256 768"
 		}
 	}
+
+
 
 	text messagesystem
 	{
@@ -587,6 +638,7 @@ menu map_combatzoom
 	func init
 	{
 		cmd		"music_change aircombat;"
+		cmd		"set mn_messagesystem 0;"	// MessageSystem turned off
 	}
 
 	func close

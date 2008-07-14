@@ -1283,7 +1283,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	/* Create random blocked fields in the base.
 	 * The first base never has blocked fields so we skip it. */
 	if (base->idx > 0) {
-		const int j = (int) (frand() * 3 + 1.5f);
+		const int j = round ((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
 		for (i = 0; i < j; i++) {
 			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE - 1)];
 			/* set this field to invalid if there is no building yet */

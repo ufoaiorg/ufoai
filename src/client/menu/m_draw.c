@@ -65,11 +65,9 @@ void MN_DrawMenus (void)
 	int sp, pp;
 	vec4_t color;
 	int mouseOver = 0;
-	int y, i;
+	int i;
 	message_t *message;
-	int width, height;
 	const invList_t *itemHover = NULL;
-	char *tab, *end;
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -215,60 +213,28 @@ void MN_DrawMenus (void)
 						font = MN_GetFont(menu, node);
 						MN_DrawTextNode(NULL, mn.menuTextLinkedList[node->num], font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
-						if (node->data[MN_DATA_ANIM_OR_FONT])
-							font = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
-						else
-							font = "f_small";
+						linkedList_t *messagelist = NULL;
+						char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
+						font = MN_GetFont(menu, node);
 
-						y = node->pos[1];
-						node->textLines = 0;
 						message = mn.messageStack;
 						while (message) {
-							if (node->textLines >= node->height) {
-								/** @todo: Draw the scrollbars */
-								break;
-							}
-							node->textLines++;
-
-							/* maybe due to scrolling this line is not visible */
-							if (node->textLines > node->textScroll) {
-								int offset = 0;
-								char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
-								/* get formatted date text and pixel width of text */
-								MN_TimestampedText(text, message, sizeof(text));
-								R_FontLength(font, text, &offset, &height);
-								/* append remainder of message */
-								Q_strcat(text, message->text, sizeof(text));
-								R_FontLength(font, text, &width, &height);
-								if (!width)
+							/* get formatted date text */
+							MN_TimestampedText(text, message, sizeof(text));
+							Q_strcat(text, message->text, sizeof(text));
+							for (i = 0; i < (sizeof(text) - 1); i++){
+								if (text[i] == '\n'){
+									text[i] = '\0';
 									break;
-								if (width > node->pos[0] + node->size[0]) {
-									int indent = node->pos[0];
-									tab = text;
-									while (qtrue) {
-										y += R_FontDrawString(font, ALIGN_UL, indent, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab, 0, 0, NULL, qfalse);
-										/* we use a backslash to determine where to break the line */
-										end = strstr(tab, "\\");
-										if (!end)
-											break;
-										*end++ = '\0';
-										tab = end;
-										node->textLines++;
-										if (node->textLines >= node->height)
-											break;
-										indent = offset;
-									}
-								} else {
-									/* newline to space - we don't need this */
-									while ((end = strstr(text, "\\")) != NULL)
-										*end = ' ';
-
-									y += R_FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], text, 0, 0, NULL, qfalse);
 								}
 							}
-
+							/* Make a list */
+							LIST_Add(&messagelist, (byte*) text, sizeof(text));
 							message = message->next;
 						}
+						assert(messagelist);
+						MN_DrawTextNode(NULL, messagelist, font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
+						LIST_Delete(&messagelist);
 					}
 					break;
 
