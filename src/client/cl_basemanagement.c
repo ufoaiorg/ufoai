@@ -3592,7 +3592,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
  * @sa B_Save
  * @sa AII_InitialiseSlot
  */
-static void B_SaveAircraftSlots (aircraftSlot_t* slot, int num, sizebuf_t* sb)
+static void B_SaveAircraftSlots (const aircraftSlot_t* slot, const int num, sizebuf_t* sb)
 {
 	int i;
 
@@ -3619,7 +3619,7 @@ static void B_SaveAircraftSlots (aircraftSlot_t* slot, int num, sizebuf_t* sb)
 /**
  * @brief Saves the weapon slots of a base.
  */
-static void B_SaveBaseSlots (baseWeapon_t *weapons, int numWeapons, sizebuf_t* sb)
+void B_SaveBaseSlots (const baseWeapon_t *weapons, const int numWeapons, sizebuf_t* sb)
 {
 	int i;
 
@@ -3654,13 +3654,10 @@ static void B_SaveBaseSlots (baseWeapon_t *weapons, int numWeapons, sizebuf_t* s
 qboolean B_Save (sizebuf_t* sb, void* data)
 {
 	int i, k, l;
-	base_t *b;
-	aircraft_t *aircraft;
-	building_t *building;
 
 	MSG_WriteShort(sb, gd.numAircraft);
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
-		b = B_GetBaseByIDX(i);
+		const base_t *b = B_GetBaseByIDX(i);
 		MSG_WriteByte(sb, b->founded);
 		if (!b->founded)
 			continue;
@@ -3674,7 +3671,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, b->map[k][l].posY);
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
-			building = &gd.buildings[i][k];
+			const building_t *building = &gd.buildings[i][k];
 			MSG_WriteByte(sb, building->tpl ? building->tpl - gd.buildingTemplates : BYTES_NONE);
 			MSG_WriteByte(sb, building->buildingStatus);
 			MSG_WriteLong(sb, building->timeStart);
@@ -3695,7 +3692,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, AIR_GetAircraftIdxInBase(b->aircraftCurrent));
 		MSG_WriteByte(sb, b->numAircraftInBase);
 		for (k = 0; k < b->numAircraftInBase; k++) {
-			aircraft = &b->aircraft[k];
+			const aircraft_t *aircraft = &b->aircraft[k];
 			MSG_WriteString(sb, aircraft->id);
 			MSG_WriteShort(sb, aircraft->idx);
 			MSG_WriteByte(sb, aircraft->status);
@@ -3842,18 +3839,17 @@ static void B_LoadAircraftSlots (base_t* base, aircraftSlot_t* slot, int num, si
  * @sa B_Load
  * @sa B_SaveItemSlots
  */
-static void B_LoadBaseSlots (base_t* base, baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb)
+void B_LoadBaseSlots (baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb)
 {
 	int i, target;
 	technology_t *tech;
 
 	for (i = 0; i < numWeapons; i++) {
-		tech = RS_GetTechByProvided(MSG_ReadString(sb));
+		technology_t *tech = RS_GetTechByProvided(MSG_ReadString(sb));
 		/* base is NULL here to not check against the storage amounts - they
 		 * are already loaded in the campaign load function and set to the value
 		 * after the craftitem was already removed from the initial game - thus
 		 * there might not be any of these items in the storage at this point */
-		/** @todo: Check whether storage and capacities needs updating now */
 		if (tech)
 			AII_AddItemToSlot(NULL, tech, &weapons[i].slot);
 		weapons[i].slot.ammoLeft = MSG_ReadShort(sb);
@@ -3949,11 +3945,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* read missile battery slots */
 		b->numBatteries = MSG_ReadByte(sb);
-		B_LoadBaseSlots(b, b->batteries, b->numBatteries, sb);
+		B_LoadBaseSlots(b->batteries, b->numBatteries, sb);
 
 		/* read laser battery slots */
 		b->numLasers = MSG_ReadByte(sb);
-		B_LoadBaseSlots(b, b->lasers, b->numLasers, sb);
+		B_LoadBaseSlots(b->lasers, b->numLasers, sb);
 
 		b->aircraftCurrent = NULL;
 		aircraftIdxInBase = MSG_ReadShort(sb);

@@ -105,6 +105,7 @@ typedef enum {
 	PRE_MBUITY, /* MAX_BUILDING_TYPE in buildingType_t */
 	PRE_MAXALB,	/* #define MAX_ALIEN_BASES */
 	PRE_MAXCAT, /* INTERESTCATEGORY_MAX in interestCategory_t */
+	PRE_MAXINST, /* MAX_INSTALLATIONS */
 
 	PRE_MAX
 } presaveType_t;

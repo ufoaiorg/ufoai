@@ -566,6 +566,7 @@ static void Com_DebugHelp_f (void)
 			" * debug_listbuilding\n"
 			" * debug_listcampaign\n"
 			" * debug_listcapacities\n"
+			" * debug_listinstallation\n"
 			" * debug_listinterest\n"
 			" * debug_listinventory\n"
 			" * debug_listitem\n"

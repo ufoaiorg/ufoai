@@ -1,7 +1,7 @@
 /**
  * @file cl_installation.c
  * @brief Handles everything that is located in or accessed through an installation.
- * @note Installation functions prefix: I_
+ * @note Installation functions prefix: INS_*
  */
 
 /*
@@ -189,8 +189,10 @@ static void INS_SelectInstallation_f (void)
 static void INS_BuildInstallation_f (void)
 {
 	const nation_t *nation;
+	/** @todo: need to work out where the cost of the installation is to be stored.  Should it be part of the
+	 * campaign or in the installation.ufo config.  (curCampaign->installationcost) */
 	const int installationcost = 100000;
-	
+
 	if (!installationCurrent)
 		return;
 
@@ -198,15 +200,13 @@ static void INS_BuildInstallation_f (void)
 	assert(ccs.singleplayer);
 	assert(curCampaign);
 
-	/* @todo: need to work out where the cost of the installation is to be stored.  Should it be part of the 
-	 * campaign or in the installation.ufo config.  (curCampaign->installationcost) */
 	if (ccs.credits - installationcost > 0) {
 		if (CL_NewInstallation(installationCurrent, newInstallationPos)) {
 			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", gd.numInstallations);
 			installationCurrent->idx = gd.numInstallations - 1;
 			installationCurrent->founded = qtrue;
 			installationCurrent->installationStatus = INSTALLATION_WORKING;
-			
+
 			campaignStats.installationsBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - installationcost);
@@ -243,10 +243,9 @@ void INS_NewInstallations (void)
 	/* reset installations */
 	int i;
 	char title[MAX_VAR];
-	installation_t *installation;
 
 	for (i = 0; i < MAX_INSTALLATIONS; i++) {
-		installation = INS_GetInstallationByIDX(i);
+		installation_t *installation = INS_GetInstallationByIDX(i);
 		Q_strncpyz(title, installation->name, sizeof(title));
 /*		INS_ClearInstallation(installation); */
 		Q_strncpyz(installation->name, title, sizeof(title));
@@ -354,7 +353,6 @@ void INS_InitStartup (void)
 
 	mn_installation_count = Cvar_Get("mn_installation_count", "0", 0, "Current amount of build installations");
 	mn_installation_id = Cvar_Get("mn_installation_id", "-1", 0, "Internal id of the current selected installation");
-
 }
 
 /**
@@ -436,6 +434,25 @@ void INS_ParseInstallationNames (const char *name, const char **text)
  */
 qboolean INS_Save (sizebuf_t* sb, void* data)
 {
+	int i;
+	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
+#if 0
+		const installtion i = INS_GetInstallationByIDX(i);
+		MSG_WriteByte(sb, i->founded);
+		if (!i->founded)
+			continue;
+		MSG_WriteString(sb, i->name);
+		MSG_WritePos(sb, i->pos);
+		MSG_WriteByte(sb, i->installationType);
+		MSG_WriteByte(sb, i->installationStatus);
+		MSG_WriteShort(sb, i->installationDamage);
+		MSG_WriteFloat(sb, i->alienInterest);
+		MSG_WriteShort(sb, i->radar.range);
+
+		MSG_WriteByte(sb, i->numBatteries);
+		B_SaveBaseSlots(i->batteries, i->numBatteries, sb);
+#endif
+	}
 
 	return qtrue;
 }
@@ -450,6 +467,28 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
  */
 qboolean INS_Load (sizebuf_t* sb, void* data)
 {
+	int i;
+	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
+#if 0
+		installation *const b = INS_GetInstallationByIDX(i);
+		i->founded = MSG_ReadByte(sb);
+		if (!i->founded)
+			continue;
+		Q_strncpyz(i->name, MSG_ReadStringRaw(sb), sizeof(i->name));
+		MSG_ReadPos(sb, i->pos);
+		i->installationType = MSG_ReadByte(sb);
+		i->installationStatus = MSG_ReadByte(sb);
+		i->installationDamage = MSG_ReadShort(sb);
+		i->alienInterest = MSG_ReadFloat(sb);
+		RADAR_Initialise(&i->radar, MSG_ReadShort(sb), 1.0f, qtrue);
+
+		/* read battery slots */
+		i->numBatteries = MSG_ReadByte(sb);
+		B_LoadBaseSlots(i->batteries, i->numBatteries, sb);
+
+		/** @todo aircraft */
+#endif
+	}
 
 	return qtrue;
 }

@@ -197,7 +197,7 @@ qboolean CL_NewInstallation (installation_t* installation, vec2_t pos)
 	gd.numInstallations++;
 
 	/* set up the installation with buildings that have the autobuild flag set */
-	INS_SetUpInstallation(installation); 
+	INS_SetUpInstallation(installation);
 
 	return qtrue;
 }

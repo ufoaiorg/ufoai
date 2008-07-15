@@ -28,8 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_basemanagement.h"
 
-#define MAX_LIST_CHAR		1024
-#define MAX_INSTALLATIONS	20
+#define MAX_INSTALLATIONS	16
 
 #define MAX_INSTALLATION_DAMAGE	100
 #define MAX_INSTALLATION_BATTERIES	5
@@ -66,7 +65,7 @@ typedef struct installation_s {
 	int idx;					/**< Self link. Index in the global installation-list. */
 	char name[MAX_VAR];			/**< Name of the installation */
 
-	installationType_t installationType; /** type of installation.  Radar, Sam Site or UFO Yard **/ 
+	installationType_t installationType; /** type of installation.  Radar, Sam Site or UFO Yard **/
 
 	qboolean founded;	/**< already founded? */
 	vec3_t pos;		/**< pos on geoscape */
@@ -81,7 +80,7 @@ typedef struct installation_s {
 
 	float alienInterest;	/**< How much aliens know this installation (and may attack it) */
 
-	radar_t	radar;	
+	radar_t	radar;
 
 	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation.  For Sam Sites Only.  */
 	int numBatteries;

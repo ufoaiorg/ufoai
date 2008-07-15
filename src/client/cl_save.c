@@ -71,6 +71,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_MBUITY] = MAX_BUILDING_TYPE;	/* MAX_BUILDING_TYPE in buildingType_t */
 	presaveArray[PRE_MAXALB] = MAX_ALIEN_BASES;		/* #define MAX_ALIEN_BASES */
 	presaveArray[PRE_MAXCAT] = INTERESTCATEGORY_MAX;	/* INTERESTCATEGORY_MAX in interestCategory_t */
+	presaveArray[PRE_MAXINST] = MAX_INSTALLATIONS;
 
 	MSG_WriteByte(sb, PRE_MAX);
 	for (i = 0; i < PRE_MAX; i++) {
