@@ -4284,6 +4284,8 @@ static void CL_StatsUpdate_f (void)
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 		campaignStats.basesBuild, gd.numBases, campaignStats.basesAttacked),
 
+	/** @todo installation_t stats */
+
 	/* nations */
 	pos += (strlen(pos) + 1);
 	mn.menuText[TEXT_STATS_3] = pos;
