@@ -155,13 +155,13 @@ qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
  */
 vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 {
-	float length, ilength;
+	float length;
 
-	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	length = DotProduct(v, v);
 	length = sqrt(length);		/** @todo */
 
 	if (length) {
-		ilength = 1 / length;
+		const float ilength = 1 / length;
 		out[0] = v[0] * ilength;
 		out[1] = v[1] * ilength;
 		out[2] = v[2] * ilength;
