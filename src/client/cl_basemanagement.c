@@ -3842,7 +3842,6 @@ static void B_LoadAircraftSlots (base_t* base, aircraftSlot_t* slot, int num, si
 void B_LoadBaseSlots (baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb)
 {
 	int i, target;
-	technology_t *tech;
 
 	for (i = 0; i < numWeapons; i++) {
 		technology_t *tech = RS_GetTechByProvided(MSG_ReadString(sb));
