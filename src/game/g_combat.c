@@ -738,7 +738,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
 								if (actor->inuse
 									 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
-									 && VectorCompare(drop, actor->pos) )
+									 && VectorCompare(drop, actor->pos))
 									FLOOR(actor) = FLOOR(floor);
 						} else {
 							gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
@@ -1078,7 +1078,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 				for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
 					if (actor->inuse
 						 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
-						 && VectorCompare(drop, actor->pos) )
+						 && VectorCompare(drop, actor->pos))
 						FLOOR(actor) = FLOOR(floor);
 			} else {
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);

@@ -2200,7 +2200,7 @@ void Com_AddObjectLinks (void)
 		}
 
 		/* Back-link the obj-idx inside the fds */
-		for (k = 0; k < od->numFiredefs[weaponsIdx]; k++ ) {
+		for (k = 0; k < od->numFiredefs[weaponsIdx]; k++) {
 			od->fd[weaponsIdx][k].obj = od;
 		}
 	}

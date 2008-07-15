@@ -248,7 +248,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 		}
 	}
 
-	for (i = 0; i < gd.numAliensTD; i++ ) {
+	for (i = 0; i < gd.numAliensTD; i++) {
 #ifdef DEBUG
 		if (!tobase->alienscont[i].tech)
 			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", tobase->alienscont[i].teamDef->name);

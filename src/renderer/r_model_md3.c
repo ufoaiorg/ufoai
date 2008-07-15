@@ -110,10 +110,10 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 			for (l = 0; l < mod->alias.num_tags; l++, pintag++, pouttag++) {
 				memcpy(pouttag->name, pintag->name, MD3_MAX_PATH);
 				for (j = 0; j < 3; j++) {
-					pouttag->orient.origin[j] = LittleFloat(pintag->orient.origin[j] );
-					pouttag->orient.axis[0][j] = LittleFloat(pintag->orient.axis[0][j] );
-					pouttag->orient.axis[1][j] = LittleFloat(pintag->orient.axis[1][j] );
-					pouttag->orient.axis[2][j] = LittleFloat(pintag->orient.axis[2][j] );
+					pouttag->orient.origin[j] = LittleFloat(pintag->orient.origin[j]);
+					pouttag->orient.axis[0][j] = LittleFloat(pintag->orient.axis[0][j]);
+					pouttag->orient.axis[1][j] = LittleFloat(pintag->orient.axis[1][j]);
+					pouttag->orient.axis[2][j] = LittleFloat(pintag->orient.axis[2][j]);
 				}
 				/*Com_Printf("X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n",
 					pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2],

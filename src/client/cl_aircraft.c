@@ -2002,7 +2002,7 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
 	float allWeaponRanges[maxSlot];
 	int numAllWeaponRanges = 0;
 	int numUniqueWeaponRanges = 0;
-	
+
 
 	assert(slot);
 
@@ -2021,7 +2021,7 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
 	if (numAllWeaponRanges > 0) {
 		/* sort the list of all weapon ranges and create an array with only the unique ranges */
 		qsort(allWeaponRanges, numAllWeaponRanges, sizeof(allWeaponRanges[0]), Q_FloatSort);
-		
+
 		for (idxAllWeap = 0; idxAllWeap < numAllWeaponRanges; idxAllWeap++) {
 			if (allWeaponRanges[idxAllWeap] != weaponRanges[numUniqueWeaponRanges - 1] || idxAllWeap == 0) {
 				weaponRanges[numUniqueWeaponRanges] = allWeaponRanges[idxAllWeap];
@@ -2357,7 +2357,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		byte base, ufotype;
 		gd.recoveries[i].active = MSG_ReadByte(sb);
 		base = MSG_ReadByte(sb);
-		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base ) : NULL;
+		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base) : NULL;
 		assert(numAircraftTemplates);
 		ufotype = MSG_ReadByte(sb);
 		gd.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;

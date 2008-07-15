@@ -332,7 +332,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 	q->state = DLQ_STATE_NOT_STARTED;
 	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath));
 
-	/* special case for map file lists, i really wanted a server-push mechanism for this, but oh well */
+	/* special case for map file lists */
 	len = strlen(ufoPath);
 	if (cl_http_filelists->integer && len > 4 && !Q_stricmp(ufoPath + len - 4, ".bsp")) {
 		char listPath[MAX_OSPATH];
@@ -341,7 +341,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 		Com_sprintf(filePath, sizeof(filePath), BASEDIRNAME"/%s", ufoPath);
 
 		COM_StripExtension(filePath, listPath, sizeof(listPath));
-		strcat(listPath, ".filelist");
+		Q_strcat(listPath, ".filelist", sizeof(listPath));
 
 		CL_QueueHTTPDownload(listPath);
 	}
@@ -382,6 +382,7 @@ qboolean CL_PendingHTTPDownloads (void)
 
 /**
  * @brief Validate a path supplied by a filelist.
+ * @param[in,out] The file to download (high bits will be stripped)
  * @sa CL_QueueHTTPDownload
  * @sa CL_ParseFileList
  */
@@ -446,6 +447,7 @@ static void CL_CheckAndQueueDownload (char *path)
 		FILE *f;
 		char gamePath[MAX_OSPATH];
 
+		/* search the user homedir to find the pk3 file */
 		if (pak) {
 			Com_sprintf(gamePath, sizeof(gamePath),"%s/%s", FS_Gamedir(), path);
 			f = fopen(gamePath, "rb");
@@ -681,7 +683,7 @@ static void CL_FinishHTTPDownload (void)
 				CL_CancelHTTPDownloads(qtrue);
 				continue;
 			default:
-				i = strlen (dl->queueEntry->ufoPath);
+				i = strlen(dl->queueEntry->ufoPath);
 				if (!strcmp(dl->queueEntry->ufoPath + i - 4, ".pk3"))
 					downloading_pak = qfalse;
 				if (isFile)
@@ -699,7 +701,7 @@ static void CL_FinishHTTPDownload (void)
 				Com_Printf("Failed to rename %s for some odd reason...", dl->filePath);
 
 			/* a pk3 file is very special... */
-			i = strlen (tempName);
+			i = strlen(tempName);
 			if (!strcmp(tempName + i - 4, ".pk3")) {
 				FS_RestartFilesystem();
 				CL_ReVerifyHTTPQueue();
@@ -718,7 +720,8 @@ static void CL_FinishHTTPDownload (void)
 		 * out why, please let me know. */
 		curl_multi_remove_handle(multi, dl->curl);
 
-		Com_Printf("HTTP(%s): %.f bytes, %.2fkB/sec [%d remaining files]\n", dl->queueEntry->ufoPath, fileSize, (fileSize / 1024.0) / timeTaken, pendingCount);
+		Com_Printf("HTTP(%s): %.f bytes, %.2fkB/sec [%d remaining files]\n",
+			dl->queueEntry->ufoPath, fileSize, (fileSize / 1024.0) / timeTaken, pendingCount);
 	} while (msgs_in_queue > 0);
 
 	if (handleCount == 0) {

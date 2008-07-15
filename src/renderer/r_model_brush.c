@@ -362,7 +362,7 @@ static void R_ModLoadLeafs (lump_t * l)
 {
 	dBspLeaf_t *in;
 	mBspLeaf_t *out;
-	int i, j, count, p;
+	int i, j, count;
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -380,8 +380,7 @@ static void R_ModLoadLeafs (lump_t * l)
 			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + shift[j];
 		}
 
-		p = LittleLong(in->contentFlags);
-		out->contents = p;
+		out->contents = LittleLong(in->contentFlags);
 	}
 }
 
@@ -478,7 +477,7 @@ static void R_ModShiftTile (void)
  */
 static void R_LoadBspVertexArrays (void)
 {
-	int i, j, index;
+	int i, j;
 	int vertind, coordind;
 	float *vec, *vecShifted, s, t;
 	mBspSurface_t *surf;
@@ -490,10 +489,10 @@ static void R_LoadBspVertexArrays (void)
 		surf->index = vertind / 3;
 
 		for (j = 0; j < surf->numedges; j++) {
+			const int index = loadmodel->bsp.surfedges[surf->firstedge + j];
+
 			if (vertind >= MAX_GL_ARRAY_LENGTH * 3)
 				Com_Error(ERR_DROP, "R_LoadBspVertexArrays: Exceeded MAX_GL_ARRAY_LENGTH %i", vertind);
-
-			index = loadmodel->bsp.surfedges[surf->firstedge + j];
 
 			/* vertex */
 			if (index > 0) {  /* negative indices to differentiate which end of the edge */
@@ -642,11 +641,8 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* set up the submodels, the first 255 submodels are the models of the
 	 * different levels, don't care about them */
 	for (i = NUM_REGULAR_MODELS; i < loadmodel->bsp.numsubmodels; i++) {
-		const mBspHeader_t *bm;
-		model_t *starmod;
-
-		bm = &loadmodel->bsp.submodels[i];
-		starmod = &r_modelsInline[r_numModelsInline];
+		const mBspHeader_t *bm = &loadmodel->bsp.submodels[i];
+		model_t *starmod = &r_modelsInline[r_numModelsInline];
 
 		*starmod = *loadmodel;
 		starmod->bsp.firstmodelsurface = bm->firstface;
@@ -733,7 +729,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 		/* get tile name */
 		if (token[0] == '+')
-			Com_sprintf(name, MAX_VAR, "%s%s", base, token + 1);
+			Com_sprintf(name, sizeof(name), "%s%s", base, token + 1);
 		else
 			Q_strncpyz(name, token, sizeof(name));
 

@@ -214,7 +214,7 @@ typedef enum {
 #define BUYTYPE_MATCH(type1,type2) (\
 	(  ((((type1) == BUY_WEAP_PRI) || ((type1) == BUY_WEAP_SEC)) && ((type2) == BUY_MULTI_AMMO)) \
 	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
-	|| ((type1) == (type2)) ) \
+	|| ((type1) == (type2))) \
 	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
 
 /**

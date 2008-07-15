@@ -143,7 +143,6 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 
 	R_EnableBlend(qtrue);
 
-	/* FIXME */
 	R_DrawBlendSurfaces(&blend_surfaces);
 
 	R_DrawBlendWarpSurfaces(&blend_warp_surfaces);

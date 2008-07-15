@@ -708,7 +708,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
 		if (INVSH_LoadableInWeapon(&csi.ods[i], type)
-		&& (ed->numLoose[i] > item.a) ) {
+		&& (ed->numLoose[i] > item.a)) {
 			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with

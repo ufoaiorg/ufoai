@@ -431,7 +431,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg)
 	char buf[IRC_RECV_BUF_SIZE];
 	menu_t* menu;
 
-	while (strlen(irc_buffer) + strlen(msg) + 1 >= sizeof(irc_buffer) ) {
+	while (strlen(irc_buffer) + strlen(msg) + 1 >= sizeof(irc_buffer)) {
 		char *n;
 		if (!(n = strchr(irc_buffer, '\n'))) {
 			irc_buffer[0] = '\0';

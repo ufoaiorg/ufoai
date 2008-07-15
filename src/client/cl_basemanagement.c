@@ -2914,7 +2914,7 @@ static void B_AssembleMap_f (void)
 				if (!entry->used && entry->needs) {
 					entry->used = 1;
 				} else if (entry->needs) {
-					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used );
+					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used);
 					entry->used = 0;
 					continue;
 				}

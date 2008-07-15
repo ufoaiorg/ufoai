@@ -706,7 +706,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 				Com_Printf("Entity %i, Brush %i: duplicate plane at line %i\n", b->entitynum, b->brushnum, GetScriptLine());
 				break;
 			}
-			if (s2->planenum == (planenum ^ 1) ) {
+			if (s2->planenum == (planenum ^ 1)) {
 				Com_Printf("Entity %i, Brush %i: mirrored plane at line %i\n", b->entitynum, b->brushnum, GetScriptLine());
 				break;
 			}

@@ -1356,7 +1356,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
 					if (equip[i] && ((obj->weapon && BUY_SEC(obj->buytype) && !obj->reload)
-							|| obj->buytype == BUY_MISC) ) {
+							|| obj->buytype == BUY_MISC)) {
 						if (obj->price > maxPrice && obj->price < prevPrice) {
 							maxPrice = obj->price;
 							weapon = obj;
@@ -1880,7 +1880,7 @@ qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 	for (i = 0; i < od->numWeapons; i++) {
 #ifdef DEBUG
 		if (!od->weapons[i]) {
-			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: No weapon pointer set for the %i. entry found in item '%s'.\n", i, od->id );
+			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: No weapon pointer set for the %i. entry found in item '%s'.\n", i, od->id);
 			break;
 		}
 #endif
@@ -1890,7 +1890,7 @@ qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 		}
 	}
 #if 0
-	Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, weapon->id );
+	Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, weapon->id);
 #endif
 	return usable;
 }
@@ -1992,8 +1992,8 @@ qboolean Com_CheckShape (const uint32_t *shape, const int x, const int y)
 	const uint32_t row = shape[y];
 	int position = pow(2, x);
 
-	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0 ) {
-		Com_Printf("Com_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x,y);
+	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
+		Com_Printf("Com_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x, y);
 		return qfalse;
 	}
 
@@ -2011,8 +2011,8 @@ qboolean Com_CheckShape (const uint32_t *shape, const int x, const int y)
  */
 static qboolean Com_CheckShapeSmall (const uint32_t shape, const int x, const int y)
 {
-	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0 ) {
-		Com_Printf("Com_CheckShapeSmall: Bad x or y value: (x=%i, y=%i)\n", x,y);
+	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
+		Com_Printf("Com_CheckShapeSmall: Bad x or y value: (x=%i, y=%i)\n", x, y);
 		return qfalse;
 	}
 

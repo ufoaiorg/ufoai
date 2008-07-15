@@ -3564,7 +3564,7 @@ void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
 	/* Prepare return values. */
 	*day = d + 1;
 	*month = i + 1;	/**< Return month in range [1-12] */
-	assert(*month >= 1 && *month <=12 );
+	assert(*month >= 1 && *month <= 12);
 	assert(*day >= 1 && *day <= monthLength[i]);
 }
 
