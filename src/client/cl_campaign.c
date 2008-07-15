@@ -165,7 +165,7 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
  * @return True if the base has been build.
  * @sa INS_BuildInstallation
  */
-qboolean CL_NewInstallation (installation_t* installation, vec2_t pos)
+qboolean CL_NewInstallation (installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos)
 {
 	byte *colorTerrain;
 
@@ -197,7 +197,7 @@ qboolean CL_NewInstallation (installation_t* installation, vec2_t pos)
 	gd.numInstallations++;
 
 	/* set up the installation with buildings that have the autobuild flag set */
-	INS_SetUpInstallation(installation);
+	INS_SetUpInstallation(installation, installationTemplate);
 
 	return qtrue;
 }

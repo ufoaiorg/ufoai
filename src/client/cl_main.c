@@ -1712,6 +1712,8 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		UP_ParseChapters(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qfalse);
+	else if (!Q_strncmp(type, "installation", 13))
+		INS_ParseInstallations(name, text); 
 	else if (!Q_strncmp(type, "researched", 10))
 		CL_ParseResearchedCampaignItems(name, text);
 	else if (!Q_strncmp(type, "researchable", 12))

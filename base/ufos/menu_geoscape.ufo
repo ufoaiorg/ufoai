@@ -1247,7 +1247,7 @@ menu popup_newinstallation
 		pos		"560 450"
 		out		{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
 		in		{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_build_installation;" }
+		click	{ cmd "mn_pop;mn_build_installation radartower;" }
 	}
 	string string_cancel
 	{

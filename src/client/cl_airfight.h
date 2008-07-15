@@ -57,6 +57,7 @@ typedef struct aircraftProjectile_s {
 	aircraft_t *attackingAircraft;	/**< Aircraft which shooted the projectile. NULL if aircraft is destroyed or base is shooting */
 
 	struct base_s* aimedBase;		/**< aimed base - NULL if the target is an aircraft */
+	struct installation_s* aimedInstallation;	/**< aimed installation - NULL if the target is an aircraft */
 	aircraft_t *aimedAircraft;	/**< target of the projectile/
 							 	 ** used only if the projectile will touch its target (otherwise it's NULL)
 									and if aimedBase != NULL */

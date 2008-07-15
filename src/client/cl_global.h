@@ -86,6 +86,10 @@ typedef struct globalData_s
 	int numBuildings[MAX_BASES];
 
 	/* == installations == */
+	/* A template for each possible installation with configurable values */
+	installationTemplate_t installationTemplates[MAX_INSTALLATION_TEMPLATES];
+	int numInstallationTemplates;
+
 	/* A list of _all_ installations ... even unbuilt ones. */
 	installation_t installations[MAX_INSTALLATIONS];
 	/* Total number of parsed installation-names. */

@@ -2,6 +2,33 @@
 // INSTALLATION
 // ==============
 
+installation radartower
+{
+	name		"_Radar Tower"
+	cost		10000
+	radar_range	12.0
+	max_batteries	0
+	max_ufo_stored	0
+}
+
+installation ufoyard
+{
+	name		"_UFO Yard"
+	cost		30000
+	radar_range	0.0
+	max_batteries	0
+	max_ufo_stored	10
+}
+
+installation samsite
+{
+	name		"_SAM Site"
+	cost		20000
+	radar_range	0.0
+	max_batteries	2
+	max_ufo_stored	0
+}
+
 
 installationnames main
 {

@@ -369,9 +369,9 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 /**
  * @brief Update radar coverage when building/destroying new radar
  */
-void RADAR_UpdateInstallationRadarCoverage_f (installation_t *installation)
+void RADAR_UpdateInstallationRadarCoverage_f (installation_t *installation, const float radarRange)
 {
-	RADAR_Initialise(&installation->radar, RADAR_INSTALLATIONRANGE, RADAR_INSTALLATIONLEVEL, qtrue);
+	RADAR_Initialise(&installation->radar, radarRange, RADAR_INSTALLATIONLEVEL, qtrue);
 	CP_UpdateMissionVisibleOnGeoscape();
 } 
 

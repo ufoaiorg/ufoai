@@ -46,8 +46,6 @@ static cvar_t *mn_installation_title;
 static cvar_t *mn_installation_count;
 static cvar_t *mn_installation_id;
 
-installation_t *installationCurrent;
-
 /**
  * @brief Array bound check for the installation index.
  * @param[in] instIdx  Instalation's index
@@ -76,14 +74,36 @@ installation_t* INS_GetFoundedInstallationByIDX (int instIdx)
 }
 
 /**
+ * @brief Returns the installation radar range (if set) for a given installation type.
+ * @param[in] installationType The type of the installation to find the radar range of.
+ * @return The radar range of the installation if the installation is found and has had the range set.  Otherwise it will return -1.
+ */
+static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (const char *id)
+{
+	int idx;
+	
+	for (idx = 0; idx < gd.numInstallationTemplates; idx++) {
+		if (Q_strncmp(gd.installationTemplates[idx].id, id, MAX_VAR) == 0) {
+			return &gd.installationTemplates[idx];
+		}
+	}
+	
+	return NULL;
+}
+
+
+/**
  * @brief Setup new installation
  * @sa CL_NewInstallation
  */
-void INS_SetUpInstallation (installation_t* installation)
+void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate)
 {
 	const int newInstallationAlienInterest = 1.0f;
 
 	assert(installation);
+
+	installation->installationTemplate = installationTemplate;
+	
 	/* Reset current capacities. */
 	installation->aircraftCapacitiy.cur = 0;
 
@@ -101,9 +121,11 @@ void INS_SetUpInstallation (installation_t* installation)
 	/* intialise hit points */
 	installation->installationDamage = MAX_INSTALLATION_DAMAGE;
 
+	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id, installation->installationTemplate->radarRange, installation->installationTemplate->numMaxBatteries, installation->installationTemplate->numMaxUfoStored);
+	
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
-	RADAR_UpdateInstallationRadarCoverage_f(installation);
+	RADAR_UpdateInstallationRadarCoverage_f(installation, installation->installationTemplate->radarRange);
 }
 
 /**
@@ -136,11 +158,68 @@ static int INS_GetFirstUnfoundedInstallation (void)
 
 	return MAX_INSTALLATIONS;
 }
+/**
+ * @param[in] installation If this is @c NULL we want to installation a new base
+ */
+void INS_SelectInstallation (installation_t *installation)
+{
+	/* set up a new base */
+	if (!installation) {
+		int installationID;
+
+		/* if player hit the "create base" button while creating base mode is enabled
+		 * that means that player wants to quit this mode */
+		if (gd.mapAction == MA_NEWINSTALLATION) {
+			MAP_ResetAction();
+			if (!radarOverlayWasSet)
+				MAP_DeactivateOverlay("radar");
+			return;
+		}
+
+		gd.mapAction = MA_NEWINSTALLATION;
+		installationID = INS_GetFirstUnfoundedInstallation();
+		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: new installationID is %i\n", installationID);
+		if (installationID < MAX_INSTALLATIONS) {
+			installationCurrent = INS_GetInstallationByIDX(installationID);
+			installationCurrent->idx = installationID;
+			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", installationCurrent->name);
+			/* Store configuration of radar overlay to be able to set it back */
+			radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
+			/* show radar overlay (if not already displayed) */
+			if (!radarOverlayWasSet)
+				MAP_SetOverlay("radar");
+		} else {
+			Com_Printf("MaxInstallations reached\n");
+			/* select the first installation in list */
+			installationCurrent = INS_GetInstallationByIDX(0);
+			gd.mapAction = MA_NONE;
+		}
+	} else {
+		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: select installation with id %i\n", installation->idx);
+		installationCurrent = installation;
+		gd.mapAction = MA_NONE;
+		if (installation->numBatteries > 0)
+			MN_PushMenu("basedefence");
+		else if (installation->numAircraftInInstallation > 0)
+			MN_PushMenu("ufoYard");
+	
+	}
+
+	/**
+	 * this is only needed when we are going to be show up the base
+	 * in our base view port
+	 */
+	if (gd.mapAction != MA_NEWBASE) {
+		assert(baseCurrent);
+		Cvar_Set("mn_base_title", baseCurrent->name);
+		Cvar_SetValue("mn_numbases", gd.numBases);
+		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
+	}
+}
 
 /**
- * @brief Called when a installation is opened or a new installation is created on geoscape.
- *
- * For a new installation the installationID is -1.
+ * @brief Called when a base is opened or a new base is created on geoscape.
+ * For a new base the baseID is -1.
  */
 static void INS_SelectInstallation_f (void)
 {
@@ -153,34 +232,14 @@ static void INS_SelectInstallation_f (void)
 	}
 	installationID = atoi(Cmd_Argv(1));
 
-	/* set up a new installation */
-	/* called from *.ufo with -1 */
-	if (installationID < 0) {
-		gd.mapAction = MA_NEWINSTALLATION;
-		installationID = INS_GetFirstUnfoundedInstallation();
-		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: new installationID is %i\n", installationID);
-		if (installationID < MAX_INSTALLATIONS) {
-			installationCurrent = INS_GetInstallationByIDX(installationID);
-			installationCurrent->idx = installationID;
-/*			Cvar_Set("mn_installation_newcost", va(_("%i c"), curCampaign->installationcost)); @todo setup installation cost for the three types */
-			Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: installationID is valid for installation: %s\n", installationCurrent->name);
-		} else {
-			Com_Printf("MaxInstallations reached\n");
-			/* select the first installation in list */
-			installationCurrent = INS_GetInstallationByIDX(0);
-			gd.mapAction = MA_NONE;
-		}
-	} else if (installationID < MAX_INSTALLATIONS) {
-		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: select installation with id %i\n", installationID);
-		installation = INS_GetInstallationByIDX(installationID);
-		if (installation->founded) {
-			installationCurrent = installation;
-			gd.mapAction = MA_NONE;
-		}
-	} else
-		return;
-
+	if (installationID >= 0 && installationID < gd.numInstallations)
+		installation = INS_GetFoundedInstallationByIDX(installationID);
+	else
+		/* create a new base */
+		installation = NULL;
+	INS_SelectInstallation(installation);
 }
+
 
 /**
  * @brief Constructs a new installation.
@@ -189,9 +248,19 @@ static void INS_SelectInstallation_f (void)
 static void INS_BuildInstallation_f (void)
 {
 	const nation_t *nation;
-	/** @todo: need to work out where the cost of the installation is to be stored.  Should it be part of the
-	 * campaign or in the installation.ufo config.  (curCampaign->installationcost) */
-	const int installationcost = 100000;
+	installationTemplate_t *installationTemplate;
+	
+	if (Cmd_Argc() < 1) {
+		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
+		return;
+	}
+
+	installationTemplate = INS_GetInstallationTemplateFromInstallationId(Cmd_Argv(1));
+
+	if (!installationTemplate) {
+		Com_Printf("The installation type %s passed for %s is not valid.\n", Cmd_Argv(1), Cmd_Argv(0));
+		return;
+	}
 
 	if (!installationCurrent)
 		return;
@@ -199,17 +268,21 @@ static void INS_BuildInstallation_f (void)
 	assert(!installationCurrent->founded);
 	assert(ccs.singleplayer);
 	assert(curCampaign);
+	assert(installationTemplate->cost >= 0);
 
-	if (ccs.credits - installationcost > 0) {
-		if (CL_NewInstallation(installationCurrent, newInstallationPos)) {
+	/* @todo: need to work out where the cost of the installation is to be stored.  Should it be part of the 
+	 * campaign or in the installation.ufo config.  (curCampaign->installationcost) */
+	if (ccs.credits - installationTemplate->cost > 0) {
+		if (CL_NewInstallation(installationCurrent, installationTemplate, newInstallationPos)) {
 			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", gd.numInstallations);
 			installationCurrent->idx = gd.numInstallations - 1;
 			installationCurrent->founded = qtrue;
 			installationCurrent->installationStatus = INSTALLATION_WORKING;
-
+			installationCurrent->installationTemplate = installationTemplate;
+			
 			campaignStats.installationsBuild++;
 			gd.mapAction = MA_NONE;
-			CL_UpdateCredits(ccs.credits - installationcost);
+			CL_UpdateCredits(ccs.credits - installationTemplate->cost);
 			Q_strncpyz(installationCurrent->name, mn_installation_title->string, sizeof(installationCurrent->name));
 			nation = MAP_GetNation(installationCurrent->pos);
 			if (nation)
@@ -243,9 +316,10 @@ void INS_NewInstallations (void)
 	/* reset installations */
 	int i;
 	char title[MAX_VAR];
+	installation_t *installation;
 
 	for (i = 0; i < MAX_INSTALLATIONS; i++) {
-		installation_t *installation = INS_GetInstallationByIDX(i);
+		installation = INS_GetInstallationByIDX(i);
 		Q_strncpyz(title, installation->name, sizeof(title));
 /*		INS_ClearInstallation(installation); */
 		Q_strncpyz(installation->name, title, sizeof(title));
@@ -336,9 +410,21 @@ static void INS_CheckMaxInstallations_f (void)
  */
 void INS_InitStartup (void)
 {
+	int idx;
+
 	Com_DPrintf(DEBUG_CLIENT, "Reset installation\n");
 
 	Cvar_SetValue("mn_installation_max", 10);
+
+	for (idx = 0; idx < gd.numInstallationTemplates; idx++) {
+		gd.installationTemplates[idx].id = NULL;
+		gd.installationTemplates[idx].name = NULL;
+		gd.installationTemplates[idx].cost = 0;
+		gd.installationTemplates[idx].radarRange = 0.0f;
+		gd.installationTemplates[idx].numMaxUfoStored = 0;
+		gd.installationTemplates[idx].numMaxBatteries = 0;
+	}
+
 
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_select_installation", INS_SelectInstallation_f, NULL);
@@ -353,6 +439,7 @@ void INS_InitStartup (void)
 
 	mn_installation_count = Cvar_Get("mn_installation_count", "0", 0, "Current amount of build installations");
 	mn_installation_id = Cvar_Get("mn_installation_id", "-1", 0, "Internal id of the current selected installation");
+
 }
 
 /**
@@ -426,6 +513,94 @@ void INS_ParseInstallationNames (const char *name, const char **text)
 	mn_installation_title = Cvar_Get("mn_installation_title", "", 0, NULL);
 }
 
+/**
+ * @brief Copies an entry from the installation description file into the list of installation templates.
+ * @note Parses one "installation" entry in the installation.ufo file and writes
+ * it into the next free entry in installationTemplates.
+ * @param[in] name Unique test-id of a installationTemplate_t.
+ * @param[in] text @todo: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
+ */
+void INS_ParseInstallations (const char *name, const char **text)
+{
+	installationTemplate_t *installation;
+	const char *errhead = "INS_ParseInstallations: unexpected end of file (names ";
+	const char *token;
+	int i;
+
+	/* get id list body */
+	token = COM_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("INS_ParseInstallations: installation \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	if (!name) {
+		Com_Printf("INS_ParseInstallations: installation name not specified.\n");
+		return;
+		
+	}
+	
+	if (gd.numInstallationTemplates >= MAX_INSTALLATION_TEMPLATES) {
+		Com_Printf("INS_ParseInstallations: too many installation templates\n");
+		gd.numInstallationTemplates = MAX_INSTALLATION_TEMPLATES;	/* just in case it's bigger. */
+		return;
+	}
+
+	for (i = 0; i < gd.numInstallationTemplates; i++) {
+		if (!Q_strcmp(gd.installationTemplates[i].name, name)) {
+			Com_Printf("INS_ParseInstallations: Second installation with same name found (%s) - second ignored\n", name);
+			return;
+		}
+	}
+
+	/* new entry */
+	installation = &gd.installationTemplates[gd.numInstallationTemplates];
+	memset(installation, 0, sizeof(*installation));
+	installation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+
+	Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);
+
+	gd.numInstallationTemplates++;
+	do {
+		/* get the name type */
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		/* get values */
+		if (!Q_strncmp(token, "name", MAX_VAR)) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+
+			installation->name = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+		} else if (!Q_strncmp(token, "cost", MAX_VAR)) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			installation->cost = atoi(token);
+		} else if (!Q_strncmp(token, "radar_range", MAX_VAR)) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			installation->radarRange = atof(token);
+		} else if (!Q_strncmp(token, "max_batteries", MAX_VAR)) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			installation->numMaxBatteries = atoi(token);
+		} else if (!Q_strncmp(token, "max_ufo_stored", MAX_VAR)) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			installation->numMaxUfoStored = atoi(token);
+		}
+
+	} while (*text);
+}
+
 
 /**
  * @brief Save callback for savegames
@@ -434,25 +609,6 @@ void INS_ParseInstallationNames (const char *name, const char **text)
  */
 qboolean INS_Save (sizebuf_t* sb, void* data)
 {
-	int i;
-	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
-#if 0
-		const installtion i = INS_GetInstallationByIDX(i);
-		MSG_WriteByte(sb, i->founded);
-		if (!i->founded)
-			continue;
-		MSG_WriteString(sb, i->name);
-		MSG_WritePos(sb, i->pos);
-		MSG_WriteByte(sb, i->installationType);
-		MSG_WriteByte(sb, i->installationStatus);
-		MSG_WriteShort(sb, i->installationDamage);
-		MSG_WriteFloat(sb, i->alienInterest);
-		MSG_WriteShort(sb, i->radar.range);
-
-		MSG_WriteByte(sb, i->numBatteries);
-		B_SaveBaseSlots(i->batteries, i->numBatteries, sb);
-#endif
-	}
 
 	return qtrue;
 }
@@ -467,28 +623,6 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
  */
 qboolean INS_Load (sizebuf_t* sb, void* data)
 {
-	int i;
-	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
-#if 0
-		installation *const b = INS_GetInstallationByIDX(i);
-		i->founded = MSG_ReadByte(sb);
-		if (!i->founded)
-			continue;
-		Q_strncpyz(i->name, MSG_ReadStringRaw(sb), sizeof(i->name));
-		MSG_ReadPos(sb, i->pos);
-		i->installationType = MSG_ReadByte(sb);
-		i->installationStatus = MSG_ReadByte(sb);
-		i->installationDamage = MSG_ReadShort(sb);
-		i->alienInterest = MSG_ReadFloat(sb);
-		RADAR_Initialise(&i->radar, MSG_ReadShort(sb), 1.0f, qtrue);
-
-		/* read battery slots */
-		i->numBatteries = MSG_ReadByte(sb);
-		B_LoadBaseSlots(i->batteries, i->numBatteries, sb);
-
-		/** @todo aircraft */
-#endif
-	}
 
 	return qtrue;
 }

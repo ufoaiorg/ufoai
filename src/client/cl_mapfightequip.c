@@ -683,13 +683,20 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	MN_MenuTextReset(TEXT_STANDARD);
 
 	/* baseCurrent should be non NULL because we are in the menu of this base */
-	if (!baseCurrent)
+	if (!baseCurrent && !installationCurrent)
 		return;
 
-	/* Check that the base has at least 1 battery */
-	if (baseCurrent->numBatteries + baseCurrent->numLasers < 1) {
-		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
-		return;
+	/* Check that the base or installation has at least 1 battery */
+	if (baseCurrent) {
+		if (baseCurrent->numBatteries + baseCurrent->numLasers < 1) {
+			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
+			return;
+		}
+	} else {
+		if (installationCurrent->numBatteries < 1) {
+			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
+			return;
+		}
 	}
 
 	if (Cmd_Argc() != 2 || noparams) {

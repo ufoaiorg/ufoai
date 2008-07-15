@@ -86,7 +86,7 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @sa AIRFIGHT_RemoveProjectile
  * @sa AII_ReloadWeapon for the aircraft item reload code
  */
-static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
+static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const installation_t* attackingInstallation, aircraft_t *attacker, base_t* aimedBase, installation_t* aimedInstallation, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
 	aircraftProjectile_t *projectile;
 
@@ -106,27 +106,34 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t 
 
 	projectile->idx = gd.numProjectiles;
 	projectile->aircraftItem = weaponSlot->ammo;
-	if (!attackingBase) {
+	if (attackingBase) {
+		projectile->attackingAircraft = NULL;
+		VectorSet(projectile->pos[0], attackingBase->pos[0], attackingBase->pos[1], 0);
+	} else if (attackingInstallation) {
+		projectile->attackingAircraft = NULL;
+		VectorSet(projectile->pos[0], attackingInstallation->pos[0], attackingInstallation->pos[1], 0);
+	} else {
 		assert(attacker);
 		projectile->attackingAircraft = attacker;
 		VectorSet(projectile->pos[0], attacker->pos[0], attacker->pos[1], 0);
-	} else {
-		projectile->attackingAircraft = NULL;
-		VectorSet(projectile->pos[0], attackingBase->pos[0], attackingBase->pos[1], 0);
 	}
 
 	projectile->numProjectiles = 1;
 
 	/* if we are not aiming to a base - we are aiming towards an aircraft */
-	if (!aimedBase) {
+	if (aimedBase) {
+		projectile->aimedAircraft = NULL;
+		projectile->aimedBase = aimedBase;
+		VectorSet(projectile->idleTarget, aimedBase->pos[0], aimedBase->pos[1], 0);
+	} else if (aimedInstallation) {
+		projectile->aimedAircraft = NULL;
+		projectile->aimedInstallation = aimedInstallation;
+		VectorSet(projectile->idleTarget, aimedInstallation->pos[0], aimedInstallation->pos[1], 0);
+	} else {
 		assert(target);
 		projectile->aimedAircraft = target;
 		projectile->aimedBase = NULL;
 		VectorSet(projectile->idleTarget, 0, 0, 0);
-	} else {
-		projectile->aimedAircraft = NULL;
-		projectile->aimedBase = aimedBase;
-		VectorSet(projectile->idleTarget, aimedBase->pos[0], aimedBase->pos[1], 0);
 	}
 	projectile->time = 0;
 	projectile->angle = 0.0f;
@@ -355,7 +362,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		const objDef_t *ammo = shooter->weapons[slotIdx].ammo;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, shooter, shooter->baseTarget, target, shooter->weapons + slotIdx)) {
+		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, shooter->baseTarget, shooter->installationTarget, target, shooter->weapons + slotIdx)) {
 			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			probability = frand();
@@ -777,7 +784,62 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(base, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
+		if (AIRFIGHT_AddProjectile(base, NULL, NULL, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
+			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
+			/* will we miss the target ? */
+			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
+				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
+		}
+	}
+}
+
+/**
+ * @brief Check if one type of battery (missile or laser) can shoot now.
+ * @param[in] installation Pointer to the firing intallation.
+ * @param[in] weapons The installation weapon to check and fire.
+ * @param[in] maxWeapons
+ */
+static void AIRFIGHT_InstallationShoot (const installation_t *installation, baseWeapon_t *weapons, int maxWeapons)
+{
+	int i, test;
+	float distance;
+
+	for (i = 0; i < maxWeapons; i++) {
+		/* if no target, can't shoot */
+		if (!weapons[i].target)
+			continue;
+
+		/* If the weapon is not ready in base, can't shoot. */
+		if (weapons[i].slot.installationTime > 0)
+			continue;
+
+		/* if weapon is reloading, can't shoot */
+		if (weapons[i].slot.delayNextShot > 0)
+			continue;
+
+		/* check that the ufo is still visible */
+		if (!weapons[i].target->visible) {
+			weapons[i].target = NULL;
+			continue;
+		}
+
+		/* Check if we can still fire on this target. */
+		distance = MAP_GetDistance(installation->pos, weapons[i].target->pos);
+		test = AIRFIGHT_CheckWeapon(&weapons[i].slot + i, distance);
+		/* weapon unable to shoot, reset target */
+		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
+			weapons[i].target = NULL;
+			continue;
+		}
+		/* we can't shoot with this weapon atm, wait to see if UFO comes closer */
+		else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
+			continue;
+		/* target is too far, wait to see if UFO comes closer */
+		else if (distance > weapons[i].slot.ammo->craftitem.stats[AIR_STATS_WRANGE])
+			continue;
+
+		/* shoot */
+		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, NULL, NULL, weapons[i].target, &weapons[i].slot + i)) {
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
@@ -793,9 +855,10 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 void AIRFIGHT_CampaignRunBaseDefense (int dt)
 {
 	int baseIdx;
-	int idx;
+	int installationIdx;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		int idx;
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
@@ -817,6 +880,27 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 				AIRFIGHT_BaseShoot(base, base->batteries, base->numBatteries);
 			if (B_GetBuildingStatus(base, B_DEFENSE_LASER))
 				AIRFIGHT_BaseShoot(base, base->lasers, base->numLasers);
+		}
+	}
+
+	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		int idx;
+		installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		if (!installation)
+			continue;
+		
+		assert(installation);
+		
+/*		if (installation->installationTemplate->numMaxBatteries <= 0)
+			continue; */
+		
+		for (idx = 0; idx < installation->numBatteries; idx++) {
+			if (installation->batteries[idx].slot.delayNextShot > 0)
+				installation->batteries[idx].slot.delayNextShot -= dt;
+		}
+
+		if (AII_InstallationCanShoot(installation)) {
+			AIRFIGHT_InstallationShoot(installation, installation->batteries, installation->numBatteries);
 		}
 	}
 }
