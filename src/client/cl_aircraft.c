@@ -826,7 +826,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		/* give him some fuel */
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 		/* Set HP to maximum */
-		aircraft->damage =aircraft->stats[AIR_STATS_DAMAGE];
+		aircraft->damage = aircraft->stats[AIR_STATS_DAMAGE];
 
 		/* set initial direction of the aircraft */
 		VectorSet(aircraft->direction, 1, 0, 0);
@@ -2052,6 +2052,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WritePos(sb, gd.ufos[i].pos);
 		MSG_WriteByte(sb, gd.ufos[i].status);
 		MSG_WriteLong(sb, gd.ufos[i].fuel);
+		MSG_WriteLong(sb, gd.ufos[i].damage);
 		MSG_WriteShort(sb, gd.ufos[i].time);
 		MSG_WriteShort(sb, gd.ufos[i].point);
 		MSG_WriteShort(sb, gd.ufos[i].route.numPoints);
@@ -2199,6 +2200,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, tmp_vec3t);		/* pos */
 			MSG_ReadByte(sb);			/* status */
 			MSG_ReadLong(sb);			/* fuel */
+/*			MSG_ReadLong(sb);	*/		/* damage */
 			MSG_ReadShort(sb);			/* time */
 			MSG_ReadShort(sb);			/* point */
 			tmp_int = MSG_ReadShort(sb);		/* numPoints */
@@ -2240,6 +2242,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, ufo->pos);
 			ufo->status = MSG_ReadByte(sb);
 			ufo->fuel = MSG_ReadLong(sb);
+/*			ufo->damage = MSG_ReadLong(sb);	*/
 			ufo->time = MSG_ReadShort(sb);
 			ufo->point = MSG_ReadShort(sb);
 			ufo->route.numPoints = MSG_ReadShort(sb);
@@ -2250,7 +2253,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			gd.ufos[i].mission = CP_GetMissionById(MSG_ReadString(sb));
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				ufo->stats[j] = MSG_ReadLong(sb);
-			/** @todo check if we need both damage values */
+			/** @todo remove next line in next revision when load damage enabled */
 			ufo->damage = ufo->stats[AIR_STATS_DAMAGE];
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int == -1)

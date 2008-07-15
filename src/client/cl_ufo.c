@@ -631,7 +631,6 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	/* Give it HP */
 	ufo->damage = ufo->stats[AIR_STATS_DAMAGE];
 	/* Check for 0 damage which cause invulerable UFOs */
-	/** @todo: check why it is 0 in some cases */
 	assert(ufo->damage);
 
 	/* Initialise ufo data */
