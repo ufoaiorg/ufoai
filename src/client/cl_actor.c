@@ -5172,10 +5172,9 @@ void CL_AddPathing (void)
  */
 void CL_PlayActorSound (const le_t * le, actorSound_t soundType)
 {
-	sfx_t* sfx;
 	const char *actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 	if (actorSound) {
-		sfx = S_RegisterSound(actorSound);
+		sfx_t *sfx = S_RegisterSound(actorSound);
 		if (sfx) {
 			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
 			S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME);
