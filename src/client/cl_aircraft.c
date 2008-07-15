@@ -2250,6 +2250,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			gd.ufos[i].mission = CP_GetMissionById(MSG_ReadString(sb));
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				ufo->stats[j] = MSG_ReadLong(sb);
+			/** @todo check if we need both damage values */
+			ufo->damage = ufo->stats[AIR_STATS_DAMAGE];
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int == -1)
 				ufo->baseTarget = NULL;
