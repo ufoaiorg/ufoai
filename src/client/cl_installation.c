@@ -81,13 +81,13 @@ installation_t* INS_GetFoundedInstallationByIDX (int instIdx)
 static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (const char *id)
 {
 	int idx;
-	
+
 	for (idx = 0; idx < gd.numInstallationTemplates; idx++) {
 		if (Q_strncmp(gd.installationTemplates[idx].id, id, MAX_VAR) == 0) {
 			return &gd.installationTemplates[idx];
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -103,7 +103,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	assert(installation);
 
 	installation->installationTemplate = installationTemplate;
-	
+
 	/* Reset current capacities. */
 	installation->aircraftCapacitiy.cur = 0;
 
@@ -122,7 +122,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	installation->installationDamage = MAX_INSTALLATION_DAMAGE;
 
 	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id, installation->installationTemplate->radarRange, installation->installationTemplate->numMaxBatteries, installation->installationTemplate->numMaxUfoStored);
-	
+
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
 	RADAR_UpdateInstallationRadarCoverage_f(installation, installation->installationTemplate->radarRange);
@@ -201,8 +201,7 @@ void INS_SelectInstallation (installation_t *installation)
 		if (installation->numBatteries > 0)
 			MN_PushMenu("basedefence");
 		else if (installation->numAircraftInInstallation > 0)
-			MN_PushMenu("ufoYard");
-	
+			MN_PushMenu("ufoyard");
 	}
 
 	/**
@@ -249,7 +248,7 @@ static void INS_BuildInstallation_f (void)
 {
 	const nation_t *nation;
 	installationTemplate_t *installationTemplate;
-	
+
 	if (Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
 		return;
@@ -270,7 +269,7 @@ static void INS_BuildInstallation_f (void)
 	assert(curCampaign);
 	assert(installationTemplate->cost >= 0);
 
-	/* @todo: need to work out where the cost of the installation is to be stored.  Should it be part of the 
+	/** @todo: need to work out where the cost of the installation is to be stored.  Should it be part of the
 	 * campaign or in the installation.ufo config.  (curCampaign->installationcost) */
 	if (ccs.credits - installationTemplate->cost > 0) {
 		if (CL_NewInstallation(installationCurrent, installationTemplate, newInstallationPos)) {
@@ -279,7 +278,7 @@ static void INS_BuildInstallation_f (void)
 			installationCurrent->founded = qtrue;
 			installationCurrent->installationStatus = INSTALLATION_WORKING;
 			installationCurrent->installationTemplate = installationTemplate;
-			
+
 			campaignStats.installationsBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - installationTemplate->cost);
@@ -302,7 +301,6 @@ static void INS_BuildInstallation_f (void)
 
 		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new installation."));
 		MN_Popup(_("Notice"), popupText);
-
 	}
 }
 
@@ -439,7 +437,6 @@ void INS_InitStartup (void)
 
 	mn_installation_count = Cvar_Get("mn_installation_count", "0", 0, "Current amount of build installations");
 	mn_installation_id = Cvar_Get("mn_installation_id", "-1", 0, "Internal id of the current selected installation");
-
 }
 
 /**
@@ -537,9 +534,9 @@ void INS_ParseInstallations (const char *name, const char **text)
 	if (!name) {
 		Com_Printf("INS_ParseInstallations: installation name not specified.\n");
 		return;
-		
+
 	}
-	
+
 	if (gd.numInstallationTemplates >= MAX_INSTALLATION_TEMPLATES) {
 		Com_Printf("INS_ParseInstallations: too many installation templates\n");
 		gd.numInstallationTemplates = MAX_INSTALLATION_TEMPLATES;	/* just in case it's bigger. */
@@ -609,7 +606,25 @@ void INS_ParseInstallations (const char *name, const char **text)
  */
 qboolean INS_Save (sizebuf_t* sb, void* data)
 {
+	int i;
+	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
+#if 0
+		const installtion i = INS_GetInstallationByIDX(i);
+		MSG_WriteByte(sb, i->founded);
+		if (!i->founded)
+			continue;
+		MSG_WriteString(sb, i->name);
+		MSG_WritePos(sb, i->pos);
+		MSG_WriteByte(sb, i->installationType);
+		MSG_WriteByte(sb, i->installationStatus);
+		MSG_WriteShort(sb, i->installationDamage);
+		MSG_WriteFloat(sb, i->alienInterest);
+		MSG_WriteShort(sb, i->radar.range);
 
+		MSG_WriteByte(sb, i->numBatteries);
+		B_SaveBaseSlots(i->batteries, i->numBatteries, sb);
+#endif
+	}
 	return qtrue;
 }
 
@@ -623,7 +638,28 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
  */
 qboolean INS_Load (sizebuf_t* sb, void* data)
 {
+	int i;
+	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
+#if 0
+		installation *const b = INS_GetInstallationByIDX(i);
+		i->founded = MSG_ReadByte(sb);
+		if (!i->founded)
+				continue;
+		Q_strncpyz(i->name, MSG_ReadStringRaw(sb), sizeof(i->name));
+		MSG_ReadPos(sb, i->pos);
+		i->installationType = MSG_ReadByte(sb);
+		i->installationStatus = MSG_ReadByte(sb);
+		i->installationDamage = MSG_ReadShort(sb);
+		i->alienInterest = MSG_ReadFloat(sb);
+		RADAR_Initialise(&i->radar, MSG_ReadShort(sb), 1.0f, qtrue);
 
+		/* read battery slots */
+		i->numBatteries = MSG_ReadByte(sb);
+		B_LoadBaseSlots(i->batteries, i->numBatteries, sb);
+
+		/** @todo aircraft */
+#endif
+	}
 	return qtrue;
 }
 
