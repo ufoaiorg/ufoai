@@ -231,7 +231,6 @@ ac     +a     +a     ac
 0      0      ab     0
 }
 
-
 // Empty garage at horizontal street
 tile +h04
 {

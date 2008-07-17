@@ -213,7 +213,6 @@ abc     +a     +a     +a     abc
 
 // *********************************
 
-
 assembly river
 {
 size "8 5"
@@ -243,8 +242,6 @@ title "_Tropical river"
 
 +drop_firebird "1 1"
 }
-
-
 
 assembly drug
 {

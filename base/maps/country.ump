@@ -25,7 +25,6 @@ base country/c_
 // s = rock end vertical front left
 // t = rock end vertical front right
 
-
 // horizontal first row - abdlmn
 // horizontal last row - abdijk
 // vertical first col - acdrst
@@ -631,7 +630,6 @@ tile +s04
 bd   +b     +b     bd
 0    abijk  abijk  0
 }
-
 
 // street vertical
 tile +s04_2
