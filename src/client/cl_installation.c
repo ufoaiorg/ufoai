@@ -99,9 +99,13 @@ static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (co
 void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate)
 {
 	const int newInstallationAlienInterest = 1.0f;
+	int idxBattery;
 
 	assert(installation);
 
+	installation->idx = gd.numInstallations - 1;
+	installation->founded = qtrue;
+	installation->installationStatus = INSTALLATION_WORKING;
 	installation->installationTemplate = installationTemplate;
 
 	/* Reset current capacities. */
@@ -121,11 +125,20 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* intialise hit points */
 	installation->installationDamage = MAX_INSTALLATION_DAMAGE;
 
+	Q_strncpyz (&installation->storage.name[16], "base_AA51_launcher", sizeof(installation->storage.name[16]));
+	installation->storage.num[16] = 3;
+	
 	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id, installation->installationTemplate->radarRange, installation->installationTemplate->numMaxBatteries, installation->installationTemplate->numMaxUfoStored);
 
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
 	RADAR_UpdateInstallationRadarCoverage_f(installation, installation->installationTemplate->radarRange);
+
+	for (idxBattery = 0; idxBattery < installation->installationTemplate->numMaxBatteries; idxBattery++) {
+		AII_InitialiseSlot(&installation->batteries[idxBattery].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
+		installation->batteries[idxBattery].target = NULL;
+
+	}
 }
 
 /**
@@ -163,7 +176,7 @@ static int INS_GetFirstUnfoundedInstallation (void)
  */
 void INS_SelectInstallation (installation_t *installation)
 {
-	/* set up a new base */
+	/* set up a new installation */
 	if (!installation) {
 		int installationID;
 
@@ -197,23 +210,14 @@ void INS_SelectInstallation (installation_t *installation)
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: select installation with id %i\n", installation->idx);
 		installationCurrent = installation;
+		baseCurrent = NULL;
 		gd.mapAction = MA_NONE;
-		if (installation->numBatteries > 0)
+		if (installation->installationTemplate->numMaxBatteries > 0)
 			MN_PushMenu("basedefence");
 		else if (installation->numAircraftInInstallation > 0)
 			MN_PushMenu("ufoyard");
 	}
 
-	/**
-	 * this is only needed when we are going to be show up the base
-	 * in our base view port
-	 */
-	if (gd.mapAction != MA_NEWBASE) {
-		assert(baseCurrent);
-		Cvar_Set("mn_base_title", baseCurrent->name);
-		Cvar_SetValue("mn_numbases", gd.numBases);
-		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
-	}
 }
 
 /**
@@ -269,15 +273,12 @@ static void INS_BuildInstallation_f (void)
 	assert(curCampaign);
 	assert(installationTemplate->cost >= 0);
 
-	/** @todo: need to work out where the cost of the installation is to be stored.  Should it be part of the
-	 * campaign or in the installation.ufo config.  (curCampaign->installationcost) */
 	if (ccs.credits - installationTemplate->cost > 0) {
 		if (CL_NewInstallation(installationCurrent, installationTemplate, newInstallationPos)) {
 			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", gd.numInstallations);
-			installationCurrent->idx = gd.numInstallations - 1;
-			installationCurrent->founded = qtrue;
-			installationCurrent->installationStatus = INSTALLATION_WORKING;
-			installationCurrent->installationTemplate = installationTemplate;
+
+			/* set up the installation */
+			INS_SetUpInstallation(installationCurrent, installationTemplate);
 
 			campaignStats.installationsBuild++;
 			gd.mapAction = MA_NONE;

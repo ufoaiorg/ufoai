@@ -196,9 +196,6 @@ qboolean CL_NewInstallation (installation_t* installation, installationTemplate_
 
 	gd.numInstallations++;
 
-	/* set up the installation with buildings that have the autobuild flag set */
-	INS_SetUpInstallation(installation, installationTemplate);
-
 	return qtrue;
 }
 

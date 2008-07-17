@@ -102,6 +102,7 @@ typedef enum {
 typedef struct aircraftSlot_s {
 	int idx;					/**< self link */
 	struct base_s *base;		/**< A link to the base. (if defined by aircraftItemType_t) */
+	struct installation_s *installation;		/**< A link to the installation. (if defined by aircraftItemType_t) */
 	struct aircraft_s *aircraftTemplate;	/**< A link to the aircraft template (if defined by aircraftItemType_t). */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
 
