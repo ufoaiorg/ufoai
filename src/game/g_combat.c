@@ -447,7 +447,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				G_Morale(ML_WOUND, target, attacker, damage);
 		} else { /* medikit, etc. */
 			if (target->HP > GET_HP(target->chr.score.skills[ABILITY_POWER]))
-				target->HP = max(GET_HP(target->chr.score.skills[ABILITY_POWER]), 0);
+				target->HP = min(max(GET_HP(target->chr.score.skills[ABILITY_POWER]), 0), target->chr.maxHP);
 		}
 		G_SendStats(target);
 	}
