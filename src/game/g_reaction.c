@@ -94,6 +94,104 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 }
 
 /**
+ * @brief Check whether ent can reaction fire at target, i.e. that it can see it and neither is dead etc.
+ * @param[in] ent The entity that might be firing
+ * @param[in] target The entity that might be fired at
+ * @param[out] reason If not null then it prints the reason that reaction fire wasn't possible
+ * @returns Whether 'ent' can actually fire at 'target'
+ */
+static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char **reason)
+{
+	float actorVis;
+	qboolean frustum;
+
+	/* an entity can't reaction fire at itself */
+	if (ent == target) {
+#ifdef DEBUG_REACTION
+		if (reason)
+			*reason = "Cannot fire on self";
+		return qfalse;
+#endif
+	}
+
+	/* check ent is a suitable shooter */
+	if (!ent->inuse || !G_IsLivingActor(ent)) {
+#ifdef DEBUG_REACTION
+		if (reason)
+			*reason = "Shooter is not ent, is non-actor or is dead";
+#endif
+		return qfalse;
+	}
+
+	/* check ent has reaction fire enabled */
+	if (!(ent->state & STATE_SHAKEN)
+	 && !(ent->state & STATE_REACTION)) {
+#ifdef DEBUG_REACTION
+		if (reason)
+			*reason = "Shooter does not have reaction fire enabled";
+#endif
+		return qfalse;
+	}
+
+#if 0
+/** This code will prevent multiple shots (no matter the available TUs) if STATE_REACTION_ONCE is set.
+ * @todo Remove this if we don't happen to re-introduce it. */
+	if ((ent->state & STATE_REACTION_ONCE)
+	 && (ent->reactionFired > 0)) {
+#ifdef DEBUG_REACTION
+		if (reason)
+			*reason = "Shooter is not supposed to react again (i.e. has shot too often).";
+#endif
+		return qfalse;
+	}
+#endif
+
+	/* check in range and visible */
+	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST) {
+#ifdef DEBUG_REACTION
+		if (reason)
+			*reason = "Target is out of range";
+#endif
+		return qfalse;
+	}
+
+	actorVis = G_ActorVis(ent->origin, target, qtrue);
+	frustum = G_FrustumVis(ent, target->origin);
+	if (actorVis <= 0.2 || !frustum) {
+#ifdef DEBUG_REACTION
+		if (reason)
+			*reason = "Target is not visible";
+#endif
+		return qfalse;
+	}
+
+	/* If reaction fire is triggered by a friendly unit
+	 * and the shooter is still sane, don't shoot;
+	 * well, if the shooter isn't sane anymore... */
+	if (target->team == TEAM_CIVILIAN || target->team == ent->team)
+		if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand()) {
+#ifdef DEBUG_REACTION
+			if (reason)
+				*reason = "Shooter will not fire on friendly";
+#endif
+			return qfalse;
+		}
+
+	/* Don't react in your own turn, trust your commander. Can't use
+	 * level.activeTeam, because this function touches it recursively. */
+	if (ent->team == turnTeam) {
+#ifdef DEBUG_REACTION
+		if (reason)
+			*reason = "It's the shooter's turn";
+#endif
+		return qfalse;
+	}
+
+	/* okay do it then */
+	return qtrue;
+}
+
+/**
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
  * @returns qtrue if some entity initiated firing
@@ -194,7 +292,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	int tus, fire_hand_type, team;
 	int firemode = -1;
 	qboolean tookShot;
-	char reason[64];
+	char *reason = NULL;
 
 	/* check whether this ent has a reaction fire queued */
 	if (!ent->reactionTarget) {
@@ -214,7 +312,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	}
 
 	/* ent can't take a reaction shot if it's not possible */
-	if (!G_CanReactionFire(ent, ent->reactionTarget, reason)) {
+	if (!G_CanReactionFire(ent, ent->reactionTarget, &reason)) {
 		ent->reactionTarget = NULL;
 #ifdef DEBUG_REACTION
 		if (!mock)
@@ -287,104 +385,6 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 #endif
 	}
 	return tookShot;
-}
-
-/**
- * @brief Check whether ent can reaction fire at target, i.e. that it can see it and neither is dead etc.
- * @param[in] ent The entity that might be firing
- * @param[in] target The entity that might be fired at
- * @param[out] reason If not null then it prints the reason that reaction fire wasn't possible
- * @returns Whether 'ent' can actually fire at 'target'
- */
-qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
-{
-	float actorVis;
-	qboolean frustum;
-
-	/* an entity can't reaction fire at itself */
-	if (ent == target) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			Com_sprintf(reason, sizeof(reason), "Cannot fire on self");
-		return qfalse;
-#endif
-	}
-
-	/* check ent is a suitable shooter */
-	if (!ent->inuse || (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) || (ent->state & STATE_DEAD)) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			Com_sprintf(reason, sizeof(reason), "Shooter is not ent, is non-actor or is dead");
-#endif
-		return qfalse;
-	}
-
-	/* check ent has reaction fire enabled */
-	if (!(ent->state & STATE_SHAKEN)
-	 && !(ent->state & STATE_REACTION)) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			Com_sprintf(reason, sizeof(reason), "Shooter does not have reaction fire enabled");
-#endif
-		return qfalse;
-	}
-
-#if 0
-/** This code will prevent multiple shots (no matter the available TUs) if STATE_REACTION_ONCE is set.
- * @todo Remove this if we don't happen to re-introduce it. */
-	if ((ent->state & STATE_REACTION_ONCE)
-	 && (ent->reactionFired > 0)) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			Com_sprintf(reason, sizeof(reason), "Shooter is not supposed to react again (i.e. has shot too often).");
-#endif
-		return qfalse;
-	}
-#endif
-
-	/* check in range and visible */
-	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			Com_sprintf(reason, sizeof(reason), "Target is out of range");
-#endif
-		return qfalse;
-	}
-
-	actorVis = G_ActorVis(ent->origin, target, qtrue);
-	frustum = G_FrustumVis(ent, target->origin);
-	if (actorVis <= 0.2 || !frustum) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			Com_sprintf(reason, sizeof(reason), "Target is not visible");
-#endif
-		return qfalse;
-	}
-
-	/* If reaction fire is triggered by a friendly unit
-	 * and the shooter is still sane, don't shoot;
-	 * well, if the shooter isn't sane anymore... */
-	if (target->team == TEAM_CIVILIAN || target->team == ent->team)
-		if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand()) {
-#ifdef DEBUG_REACTION
-			if (reason)
-				Com_sprintf(reason, sizeof(reason), "Shooter will not fire on friendly");
-#endif
-			return qfalse;
-		}
-
-	/* Don't react in your own turn, trust your commander. Can't use
-	 * level.activeTeam, because this function touches it recursively. */
-	if (ent->team == turnTeam) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			Com_sprintf(reason, sizeof(reason), "It's the shooter's turn");
-#endif
-		return qfalse;
-	}
-
-	/* okay do it then */
-	return qtrue;
 }
 
 /**

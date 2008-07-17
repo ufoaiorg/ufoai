@@ -910,7 +910,7 @@ void AI_Run (void)
 				ent = player->pers.last + 1;
 
 			for (j = ent - g_edicts; j < globals.num_edicts; j++, ent++)
-				if (ent->inuse && ent->team == player->pers.team && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->TU) {
+				if (ent->inuse && ent->TU && ent->team == player->pers.team && G_IsLivingActor(ent)) {
 					AI_ActorThink(player, ent);
 					player->pers.last = ent;
 					return;

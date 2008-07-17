@@ -43,6 +43,15 @@ enum {
 	SOUND_CHANNEL_AMBIENT
 };
 
+/** @brief These sounds are precached in S_RegisterSounds */
+enum {
+	SOUND_WATER_IN,
+	SOUND_WATER_OUT,
+	SOUND_WATER_MOVE,
+
+	MAX_SOUNDIDS
+};
+
 typedef struct sfx_s {
 	char *name;
 	int loops;					/**< how many loops - 0 = play only once, -1 = infinite */

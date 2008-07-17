@@ -196,6 +196,9 @@ typedef struct client_static_s {
 
 	/* these models must only be loaded once */
 	struct model_s *model_weapons[MAX_OBJDEFS];
+
+	/* this pool is reloaded on every sound system restart */
+	sfx_t *sound_pool[MAX_SOUNDIDS];
 } client_static_t;
 
 extern client_static_t cls;

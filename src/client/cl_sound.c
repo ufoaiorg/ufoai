@@ -391,7 +391,6 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume)
 	}
 #endif
 
-	/** @todo: Make display the RF_HIGHLIGHT effect for all actors that are in hear range */
 	if (origin) {
 		le_t* le = LE_GetClosestActor(origin);
 		if (le) {
@@ -499,6 +498,11 @@ void S_RegisterSounds (void)
 			}
 		}
 	}
+
+	/* precache the sound pool */
+	cls.sound_pool[SOUND_WATER_IN] = S_RegisterSound("footsteps/water_in");
+	cls.sound_pool[SOUND_WATER_OUT] = S_RegisterSound("footsteps/water_out");
+	cls.sound_pool[SOUND_WATER_MOVE] = S_RegisterSound("footsteps/water_under");
 }
 
 /**
@@ -616,10 +620,6 @@ static void S_Music_Change_f (void)
 	type = Cmd_Argv(1);
 	if (!Q_strcmp(type, "geoscape")) {
 		category = MUSIC_GEOSCAPE;
-		if (cls.state == ca_active) {
-			Com_DPrintf(DEBUG_SOUND, "Not changing music to geoscape - we are in Battlescape\n");
-			return;
-		}
 	} else if (!Q_strcmp(type, "battlescape")) {
 		category = MUSIC_BATTLESCAPE;
 	} else if (!Q_strcmp(type, "main")) {
@@ -628,6 +628,11 @@ static void S_Music_Change_f (void)
 		category = MUSIC_GEOSCAPE;
 	} else {
 		Com_Printf("Invalid parameter given\n");
+		return;
+	}
+
+	if (category != MUSIC_BATTLESCAPE && cls.state == ca_active) {
+		Com_DPrintf(DEBUG_SOUND, "Not changing music to %s - we are in Battlescape\n", type);
 		return;
 	}
 

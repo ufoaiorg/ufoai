@@ -4284,8 +4284,7 @@ void CL_ActorMouseTrace (void)
 	/* search for an actor on this field */
 	mouseActor = NULL;
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-
-		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2))
+		if (le->inuse && LE_IsLivingActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 				if (VectorCompare(le->pos, mousePos)) {
@@ -4732,7 +4731,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && VectorCompare(le->pos, toPos)) {
+		if (le->inuse && LE_IsLivingActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}
@@ -4800,7 +4799,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && VectorCompare(le->pos, toPos)) {
+		if (le->inuse && LE_IsLivingActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}

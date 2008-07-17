@@ -36,10 +36,6 @@ int numLMs;
 le_t LEs[MAX_EDICTS];
 int numLEs;
 
-static sfx_t* soundWaterIn;
-static sfx_t* soundWaterOut;
-static sfx_t* soundWaterMove;
-
 /*===========================================================================
 Local Model (LM) handling
 =========================================================================== */
@@ -144,6 +140,18 @@ static inline localModel_t *LM_Find (int entnum)
 			return &LMs[i];
 
 	return NULL;
+}
+
+/**
+ * @brief Checks whether the given le is a living actor
+ * @param[in] le The local entity to perform the check for
+ * @sa G_IsLivingActor
+ */
+qboolean LE_IsLivingActor (const le_t *le)
+{
+	assert(le);
+	return ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
+		&& !(le->state & STATE_DEAD));
 }
 
 /**
@@ -432,7 +440,10 @@ void LET_PlayAmbientSound (le_t * le)
 /**
  * @brief Change the animation of an actor to the idle animation (which can be
  * panic, dead or stand)
+ * @note We have more than one animation for dead - the index is given by the
+ * state of the local entity
  * @note Think function
+ * @note See the *.anm files in the models dir
  */
 void LET_StartIdle (le_t * le)
 {
@@ -463,13 +474,6 @@ void LET_StartIdle (le_t * le)
  */
 static void LE_PlaySoundFileForContents (le_t* le, int contents)
 {
-	if (!soundWaterIn)
-		soundWaterIn = S_RegisterSound("footsteps/water_in");
-	if (!soundWaterOut)
-		soundWaterOut = S_RegisterSound("footsteps/water_out");
-	if (!soundWaterMove)
-		soundWaterOut = S_RegisterSound("footsteps/water_under");
-
 	/* only play those water sounds when an actor jumps into the water - but not
 	 * if he enters carefully in crouched mode */
 	if (le->state & ~STATE_CROUCHED) {
@@ -477,17 +481,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_StartSound(le->origin, soundWaterOut, DEFAULT_SOUND_PACKET_VOLUME);
+				S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_OUT], DEFAULT_SOUND_PACKET_VOLUME);
 			} else {
 				/* play water entering sound */
-				S_StartSound(le->origin, soundWaterIn, DEFAULT_SOUND_PACKET_VOLUME);
+				S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_IN], DEFAULT_SOUND_PACKET_VOLUME);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_StartSound(le->origin, soundWaterMove, DEFAULT_SOUND_PACKET_VOLUME);
+			S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_MOVE], DEFAULT_SOUND_PACKET_VOLUME);
 		}
 	}
 }
@@ -500,7 +504,6 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
  */
 static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
 {
-	sfx_t *sfx;
 	const terrainType_t *t;
 	vec3_t origin;
 
@@ -519,7 +522,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 			CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
 	}
 	if (t->footStepSound) {
-		sfx = S_RegisterSound(t->footStepSound);
+		sfx_t *sfx = S_RegisterSound(t->footStepSound);
 		Com_DPrintf(DEBUG_SOUND, "LE_PlaySoundFileAndParticleForSurface: volume %.2f\n", t->footStepVolume);
 		S_StartSound(origin, sfx, t->footStepVolume);
 	}
@@ -540,19 +543,13 @@ le_t* LE_GetClosestActor (const vec3_t origin)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->pnum != cl.pnum)
 			continue;
-		switch (le->type) {
-		/* only visible actors */
-		case ET_ACTOR:
-		case ET_ACTOR2x2:
-			if (le->state & STATE_DEAD)
-				continue;
-			VectorSubtract(origin, le->origin, leOrigin);
-			tmp = VectorLength(leOrigin);
-			if (tmp < dist) {
-				actor = le;
-				dist = tmp;
-			}
-			break;
+		if (!LE_IsLivingActor(le))
+			continue;
+		VectorSubtract(origin, le->origin, leOrigin);
+		tmp = VectorLength(leOrigin);
+		if (tmp < dist) {
+			actor = le;
+			dist = tmp;
 		}
 	}
 
@@ -569,8 +566,6 @@ static void LET_PathMove (le_t * le)
 	float frac;
 	int tuCost = 0;
 	vec3_t start, dest, delta;
-	trace_t trace;
-	vec3_t from, to;
 
 	/* check for start */
 	if (cl.time <= le->startTime)
@@ -593,6 +588,9 @@ static void LET_PathMove (le_t * le)
 
 			/* walking in water will not play the normal footstep sounds */
 			if (!le->pathContents[le->pathPos]) {
+				trace_t trace;
+				vec3_t from, to;
+
 				/* prepare trace vectors */
 				PosToVec(le->pos, from);
 				VectorCopy(from, to);
@@ -656,11 +654,14 @@ static void LET_PathMove (le_t * le)
 
 	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
 
+	/* calculate the new interpolated actor origin in the world */
 	VectorMA(start, frac, delta, le->origin);
 }
 
 /**
  * @note Think function
+ * @brief Change the actors animation to walking
+ * @note See the *.anm files in the models dir
  */
 void LET_StartPathMove (le_t * le)
 {
@@ -696,9 +697,9 @@ void LET_ProjectileAutoHide (le_t *le)
 
 	/* check whether any of our actors can see this le */
 	for (i = 0, actors = LEs; i < numLEs; i++, actors++) {
-		if (actors->team != cls.team || actors->state & STATE_DEAD)
+		if (actors->team != cls.team)
 			continue;
-		if (actors->type == ET_ACTOR || actors->type == ET_ACTOR2x2) {
+		if (LE_IsLivingActor(actors)) {
 			/* at least one of our actors can see this */
 			if (FrustomVis(actors->origin, actors->dir, le->origin)) {
 				if (TR_TestLine(actors->origin, le->origin, TL_FLAG_NONE)) {
@@ -753,7 +754,7 @@ static void LET_Projectile (le_t * le)
  LE Special Effects
 =========================================================================== */
 
-void LE_AddProjectile (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide)
+void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, qboolean autohide)
 {
 	le_t *le;
 	vec3_t delta;
@@ -778,7 +779,8 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t imp
 
 	VecToAngles(delta, le->ptl->angles);
 	/* direction */
-	/** @todo Why are we not using le->dir here? */
+	/** @todo Why are we not using le->dir here?
+	 * @sa LE_AddGrenade */
 	le->state = normal;
 	le->fd = fd;
 
@@ -875,7 +877,8 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	}
 
 	le->endTime = cl.time + dt;
-	/** @todo Why are we not using le->dir here? */
+	/** @todo Why are we not using le->dir here?
+	 @sa LE_AddProjectile */
 	le->state = 5;				/* direction (0,0,1) */
 	le->fd = fd;
 	assert(fd);
@@ -939,6 +942,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, float volume, i
 		return;
 	}
 	le->type = ET_SOUND;
+	/** @todo What if we call a snd_restart during this is played? */
 	le->sfx = sfx;
 	le->sfx->channel = -1;
 	le->sfx->volume = -1; /* at least one volume change */

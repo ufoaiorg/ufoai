@@ -45,7 +45,7 @@ static qboolean G_TeamPointVis (int team, vec3_t point)
 
 	/* test if point is visible from team */
 	for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
-		if (from->inuse && (from->type == ET_ACTOR || from->type == ET_ACTOR2x2) && !(from->state & STATE_DEAD) && from->team == team && G_FrustumVis(from, point)) {
+		if (from->inuse && from->team == team && G_IsLivingActor(from) && G_FrustumVis(from, point)) {
 			/* get viewers eye height */
 			VectorCopy(from->origin, eye);
 			if (from->state & (STATE_CROUCHED | STATE_PANIC))

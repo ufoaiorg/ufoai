@@ -137,7 +137,7 @@ static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD
 
 qboolean CL_OutsideMap(vec3_t impact);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
-void LE_AddProjectile(const fireDef_t *fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide);
+void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, qboolean autohide);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt);
 void LE_AddAmbientSound(const char *sound, const vec3_t origin, float volume, int levelflags);
 le_t *LE_GetClosestActor(const vec3_t origin);
@@ -160,6 +160,7 @@ qboolean LE_BrushModelAction(le_t *le, entity_t *ent);
 void CL_RecalcRouting(const le_t *le);
 void CL_CompleteRecalcRouting(void);
 
+qboolean LE_IsLivingActor(const le_t *le);
 void LE_Explode(struct dbuffer *msg);
 void LE_DoorOpen(struct dbuffer *msg);
 void LE_DoorClose(struct dbuffer *msg);

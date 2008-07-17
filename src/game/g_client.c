@@ -41,6 +41,7 @@ static int scoreMissionNum = 0;
 /**
  * @brief Checks whether the given edict is a living actor
  * @param[in] ent The edict to perform the check for
+ * @sa LE_IsLivingActor
  */
 qboolean G_IsLivingActor (const edict_t *ent)
 {

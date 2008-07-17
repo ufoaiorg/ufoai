@@ -250,7 +250,6 @@ void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent);
 
 /* g_reaction.c */
-qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason);
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
 void G_ReactToPreFire(edict_t *target);
 void G_ReactToPostFire(edict_t *target);

@@ -633,7 +633,6 @@ static void CL_MiddleClickUp_f (void)
  */
 static void CL_LeftClickDown_f (void)
 {
-	menu_t* menu;
 	switch (mouseSpace) {
 	case MS_MENU:
 		MN_Click(mousePosX, mousePosY);
@@ -642,7 +641,7 @@ static void CL_LeftClickDown_f (void)
 		/* we clicked outside the world but not onto a menu */
 		if (cls.state == ca_active) {
 			/* get the current menu */
-			menu = MN_GetActiveMenu();
+			const menu_t *menu = MN_GetActiveMenu();
 			if (menu && menu->leaveNode)
 				MN_ExecuteActions(menu, menu->leaveNode->click);
 		}
@@ -672,8 +671,7 @@ static void CL_DrawSpottedLines_f (void)
 
 	for (i = 0; i < numLEs; i++) {
 		const le_t *le = &LEs[i];
-		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
-		 && !(le->state & STATE_DEAD) && le->team != cls.team
+		if (le->inuse && LE_IsLivingActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			/* not facing in the direction of the 'target' */
 			if (!FrustomVis(watcher->origin, watcher->dir, le->origin))
@@ -732,8 +730,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 		if (++i >= numLEs)
 			i = 0;
 		le = &LEs[i];
-		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
-		 && !(le->state & STATE_DEAD) && le->team != cls.team
+		if (le->inuse && LE_IsLivingActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			VectorCopy(watcher->origin, from);
 			VectorCopy(le->origin, at);
@@ -791,7 +788,8 @@ static void CL_NextAlien_f (void)
 		if (++i >= numLEs)
 			i = 0;
 		le = &LEs[i];
-		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN) {
+		if (le->inuse && LE_IsLivingActor(le) && le->team != cls.team
+		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
 			V_CenterView(le->pos);
 			return;
