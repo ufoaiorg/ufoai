@@ -7,8 +7,8 @@ base forest/forest_
 // Tiletypes
 // ------
 // a: normal
-// b: water 
-// c: 
+// b: water
+// c:
 // u: UFO
 
 tile +drop_firebird
@@ -45,7 +45,7 @@ tile +f2
 {
 3 3
 
-0      ab         0 
+0      ab         0
 ab      +a        ab
 0      ab         0
 }
@@ -132,7 +132,7 @@ b      +b       b
 0      a        0
 }
 
-assembly test
+assembly small
 {
 size "5 5"
 

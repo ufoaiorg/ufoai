@@ -2228,6 +2228,38 @@ mapdef wilderness
 	}
 }
 
+mapdef forest_small
+{
+	map				"+forest"
+	param			small
+	multiplayer		false
+	description		"_A suburban district of an oriental area."
+	size			"small"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		rural
+		nopopulation
+	}
+}
+
 //mapdef condor_crash // The Condor is not used.
 //{
 //	map				condor_crash
