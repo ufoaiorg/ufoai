@@ -58,14 +58,6 @@
 // entity 2
 {
 "classname" "func_group"
-}
-// entity 3
-{
-"classname" "func_group"
-}
-// entity 4
-{
-"classname" "func_group"
 // brush 0
 {
 ( 188 168 25 ) ( 132 168 25 ) ( 132 110 25 ) tex_vehicles/car_c -172 16 0 0.5 0.5 65280 1024 0
@@ -159,14 +151,14 @@
 ( 180 150 3 ) ( 188 150 3 ) ( 188 154 0 ) tex_material/c_black -8 -8 0 0.5 0.5 65280 1024 0
 }
 }
-// entity 5
+// entity 3
 {
 "classname" "misc_particle"
 "origin" "63 112 108"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 6
+// entity 4
 {
 "classname" "func_group"
 // brush 0

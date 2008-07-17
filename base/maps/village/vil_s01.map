@@ -173,92 +173,60 @@
 }
 // entity 4
 {
-"classname" "func_group"
-}
-// entity 5
-{
-"classname" "func_group"
-}
-// entity 6
-{
-"classname" "func_group"
-}
-// entity 7
-{
-"classname" "func_group"
-}
-// entity 8
-{
 "classname" "light"
 "light" "180"
 "_color" "0.9 0.95 1"
 "origin" "336 128 24"
 }
-// entity 9
-{
-"classname" "func_group"
-}
-// entity 10
-{
-"classname" "func_group"
-}
-// entity 11
-{
-"classname" "func_group"
-}
-// entity 12
-{
-"classname" "func_group"
-}
-// entity 13
+// entity 5
 {
 "classname" "light"
 "origin" "380 336 24"
 "_color" "0.9 0.95 1"
 "light" "180"
 }
-// entity 14
+// entity 6
 {
 "classname" "light"
 "light" "180"
 "_color" "0.9 0.95 1"
 "origin" "384 588 24"
 }
-// entity 15
+// entity 7
 {
 "classname" "info_civilian_start"
 "angle" "315"
 "origin" "464 176 28"
 }
-// entity 16
+// entity 8
 {
 "classname" "misc_particle"
 "origin" "319 592 112"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 17
+// entity 9
 {
 "classname" "misc_particle"
 "origin" "145 62 108"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 18
+// entity 10
 {
 "classname" "misc_particle"
 "origin" "337 62 108"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 19
+// entity 11
 {
 "classname" "misc_particle"
 "origin" "319 336 112"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 20
+// entity 12
 {
 "classname" "func_group"
 // brush 0
@@ -313,7 +281,7 @@
 ( 136 56 4 ) ( 136 56 20 ) ( 128 48 20 ) tex_material/metall002 24 -7 -180 0.5 -0.4999960065 134283008 0 0
 }
 }
-// entity 21
+// entity 13
 {
 "classname" "func_group"
 // brush 0
@@ -368,7 +336,7 @@
 ( 342 68 120 ) ( 330 68 120 ) ( 330 52 116 ) tex_lights/neon003 24 35 0 0.25 -0.3333739936 134282752 0 0
 }
 }
-// entity 22
+// entity 14
 {
 "classname" "func_group"
 // brush 0
@@ -423,7 +391,7 @@
 ( 312 344 4 ) ( 312 344 20 ) ( 304 352 20 ) tex_material/metall002 -8 -7 -180 0.5 -0.5 134283008 0 0
 }
 }
-// entity 23
+// entity 15
 {
 "classname" "func_group"
 // brush 0

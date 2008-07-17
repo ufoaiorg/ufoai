@@ -57,24 +57,12 @@
 }
 // entity 2
 {
-"classname" "func_group"
-}
-// entity 3
-{
-"classname" "func_group"
-}
-// entity 4
-{
-"classname" "func_group"
-}
-// entity 5
-{
 "classname" "misc_particle"
 "origin" "145 64 108"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 6
+// entity 3
 {
 "classname" "func_group"
 // brush 0
@@ -129,7 +117,7 @@
 ( 141 51 12 ) ( 141 51 20 ) ( 138 48 20 ) tex_material/metall002 16 15 -180 0.5 -0.5 134283008 0 0
 }
 }
-// entity 7
+// entity 4
 {
 "classname" "func_group"
 // brush 0

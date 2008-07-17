@@ -799,14 +799,6 @@
 // entity 3
 {
 "classname" "func_group"
-}
-// entity 4
-{
-"classname" "func_group"
-}
-// entity 5
-{
-"classname" "func_group"
 // brush 0
 {
 ( 260 156 36 ) ( 260 148 36 ) ( 260 148 20 ) tex_buildings/concrete003 104 128 0 0.5 0.5 65280 0 0
@@ -898,35 +890,35 @@
 ( 264 156 16 ) ( 260 156 16 ) ( 260 148 20 ) tex_buildings/concrete003 -8 8 0 0.5 0.5 65280 0 0
 }
 }
-// entity 6
+// entity 4
 {
 "classname" "light"
 "light" "150"
 "_color" "1 1 0.95"
 "origin" "140 146 46"
 }
-// entity 7
+// entity 5
 {
 "classname" "light"
 "origin" "222 146 46"
 "_color" "1 1 0.95"
 "light" "150"
 }
-// entity 8
+// entity 6
 {
 "classname" "light"
 "origin" "178 196 46"
 "_color" "1 1 0.95"
 "light" "150"
 }
-// entity 9
+// entity 7
 {
 "classname" "light"
 "origin" "178 96 46"
 "_color" "1 1 0.95"
 "light" "150"
 }
-// entity 10
+// entity 8
 {
 "classname" "func_group"
 // brush 0
@@ -1020,7 +1012,7 @@
 ( 664 188 36 ) ( 664 184 36 ) ( 660 184 20 ) tex_buildings/concrete003 240 152 0 0.5 0.5 65280 0 0
 }
 }
-// entity 11
+// entity 9
 {
 "classname" "func_group"
 // brush 0
@@ -1114,18 +1106,38 @@
 ( 152 344 36 ) ( 152 340 36 ) ( 148 340 20 ) tex_buildings/concrete003 120 152 0 0.5 0.5 65280 0 0
 }
 }
+// entity 10
+{
+"classname" "light"
+"origin" "488 142 46"
+"_color" "1 1 0.95"
+"light" "150"
+}
+// entity 11
+{
+"classname" "light"
+"light" "150"
+"_color" "1 1 0.95"
+"origin" "570 142 46"
+}
 // entity 12
 {
-"classname" "func_group"
+"classname" "light"
+"light" "150"
+"_color" "1 1 0.95"
+"origin" "526 192 46"
 }
 // entity 13
 {
-"classname" "func_group"
+"classname" "light"
+"light" "150"
+"_color" "1 1 0.95"
+"origin" "526 92 46"
 }
 // entity 14
 {
 "classname" "light"
-"origin" "488 142 46"
+"origin" "520 370 46"
 "_color" "1 1 0.95"
 "light" "150"
 }
@@ -1134,59 +1146,23 @@
 "classname" "light"
 "light" "150"
 "_color" "1 1 0.95"
-"origin" "570 142 46"
+"origin" "602 370 46"
 }
 // entity 16
 {
 "classname" "light"
 "light" "150"
 "_color" "1 1 0.95"
-"origin" "526 192 46"
+"origin" "558 420 46"
 }
 // entity 17
 {
 "classname" "light"
 "light" "150"
 "_color" "1 1 0.95"
-"origin" "526 92 46"
-}
-// entity 18
-{
-"classname" "func_group"
-}
-// entity 19
-{
-"classname" "func_group"
-}
-// entity 20
-{
-"classname" "light"
-"origin" "520 370 46"
-"_color" "1 1 0.95"
-"light" "150"
-}
-// entity 21
-{
-"classname" "light"
-"light" "150"
-"_color" "1 1 0.95"
-"origin" "602 370 46"
-}
-// entity 22
-{
-"classname" "light"
-"light" "150"
-"_color" "1 1 0.95"
-"origin" "558 420 46"
-}
-// entity 23
-{
-"classname" "light"
-"light" "150"
-"_color" "1 1 0.95"
 "origin" "558 320 46"
 }
-// entity 24
+// entity 18
 {
 "classname" "func_group"
 // brush 0
@@ -1280,7 +1256,7 @@
 ( 664 188 36 ) ( 664 184 36 ) ( 660 184 20 ) tex_buildings/concrete003 240 152 0 0.5 0.5 65280 0 0
 }
 }
-// entity 25
+// entity 19
 {
 "classname" "func_group"
 // brush 0
@@ -1374,150 +1350,150 @@
 ( 152 344 36 ) ( 152 340 36 ) ( 148 340 20 ) tex_buildings/concrete003 -64 152 0 0.5 0.5 65280 0 0
 }
 }
-// entity 26
+// entity 20
 {
 "classname" "info_alien_start"
 "angle" "315"
 "origin" "304 336 28"
 }
-// entity 27
+// entity 21
 {
 "classname" "info_alien_start"
 "origin" "304 464 28"
 "angle" "180"
 }
-// entity 28
+// entity 22
 {
 "classname" "info_alien_start"
 "angle" "315"
 "origin" "496 464 28"
 }
-// entity 29
+// entity 23
 {
 "classname" "info_alien_start"
 "origin" "688 112 28"
 "angle" "225"
 }
-// entity 30
+// entity 24
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "252"
 "origin" "236 332 68"
 }
-// entity 31
+// entity 25
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter2.md2"
 "spawnflags" "2"
 "origin" "236 332 68"
 }
-// entity 32
+// entity 26
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_stamm3.md2"
 "spawnflags" "252"
 "origin" "236 332 68"
 }
-// entity 33
+// entity 27
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_stamm2.md2"
 "spawnflags" "2"
 "origin" "236 332 68"
 }
-// entity 34
+// entity 28
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "236 332 68"
 }
-// entity 35
+// entity 29
 {
 "classname" "misc_particle"
 "origin" "163 146 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 36
+// entity 30
 {
 "classname" "misc_particle"
 "origin" "179 166 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 37
+// entity 31
 {
 "classname" "misc_particle"
 "origin" "179 132 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 38
+// entity 32
 {
 "classname" "misc_particle"
 "origin" "197 146 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 39
+// entity 33
 {
 "classname" "misc_particle"
 "origin" "509 142 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 40
+// entity 34
 {
 "classname" "misc_particle"
 "origin" "525 162 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 41
+// entity 35
 {
 "classname" "misc_particle"
 "origin" "525 128 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 42
+// entity 36
 {
 "classname" "misc_particle"
 "origin" "543 142 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 43
+// entity 37
 {
 "classname" "misc_particle"
 "origin" "541 370 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 44
+// entity 38
 {
 "classname" "misc_particle"
 "origin" "557 390 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 45
+// entity 39
 {
 "classname" "misc_particle"
 "origin" "557 356 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 46
+// entity 40
 {
 "classname" "misc_particle"
 "origin" "575 370 88"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 47
+// entity 41
 {
 "classname" "func_group"
 // brush 0
@@ -1593,7 +1569,7 @@
 ( 556 368 88 ) ( 556 372 88 ) ( 560 372 88 ) tex_buildings/concrete003 128 136 0 0.5 0.5 65024 0 0
 }
 }
-// entity 48
+// entity 42
 {
 "classname" "func_group"
 // brush 0
@@ -1669,7 +1645,7 @@
 ( 540 356 8 ) ( 540 388 8 ) ( 572 388 8 ) tex_buildings/concrete003 -184 64 0 0.5 0.5 65280 0 0
 }
 }
-// entity 49
+// entity 43
 {
 "classname" "func_group"
 // brush 0

@@ -111,20 +111,12 @@
 }
 // entity 2
 {
-"classname" "func_group"
-}
-// entity 3
-{
-"classname" "func_group"
-}
-// entity 4
-{
 "classname" "misc_particle"
 "origin" "145 64 108"
 "particle" "corona"
 "spawnflags" "510"
 }
-// entity 5
+// entity 3
 {
 "classname" "func_group"
 // brush 0
