@@ -38,9 +38,6 @@ void SCR_RunConsole(void);
 void SCR_DrawPrecacheScreen(qboolean string);
 void SCR_DisplayHudMessage(const char * text, int time);
 
-extern int sb_lines;
-extern cvar_t *cursor;
-
 typedef struct {
 	int x, y;
 } screenPoint_t;

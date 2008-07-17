@@ -367,7 +367,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 			return NULL;
 		}
 
-	var = Mem_PoolAlloc(sizeof(cvar_t), com_cvarSysPool, 0);
+	var = Mem_PoolAlloc(sizeof(*var), com_cvarSysPool, 0);
 	var->name = Mem_PoolStrDup(var_name, com_cvarSysPool, 0);
 	var->string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 	var->old_string = NULL;

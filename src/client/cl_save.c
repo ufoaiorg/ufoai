@@ -151,7 +151,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	fclose(f.f);
 
-	memcpy(&header, cbuf, sizeof(saveFileHeader_t));
+	memcpy(&header, cbuf, sizeof(header));
 	/* swap all int values if needed */
 	header.compressed = LittleLong(header.compressed);
 	header.version = LittleLong(header.version);
@@ -165,7 +165,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
-		res = uncompress(buf, &len, cbuf + sizeof(saveFileHeader_t), clen - sizeof(saveFileHeader_t));
+		res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
 		Mem_Free(cbuf);
 
 		if (res != Z_OK) {
@@ -176,19 +176,21 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		}
 		sb.cursize = len;
 	} else {
-		memcpy(buf, cbuf + sizeof(saveFileHeader_t), clen - sizeof(saveFileHeader_t));
-		sb.cursize = clen - sizeof(saveFileHeader_t);
+		memcpy(buf, cbuf + sizeof(header), clen - sizeof(header));
+		sb.cursize = clen - sizeof(header);
 		Mem_Free(cbuf);
 	}
 
 	/* check current version */
 	if (header.version > SAVE_FILE_VERSION) {
 		*error = _("The file is a more recent version than is supported");
-		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, header.version);
+		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n",
+			filename, header.version);
 		Mem_Free(buf);
 		return qfalse;
 	} else if (header.version < SAVE_FILE_VERSION) {
-		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, header.version);
+		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n",
+			filename, header.version);
 	}
 
 	/* exit running game */
@@ -291,7 +293,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	/* compress data using zlib before writing */
 	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
-	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(saveFileHeader_t), cl_genericPool, CL_TAG_NONE);
+	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, CL_TAG_NONE);
 
 	/* step 4 - write the uncompressed header */
 	memset(&header, 0, sizeof(header));
@@ -303,11 +305,11 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
 		date.year, CL_DateGetMonthName(date.month - 1), date.day);
 	/** @todo fill real date string */
-	memcpy(fbuf, &header, sizeof(saveFileHeader_t));
+	memcpy(fbuf, &header, sizeof(header));
 
 	/* step 5 - compress */
 	if (header.compressed) {
-		res = compress(fbuf + sizeof(saveFileHeader_t), &bufLen, buf, sb.cursize);
+		res = compress(fbuf + sizeof(header), &bufLen, buf, sb.cursize);
 		Mem_Free(buf);
 
 		if (res != Z_OK) {
@@ -317,15 +319,15 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 			return qfalse;
 		}
 	} else {
-		memcpy(fbuf + sizeof(saveFileHeader_t), buf, sb.cursize);
+		memcpy(fbuf + sizeof(header), buf, sb.cursize);
 		Mem_Free(buf);
 	}
 
 	/* last step - write data */
-	res = FS_WriteFile(fbuf, bufLen + sizeof(saveFileHeader_t), savegame);
+	res = FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
 	Mem_Free(fbuf);
 
-	if (res == bufLen + sizeof(saveFileHeader_t)) {
+	if (res == bufLen + sizeof(header)) {
 		/* set cl_lastsave to let the continue function know which game to
 		 * automatically continue @todo: redo this in the menu */
 		Cvar_Set("cl_lastsave", filename);
@@ -412,7 +414,7 @@ static void SAV_GameReadGameComments_f (void)
 		}
 
 		/* read the comment */
-		if (fread(&header, 1, sizeof(saveFileHeader_t), f) != sizeof(saveFileHeader_t))
+		if (fread(&header, 1, sizeof(header), f) != sizeof(header))
 			Com_Printf("Warning: Savefile header may be corrupted\n");
 		Com_sprintf(comment, sizeof(comment), "%s - %s", header.name, header.gameDate);
 		Cvar_Set(va("mn_slot%i", i), comment);
@@ -522,7 +524,7 @@ static void SAV_GameSaveNameCleanup_f (void)
 		return;
 
 	/* read the comment */
-	if (fread(&header, 1, sizeof(saveFileHeader_t), f) != sizeof(saveFileHeader_t))
+	if (fread(&header, 1, sizeof(header), f) != sizeof(header))
 		Com_Printf("Warning: Savefile header may be corrupted\n");
 	Cvar_Set(cvar, header.name);
 	fclose(f);

@@ -491,7 +491,7 @@ void INS_ParseInstallationNames (const char *name, const char **text)
 			break;
 
 		installation = INS_GetInstallationByIDX(gd.numInstallationNames);
-		memset(installation, 0, sizeof(installation_t));
+		memset(installation, 0, sizeof(*installation));
 		installation->idx = gd.numInstallationNames;
 
 		/* get the title */

@@ -74,12 +74,12 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		if (!eventMail)
 			return NULL;
 
-		newEventMail = Mem_PoolAlloc(sizeof(eventMail_t), cl_localPool, CL_TAG_NONE);
+		newEventMail = Mem_PoolAlloc(sizeof(*newEventMail), cl_localPool, CL_TAG_NONE);
 		if (!newEventMail)
 			return NULL;
 
 		/* don't !! free the original pointers here */
-		memcpy(newEventMail, eventMail, sizeof(eventMail_t));
+		memcpy(newEventMail, eventMail, sizeof(*newEventMail));
 		LIST_AddPointer(&eventMails, newEventMail);
 		/* make sure, that you set a unique eventmail->id and eventmail->body now */
 		return newEventMail;

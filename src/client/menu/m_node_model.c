@@ -326,7 +326,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 					}
 				}
 				if (!node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
-					as = (animState_t *) Mem_PoolAlloc(sizeof(animState_t), cl_genericPool, CL_TAG_NONE);
+					as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, CL_TAG_NONE);
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					R_AnimChange(as, mi.model, ref);

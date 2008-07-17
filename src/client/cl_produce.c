@@ -102,8 +102,7 @@ static qboolean PR_ConditionsDisassembly (const base_t *base, const components_t
 	od = comp->asItem;
 	assert(od);
 
-	if (RS_IsResearched_ptr(od->tech)
-	 && base->storage.num[od->idx] > 0)
+	if (RS_IsResearched_ptr(od->tech) && base->storage.num[od->idx] > 0)
 		return qtrue;
 	else
 		return qfalse;
@@ -159,7 +158,7 @@ static float PR_CalculateProductionPercentDone (const base_t *base, const techno
 			maxworkers, tech->id, fraction);
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
 		if (fraction > 1.0f)
-			return 1;
+			return 1.0f;
 		else
 			return fraction;
 	}
@@ -176,10 +175,9 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
 {
 	int a, i;
 	int producibleAmount = 0;
-	qboolean producible = qfalse;
 
 	for (a = 0; a < amount; a++) {
-		producible = qtrue;
+		qboolean producible = qtrue;
 		for (i = 0; i < reqs->numLinks; i++) {
 			requirement_t *req = &reqs->links[i];
 			if (req->type == RS_LINK_ITEM) {
@@ -223,7 +221,7 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requi
 	for (i = 0; i < reqs->numLinks; i++) {
 		requirement_t *req = &reqs->links[i];
 		if (req->type == RS_LINK_ITEM) {
-			objDef_t *item = req->link;
+			const objDef_t *item = req->link;
 			assert(req->link);
 			if (amount > 0) {
 				/* Add items to the base-storage. */
@@ -271,7 +269,7 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 
 	/* Initialize */
 	prod = &queue->items[queue->numItems];
-	memset(prod, 0, sizeof(production_t));
+	memset(prod, 0, sizeof(*prod));
 
 	prod->idx = queue->numItems;	/**< Initialize self-reference. */
 
@@ -1602,13 +1600,13 @@ qboolean PR_Load (sizebuf_t *sb, void *data)
 		for (j = 0; j < pq->numItems; j++) {
 			const char *s1 = MSG_ReadString(sb);
 			const char *s2;
-			if (*s1)
+			if (s1[0] != '\0')
 				pq->items[j].item = INVSH_GetItemByID(s1);
 			pq->items[j].amount = MSG_ReadLong(sb);
 			pq->items[j].percentDone = MSG_ReadFloat(sb);
 			pq->items[j].production = MSG_ReadByte(sb);
 			s2 = MSG_ReadString(sb);
-			if (*s2)
+			if (s2[0] != '\0')
 				pq->items[j].aircraft = AIR_GetAircraft(s2);
 			pq->items[j].items_cached = MSG_ReadByte(sb);
 

@@ -2072,7 +2072,7 @@ void B_ParseBaseNames (const char *name, const char **text)
 			break;
 
 		base = B_GetBaseByIDX(gd.numBaseNames);
-		memset(base, 0, sizeof(base_t));
+		memset(base, 0, sizeof(*base));
 		base->idx = gd.numBaseNames;
 		memset(base->map, 0, sizeof(base->map));
 

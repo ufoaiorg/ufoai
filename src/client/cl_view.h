@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern int map_maxlevel;
 extern int map_maxlevel_base;
 
-void V_Init(void);
 void V_RenderView(void);
 void V_UpdateRefDef(void);
 void V_CenterView(pos3_t pos);

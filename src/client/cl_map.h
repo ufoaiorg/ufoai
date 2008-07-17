@@ -63,7 +63,7 @@ void MAP_NotifyUFODisappear(const aircraft_t* ufo);
 void MAP_InitStartup(void);
 const char* MAP_GetTerrainType(const byte* color);
 float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
-qboolean MAP_IsNight(vec2_t pos);
+qboolean MAP_IsNight(const vec2_t pos);
 qboolean MAP_MaskFind(byte * color, vec2_t polar);
 byte *MAP_GetColor(const vec2_t pos, mapType_t type);
 void MAP_Init(void);

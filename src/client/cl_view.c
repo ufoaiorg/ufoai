@@ -35,9 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_main.h"
 #include "../renderer/r_entity.h"
 
-/* global vars */
-cvar_t *cursor;
-
 int map_maxlevel;
 int map_maxlevel_base = 0;
 
@@ -52,7 +49,6 @@ int map_maxlevel_base = 0;
  */
 static void CL_ParseEntitystring (const char *es)
 {
-	const char *strstart, *entity_token;
 	char keyname[256];
 	char classname[MAX_VAR];
 	char animname[MAX_QPATH], model[MAX_QPATH], particle[MAX_QPATH], sound[MAX_QPATH];
@@ -76,6 +72,16 @@ static void CL_ParseEntitystring (const char *es)
 
 	/* parse ents */
 	while (1) {
+		/* parse the opening brace */
+		const char *entity_token = COM_Parse(&es);
+		/* memorize the start */
+		const char *strstart = es;
+		if (!es)
+			break;
+
+		if (entity_token[0] != '{')
+			Com_Error(ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", entity_token);
+
 		/* initialize */
 		VectorCopy(vec3_origin, origin);
 		VectorCopy(vec3_origin, angles);
@@ -83,16 +89,6 @@ static void CL_ParseEntitystring (const char *es)
 		spawnflags = frame = skin = 0;
 		animname[0] = model[0] = particle[0] = '\0';
 		volume = MIX_MAX_VOLUME / 2;
-
-		/* parse the opening brace */
-		entity_token = COM_Parse(&es);
-		if (!es)
-			break;
-		if (entity_token[0] != '{')
-			Com_Error(ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", entity_token);
-
-		/* memorize the start */
-		strstart = es;
 
 		/* go through all the dictionary pairs */
 		while (1) {
@@ -295,7 +291,7 @@ void CL_LoadMedia (void)
 void V_CalcFovX (void)
 {
 	if (cl_isometric->integer) {
-		float zoom =  3.6 * (cl.cam.zoom - cl_camzoommin->value) + 0.3 * cl_camzoommin->value;
+		const float zoom =  3.6 * (cl.cam.zoom - cl_camzoommin->value) + 0.3 * cl_camzoommin->value;
 		refdef.fov_x = max(min(FOV / zoom, 140.0), 1.0);
 	} else {
 		refdef.fov_x = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
@@ -305,11 +301,9 @@ void V_CalcFovX (void)
 /**
  * @sa V_CalcFovX
  */
-static void V_CalcFovY (float width, float height)
+static inline void V_CalcFovY (const float width, const float height)
 {
-	float x;
-
-	x = width / tan(refdef.fov_x / 360.0 * M_PI);
+	const float x = width / tan(refdef.fov_x / 360.0 * M_PI);
 	refdef.fov_y = atan(height / x) * 360.0 / M_PI;
 }
 
@@ -398,12 +392,4 @@ void V_CenterView (pos3_t pos)
 	PosToVec(pos, vec);
 	VectorCopy(vec, cl.cam.reforg);
 	Cvar_SetValue("cl_worldlevel", pos[2]);
-}
-
-/**
- * @sa CL_Init
- */
-void V_Init (void)
-{
-	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
 }

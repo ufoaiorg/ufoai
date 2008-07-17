@@ -43,7 +43,7 @@ typedef struct radar_s {
 void RADAR_UpdateBaseRadarCoverage(void);
 void RADAR_UpdateInstallationRadarCoverage(void);
 void RADAR_UpdateWholeRadarOverlay(void);
-void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
+void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, const vec2_t pos);
 void RADAR_DeactivateRadarOverlay(void);
 void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, qboolean destroyed);
 void RADAR_Initialise(radar_t* radar, float range, float level, qboolean updateSourceRadarMap);

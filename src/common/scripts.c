@@ -1936,7 +1936,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 		return;
 	}
 
-	t = Mem_PoolAlloc(sizeof(terrainType_t), com_genericPool, 0);
+	t = Mem_PoolAlloc(sizeof(*t), com_genericPool, 0);
 	t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
 	hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
 	/* link in terrainTypesHash[hash] should be NULL on the first run */

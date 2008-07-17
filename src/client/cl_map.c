@@ -327,7 +327,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 
 	/* Get selected bases */
 	for (i = 0; i < MAX_BASES && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
+		const base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
 		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y))
@@ -838,7 +838,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 	int i, xCircle, yCircle;
 	screenPoint_t pts[CIRCLE_DRAW_POINTS + 1];
 	vec2_t posCircle;
-	qboolean draw, oldDraw = qfalse;
+	qboolean oldDraw = qfalse;
 	int numPoints = 0;
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
@@ -853,9 +853,9 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 
 	/* Now, each equidistant point is given by a rotation around centerPos */
 	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
+		qboolean draw = qfalse;
 		RotatePointAroundVector(currentPoint, centerPos, initialVector, i * 360 / CIRCLE_DRAW_POINTS);
 		VecToPolar(currentPoint, posCircle);
-		draw = qfalse;
 		if (MAP_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
 			draw = qtrue;
 			if (!cl_3dmap->integer && numPoints != 0 && abs(pts[numPoints - 1].x - xCircle) > 512)
@@ -961,13 +961,12 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	int counter = 0;
 	int maxEventIdx;
 	const int numMissions = CP_CountMissionOnGeoscape();
-	base_t *base;
 	aircraft_t *aircraft;
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
 	maxEventIdx = numMissions + gd.numBases - 1;
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
@@ -1021,7 +1020,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	/* Cycle through bases */
 	if (centerOnEventIdx < gd.numBases + counter) {
 		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-			base = B_GetFoundedBaseByIDX(baseIdx);
+			const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 			if (!base)
 				continue;
 
@@ -1043,7 +1042,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		if (!base)
 			continue;
 
-		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
+		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				if (centerOnEventIdx == counter) {
 					if (cl_3dmap->integer)
@@ -1152,10 +1151,10 @@ void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float 
 			VectorCopy(pointOnGeoscape, smoothFinalGlobeAngle);
 			smoothDeltaLength = 0.0f;
 		} else {
-		VectorSet(smoothFinalGlobeAngle, pointOnGeoscape[0], -pointOnGeoscape[1], 0);
-		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
-		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
-		smoothDeltaLength = VectorLength(diff);
+			VectorSet(smoothFinalGlobeAngle, pointOnGeoscape[0], -pointOnGeoscape[1], 0);
+			smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
+			VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
+			smoothDeltaLength = VectorLength(diff);
 		}
 	} else {
 		/* case 2D geoscape */
@@ -1327,22 +1326,19 @@ void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
  */
 static void MAP_SmoothTranslate (void)
 {
-	vec2_t diff;
-	float length, diff_zoom;
+	const float dist1 = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
+	const float dist2 = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
+	const float length = sqrt(dist1 * dist1 + dist2 * dist2);
 
-	diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
-	diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
-	diff_zoom = smoothFinalZoom - ccs.zoom;
-
-	length = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
 	if (length < SMOOTHING_STEP_2D) {
 		ccs.center[0] = smoothFinal2DGeoscapeCenter[0];
 		ccs.center[1] = smoothFinal2DGeoscapeCenter[1];
 		ccs.zoom = smoothFinalZoom;
 		smoothRotation = qfalse;
 	} else {
-		ccs.center[0] = ccs.center[0] + SMOOTHING_STEP_2D * diff[0] / length;
-		ccs.center[1] = ccs.center[1] + SMOOTHING_STEP_2D * diff[1] / length;
+		const float diff_zoom = smoothFinalZoom - ccs.zoom;
+		ccs.center[0] = ccs.center[0] + SMOOTHING_STEP_2D * dist1 / length;
+		ccs.center[1] = ccs.center[1] + SMOOTHING_STEP_2D * dist2 / length;
 		ccs.zoom = ccs.zoom + SMOOTHING_STEP_2D * diff_zoom / length;
 	}
 }
@@ -1416,7 +1412,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
 	for (; list; list = list->next) {
-		mission_t *ms = (mission_t *)list->data;
+		const mission_t *ms = (mission_t *)list->data;
 		if (!ms->onGeoscape)
 			continue;
 		if (MAP_AllMapToScreen(node, ms->pos, &x, &y, NULL)) {
@@ -1444,7 +1440,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* draw installations */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		const installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 		if (!installation)
 			continue;
 
@@ -2107,7 +2103,7 @@ float MAP_GetDistance (const vec2_t pos1, const vec2_t pos2)
  * @param[in] pos Given position.
  * @return True if given position is Night.
  */
-qboolean MAP_IsNight (vec2_t pos)
+qboolean MAP_IsNight (const vec2_t pos)
 {
 	float p, q, a, root, x;
 

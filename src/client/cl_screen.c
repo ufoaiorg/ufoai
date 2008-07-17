@@ -51,6 +51,7 @@ static int scr_draw_loading = 0;
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
 static cvar_t *scr_rspeed;
+static cvar_t *scr_cursor;
 static cvar_t *cl_show_cursor_tooltips;
 
 static char cursor_pic[MAX_QPATH];
@@ -64,7 +65,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 		return;
 
 	if (bitmapFont) {
-		while (*string) {
+		while (string[0] != '\0') {
 			R_DrawChar(x, y, *string);
 			x += con_fontWidth;
 			string++;
@@ -78,8 +79,8 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
  */
 static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 {
-	static vec4_t color = {0.3f, 0.3f, 0.3f, 0.7f};
-	static vec4_t color_bar = {0.8f, 0.8f, 0.8f, 0.7f};
+	const vec4_t color = {0.3f, 0.3f, 0.3f, 0.7f};
+	const vec4_t color_bar = {0.8f, 0.8f, 0.8f, 0.7f};
 
 	R_DrawFill(x, y, w, h, ALIGN_UL, color);
 
@@ -217,18 +218,19 @@ static void SCR_DrawLoading (void)
  */
 static void SCR_TouchPics (void)
 {
-	if (cursor->integer) {
-		if (cursor->integer > 9 || cursor->integer < 0)
+	if (scr_cursor->integer) {
+		if (scr_cursor->integer > 9 || scr_cursor->integer < 0)
 			Cvar_SetValue("cursor", 1);
 
 		R_RegisterPic("wait");
 		R_RegisterPic("ducked");
-		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", cursor->integer);
+		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", scr_cursor->integer);
 		if (!R_RegisterPic(cursor_pic)) {
 			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursor_pic);
-			cursor_pic[0] = 0;
+			cursor_pic[0] = '\0';
 		}
-	}
+	} else
+		cursor_pic[0] = '\0';
 }
 
 static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };
@@ -239,13 +241,13 @@ static void SCR_DrawCursor (void)
 {
 	int icon_offset_x = 16;	/* Offset of the first icon on the x-axis. */
 	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
-	int icon_spacing = 2;	/* the space between different icons. */
+	const int icon_spacing = 2;	/* the space between different icons. */
 
-	if (!cursor->integer || cls.playingCinematic == CIN_STATUS_FULLSCREEN)
+	if (!scr_cursor->integer || cls.playingCinematic == CIN_STATUS_FULLSCREEN)
 		return;
 
-	if (cursor->modified) {
-		cursor->modified = qfalse;
+	if (scr_cursor->modified) {
+		scr_cursor->modified = qfalse;
 		SCR_TouchPics();
 	}
 
@@ -345,21 +347,6 @@ static void SCR_DrawCursor (void)
 		if (dragInfo.toNode && checkedTo)
 			Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
 		MN_DrawItem(org, &dragInfo.item, -1, -1, scale, color);
-
-#if 0
-/* Debugging only */
-/** @todo Maybe we could make this a feature in some way. i.e. we could draw
- * a special cursor at this place when dragging as a hint*/
-		/* Draw marker in upper left corner. */
-		Vector4Set(color, 1, 0, 0, 1);
-		if (dragInfo.item.t)
-			VectorSet(org,
-				mousePosX - (C_UNIT * dragInfo.item.t->sx - C_UNIT) / 2,
-				mousePosY - (C_UNIT * dragInfo.item.t->sy - C_UNIT) / 2,
-				-50);
-
-		R_DrawCircle2D(org[0] * viddef.rx, org[1] * viddef.ry, 2.0, qtrue, color, 1.0);
-#endif
 	}
 }
 
@@ -555,6 +542,7 @@ void SCR_Init (void)
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
 	scr_rspeed = Cvar_Get("r_speeds", "0", CVAR_ARCHIVE, "Show some rendering stats");
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
+	scr_cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
 
 	/* register our commands */
 	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, "Run a benchmark");

@@ -331,7 +331,7 @@ sfx_t *S_RegisterSound (const char *name)
 	if (!mix)
 		return NULL;		/* couldn't load the sound's data */
 
-	sfx = Mem_PoolAlloc(sizeof(sfx_t), cl_soundSysPool, CL_TAG_NONE);
+	sfx = Mem_PoolAlloc(sizeof(*sfx), cl_soundSysPool, CL_TAG_NONE);
 	sfx->name = Mem_PoolStrDup(name, cl_soundSysPool, CL_TAG_NONE);
 	sfx->data = mix;
 	sfx->channel = -1; /* just a free channel */
@@ -722,7 +722,7 @@ void S_Init (void)
 
 	sound_started = qtrue;
 
-	memset(&music, 0, sizeof(music_t));
+	memset(&music, 0, sizeof(music));
 }
 
 /**

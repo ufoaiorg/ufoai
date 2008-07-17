@@ -165,7 +165,7 @@ static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar
  * @param[in] radar Pointer to the radar that will be drawn.
  * @param[in] pos Position of the radar.
  */
-void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, vec2_t pos)
+void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t pos)
 {
 	int x, y, z;
 	int i;
@@ -304,11 +304,13 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 		for (aircraft = base->aircraft; aircraft < base->aircraft + base->numAircraftInBase; aircraft++)
 			RADAR_NotifyUFORemovedFromOneRadar(&aircraft->radar, ufo, destroyed);
 	}
+
+	/** @todo remove from installation_t radars */
 }
 
 /**
  * @brief Initialise radar
- * @param[in] radar The radar to update/initialize
+ * @param[in,out] radar The radar to update/initialize
  * @param[in] range New range of the radar
  * @param[in] level The tech level of the radar
  * @param[in] updateSourceRadarMap
@@ -373,7 +375,7 @@ void RADAR_UpdateInstallationRadarCoverage_f (installation_t *installation, cons
 {
 	RADAR_Initialise(&installation->radar, radarRange, RADAR_INSTALLATIONLEVEL, qtrue);
 	CP_UpdateMissionVisibleOnGeoscape();
-} 
+}
 
 /**
  * @brief Check if the specified position is within base radar range
@@ -406,6 +408,7 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 	int numAircraftSensored;
 
 	/* Get num of ufo in gd.ufos */
+	/** @todo why not ufo->idx? Is this only valid for aircraft in base? */
 	num = ufo - gd.ufos;
 	if (num < 0 || num >= gd.numUFOs)
 		return qfalse;

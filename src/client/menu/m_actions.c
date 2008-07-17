@@ -240,7 +240,7 @@ menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *dat
 
 	if (*action)
 		Sys_Error("There is already an action assigned\n");
-	newAction = (menuAction_t *)Mem_PoolAlloc(sizeof(menuAction_t), cl_menuSysPool, CL_TAG_MENU);
+	newAction = (menuAction_t *)Mem_PoolAlloc(sizeof(*newAction), cl_menuSysPool, CL_TAG_MENU);
 	newAction->type = type;
 	switch (type) {
 	case EA_CMD:
