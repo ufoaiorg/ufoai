@@ -609,20 +609,19 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 	int i;
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
 #if 0
-		const installtion i = INS_GetInstallationByIDX(i);
-		MSG_WriteByte(sb, i->founded);
-		if (!i->founded)
+		const installation_t *inst = INS_GetInstallationByIDX(i);
+		MSG_WriteByte(sb, inst->founded);
+		if (!inst->founded)
 			continue;
-		MSG_WriteString(sb, i->name);
-		MSG_WritePos(sb, i->pos);
-		MSG_WriteByte(sb, i->installationType);
-		MSG_WriteByte(sb, i->installationStatus);
-		MSG_WriteShort(sb, i->installationDamage);
-		MSG_WriteFloat(sb, i->alienInterest);
-		MSG_WriteShort(sb, i->radar.range);
+		MSG_WriteString(sb, inst->name);
+		MSG_WritePos(sb, inst->pos);
+		MSG_WriteByte(sb, inst->installationStatus);
+		MSG_WriteShort(sb, inst->installationDamage);
+		MSG_WriteFloat(sb, inst->alienInterest);
+		MSG_WriteShort(sb, inst->radar.range);
 
-		MSG_WriteByte(sb, i->numBatteries);
-		B_SaveBaseSlots(i->batteries, i->numBatteries, sb);
+		MSG_WriteByte(sb, inst->numBatteries);
+		B_SaveBaseSlots(inst->batteries, inst->numBatteries, sb);
 #endif
 	}
 	return qtrue;
@@ -641,21 +640,20 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 	int i;
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
 #if 0
-		installation *const b = INS_GetInstallationByIDX(i);
-		i->founded = MSG_ReadByte(sb);
-		if (!i->founded)
-				continue;
-		Q_strncpyz(i->name, MSG_ReadStringRaw(sb), sizeof(i->name));
-		MSG_ReadPos(sb, i->pos);
-		i->installationType = MSG_ReadByte(sb);
-		i->installationStatus = MSG_ReadByte(sb);
-		i->installationDamage = MSG_ReadShort(sb);
-		i->alienInterest = MSG_ReadFloat(sb);
-		RADAR_Initialise(&i->radar, MSG_ReadShort(sb), 1.0f, qtrue);
+		installation_t *inst = INS_GetInstallationByIDX(i);
+		inst->founded = MSG_ReadByte(sb);
+		if (!inst->founded)
+			continue;
+		Q_strncpyz(inst->name, MSG_ReadStringRaw(sb), sizeof(inst->name));
+		MSG_ReadPos(sb, inst->pos);
+		inst->installationStatus = MSG_ReadByte(sb);
+		inst->installationDamage = MSG_ReadShort(sb);
+		inst->alienInterest = MSG_ReadFloat(sb);
+		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), 1.0f, qtrue);
 
 		/* read battery slots */
-		i->numBatteries = MSG_ReadByte(sb);
-		B_LoadBaseSlots(i->batteries, i->numBatteries, sb);
+		inst->numBatteries = MSG_ReadByte(sb);
+		B_LoadBaseSlots(inst->batteries, inst->numBatteries, sb);
 
 		/** @todo aircraft */
 #endif
