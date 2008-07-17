@@ -957,7 +957,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
-	unsigned *buf;
+	byte *buf;
 	unsigned int i;
 	int length;
 	dBspHeader_t header;
@@ -973,7 +973,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
-	length = FS_LoadFile(filename, (byte **) &buf);
+	length = FS_LoadFile(filename, &buf);
 	if (!buf)
 		Com_Error(ERR_DROP, "Couldn't load %s", filename);
 

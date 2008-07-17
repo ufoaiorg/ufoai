@@ -847,11 +847,11 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		/* read our own motd */
 		case RPL_ENDOFMOTD:
 			{
-				char *fbuf;
+				byte *fbuf;
 				int size;
-				size = FS_LoadFile("irc_motd.txt", (byte **) &fbuf);
+				size = FS_LoadFile("irc_motd.txt", &fbuf);
 				if (size) {
-					Irc_AppendToBuffer(fbuf);
+					Irc_AppendToBuffer((char *)fbuf);
 					FS_FreeFile(&fbuf);
 				}
 			}
