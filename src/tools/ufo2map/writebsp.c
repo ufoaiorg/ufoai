@@ -31,8 +31,9 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 {
 	unsigned int i;
 	int current, previous = 0;
-	int	start = 0, end, last;
-	const char* progress[] = {"-", "\\", "|", "/"};
+	int	start = 0;
+	int end;
+	int last = 0;
 
 	if (showProgress) {
 		start = time(NULL);
@@ -48,8 +49,8 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 				fflush(stdout);
 			}
 			if (i % max(1, count / 1000) == 0) {
-				fprintf(stdout, "%s\b", progress[++last & 3]);
- 				fflush(stdout);
+				fprintf(stdout, "%c\b", "-\\|/"[++last & 3]);
+				fflush(stdout);
 			}
 		}
 
