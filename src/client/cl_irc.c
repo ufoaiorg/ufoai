@@ -762,9 +762,6 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 	}
 }
 
-/**
- * @todo: Implement me
- */
 static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 {
 	char *parseBuf, *pos;
@@ -800,7 +797,7 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 }
 
 /**
- * @todo: Implement me
+ * @todo Implement me
  */
 static void Irc_Client_CmdRplEndofnames (const char *params, const char *trailing)
 {
@@ -818,7 +815,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	/* some debug output */
 	Com_DPrintf(DEBUG_CLIENT, "pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
 
-	/** @todo: Skip non printable chars here */
+	/** @todo Skip non printable chars here */
 
 	switch (cmd.type) {
 	case IRC_COMMAND_NUMERIC:
@@ -1105,7 +1102,7 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 	m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
 	n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
-		/** @todo: strip high bits - or unprintable chars */
+		/** @todo strip high bits - or unprintable chars */
 		m->msg = (char*) Mem_Alloc(msg_len);
 		memcpy(m->msg, msg, msg_len);
 		m->msg_len = msg_len;

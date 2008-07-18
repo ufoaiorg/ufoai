@@ -1450,7 +1450,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	campaignStats.basesAttacked++;
 
 #if 0
-	/** @todo: implement onattack: add it to basemanagement.ufo and implement functions */
+	/** @todo implement onattack: add it to basemanagement.ufo and implement functions */
 	if (base->onAttack[0] != '\0')
 		/* execute next frame */
 		Cbuf_AddText(va("%s %i", base->onAttack, base->id));
@@ -1762,7 +1762,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 
 	/* Mission is a success: government is subverted => lower happiness */
 	nation = MAP_GetNation(mission->pos);
-	/** @todo: when the mission is created, we should select a position where nation exists,
+	/** @todo when the mission is created, we should select a position where nation exists,
 	 * otherwise suverting a government is meaningless */
 	if (nation)
 		NAT_SetHappiness(nation, nation->stats[0].happiness * 0.8);
@@ -2663,9 +2663,9 @@ static void CP_StartXVISpreading_f (void)
 	int i, numAlienBases;
 
 	ccs.XVISpreadActivated = qtrue;
-	/** @todo: mn_xvimap should not be enabled at the same time than ccs.XVISpreadActivated:
+	/** @todo mn_xvimap should not be enabled at the same time than ccs.XVISpreadActivated:
 	mn_xvimap means that PHALANX has a map of XVI, whereas ccs.XVISpreadActivated means that aliens started spreading XVI
-	 @todo: mn_xvimap should probably be saved, and restored when a game is loaded */
+	 @todo mn_xvimap should probably be saved, and restored when a game is loaded */
 	Cvar_Set("mn_xvimap", "1");
 
 	/* Spawn a few alien bases depending on difficulty level */
@@ -5277,7 +5277,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 	/* update nation opinions */
 	if (won) {
-		int civiliansKilled = 0; /** @todo: fill this for the case you won the game */
+		int civiliansKilled = 0; /** @todo fill this for the case you won the game */
 		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, selectedMission);
 		CP_CheckLostCondition(!won, mis, civiliansKilled);
 	} else {
@@ -5371,7 +5371,7 @@ void CL_GameAutoGo (mission_t *mis)
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(selectedMission);
-			/** @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
+			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CP_BaseAttackMissionLeave(selectedMission);
 	} else {
@@ -5448,13 +5448,13 @@ static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft
 			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;
 
-			/** @todo: use chrScore_t to determine negative influence on soldier here,
+			/** @todo use chrScore_t to determine negative influence on soldier here,
 			 * like killing too many civilians and teammates can lead to unhire and disband
 			 * such soldier, or maybe rank degradation. */
 
 			/* Check if the soldier meets the requirements for a higher rank
 			 * and do a promotion. */
-			/** @todo: use param[in] in some way. */
+			/** @todo use param[in] in some way. */
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > chr->score.rank; j--) {
 					const rank_t *rank = &gd.ranks[j];
@@ -5691,7 +5691,7 @@ static void CL_GameResults_f (void)
 			assert(chr);
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
 			/* if employee is marked as dead */
-			if (chr->HP <= 0) { /** @todo: <= -50, etc. (implants) */
+			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
 				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, chr->name);
@@ -5721,7 +5721,7 @@ static void CL_GameResults_f (void)
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(selectedMission);
-			/** @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
+			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CP_BaseAttackMissionLeave(selectedMission);
 	} else {
@@ -5811,7 +5811,7 @@ void CL_ParseAlienTeam (const char *name, const char **text)
 
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
- * @todo: Implement the use of this function
+ * @todo Implement the use of this function
  */
 void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 {
@@ -5908,7 +5908,7 @@ void CL_ParseResearchableCampaignStates (const char *name, const char **text, qb
 					tech->mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(tech);
 				} else
-					Com_Printf("@todo: Mark unresearchable");
+					Com_Printf("@todo Mark unresearchable");
 				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;
 			}
@@ -6129,7 +6129,7 @@ void CL_ParseCampaign (const char *name, const char **text)
  * @note handles multiplayer and singleplayer
  *
  * @return true when we are not in battlefield
- * @todo: Check cvar mn_main for value
+ * @todo Check cvar mn_main for value
  */
 qboolean CL_OnBattlescape (void)
 {

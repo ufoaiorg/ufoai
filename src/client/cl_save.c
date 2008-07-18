@@ -329,7 +329,8 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	if (res == bufLen + sizeof(header)) {
 		/* set cl_lastsave to let the continue function know which game to
-		 * automatically continue @todo: redo this in the menu */
+		 * automatically continue */
+		/** @todo redo this in the menu */
 		Cvar_Set("cl_lastsave", filename);
 		Com_Printf("Campaign '%s' saved.\n", comment);
 		return qtrue;

@@ -683,7 +683,6 @@ static int S_CompleteMusic (const char *partial, const char **match)
 /**
  * @sa S_Shutdown
  * @sa S_Restart_f
- * @todo: openal should be an replacement for the 'normal' snd_ref
  */
 void S_Init (void)
 {
@@ -712,7 +711,7 @@ void S_Init (void)
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
 	Cmd_AddParamCompleteFunction("music_start", S_CompleteMusic);
-	/** @todo: Complete functions */
+	/** @todo Complete functions */
 
 	if (!SND_Init()) {
 		Com_Printf("SND_Init failed\n");

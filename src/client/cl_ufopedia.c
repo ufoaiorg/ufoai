@@ -438,7 +438,7 @@ void UP_ItemDescription (const objDef_t *od)
 		} else {
 			/* just an item */
 			/* only primary definition */
-			/** @todo: We use the default firemodes here. We might need some change the "fd[0]" below to FIRESH_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
+			/** @todo We use the default firemodes here. We might need some change the "fd[0]" below to FIRESH_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
@@ -996,7 +996,7 @@ static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 
 	if (tech) {
 		upFireMode = 0;
-		upResearchedLink = 0;	/** @todo: if the first weapon of the firemode of an ammo is unresearched, its dammages,... will still be displayed */
+		upResearchedLink = 0;	/** @todo if the first weapon of the firemode of an ammo is unresearched, its dammages,... will still be displayed */
 
 		if (tech->mdl)
 			Cvar_Set("mn_upmodel_top", tech->mdl);

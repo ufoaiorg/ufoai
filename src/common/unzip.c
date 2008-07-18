@@ -560,7 +560,7 @@ local void unzlocal_DosDateToTmuDate (ulDosDate, ptm)
 
 /**
  * @brief Get info about the current file in the zipfile, with internal only info.
- * @todo: Describe parameters and the two headers.
+ * @todo Describe parameters and the two headers.
  */
 local int unzlocal_GetCurrentFileInfoInternal OF((
 		unzFile file,

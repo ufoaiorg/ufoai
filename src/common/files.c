@@ -1541,7 +1541,7 @@ void FS_RestartFilesystem (void)
 
 /**
  * @brief Copy a fully specified file from one place to another
- * @todo: Allow copy of pk3 file content
+ * @todo Allow copy of pk3 file content
  */
 void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 {

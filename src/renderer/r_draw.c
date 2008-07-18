@@ -257,7 +257,7 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
  * @sa R_RegisterPic
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
- * @todo: Return the image_t pointer (gl) once image_t is known everywhere
+ * @todo Return the image_t pointer (gl) once image_t is known everywhere
  */
 int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
 {

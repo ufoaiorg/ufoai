@@ -6,7 +6,7 @@
  * Provides information if items/buildings/etc.. can be researched/used/displayed etc...
  * Implements the research-system (research new items/etc...)
  * See base/ufos/research.ufo and base/ufos/menu_research.ufo for the underlying content.
- * @todo: comment on used global variables.
+ * @todo comment on used global variables.
  */
 
 /*
@@ -542,7 +542,7 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 				Sys_Error("RS_AssignTechLinks: Could not get item definition for '%s'", req->id);
 			break;
 		case RS_LINK_EVENT:
-			/** @todo: Get index of event in event-list. */
+			/** @todo Get index of event in event-list. */
 			break;
 		case RS_LINK_ALIEN:
 		case RS_LINK_ALIEN_DEAD:
@@ -693,7 +693,7 @@ void RS_InitTree (qboolean load)
 			/* does nothing right now */
 			break;
 		case RS_UGV:
-			/** @todo: Implement me */
+			/** @todo Implement me */
 			break;
 		case RS_LOGIC:
 			/* Does not need any additional data. */
@@ -1085,7 +1085,7 @@ static void RS_ResearchStart_f (void)
 	/* get the currently selected research-item */
 	tech = researchList[researchListPos];
 
-	/** @todo: If there are enough items add them to the tech (i.e. block them from selling or for other research),
+	/** @todo If there are enough items add them to the tech (i.e. block them from selling or for other research),
 	 * otherwise pop an errormessage telling the palyer what is missing */
 	if (!tech->statusResearchable) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n", tech->id);
@@ -1162,7 +1162,7 @@ static void RS_ResearchStop_f (void)
 		assert(tech->statusResearch == RS_PAUSED);
 		break;
 	case RS_PAUSED:
-		/** @todo: remove? Popup info how much is already researched? */
+		/** @todo remove? Popup info how much is already researched? */
 		/* tech->statusResearch = RS_RUNNING; */
 		break;
 	case RS_FINISH:
@@ -1233,7 +1233,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 			continue;
 
 		if (updateMenu) {
-			/** @todo: add check for collected items */
+			/** @todo add check for collected items */
 
 			/* Make icons visible for this entry */
 			Cmd_ExecuteString(va("research_show%i", j));
@@ -1270,7 +1270,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 					/* Display available scientists of other base here. */
 					Cvar_SetValue(va("mn_researchavailable%i", j), available[tech->base->idx]);
 				}
-				/** @todo: Free space in all labs in this base. */
+				/** @todo Free space in all labs in this base. */
 				/* Cvar_SetValue(va("mn_researchmax%i", j), available); */
 				Cvar_Set(va("mn_researchmax%i", j), _("mx."));
 				/* Set the text of the research items and mark them if they are currently researched. */
@@ -1451,7 +1451,7 @@ void RS_ResearchRun (void)
 				if (RS_ResearchAllowed(base)) {
 					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
 					Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
-					/** @todo: Just for testing, better formular may be needed. */
+					/** @todo Just for testing, better formular may be needed. */
 					tech->time -= tech->scientists * 0.8;
 					Com_DPrintf(DEBUG_CLIENT, "timeafter %.2f\n", tech->time);
 					/** @todo include employee-skill in calculation. */
@@ -1662,7 +1662,7 @@ void RS_MarkResearchedAll (void)
 		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 		RS_MarkOneResearchable(tech);
 		RS_ResearchFinish(tech);
-		/** @todo: Set all "collected" entries in the requirements to the "amount" value. */
+		/** @todo Set all "collected" entries in the requirements to the "amount" value. */
 	}
 }
 
@@ -2048,7 +2048,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-event - %s\n", token);
 						requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
-						/** @todo: Implement final event system, so this can work 100% */
+						/** @todo Implement final event system, so this can work 100% */
 					} else if (!Q_strncmp(token, "alienglobal", MAX_VAR)) {
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
@@ -2192,7 +2192,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						}
 						break;
 					}
-				/*@todo: escape "type weapon/tech/etc.." here */
+				/*@todo escape "type weapon/tech/etc.." here */
 				if (!vp->string)
 					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
 			}
@@ -2425,7 +2425,7 @@ technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 /**
  * @brief Returns the index (idx) of a "tech" entry given it's name.
  * @param[in] name the name of the tech
- * @todo: this method is extremely inefficient... it could be dramatically improved
+ * @todo this method is extremely inefficient... it could be dramatically improved
  */
 int RS_GetTechIdxByName (const char *name)
 {

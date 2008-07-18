@@ -696,7 +696,7 @@ static void BS_SellItem_f (void)
 
 		employee = E_GetHiredRobot(baseCurrent, ugv);
 		if (!E_UnhireEmployee(employee)) {
-			/** @todo: message - Couldn't fire employee. */
+			/** @todo message - Couldn't fire employee. */
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
 		} else {
 			if (baseCurrent->storage.num[ugvWeapon->idx]) {

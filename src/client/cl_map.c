@@ -579,7 +579,8 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 		} else {
 			VectorSet(angles, theta, 180, 0);
 		}
-		/* Set zoomed scale of markers.  @todo: the model for missile_tr20 is too small.
+		/* Set zoomed scale of markers. */
+		/** @todo the model for missile_tr20 is too small.
 		 * I have hard coded these values as a quick fix, but a better way to vary
 		 * the zoom scale needs to be worked out. */
 		if (Q_strcmp(model, "missile_tr20") == 0)

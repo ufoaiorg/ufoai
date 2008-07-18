@@ -1108,7 +1108,7 @@ void CL_CampaignRunAircraft (int dt)
 				/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
 				if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
 					!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
-					/** @todo: check if aircraft can go to a closer base with free space */
+					/** @todo check if aircraft can go to a closer base with free space */
 					MN_AddNewMessage(_("Notice"), va(_("Your %s is low on fuel and returns to base"), aircraft->name), qfalse, MSG_STANDARD, NULL);
 					AIR_AircraftReturnToBase(aircraft);
 				}
@@ -1647,7 +1647,7 @@ void AIR_ListAircraftSamples_f (void)
  * @brief Reload the weapon of an aircraft
  * @param[in] aircraft Pointer to the aircraft to reload
  * @todo check if there is still ammo in storage, and remove them from it
- * @todo: this should costs credits
+ * @todo this should costs credits
  * @sa AIRFIGHT_AddProjectile for the basedefense reload code
  */
 void AII_ReloadWeapon (aircraft_t *aircraft)
@@ -2242,7 +2242,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, ufo->pos);
 			ufo->status = MSG_ReadByte(sb);
 			ufo->fuel = MSG_ReadLong(sb);
-			ufo->damage = MSG_ReadLong(sb);	
+			ufo->damage = MSG_ReadLong(sb);
 			ufo->time = MSG_ReadShort(sb);
 			ufo->point = MSG_ReadShort(sb);
 			ufo->route.numPoints = MSG_ReadShort(sb);

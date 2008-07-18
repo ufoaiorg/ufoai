@@ -873,7 +873,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-	/* ?? @todo: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid.
+	/* ?? @todo Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid.
 	 * Might need some change to reflect 2x2 units.
 	 * Also might need a check if the distance is bigger than the one to the impact location. */
 	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
@@ -951,7 +951,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 #if 0
-		/** @todo: please debug, currently it causes double sounds */
+		/** @todo please debug, currently it causes double sounds */
 		/* calculate additional visibility */
 		for (k = 0; k < MAX_TEAMS; k++)
 			if (G_TeamPointVis(k, impact))
@@ -1169,8 +1169,8 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 
 /**
  * @brief Setup for shooting, either real or mock
- * @param[in] player @todo: The player this action belongs to (i.e. either the ai or the player)
- * @param[in] num @todo: The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
+ * @param[in] player @todo The player this action belongs to (i.e. either the ai or the player)
+ * @param[in] num @todo The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .

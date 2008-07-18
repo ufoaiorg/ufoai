@@ -100,7 +100,7 @@ typedef struct mTile_s {
 
 /**
  * @brief Stores the parsed data of an assembly definition.  (See *.ump files)
- * @todo: Please have a look if the comments are correct.
+ * @todo Please have a look if the comments are correct.
  */
 typedef struct mAssembly_s {
 	char id[MAX_VAR];		/**< The id (string) of the assembly as defined in the ump file (next to "assembly"). */

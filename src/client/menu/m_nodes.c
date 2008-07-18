@@ -130,7 +130,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		} else
 			return qfalse;
 #if 0
-		/** @todo: Check this */
+		/** @todo Check this */
 		Vector2Set(node->size, sx, sy); /* speed up further calls */
 #endif
 	} else {

@@ -56,14 +56,13 @@ static ipos3_t wpMins, wpMaxs;
  */
 static void CheckUnit (unsigned int unitnum)
 {
-	int  x, y, z;
 	pos3_t pos;
 	vec3_t end;
 
 	/* get coordinates of that unit */
-	z = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
-	y = (unitnum / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
-	x = unitnum % PATHFINDING_WIDTH;
+	const int z = unitnum / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
+	const int y = (unitnum / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
+	const int x = unitnum % PATHFINDING_WIDTH;
 
 	/* test bounds */
 	if (x > wpMaxs[0] || y > wpMaxs[1] || z > wpMaxs[2]

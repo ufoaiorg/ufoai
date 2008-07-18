@@ -286,7 +286,7 @@ static void SCR_DrawCursor (void)
 
 			/* playernames */
 			if (mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->integer) {
-				/*@todo: activate this:
+				/** @todo activate this:
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				*/
 				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);

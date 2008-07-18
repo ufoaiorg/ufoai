@@ -234,8 +234,8 @@ typedef struct objDef_s {
 	uint32_t shape;			/**< The shape in inventory. */
 
 	byte sx, sy;			/**< Size in x and y direction. */
-	float scale;			/**< scale value for images? and models @todo: fixme - array of scales. */
-	vec3_t center;			/**< origin for models @todo: fixme - array of scales. */
+	float scale;			/**< scale value for images? and models @todo fixme - array of scales. */
+	vec3_t center;			/**< origin for models @todo fixme - array of scales. */
 	char animationIndex;	/**< The animation index for the character with the weapon. */
 	qboolean weapon;		/**< This item is a weapon or ammo. */
 	qboolean holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
@@ -250,7 +250,7 @@ typedef struct objDef_s {
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */
-	int ammo;			/**< How much can we load into this weapon at once. @todo: what is this? isn't it ammo-only specific which defines amount of bullets in clip? */
+	int ammo;			/**< How much can we load into this weapon at once. @todo what is this? isn't it ammo-only specific which defines amount of bullets in clip? */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
 	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
@@ -376,7 +376,7 @@ typedef struct mapDef_s {
 	/* singleplayer */
 	int maxAliens;				/**< Number of spawning points on the map */
 
-	/** @todo: Make use of these values */
+	/** @todo Make use of these values */
 	linkedList_t *terrains;		/**< terrain strings this map is useable for */
 	linkedList_t *populations;	/**< population strings this map is useable for */
 	linkedList_t *cultures;		/**< culture strings this map is useable for */
@@ -618,7 +618,7 @@ typedef struct chrReservations_s {
 
 /*
 	int reserveCustom;	**< Did the player activate reservation for the custom value?
-	int custom;	**< How many TUs the player has reserved by manual input. @todo: My suggestion is to provide a numerical input-field.
+	int custom;	**< How many TUs the player has reserved by manual input. @todo My suggestion is to provide a numerical input-field.
 */
 } chrReservations_t;
 

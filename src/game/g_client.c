@@ -781,7 +781,7 @@ int G_GetActiveTeam (void)
  * @param[in] TU The time units to check against the ones ent has.
  * @param[in] quiet Don't print the console message if quiet is true.
  * the action with
- * @todo: Integrate into hud - don't use cprintf
+ * @todo Integrate into hud - don't use cprintf
  */
 qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 {
@@ -991,7 +991,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		/** @todo: "or not researched" */
+		/** @todo "or not researched" */
 		gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:
@@ -1010,7 +1010,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 		assert(!newFloor);
 		if (FLOOR(ent)) {
 			/* There is still something on the floor. */
-			/** @todo: @b why do we do this here exactly? Shouldn't they be the
+			/** @todo @b why do we do this here exactly? Shouldn't they be the
 			 * same already at this point? */
 			FLOOR(floor) = FLOOR(ent);
 			/* Tell the client to remove the item from the container */
@@ -1086,14 +1086,14 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 		if (newFloor) {
 			/* A new container was created for the floor. */
 			assert(FLOOR(ent));
-			/** @todo: @b why do we do this here exactly? Shouldn't they be the
+			/** @todo @b why do we do this here exactly? Shouldn't they be the
 			 * same already at this point? */
 			FLOOR(floor) = FLOOR(ent);
 			/* Send item info to the clients */
 			G_CheckVis(floor, qtrue);
 		} else {
 			/* Add the item; update floor, because we add at beginning */
-			/** @todo: @b why do we do this here exactly? Shouldn't they be the
+			/** @todo @b why do we do this here exactly? Shouldn't they be the
 			 * same already at this point? */
 			FLOOR(floor) = FLOOR(ent);
 			/* Tell the client to add the item to the container. */
@@ -1215,7 +1215,7 @@ static void G_InventoryToFloor (edict_t * ent)
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
 				for (i = 0; i < DIRECTIONS; i++) {
-					/** @todo: Check whether movement is possible here - otherwise don't use this field */
+					/** @todo Check whether movement is possible here - otherwise don't use this field */
 					/* extend pos with the direction vectors */
 					Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
 					/* now try to get a floor entity for that new location */
@@ -1330,7 +1330,7 @@ static void G_BuildForbiddenList (int team)
 }
 
 /**
- * @brief @todo: writeme
+ * @brief @todo writeme
  * @param[in] team The current team (see G_BuildForbiddenList)
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] distance The distance to calculate the move for.
@@ -1376,7 +1376,7 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 }
 
 /**
- * @brief @todo: writeme
+ * @brief @todo writeme
  * @param[in] player Player who is moving an actor
  * @param[in] visTeam
  * @param[in] num Edict index to move
@@ -1900,7 +1900,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					/** @todo: Comment-me: Why do we modify reaction stuff (especially TUs) here?
+					/** @todo Comment-me: Why do we modify reaction stuff (especially TUs) here?
 					 * I've commented this out for now, we could remove it completely or add a special "shaken" TU penalty. */
 					/* ent->TU -= TU_REACTION_SINGLE; */
 					/* shaken is later reset along with reaction fire */
@@ -2261,7 +2261,7 @@ void G_ListMissionScore_f (void)
  * @param[in] player The player is trying to activate the door
  * @param[in,out] actor The actor the player is using to activate the entity
  * @param[in,out] edict The entity that is to be used
- * @todo: Do we have to change the trigger position here, too? I don't think this is really needed.
+ * @todo Do we have to change the trigger position here, too? I don't think this is really needed.
  * @sa CL_ActorUseDoor
  * @sa G_UseEdict
  */
@@ -2286,7 +2286,8 @@ qboolean G_ClientUseEdict (player_t *player, edict_t *actor, edict_t *edict)
 
 /**
  * @brief The client sent us a message that he did something. We now execute the related fucntion(s) adn notify him if neccessary.
- * @param[in] player The player that sent us the message (@todo: is this correct?)
+ * @param[in] player The player to execute the action for (the actor belongs to this player)
+ * @note a client action will also send the server side edict number to determine the actor
  */
 int G_ClientAction (player_t * player)
 {
@@ -2377,7 +2378,7 @@ int G_ClientAction (player_t * player)
 		objIdx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
 		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fdIdx, objIdx);
-		/** @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
+		/** @todo Add check for correct player here (player==g_edicts[num]->team ???) */
 		ent = g_edicts + num;
 		if (ent) {
 			ent->chr.RFmode.hand = hand;
@@ -2439,7 +2440,7 @@ int G_ClientAction (player_t * player)
 /**
  * @brief Sets the teamnum var for this match
  * @param[in] player Pointer to connected player
- * @todo: Check whether there are enough free spawnpoints in all cases
+ * @todo Check whether there are enough free spawnpoints in all cases
  */
 static void G_GetTeam (player_t * player)
 {
@@ -2829,7 +2830,7 @@ void G_ClientTeamInfo (player_t * player)
 			/** @todo for now, heal fully upon entering mission */
 			ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
 
-			ent->reaction_minhit = 30; /** @todo: allow later changes from GUI */
+			ent->reaction_minhit = 30; /** @todo allow later changes from GUI */
 		} else {
 			/* just do nothing with the info */
 			gi.ReadByte(); /* fieldSize */
@@ -3171,7 +3172,7 @@ qboolean G_ClientSpawn (player_t * player)
 		return qfalse;
 	}
 
-	/** @todo: Check player->pers.team here */
+	/** @todo Check player->pers.team here */
 	if (!G_GameRunning()) {
 		/* activate round if in single-player */
 		if (sv_maxclients->integer == 1) {
@@ -3263,7 +3264,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 /**
  * @sa G_ClientDisconnect
  * @sa CL_ConnectionlessPacket
- * @todo: Check if the teamnum preference has already reached maxsoldiers
+ * @todo Check if the teamnum preference has already reached maxsoldiers
  * and reject connection if so
  */
 qboolean G_ClientConnect (player_t * player, char *userinfo)

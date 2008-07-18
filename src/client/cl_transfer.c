@@ -839,7 +839,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	/** @todo: Why don't we use MN_PopMenu directly here? */
+	/** @todo Why don't we use MN_PopMenu directly here? */
 	Cbuf_AddText("mn_pop\n");
 }
 
@@ -925,7 +925,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 	if (!destination->founded) {
 		TR_EmptyTransferCargo(NULL, transfer, qfalse);
 		MN_AddNewMessage(_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
-		/** @todo: what if source base is lost? we won't be able to unhire transfered personel. */
+		/** @todo what if source base is lost? we won't be able to unhire transfered personel. */
 	} else {
 		char message[256];
 		TR_EmptyTransferCargo(destination, transfer, qtrue);
@@ -1726,7 +1726,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		assert(gd.numBases);
 		destBase = MSG_ReadByte(sb);
 		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
-		/** @todo: Can (or should) destBase be NULL? If not, check against a null pointer
+		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer
 		 * for transfer->destbase and return qfalse here */
 		srcBase = MSG_ReadByte(sb);
 		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);

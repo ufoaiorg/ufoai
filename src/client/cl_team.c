@@ -657,7 +657,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		/* The item is a weapon and it was reloaded one time. */
 		if (item.a == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			assert(item.m);	/** @todo: Isn't this redundant here? */
+			assert(item.m);	/** @todo Isn't this redundant here? */
 			if (ed->num[item.m->idx] > 0) {
 				ed->num[item.m->idx]--;
 				return item;
@@ -689,7 +689,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		}
 	}
 
-	/** @todo: on return from a mission with no clips left
+	/** @todo on return from a mission with no clips left
 	 * and one weapon half-loaded wielded by soldier
 	 * and one empty in equip, on the first opening of equip,
 	 * the empty weapon will be in soldier hands, the half-full in equip;
@@ -2270,8 +2270,9 @@ void CL_ParseResults (struct dbuffer *msg)
 		civilian_killed += civilian_stunned;
 
 	if (!curCampaign || !selectedMission) {
-		/* the mission was started via console (@todo: or is multiplayer) */
-		/* buffer needs to be cleared and then append to it */
+		/* the mission was started via console
+		 * buffer - needs to be cleared and then append to it */
+		/** @todo or is multiplayer? */
 		if (curCampaign) {
 			Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
 			ccs.aliensKilled += thier_killed;

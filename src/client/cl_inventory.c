@@ -790,7 +790,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContai
 	if (px >= SHAPE_BIG_MAX_WIDTH || py >= SHAPE_BIG_MAX_HEIGHT)
 		return qfalse;
 
-	/** @todo: this case should be removed as soon as right clicking in equip container
+	/** @todo this case should be removed as soon as right clicking in equip container
 	 * will try to put the item in a reasonable container automatically */
 	if ((px == -1 || py == -1) && toContainer == fromContainer)
 		return qtrue;

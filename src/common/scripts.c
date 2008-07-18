@@ -1057,7 +1057,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
-				/** @todo: maybe we could add a check for the old numbers as well here */
+				/** @todo maybe we could add a check for the old numbers as well here */
 				for (j = 0; j < MAX_BUYTYPES; j++) {
 					if (!Q_stricmp(token, buytypeNames[j])) {
 						od->buytype = j;

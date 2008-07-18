@@ -127,7 +127,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	Q_strncpyz (&installation->storage.name[16], "base_AA51_launcher", sizeof(installation->storage.name[16]));
 	installation->storage.num[16] = 3;
-	
+
 	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id, installation->installationTemplate->radarRange, installation->installationTemplate->numMaxBatteries, installation->installationTemplate->numMaxUfoStored);
 
 	/* Reset Radar range */
@@ -516,7 +516,7 @@ void INS_ParseInstallationNames (const char *name, const char **text)
  * @note Parses one "installation" entry in the installation.ufo file and writes
  * it into the next free entry in installationTemplates.
  * @param[in] name Unique test-id of a installationTemplate_t.
- * @param[in] text @todo: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
+ * @param[in] text @todo document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  */
 void INS_ParseInstallations (const char *name, const char **text)
 {
@@ -623,6 +623,8 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 
 		MSG_WriteByte(sb, inst->numBatteries);
 		B_SaveBaseSlots(inst->batteries, inst->numBatteries, sb);
+		/** @todo storage, aircraft (don't save capacities, they should
+		 * be recalculated after loading) */
 #endif
 	}
 	return qtrue;
@@ -656,7 +658,8 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->numBatteries = MSG_ReadByte(sb);
 		B_LoadBaseSlots(inst->batteries, inst->numBatteries, sb);
 
-		/** @todo aircraft */
+		/** @todo storage, aircraft */
+		/** @todo don't forget to recalc the capacities like we do for bases */
 #endif
 	}
 	return qtrue;

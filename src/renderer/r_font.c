@@ -93,7 +93,7 @@ void R_FontShutdown (void)
 }
 
 /**
- * @todo: Check whether font is already loaded
+ * @todo Check whether font is already loaded
  */
 static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyle, int size)
 {
@@ -489,7 +489,7 @@ static void R_FontConvertChars (char *buffer)
 
 	replace = strstr(buffer, "\n\0");
 	if (replace)
-		*replace = '\n';	/** @todo: Could be removed ... Doesn't change anything, no? */
+		*replace = '\n';	/** @todo Could be removed ... Doesn't change anything, no? */
 }
 
 static fontCacheList_t cacheList;
@@ -573,7 +573,7 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 	cacheList->width = 0;
 
 	cacheList->cache[cacheList->numCaches] = R_FontGetFromCache(c);
-	if (cacheList->cache[cacheList->numCaches]) { /** @todo: check that cache.font = fontID and that texh0 was the same */
+	if (cacheList->cache[cacheList->numCaches]) { /** @todo check that cache.font = fontID and that texh0 was the same */
 		if (cur_line) {
 			/* Com_Printf("h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			if (increaseLine)

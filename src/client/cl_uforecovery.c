@@ -703,7 +703,7 @@ void UR_ProcessActive (void)
 				/* Destination base was destroyed meanwhile. */
 				/* UFO is lost, send proper message to the user.*/
 				recovery->active = qfalse;
-				/** @todo: prepare MN_AddNewMessage() here */
+				/** @todo prepare MN_AddNewMessage() here */
 				return;
 			}
 			/* Get ufocraft. */

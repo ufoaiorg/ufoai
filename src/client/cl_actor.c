@@ -137,7 +137,7 @@ ACTOR MENU UPDATING
 /**
  * @brief Return the skill string for the given skill level
  * @return skill string
- * @param[in] skill a skill value between 0 and MAX_SKILL (@todo: 0? never reached?)
+ * @param[in] skill a skill value between 0 and MAX_SKILL (@todo 0? never reached?)
  */
 static const char *CL_GetSkillString (const int skill)
 {
@@ -3697,7 +3697,8 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 	obj = &csi.ods[objIdx];
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
-	/* start the sound; @todo: is check for SF_BOUNCED needed? */
+	/* start the sound */
+	/** @todo is check for SF_BOUNCED needed? */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0]) {
 		S_StartLocalSound(fd->fireSound);
 	}

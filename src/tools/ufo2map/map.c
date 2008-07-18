@@ -162,7 +162,7 @@ static inline void SnapPlane (vec3_t normal, vec_t *dist)
 {
 	SnapVector(normal);
 
-	if (fabs(*dist - Q_rint(*dist)) < DIST_EPSILON)
+	if (fabs(*dist - Q_rint(*dist)) < MAP_DIST_EPSILON)
 		*dist = Q_rint(*dist);
 }
 

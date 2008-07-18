@@ -1396,7 +1396,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	} else {
-		/** @todo: For melee actors we should not be able to get into this function, this can be removed. */
+		/** @todo For melee actors we should not be able to get into this function, this can be removed. */
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 		return;
 	}

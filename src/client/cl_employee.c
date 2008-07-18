@@ -958,12 +958,9 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 }
 
 #if 0
-/************************
-@todo: Will later on be used in e.g RS_AssignScientist_f
-*********************************/
 /**
  * @brief Assigns an employee to a building.
- *
+ * @todo Will later on be used in e.g RS_AssignScientist_f
  * @param[in] building The building the employee is assigned to.
  * @param[in] employee_type	What type of employee to assign to the building.
  * @sa E_RemoveEmployeeFromBuildingOrAircraft
@@ -981,7 +978,7 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 		if (employee) {
 			employee->building = building;
 		} else {
-			/** @todo: message -> no employee available */
+			/** @todo message -> no employee available */
 		}
 		break;
 	default:
@@ -1081,7 +1078,7 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 		break;
 
 	case EMPL_ROBOT:
-		/** @todo: Check if they are linked to anywhere and remove them there. */
+		/** @todo Check if they are linked to anywhere and remove them there. */
 #if 0
 		/* Remove ugv from aircraft/team if it was assigned to one. */
 		if (CL_SoldierInAircraft(employee, NULL)) {
@@ -1268,7 +1265,7 @@ static void E_EmployeeDelete_f (void)
 
 	if (employee->hired) {
 		if (!E_UnhireEmployee(employee)) {
-			/** @todo: message - Couldn't fire employee. */
+			/** @todo message - Couldn't fire employee. */
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			return;
 		}

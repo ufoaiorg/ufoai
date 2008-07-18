@@ -240,7 +240,8 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 }
 
 /**
- * @brief @todo: This seems to be the function that is called for reaction fire isn't it?
+ * @brief
+ * @todo This seems to be the function that is called for reaction fire isn't it?
  * @param[in] player The player this action belongs to (the human player or the ai)
  * @param[in] shooter The actor that is trying to shoot
  * @param[in] at Position to fire on.

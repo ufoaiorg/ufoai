@@ -223,10 +223,10 @@ void RT_UpdateConnection (routing_t * map, int x, int y, byte z, qboolean fill)
 		/* Reset the center */
 		VectorCopy(center, start);
 		/* Set the end point to the edge of the field unit in the direction traveling */
-		/** @todo: should this check into the center of the adjacent field unit insead of just to the edge? */
+		/** @todo should this check into the center of the adjacent field unit insead of just to the edge? */
 		VectorSet(end, start[0] + (UNIT_HEIGHT / 2) * dvecs[dir][0], start[1] + (UNIT_HEIGHT / 2) * dvecs[dir][1], start[2]);
 
-		/** @todo: Do we need to use a bounding box to check for things in the way of this move? */
+		/** @todo Do we need to use a bounding box to check for things in the way of this move? */
 		/* center check */
 		if (RT_TESTLINE(start, end, TL_FLAG_ACTORCLIP))
 			continue;

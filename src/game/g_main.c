@@ -623,7 +623,7 @@ void G_CheckEndGame (void)
 			activeTeams++;
 		}
 
-	/** @todo: < 2 does not work when we count civilians */
+	/** @todo < 2 does not work when we count civilians */
 	/* prepare for sending results */
 	if (activeTeams < 2) {
 		if (activeTeams == 0)

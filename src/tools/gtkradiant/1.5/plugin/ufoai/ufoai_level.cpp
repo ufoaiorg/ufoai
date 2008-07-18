@@ -207,7 +207,7 @@ int check_entity_flags (const char *classname, const char *flag)
 
 /**
  * @brief Will check e.g. the map entities for valid values
- * @todo: check for maxlevel
+ * @todo check for maxlevel
  */
 void check_map_values (char **returnMsg)
 {

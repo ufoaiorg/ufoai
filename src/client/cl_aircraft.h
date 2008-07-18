@@ -164,7 +164,7 @@ typedef struct aircraft_s {
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
 	int maxTeamSize;	/**< Max amount of soldiers onboard. @todo How do we handle 2x2 units here? @note Limited to MAX_ACTIVETEAM */
-	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/** @todo: rename me to size. */
+	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/** @todo rename me to size. */
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;		/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
 	int point;
@@ -213,7 +213,7 @@ typedef struct aircraft_s {
 } aircraft_t;
 
 /*
-@todo: for later, this is used quite a lot in the code.
+@todo for later, this is used quite a lot in the code.
 #define AIRCRAFTCURRENT_IS_SANE(base) (((base)->aircraftCurrent >= 0) && ((base)->aircraftCurrent < (base)->numAircraftInBase))
 */
 extern aircraft_t aircraftTemplates[MAX_AIRCRAFT]; /**< available aircraft types */

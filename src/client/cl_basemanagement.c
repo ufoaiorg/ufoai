@@ -754,7 +754,7 @@ static void B_BuildingOnDestroy_f (void)
 			break;
 		case B_UFO_HANGAR:
 		case B_UFO_SMALL_HANGAR:
-			/** @todo: implement me */
+			/** @todo implement me */
 			break;
 		case B_QUARTERS:
 			E_DeleteEmployeesExceedingCapacity(base);
@@ -1102,7 +1102,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 			B_UpdateBaseCapacities(cap, base);
 	}
 
-	/** @todo: this should be an user option defined in Game Options. */
+	/** @todo this should be an user option defined in Game Options. */
 	CL_GameTimeStop();
 }
 
@@ -1817,7 +1817,7 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
  * it into the next free entry in bmBuildings[0], which is the list of buildings
  * in the first base (building_t).
  * @param[in] name Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
- * @param[in] text @todo: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
+ * @param[in] text @todo document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  * @sa CL_ParseScriptFirst (link is false here)
  * @sa CL_ParseScriptSecond (link it true here)
@@ -1928,7 +1928,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			building->tech = tech_link;
 		} else {
 			if (building->visible)
-				/** @todo: are the techs already parsed? */
+				/** @todo are the techs already parsed? */
 				Com_DPrintf(DEBUG_CLIENT, "B_ParseBuildings: Could not find tech that provides %s\n", name);
 		}
 
@@ -2568,7 +2568,7 @@ static void CL_SwapSkills (chrList_t *team)
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
-					/** @todo: Is there a better way to check for this case? */
+					/** @todo Is there a better way to check for this case? */
 					Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 				} else {
 					no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
@@ -2589,7 +2589,7 @@ static void CL_SwapSkills (chrList_t *team)
 							weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(HOLSTER(cp2)->item.m, HOLSTER(cp2)->item.t);
 
 						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
-							/** @todo: Is there a better way to check for this case? */
+							/** @todo Is there a better way to check for this case? */
 							Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 						} else {
 							no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
@@ -3820,7 +3820,7 @@ static void B_LoadAircraftSlots (base_t* base, aircraftSlot_t* slot, int num, si
 		 * are already loaded in the campaign load function and set to the value
 		 * after the craftitem was already removed from the initial game - thus
 		 * there might not be any of these items in the storage at this point */
-		/** @todo: Check whether storage and capacities needs updating now */
+		/** @todo Check whether storage and capacities needs updating now */
 		if (tech)
 			AII_AddItemToSlot(NULL, tech, slot + i);
 		slot[i].ammoLeft = MSG_ReadShort(sb);

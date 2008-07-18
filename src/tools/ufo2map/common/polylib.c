@@ -359,7 +359,7 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dist, const vec_t epsilon)
 {
 	winding_t *in;
-	/** @todo: Why + 4? */
+	/** @todo Why + 4? */
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];

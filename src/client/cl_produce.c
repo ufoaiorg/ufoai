@@ -1356,7 +1356,7 @@ static void PR_ProductionIncrease_f (void)
 				}
 
 				if (producibleAmount < amount) {
-					/** @todo: make the numbers work here. */
+					/** @todo make the numbers work here. */
 					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount));
 				}
 
@@ -1373,9 +1373,9 @@ static void PR_ProductionIncrease_f (void)
 				PR_ClearSelected();
 				selectedProduction = &queue->items[queue->numItems - 1];
 			} else { /* requirements are not met => producibleAmount <= 0 */
- 				/** @todo: better messages needed */
+ 				/** @todo better messages needed */
 				MN_Popup(_("Not enough material!"), _("You don't have enough of the needed material to produce this item."));
-				/** @todo:
+				/** @todo
 				 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
 				 *     This info should also be displayed in the item-info.
 				 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/

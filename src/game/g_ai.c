@@ -101,8 +101,8 @@ static qboolean AI_CheckFF (const edict_t *ent, const vec3_t target, float sprea
 
 /**
  * @brief Check whether the fighter should perform the shoot
- * @todo: Check whether radius and power of fd are to to big for dist
- * @todo: Check whether the alien will die when shooting
+ * @todo Check whether radius and power of fd are to to big for dist
+ * @todo Check whether the alien will die when shooting
  */
 static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, const fireDef_t* fd, float *dist)
 {
@@ -254,7 +254,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		return AI_ACTION_NOTHING_FOUND;
 
 	/* see if we are very well visible by a reacting enemy */
-	/** @todo: this is worthless now; need to check all squares along our way! */
+	/** @todo this is worthless now; need to check all squares along our way! */
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 		if (check->inuse && G_IsLivingActor(check) && ent != check
 			 && (check->team != ent->team || ent->state & STATE_INSANE)
@@ -306,9 +306,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		} else {
 			weapon = NULL;
 			od = NULL;
-			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: @todo: grenade/knife toss from inventory using empty hand\n");
-			/** @todo: grenade/knife toss from inventory using empty hand */
-			/** @todo: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
+			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: @todo grenade/knife toss from inventory using empty hand\n");
+			/** @todo grenade/knife toss from inventory using empty hand */
+			/** @todo evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
 
 		if (!od || !weapon)
@@ -319,7 +319,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		 * maybe this is only a maptest and thus no scripts parsed */
 		if (weapFdsIdx == -1)
 			continue;
-		/** @todo: timed firedefs that bounce around should not be thrown/shooten about the whole distance */
+		/** @todo timed firedefs that bounce around should not be thrown/shooten about the whole distance */
 		for (fdIdx = 0; fdIdx < od->numFiredefs[weapFdsIdx]; fdIdx++) {
 			fd = &od->fd[weapFdsIdx][fdIdx];
 
@@ -422,17 +422,17 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 	if (!(ent->state & STATE_RAGE)) {
 		/* hide */
-		/** @todo: Only hide if the visible actors have long range weapons in their hands
+		/** @todo Only hide if the visible actors have long range weapons in their hands
 		 * otherwise make it depended on the mood (or some skill) of the alien whether
 		 * it tries to attack by trying to get as close as possible or to try to hide */
 		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
-		/** @todo: What is this 2? */
+		/** @todo What is this 2? */
 		} else if (aia->target && tu >= 2) {
 			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
-			 * @todo: do this decently, only penalizing the visible part of walk
+			 * @todo do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
 			 * now it may remove some tactical options from aliens,
 			 * e.g. they may now choose only the closer doors;
@@ -472,13 +472,13 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* nothing found */
 			VectorCopy(to, ent->pos);
 			gi.GridPosToVec(gi.routingMap, to, ent->origin);
-			/** @todo: Try to crouch if no hiding spot was found - randomized */
+			/** @todo Try to crouch if no hiding spot was found - randomized */
 		} else {
 			/* found a hiding spot */
 			VectorCopy(ent->pos, aia->stop);
 			bestActionPoints += GUETE_HIDE;
 			tu -= delta;
-			/** @todo: also add bonus for fleeing from reaction fire
+			/** @todo also add bonus for fleeing from reaction fire
 			 * and a huge malus if more than 1 move under reaction */
 		}
 	}
@@ -773,7 +773,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 		G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 
 	/* do the move */
-	/** @todo: Why 0 - and not ent->team?
+	/** @todo Why 0 - and not ent->team?
 	 * I think this has something to do with the vis check in G_BuildForbiddenList */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
@@ -878,7 +878,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		 * actor once he sees the ai, too */
 		AI_TurnIntoDirection(ent, bestAia.target->pos);
 
-		/** @todo: If possible targets that can shoot back (check their inventory for weapons, not for ammo)
+		/** @todo If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
 
 		ent->hiding = qfalse;
@@ -986,7 +986,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->pnum = player->num;
 			gi.LinkEdict(ent);
 
-			/** skills; @todo: more power to Ortnoks, more mind to Tamans */
+			/** skills; @todo more power to Ortnoks, more mind to Tamans */
 			CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2);	/**< For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
 			ent->chr.score.skills[ABILITY_MIND] += 100;
 			if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
@@ -1036,7 +1036,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 			ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_civilian"), &ent->chr);
 			ent->chr.inv = &ent->i;
-			/** @todo: Maybe we have civilians with armour, too - police and so on */
+			/** @todo Maybe we have civilians with armour, too - police and so on */
 			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;

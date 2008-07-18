@@ -175,7 +175,7 @@ static int checkStartPosition (entity_t *e, int entnum)
 
 	if (((int)e->origin[0] - align) % UNIT_SIZE || ((int)e->origin[1] - align) % UNIT_SIZE) {
 		Com_Printf("* ERROR: misaligned starting position - entnum: %i (%i: %i). The %s will be deleted\n", entnum, (int)e->origin[0], (int)e->origin[1], val);
-		return 1; /** @todo: auto-align entity and check for intersection with brush */
+		return 1; /** @todo auto-align entity and check for intersection with brush */
 	}
 	return 0;
 }
@@ -339,7 +339,7 @@ static void GetIntersection (const side_t *side1, const side_t *side2, const sid
 
 	CrossProduct(side2->hessianNormal, side3->hessianNormal, IntersectionDirSide2Side3);
 	/* sin of angle between side 2 and 3 (approx equal to angle: small angle approx) */
-	sinAngle = 1.0; /** @todo: use this one: IntersectionDirSide2Side3.magnitude();*/
+	sinAngle = 1.0; /** @todo use this one: IntersectionDirSide2Side3.magnitude();*/
 	/* planes parallel, cannot intersect */
 	if (sinAngle < epsilon)
 		return;
