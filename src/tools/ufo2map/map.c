@@ -950,6 +950,20 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 }
 
 /**
+ * @brief create string without unnecessary trailing zeroes (or decimal point).
+ */
+static void TrimTrailing(char *buf, float num){
+	int i;
+	sprintf(buf, "%8.6f", num);
+	for(i = 7; i > 0; i--) {/* work back from the end*/
+		if (buf[i] != '0') break;/*find the first nonzero (useful) char */
+	}
+	if (buf[i] == '.') i--;/* lose the decimal point too, if it is the first non-zero*/
+	buf[++i] = '\0';/* keep the useful char, and more significant chars*/
+	return;
+}
+
+/**
  * @sa LoadMapFile
  * @sa FixErrors
  */
@@ -958,6 +972,7 @@ void WriteMapFile (const char *filename)
 	FILE *f;
 	int i, j, k;
 	int removed;
+	char floatBuf[20];
 
 	Com_Printf("writing map: '%s'\n", filename);
 
@@ -988,8 +1003,12 @@ void WriteMapFile (const char *filename)
 				fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
 				fprintf(f, "( %i %i %i ) ", p->planeVector[1][0], p->planeVector[1][1], p->planeVector[1][2]);
 				fprintf(f, "( %i %i %i ) ", p->planeVector[2][0], p->planeVector[2][1], p->planeVector[2][2]);
-				fprintf(f, "%s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1],
-					t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
+				fprintf(f, "%s ", t->name);
+				/* shift[] and rotate are only stored as integers in the file */
+				fprintf(f, "%1.0f %1.0f %1.0f ", t->shift[0], t->shift[1], t->rotate);
+				TrimTrailing(floatBuf, t->scale[0]); fprintf(f, "%s ", floatBuf);
+				TrimTrailing(floatBuf, t->scale[1]); fprintf(f, "%s ", floatBuf);
+				fprintf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
 			}
 			fprintf(f, "}\n");
 		}
