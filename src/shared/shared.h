@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * UNIT_HEIGHT is the height of one level */
 #define PLAYER_HEIGHT		(UNIT_HEIGHT - 16)
 #define QUANT	4
+/* WALL_SIZE is the distance a wall may protrude from the edge of a cell without interfeeting with an actor entering the cell */
+#define WALL_SIZE 5
 
 #define MAX_VAR     64
 
