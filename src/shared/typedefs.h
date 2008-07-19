@@ -231,6 +231,25 @@ typedef struct {
  *
  */
 typedef struct routing_s {
+	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH][CORE_DIRECTIONS];
+	signed char floor[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	byte ceil[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+} routing_t;
+
+typedef struct pathing_s {
+	/* TUs needed to move to this cell for the current actor */
+	byte area[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+	byte areaStored[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+
+	/* Indicates where the actor would have moved from to get to the cell */
+	byte areaFrom[ACTOR_MAX_STATES][PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+
+	/* forbidden list */
+	pos_t **fblist;	/**< pointer to forbidden list (entities are standing here) */
+	int fblength;	/**< length of forbidden list (amount of entries) */
+} pathing_t;
+
+typedef struct old_routing_s {
 	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 	byte fall[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 	byte step[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
@@ -242,7 +261,7 @@ typedef struct routing_s {
 	/* forbidden list */
 	pos_t **fblist;	/**< pointer to forbidden list (entities are standing here) */
 	int fblength;	/**< length of forbidden list (amount of entries) */
-} routing_t;
+} old_routing_t;
 
 typedef struct plane_s {
 	vec3_t	normal;
