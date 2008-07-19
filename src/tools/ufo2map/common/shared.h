@@ -83,6 +83,7 @@ typedef struct mapConfig_s {
 	qboolean generateMaterialFile;
 	qboolean performMapCheck;
 	qboolean chkEntities;
+	qboolean chkNodraws;
 	qboolean chkBrushes;
 	qboolean chkLevelFlags;
 	qboolean chkTextures;

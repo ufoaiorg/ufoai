@@ -519,13 +519,32 @@ void CheckEntities (void)
 			Com_Printf("No check for '%s' implemented\n", name);
 		}
 
+	}
+}
+
+/**
+ * @brief Check for SURF_NODRAW which might be exposed, and check for
+ * faces which can safely be set to SURF_NODRAW because they are pressed against
+ * the faces of other brushes.
+ * @todo make it work, by porting from maputils java
+ */
+ void CheckNodraws(void)
+ {
+ 	int i;
+
+	/* 0 is the world - start at 1 */
+	for (i = 0; i < num_entities; i++) {
+		entity_t *e = &entities[i];
+		const char *name = ValueForKey(e, "classname");
+
 		/* check only these entities for interaction - all the others may be
 		 * rotated, removed or moved */
 		if (!strcmp(name, "func_group") || !strcmp(name, "worldspawn")) {
 			CheckInteractionList(e);
 		}
 	}
-}
+ }
+
 
 
 /**
