@@ -208,5 +208,4 @@ void MN_PopupButton (const char *title, const char *text,
 	}
 
 	MN_PushMenu(popupButtonMenu->name);
-	return;
 }
