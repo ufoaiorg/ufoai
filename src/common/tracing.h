@@ -67,7 +67,8 @@ typedef struct trace_s{
 	float fraction;				/**< distance traveled, 1.0 = didn't hit anything, 0.0 Inside of a brush */
 	vec3_t endpos;				/**< final position */
 	TR_PLANE_TYPE plane;		/**< surface normal at impact */
-	cBspSurface_t *surface;	/**< surface hit */
+	cBspSurface_t *surface;	    /**< surface hit */
+	int planenum;				/**< index of the plane hit, used for map debugging */
 	int contentFlags;			/**< contents on other side of surface hit */
 	struct le_s *le;			/**< not set by CM_*() functions */
 	struct edict_s *ent;		/**< not set by CM_*() functions */
@@ -101,9 +102,9 @@ int TR_HeadnodeForBox(mapTile_t *tile, const vec3_t mins, const vec3_t maxs);
 
 void TR_BuildTracingNode_r (int node, int level);
 
-trace_t TR_BoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask);
-trace_t TR_TransformedBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles);
-trace_t TR_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask);
+trace_t TR_BoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject);
+trace_t TR_TransformedBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject, const vec3_t origin, const vec3_t angles);
+trace_t TR_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);
 
 qboolean TR_TestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean TR_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);

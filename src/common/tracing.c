@@ -94,6 +94,7 @@ static vec3_t trace_extents;
 
 static trace_t trace_trace;
 static int trace_contents;
+static int trace_rejects;
 static qboolean trace_ispoint;			/* optimized case */
 
 tnode_t *tnode_p;
@@ -106,7 +107,12 @@ GLOBAL DIRECTION CONSTANTS
 
 const vec3_t dup_vec = { 0, 0, PLAYER_HEIGHT - UNIT_HEIGHT / 2 };
 const vec3_t dwn_vec = { 0, 0, -UNIT_HEIGHT / 2 };
-const vec3_t testvec[5] = { {-UNIT_SIZE / 2 + 5, -UNIT_SIZE / 2 + 5, 0}, {UNIT_SIZE / 2 - 5, UNIT_SIZE / 2 - 5, 0}, {-UNIT_SIZE / 2 + 5, UNIT_SIZE / 2 - 5, 0}, {UNIT_SIZE / 2 - 5, -UNIT_SIZE / 2 + 5, 0}, {0, 0, 0} };
+const vec3_t testvec[5] = {
+    {-UNIT_SIZE / 2 + WALL_SIZE, -UNIT_SIZE / 2 + WALL_SIZE, 0},
+    { UNIT_SIZE / 2 - WALL_SIZE,  UNIT_SIZE / 2 - WALL_SIZE, 0},
+    {-UNIT_SIZE / 2 + WALL_SIZE,  UNIT_SIZE / 2 - WALL_SIZE, 0},
+    { UNIT_SIZE / 2 - WALL_SIZE, -UNIT_SIZE / 2 + WALL_SIZE, 0},
+    {0, 0, 0} };
 
 
 /*
@@ -499,7 +505,7 @@ qboolean TR_TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const
 		}
 	}
 
-	if (VectorCompare(end, stop))
+	if (VectorCompareEps(end, stop, EQUAL_EPSILON))
 		return qfalse;
 	else
 		return qtrue;
@@ -661,6 +667,7 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 {
 	int i, j;
 	TR_PLANE_TYPE *clipplane;
+	int clipplanenum;
 	float dist;
 	float enterfrac, leavefrac;
 	vec3_t ofs;
@@ -680,6 +687,7 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 	getout = qfalse;
 	startout = qfalse;
 	leadside = NULL;
+	clipplanenum = 0;
 
 	for (i = 0; i < brush->numsides; i++) {
 		TR_BRUSHSIDE_TYPE *side = &curTile->brushsides[brush->firstbrushside + i];
@@ -726,6 +734,9 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 			if (f > enterfrac) {
 				enterfrac = f;
 				clipplane = plane;
+#ifdef COMPILE_MAP
+				clipplanenum = side->planenum;
+#endif
 				leadside = side;
 			}
 		} else {				/* leave */
@@ -750,6 +761,7 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 				enterfrac = 0;
 			trace->fraction = enterfrac;
 			trace->plane = *clipplane;
+			trace->planenum = clipplanenum;
 #ifdef COMPILE_UFO
 			trace->surface = leadside->surface;
 #endif
@@ -833,7 +845,7 @@ void TR_TraceToLeaf (int leafnum)
 	assert(leafnum <= curTile->numleafs);
 
 	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_contents))
+	if (!(leaf->contentFlags & trace_contents) || (leaf->contentFlags & trace_rejects))
 		return;
 
 	/* trace line against all brushes in the leaf */
@@ -844,7 +856,7 @@ void TR_TraceToLeaf (int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contentFlags & trace_contents))
+		if (!(b->contentFlags & trace_contents) || (b->contentFlags & trace_rejects))
 			continue;
 
 		TR_ClipBoxToBrush(trace_mins, trace_maxs, trace_start, trace_end, &trace_trace, b);
@@ -869,7 +881,7 @@ static void TR_TestInLeaf (int leafnum)
 	assert(leafnum <= curTile->numleafs);
 
 	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_contents))
+	if (!(leaf->contentFlags & trace_contents) || (leaf->contentFlags & trace_rejects))
 		return;
 
 	/* trace line against all brushes in the leaf */
@@ -880,7 +892,7 @@ static void TR_TestInLeaf (int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contentFlags & trace_contents))
+		if (!(b->contentFlags & trace_contents) || (b->contentFlags & trace_rejects))
 			continue;
 		TR_TestBoxInBrush(trace_mins, trace_maxs, trace_start, &trace_trace, b);
 		if (!trace_trace.fraction)
@@ -1020,7 +1032,7 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
  *  the bounding box is returned.
  *  There is another special case when mins and maxs are both origin vectors (0, 0, 0).  In this case, the
  */
-trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask)
+trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject)
 {
 	int i;
 
@@ -1041,6 +1053,7 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 		return trace_trace;
 
 	trace_contents = brushmask;
+	trace_rejects = brushreject;
 	VectorCopy(start, trace_start);
 	VectorCopy(end, trace_end);
 	VectorCopy(mins, trace_mins);
@@ -1098,7 +1111,7 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
+trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject, const vec3_t origin, const vec3_t angles)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
@@ -1141,7 +1154,7 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	}
 
 	/* sweep the box through the model */
-	trace = TR_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask);
+	trace = TR_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask, brushreject);
 
 	if (rotated && trace.fraction != 1.0) {
 		/** @todo figure out how to do this with existing angles */
@@ -1164,7 +1177,7 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 /**
  * @brief Handles all 255 level specific submodels too
  */
-trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask)
+trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
 {
 	trace_t newtr, tr;
 	int tile, i;
@@ -1184,7 +1197,7 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 				continue;
 
 			assert(h->cnode < curTile->numnodes + 6); /* +6 => bbox */
-			newtr = TR_BoxTrace(start, end, mins, maxs, &mapTiles[tile], h->cnode, brushmask);
+			newtr = TR_BoxTrace(start, end, mins, maxs, &mapTiles[tile], h->cnode, brushmask, brushreject);
 
 			/* memorize the trace with the minimal fraction */
 			if (newtr.fraction == 0.0)
