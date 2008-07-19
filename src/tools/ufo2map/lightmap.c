@@ -1009,7 +1009,7 @@ static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4
  * @brief
  * @sa FinalLightFace
  */
-void BuildFacelights (unsigned int facenum)
+int BuildFacelights (unsigned int facenum)
 {
 	dBspFace_t *f;
 	lightinfo_t *l;
@@ -1023,13 +1023,13 @@ void BuildFacelights (unsigned int facenum)
 
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
-		return;
+		return 0;
 	}
 
 	f = &curTile->faces[facenum];
 
 	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
-		return;		/* non-lit texture */
+		return 0;		/* non-lit texture */
 
 	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;
@@ -1071,13 +1071,13 @@ void BuildFacelights (unsigned int facenum)
 	/* add sun light */
 	if (config.compile_for_day) {
 		if (!config.day_sun_intensity)
-			return;
+			return 0;
 		sun_intensity = config.day_sun_intensity;
 		VectorCopy(config.day_sun_dir, sun_dir);
 		VectorCopy(config.day_sun_color, sun_color);
 	} else {
 		if (!config.night_sun_intensity)
-			return;
+			return 0;
 		sun_intensity = config.night_sun_intensity;
 		VectorCopy(config.night_sun_dir, sun_dir);
 		VectorCopy(config.night_sun_color, sun_color);
@@ -1121,6 +1121,8 @@ void BuildFacelights (unsigned int facenum)
 	}
 
 	free(l);
+
+	return 0;
 }
 
 
@@ -1129,7 +1131,7 @@ void BuildFacelights (unsigned int facenum)
  * lighting and save into final map format
  * @sa BuildFacelights
  */
-void FinalLightFace (unsigned int facenum)
+int FinalLightFace (unsigned int facenum)
 {
 	dBspFace_t *f;
 	int i, j, k, pfacenum;
@@ -1145,7 +1147,7 @@ void FinalLightFace (unsigned int facenum)
 
 	/* none-lit texture */
 	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
-		return;
+		return 0;
 
 	f->lightofs[config.compile_for_day] = curTile->lightdatasize[config.compile_for_day];
 	curTile->lightdatasize[config.compile_for_day] += fl->numsamples * 3;
@@ -1234,4 +1236,6 @@ void FinalLightFace (unsigned int facenum)
 
 	if (config.numbounce > 0)
 		FreeTriangulation(trian);
+
+	return 0;
 }
