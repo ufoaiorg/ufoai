@@ -50,10 +50,16 @@ MACROS
  * @note P/N = positive/negative; X/Y =direction
  */
 /* route - Used by Grid_* only  */
+#ifdef COMPILE_MAP
 #define R_CONN_PX(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x10)
 #define R_CONN_NX(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x20)
 #define R_CONN_PY(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x40)
 #define R_CONN_NY(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x80)
+
+#define R_CONN_PX_PY(map,x,y,z) (R_CONN_PX(map,x,y,z) && R_CONN_PY(map,x,y,z) && R_CONN_PY(map,x+1,y,z) && R_CONN_PX(map,x,y+1,z))
+#define R_CONN_PX_NY(map,x,y,z) (R_CONN_PX(map,x,y,z) && R_CONN_NY(map,x,y,z) && R_CONN_NY(map,x+1,y,z) && R_CONN_PX(map,x,y-1,z))
+#define R_CONN_NX_PY(map,x,y,z) (R_CONN_NX(map,x,y,z) && R_CONN_PY(map,x,y,z) && R_CONN_PY(map,x-1,y,z) && R_CONN_NX(map,x,y+1,z))
+#define R_CONN_NX_NY(map,x,y,z) (R_CONN_NX(map,x,y,z) && R_CONN_NY(map,x,y,z) && R_CONN_NY(map,x-1,y,z) && R_CONN_NX(map,x,y-1,z))
 
 /* height - Used by Grid_* and updates */
 #define R_HEIGHT(map,x,y,z)  ((map)->route[(z)][(y)][(x)] & 0x0F)
@@ -68,9 +74,57 @@ MACROS
 #define R_FALL(map,x,y,z) ((map)->fall[(y)][(x)] & (1 << (z)))
 
 /* area - Used by Grid_* only */
-#define R_AREA(map,x,y,z) ((map)->area[(z)][(y)][(x)])
-#define R_SAREA(map,x,y,z) ((map)->areaStored[(z)][(y)][(x)])
+#define R_AREA(path,x,y,z,state) ((path)->area[(state)][(z)][(y)][(x)])
+#define R_SAREA(path,x,y,z,state) ((path)->areaStored[(state)][(z)][(y)][(x)])
+#endif
 
+
+/** @note IMPORTANT: actor_size is 1 or greater!!! */
+/*
+#define RT_CONN(map, actor_size, x, y, z, dir)		map[(assert(0 == 1), assert(actor_size >= 1), assert(actor_size <= ACTOR_MAX_SIZE), actor_size - 1)]\
+													.route[assert(z >= 0), assert(z < PATHFINDING_HEIGHT), z]\
+													[assert(y >= 0), assert(y < PATHFINDING_WIDTH), y]\
+													[assert(x >= 0), assert(x < PATHFINDING_WIDTH), x]\
+													[assert(dir >= 0), assert(dir < CORE_DIRECTIONS), dir]
+*/
+#define RT_CONN(map, actor_size, x, y, z, dir)		map[(actor_size) - 1].route[(z)][(y)][(x)][(dir)]
+#define RT_CONN_TEST(map, actor_size, x, y, z, dir)		assert((actor_size) >= 1); assert((actor_size) <= ACTOR_MAX_SIZE); \
+														assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
+														assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
+														assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
+														assert((dir) >= 0); assert((dir) < CORE_DIRECTIONS);
+
+#define RT_CONN_PX(map, actor_size, x, y, z)		(RT_CONN(map, actor_size, x, y, z, 0))
+#define RT_CONN_NX(map, actor_size, x, y, z)		(RT_CONN(map, actor_size, x, y, z, 1))
+#define RT_CONN_PY(map, actor_size, x, y, z)		(RT_CONN(map, actor_size, x, y, z, 2))
+#define RT_CONN_NY(map, actor_size, x, y, z)		(RT_CONN(map, actor_size, x, y, z, 3))
+
+#define RT_CONN_PX_PY(map, actor_size, x, y, z)	    (RT_CONN(map, actor_size, x, y, z, 4))
+#define RT_CONN_PX_NY(map, actor_size, x, y, z)	    (RT_CONN(map, actor_size, x, y, z, 7))
+#define RT_CONN_NX_PY(map, actor_size, x, y, z)	    (RT_CONN(map, actor_size, x, y, z, 6))
+#define RT_CONN_NX_NY(map, actor_size, x, y, z)	    (RT_CONN(map, actor_size, x, y, z, 5))
+
+#define RT_FLOOR(map, actor_size, x, y, z)		    map[(actor_size) - 1].floor[(z)][(y)][(x)]
+#define RT_CEILING(map, actor_size, x, y, z)		map[(actor_size) - 1].ceil[(z)][(y)][(x)]
+#define RT_FILLED(map, actor_size, x, y, z)		    (RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING)
+
+/* area - Used by Grid_* only */
+#define RT_AREA(path, x, y, z, state)               ((path)->area[(state)][(z)][(y)][(x)])
+#define RT_AREA_FROM(path, x, y, z, state)          ((path)->areaFrom[(state)][(z)][(y)][(x)])
+#define RT_SAREA(path, x, y, z, state)              ((path)->areaStored[(state)][(z)][(y)][(x)])
+#define RT_AREA_TEST(path, x, y, z, state)			assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
+														assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
+														assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
+														assert((state) >= 0); assert((state) < ACTOR_MAX_STATES);
+
+
+/**
+ * @brief SizedPosToVect locates the center of an actor based on size and position. */
+#define SizedPosToVec(p, actor_size, v) ( \
+	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + (UNIT_SIZE * actor_size)  / 2, \
+	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + (UNIT_SIZE * actor_size)  / 2, \
+	v[2] =  (int)p[2]        * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
+)
 
 
 /*
@@ -93,8 +147,10 @@ GAME RELATED TRACING
 */
 
 
-void RT_CheckUnit (routing_t * map, int x, int y, pos_t z);
-void RT_UpdateConnection (routing_t * map, int x, int y, byte z, qboolean fill);
+void RT_CheckUnit (old_routing_t * map, int x, int y, int z);
+int RT_NewCheckCell (routing_t * map, const int actor_size, const int x, const int y, const int z);
+void RT_UpdateConnection (old_routing_t * map, int x, int y, int z, qboolean fill);
+int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, const int y, const int z, const int dir);
 
 /*
 ==========================================================
@@ -103,5 +159,5 @@ void RT_UpdateConnection (routing_t * map, int x, int y, byte z, qboolean fill);
 */
 
 
-void Grid_DumpMap (struct routing_s *map, int lx, int ly, int lz, int hx, int hy, int hz);
+void Grid_DumpMap (struct routing_s *map, int size, int lx, int ly, int lz, int hx, int hy, int hz);
 void Grid_DumpWholeMap (routing_t *map);
