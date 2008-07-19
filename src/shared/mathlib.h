@@ -88,14 +88,19 @@ qboolean Q_IsPowerOfTwo(int i);
  * @brief Number of direct connected fields for a position
  * @sa DIRECTIONS.
  */
-#define BASE_DIRECTIONS 4
+#define BASE_DIRECTIONS 		4			/* Only the standard N,S,E,W directions */
 
-extern const int dvecs[DIRECTIONS][2];
-extern const float dvecsn[DIRECTIONS][2];
-extern const float dangle[DIRECTIONS];
+/* game/g_ai.c, game/g_spawn.c, common/routing.c, ufo2map/routing.c, client/cl_actor.c, common/cmodel.c, shared/typedefs.h */
+#define PATHFINDING_DIRECTIONS	32			/* total number of directions */
+#define CORE_DIRECTIONS			8			/* The standard N,S,E,W directions plus diagonals. */
+#define FLYING_DIRECTIONS		16			/* starting number of directions available only to fliers */
 
-extern const byte dvright[DIRECTIONS];
-extern const byte dvleft[DIRECTIONS];
+extern const vec4_t dvecs[PATHFINDING_DIRECTIONS];
+extern const float dvecsn[CORE_DIRECTIONS][2];
+extern const float dangle[CORE_DIRECTIONS];
+
+extern const byte dvright[CORE_DIRECTIONS];
+extern const byte dvleft[CORE_DIRECTIONS];
 
 /** @brief Map boundary is +/- MAX_WORLD_WIDTH - to get into the positive area we add the
  * possible max negative value and divide by the size of a grid unit field */
@@ -141,7 +146,8 @@ extern const byte dvleft[DIRECTIONS];
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
 #define LinearInterpolation(a, b, x, y)   (y=a[1] + (((x - a[0]) * (b[1] - a[1])) / (b[0] - a[0])))
 
-#define PosAddDV(p,dv)          (p[0]+=dvecs[dv&(DIRECTIONS-1)][0], p[1]+=dvecs[dv&(DIRECTIONS-1)][1], p[2]=(dv>>3)&(DIRECTIONS-1))
+#define PosAddDV(p, crouch, dv)          (p[0]+=dvecs[(dv)>>3][0], p[1]+=dvecs[(dv)>>3][1], p[2]+=dvecs[(dv)>>3][2], crouch+=dvecs[(dv)>>3][3])
+#define PosSubDV(p, crouch, dv)          (p[0]-=dvecs[(dv)>>3][0], p[1]-=dvecs[(dv)>>3][1], p[2]=dv&7, crouch-=dvecs[(dv)>>3][3])
 int AngleToDV(int angle);
 
 void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
