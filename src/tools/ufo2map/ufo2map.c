@@ -42,6 +42,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 mapConfig_t config;
 
+char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
+
+
 /**
  * @brief print usage information.
  */
@@ -58,6 +61,8 @@ static void Usage (void) {
 		" -nice <prio>             : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
 #endif
 		" -nofootstep              : don't generate a footstep file\n"
+		" -tracefile               : generate two csv files describing the floors and walls found by the trace functions\n"
+		" -debugfile (TODO)        : generate a trace debug file.  The client can load the file to highlight map obstructions\n"
 		" -onlynewer               : only proceed when the map is newer than the bsp\n"
 		" -v                       : verbose output\n"
 		"\nRadiosity options:\n"
@@ -219,7 +224,13 @@ static void U2M_Parameter (int argc, const char **argv)
 			config.noprune = qtrue;
 		} else if (!strcmp(argv[i],"-nofootstep")) {
 			config.generateFootstepFile = qfalse;
-			Com_Printf("generateFootstepFile = false\n");
+			Com_Printf("generateDebugFile = false\n");
+		} else if (!strcmp(argv[i],"-tracefile")) {
+			config.generateTraceFile = qtrue;
+			Com_Printf("generateTraceFile = true\n");
+		} else if (!strcmp(argv[i],"-debugfile")) {
+			config.generateDebugFile = qtrue;
+			Com_Printf("generateDebugFile = true\n");
 		} else if (!strcmp(argv[i],"-material")) {
 			config.generateMaterialFile = qtrue;
 			Com_Printf("generateMaterialFile = true\n");
@@ -380,6 +391,9 @@ static void U2M_SetDefaultConfigValues (void)
 	config.entity_scale = 1.0f;
 
 	config.generateFootstepFile = qtrue;
+
+	config.generateDebugFile = qfalse;
+	config.generateTraceFile = qfalse;
 }
 
 static int CheckTimeDiff (const char *map, const char *bsp)
@@ -444,6 +458,7 @@ int main (int argc, const char **argv)
 	FS_Init(argv[argc - 1]);
 
 	COM_StripExtension(COM_ExpandRelativePath(argv[argc - 1]), mapFilename, sizeof(mapFilename));
+	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);
 	strncpy(bspFilename, mapFilename, sizeof(bspFilename) - 1);
 	COM_DefaultExtension(mapFilename, sizeof(mapFilename), ".map");
 	COM_DefaultExtension(bspFilename, sizeof(bspFilename), ".bsp");

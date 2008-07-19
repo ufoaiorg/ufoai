@@ -88,6 +88,8 @@ typedef struct mapConfig_s {
 	qboolean chkTextures;
 	qboolean chkAll;
 	qboolean fixMap;
+	qboolean generateDebugFile;
+	qboolean generateTraceFile;
 
 	float day_ambient_red;
 	float day_ambient_green;
@@ -118,8 +120,9 @@ typedef struct mapConfig_s {
 	int compile_for_day;	/**< set this to 1 if you want to compile the day version of the lightmap */
 } mapConfig_t;
 extern mapConfig_t config;
+extern char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
-void U2M_ProgressBar(void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id);
+void U2M_ProgressBar(int (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id);
 
 #include "../../../common/qfiles.h"
 
