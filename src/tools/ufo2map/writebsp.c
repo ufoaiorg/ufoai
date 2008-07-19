@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int c_nofaces;
 static int c_facenodes;
 
-void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id)
+void U2M_ProgressBar (int(*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id)
 {
 	unsigned int i;
 	int current, previous = 0;
@@ -54,7 +54,7 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 			}
 		}
 
-		func(i);
+		i += func(i);
 	}
 	if (showProgress) {
 		end = time(NULL);
