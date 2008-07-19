@@ -49,13 +49,16 @@ byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 		if (data + 1 < dend && *data == *(data + 1)) {
 			/* repetitions */
 			val = *data++;
-			c = 0;
-			while (data + 1 < dend && *data == *(data + 1)) {
+			data++; /* Advance data again.  The first two bytes are identical!!! */
+			c = 0; /* This means 2 bytes are the same.  Total bytes the same is 2 + c */
+			/* Loop while the NEXT piece of data equals val */
+			while (data + 1 < dend && val == *(data + 1)) {
 				if (c >= SCHAR_MAX) /* must fit into one byte */
 					break;
 				data++;
 				c++;
 			}
+			count_p = dest_p;
 			*dest_p++ = (byte)(c) | 0x80;
 			*dest_p++ = val;
 		} else {
