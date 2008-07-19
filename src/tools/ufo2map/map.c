@@ -954,25 +954,19 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
  */
 static void TrimTrailing (char *buf, size_t bufSize, float num)
 {
-	int i;
+	char* end;
 
 	Com_sprintf(buf, bufSize, "%8.6f", num);
 
-	/* work back from the end*/
-	for (i = strlen(buf) - 1; i > 0; i--) {
-		/* find the first nonzero (useful) char */
-		if (buf[i] != '0')
-			break;
-	}
+	/* work back from the end, find the first non-zero digit */
+	end = strchr(buf, '\0');
+	while (*--buf == '0') {}
 
-	/* lose the decimal point too, if it is the first non-zero */
-	if (buf[i] == '.')
-		i--;
+	/* remove the first non-zero 'digit' only if it is the decimal point */
+	if (*buf != '.')
+		++buf;
 
-	/* keep the useful char, and more significant chars*/
-	buf[++i] = '\0';
-
-	return;
+	*buf = '\0';
 }
 
 /**
