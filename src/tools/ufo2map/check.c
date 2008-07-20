@@ -581,18 +581,55 @@ static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
 	return qtrue;
 }
 
-#if 0
+/**
+ * @brief returns the name of a content flag
+ * @arg flag should only have one bit set
+ */
+static char* NameContentFlag (const int flag)
+{
+	if (!flag) {
+		return "no flags set";
+	}
+	switch (flag) {
+		case CONTENTS_SOLID: return "SOLID";
+		case CONTENTS_WINDOW: return "WINDOW";
+		case CONTENTS_WATER: return "WATER";
+		case CONTENTS_LEVEL_1: return "LEVEL_1";
+		case CONTENTS_LEVEL_2: return "LEVEL_2";
+		case CONTENTS_LEVEL_3: return "LEVEL_3";
+		case CONTENTS_LEVEL_4: return "LEVEL_4";
+		case CONTENTS_LEVEL_5: return "LEVEL_5";
+		case CONTENTS_LEVEL_6: return "LEVEL_6";
+		case CONTENTS_LEVEL_7: return "LEVEL_7";
+		case CONTENTS_LEVEL_8: return "LEVEL_8";
+		case CONTENTS_ACTORCLIP: return "ACTORCLIP";
+		case CONTENTS_PASSABLE: return "PASSABLE";
+		case CONTENTS_ACTOR: return "ACTOR";
+		case CONTENTS_ORIGIN: return "ORIGIN";
+		case CONTENTS_WEAPONCLIP: return "WEAPONCLIP";
+		case CONTENTS_DEADACTOR: return "DEADACTOR";
+		case CONTENTS_DETAIL: return "DETAIL";
+		case CONTENTS_TRANSLUCENT: return "TRANSLUCENT";
+		case CONTENTS_STEPON: return "STEPON";
+		default: return "contentflag not recognised";
+	}
+}
+
+/**
+ * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
+ */
 static void DisplayContentFlags (const int flags)
 {
-	Com_Printf("SOLID:%i WINDOW:%i WATER:%i 1:%i 2:%i 3:%i 4:%i 5:%i 6:%i 7:%i 8:%i ACTORCLIP:%i PASSABLE:%i ACTOR:%i ORIGIN:%i WEAPONCLIP:%i DEADACTOR:%i DETAIL:%i TRANSLUCENT:%i STEPON:%i\n",
-		flags & CONTENTS_SOLID ? 1 : 0, flags & CONTENTS_WINDOW ? 1 : 0, flags & CONTENTS_WATER ? 1 : 0,
-		flags & CONTENTS_LEVEL_1 ? 1 : 0, flags & CONTENTS_LEVEL_2 ? 1 : 0, flags & CONTENTS_LEVEL_3 ? 1 : 0, flags & CONTENTS_LEVEL_4 ? 1 : 0,
-		flags & CONTENTS_LEVEL_5 ? 1 : 0, flags & CONTENTS_LEVEL_6 ? 1 : 0, flags & CONTENTS_LEVEL_7 ? 1 : 0, flags & CONTENTS_LEVEL_8 ? 1 : 0,
-		flags & CONTENTS_ACTORCLIP ? 1 : 0, flags & CONTENTS_PASSABLE ? 1 : 0, flags & CONTENTS_ACTOR ? 1 : 0, flags & CONTENTS_ORIGIN ? 1 : 0,
-		flags & CONTENTS_WEAPONCLIP ? 1 : 0, flags & CONTENTS_DEADACTOR ? 1 : 0, flags & CONTENTS_DETAIL ? 1 : 0, flags & CONTENTS_TRANSLUCENT ? 1 : 0,
-		flags & CONTENTS_STEPON ? 1 : 0);
+	if (!flags) {
+		Com_Printf(" no contentflags");
+		return;
+	}
+	int testFlag = 1;
+	do {
+		if(testFlag & flags)
+			Com_Printf(" %s", NameContentFlag(testFlag));
+	} while((testFlag <<= 1) != 0);
 }
-#endif
 
 /**
  * @brief sets all levelflags, if none are set.
@@ -840,8 +877,12 @@ void CheckBrushes (void)
 			}
 #endif
 
-			if (config.performMapCheck && side0->contentFlags != side->contentFlags) {
-				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
+			if (side0->contentFlags != side->contentFlags) {
+				Com_Printf("  Brush %i (entity %i): mixed face contents (face 0 has", brush->brushnum, brush->entitynum);
+				DisplayContentFlags(side0->contentFlags);
+				Com_Printf(", face %i has", j);
+				DisplayContentFlags(side->contentFlags);
+				Com_Printf(")\n");
 			}
 
 			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
