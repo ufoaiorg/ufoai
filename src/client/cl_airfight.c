@@ -888,19 +888,19 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 		installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 		if (!installation)
 			continue;
-		
+
 		assert(installation);
-		
-/*		if (installation->installationTemplate->numMaxBatteries <= 0)
-			continue; */
-		
-		for (idx = 0; idx < installation->numBatteries; idx++) {
+
+		if (installation->installationTemplate->numMaxBatteries <= 0)
+			continue;
+
+		for (idx = 0; idx < installation->installationTemplate->numMaxBatteries; idx++) {
 			if (installation->batteries[idx].slot.delayNextShot > 0)
 				installation->batteries[idx].slot.delayNextShot -= dt;
 		}
 
 		if (AII_InstallationCanShoot(installation)) {
-			AIRFIGHT_InstallationShoot(installation, installation->batteries, installation->numBatteries);
+			AIRFIGHT_InstallationShoot(installation, installation->batteries, installation->installationTemplate->numMaxBatteries);
 		}
 	}
 }

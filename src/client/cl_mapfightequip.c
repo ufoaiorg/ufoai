@@ -778,7 +778,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	}
 
 	/* Check if we can change to laser or missile */
-	if ((baseCurrent->numBatteries > 0 && baseCurrent->numLasers > 0) || installationCurrent->installationTemplate->numMaxBatteries > 0) {
+	if (baseCurrent && baseCurrent->numBatteries > 0 && baseCurrent->numLasers > 0) {
 		node = MN_GetNodeFromCurrentMenu("basedef_button_missile");
 		MN_UnHideNode(node);
 		node = MN_GetNodeFromCurrentMenu("basedef_button_missile_str");
@@ -911,14 +911,14 @@ void BDEF_ListClick_f (void)
 	int num, height;
 	menuNode_t *node;
 
-	if (!baseCurrent)
+	if ((!baseCurrent && !installationCurrent) || (baseCurrent && installationCurrent))
 		return;
 
 	if (Cmd_Argc() < 2)
 		return;
 	num = atoi(Cmd_Argv(1));
 
-	if (num < baseCurrent->numBatteries)
+	if ((baseCurrent && num < baseCurrent->numBatteries) || (installationCurrent && num < installationCurrent->installationTemplate->numMaxBatteries))
 		airequipSelectedSlot = num;
 
 	/* draw an arrow in front of the selected base defence */
@@ -942,9 +942,9 @@ void BDEF_ListClick_f (void)
  * @param[in] slot Pointer to the slot to update
  * @sa AII_AddItemToSlot
  */
-static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, aircraftSlot_t *slot)
+static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* installation, aircraft_t *aircraft, aircraftSlot_t *slot)
 {
-	assert(base);
+	assert(base || installation);
 
 	/* if the item is already installed, nothing to do */
 	if (slot->installationTime == 0)
@@ -958,8 +958,10 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
 				MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+			} else if (installation) {
+				MN_AddNewMessage(_("Notice"), _("Installation defense item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			} else {
-				MN_AddNewMessage(_("Notice"), _("Base defence item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Base defense item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			}
 		}
 	} else if (slot->installationTime < 0) {
@@ -979,7 +981,10 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 					CL_GameTimeStop();
 				}
 			} else if (!slot->item) {
-				MN_AddNewMessage(_("Notice"), _("Base defence item was successfully removed."), qfalse, MSG_STANDARD, NULL);
+				if (installation)
+					MN_AddNewMessage(_("Notice"), _("Installation defence item was successfully removed."), qfalse, MSG_STANDARD, NULL);
+				else
+					MN_AddNewMessage(_("Notice"), _("Base defence item was successfully removed."), qfalse, MSG_STANDARD, NULL);
 				CL_GameTimeStop();
 			}
 		}
@@ -997,6 +1002,16 @@ void AII_UpdateInstallationDelay (void)
 	int i, j, k;
 	aircraft_t *aircraft;
 
+	for (j = 0; j < MAX_INSTALLATIONS; j++) {
+		installation_t *installation = INS_GetFoundedInstallationByIDX(j);
+		if (!installation)
+			continue;
+
+		/* Update base */
+		for (k = 0; k < installation->installationTemplate->numMaxBatteries; k++)
+			AII_UpdateOneInstallationDelay(NULL, installation, NULL, &installation->batteries[k].slot);
+	}
+
 	for (j = 0; j < MAX_BASES; j++) {
 		base_t *base = B_GetFoundedBaseByIDX(j);
 		if (!base)
@@ -1004,9 +1019,9 @@ void AII_UpdateInstallationDelay (void)
 
 		/* Update base */
 		for (k = 0; k < base->numBatteries; k++)
-			AII_UpdateOneInstallationDelay(base, NULL, &base->batteries[k].slot);
+			AII_UpdateOneInstallationDelay(base, NULL, NULL, &base->batteries[k].slot);
 		for (k = 0; k < base->numLasers; k++)
-			AII_UpdateOneInstallationDelay(base, NULL, &base->lasers[k].slot);
+			AII_UpdateOneInstallationDelay(base, NULL, NULL, &base->lasers[k].slot);
 
 		/* Update each aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
@@ -1015,14 +1030,14 @@ void AII_UpdateInstallationDelay (void)
 				if (AIR_IsAircraftInBase(aircraft)) {
 					/* Update electronics delay */
 					for (k = 0; k < aircraft->maxElectronics; k++)
-						AII_UpdateOneInstallationDelay(base, aircraft, aircraft->electronics + k);
+						AII_UpdateOneInstallationDelay(base, NULL, aircraft, aircraft->electronics + k);
 
 					/* Update weapons delay */
 					for (k = 0; k < aircraft->maxWeapons; k++)
-						AII_UpdateOneInstallationDelay(base, aircraft, aircraft->weapons + k);
+						AII_UpdateOneInstallationDelay(base, NULL, aircraft, aircraft->weapons + k);
 
 					/* Update shield delay */
-					AII_UpdateOneInstallationDelay(base, aircraft, &aircraft->shield);
+					AII_UpdateOneInstallationDelay(base, NULL, aircraft, &aircraft->shield);
 				}
 			}
 	}
@@ -1662,8 +1677,10 @@ void AIM_AircraftEquipAddItem_f (void)
 	base_t* base;
 	installation_t* installation;
 
-	if ((!baseCurrent && !baseCurrent) || (baseCurrent && baseCurrent))
+	if ((!baseCurrent && !installationCurrent) || (baseCurrent && installationCurrent)) {
+		Com_Printf("Exiting early base and install both true or both false\n");
 		return;
+	}
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1686,10 +1703,16 @@ void AIM_AircraftEquipAddItem_f (void)
 		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
 		base = aircraft->homebase;
+		installation = NULL;
 		slot = AII_SelectAircraftSlot(aircraft);
 	} else {
-		slot = BDEF_SelectBaseSlot(baseCurrent);
+		if (baseCurrent)
+			slot = BDEF_SelectBaseSlot(baseCurrent);
+		else
+			slot = BDEF_SelectInstallationSlot(installationCurrent);
+
 		base = baseCurrent;
+		installation = installationCurrent;
 		aircraft = NULL;
 	}
 
@@ -1725,7 +1748,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	case ZONE_MAIN:
 		/* we add the weapon, shield, item, or base defence if slot is free or the installation of
 			current item just began */
-		if (!slot->item || slot->installationTime == slot->item->craftitem.installationTime) {
+		if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
 			AII_RemoveItemFromSlot(base, slot, qfalse);
 			AII_AddItemToSlot(base, airequipSelectedTechnology, slot); /* Aircraft stats are updated below */
 			AIM_AutoAddAmmo(base, installation, aircraft, slot);
@@ -1896,7 +1919,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	technology_t **list;
 	const menu_t *activeMenu;
 
-	if (!baseCurrent || airequipID == -1)
+	if ((!baseCurrent && !installationCurrent) || (baseCurrent && installationCurrent) || airequipID == -1)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -2053,6 +2076,7 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, bas
 	slot->nextItem = NULL;
 	slot->type = type;
 	slot->ammoLeft = -1; /** sa BDEF_AddBattery: it needs to be -1 and not 0 @sa B_SaveItemSlots */
+	slot->installationTime = 0;
 }
 
 /**
@@ -2293,9 +2317,9 @@ qboolean AII_InstallationCanShoot (const installation_t *installation)
 {
 	assert(installation);
 
-	if (installation->numBatteries > 0) {
+	if (installation->installationTemplate->numMaxBatteries > 0) {
 		/* installation has battery */
-		return AII_WeaponsCanShoot(installation->batteries, &installation->numBatteries);
+		return AII_WeaponsCanShoot(installation->batteries, &installation->installationTemplate->numMaxBatteries);
 	}
 
 	return qfalse;

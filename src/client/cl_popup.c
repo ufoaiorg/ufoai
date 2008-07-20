@@ -397,7 +397,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	static char aircraftListText[1024];
 	static char baseListText[1024];
 	char *s;
-	int i, baseIdx;
+	int i, baseIdx, installationIdx;
 	aircraft_t *air;
 	qboolean somethingWritten, notEnoughFuel;
 
@@ -499,6 +499,18 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 				somethingWritten = qtrue;
 			}
 		}
+		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+			const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
+			if (!installation)
+				continue;
+
+			/* Check if the installation should be displayed in base list
+			 * don't check range because maybe UFO will get closer */
+			if (AII_InstallationCanShoot(installation)) {
+				Q_strcat(baseListText, va("^B%s\n", installation->name), sizeof(baseListText));
+				somethingWritten = qtrue;
+			}
+		}
 		if (somethingWritten)
 			mn.menuText[TEXT_BASE_LIST] = baseListText;
 		else
@@ -595,8 +607,9 @@ static void CL_PopupInterceptRClick_f (void)
  */
 static void CL_PopupInterceptBaseClick_f (void)
 {
-	int num, baseIdx, i;
+	int num, baseIdx, installationIdx, i;
 	base_t* base;
+	installation_t *installation;
 	qboolean atLeastOneBase = qfalse;
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
@@ -623,6 +636,21 @@ static void CL_PopupInterceptBaseClick_f (void)
 		}
 	}
 
+	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		if (!installation)
+			continue;
+
+		/* Check if the installation should be displayed in base list */
+		if (AII_InstallationCanShoot(installation)) {
+			num--;
+			atLeastOneBase = qtrue;
+			if (num < 0)
+				break;
+		}
+	}
+
+
 	if (!atLeastOneBase && !num) {
 		/* no base in list: no error message
 		 * note that num should always be 0 if we enter this loop, unless this function is called from console
@@ -633,11 +661,16 @@ static void CL_PopupInterceptBaseClick_f (void)
 		return;
 	}
 
-	assert(base);
-	for (i = 0; i < base->numBatteries; i++)
-		base->batteries[i].target = selectedUFO;
-	for (i = 0; i < base->numLasers; i++)
-		base->lasers[i].target = selectedUFO;
+	assert(base || installation);
+	if (installation) {
+		for (i = 0; i < installation->installationTemplate->numMaxBatteries; i++)
+			installation->batteries[i].target = selectedUFO;
+	} else {
+		for (i = 0; i < base->numBatteries; i++)
+			base->batteries[i].target = selectedUFO;
+		for (i = 0; i < base->numLasers; i++)
+			base->lasers[i].target = selectedUFO;
+	}
 
 	MN_PopMenu(qfalse);
 }

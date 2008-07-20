@@ -349,7 +349,6 @@ static void INS_InstallationList_f (void)
 		Com_Printf("Installation name %s\n", installation->name);
 		Com_Printf("Installation founded %i\n", installation->founded);
 		Com_Printf("Installation numAircraftInInstallation %i\n", installation->numAircraftInInstallation);
-		Com_Printf("Installation numMissileBattery %i\n", installation->numBatteries);
 		Com_Printf("Installation sensorWidth %i\n", installation->radar.range);
 		Com_Printf("Installation numSensoredAircraft %i\n", installation->radar.numUFOs);
 		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);

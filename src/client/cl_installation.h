@@ -65,7 +65,7 @@ typedef struct installation_s {
 	int idx;					/**< Self link. Index in the global installation-list. */
 	char name[MAX_VAR];			/**< Name of the installation */
 
-	installationTemplate_t *installationTemplate; /** The template used for the installation. **/ 
+	installationTemplate_t *installationTemplate; /** The template used for the installation. **/
 
 	qboolean founded;	/**< already founded? */
 	vec3_t pos;		/**< pos on geoscape */
@@ -77,7 +77,6 @@ typedef struct installation_s {
 	radar_t	radar;
 
 	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation.  For Sam Sites Only.  */
-	int numBatteries;
 
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 

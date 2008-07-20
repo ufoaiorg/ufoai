@@ -2444,6 +2444,7 @@ void B_SelectBase (base_t *base)
 		baseID = B_GetFirstUnfoundedBase();
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
+			installationCurrent = NULL;
 			baseCurrent = B_GetBaseByIDX(baseID);
 			baseCurrent->idx = baseID;
 			Cvar_Set("mn_base_newbasecost", va(_("%i c"), curCampaign->basecost));
@@ -2457,11 +2458,13 @@ void B_SelectBase (base_t *base)
 		} else {
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
+			installationCurrent = NULL;
 			baseCurrent = B_GetBaseByIDX(0);
 			gd.mapAction = MA_NONE;
 		}
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
+		installationCurrent = NULL;
 		baseCurrent = base;
 		gd.mapAction = MA_NONE;
 		MN_PushMenu("bases");
