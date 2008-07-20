@@ -578,7 +578,7 @@ void R_DrawEntities (void)
 				chain = &r_null_entities;
 		} else {
 			switch (e->model->type) {
-			case mod_brush:
+			case mod_bsp:
 				chain = &r_bsp_entities;
 				break;
 			case mod_alias_dpm:

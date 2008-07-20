@@ -407,7 +407,6 @@ static const vec4_t material = {
 void R_SetDefaultState (void)
 {
 	int i;
-	gltexunit_t *tex;
 
 	R_SelectTexture(&texunit_diffuse);
 
@@ -434,7 +433,7 @@ void R_SetDefaultState (void)
 
 	/* setup texture units */
 	for (i = 0; i < MAX_GL_TEXUNITS; i++) {
-		tex = &r_state.texunits[i];
+		gltexunit_t *tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0_ARB + i;
 
 		if (i >= r_config.maxTextureUnits)

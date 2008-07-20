@@ -41,12 +41,11 @@ typedef struct gltexunit_s {
 	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
 } gltexunit_t;
 
-#define MAX_GL_TEXUNITS		4
+#define MAX_GL_TEXUNITS		2
 
 /* these are defined for convenience */
 #define texunit_diffuse		r_state.texunits[0]
 #define texunit_lightmap	r_state.texunits[1]
-#define texunit_specularmap	r_state.texunits[3]
 
 typedef struct {
 	qboolean fullscreen;

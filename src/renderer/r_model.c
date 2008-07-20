@@ -173,7 +173,7 @@ static model_t *R_RegisterModel (const char *name)
 		case mod_alias_md2:
 		case mod_alias_md3:
 			break;
-		case mod_brush:
+		case mod_bsp:
 			for (i = 0; i < mod->bsp.numtexinfo; i++)
 				mod->bsp.texinfo[i].image->registration_sequence = registration_sequence;
 			break;
