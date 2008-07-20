@@ -732,6 +732,15 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	/* get the content for the entire brush */
 	b->contentFlags = BrushContents(b);
 
+	/*copy all set face contentflags to the brush contentflags*/
+	int m;
+	for (m = 0; m < b->numsides; m++)
+		b->contentFlags |= (b->original_sides[m]).contentFlags;
+
+	/*set the contentflags on all faces to avoid problems in check/fix code */
+	for (m = 0; m < b->numsides; m++)
+		(b->original_sides[m]).contentFlags |= b->contentFlags ;
+
 	/* allow detail brushes to be removed  */
 	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {
 		b->numsides = 0;

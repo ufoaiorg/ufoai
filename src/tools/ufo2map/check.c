@@ -842,13 +842,6 @@ void CheckBrushes (void)
 		mapbrush_t *brush = &mapbrushes[i];
 		side_t *side0 = &brush->original_sides[0];
 
-		/* Disabled unused variable to prevent compiler warning. */
-#if 0
-		const int contentFlags = (brush->original_sides[0].contentFlags & CONTENTS_LEVEL_ALL)
-			? brush->original_sides[0].contentFlags
-			: (brush->original_sides[0].contentFlags | CONTENTS_LEVEL_ALL);
-#endif
-
 		Check_DuplicateBrushPlanes(brush);
 
 		for (j = 0; j < brush->numsides; j++) {
