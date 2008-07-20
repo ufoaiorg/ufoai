@@ -889,10 +889,19 @@ void CheckBrushes (void)
 #endif
 
 			if (side0->contentFlags != side->contentFlags) {
-				Com_Printf("  Brush %i (entity %i): mixed face contents (face 0 has", brush->brushnum, brush->entitynum);
-				DisplayContentFlags(side0->contentFlags);
-				Com_Printf(", face %i has", j);
-				DisplayContentFlags(side->contentFlags);
+				int jNotZero = side->contentFlags & ~side0->contentFlags;
+				int zeroNotJ = side0->contentFlags & ~side->contentFlags;
+				Com_Printf("  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
+				if (jNotZero) {
+					Com_Printf("face %i has and face 0 has not", j);
+					DisplayContentFlags(jNotZero);
+					if (zeroNotJ)
+						Com_Printf(", ");
+				}
+				if (zeroNotJ) {
+					Com_Printf("face 0 has and face %i has not", j);
+					DisplayContentFlags(zeroNotJ);
+				}
 				Com_Printf(")\n");
 			}
 
