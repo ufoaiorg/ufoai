@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "bsp.h"
+#include "check.h"
 
 extern qboolean onlyents;
 
@@ -736,8 +737,17 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		b->contentFlags |= b->original_sides[m].contentFlags;
 
 	/*set the contentflags on all faces to avoid problems in check/fix code */
-	for (m = 0; m < b->numsides; m++)
+	int notInformedMixedFace = 1;
+	for (m = 0; m < b->numsides; m++) {
+		/* only tell them once per brush */
+		if (notInformedMixedFace && checkOrFix && b->original_sides[m].contentFlags != b->contentFlags) {
+			Com_Printf("* Brush %i (entity %i): mixed face contents setting ", b->brushnum, b->entitynum);
+			DisplayContentFlags(b->contentFlags & ~b->original_sides[m].contentFlags);
+			Com_Printf("\n");
+			notInformedMixedFace = 0;
+		}
 		b->original_sides[m].contentFlags |= b->contentFlags ;
+	}
 
 	/* allow detail brushes to be removed  */
 	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {

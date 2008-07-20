@@ -30,3 +30,4 @@ void CheckBrushes(void);
 void CheckEntities(void);
 void CheckNodraws(void);
 void FixErrors(void);
+void DisplayContentFlags(const int flags);

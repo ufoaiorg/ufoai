@@ -636,7 +636,7 @@ static const char* NameContentFlag (const int flag)
 /**
  * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
  */
-static void DisplayContentFlags (const int flags)
+void DisplayContentFlags (const int flags)
 {
 	int testFlag = 1;
 	if (!flags) {
