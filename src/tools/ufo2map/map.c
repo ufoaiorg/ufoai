@@ -262,13 +262,13 @@ static void AddBrushBevels (mapbrush_t *b)
 {
 	int axis, dir;
 	int i, j, l, order;
-	side_t *s, *s2;
 	vec3_t normal;
 
 	/* add the axial planes */
 	order = 0;
 	for (axis = 0; axis < 3; axis++) {
 		for (dir = -1; dir <= 1; dir += 2, order++) {
+			side_t *s;
 			/* see if the plane is already present */
 			for (i = 0, s = b->original_sides; i < b->numsides; i++, s++) {
 				if (mapplanes[s->planenum].normal[axis] == dir)
@@ -315,10 +315,8 @@ static void AddBrushBevels (mapbrush_t *b)
 
 	/* test the non-axial plane edges */
 	for (i = 6; i < b->numsides; i++) {
-		winding_t *w;
-
-		s = b->original_sides + i;
-		w = s->winding;
+		side_t *s = b->original_sides + i;
+		winding_t *w = s->winding;
 		if (!w)
 			continue;
 
@@ -345,6 +343,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					/* construct a plane */
 					vec3_t vec2 = {0, 0, 0};
 					float dist;
+					side_t *s2;
 
 					vec2[axis] = dir;
 					CrossProduct(vec, vec2, normal);
@@ -734,11 +733,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 	/* copy all set face contentflags to the brush contentflags */
 	for (m = 0; m < b->numsides; m++)
-		b->contentFlags |= (b->original_sides[m]).contentFlags;
+		b->contentFlags |= b->original_sides[m].contentFlags;
 
 	/*set the contentflags on all faces to avoid problems in check/fix code */
 	for (m = 0; m < b->numsides; m++)
-		(b->original_sides[m]).contentFlags |= b->contentFlags ;
+		b->original_sides[m].contentFlags |= b->contentFlags ;
 
 	/* allow detail brushes to be removed  */
 	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {
