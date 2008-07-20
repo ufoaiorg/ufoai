@@ -429,7 +429,7 @@ menu map
 				*bt_messagesystem texl "32 0"
 				*bt_messagesystem texh "64 32"
 				*messagesystem size "1024 400"
-				*messagesystem height "25"
+				*messagesystem height "20"
 			}
 		click	{
 				*messagesystem size "768 400"
@@ -442,7 +442,7 @@ menu map
 	{
 		// only if messagesystem is turned on
 		if "mn_messagesystem == 1"
-		tooltip	"_Open up messages"
+		tooltip	"_Close down messages"
 		image	menu/geo_eventlog
 		pos		"850 320"
 		texl	"32 0"
