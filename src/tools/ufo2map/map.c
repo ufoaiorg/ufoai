@@ -575,7 +575,7 @@ static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
 static void ParseBrush (entity_t *mapent, const char *filename)
 {
 	mapbrush_t *b;
-	int i, j, k, mt;
+	int i, j, k, m, mt;
 	side_t *side;
 	int planenum;
 	brush_texture_t td;
@@ -732,8 +732,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	/* get the content for the entire brush */
 	b->contentFlags = BrushContents(b);
 
-	/*copy all set face contentflags to the brush contentflags*/
-	int m;
+	/* copy all set face contentflags to the brush contentflags */
 	for (m = 0; m < b->numsides; m++)
 		b->contentFlags |= (b->original_sides[m]).contentFlags;
 
