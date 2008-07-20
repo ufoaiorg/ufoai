@@ -952,7 +952,7 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 /**
  * @brief create string without unnecessary trailing zeroes (or decimal point).
  */
-static void TrimTrailing (char *buf, size_t bufSize, float num)
+static void TrimTrailing (char* const buf, size_t const bufSize, float const num)
 {
 	char* end;
 
@@ -960,13 +960,13 @@ static void TrimTrailing (char *buf, size_t bufSize, float num)
 
 	/* work back from the end, find the first non-zero digit */
 	end = strchr(buf, '\0');
-	while (*--buf == '0') {}
+	while (*--end == '0') {}
 
 	/* remove the first non-zero 'digit' only if it is the decimal point */
-	if (*buf != '.')
-		++buf;
+	if (*end != '.')
+		++end;
 
-	*buf = '\0';
+	*end = '\0';
 }
 
 /**
