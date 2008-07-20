@@ -50,8 +50,9 @@ typedef struct installationTemplate_s {
 
 	int cost;
 	float radarRange; /* The range of the installation's radar.  Units is the angle of the two points from center of earth. */
-	int numMaxBatteries; /* The maximum number of battery slots that can be used in an installation. */
-	int numMaxUfoStored; /* The maximum number of ufos that can be stored in an installation. */
+	int maxBatteries; /* The maximum number of battery slots that can be used in an installation. */
+	int maxUfoStored; /* The maximum number of ufos that can be stored in an installation. */
+	int maxDamage; /* The maximum amount of damage an installation can sustain before it is destroyed. */
 } installationTemplate_t;
 
 typedef struct installationWeapon_s {

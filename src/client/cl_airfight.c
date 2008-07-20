@@ -891,16 +891,16 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 
 		assert(installation);
 
-		if (installation->installationTemplate->numMaxBatteries <= 0)
+		if (installation->installationTemplate->maxBatteries <= 0)
 			continue;
 
-		for (idx = 0; idx < installation->installationTemplate->numMaxBatteries; idx++) {
+		for (idx = 0; idx < installation->installationTemplate->maxBatteries; idx++) {
 			if (installation->batteries[idx].slot.delayNextShot > 0)
 				installation->batteries[idx].slot.delayNextShot -= dt;
 		}
 
 		if (AII_InstallationCanShoot(installation)) {
-			AIRFIGHT_InstallationShoot(installation, installation->batteries, installation->installationTemplate->numMaxBatteries);
+			AIRFIGHT_InstallationShoot(installation, installation->batteries, installation->installationTemplate->maxBatteries);
 		}
 	}
 }

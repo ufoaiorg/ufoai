@@ -9,6 +9,7 @@ installation radartower
 	radar_range	12.0
 	max_batteries	0
 	max_ufo_stored	0
+	max_damage		1
 }
 
 installation ufoyard
@@ -18,6 +19,7 @@ installation ufoyard
 	radar_range	0.0
 	max_batteries	0
 	max_ufo_stored	10
+	max_damage		100
 }
 
 installation samsite
@@ -27,6 +29,7 @@ installation samsite
 	radar_range	0.0
 	max_batteries	2
 	max_ufo_stored	0
+	max_damage		1
 }
 
 

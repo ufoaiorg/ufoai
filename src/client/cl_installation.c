@@ -128,13 +128,13 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	Q_strncpyz (&installation->storage.name[16], "base_AA51_launcher", sizeof(installation->storage.name[16]));
 	installation->storage.num[16] = 3;
 
-	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id, installation->installationTemplate->radarRange, installation->installationTemplate->numMaxBatteries, installation->installationTemplate->numMaxUfoStored);
+	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id, installation->installationTemplate->radarRange, installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUfoStored);
 
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
 	RADAR_UpdateInstallationRadarCoverage_f(installation, installation->installationTemplate->radarRange);
 
-	for (idxBattery = 0; idxBattery < installation->installationTemplate->numMaxBatteries; idxBattery++) {
+	for (idxBattery = 0; idxBattery < installation->installationTemplate->maxBatteries; idxBattery++) {
 		AII_InitialiseSlot(&installation->batteries[idxBattery].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
 		installation->batteries[idxBattery].target = NULL;
 
@@ -212,7 +212,7 @@ void INS_SelectInstallation (installation_t *installation)
 		installationCurrent = installation;
 		baseCurrent = NULL;
 		gd.mapAction = MA_NONE;
-		if (installation->installationTemplate->numMaxBatteries > 0)
+		if (installation->installationTemplate->maxBatteries > 0)
 			MN_PushMenu("basedefence");
 		else if (installation->numAircraftInInstallation > 0)
 			MN_PushMenu("ufoyard");
@@ -419,8 +419,8 @@ void INS_InitStartup (void)
 		gd.installationTemplates[idx].name = NULL;
 		gd.installationTemplates[idx].cost = 0;
 		gd.installationTemplates[idx].radarRange = 0.0f;
-		gd.installationTemplates[idx].numMaxUfoStored = 0;
-		gd.installationTemplates[idx].numMaxBatteries = 0;
+		gd.installationTemplates[idx].maxUfoStored = 0;
+		gd.installationTemplates[idx].maxBatteries = 0;
 	}
 
 
@@ -587,12 +587,17 @@ void INS_ParseInstallations (const char *name, const char **text)
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				return;
-			installation->numMaxBatteries = atoi(token);
+			installation->maxBatteries = atoi(token);
 		} else if (!Q_strncmp(token, "max_ufo_stored", MAX_VAR)) {
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				return;
-			installation->numMaxUfoStored = atoi(token);
+			installation->maxUfoStored = atoi(token);
+		} else if (!Q_strncmp(token, "max_damage", MAX_VAR)) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			installation->maxDamage = atoi(token);
 		}
 
 	} while (*text);

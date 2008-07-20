@@ -1464,7 +1464,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		/* Draw weapon range if at least one UFO is visible */
 		if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
 			/** @todo When there will be different possible installation weapon, range should change */
-			for (i = 0; i < installation->installationTemplate->numMaxBatteries; i++) {
+			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
 				if (installation->batteries[i].slot.item && installation->batteries[i].slot.ammoLeft > 0
 					&& installation->batteries[i].slot.installationTime == 0) {
 					MAP_MapDrawEquidistantPoints(node, installation->pos,

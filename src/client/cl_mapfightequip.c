@@ -257,8 +257,8 @@ static aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation
 	case AC_ITEM_BASE_MISSILE:
 	case AC_ITEM_AMMO_LASER:
 	case AC_ITEM_BASE_LASER:
-		assert(installation->installationTemplate->numMaxBatteries > 0);
-		if (airequipSelectedSlot >= installation->installationTemplate->numMaxBatteries) {
+		assert(installation->installationTemplate->maxBatteries > 0);
+		if (airequipSelectedSlot >= installation->installationTemplate->maxBatteries) {
 			airequipSelectedSlot = 0;
 			/* update position of the arrow in front of the selected base defence */
 			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
@@ -741,7 +741,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			return;
 		}
 	} else if (installationCurrent) {
-		if (installationCurrent->installationTemplate->numMaxBatteries < 1) {
+		if (installationCurrent->installationTemplate->maxBatteries < 1) {
 			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
 			return;
 		}
@@ -806,10 +806,10 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	if (installationCurrent) {
 		/* we are in the installation defence menu */
-		if (installationCurrent->installationTemplate->numMaxBatteries == 0)
+		if (installationCurrent->installationTemplate->maxBatteries == 0)
 			Q_strcat(defBuffer, _("No defence of this type in this installation\n"), sizeof(defBuffer));
 		else {
-			for (i = 0; i < installationCurrent->installationTemplate->numMaxBatteries; i++) {
+			for (i = 0; i < installationCurrent->installationTemplate->maxBatteries; i++) {
 				if (!installationCurrent->batteries[i].slot.item)
 					Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 				else {
@@ -918,7 +918,7 @@ void BDEF_ListClick_f (void)
 		return;
 	num = atoi(Cmd_Argv(1));
 
-	if ((baseCurrent && num < baseCurrent->numBatteries) || (installationCurrent && num < installationCurrent->installationTemplate->numMaxBatteries))
+	if ((baseCurrent && num < baseCurrent->numBatteries) || (installationCurrent && num < installationCurrent->installationTemplate->maxBatteries))
 		airequipSelectedSlot = num;
 
 	/* draw an arrow in front of the selected base defence */
@@ -1008,7 +1008,7 @@ void AII_UpdateInstallationDelay (void)
 			continue;
 
 		/* Update base */
-		for (k = 0; k < installation->installationTemplate->numMaxBatteries; k++)
+		for (k = 0; k < installation->installationTemplate->maxBatteries; k++)
 			AII_UpdateOneInstallationDelay(NULL, installation, NULL, &installation->batteries[k].slot);
 	}
 
@@ -2317,9 +2317,9 @@ qboolean AII_InstallationCanShoot (const installation_t *installation)
 {
 	assert(installation);
 
-	if (installation->installationTemplate->numMaxBatteries > 0) {
+	if (installation->installationTemplate->maxBatteries > 0) {
 		/* installation has battery */
-		return AII_WeaponsCanShoot(installation->batteries, &installation->installationTemplate->numMaxBatteries);
+		return AII_WeaponsCanShoot(installation->batteries, &installation->installationTemplate->maxBatteries);
 	}
 
 	return qfalse;
