@@ -123,7 +123,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	installation->alienInterest = newInstallationAlienInterest;
 
 	/* intialise hit points */
-	installation->installationDamage = MAX_INSTALLATION_DAMAGE;
+	installation->installationDamage = installation->installationTemplate->maxDamage;
 
 	Q_strncpyz (&installation->storage.name[16], "base_AA51_launcher", sizeof(installation->storage.name[16]));
 	installation->storage.num[16] = 3;
