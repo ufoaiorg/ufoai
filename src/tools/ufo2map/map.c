@@ -580,6 +580,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	int planenum;
 	brush_texture_t td;
 	int planepts[3][3];
+	int notInformedMixedFace = 1;
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
@@ -736,8 +737,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	for (m = 0; m < b->numsides; m++)
 		b->contentFlags |= b->original_sides[m].contentFlags;
 
-	/*set the contentflags on all faces to avoid problems in check/fix code */
-	int notInformedMixedFace = 1;
+	/* set the contentflags on all faces to avoid problems in check/fix code */
 	for (m = 0; m < b->numsides; m++) {
 		/* only tell them once per brush */
 		if (notInformedMixedFace && checkOrFix && b->original_sides[m].contentFlags != b->contentFlags) {
