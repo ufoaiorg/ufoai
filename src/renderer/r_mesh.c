@@ -338,11 +338,11 @@ void R_DrawAliasModel (const entity_t *e)
 		}
 
 		/* IR goggles override color
-		 * don't highlight misc_models only actors */
+		 * don't highlight all misc_models, only actors */
 		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
 			color[1] = color[2] = 0.0;
 
-		if (r_state.lighting_enabled)
+		if (r_state.lighting_enabled && r_state.arb_fragment_program)
 			R_ShaderFragmentParameter(0, color);
 		else
 			R_Color(color);

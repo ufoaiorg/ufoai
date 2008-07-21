@@ -229,6 +229,9 @@ void R_EnableWarp (qboolean enable)
 {
 	static vec4_t offset;
 
+	if (!r_state.arb_fragment_program)
+		return;
+
 	if (!warp_shader)
 		warp_shader = R_GetShader("warp");
 
