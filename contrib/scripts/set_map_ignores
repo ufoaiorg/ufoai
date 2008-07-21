@@ -19,13 +19,18 @@ echo "*.bsp
 *.footsteps
 *.map.original*" > $PROPFILE || fail "failed to write $PROPFILE"
 
+echo "svn:ignore will be set to:"
+cat "$PROPFILE"
+
 for MAPDIR in $MAPDIRS; do
     [ -d "$MAPDIR" ] || fail "can't access map directory '$MAPDIR'"
-    echo -e "\nsetting svn:ignore property for $MAPDIR to :\n-----"
-    cat "$PROPFILE"
-    echo "-----"
     while read DIRECTORY; do
-	$SVN ps svn:ignore --file "$PROPFILE" "$DIRECTORY" || fail "failed to set property on $DIRECTORY"
+	if [ "$(diff "$PROPFILE" <(svn pg svn:ignore "$DIRECTORY" | strings))" == "" ]; then
+	    echo "not setting svn:ignore property for $DIRECTORY, already correct"
+	else
+	    echo "*** setting svn:ignore property for $DIRECTORY"
+    	    $SVN ps svn:ignore --file "$PROPFILE" "$DIRECTORY" || fail "failed to set property on $DIRECTORY"
+	fi
     done < <(find "$MAPDIR" -type d ! -wholename '*/.svn*')
 done
 
