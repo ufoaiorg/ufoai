@@ -579,74 +579,36 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 }
 
 /**
- * @brief returns the name of a content flag
- * @param[in] flag should only have one bit set
- */
-static const char* NameContentFlag (const int flag)
-{
-	if (!flag) {
-		return "no flags set";
-	}
-	switch (flag) {
-	case CONTENTS_SOLID:
-		return "SOLID";
-	case CONTENTS_WINDOW:
-		return "WINDOW";
-	case CONTENTS_WATER:
-		return "WATER";
-	case CONTENTS_LEVEL_1:
-		return "LEVEL_1";
-	case CONTENTS_LEVEL_2:
-		return "LEVEL_2";
-	case CONTENTS_LEVEL_3:
-		return "LEVEL_3";
-	case CONTENTS_LEVEL_4:
-		return "LEVEL_4";
-	case CONTENTS_LEVEL_5:
-		return "LEVEL_5";
-	case CONTENTS_LEVEL_6:
-		return "LEVEL_6";
-	case CONTENTS_LEVEL_7:
-		return "LEVEL_7";
-	case CONTENTS_LEVEL_8:
-		return "LEVEL_8";
-	case CONTENTS_ACTORCLIP:
-		return "ACTORCLIP";
-	case CONTENTS_PASSABLE:
-		return "PASSABLE";
-	case CONTENTS_ACTOR:
-		return "ACTOR";
-	case CONTENTS_ORIGIN:
-		return "ORIGIN";
-	case CONTENTS_WEAPONCLIP:
-		return "WEAPONCLIP";
-	case CONTENTS_DEADACTOR:
-		return "DEADACTOR";
-	case CONTENTS_DETAIL:
-		return "DETAIL";
-	case CONTENTS_TRANSLUCENT:
-		return "TRANSLUCENT";
-	case CONTENTS_STEPON:
-		return "STEPON";
-	default:
-		return "contentflag not recognised";
-	}
-}
-
-/**
  * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
  */
 void DisplayContentFlags (const int flags)
 {
-	int testFlag = 1;
 	if (!flags) {
 		Com_Printf(" no contentflags");
 		return;
 	}
-	do {
-		if (testFlag & flags)
-			Com_Printf(" %s", NameContentFlag(testFlag));
-	} while ((testFlag <<= 1) != 0);
+#define M(x) if (flags & CONTENTS_##x) Com_Printf(" " #x)
+	M(SOLID);
+	M(WINDOW);
+	M(WATER);
+	M(LEVEL_1);
+	M(LEVEL_2);
+	M(LEVEL_3);
+	M(LEVEL_4);
+	M(LEVEL_5);
+	M(LEVEL_6);
+	M(LEVEL_7);
+	M(LEVEL_8);
+	M(ACTORCLIP);
+	M(PASSABLE);
+	M(ACTOR);
+	M(ORIGIN);
+	M(WEAPONCLIP);
+	M(DEADACTOR);
+	M(DETAIL);
+	M(TRANSLUCENT);
+	M(STEPON);
+#undef x
 }
 
 /**
