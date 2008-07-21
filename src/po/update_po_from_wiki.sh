@@ -662,7 +662,7 @@ do
 		continue
 	fi
 
-	if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != "txt_"*"_campaign" ]] && [[ "$english" != "Aliens" ]] && [[ "$english" != "mail_"* ]]
+	if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != *"_campaign_txt" ]] && [[ "$english" != "Aliens" ]] && [[ "$english" != "mail_"* ]]
 	then
 		printf "."
 		if [[ "$debug" = "1" ]]
