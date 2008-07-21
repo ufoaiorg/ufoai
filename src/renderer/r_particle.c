@@ -49,8 +49,8 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 	/* get transformation */
 	switch (p->style) {
 	case STYLE_FACING:
-		VectorScale(vright, p->size[0], right);
-		VectorScale(vup, p->size[1], up);
+		VectorScale(r_vright, p->size[0], right);
+		VectorScale(r_vup, p->size[1], up);
 		break;
 
 	case STYLE_ROTATED:
@@ -62,7 +62,7 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 	case STYLE_BEAM:
 	case STYLE_AXIS:
 		AngleVectors(p->angles, right, NULL, NULL);
-		CrossProduct(right, vpn, up);
+		CrossProduct(right, r_vpn, up);
 		VectorNormalize(up);
 		VectorScale(right, p->size[0], right);
 		VectorScale(up, p->size[1], up);

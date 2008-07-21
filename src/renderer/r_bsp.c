@@ -255,7 +255,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	 * find which side of the node we are on */
 
 	if (r_isometric->integer) {
-		dot = -DotProduct(vpn, node->plane->normal);
+		dot = -DotProduct(r_vpn, node->plane->normal);
 	} else if (node->plane->type >= 3) {
 		dot = DotProduct(refdef.vieworg, node->plane->normal) - node->plane->dist;
 	} else {
