@@ -3,16 +3,41 @@
 DIR="${1:-.}"
 echo "using directory $DIR"
 
-EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py"
+EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py map"
+# define REPORTNEGATIVES to report all files that had no modifications performed
+#REPORTNEGATIVES=yes
 
+echo "setting eol style to native"
+GLOBIGNORE='*'
 for i in $EXT; do
-        find "$DIR" -name "*.$i" -exec ./eol {} \;
+    [[ $NOTFIRST ]] && {
+	EXPRESSION="$EXPRESSION -o"
+    } || {
+	NOTFIRST=yes
+    }
+    EXPRESSION="$EXPRESSION -name *.$i"
 done
 
-find "$DIR" -name ".cvsignore" -exec svn rm {} \;
+while read FILENAME; do
+    if [ "$(svn pg svn:eol-style "$FILENAME")" == "native" ]; then
+	[[ $REPORTNEGATIVES ]] && echo "not setting eol style for $FILENAME, already native"
+    else
+	echo "*** setting svn:eol-style native for $FILENAME"
+	svn ps svn:eol-style native "$FILENAME"
+    fi
+done < <(find "$DIR" -type f ! -wholename '*/.svn*' $EXPRESSION)
+unset GLOBIGNORE
 
+echo "setting mime types"
 mime () {
-        find "$DIR" -name "*.$1" -exec svn ps svn:mime-type $2 {} \;
+    while read FILENAME; do
+    	if [ "$(svn pg svn:mime-type)" == "$2" ]; then
+	    [[ $REPORTNEGATIVES ]] && echo "not setting mime type for $FILENAME, already $2"
+	else
+	    echo "*** setting svn:mime-type to $2 for $FILENAME"
+	    svn ps svn:mime-type $2 $FILENAME
+	fi
+    done < <(find "$DIR" -name "*.$1")
 }
 
 mime bmp image/bmp

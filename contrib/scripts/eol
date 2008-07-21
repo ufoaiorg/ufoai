@@ -1,4 +1,0 @@
-#! /bin/sh
-(echo '%s/
-//'; echo wq) | ed -s "$1"
-svn ps svn:eol-style native "$1"
