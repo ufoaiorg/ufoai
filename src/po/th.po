@@ -586,24 +586,12 @@ msgid "Play the aliens"
 msgstr "เล่นเป็นมนุษย์ต่างดาว"
 
 #: ../base/ufos/campaign.ufo:225
-#, fuzzy
 msgid "alien_campaign_txt"
 msgstr ""
-"เรียนท่านผู้บัญชาการ,\n"
+"Note\n"
 "\n"
-"ทีมของผมได้ทดสอบนักโทษเสร็จสิ้น และได้รับข้อมูลเกี่ยวกับพฤติกรรมของมนุษย์ต่างดาวบางอย่างเพิ่มเติม\n"
+"This campaign is currently only available for testing. Buildings and stuff like that is all humanoid. You will only have alien soldiers for your missions atm.\n"
 "\n"
-"การทดลองอย่างหนึ่ง เราได้จัดอาหารใส่กล่องให้นักโทษ โดยใส่กุญแจที่ใช้รหัสสองตัว ผู้รับการทดสอบได้ใช้เวลาหกชั่วโมงในการหาตัวเลขที่ถูกต้องโดยการทดลองไปเรื่อยๆ ซึ่งแสดงว่า IQ ของมนุษย์ต่างดาวนั้นต่ำกว่าสัตว์เลี้ยงลูกด้วยนมขนาดใหญ่ในโลก อย่างไรก็ตามเมื่อผู้รับการทดสอบต่อไปได้รับมอบหมายให้ทำงานเดียวกัน ด้วยกุญแจอันเดียวกัน กลับสามารถใส่เลขที่ถุกต้องได้ภายในครั้งแรก ทั้งที่ไม่ได้เห็นการทำงานของผู้รับการทดสอบแรก ผมเข้าใจว่ามันดูไม่ดีครับ แต่ผมรับรองว่าผมและทีมงานได้มีความเข้มงวดในด้านความปลอดภัยและการแยกตัว มนุษย์ต่างดาวไม่ได้รับอนุญาตให้สื่อสาร และเรายังไม่อยากตั้งทฤษฎีแน่นอนแต่กำลังลองศึกษาอยู่\n"
-"\n"
-"โชคไม่ดีที่ผลการทดลองยังสรุปไม่ได้ ได้มีการลองวิธีการสื่อสารหลายแบบแต่ไม่ประสบผล แม้ว่าจะมีกล่องเสียงและมือที่ทำงานได้ พวกนั้นดูจะไม่สามารถพูดหรือส่งสัญญาณในลักษณะที่เราเข้าใจได้ การสื่อสารด้วยฟีโรโมนไม่มีผลใดนอกจากการตอบสนองทางกายภาพพื้นๆ ความแตกต่างทางชีวภาพของมนุษย์ต่างดาวแต่ละเผ่านทำให้เกิดปัญหาการกักตัวและการสื่อสาร -- โปรดดูรายละเอียดด้านกายภาพผลการชันสูตรศพ\n"
-"\n"
-"อย่างไรก็ตาม ผมเชื่อว่าเรากำลังมีความก้าวหน้าแม้ว่าจะเพียงเล็กน้อย การสื่อสารกับมนุษย์ต่างดาวนั้นยังมีความเป็นไปได้ การศึกษายืนยันว่ามนุษย์ต่างดาวมีการตอบสนองต่อการกระตุ้นภายนอก ซึ่งหมายความว่าเราสามารถ ทำ ให้มันตอบสนองได้ด้วยวิธีใดวิธีหนึ่ง ดร. ยามาอุระได้พยายามสอนให้กลุ่มหนึ่งแสดงความต้องการ การรับรู้ และการปฏิเสธ ภูมิปัญญาของพวกมันมีจำกัดเกินกว่าจะทดลองอะไรที่ซับซ้อนกว่านั้น เมื่อผู้รับการทดลองฝึกฝนแนวคิดพื้นฐานสำเร็จ เราจะมีข้อมูลของอัตราที่มนุษย์ต่างดาวเรียนรู้ได้ และพื้นฐานที่จะศึกษาต่อ ยามาอุระหวังว่าเราจะสามารถพัฒนาทักษะการสื่อสารจนกระทั่งพวกมันทำให้เราเข้าใจได้ และเผยแพร่ความรู้ให้กับมนุษย์ต่างดาวอื่นที่อาจมีความสามารถและภูมิปัญญาสูงกว่า\n"
-"\n"
-"ผมจะแจ้งความคืบหน้าเป็นระยะครับ\n"
-"\n"
-"ขอแสดงความนับถือ,\n"
-"\n"
-"ดร. คอนเนอร์"
 
 #: ../base/ufos/events.ufo:21
 msgid "Devastating alien terror attack on Mumbai"
@@ -696,7 +684,8 @@ msgstr "ดร. คอนเนอร์, แผนกวิจัยและ�
 #: ../base/ufos/research.ufo:4689 ../base/ufos/research.ufo:4720
 #: ../base/ufos/research.ufo:4727
 msgid "mail_to_base_commander"
-msgstr "ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัิตการแอตแลนติค"
+msgstr ""
+"ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัิตการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -764,7 +753,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4440 ../base/ufos/research.ufo:4515
 #: ../base/ufos/research.ufo:4523
 msgid "mail_from_paul_navarre"
-msgstr "ผบ. พอล นาวาเร, แผนกวิจัยและพัฒนา: ฝ่ายวิศวกรรม, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr ""
+"ผบ. พอล นาวาเร, แผนกวิจัยและพัฒนา: ฝ่ายวิศวกรรม, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 #, fuzzy
@@ -815,7 +805,8 @@ msgstr "ผลิตเสร็จสิ้น"
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "XO อาเบล เอส. ฮาร์เวิร์ด, ฝ่ายปฏิบัตการภาคพื้น, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr ""
+"XO อาเบล เอส. ฮาร์เวิร์ด, ฝ่ายปฏิบัตการภาคพื้น, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -953,7 +944,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:475 ../base/ufos/research.ufo:4680
 #: ../base/ufos/research.ufo:4688
 msgid "mail_from_col_falkland"
-msgstr "พล.ท. อินกริด ฟอล์คแลนด์, สำนักข่าวกรอง, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr ""
+"พล.ท. อินกริด ฟอล์คแลนด์, สำนักข่าวกรอง, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -985,7 +977,8 @@ msgstr "พบการปฏิบัติการของมนุษย์
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "ผบ. (อากาศ) สุบัคห์ อัล-คุฮา, ฝ่ายปฏิบัติการทางอากาศ, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr ""
+"ผบ. (อากาศ) สุบัคห์ อัล-คุฮา, ฝ่ายปฏิบัติการทางอากาศ, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4493,7 +4486,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4650 ../base/ufos/research.ufo:4719
 #: ../base/ufos/research.ufo:4726
 msgid "mail_from_dr_connor"
-msgstr "ดร. คอนเนอร์, แผนกวิจัยและพัฒนา: ฝ่ายชีววิทยาและการกักกัน, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr ""
+"ดร. คอนเนอร์, แผนกวิจัยและพัฒนา: ฝ่ายชีววิทยาและการกักกัน, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/research.ufo:252 ../base/ufos/research.ufo:292
 msgid "alien_breathing_txt"
@@ -5163,18 +5157,8 @@ msgid "xaw95_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:753
-#, fuzzy
 msgid "xaw95_pre_txt"
-msgstr ""
-"รายงานการวิจัยทั้งหมดของสหประชาชาติที่เรามี ได้ให้ข้อมูลอันมีค่าเกี่ยวกับการพัฒนาอาวุธบนโลก นับตั้งแต่ช่วงต้นศตวรรษนี้ หัวข้อที่น่าสนใจอย่างหนึ่งคือการผลิต DEWs (อาวุธพลังงานแบบบังคับทิศทาง) ซึ่งเป็นอาวุธที่จะถ่ายโอนพลังงานไปยังเป้าหมาย โดยไม่ใช้กระสุน เราสนใจรายงานด้านระบบคลื่นเลเซอร์ต่อเนื่องเป็นพิเศษ\n"
-"\n"
-"บริษัทหลายแห่งและหลายประเทศ พยายามจะสร้างระบบเลเซอร์เพื่อเป็นอาวุธมาหลายปี แต่ยังไม่มีใครสามารถสร้างระบบที่สามารถพกพาได้ และมีกำลังพอเทียบเคียงกับอาวุธทั่วไปได้ อย่างไรก็ตาม ตอนนี้เราได้มีข้อมูลงานวิจัยทั้งหมด รวมทั้งงานวิจัยวิทยาการขั้นสูงสุดของโลกนี้ด้วย ผมเชื่อว่าไม่เพียงเราจะสามารถจะสร้างอาวุธเลเซอร์ขนาดพกพาที่มีประสิทธิภาพได้ เรายังสามารถสร้าง DEW ในขนาดเล็กที่ไม่เคยมีใครคาดถึงมาก่อน\n"
-"\n"
-"ท่านผู้บัญชาการ, เราควรทำงานวิจัยนี้ให้ด่วนที่สุด การพัฒนาอาวุธให้หลากหลายทำให้การป้องกันเป็นไปได้ยาก และประสบการณ์ของเราอาจทำให้สามารถพัฒนาเลเซอร์สำหรับเครื่องบิน ซึ่งสามารถเล็งจานบินความเร็วสูงได้มีประสิทธิภาพมากกว่าอาวุธทั่วไป\n"
-"\n"
-"เท่าที่ผมเข้าใจ เราที่ PHALANX กำลังจะสร้างสิ่งที่เป็นไปไม่ได้ และเราจะเริ่มต้นทำทันทีที่ท่านอนุมัติโครงการนี้\n"
-"\n"
-"--ผบ. นาวาเร"
+msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
 #: ../base/ufos/research.ufo:767
 #, fuzzy
@@ -5191,7 +5175,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:770
-#, fuzzy
 msgid "xaw95_ammo_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
@@ -5240,7 +5223,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:787
-#, fuzzy
 msgid "bombkit1_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
@@ -5289,7 +5271,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:804
-#, fuzzy
 msgid "bombkit2_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
@@ -6224,9 +6205,8 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:1810 ../base/ufos/research.ufo:1850
-#, fuzzy
 msgid "needlergun_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
 #: ../base/ufos/research.ufo:1885 ../base/ufos/research.ufo:1922
 #, fuzzy
@@ -6234,7 +6214,6 @@ msgid "coilgun_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1888 ../base/ufos/research.ufo:1925
-#, fuzzy
 msgid "coilgun_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
@@ -7475,9 +7454,9 @@ msgstr ""
 "\n"
 "Our Radar facility is not a large radar array in itself. It's actually a control centre for a series of camouflaged dishes placed on high ground around the base. There are between 8 and 12 dishes set up for each installation, depending on the available space and the dishes' individual coverage. Each dish is equipped with several means of detection rather than simply radar, as radar has trouble maintaining a lock on alien contacts. Supplemental systems include, but are not limited to, infrared and laser rangefinding.\n"
 "\n"
-"Building more than one Radar installation at a base will suitably increase the extent of our radar coverage.\n"
-"\n"
 "The facility is manned round-the-clock in 6-hour shifts, reviewing the processed data after our computers have gathered all discernible information from a contact. Human operators are absolutely necessary and should be present to supervise at all times; what the computers might dismiss as a radar ghost can turn out to be a stealthed alien harvester ready to hit a mass off civilians. Instinct and experience count just as much as software intelligence.\n"
+"\n"
+"Building more than one Radar installation at a base will not increase the extent of our radar coverage. A single facility will cover its full range as effectively as possible, and the only way to increase performance and range is to upgrade our systems with future technology or to build further installations outside the base.\n"
 "\n"
 "Our radar is patched directly into the UN aircraft registry and can cross-reference the transponder data of any civilian aircraft with its flight plan and cargo manifest. Non-PHALANX military aircraft are also required to log their routes into our database, but we can't know for certain if the various militaries will be very conscientious in following that directive.\n"
 "\n"
@@ -8042,42 +8021,44 @@ msgstr ""
 "อุปกรณ์: ที่ติดอาวุธขนาดกลาง 2 จุด (ส่วนท้อง), ช่องติดอุปกรณ์ 2 ช่อง,ช่องใส่เกราะ 1 แห่ง"
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "inter_dragon_txt"
 msgstr ""
-"Technical Specifications: Sniper Rifle Magazine\n"
+"Commander, I'm extremely proud to present you with the plans for our new interceptor, the Dragon. As you can see we've taken more than one page out of the aliens' book and the radical styling truly pays off.\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"Incorporating new technologies from the ground up, the Dragon consists of an inner skeleton of alien materials providing strength for the lighter outer skin of carbon nanotube-reinforced plastics. This allows it to mount two actual alien engines which give speed and power like nothing else in our arsenal. The forward-swept wings are a special touch to allow it more knife-fighting mobility than alien designs.\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"The three-pronged fuselage is also inspired by the enemy, slicing through the air with remarkable grace. The upper two prongs can mount small retractable weapons, the bottom prong contains a medium-sized weapon compartment, and the central structure was designed to accomodate the main hardpoint -- the 'mouth', if you will -- for which the Dragon was named.\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"The main drawback of the Dragon is that, like UFOs, it requires antimatter to get into the air. Nothing else will do considering the weight of the fuselage. Since our supplies of antimatter are so limited it may be that we can't afford to spend it on anything but our airfleet. That's why we should be careful about where we deploy the Dragon, and consider whether or not its deployment is really necessary in any given situation.\n"
 "\n"
-"Filed: 20 March 2084\n"
+"Also, please note that while the Dragon is technically capable of entering orbit on its own steam, it has no space capabilities and should not be pushed above the upper atmosphere under any circumstances. Some things are just too much to ask right now. We're engineers, Commander, not wizards.\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This magazine contains 5 rounds of 20x140mm HMG (Heavy Machine Gun) ammunition. It is a conventional single-column box design, and can be extremely heavy due to the weight of the rounds inside. One magazine can weigh up to 1 kilogramme depending on the type of ammo used. The rounds in this magazine are high-quality match grade ammunition meant for heavy sniper rifles; they are more accurate and expensive than ordinary HMG rounds.\n"
-"\n"
-"The magazine is meant to be loaded into an S-1 Sniper Rifle.\n"
+"--Cdr. Navarre\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with sniper rifles should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
+"Estimated Dragon statistics:\n"
 "\n"
 "\n"
-"Addenda\n"
+"Size: 12m x 22m x 7m\n"
 "\n"
-"None."
+"Cruising speed: 2,500 km/h\n"
+"\n"
+"Top speed: 4,290km/h\n"
+"\n"
+"Crew capacity: 1 Pilot\n"
+"\n"
+"Weapon capacity: 1 Large hardpoint (main fuselage), 1 Medium hardpoint (bottom prong), 2 Small hardpoints (top prongs), 1 Equipment bay, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3381
 msgid "inter_dragon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Commander, let me preface this by saying it's obvious that the aliens have been severely outperforming us in every way, but nowhere is this more evident than in the air. We were in a bad position at the start of the war and despite our efforts there has been little improvement.\n"
+"\n"
+"However, now that we have an understanding of alien materials and how they behave in the air, as well as alien engines and fuelling systems, I think my team and I are ready to tackle the task of creating an entirely new interceptor exclusive to PHALANX. We believe that by combining alien techniques with good old human manufacturing we can design something that will be vastly superior to our current-generation craft while remaining economically feasible to produce and to fly.\n"
+"\n"
+"The program will incur considerable expenses in lab time, personnel and materials, but as always we stand to gain much more than we could possibly lose. It's a project that could rally a lot of hope for our cause, Commander. Please let me know as soon as possible when you want us to start work.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3400
 #, fuzzy
@@ -8149,7 +8130,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3403
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3429
 msgid "ufo_scout_txt"
@@ -9796,22 +9778,33 @@ msgid "The Enemy On Earth"
 msgstr ""
 
 #: ../base/ufos/research.ufo:4634
-#, fuzzy
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
+"Proposal\n"
+"\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: The Enemy On Earth\n"
+"\n"
 "Commander,\n"
 "\n"
-"You need to read this right away. By your request, we've performed several hurried autopsies and done our best to examine the live prisoners taken on our mission against the alien sympathisers. The results are alarming.\n"
+"My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.\n"
 "\n"
-"Do you remember the report I sent you about the first live alien specimen we researched? As you may remember, it had lost all its intellect and became largely unresponsive without fellows to empower the hive mind. Prepare yourself, Commander: The human prisoner in our Containment unit exhibits the very same symptoms. A thorough blood analysis has produced conclusive evidence that the prisoner is infected with an XVI strand.\n"
+"The worrying questions seem to mount up. First, however, we need to review the facts we have.\n"
 "\n"
-"This new strand is slightly different from the others we've encountered, and we fear it can only be designated \"XVI-H\". It appears to be willfully designed to infect humans with the alien hive mind. It overrides their own rational thought processes and replaces them with a direct link into the group, whether there actually is a group or not, through a process we currently fail to understand. Our subjects run the gamut of the human race; the infection seems to have no preference for IQ or physical potential. The infection method appears to be a direct injection of infected blood into the victim's bloodstream. It is premeditated and ruthless. Any amount of shared blood is enough for the infection to take root.\n"
+"Do the aliens have active sympathisers on Earth? Yes.\n"
 "\n"
-"Quarantine procedures have been tightened to the absolute maximum, and we're rushing another full batch of tests on all our personnel. Our field agents remain clean, thank God -- just think if we'd gone into a combat zone with soldiers capable of turning on their teammates at any moment! -- but I fear we have found one conclusive result. It's Dr. Eisenhower, our Director of Administration. He's been away on holiday since last week, but we ran an older sample which has now come up positive. We don't know when or how he was subverted or if he even joined PHALANX with honourable intentions, but it's clear he has acted as an alien spy for some weeks. Unfortunately we can't seem to find him at his announced destination. Internal Security has taken charge of his workstation and is in the process of information control.\n"
+"Are the aliens supplying these human servants? Most likely, it's the only reasonable explanation for their advanced alien equipment.\n"
 "\n"
-"Things are a bit hectic right now. Dr. Eisenhower's infection implies that other members of a hive mind -- human or alien -- were in close enough proximity to allow him to function at human intelligence. He could have linked up with our subjects in Containment, or a nearby alien cell, or even other infiltrators inside our base. Right now, we don't know, and we most likely never will. We're all frightened in the Bio lab. My assistant has been jumping at shadows all day.\n"
+"Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.\n"
 "\n"
-"Commander, we must develop a vaccine against XVI-H as soon as possible. The danger of our soldiers and salvage technicians falling victim to the infection in the field is too great to ignore even for a moment. I hereby request your permission to start work on a vaccine immediately. Please, please respond at your earliest convenience.\n"
+"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
+"\n"
+"Director Wong (DivInfo) reports that if we hold off too long on implementing a new info strategy, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin to grow. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
 "\n"
 "Sincerely,\n"
 "\n"
@@ -9849,15 +9842,17 @@ msgstr ""
 "\n"
 "Do the aliens have active sympathisers on Earth? Yes.\n"
 "\n"
-"Are the aliens supplying these human servants? Affirmative; it's the only explanation for their advanced alien equipment.\n"
+"Are the aliens supplying these human servants? Most likely, it's the only reasonable explanation for their advanced alien equipment.\n"
 "\n"
 "Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.\n"
 "\n"
-"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. The DivBio also has a stake; we'd like to capture at least one live prisoner for our Containment unit so we can run a full physical examination. If the aliens have bodily altered these humans in addition to training and supplying them, we'd like to find out about it.\n"
+"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
 "\n"
 "Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
 "\n"
-"Sincerely,Dr. Connor"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:4667
 msgid "XVI Census"
@@ -10121,35 +10116,43 @@ msgstr "สำหรับมนุษย์โลกจำนวนมาก �
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "ปี 2084 โลกแม้จะยังไม่ใช่สถานที่สงบสุขที่สุด แต่ก็มีสันติภาพพอสมควร ความรุนแรงในตอนต้นศตวรรษที่ 21 นั้นกลายเป็นแค่อดีต เรื่องราวอันแสนไกล แม้จะไม่ได้ไกลจนถูกลืม สำหรับประชากรโลกส่วนใหญ่ สงครามเย็นครั้งที่สองนั้นเป็นแค่เงาอดีต เหมือนกับที่เด็กในปลายศตวรรษที่ 20 รู้สึกเกี่ยวกับสงครามโลกครั้งที่สอง"
+msgstr ""
+"ปี 2084 โลกแม้จะยังไม่ใช่สถานที่สงบสุขที่สุด แต่ก็มีสันติภาพพอสมควร ความรุนแรงในตอนต้นศตวรรษที่ 21 นั้นกลายเป็นแค่อดีต เรื่องราวอันแสนไกล แม้จะไม่ได้ไกลจนถูกลืม สำหรับประชากรโลกส่วนใหญ่ สงครามเย็นครั้งที่สองนั้นเป็นแค่เงาอดีต เหมือนกับที่เด็กในปลายศตวรรษที่ 20 รู้สึกเกี่ยวกับสงครามโลกครั้งที่สอง"
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "ความขัดแย้งได้ลดลงอย่างมากในปลายศตวรรษ เมื่อวิทยาการและการสาธารณสุขได้เข้าถึงโลกที่สามในที่สุด แม้แต่การก่อการร้ายก็ดูจะซาลงไปเมื่อเกิดสงครามเย็นครั้งที่สอง ซึ่งมนุษยชาตได้เห็นความน่ากลัวและไร้มนุษยธรรม ตั้งแต่สหรัฐเดิมถึงทวีปย่อยอินเดียที่ถูกทำลาย การต่อสุ้ระหว่างชนชั้นได้กลายเป็นสงครามทางการเมืองเมื่อทุกประเทศมีสิทธิเท่าเทียมในสหประชาชาติ และระดับมาตรฐานการดำรงชีพของโลกได้เพิ่มขึ้น แม้แต่ในส่วนที่ยากจนที่สุด หลายประเทศได้มีความมั่นคงและเข้มแข็ง ภายใต้สหประชาชาติโครงสร้างใหม่ที่สามารถควบคุมรัฐบาลโลกได้ ประเทศขนาดเล็ก ซึ่งหวาดกลัวกับอำนาจที่จีนและสหภาพยุโรปกำลังรวบรวม ได้สร้างกลุ่มการเมืองของตนเอง -- แต่ก็พบว่าไม่สามารถสู้กับกลุ่มประเทศเพื่อนบ้านอย่างปลอดภัยได้ เป็นครั้งแรกในประวัติศาสตร์มนุษยชาต ที่มีกฎหมายและความสงบเรียบร้อยมากกว่าสามในสี่ส่วนของโลก"
+msgstr ""
+"ความขัดแย้งได้ลดลงอย่างมากในปลายศตวรรษ เมื่อวิทยาการและการสาธารณสุขได้เข้าถึงโลกที่สามในที่สุด แม้แต่การก่อการร้ายก็ดูจะซาลงไปเมื่อเกิดสงครามเย็นครั้งที่สอง ซึ่งมนุษยชาตได้เห็นความน่ากลัวและไร้มนุษยธรรม ตั้งแต่สหรัฐเดิมถึงทวีปย่อยอินเดียที่ถูกทำลาย การต่อสุ้ระหว่างชนชั้นได้กลายเป็นสงครามทางการเมืองเมื่อทุกประเทศมีสิทธิเท่าเทียมในสหประชาชาติ และระดับมาตรฐานการดำรงชีพของโลกได้เพิ่มขึ้น แม้แต่ในส่วนที่ยากจนที่สุด หลายประเทศได้มีความมั่นคงและเข้มแข็ง ภายใต้สหประชาชาติโครงสร้างใหม่ที่สามารถควบคุมรัฐบาลโลกได้ ประเทศขนาดเล็ก ซึ่งหวาดกลัวกับอำนาจที่จีนและสหภาพยุโรปกำลังรวบรวม ได้สร้างกลุ่มการเมืองของตนเอง -- แต่ก็พบว่าไม่สามารถสู้กับกลุ่มประเทศเพื่อนบ้านอย่างปลอดภัยได้ เป็นครั้งแรกในประวัติศาสตร์มนุษยชาต ที่มีกฎหมายและความสงบเรียบร้อยมากกว่าสามในสี่ส่วนของโลก"
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "สำหรับมนุษย์โลกจำนวนมาก ทุกอย่างดูจะเรียบร้อยดี"
+msgstr ""
+"สำหรับมนุษย์โลกจำนวนมาก ทุกอย่างดูจะเรียบร้อยดี"
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "การโจมตีครั้งแรกเกิดที่มุมไบในวันที่ 3 มีนาคม 2084, จานบินขนาดเล็กหกลำปรากฏอย่างไม่มีที่มา และบินลงมาจากชั้นบรรยากาศ ผ่านระบบเรดาร์ที่ครอบคลุมน่านฟ้ามุมไบโดยไม่ถูกพบ และลงจอดในเมืองที่มีประชากรหนาแน่นที่สุดในโลก มันไม่ได้เตือนล่วงหน้า หรืออธิบายใดๆ พลเรือนสองหมื่นคนและทหารชั้นแนวหน้าสามกองพันถูกสังหารในช่ววสิบสองชั่วโมงอันโหดเหี้ยม จนกระทั่งทหารเครือจักรภพสามารถหยุดยั้งการเคลื่อนตัวของมนุษย์ต่างดาวได้ แล้วมันก็หนีหายไปในจานบินและหายสาปสูญไปในบรรยากาศ โดยไม่เหลือร่องรอยแบบเดียวกันการปรากฏตัว ทิ้งไว้เพียงแต่ท้องถนนที่ถูกทำลายยับเยินเป็นหลักฐาน"
+msgstr ""
+"การโจมตีครั้งแรกเกิดที่มุมไบในวันที่ 3 มีนาคม 2084, จานบินขนาดเล็กหกลำปรากฏอย่างไม่มีที่มา และบินลงมาจากชั้นบรรยากาศ ผ่านระบบเรดาร์ที่ครอบคลุมน่านฟ้ามุมไบโดยไม่ถูกพบ และลงจอดในเมืองที่มีประชากรหนาแน่นที่สุดในโลก มันไม่ได้เตือนล่วงหน้า หรืออธิบายใดๆ พลเรือนสองหมื่นคนและทหารชั้นแนวหน้าสามกองพันถูกสังหารในช่ววสิบสองชั่วโมงอันโหดเหี้ยม จนกระทั่งทหารเครือจักรภพสามารถหยุดยั้งการเคลื่อนตัวของมนุษย์ต่างดาวได้ แล้วมันก็หนีหายไปในจานบินและหายสาปสูญไปในบรรยากาศ โดยไม่เหลือร่องรอยแบบเดียวกันการปรากฏตัว ทิ้งไว้เพียงแต่ท้องถนนที่ถูกทำลายยับเยินเป็นหลักฐาน"
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "การประชุมฉุกเฉินในสหประชาชาติไม่ได้ผลลัพธ์ การบุกรุกได้ทวีความเร็ว ขนาด และความรุนแรง คราวนี้ในบอนน์ โจฮันเนสเบิร์ก และกรุงเทพ หลายประเทศพยายามใช้วิธีการทูต โดยการส่งข้อมูลในหลายพันภาษาไปยังมนุษย์ต่างดาวที่ทำลายประเทศ แต่คำพูดเหล่านี้ก้ไม่ได้รับการสนใจ ไม่กี่ชั่วโมงเมืองทั้งสามก็ไม่เหลือมนุษย์รอด การโจมตีสิ้นสุดลงขณะที่ทหารหลายกลุ่มเพิ่งได้รับอนุญาตให้ตีโต้ มนุษย์ต่างดาวไม่เหลืออะไรไว้นอกจากคอนกรีตและกองเลือด จานบินทั้งหมดหายสาปสูญไม่เหลือร่องรอย -- แต่ทุกคนก็รู้ว่าพวกม้นจะกลับมาอีก"
+msgstr ""
+"การประชุมฉุกเฉินในสหประชาชาติไม่ได้ผลลัพธ์ การบุกรุกได้ทวีความเร็ว ขนาด และความรุนแรง คราวนี้ในบอนน์ โจฮันเนสเบิร์ก และกรุงเทพ หลายประเทศพยายามใช้วิธีการทูต โดยการส่งข้อมูลในหลายพันภาษาไปยังมนุษย์ต่างดาวที่ทำลายประเทศ แต่คำพูดเหล่านี้ก้ไม่ได้รับการสนใจ ไม่กี่ชั่วโมงเมืองทั้งสามก็ไม่เหลือมนุษย์รอด การโจมตีสิ้นสุดลงขณะที่ทหารหลายกลุ่มเพิ่งได้รับอนุญาตให้ตีโต้ มนุษย์ต่างดาวไม่เหลืออะไรไว้นอกจากคอนกรีตและกองเลือด จานบินทั้งหมดหายสาปสูญไม่เหลือร่องรอย -- แต่ทุกคนก็รู้ว่าพวกม้นจะกลับมาอีก"
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "แปดสิบเจ็ดชั่วโมงหลังจากโจมตีที่มุมไบ โลกได้ตัดสินใจประกาศสงคราม ในสองสัปดาห์ กองทัพของมนุษย์ต่างพยายามแยกกันต่อต้านผู้รุกรานจากต่างดาวอย่างสุดความสามารถ แต่พวกเขาประสบความสำเร็จไม่มากนัก"
+msgstr ""
+"แปดสิบเจ็ดชั่วโมงหลังจากโจมตีที่มุมไบ โลกได้ตัดสินใจประกาศสงคราม ในสองสัปดาห์ กองทัพของมนุษย์ต่างพยายามแยกกันต่อต้านผู้รุกรานจากต่างดาวอย่างสุดความสามารถ แต่พวกเขาประสบความสำเร็จไม่มากนัก"
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "เมื่อเหลือทางเลือกอย่างเดียว สหประชาชาติจึงต้องเข้าแทรกแซง มีการนำอุปกรณ์เก่ากลับมาใช้ แม้บางอย่างจะเก่ากว่าร้อยปี และหน่วยปฏิบัติการของอดีตสหรัฐ ที่ถูกปิดไปแล้ว -- PHALANX -- ได้ถูกก่อตั้งขึ้นมาใหม่ภายใต้สหประชาชาติ ภารกิจหลักก็คือการต่อสู้กับมหันตภัยจากต่างดาว และปกป้องมนุษยชาตให้อยู่รอดด้วยทุกวิถีทาง"
+msgstr ""
+"เมื่อเหลือทางเลือกอย่างเดียว สหประชาชาติจึงต้องเข้าแทรกแซง มีการนำอุปกรณ์เก่ากลับมาใช้ แม้บางอย่างจะเก่ากว่าร้อยปี และหน่วยปฏิบัติการของอดีตสหรัฐ ที่ถูกปิดไปแล้ว -- PHALANX -- ได้ถูกก่อตั้งขึ้นมาใหม่ภายใต้สหประชาชาติ ภารกิจหลักก็คือการต่อสู้กับมหันตภัยจากต่างดาว และปกป้องมนุษยชาตให้อยู่รอดด้วยทุกวิถีทาง"
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "ด้วยเงินทุนจากมหาอำนาจทั้งแปด และทหารที่เก่งที่สุดจากกองทัพระดับสูงสุด PHALANX คือสุดยอดของสุดยอด มันเป็นแนวป้องกันแรกและแนวป้องกันเดียวของโลก มันล้มเหลวไม่ได้ เพราะความล้มเหลวย่อมหมายถึงจุดจบของมนุษยชาติ"
+msgstr ""
+"ด้วยเงินทุนจากมหาอำนาจทั้งแปด และทหารที่เก่งที่สุดจากกองทัพระดับสูงสุด PHALANX คือสุดยอดของสุดยอด มันเป็นแนวป้องกันแรกและแนวป้องกันเดียวของโลก มันล้มเหลวไม่ได้ เพราะความล้มเหลวย่อมหมายถึงจุดจบของมนุษยชาติ"
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
