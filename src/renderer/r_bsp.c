@@ -184,7 +184,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 
 	if (r_isometric->integer) {
 		dot = -DotProduct(r_vpn, node->plane->normal);
-	} else if (node->plane->type >= 3) {
+	} else if (node->plane->type > PLANE_Z) {
 		dot = DotProduct(refdef.vieworg, node->plane->normal) - node->plane->dist;
 	} else {
 		dot = refdef.vieworg[node->plane->type] - node->plane->dist;
@@ -203,6 +203,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 
 	/* draw stuff */
 	for (c = node->numsurfaces, surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface; c; c--, surf++) {
+		/* visible (front) side */
 		if ((surf->flags & MSURF_PLANEBACK) == sidebit)
 			surf->levelflagToRenderIn = (1 << refdef.worldlevel);
 	}
