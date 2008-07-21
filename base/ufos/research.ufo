@@ -4066,6 +4066,24 @@ tech rs_ugv_chaingun_belt
 	producetime	10	// @todo fixme
 }
 
+tech rs_ugv_weapon_autocannon
+{
+	type	weapon
+	mdl	ugv_phoenix	// @todo fixme
+
+	up_chapter	equipment
+	description {
+		default "_ugv_weapon_autocannon_txt"
+	}
+	pre_description {
+		default "_ugv_weapon_autocannon_pre_txt"
+	}
+
+	provides	ugv_weapon_autocannon
+	time	0
+	producetime	50
+}
+
 //========================
 // Base Weapons
 //========================
