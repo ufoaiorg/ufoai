@@ -5,9 +5,6 @@
 //	num is the number of time units
 // armour
 //	writeme (used yet?)
-// (size <> NOT USED ANYMORE - See "size" field in team_human.ufo etc...)
-// ( 	0: normal actor (1x1))
-// (	1: ugv size (2x2))
 // actors <id>
 //	id as defined for "actors" in team_humans.ufo but without the "team" part.
 //	// e.g. human_ugv_ares_w  -> _ugv_ares_w
@@ -144,6 +141,27 @@ item ugv_chaingun_belt
 	}
 }
 
+item ugv_weapon_autocannon
+{
+	name		"_Autocannon Module"
+	model		weapons/autocannon/autocannon
+	weapon		true
+	type		biggun
+	animationindex	1
+	//holdtwohanded	true
+	//firetwohanded	true
+	shape		"0 0 5 2"
+	center		"5 0 2"
+	scale		1.25
+	ammo		500
+	reload		20
+	price		0	// @todo maybe we still need this somewhere?
+	size		120
+	notonmarket	true
+	buytype	heavy_equipment
+}
 
-// ========================================================
-// EOF
+// TODO:
+// ugv_ammo_ap_rounds_txt 12mm AP Rounds
+// ugv_ammo_fp_rounds_txt 12mm FP Rounds
+

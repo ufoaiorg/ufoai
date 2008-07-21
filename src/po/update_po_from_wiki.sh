@@ -16,7 +16,7 @@
 language=$1
 url="http://ufoai.ninex.info"
 wiki_url="/wiki/index.php/List_of_msgid/"
-chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment Aliens Campaigns Story Mail_Headers Mail_Bodies"
+chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment UGVs UGV_Equipment Aliens Campaigns Story Mail_Headers Mail_Bodies"
 headers="mail_to_base_commander mail_from_paul_navarre mail_from_col_falkland mail_from_dr_connor mail_from_air_cdr mail_from_xo mail_from_surgeon mail_from_un"
 index="List_of_msgid_"${language}
 input_file=$language".po"

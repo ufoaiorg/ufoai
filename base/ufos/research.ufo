@@ -4008,6 +4008,7 @@ tech rs_ugv_phoenix
 	producetime	400
 }
 
+// area with wheels
 tech rs_ugv_ares_w
 {
 	type	ugv
