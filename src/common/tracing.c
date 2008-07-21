@@ -516,7 +516,7 @@ BOX TRACING
 /**
  * @brief Returns PSIDE_FRONT, PSIDE_BACK, or PSIDE_BOTH
  */
-int TR_BoxOnPlaneSide (vec3_t mins, vec3_t maxs, TR_PLANE_TYPE *plane)
+int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, TR_PLANE_TYPE *plane)
 {
 	int side, i;
 	vec3_t corners[2];

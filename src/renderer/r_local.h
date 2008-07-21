@@ -129,7 +129,7 @@ void R_SortSurfaces(void);
 void R_InitMiscTexture(void);
 void R_DrawEntities(void);
 void R_DrawInitLocal(void);
-qboolean R_CullBox(vec3_t mins, vec3_t maxs);
+qboolean R_CullBox(const vec3_t mins, const vec3_t maxs);
 void R_DrawParticles(void);
 
 /** @brief GL config stuff */

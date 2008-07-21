@@ -105,7 +105,7 @@ static void R_Strings_f (void)
 /**
  * @brief Returns true if the box is completely outside the frustum
  */
-qboolean R_CullBox (vec3_t mins, vec3_t maxs)
+qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
 
