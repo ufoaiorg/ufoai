@@ -8,7 +8,7 @@ EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py map"
 #REPORTNEGATIVES=yes
 
 echo "setting eol style to native"
-GLOBIGNORE='*'
+set -f
 for i in $EXT; do
     [[ $NOTFIRST ]] && {
 	EXPRESSION="$EXPRESSION -o"
@@ -26,7 +26,7 @@ while read FILENAME; do
 	svn ps svn:eol-style native "$FILENAME"
     fi
 done < <(find "$DIR" -type f ! -wholename '*/.svn*' $EXPRESSION)
-unset GLOBIGNORE
+set +f
 
 echo "setting mime types"
 mime () {
@@ -53,7 +53,7 @@ mime xbm image/x-xbitmap
 mime xpm image/x-xpixmap
 mime 3ds application/x-3ds
 mime psd image/psd
-mime dll application/x-msdownload
+mime dll application/octet-stream
 mime pdf application/pdf
 mime doc application/msword
 mime zip application/zip
