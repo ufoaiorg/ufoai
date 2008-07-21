@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	(surfs)->surfaces[(surfs)->count++] = surf
 
 /* temporary space used to group surfaces by texture */
-mBspSurfaces_t r_sorted_surfaces[MAX_GLTEXTURES];
+mBspSurfaces_t r_sorted_surfaces[MAX_GL_TEXTURES];
 
 /*
 =============================================================
@@ -49,7 +49,7 @@ static void R_SortSurfaces_ (mBspSurfaces_t *surfs)
 	/* sort them by texture */
 	for (i = 0; i < surfs->count; i++) {
 		const int index = surfs->surfaces[i]->texinfo->image->index;
-		assert(index < MAX_GLTEXTURES);
+		assert(index < MAX_GL_TEXTURES);
 		R_SurfaceToSurfaces(&r_sorted_surfaces[index], surfs->surfaces[i]);
 	}
 

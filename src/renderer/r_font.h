@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BUF_SIZE 2048
 
 /* starting offset for font texture numbers (used in font-cache) */
-#define TEXNUM_FONTS        TEXNUM_IMAGES + MAX_GLTEXTURES
+#define TEXNUM_FONTS        TEXNUM_IMAGES + MAX_GL_TEXTURES
 
 typedef struct font_s {
 	const char *name;

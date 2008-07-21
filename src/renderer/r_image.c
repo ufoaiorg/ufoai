@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <jpeglib.h>
 #include <png.h>
 
-static char glerrortex[MAX_GLERRORTEX];
+static char glerrortex[MAX_GL_ERRORTEX];
 static char *glerrortexend;
-static image_t gltextures[MAX_GLTEXTURES];
+static image_t gltextures[MAX_GL_TEXTURES];
 int numgltextures;
 
 /* generic environment map */
@@ -124,7 +124,7 @@ void R_ImageList_f (void)
 
 		Com_Printf(" %3i %3i RGB: %5i idx: %i - %s\n", image->upload_width, image->upload_height, image->texnum, image->index, image->name);
 	}
-	Com_Printf("Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
+	Com_Printf("Total textures: %i (max textures: %i)\n", numgltextures, MAX_GL_TEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
 }
 
@@ -1235,8 +1235,8 @@ void R_CalcDayAndNight (float q)
 
 	/* get image */
 	if (!r_dayandnighttexture) {
-		if (numgltextures >= MAX_GLTEXTURES)
-			Com_Error(ERR_DROP, "MAX_GLTEXTURES");
+		if (numgltextures >= MAX_GL_TEXTURES)
+			Com_Error(ERR_DROP, "MAX_GL_TEXTURES");
 		r_dayandnighttexture = &gltextures[numgltextures];
 		r_dayandnighttexture->index = numgltextures;
 		Q_strncpyz(r_dayandnighttexture->name, "day_and_night_mask", sizeof(r_dayandnighttexture->name));
@@ -1567,8 +1567,8 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 			break;
 
 	if (i == numgltextures) {
-		if (numgltextures >= MAX_GLTEXTURES)
-			Com_Error(ERR_DROP, "R_LoadImageData: MAX_GLTEXTURES hit");
+		if (numgltextures >= MAX_GL_TEXTURES)
+			Com_Error(ERR_DROP, "R_LoadImageData: MAX_GL_TEXTURES hit");
 		numgltextures++;
 	}
 	image = &gltextures[i];
@@ -1696,11 +1696,11 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	Com_Printf("R_FindImage: Can't find %s (%s)\n", lname, pname);
 #endif
 
-	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GLERRORTEX) {
+	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GL_ERRORTEX) {
 		Q_strncpyz(glerrortexend, lname, MAX_QPATH);
 		glerrortexend += strlen(lname) + 1;
 	} else {
-		Com_Error(ERR_DROP, "MAX_GLERRORTEX");
+		Com_Error(ERR_DROP, "MAX_GL_ERRORTEX");
 	}
 
   end:

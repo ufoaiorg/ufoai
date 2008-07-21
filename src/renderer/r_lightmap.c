@@ -48,8 +48,8 @@ static lightmaps_t r_lightmaps;
 
 static void R_UploadLightmapBlock (void)
 {
-	if (r_lightmaps.texnum == MAX_GLLIGHTMAPS) {
-		Com_Printf("R_UploadLightmapBlock: MAX_GLLIGHTMAPS reached.\n");
+	if (r_lightmaps.texnum == MAX_GL_LIGHTMAPS) {
+		Com_Printf("R_UploadLightmapBlock: MAX_GL_LIGHTMAPS reached.\n");
 		return;
 	}
 

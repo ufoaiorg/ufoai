@@ -67,12 +67,12 @@ typedef struct image_s {
 	material_t material;
 } image_t;
 
-#define MAX_GLERRORTEX		4096
-#define MAX_GLTEXTURES		1024
-#define MAX_GLLIGHTMAPS 	256
+#define MAX_GL_ERRORTEX		4096
+#define MAX_GL_TEXTURES		1024
+#define MAX_GL_LIGHTMAPS 	256
 
-#define TEXNUM_LIGHTMAPS	MAX_GLTEXTURES
-#define TEXNUM_IMAGES		(TEXNUM_LIGHTMAPS + MAX_GLLIGHTMAPS)
+#define TEXNUM_LIGHTMAPS	MAX_GL_TEXTURES
+#define TEXNUM_IMAGES		(TEXNUM_LIGHTMAPS + MAX_GL_LIGHTMAPS)
 
 void R_WritePNG(qFILE *f, byte *buffer, int width, int height);
 void R_WriteJPG(qFILE *f, byte *buffer, int width, int height, int quality);
