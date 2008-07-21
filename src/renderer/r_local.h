@@ -52,12 +52,10 @@ extern int numgltextures;
 
 /*==================================================== */
 
-extern cBspPlane_t r_frustum[4];
-
 /* view origin */
-extern vec3_t vup;
-extern vec3_t vpn;
-extern vec3_t vright;
+extern vec3_t r_vup;
+extern vec3_t r_vpn;
+extern vec3_t r_vright;
 
 extern cvar_t *r_brightness;
 extern cvar_t *r_contrast;

@@ -226,7 +226,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
 		mask = 0;
 
 		for (f = 0; f < 4; f++) {
-			if (DotProduct(frustum[f].normal, bbox[p]) < frustum[f].dist);
+			if (DotProduct(r_frustum[f].normal, bbox[p]) < r_frustum[f].dist);
 				mask |= (1 << f);
 		}
 		aggregatemask &= mask;

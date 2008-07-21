@@ -40,12 +40,12 @@ rstate_t r_state;
 image_t *r_notexture;			/* use for bad textures */
 image_t *r_warptexture;
 
-cBspPlane_t frustum[4];
+static cBspPlane_t r_frustum[4];
 
 /* view origin */
-vec3_t vup;
-vec3_t vpn;
-vec3_t vright;
+vec3_t r_vup;
+vec3_t r_vpn;
+vec3_t r_vright;
 
 float r_world_matrix[16];
 float r_base_world_matrix[16];
@@ -113,7 +113,7 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 		return qfalse;
 
 	for (i = 0; i < 4; i++)
-		if (TR_BoxOnPlaneSide(mins, maxs, &frustum[i]) == PSIDE_BACK)
+		if (TR_BoxOnPlaneSide(mins, maxs, &r_frustum[i]) == PSIDE_BACK)
 			return qtrue;
 	return qfalse;
 }
@@ -137,34 +137,34 @@ static void R_SetFrustum (void)
 
 	if (r_isometric->integer) {
 		/* 4 planes of a cube */
-		VectorScale(vright, +1, frustum[0].normal);
-		VectorScale(vright, -1, frustum[1].normal);
-		VectorScale(vup, +1, frustum[2].normal);
-		VectorScale(vup, -1, frustum[3].normal);
+		VectorScale(r_vright, +1, r_frustum[0].normal);
+		VectorScale(r_vright, -1, r_frustum[1].normal);
+		VectorScale(r_vup, +1, r_frustum[2].normal);
+		VectorScale(r_vup, -1, r_frustum[3].normal);
 
 		for (i = 0; i < 4; i++) {
-			frustum[i].type = PLANE_ANYZ;
-			frustum[i].dist = DotProduct(refdef.vieworg, frustum[i].normal);
-			frustum[i].signbits = SignbitsForPlane(&frustum[i]);
+			r_frustum[i].type = PLANE_ANYZ;
+			r_frustum[i].dist = DotProduct(refdef.vieworg, r_frustum[i].normal);
+			r_frustum[i].signbits = SignbitsForPlane(&r_frustum[i]);
 		}
-		frustum[0].dist -= 10 * refdef.fov_x;
-		frustum[1].dist -= 10 * refdef.fov_x;
-		frustum[2].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
-		frustum[3].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
+		r_frustum[0].dist -= 10 * refdef.fov_x;
+		r_frustum[1].dist -= 10 * refdef.fov_x;
+		r_frustum[2].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
+		r_frustum[3].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
 	} else {
 		/* rotate VPN right by FOV_X/2 degrees */
-		RotatePointAroundVector(frustum[0].normal, vup, vpn, -(90 - refdef.fov_x / 2));
+		RotatePointAroundVector(r_frustum[0].normal, r_vup, r_vpn, -(90 - refdef.fov_x / 2));
 		/* rotate VPN left by FOV_X/2 degrees */
-		RotatePointAroundVector(frustum[1].normal, vup, vpn, 90 - refdef.fov_x / 2);
+		RotatePointAroundVector(r_frustum[1].normal, r_vup, r_vpn, 90 - refdef.fov_x / 2);
 		/* rotate VPN up by FOV_X/2 degrees */
-		RotatePointAroundVector(frustum[2].normal, vright, vpn, 90 - refdef.fov_y / 2);
+		RotatePointAroundVector(r_frustum[2].normal, r_vright, r_vpn, 90 - refdef.fov_y / 2);
 		/* rotate VPN down by FOV_X/2 degrees */
-		RotatePointAroundVector(frustum[3].normal, vright, vpn, -(90 - refdef.fov_y / 2));
+		RotatePointAroundVector(r_frustum[3].normal, r_vright, r_vpn, -(90 - refdef.fov_y / 2));
 
 		for (i = 0; i < 4; i++) {
-			frustum[i].type = PLANE_ANYZ;
-			frustum[i].dist = DotProduct(refdef.vieworg, frustum[i].normal);
-			frustum[i].signbits = SignbitsForPlane(&frustum[i]);
+			r_frustum[i].type = PLANE_ANYZ;
+			r_frustum[i].dist = DotProduct(refdef.vieworg, r_frustum[i].normal);
+			r_frustum[i].signbits = SignbitsForPlane(&r_frustum[i]);
 		}
 	}
 }
@@ -172,7 +172,7 @@ static void R_SetFrustum (void)
 static inline void R_SetupFrame (void)
 {
 	/* build the transformation matrix for the given view angles */
-	AngleVectors(refdef.viewangles, vpn, vright, vup);
+	AngleVectors(refdef.viewangles, r_vpn, r_vright, r_vup);
 
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (refdef.rdflags & RDF_NOWORLDMODEL) {
